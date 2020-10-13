@@ -26,6 +26,15 @@ jobs:
         # a pull request then we can checkout the head.
         fetch-depth: 2
 
+    - name: Get yarn cache directory path
+      id: init
+      shell: bash
+      run: |
+        echo "::set-output name=yarn_cache::$(yarn cache dir)"
+        #
+        echo "Node $(node --version)"
+        echo "Yarn $(yarn --version)"
+
     # If this run was triggered by a pull request event, then checkout
     # the head of the pull request instead of the merge commit.
     - run: git checkout HEAD^2
@@ -42,7 +51,7 @@ jobs:
 
     - name: Installing
       run: yarn --frozen-lockfile --perfer-offline
-        
+
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v1
