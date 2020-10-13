@@ -139,9 +139,10 @@ jobs:
           xcodebuild \
             -allowProvisioningUpdates \
             -archivePath monsuivipsy.xcarchive \
+            -configuration release \
+            -quiet \
             -scheme monsuivipsy clean archive \
             -sdk iphonesimulator \
-            -configuration release \
             -workspace monsuivipsy.xcworkspace \
             ONLY_ACTIVE_ARCH=NO
         env:
