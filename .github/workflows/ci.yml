@@ -134,18 +134,16 @@ jobs:
       - name: Build iOS app
         if: matrix.config.kind == 'ios'
         working-directory: ios
+        # Inspired by https://www.objc.io/issues/6-build-tools/travis-ci/
         run: |
           xcodebuild \
             -allowProvisioningUpdates \
             -archivePath monsuivipsy.xcarchive \
             -scheme monsuivipsy clean archive \
-            -sdk iphoneos \
+            -sdk iphonesimulator \
             -configuration release \
             -workspace monsuivipsy.xcworkspace \
-            CODE_SIGN_IDENTITY="" \
-            CODE_SIGNING_ALLOWED=NO \
-            CODE_SIGNING_REQUIRED=NO \
-            DEVELOPMENT_TEAM=${DEVELOPMENT_TEAM}
+            ONLY_ACTIVE_ARCH=NO
         env:
           DEVELOPMENT_TEAM: ${{ secrets.SOCIALGROOVYBOT_IOS_DEVELOPMENT_TEAM }}
 
