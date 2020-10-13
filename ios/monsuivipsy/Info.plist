@@ -53,5 +53,9 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>method</key>
+	<string>app-store</string>
+	<key>teamID</key>
+	<string>B4JPFKWLRH</string>
 </dict>
 </plist>
