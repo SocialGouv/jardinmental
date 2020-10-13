@@ -1,6 +1,6 @@
-import React from "react";
-import { Text } from "react-native"
+import React from 'react';
+import {Text} from 'react-native';
 
-const HelloWorld = () => <Text>Hello, world!</Text>
+const HelloWorld = () => <Text>Hello, world!</Text>;
 
 export default HelloWorld;

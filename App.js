@@ -23,7 +23,7 @@ import {
   DebugInstructions,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-import HelloWorld from "./src/hello-world"
+import HelloWorld from './src/hello-world';
 
 const App: () => React$Node = () => {
   return (
