@@ -149,7 +149,7 @@ jobs:
           DEVELOPMENT_TEAM: ${{ secrets.SOCIALGROOVYBOT_IOS_DEVELOPMENT_TEAM }}
 
       - name: Export iOS app
-        if: matrix.config.kind == 'ios'
+        if: matrix.config.kind == 'ios_not_working :('
         working-directory: ios
         run: |
           xcodebuild \
