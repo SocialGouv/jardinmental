@@ -1,0 +1,166 @@
+name: ci
+on:
+  - push
+  - pull_request
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Node.js 12.x
+        uses: actions/setup-node@v2-beta
+        with:
+          node-version: 12.x
+
+      - name: Get yarn cache directory path
+        id: init
+        shell: bash
+        run: |
+          echo "::set-output name=yarn_cache::$(yarn cache dir)"
+          #
+          echo "Node $(node --version)"
+          echo "Yarn $(yarn --version)"
+
+      - uses: actions/checkout@v2
+
+      - name: Cache Yarn packages
+        id: yarn_cache_packages
+        uses: actions/cache@v1
+        with:
+          path: ${{ steps.init.outputs.yarn_cache }}
+          key: ${{ runner.os }}-yarn_cache-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn_cache-
+
+      - name: Installing
+        run: yarn --frozen-lockfile --perfer-offline
+
+      - name: Lint
+        run: yarn lint
+
+      - name: Unit tests and coverage
+        run: yarn test --coverage --coverageReporters=lcov --coverageReporters=text-summary
+
+      - name: Send test coverage to codecov
+        continue-on-error: true
+        uses: codecov/codecov-action@v1
+  build:
+    needs:
+      - test
+    strategy:
+      # Don't fast-fail on tag and master
+      fail-fast: ${{ github.event_name == 'pull_request' || (github.ref !=
+        'refs/heads/master' && !startsWith(github.ref, 'refs/tags/')) }}
+      matrix:
+        config:
+          - os: ubuntu-latest
+            kind: android
+          - os: macOS-latest
+            kind: ios
+
+    name: build on 12.x (${{ matrix.config.os }})
+    runs-on: ${{ matrix.config.os }}
+
+    steps:
+      - name: Set up Node.js 12.x
+        uses: actions/setup-node@v2-beta
+        with:
+          node-version: 12.x
+
+      - name: Get yarn cache directory path
+        id: init
+        shell: bash
+        run: |
+          echo "::set-output name=yarn_cache::$(yarn cache dir)"
+          #
+          echo "Node $(node --version)"
+          echo "Yarn $(yarn --version)"
+
+      - uses: actions/checkout@v2
+
+      - name: Cache Yarn packages
+        id: yarn_cache_packages
+        uses: actions/cache@v1
+        with:
+          path: ${{ steps.init.outputs.yarn_cache }}
+          key: ${{ runner.os }}-${{ matrix.config.kind }}-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ matrix.config.kind }}-
+
+      - name: Installing
+        run: yarn --frozen-lockfile --perfer-offline
+
+      #
+      # Android
+
+      - name: Cache gradle dependencies
+        if: matrix.config.kind == 'android'
+        uses: actions/cache@v1
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Build Android app
+        if: matrix.config.kind == 'android'
+        working-directory: android
+        run: ./gradlew bundleRelease
+
+      - name: Archive Android apk
+        if: matrix.config.kind == 'android'
+        uses: actions/upload-artifact@v2
+        with:
+          name: monsuivipsy.apk
+          path: android/app/build/outputs/apk/release/
+
+      #
+      # iOS
+
+      - name: Cache Pods dependencies
+        if: matrix.config.kind == 'ios'
+        uses: actions/cache@v1
+        with:
+          path: ios/Pods
+          key: ${{ runner.os }}-pods-cache-${{ hashFiles('**/ios/Podfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pods-cache-
+
+      - name: Install pod dependencies
+        if: matrix.config.kind == 'ios'
+        working-directory: ios
+        run: pod install
+
+      - name: Build iOS app
+        if: matrix.config.kind == 'ios'
+        working-directory: ios
+        # Inspired by https://www.objc.io/issues/6-build-tools/travis-ci/
+        run: |
+          xcodebuild \
+            -allowProvisioningUpdates \
+            -archivePath monsuivipsy.xcarchive \
+            -configuration release \
+            -quiet \
+            -scheme monsuivipsy clean archive \
+            -sdk iphonesimulator \
+            -workspace monsuivipsy.xcworkspace \
+            ONLY_ACTIVE_ARCH=NO
+        env:
+          DEVELOPMENT_TEAM: ${{ secrets.SOCIALGROOVYBOT_IOS_DEVELOPMENT_TEAM }}
+
+      - name: Export iOS app
+        if: matrix.config.kind == 'ios_not_working :('
+        working-directory: ios
+        run: |
+          xcodebuild \
+            -archivePath ./monsuivipsy.xcarchive \
+            -exportArchive \
+            -exportOptionsPlist monsuivipsy/Info.plist \
+            -exportPath .
+          mv monsuivipsy.ipa ../monsuivipsy.ipa
+      - name: Archive iOS ipa
+        if: matrix.config.kind == 'ios'
+        uses: actions/upload-artifact@v2
+        with:
+          name: monsuivipsy.ipa
+          path: ios/build/
