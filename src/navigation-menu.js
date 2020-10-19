@@ -1,5 +1,6 @@
-import React from 'react';
-import {StyleSheet, View, TouchableWithoutFeedback} from 'react-native';
+import React, {useState} from 'react';
+import {StyleSheet, View} from 'react-native';
+import NavigationButton from './navigation-button';
 
 const styles = StyleSheet.create({
   container: {
@@ -8,64 +9,49 @@ const styles = StyleSheet.create({
     left: 0,
     width: '100%',
     flexDirection: 'row',
-    paddingVertical: '15px',
+    paddingVertical: 15,
     justifyContent: 'space-around',
-    height: '${menuHeight}px',
-    borderTopWidth: '1px',
+    borderTopWidth: 1,
     borderTopColor: '#4030a533',
     backgroundColor: 'white',
   },
-  buttonContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexShrink: 1,
-    flexBasis: '75px',
-  },
-  buttonText: {
-    marginTop: '4px',
-    fontFamily: 'Raleway-SemiBold',
-    fontSize: '15px',
-    color: '#4030a5',
-    opacity: '${({selected}) => (selected ? 1 : 0.6)}',
-    flexWrap: 'nowrap',
-  },
 });
 
-const Button = ({
-  setView,
-  view,
-  selfView,
-  Icon,
-  caption,
-  moveLeft,
-  moveRight,
-}) => {
-  const selected = view === selfView;
+const navigationItems = [
+  {
+    id: 'main',
+    label: 'Journal',
+    icon: 'assets/svg/smile.svg',
+  },
+  {
+    id: 'add',
+    label: '+',
+    icon: 'assets/svg/smile.svg',
+  },
+  {
+    id: 'calendar',
+    label: 'Calendrier',
+    icon: 'assets/svg/smile.svg',
+  },
+];
+
+const NavigationMenu = () => {
+  const [view, setView] = useState('main');
+  console.log('>>>>>', view);
   return (
-    <TouchableWithoutFeedback
-      onPress={async () => {
-        setView(selfView);
-      }}>
-      <View
-        style={styles.buttonContainer}
-        moveLeft={moveLeft}
-        moveRight={moveRight}>
-        <Icon
-          size={iconSize}
-          color={selected ? '#39cec0' : '#5352a3'}
-          selected={selected}
+    <View style={styles.container}>
+      {navigationItems.map(({label, id, icon}) => (
+        <NavigationButton
+          key={id}
+          setView={setView}
+          view={view}
+          selfView={id}
+          label={label}
+          Icon={icon}
         />
-        <View
-          style={styles.buttonText}
-          allowFontScaling={false}
-          selected={selected}>
-          {caption}
-        </View>
-      </View>
-    </TouchableWithoutFeedback>
+      ))}
+    </View>
   );
 };
-
-const NavigationMenu = () => <View style={styles.container}>LOL</View>;
 
 export default NavigationMenu;
