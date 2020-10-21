@@ -1,6 +1,9 @@
 import React, {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import NavigationButton from './navigation-button';
+import DiarySvg from '../assets/svg/diary.svg';
+import PlusSvg from '../assets/svg/plus.svg';
+import CalendarSvg from '../assets/svg/calendar.svg';
 
 const styles = StyleSheet.create({
   container: {
@@ -21,23 +24,21 @@ const navigationItems = [
   {
     id: 'main',
     label: 'Journal',
-    icon: 'assets/svg/smile.svg',
+    icon: <DiarySvg />,
   },
   {
     id: 'add',
-    label: '+',
-    icon: 'assets/svg/smile.svg',
+    icon: <PlusSvg />,
   },
   {
     id: 'calendar',
     label: 'Calendrier',
-    icon: 'assets/svg/smile.svg',
+    icon: <CalendarSvg />,
   },
 ];
 
 const NavigationMenu = () => {
   const [view, setView] = useState('main');
-  console.log('>>>>>', view);
   return (
     <View style={styles.container}>
       {navigationItems.map(({label, id, icon}) => (
@@ -47,7 +48,7 @@ const NavigationMenu = () => {
           view={view}
           selfView={id}
           label={label}
-          Icon={icon}
+          icon={icon}
         />
       ))}
     </View>

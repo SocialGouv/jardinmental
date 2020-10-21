@@ -24,6 +24,7 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 import NavigationMenu from './src/navigation-menu';
+import CalendarSvg from './assets/svg/calendar.svg';
 
 const App: () => React$Node = () => {
   return (
