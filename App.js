@@ -63,6 +63,7 @@ const App: () => React$Node = () => {
 const styles = StyleSheet.create({
   scrollView: {
     backgroundColor: Colors.lighter,
+    fontFamily: 'Karla-Regular',
   },
   engine: {
     position: 'absolute',

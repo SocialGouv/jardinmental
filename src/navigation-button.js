@@ -11,7 +11,6 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     marginTop: 4,
-    fontFamily: 'Raleway-SemiBold',
     fontSize: 15,
     color: '#4030a5',
     flexWrap: 'nowrap',

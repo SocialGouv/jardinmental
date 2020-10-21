@@ -37,7 +37,6 @@ const navigationItems = [
 
 const NavigationMenu = () => {
   const [view, setView] = useState('main');
-  console.log('>>>>>', view);
   return (
     <View style={styles.container}>
       {navigationItems.map(({label, id, icon}) => (
