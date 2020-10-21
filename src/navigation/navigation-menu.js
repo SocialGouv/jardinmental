@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import NavigationButton from './navigation-button';
-import DiarySvg from '../assets/svg/diary.svg';
-import PlusSvg from '../assets/svg/plus.svg';
-import CalendarSvg from '../assets/svg/calendar.svg';
+import DiarySvg from '../../assets/svg/diary.svg';
+import PlusSvg from '../../assets/svg/plus.svg';
+import CalendarSvg from '../../assets/svg/calendar.svg';
 
 const styles = StyleSheet.create({
   container: {
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
 
 const navigationItems = [
   {
-    id: 'main',
+    id: 'diary',
     label: 'Journal',
     icon: <DiarySvg />,
   },
@@ -38,7 +38,7 @@ const navigationItems = [
 ];
 
 const NavigationMenu = () => {
-  const [view, setView] = useState('main');
+  const [view, setView] = useState('diary');
   return (
     <View style={styles.container}>
       {navigationItems.map(({label, id, icon}) => (

@@ -1,6 +1,5 @@
 import React from 'react';
 import {StyleSheet, View, TouchableWithoutFeedback, Text} from 'react-native';
-//import SVGImage from 'assets/svg/smile.svg';
 
 const styles = StyleSheet.create({
   buttonContainer: {
