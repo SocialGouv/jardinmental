@@ -26,11 +26,12 @@ const NavigationButton = ({setView, view, selfView, icon, label}) => {
         setView(selfView);
       }}>
       <View style={styles.buttonContainer}>
+        {icon}
         <View
           style={styles.buttonText}
           allowFontScaling={false}
           selected={selected}>
-          <Text>{label}</Text>
+          {label && <Text>{label}</Text>}
         </View>
       </View>
     </TouchableWithoutFeedback>
