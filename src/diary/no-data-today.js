@@ -1,6 +1,21 @@
 import React from 'react';
 import {StyleSheet, View, Text} from 'react-native';
 import Button from '../common/button';
+import {colors} from '../colors';
+
+const NoDataToday = () => {
+  return (
+    <View style={styles.noDataContainer}>
+      <Text style={styles.noDataTitle}>Comment se passe ta journée ?</Text>
+      <Text style={styles.noDataText}>
+        Faisons ensemble un petit point sur tes ressentis
+      </Text>
+      <View style={styles.buttonWrapper}>
+        <Button title="Commencer" />
+      </View>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   noDataContainer: {
@@ -13,22 +28,14 @@ const styles = StyleSheet.create({
   },
   noDataTitle: {
     fontWeight: 'bold',
+    color: colors.BLUE,
+  },
+  noDataText: {
+    color: colors.BLUE,
   },
   buttonWrapper: {
     paddingTop: 10,
   },
 });
-
-const NoDataToday = () => {
-  return (
-    <View style={styles.noDataContainer}>
-      <Text style={styles.noDataTitle}>Comment se passe ta journée ?</Text>
-      <Text>Faisons ensemble un petit point sur tes ressentis</Text>
-      <View style={styles.buttonWrapper}>
-        <Button title="Commencer" />
-      </View>
-    </View>
-  );
-};
 
 export default NoDataToday;

@@ -1,19 +1,25 @@
 import React from 'react';
 import {StyleSheet, View, Text} from 'react-native';
-
-const styles = StyleSheet.create({
-  title: {
-    fontSize: 35,
-    padding: 20,
-  },
-});
+import {colors} from './colors';
 
 const Header = () => {
   return (
-    <View>
+    <View style={styles.container}>
       <Text style={styles.title}>Mon journal</Text>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: 'white',
+  },
+  title: {
+    fontSize: 22,
+    padding: 20,
+    color: colors.BLUE,
+    fontWeight: '700',
+  },
+});
 
 export default Header;
