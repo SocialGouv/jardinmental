@@ -38,9 +38,6 @@ jobs:
       - name: Lint
         run: yarn lint
 
-      - name: Unit tests and coverage
-        run: yarn test
-        
   build:
     needs:
       - test
