@@ -3,9 +3,11 @@ import {StyleSheet, ScrollView, Text, View} from 'react-native';
 import DiaryItem from './diary-item';
 import {diaryData} from './diary-data';
 import {colors} from '../colors';
+import Header from '../header';
 
 const Diary = () => (
   <ScrollView style={styles.container}>
+    <Header />
     {diaryData.map(({date, patientState}) => (
       <View key={date}>
         <Text style={styles.title}>{date}</Text>

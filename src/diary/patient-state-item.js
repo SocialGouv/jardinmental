@@ -1,16 +1,14 @@
 import React from 'react';
 import {StyleSheet, View, Text} from 'react-native';
+import CircledIcon from '../common/circled-icon';
 
 const PatientStateItem = ({patientStateItem, category}) => {
   return (
     <View style={styles.container}>
-      <View
-        style={{
-          ...styles.iconContainer,
-          backgroundColor: patientStateItem.color,
-        }}>
-        <patientStateItem.icon width={20} height={20} />
-      </View>
+      <CircledIcon
+        color={patientStateItem.color}
+        Icon={patientStateItem.icon}
+      />
       <Text style={styles.categoryText}>{category}</Text>
     </View>
   );
@@ -21,18 +19,8 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 15,
-  },
-  iconContainer: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: 'lightgrey',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: 20,
+    paddingBottom: 10,
+    paddingHorizontal: 15,
   },
   categoryText: {
     fontSize: 15,
