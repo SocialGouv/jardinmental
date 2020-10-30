@@ -3,7 +3,7 @@ import {StyleSheet, View, Text} from 'react-native';
 import Button from '../common/button';
 import {colors} from '../colors';
 
-const NoDataToday = () => {
+const NoDataTodayDiaryItem = () => {
   return (
     <View style={styles.noDataContainer}>
       <Text style={styles.noDataTitle}>Comment se passe ta journée ?</Text>
@@ -38,4 +38,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default NoDataToday;
+export default NoDataTodayDiaryItem;

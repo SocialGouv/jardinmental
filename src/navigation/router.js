@@ -1,65 +1,31 @@
 import React from 'react';
-import Diary from '../diary/diary';
-import Calendar from '../calendar';
+import Tabs from './tabs';
+import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
-import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import DiarySvg from '../../assets/svg/diary.svg';
-import PlusSvg from '../../assets/svg/plus.svg';
-import CalendarSvg from '../../assets/svg/calendar.svg';
-import Survey from '../survey';
-import {StyleSheet, View} from 'react-native';
+import {surveyData} from '../survey/survey-data';
+import SurveyScreen from '../survey/survey-screen';
 
-const Tab = createMaterialTopTabNavigator();
+const Stack = createStackNavigator();
 
 const Router = () => (
   <NavigationContainer>
-    <Tab.Navigator
-      initialRouteName="Diary"
-      swipeEnabled={true}
-      tabBarPosition="bottom"
-      tabBarOptions={{
-        activeTintColor: '#26387C',
-        inactiveTintColor: '#E5E5E5',
-        showIcon: true,
-        indicatorStyle: {height: 0},
-      }}>
-      <Tab.Screen
-        name="Diary"
-        component={Diary}
-        options={{
-          tabBarLabel: 'Journal',
-          tabBarIcon: ({color}) => <DiarySvg style={{color}} />,
-        }}
-      />
-      <Tab.Screen
-        name="Survey"
-        component={Survey}
-        options={{
-          tabBarLabel: '',
-          tabBarIcon: () => (
-            <View style={styles.surveyButton}>
-              <PlusSvg />
-            </View>
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Calendar"
-        component={Calendar}
-        options={{
-          tabBarLabel: 'Calendrier',
-          tabBarIcon: ({color}) => <CalendarSvg style={{color}} />,
-        }}
-      />
-    </Tab.Navigator>
+    <Stack.Navigator initialRouteName="tabs" headerMode="none">
+      <Stack.Screen name="tabs" component={Tabs} />
+      {surveyData.map((surveyItem, index) => (
+        <Stack.Screen name={`question-${index}`} key={`question-${index}`}>
+          {({navigation}) => (
+            <SurveyScreen
+              question={surveyData[index].question}
+              answers={surveyData[index].answers}
+              explanation={surveyData[index].explanation}
+              currentSurveyItem={index}
+              navigation={navigation}
+            />
+          )}
+        </Stack.Screen>
+      ))}
+    </Stack.Navigator>
   </NavigationContainer>
 );
-
-const styles = StyleSheet.create({
-  surveyButton: {
-    display: 'flex',
-    alignItems: 'center',
-  },
-});
 
 export default Router;

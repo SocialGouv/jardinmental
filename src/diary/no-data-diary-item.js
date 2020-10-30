@@ -1,24 +1,15 @@
 import React from 'react';
-import {StyleSheet, View, Text, Image} from 'react-native';
-import Button from '../common/button';
+import {StyleSheet, View, Text} from 'react-native';
 import {colors} from '../colors';
 
 const NoDataDiaryItem = () => {
   return (
     <View style={styles.noDataContainer}>
       <View style={styles.textContainer}>
-        <Text style={styles.noDataTitle}>Aucune information</Text>
-        <Text style={styles.noDataText}>
-          Clique ici pour compléter tes informations
+        <Text style={styles.noDataTitle}>
+          Vous n'avez rien saisi ce jour-là
         </Text>
-        <View style={styles.buttonWrapper}>
-          <Button title="Ajouter" />
-        </View>
       </View>
-      <Image
-        style={styles.image}
-        source={require('../../assets/imgs/no-data.png')}
-      />
     </View>
   );
 };
@@ -37,15 +28,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: colors.BLUE,
   },
-  noDataText: {
-    color: colors.BLUE,
-  },
   textContainer: {
     padding: 15,
-    width: '65%',
-  },
-  buttonWrapper: {
-    paddingTop: 10,
   },
 });
 

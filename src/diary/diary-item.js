@@ -2,15 +2,15 @@ import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import PatientStateItem from './patient-state-item';
 import {categories} from '../constants';
-import NoDataDiaryItem from './no-data-diary-item';
-import NoDataToday from './no-data-today';
+import NoDataYesterdayDiaryItem from './no-data-yesterday-diary-item';
+import NoDataTodayDiaryItem from './no-data-today-diary-item';
 
 const DiaryItem = ({patientState}) => {
   if (patientState === null) {
-    return <NoDataDiaryItem />;
+    return <NoDataYesterdayDiaryItem />;
   }
   if (patientState === undefined) {
-    return <NoDataToday />;
+    return <NoDataTodayDiaryItem />;
   }
   return (
     <View style={styles.container}>
@@ -41,11 +41,13 @@ const DiaryItem = ({patientState}) => {
 const styles = StyleSheet.create({
   container: {
     marginTop: 0,
-    marginBottom: 20,
+    marginBottom: 40,
     backgroundColor: 'rgba(38, 56, 124, 0.03)',
     borderRadius: 10,
     borderWidth: 1,
     borderColor: 'rgba(38, 56, 124, 0.08)',
+    paddingTop: 20,
+    paddingBottom: 10,
   },
 });
 

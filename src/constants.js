@@ -55,3 +55,20 @@ export const categories = {
   sleep: 'Sommeil',
   sensations: 'Sensations étranges',
 };
+
+export const surveyDate = {
+  YESTERDAY: {
+    icon: icons.veryGood,
+    color: colors.veryGood,
+    label: 'Hier',
+  },
+  TODAY: {
+    icon: icons.good,
+    color: colors.good,
+    label: "Aujourd'hui",
+  },
+};
+
+export const frequence = {};
+
+export const intensity = {};
