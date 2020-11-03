@@ -8,13 +8,15 @@ export const icons = {
   yesterday: 'YesterdaySvg',
 };
 
-export const colors = {
+const colors = {
   veryGood: '#E2FA80',
   good: '#F0F277',
   middle: '#FCE285',
   bad: '#FCD0A7',
   veryBad: '#FFC0C0',
 };
+
+export const colorsMap = Object.keys(colors).map((key) => colors[key]);
 
 export const categoryStates = {
   VERY_GOOD: {

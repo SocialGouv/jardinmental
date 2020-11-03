@@ -1,7 +1,7 @@
 import React from 'react';
-import {StyleSheet, View, Text, Image} from 'react-native';
+import { StyleSheet, View, Text, Image } from 'react-native';
 import Button from '../common/button';
-import {colors} from '../colors';
+import { colors } from '../common/colors';
 
 const NoDataYesterdayDiaryItem = () => {
   return (

@@ -1,23 +1,22 @@
 import React from 'react';
+import {StyleSheet, SafeAreaView} from 'react-native';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Diary from '../diary/diary';
-import Calendar from '../calendar';
-import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+import Calendar from '../calendar/calendar';
 import DiarySvg from '../../assets/svg/diary.svg';
 import PlusSvg from '../../assets/svg/plus.svg';
 import CalendarSvg from '../../assets/svg/calendar.svg';
-import {StyleSheet, View} from 'react-native';
 
-const Tab = createMaterialTopTabNavigator();
+const Tab = createBottomTabNavigator();
 
 const Tabs = ({navigation}) => (
   <>
-    <View style={styles.surveyButton}>
+    <SafeAreaView style={styles.surveyButton}>
       <PlusSvg onPress={() => navigation.navigate('question-0')} />
-    </View>
+    </SafeAreaView>
     <Tab.Navigator
       initialRouteName="Diary"
       swipeEnabled={true}
-      tabBarPosition="bottom"
       tabBarOptions={{
         activeTintColor: '#26387C',
         inactiveTintColor: '#E5E5E5',

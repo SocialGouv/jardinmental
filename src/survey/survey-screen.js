@@ -6,7 +6,7 @@ import {
   ScrollView,
   View,
 } from 'react-native';
-import {colors} from '../colors';
+import {colors} from '../common/colors';
 import CircledIcon from '../common/circled-icon';
 import {surveyData} from './survey-data';
 import SurveyExplanation from './survey-explanation';

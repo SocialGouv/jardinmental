@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import {getItemFromStorage, setItemFromStorage} from '../storage/storage';
-import {STORAGE_KEY_SURVEY_RESULTS} from '../constants';
+import {STORAGE_KEY_SURVEY_RESULTS} from '../common/constants';
 import {diaryData as fakeDiaryData} from '../diary/diary-data';
 
 export const useDiaryData = () => {

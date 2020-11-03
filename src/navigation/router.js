@@ -4,6 +4,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
 import {surveyData} from '../survey/survey-data';
 import SurveyScreen from '../survey/survey-screen';
+import Reminder from '../reminder/reminder';
 
 const Stack = createStackNavigator();
 
@@ -24,6 +25,7 @@ const Router = () => (
           )}
         </Stack.Screen>
       ))}
+      <Stack.Screen name="reminder" component={Reminder} />
     </Stack.Navigator>
   </NavigationContainer>
 );

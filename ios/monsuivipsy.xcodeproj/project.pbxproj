@@ -65,6 +65,7 @@
 		BBA067A20CA88DC444AD7985 /* Pods-monsuivipsy-monsuivipsyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-monsuivipsy-monsuivipsyTests.release.xcconfig"; path = "Target Support Files/Pods-monsuivipsy-monsuivipsyTests/Pods-monsuivipsy-monsuivipsyTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
+		F7F79B692551712B0001E4BF /* monsuivipsy.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = monsuivipsy.entitlements; path = monsuivipsy/monsuivipsy.entitlements; sourceTree = "<group>"; };
 		FB81172FB8990ADAACAE7273 /* libPods-monsuivipsy-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-monsuivipsy-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FEEF8229C826EAA0BBB70B05 /* Pods-monsuivipsy-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-monsuivipsy-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-monsuivipsy-tvOSTests/Pods-monsuivipsy-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -125,6 +126,7 @@
 		13B07FAE1A68108700A75B9A /* monsuivipsy */ = {
 			isa = PBXGroup;
 			children = (
+				F7F79B692551712B0001E4BF /* monsuivipsy.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -161,7 +163,6 @@
 				44541E8E24EC99B811581DC5 /* Pods-monsuivipsy-tvOSTests.debug.xcconfig */,
 				FEEF8229C826EAA0BBB70B05 /* Pods-monsuivipsy-tvOSTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -655,6 +656,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = monsuivipsy/monsuivipsy.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = monsuivipsy/Info.plist;
@@ -678,6 +680,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = monsuivipsy/monsuivipsy.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				INFOPLIST_FILE = monsuivipsy/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
