@@ -69,6 +69,38 @@ export const surveyDate = {
   },
 };
 
-export const frequence = {};
+export const frequence = {
+  NEVER: {
+    icon: icons.veryGood,
+    color: colors.veryGood,
+    label: 'Jamais',
+  },
+  SEVERAL_TIMES: {
+    icon: icons.middle,
+    color: colors.middle,
+    label: 'Plusieurs fois',
+  },
+  MANY_TIMES: {
+    icon: icons.veryBad,
+    color: colors.veryBad,
+    label: 'De nombreuses fois',
+  },
+};
 
-export const intensity = {};
+export const intensity = {
+  LIGHT: {
+    icon: icons.veryGood,
+    color: colors.veryGood,
+    label: 'Légèrement pénible',
+  },
+  MIDDLE: {
+    icon: icons.middle,
+    color: colors.middle,
+    label: 'Moyennement pénible',
+  },
+  HIGH: {
+    icon: icons.veryBad,
+    color: colors.veryBad,
+    label: 'Très pénible',
+  },
+};

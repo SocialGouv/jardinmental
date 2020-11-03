@@ -9,6 +9,7 @@ import {
 import {colors} from '../colors';
 import CircledIcon from '../common/circled-icon';
 import {surveyData} from './survey-data';
+import SurveyExplanation from './survey-explanation';
 
 const SurveyScreen = ({
   question,
@@ -35,23 +36,25 @@ const SurveyScreen = ({
   };
 
   return (
-    <ScrollView style={styles.container}>
-      <Text style={styles.question}>{question}</Text>
-      {answers.map((answer, index) => (
-        <TouchableOpacity key={index} onPress={nextQuestion}>
-          <View style={styles.answer}>
-            <CircledIcon color={answer.color} Icon={answer.icon} />
-            <Text style={styles.label}>{answer.label}</Text>
-          </View>
+    <>
+      <ScrollView style={styles.container}>
+        <Text style={styles.question}>{question}</Text>
+        {answers.map((answer, index) => (
+          <TouchableOpacity key={index} onPress={nextQuestion}>
+            <View style={styles.answer}>
+              <CircledIcon color={answer.color} Icon={answer.icon} />
+              <Text style={styles.label}>{answer.label}</Text>
+            </View>
+          </TouchableOpacity>
+        ))}
+        <TouchableOpacity onPress={nextQuestion}>
+          <Text style={styles.backButton} onPress={previousQuestion}>
+            Retour
+          </Text>
         </TouchableOpacity>
-      ))}
-      <Text>{explanation}</Text>
-      <TouchableOpacity onPress={nextQuestion}>
-        <Text style={styles.backButton} onPress={previousQuestion}>
-          Retour
-        </Text>
-      </TouchableOpacity>
-    </ScrollView>
+      </ScrollView>
+      <SurveyExplanation explanation={explanation} category={'Explications'} />
+    </>
   );
 };
 
