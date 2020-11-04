@@ -10,7 +10,7 @@ export const surveyData = [
   {
     id: 'day',
     question: 'Commençons ! Pour quel jour souhaites-tu noter tes ressentis',
-    answers: [surveyDate.YESTERDAY, surveyDate.TODAY],
+    answers: [surveyDate.TODAY, surveyDate.YESTERDAY],
     explanation: null,
   },
   {

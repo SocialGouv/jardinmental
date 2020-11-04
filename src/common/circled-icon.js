@@ -1,4 +1,12 @@
 import React from 'react';
+import VeryGoodSvg from '../../assets/svg/veryGood.svg';
+import GoodSvg from '../../assets/svg/good.svg';
+import MiddleSvg from '../../assets/svg/middle.svg';
+import BadSvg from '../../assets/svg/bad.svg';
+import VeryBadSvg from '../../assets/svg/veryBad.svg';
+import TodaySvg from '../../assets/svg/today.svg';
+import YesterdaySvg from '../../assets/svg/yesterday.svg';
+
 import {StyleSheet, View} from 'react-native';
 
 const styles = StyleSheet.create({
@@ -15,7 +23,21 @@ const styles = StyleSheet.create({
   },
 });
 
-const CircledIcon = ({Icon, color}) => {
+const mapIconToSvg = (icon) => {
+  const iconMap = {
+    VeryGoodSvg,
+    GoodSvg,
+    MiddleSvg,
+    BadSvg,
+    VeryBadSvg,
+    TodaySvg,
+    YesterdaySvg,
+  };
+  return iconMap[icon];
+};
+
+const CircledIcon = ({icon, color}) => {
+  const Icon = mapIconToSvg(icon);
   return (
     <View
       style={{
