@@ -10,8 +10,10 @@ import React from 'react';
 import {StatusBar} from 'react-native';
 
 import Router from './src/navigation/router';
+import {initStorage} from './src/storage/storage';
 
 const App: () => React$Node = () => {
+  initStorage();
   return (
     <>
       <StatusBar barStyle="dark-content" />

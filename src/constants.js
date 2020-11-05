@@ -1,15 +1,11 @@
-import VeryGoodSvg from '../assets/svg/veryGood.svg';
-import GoodSvg from '../assets/svg/good.svg';
-import MiddleSvg from '../assets/svg/middle.svg';
-import BadSvg from '../assets/svg/bad.svg';
-import VeryBadSvg from '../assets/svg/veryBad.svg';
-
 export const icons = {
-  veryGood: VeryGoodSvg,
-  good: GoodSvg,
-  middle: MiddleSvg,
-  bad: BadSvg,
-  veryBad: VeryBadSvg,
+  veryGood: 'VeryGoodSvg',
+  good: 'GoodSvg',
+  middle: 'MiddleSvg',
+  bad: 'BadSvg',
+  veryBad: 'VeryBadSvg',
+  today: 'TodaySvg',
+  yesterday: 'YesterdaySvg',
 };
 
 export const colors = {
@@ -58,13 +54,13 @@ export const categories = {
 
 export const surveyDate = {
   YESTERDAY: {
-    icon: icons.veryGood,
-    color: colors.veryGood,
+    icon: icons.yesterday,
+    color: 'white',
     label: 'Hier',
   },
   TODAY: {
-    icon: icons.good,
-    color: colors.good,
+    icon: icons.today,
+    color: 'white',
     label: "Aujourd'hui",
   },
 };
@@ -104,3 +100,5 @@ export const intensity = {
     label: 'Très pénible',
   },
 };
+
+export const STORAGE_KEY_SURVEY_RESULTS = '@SURVEY_RESULTS';

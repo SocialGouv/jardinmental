@@ -3,11 +3,12 @@ import {StyleSheet, View, Text} from 'react-native';
 import CircledIcon from '../common/circled-icon';
 
 const PatientStateItem = ({patientStateItem, category}) => {
+  console.log('patientStateItem', patientStateItem);
   return (
     <View style={styles.container}>
       <CircledIcon
         color={patientStateItem.color}
-        Icon={patientStateItem.icon}
+        icon={patientStateItem.icon}
       />
       <Text style={styles.categoryText}>{category}</Text>
     </View>

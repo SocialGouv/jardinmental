@@ -19,6 +19,7 @@ const SurveyScreen = ({
   navigation,
 }) => {
   const totalQuestions = surveyData.length;
+
   const nextQuestion = () => {
     if (currentSurveyItem !== totalQuestions - 1) {
       navigation.navigate(`question-${currentSurveyItem + 1}`);
@@ -42,7 +43,7 @@ const SurveyScreen = ({
         {answers.map((answer, index) => (
           <TouchableOpacity key={index} onPress={nextQuestion}>
             <View style={styles.answer}>
-              <CircledIcon color={answer.color} Icon={answer.icon} />
+              <CircledIcon color={answer.color} icon={answer.icon} />
               <Text style={styles.label}>{answer.label}</Text>
             </View>
           </TouchableOpacity>
