@@ -8,7 +8,7 @@ import {
   Text,
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { colors } from '../common/colors';
+import {colors} from '../common/colors';
 
 /*
   onChange:
@@ -23,7 +23,7 @@ const today = (offset = 0) => {
   return new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0);
 };
 
-const TimePicker = ({ visible, selectDate }) => {
+const TimePicker = ({visible, selectDate}) => {
   const [date, setDate] = React.useState(new Date(Date.now() + 60 * 1000));
   React.useEffect(() => {
     if (visible) setDate(new Date(Date.now() + 60 * 1000));

@@ -21,6 +21,7 @@ const Router = () => (
               explanation={surveyData[index].explanation}
               currentSurveyItem={index}
               navigation={navigation}
+              questionId={surveyItem.id}
             />
           )}
         </Stack.Screen>

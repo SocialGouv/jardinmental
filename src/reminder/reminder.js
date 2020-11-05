@@ -30,10 +30,13 @@ const timeIsAfterNow = (inputDate) => {
   const date = new Date(inputDate);
   const hours = date.getHours();
   const minutes = date.getMinutes();
-  if (hours > new Date().getHours()) return true;
-  if (hours < new Date().getHours()) return false;
-  if (minutes <= new Date().getMinutes()) return false;
-  return true;
+  if (hours > new Date().getHours()) {
+    return true;
+  }
+  if (hours < new Date().getHours()) {
+    return false;
+  }
+  return minutes > new Date().getMinutes();
 };
 
 const ReminderStorageKey = '@Reminder';
@@ -65,13 +68,16 @@ class Reminder extends React.Component {
   getReminder = async (showAlert = true) => {
     const isRegistered = await NotificationService.checkPermission();
     const reminder = await AsyncStorage.getItem(ReminderStorageKey);
-    if (Boolean(reminder) && new Date(reminder) == 'Invalid Date') {
+    if (Boolean(reminder) && new Date(reminder) === 'Invalid Date') {
       this.deleteReminder();
       return;
     }
-    if (!isRegistered && reminder && showAlert)
+    if (!isRegistered && reminder && showAlert) {
       this.showPermissionsAlert(this.deleteReminder);
-    if (!reminder) return;
+    }
+    if (!reminder) {
+      return;
+    }
     this.setState({reminder: new Date(reminder)});
   };
 
@@ -139,7 +145,9 @@ class Reminder extends React.Component {
   };
 
   handleNotification = (notification) => {
-    if (!notification) return;
+    if (!notification) {
+      return;
+    }
     if (Platform.OS === 'android') {
       if (notification.title === reminderTitle) {
         this.onOK();
@@ -159,7 +167,7 @@ class Reminder extends React.Component {
         <TouchableOpacity
           onPress={this.onBackPress}
           style={styles.backButtonContainer}>
-          <Text style={styles.backButton}>{'< Retour'}</Text>
+          <Text style={styles.backButton}>{'Retour'}</Text>
         </TouchableOpacity>
         <ReminderSvg />
         <Text style={styles.title}>
@@ -190,9 +198,10 @@ class Reminder extends React.Component {
             {reminder ? 'Modifier le rappel' : 'Définir un rappel'}
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={this.deleteReminder}>
+        <TouchableOpacity
+          onPress={reminder ? this.deleteReminder : this.onBackPress}>
           <Text style={styles.later}>
-            {reminder ? 'Retirer le rappel' : 'Plus tard peut-être'}
+            {reminder ? 'Retirer le rappel' : 'Plus tard, peut-être'}
           </Text>
         </TouchableOpacity>
         <TimePicker visible={timePickerVisible} selectDate={this.setReminder} />
@@ -248,10 +257,12 @@ const styles = StyleSheet.create({
   backButton: {
     fontWeight: '700',
     textDecorationLine: 'underline',
+    color: colors.BLUE,
   },
   later: {
     fontWeight: '700',
     textDecorationLine: 'underline',
+    color: colors.BLUE,
   },
   setupButton: {
     backgroundColor: colors.LIGHT_BLUE,

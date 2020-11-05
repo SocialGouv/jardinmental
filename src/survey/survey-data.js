@@ -1,9 +1,10 @@
 import {
-  categories,
+  displayedCategories,
   categoryStates,
   frequence,
   intensity,
   surveyDate,
+  categories,
 } from '../common/constants';
 
 export const surveyData = [
@@ -29,21 +30,21 @@ export const surveyData = [
       'euphorique ou agité) ou varier trop fortement',
   },
   {
-    id: `${categories.anxiety}-frequence`,
+    id: categories['anxiety-frequence'],
     question: 'Combien de temps vous êtes-vous senti anxieux aujourd’hui ?',
     answers: [frequence.NEVER, frequence.SEVERAL_TIMES, frequence.MANY_TIMES],
     explanation:
       'L’anxiété est un état d’appréhension, d’inquiétude, de peur ou de tension, désagréable, qui peut être ou non associé à un facteur de stress.',
   },
   {
-    id: `${categories.anxiety}-intensity`,
+    id: categories['anxiety-intensity'],
     question: 'A quel point cela a-t-il été pénible ?',
     answers: [intensity.LIGHT, intensity.MIDDLE, intensity.HIGH],
     explanation:
       'L’anxiété est un état d’appréhension, d’inquiétude, de peur ou de tension, désagréable, qui peut être ou non associé à un facteur de stress.',
   },
   {
-    id: `${categories.badThoughts}-frequence`,
+    id: categories['badThoughts-frequence'],
     question: 'Avez-vous eu des pensées parasites aujourd’hui ?',
     answers: [frequence.NEVER, frequence.SEVERAL_TIMES, frequence.MANY_TIMES],
 
@@ -51,7 +52,7 @@ export const surveyData = [
       'Ce sont des pensées que l’on ne contrôle pas. Elles peuvent nous envahir sans que l’on ne puisse rien y faire, ou pas beaucoup. Elles peuvent être tristes, angoissantes, effrayantes, gênantes, absurdes … On n’arrive pas à s’en débarrasser et, parfois, on n’arrive pas à penser à autre chose. On peut finir par se sentir triste, en colère, avoir peur ou devenir méfiant, parfois au point de ne plus rien pouvoir faire.',
   },
   {
-    id: `${categories.badThoughts}-intensity`,
+    id: categories['badThoughts-intensity'],
     question:
       'A quel point ces pensées parasites ont été désagréables/pénibles ?',
     answers: [intensity.LIGHT, intensity.MIDDLE, intensity.HIGH],
@@ -59,7 +60,7 @@ export const surveyData = [
       'Ce sont des pensées que l’on ne contrôle pas. Elles peuvent nous envahir sans que l’on ne puisse rien y faire, ou pas beaucoup. Elles peuvent être tristes, angoissantes, effrayantes, gênantes, absurdes … On n’arrive pas à s’en débarrasser et, parfois, on n’arrive pas à penser à autre chose. On peut finir par se sentir triste, en colère, avoir peur ou devenir méfiant, parfois au point de ne plus rien pouvoir faire.',
   },
   {
-    id: `${categories.sensations}-frequence`,
+    id: categories['sensations-frequence'],
     question:
       'A quelle fréquence les sensations étranges ou les hallucinations ont été présentes aujourd’hui ?',
     answers: [frequence.NEVER, frequence.SEVERAL_TIMES, frequence.MANY_TIMES],
@@ -78,7 +79,7 @@ export const surveyData = [
       '\t•\tsentir des odeurs ou avoir des goûts dans la bouche inhabituels, sans que quelque chose en soit clairement l’origine\n',
   },
   {
-    id: `${categories.sensations}-intensity`,
+    id: categories['sensations-intensity'],
     question: 'A quel point leur présence a-t-elle été pénible ?',
     answers: [intensity.LIGHT, intensity.MIDDLE, intensity.HIGH],
     explanation:

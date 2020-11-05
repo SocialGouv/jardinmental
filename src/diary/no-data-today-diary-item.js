@@ -1,9 +1,9 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import {StyleSheet, View, Text} from 'react-native';
 import Button from '../common/button';
-import { colors } from '../common/colors';
+import {colors} from '../common/colors';
 
-const NoDataTodayDiaryItem = () => {
+const NoDataTodayDiaryItem = ({startAtFirstQuestion}) => {
   return (
     <View style={styles.noDataContainer}>
       <Text style={styles.noDataTitle}>Comment se passe ta journée ?</Text>
@@ -11,7 +11,12 @@ const NoDataTodayDiaryItem = () => {
         Faisons ensemble un petit point sur tes ressentis
       </Text>
       <View style={styles.buttonWrapper}>
-        <Button title="Commencer" />
+        <Button
+          title="Commencer"
+          buttonColor="white"
+          textColor={colors.BLUE}
+          onPress={startAtFirstQuestion}
+        />
       </View>
     </View>
   );

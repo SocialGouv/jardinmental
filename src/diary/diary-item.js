@@ -1,38 +1,47 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import PatientStateItem from './patient-state-item';
-import {categories} from '../common/constants';
+import {displayedCategories} from '../common/constants';
 import NoDataYesterdayDiaryItem from './no-data-yesterday-diary-item';
 import NoDataTodayDiaryItem from './no-data-today-diary-item';
+import {isToday, isYesterday, parseISO} from 'date-fns';
+import NoDataDiaryItem from './no-data-diary-item';
 
-const DiaryItem = ({patientState}) => {
-  if (patientState === null) {
-    return <NoDataYesterdayDiaryItem />;
-  }
-  if (patientState === undefined) {
-    return <NoDataTodayDiaryItem />;
+const DiaryItem = ({patientState, startAtFirstQuestion, date}) => {
+  if (!patientState) {
+    if (isToday(parseISO(date))) {
+      return (
+        <NoDataTodayDiaryItem startAtFirstQuestion={startAtFirstQuestion} />
+      );
+    } else if (isYesterday(parseISO(date))) {
+      return (
+        <NoDataYesterdayDiaryItem startAtFirstQuestion={startAtFirstQuestion} />
+      );
+    } else {
+      return <NoDataDiaryItem />;
+    }
   }
   return (
     <View style={styles.container}>
       <PatientStateItem
         patientStateItem={patientState.mood}
-        category={categories.mood}
+        category={displayedCategories.mood}
       />
       <PatientStateItem
         patientStateItem={patientState.anxiety}
-        category={categories.anxiety}
+        category={displayedCategories.anxiety}
       />
       <PatientStateItem
         patientStateItem={patientState.badThought}
-        category={categories.badThoughts}
+        category={displayedCategories.badThoughts}
       />
       <PatientStateItem
         patientStateItem={patientState.sleep}
-        category={categories.sleep}
+        category={displayedCategories.sleep}
       />
       <PatientStateItem
         patientStateItem={patientState.sensations}
-        category={categories.sensations}
+        category={displayedCategories.sensations}
       />
     </View>
   );

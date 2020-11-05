@@ -1,5 +1,5 @@
 import PushNotification from 'react-native-push-notification';
-import { Platform } from 'react-native';
+import {Platform} from 'react-native';
 
 class NotificationService {
   listeners = {};
@@ -31,7 +31,7 @@ class NotificationService {
         importance: 4, // (optional) default: 4. Int value of the Android notification importance
         vibrate: true, // (optional) default: true. Creates the default vibration patten if true.
       },
-      (created) => console.log(`createChannel returned '${created}'`) // (optional) callback returns whether the channel was created, false means it already existed.
+      (created) => console.log(`createChannel returned '${created}'`), // (optional) callback returns whether the channel was created, false means it already existed.
     );
     this.isConfigured = true;
   }
@@ -63,7 +63,7 @@ class NotificationService {
 
   async checkPermission() {
     return await new Promise((resolve) => {
-      PushNotification.checkPermissions(({ alert }) => {
+      PushNotification.checkPermissions(({alert}) => {
         resolve(alert);
       });
     });

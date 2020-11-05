@@ -1,13 +1,13 @@
 import React from 'react';
 import {StyleSheet, SafeAreaView} from 'react-native';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import Diary from '../diary/diary';
 import Calendar from '../calendar/calendar';
 import DiarySvg from '../../assets/svg/diary.svg';
 import PlusSvg from '../../assets/svg/plus.svg';
 import CalendarSvg from '../../assets/svg/calendar.svg';
 
-const Tab = createBottomTabNavigator();
+const Tab = createMaterialTopTabNavigator();
 
 const Tabs = ({navigation}) => (
   <>
@@ -17,6 +17,7 @@ const Tabs = ({navigation}) => (
     <Tab.Navigator
       initialRouteName="Diary"
       swipeEnabled={true}
+      tabBarPosition="bottom"
       tabBarOptions={{
         activeTintColor: '#26387C',
         inactiveTintColor: '#E5E5E5',
@@ -48,7 +49,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     position: 'absolute',
-    bottom: 15,
+    bottom: 50,
     zIndex: 1,
     alignSelf: 'center',
   },

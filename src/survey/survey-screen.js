@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {
   TouchableOpacity,
   StyleSheet,
@@ -10,6 +10,9 @@ import {colors} from '../common/colors';
 import CircledIcon from '../common/circled-icon';
 import {surveyData} from './survey-data';
 import SurveyExplanation from './survey-explanation';
+import {AppContext} from '../../App';
+import {createTodayDiaryDataIfNotExists} from '../utils/diary-util';
+import {categories} from '../common/constants';
 
 const SurveyScreen = ({
   question,
@@ -17,15 +20,33 @@ const SurveyScreen = ({
   explanation,
   currentSurveyItem,
   navigation,
+  questionId,
 }) => {
   const totalQuestions = surveyData.length;
+  const {diaryData, setDiaryData} = useContext(AppContext);
 
-  const nextQuestion = () => {
+  const nextQuestion = (answer) => {
     if (currentSurveyItem !== totalQuestions - 1) {
       navigation.navigate(`question-${currentSurveyItem + 1}`);
     } else {
       navigation.navigate('tabs');
     }
+    /*if (answer.id === 'TODAY') {
+      createTodayDiaryDataIfNotExists(diaryData);
+    } else if (answer.id === 'YESTERDAY') {
+      console.log('yesterday');
+    } else {
+      console.log('diaryData', diaryData);
+      const newPatientState = {
+        ...diaryData[0].patientState,
+        [categories[questionId]]: answer.id,
+      };
+      const newDiaryData = {
+        date: diaryData[0].date,
+        patientState: newPatientState,
+      };
+      setDiaryData(newDiaryData);
+    }*/
   };
 
   const previousQuestion = () => {
@@ -41,7 +62,7 @@ const SurveyScreen = ({
       <ScrollView style={styles.container}>
         <Text style={styles.question}>{question}</Text>
         {answers.map((answer, index) => (
-          <TouchableOpacity key={index} onPress={nextQuestion}>
+          <TouchableOpacity key={index} onPress={() => nextQuestion(answer)}>
             <View style={styles.answer}>
               <CircledIcon color={answer.color} icon={answer.icon} />
               <Text style={styles.label}>{answer.label}</Text>
