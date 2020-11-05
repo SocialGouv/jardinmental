@@ -4,7 +4,7 @@ import {
   frequence,
   intensity,
   surveyDate,
-} from '../constants';
+} from '../common/constants';
 
 export const surveyData = [
   {

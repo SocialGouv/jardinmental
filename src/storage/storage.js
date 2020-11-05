@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {STORAGE_KEY_SURVEY_RESULTS} from '../constants';
+import {STORAGE_KEY_SURVEY_RESULTS} from '../common/constants';
 
 export const initStorage = async () => {
   try {

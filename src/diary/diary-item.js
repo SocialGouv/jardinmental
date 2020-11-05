@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import PatientStateItem from './patient-state-item';
-import {categories} from '../constants';
+import {categories} from '../common/constants';
 import NoDataYesterdayDiaryItem from './no-data-yesterday-diary-item';
 import NoDataTodayDiaryItem from './no-data-today-diary-item';
 
