@@ -68,9 +68,15 @@ const Chart = ({title, data = [1, 2, 3, null, 2, 4, 4], lines = 6}) => {
           viewBox={`0 0 ${chartWidth} ${chartHeight}`}>
           <G id="Group" stroke={colors.DARK_BLUE} strokeWidth={2}>
             {data.map((value, index) => {
-              if (index === 0) return null;
-              if (data[index] === null) return null;
-              if (data[index - 1] === null) return null;
+              if (index === 0) {
+                return null;
+              }
+              if (data[index] === null) {
+                return null;
+              }
+              if (data[index - 1] === null) {
+                return null;
+              }
               return (
                 <Line
                   key={`${value}${index}`}
@@ -82,7 +88,9 @@ const Chart = ({title, data = [1, 2, 3, null, 2, 4, 4], lines = 6}) => {
               );
             })}
             {data.map((value, index) => {
-              if (value === null) return null;
+              if (value === null) {
+                return null;
+              }
               return (
                 <Circle
                   key={`${value}${index}`}

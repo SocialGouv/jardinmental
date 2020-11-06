@@ -1,13 +1,26 @@
 import React, {useState} from 'react';
 import {SafeAreaView, ScrollView, StyleSheet} from 'react-native';
-import {categories} from '../common/constants';
-import {getTodaySWeek, beforeToday} from '../services/date/helpers';
+import {displayedCategories} from '../common/constants';
+import {beforeToday, getTodaySWeek} from '../services/date/helpers';
 import Header from '../common/header';
 import Chart from './chart';
 import WeekPicker from './week-picker';
+import {fakeDiaryData} from '../diary/fake-diary-data';
 
 const Calendar = () => {
   const [day, setDay] = useState(new Date());
+  const computeChartData = (category) => {
+    return fakeDiaryData.map((diaryItem) => {
+      if (!diaryItem.patientState) {
+        return null;
+      }
+      const categoryState = diaryItem.patientState[category];
+      if (!categoryState) {
+        return null;
+      }
+      return categoryState.level;
+    });
+  };
 
   return (
     <SafeAreaView style={styles.safe}>
@@ -20,8 +33,12 @@ const Calendar = () => {
           onAfterPress={() => setDay(beforeToday(-7, day))}
           onBeforePress={() => setDay(beforeToday(7, day))}
         />
-        {Object.keys(categories).map((key) => (
-          <Chart title={categories[key]} key={key} />
+        {Object.keys(displayedCategories).map((key) => (
+          <Chart
+            title={displayedCategories[key]}
+            key={key}
+            data={computeChartData(key)}
+          />
         ))}
       </ScrollView>
     </SafeAreaView>

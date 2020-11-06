@@ -1,11 +1,11 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import ArrowLeftSvg from '../../assets/svg/arrow-left.svg';
 import ArrowRightSvg from '../../assets/svg/arrow-right.svg';
-import { colors } from '../common/colors';
-import { months, shortMonths } from '../services/date/helpers';
+import {colors} from '../common/colors';
+import {months, shortMonths} from '../services/date/helpers';
 
-const WeekPicker = ({ onBeforePress, onAfterPress, firstDay, lastDay }) => {
+const WeekPicker = ({onBeforePress, onAfterPress, firstDay, lastDay}) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={onBeforePress} style={styles.button}>

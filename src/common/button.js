@@ -1,10 +1,11 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableHighlight} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 
 const styles = StyleSheet.create({
   button: {
     borderRadius: 20,
     backgroundColor: '#1FC6D5',
+    width: '50%',
   },
   text: {
     color: 'white',
@@ -14,11 +15,13 @@ const styles = StyleSheet.create({
   },
 });
 
-const Button = ({title}) => {
+const Button = ({title, buttonColor, textColor, onPress}) => {
   return (
-    <TouchableHighlight style={styles.button} onPress={() => {}}>
-      <Text style={styles.text}>{title}</Text>
-    </TouchableHighlight>
+    <TouchableOpacity
+      style={{...styles.button, backgroundColor: buttonColor || '#1FC6D5'}}
+      onPress={onPress || (() => {})}>
+      <Text style={{...styles.text, color: textColor || 'white'}}>{title}</Text>
+    </TouchableOpacity>
   );
 };
 

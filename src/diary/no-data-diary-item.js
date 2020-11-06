@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, View, Text} from 'react-native';
-import {colors} from '../colors';
+import {colors} from '../common/colors';
 
 const NoDataDiaryItem = () => {
   return (
