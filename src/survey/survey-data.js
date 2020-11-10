@@ -16,7 +16,7 @@ export const surveyData = [
   },
   {
     id: categories.mood,
-    question: 'Quelle a été votre humeur aujourd’hui ?',
+    question: 'Comment a été votre humeur aujourd’hui ?',
     answers: [
       categoryStates.VERY_GOOD,
       categoryStates.GOOD,
