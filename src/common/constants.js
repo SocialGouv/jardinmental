@@ -14,9 +14,16 @@ const colors = {
   middle: '#FCE285',
   bad: '#FCD0A7',
   veryBad: '#FFC0C0',
+  veryGoodTrans: '#edfaca',
+  goodTrans: '#f1f491',
+  middleTrans: '#fbe79c',
+  badTrans: '#fbd8b8',
+  veryBadTrans: '#fdcccc',
 };
 
-export const colorsMap = Object.keys(colors).map((key) => colors[key]);
+export const colorsMap = Object.keys(colors)
+  .map((key) => colors[key])
+  .reverse();
 
 export const categoryStates = {
   VERY_GOOD: {
@@ -56,23 +63,23 @@ export const categoryStates = {
   },
 };
 
-export const displayedCategories = {
-  mood: 'Humeur',
-  anxiety: 'Anxiété',
-  badThoughts: 'Idées parasites',
-  sleep: 'Sommeil',
-  sensations: 'Sensations étranges',
+export const categories = {
+  MOOD: 'MOOD',
+  ANXIETY_FREQUENCE: 'ANXIETY_FREQUENCE',
+  ANXIETY_INTENSITY: 'ANXIETY_INTENSITY',
+  BADTHOUGHTS_FREQUENCE: 'BADTHOUGHTS_FREQUENCE',
+  BADTHOUGHTS_INTENSITY: 'BADTHOUGHTS_INTENSITY',
+  SENSATIONS_FREQUENCE: 'SENSATIONS_FREQUENCE',
+  SENSATIONS_INTENSITY: 'SENSATIONS_INTENSITY',
+  SLEEP: 'SLEEP',
 };
 
-export const categories = {
-  mood: 'mood',
-  'anxiety-frequence': 'anxiety-frequence',
-  'anxiety-intensity': 'anxiety-intensity',
-  'badThoughts-frequence': 'badThoughts-frequence',
-  'badThoughts-intensity': 'badThoughts-intensity',
-  'sensations-frequence': 'sensations-frequence',
-  'sensations-intensity': 'sensations-intensity',
-  sleep: 'sleep',
+export const displayedCategories = {
+  MOOD: 'Humeur',
+  ANXIETY_FREQUENCE: 'Anxiété',
+  BADTHOUGHTS_FREQUENCE: 'Idées parasites',
+  SLEEP: 'Sommeil',
+  SENSATIONS_FREQUENCE: 'Sensations étranges',
 };
 
 export const surveyDate = {
@@ -139,3 +146,4 @@ export const intensity = {
 };
 
 export const STORAGE_KEY_SURVEY_RESULTS = '@SURVEY_RESULTS';
+export const STORAGE_KEY_START_DATE = '@SURVEY_DATE';

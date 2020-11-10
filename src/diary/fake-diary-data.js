@@ -1,52 +1,42 @@
-import {categoryStates} from '../common/constants';
-import {today} from '../services/date/helpers';
-import {subDays} from 'date-fns';
+import {categoryStates, frequence} from '../common/constants';
+import {addDays} from 'date-fns';
+import {formatDay, oneDay} from '../services/date/helpers';
 
-export const fakeDiaryData = [
-  {
-    date: today,
-    patientState: null,
+export const startDate = new Date(Date.now() - 10 * oneDay);
+
+export const fakeDiaryData = {
+  [formatDay(startDate)]: null,
+  [formatDay(addDays(startDate, 1))]: null,
+  [formatDay(addDays(startDate, 2))]: null,
+  [formatDay(addDays(startDate, 3))]: {
+    MOOD: categoryStates.BAD,
+    ANXIETY_FREQUENCE: frequence.SEVERAL_TIMES,
+    ANXIETY_INTENSITY: categoryStates.MIDDLE,
+    BADTHOUGHTS_FREQUENCE: frequence.MANY_TIMES,
+    BADTHOUGHTS_INTENSITY: categoryStates.VERY_GOOD,
+    SENSATIONS_FREQUENCE: frequence.NEVER,
+    SENSATIONS_INTENSITY: categoryStates.VERY_BAD,
+    SLEEP: categoryStates.VERY_GOOD,
   },
-  {
-    date: subDays(today, 1),
-    patientState: null,
+  [formatDay(addDays(startDate, 4))]: {
+    MOOD: categoryStates.GOOD,
+    ANXIETY_FREQUENCE: frequence.NEVER,
+    ANXIETY_INTENSITY: categoryStates.GOOD,
+    BADTHOUGHTS_FREQUENCE: frequence.SEVERAL_TIMES,
+    BADTHOUGHTS_INTENSITY: categoryStates.MIDDLE,
+    SENSATIONS_FREQUENCE: frequence.MANY_TIMES,
+    SENSATIONS_INTENSITY: categoryStates.BAD,
+    SLEEP: categoryStates.VERY_BAD,
   },
-  {
-    date: subDays(today, 2),
-    patientState: null,
+  [formatDay(addDays(startDate, 5))]: null,
+  [formatDay(addDays(startDate, 6))]: {
+    MOOD: categoryStates.VERY_GOOD,
+    ANXIETY_FREQUENCE: frequence.MANY_TIMES,
+    ANXIETY_INTENSITY: categoryStates.VERY_BAD,
+    BADTHOUGHTS_FREQUENCE: frequence.MANY_TIMES,
+    BADTHOUGHTS_INTENSITY: categoryStates.VERY_GOOD,
+    SENSATIONS_FREQUENCE: frequence.MANY_TIMES,
+    SENSATIONS_INTENSITY: categoryStates.GOOD,
+    SLEEP: categoryStates.MIDDLE,
   },
-  {
-    date: subDays(today, 3),
-    patientState: {
-      mood: categoryStates.VERY_GOOD,
-      badThought: categoryStates.GOOD,
-      anxiety: categoryStates.BAD,
-      sleep: categoryStates.MIDDLE,
-      sensations: categoryStates.VERY_BAD,
-    },
-  },
-  {
-    date: subDays(today, 4),
-    patientState: {
-      mood: categoryStates.VERY_GOOD,
-      badThought: categoryStates.GOOD,
-      anxiety: categoryStates.BAD,
-      sleep: categoryStates.MIDDLE,
-      sensations: categoryStates.VERY_BAD,
-    },
-  },
-  {
-    date: subDays(today, 5),
-    patientState: null,
-  },
-  {
-    date: subDays(today, 6),
-    patientState: {
-      mood: categoryStates.GOOD,
-      badThought: categoryStates.VERY_GOOD,
-      anxiety: categoryStates.BAD,
-      sleep: categoryStates.VERY_BAD,
-      sensations: categoryStates.BAD,
-    },
-  },
-];
+};

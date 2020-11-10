@@ -40,73 +40,94 @@ const dotsX = [
 
 /* End chart spacing */
 
-const Chart = ({title, data = [1, 2, 3, null, 2, 4, 4], lines = 6}) => {
-  return (
-    <View>
-      <Text style={styles.title}>{title}</Text>
-      <View style={styles.chartContainer}>
-        {Array(lines)
-          .fill()
-          .map((_, i) => (
-            <Text
-              key={i}
-              style={styles.line}
-              ellipsizeMode="clip"
-              numberOfLines={1}>
-              {''.padEnd(300, '-')}
-            </Text>
-          ))}
-        <View style={styles.days}>
-          {days.map((day) => (
-            <Text key={day} style={styles.day}>
-              {day}
-            </Text>
-          ))}
-        </View>
-        <Svg
-          style={styles.svgContainer}
-          viewBox={`0 0 ${chartWidth} ${chartHeight}`}>
-          <G id="Group" stroke={colors.DARK_BLUE} strokeWidth={2}>
-            {data.map((value, index) => {
-              if (index === 0) {
-                return null;
-              }
-              if (data[index] === null) {
-                return null;
-              }
-              if (data[index - 1] === null) {
-                return null;
-              }
-              return (
-                <Line
-                  key={`${value}${index}`}
-                  x1={dotsX[index - 1]}
-                  y1={dotsY[data[index - 1]]}
-                  x2={dotsX[index]}
-                  y2={dotsY[data[index]]}
-                />
-              );
-            })}
-            {data.map((value, index) => {
-              if (value === null) {
-                return null;
-              }
-              return (
-                <Circle
-                  key={`${value}${index}`}
-                  fill={colorsMap[value]}
-                  cx={dotsX[index]}
-                  cy={dotsY[value]}
-                  r={dotSize}
-                />
-              );
-            })}
-          </G>
-        </Svg>
+const Chart = ({
+  onPress,
+  title,
+  data = [1, 2, 3, null, 2, 4, 4],
+  lines = 6,
+  withFocus = false,
+  focused = null,
+}) => (
+  <View>
+    <Text style={styles.title}>{title}</Text>
+    <View style={styles.chartContainer}>
+      {Array(lines)
+        .fill()
+        .map((_, i) => (
+          <Text
+            key={i}
+            style={styles.line}
+            ellipsizeMode="clip"
+            numberOfLines={1}>
+            {''.padEnd(300, '-')}
+          </Text>
+        ))}
+      <View style={styles.days}>
+        {days.map((day) => (
+          <Text key={day} style={styles.day}>
+            {day}
+          </Text>
+        ))}
       </View>
+      <Svg
+        style={styles.svgContainer}
+        viewBox={`0 0 ${chartWidth} ${chartHeight}`}>
+        <G
+          id="Group"
+          strokeWidth={2}
+          stroke={withFocus ? colors.DARK_BLUE_TRANS : colors.DARK_BLUE}>
+          {data.map((value, index) => {
+            if (index === 0) {
+              return null;
+            }
+            if (data[index] === null) {
+              return null;
+            }
+            if (data[index - 1] === null) {
+              return null;
+            }
+            return (
+              <Line
+                key={`${value}${index}`}
+                x1={dotsX[index - 1]}
+                y1={dotsY[data[index - 1]]}
+                x2={dotsX[index]}
+                y2={dotsY[data[index]]}
+              />
+            );
+          })}
+          {data.map((value, index) => {
+            if (value === null) {
+              return null;
+            }
+            return (
+              <Circle
+                key={`${value}${index}`}
+                fill={
+                  colorsMap[
+                    value +
+                      (withFocus && focused !== index
+                        ? colorsMap.length / 2
+                        : 0)
+                  ]
+                }
+                stroke={
+                  withFocus && focused !== index
+                    ? colors.DARK_BLUE_TRANS
+                    : colors.DARK_BLUE
+                }
+                cx={dotsX[index]}
+                cy={dotsY[value]}
+                r={dotSize}
+                onPress={() => (onPress ? onPress(index) : null)}
+              />
+            );
+          })}
+        </G>
+      </Svg>
     </View>
-  );
-};
+  </View>
+);
 
 const styles = StyleSheet.create({
   title: {

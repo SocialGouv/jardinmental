@@ -1,34 +1,36 @@
 import React, {useState} from 'react';
-import {SafeAreaView, ScrollView, StyleSheet} from 'react-native';
+import {SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
 import {displayedCategories} from '../common/constants';
 import {
-  beforeToday,
+  formatDay,
   getArrayOfDates,
   getTodaySWeek,
 } from '../services/date/helpers';
-import Header from '../common/header';
 import Chart from './chart';
-import WeekPicker from './week-picker';
 import {DiaryDataContext} from '../context';
 import {useContext} from 'react';
+import DayTitle from './day-title';
+import DiaryItem from '../diary/diary-item';
 
-const Calendar = ({navigation}) => {
-  const [day, setDay] = useState(new Date());
+const DailyChart = ({
+  route: {
+    params: {day, categoryId, dayIndex},
+  },
+  navigation,
+}) => {
+  const [focused, setFocused] = useState(dayIndex);
+  const [diaryDay, setDiaryDay] = useState(day);
   const [diaryData] = useContext(DiaryDataContext);
 
-  const {firstDay, lastDay} = getTodaySWeek(day);
-
+  const {firstDay} = getTodaySWeek(new Date(day));
   const chartDates = getArrayOfDates({startDate: firstDay, numberOfDays: 6});
 
-  const displayOnlyRequest = (categoryId, dayIndex) => {
-    navigation.navigate('chart-day', {
-      day: chartDates[dayIndex],
-      categoryId,
-      dayIndex,
-    });
+  const setFocusedRequest = (index) => {
+    setFocused(index);
+    setDiaryDay(chartDates[index]);
   };
 
-  const computeChartData = (categoryId) => {
+  const computeChartData = () => {
     return chartDates.map((date) => {
       const dayData = diaryData[date];
       if (!dayData) {
@@ -47,21 +49,16 @@ const Calendar = ({navigation}) => {
       <ScrollView
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContainer}>
-        <Header>Calendrier</Header>
-        <WeekPicker
-          firstDay={firstDay}
-          lastDay={lastDay}
-          onAfterPress={() => setDay(beforeToday(-7, day))}
-          onBeforePress={() => setDay(beforeToday(7, day))}
+        <DayTitle day={new Date(diaryDay)} onBackPress={navigation.goBack} />
+        <Chart
+          title={displayedCategories[categoryId]}
+          data={computeChartData()}
+          withFocus
+          focused={focused}
+          onPress={setFocusedRequest}
         />
-        {Object.keys(displayedCategories).map((categoryId) => (
-          <Chart
-            title={displayedCategories[categoryId]}
-            key={categoryId}
-            data={computeChartData(categoryId)}
-            onPress={(dayIndex) => displayOnlyRequest(categoryId, dayIndex)}
-          />
-        ))}
+        <View style={styles.spacer} />
+        <DiaryItem date={diaryDay} patientState={diaryData[diaryDay]} />
       </ScrollView>
     </SafeAreaView>
   );
@@ -76,6 +73,9 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: 'white',
   },
+  spacer: {
+    height: 30,
+  },
   scrollContainer: {
     paddingBottom: 150,
   },
@@ -85,4 +85,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Calendar;
+export default DailyChart;

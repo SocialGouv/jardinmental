@@ -2,6 +2,7 @@ import React from 'react';
 import {StyleSheet, View, Text} from 'react-native';
 import Button from '../common/button';
 import {colors} from '../common/colors';
+import {formatDay} from '../services/date/helpers';
 
 const NoDataTodayDiaryItem = ({startAtFirstQuestion}) => {
   return (
@@ -15,7 +16,7 @@ const NoDataTodayDiaryItem = ({startAtFirstQuestion}) => {
           title="Commencer"
           buttonColor="white"
           textColor={colors.BLUE}
-          onPress={startAtFirstQuestion}
+          onPress={() => startAtFirstQuestion(formatDay(new Date()))}
         />
       </View>
     </View>

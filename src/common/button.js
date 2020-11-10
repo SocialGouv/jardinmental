@@ -15,11 +15,11 @@ const styles = StyleSheet.create({
   },
 });
 
-const Button = ({title, buttonColor, textColor, onPress}) => {
+const Button = ({title, buttonColor, textColor, onPress = () => null}) => {
   return (
     <TouchableOpacity
       style={{...styles.button, backgroundColor: buttonColor || '#1FC6D5'}}
-      onPress={onPress || (() => {})}>
+      onPress={onPress}>
       <Text style={{...styles.text, color: textColor || 'white'}}>{title}</Text>
     </TouchableOpacity>
   );

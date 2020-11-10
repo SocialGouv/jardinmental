@@ -23,26 +23,13 @@ const DiaryItem = ({patientState, startAtFirstQuestion, date}) => {
   }
   return (
     <View style={styles.container}>
-      <PatientStateItem
-        patientStateItem={patientState.mood}
-        category={displayedCategories.mood}
-      />
-      <PatientStateItem
-        patientStateItem={patientState.anxiety}
-        category={displayedCategories.anxiety}
-      />
-      <PatientStateItem
-        patientStateItem={patientState.badThought}
-        category={displayedCategories.badThoughts}
-      />
-      <PatientStateItem
-        patientStateItem={patientState.sleep}
-        category={displayedCategories.sleep}
-      />
-      <PatientStateItem
-        patientStateItem={patientState.sensations}
-        category={displayedCategories.sensations}
-      />
+      {Object.keys(displayedCategories).map((key) => (
+        <PatientStateItem
+          key={key}
+          patientStateItem={patientState[key]}
+          category={displayedCategories[key]}
+        />
+      ))}
     </View>
   );
 };
