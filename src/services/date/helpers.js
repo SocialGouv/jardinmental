@@ -1,4 +1,3 @@
-export const today = new Date();
 export const oneDay = 1000 * 60 * 60 * 24;
 export const beforeToday = (offset = 0, date = new Date()) =>
   new Date(Date.parse(date) - offset * oneDay);
@@ -35,32 +34,32 @@ export const shortMonths = [
 ];
 
 export const getTodaySWeek = (date = new Date()) => {
-  const weekDay = date.getDay() === 0 ? 7 : date.getDay() - 1;
+  const weekDay = date.getDay() === 0 ? 6 : date.getDay() - 1;
   const firstDay = beforeToday(weekDay, date);
-  const lastDay = beforeToday(-(7 - weekDay), date);
+  const lastDay = beforeToday(-(6 - weekDay), date);
   return {firstDay: new Date(firstDay), lastDay: new Date(lastDay)};
 };
 
-export const dateWithTimeAndOffsetFromToday = (hours, minutes, offset) => {
-  const date = new Date();
-  return new Date(
-    date.getFullYear(),
-    date.getMonth(),
-    date.getDate() + offset,
-    hours,
-    minutes,
-  );
-};
-
-export const timeIsAfterNow = (inputDate) => {
-  const date = makeSureDate(inputDate);
-  const hours = date.getHours();
-  const minutes = date.getMinutes();
-  if (hours > new Date().getHours()) {
-    return true;
+export const getArrayOfDates = ({
+  startDate,
+  numberOfDays = null,
+  reverse = false,
+}) => {
+  const parsedStartDate = Date.parse(new Date(startDate));
+  const dates = [parsedStartDate];
+  const lastDay = numberOfDays
+    ? parsedStartDate + numberOfDays * oneDay
+    : Date.parse(new Date(formatDay(new Date())));
+  let dateAdded = parsedStartDate;
+  while (dateAdded < lastDay) {
+    dateAdded = dateAdded + oneDay;
+    dates.push(dateAdded);
   }
-  if (hours < new Date().getHours()) {
-    return false;
+  const sortedDates = [...dates]
+    .map((parsed) => formatDay(new Date(parsed)))
+    .sort();
+  if (reverse) {
+    return sortedDates.reverse();
   }
-  return minutes > new Date().getMinutes();
+  return sortedDates;
 };

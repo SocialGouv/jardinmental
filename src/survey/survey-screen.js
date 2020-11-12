@@ -5,14 +5,15 @@ import {
   Text,
   ScrollView,
   View,
+  SafeAreaView,
 } from 'react-native';
 import {colors} from '../common/colors';
 import CircledIcon from '../common/circled-icon';
 import {surveyData} from './survey-data';
 import SurveyExplanation from './survey-explanation';
-import {AppContext} from '../../App';
-import {createTodayDiaryDataIfNotExists} from '../utils/diary-util';
-import {categories} from '../common/constants';
+import {categories, surveyDate} from '../common/constants';
+import {DiaryDataContext} from '../context';
+import {beforeToday, formatDay} from '../services/date/helpers';
 
 const SurveyScreen = ({
   question,
@@ -20,33 +21,36 @@ const SurveyScreen = ({
   explanation,
   currentSurveyItem,
   navigation,
+  route,
   questionId,
 }) => {
   const totalQuestions = surveyData.length;
-  const {diaryData, setDiaryData} = useContext(AppContext);
+  const setDiaryData = useContext(DiaryDataContext)[1];
 
   const nextQuestion = (answer) => {
-    if (currentSurveyItem !== totalQuestions - 1) {
-      navigation.navigate(`question-${currentSurveyItem + 1}`);
+    let currentSurvey = {};
+    if (currentSurveyItem !== 0) {
+      currentSurvey = {...route.params.currentSurvey};
+    }
+    if (answer.id === surveyDate.TODAY.id) {
+      currentSurvey = {
+        date: formatDay(new Date()),
+        answers: {},
+      };
+    } else if (answer.id === surveyDate.YESTERDAY.id) {
+      currentSurvey = {
+        date: formatDay(beforeToday(1)),
+        answers: {},
+      };
     } else {
+      currentSurvey.answers[categories[questionId]] = answer;
+    }
+    if (currentSurveyItem !== totalQuestions - 1) {
+      navigation.navigate(`question-${currentSurveyItem + 1}`, {currentSurvey});
+    } else {
+      setDiaryData(currentSurvey);
       navigation.navigate('tabs');
     }
-    /*if (answer.id === 'TODAY') {
-      createTodayDiaryDataIfNotExists(diaryData);
-    } else if (answer.id === 'YESTERDAY') {
-      console.log('yesterday');
-    } else {
-      console.log('diaryData', diaryData);
-      const newPatientState = {
-        ...diaryData[0].patientState,
-        [categories[questionId]]: answer.id,
-      };
-      const newDiaryData = {
-        date: diaryData[0].date,
-        patientState: newPatientState,
-      };
-      setDiaryData(newDiaryData);
-    }*/
   };
 
   const previousQuestion = () => {
@@ -58,7 +62,7 @@ const SurveyScreen = ({
   };
 
   return (
-    <>
+    <SafeAreaView style={styles.safe}>
       <ScrollView style={styles.container}>
         <Text style={styles.question}>{question}</Text>
         {answers.map((answer, index) => (
@@ -76,11 +80,15 @@ const SurveyScreen = ({
         </TouchableOpacity>
       </ScrollView>
       <SurveyExplanation explanation={explanation} category={'Explications'} />
-    </>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  safe: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
   question: {
     color: colors.BLUE,
     fontSize: 22,

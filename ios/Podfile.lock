@@ -302,7 +302,7 @@ PODS:
     - React
   - RNCMaskedView (0.1.10):
     - React
-  - RNCPushNotificationIOS (1.7.1):
+  - RNCPushNotificationIOS (1.7.3):
     - React-Core
   - RNDateTimePicker (3.0.4):
     - React-Core
@@ -310,7 +310,7 @@ PODS:
     - React
   - RNReanimated (1.13.1):
     - React
-  - RNScreens (2.12.0):
+  - RNScreens (2.14.0):
     - React-Core
   - RNSVG (12.1.0):
     - React
@@ -503,11 +503,11 @@ SPEC CHECKSUMS:
   ReactCommon: 4167844018c9ed375cc01a843e9ee564399e53c3
   RNCAsyncStorage: 05bae7ecfab1cbd5441993f1ca098f7c3b3f8d0e
   RNCMaskedView: 5a8ec07677aa885546a0d98da336457e2bea557f
-  RNCPushNotificationIOS: 988c26325d0b7e7b54f818db35b8313d3a125f0c
+  RNCPushNotificationIOS: edeeea93b7210d2f918fc0e46e1a2a189b5fdacc
   RNDateTimePicker: 3d1931e387248cb8f1d1d33740d4a1a82dfe622a
   RNGestureHandler: 7a5833d0f788dbd107fbb913e09aa0c1ff333c39
   RNReanimated: dd8c286ab5dd4ba36d3a7fef8bff7e08711b5476
-  RNScreens: 4b488fdf9537bbce829e2910c8cce1d17f6d9be8
+  RNScreens: 2e278a90eb15092ed261d4f2271e3fc9b60d08d4
   RNSVG: ce9d996113475209013317e48b05c21ee988d42e
   Yoga: 7d13633d129fd179e01b8953d38d47be90db185a
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a

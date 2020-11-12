@@ -9,15 +9,23 @@ import {
 } from 'react-native';
 import DiaryItem from './diary-item';
 import Header from '../common/header';
-import {useDiaryData} from '../hooks/useDiaryData';
 import {colors} from '../common/colors';
 import {format, parseISO, isToday, isYesterday} from 'date-fns';
 import {fr} from 'date-fns/locale';
 import {firstLetterUppercase} from '../utils/string-util';
+import {useContext} from 'react';
+import {DiaryDataContext} from '../context';
 
 const Diary = ({navigation}) => {
-  const diaryData = useDiaryData();
-  const startAtFirstQuestion = () => navigation.navigate('question-1');
+  const [diaryData] = useContext(DiaryDataContext);
+
+  const startAtFirstQuestion = (date) =>
+    navigation.navigate('question-1', {
+      currentSurvey: {
+        date,
+        answers: {},
+      },
+    });
   const formatDate = (date) => {
     const isoDate = parseISO(date);
     if (isToday(isoDate)) {
@@ -39,12 +47,12 @@ const Diary = ({navigation}) => {
             <Text style={styles.settings}>Rappel</Text>
           </TouchableOpacity>
         </View>
-        {diaryData.map(({date, patientState}) => (
+        {Object.keys(diaryData).map((date) => (
           <View key={date}>
             <Text style={styles.title}>{formatDate(date)}</Text>
             <DiaryItem
               date={date}
-              patientState={patientState}
+              patientState={diaryData[date]}
               startAtFirstQuestion={startAtFirstQuestion}
             />
           </View>

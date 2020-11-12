@@ -2,6 +2,7 @@ import React from 'react';
 import {StyleSheet, View, Text, Image} from 'react-native';
 import Button from '../common/button';
 import {colors} from '../common/colors';
+import {beforeToday, formatDay} from '../services/date/helpers';
 
 const NoDataYesterdayDiaryItem = ({startAtFirstQuestion}) => {
   return (
@@ -12,7 +13,10 @@ const NoDataYesterdayDiaryItem = ({startAtFirstQuestion}) => {
           Clique ici pour compléter tes informations
         </Text>
         <View style={styles.buttonWrapper}>
-          <Button title="Ajouter" onPress={startAtFirstQuestion} />
+          <Button
+            title="Ajouter"
+            onPress={() => startAtFirstQuestion(formatDay(beforeToday(1)))}
+          />
         </View>
       </View>
       <Image
