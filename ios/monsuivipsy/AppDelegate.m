@@ -26,6 +26,9 @@ static void InitializeFlipper(UIApplication *application) {
 }
 #endif
 
+#import <UserNotifications/UserNotifications.h>
+#import <RNCPushNotificationIOS.h>
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -46,10 +49,10 @@ static void InitializeFlipper(UIApplication *application) {
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
-  
+
   UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
   center.delegate = self;
-  
+
   return YES;
 }
 
