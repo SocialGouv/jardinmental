@@ -14,9 +14,11 @@ import SurveyExplanation from './survey-explanation';
 import {categories, surveyDate} from '../common/constants';
 import {DiaryDataContext} from '../context';
 import {beforeToday, formatDay} from '../services/date/helpers';
+import {isYesterday, parseISO} from 'date-fns';
 
 const SurveyScreen = ({
   question,
+  yesterdayQuestion,
   answers,
   explanation,
   currentSurveyItem,
@@ -46,7 +48,10 @@ const SurveyScreen = ({
       currentSurvey.answers[categories[questionId]] = answer;
     }
     if (currentSurveyItem !== totalQuestions - 1) {
-      navigation.navigate(`question-${currentSurveyItem + 1}`, {currentSurvey});
+      const isNextQuestionSkipped = answer.id === 'NEVER';
+      const nextQuestionId =
+        currentSurveyItem + (isNextQuestionSkipped ? 2 : 1);
+      navigation.navigate(`question-${nextQuestionId}`, {currentSurvey});
     } else {
       setDiaryData(currentSurvey);
       navigation.navigate('tabs');
@@ -61,10 +66,16 @@ const SurveyScreen = ({
     }
   };
 
+  const isSurveyDateYesterday = isYesterday(
+    parseISO(route.params?.currentSurvey?.date),
+  );
+
   return (
     <SafeAreaView style={styles.safe}>
       <ScrollView style={styles.container}>
-        <Text style={styles.question}>{question}</Text>
+        <Text style={styles.question}>
+          {isSurveyDateYesterday ? yesterdayQuestion : question}
+        </Text>
         {answers.map((answer, index) => (
           <TouchableOpacity key={index} onPress={() => nextQuestion(answer)}>
             <View style={styles.answer}>

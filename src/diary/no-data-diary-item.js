@@ -16,7 +16,7 @@ const NoDataDiaryItem = () => {
 
 const styles = StyleSheet.create({
   noDataContainer: {
-    backgroundColor: '#F4FCFD',
+    backgroundColor: 'rgba(38, 56, 124, 0.03)',
     borderRadius: 10,
     borderWidth: 1,
     borderColor: 'rgba(38, 56, 124, 0.08)',

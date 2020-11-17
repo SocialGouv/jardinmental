@@ -16,6 +16,7 @@ export const surveyData = [
   {
     id: categories.MOOD,
     question: 'Comment a été votre humeur aujourd’hui ?',
+    yesterdayQuestion: 'Comment a été votre humeur hier ?',
     answers: [
       categoryStates.VERY_GOOD,
       categoryStates.GOOD,
@@ -31,6 +32,7 @@ export const surveyData = [
   {
     id: categories.ANXIETY_FREQUENCE,
     question: 'Combien de temps vous êtes-vous senti anxieux aujourd’hui ?',
+    yesterdayQuestion: 'Combien de temps vous êtes-vous senti anxieux hier ?',
     answers: [frequence.NEVER, frequence.SEVERAL_TIMES, frequence.MANY_TIMES],
     explanation:
       'L’anxiété est un état d’appréhension, d’inquiétude, de peur ou de tension, désagréable, qui peut être ou non associé à un facteur de stress.',
@@ -38,6 +40,7 @@ export const surveyData = [
   {
     id: categories.ANXIETY_INTENSITY,
     question: 'A quel point cela a-t-il été pénible ?',
+    yesterdayQuestion: 'A quel point cela a-t-il été pénible ?',
     answers: [intensity.LIGHT, intensity.MIDDLE, intensity.HIGH],
     explanation:
       'L’anxiété est un état d’appréhension, d’inquiétude, de peur ou de tension, désagréable, qui peut être ou non associé à un facteur de stress.',
@@ -45,6 +48,7 @@ export const surveyData = [
   {
     id: categories.BADTHOUGHTS_FREQUENCE,
     question: 'Avez-vous eu des pensées parasites aujourd’hui ?',
+    yesterdayQuestion: 'Avez-vous eu des pensées parasites hier ?',
     answers: [frequence.NEVER, frequence.SEVERAL_TIMES, frequence.MANY_TIMES],
 
     explanation:
@@ -54,6 +58,8 @@ export const surveyData = [
     id: categories.BADTHOUGHTS_INTENSITY,
     question:
       'A quel point ces pensées parasites ont été désagréables/pénibles ?',
+    yesterdayQuestion:
+      'A quel point ces pensées parasites ont été désagréables/pénibles ?',
     answers: [intensity.LIGHT, intensity.MIDDLE, intensity.HIGH],
     explanation:
       'Ce sont des pensées que l’on ne contrôle pas. Elles peuvent nous envahir sans que l’on ne puisse rien y faire, ou pas beaucoup. Elles peuvent être tristes, angoissantes, effrayantes, gênantes, absurdes … On n’arrive pas à s’en débarrasser et, parfois, on n’arrive pas à penser à autre chose. On peut finir par se sentir triste, en colère, avoir peur ou devenir méfiant, parfois au point de ne plus rien pouvoir faire.',
@@ -62,6 +68,8 @@ export const surveyData = [
     id: categories.SENSATIONS_FREQUENCE,
     question:
       'A quelle fréquence les sensations étranges ou les hallucinations ont été présentes aujourd’hui ?',
+    yesterdayQuestion:
+      'A quelle fréquence les sensations étranges ou les hallucinations ont été présentes hier ?',
     answers: [frequence.NEVER, frequence.SEVERAL_TIMES, frequence.MANY_TIMES],
     explanation:
       'Elles regroupent un ensemble de phénomènes qui se rattachent à nos 5 sens : la vue, l’ouïe, l’odorat, le toucher et le goût. \n' +
@@ -80,6 +88,7 @@ export const surveyData = [
   {
     id: categories.SENSATIONS_INTENSITY,
     question: 'A quel point leur présence a-t-elle été pénible ?',
+    yesterdayQuestion: 'A quel point leur présence a-t-elle été pénible ?',
     answers: [intensity.LIGHT, intensity.MIDDLE, intensity.HIGH],
     explanation:
       'Elles regroupent un ensemble de phénomènes qui se rattachent à nos 5 sens : la vue, l’ouïe, l’odorat, le toucher et le goût. \n' +
@@ -98,6 +107,8 @@ export const surveyData = [
   {
     id: categories.SLEEP,
     question: 'Selon vous, quelle est la qualité générale de votre nuit ?',
+    yesterdayQuestion:
+      'Selon vous, quelle est la qualité générale de votre nuit d’hier ?',
     answers: [
       categoryStates.VERY_GOOD,
       categoryStates.GOOD,
