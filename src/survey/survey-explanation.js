@@ -1,5 +1,11 @@
 import React, {useCallback, useState} from 'react';
-import {StyleSheet, View, Text, ScrollView} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
 import {colors} from '../common/colors';
 import InfoSvg from '../../assets/svg/info.svg';
 import ArrowUpSvg from '../../assets/svg/arrow-up.svg';
@@ -25,9 +31,9 @@ const SurveyExplanation = ({category, explanation}) => {
     </ScrollView>
   ) : (
     <View>
-      <View style={styles.arrowUp}>
-        <ArrowUpSvg color="#26387C" onPress={toggleFullScreen} />
-      </View>
+      <TouchableOpacity style={styles.arrowUp} onPress={toggleFullScreen}>
+        <ArrowUpSvg color="#26387C" />
+      </TouchableOpacity>
       <View style={styles.container}>
         <InfoSvg />
         <View paddingLeft={10}>
