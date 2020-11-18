@@ -6,6 +6,7 @@ import NoDataYesterdayDiaryItem from './no-data-yesterday-diary-item';
 import NoDataTodayDiaryItem from './no-data-today-diary-item';
 import {isToday, isYesterday, parseISO} from 'date-fns';
 import NoDataDiaryItem from './no-data-diary-item';
+import Notes from './notes';
 
 const DiaryItem = ({patientState, startAtFirstQuestion, date}) => {
   if (!patientState) {
@@ -30,6 +31,7 @@ const DiaryItem = ({patientState, startAtFirstQuestion, date}) => {
           category={displayedCategories[key]}
         />
       ))}
+      <Notes notes={patientState.NOTES} />
     </View>
   );
 };

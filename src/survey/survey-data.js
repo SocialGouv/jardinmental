@@ -121,4 +121,10 @@ export const surveyData = [
       'En effet, un bon sommeil est la base d’une bonne hygiène de vie et contribue à maintenir\n' +
       'un état psychique satisfaisant et stable, quelles que soit les difficultés que l’on rencontre.',
   },
+  {
+    id: categories.NOTES,
+    question: 'Ajoutez un commentaire sur votre journée si vous le souhaitez',
+    yesterdayQuestion:
+      "Ajoutez un commentaire sur votre journée d'hier si vous le souhaitez",
+  },
 ];

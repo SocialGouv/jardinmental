@@ -6,6 +6,7 @@ import BadSvg from '../../assets/svg/bad.svg';
 import VeryBadSvg from '../../assets/svg/veryBad.svg';
 import TodaySvg from '../../assets/svg/today.svg';
 import YesterdaySvg from '../../assets/svg/yesterday.svg';
+import NotesSvg from '../../assets/svg/notes.svg';
 
 import {StyleSheet, View} from 'react-native';
 
@@ -32,6 +33,7 @@ const mapIconToSvg = (icon) => {
     VeryBadSvg,
     TodaySvg,
     YesterdaySvg,
+    NotesSvg,
   };
   return iconMap[icon];
 };

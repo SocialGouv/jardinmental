@@ -7,6 +7,7 @@ import SurveyScreen from '../survey/survey-screen';
 import Reminder from '../reminder/reminder';
 import DailyChart from '../calendar/daily-chart';
 import {Platform} from 'react-native';
+import Notes from '../survey/notes-screen';
 
 const Stack = createStackNavigator();
 
@@ -19,7 +20,7 @@ const Router = () => (
           name={`question-${index}`}
           key={`question-${index}`}
           options={{animationEnabled: Platform.OS === 'ios'}}>
-          {(props) => (
+          {({navigation, route}) => (
             <SurveyScreen
               question={surveyData[index].question}
               yesterdayQuestion={surveyData[index].yesterdayQuestion}
@@ -27,13 +28,21 @@ const Router = () => (
               explanation={surveyData[index].explanation}
               currentSurveyItem={index}
               questionId={surveyItem.id}
-              {...props}
+              navigation={navigation}
+              route={route}
             />
           )}
         </Stack.Screen>
       ))}
       <Stack.Screen name="reminder" component={Reminder} />
       <Stack.Screen name="chart-day" component={DailyChart} />
+      <Stack.Screen
+        name="notes"
+        options={{animationEnabled: Platform.OS === 'ios'}}>
+        {({navigation, route}) => (
+          <Notes navigation={navigation} route={route} />
+        )}
+      </Stack.Screen>
     </Stack.Navigator>
   </NavigationContainer>
 );

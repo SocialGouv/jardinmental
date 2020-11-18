@@ -17,6 +17,7 @@ export const fakeDiaryData = {
     SENSATIONS_FREQUENCE: frequence.NEVER,
     SENSATIONS_INTENSITY: categoryStates.VERY_BAD,
     SLEEP: categoryStates.VERY_GOOD,
+    NOTES: 'Test note',
   },
   [formatDay(addDays(startDate, 4))]: {
     MOOD: categoryStates.GOOD,
@@ -27,6 +28,7 @@ export const fakeDiaryData = {
     SENSATIONS_FREQUENCE: frequence.MANY_TIMES,
     SENSATIONS_INTENSITY: categoryStates.BAD,
     SLEEP: categoryStates.VERY_BAD,
+    NOTES: null,
   },
   [formatDay(addDays(startDate, 5))]: null,
   [formatDay(addDays(startDate, 6))]: {
@@ -38,5 +40,7 @@ export const fakeDiaryData = {
     SENSATIONS_FREQUENCE: frequence.MANY_TIMES,
     SENSATIONS_INTENSITY: categoryStates.GOOD,
     SLEEP: categoryStates.MIDDLE,
+    NOTES:
+      'This is a very long note. This is a very long note. This is a very long note. This is a very long note. This is a very long note. This is a very long note. This is a very long note. ',
   },
 };
