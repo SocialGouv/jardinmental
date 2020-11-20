@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
   TouchableOpacity,
   StyleSheet,
@@ -6,10 +6,11 @@ import {
   ScrollView,
   View,
   SafeAreaView,
+  TextInput,
 } from 'react-native';
 import {colors} from '../common/colors';
 import CircledIcon from '../common/circled-icon';
-import {surveyData} from './survey-data';
+import {buildSurveyData} from './survey-data';
 import SurveyExplanation from './survey-explanation';
 import {categories, surveyDate} from '../common/constants';
 import {DiaryDataContext} from '../context';
@@ -26,33 +27,46 @@ const SurveyScreen = ({
   route,
   questionId,
 }) => {
-  const totalQuestions = surveyData.length;
-  const setDiaryData = useContext(DiaryDataContext)[1];
+  const [totalQuestions, setTotalQuestions] = useState();
 
+  useEffect(() => {
+    (async () => {
+      const data = await buildSurveyData();
+      if (data) setTotalQuestions(data.length);
+    })();
+  }, []);
+
+  const setDiaryData = useContext(DiaryDataContext)[1];
+  const [note, setNote] = useState();
   const nextQuestion = (answer) => {
     let currentSurvey = {};
     if (currentSurveyItem !== 0) {
       currentSurvey = {...route.params.currentSurvey};
     }
-    if (answer.id === surveyDate.TODAY.id) {
-      currentSurvey = {
-        date: formatDay(new Date()),
-        answers: {},
-      };
-    } else if (answer.id === surveyDate.YESTERDAY.id) {
-      currentSurvey = {
-        date: formatDay(beforeToday(1)),
-        answers: {},
-      };
-    } else {
-      currentSurvey.answers[categories[questionId]] = answer;
+
+    if (answer) {
+      if (answer.id === surveyDate.TODAY.id) {
+        currentSurvey = {
+          date: formatDay(new Date()),
+          answers: {},
+        };
+      } else if (answer.id === surveyDate.YESTERDAY.id) {
+        currentSurvey = {
+          date: formatDay(beforeToday(1)),
+          answers: {},
+        };
+      } else {
+        currentSurvey.answers[categories[questionId]] = answer;
+      }
     }
-    if (currentSurveyItem !== totalQuestions - 1) {
+
+    if (!isLastQuestion()) {
       const isNextQuestionSkipped = answer.id === 'NEVER';
       const nextQuestionId =
         currentSurveyItem + (isNextQuestionSkipped ? 2 : 1);
       navigation.navigate(`question-${nextQuestionId}`, {currentSurvey});
     } else {
+      console.log(currentSurvey);
       setDiaryData(currentSurvey);
       navigation.navigate('tabs');
     }
@@ -70,26 +84,55 @@ const SurveyScreen = ({
     parseISO(route.params?.currentSurvey?.date),
   );
 
+  const isLastQuestion = () => {
+    return currentSurveyItem === totalQuestions - 1;
+  };
+
   return (
     <SafeAreaView style={styles.safe}>
       <ScrollView style={styles.container}>
         <Text style={styles.question}>
           {isSurveyDateYesterday ? yesterdayQuestion : question}
         </Text>
-        {answers.map((answer, index) => (
-          <TouchableOpacity key={index} onPress={() => nextQuestion(answer)}>
-            <View style={styles.answer}>
-              <CircledIcon color={answer.color} icon={answer.icon} />
-              <Text style={styles.label}>{answer.label}</Text>
-            </View>
-          </TouchableOpacity>
-        ))}
+        {answers.length ? (
+          <>
+            {answers.map((answer, index) => (
+              <TouchableOpacity
+                key={index}
+                onPress={() => nextQuestion(answer)}>
+                <View style={styles.answer}>
+                  <CircledIcon color={answer.color} icon={answer.icon} />
+                  <Text style={styles.label}>{answer.label}</Text>
+                </View>
+              </TouchableOpacity>
+            ))}
+          </>
+        ) : (
+          <>
+            <TextInput
+              style={[styles.answer, styles.textInput]}
+              placeholder={'Saisir une note'}
+              onChangeText={(text) => setNote(text)}
+              multiline
+              value={note}
+            />
+          </>
+        )}
         <TouchableOpacity onPress={nextQuestion}>
           <Text style={styles.backButton} onPress={previousQuestion}>
             Retour
           </Text>
         </TouchableOpacity>
       </ScrollView>
+      {isLastQuestion() && (
+        <View style={[styles.container, styles.bottom]}>
+          <TouchableOpacity
+            onPress={() => nextQuestion(note)}
+            style={styles.ValidationButton}>
+            <Text style={styles.ValidationButtonText}>Valider</Text>
+          </TouchableOpacity>
+        </View>
+      )}
       <SurveyExplanation explanation={explanation} category={'Explications'} />
     </SafeAreaView>
   );
@@ -127,6 +170,29 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     textDecorationLine: 'underline',
     color: colors.BLUE,
+    paddingTop: 15,
+    paddingBottom: 30,
+  },
+  ValidationButton: {
+    backgroundColor: colors.LIGHT_BLUE,
+    height: 45,
+    borderRadius: 45,
+    paddingHorizontal: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 15,
+  },
+  ValidationButtonText: {
+    color: '#fff',
+    fontWeight: '700',
+    fontSize: 19,
+  },
+  textInput: {
+    fontSize: 20,
+  },
+  bottom: {
+    justifyContent: 'flex-end',
+    marginBottom: 36,
   },
 });
 

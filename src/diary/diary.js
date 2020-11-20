@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   StyleSheet,
   ScrollView,
@@ -15,17 +15,37 @@ import {fr} from 'date-fns/locale';
 import {firstLetterUppercase} from '../utils/string-util';
 import {useContext} from 'react';
 import {DiaryDataContext} from '../context';
+import Settings from '../settings/settings-modal';
+import localStorage from '../utils/localStorage';
 
 const Diary = ({navigation}) => {
   const [diaryData] = useContext(DiaryDataContext);
+  const [modalSettingsVisible, setModalSettingsVisible] = useState(false);
+  const [symptoms, setSymptoms] = useState();
 
-  const startAtFirstQuestion = (date) =>
-    navigation.navigate('question-1', {
-      currentSurvey: {
-        date,
-        answers: {},
-      },
-    });
+  useEffect(() => {
+    (async () => {
+      const symptoms = await localStorage.getSymptoms();
+      if (symptoms) setSymptoms(symptoms);
+    })();
+  }, []);
+
+  const startAtFirstQuestion = (date) => {
+    if (!symptoms) {
+      console.log({symptoms});
+      navigation.navigate('symptoms', {
+        redirect: 'question-1',
+        showExplanation: true,
+      });
+    } else {
+      navigation.navigate('question-1', {
+        currentSurvey: {
+          date,
+          answers: {},
+        },
+      });
+    }
+  };
   const formatDate = (date) => {
     const isoDate = parseISO(date);
     if (isToday(isoDate)) {
@@ -43,8 +63,8 @@ const Diary = ({navigation}) => {
       <ScrollView style={styles.container}>
         <View style={styles.headerContainer}>
           <Header>Mon journal</Header>
-          <TouchableOpacity onPress={() => navigation.navigate('reminder')}>
-            <Text style={styles.settings}>Rappel</Text>
+          <TouchableOpacity onPress={() => setModalSettingsVisible(true)}>
+            <Text style={styles.settings}>Réglages</Text>
           </TouchableOpacity>
         </View>
         {Object.keys(diaryData).map((date) => (
@@ -58,6 +78,11 @@ const Diary = ({navigation}) => {
           </View>
         ))}
       </ScrollView>
+      <Settings
+        visible={modalSettingsVisible}
+        navigation={navigation}
+        onClick={() => setModalSettingsVisible(false)}
+      />
     </SafeAreaView>
   );
 };
