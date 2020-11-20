@@ -28,8 +28,17 @@ const SymptomScreen = ({navigation, route}) => {
     (async () => {
       const symptoms = await localStorage.getSymptoms();
       if (symptoms) setChosenCategories(symptoms);
+      else checkAll();
     })();
   }, []);
+
+  const checkAll = () => {
+    let categories = {};
+    Object.keys(displayedCategories).forEach((cat) => {
+      categories[cat] = true;
+    });
+    setChosenCategories(categories);
+  };
 
   const showExplanation = route.params?.showExplanation || false;
 
@@ -69,14 +78,6 @@ const SymptomScreen = ({navigation, route}) => {
 
     navigation.navigate(redirection, params);
   };
-
-  useEffect(() => {
-    let categories = {};
-    Object.keys(displayedCategories).forEach((cat) => {
-      categories[cat] = false;
-    });
-    setChosenCategories(categories);
-  }, []);
 
   return (
     <SafeAreaView style={styles.safe}>
