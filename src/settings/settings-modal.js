@@ -27,7 +27,7 @@ function settingsModal({navigation, visible, onClick}) {
             icon="ReminderSettingSvg"
           />
           <SettingItem
-            title="Mes données suivies"
+            title="Sélectionner les symptômes"
             path="symptoms"
             navigation={navigation}
             onClick={onClick}
