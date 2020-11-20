@@ -11,21 +11,8 @@ import localStorage from '../utils/localStorage';
 const Tab = createMaterialTopTabNavigator();
 
 const Tabs = ({navigation}) => {
-  const [symptoms, setSymptoms] = useState();
-
-  const getSymp = async () => {
-    const symp = await localStorage.getSymptoms();
-    if (symp) setSymptoms(symp);
-  };
-
-  useEffect(() => {
-    async () => {
-      await getSymp();
-    };
-  }, []);
-
   const handlePlus = async () => {
-    await getSymp();
+    const symptoms = await localStorage.getSymptoms();
     if (!symptoms) {
       navigation.navigate('symptoms', {
         showExplanation: true,

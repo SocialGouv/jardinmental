@@ -22,16 +22,9 @@ import {buildSurveyData} from '../survey/survey-data';
 const Diary = ({navigation}) => {
   const [diaryData] = useContext(DiaryDataContext);
   const [modalSettingsVisible, setModalSettingsVisible] = useState(false);
-  const [symptoms, setSymptoms] = useState();
-
-  useEffect(() => {
-    (async () => {
-      const symptoms = await localStorage.getSymptoms();
-      if (symptoms) setSymptoms(symptoms);
-    })();
-  }, []);
 
   const startAtFirstQuestion = async (date) => {
+    const symptoms = await localStorage.getSymptoms();
     if (!symptoms) {
       navigation.navigate('symptoms', {
         redirect: true,
