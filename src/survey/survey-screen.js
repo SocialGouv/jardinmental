@@ -6,7 +6,6 @@ import {
   ScrollView,
   View,
   SafeAreaView,
-  TextInput,
 } from 'react-native';
 import {colors} from '../common/colors';
 import CircledIcon from '../common/circled-icon';
@@ -28,16 +27,19 @@ const SurveyScreen = ({
   questionId,
 }) => {
   const [totalQuestions, setTotalQuestions] = useState();
+  const [questions, setQuestions] = useState();
+  const setDiaryData = useContext(DiaryDataContext)[1];
 
   useEffect(() => {
     (async () => {
-      const data = await buildSurveyData();
-      if (data) setTotalQuestions(data.length);
+      const questions = await buildSurveyData();
+      if (questions) {
+        setQuestions(questions);
+        setTotalQuestions(questions.length);
+      }
     })();
   }, []);
 
-  const setDiaryData = useContext(DiaryDataContext)[1];
-  const [note, setNote] = useState();
   const nextQuestion = (answer) => {
     let currentSurvey = {};
     if (currentSurveyItem !== 0) {
@@ -62,11 +64,14 @@ const SurveyScreen = ({
 
     if (!isLastQuestion()) {
       const isNextQuestionSkipped = answer.id === 'NEVER';
-      const nextQuestionId =
-        currentSurveyItem + (isNextQuestionSkipped ? 2 : 1);
+      // getting index of the current question in the 'questions' array
+      const index = questions.indexOf(currentSurveyItem);
+      // getting the next index of the next question
+      const nextQuestionIndex = index + (isNextQuestionSkipped ? 2 : 1);
+      // getting the router index of the next question
+      const nextQuestionId = questions[nextQuestionIndex];
       navigation.navigate(`question-${nextQuestionId}`, {currentSurvey});
     } else {
-      console.log(currentSurvey);
       setDiaryData(currentSurvey);
       navigation.navigate('tabs');
     }
@@ -74,7 +79,11 @@ const SurveyScreen = ({
 
   const previousQuestion = () => {
     if (currentSurveyItem !== 0) {
-      navigation.navigate(`question-${currentSurveyItem - 1}`);
+      // getting index of the current question in the 'questions' array
+      const index = questions.indexOf(currentSurveyItem);
+      // getting the router index of the previous question
+      const previousQuestionId = questions[index - 1];
+      navigation.navigate(`question-${previousQuestionId}`);
     } else {
       navigation.navigate('tabs');
     }
@@ -85,7 +94,7 @@ const SurveyScreen = ({
   );
 
   const isLastQuestion = () => {
-    return currentSurveyItem === totalQuestions - 1;
+    return questions.indexOf(currentSurveyItem) === totalQuestions - 1;
   };
 
   return (
@@ -94,45 +103,20 @@ const SurveyScreen = ({
         <Text style={styles.question}>
           {isSurveyDateYesterday ? yesterdayQuestion : question}
         </Text>
-        {answers.length ? (
-          <>
-            {answers.map((answer, index) => (
-              <TouchableOpacity
-                key={index}
-                onPress={() => nextQuestion(answer)}>
-                <View style={styles.answer}>
-                  <CircledIcon color={answer.color} icon={answer.icon} />
-                  <Text style={styles.label}>{answer.label}</Text>
-                </View>
-              </TouchableOpacity>
-            ))}
-          </>
-        ) : (
-          <>
-            <TextInput
-              style={[styles.answer, styles.textInput]}
-              placeholder={'Saisir une note'}
-              onChangeText={(text) => setNote(text)}
-              multiline
-              value={note}
-            />
-          </>
-        )}
+        {answers.map((answer, index) => (
+          <TouchableOpacity key={index} onPress={() => nextQuestion(answer)}>
+            <View style={styles.answer}>
+              <CircledIcon color={answer.color} icon={answer.icon} />
+              <Text style={styles.label}>{answer.label}</Text>
+            </View>
+          </TouchableOpacity>
+        ))}
         <TouchableOpacity onPress={nextQuestion}>
           <Text style={styles.backButton} onPress={previousQuestion}>
             Retour
           </Text>
         </TouchableOpacity>
       </ScrollView>
-      {isLastQuestion() && (
-        <View style={[styles.container, styles.bottom]}>
-          <TouchableOpacity
-            onPress={() => nextQuestion(note)}
-            style={styles.ValidationButton}>
-            <Text style={styles.ValidationButtonText}>Valider</Text>
-          </TouchableOpacity>
-        </View>
-      )}
       <SurveyExplanation explanation={explanation} category={'Explications'} />
     </SafeAreaView>
   );

@@ -17,6 +17,7 @@ import {useContext} from 'react';
 import {DiaryDataContext} from '../context';
 import Settings from '../settings/settings-modal';
 import localStorage from '../utils/localStorage';
+import {buildSurveyData} from '../survey/survey-data';
 
 const Diary = ({navigation}) => {
   const [diaryData] = useContext(DiaryDataContext);
@@ -30,15 +31,16 @@ const Diary = ({navigation}) => {
     })();
   }, []);
 
-  const startAtFirstQuestion = (date) => {
+  const startAtFirstQuestion = async (date) => {
     if (!symptoms) {
-      console.log({symptoms});
       navigation.navigate('symptoms', {
-        redirect: 'question-1',
+        redirect: true,
         showExplanation: true,
+        date,
       });
     } else {
-      navigation.navigate('question-1', {
+      const questions = await buildSurveyData();
+      navigation.navigate(`question-${questions[1]}`, {
         currentSurvey: {
           date,
           answers: {},

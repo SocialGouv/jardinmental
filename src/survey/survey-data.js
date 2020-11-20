@@ -4,34 +4,36 @@ import {
   intensity,
   surveyDate,
   categories,
-  displayedCategories,
 } from '../common/constants';
 import localStorage from '../utils/localStorage';
 
+// build an array of the question's index that the user selected.
 export const buildSurveyData = async () => {
-  console.log('test');
   const userSymptoms = await localStorage.getSymptoms();
-  let data = [availableData[0]];
+  // initiate the array with 0 (question on the day)
+  let data = [0];
 
-  availableData.forEach((cat) => {
-    if (displayedCategories.hasOwnProperty(cat.id)) {
-      if (userSymptoms[cat.id]) {
-        data.push(cat);
-        const [c, d] = cat.id.split('_');
-        if (d && d === 'FREQUENCE') {
-          const [catIntensity] = availableData.filter((ad) => {
-            return ad.id === `${c}_INTENSITY`;
-          });
-          data.push(catIntensity);
-        }
+  availableData.forEach((question, index) => {
+    const category = question.id;
+
+    // if the user selected this category
+    if (userSymptoms[category]) {
+      data.push(index);
+
+      // get the name and the suffix of the category
+      const [_, suffix] = category.split('_');
+
+      // if it's one category with the suffix 'FREQUENCE' :
+      // add the next question (i.e. the question on the intensity of the same category)
+      if (suffix && suffix === 'FREQUENCE') {
+        data.push(index + 1);
       }
     }
   });
-  console.log(data);
   return data;
 };
 
-const availableData = [
+export const availableData = [
   {
     id: 'day',
     question: 'Commençons ! Pour quel jour souhaites-tu noter tes ressentis',
@@ -153,13 +155,5 @@ const availableData = [
       'En effet, un bon sommeil est la base d’une bonne hygiène de vie et contribue à maintenir\n' +
       'un état psychique satisfaisant et stable, quelles que soit les difficultés que l’on rencontre.',
     dynamic: true,
-  },
-  {
-    id: categories.NOTE,
-    question: 'Ajouter un commentaire sur votre journée si vous le souhaitez.',
-    yesterdayQuestion:
-      'Ajouter un commentaire sur votre journée d’hier si vous le souhaitez.',
-    answers: [],
-    explanation: null,
   },
 ];

@@ -11,12 +11,12 @@ import {
 import CheckBox from '@react-native-community/checkbox';
 import {colors} from '../common/colors';
 import CircledIcon from '../common/circled-icon';
-import {surveyData} from '../survey/survey-data';
+import {buildSurveyData} from '../survey/survey-data';
 import SymptomsExplanation from '../symptoms/symptoms-explanation';
 import {DiaryDataContext} from '../context';
 import {beforeToday, formatDay} from '../services/date/helpers';
 import {isYesterday, parseISO} from 'date-fns';
-import {displayableCategories, categories, icons} from '../common/constants';
+import {displayedCategories, categories, icons} from '../common/constants';
 import localStorage from '../utils/localStorage';
 
 const SymptomScreen = ({navigation, route}) => {
@@ -50,12 +50,29 @@ const SymptomScreen = ({navigation, route}) => {
   const submitNewCategories = async () => {
     if (noneSelected()) return;
     await localStorage.setSymptoms(chosenCategories);
-    navigation.navigate(route.params?.redirect || 'tabs');
+    const questions = await buildSurveyData();
+    const index = questions[1];
+    let redirection = 'tabs';
+    let params = {};
+
+    if (route.params?.redirect === '0') {
+      redirection = 'question-0';
+    } else if (route.params?.redirect) {
+      redirection = `question-${index}`;
+      params = {
+        currentSurvey: {
+          date: route.params?.date,
+          answers: {},
+        },
+      };
+    }
+
+    navigation.navigate(redirection, params);
   };
 
   useEffect(() => {
     let categories = {};
-    Object.keys(displayableCategories).forEach((cat) => {
+    Object.keys(displayedCategories).forEach((cat) => {
       categories[cat] = false;
     });
     setChosenCategories(categories);
@@ -78,7 +95,7 @@ const SymptomScreen = ({navigation, route}) => {
         {chosenCategories &&
           Object.keys(chosenCategories).map((cat, index) => (
             <View key={index} style={styles.categories}>
-              <Text style={styles.label}>{displayableCategories[cat]}</Text>
+              <Text style={styles.label}>{displayedCategories[cat]}</Text>
               <CheckBox
                 animationDuration={0.2}
                 boxType="square"

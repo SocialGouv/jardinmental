@@ -6,27 +6,30 @@ import Calendar from '../calendar/calendar';
 import DiarySvg from '../../assets/svg/diary.svg';
 import PlusSvg from '../../assets/svg/plus.svg';
 import CalendarSvg from '../../assets/svg/calendar.svg';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {STORAGE_KEY_SYMPTOMS} from '../common/constants';
+import localStorage from '../utils/localStorage';
 
 const Tab = createMaterialTopTabNavigator();
 
 const Tabs = ({navigation}) => {
   const [symptoms, setSymptoms] = useState();
 
+  const getSymp = async () => {
+    const symp = await localStorage.getSymptoms();
+    if (symp) setSymptoms(symp);
+  };
+
   useEffect(() => {
-    const getSymptoms = async () => {
-      const symp = await AsyncStorage.getItem(STORAGE_KEY_SYMPTOMS);
-      if (symp) setSymptoms(symp);
+    async () => {
+      await getSymp();
     };
-    getSymptoms();
   }, []);
 
-  const handlePlus = () => {
+  const handlePlus = async () => {
+    await getSymp();
     if (!symptoms) {
       navigation.navigate('symptoms', {
         showExplanation: true,
-        redirect: 'question-0',
+        redirect: '0',
       });
     } else {
       navigation.navigate('question-0');
