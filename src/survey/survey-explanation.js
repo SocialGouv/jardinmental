@@ -25,7 +25,7 @@ const SurveyExplanation = ({category, explanation}) => {
     <ScrollView style={styles.fullScreenContainer}>
       <Text style={styles.title}>{category}</Text>
       <Text>{explanation}</Text>
-      <Text style={styles.moreButton} onPress={toggleFullScreen}>
+      <Text style={styles.lessButton} onPress={toggleFullScreen}>
         Réduire
       </Text>
     </ScrollView>
@@ -36,9 +36,11 @@ const SurveyExplanation = ({category, explanation}) => {
       </TouchableOpacity>
       <View style={styles.container}>
         <InfoSvg />
-        <View paddingLeft={10}>
+        <View paddingLeft={10} style={styles.textContainer}>
           <Text style={styles.title}>{category}</Text>
-          <Text numberOfLines={5}>{explanation}</Text>
+          <Text numberOfLines={5} style={styles.explanation}>
+            {explanation}
+          </Text>
           <Text style={styles.moreButton} onPress={toggleFullScreen}>
             Afficher la suite
           </Text>
@@ -71,7 +73,7 @@ const styles = StyleSheet.create({
     paddingBottom: 3,
   },
   textContainer: {
-    padding: 15,
+    width: '90%',
   },
   moreButton: {
     fontWeight: '700',
@@ -103,6 +105,16 @@ const styles = StyleSheet.create({
     padding: 25,
     display: 'flex',
     flexDirection: 'column',
+  },
+  explanation: {
+    textAlign: 'justify',
+  },
+  lessButton: {
+    paddingBottom: 50,
+    fontWeight: '700',
+    textDecorationLine: 'underline',
+    color: colors.BLUE,
+    paddingTop: 10,
   },
 });
 

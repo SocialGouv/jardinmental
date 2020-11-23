@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React /*, {useContext}*/ from 'react';
 import {
   TouchableOpacity,
   StyleSheet,
@@ -12,7 +12,7 @@ import CircledIcon from '../common/circled-icon';
 import {surveyData} from './survey-data';
 import SurveyExplanation from './survey-explanation';
 import {categories, surveyDate} from '../common/constants';
-import {DiaryDataContext} from '../context';
+//import {DiaryDataContext} from '../context';
 import {beforeToday, formatDay} from '../services/date/helpers';
 import {isYesterday, parseISO} from 'date-fns';
 
@@ -27,7 +27,7 @@ const SurveyScreen = ({
   questionId,
 }) => {
   const totalQuestions = surveyData.length;
-  const setDiaryData = useContext(DiaryDataContext)[1];
+  //const setDiaryData = useContext(DiaryDataContext)[1];
 
   const nextQuestion = (answer) => {
     let currentSurvey = {};
@@ -47,14 +47,15 @@ const SurveyScreen = ({
     } else {
       currentSurvey.answers[categories[questionId]] = answer;
     }
-    if (currentSurveyItem !== totalQuestions - 1) {
+    // -1 for list length and -1 for the last question => it navigates to notes
+    if (currentSurveyItem !== totalQuestions - 2) {
       const isNextQuestionSkipped = answer.id === 'NEVER';
       const nextQuestionId =
         currentSurveyItem + (isNextQuestionSkipped ? 2 : 1);
       navigation.navigate(`question-${nextQuestionId}`, {currentSurvey});
     } else {
-      setDiaryData(currentSurvey);
-      navigation.navigate('tabs');
+      //setDiaryData(currentSurvey);
+      navigation.navigate('notes', {currentSurvey});
     }
   };
 
@@ -76,14 +77,16 @@ const SurveyScreen = ({
         <Text style={styles.question}>
           {isSurveyDateYesterday ? yesterdayQuestion : question}
         </Text>
-        {answers.map((answer, index) => (
-          <TouchableOpacity key={index} onPress={() => nextQuestion(answer)}>
-            <View style={styles.answer}>
-              <CircledIcon color={answer.color} icon={answer.icon} />
-              <Text style={styles.label}>{answer.label}</Text>
-            </View>
-          </TouchableOpacity>
-        ))}
+        {answers
+          .filter((answer) => answer.id !== categories.NOTES)
+          .map((answer, index) => (
+            <TouchableOpacity key={index} onPress={() => nextQuestion(answer)}>
+              <View style={styles.answer}>
+                <CircledIcon color={answer.color} icon={answer.icon} />
+                <Text style={styles.label}>{answer.label}</Text>
+              </View>
+            </TouchableOpacity>
+          ))}
         <TouchableOpacity onPress={nextQuestion}>
           <Text style={styles.backButton} onPress={previousQuestion}>
             Retour
