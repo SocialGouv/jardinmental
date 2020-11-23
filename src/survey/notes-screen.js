@@ -16,21 +16,13 @@ import Button from '../common/button';
 
 const Notes = ({navigation, route}) => {
   const [notes, setNotes] = useState('');
-  const [backRedirection, setBackRedirection] = useState('tabs');
   const setDiaryData = useContext(DiaryDataContext)[1];
 
-  useEffect(() => {
-    (async () => {
-      const questions = await buildSurveyData();
-      if (questions) {
-        const index = questions[questions.length - 1];
-        setBackRedirection(`question-${index}`);
-      }
-    })();
-  }, []);
-
   const previousQuestion = () => {
-    navigation.navigate(backRedirection);
+    const redirect = route.params?.backRedirect
+      ? `question-${route.params.backRedirect}`
+      : 'tabs';
+    navigation.navigate(redirect);
   };
 
   const validateSurvey = () => {
