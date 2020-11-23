@@ -33,7 +33,7 @@ const Diary = ({navigation}) => {
       });
     } else {
       const questions = await buildSurveyData();
-      navigation.navigate(`question-${questions[1]}`, {
+      navigation.navigate(`question-${questions[0]}`, {
         currentSurvey: {
           date,
           answers: {},
