@@ -6,6 +6,7 @@ export const icons = {
   veryBad: 'VeryBadSvg',
   today: 'TodaySvg',
   yesterday: 'YesterdaySvg',
+  notes: 'NotesSvg',
 };
 
 const colors = {
@@ -72,6 +73,7 @@ export const categories = {
   SENSATIONS_FREQUENCE: 'SENSATIONS_FREQUENCE',
   SENSATIONS_INTENSITY: 'SENSATIONS_INTENSITY',
   SLEEP: 'SLEEP',
+  NOTES: 'NOTES',
 };
 
 export const displayedCategories = {

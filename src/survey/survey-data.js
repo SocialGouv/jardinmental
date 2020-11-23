@@ -156,4 +156,10 @@ export const availableData = [
       'un état psychique satisfaisant et stable, quelles que soit les difficultés que l’on rencontre.',
     dynamic: true,
   },
+  {
+    id: categories.NOTES,
+    question: 'Ajoutez un commentaire sur votre journée si vous le souhaitez',
+    yesterdayQuestion:
+      "Ajoutez un commentaire sur votre journée d'hier si vous le souhaitez",
+  },
 ];

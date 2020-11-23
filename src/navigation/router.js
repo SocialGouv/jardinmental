@@ -8,6 +8,7 @@ import SymptomScreen from '../symptoms/symptoms-screen';
 import Reminder from '../reminder/reminder';
 import DailyChart from '../calendar/daily-chart';
 import {Platform} from 'react-native';
+import Notes from '../survey/notes-screen';
 
 const Stack = createStackNavigator();
 
@@ -39,6 +40,13 @@ const Router = () => {
         </Stack.Screen>
         <Stack.Screen name="reminder" component={Reminder} />
         <Stack.Screen name="chart-day" component={DailyChart} />
+        <Stack.Screen
+          name="notes"
+          options={{animationEnabled: Platform.OS === 'ios'}}>
+          {({navigation, route}) => (
+            <Notes navigation={navigation} route={route} />
+          )}
+        </Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
   );

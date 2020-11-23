@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   TouchableOpacity,
   StyleSheet,
@@ -12,7 +12,7 @@ import CircledIcon from '../common/circled-icon';
 import {buildSurveyData} from './survey-data';
 import SurveyExplanation from './survey-explanation';
 import {categories, surveyDate} from '../common/constants';
-import {DiaryDataContext} from '../context';
+//import {DiaryDataContext} from '../context';
 import {beforeToday, formatDay} from '../services/date/helpers';
 import {isYesterday, parseISO} from 'date-fns';
 
@@ -28,7 +28,7 @@ const SurveyScreen = ({
 }) => {
   const [totalQuestions, setTotalQuestions] = useState();
   const [questions, setQuestions] = useState();
-  const setDiaryData = useContext(DiaryDataContext)[1];
+  // const setDiaryData = useContext(DiaryDataContext)[1];
 
   useEffect(() => {
     (async () => {
@@ -72,8 +72,8 @@ const SurveyScreen = ({
       const nextQuestionId = questions[nextQuestionIndex];
       navigation.navigate(`question-${nextQuestionId}`, {currentSurvey});
     } else {
-      setDiaryData(currentSurvey);
-      navigation.navigate('tabs');
+      //setDiaryData(currentSurvey);
+      navigation.navigate('notes', {currentSurvey});
     }
   };
 
@@ -103,14 +103,16 @@ const SurveyScreen = ({
         <Text style={styles.question}>
           {isSurveyDateYesterday ? yesterdayQuestion : question}
         </Text>
-        {answers.map((answer, index) => (
-          <TouchableOpacity key={index} onPress={() => nextQuestion(answer)}>
-            <View style={styles.answer}>
-              <CircledIcon color={answer.color} icon={answer.icon} />
-              <Text style={styles.label}>{answer.label}</Text>
-            </View>
-          </TouchableOpacity>
-        ))}
+        {answers
+          .filter((answer) => answer.id !== categories.NOTES)
+          .map((answer, index) => (
+            <TouchableOpacity key={index} onPress={() => nextQuestion(answer)}>
+              <View style={styles.answer}>
+                <CircledIcon color={answer.color} icon={answer.icon} />
+                <Text style={styles.label}>{answer.label}</Text>
+              </View>
+            </TouchableOpacity>
+          ))}
         <TouchableOpacity onPress={nextQuestion}>
           <Text style={styles.backButton} onPress={previousQuestion}>
             Retour
