@@ -42,7 +42,7 @@ const Calendar = ({navigation}) => {
     });
   };
 
-  const chartVisible = (categoryId) => {
+  const isChartVisible = (categoryId) => {
     let visible = false;
     chartDates.forEach((date) => {
       if (!diaryData[date]) return;
@@ -66,7 +66,7 @@ const Calendar = ({navigation}) => {
         />
         {Object.keys(displayedCategories).map(
           (categoryId) =>
-            chartVisible(categoryId) && (
+            isChartVisible(categoryId) && (
               <Chart
                 title={displayedCategories[categoryId]}
                 key={categoryId}

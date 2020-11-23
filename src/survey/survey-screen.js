@@ -26,16 +26,15 @@ const SurveyScreen = ({
   route,
   questionId,
 }) => {
-  const [totalQuestions, setTotalQuestions] = useState();
-  const [questions, setQuestions] = useState();
-  // const setDiaryData = useContext(DiaryDataContext)[1];
+  const [totalQuestions, setTotalQuestions] = useState(0);
+  const [questions, setQuestions] = useState([]);
 
   useEffect(() => {
     (async () => {
-      const questions = await buildSurveyData();
-      if (questions) {
-        setQuestions(questions);
-        setTotalQuestions(questions.length);
+      const q = await buildSurveyData();
+      if (q) {
+        setQuestions(q);
+        setTotalQuestions(q.length);
       }
     })();
   }, []);
@@ -62,25 +61,27 @@ const SurveyScreen = ({
       }
     }
 
+    let redirection = 'notes';
     if (!isLastQuestion()) {
       const isNextQuestionSkipped = answer.id === 'NEVER';
       // getting index of the current question in the 'questions' array
       const index = questions.indexOf(currentSurveyItem);
       // getting the next index of the next question
       const nextQuestionIndex = index + (isNextQuestionSkipped ? 2 : 1);
-      // getting the router index of the next question
-      const nextQuestionId = questions[nextQuestionIndex];
-      navigation.navigate(`question-${nextQuestionId}`, {currentSurvey});
-    } else {
-      //setDiaryData(currentSurvey);
-      navigation.navigate('notes', {currentSurvey});
+      // if there is a next question, navigate to it
+      // else go to 'notes'
+      if (nextQuestionIndex <= questions.length - 1) {
+        const nextQuestionId = questions[nextQuestionIndex];
+        redirection = `question-${nextQuestionId}`;
+      }
     }
+    navigation.navigate(redirection, {currentSurvey});
   };
 
   const previousQuestion = () => {
-    if (currentSurveyItem !== 0) {
-      // getting index of the current question in the 'questions' array
-      const index = questions.indexOf(currentSurveyItem);
+    // getting index of the current question in the 'questions' array
+    const index = questions.indexOf(currentSurveyItem);
+    if (index > 0) {
       // getting the router index of the previous question
       const previousQuestionId = questions[index - 1];
       navigation.navigate(`question-${previousQuestionId}`);

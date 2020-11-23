@@ -22,7 +22,7 @@ const Router = () => {
             name={`question-${index}`}
             key={`question-${index}`}
             options={{animationEnabled: Platform.OS === 'ios'}}>
-            {(props) => (
+            {({navigation, route}) => (
               <SurveyScreen
                 question={availableData[index].question}
                 yesterdayQuestion={availableData[index].yesterdayQuestion}
@@ -30,7 +30,8 @@ const Router = () => {
                 explanation={availableData[index].explanation}
                 currentSurveyItem={index}
                 questionId={surveyItem.id}
-                {...props}
+                navigation={navigation}
+                route={route}
               />
             )}
           </Stack.Screen>

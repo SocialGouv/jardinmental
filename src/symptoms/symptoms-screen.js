@@ -21,7 +21,7 @@ import localStorage from '../utils/localStorage';
 
 const SymptomScreen = ({navigation, route}) => {
   const explanation =
-    'A tout moment, vous pourrez modifier la liste des symptômes que vous souhaitez suivre via l’onglet “réglages” situés en haut à droite du journal';
+    'A tout moment, vous pourrez modifier la liste des symptômes que vous souhaitez suivre via l’onglet “Réglages” situé en haut à droite du journal';
   const [chosenCategories, setChosenCategories] = useState({});
 
   useEffect(() => {

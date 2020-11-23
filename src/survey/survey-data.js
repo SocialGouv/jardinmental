@@ -10,9 +10,7 @@ import localStorage from '../utils/localStorage';
 // build an array of the question's index that the user selected.
 export const buildSurveyData = async () => {
   const userSymptoms = await localStorage.getSymptoms();
-  // initiate the array with 0 (question on the day)
-  let data = [0];
-
+  let data = [];
   availableData.forEach((question, index) => {
     const category = question.id;
 
@@ -21,15 +19,18 @@ export const buildSurveyData = async () => {
       data.push(index);
 
       // get the name and the suffix of the category
-      const [_, suffix] = category.split('_');
+      const [categoryName, suffix] = category.split('_');
 
       // if it's one category with the suffix 'FREQUENCE' :
-      // add the next question (i.e. the question on the intensity of the same category)
+      // add the next question if it's the same categoryName (i.e. the question on the intensity of the same category)
       if (suffix && suffix === 'FREQUENCE') {
-        data.push(index + 1);
+        const nextCategory = availableData[index + 1].id;
+        const [nextCategoryName, _] = nextCategory.split('_');
+        nextCategoryName === categoryName && data.push(index + 1);
       }
     }
   });
+  console.log(data);
   return data;
 };
 
