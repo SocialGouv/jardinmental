@@ -3,6 +3,7 @@ import React, {useEffect, useState} from 'react';
 import {
   STORAGE_KEY_SURVEY_RESULTS,
   STORAGE_KEY_START_DATE,
+  STORAGE_KEY_SYMPTOMS,
 } from '../common/constants';
 import {
   fakeDiaryData,
@@ -13,6 +14,7 @@ import {formatDay, getArrayOfDates} from '../services/date/helpers';
 const wipeData = async () => {
   await AsyncStorage.removeItem(STORAGE_KEY_START_DATE);
   await AsyncStorage.removeItem(STORAGE_KEY_SURVEY_RESULTS);
+  await AsyncStorage.removeItem(STORAGE_KEY_SYMPTOMS);
 };
 
 const setupFakeData = async () => {

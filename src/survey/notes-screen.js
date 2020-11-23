@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native';
 import {colors} from '../common/colors';
-import {surveyData} from './survey-data';
+import {availableData, buildSurveyData} from './survey-data';
 import {categories} from '../common/constants';
 import {DiaryDataContext} from '../context';
 import {isYesterday, parseISO} from 'date-fns';
@@ -16,10 +16,21 @@ import Button from '../common/button';
 
 const Notes = ({navigation, route}) => {
   const [notes, setNotes] = useState('');
+  const [backRedirection, setBackRedirection] = useState('tabs');
   const setDiaryData = useContext(DiaryDataContext)[1];
 
+  useEffect(() => {
+    (async () => {
+      const questions = await buildSurveyData();
+      if (questions) {
+        const index = questions[questions.length - 1];
+        setBackRedirection(`question-${index}`);
+      }
+    })();
+  }, []);
+
   const previousQuestion = () => {
-    navigation.navigate(`question-${surveyData.length - 2}`);
+    navigation.navigate(backRedirection);
   };
 
   const validateSurvey = () => {
@@ -36,7 +47,7 @@ const Notes = ({navigation, route}) => {
     parseISO(route.params?.currentSurvey?.date),
   );
 
-  const {question, yesterdayQuestion} = surveyData.find(
+  const {question, yesterdayQuestion} = availableData.find(
     ({id}) => id === categories.NOTES,
   );
 

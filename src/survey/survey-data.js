@@ -5,8 +5,36 @@ import {
   surveyDate,
   categories,
 } from '../common/constants';
+import localStorage from '../utils/localStorage';
 
-export const surveyData = [
+// build an array of the question's index that the user selected.
+export const buildSurveyData = async () => {
+  const userSymptoms = await localStorage.getSymptoms();
+  let data = [];
+  availableData.forEach((question, index) => {
+    const category = question.id;
+
+    // if the user selected this category
+    if (userSymptoms[category]) {
+      data.push(index);
+
+      // get the name and the suffix of the category
+      const [categoryName, suffix] = category.split('_');
+
+      // if it's one category with the suffix 'FREQUENCE' :
+      // add the next question if it's the same categoryName (i.e. the question on the intensity of the same category)
+      if (suffix && suffix === 'FREQUENCE') {
+        const nextCategory = availableData[index + 1].id;
+        const [nextCategoryName, _] = nextCategory.split('_');
+        nextCategoryName === categoryName && data.push(index + 1);
+      }
+    }
+  });
+  console.log(data);
+  return data;
+};
+
+export const availableData = [
   {
     id: 'day',
     question: 'Commençons ! Pour quel jour souhaites-tu noter tes ressentis',
@@ -28,6 +56,7 @@ export const surveyData = [
       'L’humeur varie dans la journée et c’est normal, mais elle peut-être trop basse (quand on\n' +
       'se sent triste par exemple, ou en colère ou irritable), trop haute (quand on se sent\n' +
       'euphorique ou agité) ou varier trop fortement',
+    dynamic: true,
   },
   {
     id: categories.ANXIETY_FREQUENCE,
@@ -36,6 +65,7 @@ export const surveyData = [
     answers: [frequence.NEVER, frequence.SEVERAL_TIMES, frequence.MANY_TIMES],
     explanation:
       'L’anxiété est un état d’appréhension, d’inquiétude, de peur ou de tension, désagréable, qui peut être ou non associé à un facteur de stress.',
+    dynamic: true,
   },
   {
     id: categories.ANXIETY_INTENSITY,
@@ -44,6 +74,7 @@ export const surveyData = [
     answers: [intensity.LIGHT, intensity.MIDDLE, intensity.HIGH],
     explanation:
       'L’anxiété est un état d’appréhension, d’inquiétude, de peur ou de tension, désagréable, qui peut être ou non associé à un facteur de stress.',
+    dynamic: true,
   },
   {
     id: categories.BADTHOUGHTS_FREQUENCE,
@@ -53,6 +84,7 @@ export const surveyData = [
 
     explanation:
       'Ce sont des pensées que l’on ne contrôle pas. Elles peuvent nous envahir sans que l’on ne puisse rien y faire, ou pas beaucoup. Elles peuvent être tristes, angoissantes, effrayantes, gênantes, absurdes … On n’arrive pas à s’en débarrasser et, parfois, on n’arrive pas à penser à autre chose. On peut finir par se sentir triste, en colère, avoir peur ou devenir méfiant, parfois au point de ne plus rien pouvoir faire.',
+    dynamic: true,
   },
   {
     id: categories.BADTHOUGHTS_INTENSITY,
@@ -63,6 +95,7 @@ export const surveyData = [
     answers: [intensity.LIGHT, intensity.MIDDLE, intensity.HIGH],
     explanation:
       'Ce sont des pensées que l’on ne contrôle pas. Elles peuvent nous envahir sans que l’on ne puisse rien y faire, ou pas beaucoup. Elles peuvent être tristes, angoissantes, effrayantes, gênantes, absurdes … On n’arrive pas à s’en débarrasser et, parfois, on n’arrive pas à penser à autre chose. On peut finir par se sentir triste, en colère, avoir peur ou devenir méfiant, parfois au point de ne plus rien pouvoir faire.',
+    dynamic: true,
   },
   {
     id: categories.SENSATIONS_FREQUENCE,
@@ -84,6 +117,7 @@ export const surveyData = [
       '\t•\tentendre des bruits, des sons, son prénom appelé, des chuchotements, des voix distinctes, ses propres pensées; \n' +
       '\t•\tsentir sur sa peau l’impression d’être touché, effleuré, tiré … ou avoir des sensations internes incompréhensibles parfois étranges, gênantes ou douloureuses, à l’intérieur de notre corps, dans certains organes ; \n' +
       '\t•\tsentir des odeurs ou avoir des goûts dans la bouche inhabituels, sans que quelque chose en soit clairement l’origine\n',
+    dynamic: true,
   },
   {
     id: categories.SENSATIONS_INTENSITY,
@@ -103,6 +137,7 @@ export const surveyData = [
       '\t•\tentendre des bruits, des sons, son prénom appelé, des chuchotements, des voix distinctes, ses propres pensées; \n' +
       '\t•\tsentir sur sa peau l’impression d’être touché, effleuré, tiré … ou avoir des sensations internes incompréhensibles parfois étranges, gênantes ou douloureuses, à l’intérieur de notre corps, dans certains organes ; \n' +
       '\t•\tsentir des odeurs ou avoir des goûts dans la bouche inhabituels, sans que quelque chose en soit clairement l’origine\n',
+    dynamic: true,
   },
   {
     id: categories.SLEEP,
@@ -120,6 +155,7 @@ export const surveyData = [
       'Quand on s’intéresse au sommeil, on regarde principalement sa durée et sa qualité.\n' +
       'En effet, un bon sommeil est la base d’une bonne hygiène de vie et contribue à maintenir\n' +
       'un état psychique satisfaisant et stable, quelles que soit les difficultés que l’on rencontre.',
+    dynamic: true,
   },
   {
     id: categories.NOTES,

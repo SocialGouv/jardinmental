@@ -24,13 +24,16 @@ const DiaryItem = ({patientState, startAtFirstQuestion, date}) => {
   }
   return (
     <View style={styles.container}>
-      {Object.keys(displayedCategories).map((key) => (
-        <PatientStateItem
-          key={key}
-          patientStateItem={patientState[key]}
-          category={displayedCategories[key]}
-        />
-      ))}
+      {Object.keys(displayedCategories).map(
+        (key) =>
+          patientState[key] && (
+            <PatientStateItem
+              key={key}
+              patientStateItem={patientState[key]}
+              category={displayedCategories[key]}
+            />
+          ),
+      )}
       <Notes notes={patientState.NOTES} />
     </View>
   );

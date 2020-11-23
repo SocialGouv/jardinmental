@@ -42,6 +42,16 @@ const Calendar = ({navigation}) => {
     });
   };
 
+  const isChartVisible = (categoryId) => {
+    let visible = false;
+    chartDates.forEach((date) => {
+      if (!diaryData[date]) return;
+      if (!diaryData[date][categoryId]) return;
+      visible = true;
+    });
+    return visible;
+  };
+
   return (
     <SafeAreaView style={styles.safe}>
       <ScrollView
@@ -54,14 +64,17 @@ const Calendar = ({navigation}) => {
           onAfterPress={() => setDay(beforeToday(-7, day))}
           onBeforePress={() => setDay(beforeToday(7, day))}
         />
-        {Object.keys(displayedCategories).map((categoryId) => (
-          <Chart
-            title={displayedCategories[categoryId]}
-            key={categoryId}
-            data={computeChartData(categoryId)}
-            onPress={(dayIndex) => displayOnlyRequest(categoryId, dayIndex)}
-          />
-        ))}
+        {Object.keys(displayedCategories).map(
+          (categoryId) =>
+            isChartVisible(categoryId) && (
+              <Chart
+                title={displayedCategories[categoryId]}
+                key={categoryId}
+                data={computeChartData(categoryId)}
+                onPress={(dayIndex) => displayOnlyRequest(categoryId, dayIndex)}
+              />
+            ),
+        )}
       </ScrollView>
     </SafeAreaView>
   );
