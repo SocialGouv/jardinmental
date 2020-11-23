@@ -2,7 +2,7 @@
 
 Permettre à chacun de mieux connaitre son trouble pour faciliter le choix du bon traitement
 
-## Run the application in devlopment mode
+## Run the application in development mode
 
 ```
 yarn start
