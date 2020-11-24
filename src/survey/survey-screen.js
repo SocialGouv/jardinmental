@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import {colors} from '../common/colors';
 import CircledIcon from '../common/circled-icon';
-import {buildSurveyData} from './survey-data';
+import {availableData, buildSurveyData} from './survey-data';
 import SurveyExplanation from './survey-explanation';
 import {categories, surveyDate} from '../common/constants';
 //import {DiaryDataContext} from '../context';
@@ -75,18 +75,36 @@ const SurveyScreen = ({
         redirection = `question-${nextQuestionId}`;
       }
     }
-    navigation.navigate(redirection, {currentSurvey});
+    navigation.navigate(redirection, {
+      currentSurvey,
+      backRedirect: currentSurveyItem,
+    });
   };
 
   const previousQuestion = () => {
+    const survey = route.params?.currentSurvey;
+
     // getting index of the current question in the 'questions' array
     const index = questions.indexOf(currentSurveyItem);
-    if (index > 0) {
-      // getting the router index of the previous question
-      const previousQuestionId = questions[index - 1];
-      navigation.navigate(`question-${previousQuestionId}`);
-    } else {
+    if (index <= 0) {
       navigation.navigate('tabs');
+      return;
+    }
+
+    // getting the router index of the previous question
+    let previousQuestionIndex = questions[index - 1];
+
+    const previousQuestionId = availableData[previousQuestionIndex].id;
+    if (survey?.answers[categories[previousQuestionId]]) {
+      navigation.navigate(`question-${previousQuestionIndex}`, {
+        ...route.params,
+      });
+      return;
+    } else {
+      previousQuestionIndex = questions[index - 2];
+      navigation.navigate(`question-${previousQuestionIndex}`, {
+        ...route.params,
+      });
     }
   };
 
