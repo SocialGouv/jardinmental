@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native';
 import {colors} from '../common/colors';
-import {availableData, buildSurveyData} from './survey-data';
+import {availableData} from './survey-data';
 import {categories} from '../common/constants';
 import {DiaryDataContext} from '../context';
 import {isYesterday, parseISO} from 'date-fns';

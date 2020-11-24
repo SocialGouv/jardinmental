@@ -7,10 +7,8 @@ import {formatDay} from '../services/date/helpers';
 const NoDataTodayDiaryItem = ({startAtFirstQuestion}) => {
   return (
     <View style={styles.noDataContainer}>
-      <Text style={styles.noDataTitle}>Comment se passe ta journée ?</Text>
-      <Text style={styles.noDataText}>
-        Faisons ensemble un petit point sur tes ressentis
-      </Text>
+      <Text style={styles.noDataTitle}>Comment se passe votre journée ?</Text>
+      <Text style={styles.noDataText}>Faisons un point sur vos ressentis</Text>
       <View style={styles.buttonWrapper}>
         <Button
           title="Commencer"

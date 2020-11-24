@@ -1,23 +1,9 @@
-import React, {useCallback, useState} from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native';
+import React from 'react';
+import {StyleSheet, View, Text} from 'react-native';
 import {colors} from '../common/colors';
 import InfoSvg from '../../assets/svg/info.svg';
-import ArrowUpSvg from '../../assets/svg/arrow-up.svg';
 
 const SymptomsExplanation = ({category, explanation}) => {
-  const [isFullScreen, setIsFullScreen] = useState(false);
-
-  const toggleFullScreen = useCallback(() => setIsFullScreen(!isFullScreen), [
-    setIsFullScreen,
-    isFullScreen,
-  ]);
-
   if (explanation === null) {
     return null;
   }

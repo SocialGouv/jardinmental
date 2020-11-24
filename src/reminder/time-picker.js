@@ -26,7 +26,9 @@ const today = (offset = 0) => {
 const TimePicker = ({visible, selectDate}) => {
   const [date, setDate] = React.useState(new Date(Date.now() + 60 * 1000));
   React.useEffect(() => {
-    if (visible) setDate(new Date(Date.now() + 60 * 1000));
+    if (visible) {
+      setDate(new Date(Date.now() + 60 * 1000));
+    }
   }, [visible]);
   if (Platform.OS === 'ios') {
     return (

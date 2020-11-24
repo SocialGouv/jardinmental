@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   TouchableOpacity,
   StyleSheet,
@@ -6,17 +6,12 @@ import {
   ScrollView,
   View,
   SafeAreaView,
-  TextInput,
 } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import {colors} from '../common/colors';
-import CircledIcon from '../common/circled-icon';
 import {buildSurveyData} from '../survey/survey-data';
 import SymptomsExplanation from '../symptoms/symptoms-explanation';
-import {DiaryDataContext} from '../context';
-import {beforeToday, formatDay} from '../services/date/helpers';
-import {isYesterday, parseISO} from 'date-fns';
-import {displayedCategories, categories, icons} from '../common/constants';
+import {displayedCategories} from '../common/constants';
 import localStorage from '../utils/localStorage';
 
 const SymptomScreen = ({navigation, route}) => {
@@ -27,8 +22,11 @@ const SymptomScreen = ({navigation, route}) => {
   useEffect(() => {
     (async () => {
       const symptoms = await localStorage.getSymptoms();
-      if (symptoms) setChosenCategories(symptoms);
-      else checkAll();
+      if (symptoms) {
+        setChosenCategories(symptoms);
+      } else {
+        checkAll();
+      }
     })();
   }, []);
 
@@ -57,7 +55,9 @@ const SymptomScreen = ({navigation, route}) => {
   };
 
   const submitNewCategories = async () => {
-    if (noneSelected()) return;
+    if (noneSelected()) {
+      return;
+    }
     await localStorage.setSymptoms(chosenCategories);
     const questions = await buildSurveyData();
     const index = questions[1];
@@ -198,26 +198,8 @@ const styles = StyleSheet.create({
     paddingTop: 15,
     paddingBottom: 30,
   },
-  ValidationButton: {
-    backgroundColor: colors.LIGHT_BLUE,
-    height: 45,
-    borderRadius: 45,
-    paddingHorizontal: 30,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 15,
-  },
-  ValidationButtonText: {
-    color: '#fff',
-    fontWeight: '700',
-    fontSize: 19,
-  },
   textInput: {
     fontSize: 20,
-  },
-  bottom: {
-    justifyContent: 'flex-end',
-    marginBottom: 36,
   },
 });
 

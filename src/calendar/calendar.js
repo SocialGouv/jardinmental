@@ -45,8 +45,12 @@ const Calendar = ({navigation}) => {
   const isChartVisible = (categoryId) => {
     let visible = false;
     chartDates.forEach((date) => {
-      if (!diaryData[date]) return;
-      if (!diaryData[date][categoryId]) return;
+      if (!diaryData[date]) {
+        return;
+      }
+      if (!diaryData[date][categoryId]) {
+        return;
+      }
       visible = true;
     });
     return visible;
