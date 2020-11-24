@@ -12,7 +12,6 @@ import CircledIcon from '../common/circled-icon';
 import {availableData, buildSurveyData} from './survey-data';
 import SurveyExplanation from './survey-explanation';
 import {categories, surveyDate} from '../common/constants';
-//import {DiaryDataContext} from '../context';
 import {beforeToday, formatDay} from '../services/date/helpers';
 import {isYesterday, parseISO} from 'date-fns';
 
@@ -99,7 +98,6 @@ const SurveyScreen = ({
       navigation.navigate(`question-${previousQuestionIndex}`, {
         ...route.params,
       });
-      return;
     } else {
       previousQuestionIndex = questions[index - 2];
       navigation.navigate(`question-${previousQuestionIndex}`, {

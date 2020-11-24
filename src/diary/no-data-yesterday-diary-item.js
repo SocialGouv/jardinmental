@@ -10,7 +10,7 @@ const NoDataYesterdayDiaryItem = ({startAtFirstQuestion}) => {
       <View style={styles.textContainer}>
         <Text style={styles.noDataTitle}>Aucune information</Text>
         <Text style={styles.noDataText}>
-          Clique ici pour compléter tes informations
+          Cliquez ici pour compléter vos informations
         </Text>
         <View style={styles.buttonWrapper}>
           <Button

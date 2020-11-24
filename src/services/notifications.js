@@ -95,7 +95,9 @@ class NotificationService {
   listen = (callback) => {
     const listenerKey = `listener_${Date.now()}`;
     this.listeners[listenerKey] = callback;
-    if (this.initNotification) this.handleNotification(this.initNotification);
+    if (this.initNotification) {
+      this.handleNotification(this.initNotification);
+    }
     return listenerKey;
   };
 

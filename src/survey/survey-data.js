@@ -37,7 +37,7 @@ export const buildSurveyData = async () => {
 export const availableData = [
   {
     id: 'day',
-    question: 'Commençons ! Pour quel jour souhaites-tu noter tes ressentis',
+    question: 'Commençons ! Pour quel jour souhaitez-vous noter vos ressentis',
     answers: [surveyDate.TODAY, surveyDate.YESTERDAY],
     explanation: null,
   },

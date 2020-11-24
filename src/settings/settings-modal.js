@@ -1,13 +1,5 @@
 import React from 'react';
-import {
-  View,
-  StyleSheet,
-  Modal,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-} from 'react-native';
-import {colors} from '../common/colors';
-import {icons} from '../common/constants';
+import {View, StyleSheet, Modal, TouchableOpacity} from 'react-native';
 
 import SettingItem from './setting-item';
 
