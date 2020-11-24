@@ -46,10 +46,14 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     padding: 15,
-    width: '65%',
+    width: '66%',
   },
   buttonWrapper: {
     paddingTop: 10,
+  },
+  image: {
+    width: 120,
+    height: 140,
   },
 });
 
