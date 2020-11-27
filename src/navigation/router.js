@@ -6,6 +6,7 @@ import {availableData} from '../survey/survey-data';
 import SurveyScreen from '../survey/survey-screen';
 import SymptomScreen from '../symptoms/symptoms-screen';
 import Reminder from '../reminder/reminder';
+import Export from '../export/export';
 import DailyChart from '../calendar/daily-chart';
 import {Platform} from 'react-native';
 import Notes from '../survey/notes-screen';
@@ -40,6 +41,7 @@ const Router = () => {
           {(props) => <SymptomScreen {...props} />}
         </Stack.Screen>
         <Stack.Screen name="reminder" component={Reminder} />
+        <Stack.Screen name="export" component={Export} />
         <Stack.Screen name="chart-day" component={DailyChart} />
         <Stack.Screen
           name="notes"

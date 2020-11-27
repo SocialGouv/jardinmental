@@ -27,7 +27,7 @@ function settingsModal({navigation, visible, onClick}) {
           />
           <SettingItem
             title="Exporter mes données"
-            path=""
+            path="export"
             navigation={navigation}
             onClick={onClick}
             icon="ExportDataSettingSvg"
