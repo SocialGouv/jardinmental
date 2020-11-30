@@ -15,35 +15,36 @@ import {colors} from '../common/colors';
 import {DiaryDataContext} from '../context';
 import {displayedCategories} from '../common/constants';
 
+import {
+  TIPIMAIL_API_KEY,
+  TIPIMAIL_API_USER,
+  TIPIMAIL_FROM_MAIL,
+  TIPIMAIL_FROM_NAME,
+} from '@env';
 const MailStorageKey = '@Mail';
-
-//TODO : identité du sender de mail
-const mailFrom = '';
-const mailFromName = 'MonSuiviPsy - Application';
-const API_USER = '2fbfeec4905f352f871b2590da840571';
-const API_KEY = 'e94f70b1c2dd423a446efbbc788200cb';
 
 const Export = ({navigation}) => {
   const [mail, setMail] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [days, setDays] = useState(30);
+  const [isLoading, setIsLoading] = useState(false);
   const [diaryData] = useContext(DiaryDataContext);
 
   useEffect(() => {
     (async () => {
-      const m = await AsyncStorage.getItem(MailStorageKey);
-      if (m) setMail(m);
+      const storageMail = await AsyncStorage.getItem(MailStorageKey);
+      if (storageMail) {
+        setMail(storageMail);
+      }
     })();
   }, []);
 
   onBackPress = navigation.goBack;
 
-  var today = new Date();
+  const today = new Date();
   var firstDay = new Date();
-  firstDay.setDate(today.getDate() - days);
+  firstDay.setDate(today.getDate() - 30);
   const chartDates = getArrayOfDates({
     startDate: firstDay,
-    numberOfDays: days,
+    numberOfDays: 30,
   });
 
   const computeChartData = (categoryId) => {
@@ -73,15 +74,17 @@ const Export = ({navigation}) => {
   const mapImagesToState = (iconType) => {
     switch (iconType) {
       case 'VeryGoodSvg':
-        return 'https://monsuivipsy.s3-eu-west-1.amazonaws.com/veryGood.svg';
+        return 'https://monsuivipsy.s3-eu-west-1.amazonaws.com/veryGood.png';
       case 'GoodSvg':
-        return 'https://monsuivipsy.s3-eu-west-1.amazonaws.com/good.svg';
+        return 'https://monsuivipsy.s3-eu-west-1.amazonaws.com/good.png';
       case 'MiddleSvg':
-        return 'https://monsuivipsy.s3-eu-west-1.amazonaws.com/middle.svg';
+        return 'https://monsuivipsy.s3-eu-west-1.amazonaws.com/middle.png';
       case 'BadSvg':
-        return 'https://monsuivipsy.s3-eu-west-1.amazonaws.com/bad.svg';
+        return 'https://monsuivipsy.s3-eu-west-1.amazonaws.com/bad.png';
       case 'VeryBadSvg':
-        return 'https://monsuivipsy.s3-eu-west-1.amazonaws.com/veryBad.svg';
+        return 'https://monsuivipsy.s3-eu-west-1.amazonaws.com/veryBad.png';
+      case 'Notes':
+        return 'https://monsuivipsy.s3-eu-west-1.amazonaws.com/notes.png';
     }
   };
 
@@ -103,43 +106,40 @@ const Export = ({navigation}) => {
           h1 {
             color: ${colors.BLUE};
           }
-          h3 {
-            color: ${colors.DARK_BLUE};
-          }
           span {
             color: ${colors.DARK_BLUE_TRANS};
           }
-          .category {
-            margin: 10px;
-          }
           .graph {
-            overflow: hidden;
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
           }
           .bar {
-            float: left;
             background: ${colors.LIGHT_BLUE};
             font-size: small;
             color:white;
             text-align: center;
           }
           .footer {
-            overflow: hidden;
+            width: 100%;
+            border-collapse: collapse;
           }
           .endDate {
-            float: right;
+            text-align: right;
           }
         </style>
         <style>
           .journal {
-            list-style-type: none;
           }
-          .journal__item {
+          .journal__item-date {
             margin-top: 35px;
           }
-          .journal__item-wrapper {
-            max-width: 450px;
-            border: 1px solid #ebedf2;
+          .journal__item {
             border-radius: 8px;
+            border-collapse: collapse;
+          }
+          .journal__item-wrapper {
+            border: 1px solid #ebedf2;
             background-color: #f8f9fb;
           }
           .journal__item-symptoms {
@@ -150,24 +150,22 @@ const Export = ({navigation}) => {
             overflow: hidden;
             list-style-type: none;
           }
-          .journal__item-icon-wrapper {
-            border-radius: 50%;
-          }
           .journal__item-image {
             float: left;
             width: 45px;
             height: 45px;
+            padding: 5px;
           }
           .journal__note-separator {
             width: 85%;
-            margin: 8px auto 20px auto;
+            margin: 0px auto 12px auto;
             border: 1px solid #ebedf2;
           }
           .journal__item-symptom-name {
             line-height: 45px;
             margin: 0;
-            margin-left: 60px;
-            padding: 0;
+            margin-left: 20px;
+            padding-right: 50px;
           }
         </style>
       </head>
@@ -176,46 +174,56 @@ const Export = ({navigation}) => {
         ${Object.keys(displayedCategories)
           .map((categoryId) => {
             const res = computeChartData(categoryId);
-            const heighest = res.reduce((currentHeigest, current) => {
-              return current > currentHeigest ? current : currentHeigest;
+            const heighest = res.reduce((currentHeighest, current) => {
+              return current > currentHeighest ? current : currentHeighest;
             }, 0);
 
             if (!isChartVisible(categoryId)) return '';
 
-            return `<div class="category">
-              <h3 class="header">${displayedCategories[categoryId]}</h3>
-              <div class="graph">
-                ${res
-                  .map((value) => {
-                    const height = 15 * value + 2;
-                    const margin = 15 * (heighest - value);
+            return `<div style="margin: 10px">
+              <h3 style="color: ${colors.DARK_BLUE};">${
+              displayedCategories[categoryId]
+            }</h3>
+              <table class="graph">
+                <tbody>
+                  <tr>
+                    ${res
+                      .map((value) => {
+                        const height = 15 * value + 2;
+                        const margin = 15 * (heighest - value);
 
-                    return `<div
-                      class="bar"
-                      style="
-                        height:${height}px;
-                        line-height: ${height}px;
-                        margin-top: ${margin}px;
-                        width: ${100 / res.length - 0.5}%;
-                        margin-right: 0.5%;
-                      "
-                    >
-                      ${value || ''}
-                    </div>`;
-                  })
-                  .join('')}
-              </div>
-              <div class="footer">
-                <span>${firstDay.toLocaleDateString('fr-FR')}</span>
-                <span class="endDate">${today.toLocaleDateString(
-                  'fr-FR',
-                )}</span>
-              </div>
+                        return `<td>
+                          <div
+                            class="bar"
+                            style="
+                              height:${height}px;
+                              line-height: ${height}px;
+                              margin-top: ${margin}px;
+                            "
+                          >
+                            ${value || ' '}
+                          </div>
+                        </td>`;
+                      })
+                      .join('')}
+                  </tr>
+                </tbody>
+              </table>
+              <table class="footer">
+                <tbody>
+                  <tr>
+                    <td>${firstDay.toLocaleDateString('fr-FR')}</td>
+                    <td class="endDate">${today.toLocaleDateString(
+                      'fr-FR',
+                    )}</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>`;
           })
           .join('')}
           <h1>Mon journal</h1>
-          <ul class="journal">
+          <div class="journal">
             ${Object.keys(diaryData)
               .map((strDate) => ({strDate, date: new Date(strDate)}))
               .sort((item1, item2) => item2.date - item1.date)
@@ -231,28 +239,23 @@ const Export = ({navigation}) => {
                 } = diaryData[strDate];
 
                 return `
-                  <li class="journal__item">
-                    <p class="journal__item-date">${strDate
-                      .split('-')
-                      .reverse()
-                      .join('/')}</p>
-                    <div class="journal__item-wrapper">
-                      <ul class="journal__item-symptoms">
+                  <p class="journal__item-date">${strDate
+                    .split('-')
+                    .reverse()
+                    .join('/')}</p>
+                  <table class="journal__item">
+                    <tbody class="journal__item-wrapper">
                         ${
                           !ANXIETY_FREQUENCE
                             ? ''
                             : `
-                          <li class="journal__item-symptom-wrapper">
-                            <div class="journal__item-icon-wrapper" style="background-color:${
-                              ANXIETY_FREQUENCE.color
-                            }">
-                              <img src="${mapImagesToState(
-                                ANXIETY_FREQUENCE.icon,
-                              )}" class="journal__item-image" />
-                            </div>
-                            <p class="journal__item-symptom-name">${
+                          <tr class="journal__item-symptom-wrapper">
+                            <td><img src="${mapImagesToState(
+                              ANXIETY_FREQUENCE.icon,
+                            )}" class="journal__item-image" /></td>
+                            <td><p class="journal__item-symptom-name">${
                               displayedCategories['ANXIETY_FREQUENCE']
-                            }</p>
+                            }</p></td>
                           </li>
                         `
                         }
@@ -260,76 +263,79 @@ const Export = ({navigation}) => {
                           !BADTHOUGHTS_FREQUENCE
                             ? ''
                             : `
-                          <li class="journal__item-symptom-wrapper">
-                            <img src="${mapImagesToState(
+                          <tr class="journal__item-symptom-wrapper">
+                            <td><img src="${mapImagesToState(
                               BADTHOUGHTS_FREQUENCE.icon,
-                            )}" class="journal__item-image" />
-                            <p class="journal__item-symptom-name">${
+                            )}" class="journal__item-image" /></td>
+                            <td><p class="journal__item-symptom-name">${
                               displayedCategories['BADTHOUGHTS_FREQUENCE']
-                            }</p>
-                          </li>
+                            }</p></td>
+                          </tr>
                         `
                         }
                         ${
                           !MOOD
                             ? ''
                             : `
-                          <li class="journal__item-symptom-wrapper">
-                            <img src="${mapImagesToState(
+                          <tr class="journal__item-symptom-wrapper">
+                            <td><img src="${mapImagesToState(
                               MOOD.icon,
-                            )}" class="journal__item-image" />
-                            <p class="journal__item-symptom-name">${
+                            )}" class="journal__item-image" /></td>
+                            <td><p class="journal__item-symptom-name">${
                               displayedCategories['MOOD']
-                            }</p>
-                          </li>
+                            }</p></td>
+                          </tr>
                         `
                         }
                         ${
                           !SENSATIONS_FREQUENCE
                             ? ''
                             : `
-                          <li class="journal__item-symptom-wrapper">
-                            <img src="${mapImagesToState(
+                          <tr class="journal__item-symptom-wrapper">
+                            <td><img src="${mapImagesToState(
                               SENSATIONS_FREQUENCE.icon,
-                            )}" class="journal__item-image" />
-                            <p class="journal__item-symptom-name">${
+                            )}" class="journal__item-image" /></td>
+                            <td><p class="journal__item-symptom-name">${
                               displayedCategories['SENSATIONS_FREQUENCE']
-                            }</p>
-                          </li>
+                            }</p></td>
+                          </tr>
                         `
                         }
                         ${
                           !SLEEP
                             ? ''
                             : `
-                          <li class="journal__item-symptom-wrapper">
-                            <img src="${mapImagesToState(
+                          <tr class="journal__item-symptom-wrapper">
+                            <td><img src="${mapImagesToState(
                               SLEEP.icon,
-                            )}" class="journal__item-image" />
-                            <p class="journal__item-symptom-name">${
+                            )}" class="journal__item-image" /></td>
+                            <td><p class="journal__item-symptom-name">${
                               displayedCategories['SLEEP']
-                            }</p>
-                          </li>
+                            }</p></td>
+                          </tr>
                         `
                         }
                         ${
                           !NOTES
                             ? ''
                             : `
-                          <li class="journal__item-symptom-wrapper">
-                            <hr class="journal__note-separator" />
-                            <img src="https://cdn.iconscout.com/icon/premium/png-256-thumb/note-pencile-memo-pen-notebook-book-write-3-14650.png" class="journal__item-image" />
-                            <p class="journal__item-symptom-name">${NOTES}</p>
-                          </li>
+                          <tr>
+                            <td colspan="2">
+                              <hr class="journal__note-separator" />
+                            </td
+                          </tr>
+                          <tr class="journal__item-symptom-wrapper">
+                            <td><img src="https://cdn.iconscout.com/icon/premium/png-256-thumb/note-pencile-memo-pen-notebook-book-write-3-14650.png" class="journal__item-image" /></td>
+                            <td><p class="journal__item-symptom-name">${NOTES}</p></td>
+                          </tr>
                         `
                         }
-                      </ul>
-                    </div>
-                  </li>
+                    </tbody>
+                  </table>
                 `;
               })
               .join('')}
-            </ul>
+            </div>
       </body>
     </html>`;
   };
@@ -337,17 +343,16 @@ const Export = ({navigation}) => {
   const exportData = async () => {
     await AsyncStorage.setItem(MailStorageKey, mail);
     const htmlExport = formatHtmlTable();
-
-    setLoading(true);
+    setIsLoading(true);
     const res = await fetch('https://api.tipimail.com/v1/messages/send', {
       method: 'POST',
       headers: {
-        'X-Tipimail-ApiUser': API_USER,
-        'X-Tipimail-ApiKey': API_KEY,
+        'X-Tipimail-ApiUser': TIPIMAIL_API_USER,
+        'X-Tipimail-ApiKey': TIPIMAIL_API_KEY,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        apiKey: API_KEY,
+        apiKey: TIPIMAIL_API_KEY,
         to: [
           {
             address: mail,
@@ -355,8 +360,8 @@ const Export = ({navigation}) => {
         ],
         msg: {
           from: {
-            address: mailFrom,
-            personalName: mailFromName,
+            address: TIPIMAIL_FROM_MAIL,
+            personalName: TIPIMAIL_FROM_NAME,
           },
           subject: 'Export de données',
           html: htmlExport,
@@ -364,13 +369,14 @@ const Export = ({navigation}) => {
       }),
     }).catch((err) => console.log('sendNPS err', err));
 
-    setLoading(false);
+    setIsLoading(false);
     if (res.ok) {
       Alert.alert(
         'Mail envoyé !',
         `Retrouvez vos données sur votre boîte mail : ${mail}`,
       );
     } else {
+      console.log(res);
       Alert.alert("Une erreur s'est produite !");
     }
   };
@@ -380,29 +386,12 @@ const Export = ({navigation}) => {
       <TouchableOpacity
         onPress={this.onBackPress}
         style={styles.backButtonContainer}>
-        <Text style={styles.backButton}>{'Retour'}</Text>
+        <Text style={styles.backButton}>Retour</Text>
       </TouchableOpacity>
       <ExportData style={styles.icon} />
-      {true && (
-        <Text style={styles.title}>
-          Recevez vos données des 30 derniers jours par mail
-        </Text>
-      )}
-
-      {false && (
-        <>
-          <Text style={styles.title}>Recevez vos données des</Text>
-          <TextInput
-            keyboardType="decimal-pad"
-            onChangeText={(txt) => setDays(parseInt(txt))}
-            value={'' + days}
-            placeholder="Renseignez le nombre de jour"
-            style={styles.inputDays}
-          />
-          <Text style={styles.title}>derniers jours par mail</Text>
-        </>
-      )}
-
+      <Text style={styles.title}>
+        Recevez vos données des 30 derniers jours par mail
+      </Text>
       <TextInput
         autoCapitalize="none"
         keyboardType="email-address"
@@ -413,7 +402,7 @@ const Export = ({navigation}) => {
         style={styles.inputMail}
       />
 
-      {!loading && (
+      {!isLoading && (
         <TouchableOpacity onPress={exportData} style={styles.exportButton}>
           <Text style={styles.exportButtonText}>Exporter mes données</Text>
         </TouchableOpacity>
@@ -473,13 +462,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#F4FCFD',
     borderRadius: 10,
     marginVertical: '10%',
-    padding: 10,
-  },
-  inputDays: {
-    width: '75%',
-    textAlign: 'center',
-    backgroundColor: '#F4FCFD',
-    borderRadius: 10,
     padding: 10,
   },
 });
