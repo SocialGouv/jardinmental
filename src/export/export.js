@@ -1,6 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {
-  View,
   Text,
   TouchableOpacity,
   StyleSheet,
@@ -8,12 +7,10 @@ import {
   TextInput,
   Alert,
 } from 'react-native';
-import {getArrayOfDates} from '../services/date/helpers';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ExportData from '../../assets/svg/export-data.svg';
 import {colors} from '../common/colors';
 import {DiaryDataContext} from '../context';
-import {displayedCategories} from '../common/constants';
 import {formatHtmlTable} from './utils';
 
 import {

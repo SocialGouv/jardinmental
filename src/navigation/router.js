@@ -10,6 +10,10 @@ import Export from '../export/export';
 import DailyChart from '../calendar/daily-chart';
 import {Platform} from 'react-native';
 import Notes from '../survey/notes-screen';
+import Onboarding from '../onboarding/onboarding';
+import CGU from '../legal/cgu-screen';
+import Privacy from '../legal/privacy-screen';
+import LegalMentions from '../legal/legal-mentions-screen';
 
 const Stack = createStackNavigator();
 
@@ -50,6 +54,10 @@ const Router = () => {
             <Notes navigation={navigation} route={route} />
           )}
         </Stack.Screen>
+        <Stack.Screen name="onboarding" component={Onboarding} />
+        <Stack.Screen name="cgu" component={CGU} />
+        <Stack.Screen name="privacy" component={Privacy} />
+        <Stack.Screen name="legal-mentions" component={LegalMentions} />
       </Stack.Navigator>
     </NavigationContainer>
   );

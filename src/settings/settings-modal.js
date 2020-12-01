@@ -3,7 +3,7 @@ import {View, StyleSheet, Modal, TouchableOpacity} from 'react-native';
 
 import SettingItem from './setting-item';
 
-function settingsModal({navigation, visible, onClick}) {
+const SettingsModal = ({navigation, visible, onClick}) => {
   return (
     <Modal animationType="slide" visible={visible} transparent={true}>
       <TouchableOpacity
@@ -32,11 +32,18 @@ function settingsModal({navigation, visible, onClick}) {
             onClick={onClick}
             icon="ExportDataSettingSvg"
           />
+          <SettingItem
+            title="Conditions générales d'utilisation"
+            path="cgu"
+            navigation={navigation}
+            onClick={onClick}
+            icon="CguSettingSvg"
+          />
         </View>
       </TouchableOpacity>
     </Modal>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -51,4 +58,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default settingsModal;
+export default SettingsModal;
