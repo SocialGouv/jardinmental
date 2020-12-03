@@ -22,9 +22,7 @@ const colors = {
   veryBadTrans: '#fdcccc',
 };
 
-export const colorsMap = Object.keys(colors)
-  .map((key) => colors[key])
-  .reverse();
+export const colorsMap = Object.keys(colors).map((key) => colors[key]);
 
 export const categoryStates = {
   VERY_GOOD: {

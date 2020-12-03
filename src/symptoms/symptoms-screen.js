@@ -60,7 +60,7 @@ const SymptomScreen = ({navigation, route}) => {
     }
     await localStorage.setSymptoms(chosenCategories);
     const questions = await buildSurveyData();
-    const index = questions[1];
+    const index = questions[0];
     let redirection = 'tabs';
     let params = {};
 
