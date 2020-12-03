@@ -26,16 +26,18 @@ const mapImagesToState = (iconType) => {
 const generateTime = (firstDay, today) => {
   return `
     <table
+      width="100%"
       style="
         width: 100%;
         max-width: 100%:
         border-collapse: collapse;
+        table-layout: fixed;
       "
     >
       <tbody>
         <tr>
           <td>${firstDay.toLocaleDateString('fr-FR')}</td>
-          <td style="text-align: right;">
+          <td align="right" style="text-align: right;">
               ${today.toLocaleDateString('fr-FR')}
           </td>
         </tr>
