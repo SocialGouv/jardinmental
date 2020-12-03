@@ -38,7 +38,7 @@ const Export = ({navigation}) => {
     })();
   }, []);
 
-  onBackPress = navigation.goBack;
+  const onBackPress = navigation.goBack;
 
   const exportData = async () => {
     await AsyncStorage.setItem(MailStorageKey, mail);
@@ -83,7 +83,7 @@ const Export = ({navigation}) => {
   return (
     <SafeAreaView style={styles.container}>
       <TouchableOpacity
-        onPress={this.onBackPress}
+        onPress={onBackPress}
         style={styles.backButtonContainer}>
         <Text style={styles.backButton}>Retour</Text>
       </TouchableOpacity>

@@ -25,16 +25,19 @@ const mapImagesToState = (iconType) => {
 
 const generateTime = (firstDay, today) => {
   return `
-    <table style="
-      width: 100%;
-      border-collapse: collapse;
-    ">
+    <table
+      style="
+        width: 100%;
+        max-width: 100%:
+        border-collapse: collapse;
+      "
+    >
       <tbody>
         <tr>
           <td>${firstDay.toLocaleDateString('fr-FR')}</td>
-          <td style="text-align: right;">${today.toLocaleDateString(
-            'fr-FR',
-          )}</td>
+          <td style="text-align: right;">
+              ${today.toLocaleDateString('fr-FR')}
+          </td>
         </tr>
       </tbody>
     </table>
@@ -42,31 +45,48 @@ const generateTime = (firstDay, today) => {
 };
 
 const generateBar = (value, height, margin) => {
-  return `<td>
-    <table cellpadding="0" cellspacing="0" border="0" height="${margin}" width="100%">
+  return `<td style="vertical-align: bottom">
+    <table
+      cellpadding="0"
+      cellspacing="0"
+      border="0"
+      width="100%"
+      style="
+        width: 100%;
+        max-width: 100%
+      "
+    >
       <tr>
-        <td>
-            <table cellpadding="0" cellspacing="0" border="0" height="${margin}" width="100%">
-              <tr>
-                <td>
-                </td>
-              </tr>
-            </table>
-            <table cellpadding="0" cellspacing="0" border="0" height="${height}" width="100%"
+        <td style="vertical-align: bottom">
+            <table
+              cellpadding="0"
+              cellspacing="0"
+              border="0"
+              height="${height}"
+              width="100%"
               style="
+                width: 100%;
+                max-width: 100%;
                 border-collapse: collapse;
                 table-layout: fixed;
-                line-height: ${height}px;
               "
             >
               <tbody>
                 <tr>
-                  <td style="
-                    background-color: ${colors.LIGHT_BLUE};
-                    text-align: center;
-                    font-size: small;
-                    color:white;
-                  ">
+                  <td
+                    valign="middle"
+                    width="100%"
+                    height="${height}"
+                    style="
+                      width: 100%;
+                      max-width: 100%;
+                      vertical-align: middle;
+                      background-color: ${colors.LIGHT_BLUE};
+                      text-align: center;
+                      font-size: small;
+                      color:white;
+                    "
+                  >
                     ${value || ' '}
                   </td>
                 </tr>
@@ -79,7 +99,9 @@ const generateBar = (value, height, margin) => {
 };
 
 const generateState = (symptom, symptomStrName) => {
-  if (!symptom) return '';
+  if (!symptom) {
+    return '';
+  }
 
   return `
     <tr class="journal__item-symptom-wrapper">
@@ -104,8 +126,9 @@ const generateState = (symptom, symptomStrName) => {
 };
 
 const generateNote = (note) => {
-  if (!note) return '';
-
+  if (!note) {
+    return '';
+  }
   return `
     <tr>
       <td colspan="2" style="padding-left: 20px; padding-right: 20px">
@@ -138,7 +161,7 @@ const generateNote = (note) => {
 
 const formatHtmlTable = (diaryData) => {
   const today = new Date();
-  var firstDay = new Date();
+  const firstDay = new Date();
   firstDay.setDate(today.getDate() - 30);
   const chartDates = getArrayOfDates({
     startDate: firstDay,
@@ -188,7 +211,7 @@ const formatHtmlTable = (diaryData) => {
           .ExternalClass {width: 100%;}
         </style>
       </head>
-      <body>
+      <body width="100%">
         <h1 style="color: ${colors.BLUE}">Mes données de MonSuiviPsy</h1>
         ${Object.keys(displayedCategories)
           .map((categoryId) => {
@@ -197,20 +220,27 @@ const formatHtmlTable = (diaryData) => {
               return current > currentHeighest ? current : currentHeighest;
             }, 0);
 
-            if (!isChartVisible(categoryId)) return '';
+            if (!isChartVisible(categoryId)) {
+              return '';
+            }
 
             return `
-              <table>
+              <table width="100%" style="width: 100%; max-width: 100%;">
                 <tbody>
                   <tr>
                     <td>
-                      <h3 style="color: ${colors.DARK_BLUE};">${
-              displayedCategories[categoryId]
-            }</h3>
-                      <table width="100%" style="
-                        border-collapse: collapse;
-                        table-layout: fixed;
-                      ">
+                      <h3 style="color: ${colors.DARK_BLUE};">
+                        ${displayedCategories[categoryId]}
+                      </h3>
+                      <table
+                        width="100%"
+                        style="
+                          width: 100%;
+                          max-width: 100%;
+                          border-collapse: collapse;
+                          table-layout: fixed;
+                        "
+                      >
                         <tbody>
                           <tr>
                             ${res
@@ -240,7 +270,10 @@ const formatHtmlTable = (diaryData) => {
                   .map((strDate) => ({strDate, date: new Date(strDate)}))
                   .sort((item1, item2) => item2.date - item1.date)
                   .map(({strDate}) => {
-                    if (!diaryData[strDate]) return '';
+                    if (!diaryData[strDate]) {
+                      return '';
+                    }
+
                     const {
                       ANXIETY_FREQUENCE,
                       BADTHOUGHTS_FREQUENCE,
