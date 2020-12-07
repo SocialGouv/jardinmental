@@ -16,7 +16,9 @@
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* monsuivipsyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* monsuivipsyTests.m */; };
+		31731C7C903E4C8AAC78BB95 /* Karla-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 972AB3D44CEE437686BB82B6 /* Karla-Bold.ttf */; };
 		387977B3A234551D1179845E /* libPods-monsuivipsy-monsuivipsyTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E2FD4F92EFF5C3A62ECF4C8 /* libPods-monsuivipsy-monsuivipsyTests.a */; };
+		539C1AD1016C4A619B663BFE /* Karla-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 31E9B1DA17C04817B26C7C89 /* Karla-Regular.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		ADAAF48F083CC4728B95BF02 /* libPods-monsuivipsy.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5147B0D056B5239DB7841F82 /* libPods-monsuivipsy.a */; };
 		DD76B2DE763F69C7D2D61706 /* libPods-monsuivipsy-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FB81172FB8990ADAACAE7273 /* libPods-monsuivipsy-tvOS.a */; };
@@ -54,11 +56,14 @@
 		204721BAC7861B83D591AD26 /* Pods-monsuivipsy-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-monsuivipsy-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-monsuivipsy-tvOS/Pods-monsuivipsy-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* monsuivipsy-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "monsuivipsy-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* monsuivipsy-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "monsuivipsy-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		31E9B1DA17C04817B26C7C89 /* Karla-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Karla-Regular.ttf"; path = "../assets/fonts/Karla-Regular.ttf"; sourceTree = "<group>"; };
 		44541E8E24EC99B811581DC5 /* Pods-monsuivipsy-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-monsuivipsy-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-monsuivipsy-tvOSTests/Pods-monsuivipsy-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		4A1FEA83AF52CA324EC538D4 /* Pods-monsuivipsy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-monsuivipsy.debug.xcconfig"; path = "Target Support Files/Pods-monsuivipsy/Pods-monsuivipsy.debug.xcconfig"; sourceTree = "<group>"; };
 		5147B0D056B5239DB7841F82 /* libPods-monsuivipsy.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-monsuivipsy.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6A9480AF257E35E9004F1F1F /* libCocoaAsyncSocket.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libCocoaAsyncSocket.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E2FD4F92EFF5C3A62ECF4C8 /* libPods-monsuivipsy-monsuivipsyTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-monsuivipsy-monsuivipsyTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = monsuivipsy/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		972AB3D44CEE437686BB82B6 /* Karla-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Karla-Bold.ttf"; path = "../assets/fonts/Karla-Bold.ttf"; sourceTree = "<group>"; };
 		9F6D7851075C7ADBB2379559 /* Pods-monsuivipsy-monsuivipsyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-monsuivipsy-monsuivipsyTests.debug.xcconfig"; path = "Target Support Files/Pods-monsuivipsy-monsuivipsyTests/Pods-monsuivipsy-monsuivipsyTests.debug.xcconfig"; sourceTree = "<group>"; };
 		A1765786A58784FD25CC01DD /* Pods-monsuivipsy-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-monsuivipsy-tvOS.release.xcconfig"; path = "Target Support Files/Pods-monsuivipsy-tvOS/Pods-monsuivipsy-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		A7EF96A3E63DB9034124DEDF /* libPods-monsuivipsy-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-monsuivipsy-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -141,6 +146,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6A9480AF257E35E9004F1F1F /* libCocoaAsyncSocket.a */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
 				5147B0D056B5239DB7841F82 /* libPods-monsuivipsy.a */,
@@ -149,6 +155,15 @@
 				A7EF96A3E63DB9034124DEDF /* libPods-monsuivipsy-tvOSTests.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4E9E92D8DC8640CEB4017C64 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				972AB3D44CEE437686BB82B6 /* Karla-Bold.ttf */,
+				31E9B1DA17C04817B26C7C89 /* Karla-Regular.ttf */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 		64479DEF9016D3377BA43C16 /* Pods */ = {
@@ -182,6 +197,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				64479DEF9016D3377BA43C16 /* Pods */,
+				4E9E92D8DC8640CEB4017C64 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -295,8 +311,9 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = KV7W3R8UMB;
+						DevelopmentTeam = 76GBKHVK25;
 						LastSwiftMigration = 1120;
+						ProvisioningStyle = Manual;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -344,6 +361,8 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				31731C7C903E4C8AAC78BB95 /* Karla-Bold.ttf in Resources */,
+				539C1AD1016C4A619B663BFE /* Karla-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -660,12 +679,13 @@
 				CODE_SIGN_ENTITLEMENTS = monsuivipsy/monsuivipsy.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = KV7W3R8UMB;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = monsuivipsy/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.3.0;
+				MARKETING_VERSION = 1.4.0;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -675,6 +695,7 @@
 				PRODUCT_NAME = monsuivipsy;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
+				SYMROOT = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -689,11 +710,50 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = 76GBKHVK25;
 				INFOPLIST_FILE = monsuivipsy/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.3.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/CocoaAsyncSocket\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/DoubleConversion\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FBReactNativeSpec\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/Folly\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/RCTTypeSafety\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/RNCAsyncStorage\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/RNCCheckbox\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/RNCMaskedView\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/RNCPushNotificationIOS\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/RNDateTimePicker\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/RNGestureHandler\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/RNReanimated\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/RNSVG\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/RNScreens\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/React-Core\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/React-CoreModules\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/React-RCTAnimation\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/React-RCTBlob\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/React-RCTImage\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/React-RCTLinking\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/React-RCTNetwork\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/React-RCTSettings\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/React-RCTText\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/React-RCTVibration\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/React-cxxreact\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/React-jsi\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/React-jsiexecutor\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/React-jsinspector\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/ReactCommon\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/Yoga\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/YogaKit\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/glog\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/react-native-safe-area-context\"",
+					"\"${PODS_ROOT}/CocoaLibEvent/lib\"",
+					"\"${PODS_ROOT}/OpenSSL-Universal/ios/lib\"",
+				);
+				MARKETING_VERSION = 1.4.0;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -703,6 +763,7 @@
 				PRODUCT_NAME = monsuivipsy;
 				PROVISIONING_PROFILE_SPECIFIER = "iOS Provisioning";
 				SWIFT_VERSION = 5.0;
+				SYMROOT = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

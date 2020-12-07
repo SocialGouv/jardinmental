@@ -4,14 +4,14 @@ import {colors} from '../common/colors';
 import Icon from '../common/icon';
 import ArrowRightSvg from '../../assets/svg/arrow-right.svg';
 
-function settingItem({
+export const SettingItem = ({
   title,
   navigation,
   path = 'tabs',
   icon,
   color = colors.LIGHT_BLUE,
   onClick,
-}) {
+}) => {
   const handleClick = () => {
     onClick();
     navigation.navigate(path);
@@ -29,7 +29,7 @@ function settingItem({
       </View>
     </TouchableOpacity>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -54,4 +54,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default settingItem;
+export default SettingItem;

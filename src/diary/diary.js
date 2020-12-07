@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   StyleSheet,
   ScrollView,
@@ -52,6 +52,16 @@ const Diary = ({navigation}) => {
       return firstLetterUppercase(formattedDate);
     }
   };
+
+  useEffect(() => {
+    const handleNavigation = async () => {
+      const isFirstAppLaunch = await localStorage.getIsFirstAppLaunch();
+      if (isFirstAppLaunch !== 'false') {
+        navigation.navigate('onboarding');
+      }
+    };
+    handleNavigation();
+  }, [navigation]);
 
   return (
     <SafeAreaView style={styles.safe}>

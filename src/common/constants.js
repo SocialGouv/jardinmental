@@ -148,3 +148,4 @@ export const intensity = {
 export const STORAGE_KEY_SURVEY_RESULTS = '@SURVEY_RESULTS';
 export const STORAGE_KEY_START_DATE = '@SURVEY_DATE';
 export const STORAGE_KEY_SYMPTOMS = '@SYMPTOMS';
+export const STORAGE_KEY_IS_FIRST_LAUNCH = '@IS_FIRST_LAUNCH';
