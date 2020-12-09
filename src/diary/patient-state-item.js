@@ -1,14 +1,19 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet, View, Text} from 'react-native';
 import CircledIcon from '../common/circled-icon';
+import {colorsMap} from '../common/constants';
 
-const PatientStateItem = ({patientStateItem, category}) => {
+const PatientStateItem = ({patientStateItem, category, intensity}) => {
+  const [color, setColor] = useState(patientStateItem.color);
+
+  useEffect(() => {
+    let modifier = intensity ? intensity.level - 1 : 0;
+    setColor(colorsMap[patientStateItem.level + modifier - 1]);
+  }, [patientStateItem, intensity]);
+
   return (
     <View style={styles.container}>
-      <CircledIcon
-        color={patientStateItem.color}
-        icon={patientStateItem.icon}
-      />
+      <CircledIcon color={color} icon={patientStateItem.icon} />
       <Text style={styles.categoryText}>{category}</Text>
     </View>
   );

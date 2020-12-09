@@ -30,7 +30,6 @@ export const buildSurveyData = async () => {
       }
     }
   });
-  console.log(data);
   return data;
 };
 

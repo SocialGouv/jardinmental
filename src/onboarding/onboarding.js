@@ -50,8 +50,8 @@ const Onboarding = ({navigation}) => {
         </View>
         <View style={styles.container}>
           <Text style={styles.presentationText}>
-            Envoyer le récapitulatif des courbes à votre votre psychiatre, à
-            votre médecin, à votre psychologue, si vous le souhaitez
+            Envoyer le récapitulatif des courbes à votre psychiatre, à votre
+            médecin, à votre psychologue, si vous le souhaitez
           </Text>
         </View>
       </Swiper>

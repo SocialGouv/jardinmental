@@ -16,11 +16,11 @@ const chartHeight = 220;
 const chartInnerHeight = chartHeight - daysHeight;
 const spacingY = 0.1452;
 const dotsY = [
-  chartPaddingTop + chartInnerHeight * spacingY,
-  chartPaddingTop + chartInnerHeight * spacingY * 2,
-  chartPaddingTop + chartInnerHeight * spacingY * 3,
-  chartPaddingTop + chartInnerHeight * spacingY * 4,
   chartPaddingTop + chartInnerHeight * spacingY * 5,
+  chartPaddingTop + chartInnerHeight * spacingY * 4,
+  chartPaddingTop + chartInnerHeight * spacingY * 3,
+  chartPaddingTop + chartInnerHeight * spacingY * 2,
+  chartPaddingTop + chartInnerHeight * spacingY * 1,
 ];
 
 // Horizontal spacing
