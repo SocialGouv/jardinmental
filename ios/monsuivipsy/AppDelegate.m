@@ -25,6 +25,8 @@ static void InitializeFlipper(UIApplication *application) {
   [client start];
 }
 #endif
+#import <UserNotifications/UserNotifications.h>
+#import <RNCPushNotificationIOS.h>
 
 @implementation AppDelegate
 

@@ -22,6 +22,7 @@ import {
   TIPIMAIL_FROM_MAIL,
   TIPIMAIL_FROM_NAME,
 } from '@env';
+import matomo from '../services/matomo';
 const MailStorageKey = '@Mail';
 
 const Export = ({navigation}) => {
@@ -44,6 +45,7 @@ const Export = ({navigation}) => {
     await AsyncStorage.setItem(MailStorageKey, mail);
     const htmlExport = formatHtmlTable(diaryData);
     setIsLoading(true);
+    matomo.logDataExport();
     const res = await fetch('https://api.tipimail.com/v1/messages/send', {
       method: 'POST',
       headers: {

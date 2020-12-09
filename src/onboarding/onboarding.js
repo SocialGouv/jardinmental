@@ -1,11 +1,12 @@
 import React, {useState} from 'react';
 import {StyleSheet, Text, SafeAreaView, View} from 'react-native';
+import CheckBox from '@react-native-community/checkbox';
+import Swiper from 'react-native-swiper';
 import {colors} from '../common/colors';
 import Button from '../common/button';
-import Swiper from 'react-native-swiper';
-import CheckBox from '@react-native-community/checkbox';
 import localStorage from '../utils/localStorage';
 import ActiveDot from './active-dot';
+import matomo from '../services/matomo';
 
 const Onboarding = ({navigation}) => {
   const [isCguChecked, setIsCguChecked] = useState(false);
@@ -27,10 +28,17 @@ const Onboarding = ({navigation}) => {
     navigation.navigate('privacy');
   };
 
+  const onIndexChanged = (page) => {
+    matomo.logOnboardingSwipe(page);
+  };
+
   return (
     <SafeAreaView style={styles.safe}>
       <Text style={styles.title}>Mon Suivi Psy</Text>
-      <Swiper loop={false} activeDot={<ActiveDot />}>
+      <Swiper
+        loop={false}
+        activeDot={<ActiveDot />}
+        onIndexChanged={onIndexChanged}>
         <View style={styles.container}>
           <Text style={styles.presentationText}>
             Mieux suivre l’évolution de mes symptômes{'\n'}

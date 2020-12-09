@@ -14,6 +14,7 @@ import ReminderSvg from '../../assets/svg/reminder.svg';
 import TimePicker from './time-picker';
 import NotificationService from '../services/notifications';
 import {colors} from '../common/colors';
+import matomo from '../services/matomo';
 
 const dateWithTimeAndOffsetFromToday = (hours, minutes, offset) => {
   const date = new Date();
@@ -97,6 +98,7 @@ class Reminder extends React.Component {
         message: reminderMessage,
       });
     }
+    matomo.logReminderAdd();
   };
 
   showTimePicker = async () => {
@@ -136,6 +138,11 @@ class Reminder extends React.Component {
     await AsyncStorage.setItem(ReminderStorageKey, reminder.toISOString());
     await this.scheduleNotification(reminder);
     this.setState({reminder, timePickerVisible: false});
+  };
+
+  deleteReminderManually = () => {
+    matomo.logReminderCancel();
+    this.deleteReminder();
   };
 
   deleteReminder = async () => {
@@ -199,7 +206,7 @@ class Reminder extends React.Component {
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={reminder ? this.deleteReminder : this.onBackPress}>
+          onPress={reminder ? this.deleteReminderManually : this.onBackPress}>
           <Text style={styles.later}>
             {reminder ? 'Retirer le rappel' : 'Plus tard, peut-être'}
           </Text>
