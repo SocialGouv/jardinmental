@@ -25,7 +25,9 @@ const DiaryItem = ({patientState, startAtFirstQuestion, date}) => {
   return (
     <View style={styles.container}>
       {Object.keys(displayedCategories).map((key) => {
-        if (!patientState[key]) return;
+        if (!patientState[key]) {
+          return;
+        }
         const [categoryName, suffix] = key.split('_');
         if (suffix) {
           return (

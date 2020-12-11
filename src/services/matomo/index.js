@@ -16,10 +16,10 @@ const initMatomo = async () => {
     await AsyncStorage.setItem(CONSTANTS.STORE_KEY_USER_ID, userId);
   }
 
-  const prevVisits = await AsyncStorage.getItem(
+  const previousVisits = await AsyncStorage.getItem(
     CONSTANTS.STORE_KEY_NUMBER_OF_VISITS,
   );
-  const newVisits = prevVisits ? Number(prevVisits) + 1 : 1;
+  const newVisits = previousVisits ? Number(previousVisits) + 1 : 1;
   await AsyncStorage.setItem(
     CONSTANTS.STORE_KEY_NUMBER_OF_VISITS,
     `${newVisits}`,
@@ -40,10 +40,7 @@ const initMatomo = async () => {
 
 const checkNetwork = async () => {
   const networkState = await NetInfo.fetch();
-  if (!networkState.isConnected) {
-    return false;
-  }
-  return true;
+  return networkState.isConnected;
 };
 
 const logEvent = async ({category, action, name, value}) => {
@@ -53,8 +50,8 @@ const logEvent = async ({category, action, name, value}) => {
       throw new Error('no network');
     }
     Matomo.logEvent({category, action, name, value});
-  } catch (e) {
-    console.log('logEvent error', e);
+  } catch (error) {
+    console.log('logEvent error', error);
     console.log('logEvent error', {category, action, name, value});
   }
 };
@@ -70,7 +67,7 @@ const APP = 'APP';
 const APP_OPEN = 'APP_OPEN';
 const APP_CLOSE = 'APP_CLOSE';
 
-const logAppVisit = async (from = null) => {
+const logAppVisit = async () => {
   await logEvent({
     category: APP,
     action: APP_OPEN,

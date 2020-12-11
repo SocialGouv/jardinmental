@@ -126,10 +126,7 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     justifyContent: 'flex-start',
-    // alignItems: 'center',
-    // paddingBottom: 100,
     backgroundColor: '#f9f9f9',
-    // flex: 1,
     height: '100%',
   },
   inner: {
@@ -138,7 +135,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingBottom: 30,
     backgroundColor: '#f9f9f9',
-    // flex: 1,
     justifyContent: 'flex-end',
   },
   title: {
@@ -153,10 +149,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 20,
     left: 20,
-    // alignSelf: 'flex-start',
-    // paddingLeft: 20,
     marginBottom: '20%',
-    // marginTop: 20,
   },
   backButton: {
     fontWeight: '700',

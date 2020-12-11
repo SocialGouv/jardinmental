@@ -9,11 +9,6 @@ class Api {
     this.initDone = true;
   }
 
-  init2({baseUrl, idsite}) {
-    this.baseUrl2 = baseUrl;
-    this.idsite2 = idsite;
-  }
-
   makeid(length = 16) {
     var result = '';
     var characters = '01234567890abcdefABCDEF';

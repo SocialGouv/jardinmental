@@ -7,7 +7,7 @@ const PatientStateItem = ({patientStateItem, category, intensity}) => {
   const [color, setColor] = useState(patientStateItem.color);
 
   useEffect(() => {
-    let modifier = intensity ? intensity.level - 1 : 0;
+    const modifier = intensity ? intensity.level - 1 : 0;
     setColor(colorsMap[patientStateItem.level + modifier - 1]);
   }, [patientStateItem, intensity]);
 
