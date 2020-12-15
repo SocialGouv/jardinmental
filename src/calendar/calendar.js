@@ -47,13 +47,13 @@ const Calendar = ({navigation}) => {
       if (!categoryState) {
         return null;
       }
-      //TODO : if category frequence => inclure l'intensité
+
       // get the name and the suffix of the category
       const [categoryName, suffix] = categoryId.split('_');
-      // if it's one category with the suffix 'FREQUENCE' :
-      // add the next question if it's the same categoryName (i.e. the question on the intensity of the same category)
       let categoryStateIntensity = null;
       if (suffix && suffix === 'FREQUENCE') {
+        // if it's one category with the suffix 'FREQUENCE' :
+        // add the intensity (default level is 3 - for the frequence 'never')
         categoryStateIntensity = diaryData[date][
           `${categoryName}_INTENSITY`
         ] || {level: 3};

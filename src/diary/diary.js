@@ -72,16 +72,22 @@ const Diary = ({navigation}) => {
             <Text style={styles.settings}>Réglages</Text>
           </TouchableOpacity>
         </View>
-        {Object.keys(diaryData).map((date) => (
-          <View key={date}>
-            <Text style={styles.title}>{formatDate(date)}</Text>
-            <DiaryItem
-              date={date}
-              patientState={diaryData[date]}
-              startAtFirstQuestion={startAtFirstQuestion}
-            />
-          </View>
-        ))}
+        {Object.keys(diaryData)
+          .sort((a, b) => {
+            a = a.split('/').reverse().join('');
+            b = b.split('/').reverse().join('');
+            return b.localeCompare(a);
+          })
+          .map((date) => (
+            <View key={date}>
+              <Text style={styles.title}>{formatDate(date)}</Text>
+              <DiaryItem
+                date={date}
+                patientState={diaryData[date]}
+                startAtFirstQuestion={startAtFirstQuestion}
+              />
+            </View>
+          ))}
       </ScrollView>
       <Settings
         visible={modalSettingsVisible}

@@ -132,8 +132,9 @@ android {
         applicationId "com.monsuivipsy"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 7
-        versionName "1.5.0"
+        multiDexEnabled true
+        versionCode 10
+        versionName "1.5.2"
     }
     splits {
         abi {
