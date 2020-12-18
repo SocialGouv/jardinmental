@@ -24,16 +24,32 @@ const DiaryItem = ({patientState, startAtFirstQuestion, date}) => {
   }
   return (
     <View style={styles.container}>
-      {Object.keys(displayedCategories).map(
-        (key) =>
-          patientState[key] && (
+      {Object.keys(displayedCategories).map((key) => {
+        if (!patientState[key]) {
+          return;
+        }
+        const [categoryName, suffix] = key.split('_');
+        if (suffix) {
+          return (
+            <PatientStateItem
+              key={key}
+              patientStateItem={patientState[key]}
+              intensity={
+                patientState[`${categoryName}_INTENSITY`] || {level: 3}
+              }
+              category={displayedCategories[key]}
+            />
+          );
+        } else {
+          return (
             <PatientStateItem
               key={key}
               patientStateItem={patientState[key]}
               category={displayedCategories[key]}
             />
-          ),
-      )}
+          );
+        }
+      })}
       <Notes notes={patientState.NOTES} />
     </View>
   );

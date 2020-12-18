@@ -3,8 +3,14 @@ import {StyleSheet, View, Text} from 'react-native';
 import Button from '../common/button';
 import {colors} from '../common/colors';
 import {formatDay} from '../services/date/helpers';
+import matomo from '../services/matomo';
 
 const NoDataTodayDiaryItem = ({startAtFirstQuestion}) => {
+  const onStartPress = () => {
+    matomo.logFeelingDateChoose('today');
+    startAtFirstQuestion(formatDay(new Date()));
+  };
+
   return (
     <View style={styles.noDataContainer}>
       <Text style={styles.noDataTitle}>Comment se passe votre journée ?</Text>
@@ -14,7 +20,7 @@ const NoDataTodayDiaryItem = ({startAtFirstQuestion}) => {
           title="Commencer"
           buttonColor="white"
           textColor={colors.BLUE}
-          onPress={() => startAtFirstQuestion(formatDay(new Date()))}
+          onPress={onStartPress}
         />
       </View>
     </View>

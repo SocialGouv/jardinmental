@@ -13,6 +13,7 @@ import {buildSurveyData} from '../survey/survey-data';
 import SymptomsExplanation from '../symptoms/symptoms-explanation';
 import {displayedCategories} from '../common/constants';
 import localStorage from '../utils/localStorage';
+import matomo from '../services/matomo';
 
 const SymptomScreen = ({navigation, route}) => {
   const explanation =
@@ -44,6 +45,11 @@ const SymptomScreen = ({navigation, route}) => {
     let categories = {...chosenCategories};
     categories[cat] = value;
     setChosenCategories(categories);
+    if (value) {
+      matomo.logSymptomAdd(cat);
+    } else {
+      matomo.logSymptomCancel(cat);
+    }
   };
 
   const noneSelected = () => {

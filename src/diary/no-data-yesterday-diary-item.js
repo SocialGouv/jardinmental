@@ -3,8 +3,14 @@ import {StyleSheet, View, Text, Image} from 'react-native';
 import Button from '../common/button';
 import {colors} from '../common/colors';
 import {beforeToday, formatDay} from '../services/date/helpers';
+import matomo from '../services/matomo';
 
 const NoDataYesterdayDiaryItem = ({startAtFirstQuestion}) => {
+  const onStartPress = () => {
+    matomo.logFeelingDateChoose('yesterday');
+    startAtFirstQuestion(formatDay(beforeToday(1)));
+  };
+
   return (
     <View style={styles.noDataContainer}>
       <View style={styles.textContainer}>
@@ -13,10 +19,7 @@ const NoDataYesterdayDiaryItem = ({startAtFirstQuestion}) => {
           Cliquez ici pour compléter vos informations
         </Text>
         <View style={styles.buttonWrapper}>
-          <Button
-            title="Ajouter"
-            onPress={() => startAtFirstQuestion(formatDay(beforeToday(1)))}
-          />
+          <Button title="Ajouter" onPress={onStartPress} />
         </View>
       </View>
       <Image

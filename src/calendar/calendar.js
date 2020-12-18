@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {SafeAreaView, ScrollView, StyleSheet} from 'react-native';
 import {displayedCategories} from '../common/constants';
 import {
@@ -11,10 +11,19 @@ import Chart from './chart';
 import WeekPicker from './week-picker';
 import {DiaryDataContext} from '../context';
 import {useContext} from 'react';
+import matomo from '../services/matomo';
 
 const Calendar = ({navigation}) => {
   const [day, setDay] = useState(new Date());
   const [diaryData] = useContext(DiaryDataContext);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('tabPress', (e) => {
+      matomo.logCalendarOpen();
+    });
+
+    return unsubscribe;
+  }, [navigation]);
 
   const {firstDay, lastDay} = getTodaySWeek(day);
 
@@ -37,6 +46,18 @@ const Calendar = ({navigation}) => {
       const categoryState = diaryData[date][categoryId];
       if (!categoryState) {
         return null;
+      }
+
+      // get the name and the suffix of the category
+      const [categoryName, suffix] = categoryId.split('_');
+      let categoryStateIntensity = null;
+      if (suffix && suffix === 'FREQUENCE') {
+        // if it's one category with the suffix 'FREQUENCE' :
+        // add the intensity (default level is 3 - for the frequence 'never')
+        categoryStateIntensity = diaryData[date][
+          `${categoryName}_INTENSITY`
+        ] || {level: 3};
+        return categoryState.level + categoryStateIntensity.level - 2;
       }
       return categoryState.level - 1;
     });
