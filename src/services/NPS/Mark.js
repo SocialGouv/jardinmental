@@ -5,7 +5,7 @@ import {colors} from '../../common/colors';
 const Mark = ({onPress, selected, bad, good}) => (
   <>
     <View style={styles.container}>
-      {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((mark, i, arr) => (
+      {[...Array(11).keys()].map((mark, index, array) => (
         <TouchableOpacity
           style={styles.markButton}
           onPress={() => onPress(mark)}
@@ -13,7 +13,7 @@ const Mark = ({onPress, selected, bad, good}) => (
           <View
             style={[
               styles.mark,
-              i === arr.length - 1 && styles.last,
+              index === array.length - 1 && styles.last,
               mark === selected && styles.markSelected,
             ]}>
             <Text
