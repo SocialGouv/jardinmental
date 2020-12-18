@@ -7,12 +7,14 @@ import DiarySvg from '../../assets/svg/diary.svg';
 import PlusSvg from '../../assets/svg/plus.svg';
 import CalendarSvg from '../../assets/svg/calendar.svg';
 import localStorage from '../utils/localStorage';
+import matomo from '../services/matomo';
 
 const Tab = createMaterialTopTabNavigator();
 
 const Tabs = ({navigation}) => {
   const handlePlus = async () => {
     const symptoms = await localStorage.getSymptoms();
+    matomo.logFeelingStart();
     if (!symptoms) {
       navigation.navigate('symptoms', {
         showExplanation: true,

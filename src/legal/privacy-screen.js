@@ -28,9 +28,9 @@ const Privacy = ({navigation}) => {
       </Text>
       {'\n\n'}
       Il n’y a pas de traitement de vos données de santé dans le cadre de
-      l’utilisation. En effet, les données saisies par l’utilisateur sont
-      stockées exclusivement dans son téléphone. Il n’y a donc à ce titre aucun
-      traitement de données de santé.
+      l’utilisation du service MonSuiviPsy. En effet, les données saisies par
+      l’utilisateur sont stockées exclusivement dans son téléphone. Il n’y a
+      donc à ce titre aucun traitement de données de santé.
       {'\n'}
       Les données d’utilisation de l’outil comprennent des données personnelles
       anonymisées.
@@ -66,13 +66,9 @@ const Privacy = ({navigation}) => {
       {'\n\n'}
       Aucune donnée à caractère personnel n’est traitée. Les données sont
       stockées en local dans le téléphone de l’usager.
-      {'\n'}- Les données de suivi de l’évolution de l’intensité et de la
-      fréquence des symptômes et des effets indésirables des traitements.
-      {'\n'}- Les notes libres saisies par l’utilisateur, concernant l’état de
-      l’utilisateur, ses ressentis ou tout autre information qu’il souhaite
-      inscrire.
-      {'\n'}- La dernière adresse mail vers laquelle les informations saisies
-      ont été envoyées.
+      {'\n\n'}
+      Seules les données fonctionnelles d’utilisation de l’application sont
+      traitées. Celles-ci sont anonymisées avant tout traitement de notre part.
       {'\n\n'}
       <Text style={styles.title}>
         Bases juridiques des traitements de données

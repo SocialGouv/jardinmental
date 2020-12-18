@@ -4,6 +4,7 @@ import {
   STORAGE_KEY_SURVEY_RESULTS,
   STORAGE_KEY_START_DATE,
   STORAGE_KEY_SYMPTOMS,
+  STORAGE_KEY_IS_FIRST_LAUNCH,
 } from '../common/constants';
 import {
   fakeDiaryData,
@@ -15,6 +16,7 @@ const wipeData = async () => {
   await AsyncStorage.removeItem(STORAGE_KEY_START_DATE);
   await AsyncStorage.removeItem(STORAGE_KEY_SURVEY_RESULTS);
   await AsyncStorage.removeItem(STORAGE_KEY_SYMPTOMS);
+  await AsyncStorage.removeItem(STORAGE_KEY_IS_FIRST_LAUNCH);
 };
 
 const setupFakeData = async () => {

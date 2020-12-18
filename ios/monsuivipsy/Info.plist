@@ -28,9 +28,16 @@
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
 		<false/>
+		<key>NSAllowsLocalNetworking</key>
+		<true/>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string/>
+	<string></string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Karla-Bold.ttf</string>
+		<string>Karla-Regular.ttf</string>
+	</array>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>
@@ -53,10 +60,5 @@
 	<string>app-store</string>
 	<key>teamID</key>
 	<string>B4JPFKWLRH</string>
-	<key>UIAppFonts</key>
-	<array>
-		<string>Karla-Bold.ttf</string>
-		<string>Karla-Regular.ttf</string>
-	</array>
 </dict>
 </plist>
