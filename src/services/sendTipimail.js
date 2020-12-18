@@ -4,12 +4,12 @@ export const sendTipimail = async (msg, address) => {
   return await fetch('https://api.tipimail.com/v1/messages/send', {
     method: 'POST',
     headers: {
-      'X-Tipimail-ApiUser': '2fbfeec4905f352f871b2590da840571',
-      'X-Tipimail-ApiKey': 'e94f70b1c2dd423a446efbbc788200cb',
+      'X-Tipimail-ApiUser': TIPIMAIL_API_USER,
+      'X-Tipimail-ApiKey': TIPIMAIL_API_KEY,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      apiKey: 'e94f70b1c2dd423a446efbbc788200cb',
+      apiKey: TIPIMAIL_API_KEY,
       to: [
         {
           address,
