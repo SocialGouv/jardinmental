@@ -180,6 +180,18 @@ const formatHtmlTable = (diaryData) => {
       if (!categoryState) {
         return null;
       }
+
+      // get the name and the suffix of the category
+      const [categoryName, suffix] = categoryId.split('_');
+      let categoryStateIntensity = null;
+      if (suffix && suffix === 'FREQUENCE') {
+        // if it's one category with the suffix 'FREQUENCE' :
+        // add the intensity (default level is 3 - for the frequence 'never')
+        categoryStateIntensity = diaryData[date][
+          `${categoryName}_INTENSITY`
+        ] || {level: 3};
+        return categoryState.level + categoryStateIntensity.level - 1;
+      }
       return categoryState.level;
     });
   };

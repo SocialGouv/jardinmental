@@ -26,7 +26,7 @@ const DailyChart = ({
     setDiaryDay(chartDates[index]);
   };
 
-  const computeChartData = () => {
+  const computeChartData = (categoryId) => {
     return chartDates.map((date) => {
       const dayData = diaryData[date];
       if (!dayData) {
@@ -36,10 +36,21 @@ const DailyChart = ({
       if (!categoryState) {
         return null;
       }
+
+      // get the name and the suffix of the category
+      const [categoryName, suffix] = categoryId.split('_');
+      let categoryStateIntensity = null;
+      if (suffix && suffix === 'FREQUENCE') {
+        // if it's one category with the suffix 'FREQUENCE' :
+        // add the intensity (default level is 3 - for the frequence 'never')
+        categoryStateIntensity = diaryData[date][
+          `${categoryName}_INTENSITY`
+        ] || {level: 3};
+        return categoryState.level + categoryStateIntensity.level - 2;
+      }
       return categoryState.level - 1;
     });
   };
-
   return (
     <SafeAreaView style={styles.safe}>
       <ScrollView
@@ -48,7 +59,7 @@ const DailyChart = ({
         <DayTitle day={new Date(diaryDay)} onBackPress={navigation.goBack} />
         <Chart
           title={displayedCategories[categoryId]}
-          data={computeChartData()}
+          data={computeChartData(categoryId)}
           withFocus
           focused={focused}
           onPress={setFocusedRequest}

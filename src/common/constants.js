@@ -10,16 +10,16 @@ export const icons = {
 };
 
 const colors = {
-  veryGood: '#E2FA80',
-  good: '#F0F277',
-  middle: '#FCE285',
-  bad: '#FCD0A7',
   veryBad: '#FFC0C0',
-  veryGoodTrans: '#edfaca',
-  goodTrans: '#f1f491',
-  middleTrans: '#fbe79c',
-  badTrans: '#fbd8b8',
+  bad: '#FCD0A7',
+  middle: '#FCE285',
+  good: '#F0F277',
+  veryGood: '#E2FA80',
   veryBadTrans: '#fdcccc',
+  badTrans: '#fbd8b8',
+  middleTrans: '#fbe79c',
+  goodTrans: '#f1f491',
+  veryGoodTrans: '#edfaca',
 };
 
 export const colorsMap = Object.keys(colors).map((key) => colors[key]);
@@ -100,7 +100,7 @@ export const surveyDate = {
 export const frequence = {
   NEVER: {
     id: 'NEVER',
-    level: 1,
+    level: 3,
     icon: icons.veryGood,
     color: colors.veryGood,
     label: 'Jamais',
@@ -114,7 +114,7 @@ export const frequence = {
   },
   MANY_TIMES: {
     id: 'MANY_TIMES',
-    level: 3,
+    level: 1,
     icon: icons.veryBad,
     color: colors.veryBad,
     label: 'De nombreuses fois',
@@ -124,7 +124,7 @@ export const frequence = {
 export const intensity = {
   LIGHT: {
     id: 'LIGHT',
-    level: 1,
+    level: 3,
     icon: icons.veryGood,
     color: colors.veryGood,
     label: 'Légèrement pénible',
@@ -138,7 +138,7 @@ export const intensity = {
   },
   HIGH: {
     id: 'HIGH',
-    level: 3,
+    level: 1,
     icon: icons.veryBad,
     color: colors.veryBad,
     label: 'Très pénible',

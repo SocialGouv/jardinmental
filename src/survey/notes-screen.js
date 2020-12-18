@@ -13,6 +13,7 @@ import {categories} from '../common/constants';
 import {DiaryDataContext} from '../context';
 import {isYesterday, parseISO} from 'date-fns';
 import Button from '../common/button';
+import matomo from '../services/matomo';
 
 const Notes = ({navigation, route}) => {
   const [notes, setNotes] = useState('');
@@ -32,6 +33,7 @@ const Notes = ({navigation, route}) => {
       answers: {...survey?.answers, [categories.NOTES]: notes},
     };
     setDiaryData(currentSurvey);
+    matomo.logFeelingAdd();
     navigation.navigate('tabs');
   };
 

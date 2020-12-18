@@ -6,6 +6,9 @@ import {
   SafeAreaView,
   TextInput,
   Alert,
+  KeyboardAvoidingView,
+  Platform,
+  View,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ExportData from '../../assets/svg/export-data.svg';
@@ -19,6 +22,7 @@ import {
   TIPIMAIL_FROM_MAIL,
   TIPIMAIL_FROM_NAME,
 } from '@env';
+import matomo from '../services/matomo';
 const MailStorageKey = '@Mail';
 
 const Export = ({navigation}) => {
@@ -41,6 +45,7 @@ const Export = ({navigation}) => {
     await AsyncStorage.setItem(MailStorageKey, mail);
     const htmlExport = formatHtmlTable(diaryData);
     setIsLoading(true);
+    matomo.logDataExport();
     const res = await fetch('https://api.tipimail.com/v1/messages/send', {
       method: 'POST',
       headers: {
@@ -78,32 +83,39 @@ const Export = ({navigation}) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <TouchableOpacity
-        onPress={onBackPress}
-        style={styles.backButtonContainer}>
-        <Text style={styles.backButton}>Retour</Text>
-      </TouchableOpacity>
-      <ExportData style={styles.icon} />
-      <Text style={styles.title}>
-        Recevez vos données des 30 derniers jours par mail
-      </Text>
-      <TextInput
-        autoCapitalize="none"
-        keyboardType="email-address"
-        textContentType="emailAddress"
-        onChangeText={setMail}
-        value={mail}
-        placeholder="Renseignez votre email"
-        style={styles.inputMail}
-      />
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={{flex: 1}}>
+      <SafeAreaView style={styles.container}>
+        <View style={styles.inner}>
+          <TouchableOpacity
+            onPress={onBackPress}
+            style={styles.backButtonContainer}>
+            <Text style={styles.backButton}>Retour</Text>
+          </TouchableOpacity>
+          <ExportData style={styles.icon} />
+          <Text style={styles.title}>
+            Recevez vos données des 30 derniers jours par mail
+          </Text>
+          <TextInput
+            autoCapitalize="none"
+            keyboardType="email-address"
+            textContentType="emailAddress"
+            onChangeText={setMail}
+            value={mail}
+            placeholder="Renseignez votre email"
+            style={styles.inputMail}
+          />
 
-      {!isLoading && (
-        <TouchableOpacity onPress={exportData} style={styles.exportButton}>
-          <Text style={styles.exportButtonText}>Exporter mes données</Text>
-        </TouchableOpacity>
-      )}
-    </SafeAreaView>
+          {!isLoading && (
+            <TouchableOpacity onPress={exportData} style={styles.exportButton}>
+              <Text style={styles.exportButtonText}>Exporter mes données</Text>
+            </TouchableOpacity>
+          )}
+          <View style={{flex: 1}} />
+        </View>
+      </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -112,12 +124,18 @@ const styles = StyleSheet.create({
     margin: '20%',
   },
   container: {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    backgroundColor: '#f9f9f9',
+    height: '100%',
+  },
+  inner: {
+    display: 'flex',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    paddingBottom: 100,
+    paddingBottom: 30,
     backgroundColor: '#f9f9f9',
-    flexGrow: 1,
-    height: '100%',
+    justifyContent: 'flex-end',
   },
   title: {
     width: '80%',
@@ -128,10 +146,10 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   backButtonContainer: {
-    alignSelf: 'flex-start',
-    paddingLeft: 20,
+    position: 'absolute',
+    top: 20,
+    left: 20,
     marginBottom: '20%',
-    marginTop: 20,
   },
   backButton: {
     fontWeight: '700',

@@ -33,7 +33,7 @@ const SettingsModal = ({navigation, visible, onClick}) => {
             icon="ExportDataSettingSvg"
           />
           <SettingItem
-            title="Conditions générales d'utilisation"
+            title="Documents juridiques"
             path="cgu"
             navigation={navigation}
             onClick={onClick}
