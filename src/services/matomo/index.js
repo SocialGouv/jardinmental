@@ -175,6 +175,22 @@ const logDataExport = async () => {
   });
 };
 
+const logNPSOpen = async () => {
+  await logEvent({
+    category: 'NPS',
+    action: 'NPS_OPEN',
+  });
+};
+
+const logNPSSend = async (useful, reco) => {
+  await logEvent({
+    category: 'NPS',
+    action: 'NPS_SEND',
+    name: 'notes',
+    value: `${useful}-${reco}`,
+  });
+};
+
 export default {
   initMatomo,
   logAppVisit,
@@ -190,4 +206,6 @@ export default {
   logCalendarOpen,
   logDataExport,
   getUserId,
+  logNPSOpen,
+  logNPSSend,
 };

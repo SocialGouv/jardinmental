@@ -1,4 +1,5 @@
 import PushNotification from 'react-native-push-notification';
+import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import {Platform} from 'react-native';
 
 class NotificationService {
@@ -74,12 +75,24 @@ class NotificationService {
   }
 
   handleNotification = (notification) => {
-    console.log('Initial Notification', notification);
+    console.log('handle Notification', JSON.stringify(notification, null, 2));
+
+    /* ANDROID FOREGROUND */
+
+    if (Platform.OS === 'android') {
+      // if not the line below, the notification is launched without notifying
+      // with the line below, there is a local notification triggered
+      if (notification.foreground && !notification.userInteraction) {
+        return;
+      }
+    }
+    /* LISTENERS */
+
     const listenerKeys = Object.keys(this.listeners);
     //  handle initial notification if any, if no listener is mounted yet
     if (!listenerKeys.length) {
       this.initNotification = notification;
-      notification.finish();
+      notification.finish(PushNotificationIOS.FetchResult.NoData);
       return;
     }
     this.initNotification = null;
@@ -89,7 +102,7 @@ class NotificationService {
       const notificationHandler = this.listeners[listenerKeys[i]];
       notificationHandler(notification);
     }
-    notification.finish();
+    notification.finish(PushNotificationIOS.FetchResult.NoData);
   };
 
   listen = (callback) => {

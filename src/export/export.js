@@ -16,13 +16,8 @@ import {colors} from '../common/colors';
 import {DiaryDataContext} from '../context';
 import {formatHtmlTable} from './utils';
 
-import {
-  TIPIMAIL_API_KEY,
-  TIPIMAIL_API_USER,
-  TIPIMAIL_FROM_MAIL,
-  TIPIMAIL_FROM_NAME,
-} from '@env';
 import matomo from '../services/matomo';
+import {sendTipimail} from '../services/sendTipimail';
 const MailStorageKey = '@Mail';
 
 const Export = ({navigation}) => {
@@ -46,30 +41,17 @@ const Export = ({navigation}) => {
     const htmlExport = formatHtmlTable(diaryData);
     setIsLoading(true);
     matomo.logDataExport();
-    const res = await fetch('https://api.tipimail.com/v1/messages/send', {
-      method: 'POST',
-      headers: {
-        'X-Tipimail-ApiUser': TIPIMAIL_API_USER,
-        'X-Tipimail-ApiKey': TIPIMAIL_API_KEY,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        apiKey: TIPIMAIL_API_KEY,
-        to: [
-          {
-            address: mail,
-          },
-        ],
-        msg: {
-          from: {
-            address: TIPIMAIL_FROM_MAIL,
-            personalName: TIPIMAIL_FROM_NAME,
-          },
-          subject: 'Export de données',
-          html: htmlExport,
+    const res = await sendTipimail(
+      {
+        from: {
+          address: 'contact@monsuivipsy.fr',
+          personalName: 'MonSuiviPsy - Application',
         },
-      }),
-    }).catch((err) => console.log('sendNPS err', err));
+        subject: 'Export de données',
+        html: htmlExport,
+      },
+      mail,
+    );
     setIsLoading(false);
     if (res.ok) {
       Alert.alert(
