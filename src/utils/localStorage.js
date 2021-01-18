@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   STORAGE_KEY_IS_FIRST_LAUNCH,
   STORAGE_KEY_SYMPTOMS,
+  STORAGE_KEY_SUPPORTED,
 } from '../common/constants';
 
 const getSymptoms = async () => {
@@ -25,9 +26,17 @@ const setIsFirstAppLaunch = async (isAppFirstLaunch) => {
   );
 };
 
+const getSupported = async () =>
+  await AsyncStorage.getItem(STORAGE_KEY_SUPPORTED);
+
+const setSupported = async (supported) =>
+  await AsyncStorage.setItem(STORAGE_KEY_SUPPORTED, JSON.stringify(supported));
+
 export default {
   getSymptoms,
   setSymptoms,
   getIsFirstAppLaunch,
   setIsFirstAppLaunch,
+  getSupported,
+  setSupported,
 };

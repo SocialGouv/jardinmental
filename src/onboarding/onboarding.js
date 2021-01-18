@@ -1,5 +1,11 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, SafeAreaView, View} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  SafeAreaView,
+  View,
+  TouchableOpacity,
+} from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import Swiper from 'react-native-swiper';
 import {colors} from '../common/colors';
@@ -12,7 +18,7 @@ const Onboarding = ({navigation}) => {
   const [isCguChecked, setIsCguChecked] = useState(false);
 
   const validateOnboarding = async () => {
-    navigation.navigate('tabs');
+    navigation.navigate('supported');
     await localStorage.setIsFirstAppLaunch(false);
   };
 
@@ -35,65 +41,51 @@ const Onboarding = ({navigation}) => {
   return (
     <SafeAreaView style={styles.safe}>
       <Text style={styles.title}>Mon Suivi Psy</Text>
-      <Swiper
-        loop={false}
-        activeDot={<ActiveDot />}
-        onIndexChanged={onIndexChanged}>
-        <View style={styles.container}>
-          <Text style={styles.presentationText}>
-            Mieux suivre l’évolution de mes symptômes{'\n'}
-          </Text>
-          <Text style={styles.presentationText}>
-            Service <Text style={styles.emphasis}>Gratuit</Text> et{' '}
-            <Text style={styles.emphasis}>Anonyme</Text>
-          </Text>
-        </View>
-        <View style={styles.container}>
-          <Text style={styles.presentationText}>
-            Choisissez les symptômes que vous souhaitez suivre{'\n'}
-          </Text>
-          <Text style={styles.presentationText}>
-            Visualisez leur évolution sur des courbes
-          </Text>
-        </View>
-        <View style={styles.container}>
-          <Text style={styles.presentationText}>
-            Envoyer le récapitulatif des courbes à votre psychiatre, à votre
-            médecin, à votre psychologue, si vous le souhaitez
-          </Text>
-        </View>
-      </Swiper>
-      <View style={styles.buttonWrapper}>
-        <Button
-          onPress={validateOnboarding}
-          title="Commencer"
-          disabled={!isCguChecked}
-        />
-      </View>
-      <View style={styles.cgu}>
-        <CheckBox
-          animationDuration={0.2}
-          tintColor="#1FC6D5"
-          tintColors={{true: '#1FC6D5', false: 'grey'}}
-          boxType="square"
-          style={styles.checkbox}
-          value={isCguChecked}
-          onValueChange={(newValue) => setIsCguChecked(newValue)}
-        />
-        <Text>
-          En cochant cette case, vous acceptez nos{' '}
-          <Text onPress={onCguClick} style={styles.underlined}>
-            Conditions Générales d’Utilisation
-          </Text>
-          , notre{' '}
-          <Text onPress={onPrivacyClick} style={styles.underlined}>
-            Politique de Confidentialité
-          </Text>{' '}
-          et nos{' '}
-          <Text onPress={onLegalMentionsClick} style={styles.underlined}>
-            Mentions Légales
-          </Text>
+      <View style={styles.container}>
+        <Text style={styles.message}>
+          Pour <Text style={styles.emphasis}>suivre</Text> l’évolution de{' '}
+          <Text style={styles.emphasis}>mes symptômes</Text>.
         </Text>
+        <Text style={styles.message}>
+          Pour partager au mieux avec les{' '}
+          <Text style={styles.emphasis}>psychiatres</Text>,{' '}
+          <Text style={styles.emphasis}>médecins</Text>,{' '}
+          <Text style={styles.emphasis}>psychologues</Text> et trouver le bon
+          traitement pour aller mieux.
+        </Text>
+        <View style={styles.cgu}>
+          <CheckBox
+            animationDuration={0.2}
+            tintColor="#1FC6D5"
+            tintColors={{true: '#1FC6D5', false: 'grey'}}
+            boxType="square"
+            style={styles.checkbox}
+            value={isCguChecked}
+            onValueChange={(newValue) => setIsCguChecked(newValue)}
+          />
+          <Text style={styles.label}>
+            En cochant cette case, vous acceptez nos{' '}
+            <Text onPress={onCguClick} style={styles.underlined}>
+              Conditions Générales d’Utilisation
+            </Text>
+            , notre{' '}
+            <Text onPress={onPrivacyClick} style={styles.underlined}>
+              Politique de Confidentialité
+            </Text>{' '}
+            et nos{' '}
+            <Text onPress={onLegalMentionsClick} style={styles.underlined}>
+              Mentions Légales
+            </Text>
+          </Text>
+        </View>
+        <View style={styles.container}>
+          <TouchableOpacity
+            disabled={!isCguChecked}
+            onPress={validateOnboarding}
+            style={styles.ValidationButton}>
+            <Text style={styles.ValidationButtonText}>Commencer</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -103,6 +95,26 @@ const styles = StyleSheet.create({
   safe: {
     flex: 1,
     backgroundColor: 'white',
+  },
+  checkbox: {
+    marginRight: 20,
+  },
+  label: {
+    width: '100%',
+  },
+  ValidationButton: {
+    backgroundColor: colors.LIGHT_BLUE,
+    height: 45,
+    borderRadius: 45,
+    paddingHorizontal: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 15,
+  },
+  ValidationButtonText: {
+    color: '#fff',
+    fontWeight: '700',
+    fontSize: 19,
   },
   title: {
     color: colors.BLUE,
@@ -134,6 +146,10 @@ const styles = StyleSheet.create({
   },
   underlined: {
     textDecorationLine: 'underline',
+  },
+  message: {
+    fontSize: 22,
+    padding: 15,
   },
 });
 

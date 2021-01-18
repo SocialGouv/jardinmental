@@ -48,7 +48,7 @@ const TimePicker = ({visible, selectDate}) => {
             />
             <View style={styles.buttons}>
               <TouchableOpacity onPress={() => selectDate(date)}>
-                <Text style={styles.validate}>Validez</Text>
+                <Text style={styles.validate}>Valider</Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => selectDate(null)}>
                 <Text style={styles.cancel}>Retour</Text>

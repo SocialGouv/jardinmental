@@ -11,6 +11,7 @@ import DailyChart from '../calendar/daily-chart';
 import {AppState, Platform} from 'react-native';
 import Notes from '../survey/notes-screen';
 import Onboarding from '../onboarding/onboarding';
+import Supported from '../supported/supported';
 import CGU from '../legal/cgu-screen';
 import Privacy from '../legal/privacy-screen';
 import LegalMentions from '../legal/legal-mentions-screen';
@@ -81,6 +82,7 @@ class Router extends React.Component {
             )}
           </Stack.Screen>
           <Stack.Screen name="onboarding" component={Onboarding} />
+          <Stack.Screen name="supported" component={Supported} />
           <Stack.Screen name="cgu" component={CGU} />
           <Stack.Screen name="privacy" component={Privacy} />
           <Stack.Screen name="legal-mentions" component={LegalMentions} />

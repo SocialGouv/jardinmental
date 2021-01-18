@@ -3,6 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import DeviceInfo from 'react-native-device-info';
 import {Platform} from 'react-native';
 import Matomo from './lib';
+import {STORAGE_KEY_SUPPORTED} from '../../common/constants';
 
 const CONSTANTS = {
   STORE_KEY_USER_ID: 'STORE_KEY_USER_ID',
@@ -32,9 +33,12 @@ const initMatomo = async () => {
     _idvc: newVisits,
   });
 
+  let supported = await AsyncStorage.getItem(STORAGE_KEY_SUPPORTED);
+
   Matomo.setUserProperties({
     version: DeviceInfo.getVersion(),
     system: Platform.OS,
+    supported: supported ? supported : '',
   });
 };
 
@@ -191,6 +195,14 @@ const logNPSSend = async (useful, reco) => {
   });
 };
 
+const logSupportedSelect = async (supported) => {
+  await logEvent({
+    category: 'SUPPORTED',
+    name: 'supported',
+    value: supported,
+  });
+};
+
 export default {
   initMatomo,
   logAppVisit,
@@ -208,4 +220,5 @@ export default {
   getUserId,
   logNPSOpen,
   logNPSSend,
+  logSupportedSelect,
 };
