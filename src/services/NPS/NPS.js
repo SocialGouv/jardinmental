@@ -50,7 +50,7 @@ class NPS extends React.Component {
     email: '',
     sendButton: getCaption('post'),
     NPSKey: 0,
-    page: 1,
+    page: 2,
   };
 
   async componentDidMount() {
@@ -389,7 +389,7 @@ const captions = {
   'feedback.rate-app.probable.not': 'Pas du tout probable',
   'feedback.rate-app.probable.extremely': 'Très probable',
   'feedback.improvements.title':
-    'Merci !\u000APour améliorer notre service, avez-vous quelques recommandations à nous faire\u00A0?',
+    'Pour améliorer notre service, avez-vous quelques recommandations à nous faire\u00A0?',
   'feedback.improvements.question':
     'Comment pouvons-nous vous être encore plus utile\u00A0? Comment pouvons-nous améliorer ce service\u00A0?',
   'feedback.improvements.placeholder': "Idées d'améliorations (facultatif)",

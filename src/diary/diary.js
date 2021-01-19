@@ -22,11 +22,13 @@ import localStorage from '../utils/localStorage';
 import {buildSurveyData} from '../survey/survey-data';
 const ReminderStorageKey = '@Reminder';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import NPS from '../services/NPS/NPS';
 
 const Diary = ({navigation}) => {
   const [diaryData] = useContext(DiaryDataContext);
   const [modalSettingsVisible, setModalSettingsVisible] = useState(false);
   const [reminderItemVisible, setReminderItemVisible] = useState(true);
+  const [NPSvisible, setNPSvisible] = useState(false);
 
   const startAtFirstQuestion = async (date) => {
     const symptoms = await localStorage.getSymptoms();
@@ -59,8 +61,8 @@ const Diary = ({navigation}) => {
   };
 
   const onPressReminder = () => navigation.navigate('reminder');
-  const onPressContribute = () => {
-  };
+  const onPressContribute = () => setNPSvisible(true);
+  const closeNPS = () => setNPSvisible(false);
 
   useEffect(() => {
     (async () => {
@@ -81,6 +83,7 @@ const Diary = ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.safe}>
+      <NPS forceView={NPSvisible} close={closeNPS} />
       <ScrollView style={styles.container}>
         <View style={styles.headerContainer}>
           <Header>Mon journal</Header>

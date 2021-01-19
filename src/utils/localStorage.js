@@ -26,8 +26,12 @@ const setIsFirstAppLaunch = async (isAppFirstLaunch) => {
   );
 };
 
-const getSupported = async () =>
-  await AsyncStorage.getItem(STORAGE_KEY_SUPPORTED);
+const getSupported = async () => {
+  const supported = await AsyncStorage.getItem(STORAGE_KEY_SUPPORTED);
+  if (supported) {
+    return JSON.parse(supported);
+  }
+};
 
 const setSupported = async (supported) =>
   await AsyncStorage.setItem(STORAGE_KEY_SUPPORTED, JSON.stringify(supported));

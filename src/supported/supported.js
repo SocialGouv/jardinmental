@@ -32,39 +32,33 @@ const Supported = ({navigation}) => {
           <Text style={styles.title}>Mon Suivi Psy</Text>
           <Text style={styles.title}>Pour commencer</Text>
         </View>
-        <View style={styles.content}>
-          <Card
-            title="Je suis suivi"
-            subtitle="Vous avez télécharger l’application sur recommandation d’un médecin."
-            color="#D4F0F2"
-            handleClick={() => handleClick('YES')}
-          />
-          <Card
-            title="Je ne suis pas suivi"
-            subtitle="C’est une démarche personnelle, pour suivre vos symptomes."
-            color="#8BDDE4"
-            handleClick={() => handleClick('NO')}
-          />
-          <Card
-            title="Je ne suis pas suivi mais je le souhaite"
-            subtitle="Je veux trouver un contact."
-            color="#dddddd"
-            handleClick={() => handleClick('NOT_YET')}
-          />
-        </View>
+        <Card
+          title="Je suis suivi"
+          subtitle="Vous avez téléchargé l’application sur recommandation d’un professionnel qui vous suit."
+          color="#F4FCFD"
+          handleClick={() => handleClick('YES')}
+        />
+        <Card
+          title="Je ne suis pas suivi"
+          subtitle="Vous avez téléchargé l’application dans le cadre d’une démarche personnelle, pour suivre vos symptômes et avoir des informations."
+          color="#F4FCFD"
+          handleClick={() => handleClick('NO')}
+        />
+        <Card
+          title="Je ne suis pas suivi mais je le souhaite"
+          subtitle="Vous avez téléchargé l’application pour être informé, orienté et trouver un contact."
+          color="#F4FCFD"
+          handleClick={() => handleClick('NOT_YET')}
+        />
       </View>
     </SafeAreaView>
   );
 };
 
-const Card = ({color, title, subtitle, handleClick}) => {
+const Card = ({title, subtitle, handleClick}) => {
   return (
     <TouchableOpacity onPress={handleClick}>
-      <View
-        style={[
-          styles.card,
-          {backgroundColor: `${color}55`, borderColor: color},
-        ]}>
+      <View style={[styles.card]}>
         <Text style={styles.cardTitle}>{title}</Text>
         <Text style={styles.cardSubTitle}>{subtitle}</Text>
       </View>
@@ -74,7 +68,7 @@ const Card = ({color, title, subtitle, handleClick}) => {
 
 const styles = StyleSheet.create({
   card: {
-    borderWidth: 1,
+    backgroundColor: '#F4FCFD',
     marginBottom: 30,
     borderRadius: 10,
     padding: 20,
@@ -82,7 +76,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'flex-start',
-    minHeight: 120,
+    minHeight: '20%',
   },
   cardTitle: {
     color: colors.DARK_BLUE,
@@ -108,6 +102,13 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
     padding: 20,
+    flex: 1,
+    display: 'flex',
+    justifyContent: 'center',
+  },
+  content: {
+    display: 'flex',
+    flex: 1,
   },
 });
 

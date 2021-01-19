@@ -1,10 +1,7 @@
 import React from 'react';
 import {useEffect, useState} from 'react';
 import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
-import Button from '../common/button';
 import {colors} from '../common/colors';
-import {formatDay} from '../services/date/helpers';
-import matomo from '../services/matomo';
 import localStorage from '../utils/localStorage';
 
 const ReminderItem = ({onPress}) => {
@@ -14,11 +11,11 @@ const ReminderItem = ({onPress}) => {
     (async () => {
       const supported = await localStorage.getSupported();
       if (supported === 'YES') {
-        setMessage(
-          'Saisir au moins 3 à 4 fois par semaine vos symptômes permettera à votre médecin de mieux vous soigner',
+        return setMessage(
+          'Saisir au moins 4 ou 5 fois par semaine aidera le professionnel qui vous suit à mieux vous soigner',
         );
       } else {
-        setMessage(
+        return setMessage(
           'Saisir au moins 3 à 4 fois par semaine vos symptômes est l’idéal pour les suivres.',
         );
       }

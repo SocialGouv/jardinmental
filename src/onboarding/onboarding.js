@@ -7,11 +7,8 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
-import Swiper from 'react-native-swiper';
 import {colors} from '../common/colors';
-import Button from '../common/button';
 import localStorage from '../utils/localStorage';
-import ActiveDot from './active-dot';
 import matomo from '../services/matomo';
 
 const Onboarding = ({navigation}) => {
@@ -34,10 +31,6 @@ const Onboarding = ({navigation}) => {
     navigation.navigate('privacy');
   };
 
-  const onIndexChanged = (page) => {
-    matomo.logOnboardingSwipe(page);
-  };
-
   return (
     <SafeAreaView style={styles.safe}>
       <Text style={styles.title}>Mon Suivi Psy</Text>
@@ -47,11 +40,11 @@ const Onboarding = ({navigation}) => {
           <Text style={styles.emphasis}>mes symptômes</Text>.
         </Text>
         <Text style={styles.message}>
-          Pour partager au mieux avec les{' '}
+          Pour partager au mieux avec les professionnels qui me suivent (
           <Text style={styles.emphasis}>psychiatres</Text>,{' '}
-          <Text style={styles.emphasis}>médecins</Text>,{' '}
-          <Text style={styles.emphasis}>psychologues</Text> et trouver le bon
-          traitement pour aller mieux.
+          <Text style={styles.emphasis}>psychologues</Text>,{' '}
+          <Text style={styles.emphasis}>médecins généralistes</Text> …) et
+          trouver les bonnes ressources pour aller mieux.
         </Text>
         <View style={styles.cgu}>
           <CheckBox
@@ -95,6 +88,7 @@ const styles = StyleSheet.create({
   safe: {
     flex: 1,
     backgroundColor: 'white',
+    display: 'flex',
   },
   checkbox: {
     marginRight: 20,
@@ -125,6 +119,8 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
     padding: 20,
+    flex: 1,
+    justifyContent: 'flex-end',
   },
   buttonWrapper: {
     display: 'flex',
