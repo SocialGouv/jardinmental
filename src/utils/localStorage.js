@@ -3,6 +3,7 @@ import {
   STORAGE_KEY_IS_FIRST_LAUNCH,
   STORAGE_KEY_SYMPTOMS,
   STORAGE_KEY_SUPPORTED,
+  STORAGE_KEY_CUSTOM_SYMPTOMS,
 } from '../common/constants';
 
 const getSymptoms = async () => {
@@ -36,6 +37,22 @@ const getSupported = async () => {
 const setSupported = async (supported) =>
   await AsyncStorage.setItem(STORAGE_KEY_SUPPORTED, JSON.stringify(supported));
 
+const getCustomSymptoms = async () => {
+  const customSymptoms = await AsyncStorage.getItem(
+    STORAGE_KEY_CUSTOM_SYMPTOMS,
+  );
+  return JSON.parse(customSymptoms) || [];
+};
+
+const addCustomSymptoms = async (sym) => {
+  const customSymptoms = await getCustomSymptoms();
+  customSymptoms.push(sym);
+  await AsyncStorage.setItem(
+    STORAGE_KEY_CUSTOM_SYMPTOMS,
+    JSON.stringify(customSymptoms),
+  );
+};
+
 export default {
   getSymptoms,
   setSymptoms,
@@ -43,4 +60,6 @@ export default {
   setIsFirstAppLaunch,
   getSupported,
   setSupported,
+  getCustomSymptoms,
+  addCustomSymptoms,
 };

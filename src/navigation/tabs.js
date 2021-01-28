@@ -21,7 +21,7 @@ const Tabs = ({navigation}) => {
         redirect: '0',
       });
     } else {
-      navigation.navigate('question-0');
+      navigation.navigate('question', {index: 0});
     }
   };
   return (

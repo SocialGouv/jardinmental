@@ -10,27 +10,62 @@ import localStorage from '../utils/localStorage';
 // build an array of the question's index that the user selected.
 export const buildSurveyData = async () => {
   const userSymptoms = await localStorage.getSymptoms();
-  let data = [];
-  availableData.forEach((question, index) => {
+  const data = await getAvailableData();
+  let res = [];
+  data.forEach((question, index) => {
     const category = question.id;
+    // get the name and the suffix of the category
+    const [categoryName, suffix] = category.split('_');
 
     // if the user selected this category
-    if (userSymptoms[category]) {
-      data.push(index);
-
-      // get the name and the suffix of the category
-      const [categoryName, suffix] = category.split('_');
+    if (userSymptoms[category] || userSymptoms[categoryName]) {
+      res.push(index);
 
       // if it's one category with the suffix 'FREQUENCE' :
       // add the next question if it's the same categoryName (i.e. the question on the intensity of the same category)
-      if (suffix && suffix === 'FREQUENCE') {
+      if (suffix && suffix === 'FREQUENCE' && !question.custom) {
         const nextCategory = availableData[index + 1].id;
         const [nextCategoryName, _] = nextCategory.split('_');
-        nextCategoryName === categoryName && data.push(index + 1);
+        nextCategoryName === categoryName && res.push(index + 1);
       }
     }
   });
-  return data;
+  return res;
+};
+
+export const getAvailableData = async () => {
+  const customAvailableData = await getCustomAvailableData();
+  return availableData.concat(customAvailableData);
+};
+
+export const getCustomAvailableData = async () => {
+  const userCustomSymptoms = await localStorage.getCustomSymptoms();
+  res = [];
+  userCustomSymptoms.forEach((custom) => {
+    res.push(
+      {
+        id: `${custom}_FREQUENCE`,
+        question: `A quelle fréquence avez-vous eu "${custom}" aujourd’hui ?`,
+        yesterdayQuestion: `A quelle fréquence avez-vous eu "${custom}" hier ?`,
+        answers: [
+          frequence.NEVER,
+          frequence.SEVERAL_TIMES,
+          frequence.MANY_TIMES,
+        ],
+        dynamic: true,
+        custom: true,
+      },
+      {
+        id: `${custom}_INTENSITY`,
+        question: 'A quel point cela a-t-il été pénible ?',
+        yesterdayQuestion: 'A quel point cela a-t-il été pénible ?',
+        answers: [intensity.LIGHT, intensity.MIDDLE, intensity.HIGH],
+        dynamic: true,
+        custom: true,
+      },
+    );
+  });
+  return res;
 };
 
 export const availableData = [

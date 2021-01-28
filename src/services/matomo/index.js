@@ -198,6 +198,7 @@ const logNPSSend = async (useful, reco) => {
 const logSupportedSelect = async (supported) => {
   await logEvent({
     category: 'SUPPORTED',
+    action: 'SUPPORTED_CHOOSE',
     name: 'supported',
     value: supported,
   });

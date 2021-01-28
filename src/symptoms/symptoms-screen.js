@@ -19,6 +19,7 @@ const SymptomScreen = ({navigation, route}) => {
   const explanation =
     'A tout moment, vous pourrez modifier la liste des symptômes que vous souhaitez suivre via l’onglet “Réglages” situé en haut à droite du journal';
   const [chosenCategories, setChosenCategories] = useState({});
+  const [customSymptoms, setCustomSymptoms] = useState([]);
 
   useEffect(() => {
     (async () => {
@@ -28,8 +29,18 @@ const SymptomScreen = ({navigation, route}) => {
       } else {
         checkAll();
       }
+      const localCustomSymptoms = await localStorage.getCustomSymptoms();
+      if (localCustomSymptoms) setCustomSymptoms(localCustomSymptoms);
     })();
   }, []);
+
+  useEffect(() => {
+    const newSymptom = route.params?.newSymptom;
+    if (newSymptom) {
+      setCustomSymptoms([...customSymptoms, newSymptom]);
+      setChosenCategories({...chosenCategories, [newSymptom]: true});
+    }
+  }, [route]);
 
   const checkAll = () => {
     let categories = {};
@@ -71,14 +82,16 @@ const SymptomScreen = ({navigation, route}) => {
     let params = {};
 
     if (route.params?.redirect === '0') {
-      redirection = 'question-0';
+      redirection = 'question';
+      params = {index: 0};
     } else if (route.params?.redirect) {
-      redirection = `question-${index}`;
+      redirection = 'question';
       params = {
         currentSurvey: {
           date: route.params?.date,
           answers: {},
         },
+        index,
       };
     }
 
@@ -87,14 +100,12 @@ const SymptomScreen = ({navigation, route}) => {
 
   return (
     <SafeAreaView style={styles.safe}>
-      {!showExplanation && (
-        <TouchableOpacity
-          style={styles.backButtonContainer}
-          onPress={() => navigation.navigate('tabs')}>
-          <Text style={styles.backButton}>Retour</Text>
-        </TouchableOpacity>
-      )}
-      <ScrollView style={[styles.container, {flex: 1}]}>
+      <TouchableOpacity
+        style={styles.backButtonContainer}
+        onPress={() => navigation.navigate('tabs')}>
+        <Text style={styles.backButton}>Retour</Text>
+      </TouchableOpacity>
+      <ScrollView style={[styles.container, {flex: 1, paddingBottom: 100}]}>
         <Text style={styles.title}>
           Sélectionner les symptômes
           {showExplanation ? ' que vous souhaitez suivre' : ''}
@@ -102,7 +113,9 @@ const SymptomScreen = ({navigation, route}) => {
         {chosenCategories &&
           Object.keys(chosenCategories).map((cat, index) => (
             <View key={index} style={styles.categories}>
-              <Text style={styles.label}>{displayedCategories[cat]}</Text>
+              <Text style={styles.label}>
+                {displayedCategories[cat] || cat}
+              </Text>
               <CheckBox
                 animationDuration={0.2}
                 boxType="square"
@@ -112,15 +125,12 @@ const SymptomScreen = ({navigation, route}) => {
               />
             </View>
           ))}
-        {showExplanation && (
-          <TouchableOpacity>
-            <Text
-              style={styles.backButton}
-              onPress={() => navigation.navigate('tabs')}>
-              Retour
-            </Text>
-          </TouchableOpacity>
-        )}
+        <TouchableOpacity onPress={() => navigation.navigate('add-symptom')}>
+          <View style={styles.addSymptom}>
+            <Text style={styles.labelAddSymptom}>Ajouter un symptôme</Text>
+            <Text style={styles.plusIcon}>+</Text>
+          </View>
+        </TouchableOpacity>
       </ScrollView>
       <View style={styles.container}>
         <TouchableOpacity
@@ -187,6 +197,29 @@ const styles = StyleSheet.create({
     color: colors.BLUE,
     fontSize: 20,
     fontWeight: '600',
+  },
+  labelAddSymptom: {
+    flex: 1,
+    color: '#fff',
+    fontSize: 20,
+    fontWeight: '600',
+  },
+  plusIcon: {
+    color: '#fff',
+    fontSize: 30,
+    fontWeight: '300',
+    margin: -10,
+    marginRight: 10,
+  },
+  addSymptom: {
+    backgroundColor: colors.LIGHT_BLUE,
+    color: '#fff',
+    marginBottom: 50,
+    borderRadius: 10,
+    padding: 10,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   container: {
     backgroundColor: 'white',

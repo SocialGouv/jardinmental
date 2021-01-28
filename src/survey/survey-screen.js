@@ -9,24 +9,34 @@ import {
 } from 'react-native';
 import {colors} from '../common/colors';
 import CircledIcon from '../common/circled-icon';
-import {availableData, buildSurveyData} from './survey-data';
+import {buildSurveyData, getAvailableData} from './survey-data';
 import SurveyExplanation from './survey-explanation';
 import {categories, surveyDate} from '../common/constants';
 import {beforeToday, formatDay} from '../services/date/helpers';
 import {isYesterday, parseISO} from 'date-fns';
 
-const SurveyScreen = ({
-  question,
-  yesterdayQuestion,
-  answers,
-  explanation,
-  currentSurveyItem,
-  navigation,
-  route,
-  questionId,
-}) => {
+const SurveyScreen = ({navigation, route}) => {
   const [totalQuestions, setTotalQuestions] = useState(0);
   const [questions, setQuestions] = useState([]);
+  const [question, setQuestion] = useState();
+  const [yesterdayQuestion, setYesterdayQuestion] = useState();
+  const [answers, setAnswers] = useState();
+  const [explanation, setExplanation] = useState();
+  const [currentSurveyItem, setCurrentSurveyItem] = useState();
+  const [questionId, setQuestionId] = useState();
+  const [index, setIndex] = useState(route.params?.index);
+
+  const [availableData, setAvailableData] = useState();
+
+  const updateValues = () => {
+    if (!availableData) return;
+    setQuestion(availableData[index].question);
+    setYesterdayQuestion(availableData[index].yesterdayQuestion);
+    setAnswers(availableData[index].answers);
+    setExplanation(availableData[index].explanation);
+    setCurrentSurveyItem(index);
+    setQuestionId(availableData[index].id);
+  };
 
   useEffect(() => {
     (async () => {
@@ -35,8 +45,14 @@ const SurveyScreen = ({
         setQuestions(q);
         setTotalQuestions(q.length);
       }
+      const d = await getAvailableData();
+      if (d) setAvailableData(d);
     })();
   }, []);
+
+  useEffect(() => {
+    updateValues();
+  }, [route, availableData]);
 
   const nextQuestion = (answer) => {
     let currentSurvey = {};
@@ -56,11 +72,12 @@ const SurveyScreen = ({
           answers: {},
         };
       } else {
-        currentSurvey.answers[categories[questionId]] = answer;
+        currentSurvey.answers[questionId] = answer;
       }
     }
 
     let redirection = 'notes';
+    let nextIndex = -1;
     if (!isLastQuestion()) {
       const isNextQuestionSkipped = answer.id === 'NEVER';
       // getting index of the current question in the 'questions' array
@@ -71,12 +88,15 @@ const SurveyScreen = ({
       // else go to 'notes'
       if (nextQuestionIndex <= questions.length - 1) {
         const nextQuestionId = questions[nextQuestionIndex];
-        redirection = `question-${nextQuestionId}`;
+        redirection = 'question';
+        nextIndex = nextQuestionId;
       }
     }
+    setIndex(nextIndex);
     navigation.navigate(redirection, {
       currentSurvey,
       backRedirect: currentSurveyItem,
+      index: nextIndex,
     });
   };
 
@@ -94,16 +114,13 @@ const SurveyScreen = ({
     let previousQuestionIndex = questions[index - 1];
 
     const previousQuestionId = availableData[previousQuestionIndex].id;
-    if (survey?.answers[categories[previousQuestionId]]) {
-      navigation.navigate(`question-${previousQuestionIndex}`, {
-        ...route.params,
-      });
-    } else {
+    if (!survey?.answers[previousQuestionId])
       previousQuestionIndex = questions[index - 2];
-      navigation.navigate(`question-${previousQuestionIndex}`, {
-        ...route.params,
-      });
-    }
+    setIndex(previousQuestionIndex);
+    navigation.navigate('question', {
+      ...route.params,
+      index: previousQuestionIndex,
+    });
   };
 
   const isSurveyDateYesterday = isYesterday(
@@ -113,6 +130,9 @@ const SurveyScreen = ({
   const isLastQuestion = () => {
     return questions.indexOf(currentSurveyItem) === totalQuestions - 1;
   };
+
+  if (!answers || !(yesterdayQuestion || question) || !availableData)
+    return null;
 
   return (
     <SafeAreaView style={styles.safe}>
@@ -136,7 +156,12 @@ const SurveyScreen = ({
           </Text>
         </TouchableOpacity>
       </ScrollView>
-      <SurveyExplanation explanation={explanation} category={'Explications'} />
+      {explanation ? (
+        <SurveyExplanation
+          explanation={explanation}
+          category={'Explications'}
+        />
+      ) : null}
     </SafeAreaView>
   );
 };

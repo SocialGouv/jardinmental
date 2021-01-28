@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import PatientStateItem from './patient-state-item';
 import {displayedCategories} from '../common/constants';
@@ -7,8 +7,18 @@ import NoDataTodayDiaryItem from './no-data-today-diary-item';
 import {isToday, isYesterday, parseISO} from 'date-fns';
 import NoDataDiaryItem from './no-data-diary-item';
 import Notes from './notes';
+import localStorage from '../utils/localStorage';
 
 const DiaryItem = ({patientState, startAtFirstQuestion, date}) => {
+  const [customs, setCustoms] = useState([]);
+  useEffect(() => {
+    (async () => {
+      const c = await localStorage.getCustomSymptoms();
+      const t = c.map((e) => `${e}_FREQUENCE`);
+      if (t) setCustoms(t);
+    })();
+  }, [patientState]);
+
   if (!patientState) {
     if (isToday(parseISO(date))) {
       return (
@@ -24,32 +34,34 @@ const DiaryItem = ({patientState, startAtFirstQuestion, date}) => {
   }
   return (
     <View style={styles.container}>
-      {Object.keys(displayedCategories).map((key) => {
-        if (!patientState[key]) {
-          return;
-        }
-        const [categoryName, suffix] = key.split('_');
-        if (suffix) {
-          return (
-            <PatientStateItem
-              key={key}
-              patientStateItem={patientState[key]}
-              intensity={
-                patientState[`${categoryName}_INTENSITY`] || {level: 3}
-              }
-              category={displayedCategories[key]}
-            />
-          );
-        } else {
-          return (
-            <PatientStateItem
-              key={key}
-              patientStateItem={patientState[key]}
-              category={displayedCategories[key]}
-            />
-          );
-        }
-      })}
+      {Object.keys(displayedCategories)
+        .concat(customs)
+        .map((key) => {
+          if (!patientState[key]) {
+            return;
+          }
+          const [categoryName, suffix] = key.split('_');
+          if (suffix) {
+            return (
+              <PatientStateItem
+                key={key}
+                patientStateItem={patientState[key]}
+                intensity={
+                  patientState[`${categoryName}_INTENSITY`] || {level: 3}
+                }
+                category={displayedCategories[key] || categoryName}
+              />
+            );
+          } else {
+            return (
+              <PatientStateItem
+                key={key}
+                patientStateItem={patientState[key]}
+                category={displayedCategories[key]}
+              />
+            );
+          }
+        })}
       <Notes notes={patientState.NOTES} />
     </View>
   );

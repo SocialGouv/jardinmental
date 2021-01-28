@@ -12,10 +12,21 @@ import WeekPicker from './week-picker';
 import {DiaryDataContext} from '../context';
 import {useContext} from 'react';
 import matomo from '../services/matomo';
+import localStorage from '../utils/localStorage';
 
 const Calendar = ({navigation}) => {
   const [day, setDay] = useState(new Date());
   const [diaryData] = useContext(DiaryDataContext);
+
+  const [customs, setCustoms] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      const c = await localStorage.getCustomSymptoms();
+      const t = c.map((e) => `${e}_FREQUENCE`);
+      if (t) setCustoms(t);
+    })();
+  }, [diaryData]);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('tabPress', (e) => {
@@ -77,6 +88,15 @@ const Calendar = ({navigation}) => {
     return visible;
   };
 
+  const getTitle = (cat) => {
+    const category = displayedCategories[cat] || cat;
+    const [categoryName, suffix] = category.split('_');
+    if (suffix && suffix === 'FREQUENCE') {
+      return categoryName;
+    }
+    return category;
+  };
+
   return (
     <SafeAreaView style={styles.safe}>
       <ScrollView
@@ -89,17 +109,21 @@ const Calendar = ({navigation}) => {
           onAfterPress={() => setDay(beforeToday(-7, day))}
           onBeforePress={() => setDay(beforeToday(7, day))}
         />
-        {Object.keys(displayedCategories).map(
-          (categoryId) =>
-            isChartVisible(categoryId) && (
-              <Chart
-                title={displayedCategories[categoryId]}
-                key={categoryId}
-                data={computeChartData(categoryId)}
-                onPress={(dayIndex) => displayOnlyRequest(categoryId, dayIndex)}
-              />
-            ),
-        )}
+        {Object.keys(displayedCategories)
+          .concat(customs)
+          .map(
+            (categoryId) =>
+              isChartVisible(categoryId) && (
+                <Chart
+                  title={getTitle(categoryId)}
+                  key={categoryId}
+                  data={computeChartData(categoryId)}
+                  onPress={(dayIndex) =>
+                    displayOnlyRequest(categoryId, dayIndex)
+                  }
+                />
+              ),
+          )}
       </ScrollView>
     </SafeAreaView>
   );

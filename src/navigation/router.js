@@ -2,9 +2,9 @@ import React from 'react';
 import Tabs from './tabs';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
-import {availableData} from '../survey/survey-data';
 import SurveyScreen from '../survey/survey-screen';
 import SymptomScreen from '../symptoms/symptoms-screen';
+import AddSymptomScreen from '../symptoms/add-symptom-screen';
 import Reminder from '../reminder/reminder';
 import Export from '../export/export';
 import DailyChart from '../calendar/daily-chart';
@@ -49,27 +49,18 @@ class Router extends React.Component {
       <NavigationContainer>
         <Stack.Navigator initialRouteName="tabs" headerMode="none">
           <Stack.Screen name="tabs" component={Tabs} />
-          {availableData.map((surveyItem, index) => (
-            <Stack.Screen
-              name={`question-${index}`}
-              key={`question-${index}`}
-              options={{animationEnabled: Platform.OS === 'ios'}}>
-              {({navigation, route}) => (
-                <SurveyScreen
-                  question={availableData[index].question}
-                  yesterdayQuestion={availableData[index].yesterdayQuestion}
-                  answers={availableData[index].answers}
-                  explanation={availableData[index].explanation}
-                  currentSurveyItem={index}
-                  questionId={surveyItem.id}
-                  navigation={navigation}
-                  route={route}
-                />
-              )}
-            </Stack.Screen>
-          ))}
+          <Stack.Screen
+            name="question"
+            options={{animationEnabled: Platform.OS === 'ios'}}>
+            {({navigation, route}) => (
+              <SurveyScreen navigation={navigation} route={route} />
+            )}
+          </Stack.Screen>
           <Stack.Screen name="symptoms">
             {(props) => <SymptomScreen {...props} />}
+          </Stack.Screen>
+          <Stack.Screen name="add-symptom">
+            {(props) => <AddSymptomScreen {...props} />}
           </Stack.Screen>
           <Stack.Screen name="reminder" component={Reminder} />
           <Stack.Screen name="export" component={Export} />

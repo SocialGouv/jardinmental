@@ -40,11 +40,12 @@ const Diary = ({navigation}) => {
       });
     } else {
       const questions = await buildSurveyData();
-      navigation.navigate(`question-${questions[0]}`, {
+      navigation.navigate(`question`, {
         currentSurvey: {
           date,
           answers: {},
         },
+        index: questions[0],
       });
     }
   };

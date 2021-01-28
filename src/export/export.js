@@ -38,7 +38,7 @@ const Export = ({navigation}) => {
 
   const exportData = async () => {
     await AsyncStorage.setItem(MailStorageKey, mail);
-    const htmlExport = formatHtmlTable(diaryData);
+    const htmlExport = await formatHtmlTable(diaryData);
     setIsLoading(true);
     matomo.logDataExport();
     const res = await sendTipimail(

@@ -6,6 +6,7 @@ import {
   STORAGE_KEY_SYMPTOMS,
   STORAGE_KEY_IS_FIRST_LAUNCH,
   STORAGE_KEY_SUPPORTED,
+  STORAGE_KEY_CUSTOM_SYMPTOMS,
 } from '../common/constants';
 import {
   fakeDiaryData,
@@ -19,6 +20,7 @@ const wipeData = async () => {
   await AsyncStorage.removeItem(STORAGE_KEY_SYMPTOMS);
   await AsyncStorage.removeItem(STORAGE_KEY_IS_FIRST_LAUNCH);
   await AsyncStorage.removeItem(STORAGE_KEY_SUPPORTED);
+  await AsyncStorage.removeItem(STORAGE_KEY_CUSTOM_SYMPTOMS);
   await AsyncStorage.removeItem('@Reminder');
 };
 

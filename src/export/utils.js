@@ -1,6 +1,7 @@
 import {colors} from '../common/colors';
 import {displayedCategories} from '../common/constants';
 import {getArrayOfDates} from '../services/date/helpers';
+import localStorage from '../utils/localStorage';
 
 // methods
 
@@ -121,7 +122,7 @@ const generateState = (symptom, symptomStrName) => {
           margin: 0;
           margin-left: 20px;
           padding-right: 50px;
-        ">${displayedCategories[symptomStrName]}</p>
+        ">${symptomStrName}</p>
       </td>
     </tr>
   `;
@@ -161,7 +162,7 @@ const generateNote = (note) => {
   `;
 };
 
-const formatHtmlTable = (diaryData) => {
+const formatHtmlTable = async (diaryData) => {
   const today = new Date();
   const firstDay = new Date();
   firstDay.setDate(today.getDate() - 30);
@@ -206,6 +207,18 @@ const formatHtmlTable = (diaryData) => {
     return visible;
   };
 
+  const getTitle = (cat) => {
+    const category = displayedCategories[cat] || cat;
+    const [categoryName, suffix] = category.split('_');
+    if (suffix && suffix === 'FREQUENCE') {
+      return categoryName;
+    }
+    return category;
+  };
+
+  let customs = await localStorage.getCustomSymptoms();
+  customs = customs.map((e) => `${e}_FREQUENCE`);
+
   return `
   <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     <html xmlns="https://www.w3.org/1999/xhtml">
@@ -228,6 +241,7 @@ const formatHtmlTable = (diaryData) => {
       <body width="100%">
         <h1 style="color: ${colors.BLUE}">Mes données de MonSuiviPsy</h1>
         ${Object.keys(displayedCategories)
+          .concat(customs)
           .map((categoryId) => {
             const res = computeChartData(categoryId);
             const heighest = res.reduce((currentHeighest, current) => {
@@ -244,7 +258,7 @@ const formatHtmlTable = (diaryData) => {
                   <tr>
                     <td>
                       <h3 style="color: ${colors.DARK_BLUE};">
-                        ${displayedCategories[categoryId]}
+                        ${getTitle(categoryId)}
                       </h3>
                       <table
                         width="100%"
@@ -309,20 +323,20 @@ const formatHtmlTable = (diaryData) => {
                           border: 1px solid #ebedf2;
                           background-color: #f8f9fb;
                         ">
-                          ${generateState(
-                            ANXIETY_FREQUENCE,
-                            'ANXIETY_FREQUENCE',
-                          )}
-                          ${generateState(
-                            BADTHOUGHTS_FREQUENCE,
-                            'BADTHOUGHTS_FREQUENCE',
-                          )}
-                          ${generateState(MOOD, 'MOOD')}
-                          ${generateState(
-                            SENSATIONS_FREQUENCE,
-                            'SENSATIONS_FREQUENCE',
-                          )}
-                          ${generateState(SLEEP, 'SLEEP')}
+                          ${Object.keys(diaryData[strDate])
+                            .map((cat) => {
+                              const [_, suffix] = cat.split('_');
+                              if (
+                                (!suffix || suffix === 'FREQUENCE') &&
+                                cat !== 'NOTES'
+                              ) {
+                                return generateState(
+                                  diaryData[strDate][cat],
+                                  getTitle(cat),
+                                );
+                              }
+                            })
+                            .join('')}
                           ${generateNote(NOTES)}
                         </tbody>
                       </table>
