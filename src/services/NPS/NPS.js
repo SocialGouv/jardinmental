@@ -32,7 +32,7 @@ Comment pouvons-nous vous être encore plus utile: ${feedback}
 Email: ${email}
 `;
 
-const NPSTimeoutMS = __DEV__ ? 1000 * 3 : 1000 * 60 * 60 * 24 * 10;
+const NPSTimeoutMS = __DEV__ ? 1000 * 3 * 100000000 : 1000 * 60 * 60 * 24 * 10;
 const emailFormat = (email) =>
   /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,6}$/i.test(email);
 

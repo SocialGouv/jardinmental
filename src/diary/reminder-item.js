@@ -16,7 +16,7 @@ const ReminderItem = ({onPress}) => {
         );
       } else {
         return setMessage(
-          'Saisir au moins 3 à 4 fois par semaine vos symptômes est l’idéal pour les suivres.',
+          'Saisir au moins 3 à 4 fois par semaine vos symptômes est l’idéal pour les suivre.',
         );
       }
     })();
@@ -44,8 +44,10 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: 'bold',
     color: colors.BLUE,
+    fontSize: 16,
   },
   message: {
+    fontSize: 16,
     marginVertical: 10,
     color: colors.BLUE,
   },

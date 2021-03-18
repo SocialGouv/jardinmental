@@ -33,13 +33,15 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: 'bold',
     color: colors.BLUE,
+    fontSize: 16,
   },
   message: {
     marginVertical: 10,
     color: colors.BLUE,
+    fontSize: 16,
   },
   muted: {
-    fontSize: 12,
+    fontSize: 14,
   },
   buttonWrapper: {
     paddingTop: 10,

@@ -16,6 +16,7 @@ import CGU from '../legal/cgu-screen';
 import Privacy from '../legal/privacy-screen';
 import LegalMentions from '../legal/legal-mentions-screen';
 import matomo from '../services/matomo';
+import Contribute from '../contribute';
 
 const Stack = createStackNavigator();
 
@@ -77,6 +78,7 @@ class Router extends React.Component {
           <Stack.Screen name="cgu" component={CGU} />
           <Stack.Screen name="privacy" component={Privacy} />
           <Stack.Screen name="legal-mentions" component={LegalMentions} />
+          {/* <Stack.Screen name="contribute" component={Contribute} /> */}
         </Stack.Navigator>
       </NavigationContainer>
     );

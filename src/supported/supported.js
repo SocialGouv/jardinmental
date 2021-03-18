@@ -5,6 +5,7 @@ import {
   SafeAreaView,
   View,
   TouchableOpacity,
+  ScrollView,
 } from 'react-native';
 import {colors} from '../common/colors';
 import localStorage from '../utils/localStorage';
@@ -27,30 +28,36 @@ const Supported = ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.safe}>
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.title}>Mon Suivi Psy</Text>
           <Text style={styles.title}>Pour commencer</Text>
         </View>
         <Card
           title="Je suis suivi"
-          subtitle="Vous avez téléchargé l’application sur recommandation d’un professionnel qui vous suit."
+          subtitle="J’ai téléchargé l’application sur recommandation du professionnel qui me suit."
           color="#F4FCFD"
           handleClick={() => handleClick('YES')}
         />
         <Card
+          title="Je suis suivi"
+          subtitle="J’ai téléchargé l’application de moi-même, sans que le professionnel qui me suit ne me le recommande."
+          color="#F4FCFD"
+          handleClick={() => handleClick('YES_SOLO')}
+        />
+        <Card
           title="Je ne suis pas suivi"
-          subtitle="Vous avez téléchargé l’application dans le cadre d’une démarche personnelle, pour suivre vos symptômes et avoir des informations."
+          subtitle="J’ai téléchargé l’application dans le cadre d’une démarche personnelle, pour suivre mes symptômes et avoir des informations."
           color="#F4FCFD"
           handleClick={() => handleClick('NO')}
         />
         <Card
           title="Je ne suis pas suivi mais je le souhaite"
-          subtitle="Vous avez téléchargé l’application pour être informé, orienté et trouver un contact."
+          subtitle="J’ai téléchargé l’application pour être informé, orienté et trouver un contact."
           color="#F4FCFD"
           handleClick={() => handleClick('NOT_YET')}
         />
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -68,7 +75,7 @@ const Card = ({title, subtitle, handleClick}) => {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: '#F4FCFD',
+    backgroundColor: '#D2F4F7',
     marginBottom: 30,
     borderRadius: 10,
     padding: 20,
@@ -76,7 +83,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'flex-start',
-    minHeight: '20%',
+    minHeight: '10%',
   },
   cardTitle: {
     color: colors.DARK_BLUE,
@@ -104,7 +111,7 @@ const styles = StyleSheet.create({
     padding: 20,
     flex: 1,
     display: 'flex',
-    justifyContent: 'center',
+    // justifyContent: 'center',
   },
   content: {
     display: 'flex',

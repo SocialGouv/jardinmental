@@ -1,13 +1,16 @@
 import React from 'react';
-import {StyleSheet, SafeAreaView} from 'react-native';
+import {StyleSheet, SafeAreaView, Text} from 'react-native';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import Diary from '../diary/diary';
 import Calendar from '../calendar/calendar';
 import DiarySvg from '../../assets/svg/diary.svg';
+import InfoSvg from '../../assets/svg/info.svg';
 import PlusSvg from '../../assets/svg/plus.svg';
 import CalendarSvg from '../../assets/svg/calendar.svg';
 import localStorage from '../utils/localStorage';
 import matomo from '../services/matomo';
+import Infos from '../infos';
+import {colors} from '../common/colors';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -27,7 +30,9 @@ const Tabs = ({navigation}) => {
   return (
     <>
       <SafeAreaView style={styles.surveyButton}>
-        <PlusSvg onPress={handlePlus} />
+        <Text onPress={handlePlus} style={styles.text}>
+          Saisir mes derniers ressentis
+        </Text>
       </SafeAreaView>
       <Tab.Navigator
         initialRouteName="Diary"
@@ -55,6 +60,14 @@ const Tabs = ({navigation}) => {
             tabBarIcon: ({color}) => <CalendarSvg style={{color}} />,
           }}
         />
+        <Tab.Screen
+          name="Infos"
+          component={Infos}
+          options={{
+            tabBarLabel: 'Infos',
+            tabBarIcon: ({color}) => <InfoSvg style={{color}} />,
+          }}
+        />
       </Tab.Navigator>
     </>
   );
@@ -65,9 +78,19 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     position: 'absolute',
-    bottom: 50,
+    bottom: 72,
     zIndex: 1,
     alignSelf: 'center',
+    backgroundColor: colors.LIGHT_BLUE,
+    padding: 12,
+    width: '100%',
+  },
+  text: {
+    fontSize: 16,
+    color: 'white',
+    textAlign: 'center',
+    paddingVertical: 17,
+    fontWeight: '700',
   },
 });
 

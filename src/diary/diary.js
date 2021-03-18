@@ -129,6 +129,7 @@ const styles = StyleSheet.create({
   },
   container: {
     padding: 20,
+    marginBottom: 70,
     backgroundColor: 'white',
   },
   headerContainer: {

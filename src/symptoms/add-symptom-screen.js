@@ -34,6 +34,7 @@ const AddSymptomScreen = ({navigation, route}) => {
     console.log('add', value);
     if (!value) return;
     await localStorage.addCustomSymptoms(value);
+    matomo.logCustomSymptomAdd();
     navigation.navigate('symptoms', {newSymptom: value});
   };
 

@@ -113,8 +113,7 @@ const logFeelingDateChoose = async (date) => {
   await logEvent({
     category: FEELING,
     action: FEELING_DATE_CHOOSE,
-    name: 'date',
-    value: date,
+    name: date,
   });
 };
 
@@ -146,6 +145,8 @@ const logReminderCancel = async () => {
 const SYMPTOM = 'SYMPTOM';
 const SYMPTOM_ADD = 'SYMPTOM_ADD';
 const SYMPTOM_CANCEL = 'SYMPTOM_CANCEL';
+const CUSTOM_SYMPTOM = 'CUSTOM_SYMPTOM';
+const CUSTOM_SYMPTOM_ADD = 'CUSTOM_SYMPTOM_ADD';
 
 const logSymptomAdd = async (symptom) => {
   await logEvent({
@@ -162,6 +163,13 @@ const logSymptomCancel = async (symptom) => {
     action: SYMPTOM_CANCEL,
     name: 'symptom',
     value: symptom,
+  });
+};
+
+const logCustomSymptomAdd = async () => {
+  await logEvent({
+    category: CUSTOM_SYMPTOM,
+    action: CUSTOM_SYMPTOM_ADD,
   });
 };
 
@@ -199,8 +207,15 @@ const logSupportedSelect = async (supported) => {
   await logEvent({
     category: 'SUPPORTED',
     action: 'SUPPORTED_CHOOSE',
-    name: 'supported',
-    value: supported,
+    name: supported,
+  });
+};
+
+const logInfoClick = async (link) => {
+  await logEvent({
+    category: 'INFOS',
+    action: 'INFOS_CLICK',
+    name: link,
   });
 };
 
@@ -222,4 +237,6 @@ export default {
   logNPSOpen,
   logNPSSend,
   logSupportedSelect,
+  logCustomSymptomAdd,
+  logInfoClick,
 };

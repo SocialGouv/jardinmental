@@ -20,6 +20,7 @@ const DiaryItem = ({patientState, startAtFirstQuestion, date}) => {
   }, [patientState]);
 
   if (!patientState) {
+    return <NoDataDiaryItem />;
     if (isToday(parseISO(date))) {
       return (
         <NoDataTodayDiaryItem startAtFirstQuestion={startAtFirstQuestion} />

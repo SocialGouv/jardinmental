@@ -15,10 +15,19 @@ import {displayedCategories} from '../common/constants';
 import localStorage from '../utils/localStorage';
 import matomo from '../services/matomo';
 
+const lookUpCategoryMatomo = {
+  MOOD: 0,
+  ANXIETY_FREQUENCE: 1,
+  BADTHOUGHTS_FREQUENCE: 2,
+  SLEEP: 3,
+  SENSATIONS_FREQUENCE: 4,
+};
+
 const SymptomScreen = ({navigation, route}) => {
   const explanation =
     'A tout moment, vous pourrez modifier la liste des symptômes que vous souhaitez suivre via l’onglet “Réglages” situé en haut à droite du journal';
   const [chosenCategories, setChosenCategories] = useState({});
+  const [initalCategories, setInitialCategories] = useState({});
   const [customSymptoms, setCustomSymptoms] = useState([]);
 
   useEffect(() => {
@@ -26,6 +35,7 @@ const SymptomScreen = ({navigation, route}) => {
       const symptoms = await localStorage.getSymptoms();
       if (symptoms) {
         setChosenCategories(symptoms);
+        setInitialCategories(symptoms);
       } else {
         checkAll();
       }
@@ -56,11 +66,11 @@ const SymptomScreen = ({navigation, route}) => {
     let categories = {...chosenCategories};
     categories[cat] = value;
     setChosenCategories(categories);
-    if (value) {
-      matomo.logSymptomAdd(cat);
-    } else {
-      matomo.logSymptomCancel(cat);
-    }
+    // if (value) {
+    //   matomo.logSymptomAdd(cat);
+    // } else {
+    //   matomo.logSymptomCancel(cat);
+    // }
   };
 
   const noneSelected = () => {
@@ -77,6 +87,15 @@ const SymptomScreen = ({navigation, route}) => {
     }
     await localStorage.setSymptoms(chosenCategories);
     const questions = await buildSurveyData();
+    console.log({chosenCategories});
+    console.log({initalCategories});
+    Object.keys(chosenCategories).forEach((cat) => {
+      if (initalCategories[cat] !== chosenCategories[cat]) console.log(cat);
+    });
+    // console.log(questions);
+    // questions.forEach((q) => {
+    //   ma;
+    // });
     const index = questions[0];
     let redirection = 'tabs';
     let params = {};
