@@ -4,7 +4,7 @@ import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 import Button from '../common/button';
 import {colors} from '../common/colors';
 import {formatDay} from '../services/date/helpers';
-import matomo from '../services/matomo';
+import logEvents from '../services/logEvents';
 import localStorage from '../utils/localStorage';
 
 const ContributeItem = ({onPress}) => {

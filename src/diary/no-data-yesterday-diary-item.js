@@ -3,11 +3,11 @@ import {StyleSheet, View, Text, Image} from 'react-native';
 import Button from '../common/button';
 import {colors} from '../common/colors';
 import {beforeToday, formatDay} from '../services/date/helpers';
-import matomo from '../services/matomo';
+import logEvents from '../services/logEvents';
 
 const NoDataYesterdayDiaryItem = ({startAtFirstQuestion}) => {
   const onStartPress = () => {
-    matomo.logFeelingDateChoose('yesterday');
+    logEvents.logFeelingDateChoose('yesterday');
     startAtFirstQuestion(formatDay(beforeToday(1)));
   };
 

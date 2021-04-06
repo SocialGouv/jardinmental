@@ -14,7 +14,7 @@ import ReminderSvg from '../../assets/svg/reminder.svg';
 import TimePicker from './time-picker';
 import NotificationService from '../services/notifications';
 import {colors} from '../common/colors';
-import matomo from '../services/matomo';
+import logEvents from '../services/logEvents';
 
 const dateWithTimeAndOffsetFromToday = (hours, minutes, offset) => {
   const date = new Date();
@@ -98,7 +98,7 @@ class Reminder extends React.Component {
         message: reminderMessage,
       });
     }
-    matomo.logReminderAdd();
+    logEvents.logReminderAdd();
   };
 
   showTimePicker = async () => {
@@ -141,7 +141,7 @@ class Reminder extends React.Component {
   };
 
   deleteReminderManually = () => {
-    matomo.logReminderCancel();
+    logEvents.logReminderCancel();
     this.deleteReminder();
   };
 

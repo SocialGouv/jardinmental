@@ -18,18 +18,15 @@ import Mark from './Mark';
 import Notifications from '../notifications';
 import {sendTipimail} from '../sendTipimail';
 import {colors} from '../../common/colors';
-import Matomo from '../matomo/lib';
-import matomo from '../matomo';
+import Matomo from '../matomo';
+import logEvents from '../logEvents';
 
 // just to make sure nothing goes the bad way in production, debug is always false
 
-const formatText = (useful, reco, feedback, email, userId) =>
+const formatText = (useful, reco, feedback, userId) =>
   `
 User: ${userId}
-Ce service vous a-t-il été utile: ${useful}
-Quelle est la probabilité que vous recommandiez ce service à un ami ou un proche: ${reco}
 Comment pouvons-nous vous être encore plus utile: ${feedback}
-Email: ${email}
 `;
 
 const NPSTimeoutMS = __DEV__ ? 1000 * 3 * 100000000 : 1000 * 60 * 60 * 24 * 10;
@@ -124,7 +121,7 @@ class NPS extends React.Component {
     if (!timeForNPS) {
       return;
     }
-    matomo.logNPSOpen();
+    logEvents.logNPSOpen();
     await AsyncStorage.setItem(STORE_KEYS.NPS_DONE, 'true');
     this.setState({visible: true});
   };
@@ -167,7 +164,7 @@ class NPS extends React.Component {
       return;
     }
     this.setSendButton('Merci !');
-    matomo.logNPSSend(useful, reco);
+    logEvents.logNPSSend(useful, reco);
     const userId = Matomo.userId;
     sendTipimail(
       {
@@ -176,7 +173,7 @@ class NPS extends React.Component {
           personalName: 'MonSuiviPsy - Application',
         },
         subject: 'MonSuiviPsy - NPS',
-        text: formatText(useful, reco, feedback, email, userId),
+        text: formatText(useful, reco, feedback, userId),
       },
       __DEV__ ? 'tangimds@gmail.com' : 'monsuivipsy@fabrique.social.gouv.fr',
     );
@@ -229,6 +226,9 @@ class NPS extends React.Component {
         <Text style={styles.topSubTitle}>
           {getCaption('feedback.improvements.question')}
         </Text>
+        <Text style={styles.legalMessage}>
+          {getCaption('feedback.improvements.legal-message')}
+        </Text>
         <TextInput
           style={styles.feedback}
           onChangeText={this.setFeedback}
@@ -238,7 +238,7 @@ class NPS extends React.Component {
           textAlignVertical="top"
           returnKeyType="next"
         />
-        <Text style={styles.topSubTitle}>
+        {/* <Text style={styles.topSubTitle}>
           {getCaption('feedback.email.description')}
         </Text>
         <TextInput
@@ -254,7 +254,7 @@ class NPS extends React.Component {
           returnKeyType="go"
           textContentType="emailAddress"
           onSubmitEditing={this.sendNPS}
-        />
+        /> */}
         <TouchableOpacity
           style={styles.buttonContainer}
           disabled={sendButton === 'Merci !'}
@@ -372,6 +372,13 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
     color: colors.BLUE,
   },
+  legalMessage: {
+    fontSize: 12,
+    width: '95%',
+    flexShrink: 0,
+    marginTop: 15,
+    color: '#666',
+  },
 });
 
 const captions = {
@@ -392,6 +399,8 @@ const captions = {
     'Pour améliorer notre service, avez-vous quelques recommandations à nous faire\u00A0?',
   'feedback.improvements.question':
     'Comment pouvons-nous vous être encore plus utile\u00A0? Comment pouvons-nous améliorer ce service\u00A0?',
+  'feedback.improvements.legal-message':
+    'Merci de ne mentionner aucune information personnelle qui permettrait de vous identifier (nom, prénom, adresse mail, n° de téléphone, toute information sur votre état de santé)',
   'feedback.improvements.placeholder': "Idées d'améliorations (facultatif)",
   'feedback.email.description':
     "Pourrions-nous vous contacter pour en discuter avec vous\u00A0? Si vous êtes d'accord, vous pouvez renseigner votre adresse email ci-dessous.",

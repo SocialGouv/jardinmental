@@ -9,15 +9,19 @@ import {
 } from 'react-native';
 import {colors} from '../common/colors';
 import localStorage from '../utils/localStorage';
-import matomo from '../services/matomo';
-import Matomo from '../services/matomo/lib';
+import logEvents from '../services/logEvents';
+import Matomo from '../services/matomo';
 import {useEffect} from 'react';
+import Lumiere from '../services/lumiere';
 
 const Supported = ({navigation}) => {
   const handleClick = async (value) => {
     //send matomo
-    matomo.logSupportedSelect(value);
+    logEvents.logSupportedSelect(value);
     Matomo.setUserProperties({
+      supported: value,
+    });
+    Lumiere.addUserProperties({
       supported: value,
     });
     //navigate to tabs

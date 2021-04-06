@@ -2,8 +2,9 @@ import NetInfo from '@react-native-community/netinfo';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DeviceInfo from 'react-native-device-info';
 import {Platform} from 'react-native';
-import Matomo from './lib';
-import {STORAGE_KEY_SUPPORTED} from '../../common/constants';
+import Matomo from './matomo';
+import {STORAGE_KEY_SUPPORTED} from '../common/constants';
+import Lumiere from './lumiere';
 
 const CONSTANTS = {
   STORE_KEY_USER_ID: 'STORE_KEY_USER_ID',
@@ -40,6 +41,16 @@ const initMatomo = async () => {
     system: Platform.OS,
     supported: supported ? supported : '',
   });
+
+  /* lumiere */
+
+  Lumiere.init('app_h3LEvGuH6y7VzFNyWh9t0');
+  Lumiere.registerUser(userId);
+
+  Lumiere.addUserProperties({
+    visits: newVisits,
+    supported,
+  });
 };
 
 const checkNetwork = async () => {
@@ -54,6 +65,7 @@ const logEvent = async ({category, action, name, value}) => {
       throw new Error('no network');
     }
     Matomo.logEvent({category, action, name, value});
+    Lumiere.sendEvent(category, action, {[name]: value});
   } catch (error) {
     console.log('logEvent error', error);
     console.log('logEvent error', {category, action, name, value});
@@ -180,6 +192,13 @@ const logCalendarOpen = async () => {
   });
 };
 
+const logInfosOpen = async () => {
+  await logEvent({
+    category: 'INFOS',
+    action: 'INFOS_OPEN',
+  });
+};
+
 const logDataExport = async () => {
   await logEvent({
     category: 'DATA_EXPORT',
@@ -239,4 +258,5 @@ export default {
   logSupportedSelect,
   logCustomSymptomAdd,
   logInfoClick,
+  logInfosOpen,
 };

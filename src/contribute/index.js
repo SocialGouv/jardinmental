@@ -10,8 +10,8 @@ import {
 } from 'react-native';
 import {colors} from '../common/colors';
 import localStorage from '../utils/localStorage';
-import matomo from '../services/matomo';
-import Matomo from '../services/matomo/lib';
+import logEvents from '../services/logEvents';
+import Matomo from '../services/matomo';
 import {useEffect} from 'react';
 import Button from '../common/button';
 
@@ -26,7 +26,7 @@ const Supported = ({navigation}) => {
     }
     const {useful, reco, feedback, email} = this.state;
     setSendButton('Merci !');
-    matomo.logNPSSend(useful, reco);
+    logEvents.logNPSSend(useful, reco);
     const userId = Matomo.userId;
     sendTipimail(
       {

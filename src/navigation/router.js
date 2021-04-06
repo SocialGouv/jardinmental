@@ -15,20 +15,20 @@ import Supported from '../supported/supported';
 import CGU from '../legal/cgu-screen';
 import Privacy from '../legal/privacy-screen';
 import LegalMentions from '../legal/legal-mentions-screen';
-import matomo from '../services/matomo';
+import logEvents from '../services/logEvents';
 import Contribute from '../contribute';
 
 const Stack = createStackNavigator();
 
 class Router extends React.Component {
   async componentDidMount() {
-    await matomo.initMatomo();
-    matomo.logAppVisit();
+    await logEvents.initMatomo();
+    logEvents.logAppVisit();
     AppState.addEventListener('change', this.onAppChange);
   }
 
   componentWillUnmount() {
-    matomo.logAppClose();
+    logEvents.logAppClose();
     AppState.removeEventListener('focus', this.onAppChange);
   }
 
@@ -38,9 +38,9 @@ class Router extends React.Component {
       this.appState.match(/inactive|background/) &&
       nextAppState === 'active'
     ) {
-      matomo.logAppVisit();
+      logEvents.logAppVisit();
     } else {
-      matomo.logAppClose();
+      logEvents.logAppClose();
     }
     this.appState = nextAppState;
   };

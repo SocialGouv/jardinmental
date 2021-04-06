@@ -8,7 +8,7 @@ import InfoSvg from '../../assets/svg/info.svg';
 import PlusSvg from '../../assets/svg/plus.svg';
 import CalendarSvg from '../../assets/svg/calendar.svg';
 import localStorage from '../utils/localStorage';
-import matomo from '../services/matomo';
+import logEvents from '../services/logEvents';
 import Infos from '../infos';
 import {colors} from '../common/colors';
 
@@ -17,7 +17,7 @@ const Tab = createMaterialTopTabNavigator();
 const Tabs = ({navigation}) => {
   const handlePlus = async () => {
     const symptoms = await localStorage.getSymptoms();
-    matomo.logFeelingStart();
+    logEvents.logFeelingStart();
     if (!symptoms) {
       navigation.navigate('symptoms', {
         showExplanation: true,

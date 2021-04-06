@@ -10,6 +10,7 @@ import {
 import DiaryItem from './diary-item';
 import ReminderItem from './reminder-item';
 import ContributeItem from './contribute-item';
+import ExportItem from './export-item';
 import Header from '../common/header';
 import {colors} from '../common/colors';
 import {format, parseISO, isToday, isYesterday} from 'date-fns';
@@ -62,6 +63,7 @@ const Diary = ({navigation}) => {
   };
 
   const onPressReminder = () => navigation.navigate('reminder');
+  const onPressExport = () => navigation.navigate('export');
   const onPressContribute = () => setNPSvisible(true);
   const closeNPS = () => setNPSvisible(false);
 
@@ -95,6 +97,7 @@ const Diary = ({navigation}) => {
         {reminderItemVisible ? (
           <ReminderItem onPress={onPressReminder} />
         ) : null}
+        <ExportItem onPress={onPressExport} />
         {Object.keys(diaryData)
           .sort((a, b) => {
             a = a.split('/').reverse().join('');

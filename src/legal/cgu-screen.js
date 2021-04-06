@@ -29,75 +29,85 @@ const CGU = ({navigation}) => {
 
   const content = (
     <Text>
-      <Text style={styles.title}>Présentation</Text>
+      Les présentes conditions générales d’utilisation (dites « CGU ») fixent le
+      cadre juridique de l’application MonSuiviPsy définissent les conditions
+      d’accès et d’utilisation des services par l’Utilisateur.
       {'\n\n'}
-      MonSuiviPsy est un service d’aide au suivi de l’évolution des symptômes et
-      des effets indésirables des traitements à destination des particuliers et
-      de celles et ceux qui les conseillent, dans un cadre professionnel ou
-      bénévole. Il s'agit d'une application mobile qui permet de saisir
-      quotidiennement l’intensité ou la fréquence de ses symptômes et la
-      présence ou non d’effets indésirables des traitements, de saisir des notes
-      quotidiennes, d’avoir accès à un récapitulatif de l’intensité des
-      symptômes sous forme de courbe et de transférer les informations saisies
-      dans l’application via mail si l’utilisateur le souhaite. {'\n\n'}
-      Le{' '}
-      <Text style={styles.link} onPress={goToGitHub}>
-        code du logiciel
-      </Text>{' '}
-      est libre, et peut donc être vérifié et amélioré par toutes et tous.
+      <Text style={styles.title}>Article 1 - Champ d’application</Text>
       {'\n\n'}
-      <Text style={styles.title}>Vocabulaire</Text>
-      {'\n\n'}« Nous » se réfère à l’éditeur de MonSuiviPsy.
-      {'\n'}« Vous » se réfère à un·e utilisateur de MonSuiviPsy
+      L’application peut être téléchargée sans création de compte et demeure
+      d’accès libre. L’utilisation de l’application vaut acceptation des
+      présentes CGU.
       {'\n\n'}
-      <Text style={styles.title}>Absence de garantie</Text>
+      <Text style={styles.title}>Article 2 - Objet</Text>
+      {'\n\n'}« MonSuiviPsy » vise à suivre l’évolution des symptômes et des
+      effets indésirables de traitements. L’application est une solution simple
+      qui permet également un accès à des données informatives concernant les
+      symptômes suivis.
       {'\n\n'}
-      Les résultats fournis par ce service ont une valeur informative et ne
-      représentent en aucun cas un diagnostic médical.
-      {'\n\n'} Nous ne garantissons pas l'exactitude du contenu des sites
-      externes vers lesquels nous redirigeons la navigation. Ces sites ne sont
-      pas non plus régis par les mêmes conditions d'utilisation, notamment en ce
-      qui concerne leur traitement des données à caractère personnel.
-      {'\n\n'}Nous mettons MonSuiviPsy à disposition sans garantie sur sa
-      disponibilité, en « best effort ». Cela signifie que d'éventuelles
-      indisponibilités n'ouvriront pas droit à compensation financière.
+      <Text style={styles.title}>Article 3 – Définitions</Text>
       {'\n\n'}
-      <Text style={styles.title}>Évolutions</Text>
+      L’Utilisateur est toute personne qui télécharge l’application et
+      l’utilise.{'\n\n'} Les services sont l’ensemble des services proposés par
+      MonSuiviPsy.{'\n\n'} Le responsable de traitement : est la personne qui,
+      au sens de l’article du règlement (UE) n°2016/679 du Parlement européen et
+      du Conseil du 27 avril 2016 relatif à la protection des personnes
+      physiques à du traitement des données à caractère personnel et à la libre
+      circulation de ces données à caractère personnel.
       {'\n\n'}
-      Nous pouvons faire évoluer MonSuiviPsy sans information préalable. Nous
-      ajoutons régulièrement des aides, améliorons l'interface et modifions des
-      formulations sur la base de vos retours et des évolutions règlementaires.
+      <Text style={styles.title}>Article 4- Fonctionnalités</Text>
       {'\n\n'}
-      Nous pouvons suspendre l'accès à MonSuiviPsy sans information préalable,
-      notamment pour des raisons de maintenance. Nous mettons l'application à
-      jour plusieurs fois par semaine. L'indisponibilité ne dépasse généralement
-      pas une dizaine de secondes.
-      {'\n\n'}Nous pouvons amender ces conditions d’utilisation. En cas de
-      changement significatif, une notification s'affichera lors de l'accès à
-      MonSuiviPsy au moins 30 jours avant l'entrée en vigueur des nouvelles
-      conditions.
+      <Text style={styles.subtitle}>4.1 Saisie de ses symptômes</Text>
       {'\n\n'}
-      <Text style={styles.title}>Utilisation</Text>
+      L’Utilisateur peut saisir ses symptômes, d’ordre psychologique ou liés à
+      d’éventuels effets indésirables de traitements. Pour ce faire, MonSuiviPsy
+      met à sa disposition un espace « note », dont l’ensemble des informations
+      demeurent sur le terminal de l’Utilisateur. Ces symptômes peuvent être
+      nouveaux ou alors récurrents, la note permettant aux personnes de le
+      préciser pour faciliter leur propre suivi.
       {'\n\n'}
-      MonSuiviPsy est en téléchargement libre sur les plateformes Apple App
-      Store et Google Play. Son utilisation est gratuite et facultative.
-      {'\n\n'}Si vous effectuez un suivi de vos symptômes et des effets
-      indésirables des traitements, ou que vous saisissez des notes, vous
-      acceptez ces conditions d'utilisation. Comme indiqué dans l'article{' '}
-      <Text style={styles.link} onPress={goToL112}>
-        L. 112-9
-      </Text>{' '}
-      du code des relations entre le public et l'administration.
+      <Text style={styles.subtitle}>4.2 Exporter ses données</Text>
       {'\n\n'}
-      L’utilisation de MonSuiviPsy requiert une connexion internet et un
-      smartphone récent.
-      {'\n\n'}Nous nous réservons le droit de bloquer, sans information
-      préalable ni compensation financière, les usages mettant en péril
-      l'utilisation du logiciel par d'autres utilisateurs. Cela nous permet
-      d'anticiper d'éventuelles{' '}
-      <Text style={styles.link} onPress={goToDdos}>
-        attaques par déni de service
+      L’Utilisateur peut exporter ses données sous format PDF, notamment en
+      contactant le mail contact@monsuivipsy.fr . Néanmoins, aucune donnée n’est
+      transférée via MonSuiviPsy. L’application permet juste la mise en contact
+      avec l’équipe si l’Utilisateur souhaite transférer ses informations.
+      {'\n\n'}
+      <Text style={styles.title}>Article 5 - Responsabilités</Text>
+      {'\n\n'}
+      <Text style={styles.subtitle}>5.1 L’éditeur du Site</Text>
+      {'\n\n'}
+      Les sources des informations diffusées sur l’application sont réputées
+      fiables mais MonSuiviPsy ne garantit pas qu’il soit exempt de défauts,
+      d’erreurs ou d’omissions.{'\n\n'} Tout événement dû à un cas de force
+      majeure ayant pour conséquence un dysfonctionnement du site et sous
+      réserve de toute interruption ou modification en cas de maintenance,
+      n'engage pas la responsabilité de l’éditeur.{'\n\n'} L’éditeur s’engage à
+      mettre en œuvre toutes mesures appropriées, afin de protéger les données
+      traitées.{'\n\n'} L’éditeur s’engage à la sécurisation du site, notamment
+      en prenant les mesures nécessaires permettant de garantir la sécurité et
+      la confidentialité des informations fournies.{'\n\n'} L’éditeur fournit
+      les moyens nécessaires et raisonnables pour assurer un accès continu, sans
+      contrepartie financière, à la Plateforme. Il se réserve la liberté de
+      faire évoluer, de modifier ou de suspendre, sans préavis, la plateforme
+      pour des raisons de maintenance ou pour tout autre motif jugé nécessaire.
+      {'\n\n'}
+      <Text style={styles.subtitle}>5.2 L’Utilisateur</Text>
+      {'\n\n'}
+      Toute information transmise par l'Utilisateur est de sa seule
+      responsabilité. Il est rappelé que toute personne procédant à une fausse
+      déclaration pour elle-même ou pour autrui s’expose, notamment, aux
+      sanctions prévues à l’article 441-1 du code pénal, prévoyant des peines
+      pouvant aller jusqu’à trois ans d’emprisonnement et 45 000 euros d’amende.
+      {'\n\n'}
+      <Text style={styles.title}>
+        Article 6 - Mise à jour des conditions d’utilisation
       </Text>
+      {'\n\n'}
+      Les termes des présentes conditions d’utilisation peuvent être amendés à
+      tout moment, sans préavis, en fonction des modifications apportées à la
+      plateforme, de l’évolution de la législation ou pour tout autre motif jugé
+      nécessaire.
       {'\n\n'}
       <Text style={styles.link} onPress={goToLegalMentions}>
         Mentions légales
@@ -123,6 +133,10 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: '700',
+  },
+  subtitle: {
+    fontSize: 18,
+    fontWeight: '600',
   },
   link: {
     textDecorationLine: 'underline',

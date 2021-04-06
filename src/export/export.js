@@ -9,6 +9,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   View,
+  ScrollView,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ExportData from '../../assets/svg/export-data.svg';
@@ -16,7 +17,7 @@ import {colors} from '../common/colors';
 import {DiaryDataContext} from '../context';
 import {formatHtmlTable} from './utils';
 
-import matomo from '../services/matomo';
+import logEvents from '../services/logEvents';
 import {sendTipimail} from '../services/sendTipimail';
 const MailStorageKey = '@Mail';
 
@@ -29,7 +30,7 @@ const Export = ({navigation}) => {
     (async () => {
       const storageMail = await AsyncStorage.getItem(MailStorageKey);
       if (storageMail) {
-        setMail(storageMail);
+        setMail(storageMail.trim().replace(/\s*/g, ''));
       }
     })();
   }, []);
@@ -37,10 +38,15 @@ const Export = ({navigation}) => {
   const onBackPress = navigation.goBack;
 
   const exportData = async () => {
+    if (!mail)
+      return Alert.alert(
+        'Oups',
+        `Aucun mail n'a été renseigné.\n\nMerci d'indiquer l'adresse mail sur laquelle vous désirez recevoir vos données.`,
+      );
     await AsyncStorage.setItem(MailStorageKey, mail);
     const htmlExport = await formatHtmlTable(diaryData);
     setIsLoading(true);
-    matomo.logDataExport();
+    logEvents.logDataExport();
     const res = await sendTipimail(
       {
         from: {
@@ -64,12 +70,16 @@ const Export = ({navigation}) => {
     }
   };
 
+  const handleChangeMail = (value) => {
+    setMail(value.trim().replace(/\s*/g, ''));
+  };
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={{flex: 1}}>
       <SafeAreaView style={styles.container}>
-        <View style={styles.inner}>
+        <ScrollView contentContainerStyle={styles.inner}>
           <TouchableOpacity
             onPress={onBackPress}
             style={styles.backButtonContainer}>
@@ -83,7 +93,7 @@ const Export = ({navigation}) => {
             autoCapitalize="none"
             keyboardType="email-address"
             textContentType="emailAddress"
-            onChangeText={setMail}
+            onChangeText={handleChangeMail}
             value={mail}
             placeholder="Renseignez votre email"
             style={styles.inputMail}
@@ -95,7 +105,7 @@ const Export = ({navigation}) => {
             </TouchableOpacity>
           )}
           <View style={{flex: 1}} />
-        </View>
+        </ScrollView>
       </SafeAreaView>
     </KeyboardAvoidingView>
   );
@@ -113,11 +123,10 @@ const styles = StyleSheet.create({
   },
   inner: {
     display: 'flex',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
+    flex: 1,
     paddingBottom: 30,
     backgroundColor: '#f9f9f9',
-    justifyContent: 'flex-end',
+    alignItems: 'center',
   },
   title: {
     width: '80%',
@@ -156,7 +165,9 @@ const styles = StyleSheet.create({
     width: '75%',
     textAlign: 'center',
     backgroundColor: '#F4FCFD',
+    borderWidth: 0.5,
     borderRadius: 10,
+    borderColor: colors.LIGHT_BLUE,
     marginVertical: '10%',
     padding: 10,
   },

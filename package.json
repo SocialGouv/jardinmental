@@ -5,6 +5,10 @@
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
+    "ios:SE": "react-native run-ios --simulator=\"iPhone SE (2nd generation)\"",
+    "ios:8": "react-native run-ios --simulator=\"iPhone 8\"",
+    "ios:11": "react-native run-ios --simulator=\"iPhone 11\"",
+    "ios:12promax": "react-native run-ios --simulator=\"iPhone 12 Pro Max\"",
     "start": "react-native start --reset-cache",
     "test": "jest",
     "lint": "eslint .",
@@ -22,6 +26,7 @@
     "@react-navigation/native": "^5.8.10",
     "@react-navigation/stack": "^5.12.8",
     "date-fns": "^2.16.1",
+    "ip-anonymize": "^0.1.0",
     "react": "16.13.1",
     "react-native": "0.63.4",
     "react-native-device-info": "^7.2.1",

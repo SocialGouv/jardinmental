@@ -13,7 +13,7 @@ import {buildSurveyData} from '../survey/survey-data';
 import SymptomsExplanation from '../symptoms/symptoms-explanation';
 import {displayedCategories} from '../common/constants';
 import localStorage from '../utils/localStorage';
-import matomo from '../services/matomo';
+import logEvents from '../services/logEvents';
 
 const lookUpCategoryMatomo = {
   MOOD: 0,
@@ -67,9 +67,9 @@ const SymptomScreen = ({navigation, route}) => {
     categories[cat] = value;
     setChosenCategories(categories);
     // if (value) {
-    //   matomo.logSymptomAdd(cat);
+    //   logEvents.logSymptomAdd(cat);
     // } else {
-    //   matomo.logSymptomCancel(cat);
+    //   logEvents.logSymptomCancel(cat);
     // }
   };
 

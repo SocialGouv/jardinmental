@@ -14,7 +14,7 @@ import {buildSurveyData} from '../survey/survey-data';
 import SymptomsExplanation from './symptoms-explanation';
 import {displayedCategories} from '../common/constants';
 import localStorage from '../utils/localStorage';
-import matomo from '../services/matomo';
+import logEvents from '../services/logEvents';
 import PlusSvg from '../../assets/svg/plus.svg';
 
 const AddSymptomScreen = ({navigation, route}) => {
@@ -34,7 +34,7 @@ const AddSymptomScreen = ({navigation, route}) => {
     console.log('add', value);
     if (!value) return;
     await localStorage.addCustomSymptoms(value);
-    matomo.logCustomSymptomAdd();
+    logEvents.logCustomSymptomAdd();
     navigation.navigate('symptoms', {newSymptom: value});
   };
 

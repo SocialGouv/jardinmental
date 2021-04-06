@@ -1,4 +1,4 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {
   StyleSheet,
   Text,
@@ -11,7 +11,7 @@ import {
 import {colors} from '../common/colors';
 import ArrowLeftSvg from '../../assets/svg/arrow-left.svg';
 import InfoSvg from '../../assets/svg/info.svg';
-import matomo from '../services/matomo';
+import logEvents from '../services/logEvents';
 
 const LegalScreen = ({navigation, title, content}) => {
   const [isFullScreen, setIsFullScreen] = useState(false);
@@ -20,6 +20,14 @@ const LegalScreen = ({navigation, title, content}) => {
     setIsFullScreen,
     isFullScreen,
   ]);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('tabPress', (e) => {
+      logEvents.logInfosOpen();
+    });
+
+    return unsubscribe;
+  }, [navigation]);
 
   // const onBackPress = () => {
   //   navigation.goBack();
@@ -89,7 +97,7 @@ const LegalScreen = ({navigation, title, content}) => {
           <Text
             style={styles.link}
             onPress={() => {
-              matomo.logInfoClick('en_savoir_plus_mentale');
+              logEvents.logInfoClick('en_savoir_plus_mentale');
               Linking.openURL(
                 'https://www.psycom.org/comprendre/la-sante-mentale/on-a-toutes-et-tous-une-sante-mentale/',
               );
@@ -102,7 +110,7 @@ const LegalScreen = ({navigation, title, content}) => {
           <Text
             style={styles.link}
             onPress={() => {
-              matomo.logInfoClick('article_OMS');
+              logEvents.logInfoClick('article_OMS');
               Linking.openURL(
                 'https://www.who.int/whr/2001/media_centre/press_release/fr/',
               );
@@ -114,7 +122,7 @@ const LegalScreen = ({navigation, title, content}) => {
           <Text
             style={styles.link}
             onPress={() => {
-              matomo.logInfoClick('voir_un_psy');
+              logEvents.logInfoClick('voir_un_psy');
               Linking.openURL('https://pasapas-jeunes.com/j-ai-besoin-d-aide');
             }}>
             C’est grave d’aller voir un psy ?{' '}
@@ -124,7 +132,7 @@ const LegalScreen = ({navigation, title, content}) => {
           <Text
             style={styles.link}
             onPress={() => {
-              matomo.logInfoClick('en_savoir_plus_troubles');
+              logEvents.logInfoClick('en_savoir_plus_troubles');
               Linking.openURL(
                 'https://www.psycom.org/comprendre/la-sante-mentale/les-troubles-psy/',
               );
@@ -136,7 +144,7 @@ const LegalScreen = ({navigation, title, content}) => {
           <Text
             style={styles.link}
             onPress={() => {
-              matomo.logInfoClick('article_difference');
+              logEvents.logInfoClick('article_difference');
               Linking.openURL('https://doctomag.com/psychologue-psychiatre/');
             }}>
             lire l'article
@@ -146,7 +154,7 @@ const LegalScreen = ({navigation, title, content}) => {
           <Text
             style={styles.link}
             onPress={() => {
-              matomo.logInfoClick('reseau_pic');
+              logEvents.logInfoClick('reseau_pic');
               Linking.openURL(
                 'http://www.reseau-pic.info/?dest=fiches/nom.php',
               );

@@ -11,7 +11,7 @@ import Chart from './chart';
 import WeekPicker from './week-picker';
 import {DiaryDataContext} from '../context';
 import {useContext} from 'react';
-import matomo from '../services/matomo';
+import logEvents from '../services/logEvents';
 import localStorage from '../utils/localStorage';
 
 const Calendar = ({navigation}) => {
@@ -30,7 +30,7 @@ const Calendar = ({navigation}) => {
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('tabPress', (e) => {
-      matomo.logCalendarOpen();
+      logEvents.logCalendarOpen();
     });
 
     return unsubscribe;

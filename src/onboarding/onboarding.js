@@ -10,7 +10,7 @@ import CheckBox from '@react-native-community/checkbox';
 import {colors} from '../common/colors';
 import Swiper from 'react-native-swiper';
 import localStorage from '../utils/localStorage';
-import matomo from '../services/matomo';
+import logEvents from '../services/logEvents';
 import Button from '../common/button';
 import ActiveDot from './ActiveDot';
 
@@ -35,7 +35,7 @@ const Onboarding = ({navigation}) => {
   };
 
   const onIndexChanged = (page) => {
-    matomo.logOnboardingSwipe(page);
+    logEvents.logOnboardingSwipe(page);
   };
 
   return (
