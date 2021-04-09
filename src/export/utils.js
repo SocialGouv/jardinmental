@@ -128,38 +128,46 @@ const generateState = (symptom, symptomStrName) => {
   `;
 };
 
-const generateNote = (note) => {
-  if (!note) {
+const generateNote = (notes) => {
+  if (
+    (typeof notes === 'string' && !notes) || //retro compatibility
+    (typeof notes === 'object' &&
+      !notes.notesEvents &&
+      !notes.notesSymptoms &&
+      !notes.notesToxic)
+  ) {
     return '';
   }
-  return `
-    <tr>
-      <td colspan="2" style="padding-left: 20px; padding-right: 20px">
-        <hr style="
-          margin: 0px auto 12px auto;
-          border: 1px solid #ebedf2;
-        " />
-      </td>
-    </tr>
-    <tr class="journal__item-symptom-wrapper">
-      <td>
-        <img alt="emoji" title="emoji" width="45" height="45" src="${mapImagesToState(
-          'Notes',
-        )}" style="
-          display: block;
-          padding: 5px;
-        " />
-      </td>
-      <td>
-        <p style="
-          line-height: 45px;
+
+  const renderNote = (n, i) => {
+    return `<p
+      style="
           margin: 0;
           margin-left: 20px;
           padding-right: 50px;
-        ">${note}</p>
+        ">
+      ${i ? `<b>${i} :</b> ` : ''}${n}
+    </p>`;
+  };
+
+  if (typeof notes === 'string') {
+    //retro compatibility
+    return `
+    <tr class="journal__item-symptom-wrapper">
+      <td>
+        ${renderNote(notes)}
       </td>
     </tr>
   `;
+  } else {
+    return `<tr class="journal__item-symptom-wrapper">
+      <td>
+        ${renderNote(notes.notesEvents, 'Évènement')}
+        ${renderNote(notes.notesSymptoms, 'Symptôme')}
+        ${renderNote(notes.notesToxic, 'Toxique')}
+      </td>
+    </tr>`;
+  }
 };
 
 const formatHtmlTable = async (diaryData) => {
@@ -301,16 +309,7 @@ const formatHtmlTable = async (diaryData) => {
                     if (!diaryData[strDate]) {
                       return '';
                     }
-
-                    const {
-                      ANXIETY_FREQUENCE,
-                      BADTHOUGHTS_FREQUENCE,
-                      MOOD,
-                      NOTES,
-                      SENSATIONS_FREQUENCE,
-                      SLEEP,
-                    } = diaryData[strDate];
-
+                    const {NOTES} = diaryData[strDate];
                     return `
                       <p style="margin-top: 35px;">${strDate
                         .split('-')
@@ -323,20 +322,6 @@ const formatHtmlTable = async (diaryData) => {
                           border: 1px solid #ebedf2;
                           background-color: #f8f9fb;
                         ">
-                          ${Object.keys(diaryData[strDate])
-                            .map((cat) => {
-                              const [_, suffix] = cat.split('_');
-                              if (
-                                (!suffix || suffix === 'FREQUENCE') &&
-                                cat !== 'NOTES'
-                              ) {
-                                return generateState(
-                                  diaryData[strDate][cat],
-                                  getTitle(cat),
-                                );
-                              }
-                            })
-                            .join('')}
                           ${generateNote(NOTES)}
                         </tbody>
                       </table>

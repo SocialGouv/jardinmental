@@ -113,6 +113,7 @@ const FEELING = 'FEELING';
 const FEELING_START = 'FEELING_START';
 const FEELING_DATE_CHOOSE = 'FEELING_DATE_CHOOSE';
 const FEELING_ADD = 'FEELING_ADD';
+const FEELING_START_YESTERDAY = 'FEELING_START_YESTERDAY';
 
 const logFeelingStart = async () => {
   await logEvent({
@@ -126,6 +127,14 @@ const logFeelingDateChoose = async (date) => {
     category: FEELING,
     action: FEELING_DATE_CHOOSE,
     name: date,
+  });
+};
+
+const logFeelingStartYesterday = async (v) => {
+  await logEvent({
+    category: FEELING,
+    action: FEELING_START_YESTERDAY,
+    name: v,
   });
 };
 
@@ -259,4 +268,5 @@ export default {
   logCustomSymptomAdd,
   logInfoClick,
   logInfosOpen,
+  logFeelingStartYesterday,
 };

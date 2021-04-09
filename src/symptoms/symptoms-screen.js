@@ -47,8 +47,8 @@ const SymptomScreen = ({navigation, route}) => {
   useEffect(() => {
     const newSymptom = route.params?.newSymptom;
     if (newSymptom) {
-      setCustomSymptoms([...customSymptoms, newSymptom]);
-      setChosenCategories({...chosenCategories, [newSymptom]: true});
+      setCustomSymptoms([newSymptom, ...customSymptoms]);
+      setChosenCategories({[newSymptom]: true, ...chosenCategories});
     }
   }, [route]);
 
@@ -129,6 +129,12 @@ const SymptomScreen = ({navigation, route}) => {
           Sélectionner les symptômes
           {showExplanation ? ' que vous souhaitez suivre' : ''}
         </Text>
+        <TouchableOpacity onPress={() => navigation.navigate('add-symptom')}>
+          <View style={styles.addSymptom}>
+            <Text style={styles.labelAddSymptom}>Ajouter un symptôme</Text>
+            <Text style={styles.plusIcon}>+</Text>
+          </View>
+        </TouchableOpacity>
         {chosenCategories &&
           Object.keys(chosenCategories).map((cat, index) => (
             <View key={index} style={styles.categories}>
@@ -144,12 +150,6 @@ const SymptomScreen = ({navigation, route}) => {
               />
             </View>
           ))}
-        <TouchableOpacity onPress={() => navigation.navigate('add-symptom')}>
-          <View style={styles.addSymptom}>
-            <Text style={styles.labelAddSymptom}>Ajouter un symptôme</Text>
-            <Text style={styles.plusIcon}>+</Text>
-          </View>
-        </TouchableOpacity>
       </ScrollView>
       <View style={styles.container}>
         <TouchableOpacity
@@ -233,7 +233,7 @@ const styles = StyleSheet.create({
   addSymptom: {
     backgroundColor: colors.LIGHT_BLUE,
     color: '#fff',
-    marginBottom: 50,
+    marginBottom: 20,
     borderRadius: 10,
     padding: 10,
     display: 'flex',

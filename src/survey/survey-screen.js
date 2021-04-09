@@ -29,7 +29,7 @@ const SurveyScreen = ({navigation, route}) => {
   const [availableData, setAvailableData] = useState();
 
   const updateValues = () => {
-    if (!availableData) return;
+    if (!availableData || index < 0) return;
     setQuestion(availableData[index].question);
     setYesterdayQuestion(availableData[index].yesterdayQuestion);
     setAnswers(availableData[index].answers);
@@ -137,6 +137,9 @@ const SurveyScreen = ({navigation, route}) => {
   return (
     <SafeAreaView style={styles.safe}>
       <ScrollView style={styles.container}>
+        <TouchableOpacity onPress={previousQuestion}>
+          <Text style={styles.backButton}>Retour</Text>
+        </TouchableOpacity>
         <Text style={styles.question}>
           {isSurveyDateYesterday ? yesterdayQuestion : question}
         </Text>
@@ -150,11 +153,6 @@ const SurveyScreen = ({navigation, route}) => {
               </View>
             </TouchableOpacity>
           ))}
-        <TouchableOpacity onPress={nextQuestion}>
-          <Text style={styles.backButton} onPress={previousQuestion}>
-            Retour
-          </Text>
-        </TouchableOpacity>
       </ScrollView>
       {explanation ? (
         <SurveyExplanation

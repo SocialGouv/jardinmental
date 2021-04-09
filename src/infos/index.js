@@ -161,10 +161,38 @@ const LegalScreen = ({navigation, title, content}) => {
             }}>
             reseau-pic.com{' '}
           </Text>
+          {'\n\n\n'}
+          Pour simplement parler à quelqu’un :{'\n'}
+          {'\n'}
+          SOS-amitiés 24h/24 et 7j/7{'\n'}
+          <Text
+            style={styles.link}
+            onPress={() => {
+              logEvents.logInfoClick('SOS-amitiés');
+              Linking.openURL('tel:09 72 39 40 50');
+            }}>
+            09 72 39 40 50
+          </Text>
           {'\n\n'}
-          Pour simplement parler à quelqu’un : {'\n'}SOS-amitiés 24h/24 et 7j/7
-          {'\n'}SOS suicide poenix 13h-23h00 {'\n'}Fil Santé Jeune Tous les
-          jours, 9h-23h
+          SOS Suicide Phénix 13h-23h00 {'\n'}
+          <Text
+            style={styles.link}
+            onPress={() => {
+              logEvents.logInfoClick('SOS-amitiés');
+              Linking.openURL('tel:01 40 44 46 45');
+            }}>
+            01 40 44 46 45
+          </Text>
+          {'\n\n'}
+          Fil Santé Jeune Tous les jours, 9h-23h {'\n'}
+          <Text
+            style={styles.link}
+            onPress={() => {
+              logEvents.logInfoClick('SOS-amitiés');
+              Linking.openURL('tel:0 800 235 236');
+            }}>
+            0 800 235 236
+          </Text>
         </Text>
       </ScrollView>
     </SafeAreaView>
@@ -182,8 +210,9 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   cgu: {
-    padding: 15,
-    marginBottom: 85,
+    paddingVertical: 5,
+    paddingHorizontal: 15,
+    marginBottom: 72,
   },
   container: {
     flexDirection: 'row',

@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useState, useEffect} from 'react';
 import {
   StyleSheet,
   Text,
@@ -6,34 +6,88 @@ import {
   SafeAreaView,
   TextInput,
   View,
+  Alert,
+  AlertButton,
+  Platform,
+  TouchableOpacity,
 } from 'react-native';
 import {colors} from '../common/colors';
-import {availableData} from './survey-data';
+import {availableData, buildSurveyData} from './survey-data';
 import {categories} from '../common/constants';
 import {DiaryDataContext} from '../context';
-import {isYesterday, parseISO} from 'date-fns';
+import {isYesterday, isToday, parseISO} from 'date-fns';
 import Button from '../common/button';
 import logEvents from '../services/logEvents';
+import {beforeToday, formatDay} from '../services/date/helpers';
 
 const Notes = ({navigation, route}) => {
-  const [notes, setNotes] = useState('');
-  const setDiaryData = useContext(DiaryDataContext)[1];
+  const [notesEvents, setNotesEvents] = useState('');
+  const [notesSymptoms, setNotesSymptoms] = useState('');
+  const [notesToxic, setNotesToxic] = useState('');
+  const [diaryData, setDiaryData] = useContext(DiaryDataContext);
+  const [questions, setQuestions] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      const q = await buildSurveyData();
+      if (q) {
+        setQuestions(q);
+      }
+    })();
+  }, []);
 
   const previousQuestion = () => {
-    const redirect = route.params?.backRedirect
-      ? `question-${route.params.backRedirect}`
-      : 'tabs';
-    navigation.navigate(redirect);
+    if (route.params?.backRedirect) {
+      console.log(route.params?.backRedirect);
+      navigation.navigate('question', {
+        ...route.params,
+        index: route.params.backRedirect,
+      });
+    } else {
+      console.log('tabs');
+      navigation.navigate('tabs');
+    }
   };
 
   const validateSurvey = () => {
     const survey = route.params?.currentSurvey;
     const currentSurvey = {
       date: survey?.date,
-      answers: {...survey?.answers, [categories.NOTES]: notes},
+      answers: {
+        ...survey?.answers,
+        [categories.NOTES]: {notesEvents, notesSymptoms, notesToxic},
+      },
     };
     setDiaryData(currentSurvey);
     logEvents.logFeelingAdd();
+    if (
+      isToday(parseISO(currentSurvey.date)) &&
+      !diaryData[formatDay(beforeToday(1))]
+    ) {
+      Alert.alert('Souhaitez-vous renseigner vos ressentis pour hier ?', '', [
+        {
+          text: 'Oui, je les renseigne maintenant',
+          onPress: () => {
+            logEvents.logFeelingStartYesterday(true);
+            navigation.navigate('question', {
+              currentSurvey: {
+                date: formatDay(beforeToday(1)),
+                answers: {},
+              },
+              index: questions[0],
+            });
+          },
+          style: 'default',
+        },
+        {
+          text: 'Plus tard',
+          onPress: () => {
+            logEvents.logFeelingStartYesterday(false);
+          },
+          style: 'cancel',
+        },
+      ]);
+    }
     navigation.navigate('tabs');
   };
 
@@ -48,19 +102,51 @@ const Notes = ({navigation, route}) => {
   return (
     <SafeAreaView style={styles.safe}>
       <ScrollView style={styles.container}>
+        <TouchableOpacity onPress={previousQuestion}>
+          <Text style={styles.backButton}>Retour</Text>
+        </TouchableOpacity>
+
         <Text style={styles.question}>
           {isSurveyDateYesterday ? yesterdayQuestion : question}
         </Text>
+        <Text style={styles.title}>
+          Que m'est-il arrivé aujourd'hui (disputes, examens, ...) ?
+        </Text>
         <TextInput
           multiline={true}
-          onChangeText={setNotes}
-          value={notes}
-          placeholder="Saisissez une note"
+          numberOfLines={3}
+          numberOfLines={Platform.OS === 'ios' ? null : 3}
+          minHeight={Platform.OS === 'ios' ? 20 * 3 : null}
+          onChangeText={setNotesEvents}
+          value={notesEvents}
+          placeholder="Je me suis disputé avec un ami..."
           style={styles.textArea}
         />
-        <Text style={styles.backButton} onPress={previousQuestion}>
-          Retour
+        <Text style={styles.title}>
+          Je souhaite détailler un ou plusieurs de mes symptômes (ma nuit à été
+          ...) ?
         </Text>
+        <TextInput
+          multiline={true}
+          numberOfLines={Platform.OS === 'ios' ? null : 3}
+          minHeight={Platform.OS === 'ios' ? 20 * 3 : null}
+          onChangeText={setNotesSymptoms}
+          value={notesSymptoms}
+          placeholder="J'ai mis beaucoup de temps à m'endormir..."
+          style={styles.textArea}
+        />
+        <Text style={styles.title}>
+          Ai-je consommé des toxiques aujourd'hui ? Si oui, lesquels ?
+        </Text>
+        <TextInput
+          multiline={true}
+          numberOfLines={Platform.OS === 'ios' ? null : 3}
+          minHeight={Platform.OS === 'ios' ? 20 * 3 : null}
+          onChangeText={setNotesToxic}
+          value={notesToxic}
+          placeholder="Je n'ai rien consommé aujourd'hui..."
+          style={styles.textArea}
+        />
       </ScrollView>
       <View style={styles.buttonWrapper}>
         <Button onPress={validateSurvey} title="Valider" />
@@ -80,6 +166,12 @@ const styles = StyleSheet.create({
     marginBottom: 26,
     fontWeight: '700',
   },
+  title: {
+    color: colors.DARK_BLUE,
+    fontSize: 18,
+    marginBottom: 15,
+    fontWeight: '500',
+  },
   container: {
     backgroundColor: 'white',
     padding: 20,
@@ -88,6 +180,8 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     textDecorationLine: 'underline',
     color: colors.BLUE,
+    paddingTop: 15,
+    paddingBottom: 30,
   },
   buttonWrapper: {
     display: 'flex',

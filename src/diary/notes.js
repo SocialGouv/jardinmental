@@ -3,15 +3,48 @@ import {StyleSheet, View, Text} from 'react-native';
 import CircledIcon from '../common/circled-icon';
 
 const Notes = ({notes}) => {
-  if (!notes) {
+  if (
+    (typeof notes === 'string' && !notes) || //retro compatibility
+    (typeof notes === 'object' &&
+      !notes.notesEvents &&
+      !notes.notesSymptoms &&
+      !notes.notesToxic)
+  ) {
     return null;
   }
+
+  const renderNote = (t, v) => {
+    if (!v) return null;
+    return (
+      <Text style={styles.text}>
+        <Text style={styles.boldText}>{t} : </Text>
+        {v}
+      </Text>
+    );
+  };
+
+  const renderNotes = () => {
+    if (typeof notes === 'string') {
+      //retro compatibility
+      return <Text style={styles.text}>{notes}</Text>;
+    } else {
+      console.log('new notes', notes);
+      return (
+        <View style={styles.textContainer}>
+          {renderNote('Évènement', notes.notesEvents)}
+          {renderNote('Symptôme', notes.notesSymptoms)}
+          {renderNote('Toxique', notes.notesToxic)}
+        </View>
+      );
+    }
+  };
+
   return (
     <View>
       <View style={styles.divider} />
       <View style={styles.container}>
         <CircledIcon color="rgba(34,192,207, .1)" icon="NotesSvg" />
-        <Text style={styles.text}>{notes}</Text>
+        {renderNotes()}
       </View>
     </View>
   );
@@ -25,9 +58,15 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     paddingHorizontal: 15,
   },
+  textContainer: {width: '100%'},
   text: {
+    width: '80%',
     fontSize: 15,
-    width: '75%',
+    marginBottom: 5,
+  },
+  boldText: {
+    fontSize: 15,
+    fontWeight: '600',
   },
   divider: {
     height: 1,
