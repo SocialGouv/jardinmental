@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, SafeAreaView, Text} from 'react-native';
+import {StyleSheet, SafeAreaView} from 'react-native';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import Diary from '../diary/diary';
 import Calendar from '../calendar/calendar';
@@ -11,6 +11,7 @@ import localStorage from '../utils/localStorage';
 import logEvents from '../services/logEvents';
 import Infos from '../infos';
 import {colors} from '../common/colors';
+import Text from '../components/MyText';
 
 const Tab = createMaterialTopTabNavigator();
 
