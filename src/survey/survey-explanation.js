@@ -24,15 +24,16 @@ const SurveyExplanation = ({title = 'Explications', explanation}) => {
   }
   return isFullScreen ? (
     <SafeAreaView style={styles.fullScreenContainer}>
-      <ScrollView style={styles.fullScreenContainer}>
-        <Text style={[styles.title, {marginBottom: 10}]}>{title}</Text>
-        <Text>{explanation}</Text>
-        <TouchableOpacity
-          style={[styles.arrow, {transform: [{rotate: '180deg'}]}]}
-          onPress={toggleFullScreen}>
-          <ArrowUpSvg color="#26387C" />
-        </TouchableOpacity>
-      </ScrollView>
+      <TouchableOpacity style={styles.arrow} onPress={toggleFullScreen}>
+        <InfoSvg style={styles.icon} />
+        <Text style={styles.title}>{title}</Text>
+        <ArrowUpSvg style={{transform: [{rotate: '180deg'}]}} color="#26387C" />
+      </TouchableOpacity>
+      <View style={styles.container}>
+        <ScrollView>
+          <Text>{explanation}</Text>
+        </ScrollView>
+      </View>
     </SafeAreaView>
   ) : (
     <View>
@@ -41,11 +42,24 @@ const SurveyExplanation = ({title = 'Explications', explanation}) => {
         <Text style={styles.title}>{title}</Text>
         <ArrowUpSvg color="#26387C" />
       </TouchableOpacity>
+      <View style={[styles.container, {paddingBottom: 10}]}>
+        <Text numberOfLines={1} style={styles.text}>
+          {explanation}
+        </Text>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: 'rgba(38,56,124, 0.03)',
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    borderWidth: 1,
+    borderColor: 'rgba(38,56,124, 0.08)',
+    padding: 15,
+  },
   icon: {
     color: colors.BLUE,
   },
@@ -54,6 +68,9 @@ const styles = StyleSheet.create({
     color: colors.BLUE,
     marginRight: 15,
     marginLeft: 5,
+  },
+  footer: {
+    padding: 15,
   },
   arrow: {
     paddingHorizontal: 15,
@@ -66,7 +83,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     alignSelf: 'center',
-    marginVertical: 20,
+    marginVertical: 10,
   },
   fullScreenContainer: {
     backgroundColor: 'rgba(240, 240, 240, 1)',
@@ -74,10 +91,10 @@ const styles = StyleSheet.create({
     zIndex: 1,
     top: 0,
     left: 0,
-    bottom: 0,
     right: 0,
+    bottom: 0,
     padding: 25,
-    paddingTop: 50,
+    paddingVertical: 50,
     display: 'flex',
     flexDirection: 'column',
     flex: 1,
