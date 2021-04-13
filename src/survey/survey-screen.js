@@ -14,6 +14,7 @@ import SurveyExplanation from './survey-explanation';
 import {categories, surveyDate} from '../common/constants';
 import {beforeToday, formatDay} from '../services/date/helpers';
 import {isYesterday, parseISO} from 'date-fns';
+import BackButton from '../components/BackButton';
 
 const SurveyScreen = ({navigation, route}) => {
   const [totalQuestions, setTotalQuestions] = useState(0);
@@ -136,10 +137,8 @@ const SurveyScreen = ({navigation, route}) => {
 
   return (
     <SafeAreaView style={styles.safe}>
+      <BackButton onPress={previousQuestion} />
       <ScrollView style={styles.container}>
-        <TouchableOpacity onPress={previousQuestion}>
-          <Text style={styles.backButton}>Retour</Text>
-        </TouchableOpacity>
         <Text style={styles.question}>
           {isSurveyDateYesterday ? yesterdayQuestion : question}
         </Text>
@@ -154,12 +153,7 @@ const SurveyScreen = ({navigation, route}) => {
             </TouchableOpacity>
           ))}
       </ScrollView>
-      {explanation ? (
-        <SurveyExplanation
-          explanation={explanation}
-          category={'Explications'}
-        />
-      ) : null}
+      {explanation ? <SurveyExplanation explanation={explanation} /> : null}
     </SafeAreaView>
   );
 };
@@ -191,6 +185,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
     padding: 20,
+    paddingTop: 0,
   },
   backButton: {
     fontWeight: '700',

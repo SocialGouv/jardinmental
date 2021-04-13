@@ -16,6 +16,7 @@ import {displayedCategories} from '../common/constants';
 import localStorage from '../utils/localStorage';
 import logEvents from '../services/logEvents';
 import PlusSvg from '../../assets/svg/plus.svg';
+import BackButton from '../components/BackButton';
 
 const AddSymptomScreen = ({navigation, route}) => {
   const [value, setValue] = useState('');
@@ -40,11 +41,7 @@ const AddSymptomScreen = ({navigation, route}) => {
 
   return (
     <SafeAreaView style={styles.safe}>
-      <TouchableOpacity
-        style={styles.backButtonContainer}
-        onPress={navigation.goBack}>
-        <Text style={styles.backButton}>Retour</Text>
-      </TouchableOpacity>
+      <BackButton onPress={navigation.goBack} />
       <ScrollView style={[styles.container, {flex: 1}]}>
         <Text style={styles.title}>
           Noter le symptôme que vous souhaitez suivre

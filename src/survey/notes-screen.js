@@ -19,6 +19,7 @@ import {isYesterday, isToday, parseISO} from 'date-fns';
 import Button from '../common/button';
 import logEvents from '../services/logEvents';
 import {beforeToday, formatDay} from '../services/date/helpers';
+import BackButton from '../components/BackButton';
 
 const Notes = ({navigation, route}) => {
   const [notesEvents, setNotesEvents] = useState('');
@@ -101,11 +102,8 @@ const Notes = ({navigation, route}) => {
 
   return (
     <SafeAreaView style={styles.safe}>
+      <BackButton onPress={previousQuestion} />
       <ScrollView style={styles.container}>
-        <TouchableOpacity onPress={previousQuestion}>
-          <Text style={styles.backButton}>Retour</Text>
-        </TouchableOpacity>
-
         <Text style={styles.question}>
           {isSurveyDateYesterday ? yesterdayQuestion : question}
         </Text>

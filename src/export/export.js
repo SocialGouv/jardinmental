@@ -19,6 +19,7 @@ import {formatHtmlTable} from './utils';
 
 import logEvents from '../services/logEvents';
 import {sendTipimail} from '../services/sendTipimail';
+import BackButton from '../components/BackButton';
 const MailStorageKey = '@Mail';
 
 const Export = ({navigation}) => {
@@ -34,8 +35,6 @@ const Export = ({navigation}) => {
       }
     })();
   }, []);
-
-  const onBackPress = navigation.goBack;
 
   const exportData = async () => {
     if (!mail)
@@ -80,11 +79,7 @@ const Export = ({navigation}) => {
       style={{flex: 1}}>
       <SafeAreaView style={styles.container}>
         <ScrollView contentContainerStyle={styles.inner}>
-          <TouchableOpacity
-            onPress={onBackPress}
-            style={styles.backButtonContainer}>
-            <Text style={styles.backButton}>Retour</Text>
-          </TouchableOpacity>
+          <BackButton onPress={navigation.goBack} />
           <ExportData style={styles.icon} />
           <Text style={styles.title}>
             Recevez vos données des 30 derniers jours par mail

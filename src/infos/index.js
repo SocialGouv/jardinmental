@@ -35,11 +35,6 @@ const LegalScreen = ({navigation, title, content}) => {
 
   return (
     <SafeAreaView style={styles.safe}>
-      {/* <View style={styles.container}>
-        <TouchableOpacity onPress={onBackPress} style={styles.button}>
-          <Text>Retour</Text>
-        </TouchableOpacity>
-      </View> */}
       <ScrollView style={styles.cgu}>
         <View style={styles.containerInfos}>
           <InfoSvg />

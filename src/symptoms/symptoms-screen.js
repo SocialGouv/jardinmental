@@ -14,6 +14,7 @@ import SymptomsExplanation from '../symptoms/symptoms-explanation';
 import {displayedCategories} from '../common/constants';
 import localStorage from '../utils/localStorage';
 import logEvents from '../services/logEvents';
+import BackButton from '../components/BackButton';
 
 const lookUpCategoryMatomo = {
   MOOD: 0,
@@ -119,11 +120,7 @@ const SymptomScreen = ({navigation, route}) => {
 
   return (
     <SafeAreaView style={styles.safe}>
-      <TouchableOpacity
-        style={styles.backButtonContainer}
-        onPress={() => navigation.navigate('tabs')}>
-        <Text style={styles.backButton}>Retour</Text>
-      </TouchableOpacity>
+      <BackButton onPress={() => navigation.navigate('tabs')} />
       <ScrollView style={[styles.container, {flex: 1, paddingBottom: 100}]}>
         <Text style={styles.title}>
           Sélectionner les symptômes

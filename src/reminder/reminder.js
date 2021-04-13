@@ -15,6 +15,7 @@ import TimePicker from './time-picker';
 import NotificationService from '../services/notifications';
 import {colors} from '../common/colors';
 import logEvents from '../services/logEvents';
+import BackButton from '../components/BackButton';
 
 const dateWithTimeAndOffsetFromToday = (hours, minutes, offset) => {
   const date = new Date();
@@ -171,11 +172,7 @@ class Reminder extends React.Component {
     const {reminder, timePickerVisible} = this.state;
     return (
       <SafeAreaView style={styles.container}>
-        <TouchableOpacity
-          onPress={this.onBackPress}
-          style={styles.backButtonContainer}>
-          <Text style={styles.backButton}>{'Retour'}</Text>
-        </TouchableOpacity>
+        <BackButton onPress={this.onBackPress} />
         <ReminderSvg />
         <Text style={styles.title}>
           N'oubliez plus jamais de noter vos symptômes

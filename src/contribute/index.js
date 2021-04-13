@@ -14,6 +14,7 @@ import logEvents from '../services/logEvents';
 import Matomo from '../services/matomo';
 import {useEffect} from 'react';
 import Button from '../common/button';
+import BackButton from '../components/BackButton';
 
 const Supported = ({navigation}) => {
   const [contribution, setContribution] = useState('');
@@ -43,16 +44,10 @@ const Supported = ({navigation}) => {
     this.setState({visible: false});
   };
 
-  const onBackPress = () => navigation.goBack();
-
   return (
     <SafeAreaView style={styles.safe}>
       <ScrollView style={styles.container}>
-        <TouchableOpacity
-          onPress={onBackPress}
-          style={styles.backButtonContainer}>
-          <Text style={styles.backButton}>{'Retour'}</Text>
-        </TouchableOpacity>
+        <BackButton />
         <View style={styles.header}>
           <Text style={styles.title}>Mon Suivi Psy</Text>
           <Text style={styles.title}>Nous vous écoutons :</Text>
