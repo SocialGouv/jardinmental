@@ -2,11 +2,11 @@ import React, {useEffect, useState} from 'react';
 import {
   StyleSheet,
   ScrollView,
-  Text,
   View,
   SafeAreaView,
   TouchableOpacity,
 } from 'react-native';
+import Text from '../components/MyText';
 import DiaryItem from './diary-item';
 import ReminderItem from './reminder-item';
 import ContributeItem from './contribute-item';

@@ -1,6 +1,7 @@
 import React from 'react';
-import {StyleSheet, View, Text} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {colors} from './colors';
+import Text from '../components/MyText';
 
 const Header = ({children}) => {
   return (

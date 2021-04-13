@@ -1,12 +1,12 @@
 import React from 'react';
 import {
   StyleSheet,
-  Text,
   SafeAreaView,
   ScrollView,
   TouchableOpacity,
   View,
 } from 'react-native';
+import Text from '../components/MyText';
 import {colors} from '../common/colors';
 import ArrowLeftSvg from '../../assets/svg/arrow-left.svg';
 

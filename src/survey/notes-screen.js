@@ -1,7 +1,6 @@
 import React, {useContext, useState, useEffect} from 'react';
 import {
   StyleSheet,
-  Text,
   ScrollView,
   SafeAreaView,
   TextInput,
@@ -11,6 +10,7 @@ import {
   Platform,
   TouchableOpacity,
 } from 'react-native';
+import Text from '../components/MyText';
 import {colors} from '../common/colors';
 import {availableData, buildSurveyData} from './survey-data';
 import {categories} from '../common/constants';

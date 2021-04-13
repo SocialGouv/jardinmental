@@ -5,8 +5,8 @@ import {
   View,
   Modal,
   TouchableOpacity,
-  Text,
 } from 'react-native';
+import Text from '../components/MyText';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {colors} from '../common/colors';
 

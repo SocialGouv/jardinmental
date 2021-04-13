@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
 import {
   StyleSheet,
-  Text,
   SafeAreaView,
   View,
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
+import Text from '../components/MyText';
 import {colors} from '../common/colors';
 import localStorage from '../utils/localStorage';
 import logEvents from '../services/logEvents';

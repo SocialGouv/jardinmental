@@ -1,6 +1,7 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {StyleSheet, TouchableOpacity} from 'react-native';
 import Swiper from 'react-native-swiper';
+import Text from '../components/MyText';
 
 const styles = StyleSheet.create({
   button: {

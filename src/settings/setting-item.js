@@ -1,5 +1,6 @@
 import React from 'react';
-import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {View, StyleSheet, TouchableOpacity} from 'react-native';
+import Text from '../components/MyText';
 import {colors} from '../common/colors';
 import Icon from '../common/icon';
 import ArrowRightSvg from '../../assets/svg/arrow-right.svg';

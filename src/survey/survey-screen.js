@@ -2,11 +2,11 @@ import React, {useEffect, useState} from 'react';
 import {
   TouchableOpacity,
   StyleSheet,
-  Text,
   ScrollView,
   View,
   SafeAreaView,
 } from 'react-native';
+import Text from '../components/MyText';
 import {colors} from '../common/colors';
 import CircledIcon from '../common/circled-icon';
 import {buildSurveyData, getAvailableData} from './survey-data';

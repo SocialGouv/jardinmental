@@ -1,6 +1,7 @@
 import React from 'react';
 import LegalScreen from './legal-screen';
-import {Linking, StyleSheet, Text} from 'react-native';
+import {Linking, StyleSheet} from 'react-native';
+import Text from '../components/MyText';
 
 const LegalMentions = ({navigation}) => {
   const goToPrivacy = () => {

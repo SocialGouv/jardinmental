@@ -1,10 +1,10 @@
 import React from 'react';
-import {StyleSheet, View, Text, Dimensions} from 'react-native';
+import {StyleSheet, View, Dimensions} from 'react-native';
 import Svg, {Circle, Line, G} from 'react-native-svg';
 import {colors} from '../common/colors';
 import {colorsMap} from '../common/constants';
 import {days} from '../services/date/helpers';
-
+import Text from '../components/MyText';
 /* Chart setup */
 
 const dotSize = 7;

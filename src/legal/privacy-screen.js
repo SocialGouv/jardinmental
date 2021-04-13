@@ -1,6 +1,7 @@
 import React from 'react';
 import LegalScreen from './legal-screen';
-import {StyleSheet, Text, Linking, View} from 'react-native';
+import {StyleSheet, Linking, View} from 'react-native';
+import Text from '../components/MyText';
 
 const Privacy = ({navigation}) => {
   const sendMail = () => {

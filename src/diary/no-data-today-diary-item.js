@@ -1,5 +1,6 @@
 import React from 'react';
-import {StyleSheet, View, Text} from 'react-native';
+import {StyleSheet, View} from 'react-native';
+import Text from '../components/MyText';
 import Button from '../common/button';
 import {colors} from '../common/colors';
 import {formatDay} from '../services/date/helpers';

@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react';
-import {StyleSheet, Text, TouchableOpacity} from 'react-native';
+import React from 'react';
+import {StyleSheet, TouchableOpacity} from 'react-native';
 import {colors} from '../common/colors';
 import ArrowUpSvg from '../../assets/svg/arrow-up.svg';
 

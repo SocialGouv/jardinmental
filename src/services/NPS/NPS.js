@@ -9,10 +9,10 @@ import {
   View,
   ScrollView,
   KeyboardAvoidingView,
-  Text,
   TextInput,
   TouchableOpacity,
 } from 'react-native';
+import Text from '../../components/MyText';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Mark from './Mark';
 import Notifications from '../notifications';

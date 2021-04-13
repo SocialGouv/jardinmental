@@ -4,11 +4,11 @@ import {
   Linking,
   Platform,
   View,
-  Text,
   TouchableOpacity,
   StyleSheet,
   SafeAreaView,
 } from 'react-native';
+import Text from '../components/MyText';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ReminderSvg from '../../assets/svg/reminder.svg';
 import TimePicker from './time-picker';

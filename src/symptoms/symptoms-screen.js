@@ -2,11 +2,11 @@ import React, {useEffect, useState} from 'react';
 import {
   TouchableOpacity,
   StyleSheet,
-  Text,
   ScrollView,
   View,
   SafeAreaView,
 } from 'react-native';
+import Text from '../components/MyText';
 import CheckBox from '@react-native-community/checkbox';
 import {colors} from '../common/colors';
 import {buildSurveyData} from '../survey/survey-data';

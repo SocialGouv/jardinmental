@@ -1,11 +1,6 @@
 import React, {useState} from 'react';
-import {
-  StyleSheet,
-  Text,
-  SafeAreaView,
-  View,
-  TouchableOpacity,
-} from 'react-native';
+import {StyleSheet, SafeAreaView, View, TouchableOpacity} from 'react-native';
+import Text from '../components/MyText';
 import CheckBox from '@react-native-community/checkbox';
 import {colors} from '../common/colors';
 import Swiper from 'react-native-swiper';

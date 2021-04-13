@@ -1,6 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {
-  Text,
   TouchableOpacity,
   StyleSheet,
   SafeAreaView,
@@ -11,6 +10,7 @@ import {
   View,
   ScrollView,
 } from 'react-native';
+import Text from '../components/MyText';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ExportData from '../../assets/svg/export-data.svg';
 import {colors} from '../common/colors';

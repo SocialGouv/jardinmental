@@ -1,6 +1,7 @@
 import React from 'react';
 import LegalScreen from './legal-screen';
-import {StyleSheet, Text, Linking} from 'react-native';
+import {StyleSheet, Linking} from 'react-native';
+import Text from '../components/MyText';
 
 const CGU = ({navigation}) => {
   const goToGitHub = () => {

@@ -1,5 +1,6 @@
 import React from 'react';
-import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, TouchableOpacity} from 'react-native';
+import Text from '../components/MyText';
 import {colors} from '../common/colors';
 
 const ExportItem = ({onPress}) => (
