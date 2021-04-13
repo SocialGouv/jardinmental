@@ -40,7 +40,7 @@ jobs:
 
       - name: Cache Yarn packages
         id: yarn_cache_packages
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         with:
           path: ${{ steps.init.outputs.yarn_cache }}
           key: ${{ runner.os }}-${{ matrix.config.kind }}-${{ hashFiles('yarn.lock') }}
@@ -55,7 +55,7 @@ jobs:
 
       - name: Cache gradle dependencies
         if: matrix.config.kind == 'android'
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         with:
           path: ~/.gradle/caches
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
@@ -79,7 +79,7 @@ jobs:
 
       - name: Cache Pods dependencies
         if: matrix.config.kind == 'ios'
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         with:
           path: ios/Pods
           key: ${{ runner.os }}-pods-cache-${{ hashFiles('**/ios/Podfile.lock') }}
