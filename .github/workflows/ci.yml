@@ -4,40 +4,6 @@ on:
   - pull_request
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Set up Node.js 12.x
-        uses: actions/setup-node@v2-beta
-        with:
-          node-version: 12.x
-
-      - name: Get yarn cache directory path
-        id: init
-        shell: bash
-        run: |
-          echo "::set-output name=yarn_cache::$(yarn cache dir)"
-          #
-          echo "Node $(node --version)"
-          echo "Yarn $(yarn --version)"
-
-      - uses: actions/checkout@v2
-
-      - name: Cache Yarn packages
-        id: yarn_cache_packages
-        uses: actions/cache@v1
-        with:
-          path: ${{ steps.init.outputs.yarn_cache }}
-          key: ${{ runner.os }}-yarn_cache-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn_cache-
-
-      - name: Installing
-        run: yarn --frozen-lockfile --perfer-offline
-
-      - name: Lint
-        run: yarn lint
-
   build:
     needs:
       - test

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Text, Platform} from 'react-native';
+import {Text} from 'react-native';
 
 export default ({
   h1,
