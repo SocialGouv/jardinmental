@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Text} from 'react-native';
+import {Text, Platform} from 'react-native';
 
 export default ({
   h1,
@@ -15,7 +15,7 @@ export default ({
   ...rest
 }) => {
   return (
-    <Text style={[style, {fontFamily: 'roboto'}]} {...rest}>
+    <Text style={[style, {fontFamily: 'System'}]} {...rest}>
       {children}
     </Text>
   );
