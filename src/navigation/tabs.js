@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, SafeAreaView} from 'react-native';
+import {StyleSheet, SafeAreaView, Platform} from 'react-native';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import Diary from '../diary/diary';
 import Calendar from '../calendar/calendar';
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: 'white',
     textAlign: 'center',
-    paddingVertical: 17,
+    paddingVertical: Platform.OS === 'android' ? 5 : 17,
     fontWeight: '700',
   },
 });
