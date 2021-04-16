@@ -15,7 +15,8 @@ const DiaryItem = ({patientState, startAtFirstQuestion, date}) => {
     (async () => {
       const c = await localStorage.getCustomSymptoms();
       const t = c.map((e) => `${e}_FREQUENCE`);
-      if (t) setCustoms(t);
+      if (t) return setCustoms(t);
+      return;
     })();
   }, [patientState]);
 

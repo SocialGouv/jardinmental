@@ -7,9 +7,9 @@ const Notes = ({notes}) => {
   if (
     (typeof notes === 'string' && !notes) || //retro compatibility
     (typeof notes === 'object' &&
-      !notes.notesEvents &&
-      !notes.notesSymptoms &&
-      !notes.notesToxic)
+      !notes?.notesEvents &&
+      !notes?.notesSymptoms &&
+      !notes?.notesToxic)
   ) {
     return null;
   }
