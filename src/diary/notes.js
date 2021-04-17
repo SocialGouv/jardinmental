@@ -5,6 +5,7 @@ import CircledIcon from '../common/circled-icon';
 
 const Notes = ({notes}) => {
   if (
+    !notes ||
     (typeof notes === 'string' && !notes) || //retro compatibility
     (typeof notes === 'object' &&
       !notes?.notesEvents &&
@@ -29,7 +30,6 @@ const Notes = ({notes}) => {
       //retro compatibility
       return <Text style={styles.text}>{notes}</Text>;
     } else {
-      console.log('new notes', notes);
       return (
         <View style={styles.textContainer}>
           {renderNote('Évènement', notes.notesEvents)}
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
   },
   boldText: {
     fontSize: 15,
-    fontWeight: '600',
+    fontWeight: '700',
   },
   divider: {
     height: 1,

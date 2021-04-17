@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Text} from 'react-native';
+import {Platform, Text} from 'react-native';
 
 export default ({
   h1,
@@ -14,8 +14,9 @@ export default ({
   style,
   ...rest
 }) => {
+  const s = Platform.OS === 'android' ? {fontFamily: 'roboto'} : {};
   return (
-    <Text style={[style, {fontFamily: 'System'}]} {...rest}>
+    <Text style={[style, s]} {...rest}>
       {children}
     </Text>
   );
