@@ -75,4 +75,15 @@ export const fakeDiaryData = {
     SENSATIONS_INTENSITY: categoryStates.GOOD,
     SLEEP: categoryStates.MIDDLE,
   },
+  [formatDay(addDays(startDate, 10))]: {
+    MOOD: categoryStates.VERY_GOOD,
+    ANXIETY_FREQUENCE: frequence.MANY_TIMES,
+    ANXIETY_INTENSITY: categoryStates.VERY_BAD,
+    BADTHOUGHTS_FREQUENCE: frequence.MANY_TIMES,
+    BADTHOUGHTS_INTENSITY: categoryStates.VERY_GOOD,
+    SENSATIONS_FREQUENCE: frequence.MANY_TIMES,
+    SENSATIONS_INTENSITY: categoryStates.GOOD,
+    SLEEP: categoryStates.MIDDLE,
+    NOTES: {notesEvents: "ceci est une note d'event"},
+  },
 };
