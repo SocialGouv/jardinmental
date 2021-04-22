@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {StyleSheet, View} from 'react-native';
 import PatientStateItem from './patient-state-item';
 import {displayedCategories} from '../common/constants';
@@ -11,13 +11,15 @@ import localStorage from '../utils/localStorage';
 
 const DiaryItem = ({navigation, patientState, startAtFirstQuestion, date}) => {
   const [customs, setCustoms] = useState([]);
+  let unmonted = useRef(false);
+
   useEffect(() => {
     (async () => {
       const c = await localStorage.getCustomSymptoms();
       const t = c.map((e) => `${e}_FREQUENCE`);
-      if (t) return setCustoms(t);
-      return;
+      if (t && !unmonted) return setCustoms(t);
     })();
+    return () => (unmonted = true);
   }, [patientState]);
 
   const handleEditNotePress = () => {
