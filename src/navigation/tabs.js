@@ -44,6 +44,12 @@ const Tabs = ({navigation}) => {
           inactiveTintColor: '#E5E5E5',
           showIcon: true,
           indicatorStyle: {height: 0},
+          labelStyle: {
+            fontSize: 13,
+            marginHorizontal: 0,
+            marginVertical: 5,
+            padding: 0,
+          },
         }}>
         <Tab.Screen
           name="Diary"
@@ -59,6 +65,7 @@ const Tabs = ({navigation}) => {
           options={{
             tabBarLabel: 'Calendrier',
             tabBarIcon: ({color}) => <CalendarSvg style={{color}} />,
+            tabBarAccessibilityLabel: 'Yo',
           }}
         />
         <Tab.Screen

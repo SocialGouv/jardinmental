@@ -82,7 +82,7 @@ const Onboarding = ({navigation}) => {
           value={isCguChecked}
           onValueChange={(newValue) => setIsCguChecked(newValue)}
         />
-        <Text>
+        <Text style={styles.textCgu}>
           En cochant cette case, vous acceptez nos{' '}
           <Text onPress={onCguClick} style={styles.underlined}>
             Conditions Générales d’Utilisation
@@ -155,13 +155,15 @@ const styles = StyleSheet.create({
     padding: 15,
     display: 'flex',
     flexDirection: 'row',
-    width: '90%',
+  },
+  textCgu: {
+    flex: 1,
   },
   emphasis: {
     color: '#1FC6D5',
   },
   presentationText: {
-    fontSize: 30,
+    fontSize: 20,
     color: '#0A215C',
   },
   underlined: {

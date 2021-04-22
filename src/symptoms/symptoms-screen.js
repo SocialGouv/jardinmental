@@ -121,7 +121,9 @@ const SymptomScreen = ({navigation, route}) => {
   return (
     <SafeAreaView style={styles.safe}>
       <BackButton onPress={() => navigation.navigate('tabs')} />
-      <ScrollView style={[styles.container, {flex: 1, paddingBottom: 100}]}>
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={styles.scrollContainer}>
         <Text style={styles.title}>
           Sélectionner les symptômes
           {showExplanation ? ' que vous souhaitez suivre' : ''}
@@ -175,6 +177,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginBottom: 15,
   },
+  scrollContainer: {
+    paddingBottom: 80,
+  },
+
   ValidationButtonText: {
     color: '#fff',
     fontWeight: '700',
@@ -238,8 +244,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   container: {
-    backgroundColor: 'white',
     padding: 20,
+    paddingTop: 0,
+    backgroundColor: 'white',
   },
   backButtonContainer: {
     alignSelf: 'flex-start',
