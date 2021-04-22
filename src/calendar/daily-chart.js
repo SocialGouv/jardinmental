@@ -65,7 +65,11 @@ const DailyChart = ({
           onPress={setFocusedRequest}
         />
         <View style={styles.spacer} />
-        <DiaryItem date={diaryDay} patientState={diaryData[diaryDay]} />
+        <DiaryItem
+          date={diaryDay}
+          patientState={diaryData[diaryDay]}
+          navigation={navigation}
+        />
       </ScrollView>
     </SafeAreaView>
   );
