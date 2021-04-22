@@ -35,7 +35,9 @@ const LegalScreen = ({navigation, title, content}) => {
 
   return (
     <SafeAreaView style={styles.safe}>
-      <ScrollView style={styles.cgu}>
+      <ScrollView
+        style={styles.cgu}
+        contentContainerStyle={styles.scrollContainer}>
         <View style={styles.containerInfos}>
           <InfoSvg />
           <View paddingLeft={10} style={styles.textContainer}>
@@ -156,6 +158,16 @@ const LegalScreen = ({navigation, title, content}) => {
             }}>
             reseau-pic.com{' '}
           </Text>
+          {'\n\n'}
+          Je suis étudiant et j'aimerais consulter gratuitement un psychologue :{' '}
+          <Text
+            style={styles.link}
+            onPress={() => {
+              logEvents.logInfoClick('reseau_pic');
+              Linking.openURL('https://santepsy.etudiant.gouv.fr/');
+            }}>
+            santepsy.etudiant.gouv.fr{' '}
+          </Text>
           {'\n\n\n'}
           Pour simplement parler à quelqu’un :{'\n'}
           {'\n'}
@@ -207,7 +219,9 @@ const styles = StyleSheet.create({
   cgu: {
     paddingVertical: 5,
     paddingHorizontal: 15,
-    marginBottom: 72,
+  },
+  scrollContainer: {
+    paddingBottom: 80,
   },
   container: {
     flexDirection: 'row',
