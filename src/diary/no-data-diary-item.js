@@ -5,12 +5,8 @@ import {colors} from '../common/colors';
 
 const NoDataDiaryItem = () => {
   return (
-    <View style={styles.noDataContainer}>
-      <View style={styles.textContainer}>
-        <Text style={styles.noDataTitle}>
-          Vous n'avez rien saisi ce jour-là
-        </Text>
-      </View>
+    <View style={styles.textContainer}>
+      <Text style={styles.noDataTitle}>Vous n'avez rien saisi ce jour-là</Text>
     </View>
   );
 };
@@ -22,7 +18,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'rgba(38, 56, 124, 0.08)',
     display: 'flex',
-    flexDirection: 'row',
     marginBottom: 20,
   },
   noDataTitle: {
@@ -30,7 +25,8 @@ const styles = StyleSheet.create({
     color: colors.BLUE,
   },
   textContainer: {
-    padding: 15,
+    paddingBottom: 15,
+    paddingHorizontal: 15,
   },
 });
 

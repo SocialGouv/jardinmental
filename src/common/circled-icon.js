@@ -38,13 +38,14 @@ const mapIconToSvg = (icon) => {
   return iconMap[icon];
 };
 
-const CircledIcon = ({icon, color}) => {
+const CircledIcon = ({icon, color, borderColor = 'lightgrey'}) => {
   const Icon = mapIconToSvg(icon);
   return (
     <View
       style={{
         ...styles.iconContainer,
         backgroundColor: color,
+        borderColor,
       }}>
       <Icon width={20} height={20} color="black" />
     </View>

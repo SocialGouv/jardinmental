@@ -9,7 +9,7 @@ import NoDataDiaryItem from './no-data-diary-item';
 import Notes from './notes';
 import localStorage from '../utils/localStorage';
 
-const DiaryItem = ({patientState, startAtFirstQuestion, date}) => {
+const DiaryItem = ({navigation, patientState, startAtFirstQuestion, date}) => {
   const [customs, setCustoms] = useState([]);
   useEffect(() => {
     (async () => {
@@ -20,51 +20,63 @@ const DiaryItem = ({patientState, startAtFirstQuestion, date}) => {
     })();
   }, [patientState]);
 
-  if (!patientState) {
-    return <NoDataDiaryItem />;
-    if (isToday(parseISO(date))) {
-      return (
-        <NoDataTodayDiaryItem startAtFirstQuestion={startAtFirstQuestion} />
-      );
-    } else if (isYesterday(parseISO(date))) {
-      return (
-        <NoDataYesterdayDiaryItem startAtFirstQuestion={startAtFirstQuestion} />
-      );
-    } else {
-      return <NoDataDiaryItem />;
-    }
-  }
+  const handleEditNotePress = () => {
+    if (!(isToday(parseISO(date)) || isYesterday(parseISO(date)))) return;
+    const currentSurvey = {
+      date,
+      answers: patientState,
+    };
+    navigation.navigate('notes', {
+      currentSurvey,
+    });
+  };
+
+  const hasAnswerSurvey = () =>
+    Object.keys(displayedCategories)
+      .concat(customs)
+      .filter((key) => {
+        return patientState && patientState[key];
+      }).length;
+
   return (
     <View style={styles.container}>
-      {Object.keys(displayedCategories)
-        .concat(customs)
-        .map((key) => {
-          if (!patientState[key]) {
-            return;
-          }
-          const [categoryName, suffix] = key.split('_');
-          if (suffix) {
-            return (
-              <PatientStateItem
-                key={key}
-                patientStateItem={patientState[key]}
-                intensity={
-                  patientState[`${categoryName}_INTENSITY`] || {level: 3}
-                }
-                category={displayedCategories[key] || categoryName}
-              />
-            );
-          } else {
-            return (
-              <PatientStateItem
-                key={key}
-                patientStateItem={patientState[key]}
-                category={displayedCategories[key]}
-              />
-            );
-          }
-        })}
-      <Notes notes={patientState.NOTES} />
+      {!hasAnswerSurvey() ? (
+        <NoDataDiaryItem date={date} />
+      ) : (
+        Object.keys(displayedCategories)
+          .concat(customs)
+          .map((key) => {
+            if (!patientState[key]) {
+              return;
+            }
+            const [categoryName, suffix] = key.split('_');
+            if (suffix) {
+              return (
+                <PatientStateItem
+                  key={key}
+                  patientStateItem={patientState[key]}
+                  intensity={
+                    patientState[`${categoryName}_INTENSITY`] || {level: 3}
+                  }
+                  category={displayedCategories[key] || categoryName}
+                />
+              );
+            } else {
+              return (
+                <PatientStateItem
+                  key={key}
+                  patientStateItem={patientState[key]}
+                  category={displayedCategories[key]}
+                />
+              );
+            }
+          })
+      )}
+      <Notes
+        notes={patientState?.NOTES}
+        date={date}
+        onPress={handleEditNotePress}
+      />
     </View>
   );
 };
@@ -78,7 +90,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'rgba(38, 56, 124, 0.08)',
     paddingTop: 20,
-    paddingBottom: 10,
   },
 });
 

@@ -1,9 +1,11 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import Text from '../components/MyText';
 import CircledIcon from '../common/circled-icon';
+import NoNote from './no-notes';
+import {isToday, isYesterday, parseISO} from 'date-fns';
 
-const Notes = ({notes}) => {
+const Notes = ({notes, date, onPress}) => {
   if (
     !notes ||
     (typeof notes === 'string' && !notes) || //retro compatibility
@@ -12,7 +14,11 @@ const Notes = ({notes}) => {
       !notes?.notesSymptoms &&
       !notes?.notesToxic)
   ) {
-    return null;
+    if (isToday(parseISO(date)) || isYesterday(parseISO(date))) {
+      return <NoNote onPress={onPress} />;
+    } else {
+      return null;
+    }
   }
 
   const renderNote = (t, v) => {
@@ -40,13 +46,28 @@ const Notes = ({notes}) => {
     }
   };
 
+  const canEdit = isToday(parseISO(date)) || isYesterday(parseISO(date));
+
   return (
     <View>
       <View style={styles.divider} />
-      <View style={styles.container}>
-        <CircledIcon color="rgba(34,192,207, .1)" icon="NotesSvg" />
+      <TouchableOpacity
+        style={[
+          styles.container,
+          canEdit && {
+            borderRadius: 10,
+            backgroundColor: 'rgba(31, 198, 213, 0.2)',
+          },
+        ]}
+        onPress={onPress}
+        disabled={!canEdit}>
+        <CircledIcon
+          borderColor="#58C8D2"
+          color="rgba(34,192,207, .1)"
+          icon="NotesSvg"
+        />
         {renderNotes()}
-      </View>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -56,7 +77,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    paddingBottom: 10,
+    paddingVertical: 10,
     paddingHorizontal: 15,
   },
   textContainer: {width: '100%'},
@@ -73,7 +94,6 @@ const styles = StyleSheet.create({
     height: 1,
     backgroundColor: 'rgba(0,183,200, .09)',
     marginTop: 12,
-    marginBottom: 20,
     width: '80%',
     alignSelf: 'center',
   },

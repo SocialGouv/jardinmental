@@ -87,7 +87,9 @@ const Diary = ({navigation}) => {
   return (
     <SafeAreaView style={styles.safe}>
       <NPS forceView={NPSvisible} close={closeNPS} />
-      <ScrollView style={styles.container}>
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={styles.scrollContainer}>
         <View style={styles.headerContainer}>
           <Header>Mon journal</Header>
           <TouchableOpacity onPress={() => setModalSettingsVisible(true)}>
@@ -111,6 +113,7 @@ const Diary = ({navigation}) => {
                 date={date}
                 patientState={diaryData[date]}
                 startAtFirstQuestion={startAtFirstQuestion}
+                navigation={navigation}
               />
             </View>
           ))}
@@ -132,8 +135,10 @@ const styles = StyleSheet.create({
   },
   container: {
     padding: 20,
-    marginBottom: 70,
     backgroundColor: 'white',
+  },
+  scrollContainer: {
+    paddingBottom: 80,
   },
   headerContainer: {
     flexDirection: 'row',

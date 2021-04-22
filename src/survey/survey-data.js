@@ -18,7 +18,10 @@ export const buildSurveyData = async () => {
     const [categoryName, suffix] = category.split('_');
 
     // if the user selected this category
-    if (userSymptoms[category] || userSymptoms[categoryName]) {
+    if (
+      userSymptoms &&
+      (userSymptoms[category] || userSymptoms[categoryName])
+    ) {
       res.push(index);
 
       // if it's one category with the suffix 'FREQUENCE' :

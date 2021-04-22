@@ -22,9 +22,15 @@ import {beforeToday, formatDay} from '../services/date/helpers';
 import BackButton from '../components/BackButton';
 
 const Notes = ({navigation, route}) => {
-  const [notesEvents, setNotesEvents] = useState('');
-  const [notesSymptoms, setNotesSymptoms] = useState('');
-  const [notesToxic, setNotesToxic] = useState('');
+  const [notesEvents, setNotesEvents] = useState(
+    route?.params?.currentSurvey?.answers?.NOTES?.notesEvents,
+  );
+  const [notesSymptoms, setNotesSymptoms] = useState(
+    route?.params?.currentSurvey?.answers?.NOTES?.notesSymptoms,
+  );
+  const [notesToxic, setNotesToxic] = useState(
+    route?.params?.currentSurvey?.answers?.NOTES?.notesToxic,
+  );
   const [diaryData, setDiaryData] = useContext(DiaryDataContext);
   const [questions, setQuestions] = useState([]);
 

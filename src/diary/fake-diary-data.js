@@ -2,7 +2,7 @@ import {categoryStates, frequence} from '../common/constants';
 import {addDays} from 'date-fns';
 import {formatDay, oneDay} from '../services/date/helpers';
 
-export const startDate = new Date(Date.now() - 10 * oneDay);
+export const startDate = new Date(Date.now() - 15 * oneDay);
 
 export const fakeDiaryData = {
   [formatDay(startDate)]: null,
