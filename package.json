@@ -5,6 +5,7 @@
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
+    "ios:device": "react-native run-ios --device",
     "ios:SE": "react-native run-ios --simulator=\"iPhone SE (2nd generation)\"",
     "ios:8": "react-native run-ios --simulator=\"iPhone 8\"",
     "ios:11": "react-native run-ios --simulator=\"iPhone 11\"",
@@ -39,7 +40,8 @@
     "react-native-sentry": "^0.43.2",
     "react-native-svg": "^12.1.0",
     "react-native-swiper": "^1.6.0",
-    "react-native-tab-view": "^2.15.2"
+    "react-native-tab-view": "^2.15.2",
+    "react-native-version-check": "^3.4.2"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
