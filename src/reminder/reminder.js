@@ -208,7 +208,11 @@ class Reminder extends React.Component {
             {reminder ? 'Retirer le rappel' : 'Plus tard, peut-être'}
           </Text>
         </TouchableOpacity>
-        <TimePicker visible={timePickerVisible} selectDate={this.setReminder} />
+        <TimePicker
+          reminder={reminder}
+          visible={timePickerVisible}
+          selectDate={this.setReminder}
+        />
       </SafeAreaView>
     );
   }

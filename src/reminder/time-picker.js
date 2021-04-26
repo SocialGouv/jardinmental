@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Platform,
   StyleSheet,
@@ -23,16 +23,26 @@ const today = (offset = 0) => {
   return new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0);
 };
 
-const TimePicker = ({visible, selectDate}) => {
-  const [date, setDate] = React.useState(new Date(Date.now() + 60 * 1000));
-  React.useEffect(() => {
-    if (visible) {
-      setDate(new Date(Date.now() + 60 * 1000));
+const TimePicker = ({visible, selectDate, reminder}) => {
+  const [date, setDate] = useState(
+    reminder || new Date(Date.now() + 60 * 1000),
+  );
+  const [show, setShow] = useState();
+
+  useEffect(() => {
+    setShow(visible);
+    if (show) {
+      setDate(reminder || new Date(Date.now() + 60 * 1000));
     }
   }, [visible]);
+
+  if (!show) {
+    return null;
+  }
+
   if (Platform.OS === 'ios') {
     return (
-      <Modal visible={visible} animationType="fade" transparent={true}>
+      <Modal visible={show} animationType="fade" transparent={true}>
         <View style={styles.container}>
           <View style={styles.datePickerContainer}>
             <DateTimePicker
@@ -60,9 +70,6 @@ const TimePicker = ({visible, selectDate}) => {
     );
   }
 
-  if (!visible) {
-    return null;
-  }
   return (
     <DateTimePicker
       testID="dateTimePicker"
@@ -70,8 +77,12 @@ const TimePicker = ({visible, selectDate}) => {
       mode="time"
       display="spinner"
       maximumDate={today(1)}
+      locale="fr-FR"
       onChange={(_, selectedDate) => {
-        selectDate(selectedDate);
+        const currentDate = selectedDate || date;
+        setShow(false);
+        setDate(currentDate);
+        selectDate(currentDate);
       }}
     />
   );
