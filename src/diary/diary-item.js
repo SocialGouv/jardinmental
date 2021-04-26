@@ -11,15 +11,15 @@ import localStorage from '../utils/localStorage';
 
 const DiaryItem = ({navigation, patientState, startAtFirstQuestion, date}) => {
   const [customs, setCustoms] = useState([]);
-  let unmonted = useRef(false);
+  let mounted = useRef(true);
 
   useEffect(() => {
     (async () => {
       const c = await localStorage.getCustomSymptoms();
       const t = c.map((e) => `${e}_FREQUENCE`);
-      if (t && !unmonted) return setCustoms(t);
+      if (t && mounted) return setCustoms(t);
     })();
-    return () => (unmonted = true);
+    return () => (mounted = false);
   }, [patientState]);
 
   const handleEditNotePress = () => {

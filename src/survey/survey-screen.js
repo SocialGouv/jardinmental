@@ -30,13 +30,13 @@ const SurveyScreen = ({navigation, route}) => {
   const [availableData, setAvailableData] = useState();
 
   const updateValues = () => {
-    if (!availableData || index < 0) return;
-    setQuestion(availableData[index].question);
-    setYesterdayQuestion(availableData[index].yesterdayQuestion);
-    setAnswers(availableData[index].answers);
-    setExplanation(availableData[index].explanation);
+    if (!availableData || index < 0 || !availableData[index]) return;
+    setQuestion(availableData[index]?.question);
+    setYesterdayQuestion(availableData[index]?.yesterdayQuestion);
+    setAnswers(availableData[index]?.answers);
+    setExplanation(availableData[index]?.explanation);
     setCurrentSurveyItem(index);
-    setQuestionId(availableData[index].id);
+    setQuestionId(availableData[index]?.id);
   };
 
   useEffect(() => {
