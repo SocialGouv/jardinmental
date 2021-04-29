@@ -1,4 +1,4 @@
-import React, {useContext, useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
   ScrollView,
@@ -8,9 +8,7 @@ import {
 } from 'react-native';
 import Text from '../components/MyText';
 import {colors} from '../common/colors';
-import {DiaryDataContext} from '../context';
 import Button from '../common/button';
-import BackButton from '../components/BackButton';
 import localStorage from '../utils/localStorage';
 import {DRUG_LIST} from '../utils/drugs-list';
 import CheckBox from '@react-native-community/checkbox';
@@ -18,15 +16,6 @@ import CheckBox from '@react-native-community/checkbox';
 const Drugs = ({navigation, route}) => {
   const [treatment, setTreatment] = useState([]);
   const [filter, setFilter] = useState();
-  // useEffect(() => {
-  //   const handleNavigation = async () => {
-  //     const treatmentStorage = await localStorage.getTreatment();
-  //     if (treatmentStorage) {
-  //       setTreatment(treatmentStorage);
-  //     }
-  //   };
-  //   handleNavigation();
-  // }, [navigation]);
 
   useEffect(() => {
     (async () => {
@@ -36,19 +25,6 @@ const Drugs = ({navigation, route}) => {
       }
     })();
   }, []);
-
-  const previousQuestion = () => {
-    if (route.params?.backRedirect) {
-      console.log(route.params?.backRedirect);
-      navigation.navigate('question', {
-        ...route.params,
-        index: route.params.backRedirect,
-      });
-    } else {
-      console.log('tabs');
-      navigation.navigate('tabs');
-    }
-  };
 
   const setToogleCheckbox = (d, value) => {
     let t = [...treatment];
@@ -63,13 +39,11 @@ const Drugs = ({navigation, route}) => {
   };
 
   const submit = async () => {
-    console.log('my treat', treatment);
     await localStorage.setMedicalTreatment(treatment);
     navigation.navigate('drugs', {treatment});
   };
 
   const handleFilter = (f) => {
-    console.log('filter', f);
     setFilter(f);
   };
 
@@ -137,25 +111,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     color: 'black',
   },
-
   safe: {
     flex: 1,
     backgroundColor: 'white',
-  },
-  question: {
-    color: colors.BLUE,
-    fontSize: 22,
-    marginBottom: 26,
-    fontWeight: '700',
-  },
-  title: {
-    color: colors.DARK_BLUE,
-    fontSize: 18,
-    marginBottom: 15,
-    fontWeight: '500',
-  },
-  bold: {
-    fontWeight: '700',
   },
   container: {
     backgroundColor: 'white',
@@ -172,12 +130,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-around',
     paddingVertical: 10,
-  },
-  textArea: {
-    backgroundColor: '#F4FCFD',
-    borderRadius: 10,
-    marginBottom: 10,
-    padding: 10,
   },
   drug: {
     backgroundColor: '#26387c12',

@@ -1,24 +1,10 @@
 import React, {useContext, useState, useEffect} from 'react';
-import {
-  StyleSheet,
-  ScrollView,
-  SafeAreaView,
-  TextInput,
-  View,
-  Alert,
-  AlertButton,
-  Platform,
-  TouchableOpacity,
-} from 'react-native';
+import {StyleSheet, ScrollView, SafeAreaView, View} from 'react-native';
 import Text from '../components/MyText';
 import {colors} from '../common/colors';
-import {availableData, buildSurveyData} from '../survey/survey-data';
-import {categories} from '../common/constants';
+import {buildSurveyData} from '../survey/survey-data';
 import {DiaryDataContext} from '../context';
-import {isYesterday, isToday, parseISO} from 'date-fns';
 import Button from '../common/button';
-import logEvents from '../services/logEvents';
-import {beforeToday, formatDay} from '../services/date/helpers';
 import BackButton from '../components/BackButton';
 import localStorage from '../utils/localStorage';
 import NoData from './no-data';
@@ -32,26 +18,16 @@ const Drugs = ({navigation, route}) => {
   const [inSurvey, setInSurvey] = useState(false);
 
   useEffect(() => {
-    (async () => {
-      const q = await buildSurveyData();
-      if (q) {
-        setQuestions(q);
-      }
-    })();
     setInSurvey(!!route.params?.currentSurvey);
   }, []);
 
   useEffect(() => {
-    console.log('rerender');
-    console.log(medicalTreatment);
-    const handleNavigation = async () => {
+    (async () => {
       const medicalTreatmentStorage = await localStorage.getMedicalTreatment();
       if (medicalTreatmentStorage) {
-        // console.log({medicalTreatmentStorage});
         setMedicalTreatment(medicalTreatmentStorage);
       }
-    };
-    handleNavigation();
+    })();
   }, [navigation, route]);
 
   const previousQuestion = () => {
@@ -68,7 +44,6 @@ const Drugs = ({navigation, route}) => {
   };
 
   const handleAdd = () => {
-    console.log('add drug');
     navigation.navigate('drugs-list');
   };
 
@@ -87,10 +62,8 @@ const Drugs = ({navigation, route}) => {
 
   const render = () => {
     if (!medicalTreatment) {
-      console.log('case !medicalTreatment');
       return <NoData navigation={navigation} />;
     }
-    // console.log({medicalTreatment});
     return (
       <View>
         {medicalTreatment.map((e, i) => (
@@ -177,24 +150,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     padding: 20,
   },
-  backButton: {
-    fontWeight: '700',
-    textDecorationLine: 'underline',
-    color: colors.BLUE,
-    paddingTop: 15,
-    paddingBottom: 30,
-  },
   buttonWrapper: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-end',
     paddingBottom: 30,
-  },
-  textArea: {
-    backgroundColor: '#F4FCFD',
-    borderRadius: 10,
-    marginBottom: 10,
-    padding: 10,
   },
 });
 

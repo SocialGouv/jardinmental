@@ -1,32 +1,11 @@
-import React, {useContext, useState, useEffect} from 'react';
-import {
-  StyleSheet,
-  ScrollView,
-  SafeAreaView,
-  TextInput,
-  View,
-  Alert,
-  AlertButton,
-  Platform,
-  TouchableOpacity,
-} from 'react-native';
+import React, {useState} from 'react';
+import {StyleSheet, TextInput, View} from 'react-native';
 import Text from '../components/MyText';
 import {colors} from '../common/colors';
-import {availableData, buildSurveyData} from '../survey/survey-data';
-import {categories} from '../common/constants';
-import {DiaryDataContext} from '../context';
-import {isYesterday, isToday, parseISO} from 'date-fns';
-import Button from '../common/button';
-import logEvents from '../services/logEvents';
-import {beforeToday, formatDay} from '../services/date/helpers';
-import BackButton from '../components/BackButton';
-import localStorage from '../utils/localStorage';
-import NoData from './no-data';
-import {DRUG_LIST} from '../common/drugs-list';
 import RNPickerSelect from 'react-native-picker-select';
 import Icon from '../common/icon';
 
-export default ({drug, navigation, route, onChange, showPosology}) => {
+export default ({drug, onChange, showPosology}) => {
   const [showFreeText, setShowFreeText] = useState(false);
   const [ƒreeText, setFreeText] = useState('');
 
@@ -131,11 +110,6 @@ const styles = StyleSheet.create({
     color: colors.DARK_BLUE,
     fontStyle: 'italic',
   },
-  posologyInput: {
-    fontSize: 15,
-    fontWeight: '600',
-    backgroundColor: '#f00',
-  },
   freeText: {
     fontSize: 16,
     paddingVertical: 12,
@@ -146,48 +120,5 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     color: 'black',
     maxWidth: 150,
-  },
-
-  safe: {
-    flex: 1,
-    backgroundColor: 'white',
-  },
-  question: {
-    color: colors.BLUE,
-    fontSize: 22,
-    marginBottom: 26,
-    fontWeight: '700',
-  },
-  title: {
-    color: colors.DARK_BLUE,
-    fontSize: 18,
-    marginBottom: 15,
-    fontWeight: '500',
-  },
-  bold: {
-    fontWeight: '700',
-  },
-  container: {
-    backgroundColor: 'white',
-    padding: 20,
-  },
-  backButton: {
-    fontWeight: '700',
-    textDecorationLine: 'underline',
-    color: colors.BLUE,
-    paddingTop: 15,
-    paddingBottom: 30,
-  },
-  buttonWrapper: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    paddingBottom: 30,
-  },
-  textArea: {
-    backgroundColor: '#F4FCFD',
-    borderRadius: 10,
-    marginBottom: 10,
-    padding: 10,
   },
 });
