@@ -3,6 +3,7 @@ import ReminderSettingSvg from '../../assets/svg/reminder-setting.svg';
 import ExportDataSettingSvg from '../../assets/svg/export-data-setting.svg';
 import SymptomsSetting from '../../assets/svg/symptoms-setting.svg';
 import CguSettingSvg from '../../assets/svg/cgu-setting.svg';
+import DrugsSvg from '../../assets/svg/drugs.svg';
 
 import {StyleSheet, View} from 'react-native';
 
@@ -12,6 +13,7 @@ const mapIconToSvg = (icon) => {
     ExportDataSettingSvg,
     SymptomsSetting,
     CguSettingSvg,
+    DrugsSvg,
   };
   return iconMap[icon];
 };
