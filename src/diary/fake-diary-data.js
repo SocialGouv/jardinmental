@@ -2,7 +2,8 @@ import {categoryStates, frequence} from '../common/constants';
 import {addDays} from 'date-fns';
 import {formatDay, oneDay} from '../services/date/helpers';
 
-export const startDate = new Date(Date.now() - 15 * oneDay);
+const MAX_DAY = 12;
+export const startDate = new Date(Date.now() - MAX_DAY * oneDay);
 
 export const fakeDiaryData = {
   [formatDay(startDate)]: null,
@@ -18,6 +19,25 @@ export const fakeDiaryData = {
     SENSATIONS_INTENSITY: categoryStates.VERY_BAD,
     SLEEP: categoryStates.VERY_GOOD,
     NOTES: 'Test note',
+    POSOLOGY: [
+      {
+        name1: 'Imovane',
+        name2: 'Zopiclone',
+        values: ['10 mg', '25 mg', '50 mg'],
+        value: '10 mg',
+      },
+      {
+        name1: 'Lamictal',
+        name2: 'Lamotrigine',
+        value: '20 mg',
+        values: ['10 mg', '25 mg', '50 mg'],
+      },
+      {
+        name1: 'Mélatonine',
+        value: '150 mg',
+        values: ['10 mg', '25 mg', '50 mg'],
+      },
+    ],
   },
   [formatDay(addDays(startDate, 4))]: {
     MOOD: categoryStates.GOOD,
