@@ -10,6 +10,8 @@ import localStorage from '../utils/localStorage';
 import NoData from './no-data';
 import DrugItem from './drug-item';
 import {DRUG_LIST} from '../utils/drugs-list';
+import Icon from '../common/icon';
+import InfoSvg from '../../assets/svg/info.svg';
 
 const Drugs = ({navigation, route}) => {
   const [diaryData, setDiaryData] = useContext(DiaryDataContext);
@@ -120,11 +122,19 @@ const Drugs = ({navigation, route}) => {
     <SafeAreaView style={styles.safe}>
       <BackButton onPress={previousQuestion} />
       <ScrollView style={styles.container}>
-        <Text style={styles.title}>
-          {inSurvey
-            ? "Quel traitement avez-vous pris aujourd'hui ?"
-            : 'Suivi de votre traitement'}
-        </Text>
+        <View style={styles.header}>
+          <Text style={styles.title}>
+            {inSurvey
+              ? "Quel traitement avez-vous pris aujourd'hui ?"
+              : 'Suivi de votre traitement'}
+          </Text>
+          <Icon
+            icon="InfoSvg"
+            color={colors.DARK_BLUE}
+            width={30}
+            height={30}
+          />
+        </View>
         <Text style={styles.subtitle}>
           Indiquez chaque soir l'ensemble des médicaments pris{' '}
           <Text style={styles.bold}>durant la journée</Text>.
@@ -139,6 +149,13 @@ const Drugs = ({navigation, route}) => {
 };
 
 const styles = StyleSheet.create({
+  header: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingBottom: 20,
+  },
   safe: {
     flex: 1,
     backgroundColor: 'white',
@@ -146,7 +163,6 @@ const styles = StyleSheet.create({
   title: {
     color: colors.BLUE,
     fontSize: 22,
-    marginBottom: 10,
     fontWeight: '700',
   },
   subtitle: {
