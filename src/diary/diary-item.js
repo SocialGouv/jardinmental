@@ -8,6 +8,7 @@ import {isToday, isYesterday, parseISO} from 'date-fns';
 import NoDataDiaryItem from './no-data-diary-item';
 import Notes from './notes';
 import localStorage from '../utils/localStorage';
+import Posology from './posology';
 
 const DiaryItem = ({navigation, patientState, startAtFirstQuestion, date}) => {
   const [customs, setCustoms] = useState([]);
@@ -22,14 +23,15 @@ const DiaryItem = ({navigation, patientState, startAtFirstQuestion, date}) => {
     return () => (mounted = false);
   }, [patientState]);
 
-  const handleEditNotePress = () => {
+  const handleEdit = (tabs) => {
     if (!(isToday(parseISO(date)) || isYesterday(parseISO(date)))) return;
     const currentSurvey = {
       date,
       answers: patientState,
     };
-    navigation.navigate('notes', {
+    navigation.navigate(tabs, {
       currentSurvey,
+      redirect: true,
     });
   };
 
@@ -77,7 +79,12 @@ const DiaryItem = ({navigation, patientState, startAtFirstQuestion, date}) => {
       <Notes
         notes={patientState?.NOTES}
         date={date}
-        onPress={handleEditNotePress}
+        onPress={() => handleEdit('notes')}
+      />
+      <Posology
+        data={patientState?.POSOLOGY}
+        date={date}
+        onPress={() => handleEdit('drugs')}
       />
     </View>
   );

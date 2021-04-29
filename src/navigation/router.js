@@ -17,6 +17,8 @@ import Privacy from '../legal/privacy-screen';
 import LegalMentions from '../legal/legal-mentions-screen';
 import logEvents from '../services/logEvents';
 import Contribute from '../contribute';
+import Drugs from '../drugs/drugs';
+import DrugsList from '../drugs/list';
 
 const Stack = createStackNavigator();
 
@@ -78,6 +80,8 @@ class Router extends React.Component {
           <Stack.Screen name="cgu" component={CGU} />
           <Stack.Screen name="privacy" component={Privacy} />
           <Stack.Screen name="legal-mentions" component={LegalMentions} />
+          <Stack.Screen name="drugs" component={Drugs} />
+          <Stack.Screen name="drugs-list" component={DrugsList} />
           {/* <Stack.Screen name="contribute" component={Contribute} /> */}
         </Stack.Navigator>
       </NavigationContainer>

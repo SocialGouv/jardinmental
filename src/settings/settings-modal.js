@@ -26,6 +26,13 @@ const SettingsModal = ({navigation, visible, onClick}) => {
             icon="SymptomsSetting"
           />
           <SettingItem
+            title="Mon traitement"
+            path="drugs"
+            navigation={navigation}
+            onClick={onClick}
+            icon="DrugsSvg"
+          />
+          <SettingItem
             title="Exporter mes données"
             path="export"
             navigation={navigation}

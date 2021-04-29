@@ -4,6 +4,7 @@ import {
   STORAGE_KEY_SYMPTOMS,
   STORAGE_KEY_SUPPORTED,
   STORAGE_KEY_CUSTOM_SYMPTOMS,
+  STORAGE_KEY_MEDICAL_TREATMENT,
 } from '../common/constants';
 
 const getSymptoms = async () => {
@@ -53,6 +54,15 @@ const addCustomSymptoms = async (sym) => {
   );
 };
 
+const getMedicalTreatment = async () => {
+  const a = await AsyncStorage.getItem(STORAGE_KEY_MEDICAL_TREATMENT);
+  return JSON.parse(a);
+};
+
+const setMedicalTreatment = async (v) => {
+  await AsyncStorage.setItem(STORAGE_KEY_MEDICAL_TREATMENT, JSON.stringify(v));
+};
+
 export default {
   getSymptoms,
   setSymptoms,
@@ -62,4 +72,6 @@ export default {
   setSupported,
   getCustomSymptoms,
   addCustomSymptoms,
+  getMedicalTreatment,
+  setMedicalTreatment,
 };
