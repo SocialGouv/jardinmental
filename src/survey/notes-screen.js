@@ -78,6 +78,7 @@ const Notes = ({navigation, route}) => {
     }
     navigation.navigate('drugs', {
       currentSurvey,
+      backRedirect: 'notes',
     });
   };
 

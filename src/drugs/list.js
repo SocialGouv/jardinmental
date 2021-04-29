@@ -33,7 +33,7 @@ const Drugs = ({navigation, route}) => {
       const i = treatment.indexOf(elem);
       t.splice(i, 1);
     } else {
-      t.push(d);
+      t.push({id: d.id});
     }
     setTreatment(t);
   };

@@ -9,6 +9,7 @@ import BackButton from '../components/BackButton';
 import localStorage from '../utils/localStorage';
 import NoData from './no-data';
 import DrugItem from './drug-item';
+import {DRUG_LIST} from '../utils/drugs-list';
 
 const Drugs = ({navigation, route}) => {
   const [diaryData, setDiaryData] = useContext(DiaryDataContext);
@@ -19,32 +20,49 @@ const Drugs = ({navigation, route}) => {
 
   useEffect(() => {
     setInSurvey(!!route.params?.currentSurvey);
+    defaultValue();
   }, []);
 
   useEffect(() => {
     (async () => {
       const medicalTreatmentStorage = await localStorage.getMedicalTreatment();
       if (medicalTreatmentStorage) {
-        setMedicalTreatment(medicalTreatmentStorage);
+        const t = DRUG_LIST.filter(
+          (e) => !!medicalTreatmentStorage.find((local) => local.id === e.id),
+        );
+        setMedicalTreatment(t);
       }
     })();
   }, [navigation, route]);
 
   const previousQuestion = () => {
-    if (route.params?.backRedirect) {
-      console.log(route.params?.backRedirect);
-      navigation.navigate('question', {
+    if (route?.params?.backRedirect) {
+      console.log(route?.params?.backRedirect);
+      navigation.navigate(route?.params?.backRedirect, {
         ...route.params,
-        index: route.params.backRedirect,
       });
     } else {
-      console.log('tabs');
       navigation.navigate('tabs');
     }
   };
 
   const handleAdd = () => {
     navigation.navigate('drugs-list');
+  };
+
+  const defaultValue = () => {
+    const lastSurvey =
+      diaryData[
+        Object.keys(diaryData)
+          .sort((a, b) => {
+            a = a.split('/').reverse().join('');
+            b = b.split('/').reverse().join('');
+            return b.localeCompare(a);
+          })
+          .find((e) => diaryData[e]?.POSOLOGY)
+      ];
+    if (!lastSurvey) return;
+    setPosology(lastSurvey?.POSOLOGY);
   };
 
   const handleDrugChange = (d, value) => {
@@ -69,7 +87,7 @@ const Drugs = ({navigation, route}) => {
         {medicalTreatment.map((e, i) => (
           <DrugItem
             key={i}
-            drug={e}
+            drug={(posology && posology.find((i) => i.id === e.id)) || e}
             onChange={handleDrugChange}
             showPosology={inSurvey}
           />

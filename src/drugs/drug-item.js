@@ -9,6 +9,8 @@ export default ({drug, onChange, showPosology}) => {
   const [showFreeText, setShowFreeText] = useState(false);
   const [ƒreeText, setFreeText] = useState('');
 
+  if (!drug) return null;
+
   const handleChangeFreeText = (value) => {
     setFreeText(value);
     onChange(drug, value);
@@ -20,8 +22,10 @@ export default ({drug, onChange, showPosology}) => {
         <View style={styles.left}>
           <Icon icon="DrugsSvg" />
           <View style={styles.posologyName}>
-            <Text style={styles.text1}>{drug.name1}</Text>
-            {drug.name2 ? <Text style={styles.text2}>{drug.name2}</Text> : null}
+            <Text style={styles.text1}>{drug?.name1}</Text>
+            {drug?.name2 ? (
+              <Text style={styles.text2}>{drug?.name2}</Text>
+            ) : null}
           </View>
         </View>
         {showPosology ? (
@@ -47,6 +51,7 @@ export default ({drug, onChange, showPosology}) => {
                 drug?.values.map((v) => ({label: v, value: v})),
               )}
               style={pickerSelectStyles}
+              value={drug?.value}
             />
           )
         ) : null}
