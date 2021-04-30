@@ -21,6 +21,7 @@ const Tab = createMaterialTopTabNavigator();
 
 const Tabs = ({navigation, route}) => {
   const [questions, setQuestions] = useState([]);
+  const [alert, setAlert] = useState(false);
   const [diaryData] = useContext(DiaryDataContext);
 
   const handlePlus = async () => {
@@ -37,15 +38,12 @@ const Tabs = ({navigation, route}) => {
   };
 
   const alertNoDataYesterday = (date) => {
-    console.log('in alert fun');
-    console.log(date);
-    console.log(isToday(parseISO(date)));
-    console.log(!diaryData[formatDay(beforeToday(1))]);
     if (
       questions.length &&
       isToday(parseISO(date)) &&
       !diaryData[formatDay(beforeToday(1))]
     ) {
+      setAlert(true);
       Alert.alert('Souhaitez-vous renseigner vos ressentis pour hier ?', '', [
         {
           text: 'Oui, je les renseigne maintenant',
@@ -77,8 +75,9 @@ const Tabs = ({navigation, route}) => {
       const q = await buildSurveyData();
       if (q) setQuestions(q);
     })();
-    route?.params?.checkYesterday &&
-      alertNoDataYesterday(route?.params?.currentSurvey?.date);
+    // !alert &&
+    //   route?.params?.checkYesterday &&
+    //   alertNoDataYesterday(route?.params?.currentSurvey?.date);
   }, [navigation, route]);
   return (
     <>

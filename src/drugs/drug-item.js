@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, TextInput, View} from 'react-native';
+import {StyleSheet, TextInput, View, Platform} from 'react-native';
 import Text from '../components/MyText';
 import {colors} from '../common/colors';
 import RNPickerSelect from 'react-native-picker-select';
@@ -31,7 +31,7 @@ export default ({drug, onChange, showPosology}) => {
         <View style={styles.right}>
           {showPosology ? (
             showFreeText ? (
-              <>
+              <View style={styles.freeTextContainer}>
                 <TextInput
                   autoCapitalize="none"
                   onChangeText={handleChangeFreeText}
@@ -39,8 +39,12 @@ export default ({drug, onChange, showPosology}) => {
                   placeholder="5 ml, 3 gouttes, ..."
                   style={styles.freeText}
                 />
-                <Text onPress={() => setShowFreeText(false)}>x</Text>
-              </>
+                <Text
+                  style={styles.close}
+                  onPress={() => setShowFreeText(false)}>
+                  X
+                </Text>
+              </View>
             ) : (
               <RNPickerSelect
                 useNativeAndroidPickerStyle={false}
@@ -51,6 +55,7 @@ export default ({drug, onChange, showPosology}) => {
                 placeholder={{label: 'Choisir', value: null}}
                 items={[
                   {label: 'Entrer une valeur', value: 'FREE_TEXT'},
+                  {label: '0', value: '0'},
                 ].concat(drug?.values.map((v) => ({label: v, value: v})))}
                 style={pickerSelectStyles}
                 value={drug?.value}
@@ -70,11 +75,13 @@ const pickerSelectStyles = StyleSheet.create({
     fontSize: 16,
     paddingVertical: 12,
     paddingHorizontal: 10,
-    borderWidth: 1,
+    borderWidth: 0.5,
     borderColor: colors.LIGHT_BLUE,
     backgroundColor: '#F4FCFD',
-    borderRadius: 4,
-    color: 'black',
+    borderRadius: 8,
+    color: colors.DARK_BLUE,
+    minWidth: '100%',
+    textAlign: 'center',
     // padding: 30, // to ensure the text is never behind the icon
   },
   inputAndroid: {
@@ -85,12 +92,20 @@ const pickerSelectStyles = StyleSheet.create({
     borderColor: colors.LIGHT_BLUE,
     backgroundColor: '#F4FCFD',
     borderRadius: 8,
-    color: 'black',
+    color: colors.DARK_BLUE,
+    minWidth: '100%',
+    textAlign: 'center',
     // paddingRight: 30, // to ensure the text is never behind the icon
   },
 });
 
 const styles = StyleSheet.create({
+  close: {
+    fontSize: 16,
+    color: colors.LIGHT_BLUE,
+    marginLeft: 5,
+    padding: 0,
+  },
   posologyItem: {
     display: 'flex',
     flexDirection: 'row',
@@ -103,9 +118,10 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
+    flex: 1,
   },
   left: {
-    flex: 1,
+    flex: 2,
     // paddingRight: 30,
     display: 'flex',
     flexDirection: 'row',
@@ -116,6 +132,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-end',
+    alignItems: 'center',
   },
   text1: {
     fontSize: 15,
@@ -126,15 +143,27 @@ const styles = StyleSheet.create({
     color: colors.DARK_BLUE,
     fontStyle: 'italic',
   },
-  freeText: {
-    fontSize: 16,
-    paddingVertical: 12,
+  freeTextContainer: {
     paddingHorizontal: 10,
-    borderWidth: 1,
+    paddingVertical: Platform.OS === 'ios' ? 12 : 8,
+    borderWidth: 0.5,
     borderColor: colors.LIGHT_BLUE,
     backgroundColor: '#F4FCFD',
+    borderRadius: 8,
+    color: colors.DARK_BLUE,
+    textAlign: 'center',
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  freeText: {
+    fontSize: 16,
     borderRadius: 4,
-    color: 'black',
-    maxWidth: 150,
+    color: colors.DARK_BLUE,
+    textAlign: 'center',
+    display: 'flex',
+    flexDirection: 'row',
+    flex: 1,
+    padding: 0,
   },
 });

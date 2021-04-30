@@ -11,14 +11,18 @@ import NoData from './no-data';
 import DrugItem from './drug-item';
 import {DRUG_LIST} from '../utils/drugs-list';
 import Icon from '../common/icon';
+import logEvents from '../services/logEvents';
+import DrugInformations from './drug-information';
 
 const Drugs = ({navigation, route}) => {
   const [diaryData, setDiaryData] = useContext(DiaryDataContext);
   const [medicalTreatment, setMedicalTreatment] = useState();
   const [posology, setPosology] = useState([]);
   const [inSurvey, setInSurvey] = useState(false);
+  const [showInfos, setShowInfos] = useState();
 
   useEffect(() => {
+    logEvents.logDrugsOpen();
     setInSurvey(!!route.params?.currentSurvey);
   }, []);
 
@@ -123,8 +127,13 @@ const Drugs = ({navigation, route}) => {
     navigation.navigate('tabs', params);
   };
 
+  const toggleInfos = () => {
+    setShowInfos(!showInfos);
+  };
+
   return (
     <SafeAreaView style={styles.safe}>
+      <DrugInformations visible={showInfos} onClose={toggleInfos} />
       <BackButton onPress={previousQuestion} />
       <ScrollView style={styles.container}>
         <View style={styles.header}>
@@ -138,6 +147,7 @@ const Drugs = ({navigation, route}) => {
             color={colors.DARK_BLUE}
             width={30}
             height={30}
+            onPress={toggleInfos}
           />
         </View>
         <Text style={styles.subtitle}>
