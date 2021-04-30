@@ -171,6 +171,7 @@ const styles = StyleSheet.create({
     color: colors.BLUE,
     fontSize: 22,
     fontWeight: '700',
+    flex: 1,
   },
   subtitle: {
     color: '#000',

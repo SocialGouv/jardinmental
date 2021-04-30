@@ -28,33 +28,35 @@ export default ({drug, onChange, showPosology}) => {
             ) : null}
           </View>
         </View>
-        {showPosology ? (
-          showFreeText ? (
-            <>
-              <TextInput
-                autoCapitalize="none"
-                onChangeText={handleChangeFreeText}
-                value={ƒreeText}
-                placeholder="5 ml, 3 gouttes, ..."
-                style={styles.freeText}
+        <View style={styles.right}>
+          {showPosology ? (
+            showFreeText ? (
+              <>
+                <TextInput
+                  autoCapitalize="none"
+                  onChangeText={handleChangeFreeText}
+                  value={ƒreeText}
+                  placeholder="5 ml, 3 gouttes, ..."
+                  style={styles.freeText}
+                />
+                <Text onPress={() => setShowFreeText(false)}>x</Text>
+              </>
+            ) : (
+              <RNPickerSelect
+                onValueChange={(value) => {
+                  if (value === 'FREE_TEXT') return setShowFreeText(true);
+                  onChange(drug, value);
+                }}
+                placeholder={{label: 'Choisir', value: null}}
+                items={[
+                  {label: 'Entrer une valeur', value: 'FREE_TEXT'},
+                ].concat(drug?.values.map((v) => ({label: v, value: v})))}
+                style={pickerSelectStyles}
+                value={drug?.value}
               />
-              <Text onPress={() => setShowFreeText(false)}>x</Text>
-            </>
-          ) : (
-            <RNPickerSelect
-              onValueChange={(value) => {
-                if (value === 'FREE_TEXT') return setShowFreeText(true);
-                onChange(drug, value);
-              }}
-              placeholder={{label: 'Choisir', value: null}}
-              items={[{label: 'Entrer une valeur', value: 'FREE_TEXT'}].concat(
-                drug?.values.map((v) => ({label: v, value: v})),
-              )}
-              style={pickerSelectStyles}
-              value={drug?.value}
-            />
-          )
-        ) : null}
+            )
+          ) : null}
+        </View>
       </View>
     );
   };
@@ -72,7 +74,7 @@ const pickerSelectStyles = StyleSheet.create({
     backgroundColor: '#F4FCFD',
     borderRadius: 4,
     color: 'black',
-    paddingRight: 30, // to ensure the text is never behind the icon
+    // padding: 30, // to ensure the text is never behind the icon
   },
   inputAndroid: {
     fontSize: 16,
@@ -83,7 +85,7 @@ const pickerSelectStyles = StyleSheet.create({
     backgroundColor: '#F4FCFD',
     borderRadius: 8,
     color: 'black',
-    paddingRight: 30, // to ensure the text is never behind the icon
+    // paddingRight: 30, // to ensure the text is never behind the icon
   },
 });
 
@@ -103,8 +105,16 @@ const styles = StyleSheet.create({
   },
   left: {
     flex: 1,
+    // paddingRight: 30,
     display: 'flex',
     flexDirection: 'row',
+  },
+  right: {
+    flex: 1,
+    // paddingRight: 30,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
   },
   text1: {
     fontSize: 15,

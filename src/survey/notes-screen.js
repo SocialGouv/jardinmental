@@ -93,7 +93,9 @@ const Notes = ({navigation, route}) => {
   return (
     <SafeAreaView style={styles.safe}>
       <BackButton onPress={previousQuestion} />
-      <ScrollView style={styles.container}>
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={styles.scrollContainer}>
         <Text style={styles.question}>
           {isSurveyDateYesterday ? yesterdayQuestion : question}
         </Text>
@@ -164,6 +166,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     padding: 20,
   },
+  scrollContainer: {
+    paddingBottom: 150,
+  },
   backButton: {
     fontWeight: '700',
     textDecorationLine: 'underline',
@@ -175,7 +180,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-end',
-    paddingBottom: 30,
+    paddingVertical: 20,
   },
   textArea: {
     backgroundColor: '#F4FCFD',
