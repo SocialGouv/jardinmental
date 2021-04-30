@@ -43,6 +43,7 @@ export default ({drug, onChange, showPosology}) => {
               </>
             ) : (
               <RNPickerSelect
+                useNativeAndroidPickerStyle={false}
                 onValueChange={(value) => {
                   if (value === 'FREE_TEXT') return setShowFreeText(true);
                   onChange(drug, value);
