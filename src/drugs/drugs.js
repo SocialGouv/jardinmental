@@ -11,18 +11,15 @@ import NoData from './no-data';
 import DrugItem from './drug-item';
 import {DRUG_LIST} from '../utils/drugs-list';
 import Icon from '../common/icon';
-import InfoSvg from '../../assets/svg/info.svg';
 
 const Drugs = ({navigation, route}) => {
   const [diaryData, setDiaryData] = useContext(DiaryDataContext);
-  const [questions, setQuestions] = useState([]);
   const [medicalTreatment, setMedicalTreatment] = useState();
   const [posology, setPosology] = useState([]);
   const [inSurvey, setInSurvey] = useState(false);
 
   useEffect(() => {
     setInSurvey(!!route.params?.currentSurvey);
-    defaultValue();
   }, []);
 
   useEffect(() => {
@@ -36,6 +33,10 @@ const Drugs = ({navigation, route}) => {
       }
     })();
   }, [navigation, route]);
+
+  useEffect(() => {
+    defaultValue();
+  }, [medicalTreatment]);
 
   const previousQuestion = () => {
     if (route?.params?.backRedirect) {
@@ -63,8 +64,12 @@ const Drugs = ({navigation, route}) => {
           })
           .find((e) => diaryData[e]?.POSOLOGY)
       ];
-    if (!lastSurvey) return;
-    setPosology(lastSurvey?.POSOLOGY);
+    if (!lastSurvey || !medicalTreatment) return;
+    setPosology(
+      lastSurvey?.POSOLOGY.filter(
+        (e) => !!medicalTreatment.find((t) => t.id === e.id),
+      ),
+    );
   };
 
   const handleDrugChange = (d, value) => {
@@ -141,9 +146,11 @@ const Drugs = ({navigation, route}) => {
         </Text>
         {render()}
       </ScrollView>
-      <View style={styles.buttonWrapper}>
-        <Button onPress={submit} title="Valider" />
-      </View>
+      {inSurvey ? (
+        <View style={styles.buttonWrapper}>
+          <Button onPress={submit} title="Valider" />
+        </View>
+      ) : null}
     </SafeAreaView>
   );
 };

@@ -42,7 +42,7 @@ const Tabs = ({navigation, route}) => {
     console.log(isToday(parseISO(date)));
     console.log(!diaryData[formatDay(beforeToday(1))]);
     if (
-      questions &&
+      questions.length &&
       isToday(parseISO(date)) &&
       !diaryData[formatDay(beforeToday(1))]
     ) {
@@ -77,11 +77,6 @@ const Tabs = ({navigation, route}) => {
       const q = await buildSurveyData();
       if (q) setQuestions(q);
     })();
-  }, []);
-
-  useEffect(() => {
-    console.log('renderTab');
-    console.log(route?.params);
     route?.params?.checkYesterday &&
       alertNoDataYesterday(route?.params?.currentSurvey?.date);
   }, [navigation, route]);
