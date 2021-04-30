@@ -17,7 +17,6 @@ export default ({visible = false, onClose}) => {
   const [isFullScreen, setIsFullScreen] = useState(visible);
 
   useEffect(() => {
-    console.log(visible);
     setIsFullScreen(visible);
   }, [visible]);
 
