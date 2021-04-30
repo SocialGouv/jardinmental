@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   cardContent: {flex: 1},
-  button: {width: 220},
+  button: {width: '90%'},
   cardTitle: {
     fontSize: 15,
     color: colors.DARK_BLUE,
