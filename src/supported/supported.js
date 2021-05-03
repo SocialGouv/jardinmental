@@ -32,46 +32,48 @@ const Supported = ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.safe}>
-      <ScrollView style={styles.container}>
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={styles.scrollContainer}>
         <View style={styles.header}>
           <Text style={styles.title}>Mon Suivi Psy</Text>
           <Text style={styles.title}>Pour commencer</Text>
         </View>
         <Card
-          title="Je suis suivi"
-          subtitle="J’ai téléchargé l’application sur recommandation du professionnel qui me suit."
+          title="Je suis suivi, j’ai téléchargé l’application sur recommandation du professionnel qui me suit"
           color="#F4FCFD"
           handleClick={() => handleClick('YES')}
         />
         <Card
-          title="Je suis suivi"
-          subtitle="J’ai téléchargé l’application de moi-même, sans que le professionnel qui me suit ne me le recommande."
+          title="Je suis suivi, j’ai téléchargé l’application de moi-même"
           color="#F4FCFD"
           handleClick={() => handleClick('YES_SOLO')}
         />
         <Card
+          title="Je ne suis pas suivi mais je le souhaite"
+          color="#F4FCFD"
+          handleClick={() => handleClick('NOT_YET')}
+        />
+        <Card
           title="Je ne suis pas suivi"
-          subtitle="J’ai téléchargé l’application dans le cadre d’une démarche personnelle, pour suivre mes symptômes et avoir des informations."
           color="#F4FCFD"
           handleClick={() => handleClick('NO')}
         />
         <Card
-          title="Je ne suis pas suivi mais je le souhaite"
-          subtitle="J’ai téléchargé l’application pour être informé, orienté et trouver un contact."
+          title="Je suis professionnel de santé"
           color="#F4FCFD"
-          handleClick={() => handleClick('NOT_YET')}
+          handleClick={() => handleClick('PRO')}
         />
       </ScrollView>
     </SafeAreaView>
   );
 };
 
-const Card = ({title, subtitle, handleClick}) => {
+const Card = ({title, handleClick}) => {
   return (
     <TouchableOpacity onPress={handleClick}>
       <View style={[styles.card]}>
         <Text style={styles.cardTitle}>{title}</Text>
-        <Text style={styles.cardSubTitle}>{subtitle}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -80,7 +82,7 @@ const Card = ({title, subtitle, handleClick}) => {
 const styles = StyleSheet.create({
   card: {
     backgroundColor: '#D2F4F7',
-    marginBottom: 30,
+    marginBottom: 20,
     borderRadius: 10,
     padding: 20,
     display: 'flex',
@@ -89,20 +91,21 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     minHeight: '10%',
   },
+  scrollContainer: {
+    paddingBottom: 150,
+  },
+
   cardTitle: {
     color: colors.DARK_BLUE,
-    fontWeight: '700',
-    marginBottom: 10,
-  },
-  cardSubTitle: {
-    color: colors.DARK_BLUE,
+    fontWeight: '500',
+    // marginBottom: 10,
   },
   safe: {
     flex: 1,
     backgroundColor: 'white',
   },
   header: {
-    marginBottom: 30,
+    marginBottom: 15,
   },
   title: {
     color: colors.BLUE,

@@ -18,8 +18,8 @@ import {DiaryDataContext} from '../context';
 import {isYesterday, isToday, parseISO} from 'date-fns';
 import Button from '../common/button';
 import logEvents from '../services/logEvents';
-import {beforeToday, formatDay} from '../services/date/helpers';
 import BackButton from '../components/BackButton';
+import localStorage from '../utils/localStorage';
 
 const Notes = ({navigation, route}) => {
   const [notesEvents, setNotesEvents] = useState(
@@ -56,7 +56,7 @@ const Notes = ({navigation, route}) => {
     }
   };
 
-  const validateSurvey = () => {
+  const validateSurvey = async () => {
     const survey = route.params?.currentSurvey;
     const currentSurvey = {
       date: survey?.date,
@@ -67,35 +67,19 @@ const Notes = ({navigation, route}) => {
     };
     setDiaryData(currentSurvey);
     logEvents.logFeelingAdd();
-    if (
-      isToday(parseISO(currentSurvey.date)) &&
-      !diaryData[formatDay(beforeToday(1))]
-    ) {
-      Alert.alert('Souhaitez-vous renseigner vos ressentis pour hier ?', '', [
-        {
-          text: 'Oui, je les renseigne maintenant',
-          onPress: () => {
-            logEvents.logFeelingStartYesterday(true);
-            navigation.navigate('question', {
-              currentSurvey: {
-                date: formatDay(beforeToday(1)),
-                answers: {},
-              },
-              index: questions[0],
-            });
-          },
-          style: 'default',
-        },
-        {
-          text: 'Plus tard',
-          onPress: () => {
-            logEvents.logFeelingStartYesterday(false);
-          },
-          style: 'cancel',
-        },
-      ]);
+
+    if (route.params?.redirect) {
+      return navigation.navigate('tabs', {currentSurvey, checkYesterday: true});
     }
-    navigation.navigate('tabs');
+
+    const medicalTreatmentStorage = await localStorage.getMedicalTreatment();
+    if (medicalTreatmentStorage?.length === 0) {
+      return navigation.navigate('tabs', {currentSurvey, checkYesterday: true});
+    }
+    navigation.navigate('drugs', {
+      currentSurvey,
+      backRedirect: 'notes',
+    });
   };
 
   const isSurveyDateYesterday = isYesterday(
@@ -109,7 +93,9 @@ const Notes = ({navigation, route}) => {
   return (
     <SafeAreaView style={styles.safe}>
       <BackButton onPress={previousQuestion} />
-      <ScrollView style={styles.container}>
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={styles.scrollContainer}>
         <Text style={styles.question}>
           {isSurveyDateYesterday ? yesterdayQuestion : question}
         </Text>
@@ -180,6 +166,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     padding: 20,
   },
+  scrollContainer: {
+    paddingBottom: 150,
+  },
   backButton: {
     fontWeight: '700',
     textDecorationLine: 'underline',
@@ -191,7 +180,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-end',
-    paddingBottom: 30,
+    paddingVertical: 20,
   },
   textArea: {
     backgroundColor: '#F4FCFD',

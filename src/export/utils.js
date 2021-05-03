@@ -2,6 +2,7 @@ import {colors} from '../common/colors';
 import {displayedCategories} from '../common/constants';
 import {getArrayOfDates} from '../services/date/helpers';
 import localStorage from '../utils/localStorage';
+import {DRUG_LIST} from '../utils/drugs-list';
 
 // methods
 
@@ -47,7 +48,7 @@ const generateTime = (firstDay, today) => {
   `;
 };
 
-const generateBar = (value, height, margin) => {
+const generateBar = (value, height, color = colors.LIGHT_BLUE) => {
   return `<td style="vertical-align: bottom">
     <table
       cellpadding="0"
@@ -84,7 +85,7 @@ const generateBar = (value, height, margin) => {
                       width: 100%;
                       max-width: 100%;
                       vertical-align: middle;
-                      background-color: ${colors.LIGHT_BLUE};
+                      background-color: ${color};
                       text-align: center;
                       font-size: small;
                       color:white;
@@ -101,45 +102,20 @@ const generateBar = (value, height, margin) => {
   </td>`;
 };
 
-const generateState = (symptom, symptomStrName) => {
-  if (!symptom) {
-    return '';
-  }
-
-  return `
-    <tr class="journal__item-symptom-wrapper">
-      <td>
-        <img alt="emoji" title="emoji" width="45" height="45" src="${mapImagesToState(
-          symptom.icon,
-        )}" style="
-          display: block;
-          padding: 5px;
-        " />
-      </td>
-      <td>
-        <p style="
-          line-height: 45px;
-          margin: 0;
-          margin-left: 20px;
-          padding-right: 50px;
-        ">${symptomStrName}</p>
-      </td>
-    </tr>
-  `;
-};
-
 const generateNote = (notes) => {
   if (
+    !notes ||
     (typeof notes === 'string' && !notes) || //retro compatibility
     (typeof notes === 'object' &&
-      !notes.notesEvents &&
-      !notes.notesSymptoms &&
-      !notes.notesToxic)
+      !notes?.notesEvents &&
+      !notes?.notesSymptoms &&
+      !notes?.notesToxic)
   ) {
     return '';
   }
 
   const renderNote = (n, i) => {
+    if (!n) return '';
     return `<p
       style="
           margin: 0;
@@ -215,6 +191,32 @@ const formatHtmlTable = async (diaryData) => {
     return visible;
   };
 
+  const isDrugVisible = (drug) => {
+    let visible = false;
+    chartDates.forEach((date) => {
+      if (!diaryData[date]) return;
+      if (!diaryData[date]?.POSOLOGY?.find((e) => e.id === drug.id)) return;
+      visible = true;
+    });
+    return visible;
+  };
+
+  const computeChartDrug = (drug) => {
+    return chartDates.map((date) => {
+      const dayData = diaryData[date];
+      if (!dayData) {
+        return null;
+      }
+      const drugToday = diaryData[date]?.POSOLOGY?.find(
+        (e) => e.id === drug.id,
+      );
+      if (!drugToday) {
+        return null;
+      }
+      return drugToday.value;
+    });
+  };
+
   const getTitle = (cat) => {
     const category = displayedCategories[cat] || cat;
     const [categoryName, suffix] = category.split('_');
@@ -252,9 +254,6 @@ const formatHtmlTable = async (diaryData) => {
           .concat(customs)
           .map((categoryId) => {
             const res = computeChartData(categoryId);
-            const heighest = res.reduce((currentHeighest, current) => {
-              return current > currentHeighest ? current : currentHeighest;
-            }, 0);
 
             if (!isChartVisible(categoryId)) {
               return '';
@@ -265,7 +264,7 @@ const formatHtmlTable = async (diaryData) => {
                 <tbody>
                   <tr>
                     <td>
-                      <h3 style="color: ${colors.DARK_BLUE};">
+                      <h3 style="color: ${colors.LIGHT_BLUE};">
                         ${getTitle(categoryId)}
                       </h3>
                       <table
@@ -282,9 +281,12 @@ const formatHtmlTable = async (diaryData) => {
                             ${res
                               .map((value) => {
                                 const height = 15 * value + 2;
-                                const margin = 15 * (heighest - value);
 
-                                return generateBar(value, height, margin);
+                                return generateBar(
+                                  value,
+                                  height,
+                                  colors.LIGHT_BLUE,
+                                );
                               })
                               .join('')}
                           </tr>
@@ -298,6 +300,49 @@ const formatHtmlTable = async (diaryData) => {
             `;
           })
           .join('')}
+        <h1 style="color: ${colors.BLUE}">Mon traitement</h1>
+        ${DRUG_LIST.map((drug) => {
+          if (!isDrugVisible(drug)) {
+            return '';
+          }
+          const res = computeChartDrug(drug);
+
+          return `
+              <table width="100%" style="width: 100%; max-width: 100%;">
+                <tbody>
+                  <tr>
+                    <td>
+                      <h3 style="color: ${colors.DARK_BLUE};">
+                        ${drug.id}
+                      </h3>
+                      <table
+                        width="100%"
+                        style="
+                          width: 100%;
+                          max-width: 100%;
+                          border-collapse: collapse;
+                          table-layout: fixed;
+                        "
+                      >
+                        <tbody>
+                          <tr>
+                            ${res
+                              .map((value) => {
+                                const height = 15 * value + 2;
+
+                                return generateBar(value, height, colors.BLUE);
+                              })
+                              .join('')}
+                          </tr>
+                        </tbody>
+                      </table>
+                      ${generateTime(firstDay, today)}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            `;
+        }).join('')}
           <h1 style="color: ${colors.BLUE};">Mon journal</h1>
           <table cellpadding="0" cellspacing="0" border="0">
             <tr>

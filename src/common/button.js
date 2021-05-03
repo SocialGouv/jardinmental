@@ -23,11 +23,12 @@ const Button = ({
   textColor,
   onPress = () => null,
   disabled = false,
+  style,
 }) => {
   const color = disabled ? 'lightgrey' : buttonColor;
   return (
     <TouchableOpacity
-      style={{...styles.button, backgroundColor: color || '#1FC6D5'}}
+      style={[{...styles.button, backgroundColor: color || '#1FC6D5'}, style]}
       onPress={onPress}
       disabled={disabled}>
       <Text style={{...styles.text, color: textColor || 'white'}}>{title}</Text>

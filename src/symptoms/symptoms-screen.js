@@ -170,12 +170,11 @@ const SymptomScreen = ({navigation, route}) => {
 const styles = StyleSheet.create({
   ValidationButton: {
     backgroundColor: colors.LIGHT_BLUE,
-    height: 45,
+    height: 35,
     borderRadius: 45,
     paddingHorizontal: 30,
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 15,
   },
   scrollContainer: {
     paddingBottom: 80,
@@ -184,7 +183,7 @@ const styles = StyleSheet.create({
   ValidationButtonText: {
     color: '#fff',
     fontWeight: '700',
-    fontSize: 19,
+    fontSize: 15,
   },
   bottom: {
     justifyContent: 'flex-end',
@@ -217,7 +216,7 @@ const styles = StyleSheet.create({
   label: {
     flex: 1,
     color: colors.BLUE,
-    fontSize: 20,
+    fontSize: 17,
     fontWeight: '600',
   },
   labelAddSymptom: {
@@ -244,7 +243,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   container: {
-    padding: 20,
+    paddingHorizontal: 20,
     paddingTop: 0,
     backgroundColor: 'white',
   },

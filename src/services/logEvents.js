@@ -247,6 +247,13 @@ const logInfoClick = async (link) => {
   });
 };
 
+const logDrugsOpen = async () => {
+  await logEvent({
+    category: 'DRUG',
+    action: 'DRUG_OPEN',
+  });
+};
+
 export default {
   initMatomo,
   logAppVisit,
@@ -269,4 +276,5 @@ export default {
   logInfoClick,
   logInfosOpen,
   logFeelingStartYesterday,
+  logDrugsOpen,
 };
