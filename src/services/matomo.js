@@ -78,6 +78,7 @@ class Api {
         throw new Error('matomo not initialized yet');
       }
       if (__DEV__) {
+        return;
         console.log(
           `${this.baseUrl}?${this.computeParams(params, this.idsite)}`,
         );

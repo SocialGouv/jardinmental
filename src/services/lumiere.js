@@ -62,6 +62,7 @@ class LumiereService {
       );
     }
     if (props.hasOwnProperty('value')) body.value = props.value;
+    if (__DEV__) return; //console.log({debug: body});
 
     await fetch(`https://lumiere.cleverapps.io/api/up?appId=${this.appId}`, {
       method: 'POST',
