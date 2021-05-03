@@ -13,7 +13,7 @@ import localStorage from '../utils/localStorage';
 import {DRUG_LIST} from '../utils/drugs-list';
 import CheckBox from '@react-native-community/checkbox';
 
-const Drugs = ({navigation, route}) => {
+const Drugs = ({navigation}) => {
   const [treatment, setTreatment] = useState([]);
   const [filter, setFilter] = useState();
 

@@ -6,7 +6,7 @@ import Button from '../common/button';
 import localStorage from '../utils/localStorage';
 import Icon from '../common/icon';
 
-export default ({navigation, route}) => {
+export default ({navigation}) => {
   const handleNoTreatment = async () => {
     await localStorage.setMedicalTreatment([]);
     navigation.navigate('tabs');

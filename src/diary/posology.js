@@ -2,7 +2,6 @@ import React from 'react';
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import Text from '../components/MyText';
 import CircledIcon from '../common/circled-icon';
-import NoNote from './no-notes';
 import {isToday, isYesterday, parseISO} from 'date-fns';
 import {colors} from '../common/colors';
 
@@ -12,7 +11,6 @@ const Posology = ({data, date, onPress}) => {
   }
 
   const renderPosology = () => {
-    // console.log(data);
     return data.map((p, i) => {
       if (!p?.name1 || !p?.value) return null;
       return (

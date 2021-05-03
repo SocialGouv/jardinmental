@@ -2,7 +2,6 @@ import React, {useContext, useState, useEffect} from 'react';
 import {StyleSheet, ScrollView, SafeAreaView, View} from 'react-native';
 import Text from '../components/MyText';
 import {colors} from '../common/colors';
-import {buildSurveyData} from '../survey/survey-data';
 import {DiaryDataContext} from '../context';
 import Button from '../common/button';
 import BackButton from '../components/BackButton';
@@ -23,7 +22,7 @@ const Drugs = ({navigation, route}) => {
 
   useEffect(() => {
     logEvents.logDrugsOpen();
-    setInSurvey(!!route.params?.currentSurvey);
+    setInSurvey(!!route?.params?.currentSurvey);
   }, []);
 
   useEffect(() => {
