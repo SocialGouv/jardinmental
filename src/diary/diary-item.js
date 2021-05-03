@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useRef} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import PatientStateItem from './patient-state-item';
 import {displayedCategories} from '../common/constants';
 import NoDataYesterdayDiaryItem from './no-data-yesterday-diary-item';
@@ -42,8 +42,17 @@ const DiaryItem = ({navigation, patientState, startAtFirstQuestion, date}) => {
         return patientState && patientState[key];
       }).length;
 
+  const handlePressItem = () => {
+    if (!(isToday(parseISO(date)) || isYesterday(parseISO(date))))
+      return navigation.navigate('too-late', {date});
+    startAtFirstQuestion(date);
+  };
+
   return (
-    <View style={styles.container}>
+    <TouchableOpacity
+      activeOpacity={1}
+      style={styles.container}
+      onPress={handlePressItem}>
       {!hasAnswerSurvey() ? (
         <NoDataDiaryItem date={date} />
       ) : (
@@ -86,7 +95,7 @@ const DiaryItem = ({navigation, patientState, startAtFirstQuestion, date}) => {
         date={date}
         onPress={() => handleEdit('drugs')}
       />
-    </View>
+    </TouchableOpacity>
   );
 };
 

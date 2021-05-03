@@ -1,3 +1,6 @@
+import {format, parseISO} from 'date-fns';
+import {fr} from 'date-fns/locale';
+
 export const oneDay = 1000 * 60 * 60 * 24;
 export const beforeToday = (offset = 0, date = new Date()) =>
   new Date(Date.parse(date) - offset * oneDay);
@@ -62,4 +65,11 @@ export const getArrayOfDates = ({
     return sortedDates.reverse();
   }
   return sortedDates;
+};
+
+export const formatDate = (d) => {
+  if (!d) return '-';
+  const isoDate = parseISO(d);
+
+  return format(isoDate, 'EEEE d MMMM', {locale: fr});
 };
