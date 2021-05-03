@@ -12,10 +12,14 @@ import Button from '../common/button';
 import localStorage from '../utils/localStorage';
 import {DRUG_LIST} from '../utils/drugs-list';
 import CheckBox from '@react-native-community/checkbox';
+import logEvents from '../services/logEvents';
+import NPS from '../services/NPS/NPS';
 
 const Drugs = ({navigation}) => {
   const [treatment, setTreatment] = useState([]);
   const [filter, setFilter] = useState();
+  const [list, setList] = useState(null);
+  const [NPSvisible, setNPSvisible] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -25,6 +29,15 @@ const Drugs = ({navigation}) => {
       }
     })();
   }, []);
+
+  useEffect(() => {
+    setList(
+      DRUG_LIST.sort((a, b) => a.name1 > b.name1).filter((e) => {
+        const r = new RegExp(filter, 'gi');
+        return r.test(e.id);
+      }),
+    );
+  }, [filter]);
 
   const setToogleCheckbox = (d, value) => {
     let t = [...treatment];
@@ -43,12 +56,13 @@ const Drugs = ({navigation}) => {
     navigation.navigate('drugs', {treatment});
   };
 
-  const handleFilter = (f) => {
-    setFilter(f);
-  };
+  const handleFilter = (f) => setFilter(f);
+  const onPressContribute = () => setNPSvisible(true);
+  const closeNPS = () => setNPSvisible(false);
 
   return (
     <SafeAreaView style={styles.safe}>
+      <NPS forceView={NPSvisible} close={closeNPS} page={3} />
       <TextInput
         autoCapitalize="none"
         onChangeText={handleFilter}
@@ -57,35 +71,41 @@ const Drugs = ({navigation}) => {
         style={styles.filter}
       />
       <ScrollView style={styles.container}>
-        {DRUG_LIST.sort((a, b) => a.name1 > b.name1)
-          .filter((e) => {
-            const r = new RegExp(filter, 'gi');
-            return r.test(e.id);
-          })
-          .map((e, index) => (
-            <View
-              key={index}
-              style={[
-                styles.drug,
-                {
-                  backgroundColor: treatment.find((x) => x.id === e.id)
-                    ? 'white'
-                    : '#26387c12',
-                },
-              ]}>
-              <View style={styles.item}>
-                <Text style={styles.text1}>{e.name1}</Text>
-                {e.name2 ? <Text style={styles.text2}>({e.name2})</Text> : null}
-              </View>
-              <CheckBox
-                animationDuration={0.2}
-                boxType="square"
-                style={styles.checkbox}
-                value={!!treatment.find((x) => x.id === e.id)}
-                onValueChange={(newValue) => setToogleCheckbox(e, newValue)}
-              />
+        {!list ? <Text>Chargement</Text> : null}
+        {list?.map((e, index) => (
+          <View
+            key={index}
+            style={[
+              styles.drug,
+              {
+                backgroundColor: treatment.find((x) => x.id === e.id)
+                  ? 'white'
+                  : '#26387c12',
+              },
+            ]}>
+            <View style={styles.item}>
+              <Text style={styles.text1}>{e.name1}</Text>
+              {e.name2 ? <Text style={styles.text2}>({e.name2})</Text> : null}
             </View>
-          ))}
+            <CheckBox
+              animationDuration={0.2}
+              boxType="square"
+              style={styles.checkbox}
+              value={!!treatment.find((x) => x.id === e.id)}
+              onValueChange={(newValue) => setToogleCheckbox(e, newValue)}
+            />
+          </View>
+        ))}
+        {list?.length === 0 ? (
+          <Text
+            style={styles.notFound}
+            onPress={() => {
+              logEvents.logTreatmentNotFound(filter);
+              onPressContribute();
+            }}>
+            Je ne trouve pas mon traitement
+          </Text>
+        ) : null}
       </ScrollView>
       <View style={styles.buttonWrapper}>
         <Button
@@ -102,6 +122,12 @@ const Drugs = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
+  notFound: {
+    color: colors.BLUE,
+    textDecorationLine: 'underline',
+    fontWeight: '600',
+    padding: 30,
+  },
   filter: {
     fontSize: 16,
     paddingVertical: 12,
@@ -133,7 +159,6 @@ const styles = StyleSheet.create({
   },
   drug: {
     backgroundColor: '#26387c12',
-    borderColor: '#D4F0F2',
     paddingVertical: 10,
     paddingHorizontal: 20,
     display: 'flex',

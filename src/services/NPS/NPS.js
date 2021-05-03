@@ -23,11 +23,16 @@ import logEvents from '../logEvents';
 
 // just to make sure nothing goes the bad way in production, debug is always false
 
-const formatText = (useful, reco, feedback, userId) =>
-  `
+const formatText = ({useful, reco, feedback, drugNotFound, userId}) => {
+  let text = `
 User: ${userId}
-Comment pouvons-nous vous être encore plus utile: ${feedback}
 `;
+  if (feedback)
+    text += `Comment pouvons-nous vous être encore plus utile: ${feedback}`;
+  if (drugNotFound)
+    text += `Indiquez ici, si vous le souhaitez, le traitement que vous souhaiteriez suivre: ${drugNotFound}`;
+  return text;
+};
 
 const NPSTimeoutMS = __DEV__ ? 1000 * 3 * 100000000 : 1000 * 60 * 60 * 24 * 10;
 const emailFormat = (email) =>
@@ -43,6 +48,7 @@ class NPS extends React.Component {
     visible: false,
     useful: null,
     reco: null,
+    drugNotFound: null,
     feedback: '',
     email: '',
     sendButton: getCaption('post'),
@@ -77,6 +83,9 @@ class NPS extends React.Component {
         this.props.close();
       }
       this.npsSent = false;
+    }
+    if (prevProps.page && prevProps.page !== this.state.page) {
+      this.setState({page: prevProps.page});
     }
   }
 
@@ -139,6 +148,7 @@ class NPS extends React.Component {
   setUseful = (useful) => this.setState({useful});
   setReco = (reco) => this.setState({reco});
   setFeedback = (feedback) => this.setState({feedback});
+  setDrugNotFound = (drugNotFound) => this.setState({drugNotFound});
   setSendButton = (sendButton) => this.setState({sendButton});
   setEmail = (email) => this.setState({email});
 
@@ -158,7 +168,7 @@ class NPS extends React.Component {
     if (this.npsSent) {
       return;
     }
-    const {useful, reco, feedback, email} = this.state;
+    const {useful, reco, feedback, email, drugNotFound} = this.state;
     if (email.length && !emailFormat(email)) {
       Alert.alert('Adresse email non valide');
       return;
@@ -173,7 +183,7 @@ class NPS extends React.Component {
           personalName: 'MonSuiviPsy - Application',
         },
         subject: 'MonSuiviPsy - NPS',
-        text: formatText(useful, reco, feedback, userId),
+        text: formatText({useful, reco, feedback, drugNotFound, userId}),
       },
       __DEV__ ? 'tangimds@gmail.com' : 'monsuivipsy@fabrique.social.gouv.fr',
     );
@@ -265,6 +275,37 @@ class NPS extends React.Component {
     );
   }
 
+  renderThirdPage() {
+    const {feedback, sendButton, email, drugNotFound} = this.state;
+    return (
+      <>
+        <Text style={styles.topTitle}>
+          {getCaption('feedback.drugsNotFound.title')}
+        </Text>
+        <Text style={styles.topSubTitle}>
+          {getCaption('feedback.drugsNotFound.question')}
+        </Text>
+        <TextInput
+          style={styles.feedback}
+          onChangeText={this.setDrugNotFound}
+          placeholder={getCaption('feedback.drugsNotFound.placeholder')}
+          value={drugNotFound}
+          multiline
+          textAlignVertical="top"
+          returnKeyType="next"
+        />
+        <TouchableOpacity
+          style={styles.buttonContainer}
+          disabled={
+            sendButton === 'Nous avons bien pris en compte votre retour !'
+          }
+          onPress={this.sendNPS}>
+          <Text style={styles.buttonText}>{sendButton}</Text>
+        </TouchableOpacity>
+      </>
+    );
+  }
+
   render() {
     const {visible, page} = this.state;
     return (
@@ -285,6 +326,7 @@ class NPS extends React.Component {
             <ScrollView style={styles.scrollView}>
               {page === 1 && this.renderFirstPage()}
               {page === 2 && this.renderSecondPage()}
+              {page === 3 && this.renderThirdPage()}
             </ScrollView>
           </KeyboardAvoidingView>
         </View>
@@ -405,6 +447,10 @@ const captions = {
   'feedback.email.description':
     "Pourrions-nous vous contacter pour en discuter avec vous\u00A0? Si vous êtes d'accord, vous pouvez renseigner votre adresse email ci-dessous.",
   'feedback.email': 'Adresse email (facultatif)',
+  'feedback.drugsNotFound.title': 'Je ne trouve pas mon traitement',
+  'feedback.drugsNotFound.question':
+    'Indiquez ici, si vous le souhaitez, le traitement que vous souhaiteriez suivre.',
+  'feedback.drugsNotFound.placeholder': 'Votre message...',
 };
 
 // in case of i18n, we need to get the caption with a function
