@@ -198,7 +198,6 @@ const formatHtmlTable = async (diaryData) => {
       if (!diaryData[date]?.POSOLOGY?.find((e) => e.id === drug.id)) return;
       visible = true;
     });
-    console.log(drug.id, visible);
     return visible;
   };
 
