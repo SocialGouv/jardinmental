@@ -8,9 +8,7 @@ import {
 } from 'react-native';
 import Text from '../components/MyText';
 import DiaryItem from './diary-item';
-import ReminderItem from './reminder-item';
 import ContributeItem from './contribute-item';
-import ExportItem from './export-item';
 import Header from '../common/header';
 import {colors} from '../common/colors';
 import {format, parseISO, isToday, isYesterday} from 'date-fns';
@@ -21,14 +19,12 @@ import {DiaryDataContext} from '../context';
 import Settings from '../settings/settings-modal';
 import localStorage from '../utils/localStorage';
 import {buildSurveyData} from '../survey/survey-data';
-const ReminderStorageKey = '@Reminder';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import NPS from '../services/NPS/NPS';
+import Bubble from './bubble';
 
 const Diary = ({navigation}) => {
   const [diaryData] = useContext(DiaryDataContext);
   const [modalSettingsVisible, setModalSettingsVisible] = useState(false);
-  const [reminderItemVisible, setReminderItemVisible] = useState(true);
   const [NPSvisible, setNPSvisible] = useState(false);
 
   const startAtFirstQuestion = async (date) => {
@@ -62,17 +58,8 @@ const Diary = ({navigation}) => {
     }
   };
 
-  const onPressReminder = () => navigation.navigate('reminder');
-  const onPressExport = () => navigation.navigate('export');
   const onPressContribute = () => setNPSvisible(true);
   const closeNPS = () => setNPSvisible(false);
-
-  useEffect(() => {
-    (async () => {
-      const reminder = await AsyncStorage.getItem(ReminderStorageKey);
-      setReminderItemVisible(!reminder);
-    })();
-  }, []);
 
   useEffect(() => {
     const handleNavigation = async () => {
@@ -96,10 +83,11 @@ const Diary = ({navigation}) => {
             <Text style={styles.settings}>Réglages</Text>
           </TouchableOpacity>
         </View>
-        {reminderItemVisible ? (
-          <ReminderItem onPress={onPressReminder} />
-        ) : null}
-        <ExportItem onPress={onPressExport} />
+        <Bubble
+          diaryData={diaryData}
+          startAtFirstQuestion={startAtFirstQuestion}
+          navigation={navigation}
+        />
         {Object.keys(diaryData)
           .sort((a, b) => {
             a = a.split('/').reverse().join('');

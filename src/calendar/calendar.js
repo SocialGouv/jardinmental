@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {SafeAreaView, ScrollView, StyleSheet} from 'react-native';
 import {displayedCategories} from '../common/constants';
 import {
@@ -17,15 +17,16 @@ import localStorage from '../utils/localStorage';
 const Calendar = ({navigation}) => {
   const [day, setDay] = useState(new Date());
   const [diaryData] = useContext(DiaryDataContext);
-
   const [customs, setCustoms] = useState([]);
+  let mounted = useRef(true);
 
   useEffect(() => {
     (async () => {
       const c = await localStorage.getCustomSymptoms();
       const t = c.map((e) => `${e}_FREQUENCE`);
-      if (t) setCustoms(t);
+      if (t && mounted) setCustoms(t);
     })();
+    return () => (mounted = false);
   }, [diaryData]);
 
   useEffect(() => {

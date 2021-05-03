@@ -1,19 +1,19 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import Text from '../components/MyText';
 import Button from '../common/button';
 import {colors} from '../common/colors';
 import {formatDay} from '../services/date/helpers';
 import logEvents from '../services/logEvents';
 
-const NoDataTodayDiaryItem = ({startAtFirstQuestion}) => {
+export default ({startAtFirstQuestion}) => {
   const onStartPress = () => {
     logEvents.logFeelingDateChoose('today');
     startAtFirstQuestion(formatDay(new Date()));
   };
 
   return (
-    <View style={styles.noDataContainer}>
+    <TouchableOpacity style={styles.noDataContainer} onPress={onStartPress}>
       <Text style={styles.noDataTitle}>Comment se passe votre journée ?</Text>
       <Text style={styles.noDataText}>Faisons un point sur vos ressentis</Text>
       <View style={styles.buttonWrapper}>
@@ -24,7 +24,7 @@ const NoDataTodayDiaryItem = ({startAtFirstQuestion}) => {
           onPress={onStartPress}
         />
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -48,5 +48,3 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
 });
-
-export default NoDataTodayDiaryItem;
