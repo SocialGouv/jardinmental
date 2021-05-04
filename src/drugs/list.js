@@ -14,6 +14,7 @@ import {DRUG_LIST} from '../utils/drugs-list';
 import CheckBox from '@react-native-community/checkbox';
 import logEvents from '../services/logEvents';
 import NPS from '../services/NPS/NPS';
+import NotFound from './not-found';
 
 const Drugs = ({navigation}) => {
   const [treatment, setTreatment] = useState([]);
@@ -96,16 +97,7 @@ const Drugs = ({navigation}) => {
             />
           </View>
         ))}
-        {list?.length === 0 ? (
-          <Text
-            style={styles.notFound}
-            onPress={() => {
-              logEvents.logTreatmentNotFound(filter);
-              onPressContribute();
-            }}>
-            Je ne trouve pas mon traitement
-          </Text>
-        ) : null}
+        {list?.length === 0 ? <NotFound searchedValue={filter} /> : null}
       </ScrollView>
       <View style={styles.buttonWrapper}>
         <Button
@@ -155,7 +147,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around',
-    paddingVertical: 10,
+    paddingVertical: 15,
   },
   drug: {
     backgroundColor: '#26387c12',
