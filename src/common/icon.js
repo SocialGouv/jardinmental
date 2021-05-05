@@ -5,6 +5,7 @@ import SymptomsSetting from '../../assets/svg/symptoms-setting.svg';
 import CguSettingSvg from '../../assets/svg/cgu-setting.svg';
 import DrugsSvg from '../../assets/svg/drugs.svg';
 import InfoSvg from '../../assets/svg/info.svg';
+import BurgerSvg from '../../assets/svg/burger-badge.svg';
 
 import {StyleSheet, View} from 'react-native';
 
@@ -16,6 +17,7 @@ const mapIconToSvg = (icon) => {
     CguSettingSvg,
     DrugsSvg,
     InfoSvg,
+    BurgerSvg,
   };
   return iconMap[icon];
 };

@@ -13,6 +13,7 @@ import {DiaryDataContext} from '../context';
 import {useContext} from 'react';
 import logEvents from '../services/logEvents';
 import localStorage from '../utils/localStorage';
+import Text from '../components/MyText';
 
 const Calendar = ({navigation}) => {
   const [day, setDay] = useState(new Date());
@@ -103,7 +104,8 @@ const Calendar = ({navigation}) => {
       <ScrollView
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContainer}>
-        <Header>Calendrier</Header>
+        <Header title="Calendrier" navigation={navigation} />
+
         <WeekPicker
           firstDay={firstDay}
           lastDay={lastDay}
