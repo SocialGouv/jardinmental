@@ -6,9 +6,10 @@ import {
   Platform,
   Dimensions,
   View,
+  ScrollView,
 } from 'react-native';
 import Modal from 'react-native-modal';
-import Text from '../components/MyText';
+// import Text from '../components/MyText';
 import DrawerItem from './drawer-item';
 
 export default ({navigation, visible, onClick}) => {
@@ -20,25 +21,22 @@ export default ({navigation, visible, onClick}) => {
   const deviceHeight = Dimensions.get('window').height;
   return (
     <Modal
-      style={{margin: 0, flex: 1}}
+      style={styles.modal}
       isVisible={isVisible}
-      onBackdropPress={() => setIsVisible(false)}
-      onSwipeComplete={() => setIsVisible(false)}
+      onBackdropPress={onClick}
+      onSwipeComplete={onClick}
       animationIn="slideInLeft"
       animationOut="slideOutLeft"
       deviceHeight={deviceHeight}>
-      <View style={styles.safe}>
-        <TouchableOpacity
-          activeOpacity={1}
-          style={styles.container}
-          onPressOut={onClick}>
-          <SafeAreaView style={styles.card}>
+      <View style={styles.card}>
+        <SafeAreaView>
+          <ScrollView contentContainerStyle={styles.scrollContainer}>
             <DrawerItem
-              title="Nouveauté"
-              path="reminder"
+              title="Nouveautés"
+              path="news"
               navigation={navigation}
               onClick={onClick}
-              icon="ReminderSettingSvg"
+              icon="NewsSvg"
             />
             <Separator />
             <DrawerItem
@@ -46,18 +44,25 @@ export default ({navigation, visible, onClick}) => {
               path="onboarding"
               navigation={navigation}
               onClick={onClick}
-              icon="ReminderSettingSvg"
+              icon="PresentationSvg"
+            />
+            <DrawerItem
+              title="Informations"
+              path="infos"
+              navigation={navigation}
+              onClick={onClick}
+              icon="InfoSvg"
             />
             <DrawerItem
               title="Protection des données"
-              path="reminder"
+              path="privacy"
               navigation={navigation}
               onClick={onClick}
-              icon="ReminderSettingSvg"
+              icon="ProtectionSvg"
             />
             <DrawerItem
-              title="Mention légales"
-              path="reminder"
+              title="Mentions légales"
+              path="legal-mentions"
               navigation={navigation}
               onClick={onClick}
               icon="SymptomsSetting"
@@ -70,14 +75,9 @@ export default ({navigation, visible, onClick}) => {
               onClick={onClick}
               icon="ExportDataSettingSvg"
             />
-            <DrawerItem
-              title="Donnez votre avis"
-              path="reminder"
-              navigation={navigation}
-              onClick={onClick}
-            />
-          </SafeAreaView>
-        </TouchableOpacity>
+            {/* <DrawerItem title="Donnez mon avis" onClick={() => {}} /> */}
+          </ScrollView>
+        </SafeAreaView>
       </View>
     </Modal>
   );
@@ -86,23 +86,25 @@ export default ({navigation, visible, onClick}) => {
 const Separator = () => <View style={styles.separator}></View>;
 
 const styles = StyleSheet.create({
-  safe: {flex: 1},
+  modal: {
+    margin: 0,
+    flex: 1,
+  },
   separator: {
     borderColor: '#eee',
     borderTopWidth: 1,
     marginHorizontal: 30,
   },
-
-  container: {
-    flex: 1,
-    justifyContent: 'flex-start',
-    backgroundColor: '#0A215C50',
+  scrollContainer: {
+    paddingBottom: 80,
   },
   card: {
     width: '80%',
     height: '100%',
     backgroundColor: '#fff',
     borderRadius: 10,
+    borderTopLeftRadius: 0,
+    borderBottomLeftRadius: 0,
     paddingBottom: 30,
   },
 });

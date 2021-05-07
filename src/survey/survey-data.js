@@ -201,3 +201,23 @@ export const availableData = [
       "Ajoutez un commentaire sur votre journée d'hier si vous le souhaitez",
   },
 ];
+
+export const startAtFirstQuestion = async (date, navigation) => {
+  const symptoms = await localStorage.getSymptoms();
+  if (!symptoms) {
+    navigation.navigate('symptoms', {
+      redirect: true,
+      showExplanation: true,
+      date,
+    });
+  } else {
+    const questions = await buildSurveyData();
+    navigation.navigate(`question`, {
+      currentSurvey: {
+        date,
+        answers: {},
+      },
+      index: questions[0],
+    });
+  }
+};

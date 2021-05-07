@@ -1,48 +1,61 @@
-import React, {useState} from 'react';
-import {StyleSheet, View, TouchableOpacity} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {StyleSheet, View, Animated, Easing} from 'react-native';
 import {colors} from './colors';
 import Icon from '../common/icon';
 import Text from '../components/MyText';
 import Settings from '../settings/settings-modal';
 import Drawer from '../drawer';
+import {useRoute} from '@react-navigation/native';
 
 const Header = ({title, navigation}) => {
   const [settingsVisible, setSettingsVisible] = useState(false);
-  const [drawerVisible, setDrawerVisible] = useState(true);
+  const [drawerVisible, setDrawerVisible] = useState();
+  const route = useRoute();
 
   return (
-    <View style={styles.headerContainer}>
-      <View style={styles.container}>
-        <Settings
-          visible={settingsVisible}
-          navigation={navigation}
-          onClick={() => setSettingsVisible(false)}
-        />
-        <Drawer
-          visible={drawerVisible}
-          navigation={navigation}
-          onClick={() => setDrawerVisible(false)}
-        />
+    <View style={styles.container}>
+      <Settings
+        visible={settingsVisible}
+        navigation={navigation}
+        onClick={() => setSettingsVisible(false)}
+      />
+      <Drawer
+        visible={drawerVisible}
+        navigation={navigation}
+        onClick={() => setDrawerVisible(false)}
+      />
+      <Icon
+        badge
+        icon="BurgerSvg"
+        width={24}
+        height={24}
+        onPress={() => setDrawerVisible(true)}
+        styleContainer={{marginRight: 20}}
+      />
+      <Text style={styles.title}>{title}</Text>
+      {route.name === 'Diary' ? (
         <Icon
-          icon="BurgerSvg"
+          spin={settingsVisible}
+          icon="GearSvg"
           width={30}
           height={30}
-          onPress={() => setDrawerVisible(true)}
+          onPress={() => setSettingsVisible(true)}
         />
-        <Text style={styles.title}>{title}</Text>
-      </View>
-      <TouchableOpacity onPress={() => setSettingsVisible(true)}>
-        <Text style={styles.settings}>Réglages</Text>
-      </TouchableOpacity>
+      ) : null}
+      {route.name === 'Calendar' ? (
+        <Icon
+          color="#26387C"
+          icon="ExportDataSvg"
+          width={30}
+          height={30}
+          onPress={() => navigation.navigate('export')}
+        />
+      ) : null}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  headerContainer: {
-    flexDirection: 'row',
-    display: 'flex',
-  },
   container: {
     flex: 1,
     backgroundColor: 'white',
@@ -57,12 +70,7 @@ const styles = StyleSheet.create({
     color: colors.BLUE,
     marginRight: 'auto',
     fontWeight: '700',
-  },
-  settings: {
-    fontSize: 16,
-    color: colors.BLUE,
-    fontWeight: '700',
-    paddingTop: 5,
+    flex: 1,
   },
 });
 

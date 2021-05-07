@@ -21,7 +21,15 @@ export const SettingItem = ({
     <TouchableOpacity onPress={handleClick}>
       <View style={styles.container}>
         <View style={styles.answer}>
-          {icon && <Icon icon={icon} color={color} width={30} height={30} />}
+          {icon && (
+            <Icon
+              icon={icon}
+              color={color}
+              width={30}
+              height={30}
+              styleContainer={{marginRight: 20}}
+            />
+          )}
           <Text style={styles.label}>{title}</Text>
           <View style={styles.button}>
             <ArrowRightSvg />

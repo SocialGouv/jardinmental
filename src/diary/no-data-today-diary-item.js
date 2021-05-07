@@ -6,10 +6,10 @@ import {colors} from '../common/colors';
 import {formatDay} from '../services/date/helpers';
 import logEvents from '../services/logEvents';
 
-export default ({startAtFirstQuestion}) => {
+export default ({startAtFirstQuestion, navigation}) => {
   const onStartPress = () => {
     logEvents.logFeelingDateChoose('today');
-    startAtFirstQuestion(formatDay(new Date()));
+    startAtFirstQuestion(formatDay(new Date()), navigation);
   };
 
   return (

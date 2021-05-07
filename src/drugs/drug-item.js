@@ -20,7 +20,7 @@ export default ({drug, onChange, showPosology}) => {
     return (
       <View style={styles.posologyItem}>
         <View style={styles.left}>
-          <Icon icon="DrugsSvg" />
+          <Icon icon="DrugsSvg" styleContainer={{marginRight: 10}} />
           <View style={styles.posologyName}>
             <Text style={styles.text1}>{drug?.name1}</Text>
             {drug?.name2 ? (

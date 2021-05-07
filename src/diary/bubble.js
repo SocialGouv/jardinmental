@@ -6,8 +6,9 @@ import NoDataTodayDiaryItem from './no-data-today-diary-item';
 import NoDataYesterdayDiaryItem from './no-data-yesterday-diary-item';
 const ReminderStorageKey = '@Reminder';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {startAtFirstQuestion} from '../survey/survey-data';
 
-export default ({startAtFirstQuestion, diaryData, navigation}) => {
+export default ({diaryData, navigation}) => {
   const [reminderItemVisible, setReminderItemVisible] = useState(true);
 
   useEffect(() => {
@@ -29,10 +30,18 @@ export default ({startAtFirstQuestion, diaryData, navigation}) => {
   const yesterday = dates[1];
 
   if (!diaryData[today])
-    return <NoDataTodayDiaryItem startAtFirstQuestion={startAtFirstQuestion} />;
+    return (
+      <NoDataTodayDiaryItem
+        startAtFirstQuestion={startAtFirstQuestion}
+        navigation={navigation}
+      />
+    );
   if (!diaryData[yesterday])
     return (
-      <NoDataYesterdayDiaryItem startAtFirstQuestion={startAtFirstQuestion} />
+      <NoDataYesterdayDiaryItem
+        startAtFirstQuestion={startAtFirstQuestion}
+        navigation={navigation}
+      />
     );
   if (reminderItemVisible) return <ReminderItem onPress={onPressReminder} />;
   return <ExportItem onPress={onPressExport} />;

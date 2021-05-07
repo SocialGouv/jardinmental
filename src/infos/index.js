@@ -9,9 +9,9 @@ import {
 } from 'react-native';
 import Text from '../components/MyText';
 import {colors} from '../common/colors';
-import ArrowLeftSvg from '../../assets/svg/arrow-left.svg';
 import InfoSvg from '../../assets/svg/info.svg';
 import logEvents from '../services/logEvents';
+import BackButton from '../components/BackButton';
 
 const LegalScreen = ({navigation, title, content}) => {
   const [isFullScreen, setIsFullScreen] = useState(false);
@@ -35,6 +35,7 @@ const LegalScreen = ({navigation, title, content}) => {
 
   return (
     <SafeAreaView style={styles.safe}>
+      <BackButton onPress={navigation.goBack} />
       <ScrollView
         style={styles.cgu}
         contentContainerStyle={styles.scrollContainer}>

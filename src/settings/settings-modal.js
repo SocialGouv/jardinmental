@@ -19,7 +19,7 @@ const SettingsModal = ({navigation, visible, onClick}) => {
             icon="ReminderSettingSvg"
           />
           <SettingItem
-            title="Sélectionner les symptômes"
+            title="Sélectionner mes symptômes"
             path="symptoms"
             navigation={navigation}
             onClick={onClick}
@@ -31,20 +31,6 @@ const SettingsModal = ({navigation, visible, onClick}) => {
             navigation={navigation}
             onClick={onClick}
             icon="DrugsSvg"
-          />
-          <SettingItem
-            title="Exporter mes données"
-            path="export"
-            navigation={navigation}
-            onClick={onClick}
-            icon="ExportDataSettingSvg"
-          />
-          <SettingItem
-            title="Documents juridiques"
-            path="cgu"
-            navigation={navigation}
-            onClick={onClick}
-            icon="CguSettingSvg"
           />
         </View>
       </TouchableOpacity>

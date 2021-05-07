@@ -17,7 +17,6 @@ import {firstLetterUppercase} from '../utils/string-util';
 import {useContext} from 'react';
 import {DiaryDataContext} from '../context';
 import localStorage from '../utils/localStorage';
-import {buildSurveyData} from '../survey/survey-data';
 import NPS from '../services/NPS/NPS';
 import Bubble from './bubble';
 
@@ -25,25 +24,25 @@ const Diary = ({navigation}) => {
   const [diaryData] = useContext(DiaryDataContext);
   const [NPSvisible, setNPSvisible] = useState(false);
 
-  const startAtFirstQuestion = async (date) => {
-    const symptoms = await localStorage.getSymptoms();
-    if (!symptoms) {
-      navigation.navigate('symptoms', {
-        redirect: true,
-        showExplanation: true,
-        date,
-      });
-    } else {
-      const questions = await buildSurveyData();
-      navigation.navigate(`question`, {
-        currentSurvey: {
-          date,
-          answers: {},
-        },
-        index: questions[0],
-      });
-    }
-  };
+  // const startAtFirstQuestion = async (date) => {
+  //   const symptoms = await localStorage.getSymptoms();
+  //   if (!symptoms) {
+  //     navigation.navigate('symptoms', {
+  //       redirect: true,
+  //       showExplanation: true,
+  //       date,
+  //     });
+  //   } else {
+  //     const questions = await buildSurveyData();
+  //     navigation.navigate(`question`, {
+  //       currentSurvey: {
+  //         date,
+  //         answers: {},
+  //       },
+  //       index: questions[0],
+  //     });
+  //   }
+  // };
   const formatDate = (date) => {
     const isoDate = parseISO(date);
     if (isToday(isoDate)) {
@@ -76,11 +75,7 @@ const Diary = ({navigation}) => {
         style={styles.container}
         contentContainerStyle={styles.scrollContainer}>
         <Header title="Mon journal" navigation={navigation} />
-        <Bubble
-          diaryData={diaryData}
-          startAtFirstQuestion={startAtFirstQuestion}
-          navigation={navigation}
-        />
+        <Bubble diaryData={diaryData} navigation={navigation} />
         {Object.keys(diaryData)
           .sort((a, b) => {
             a = a.split('/').reverse().join('');
@@ -93,7 +88,6 @@ const Diary = ({navigation}) => {
               <DiaryItem
                 date={date}
                 patientState={diaryData[date]}
-                startAtFirstQuestion={startAtFirstQuestion}
                 navigation={navigation}
               />
             </View>

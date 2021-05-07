@@ -15,7 +15,7 @@ export default ({navigation}) => {
   return (
     <View>
       <View style={styles.card}>
-        <Icon icon="DrugsSvg" />
+        <Icon icon="DrugsSvg" styleContainer={{marginRight: 10}} />
         <View style={styles.cardContent}>
           <Text style={styles.cardTitle}>
             Vous n'avez pas encore précisé de traitement

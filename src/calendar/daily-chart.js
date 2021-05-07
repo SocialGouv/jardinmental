@@ -56,7 +56,7 @@ const DailyChart = ({
       <ScrollView
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContainer}>
-        <DayTitle day={new Date(diaryDay)} onBackPress={navigation.goBack} />
+        <DayTitle day={diaryDay} onBackPress={navigation.goBack} />
         <Chart
           title={displayedCategories[categoryId]}
           data={computeChartData(categoryId)}

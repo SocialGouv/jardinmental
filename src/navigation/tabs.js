@@ -1,5 +1,10 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {StyleSheet, SafeAreaView, Platform, Alert} from 'react-native';
+import {
+  StyleSheet,
+  SafeAreaView,
+  Platform,
+  TouchableHighlight,
+} from 'react-native';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import Diary from '../diary/diary';
 import Calendar from '../calendar/calendar';
@@ -16,6 +21,8 @@ import {buildSurveyData} from '../survey/survey-data';
 import {DiaryDataContext} from '../context';
 import {isToday, parseISO} from 'date-fns';
 import {beforeToday, formatDay} from '../services/date/helpers';
+import {Circle} from 'react-native-svg';
+import Icon from '../common/icon';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -82,9 +89,13 @@ const Tabs = ({navigation, route}) => {
   return (
     <>
       <SafeAreaView style={styles.surveyButton}>
-        <Text onPress={handlePlus} style={styles.text}>
-          Saisir mes derniers ressentis
-        </Text>
+        <Icon
+          activeOpacity={0.9}
+          icon="PlusSvg"
+          onPress={handlePlus}
+          width={50}
+          height={50}
+        />
       </SafeAreaView>
       <Tab.Navigator
         initialRouteName="Diary"
@@ -95,10 +106,12 @@ const Tabs = ({navigation, route}) => {
           inactiveTintColor: '#E5E5E5',
           showIcon: true,
           indicatorStyle: {height: 0},
+          style: styles.tabBar,
           labelStyle: {
-            fontSize: 13,
+            textTransform: 'capitalize',
+            fontSize: 11,
             marginHorizontal: 0,
-            marginVertical: 5,
+            marginVertical: Platform.OS === 'android' ? 0 : 5,
             padding: 0,
           },
         }}>
@@ -116,33 +129,38 @@ const Tabs = ({navigation, route}) => {
           options={{
             tabBarLabel: 'Calendrier',
             tabBarIcon: ({color}) => <CalendarSvg style={{color}} />,
-            tabBarAccessibilityLabel: 'Yo',
           }}
         />
-        <Tab.Screen
+        {/* <Tab.Screen
           name="Infos"
           component={Infos}
           options={{
             tabBarLabel: 'Infos',
             tabBarIcon: ({color}) => <InfoSvg style={{color}} />,
           }}
-        />
+        /> */}
       </Tab.Navigator>
     </>
   );
 };
 
 const styles = StyleSheet.create({
+  tabBar: {
+    borderColor: colors.LIGHT_BLUE,
+    borderWidth: 1,
+    maxHeight: 80,
+  },
   surveyButton: {
     display: 'flex',
     alignItems: 'center',
     position: 'absolute',
-    bottom: 72,
+    bottom: Platform.OS === 'android' ? 40 : 50,
+
     zIndex: 1,
     alignSelf: 'center',
-    backgroundColor: colors.LIGHT_BLUE,
-    padding: 12,
-    width: '100%',
+    // backgroundColor: colors.LIGHT_BLUE,
+    // padding: 12,
+    // width: '100%',
   },
   text: {
     fontSize: 16,

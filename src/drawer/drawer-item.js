@@ -5,7 +5,7 @@ import {colors} from '../common/colors';
 import Icon from '../common/icon';
 import ArrowRightSvg from '../../assets/svg/arrow-right.svg';
 
-export const SettingItem = ({
+export default ({
   title,
   navigation,
   path = 'tabs',
@@ -15,14 +15,20 @@ export const SettingItem = ({
 }) => {
   const handleClick = () => {
     onClick();
-    navigation.navigate(path);
+    navigation && navigation.navigate(path);
   };
   return (
     <TouchableOpacity onPress={handleClick}>
       <View style={styles.container}>
         <View style={styles.answer}>
           {icon ? (
-            <Icon icon={icon} color={color} width={30} height={30} />
+            <Icon
+              icon={icon}
+              color={color}
+              width={30}
+              height={30}
+              styleContainer={{marginRight: 20}}
+            />
           ) : (
             <View style={{marginHorizontal: 30}}></View>
           )}
@@ -58,5 +64,3 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
-
-export default SettingItem;

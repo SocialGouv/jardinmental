@@ -2,7 +2,7 @@ import React from 'react';
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import ArrowLeftSvg from '../../assets/svg/arrow-left.svg';
 import {colors} from '../common/colors';
-import {months} from '../services/date/helpers';
+import {formatDate} from '../services/date/helpers';
 import Text from '../components/MyText';
 
 const DayTitle = ({onBackPress, day}) => {
@@ -12,9 +12,7 @@ const DayTitle = ({onBackPress, day}) => {
         <ArrowLeftSvg />
       </TouchableOpacity>
       <Text style={styles.content}>
-        <Text style={styles.day}>
-          {`${day.getDate()} ${months[day.getMonth()]}`}
-        </Text>
+        <Text style={styles.day}>{formatDate(day)}</Text>
       </Text>
       <View style={styles.button} />
     </View>
