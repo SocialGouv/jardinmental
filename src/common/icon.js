@@ -12,6 +12,7 @@ import NewsSvg from '../../assets/svg/news.svg';
 import ProtectionSvg from '../../assets/svg/protection.svg';
 import GearSvg from '../../assets/svg/gear.svg';
 import PlusSvg from '../../assets/svg/plus.svg';
+import ClockSvg from '../../assets/svg/clock.svg';
 import Text from '../components/MyText';
 
 import {
@@ -37,6 +38,7 @@ const mapIconToSvg = (icon) => {
     GearSvg,
     ExportDataSvg,
     PlusSvg,
+    ClockSvg,
   };
   return iconMap[icon];
 };

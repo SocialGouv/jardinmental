@@ -1,3 +1,4 @@
+import {Alert} from 'react-native';
 import {
   categoryStates,
   frequence,
@@ -6,6 +7,9 @@ import {
   categories,
 } from '../common/constants';
 import localStorage from '../utils/localStorage';
+import {beforeToday, formatDay} from '../services/date/helpers';
+import {isToday, parseISO} from 'date-fns';
+import logEvents from '../services/logEvents';
 
 // build an array of the question's index that the user selected.
 export const buildSurveyData = async () => {
@@ -219,5 +223,28 @@ export const startAtFirstQuestion = async (date, navigation) => {
       },
       index: questions[0],
     });
+  }
+};
+
+export const alertNoDataYesterday = ({date, diaryData, navigation}) => {
+  console.log({date});
+  if (isToday(parseISO(date)) && !diaryData[formatDay(beforeToday(1))]) {
+    Alert.alert('Souhaitez-vous renseigner vos ressentis pour hier ?', '', [
+      {
+        text: 'Oui, je les renseigne maintenant',
+        onPress: () => {
+          logEvents.logFeelingStartYesterday(true);
+          startAtFirstQuestion(formatDay(beforeToday(1)), navigation);
+        },
+        style: 'default',
+      },
+      {
+        text: 'Plus tard',
+        onPress: () => {
+          logEvents.logFeelingStartYesterday(false);
+        },
+        style: 'cancel',
+      },
+    ]);
   }
 };

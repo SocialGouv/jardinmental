@@ -12,6 +12,7 @@ import {DRUG_LIST} from '../utils/drugs-list';
 import Icon from '../common/icon';
 import logEvents from '../services/logEvents';
 import DrugInformations from './drug-information';
+import {alertNoDataYesterday} from '../survey/survey-data';
 
 const Drugs = ({navigation, route}) => {
   const [diaryData, setDiaryData] = useContext(DiaryDataContext);
@@ -90,7 +91,7 @@ const Drugs = ({navigation, route}) => {
 
   const render = () => {
     if (!medicalTreatment) {
-      return <NoData navigation={navigation} />;
+      return <NoData navigation={navigation} route={route} />;
     }
     return (
       <View>
@@ -110,7 +111,6 @@ const Drugs = ({navigation, route}) => {
   };
 
   const submit = () => {
-    const params = {checkYesterday: inSurvey};
     if (inSurvey) {
       const survey = route.params?.currentSurvey;
       const currentSurvey = {
@@ -121,9 +121,10 @@ const Drugs = ({navigation, route}) => {
         },
       };
       setDiaryData(currentSurvey);
-      params.currentSurvey = currentSurvey;
+      alertNoDataYesterday({date: survey?.date, diaryData, navigation});
     }
-    navigation.navigate('tabs', params);
+
+    navigation.navigate('tabs');
   };
 
   const toggleInfos = () => {
