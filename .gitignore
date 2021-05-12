@@ -59,3 +59,7 @@ buck-out/
 /ios/Pods/
 
 .env
+*.csv
+*.xls
+*.xlsx
+*.numbers
