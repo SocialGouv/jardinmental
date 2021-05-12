@@ -9,8 +9,9 @@ import NoDataDiaryItem from './no-data-diary-item';
 import Notes from './notes';
 import localStorage from '../utils/localStorage';
 import Posology from './posology';
+import {startAtFirstQuestion} from '../survey/survey-data';
 
-const DiaryItem = ({navigation, patientState, startAtFirstQuestion, date}) => {
+const DiaryItem = ({navigation, patientState, date}) => {
   const [customs, setCustoms] = useState([]);
   let mounted = useRef(true);
 
@@ -45,7 +46,7 @@ const DiaryItem = ({navigation, patientState, startAtFirstQuestion, date}) => {
   const handlePressItem = () => {
     if (!(isToday(parseISO(date)) || isYesterday(parseISO(date))))
       return navigation.navigate('too-late', {date});
-    startAtFirstQuestion(date);
+    startAtFirstQuestion(date, navigation);
   };
 
   return (

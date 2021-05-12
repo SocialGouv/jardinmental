@@ -5,17 +5,18 @@ import {
   SafeAreaView,
   TextInput,
   View,
-  Alert,
-  AlertButton,
   Platform,
-  TouchableOpacity,
 } from 'react-native';
 import Text from '../components/MyText';
 import {colors} from '../common/colors';
-import {availableData, buildSurveyData} from './survey-data';
+import {
+  availableData,
+  buildSurveyData,
+  alertNoDataYesterday,
+} from './survey-data';
 import {categories} from '../common/constants';
 import {DiaryDataContext} from '../context';
-import {isYesterday, isToday, parseISO} from 'date-fns';
+import {isYesterday, parseISO} from 'date-fns';
 import Button from '../common/button';
 import logEvents from '../services/logEvents';
 import BackButton from '../components/BackButton';
@@ -69,12 +70,14 @@ const Notes = ({navigation, route}) => {
     logEvents.logFeelingAdd();
 
     if (route.params?.redirect) {
-      return navigation.navigate('tabs', {currentSurvey, checkYesterday: true});
+      alertNoDataYesterday({date: survey?.date, diaryData, navigation});
+      return navigation.navigate('tabs');
     }
 
     const medicalTreatmentStorage = await localStorage.getMedicalTreatment();
     if (medicalTreatmentStorage?.length === 0) {
-      return navigation.navigate('tabs', {currentSurvey, checkYesterday: true});
+      alertNoDataYesterday({date: survey?.date, diaryData, navigation});
+      return navigation.navigate('tabs');
     }
     navigation.navigate('drugs', {
       currentSurvey,

@@ -11,6 +11,7 @@ import ReminderSvg from '../../assets/svg/reminder.svg';
 import {colors} from '../common/colors';
 import BackButton from '../components/BackButton';
 import {formatDate} from '../services/date/helpers';
+import Icon from '../common/icon';
 
 export default ({navigation, route}) => {
   const [date, setDate] = useState(null);
@@ -24,12 +25,21 @@ export default ({navigation, route}) => {
   return (
     <SafeAreaView style={styles.safe}>
       <BackButton onPress={navigation.goBack} />
-      <ScrollView
-        style={styles.container}
-        contentContainerStyle={styles.scrollContainer}>
-        <ReminderSvg />
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <Icon
+          icon="ClockSvg"
+          color="#1FC6D5"
+          styleContainer={{
+            marginTop: '20%',
+            marginBottom: '20%',
+          }}
+          width={100}
+          height={100}
+        />
+        {/* <ReminderSvg /> */}
         <Text style={styles.title}>
-          Il est trop tard pour saisir les informations du {formatDate(date)} !
+          Il est trop tard pour modifier les informations du {formatDate(date)}{' '}
+          !
         </Text>
         <View style={styles.description}>
           <Text style={styles.subTitle}>
@@ -42,7 +52,7 @@ export default ({navigation, route}) => {
         <TouchableOpacity
           onPress={navigation.goBack}
           style={styles.setupButton}>
-          <Text style={styles.setupButtonText}>Retour au journal</Text>
+          <Text style={styles.setupButtonText}>Retour</Text>
         </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
@@ -56,12 +66,11 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     paddingBottom: 80,
+    display: 'flex',
+    alignItems: 'center',
   },
   bold: {
     fontWeight: '700',
-  },
-  container: {
-    padding: 40,
   },
   title: {
     width: '80%',

@@ -12,11 +12,11 @@ import {
 } from 'react-native';
 import Text from '../components/MyText';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import ExportData from '../../assets/svg/export-data.svg';
+import ExportDataSvg from '../../assets/svg/export-data.svg';
 import {colors} from '../common/colors';
 import {DiaryDataContext} from '../context';
 import {formatHtmlTable} from './utils';
-
+import Icon from '../common/icon';
 import logEvents from '../services/logEvents';
 import {sendTipimail} from '../services/sendTipimail';
 import BackButton from '../components/BackButton';
@@ -80,7 +80,16 @@ const Export = ({navigation}) => {
       <SafeAreaView style={styles.container}>
         <ScrollView contentContainerStyle={styles.inner}>
           <BackButton onPress={navigation.goBack} />
-          <ExportData style={styles.icon} />
+          <Icon
+            icon="ExportDataSvg"
+            color="#d3d3e8"
+            styleContainer={{
+              marginTop: '20%',
+              marginBottom: '20%',
+            }}
+            width={80}
+            height={80}
+          />
           <Text style={styles.title}>
             Recevez vos données des 30 derniers jours par mail
           </Text>

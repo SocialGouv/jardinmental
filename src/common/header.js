@@ -1,26 +1,92 @@
-import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {StyleSheet, View, Animated, Easing} from 'react-native';
 import {colors} from './colors';
+import Icon from '../common/icon';
 import Text from '../components/MyText';
+import Settings from '../settings/settings-modal';
+import Drawer from '../drawer';
+import {useRoute} from '@react-navigation/native';
+import {needUpdate} from '../services/versionChecker';
+import {getBadgeNotesVersion} from '../news';
 
-const Header = ({children}) => {
+const Header = ({title, navigation}) => {
+  const [settingsVisible, setSettingsVisible] = useState(false);
+  const [drawerVisible, setDrawerVisible] = useState();
+  const [badge, setBadge] = useState(false);
+  const route = useRoute();
+
+  const updateBadge = async () => {
+    const update = await needUpdate();
+    const news = await getBadgeNotesVersion();
+    setBadge(update || news);
+  };
+
+  useEffect(() => {
+    updateBadge();
+  }, [navigation]);
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{children}</Text>
+      <Settings
+        visible={settingsVisible}
+        navigation={navigation}
+        onClick={() => setSettingsVisible(false)}
+      />
+      <Drawer
+        visible={drawerVisible}
+        navigation={navigation}
+        onClick={() => {
+          updateBadge();
+          setDrawerVisible(false);
+        }}
+      />
+      <Icon
+        badge={badge}
+        icon="BurgerSvg"
+        width={24}
+        height={24}
+        onPress={() => setDrawerVisible(true)}
+        styleContainer={{marginRight: 20}}
+      />
+      <Text style={styles.title}>{title}</Text>
+      {route.name === 'Diary' ? (
+        <Icon
+          spin={settingsVisible}
+          icon="GearSvg"
+          width={30}
+          height={30}
+          onPress={() => setSettingsVisible(true)}
+        />
+      ) : null}
+      {route.name === 'Calendar' ? (
+        <Icon
+          color="#26387C"
+          icon="ExportDataSvg"
+          width={30}
+          height={30}
+          onPress={() => navigation.navigate('export')}
+        />
+      ) : null}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     backgroundColor: 'white',
     marginRight: 'auto',
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingBottom: 30,
   },
   title: {
     fontSize: 22,
-    paddingBottom: 30,
     color: colors.BLUE,
+    marginRight: 'auto',
     fontWeight: '700',
+    flex: 1,
   },
 });
 

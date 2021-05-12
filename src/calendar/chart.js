@@ -63,8 +63,11 @@ const Chart = ({
           </Text>
         ))}
       <View style={styles.days}>
-        {days.map((day) => (
-          <Text key={day} style={styles.day}>
+        {days.map((day, index) => (
+          <Text
+            key={day}
+            style={styles.day}
+            onPress={() => (onPress ? onPress(index) : null)}>
             {day}
           </Text>
         ))}

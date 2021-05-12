@@ -1,10 +1,11 @@
 import React, {useEffect, useState, useRef} from 'react';
-import {SafeAreaView, ScrollView, StyleSheet} from 'react-native';
+import {SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
 import {displayedCategories} from '../common/constants';
 import {
   beforeToday,
   getArrayOfDates,
   getTodaySWeek,
+  formatDate,
 } from '../services/date/helpers';
 import Header from '../common/header';
 import Chart from './chart';
@@ -13,6 +14,9 @@ import {DiaryDataContext} from '../context';
 import {useContext} from 'react';
 import logEvents from '../services/logEvents';
 import localStorage from '../utils/localStorage';
+import Text from '../components/MyText';
+import Icon from '../common/icon';
+import {colors} from '../common/colors';
 
 const Calendar = ({navigation}) => {
   const [day, setDay] = useState(new Date());
@@ -103,13 +107,26 @@ const Calendar = ({navigation}) => {
       <ScrollView
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContainer}>
-        <Header>Calendrier</Header>
+        <Header title="Calendrier" navigation={navigation} />
+
         <WeekPicker
           firstDay={firstDay}
           lastDay={lastDay}
           onAfterPress={() => setDay(beforeToday(-7, day))}
           onBeforePress={() => setDay(beforeToday(7, day))}
         />
+        <View style={styles.subtitleContainer}>
+          <Icon
+            icon="InfoSvg"
+            width={25}
+            height={25}
+            color={colors.LIGHT_BLUE}
+          />
+          <Text style={styles.subtitle}>
+            Tapez sur un jour ou un point pour retrouver une{' '}
+            <Text style={styles.bold}>vue détaillée</Text>.
+          </Text>
+        </View>
         {Object.keys(displayedCategories)
           .concat(customs)
           .map(
@@ -131,6 +148,20 @@ const Calendar = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
+  subtitle: {
+    flex: 1,
+    color: '#000',
+    fontSize: 15,
+    fontWeight: 'normal',
+  },
+  subtitleContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    marginVertical: 10,
+  },
+  bold: {
+    fontWeight: 'bold',
+  },
   safe: {
     flex: 1,
     backgroundColor: 'white',

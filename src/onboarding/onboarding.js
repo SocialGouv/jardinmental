@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {StyleSheet, SafeAreaView, View, TouchableOpacity} from 'react-native';
 import Text from '../components/MyText';
 import CheckBox from '@react-native-community/checkbox';
@@ -8,12 +8,22 @@ import localStorage from '../utils/localStorage';
 import logEvents from '../services/logEvents';
 import Button from '../common/button';
 import ActiveDot from './ActiveDot';
+import BackButton from '../components/BackButton';
 
 const Onboarding = ({navigation}) => {
   const [isCguChecked, setIsCguChecked] = useState(false);
+  const [firstTime, setFirstTime] = useState(true);
+
+  useEffect(() => {
+    (async () => {
+      const isFirstAppLaunch = await localStorage.getIsFirstAppLaunch();
+      setFirstTime(isFirstAppLaunch !== 'false');
+    })();
+  }, [navigation]);
 
   const validateOnboarding = async () => {
-    navigation.navigate('supported');
+    const target = firstTime ? 'supported' : 'tabs';
+    navigation.navigate(target);
     await localStorage.setIsFirstAppLaunch(false);
   };
 
@@ -35,6 +45,7 @@ const Onboarding = ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.safe}>
+      {!firstTime ? <BackButton onPress={navigation.goBack} /> : null}
       <Text style={styles.title}>Mon Suivi Psy</Text>
       <Swiper
         loop={false}
@@ -72,38 +83,42 @@ const Onboarding = ({navigation}) => {
         </View>
       </Swiper>
 
-      <View style={styles.cgu}>
-        <CheckBox
-          animationDuration={0.2}
-          tintColor="#1FC6D5"
-          tintColors={{true: '#1FC6D5', false: 'grey'}}
-          boxType="square"
-          style={styles.checkbox}
-          value={isCguChecked}
-          onValueChange={(newValue) => setIsCguChecked(newValue)}
-        />
-        <Text style={styles.textCgu}>
-          En cochant cette case, vous acceptez nos{' '}
-          <Text onPress={onCguClick} style={styles.underlined}>
-            Conditions Générales d’Utilisation
-          </Text>
-          , notre{' '}
-          <Text onPress={onPrivacyClick} style={styles.underlined}>
-            Politique de Confidentialité
-          </Text>{' '}
-          et nos{' '}
-          <Text onPress={onLegalMentionsClick} style={styles.underlined}>
-            Mentions Légales
-          </Text>
-        </Text>
-      </View>
-      <View style={styles.buttonWrapper}>
-        <Button
-          onPress={validateOnboarding}
-          title="Commencer"
-          disabled={!isCguChecked}
-        />
-      </View>
+      {firstTime ? (
+        <>
+          <View style={styles.cgu}>
+            <CheckBox
+              animationDuration={0.2}
+              tintColor="#1FC6D5"
+              tintColors={{true: '#1FC6D5', false: 'grey'}}
+              boxType="square"
+              style={styles.checkbox}
+              value={isCguChecked}
+              onValueChange={(newValue) => setIsCguChecked(newValue)}
+            />
+            <Text style={styles.textCgu}>
+              En cochant cette case, vous acceptez nos{' '}
+              <Text onPress={onCguClick} style={styles.underlined}>
+                Conditions Générales d’Utilisation
+              </Text>
+              , notre{' '}
+              <Text onPress={onPrivacyClick} style={styles.underlined}>
+                Politique de Confidentialité
+              </Text>{' '}
+              et nos{' '}
+              <Text onPress={onLegalMentionsClick} style={styles.underlined}>
+                Mentions Légales
+              </Text>
+            </Text>
+          </View>
+          <View style={styles.buttonWrapper}>
+            <Button
+              onPress={validateOnboarding}
+              title="Commencer"
+              disabled={!isCguChecked && firstTime}
+            />
+          </View>
+        </>
+      ) : null}
     </SafeAreaView>
   );
 };

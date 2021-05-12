@@ -16,36 +16,33 @@ import {fr} from 'date-fns/locale';
 import {firstLetterUppercase} from '../utils/string-util';
 import {useContext} from 'react';
 import {DiaryDataContext} from '../context';
-import Settings from '../settings/settings-modal';
 import localStorage from '../utils/localStorage';
-import {buildSurveyData} from '../survey/survey-data';
 import NPS from '../services/NPS/NPS';
 import Bubble from './bubble';
 
 const Diary = ({navigation}) => {
   const [diaryData] = useContext(DiaryDataContext);
-  const [modalSettingsVisible, setModalSettingsVisible] = useState(false);
   const [NPSvisible, setNPSvisible] = useState(false);
 
-  const startAtFirstQuestion = async (date) => {
-    const symptoms = await localStorage.getSymptoms();
-    if (!symptoms) {
-      navigation.navigate('symptoms', {
-        redirect: true,
-        showExplanation: true,
-        date,
-      });
-    } else {
-      const questions = await buildSurveyData();
-      navigation.navigate(`question`, {
-        currentSurvey: {
-          date,
-          answers: {},
-        },
-        index: questions[0],
-      });
-    }
-  };
+  // const startAtFirstQuestion = async (date) => {
+  //   const symptoms = await localStorage.getSymptoms();
+  //   if (!symptoms) {
+  //     navigation.navigate('symptoms', {
+  //       redirect: true,
+  //       showExplanation: true,
+  //       date,
+  //     });
+  //   } else {
+  //     const questions = await buildSurveyData();
+  //     navigation.navigate(`question`, {
+  //       currentSurvey: {
+  //         date,
+  //         answers: {},
+  //       },
+  //       index: questions[0],
+  //     });
+  //   }
+  // };
   const formatDate = (date) => {
     const isoDate = parseISO(date);
     if (isToday(isoDate)) {
@@ -77,17 +74,8 @@ const Diary = ({navigation}) => {
       <ScrollView
         style={styles.container}
         contentContainerStyle={styles.scrollContainer}>
-        <View style={styles.headerContainer}>
-          <Header>Mon journal</Header>
-          <TouchableOpacity onPress={() => setModalSettingsVisible(true)}>
-            <Text style={styles.settings}>Réglages</Text>
-          </TouchableOpacity>
-        </View>
-        <Bubble
-          diaryData={diaryData}
-          startAtFirstQuestion={startAtFirstQuestion}
-          navigation={navigation}
-        />
+        <Header title="Mon journal" navigation={navigation} />
+        <Bubble diaryData={diaryData} navigation={navigation} />
         {Object.keys(diaryData)
           .sort((a, b) => {
             a = a.split('/').reverse().join('');
@@ -100,18 +88,12 @@ const Diary = ({navigation}) => {
               <DiaryItem
                 date={date}
                 patientState={diaryData[date]}
-                startAtFirstQuestion={startAtFirstQuestion}
                 navigation={navigation}
               />
             </View>
           ))}
         <ContributeItem onPress={onPressContribute} />
       </ScrollView>
-      <Settings
-        visible={modalSettingsVisible}
-        navigation={navigation}
-        onClick={() => setModalSettingsVisible(false)}
-      />
     </SafeAreaView>
   );
 };
@@ -127,16 +109,6 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     paddingBottom: 80,
-  },
-  headerContainer: {
-    flexDirection: 'row',
-    display: 'flex',
-  },
-  settings: {
-    fontSize: 16,
-    color: colors.BLUE,
-    fontWeight: '700',
-    paddingTop: 5,
   },
   title: {
     fontSize: 19,

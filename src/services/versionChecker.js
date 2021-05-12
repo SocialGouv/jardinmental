@@ -2,14 +2,17 @@ import React, {useEffect, useState} from 'react';
 import {Linking, Alert, Platform} from 'react-native';
 import VersionCheck from 'react-native-version-check';
 
+export const needUpdate = async () => {
+  const res = await VersionCheck.needUpdate();
+  return res.isNeeded;
+};
+
 export default () => {
   const [show, setShow] = useState(false);
 
   const getInfosStore = async () => {
-    VersionCheck.needUpdate().then(async (res) => {
-      console.log(res);
-      setShow(res.isNeeded);
-    });
+    const t = await needUpdate();
+    setShow(t);
   };
 
   useEffect(() => {

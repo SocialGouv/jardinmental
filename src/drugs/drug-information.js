@@ -39,11 +39,11 @@ export default ({visible = false, onClose}) => {
             indicatif pour vous aider dans le suivi de votre traitement
             médicamenteux. Il convient néanmoins de toujours se référer à la
             prescription médicale vous concernant et à votre médecin référent
-            pour tout ce qui à trait à votre traitement médicamenteux en
+            pour tout ce qui a trait à votre traitement médicamenteux en
             particulier et à votre suivi en général.
           </Text>
           <Text>
-            Je voudrais des informations sur les traitement médicamenteux :{' '}
+            Je voudrais des informations sur les traitements médicamenteux :{' '}
             <Text
               style={styles.link}
               onPress={() => {
@@ -116,5 +116,6 @@ const styles = StyleSheet.create({
   },
   text: {
     marginBottom: 20,
+    textAlign: 'justify',
   },
 });

@@ -20,6 +20,8 @@ import Contribute from '../contribute';
 import Drugs from '../drugs/drugs';
 import DrugsList from '../drugs/list';
 import TooLate from '../diary/too-late';
+import News from '../news';
+import Infos from '../infos';
 
 const Stack = createStackNavigator();
 
@@ -84,6 +86,8 @@ class Router extends React.Component {
           <Stack.Screen name="drugs" component={Drugs} />
           <Stack.Screen name="drugs-list" component={DrugsList} />
           <Stack.Screen name="too-late" component={TooLate} />
+          <Stack.Screen name="news" component={News} />
+          <Stack.Screen name="infos" component={Infos} />
           {/* <Stack.Screen name="contribute" component={Contribute} /> */}
         </Stack.Navigator>
       </NavigationContainer>

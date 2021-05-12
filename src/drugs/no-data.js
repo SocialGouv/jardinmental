@@ -1,21 +1,31 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {StyleSheet, View} from 'react-native';
+
+import {DiaryDataContext} from '../context';
 import Text from '../components/MyText';
 import {colors} from '../common/colors';
 import Button from '../common/button';
 import localStorage from '../utils/localStorage';
 import Icon from '../common/icon';
+import {alertNoDataYesterday} from '../survey/survey-data';
 
-export default ({navigation}) => {
+export default ({navigation, route}) => {
+  const [diaryData] = useContext(DiaryDataContext);
+
   const handleNoTreatment = async () => {
     await localStorage.setMedicalTreatment([]);
+    alertNoDataYesterday({
+      date: route?.params?.currentSurvey?.date,
+      diaryData,
+      navigation,
+    });
     navigation.navigate('tabs');
   };
 
   return (
     <View>
       <View style={styles.card}>
-        <Icon icon="DrugsSvg" />
+        <Icon icon="DrugsSvg" styleContainer={{marginRight: 10}} />
         <View style={styles.cardContent}>
           <Text style={styles.cardTitle}>
             Vous n'avez pas encore précisé de traitement
