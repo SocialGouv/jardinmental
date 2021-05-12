@@ -13,9 +13,9 @@ export const getBadgeNotesVersion = async () => {
   return lastNotesVersion !== LAST_NOTES_VERSION;
 };
 
-export const LAST_NOTES_VERSION = '1.12.1';
+export const LAST_NOTES_VERSION = '1.13';
 
-export default ({navigation, title, content}) => {
+export default ({navigation}) => {
   return (
     <SafeAreaView style={styles.safe}>
       <BackButton onPress={navigation.goBack} />
@@ -25,7 +25,7 @@ export default ({navigation, title, content}) => {
         contentContainerStyle={styles.scrollContainer}>
         <Card
           title="Mon Suivi Psy se refait une beauté !"
-          version="1.10.12"
+          version="v1.13"
           date="12/05/2021">
           <Item>
             <Text style={styles.text}>

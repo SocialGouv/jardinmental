@@ -70,7 +70,6 @@ const getNotesVersion = async () => {
 };
 
 const setNotesVersion = async (v) => {
-  console.log('set', v);
   await AsyncStorage.setItem(STORAGE_KEY_NOTES_VERSION, JSON.stringify(v));
 };
 
