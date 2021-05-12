@@ -7,15 +7,31 @@ import {
   Dimensions,
   View,
   ScrollView,
+  Linking,
 } from 'react-native';
 import Modal from 'react-native-modal';
-// import Text from '../components/MyText';
 import DrawerItem from './drawer-item';
+import {needUpdate} from '../services/versionChecker';
+import {getBadgeNotesVersion} from '../news';
+import localStorage from '../utils/localStorage';
+import {LAST_NOTES_VERSION} from '../news';
 
 export default ({navigation, visible, onClick}) => {
   const [isVisible, setIsVisible] = useState();
+  const [updateVisible, setUpdateVisible] = useState(false);
+  const [badgeNotesVersionVisible, setBadgeNotesVersionVisible] = useState(
+    false,
+  );
+
   useEffect(() => {
     setIsVisible(visible);
+
+    (async () => {
+      const u = await needUpdate();
+      setUpdateVisible(u);
+      const n = await getBadgeNotesVersion();
+      setBadgeNotesVersionVisible(n);
+    })();
   }, [visible]);
 
   const deviceHeight = Dimensions.get('window').height;
@@ -32,10 +48,14 @@ export default ({navigation, visible, onClick}) => {
         <SafeAreaView>
           <ScrollView contentContainerStyle={styles.scrollContainer}>
             <DrawerItem
+              badge={badgeNotesVersionVisible}
               title="Nouveautés"
               path="news"
               navigation={navigation}
-              onClick={onClick}
+              onClick={async () => {
+                await localStorage.setNotesVersion(LAST_NOTES_VERSION);
+                onClick();
+              }}
               icon="NewsSvg"
             />
             <Separator />
@@ -76,6 +96,20 @@ export default ({navigation, visible, onClick}) => {
               icon="ExportDataSettingSvg"
             />
             {/* <DrawerItem title="Donnez mon avis" onClick={() => {}} /> */}
+            {updateVisible ? (
+              <DrawerItem
+                badge
+                title="Mettre à jour"
+                icon="NewsSvg"
+                onClick={() =>
+                  Linking.openURL(
+                    Platform.OS === 'ios'
+                      ? 'itms-apps://apps.apple.com/FR/app/id1540061393'
+                      : 'https://play.app.goo.gl/?link=https://play.google.com/store/apps/details?id=com.monsuivipsy',
+                  )
+                }
+              />
+            ) : null}
           </ScrollView>
         </SafeAreaView>
       </View>

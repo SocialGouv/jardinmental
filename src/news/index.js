@@ -1,9 +1,19 @@
 import React from 'react';
 import {StyleSheet, SafeAreaView, ScrollView} from 'react-native';
 
-import Text from '../components/MyText';
 import {colors} from '../common/colors';
 import BackButton from '../components/BackButton';
+import Card from './card';
+import Item from './Item';
+import Text from '../components/MyText';
+import localStorage from '../utils/localStorage';
+
+export const getBadgeNotesVersion = async () => {
+  let lastNotesVersion = await localStorage.getNotesVersion();
+  return lastNotesVersion !== LAST_NOTES_VERSION;
+};
+
+export const LAST_NOTES_VERSION = '1.12.1';
 
 export default ({navigation, title, content}) => {
   return (
@@ -13,16 +23,63 @@ export default ({navigation, title, content}) => {
       <ScrollView
         style={styles.cgu}
         contentContainerStyle={styles.scrollContainer}>
-        {/* mettre numero de version */}
-        {/* message de base */}
-        {/* toggle pour voir les nouveautés des anciennes versions */}
-        <Text>pleins de nouveauté trop cool</Text>
+        <Card
+          title="Mon Suivi Psy se refait une beauté !"
+          version="1.10.12"
+          date="12/05/2021">
+          <Item>
+            <Text style={styles.text}>
+              Le nouveau bouton en haut à gauche de votre écran ouvre un{' '}
+              <Text style={styles.bold}>menu</Text>. Il vous permet de naviguer
+              plus facilement entre tous les écrans secondaires de l'application
+              Mon Suivi Psy.
+            </Text>
+          </Item>
+          <Item>
+            <Text style={styles.text}>
+              Le nouveau bouton en haut à droite de votre écran ouvre les{' '}
+              <Text style={styles.bold}>paramètres</Text>. Vous pouvez
+              sélectionner vos symptômes, indiquer votre traitement
+              médicamenteux si besoin, définir un rappel, etc.
+            </Text>
+          </Item>
+          <Item>
+            <Text style={styles.text}>
+              Vous pouvez maintenant rentrer les{' '}
+              <Text style={styles.bold}>traitements</Text> que vous prenez dans
+              l’application. Tous les médicaments ne sont pas accessibles, vous
+              pouvez nous informer si vous souhaitez ajouter le vôtre. Lors de
+              l’export de vos données, les informations concernant vos prises de
+              traitements médicamenteux seront aussi transmises, en bas des
+              courbes de suivi des symptômes.
+            </Text>
+          </Item>
+          <Item>
+            <Text style={styles.text}>
+              La barre de navigation retrouve sa{' '}
+              <Text style={styles.bold}>simplicité</Text>, avec un accès rapide
+              à votre journal et à votre calendrier. Vous pouvez retrouver
+              l'onglet <Text style={[styles.italic, styles.bold]}>Infos</Text>{' '}
+              dans le menu (en haut à gauche de votre écran).
+            </Text>
+          </Item>
+          <Item>
+            <Text style={styles.text}>
+              L'<Text style={styles.bold}>export</Text> de vos données est
+              possible depuis le menu ainsi que depuis votre calendrier (le
+              bouton d'export vient remplacer le bouton des réglages).
+            </Text>
+          </Item>
+        </Card>
       </ScrollView>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  text: {color: '#333'},
+  bold: {fontWeight: 'bold'},
+  italic: {fontStyle: 'italic'},
   safe: {
     flex: 1,
   },

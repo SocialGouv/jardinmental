@@ -6,11 +6,24 @@ import Text from '../components/MyText';
 import Settings from '../settings/settings-modal';
 import Drawer from '../drawer';
 import {useRoute} from '@react-navigation/native';
+import {needUpdate} from '../services/versionChecker';
+import {getBadgeNotesVersion} from '../news';
 
 const Header = ({title, navigation}) => {
   const [settingsVisible, setSettingsVisible] = useState(false);
   const [drawerVisible, setDrawerVisible] = useState();
+  const [badge, setBadge] = useState(false);
   const route = useRoute();
+
+  const updateBadge = async () => {
+    const update = await needUpdate();
+    const news = await getBadgeNotesVersion();
+    setBadge(update || news);
+  };
+
+  useEffect(() => {
+    updateBadge();
+  }, [navigation]);
 
   return (
     <View style={styles.container}>
@@ -22,10 +35,13 @@ const Header = ({title, navigation}) => {
       <Drawer
         visible={drawerVisible}
         navigation={navigation}
-        onClick={() => setDrawerVisible(false)}
+        onClick={() => {
+          updateBadge();
+          setDrawerVisible(false);
+        }}
       />
       <Icon
-        badge
+        badge={badge}
         icon="BurgerSvg"
         width={24}
         height={24}

@@ -1,36 +1,18 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {
-  StyleSheet,
-  SafeAreaView,
-  Platform,
-  TouchableHighlight,
-} from 'react-native';
+import React from 'react';
+import {StyleSheet, SafeAreaView, Platform} from 'react-native';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import Diary from '../diary/diary';
 import Calendar from '../calendar/calendar';
 import DiarySvg from '../../assets/svg/diary.svg';
-import InfoSvg from '../../assets/svg/info.svg';
-import PlusSvg from '../../assets/svg/plus.svg';
 import CalendarSvg from '../../assets/svg/calendar.svg';
 import localStorage from '../utils/localStorage';
 import logEvents from '../services/logEvents';
-import Infos from '../infos';
 import {colors} from '../common/colors';
-import Text from '../components/MyText';
-import {buildSurveyData} from '../survey/survey-data';
-import {DiaryDataContext} from '../context';
-import {isToday, parseISO} from 'date-fns';
-import {beforeToday, formatDay} from '../services/date/helpers';
-import {Circle} from 'react-native-svg';
 import Icon from '../common/icon';
 
 const Tab = createMaterialTopTabNavigator();
 
 const Tabs = ({navigation, route}) => {
-  // const [questions, setQuestions] = useState([]);
-  // const [alert, setAlert] = useState(false);
-  // const [diaryData] = useContext(DiaryDataContext);
-
   const handlePlus = async () => {
     const symptoms = await localStorage.getSymptoms();
     logEvents.logFeelingStart();
@@ -44,48 +26,6 @@ const Tabs = ({navigation, route}) => {
     }
   };
 
-  // const alertNoDataYesterday = (date) => {
-  //   if (
-  //     questions.length &&
-  //     isToday(parseISO(date)) &&
-  //     !diaryData[formatDay(beforeToday(1))]
-  //   ) {
-  //     setAlert(true);
-  //     Alert.alert('Souhaitez-vous renseigner vos ressentis pour hier ?', '', [
-  //       {
-  //         text: 'Oui, je les renseigne maintenant',
-  //         onPress: () => {
-  //           logEvents.logFeelingStartYesterday(true);
-  //           navigation.navigate('question', {
-  //             currentSurvey: {
-  //               date: formatDay(beforeToday(1)),
-  //               answers: {},
-  //             },
-  //             index: questions[0],
-  //           });
-  //         },
-  //         style: 'default',
-  //       },
-  //       {
-  //         text: 'Plus tard',
-  //         onPress: () => {
-  //           logEvents.logFeelingStartYesterday(false);
-  //         },
-  //         style: 'cancel',
-  //       },
-  //     ]);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   (async () => {
-  //     const q = await buildSurveyData();
-  //     if (q) setQuestions(q);
-  //   })();
-  // !alert &&
-  //   route?.params?.checkYesterday &&
-  //   alertNoDataYesterday(route?.params?.currentSurvey?.date);
-  // }, [navigation, route]);
   return (
     <>
       <SafeAreaView style={styles.surveyButton}>
@@ -131,14 +71,6 @@ const Tabs = ({navigation, route}) => {
             tabBarIcon: ({color}) => <CalendarSvg style={{color}} />,
           }}
         />
-        {/* <Tab.Screen
-          name="Infos"
-          component={Infos}
-          options={{
-            tabBarLabel: 'Infos',
-            tabBarIcon: ({color}) => <InfoSvg style={{color}} />,
-          }}
-        /> */}
       </Tab.Navigator>
     </>
   );
@@ -158,9 +90,6 @@ const styles = StyleSheet.create({
 
     zIndex: 1,
     alignSelf: 'center',
-    // backgroundColor: colors.LIGHT_BLUE,
-    // padding: 12,
-    // width: '100%',
   },
   text: {
     fontSize: 16,

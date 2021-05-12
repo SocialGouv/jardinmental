@@ -12,6 +12,7 @@ export default ({
   icon,
   color = colors.LIGHT_BLUE,
   onClick,
+  badge = false,
 }) => {
   const handleClick = () => {
     onClick();
@@ -23,6 +24,7 @@ export default ({
         <View style={styles.answer}>
           {icon ? (
             <Icon
+              badge={badge}
               icon={icon}
               color={color}
               width={30}
