@@ -1,11 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {
-  StyleSheet,
-  ScrollView,
-  View,
-  SafeAreaView,
-  TouchableOpacity,
-} from 'react-native';
+import {StyleSheet, ScrollView, View, SafeAreaView} from 'react-native';
 import Text from '../components/MyText';
 import DiaryItem from './diary-item';
 import ContributeItem from './contribute-item';
@@ -24,25 +18,6 @@ const Diary = ({navigation}) => {
   const [diaryData] = useContext(DiaryDataContext);
   const [NPSvisible, setNPSvisible] = useState(false);
 
-  // const startAtFirstQuestion = async (date) => {
-  //   const symptoms = await localStorage.getSymptoms();
-  //   if (!symptoms) {
-  //     navigation.navigate('symptoms', {
-  //       redirect: true,
-  //       showExplanation: true,
-  //       date,
-  //     });
-  //   } else {
-  //     const questions = await buildSurveyData();
-  //     navigation.navigate(`question`, {
-  //       currentSurvey: {
-  //         date,
-  //         answers: {},
-  //       },
-  //       index: questions[0],
-  //     });
-  //   }
-  // };
   const formatDate = (date) => {
     const isoDate = parseISO(date);
     if (isToday(isoDate)) {
