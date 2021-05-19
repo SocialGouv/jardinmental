@@ -2,7 +2,7 @@ const fs = require('fs');
 const csv = require('csv-parser');
 
 (async () => {
-  const arr = await parse('./2021avri_ListeMedocs_MSP/Feuil2-Table 1.csv');
+  const arr = await parse('./Untitled/Feuil2-Table 1.csv');
   let count = 0;
   console.log('export const DRUG_LIST = [');
   for (let i = 0; i < arr.length; i++) {
@@ -22,7 +22,7 @@ function parse(file) {
   let arr = [];
   return new Promise((resolve, reject) => {
     fs.createReadStream(file)
-      .pipe(csv())
+      .pipe(csv({separator: ';'}))
       .on('data', async (row) => {
         let newRow = {};
         try {
@@ -39,7 +39,7 @@ function parse(file) {
           if (!obj.name1) obj.name1 = newRow['name'].trim();
 
           if (newRow['posology'])
-            obj.values = newRow['posology'].split(';').map((e) => e.trim());
+            obj.values = newRow['posology'].split(',').map((e) => e.trim());
           arr.push(obj);
         } catch (e) {
           console.log('e', e);
