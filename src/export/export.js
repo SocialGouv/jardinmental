@@ -10,6 +10,7 @@ import {
   View,
   ScrollView,
 } from 'react-native';
+import KeyboardAvoidingViewScreen from '../components/KeyboardAvoidingViewScreen';
 import Text from '../components/MyText';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ExportDataSvg from '../../assets/svg/export-data.svg';
@@ -77,8 +78,11 @@ const Export = ({navigation}) => {
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={{flex: 1}}>
-      <SafeAreaView style={styles.container}>
-        <ScrollView contentContainerStyle={styles.inner}>
+      <SafeAreaView style={{flex: 1}}>
+        <ScrollView
+          contentInsetAdjustmentBehavior="automatic"
+          keyboardShouldPersistTaps="handled"
+          contentContainerStyle={styles.inner}>
           <BackButton onPress={navigation.goBack} />
           <Icon
             icon="ExportDataSvg"
@@ -131,6 +135,7 @@ const styles = StyleSheet.create({
     paddingBottom: 30,
     backgroundColor: '#f9f9f9',
     alignItems: 'center',
+    justifyContent: 'flex-end',
   },
   title: {
     width: '80%',

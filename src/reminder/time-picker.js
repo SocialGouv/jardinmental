@@ -1,122 +1,42 @@
 import React, {useState, useEffect} from 'react';
-import {
-  Platform,
-  StyleSheet,
-  View,
-  Modal,
-  TouchableOpacity,
-} from 'react-native';
-import Text from '../components/MyText';
-import DateTimePicker from '@react-native-community/datetimepicker';
-import {colors} from '../common/colors';
-
-/*
-  onChange:
-  - triggered everytime the datepicker changes date on iOS -> need state
-  - triggered everytime the OK button is tapped on android -> no need state
-*/
-
-// https://github.com/react-native-community/react-native-datetimepicker/issues/114
-
-const today = (offset = 0) => {
-  const now = new Date(Date.now() + offset * 1000 * 60 * 60 * 24);
-  return new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0);
-};
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 const TimePicker = ({visible, selectDate, reminder}) => {
   const [date, setDate] = useState(
     reminder || new Date(Date.now() + 60 * 1000),
   );
-  const [show, setShow] = useState();
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+
+  const handleCancel = () => {
+    selectDate(null);
+    setDatePickerVisibility(false);
+  };
+
+  const handleConfirm = (date) => {
+    selectDate(date);
+    setDatePickerVisibility(false);
+  };
 
   useEffect(() => {
-    setShow(visible);
-    if (show) {
+    setDatePickerVisibility(visible);
+    if (visible) {
       setDate(reminder || new Date(Date.now() + 60 * 1000));
     }
   }, [visible]);
 
-  if (!show) {
-    return null;
-  }
-
-  if (Platform.OS === 'ios') {
-    return (
-      <Modal visible={show} animationType="fade" transparent={true}>
-        <View style={styles.container}>
-          <View style={styles.datePickerContainer}>
-            <DateTimePicker
-              value={date}
-              mode="time"
-              display="spinner"
-              maximumDate={today(1)}
-              locale="fr-FR"
-              onChange={(_, selectedDate) => {
-                const currentDate = selectedDate || date;
-                setDate(currentDate);
-              }}
-            />
-            <View style={styles.buttons}>
-              <TouchableOpacity onPress={() => selectDate(date)}>
-                <Text style={styles.validate}>Valider</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => selectDate(null)}>
-                <Text style={styles.cancel}>Retour</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-      </Modal>
-    );
-  }
-
   return (
-    <DateTimePicker
-      testID="dateTimePicker"
-      value={date}
+    <DateTimePickerModal
+      date={date}
+      isVisible={isDatePickerVisible}
       mode="time"
-      display="spinner"
-      maximumDate={today(1)}
-      locale="fr-FR"
-      onChange={(_, selectedDate) => {
-        const currentDate = selectedDate || date;
-        setShow(false);
-        setDate(currentDate);
-        selectDate(currentDate);
-      }}
+      onConfirm={handleConfirm}
+      onCancel={handleCancel}
+      locale="en_GB" // trick for 24 hours on iOS
+      cancelTextIOS="Retour"
+      confirmTextIOS="Valider"
+      headerTextIOS="Définir un rappel"
     />
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    height: '100%',
-    width: '100%',
-    backgroundColor: 'rgba(0, 0, 0, 0.3)',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  datePickerContainer: {
-    width: '90%',
-    maxWidth: 300,
-    borderRadius: 20,
-    backgroundColor: 'white',
-    justifyContent: 'center',
-  },
-  buttons: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginVertical: 15,
-  },
-  validate: {
-    color: colors.LIGHT_BLUE,
-    fontWeight: '700',
-    fontSize: 16,
-  },
-  cancel: {
-    fontWeight: '700',
-    fontSize: 16,
-  },
-});
 
 export default TimePicker;

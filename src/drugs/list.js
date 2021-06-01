@@ -31,11 +31,16 @@ const Drugs = ({navigation}) => {
     })();
   }, []);
 
+  const cleanString = (s) => {
+    let r = s?.replace(/\s*/g, '').replace(/é/g, 'e').replace(/è/g, 'e');
+    return r;
+  };
+
   useEffect(() => {
     setList(
       DRUG_LIST.sort((a, b) => a.name1 > b.name1).filter((e) => {
-        const r = new RegExp(filter, 'gi');
-        return r.test(e.id);
+        const r = new RegExp(cleanString(filter), 'gi');
+        return r.test(cleanString(e.id));
       }),
     );
   }, [filter]);

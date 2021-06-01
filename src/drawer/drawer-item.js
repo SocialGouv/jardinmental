@@ -46,7 +46,7 @@ export default ({
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
+    padding: 10,
   },
   button: {
     width: 45,
