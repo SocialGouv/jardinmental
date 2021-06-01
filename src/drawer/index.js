@@ -19,6 +19,8 @@ import {LAST_NOTES_VERSION} from '../news';
 export default ({navigation, visible, onClick}) => {
   const [isVisible, setIsVisible] = useState();
   const [updateVisible, setUpdateVisible] = useState(false);
+  const [npsProIsVisible, setNpsProIsVisible] = useState(true);
+  const [badgeNpsProIsVisible, setBadgeNpsProIsVisible] = useState(false);
   const [badgeNotesVersionVisible, setBadgeNotesVersionVisible] = useState(
     false,
   );
@@ -31,6 +33,10 @@ export default ({navigation, visible, onClick}) => {
       setUpdateVisible(u);
       const n = await getBadgeNotesVersion();
       setBadgeNotesVersionVisible(n);
+      const proNPS = await localStorage.getSupported();
+      setNpsProIsVisible(proNPS === 'PRO');
+      const badgeProNPS = await localStorage.getVisitProNPS();
+      setBadgeNpsProIsVisible(!badgeProNPS);
     })();
   }, [visible]);
 
@@ -108,6 +114,19 @@ export default ({navigation, visible, onClick}) => {
                       : 'https://play.app.goo.gl/?link=https://play.google.com/store/apps/details?id=com.monsuivipsy',
                   )
                 }
+              />
+            ) : null}
+            {npsProIsVisible ? (
+              <DrawerItem
+                badge={badgeNpsProIsVisible}
+                title="Donner mon avis"
+                icon="LightBulbSvg"
+                path="contribute-pro"
+                navigation={navigation}
+                onClick={async () => {
+                  await localStorage.setVisitProNPS(true);
+                  onClick();
+                }}
               />
             ) : null}
           </ScrollView>

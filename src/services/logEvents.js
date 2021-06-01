@@ -230,6 +230,12 @@ const logNPSSend = async (useful, reco) => {
     value: `${useful}-${reco}`,
   });
 };
+const logProNPSSend = async () => {
+  await logEvent({
+    category: 'NPS',
+    action: 'PRO_NPS_SEND',
+  });
+};
 
 const logSupportedSelect = async (supported) => {
   await logEvent({
@@ -286,4 +292,5 @@ export default {
   logFeelingStartYesterday,
   logDrugsOpen,
   logTreatmentNotFound,
+  logProNPSSend,
 };

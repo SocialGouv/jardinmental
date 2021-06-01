@@ -6,6 +6,7 @@ import {
   STORAGE_KEY_CUSTOM_SYMPTOMS,
   STORAGE_KEY_MEDICAL_TREATMENT,
   STORAGE_KEY_NOTES_VERSION,
+  STORAGE_KEY_VISIT_PRO_NPS,
 } from '../common/constants';
 
 const getSymptoms = async () => {
@@ -73,6 +74,15 @@ const setNotesVersion = async (v) => {
   await AsyncStorage.setItem(STORAGE_KEY_NOTES_VERSION, JSON.stringify(v));
 };
 
+const getVisitProNPS = async () => {
+  const a = await AsyncStorage.getItem(STORAGE_KEY_VISIT_PRO_NPS);
+  return JSON.parse(a);
+};
+
+const setVisitProNPS = async (v) => {
+  await AsyncStorage.setItem(STORAGE_KEY_VISIT_PRO_NPS, JSON.stringify(v));
+};
+
 export default {
   getSymptoms,
   setSymptoms,
@@ -86,4 +96,6 @@ export default {
   setMedicalTreatment,
   getNotesVersion,
   setNotesVersion,
+  getVisitProNPS,
+  setVisitProNPS,
 };

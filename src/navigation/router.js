@@ -16,7 +16,7 @@ import CGU from '../legal/cgu-screen';
 import Privacy from '../legal/privacy-screen';
 import LegalMentions from '../legal/legal-mentions-screen';
 import logEvents from '../services/logEvents';
-import Contribute from '../contribute';
+import ContributePro from '../contribute/contributePro';
 import Drugs from '../drugs/drugs';
 import DrugsList from '../drugs/list';
 import TooLate from '../diary/too-late';
@@ -88,6 +88,7 @@ class Router extends React.Component {
           <Stack.Screen name="too-late" component={TooLate} />
           <Stack.Screen name="news" component={News} />
           <Stack.Screen name="infos" component={Infos} />
+          <Stack.Screen name="contribute-pro" component={ContributePro} />
           {/* <Stack.Screen name="contribute" component={Contribute} /> */}
         </Stack.Navigator>
       </NavigationContainer>

@@ -8,6 +8,7 @@ import Drawer from '../drawer';
 import {useRoute} from '@react-navigation/native';
 import {needUpdate} from '../services/versionChecker';
 import {getBadgeNotesVersion} from '../news';
+import localStorage from '../utils/localStorage';
 
 const Header = ({title, navigation}) => {
   const [settingsVisible, setSettingsVisible] = useState(false);
@@ -18,7 +19,9 @@ const Header = ({title, navigation}) => {
   const updateBadge = async () => {
     const update = await needUpdate();
     const news = await getBadgeNotesVersion();
-    setBadge(update || news);
+    const supported = await localStorage.getSupported();
+    const badgeProNPS = await localStorage.getVisitProNPS();
+    setBadge(update || news || (supported === 'PRO' && !badgeProNPS));
   };
 
   useEffect(() => {
