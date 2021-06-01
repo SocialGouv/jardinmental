@@ -61,13 +61,13 @@ export default ({navigation, searchedValue}) => {
               Ce service est en amélioration continue grâce à vos retours. Pour
               le rendre encore plus utile, nous aimerions échanger avec vous.
               {'\n'}
-              Indiquez-nous votre mail ou votre numéro de téléphone pour que
-              nous puissions vous contacter si cela vous intéresse.
+              Indiquez-nous votre mail pour que nous puissions vous contacter si
+              cela vous intéresse.
             </Text>
             <TextInput
               style={styles.feedback}
               onChangeText={setValue}
-              placeholder="exemple@mail.com ou 0612345678"
+              placeholder="exemple@mail.com"
               value={value}
               multiline
               textAlignVertical="top"
