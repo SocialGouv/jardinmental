@@ -15,6 +15,7 @@ import {displayedCategories} from '../common/constants';
 import localStorage from '../utils/localStorage';
 import logEvents from '../services/logEvents';
 import BackButton from '../components/BackButton';
+import Button from '../common/button';
 
 const lookUpCategoryMatomo = {
   MOOD: 0,
@@ -150,12 +151,8 @@ const SymptomScreen = ({navigation, route}) => {
             </View>
           ))}
       </ScrollView>
-      <View style={styles.container}>
-        <TouchableOpacity
-          onPress={submitNewCategories}
-          style={styles.ValidationButton}>
-          <Text style={styles.ValidationButtonText}>Valider</Text>
-        </TouchableOpacity>
+      <View style={styles.buttonWrapper}>
+        <Button title="Valider" onPress={submitNewCategories} />
       </View>
       {showExplanation && (
         <SymptomsExplanation
@@ -262,6 +259,12 @@ const styles = StyleSheet.create({
   },
   textInput: {
     fontSize: 20,
+  },
+  buttonWrapper: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    padding: 15,
   },
 });
 

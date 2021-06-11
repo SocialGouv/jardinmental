@@ -14,6 +14,7 @@ import localStorage from '../utils/localStorage';
 import {getDrugListWithLocalStorage} from '../utils/drugs-list';
 import CheckBox from '@react-native-community/checkbox';
 import NPS from '../services/NPS/NPS';
+import BackButton from '../components/BackButton';
 
 const Drugs = ({navigation, route}) => {
   const [treatment, setTreatment] = useState([]);
@@ -89,13 +90,23 @@ const Drugs = ({navigation, route}) => {
   return (
     <SafeAreaView style={styles.safe}>
       <NPS forceView={NPSvisible} close={closeNPS} page={3} />
-      <TextInput
-        autoCapitalize="none"
-        onChangeText={handleFilter}
-        value={filter}
-        placeholder="Rechercher un traitement"
-        style={styles.filter}
-      />
+      <View
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          marginBottom: 10,
+          alignItems: 'center',
+        }}>
+        <BackButton onPress={navigation.goBack} />
+        <TextInput
+          autoCapitalize="none"
+          onChangeText={handleFilter}
+          value={filter}
+          placeholder="Rechercher un traitement"
+          placeholderTextColor="#a3a3a3"
+          style={styles.filter}
+        />
+      </View>
       <ScrollView style={styles.container}>
         {!filteredList ? (
           <Text>Chargement</Text>
@@ -133,7 +144,7 @@ const Drugs = ({navigation, route}) => {
               }>
               <View style={styles.addDrug}>
                 <Text style={styles.labelAddDrug}>
-                  Ajouter un traitement {filter ? `(${filter})` : ''}
+                  Ajouter un traitement {filter ? `"${filter}"` : ''}
                 </Text>
                 <Text style={styles.plusIcon}>+</Text>
               </View>
@@ -142,13 +153,6 @@ const Drugs = ({navigation, route}) => {
         )}
       </ScrollView>
       <View style={styles.buttonWrapper}>
-        <Button
-          style={styles.backButton}
-          onPress={navigation.goBack}
-          title="Retour"
-          buttonColor="#fff"
-          textColor={colors.DARK_BLUE}
-        />
         <Button onPress={submit} title="Valider" />
       </View>
     </SafeAreaView>
@@ -192,7 +196,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     paddingVertical: 12,
     paddingHorizontal: 10,
-    borderBottomWidth: 1,
     borderColor: '#EDEDED',
     backgroundColor: '#fff',
     color: 'black',

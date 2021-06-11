@@ -1,19 +1,38 @@
 import React from 'react';
 import {StyleSheet, TouchableOpacity} from 'react-native';
-import Swiper from 'react-native-swiper';
 import Text from '../components/MyText';
 
 const styles = StyleSheet.create({
   button: {
-    borderRadius: 20,
-    backgroundColor: '#1FC6D5',
-    width: '50%',
+    minWidth: '70%',
+    height: 45,
+    borderRadius: 45,
+    paddingHorizontal: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 10,
+    shadowColor: '#0A215C',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.18,
+    shadowRadius: 1.0,
+
+    elevation: 1,
   },
   text: {
-    color: 'white',
-    textAlign: 'center',
-    paddingTop: 5,
-    paddingBottom: 5,
+    fontWeight: '700',
+    fontSize: 19,
+  },
+  container: {
+    display: 'flex',
+    paddingHorizontal: 20,
+    paddingTop: 0,
+    paddingBottom: 20,
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'flex-end',
   },
 });
 
@@ -23,15 +42,21 @@ const Button = ({
   textColor,
   onPress = () => null,
   disabled = false,
-  style,
+  buttonStyle,
+  textStyle,
 }) => {
   const color = disabled ? 'lightgrey' : buttonColor;
   return (
     <TouchableOpacity
-      style={[{...styles.button, backgroundColor: color || '#1FC6D5'}, style]}
+      style={[
+        {...styles.button, backgroundColor: color || '#1FC6D5'},
+        buttonStyle,
+      ]}
       onPress={onPress}
       disabled={disabled}>
-      <Text style={{...styles.text, color: textColor || 'white'}}>{title}</Text>
+      <Text style={[{...styles.text, color: textColor || 'white'}, textStyle]}>
+        {title}
+      </Text>
     </TouchableOpacity>
   );
 };

@@ -22,6 +22,8 @@ export default ({startAtFirstQuestion, navigation}) => {
           buttonColor="white"
           textColor={colors.BLUE}
           onPress={onStartPress}
+          buttonStyle={{width: '50%', height: 30}}
+          textStyle={{fontSize: 15, fontWeight: 'normal'}}
         />
       </View>
     </TouchableOpacity>

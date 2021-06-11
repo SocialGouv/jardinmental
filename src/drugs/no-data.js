@@ -36,7 +36,8 @@ export default ({navigation, route}) => {
           <Button
             onPress={() => navigation.navigate('drugs-list')}
             title="Ajouter un médicament"
-            style={styles.button}
+            buttonStyle={styles.button}
+            textStyle={{fontSize: 14, fontWeight: 'normal'}}
           />
         </View>
       </View>
@@ -80,11 +81,11 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   cardContent: {flex: 1},
-  button: {width: '90%'},
+  button: {width: '90%', height: 30},
   cardTitle: {
     fontSize: 15,
     color: colors.DARK_BLUE,
-    fontWeight: '500',
+    fontWeight: 'bold',
     marginBottom: 10,
   },
   cardSubTitle: {

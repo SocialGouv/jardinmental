@@ -11,12 +11,8 @@ export default ({onPress}) => (
 
 const styles = StyleSheet.create({
   backButtonContainer: {
-    alignSelf: 'flex-start',
-    paddingLeft: 20,
-    marginTop: 20,
-  },
-  backButtonContainer: {
-    marginTop: 15,
+    marginTop: 10,
+    marginBottom: 10,
     marginLeft: 15,
     paddingHorizontal: 15,
     borderRadius: 20,
