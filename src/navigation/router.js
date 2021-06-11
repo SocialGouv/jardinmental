@@ -19,6 +19,7 @@ import logEvents from '../services/logEvents';
 import ContributePro from '../contribute/contributePro';
 import Drugs from '../drugs/drugs';
 import DrugsList from '../drugs/list';
+import AddDrug from '../drugs/add-drug';
 import TooLate from '../diary/too-late';
 import News from '../news';
 import Infos from '../infos';
@@ -85,6 +86,7 @@ class Router extends React.Component {
           <Stack.Screen name="legal-mentions" component={LegalMentions} />
           <Stack.Screen name="drugs" component={Drugs} />
           <Stack.Screen name="drugs-list" component={DrugsList} />
+          <Stack.Screen name="add-drug" component={AddDrug} />
           <Stack.Screen name="too-late" component={TooLate} />
           <Stack.Screen name="news" component={News} />
           <Stack.Screen name="infos" component={Infos} />

@@ -8,7 +8,7 @@ import BackButton from '../components/BackButton';
 import localStorage from '../utils/localStorage';
 import NoData from './no-data';
 import DrugItem from './drug-item';
-import {DRUG_LIST} from '../utils/drugs-list';
+import {getDrugListWithLocalStorage} from '../utils/drugs-list';
 import Icon from '../common/icon';
 import logEvents from '../services/logEvents';
 import DrugInformations from './drug-information';
@@ -20,23 +20,30 @@ const Drugs = ({navigation, route}) => {
   const [posology, setPosology] = useState([]);
   const [inSurvey, setInSurvey] = useState(false);
   const [showInfos, setShowInfos] = useState();
+  const [listDrugs, setListDrugs] = useState();
 
   useEffect(() => {
     logEvents.logDrugsOpen();
     setInSurvey(!!route?.params?.currentSurvey);
-  }, []);
+    (async () => {
+      const list = await getDrugListWithLocalStorage();
+      setListDrugs(list);
+    })();
+  }, [route]);
 
   useEffect(() => {
+    if (!listDrugs || listDrugs?.length <= 0) return;
     (async () => {
-      const medicalTreatmentStorage = await localStorage.getMedicalTreatment();
+      const medicalTreatmentStorage =
+        route?.params?.treatment || (await localStorage.getMedicalTreatment());
       if (medicalTreatmentStorage) {
-        const t = DRUG_LIST.filter(
+        const t = listDrugs.filter(
           (e) => !!medicalTreatmentStorage.find((local) => local.id === e.id),
         );
         setMedicalTreatment(t);
       }
     })();
-  }, [navigation, route]);
+  }, [navigation, route, listDrugs]);
 
   useEffect(() => {
     defaultValue();
@@ -76,16 +83,16 @@ const Drugs = ({navigation, route}) => {
     );
   };
 
-  const handleDrugChange = (d, value) => {
+  const handleDrugChange = (d, value, isFreeText) => {
     let updated = false;
     let p = posology.map((e) => {
       if (e?.id === d?.id) {
         updated = true;
-        return {...d, value};
+        return {...d, value, isFreeText};
       }
       return e;
     });
-    if (!updated) p = [...posology, {...d, value}];
+    if (!updated) p = [...posology, {...d, value, isFreeText}];
     setPosology(p);
   };
 
@@ -135,7 +142,9 @@ const Drugs = ({navigation, route}) => {
     <SafeAreaView style={styles.safe}>
       <DrugInformations visible={showInfos} onClose={toggleInfos} />
       <BackButton onPress={previousQuestion} />
-      <ScrollView style={styles.container}>
+      <ScrollView
+        style={styles.scrollView}
+        contentContainerStyle={styles.scrollContainer}>
         <View style={styles.header}>
           <Text style={styles.title}>
             {inSurvey
@@ -166,6 +175,13 @@ const Drugs = ({navigation, route}) => {
 };
 
 const styles = StyleSheet.create({
+  scrollView: {
+    padding: 20,
+    backgroundColor: 'white',
+  },
+  scrollContainer: {
+    paddingBottom: 150,
+  },
   header: {
     display: 'flex',
     flexDirection: 'row',
@@ -197,10 +213,6 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
     fontWeight: '600',
     marginTop: 15,
-  },
-  container: {
-    backgroundColor: 'white',
-    padding: 20,
   },
   buttonWrapper: {
     display: 'flex',

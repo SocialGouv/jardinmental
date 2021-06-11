@@ -5,21 +5,21 @@ import {
   SafeAreaView,
   View,
   TextInput,
+  TouchableOpacity,
 } from 'react-native';
 import Text from '../components/MyText';
 import {colors} from '../common/colors';
 import Button from '../common/button';
 import localStorage from '../utils/localStorage';
-import {DRUG_LIST} from '../utils/drugs-list';
+import {getDrugListWithLocalStorage} from '../utils/drugs-list';
 import CheckBox from '@react-native-community/checkbox';
-import logEvents from '../services/logEvents';
 import NPS from '../services/NPS/NPS';
-import NotFound from './not-found';
 
-const Drugs = ({navigation}) => {
+const Drugs = ({navigation, route}) => {
   const [treatment, setTreatment] = useState([]);
   const [filter, setFilter] = useState();
-  const [list, setList] = useState(null);
+  const [list, setList] = useState();
+  const [filteredList, setFilteredList] = useState();
   const [NPSvisible, setNPSvisible] = useState(false);
 
   useEffect(() => {
@@ -32,18 +32,39 @@ const Drugs = ({navigation}) => {
   }, []);
 
   const cleanString = (s) => {
-    let r = s?.replace(/\s*/g, '').replace(/é/g, 'e').replace(/è/g, 'e');
+    let r = s
+      ?.replace(/\s*/g, '')
+      .replace(/é/g, 'e')
+      .replace(/è/g, 'e')
+      .replace(/(\(|\)|\||\^|\$)/g, '\\$1')
+      .toLowerCase();
     return r;
   };
 
   useEffect(() => {
-    setList(
-      DRUG_LIST.sort((a, b) => a.name1 > b.name1).filter((e) => {
-        const r = new RegExp(cleanString(filter), 'gi');
-        return r.test(cleanString(e.id));
-      }),
+    (async () => {
+      const l = await getDrugListWithLocalStorage();
+      setList(l);
+    })();
+  }, []);
+
+  useEffect(() => {
+    const newDrug = route?.params?.newDrug;
+    if (newDrug) {
+      setList((l) => [newDrug, ...l]);
+    }
+  }, [route]);
+
+  useEffect(() => {
+    setFilteredList(
+      list
+        ?.sort((a, b) => cleanString(a.name1) > cleanString(b.name1))
+        .filter((e) => {
+          const r = new RegExp(cleanString(filter), 'gi');
+          return r.test(cleanString(e.id));
+        }),
     );
-  }, [filter]);
+  }, [filter, list]);
 
   const setToogleCheckbox = (d, value) => {
     let t = [...treatment];
@@ -63,7 +84,6 @@ const Drugs = ({navigation}) => {
   };
 
   const handleFilter = (f) => setFilter(f);
-  const onPressContribute = () => setNPSvisible(true);
   const closeNPS = () => setNPSvisible(false);
 
   return (
@@ -77,32 +97,49 @@ const Drugs = ({navigation}) => {
         style={styles.filter}
       />
       <ScrollView style={styles.container}>
-        {!list ? <Text>Chargement</Text> : null}
-        {list?.map((e, index) => (
-          <View
-            key={index}
-            style={[
-              styles.drug,
-              {
-                backgroundColor: treatment.find((x) => x.id === e.id)
-                  ? 'white'
-                  : '#26387c12',
-              },
-            ]}>
-            <View style={styles.item}>
-              <Text style={styles.text1}>{e.name1}</Text>
-              {e.name2 ? <Text style={styles.text2}>({e.name2})</Text> : null}
-            </View>
-            <CheckBox
-              animationDuration={0.2}
-              boxType="square"
-              style={styles.checkbox}
-              value={!!treatment.find((x) => x.id === e.id)}
-              onValueChange={(newValue) => setToogleCheckbox(e, newValue)}
-            />
-          </View>
-        ))}
-        {list?.length === 0 ? <NotFound searchedValue={filter} /> : null}
+        {!filteredList ? (
+          <Text>Chargement</Text>
+        ) : (
+          <>
+            {filteredList?.map((e, index) => (
+              <View
+                key={index}
+                style={[
+                  styles.drug,
+                  {
+                    backgroundColor: treatment.find((x) => x.id === e.id)
+                      ? 'white'
+                      : '#26387c12',
+                  },
+                ]}>
+                <View style={styles.item}>
+                  <Text style={styles.text1}>{e.name1}</Text>
+                  {e.name2 ? (
+                    <Text style={styles.text2}>({e.name2})</Text>
+                  ) : null}
+                </View>
+                <CheckBox
+                  animationDuration={0.2}
+                  boxType="square"
+                  style={styles.checkbox}
+                  value={!!treatment.find((x) => x.id === e.id)}
+                  onValueChange={(newValue) => setToogleCheckbox(e, newValue)}
+                />
+              </View>
+            ))}
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate('add-drug', {prefilledValue: filter})
+              }>
+              <View style={styles.addDrug}>
+                <Text style={styles.labelAddDrug}>
+                  Ajouter un traitement {filter ? `(${filter})` : ''}
+                </Text>
+                <Text style={styles.plusIcon}>+</Text>
+              </View>
+            </TouchableOpacity>
+          </>
+        )}
       </ScrollView>
       <View style={styles.buttonWrapper}>
         <Button
@@ -119,11 +156,37 @@ const Drugs = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
-  notFound: {
-    color: colors.BLUE,
-    textDecorationLine: 'underline',
+  labelAddDrug: {
+    flex: 1,
+    color: '#fff',
+    fontSize: 20,
     fontWeight: '600',
-    padding: 30,
+  },
+  plusIcon: {
+    color: '#fff',
+    fontSize: 30,
+    fontWeight: '300',
+    margin: -10,
+    marginRight: 10,
+  },
+  addDrug: {
+    backgroundColor: colors.LIGHT_BLUE,
+    color: '#fff',
+    margin: 10,
+    borderRadius: 10,
+    padding: 10,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    shadowColor: '#0A215C',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.18,
+    shadowRadius: 1.0,
+
+    elevation: 1,
   },
   filter: {
     fontSize: 16,

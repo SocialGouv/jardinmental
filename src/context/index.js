@@ -7,6 +7,7 @@ import {
   STORAGE_KEY_IS_FIRST_LAUNCH,
   STORAGE_KEY_SUPPORTED,
   STORAGE_KEY_CUSTOM_SYMPTOMS,
+  STORAGE_KEY_CUSTOM_DRUGS,
   STORAGE_KEY_MEDICAL_TREATMENT,
   STORAGE_KEY_NOTES_VERSION,
   STORAGE_KEY_VISIT_PRO_NPS,
@@ -27,6 +28,7 @@ const wipeData = async () => {
   await AsyncStorage.removeItem(STORAGE_KEY_MEDICAL_TREATMENT);
   await AsyncStorage.removeItem(STORAGE_KEY_NOTES_VERSION);
   await AsyncStorage.removeItem(STORAGE_KEY_VISIT_PRO_NPS);
+  await AsyncStorage.removeItem(STORAGE_KEY_CUSTOM_DRUGS);
   await AsyncStorage.removeItem('@Reminder');
 };
 

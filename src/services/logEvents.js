@@ -268,6 +268,15 @@ const logTreatmentNotFound = async (value) => {
   });
 };
 
+const logDrugAdd = async (drug) => {
+  await logEvent({
+    category: 'DRUG',
+    action: 'DRUG_ADD',
+    name: 'drug',
+    value: drug,
+  });
+};
+
 export default {
   initMatomo,
   logAppVisit,
@@ -293,4 +302,5 @@ export default {
   logDrugsOpen,
   logTreatmentNotFound,
   logProNPSSend,
+  logDrugAdd,
 };

@@ -7,6 +7,7 @@ import {
   STORAGE_KEY_MEDICAL_TREATMENT,
   STORAGE_KEY_NOTES_VERSION,
   STORAGE_KEY_VISIT_PRO_NPS,
+  STORAGE_KEY_CUSTOM_DRUGS,
 } from '../common/constants';
 
 const getSymptoms = async () => {
@@ -83,6 +84,20 @@ const setVisitProNPS = async (v) => {
   await AsyncStorage.setItem(STORAGE_KEY_VISIT_PRO_NPS, JSON.stringify(v));
 };
 
+const getCustomDrugs = async () => {
+  const customDrugs = await AsyncStorage.getItem(STORAGE_KEY_CUSTOM_DRUGS);
+  return JSON.parse(customDrugs) || [];
+};
+
+const addCustomDrug = async (drug) => {
+  const customDrugs = await getCustomDrugs();
+  customDrugs.push(drug);
+  await AsyncStorage.setItem(
+    STORAGE_KEY_CUSTOM_DRUGS,
+    JSON.stringify(customDrugs),
+  );
+};
+
 export default {
   getSymptoms,
   setSymptoms,
@@ -98,4 +113,6 @@ export default {
   setNotesVersion,
   getVisitProNPS,
   setVisitProNPS,
+  addCustomDrug,
+  getCustomDrugs,
 };

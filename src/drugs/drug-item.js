@@ -4,16 +4,21 @@ import Text from '../components/MyText';
 import {colors} from '../common/colors';
 import RNPickerSelect from 'react-native-picker-select';
 import Icon from '../common/icon';
+import {useEffect} from 'react/cjs/react.development';
 
 export default ({drug, onChange, showPosology}) => {
   const [showFreeText, setShowFreeText] = useState(false);
-  const [ƒreeText, setFreeText] = useState('');
+  const [freeText, setFreeText] = useState('');
 
   if (!drug) return null;
+  useEffect(() => {
+    setShowFreeText(drug?.isFreeText);
+    setFreeText(drug?.value);
+  }, [drug]);
 
   const handleChangeFreeText = (value) => {
     setFreeText(value);
-    onChange(drug, value);
+    onChange(drug, value, showFreeText);
   };
 
   const render = () => {
@@ -35,7 +40,7 @@ export default ({drug, onChange, showPosology}) => {
                 <TextInput
                   autoCapitalize="none"
                   onChangeText={handleChangeFreeText}
-                  value={ƒreeText}
+                  value={freeText}
                   placeholder="5 ml, 3 gouttes, ..."
                   style={styles.freeText}
                 />

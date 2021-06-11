@@ -1,3 +1,13 @@
+import localStorage from '../utils/localStorage';
+
+export const getDrugListWithLocalStorage = async () => {
+  const customDrugs = await localStorage.getCustomDrugs();
+  // DRUG_LIST.push(...customDrugs.map((e) => ({...e, name1: `${e.name1} *`})));
+  const tempList = [...DRUG_LIST];
+  tempList.push(...customDrugs);
+  return tempList;
+};
+
 export const DRUG_LIST = [
   {
     id: 'Elavil (Amytriptyline)',
