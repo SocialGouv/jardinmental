@@ -2,7 +2,7 @@ import {colors} from '../common/colors';
 import {displayedCategories} from '../common/constants';
 import {getArrayOfDates} from '../services/date/helpers';
 import localStorage from '../utils/localStorage';
-import {DRUG_LIST} from '../utils/drugs-list';
+import {getDrugListWithLocalStorage} from '../utils/drugs-list';
 
 // methods
 
@@ -89,6 +89,7 @@ const generateBar = (value, height, color = colors.LIGHT_BLUE) => {
                       text-align: center;
                       font-size: small;
                       color:white;
+                      word-wrap: break-word; 
                     "
                   >
                     ${value || ' '}
@@ -226,8 +227,10 @@ const formatHtmlTable = async (diaryData) => {
     return category;
   };
 
-  let customs = await localStorage.getCustomSymptoms();
-  customs = customs.map((e) => `${e}_FREQUENCE`);
+  let customsSymptoms = await localStorage.getCustomSymptoms();
+  customsSymptoms = customsSymptoms.map((e) => `${e}_FREQUENCE`);
+
+  const drugListWithLocalStorage = await getDrugListWithLocalStorage();
 
   return `
   <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -251,7 +254,7 @@ const formatHtmlTable = async (diaryData) => {
       <body width="100%">
         <h1 style="color: ${colors.BLUE}">Mes données de MonSuiviPsy</h1>
         ${Object.keys(displayedCategories)
-          .concat(customs)
+          .concat(customsSymptoms)
           .map((categoryId) => {
             const res = computeChartData(categoryId);
 
@@ -301,13 +304,14 @@ const formatHtmlTable = async (diaryData) => {
           })
           .join('')}
         <h1 style="color: ${colors.BLUE}">Mon traitement</h1>
-        ${DRUG_LIST.map((drug) => {
-          if (!isDrugVisible(drug)) {
-            return '';
-          }
-          const res = computeChartDrug(drug);
+        ${drugListWithLocalStorage
+          .map((drug) => {
+            if (!isDrugVisible(drug)) {
+              return '';
+            }
+            const res = computeChartDrug(drug);
 
-          return `
+            return `
               <table width="100%" style="width: 100%; max-width: 100%;">
                 <tbody>
                   <tr>
@@ -342,7 +346,8 @@ const formatHtmlTable = async (diaryData) => {
                 </tbody>
               </table>
             `;
-        }).join('')}
+          })
+          .join('')}
           <h1 style="color: ${colors.BLUE};">Mon journal</h1>
           <table cellpadding="0" cellspacing="0" border="0">
             <tr>
@@ -355,6 +360,14 @@ const formatHtmlTable = async (diaryData) => {
                       return '';
                     }
                     const {NOTES} = diaryData[strDate];
+                    // if there no NOTES.x => display nothing
+                    if (
+                      !NOTES?.notesEvents &&
+                      !NOTES?.notesSymptoms &&
+                      !NOTES?.notesToxic
+                    ) {
+                      return '';
+                    }
                     return `
                       <p style="margin-top: 35px;">${strDate
                         .split('-')
