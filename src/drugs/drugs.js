@@ -111,7 +111,7 @@ const Drugs = ({navigation, route}) => {
           />
         ))}
         <Text style={styles.addButton} onPress={handleAdd}>
-          + Ajouter un médicament
+          + Ajouter / Modifier mes médicaments suivis
         </Text>
       </View>
     );
