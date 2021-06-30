@@ -12,16 +12,12 @@ import localStorage from '../utils/localStorage';
 import logEvents from '../services/logEvents';
 import Matomo from '../services/matomo';
 import {useEffect} from 'react';
-import Lumiere from '../services/lumiere';
 
 const Supported = ({navigation}) => {
   const handleClick = async (value) => {
     //send matomo
     logEvents.logSupportedSelect(value);
     Matomo.setUserProperties({
-      supported: value,
-    });
-    Lumiere.addUserProperties({
       supported: value,
     });
     //navigate to tabs
