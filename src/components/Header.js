@@ -4,7 +4,7 @@ import {colors} from '../utils/colors';
 import Icon from './Icon';
 import Text from './MyText';
 import Settings from '../scenes/settings/settings-modal';
-import Drawer from '../drawer';
+import Drawer from './drawer';
 import {useRoute} from '@react-navigation/native';
 import {needUpdate} from '../services/versionChecker';
 import {getBadgeNotesVersion} from '../scenes/news';
