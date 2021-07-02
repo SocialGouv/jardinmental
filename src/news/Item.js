@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {colors} from '../common/colors';
+import {colors} from '../utils/colors';
 import Text from '../components/MyText';
 
 export default ({children}) => {

@@ -5,7 +5,7 @@ import {
   intensity,
   surveyDate,
   categories,
-} from '../common/constants';
+} from '../utils/constants';
 import localStorage from '../utils/localStorage';
 import {beforeToday, formatDay} from '../services/date/helpers';
 import {isToday, parseISO} from 'date-fns';

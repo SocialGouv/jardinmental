@@ -1,8 +1,8 @@
 import React from 'react';
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import Text from '../components/MyText';
-import CircledIcon from '../common/circled-icon';
-import {colors} from '../common/colors';
+import CircledIcon from '../components/CircledIcon';
+import {colors} from '../utils/colors';
 
 const NoNotes = ({onPress}) => {
   return (

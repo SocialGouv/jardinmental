@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, View, Animated, Easing} from 'react-native';
-import {colors} from './colors';
-import Icon from '../common/icon';
+import {StyleSheet, View} from 'react-native';
+import {colors} from '../utils/colors';
+import Icon from '../components/Icon';
 import Text from '../components/MyText';
 import Settings from '../settings/settings-modal';
 import Drawer from '../drawer';

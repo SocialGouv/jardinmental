@@ -7,11 +7,11 @@ import {
   SafeAreaView,
 } from 'react-native';
 import Text from '../components/MyText';
-import {colors} from '../common/colors';
-import CircledIcon from '../common/circled-icon';
+import {colors} from '../utils/colors';
+import CircledIcon from '../components/CircledIcon';
 import {buildSurveyData, getAvailableData} from './survey-data';
 import SurveyExplanation from './survey-explanation';
-import {categories, surveyDate} from '../common/constants';
+import {categories, surveyDate} from '../utils/constants';
 import {beforeToday, formatDay} from '../services/date/helpers';
 import {isYesterday, parseISO} from 'date-fns';
 import BackButton from '../components/BackButton';

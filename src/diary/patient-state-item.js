@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import Text from '../components/MyText';
-import CircledIcon from '../common/circled-icon';
-import {colorsMap} from '../common/constants';
+import CircledIcon from '../components/CircledIcon';
+import {colorsMap} from '../utils/constants';
 
 const PatientStateItem = ({patientStateItem, category, intensity}) => {
   const [color, setColor] = useState(patientStateItem.color);

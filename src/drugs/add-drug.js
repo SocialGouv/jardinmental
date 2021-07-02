@@ -8,7 +8,7 @@ import {
   TextInput,
 } from 'react-native';
 import Text from '../components/MyText';
-import {colors} from '../common/colors';
+import {colors} from '../utils/colors';
 import localStorage from '../utils/localStorage';
 import logEvents from '../services/logEvents';
 import BackButton from '../components/BackButton';

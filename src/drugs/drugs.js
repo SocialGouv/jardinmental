@@ -1,15 +1,15 @@
 import React, {useContext, useState, useEffect} from 'react';
 import {StyleSheet, ScrollView, SafeAreaView, View} from 'react-native';
 import Text from '../components/MyText';
-import {colors} from '../common/colors';
+import {colors} from '../utils/colors';
 import {DiaryDataContext} from '../context';
-import Button from '../common/button';
+import Button from '../components/Button';
 import BackButton from '../components/BackButton';
 import localStorage from '../utils/localStorage';
 import NoData from './no-data';
 import DrugItem from './drug-item';
 import {getDrugListWithLocalStorage} from '../utils/drugs-list';
-import Icon from '../common/icon';
+import Icon from '../components/Icon';
 import logEvents from '../services/logEvents';
 import DrugInformations from './drug-information';
 import {alertNoDataYesterday} from '../survey/survey-data';

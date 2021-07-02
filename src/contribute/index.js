@@ -8,12 +8,12 @@ import {
   ScrollView,
 } from 'react-native';
 import Text from '../components/MyText';
-import {colors} from '../common/colors';
+import {colors} from '../utils/colors';
 import localStorage from '../utils/localStorage';
 import logEvents from '../services/logEvents';
 import Matomo from '../services/matomo';
 import {useEffect} from 'react';
-import Button from '../common/button';
+import Button from '../components/Button';
 import BackButton from '../components/BackButton';
 
 const Supported = ({navigation}) => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import Icon from '../common/icon';
-import {colors} from '../common/colors';
+import Icon from '../components/Icon';
+import {colors} from '../utils/colors';
 import Text from '../components/MyText';
 
 export default ({title, version, date, children, badge = false}) => {

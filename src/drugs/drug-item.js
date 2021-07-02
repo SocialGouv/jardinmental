@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import {StyleSheet, TextInput, View, Platform} from 'react-native';
 import Text from '../components/MyText';
-import {colors} from '../common/colors';
+import {colors} from '../utils/colors';
 import RNPickerSelect from 'react-native-picker-select';
-import Icon from '../common/icon';
+import Icon from '../components/Icon';
 
 export default ({drug, onChange, showPosology}) => {
   const [showFreeText, setShowFreeText] = useState(false);

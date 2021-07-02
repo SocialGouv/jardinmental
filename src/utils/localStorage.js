@@ -8,7 +8,7 @@ import {
   STORAGE_KEY_NOTES_VERSION,
   STORAGE_KEY_VISIT_PRO_NPS,
   STORAGE_KEY_CUSTOM_DRUGS,
-} from '../common/constants';
+} from '../utils/constants';
 
 const getSymptoms = async () => {
   const symptoms = await AsyncStorage.getItem(STORAGE_KEY_SYMPTOMS);

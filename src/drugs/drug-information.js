@@ -8,7 +8,7 @@ import {
   Linking,
 } from 'react-native';
 import Text from '../components/MyText';
-import {colors} from '../common/colors';
+import {colors} from '../utils/colors';
 import InfoSvg from '../../assets/svg/info.svg';
 import ArrowUpSvg from '../../assets/svg/arrow-up.svg';
 import logEvents from '../services/logEvents';

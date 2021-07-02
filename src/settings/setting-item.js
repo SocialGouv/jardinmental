@@ -1,8 +1,8 @@
 import React from 'react';
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import Text from '../components/MyText';
-import {colors} from '../common/colors';
-import Icon from '../common/icon';
+import {colors} from '../utils/colors';
+import Icon from '../components/Icon';
 import ArrowRightSvg from '../../assets/svg/arrow-right.svg';
 
 export const SettingItem = ({

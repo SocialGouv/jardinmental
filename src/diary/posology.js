@@ -1,9 +1,9 @@
 import React from 'react';
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import Text from '../components/MyText';
-import CircledIcon from '../common/circled-icon';
+import CircledIcon from '../components/CircledIcon';
 import {isToday, isYesterday, parseISO} from 'date-fns';
-import {colors} from '../common/colors';
+import {colors} from '../utils/colors';
 
 const Posology = ({data, date, onPress}) => {
   if (!data || data.length === 0) {

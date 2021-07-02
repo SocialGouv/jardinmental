@@ -3,10 +3,10 @@ import {StyleSheet, View} from 'react-native';
 
 import {DiaryDataContext} from '../context';
 import Text from '../components/MyText';
-import {colors} from '../common/colors';
-import Button from '../common/button';
+import {colors} from '../utils/colors';
+import Button from '../components/Button';
 import localStorage from '../utils/localStorage';
-import Icon from '../common/icon';
+import Icon from '../components/Icon';
 import {alertNoDataYesterday} from '../survey/survey-data';
 
 export default ({navigation, route}) => {

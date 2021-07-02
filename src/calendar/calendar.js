@@ -1,13 +1,13 @@
 import React, {useEffect, useState, useRef} from 'react';
 import {SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
-import {displayedCategories} from '../common/constants';
+import {displayedCategories} from '../utils/constants';
 import {
   beforeToday,
   getArrayOfDates,
   getTodaySWeek,
   formatDate,
 } from '../services/date/helpers';
-import Header from '../common/header';
+import Header from '../components/Header';
 import Chart from './chart';
 import WeekPicker from './week-picker';
 import {DiaryDataContext} from '../context';
@@ -15,8 +15,8 @@ import {useContext} from 'react';
 import logEvents from '../services/logEvents';
 import localStorage from '../utils/localStorage';
 import Text from '../components/MyText';
-import Icon from '../common/icon';
-import {colors} from '../common/colors';
+import Icon from '../components/Icon';
+import {colors} from '../utils/colors';
 
 const Calendar = ({navigation}) => {
   const [day, setDay] = useState(new Date());

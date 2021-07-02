@@ -8,16 +8,16 @@ import {
   Platform,
 } from 'react-native';
 import Text from '../components/MyText';
-import {colors} from '../common/colors';
+import {colors} from '../utils/colors';
 import {
   availableData,
   buildSurveyData,
   alertNoDataYesterday,
 } from './survey-data';
-import {categories} from '../common/constants';
+import {categories} from '../utils/constants';
 import {DiaryDataContext} from '../context';
 import {isYesterday, parseISO} from 'date-fns';
-import Button from '../common/button';
+import Button from '../components/Button';
 import logEvents from '../services/logEvents';
 import BackButton from '../components/BackButton';
 import localStorage from '../utils/localStorage';

@@ -2,11 +2,11 @@ import React, {useState, useEffect} from 'react';
 import {StyleSheet, SafeAreaView, View, TouchableOpacity} from 'react-native';
 import Text from '../components/MyText';
 import CheckBox from '@react-native-community/checkbox';
-import {colors} from '../common/colors';
+import {colors} from '../utils/colors';
 import Swiper from 'react-native-swiper';
 import localStorage from '../utils/localStorage';
 import logEvents from '../services/logEvents';
-import Button from '../common/button';
+import Button from '../components/Button';
 import ActiveDot from './ActiveDot';
 import BackButton from '../components/BackButton';
 

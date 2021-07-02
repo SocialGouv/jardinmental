@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import {StyleSheet, View, TextInput, TouchableOpacity} from 'react-native';
 import Text from '../components/MyText';
-import {colors} from '../common/colors';
-import Button from '../common/button';
+import {colors} from '../utils/colors';
+import Button from '../components/Button';
 import localStorage from '../utils/localStorage';
 import Matomo from '../services/matomo';
 import logEvents from '../services/logEvents';

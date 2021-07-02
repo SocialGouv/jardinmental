@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, SafeAreaView, ScrollView} from 'react-native';
 
-import {colors} from '../common/colors';
+import {colors} from '../utils/colors';
 import BackButton from '../components/BackButton';
 import Card from './card';
 import Item from './Item';

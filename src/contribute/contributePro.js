@@ -7,8 +7,8 @@ import {
   ScrollView,
 } from 'react-native';
 import Text from '../components/MyText';
-import {colors} from '../common/colors';
-import Button from '../common/button';
+import {colors} from '../utils/colors';
+import Button from '../components/Button';
 import Matomo from '../services/matomo';
 import logEvents from '../services/logEvents';
 import {sendTipimail} from '../services/sendTipimail';

@@ -1,4 +1,4 @@
-import {categoryStates, frequence} from '../common/constants';
+import {categoryStates, frequence} from '../utils/constants';
 import {addDays} from 'date-fns';
 import {formatDay, oneDay} from '../services/date/helpers';
 

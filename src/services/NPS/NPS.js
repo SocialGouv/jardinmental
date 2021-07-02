@@ -17,7 +17,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Mark from './Mark';
 import Notifications from '../notifications';
 import {sendTipimail} from '../sendTipimail';
-import {colors} from '../../common/colors';
+import {colors} from '../../utils/colors';
 import Matomo from '../matomo';
 import logEvents from '../logEvents';
 

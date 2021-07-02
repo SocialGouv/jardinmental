@@ -7,8 +7,8 @@ import DiarySvg from '../../assets/svg/diary.svg';
 import CalendarSvg from '../../assets/svg/calendar.svg';
 import localStorage from '../utils/localStorage';
 import logEvents from '../services/logEvents';
-import {colors} from '../common/colors';
-import Icon from '../common/icon';
+import {colors} from '../utils/colors';
+import Icon from '../components/Icon';
 
 const Tab = createMaterialTopTabNavigator();
 

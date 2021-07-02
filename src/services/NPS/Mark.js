@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import {colors} from '../../common/colors';
+import {colors} from '../../utils/colors';
 import Text from '../../components/MyText';
 
 const Mark = ({onPress, selected, bad, good}) => (

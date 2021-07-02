@@ -7,7 +7,7 @@ import {
   View,
 } from 'react-native';
 import Text from '../components/MyText';
-import {colors} from '../common/colors';
+import {colors} from '../utils/colors';
 import ArrowLeftSvg from '../../assets/svg/arrow-left.svg';
 
 const LegalScreen = ({navigation, title, content}) => {

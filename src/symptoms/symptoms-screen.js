@@ -8,14 +8,14 @@ import {
 } from 'react-native';
 import Text from '../components/MyText';
 import CheckBox from '@react-native-community/checkbox';
-import {colors} from '../common/colors';
+import {colors} from '../utils/colors';
 import {buildSurveyData} from '../survey/survey-data';
 import SymptomsExplanation from '../symptoms/symptoms-explanation';
-import {displayedCategories} from '../common/constants';
+import {displayedCategories} from '../utils/constants';
 import localStorage from '../utils/localStorage';
 import logEvents from '../services/logEvents';
 import BackButton from '../components/BackButton';
-import Button from '../common/button';
+import Button from '../components/Button';
 
 const lookUpCategoryMatomo = {
   MOOD: 0,

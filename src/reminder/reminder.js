@@ -13,7 +13,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import ReminderSvg from '../../assets/svg/reminder.svg';
 import TimePicker from './time-picker';
 import NotificationService from '../services/notifications';
-import {colors} from '../common/colors';
+import {colors} from '../utils/colors';
 import logEvents from '../services/logEvents';
 import BackButton from '../components/BackButton';
 

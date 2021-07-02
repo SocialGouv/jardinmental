@@ -8,8 +8,8 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Text from '../components/MyText';
-import {colors} from '../common/colors';
-import Button from '../common/button';
+import {colors} from '../utils/colors';
+import Button from '../components/Button';
 import localStorage from '../utils/localStorage';
 import {getDrugListWithLocalStorage} from '../utils/drugs-list';
 import CheckBox from '@react-native-community/checkbox';

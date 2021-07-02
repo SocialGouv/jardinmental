@@ -3,7 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import DeviceInfo from 'react-native-device-info';
 import {Platform} from 'react-native';
 import Matomo from './matomo';
-import {STORAGE_KEY_SUPPORTED} from '../common/constants';
+import {STORAGE_KEY_SUPPORTED} from '../utils/constants';
 
 const CONSTANTS = {
   STORE_KEY_USER_ID: 'STORE_KEY_USER_ID',

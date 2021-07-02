@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, TouchableOpacity} from 'react-native';
-import {colors} from '../common/colors';
+import {colors} from '../utils/colors';
 import ArrowUpSvg from '../../assets/svg/arrow-up.svg';
 
 export default ({onPress}) => (

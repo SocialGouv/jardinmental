@@ -11,7 +11,7 @@ import {
   STORAGE_KEY_MEDICAL_TREATMENT,
   STORAGE_KEY_NOTES_VERSION,
   STORAGE_KEY_VISIT_PRO_NPS,
-} from '../common/constants';
+} from '../utils/constants';
 import {
   fakeDiaryData,
   startDate as fakeStartDate,

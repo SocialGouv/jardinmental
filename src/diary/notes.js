@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import Text from '../components/MyText';
-import CircledIcon from '../common/circled-icon';
+import CircledIcon from '../components/CircledIcon';
 import NoNote from './no-notes';
 import {isToday, isYesterday, parseISO} from 'date-fns';
 

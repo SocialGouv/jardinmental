@@ -1,8 +1,8 @@
 import React from 'react';
 import {StyleSheet, View, Dimensions} from 'react-native';
 import Svg, {Circle, Line, G} from 'react-native-svg';
-import {colors} from '../common/colors';
-import {colorsMap} from '../common/constants';
+import {colors} from '../utils/colors';
+import {colorsMap} from '../utils/constants';
 import {days} from '../services/date/helpers';
 import Text from '../components/MyText';
 /* Chart setup */
