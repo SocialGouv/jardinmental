@@ -3,11 +3,11 @@ import {StyleSheet, View} from 'react-native';
 import {colors} from '../utils/colors';
 import Icon from './Icon';
 import Text from './MyText';
-import Settings from '../settings/settings-modal';
+import Settings from '../scenes/settings/settings-modal';
 import Drawer from '../drawer';
 import {useRoute} from '@react-navigation/native';
 import {needUpdate} from '../services/versionChecker';
-import {getBadgeNotesVersion} from '../news';
+import {getBadgeNotesVersion} from '../scenes/news';
 import localStorage from '../utils/localStorage';
 
 const Header = ({title, navigation}) => {

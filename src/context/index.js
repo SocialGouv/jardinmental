@@ -15,7 +15,7 @@ import {
 import {
   fakeDiaryData,
   startDate as fakeStartDate,
-} from '../diary/fake-diary-data';
+} from '../scenes/diary/fake-diary-data';
 import {formatDay, getArrayOfDates} from '../utils/date/helpers';
 
 const wipeData = async () => {

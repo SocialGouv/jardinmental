@@ -1,8 +1,8 @@
 import React from 'react';
 import {StyleSheet, SafeAreaView, Platform} from 'react-native';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import Diary from '../diary/diary';
-import Calendar from '../calendar/calendar';
+import Diary from '../scenes/diary/diary';
+import Calendar from '../scenes/calendar/calendar';
 import DiarySvg from '../../assets/svg/diary.svg';
 import CalendarSvg from '../../assets/svg/calendar.svg';
 import localStorage from '../utils/localStorage';

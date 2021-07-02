@@ -12,9 +12,8 @@ import {
 import Modal from 'react-native-modal';
 import DrawerItem from './drawer-item';
 import {needUpdate} from '../services/versionChecker';
-import {getBadgeNotesVersion} from '../news';
 import localStorage from '../utils/localStorage';
-import {LAST_NOTES_VERSION} from '../news';
+import {getBadgeNotesVersion, LAST_NOTES_VERSION} from '../scenes/news';
 
 export default ({navigation, visible, onClick}) => {
   const [isVisible, setIsVisible] = useState();
