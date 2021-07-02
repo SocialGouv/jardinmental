@@ -2,7 +2,7 @@ import React from 'react';
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import ArrowLeftSvg from '../../assets/svg/arrow-left.svg';
 import {colors} from '../utils/colors';
-import {formatDate} from '../services/date/helpers';
+import {formatDate} from '../utils/date/helpers';
 import Text from '../components/MyText';
 
 const DayTitle = ({onBackPress, day}) => {

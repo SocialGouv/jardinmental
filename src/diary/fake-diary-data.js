@@ -1,6 +1,6 @@
 import {categoryStates, frequence} from '../utils/constants';
 import {addDays} from 'date-fns';
-import {formatDay, oneDay} from '../services/date/helpers';
+import {formatDay, oneDay} from '../utils/date/helpers';
 
 const MAX_DAY = 12;
 export const startDate = new Date(Date.now() - MAX_DAY * oneDay);

@@ -7,7 +7,7 @@ import {
   categories,
 } from '../utils/constants';
 import localStorage from '../utils/localStorage';
-import {beforeToday, formatDay} from '../services/date/helpers';
+import {beforeToday, formatDay} from '../utils/date/helpers';
 import {isToday, parseISO} from 'date-fns';
 import logEvents from '../services/logEvents';
 

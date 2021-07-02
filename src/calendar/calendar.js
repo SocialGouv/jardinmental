@@ -6,7 +6,7 @@ import {
   getArrayOfDates,
   getTodaySWeek,
   formatDate,
-} from '../services/date/helpers';
+} from '../utils/date/helpers';
 import Header from '../components/Header';
 import Chart from './chart';
 import WeekPicker from './week-picker';

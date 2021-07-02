@@ -16,7 +16,7 @@ import {
   fakeDiaryData,
   startDate as fakeStartDate,
 } from '../diary/fake-diary-data';
-import {formatDay, getArrayOfDates} from '../services/date/helpers';
+import {formatDay, getArrayOfDates} from '../utils/date/helpers';
 
 const wipeData = async () => {
   await AsyncStorage.removeItem(STORAGE_KEY_START_DATE);

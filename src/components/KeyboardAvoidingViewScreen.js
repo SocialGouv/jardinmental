@@ -1,4 +1,9 @@
-import {KeyboardAvoidingView, SafeAreaView, ScrollView} from 'react-native';
+import {
+  KeyboardAvoidingView,
+  SafeAreaView,
+  ScrollView,
+  Platform,
+} from 'react-native';
 import React from 'react';
 
 const ScreenContainer = ({children}) => {

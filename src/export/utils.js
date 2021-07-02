@@ -1,6 +1,6 @@
 import {colors} from '../utils/colors';
 import {displayedCategories} from '../utils/constants';
-import {getArrayOfDates} from '../services/date/helpers';
+import {getArrayOfDates} from '../utils/date/helpers';
 import localStorage from '../utils/localStorage';
 import {getDrugListWithLocalStorage} from '../utils/drugs-list';
 

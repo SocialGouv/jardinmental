@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
 import {displayedCategories} from '../utils/constants';
-import {getArrayOfDates, getTodaySWeek} from '../services/date/helpers';
+import {getArrayOfDates, getTodaySWeek} from '../utils/date/helpers';
 import Chart from './chart';
 import {DiaryDataContext} from '../context';
 import {useContext} from 'react';

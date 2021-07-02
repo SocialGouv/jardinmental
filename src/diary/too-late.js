@@ -10,7 +10,7 @@ import Text from '../components/MyText';
 import ReminderSvg from '../../assets/svg/reminder.svg';
 import {colors} from '../utils/colors';
 import BackButton from '../components/BackButton';
-import {formatDate} from '../services/date/helpers';
+import {formatDate} from '../utils/date/helpers';
 import Icon from '../components/Icon';
 
 export default ({navigation, route}) => {

@@ -12,7 +12,7 @@ import CircledIcon from '../components/CircledIcon';
 import {buildSurveyData, getAvailableData} from './survey-data';
 import SurveyExplanation from './survey-explanation';
 import {categories, surveyDate} from '../utils/constants';
-import {beforeToday, formatDay} from '../services/date/helpers';
+import {beforeToday, formatDay} from '../utils/date/helpers';
 import {isYesterday, parseISO} from 'date-fns';
 import BackButton from '../components/BackButton';
 

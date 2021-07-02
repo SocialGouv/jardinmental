@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {colors} from '../utils/colors';
-import Icon from '../components/Icon';
-import Text from '../components/MyText';
+import Icon from './Icon';
+import Text from './MyText';
 import Settings from '../settings/settings-modal';
 import Drawer from '../drawer';
 import {useRoute} from '@react-navigation/native';

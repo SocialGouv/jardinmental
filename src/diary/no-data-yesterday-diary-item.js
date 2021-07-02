@@ -3,7 +3,7 @@ import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import Text from '../components/MyText';
 import Button from '../components/Button';
 import {colors} from '../utils/colors';
-import {beforeToday, formatDay} from '../services/date/helpers';
+import {beforeToday, formatDay} from '../utils/date/helpers';
 import logEvents from '../services/logEvents';
 
 export default ({startAtFirstQuestion, navigation}) => {

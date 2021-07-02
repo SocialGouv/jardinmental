@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, TouchableOpacity} from 'react-native';
-import Text from '../components/MyText';
+import Text from './MyText';
 
 const styles = StyleSheet.create({
   button: {
