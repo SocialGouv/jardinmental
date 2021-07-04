@@ -63,6 +63,13 @@ export default ({navigation, visible, onClick}) => {
               }}
               icon="NewsSvg"
             />
+            <DrawerItem
+              title="Pensées automatiques"
+              path="activate-thoughts"
+              navigation={navigation}
+              onClick={onClick}
+              icon="ThoughtsSvg"
+            />
             <Separator />
             <DrawerItem
               title="Présentation"
