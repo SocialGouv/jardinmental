@@ -3,8 +3,10 @@ import {StyleSheet, TouchableOpacity} from 'react-native';
 import {colors} from '../utils/colors';
 import ArrowUpSvg from '../../assets/svg/arrow-up.svg';
 
-export default ({onPress}) => (
-  <TouchableOpacity onPress={onPress} style={styles.backButtonContainer}>
+export default ({onPress, disabled = true}) => (
+  <TouchableOpacity
+    onPress={onPress}
+    style={[styles.backButtonContainer, {opacity: disabled ? 0.4 : 1}]}>
     <ArrowUpSvg color={colors.BLUE} />
   </TouchableOpacity>
 );
@@ -24,6 +26,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     alignSelf: 'flex-start',
-    transform: [{rotate: '270deg'}],
+    transform: [{rotate: '90deg'}],
   },
 });

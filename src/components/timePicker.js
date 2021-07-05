@@ -1,10 +1,13 @@
 import React, {useState, useEffect} from 'react';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
-const TimePicker = ({visible, selectDate, reminder}) => {
-  const [date, setDate] = useState(
-    reminder || new Date(Date.now() + 60 * 1000),
-  );
+const TimePicker = ({
+  visible,
+  selectDate,
+  value,
+  headerTextIOS = 'Définir un rappel',
+}) => {
+  const [date, setDate] = useState(value || new Date(Date.now() + 60 * 1000));
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
   const handleCancel = () => {
@@ -20,13 +23,13 @@ const TimePicker = ({visible, selectDate, reminder}) => {
   useEffect(() => {
     setDatePickerVisibility(visible);
     if (visible) {
-      setDate(reminder || new Date(Date.now() + 60 * 1000));
+      setDate(value || new Date(Date.now() + 60 * 1000));
     }
-  }, [visible]);
+  }, [value, visible]);
 
   return (
     <DateTimePickerModal
-      date={date}
+      date={value}
       isVisible={isDatePickerVisible}
       mode="time"
       onConfirm={handleConfirm}
@@ -34,7 +37,7 @@ const TimePicker = ({visible, selectDate, reminder}) => {
       locale="en_GB" // trick for 24 hours on iOS
       cancelTextIOS="Retour"
       confirmTextIOS="Valider"
-      headerTextIOS="Définir un rappel"
+      headerTextIOS={headerTextIOS}
     />
   );
 };

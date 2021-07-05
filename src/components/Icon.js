@@ -15,6 +15,7 @@ import PlusSvg from '../../assets/svg/plus.svg';
 import ClockSvg from '../../assets/svg/clock.svg';
 import LightBulbSvg from '../../assets/svg/light-bulb.svg';
 import ThoughtsSvg from '../../assets/svg/thoughts.svg';
+import CalendarSvg from '../../assets/svg/calendar.svg';
 import Text from '../components/MyText';
 
 import {
@@ -43,6 +44,7 @@ const mapIconToSvg = (icon) => {
     ClockSvg,
     LightBulbSvg,
     ThoughtsSvg,
+    CalendarSvg,
   };
   return iconMap[icon];
 };
@@ -62,7 +64,7 @@ const Icon = ({
   useEffect(() => {
     if (spin === undefined) return;
 
-    spinValue = new Animated.Value(spin ? 0 : 1);
+    const spinValue = new Animated.Value(spin ? 0 : 1);
 
     Animated.timing(spinValue, {
       toValue: spin ? 1 : 0,

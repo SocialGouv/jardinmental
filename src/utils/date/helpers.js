@@ -73,3 +73,11 @@ export const formatDate = (d) => {
 
   return format(isoDate, 'EEEE d MMMM', {locale: fr});
 };
+
+export const getTime = (d) => {
+  if (!d) return '-';
+  return d.toLocaleTimeString('fr-FR', {
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+};

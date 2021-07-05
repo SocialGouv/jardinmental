@@ -11,7 +11,7 @@ import {
 import Text from '../../components/MyText';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ReminderSvg from '../../../assets/svg/reminder.svg';
-import TimePicker from './time-picker';
+import TimePicker from '../../components/timePicker';
 import NotificationService from '../../services/notifications';
 import {colors} from '../../utils/colors';
 import logEvents from '../../services/logEvents';
@@ -209,7 +209,7 @@ class Reminder extends React.Component {
           </Text>
         </TouchableOpacity>
         <TimePicker
-          reminder={reminder}
+          date={reminder}
           visible={timePickerVisible}
           selectDate={this.setReminder}
         />
