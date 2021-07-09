@@ -40,10 +40,9 @@ export default ({navigation}) => {
           icon="HeartsSvg"
           color="#1FC6D5"
           styleContainer={styles.icon}
-          width={100}
-          height={100}
+          width={60}
+          height={60}
         />
-        {/* <ReminderSvg /> */}
         <Text style={styles.title}>Colonnes de Beck</Text>
         <View style={styles.description}>
           <Text style={styles.subTitle}>
@@ -84,9 +83,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
   },
-  icon: {marginTop: '20%', marginBottom: '20%'},
+  icon: {marginTop: 30, marginBottom: 30},
   scrollContainer: {
-    paddingBottom: 80,
     display: 'flex',
     alignItems: 'center',
   },
@@ -98,7 +96,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     color: colors.BLUE,
     fontWeight: '600',
-    marginTop: '10%',
+    marginTop: 20,
     textAlign: 'center',
   },
   description: {
@@ -110,6 +108,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
     flexShrink: 0,
     lineHeight: 25,
+    textAlign: 'center',
   },
   activateButton: {
     backgroundColor: colors.LIGHT_BLUE,

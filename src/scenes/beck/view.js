@@ -193,19 +193,17 @@ const ItemTag = ({title, values, intensity}) => {
     <View style={styles.stepContainer}>
       <Text style={styleBeck.title}>{title}</Text>
       <View style={styles.contentItem}>
-        <View style={styleBeck.listContainer}>
+        <View style={styles.contentTag}>
           {values?.map((e, i) => (
             <TextTag key={i} value={e} color="#D4F0F2" />
           ))}
         </View>
         {intensity && (
-          <View style={styleBeck.listContainer}>
-            <TextTag
-              value={intensity}
-              color="#D3D7E4"
-              buttonStyle={{marginBottom: 0}}
-            />
-          </View>
+          <TextTag
+            value={intensity}
+            color="#D3D7E4"
+            buttonStyle={{marginBottom: 0}}
+          />
         )}
       </View>
     </View>
@@ -218,6 +216,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    flexWrap: 'wrap',
+  },
+  contentTag: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    flexWrap: 'wrap',
   },
   citation: {
     borderLeftWidth: 2,

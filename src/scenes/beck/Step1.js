@@ -27,6 +27,7 @@ export default ({onChange, onSubmit, data}) => {
         value={whatSelected}
         placeholder="Je me suis disputé avec un ami..."
         style={styleBeck.textArea}
+        textAlignVertical={'top'}
       />
       <Button
         title="Continuer"

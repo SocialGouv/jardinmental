@@ -65,8 +65,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     paddingVertical: 12,
     paddingHorizontal: 10,
-    minWidth: '100%',
-    width: '100%',
     textAlign: 'left',
     color: colors.DARK_BLUE,
   },

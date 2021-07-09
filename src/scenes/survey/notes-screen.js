@@ -113,6 +113,7 @@ const Notes = ({navigation, route}) => {
           value={notesEvents}
           placeholder="Je me suis disputé avec un ami..."
           style={styles.textArea}
+          textAlignVertical={'top'}
         />
         <Text style={styles.title}>
           Je souhaite détailler un ou plusieurs de mes symptômes (ma nuit à été
@@ -126,6 +127,7 @@ const Notes = ({navigation, route}) => {
           value={notesSymptoms}
           placeholder="J'ai mis beaucoup de temps à m'endormir..."
           style={styles.textArea}
+          textAlignVertical={'top'}
         />
         <Text style={styles.title}>
           Ai-je consommé des toxiques aujourd'hui ? Si oui, lesquels ?
@@ -139,6 +141,7 @@ const Notes = ({navigation, route}) => {
           value={notesToxic}
           placeholder="Je n'ai rien consommé aujourd'hui..."
           style={styles.textArea}
+          textAlignVertical={'top'}
         />
       </ScrollView>
       <View style={styles.buttonWrapper}>
