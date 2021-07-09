@@ -122,7 +122,13 @@ const SymptomScreen = ({navigation, route}) => {
 
   return (
     <SafeAreaView style={styles.safe}>
-      <BackButton onPress={() => navigation.navigate('tabs')} />
+      <View style={styles.buttonsContainer}>
+        <BackButton onPress={() => navigation.navigate('tabs')} />
+        <TouchableOpacity onPress={submitNewCategories}>
+          <Text style={styles.okButtonText}>OK</Text>
+        </TouchableOpacity>
+      </View>
+
       <ScrollView
         style={styles.container}
         contentContainerStyle={styles.scrollContainer}>
@@ -161,6 +167,11 @@ const SymptomScreen = ({navigation, route}) => {
 };
 
 const styles = StyleSheet.create({
+  buttonsContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
   ValidationButton: {
     backgroundColor: colors.LIGHT_BLUE,
     height: 35,
@@ -262,6 +273,12 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     alignItems: 'center',
     padding: 15,
+  },
+  okButtonText: {
+    marginTop: 20,
+    marginRight: 20,
+    fontWeight: 'bold',
+    color: colors.BLUE,
   },
 });
 
