@@ -145,6 +145,48 @@ export const intensity = {
   },
 };
 
+export const DEFAULT_BECK_WHERE_LIST = [
+  'À la maison',
+  'Au lycée',
+  'Dans la rue',
+  'Au travail',
+];
+export const DEFAULT_BECK_WHO_LIST = ['Charles', 'Karim', 'Inès'];
+export const DEFAULT_BECK_EMOTION_LIST = [
+  'Anxiété',
+  'Colère',
+  'Tristesse',
+  'Peur',
+  'Déception',
+  'Culpabilité',
+  'Solitude',
+  'Honte',
+  'Frustration',
+  'Jalousie',
+];
+export const DEFAULT_BECK_SENSATION_LIST = [
+  'Tête qui tourne',
+  'Larmes aux yeux',
+  'Gorge serrée',
+  'Poids sur la poitrine',
+  'Mal au ventre',
+  'Coeur qui bat vite',
+  'Chaleur',
+  'Froid',
+  'Tremblements',
+  'Nausée',
+  'Souffle court',
+];
+
+export const BeckStepTitles = [
+  'La situation',
+  'La situation',
+  'Vos émotions',
+  'Vos pensées',
+  'Comportement et Résultats',
+  'Restructuration',
+];
+
 export const STORAGE_KEY_SURVEY_RESULTS = '@SURVEY_RESULTS';
 export const STORAGE_KEY_START_DATE = '@SURVEY_DATE';
 export const STORAGE_KEY_SYMPTOMS = '@SYMPTOMS';
@@ -155,4 +197,8 @@ export const STORAGE_KEY_CUSTOM_SYMPTOMS = '@CUSTOM_SYMPTOMS';
 export const STORAGE_KEY_NOTES_VERSION = '@NOTES_VERSION';
 export const STORAGE_KEY_VISIT_PRO_NPS = '@VISIT_PRO_NPS';
 export const STORAGE_KEY_CUSTOM_DRUGS = '@CUSTOM_DRUGS';
-export const STORAGE_KEY_THOUGHTS_ACTIVATED = '@STORAGE_KEY_THOUGHTS_ACTIVATED';
+export const STORAGE_KEY_IS_BECK_ACTIVATED = '@STORAGE_KEY_IS_BECK_ACTIVATED';
+export const STORAGE_KEY_BECK_WHERE_LIST = '@BECK_WHERE_LIST';
+export const STORAGE_KEY_BECK_WHO_LIST = '@BECK_WHO_LIST';
+export const STORAGE_KEY_BECK_EMOTION_LIST = '@BECK_EMOTION_LIST';
+export const STORAGE_KEY_BECK_SENSATION_LIST = '@BECK_SENSATION_LIST';

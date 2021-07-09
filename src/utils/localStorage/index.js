@@ -8,8 +8,8 @@ import {
   STORAGE_KEY_NOTES_VERSION,
   STORAGE_KEY_VISIT_PRO_NPS,
   STORAGE_KEY_CUSTOM_DRUGS,
-  STORAGE_KEY_THOUGHTS_ACTIVATED,
-} from '../utils/constants';
+} from '../../utils/constants';
+import localStorageBeck from './beck';
 
 const getSymptoms = async () => {
   const symptoms = await AsyncStorage.getItem(STORAGE_KEY_SYMPTOMS);
@@ -99,15 +99,6 @@ const addCustomDrug = async (drug) => {
   );
 };
 
-const getToughtsActivated = async () => {
-  const a = await AsyncStorage.getItem(STORAGE_KEY_THOUGHTS_ACTIVATED);
-  return JSON.parse(a);
-};
-
-const setToughtsActivated = async (v) => {
-  await AsyncStorage.setItem(STORAGE_KEY_THOUGHTS_ACTIVATED, JSON.stringify(v));
-};
-
 export default {
   getSymptoms,
   setSymptoms,
@@ -125,6 +116,5 @@ export default {
   setVisitProNPS,
   addCustomDrug,
   getCustomDrugs,
-  getToughtsActivated,
-  setToughtsActivated,
+  ...localStorageBeck,
 };

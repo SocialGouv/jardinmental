@@ -11,6 +11,11 @@ import {
   STORAGE_KEY_MEDICAL_TREATMENT,
   STORAGE_KEY_NOTES_VERSION,
   STORAGE_KEY_VISIT_PRO_NPS,
+  STORAGE_KEY_IS_BECK_ACTIVATED,
+  STORAGE_KEY_BECK_WHERE_LIST,
+  STORAGE_KEY_BECK_WHO_LIST,
+  STORAGE_KEY_BECK_SENSATION_LIST,
+  STORAGE_KEY_BECK_EMOTION_LIST,
 } from '../utils/constants';
 import {
   fakeDiaryData,
@@ -29,6 +34,11 @@ const wipeData = async () => {
   await AsyncStorage.removeItem(STORAGE_KEY_NOTES_VERSION);
   await AsyncStorage.removeItem(STORAGE_KEY_VISIT_PRO_NPS);
   await AsyncStorage.removeItem(STORAGE_KEY_CUSTOM_DRUGS);
+  await AsyncStorage.removeItem(STORAGE_KEY_IS_BECK_ACTIVATED);
+  await AsyncStorage.removeItem(STORAGE_KEY_BECK_WHERE_LIST);
+  await AsyncStorage.removeItem(STORAGE_KEY_BECK_WHO_LIST);
+  await AsyncStorage.removeItem(STORAGE_KEY_BECK_SENSATION_LIST);
+  await AsyncStorage.removeItem(STORAGE_KEY_BECK_EMOTION_LIST);
   await AsyncStorage.removeItem('@Reminder');
 };
 
@@ -57,7 +67,7 @@ const DiaryDataProvider = ({children}) => {
   const setDiaryDataRequest = ({date: isoDate, answers: data}) => {
     const newDiaryData = {
       ...diaryData,
-      [isoDate]: data,
+      [isoDate]: {...diaryData[isoDate], ...data},
     };
     setDiaryData(newDiaryData);
     AsyncStorage.setItem(
