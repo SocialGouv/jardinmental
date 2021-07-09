@@ -14,8 +14,15 @@ import GearSvg from '../../assets/svg/gear.svg';
 import PlusSvg from '../../assets/svg/plus.svg';
 import ClockSvg from '../../assets/svg/clock.svg';
 import LightBulbSvg from '../../assets/svg/light-bulb.svg';
+import HeartsSvg from '../../assets/svg/hearts.svg';
 import ThoughtsSvg from '../../assets/svg/thoughts.svg';
 import CalendarSvg from '../../assets/svg/calendar.svg';
+import ArrowUpSvg from '../../assets/svg/arrow-up.svg';
+import PlusSurveySvg from '../../assets/svg/plus-survey.svg';
+import PlusBeckSvg from '../../assets/svg/plus-beck.svg';
+import CrossSvg from '../../assets/svg/cross.svg';
+import BinSvg from '../../assets/svg/bin.svg';
+import NotesSvg from '../../assets/svg/notes.svg';
 import Text from '../components/MyText';
 
 import {
@@ -43,8 +50,15 @@ const mapIconToSvg = (icon) => {
     PlusSvg,
     ClockSvg,
     LightBulbSvg,
-    ThoughtsSvg,
+    HeartsSvg,
     CalendarSvg,
+    ArrowUpSvg,
+    PlusSurveySvg,
+    PlusBeckSvg,
+    ThoughtsSvg,
+    CrossSvg,
+    BinSvg,
+    NotesSvg,
   };
   return iconMap[icon];
 };

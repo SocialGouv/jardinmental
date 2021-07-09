@@ -8,6 +8,8 @@ import TodaySvg from '../../assets/svg/today.svg';
 import YesterdaySvg from '../../assets/svg/yesterday.svg';
 import NotesSvg from '../../assets/svg/notes.svg';
 import DrugsSvg from '../../assets/svg/drugs.svg';
+import HeartsSvg from '../../assets/svg/hearts.svg';
+import PlusSvg from '../../assets/svg/plus-1.svg';
 
 import {StyleSheet, View} from 'react-native';
 
@@ -36,11 +38,18 @@ const mapIconToSvg = (icon) => {
     YesterdaySvg,
     NotesSvg,
     DrugsSvg,
+    HeartsSvg,
+    PlusSvg,
   };
   return iconMap[icon];
 };
 
-const CircledIcon = ({icon, color, borderColor = 'lightgrey'}) => {
+const CircledIcon = ({
+  icon,
+  color,
+  borderColor = 'lightgrey',
+  iconColor = 'black',
+}) => {
   const Icon = mapIconToSvg(icon);
   return (
     <View
@@ -49,7 +58,7 @@ const CircledIcon = ({icon, color, borderColor = 'lightgrey'}) => {
         backgroundColor: color,
         borderColor,
       }}>
-      <Icon width={20} height={20} color="black" />
+      <Icon width={20} height={20} color={iconColor} />
     </View>
   );
 };
