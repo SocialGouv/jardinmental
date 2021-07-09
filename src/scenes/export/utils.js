@@ -475,7 +475,8 @@ const formatHtmlTable = async (diaryData) => {
                       !NOTES?.notesEvents &&
                       !NOTES?.notesSymptoms &&
                       !NOTES?.notesToxic &&
-                      Object.keys(becks).length === 0
+                      becks &&
+                      Object.keys(becks)?.length === 0
                     ) {
                       return '';
                     }
@@ -498,9 +499,13 @@ const formatHtmlTable = async (diaryData) => {
                               ? generateNote(NOTES)
                               : ''
                           }
-                          ${Object.keys(becks)
-                            ?.map((id) => generateBeck(becks[id]))
-                            .join('<hr/>')}
+                          ${
+                            becks
+                              ? Object.keys(becks)
+                                  ?.map((id) => generateBeck(becks[id]))
+                                  .join('<hr/>')
+                              : ''
+                          }
                         </tbody>
                       </table>
                     `;
