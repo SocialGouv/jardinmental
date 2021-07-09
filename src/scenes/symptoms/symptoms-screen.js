@@ -16,6 +16,7 @@ import localStorage from '../../utils/localStorage';
 import logEvents from '../../services/logEvents';
 import BackButton from '../../components/BackButton';
 import Button from '../../components/Button';
+import AddElemToList from './AddElemToList';
 
 const lookUpCategoryMatomo = {
   MOOD: 0,
@@ -45,14 +46,6 @@ const SymptomScreen = ({navigation, route}) => {
       if (localCustomSymptoms) setCustomSymptoms(localCustomSymptoms);
     })();
   }, []);
-
-  useEffect(() => {
-    const newSymptom = route.params?.newSymptom;
-    if (newSymptom) {
-      setCustomSymptoms([newSymptom, ...customSymptoms]);
-      setChosenCategories({[newSymptom]: true, ...chosenCategories});
-    }
-  }, [route]);
 
   const checkAll = () => {
     let categories = {};
@@ -119,6 +112,14 @@ const SymptomScreen = ({navigation, route}) => {
     navigation.navigate(redirection, params);
   };
 
+  const handleAddNewSymptom = async (value) => {
+    if (!value) return;
+    if (value in chosenCategories) return;
+    await localStorage.addCustomSymptoms(value);
+    setChosenCategories({[value]: true, ...chosenCategories});
+    logEvents.logCustomSymptomAdd();
+  };
+
   return (
     <SafeAreaView style={styles.safe}>
       <BackButton onPress={() => navigation.navigate('tabs')} />
@@ -129,12 +130,7 @@ const SymptomScreen = ({navigation, route}) => {
           Sélectionner les symptômes
           {showExplanation ? ' que vous souhaitez suivre' : ''}
         </Text>
-        <TouchableOpacity onPress={() => navigation.navigate('add-symptom')}>
-          <View style={styles.addSymptom}>
-            <Text style={styles.labelAddSymptom}>Ajouter un symptôme</Text>
-            <Text style={styles.plusIcon}>+</Text>
-          </View>
-        </TouchableOpacity>
+        <AddElemToList onChange={handleAddNewSymptom} />
         {chosenCategories &&
           Object.keys(chosenCategories).map((cat, index) => (
             <View key={index} style={styles.categories}>
@@ -150,10 +146,10 @@ const SymptomScreen = ({navigation, route}) => {
               />
             </View>
           ))}
+        <View style={styles.buttonWrapper}>
+          <Button title="Valider" onPress={submitNewCategories} />
+        </View>
       </ScrollView>
-      <View style={styles.buttonWrapper}>
-        <Button title="Valider" onPress={submitNewCategories} />
-      </View>
       {showExplanation && (
         <SymptomsExplanation
           explanation={explanation}
@@ -203,6 +199,7 @@ const styles = StyleSheet.create({
   categories: {
     backgroundColor: '#F4FCFD',
     borderColor: '#D4F0F2',
+    borderWidth: 0.5,
     marginBottom: 10,
     borderRadius: 10,
     padding: 10,
