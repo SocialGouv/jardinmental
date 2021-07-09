@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import Text from '../../components/MyText';
-import CircledIcon from '../../components/CircledIcon';
+import Icon from '../../components/Icon';
 import NoNote from './no-notes';
 import {isToday, isYesterday, parseISO} from 'date-fns';
 
@@ -61,11 +61,12 @@ const Notes = ({notes, date, onPress}) => {
         ]}
         onPress={onPress}
         disabled={!canEdit}>
-        <CircledIcon
-          borderColor="#58C8D2"
-          iconColor="#58C8D2"
-          color="rgba(34,192,207, .1)"
+        <Icon
           icon="NotesSvg"
+          color="#58C8D2"
+          width={25}
+          height={25}
+          styleContainer={styles.icon}
         />
         {renderNotes()}
       </TouchableOpacity>
@@ -74,6 +75,7 @@ const Notes = ({notes, date, onPress}) => {
 };
 
 const styles = StyleSheet.create({
+  icon: {marginRight: 20},
   divider: {
     height: 1,
     backgroundColor: 'rgba(0,183,200, .09)',

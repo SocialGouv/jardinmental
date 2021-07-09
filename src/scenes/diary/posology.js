@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import Text from '../../components/MyText';
-import CircledIcon from '../../components/CircledIcon';
+import Icon from '../../components/Icon';
 import {isToday, isYesterday, parseISO} from 'date-fns';
 import {colors} from '../../utils/colors';
 
@@ -40,10 +40,12 @@ const Posology = ({data, date, onPress}) => {
         ]}
         onPress={onPress}
         disabled={!canEdit}>
-        <CircledIcon
-          borderColor="#58C8D2"
-          color="rgba(34,192,207, .1)"
+        <Icon
           icon="DrugsSvg"
+          color="#58C8D2"
+          width={25}
+          height={25}
+          styleContainer={styles.icon}
         />
         <View style={styles.posologyContainer}>{renderPosology()}</View>
       </TouchableOpacity>
@@ -52,6 +54,7 @@ const Posology = ({data, date, onPress}) => {
 };
 
 const styles = StyleSheet.create({
+  icon: {marginRight: 20},
   posologyItem: {
     display: 'flex',
     flexDirection: 'row',
