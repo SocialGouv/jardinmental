@@ -63,6 +63,7 @@ const Notes = ({notes, date, onPress}) => {
         disabled={!canEdit}>
         <CircledIcon
           borderColor="#58C8D2"
+          iconColor="#58C8D2"
           color="rgba(34,192,207, .1)"
           icon="NotesSvg"
         />
@@ -73,6 +74,13 @@ const Notes = ({notes, date, onPress}) => {
 };
 
 const styles = StyleSheet.create({
+  divider: {
+    height: 1,
+    backgroundColor: 'rgba(0,183,200, .09)',
+    marginVertical: 10,
+    width: '80%',
+    alignSelf: 'center',
+  },
   container: {
     display: 'flex',
     flexDirection: 'row',
@@ -89,13 +97,6 @@ const styles = StyleSheet.create({
   boldText: {
     fontSize: 15,
     fontWeight: '700',
-  },
-  divider: {
-    height: 1,
-    backgroundColor: 'rgba(0,183,200, .09)',
-    marginTop: 12,
-    width: '80%',
-    alignSelf: 'center',
   },
 });
 

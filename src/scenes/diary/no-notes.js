@@ -6,15 +6,21 @@ import {colors} from '../../utils/colors';
 
 const NoNotes = ({onPress}) => {
   return (
-    <TouchableOpacity onPress={onPress}>
-      <View style={styles.cta}>
-        <View style={styles.divider} />
-        <View style={styles.container}>
-          <CircledIcon borderColor="#58C8D2" icon="NotesSvg" />
-          <Text style={styles.text}>Ajouter une note</Text>
+    <>
+      <View style={styles.divider} />
+      <TouchableOpacity onPress={onPress}>
+        <View style={styles.cta}>
+          <View style={styles.container}>
+            <CircledIcon
+              borderColor="#58C8D2"
+              iconColor="#58C8D2"
+              icon="NotesSvg"
+            />
+            <Text style={styles.text}>Ajouter une note</Text>
+          </View>
         </View>
-      </View>
-    </TouchableOpacity>
+      </TouchableOpacity>
+    </>
   );
 };
 
@@ -41,6 +47,7 @@ const styles = StyleSheet.create({
   divider: {
     height: 1,
     backgroundColor: 'rgba(0,183,200, .09)',
+    marginVertical: 10,
     width: '80%',
     alignSelf: 'center',
   },

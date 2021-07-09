@@ -9,6 +9,7 @@ import NoDataDiaryItem from './no-data-diary-item';
 import Notes from './notes';
 import localStorage from '../../utils/localStorage';
 import Posology from './posology';
+import Beck from './beck';
 import {startAtFirstQuestion} from '../survey/survey-data';
 
 const DiaryItem = ({navigation, patientState, date}) => {
@@ -24,18 +25,24 @@ const DiaryItem = ({navigation, patientState, date}) => {
     return () => (mounted = false);
   }, [patientState]);
 
-  const handleEdit = (tabs) => {
+  const handleEdit = (tab) => {
     if (!(isToday(parseISO(date)) || isYesterday(parseISO(date)))) return;
     const currentSurvey = {
       date,
       answers: patientState,
     };
-    navigation.navigate(tabs, {
+    navigation.navigate(tab, {
       currentSurvey,
       redirect: true,
     });
   };
-
+  const handleViewBeck = (beck, beckId) => {
+    navigation.navigate('view-beck', {
+      beckId,
+      beck,
+      redirect: true,
+    });
+  };
   const hasAnswerSurvey = () =>
     Object.keys(displayedCategories)
       .concat(customs)
@@ -90,6 +97,11 @@ const DiaryItem = ({navigation, patientState, date}) => {
         notes={patientState?.NOTES}
         date={date}
         onPress={() => handleEdit('notes')}
+      />
+      <Beck
+        data={patientState?.becks}
+        date={date}
+        onPress={(beck, beckId) => handleViewBeck(beck, beckId)}
       />
       <Posology
         data={patientState?.POSOLOGY}
