@@ -5,6 +5,7 @@ import {
   StyleSheet,
   SafeAreaView,
   ScrollView,
+  Alert,
 } from 'react-native';
 import Text from '../../components/MyText';
 import {colors} from '../../utils/colors';
@@ -18,7 +19,12 @@ export default ({navigation}) => {
     const d = await localStorage.getIsBeckActivated();
     setIsBeckActivated(d);
   };
-  const setLocalStorage = async (v) => {
+  const handleClick = async (v) => {
+    const alertTitle = v ? 'Activées' : 'Désactivées';
+    const alertMessage = v
+      ? 'Les colonnes de Beck sont activées sur cet appareil.'
+      : 'Les colonnes de Beck sont désactivées sur cet appareil.';
+    Alert.alert(alertTitle, alertMessage);
     await localStorage.setIsBeckActivated(v);
     setIsBeckActivated(v);
   };
@@ -48,7 +54,7 @@ export default ({navigation}) => {
         {isBeckActivated ? (
           <>
             <TouchableOpacity
-              onPress={() => setLocalStorage(false)}
+              onPress={() => handleClick(false)}
               style={styles.desactivateButton}>
               <Text style={styles.desactivateButtonText}>Désactiver</Text>
             </TouchableOpacity>
@@ -59,7 +65,7 @@ export default ({navigation}) => {
         ) : (
           <>
             <TouchableOpacity
-              onPress={() => setLocalStorage(true)}
+              onPress={() => handleClick(true)}
               style={styles.activateButton}>
               <Text style={styles.activateButtonText}>Activer</Text>
             </TouchableOpacity>
