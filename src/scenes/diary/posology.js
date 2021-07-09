@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
   divider: {
     height: 1,
     backgroundColor: 'rgba(0,183,200, .09)',
-    marginTop: 12,
+    marginVertical: 10,
     width: '80%',
     alignSelf: 'center',
   },

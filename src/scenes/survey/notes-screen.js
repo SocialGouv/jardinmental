@@ -107,7 +107,6 @@ const Notes = ({navigation, route}) => {
         </Text>
         <TextInput
           multiline={true}
-          numberOfLines={3}
           numberOfLines={Platform.OS === 'ios' ? null : 3}
           minHeight={Platform.OS === 'ios' ? 20 * 3 : null}
           onChangeText={setNotesEvents}
@@ -131,6 +130,7 @@ const Notes = ({navigation, route}) => {
         <Text style={styles.title}>
           Ai-je consommé des toxiques aujourd'hui ? Si oui, lesquels ?
         </Text>
+        <Text style={styles.subtitle}>(ex: tabac, alcool, cannabis, ...)</Text>
         <TextInput
           multiline={true}
           numberOfLines={Platform.OS === 'ios' ? null : 3}
@@ -164,6 +164,13 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginBottom: 15,
     fontWeight: '500',
+  },
+  subtitle: {
+    color: 'grey',
+    fontSize: 14,
+    marginBottom: 15,
+    fontWeight: 'normal',
+    fontStyle: 'italic',
   },
   container: {
     backgroundColor: 'white',

@@ -209,7 +209,7 @@ class Reminder extends React.Component {
           </Text>
         </TouchableOpacity>
         <TimePicker
-          date={reminder}
+          value={reminder}
           visible={timePickerVisible}
           selectDate={this.setReminder}
         />
