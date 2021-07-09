@@ -5,7 +5,7 @@ import Text from '../components/MyText';
 
 export default ({
   numberOfSteps = 10,
-  step = 1,
+  step = 0,
   activeColor = colors.LIGHT_BLUE,
   inactiveColor = '#F4FCFD',
   borderColor = '#D4F0F2',

@@ -1,17 +1,20 @@
 import React from 'react';
-import {StyleSheet, TouchableOpacity} from 'react-native';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {colors} from '../utils/colors';
 import Text from './MyText';
+import Icon from './Icon';
 
 export default ({
   textColor = colors.DARK_BLUE,
   onPress = () => null,
+  onClose = () => null,
   disabled = false,
   buttonStyle,
   textStyle,
   value,
   selected,
   color = '#1FC6D5',
+  enableClosed = false,
 }) => {
   let backgroundColor = `${color}66`;
   if (selected) backgroundColor = colors.DARK_BLUE;
@@ -25,30 +28,61 @@ export default ({
   if (selected) myTextColor = 'white';
   if (disabled) myTextColor = 'grey';
   return (
-    <TouchableOpacity
-      style={[{...styles.button, backgroundColor, borderColor}, buttonStyle]}
-      onPress={onPress}
-      disabled={disabled}>
-      <Text style={[{...styles.text, color: myTextColor}, textStyle]}>
-        {value}
-      </Text>
-    </TouchableOpacity>
+    <View style={styles.container}>
+      <TouchableOpacity
+        style={[{...styles.button, backgroundColor, borderColor}, buttonStyle]}
+        onPress={() => onPress(value)}
+        disabled={disabled}>
+        <Text style={[{...styles.text, color: myTextColor}, textStyle]}>
+          {value}
+        </Text>
+      </TouchableOpacity>
+      {enableClosed && (
+        <TouchableOpacity
+          style={styles.close}
+          onPress={() => onClose(value)}
+          disabled={disabled}>
+          <Icon icon="CrossSvg" width={8} height={8} color={colors.BLUE} />
+        </TouchableOpacity>
+      )}
+    </View>
   );
 };
 const styles = StyleSheet.create({
-  button: {
-    height: 38,
-    width: '100%',
-    borderRadius: 10,
-    paddingHorizontal: 15,
+  container: {
+    display: 'flex',
+    alignSelf: 'flex-end',
+    marginBottom: 10,
+    marginRight: 20,
+  },
+  close: {
+    position: 'absolute',
+    display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 10,
-    marginRight: 10,
+    top: -5,
+    right: -8,
+    backgroundColor: '#F4FCFD',
+    borderRadius: 16,
+    borderColor: '#D4F0F2',
+    borderWidth: 1,
+    zIndex: 2,
+    width: 18,
+    height: 18,
+  },
+  button: {
+    alignSelf: 'flex-start',
+    minHeight: 38,
+    borderRadius: 10,
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
     borderWidth: 1,
   },
   text: {
     fontWeight: 'normal',
     fontSize: 15,
   },
+  closeText: {fontSize: 12},
 });

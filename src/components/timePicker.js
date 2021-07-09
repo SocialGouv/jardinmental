@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
-const TimePicker = ({
+export default ({
   visible,
   selectDate,
   value,
@@ -15,8 +15,8 @@ const TimePicker = ({
     setDatePickerVisibility(false);
   };
 
-  const handleConfirm = (date) => {
-    selectDate(date);
+  const handleConfirm = (d) => {
+    selectDate(d);
     setDatePickerVisibility(false);
   };
 
@@ -29,7 +29,7 @@ const TimePicker = ({
 
   return (
     <DateTimePickerModal
-      date={value}
+      date={date}
       isVisible={isDatePickerVisible}
       mode="time"
       onConfirm={handleConfirm}
@@ -41,5 +41,3 @@ const TimePicker = ({
     />
   );
 };
-
-export default TimePicker;

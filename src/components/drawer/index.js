@@ -64,8 +64,8 @@ export default ({navigation, visible, onClick}) => {
               icon="NewsSvg"
             />
             <DrawerItem
-              title="Pensées automatiques"
-              path="activate-thoughts"
+              title="Colonnes de Beck"
+              path="activate-beck"
               navigation={navigation}
               onClick={onClick}
               icon="ThoughtsSvg"
@@ -142,7 +142,7 @@ export default ({navigation, visible, onClick}) => {
   );
 };
 
-const Separator = () => <View style={styles.separator}></View>;
+const Separator = () => <View style={styles.separator} />;
 
 const styles = StyleSheet.create({
   modal: {
@@ -153,6 +153,7 @@ const styles = StyleSheet.create({
     borderColor: '#eee',
     borderTopWidth: 1,
     marginHorizontal: 30,
+    marginVertical: 15,
   },
   scrollContainer: {
     paddingBottom: 80,
