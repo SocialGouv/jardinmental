@@ -3,6 +3,7 @@ import {displayedCategories} from '../../utils/constants';
 import {getArrayOfDates} from '../../utils/date/helpers';
 import localStorage from '../../utils/localStorage';
 import {getDrugListWithLocalStorage} from '../../utils/drugs-list';
+import beck from '../../utils/localStorage/beck';
 
 // methods
 
@@ -22,6 +23,9 @@ const mapImagesToState = (iconType) => {
       return 'https://monsuivipsy.s3-eu-west-1.amazonaws.com/notes.png';
   }
 };
+
+const colorsValue = ['#FFC0C0', '#FCD0A7', '#FCE285', '#F0F277', '#E2FA80'];
+const colorsText = ['#b86564', '#ba8553', '#ab9237', '#a1a06e', '#9ab037'];
 
 // GENERATORS
 
@@ -85,10 +89,10 @@ const generateBar = (value, height, color = colors.LIGHT_BLUE) => {
                       width: 100%;
                       max-width: 100%;
                       vertical-align: middle;
-                      background-color: ${color};
+                      background-color: ${colorsValue[value - 1]};
                       text-align: center;
                       font-size: small;
-                      color:white;
+                      color:${colorsText[value - 1]};
                       word-wrap: break-word; 
                     "
                   >
@@ -145,6 +149,112 @@ const generateNote = (notes) => {
       </td>
     </tr>`;
   }
+};
+
+const generateBeck = (beck) => {
+  if (!beck || !(beck?.mainEmotion && beck?.mainEmotionIntensity)) {
+    return '';
+  }
+
+  const renderTitle = (e) => `<p
+      style="
+          margin: 0;
+          margin-top:20px;
+          margin-left: 20px;
+          padding-right: 50px;
+          color:${colors.DARK_BLUE};
+          font-size: large;
+        ">
+      ${e ? `<b>${e}</b> ` : ''}
+    </p>`;
+
+  const renderItem = (e, t) => {
+    if (!e || e.length === 0) return '';
+    return `<p
+      style="
+          margin: 0;
+          margin-left: 20px;
+          padding-right: 50px;
+        ">
+       ${t ? `<b>${t} :</b> ` : ''}${e}
+    </p>`;
+  };
+  const renderItemWithPercentage = (e, p, t) => {
+    if (!e) return '';
+    return `<p
+      style="
+          margin: 0;
+          margin-left: 20px;
+          padding-right: 50px;
+        ">
+       ${t ? `<b>${t} :</b> ` : ''}${e} ${p ? `(${p * 10}%)` : ''}
+    </p>`;
+  };
+
+  const renderListItem = (list, t) => {
+    if (!list || list.length === 0) return '';
+    return `<p
+      style="
+          margin: 0;
+          margin-left: 20px;
+          padding-right: 50px;
+        ">
+       ${t ? `<b>${t} :</b> ` : ''}${list.join(', ')}
+    </p>`;
+  };
+
+  const renderBeck = (b) => {
+    return `
+    ${renderTitle('La situation')}
+    ${renderItem(`${b?.date} à ${b?.time}`)}
+    ${renderListItem(b?.who, 'Avec')}
+    ${renderItem(b?.where)}
+    ${renderItem(b?.what, 'Description factuelle')}
+    ${renderTitle('Vos émotions')}
+    ${renderItemWithPercentage(
+      b?.mainEmotion,
+      b?.mainEmotionIntensity,
+      'Émotion principale',
+    )}
+    ${renderListItem(b?.otherEmotions, 'Autres émotions')}
+    ${renderListItem(b?.physicalSensations, 'Sensations')}
+    ${renderTitle('Vos pensées')}
+    ${renderItemWithPercentage(
+      b?.thoughtsBeforeMainEmotion,
+      b?.trustInThoughsThen,
+      'Pensée immédiate',
+    )}
+    ${renderItem(b?.memories, 'Images et souvenirs')}
+    ${renderTitle('Comportement et Résultats')}
+    ${renderItem(b?.actions, "Qu'avez-vous fait ?")}
+    ${renderItem(b?.consequencesForYou, 'Conséquences pour vous')}
+    ${renderItem(
+      b?.consequencesForRelatives,
+      'Conséquences pour votre entourage',
+    )}
+    ${renderTitle('Restructuration')}
+    ${renderItem(b?.argumentPros, 'Arguments en faveur')}
+    ${renderItem(b?.argumentCons, 'Arguments en défaveur')}
+    ${renderItemWithPercentage(
+      b?.nuancedThoughts,
+      b?.trustInThoughsNow,
+      'Pensée nuancée',
+    )}
+    ${renderItemWithPercentage(
+      b?.mainEmotion,
+      b?.mainEmotionIntensityNuanced,
+      'Émotions après coup',
+    )}
+    `;
+  };
+
+  return `
+    <tr class="journal__item-symptom-wrapper">
+      <td>
+        ${renderBeck(beck)}
+      </td>
+    </tr>
+  `;
 };
 
 const formatHtmlTable = async (diaryData) => {
@@ -359,12 +469,13 @@ const formatHtmlTable = async (diaryData) => {
                     if (!diaryData[strDate]) {
                       return '';
                     }
-                    const {NOTES} = diaryData[strDate];
+                    const {NOTES, becks} = diaryData[strDate];
                     // if there no NOTES.x => display nothing
                     if (
                       !NOTES?.notesEvents &&
                       !NOTES?.notesSymptoms &&
-                      !NOTES?.notesToxic
+                      !NOTES?.notesToxic &&
+                      Object.keys(becks).length === 0
                     ) {
                       return '';
                     }
@@ -380,7 +491,16 @@ const formatHtmlTable = async (diaryData) => {
                           border: 1px solid #ebedf2;
                           background-color: #f8f9fb;
                         ">
-                          ${generateNote(NOTES)}
+                          ${
+                            NOTES?.notesEvents ||
+                            NOTES?.notesSymptoms ||
+                            NOTES?.notesToxic
+                              ? generateNote(NOTES)
+                              : ''
+                          }
+                          ${Object.keys(becks)
+                            ?.map((id) => generateBeck(becks[id]))
+                            .join('<hr/>')}
                         </tbody>
                       </table>
                     `;
