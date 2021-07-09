@@ -32,6 +32,13 @@ const SettingsModal = ({navigation, visible, onClick}) => {
             onClick={onClick}
             icon="DrugsSvg"
           />
+          <SettingItem
+            title="Colonnes de Beck"
+            path="activate-beck"
+            navigation={navigation}
+            onClick={onClick}
+            icon="ThoughtsSvg"
+          />
         </View>
       </TouchableOpacity>
     </Modal>

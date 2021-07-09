@@ -23,7 +23,9 @@ import AddDrug from '../scenes/drugs/add-drug';
 import TooLate from '../scenes/diary/too-late';
 import News from '../scenes/news';
 import Infos from '../scenes/infos';
-import ActivateThoughts from '../scenes/thoughts/activate';
+import ActivateBeck from '../scenes/beck/activate';
+import ViewBeck from '../scenes/beck/view';
+import Beck from '../scenes/beck';
 
 const Stack = createStackNavigator();
 
@@ -92,7 +94,9 @@ class Router extends React.Component {
           <Stack.Screen name="news" component={News} />
           <Stack.Screen name="infos" component={Infos} />
           <Stack.Screen name="contribute-pro" component={ContributePro} />
-          <Stack.Screen name="activate-thoughts" component={ActivateThoughts} />
+          <Stack.Screen name="activate-beck" component={ActivateBeck} />
+          <Stack.Screen name="view-beck" component={ViewBeck} />
+          <Stack.Screen name="beck" component={Beck} />
           {/* <Stack.Screen name="contribute" component={Contribute} /> */}
         </Stack.Navigator>
       </NavigationContainer>

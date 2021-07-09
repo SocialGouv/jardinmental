@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, SafeAreaView, Platform} from 'react-native';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import Diary from '../scenes/diary/diary';
@@ -9,11 +9,20 @@ import localStorage from '../utils/localStorage';
 import logEvents from '../services/logEvents';
 import {colors} from '../utils/colors';
 import Icon from '../components/Icon';
+import PlusModal from '../scenes/diary/plus-modal';
 
 const Tab = createMaterialTopTabNavigator();
 
 const Tabs = ({navigation, route}) => {
+  const [plusModalVisible, setPlusModalVisible] = useState(false);
+
   const handlePlus = async () => {
+    const isBeckActivated = await localStorage.getIsBeckActivated();
+    if (isBeckActivated) return setPlusModalVisible(true);
+    startSurvey();
+  };
+
+  const startSurvey = async () => {
     const symptoms = await localStorage.getSymptoms();
     logEvents.logFeelingStart();
     if (!symptoms) {
@@ -28,6 +37,13 @@ const Tabs = ({navigation, route}) => {
 
   return (
     <>
+      <PlusModal
+        visible={plusModalVisible}
+        navigation={navigation}
+        onClick={() => setPlusModalVisible(false)}
+        onChange={(e) => console.log(e)}
+        startSurvey={startSurvey}
+      />
       <SafeAreaView style={styles.surveyButton}>
         <Icon
           activeOpacity={0.9}
