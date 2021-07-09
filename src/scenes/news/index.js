@@ -13,7 +13,7 @@ export const getBadgeNotesVersion = async () => {
   return lastNotesVersion !== LAST_NOTES_VERSION;
 };
 
-export const LAST_NOTES_VERSION = '1.13';
+export const LAST_NOTES_VERSION = '1.14';
 
 export default ({navigation}) => {
   return (
@@ -23,10 +23,15 @@ export default ({navigation}) => {
       <ScrollView
         style={styles.cgu}
         contentContainerStyle={styles.scrollContainer}>
+        <Card title="Les colonnes de Beck !" version="v1.14" date="07/2021">
+          <Item>
+            <Text style={styles.text}>blabla </Text>
+          </Item>
+        </Card>
         <Card
           title="Mon Suivi Psy se refait une beauté !"
           version="v1.13"
-          date="12/05/2021">
+          date="05/2021">
           <Item>
             <Text style={styles.text}>
               Le nouveau bouton en haut à gauche de votre écran ouvre un{' '}
