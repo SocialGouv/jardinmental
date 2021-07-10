@@ -14,7 +14,7 @@ import {
   deleteBeckfromDiaryData,
 } from '../../utils';
 import localStorage from '../../utils/localStorage';
-import AddElemToList from './AddElemToList';
+import AddElemToList from '../../components/AddElemToList';
 import {
   DEFAULT_BECK_WHERE_LIST,
   DEFAULT_BECK_WHO_LIST,

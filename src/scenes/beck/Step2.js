@@ -9,7 +9,7 @@ import Separator from '../../components/Separator';
 import DiscretSlider from '../../components/DiscretSlider';
 import {toggleSelectedInArray, toggleState} from '../../utils';
 import localStorage from '../../utils/localStorage';
-import AddElemToList from './AddElemToList';
+import AddElemToList from '../../components/AddElemToList';
 import {
   DEFAULT_BECK_EMOTION_LIST,
   DEFAULT_BECK_SENSATION_LIST,
