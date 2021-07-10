@@ -1,11 +1,17 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, TextInput, View, Platform} from 'react-native';
+import {
+  StyleSheet,
+  TextInput,
+  View,
+  Platform,
+  TouchableOpacity,
+} from 'react-native';
 import Text from '../../components/MyText';
 import {colors} from '../../utils/colors';
 import RNPickerSelect from 'react-native-picker-select';
 import Icon from '../../components/Icon';
 
-export default ({drug, onChange, showPosology}) => {
+export default ({drug, onChange, showPosology, onClose}) => {
   const [showFreeText, setShowFreeText] = useState(false);
   const [freeText, setFreeText] = useState('');
 
@@ -24,6 +30,9 @@ export default ({drug, onChange, showPosology}) => {
     return (
       <View style={styles.posologyItem}>
         <View style={styles.left}>
+          <TouchableOpacity style={styles.delete} onPress={onClose}>
+            <Icon icon="CrossSvg" width={8} height={8} color={colors.BLUE} />
+          </TouchableOpacity>
           <Icon icon="DrugsSvg" styleContainer={{marginRight: 10}} />
           <View style={styles.posologyName}>
             <Text style={styles.text1}>{drug?.name1}</Text>
@@ -32,9 +41,9 @@ export default ({drug, onChange, showPosology}) => {
             ) : null}
           </View>
         </View>
-        <View style={styles.right}>
-          {showPosology ? (
-            showFreeText ? (
+        {showPosology ? (
+          <View style={styles.right}>
+            {showFreeText ? (
               <View style={styles.freeTextContainer}>
                 <TextInput
                   autoCapitalize="none"
@@ -64,9 +73,9 @@ export default ({drug, onChange, showPosology}) => {
                 style={pickerSelectStyles}
                 value={drug?.value}
               />
-            )
-          ) : null}
-        </View>
+            )}
+          </View>
+        ) : null}
       </View>
     );
   };
@@ -104,6 +113,21 @@ const pickerSelectStyles = StyleSheet.create({
 });
 
 const styles = StyleSheet.create({
+  delete: {
+    position: 'absolute',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    top: -5,
+    left: -5,
+    backgroundColor: '#F4FCFD',
+    borderRadius: 16,
+    borderColor: '#D4F0F2',
+    borderWidth: 1,
+    zIndex: 2,
+    width: 18,
+    height: 18,
+  },
   close: {
     fontSize: 16,
     color: colors.LIGHT_BLUE,

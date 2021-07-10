@@ -15,6 +15,7 @@ import {getDrugListWithLocalStorage} from '../../utils/drugs-list';
 import CheckBox from '@react-native-community/checkbox';
 import NPS from '../../services/NPS/NPS';
 import BackButton from '../../components/BackButton';
+import AddElemToList from '../../components/AddElemToList';
 
 const Drugs = ({navigation, route}) => {
   const [treatment, setTreatment] = useState([]);
@@ -57,15 +58,16 @@ const Drugs = ({navigation, route}) => {
   }, [route]);
 
   useEffect(() => {
-    setFilteredList(
-      list
-        ?.sort((a, b) => cleanString(a.name1) > cleanString(b.name1))
-        .filter((e) => {
-          const r = new RegExp(cleanString(filter), 'gi');
-          return r.test(cleanString(e.id));
-        }),
-    );
+    setFilteredList(filterAndSortList(list));
   }, [filter, list]);
+
+  const filterAndSortList = (list) =>
+    list
+      ?.sort((a, b) => cleanString(a.name1) > cleanString(b.name1))
+      .filter((e) => {
+        const r = new RegExp(cleanString(filter), 'gi');
+        return r.test(cleanString(e.id));
+      });
 
   const setToogleCheckbox = (d, value) => {
     let t = [...treatment];
@@ -82,6 +84,18 @@ const Drugs = ({navigation, route}) => {
   const submit = async () => {
     await localStorage.setMedicalTreatment(treatment);
     navigation.navigate('drugs', {treatment});
+  };
+
+  const handleAdd = async (value) => {
+    console.log('add drug', value);
+    if (!value) return;
+    const drug = {id: value, name1: value, values: []};
+    await localStorage.addCustomDrug(drug);
+    const drugsAfterAddition = await getDrugListWithLocalStorage();
+    setFilteredList(filterAndSortList(drugsAfterAddition));
+    setToogleCheckbox(drug, true);
+    // logEvents.logDrugAdd(value);
+    // navigation.navigate('drugs-list', {newDrug: drug});
   };
 
   const handleFilter = (f) => setFilter(f);
@@ -112,6 +126,11 @@ const Drugs = ({navigation, route}) => {
           <Text>Chargement</Text>
         ) : (
           <>
+            <AddElemToList
+              onChange={handleAdd}
+              onChangeText={handleFilter}
+              styleContainer={{marginHorizontal: 10}}
+            />
             {filteredList?.map((e, index) => (
               <View
                 key={index}
@@ -138,17 +157,6 @@ const Drugs = ({navigation, route}) => {
                 />
               </View>
             ))}
-            <TouchableOpacity
-              onPress={() =>
-                navigation.navigate('add-drug', {prefilledValue: filter})
-              }>
-              <View style={styles.addDrug}>
-                <Text style={styles.labelAddDrug}>
-                  Ajouter un traitement {filter ? `"${filter}"` : ''}
-                </Text>
-                <Text style={styles.plusIcon}>+</Text>
-              </View>
-            </TouchableOpacity>
           </>
         )}
       </ScrollView>
@@ -214,11 +222,9 @@ const styles = StyleSheet.create({
     width: '20%',
   },
   buttonWrapper: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-around',
-    paddingVertical: 15,
+    position: 'absolute',
+    bottom: 10,
+    left: 10,
   },
   drug: {
     backgroundColor: '#26387c12',

@@ -31,17 +31,22 @@ const Drugs = ({navigation, route}) => {
     })();
   }, [route]);
 
+  const enrichTreatmentWithData = (list) => {
+    if (list) {
+      const t = listDrugs.filter(
+        (e) => !!list.find((local) => local.id === e.id),
+      );
+      return t;
+    }
+    return null;
+  };
+
   useEffect(() => {
     if (!listDrugs || listDrugs?.length <= 0) return;
     (async () => {
       const medicalTreatmentStorage =
         route?.params?.treatment || (await localStorage.getMedicalTreatment());
-      if (medicalTreatmentStorage) {
-        const t = listDrugs.filter(
-          (e) => !!medicalTreatmentStorage.find((local) => local.id === e.id),
-        );
-        setMedicalTreatment(t);
-      }
+      setMedicalTreatment(enrichTreatmentWithData(medicalTreatmentStorage));
     })();
   }, [navigation, route, listDrugs]);
 
@@ -96,6 +101,13 @@ const Drugs = ({navigation, route}) => {
     setPosology(p);
   };
 
+  const handleDelete = async (drug) => {
+    const treatmentAfterDeletion = await localStorage.removeDrugFromTreatment(
+      drug?.id,
+    );
+    setMedicalTreatment(enrichTreatmentWithData(treatmentAfterDeletion));
+  };
+
   const render = () => {
     if (!medicalTreatment) {
       return <NoData navigation={navigation} route={route} />;
@@ -108,6 +120,7 @@ const Drugs = ({navigation, route}) => {
             drug={(posology && posology.find((i) => i.id === e.id)) || e}
             onChange={handleDrugChange}
             showPosology={inSurvey}
+            onClose={() => handleDelete(e)}
           />
         ))}
         <Text style={styles.addButton} onPress={handleAdd}>
