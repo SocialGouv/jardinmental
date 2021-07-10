@@ -4,7 +4,6 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
 import SurveyScreen from '../scenes/survey/survey-screen';
 import SymptomScreen from '../scenes/symptoms/symptoms-screen';
-import AddSymptomScreen from '../scenes/symptoms/add-symptom-screen';
 import Reminder from '../scenes/reminder/reminder';
 import Export from '../scenes/export/export';
 import DailyChart from '../scenes/calendar/daily-chart';
@@ -19,7 +18,6 @@ import logEvents from '../services/logEvents';
 import ContributePro from '../scenes/contribute/contributePro';
 import Drugs from '../scenes/drugs/drugs';
 import DrugsList from '../scenes/drugs/list';
-import AddDrug from '../scenes/drugs/add-drug';
 import TooLate from '../scenes/diary/too-late';
 import News from '../scenes/news';
 import Infos from '../scenes/infos';
@@ -69,9 +67,6 @@ class Router extends React.Component {
           <Stack.Screen name="symptoms">
             {(props) => <SymptomScreen {...props} />}
           </Stack.Screen>
-          <Stack.Screen name="add-symptom">
-            {(props) => <AddSymptomScreen {...props} />}
-          </Stack.Screen>
           <Stack.Screen name="reminder" component={Reminder} />
           <Stack.Screen name="export" component={Export} />
           <Stack.Screen name="chart-day" component={DailyChart} />
@@ -89,7 +84,6 @@ class Router extends React.Component {
           <Stack.Screen name="legal-mentions" component={LegalMentions} />
           <Stack.Screen name="drugs" component={Drugs} />
           <Stack.Screen name="drugs-list" component={DrugsList} />
-          <Stack.Screen name="add-drug" component={AddDrug} />
           <Stack.Screen name="too-late" component={TooLate} />
           <Stack.Screen name="news" component={News} />
           <Stack.Screen name="infos" component={Infos} />
