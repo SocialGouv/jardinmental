@@ -16,7 +16,7 @@ import localStorage from '../../utils/localStorage';
 import logEvents from '../../services/logEvents';
 import BackButton from '../../components/BackButton';
 import Button from '../../components/Button';
-import AddElemToList from './AddElemToList';
+import AddElemToList from '../../components/AddElemToList';
 
 const lookUpCategoryMatomo = {
   MOOD: 0,

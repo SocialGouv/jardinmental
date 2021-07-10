@@ -67,6 +67,16 @@ const setMedicalTreatment = async (v) => {
   await AsyncStorage.setItem(STORAGE_KEY_MEDICAL_TREATMENT, JSON.stringify(v));
 };
 
+const removeDrugFromTreatment = async (drugId) => {
+  let treatment = await getMedicalTreatment();
+  treatment = treatment.filter((e) => e.id !== drugId);
+  await AsyncStorage.setItem(
+    STORAGE_KEY_MEDICAL_TREATMENT,
+    JSON.stringify(treatment),
+  );
+  return treatment;
+};
+
 const getNotesVersion = async () => {
   const a = await AsyncStorage.getItem(STORAGE_KEY_NOTES_VERSION);
   return JSON.parse(a);
@@ -97,6 +107,7 @@ const addCustomDrug = async (drug) => {
     STORAGE_KEY_CUSTOM_DRUGS,
     JSON.stringify(customDrugs),
   );
+  return customDrugs;
 };
 
 export default {
@@ -110,6 +121,7 @@ export default {
   addCustomSymptoms,
   getMedicalTreatment,
   setMedicalTreatment,
+  removeDrugFromTreatment,
   getNotesVersion,
   setNotesVersion,
   getVisitProNPS,
