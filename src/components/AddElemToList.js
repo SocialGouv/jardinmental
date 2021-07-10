@@ -1,13 +1,17 @@
 import React, {useState} from 'react';
 import {StyleSheet, View, TouchableOpacity, TextInput} from 'react-native';
-import {colors} from '../../utils/colors';
-import CircledIcon from '../../components/CircledIcon';
+import {colors} from '../utils/colors';
+import CircledIcon from './CircledIcon';
 
-export default ({onChange = console.log, placeholder = 'Ajouter...'}) => {
+export default ({
+  onChange = console.log,
+  placeholder = 'Ajouter...',
+  styleContainer,
+}) => {
   const [value, setValue] = useState();
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, styleContainer]}>
       <View style={styles.inputContainer}>
         <TextInput
           onChangeText={setValue}
@@ -56,7 +60,7 @@ const styles = StyleSheet.create({
     color: colors.DARK_BLUE,
   },
   container: {
-    padding: 5,
+    marginBottom: 10,
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
