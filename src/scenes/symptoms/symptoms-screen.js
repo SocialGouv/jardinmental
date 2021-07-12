@@ -31,7 +31,6 @@ const SymptomScreen = ({navigation, route}) => {
     'A tout moment, vous pourrez modifier la liste des symptômes que vous souhaitez suivre via l’onglet “Réglages” situé en haut à droite du journal';
   const [chosenCategories, setChosenCategories] = useState({});
   const [initalCategories, setInitialCategories] = useState({});
-  const [customSymptoms, setCustomSymptoms] = useState([]);
 
   useEffect(() => {
     (async () => {
@@ -42,8 +41,6 @@ const SymptomScreen = ({navigation, route}) => {
       } else {
         checkAll();
       }
-      const localCustomSymptoms = await localStorage.getCustomSymptoms();
-      if (localCustomSymptoms) setCustomSymptoms(localCustomSymptoms);
     })();
   }, []);
 
@@ -84,13 +81,7 @@ const SymptomScreen = ({navigation, route}) => {
     const questions = await buildSurveyData();
     console.log({chosenCategories});
     console.log({initalCategories});
-    Object.keys(chosenCategories).forEach((cat) => {
-      if (initalCategories[cat] !== chosenCategories[cat]) console.log(cat);
-    });
-    // console.log(questions);
-    // questions.forEach((q) => {
-    //   ma;
-    // });
+
     const index = questions[0];
     let redirection = 'tabs';
     let params = {};
@@ -153,7 +144,11 @@ const SymptomScreen = ({navigation, route}) => {
             </View>
           ))}
         <View style={styles.buttonWrapper}>
-          <Button title="Valider" onPress={submitNewCategories} />
+          <Button
+            title="Valider"
+            onPress={submitNewCategories}
+            disabled={noneSelected()}
+          />
         </View>
       </ScrollView>
       {showExplanation && (
