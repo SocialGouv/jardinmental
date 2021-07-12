@@ -6,6 +6,7 @@ import {parseISO, differenceInDays} from 'date-fns';
 import {colors} from '../../utils/colors';
 import {DiaryDataContext} from '../../context';
 import {confirm, deleteBeckfromDiaryData} from '../../utils';
+import logEvents from '../../services/logEvents';
 
 export default ({data, date, onPress}) => {
   const [diaryData, setDiaryData] = useContext(DiaryDataContext);
@@ -17,8 +18,10 @@ export default ({data, date, onPress}) => {
   const handleDelete = ({date, beckId}) => {
     confirm({
       title: 'Êtes-vous sûr de vouloir supprimer cet élément ?',
-      onConfirm: () =>
-        deleteBeckfromDiaryData({date, beckId, diaryData, setDiaryData}),
+      onConfirm: () => {
+        logEvents.logDeleteBeck();
+        deleteBeckfromDiaryData({date, beckId, diaryData, setDiaryData});
+      },
       cancelText: 'Annuler',
       confirmText: 'Oui, supprimer',
     });

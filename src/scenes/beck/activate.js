@@ -12,6 +12,7 @@ import {colors} from '../../utils/colors';
 import BackButton from '../../components/BackButton';
 import Icon from '../../components/Icon';
 import localStorage from '../../utils/localStorage';
+import logEvents from '../../services/logEvents';
 
 export default ({navigation}) => {
   const [isBeckActivated, setIsBeckActivated] = useState();
@@ -26,6 +27,7 @@ export default ({navigation}) => {
       : 'Les colonnes de Beck sont désactivées sur cet appareil.';
     Alert.alert(alertTitle, alertMessage);
     await localStorage.setIsBeckActivated(v);
+    logEvents.logActivateBeck(v);
     setIsBeckActivated(v);
   };
   useEffect(() => {

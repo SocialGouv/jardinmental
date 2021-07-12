@@ -18,6 +18,7 @@ import TextTag from '../../components/TextTag';
 import {BeckStepTitles} from '../../utils/constants';
 import {DiaryDataContext} from '../../context';
 import {confirm, deleteBeckfromDiaryData} from '../../utils';
+import logEvents from '../../services/logEvents';
 
 export default ({navigation, route}) => {
   const [beck, setBeck] = useState({});
@@ -25,11 +26,16 @@ export default ({navigation, route}) => {
   const [diaryData, setDiaryData] = useContext(DiaryDataContext);
 
   useEffect(() => {
+    logEvents.logBeckViewOpen();
+  }, []);
+
+  useEffect(() => {
     setBeck(route?.params?.beck);
     setBeckId(route?.params?.beckId);
   }, [route?.params?.beck, route?.params?.beckId]);
 
   const handleEdit = () => {
+    logEvents.logBeckEditClick();
     navigation.navigate('beck', {
       beckId,
       beck,
@@ -42,6 +48,7 @@ export default ({navigation, route}) => {
       title: 'Êtes-vous sûr de vouloir supprimer cet élément ?',
       onConfirm: () => {
         deleteBeckfromDiaryData({date, beckId, diaryData, setDiaryData});
+        logEvents.logDeleteBeck();
         navigation.goBack();
       },
       cancelText: 'Annuler',

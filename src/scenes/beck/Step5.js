@@ -6,6 +6,7 @@ import Text from '../../components/MyText';
 import Button from '../../components/Button';
 import Separator from '../../components/Separator';
 import DiscretSlider from '../../components/DiscretSlider';
+import logEvents from '../../services/logEvents';
 
 export default ({onChange, onSubmit, data}) => {
   const numberOfLines = 8;
@@ -17,6 +18,10 @@ export default ({onChange, onSubmit, data}) => {
   const [argumentProsSelected, setArgumentProsSelected] = useState();
   const [argumentConsSelected, setArgumentConsSelected] = useState();
   const [nuancedThoughtsSelected, setNuancedThoughtsSelected] = useState();
+
+  useEffect(() => {
+    logEvents.logBeckStepOpen(5);
+  }, []);
 
   useEffect(() => {
     setArgumentProsSelected(data?.argumentPros);

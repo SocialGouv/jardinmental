@@ -14,6 +14,7 @@ import {
   DEFAULT_BECK_EMOTION_LIST,
   DEFAULT_BECK_SENSATION_LIST,
 } from '../../utils/constants';
+import logEvents from '../../services/logEvents';
 
 export default ({onChange, onSubmit, data}) => {
   // lists that will be displayed
@@ -90,6 +91,7 @@ export default ({onChange, onSubmit, data}) => {
     // select it by default
     if (selectAsMain) handleClickMainEmotion(emotion);
     if (selectAsOther) handleClickOtherEmotions(emotion);
+    logEvents.logBeckAddCustomEmotion(emotion);
   };
   const addPhysicalSensation = async (sensation) => {
     // store the new 'sensation' value for next times
@@ -98,6 +100,7 @@ export default ({onChange, onSubmit, data}) => {
     setListPhysicalSensations([...listPhysicalSensations, sensation]);
     // select it by default
     handleClickPhysicalSensations(sensation);
+    logEvents.logBeckAddCustomSensation(sensation);
   };
 
   const removeSensation = async (sensation) => {
@@ -148,6 +151,7 @@ export default ({onChange, onSubmit, data}) => {
   );
 
   useEffect(() => {
+    logEvents.logBeckStepOpen(2);
     setListEmotionFromStorage();
     setListSensationFromStorage();
   }, []);

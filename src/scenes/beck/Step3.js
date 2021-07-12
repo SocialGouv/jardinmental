@@ -6,6 +6,7 @@ import Text from '../../components/MyText';
 import Button from '../../components/Button';
 import Separator from '../../components/Separator';
 import DiscretSlider from '../../components/DiscretSlider';
+import logEvents from '../../services/logEvents';
 
 export default ({onChange, onSubmit, data}) => {
   const numberOfLines = 8;
@@ -18,6 +19,10 @@ export default ({onChange, onSubmit, data}) => {
     setThoughtsBeforeMainEmotionSelected,
   ] = useState();
   const [memoriesSelected, setMemoriesSelected] = useState();
+
+  useEffect(() => {
+    logEvents.logBeckStepOpen(3);
+  }, []);
 
   useEffect(() => {
     setThoughtsBeforeMainEmotionSelected(data?.thoughtsBeforeMainEmotion);

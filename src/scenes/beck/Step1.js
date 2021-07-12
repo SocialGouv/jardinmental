@@ -4,10 +4,15 @@ import {View, StyleSheet, TextInput, Platform} from 'react-native';
 import styleBeck from '../../styles/beck';
 import Text from '../../components/MyText';
 import Button from '../../components/Button';
+import logEvents from '../../services/logEvents';
 
 export default ({onChange, onSubmit, data}) => {
   const numberOfLines = 8;
   const [whatSelected, setWhatSelected] = useState();
+
+  useEffect(() => {
+    logEvents.logBeckStepOpen(1);
+  }, []);
 
   useEffect(() => {
     setWhatSelected(data?.what);

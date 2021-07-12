@@ -265,6 +265,70 @@ const logDrugAdd = async (drug) => {
   });
 };
 
+// beck
+const logActivateBeck = async (v) => {
+  await logEvent({
+    category: 'BECK',
+    action: 'BECK_ACTIVATE',
+    name: v,
+  });
+};
+const logBeckAddCustomWhere = async (value) => {
+  await logEvent({
+    category: 'BECK',
+    action: 'BECK_ADD_CUSTOM_ELEMENT_IN_WHERE_LIST',
+    name: value,
+  });
+};
+const logBeckAddCustomWho = async (value) => {
+  await logEvent({
+    category: 'BECK',
+    action: 'BECK_ADD_CUSTOM_ELEMENT_IN_WHO_LIST',
+    name: value,
+  });
+};
+const logBeckAddCustomEmotion = async (value) => {
+  await logEvent({
+    category: 'BECK',
+    action: 'BECK_ADD_CUSTOM_ELEMENT_IN_EMOTION_LIST',
+    name: value,
+  });
+};
+const logBeckAddCustomSensation = async (value) => {
+  await logEvent({
+    category: 'BECK',
+    action: 'BECK_ADD_CUSTOM_ELEMENT_IN_SENSATION_LIST',
+    name: value,
+  });
+};
+
+const logBeckStepOpen = async (step) => {
+  await logEvent({
+    category: 'BECK',
+    action: 'BECK_STEP_OPEN',
+    name: step,
+  });
+};
+const logBeckViewOpen = async () => {
+  await logEvent({
+    category: 'BECK',
+    action: 'BECK_VIEW_OPEN',
+  });
+};
+const logBeckEditClick = async () => {
+  await logEvent({
+    category: 'BECK',
+    action: 'BECK_EDIT_CLICK',
+  });
+};
+
+const logDeleteBeck = async () => {
+  await logEvent({
+    category: 'BECK',
+    action: 'BECK_DELETE',
+  });
+};
+
 export default {
   initMatomo,
   logAppVisit,
@@ -291,4 +355,13 @@ export default {
   logTreatmentNotFound,
   logProNPSSend,
   logDrugAdd,
+  logActivateBeck,
+  logBeckStepOpen,
+  logBeckViewOpen,
+  logDeleteBeck,
+  logBeckEditClick,
+  logBeckAddCustomWhere,
+  logBeckAddCustomWho,
+  logBeckAddCustomEmotion,
+  logBeckAddCustomSensation,
 };

@@ -22,6 +22,7 @@ import {
 import {formatDate, formatDay, getTime} from '../../utils/date/helpers';
 import {subDays, isToday, isYesterday, parseISO} from 'date-fns';
 import {DiaryDataContext} from '../../context';
+import logEvents from '../../services/logEvents';
 
 export default ({onChange, onSubmit, data, id}) => {
   const [diaryData, setDiaryData] = useContext(DiaryDataContext);
@@ -68,6 +69,7 @@ export default ({onChange, onSubmit, data, id}) => {
     setListWhere([...listWhere, where]);
     // select it by default
     handleClickWhere(where);
+    logEvents.logBeckAddCustomWhere(where);
   };
   const addNewWho = async (newWho) => {
     // store the new 'who' value for next times
@@ -76,6 +78,7 @@ export default ({onChange, onSubmit, data, id}) => {
     setListWho([...listWho, newWho]);
     // select it by default
     handleClickWho(newWho);
+    logEvents.logBeckAddCustomWho(newWho);
   };
 
   // handle remove value, remove of the list and unselect it if needed
@@ -121,6 +124,7 @@ export default ({onChange, onSubmit, data, id}) => {
   const [timeSelected, setTimeSelected] = useState();
 
   useEffect(() => {
+    logEvents.logBeckStepOpen(0);
     setListWhereFromStorage();
     setListWhoFromStorage();
     const now = new Date(Date.now());
