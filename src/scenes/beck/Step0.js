@@ -38,6 +38,7 @@ export default ({onChange, onSubmit, data, id}) => {
 
   //handlers click
   const handleClickWhere = (where) => {
+    if (where === whereSelected) where = null;
     setWhereSelected(where);
     onChange({where});
   };

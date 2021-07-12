@@ -31,6 +31,7 @@ export default ({onChange, onSubmit, data}) => {
 
   //handlers
   const handleClickMainEmotion = (emotion) => {
+    if (emotion === mainEmotionSelected) emotion = null;
     setMainEmotionSelected(emotion);
     onChange({mainEmotion: emotion});
   };
