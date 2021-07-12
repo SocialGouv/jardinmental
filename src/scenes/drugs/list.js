@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
   },
   buttonWrapper: {
     position: 'absolute',
-    bottom: 10,
+    bottom: 20,
     left: 10,
   },
   drug: {
