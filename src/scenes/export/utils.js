@@ -476,10 +476,16 @@ const formatHtmlTable = async (diaryData) => {
                       !NOTES?.notesSymptoms &&
                       !NOTES?.notesToxic &&
                       becks &&
-                      Object.keys(becks)?.length === 0
+                      Object.keys(becks)?.filter(
+                        (id) =>
+                          becks[id].mainEmotion &&
+                          becks[id].mainEmotionIntensity,
+                      )?.length === 0
                     ) {
                       return '';
                     }
+                    console.log(becks);
+                    console.log(Object.keys(becks)?.length);
                     return `
                       <p style="margin-top: 35px;">${strDate
                         .split('-')
