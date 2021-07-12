@@ -16,8 +16,24 @@ export default ({
 
   const handleChange = (e) => {
     setTimePickerVisible(false);
+    if (!e) onChange(null);
     const v = getTime(e);
     onChange(v);
+  };
+
+  const timeStringToISODate = (timeString) => {
+    if (!timeString) return null;
+    const date = new Date();
+    const [hours, minutes] = timeString.split(':');
+    date.setHours(hours);
+    date.setMinutes(minutes);
+    return date;
+  };
+
+  const displayOnlyHourAndMinute = (timeString) => {
+    if (!timeString) return null;
+    const [hours, minutes] = timeString.split(':');
+    return `${hours}:${minutes}`;
   };
 
   return (
@@ -35,7 +51,9 @@ export default ({
         ) : null}
         <View style={styles.selectContainer}>
           {value ? (
-            <Text style={[styles.text, styles.value]}>{value}</Text>
+            <Text style={[styles.text, styles.value]}>
+              {displayOnlyHourAndMinute(value)}
+            </Text>
           ) : (
             <Text style={[styles.text, styles.placeholder]}>{placeholder}</Text>
           )}
@@ -52,7 +70,7 @@ export default ({
           visible={timePickerVisible}
           selectDate={handleChange}
           headerTextIOS="Choisir l'heure"
-          value={value}
+          value={timeStringToISODate(value)}
         />
       </View>
     </TouchableOpacity>

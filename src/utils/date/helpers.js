@@ -75,7 +75,7 @@ export const formatDate = (d) => {
 };
 
 export const getTime = (d) => {
-  if (!d) return '-';
+  if (!d) return null;
   return d.toLocaleTimeString('fr-FR', {
     hour: '2-digit',
     minute: '2-digit',
