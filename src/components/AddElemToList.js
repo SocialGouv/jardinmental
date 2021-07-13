@@ -71,5 +71,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     textAlign: 'left',
     color: colors.DARK_BLUE,
+    flex: 1,
   },
 });
