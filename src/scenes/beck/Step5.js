@@ -45,6 +45,7 @@ export default ({onChange, onSubmit, data}) => {
         value={argumentProsSelected}
         placeholder="Message..."
         style={styleBeck.textArea}
+        textAlignVertical={'top'}
       />
       <Text style={styleBeck.title}>Arguments en défaveur de votre pensée</Text>
       <Text style={styleBeck.subtitle}>
@@ -58,6 +59,7 @@ export default ({onChange, onSubmit, data}) => {
         value={argumentConsSelected}
         placeholder="Message..."
         style={styleBeck.textArea}
+        textAlignVertical={'top'}
       />
       <Text style={styleBeck.title}>Pensée plus nuancée/adaptée</Text>
       <Text style={styleBeck.subtitle}>
@@ -72,6 +74,7 @@ export default ({onChange, onSubmit, data}) => {
         value={nuancedThoughtsSelected}
         placeholder="Message..."
         style={styleBeck.textArea}
+        textAlignVertical={'top'}
       />
       <Separator style={styleBeck.separator} />
       <Text style={styleBeck.title}>

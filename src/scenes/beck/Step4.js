@@ -43,6 +43,7 @@ export default ({onChange, onSubmit, data}) => {
         value={actionsSelected}
         placeholder="J'ai fait..."
         style={styleBeck.textArea}
+        textAlignVertical={'top'}
       />
       <Text style={styleBeck.title}>Quels résultats a eu ce comportement?</Text>
       <Text style={styleBeck.subtitle}>
@@ -56,6 +57,7 @@ export default ({onChange, onSubmit, data}) => {
         value={consequencesForYouSelected}
         placeholder="Message..."
         style={styleBeck.textArea}
+        textAlignVertical={'top'}
       />
       <Text style={styleBeck.title}>
         Quelle a été la réaction de votre entourage ?
@@ -73,6 +75,7 @@ export default ({onChange, onSubmit, data}) => {
         value={consequencesForRelativesSelected}
         placeholder="Message..."
         style={styleBeck.textArea}
+        textAlignVertical={'top'}
       />
       <Button
         title="Continuer"

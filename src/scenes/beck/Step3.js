@@ -45,6 +45,7 @@ export default ({onChange, onSubmit, data}) => {
         value={thoughtsBeforeMainEmotionSelected}
         placeholder="Mes pensées..."
         style={styleBeck.textArea}
+        textAlignVertical={'top'}
       />
       <Separator style={styleBeck.separator} />
       <Text style={styleBeck.title}>
@@ -69,6 +70,7 @@ export default ({onChange, onSubmit, data}) => {
         value={memoriesSelected}
         placeholder="Message..."
         style={styleBeck.textArea}
+        textAlignVertical={'top'}
       />
       <Button
         title="Continuer"
