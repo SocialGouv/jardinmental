@@ -1,4 +1,4 @@
-import React, {useContext, useState, useEffect} from 'react';
+import React, {useContext, useState, useEffect, useRef} from 'react';
 import {View, StyleSheet, SafeAreaView, ScrollView} from 'react-native';
 
 import Text from '../../components/MyText';
@@ -19,11 +19,19 @@ import Step4 from './Step4';
 import Step5 from './Step5';
 
 export default ({navigation, route}) => {
+  const scrollRef = useRef();
   const [step, setStep] = useState(0);
   const [beck, setBeck] = useState({});
   const [originalBeckDate, setOriginalBeckDate] = useState(null);
   const [id, setId] = useState();
   const [diaryData, setDiaryData] = useContext(DiaryDataContext);
+
+  useEffect(() => {
+    scrollRef.current?.scrollTo({
+      y: 0,
+      animated: true,
+    });
+  }, [step]);
 
   useEffect(() => {
     setBeck(route?.params?.beck);
@@ -129,6 +137,7 @@ export default ({navigation, route}) => {
       </View>
 
       <ScrollView
+        ref={scrollRef}
         keyboardShouldPersistTaps="handled"
         style={styles.container}
         contentContainerStyle={styles.scrollContainer}>
