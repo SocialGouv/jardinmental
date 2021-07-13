@@ -25,7 +25,13 @@ export default ({navigation}) => {
     const alertMessage = v
       ? 'Les colonnes de Beck sont activées sur cet appareil.'
       : 'Les colonnes de Beck sont désactivées sur cet appareil.';
-    Alert.alert(alertTitle, alertMessage);
+    Alert.alert(alertTitle, alertMessage, [
+      {
+        text: 'Retourner au journal',
+        onPress: () => navigation.navigate('tabs'),
+        style: 'default',
+      },
+    ]);
     await localStorage.setIsBeckActivated(v);
     logEvents.logActivateBeck(v);
     setIsBeckActivated(v);

@@ -63,6 +63,13 @@ const Export = ({navigation}) => {
       Alert.alert(
         'Mail envoyé !',
         `Retrouvez vos données sur votre boîte mail : ${mail}`,
+        [
+          {
+            text: 'Retourner au journal',
+            onPress: () => navigation.navigate('tabs'),
+            style: 'default',
+          },
+        ],
       );
     } else {
       console.log(res);
