@@ -131,6 +131,11 @@ const Drugs = ({navigation, route}) => {
               onChangeText={handleFilter}
               styleContainer={{marginHorizontal: 10}}
             />
+            {filteredList?.length === 0 ? (
+              <Text style={styles.noResult}>
+                Aucun résultat pour la recherche "{filter}"
+              </Text>
+            ) : null}
             {filteredList?.map((e, index) => (
               <View
                 key={index}
@@ -255,6 +260,13 @@ const styles = StyleSheet.create({
   },
   checkbox: {
     marginHorizontal: 10,
+  },
+  noResult: {
+    color: '#a3a3a3',
+    fontSize: 16,
+    fontWeight: '400',
+    fontStyle: 'italic',
+    textAlign: 'center',
   },
 });
 
