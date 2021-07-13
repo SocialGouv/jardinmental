@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View, Dimensions} from 'react-native';
+import {StyleSheet, View, Dimensions, TouchableOpacity} from 'react-native';
 import Svg, {Circle, Line, G} from 'react-native-svg';
 import {colors} from '../../utils/colors';
 import {colorsMap} from '../../utils/constants';
@@ -62,16 +62,6 @@ const Chart = ({
             {''.padEnd(300, '-')}
           </Text>
         ))}
-      <View style={styles.days}>
-        {days.map((day, index) => (
-          <Text
-            key={day}
-            style={styles.day}
-            onPress={() => (onPress ? onPress(index) : null)}>
-            {day}
-          </Text>
-        ))}
-      </View>
       <Svg
         style={styles.svgContainer}
         viewBox={`0 0 ${chartWidth} ${chartHeight}`}>
@@ -128,6 +118,15 @@ const Chart = ({
           })}
         </G>
       </Svg>
+      <View style={styles.days}>
+        {days.map((day, index) => (
+          <TouchableOpacity
+            key={day}
+            onPress={() => (onPress ? onPress(index) : null)}>
+            <Text style={styles.day}>{day}</Text>
+          </TouchableOpacity>
+        ))}
+      </View>
     </View>
   </View>
 );
