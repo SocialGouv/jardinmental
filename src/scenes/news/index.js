@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {StyleSheet, SafeAreaView, ScrollView} from 'react-native';
 
 import {colors} from '../../utils/colors';
@@ -16,16 +16,39 @@ export const getBadgeNotesVersion = async () => {
 export const LAST_NOTES_VERSION = '1.14';
 
 export default ({navigation}) => {
+  useEffect(() => {
+    (async () => {
+      await localStorage.setNotesVersion(LAST_NOTES_VERSION);
+    })();
+  }, []);
+
   return (
     <SafeAreaView style={styles.safe}>
       <BackButton onPress={navigation.goBack} />
-
       <ScrollView
         style={styles.cgu}
         contentContainerStyle={styles.scrollContainer}>
         <Card title="Les colonnes de Beck !" version="v1.14" date="07/2021">
           <Item>
-            <Text style={styles.text}>blabla </Text>
+            <Text style={styles.text}>
+              Apprenez à <Text style={styles.bold}>identifier</Text>,{' '}
+              <Text style={styles.bold}>comprendre</Text> et{' '}
+              <Text style={styles.bold}>gérer</Text> vos pensées et vos emotions
+              au quotidien.
+            </Text>
+          </Item>
+          <Item>
+            <Text style={styles.text}>
+              Cette nouvelle fonctionnalité vous permet de mieux identifer des{' '}
+              <Text style={styles.bold}>situations</Text> et vos{' '}
+              <Text style={styles.bold}>émotions</Text> qui en découlent.
+            </Text>
+          </Item>
+          <Item>
+            <Text style={styles.text}>
+              Les colonnes de Beck sont activables/désactivables depuis les{' '}
+              <Text style={styles.bold}>paramètres</Text>
+            </Text>
           </Item>
         </Card>
         <Card
