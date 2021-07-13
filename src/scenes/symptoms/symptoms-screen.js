@@ -121,6 +121,7 @@ const SymptomScreen = ({navigation, route}) => {
       </View>
 
       <ScrollView
+        keyboardShouldPersistTaps="handled"
         style={styles.container}
         contentContainerStyle={styles.scrollContainer}>
         <Text style={styles.title}>

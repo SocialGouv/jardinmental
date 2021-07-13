@@ -121,7 +121,7 @@ const Drugs = ({navigation, route}) => {
           style={styles.filter}
         />
       </View>
-      <ScrollView style={styles.container}>
+      <ScrollView style={styles.container} keyboardShouldPersistTaps="handled">
         {!filteredList ? (
           <Text>Chargement</Text>
         ) : (

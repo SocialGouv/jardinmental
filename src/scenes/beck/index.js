@@ -129,6 +129,7 @@ export default ({navigation, route}) => {
       </View>
 
       <ScrollView
+        keyboardShouldPersistTaps="handled"
         style={styles.container}
         contentContainerStyle={styles.scrollContainer}>
         <Text style={styles.mainTitle}>{BeckStepTitles[step]}</Text>
