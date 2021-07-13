@@ -46,6 +46,7 @@ const Calendar = ({navigation}) => {
   const chartDates = getArrayOfDates({startDate: firstDay, numberOfDays: 6});
 
   const displayOnlyRequest = (categoryId, dayIndex) => {
+    if (Date.parse(new Date(chartDates[dayIndex])) > Date.now()) return; // if clicked day is in the future, don't display it
     navigation.navigate('chart-day', {
       day: chartDates[dayIndex],
       categoryId,
