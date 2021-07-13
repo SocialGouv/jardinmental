@@ -9,6 +9,7 @@ import StepIndicator from '../../components/StepIndicator';
 import {DiaryDataContext} from '../../context';
 import {alertNoDataYesterday} from '../survey/survey-data';
 import {BeckStepTitles} from '../../utils/constants';
+import {deleteBeckfromDiaryData} from '../../utils';
 
 import Step0 from './Step0';
 import Step1 from './Step1';
@@ -20,17 +21,29 @@ import Step5 from './Step5';
 export default ({navigation, route}) => {
   const [step, setStep] = useState(0);
   const [beck, setBeck] = useState({});
+  const [originalBeckDate, setOriginalBeckDate] = useState(null);
   const [id, setId] = useState();
   const [diaryData, setDiaryData] = useContext(DiaryDataContext);
 
   useEffect(() => {
     setBeck(route?.params?.beck);
     setId(route?.params?.beckId);
+    setOriginalBeckDate(route?.params?.beck?.date);
   }, [route?.params?.beck]);
 
   const updateBeck = (e) => setBeck({...beck, ...e});
   const save = () => {
     if (!beck?.date) return;
+
+    // delete from the orignal date if there is one
+    if (originalBeckDate && originalBeckDate !== beck?.date)
+      deleteBeckfromDiaryData({
+        date: originalBeckDate,
+        beckId: id,
+        diaryData,
+        setDiaryData,
+      });
+
     // save progression
     const survey = diaryData[beck?.date] || {};
     const becks = survey?.becks || {};

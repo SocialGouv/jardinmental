@@ -8,11 +8,7 @@ import SelectTimeComponent from './SelectTimeComponent';
 import styleBeck from '../../styles/beck';
 import Separator from '../../components/Separator';
 import Button from '../../components/Button';
-import {
-  toggleSelectedInArray,
-  toggleState,
-  deleteBeckfromDiaryData,
-} from '../../utils';
+import {toggleSelectedInArray, toggleState} from '../../utils';
 import localStorage from '../../utils/localStorage';
 import AddElemToList from '../../components/AddElemToList';
 import {
@@ -21,12 +17,9 @@ import {
 } from '../../utils/constants';
 import {formatDate, formatDay, getTime} from '../../utils/date/helpers';
 import {subDays, isToday, isYesterday, parseISO} from 'date-fns';
-import {DiaryDataContext} from '../../context';
 import logEvents from '../../services/logEvents';
 
 export default ({onChange, onSubmit, data, id}) => {
-  const [diaryData, setDiaryData] = useContext(DiaryDataContext);
-
   // lists that will be displayed
   const [listWhere, setListWhere] = useState();
   const [listWhen, setListWhen] = useState();
@@ -168,16 +161,7 @@ export default ({onChange, onSubmit, data, id}) => {
         <SelectDateComponent
           placeholder="Choisir la date"
           iconName="CalendarSvg"
-          onChange={(date) => {
-            if (date !== data?.date)
-              deleteBeckfromDiaryData({
-                date: data?.date,
-                beckId: id,
-                diaryData,
-                setDiaryData,
-              });
-            onChange({date});
-          }}
+          onChange={(date) => onChange({date})}
           styleContainer={styles.selectDateComponentContainer}
           value={dateSelected}
           items={listWhen}
