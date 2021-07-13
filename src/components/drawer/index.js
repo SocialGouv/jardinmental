@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
-  TouchableOpacity,
   Platform,
   Dimensions,
   View,
@@ -13,7 +12,7 @@ import Modal from 'react-native-modal';
 import DrawerItem from './drawer-item';
 import {needUpdate} from '../../services/versionChecker';
 import localStorage from '../../utils/localStorage';
-import {getBadgeNotesVersion, LAST_NOTES_VERSION} from '../../scenes/news';
+import {getBadgeNotesVersion} from '../../scenes/news';
 
 export default ({navigation, visible, onClick}) => {
   const [isVisible, setIsVisible] = useState();
@@ -57,10 +56,7 @@ export default ({navigation, visible, onClick}) => {
               title="Nouveautés"
               path="news"
               navigation={navigation}
-              onClick={async () => {
-                await localStorage.setNotesVersion(LAST_NOTES_VERSION);
-                onClick();
-              }}
+              onClick={onClick}
               icon="NewsSvg"
             />
             <DrawerItem
