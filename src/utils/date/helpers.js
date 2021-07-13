@@ -81,3 +81,18 @@ export const getTime = (d) => {
     minute: '2-digit',
   });
 };
+
+export const timeStringToISODate = (timeString) => {
+  if (!timeString) return null;
+  const date = new Date();
+  const [hours, minutes] = timeString.split(':');
+  date.setHours(hours);
+  date.setMinutes(minutes);
+  return date;
+};
+
+export const displayOnlyHourAndMinute = (timeString) => {
+  if (!timeString) return null;
+  const [hours, minutes] = timeString.split(':');
+  return `${hours}:${minutes}`;
+};

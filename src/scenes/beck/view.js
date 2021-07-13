@@ -13,7 +13,7 @@ import Button from '../../components/Button';
 import Icon from '../../components/Icon';
 import BackButton from '../../components/BackButton';
 import {colors} from '../../utils/colors';
-import {formatDate} from '../../utils/date/helpers';
+import {formatDate, displayOnlyHourAndMinute} from '../../utils/date/helpers';
 import TextTag from '../../components/TextTag';
 import {BeckStepTitles} from '../../utils/constants';
 import {DiaryDataContext} from '../../context';
@@ -101,7 +101,7 @@ export default ({navigation, route}) => {
           <Text style={styleBeck.sectionTitle}>{BeckStepTitles[0]}</Text>
           {date && time && (
             <Text>
-              {formatDate(date)} à {time}
+              {formatDate(date)} à {displayOnlyHourAndMinute(time)}
             </Text>
           )}
           {who?.length && (

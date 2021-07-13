@@ -22,9 +22,8 @@ export default ({navigation, route}) => {
   const [beck, setBeck] = useState({});
   const [id, setId] = useState();
   const [diaryData, setDiaryData] = useContext(DiaryDataContext);
-  console.log(beck);
+
   useEffect(() => {
-    console.log(route.params);
     setBeck(route?.params?.beck);
     setId(route?.params?.beckId);
   }, [route?.params?.beck]);

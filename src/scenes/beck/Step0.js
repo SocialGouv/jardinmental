@@ -140,17 +140,24 @@ export default ({onChange, onSubmit, data, id}) => {
   }, []);
 
   useEffect(() => {
-    const now = new Date(Date.now());
     setWhereSelected(data?.where);
     setWhosSelected(data?.who || []);
+  }, [data?.where, data?.who]);
+
+  useEffect(() => {
+    const now = new Date(Date.now());
     setDateSelected(data?.date || formatDay(now));
+  }, [data?.date]);
+
+  useEffect(() => {
+    const now = new Date(Date.now());
     if (data?.time) {
-      setTimeSelected(data?.time);
+      setTimeSelected(data?.time || getTime(now));
     } else {
       setTimeSelected(getTime(now));
       onChange({time: getTime(now)});
     }
-  }, [data]);
+  }, [data?.time]);
 
   return (
     <View style={styles.safe}>

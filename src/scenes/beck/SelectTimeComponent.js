@@ -2,7 +2,11 @@ import React, {useState} from 'react';
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import {colors} from '../../utils/colors';
 import Icon from '../../components/Icon';
-import {getTime} from '../../utils/date/helpers';
+import {
+  getTime,
+  timeStringToISODate,
+  displayOnlyHourAndMinute,
+} from '../../utils/date/helpers';
 import TimePicker from '../../components/timePicker';
 import Text from '../../components/MyText';
 
@@ -19,21 +23,6 @@ export default ({
     if (!e) onChange(null);
     const v = getTime(e);
     onChange(v);
-  };
-
-  const timeStringToISODate = (timeString) => {
-    if (!timeString) return null;
-    const date = new Date();
-    const [hours, minutes] = timeString.split(':');
-    date.setHours(hours);
-    date.setMinutes(minutes);
-    return date;
-  };
-
-  const displayOnlyHourAndMinute = (timeString) => {
-    if (!timeString) return null;
-    const [hours, minutes] = timeString.split(':');
-    return `${hours}:${minutes}`;
   };
 
   return (
