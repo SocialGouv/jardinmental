@@ -3,29 +3,19 @@ import {displayedCategories} from '../../utils/constants';
 import {getArrayOfDates} from '../../utils/date/helpers';
 import localStorage from '../../utils/localStorage';
 import {getDrugListWithLocalStorage} from '../../utils/drugs-list';
-import beck from '../../utils/localStorage/beck';
 
 // methods
 
-const mapImagesToState = (iconType) => {
-  switch (iconType) {
-    case 'VeryGoodSvg':
-      return 'https://monsuivipsy.s3-eu-west-1.amazonaws.com/veryGood.png';
-    case 'GoodSvg':
-      return 'https://monsuivipsy.s3-eu-west-1.amazonaws.com/good.png';
-    case 'MiddleSvg':
-      return 'https://monsuivipsy.s3-eu-west-1.amazonaws.com/middle.png';
-    case 'BadSvg':
-      return 'https://monsuivipsy.s3-eu-west-1.amazonaws.com/bad.png';
-    case 'VeryBadSvg':
-      return 'https://monsuivipsy.s3-eu-west-1.amazonaws.com/veryBad.png';
-    case 'Notes':
-      return 'https://monsuivipsy.s3-eu-west-1.amazonaws.com/notes.png';
-  }
-};
-
 const colorsValue = ['#FFC0C0', '#FCD0A7', '#FCE285', '#F0F277', '#E2FA80'];
 const colorsText = ['#b86564', '#ba8553', '#ab9237', '#a1a06e', '#9ab037'];
+
+const hasNotes = (notes) =>
+  !!notes &&
+  ((typeof notes === 'string' && notes) || //retro compatibility
+    (typeof notes === 'object' &&
+      (notes?.notesEvents || notes?.notesSymptoms || notes?.notesToxic)));
+
+const hasBeck = (becks) => becks && Object.keys(becks)?.length > 0;
 
 // GENERATORS
 
@@ -52,7 +42,12 @@ const generateTime = (firstDay, today) => {
   `;
 };
 
-const generateBar = (value, height, color = colors.LIGHT_BLUE) => {
+const generateBar = (
+  value,
+  height,
+  backgroundColor = 'grey',
+  textColor = 'white',
+) => {
   return `<td style="vertical-align: bottom">
     <table
       cellpadding="0"
@@ -89,10 +84,10 @@ const generateBar = (value, height, color = colors.LIGHT_BLUE) => {
                       width: 100%;
                       max-width: 100%;
                       vertical-align: middle;
-                      background-color: ${colorsValue[value - 1]};
+                      background-color: ${backgroundColor};
                       text-align: center;
                       font-size: small;
-                      color:${colorsText[value - 1]};
+                      color:${textColor};
                       word-wrap: break-word; 
                     "
                   >
@@ -108,14 +103,7 @@ const generateBar = (value, height, color = colors.LIGHT_BLUE) => {
 };
 
 const generateNote = (notes) => {
-  if (
-    !notes ||
-    (typeof notes === 'string' && !notes) || //retro compatibility
-    (typeof notes === 'object' &&
-      !notes?.notesEvents &&
-      !notes?.notesSymptoms &&
-      !notes?.notesToxic)
-  ) {
+  if (!hasNotes(notes)) {
     return '';
   }
 
@@ -152,7 +140,7 @@ const generateNote = (notes) => {
 };
 
 const generateBeck = (beck) => {
-  if (!beck || !(beck?.mainEmotion && beck?.mainEmotionIntensity)) {
+  if (!beck) {
     return '';
   }
 
@@ -206,7 +194,8 @@ const generateBeck = (beck) => {
   const renderBeck = (b) => {
     return `
     ${renderTitle('La situation')}
-    ${renderItem(`${b?.date} à ${b?.time}`)}
+    ${renderItem(b?.date, 'Le')}
+    ${renderItem(b?.time, 'À')}
     ${renderListItem(b?.who, 'Avec')}
     ${renderItem(b?.where)}
     ${renderItem(b?.what, 'Description factuelle')}
@@ -398,7 +387,8 @@ const formatHtmlTable = async (diaryData) => {
                                 return generateBar(
                                   value,
                                   height,
-                                  colors.LIGHT_BLUE,
+                                  colorsValue[value - 1],
+                                  colorsText[value - 1],
                                 );
                               })
                               .join('')}
@@ -471,21 +461,11 @@ const formatHtmlTable = async (diaryData) => {
                     }
                     const {NOTES, becks} = diaryData[strDate];
                     // if there no NOTES.x => display nothing
-                    if (
-                      !NOTES?.notesEvents &&
-                      !NOTES?.notesSymptoms &&
-                      !NOTES?.notesToxic &&
-                      becks &&
-                      Object.keys(becks)?.filter(
-                        (id) =>
-                          becks[id].mainEmotion &&
-                          becks[id].mainEmotionIntensity,
-                      )?.length === 0
-                    ) {
+                    console.log(hasNotes(NOTES));
+                    console.log(hasBeck(becks));
+                    if (!hasNotes(NOTES) && !hasBeck(becks)) {
                       return '';
                     }
-                    console.log(becks);
-                    console.log(Object.keys(becks)?.length);
                     return `
                       <p style="margin-top: 35px;">${strDate
                         .split('-')
@@ -498,13 +478,7 @@ const formatHtmlTable = async (diaryData) => {
                           border: 1px solid #ebedf2;
                           background-color: #f8f9fb;
                         ">
-                          ${
-                            NOTES?.notesEvents ||
-                            NOTES?.notesSymptoms ||
-                            NOTES?.notesToxic
-                              ? generateNote(NOTES)
-                              : ''
-                          }
+                          ${generateNote(NOTES)}
                           ${
                             becks
                               ? Object.keys(becks)
