@@ -7,29 +7,25 @@ import beck from '../../utils/localStorage/beck';
 
 // methods
 
+const mapImagesToState = (iconType) => {
+  switch (iconType) {
+    case 'VeryGoodSvg':
+      return 'https://monsuivipsy.s3-eu-west-1.amazonaws.com/veryGood.png';
+    case 'GoodSvg':
+      return 'https://monsuivipsy.s3-eu-west-1.amazonaws.com/good.png';
+    case 'MiddleSvg':
+      return 'https://monsuivipsy.s3-eu-west-1.amazonaws.com/middle.png';
+    case 'BadSvg':
+      return 'https://monsuivipsy.s3-eu-west-1.amazonaws.com/bad.png';
+    case 'VeryBadSvg':
+      return 'https://monsuivipsy.s3-eu-west-1.amazonaws.com/veryBad.png';
+    case 'Notes':
+      return 'https://monsuivipsy.s3-eu-west-1.amazonaws.com/notes.png';
+  }
+};
+
 const colorsValue = ['#FFC0C0', '#FCD0A7', '#FCE285', '#F0F277', '#E2FA80'];
 const colorsText = ['#b86564', '#ba8553', '#ab9237', '#a1a06e', '#9ab037'];
-
-let DAYS = 30;
-
-const hasNotes = (notes) =>
-  notes &&
-  ((typeof notes === 'string' && notes) || //retro compatibility
-    (typeof notes === 'object' &&
-      (notes?.notesEvents || notes?.notesSymptoms || notes?.notesToxic)));
-
-const hasBeck = (becks) =>
-  becks &&
-  Object.keys(becks)?.filter(
-    (id) => becks[id].mainEmotion && becks[id].mainEmotionIntensity,
-  )?.length === 0;
-
-const diffInDays = (d1, d2) => {
-  var t2 = d2.getTime();
-  var t1 = d1.getTime();
-
-  return Math.abs(parseInt((t2 - t1) / (24 * 3600 * 1000)));
-};
 
 // GENERATORS
 
@@ -56,12 +52,7 @@ const generateTime = (firstDay, today) => {
   `;
 };
 
-const generateBar = (
-  value,
-  height,
-  backgroundColor = 'grey',
-  textColor = 'white',
-) => {
+const generateBar = (value, height, color = colors.LIGHT_BLUE) => {
   return `<td style="vertical-align: bottom">
     <table
       cellpadding="0"
@@ -98,10 +89,10 @@ const generateBar = (
                       width: 100%;
                       max-width: 100%;
                       vertical-align: middle;
-                      background-color: ${backgroundColor};
+                      background-color: ${colorsValue[value - 1]};
                       text-align: center;
                       font-size: small;
-                      color:${textColor};
+                      color:${colorsText[value - 1]};
                       word-wrap: break-word; 
                     "
                   >
@@ -117,7 +108,14 @@ const generateBar = (
 };
 
 const generateNote = (notes) => {
-  if (!hasNotes(notes)) {
+  if (
+    !notes ||
+    (typeof notes === 'string' && !notes) || //retro compatibility
+    (typeof notes === 'object' &&
+      !notes?.notesEvents &&
+      !notes?.notesSymptoms &&
+      !notes?.notesToxic)
+  ) {
     return '';
   }
 
@@ -260,26 +258,12 @@ const generateBeck = (beck) => {
 };
 
 const formatHtmlTable = async (diaryData) => {
-  const MAX_DAY = 30;
   const today = new Date();
-  const todayMinusMaxDay = new Date();
-  todayMinusMaxDay.setDate(today.getDate() - MAX_DAY);
-
   const firstDay = new Date();
-  const firstDayDiaryData = Object.keys(diaryData)
-    .map((strDate) => ({strDate, date: new Date(strDate)}))
-    .sort((item1, item2) => item1.date - item2.date)[0];
-
-  if (firstDayDiaryData.date.getTime() > todayMinusMaxDay.getTime())
-    firstDay.setTime(firstDayDiaryData.date.getTime());
-  else firstDay.setDate(today.getDate() - MAX_DAY);
-
-  const diffDays = diffInDays(firstDay, today);
-  DAYS = diffDays;
-
+  firstDay.setDate(today.getDate() - 30);
   const chartDates = getArrayOfDates({
     startDate: firstDay,
-    numberOfDays: diffDays,
+    numberOfDays: 30,
   });
 
   const computeChartData = (categoryId) => {
@@ -389,11 +373,7 @@ const formatHtmlTable = async (diaryData) => {
             }
 
             return `
-              <table width="100%" style="width: 100%; max-width: ${Math.min(
-                // ne pas depasser 100
-                100,
-                Math.max(0, (100 * (DAYS + 1)) / 30), // ne pas depasser 0
-              )}%;">
+              <table width="100%" style="width: 100%; max-width: 100%;">
                 <tbody>
                   <tr>
                     <td>
@@ -418,8 +398,7 @@ const formatHtmlTable = async (diaryData) => {
                                 return generateBar(
                                   value,
                                   height,
-                                  colorsValue[value - 1],
-                                  colorsText[value - 1],
+                                  colors.LIGHT_BLUE,
                                 );
                               })
                               .join('')}
@@ -443,11 +422,7 @@ const formatHtmlTable = async (diaryData) => {
             const res = computeChartDrug(drug);
 
             return `
-              <table width="100%" style="width: 100%; max-width: ${Math.min(
-                // ne pas depasser 100
-                100,
-                Math.max(0, (100 * (DAYS + 1)) / 30), // ne pas depasser 0
-              )}%;">
+              <table width="100%" style="width: 100%; max-width: 100%;">
                 <tbody>
                   <tr>
                     <td>
@@ -495,10 +470,22 @@ const formatHtmlTable = async (diaryData) => {
                       return '';
                     }
                     const {NOTES, becks} = diaryData[strDate];
-
-                    if (!hasNotes(NOTES) && !hasBeck(becks)) {
+                    // if there no NOTES.x => display nothing
+                    if (
+                      !NOTES?.notesEvents &&
+                      !NOTES?.notesSymptoms &&
+                      !NOTES?.notesToxic &&
+                      becks &&
+                      Object.keys(becks)?.filter(
+                        (id) =>
+                          becks[id].mainEmotion &&
+                          becks[id].mainEmotionIntensity,
+                      )?.length === 0
+                    ) {
                       return '';
                     }
+                    console.log(becks);
+                    console.log(Object.keys(becks)?.length);
                     return `
                       <p style="margin-top: 35px;">${strDate
                         .split('-')
@@ -511,7 +498,13 @@ const formatHtmlTable = async (diaryData) => {
                           border: 1px solid #ebedf2;
                           background-color: #f8f9fb;
                         ">
-                          ${generateNote(NOTES)}
+                          ${
+                            NOTES?.notesEvents ||
+                            NOTES?.notesSymptoms ||
+                            NOTES?.notesToxic
+                              ? generateNote(NOTES)
+                              : ''
+                          }
                           ${
                             becks
                               ? Object.keys(becks)
