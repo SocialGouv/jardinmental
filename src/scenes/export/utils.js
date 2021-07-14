@@ -1,6 +1,6 @@
 import {colors} from '../../utils/colors';
 import {displayedCategories} from '../../utils/constants';
-import {getArrayOfDates} from '../../utils/date/helpers';
+import {getArrayOfDates, formatDate} from '../../utils/date/helpers';
 import localStorage from '../../utils/localStorage';
 import {getDrugListWithLocalStorage} from '../../utils/drugs-list';
 
@@ -114,6 +114,8 @@ const generateNote = (notes) => {
           margin: 0;
           margin-left: 20px;
           padding-right: 50px;
+          padding-top: 2px;
+          padding-bottom: 2px;
         ">
       ${i ? `<b>${i} :</b> ` : ''}${n}
     </p>`;
@@ -122,15 +124,17 @@ const generateNote = (notes) => {
   if (typeof notes === 'string') {
     //retro compatibility
     return `
-    <tr class="journal__item-symptom-wrapper">
-      <td>
+    <p style="text-decoration: underline;margin:0;padding:8px">Mes notes</p>
+    <tr class="journal__item-symptom-wrapper" >
+      <td style="padding:10px;">
         ${renderNote(notes)}
       </td>
     </tr>
   `;
   } else {
-    return `<tr class="journal__item-symptom-wrapper">
-      <td>
+    return `<p style="text-decoration: underline;margin:0;padding:8px">Mes notes</p>
+    <tr class="journal__item-symptom-wrapper">  
+      <td style="padding:10px;">
         ${renderNote(notes.notesEvents, 'Évènement')}
         ${renderNote(notes.notesSymptoms, 'Symptôme')}
         ${renderNote(notes.notesToxic, 'Toxique')}
@@ -147,7 +151,6 @@ const generateBeck = (beck) => {
   const renderTitle = (e) => `<p
       style="
           margin: 0;
-          margin-top:20px;
           margin-left: 20px;
           padding-right: 50px;
           color:${colors.DARK_BLUE};
@@ -191,6 +194,8 @@ const generateBeck = (beck) => {
     </p>`;
   };
 
+  const renderSeparator = () => '<div style="height:20px;width:1px;"/>';
+
   const renderBeck = (b) => {
     return `
     ${renderTitle('La situation')}
@@ -199,6 +204,7 @@ const generateBeck = (beck) => {
     ${renderListItem(b?.who, 'Avec')}
     ${renderItem(b?.where)}
     ${renderItem(b?.what, 'Description factuelle')}
+    ${renderSeparator()}
     ${renderTitle('Vos émotions')}
     ${renderItemWithPercentage(
       b?.mainEmotion,
@@ -207,6 +213,7 @@ const generateBeck = (beck) => {
     )}
     ${renderListItem(b?.otherEmotions, 'Autres émotions')}
     ${renderListItem(b?.physicalSensations, 'Sensations')}
+    ${renderSeparator()}
     ${renderTitle('Vos pensées')}
     ${renderItemWithPercentage(
       b?.thoughtsBeforeMainEmotion,
@@ -214,6 +221,7 @@ const generateBeck = (beck) => {
       'Pensée immédiate',
     )}
     ${renderItem(b?.memories, 'Images et souvenirs')}
+    ${renderSeparator()}
     ${renderTitle('Comportement et Résultats')}
     ${renderItem(b?.actions, "Qu'avez-vous fait ?")}
     ${renderItem(b?.consequencesForYou, 'Conséquences pour vous')}
@@ -221,6 +229,7 @@ const generateBeck = (beck) => {
       b?.consequencesForRelatives,
       'Conséquences pour votre entourage',
     )}
+    ${renderSeparator()}
     ${renderTitle('Restructuration')}
     ${renderItem(b?.argumentPros, 'Arguments en faveur')}
     ${renderItem(b?.argumentCons, 'Arguments en défaveur')}
@@ -238,8 +247,9 @@ const generateBeck = (beck) => {
   };
 
   return `
+    <p style="text-decoration: underline;margin:0;padding:8px">Mes colonnes de Beck</p>
     <tr class="journal__item-symptom-wrapper">
-      <td>
+      <td style="padding:10px;">
         ${renderBeck(beck)}
       </td>
     </tr>
@@ -467,18 +477,31 @@ const formatHtmlTable = async (diaryData) => {
                       return '';
                     }
                     return `
-                      <p style="margin-top: 35px;">${strDate
+                      <p style="margin-top: 35px;">${formatDate(strDate)
                         .split('-')
                         .reverse()
                         .join('/')}</p>
                       <table style="
                         border-collapse: collapse;
+                        margin-bottom: 20px;
                       ">
                         <tbody style="
+                          padding:15px;
                           border: 1px solid #ebedf2;
                           background-color: #f8f9fb;
                         ">
                           ${generateNote(NOTES)}
+                        </tbody>
+                      </table>
+                      <table style="
+                        border-collapse: collapse;
+                        margin-bottom: 20px;
+                      ">
+                        <tbody style="
+                          padding:15px;
+                          border: 1px solid #ebedf2;
+                          background-color: #f8f9fb;
+                        ">
                           ${
                             becks
                               ? Object.keys(becks)
