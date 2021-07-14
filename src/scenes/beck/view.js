@@ -99,17 +99,17 @@ export default ({navigation, route}) => {
         contentContainerStyle={styles.scrollContainer}>
         <View style={styles.stepContainer}>
           <Text style={styleBeck.sectionTitle}>{BeckStepTitles[0]}</Text>
-          {date && time && (
+          {date && time ? (
             <Text>
               {formatDate(date)} à {displayOnlyHourAndMinute(time)}
             </Text>
-          )}
-          {who?.length && (
+          ) : null}
+          {who?.length ? (
             <Text>
               Avec <Text style={styles.bold}>{who?.join(', ')}</Text>
             </Text>
-          )}
-          {where && <Text>{where}</Text>}
+          ) : null}
+          {where ? <Text>{where}</Text> : null}
           <ItemText title="Description factuelle" value={what} />
           <View style={styleBeck.XSseparator} />
           <Text style={styleBeck.sectionTitle}>{BeckStepTitles[2]}</Text>

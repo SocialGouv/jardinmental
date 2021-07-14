@@ -1,5 +1,11 @@
 import React, {useState} from 'react';
-import {StyleSheet, View, TouchableOpacity, TextInput} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  TextInput,
+  Keyboard,
+} from 'react-native';
 import {colors} from '../utils/colors';
 import CircledIcon from './CircledIcon';
 
@@ -25,6 +31,7 @@ export default ({
         <TouchableOpacity
           disabled={!value}
           onPress={() => {
+            Keyboard.dismiss();
             onChange(value);
             setValue('');
           }}>
@@ -35,6 +42,7 @@ export default ({
             iconColor={colors.BLUE}
             width={13}
             height={13}
+            opacity={value ? 1 : 0.5}
           />
         </TouchableOpacity>
       </View>
