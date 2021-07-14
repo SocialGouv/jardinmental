@@ -23,6 +23,7 @@ export default ({
       </View>
       <View style={styles.iconContainer}>
         <TouchableOpacity
+          disabled={!value}
           onPress={() => {
             onChange(value);
             setValue('');
