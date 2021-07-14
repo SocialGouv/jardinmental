@@ -98,9 +98,8 @@ const Drugs = ({navigation, route}) => {
     //if there is something in the buffer, alert the user ...
     if (bufferCustomDrugs)
       return confirm({
-        title: 'Êtes-vous sûr de vouloir valider cette selection ?',
-        message:
-          "Il semblerait que vous n'avez pas correctement ajouter votre traitement personnalisé.",
+        title: 'Êtes-vous sûr de vouloir valider cette sélection ?',
+        message: `Il semblerait que vous n'avez pas correctement ajouter votre traitement personnalisé "${bufferCustomDrugs}"`,
         onConfirm: submit,
         onCancel: () => {
           scrollRef.current?.scrollTo({
