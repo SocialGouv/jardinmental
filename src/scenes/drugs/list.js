@@ -1,11 +1,10 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {
   StyleSheet,
   ScrollView,
   SafeAreaView,
   View,
   TextInput,
-  TouchableOpacity,
 } from 'react-native';
 import Text from '../../components/MyText';
 import {colors} from '../../utils/colors';
@@ -16,13 +15,19 @@ import CheckBox from '@react-native-community/checkbox';
 import NPS from '../../services/NPS/NPS';
 import BackButton from '../../components/BackButton';
 import AddElemToList from '../../components/AddElemToList';
+import {confirm} from '../../utils';
+import logEvents from '../../services/logEvents';
+const ELEMENT_HEIGHT = 55;
 
 const Drugs = ({navigation, route}) => {
+  const scrollRef = useRef();
   const [treatment, setTreatment] = useState([]);
   const [filter, setFilter] = useState();
   const [list, setList] = useState();
   const [filteredList, setFilteredList] = useState();
   const [NPSvisible, setNPSvisible] = useState(false);
+  const [bufferCustomDrugs, setBufferCustomDrugs] = useState();
+  const [viewElementIndex, setViewElementIndex] = useState();
 
   useEffect(() => {
     (async () => {
@@ -32,6 +37,14 @@ const Drugs = ({navigation, route}) => {
       }
     })();
   }, []);
+
+  useEffect(() => {
+    if (!viewElementIndex) return;
+    scrollRef.current?.scrollTo({
+      y: viewElementIndex * ELEMENT_HEIGHT,
+      animated: true,
+    });
+  }, [viewElementIndex]);
 
   const cleanString = (s) => {
     let r = s
@@ -81,6 +94,27 @@ const Drugs = ({navigation, route}) => {
     setTreatment(t);
   };
 
+  const handleSubmit = () => {
+    //if there is something in the buffer, alert the user ...
+    if (bufferCustomDrugs)
+      return confirm({
+        title: 'Êtes-vous sûr de vouloir valider cette selection ?',
+        message:
+          "Il semblerait que vous n'avez pas correctement ajouter votre traitement personnalisé.",
+        onConfirm: submit,
+        onCancel: () => {
+          scrollRef.current?.scrollTo({
+            y: 0,
+            animated: true,
+          });
+        },
+        cancelText: 'Retourner à la liste',
+        confirmText: 'Oui, valider quand même',
+      });
+    //... else, submit the treatment
+    else submit();
+  };
+
   const submit = async () => {
     await localStorage.setMedicalTreatment(treatment);
     navigation.navigate('drugs', {treatment});
@@ -92,10 +126,13 @@ const Drugs = ({navigation, route}) => {
     const drug = {id: value, name1: value, values: []};
     await localStorage.addCustomDrug(drug);
     const drugsAfterAddition = await getDrugListWithLocalStorage();
-    setFilteredList(filterAndSortList(drugsAfterAddition));
+    const filteredListAfterAddition = filterAndSortList(drugsAfterAddition);
+    setFilteredList(filteredListAfterAddition);
     setToogleCheckbox(drug, true);
-    // logEvents.logDrugAdd(value);
-    // navigation.navigate('drugs-list', {newDrug: drug});
+    setViewElementIndex(
+      filteredListAfterAddition.map((e) => e.id).indexOf(value),
+    );
+    logEvents.logDrugAdd(value);
   };
 
   const handleFilter = (f) => setFilter(f);
@@ -121,14 +158,18 @@ const Drugs = ({navigation, route}) => {
           style={styles.filter}
         />
       </View>
-      <ScrollView style={styles.container} keyboardShouldPersistTaps="handled">
+      <ScrollView
+        ref={scrollRef}
+        style={styles.container}
+        contentContainerStyle={styles.scrollContainer}
+        keyboardShouldPersistTaps="handled">
         {!filteredList ? (
           <Text>Chargement</Text>
         ) : (
           <>
             <AddElemToList
               onChange={handleAdd}
-              onChangeText={handleFilter}
+              onChangeText={setBufferCustomDrugs}
               styleContainer={{marginHorizontal: 10}}
             />
             {filteredList?.length === 0 ? (
@@ -166,7 +207,7 @@ const Drugs = ({navigation, route}) => {
         )}
       </ScrollView>
       <View style={styles.buttonWrapper}>
-        <Button onPress={submit} title="Valider" />
+        <Button onPress={handleSubmit} title="Valider" />
       </View>
     </SafeAreaView>
   );
@@ -220,6 +261,9 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
   },
+  scrollContainer: {
+    paddingBottom: 80,
+  },
   backButton: {
     fontWeight: '700',
     textDecorationLine: 'underline',
@@ -239,6 +283,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     flex: 1,
+    height: 55,
   },
   item: {
     display: 'flex',

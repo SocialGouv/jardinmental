@@ -13,6 +13,7 @@ export default ({
   onChange = console.log,
   placeholder = 'Ajouter...',
   styleContainer,
+  onChangeText = console.log,
 }) => {
   const [value, setValue] = useState();
 
@@ -20,7 +21,10 @@ export default ({
     <View style={[styles.container, styleContainer]}>
       <View style={styles.inputContainer}>
         <TextInput
-          onChangeText={setValue}
+          onChangeText={(e) => {
+            setValue(e);
+            onChangeText(e);
+          }}
           value={value}
           placeholder={placeholder}
           placeholderTextColor="lightgrey"
@@ -34,6 +38,7 @@ export default ({
             Keyboard.dismiss();
             onChange(value);
             setValue('');
+            onChangeText('');
           }}>
           <CircledIcon
             icon="PlusSvg"
