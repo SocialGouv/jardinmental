@@ -6,7 +6,7 @@ import {colors} from '../../utils/colors';
 const ExportItem = ({onPress}) => (
   <TouchableOpacity onPress={onPress}>
     <View style={styles.container}>
-      <Text style={styles.title}>Colonnes de Beck</Text>
+      <Text style={styles.title}>Activer les colonnes de Beck</Text>
       <Text style={styles.message}>
         Apprenez à identifier, comprendre et gérer vos pensées et vos emotions
         au quotidien.
