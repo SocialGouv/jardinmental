@@ -2,8 +2,6 @@ import React, {useEffect, useState, useRef} from 'react';
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import PatientStateItem from './patient-state-item';
 import {displayedCategories} from '../../utils/constants';
-import NoDataYesterdayDiaryItem from './no-data-yesterday-diary-item';
-import NoDataTodayDiaryItem from './no-data-today-diary-item';
 import {isToday, isYesterday, parseISO} from 'date-fns';
 import NoDataDiaryItem from './no-data-diary-item';
 import Notes from './notes';

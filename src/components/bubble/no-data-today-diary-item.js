@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
-import Text from '../../components/MyText';
-import Button from '../../components/Button';
+import Text from '../MyText';
+import Button from '../Button';
 import {colors} from '../../utils/colors';
 import {formatDay} from '../../utils/date/helpers';
 import logEvents from '../../services/logEvents';

@@ -6,7 +6,7 @@ import NoDataTodayDiaryItem from './no-data-today-diary-item';
 import NoDataYesterdayDiaryItem from './no-data-yesterday-diary-item';
 const ReminderStorageKey = '@Reminder';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {startAtFirstQuestion} from '../survey/survey-data';
+import {startAtFirstQuestion} from '../../scenes/survey/survey-data';
 
 export default ({diaryData, navigation}) => {
   const [reminderItemVisible, setReminderItemVisible] = useState(true);

@@ -12,7 +12,7 @@ import {useContext} from 'react';
 import {DiaryDataContext} from '../../context';
 import localStorage from '../../utils/localStorage';
 import NPS from '../../services/NPS/NPS';
-import Bubble from './bubble';
+import Bubble from '../../components/bubble';
 
 const Diary = ({navigation}) => {
   const [diaryData] = useContext(DiaryDataContext);
