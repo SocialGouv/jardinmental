@@ -1,5 +1,12 @@
 import React, {useContext, useState, useEffect, useRef} from 'react';
-import {View, StyleSheet, SafeAreaView, ScrollView} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  SafeAreaView,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
+} from 'react-native';
 
 import Text from '../../components/MyText';
 import {colors} from '../../utils/colors';
@@ -130,25 +137,29 @@ export default ({navigation, route}) => {
   };
 
   return (
-    <SafeAreaView style={styles.safe}>
-      <View style={styles.buttonsContainer}>
-        <BackButton onPress={previousStep} />
-        <ForwardButton onPress={nextStep} />
-      </View>
-
-      <ScrollView
-        ref={scrollRef}
-        keyboardShouldPersistTaps="handled"
-        style={styles.container}
-        contentContainerStyle={styles.scrollContainer}>
-        <Text style={styles.mainTitle}>{BeckStepTitles[step]}</Text>
-        <Text style={styles.mainDescription}>{renderDescription(step)}</Text>
-        <View style={styles.stepIndicatorContainer}>
-          <StepIndicator numberOfSteps={6} step={step} />
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={styles.safe}
+      keyboardVerticalOffset={10}>
+      <SafeAreaView style={styles.safe}>
+        <View style={styles.buttonsContainer}>
+          <BackButton onPress={previousStep} />
+          <ForwardButton onPress={nextStep} />
         </View>
-        <View style={styles.stepContainer}>{renderStep(step)}</View>
-      </ScrollView>
-    </SafeAreaView>
+        <ScrollView
+          ref={scrollRef}
+          keyboardShouldPersistTaps="handled"
+          style={styles.container}
+          contentContainerStyle={styles.scrollContainer}>
+          <Text style={styles.mainTitle}>{BeckStepTitles[step]}</Text>
+          <Text style={styles.mainDescription}>{renderDescription(step)}</Text>
+          <View style={styles.stepIndicatorContainer}>
+            <StepIndicator numberOfSteps={6} step={step} />
+          </View>
+          <View style={styles.stepContainer}>{renderStep(step)}</View>
+        </ScrollView>
+      </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 };
 
