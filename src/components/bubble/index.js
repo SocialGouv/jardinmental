@@ -26,26 +26,35 @@ export default ({diaryData, navigation}) => {
     }, []),
   );
 
+  const showBubbleSurvey = (day) => {
+    const index = Object.keys(diaryData).sort((a, b) => {
+      a = a.split('/').reverse().join('');
+      b = b.split('/').reverse().join('');
+      return b.localeCompare(a);
+    })[day];
+    if (!diaryData[index]) return true;
+    return (
+      Object.keys(diaryData[index]).filter((key) => key !== 'becks').length ===
+      0
+    );
+  };
+
   const onPressBeck = () => navigation.navigate('activate-beck');
   const onPressReminder = () => navigation.navigate('reminder');
   const onPressExport = () => navigation.navigate('export');
-  const dates = Object.keys(diaryData).sort((a, b) => {
-    a = a.split('/').reverse().join('');
-    b = b.split('/').reverse().join('');
-    return b.localeCompare(a);
-  });
 
-  const today = dates[0];
-  const yesterday = dates[1];
   if (beckItemVisible) return <BeckItem onPress={onPressBeck} />;
-  if (!diaryData[today])
+
+  // show the bubble if there is no info in the index 0 (today)
+  if (showBubbleSurvey(0))
     return (
       <NoDataTodayDiaryItem
         startAtFirstQuestion={startAtFirstQuestion}
         navigation={navigation}
       />
     );
-  if (!diaryData[yesterday])
+  // show the bubble if there is no info in the index 1 (yesterday)
+  if (showBubbleSurvey(1))
     return (
       <NoDataYesterdayDiaryItem
         startAtFirstQuestion={startAtFirstQuestion}
