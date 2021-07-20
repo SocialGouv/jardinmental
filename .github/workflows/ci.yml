@@ -18,14 +18,14 @@ jobs:
           - os: macOS-latest
             kind: ios
 
-    name: build on 12.x (${{ matrix.config.os }})
+    name: build (${{ matrix.config.os }})
     runs-on: ${{ matrix.config.os }}
 
     steps:
-      - name: Set up Node.js 12.x
+      - name: Set up Node.js
         uses: actions/setup-node@v2-beta
         with:
-          node-version: 12.x
+          node-version: 14.x
 
       - name: Get yarn cache directory path
         id: init
