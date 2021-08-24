@@ -63,7 +63,7 @@ export default ({onChange, onSubmit, data}) => {
         Quelle a été la réaction de votre entourage ?
       </Text>
       <Text style={styleBeck.subtitle}>
-        Comment ont réagit les personnes présentes ?
+        Comment ont réagi les personnes présentes ?
       </Text>
       <TextInput
         multiline={true}

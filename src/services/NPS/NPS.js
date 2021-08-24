@@ -27,6 +27,8 @@ const formatText = (useful, reco, feedback, userId) =>
   `
 User: ${userId}
 Comment pouvons-nous vous être encore plus utile: ${feedback}
+Ce service vous a-t-il été utile: ${useful}
+Quelle est la probabilité que vous recommandiez ce service à un ami ou un proche: ${reco}
 `;
 
 const NPSTimeoutMS = __DEV__ ? 1000 * 3 * 100000000 : 1000 * 60 * 60 * 24 * 10;
@@ -217,7 +219,7 @@ class NPS extends React.Component {
   }
 
   renderSecondPage() {
-    const {feedback, sendButton, email} = this.state;
+    const {feedback, sendButton, email, useful, reco} = this.state;
     return (
       <>
         <Text style={styles.topTitle}>
@@ -237,6 +239,24 @@ class NPS extends React.Component {
           multiline
           textAlignVertical="top"
           returnKeyType="next"
+        />
+        <Text style={styles.topSubTitle}>
+          {getCaption('feedback.rate-app.useful')}
+        </Text>
+        <Mark
+          selected={useful}
+          onPress={this.setUseful}
+          bad={getCaption('feedback.rate-app.useful.not')}
+          good={getCaption('feedback.rate-app.useful.extremely')}
+        />
+        <Text style={styles.topSubTitle}>
+          {getCaption('feedback.rate-app.probable')}
+        </Text>
+        <Mark
+          selected={reco}
+          onPress={this.setReco}
+          bad={getCaption('feedback.rate-app.probable.not')}
+          good={getCaption('feedback.rate-app.probable.extremely')}
         />
         {/* <Text style={styles.topSubTitle}>
           {getCaption('feedback.email.description')}
