@@ -8,7 +8,7 @@ const ExportItem = ({onPress}) => (
     <View style={styles.container}>
       <Text style={styles.title}>Activer les colonnes de Beck</Text>
       <Text style={styles.message}>
-        Apprenez à identifier, comprendre et gérer vos pensées et vos emotions
+        Apprenez à identifier, comprendre et gérer vos pensées et vos émotions
         au quotidien.
       </Text>
     </View>

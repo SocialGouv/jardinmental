@@ -55,7 +55,7 @@ export default ({navigation}) => {
         <View style={styles.description}>
           <Text style={styles.subTitle}>
             Apprenez à identifier, comprendre et gérer vos pensées et vos
-            emotions au quotidien.
+            émotions au quotidien.
           </Text>
         </View>
         {isBeckActivated ? (

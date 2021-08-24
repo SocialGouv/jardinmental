@@ -1,6 +1,6 @@
 import React from 'react';
 import LegalScreen from './legal-screen';
-import {Linking, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 import Text from '../../components/MyText';
 
 const LegalMentions = ({navigation}) => {
@@ -10,10 +10,6 @@ const LegalMentions = ({navigation}) => {
 
   const goToCGU = () => {
     navigation.navigate('cgu');
-  };
-
-  const goToGitHub = () => {
-    Linking.openURL('https://github.com/SocialGouv/monsuivipsy');
   };
 
   const content = (

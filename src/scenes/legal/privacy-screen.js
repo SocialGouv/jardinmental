@@ -1,19 +1,9 @@
 import React from 'react';
 import LegalScreen from './legal-screen';
-import {StyleSheet, Linking, View} from 'react-native';
+import {StyleSheet} from 'react-native';
 import Text from '../../components/MyText';
 
 const Privacy = ({navigation}) => {
-  const sendMail = () => {
-    Linking.openURL('mailto:monsuivipsy@fabrique.social.gouv.fr');
-  };
-
-  const goToCnil = () => {
-    Linking.openURL(
-      'https://www.cnil.fr/fr/modele/courrier/exercer-son-droit-dacces',
-    );
-  };
-
   const goToLegalMentions = () => {
     navigation.navigate('legal-mentions');
   };
@@ -35,8 +25,8 @@ const Privacy = ({navigation}) => {
       <Text style={styles.title}>Finalités</Text>
       {'\n\n'}
       L’application « MonSuiviPsy » vise à suivre l’évolution des symptômes et
-      des effets indésirables de traitements. Elle permet notamment de :
-      {'\n'}- La saisie de notes libres
+      des effets indésirables de traitements. Elle permet notamment :{'\n'}- La
+      saisie de notes libres
       {'\n'}- La saisie de données via un questionnaire.
       {'\n'}- L&#39;export de données saisies par mail à toute personne choisie
       par l&#39;utilisateur.
@@ -213,38 +203,6 @@ const Privacy = ({navigation}) => {
       title="Politique de confidentialité"
       content={content}
     />
-  );
-};
-
-const Table = ({header, data}) => {
-  console.log(header);
-  renderRow = (datum, header = false) => {
-    return (
-      <View
-        style={{
-          flex: 1,
-          alignSelf: 'stretch',
-          flexDirection: 'row',
-        }}>
-        {datum.map((e) => {
-          console.log(e);
-          return (
-            <View style={{flex: 1, alignSelf: 'stretch'}}>
-              <Text>{e}</Text>
-            </View>
-          );
-        })}
-      </View>
-    );
-  };
-  return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      {renderRow(header, true)}
-      {data.map((datum) => {
-        // This will render a row for each data element.
-        return renderRow(datum);
-      })}
-    </View>
   );
 };
 

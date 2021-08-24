@@ -156,7 +156,7 @@ export default ({navigation, route}) => {
             intensity={percentage(trustInThoughsNow)}
           />
           <ItemTag
-            title="Emotions après coup"
+            title="Émotions après coup"
             values={mainEmotion}
             intensity={percentage(mainEmotionIntensityNuanced)}
           />

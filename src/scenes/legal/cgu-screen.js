@@ -1,25 +1,9 @@
 import React from 'react';
 import LegalScreen from './legal-screen';
-import {StyleSheet, Linking} from 'react-native';
+import {StyleSheet} from 'react-native';
 import Text from '../../components/MyText';
 
 const CGU = ({navigation}) => {
-  const goToGitHub = () => {
-    Linking.openURL('https://github.com/SocialGouv/monsuivipsy');
-  };
-
-  const goToL112 = () => {
-    Linking.openURL(
-      'https://www.legifrance.gouv.fr/codes/id/LEGIARTI000031367350/2016-03-29/',
-    );
-  };
-
-  const goToDdos = () => {
-    Linking.openURL(
-      'https://fr.wikipedia.org/wiki/Attaque_par_d%C3%A9ni_de_service',
-    );
-  };
-
   const goToLegalMentions = () => {
     navigation.navigate('legal-mentions');
   };
@@ -31,7 +15,7 @@ const CGU = ({navigation}) => {
   const content = (
     <Text>
       Les présentes conditions générales d’utilisation (dites « CGU ») fixent le
-      cadre juridique de l’application MonSuiviPsy définissent les conditions
+      cadre juridique de l’application MonSuiviPsy et définissent les conditions
       d’accès et d’utilisation des services par l’Utilisateur.
       {'\n\n'}
       <Text style={styles.title}>Article 1 - Champ d’application</Text>

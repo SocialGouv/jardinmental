@@ -33,7 +33,7 @@ export default ({navigation}) => {
             <Text style={styles.text}>
               Apprenez à <Text style={styles.bold}>identifier</Text>,{' '}
               <Text style={styles.bold}>comprendre</Text> et{' '}
-              <Text style={styles.bold}>gérer</Text> vos pensées et vos emotions
+              <Text style={styles.bold}>gérer</Text> vos pensées et vos émotions
               au quotidien.
             </Text>
           </Item>

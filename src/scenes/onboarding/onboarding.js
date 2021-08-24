@@ -66,7 +66,7 @@ const Onboarding = ({navigation}) => {
           <Text style={styles.presentationText}>
             A la clé, j’obtiens une{' '}
             <Text style={styles.emphasis}>
-              courbe de l’évolution de mes ressentis,
+              courbe de l’évolution de mes ressentis,{' '}
             </Text>
             semaine après semaine.{' '}
           </Text>
@@ -75,10 +75,10 @@ const Onboarding = ({navigation}) => {
           <Text style={styles.presentationText}>
             Je peux{' '}
             <Text style={styles.emphasis}>
-              adresser ces informations, par mail{' '}
+              adresser ces informations, par mail
             </Text>
             , à mon médecin ou à mon psychologue, uniquement si je le souhaite
-            bien sûr, pour l’aider à mieux comprendre ce qui m’arrive{' '}
+            bien sûr, pour l’aider à mieux comprendre ce qui m’arrive.
           </Text>
         </View>
       </Swiper>
