@@ -8,25 +8,19 @@ import logEvents from '../../services/logEvents';
 
 export default ({onChange, onSubmit, data}) => {
   const numberOfLines = 8;
-  const [actionsSelected, setActionsSelected] = useState();
-  const [
-    consequencesForYouSelected,
-    setConsequencesForYouSelected,
-  ] = useState();
+  const [actionsSelected, setActionsSelected] = useState(data?.actions);
+  const [consequencesForYouSelected, setConsequencesForYouSelected] = useState(
+    data?.consequencesForYou,
+  );
   const [
     consequencesForRelativesSelected,
     setConsequencesForRelativesSelected,
-  ] = useState();
+  ] = useState(data?.consequencesForRelatives);
 
   useEffect(() => {
     logEvents.logBeckStepOpen(4);
   }, []);
 
-  useEffect(() => {
-    setActionsSelected(data?.actions);
-    setConsequencesForYouSelected(data?.consequencesForYou);
-    setConsequencesForRelativesSelected(data?.consequencesForRelatives);
-  }, [data]);
   return (
     <View style={styles.safe}>
       <Text style={styleBeck.title}>
@@ -39,7 +33,10 @@ export default ({onChange, onSubmit, data}) => {
         multiline={true}
         numberOfLines={Platform.OS === 'ios' ? null : numberOfLines}
         minHeight={Platform.OS === 'ios' ? 20 * numberOfLines : null}
-        onChangeText={(actions) => onChange({actions})}
+        onChangeText={(actions) => {
+          setActionsSelected(actions);
+          onChange({actions});
+        }}
         value={actionsSelected}
         placeholder="J'ai fait..."
         style={styleBeck.textArea}
@@ -53,7 +50,10 @@ export default ({onChange, onSubmit, data}) => {
         multiline={true}
         numberOfLines={Platform.OS === 'ios' ? null : numberOfLines}
         minHeight={Platform.OS === 'ios' ? 20 * numberOfLines : null}
-        onChangeText={(consequencesForYou) => onChange({consequencesForYou})}
+        onChangeText={(consequencesForYou) => {
+          setConsequencesForYouSelected(consequencesForYou);
+          onChange({consequencesForYou});
+        }}
         value={consequencesForYouSelected}
         placeholder="Message..."
         style={styleBeck.textArea}
@@ -69,9 +69,10 @@ export default ({onChange, onSubmit, data}) => {
         multiline={true}
         numberOfLines={Platform.OS === 'ios' ? null : numberOfLines}
         minHeight={Platform.OS === 'ios' ? 20 * numberOfLines : null}
-        onChangeText={(consequencesForRelatives) =>
-          onChange({consequencesForRelatives})
-        }
+        onChangeText={(consequencesForRelatives) => {
+          setConsequencesForRelativesSelected(consequencesForRelatives);
+          onChange({consequencesForRelatives});
+        }}
         value={consequencesForRelativesSelected}
         placeholder="Message..."
         style={styleBeck.textArea}

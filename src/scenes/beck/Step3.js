@@ -10,25 +10,18 @@ import logEvents from '../../services/logEvents';
 
 export default ({onChange, onSubmit, data}) => {
   const numberOfLines = 8;
-  const [
-    trustInThoughsThenSelected,
-    setTrustInThoughsThenSelected,
-  ] = useState();
+  const [trustInThoughsThenSelected, setTrustInThoughsThenSelected] = useState(
+    data?.trustInThoughsThen,
+  );
   const [
     thoughtsBeforeMainEmotionSelected,
     setThoughtsBeforeMainEmotionSelected,
-  ] = useState();
-  const [memoriesSelected, setMemoriesSelected] = useState();
+  ] = useState(data?.thoughtsBeforeMainEmotion);
+  const [memoriesSelected, setMemoriesSelected] = useState(data?.memories);
 
   useEffect(() => {
     logEvents.logBeckStepOpen(3);
   }, []);
-
-  useEffect(() => {
-    setThoughtsBeforeMainEmotionSelected(data?.thoughtsBeforeMainEmotion);
-    setMemoriesSelected(data?.memories);
-    setTrustInThoughsThenSelected(data?.trustInThoughsThen);
-  }, [data]);
 
   return (
     <View style={styles.safe}>
@@ -39,9 +32,10 @@ export default ({onChange, onSubmit, data}) => {
         multiline={true}
         numberOfLines={Platform.OS === 'ios' ? null : numberOfLines}
         minHeight={Platform.OS === 'ios' ? 20 * numberOfLines : null}
-        onChangeText={(thoughtsBeforeMainEmotion) =>
-          onChange({thoughtsBeforeMainEmotion})
-        }
+        onChangeText={(thoughtsBeforeMainEmotion) => {
+          setThoughtsBeforeMainEmotionSelected(thoughtsBeforeMainEmotion);
+          onChange({thoughtsBeforeMainEmotion});
+        }}
         value={thoughtsBeforeMainEmotionSelected}
         placeholder="Mes pensées..."
         style={styleBeck.textArea}
@@ -66,7 +60,10 @@ export default ({onChange, onSubmit, data}) => {
         multiline={true}
         numberOfLines={Platform.OS === 'ios' ? null : numberOfLines}
         minHeight={Platform.OS === 'ios' ? 20 * numberOfLines : null}
-        onChangeText={(memories) => onChange({memories})}
+        onChangeText={(memories) => {
+          setMemoriesSelected(memories);
+          onChange({memories});
+        }}
         value={memoriesSelected}
         placeholder="Message..."
         style={styleBeck.textArea}

@@ -10,26 +10,26 @@ import logEvents from '../../services/logEvents';
 
 export default ({onChange, onSubmit, data}) => {
   const numberOfLines = 8;
-  const [trustInThoughsNowSelected, setTrustInThoughsNowSelected] = useState();
+  const [trustInThoughsNowSelected, setTrustInThoughsNowSelected] = useState(
+    data?.trustInThoughsNow,
+  );
   const [
     mainEmotionIntensityNuancedSelected,
     setMainEmotionIntensityNuancedSelected,
-  ] = useState();
-  const [argumentProsSelected, setArgumentProsSelected] = useState();
-  const [argumentConsSelected, setArgumentConsSelected] = useState();
-  const [nuancedThoughtsSelected, setNuancedThoughtsSelected] = useState();
+  ] = useState(data?.mainEmotionIntensityNuanced);
+  const [argumentProsSelected, setArgumentProsSelected] = useState(
+    data?.argumentPros,
+  );
+  const [argumentConsSelected, setArgumentConsSelected] = useState(
+    data?.argumentCons,
+  );
+  const [nuancedThoughtsSelected, setNuancedThoughtsSelected] = useState(
+    data?.nuancedThoughts,
+  );
 
   useEffect(() => {
     logEvents.logBeckStepOpen(5);
   }, []);
-
-  useEffect(() => {
-    setArgumentProsSelected(data?.argumentPros);
-    setArgumentConsSelected(data?.argumentCons);
-    setNuancedThoughtsSelected(data?.nuancedThoughts);
-    setTrustInThoughsNowSelected(data?.trustInThoughsNow);
-    setMainEmotionIntensityNuancedSelected(data?.mainEmotionIntensityNuanced);
-  }, [data]);
 
   return (
     <View style={styles.safe}>
@@ -41,7 +41,10 @@ export default ({onChange, onSubmit, data}) => {
         multiline={true}
         numberOfLines={Platform.OS === 'ios' ? null : numberOfLines}
         minHeight={Platform.OS === 'ios' ? 20 * numberOfLines : null}
-        onChangeText={(argumentPros) => onChange({argumentPros})}
+        onChangeText={(argumentPros) => {
+          setArgumentProsSelected(argumentPros);
+          onChange({argumentPros});
+        }}
         value={argumentProsSelected}
         placeholder="Message..."
         style={styleBeck.textArea}
@@ -55,7 +58,10 @@ export default ({onChange, onSubmit, data}) => {
         multiline={true}
         numberOfLines={Platform.OS === 'ios' ? null : numberOfLines}
         minHeight={Platform.OS === 'ios' ? 20 * numberOfLines : null}
-        onChangeText={(argumentCons) => onChange({argumentCons})}
+        onChangeText={(argumentCons) => {
+          setArgumentConsSelected(argumentCons);
+          onChange({argumentCons});
+        }}
         value={argumentConsSelected}
         placeholder="Message..."
         style={styleBeck.textArea}
@@ -70,7 +76,10 @@ export default ({onChange, onSubmit, data}) => {
         multiline={true}
         numberOfLines={Platform.OS === 'ios' ? null : numberOfLines}
         minHeight={Platform.OS === 'ios' ? 20 * numberOfLines : null}
-        onChangeText={(nuancedThoughts) => onChange({nuancedThoughts})}
+        onChangeText={(nuancedThoughts) => {
+          setNuancedThoughtsSelected(nuancedThoughts);
+          onChange({nuancedThoughts});
+        }}
         value={nuancedThoughtsSelected}
         placeholder="Message..."
         style={styleBeck.textArea}

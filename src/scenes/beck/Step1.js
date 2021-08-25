@@ -8,15 +8,11 @@ import logEvents from '../../services/logEvents';
 
 export default ({onChange, onSubmit, data}) => {
   const numberOfLines = 8;
-  const [whatSelected, setWhatSelected] = useState();
+  const [whatSelected, setWhatSelected] = useState(data?.what);
 
   useEffect(() => {
     logEvents.logBeckStepOpen(1);
   }, []);
-
-  useEffect(() => {
-    setWhatSelected(data?.what);
-  }, [data]);
 
   return (
     <View style={styles.safe}>
@@ -28,7 +24,10 @@ export default ({onChange, onSubmit, data}) => {
         multiline={true}
         numberOfLines={Platform.OS === 'ios' ? null : numberOfLines}
         minHeight={Platform.OS === 'ios' ? 20 * numberOfLines : null}
-        onChangeText={(what) => onChange({what})}
+        onChangeText={(what) => {
+          setWhatSelected(what);
+          onChange({what});
+        }}
         value={whatSelected}
         placeholder="Je me suis disputé avec un ami..."
         style={styleBeck.textArea}
