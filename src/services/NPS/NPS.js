@@ -23,12 +23,13 @@ import logEvents from '../logEvents';
 
 // just to make sure nothing goes the bad way in production, debug is always false
 
-const formatText = (useful, reco, feedback, userId) =>
+const formatText = (useful, reco, feedback, userId, contact) =>
   `
 User: ${userId}
 Comment pouvons-nous vous être encore plus utile: ${feedback}
 Ce service vous a-t-il été utile: ${useful}
 Quelle est la probabilité que vous recommandiez ce service à un ami ou un proche: ${reco}
+contact: ${contact}
 `;
 
 const NPSTimeoutMS = __DEV__ ? 1000 * 3 * 100000000 : 1000 * 60 * 60 * 24 * 10;
@@ -46,7 +47,7 @@ class NPS extends React.Component {
     useful: null,
     reco: null,
     feedback: '',
-    email: '',
+    contact: '',
     sendButton: getCaption('post'),
     NPSKey: 0,
     page: 2,
@@ -142,7 +143,7 @@ class NPS extends React.Component {
   setReco = (reco) => this.setState({reco});
   setFeedback = (feedback) => this.setState({feedback});
   setSendButton = (sendButton) => this.setState({sendButton});
-  setEmail = (email) => this.setState({email});
+  setContact = (contact) => this.setState({contact});
 
   onClose = async () => {
     const {useful, reco} = this.state;
@@ -160,11 +161,7 @@ class NPS extends React.Component {
     if (this.npsSent) {
       return;
     }
-    const {useful, reco, feedback, email} = this.state;
-    if (email.length && !emailFormat(email)) {
-      Alert.alert('Adresse email non valide');
-      return;
-    }
+    const {useful, reco, feedback, contact} = this.state;
     this.setSendButton('Merci !');
     logEvents.logNPSSend(useful, reco);
     const userId = Matomo.userId;
@@ -175,7 +172,7 @@ class NPS extends React.Component {
           personalName: 'MonSuiviPsy - Application',
         },
         subject: 'MonSuiviPsy - NPS',
-        text: formatText(useful, reco, feedback, userId),
+        text: formatText(useful, reco, feedback, userId, contact),
       },
       __DEV__ ? 'tangimds@gmail.com' : 'monsuivipsy@fabrique.social.gouv.fr',
     );
@@ -219,17 +216,11 @@ class NPS extends React.Component {
   }
 
   renderSecondPage() {
-    const {feedback, sendButton, email, useful, reco} = this.state;
+    const {feedback, sendButton, contact, useful, reco} = this.state;
     return (
       <>
-        <Text style={styles.topTitle}>
-          {getCaption('feedback.improvements.title')}
-        </Text>
         <Text style={styles.topSubTitle}>
           {getCaption('feedback.improvements.question')}
-        </Text>
-        <Text style={styles.legalMessage}>
-          {getCaption('feedback.improvements.legal-message')}
         </Text>
         <TextInput
           style={styles.feedback}
@@ -258,23 +249,19 @@ class NPS extends React.Component {
           bad={getCaption('feedback.rate-app.probable.not')}
           good={getCaption('feedback.rate-app.probable.extremely')}
         />
-        {/* <Text style={styles.topSubTitle}>
-          {getCaption('feedback.email.description')}
+        <Text style={styles.topSubTitle}>
+          {getCaption('feedback.contact.description')}
         </Text>
         <TextInput
-          style={styles.email}
-          value={email}
-          ref={(r) => (this.emailInput = r)}
-          placeholder={getCaption('feedback.email')}
-          onChangeText={this.setEmail}
-          autoCompleteType="email"
+          style={styles.contact}
+          value={contact}
+          placeholder={getCaption('feedback.contact')}
+          onChangeText={this.setContact}
           autoCorrect={false}
-          keyboardType="email-address"
           autoCapitalize="none"
           returnKeyType="go"
-          textContentType="emailAddress"
           onSubmitEditing={this.sendNPS}
-        /> */}
+        />
         <TouchableOpacity
           style={styles.buttonContainer}
           disabled={sendButton === 'Merci !'}
@@ -368,7 +355,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#dbdbe9',
   },
-  email: {
+  contact: {
     width: '100%',
     height: 50,
     borderRadius: 7,
@@ -415,16 +402,16 @@ const captions = {
     'Quelle est la probabilité que vous recommandiez ce service à un ami ou un proche\u00A0?',
   'feedback.rate-app.probable.not': 'Pas du tout probable',
   'feedback.rate-app.probable.extremely': 'Très probable',
-  'feedback.improvements.title':
-    'Pour améliorer notre service, avez-vous quelques recommandations à nous faire\u00A0?',
   'feedback.improvements.question':
-    'Comment pouvons-nous vous être encore plus utile\u00A0? Comment pouvons-nous améliorer ce service\u00A0?',
+    'Pour améliorer notre service, avez-vous quelques recommandations à nous faire\u00A0?',
+  // 'feedback.improvements.question':
+  //   'Comment pouvons-nous vous être encore plus utile\u00A0? Comment pouvons-nous améliorer ce service\u00A0?',
   'feedback.improvements.legal-message':
     'Merci de ne mentionner aucune information personnelle qui permettrait de vous identifier (nom, prénom, adresse mail, n° de téléphone, toute information sur votre état de santé)',
   'feedback.improvements.placeholder': "Idées d'améliorations (facultatif)",
-  'feedback.email.description':
-    "Pourrions-nous vous contacter pour en discuter avec vous\u00A0? Si vous êtes d'accord, vous pouvez renseigner votre adresse email ci-dessous.",
-  'feedback.email': 'Adresse email (facultatif)',
+  'feedback.contact.description':
+    'Echanger avec vous serait précieux pour améliorer notre service, laissez nous votre email ou votre numéro de téléphone si vous le souhaitez.',
+  'feedback.contact': 'Adresse email ou numéro de téléphone (facultatif)',
 };
 
 // in case of i18n, we need to get the caption with a function
