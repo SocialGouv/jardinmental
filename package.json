@@ -1,6 +1,6 @@
 {
   "name": "monsuivipsy",
-  "version": "0.0.1",
+  "version": "1.14.11",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
@@ -34,7 +34,7 @@
     "ip-anonymize": "^0.1.0",
     "react": "16.13.1",
     "react-native": "0.63.4",
-    "react-native-device-info": "^7.2.1",
+    "react-native-device-info": "^8.3.1",
     "react-native-dotenv": "^2.4.3",
     "react-native-gesture-handler": "^1.9.0",
     "react-native-modal": "^11.10.0",

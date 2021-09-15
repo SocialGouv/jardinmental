@@ -13,6 +13,8 @@ import DrawerItem from './drawer-item';
 import {needUpdate} from '../../services/versionChecker';
 import localStorage from '../../utils/localStorage';
 import {getBadgeNotesVersion} from '../../scenes/news';
+import pck from '../../../package.json';
+import Text from '../../components/MyText';
 
 export default ({navigation, visible, onClick}) => {
   const [isVisible, setIsVisible] = useState();
@@ -131,6 +133,9 @@ export default ({navigation, visible, onClick}) => {
                 }}
               />
             ) : null}
+            <View style={styles.versionContainer}>
+              <Text style={styles.versionLabel}>{pck.version}</Text>
+            </View>
           </ScrollView>
         </SafeAreaView>
       </View>
@@ -153,6 +158,14 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     paddingBottom: 80,
+  },
+  versionContainer: {
+    marginTop: 20,
+    flex: 1,
+    alignItems: 'center',
+  },
+  versionLabel: {
+    color: '#ccc',
   },
   card: {
     width: '80%',
