@@ -834,7 +834,7 @@ export const DRUG_LIST = [
     id: 'Lysanxia (Prazépam) ',
     name1: 'Lysanxia',
     name2: 'Prazépam',
-    values: ['10 mg', '20 mg', '30 mg', '40 mg', '50 mg', '60 mg'],
+    values: ['5 mg', '10 mg', '20 mg', '30 mg', '40 mg', '50 mg', '60 mg'],
   },
   {
     id: 'Lysanxia 15 mg/ml solution buvable (Prazépam)',
