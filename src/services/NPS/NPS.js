@@ -20,16 +20,27 @@ import {sendTipimail} from '../sendTipimail';
 import {colors} from '../../utils/colors';
 import Matomo from '../matomo';
 import logEvents from '../logEvents';
+import localStorage from '../../utils/localStorage';
 
 // just to make sure nothing goes the bad way in production, debug is always false
 
-const formatText = (useful, reco, feedback, userId, contact) =>
+const lookUpSupported = {
+  YES:
+    'Je suis suivi, j’ai téléchargé l’application sur recommandation du professionnel qui me suit',
+  YES_SOLO: 'Je suis suivi, j’ai téléchargé l’application de moi-même',
+  NOT_YET: 'Je ne suis pas suivi mais je le souhaite',
+  NO: 'Je ne suis pas suivi',
+  PRO: 'Je suis professionnel de santé',
+};
+
+const formatText = ({useful, reco, feedback, userId, contact, supported}) =>
   `
 User: ${userId}
 Comment pouvons-nous vous être encore plus utile: ${feedback}
 Ce service vous a-t-il été utile: ${useful}
 Quelle est la probabilité que vous recommandiez ce service à un ami ou un proche: ${reco}
 contact: ${contact}
+profil: ${lookUpSupported[supported]}
 `;
 
 const NPSTimeoutMS = __DEV__ ? 1000 * 3 * 100000000 : 1000 * 60 * 60 * 24 * 10;
@@ -165,6 +176,7 @@ class NPS extends React.Component {
     this.setSendButton('Merci !');
     logEvents.logNPSSend(useful, reco);
     const userId = Matomo.userId;
+    const supported = await localStorage.getSupported();
     sendTipimail(
       {
         from: {
@@ -172,7 +184,7 @@ class NPS extends React.Component {
           personalName: 'MonSuiviPsy - Application',
         },
         subject: 'MonSuiviPsy - NPS',
-        text: formatText(useful, reco, feedback, userId, contact),
+        text: formatText({useful, reco, feedback, userId, contact, supported}),
       },
       __DEV__ ? 'tangimds@gmail.com' : 'monsuivipsy@fabrique.social.gouv.fr',
     );
