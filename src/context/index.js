@@ -85,6 +85,7 @@ const DiaryDataProvider = ({children}) => {
     const getDiaryDataFromStorage = async () => {
       // await wipeData();
       // await setupFakeData();
+      // await AsyncStorage.clear();
 
       // start date is needed to populate empty dates
       const startDate = await AsyncStorage.getItem(STORAGE_KEY_START_DATE);

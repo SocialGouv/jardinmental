@@ -73,15 +73,11 @@ const SymptomScreen = ({navigation, route}) => {
     return empty;
   };
 
-  const submitNewCategories = async () => {
+  const goToFirstQuestion = async () => {
     if (noneSelected()) {
       return;
     }
-    await localStorage.setSymptoms(chosenCategories);
     const questions = await buildSurveyData();
-    console.log({chosenCategories});
-    console.log({initalCategories});
-
     const index = questions[0];
     let redirection = 'tabs';
     let params = {};
@@ -103,6 +99,10 @@ const SymptomScreen = ({navigation, route}) => {
     navigation.navigate(redirection, params);
   };
 
+  useEffect(() => {
+    (async () => await localStorage.setSymptoms(chosenCategories))();
+  }, [chosenCategories]);
+
   const handleAddNewSymptom = async (value) => {
     if (!value) return;
     if (value in chosenCategories) return;
@@ -114,20 +114,22 @@ const SymptomScreen = ({navigation, route}) => {
   return (
     <SafeAreaView style={styles.safe}>
       <View style={styles.buttonsContainer}>
-        <BackButton onPress={() => navigation.navigate('tabs')} />
-        <TouchableOpacity onPress={submitNewCategories}>
-          <Text style={styles.okButtonText}>OK</Text>
-        </TouchableOpacity>
+        <BackButton
+          disabled={noneSelected()}
+          onPress={() => navigation.navigate('tabs')}
+        />
       </View>
-
       <ScrollView
         keyboardShouldPersistTaps="handled"
         style={styles.container}
         contentContainerStyle={styles.scrollContainer}>
         <Text style={styles.title}>
           Sélectionner les symptômes
-          {showExplanation ? ' que vous souhaitez suivre' : ''}
+          {showExplanation ? ' que vous souhaitez suivre' : ''}{' '}
         </Text>
+        {noneSelected() ? (
+          <Text style={styles.alert}>Sélectionner au moins 1 symptôme</Text>
+        ) : null}
         <AddElemToList onChange={handleAddNewSymptom} />
         {chosenCategories &&
           Object.keys(chosenCategories).map((cat, index) => (
@@ -144,13 +146,15 @@ const SymptomScreen = ({navigation, route}) => {
               />
             </View>
           ))}
-        <View style={styles.buttonWrapper}>
-          <Button
-            title="Valider"
-            onPress={submitNewCategories}
-            disabled={noneSelected()}
-          />
-        </View>
+        {showExplanation ? (
+          <View style={styles.buttonWrapper}>
+            <Button
+              title="Valider"
+              onPress={goToFirstQuestion}
+              disabled={noneSelected()}
+            />
+          </View>
+        ) : null}
       </ScrollView>
       {showExplanation && (
         <SymptomsExplanation
@@ -199,8 +203,15 @@ const styles = StyleSheet.create({
   title: {
     color: colors.BLUE,
     fontSize: 22,
-    marginBottom: 26,
+    marginBottom: 13,
     fontWeight: '700',
+    textAlign: 'center',
+  },
+  alert: {
+    color: 'red',
+    fontSize: 13,
+    marginBottom: 10,
+    fontWeight: '500',
     textAlign: 'center',
   },
   categories: {
