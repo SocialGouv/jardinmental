@@ -158,7 +158,7 @@ class NPS extends React.Component {
 
   onClose = async () => {
     const {useful, reco} = this.state;
-    if (useful !== null || reco !== null) {
+    if ((useful !== null || reco !== null) && !this.npsSent) {
       await this.sendNPS();
     }
     this.setState({visible: false});
@@ -174,7 +174,8 @@ class NPS extends React.Component {
     }
     const {useful, reco, feedback, contact} = this.state;
     this.setSendButton('Merci !');
-    logEvents.logNPSSend(useful, reco);
+    logEvents.logNPSUsefulSend(useful);
+    logEvents.logNPSRecoSend(reco);
     const userId = Matomo.userId;
     const supported = await localStorage.getSupported();
     sendTipimail(
@@ -189,7 +190,7 @@ class NPS extends React.Component {
       __DEV__ ? 'tangimds@gmail.com' : 'monsuivipsy@fabrique.social.gouv.fr',
     );
     this.npsSent = true;
-    this.setState({visible: false});
+    this.setState({visible: false, useful: null, reco: null});
   };
 
   renderFirstPage() {

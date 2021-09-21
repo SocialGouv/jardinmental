@@ -218,6 +218,25 @@ const logNPSSend = async (useful, reco) => {
     value: `${useful}-${reco}`,
   });
 };
+
+const logNPSUsefulSend = async (value) => {
+  await logEvent({
+    category: 'NPS',
+    action: 'NPS_SEND',
+    name: 'notes-useful',
+    value,
+  });
+};
+
+const logNPSRecoSend = async (value) => {
+  await logEvent({
+    category: 'NPS',
+    action: 'NPS_SEND',
+    name: 'notes-reco',
+    value,
+  });
+};
+
 const logProNPSSend = async () => {
   await logEvent({
     category: 'NPS',
@@ -364,4 +383,6 @@ export default {
   logBeckAddCustomWho,
   logBeckAddCustomEmotion,
   logBeckAddCustomSensation,
+  logNPSUsefulSend,
+  logNPSRecoSend,
 };
