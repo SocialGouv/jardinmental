@@ -53,3 +53,29 @@ export const deleteBeckfromDiaryData = ({
     },
   });
 };
+
+export const getScoreWithState = ({patientState, category}) => {
+  // if the patient state doesnt have any info on question 1, return
+  if (!patientState[category]) {
+    return;
+  }
+  const [categoryName, suffix] = category.split('_');
+
+  // if it is a 1 question category, return the level of the question
+  if (!suffix) {
+    return patientState[category].level;
+  } else {
+    // else if there is 2 question...
+
+    // if it is never, the score is max, we dont look at the intensity,
+    // i.e. 5
+    if (patientState[category].id === 'NEVER') {
+      return 5;
+    }
+
+    // else we compute both frequence & intensity
+    const frequence = patientState[category];
+    const intensity = patientState[`${categoryName}_INTENSITY`];
+    return frequence.level + intensity.level - 1;
+  }
+};

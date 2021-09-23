@@ -22,6 +22,14 @@ const colors = {
   veryGoodTrans: '#edfaca',
 };
 
+export const scoresMapIcon = {
+  1: {color: colors.veryBad, faceIcon: icons.veryBad},
+  2: {color: colors.bad, faceIcon: icons.bad},
+  3: {color: colors.middle, faceIcon: icons.middle},
+  4: {color: colors.good, faceIcon: icons.good},
+  5: {color: colors.veryGood, faceIcon: icons.veryGood},
+};
+
 export const colorsMap = Object.keys(colors).map((key) => colors[key]);
 
 export const categoryStates = {

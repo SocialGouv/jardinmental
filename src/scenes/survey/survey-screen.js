@@ -81,9 +81,6 @@ const SurveyScreen = ({navigation, route}) => {
     let nextIndex = -1;
     if (!isLastQuestion()) {
       const isNextQuestionSkipped = answer.id === 'NEVER';
-      //default intensity at 3, so it gets the best evalution
-      const [categoryName] = questionId.split('_');
-      currentSurvey.answers[`${categoryName}_INTENSITY`] = {level: 3};
       // getting index of the current question in the 'questions' array
       const index = questions.indexOf(currentSurveyItem);
       // getting the next index of the next question

@@ -9,6 +9,7 @@ import localStorage from '../../utils/localStorage';
 import Posology from './posology';
 import Beck from './beck';
 import {startAtFirstQuestion} from '../survey/survey-data';
+import {getScoreWithState} from '../../utils';
 
 const DiaryItem = ({navigation, patientState, date}) => {
   const [customs, setCustoms] = useState([]);
@@ -68,27 +69,15 @@ const DiaryItem = ({navigation, patientState, date}) => {
             if (!patientState[key]) {
               return;
             }
-            const [categoryName, suffix] = key.split('_');
-            if (suffix) {
-              return (
-                <PatientStateItem
-                  key={key}
-                  patientStateItem={patientState[key]}
-                  intensity={
-                    patientState[`${categoryName}_INTENSITY`] || {level: 3}
-                  }
-                  category={displayedCategories[key] || categoryName}
-                />
-              );
-            } else {
-              return (
-                <PatientStateItem
-                  key={key}
-                  patientStateItem={patientState[key]}
-                  category={displayedCategories[key]}
-                />
-              );
-            }
+            const [categoryName] = key.split('_');
+            return (
+              <PatientStateItem
+                key={key}
+                category={key}
+                patientState={patientState}
+                label={displayedCategories[key] || categoryName}
+              />
+            );
           })
       )}
       <Notes
