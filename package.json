@@ -44,7 +44,7 @@
     "react-native-push-notification": "^7.3.0",
     "react-native-reanimated": "^1.13.2",
     "react-native-safe-area-context": "^3.1.9",
-    "react-native-screens": "^2.15.0",
+    "react-native-screens": "^3.8.0",
     "react-native-sentry": "^0.43.2",
     "react-native-svg": "^12.1.0",
     "react-native-swiper": "^1.6.0",
