@@ -134,7 +134,7 @@ export default ({navigation, visible, onClick}) => {
               />
             ) : null}
             <View style={styles.versionContainer}>
-              <Text style={styles.versionLabel}>{pck.version}</Text>
+              <Text style={styles.versionLabel}>version {pck.version}</Text>
             </View>
           </ScrollView>
         </SafeAreaView>
