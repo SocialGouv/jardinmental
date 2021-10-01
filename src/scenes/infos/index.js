@@ -138,16 +138,6 @@ const LegalScreen = ({navigation, title, content}) => {
             en savoir plus
           </Text>
           {'\n\n'}
-          Quelle est la différence entre un psychologue et un psychiatre ?{'\n'}
-          <Text
-            style={styles.link}
-            onPress={() => {
-              logEvents.logInfoClick('article_difference');
-              Linking.openURL('https://doctomag.com/psychologue-psychiatre/');
-            }}>
-            lire l'article
-          </Text>
-          {'\n\n'}
           Je voudrais des informations sur les traitement médicamenteux :{' '}
           <Text
             style={styles.link}

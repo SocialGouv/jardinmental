@@ -61,13 +61,6 @@ export default ({navigation, visible, onClick}) => {
               onClick={onClick}
               icon="NewsSvg"
             />
-            <DrawerItem
-              title="Colonnes de Beck"
-              path="activate-beck"
-              navigation={navigation}
-              onClick={onClick}
-              icon="ThoughtsSvg"
-            />
             <Separator />
             <DrawerItem
               title="Présentation"
