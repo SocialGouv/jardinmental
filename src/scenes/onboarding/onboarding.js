@@ -1,5 +1,12 @@
-import React, {useState, useEffect} from 'react';
-import {StyleSheet, SafeAreaView, View, TouchableOpacity} from 'react-native';
+import React, {useState, useEffect, useRef} from 'react';
+import {
+  StyleSheet,
+  SafeAreaView,
+  View,
+  TouchableOpacity,
+  ScrollView,
+  Dimensions,
+} from 'react-native';
 import Text from '../../components/MyText';
 import CheckBox from '@react-native-community/checkbox';
 import {colors} from '../../utils/colors';
@@ -9,17 +16,20 @@ import logEvents from '../../services/logEvents';
 import Button from '../../components/Button';
 import ActiveDot from './ActiveDot';
 import BackButton from '../../components/BackButton';
+import {Screen1, Screen2, Screen3} from './screens';
 
 const Onboarding = ({navigation}) => {
   const [isCguChecked, setIsCguChecked] = useState(false);
   const [firstTime, setFirstTime] = useState(true);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const swiperRef = useRef();
 
-  useEffect(() => {
-    (async () => {
-      const isFirstAppLaunch = await localStorage.getIsFirstAppLaunch();
-      setFirstTime(isFirstAppLaunch !== 'false');
-    })();
-  }, [navigation]);
+  // useEffect(() => {
+  //   (async () => {
+  //     const isFirstAppLaunch = await localStorage.getIsFirstAppLaunch();
+  //     setFirstTime(isFirstAppLaunch !== 'false');
+  //   })();
+  // }, [navigation]);
 
   const validateOnboarding = async () => {
     const target = firstTime ? 'supported' : 'tabs';
@@ -27,103 +37,94 @@ const Onboarding = ({navigation}) => {
     await localStorage.setIsFirstAppLaunch(false);
   };
 
-  const onCguClick = () => {
-    navigation.navigate('cgu');
-  };
+  const onCguClick = () => navigation.navigate('cgu');
+  const onLegalMentionsClick = () => navigation.navigate('legal-mentions');
+  const onPrivacyClick = () => navigation.navigate('privacy');
 
-  const onLegalMentionsClick = () => {
-    navigation.navigate('legal-mentions');
-  };
-
-  const onPrivacyClick = () => {
-    navigation.navigate('privacy');
-  };
-
-  const onIndexChanged = (page) => {
-    logEvents.logOnboardingSwipe(page);
-  };
+  const onPressNext = () => swiperRef?.current?.scrollBy(1);
 
   return (
     <SafeAreaView style={styles.safe}>
       {!firstTime ? <BackButton onPress={navigation.goBack} /> : null}
-      <Text style={styles.title}>Mon Suivi Psy</Text>
-      <Swiper
-        loop={false}
-        activeDot={<ActiveDot />}
-        onIndexChanged={onIndexChanged}>
-        <View style={styles.container}>
-          <Text style={styles.presentationText}>
-            Chaque jour, à l’heure que j’ai choisie,{' '}
-            <Text style={styles.emphasis}>
-              Mon Suivi Psy me rappelle de faire un point sur mes ressentis
-            </Text>{' '}
-            grâce à un questionnaire que je peux{' '}
-            <Text style={styles.emphasis}>personnaliser</Text> à tout moment, en
-            retirant ou en ajoutant des items à suivre.
-          </Text>
-        </View>
-        <View style={styles.container}>
-          <Text style={styles.presentationText}>
-            A la clé, j’obtiens une{' '}
-            <Text style={styles.emphasis}>
-              courbe de l’évolution de mes ressentis,{' '}
-            </Text>
-            semaine après semaine.{' '}
-          </Text>
-        </View>
-        <View style={styles.container}>
-          <Text style={styles.presentationText}>
-            Je peux{' '}
-            <Text style={styles.emphasis}>
-              adresser ces informations, par mail
-            </Text>
-            , à mon médecin ou à mon psychologue, uniquement si je le souhaite
-            bien sûr, pour l’aider à mieux comprendre ce qui m’arrive.
-          </Text>
-        </View>
-      </Swiper>
-
-      {firstTime ? (
-        <>
-          <View style={styles.cgu}>
-            <CheckBox
-              animationDuration={0.2}
-              tintColor="#1FC6D5"
-              tintColors={{true: '#1FC6D5', false: 'grey'}}
-              boxType="square"
-              style={styles.checkbox}
-              value={isCguChecked}
-              onValueChange={(newValue) => setIsCguChecked(newValue)}
-            />
-            <Text style={styles.textCgu}>
-              En cochant cette case, vous acceptez nos{' '}
-              <Text onPress={onCguClick} style={styles.underlined}>
-                Conditions Générales d’Utilisation
-              </Text>
-              , notre{' '}
-              <Text onPress={onPrivacyClick} style={styles.underlined}>
-                Politique de Confidentialité
-              </Text>{' '}
-              et nos{' '}
-              <Text onPress={onLegalMentionsClick} style={styles.underlined}>
-                Mentions Légales
-              </Text>
-            </Text>
-          </View>
+      <Text style={styles.title}>
+        Mon Suivi Psy m'accompagne entre mes consultations
+      </Text>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <Swiper
+          onIndexChanged={(page) => {
+            // dirty hack because of this issue
+            // https://github.com/leecade/react-native-swiper/issues/1209
+            setTimeout(() => {
+              setCurrentIndex(page);
+              firstTime && logEvents.logOnboardingSwipe(page);
+            }, 0);
+          }}
+          loop={false}
+          ref={swiperRef}
+          // showsButtons
+          activeDot={<ActiveDot />}>
+          <Screen1 />
+          <Screen2 />
+          <Screen3 />
+        </Swiper>
+      </ScrollView>
+      <View style={styles.CTAButtonContainer}>
+        {currentIndex === 2 ? (
+          firstTime ? (
+            <>
+              <View style={styles.cgu}>
+                <CheckBox
+                  animationDuration={0.2}
+                  tintColor="#1FC6D5"
+                  tintColors={{true: '#1FC6D5', false: 'grey'}}
+                  boxType="square"
+                  style={styles.checkbox}
+                  value={isCguChecked}
+                  onValueChange={(newValue) => setIsCguChecked(newValue)}
+                />
+                <Text style={styles.textCgu}>
+                  En cochant cette case, vous acceptez nos{' '}
+                  <Text onPress={onCguClick} style={styles.underlined}>
+                    Conditions Générales d’Utilisation
+                  </Text>
+                  , notre{' '}
+                  <Text onPress={onPrivacyClick} style={styles.underlined}>
+                    Politique de Confidentialité
+                  </Text>{' '}
+                  et nos{' '}
+                  <Text
+                    onPress={onLegalMentionsClick}
+                    style={styles.underlined}>
+                    Mentions Légales
+                  </Text>
+                </Text>
+              </View>
+              <View style={styles.buttonWrapper}>
+                <Button
+                  onPress={validateOnboarding}
+                  title="Commencer"
+                  disabled={!isCguChecked && firstTime}
+                />
+              </View>
+            </>
+          ) : (
+            <View style={styles.buttonWrapper}>
+              <Button title="Terminer" onPress={navigation.goBack} />
+            </View>
+          )
+        ) : (
           <View style={styles.buttonWrapper}>
-            <Button
-              onPress={validateOnboarding}
-              title="Commencer"
-              disabled={!isCguChecked && firstTime}
-            />
+            <Button title="Suivant" onPress={onPressNext} />
           </View>
-        </>
-      ) : null}
+        )}
+      </View>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  CTAButtonContainer: {},
+  scrollContainer: {flex: 1},
   safe: {
     flex: 1,
     backgroundColor: 'white',
@@ -154,6 +155,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     padding: 20,
     fontWeight: '700',
+    textAlign: 'center',
   },
   container: {
     backgroundColor: 'white',
@@ -173,6 +175,7 @@ const styles = StyleSheet.create({
   },
   textCgu: {
     flex: 1,
+    fontSize: Dimensions.get('window').height > 600 ? 16 : 12,
   },
   emphasis: {
     color: '#1FC6D5',
