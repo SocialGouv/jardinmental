@@ -24,12 +24,12 @@ const Onboarding = ({navigation}) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const swiperRef = useRef();
 
-  // useEffect(() => {
-  //   (async () => {
-  //     const isFirstAppLaunch = await localStorage.getIsFirstAppLaunch();
-  //     setFirstTime(isFirstAppLaunch !== 'false');
-  //   })();
-  // }, [navigation]);
+  useEffect(() => {
+    (async () => {
+      const isFirstAppLaunch = await localStorage.getIsFirstAppLaunch();
+      setFirstTime(isFirstAppLaunch !== 'false');
+    })();
+  }, [navigation]);
 
   const validateOnboarding = async () => {
     const target = firstTime ? 'supported' : 'tabs';
