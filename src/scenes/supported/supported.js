@@ -21,7 +21,7 @@ const Supported = ({navigation}) => {
       supported: value,
     });
     //navigate to tabs
-    navigation.navigate('tabs');
+    navigation.navigate('reminder', {onboarding: true});
     //set local storage
     await localStorage.setSupported(value);
   };

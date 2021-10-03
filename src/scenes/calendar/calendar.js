@@ -179,7 +179,7 @@ const Calendar = ({navigation}) => {
                 color={colors.LIGHT_BLUE}
               />
               <Text style={styles.subtitle}>
-                Des <Text style={styles.bold}>courbes d'evolution</Text> de vos
+                Des <Text style={styles.bold}>courbes d'évolution</Text> de vos
                 symptômes apparaîtront au fur et à mesure de vos saisies
                 quotidiennes.
               </Text>

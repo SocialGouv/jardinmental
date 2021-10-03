@@ -65,7 +65,10 @@ class Reminder extends React.Component {
     this.props.navigation.navigate('tabs');
   };
 
-  onBackPress = this.props.navigation.goBack;
+  onBackPress = () => this.props.navigation.navigate('tabs');
+
+  goToNextOnboardingScreen = () =>
+    this.props.navigation.navigate('symptoms', {onboarding: true});
 
   getReminder = async (showAlert = true) => {
     const isRegistered = await NotificationService.checkPermission();
@@ -202,12 +205,22 @@ class Reminder extends React.Component {
             {reminder ? 'Modifier le rappel' : 'Définir un rappel'}
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          onPress={reminder ? this.deleteReminderManually : this.onBackPress}>
-          <Text style={styles.later}>
-            {reminder ? 'Retirer le rappel' : 'Plus tard, peut-être'}
-          </Text>
-        </TouchableOpacity>
+        {this.props.route?.params?.onboarding ? (
+          <TouchableOpacity
+            onPress={this.goToNextOnboardingScreen}
+            style={reminder ? styles.setupButton : {}}>
+            <Text style={reminder ? styles.setupButtonText : styles.later}>
+              {reminder ? 'Continuer' : 'Plus tard, peut-être'}
+            </Text>
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity
+            onPress={reminder ? this.deleteReminderManually : this.onBackPress}>
+            <Text style={styles.later}>
+              {reminder ? 'Retirer le rappel' : 'Plus tard, peut-être'}
+            </Text>
+          </TouchableOpacity>
+        )}
         <TimePicker
           value={reminder}
           visible={timePickerVisible}

@@ -1,5 +1,11 @@
 import React, {useContext, useState, useEffect} from 'react';
-import {StyleSheet, ScrollView, SafeAreaView, View} from 'react-native';
+import {
+  StyleSheet,
+  ScrollView,
+  SafeAreaView,
+  View,
+  TouchableOpacity,
+} from 'react-native';
 import Text from '../../components/MyText';
 import {colors} from '../../utils/colors';
 import {DiaryDataContext} from '../../context';
@@ -127,6 +133,15 @@ const Drugs = ({navigation, route}) => {
           + Ajouter / Modifier mes médicaments suivis
         </Text>
         {/* // if its onboarding, show button 'commencer' */}
+        {route?.params?.onboarding ? (
+          <View style={styles.buttonWrapper}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('tabs')}
+              style={styles.setupButton}>
+              <Text style={styles.setupButtonText}>Commencer</Text>
+            </TouchableOpacity>
+          </View>
+        ) : null}
       </View>
     );
   };
@@ -189,6 +204,20 @@ const Drugs = ({navigation, route}) => {
 };
 
 const styles = StyleSheet.create({
+  setupButton: {
+    backgroundColor: colors.LIGHT_BLUE,
+    height: 45,
+    borderRadius: 45,
+    paddingHorizontal: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 15,
+  },
+  setupButtonText: {
+    color: '#fff',
+    fontWeight: '700',
+    fontSize: 19,
+  },
   scrollView: {
     padding: 20,
     backgroundColor: 'white',
