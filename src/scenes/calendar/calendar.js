@@ -24,7 +24,7 @@ import localStorage from '../../utils/localStorage';
 import Text from '../../components/MyText';
 import Icon from '../../components/Icon';
 import {colors} from '../../utils/colors';
-const screenWidth = Dimensions.get('window').width;
+const screenHeight = Dimensions.get('window').height;
 
 const Calendar = ({navigation}) => {
   const [day, setDay] = useState(new Date());
@@ -157,8 +157,7 @@ const Calendar = ({navigation}) => {
               .concat(customs)
               .map(
                 (categoryId) =>
-                  isChartVisible(categoryId) &&
-                  ['MOOD', 'SLEEP'].includes(categoryId) && (
+                  isChartVisible(categoryId) && (
                     <Chart
                       title={getTitle(categoryId)}
                       key={categoryId}
@@ -199,10 +198,12 @@ const Calendar = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
-  imageContainer: {display: 'flex', alignItems: 'center'},
+  imageContainer: {
+    display: 'flex',
+    alignItems: 'center',
+  },
   image: {
-    flex: 1,
-    height: screenWidth,
+    height: screenHeight * 0.5,
     resizeMode: 'contain',
   },
   subtitle: {

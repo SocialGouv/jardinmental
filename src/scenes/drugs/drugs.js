@@ -126,6 +126,7 @@ const Drugs = ({navigation, route}) => {
         <Text style={styles.addButton} onPress={handleAdd}>
           + Ajouter / Modifier mes médicaments suivis
         </Text>
+        {/* // if its onboarding, show button 'commencer' */}
       </View>
     );
   };

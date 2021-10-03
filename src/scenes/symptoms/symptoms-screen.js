@@ -52,7 +52,8 @@ const SymptomScreen = ({navigation, route}) => {
     setChosenCategories(categories);
   };
 
-  const showExplanation = route.params?.showExplanation || false;
+  const showExplanation =
+    route.params?.showExplanation || route.params?.onboarding || false;
 
   const setToogleCheckbox = (cat, value) => {
     let categories = {...chosenCategories};
@@ -82,7 +83,10 @@ const SymptomScreen = ({navigation, route}) => {
     let redirection = 'tabs';
     let params = {};
 
-    if (route.params?.redirect === '0') {
+    if (route.params?.onboarding) {
+      redirection = 'drugs';
+      params = {onboarding: true};
+    } else if (route.params?.redirect === '0') {
       redirection = 'question';
       params = {index: 0};
     } else if (route.params?.redirect) {
@@ -124,7 +128,7 @@ const SymptomScreen = ({navigation, route}) => {
         style={styles.container}
         contentContainerStyle={styles.scrollContainer}>
         <Text style={styles.title}>
-          Sélectionner les symptômes
+          Sélectionner ou ajouter les symptômes
           {showExplanation ? ' que vous souhaitez suivre' : ''}{' '}
         </Text>
         {noneSelected() ? (
