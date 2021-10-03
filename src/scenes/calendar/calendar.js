@@ -1,5 +1,12 @@
-import React, {useEffect, useState, useRef} from 'react';
-import {SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
+import React, {useEffect, useState, useRef, useCallback} from 'react';
+import {
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  View,
+  Image,
+  Dimensions,
+} from 'react-native';
 import {displayedCategories} from '../../utils/constants';
 import {
   beforeToday,
@@ -17,11 +24,13 @@ import localStorage from '../../utils/localStorage';
 import Text from '../../components/MyText';
 import Icon from '../../components/Icon';
 import {colors} from '../../utils/colors';
+const screenWidth = Dimensions.get('window').width;
 
 const Calendar = ({navigation}) => {
   const [day, setDay] = useState(new Date());
   const [diaryData] = useContext(DiaryDataContext);
   const [customs, setCustoms] = useState([]);
+  const [calendarIsEmpty, setCalendarIsEmpty] = useState(true);
   let mounted = useRef(true);
 
   useEffect(() => {
@@ -40,6 +49,17 @@ const Calendar = ({navigation}) => {
 
     return unsubscribe;
   }, [navigation]);
+
+  useEffect(() => {
+    console.log('new view !');
+    const emptyCalendar = !Object.keys(displayedCategories)
+      .concat(customs)
+      .reduce((showing, categoryId) => {
+        return Boolean(isChartVisible(categoryId)) || showing;
+      }, false);
+    console.log({emptyCalendar});
+    setCalendarIsEmpty(emptyCalendar);
+  }, [day, customs, isChartVisible]);
 
   const {firstDay, lastDay} = getTodaySWeek(day);
 
@@ -80,19 +100,22 @@ const Calendar = ({navigation}) => {
     });
   };
 
-  const isChartVisible = (categoryId) => {
-    let visible = false;
-    chartDates.forEach((date) => {
-      if (!diaryData[date]) {
-        return;
-      }
-      if (!diaryData[date][categoryId]) {
-        return;
-      }
-      visible = true;
-    });
-    return visible;
-  };
+  const isChartVisible = useCallback(
+    (categoryId) => {
+      let visible = false;
+      chartDates.forEach((date) => {
+        if (!diaryData[date]) {
+          return;
+        }
+        if (!diaryData[date][categoryId]) {
+          return;
+        }
+        visible = true;
+      });
+      return visible;
+    },
+    [diaryData, chartDates],
+  );
 
   const getTitle = (cat) => {
     const category = displayedCategories[cat] || cat;
@@ -116,39 +139,72 @@ const Calendar = ({navigation}) => {
           onAfterPress={() => setDay(beforeToday(-7, day))}
           onBeforePress={() => setDay(beforeToday(7, day))}
         />
-        <View style={styles.subtitleContainer}>
-          <Icon
-            icon="InfoSvg"
-            width={25}
-            height={25}
-            color={colors.LIGHT_BLUE}
-          />
-          <Text style={styles.subtitle}>
-            Tapez sur un jour ou un point pour retrouver une{' '}
-            <Text style={styles.bold}>vue détaillée</Text>.
-          </Text>
-        </View>
-        {Object.keys(displayedCategories)
-          .concat(customs)
-          .map(
-            (categoryId) =>
-              isChartVisible(categoryId) && (
-                <Chart
-                  title={getTitle(categoryId)}
-                  key={categoryId}
-                  data={computeChartData(categoryId)}
-                  onPress={(dayIndex) =>
-                    displayOnlyRequest(categoryId, dayIndex)
-                  }
-                />
-              ),
-          )}
+        {!calendarIsEmpty ? (
+          <>
+            <View style={styles.subtitleContainer}>
+              <Icon
+                icon="InfoSvg"
+                width={25}
+                height={25}
+                color={colors.LIGHT_BLUE}
+              />
+              <Text style={styles.subtitle}>
+                Tapez sur un jour ou un point pour retrouver une{' '}
+                <Text style={styles.bold}>vue détaillée</Text>.
+              </Text>
+            </View>
+            {Object.keys(displayedCategories)
+              .concat(customs)
+              .map(
+                (categoryId) =>
+                  isChartVisible(categoryId) &&
+                  ['MOOD', 'SLEEP'].includes(categoryId) && (
+                    <Chart
+                      title={getTitle(categoryId)}
+                      key={categoryId}
+                      data={computeChartData(categoryId)}
+                      onPress={(dayIndex) =>
+                        displayOnlyRequest(categoryId, dayIndex)
+                      }
+                    />
+                  ),
+              )}
+          </>
+        ) : (
+          <>
+            <View style={styles.subtitleContainer}>
+              <Icon
+                icon="InfoSvg"
+                width={25}
+                height={25}
+                color={colors.LIGHT_BLUE}
+              />
+              <Text style={styles.subtitle}>
+                Des <Text style={styles.bold}>courbes d'evolution</Text> de vos
+                symptômes apparaîtront au fur et à mesure de vos saisies
+                quotidiennes.
+              </Text>
+            </View>
+            <View style={styles.imageContainer}>
+              <Image
+                style={styles.image}
+                source={require('../../../assets/imgs/calendar.png')}
+              />
+            </View>
+          </>
+        )}
       </ScrollView>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  imageContainer: {display: 'flex', alignItems: 'center'},
+  image: {
+    flex: 1,
+    height: screenWidth,
+    resizeMode: 'contain',
+  },
   subtitle: {
     flex: 1,
     color: '#000',
