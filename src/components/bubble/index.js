@@ -43,7 +43,9 @@ export default ({diaryData, navigation}) => {
   const onPressReminder = () => navigation.navigate('reminder');
   const onPressExport = () => navigation.navigate('export');
 
-  if (beckItemVisible) return <BeckItem onPress={onPressBeck} />;
+  // if (beckItemVisible) return <BeckItem onPress={onPressBeck} />;
+
+  if (reminderItemVisible) return <ReminderItem onPress={onPressReminder} />;
 
   // show the bubble if there is no info in the index 0 (today)
   if (showBubbleSurvey(0))
@@ -53,6 +55,7 @@ export default ({diaryData, navigation}) => {
         navigation={navigation}
       />
     );
+
   // show the bubble if there is no info in the index 1 (yesterday)
   if (showBubbleSurvey(1))
     return (
@@ -61,6 +64,5 @@ export default ({diaryData, navigation}) => {
         navigation={navigation}
       />
     );
-  if (reminderItemVisible) return <ReminderItem onPress={onPressReminder} />;
   return <ExportItem onPress={onPressExport} />;
 };
