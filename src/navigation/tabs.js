@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {StyleSheet, SafeAreaView, Platform} from 'react-native';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import Diary from '../scenes/diary/diary';
@@ -14,11 +14,15 @@ import PlusModal from '../scenes/diary/plus-modal';
 const Tab = createMaterialTopTabNavigator();
 
 const Tabs = ({navigation, route}) => {
-  const [plusModalVisible, setPlusModalVisible] = useState(false);
+  const [plusModalVisible, setPlusModalVisible] = React.useState(false);
 
   const handlePlus = async () => {
-    const isBeckActivated = await localStorage.getIsBeckActivated();
-    if (isBeckActivated) return setPlusModalVisible(true);
+    const isBeckActivatedInLocalStorage = await localStorage.getIsBeckActivated();
+    if (
+      isBeckActivatedInLocalStorage === null || // if the user hasnt specify it yet, beck is activated by default
+      isBeckActivatedInLocalStorage === true
+    )
+      return setPlusModalVisible(true);
     startSurvey();
   };
 

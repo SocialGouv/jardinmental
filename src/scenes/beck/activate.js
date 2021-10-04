@@ -17,8 +17,12 @@ import logEvents from '../../services/logEvents';
 export default ({navigation}) => {
   const [isBeckActivated, setIsBeckActivated] = useState();
   const getData = async () => {
-    const d = await localStorage.getIsBeckActivated();
-    setIsBeckActivated(d);
+    const isBeckActivatedInLocalStorage = await localStorage.getIsBeckActivated();
+    if (
+      isBeckActivatedInLocalStorage === null || // if the user hasnt specify it yet, beck is activated by default
+      isBeckActivatedInLocalStorage === true
+    )
+      return setIsBeckActivated(true);
   };
   const handleClick = async (v) => {
     const alertTitle = v ? 'Activées' : 'Désactivées';
