@@ -116,7 +116,7 @@ const Notes = ({navigation, route}) => {
           textAlignVertical={'top'}
         />
         <Text style={styles.title}>
-          Je souhaite détailler un ou plusieurs de mes symptômes (ma nuit à été
+          Je souhaite détailler un ou plusieurs de mes symptômes (ma nuit a été
           ...) ?
         </Text>
         <TextInput

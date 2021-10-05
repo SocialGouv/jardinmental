@@ -52,7 +52,7 @@ export default ({onChange, onSubmit, data}) => {
       />
       <Text style={styleBeck.title}>Arguments en défaveur de votre pensée</Text>
       <Text style={styleBeck.subtitle}>
-        Quels sont les arguments qui nuancent/démentent votre pensée initiale{' '}
+        Quels sont les arguments qui nuancent/démentent votre pensée initiale ?
       </Text>
       <TextInput
         multiline={true}
