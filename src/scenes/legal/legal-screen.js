@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import Text from '../../components/MyText';
 import {colors} from '../../utils/colors';
-import ArrowLeftSvg from '../../../assets/svg/arrow-left.svg';
+import ArrowLeftSvg from '../../../assets/svg/arrow-left.js';
 
 const LegalScreen = ({navigation, title, content}) => {
   const onBackPress = () => {

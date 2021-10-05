@@ -113,3 +113,9 @@ export const changeTimezone = (date, ianatz) => {
   // so 12:00 in Toronto is 17:00 UTC
   return new Date(date.getTime() - diff); // needs to substract
 };
+
+export const isAfterToday = (date) => {
+  const today = new Date();
+  const test = new Date(date);
+  return test > today;
+};

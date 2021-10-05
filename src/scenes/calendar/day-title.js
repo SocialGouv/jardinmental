@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
-import ArrowLeftSvg from '../../../assets/svg/arrow-left.svg';
+import ArrowLeftSvg from '../../../assets/svg/arrow-left.js';
 import {colors} from '../../utils/colors';
 import {formatDate} from '../../utils/date/helpers';
 import Text from '../../components/MyText';

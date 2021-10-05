@@ -3,7 +3,7 @@ import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import Text from '../../components/MyText';
 import {colors} from '../../utils/colors';
 import Icon from '../../components/Icon';
-import ArrowRightSvg from '../../../assets/svg/arrow-right.svg';
+import ArrowRightSvg from '../../../assets/svg/arrow-right.js';
 
 export default ({
   title,

@@ -138,6 +138,7 @@ const Calendar = ({navigation}) => {
           lastDay={lastDay}
           onAfterPress={() => setDay(beforeToday(-7, day))}
           onBeforePress={() => setDay(beforeToday(7, day))}
+          setDay={setDay}
         />
         {!calendarIsEmpty ? (
           <>
