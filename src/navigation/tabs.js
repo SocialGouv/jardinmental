@@ -4,7 +4,7 @@ import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs
 import Diary from '../scenes/diary/diary';
 import Calendar from '../scenes/calendar/calendar';
 import DiarySvg from '../../assets/svg/diary.svg';
-import CalendarSvg from '../../assets/svg/calendar.svg';
+import CourbeSvg from '../../assets/svg/Courbes';
 import localStorage from '../utils/localStorage';
 import logEvents from '../services/logEvents';
 import {colors} from '../utils/colors';
@@ -63,7 +63,7 @@ const Tabs = ({navigation, route}) => {
         tabBarPosition="bottom"
         tabBarOptions={{
           activeTintColor: '#26387C',
-          inactiveTintColor: '#E5E5E5',
+          inactiveTintColor: '#26387C40',
           showIcon: true,
           indicatorStyle: {height: 0},
           style: styles.tabBar,
@@ -87,8 +87,8 @@ const Tabs = ({navigation, route}) => {
           name="Calendar"
           component={Calendar}
           options={{
-            tabBarLabel: 'Calendrier',
-            tabBarIcon: ({color}) => <CalendarSvg style={{color}} />,
+            tabBarLabel: 'Courbes',
+            tabBarIcon: ({color}) => <CourbeSvg style={{color}} />,
           }}
         />
       </Tab.Navigator>

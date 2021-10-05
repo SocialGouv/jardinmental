@@ -1,9 +1,9 @@
 import React from 'react';
 import Text from '../../components/MyText';
 import {colors} from '../../utils/colors';
-import Screen1Image from './Screen1-im';
-import Screen2Image from './Screen2-im';
-import Screen3Image from './Screen3-im';
+import Screen1Image from '../../../assets/svg/Notes';
+import Screen2Image from '../../../assets/svg/Courbes';
+import Screen3Image from '../../../assets/svg/Chat';
 
 import {StyleSheet, View, Dimensions} from 'react-native';
 export const buttonHeight = 43;
@@ -73,6 +73,7 @@ const styles = StyleSheet.create({
     color: '#0A215C',
   },
   image: {
+    color: '#C3C7D5',
     height: screenHeight * (Dimensions.get('window').height > 600 ? 0.15 : 0.1),
     width: screenWidth,
     marginVertical: 0,
