@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {colors} from '../utils/colors';
 import Icon from './Icon';
 import Text from './MyText';
 import Settings from '../scenes/settings/settings-modal';
 import Drawer from './drawer';
-import {useRoute} from '@react-navigation/native';
+import {useRoute, useFocusEffect} from '@react-navigation/native';
 import {needUpdate} from '../services/versionChecker';
 import {getBadgeNotesVersion} from '../scenes/news';
 import localStorage from '../utils/localStorage';
@@ -24,9 +24,11 @@ const Header = ({title, navigation}) => {
     setBadge(update || news || (supported === 'PRO' && !badgeProNPS));
   };
 
-  useEffect(() => {
-    updateBadge();
-  }, [navigation]);
+  useFocusEffect(
+    React.useCallback(() => {
+      updateBadge();
+    }, []),
+  );
 
   return (
     <View style={styles.container}>
