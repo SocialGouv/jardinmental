@@ -131,7 +131,7 @@ const Calendar = ({navigation}) => {
       <ScrollView
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContainer}>
-        <Header title="Calendrier" navigation={navigation} />
+        <Header title="Courbes" navigation={navigation} />
 
         <WeekPicker
           firstDay={firstDay}
