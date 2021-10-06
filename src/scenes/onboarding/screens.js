@@ -4,6 +4,7 @@ import {colors} from '../../utils/colors';
 import Screen1Image from '../../../assets/svg/Notes';
 import Screen2Image from '../../../assets/svg/Courbes';
 import Screen3Image from '../../../assets/svg/Chat';
+import DiarySvg from '../../../assets/svg/diary';
 
 import {StyleSheet, View, Dimensions} from 'react-native';
 export const buttonHeight = 43;
@@ -19,12 +20,12 @@ console.log();
 
 export const Screen1 = () => (
   <View style={styles.container}>
-    <Screen1Image style={styles.image} />
+    <DiarySvg style={styles.image} />
     <Text style={styles.presentationText}>
       <Text style={styles.bold}>Auto-observation</Text>
-      {'\n\n'}Chaque jour, je note mes{' '}
+      {'\n\n'}Chaque jour, je note dans mon journal mes{' '}
       <Text style={styles.emphasis}>ressentis</Text>, les{' '}
-      <Text style={styles.emphasis}>événements</Text> qui m'ont marqués, mes
+      <Text style={styles.emphasis}>événements</Text> qui m'ont marqués et mes
       prises de <Text style={styles.emphasis}>traitement</Text>.
     </Text>
   </View>
@@ -34,7 +35,7 @@ export const Screen2 = () => (
     <Screen2Image style={styles.image} />
     <Text style={styles.presentationText}>
       <Text style={styles.bold}>Courbes de mes ressentis</Text>
-      {'\n\n'}Plus je l'utilise, plus je peux{' '}
+      {'\n\n'}Plus j'utilise l'application, plus je peux{' '}
       <Text style={styles.emphasis}>observer</Text> mes tendances et commencer à
       voir des <Text style={styles.emphasis}>liens</Text>.
     </Text>
@@ -55,10 +56,11 @@ export const Screen3 = () => (
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
+    flex: 1,
     backgroundColor: 'white',
     padding: 20,
-    justifyContent: 'flex-start',
+    marginBottom: Dimensions.get('window').height > 600 ? 20 : 60,
+    justifyContent: 'center',
     alignItems: 'center',
   },
   emphasis: {
@@ -68,6 +70,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   presentationText: {
+    textAlign: 'center',
     marginTop: 15,
     fontSize: Dimensions.get('window').height > 600 ? 20 : 15,
     color: '#0A215C',

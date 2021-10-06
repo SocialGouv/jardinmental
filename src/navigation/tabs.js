@@ -3,7 +3,7 @@ import {StyleSheet, SafeAreaView, Platform} from 'react-native';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import Diary from '../scenes/diary/diary';
 import Calendar from '../scenes/calendar/calendar';
-import DiarySvg from '../../assets/svg/diary.svg';
+import DiarySvg from '../../assets/svg/diary.js';
 import CourbeSvg from '../../assets/svg/Courbes';
 import localStorage from '../utils/localStorage';
 import logEvents from '../services/logEvents';
