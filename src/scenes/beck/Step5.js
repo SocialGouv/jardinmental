@@ -69,8 +69,8 @@ export default ({onChange, onSubmit, data}) => {
       />
       <Text style={styleBeck.title}>Pensée plus nuancée/adaptée</Text>
       <Text style={styleBeck.subtitle}>
-        En prenant en compte à la fois les arguments en faveur et en défaveur de
-        la pensée initiale
+        Prenez en compte à la fois les arguments en faveur et en défaveur de la
+        pensée initiale
       </Text>
       <TextInput
         multiline={true}
@@ -87,7 +87,7 @@ export default ({onChange, onSubmit, data}) => {
       />
       <Separator style={styleBeck.separator} />
       <Text style={styleBeck.title}>
-        A quel % je crois à ma pensée initiale maintenant
+        A quel % je crois à ma pensée initiale maintenant ?
       </Text>
       <DiscretSlider
         step={trustInThoughsNowSelected}
@@ -98,8 +98,8 @@ export default ({onChange, onSubmit, data}) => {
       />
       <View style={styleBeck.separator} />
       <Text style={styleBeck.title}>
-        Vos émotions et leur % d'intensité maintenant en ayant la pensée nuancée
-        en tête
+        Vos émotions initiales et leur % d'intensité maintenant en ayant la
+        pensée nuancée en tête
       </Text>
       <DiscretSlider
         step={mainEmotionIntensityNuancedSelected}

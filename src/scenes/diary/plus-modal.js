@@ -12,7 +12,7 @@ const SettingsModal = ({navigation, visible, onClick, startSurvey}) => {
         onPressOut={onClick}>
         <View style={styles.card}>
           <PlusItem
-            title="Suivi des symptômes"
+            title="Pour faire le point sur sa journée"
             navigation={navigation}
             onClick={() => {
               onClick();
@@ -21,7 +21,7 @@ const SettingsModal = ({navigation, visible, onClick, startSurvey}) => {
             icon="PlusSurveySvg"
           />
           <PlusItem
-            title="Colonnes de Beck"
+            title="Pour faire le point sur un événement"
             path="beck"
             navigation={navigation}
             onClick={onClick}
