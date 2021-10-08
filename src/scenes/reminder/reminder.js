@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import Text from '../../components/MyText';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import ReminderSvg from '../../../assets/svg/reminder.svg';
+import ReminderSvg from '../../../assets/svg/reminder.js';
 import TimePicker from '../../components/timePicker';
 import NotificationService from '../../services/notifications';
 import {colors} from '../../utils/colors';
@@ -172,15 +172,35 @@ class Reminder extends React.Component {
     }
   };
 
+  renderHeader = () => {
+    return this.props.route?.params?.onboarding ? (
+      <>
+        <View style={styles.header}>
+          <ReminderSvg style={styles.smallImage} height={40} width={40} />
+          <Text style={styles.smallTitle}>
+            À quelle heure souhaitez-vous remplir votre journal ?
+          </Text>
+        </View>
+        <Text style={styles.subTitle}>
+          Vous serez notifié(e) à cette heure pour remplir votre journal.
+        </Text>
+      </>
+    ) : (
+      <>
+        <ReminderSvg style={styles.bigImage} />
+        <Text style={styles.bigTitle}>
+          N'oubliez plus jamais de remplir votre journal
+        </Text>
+      </>
+    );
+  };
+
   render() {
     const {reminder, timePickerVisible} = this.state;
     return (
       <SafeAreaView style={styles.container}>
         <BackButton onPress={this.onBackPress} />
-        <ReminderSvg />
-        <Text style={styles.title}>
-          N'oubliez plus jamais de noter vos symptômes
-        </Text>
+        {this.renderHeader()}
         <View style={styles.description}>
           {reminder ? (
             <>
@@ -235,6 +255,26 @@ class Reminder extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  smallImage: {
+    color: colors.BLUE,
+    height: 40,
+    width: 40,
+    marginVertical: 0,
+    marginRight: 10,
+  },
+  bigImage: {
+    color: '#C3C7D5',
+    height: 40,
+    width: 40,
+    marginVertical: 0,
+  },
+  header: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 30,
+  },
   container: {
     justifyContent: 'flex-start',
     alignItems: 'center',
@@ -243,7 +283,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     height: '100%',
   },
-  title: {
+  bigTitle: {
     width: '80%',
     flexShrink: 0,
     textAlign: 'center',
@@ -251,6 +291,14 @@ const styles = StyleSheet.create({
     color: colors.BLUE,
     fontWeight: '700',
     marginTop: '10%',
+  },
+  smallTitle: {
+    width: '80%',
+    flexShrink: 0,
+    textAlign: 'left',
+    fontSize: 22,
+    color: colors.BLUE,
+    fontWeight: '700',
   },
   description: {
     width: '80%',
@@ -260,6 +308,7 @@ const styles = StyleSheet.create({
   subTitle: {
     flexShrink: 0,
     textAlign: 'center',
+    paddingHorizontal: 20,
   },
   time: {
     fontWeight: '700',
