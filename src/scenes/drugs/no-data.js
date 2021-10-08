@@ -45,7 +45,7 @@ export default ({navigation, route}) => {
         <Text style={styles.separatorText}>ou</Text>
       </View>
       <Text style={styles.noTreatment} onPress={handleNoTreatment}>
-        Je n'ai aucun traitment médical
+        Je n'ai aucun traitement médical
       </Text>
     </View>
   );

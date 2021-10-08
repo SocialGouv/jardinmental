@@ -115,7 +115,6 @@ const Drugs = ({navigation, route}) => {
   };
 
   const submit = async () => {
-    console.log('go to onboarding-drugs');
     await localStorage.setMedicalTreatment(treatment);
     navigation.navigate('onboarding-drugs', {treatment});
   };
