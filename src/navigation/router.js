@@ -10,7 +10,10 @@ import DailyChart from '../scenes/calendar/daily-chart';
 import {AppState, Platform} from 'react-native';
 import Notes from '../scenes/survey/notes-screen';
 import Onboarding from '../scenes/onboarding/onboarding';
-import Supported from '../scenes/supported/supported';
+import Supported from '../scenes/onboarding/onboardingSupported';
+import OnboardingSymptoms from '../scenes/onboarding/onboardingSymptoms';
+import OnboardingDrugs from '../scenes/onboarding/onboardingDrugs';
+import OnboardingDrugsList from '../scenes/onboarding/onboardingDrugs/list';
 import CGU from '../scenes/legal/cgu-screen';
 import Privacy from '../scenes/legal/privacy-screen';
 import LegalMentions from '../scenes/legal/legal-mentions-screen';
@@ -78,6 +81,15 @@ class Router extends React.Component {
             )}
           </Stack.Screen>
           <Stack.Screen name="onboarding" component={Onboarding} />
+          <Stack.Screen
+            name="onboarding-symptoms"
+            component={OnboardingSymptoms}
+          />
+          <Stack.Screen name="onboarding-drugs" component={OnboardingDrugs} />
+          <Stack.Screen
+            name="onboarding-drugs-list"
+            component={OnboardingDrugsList}
+          />
           <Stack.Screen name="supported" component={Supported} />
           <Stack.Screen name="cgu" component={CGU} />
           <Stack.Screen name="privacy" component={Privacy} />

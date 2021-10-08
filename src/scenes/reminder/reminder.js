@@ -43,7 +43,8 @@ const timeIsAfterNow = (inputDate) => {
 
 const ReminderStorageKey = '@Reminder';
 const reminderTitle = "C'est l'heure de noter vos symptômes !";
-const reminderMessage = "N'oubliez pas de remplir votre Mon Suivi Psy";
+const reminderMessage =
+  "N'oubliez pas de remplir votre application Mon Suivi Psy";
 class Reminder extends React.Component {
   state = {
     reminder: null,
@@ -184,9 +185,11 @@ class Reminder extends React.Component {
           {reminder ? (
             <>
               <Text style={styles.subTitle}>Vous avez défini un rappel à</Text>
-              <Text style={styles.time}>{`${reminder.getLocalePureTime(
-                'fr',
-              )}`}</Text>
+              <TouchableOpacity onPress={this.showTimePicker}>
+                <Text style={styles.time}>{`${reminder.getLocalePureTime(
+                  'fr',
+                )}`}</Text>
+              </TouchableOpacity>
               <Text style={styles.subTitle}>tous les jours.</Text>
             </>
           ) : (
@@ -207,7 +210,7 @@ class Reminder extends React.Component {
         </TouchableOpacity>
         {this.props.route?.params?.onboarding ? (
           <TouchableOpacity
-            onPress={this.goToNextOnboardingScreen}
+            onPress={this.onBackPress}
             style={reminder ? styles.setupButton : {}}>
             <Text style={reminder ? styles.setupButtonText : styles.later}>
               {reminder ? 'Continuer' : 'Plus tard, peut-être'}

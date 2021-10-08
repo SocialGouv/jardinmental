@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
   StyleSheet,
   SafeAreaView,
@@ -6,12 +6,11 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import Text from '../../components/MyText';
-import {colors} from '../../utils/colors';
-import localStorage from '../../utils/localStorage';
-import logEvents from '../../services/logEvents';
-import Matomo from '../../services/matomo';
-import {useEffect} from 'react';
+import Text from '../../../components/MyText';
+import {colors} from '../../../utils/colors';
+import localStorage from '../../../utils/localStorage';
+import logEvents from '../../../services/logEvents';
+import Matomo from '../../../services/matomo';
 
 const Supported = ({navigation}) => {
   const handleClick = async (value) => {
@@ -21,7 +20,7 @@ const Supported = ({navigation}) => {
       supported: value,
     });
     //navigate to tabs
-    navigation.navigate('reminder', {onboarding: true});
+    navigation.navigate('onboarding-symptoms');
     //set local storage
     await localStorage.setSupported(value);
   };
