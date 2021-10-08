@@ -176,7 +176,7 @@ class Reminder extends React.Component {
     return this.props.route?.params?.onboarding ? (
       <>
         <View style={styles.header}>
-          <ReminderSvg style={styles.smallImage} height={40} width={40} />
+          <ReminderSvg style={styles.smallImage} height={30} width={30} />
           <Text style={styles.smallTitle}>
             À quelle heure souhaitez-vous remplir votre journal ?
           </Text>
@@ -199,7 +199,9 @@ class Reminder extends React.Component {
     const {reminder, timePickerVisible} = this.state;
     return (
       <SafeAreaView style={styles.container}>
-        <BackButton onPress={this.onBackPress} />
+        {!this.props.route?.params?.onboarding ? (
+          <BackButton onPress={this.onBackPress} />
+        ) : null}
         {this.renderHeader()}
         <View style={styles.description}>
           {reminder ? (
@@ -273,7 +275,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: 30,
+    marginVertical: 20,
   },
   container: {
     justifyContent: 'flex-start',

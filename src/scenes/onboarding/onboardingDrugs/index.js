@@ -149,7 +149,7 @@ const Drugs = ({navigation, route}) => {
   return (
     <SafeAreaView style={styles.safe}>
       <DrugInformations visible={showInfos} onClose={toggleInfos} />
-      <BackButton onPress={previousQuestion} />
+      {/* <BackButton onPress={navigation.goBack} /> */}
       <ScrollView
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContainer}>

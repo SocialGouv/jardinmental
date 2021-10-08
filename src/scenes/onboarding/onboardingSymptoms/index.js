@@ -89,18 +89,15 @@ const SymptomScreen = ({navigation, route}) => {
 
   return (
     <SafeAreaView style={styles.safe}>
-      <View style={styles.buttonsContainer}>
-        <BackButton
-          disabled={noneSelected()}
-          onPress={() => navigation.navigate('tabs')}
-        />
-      </View>
+      {/* <View style={styles.buttonsContainer}>
+        <BackButton disabled={noneSelected()} onPress={navigation.goBack} />
+      </View> */}
       <ScrollView
         keyboardShouldPersistTaps="handled"
         style={styles.container}
         contentContainerStyle={styles.scrollContainer}>
         <View style={styles.titleContainer}>
-          <Logo style={styles.image} />
+          <Logo style={styles.image} width={30} height={30} />
           <Text style={styles.title}>
             Quels ressentis souhaitez-vous suivre quotidiennement ?
           </Text>
@@ -193,6 +190,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
+    flex: 1,
     color: colors.BLUE,
     fontSize: 22,
     fontWeight: '700',
@@ -245,9 +243,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   container: {
-    paddingHorizontal: 20,
-    paddingTop: 0,
-    paddingBottom: 20,
+    padding: 20,
     backgroundColor: 'white',
   },
   backButtonContainer: {
