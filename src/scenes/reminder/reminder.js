@@ -178,11 +178,12 @@ class Reminder extends React.Component {
         <View style={styles.header}>
           <ReminderSvg style={styles.smallImage} height={30} width={30} />
           <Text style={styles.smallTitle}>
-            À quelle heure souhaitez-vous remplir votre journal ?
+            À quelle heure souhaitez vous avoir un rappel pour penser à remplir
+            votre journal ?
           </Text>
         </View>
         <Text style={styles.subTitle}>
-          Vous serez notifié(e) à cette heure pour remplir votre journal.
+          Vous recevrez une notification journalière à cette heure.
         </Text>
       </>
     ) : (

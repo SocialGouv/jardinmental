@@ -52,8 +52,7 @@ const SymptomScreen = ({navigation, route}) => {
     setChosenCategories(categories);
   };
 
-  const showExplanation =
-    route.params?.showExplanation || route.params?.onboarding || false;
+  const showExplanation = route.params?.showExplanation || false;
 
   const setToogleCheckbox = (cat, value) => {
     let categories = {...chosenCategories};
@@ -78,6 +77,7 @@ const SymptomScreen = ({navigation, route}) => {
     if (noneSelected()) {
       return;
     }
+    await localStorage.setSymptoms(chosenCategories);
     const questions = await buildSurveyData();
     const index = questions[0];
     let redirection = 'tabs';
@@ -104,8 +104,10 @@ const SymptomScreen = ({navigation, route}) => {
   };
 
   useEffect(() => {
+    // we do not save on the fly if it is the first time the user see the symptoms screen
+    if (showExplanation) return;
     (async () => await localStorage.setSymptoms(chosenCategories))();
-  }, [chosenCategories]);
+  }, [chosenCategories, showExplanation]);
 
   const handleAddNewSymptom = async (value) => {
     if (!value) return;

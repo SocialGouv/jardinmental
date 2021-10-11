@@ -9,7 +9,7 @@ import localStorage from '../../../utils/localStorage';
 export default ({navigation}) => {
   const handleNoTreatment = async () => {
     await localStorage.setMedicalTreatment([]);
-    navigation.navigate('reminder');
+    navigation.navigate('reminder', {onboarding: true});
   };
 
   return (
