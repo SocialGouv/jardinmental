@@ -8,6 +8,8 @@ import {
   STORAGE_KEY_NOTES_VERSION,
   STORAGE_KEY_VISIT_PRO_NPS,
   STORAGE_KEY_CUSTOM_DRUGS,
+  STORAGE_KEY_ONBOARDING_STEP,
+  STORAGE_KEY_ONBOARDING_DONE,
 } from '../../utils/constants';
 import localStorageBeck from './beck';
 
@@ -29,6 +31,27 @@ const setIsFirstAppLaunch = async (isAppFirstLaunch) => {
   await AsyncStorage.setItem(
     STORAGE_KEY_IS_FIRST_LAUNCH,
     JSON.stringify(isAppFirstLaunch),
+  );
+};
+const getOnboardingStep = async () =>
+  await AsyncStorage.getItem(STORAGE_KEY_ONBOARDING_STEP);
+
+const setOnboardingStep = async (step) => {
+  await AsyncStorage.setItem(STORAGE_KEY_ONBOARDING_STEP, step);
+};
+const getOnboardingDone = async () => {
+  const onboardingDone = await AsyncStorage.getItem(
+    STORAGE_KEY_ONBOARDING_DONE,
+  );
+  if (onboardingDone) {
+    return JSON.parse(onboardingDone);
+  }
+};
+
+const setOnboardingDone = async (value) => {
+  await AsyncStorage.setItem(
+    STORAGE_KEY_ONBOARDING_DONE,
+    JSON.stringify(value),
   );
 };
 
@@ -115,6 +138,10 @@ export default {
   setSymptoms,
   getIsFirstAppLaunch,
   setIsFirstAppLaunch,
+  getOnboardingStep,
+  setOnboardingStep,
+  getOnboardingDone,
+  setOnboardingDone,
   getSupported,
   setSupported,
   getCustomSymptoms,

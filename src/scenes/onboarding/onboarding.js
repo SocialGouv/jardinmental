@@ -34,7 +34,6 @@ const Onboarding = ({navigation}) => {
   const validateOnboarding = async () => {
     const target = firstTime ? 'supported' : 'tabs';
     navigation.navigate(target);
-    await localStorage.setIsFirstAppLaunch(false);
   };
 
   const onCguClick = () => navigation.navigate('cgu');

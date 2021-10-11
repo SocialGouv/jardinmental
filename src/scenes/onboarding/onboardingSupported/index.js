@@ -11,6 +11,7 @@ import {colors} from '../../../utils/colors';
 import localStorage from '../../../utils/localStorage';
 import logEvents from '../../../services/logEvents';
 import Matomo from '../../../services/matomo';
+import {ONBOARDING_STEPS} from '../../../utils/constants';
 
 const Supported = ({navigation}) => {
   const handleClick = async (value) => {
@@ -24,6 +25,12 @@ const Supported = ({navigation}) => {
     //set local storage
     await localStorage.setSupported(value);
   };
+
+  React.useEffect(() => {
+    (async () => {
+      await localStorage.setOnboardingStep(ONBOARDING_STEPS.STEP_SUPPORTED);
+    })();
+  }, []);
 
   return (
     <SafeAreaView style={styles.safe}>

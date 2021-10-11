@@ -19,6 +19,7 @@ import Button from '../../../components/Button';
 import AddElemToList from '../../../components/AddElemToList';
 import DiarySvg from '../../../../assets/svg/diary';
 import Logo from '../../../../assets/svg/symptoms-setting';
+import {ONBOARDING_STEPS} from '../../../utils/constants';
 
 const lookUpCategoryMatomo = {
   MOOD: 0,
@@ -33,6 +34,12 @@ const SymptomScreen = ({navigation, route}) => {
     'A tout moment, vous pourrez modifier la liste des symptômes que vous souhaitez suivre via l’onglet “Réglages” situé en haut à droite du journal';
   const [chosenCategories, setChosenCategories] = useState({});
   const [initalCategories, setInitialCategories] = useState({});
+
+  useEffect(() => {
+    (async () => {
+      await localStorage.setOnboardingStep(ONBOARDING_STEPS.STEP_SYMPTOMS);
+    })();
+  }, []);
 
   useEffect(() => {
     (async () => {

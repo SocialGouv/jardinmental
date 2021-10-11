@@ -9,7 +9,7 @@ import Export from '../scenes/export/export';
 import DailyChart from '../scenes/calendar/daily-chart';
 import {AppState, Platform} from 'react-native';
 import Notes from '../scenes/survey/notes-screen';
-import Onboarding from '../scenes/onboarding/onboarding';
+import Onboarding from '../scenes/onboarding';
 import Supported from '../scenes/onboarding/onboardingSupported';
 import OnboardingSymptoms from '../scenes/onboarding/onboardingSymptoms';
 import OnboardingDrugs from '../scenes/onboarding/onboardingDrugs';

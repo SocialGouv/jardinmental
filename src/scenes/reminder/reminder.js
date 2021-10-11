@@ -10,6 +10,8 @@ import {
 } from 'react-native';
 import Text from '../../components/MyText';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import localStorage from '../../utils/localStorage';
+import {ONBOARDING_STEPS} from '../../utils/constants';
 import ReminderSvg from '../../../assets/svg/reminder.js';
 import TimePicker from '../../components/timePicker';
 import NotificationService from '../../services/notifications';
@@ -56,20 +58,28 @@ class Reminder extends React.Component {
     this.notifcationListener = NotificationService.listen(
       this.handleNotification,
     );
+    this.setOnboardingStepIfNeeded();
   }
 
   componentWillUnmount() {
     NotificationService.remove(this.notifcationListener);
   }
 
+  setOnboardingStepIfNeeded = async () => {
+    if (this.props.route?.params?.onboarding)
+      await localStorage.setOnboardingStep(ONBOARDING_STEPS.STEP_REMINDER);
+  };
+
   onOK = () => {
     this.props.navigation.navigate('tabs');
   };
 
   onBackPress = () => this.props.navigation.navigate('tabs');
-
-  goToNextOnboardingScreen = () =>
-    this.props.navigation.navigate('symptoms', {onboarding: true});
+  validateOnboarding = async () => {
+    await localStorage.setOnboardingDone(true);
+    // await localStorage.setOnboardingStep(null);
+    this.props.navigation.navigate('tabs');
+  };
 
   getReminder = async (showAlert = true) => {
     const isRegistered = await NotificationService.checkPermission();
@@ -233,7 +243,7 @@ class Reminder extends React.Component {
         </TouchableOpacity>
         {this.props.route?.params?.onboarding ? (
           <TouchableOpacity
-            onPress={this.onBackPress}
+            onPress={this.validateOnboarding}
             style={reminder ? styles.setupButton : {}}>
             <Text style={reminder ? styles.setupButtonText : styles.later}>
               {reminder ? 'Continuer' : 'Plus tard, peut-être'}

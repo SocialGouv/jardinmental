@@ -16,6 +16,8 @@ import {
   STORAGE_KEY_BECK_WHO_LIST,
   STORAGE_KEY_BECK_SENSATION_LIST,
   STORAGE_KEY_BECK_EMOTION_LIST,
+  STORAGE_KEY_ONBOARDING_STEP,
+  STORAGE_KEY_ONBOARDING_DONE,
 } from '../utils/constants';
 import {
   fakeDiaryData,
@@ -39,6 +41,8 @@ const wipeData = async () => {
   await AsyncStorage.removeItem(STORAGE_KEY_BECK_WHO_LIST);
   await AsyncStorage.removeItem(STORAGE_KEY_BECK_SENSATION_LIST);
   await AsyncStorage.removeItem(STORAGE_KEY_BECK_EMOTION_LIST);
+  await AsyncStorage.removeItem(STORAGE_KEY_ONBOARDING_STEP);
+  await AsyncStorage.removeItem(STORAGE_KEY_ONBOARDING_DONE);
   await AsyncStorage.removeItem('@Reminder');
 };
 

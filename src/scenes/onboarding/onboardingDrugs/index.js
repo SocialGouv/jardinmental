@@ -20,6 +20,7 @@ import logEvents from '../../../services/logEvents';
 import DrugInformations from './drug-information';
 import {alertNoDataYesterday} from '../../survey/survey-data';
 import Logo from '../../../../assets/svg/drugs';
+import {ONBOARDING_STEPS} from '../../../utils/constants';
 
 const Drugs = ({navigation, route}) => {
   const [diaryData, setDiaryData] = useContext(DiaryDataContext);
@@ -27,6 +28,12 @@ const Drugs = ({navigation, route}) => {
   const [posology, setPosology] = useState([]);
   const [showInfos, setShowInfos] = useState();
   const [listDrugs, setListDrugs] = useState();
+
+  useEffect(() => {
+    (async () => {
+      await localStorage.setOnboardingStep(ONBOARDING_STEPS.STEP_DRUGS);
+    })();
+  }, []);
 
   useEffect(() => {
     logEvents.logDrugsOpen();

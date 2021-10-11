@@ -44,13 +44,22 @@ const Diary = ({navigation}) => {
   const closeNPS = () => setNPSvisible(false);
 
   useEffect(() => {
-    const handleNavigation = async () => {
-      const isFirstAppLaunch = await localStorage.getIsFirstAppLaunch();
-      if (isFirstAppLaunch !== 'false') {
-        navigation.navigate('onboarding');
+    const handleOnboarding = async () => {
+      const onboardingStep = await localStorage.getOnboardingStep();
+      const onboardingIsDone = await localStorage.getOnboardingDone();
+
+      //if ONBOARDING_DONE is true, do nothing
+      if (Boolean(onboardingIsDone)) return;
+      else {
+        const isFirstAppLaunch = await localStorage.getIsFirstAppLaunch();
+        if (isFirstAppLaunch !== 'false') {
+          navigation.navigate('onboarding', {
+            screen: onboardingStep || 'OnboardingPresentation',
+          });
+        }
       }
     };
-    handleNavigation();
+    handleOnboarding();
   }, [navigation]);
 
   // display only LIMIT_PER_PAGE days
