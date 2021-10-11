@@ -19,6 +19,7 @@ import Icon from '../../components/Icon';
 import logEvents from '../../services/logEvents';
 import DrugInformations from './drug-information';
 import {alertNoDataYesterday} from '../survey/survey-data';
+import Logo from '../../../assets/svg/drugs';
 
 const Drugs = ({navigation, route}) => {
   const [diaryData, setDiaryData] = useContext(DiaryDataContext);
@@ -175,11 +176,14 @@ const Drugs = ({navigation, route}) => {
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContainer}>
         <View style={styles.header}>
-          <Text style={styles.title}>
-            {inSurvey
-              ? "Quel traitement avez-vous pris aujourd'hui ?"
-              : 'Suivi de votre traitement'}
-          </Text>
+          <View style={styles.titleContainer}>
+            <Logo style={styles.image} width={30} height={30} />
+            <Text style={styles.title}>
+              {inSurvey
+                ? "Quel traitement avez-vous pris aujourd'hui ?"
+                : 'Suivi de votre traitement'}
+            </Text>
+          </View>
           <Icon
             icon="InfoSvg"
             color={colors.DARK_BLUE}
@@ -204,6 +208,19 @@ const Drugs = ({navigation, route}) => {
 };
 
 const styles = StyleSheet.create({
+  image: {
+    color: colors.BLUE,
+    height: 40,
+    width: 40,
+    marginVertical: 0,
+    marginRight: 10,
+  },
+  titleContainer: {
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   setupButton: {
     backgroundColor: colors.LIGHT_BLUE,
     height: 45,

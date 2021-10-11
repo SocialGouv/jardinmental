@@ -25,7 +25,7 @@ export default ({navigation, route}) => {
   return (
     <View>
       <View style={styles.card}>
-        <Icon icon="DrugsSvg" styleContainer={{marginRight: 10}} />
+        {/* <Icon icon="DrugsSvg" styleContainer={{marginRight: 10}} /> */}
         <View style={styles.cardContent}>
           <Text style={styles.cardTitle}>
             Vous n'avez pas encore précisé de traitement
@@ -44,9 +44,19 @@ export default ({navigation, route}) => {
       <View style={styles.separator}>
         <Text style={styles.separatorText}>ou</Text>
       </View>
-      <Text style={styles.noTreatment} onPress={handleNoTreatment}>
-        Je n'ai aucun traitement médical
-      </Text>
+      <View style={styles.card}>
+        <View style={styles.cardContent}>
+          <Text style={styles.cardTitle}>
+            Je ne prends aucun traitement médicamenteux
+          </Text>
+          <Button
+            onPress={handleNoTreatment}
+            title="Continuer"
+            buttonStyle={styles.button}
+            textStyle={{fontSize: 14, fontWeight: 'normal'}}
+          />
+        </View>
+      </View>
     </View>
   );
 };
@@ -78,10 +88,10 @@ const styles = StyleSheet.create({
     borderColor: '#d4f0f2',
     borderWidth: 1,
     borderRadius: 10,
-    padding: 10,
+    padding: 20,
   },
   cardContent: {flex: 1},
-  button: {width: '90%', height: 30},
+  button: {flex: 0, height: 30, alignSelf: 'center'},
   cardTitle: {
     fontSize: 15,
     color: colors.DARK_BLUE,
