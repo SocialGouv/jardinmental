@@ -26,8 +26,9 @@ const Onboarding = ({navigation}) => {
 
   useEffect(() => {
     (async () => {
+      const onboardingIsDone = await localStorage.getOnboardingDone();
       const isFirstAppLaunch = await localStorage.getIsFirstAppLaunch();
-      setFirstTime(isFirstAppLaunch !== 'false');
+      setFirstTime(isFirstAppLaunch !== 'false' && !onboardingIsDone);
     })();
   }, [navigation]);
 
