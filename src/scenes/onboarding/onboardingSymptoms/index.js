@@ -9,7 +9,6 @@ import {
 import Text from '../../../components/MyText';
 import CheckBox from '@react-native-community/checkbox';
 import {colors} from '../../../utils/colors';
-import {buildSurveyData} from '../../survey/survey-data';
 import SymptomsExplanation from '../../symptoms/symptoms-explanation';
 import {displayedCategories} from '../../../utils/constants';
 import localStorage from '../../../utils/localStorage';
@@ -21,19 +20,10 @@ import DiarySvg from '../../../../assets/svg/diary';
 import Logo from '../../../../assets/svg/symptoms-setting';
 import {ONBOARDING_STEPS} from '../../../utils/constants';
 
-const lookUpCategoryMatomo = {
-  MOOD: 0,
-  ANXIETY_FREQUENCE: 1,
-  BADTHOUGHTS_FREQUENCE: 2,
-  SLEEP: 3,
-  SENSATIONS_FREQUENCE: 4,
-};
-
 const SymptomScreen = ({navigation, route}) => {
   const explanation =
     'A tout moment, vous pourrez modifier la liste des symptômes que vous souhaitez suivre via l’onglet “Réglages” situé en haut à droite du journal';
   const [chosenCategories, setChosenCategories] = useState({});
-  const [initalCategories, setInitialCategories] = useState({});
 
   useEffect(() => {
     (async () => {
@@ -46,14 +36,13 @@ const SymptomScreen = ({navigation, route}) => {
       const symptoms = await localStorage.getSymptoms();
       if (symptoms) {
         setChosenCategories(symptoms);
-        setInitialCategories(symptoms);
       } else {
-        checkAll();
+        init();
       }
     })();
   }, []);
 
-  const checkAll = () => {
+  const init = () => {
     let categories = {};
     Object.keys(displayedCategories).forEach((cat) => {
       categories[cat] = true;
@@ -111,7 +100,9 @@ const SymptomScreen = ({navigation, route}) => {
         </View>
 
         {noneSelected() ? (
-          <Text style={styles.alert}>Sélectionner au moins 1 symptôme</Text>
+          <Text style={styles.alert}>
+            Ajouter ou sélectionner au moins 1 symptôme
+          </Text>
         ) : null}
         <AddElemToList
           onChange={handleAddNewSymptom}

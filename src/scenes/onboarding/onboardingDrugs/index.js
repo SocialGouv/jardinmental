@@ -164,7 +164,9 @@ const Drugs = ({navigation, route}) => {
           <View style={styles.titleContainer}>
             <Logo style={styles.image} width={30} height={30} />
             <Text style={styles.title}>
-              Prenez-vous un traitement médicamenteux ?
+              {medicalTreatment?.length
+                ? 'Voici la liste des traitements que vous allez suivre :'
+                : 'Prenez-vous un traitement médicamenteux ?'}
             </Text>
           </View>
           <Icon
