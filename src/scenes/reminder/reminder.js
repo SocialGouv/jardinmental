@@ -210,9 +210,7 @@ class Reminder extends React.Component {
     const {reminder, timePickerVisible} = this.state;
     return (
       <SafeAreaView style={styles.container}>
-        {!this.props.route?.params?.onboarding ? (
-          <BackButton onPress={this.onBackPress} />
-        ) : null}
+        <BackButton onPress={this.props.navigation.goBack} />
         {this.renderHeader()}
         <View style={styles.description}>
           {reminder ? (
@@ -286,7 +284,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginVertical: 20,
+    marginVertical: 10,
   },
   container: {
     justifyContent: 'flex-start',

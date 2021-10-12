@@ -156,7 +156,7 @@ const Drugs = ({navigation, route}) => {
   return (
     <SafeAreaView style={styles.safe}>
       <DrugInformations visible={showInfos} onClose={toggleInfos} />
-      {/* <BackButton onPress={navigation.goBack} /> */}
+      <BackButton onPress={navigation.goBack} />
       <ScrollView
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContainer}>
@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
     fontSize: 19,
   },
   scrollView: {
-    padding: 20,
+    padding: 10,
     backgroundColor: 'white',
   },
   scrollContainer: {

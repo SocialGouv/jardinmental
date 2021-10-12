@@ -96,9 +96,9 @@ const SymptomScreen = ({navigation, route}) => {
 
   return (
     <SafeAreaView style={styles.safe}>
-      {/* <View style={styles.buttonsContainer}>
+      <View style={styles.buttonsContainer}>
         <BackButton disabled={noneSelected()} onPress={navigation.goBack} />
-      </View> */}
+      </View>
       <ScrollView
         keyboardShouldPersistTaps="handled"
         style={styles.container}
@@ -250,7 +250,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   container: {
-    padding: 20,
+    padding: 10,
     backgroundColor: 'white',
   },
   backButtonContainer: {
