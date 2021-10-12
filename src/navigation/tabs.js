@@ -62,10 +62,15 @@ const Tabs = ({navigation, route}) => {
         swipeEnabled={true}
         tabBarPosition="bottom"
         tabBarOptions={{
-          activeTintColor: '#26387C',
-          inactiveTintColor: '#26387C40',
+          activeTintColor: colors.LIGHT_BLUE,
+          inactiveTintColor: colors.BLUE,
           showIcon: true,
-          indicatorStyle: {height: 0},
+          indicatorStyle: {
+            height: 3,
+            top: 0,
+            backgroundColor: colors.LIGHT_BLUE,
+            borderRadius: 5,
+          },
           style: styles.tabBar,
           labelStyle: {
             textTransform: 'capitalize',
@@ -98,8 +103,6 @@ const Tabs = ({navigation, route}) => {
 
 const styles = StyleSheet.create({
   tabBar: {
-    borderColor: colors.LIGHT_BLUE,
-    borderWidth: 1,
     maxHeight: 80,
   },
   surveyButton: {
