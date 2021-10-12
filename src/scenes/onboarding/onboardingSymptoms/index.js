@@ -45,7 +45,7 @@ const SymptomScreen = ({navigation, route}) => {
   const init = () => {
     let categories = {};
     Object.keys(displayedCategories).forEach((cat) => {
-      categories[cat] = true;
+      categories[cat] = false;
     });
     setChosenCategories(categories);
   };

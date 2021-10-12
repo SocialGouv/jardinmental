@@ -28,7 +28,9 @@ const Onboarding = ({navigation}) => {
     (async () => {
       const onboardingIsDone = await localStorage.getOnboardingDone();
       const isFirstAppLaunch = await localStorage.getIsFirstAppLaunch();
-      setFirstTime(isFirstAppLaunch !== 'false' && !onboardingIsDone);
+      setFirstTime(
+        __DEV__ ? true : isFirstAppLaunch !== 'false' && !onboardingIsDone,
+      );
     })();
   }, [navigation]);
 
