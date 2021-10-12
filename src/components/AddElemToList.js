@@ -42,12 +42,12 @@ export default ({
           }}>
           <CircledIcon
             icon="PlusSvg"
-            color="#F4FCFD"
-            borderColor="#D4F0F2"
-            iconColor={colors.BLUE}
+            color={colors.LIGHT_BLUE}
+            borderColor="#fff"
+            iconColor="#fff"
             width={13}
             height={13}
-            opacity={value ? 1 : 0.5}
+            opacity={value ? 1 : 0.38}
           />
         </TouchableOpacity>
       </View>

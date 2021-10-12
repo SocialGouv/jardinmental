@@ -120,6 +120,14 @@ const SymptomScreen = ({navigation, route}) => {
                 style={styles.checkbox}
                 value={chosenCategories[cat]}
                 onValueChange={(newValue) => setToogleCheckbox(cat, newValue)}
+                // for android
+                tintColors={{true: colors.LIGHT_BLUE, false: '#aaa'}}
+                // for ios
+                tintColor="#aaa"
+                onCheckColor={colors.LIGHT_BLUE}
+                onTintColor={colors.LIGHT_BLUE}
+                onAnimationType="bounce"
+                offAnimationType="bounce"
               />
             </View>
           ))}
