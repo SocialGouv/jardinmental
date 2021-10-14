@@ -42,7 +42,7 @@
     "react-native-modal-datetime-picker": "^9.2.3",
     "react-native-picker-select": "^8.0.4",
     "react-native-push-notification": "^7.3.0",
-    "react-native-reanimated": "^1.13.2",
+    "react-native-reanimated": "^2.2.3",
     "react-native-safe-area-context": "^3.1.9",
     "react-native-screens": "^2.15.0",
     "react-native-sentry": "^0.43.2",
