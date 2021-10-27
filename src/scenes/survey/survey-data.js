@@ -47,7 +47,7 @@ export const getAvailableData = async () => {
 
 export const getCustomAvailableData = async () => {
   const userCustomSymptoms = await localStorage.getCustomSymptoms();
-  res = [];
+  const res = [];
   userCustomSymptoms.forEach((custom) => {
     res.push(
       {
@@ -78,7 +78,8 @@ export const getCustomAvailableData = async () => {
 export const availableData = [
   {
     id: 'day',
-    question: 'Commençons ! Pour quel jour souhaitez-vous noter vos ressentis',
+    question:
+      'Commençons ! Pour quel jour souhaitez-vous noter vos ressentis ?',
     answers: [surveyDate.TODAY, surveyDate.YESTERDAY],
     explanation: null,
   },

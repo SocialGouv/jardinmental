@@ -43,10 +43,9 @@ export default ({navigation, route}) => {
         </Text>
         <View style={styles.description}>
           <Text style={styles.subTitle}>
-            Pour s'assurer que les informations saisies sont fiables, il n'est
-            possible de saisir que les données du{' '}
-            <Text style={styles.bold}>jour même</Text> ou de{' '}
-            <Text style={styles.bold}>la veille</Text>.
+            Pour que les informations saisies soient les plus fiables possibles,
+            il n'est possible de saisir que les données des{' '}
+            <Text style={styles.bold}>7 derniers jours</Text>.
           </Text>
         </View>
         <TouchableOpacity
