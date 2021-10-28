@@ -1,4 +1,4 @@
-import {format, parseISO} from 'date-fns';
+import {format, parseISO, isToday, isYesterday} from 'date-fns';
 import {fr} from 'date-fns/locale';
 
 export const oneDay = 1000 * 60 * 60 * 24;
@@ -72,6 +72,17 @@ export const formatDate = (d) => {
   const isoDate = parseISO(d);
 
   return format(isoDate, 'EEEE d MMMM', {locale: fr});
+};
+
+export const formatRelativeDate = (date) => {
+  const isoDate = parseISO(date);
+  if (isToday(isoDate)) {
+    return "aujourd'hui";
+  } else if (isYesterday(isoDate)) {
+    return 'hier';
+  } else {
+    return format(isoDate, 'EEEE d MMMM', {locale: fr});
+  }
 };
 
 export const getTime = (d) => {

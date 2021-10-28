@@ -11,7 +11,7 @@ import DiaryItem from './diary-item';
 import ContributeItem from './contribute-item';
 import Header from '../../components/Header';
 import {colors} from '../../utils/colors';
-import {format, parseISO, isToday, isYesterday} from 'date-fns';
+import {format, parseISO, isToday, isYesterday, compareAsc} from 'date-fns';
 import {fr} from 'date-fns/locale';
 import {firstLetterUppercase} from '../../utils/string-util';
 import {useContext} from 'react';
@@ -20,8 +20,15 @@ import localStorage from '../../utils/localStorage';
 import NPS from '../../services/NPS/NPS';
 import Bubble from '../../components/bubble';
 import ArrowUpSvg from '../../../assets/svg/arrow-up.svg';
+import {beforeToday} from '../../utils/date/helpers';
 
 const LIMIT_PER_PAGE = __DEV__ ? 3 : 30;
+
+export const canEdit = (d) => {
+  const limitDate = beforeToday(7);
+  const canEditBool = compareAsc(parseISO(d), limitDate) === 1;
+  return canEditBool;
+};
 
 const Diary = ({navigation}) => {
   const [diaryData] = useContext(DiaryDataContext);

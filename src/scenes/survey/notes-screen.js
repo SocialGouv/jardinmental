@@ -89,9 +89,7 @@ const Notes = ({navigation, route}) => {
     parseISO(route.params?.currentSurvey?.date),
   );
 
-  const {question, yesterdayQuestion} = availableData.find(
-    ({id}) => id === categories.NOTES,
-  );
+  const {question} = availableData.find(({id}) => id === categories.NOTES);
 
   return (
     <SafeAreaView style={styles.safe}>
@@ -99,9 +97,7 @@ const Notes = ({navigation, route}) => {
       <ScrollView
         style={styles.container}
         contentContainerStyle={styles.scrollContainer}>
-        <Text style={styles.question}>
-          {isSurveyDateYesterday ? yesterdayQuestion : question}
-        </Text>
+        <Text style={styles.question}>{question}</Text>
         <Text style={styles.title}>
           Que m'est-il arrivé aujourd'hui (disputes, examens, ...) ?
         </Text>

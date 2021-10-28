@@ -11,16 +11,20 @@ import {colors} from '../../utils/colors';
 import CircledIcon from '../../components/CircledIcon';
 import {buildSurveyData, getAvailableData} from './survey-data';
 import SurveyExplanation from './survey-explanation';
-import {categories, surveyDate} from '../../utils/constants';
-import {beforeToday, formatDay} from '../../utils/date/helpers';
-import {isYesterday, parseISO} from 'date-fns';
+import {categories} from '../../utils/constants';
+import {
+  beforeToday,
+  formatDay,
+  formatRelativeDate,
+} from '../../utils/date/helpers';
+import {isToday, isYesterday, parseISO, subDays} from 'date-fns';
 import BackButton from '../../components/BackButton';
+import {firstLetterUppercase} from '../../utils/string-util';
 
 const SurveyScreen = ({navigation, route}) => {
   const [totalQuestions, setTotalQuestions] = useState(0);
   const [questions, setQuestions] = useState([]);
   const [question, setQuestion] = useState();
-  const [yesterdayQuestion, setYesterdayQuestion] = useState();
   const [answers, setAnswers] = useState();
   const [explanation, setExplanation] = useState();
   const [currentSurveyItem, setCurrentSurveyItem] = useState();
@@ -32,7 +36,6 @@ const SurveyScreen = ({navigation, route}) => {
   const updateValues = () => {
     if (!availableData || index < 0 || !availableData[index]) return;
     setQuestion(availableData[index]?.question);
-    setYesterdayQuestion(availableData[index]?.yesterdayQuestion);
     setAnswers(availableData[index]?.answers);
     setExplanation(availableData[index]?.explanation);
     setCurrentSurveyItem(index);
@@ -62,14 +65,10 @@ const SurveyScreen = ({navigation, route}) => {
     }
 
     if (answer) {
-      if (answer.id === surveyDate.TODAY.id) {
+      // if date selection
+      if (answer.id === 'DATE') {
         currentSurvey = {
-          date: formatDay(new Date()),
-          answers: {},
-        };
-      } else if (answer.id === surveyDate.YESTERDAY.id) {
-        currentSurvey = {
-          date: formatDay(beforeToday(1)),
+          date: formatDay(beforeToday(answer.dateOffset)),
           answers: {},
         };
       } else {
@@ -124,24 +123,58 @@ const SurveyScreen = ({navigation, route}) => {
     });
   };
 
-  const isSurveyDateYesterday = isYesterday(
-    parseISO(route.params?.currentSurvey?.date),
-  );
-
   const isLastQuestion = () => {
     return questions.indexOf(currentSurveyItem) === totalQuestions - 1;
   };
 
-  if (!answers || !(yesterdayQuestion || question) || !availableData)
-    return null;
+  if (!answers || !question || !availableData) return null;
+
+  if (questionId === 'day') {
+    const now = new Date(Date.now());
+    return (
+      <SafeAreaView style={styles.safe}>
+        <BackButton onPress={previousQuestion} />
+        <ScrollView style={styles.container}>
+          <Text style={styles.question}>{question}</Text>
+          {[...Array(7)].map((_, i) => {
+            const value = formatDay(subDays(now, i));
+            let label = firstLetterUppercase(formatRelativeDate(value));
+            return (
+              <TouchableOpacity
+                key={i}
+                onPress={() => nextQuestion({id: 'DATE', dateOffset: i})}>
+                <View style={styles.answer}>
+                  <CircledIcon color="white" icon="TodaySvg" />
+                  <Text style={styles.label}>{label}</Text>
+                </View>
+              </TouchableOpacity>
+            );
+          })}
+          <Text style={styles.subtitle}>
+            Attention ! Je ne peux pas remplir au-delà de 7 jours car les
+            informations seront alors moins fidèles.
+          </Text>
+        </ScrollView>
+        {explanation ? <SurveyExplanation explanation={explanation} /> : null}
+      </SafeAreaView>
+    );
+  }
+
+  const renderQuestion = () => {
+    let relativeDate = formatRelativeDate(route.params?.currentSurvey?.date);
+    if (
+      !isYesterday(parseISO(route.params?.currentSurvey?.date)) &&
+      !isToday(parseISO(route.params?.currentSurvey?.date))
+    )
+      relativeDate = `le ${relativeDate}`;
+    return question.replace('{{date}}', relativeDate);
+  };
 
   return (
     <SafeAreaView style={styles.safe}>
       <BackButton onPress={previousQuestion} />
       <ScrollView style={styles.container}>
-        <Text style={styles.question}>
-          {isSurveyDateYesterday ? yesterdayQuestion : question}
-        </Text>
+        <Text style={styles.question}>{renderQuestion()}</Text>
         {answers
           .filter((answer) => answer.id !== categories.NOTES)
           .map((answer, index) => (
@@ -169,6 +202,16 @@ const styles = StyleSheet.create({
     marginBottom: 26,
     fontWeight: '700',
   },
+  subtitle: {
+    flex: 1,
+    color: '#000',
+    fontSize: 15,
+    marginTop: 15,
+
+    fontWeight: 'normal',
+    textAlign: 'center',
+  },
+
   answer: {
     backgroundColor: '#F4FCFD',
     borderColor: '#D4F0F2',

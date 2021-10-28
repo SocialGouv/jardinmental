@@ -2,8 +2,8 @@ import React from 'react';
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import Text from '../../components/MyText';
 import Icon from '../../components/Icon';
-import {isToday, isYesterday, parseISO} from 'date-fns';
 import {colors} from '../../utils/colors';
+import {canEdit} from './diary';
 
 const Posology = ({data, date, onPress}) => {
   if (!data || data.length === 0) {
@@ -25,21 +25,19 @@ const Posology = ({data, date, onPress}) => {
     });
   };
 
-  const canEdit = isToday(parseISO(date)) || isYesterday(parseISO(date));
-
   return (
     <View>
       <View style={styles.divider} />
       <TouchableOpacity
         style={[
           styles.container,
-          canEdit && {
+          canEdit(date) && {
             borderRadius: 10,
             backgroundColor: 'rgba(31, 198, 213, 0.2)',
           },
         ]}
         onPress={onPress}
-        disabled={!canEdit}>
+        disabled={!canEdit(date)}>
         <Icon
           icon="DrugsSvg"
           color="#58C8D2"

@@ -2,11 +2,16 @@ import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import Text from '../../components/MyText';
 import {colors} from '../../utils/colors';
+import {canEdit} from './diary';
 
-const NoDataDiaryItem = () => {
+const NoDataDiaryItem = ({date}) => {
   return (
     <View style={styles.textContainer}>
-      <Text style={styles.noDataTitle}>Vous n'avez rien saisi ce jour-là</Text>
+      <Text style={styles.noDataTitle}>
+        {canEdit(date)
+          ? "Vous n'avez rien saisi ce jour-là"
+          : 'Vous ne pouvez plus saisir votre questionnaire pour ce jour'}
+      </Text>
     </View>
   );
 };

@@ -2,7 +2,6 @@ import React, {useEffect, useState, useRef} from 'react';
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import PatientStateItem from './patient-state-item';
 import {displayedCategories} from '../../utils/constants';
-import {isToday, isYesterday, parseISO} from 'date-fns';
 import NoDataDiaryItem from './no-data-diary-item';
 import Notes from './notes';
 import localStorage from '../../utils/localStorage';
@@ -10,6 +9,7 @@ import Posology from './posology';
 import Beck from './beck';
 import {startAtFirstQuestion} from '../survey/survey-data';
 import {getScoreWithState} from '../../utils';
+import {canEdit} from './diary';
 
 const DiaryItem = ({navigation, patientState, date}) => {
   const [customs, setCustoms] = useState([]);
@@ -25,7 +25,7 @@ const DiaryItem = ({navigation, patientState, date}) => {
   }, [patientState]);
 
   const handleEdit = (tab) => {
-    if (!(isToday(parseISO(date)) || isYesterday(parseISO(date)))) return;
+    if (!canEdit(date)) return;
     const currentSurvey = {
       date,
       answers: patientState,
@@ -50,8 +50,7 @@ const DiaryItem = ({navigation, patientState, date}) => {
       }).length;
 
   const handlePressItem = () => {
-    if (!(isToday(parseISO(date)) || isYesterday(parseISO(date))))
-      return navigation.navigate('too-late', {date});
+    if (!canEdit(date)) return navigation.navigate('too-late', {date});
     startAtFirstQuestion(date, navigation);
   };
 
