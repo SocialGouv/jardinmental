@@ -20,6 +20,7 @@ import {
 import {isToday, isYesterday, parseISO, subDays} from 'date-fns';
 import BackButton from '../../components/BackButton';
 import {firstLetterUppercase} from '../../utils/string-util';
+import ArrowUpSvg from '../../../assets/svg/arrow-up.svg';
 
 const SurveyScreen = ({navigation, route}) => {
   const [totalQuestions, setTotalQuestions] = useState(0);
@@ -144,15 +145,19 @@ const SurveyScreen = ({navigation, route}) => {
                 key={i}
                 onPress={() => nextQuestion({id: 'DATE', dateOffset: i})}>
                 <View style={styles.answer}>
-                  <CircledIcon color="white" icon="TodaySvg" />
-                  <Text style={styles.label}>{label}</Text>
+                  <View style={styles.answerLabel}>
+                    <CircledIcon color="white" icon="TodaySvg" />
+                    <Text style={styles.label}>{label}</Text>
+                  </View>
+                  <ArrowUpSvg style={styles.arrowRight} color={colors.BLUE} />
                 </View>
               </TouchableOpacity>
             );
           })}
+          <Text style={styles.subtitleTop}>Attention !</Text>
           <Text style={styles.subtitle}>
-            Attention ! Je ne peux pas remplir au-delà de 7 jours car les
-            informations seront alors moins fidèles.
+            Je ne peux pas remplir au-delà de 7 jours car les informations
+            seront alors moins fidèles
           </Text>
         </ScrollView>
         {explanation ? <SurveyExplanation explanation={explanation} /> : null}
@@ -192,6 +197,9 @@ const SurveyScreen = ({navigation, route}) => {
 };
 
 const styles = StyleSheet.create({
+  arrowRight: {
+    transform: [{rotate: '90deg'}],
+  },
   safe: {
     flex: 1,
     backgroundColor: 'white',
@@ -202,6 +210,14 @@ const styles = StyleSheet.create({
     marginBottom: 26,
     fontWeight: '700',
   },
+  subtitleTop: {
+    flex: 1,
+    color: colors.LIGHT_BLUE,
+    fontSize: 18,
+    fontWeight: '700',
+    marginTop: 15,
+    textAlign: 'center',
+  },
   subtitle: {
     flex: 1,
     color: '#000',
@@ -211,7 +227,6 @@ const styles = StyleSheet.create({
     fontWeight: 'normal',
     textAlign: 'center',
   },
-
   answer: {
     backgroundColor: '#F4FCFD',
     borderColor: '#D4F0F2',
@@ -221,6 +236,13 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  answerLabel: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   label: {
     fontWeight: '600',

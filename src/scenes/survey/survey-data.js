@@ -77,7 +77,7 @@ export const availableData = [
   {
     id: 'day',
     question:
-      'Commençons ! Pour quel jour souhaitez-vous noter vos ressentis ?',
+      'Commençons ! Pour quel jour souhaites-tu remplir ton questionnaire ?',
     answers: [surveyDate.TODAY, surveyDate.YESTERDAY],
     explanation: null,
   },
