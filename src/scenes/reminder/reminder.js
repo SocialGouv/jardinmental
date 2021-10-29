@@ -44,7 +44,7 @@ const timeIsAfterNow = (inputDate) => {
 };
 
 const ReminderStorageKey = '@Reminder';
-const reminderTitle = "C'est l'heure de noter vos symptômes !";
+const reminderTitle = "Comment ça va aujourd'hui ?";
 const reminderMessage =
   "N'oubliez pas de remplir votre application Mon Suivi Psy";
 class Reminder extends React.Component {
