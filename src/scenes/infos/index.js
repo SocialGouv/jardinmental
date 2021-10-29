@@ -159,38 +159,6 @@ const LegalScreen = ({navigation, title, content}) => {
             }}>
             santepsy.etudiant.gouv.fr{' '}
           </Text>
-          {'\n\n\n'}
-          Pour simplement parler à quelqu’un :{'\n'}
-          {'\n'}
-          SOS-amitiés 24h/24 et 7j/7{'\n'}
-          <Text
-            style={styles.link}
-            onPress={() => {
-              logEvents.logInfoClick('SOS-amitiés');
-              Linking.openURL('tel:09 72 39 40 50');
-            }}>
-            09 72 39 40 50
-          </Text>
-          {'\n\n'}
-          SOS Suicide Phénix 13h-23h00 {'\n'}
-          <Text
-            style={styles.link}
-            onPress={() => {
-              logEvents.logInfoClick('SOS-amitiés');
-              Linking.openURL('tel:01 40 44 46 45');
-            }}>
-            01 40 44 46 45
-          </Text>
-          {'\n\n'}
-          Fil Santé Jeune Tous les jours, 9h-23h {'\n'}
-          <Text
-            style={styles.link}
-            onPress={() => {
-              logEvents.logInfoClick('SOS-amitiés');
-              Linking.openURL('tel:0 800 235 236');
-            }}>
-            0 800 235 236
-          </Text>
         </Text>
       </ScrollView>
     </SafeAreaView>

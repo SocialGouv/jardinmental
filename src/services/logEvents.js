@@ -195,6 +195,12 @@ const logInfosOpen = async () => {
     action: 'INFOS_OPEN',
   });
 };
+const logContactOpen = async () => {
+  await logEvent({
+    category: 'CONTACT',
+    action: 'CONTACT_OPEN',
+  });
+};
 
 const logDataExport = async () => {
   await logEvent({
@@ -365,6 +371,7 @@ export default {
   getUserId,
   logNPSOpen,
   logNPSSend,
+  logContactOpen,
   logSupportedSelect,
   logCustomSymptomAdd,
   logInfoClick,

@@ -27,6 +27,7 @@ import Infos from '../scenes/infos';
 import ActivateBeck from '../scenes/beck/activate';
 import ViewBeck from '../scenes/beck/view';
 import Beck from '../scenes/beck';
+import Contact from '../scenes/contact';
 
 const Stack = createStackNavigator();
 
@@ -99,6 +100,7 @@ class Router extends React.Component {
           <Stack.Screen name="too-late" component={TooLate} />
           <Stack.Screen name="news" component={News} />
           <Stack.Screen name="infos" component={Infos} />
+          <Stack.Screen name="contact" component={Contact} />
           <Stack.Screen name="contribute-pro" component={ContributePro} />
           <Stack.Screen name="activate-beck" component={ActivateBeck} />
           <Stack.Screen name="view-beck" component={ViewBeck} />

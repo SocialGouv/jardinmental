@@ -77,6 +77,13 @@ export default ({navigation, visible, onClick}) => {
               icon="InfoSvg"
             />
             <DrawerItem
+              title="Parler à quelqu'un"
+              path="contact"
+              navigation={navigation}
+              onClick={onClick}
+              icon="PhoneSvg"
+            />
+            <DrawerItem
               title="Protection des données"
               path="privacy"
               navigation={navigation}
