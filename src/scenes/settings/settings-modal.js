@@ -26,14 +26,14 @@ const SettingsModal = ({navigation, visible, onClick}) => {
             icon="SymptomsSetting"
           />
           <SettingItem
-            title="Mon traitement"
+            title="Saisir mon traitement"
             path="drugs"
             navigation={navigation}
             onClick={onClick}
             icon="DrugsSvg"
           />
           <SettingItem
-            title="Colonnes de Beck"
+            title="Activer la saisie pour un événement"
             path="activate-beck"
             navigation={navigation}
             onClick={onClick}
