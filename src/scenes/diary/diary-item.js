@@ -7,7 +7,6 @@ import Notes from './notes';
 import localStorage from '../../utils/localStorage';
 import Posology from './posology';
 import Beck from './beck';
-import {startAtFirstQuestion} from '../survey/survey-data';
 import {canEdit} from './diary';
 
 const DiaryItem = ({navigation, patientState, date}) => {
@@ -55,7 +54,7 @@ const DiaryItem = ({navigation, patientState, date}) => {
 
   const handlePressItem = () => {
     if (!canEdit(date)) return navigation.navigate('too-late', {date});
-    startAtFirstQuestion(date, navigation);
+    handleEdit('day-survey');
   };
 
   return (
