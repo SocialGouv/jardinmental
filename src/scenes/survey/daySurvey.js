@@ -87,6 +87,7 @@ const DaySurvey = ({navigation, route}) => {
             onPress={toggleAnswer}
             selected={answers[q.id]}
             explanation={q.explanation}
+            isLast={i === questions.length - 1}
           />
         ))}
         <View style={styles.divider} />
@@ -151,7 +152,7 @@ const answers = [
   },
 ];
 
-const Question = ({question, explanation, onPress, selected}) => {
+const Question = ({question, explanation, onPress, selected, isLast}) => {
   const [showExplanation, setShowExplanation] = useState(false);
   const toggleShowExplanation = async () => {
     setShowExplanation((prev) => !prev);
@@ -179,7 +180,7 @@ const Question = ({question, explanation, onPress, selected}) => {
           ) : null}
         </View>
       </TouchableOpacity>
-      <View style={styles.answerContainer}>
+      <View style={[styles.answerContainer, !isLast && styles.leftFileAriane]}>
         {answers.map((answer, i) => {
           const active = selected === answer.score;
           return (
@@ -230,7 +231,6 @@ const styles = StyleSheet.create({
 
   questionContainer: {
     display: 'flex',
-    marginBottom: 15,
   },
   questionHeaderContainer: {
     backgroundColor: '#F4FCFD',
@@ -259,10 +259,16 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   answerContainer: {
-    marginTop: 10,
+    paddingTop: 10,
+    paddingBottom: 15,
+    marginLeft: 18, // padding of the header question container + half of the dot size => 10 + 8 = 18
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-around',
+  },
+  leftFileAriane: {
+    borderLeftColor: '#DEF4F5',
+    borderLeftWidth: 2,
   },
   safe: {
     flex: 1,
