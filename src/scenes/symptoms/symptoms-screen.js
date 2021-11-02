@@ -122,11 +122,15 @@ const SymptomScreen = ({navigation, route}) => {
         style={styles.container}
         contentContainerStyle={styles.scrollContainer}>
         <Text style={styles.title}>
-          Sélectionner ou ajouter les symptômes
-          {showExplanation ? ' que vous souhaitez suivre' : ''}{' '}
+          Que souhaitez-vous suivre quotidiennement ?
+        </Text>
+        <Text style={styles.subtitle}>
+          Cela peut être un ressenti positif ou négatif ou une activité
         </Text>
         {noneSelected() ? (
-          <Text style={styles.alert}>Sélectionner au moins 1 symptôme</Text>
+          <Text style={styles.alert}>
+            Ajouter ou sélectionner au moins 1 élément
+          </Text>
         ) : null}
         <AddElemToList onChange={handleAddNewSymptom} />
         {chosenCategories &&
@@ -211,6 +215,13 @@ const styles = StyleSheet.create({
     fontSize: 22,
     marginBottom: 13,
     fontWeight: '700',
+    textAlign: 'center',
+  },
+  subtitle: {
+    color: colors.LIGHT_BLUE,
+    fontSize: 13,
+    marginBottom: 10,
+    fontWeight: '300',
     textAlign: 'center',
   },
   alert: {

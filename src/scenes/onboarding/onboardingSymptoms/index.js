@@ -95,13 +95,15 @@ const SymptomScreen = ({navigation, route}) => {
         <View style={styles.titleContainer}>
           <Logo style={styles.image} width={30} height={30} />
           <Text style={styles.title}>
-            Quels ressentis souhaitez-vous suivre quotidiennement ?
+            Que souhaitez-vous suivre quotidiennement ?
           </Text>
         </View>
-
+        <Text style={styles.subtitle}>
+          Cela peut être un ressenti positif ou négatif ou une activité
+        </Text>
         {noneSelected() ? (
           <Text style={styles.alert}>
-            Ajouter ou sélectionner au moins 1 symptôme
+            Ajouter ou sélectionner au moins 1 élément
           </Text>
         ) : null}
         <AddElemToList
@@ -200,6 +202,13 @@ const styles = StyleSheet.create({
     color: colors.BLUE,
     fontSize: 22,
     fontWeight: '700',
+  },
+  subtitle: {
+    color: colors.LIGHT_BLUE,
+    fontSize: 13,
+    marginBottom: 10,
+    fontWeight: '300',
+    textAlign: 'center',
   },
   alert: {
     color: 'red',
