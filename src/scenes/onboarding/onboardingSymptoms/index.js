@@ -10,7 +10,7 @@ import Text from '../../../components/MyText';
 import CheckBox from '@react-native-community/checkbox';
 import {colors} from '../../../utils/colors';
 import SymptomsExplanation from '../../symptoms/symptoms-explanation';
-import {displayedCategories} from '../../../utils/constants';
+import {displayedCategories, categories} from '../../../utils/constants';
 import localStorage from '../../../utils/localStorage';
 import logEvents from '../../../services/logEvents';
 import BackButton from '../../../components/BackButton';
@@ -33,21 +33,36 @@ const SymptomScreen = ({navigation, route}) => {
 
   useEffect(() => {
     (async () => {
-      const symptoms = await localStorage.getSymptoms();
-      if (symptoms) {
-        setChosenCategories(symptoms);
-      } else {
-        init();
+      const preselectedCategories = await localStorage.getSymptoms();
+      if (
+        !preselectedCategories ||
+        !Object.keys(preselectedCategories).length
+      ) {
+        return init();
       }
+
+      const customSymptoms = await localStorage.getCustomSymptoms();
+      let selected = {};
+      Object.keys(categories)
+        .concat(customSymptoms)
+        .forEach((cat) => {
+          const [categoryName] = cat.split('_');
+          if (preselectedCategories[cat] === true) {
+            selected[categoryName] = true;
+          } else {
+            selected[categoryName] = false;
+          }
+        });
+      setChosenCategories(selected);
     })();
   }, []);
 
   const init = () => {
-    let categories = {};
-    Object.keys(displayedCategories).forEach((cat) => {
-      categories[cat] = false;
+    let res = {};
+    Object.keys(categories).forEach((cat) => {
+      res[cat] = false;
     });
-    setChosenCategories(categories);
+    setChosenCategories(res);
   };
 
   const setToogleCheckbox = (cat, value) => {
