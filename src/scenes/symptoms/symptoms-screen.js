@@ -74,25 +74,21 @@ const SymptomScreen = ({navigation, route}) => {
       return;
     }
     await localStorage.setSymptoms(chosenCategories);
-    const questions = await buildSurveyData();
-    const index = questions[0];
     let redirection = 'tabs';
     let params = {};
 
     if (route.params?.onboarding) {
       redirection = 'drugs';
       params = {onboarding: true};
-    } else if (route.params?.redirect === '0') {
-      redirection = 'question';
-      params = {index: 0};
+    } else if (route.params?.redirect === 'select-day') {
+      redirection = 'select-day';
     } else if (route.params?.redirect) {
-      redirection = 'question';
+      redirection = 'day-survey';
       params = {
         currentSurvey: {
           date: route.params?.date,
           answers: {},
         },
-        index,
       };
     }
 

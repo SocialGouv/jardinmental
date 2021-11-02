@@ -35,7 +35,6 @@ const Notes = ({navigation, route}) => {
       console.log(route.params?.backRedirect);
       navigation.navigate('question', {
         ...route.params,
-        index: route.params.backRedirect,
       });
     } else {
       console.log('tabs');
@@ -79,7 +78,7 @@ const Notes = ({navigation, route}) => {
 
   return (
     <SafeAreaView style={styles.safe}>
-      <BackButton onPress={previousQuestion} />
+      <BackButton onPress={navigation.goBack} />
       <ScrollView
         style={styles.container}
         contentContainerStyle={styles.scrollContainer}>

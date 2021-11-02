@@ -32,10 +32,10 @@ const Tabs = ({navigation, route}) => {
     if (!symptoms) {
       navigation.navigate('symptoms', {
         showExplanation: true,
-        redirect: '0',
+        redirect: 'select-day',
       });
     } else {
-      navigation.navigate('question', {index: 0});
+      navigation.navigate('select-day');
     }
   };
 
