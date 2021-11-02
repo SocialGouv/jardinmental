@@ -67,7 +67,7 @@ export default ({navigation}) => {
             </Text>
           </Item>
         </Card>
-        <Card
+        {/* <Card
           title="Mon Suivi Psy se refait une beauté !"
           version="v1.13"
           date="05/2021">
@@ -114,7 +114,7 @@ export default ({navigation}) => {
               bouton d'export vient remplacer le bouton des réglages).
             </Text>
           </Item>
-        </Card>
+        </Card> */}
       </ScrollView>
     </SafeAreaView>
   );
