@@ -34,7 +34,7 @@ const DaySurvey = ({navigation, route}) => {
 
   useEffect(() => {
     //init the survey if there is already answers
-    Object.keys(route?.params?.currentSurvey?.answers).forEach((key) => {
+    Object.keys(route?.params?.currentSurvey?.answers || {})?.forEach((key) => {
       const score = getScoreWithState({
         patientState: route?.params?.currentSurvey?.answers,
         category: key,
@@ -43,7 +43,7 @@ const DaySurvey = ({navigation, route}) => {
         toggleAnswer({key: key.split('_')[0], value: score});
       }
     });
-  }, [route?.params?.currentSurvey, questions]);
+  }, [route?.params?.currentSurvey?.answers, questions]);
 
   const toggleAnswer = async ({key, value}) => {
     setAnswers((prev) => {
