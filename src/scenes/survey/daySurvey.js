@@ -16,6 +16,7 @@ import {isToday, isYesterday, parseISO} from 'date-fns';
 import BackButton from '../../components/BackButton';
 import ArrowUpSvg from '../../../assets/svg/arrow-up.svg';
 import Button from '../../components/Button';
+import {getScoreWithState} from '../../utils';
 
 const DaySurvey = ({navigation, route}) => {
   const [questions, setQuestions] = useState([]);
@@ -31,18 +32,27 @@ const DaySurvey = ({navigation, route}) => {
     })();
   }, []);
 
-  const toggleAnswer = async ({question, answer}) => {
+  useEffect(() => {
+    //init the survey if there is already answers
+    Object.keys(route?.params?.currentSurvey?.answers).forEach((key) => {
+      const score = getScoreWithState({
+        patientState: route?.params?.currentSurvey?.answers,
+        category: key,
+      });
+      if (questions.find((q) => q.id === key)) {
+        toggleAnswer({key: key.split('_')[0], value: score});
+      }
+    });
+  }, [route?.params?.currentSurvey, questions]);
+
+  const toggleAnswer = async ({key, value}) => {
     setAnswers((prev) => {
       return {
         ...prev,
-        [question.id]: answer.score,
+        [key]: value,
       };
     });
   };
-
-  useEffect(() => {
-    console.log({answers});
-  }, [answers]);
 
   const submitDay = () => {
     const prevCurrentSurvey = route.params?.currentSurvey;
@@ -156,7 +166,7 @@ const Question = ({question, explications, onPress, selected}) => {
           return (
             <TouchableOpacity
               key={i}
-              onPress={() => onPress({question, answer})}>
+              onPress={() => onPress({key: question.id, value: answer.score})}>
               <CircledIcon
                 color={
                   active

@@ -111,13 +111,11 @@ export const startAtFirstQuestion = async (date, navigation) => {
       date,
     });
   } else {
-    const questions = await buildSurveyData();
-    navigation.navigate(`question`, {
+    navigation.navigate(`day-survey`, {
       currentSurvey: {
         date,
         answers: {},
       },
-      index: questions[0],
     });
   }
 };
