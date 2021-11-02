@@ -3,6 +3,7 @@ import Tabs from './tabs';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
 import SurveyScreen from '../scenes/survey/survey-screen';
+import DaySurveyScreen from '../scenes/survey/daySurvey';
 import SymptomScreen from '../scenes/symptoms/symptoms-screen';
 import Reminder from '../scenes/reminder/reminder';
 import Export from '../scenes/export/export';
@@ -60,6 +61,7 @@ class Router extends React.Component {
     return (
       <NavigationContainer>
         <Stack.Navigator initialRouteName="tabs" headerMode="none">
+          <Stack.Screen name="day-survey" component={DaySurveyScreen} />
           <Stack.Screen name="tabs" component={Tabs} />
           <Stack.Screen
             name="question"

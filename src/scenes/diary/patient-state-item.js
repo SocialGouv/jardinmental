@@ -11,7 +11,7 @@ const PatientStateItem = ({patientState, category, label}) => {
   useEffect(() => {
     const score = getScoreWithState({patientState, category, debug: true});
     const icon = scoresMapIcon[score];
-    setIcon(icon);
+    icon && setIcon(icon);
   }, [patientState, category]);
 
   if (!color || !faceIcon) return null;

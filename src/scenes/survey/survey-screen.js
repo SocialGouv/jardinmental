@@ -72,6 +72,9 @@ const SurveyScreen = ({navigation, route}) => {
           date: formatDay(beforeToday(answer.dateOffset)),
           answers: {},
         };
+        return navigation.navigate('day-survey', {
+          currentSurvey,
+        });
       } else {
         currentSurvey.answers[questionId] = answer;
       }
@@ -128,7 +131,7 @@ const SurveyScreen = ({navigation, route}) => {
     return questions.indexOf(currentSurveyItem) === totalQuestions - 1;
   };
 
-  if (!answers || !question || !availableData) return null;
+  if (!question || !availableData) return null;
 
   if (questionId === 'day') {
     const now = new Date(Date.now());
@@ -181,12 +184,14 @@ const SurveyScreen = ({navigation, route}) => {
       <ScrollView style={styles.container}>
         <Text style={styles.question}>{renderQuestion()}</Text>
         {answers
-          .filter((answer) => answer.id !== categories.NOTES)
+          .filter((answer) => answer.id !== 'NOTES')
           .map((answer, index) => (
             <TouchableOpacity key={index} onPress={() => nextQuestion(answer)}>
               <View style={styles.answer}>
-                <CircledIcon color={answer.color} icon={answer.icon} />
-                <Text style={styles.label}>{answer.label}</Text>
+                <View style={styles.answerLabel}>
+                  <CircledIcon color={answer.color} icon={answer.icon} />
+                  <Text style={styles.label}>{answer.label}</Text>
+                </View>
               </View>
             </TouchableOpacity>
           ))}
