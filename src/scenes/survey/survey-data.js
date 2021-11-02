@@ -97,6 +97,22 @@ export const availableData = [
       'un état psychique satisfaisant et stable, quelles que soit les difficultés que l’on rencontre.',
   },
   {
+    id: categories.DAILYACTIVITIES,
+    label: 'Faire mes activités quotidiennes',
+    // explanation:
+    //   'Quand on s’intéresse au sommeil, on regarde principalement sa durée et sa qualité.\n' +
+    //   'En effet, un bon sommeil est la base d’une bonne hygiène de vie et contribue à maintenir\n' +
+    //   'un état psychique satisfaisant et stable, quelles que soit les difficultés que l’on rencontre.',
+  },
+  {
+    id: categories.COMMUNICATION,
+    label: 'Communication avec mon entourage',
+    // explanation:
+    //   'Quand on s’intéresse au sommeil, on regarde principalement sa durée et sa qualité.\n' +
+    //   'En effet, un bon sommeil est la base d’une bonne hygiène de vie et contribue à maintenir\n' +
+    //   'un état psychique satisfaisant et stable, quelles que soit les difficultés que l’on rencontre.',
+  },
+  {
     id: 'NOTES',
     question: 'Ajoutez un commentaire sur votre journée si vous le souhaitez',
   },

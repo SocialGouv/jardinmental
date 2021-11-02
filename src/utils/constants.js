@@ -76,6 +76,8 @@ export const categories = {
   BADTHOUGHTS: 'BADTHOUGHTS',
   SENSATIONS: 'SENSATIONS',
   SLEEP: 'SLEEP',
+  DAILYACTIVITIES: 'DAILYACTIVITIES',
+  COMMUNICATION: 'COMMUNICATION',
 };
 
 export const displayedCategories = {
@@ -84,6 +86,8 @@ export const displayedCategories = {
   BADTHOUGHTS: 'Idées parasites',
   SLEEP: 'Sommeil',
   SENSATIONS: 'Sensations étranges',
+  DAILYACTIVITIES: 'Faire mes activités quotidiennes',
+  COMMUNICATION: 'Communication avec mon entourage',
   BADTHOUGHTS_FREQUENCE: 'Idées parasites',
   ANXIETY_FREQUENCE: 'Anxiété',
   SENSATIONS_FREQUENCE: 'Sensations étranges',
