@@ -20,7 +20,6 @@ import {getScoreWithState} from '../../utils';
 
 const DaySurvey = ({navigation, route}) => {
   const [questions, setQuestions] = useState([]);
-  const [explanation, setExplanation] = useState();
   const [answers, setAnswers] = useState({});
 
   useEffect(() => {
@@ -87,6 +86,7 @@ const DaySurvey = ({navigation, route}) => {
             question={q}
             onPress={toggleAnswer}
             selected={answers[q.id]}
+            explanation={q.explanation}
           />
         ))}
         <View style={styles.divider} />
@@ -151,15 +151,34 @@ const answers = [
   },
 ];
 
-const Question = ({question, explications, onPress, selected}) => {
+const Question = ({question, explanation, onPress, selected}) => {
+  const [showExplanation, setShowExplanation] = useState(false);
+  const toggleShowExplanation = async () => {
+    setShowExplanation((prev) => !prev);
+  };
   return (
     <View style={styles.questionContainer}>
-      <View style={styles.questionHeader}>
-        <View style={styles.questionPoint} />
-        <Text style={styles.questionTitle}>{question.label}</Text>
-        <Text style={styles.questionTitle}>i</Text>
-        {/* TODO INFO */}
-      </View>
+      <TouchableOpacity onPress={toggleShowExplanation}>
+        <View style={styles.questionHeaderContainer}>
+          <View style={styles.questionHeader}>
+            <View style={styles.questionPoint} />
+            <Text style={styles.questionTitle}>{question.label}</Text>
+            {explanation ? (
+              <ArrowUpSvg
+                style={showExplanation ? styles.arrowUp : styles.arrowDown}
+                color={colors.BLUE}
+              />
+            ) : (
+              <View />
+            )}
+          </View>
+          {explanation && showExplanation ? (
+            <View style={styles.questionInfo}>
+              <Text>{explanation}</Text>
+            </View>
+          ) : null}
+        </View>
+      </TouchableOpacity>
       <View style={styles.answerContainer}>
         {answers.map((answer, i) => {
           const active = selected === answer.score;
@@ -188,6 +207,13 @@ const Question = ({question, explications, onPress, selected}) => {
 };
 
 const styles = StyleSheet.create({
+  arrowDown: {
+    transform: [{rotate: '180deg'}],
+  },
+  arrowUp: {
+    transform: [{rotate: '0deg'}],
+  },
+
   buttonWrapper: {
     display: 'flex',
     alignItems: 'center',
@@ -206,16 +232,21 @@ const styles = StyleSheet.create({
     display: 'flex',
     marginBottom: 15,
   },
-  questionHeader: {
+  questionHeaderContainer: {
     backgroundColor: '#F4FCFD',
     borderColor: '#DEF4F5',
     borderWidth: 1,
     borderRadius: 10,
     padding: 10,
+  },
+  questionHeader: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+  },
+  questionInfo: {
+    marginTop: 15,
   },
   questionPoint: {
     height: 16,
