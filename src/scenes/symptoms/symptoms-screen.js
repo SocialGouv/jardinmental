@@ -1,63 +1,59 @@
 import React, {useEffect, useState} from 'react';
-import {
-  TouchableOpacity,
-  StyleSheet,
-  ScrollView,
-  View,
-  SafeAreaView,
-} from 'react-native';
+import {StyleSheet, ScrollView, View, SafeAreaView} from 'react-native';
 import Text from '../../components/MyText';
 import CheckBox from '@react-native-community/checkbox';
 import {colors} from '../../utils/colors';
 import {buildSurveyData} from '../survey/survey-data';
 import SymptomsExplanation from '../symptoms/symptoms-explanation';
-import {displayedCategories} from '../../utils/constants';
+import {displayedCategories, categories} from '../../utils/constants';
 import localStorage from '../../utils/localStorage';
 import logEvents from '../../services/logEvents';
 import BackButton from '../../components/BackButton';
 import Button from '../../components/Button';
 import AddElemToList from '../../components/AddElemToList';
 
-const lookUpCategoryMatomo = {
-  MOOD: 0,
-  ANXIETY_FREQUENCE: 1,
-  BADTHOUGHTS_FREQUENCE: 2,
-  SLEEP: 3,
-  SENSATIONS_FREQUENCE: 4,
-};
-
 const SymptomScreen = ({navigation, route}) => {
   const explanation =
     'A tout moment, vous pourrez modifier la liste des symptômes que vous souhaitez suivre via l’onglet “Réglages” situé en haut à droite du journal';
   const [chosenCategories, setChosenCategories] = useState({});
-  const [initalCategories, setInitialCategories] = useState({});
 
   useEffect(() => {
     (async () => {
-      const symptoms = await localStorage.getSymptoms();
-      if (symptoms) {
-        setChosenCategories(symptoms);
-        setInitialCategories(symptoms);
-      } else {
-        checkAll();
+      const preselectedCategories = await localStorage.getSymptoms();
+      if (!Object.keys(preselectedCategories).length) {
+        return checkAll();
       }
+
+      const customSymptoms = await localStorage.getCustomSymptoms();
+      let selected = {};
+      Object.keys(categories)
+        .concat(customSymptoms)
+        .forEach((cat) => {
+          const [categoryName] = cat.split('_');
+          if (preselectedCategories[cat] === true) {
+            selected[categoryName] = true;
+          } else {
+            selected[categoryName] = false;
+          }
+        });
+      setChosenCategories(selected);
     })();
   }, []);
 
   const checkAll = () => {
-    let categories = {};
-    Object.keys(displayedCategories).forEach((cat) => {
-      categories[cat] = true;
+    let res = {};
+    Object.keys(categories).forEach((cat) => {
+      res[cat] = true;
     });
-    setChosenCategories(categories);
+    setChosenCategories(res);
   };
 
   const showExplanation = route.params?.showExplanation || false;
 
   const setToogleCheckbox = (cat, value) => {
-    let categories = {...chosenCategories};
-    categories[cat] = value;
-    setChosenCategories(categories);
+    let res = {...chosenCategories};
+    res[cat] = value;
+    setChosenCategories(res);
     // if (value) {
     //   logEvents.logSymptomAdd(cat);
     // } else {

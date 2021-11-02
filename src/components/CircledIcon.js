@@ -48,8 +48,10 @@ const CircledIcon = ({
   icon,
   color,
   borderColor = 'lightgrey',
+  borderWidth = 1,
   iconColor = 'black',
   opacity = 1,
+  iconContainerStyle,
 }) => {
   const Icon = mapIconToSvg(icon);
   return (
@@ -58,7 +60,9 @@ const CircledIcon = ({
         ...styles.iconContainer,
         backgroundColor: color,
         borderColor,
+        borderWidth,
         opacity,
+        ...iconContainerStyle,
       }}>
       <Icon width={20} height={20} color={iconColor} />
     </View>

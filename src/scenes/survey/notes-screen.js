@@ -9,11 +9,7 @@ import {
 } from 'react-native';
 import Text from '../../components/MyText';
 import {colors} from '../../utils/colors';
-import {
-  availableData,
-  buildSurveyData,
-  alertNoDataYesterday,
-} from './survey-data';
+import {availableData, alertNoDataYesterday} from './survey-data';
 import {categories} from '../../utils/constants';
 import {DiaryDataContext} from '../../context';
 import {isYesterday, parseISO} from 'date-fns';
@@ -33,16 +29,6 @@ const Notes = ({navigation, route}) => {
     route?.params?.currentSurvey?.answers?.NOTES?.notesToxic,
   );
   const [diaryData, setDiaryData] = useContext(DiaryDataContext);
-  const [questions, setQuestions] = useState([]);
-
-  useEffect(() => {
-    (async () => {
-      const q = await buildSurveyData();
-      if (q) {
-        setQuestions(q);
-      }
-    })();
-  }, []);
 
   const previousQuestion = () => {
     if (route.params?.backRedirect) {
@@ -63,7 +49,7 @@ const Notes = ({navigation, route}) => {
       date: survey?.date,
       answers: {
         ...survey?.answers,
-        [categories.NOTES]: {notesEvents, notesSymptoms, notesToxic},
+        ['NOTES']: {notesEvents, notesSymptoms, notesToxic},
       },
     };
     setDiaryData(currentSurvey);
@@ -89,7 +75,7 @@ const Notes = ({navigation, route}) => {
     parseISO(route.params?.currentSurvey?.date),
   );
 
-  const {question} = availableData.find(({id}) => id === categories.NOTES);
+  const {question} = availableData.find(({id}) => id === 'NOTES');
 
   return (
     <SafeAreaView style={styles.safe}>
