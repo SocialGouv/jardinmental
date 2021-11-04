@@ -23,7 +23,7 @@ import {
   fakeDiaryData,
   startDate as fakeStartDate,
 } from '../scenes/diary/fake-diary-data';
-import {formatDay, getArrayOfDates} from '../utils/date/helpers';
+import {beforeToday, formatDay, getArrayOfDates} from '../utils/date/helpers';
 
 const wipeData = async () => {
   await AsyncStorage.removeItem(STORAGE_KEY_START_DATE);
@@ -92,7 +92,7 @@ const DiaryDataProvider = ({children}) => {
       // await AsyncStorage.clear();
 
       // start date is needed to populate empty dates
-      const startDate = await AsyncStorage.getItem(STORAGE_KEY_START_DATE);
+      let startDate = await AsyncStorage.getItem(STORAGE_KEY_START_DATE);
       let data =
         (await AsyncStorage.getItem(STORAGE_KEY_SURVEY_RESULTS)) || '{}';
 
@@ -110,6 +110,8 @@ const DiaryDataProvider = ({children}) => {
       // we set data first for a better UX
       data = JSON.parse(data);
       setDiaryData(data);
+
+      startDate = beforeToday(7, startDate);
 
       const diary = fillUpEmptyDates(startDate, data);
       setDiaryData(diary);
