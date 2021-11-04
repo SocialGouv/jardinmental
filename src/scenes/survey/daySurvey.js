@@ -38,8 +38,9 @@ const DaySurvey = ({navigation, route}) => {
         patientState: route?.params?.currentSurvey?.answers,
         category: key,
       });
-      if (questions.find((q) => q.id === key)) {
-        toggleAnswer({key: key.split('_')[0], value: score});
+      const cleanedQuestionId = key.split('_')[0];
+      if (questions.find((q) => q.id === cleanedQuestionId)) {
+        toggleAnswer({key: cleanedQuestionId, value: score});
       }
     });
   }, [route?.params?.currentSurvey?.answers, questions]);
