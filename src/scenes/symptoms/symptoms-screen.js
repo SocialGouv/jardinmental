@@ -3,9 +3,12 @@ import {StyleSheet, ScrollView, View, SafeAreaView} from 'react-native';
 import Text from '../../components/MyText';
 import CheckBox from '@react-native-community/checkbox';
 import {colors} from '../../utils/colors';
-import {buildSurveyData} from '../survey/survey-data';
 import SymptomsExplanation from '../symptoms/symptoms-explanation';
-import {displayedCategories, categories} from '../../utils/constants';
+import {
+  displayedCategories,
+  categories,
+  reliquatCategories,
+} from '../../utils/constants';
 import localStorage from '../../utils/localStorage';
 import logEvents from '../../services/logEvents';
 import BackButton from '../../components/BackButton';
@@ -27,9 +30,22 @@ const SymptomScreen = ({navigation, route}) => {
       const customSymptoms = await localStorage.getCustomSymptoms();
       let selected = {};
       Object.keys(categories)
+        .concat(...Object.keys(reliquatCategories))
         .concat(customSymptoms)
         .forEach((cat) => {
+          console.log(
+            '✍️ ~ file: symptoms-screen.js ~ line 31 ~ .forEach ~ cat',
+            cat,
+          );
           const [categoryName] = cat.split('_');
+          console.log(
+            '✍️ ~ file: symptoms-screen.js ~ line 33 ~ .forEach ~ categoryName',
+            categoryName,
+          );
+          console.log(
+            '✍️ ~ file: symptoms-screen.js ~ line 41 ~ .forEach ~ preselectedCategories[cat] ',
+            preselectedCategories[cat],
+          );
           if (preselectedCategories[cat] === true) {
             selected[categoryName] = true;
           } else {

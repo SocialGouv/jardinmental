@@ -79,6 +79,11 @@ export const categories = {
   DAILYACTIVITIES: 'DAILYACTIVITIES',
   COMMUNICATION: 'COMMUNICATION',
 };
+export const reliquatCategories = {
+  BADTHOUGHTS_FREQUENCE: 'BADTHOUGHTS_FREQUENCE',
+  ANXIETY_FREQUENCE: 'ANXIETY_FREQUENCE',
+  SENSATIONS_FREQUENCE: 'SENSATIONS_FREQUENCE',
+};
 
 export const displayedCategories = {
   MOOD: 'Humeur',
