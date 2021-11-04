@@ -1,4 +1,8 @@
 {
   "name": "monsuivipsy",
-  "displayName": "monsuivipsy"
+  "displayName": "Mon Suivi Psy",
+  "version": {
+    "buildNumber": 64,
+    "buildName": "1.14.21"
+  }
 }

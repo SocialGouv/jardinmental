@@ -3,18 +3,6 @@ apply plugin: "com.android.application"
 import com.android.build.OutputFile
 import groovy.json.JsonSlurper
 
-def getVersionFromNpm(key) {
-    //  Read and parse package.json file from project root
-    def inputFile = new File("$rootDir/../package.json")
-    def packageJson = new JsonSlurper().parseText(inputFile.text)
-
-    // Return the version, you can get any value this way
-    return packageJson[key]
-}
-
-println "VersionCode : ${getVersionFromNpm('versionCode')}"
-println "version : ${getVersionFromNpm('version')}"
-
 /**
  * The react.gradle file registers a task for each build variant (e.g. bundleDebugJsAndAssets
  * and bundleReleaseJsAndAssets).
@@ -143,8 +131,8 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         multiDexEnabled true
-        versionCode getVersionFromNpm('versionCode')
-        versionName getVersionFromNpm('version')
+        versionCode 64
+        versionName "1.14.21"
     }
     splits {
         abi {

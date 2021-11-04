@@ -1,7 +1,6 @@
 {
   "name": "monsuivipsy",
   "version": "1.14.21",
-  "versionCode": 64,
   "private": true,
   "scripts": {
     "android": "react-native run-android",
@@ -16,7 +15,8 @@
     "test": "jest",
     "lint": "eslint .",
     "android:build-aab": "cd android && ./gradlew clean && ./gradlew bundleRelease && cd ../",
-    "postinstall": "pod install --project-directory=ios/ --repo-update && npx jetify -r"
+    "postinstall": "pod install --project-directory=ios/ --repo-update && npx jetify -r",
+    "update-mobile-app-version": "node ./update-mobile-app-version.js"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.13.2",
