@@ -5,23 +5,21 @@ import {beforeToday, formatDay} from '../../utils/date/helpers';
 import {isToday, parseISO} from 'date-fns';
 import logEvents from '../../services/logEvents';
 
-// build an array of the question's index that the user selected.
+// build an array of the question that the user has selected.
 export const buildSurveyData = async () => {
   const userSymptoms = await localStorage.getSymptoms();
   const data = await getAvailableData();
   let res = [];
   data.forEach((question, index) => {
-    const category = question.id;
-    // get the name and the suffix of the category
-    const [categoryName, suffix] = category.split('_');
-
-    // if the user selected this category
-    if (
-      userSymptoms &&
-      (userSymptoms[category] || userSymptoms[categoryName])
-    ) {
-      res.push(question);
-    }
+    // we get the category name if there is a _
+    const [categoryName] = question.id.split('_');
+    // if the user selected this category or a category that
+    Object.keys(userSymptoms).forEach((userSymptom) => {
+      const [userSymptomName] = userSymptom.split('_');
+      if (userSymptomName === categoryName && userSymptoms[userSymptom]) {
+        res.push(question);
+      }
+    });
   });
   return res;
 };

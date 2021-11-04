@@ -67,7 +67,7 @@ const DaySurvey = ({navigation, route}) => {
   };
 
   const allQuestionHasAnAnswer = () =>
-    questions.reduce((prev, curr) => prev && answers[curr.id], true);
+    questions.every((curr) => answers[curr.id]);
 
   const renderQuestion = () => {
     if (isYesterday(parseISO(route.params?.currentSurvey?.date)))
