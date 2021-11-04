@@ -23,7 +23,6 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
       </activity>
-      <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
               <!-- Change the value to true to enable pop-up for in foreground (remote-only, for local use ignoreInForeground) -->
       <meta-data  android:name="com.dieam.reactnativepushnotification.notification_foreground"
                   android:value="false"/>
