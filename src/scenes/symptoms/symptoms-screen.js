@@ -33,24 +33,12 @@ const SymptomScreen = ({navigation, route}) => {
         .concat(...Object.keys(reliquatCategories))
         .concat(customSymptoms)
         .forEach((cat) => {
-          console.log(
-            '✍️ ~ file: symptoms-screen.js ~ line 31 ~ .forEach ~ cat',
-            cat,
-          );
           const [categoryName] = cat.split('_');
-          console.log(
-            '✍️ ~ file: symptoms-screen.js ~ line 33 ~ .forEach ~ categoryName',
-            categoryName,
-          );
-          console.log(
-            '✍️ ~ file: symptoms-screen.js ~ line 41 ~ .forEach ~ preselectedCategories[cat] ',
-            preselectedCategories[cat],
-          );
-          if (preselectedCategories[cat] === true) {
-            selected[categoryName] = true;
-          } else {
-            selected[categoryName] = false;
-          }
+          // select it if we add it to the list (old and new version)
+          // cat is the full name (SYMPTOM_FREQUENCE)
+          // categoryName is the new format (SYMPTOM)
+          selected[categoryName] =
+            preselectedCategories[cat] || preselectedCategories[categoryName];
         });
       setChosenCategories(selected);
     })();
