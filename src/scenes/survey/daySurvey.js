@@ -17,6 +17,7 @@ import BackButton from '../../components/BackButton';
 import ArrowUpSvg from '../../../assets/svg/arrow-up.svg';
 import Button from '../../components/Button';
 import {getScoreWithState} from '../../utils';
+import Icon from '../../components/Icon';
 
 const DaySurvey = ({navigation, route}) => {
   const [questions, setQuestions] = useState([]);
@@ -167,16 +168,20 @@ const Question = ({question, explanation, onPress, selected, isLast}) => {
       <TouchableOpacity onPress={toggleShowExplanation}>
         <View style={styles.questionHeaderContainer}>
           <View style={styles.questionHeader}>
-            <View style={styles.questionPoint} />
-            <Text style={styles.questionTitle}>{question.label}</Text>
             {explanation ? (
-              <ArrowUpSvg
-                style={showExplanation ? styles.arrowUp : styles.arrowDown}
-                color={colors.BLUE}
+              <Icon
+                icon="InfoSvg"
+                width={25}
+                height={25}
+                color={colors.LIGHT_BLUE}
+                styleContainer={{width: 25, height: 25}}
               />
             ) : (
               <View />
             )}
+            <Text style={styles.questionTitle}>{question.label}</Text>
+            {/* we put a view here because we'll add a item here later */}
+            <View />
           </View>
           {explanation && showExplanation ? (
             <View style={styles.questionInfo}>
@@ -192,18 +197,27 @@ const Question = ({question, explanation, onPress, selected, isLast}) => {
             <TouchableOpacity
               key={i}
               onPress={() => onPress({key: question.id, value: answer.score})}>
-              <CircledIcon
-                color={
-                  active
-                    ? answer.backgroundColor
-                    : answer.inactiveBackgroundColor
-                }
-                borderColor={active ? colors.LIGHT_BLUE : '#eee'}
-                borderWidth={active ? 2 : 1}
-                iconColor={active ? answer.iconColor : answer.inactiveIconColor}
-                icon={answer.icon}
-                iconContainerStyle={{marginRight: 0}}
-              />
+              <View
+                style={[
+                  styles.selectionContainer,
+                  active && styles.activeSelectionContainer,
+                ]}>
+                <CircledIcon
+                  color={
+                    !active && selected
+                      ? answer.inactiveBackgroundColor
+                      : answer.backgroundColor
+                  }
+                  borderColor="#eee"
+                  iconColor={
+                    !active && selected
+                      ? answer.inactiveIconColor
+                      : answer.iconColor
+                  }
+                  icon={answer.icon}
+                  iconContainerStyle={{marginRight: 0}}
+                />
+              </View>
             </TouchableOpacity>
           );
         })}
@@ -213,6 +227,15 @@ const Question = ({question, explanation, onPress, selected, isLast}) => {
 };
 
 const styles = StyleSheet.create({
+  selectionContainer: {
+    padding: 3,
+    borderColor: '#DEF4F5',
+    borderWidth: 1,
+    borderRadius: 10,
+  },
+  activeSelectionContainer: {
+    backgroundColor: colors.LIGHT_BLUE,
+  },
   arrowDown: {
     transform: [{rotate: '180deg'}],
   },

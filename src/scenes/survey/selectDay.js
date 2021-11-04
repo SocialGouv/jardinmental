@@ -90,8 +90,7 @@ const styles = StyleSheet.create({
     flex: 1,
     color: '#000',
     fontSize: 15,
-    marginTop: 15,
-
+    marginVertical: 15,
     fontWeight: 'normal',
     textAlign: 'center',
   },
