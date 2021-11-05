@@ -39,6 +39,13 @@ const SettingsModal = ({navigation, visible, onClick}) => {
             onClick={onClick}
             icon="ThoughtsSvg"
           />
+          <SettingItem
+            title="Exporter mes données"
+            path="export"
+            navigation={navigation}
+            onClick={onClick}
+            icon="ExportDataSettingSvg"
+          />
         </View>
       </TouchableOpacity>
     </Modal>

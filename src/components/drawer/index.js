@@ -98,14 +98,6 @@ export default ({navigation, visible, onClick}) => {
               icon="SymptomsSetting"
             />
             <Separator />
-            <DrawerItem
-              title="Exporter mes données"
-              path="export"
-              navigation={navigation}
-              onClick={onClick}
-              icon="ExportDataSettingSvg"
-            />
-            {/* <DrawerItem title="Donnez mon avis" onClick={() => {}} /> */}
             {updateVisible ? (
               <DrawerItem
                 badge
