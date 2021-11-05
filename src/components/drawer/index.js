@@ -84,6 +84,13 @@ export default ({navigation, visible, onClick}) => {
               icon="PhoneSvg"
             />
             <DrawerItem
+              title="Site internet"
+              icon="GlobeSvg"
+              onClick={() => {
+                Linking.openURL('https://monsuivipsy.fabrique.social.gouv.fr/');
+              }}
+            />
+            <DrawerItem
               title="Protection des données"
               path="privacy"
               navigation={navigation}
