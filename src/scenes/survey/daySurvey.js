@@ -59,7 +59,7 @@ const DaySurvey = ({navigation, route}) => {
     const prevCurrentSurvey = route.params?.currentSurvey;
     const currentSurvey = {
       date: prevCurrentSurvey?.date,
-      answers,
+      answers: {...prevCurrentSurvey.answers, ...answers},
     };
 
     navigation.navigate('notes', {
