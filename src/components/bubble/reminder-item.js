@@ -19,7 +19,7 @@ const ReminderItem = ({onPress}) => {
           );
         } else {
           return setMessage(
-            'Saisir au moins 3 à 4 fois par semaine vos symptômes est l’idéal pour les suivre.',
+            'Saisir au moins 3 à 4 fois par semaine mon questionnaire quotidien me permet de mieux suivre mon évolution.',
           );
         }
       }

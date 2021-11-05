@@ -1,18 +1,17 @@
-import React, {useContext, useState, useEffect} from 'react';
+import React, {useContext, useState} from 'react';
 import {
   StyleSheet,
   ScrollView,
   SafeAreaView,
   TextInput,
   View,
+  KeyboardAvoidingView,
   Platform,
 } from 'react-native';
 import Text from '../../components/MyText';
 import {colors} from '../../utils/colors';
 import {availableData, alertNoDataYesterday} from './survey-data';
-import {categories} from '../../utils/constants';
 import {DiaryDataContext} from '../../context';
-import {isYesterday, parseISO} from 'date-fns';
 import Button from '../../components/Button';
 import logEvents from '../../services/logEvents';
 import BackButton from '../../components/BackButton';
@@ -29,18 +28,6 @@ const Notes = ({navigation, route}) => {
     route?.params?.currentSurvey?.answers?.NOTES?.notesToxic,
   );
   const [diaryData, setDiaryData] = useContext(DiaryDataContext);
-
-  const previousQuestion = () => {
-    if (route.params?.backRedirect) {
-      console.log(route.params?.backRedirect);
-      navigation.navigate('question', {
-        ...route.params,
-      });
-    } else {
-      console.log('tabs');
-      navigation.navigate('tabs');
-    }
-  };
 
   const validateSurvey = async () => {
     const survey = route.params?.currentSurvey;
@@ -70,65 +57,68 @@ const Notes = ({navigation, route}) => {
     });
   };
 
-  const isSurveyDateYesterday = isYesterday(
-    parseISO(route.params?.currentSurvey?.date),
-  );
-
   const {question} = availableData.find(({id}) => id === 'NOTES');
 
   return (
-    <SafeAreaView style={styles.safe}>
-      <BackButton onPress={navigation.goBack} />
-      <ScrollView
-        style={styles.container}
-        contentContainerStyle={styles.scrollContainer}>
-        <Text style={styles.question}>{question}</Text>
-        <Text style={styles.title}>
-          Que m'est-il arrivé aujourd'hui (disputes, examens, ...) ?
-        </Text>
-        <TextInput
-          multiline={true}
-          numberOfLines={Platform.OS === 'ios' ? null : 3}
-          minHeight={Platform.OS === 'ios' ? 20 * 3 : null}
-          onChangeText={setNotesEvents}
-          value={notesEvents}
-          placeholder="Je me suis disputé avec un ami..."
-          style={styles.textArea}
-          textAlignVertical={'top'}
-        />
-        <Text style={styles.title}>
-          Je souhaite détailler un ou plusieurs de mes symptômes (ma nuit a été
-          ...) ?
-        </Text>
-        <TextInput
-          multiline={true}
-          numberOfLines={Platform.OS === 'ios' ? null : 3}
-          minHeight={Platform.OS === 'ios' ? 20 * 3 : null}
-          onChangeText={setNotesSymptoms}
-          value={notesSymptoms}
-          placeholder="J'ai mis beaucoup de temps à m'endormir..."
-          style={styles.textArea}
-          textAlignVertical={'top'}
-        />
-        <Text style={styles.title}>
-          Ai-je consommé des toxiques aujourd'hui ? Si oui, lesquels ?
-        </Text>
-        <Text style={styles.subtitle}>(ex: tabac, alcool, cannabis, ...)</Text>
-        <TextInput
-          multiline={true}
-          numberOfLines={Platform.OS === 'ios' ? null : 3}
-          minHeight={Platform.OS === 'ios' ? 20 * 3 : null}
-          onChangeText={setNotesToxic}
-          value={notesToxic}
-          placeholder="Je n'ai rien consommé aujourd'hui..."
-          style={styles.textArea}
-          textAlignVertical={'top'}
-        />
-      </ScrollView>
-      <View style={styles.buttonWrapper}>
-        <Button onPress={validateSurvey} title="Valider" />
-      </View>
-    </SafeAreaView>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={styles.safe}
+      keyboardVerticalOffset={10}>
+      <SafeAreaView style={styles.safe}>
+        <BackButton onPress={navigation.goBack} />
+        <ScrollView
+          style={styles.container}
+          contentContainerStyle={styles.scrollContainer}>
+          <Text style={styles.question}>{question}</Text>
+          <Text style={styles.title}>
+            Que m'est-il arrivé aujourd'hui (disputes, examens, ...) ?
+          </Text>
+          <TextInput
+            multiline={true}
+            numberOfLines={Platform.OS === 'ios' ? null : 3}
+            minHeight={Platform.OS === 'ios' ? 20 * 3 : null}
+            onChangeText={setNotesEvents}
+            value={notesEvents}
+            placeholder="Je me suis disputé avec un ami..."
+            style={styles.textArea}
+            textAlignVertical={'top'}
+          />
+          <Text style={styles.title}>
+            Je souhaite détailler un ou plusieurs de mes symptômes (ma nuit a
+            été ...) ?
+          </Text>
+          <TextInput
+            multiline={true}
+            numberOfLines={Platform.OS === 'ios' ? null : 3}
+            minHeight={Platform.OS === 'ios' ? 20 * 3 : null}
+            onChangeText={setNotesSymptoms}
+            value={notesSymptoms}
+            placeholder="J'ai mis beaucoup de temps à m'endormir..."
+            style={styles.textArea}
+            textAlignVertical={'top'}
+          />
+          <Text style={styles.title}>
+            Ai-je consommé des toxiques aujourd'hui ? Si oui, lesquels ?
+          </Text>
+          <Text style={styles.subtitle}>
+            (ex: tabac, alcool, cannabis, ...)
+          </Text>
+          <TextInput
+            multiline={true}
+            numberOfLines={Platform.OS === 'ios' ? null : 3}
+            minHeight={Platform.OS === 'ios' ? 20 * 3 : null}
+            onChangeText={setNotesToxic}
+            value={notesToxic}
+            placeholder="Je n'ai rien consommé aujourd'hui..."
+            style={styles.textArea}
+            textAlignVertical={'top'}
+          />
+        </ScrollView>
+        <View style={styles.buttonWrapper}>
+          <Button onPress={validateSurvey} title="Valider" />
+        </View>
+      </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -161,7 +151,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   scrollContainer: {
-    paddingBottom: 150,
+    paddingBottom: 80,
   },
   backButton: {
     fontWeight: '700',
@@ -174,7 +164,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-end',
-    paddingVertical: 20,
   },
   textArea: {
     backgroundColor: '#F4FCFD',

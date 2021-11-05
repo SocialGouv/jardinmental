@@ -135,11 +135,10 @@ export const startAtFirstQuestion = async (date, navigation) => {
 };
 
 export const alertNoDataYesterday = ({date, diaryData, navigation}) => {
-  console.log({date});
   if (isToday(parseISO(date)) && !diaryData[formatDay(beforeToday(1))]) {
-    Alert.alert('Souhaitez-vous renseigner vos ressentis pour hier ?', '', [
+    Alert.alert('Souhaitez-vous remplir votre questionnaire pour hier ?', '', [
       {
-        text: 'Oui, je les renseigne maintenant',
+        text: 'Oui, je le renseigne maintenant',
         onPress: () => {
           logEvents.logFeelingStartYesterday(true);
           startAtFirstQuestion(formatDay(beforeToday(1)), navigation);
