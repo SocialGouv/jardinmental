@@ -1,7 +1,7 @@
 {
   "name": "monsuivipsy",
-  "version": "1.14.21",
-  "versionCode": 64,
+  "version": "1.15.1",
+  "versionCode": 66,
   "private": true,
   "scripts": {
     "android": "react-native run-android",
