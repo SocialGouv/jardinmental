@@ -38,8 +38,7 @@ export default ({navigation, route}) => {
         />
         {/* <ReminderSvg /> */}
         <Text style={styles.title}>
-          Il est trop tard pour modifier les informations du {formatDate(date)}{' '}
-          !
+          Il est trop tard pour modifier les informations du {formatDate(date)}.
         </Text>
         <View style={styles.description}>
           <Text style={styles.subTitle}>
