@@ -122,9 +122,9 @@ export default ({navigation, route}) => {
   const renderDescription = (s) => {
     switch (s) {
       case 0:
-        return 'Décrivez une situation vécue qui été source de stress ou d’angoisse';
+        return 'Décrivez une situation vécue qui a été source de stress ou d’angoisse';
       case 1:
-        return 'Décrivez une situation vécue qui été source de stress ou d’angoisse';
+        return 'Décrivez une situation vécue qui a été source de stress ou d’angoisse';
       case 2:
         return 'Quelles ont été vos émotions et sensations pendant cette situation ?';
       case 3:
