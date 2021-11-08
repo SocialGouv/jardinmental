@@ -19,6 +19,7 @@ import {BeckStepTitles} from '../../utils/constants';
 import {DiaryDataContext} from '../../context';
 import {confirm, deleteBeckfromDiaryData} from '../../utils';
 import logEvents from '../../services/logEvents';
+import {parseISO, differenceInDays} from 'date-fns';
 
 export default ({navigation, route}) => {
   const [beck, setBeck] = useState({});
@@ -33,6 +34,31 @@ export default ({navigation, route}) => {
     setBeck(route?.params?.beck);
     setBeckId(route?.params?.beckId);
   }, [route?.params?.beck, route?.params?.beckId]);
+
+  const {
+    date,
+    time,
+    where,
+    who,
+    what,
+    mainEmotion,
+    mainEmotionIntensity,
+    otherEmotions,
+    physicalSensations,
+    thoughtsBeforeMainEmotion,
+    trustInThoughsThen,
+    memories,
+    actions,
+    consequencesForYou,
+    consequencesForRelatives,
+    argumentPros,
+    argumentCons,
+    nuancedThoughts,
+    trustInThoughsNow,
+    mainEmotionIntensityNuanced,
+  } = beck;
+
+  const canEdit = differenceInDays(new Date(), parseISO(date)) <= 30;
 
   const handleEdit = () => {
     logEvents.logBeckEditClick();
@@ -58,37 +84,16 @@ export default ({navigation, route}) => {
 
   const percentage = (x) => x && `${x * 10}%`;
 
-  const {
-    date,
-    time,
-    where,
-    who,
-    what,
-    mainEmotion,
-    mainEmotionIntensity,
-    otherEmotions,
-    physicalSensations,
-    thoughtsBeforeMainEmotion,
-    trustInThoughsThen,
-    memories,
-    actions,
-    consequencesForYou,
-    consequencesForRelatives,
-    argumentPros,
-    argumentCons,
-    nuancedThoughts,
-    trustInThoughsNow,
-    mainEmotionIntensityNuanced,
-  } = beck;
-
   return (
     <SafeAreaView style={styles.safe}>
       <View style={styles.buttonsContainer}>
         <BackButton onPress={navigation.goBack} />
         <View style={styles.buttonsRightContainer}>
-          <TouchableOpacity onPress={handleEdit}>
-            <Icon icon="NotesSvg" color="#58C8D2" width={25} height={25} />
-          </TouchableOpacity>
+          {canEdit ? (
+            <TouchableOpacity onPress={handleEdit}>
+              <Icon icon="NotesSvg" color="#58C8D2" width={25} height={25} />
+            </TouchableOpacity>
+          ) : null}
           <TouchableOpacity onPress={handleDelete}>
             <Icon icon="BinSvg" color="#D10000" width={25} height={25} />
           </TouchableOpacity>
