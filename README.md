@@ -1,62 +1,56 @@
+![Mobile version](https://img.shields.io/badge/mobile%20app%20version-1.14.21-blue)
+
 # Mon Suivi Psy
 
 Permettre à chacun de mieux connaitre son trouble pour faciliter le choix du bon traitement
 
-## Run the application in development mode
+## Deploy
 
-```
-yarn start
-```
+### For all: bump versions
 
-Then, open another terminal and run:
-### On iOS
+#### Concept
 
-```
-yarn ios
-```
+Both android and ios have two kind of build numbers:
 
-### On Android
+- android: you can see in `'/android/app/build.gradle` file `versionCode` and `versionName`. Usually, `versionCode` is incremented by 1 for every release, and `versionName` is basic versioning like `1.0.0` or whatever.
 
-```
-yarn android
-```
+- ios: you can see in `./ios/BalaBenzine.xcodeproj/project.pbxproj` two lines called `CURRENT_PROJECT_VERSION` and two other called `MARKETING_VERSION`. Usually, `CURRENT_PROJECT_VERSION` is incremented by 1 for every release, and `MARKETING_VERSION` is basic versioning like `1.0.0` or whatever.
 
-## Run tests
-```
-yarn test
-```
+#### Automatic bump
 
-## Check lint
-```
-yarn lint
-```
+run `yarn update-mobile-app-version` with the proper arguments:
 
-## Publish the app
+- `yarn update-mobile-app-version bump`: it will just increment +1 `versionCode` and `CURRENT_PROJECT_VERSION`
+- `yarn update-mobile-app-version patch`: it will increment +1 `versionCode` and `CURRENT_PROJECT_VERSION` and increment `MARKETING_VERSION` and `versionName` from, for example, 1.0.0 to 1.0.1
+- `yarn update-mobile-app-version minor`: it will increment +1 `versionCode` and `CURRENT_PROJECT_VERSION` and increment `MARKETING_VERSION` and `versionName` from, for example, 1.0.1 to 1.1.0
+- `yarn update-mobile-app-version major`: it will increment +1 `versionCode` and `CURRENT_PROJECT_VERSION` and increment `MARKETING_VERSION` and `versionName` from, for example, 1.1.0 to 2.0.0
 
-### On Android
+#### Manual bump
 
-- Edit `android/app/build.gradle` lines 135 and 136 to change versionCode and version name
+Just update manually the versions where you need to do it.
 
-- Edit `android/gradle.properties` lines 29 and 30 to add the keystore password
+You can't upload twice the same `versionCode`/`CURRENT_PROJECT_VERSION`, whereas you can upload twice `versionName`/`MARKETING_VERSION`.
+In any case, you can't upload any version lower than the previous.
 
-- Then, run the following command :
-```
-yarn build:android
-```
+So be careful when you name those.
 
-This will generate a .aab file that you can upload in Google Play Console. This file can be found in `android/app/build/outputs/bundle/release/app.aab` and uploaded in a new Play Store release.
+### Android
 
-### On iOS
+Just run `yarn build:android`.
+Get the `.aab` file located at `./android/app/build/outputs/bundle/release/app-release.aab`
 
-- Check `ios/monsuivipsy/Info.plist` line 29 to put `NSAllowsArbitraryLoads` to false and remove `localhost` from `NSExceptionDomains`
+Upload it in Google Play console, Internal Testing or Production directly, as you prefer. Better to have at least one Internal Testing tester that can check the app is properly compiled (like with a real API connection, not localhost).
+
+### iOS
 
 - Open `ios/monsuivipsy.xcodeproj`, and click Product > Archive
 
 - At the end of archiving, a new window opens: click "Distribute App". Then:
+
   - Select "App Store Connect", and click "Next"
   - Select "Upload", and click "Next"
   - Select all three checkoxes ("Include bitcode for iOS content", "Strip Swift symbols" and "Upload your app's symbols"), and click "Next"
   - In "Distribution certificate", select the default one, and in "monsuivipsy.app", select "iOS provisionning", and click "Next"
   - Finally, click on "Upload"
-  
+
 - Your app is now in the Test Flight tab in your App Store Connect. After it is reviewed, you can use it in your next App Store release.
