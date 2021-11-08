@@ -3,18 +3,6 @@ apply plugin: "com.android.application"
 import com.android.build.OutputFile
 import groovy.json.JsonSlurper
 
-def getVersionFromNpm(key) {
-    //  Read and parse package.json file from project root
-    def inputFile = new File("$rootDir/../package.json")
-    def packageJson = new JsonSlurper().parseText(inputFile.text)
-
-    // Return the version, you can get any value this way
-    return packageJson[key]
-}
-
-println "VersionCode : ${getVersionFromNpm('versionCode')}"
-println "version : ${getVersionFromNpm('version')}"
-
 /**
  * The react.gradle file registers a task for each build variant (e.g. bundleDebugJsAndAssets
  * and bundleReleaseJsAndAssets).
@@ -134,20 +122,17 @@ def jscFlavor = 'org.webkit:android-jsc:+'
 def enableHermes = project.ext.react.get("enableHermes", false);
 
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
+    ndkVersion rootProject.ext.ndkVersion
 
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
+    compileSdkVersion rootProject.ext.compileSdkVersion
 
     defaultConfig {
         applicationId "com.monsuivipsy"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         multiDexEnabled true
-        versionCode getVersionFromNpm('versionCode')
-        versionName getVersionFromNpm('version')
+        versionCode 64
+        versionName "1.14.21"
     }
     splits {
         abi {
@@ -195,7 +180,7 @@ android {
             def abi = output.getFilter(OutputFile.ABI)
             if (abi != null) {  // null for the universal-debug, universal-release variants
                 output.versionCodeOverride =
-                        versionCodes.get(abi) * 1048576 + defaultConfig.versionCode
+                        defaultConfig.versionCode * 1000 + versionCodes.get(abi)
             }
 
         }
@@ -234,7 +219,7 @@ dependencies {
 // Run this once to be able to run the application with BUCK
 // puts all compile dependencies into folder libs for BUCK to use
 task copyDownloadableDepsToLibs(type: Copy) {
-    from configurations.compile
+    from configurations.implementation
     into 'libs'
 }
 
