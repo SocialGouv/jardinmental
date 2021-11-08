@@ -14,7 +14,7 @@ const ContributeItem = ({onPress}) => {
       <View style={styles.container}>
         <Text style={styles.title}>Contribuer à Mon Suivi Psy</Text>
         <Text style={styles.message}>
-          Partagez-nous comment améliorer l'application{' '}
+          Dites-nous comment améliorer l'application{' '}
           <Text style={styles.muted}>(Nous lisons tous les messages)</Text>
         </Text>
       </View>
