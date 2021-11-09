@@ -54,7 +54,7 @@ const SurveyScreen = ({navigation}) => {
             </TouchableOpacity>
           );
         })}
-        <Text style={styles.subtitleTop}>Attention !</Text>
+        <Text style={styles.subtitleTop}>Remarque</Text>
         <Text style={styles.subtitle}>
           Je ne peux pas remplir au-delà de 7 jours car les informations seront
           alors moins fidèles
