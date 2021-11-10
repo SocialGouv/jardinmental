@@ -37,12 +37,12 @@ class Router extends React.Component {
   async componentDidMount() {
     await logEvents.initMatomo();
     logEvents.logAppVisit();
-    AppState.addEventListener('change', this.onAppChange);
+    this.appListener = AppState.addEventListener('change', this.onAppChange);
   }
 
   componentWillUnmount() {
     logEvents.logAppClose();
-    AppState.removeEventListener('focus', this.onAppChange);
+    this.appListener.remove();
   }
 
   appState = AppState.currentState;

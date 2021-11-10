@@ -68,13 +68,16 @@ class NPS extends React.Component {
     if (__DEV__) {
       this.reset();
     }
-    AppState.addEventListener('change', this.handleAppStateChange);
+    this.NPSListener = AppState.addEventListener(
+      'change',
+      this.handleAppStateChange,
+    );
     this.notificationsListener = Notifications.listen(this.handleNotification);
     this.checkNeedNPS();
   }
 
   componentWillUnmount() {
-    AppState.removeEventListener('change', this.handleAppStateChange);
+    this.NPSListener.remove();
     Notifications.remove(this.notificationsListener);
   }
 
