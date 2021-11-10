@@ -1,5 +1,5 @@
 import {colors} from '../../utils/colors';
-import {displayedCategories} from '../../utils/constants';
+import {displayedCategories, categories} from '../../utils/constants';
 import {getArrayOfDates, formatDate} from '../../utils/date/helpers';
 import localStorage from '../../utils/localStorage';
 import {getDrugListWithLocalStorage} from '../../utils/drugs-list';
@@ -273,7 +273,8 @@ const formatHtmlTable = async (diaryData) => {
       if (!dayData) {
         return null;
       }
-      const categoryState = dayData[categoryId];
+      const categoryState =
+        dayData[categoryId] || dayData[`${categoryId}_FREQUENCE`];
       if (!categoryState) {
         return null;
       }
@@ -369,7 +370,7 @@ const formatHtmlTable = async (diaryData) => {
       </head>
       <body width="100%">
         <h1 style="color: ${colors.BLUE}">Mes données de MonSuiviPsy</h1>
-        ${Object.keys(displayedCategories)
+        ${Object.keys(categories)
           .concat(customsSymptoms)
           .map((categoryId) => {
             const res = computeChartData(categoryId);
