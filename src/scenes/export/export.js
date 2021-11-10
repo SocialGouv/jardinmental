@@ -65,7 +65,7 @@ const Export = ({navigation}) => {
         `Retrouvez vos données sur votre boîte mail : ${mail}`,
         [
           {
-            text: 'Retourner au journal',
+            text: 'Retour',
             onPress: () => navigation.navigate('tabs'),
             style: 'default',
           },
