@@ -9,7 +9,6 @@ import {
 import Text from '../../../components/MyText';
 import CheckBox from '@react-native-community/checkbox';
 import {colors} from '../../../utils/colors';
-import SymptomsExplanation from '../../symptoms/symptoms-explanation';
 import {displayedCategories, categories} from '../../../utils/constants';
 import localStorage from '../../../utils/localStorage';
 import logEvents from '../../../services/logEvents';
@@ -21,8 +20,6 @@ import Logo from '../../../../assets/svg/symptoms-setting';
 import {ONBOARDING_STEPS} from '../../../utils/constants';
 
 const SymptomScreen = ({navigation, route}) => {
-  const explanation =
-    "A tout moment, vous pourrez modifier cette liste d'éléments que vous souhaitez suivre via l’onglet “Réglages” situé en haut à droite du journal";
   const [chosenCategories, setChosenCategories] = useState({});
 
   useEffect(() => {
@@ -114,7 +111,8 @@ const SymptomScreen = ({navigation, route}) => {
           </Text>
         </View>
         <Text style={styles.subtitle}>
-          Cela peut être un ressenti positif ou négatif ou une activité
+          Créer les critères que vous souhaitez suivre quotidiennement. Vous
+          pouvez en créer autant que vous le souhaitez.
         </Text>
         {noneSelected() ? (
           <Text style={styles.alert}>
@@ -125,6 +123,9 @@ const SymptomScreen = ({navigation, route}) => {
           onChange={handleAddNewSymptom}
           placeholder="Ajouter un ressenti"
         />
+        <Text style={[styles.subtitle, styles.spaceabove]}>
+          Vous pouvez aussi en sélectionner parmi ces exemples:
+        </Text>
         {chosenCategories &&
           Object.keys(chosenCategories).map((cat, index) => (
             <View key={index} style={styles.categories}>
@@ -149,6 +150,11 @@ const SymptomScreen = ({navigation, route}) => {
             </View>
           ))}
         <View style={styles.buttonWrapper}>
+          <Text style={[styles.subtitle, styles.spaceabove]}>
+            Vous pouvez modifier votre sélection ultérieurement dans les
+            réglages
+          </Text>
+
           <Button
             title="Valider"
             onPress={nextOnboardingScreen}
@@ -156,10 +162,6 @@ const SymptomScreen = ({navigation, route}) => {
           />
         </View>
       </ScrollView>
-      <SymptomsExplanation
-        explanation={explanation}
-        category={'Informations'}
-      />
     </SafeAreaView>
   );
 };
@@ -219,11 +221,14 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   subtitle: {
-    color: colors.LIGHT_BLUE,
+    color: '#181818',
     fontSize: 13,
     marginBottom: 10,
     fontWeight: '300',
     textAlign: 'center',
+  },
+  spaceabove: {
+    marginTop: 15,
   },
   alert: {
     color: 'red',
