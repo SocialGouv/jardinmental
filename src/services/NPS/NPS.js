@@ -77,7 +77,7 @@ class NPS extends React.Component {
   }
 
   componentWillUnmount() {
-    this.NPSListener.remove();
+    this.NPSListener?.remove();
     Notifications.remove(this.notificationsListener);
   }
 

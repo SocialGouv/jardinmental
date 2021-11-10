@@ -42,7 +42,7 @@ class Router extends React.Component {
 
   componentWillUnmount() {
     logEvents.logAppClose();
-    this.appListener.remove();
+    this.appListener?.remove();
   }
 
   appState = AppState.currentState;
