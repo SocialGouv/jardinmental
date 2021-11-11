@@ -60,65 +60,58 @@ const Notes = ({navigation, route}) => {
   const {question} = availableData.find(({id}) => id === 'NOTES');
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={styles.safe}
-      keyboardVerticalOffset={10}>
-      <SafeAreaView style={styles.safe}>
-        <BackButton onPress={navigation.goBack} />
-        <ScrollView
-          style={styles.container}
-          contentContainerStyle={styles.scrollContainer}>
-          <Text style={styles.question}>{question}</Text>
-          <Text style={styles.title}>
-            Que m'est-il arrivé aujourd'hui (disputes, examens, ...) ?
-          </Text>
-          <TextInput
-            multiline={true}
-            numberOfLines={Platform.OS === 'ios' ? null : 3}
-            minHeight={Platform.OS === 'ios' ? 20 * 3 : null}
-            onChangeText={setNotesEvents}
-            value={notesEvents}
-            placeholder="Je me suis disputé avec un ami..."
-            style={styles.textArea}
-            textAlignVertical={'top'}
-          />
-          <Text style={styles.title}>
-            Je souhaite détailler un ou plusieurs de mes symptômes (ma nuit a
-            été ...) ?
-          </Text>
-          <TextInput
-            multiline={true}
-            numberOfLines={Platform.OS === 'ios' ? null : 3}
-            minHeight={Platform.OS === 'ios' ? 20 * 3 : null}
-            onChangeText={setNotesSymptoms}
-            value={notesSymptoms}
-            placeholder="J'ai mis beaucoup de temps à m'endormir..."
-            style={styles.textArea}
-            textAlignVertical={'top'}
-          />
-          <Text style={styles.title}>
-            Ai-je consommé des toxiques aujourd'hui ? Si oui, lesquels ?
-          </Text>
-          <Text style={styles.subtitle}>
-            (ex: tabac, alcool, cannabis, ...)
-          </Text>
-          <TextInput
-            multiline={true}
-            numberOfLines={Platform.OS === 'ios' ? null : 3}
-            minHeight={Platform.OS === 'ios' ? 20 * 3 : null}
-            onChangeText={setNotesToxic}
-            value={notesToxic}
-            placeholder="Je n'ai rien consommé aujourd'hui..."
-            style={styles.textArea}
-            textAlignVertical={'top'}
-          />
-        </ScrollView>
-        <View style={styles.buttonWrapper}>
-          <Button onPress={validateSurvey} title="Valider" />
-        </View>
-      </SafeAreaView>
-    </KeyboardAvoidingView>
+    <SafeAreaView style={styles.safe}>
+      <BackButton onPress={navigation.goBack} />
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={styles.scrollContainer}>
+        <Text style={styles.question}>{question}</Text>
+        <Text style={styles.title}>
+          Que m'est-il arrivé aujourd'hui (disputes, examens, ...) ?
+        </Text>
+        <TextInput
+          multiline={true}
+          numberOfLines={Platform.OS === 'ios' ? null : 3}
+          minHeight={Platform.OS === 'ios' ? 20 * 3 : null}
+          onChangeText={setNotesEvents}
+          value={notesEvents}
+          placeholder="Je me suis disputé avec un ami..."
+          style={styles.textArea}
+          textAlignVertical={'top'}
+        />
+        <Text style={styles.title}>
+          Je souhaite détailler un ou plusieurs de mes symptômes (ma nuit a été
+          ...) ?
+        </Text>
+        <TextInput
+          multiline={true}
+          numberOfLines={Platform.OS === 'ios' ? null : 3}
+          minHeight={Platform.OS === 'ios' ? 20 * 3 : null}
+          onChangeText={setNotesSymptoms}
+          value={notesSymptoms}
+          placeholder="J'ai mis beaucoup de temps à m'endormir..."
+          style={styles.textArea}
+          textAlignVertical={'top'}
+        />
+        <Text style={styles.title}>
+          Ai-je consommé des toxiques aujourd'hui ? Si oui, lesquels ?
+        </Text>
+        <Text style={styles.subtitle}>(ex: tabac, alcool, cannabis, ...)</Text>
+        <TextInput
+          multiline={true}
+          numberOfLines={Platform.OS === 'ios' ? null : 3}
+          minHeight={Platform.OS === 'ios' ? 20 * 3 : null}
+          onChangeText={setNotesToxic}
+          value={notesToxic}
+          placeholder="Je n'ai rien consommé aujourd'hui..."
+          style={styles.textArea}
+          textAlignVertical={'top'}
+        />
+      </ScrollView>
+      <View style={styles.buttonWrapper}>
+        <Button onPress={validateSurvey} title="Valider" />
+      </View>
+    </SafeAreaView>
   );
 };
 
@@ -151,7 +144,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   scrollContainer: {
-    paddingBottom: 80,
+    paddingBottom: 500,
   },
   backButton: {
     fontWeight: '700',
