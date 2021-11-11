@@ -72,7 +72,7 @@ const Tabs = ({navigation, route}) => {
           name="Calendar"
           component={Calendar}
           options={{
-            tabBarLabel: 'Courbes',
+            tabBarLabel: 'Bilan',
             tabBarIcon: ({color}) => <CourbeSvg style={{color}} />,
           }}
         />
