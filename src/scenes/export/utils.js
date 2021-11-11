@@ -279,7 +279,7 @@ const formatHtmlTable = async (diaryData) => {
         return null;
       }
 
-      if (typeof categoryState === 'number') return categoryState;
+      if (categoryState?.value) return categoryState?.value;
 
       // -------
       // the following code is for the retrocompatibility

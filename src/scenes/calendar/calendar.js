@@ -87,7 +87,7 @@ const Calendar = ({navigation}) => {
       if (!categoryState) {
         return null;
       }
-      if (typeof categoryState === 'number') return categoryState - 1;
+      if (categoryState?.value) return categoryState?.value - 1;
 
       // -------
       // the following code is for the retrocompatibility

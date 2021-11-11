@@ -50,7 +50,7 @@ const DaySurvey = ({navigation, route}) => {
     setAnswers((prev) => {
       return {
         ...prev,
-        [key]: value,
+        [key]: {value},
       };
     });
   };
@@ -90,7 +90,7 @@ const DaySurvey = ({navigation, route}) => {
             key={i}
             question={q}
             onPress={toggleAnswer}
-            selected={answers[q.id]}
+            selected={answers[q.id]?.value}
             explanation={q.explanation}
             isLast={i === questions.length - 1}
           />
