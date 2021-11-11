@@ -1,12 +1,7 @@
 import React from 'react';
-import {useEffect, useState} from 'react';
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import Text from '../../components/MyText';
-import Button from '../../components/Button';
 import {colors} from '../../utils/colors';
-import {formatDay} from '../../utils/date/helpers';
-import logEvents from '../../services/logEvents';
-import localStorage from '../../utils/localStorage';
 
 const ContributeItem = ({onPress}) => {
   return (

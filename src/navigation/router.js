@@ -23,7 +23,7 @@ import logEvents from '../services/logEvents';
 import ContributePro from '../scenes/contribute/contributePro';
 import Drugs from '../scenes/drugs/drugs';
 import DrugsList from '../scenes/drugs/list';
-import TooLate from '../scenes/diary/too-late';
+import TooLate from '../scenes/status/too-late';
 import News from '../scenes/news';
 import Infos from '../scenes/infos';
 import ActivateBeck from '../scenes/beck/activate';

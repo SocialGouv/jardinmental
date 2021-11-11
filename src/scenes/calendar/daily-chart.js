@@ -6,7 +6,7 @@ import Chart from './chart';
 import {DiaryDataContext} from '../../context';
 import {useContext} from 'react';
 import DayTitle from './day-title';
-import DiaryItem from '../diary/diary-item';
+import DiaryItem from '../status/status-item';
 
 const DailyChart = ({
   route: {

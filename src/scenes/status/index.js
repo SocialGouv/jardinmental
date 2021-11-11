@@ -7,11 +7,11 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Text from '../../components/MyText';
-import DiaryItem from './diary-item';
+import StatusItem from './status-item';
 import ContributeItem from './contribute-item';
 import Header from '../../components/Header';
 import {colors} from '../../utils/colors';
-import {format, parseISO, isToday, isYesterday, compareAsc} from 'date-fns';
+import {format, parseISO, isToday, isYesterday} from 'date-fns';
 import {fr} from 'date-fns/locale';
 import {firstLetterUppercase} from '../../utils/string-util';
 import {useContext} from 'react';
@@ -20,17 +20,11 @@ import localStorage from '../../utils/localStorage';
 import NPS from '../../services/NPS/NPS';
 import Bubble from '../../components/bubble';
 import ArrowUpSvg from '../../../assets/svg/arrow-up.svg';
-import {beforeToday} from '../../utils/date/helpers';
+import logEvents from '../../services/logEvents';
 
 const LIMIT_PER_PAGE = __DEV__ ? 3 : 30;
 
-export const canEdit = (d) => {
-  const limitDate = beforeToday(7);
-  const canEditBool = compareAsc(parseISO(d), limitDate) === 1;
-  return canEditBool;
-};
-
-const Diary = ({navigation}) => {
+const Status = ({navigation}) => {
   const [diaryData] = useContext(DiaryDataContext);
   const [NPSvisible, setNPSvisible] = useState(false);
   const [page, setPage] = useState(1);
@@ -46,9 +40,6 @@ const Diary = ({navigation}) => {
       return firstLetterUppercase(formattedDate);
     }
   };
-
-  const onPressContribute = () => setNPSvisible(true);
-  const closeNPS = () => setNPSvisible(false);
 
   useEffect(() => {
     const handleOnboarding = async () => {
@@ -69,16 +60,36 @@ const Diary = ({navigation}) => {
     handleOnboarding();
   }, [navigation]);
 
+  const startSurvey = async () => {
+    const symptoms = await localStorage.getSymptoms();
+    logEvents.logFeelingStart();
+    if (!symptoms) {
+      navigation.navigate('symptoms', {
+        showExplanation: true,
+        redirect: '0',
+      });
+    } else {
+      navigation.navigate('question', {index: 0});
+    }
+  };
+
   // display only LIMIT_PER_PAGE days
   // button that will display LIMIT_PER_PAGE more each time
 
   return (
     <SafeAreaView style={styles.safe}>
-      <NPS forceView={NPSvisible} close={closeNPS} />
+      <NPS forceView={NPSvisible} close={() => setNPSvisible(false)} />
       <ScrollView
         style={styles.container}
         contentContainerStyle={styles.scrollContainer}>
-        <Header title="Mon journal" navigation={navigation} />
+        <Header title="Mon état quotidien" navigation={navigation} />
+        <TouchableOpacity onPress={startSurvey} style={styles.setupButton}>
+          <Text style={styles.setupButtonText}>
+            Comment s'est passé ma journée
+          </Text>
+        </TouchableOpacity>
+        <View style={styles.divider} />
+
         <Bubble diaryData={diaryData} navigation={navigation} />
         {Object.keys(diaryData)
           .sort((a, b) => {
@@ -89,15 +100,15 @@ const Diary = ({navigation}) => {
           .slice(0, LIMIT_PER_PAGE * page)
           .map((date) => (
             <View key={date}>
-              <Text style={styles.title}>{formatDate(date)}</Text>
-              <DiaryItem
+              <Text style={styles.subtitle}>{formatDate(date)}</Text>
+              <StatusItem
                 date={date}
                 patientState={diaryData[date]}
                 navigation={navigation}
               />
             </View>
           ))}
-        <ContributeItem onPress={onPressContribute} />
+        <ContributeItem onPress={() => setNPSvisible(true)} />
         {Object.keys(diaryData)?.length > LIMIT_PER_PAGE * page ? (
           <TouchableOpacity
             onPress={() => setPage(page + 1)}
@@ -142,6 +153,46 @@ const styles = StyleSheet.create({
     color: colors.BLUE,
     fontWeight: '700',
   },
+  flex: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  subtitle: {
+    fontSize: 19,
+    paddingTop: 10,
+    paddingLeft: 10,
+    paddingBottom: 10,
+    backgroundColor: '#F2FCFD',
+    borderColor: '#D9F5F6',
+    borderWidth: 1,
+    borderRadius: 10,
+    fontWeight: '600',
+    overflow: 'hidden',
+  },
+  verticalBorder: {
+    borderLeftWidth: 1,
+    borderColor: '#00CEF7',
+  },
+  setupButton: {
+    backgroundColor: colors.LIGHT_BLUE,
+    height: 45,
+    borderRadius: 45,
+    paddingHorizontal: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  setupButtonText: {
+    color: '#fff',
+    fontWeight: '700',
+    fontSize: 19,
+  },
+  divider: {
+    height: 1,
+    backgroundColor: '#E0E0E0',
+    marginVertical: 15,
+    width: '50%',
+    alignSelf: 'center',
+  },
 });
 
-export default Diary;
+export default Status;
