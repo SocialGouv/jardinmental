@@ -114,11 +114,7 @@ const SymptomScreen = ({navigation, route}) => {
           Créer les critères que vous souhaitez suivre quotidiennement. Vous
           pouvez en créer autant que vous le souhaitez.
         </Text>
-        {noneSelected() ? (
-          <Text style={styles.alert}>
-            Ajouter ou sélectionner au moins 1 élément
-          </Text>
-        ) : null}
+
         <AddElemToList
           onChange={handleAddNewSymptom}
           placeholder="Ajouter un ressenti"
@@ -150,11 +146,16 @@ const SymptomScreen = ({navigation, route}) => {
             </View>
           ))}
         <View style={styles.buttonWrapper}>
-          <Text style={[styles.subtitle, styles.spaceabove]}>
-            Vous pouvez modifier votre sélection ultérieurement dans les
-            réglages
-          </Text>
-
+          {noneSelected() ? (
+            <Text style={[styles.alert, styles.spaceabove]}>
+              Ajouter ou sélectionner au moins 1 élément
+            </Text>
+          ) : (
+            <Text style={[styles.subtitle, styles.spaceabove]}>
+              Vous pourrez modifier votre sélection ultérieurement dans les
+              réglages
+            </Text>
+          )}
           <Button
             title="Valider"
             onPress={nextOnboardingScreen}
