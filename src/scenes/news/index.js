@@ -28,6 +28,47 @@ export default ({navigation}) => {
       <ScrollView
         style={styles.cgu}
         contentContainerStyle={styles.scrollContainer}>
+        <Card title="Nouveau Questionnaire" version="v1.15" date="11/2021">
+          <Item>
+            <Text style={styles.text}>
+              Le questionnaire quotidien personnalisé se simplifie ! Plus{' '}
+              <Text style={styles.bold}>simple</Text>, plus{' '}
+              <Text style={styles.bold}>rapide</Text> et plus{' '}
+              <Text style={styles.bold}>facile</Text> à remplir.
+            </Text>
+          </Item>
+          <Item>
+            <Text style={styles.text}>
+              Vous avez le choix entre{' '}
+              <Text style={styles.bold}>5 niveaux</Text> différents pour chaque
+              critère.
+            </Text>
+          </Item>
+          <Item>
+            <Text style={styles.text}>
+              Vous avez toujours la possibilité de suivre vos{' '}
+              <Text style={styles.bold}>ressentis</Text>, et vous pouvez
+              maintenant :{'\n'}• suivre des{' '}
+              <Text style={styles.bold}>critères positifs</Text> comme la
+              motivation, le bien-être, la fierté …{'\n'}• suivre des{' '}
+              <Text style={styles.bold}>activités</Text>
+              («sortie avec mes amis », « activités quotidiennes » …)
+            </Text>
+          </Item>
+          <Item>
+            <Text style={styles.text}>
+              Vous pouvez toujours ajouter autant de critères à suivre que vous
+              le souhaitez
+            </Text>
+          </Item>
+          <Item>
+            <Text style={styles.text}>
+              Vous pouvez maintenant suivre les critères sur les{' '}
+              <Text style={styles.bold}>7 derniers jours</Text> (et non plus les
+              2 derniers jours)
+            </Text>
+          </Item>
+        </Card>
         <Card title="Les colonnes de Beck !" version="v1.14" date="07/2021">
           <Item>
             <Text style={styles.text}>

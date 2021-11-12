@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   scrollContainer: {
-    paddingBottom: 500,
+    paddingBottom: 80,
   },
   backButton: {
     fontWeight: '700',
