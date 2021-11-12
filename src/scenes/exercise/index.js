@@ -84,7 +84,11 @@ export default ({navigation}) => {
                 onAnimationType="bounce"
                 offAnimationType="bounce"
               />
-              <Text>Ne plus afficher ce message</Text>
+              <TouchableOpacity
+                activeOpacity={0.7}
+                onPress={() => setShowWelcomeDefault((e) => !e)}>
+                <Text>Ne plus afficher ce message</Text>
+              </TouchableOpacity>
             </View>
             <TouchableOpacity
               onPress={validateWelcomeMessage}
