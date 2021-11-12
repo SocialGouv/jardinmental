@@ -1,5 +1,6 @@
 import {format, parseISO, isToday, isYesterday} from 'date-fns';
 import {fr} from 'date-fns/locale';
+import {firstLetterUppercase} from '../../utils/string-util';
 
 export const oneDay = 1000 * 60 * 60 * 24;
 export const beforeToday = (offset = 0, date = new Date()) =>
@@ -129,4 +130,16 @@ export const isAfterToday = (date) => {
   const today = new Date();
   const test = new Date(date);
   return test > today;
+};
+
+export const formatDateThread = (date) => {
+  const isoDate = parseISO(date);
+  if (isToday(isoDate)) {
+    return "Aujourd'hui";
+  } else if (isYesterday(isoDate)) {
+    return 'Hier';
+  } else {
+    const formattedDate = format(isoDate, 'EEEE d MMMM', {locale: fr});
+    return firstLetterUppercase(formattedDate);
+  }
 };

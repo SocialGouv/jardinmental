@@ -8,12 +8,9 @@ import {
 } from 'react-native';
 import Text from '../../components/MyText';
 import StatusItem from './status-item';
-import ContributeItem from './contribute-item';
+import ContributeCard from '../contribute/contributeCard';
 import Header from '../../components/Header';
 import {colors} from '../../utils/colors';
-import {format, parseISO, isToday, isYesterday} from 'date-fns';
-import {fr} from 'date-fns/locale';
-import {firstLetterUppercase} from '../../utils/string-util';
 import {useContext} from 'react';
 import {DiaryDataContext} from '../../context';
 import localStorage from '../../utils/localStorage';
@@ -21,6 +18,7 @@ import NPS from '../../services/NPS/NPS';
 import Bubble from '../../components/bubble';
 import ArrowUpSvg from '../../../assets/svg/arrow-up.svg';
 import logEvents from '../../services/logEvents';
+import {formatDateThread} from '../../utils/date/helpers';
 
 const LIMIT_PER_PAGE = __DEV__ ? 3 : 30;
 
@@ -28,18 +26,6 @@ const Status = ({navigation}) => {
   const [diaryData] = useContext(DiaryDataContext);
   const [NPSvisible, setNPSvisible] = useState(false);
   const [page, setPage] = useState(1);
-
-  const formatDate = (date) => {
-    const isoDate = parseISO(date);
-    if (isToday(isoDate)) {
-      return "Aujourd'hui";
-    } else if (isYesterday(isoDate)) {
-      return 'Hier';
-    } else {
-      const formattedDate = format(isoDate, 'EEEE d MMMM', {locale: fr});
-      return firstLetterUppercase(formattedDate);
-    }
-  };
 
   useEffect(() => {
     const handleOnboarding = async () => {
@@ -100,7 +86,7 @@ const Status = ({navigation}) => {
           .slice(0, LIMIT_PER_PAGE * page)
           .map((date) => (
             <View key={date}>
-              <Text style={styles.subtitle}>{formatDate(date)}</Text>
+              <Text style={styles.subtitle}>{formatDateThread(date)}</Text>
               <StatusItem
                 date={date}
                 patientState={diaryData[date]}
@@ -108,15 +94,15 @@ const Status = ({navigation}) => {
               />
             </View>
           ))}
-        <ContributeItem onPress={() => setNPSvisible(true)} />
-        {Object.keys(diaryData)?.length > LIMIT_PER_PAGE * page ? (
+        <ContributeCard onPress={() => setNPSvisible(true)} />
+        {Object.keys(diaryData)?.length > LIMIT_PER_PAGE * page && (
           <TouchableOpacity
             onPress={() => setPage(page + 1)}
             style={styles.versionContainer}>
             <Text style={styles.arrowDownLabel}>Voir plus</Text>
             <ArrowUpSvg style={styles.arrowDown} color={colors.BLUE} />
           </TouchableOpacity>
-        ) : null}
+        )}
       </ScrollView>
     </SafeAreaView>
   );

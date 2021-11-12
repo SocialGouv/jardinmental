@@ -3,10 +3,12 @@ import {StyleSheet, SafeAreaView, Platform} from 'react-native';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import Diary from '../scenes/diary';
 import Status from '../scenes/status';
+import Exercise from '../scenes/exercise';
 import Calendar from '../scenes/calendar/calendar';
 import DiarySvg from '../../assets/svg/diary.js';
 import StatusSvg from '../../assets/svg/status.js';
 import CourbeSvg from '../../assets/svg/Courbes';
+import ExerciseSvg from '../../assets/svg/exercise';
 import localStorage from '../utils/localStorage';
 import logEvents from '../services/logEvents';
 import {colors} from '../utils/colors';
@@ -66,6 +68,14 @@ const Tabs = ({navigation, route}) => {
           options={{
             tabBarLabel: 'Journal',
             tabBarIcon: ({color}) => <DiarySvg style={{color}} />,
+          }}
+        />
+        <Tab.Screen
+          name="Exercice"
+          component={Exercise}
+          options={{
+            tabBarLabel: 'Exercice',
+            tabBarIcon: ({color}) => <ExerciseSvg style={{color}} />,
           }}
         />
         <Tab.Screen
