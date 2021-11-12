@@ -1453,10 +1453,15 @@
   dependencies:
     invariant "^2.2.4"
 
-"@react-native-picker/picker@^1.15.0", "@react-native-picker/picker@^1.8.3":
+"@react-native-picker/picker@^1.8.3":
   version "1.16.0"
   resolved "https://registry.npmjs.org/@react-native-picker/picker/-/picker-1.16.0.tgz"
   integrity sha512-kQcL8U5CYQRgmNtlyhEH1BIp06Eaxhj7Lybd7rV4asd4Q90kCEm52b5x5WnE0J6WdVvC6sRzdcbPCb0s9yc4mQ==
+
+"@react-native-picker/picker@^2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@react-native-picker/picker/-/picker-2.2.0.tgz#e96ecc0808bdf2a706a263b422864bee5a0e6b76"
+  integrity sha512-zhzXsppY9t6TU39WMx/x1L1PyP3dPgGhtav7Yo8nlfihNGIAFwHnNcNuyC8CLdWxKj9n2+Z6+ZR6r/Kda82JnA==
 
 "@react-native/assets@1.0.0":
   version "1.0.0"

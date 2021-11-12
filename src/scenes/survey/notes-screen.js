@@ -1,22 +1,17 @@
-import React, {useContext, useState, useEffect} from 'react';
+import React, {useContext, useState} from 'react';
 import {
   StyleSheet,
   ScrollView,
   SafeAreaView,
   TextInput,
   View,
+  KeyboardAvoidingView,
   Platform,
 } from 'react-native';
 import Text from '../../components/MyText';
 import {colors} from '../../utils/colors';
-import {
-  availableData,
-  buildSurveyData,
-  alertNoDataYesterday,
-} from './survey-data';
-import {categories} from '../../utils/constants';
+import {availableData, alertNoDataYesterday} from './survey-data';
 import {DiaryDataContext} from '../../context';
-import {isYesterday, parseISO} from 'date-fns';
 import Button from '../../components/Button';
 import logEvents from '../../services/logEvents';
 import BackButton from '../../components/BackButton';
@@ -33,29 +28,6 @@ const Notes = ({navigation, route}) => {
     route?.params?.currentSurvey?.answers?.NOTES?.notesToxic,
   );
   const [diaryData, setDiaryData] = useContext(DiaryDataContext);
-  const [questions, setQuestions] = useState([]);
-
-  useEffect(() => {
-    (async () => {
-      const q = await buildSurveyData();
-      if (q) {
-        setQuestions(q);
-      }
-    })();
-  }, []);
-
-  const previousQuestion = () => {
-    if (route.params?.backRedirect) {
-      console.log(route.params?.backRedirect);
-      navigation.navigate('question', {
-        ...route.params,
-        index: route.params.backRedirect,
-      });
-    } else {
-      console.log('tabs');
-      navigation.navigate('tabs');
-    }
-  };
 
   const validateSurvey = async () => {
     const survey = route.params?.currentSurvey;
@@ -63,7 +35,7 @@ const Notes = ({navigation, route}) => {
       date: survey?.date,
       answers: {
         ...survey?.answers,
-        [categories.NOTES]: {notesEvents, notesSymptoms, notesToxic},
+        ['NOTES']: {notesEvents, notesSymptoms, notesToxic},
       },
     };
     setDiaryData(currentSurvey);
@@ -85,15 +57,11 @@ const Notes = ({navigation, route}) => {
     });
   };
 
-  const isSurveyDateYesterday = isYesterday(
-    parseISO(route.params?.currentSurvey?.date),
-  );
-
-  const {question} = availableData.find(({id}) => id === categories.NOTES);
+  const {question} = availableData.find(({id}) => id === 'NOTES');
 
   return (
     <SafeAreaView style={styles.safe}>
-      <BackButton onPress={previousQuestion} />
+      <BackButton onPress={navigation.goBack} />
       <ScrollView
         style={styles.container}
         contentContainerStyle={styles.scrollContainer}>
@@ -176,7 +144,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   scrollContainer: {
-    paddingBottom: 150,
+    paddingBottom: 80,
   },
   backButton: {
     fontWeight: '700',
@@ -189,7 +157,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-end',
-    paddingVertical: 20,
   },
   textArea: {
     backgroundColor: '#F4FCFD',

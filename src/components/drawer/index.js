@@ -84,6 +84,13 @@ export default ({navigation, visible, onClick}) => {
               icon="PhoneSvg"
             />
             <DrawerItem
+              title="Site internet"
+              icon="GlobeSvg"
+              onClick={() => {
+                Linking.openURL('https://monsuivipsy.fabrique.social.gouv.fr/');
+              }}
+            />
+            <DrawerItem
               title="Protection des données"
               path="privacy"
               navigation={navigation}
@@ -98,14 +105,6 @@ export default ({navigation, visible, onClick}) => {
               icon="SymptomsSetting"
             />
             <Separator />
-            <DrawerItem
-              title="Exporter mes données"
-              path="export"
-              navigation={navigation}
-              onClick={onClick}
-              icon="ExportDataSettingSvg"
-            />
-            {/* <DrawerItem title="Donnez mon avis" onClick={() => {}} /> */}
             {updateVisible ? (
               <DrawerItem
                 badge

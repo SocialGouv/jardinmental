@@ -55,6 +55,12 @@ export const deleteBeckfromDiaryData = ({
 };
 
 export const getScoreWithState = ({patientState, category}) => {
+  if (patientState[category]?.value) return patientState[category]?.value;
+
+  // -------
+  // the following code is for the retrocompatibility
+  // -------
+
   // if the patient state doesnt have any info on question 1, return
   if (!patientState[category]) {
     return;

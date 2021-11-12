@@ -7,19 +7,22 @@ import Notes from './notes';
 import localStorage from '../../utils/localStorage';
 import Posology from './posology';
 import Beck from './beck';
-import {startAtFirstQuestion} from '../survey/survey-data';
-import {getScoreWithState} from '../../utils';
 import {canEdit} from './diary';
 
 const DiaryItem = ({navigation, patientState, date}) => {
   const [customs, setCustoms] = useState([]);
+  const [oldCustoms, setOldCustoms] = useState([]);
   let mounted = useRef(true);
 
   useEffect(() => {
     (async () => {
       const c = await localStorage.getCustomSymptoms();
+      if (c && mounted) setCustoms(c);
+
+      //retrocompatibility
       const t = c.map((e) => `${e}_FREQUENCE`);
-      if (t && mounted) return setCustoms(t);
+      if (t && mounted) setOldCustoms(t);
+      return;
     })();
     return () => (mounted = false);
   }, [patientState]);
@@ -51,7 +54,7 @@ const DiaryItem = ({navigation, patientState, date}) => {
 
   const handlePressItem = () => {
     if (!canEdit(date)) return navigation.navigate('too-late', {date});
-    startAtFirstQuestion(date, navigation);
+    handleEdit('day-survey');
   };
 
   return (
@@ -64,6 +67,7 @@ const DiaryItem = ({navigation, patientState, date}) => {
       ) : (
         Object.keys(displayedCategories)
           .concat(customs)
+          .concat(oldCustoms)
           .map((key) => {
             if (!patientState[key]) {
               return;

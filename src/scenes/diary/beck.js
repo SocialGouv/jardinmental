@@ -2,7 +2,6 @@ import React, {useContext} from 'react';
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import Text from '../../components/MyText';
 import Icon from '../../components/Icon';
-import {parseISO, differenceInDays} from 'date-fns';
 import {colors} from '../../utils/colors';
 import {DiaryDataContext} from '../../context';
 import {confirm, deleteBeckfromDiaryData} from '../../utils';
@@ -54,8 +53,6 @@ export default ({data, date, onPress}) => {
     );
   };
 
-  const canEdit = differenceInDays(new Date(), parseISO(date)) <= 30; //isToday(parseISO(date)) || isYesterday(parseISO(date));
-
   return (
     <View>
       <View style={styles.divider} />
@@ -64,9 +61,8 @@ export default ({data, date, onPress}) => {
         return (
           <TouchableOpacity
             key={j}
-            style={[styles.container, canEdit && styles.containerEditable]}
-            onPress={() => onPress(beck, i)}
-            disabled={!canEdit}>
+            style={[styles.container]}
+            onPress={() => onPress(beck, i)}>
             <Icon
               icon="ThoughtsSvg"
               color="#58C8D2"

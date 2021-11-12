@@ -9,7 +9,7 @@ export const icons = {
   notes: 'NotesSvg',
 };
 
-const colors = {
+export const colors = {
   veryBad: '#FFC0C0',
   bad: '#FCD0A7',
   middle: '#FCE285',
@@ -72,21 +72,29 @@ export const categoryStates = {
 
 export const categories = {
   MOOD: 'MOOD',
-  ANXIETY_FREQUENCE: 'ANXIETY_FREQUENCE',
-  ANXIETY_INTENSITY: 'ANXIETY_INTENSITY',
-  BADTHOUGHTS_FREQUENCE: 'BADTHOUGHTS_FREQUENCE',
-  BADTHOUGHTS_INTENSITY: 'BADTHOUGHTS_INTENSITY',
-  SENSATIONS_FREQUENCE: 'SENSATIONS_FREQUENCE',
-  SENSATIONS_INTENSITY: 'SENSATIONS_INTENSITY',
+  ANXIETY: 'ANXIETY',
+  BADTHOUGHTS: 'BADTHOUGHTS',
+  SENSATIONS: 'SENSATIONS',
   SLEEP: 'SLEEP',
-  NOTES: 'NOTES',
+  DAILYACTIVITIES: 'DAILYACTIVITIES',
+  COMMUNICATION: 'COMMUNICATION',
+};
+export const reliquatCategories = {
+  BADTHOUGHTS_FREQUENCE: 'BADTHOUGHTS_FREQUENCE',
+  ANXIETY_FREQUENCE: 'ANXIETY_FREQUENCE',
+  SENSATIONS_FREQUENCE: 'SENSATIONS_FREQUENCE',
 };
 
 export const displayedCategories = {
   MOOD: 'Humeur',
-  ANXIETY_FREQUENCE: 'Anxiété',
-  BADTHOUGHTS_FREQUENCE: 'Idées parasites',
+  ANXIETY: 'Anxiété',
+  BADTHOUGHTS: 'Idées parasites',
   SLEEP: 'Sommeil',
+  SENSATIONS: 'Sensations étranges',
+  DAILYACTIVITIES: 'Faire mes activités quotidiennes',
+  COMMUNICATION: 'Communication avec mon entourage',
+  BADTHOUGHTS_FREQUENCE: 'Idées parasites',
+  ANXIETY_FREQUENCE: 'Anxiété',
   SENSATIONS_FREQUENCE: 'Sensations étranges',
 };
 

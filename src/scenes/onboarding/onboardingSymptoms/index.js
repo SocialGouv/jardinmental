@@ -9,8 +9,7 @@ import {
 import Text from '../../../components/MyText';
 import CheckBox from '@react-native-community/checkbox';
 import {colors} from '../../../utils/colors';
-import SymptomsExplanation from '../../symptoms/symptoms-explanation';
-import {displayedCategories} from '../../../utils/constants';
+import {displayedCategories, categories} from '../../../utils/constants';
 import localStorage from '../../../utils/localStorage';
 import logEvents from '../../../services/logEvents';
 import BackButton from '../../../components/BackButton';
@@ -21,8 +20,6 @@ import Logo from '../../../../assets/svg/symptoms-setting';
 import {ONBOARDING_STEPS} from '../../../utils/constants';
 
 const SymptomScreen = ({navigation, route}) => {
-  const explanation =
-    'A tout moment, vous pourrez modifier la liste des symptômes que vous souhaitez suivre via l’onglet “Réglages” situé en haut à droite du journal';
   const [chosenCategories, setChosenCategories] = useState({});
 
   useEffect(() => {
@@ -33,21 +30,36 @@ const SymptomScreen = ({navigation, route}) => {
 
   useEffect(() => {
     (async () => {
-      const symptoms = await localStorage.getSymptoms();
-      if (symptoms) {
-        setChosenCategories(symptoms);
-      } else {
-        init();
+      const preselectedCategories = await localStorage.getSymptoms();
+      if (
+        !preselectedCategories ||
+        !Object.keys(preselectedCategories).length
+      ) {
+        return init();
       }
+
+      const customSymptoms = await localStorage.getCustomSymptoms();
+      let selected = {};
+      Object.keys(categories)
+        .concat(customSymptoms)
+        .forEach((cat) => {
+          const [categoryName] = cat.split('_');
+          if (preselectedCategories[cat] === true) {
+            selected[categoryName] = true;
+          } else {
+            selected[categoryName] = false;
+          }
+        });
+      setChosenCategories(selected);
     })();
   }, []);
 
   const init = () => {
-    let categories = {};
-    Object.keys(displayedCategories).forEach((cat) => {
-      categories[cat] = false;
+    let res = {};
+    Object.keys(categories).forEach((cat) => {
+      res[cat] = false;
     });
-    setChosenCategories(categories);
+    setChosenCategories(res);
   };
 
   const setToogleCheckbox = (cat, value) => {
@@ -95,19 +107,21 @@ const SymptomScreen = ({navigation, route}) => {
         <View style={styles.titleContainer}>
           <Logo style={styles.image} width={30} height={30} />
           <Text style={styles.title}>
-            Quels ressentis souhaitez-vous suivre quotidiennement ?
+            Que souhaitez-vous suivre quotidiennement ?
           </Text>
         </View>
+        <Text style={styles.subtitle}>
+          Créer les critères que vous souhaitez suivre quotidiennement. Vous
+          pouvez en créer autant que vous le souhaitez.
+        </Text>
 
-        {noneSelected() ? (
-          <Text style={styles.alert}>
-            Ajouter ou sélectionner au moins 1 symptôme
-          </Text>
-        ) : null}
         <AddElemToList
           onChange={handleAddNewSymptom}
           placeholder="Ajouter un ressenti"
         />
+        <Text style={[styles.subtitle, styles.spaceabove]}>
+          Vous pouvez aussi en sélectionner parmi ces exemples:
+        </Text>
         {chosenCategories &&
           Object.keys(chosenCategories).map((cat, index) => (
             <View key={index} style={styles.categories}>
@@ -132,6 +146,16 @@ const SymptomScreen = ({navigation, route}) => {
             </View>
           ))}
         <View style={styles.buttonWrapper}>
+          {noneSelected() ? (
+            <Text style={[styles.alert, styles.spaceabove]}>
+              Ajouter ou sélectionner au moins 1 élément
+            </Text>
+          ) : (
+            <Text style={[styles.subtitle, styles.spaceabove]}>
+              Vous pourrez modifier votre sélection ultérieurement dans les
+              réglages
+            </Text>
+          )}
           <Button
             title="Valider"
             onPress={nextOnboardingScreen}
@@ -139,10 +163,6 @@ const SymptomScreen = ({navigation, route}) => {
           />
         </View>
       </ScrollView>
-      <SymptomsExplanation
-        explanation={explanation}
-        category={'Informations'}
-      />
     </SafeAreaView>
   );
 };
@@ -200,6 +220,16 @@ const styles = StyleSheet.create({
     color: colors.BLUE,
     fontSize: 22,
     fontWeight: '700',
+  },
+  subtitle: {
+    color: '#181818',
+    fontSize: 13,
+    marginBottom: 10,
+    fontWeight: '300',
+    textAlign: 'center',
+  },
+  spaceabove: {
+    marginTop: 15,
   },
   alert: {
     color: 'red',

@@ -9,9 +9,9 @@ const PatientStateItem = ({patientState, category, label}) => {
   const [{color, faceIcon}, setIcon] = useState({});
 
   useEffect(() => {
-    const score = getScoreWithState({patientState, category, debug: true});
+    const score = getScoreWithState({patientState, category});
     const icon = scoresMapIcon[score];
-    setIcon(icon);
+    icon && setIcon(icon);
   }, [patientState, category]);
 
   if (!color || !faceIcon) return null;

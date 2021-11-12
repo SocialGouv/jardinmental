@@ -30,14 +30,18 @@ const Calendar = ({navigation}) => {
   const [day, setDay] = useState(new Date());
   const [diaryData] = useContext(DiaryDataContext);
   const [customs, setCustoms] = useState([]);
+  const [oldCustoms, setOldCustoms] = useState([]);
   const [calendarIsEmpty, setCalendarIsEmpty] = useState(true);
   let mounted = useRef(true);
 
   useEffect(() => {
     (async () => {
       const c = await localStorage.getCustomSymptoms();
+      if (c && mounted) setCustoms(c);
+
+      //retrocompatibility
       const t = c.map((e) => `${e}_FREQUENCE`);
-      if (t && mounted) setCustoms(t);
+      if (t && mounted) setOldCustoms(t);
     })();
     return () => (mounted = false);
   }, [diaryData]);
@@ -51,15 +55,14 @@ const Calendar = ({navigation}) => {
   }, [navigation]);
 
   useEffect(() => {
-    console.log('new view !');
     const emptyCalendar = !Object.keys(displayedCategories)
       .concat(customs)
+      .concat(oldCustoms)
       .reduce((showing, categoryId) => {
         return Boolean(isChartVisible(categoryId)) || showing;
       }, false);
-    console.log({emptyCalendar});
     setCalendarIsEmpty(emptyCalendar);
-  }, [day, customs, isChartVisible]);
+  }, [day, customs, oldCustoms, isChartVisible]);
 
   const {firstDay, lastDay} = getTodaySWeek(day);
 
@@ -84,6 +87,11 @@ const Calendar = ({navigation}) => {
       if (!categoryState) {
         return null;
       }
+      if (categoryState?.value) return categoryState?.value - 1;
+
+      // -------
+      // the following code is for the retrocompatibility
+      // -------
 
       // get the name and the suffix of the category
       const [categoryName, suffix] = categoryId.split('_');
@@ -156,6 +164,7 @@ const Calendar = ({navigation}) => {
             </View>
             {Object.keys(displayedCategories)
               .concat(customs)
+              .concat(oldCustoms)
               .map(
                 (categoryId) =>
                   isChartVisible(categoryId) && (
@@ -180,9 +189,8 @@ const Calendar = ({navigation}) => {
                 color={colors.LIGHT_BLUE}
               />
               <Text style={styles.subtitle}>
-                Des <Text style={styles.bold}>courbes d'évolution</Text> de vos
-                symptômes apparaîtront au fur et à mesure de vos saisies
-                quotidiennes.
+                Des <Text style={styles.bold}>courbes d'évolution</Text>{' '}
+                apparaîtront au fur et à mesure de vos saisies quotidiennes.
               </Text>
             </View>
             <View style={styles.imageContainer}>

@@ -1,8 +1,10 @@
 import {colors} from '../../utils/colors';
-import {displayedCategories} from '../../utils/constants';
+import {displayedCategories, categories} from '../../utils/constants';
 import {getArrayOfDates, formatDate} from '../../utils/date/helpers';
 import localStorage from '../../utils/localStorage';
 import {getDrugListWithLocalStorage} from '../../utils/drugs-list';
+import {parseISO, format} from 'date-fns';
+import {fr} from 'date-fns/locale';
 
 // methods
 
@@ -32,9 +34,9 @@ const generateTime = (firstDay, today) => {
     >
       <tbody>
         <tr>
-          <td>${firstDay.toLocaleDateString('fr-FR')}</td>
+          <td>${format(firstDay, 'EEEE d MMMM', {locale: fr})}</td>
           <td align="right" style="text-align: right;">
-              ${today.toLocaleDateString('fr-FR')}
+              ${format(today, 'EEEE d MMMM', {locale: fr})}
           </td>
         </tr>
       </tbody>
@@ -271,10 +273,17 @@ const formatHtmlTable = async (diaryData) => {
       if (!dayData) {
         return null;
       }
-      const categoryState = diaryData[date][categoryId];
+      const categoryState =
+        dayData[categoryId] || dayData[`${categoryId}_FREQUENCE`];
       if (!categoryState) {
         return null;
       }
+
+      if (categoryState?.value) return categoryState?.value;
+
+      // -------
+      // the following code is for the retrocompatibility
+      // -------
 
       // get the name and the suffix of the category
       const [categoryName, suffix] = categoryId.split('_');
@@ -282,9 +291,9 @@ const formatHtmlTable = async (diaryData) => {
       if (suffix && suffix === 'FREQUENCE') {
         // if it's one category with the suffix 'FREQUENCE' :
         // add the intensity (default level is 3 - for the frequence 'never')
-        categoryStateIntensity = diaryData[date][
-          `${categoryName}_INTENSITY`
-        ] || {level: 3};
+        categoryStateIntensity = dayData[`${categoryName}_INTENSITY`] || {
+          level: 3,
+        };
         return categoryState.level + categoryStateIntensity.level - 1;
       }
       return categoryState.level;
@@ -337,7 +346,6 @@ const formatHtmlTable = async (diaryData) => {
   };
 
   let customsSymptoms = await localStorage.getCustomSymptoms();
-  customsSymptoms = customsSymptoms.map((e) => `${e}_FREQUENCE`);
 
   const drugListWithLocalStorage = await getDrugListWithLocalStorage();
 
@@ -362,7 +370,7 @@ const formatHtmlTable = async (diaryData) => {
       </head>
       <body width="100%">
         <h1 style="color: ${colors.BLUE}">Mes données de MonSuiviPsy</h1>
-        ${Object.keys(displayedCategories)
+        ${Object.keys(categories)
           .concat(customsSymptoms)
           .map((categoryId) => {
             const res = computeChartData(categoryId);

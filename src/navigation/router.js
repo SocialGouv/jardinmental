@@ -3,6 +3,8 @@ import Tabs from './tabs';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
 import SurveyScreen from '../scenes/survey/survey-screen';
+import DaySurveyScreen from '../scenes/survey/daySurvey';
+import SelectDayScreen from '../scenes/survey/selectDay';
 import SymptomScreen from '../scenes/symptoms/symptoms-screen';
 import Reminder from '../scenes/reminder/reminder';
 import Export from '../scenes/export/export';
@@ -35,12 +37,12 @@ class Router extends React.Component {
   async componentDidMount() {
     await logEvents.initMatomo();
     logEvents.logAppVisit();
-    AppState.addEventListener('change', this.onAppChange);
+    this.appListener = AppState.addEventListener('change', this.onAppChange);
   }
 
   componentWillUnmount() {
     logEvents.logAppClose();
-    AppState.removeEventListener('focus', this.onAppChange);
+    this.appListener?.remove();
   }
 
   appState = AppState.currentState;
@@ -60,14 +62,16 @@ class Router extends React.Component {
     return (
       <NavigationContainer>
         <Stack.Navigator initialRouteName="tabs" headerMode="none">
+          <Stack.Screen name="day-survey" component={DaySurveyScreen} />
+          <Stack.Screen name="select-day" component={SelectDayScreen} />
           <Stack.Screen name="tabs" component={Tabs} />
-          <Stack.Screen
+          {/* <Stack.Screen
             name="question"
             options={{animationEnabled: Platform.OS === 'ios'}}>
             {({navigation, route}) => (
               <SurveyScreen navigation={navigation} route={route} />
             )}
-          </Stack.Screen>
+          </Stack.Screen> */}
           <Stack.Screen name="symptoms">
             {(props) => <SymptomScreen {...props} />}
           </Stack.Screen>
