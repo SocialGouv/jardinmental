@@ -52,7 +52,7 @@ export default ({patientState, date, navigation}) => {
                   ) : null}
                 </>
               ) : (
-                <Text>Bouillon</Text>
+                <Text style={styles.place}>Brouillon</Text>
               )}
             </View>
             {beck?.time && <Text style={styles.time}>à {beck.time}</Text>}

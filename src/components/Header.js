@@ -54,24 +54,13 @@ const Header = ({title, navigation}) => {
         styleContainer={{marginRight: 20}}
       />
       <Text style={styles.title}>{title}</Text>
-      {route.name === 'Diary' ? (
-        <Icon
-          spin={settingsVisible}
-          icon="GearSvg"
-          width={30}
-          height={30}
-          onPress={() => setSettingsVisible(true)}
-        />
-      ) : null}
-      {route.name === 'Calendar' ? (
-        <Icon
-          color="#26387C"
-          icon="ExportDataSvg"
-          width={30}
-          height={30}
-          onPress={() => navigation.navigate('export')}
-        />
-      ) : null}
+      <Icon
+        spin={settingsVisible}
+        icon="GearSvg"
+        width={30}
+        height={30}
+        onPress={() => setSettingsVisible(true)}
+      />
     </View>
   );
 };

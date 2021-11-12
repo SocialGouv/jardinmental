@@ -53,6 +53,12 @@ export default ({navigation}) => {
           title="Mes fiches de pensées automatiques"
           navigation={navigation}
         />
+        <TouchableOpacity
+          onPress={() => navigation.navigate('beck')}
+          style={styles.button}>
+          <Text style={styles.buttonText}>Faire le point sur un événement</Text>
+        </TouchableOpacity>
+        <View style={styles.divider} />
         {showWelcome === 'true' || !showWelcome ? (
           <View style={styles.welcomeContainer}>
             <Text style={[styles.welcomeText, styles.boldText]}>
@@ -86,48 +92,41 @@ export default ({navigation}) => {
               <Text style={styles.buttonText}>Valider</Text>
             </TouchableOpacity>
           </View>
-        ) : (
-          <>
-            <TouchableOpacity
-              onPress={() => navigation.navigate('beck')}
-              style={styles.button}>
-              <Text style={styles.buttonText}>
-                Faire le point sur un événement
-              </Text>
-            </TouchableOpacity>
-            <View style={styles.divider} />
-            {Object.keys(diaryData)
-              .sort((a, b) => {
-                a = a.split('/').reverse().join('');
-                b = b.split('/').reverse().join('');
-                return b.localeCompare(a);
-              })
-              .slice(0, LIMIT_PER_PAGE * page)
-              .filter(
-                (el) =>
-                  diaryData[el]?.becks &&
-                  Object.keys(diaryData[el].becks).length > 0,
-              )
-              .map((date) => (
-                <View key={date}>
-                  <Text style={styles.subtitle}>{formatDateThread(date)}</Text>
-                  <ExerciseItem
-                    patientState={diaryData[date]}
-                    date={date}
-                    navigation={navigation}
-                  />
-                </View>
-              ))}
-            <ContributeCard onPress={() => setNPSvisible(true)} />
-            {Object.keys(diaryData)?.length > LIMIT_PER_PAGE * page && (
-              <TouchableOpacity
-                onPress={() => setPage(page + 1)}
-                style={styles.versionContainer}>
-                <Text style={styles.arrowDownLabel}>Voir plus</Text>
-                <ArrowUpSvg style={styles.arrowDown} color={colors.BLUE} />
-              </TouchableOpacity>
-            )}
-          </>
+        ) : null}
+        {Object.keys(diaryData)
+          .sort((a, b) => {
+            a = a.split('/').reverse().join('');
+            b = b.split('/').reverse().join('');
+            return b.localeCompare(a);
+          })
+          .slice(0, LIMIT_PER_PAGE * page)
+          .filter(
+            (el) =>
+              diaryData[el]?.becks &&
+              Object.keys(diaryData[el].becks).length > 0,
+          )
+          .map((date) => (
+            <View key={date}>
+              <Text style={styles.subtitle}>{formatDateThread(date)}</Text>
+              <ExerciseItem
+                patientState={diaryData[date]}
+                date={date}
+                navigation={navigation}
+              />
+            </View>
+          ))}
+        <ContributeCard onPress={() => setNPSvisible(true)} />
+        {Object.keys(diaryData)?.filter(
+          (el) =>
+            diaryData[el]?.becks && Object.keys(diaryData[el].becks).length > 0,
+        )?.length >
+          LIMIT_PER_PAGE * page && (
+          <TouchableOpacity
+            onPress={() => setPage(page + 1)}
+            style={styles.versionContainer}>
+            <Text style={styles.arrowDownLabel}>Voir plus</Text>
+            <ArrowUpSvg style={styles.arrowDown} color={colors.BLUE} />
+          </TouchableOpacity>
         )}
       </ScrollView>
     </SafeAreaView>
@@ -145,6 +144,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#E7E9F1',
     borderRadius: 10,
+    marginBottom: 10,
   },
   welcomeText: {marginBottom: 30},
   boldText: {fontWeight: 'bold'},
@@ -197,5 +197,18 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     fontWeight: '600',
     overflow: 'hidden',
+  },
+  versionContainer: {
+    marginTop: 20,
+    flex: 1,
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  arrowDown: {
+    transform: [{rotate: '180deg'}],
+  },
+  arrowDownLabel: {
+    color: colors.BLUE,
   },
 });

@@ -33,13 +33,6 @@ const SettingsModal = ({navigation, visible, onClick}) => {
             icon="DrugsSvg"
           />
           <SettingItem
-            title="Activer la saisie pour un événement"
-            path="activate-beck"
-            navigation={navigation}
-            onClick={onClick}
-            icon="ThoughtsSvg"
-          />
-          <SettingItem
             title="Exporter mes données"
             path="export"
             navigation={navigation}
