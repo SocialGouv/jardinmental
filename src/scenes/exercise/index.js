@@ -18,6 +18,7 @@ import {DiaryDataContext} from '../../context';
 import {formatDateThread} from '../../utils/date/helpers';
 import ContributeCard from '../contribute/contributeCard';
 import {STORAGE_KEY_BECK_SHOW_WELCOME} from '../../utils/constants';
+import ArrowUpSvg from '../../../assets/svg/arrow-up.svg';
 
 const LIMIT_PER_PAGE = __DEV__ ? 3 : 30;
 
