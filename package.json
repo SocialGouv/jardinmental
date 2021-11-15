@@ -1,6 +1,6 @@
 {
   "name": "monsuivipsy",
-  "version": "1.15.6",
+  "version": "1.16.0",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
