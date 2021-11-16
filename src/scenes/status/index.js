@@ -71,7 +71,7 @@ const Status = ({navigation}) => {
         <Header title="Mon état quotidien" navigation={navigation} />
         <TouchableOpacity onPress={startSurvey} style={styles.setupButton}>
           <Text style={styles.setupButtonText}>
-            Comment s'est passé ma journée
+            Comment s'est passée ma journée
           </Text>
         </TouchableOpacity>
         <View style={styles.divider} />
@@ -161,16 +161,19 @@ const styles = StyleSheet.create({
   },
   setupButton: {
     backgroundColor: colors.LIGHT_BLUE,
-    height: 45,
     borderRadius: 45,
-    paddingHorizontal: 30,
+    paddingHorizontal: 15,
+    paddingVertical: 10,
     alignItems: 'center',
     justifyContent: 'center',
+    display: 'flex',
   },
   setupButtonText: {
     color: '#fff',
-    fontWeight: '700',
+    fontWeight: 'bold',
     fontSize: 19,
+    flexWrap: 'wrap',
+    textAlign: 'center',
   },
   divider: {
     height: 1,
