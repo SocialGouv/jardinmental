@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, SafeAreaView, Platform} from 'react-native';
+import {StyleSheet, Platform} from 'react-native';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import Diary from '../scenes/diary';
 import Status from '../scenes/status';
@@ -43,7 +43,7 @@ const Tabs = ({navigation, route}) => {
           style: styles.tabBar,
           labelStyle: {
             textTransform: 'capitalize',
-            fontSize: 11,
+            fontSize: 10,
             marginHorizontal: 0,
             marginVertical: Platform.OS === 'android' ? 0 : 5,
             padding: 0,
@@ -61,7 +61,7 @@ const Tabs = ({navigation, route}) => {
           name="Diary"
           component={Diary}
           options={{
-            tabBarLabel: 'Mon Journal',
+            tabBarLabel: 'Mon journal',
             tabBarIcon: ({color}) => <DiarySvg style={{color}} />,
           }}
         />
@@ -77,7 +77,7 @@ const Tabs = ({navigation, route}) => {
           name="Calendar"
           component={Calendar}
           options={{
-            tabBarLabel: 'Mon Suivi',
+            tabBarLabel: 'Mon suivi',
             tabBarIcon: ({color}) => <CourbeSvg style={{color}} />,
           }}
         />
@@ -97,7 +97,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     position: 'absolute',
     bottom: Platform.OS === 'android' ? 40 : 50,
-
     zIndex: 1,
     alignSelf: 'center',
   },
