@@ -76,7 +76,6 @@ export default ({navigation, patientState, date}) => {
                   />
                 );
               })}
-            <View style={styles.divider} />
             <Posology
               data={patientState?.POSOLOGY}
               date={date}

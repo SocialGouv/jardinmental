@@ -33,19 +33,22 @@ const Posology = ({data, date, onPress}) => {
   };
 
   return (
-    <View>
-      <TouchableOpacity
-        style={[
-          styles.container,
-          canEdit(date) && {
-            borderRadius: 10,
-          },
-        ]}
-        onPress={onPress}
-        disabled={!canEdit(date)}>
-        <View style={styles.posologyContainer}>{renderPosology()}</View>
-      </TouchableOpacity>
-    </View>
+    <>
+      <View style={styles.divider} />
+      <View>
+        <TouchableOpacity
+          style={[
+            styles.container,
+            canEdit(date) && {
+              borderRadius: 10,
+            },
+          ]}
+          onPress={onPress}
+          disabled={!canEdit(date)}>
+          <View style={styles.posologyContainer}>{renderPosology()}</View>
+        </TouchableOpacity>
+      </View>
+    </>
   );
 };
 
@@ -98,6 +101,13 @@ const styles = StyleSheet.create({
   boldText: {
     fontSize: 15,
     fontWeight: '700',
+  },
+  divider: {
+    height: 1,
+    backgroundColor: '#6BD1F3',
+    marginVertical: 10,
+    width: '60%',
+    alignSelf: 'center',
   },
 });
 
