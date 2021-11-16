@@ -61,7 +61,7 @@ const Tabs = ({navigation, route}) => {
           name="Diary"
           component={Diary}
           options={{
-            tabBarLabel: 'Journal',
+            tabBarLabel: 'Mon Journal',
             tabBarIcon: ({color}) => <DiarySvg style={{color}} />,
           }}
         />
@@ -77,7 +77,7 @@ const Tabs = ({navigation, route}) => {
           name="Calendar"
           component={Calendar}
           options={{
-            tabBarLabel: 'Bilan',
+            tabBarLabel: 'Mon Suivi',
             tabBarIcon: ({color}) => <CourbeSvg style={{color}} />,
           }}
         />
