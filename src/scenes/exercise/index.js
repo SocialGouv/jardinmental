@@ -62,7 +62,7 @@ export default ({navigation}) => {
         {showWelcome === 'true' || !showWelcome ? (
           <View style={styles.welcomeContainer}>
             <Text style={[styles.welcomeText, styles.boldText]}>
-              Cet exerice nécessite des explications afin de le réaliser.
+              Cet exercice nécessite des explications afin d'être réalisé.
             </Text>
             <Text style={styles.welcomeText}>
               Vous pouvez en parler à un thérapeute ou cliquer sur ce lien pour
