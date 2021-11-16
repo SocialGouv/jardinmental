@@ -144,7 +144,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   subtitle: {
-    fontSize: 19,
+    color: colors.BLUE,
+    fontSize: 17,
+    textAlign: 'center',
     paddingTop: 10,
     paddingLeft: 10,
     paddingBottom: 10,
