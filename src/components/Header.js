@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, Dimensions} from 'react-native';
 import {colors} from '../utils/colors';
 import Icon from './Icon';
 import Text from './MyText';
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     paddingBottom: 30,
   },
   title: {
-    fontSize: 22,
+    fontSize: Dimensions.get('window').width > 300 ? 22 : 16,
     color: colors.BLUE,
     marginRight: 'auto',
     fontWeight: '700',
