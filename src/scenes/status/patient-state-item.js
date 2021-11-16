@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
   },
   label: {
+    flex: 1,
     fontSize: 15,
   },
 });

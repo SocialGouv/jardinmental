@@ -10,7 +10,7 @@ const ContributeItem = ({onPress}) => {
         <Text style={styles.title}>Contribuer à Mon Suivi Psy</Text>
         <Text style={styles.message}>
           Dites-nous comment améliorer l'application{' '}
-          <Text style={styles.muted}>(Nous lisons tous les messages)</Text>
+          <Text style={styles.muted}>Nous lisons tous les messages</Text>
         </Text>
       </View>
     </TouchableOpacity>
@@ -37,7 +37,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   muted: {
-    fontSize: 14,
+    fontSize: 12,
+    fontStyle: 'italic',
   },
   buttonWrapper: {
     paddingTop: 10,
