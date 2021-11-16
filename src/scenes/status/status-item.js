@@ -6,18 +6,22 @@ import NoDataDiaryItem from './no-data-status-item';
 import Notes from './notes';
 import localStorage from '../../utils/localStorage';
 import Posology from './posology';
-import {startAtFirstQuestion} from '../survey/survey-data';
 import {canEdit} from './utils/index.js';
 
 export default ({navigation, patientState, date}) => {
   const [customs, setCustoms] = useState([]);
+  const [oldCustoms, setOldCustoms] = useState([]);
   let mounted = useRef(true);
 
   useEffect(() => {
     (async () => {
       const c = await localStorage.getCustomSymptoms();
+      if (c && mounted) setCustoms(c);
+
+      //retrocompatibility
       const t = c.map((e) => `${e}_FREQUENCE`);
-      if (t && mounted) return setCustoms(t);
+      if (t && mounted) setOldCustoms(t);
+      return;
     })();
     return () => (mounted = false);
   }, [patientState]);
@@ -42,7 +46,7 @@ export default ({navigation, patientState, date}) => {
 
   const handlePressItem = () => {
     if (!canEdit(date)) return navigation.navigate('too-late', {date});
-    startAtFirstQuestion(date, navigation);
+    handleEdit('day-survey');
   };
 
   return (
@@ -57,6 +61,7 @@ export default ({navigation, patientState, date}) => {
           <View>
             {Object.keys(displayedCategories)
               .concat(customs)
+              .concat(oldCustoms)
               .map((key) => {
                 if (!patientState[key]) {
                   return;

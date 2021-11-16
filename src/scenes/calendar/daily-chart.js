@@ -36,6 +36,11 @@ const DailyChart = ({
       if (!categoryState) {
         return null;
       }
+      if (categoryState?.value) return categoryState?.value - 1;
+
+      // -------
+      // the following code is for the retrocompatibility
+      // -------
 
       // get the name and the suffix of the category
       const [categoryName, suffix] = categoryId.split('_');
@@ -51,6 +56,7 @@ const DailyChart = ({
       return categoryState.level - 1;
     });
   };
+
   return (
     <SafeAreaView style={styles.safe}>
       <ScrollView
