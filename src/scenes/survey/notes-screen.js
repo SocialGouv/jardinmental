@@ -107,10 +107,10 @@ const Notes = ({navigation, route}) => {
           style={styles.textArea}
           textAlignVertical={'top'}
         />
+        <View style={styles.buttonWrapper}>
+          <Button onPress={validateSurvey} title="Valider" />
+        </View>
       </ScrollView>
-      <View style={styles.buttonWrapper}>
-        <Button onPress={validateSurvey} title="Valider" />
-      </View>
     </SafeAreaView>
   );
 };
@@ -154,6 +154,7 @@ const styles = StyleSheet.create({
     paddingBottom: 30,
   },
   buttonWrapper: {
+    marginTop: 20,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-end',
