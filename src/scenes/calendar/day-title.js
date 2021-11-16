@@ -1,16 +1,14 @@
 import React from 'react';
-import {View, StyleSheet, TouchableOpacity} from 'react-native';
-import ArrowLeftSvg from '../../../assets/svg/arrow-left.js';
+import {View, StyleSheet} from 'react-native';
 import {colors} from '../../utils/colors';
 import {formatDate} from '../../utils/date/helpers';
 import Text from '../../components/MyText';
+import BackButton from '../../components/BackButton';
 
 const DayTitle = ({onBackPress, day}) => {
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={onBackPress} style={styles.button}>
-        <ArrowLeftSvg />
-      </TouchableOpacity>
+      <BackButton onPress={onBackPress} />
       <Text style={styles.content}>
         <Text style={styles.day}>{formatDate(day)}</Text>
       </Text>
