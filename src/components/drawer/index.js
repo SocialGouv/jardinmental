@@ -15,6 +15,7 @@ import localStorage from '../../utils/localStorage';
 import {getBadgeNotesVersion} from '../../scenes/news';
 import pck from '../../../package.json';
 import Text from '../../components/MyText';
+import {colors} from '../../utils/colors';
 
 export default ({navigation, visible, onClick}) => {
   const [isVisible, setIsVisible] = useState();
@@ -53,6 +54,7 @@ export default ({navigation, visible, onClick}) => {
       <View style={styles.card}>
         <SafeAreaView>
           <ScrollView contentContainerStyle={styles.scrollContainer}>
+            <Text style={styles.title}>Mon Suivi Psy</Text>
             <DrawerItem
               badge={badgeNotesVersionVisible}
               title="Nouveautés"
@@ -174,5 +176,12 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 0,
     borderBottomLeftRadius: 0,
     paddingBottom: 30,
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    padding: 30,
+    paddingTop: 15,
+    color: colors.DARK_BLUE,
   },
 });

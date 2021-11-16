@@ -97,7 +97,7 @@ export default ({navigation}) => {
               onPress={() => navigation.navigate('beck')}
               style={styles.button}>
               <Text style={styles.buttonText}>
-                Faire le point sur un événement
+                Faire le point sur un évènement
               </Text>
             </TouchableOpacity>
             <View style={styles.divider} />
