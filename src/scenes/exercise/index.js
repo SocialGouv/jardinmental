@@ -5,6 +5,7 @@ import {
   SafeAreaView,
   TouchableOpacity,
   ScrollView,
+  Dimensions,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CheckBox from '@react-native-community/checkbox';
@@ -179,16 +180,19 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: colors.LIGHT_BLUE,
-    height: 45,
     borderRadius: 45,
-    paddingHorizontal: 30,
+    paddingHorizontal: 10,
+    paddingVertical: 10,
     alignItems: 'center',
     justifyContent: 'center',
+    display: 'flex',
   },
   buttonText: {
     color: '#fff',
-    fontWeight: '700',
-    fontSize: 19,
+    fontWeight: 'bold',
+    fontSize: Dimensions.get('window').width > 350 ? 19 : 15,
+    flexWrap: 'wrap',
+    textAlign: 'center',
   },
   divider: {
     height: 1,

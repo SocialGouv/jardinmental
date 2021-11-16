@@ -76,10 +76,10 @@ const styles = StyleSheet.create({
     paddingBottom: 30,
   },
   title: {
-    fontSize: Dimensions.get('window').width > 300 ? 22 : 16,
+    fontSize: Dimensions.get('window').width > 350 ? 22 : 16,
     color: colors.BLUE,
     marginRight: 'auto',
-    fontWeight: '700',
+    fontWeight: 'bold',
     flex: 1,
   },
 });

@@ -5,6 +5,7 @@ import {
   View,
   SafeAreaView,
   TouchableOpacity,
+  Dimensions,
 } from 'react-native';
 import Text from '../../components/MyText';
 import StatusItem from './status-item';
@@ -164,7 +165,7 @@ const styles = StyleSheet.create({
   setupButton: {
     backgroundColor: colors.LIGHT_BLUE,
     borderRadius: 45,
-    paddingHorizontal: 15,
+    paddingHorizontal: 10,
     paddingVertical: 10,
     alignItems: 'center',
     justifyContent: 'center',
@@ -173,7 +174,7 @@ const styles = StyleSheet.create({
   setupButtonText: {
     color: '#fff',
     fontWeight: 'bold',
-    fontSize: 19,
+    fontSize: Dimensions.get('window').width > 350 ? 19 : 15,
     flexWrap: 'wrap',
     textAlign: 'center',
   },
