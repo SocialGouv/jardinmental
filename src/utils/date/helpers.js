@@ -6,6 +6,12 @@ export const oneDay = 1000 * 60 * 60 * 24;
 export const beforeToday = (offset = 0, date = new Date()) =>
   new Date(Date.parse(date) - offset * oneDay);
 export const formatDay = (date) => date.toISOString().split('T')[0];
+export const makeSureDate = (date) => {
+  if (date instanceof Date) {
+    return date;
+  }
+  return new Date(date);
+};
 
 export const days = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
 export const months = [

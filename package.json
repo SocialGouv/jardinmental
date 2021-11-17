@@ -39,6 +39,7 @@
     "react-native-device-info": "^8.3.1",
     "react-native-dotenv": "^2.4.3",
     "react-native-gesture-handler": "^1.9.0",
+    "react-native-get-random-values": "^1.7.1",
     "react-native-modal": "^11.10.0",
     "react-native-modal-datetime-picker": "^9.2.3",
     "react-native-picker-select": "^8.0.4",
@@ -50,7 +51,8 @@
     "react-native-svg": "^12.1.0",
     "react-native-swiper": "^1.6.0",
     "react-native-tab-view": "^2.15.2",
-    "react-native-version-check": "^3.4.2"
+    "react-native-version-check": "^3.4.2",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
