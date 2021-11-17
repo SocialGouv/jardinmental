@@ -13,7 +13,7 @@ import ContributeCard from '../contribute/contributeCard';
 import Header from '../../components/Header';
 import {colors} from '../../utils/colors';
 import {useContext} from 'react';
-import {DiaryDataContext} from '../../context';
+import {DiaryDataContext} from '../../context/diaryData';
 import localStorage from '../../utils/localStorage';
 import NPS from '../../services/NPS/NPS';
 import Bubble from '../../components/bubble';

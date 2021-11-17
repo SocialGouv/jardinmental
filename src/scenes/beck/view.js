@@ -16,7 +16,7 @@ import {colors} from '../../utils/colors';
 import {formatDate, displayOnlyHourAndMinute} from '../../utils/date/helpers';
 import TextTag from '../../components/TextTag';
 import {BeckStepTitles} from '../../utils/constants';
-import {DiaryDataContext} from '../../context';
+import {DiaryDataContext} from '../../context/diaryData';
 import {confirm, deleteBeckfromDiaryData} from '../../utils';
 import logEvents from '../../services/logEvents';
 import {parseISO, differenceInDays} from 'date-fns';

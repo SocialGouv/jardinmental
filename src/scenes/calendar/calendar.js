@@ -17,7 +17,7 @@ import {
 import Header from '../../components/Header';
 import Chart from './chart';
 import WeekPicker from './week-picker';
-import {DiaryDataContext} from '../../context';
+import {DiaryDataContext} from '../../context/diaryData';
 import {useContext} from 'react';
 import logEvents from '../../services/logEvents';
 import localStorage from '../../utils/localStorage';

@@ -15,7 +15,7 @@ import {colors} from '../../utils/colors';
 import NPS from '../../services/NPS/NPS';
 import Header from '../../components/Header';
 import ExerciseItem from './exercise-item';
-import {DiaryDataContext} from '../../context';
+import {DiaryDataContext} from '../../context/diaryData';
 import {formatDateThread} from '../../utils/date/helpers';
 import ContributeCard from '../contribute/contributeCard';
 import {STORAGE_KEY_BECK_SHOW_WELCOME} from '../../utils/constants';

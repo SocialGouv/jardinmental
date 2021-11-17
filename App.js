@@ -2,7 +2,7 @@ import 'react-native-gesture-handler';
 import React from 'react';
 
 import Router from './src/navigation/router';
-import {DiaryDataProvider} from './src/context';
+import {DiaryDataProvider} from './src/context/diaryData';
 import NPS from './src/services/NPS/NPS';
 import VersionChecker from './src/services/versionChecker';
 import {Sentry} from 'react-native-sentry';

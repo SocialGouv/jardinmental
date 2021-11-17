@@ -3,7 +3,7 @@ import {SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
 import {displayedCategories} from '../../utils/constants';
 import {getArrayOfDates, getTodaySWeek} from '../../utils/date/helpers';
 import Chart from './chart';
-import {DiaryDataContext} from '../../context';
+import {DiaryDataContext} from '../../context/diaryData';
 import {useContext} from 'react';
 import DayTitle from './day-title';
 import DiaryItem from '../status/status-item';

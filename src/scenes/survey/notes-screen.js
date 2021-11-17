@@ -11,7 +11,7 @@ import {
 import Text from '../../components/MyText';
 import {colors} from '../../utils/colors';
 import {availableData, alertNoDataYesterday} from './survey-data';
-import {DiaryDataContext} from '../../context';
+import {DiaryDataContext} from '../../context/diaryData';
 import Button from '../../components/Button';
 import logEvents from '../../services/logEvents';
 import BackButton from '../../components/BackButton';

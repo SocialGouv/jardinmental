@@ -14,7 +14,7 @@ const Posology = ({data, date, onPress}) => {
     return data.map((p, i) => {
       if (!p?.name1 || !p?.value) return null;
       return (
-        <View style={styles.posologyItem}>
+        <View style={styles.posologyItem} key={i}>
           <Icon
             icon="DrugsSvg"
             color="#58C8D2"
