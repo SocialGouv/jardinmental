@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {
   TouchableOpacity,
   StyleSheet,
@@ -18,13 +18,14 @@ import {subDays} from 'date-fns';
 import BackButton from '../../components/BackButton';
 import {firstLetterUppercase} from '../../utils/string-util';
 import ArrowUpSvg from '../../../assets/svg/arrow-up.svg';
+import {DiaryDataContext} from '../../context/diaryData';
 
 const SurveyScreen = ({navigation}) => {
+  const [diaryData] = useContext(DiaryDataContext);
   const startSurvey = (offset) => {
-    const currentSurvey = {
-      date: formatDay(beforeToday(offset)),
-      answers: {},
-    };
+    const date = formatDay(beforeToday(offset));
+    const answers = diaryData[date] || {};
+    const currentSurvey = {date, answers};
     return navigation.navigate('day-survey', {
       currentSurvey,
     });
