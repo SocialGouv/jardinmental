@@ -5,13 +5,12 @@ import {
   View,
   SafeAreaView,
   TouchableOpacity,
-  Dimensions,
   TextInput,
   Platform,
 } from 'react-native';
 import {v4 as uuidv4} from 'uuid';
 import Text from '../../components/MyText';
-import DiaryNoteItem from './DiaryNoteItem';
+import DiaryNotes from './DiaryNotes';
 import ContributeCard from '../contribute/contributeCard';
 import Header from '../../components/Header';
 import {colors} from '../../utils/colors';
@@ -19,16 +18,14 @@ import {useContext} from 'react';
 import {DiaryNotesContext} from '../../context/diaryNotes';
 import localStorage from '../../utils/localStorage';
 import NPS from '../../services/NPS/NPS';
-import Bubble from '../../components/bubble';
 import ArrowUpSvg from '../../../assets/svg/arrow-up.svg';
 import logEvents from '../../services/logEvents';
 import {
   formatDateThread,
   beforeToday,
   formatDay,
-  formatRelativeDate,
 } from '../../utils/date/helpers';
-import Button from '../../components/Button';
+import Button from './Button';
 
 const LIMIT_PER_PAGE = __DEV__ ? 3 : 30;
 
@@ -87,25 +84,29 @@ const Status = ({navigation}) => {
         style={styles.container}
         contentContainerStyle={styles.scrollContainer}>
         <Header title="Mon journal" navigation={navigation} />
-        <TextInput
-          multiline={true}
-          numberOfLines={getNumberOfLines()}
-          minHeight={getMinHeight()}
-          onChangeText={setBuffer}
-          value={buffer}
-          placeholder="Saisir ma nouvelle note"
-          style={styles.textArea}
-          textAlignVertical={'top'}
-          onFocus={() => setInputFocused(true)}
-          onBlur={() => setInputFocused(false)}
-        />
-        {inputFocused ? (
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity onPress={addDiaryNote}>
-              <Text style={styles.buttonText}>Valider</Text>
-            </TouchableOpacity>
-          </View>
-        ) : null}
+        <View>
+          <TextInput
+            multiline={true}
+            numberOfLines={getNumberOfLines()}
+            minHeight={getMinHeight()}
+            onChangeText={setBuffer}
+            value={buffer}
+            placeholder="Saisir ma nouvelle note"
+            style={styles.textArea}
+            textAlignVertical={'top'}
+            onFocus={() => setInputFocused(true)}
+            onBlur={() => setInputFocused(false)}
+          />
+          {inputFocused && buffer ? (
+            <View style={styles.buttonContainer}>
+              <Button
+                icon="plus"
+                visible={inputFocused}
+                onPress={addDiaryNote}
+              />
+            </View>
+          ) : null}
+        </View>
         <View style={styles.divider} />
         {Object.keys(diaryNotes)
           .sort((a, b) => {
@@ -117,7 +118,7 @@ const Status = ({navigation}) => {
           .map((date) => (
             <View key={date}>
               <Text style={styles.subtitle}>{formatDateThread(date)}</Text>
-              <DiaryNoteItem
+              <DiaryNotes
                 date={date}
                 diaryNote={diaryNotes[date]}
                 navigation={navigation}
@@ -160,6 +161,14 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: 'white',
   },
+  inputContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
+    paddingVertical: 5,
+    paddingHorizontal: 15,
+  },
   scrollContainer: {
     paddingBottom: 80,
   },
@@ -191,15 +200,14 @@ const styles = StyleSheet.create({
     borderLeftWidth: 1,
     borderColor: '#00CEF7',
   },
-
   buttonContainer: {
-    backgroundColor: colors.LIGHT_BLUE,
-    borderRadius: 45,
-    paddingHorizontal: 10,
-    paddingVertical: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
     display: 'flex',
+    position: 'absolute',
+    right: 0,
+    bottom: -10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
   },
   buttonText: {
     color: '#fff',

@@ -1,11 +1,12 @@
 import React, {useEffect, useState, useRef} from 'react';
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
-import NoteDetail from './NoteDetail';
+import DiaryNote from './DiaryNote';
 import {displayedCategories} from '../../utils/constants';
 import localStorage from '../../utils/localStorage';
 import Text from '../../components/MyText';
 
-const DiaryNoteItem = ({navigation, diaryNote, date}) => {
+const DiaryNotes = ({navigation, diaryNote, date}) => {
+  const [editingNoteId, setEditingNoteId] = useState(null);
   if (!diaryNote || !diaryNote?.values) return null;
   const handleEdit = (tab) => {};
 
@@ -18,15 +19,7 @@ const DiaryNoteItem = ({navigation, diaryNote, date}) => {
       {diaryNote?.values
         ?.sort((a, b) => (a.timestamp > b.timestamp ? -1 : 1))
         ?.map((note) => (
-          <TouchableOpacity
-            key={note.id}
-            activeOpacity={1}
-            style={styles.item}
-            onPress={handlePressItem}>
-            <View>
-              <NoteDetail note={note} />
-            </View>
-          </TouchableOpacity>
+          <DiaryNote key={note.id} note={note} />
         ))}
     </View>
   );
@@ -57,4 +50,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DiaryNoteItem;
+export default DiaryNotes;
