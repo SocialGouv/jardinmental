@@ -1,5 +1,5 @@
-import React, {useState, useEffect, useContext} from 'react';
-import {StyleSheet, View, TextInput, TouchableOpacity} from 'react-native';
+import React, {useState, useContext} from 'react';
+import {StyleSheet, View, TextInput, Alert} from 'react-native';
 import Text from '../../components/MyText';
 import {colors} from '../../utils/colors';
 import {makeSureDate} from '../../utils/date/helpers';
@@ -42,6 +42,20 @@ const DiaryNote = ({note, date}) => {
       date,
       value: {...note, value: buffer},
     });
+  };
+
+  const pressDelete = () => {
+    Alert.alert('Supprimer la note ?', 'Cette action est définitive', [
+      {
+        text: 'Confirmer la suppression',
+        onPress: deleteNoteInContext,
+        style: 'default',
+      },
+      {
+        text: 'Annuler',
+        style: 'cancel',
+      },
+    ]);
   };
   const deleteNoteInContext = () => {
     updateDiaryNote({
@@ -101,29 +115,13 @@ const DiaryNote = ({note, date}) => {
           borderColor="#D9605C"
           backgroundColor="#ffe1e0"
           visible={editMode}
-          onPress={() => {
-            setInitialValue('');
-            //todo save in context
-            deleteNoteInContext();
-            setEditMode(false);
-          }}
+          onPress={pressDelete}
         />
-        {/* <Button
-          icon="cancel"
-          visible={editMode}
-          onPress={() => {
-            //restor initial value of the text
-            setBuffer(initialValue);
-            setEditMode(false);
-            setToggled(false);
-          }}
-        /> */}
         <Button
           icon="validate"
           visible={editMode}
           onPress={() => {
             setInitialValue(buffer);
-            //todo save in context
             saveNoteInContext();
             setEditMode(false);
           }}

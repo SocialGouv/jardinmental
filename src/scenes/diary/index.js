@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   TextInput,
   Platform,
+  Keyboard,
 } from 'react-native';
 import {v4 as uuidv4} from 'uuid';
 import Text from '../../components/MyText';
@@ -81,7 +82,8 @@ const Diary = ({navigation}) => {
       <NPS forceView={NPSvisible} close={() => setNPSvisible(false)} />
       <ScrollView
         style={styles.container}
-        contentContainerStyle={styles.scrollContainer}>
+        contentContainerStyle={styles.scrollContainer}
+        keyboardShouldPersistTaps="handled">
         <Header title="Mon journal" navigation={navigation} />
         <View>
           <TextInput
@@ -102,7 +104,10 @@ const Diary = ({navigation}) => {
                 icon="validate"
                 visible
                 disabled={!buffer}
-                onPress={addDiaryNote}
+                onPress={() => {
+                  Keyboard.dismiss();
+                  addDiaryNote();
+                }}
               />
             </View>
           ) : null}
