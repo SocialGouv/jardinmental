@@ -61,6 +61,11 @@ const DiaryNote = ({note, date}) => {
               style={styles.label}
               textAlignVertical={'top'}
               editable={editMode}
+              onBlur={() => {
+                setBuffer(initialValue);
+                setEditMode(false);
+                setToggled(false);
+              }}
             />
             <Text style={styles.timestamp}>
               {makeSureDate(note?.timestamp).getLocaleTime('fr')}
@@ -83,8 +88,14 @@ const DiaryNote = ({note, date}) => {
         </View>
       </View>
       <View style={styles.bottomButtonsContainer}>
-        {/* <Button icon="bin" visible={editMode} /> */}
         <Button
+          icon="bin"
+          iconColor="#D9605C"
+          borderColor="#D9605C"
+          backgroundColor="#ffe1e0"
+          visible={editMode}
+        />
+        {/* <Button
           icon="cancel"
           visible={editMode}
           onPress={() => {
@@ -93,7 +104,7 @@ const DiaryNote = ({note, date}) => {
             setEditMode(false);
             setToggled(false);
           }}
-        />
+        /> */}
         <Button
           icon="validate"
           visible={editMode}

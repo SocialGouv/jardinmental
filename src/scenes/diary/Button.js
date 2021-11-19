@@ -7,41 +7,50 @@ import Bin from '../../../assets/svg/Bin';
 import ArrowUpSvg from '../../../assets/svg/arrow-up.svg';
 import Done from '../../../assets/svg/Done';
 
-export default ({onPress, disabled, visible = false, isToggled, icon}) => {
+export default ({
+  iconColor = colors.BLUE,
+  backgroundColor = '#f1f1f1',
+  borderColor = '#e1e1e1',
+  onPress,
+  disabled,
+  visible = false,
+  isToggled,
+  icon,
+}) => {
   if (!visible || !icon) return null;
   const render = () => {
     switch (icon) {
       case 'plus':
-        return <Plus color={disabled ? colors.DARK_BLUE_TRANS : colors.BLUE} />;
+        return <Plus opacity={disabled ? 0.5 : 1} color={iconColor} />;
       case 'pencil':
-        return (
-          <Pencil color={disabled ? colors.DARK_BLUE_TRANS : colors.BLUE} />
-        );
+        return <Pencil opacity={disabled ? 0.5 : 1} color={iconColor} />;
       case 'bin':
-        return <Bin color={disabled ? colors.DARK_BLUE_TRANS : colors.BLUE} />;
+        return <Bin opacity={disabled ? 0.5 : 1} color={iconColor} />;
       case 'cancel':
         return (
           <Plus
-            color={disabled ? colors.DARK_BLUE_TRANS : colors.BLUE}
+            opacity={disabled ? 0.5 : 1}
+            color={iconColor}
             style={{transform: [{rotate: '45deg'}]}}
           />
         );
       case 'toggle':
         return (
           <ArrowUpSvg
-            color={disabled ? colors.DARK_BLUE_TRANS : colors.BLUE}
+            opacity={disabled ? 0.5 : 1}
+            color={iconColor}
             style={{transform: [{rotate: isToggled ? '0deg' : '180deg'}]}}
           />
         );
       case 'validate':
-        return <Done color={disabled ? colors.DARK_BLUE_TRANS : colors.BLUE} />;
+        return <Done opacity={disabled ? 0.5 : 1} color={iconColor} />;
     }
   };
   return (
     <TouchableOpacity
       disabled={disabled}
       onPress={onPress}
-      style={styles.backButtonContainer}>
+      style={[styles.backButtonContainer, {backgroundColor, borderColor}]}>
       {render()}
     </TouchableOpacity>
   );
@@ -52,8 +61,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
     paddingHorizontal: 10,
     borderRadius: 20,
-    backgroundColor: '#f1f1f1',
-    borderColor: '#e1e1e1',
     borderWidth: 1,
     height: 40,
     width: 40,

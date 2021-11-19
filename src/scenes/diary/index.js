@@ -96,11 +96,12 @@ const Diary = ({navigation}) => {
             onFocus={() => setInputFocused(true)}
             onBlur={() => setInputFocused(false)}
           />
-          {inputFocused && buffer ? (
+          {inputFocused ? (
             <View style={styles.buttonContainer}>
               <Button
-                icon="plus"
-                visible={inputFocused}
+                icon="validate"
+                visible
+                disabled={!buffer}
                 onPress={addDiaryNote}
               />
             </View>
@@ -201,9 +202,6 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     display: 'flex',
-    position: 'absolute',
-    right: 0,
-    bottom: -10,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-end',
