@@ -19,6 +19,8 @@ const DiaryNote = ({note, date}) => {
   const [initialValue, setInitialValue] = useState(note?.value);
   const [editMode, setEditMode] = useState(false);
 
+  if (!note || !note?.value) return null;
+
   const lines = note?.value?.split(/\r\n|\r|\n/);
   const textIsLong = note?.value.length > MAX_SIZE || lines.length >= 3;
 
@@ -41,8 +43,13 @@ const DiaryNote = ({note, date}) => {
       value: {...note, value: buffer},
     });
   };
-
-  if (!note?.value) return null;
+  const deleteNoteInContext = () => {
+    updateDiaryNote({
+      id: note.id,
+      date,
+      value: null,
+    });
+  };
 
   return (
     <>
@@ -94,6 +101,12 @@ const DiaryNote = ({note, date}) => {
           borderColor="#D9605C"
           backgroundColor="#ffe1e0"
           visible={editMode}
+          onPress={() => {
+            setInitialValue('');
+            //todo save in context
+            deleteNoteInContext();
+            setEditMode(false);
+          }}
         />
         {/* <Button
           icon="cancel"

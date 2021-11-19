@@ -25,9 +25,12 @@ const DiaryNotesProvider = ({children}) => {
   };
 
   const updateDiaryNote = ({date, id, value}) => {
-    const values = diaryNotes[date]?.values?.map((v) =>
-      v.id === id ? value : v,
-    );
+    const values = diaryNotes[date]?.values?.reduce((previous, current) => {
+      if (current?.id === id) {
+        if (!value) return previous;
+        else return [...previous, value];
+      } else return [...previous, current];
+    }, []);
     const newDiaryNotes = {
       ...diaryNotes,
       [date]: {values},
