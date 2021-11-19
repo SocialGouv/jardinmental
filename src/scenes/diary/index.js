@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import {
   StyleSheet,
   ScrollView,
@@ -14,7 +14,6 @@ import DiaryNotes from './DiaryNotes';
 import ContributeCard from '../contribute/contributeCard';
 import Header from '../../components/Header';
 import {colors} from '../../utils/colors';
-import {useContext} from 'react';
 import {DiaryNotesContext} from '../../context/diaryNotes';
 import localStorage from '../../utils/localStorage';
 import NPS from '../../services/NPS/NPS';
@@ -29,7 +28,7 @@ import Button from './Button';
 
 const LIMIT_PER_PAGE = __DEV__ ? 3 : 30;
 
-const Status = ({navigation}) => {
+const Diary = ({navigation}) => {
   const [diaryNotes, setDiaryNotes] = useContext(DiaryNotesContext);
   const [NPSvisible, setNPSvisible] = useState(false);
   const [page, setPage] = useState(1);
@@ -231,4 +230,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Status;
+export default Diary;

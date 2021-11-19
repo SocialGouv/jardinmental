@@ -1,13 +1,18 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {StyleSheet, View, TextInput, TouchableOpacity} from 'react-native';
 import Text from '../../components/MyText';
 import {colors} from '../../utils/colors';
 import {makeSureDate} from '../../utils/date/helpers';
 import Button from './Button';
+import {DiaryNotesContext} from '../../context/diaryNotes';
 
 const MAX_SIZE = 80;
 
-const DiaryNote = ({note}) => {
+const DiaryNote = ({note, date}) => {
+  const [diaryNotes, setDiaryNotes, updateDiaryNote] = useContext(
+    DiaryNotesContext,
+  );
+
   const [toggled, setToggled] = useState(false);
   const [buffer, setBuffer] = useState(note?.value);
   // const [valueDisplayed, setValueDisplayed] = useState('');
@@ -29,17 +34,13 @@ const DiaryNote = ({note}) => {
     else return initialValue;
   };
 
-  // useEffect(() => {
-  //   toggled || editMode
-  //     ? setValue(note?.value)
-  //     : setValue(
-  //         note?.value
-  //           ?.substring(0, MAX_SIZE)
-  //           ?.split(/\r\n|\r|\n/)
-  //           ?.slice(0, 3)
-  //           .join('\n'),
-  //       );
-  // }, [toggled, note?.value, editMode]);
+  const saveNoteInContext = () => {
+    updateDiaryNote({
+      id: note.id,
+      date,
+      value: {...note, value: buffer},
+    });
+  };
 
   if (!note?.value) return null;
 
@@ -69,6 +70,7 @@ const DiaryNote = ({note}) => {
             <Button
               icon="pencil"
               visible={!editMode}
+              // autofocus input and show keyboard
               onPress={() => setEditMode((e) => !e)}
             />
             <Button
@@ -98,6 +100,7 @@ const DiaryNote = ({note}) => {
           onPress={() => {
             setInitialValue(buffer);
             //todo save in context
+            saveNoteInContext();
             setEditMode(false);
           }}
         />

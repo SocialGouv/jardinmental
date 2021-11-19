@@ -12,12 +12,25 @@ const DiaryNotesProvider = ({children}) => {
   const [diaryNotes, setDiaryNotes] = useState({});
 
   const setDiaryNotesRequest = ({date: isoDate, value: data}) => {
-    console.log('✍️ ~ data', data);
-    console.log('✍️ ~ isoDate', isoDate);
     const previousValues = diaryNotes[isoDate]?.values || [];
     const newDiaryNotes = {
       ...diaryNotes,
       [isoDate]: {values: [...previousValues, data]},
+    };
+    setDiaryNotes(newDiaryNotes);
+    AsyncStorage.setItem(
+      STORAGE_KEY_DIARY_NOTES,
+      JSON.stringify(newDiaryNotes),
+    );
+  };
+
+  const updateDiaryNote = ({date, id, value}) => {
+    const values = diaryNotes[date]?.values?.map((v) =>
+      v.id === id ? value : v,
+    );
+    const newDiaryNotes = {
+      ...diaryNotes,
+      [date]: {values},
     };
     setDiaryNotes(newDiaryNotes);
     AsyncStorage.setItem(
@@ -42,7 +55,8 @@ const DiaryNotesProvider = ({children}) => {
   }, [setDiaryNotes]);
 
   return (
-    <DiaryNotesContext.Provider value={[diaryNotes, setDiaryNotesRequest]}>
+    <DiaryNotesContext.Provider
+      value={[diaryNotes, setDiaryNotesRequest, updateDiaryNote]}>
       {children}
     </DiaryNotesContext.Provider>
   );

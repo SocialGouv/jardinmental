@@ -19,7 +19,7 @@ const DiaryNotes = ({navigation, diaryNote, date}) => {
       {diaryNote?.values
         ?.sort((a, b) => (a.timestamp > b.timestamp ? -1 : 1))
         ?.map((note) => (
-          <DiaryNote key={note.id} note={note} />
+          <DiaryNote key={note.id} note={note} date={date} />
         ))}
     </View>
   );
