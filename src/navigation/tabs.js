@@ -5,10 +5,10 @@ import Diary from '../scenes/diary';
 import Status from '../scenes/status';
 import Exercise from '../scenes/exercise';
 import Calendar from '../scenes/calendar/calendar';
-import DiarySvg from '../../assets/svg/diary.js';
-import StatusSvg from '../../assets/svg/status.js';
-import CourbeSvg from '../../assets/svg/Courbes';
-import ExerciseSvg from '../../assets/svg/exercise';
+import SurveyMenu from '../../assets/svg/SurveyMenu';
+import DiaryMenu from '../../assets/svg/DiaryMenu';
+import ExerciseMenu from '../../assets/svg/ExerciseMenu';
+import GraphMenu from '../../assets/svg/GraphMenu';
 import localStorage from '../utils/localStorage';
 import logEvents from '../services/logEvents';
 import {colors} from '../utils/colors';
@@ -54,7 +54,7 @@ const Tabs = ({navigation, route}) => {
           component={Status}
           options={{
             tabBarLabel: 'Mon état',
-            tabBarIcon: ({color}) => <StatusSvg style={{color}} />,
+            tabBarIcon: ({color}) => <SurveyMenu style={{color}} />,
           }}
         />
         <Tab.Screen
@@ -62,7 +62,7 @@ const Tabs = ({navigation, route}) => {
           component={Diary}
           options={{
             tabBarLabel: 'Mon journal',
-            tabBarIcon: ({color}) => <DiarySvg style={{color}} />,
+            tabBarIcon: ({color}) => <DiaryMenu style={{color}} />,
           }}
         />
         <Tab.Screen
@@ -70,7 +70,7 @@ const Tabs = ({navigation, route}) => {
           component={Exercise}
           options={{
             tabBarLabel: 'Exercice',
-            tabBarIcon: ({color}) => <ExerciseSvg style={{color}} />,
+            tabBarIcon: ({color}) => <ExerciseMenu style={{color}} />,
           }}
         />
         <Tab.Screen
@@ -78,7 +78,7 @@ const Tabs = ({navigation, route}) => {
           component={Calendar}
           options={{
             tabBarLabel: 'Mon suivi',
-            tabBarIcon: ({color}) => <CourbeSvg style={{color}} />,
+            tabBarIcon: ({color}) => <GraphMenu style={{color}} />,
           }}
         />
       </Tab.Navigator>
