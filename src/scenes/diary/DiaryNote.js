@@ -164,6 +164,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
   },
   label: {
+    color: colors.DARK_BLUE,
     flex: 1,
     fontSize: 15,
   },
