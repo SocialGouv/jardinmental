@@ -1,5 +1,5 @@
-import React, {useState, useContext} from 'react';
-import {StyleSheet, View, TextInput, Alert} from 'react-native';
+import React, {useState, useContext, useRef, useEffect} from 'react';
+import {StyleSheet, View, TextInput, Alert, Keyboard} from 'react-native';
 import Text from '../../components/MyText';
 import {colors} from '../../utils/colors';
 import {makeSureDate} from '../../utils/date/helpers';
@@ -12,12 +12,15 @@ const DiaryNote = ({note, date}) => {
   const [diaryNotes, setDiaryNotes, updateDiaryNote] = useContext(
     DiaryNotesContext,
   );
-
+  const inputRef = useRef();
   const [toggled, setToggled] = useState(false);
   const [buffer, setBuffer] = useState(note?.value);
   // const [valueDisplayed, setValueDisplayed] = useState('');
   const [initialValue, setInitialValue] = useState(note?.value);
   const [editMode, setEditMode] = useState(false);
+  useEffect(() => {
+    if (editMode) inputRef.current.focus();
+  }, [editMode]);
 
   if (!note || !note?.value) return null;
 
@@ -73,6 +76,8 @@ const DiaryNote = ({note, date}) => {
         <View>
           <View style={styles.container}>
             <TextInput
+              ref={inputRef}
+              blurOnSubmit={false}
               multiline={true}
               onChangeText={(e) => {
                 setBuffer(e);
