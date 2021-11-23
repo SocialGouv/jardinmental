@@ -75,6 +75,7 @@ const Diary = ({navigation}) => {
     };
     setDiaryNotes(note);
     setBuffer('');
+    logEvents.logAddNoteDiary();
   };
 
   return (

@@ -66,7 +66,7 @@ const Tabs = ({navigation, route}) => {
           }}
         />
         <Tab.Screen
-          name="Exercice"
+          name="Exercise"
           component={Exercise}
           options={{
             tabBarLabel: 'Exercice',

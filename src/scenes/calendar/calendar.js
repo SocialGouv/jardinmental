@@ -47,14 +47,6 @@ const Calendar = ({navigation}) => {
   }, [diaryData]);
 
   useEffect(() => {
-    const unsubscribe = navigation.addListener('tabPress', (e) => {
-      logEvents.logCalendarOpen();
-    });
-
-    return unsubscribe;
-  }, [navigation]);
-
-  useEffect(() => {
     const emptyCalendar = !Object.keys(displayedCategories)
       .concat(customs)
       .concat(oldCustoms)

@@ -58,9 +58,19 @@ class Router extends React.Component {
     this.appState = nextAppState;
   };
 
+  onStateChange = async () => {
+    if (!this.navigationRef) return;
+    const route = this.navigationRef.getCurrentRoute();
+    if (route.name === this.prevCurrentRouteName) return;
+    this.prevCurrentRouteName = route.name;
+    logEvents.logOpenPage(route.name);
+  };
+
   render() {
     return (
-      <NavigationContainer>
+      <NavigationContainer
+        ref={(r) => (this.navigationRef = r)}
+        onStateChange={this.onStateChange}>
         <Stack.Navigator initialRouteName="tabs" headerMode="none">
           <Stack.Screen name="day-survey" component={DaySurveyScreen} />
           <Stack.Screen name="select-day" component={SelectDayScreen} />

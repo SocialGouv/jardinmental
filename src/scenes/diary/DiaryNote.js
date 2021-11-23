@@ -5,6 +5,7 @@ import {colors} from '../../utils/colors';
 import {makeSureDate} from '../../utils/date/helpers';
 import Button from '../../components/RoundButtonIcon';
 import {DiaryNotesContext} from '../../context/diaryNotes';
+import logEvents from '../../services/logEvents';
 
 const MAX_SIZE = 80;
 
@@ -66,6 +67,7 @@ const DiaryNote = ({note, date}) => {
       date,
       value: null,
     });
+    logEvents.logDeleteNoteDiary();
   };
 
   return (
@@ -102,7 +104,10 @@ const DiaryNote = ({note, date}) => {
               icon="pencil"
               visible={!editMode}
               // autofocus input and show keyboard
-              onPress={() => setEditMode((e) => !e)}
+              onPress={() => {
+                setEditMode((e) => !e);
+                logEvents.logEditNoteDiary();
+              }}
             />
             <Button
               icon="toggle"
