@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Dimensions,
+  Linking,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CheckBox from '@react-native-community/checkbox';
@@ -62,7 +63,14 @@ export default ({navigation}) => {
             <Text style={styles.welcomeText}>
               Vous pouvez en parler à un thérapeute ou cliquer sur ce lien pour
               de plus amples informations :{'\n'}
-              -- LIEN --
+              <Text
+                style={styles.link}
+                onPress={() => {
+                  // todo logevent voir video
+                  Linking.openURL('https://youtu.be/qSWBFTXCWZs');
+                }}>
+                voir la vidéo
+              </Text>
             </Text>
             <View style={styles.showWelcomeView}>
               <CheckBox
@@ -227,5 +235,10 @@ const styles = StyleSheet.create({
   },
   arrowDownLabel: {
     color: colors.BLUE,
+  },
+  link: {
+    color: colors.LIGHT_BLUE,
+    fontWeight: '700',
+    textDecorationLine: 'underline',
   },
 });
