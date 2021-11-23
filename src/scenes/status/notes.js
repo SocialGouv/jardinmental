@@ -68,8 +68,8 @@ const Notes = ({notes, date, onPress}) => {
         <Text style={styles.text}>{notes}</Text>
       ) : (
         <View style={styles.textContainer}>
-          <Note title="Context" text={notes.notesEvents} />
-          <Note title="Symptôme" text={notes.notesSymptoms} />
+          <Note title="Contexte" text={notes.notesEvents} />
+          <Note title="Ressentis" text={notes.notesSymptoms} />
           <Note title="Toxique" text={notes.notesToxic} />
         </View>
       )}
