@@ -6434,6 +6434,11 @@ react-native-dotenv@^2.4.3:
   dependencies:
     dotenv "^8.0.0"
 
+react-native-fbsdk-next@^6.1.1:
+  version "6.1.1"
+  resolved "https://registry.yarnpkg.com/react-native-fbsdk-next/-/react-native-fbsdk-next-6.1.1.tgz#0768d43e7fa2f7235eba41dec4fb6a841b6498e8"
+  integrity sha512-3YuZXnT3xpJFCxK4lmdN8STpWxlCTrnK5BcK/YxGviJ2bqA5oPXVIqg+gny2DKc9fpaV1UaLI320hImEgWy5+w==
+
 react-native-gesture-handler@^1.9.0:
   version "1.9.0"
   resolved "https://registry.npmjs.org/react-native-gesture-handler/-/react-native-gesture-handler-1.9.0.tgz"
