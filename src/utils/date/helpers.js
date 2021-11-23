@@ -12,6 +12,37 @@ export const makeSureDate = (date) => {
   }
   return new Date(date);
 };
+export const makeSureTimestamp = (date) => {
+  if (date instanceof Date) {
+    return Date.parse(date);
+  }
+  return date;
+};
+
+export const today = (offset = 0, withTime = false) => {
+  if (withTime) {
+    const now = new Date();
+    return new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate(),
+      now.getHours(),
+      now.getMinutes() + 1,
+    );
+  }
+  return dateWithoutTime(new Date(), offset);
+};
+export const dateWithoutTime = (inputDate, offset = 0) => {
+  const date = makeSureDate(inputDate);
+  return new Date(
+    date.getFullYear(),
+    date.getMonth(),
+    date.getDate() + offset,
+    0,
+    0,
+    0,
+  );
+};
 
 export const days = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
 export const months = [

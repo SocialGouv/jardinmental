@@ -22,10 +22,12 @@ import ArrowUpSvg from '../../../assets/svg/arrow-up.svg';
 import logEvents from '../../services/logEvents';
 import {
   formatDateThread,
-  beforeToday,
   formatDay,
+  makeSureTimestamp,
 } from '../../utils/date/helpers';
 import Button from '../../components/RoundButtonIcon';
+import DateOrTimeDisplay from '../../components/DateOrTimeDisplay';
+import DatePicker from '../../components/DatePicker';
 
 const LIMIT_PER_PAGE = __DEV__ ? 3 : 30;
 
@@ -35,6 +37,8 @@ const Diary = ({navigation}) => {
   const [page, setPage] = useState(1);
   const [buffer, setBuffer] = useState('');
   const [inputFocused, setInputFocused] = useState(false);
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [timestamp, setTimestamp] = useState(Date.now());
 
   useEffect(() => {
     const handleOnboarding = async () => {
@@ -67,14 +71,14 @@ const Diary = ({navigation}) => {
   };
 
   const addDiaryNote = () => {
-    const date = formatDay(beforeToday(0));
-    // const previousArray = diaryNotes[date]?.values || [];
+    const date = formatDay(new Date(timestamp));
     const note = {
       date,
-      value: {timestamp: Date.now(), id: uuidv4(), value: buffer, version: 1},
+      value: {timestamp, id: uuidv4(), value: buffer, version: 1},
     };
     setDiaryNotes(note);
     setBuffer('');
+    setTimestamp(Date.now());
     logEvents.logAddNoteDiary();
   };
 
@@ -101,6 +105,18 @@ const Diary = ({navigation}) => {
           />
           {inputFocused ? (
             <View style={styles.buttonContainer}>
+              <View style={styles.dateContainer}>
+                <DateOrTimeDisplay
+                  mode="date"
+                  date={timestamp}
+                  onPress={() => setShowDatePicker('date')}
+                />
+                <DateOrTimeDisplay
+                  mode="time"
+                  date={timestamp}
+                  onPress={() => setShowDatePicker('time')}
+                />
+              </View>
               <Button
                 icon="validate"
                 visible
@@ -141,11 +157,36 @@ const Diary = ({navigation}) => {
           </TouchableOpacity>
         )}
       </ScrollView>
+      <DatePicker
+        visible={Boolean(showDatePicker)}
+        mode={showDatePicker}
+        initDate={timestamp}
+        selectDate={(newDate) => {
+          if (newDate && showDatePicker === 'date') {
+            const newDateObject = new Date(newDate);
+            const oldDateObject = new Date(timestamp);
+            newDate = new Date(
+              newDateObject.getFullYear(),
+              newDateObject.getMonth(),
+              newDateObject.getDate(),
+              oldDateObject.getHours(),
+              oldDateObject.getMinutes(),
+            );
+          }
+          setShowDatePicker(false);
+          if (newDate) {
+            setTimestamp(makeSureTimestamp(newDate));
+          }
+        }}
+      />
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  dateContainer: {
+    flexDirection: 'row',
+  },
   arrowDown: {
     transform: [{rotate: '180deg'}],
   },

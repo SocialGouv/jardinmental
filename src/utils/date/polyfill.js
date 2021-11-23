@@ -278,3 +278,10 @@ Date.prototype.getLocaleTime = function (locale) {
     })
   );
 };
+Date.prototype.getLocaleDate = function (locale) {
+  return new Date(this).toCustomLocaleString(locale, {
+    weekday: 'long',
+    month: 'long',
+    day: 'numeric',
+  });
+};
