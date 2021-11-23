@@ -57,6 +57,11 @@ const DailyChart = ({
     });
   };
 
+  const displayTitle = () => {
+    const [categoryName] = categoryId.split('_');
+    return displayedCategories[categoryId] || categoryName;
+  };
+
   return (
     <SafeAreaView style={styles.safe}>
       <ScrollView
@@ -64,7 +69,7 @@ const DailyChart = ({
         contentContainerStyle={styles.scrollContainer}>
         <DayTitle day={diaryDay} onBackPress={navigation.goBack} />
         <Chart
-          title={displayedCategories[categoryId]}
+          title={displayTitle()}
           data={computeChartData(categoryId)}
           withFocus
           focused={focused}
