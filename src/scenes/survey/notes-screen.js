@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useState, useRef, useEffect} from 'react';
 import {
   StyleSheet,
   ScrollView,
@@ -15,6 +15,7 @@ import {DiaryDataContext} from '../../context/diaryData';
 import Button from '../../components/Button';
 import logEvents from '../../services/logEvents';
 import BackButton from '../../components/BackButton';
+import RoundButtonIcon from '../../components/RoundButtonIcon';
 import localStorage from '../../utils/localStorage';
 
 const Notes = ({navigation, route}) => {
@@ -28,6 +29,18 @@ const Notes = ({navigation, route}) => {
     route?.params?.currentSurvey?.answers?.NOTES?.notesToxic,
   );
   const [diaryData, setDiaryData] = useContext(DiaryDataContext);
+
+  const [inputFocused, setInputFocused] = useState();
+  const inputRef1 = useRef();
+  const inputRef2 = useRef();
+  const inputRef3 = useRef();
+  const scrollRef = useRef();
+
+  const focusNextInput = (previousInput) => {
+    if (previousInput === 1) inputRef2.current.focus();
+    if (previousInput === 2) inputRef3.current.focus();
+    if (previousInput === 3) inputRef3.current.blur();
+  };
 
   const validateSurvey = async () => {
     const survey = route.params?.currentSurvey;
@@ -57,61 +70,97 @@ const Notes = ({navigation, route}) => {
     });
   };
 
+  useEffect(() => {
+    if (!inputFocused) return;
+    scrollRef.current?.scrollTo({
+      y: inputFocused * 60,
+      animated: true,
+    });
+  }, [inputFocused]);
+
   const {question} = availableData.find(({id}) => id === 'NOTES');
 
   return (
-    <SafeAreaView style={styles.safe}>
-      <BackButton onPress={navigation.goBack} />
-      <ScrollView
-        style={styles.container}
-        contentContainerStyle={styles.scrollContainer}>
-        <Text style={styles.question}>{question}</Text>
-        <Text style={styles.title}>
-          Que m'est-il arrivé aujourd'hui (disputes, examens, ...) ?
-        </Text>
-        <TextInput
-          multiline={true}
-          numberOfLines={Platform.OS === 'ios' ? null : 3}
-          minHeight={Platform.OS === 'ios' ? 20 * 3 : null}
-          onChangeText={setNotesEvents}
-          value={notesEvents}
-          placeholder="Je me suis disputé avec un ami..."
-          style={styles.textArea}
-          textAlignVertical={'top'}
-        />
-        <Text style={styles.title}>
-          Je souhaite détailler un ou plusieurs de mes ressentis (ma nuit a été
-          ...) ?
-        </Text>
-        <TextInput
-          multiline={true}
-          numberOfLines={Platform.OS === 'ios' ? null : 3}
-          minHeight={Platform.OS === 'ios' ? 20 * 3 : null}
-          onChangeText={setNotesSymptoms}
-          value={notesSymptoms}
-          placeholder="J'ai mis beaucoup de temps à m'endormir..."
-          style={styles.textArea}
-          textAlignVertical={'top'}
-        />
-        <Text style={styles.title}>
-          Ai-je consommé des toxiques aujourd'hui ? Si oui, lesquels ?
-        </Text>
-        <Text style={styles.subtitle}>(ex: tabac, alcool, cannabis, ...)</Text>
-        <TextInput
-          multiline={true}
-          numberOfLines={Platform.OS === 'ios' ? null : 3}
-          minHeight={Platform.OS === 'ios' ? 20 * 3 : null}
-          onChangeText={setNotesToxic}
-          value={notesToxic}
-          placeholder="Je n'ai rien consommé aujourd'hui..."
-          style={styles.textArea}
-          textAlignVertical={'top'}
-        />
-        <View style={styles.buttonWrapper}>
-          <Button onPress={validateSurvey} title="Valider" />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={styles.safe}
+      keyboardVerticalOffset={10}>
+      <SafeAreaView style={styles.safe}>
+        <BackButton onPress={navigation.goBack} />
+        <ScrollView
+          ref={scrollRef}
+          style={styles.container}
+          contentContainerStyle={styles.scrollContainer}
+          keyboardShouldPersistTaps="handled">
+          <Text style={styles.question}>{question}</Text>
+          <Text style={styles.title}>
+            Que m'est-il arrivé aujourd'hui (disputes, examens, ...) ?
+          </Text>
+          <TextInput
+            ref={inputRef1}
+            multiline={true}
+            numberOfLines={Platform.OS === 'ios' ? null : 3}
+            minHeight={Platform.OS === 'ios' ? 20 * 3 : null}
+            onChangeText={setNotesEvents}
+            value={notesEvents}
+            placeholder="Je me suis disputé avec un ami..."
+            style={styles.textArea}
+            textAlignVertical={'top'}
+            onFocus={() => setInputFocused(1)}
+            onBlur={() => setInputFocused(null)}
+          />
+          <Text style={styles.title}>
+            Je souhaite détailler un ou plusieurs de mes ressentis (ma nuit a
+            été ...) ?
+          </Text>
+          <TextInput
+            ref={inputRef2}
+            multiline={true}
+            numberOfLines={Platform.OS === 'ios' ? null : 3}
+            minHeight={Platform.OS === 'ios' ? 20 * 3 : null}
+            onChangeText={setNotesSymptoms}
+            value={notesSymptoms}
+            placeholder="J'ai mis beaucoup de temps à m'endormir..."
+            style={styles.textArea}
+            textAlignVertical={'top'}
+            onFocus={() => setInputFocused(2)}
+            onBlur={() => setInputFocused(null)}
+          />
+          <Text style={styles.title}>
+            Ai-je consommé des toxiques aujourd'hui ? Si oui, lesquels ?
+          </Text>
+          <Text style={styles.subtitle}>
+            (ex: tabac, alcool, cannabis, ...)
+          </Text>
+          <TextInput
+            ref={inputRef3}
+            multiline={true}
+            numberOfLines={Platform.OS === 'ios' ? null : 3}
+            minHeight={Platform.OS === 'ios' ? 20 * 3 : null}
+            onChangeText={setNotesToxic}
+            value={notesToxic}
+            placeholder="Je n'ai rien consommé aujourd'hui..."
+            style={styles.textArea}
+            textAlignVertical={'top'}
+            onFocus={() => setInputFocused(3)}
+            onBlur={() => setInputFocused(null)}
+          />
+        </ScrollView>
+        {inputFocused ? (
+          <View style={styles.floatingButtonWrapper}>
+            <RoundButtonIcon
+              onPress={() => focusNextInput(inputFocused)}
+              icon={inputFocused === 3 ? 'validate' : 'arrow-right'}
+              visible
+            />
+          </View>
+        ) : (
+          <View style={styles.buttonWrapper}>
+            <Button onPress={validateSurvey} title="Valider" />
+          </View>
+        )}
+      </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -153,8 +202,14 @@ const styles = StyleSheet.create({
     paddingTop: 15,
     paddingBottom: 30,
   },
+  floatingButtonWrapper: {
+    position: 'absolute',
+    bottom: 20,
+    right: 10,
+  },
   buttonWrapper: {
-    marginTop: 20,
+    flex: 1,
+    marginVertical: 10,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-end',

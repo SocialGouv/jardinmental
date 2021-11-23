@@ -3,7 +3,7 @@ import {StyleSheet, View, TextInput, Alert, Keyboard} from 'react-native';
 import Text from '../../components/MyText';
 import {colors} from '../../utils/colors';
 import {makeSureDate} from '../../utils/date/helpers';
-import Button from './Button';
+import Button from '../../components/RoundButtonIcon';
 import {DiaryNotesContext} from '../../context/diaryNotes';
 
 const MAX_SIZE = 80;

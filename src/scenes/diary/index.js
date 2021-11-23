@@ -25,7 +25,7 @@ import {
   beforeToday,
   formatDay,
 } from '../../utils/date/helpers';
-import Button from './Button';
+import Button from '../../components/RoundButtonIcon';
 
 const LIMIT_PER_PAGE = __DEV__ ? 3 : 30;
 

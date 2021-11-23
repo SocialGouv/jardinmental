@@ -1,13 +1,14 @@
 import React from 'react';
 import {StyleSheet, TouchableOpacity} from 'react-native';
-import {colors} from '../../utils/colors';
-import Plus from '../../../assets/svg/Plus';
-import Pencil from '../../../assets/svg/Pencil';
-import Bin from '../../../assets/svg/Bin';
-import ArrowUpSvg from '../../../assets/svg/arrow-up.svg';
-import Done from '../../../assets/svg/Done';
+import {colors} from '../utils/colors';
+import Plus from '../../assets/svg/Plus';
+import Pencil from '../../assets/svg/Pencil';
+import Bin from '../../assets/svg/Bin';
+import ArrowUpSvg from '../../assets/svg/arrow-up.svg';
+import Done from '../../assets/svg/Done';
+import ArrowRight from '../../assets/svg/arrow-right';
 
-export default ({
+const RoundButtonIcon = ({
   iconColor = colors.BLUE,
   backgroundColor = '#f1f1f1',
   borderColor = '#e1e1e1',
@@ -44,6 +45,8 @@ export default ({
         );
       case 'validate':
         return <Done opacity={disabled ? 0.5 : 1} color={iconColor} />;
+      case 'arrow-right':
+        return <ArrowRight opacity={disabled ? 0.5 : 1} color={iconColor} />;
     }
   };
   return (
@@ -71,3 +74,5 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
   },
 });
+
+export default RoundButtonIcon;
