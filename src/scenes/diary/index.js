@@ -58,12 +58,12 @@ const Diary = ({navigation}) => {
   useEffect(() => {}, [inputFocused]);
 
   const getNumberOfLines = () => {
-    if (Platform.OS === 'ios') return null;
-    return inputFocused ? 3 : 1;
+    if (!inputFocused) return 1;
+    return Platform.OS === 'ios' ? null : 3;
   };
   const getMinHeight = () => {
-    if (Platform.OS !== 'ios') return null;
-    return inputFocused ? 20 * 3 : 1;
+    if (!inputFocused) return 1;
+    return Platform.OS !== 'ios' ? null : 20 * 3;
   };
 
   const addDiaryNote = () => {
