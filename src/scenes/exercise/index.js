@@ -58,11 +58,12 @@ export default ({navigation}) => {
         {showWelcome === 'true' || !showWelcome ? (
           <View style={styles.welcomeContainer}>
             <Text style={[styles.welcomeText, styles.boldText]}>
-              Cet exercice nécessite des explications afin d'être réalisé.
+              Cet exercice nécessite des explications afin de le réaliser. Nous
+              vous recommandons d’en discuter préalablement avec un thérapeute.
             </Text>
             <Text style={styles.welcomeText}>
-              Vous pouvez en parler à un thérapeute ou cliquer sur ce lien pour
-              de plus amples informations :{'\n'}
+              Voici une vidéo qui vous présente brièvement comment remplir vos
+              fiches :{' '}
               <Text
                 style={styles.link}
                 onPress={() => {
