@@ -61,15 +61,6 @@ const Diary = ({navigation}) => {
 
   useEffect(() => {}, [inputFocused]);
 
-  const getNumberOfLines = () => {
-    if (!inputFocused) return 1;
-    return Platform.OS === 'ios' ? null : 3;
-  };
-  const getMinHeight = () => {
-    if (!inputFocused) return 1;
-    return Platform.OS !== 'ios' ? null : 20 * 3;
-  };
-
   const addDiaryNote = () => {
     const date = formatDay(new Date(timestamp));
     const note = {
@@ -93,8 +84,8 @@ const Diary = ({navigation}) => {
         <View>
           <TextInput
             multiline={true}
-            numberOfLines={getNumberOfLines()}
-            minHeight={getMinHeight()}
+            numberOfLines={Platform.OS === 'ios' ? null : 1}
+            minHeight={Platform.OS === 'ios' ? 30 * 1 : null}
             onChangeText={setBuffer}
             value={buffer}
             placeholder="Saisir ma nouvelle note"
