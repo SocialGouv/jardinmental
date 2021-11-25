@@ -28,6 +28,55 @@ export default ({navigation}) => {
       <ScrollView
         style={styles.cgu}
         contentContainerStyle={styles.scrollContainer}>
+        <Card
+          title="Menu de navigation à 4 boutons"
+          version="v1.16"
+          date="12/2021">
+          <Item showDot={false}>
+            <Text style={styles.text}>
+              Vous retrouverez dans le nouveau menu des fonctions que vous
+              connaissez déja bien :
+            </Text>
+          </Item>
+          <Item>
+            <Text style={styles.text}>
+              <Text style={styles.bold}>Mon Etat</Text>
+              {'\n'}Remplissez votre questionnaire quotidien, avec les
+              symptômes, les ressentis ou encore les activités que vous suivez !
+              Vous pouvez toujours saisir des notes pour y apporter quelques
+              précisions, ainsi que le traitement pris dans votre journée.
+            </Text>
+          </Item>
+          <Item>
+            <Text style={styles.text}>
+              <Text style={styles.bold}>Mon Journal</Text>
+              {'\n'}• Comme un véritable journal intime, vous pouvez créer
+              autant de notes que vous le souhaitez, sans limitation de taille
+              de texte.{'\n'}• N'hésitez pas à vous en servir pour décrire
+              précisément un évènement qui vous a marqué, des pensées, ou tout
+              ce que vous voulez ! {'\n'}• Lorsque vous écrivez une nouvelle
+              note, vous pouvez modifier la date et l'heure auxquelles se réfère
+              la note. Très utile pour décrire un évènement passé mais que vous
+              n'auriez pas eu le temps de noter par exemple.
+            </Text>
+          </Item>
+          <Item>
+            <Text style={styles.text}>
+              <Text style={styles.bold}>Exercice</Text>
+              {'\n'}Retrouvez ici vos colonnes de Beck. Afin de réaliser cet
+              exercice, il est nécessaire d'avoir eu au préalable des
+              explications d'un thérapeute.
+            </Text>
+          </Item>
+          <Item>
+            <Text style={styles.text}>
+              <Text style={styles.bold}>Mon Suivi</Text>
+              {'\n'}Retrouvez ici vos courbes de suivi classées par semaine,
+              ainsi que le détail de votre journée en cliquant sur un point de
+              la courbe.
+            </Text>
+          </Item>
+        </Card>
         <Card title="Nouveau Questionnaire" version="v1.15" date="11/2021">
           <Item>
             <Text style={styles.text}>
