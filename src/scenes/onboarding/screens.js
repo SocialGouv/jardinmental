@@ -1,10 +1,10 @@
 import React from 'react';
 import Text from '../../components/MyText';
-import {colors} from '../../utils/colors';
-import Screen1Image from '../../../assets/svg/Notes';
-import Screen2Image from '../../../assets/svg/Courbes';
-import Screen3Image from '../../../assets/svg/Chat';
-import DiarySvg from '../../../assets/svg/diary';
+
+import SurveyMenu from '../../../assets/svg/SurveyMenu';
+import DiaryMenu from '../../../assets/svg/DiaryMenu';
+import ExerciseMenu from '../../../assets/svg/ExerciseMenu';
+import GraphMenu from '../../../assets/svg/GraphMenu';
 
 import {StyleSheet, View, Dimensions} from 'react-native';
 export const buttonHeight = 43;
@@ -16,34 +16,38 @@ export const defaultPadding = Math.min(
 export const screenWidth = Dimensions.get('window').width;
 export const screenHeight = Dimensions.get('window').height;
 export const menuHeight = 80;
-console.log();
+const size =
+  screenHeight * (Dimensions.get('window').height > 600 ? 0.15 : 0.1);
 
 export const Screen1 = () => (
   <View style={styles.container}>
-    <DiarySvg style={styles.image} />
+    <View style={styles.imageContainer}>
+      <SurveyMenu height={size} width={size} style={styles.image} />
+      <DiaryMenu height={size} width={size} style={styles.image} />
+    </View>
     <Text style={styles.presentationText}>
       <Text style={styles.bold}>Auto-observation</Text>
-      {'\n\n'}Chaque jour, je note dans mon journal mes{' '}
-      <Text style={styles.emphasis}>ressentis</Text>, les{' '}
-      <Text style={styles.emphasis}>événements</Text> qui m'ont marqués et mes
-      prises de <Text style={styles.emphasis}>traitement</Text>.
+      {'\n\n'}Chaque jour, j'évalue{' '}
+      <Text style={styles.emphasis}>mes ressentis</Text>, je note{' '}
+      <Text style={styles.emphasis}>les traitements</Text> que je prends et{' '}
+      <Text style={styles.emphasis}>les événements</Text> qui m'ont marqués.
     </Text>
   </View>
 );
 export const Screen2 = () => (
   <View style={styles.container}>
-    <Screen2Image style={styles.image} />
+    <GraphMenu height={size} width={size} style={styles.image} />
     <Text style={styles.presentationText}>
       <Text style={styles.bold}>Courbes de mes ressentis</Text>
       {'\n\n'}Plus j'utilise l'application, plus je peux{' '}
-      <Text style={styles.emphasis}>observer</Text> mes tendances et commencer à
-      voir des <Text style={styles.emphasis}>liens</Text>.
+      <Text style={styles.emphasis}>observer</Text> mes{' '}
+      <Text style={styles.emphasis}>ressentis</Text> et{' '}
+      <Text style={styles.emphasis}>comprendre</Text> leur évolution.
     </Text>
   </View>
 );
 export const Screen3 = () => (
   <View style={styles.container}>
-    <Screen3Image style={styles.image} />
     <Text style={styles.presentationText}>
       <Text style={styles.bold}>Arriver préparé</Text>
       {'\n\n'}Le jour de ma consultation, j'ai une{' '}
@@ -71,14 +75,16 @@ const styles = StyleSheet.create({
   },
   presentationText: {
     textAlign: 'center',
-    marginTop: 15,
+    marginTop: 20,
     fontSize: Dimensions.get('window').height > 600 ? 20 : 15,
     color: '#0A215C',
   },
+  imageContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
   image: {
     color: '#C3C7D5',
-    height: screenHeight * (Dimensions.get('window').height > 600 ? 0.15 : 0.1),
-    width: screenWidth,
     marginVertical: 0,
   },
 });
