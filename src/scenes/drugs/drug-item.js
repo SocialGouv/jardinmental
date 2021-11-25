@@ -66,15 +66,20 @@ export default ({drug, onChange, showPosology, onClose}) => {
                   onChange(drug, value);
                 }}
                 placeholder={{
-                  label: 'Choisir une dose',
+                  label: 'choisir une dose dans la liste',
                   value: null,
                   color: 'grey',
                   inputLabel: 'Choisir',
                 }}
-                items={[
-                  {label: 'Saisir manuellement une dose', value: 'FREE_TEXT'},
-                  {label: '0', value: '0'},
-                ].concat(drug?.values.map((v) => ({label: v, value: v})))}
+                items={[{label: '0', value: '0'}]
+                  .concat(drug?.values.map((v) => ({label: v, value: v})))
+                  .concat([
+                    {
+                      label: 'Saisir manuellement une dose',
+                      value: 'FREE_TEXT',
+                      color: colors.LIGHT_BLUE,
+                    },
+                  ])}
                 style={pickerSelectStyles}
                 value={drug?.value}
               />
