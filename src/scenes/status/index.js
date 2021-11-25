@@ -69,7 +69,7 @@ const Status = ({navigation}) => {
       <ScrollView
         style={styles.container}
         contentContainerStyle={styles.scrollContainer}>
-        <Header title="Mon état quotidien" navigation={navigation} />
+        <Header title="Mon état et mes traitements" navigation={navigation} />
         <TouchableOpacity onPress={startSurvey} style={styles.setupButton}>
           <Text style={styles.setupButtonText}>
             Comment s'est passée ma journée

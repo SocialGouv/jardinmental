@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   textContainer: {width: '100%'},
-  boldText: {fontWeight: '700'},
+  boldText: {fontWeight: 'bold'},
   italic: {fontStyle: 'italic'},
 });
 

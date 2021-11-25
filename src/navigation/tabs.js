@@ -41,11 +41,17 @@ const Tabs = ({navigation, route}) => {
           showIcon: true,
           indicatorStyle: {height: 0},
           style: styles.tabBar,
+          iconStyle: {
+            // borderColor: 'red',
+            // borderWidth: 1,
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          },
           labelStyle: {
             textTransform: 'capitalize',
             fontSize: 10,
             marginHorizontal: 0,
-            marginVertical: Platform.OS === 'android' ? 0 : 5,
             padding: 0,
           },
         }}>
@@ -54,7 +60,7 @@ const Tabs = ({navigation, route}) => {
           component={Status}
           options={{
             tabBarLabel: 'Mon état',
-            tabBarIcon: ({color}) => <SurveyMenu style={{color}} />,
+            tabBarIcon: ({color}) => <SurveyMenu height={24} style={{color}} />,
           }}
         />
         <Tab.Screen
@@ -62,7 +68,7 @@ const Tabs = ({navigation, route}) => {
           component={Diary}
           options={{
             tabBarLabel: 'Mon journal',
-            tabBarIcon: ({color}) => <DiaryMenu style={{color}} />,
+            tabBarIcon: ({color}) => <DiaryMenu height={24} style={{color}} />,
           }}
         />
         <Tab.Screen
@@ -70,7 +76,9 @@ const Tabs = ({navigation, route}) => {
           component={Exercise}
           options={{
             tabBarLabel: 'Exercice',
-            tabBarIcon: ({color}) => <ExerciseMenu style={{color}} />,
+            tabBarIcon: ({color}) => (
+              <ExerciseMenu height={24} style={{color}} />
+            ),
           }}
         />
         <Tab.Screen
@@ -78,7 +86,7 @@ const Tabs = ({navigation, route}) => {
           component={Calendar}
           options={{
             tabBarLabel: 'Mon suivi',
-            tabBarIcon: ({color}) => <GraphMenu style={{color}} />,
+            tabBarIcon: ({color}) => <GraphMenu height={24} style={{color}} />,
           }}
         />
       </Tab.Navigator>
