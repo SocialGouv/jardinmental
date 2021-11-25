@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
   },
   floatingButtonWrapper: {
     position: 'absolute',
-    bottom: 20,
+    bottom: Platform.OS === 'ios' ? 0 : 35,
     right: 10,
   },
   buttonWrapper: {
