@@ -76,7 +76,6 @@ const styles = StyleSheet.create({
   },
   datePickerContainer: {
     display: 'flex',
-    flexDirection: 'row',
     width: '100%',
     maxWidth: 320,
     borderRadius: 20,
@@ -90,9 +89,6 @@ const styles = StyleSheet.create({
   },
   datePicker: {
     marginHorizontal: 10,
-    flex: 1,
-    textAlign: 'center',
-    alignSelf: 'center',
   },
 });
 
