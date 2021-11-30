@@ -68,7 +68,7 @@ export default ({navigation}) => {
                 style={styles.link}
                 onPress={() => {
                   // todo logevent voir video
-                  Linking.openURL('https://youtu.be/eHVpS6SQrGY');
+                  Linking.openURL('https://youtu.be/3U4J-_QsTc0');
                 }}>
                 voir la vidéo
               </Text>
