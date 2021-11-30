@@ -34,8 +34,9 @@ export default ({navigation}) => {
           date="12/2021">
           <Item showDot={false}>
             <Text style={styles.text}>
-              Vous retrouverez dans le nouveau menu des fonctions que vous
-              connaissez déja bien :
+              Dans le nouveau menu, vous retrouverez des fonctions que vous
+              connaissez déja bien, ainsi qu'une nouvelle intitulée "Mon
+              Journal" :
             </Text>
           </Item>
           <Item>
@@ -49,7 +50,9 @@ export default ({navigation}) => {
           </Item>
           <Item>
             <Text style={styles.text}>
-              <Text style={styles.bold}>Mon Journal</Text>
+              <Text style={styles.bold}>
+                Mon Journal <Text style={styles.bold}>(nouveau)</Text>
+              </Text>
               {'\n'}• Comme un véritable journal intime, vous pouvez créer
               autant de notes que vous le souhaitez, sans limitation de taille
               de texte.{'\n'}• N'hésitez pas à vous en servir pour décrire
