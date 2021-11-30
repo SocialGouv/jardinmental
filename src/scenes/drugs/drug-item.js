@@ -71,8 +71,14 @@ export default ({drug, onChange, showPosology, onClose}) => {
                   color: 'grey',
                   inputLabel: 'Choisir',
                 }}
-                items={[{label: '0', value: '0'}]
-                  .concat(drug?.values.map((v) => ({label: v, value: v})))
+                items={[{label: '0', value: '0', color: colors.BLUE}]
+                  .concat(
+                    drug?.values.map((v) => ({
+                      label: v,
+                      value: v,
+                      color: colors.BLUE,
+                    })),
+                  )
                   .concat([
                     {
                       label: 'Saisir manuellement une dose',
