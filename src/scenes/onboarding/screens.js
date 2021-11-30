@@ -5,6 +5,7 @@ import SurveyMenu from '../../../assets/svg/SurveyMenu';
 import DiaryMenu from '../../../assets/svg/DiaryMenu';
 import ExerciseMenu from '../../../assets/svg/ExerciseMenu';
 import GraphMenu from '../../../assets/svg/GraphMenu';
+import Screen3Image from '../../../assets/svg/Chat';
 
 import {StyleSheet, View, Dimensions} from 'react-native';
 export const buttonHeight = 43;
@@ -22,15 +23,19 @@ const size =
 export const Screen1 = () => (
   <View style={styles.container}>
     <View style={styles.imageContainer}>
-      <SurveyMenu height={size} width={size} style={styles.image} />
+      <SurveyMenu
+        height={size}
+        width={size}
+        style={[styles.image, styles.tiltUp]}
+      />
       <DiaryMenu height={size} width={size} style={styles.image} />
     </View>
     <Text style={styles.presentationText}>
       <Text style={styles.bold}>Auto-observation</Text>
-      {'\n\n'}Chaque jour, j'évalue{' '}
-      <Text style={styles.emphasis}>mes ressentis</Text>, je note{' '}
-      <Text style={styles.emphasis}>les traitements</Text> que je prends et{' '}
-      <Text style={styles.emphasis}>les événements</Text> qui m'ont marqués.
+      {'\n\n'}Chaque jour, j'évalue mes{' '}
+      <Text style={styles.emphasis}>ressentis</Text>, je note les{' '}
+      <Text style={styles.emphasis}>traitements</Text> que je prends et les{' '}
+      <Text style={styles.emphasis}>événements</Text> qui m'ont marqués.
     </Text>
   </View>
 );
@@ -48,6 +53,7 @@ export const Screen2 = () => (
 );
 export const Screen3 = () => (
   <View style={styles.container}>
+    <Screen3Image style={styles.image} />
     <Text style={styles.presentationText}>
       <Text style={styles.bold}>Arriver préparé</Text>
       {'\n\n'}Le jour de ma consultation, j'ai une{' '}
@@ -86,5 +92,8 @@ const styles = StyleSheet.create({
   image: {
     color: '#C3C7D5',
     marginVertical: 0,
+  },
+  tiltUp: {
+    marginTop: -0.1 * size,
   },
 });
