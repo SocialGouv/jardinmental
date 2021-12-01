@@ -16,6 +16,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import ExportDataSvg from '../../../assets/svg/export-data.svg';
 import {colors} from '../../utils/colors';
 import {DiaryDataContext} from '../../context/diaryData';
+import {DiaryNotesContext} from '../../context/diaryNotes';
 import {formatHtmlTable} from './utils';
 import Icon from '../../components/Icon';
 import logEvents from '../../services/logEvents';
@@ -27,6 +28,7 @@ const Export = ({navigation}) => {
   const [mail, setMail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [diaryData] = useContext(DiaryDataContext);
+  const [diaryNotes] = useContext(DiaryNotesContext);
 
   useEffect(() => {
     (async () => {
@@ -44,7 +46,7 @@ const Export = ({navigation}) => {
         `Aucun mail n'a été renseigné.\n\nMerci d'indiquer l'adresse mail sur laquelle vous désirez recevoir vos données.`,
       );
     await AsyncStorage.setItem(MailStorageKey, mail);
-    const htmlExport = await formatHtmlTable(diaryData);
+    const htmlExport = await formatHtmlTable(diaryData, diaryNotes);
     setIsLoading(true);
     logEvents.logDataExport();
     const res = await sendTipimail(

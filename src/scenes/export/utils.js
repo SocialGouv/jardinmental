@@ -14,10 +14,10 @@ const colorsText = ['#b86564', '#ba8553', '#ab9237', '#a1a06e', '#9ab037'];
 const hasNotes = (notes) =>
   !!notes &&
   ((typeof notes === 'string' && notes) || //retro compatibility
-    (typeof notes === 'object' &&
-      (notes?.notesEvents || notes?.notesSymptoms || notes?.notesToxic)));
+    (typeof notes === 'object' && Object.keys(notes)?.length > 0));
 
-const hasBeck = (becks) => becks && Object.keys(becks)?.length > 0;
+const hasBeck = (becks) => !!becks && Object.keys(becks)?.length > 0;
+const hasDiaryNotes = (diary) => !!diary && diary?.values?.some((e) => e.value);
 
 // GENERATORS
 
@@ -126,7 +126,6 @@ const generateNote = (notes) => {
   if (typeof notes === 'string') {
     //retro compatibility
     return `
-    <p style="text-decoration: underline;margin:0;padding:8px">Mes notes</p>
     <tr class="journal__item-symptom-wrapper" >
       <td style="padding:10px;">
         ${renderNote(notes)}
@@ -134,7 +133,7 @@ const generateNote = (notes) => {
     </tr>
   `;
   } else {
-    return `<p style="text-decoration: underline;margin:0;padding:8px">Mes notes</p>
+    return `
     <tr class="journal__item-symptom-wrapper">  
       <td style="padding:10px;">
         ${renderNote(notes.notesEvents, 'Évènement')}
@@ -143,6 +142,25 @@ const generateNote = (notes) => {
       </td>
     </tr>`;
   }
+};
+const generateDiaryNote = (notes) => {
+  return notes
+    ?.filter((e) => e.value)
+    ?.map(
+      (
+        e,
+      ) => `<tr class="journal__item-symptom-wrapper">  <td style="padding:10px;">
+        <p
+      style="
+          margin: 0;
+          margin-left: 20px;
+          padding-right: 50px;
+          padding-top: 2px;
+          padding-bottom: 2px;
+        ">${e.value}</p>
+      </td></tr>`,
+    )
+    ?.join('');
 };
 
 const generateBeck = (beck) => {
@@ -249,7 +267,6 @@ const generateBeck = (beck) => {
   };
 
   return `
-    <p style="text-decoration: underline;margin:0;padding:8px">Mes colonnes de Beck</p>
     <tr class="journal__item-symptom-wrapper">
       <td style="padding:10px;">
         ${renderBeck(beck)}
@@ -258,7 +275,7 @@ const generateBeck = (beck) => {
   `;
 };
 
-const formatHtmlTable = async (diaryData) => {
+const formatHtmlTable = async (diaryData, diaryNotes) => {
   const today = new Date();
   const firstDay = new Date();
   firstDay.setDate(today.getDate() - 30);
@@ -363,13 +380,17 @@ const formatHtmlTable = async (diaryData) => {
           table {border-collapse:separate;}
           a, a:link, a:visited {text-decoration: none; color: #00788a;}
           a:hover {text-decoration: underline;}
-          h2,h2 a,h2 a:visited,h3,h3 a,h3 a:visited,h4,h5,h6,.t_cht {color:#000 !important;}
+          h2 a,h2 a:visited,h3 a,h3 a:visited,h4,h5,h6,.t_cht {color:#000 !important;}
           .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td {line-height: 100%;}
           .ExternalClass {width: 100%;}
         </style>
       </head>
       <body width="100%">
-        <h1 style="color: ${colors.BLUE}">Mes données de MonSuiviPsy</h1>
+        <h1 style="text-align:center;color: ${
+          colors.BLUE
+        }">Mes données de MonSuiviPsy</h1>
+        <h2 style="color: ${colors.BLUE}">Mon état et mon traitement</h2>
+        <h3 style="color: ${colors.BLUE}">Mes ressentis</h3>
         ${Object.keys(categories)
           .concat(customsSymptoms)
           .map((categoryId) => {
@@ -421,74 +442,105 @@ const formatHtmlTable = async (diaryData) => {
             `;
           })
           .join('')}
-        <h1 style="color: ${colors.BLUE}">Mon traitement</h1>
-        ${drugListWithLocalStorage
-          .map((drug) => {
-            if (!isDrugVisible(drug)) {
-              return '';
-            }
-            const res = computeChartDrug(drug);
+        <h3 style="margin-top:15px;color: ${colors.BLUE}">Mon traitement</h3>
+          ${drugListWithLocalStorage
+            .map((drug) => {
+              if (!isDrugVisible(drug)) {
+                return '';
+              }
+              const res = computeChartDrug(drug);
 
-            return `
-              <table width="100%" style="width: 100%; max-width: 100%;">
-                <tbody>
-                  <tr>
-                    <td>
-                      <h3 style="color: ${colors.DARK_BLUE};">
-                        ${drug.id}
-                      </h3>
-                      <table
-                        width="100%"
-                        style="
-                          width: 100%;
-                          max-width: 100%;
-                          border-collapse: collapse;
-                          table-layout: fixed;
-                        "
-                      >
-                        <tbody>
-                          <tr>
-                            ${res
-                              .map((value) => {
-                                const height = 15 * value + 2;
+              return `
+                <table width="100%" style="width: 100%; max-width: 100%;">
+                  <tbody>
+                    <tr>
+                      <td>
+                        <h3 style="color: ${colors.DARK_BLUE};">
+                          ${drug.id}
+                        </h3>
+                        <table
+                          width="100%"
+                          style="
+                            width: 100%;
+                            max-width: 100%;
+                            border-collapse: collapse;
+                            table-layout: fixed;
+                          "
+                        >
+                          <tbody>
+                            <tr>
+                              ${res
+                                .map((value) => {
+                                  const height = 15 * value + 2;
 
-                                return generateBar(value, height, colors.BLUE);
-                              })
-                              .join('')}
-                          </tr>
-                        </tbody>
-                      </table>
-                      ${generateTime(firstDay, today)}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            `;
-          })
-          .join('')}
-          <h1 style="color: ${colors.BLUE};">Mon journal</h1>
+                                  return generateBar(
+                                    value,
+                                    height,
+                                    colors.BLUE,
+                                  );
+                                })
+                                .join('')}
+                            </tr>
+                          </tbody>
+                        </table>
+                        ${generateTime(firstDay, today)}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              `;
+            })
+            .join('')}
+          <hr style="margin: 4rem 2rem;"/>
+          <h2 style="margin-top:15px;color: ${
+            colors.BLUE
+          };">Mon suivi d'évènements</h2>
           <table cellpadding="0" cellspacing="0" border="0">
             <tr>
               <td>
-                ${Object.keys(diaryData)
+                ${Object.keys({...diaryData, ...diaryData})
                   .map((strDate) => ({strDate, date: new Date(strDate)}))
                   .sort((item1, item2) => item2.date - item1.date)
                   .map(({strDate}) => {
-                    if (!diaryData[strDate]) {
+                    if (!diaryData[strDate] && !diaryNotes[strDate]) {
                       return '';
                     }
-                    const {NOTES, becks} = diaryData[strDate];
-                    // if there no NOTES.x => display nothing
-                    console.log(hasNotes(NOTES));
-                    console.log(hasBeck(becks));
-                    if (!hasNotes(NOTES) && !hasBeck(becks)) {
+                    let NOTES = diaryData[strDate]?.NOTES || null;
+                    let becks = diaryData[strDate]?.becks || null;
+                    const diaryNoteDate = diaryNotes[strDate];
+
+                    if (
+                      !hasNotes(NOTES) &&
+                      !hasBeck(becks) &&
+                      !hasDiaryNotes(diaryNoteDate)
+                    ) {
                       return '';
                     }
                     return `
-                      <p style="margin-top: 35px;">${formatDate(strDate)
+                      <h3 style="margin-top: 35px;">${formatDate(strDate)
                         .split('-')
                         .reverse()
-                        .join('/')}</p>
+                        .join('/')}</>
+                      ${hasNotes(NOTES) ? renderSurveyNotes(NOTES) : '<div/>'}
+                      ${hasBeck(becks) ? renderBecks(becks) : '<div/>'}
+                      ${
+                        hasDiaryNotes(diaryNoteDate)
+                          ? renderDiaryNotes(diaryNoteDate.values)
+                          : '<div/>'
+                      }
+                    `;
+                  })
+                  .join('')}
+                </td>
+              </tr>
+            </table>
+      </body>
+    </html>
+  `;
+};
+
+const renderSurveyNotes = (value) => {
+  return `<h4 style="color: ${colors.BLUE};">Mes notes</h4>
                       <table style="
                         border-collapse: collapse;
                         margin-bottom: 20px;
@@ -498,9 +550,15 @@ const formatHtmlTable = async (diaryData) => {
                           border: 1px solid #ebedf2;
                           background-color: #f8f9fb;
                         ">
-                          ${generateNote(NOTES)}
+                          ${generateNote(value)}
                         </tbody>
-                      </table>
+                      </table>`;
+};
+
+const renderBecks = (value) => {
+  return `<h4 style="color: ${
+    colors.BLUE
+  };">Mes fiches de pensées automatiques</h4>
                       <table style="
                         border-collapse: collapse;
                         margin-bottom: 20px;
@@ -511,23 +569,30 @@ const formatHtmlTable = async (diaryData) => {
                           background-color: #f8f9fb;
                         ">
                           ${
-                            becks
-                              ? Object.keys(becks)
-                                  ?.map((id) => generateBeck(becks[id]))
+                            value
+                              ? Object.keys(value)
+                                  ?.map((id) => generateBeck(value[id]))
                                   .join('<hr/>')
                               : ''
                           }
                         </tbody>
-                      </table>
-                    `;
-                  })
-                  .join('')}
-                </td>
-              </tr>
-            </table>
-      </body>
-    </html>
-  `;
+                      </table>`;
+};
+
+const renderDiaryNotes = (value) => {
+  return `<h4 style="color: ${colors.BLUE};">Mon journal</h4>
+                      <table style="
+                        border-collapse: collapse;
+                        margin-bottom: 20px;
+                      ">
+                        <tbody style="
+                          padding:15px;
+                          border: 1px solid #ebedf2;
+                          background-color: #f8f9fb;
+                        ">
+                          ${generateDiaryNote(value)}
+                        </tbody>
+                      </table>`;
 };
 
 module.exports = {
