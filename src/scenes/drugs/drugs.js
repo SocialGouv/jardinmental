@@ -30,7 +30,6 @@ const Drugs = ({navigation, route}) => {
   const [listDrugs, setListDrugs] = useState();
 
   useEffect(() => {
-    logEvents.logDrugsOpen();
     setInSurvey(!!route?.params?.currentSurvey);
     (async () => {
       const list = await getDrugListWithLocalStorage();
@@ -158,6 +157,7 @@ const Drugs = ({navigation, route}) => {
         },
       };
       setDiaryData(currentSurvey);
+      logEvents.logInputDrugSurvey(posology?.filter((e) => e?.value)?.length);
       alertNoDataYesterday({date: survey?.date, diaryData, navigation});
     }
 

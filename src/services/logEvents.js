@@ -289,6 +289,14 @@ const logDrugAdd = async (drug) => {
     value: drug,
   });
 };
+const logInputDrugSurvey = async (numberOfInput) => {
+  await logEvent({
+    category: 'DRUG',
+    action: 'DRUG_INPUT_SURVEY',
+    name: 'numberOfInput',
+    value: numberOfInput,
+  });
+};
 
 // beck
 const logActivateBeck = async (v) => {
@@ -422,4 +430,5 @@ export default {
   logEditNoteDiary,
   logDeleteNoteDiary,
   logOpenPage,
+  logInputDrugSurvey,
 };
