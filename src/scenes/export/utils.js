@@ -498,7 +498,7 @@ const formatHtmlTable = async (diaryData, diaryNotes) => {
           <table cellpadding="0" cellspacing="0" border="0">
             <tr>
               <td>
-                ${Object.keys({...diaryData, ...diaryData})
+                ${Object.keys({...diaryData, ...diaryNotes})
                   .map((strDate) => ({strDate, date: new Date(strDate)}))
                   .sort((item1, item2) => item2.date - item1.date)
                   .map(({strDate}) => {
