@@ -2,16 +2,18 @@ import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import Text from '../../components/MyText';
 import {colors} from '../../utils/colors';
-import {canEdit} from './diary';
+import {canEdit} from './utils/index.js';
+import ArrowRightSvg from '../../../assets/svg/arrow-right.js';
 
 const NoDataDiaryItem = ({date}) => {
   return (
     <View style={styles.textContainer}>
       <Text style={styles.noDataTitle}>
         {canEdit(date)
-          ? "Vous n'avez rien saisi ce jour-là"
+          ? 'Renseignez mon état pour ce jour-là'
           : 'Vous ne pouvez plus saisir votre questionnaire pour ce jour'}
       </Text>
+      {canEdit(date) && <ArrowRightSvg color="#C7CED5" />}
     </View>
   );
 };
@@ -30,7 +32,10 @@ const styles = StyleSheet.create({
     color: colors.BLUE,
   },
   textContainer: {
-    paddingBottom: 15,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     paddingHorizontal: 15,
   },
 });

@@ -3,10 +3,10 @@ import {StyleSheet, View} from 'react-native';
 import {colors} from '../../utils/colors';
 import Text from '../../components/MyText';
 
-export default ({children}) => {
+export default ({showDot = true, children}) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.dot}>• </Text>
+      {showDot ? <Text style={styles.dot}>• </Text> : null}
       <View style={styles.content}>{children}</View>
     </View>
   );

@@ -13,7 +13,7 @@ import {colors} from '../../utils/colors';
 import BackButton from '../../components/BackButton';
 import ForwardButton from '../../components/ForwardButton';
 import StepIndicator from '../../components/StepIndicator';
-import {DiaryDataContext} from '../../context';
+import {DiaryDataContext} from '../../context/diaryData';
 import {alertNoDataYesterday} from '../survey/survey-data';
 import {BeckStepTitles} from '../../utils/constants';
 import {deleteBeckfromDiaryData} from '../../utils';

@@ -1,12 +1,7 @@
 import React from 'react';
-import {useEffect, useState} from 'react';
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import Text from '../../components/MyText';
-import Button from '../../components/Button';
 import {colors} from '../../utils/colors';
-import {formatDay} from '../../utils/date/helpers';
-import logEvents from '../../services/logEvents';
-import localStorage from '../../utils/localStorage';
 
 const ContributeItem = ({onPress}) => {
   return (
@@ -14,8 +9,8 @@ const ContributeItem = ({onPress}) => {
       <View style={styles.container}>
         <Text style={styles.title}>Contribuer à Mon Suivi Psy</Text>
         <Text style={styles.message}>
-          Dites-nous comment améliorer l'application{' '}
-          <Text style={styles.muted}>(Nous lisons tous les messages)</Text>
+          Dites-nous comment améliorer l'application{'\n'}
+          <Text style={styles.muted}>Nous lisons tous les messages</Text>
         </Text>
       </View>
     </TouchableOpacity>
@@ -42,7 +37,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   muted: {
-    fontSize: 14,
+    fontSize: 12,
+    fontStyle: 'italic',
   },
   buttonWrapper: {
     paddingTop: 10,

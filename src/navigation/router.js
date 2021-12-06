@@ -23,7 +23,7 @@ import logEvents from '../services/logEvents';
 import ContributePro from '../scenes/contribute/contributePro';
 import Drugs from '../scenes/drugs/drugs';
 import DrugsList from '../scenes/drugs/list';
-import TooLate from '../scenes/diary/too-late';
+import TooLate from '../scenes/status/too-late';
 import News from '../scenes/news';
 import Infos from '../scenes/infos';
 import ActivateBeck from '../scenes/beck/activate';
@@ -58,9 +58,19 @@ class Router extends React.Component {
     this.appState = nextAppState;
   };
 
+  onStateChange = async () => {
+    if (!this.navigationRef) return;
+    const route = this.navigationRef.getCurrentRoute();
+    if (route.name === this.prevCurrentRouteName) return;
+    this.prevCurrentRouteName = route.name;
+    logEvents.logOpenPage(route.name);
+  };
+
   render() {
     return (
-      <NavigationContainer>
+      <NavigationContainer
+        ref={(r) => (this.navigationRef = r)}
+        onStateChange={this.onStateChange}>
         <Stack.Navigator initialRouteName="tabs" headerMode="none">
           <Stack.Screen name="day-survey" component={DaySurveyScreen} />
           <Stack.Screen name="select-day" component={SelectDayScreen} />

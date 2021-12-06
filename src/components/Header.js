@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, Dimensions} from 'react-native';
 import {colors} from '../utils/colors';
 import Icon from './Icon';
 import Text from './MyText';
@@ -54,24 +54,13 @@ const Header = ({title, navigation}) => {
         styleContainer={{marginRight: 20}}
       />
       <Text style={styles.title}>{title}</Text>
-      {route.name === 'Diary' ? (
-        <Icon
-          spin={settingsVisible}
-          icon="GearSvg"
-          width={30}
-          height={30}
-          onPress={() => setSettingsVisible(true)}
-        />
-      ) : null}
-      {route.name === 'Calendar' ? (
-        <Icon
-          color="#26387C"
-          icon="ExportDataSvg"
-          width={30}
-          height={30}
-          onPress={() => navigation.navigate('export')}
-        />
-      ) : null}
+      <Icon
+        spin={settingsVisible}
+        icon="GearSvg"
+        width={30}
+        height={30}
+        onPress={() => setSettingsVisible(true)}
+      />
     </View>
   );
 };
@@ -87,10 +76,10 @@ const styles = StyleSheet.create({
     paddingBottom: 30,
   },
   title: {
-    fontSize: 22,
+    fontSize: Dimensions.get('window').width > 370 ? 19 : 14,
     color: colors.BLUE,
     marginRight: 'auto',
-    fontWeight: '700',
+    fontWeight: 'bold',
     flex: 1,
   },
 });

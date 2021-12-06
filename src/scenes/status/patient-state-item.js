@@ -29,10 +29,11 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    paddingBottom: 10,
+    paddingVertical: 5,
     paddingHorizontal: 15,
   },
   label: {
+    flex: 1,
     fontSize: 15,
   },
 });

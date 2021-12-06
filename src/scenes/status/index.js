@@ -5,50 +5,28 @@ import {
   View,
   SafeAreaView,
   TouchableOpacity,
+  Dimensions,
 } from 'react-native';
 import Text from '../../components/MyText';
-import DiaryItem from './diary-item';
-import ContributeItem from './contribute-item';
+import StatusItem from './status-item';
+import ContributeCard from '../contribute/contributeCard';
 import Header from '../../components/Header';
 import {colors} from '../../utils/colors';
-import {format, parseISO, isToday, isYesterday, compareAsc} from 'date-fns';
-import {fr} from 'date-fns/locale';
-import {firstLetterUppercase} from '../../utils/string-util';
 import {useContext} from 'react';
-import {DiaryDataContext} from '../../context';
+import {DiaryDataContext} from '../../context/diaryData';
 import localStorage from '../../utils/localStorage';
 import NPS from '../../services/NPS/NPS';
 import Bubble from '../../components/bubble';
 import ArrowUpSvg from '../../../assets/svg/arrow-up.svg';
-import {beforeToday} from '../../utils/date/helpers';
+import logEvents from '../../services/logEvents';
+import {formatDateThread} from '../../utils/date/helpers';
 
 const LIMIT_PER_PAGE = __DEV__ ? 3 : 30;
 
-export const canEdit = (d) => {
-  const limitDate = beforeToday(7);
-  const canEditBool = compareAsc(parseISO(d), limitDate) === 1;
-  return canEditBool;
-};
-
-const Diary = ({navigation}) => {
+const Status = ({navigation}) => {
   const [diaryData] = useContext(DiaryDataContext);
   const [NPSvisible, setNPSvisible] = useState(false);
   const [page, setPage] = useState(1);
-
-  const formatDate = (date) => {
-    const isoDate = parseISO(date);
-    if (isToday(isoDate)) {
-      return "Aujourd'hui";
-    } else if (isYesterday(isoDate)) {
-      return 'Hier';
-    } else {
-      const formattedDate = format(isoDate, 'EEEE d MMMM', {locale: fr});
-      return firstLetterUppercase(formattedDate);
-    }
-  };
-
-  const onPressContribute = () => setNPSvisible(true);
-  const closeNPS = () => setNPSvisible(false);
 
   useEffect(() => {
     const handleOnboarding = async () => {
@@ -69,16 +47,36 @@ const Diary = ({navigation}) => {
     handleOnboarding();
   }, [navigation]);
 
+  const startSurvey = async () => {
+    const symptoms = await localStorage.getSymptoms();
+    logEvents.logFeelingStart();
+    if (!symptoms) {
+      navigation.navigate('symptoms', {
+        showExplanation: true,
+        redirect: 'select-day',
+      });
+    } else {
+      navigation.navigate('select-day');
+    }
+  };
+
   // display only LIMIT_PER_PAGE days
   // button that will display LIMIT_PER_PAGE more each time
 
   return (
     <SafeAreaView style={styles.safe}>
-      <NPS forceView={NPSvisible} close={closeNPS} />
+      <NPS forceView={NPSvisible} close={() => setNPSvisible(false)} />
       <ScrollView
         style={styles.container}
         contentContainerStyle={styles.scrollContainer}>
-        <Header title="Mon journal" navigation={navigation} />
+        <Header title="Mon état et mes traitements" navigation={navigation} />
+        <TouchableOpacity onPress={startSurvey} style={styles.setupButton}>
+          <Text style={styles.setupButtonText}>
+            Comment s'est passée ma journée
+          </Text>
+        </TouchableOpacity>
+        <View style={styles.divider} />
+
         <Bubble diaryData={diaryData} navigation={navigation} />
         {Object.keys(diaryData)
           .sort((a, b) => {
@@ -89,23 +87,23 @@ const Diary = ({navigation}) => {
           .slice(0, LIMIT_PER_PAGE * page)
           .map((date) => (
             <View key={date}>
-              <Text style={styles.title}>{formatDate(date)}</Text>
-              <DiaryItem
+              <Text style={styles.subtitle}>{formatDateThread(date)}</Text>
+              <StatusItem
                 date={date}
                 patientState={diaryData[date]}
                 navigation={navigation}
               />
             </View>
           ))}
-        <ContributeItem onPress={onPressContribute} />
-        {Object.keys(diaryData)?.length > LIMIT_PER_PAGE * page ? (
+        <ContributeCard onPress={() => setNPSvisible(true)} />
+        {Object.keys(diaryData)?.length > LIMIT_PER_PAGE * page && (
           <TouchableOpacity
             onPress={() => setPage(page + 1)}
             style={styles.versionContainer}>
             <Text style={styles.arrowDownLabel}>Voir plus</Text>
             <ArrowUpSvg style={styles.arrowDown} color={colors.BLUE} />
           </TouchableOpacity>
-        ) : null}
+        )}
       </ScrollView>
     </SafeAreaView>
   );
@@ -142,6 +140,51 @@ const styles = StyleSheet.create({
     color: colors.BLUE,
     fontWeight: '700',
   },
+  flex: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  subtitle: {
+    color: colors.BLUE,
+    fontSize: 17,
+    textAlign: 'center',
+    paddingTop: 10,
+    paddingLeft: 10,
+    paddingBottom: 10,
+    backgroundColor: '#F2FCFD',
+    borderColor: '#D9F5F6',
+    borderWidth: 1,
+    borderRadius: 10,
+    fontWeight: '600',
+    overflow: 'hidden',
+  },
+  verticalBorder: {
+    borderLeftWidth: 1,
+    borderColor: '#00CEF7',
+  },
+  setupButton: {
+    backgroundColor: colors.LIGHT_BLUE,
+    borderRadius: 45,
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    display: 'flex',
+  },
+  setupButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: Dimensions.get('window').width > 350 ? 19 : 15,
+    flexWrap: 'wrap',
+    textAlign: 'center',
+  },
+  divider: {
+    height: 1,
+    backgroundColor: '#E0E0E0',
+    marginVertical: 15,
+    width: '50%',
+    alignSelf: 'center',
+  },
 });
 
-export default Diary;
+export default Status;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {
   TouchableOpacity,
   StyleSheet,
@@ -18,13 +18,15 @@ import {subDays} from 'date-fns';
 import BackButton from '../../components/BackButton';
 import {firstLetterUppercase} from '../../utils/string-util';
 import ArrowUpSvg from '../../../assets/svg/arrow-up.svg';
+import {DiaryDataContext} from '../../context/diaryData';
+import Done from '../../../assets/svg/Done';
 
 const SurveyScreen = ({navigation}) => {
+  const [diaryData] = useContext(DiaryDataContext);
   const startSurvey = (offset) => {
-    const currentSurvey = {
-      date: formatDay(beforeToday(offset)),
-      answers: {},
-    };
+    const date = formatDay(beforeToday(offset));
+    const answers = diaryData[date] || {};
+    const currentSurvey = {date, answers};
     return navigation.navigate('day-survey', {
       currentSurvey,
     });
@@ -42,14 +44,35 @@ const SurveyScreen = ({navigation}) => {
         {[...Array(7)].map((_, i) => {
           const value = formatDay(subDays(now, i));
           let label = firstLetterUppercase(formatRelativeDate(value));
+          const blackListKeys = ['becks', 'NOTES'];
+          const filtered = Object.keys(diaryData[value] || [])
+            .filter((key) => !blackListKeys.includes(key))
+            .reduce((obj, key) => {
+              obj[key] = diaryData[value][key];
+              return obj;
+            }, {});
+
+          const dayIsDone = Object.keys(filtered).length !== 0;
+
           return (
             <TouchableOpacity key={i} onPress={() => startSurvey(i)}>
-              <View style={styles.answer}>
+              <View
+                style={[
+                  styles.answer,
+                  dayIsDone ? styles.answerDone : styles.answerNotDone,
+                ]}>
                 <View style={styles.answerLabel}>
-                  <CircledIcon color="white" icon="TodaySvg" />
+                  <CircledIcon
+                    color="white"
+                    icon={i === 0 ? 'TodaySvg' : 'YesterdaySvg'}
+                  />
                   <Text style={styles.label}>{label}</Text>
                 </View>
-                <ArrowUpSvg style={styles.arrowRight} color={colors.BLUE} />
+                {dayIsDone ? (
+                  <Done color="#059669" backgroundColor="#D1FAE5" />
+                ) : (
+                  <ArrowUpSvg style={styles.arrowRight} color={colors.BLUE} />
+                )}
               </View>
             </TouchableOpacity>
           );
@@ -67,6 +90,7 @@ const SurveyScreen = ({navigation}) => {
 const styles = StyleSheet.create({
   arrowRight: {
     transform: [{rotate: '90deg'}],
+    marginRight: 10,
   },
   safe: {
     flex: 1,
@@ -104,6 +128,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+  },
+  answerDone: {
+    backgroundColor: '#C9EFDC',
+    borderColor: '#78b094',
+  },
+  answerNotDone: {
+    backgroundColor: '#F4FCFD',
+    borderColor: '#D4F0F2',
   },
   answerLabel: {
     display: 'flex',

@@ -283,6 +283,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.LIGHT_BLUE,
   },
   questionTitle: {
+    textAlign: 'center',
     fontSize: 18,
     fontWeight: 'bold',
   },

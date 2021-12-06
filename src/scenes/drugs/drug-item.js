@@ -65,11 +65,27 @@ export default ({drug, onChange, showPosology, onClose}) => {
                   if (value === 'FREE_TEXT') return setShowFreeText(true);
                   onChange(drug, value);
                 }}
-                placeholder={{label: 'Choisir', value: null}}
-                items={[
-                  {label: 'Entrer une valeur', value: 'FREE_TEXT'},
-                  {label: '0', value: '0'},
-                ].concat(drug?.values.map((v) => ({label: v, value: v})))}
+                placeholder={{
+                  label: 'choisir une dose dans la liste',
+                  value: null,
+                  color: 'grey',
+                  inputLabel: 'Choisir',
+                }}
+                items={[{label: '0', value: '0', color: colors.BLUE}]
+                  .concat(
+                    drug?.values.map((v) => ({
+                      label: v,
+                      value: v,
+                      color: colors.BLUE,
+                    })),
+                  )
+                  .concat([
+                    {
+                      label: 'Saisir manuellement une dose',
+                      value: 'FREE_TEXT',
+                      color: colors.LIGHT_BLUE,
+                    },
+                  ])}
                 style={pickerSelectStyles}
                 value={drug?.value}
               />
