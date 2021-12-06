@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import {StyleSheet, View} from 'react-native';
 
-import {DiaryDataContext} from '../../context';
+import {DiaryDataContext} from '../../context/diaryData';
 import Text from '../../components/MyText';
 import {colors} from '../../utils/colors';
 import Button from '../../components/Button';

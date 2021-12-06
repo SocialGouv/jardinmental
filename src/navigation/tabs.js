@@ -1,31 +1,21 @@
 import React from 'react';
-import {StyleSheet, SafeAreaView, Platform} from 'react-native';
+import {StyleSheet, Platform} from 'react-native';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import Diary from '../scenes/diary/diary';
+import Diary from '../scenes/diary';
+import Status from '../scenes/status';
+import Exercise from '../scenes/exercise';
 import Calendar from '../scenes/calendar/calendar';
-import DiarySvg from '../../assets/svg/diary.js';
-import CourbeSvg from '../../assets/svg/Courbes';
+import SurveyMenu from '../../assets/svg/SurveyMenu';
+import DiaryMenu from '../../assets/svg/DiaryMenu';
+import ExerciseMenu from '../../assets/svg/ExerciseMenu';
+import GraphMenu from '../../assets/svg/GraphMenu';
 import localStorage from '../utils/localStorage';
 import logEvents from '../services/logEvents';
 import {colors} from '../utils/colors';
-import Icon from '../components/Icon';
-import PlusModal from '../scenes/diary/plus-modal';
 
 const Tab = createMaterialTopTabNavigator();
 
 const Tabs = ({navigation, route}) => {
-  const [plusModalVisible, setPlusModalVisible] = React.useState(false);
-
-  const handlePlus = async () => {
-    const isBeckActivatedInLocalStorage = await localStorage.getIsBeckActivated();
-    if (
-      isBeckActivatedInLocalStorage === null || // if the user hasnt specify it yet, beck is activated by default
-      isBeckActivatedInLocalStorage === true
-    )
-      return setPlusModalVisible(true);
-    startSurvey();
-  };
-
   const startSurvey = async () => {
     const symptoms = await localStorage.getSymptoms();
     logEvents.logFeelingStart();
@@ -41,59 +31,62 @@ const Tabs = ({navigation, route}) => {
 
   return (
     <>
-      <PlusModal
-        visible={plusModalVisible}
-        navigation={navigation}
-        onClick={() => setPlusModalVisible(false)}
-        onChange={(e) => console.log(e)}
-        startSurvey={startSurvey}
-      />
-      <SafeAreaView style={styles.surveyButton}>
-        <Icon
-          activeOpacity={0.9}
-          icon="PlusSvg"
-          onPress={handlePlus}
-          width={50}
-          height={50}
-        />
-      </SafeAreaView>
       <Tab.Navigator
-        initialRouteName="Diary"
+        initialRouteName="Status"
         swipeEnabled={true}
         tabBarPosition="bottom"
         tabBarOptions={{
           activeTintColor: colors.LIGHT_BLUE,
           inactiveTintColor: colors.BLUE,
           showIcon: true,
-          indicatorStyle: {
-            height: 3,
-            top: 0,
-            backgroundColor: colors.LIGHT_BLUE,
-            borderRadius: 5,
-          },
+          indicatorStyle: {height: 0},
           style: styles.tabBar,
+          iconStyle: {
+            // borderColor: 'red',
+            // borderWidth: 1,
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          },
           labelStyle: {
             textTransform: 'capitalize',
-            fontSize: 11,
+            fontSize: 10,
             marginHorizontal: 0,
-            marginVertical: Platform.OS === 'android' ? 0 : 5,
             padding: 0,
           },
         }}>
         <Tab.Screen
+          name="Status"
+          component={Status}
+          options={{
+            tabBarLabel: 'Mon état',
+            tabBarIcon: ({color}) => <SurveyMenu height={24} style={{color}} />,
+          }}
+        />
+        <Tab.Screen
           name="Diary"
           component={Diary}
           options={{
-            tabBarLabel: 'Journal',
-            tabBarIcon: ({color}) => <DiarySvg style={{color}} />,
+            tabBarLabel: 'Mon journal',
+            tabBarIcon: ({color}) => <DiaryMenu height={24} style={{color}} />,
+          }}
+        />
+        <Tab.Screen
+          name="Exercise"
+          component={Exercise}
+          options={{
+            tabBarLabel: 'Exercice',
+            tabBarIcon: ({color}) => (
+              <ExerciseMenu height={24} style={{color}} />
+            ),
           }}
         />
         <Tab.Screen
           name="Calendar"
           component={Calendar}
           options={{
-            tabBarLabel: 'Courbes',
-            tabBarIcon: ({color}) => <CourbeSvg style={{color}} />,
+            tabBarLabel: 'Mon suivi',
+            tabBarIcon: ({color}) => <GraphMenu height={24} style={{color}} />,
           }}
         />
       </Tab.Navigator>
@@ -103,6 +96,8 @@ const Tabs = ({navigation, route}) => {
 
 const styles = StyleSheet.create({
   tabBar: {
+    borderTopColor: colors.LIGHT_BLUE_TRANS,
+    borderTopWidth: 0.5,
     maxHeight: 80,
   },
   surveyButton: {
@@ -110,7 +105,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     position: 'absolute',
     bottom: Platform.OS === 'android' ? 40 : 50,
-
     zIndex: 1,
     alignSelf: 'center',
   },

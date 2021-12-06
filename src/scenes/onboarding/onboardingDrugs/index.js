@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import Text from '../../../components/MyText';
 import {colors} from '../../../utils/colors';
-import {DiaryDataContext} from '../../../context';
+import {DiaryDataContext} from '../../../context/diaryData';
 import Button from '../../../components/Button';
 import BackButton from '../../../components/BackButton';
 import localStorage from '../../../utils/localStorage';

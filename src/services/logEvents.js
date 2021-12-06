@@ -289,6 +289,14 @@ const logDrugAdd = async (drug) => {
     value: drug,
   });
 };
+const logInputDrugSurvey = async (numberOfInput) => {
+  await logEvent({
+    category: 'DRUG',
+    action: 'DRUG_INPUT_SURVEY',
+    name: 'numberOfInput',
+    value: numberOfInput,
+  });
+};
 
 // beck
 const logActivateBeck = async (v) => {
@@ -354,6 +362,32 @@ const logDeleteBeck = async () => {
   });
 };
 
+const logAddNoteDiary = async () => {
+  await logEvent({
+    category: 'DIARY',
+    action: 'DIARY_ADD_NOTE',
+  });
+};
+const logEditNoteDiary = async () => {
+  await logEvent({
+    category: 'DIARY',
+    action: 'DIARY_EDIT_NOTE',
+  });
+};
+const logDeleteNoteDiary = async () => {
+  await logEvent({
+    category: 'DIARY',
+    action: 'DIARY_DELETE_NOTE',
+  });
+};
+
+const logOpenPage = async (category) => {
+  await logEvent({
+    category: 'OPEN_TAB',
+    action: `${category.toUpperCase()}_OPEN`,
+  });
+};
+
 export default {
   initMatomo,
   logAppVisit,
@@ -392,4 +426,9 @@ export default {
   logBeckAddCustomSensation,
   logNPSUsefulSend,
   logNPSRecoSend,
+  logAddNoteDiary,
+  logEditNoteDiary,
+  logDeleteNoteDiary,
+  logOpenPage,
+  logInputDrugSurvey,
 };

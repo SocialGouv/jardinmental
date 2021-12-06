@@ -1,6 +1,6 @@
 {
   "name": "monsuivipsy",
-  "version": "1.15.6",
+  "version": "1.16.8",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
@@ -16,7 +16,8 @@
     "lint": "eslint .",
     "android:build-aab": "cd android && ./gradlew clean && ./gradlew bundleRelease && cd ../",
     "postinstall": "pod install --project-directory=ios/ --repo-update && npx jetify -r",
-    "update-mobile-app-version": "node ./update-mobile-app-version.js"
+    "update-mobile-app-version": "node ./update-mobile-app-version.js",
+    "clean-project": "rm -rf node_modules && echo ✨ node_modules deleted && rm -rf ios/Pods && echo ✨ Pods deleted && watchman watch-del-all"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.13.2",
@@ -37,7 +38,9 @@
     "react-native": "0.65.1",
     "react-native-device-info": "^8.3.1",
     "react-native-dotenv": "^2.4.3",
+    "react-native-fbsdk-next": "^6.1.1",
     "react-native-gesture-handler": "^1.9.0",
+    "react-native-get-random-values": "^1.7.1",
     "react-native-modal": "^11.10.0",
     "react-native-modal-datetime-picker": "^9.2.3",
     "react-native-picker-select": "^8.0.4",
@@ -49,7 +52,8 @@
     "react-native-svg": "^12.1.0",
     "react-native-swiper": "^1.6.0",
     "react-native-tab-view": "^2.15.2",
-    "react-native-version-check": "^3.4.2"
+    "react-native-version-check": "^3.4.2",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

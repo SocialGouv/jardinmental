@@ -131,8 +131,8 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         multiDexEnabled true
-        versionCode 71
-        versionName "1.15.6"
+        versionCode 80
+        versionName "1.16.8"
     }
     splits {
         abi {
@@ -189,6 +189,9 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
+    
+    implementation 'com.facebook.android:facebook-android-sdk:latest.release'
+
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:0.63.4"  // From node_modules
 

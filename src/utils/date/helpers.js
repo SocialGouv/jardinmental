@@ -1,10 +1,48 @@
 import {format, parseISO, isToday, isYesterday} from 'date-fns';
 import {fr} from 'date-fns/locale';
+import {firstLetterUppercase} from '../../utils/string-util';
 
 export const oneDay = 1000 * 60 * 60 * 24;
 export const beforeToday = (offset = 0, date = new Date()) =>
   new Date(Date.parse(date) - offset * oneDay);
 export const formatDay = (date) => date.toISOString().split('T')[0];
+export const makeSureDate = (date) => {
+  if (date instanceof Date) {
+    return date;
+  }
+  return new Date(date);
+};
+export const makeSureTimestamp = (date) => {
+  if (date instanceof Date) {
+    return Date.parse(date);
+  }
+  return date;
+};
+
+export const today = (offset = 0, withTime = false) => {
+  if (withTime) {
+    const now = new Date();
+    return new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate(),
+      now.getHours(),
+      now.getMinutes() + 1,
+    );
+  }
+  return dateWithoutTime(new Date(), offset);
+};
+export const dateWithoutTime = (inputDate, offset = 0) => {
+  const date = makeSureDate(inputDate);
+  return new Date(
+    date.getFullYear(),
+    date.getMonth(),
+    date.getDate() + offset,
+    0,
+    0,
+    0,
+  );
+};
 
 export const days = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
 export const months = [
@@ -129,4 +167,16 @@ export const isAfterToday = (date) => {
   const today = new Date();
   const test = new Date(date);
   return test > today;
+};
+
+export const formatDateThread = (date) => {
+  const isoDate = parseISO(date);
+  if (isToday(isoDate)) {
+    return "Aujourd'hui";
+  } else if (isYesterday(isoDate)) {
+    return 'Hier';
+  } else {
+    const formattedDate = format(isoDate, 'EEEE d MMMM', {locale: fr});
+    return firstLetterUppercase(formattedDate);
+  }
 };

@@ -3,10 +3,10 @@ import {SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
 import {displayedCategories} from '../../utils/constants';
 import {getArrayOfDates, getTodaySWeek} from '../../utils/date/helpers';
 import Chart from './chart';
-import {DiaryDataContext} from '../../context';
+import {DiaryDataContext} from '../../context/diaryData';
 import {useContext} from 'react';
 import DayTitle from './day-title';
-import DiaryItem from '../diary/diary-item';
+import DiaryItem from '../status/status-item';
 
 const DailyChart = ({
   route: {
@@ -36,6 +36,11 @@ const DailyChart = ({
       if (!categoryState) {
         return null;
       }
+      if (categoryState?.value) return categoryState?.value - 1;
+
+      // -------
+      // the following code is for the retrocompatibility
+      // -------
 
       // get the name and the suffix of the category
       const [categoryName, suffix] = categoryId.split('_');
@@ -51,6 +56,12 @@ const DailyChart = ({
       return categoryState.level - 1;
     });
   };
+
+  const displayTitle = () => {
+    const [categoryName] = categoryId.split('_');
+    return displayedCategories[categoryId] || categoryName;
+  };
+
   return (
     <SafeAreaView style={styles.safe}>
       <ScrollView
@@ -58,7 +69,7 @@ const DailyChart = ({
         contentContainerStyle={styles.scrollContainer}>
         <DayTitle day={diaryDay} onBackPress={navigation.goBack} />
         <Chart
-          title={displayedCategories[categoryId]}
+          title={displayTitle()}
           data={computeChartData(categoryId)}
           withFocus
           focused={focused}

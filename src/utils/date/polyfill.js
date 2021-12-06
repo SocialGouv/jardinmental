@@ -268,3 +268,20 @@ Date.prototype.getLocalePureTime = function (locale) {
     minute: '2-digit',
   });
 };
+
+Date.prototype.getLocaleTime = function (locale) {
+  return (
+    'à ' +
+    new Date(this).toCustomLocaleString(locale, {
+      hour: '2-digit',
+      minute: '2-digit',
+    })
+  );
+};
+Date.prototype.getLocaleDate = function (locale) {
+  return new Date(this).toCustomLocaleString(locale, {
+    weekday: 'long',
+    month: 'long',
+    day: 'numeric',
+  });
+};

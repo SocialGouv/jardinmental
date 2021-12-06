@@ -17,7 +17,7 @@ import {
 import Header from '../../components/Header';
 import Chart from './chart';
 import WeekPicker from './week-picker';
-import {DiaryDataContext} from '../../context';
+import {DiaryDataContext} from '../../context/diaryData';
 import {useContext} from 'react';
 import logEvents from '../../services/logEvents';
 import localStorage from '../../utils/localStorage';
@@ -45,14 +45,6 @@ const Calendar = ({navigation}) => {
     })();
     return () => (mounted = false);
   }, [diaryData]);
-
-  useEffect(() => {
-    const unsubscribe = navigation.addListener('tabPress', (e) => {
-      logEvents.logCalendarOpen();
-    });
-
-    return unsubscribe;
-  }, [navigation]);
 
   useEffect(() => {
     const emptyCalendar = !Object.keys(displayedCategories)
@@ -139,7 +131,7 @@ const Calendar = ({navigation}) => {
       <ScrollView
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContainer}>
-        <Header title="Courbes" navigation={navigation} />
+        <Header title="Mon suivi" navigation={navigation} />
 
         <WeekPicker
           firstDay={firstDay}
