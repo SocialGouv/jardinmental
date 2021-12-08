@@ -98,7 +98,7 @@ const SymptomScreen = ({navigation, route}) => {
   return (
     <SafeAreaView style={styles.safe}>
       <View style={styles.buttonsContainer}>
-        <BackButton disabled={noneSelected()} onPress={navigation.goBack} />
+        <BackButton onPress={navigation.goBack} />
       </View>
       <ScrollView
         keyboardShouldPersistTaps="handled"
