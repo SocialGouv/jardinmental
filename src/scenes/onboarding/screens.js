@@ -59,7 +59,7 @@ export const Screen3 = () => (
       {'\n\n'}Le jour de ma consultation, j'ai une{' '}
       <Text style={styles.emphasis}>vision complète</Text> de ce que j'ai vécu
       et de ce qui m'a interrogé pour en{' '}
-      <Text style={styles.emphasis}>parler</Text> avec mon psy
+      <Text style={styles.emphasis}>parler</Text> avec mon thérapeute.
     </Text>
   </View>
 );
