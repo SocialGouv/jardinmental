@@ -1,3 +1,10 @@
+## [1.16.8-beta.1](https://github.com/SocialGouv/monsuivipsy/compare/v1.16.7...v1.16.8-beta.1) (2021-12-08)
+
+
+### Bug Fixes
+
+* wording ([eb3f1a1](https://github.com/SocialGouv/monsuivipsy/commit/eb3f1a161998b073368ac2ed834c2723c28d4d67))
+
 ## [1.16.7](https://github.com/SocialGouv/monsuivipsy/compare/v1.16.6...v1.16.7) (2021-12-08)
 
 
