@@ -1,3 +1,10 @@
+## [1.16.7](https://github.com/SocialGouv/monsuivipsy/compare/v1.16.6...v1.16.7) (2021-12-08)
+
+
+### Bug Fixes
+
+* bouton retour actif sur l'écran de selection de ressenti - onboarding ([#96](https://github.com/SocialGouv/monsuivipsy/issues/96)) ([baa6c25](https://github.com/SocialGouv/monsuivipsy/commit/baa6c251cec43135d4e38acb80f961344517d1f7))
+
 # [1.12.0](https://github.com/SocialGouv/monsuivipsy/compare/v1.11.1...v1.12.0) (2021-12-06)
 
 
