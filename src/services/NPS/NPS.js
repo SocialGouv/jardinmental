@@ -21,6 +21,7 @@ import {colors} from '../../utils/colors';
 import Matomo from '../matomo';
 import logEvents from '../logEvents';
 import localStorage from '../../utils/localStorage';
+import pck from '../../../package.json';
 
 // just to make sure nothing goes the bad way in production, debug is always false
 
@@ -36,6 +37,8 @@ const lookUpSupported = {
 const formatText = ({useful, reco, feedback, userId, contact, supported}) =>
   `
 User: ${userId}
+Version: ${pck.version}
+OS: ${Platform.OS}
 Comment pouvons-nous vous être encore plus utile: ${feedback}
 Ce service vous a-t-il été utile: ${useful}
 Quelle est la probabilité que vous recommandiez ce service à un ami ou un proche: ${reco}
