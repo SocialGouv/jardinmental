@@ -20,6 +20,7 @@ import Bubble from '../../components/bubble';
 import ArrowUpSvg from '../../../assets/svg/arrow-up.svg';
 import logEvents from '../../services/logEvents';
 import {formatDateThread} from '../../utils/date/helpers';
+import BannerProNPS from './bannerProNPS';
 
 const LIMIT_PER_PAGE = __DEV__ ? 3 : 30;
 
@@ -70,6 +71,7 @@ const Status = ({navigation}) => {
         style={styles.container}
         contentContainerStyle={styles.scrollContainer}>
         <Header title="Mon état et mes traitements" navigation={navigation} />
+        <BannerProNPS />
         <TouchableOpacity onPress={startSurvey} style={styles.setupButton}>
           <Text style={styles.setupButtonText}>
             Comment s'est passée ma journée
