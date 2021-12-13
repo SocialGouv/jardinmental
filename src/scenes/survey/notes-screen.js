@@ -145,6 +145,9 @@ const Notes = ({navigation, route}) => {
             onFocus={() => setInputFocused(3)}
             onBlur={() => setInputFocused(null)}
           />
+          <View style={styles.buttonWrapper}>
+            <Button onPress={validateSurvey} title="Valider" />
+          </View>
         </ScrollView>
         {inputFocused ? (
           <View style={styles.floatingButtonWrapper}>
@@ -154,11 +157,7 @@ const Notes = ({navigation, route}) => {
               visible
             />
           </View>
-        ) : (
-          <View style={styles.buttonWrapper}>
-            <Button onPress={validateSurvey} title="Valider" />
-          </View>
-        )}
+        ) : null}
       </SafeAreaView>
     </KeyboardAvoidingView>
   );
@@ -193,7 +192,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   scrollContainer: {
-    paddingBottom: 80,
+    paddingBottom: 600,
   },
   backButton: {
     fontWeight: '700',
