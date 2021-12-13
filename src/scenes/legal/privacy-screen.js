@@ -75,7 +75,7 @@ const Privacy = ({navigation}) => {
       traitement des données à caractère personnel et à la libre circulation de
       ces données. {'\n\n'}L'obligation légale est posée par la loi LCEN n°
       2004-575 du 21 juin 2004 pour la confiance dans l'économie numérique et
-      par les articles 1 et 3 du décret n°2011-219 du 25 février 2011.
+      par l'article 1 du décret n°2021-1363 du 20 octobre 2021.
       {'\n\n'}
       <Text style={styles.subtitle}>c. Cookies</Text>
       {'\n\n'}
@@ -104,8 +104,8 @@ const Privacy = ({navigation}) => {
       Données relatives aux notes libres et à l’évolution des symptômes : Dès la
       suppression ou dans un délai de 2 ans à compter de la dernière utilisation
       {'\n\n'}
-      Données d’hébergeur : 1 an, conformément au décret n°2011-219 du 25
-      février 2011.
+      Données d’hébergeur : 1 an, conformément au décret n°2021-1363 du 20
+      octobre 2021.
       {'\n\n'}
       Cookies : Dans un délai de 13 mois, conformément aux recommandations de la
       CNIL
