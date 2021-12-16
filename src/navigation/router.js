@@ -25,7 +25,6 @@ import Drugs from '../scenes/drugs/drugs';
 import DrugsList from '../scenes/drugs/list';
 import TooLate from '../scenes/status/too-late';
 import News from '../scenes/news';
-import Infos from '../scenes/infos';
 import ActivateBeck from '../scenes/beck/activate';
 import ViewBeck from '../scenes/beck/view';
 import Beck from '../scenes/beck';
@@ -113,7 +112,6 @@ class Router extends React.Component {
           <Stack.Screen name="drugs-list" component={DrugsList} />
           <Stack.Screen name="too-late" component={TooLate} />
           <Stack.Screen name="news" component={News} />
-          <Stack.Screen name="infos" component={Infos} />
           <Stack.Screen name="contact" component={Contact} />
           <Stack.Screen name="contribute-pro" component={ContributePro} />
           <Stack.Screen name="activate-beck" component={ActivateBeck} />

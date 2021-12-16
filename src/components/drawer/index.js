@@ -72,14 +72,7 @@ export default ({navigation, visible, onClick}) => {
               icon="PresentationSvg"
             />
             <DrawerItem
-              title="Informations"
-              path="infos"
-              navigation={navigation}
-              onClick={onClick}
-              icon="InfoSvg"
-            />
-            <DrawerItem
-              title="Parler à quelqu'un"
+              title="Parler à quelqu'un et s'informer"
               path="contact"
               navigation={navigation}
               onClick={onClick}
