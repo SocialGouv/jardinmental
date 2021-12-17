@@ -3,6 +3,7 @@ import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import {parseISO, differenceInDays} from 'date-fns';
 
 import Icon from '../../components/Icon';
+import {colors} from '../../utils/colors';
 
 export default ({patientState, date, navigation}) => {
   const data = patientState?.becks;
@@ -46,6 +47,11 @@ export default ({patientState, date, navigation}) => {
                   <Text>
                     {beck?.mainEmotion} -{' '}
                     {`${beck?.mainEmotionIntensity * 10}%`}
+                    {beck?.mainEmotionIntensityNuanced ? (
+                      <Text style={styles.mainEmotionIntensityNuancedStyle}>
+                        {' →'} {beck?.mainEmotionIntensityNuanced * 10}%
+                      </Text>
+                    ) : null}
                   </Text>
                   {beck?.where ? (
                     <Text style={styles.place}>{beck?.where}</Text>
@@ -99,5 +105,9 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontStyle: 'italic',
     color: '#26387C',
+  },
+  mainEmotionIntensityNuancedStyle: {
+    color: colors.LIGHT_BLUE,
+    fontWeight: 'bold',
   },
 });
