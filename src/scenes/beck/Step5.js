@@ -89,6 +89,11 @@ export default ({onChange, onSubmit, data}) => {
       <Text style={styleBeck.title}>
         A quel % je crois à ma pensée initiale maintenant ?
       </Text>
+      {data.thoughtsBeforeMainEmotion ? (
+        <Text style={[styleBeck.subtitle, styles.italic, styles.mb1]}>
+          " {data.thoughtsBeforeMainEmotion} "
+        </Text>
+      ) : null}
       <DiscretSlider
         step={trustInThoughsNowSelected}
         onChange={(trustInThoughsNow) => {
@@ -121,5 +126,11 @@ const styles = StyleSheet.create({
   safe: {
     flex: 1,
     backgroundColor: 'white',
+  },
+  italic: {
+    fontStyle: 'italic',
+  },
+  mb1: {
+    marginBottom: 10,
   },
 });
