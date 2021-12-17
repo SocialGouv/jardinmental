@@ -22,9 +22,8 @@ export default ({navigation, visible, onClick}) => {
   const [updateVisible, setUpdateVisible] = useState(false);
   const [npsProIsVisible, setNpsProIsVisible] = useState(true);
   const [badgeNpsProIsVisible, setBadgeNpsProIsVisible] = useState(false);
-  const [badgeNotesVersionVisible, setBadgeNotesVersionVisible] = useState(
-    false,
-  );
+  const [badgeNotesVersionVisible, setBadgeNotesVersionVisible] =
+    useState(false);
 
   useEffect(() => {
     setIsVisible(visible);
@@ -73,17 +72,17 @@ export default ({navigation, visible, onClick}) => {
             />
             <DrawerItem
               title="Parler à quelqu'un et s'informer"
-              path="contact"
+              path="infos"
               navigation={navigation}
               onClick={onClick}
               icon="PhoneSvg"
             />
             <DrawerItem
-              title="Site internet"
-              icon="GlobeSvg"
-              onClick={() => {
-                Linking.openURL('https://monsuivipsy.fabrique.social.gouv.fr/');
-              }}
+              title="Nous contacter"
+              path="contact"
+              navigation={navigation}
+              onClick={onClick}
+              icon="PhoneSvg"
             />
             <DrawerItem
               title="Protection des données"

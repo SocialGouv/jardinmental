@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {StyleSheet, SafeAreaView, ScrollView} from 'react-native';
+import {StyleSheet, SafeAreaView, ScrollView, Image, View} from 'react-native';
 
 import {colors} from '../../utils/colors';
 import BackButton from '../../components/BackButton';
@@ -24,7 +24,13 @@ export default ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.safe}>
-      <BackButton onPress={navigation.goBack} />
+      <View style={styles.headerContainer}>
+        <BackButton onPress={navigation.goBack} />
+        <Image
+          style={styles.image}
+          source={require('../../../assets/imgs/logo2.png')}
+        />
+      </View>
       <ScrollView
         style={styles.cgu}
         contentContainerStyle={styles.scrollContainer}>
@@ -214,6 +220,18 @@ export default ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
+  headerContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingRight: 20,
+  },
+  image: {
+    height: 50,
+    width: 50,
+  },
+
   text: {color: '#333'},
   bold: {fontWeight: 'bold'},
   italic: {fontStyle: 'italic'},
