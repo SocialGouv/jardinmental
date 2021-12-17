@@ -1174,10 +1174,10 @@
   resolved "https://registry.npmjs.org/@react-native-community/masked-view/-/masked-view-0.1.10.tgz"
   integrity sha512-rk4sWFsmtOw8oyx8SD3KSvawwaK7gRBSEIy2TAwURyGt+3TizssXP1r8nx3zY+R7v2vYYHXZ+k2/GULAT/bcaQ==
 
-"@react-native-community/netinfo@^5.9.9":
-  version "5.9.9"
-  resolved "https://registry.npmjs.org/@react-native-community/netinfo/-/netinfo-5.9.9.tgz"
-  integrity sha512-Gp0XV4BgabvzkL4Dp6JAsA2l9LcmgBAq3erCLdvRZmEFz7guCWTogQWVfFtl+IbU0uqfwfo9fm2+mQiwdudLCw==
+"@react-native-community/netinfo@^7.0.0":
+  version "7.1.6"
+  resolved "https://registry.npmjs.org/@react-native-community/netinfo/-/netinfo-7.1.6.tgz"
+  integrity sha512-FsBpEpMaFRwWz+Z2HWcYP2wBN7wooTIuvnOvY5EBJwrJIu15UnTaSGT4ABhdMSP8I0loI75mJxuXVQ+BwR5UTg==
 
 "@react-native-community/push-notification-ios@^1.8.0":
   version "1.8.0"
@@ -3265,9 +3265,9 @@ fbjs@^1.0.0:
     ua-parser-js "^0.7.18"
 
 fbjs@^3.0.0:
-  version "3.0.1"
-  resolved "https://registry.npmjs.org/fbjs/-/fbjs-3.0.1.tgz"
-  integrity sha512-8+vkGyT4lNDRKHQNPp0yh/6E7FfkLg89XqQbOYnvntRh+8RiSD43yrh9E5ejp1muCizTL4nDVG+y8W4e+LROHg==
+  version "3.0.2"
+  resolved "https://registry.npmjs.org/fbjs/-/fbjs-3.0.2.tgz"
+  integrity sha512-qv+boqYndjElAJHNN3NoM8XuwQZ1j2m3kEvTgdle8IDjr6oUbkEpvABWtj/rQl3vq4ew7dnElBxL4YJAwTVqQQ==
   dependencies:
     cross-fetch "^3.0.4"
     fbjs-css-vars "^1.0.0"
