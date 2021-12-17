@@ -144,7 +144,7 @@ export default ({navigation, route}) => {
       <SafeAreaView style={styles.safe}>
         <View style={styles.buttonsContainer}>
           <BackButton onPress={previousStep} />
-          <ForwardButton onPress={nextStep} />
+          {step < 5 ? <ForwardButton onPress={nextStep} /> : null}
         </View>
         <ScrollView
           ref={scrollRef}
