@@ -81,7 +81,6 @@ export default ({onClose}) => {
 const styles = StyleSheet.create({
   feedback: {
     width: '100%',
-    // height: 100,
     borderRadius: 7,
     borderWidth: 1,
     borderColor: '#dbdbe9',
@@ -90,12 +89,6 @@ const styles = StyleSheet.create({
     marginVertical: 15,
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
-  },
-  notFound: {
-    color: '#444',
-    fontStyle: 'italic',
-    fontWeight: '600',
-    padding: 30,
   },
   welcomeContainer: {
     padding: 20,
@@ -109,12 +102,6 @@ const styles = StyleSheet.create({
   welcomeText: {marginBottom: 30},
   boldText: {fontWeight: 'bold'},
   blueText: {color: colors.LIGHT_BLUE},
-  showWelcomeView: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 30,
-  },
   button: {
     backgroundColor: colors.LIGHT_BLUE,
     borderRadius: 45,
