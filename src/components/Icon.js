@@ -27,6 +27,7 @@ import Text from '../components/MyText';
 import PhoneSvg from '../../assets/svg/Phone';
 import PeopleSvg from '../../assets/svg/People';
 import GlobeSvg from '../../assets/svg/Globe';
+import LockSvg from '../../assets/svg/Lock';
 
 import {
   StyleSheet,
@@ -65,6 +66,7 @@ const mapIconToSvg = (icon) => {
     PhoneSvg,
     GlobeSvg,
     PeopleSvg,
+    LockSvg,
   };
   return iconMap[icon];
 };
