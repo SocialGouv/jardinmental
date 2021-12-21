@@ -12,6 +12,7 @@ import localStorage from '../../../utils/localStorage';
 import logEvents from '../../../services/logEvents';
 import Matomo from '../../../services/matomo';
 import {ONBOARDING_STEPS} from '../../../utils/constants';
+import HandShakeSvg from '../../../../assets/svg/HandShake';
 
 const Supported = ({navigation}) => {
   const handleClick = async (value) => {
@@ -38,16 +39,17 @@ const Supported = ({navigation}) => {
         style={styles.container}
         contentContainerStyle={styles.scrollContainer}>
         <View style={styles.header}>
-          <Text style={styles.title}>Mon Suivi Psy</Text>
-          <Text style={styles.title}>Pour commencer</Text>
+          <HandShakeSvg width={88} height={88} color="#bebebe" />
+          <Text style={styles.title}>Bienvenue sur{'\n'}Mon Suivi Psy</Text>
+          <Text style={styles.subtitle}>Faisons connaissance :</Text>
         </View>
         <Card
-          title="Je suis suivi, j’ai téléchargé l’application sur recommandation du professionnel qui me suit"
+          title="Je suis suivi, le professionnel qui me suit m'a recommandé l'application"
           color="#F4FCFD"
           handleClick={() => handleClick('YES')}
         />
         <Card
-          title="Je suis suivi, j’ai téléchargé l’application de moi-même"
+          title="Je suis suivi, j'ai téléchargé moi-même l'application"
           color="#F4FCFD"
           handleClick={() => handleClick('YES_SOLO')}
         />
@@ -61,8 +63,8 @@ const Supported = ({navigation}) => {
           color="#F4FCFD"
           handleClick={() => handleClick('NO')}
         />
-        <Card
-          title="Je suis professionnel de santé"
+        <DarkCard
+          title="Je suis un professionnel de santé"
           color="#F4FCFD"
           handleClick={() => handleClick('PRO')}
         />
@@ -74,8 +76,17 @@ const Supported = ({navigation}) => {
 const Card = ({title, handleClick}) => {
   return (
     <TouchableOpacity onPress={handleClick}>
-      <View style={[styles.card]}>
+      <View style={styles.card}>
         <Text style={styles.cardTitle}>{title}</Text>
+      </View>
+    </TouchableOpacity>
+  );
+};
+const DarkCard = ({title, handleClick}) => {
+  return (
+    <TouchableOpacity onPress={handleClick}>
+      <View style={styles.darkCard}>
+        <Text style={styles.darkCardTitle}>{title}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -83,24 +94,39 @@ const Card = ({title, handleClick}) => {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: '#D2F4F7',
+    backgroundColor: colors.LIGHT_BLUE,
     marginBottom: 20,
-    borderRadius: 10,
+    borderRadius: 20,
     padding: 20,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'flex-start',
-    minHeight: '10%',
+    alignItems: 'center',
+    minHeight: 75,
+    flex: 1,
+  },
+  darkCard: {
+    backgroundColor: colors.DARK_BLUE,
+    marginBottom: 20,
+    borderRadius: 20,
+    padding: 15,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   scrollContainer: {
     paddingBottom: 150,
   },
-
   cardTitle: {
-    color: colors.DARK_BLUE,
+    color: '#fff',
     fontWeight: '500',
-    // marginBottom: 10,
+    textAlign: 'center',
+  },
+  darkCardTitle: {
+    color: '#fff',
+    fontWeight: '500',
+    textAlign: 'center',
   },
   safe: {
     flex: 1,
@@ -108,23 +134,24 @@ const styles = StyleSheet.create({
   },
   header: {
     marginBottom: 15,
+    alignItems: 'center',
   },
   title: {
     color: colors.BLUE,
     fontSize: 22,
-    paddingBottom: 20,
+    paddingBottom: 15,
     fontWeight: '700',
+  },
+  subtitle: {
+    color: colors.BLUE,
+    paddingBottom: 10,
+    fontWeight: 'normal',
   },
   container: {
     backgroundColor: 'white',
     padding: 20,
     flex: 1,
     display: 'flex',
-    // justifyContent: 'center',
-  },
-  content: {
-    display: 'flex',
-    flex: 1,
   },
 });
 
