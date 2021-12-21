@@ -15,6 +15,7 @@ import Onboarding from '../scenes/onboarding';
 import Supported from '../scenes/onboarding/onboardingSupported';
 import OnboardingSymptoms from '../scenes/onboarding/onboardingSymptoms';
 import OnboardingDrugs from '../scenes/onboarding/onboardingDrugs';
+import OnboardingDrugsInformation from '../scenes/onboarding/onboardingDrugs/drugs-information';
 import OnboardingDrugsList from '../scenes/onboarding/onboardingDrugs/list';
 import CGU from '../scenes/legal/cgu-screen';
 import Privacy from '../scenes/legal/privacy-screen';
@@ -102,6 +103,10 @@ class Router extends React.Component {
             component={OnboardingSymptoms}
           />
           <Stack.Screen name="onboarding-drugs" component={OnboardingDrugs} />
+          <Stack.Screen
+            name="onboarding-drugs-information"
+            component={OnboardingDrugsInformation}
+          />
           <Stack.Screen
             name="onboarding-drugs-list"
             component={OnboardingDrugsList}

@@ -17,7 +17,6 @@ import DrugItem from './drug-item';
 import {getDrugListWithLocalStorage} from '../../../utils/drugs-list';
 import Icon from '../../../components/Icon';
 import logEvents from '../../../services/logEvents';
-import DrugInformations from './drug-information';
 import {alertNoDataYesterday} from '../../survey/survey-data';
 import Logo from '../../../../assets/svg/drugs';
 import {ONBOARDING_STEPS} from '../../../utils/constants';
@@ -155,7 +154,6 @@ const Drugs = ({navigation, route}) => {
 
   return (
     <SafeAreaView style={styles.safe}>
-      <DrugInformations visible={showInfos} onClose={toggleInfos} />
       <BackButton onPress={navigation.goBack} />
       <ScrollView
         style={styles.scrollView}
@@ -166,16 +164,9 @@ const Drugs = ({navigation, route}) => {
             <Text style={styles.title}>
               {medicalTreatment?.length
                 ? 'Voici la liste des traitements que vous allez suivre :'
-                : 'Prenez-vous un traitement médicamenteux ?'}
+                : 'Quel traitement est-ce que je souhaite suivre ?'}
             </Text>
           </View>
-          <Icon
-            icon="InfoSvg"
-            color={colors.DARK_BLUE}
-            width={30}
-            height={30}
-            onPress={toggleInfos}
-          />
         </View>
         {render()}
       </ScrollView>
@@ -212,7 +203,7 @@ const styles = StyleSheet.create({
     fontSize: 19,
   },
   scrollView: {
-    padding: 10,
+    paddingHorizontal: 20,
     backgroundColor: 'white',
   },
   scrollContainer: {

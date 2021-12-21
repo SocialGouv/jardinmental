@@ -113,7 +113,7 @@ const SymptomScreen = ({navigation, route}) => {
         <Text style={styles.subtitle}>
           J'ajoute mes critères{' '}
           <Text style={styles.lightblue}>personnalisés</Text>. Cela peut-être un{' '}
-          <Text style={styles.lightblue}>symptôme</Text>, un
+          <Text style={styles.lightblue}>symptôme</Text>, un{' '}
           <Text style={styles.lightblue}>ressenti positif</Text> ou encore une{' '}
           <Text style={styles.lightblue}>activité</Text>
         </Text>
