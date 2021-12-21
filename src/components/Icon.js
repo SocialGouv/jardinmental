@@ -25,6 +25,7 @@ import BinSvg from '../../assets/svg/bin.svg';
 import NotesSvg from '../../assets/svg/notes.svg';
 import Text from '../components/MyText';
 import PhoneSvg from '../../assets/svg/Phone';
+import PeopleSvg from '../../assets/svg/People';
 import GlobeSvg from '../../assets/svg/Globe';
 
 import {
@@ -63,6 +64,7 @@ const mapIconToSvg = (icon) => {
     NotesSvg,
     PhoneSvg,
     GlobeSvg,
+    PeopleSvg,
   };
   return iconMap[icon];
 };
