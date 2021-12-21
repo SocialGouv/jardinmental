@@ -250,6 +250,13 @@ const logProNPSSend = async () => {
   });
 };
 
+const logProNPSContactSend = async () => {
+  await logEvent({
+    category: 'NPS',
+    action: 'PRO_NPS_CONTACT_SEND',
+  });
+};
+
 const logSupportedSelect = async (supported) => {
   await logEvent({
     category: 'SUPPORTED',
@@ -414,6 +421,7 @@ export default {
   logDrugsOpen,
   logTreatmentNotFound,
   logProNPSSend,
+  logProNPSContactSend,
   logDrugAdd,
   logActivateBeck,
   logBeckStepOpen,

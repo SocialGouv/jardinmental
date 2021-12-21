@@ -20,6 +20,7 @@ import Bubble from '../../components/bubble';
 import ArrowUpSvg from '../../../assets/svg/arrow-up.svg';
 import logEvents from '../../services/logEvents';
 import {formatDateThread} from '../../utils/date/helpers';
+import BannerProNPS from './bannerProNPS';
 
 const LIMIT_PER_PAGE = __DEV__ ? 3 : 30;
 
@@ -27,6 +28,7 @@ const Status = ({navigation}) => {
   const [diaryData] = useContext(DiaryDataContext);
   const [NPSvisible, setNPSvisible] = useState(false);
   const [page, setPage] = useState(1);
+  const [bannerProNPSVisible, setBannerProNPSVisible] = useState(true);
 
   useEffect(() => {
     const handleOnboarding = async () => {
@@ -34,8 +36,9 @@ const Status = ({navigation}) => {
       const onboardingIsDone = await localStorage.getOnboardingDone();
 
       //if ONBOARDING_DONE is true, do nothing
-      if (Boolean(onboardingIsDone)) return;
-      else {
+      if (onboardingIsDone) {
+        return;
+      } else {
         const isFirstAppLaunch = await localStorage.getIsFirstAppLaunch();
         if (isFirstAppLaunch !== 'false') {
           navigation.navigate('onboarding', {
@@ -45,6 +48,12 @@ const Status = ({navigation}) => {
       }
     };
     handleOnboarding();
+
+    (async () => {
+      const bannerProNPSDone = await localStorage.getNpsProContact();
+      const supported = await localStorage.getSupported();
+      setBannerProNPSVisible(supported === 'PRO' && !bannerProNPSDone);
+    })();
   }, [navigation]);
 
   const startSurvey = async () => {
@@ -70,39 +79,44 @@ const Status = ({navigation}) => {
         style={styles.container}
         contentContainerStyle={styles.scrollContainer}>
         <Header title="Mon état et mes traitements" navigation={navigation} />
-        <TouchableOpacity onPress={startSurvey} style={styles.setupButton}>
-          <Text style={styles.setupButtonText}>
-            Comment s'est passée ma journée
-          </Text>
-        </TouchableOpacity>
-        <View style={styles.divider} />
-
-        <Bubble diaryData={diaryData} navigation={navigation} />
-        {Object.keys(diaryData)
-          .sort((a, b) => {
-            a = a.split('/').reverse().join('');
-            b = b.split('/').reverse().join('');
-            return b.localeCompare(a);
-          })
-          .slice(0, LIMIT_PER_PAGE * page)
-          .map((date) => (
-            <View key={date}>
-              <Text style={styles.subtitle}>{formatDateThread(date)}</Text>
-              <StatusItem
-                date={date}
-                patientState={diaryData[date]}
-                navigation={navigation}
-              />
-            </View>
-          ))}
-        <ContributeCard onPress={() => setNPSvisible(true)} />
-        {Object.keys(diaryData)?.length > LIMIT_PER_PAGE * page && (
-          <TouchableOpacity
-            onPress={() => setPage(page + 1)}
-            style={styles.versionContainer}>
-            <Text style={styles.arrowDownLabel}>Voir plus</Text>
-            <ArrowUpSvg style={styles.arrowDown} color={colors.BLUE} />
-          </TouchableOpacity>
+        {bannerProNPSVisible ? (
+          <BannerProNPS onClose={() => setBannerProNPSVisible(false)} />
+        ) : (
+          <>
+            <TouchableOpacity onPress={startSurvey} style={styles.setupButton}>
+              <Text style={styles.setupButtonText}>
+                Comment s'est passée ma journée
+              </Text>
+            </TouchableOpacity>
+            <View style={styles.divider} />
+            <Bubble diaryData={diaryData} navigation={navigation} />
+            {Object.keys(diaryData)
+              .sort((a, b) => {
+                a = a.split('/').reverse().join('');
+                b = b.split('/').reverse().join('');
+                return b.localeCompare(a);
+              })
+              .slice(0, LIMIT_PER_PAGE * page)
+              .map((date) => (
+                <View key={date}>
+                  <Text style={styles.subtitle}>{formatDateThread(date)}</Text>
+                  <StatusItem
+                    date={date}
+                    patientState={diaryData[date]}
+                    navigation={navigation}
+                  />
+                </View>
+              ))}
+            <ContributeCard onPress={() => setNPSvisible(true)} />
+            {Object.keys(diaryData)?.length > LIMIT_PER_PAGE * page && (
+              <TouchableOpacity
+                onPress={() => setPage(page + 1)}
+                style={styles.versionContainer}>
+                <Text style={styles.arrowDownLabel}>Voir plus</Text>
+                <ArrowUpSvg style={styles.arrowDown} color={colors.BLUE} />
+              </TouchableOpacity>
+            )}
+          </>
         )}
       </ScrollView>
     </SafeAreaView>

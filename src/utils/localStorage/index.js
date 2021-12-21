@@ -10,6 +10,7 @@ import {
   STORAGE_KEY_CUSTOM_DRUGS,
   STORAGE_KEY_ONBOARDING_STEP,
   STORAGE_KEY_ONBOARDING_DONE,
+  STORAGE_KEY_NPS_PRO_CONTACT,
 } from '../../utils/constants';
 import localStorageBeck from './beck';
 
@@ -118,6 +119,15 @@ const setVisitProNPS = async (v) => {
   await AsyncStorage.setItem(STORAGE_KEY_VISIT_PRO_NPS, JSON.stringify(v));
 };
 
+const setNpsProContact = async (v) => {
+  await AsyncStorage.setItem(STORAGE_KEY_NPS_PRO_CONTACT, JSON.stringify(v));
+};
+
+const getNpsProContact = async () => {
+  const v = await AsyncStorage.getItem(STORAGE_KEY_NPS_PRO_CONTACT);
+  return JSON.parse(v);
+};
+
 const getCustomDrugs = async () => {
   const customDrugs = await AsyncStorage.getItem(STORAGE_KEY_CUSTOM_DRUGS);
   return JSON.parse(customDrugs) || [];
@@ -155,5 +165,7 @@ export default {
   setVisitProNPS,
   addCustomDrug,
   getCustomDrugs,
+  setNpsProContact,
+  getNpsProContact,
   ...localStorageBeck,
 };
