@@ -128,11 +128,8 @@ const Calendar = ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.safe}>
-      <ScrollView
-        style={styles.scrollView}
-        contentContainerStyle={styles.scrollContainer}>
+      <View style={styles.headerContainer}>
         <Header title="Mon suivi" navigation={navigation} />
-
         <WeekPicker
           firstDay={firstDay}
           lastDay={lastDay}
@@ -140,6 +137,10 @@ const Calendar = ({navigation}) => {
           onBeforePress={() => setDay(beforeToday(7, day))}
           setDay={setDay}
         />
+      </View>
+      <ScrollView
+        style={styles.scrollView}
+        contentContainerStyle={styles.scrollContainer}>
         {!calendarIsEmpty ? (
           <>
             <View style={styles.subtitleContainer}>
@@ -199,6 +200,10 @@ const Calendar = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
+  headerContainer: {
+    padding: 20,
+    paddingBottom: 0,
+  },
   imageContainer: {
     display: 'flex',
     alignItems: 'center',
@@ -226,12 +231,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   scrollView: {
-    padding: 20,
+    flex: 1,
+    paddingHorizontal: 20,
     backgroundColor: 'white',
   },
-  scrollContainer: {
-    paddingBottom: 150,
-  },
+  scrollContainer: {},
   title: {
     fontWeight: '700',
     fontSize: 22,
