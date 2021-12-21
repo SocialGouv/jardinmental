@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import Modal from 'react-native-modal';
 import DrawerItem from './drawer-item';
+import LegalItem from './legal-item';
 import {needUpdate} from '../../services/versionChecker';
 import localStorage from '../../utils/localStorage';
 import {getBadgeNotesVersion} from '../../scenes/news';
@@ -82,23 +83,8 @@ export default ({navigation, visible, onClick}) => {
               path="contact"
               navigation={navigation}
               onClick={onClick}
-              icon="PhoneSvg"
+              icon="PeopleSvg"
             />
-            <DrawerItem
-              title="Protection des données"
-              path="privacy"
-              navigation={navigation}
-              onClick={onClick}
-              icon="ProtectionSvg"
-            />
-            <DrawerItem
-              title="Mentions légales"
-              path="legal-mentions"
-              navigation={navigation}
-              onClick={onClick}
-              icon="SymptomsSetting"
-            />
-            <Separator />
             {updateVisible ? (
               <DrawerItem
                 badge
@@ -126,6 +112,25 @@ export default ({navigation, visible, onClick}) => {
                 }}
               />
             ) : null}
+            <Separator />
+            <LegalItem
+              title="Conditions générales d'utilisation"
+              path="cgu"
+              navigation={navigation}
+              onClick={onClick}
+            />
+            <LegalItem
+              title="Protection des données"
+              path="privacy"
+              navigation={navigation}
+              onClick={onClick}
+            />
+            <LegalItem
+              title="Mentions légales"
+              path="legal-mentions"
+              navigation={navigation}
+              onClick={onClick}
+            />
             <View style={styles.versionContainer}>
               <Text style={styles.versionLabel}>version {pck.version}</Text>
             </View>

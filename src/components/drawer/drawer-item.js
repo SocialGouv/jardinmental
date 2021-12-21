@@ -32,11 +32,11 @@ export default ({
               styleContainer={{marginRight: 20}}
             />
           ) : (
-            <View style={{marginHorizontal: 30}}></View>
+            <View style={{marginHorizontal: 30}} />
           )}
           <Text style={styles.label}>{title}</Text>
           <View style={styles.button}>
-            <ArrowRightSvg />
+            <ArrowRightSvg color="#1FC6D5" />
           </View>
         </View>
       </View>
