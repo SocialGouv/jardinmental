@@ -1,6 +1,7 @@
 import React from 'react';
 import Text from '../../components/MyText';
 
+import LockSvg from '../../../assets/svg/Lock';
 import SurveyMenu from '../../../assets/svg/SurveyMenu';
 import DiaryMenu from '../../../assets/svg/DiaryMenu';
 import ExerciseMenu from '../../../assets/svg/ExerciseMenu';
@@ -20,6 +21,25 @@ export const menuHeight = 80;
 const size =
   screenHeight * (Dimensions.get('window').height > 600 ? 0.15 : 0.1);
 
+export const Screen0 = () => (
+  <View style={styles.container}>
+    <View style={styles.imageContainer}>
+      <LockSvg height={size} width={size} style={styles.image} />
+    </View>
+    <Text style={styles.presentationText}>
+      <Text style={styles.bold}>
+        Mon Suivi Psy est un service public développé par des professionnels de
+        santé et des patients, entièrement{' '}
+        <Text style={styles.emphasis}>gratuit</Text> et{' '}
+        <Text style={styles.emphasis}>anonyme</Text>
+      </Text>
+      {'\n\n'}
+      <Text style={styles.emphasis}>Personne</Text> ne peut accéder aux
+      informations que je saisis, et moi seul décide si je souhaite les{' '}
+      <Text style={styles.emphasis}>partager</Text>.
+    </Text>
+  </View>
+);
 export const Screen1 = () => (
   <View style={styles.container}>
     <View style={styles.imageContainer}>
