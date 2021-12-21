@@ -184,24 +184,14 @@ class Reminder extends React.Component {
 
   renderHeader = () => {
     return this.props.route?.params?.onboarding ? (
-      <>
-        <View style={styles.header}>
-          <ReminderSvg style={styles.smallImage} height={30} width={30} />
-          <Text style={styles.smallTitle}>
-            À quelle heure souhaitez vous avoir un rappel pour penser à
-            renseigner comment s'est passée votre journée ?
-          </Text>
-        </View>
-        <Text style={styles.subTitle}>
-          Vous recevrez une notification journalière à cette heure.
-        </Text>
-      </>
+      <View style={styles.header}>
+        <ReminderSvg style={styles.smallImage} height={30} width={30} />
+        <Text style={styles.smallTitle}>Je programme un rappel quotidien</Text>
+      </View>
     ) : (
       <>
         <ReminderSvg style={styles.bigImage} />
-        <Text style={styles.bigTitle}>
-          N'oubliez plus jamais de remplir votre journal
-        </Text>
+        <Text style={styles.bigTitle}>Je programme un rappel quotidien</Text>
       </>
     );
   };
@@ -215,41 +205,43 @@ class Reminder extends React.Component {
         <View style={styles.description}>
           {reminder ? (
             <>
-              <Text style={styles.subTitle}>Vous avez défini un rappel à</Text>
+              <Text style={styles.subtitle}>
+                Je receverai une notification à :
+              </Text>
               <TouchableOpacity onPress={this.showTimePicker}>
                 <Text style={styles.time}>{`${reminder.getLocalePureTime(
                   'fr',
                 )}`}</Text>
               </TouchableOpacity>
-              <Text style={styles.subTitle}>tous les jours.</Text>
+              <Text style={styles.subtitle}>tous les jours.</Text>
             </>
           ) : (
-            <>
-              <Text style={styles.subTitle}>
-                Définissez un rappel quotidien sur votre téléphone pour vous
-                rappeler
-              </Text>
-            </>
+            <Text style={styles.subtitle}>
+              <Text style={styles.lightblue}>Je n'oublie pas</Text> de
+              renseigner comment s'est passée ma journée, ce qui me permet
+              d'avoir un <Text style={styles.lightblue}>meilleur suivi</Text>
+            </Text>
           )}
         </View>
         <TouchableOpacity
           onPress={this.showTimePicker}
           style={styles.setupButton}>
           <Text style={styles.setupButtonText}>
-            {reminder ? 'Modifier le rappel' : 'Définir un rappel'}
+            {reminder ? 'Modifier le rappel' : "Choisir l'heure du rappel"}
           </Text>
         </TouchableOpacity>
         {this.props.route?.params?.onboarding ? (
           <TouchableOpacity
             onPress={this.validateOnboarding}
-            style={reminder ? styles.setupButton : {}}>
+            style={[styles.laterContainer, reminder ? styles.setupButton : {}]}>
             <Text style={reminder ? styles.setupButtonText : styles.later}>
-              {reminder ? 'Continuer' : 'Plus tard, peut-être'}
+              {reminder ? 'Je démarre Mon Suivi Psy' : 'Plus tard, peut-être'}
             </Text>
           </TouchableOpacity>
         ) : (
           <TouchableOpacity
-            onPress={reminder ? this.deleteReminderManually : this.onBackPress}>
+            onPress={reminder ? this.deleteReminderManually : this.onBackPress}
+            style={[styles.laterContainer]}>
             <Text style={styles.later}>
               {reminder ? 'Retirer le rappel' : 'Plus tard, peut-être'}
             </Text>
@@ -287,6 +279,8 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   container: {
+    borderColor: 'red',
+    borderWidth: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
     paddingBottom: 100,
@@ -322,8 +316,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   time: {
-    fontWeight: '700',
-    fontSize: 19,
+    color: colors.DARK_BLUE,
+    fontWeight: '500',
+    fontSize: 35,
     textAlign: 'center',
     paddingVertical: 10,
   },
@@ -343,6 +338,10 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
     color: colors.BLUE,
   },
+  laterContainer: {
+    position: 'absolute',
+    bottom: 60,
+  },
   later: {
     fontWeight: '700',
     textDecorationLine: 'underline',
@@ -361,6 +360,24 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: '700',
     fontSize: 19,
+  },
+  subtitle: {
+    color: colors.DARK_BLUE,
+    fontSize: 18,
+    marginBottom: 10,
+    fontWeight: '300',
+    textAlign: 'center',
+  },
+  link: {
+    color: '#181818',
+    textDecorationLine: 'underline',
+    fontSize: 14,
+    marginBottom: 10,
+    fontWeight: '300',
+    textAlign: 'center',
+  },
+  lightblue: {
+    color: colors.LIGHT_BLUE,
   },
 });
 
