@@ -67,7 +67,7 @@ const Header = ({title, navigation}) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 0,
     backgroundColor: 'white',
     marginRight: 'auto',
     display: 'flex',
