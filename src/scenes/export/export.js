@@ -22,6 +22,7 @@ import Icon from '../../components/Icon';
 import logEvents from '../../services/logEvents';
 import {sendTipimail} from '../../services/sendTipimail';
 import BackButton from '../../components/BackButton';
+import Button from '../../components/Button';
 const MailStorageKey = '@Mail';
 
 const Export = ({navigation}) => {
@@ -139,9 +140,11 @@ const Export = ({navigation}) => {
             />
           </View>
           {!isLoading && (
-            <TouchableOpacity onPress={exportData} style={styles.exportButton}>
-              <Text style={styles.exportButtonText}>Exporter mes données</Text>
-            </TouchableOpacity>
+            <Button
+              title="Exporter mes données"
+              disabled={!mail}
+              onPress={exportData}
+            />
           )}
         </ScrollView>
       </SafeAreaView>
@@ -184,20 +187,6 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     textDecorationLine: 'underline',
     color: colors.BLUE,
-  },
-  exportButton: {
-    backgroundColor: colors.LIGHT_BLUE,
-    height: 45,
-    borderRadius: 45,
-    paddingHorizontal: 30,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 15,
-  },
-  exportButtonText: {
-    color: '#fff',
-    fontWeight: '700',
-    fontSize: 19,
   },
   inputMail: {
     textAlign: 'center',
