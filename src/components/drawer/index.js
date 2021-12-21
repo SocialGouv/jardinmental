@@ -85,6 +85,13 @@ export default ({navigation, visible, onClick}) => {
               onClick={onClick}
               icon="PeopleSvg"
             />
+            <DrawerItem
+              title="Qui peut voir mes données ?"
+              path="privacy-light"
+              navigation={navigation}
+              onClick={onClick}
+              icon="LockSvg"
+            />
             {updateVisible ? (
               <DrawerItem
                 badge
@@ -158,12 +165,12 @@ const styles = StyleSheet.create({
     paddingBottom: 80,
   },
   versionContainer: {
-    marginTop: 20,
+    marginTop: 47,
     flex: 1,
     alignItems: 'center',
   },
   versionLabel: {
-    color: '#ccc',
+    color: '#ddd',
   },
   card: {
     width: '80%',
