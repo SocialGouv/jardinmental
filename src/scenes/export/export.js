@@ -26,6 +26,7 @@ const MailStorageKey = '@Mail';
 
 const Export = ({navigation}) => {
   const [mail, setMail] = useState('');
+  const [pseudo, setPseudo] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [diaryData] = useContext(DiaryDataContext);
   const [diaryNotes] = useContext(DiaryNotesContext);
@@ -49,13 +50,15 @@ const Export = ({navigation}) => {
     const htmlExport = await formatHtmlTable(diaryData, diaryNotes);
     setIsLoading(true);
     logEvents.logDataExport();
+    let subject = 'Export de données';
+    if (pseudo) subject += ` - ${pseudo}`;
     const res = await sendTipimail(
       {
         from: {
           address: 'contact@monsuivipsy.fr',
           personalName: 'MonSuiviPsy - Application',
         },
-        subject: 'Export de données',
+        subject,
         html: htmlExport,
       },
       mail,
@@ -82,6 +85,9 @@ const Export = ({navigation}) => {
   const handleChangeMail = (value) => {
     setMail(value.trim().replace(/\s*/g, ''));
   };
+  const handleChangePseudo = (value) => {
+    setPseudo(value.trim().replace(/\s*/g, ''));
+  };
 
   return (
     <KeyboardAvoidingView
@@ -104,24 +110,39 @@ const Export = ({navigation}) => {
             height={80}
           />
           <Text style={styles.title}>
-            Recevez vos données des 30 derniers jours par mail
+            J'envoie par mail mes données des 30 derniers jours
           </Text>
-          <TextInput
-            autoCapitalize="none"
-            keyboardType="email-address"
-            textContentType="emailAddress"
-            onChangeText={handleChangeMail}
-            value={mail}
-            placeholder="Renseignez votre email"
-            style={styles.inputMail}
-          />
 
+          <View style={styles.inputContainer}>
+            <Text style={styles.label}>À qui je souhaite l'envoyer ?</Text>
+            <TextInput
+              autoCapitalize="none"
+              keyboardType="email-address"
+              textContentType="emailAddress"
+              onChangeText={handleChangeMail}
+              value={mail}
+              placeholder="exemple@email.com"
+              style={styles.inputMail}
+            />
+          </View>
+          <View style={styles.inputContainer}>
+            <Text style={styles.label}>
+              Si je le souhaite, je peux donner un nom à mon bilan pour mieux
+              l'identifier
+            </Text>
+            <TextInput
+              autoCapitalize="none"
+              onChangeText={handleChangePseudo}
+              value={pseudo}
+              placeholder="Ex: Arthur, décembre, ..."
+              style={styles.inputMail}
+            />
+          </View>
           {!isLoading && (
             <TouchableOpacity onPress={exportData} style={styles.exportButton}>
               <Text style={styles.exportButtonText}>Exporter mes données</Text>
             </TouchableOpacity>
           )}
-          <View style={{flex: 1}} />
         </ScrollView>
       </SafeAreaView>
     </KeyboardAvoidingView>
@@ -142,9 +163,8 @@ const styles = StyleSheet.create({
     display: 'flex',
     flex: 1,
     paddingBottom: 30,
-    backgroundColor: '#f9f9f9',
     alignItems: 'center',
-    justifyContent: 'flex-end',
+    justifyContent: 'flex-start',
   },
   title: {
     width: '80%',
@@ -180,14 +200,22 @@ const styles = StyleSheet.create({
     fontSize: 19,
   },
   inputMail: {
-    width: '75%',
     textAlign: 'center',
     backgroundColor: '#F4FCFD',
     borderWidth: 0.5,
     borderRadius: 10,
     borderColor: colors.LIGHT_BLUE,
-    marginVertical: '10%',
     padding: 10,
+  },
+  label: {
+    marginBottom: 5,
+    color: colors.BLUE,
+  },
+  inputContainer: {
+    paddingHorizontal: 30,
+    display: 'flex',
+    alignSelf: 'stretch',
+    marginVertical: 30,
   },
 });
 
