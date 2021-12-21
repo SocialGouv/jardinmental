@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {
   StyleSheet,
   View,
@@ -13,21 +13,9 @@ import logEvents from '../../services/logEvents';
 import {sendTipimail} from '../../services/sendTipimail';
 import localStorage from '../../utils/localStorage';
 
-export default () => {
+export default ({onClose}) => {
   const [value, setValue] = useState();
   const [npsSent, setNpsSent] = useState(false);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    console.log('yo');
-    (async () => {
-      const supported = await localStorage.getSupported();
-      console.log('✍️ ~ supported', supported);
-      const npsProContact = await localStorage.getNpsProContact();
-      console.log('✍️ ~ npsProContact', npsProContact);
-      setVisible(supported === 'PRO' && !npsProContact);
-    })();
-  }, []);
 
   const formatText = ({value, userId}) => {
     let text = `User: ${userId}\n`;
@@ -39,9 +27,9 @@ export default () => {
     if (npsSent) {
       return;
     }
-    logEvents.logProNPSSend();
+    logEvents.logProNPSContactSend();
     const userId = Matomo.userId;
-    await sendTipimail(
+    sendTipimail(
       {
         from: {
           address: 'contact@monsuivipsy.fr',
@@ -53,9 +41,11 @@ export default () => {
       __DEV__ ? 'tangimds@gmail.com' : 'monsuivipsy@fabrique.social.gouv.fr',
     );
     setNpsSent(true);
+    localStorage.setNpsProContact(true);
+    onClose();
   };
 
-  return visible ? (
+  return (
     <View style={styles.welcomeContainer}>
       <Text style={[styles.welcomeText, styles.boldText]}>
         Mon Suivi Psy est un service public développé avec des professionnels de
@@ -81,13 +71,11 @@ export default () => {
       <TouchableOpacity onPress={sendNPS} style={styles.button}>
         <Text style={styles.buttonText}>Valider</Text>
       </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => setVisible(false)}
-        style={styles.secondarybutton}>
+      <TouchableOpacity onPress={onClose} style={styles.secondarybutton}>
         <Text style={styles.secondarybuttonText}>Passer cette étape</Text>
       </TouchableOpacity>
     </View>
-  ) : null;
+  );
 };
 
 const styles = StyleSheet.create({
