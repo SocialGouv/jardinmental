@@ -31,8 +31,6 @@ const Status = ({navigation}) => {
   const [bannerProNPSVisible, setBannerProNPSVisible] = useState(true);
 
   useEffect(() => {
-    // localStorage.setNpsProContact(null);
-
     const handleOnboarding = async () => {
       const onboardingStep = await localStorage.getOnboardingStep();
       const onboardingIsDone = await localStorage.getOnboardingDone();
