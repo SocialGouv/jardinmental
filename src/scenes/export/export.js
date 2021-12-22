@@ -115,27 +115,29 @@ const Export = ({navigation}) => {
           </Text>
 
           <View style={styles.inputContainer}>
-            <Text style={styles.label}>À qui je souhaite l'envoyer ?</Text>
+            <Text style={styles.label}>
+              Je souhaite envoyer mes données à :
+            </Text>
             <TextInput
               autoCapitalize="none"
               keyboardType="email-address"
               textContentType="emailAddress"
               onChangeText={handleChangeMail}
               value={mail}
-              placeholder="exemple@email.com"
+              placeholder="destinataire@mail.com"
               style={styles.inputMail}
             />
           </View>
           <View style={styles.inputContainer}>
             <Text style={styles.label}>
-              Si je le souhaite, je peux donner un nom à mon bilan pour mieux
-              l'identifier
+              <Text style={styles.italic}>Optionnel</Text> : je peux donner un
+              nom à mon bilan pour mieux l'identifier
             </Text>
             <TextInput
               autoCapitalize="none"
               onChangeText={handleChangePseudo}
               value={pseudo}
-              placeholder="Ex: Arthur, décembre, ..."
+              placeholder="Ex: Arthur M. décembre 2020, ..."
               style={styles.inputMail}
             />
           </View>
@@ -199,12 +201,16 @@ const styles = StyleSheet.create({
   label: {
     marginBottom: 5,
     color: colors.BLUE,
+    textAlign: 'center',
   },
   inputContainer: {
     paddingHorizontal: 30,
     display: 'flex',
     alignSelf: 'stretch',
     marginVertical: 30,
+  },
+  italic: {
+    fontStyle: 'italic',
   },
 });
 
