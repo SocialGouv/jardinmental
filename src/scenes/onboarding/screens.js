@@ -30,8 +30,8 @@ export const Screen0 = () => (
       <Text style={styles.bold}>
         Mon Suivi Psy est un service public développé par des professionnels de
         santé et des patients, entièrement{' '}
-        <Text style={styles.emphasis}>gratuit</Text> et{' '}
-        <Text style={styles.emphasis}>anonyme</Text>
+        <Text style={[styles.bold, styles.emphasis]}>gratuit</Text> et{' '}
+        <Text style={[styles.bold, styles.emphasis]}>anonyme</Text>
       </Text>
       {'\n\n'}
       <Text style={styles.emphasis}>Personne</Text> ne peut accéder aux
