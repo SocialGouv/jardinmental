@@ -15,7 +15,7 @@ import logEvents from '../../../services/logEvents';
 import BackButton from '../../../components/BackButton';
 import Button from '../../../components/Button';
 import AddElemToList from '../../../components/AddElemToList';
-import DiarySvg from '../../../../assets/svg/diary';
+import SurveyMenu from '../../../../assets/svg/SurveyMenu';
 import Logo from '../../../../assets/svg/symptoms-setting';
 import {ONBOARDING_STEPS} from '../../../utils/constants';
 
@@ -105,22 +105,25 @@ const SymptomScreen = ({navigation, route}) => {
         style={styles.container}
         contentContainerStyle={styles.scrollContainer}>
         <View style={styles.titleContainer}>
-          <Logo style={styles.image} width={30} height={30} />
+          <SurveyMenu style={styles.image} width={30} height={30} />
           <Text style={styles.title}>
-            Que souhaitez-vous suivre quotidiennement ?
+            Qu'est ce que je souhaite suivre quotidiennement ?
           </Text>
         </View>
         <Text style={styles.subtitle}>
-          Créer les critères que vous souhaitez suivre quotidiennement. Vous
-          pouvez en créer autant que vous le souhaitez.
+          J'ajoute mes critères{' '}
+          <Text style={styles.lightblue}>personnalisés</Text>. Cela peut-être un{' '}
+          <Text style={styles.lightblue}>symptôme</Text>, un{' '}
+          <Text style={styles.lightblue}>ressenti positif</Text> ou encore une{' '}
+          <Text style={styles.lightblue}>activité</Text>
         </Text>
 
         <AddElemToList
           onChange={handleAddNewSymptom}
-          placeholder="Ajouter un ressenti"
+          placeholder="Ajouter un ressenti ou une activité"
         />
         <Text style={[styles.subtitle, styles.spaceabove]}>
-          Vous pouvez aussi en sélectionner parmi ces exemples:
+          Je peux aussi en sélectionner parmi ces exemples :
         </Text>
         {chosenCategories &&
           Object.keys(chosenCategories).map((cat, index) => (
@@ -203,6 +206,8 @@ const styles = StyleSheet.create({
   },
   checkbox: {
     marginHorizontal: 10,
+    width: 25,
+    height: 25,
   },
   safe: {
     flex: 1,
@@ -223,7 +228,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     color: '#181818',
-    fontSize: 13,
+    fontSize: 14,
     marginBottom: 10,
     fontWeight: '300',
     textAlign: 'center',
@@ -279,7 +284,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   container: {
-    padding: 10,
+    paddingHorizontal: 20,
     backgroundColor: 'white',
   },
   backButtonContainer: {
@@ -308,6 +313,9 @@ const styles = StyleSheet.create({
     marginRight: 20,
     fontWeight: 'bold',
     color: colors.BLUE,
+  },
+  lightblue: {
+    color: colors.LIGHT_BLUE,
   },
 });
 

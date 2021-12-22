@@ -16,7 +16,7 @@ import logEvents from '../../services/logEvents';
 import Button from '../../components/Button';
 import ActiveDot from './ActiveDot';
 import BackButton from '../../components/BackButton';
-import {Screen1, Screen2, Screen3} from './screens';
+import {Screen0, Screen1, Screen2, Screen3} from './screens';
 
 const Onboarding = ({navigation}) => {
   const [isCguChecked, setIsCguChecked] = useState(false);
@@ -65,13 +65,14 @@ const Onboarding = ({navigation}) => {
           ref={swiperRef}
           // showsButtons
           activeDot={<ActiveDot />}>
+          <Screen0 />
           <Screen1 />
           <Screen2 />
           <Screen3 />
         </Swiper>
       </ScrollView>
       <View style={styles.CTAButtonContainer}>
-        {currentIndex === 2 ? (
+        {currentIndex === 3 ? (
           firstTime ? (
             <>
               <View style={styles.cgu}>
