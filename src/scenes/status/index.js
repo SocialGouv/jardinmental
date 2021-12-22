@@ -89,7 +89,7 @@ const Status = ({navigation}) => {
               </Text>
             </TouchableOpacity>
             <View style={styles.divider} />
-            <Bubble diaryData={diaryData} navigation={navigation} />
+            <ContributeCard onPress={() => setNPSvisible(true)} />
             {Object.keys(diaryData)
               .sort((a, b) => {
                 a = a.split('/').reverse().join('');
@@ -107,7 +107,7 @@ const Status = ({navigation}) => {
                   />
                 </View>
               ))}
-            <ContributeCard onPress={() => setNPSvisible(true)} />
+            <Bubble diaryData={diaryData} navigation={navigation} />
             {Object.keys(diaryData)?.length > LIMIT_PER_PAGE * page && (
               <TouchableOpacity
                 onPress={() => setPage(page + 1)}
