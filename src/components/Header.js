@@ -55,6 +55,7 @@ const Header = ({title, navigation}) => {
       />
       <Text style={styles.title}>{title}</Text>
       <Icon
+        color={colors.BLUE}
         spin={settingsVisible}
         icon="GearSvg"
         width={25}

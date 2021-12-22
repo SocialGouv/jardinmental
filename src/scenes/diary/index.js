@@ -178,7 +178,7 @@ const Diary = ({navigation}) => {
 
 const styles = StyleSheet.create({
   headerContainer: {
-    padding: 20,
+    padding: 5,
     paddingBottom: 0,
   },
   dateContainer: {
