@@ -9,16 +9,12 @@ import {
 import Text from '../../../components/MyText';
 import {colors} from '../../../utils/colors';
 import {DiaryDataContext} from '../../../context/diaryData';
-import Button from '../../../components/Button';
 import BackButton from '../../../components/BackButton';
 import localStorage from '../../../utils/localStorage';
 import NoData from './no-data';
 import DrugItem from './drug-item';
 import {getDrugListWithLocalStorage} from '../../../utils/drugs-list';
-import Icon from '../../../components/Icon';
 import logEvents from '../../../services/logEvents';
-import DrugInformations from './drug-information';
-import {alertNoDataYesterday} from '../../survey/survey-data';
 import Logo from '../../../../assets/svg/drugs';
 import {ONBOARDING_STEPS} from '../../../utils/constants';
 
@@ -26,7 +22,6 @@ const Drugs = ({navigation, route}) => {
   const [diaryData, setDiaryData] = useContext(DiaryDataContext);
   const [medicalTreatment, setMedicalTreatment] = useState();
   const [posology, setPosology] = useState([]);
-  const [showInfos, setShowInfos] = useState();
   const [listDrugs, setListDrugs] = useState();
 
   useEffect(() => {
@@ -121,11 +116,19 @@ const Drugs = ({navigation, route}) => {
   };
 
   const render = () => {
-    if (!medicalTreatment) {
+    if (!medicalTreatment || !medicalTreatment?.length) {
       return <NoData navigation={navigation} route={route} />;
     }
     return (
       <View>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate('onboarding-drugs-information', {
+              onboarding: true,
+            })
+          }>
+          <Text style={styles.link}>Informations sur les traitements</Text>
+        </TouchableOpacity>
         {medicalTreatment.map((e, i) => (
           <DrugItem
             key={i}
@@ -149,13 +152,8 @@ const Drugs = ({navigation, route}) => {
     );
   };
 
-  const toggleInfos = () => {
-    setShowInfos(!showInfos);
-  };
-
   return (
     <SafeAreaView style={styles.safe}>
-      <DrugInformations visible={showInfos} onClose={toggleInfos} />
       <BackButton onPress={navigation.goBack} />
       <ScrollView
         style={styles.scrollView}
@@ -166,16 +164,9 @@ const Drugs = ({navigation, route}) => {
             <Text style={styles.title}>
               {medicalTreatment?.length
                 ? 'Voici la liste des traitements que vous allez suivre :'
-                : 'Prenez-vous un traitement médicamenteux ?'}
+                : 'Quel traitement est-ce que je souhaite suivre ?'}
             </Text>
           </View>
-          <Icon
-            icon="InfoSvg"
-            color={colors.DARK_BLUE}
-            width={30}
-            height={30}
-            onPress={toggleInfos}
-          />
         </View>
         {render()}
       </ScrollView>
@@ -184,6 +175,14 @@ const Drugs = ({navigation, route}) => {
 };
 
 const styles = StyleSheet.create({
+  link: {
+    color: '#181818',
+    textDecorationLine: 'underline',
+    fontSize: 14,
+    marginBottom: 20,
+    fontWeight: '300',
+    textAlign: 'center',
+  },
   image: {
     color: colors.BLUE,
     height: 40,
@@ -212,7 +211,7 @@ const styles = StyleSheet.create({
     fontSize: 19,
   },
   scrollView: {
-    padding: 10,
+    paddingHorizontal: 20,
     backgroundColor: 'white',
   },
   scrollContainer: {
@@ -223,7 +222,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: 30,
+    marginBottom: 20,
   },
   safe: {
     flex: 1,

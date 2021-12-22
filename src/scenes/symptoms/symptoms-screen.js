@@ -129,14 +129,20 @@ const SymptomScreen = ({navigation, route}) => {
           Que souhaitez-vous suivre quotidiennement ?
         </Text>
         <Text style={styles.subtitle}>
-          Cela peut être un ressenti positif ou négatif ou une activité
+          Cela peut être un{' '}
+          <Text style={styles.lightblue}>ressenti positif</Text> ou{' '}
+          <Text style={styles.lightblue}>négatif</Text> ou une{' '}
+          <Text style={styles.lightblue}>activité</Text>
         </Text>
         {noneSelected() ? (
           <Text style={styles.alert}>
             Ajouter ou sélectionner au moins 1 élément
           </Text>
         ) : null}
-        <AddElemToList onChange={handleAddNewSymptom} />
+        <AddElemToList
+          onChange={handleAddNewSymptom}
+          placeholder="Ajouter un ressenti ou une activité"
+        />
         {chosenCategories &&
           Object.keys(chosenCategories).map((cat, index) => (
             <View key={index} style={styles.categories}>
@@ -209,6 +215,8 @@ const styles = StyleSheet.create({
   },
   checkbox: {
     marginHorizontal: 10,
+    width: 25,
+    height: 25,
   },
   safe: {
     flex: 1,
@@ -222,11 +230,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   subtitle: {
-    color: colors.LIGHT_BLUE,
+    color: colors.BLUE,
     fontSize: 13,
     marginBottom: 10,
-    fontWeight: '300',
+    fontWeight: '400',
     textAlign: 'center',
+  },
+  lightblue: {
+    color: colors.LIGHT_BLUE,
   },
   alert: {
     color: 'red',
