@@ -127,7 +127,7 @@ export default ({navigation, visible, onClick}) => {
               onClick={onClick}
             />
             <LegalItem
-              title="Protection des données"
+              title="Politique de confidentialité"
               path="privacy"
               navigation={navigation}
               onClick={onClick}
