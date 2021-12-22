@@ -5,6 +5,7 @@ import {
   View,
   TouchableOpacity,
   ScrollView,
+  Dimensions,
 } from 'react-native';
 import Text from '../../../components/MyText';
 import {colors} from '../../../utils/colors';
@@ -102,7 +103,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    minHeight: 75,
+    minHeight: Dimensions.get('window').height > 700 ? 75 : 40,
     flex: 1,
   },
   darkCard: {

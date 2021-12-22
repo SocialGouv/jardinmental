@@ -19,7 +19,7 @@ export const screenWidth = Dimensions.get('window').width;
 export const screenHeight = Dimensions.get('window').height;
 export const menuHeight = 80;
 const size =
-  screenHeight * (Dimensions.get('window').height > 600 ? 0.15 : 0.1);
+  screenHeight * (Dimensions.get('window').height > 700 ? 0.15 : 0.1);
 
 export const Screen0 = () => (
   <View style={styles.container}>
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
     padding: 20,
-    marginBottom: Dimensions.get('window').height > 600 ? 20 : 60,
+    marginBottom: Dimensions.get('window').height > 700 ? 20 : 60,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
   presentationText: {
     textAlign: 'center',
     marginTop: 20,
-    fontSize: Dimensions.get('window').height > 600 ? 20 : 15,
+    fontSize: Dimensions.get('window').height > 700 ? 20 : 17,
     color: '#0A215C',
   },
   imageContainer: {

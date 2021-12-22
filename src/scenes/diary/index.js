@@ -46,7 +46,7 @@ const Diary = ({navigation}) => {
       const onboardingIsDone = await localStorage.getOnboardingDone();
 
       //if ONBOARDING_DONE is true, do nothing
-      if (Boolean(onboardingIsDone)) return;
+      if (onboardingIsDone) return;
       else {
         const isFirstAppLaunch = await localStorage.getIsFirstAppLaunch();
         if (isFirstAppLaunch !== 'false') {
@@ -76,11 +76,13 @@ const Diary = ({navigation}) => {
   return (
     <SafeAreaView style={styles.safe}>
       <NPS forceView={NPSvisible} close={() => setNPSvisible(false)} />
+      <View style={styles.headerContainer}>
+        <Header title="Mon journal" navigation={navigation} />
+      </View>
       <ScrollView
         style={styles.container}
         contentContainerStyle={styles.scrollContainer}
         keyboardShouldPersistTaps="handled">
-        <Header title="Mon journal" navigation={navigation} />
         <View>
           <TextInput
             multiline={true}
@@ -175,6 +177,10 @@ const Diary = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
+  headerContainer: {
+    padding: 20,
+    paddingBottom: 0,
+  },
   dateContainer: {
     flexDirection: 'row',
   },

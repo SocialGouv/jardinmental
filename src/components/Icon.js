@@ -10,7 +10,7 @@ import BurgerSvg from '../../assets/svg/burger.svg';
 import PresentationSvg from '../../assets/svg/presentation.svg';
 import NewsSvg from '../../assets/svg/news.svg';
 import ProtectionSvg from '../../assets/svg/protection.svg';
-import GearSvg from '../../assets/svg/gear.svg';
+import GearSvg from '../../assets/svg/Gear.js';
 import PlusSvg from '../../assets/svg/plus.svg';
 import ClockSvg from '../../assets/svg/clock.svg';
 import LightBulbSvg from '../../assets/svg/light-bulb.svg';
@@ -132,6 +132,8 @@ const Icon = ({
 
 const styles = StyleSheet.create({
   iconContainer: {
+    // borderColor: 'red',
+    // borderWidth: 1,
     width: 40,
     height: 40,
     display: 'flex',

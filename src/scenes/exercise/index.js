@@ -48,13 +48,15 @@ export default ({navigation}) => {
   return (
     <SafeAreaView style={styles.safe}>
       <NPS forceView={NPSvisible} close={() => setNPSvisible(false)} />
-      <ScrollView
-        style={styles.container}
-        contentContainerStyle={styles.scrollContainer}>
+      <View style={styles.headerContainer}>
         <Header
           title="Mes fiches de pensées automatiques"
           navigation={navigation}
         />
+      </View>
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={styles.scrollContainer}>
         {showWelcome === 'true' || !showWelcome ? (
           <View style={styles.welcomeContainer}>
             <Text style={[styles.welcomeText, styles.boldText]}>
@@ -155,6 +157,10 @@ export default ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
+  headerContainer: {
+    padding: 20,
+    paddingBottom: 0,
+  },
   safe: {
     flex: 1,
     backgroundColor: 'white',
