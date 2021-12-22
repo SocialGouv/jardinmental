@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
+import {useFocusEffect} from '@react-navigation/native';
 import Text from '../../components/MyText';
 import StatusItem from './status-item';
 import ContributeCard from '../contribute/contributeCard';
@@ -31,7 +32,7 @@ const Status = ({navigation}) => {
   const [bannerProNPSVisible, setBannerProNPSVisible] = useState(true);
 
   useEffect(() => {
-    const handleOnboarding = async () => {
+    (async () => {
       const onboardingStep = await localStorage.getOnboardingStep();
       const onboardingIsDone = await localStorage.getOnboardingDone();
 
@@ -46,15 +47,18 @@ const Status = ({navigation}) => {
           });
         }
       }
-    };
-    handleOnboarding();
-
-    (async () => {
-      const bannerProNPSDone = await localStorage.getNpsProContact();
-      const supported = await localStorage.getSupported();
-      setBannerProNPSVisible(supported === 'PRO' && !bannerProNPSDone);
     })();
   }, [navigation]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      (async () => {
+        const bannerProNPSDone = await localStorage.getNpsProContact();
+        const supported = await localStorage.getSupported();
+        setBannerProNPSVisible(supported === 'PRO' && !bannerProNPSDone);
+      })();
+    }, []),
+  );
 
   const startSurvey = async () => {
     const symptoms = await localStorage.getSymptoms();
