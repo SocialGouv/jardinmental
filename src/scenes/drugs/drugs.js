@@ -15,9 +15,7 @@ import localStorage from '../../utils/localStorage';
 import NoData from './no-data';
 import DrugItem from './drug-item';
 import {getDrugListWithLocalStorage} from '../../utils/drugs-list';
-import Icon from '../../components/Icon';
 import logEvents from '../../services/logEvents';
-import DrugInformations from './drug-information';
 import {alertNoDataYesterday} from '../survey/survey-data';
 import Logo from '../../../assets/svg/drugs';
 
@@ -26,7 +24,6 @@ const Drugs = ({navigation, route}) => {
   const [medicalTreatment, setMedicalTreatment] = useState();
   const [posology, setPosology] = useState([]);
   const [inSurvey, setInSurvey] = useState(false);
-  const [showInfos, setShowInfos] = useState();
   const [listDrugs, setListDrugs] = useState();
 
   useEffect(() => {
@@ -115,11 +112,19 @@ const Drugs = ({navigation, route}) => {
   };
 
   const render = () => {
-    if (!medicalTreatment) {
+    if (!medicalTreatment || !medicalTreatment?.length) {
       return <NoData navigation={navigation} route={route} />;
     }
     return (
       <View>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate('onboarding-drugs-information', {
+              onboarding: true,
+            })
+          }>
+          <Text style={styles.link}>Informations sur les traitements</Text>
+        </TouchableOpacity>
         {medicalTreatment.map((e, i) => (
           <DrugItem
             key={i}
@@ -164,13 +169,8 @@ const Drugs = ({navigation, route}) => {
     navigation.navigate('tabs');
   };
 
-  const toggleInfos = () => {
-    setShowInfos(!showInfos);
-  };
-
   return (
     <SafeAreaView style={styles.safe}>
-      <DrugInformations visible={showInfos} onClose={toggleInfos} />
       <BackButton onPress={previousQuestion} />
       <ScrollView
         style={styles.scrollView}
@@ -180,22 +180,11 @@ const Drugs = ({navigation, route}) => {
             <Logo style={styles.image} width={30} height={30} />
             <Text style={styles.title}>
               {inSurvey
-                ? "Quel traitement avez-vous pris aujourd'hui ?"
-                : 'Suivi de votre traitement'}
+                ? "Quel traitement ai-je pris aujourd'hui ?"
+                : 'Suivi de mon traitement'}
             </Text>
           </View>
-          <Icon
-            icon="InfoSvg"
-            color={colors.DARK_BLUE}
-            width={30}
-            height={30}
-            onPress={toggleInfos}
-          />
         </View>
-        <Text style={styles.subtitle}>
-          Indiquez chaque soir l'ensemble des médicaments pris{' '}
-          <Text style={styles.bold}>durant la journée</Text>.
-        </Text>
         {render()}
       </ScrollView>
       {inSurvey ? (
@@ -208,6 +197,14 @@ const Drugs = ({navigation, route}) => {
 };
 
 const styles = StyleSheet.create({
+  link: {
+    color: '#181818',
+    textDecorationLine: 'underline',
+    fontSize: 14,
+    marginBottom: 20,
+    fontWeight: '300',
+    textAlign: 'center',
+  },
   image: {
     color: colors.BLUE,
     height: 40,

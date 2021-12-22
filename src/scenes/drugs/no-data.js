@@ -1,12 +1,11 @@
 import React, {useContext} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 
 import {DiaryDataContext} from '../../context/diaryData';
 import Text from '../../components/MyText';
 import {colors} from '../../utils/colors';
 import Button from '../../components/Button';
 import localStorage from '../../utils/localStorage';
-import Icon from '../../components/Icon';
 import {alertNoDataYesterday} from '../survey/survey-data';
 
 export default ({navigation, route}) => {
@@ -21,87 +20,62 @@ export default ({navigation, route}) => {
     });
     navigation.navigate('tabs');
   };
+  const handleDrugInformation = async () => {
+    navigation.navigate('onboarding-drugs-information', {onboarding: true});
+  };
 
   return (
     <View>
-      <View style={styles.card}>
-        {/* <Icon icon="DrugsSvg" styleContainer={{marginRight: 10}} /> */}
-        <View style={styles.cardContent}>
-          <Text style={styles.cardTitle}>
-            Vous n'avez pas encore précisé de traitement
-          </Text>
-          <Text style={styles.cardSubTitle}>
-            Ajoutez vos médicaments pour suivre vos prises
-          </Text>
-          <Button
-            onPress={() => navigation.navigate('drugs-list')}
-            title="Ajouter un médicament"
-            buttonStyle={styles.button}
-            textStyle={{fontSize: 14, fontWeight: 'normal'}}
-          />
-        </View>
-      </View>
-      <View style={styles.separator}>
-        <Text style={styles.separatorText}>ou</Text>
-      </View>
-      <View style={styles.card}>
-        <View style={styles.cardContent}>
-          <Text style={styles.cardTitle}>
-            Je ne prends aucun traitement médicamenteux
-          </Text>
-          <Button
-            onPress={handleNoTreatment}
-            title="Continuer"
-            buttonStyle={styles.button}
-            textStyle={{fontSize: 14, fontWeight: 'normal'}}
-          />
-        </View>
-      </View>
+      <Text style={styles.subtitle}>
+        Je suis chaque jour mes <Text style={styles.lightblue}>prises</Text> de{' '}
+        <Text style={styles.lightblue}>traitement</Text>, cela me permet de{' '}
+        <Text style={styles.lightblue}>comprendre</Text> comment il influe mon{' '}
+        <Text style={styles.lightblue}>état</Text>
+      </Text>
+      <Button
+        onPress={() => navigation.navigate('drugs-list')}
+        title="Ajouter un traitement"
+        buttonStyle={styles.button}
+        textStyle={{fontSize: 14, fontWeight: 'bold'}}
+      />
+      <TouchableOpacity onPress={handleDrugInformation}>
+        <Text style={styles.link}>Informations sur les traitements</Text>
+      </TouchableOpacity>
+
+      <Button
+        onPress={handleNoTreatment}
+        title="Je ne prends pas de traitement"
+        buttonStyle={styles.darkButton}
+        textStyle={{fontSize: 14, fontWeight: 'bold'}}
+      />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  noTreatment: {
-    color: colors.BLUE,
-    textDecorationLine: 'underline',
-    fontWeight: '600',
+  button: {marginTop: 40, height: 60, alignSelf: 'center'},
+  darkButton: {
+    marginTop: 40,
+    backgroundColor: colors.DARK_BLUE,
+    height: 60,
+    alignSelf: 'center',
   },
-  separator: {
-    borderTopWidth: 1,
-    borderColor: '#EDEDED',
-    marginVertical: 30,
-    alignItems: 'center',
-  },
-  separatorText: {
-    top: -10,
-    backgroundColor: '#fff',
-    paddingHorizontal: 20,
-    color: '#8F8F8F',
-    fontStyle: 'italic',
-    fontWeight: '600',
-  },
-  card: {
-    display: 'flex',
-    flexDirection: 'row',
-    backgroundColor: '#F4FCFD',
-    borderColor: '#d4f0f2',
-    borderWidth: 1,
-    borderRadius: 10,
-    padding: 20,
-  },
-  cardContent: {flex: 1},
-  button: {flex: 0, height: 30, alignSelf: 'center'},
-  cardTitle: {
-    fontSize: 15,
+  subtitle: {
     color: colors.DARK_BLUE,
-    fontWeight: 'bold',
+    fontSize: 18,
     marginBottom: 10,
-  },
-  cardSubTitle: {
-    fontSize: 14,
-    color: colors.DARK_BLUE,
     fontWeight: '300',
+    textAlign: 'center',
+  },
+  link: {
+    color: '#181818',
+    textDecorationLine: 'underline',
+    fontSize: 14,
     marginBottom: 10,
+    fontWeight: '300',
+    textAlign: 'center',
+  },
+  lightblue: {
+    color: colors.LIGHT_BLUE,
   },
 });
