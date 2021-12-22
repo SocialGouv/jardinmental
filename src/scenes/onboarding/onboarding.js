@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
   },
   textCgu: {
     flex: 1,
-    fontSize: Dimensions.get('window').height > 600 ? 16 : 12,
+    fontSize: Dimensions.get('window').height > 700 ? 16 : 12,
   },
   emphasis: {
     color: '#1FC6D5',

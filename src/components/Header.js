@@ -48,8 +48,8 @@ const Header = ({title, navigation}) => {
       <Icon
         badge={badge}
         icon="BurgerSvg"
-        width={24}
-        height={24}
+        width={20}
+        height={20}
         onPress={() => setDrawerVisible(true)}
         styleContainer={{marginRight: 20}}
       />
@@ -57,8 +57,8 @@ const Header = ({title, navigation}) => {
       <Icon
         spin={settingsVisible}
         icon="GearSvg"
-        width={30}
-        height={30}
+        width={25}
+        height={25}
         onPress={() => setSettingsVisible(true)}
       />
     </View>
@@ -67,16 +67,18 @@ const Header = ({title, navigation}) => {
 
 const styles = StyleSheet.create({
   container: {
+    // borderColor: 'blue',
+    // borderWidth: 1,
     flex: 0,
-    backgroundColor: 'white',
+    backgroundColor: 'transparent',
     marginRight: 'auto',
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    paddingBottom: 30,
+    paddingBottom: 5,
   },
   title: {
-    fontSize: Dimensions.get('window').width > 370 ? 19 : 14,
+    fontSize: Dimensions.get('window').width > 380 ? 19 : 16,
     color: colors.BLUE,
     marginRight: 'auto',
     fontWeight: 'bold',

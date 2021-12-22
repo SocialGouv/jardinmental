@@ -79,10 +79,12 @@ const Status = ({navigation}) => {
   return (
     <SafeAreaView style={styles.safe}>
       <NPS forceView={NPSvisible} close={() => setNPSvisible(false)} />
+      <View style={styles.headerContainer}>
+        <Header title="Mon état et mes traitements" navigation={navigation} />
+      </View>
       <ScrollView
         style={styles.container}
         contentContainerStyle={styles.scrollContainer}>
-        <Header title="Mon état et mes traitements" navigation={navigation} />
         {bannerProNPSVisible ? (
           <BannerProNPS onClose={() => setBannerProNPSVisible(false)} />
         ) : (
@@ -128,6 +130,10 @@ const Status = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
+  headerContainer: {
+    padding: 20,
+    paddingBottom: 0,
+  },
   arrowDown: {
     transform: [{rotate: '180deg'}],
   },
