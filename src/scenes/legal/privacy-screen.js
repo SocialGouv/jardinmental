@@ -258,7 +258,7 @@ const Privacy = ({navigation}) => {
         garantir la sécurité et confidentialité.
       </Text>
       <Text style={styles.h1}>
-        Utilisation de témoins de connexion (« cookies »)
+        Utilisation de témoins de connexion («&nbsp;cookies&nbsp;»)
       </Text>
       <Text style={styles.default}>
         Un cookie est un fichier déposé sur votre terminal lors de la visite
@@ -268,21 +268,23 @@ const Privacy = ({navigation}) => {
       </Text>
       <Text style={styles.default}>
         Nous collectons donc des données par l'intermédiaire de dispositifs
-        appelés “cookies” permettant d'établir des mesures statistiques.
+        appelés «&nbsp;cookies&nbsp;» permettant d'établir des mesures
+        statistiques.
       </Text>
       <Text style={styles.default}>
         L'application dépose des cookies de mesure d'audience (nombre de
         visites, pages consultées), respectant les conditions d'exemption du
-        consentement de l'internaute définies par la recommandation « Cookies »
-        de la Commission nationale informatique et libertés (CNIL).
+        consentement de l'internaute définies par la recommandation
+        «&nbsp;Cookies&nbsp;» de la Commission nationale informatique et
+        libertés (CNIL).
       </Text>
       <Text style={styles.default}>
         <Text style={styles.bold}>Nous utilisons pour cela Matomo</Text>, un
         outil de mesure d'audience web libre, paramétré pour être en conformité
-        avec la recommandation « Cookies » de la CNIL. Cela signifie que votre
-        adresse IP, par exemple, est anonymisée avant d'être enregistrée. Il est
-        donc impossible d'associer vos visites sur ce cette application à votre
-        personne.
+        avec la recommandation «&nbsp;Cookies&nbsp;» de la CNIL. Cela signifie
+        que votre adresse IP, par exemple, est anonymisée avant d'être
+        enregistrée. Il est donc impossible d'associer vos visites sur ce cette
+        application à votre personne.
       </Text>
       <Text style={styles.default}>
         Les données anonymisées issues de Matomo sont exportées vers un Metabase

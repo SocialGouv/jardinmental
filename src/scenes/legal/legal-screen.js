@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
   title: {
     color: colors.BLUE,
     fontSize: 20,
-    fontWeight: '700',
+    fontWeight: 'bold',
     textAlign: 'center',
   },
   scrollContainer: {
