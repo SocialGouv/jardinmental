@@ -213,7 +213,6 @@ class Reminder extends React.Component {
                   'fr',
                 )}`}</Text>
               </TouchableOpacity>
-              <Text style={styles.subtitle}>tous les jours.</Text>
             </>
           ) : (
             <Text style={styles.subtitle}>
@@ -223,29 +222,46 @@ class Reminder extends React.Component {
             </Text>
           )}
         </View>
-        <TouchableOpacity
-          onPress={this.showTimePicker}
-          style={styles.setupButton}>
-          <Text style={styles.setupButtonText}>
-            {reminder ? 'Modifier le rappel' : "Choisir l'heure du rappel"}
-          </Text>
-        </TouchableOpacity>
         {this.props.route?.params?.onboarding ? (
-          <TouchableOpacity
-            onPress={this.validateOnboarding}
-            style={[styles.laterContainer, reminder ? styles.setupButton : {}]}>
-            <Text style={reminder ? styles.setupButtonText : styles.later}>
-              {reminder ? 'Je démarre Mon Suivi Psy' : 'Plus tard, peut-être'}
-            </Text>
-          </TouchableOpacity>
+          <>
+            <TouchableOpacity
+              onPress={reminder ? this.validateOnboarding : this.showTimePicker}
+              style={styles.setupButton}>
+              <Text style={styles.setupButtonText}>
+                {reminder
+                  ? 'Je démarre Mon Suivi Psy'
+                  : "Choisir l'heure du rappel"}
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={reminder ? this.showTimePicker : this.validateOnboarding}
+              style={[styles.laterContainer]}>
+              <Text style={styles.later}>
+                {reminder
+                  ? "Modifier l'heure du rappel"
+                  : 'Plus tard, peut-être'}
+              </Text>
+            </TouchableOpacity>
+          </>
         ) : (
-          <TouchableOpacity
-            onPress={reminder ? this.deleteReminderManually : this.onBackPress}
-            style={[styles.laterContainer]}>
-            <Text style={styles.later}>
-              {reminder ? 'Retirer le rappel' : 'Plus tard, peut-être'}
-            </Text>
-          </TouchableOpacity>
+          <>
+            <TouchableOpacity
+              onPress={this.showTimePicker}
+              style={styles.setupButton}>
+              <Text style={styles.setupButtonText}>
+                {reminder ? 'Modifier le rappel' : "Choisir l'heure du rappel"}
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={
+                reminder ? this.deleteReminderManually : this.onBackPress
+              }
+              style={[styles.laterContainer]}>
+              <Text style={styles.later}>
+                {reminder ? 'Retirer le rappel' : 'Plus tard, peut-être'}
+              </Text>
+            </TouchableOpacity>
+          </>
         )}
         <TimePicker
           value={reminder}
