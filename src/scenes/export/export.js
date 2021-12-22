@@ -98,7 +98,8 @@ const Export = ({navigation}) => {
         <ScrollView
           contentInsetAdjustmentBehavior="automatic"
           keyboardShouldPersistTaps="handled"
-          contentContainerStyle={styles.inner}>
+          style={styles.container}
+          contentContainerStyle={styles.scrollContainer}>
           <BackButton onPress={navigation.goBack} />
           <Icon
             icon="ExportDataSvg"
@@ -159,17 +160,14 @@ const styles = StyleSheet.create({
     margin: '20%',
   },
   container: {
-    display: 'flex',
-    justifyContent: 'flex-start',
-    backgroundColor: '#f9f9f9',
-    height: '100%',
+    padding: 20,
+    backgroundColor: 'white',
   },
-  inner: {
+  scrollContainer: {
+    // paddingBottom: 80,
     display: 'flex',
-    flex: 1,
-    paddingBottom: 30,
-    alignItems: 'center',
     justifyContent: 'flex-start',
+    alignItems: 'center',
   },
   title: {
     width: '80%',
@@ -177,7 +175,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 22,
     color: colors.BLUE,
-    fontWeight: '700',
+    fontWeight: 'bold',
   },
   backButtonContainer: {
     position: 'absolute',

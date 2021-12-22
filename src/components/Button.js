@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     elevation: 1,
   },
   text: {
-    fontWeight: '700',
+    fontWeight: 'bold',
     fontSize: 19,
   },
   container: {
