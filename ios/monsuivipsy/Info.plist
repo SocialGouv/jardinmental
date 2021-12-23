@@ -38,11 +38,23 @@
 		<true/>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Karla-Bold.ttf</string>
 		<string>Karla-Regular.ttf</string>
+		<string>Karla-BoldItalic.ttf</string>
+		<string>Karla-ExtraBold.ttf</string>
+		<string>Karla-ExtraBoldItalic.ttf</string>
+		<string>Karla-ExtraLight.ttf</string>
+		<string>Karla-ExtraLightItalic.ttf</string>
+		<string>Karla-Italic.ttf</string>
+		<string>Karla-Light.ttf</string>
+		<string>Karla-LightItalic.ttf</string>
+		<string>Karla-Medium.ttf</string>
+		<string>Karla-MediumItalic.ttf</string>
+		<string>Karla-SemiBold.ttf</string>
+		<string>Karla-SemiBoldItalic.ttf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>

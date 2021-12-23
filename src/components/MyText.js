@@ -14,7 +14,7 @@ export default ({
   style,
   ...rest
 }) => {
-  const s = Platform.OS === 'android' ? {fontFamily: 'roboto'} : {};
+  const s = {fontFamily: 'Karla'};
   return (
     <Text style={[style, s]} {...rest}>
       {children}
