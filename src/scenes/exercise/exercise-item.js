@@ -4,6 +4,7 @@ import {parseISO, differenceInDays} from 'date-fns';
 
 import Icon from '../../components/Icon';
 import {colors} from '../../utils/colors';
+import ArrowRightStick from '../../../assets/svg/ArrowRightStick';
 
 export default ({patientState, date, navigation}) => {
   const data = patientState?.becks;
@@ -46,10 +47,11 @@ export default ({patientState, date, navigation}) => {
                 <>
                   <Text>
                     {beck?.mainEmotion} -{' '}
-                    {`${beck?.mainEmotionIntensity * 10}%`}
+                    {`${beck?.mainEmotionIntensity * 10}% `}
                     {beck?.mainEmotionIntensityNuanced ? (
                       <Text style={styles.mainEmotionIntensityNuancedStyle}>
-                        {' →'} {beck?.mainEmotionIntensityNuanced * 10}%
+                        <ArrowRightStick color={colors.LIGHT_BLUE} />{' '}
+                        {beck?.mainEmotionIntensityNuanced * 10}%
                       </Text>
                     ) : null}
                   </Text>
