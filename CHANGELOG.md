@@ -1,3 +1,19 @@
+# [1.18.0](https://github.com/SocialGouv/monsuivipsy/compare/v1.17.0...v1.18.0) (2021-12-23)
+
+
+### Bug Fixes
+
+* **exercice:** style flèche de l'évolution de l'intensité de l'émotion ([8c59419](https://github.com/SocialGouv/monsuivipsy/commit/8c594197fbaf2bf4131ec19bbc3ba0d7dca0ce2f))
+* **export:** wording + autoriser les espaces dans le pseudo ([de86a9e](https://github.com/SocialGouv/monsuivipsy/commit/de86a9eda0dd2389d3d785b6ccaa4f736a900d64))
+* **legal:** mise à jour des CGU ([faa7cdf](https://github.com/SocialGouv/monsuivipsy/commit/faa7cdfd1cbf27fb785f6eb2d67210294c76a75d))
+* **onboarding:** wording écran auto-évaluation ([0005309](https://github.com/SocialGouv/monsuivipsy/commit/000530980c94f7aaedc0361e46d9a7b7183a1f80))
+* **onboarding:** wording écran rappel ([22fd572](https://github.com/SocialGouv/monsuivipsy/commit/22fd5724fb5d84cfaa442688b64ab762e69ee2d8))
+
+
+### Features
+
+* ajouter police Karla ([d7a93de](https://github.com/SocialGouv/monsuivipsy/commit/d7a93deaf74d36c6e2d13da53fee632da186983a))
+
 # [1.17.0](https://github.com/SocialGouv/monsuivipsy/compare/v1.16.8...v1.17.0) (2021-12-22)
 
 
