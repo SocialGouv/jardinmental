@@ -55,7 +55,7 @@ export const Screen1 = () => (
       {'\n\n'}Chaque jour, j'évalue mes{' '}
       <Text style={styles.emphasis}>ressentis</Text>, je note les{' '}
       <Text style={styles.emphasis}>traitements</Text> que je prends et les{' '}
-      <Text style={styles.emphasis}>événements</Text> qui m'ont marqués.
+      <Text style={styles.emphasis}>évènements</Text> qui m'ont marqué.
     </Text>
   </View>
 );
