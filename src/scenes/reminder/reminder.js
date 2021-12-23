@@ -237,9 +237,7 @@ class Reminder extends React.Component {
               onPress={reminder ? this.showTimePicker : this.validateOnboarding}
               style={[styles.laterContainer]}>
               <Text style={styles.later}>
-                {reminder
-                  ? "Modifier l'heure du rappel"
-                  : 'Plus tard, peut-être'}
+                {reminder ? "Modifier l'heure du rappel" : 'Plus tard'}
               </Text>
             </TouchableOpacity>
           </>
@@ -258,7 +256,7 @@ class Reminder extends React.Component {
               }
               style={[styles.laterContainer]}>
               <Text style={styles.later}>
-                {reminder ? 'Retirer le rappel' : 'Plus tard, peut-être'}
+                {reminder ? 'Retirer le rappel' : 'Plus tard'}
               </Text>
             </TouchableOpacity>
           </>
@@ -295,8 +293,6 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   container: {
-    borderColor: 'red',
-    borderWidth: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
     paddingBottom: 100,
