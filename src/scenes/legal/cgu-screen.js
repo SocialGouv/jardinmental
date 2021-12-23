@@ -93,11 +93,15 @@ const CGU = ({navigation}) => {
       </Text>
       <Text style={styles.h2}>4.6 - Exporter ses données </Text>
       <Text style={styles.default}>
-        L'Utilisateur peut exporter ses données sous format PDF, notamment en
-        contactant le mail contact@monsuivipsy.fr . Néanmoins, aucune donnée
-        n'est transférée via MonSuiviPsy. L'application permet juste la mise en
-        contact avec l'équipe si l'Utilisateur souhaite transférer ses
-        informations.
+        L'Utilisateur peut exporter ses données sous format d'un mail, en
+        l'envoyant à la personne de son choix . Néanmoins, aucune donnée n'est
+        transférée à l'équipe de Mon Suivi Psy.
+      </Text>
+      <Text style={styles.h2}>4.7 - Contacter l'équipe de Mon Suivi Psy </Text>
+      <Text style={styles.default}>
+        Via la fonction «&nbsp;contribuer à Mon Suivi Psy&nbsp;», l'application
+        permet la mise en contact avec l'équipe si l'Utilisateur souhaite
+        transférer ses informations de contact à l'équipe.
       </Text>
       <Text style={styles.h1}>Article 5 - Responsabilités</Text>
       <Text style={styles.h2}>5.1 - L'éditeur du Site</Text>
