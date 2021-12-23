@@ -86,9 +86,6 @@ const Export = ({navigation}) => {
   const handleChangeMail = (value) => {
     setMail(value.trim().replace(/\s*/g, ''));
   };
-  const handleChangePseudo = (value) => {
-    setPseudo(value.trim().replace(/\s*/g, ''));
-  };
 
   return (
     <KeyboardAvoidingView
@@ -136,11 +133,14 @@ const Export = ({navigation}) => {
             </Text>
             <TextInput
               autoCapitalize="none"
-              onChangeText={handleChangePseudo}
+              onChangeText={setPseudo}
               value={pseudo}
               placeholder="Ex: Arthur M. décembre 2020, ..."
               style={styles.inputMail}
             />
+            <Text style={styles.indication}>
+              Le nom choisi sera affiché dans l'objet du mail
+            </Text>
           </View>
           {!isLoading && (
             <Button
@@ -156,15 +156,20 @@ const Export = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
+  indication: {
+    fontStyle: 'italic',
+    textAlign: 'center',
+    color: '#888888',
+    marginTop: 3,
+  },
+
   icon: {
     margin: '20%',
   },
   container: {
     padding: 20,
-    backgroundColor: 'white',
   },
   scrollContainer: {
-    // paddingBottom: 80,
     display: 'flex',
     justifyContent: 'flex-start',
     alignItems: 'center',
