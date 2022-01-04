@@ -42,7 +42,7 @@ export default ({patientState, date, navigation}) => {
               styleContainer={styles.icon}
             />
 
-            <View>
+            <View style={styles.containerContent}>
               {!isDraft ? (
                 <>
                   <Text>
@@ -72,6 +72,9 @@ export default ({patientState, date, navigation}) => {
 };
 
 const styles = StyleSheet.create({
+  containerContent: {
+    flex: 1,
+  },
   container: {
     paddingLeft: 15,
     paddingBottom: 15,
