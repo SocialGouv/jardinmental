@@ -5,6 +5,8 @@ import {
   ScrollView,
   View,
   SafeAreaView,
+  TextInput,
+  Platform,
 } from 'react-native';
 import Text from '../../components/MyText';
 import {colors} from '../../utils/colors';
@@ -42,6 +44,12 @@ const DaySurvey = ({navigation, route}) => {
       const cleanedQuestionId = key.split('_')[0];
       if (questions.find((q) => q.id === cleanedQuestionId)) {
         toggleAnswer({key: cleanedQuestionId, value: score});
+        handleChangeUserComment({
+          key: cleanedQuestionId,
+          userComment:
+            route?.params?.currentSurvey?.answers[cleanedQuestionId]
+              ?.userComment,
+        });
       }
     });
   }, [route?.params?.currentSurvey?.answers, questions]);
@@ -50,7 +58,16 @@ const DaySurvey = ({navigation, route}) => {
     setAnswers((prev) => {
       return {
         ...prev,
-        [key]: {value},
+        [key]: {...prev[key], value},
+      };
+    });
+  };
+
+  const handleChangeUserComment = ({key, userComment}) => {
+    setAnswers((prev) => {
+      return {
+        ...prev,
+        [key]: {...prev[key], userComment},
       };
     });
   };
@@ -93,6 +110,8 @@ const DaySurvey = ({navigation, route}) => {
             selected={answers[q.id]?.value}
             explanation={q.explanation}
             isLast={i === questions.length - 1}
+            onChangeUserComment={handleChangeUserComment}
+            userComment={answers[q.id]?.userComment}
           />
         ))}
         <View style={styles.divider} />
@@ -158,11 +177,25 @@ const answers = [
   },
 ];
 
-const Question = ({question, explanation, onPress, selected, isLast}) => {
+const Question = ({
+  question,
+  explanation,
+  onPress,
+  selected,
+  isLast,
+  onChangeUserComment,
+  userComment,
+}) => {
+  console.log('✍️ ~ userComment', userComment);
   const [showExplanation, setShowExplanation] = useState(false);
   const toggleShowExplanation = async () => {
     setShowExplanation((prev) => !prev);
   };
+  const [text, setText] = useState('');
+  useEffect(() => {
+    setText(userComment || '');
+  }, [userComment]);
+
   return (
     <View style={styles.questionContainer}>
       <TouchableOpacity onPress={toggleShowExplanation}>
@@ -191,42 +224,68 @@ const Question = ({question, explanation, onPress, selected, isLast}) => {
         </View>
       </TouchableOpacity>
       <View style={[styles.answerContainer, !isLast && styles.leftFileAriane]}>
-        {answers.map((answer, i) => {
-          const active = selected === answer.score;
-          return (
-            <TouchableOpacity
-              key={i}
-              onPress={() => onPress({key: question.id, value: answer.score})}>
-              <View
-                style={[
-                  styles.selectionContainer,
-                  active && styles.activeSelectionContainer,
-                ]}>
-                <CircledIcon
-                  color={
-                    !active && selected
-                      ? answer.inactiveBackgroundColor
-                      : answer.backgroundColor
-                  }
-                  borderColor="#eee"
-                  iconColor={
-                    !active && selected
-                      ? answer.inactiveIconColor
-                      : answer.iconColor
-                  }
-                  icon={answer.icon}
-                  iconContainerStyle={{marginRight: 0}}
-                />
-              </View>
-            </TouchableOpacity>
-          );
-        })}
+        <View style={styles.answersContainer}>
+          {answers.map((answer, i) => {
+            const active = selected === answer.score;
+            return (
+              <TouchableOpacity
+                key={i}
+                onPress={() =>
+                  onPress({key: question.id, value: answer.score})
+                }>
+                <View
+                  style={[
+                    styles.selectionContainer,
+                    active && styles.activeSelectionContainer,
+                  ]}>
+                  <CircledIcon
+                    color={
+                      !active && selected
+                        ? answer.inactiveBackgroundColor
+                        : answer.backgroundColor
+                    }
+                    borderColor="#eee"
+                    iconColor={
+                      !active && selected
+                        ? answer.inactiveIconColor
+                        : answer.iconColor
+                    }
+                    icon={answer.icon}
+                    iconContainerStyle={{marginRight: 0}}
+                  />
+                </View>
+              </TouchableOpacity>
+            );
+          })}
+        </View>
+        <TextInput
+          multiline={true}
+          numberOfLines={Platform.OS === 'ios' ? null : 1}
+          minHeight={Platform.OS === 'ios' ? 30 * 1 : null}
+          onChangeText={(userComment) => {
+            setText(userComment);
+            onChangeUserComment({key: question.id, userComment});
+          }}
+          value={text}
+          placeholder="Ajouter une précision sur ce critère"
+          style={styles.textArea}
+          textAlignVertical={'top'}
+          // onFocus={() => setInputFocused(true)}
+          // onBlur={() => setInputFocused(false)}
+        />
       </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  textArea: {
+    backgroundColor: '#F4FCFD',
+    borderRadius: 10,
+    marginBottom: 10,
+    padding: 10,
+    marginHorizontal: 15,
+  },
   selectionContainer: {
     padding: 3,
     borderColor: '#DEF4F5',
@@ -292,8 +351,13 @@ const styles = StyleSheet.create({
     paddingBottom: 15,
     marginLeft: 18, // padding of the header question container + half of the dot size => 10 + 8 = 18
     display: 'flex',
+    justifyContent: 'space-around',
+  },
+  answersContainer: {
+    display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-around',
+    paddingBottom: 15,
   },
   leftFileAriane: {
     borderLeftColor: '#DEF4F5',
