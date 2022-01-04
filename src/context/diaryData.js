@@ -99,21 +99,20 @@ const DiaryDataProvider = ({children}) => {
       // if no start date, it's the first time the user opens the app
       // so we initialize it
       if (!startDate) {
-        const initDiary = {[formatDay(new Date())]: null};
-        await AsyncStorage.setItem(
-          STORAGE_KEY_START_DATE,
-          formatDay(new Date()),
-        );
-        return setDiaryData(initDiary);
+        const tempStartDate = formatDay(new Date());
+        await AsyncStorage.setItem(STORAGE_KEY_START_DATE, tempStartDate);
+        let tempStartDateMinus7 = beforeToday(7, tempStartDate);
+        const tempDiary = fillUpEmptyDates(tempStartDateMinus7, data);
+        return setDiaryData(tempDiary);
       }
 
       // we set data first for a better UX
       data = JSON.parse(data);
       setDiaryData(data);
 
-      startDate = beforeToday(7, startDate);
+      let startDateMinus7 = beforeToday(7, startDate);
 
-      const diary = fillUpEmptyDates(startDate, data);
+      const diary = fillUpEmptyDates(startDateMinus7, data);
       setDiaryData(diary);
     };
 
