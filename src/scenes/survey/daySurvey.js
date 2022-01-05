@@ -23,8 +23,6 @@ const DaySurvey = ({navigation, route}) => {
   const questionToxic = {
     id: 'TOXIC',
     label: 'Ai-je consommé des substances aujourd’hui ?',
-    explanation:
-      "Toxic, drogues, en fait ici on peut t'expliquer ce que c'est !",
   };
 
   useEffect(() => {
