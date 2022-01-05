@@ -98,6 +98,17 @@ export const displayedCategories = {
   SENSATIONS_FREQUENCE: 'Sensations étranges',
 };
 
+export const translateCategories = {
+  MOOD: 'Humeur',
+  ANXIETY: 'Anxiété',
+  BADTHOUGHTS: 'Idées parasites',
+  SLEEP: 'Sommeil',
+  SENSATIONS: 'Sensations étranges',
+  DAILYACTIVITIES: 'Faire mes activités quotidiennes',
+  COMMUNICATION: 'Communication avec mon entourage',
+  TOXIC: 'Substance ',
+};
+
 export const surveyDate = {
   YESTERDAY: {
     id: 'YESTERDAY',
