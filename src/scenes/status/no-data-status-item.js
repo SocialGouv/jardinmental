@@ -10,8 +10,8 @@ const NoDataDiaryItem = ({date}) => {
     <View style={styles.textContainer}>
       <Text style={styles.noDataTitle}>
         {canEdit(date)
-          ? 'Renseignez mon état pour ce jour-là'
-          : 'Vous ne pouvez plus saisir votre questionnaire pour ce jour'}
+          ? 'Renseigner mon état pour ce jour-là'
+          : 'Je ne peux plus saisir mon questionnaire pour ce jour'}
       </Text>
       {canEdit(date) && <ArrowRightSvg color="#C7CED5" />}
     </View>
