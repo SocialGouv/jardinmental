@@ -12,10 +12,12 @@ import {
 import {v4 as uuidv4} from 'uuid';
 import Text from '../../components/MyText';
 import DiaryNotes from './DiaryNotes';
+import DiarySymptoms from './DiarySymptoms';
 import ContributeCard from '../contribute/contributeCard';
 import Header from '../../components/Header';
 import {colors} from '../../utils/colors';
 import {DiaryNotesContext} from '../../context/diaryNotes';
+import {DiaryDataContext} from '../../context/diaryData';
 import localStorage from '../../utils/localStorage';
 import NPS from '../../services/NPS/NPS';
 import ArrowUpSvg from '../../../assets/svg/arrow-up.svg';
@@ -33,6 +35,7 @@ const LIMIT_PER_PAGE = __DEV__ ? 3 : 30;
 
 const Diary = ({navigation}) => {
   const [diaryNotes, setDiaryNotes] = useContext(DiaryNotesContext);
+  const [diaryData] = useContext(DiaryDataContext);
   const [NPSvisible, setNPSvisible] = useState(false);
   const [page, setPage] = useState(1);
   const [buffer, setBuffer] = useState('');
@@ -71,6 +74,13 @@ const Diary = ({navigation}) => {
     setBuffer('');
     setTimestamp(Date.now());
     logEvents.logAddNoteDiary();
+  };
+
+  const getUserComments = (obj, key) => {
+    const userComments = Object.keys(obj[key])
+      ?.filter((s) => obj[key][s]?.userComment?.trim())
+      .map((e) => ({id: e, value: obj[key][e].userComment?.trim()}));
+    return userComments;
   };
 
   return (
@@ -123,23 +133,32 @@ const Diary = ({navigation}) => {
           ) : null}
         </View>
         <View style={styles.divider} />
-        {Object.keys(diaryNotes)
+        {Object.keys({...diaryNotes, ...diaryData})
           .sort((a, b) => {
             a = a.split('/').reverse().join('');
             b = b.split('/').reverse().join('');
             return b.localeCompare(a);
           })
           .slice(0, LIMIT_PER_PAGE * page)
-          .map((date) => (
-            <View key={date}>
-              <Text style={styles.subtitle}>{formatDateThread(date)}</Text>
-              <DiaryNotes
-                date={date}
-                diaryNote={diaryNotes[date]}
-                navigation={navigation}
-              />
-            </View>
-          ))}
+          .map((date) => {
+            if (!diaryNotes[date] && !getUserComments(diaryData, date)?.length)
+              return null;
+            return (
+              <View key={date}>
+                <Text style={styles.subtitle}>{formatDateThread(date)}</Text>
+                <DiaryNotes
+                  date={date}
+                  diaryNote={diaryNotes[date]}
+                  navigation={navigation}
+                />
+                <DiarySymptoms
+                  date={date}
+                  values={getUserComments(diaryData, date)}
+                  navigation={navigation}
+                />
+              </View>
+            );
+          })}
         <ContributeCard onPress={() => setNPSvisible(true)} />
         {Object.keys(diaryNotes)?.length > LIMIT_PER_PAGE * page && (
           <TouchableOpacity
