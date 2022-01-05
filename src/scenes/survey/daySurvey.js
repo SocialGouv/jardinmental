@@ -1,29 +1,31 @@
-import React, {useEffect, useState} from 'react';
-import {
-  TouchableOpacity,
-  StyleSheet,
-  ScrollView,
-  View,
-  SafeAreaView,
-  TextInput,
-  Platform,
-} from 'react-native';
+import React, {useEffect, useState, useContext} from 'react';
+import {StyleSheet, ScrollView, View, SafeAreaView} from 'react-native';
 import Text from '../../components/MyText';
 import {colors} from '../../utils/colors';
-import CircledIcon from '../../components/CircledIcon';
 import {buildSurveyData} from './survey-data';
-import {icons, colors as colorsFromConstant} from '../../utils/constants';
 import {formatRelativeDate} from '../../utils/date/helpers';
 import {isToday, isYesterday, parseISO} from 'date-fns';
 import BackButton from '../../components/BackButton';
-import ArrowUpSvg from '../../../assets/svg/arrow-up.svg';
 import Button from '../../components/Button';
 import {getScoreWithState} from '../../utils';
-import Icon from '../../components/Icon';
+import Question from './Question';
+import QuestionYesNo from './QuestionYesNo';
+import logEvents from '../../services/logEvents';
+import {DiaryDataContext} from '../../context/diaryData';
+import {availableData, alertNoDataYesterday} from './survey-data';
+import localStorage from '../../utils/localStorage';
 
 const DaySurvey = ({navigation, route}) => {
+  const [diaryData, setDiaryData] = useContext(DiaryDataContext);
+
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState({});
+  const questionToxic = {
+    id: 'TOXIC',
+    label: 'Ai-je consommé des substances aujourd’hui ?',
+    explanation:
+      "Toxic, drogues, en fait ici on peut t'expliquer ce que c'est !",
+  };
 
   useEffect(() => {
     (async () => {
@@ -52,7 +54,18 @@ const DaySurvey = ({navigation, route}) => {
         });
       }
     });
-  }, [route?.params?.currentSurvey?.answers, questions]);
+    if (route?.params?.currentSurvey?.answers[questionToxic.id]) {
+      toggleAnswer({
+        key: questionToxic.id,
+        value: route?.params?.currentSurvey?.answers[questionToxic.id]?.value,
+      });
+      handleChangeUserComment({
+        key: questionToxic.id,
+        userComment:
+          route?.params?.currentSurvey?.answers[questionToxic.id]?.userComment,
+      });
+    }
+  }, [route?.params?.currentSurvey?.answers, questions, questionToxic.id]);
 
   const toggleAnswer = async ({key, value}) => {
     setAnswers((prev) => {
@@ -72,20 +85,41 @@ const DaySurvey = ({navigation, route}) => {
     });
   };
 
-  const submitDay = () => {
+  const submitDay = async () => {
     const prevCurrentSurvey = route.params?.currentSurvey;
     const currentSurvey = {
       date: prevCurrentSurvey?.date,
       answers: {...prevCurrentSurvey.answers, ...answers},
     };
+    setDiaryData(currentSurvey);
+    logEvents.logFeelingAdd();
 
-    navigation.navigate('notes', {
+    if (route.params?.redirect) {
+      alertNoDataYesterday({
+        date: prevCurrentSurvey?.date,
+        diaryData,
+        navigation,
+      });
+      return navigation.navigate('tabs');
+    }
+
+    const medicalTreatmentStorage = await localStorage.getMedicalTreatment();
+    if (medicalTreatmentStorage?.length === 0) {
+      alertNoDataYesterday({
+        date: prevCurrentSurvey?.date,
+        diaryData,
+        navigation,
+      });
+      return navigation.navigate('tabs');
+    }
+
+    navigation.navigate('drugs', {
       currentSurvey,
     });
   };
 
   const allQuestionHasAnAnswer = () =>
-    questions.every((curr) => answers[curr.id]);
+    [...questions, questionToxic].every((curr) => answers[curr.id]);
 
   const renderQuestion = () => {
     if (isYesterday(parseISO(route.params?.currentSurvey?.date)))
@@ -97,6 +131,7 @@ const DaySurvey = ({navigation, route}) => {
     return `Comment s'est passé ${relativeDate} ?`;
   };
 
+  console.log('✍️ ~ answers', answers);
   return (
     <SafeAreaView style={styles.safe}>
       <BackButton onPress={navigation.goBack} />
@@ -109,11 +144,19 @@ const DaySurvey = ({navigation, route}) => {
             onPress={toggleAnswer}
             selected={answers[q.id]?.value}
             explanation={q.explanation}
-            isLast={i === questions.length - 1}
             onChangeUserComment={handleChangeUserComment}
             userComment={answers[q.id]?.userComment}
           />
         ))}
+        <QuestionYesNo
+          question={questionToxic}
+          onPress={toggleAnswer}
+          selected={answers[questionToxic.id]?.value}
+          explanation={questionToxic.explanation}
+          isLast
+          onChangeUserComment={handleChangeUserComment}
+          userComment={answers[questionToxic.id]?.userComment}
+        />
         <View style={styles.divider} />
         <Text style={styles.subtitle}>
           Remplir chaque critère pour valider cette journée me permet d'avoir
@@ -134,150 +177,6 @@ const DaySurvey = ({navigation, route}) => {
   );
 };
 
-const answers = [
-  {
-    score: 1,
-    backgroundColor: colorsFromConstant.veryBad,
-    inactiveBackgroundColor: colorsFromConstant.veryBadTrans,
-    iconColor: '#7F2121',
-    inactiveIconColor: '#666666',
-    icon: icons.veryBad,
-  },
-  {
-    score: 2,
-    backgroundColor: colorsFromConstant.bad,
-    inactiveBackgroundColor: colorsFromConstant.badTrans,
-    iconColor: '#7B3900',
-    inactiveIconColor: '#666666',
-    icon: icons.bad,
-  },
-  {
-    score: 3,
-    backgroundColor: colorsFromConstant.middle,
-    inactiveBackgroundColor: colorsFromConstant.middleTrans,
-    iconColor: '#7B5300',
-    inactiveIconColor: '#666666',
-    icon: icons.middle,
-  },
-  {
-    score: 4,
-    backgroundColor: colorsFromConstant.good,
-    inactiveBackgroundColor: colorsFromConstant.goodTrans,
-    iconColor: '#696B00',
-    inactiveIconColor: '#666666',
-    icon: icons.good,
-  },
-  {
-    score: 5,
-    backgroundColor: colorsFromConstant.veryGood,
-    inactiveBackgroundColor: colorsFromConstant.veryGoodTrans,
-    iconColor: '#537900',
-    inactiveIconColor: '#666666',
-    icon: icons.veryGood,
-  },
-];
-
-const Question = ({
-  question,
-  explanation,
-  onPress,
-  selected,
-  isLast,
-  onChangeUserComment,
-  userComment,
-}) => {
-  console.log('✍️ ~ userComment', userComment);
-  const [showExplanation, setShowExplanation] = useState(false);
-  const toggleShowExplanation = async () => {
-    setShowExplanation((prev) => !prev);
-  };
-  const [text, setText] = useState('');
-  useEffect(() => {
-    setText(userComment || '');
-  }, [userComment]);
-
-  return (
-    <View style={styles.questionContainer}>
-      <TouchableOpacity onPress={toggleShowExplanation}>
-        <View style={styles.questionHeaderContainer}>
-          <View style={styles.questionHeader}>
-            {explanation ? (
-              <Icon
-                icon="InfoSvg"
-                width={25}
-                height={25}
-                color={colors.LIGHT_BLUE}
-                styleContainer={{width: 25, height: 25}}
-              />
-            ) : (
-              <View />
-            )}
-            <Text style={styles.questionTitle}>{question.label}</Text>
-            {/* we put a view here because we'll add a item here later */}
-            <View />
-          </View>
-          {explanation && showExplanation ? (
-            <View style={styles.questionInfo}>
-              <Text>{explanation}</Text>
-            </View>
-          ) : null}
-        </View>
-      </TouchableOpacity>
-      <View style={[styles.answerContainer, !isLast && styles.leftFileAriane]}>
-        <View style={styles.answersContainer}>
-          {answers.map((answer, i) => {
-            const active = selected === answer.score;
-            return (
-              <TouchableOpacity
-                key={i}
-                onPress={() =>
-                  onPress({key: question.id, value: answer.score})
-                }>
-                <View
-                  style={[
-                    styles.selectionContainer,
-                    active && styles.activeSelectionContainer,
-                  ]}>
-                  <CircledIcon
-                    color={
-                      !active && selected
-                        ? answer.inactiveBackgroundColor
-                        : answer.backgroundColor
-                    }
-                    borderColor="#eee"
-                    iconColor={
-                      !active && selected
-                        ? answer.inactiveIconColor
-                        : answer.iconColor
-                    }
-                    icon={answer.icon}
-                    iconContainerStyle={{marginRight: 0}}
-                  />
-                </View>
-              </TouchableOpacity>
-            );
-          })}
-        </View>
-        <TextInput
-          multiline={true}
-          numberOfLines={Platform.OS === 'ios' ? null : 1}
-          minHeight={Platform.OS === 'ios' ? 30 * 1 : null}
-          onChangeText={(userComment) => {
-            setText(userComment);
-            onChangeUserComment({key: question.id, userComment});
-          }}
-          value={text}
-          placeholder="Ajouter une précision sur ce critère"
-          style={styles.textArea}
-          textAlignVertical={'top'}
-          // onFocus={() => setInputFocused(true)}
-          // onBlur={() => setInputFocused(false)}
-        />
-      </View>
-    </View>
-  );
-};
-
 const styles = StyleSheet.create({
   textArea: {
     backgroundColor: '#F4FCFD',
@@ -292,8 +191,22 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
   },
+  selectionYesNoContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 40,
+    height: 40,
+    borderColor: '#DEF4F5',
+    borderWidth: 1,
+    borderRadius: 99999,
+  },
   activeSelectionContainer: {
     backgroundColor: colors.LIGHT_BLUE,
+  },
+  activeLabel: {
+    color: '#fff',
+    fontWeight: 'bold',
   },
   arrowDown: {
     transform: [{rotate: '180deg'}],
