@@ -94,7 +94,7 @@ const QuestionYesNo = ({
               onChangeUserComment({key: question.id, userComment: value});
             }}
             value={text}
-            placeholder="Exemple: alcool, cannabis, ect."
+            placeholder="Exemple: alcool, cannabis, tabac..."
             style={styles.textArea}
             textAlignVertical={'top'}
             // onFocus={() => setInputFocused(true)}
