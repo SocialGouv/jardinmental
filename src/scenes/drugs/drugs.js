@@ -59,12 +59,11 @@ const Drugs = ({navigation, route}) => {
 
   const previousQuestion = () => {
     if (route?.params?.backRedirect) {
-      console.log(route?.params?.backRedirect);
       navigation.navigate(route?.params?.backRedirect, {
         ...route.params,
       });
     } else {
-      navigation.navigate('tabs');
+      navigation.goBack();
     }
   };
 

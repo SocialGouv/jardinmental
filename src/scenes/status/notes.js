@@ -14,25 +14,7 @@ const Notes = ({notes, date, onPress}) => {
       !notes?.notesSymptoms &&
       !notes?.notesToxic)
   ) {
-    if (canEdit(date)) {
-      return (
-        <TouchableOpacity onPress={onPress} style={styles.container}>
-          <View style={styles.label}>
-            <Icon
-              icon="NotesSvg"
-              color="#58C8D2"
-              width={20}
-              height={20}
-              styleContainer={styles.icon}
-            />
-            <Text>Ajouter une note</Text>
-          </View>
-          <ArrowRightSvg color="#C7CED5" />
-        </TouchableOpacity>
-      );
-    } else {
-      return null;
-    }
+    return null;
   }
 
   const Note = ({title, text}) => {
@@ -47,33 +29,36 @@ const Notes = ({notes, date, onPress}) => {
   };
 
   return (
-    <TouchableOpacity
-      style={[
-        styles.container,
-        canEdit(date) && {
-          borderRadius: 10,
-        },
-      ]}
-      onPress={onPress}
-      disabled={!canEdit(date)}>
-      <Icon
-        icon="NotesSvg"
-        color="#58C8D2"
-        width={20}
-        height={20}
-        styleContainer={styles.icon}
-      />
-      {typeof notes === String ? (
-        //Retro compatibility
-        <Text style={styles.text}>{notes}</Text>
-      ) : (
-        <View style={styles.textContainer}>
-          <Note title="Contexte" text={notes.notesEvents} />
-          <Note title="Ressentis" text={notes.notesSymptoms} />
-          <Note title="Toxique" text={notes.notesToxic} />
-        </View>
-      )}
-    </TouchableOpacity>
+    <>
+      <View style={styles.divider} />
+      <TouchableOpacity
+        style={[
+          styles.container,
+          canEdit(date) && {
+            borderRadius: 10,
+          },
+        ]}
+        onPress={onPress}
+        disabled={!canEdit(date)}>
+        <Icon
+          icon="NotesSvg"
+          color="#58C8D2"
+          width={20}
+          height={20}
+          styleContainer={styles.icon}
+        />
+        {typeof notes === String ? (
+          //Retro compatibility
+          <Text style={styles.text}>{notes}</Text>
+        ) : (
+          <View style={styles.textContainer}>
+            <Note title="Contexte" text={notes.notesEvents} />
+            <Note title="Ressentis" text={notes.notesSymptoms} />
+            <Note title="Toxique" text={notes.notesToxic} />
+          </View>
+        )}
+      </TouchableOpacity>
+    </>
   );
 };
 
@@ -94,6 +79,13 @@ const styles = StyleSheet.create({
   textContainer: {width: '100%'},
   boldText: {fontWeight: 'bold'},
   italic: {fontStyle: 'italic'},
+  divider: {
+    height: 1,
+    backgroundColor: '#6BD1F3',
+    marginVertical: 10,
+    width: '60%',
+    alignSelf: 'center',
+  },
 });
 
 export default Notes;

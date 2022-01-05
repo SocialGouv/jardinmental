@@ -8,6 +8,7 @@ import localStorage from '../../utils/localStorage';
 import Posology from './posology';
 import {canEdit} from './utils/index.js';
 import Button from '../../components/RoundButtonIcon';
+import Toxic from './toxic';
 
 export default ({navigation, patientState, date}) => {
   const [customs, setCustoms] = useState([]);
@@ -35,7 +36,6 @@ export default ({navigation, patientState, date}) => {
     };
     navigation.navigate(tab, {
       currentSurvey,
-      redirect: true,
     });
   };
   const hasAnswerSurvey = () =>
@@ -72,12 +72,12 @@ export default ({navigation, patientState, date}) => {
                   />
                 );
               })}
+            <Toxic data={patientState?.TOXIC} />
             <Posology
               data={patientState?.POSOLOGY}
               date={date}
               onPress={() => handleEdit('drugs')}
             />
-            <View style={styles.divider} />
             <Notes
               notes={patientState?.NOTES}
               date={date}
@@ -128,12 +128,5 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     borderLeftWidth: 0.4,
     borderColor: '#00CEF7',
-  },
-  divider: {
-    height: 1,
-    backgroundColor: '#6BD1F3',
-    marginVertical: 10,
-    width: '60%',
-    alignSelf: 'center',
   },
 });
