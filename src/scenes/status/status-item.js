@@ -7,6 +7,7 @@ import Notes from './notes';
 import localStorage from '../../utils/localStorage';
 import Posology from './posology';
 import {canEdit} from './utils/index.js';
+import Button from '../../components/RoundButtonIcon';
 
 export default ({navigation, patientState, date}) => {
   const [customs, setCustoms] = useState([]);
@@ -49,15 +50,10 @@ export default ({navigation, patientState, date}) => {
     handleEdit('day-survey');
   };
 
-  return (
-    <View style={styles.container}>
-      <TouchableOpacity
-        activeOpacity={1}
-        style={styles.item}
-        onPress={handlePressItem}>
-        {!hasAnswerSurvey() ? (
-          <NoDataDiaryItem date={date} />
-        ) : (
+  if (hasAnswerSurvey()) {
+    return (
+      <View style={styles.container}>
+        <View style={[styles.item, styles.itemWithSpaceAbove]}>
           <View>
             {Object.keys(displayedCategories)
               .concat(customs)
@@ -87,22 +83,45 @@ export default ({navigation, patientState, date}) => {
               date={date}
               onPress={() => handleEdit('notes')}
             />
+            <View style={styles.buttonsContainer}>
+              <Button icon="pencil" visible={true} onPress={handlePressItem} />
+            </View>
           </View>
-        )}
-      </TouchableOpacity>
-    </View>
-  );
+        </View>
+      </View>
+    );
+  } else {
+    return (
+      <View style={styles.container}>
+        <TouchableOpacity style={styles.item} onPress={handlePressItem}>
+          <NoDataDiaryItem date={date} />
+        </TouchableOpacity>
+      </View>
+    );
+  }
 };
 
 const styles = StyleSheet.create({
+  buttonsContainer: {
+    width: '100%',
+    display: 'flex',
+    position: 'absolute',
+    top: -38,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   item: {
-    marginTop: 15,
+    marginVertical: 15,
     backgroundColor: 'rgba(38, 56, 124, 0.03)',
     borderRadius: 10,
     borderWidth: 1,
     borderColor: 'rgba(38, 56, 124, 0.08)',
-    paddingVertical: 10,
-    marginBottom: 15,
+    paddingVertical: 15,
+  },
+  itemWithSpaceAbove: {
+    marginTop: 25,
+    paddingTop: 20,
   },
   container: {
     paddingLeft: 15,
