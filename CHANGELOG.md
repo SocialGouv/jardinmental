@@ -1,3 +1,22 @@
+# [1.19.0](https://github.com/SocialGouv/monsuivipsy/compare/v1.18.0...v1.19.0) (2022-01-06)
+
+
+### Bug Fixes
+
+* **etat:** afficher les 7 jours précédents même à la première utilisation de l'application ([88a2b37](https://github.com/SocialGouv/monsuivipsy/commit/88a2b379080d6123170c032a5f7f9ba44f0ab3af))
+* **etat:** ajout des commentaire par ressenti dans la vue global de mon état ([a656764](https://github.com/SocialGouv/monsuivipsy/commit/a6567645c1f0cf00bed4f547d3e18519e3bca58c))
+* **etat:** changer la gestion d'edition d'un questionnaire pour une journée - ajout d'une bulle avec crayon ([3713450](https://github.com/SocialGouv/monsuivipsy/commit/3713450a54acc863358b4ca4d5255478f69f3adb))
+* **etat:** wording pour les jours non remplis (1ere vs 3eme personne) ([1319c40](https://github.com/SocialGouv/monsuivipsy/commit/1319c402d8956d89f3500ead4f633d1b96aa1328))
+* **exercice,beck:** retour à la ligne si le texte est trop grand dans un recap d'exercice de Beck ([c1a16e0](https://github.com/SocialGouv/monsuivipsy/commit/c1a16e00787817464acd2189283cc2cfe26f4900))
+* **journal:** voir plus visible meme si ce n'est que des notes de ressenti ([fe5134b](https://github.com/SocialGouv/monsuivipsy/commit/fe5134b8f865f20621014d0072e7087564fc3436))
+* **questionnaire:** ajouter substance dans le questionnaire et enlever étape intermédiaire avec les notes ([01c0c51](https://github.com/SocialGouv/monsuivipsy/commit/01c0c51683ec4f313e885d00ddd5b2d9ee39b5fa))
+
+
+### Features
+
+* **journal:** ajout commentaire sur les ressentis dans le journal ([8eb486a](https://github.com/SocialGouv/monsuivipsy/commit/8eb486ac645951a95bfb400b59eb5e10748beb0a))
+* **questionnaire:** possibilité d'ajouter des commentaires par ressenti ([39e2e94](https://github.com/SocialGouv/monsuivipsy/commit/39e2e9429173d2982139778de86fd89357135a8e))
+
 # [1.18.0](https://github.com/SocialGouv/monsuivipsy/compare/v1.17.0...v1.18.0) (2021-12-23)
 
 
