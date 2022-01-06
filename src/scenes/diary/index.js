@@ -76,8 +76,18 @@ const Diary = ({navigation}) => {
     logEvents.logAddNoteDiary();
   };
 
+  const diaryDataWithUserComments = Object.keys(diaryData).reduce(
+    (prev, curr) => {
+      const n = Object.keys(diaryData[curr] || [])?.some((category) =>
+        diaryData[curr][category]?.userComment?.trim(),
+      );
+      return n ? {...prev, [curr]: diaryData[curr]} : prev;
+    },
+    {},
+  );
+
   const getUserComments = (obj, key) => {
-    const userComments = Object.keys(obj[key])
+    const userComments = Object.keys(obj[key] || [])
       ?.filter((s) => obj[key][s]?.userComment?.trim())
       .map((e) => ({id: e, value: obj[key][e].userComment?.trim()}));
     return userComments;
@@ -133,7 +143,7 @@ const Diary = ({navigation}) => {
           ) : null}
         </View>
         <View style={styles.divider} />
-        {Object.keys({...diaryNotes, ...diaryData})
+        {Object.keys({...diaryNotes, ...diaryDataWithUserComments})
           .sort((a, b) => {
             a = a.split('/').reverse().join('');
             b = b.split('/').reverse().join('');
@@ -160,7 +170,8 @@ const Diary = ({navigation}) => {
             );
           })}
         <ContributeCard onPress={() => setNPSvisible(true)} />
-        {Object.keys(diaryNotes)?.length > LIMIT_PER_PAGE * page && (
+        {Object.keys({...diaryNotes, ...diaryDataWithUserComments})?.length >
+          LIMIT_PER_PAGE * page && (
           <TouchableOpacity
             onPress={() => setPage(page + 1)}
             style={styles.versionContainer}>
