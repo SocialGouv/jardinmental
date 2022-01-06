@@ -52,15 +52,15 @@ const DaySurvey = ({navigation, route}) => {
         });
       }
     });
-    if (route?.params?.currentSurvey?.answers[questionToxic.id]) {
+    if ((route?.params?.currentSurvey?.answers || {})[questionToxic.id]) {
       toggleAnswer({
         key: questionToxic.id,
-        value: route?.params?.currentSurvey?.answers[questionToxic.id]?.value,
+        value: route?.params?.currentSurvey?.answers[questionToxic?.id]?.value,
       });
       handleChangeUserComment({
         key: questionToxic.id,
         userComment:
-          route?.params?.currentSurvey?.answers[questionToxic.id]?.userComment,
+          route?.params?.currentSurvey?.answers[questionToxic?.id]?.userComment,
       });
     }
   }, [route?.params?.currentSurvey?.answers, questions, questionToxic.id]);
