@@ -84,23 +84,21 @@ const QuestionYesNo = ({
             );
           })}
         </View>
-        {selected ? (
-          <TextInput
-            multiline={true}
-            numberOfLines={Platform.OS === 'ios' ? null : 1}
-            minHeight={Platform.OS === 'ios' ? 30 * 1 : null}
-            onChangeText={(value) => {
-              setText(value);
-              onChangeUserComment({key: question.id, userComment: value});
-            }}
-            value={text}
-            placeholder="Exemple: alcool, cannabis, tabac..."
-            style={styles.textArea}
-            textAlignVertical={'top'}
-            // onFocus={() => setInputFocused(true)}
-            // onBlur={() => setInputFocused(false)}
-          />
-        ) : null}
+        <TextInput
+          multiline={true}
+          numberOfLines={Platform.OS === 'ios' ? null : 1}
+          minHeight={Platform.OS === 'ios' ? 30 * 1 : null}
+          onChangeText={(value) => {
+            setText(value);
+            onChangeUserComment({key: question.id, userComment: value});
+          }}
+          value={text}
+          placeholder="Exemple: alcool, cannabis, tabac..."
+          style={styles.textArea}
+          textAlignVertical={'top'}
+          // onFocus={() => setInputFocused(true)}
+          // onBlur={() => setInputFocused(false)}
+        />
       </View>
     </View>
   );
