@@ -157,8 +157,8 @@ const DaySurvey = ({navigation, route}) => {
         />
         <View style={styles.divider} />
         <Text style={styles.subtitle}>
-          Remplir chaque critère pour valider cette journée me permet d'avoir
-          une vision complète de ce que je vis.{' '}
+          Je pense à remplir &quot;Mon&nbsp;Journal&quot; pour préciser des
+          élements de ma journée
         </Text>
         <View style={styles.buttonWrapper}>
           <Button
