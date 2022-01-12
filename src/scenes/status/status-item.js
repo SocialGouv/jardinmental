@@ -9,6 +9,7 @@ import Posology from './posology';
 import {canEdit} from './utils/index.js';
 import Button from '../../components/RoundButtonIcon';
 import Toxic from './toxic';
+import logEvents from '../../services/logEvents';
 
 export default ({navigation, patientState, date}) => {
   const [customs, setCustoms] = useState([]);
@@ -47,6 +48,7 @@ export default ({navigation, patientState, date}) => {
 
   const handlePressItem = () => {
     if (!canEdit(date)) return navigation.navigate('too-late', {date});
+    logEvents.logFeelingEditButtonClick();
     handleEdit('day-survey');
   };
 

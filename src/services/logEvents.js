@@ -133,6 +133,22 @@ const logFeelingAdd = async () => {
   });
 };
 
+const logFeelingAddComment = async (value) => {
+  await logEvent({
+    category: FEELING,
+    action: 'FEELING_ADD_COMMENT',
+    name: 'comment',
+    value,
+  });
+};
+
+const logFeelingEditButtonClick = async () => {
+  await logEvent({
+    category: FEELING,
+    action: 'FEELING_EDIT_BUTTON_CLICK',
+  });
+};
+
 const PARAMETERS = 'PARAMETERS';
 const REMINDER_ADD = 'REMINDER_ADD';
 const REMINDER_CANCEL = 'REMINDER_CANCEL';
@@ -439,4 +455,6 @@ export default {
   logDeleteNoteDiary,
   logOpenPage,
   logInputDrugSurvey,
+  logFeelingEditButtonClick,
+  logFeelingAddComment,
 };
