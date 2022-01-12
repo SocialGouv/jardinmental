@@ -91,6 +91,9 @@ const DaySurvey = ({navigation, route}) => {
     };
     setDiaryData(currentSurvey);
     logEvents.logFeelingAdd();
+    logEvents.logFeelingAddComment(
+      Object.keys(answers).filter((key) => answers[key].userComment)?.length,
+    );
 
     if (route.params?.redirect) {
       alertNoDataYesterday({
