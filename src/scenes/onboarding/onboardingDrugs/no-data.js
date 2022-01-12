@@ -20,8 +20,8 @@ export default ({navigation}) => {
       <Text style={styles.subtitle}>
         Je suis chaque jour mes <Text style={styles.lightblue}>prises</Text> de{' '}
         <Text style={styles.lightblue}>traitement</Text>, cela me permet de{' '}
-        <Text style={styles.lightblue}>comprendre</Text> comment il influe mon{' '}
-        <Text style={styles.lightblue}>état</Text>
+        <Text style={styles.lightblue}>comprendre</Text> comment il influe sur{' '}
+        mon <Text style={styles.lightblue}>état</Text>
       </Text>
       <Button
         onPress={() => navigation.navigate('onboarding-drugs-list')}
