@@ -11,7 +11,7 @@ import Text from '../../components/MyText';
 import {colors} from '../../utils/colors';
 import logEvents from '../../services/logEvents';
 import BackButton from '../../components/BackButton';
-import InfoSvg from '../../../assets/svg/info.svg';
+import Icon from '../../components/Icon';
 
 const Infos = ({navigation}) => {
   const [isFullScreen, setIsFullScreen] = useState(false);
@@ -81,9 +81,15 @@ const Infos = ({navigation}) => {
           </Text>
         </Text>
         <View style={styles.containerInfos}>
-          <InfoSvg />
-          <View paddingLeft={10} style={styles.textContainer}>
+          <View style={styles.textContainer}>
             <Text style={styles.titleInfos}>
+              <Icon
+                icon="InfoSvg"
+                color="#58C8D2"
+                width={21}
+                height={25}
+                styleContainer={styles.infoIcon}
+              />
               Les troubles psychiatriques se soignent
             </Text>
             {isFullScreen ? (
@@ -104,7 +110,7 @@ const Infos = ({navigation}) => {
                   on se retrouve dans des situations difficiles.{'\n\n'} Le fait
                   d’avoir un trouble psychiatrique n’a aucun rapport avec une
                   quelconque faiblesse ou manque de volonté. C’est juste que
-                  parfois, pour pleins de raisons différentes, notre santé
+                  parfois, pour plein de raisons différentes, notre santé
                   mentale est moins bonne, comme n’importe quelle autre
                   composante de notre santé.
                   {'\n'} Les troubles psychiatriques se soignent, encore plus
@@ -211,6 +217,11 @@ const Infos = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
+  infoIcon: {
+    marginRight: 10,
+    width: 21,
+    height: 25,
+  },
   headerContainer: {
     display: 'flex',
     flexDirection: 'row',
