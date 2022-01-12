@@ -63,7 +63,6 @@ const Drugs = ({navigation, route}) => {
 
   const previousQuestion = () => {
     if (route?.params?.backRedirect) {
-      console.log(route?.params?.backRedirect);
       navigation.navigate(route?.params?.backRedirect, {
         ...route.params,
       });

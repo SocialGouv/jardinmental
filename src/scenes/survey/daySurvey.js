@@ -129,7 +129,6 @@ const DaySurvey = ({navigation, route}) => {
     return `Comment s'est passé ${relativeDate} ?`;
   };
 
-  console.log('✍️ ~ answers', answers);
   return (
     <SafeAreaView style={styles.safe}>
       <BackButton onPress={navigation.goBack} />
@@ -163,7 +162,6 @@ const DaySurvey = ({navigation, route}) => {
         <View style={styles.buttonWrapper}>
           <Button
             onPress={() => {
-              console.log('OK');
               submitDay();
             }}
             title="Valider"

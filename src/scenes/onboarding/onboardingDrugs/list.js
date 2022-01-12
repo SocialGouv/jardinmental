@@ -120,7 +120,6 @@ const Drugs = ({navigation, route}) => {
   };
 
   const handleAdd = async (value) => {
-    console.log('add drug', value);
     if (!value) return;
     const drug = {id: value, name1: value, values: []};
     await localStorage.addCustomDrug(drug);
