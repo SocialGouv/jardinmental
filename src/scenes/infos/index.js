@@ -80,6 +80,7 @@ const Infos = ({navigation}) => {
             0 800 235 236
           </Text>
         </Text>
+        <Text style={styles.title}>Pour s'informer sur la santé mentale :</Text>
         <View style={styles.containerInfos}>
           <View style={styles.textContainer}>
             <Text style={styles.titleInfos}>
@@ -243,7 +244,8 @@ const styles = StyleSheet.create({
     paddingBottom: 30,
     display: 'flex',
     flexDirection: 'row',
-    marginVertical: 40,
+    marginTop: 10,
+    marginBottom: 40,
   },
   lessButton: {
     fontWeight: '700',
