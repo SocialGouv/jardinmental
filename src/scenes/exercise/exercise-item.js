@@ -4,7 +4,6 @@ import {parseISO, differenceInDays} from 'date-fns';
 
 import Icon from '../../components/Icon';
 import {colors} from '../../utils/colors';
-import Arrow from '../../../assets/svg/Arrow';
 
 export default ({patientState, date, navigation}) => {
   const data = patientState?.becks;
