@@ -4,7 +4,7 @@ import {parseISO, differenceInDays} from 'date-fns';
 
 import Icon from '../../components/Icon';
 import {colors} from '../../utils/colors';
-import ArrowRightStick from '../../../assets/svg/ArrowRightStick';
+import Arrow from '../../../assets/svg/Arrow';
 
 export default ({patientState, date, navigation}) => {
   const data = patientState?.becks;
@@ -45,16 +45,26 @@ export default ({patientState, date, navigation}) => {
             <View style={styles.containerContent}>
               {!isDraft ? (
                 <>
-                  <Text>
-                    {beck?.mainEmotion} -{' '}
-                    {`${beck?.mainEmotionIntensity * 10}% `}
-                    {beck?.mainEmotionIntensityNuanced ? (
-                      <Text style={styles.mainEmotionIntensityNuancedStyle}>
-                        <ArrowRightStick color={colors.LIGHT_BLUE} />{' '}
-                        {beck?.mainEmotionIntensityNuanced * 10}%
-                      </Text>
-                    ) : null}
-                  </Text>
+                  <View style={styles.line}>
+                    <Text>
+                      {beck?.mainEmotion} -{' '}
+                      {`${beck?.mainEmotionIntensity * 10}%`}&nbsp;
+                      {beck?.mainEmotionIntensityNuanced ? (
+                        <>
+                          <Icon
+                            icon="Arrow"
+                            color="#58C8D2"
+                            width={14}
+                            height={14}
+                            styleContainer={styles.arrowIconContainer}
+                          />
+                          <Text style={styles.mainEmotionIntensityNuancedStyle}>
+                            &nbsp;{beck?.mainEmotionIntensityNuanced * 10}%
+                          </Text>
+                        </>
+                      ) : null}
+                    </Text>
+                  </View>
                   {beck?.where ? (
                     <Text style={styles.place}>{beck?.where}</Text>
                   ) : null}
@@ -95,7 +105,13 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     marginTop: 15,
   },
-  icon: {marginRight: 20},
+  icon: {
+    marginRight: 20,
+  },
+  arrowIconContainer: {
+    width: 14,
+    height: 10,
+  },
   containerEditable: {
     backgroundColor: 'rgba(31, 198, 213, 0.2)',
   },
@@ -114,5 +130,10 @@ const styles = StyleSheet.create({
   mainEmotionIntensityNuancedStyle: {
     color: colors.LIGHT_BLUE,
     fontWeight: 'bold',
+  },
+  line: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });
