@@ -71,6 +71,6 @@ console.log('🥳 Bumped version number to ' + newBuildNumber);
 if (release !== 'bump') {
   console.log('🥳 Updated version name to ' + newBuildName);
   console.log(
-    `chore(version): ${release} - ${currentBuildName} 👉 ${newBuildName}`,
+    `chore(version): ✨ ${release} \`${currentBuildName}\` -> \`${newBuildName}\``,
   );
 }
