@@ -107,7 +107,7 @@ const SymptomScreen = ({navigation, route}) => {
         <View style={styles.titleContainer}>
           <SurveyMenu style={styles.image} width={30} height={30} />
           <Text style={styles.title}>
-            Qu'est ce que je souhaite suivre quotidiennement ?
+            Qu'est-ce que je souhaite suivre quotidiennement ?
           </Text>
         </View>
         <Text style={styles.subtitle}>
