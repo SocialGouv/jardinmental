@@ -133,7 +133,7 @@ const DaySurvey = ({navigation, route}) => {
   return (
     <SafeAreaView style={styles.safe}>
       <BackButton onPress={navigation.goBack} />
-      <ScrollView style={styles.container}>
+      <ScrollView style={styles.container} keyboardDismissMode="on-drag">
         <Text style={styles.question}>{renderQuestion()}</Text>
         {questions.map((q, i) => (
           <Question
