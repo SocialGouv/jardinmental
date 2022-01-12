@@ -1,3 +1,18 @@
+## [1.19.1](https://github.com/SocialGouv/monsuivipsy/compare/v1.19.0...v1.19.1) (2022-01-12)
+
+
+### Bug Fixes
+
+* **exercice:** changement du logo de la flèche de l'évolution d'intensité ([e24a974](https://github.com/SocialGouv/monsuivipsy/commit/e24a974ca98013086f598c154dfab3aeaff32f5e))
+* **infos:** agrandissement de la zone cliquable pour les liens ([3a1184d](https://github.com/SocialGouv/monsuivipsy/commit/3a1184dc90b7b15f36ac439c2cc5b31f35fbb7b4))
+* **infos:** ajout titre avant les informations sur la santé mentale ([06ce86d](https://github.com/SocialGouv/monsuivipsy/commit/06ce86db0306737cde71753d85527feea7130463))
+* **infos:** enlever l'espace sur la gauche + wording ([4fc454e](https://github.com/SocialGouv/monsuivipsy/commit/4fc454e9a1fc182e67551265b0d3a828ea832f1d))
+* **onboarding:** wording ([361964a](https://github.com/SocialGouv/monsuivipsy/commit/361964a5e33488ddfdc0c543d4b03b375c5bb209))
+* **questionnaire:** cacher le clavier au scroll ([0210e30](https://github.com/SocialGouv/monsuivipsy/commit/0210e30cab8362ea24e4111ede2f6ad4aa8047ae))
+* **questionnaire:** changement du texte au dessus du bouton "valider" ([efac63d](https://github.com/SocialGouv/monsuivipsy/commit/efac63d7550ee7784feece87a8e30a4e05bbf315))
+* **questionnaire:** toujours afficher les exemples de toxiques ([bc27b6a](https://github.com/SocialGouv/monsuivipsy/commit/bc27b6a8504bea231ebe5daf939ada61a4644e1e))
+* **stats:** ajout ecouteur clique edition journée + nombre de commentaire par questionnaire ([cc1a36d](https://github.com/SocialGouv/monsuivipsy/commit/cc1a36dbf4366a05be01b623f7d599cb0ea611e7))
+
 # [1.19.0](https://github.com/SocialGouv/monsuivipsy/compare/v1.18.0...v1.19.0) (2022-01-06)
 
 
