@@ -6,6 +6,7 @@ import {
   Linking,
   View,
   Image,
+  TouchableOpacity,
 } from 'react-native';
 import Text from '../../components/MyText';
 import {colors} from '../../utils/colors';
@@ -40,45 +41,44 @@ const Infos = ({navigation}) => {
         <Text style={styles.content}>
           Numéro national de prévention du suicide, Gratuit, 24h/24 et 7j/7
           {'\n\n'}
-          <Text
-            style={styles.link}
+          <TouchableOpacity
+            style={styles.content}
             onPress={() => {
               logEvents.logInfoClick(
                 'Numéro national de prévention du suicide',
               );
               Linking.openURL('tel:3114');
             }}>
-            3114
-          </Text>
-          {'\n\n\n'}
+            <Text style={styles.link}>3114</Text>
+          </TouchableOpacity>
+          {'\n\n'}
           SOS-amitiés, 24h/24 et 7j/7{'\n\n'}
-          <Text
-            style={styles.link}
+          <TouchableOpacity
+            style={styles.content}
             onPress={() => {
               logEvents.logInfoClick('SOS-amitiés');
               Linking.openURL('tel:09 72 39 40 50');
             }}>
-            09 72 39 40 50
-          </Text>
-          {'\n\n'}
-          <Text
-            style={styles.link}
+            <Text style={styles.link}>09 72 39 40 50</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.content}
             onPress={() => {
               logEvents.logInfoClick('SOS-amitiés');
               Linking.openURL('tel:01 40 09 15 22');
             }}>
-            01 40 09 15 22
-          </Text>
+            <Text style={styles.link}>01 40 09 15 22</Text>
+          </TouchableOpacity>
           {'\n\n\n'}
           Fil Santé Jeune, Tous les jours, 9h-23h {'\n\n'}
-          <Text
-            style={styles.link}
+          <TouchableOpacity
+            style={styles.content}
             onPress={() => {
               logEvents.logInfoClick('SOS-amitiés');
               Linking.openURL('tel:0 800 235 236');
             }}>
-            0 800 235 236
-          </Text>
+            <Text style={styles.link}>0 800 235 236</Text>
+          </TouchableOpacity>
         </Text>
         <Text style={styles.title}>Pour s'informer sur la santé mentale :</Text>
         <View style={styles.containerInfos}>
@@ -143,74 +143,88 @@ const Infos = ({navigation}) => {
           </View>
         </View>
         <Text style={styles.content}>
-          La santé mentale, qu’est-ce que c’est ?{'\n'}
-          <Text
-            style={styles.link}
+          <TouchableOpacity
+            style={styles.content}
             onPress={() => {
               logEvents.logInfoClick('en_savoir_plus_mentale');
               Linking.openURL(
                 'https://www.psycom.org/comprendre/la-sante-mentale/on-a-toutes-et-tous-une-sante-mentale/',
               );
             }}>
-            en savoir plus
-          </Text>
+            <Text style={styles.contentText}>
+              La santé mentale, qu’est-ce que c’est ?{'\n'}
+              <Text style={styles.link}>en savoir plus</Text>
+            </Text>
+          </TouchableOpacity>
           {'\n\n'}
-          Avoir un trouble psychiatrique, c’est fréquent ? 1 personne sur 4
-          souffre de troubles mentaux{'\n'}
-          <Text
-            style={styles.link}
+          <TouchableOpacity
+            style={styles.content}
             onPress={() => {
               logEvents.logInfoClick('article_OMS');
               Linking.openURL(
                 'https://www.who.int/whr/2001/media_centre/press_release/fr/',
               );
             }}>
-            Article de l'OMS
-          </Text>
+            <Text style={styles.contentText}>
+              Avoir un trouble psychiatrique, c’est fréquent ? 1 personne sur 4
+              souffre de troubles mentaux{'\n'}
+              <Text style={styles.link}>Article de l'OMS</Text>
+            </Text>
+          </TouchableOpacity>
           {'\n\n'}
-          On a tous besoin d'aide à un moment ou un autre de notre vie.{'\n'}
-          <Text
-            style={styles.link}
+          <TouchableOpacity
+            style={styles.content}
             onPress={() => {
               logEvents.logInfoClick('voir_un_psy');
               Linking.openURL('https://pasapas-jeunes.com/j-ai-besoin-d-aide');
             }}>
-            C’est grave d’aller voir un psy ?{' '}
-          </Text>
+            <Text style={styles.contentText}>
+              On a tous besoin d'aide à un moment ou un autre de notre vie.
+              {'\n'}
+              <Text style={styles.link}>C’est grave d’aller voir un psy ?</Text>
+            </Text>
+          </TouchableOpacity>
           {'\n\n'}
-          Quels sont les différents troubles psy ?{'\n'}
-          <Text
-            style={styles.link}
+          <TouchableOpacity
+            style={styles.content}
             onPress={() => {
               logEvents.logInfoClick('en_savoir_plus_troubles');
               Linking.openURL(
                 'https://www.psycom.org/comprendre/la-sante-mentale/les-troubles-psy/',
               );
             }}>
-            en savoir plus
-          </Text>
+            <Text style={styles.contentText}>
+              Quels sont les différents troubles psy ?{'\n'}
+              <Text style={styles.link}>en savoir plus</Text>
+            </Text>
+          </TouchableOpacity>
           {'\n\n'}
-          Je voudrais des informations sur les traitement médicamenteux :{' '}
-          <Text
-            style={styles.link}
+          <TouchableOpacity
+            style={styles.content}
             onPress={() => {
               logEvents.logInfoClick('reseau_pic');
               Linking.openURL(
                 'http://www.reseau-pic.info/?dest=fiches/nom.php',
               );
             }}>
-            reseau-pic.com{' '}
-          </Text>
+            <Text style={styles.contentText}>
+              Je voudrais des informations sur les traitement médicamenteux :{' '}
+              <Text style={styles.link}>reseau-pic.com </Text>
+            </Text>
+          </TouchableOpacity>
           {'\n\n'}
-          Je suis étudiant et j'aimerais consulter gratuitement un psychologue :{' '}
-          <Text
-            style={styles.link}
+          <TouchableOpacity
+            style={styles.content}
             onPress={() => {
               logEvents.logInfoClick('reseau_pic');
               Linking.openURL('https://santepsy.etudiant.gouv.fr/');
             }}>
-            santepsy.etudiant.gouv.fr{' '}
-          </Text>
+            <Text style={styles.contentText}>
+              Je suis étudiant et j'aimerais consulter gratuitement un
+              psychologue :{' '}
+              <Text style={styles.link}>santepsy.etudiant.gouv.fr </Text>
+            </Text>
+          </TouchableOpacity>
         </Text>
       </ScrollView>
     </SafeAreaView>
@@ -273,8 +287,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
   },
   content: {
-    color: colors.DARK_BLUE,
     padding: 10,
+    color: colors.DARK_BLUE,
+    fontSize: 16,
+  },
+  contentText: {
+    color: colors.DARK_BLUE,
     fontSize: 16,
   },
   scrollContainer: {
@@ -291,7 +309,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   link: {
-    margin: 100,
     color: colors.LIGHT_BLUE,
     fontWeight: '700',
     textDecorationLine: 'underline',
