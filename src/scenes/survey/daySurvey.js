@@ -1,5 +1,11 @@
 import React, {useEffect, useState, useContext} from 'react';
-import {StyleSheet, ScrollView, View, SafeAreaView} from 'react-native';
+import {
+  StyleSheet,
+  ScrollView,
+  View,
+  SafeAreaView,
+  Keyboard,
+} from 'react-native';
 import Text from '../../components/MyText';
 import {colors} from '../../utils/colors';
 import {buildSurveyData} from './survey-data';
@@ -135,7 +141,10 @@ const DaySurvey = ({navigation, route}) => {
   return (
     <SafeAreaView style={styles.safe}>
       <BackButton onPress={navigation.goBack} />
-      <ScrollView style={styles.container} keyboardDismissMode="on-drag">
+      <ScrollView
+        style={styles.container}
+        keyboardDismissMode="on-drag"
+        onScrollBeginDrag={Keyboard.dismiss}>
         <Text style={styles.question}>{renderQuestion()}</Text>
         {questions.map((q, i) => (
           <Question
