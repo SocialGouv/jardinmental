@@ -84,14 +84,14 @@ const Infos = ({navigation}) => {
         <View style={styles.containerInfos}>
           <View style={styles.textContainer}>
             <Text style={styles.titleInfos}>
-              <Icon
+              {/* <Icon
                 icon="InfoSvg"
                 color="#58C8D2"
                 width={21}
                 height={25}
                 styleContainer={styles.infoIcon}
-              />
-              Les troubles psychiatriques se soignent
+              /> */}
+              Les troubles psychiatriques se soignent.
             </Text>
             {isFullScreen ? (
               <>
@@ -108,13 +108,13 @@ const Infos = ({navigation}) => {
                   et l’on peut présenter un trouble psychiatrique. Les troubles
                   psychiatriques sont très fréquents, ils peuvent toucher
                   n’importe qui à n’importe quel moment de la vie, surtout quand
-                  on se retrouve dans des situations difficiles.{'\n\n'} Le fait
-                  d’avoir un trouble psychiatrique n’a aucun rapport avec une
-                  quelconque faiblesse ou manque de volonté. C’est juste que
-                  parfois, pour plein de raisons différentes, notre santé
-                  mentale est moins bonne, comme n’importe quelle autre
+                  on se retrouve dans des situations difficiles.{'\n\n'}
+                  Le fait d’avoir un trouble psychiatrique n’a aucun rapport
+                  avec une quelconque faiblesse ou manque de volonté. C’est
+                  juste que parfois, pour plein de raisons différentes, notre
+                  santé mentale est moins bonne, comme n’importe quelle autre
                   composante de notre santé.
-                  {'\n'} Les troubles psychiatriques se soignent, encore plus
+                  {'\n'}Les troubles psychiatriques se soignent, encore plus
                   s’ils sont pris en charge rapidement. Quand on a un doute,
                   quand on se pose la question, c’est toujours une bonne idée de
                   consulter un professionnel de santé, qui saura nous informer
@@ -142,89 +142,92 @@ const Infos = ({navigation}) => {
             )}
           </View>
         </View>
-        <Text style={styles.content}>
-          <TouchableOpacity
-            style={styles.content}
-            onPress={() => {
-              logEvents.logInfoClick('en_savoir_plus_mentale');
-              Linking.openURL(
-                'https://www.psycom.org/comprendre/la-sante-mentale/on-a-toutes-et-tous-une-sante-mentale/',
-              );
-            }}>
-            <Text style={styles.contentText}>
-              La santé mentale, qu’est-ce que c’est ?{'\n'}
+        <Text>
+          <Text style={styles.contentText}>
+            La santé mentale, qu’est-ce que c’est ?{'\n'}
+            <TouchableOpacity
+              style={styles.content}
+              onPress={() => {
+                logEvents.logInfoClick('en_savoir_plus_mentale');
+                Linking.openURL(
+                  'https://www.psycom.org/comprendre/la-sante-mentale/on-a-toutes-et-tous-une-sante-mentale/',
+                );
+              }}>
               <Text style={styles.link}>en savoir plus</Text>
-            </Text>
-          </TouchableOpacity>
+            </TouchableOpacity>
+          </Text>
           {'\n\n'}
-          <TouchableOpacity
-            style={styles.content}
-            onPress={() => {
-              logEvents.logInfoClick('article_OMS');
-              Linking.openURL(
-                'https://www.who.int/whr/2001/media_centre/press_release/fr/',
-              );
-            }}>
-            <Text style={styles.contentText}>
-              Avoir un trouble psychiatrique, c’est fréquent ? 1 personne sur 4
-              souffre de troubles mentaux{'\n'}
+          <Text style={styles.contentText}>
+            Avoir un trouble psychiatrique, c’est fréquent ? 1&nbsp;personne sur
+            4 souffre de troubles mentaux.{'\n'}
+            <TouchableOpacity
+              style={styles.content}
+              onPress={() => {
+                logEvents.logInfoClick('article_OMS');
+                Linking.openURL(
+                  'https://www.who.int/whr/2001/media_centre/press_release/fr/',
+                );
+              }}>
               <Text style={styles.link}>Article de l'OMS</Text>
-            </Text>
-          </TouchableOpacity>
+            </TouchableOpacity>
+          </Text>
           {'\n\n'}
-          <TouchableOpacity
-            style={styles.content}
-            onPress={() => {
-              logEvents.logInfoClick('voir_un_psy');
-              Linking.openURL('https://pasapas-jeunes.com/j-ai-besoin-d-aide');
-            }}>
-            <Text style={styles.contentText}>
-              On a tous besoin d'aide à un moment ou un autre de notre vie.
-              {'\n'}
+          <Text style={styles.contentText}>
+            On a tous besoin d'aide à un moment ou un autre de notre vie.
+            {'\n'}
+            <TouchableOpacity
+              style={styles.content}
+              onPress={() => {
+                logEvents.logInfoClick('voir_un_psy');
+                Linking.openURL(
+                  'https://pasapas-jeunes.com/j-ai-besoin-d-aide',
+                );
+              }}>
               <Text style={styles.link}>C’est grave d’aller voir un psy ?</Text>
-            </Text>
-          </TouchableOpacity>
+            </TouchableOpacity>
+          </Text>
           {'\n\n'}
-          <TouchableOpacity
-            style={styles.content}
-            onPress={() => {
-              logEvents.logInfoClick('en_savoir_plus_troubles');
-              Linking.openURL(
-                'https://www.psycom.org/comprendre/la-sante-mentale/les-troubles-psy/',
-              );
-            }}>
-            <Text style={styles.contentText}>
-              Quels sont les différents troubles psy ?{'\n'}
+          <Text style={styles.contentText}>
+            Quels sont les différents troubles psy&nbsp;?{'\n'}
+            <TouchableOpacity
+              style={styles.content}
+              onPress={() => {
+                logEvents.logInfoClick('en_savoir_plus_troubles');
+                Linking.openURL(
+                  'https://www.psycom.org/comprendre/la-sante-mentale/les-troubles-psy/',
+                );
+              }}>
               <Text style={styles.link}>en savoir plus</Text>
-            </Text>
-          </TouchableOpacity>
+            </TouchableOpacity>
+          </Text>
           {'\n\n'}
-          <TouchableOpacity
-            style={styles.content}
-            onPress={() => {
-              logEvents.logInfoClick('reseau_pic');
-              Linking.openURL(
-                'http://www.reseau-pic.info/?dest=fiches/nom.php',
-              );
-            }}>
-            <Text style={styles.contentText}>
-              Je voudrais des informations sur les traitement médicamenteux :{' '}
+          <Text style={styles.contentText}>
+            Je voudrais des informations sur les traitement médicamenteux&nbsp;:
+            {'\n'}
+            <TouchableOpacity
+              style={styles.content}
+              onPress={() => {
+                logEvents.logInfoClick('reseau_pic');
+                Linking.openURL(
+                  'http://www.reseau-pic.info/?dest=fiches/nom.php',
+                );
+              }}>
               <Text style={styles.link}>reseau-pic.com </Text>
-            </Text>
-          </TouchableOpacity>
+            </TouchableOpacity>
+          </Text>
           {'\n\n'}
-          <TouchableOpacity
-            style={styles.content}
-            onPress={() => {
-              logEvents.logInfoClick('reseau_pic');
-              Linking.openURL('https://santepsy.etudiant.gouv.fr/');
-            }}>
-            <Text style={styles.contentText}>
-              Je suis étudiant et j'aimerais consulter gratuitement un
-              psychologue :{' '}
+          <Text style={styles.contentText}>
+            Je suis étudiant et j'aimerais consulter gratuitement un
+            psychologue&nbsp;:{' '}
+            <TouchableOpacity
+              style={styles.content}
+              onPress={() => {
+                logEvents.logInfoClick('reseau_pic');
+                Linking.openURL('https://santepsy.etudiant.gouv.fr/');
+              }}>
               <Text style={styles.link}>santepsy.etudiant.gouv.fr </Text>
-            </Text>
-          </TouchableOpacity>
+            </TouchableOpacity>
+          </Text>
         </Text>
       </ScrollView>
     </SafeAreaView>
