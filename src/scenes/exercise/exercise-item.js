@@ -49,18 +49,9 @@ export default ({patientState, date, navigation}) => {
                       {beck?.mainEmotion} -{' '}
                       {`${beck?.mainEmotionIntensity * 10}%`}&nbsp;
                       {beck?.mainEmotionIntensityNuanced ? (
-                        <>
-                          <Icon
-                            icon="Arrow"
-                            color="#58C8D2"
-                            width={14}
-                            height={14}
-                            styleContainer={styles.arrowIconContainer}
-                          />
-                          <Text style={styles.mainEmotionIntensityNuancedStyle}>
-                            &nbsp;{beck?.mainEmotionIntensityNuanced * 10}%
-                          </Text>
-                        </>
+                        <Text style={styles.mainEmotionIntensityNuancedStyle}>
+                          &gt;&nbsp;{beck?.mainEmotionIntensityNuanced * 10}%
+                        </Text>
                       ) : null}
                     </Text>
                   </View>
