@@ -9,6 +9,7 @@ import Posology from './posology';
 import {canEdit} from './utils/index.js';
 import Button from '../../components/RoundButtonIcon';
 import Toxic from './toxic';
+import Context from './context';
 import logEvents from '../../services/logEvents';
 
 export default ({navigation, patientState, date}) => {
@@ -74,6 +75,7 @@ export default ({navigation, patientState, date}) => {
                   />
                 );
               })}
+            <Context data={patientState?.CONTEXT} />
             <Toxic data={patientState?.TOXIC} />
             <Posology
               data={patientState?.POSOLOGY}

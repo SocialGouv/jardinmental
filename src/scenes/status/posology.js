@@ -6,7 +6,7 @@ import {colors} from '../../utils/colors';
 import {canEdit} from './utils/index.js';
 
 const Posology = ({data, date, onPress}) => {
-  if (!data || data.length === 0) {
+  if (!data || data.length === 0 || data.every((e) => !e.value)) {
     return null;
   }
 
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
   },
   divider: {
     height: 1,
-    backgroundColor: '#6BD1F3',
+    backgroundColor: 'rgba(38, 56, 124, 0.08)',
     marginVertical: 10,
     width: '60%',
     alignSelf: 'center',
