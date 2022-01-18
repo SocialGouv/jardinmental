@@ -1,5 +1,9 @@
 import {colors} from '../../utils/colors';
-import {displayedCategories, categories} from '../../utils/constants';
+import {
+  displayedCategories,
+  categories,
+  translateCategories,
+} from '../../utils/constants';
 import {getArrayOfDates, formatDate} from '../../utils/date/helpers';
 import localStorage from '../../utils/localStorage';
 import {getDrugListWithLocalStorage} from '../../utils/drugs-list';
@@ -18,6 +22,7 @@ const hasNotes = (notes) =>
 
 const hasBeck = (becks) => !!becks && Object.keys(becks)?.length > 0;
 const hasDiaryNotes = (diary) => !!diary && diary?.values?.some((e) => e.value);
+const hasContext = (context) => !!context?.userComment;
 
 // GENERATORS
 
@@ -506,6 +511,8 @@ const formatHtmlTable = async (diaryData, diaryNotes) => {
                       return '';
                     }
                     let NOTES = diaryData[strDate]?.NOTES || null;
+                    let CONTEXT = diaryData[strDate]?.CONTEXT || null;
+                    console.log('✍️ ~ CONTEXT', CONTEXT);
                     let becks = diaryData[strDate]?.becks || null;
                     const diaryNoteDate = diaryNotes[strDate];
 
@@ -522,12 +529,13 @@ const formatHtmlTable = async (diaryData, diaryNotes) => {
                         .reverse()
                         .join('/')}</>
                       ${hasNotes(NOTES) ? renderSurveyNotes(NOTES) : '<div/>'}
-                      ${hasBeck(becks) ? renderBecks(becks) : '<div/>'}
+                      ${renderSurvey(diaryData, strDate)}
                       ${
                         hasDiaryNotes(diaryNoteDate)
                           ? renderDiaryNotes(diaryNoteDate.values)
                           : '<div/>'
                       }
+                      ${hasBeck(becks) ? renderBecks(becks) : '<div/>'}
                     `;
                   })
                   .join('')}
@@ -537,6 +545,69 @@ const formatHtmlTable = async (diaryData, diaryNotes) => {
       </body>
     </html>
   `;
+};
+
+const renderSurvey = (data, date) => {
+  const getUserComments = (obj, key) => {
+    const userComments = Object.keys(obj[key] || [])
+      ?.filter((s) => obj[key][s]?.userComment?.trim())
+      .map((e) => ({id: e, value: obj[key][e].userComment?.trim()}));
+    return userComments;
+  };
+
+  const renderUserComment = (key, value) => {
+    if (key === 'TOXIC' && !data[date][key]?.value) return '';
+    if (key === 'TOXIC') {
+      return `<p
+      style="
+          margin: 0;
+          margin-left: 20px;
+          padding-right: 50px;
+          padding-top: 2px;
+          padding-bottom: 2px;
+        ">
+      <b>Toxique :</b>${value || 'oui'}
+    </p>`;
+    } else {
+      return `<p
+      style="
+          margin: 0;
+          margin-left: 20px;
+          padding-right: 50px;
+          padding-top: 2px;
+          padding-bottom: 2px;
+        ">
+      <b>${translateCategories[key] || key} :</b>${value}
+    </p>`;
+    }
+  };
+
+  return `<h4 style="color: ${colors.BLUE};">Questionnaire</h4>
+                      <table style="
+                        border-collapse: collapse;
+                        margin-bottom: 20px;
+                      ">
+                        <tbody style="
+                          padding:15px;
+                          border: 1px solid #ebedf2;
+                          background-color: #f8f9fb;
+                        ">
+                          <tr class="journal__item-symptom-wrapper">
+                            <td style="padding:10px;">
+                              ${getUserComments(data, date)
+                                ?.map(
+                                  (userComment) =>
+                                    userComment &&
+                                    renderUserComment(
+                                      userComment.id,
+                                      userComment.value,
+                                    ),
+                                )
+                                .join('')}            
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>`;
 };
 
 const renderSurveyNotes = (value) => {
