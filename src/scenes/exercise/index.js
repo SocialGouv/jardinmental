@@ -119,12 +119,12 @@ export default ({navigation}) => {
                 b = b.split('/').reverse().join('');
                 return b.localeCompare(a);
               })
-              .slice(0, LIMIT_PER_PAGE * page)
               .filter(
                 (el) =>
                   diaryData[el]?.becks &&
                   Object.keys(diaryData[el].becks).length > 0,
               )
+              .slice(0, LIMIT_PER_PAGE * page)
               .map((date) => (
                 <View key={date}>
                   <Text style={styles.subtitle}>{formatDateThread(date)}</Text>
@@ -136,11 +136,17 @@ export default ({navigation}) => {
                 </View>
               ))}
             <ContributeCard onPress={() => setNPSvisible(true)} />
-            {Object.keys(diaryData)?.filter(
-              (el) =>
-                diaryData[el]?.becks &&
-                Object.keys(diaryData[el].becks).length > 0,
-            )?.length >
+            {Object.keys(diaryData)
+              ?.sort((a, b) => {
+                a = a.split('/').reverse().join('');
+                b = b.split('/').reverse().join('');
+                return b.localeCompare(a);
+              })
+              ?.filter(
+                (el) =>
+                  diaryData[el]?.becks &&
+                  Object.keys(diaryData[el].becks).length > 0,
+              )?.length >
               LIMIT_PER_PAGE * page && (
               <TouchableOpacity
                 onPress={() => setPage(page + 1)}
