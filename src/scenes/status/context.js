@@ -2,8 +2,8 @@ import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import Text from '../../components/MyText';
 
-const Toxic = ({data}) => {
-  if (!data || !data.value) return null;
+const Context = ({data}) => {
+  if (!data || !data.userComment) return null;
 
   const Detail = ({title, text}) => {
     if (!text) return null;
@@ -20,7 +20,7 @@ const Toxic = ({data}) => {
       <View style={styles.divider} />
       <View style={styles.container}>
         <View style={styles.textContainer}>
-          <Detail title="Substances" text={data.userComment || 'Oui'} />
+          <Detail title="Contexte" text={data.userComment || 'Oui'} />
         </View>
       </View>
     </>
@@ -48,4 +48,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Toxic;
+export default Context;

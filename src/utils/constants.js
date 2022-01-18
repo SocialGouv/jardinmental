@@ -106,7 +106,8 @@ export const translateCategories = {
   SENSATIONS: 'Sensations étranges',
   DAILYACTIVITIES: 'Faire mes activités quotidiennes',
   COMMUNICATION: 'Communication avec mon entourage',
-  TOXIC: 'Substance ',
+  TOXIC: 'Substance',
+  CONTEXT: 'Contexte',
 };
 
 export const surveyDate = {
