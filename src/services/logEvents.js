@@ -141,6 +141,22 @@ const logFeelingAddComment = async (value) => {
     value,
   });
 };
+const logFeelingAddContext = async (value) => {
+  await logEvent({
+    category: FEELING,
+    action: 'FEELING_ADD_CONTEXT',
+    name: 'context',
+    value,
+  });
+};
+const logFeelingResponseToxic = async (value) => {
+  await logEvent({
+    category: FEELING,
+    action: 'FEELING_RESPONSE_TOXIC',
+    name: 'toxic',
+    value,
+  });
+};
 
 const logFeelingEditButtonClick = async () => {
   await logEvent({
@@ -457,4 +473,6 @@ export default {
   logInputDrugSurvey,
   logFeelingEditButtonClick,
   logFeelingAddComment,
+  logFeelingAddContext,
+  logFeelingResponseToxic,
 };
