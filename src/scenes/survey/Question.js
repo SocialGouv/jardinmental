@@ -96,9 +96,9 @@ const Question = ({
           multiline={true}
           numberOfLines={Platform.OS === 'ios' ? null : 1}
           minHeight={Platform.OS === 'ios' ? 30 * 1 : null}
-          onChangeText={(userComment) => {
-            setText(userComment);
-            onChangeUserComment({key: question.id, userComment});
+          onChangeText={(v) => {
+            setText(v);
+            onChangeUserComment({key: question.id, userComment: v});
           }}
           value={text}
           placeholder="Ajouter une précision sur ce critère"

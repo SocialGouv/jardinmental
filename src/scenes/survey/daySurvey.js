@@ -15,6 +15,7 @@ import BackButton from '../../components/BackButton';
 import Button from '../../components/Button';
 import {getScoreWithState} from '../../utils';
 import Question from './Question';
+import InputQuestion from './InputQuestion';
 import QuestionYesNo from './QuestionYesNo';
 import logEvents from '../../services/logEvents';
 import {DiaryDataContext} from '../../context/diaryData';
@@ -29,6 +30,10 @@ const DaySurvey = ({navigation, route}) => {
   const questionToxic = {
     id: 'TOXIC',
     label: 'Ai-je consommé des substances aujourd’hui ?',
+  };
+  const questionContext = {
+    id: 'CONTEXT',
+    label: 'Je précise le contexte de ma journée',
   };
 
   useEffect(() => {
@@ -69,7 +74,20 @@ const DaySurvey = ({navigation, route}) => {
           route?.params?.currentSurvey?.answers[questionToxic?.id]?.userComment,
       });
     }
-  }, [route?.params?.currentSurvey?.answers, questions, questionToxic.id]);
+    if ((route?.params?.currentSurvey?.answers || {})[questionContext.id]) {
+      handleChangeUserComment({
+        key: questionContext.id,
+        userComment:
+          route?.params?.currentSurvey?.answers[questionContext?.id]
+            ?.userComment,
+      });
+    }
+  }, [
+    route?.params?.currentSurvey?.answers,
+    questions,
+    questionToxic.id,
+    questionContext?.id,
+  ]);
 
   const toggleAnswer = async ({key, value}) => {
     setAnswers((prev) => {
@@ -98,8 +116,16 @@ const DaySurvey = ({navigation, route}) => {
     setDiaryData(currentSurvey);
     logEvents.logFeelingAdd();
     logEvents.logFeelingAddComment(
-      Object.keys(answers).filter((key) => answers[key].userComment)?.length,
+      Object.keys(answers).filter(
+        (key) =>
+          ![questionToxic.id, questionContext.id].includes(key) &&
+          answers[key].userComment,
+      )?.length,
     );
+    logEvents.logFeelingAddContext(
+      answers[questionContext.id]?.userComment ? 1 : 0,
+    );
+    logEvents.logFeelingResponseToxic(answers[questionToxic.id]?.value ? 1 : 0);
 
     if (route.params?.redirect) {
       alertNoDataYesterday({
@@ -157,6 +183,14 @@ const DaySurvey = ({navigation, route}) => {
             userComment={answers[q.id]?.userComment}
           />
         ))}
+        <InputQuestion
+          question={questionContext}
+          onPress={toggleAnswer}
+          selected={answers[questionContext.id]?.value}
+          explanation={questionContext.explanation}
+          onChangeUserComment={handleChangeUserComment}
+          userComment={answers[questionContext.id]?.userComment}
+        />
         <QuestionYesNo
           question={questionToxic}
           onPress={toggleAnswer}
@@ -167,10 +201,6 @@ const DaySurvey = ({navigation, route}) => {
           userComment={answers[questionToxic.id]?.userComment}
         />
         <View style={styles.divider} />
-        <Text style={styles.subtitle}>
-          Je pense à remplir &quot;Mon&nbsp;Journal&quot; pour préciser des
-          élements de ma journée
-        </Text>
         <View style={styles.buttonWrapper}>
           <Button
             onPress={() => {
@@ -180,6 +210,10 @@ const DaySurvey = ({navigation, route}) => {
             disabled={!allQuestionHasAnAnswer()}
           />
         </View>
+        <Text style={styles.subtitle}>
+          Je pense à remplir &quot;Mon&nbsp;Journal&quot; pour préciser des
+          élements de ma journée
+        </Text>
       </ScrollView>
     </SafeAreaView>
   );
@@ -306,7 +340,6 @@ const styles = StyleSheet.create({
     flex: 1,
     color: '#000',
     fontSize: 15,
-    marginTop: 15,
     fontWeight: 'normal',
     textAlign: 'center',
   },
