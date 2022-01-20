@@ -1,3 +1,20 @@
+# [1.20.0](https://github.com/SocialGouv/monsuivipsy/compare/v1.19.1...v1.20.0) (2022-01-20)
+
+
+### Bug Fixes
+
+* **exercice:** flèche moche, mais qui marche ([c6a5234](https://github.com/SocialGouv/monsuivipsy/commit/c6a523485716bb6b117fa556594699ea3efd1ce6))
+* **exercice:** voir plus ne s'affichait pas correctement quand il y avait un questionnaire sans beck ([664ecf1](https://github.com/SocialGouv/monsuivipsy/commit/664ecf1e02be00efc92b96c0eaa08c6ea2362618))
+* **export:** ajout des commentaires par ressenti + contexte de la journée + substance ([c2dbaa9](https://github.com/SocialGouv/monsuivipsy/commit/c2dbaa93c2d8a81513b35a09ef216f46d9e4dcc0))
+* **infos:** texte qui sort de l'écran ([6ccc756](https://github.com/SocialGouv/monsuivipsy/commit/6ccc756b890f30d9f45f89c3620dca6f9def404d))
+* **journal:** ajout du contexte de la journée dans le journal ([a1e6b50](https://github.com/SocialGouv/monsuivipsy/commit/a1e6b507aa0fa155f5735ae4b56c19900f693a3c))
+* **questionnaire:** fix pour android - cacher le clavier au scroll ([d10dfcf](https://github.com/SocialGouv/monsuivipsy/commit/d10dfcfaed78e182eccce4037bedacfff9b1f634))
+
+
+### Features
+
+* **questionnaire:** ajout du contexte de la journée ([793f5a3](https://github.com/SocialGouv/monsuivipsy/commit/793f5a39dc5e096c0175d98e53b87745c093d7e9))
+
 ## [1.19.1](https://github.com/SocialGouv/monsuivipsy/compare/v1.19.0...v1.19.1) (2022-01-12)
 
 
