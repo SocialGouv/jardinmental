@@ -1,3 +1,12 @@
+## [1.20.1](https://github.com/SocialGouv/monsuivipsy/compare/v1.20.0...v1.20.1) (2022-01-20)
+
+
+### Bug Fixes
+
+* **export:** ajouter espace après les `:` ([8a298c1](https://github.com/SocialGouv/monsuivipsy/commit/8a298c1b05b1bb1023b1ef110fde3ab7162d8d1a))
+* **questionnaire:** ajouter exemple de contexte dans le placeholder ([4a79ee1](https://github.com/SocialGouv/monsuivipsy/commit/4a79ee127ee73815a87c1af98b11d4ad03b37fcf))
+* **questionnaire:** mise à jour de la phrase en bas du questionnaire ([4ff5861](https://github.com/SocialGouv/monsuivipsy/commit/4ff58610b5d08d3d11273be8749141cf1d56742f))
+
 # [1.20.0](https://github.com/SocialGouv/monsuivipsy/compare/v1.19.1...v1.20.0) (2022-01-20)
 
 
