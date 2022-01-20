@@ -212,7 +212,7 @@ const DaySurvey = ({navigation, route}) => {
           />
         </View>
         <Text style={styles.subtitle}>
-          Retrouvez toutes vos notes dans votre journal intime
+          Retrouvez toutes vos notes dans l'onglet &quot;Mon&nbsp;journal&quot;
         </Text>
       </ScrollView>
     </SafeAreaView>
