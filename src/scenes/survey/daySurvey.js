@@ -212,8 +212,7 @@ const DaySurvey = ({navigation, route}) => {
           />
         </View>
         <Text style={styles.subtitle}>
-          Je pense à remplir &quot;Mon&nbsp;Journal&quot; pour préciser des
-          élements de ma journée
+          Retrouvez toutes vos notes dans votre journal intime
         </Text>
       </ScrollView>
     </SafeAreaView>
