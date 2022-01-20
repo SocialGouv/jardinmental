@@ -16,6 +16,7 @@ const Question = ({
   isLast,
   onChangeUserComment,
   userComment,
+  placeholder = 'Message...',
 }) => {
   const [showExplanation, setShowExplanation] = useState(false);
   const toggleShowExplanation = async () => {
@@ -63,7 +64,7 @@ const Question = ({
             onChangeUserComment({key: question.id, userComment: v});
           }}
           value={text}
-          placeholder="Ajouter une précision sur ce critère"
+          placeholder={placeholder}
           style={styles.textArea}
           textAlignVertical={'top'}
         />
