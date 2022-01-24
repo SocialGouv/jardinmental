@@ -38,7 +38,8 @@ const Supported = ({navigation}) => {
     <SafeAreaView style={styles.safe}>
       <ScrollView
         style={styles.container}
-        contentContainerStyle={styles.scrollContainer}>
+        contentContainerStyle={styles.scrollContainer}
+        testID="scroll-view">
         <View style={styles.header}>
           <HandShakeSvg width={88} height={88} color="#bebebe" />
           <Text style={styles.title}>Bienvenue sur{'\n'}Mon Suivi Psy</Text>
@@ -63,6 +64,7 @@ const Supported = ({navigation}) => {
           title="Je ne suis pas suivi"
           color="#F4FCFD"
           handleClick={() => handleClick('NO')}
+          testID="not-followed-button"
         />
         <DarkCard
           title="Je suis un professionnel de santé"
@@ -74,9 +76,9 @@ const Supported = ({navigation}) => {
   );
 };
 
-const Card = ({title, handleClick}) => {
+const Card = ({title, handleClick, testID}) => {
   return (
-    <TouchableOpacity onPress={handleClick}>
+    <TouchableOpacity onPress={handleClick} testID={testID}>
       <View style={styles.card}>
         <Text style={styles.cardTitle}>{title}</Text>
       </View>

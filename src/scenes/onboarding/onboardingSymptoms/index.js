@@ -103,7 +103,8 @@ const SymptomScreen = ({navigation, route}) => {
       <ScrollView
         keyboardShouldPersistTaps="handled"
         style={styles.container}
-        contentContainerStyle={styles.scrollContainer}>
+        contentContainerStyle={styles.scrollContainer}
+        testID="scroll-view">
         <View style={styles.titleContainer}>
           <SurveyMenu style={styles.image} width={30} height={30} />
           <Text style={styles.title}>
@@ -145,6 +146,7 @@ const SymptomScreen = ({navigation, route}) => {
                 onTintColor={colors.LIGHT_BLUE}
                 onAnimationType="bounce"
                 offAnimationType="bounce"
+                testID={'check-box-'+cat.toLowerCase()}
               />
             </View>
           ))}
@@ -163,6 +165,7 @@ const SymptomScreen = ({navigation, route}) => {
             title="Valider"
             onPress={nextOnboardingScreen}
             disabled={noneSelected()}
+            testID="validate-button"
           />
         </View>
       </ScrollView>

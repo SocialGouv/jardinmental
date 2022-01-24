@@ -22,7 +22,7 @@ const size =
   screenHeight * (Dimensions.get('window').height > 700 ? 0.15 : 0.1);
 
 export const Screen0 = () => (
-  <View style={styles.container}>
+  <View style={styles.container} testID="screen-0">
     <View style={styles.imageContainer}>
       <LockSvg height={size} width={size} style={styles.image} />
     </View>
@@ -41,7 +41,7 @@ export const Screen0 = () => (
   </View>
 );
 export const Screen1 = () => (
-  <View style={styles.container}>
+  <View style={styles.container} testID="screen-1">
     <View style={styles.imageContainer}>
       <SurveyMenu
         height={size}
@@ -60,7 +60,7 @@ export const Screen1 = () => (
   </View>
 );
 export const Screen2 = () => (
-  <View style={styles.container}>
+  <View style={styles.container} testID="screen-2">
     <GraphMenu height={size} width={size} style={styles.image} />
     <Text style={styles.presentationText}>
       <Text style={styles.bold}>Courbes de mes ressentis</Text>
@@ -72,7 +72,7 @@ export const Screen2 = () => (
   </View>
 );
 export const Screen3 = () => (
-  <View style={styles.container}>
+  <View style={styles.container} testID="screen-3">
     <Screen3Image style={styles.image} />
     <Text style={styles.presentationText}>
       <Text style={styles.bold}>Arriver préparé</Text>
