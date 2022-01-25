@@ -14,6 +14,7 @@ export default ({
   placeholder = 'Ajouter...',
   styleContainer,
   onChangeText = console.log,
+  testID
 }) => {
   const [value, setValue] = useState();
 
@@ -29,6 +30,7 @@ export default ({
           placeholder={placeholder}
           placeholderTextColor="lightgrey"
           style={styles.text}
+          testID={testID ? testID+'-input' : undefined}
         />
       </View>
       <View style={styles.iconContainer}>
@@ -39,7 +41,8 @@ export default ({
             onChange(value);
             setValue('');
             onChangeText('');
-          }}>
+          }}
+          testID={testID ? testID+'-add-button' : undefined}>
           <CircledIcon
             icon="PlusSvg"
             color={colors.LIGHT_BLUE}

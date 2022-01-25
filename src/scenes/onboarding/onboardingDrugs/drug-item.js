@@ -11,7 +11,7 @@ import {colors} from '../../../utils/colors';
 import RNPickerSelect from 'react-native-picker-select';
 import Icon from '../../../components/Icon';
 
-export default ({drug, onChange, showPosology, onClose}) => {
+export default ({drug, onChange, showPosology, onClose, testID}) => {
   const [showFreeText, setShowFreeText] = useState(false);
   const [freeText, setFreeText] = useState('');
 
@@ -28,7 +28,7 @@ export default ({drug, onChange, showPosology, onClose}) => {
 
   const render = () => {
     return (
-      <View style={styles.posologyItem}>
+      <View style={styles.posologyItem} testID={testID}>
         <View style={styles.left}>
           <TouchableOpacity style={styles.delete} onPress={onClose}>
             <Icon icon="CrossSvg" width={8} height={8} color={colors.BLUE} />

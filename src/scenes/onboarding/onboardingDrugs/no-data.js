@@ -28,6 +28,7 @@ export default ({navigation}) => {
         title="Ajouter un traitement"
         buttonStyle={styles.button}
         textStyle={{fontSize: 14, fontWeight: 'bold'}}
+        testID='add-drugs-button'
       />
       <TouchableOpacity onPress={handleDrugInformation}>
         <Text style={styles.link}>Informations sur les traitements</Text>

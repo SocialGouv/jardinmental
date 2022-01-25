@@ -8,8 +8,10 @@ import {DiaryNotesProvider} from './src/context/diaryNotes';
 import NPS from './src/services/NPS/NPS';
 import VersionChecker from './src/services/versionChecker';
 import {Sentry} from 'react-native-sentry';
+import { LogBox } from 'react-native';
 
 if (!__DEV__) {
+  LogBox.ignoreAllLogs();
   Sentry.config(
     'https://9f0bd8f8af8444eea9f470d00a1bb411@sentry.fabrique.social.gouv.fr/54',
   ).install();

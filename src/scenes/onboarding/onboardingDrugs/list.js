@@ -160,7 +160,8 @@ const Drugs = ({navigation, route}) => {
         ref={scrollRef}
         style={styles.container}
         contentContainerStyle={styles.scrollContainer}
-        keyboardShouldPersistTaps="handled">
+        keyboardShouldPersistTaps="handled"
+        testID="scroll-view">
         {!filteredList ? (
           <Text>Chargement</Text>
         ) : (
@@ -198,6 +199,7 @@ const Drugs = ({navigation, route}) => {
                   style={styles.checkbox}
                   value={!!treatment.find((x) => x.id === e.id)}
                   onValueChange={(newValue) => setToogleCheckbox(e, newValue)}
+                  testID={e.name1 ? "check-box-"+e.name1.trim().toLowerCase() : undefined}
                 />
               </View>
             ))}
@@ -205,7 +207,9 @@ const Drugs = ({navigation, route}) => {
         )}
       </ScrollView>
       <View style={styles.buttonWrapper}>
-        <Button onPress={handleSubmit} title="Valider" />
+        <Button onPress={handleSubmit} title="Valider"
+          testID='validate-button'
+        />
       </View>
     </SafeAreaView>
   );

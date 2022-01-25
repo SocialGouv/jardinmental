@@ -122,6 +122,7 @@ const SymptomScreen = ({navigation, route}) => {
         <AddElemToList
           onChange={handleAddNewSymptom}
           placeholder="Ajouter un ressenti ou une activité"
+          testID="custom"
         />
         <Text style={[styles.subtitle, styles.spaceabove]}>
           Je peux aussi en sélectionner parmi ces exemples :

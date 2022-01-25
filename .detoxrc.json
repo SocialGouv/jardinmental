@@ -5,8 +5,8 @@
   "apps": {
     "ios": {
       "type": "ios.app",
-      "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/monsuivipsy.app",
-      "build": "xcodebuild -workspace ios/monsuivipsy.xcworkspace -configuration Debug -sdk iphonesimulator -scheme monsuivipsy -derivedDataPath ios/build",
+      "binaryPath": "ios/build/Build/Products/Release-iphonesimulator/monsuivipsy.app",
+      "build": "xcodebuild -workspace ios/monsuivipsy.xcworkspace -configuration Release -sdk iphonesimulator -scheme monsuivipsy -derivedDataPath ios/build",
       "bundleId": "org.reactjs.native.example.monsuivipsy"
     },
     "android": {

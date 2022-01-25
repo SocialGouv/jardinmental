@@ -94,7 +94,7 @@ const Status = ({navigation}) => {
           <BannerProNPS onClose={() => setBannerProNPSVisible(false)} />
         ) : (
           <>
-            <TouchableOpacity onPress={startSurvey} style={styles.setupButton}>
+            <TouchableOpacity onPress={startSurvey} style={styles.setupButton} testID="main-button">
               <Text style={styles.setupButtonText}>
                 Comment s'est passée ma journée
               </Text>

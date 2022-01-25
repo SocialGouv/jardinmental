@@ -13,6 +13,7 @@
     "ios:12promax": "react-native run-ios --simulator=\"iPhone 12 Pro Max\"",
     "start": "react-native start --reset-cache",
     "test": "jest",
+    "detox:ios": "detox build --configuration ios && detox test --configuration ios",
     "lint": "eslint .",
     "android:build-aab": "cd android && ./gradlew clean && ./gradlew bundleRelease && cd ../",
     "postinstall": "pod install --project-directory=ios/ --repo-update && npx jetify -r",
