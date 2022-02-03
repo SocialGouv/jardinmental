@@ -1,3 +1,10 @@
+## [1.20.2](https://github.com/SocialGouv/monsuivipsy/compare/v1.20.1...v1.20.2) (2022-02-03)
+
+
+### Bug Fixes
+
+* delete useless file ([60d53b6](https://github.com/SocialGouv/monsuivipsy/commit/60d53b6b7b1e890baeff91d8001bd51c6f0a4a00))
+
 ## [1.20.1](https://github.com/SocialGouv/monsuivipsy/compare/v1.20.0...v1.20.1) (2022-01-20)
 
 
