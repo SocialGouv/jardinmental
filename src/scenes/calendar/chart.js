@@ -14,13 +14,13 @@ const daysHeight = 20;
 const chartPaddingTop = 10;
 const chartHeight = 220;
 const chartInnerHeight = chartHeight - daysHeight;
-const spacingY = 0.1452;
+const spacingY = 0.172;
 const dotsY = [
-  chartPaddingTop + chartInnerHeight * spacingY * 5,
-  chartPaddingTop + chartInnerHeight * spacingY * 4,
-  chartPaddingTop + chartInnerHeight * spacingY * 3,
-  chartPaddingTop + chartInnerHeight * spacingY * 2,
-  chartPaddingTop + chartInnerHeight * spacingY * 1,
+  chartPaddingTop + chartInnerHeight * spacingY * 4.5,
+  chartPaddingTop + chartInnerHeight * spacingY * 3.5,
+  chartPaddingTop + chartInnerHeight * spacingY * 2.5,
+  chartPaddingTop + chartInnerHeight * spacingY * 1.5,
+  chartPaddingTop + chartInnerHeight * spacingY * 0.5,
 ];
 
 // Horizontal spacing
@@ -44,7 +44,7 @@ const Chart = ({
   onPress,
   title,
   data = [],
-  lines = 6,
+  lines = 5,
   withFocus = false,
   focused = null,
 }) => (
