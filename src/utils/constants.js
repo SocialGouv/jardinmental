@@ -10,11 +10,11 @@ export const icons = {
 };
 
 export const colors = {
-  veryBad: '#FFC0C0',
+  veryBad: '#FFA1A1',
   bad: '#FCD0A7',
-  middle: '#FCE285',
-  good: '#F0F277',
-  veryGood: '#E2FA80',
+  middle: '#F8FB85',
+  good: '#CCFD64',
+  veryGood: '#7AFD13',
   veryBadTrans: '#fdcccc',
   badTrans: '#fbd8b8',
   middleTrans: '#fbe79c',
