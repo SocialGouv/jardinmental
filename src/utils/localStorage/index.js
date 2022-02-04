@@ -73,6 +73,10 @@ const getCustomSymptoms = async () => {
   return JSON.parse(customSymptoms) || [];
 };
 
+const setCustomSymptoms = async (symp) => {
+  await AsyncStorage.setItem(STORAGE_KEY_CUSTOM_SYMPTOMS, JSON.stringify(symp));
+};
+
 const addCustomSymptoms = async (sym) => {
   const customSymptoms = await getCustomSymptoms();
   customSymptoms.push(sym);
@@ -156,6 +160,7 @@ export default {
   setSupported,
   getCustomSymptoms,
   addCustomSymptoms,
+  setCustomSymptoms,
   getMedicalTreatment,
   setMedicalTreatment,
   removeDrugFromTreatment,

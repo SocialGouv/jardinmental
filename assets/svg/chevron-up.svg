@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g id="chevron-top">
+        <line x1="16" x2="25" y1="11.5" y2="20.5" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+            stroke-linejoin="round" />
+        <line x1="7" x2="16" y1="20.5" y2="11.5" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+            stroke-linejoin="round" />
+    </g>
+</svg>
