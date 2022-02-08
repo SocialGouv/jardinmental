@@ -13,7 +13,12 @@ import SurveyMenu from '../../../../assets/svg/SurveyMenu';
 import AddElemToList from '../../../components/AddElemToList';
 import localStorage from '../../../utils/localStorage';
 import logEvents from '../../../services/logEvents';
-import {ONBOARDING_STEPS, displayedCategories} from '../../../utils/constants';
+import {
+  ONBOARDING_STEPS,
+  categories,
+  displayedCategories,
+  reliquatCategories,
+} from '../../../utils/constants';
 import TextTag from '../../../components/TextTag';
 import Button from '../../../components/Button';
 import Text from '../../../components/MyText';
@@ -24,15 +29,36 @@ const CustomSymptomScreen = ({navigation, route, settings = false}) => {
 
   useEffect(() => {
     (async () => {
-      await localStorage.setOnboardingStep(
-        ONBOARDING_STEPS.STEP_SYMPTOMS_CUSTOM,
-      );
-
       const preselectedCategories = await localStorage.getSymptoms();
+      if (!Object.keys(preselectedCategories).length) {
+        return;
+      }
+
       const customSymptoms = await localStorage.getCustomSymptoms();
-      setChosenCategories({...preselectedCategories, ...customSymptoms});
+      let selected = {};
+      Object.keys(categories)
+        .concat(...Object.keys(reliquatCategories))
+        .concat(customSymptoms)
+        .forEach((cat) => {
+          const [categoryName] = cat.split('_');
+          // select it if we add it to the list (old and new version)
+          // cat is the full name (SYMPTOM_FREQUENCE)
+          // categoryName is the new format (SYMPTOM)
+          selected[categoryName] =
+            preselectedCategories[cat] || preselectedCategories[categoryName];
+        });
+      setChosenCategories(selected);
     })();
   }, []);
+
+  useEffect(() => {
+    (async () => {
+      !settings &&
+        (await localStorage.setOnboardingStep(
+          ONBOARDING_STEPS.STEP_SYMPTOMS_CUSTOM,
+        ));
+    })();
+  }, [settings]);
 
   useEffect(() => {
     if (chosenCategories === undefined) return;
@@ -48,18 +74,19 @@ const CustomSymptomScreen = ({navigation, route, settings = false}) => {
       customSymptomsKeys.forEach(
         (e) => (customSymptoms[e] = chosenCategories[e]),
       );
-      await localStorage.setCustomSymptoms(customSymptoms);
+      await localStorage.setCustomSymptoms(customSymptomsKeys);
 
       let defaultSymptoms = {};
       defaultSymptomsKeys.forEach(
         (e) => (defaultSymptoms[e] = chosenCategories[e]),
       );
-      await localStorage.setSymptoms(defaultSymptoms);
+      await localStorage.setSymptoms(chosenCategories);
     })();
   }, [chosenCategories]);
 
   const addSymptom = async (value) => {
     if (!value) return;
+    await localStorage.addCustomSymptoms(value);
     setChosenCategories({...chosenCategories, [value]: true});
     logEvents.logCustomSymptomAdd();
   };
