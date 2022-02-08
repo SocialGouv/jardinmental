@@ -5,7 +5,7 @@ import Text from './MyText';
 const styles = StyleSheet.create({
   button: {
     minWidth: '70%',
-    height: 45,
+    minHeight: 45,
     borderRadius: 45,
     paddingHorizontal: 30,
     alignItems: 'center',
@@ -24,15 +24,6 @@ const styles = StyleSheet.create({
   text: {
     fontWeight: 'bold',
     fontSize: 19,
-  },
-  container: {
-    display: 'flex',
-    paddingHorizontal: 20,
-    paddingTop: 0,
-    paddingBottom: 20,
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'flex-end',
   },
 });
 

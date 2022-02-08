@@ -14,7 +14,6 @@ import localStorage from '../../../utils/localStorage';
 import logEvents from '../../../services/logEvents';
 import BackButton from '../../../components/BackButton';
 import Button from '../../../components/Button';
-import AddElemToList from '../../../components/AddElemToList';
 import SurveyMenu from '../../../../assets/svg/SurveyMenu';
 import Logo from '../../../../assets/svg/symptoms-setting';
 import {ONBOARDING_STEPS} from '../../../utils/constants';
@@ -37,20 +36,7 @@ const SymptomScreen = ({navigation, route}) => {
       ) {
         return init();
       }
-
-      const customSymptoms = await localStorage.getCustomSymptoms();
-      let selected = {};
-      Object.keys(categories)
-        .concat(customSymptoms)
-        .forEach((cat) => {
-          const [categoryName] = cat.split('_');
-          if (preselectedCategories[cat] === true) {
-            selected[categoryName] = true;
-          } else {
-            selected[categoryName] = false;
-          }
-        });
-      setChosenCategories(selected);
+      setChosenCategories(preselectedCategories);
     })();
   }, []);
 
@@ -80,7 +66,7 @@ const SymptomScreen = ({navigation, route}) => {
     if (noneSelected()) {
       return;
     }
-    navigation.navigate('onboarding-drugs');
+    navigation.navigate('onboarding-symptoms-custom');
   };
 
   useEffect(() => {
@@ -111,19 +97,8 @@ const SymptomScreen = ({navigation, route}) => {
           </Text>
         </View>
         <Text style={styles.subtitle}>
-          J'ajoute mes critères{' '}
-          <Text style={styles.lightblue}>personnalisés</Text>. Cela peut-être un{' '}
-          <Text style={styles.lightblue}>symptôme</Text>, un{' '}
-          <Text style={styles.lightblue}>ressenti positif</Text> ou encore une{' '}
-          <Text style={styles.lightblue}>activité</Text>
-        </Text>
-
-        <AddElemToList
-          onChange={handleAddNewSymptom}
-          placeholder="Ajouter un ressenti ou une activité"
-        />
-        <Text style={[styles.subtitle, styles.spaceabove]}>
-          Je peux aussi en sélectionner parmi ces exemples :
+          Sélectionnez ce que vous voulez suivre quotidiennement parmi ces
+          exemples
         </Text>
         {chosenCategories &&
           Object.keys(chosenCategories).map((cat, index) => (
@@ -154,9 +129,9 @@ const SymptomScreen = ({navigation, route}) => {
               Ajouter ou sélectionner au moins 1 élément
             </Text>
           ) : (
-            <Text style={[styles.subtitle, styles.spaceabove]}>
-              Vous pourrez modifier votre sélection ultérieurement dans les
-              réglages
+            <Text style={[styles.h3, styles.spaceabove]}>
+              Vous pourrez modifier à tout moment ce que vous suivez, via le
+              menu "Réglages" de l'application
             </Text>
           )}
           <Button
@@ -226,12 +201,18 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: '700',
   },
-  subtitle: {
+  h3: {
     color: '#181818',
     fontSize: 14,
     marginBottom: 10,
     fontWeight: '300',
     textAlign: 'center',
+  },
+  subtitle: {
+    color: colors.BLUE,
+    fontSize: 18,
+    marginVertical: 30,
+    fontWeight: '400',
   },
   spaceabove: {
     marginTop: 15,

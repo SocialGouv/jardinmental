@@ -21,6 +21,8 @@ import ArrowUpSvg from '../../assets/svg/arrow-up.svg';
 import PlusSurveySvg from '../../assets/svg/plus-survey.svg';
 import PlusBeckSvg from '../../assets/svg/plus-beck.svg';
 import CrossSvg from '../../assets/svg/cross.svg';
+import ChevronUpSvg from '../../assets/svg/chevron-up.svg';
+import ChevronDownSvg from '../../assets/svg/chevron-down.svg';
 import BinSvg from '../../assets/svg/bin.svg';
 import NotesSvg from '../../assets/svg/notes.svg';
 import Text from '../components/MyText';
@@ -67,6 +69,8 @@ const mapIconToSvg = (icon) => {
     PhoneSvg,
     GlobeSvg,
     PeopleSvg,
+    ChevronUpSvg,
+    ChevronDownSvg,
     LockSvg,
     Arrow,
   };
