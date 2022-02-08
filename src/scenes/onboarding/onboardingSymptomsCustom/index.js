@@ -1,3 +1,4 @@
+import React, {useEffect, useState} from 'react';
 import {
   StyleSheet,
   View,
@@ -5,7 +6,6 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
 
 import BackButton from '../../../components/BackButton';
 import {colors} from '../../../utils/colors';
@@ -19,11 +19,7 @@ import Button from '../../../components/Button';
 import Text from '../../../components/MyText';
 import Icon from '../../../components/Icon';
 
-export default function onboardingSymptomsCustom({
-  navigation,
-  route,
-  settings = false,
-}) {
+const CustomSymptomScreen = ({navigation, route, settings = false}) => {
   const [chosenCategories, setChosenCategories] = useState();
 
   useEffect(() => {
@@ -130,7 +126,7 @@ export default function onboardingSymptomsCustom({
       </ScrollView>
     </SafeAreaView>
   );
-}
+};
 
 const OldCriteria = ({chosenCategories, addSymptom}) => {
   const [showOldCriteria, setShowOldCriteria] = useState(false);
@@ -248,3 +244,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
+export default CustomSymptomScreen;
