@@ -12,8 +12,8 @@ import {fr} from 'date-fns/locale';
 
 // methods
 
-const colorsValue = ['#FFC0C0', '#FCD0A7', '#FCE285', '#F0F277', '#E2FA80'];
-const colorsText = ['#b86564', '#ba8553', '#ab9237', '#a1a06e', '#9ab037'];
+const colorsValue = ['#FFA1A1', '#FCD0A7', '#F8FB85', '#CCFD64', '#7AFD13'];
+const colorsText = ['#b86564', '#ba8553', '#ab9237', '#5c781f', '#407a12'];
 
 const hasNotes = (notes) =>
   !!notes &&
