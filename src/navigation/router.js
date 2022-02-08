@@ -2,10 +2,8 @@ import React from 'react';
 import Tabs from './tabs';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
-import SurveyScreen from '../scenes/survey/survey-screen';
 import DaySurveyScreen from '../scenes/survey/daySurvey';
 import SelectDayScreen from '../scenes/survey/selectDay';
-import SymptomScreen from '../scenes/symptoms/symptoms-screen';
 import Reminder from '../scenes/reminder/reminder';
 import Export from '../scenes/export/export';
 import DailyChart from '../scenes/calendar/daily-chart';
@@ -14,6 +12,7 @@ import Notes from '../scenes/survey/notes-screen';
 import Onboarding from '../scenes/onboarding';
 import Supported from '../scenes/onboarding/onboardingSupported';
 import OnboardingSymptoms from '../scenes/onboarding/onboardingSymptoms';
+import OnboardingSymptomsCustom from '../scenes/onboarding/onboardingSymptomsCustom';
 import OnboardingDrugs from '../scenes/onboarding/onboardingDrugs';
 import OnboardingDrugsInformation from '../scenes/onboarding/onboardingDrugs/drugs-information';
 import OnboardingDrugsList from '../scenes/onboarding/onboardingDrugs/list';
@@ -85,7 +84,7 @@ class Router extends React.Component {
             )}
           </Stack.Screen> */}
           <Stack.Screen name="symptoms">
-            {(props) => <SymptomScreen {...props} />}
+            {(props) => <OnboardingSymptomsCustom settings={true} {...props} />}
           </Stack.Screen>
           <Stack.Screen name="reminder" component={Reminder} />
           <Stack.Screen name="export" component={Export} />
@@ -101,6 +100,10 @@ class Router extends React.Component {
           <Stack.Screen
             name="onboarding-symptoms"
             component={OnboardingSymptoms}
+          />
+          <Stack.Screen
+            name="onboarding-symptoms-custom"
+            component={OnboardingSymptomsCustom}
           />
           <Stack.Screen name="onboarding-drugs" component={OnboardingDrugs} />
           <Stack.Screen
