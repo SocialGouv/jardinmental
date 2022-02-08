@@ -51,7 +51,7 @@ const Onboarding = ({navigation}) => {
       <Text style={styles.title}>
         Mon Suivi Psy m'accompagne entre mes consultations
       </Text>
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
+      <ScrollView contentContainerStyle={styles.scrollContainer} testID="scroll-view">
         <Swiper
           onIndexChanged={(page) => {
             // dirty hack because of this issue
@@ -84,6 +84,7 @@ const Onboarding = ({navigation}) => {
                   style={styles.checkbox}
                   value={isCguChecked}
                   onValueChange={(newValue) => setIsCguChecked(newValue)}
+                  testID='check-box'
                 />
                 <Text style={styles.textCgu}>
                   En cochant cette case, vous acceptez nos{' '}
@@ -106,18 +107,19 @@ const Onboarding = ({navigation}) => {
                 <Button
                   onPress={validateOnboarding}
                   title="Commencer"
+                  testID="start-button"
                   disabled={!isCguChecked && firstTime}
                 />
               </View>
             </>
           ) : (
             <View style={styles.buttonWrapper}>
-              <Button title="Terminer" onPress={navigation.goBack} />
+              <Button title="Terminer" testID="done-button" onPress={navigation.goBack} />
             </View>
           )
         ) : (
           <View style={styles.buttonWrapper}>
-            <Button title="Suivant" onPress={onPressNext} />
+            <Button title="Suivant" testID="next-button" onPress={onPressNext} />
           </View>
         )}
       </View>

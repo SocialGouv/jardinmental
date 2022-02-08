@@ -53,8 +53,13 @@ const Diary = ({navigation}) => {
       else {
         const isFirstAppLaunch = await localStorage.getIsFirstAppLaunch();
         if (isFirstAppLaunch !== 'false') {
-          navigation.navigate('onboarding', {
-            screen: onboardingStep || 'OnboardingPresentation',
+          navigation.reset({
+            routes: [
+              {
+                name: 'onboarding',
+                params: {screen: onboardingStep || 'OnboardingPresentation'},
+              },
+            ],
           });
         }
       }

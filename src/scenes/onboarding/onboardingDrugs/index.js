@@ -135,6 +135,7 @@ const Drugs = ({navigation, route}) => {
             onChange={handleDrugChange}
             showPosology={false}
             onClose={() => handleDelete(e)}
+            testID={e.name1 ? 'drug-item-'+e.name1.trim().toLowerCase() : undefined}
           />
         ))}
         <Text style={styles.addButton} onPress={handleAdd}>
@@ -143,7 +144,8 @@ const Drugs = ({navigation, route}) => {
         <View style={styles.buttonWrapper}>
           <TouchableOpacity
             onPress={() => navigation.navigate('reminder', {onboarding: true})}
-            style={styles.setupButton}>
+            style={styles.setupButton}
+            testID='continue-button'>
             <Text style={styles.setupButtonText}>Continuer</Text>
           </TouchableOpacity>
         </View>

@@ -44,6 +44,7 @@ const Button = ({
   disabled = false,
   buttonStyle,
   textStyle,
+  testID,
 }) => {
   const color = disabled ? 'lightgrey' : buttonColor;
   return (
@@ -53,7 +54,8 @@ const Button = ({
         buttonStyle,
       ]}
       onPress={onPress}
-      disabled={disabled}>
+      disabled={disabled}
+      testID={testID}>
       <Text style={[{...styles.text, color: textColor || 'white'}, textStyle]}>
         {title}
       </Text>

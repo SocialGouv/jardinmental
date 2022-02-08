@@ -235,7 +235,8 @@ class Reminder extends React.Component {
             </TouchableOpacity>
             <TouchableOpacity
               onPress={reminder ? this.showTimePicker : this.validateOnboarding}
-              style={[styles.laterContainer]}>
+              style={[styles.laterContainer]}
+              testID='later-button'>
               <Text style={styles.later}>
                 {reminder ? "Modifier l'heure du rappel" : 'Plus tard'}
               </Text>

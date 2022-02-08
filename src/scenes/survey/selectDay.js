@@ -55,7 +55,7 @@ const SurveyScreen = ({navigation}) => {
           const dayIsDone = Object.keys(filtered).length !== 0;
 
           return (
-            <TouchableOpacity key={i} onPress={() => startSurvey(i)}>
+            <TouchableOpacity key={i} onPress={() => startSurvey(i)} testID={'day-button-'+i}>
               <View
                 style={[
                   styles.answer,
