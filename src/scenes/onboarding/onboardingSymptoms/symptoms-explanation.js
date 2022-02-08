@@ -14,10 +14,10 @@ import ArrowUpSvg from '../../../assets/svg/arrow-up.svg';
 const SurveyExplanation = ({title = 'Explications', explanation}) => {
   const [isFullScreen, setIsFullScreen] = useState(false);
 
-  const toggleFullScreen = useCallback(() => setIsFullScreen(!isFullScreen), [
-    setIsFullScreen,
-    isFullScreen,
-  ]);
+  const toggleFullScreen = useCallback(
+    () => setIsFullScreen(!isFullScreen),
+    [setIsFullScreen, isFullScreen],
+  );
 
   if (explanation === null) {
     return null;
