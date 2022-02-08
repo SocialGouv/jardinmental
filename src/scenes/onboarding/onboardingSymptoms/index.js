@@ -14,7 +14,6 @@ import localStorage from '../../../utils/localStorage';
 import logEvents from '../../../services/logEvents';
 import BackButton from '../../../components/BackButton';
 import Button from '../../../components/Button';
-import AddElemToList from '../../../components/AddElemToList';
 import SurveyMenu from '../../../../assets/svg/SurveyMenu';
 import Logo from '../../../../assets/svg/symptoms-setting';
 import {ONBOARDING_STEPS} from '../../../utils/constants';
@@ -37,12 +36,6 @@ const SymptomScreen = ({navigation, route}) => {
       ) {
         return init();
       }
-
-      console.log(
-        '🚀 ~ file: index.js ~ line 28 ~ preselectedCategories',
-        preselectedCategories,
-      );
-
       setChosenCategories(preselectedCategories);
     })();
   }, []);
@@ -107,14 +100,6 @@ const SymptomScreen = ({navigation, route}) => {
           Sélectionnez ce que vous voulez suivre quotidiennement parmi ces
           exemples
         </Text>
-
-        {/* <AddElemToList
-          onChange={handleAddNewSymptom}
-          placeholder="Ajouter un ressenti ou une activité"
-        />
-        <Text style={[styles.subtitle, styles.spaceabove]}>
-          Je peux aussi en sélectionner parmi ces exemples :
-        </Text> */}
         {chosenCategories &&
           Object.keys(chosenCategories).map((cat, index) => (
             <View key={index} style={styles.categories}>
@@ -146,7 +131,7 @@ const SymptomScreen = ({navigation, route}) => {
           ) : (
             <Text style={[styles.h3, styles.spaceabove]}>
               Vous pourrez modifier à tout moment ce que vous suivez, via le
-              menu “Réglages” de l’application
+              menu "Réglages" de l'application
             </Text>
           )}
           <Button
