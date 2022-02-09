@@ -8,7 +8,7 @@ import ArrowRightSvg from '../../../assets/svg/arrow-right.js';
 import {colors} from '../../utils/colors';
 
 const PatientStateItem = ({patientState, category, label}) => {
-  const [{color, faceIcon}, setIcon] = useState({});
+  const [{color, borderColor, faceIcon, iconColor}, setIcon] = useState({});
   const [userCommentVisible, setUserCommentVisible] = useState(false);
 
   useEffect(() => {
@@ -24,7 +24,14 @@ const PatientStateItem = ({patientState, category, label}) => {
   const content = (
     <View>
       <View style={styles.container}>
-        <CircledIcon color={color} icon={faceIcon} />
+        <CircledIcon
+          color={color}
+          borderColor={borderColor}
+          iconColor={iconColor}
+          icon={faceIcon}
+          iconWidth={32}
+          iconHeight={32}
+        />
         <View style={styles.labelContainer}>
           <Text style={styles.label}>{label}</Text>
         </View>

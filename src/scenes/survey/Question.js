@@ -73,19 +73,13 @@ const Question = ({
                     active && styles.activeSelectionContainer,
                   ]}>
                   <CircledIcon
-                    color={
-                      !active && selected
-                        ? answer.inactiveBackgroundColor
-                        : answer.backgroundColor
-                    }
-                    borderColor="#eee"
-                    iconColor={
-                      !active && selected
-                        ? answer.inactiveIconColor
-                        : answer.iconColor
-                    }
+                    color={answer.backgroundColor}
+                    borderColor={answer.borderColor}
+                    iconColor={answer.iconColor}
                     icon={answer.icon}
                     iconContainerStyle={{marginRight: 0}}
+                    iconWidth={32}
+                    iconHeight={32}
                   />
                 </View>
               </TouchableOpacity>
@@ -121,7 +115,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
   },
   selectionContainer: {
-    padding: 3,
+    padding: 4,
     borderColor: '#DEF4F5',
     borderWidth: 1,
     borderRadius: 10,
