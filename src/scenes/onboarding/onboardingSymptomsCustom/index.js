@@ -10,7 +10,7 @@ import {
 import BackButton from '../../../components/BackButton';
 import {colors} from '../../../utils/colors';
 import SurveyMenu from '../../../../assets/svg/SurveyMenu';
-import AddElemToList from '../../../components/AddElemToList';
+import AddSymptom from './AddSymptom';
 import localStorage from '../../../utils/localStorage';
 import logEvents from '../../../services/logEvents';
 import {
@@ -106,16 +106,13 @@ const CustomSymptomScreen = ({navigation, route, settings = false}) => {
         <View style={styles.titleContainer}>
           <SurveyMenu style={styles.image} width={30} height={30} />
           <Text style={styles.title}>
-            Qu'est-ce que je souhaite suivre quotidiennement ?
+            Ajoutez vos <Text style={styles.bold}>propres items</Text> à votre
+            suivi quotidien
           </Text>
         </View>
-        <Text style={styles.subtitle}>
-          Ajouter maintenant vos propres critères à ceux que vous avez déjà
-          sélectionnés
-        </Text>
-        <AddElemToList
+        <AddSymptom
           onChange={addSymptom}
-          placeholder="Ajouter un ressenti ou une activité"
+          placeholder="Ajoutez un ressenti, une activité, un comportement, etc..."
         />
         <Text style={styles.subtitle}>Vous suivez actuellement :</Text>
         <View style={styles.listContainer}>
@@ -236,6 +233,9 @@ const styles = StyleSheet.create({
     flex: 1,
     color: colors.BLUE,
     fontSize: 22,
+    fontWeight: '400',
+  },
+  bold: {
     fontWeight: '700',
   },
   subtitle: {
