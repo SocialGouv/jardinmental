@@ -5,7 +5,9 @@ import {
   View,
   SafeAreaView,
   Keyboard,
+  KeyboardAvoidingView,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 import Text from '../../components/MyText';
 import {colors} from '../../utils/colors';
@@ -171,61 +173,66 @@ const DaySurvey = ({navigation, route}) => {
   return (
     <SafeAreaView style={styles.safe}>
       <BackButton onPress={navigation.goBack} />
-      <ScrollView
-        style={styles.container}
-        keyboardDismissMode="on-drag"
-        onScrollBeginDrag={Keyboard.dismiss}>
-        <Text style={styles.question}>{renderQuestion()}</Text>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate('symptoms');
-            logEvents.logSettingsSymptomsFromSurvey();
-          }}>
-          <Text style={styles.link}>Modifier mon questionnaire ›</Text>
-        </TouchableOpacity>
-        {questions.map((q, i) => (
-          <Question
-            key={i}
-            question={q}
-            onPress={toggleAnswer}
-            selected={answers[q.id]?.value}
-            explanation={q.explanation}
-            onChangeUserComment={handleChangeUserComment}
-            userComment={answers[q.id]?.userComment}
-          />
-        ))}
-        <InputQuestion
-          question={questionContext}
-          onPress={toggleAnswer}
-          selected={answers[questionContext.id]?.value}
-          explanation={questionContext.explanation}
-          onChangeUserComment={handleChangeUserComment}
-          userComment={answers[questionContext.id]?.userComment}
-          placeholder="Contexte, évènements, mes comportements ..."
-        />
-        <QuestionYesNo
-          question={questionToxic}
-          onPress={toggleAnswer}
-          selected={answers[questionToxic.id]?.value}
-          explanation={questionToxic.explanation}
-          isLast
-          onChangeUserComment={handleChangeUserComment}
-          userComment={answers[questionToxic.id]?.userComment}
-        />
-        <View style={styles.divider} />
-        <View style={styles.buttonWrapper}>
-          <Button
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'position' : 'height'}
+        style={{flex: 1}}>
+        <ScrollView
+          style={styles.container}
+          keyboardDismissMode="on-drag"
+          onScrollBeginDrag={Keyboard.dismiss}>
+          <Text style={styles.question}>{renderQuestion()}</Text>
+          <TouchableOpacity
             onPress={() => {
-              submitDay();
-            }}
-            title="Valider"
-            disabled={!allQuestionHasAnAnswer()}
+              navigation.navigate('symptoms');
+              logEvents.logSettingsSymptomsFromSurvey();
+            }}>
+            <Text style={styles.link}>Modifier mon questionnaire ›</Text>
+          </TouchableOpacity>
+          {questions.map((q, i) => (
+            <Question
+              key={i}
+              question={q}
+              onPress={toggleAnswer}
+              selected={answers[q.id]?.value}
+              explanation={q.explanation}
+              onChangeUserComment={handleChangeUserComment}
+              userComment={answers[q.id]?.userComment}
+            />
+          ))}
+          <InputQuestion
+            question={questionContext}
+            onPress={toggleAnswer}
+            selected={answers[questionContext.id]?.value}
+            explanation={questionContext.explanation}
+            onChangeUserComment={handleChangeUserComment}
+            userComment={answers[questionContext.id]?.userComment}
+            placeholder="Contexte, évènements, mes comportements ..."
           />
-        </View>
-        <Text style={styles.subtitle}>
-          Retrouvez toutes vos notes dans l'onglet &quot;Mon&nbsp;journal&quot;
-        </Text>
-      </ScrollView>
+          <QuestionYesNo
+            question={questionToxic}
+            onPress={toggleAnswer}
+            selected={answers[questionToxic.id]?.value}
+            explanation={questionToxic.explanation}
+            isLast
+            onChangeUserComment={handleChangeUserComment}
+            userComment={answers[questionToxic.id]?.userComment}
+          />
+          <View style={styles.divider} />
+          <View style={styles.buttonWrapper}>
+            <Button
+              onPress={() => {
+                submitDay();
+              }}
+              title="Valider"
+              disabled={!allQuestionHasAnAnswer()}
+            />
+          </View>
+          <Text style={styles.subtitle}>
+            Retrouvez toutes vos notes dans l'onglet
+            &quot;Mon&nbsp;journal&quot;
+          </Text>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };
