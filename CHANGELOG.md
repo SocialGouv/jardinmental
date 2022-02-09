@@ -1,4 +1,4 @@
-## [1.20.3](https://github.com/SocialGouv/monsuivipsy/compare/v1.20.2...v1.20.3) (2022-02-09)
+## [1.20.4](https://github.com/SocialGouv/monsuivipsy/compare/v1.20.3...v1.20.4) (2022-02-09)
 
 
 ### Bug Fixes
@@ -24,15 +24,8 @@
 ### Bug Fixes
 
 * **couleur:** smiley + couleurs ([dde31e9](https://github.com/SocialGouv/monsuivipsy/commit/dde31e90f19dc90a9838fcdf6b573621d731e01b))
-* **momn suivi:** lignes courbes ([#119](https://github.com/SocialGouv/monsuivipsy/issues/119)) ([45beebe](https://github.com/SocialGouv/monsuivipsy/commit/45beebe27a63c72c00567a339c9bc2347cb13b00))
+* **mon suivi:** lignes courbes ([#119](https://github.com/SocialGouv/monsuivipsy/issues/119)) ([45beebe](https://github.com/SocialGouv/monsuivipsy/commit/45beebe27a63c72c00567a339c9bc2347cb13b00))
 * **onboarding:** changer l'écran de choix de critère ([#120](https://github.com/SocialGouv/monsuivipsy/issues/120)) ([5b7ee8d](https://github.com/SocialGouv/monsuivipsy/commit/5b7ee8d377888688ad26a154b1a882195190e99e))
-
-## [1.20.3](https://github.com/SocialGouv/monsuivipsy/compare/v1.20.2...v1.20.3) (2022-02-08)
-
-
-### Bug Fixes
-
-* **couleur:** smiley + couleurs ([a652cdc](https://github.com/SocialGouv/monsuivipsy/commit/a652cdc7bff92e72b27e02d48168a84db6a77475))
 
 ## [1.20.2](https://github.com/SocialGouv/monsuivipsy/compare/v1.20.1...v1.20.2) (2022-02-03)
 
