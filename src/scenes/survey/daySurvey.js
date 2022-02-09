@@ -5,6 +5,7 @@ import {
   View,
   SafeAreaView,
   Keyboard,
+  TouchableOpacity,
 } from 'react-native';
 import Text from '../../components/MyText';
 import {colors} from '../../utils/colors';
@@ -21,6 +22,7 @@ import logEvents from '../../services/logEvents';
 import {DiaryDataContext} from '../../context/diaryData';
 import {availableData, alertNoDataYesterday} from './survey-data';
 import localStorage from '../../utils/localStorage';
+import {useFocusEffect} from '@react-navigation/native';
 
 const DaySurvey = ({navigation, route}) => {
   const [diaryData, setDiaryData] = useContext(DiaryDataContext);
@@ -36,14 +38,16 @@ const DaySurvey = ({navigation, route}) => {
     label: 'Je précise le contexte de ma journée',
   };
 
-  useEffect(() => {
-    (async () => {
-      const q = await buildSurveyData();
-      if (q) {
-        setQuestions(q);
-      }
-    })();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      (async () => {
+        const q = await buildSurveyData();
+        if (q) {
+          setQuestions(q);
+        }
+      })();
+    }, []),
+  );
 
   useEffect(() => {
     //init the survey if there is already answers
@@ -172,6 +176,9 @@ const DaySurvey = ({navigation, route}) => {
         keyboardDismissMode="on-drag"
         onScrollBeginDrag={Keyboard.dismiss}>
         <Text style={styles.question}>{renderQuestion()}</Text>
+        <TouchableOpacity onPress={() => navigation.navigate('symptoms')}>
+          <Text style={styles.link}>Modifier mon questionnaire ›</Text>
+        </TouchableOpacity>
         {questions.map((q, i) => (
           <Question
             key={i}
@@ -325,8 +332,14 @@ const styles = StyleSheet.create({
   question: {
     color: colors.BLUE,
     fontSize: 22,
-    marginBottom: 26,
+    marginBottom: 8,
     fontWeight: '700',
+  },
+  link: {
+    color: colors.LIGHT_BLUE,
+    textDecorationLine: 'underline',
+    marginBottom: 15,
+    textAlign: 'center',
   },
   subtitleTop: {
     flex: 1,
