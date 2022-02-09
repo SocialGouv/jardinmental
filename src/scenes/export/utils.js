@@ -220,7 +220,7 @@ const generateBeck = (beck) => {
     </p>`;
   };
 
-  const renderSeparator = () => '<div style="height:20px;width:1px;"/>';
+  const renderSeparator = () => '<div style="height:20px;width:1px;"></div>';
 
   const renderBeck = (b) => {
     return `
