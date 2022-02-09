@@ -163,7 +163,7 @@ const OldCriteria = ({chosenCategories, addSymptom}) => {
       <TouchableOpacity
         style={styles.flexRow}
         onPress={() => setShowOldCriteria((prev) => !prev)}>
-        <Text style={styles.subtitle}>Afficher les anciens critères</Text>
+        <Text style={styles.subtitle}>Réactiver les anciens critères</Text>
         {showOldCriteria ? (
           <Icon
             icon="ChevronUpSvg"
@@ -191,6 +191,8 @@ const OldCriteria = ({chosenCategories, addSymptom}) => {
                 selected={false}
                 color="#D4F0F2"
                 onPress={() => addSymptom(e)}
+                enableAdd
+                onAdd={() => addSymptom(e)}
               />
             ))}
         </View>

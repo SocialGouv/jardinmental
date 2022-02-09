@@ -8,6 +8,7 @@ export default ({
   textColor = colors.DARK_BLUE,
   onPress = () => null,
   onClose = () => null,
+  onAdd = () => null,
   disabled = false,
   buttonStyle,
   textStyle,
@@ -15,6 +16,7 @@ export default ({
   selected,
   color = '#1FC6D5',
   enableClosed = false,
+  enableAdd = false,
 }) => {
   let backgroundColor = `${color}66`;
   if (selected) backgroundColor = colors.DARK_BLUE;
@@ -45,6 +47,14 @@ export default ({
           <Icon icon="CrossSvg" width={8} height={8} color={colors.BLUE} />
         </TouchableOpacity>
       )}
+      {enableAdd && (
+        <TouchableOpacity
+          style={styles.add}
+          onPress={() => onAdd(value)}
+          disabled={disabled}>
+          <Icon icon="CrossSvg" width={8} height={8} color={colors.BLUE} />
+        </TouchableOpacity>
+      )}
     </View>
   );
 };
@@ -69,6 +79,22 @@ const styles = StyleSheet.create({
     zIndex: 2,
     width: 18,
     height: 18,
+  },
+  add: {
+    position: 'absolute',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    top: -5,
+    right: -8,
+    backgroundColor: '#F4FCFD',
+    borderRadius: 16,
+    borderColor: '#D4F0F2',
+    borderWidth: 1,
+    zIndex: 2,
+    width: 18,
+    height: 18,
+    transform: [{rotate: '45deg'}],
   },
   button: {
     alignSelf: 'flex-start',
