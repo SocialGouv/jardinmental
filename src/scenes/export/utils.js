@@ -22,7 +22,8 @@ const hasNotes = (notes) =>
 
 const hasBeck = (becks) => !!becks && Object.keys(becks)?.length > 0;
 const hasDiaryNotes = (diary) => !!diary && diary?.values?.some((e) => e.value);
-const hasContext = (context) => !!context?.userComment;
+const hasContext = (survey) =>
+  !!survey && Object.keys(survey)?.some((k) => survey[k]?.userComment?.length);
 
 // GENERATORS
 
@@ -511,15 +512,15 @@ const formatHtmlTable = async (diaryData, diaryNotes) => {
                       return '';
                     }
                     let NOTES = diaryData[strDate]?.NOTES || null;
-                    let CONTEXT = diaryData[strDate]?.CONTEXT || null;
-                    console.log('✍️ ~ CONTEXT', CONTEXT);
                     let becks = diaryData[strDate]?.becks || null;
                     const diaryNoteDate = diaryNotes[strDate];
+                    const diaryDataDate = diaryData[strDate];
 
                     if (
                       !hasNotes(NOTES) &&
                       !hasBeck(becks) &&
-                      !hasDiaryNotes(diaryNoteDate)
+                      !hasDiaryNotes(diaryNoteDate) &&
+                      !hasContext(diaryDataDate)
                     ) {
                       return '';
                     }
@@ -529,7 +530,11 @@ const formatHtmlTable = async (diaryData, diaryNotes) => {
                         .reverse()
                         .join('/')}</>
                       ${hasNotes(NOTES) ? renderSurveyNotes(NOTES) : '<div/>'}
-                      ${renderSurvey(diaryData, strDate)}
+                      ${
+                        hasContext(diaryDataDate)
+                          ? renderSurvey(diaryData, strDate)
+                          : '<div/>'
+                      }
                       ${
                         hasDiaryNotes(diaryNoteDate)
                           ? renderDiaryNotes(diaryNoteDate.values)
