@@ -141,8 +141,8 @@ const CustomSymptomScreen = ({navigation, route, settings = false}) => {
         {!settings && (
           <View style={styles.buttonWrapper}>
             <Text style={[styles.h3, styles.spaceabove]}>
-              Vous pourrez modifier à tout moment ce que vous suivez, via le
-              menu “Réglages” de l’application
+              Vous pourrez modifier à tout moment ce que vous suivez via le menu
+              "Réglages" de l'application
             </Text>
             <Button
               title="Valider"
