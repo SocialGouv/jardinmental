@@ -246,7 +246,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
   },
   scrollContainer: {
-    paddingBottom: 80,
+    paddingBottom: 150,
   },
   title: {
     fontSize: 19,
