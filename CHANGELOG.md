@@ -1,3 +1,23 @@
+## [1.20.3](https://github.com/SocialGouv/monsuivipsy/compare/v1.20.2...v1.20.3) (2022-02-09)
+
+
+### Bug Fixes
+
+* **clavier:** masquer le clavier au scroll si besoin ([58be2d5](https://github.com/SocialGouv/monsuivipsy/commit/58be2d58b8522c72acf4aac68e8b94f8112668df))
+* **couleur:** smiley + couleurs ([dde31e9](https://github.com/SocialGouv/monsuivipsy/commit/dde31e90f19dc90a9838fcdf6b573621d731e01b))
+* **export:** contexte du questionnaire inclus meme si aucune note du journal ce meme jour ([5caf457](https://github.com/SocialGouv/monsuivipsy/commit/5caf457815b724aeccdc102dc5f3256f89685b41))
+* **export:** titre vertical ([2d237a2](https://github.com/SocialGouv/monsuivipsy/commit/2d237a2db5b8c07c18f6e7409116330d0b534811))
+* **journal:** ajouter space bottom ([f9b0dc5](https://github.com/SocialGouv/monsuivipsy/commit/f9b0dc5fa358a699303b04b0a14384624bce90d9))
+* **momn suivi:** lignes courbes ([#119](https://github.com/SocialGouv/monsuivipsy/issues/119)) ([45beebe](https://github.com/SocialGouv/monsuivipsy/commit/45beebe27a63c72c00567a339c9bc2347cb13b00))
+* **onboarding:** changer l'écran de choix de critère ([#120](https://github.com/SocialGouv/monsuivipsy/issues/120)) ([5b7ee8d](https://github.com/SocialGouv/monsuivipsy/commit/5b7ee8d377888688ad26a154b1a882195190e99e))
+* **onboarding:** masquer les "anciens critères" ([16b8cb3](https://github.com/SocialGouv/monsuivipsy/commit/16b8cb38ede53f2207445d1fc288fd8ac9711e0d))
+* **onboarding:** wording - enlever la `,` ([ea1ec6d](https://github.com/SocialGouv/monsuivipsy/commit/ea1ec6dda3d693011b34e8e2d8c407a348dc65ae))
+* **paramètre:** ajouter/enlever critères ([04de4a8](https://github.com/SocialGouv/monsuivipsy/commit/04de4a8803bacead3bbc406c01e2f561e8f8cc18))
+* **questionnaire:** ajouter lien pour paramétrer le questionnaire ([8e25a1c](https://github.com/SocialGouv/monsuivipsy/commit/8e25a1c61ace5754e0c836b59e58aadedf5d1b40))
+* **questionnaire:** remonter écran si besoin ([06033dc](https://github.com/SocialGouv/monsuivipsy/commit/06033dc306cee4c1d5b3fc1adaf545daf8028f8e))
+* **smileys:** taille, couleur ([a1fdc3d](https://github.com/SocialGouv/monsuivipsy/commit/a1fdc3dff5453606c4df89f17074407ca083ac86))
+* **symptoms:** wording + bull pour réactiver un critère ([e46314d](https://github.com/SocialGouv/monsuivipsy/commit/e46314dbb3290b2cbf81ca0dd1bb8fc7529d696f))
+
 ## [1.20.3](https://github.com/SocialGouv/monsuivipsy/compare/v1.20.2...v1.20.3) (2022-02-08)
 
 
