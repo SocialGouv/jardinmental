@@ -22,12 +22,53 @@ export const colors = {
   veryGoodTrans: '#edfaca',
 };
 
+export const iconBorderColors = {
+  veryBad: '#FF6262',
+  bad: '#FFB269',
+  middle: '#F0CC49',
+  good: '#A6DB0E',
+  veryGood: '#60C511',
+};
+
+export const iconColors = {
+  veryBad: '#840707',
+  bad: '#6D3500',
+  middle: '#8C4C10',
+  good: '#616300',
+  veryGood: '#4F6300',
+};
+
 export const scoresMapIcon = {
-  1: {color: colors.veryBad, faceIcon: icons.veryBad},
-  2: {color: colors.bad, faceIcon: icons.bad},
-  3: {color: colors.middle, faceIcon: icons.middle},
-  4: {color: colors.good, faceIcon: icons.good},
-  5: {color: colors.veryGood, faceIcon: icons.veryGood},
+  1: {
+    color: colors.veryBad,
+    faceIcon: icons.veryBad,
+    borderColor: iconBorderColors.veryBad,
+    iconColor: iconColors.veryBad,
+  },
+  2: {
+    color: colors.bad,
+    faceIcon: icons.bad,
+    borderColor: iconBorderColors.bad,
+    iconColor: iconColors.bad,
+  },
+  3: {
+    color: colors.middle,
+    faceIcon: icons.middle,
+    borderColor: iconBorderColors.middle,
+    iconColor: iconColors.middle,
+  },
+  4: {
+    color: colors.good,
+    faceIcon: icons.good,
+    borderColor: iconBorderColors.good,
+    iconColor: iconColors.good,
+  },
+  5: {
+    color: colors.veryGood,
+    faceIcon: icons.veryGood,
+    borderColor: iconBorderColors.veryGood,
+    iconColor: iconColors.veryGood,
+  },
 };
 
 export const colorsMap = Object.keys(colors).map((key) => colors[key]);
