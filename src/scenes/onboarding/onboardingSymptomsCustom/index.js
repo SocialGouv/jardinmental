@@ -131,10 +131,12 @@ const CustomSymptomScreen = ({navigation, route, settings = false}) => {
             ))}
         </View>
 
-        <OldCriteria
-          chosenCategories={chosenCategories}
-          addSymptom={addSymptom}
-        />
+        {settings ? (
+          <OldCriteria
+            chosenCategories={chosenCategories}
+            addSymptom={addSymptom}
+          />
+        ) : null}
         {!settings && (
           <View style={styles.buttonWrapper}>
             <Text style={[styles.h3, styles.spaceabove]}>
