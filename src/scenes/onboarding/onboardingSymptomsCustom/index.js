@@ -5,6 +5,7 @@ import {
   SafeAreaView,
   ScrollView,
   TouchableOpacity,
+  Keyboard,
 } from 'react-native';
 
 import BackButton from '../../../components/BackButton';
@@ -102,7 +103,9 @@ const CustomSymptomScreen = ({navigation, route, settings = false}) => {
       <ScrollView
         keyboardShouldPersistTaps="handled"
         style={styles.container}
-        contentContainerStyle={styles.scrollContainer}>
+        contentContainerStyle={styles.scrollContainer}
+        keyboardDismissMode="on-drag"
+        onScrollBeginDrag={Keyboard.dismiss}>
         <View style={styles.titleContainer}>
           <SurveyMenu style={styles.image} width={30} height={30} />
           <Text style={styles.title}>

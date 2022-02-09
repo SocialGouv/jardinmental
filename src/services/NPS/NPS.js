@@ -11,6 +11,7 @@ import {
   KeyboardAvoidingView,
   TextInput,
   TouchableOpacity,
+  Keyboard,
 } from 'react-native';
 import Text from '../../components/MyText';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -26,8 +27,7 @@ import pck from '../../../package.json';
 // just to make sure nothing goes the bad way in production, debug is always false
 
 const lookUpSupported = {
-  YES:
-    'Je suis suivi, j’ai téléchargé l’application sur recommandation du professionnel qui me suit',
+  YES: 'Je suis suivi, j’ai téléchargé l’application sur recommandation du professionnel qui me suit',
   YES_SOLO: 'Je suis suivi, j’ai téléchargé l’application de moi-même',
   NOT_YET: 'Je ne suis pas suivi mais je le souhaite',
   NO: 'Je ne suis pas suivi',
@@ -308,7 +308,10 @@ class NPS extends React.Component {
                 <Text style={styles.backText}>{getCaption('back')}</Text>
               </TouchableOpacity>
             </View>
-            <ScrollView style={styles.scrollView}>
+            <ScrollView
+              style={styles.scrollView}
+              keyboardDismissMode="on-drag"
+              onScrollBeginDrag={Keyboard.dismiss}>
               {page === 1 && this.renderFirstPage()}
               {page === 2 && this.renderSecondPage()}
             </ScrollView>

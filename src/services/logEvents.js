@@ -184,10 +184,18 @@ const logReminderCancel = async () => {
 };
 
 const SYMPTOM = 'SYMPTOM';
+const SYMPTOM_SETTING_FROM_SURVEY = 'SYMPTOM_SETTING_FROM_SURVEY';
 const SYMPTOM_ADD = 'SYMPTOM_ADD';
 const SYMPTOM_CANCEL = 'SYMPTOM_CANCEL';
 const CUSTOM_SYMPTOM = 'CUSTOM_SYMPTOM';
 const CUSTOM_SYMPTOM_ADD = 'CUSTOM_SYMPTOM_ADD';
+
+const logSettingsSymptomsFromSurvey = async () => {
+  await logEvent({
+    category: SYMPTOM,
+    action: SYMPTOM_SETTING_FROM_SURVEY,
+  });
+};
 
 const logSymptomAdd = async (symptom) => {
   await logEvent({
@@ -475,4 +483,5 @@ export default {
   logFeelingAddComment,
   logFeelingAddContext,
   logFeelingResponseToxic,
+  logSettingsSymptomsFromSurvey,
 };
