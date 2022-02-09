@@ -5,6 +5,7 @@ import {
   TextInput,
   SafeAreaView,
   ScrollView,
+  Keyboard,
 } from 'react-native';
 import Text from '../../components/MyText';
 import {colors} from '../../utils/colors';
@@ -49,7 +50,9 @@ export default ({navigation, searchedValue}) => {
       <BackButton onPress={navigation.goBack} />
       <ScrollView
         style={styles.container}
-        contentContainerStyle={styles.scrollContainer}>
+        contentContainerStyle={styles.scrollContainer}
+        keyboardDismissMode="on-drag"
+        onScrollBeginDrag={Keyboard.dismiss}>
         {npsSent ? (
           <Text style={styles.topSubTitle}>
             Merci, nous avons bien pris en compte votre retour !

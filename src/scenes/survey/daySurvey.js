@@ -176,7 +176,11 @@ const DaySurvey = ({navigation, route}) => {
         keyboardDismissMode="on-drag"
         onScrollBeginDrag={Keyboard.dismiss}>
         <Text style={styles.question}>{renderQuestion()}</Text>
-        <TouchableOpacity onPress={() => navigation.navigate('symptoms')}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('symptoms');
+            logEvents.logSettingsSymptomsFromSurvey();
+          }}>
           <Text style={styles.link}>Modifier mon questionnaire ›</Text>
         </TouchableOpacity>
         {questions.map((q, i) => (

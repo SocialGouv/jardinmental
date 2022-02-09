@@ -5,6 +5,7 @@ import {
   SafeAreaView,
   View,
   TextInput,
+  Keyboard,
 } from 'react-native';
 import Text from '../../components/MyText';
 import {colors} from '../../utils/colors';
@@ -161,7 +162,9 @@ const Drugs = ({navigation, route}) => {
         ref={scrollRef}
         style={styles.container}
         contentContainerStyle={styles.scrollContainer}
-        keyboardShouldPersistTaps="handled">
+        keyboardShouldPersistTaps="handled"
+        keyboardDismissMode="on-drag"
+        onScrollBeginDrag={Keyboard.dismiss}>
         {!filteredList ? (
           <Text>Chargement</Text>
         ) : (

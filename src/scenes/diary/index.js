@@ -102,7 +102,9 @@ const Diary = ({navigation}) => {
       <ScrollView
         style={styles.container}
         contentContainerStyle={styles.scrollContainer}
-        keyboardShouldPersistTaps="handled">
+        keyboardShouldPersistTaps="handled"
+        keyboardDismissMode="on-drag"
+        onScrollBeginDrag={Keyboard.dismiss}>
         <View>
           <TextInput
             multiline={true}

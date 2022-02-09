@@ -6,6 +6,7 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Platform,
+  Keyboard,
 } from 'react-native';
 
 import Text from '../../components/MyText';
@@ -150,7 +151,9 @@ export default ({navigation, route}) => {
           ref={scrollRef}
           keyboardShouldPersistTaps="handled"
           style={styles.container}
-          contentContainerStyle={styles.scrollContainer}>
+          contentContainerStyle={styles.scrollContainer}
+          keyboardDismissMode="on-drag"
+          onScrollBeginDrag={Keyboard.dismiss}>
           <Text style={styles.mainTitle}>{BeckStepTitles[step]}</Text>
           <Text style={styles.mainDescription}>{renderDescription(step)}</Text>
           <View style={styles.stepIndicatorContainer}>

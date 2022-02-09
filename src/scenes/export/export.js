@@ -9,6 +9,7 @@ import {
   Platform,
   View,
   ScrollView,
+  Keyboard,
 } from 'react-native';
 import KeyboardAvoidingViewScreen from '../../components/KeyboardAvoidingViewScreen';
 import Text from '../../components/MyText';
@@ -96,7 +97,9 @@ const Export = ({navigation}) => {
           contentInsetAdjustmentBehavior="automatic"
           keyboardShouldPersistTaps="handled"
           style={styles.container}
-          contentContainerStyle={styles.scrollContainer}>
+          contentContainerStyle={styles.scrollContainer}
+          keyboardDismissMode="on-drag"
+          onScrollBeginDrag={Keyboard.dismiss}>
           <BackButton onPress={navigation.goBack} />
           <Icon
             icon="ExportDataSvg"
@@ -173,6 +176,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'flex-start',
     alignItems: 'center',
+    paddingBottom: 40,
   },
   title: {
     width: '80%',
