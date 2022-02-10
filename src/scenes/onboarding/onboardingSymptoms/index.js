@@ -1,24 +1,18 @@
-import React, {useEffect, useState} from 'react';
-import {
-  TouchableOpacity,
-  StyleSheet,
-  ScrollView,
-  View,
-  SafeAreaView,
-} from 'react-native';
-import Text from '../../../components/MyText';
-import CheckBox from '@react-native-community/checkbox';
-import {colors} from '../../../utils/colors';
-import {displayedCategories, categories} from '../../../utils/constants';
-import localStorage from '../../../utils/localStorage';
-import logEvents from '../../../services/logEvents';
-import BackButton from '../../../components/BackButton';
-import Button from '../../../components/Button';
-import SurveyMenu from '../../../../assets/svg/SurveyMenu';
-import Logo from '../../../../assets/svg/symptoms-setting';
-import {ONBOARDING_STEPS} from '../../../utils/constants';
+import React, { useEffect, useState } from "react";
+import { TouchableOpacity, StyleSheet, ScrollView, View, SafeAreaView } from "react-native";
+import Text from "../../../components/MyText";
+import CheckBox from "@react-native-community/checkbox";
+import { colors } from "../../../utils/colors";
+import { displayedCategories, categories } from "../../../utils/constants";
+import localStorage from "../../../utils/localStorage";
+import logEvents from "../../../services/logEvents";
+import BackButton from "../../../components/BackButton";
+import Button from "../../../components/Button";
+import SurveyMenu from "../../../../assets/svg/SurveyMenu";
+import Logo from "../../../../assets/svg/symptoms-setting";
+import { ONBOARDING_STEPS } from "../../../utils/constants";
 
-const SymptomScreen = ({navigation, route}) => {
+const SymptomScreen = ({ navigation, route }) => {
   const [chosenCategories, setChosenCategories] = useState({});
 
   useEffect(() => {
@@ -30,10 +24,7 @@ const SymptomScreen = ({navigation, route}) => {
   useEffect(() => {
     (async () => {
       const preselectedCategories = await localStorage.getSymptoms();
-      if (
-        !preselectedCategories ||
-        !Object.keys(preselectedCategories).length
-      ) {
+      if (!preselectedCategories || !Object.keys(preselectedCategories).length) {
         return init();
       }
       setChosenCategories(preselectedCategories);
@@ -49,7 +40,7 @@ const SymptomScreen = ({navigation, route}) => {
   };
 
   const setToogleCheckbox = (cat, value) => {
-    let categories = {...chosenCategories};
+    let categories = { ...chosenCategories };
     categories[cat] = value;
     setChosenCategories(categories);
   };
@@ -66,7 +57,7 @@ const SymptomScreen = ({navigation, route}) => {
     if (noneSelected()) {
       return;
     }
-    navigation.navigate('onboarding-symptoms-custom');
+    navigation.navigate("onboarding-symptoms-custom");
   };
 
   useEffect(() => {
@@ -77,7 +68,7 @@ const SymptomScreen = ({navigation, route}) => {
     if (!value) return;
     if (value in chosenCategories) return;
     await localStorage.addCustomSymptoms(value);
-    setChosenCategories({[value]: true, ...chosenCategories});
+    setChosenCategories({ [value]: true, ...chosenCategories });
     logEvents.logCustomSymptomAdd();
   };
 
@@ -89,23 +80,17 @@ const SymptomScreen = ({navigation, route}) => {
       <ScrollView
         keyboardShouldPersistTaps="handled"
         style={styles.container}
-        contentContainerStyle={styles.scrollContainer}>
+        contentContainerStyle={styles.scrollContainer}
+      >
         <View style={styles.titleContainer}>
           <SurveyMenu style={styles.image} width={30} height={30} />
-          <Text style={styles.title}>
-            Qu'est-ce que je souhaite suivre quotidiennement ?
-          </Text>
+          <Text style={styles.title}>Qu'est-ce que je souhaite suivre quotidiennement ?</Text>
         </View>
-        <Text style={styles.subtitle}>
-          Sélectionnez ce que vous voulez suivre quotidiennement parmi ces
-          exemples
-        </Text>
+        <Text style={styles.subtitle}>Voici des exemples que vous pouvez sélectionner</Text>
         {chosenCategories &&
           Object.keys(chosenCategories).map((cat, index) => (
             <View key={index} style={styles.categories}>
-              <Text style={styles.label}>
-                {displayedCategories[cat] || cat}
-              </Text>
+              <Text style={styles.label}>{displayedCategories[cat] || cat}</Text>
               <CheckBox
                 animationDuration={0.2}
                 boxType="square"
@@ -113,7 +98,7 @@ const SymptomScreen = ({navigation, route}) => {
                 value={chosenCategories[cat]}
                 onValueChange={(newValue) => setToogleCheckbox(cat, newValue)}
                 // for android
-                tintColors={{true: colors.LIGHT_BLUE, false: '#aaa'}}
+                tintColors={{ true: colors.LIGHT_BLUE, false: "#aaa" }}
                 // for ios
                 tintColor="#aaa"
                 onCheckColor={colors.LIGHT_BLUE}
@@ -125,20 +110,13 @@ const SymptomScreen = ({navigation, route}) => {
           ))}
         <View style={styles.buttonWrapper}>
           {noneSelected() ? (
-            <Text style={[styles.alert, styles.spaceabove]}>
-              Ajouter ou sélectionner au moins 1 élément
-            </Text>
+            <Text style={[styles.alert, styles.spaceabove]}>Ajouter ou sélectionner au moins 1 élément</Text>
           ) : (
             <Text style={[styles.h3, styles.spaceabove]}>
-              Vous pourrez modifier à tout moment ce que vous suivez via le menu
-              "Réglages" de l'application
+              Vous pourrez modifier à tout moment ce que vous suivez via le menu "Réglages" de l'application
             </Text>
           )}
-          <Button
-            title="Valider"
-            onPress={nextOnboardingScreen}
-            disabled={noneSelected()}
-          />
+          <Button title="Valider" onPress={nextOnboardingScreen} disabled={noneSelected()} />
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -155,28 +133,28 @@ const styles = StyleSheet.create({
   },
 
   buttonsContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   ValidationButton: {
     backgroundColor: colors.LIGHT_BLUE,
     height: 35,
     borderRadius: 45,
     paddingHorizontal: 30,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   scrollContainer: {
     paddingBottom: 80,
   },
   ValidationButtonText: {
-    color: '#fff',
-    fontWeight: '700',
+    color: "#fff",
+    fontWeight: "700",
     fontSize: 15,
   },
   bottom: {
-    justifyContent: 'flex-end',
+    justifyContent: "flex-end",
     marginBottom: 36,
   },
   checkbox: {
@@ -186,96 +164,96 @@ const styles = StyleSheet.create({
   },
   safe: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: "white",
   },
   titleContainer: {
     marginBottom: 13,
 
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
   },
   title: {
     flex: 1,
     color: colors.BLUE,
     fontSize: 22,
-    fontWeight: '700',
+    fontWeight: "700",
   },
   h3: {
-    color: '#181818',
+    color: "#181818",
     fontSize: 14,
     marginBottom: 10,
-    fontWeight: '300',
-    textAlign: 'center',
+    fontWeight: "300",
+    textAlign: "center",
   },
   subtitle: {
     color: colors.BLUE,
     fontSize: 18,
     marginVertical: 30,
-    fontWeight: '400',
+    fontWeight: "400",
   },
   spaceabove: {
     marginTop: 15,
   },
   alert: {
-    color: 'red',
+    color: "red",
     fontSize: 13,
     marginBottom: 10,
-    fontWeight: '500',
-    textAlign: 'center',
+    fontWeight: "500",
+    textAlign: "center",
   },
   categories: {
-    backgroundColor: '#F4FCFD',
-    borderColor: '#D4F0F2',
+    backgroundColor: "#F4FCFD",
+    borderColor: "#D4F0F2",
     borderWidth: 0.5,
     marginBottom: 10,
     borderRadius: 10,
     padding: 10,
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
   },
   label: {
     flex: 1,
     color: colors.BLUE,
     fontSize: 17,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   labelAddSymptom: {
     flex: 1,
-    color: '#fff',
+    color: "#fff",
     fontSize: 20,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   plusIcon: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 30,
-    fontWeight: '300',
+    fontWeight: "300",
     margin: -10,
     marginRight: 10,
   },
   addSymptom: {
     backgroundColor: colors.LIGHT_BLUE,
-    color: '#fff',
+    color: "#fff",
     marginBottom: 20,
     borderRadius: 10,
     padding: 10,
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
   },
   container: {
     paddingHorizontal: 20,
-    backgroundColor: 'white',
+    backgroundColor: "white",
   },
   backButtonContainer: {
-    alignSelf: 'flex-start',
+    alignSelf: "flex-start",
     paddingLeft: 20,
     marginTop: 20,
   },
   backButton: {
-    fontWeight: '700',
-    textDecorationLine: 'underline',
+    fontWeight: "700",
+    textDecorationLine: "underline",
     color: colors.BLUE,
     paddingTop: 15,
     paddingBottom: 30,
@@ -284,15 +262,15 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   buttonWrapper: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
+    display: "flex",
+    justifyContent: "flex-end",
+    alignItems: "center",
     padding: 15,
   },
   okButtonText: {
     marginTop: 20,
     marginRight: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     color: colors.BLUE,
   },
   lightblue: {
