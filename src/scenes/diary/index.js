@@ -8,6 +8,7 @@ import {
   TextInput,
   Platform,
   Keyboard,
+  Dimensions,
 } from "react-native";
 import { v4 as uuidv4 } from "uuid";
 import Text from "../../components/MyText";
@@ -28,6 +29,7 @@ import DateOrTimeDisplay from "../../components/DateOrTimeDisplay";
 import DatePicker from "../../components/DatePicker";
 
 const LIMIT_PER_PAGE = __DEV__ ? 3 : 30;
+const screenHeight = Dimensions.get("window").height;
 
 const Diary = ({ navigation }) => {
   const [diaryNotes, setDiaryNotes] = useContext(DiaryNotesContext);
@@ -96,8 +98,6 @@ const Diary = ({ navigation }) => {
         style={styles.container}
         contentContainerStyle={styles.scrollContainer}
         keyboardShouldPersistTaps="handled"
-        keyboardDismissMode="on-drag"
-        onScrollBeginDrag={Keyboard.dismiss}
       >
         <View>
           <TextInput
@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
   },
   scrollContainer: {
-    paddingBottom: 150,
+    paddingBottom: screenHeight / 2,
   },
   title: {
     fontSize: 19,
