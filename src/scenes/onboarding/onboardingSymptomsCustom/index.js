@@ -134,7 +134,7 @@ const OldCriteria = ({ chosenCategories, addSymptom }) => {
   return (
     <View>
       <TouchableOpacity style={styles.flexRow} onPress={() => setShowOldCriteria((prev) => !prev)}>
-        <Text style={styles.subtitle}>Réactiver les anciens critères</Text>
+        <Text style={[styles.subtitle, styles.underline]}>Réactiver les anciens critères</Text>
         {showOldCriteria ? (
           <Icon icon="ChevronUpSvg" width={20} height={20} color={colors.BLUE} />
         ) : (
@@ -208,6 +208,9 @@ const styles = StyleSheet.create({
     marginVertical: 30,
     fontWeight: "400",
     textAlign: "center",
+  },
+  underline: {
+    textDecorationLine: "underline",
   },
   listContainer: {
     display: "flex",
