@@ -342,6 +342,7 @@ const styles = StyleSheet.create({
   link: {
     color: colors.LIGHT_BLUE,
     textDecorationLine: "underline",
+    fontSize: 18,
   },
   subtitleTop: {
     flex: 1,
