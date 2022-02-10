@@ -34,7 +34,7 @@ const AddSymptom = ({
         <Button
           backgroundColor={colors.LIGHT_BLUE}
           iconColor={colors.WHITE}
-          borderColor={colors.WHITE}
+          borderWidth={0}
           icon="plus"
           visible={true}
           onPress={() => {
