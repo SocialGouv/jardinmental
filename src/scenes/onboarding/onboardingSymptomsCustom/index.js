@@ -90,12 +90,13 @@ const CustomSymptomScreen = ({ navigation, route, settings = false }) => {
         <View style={styles.titleContainer}>
           <SurveyMenu style={styles.image} width={30} height={30} />
           <Text style={styles.title}>
-            Ajoutez vos <Text style={styles.bold}>propres items</Text> à votre suivi quotidien
+            <Text style={styles.bold}>Personnalisez votre questionnaire</Text> en ajoutant vos{" "}
+            <Text style={styles.bold}>propres éléments</Text>
           </Text>
         </View>
         <AddSymptom
           onChange={addSymptom}
-          placeholder="Ajoutez un ressenti, une activité, un comportement, etc..."
+          placeholder="Ajoutez un ressenti, une activité, une sensation physique, un comportement, etc..."
         />
         <Text style={styles.subtitle}>Vous suivez actuellement :</Text>
         <View style={styles.listContainer}>
@@ -134,7 +135,7 @@ const OldCriteria = ({ chosenCategories, addSymptom }) => {
   return (
     <View>
       <TouchableOpacity style={styles.flexRow} onPress={() => setShowOldCriteria((prev) => !prev)}>
-        <Text style={[styles.subtitle, styles.underline]}>Réactiver les anciens critères</Text>
+        <Text style={[styles.subtitle, styles.underline]}>Réactiver vos anciens éléments</Text>
         {showOldCriteria ? (
           <Icon icon="ChevronUpSvg" width={20} height={20} color={colors.BLUE} />
         ) : (
@@ -198,6 +199,7 @@ const styles = StyleSheet.create({
     color: colors.BLUE,
     fontSize: 22,
     fontWeight: "400",
+    textAlign: "center",
   },
   bold: {
     fontWeight: "700",
