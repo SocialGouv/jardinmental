@@ -69,30 +69,28 @@ const DiaryNote = ({ note, date }) => {
   };
 
   return (
-    <>
+    <View>
       <View key={note.id} style={[styles.item, editMode ? { backgroundColor: "#F4FCFD" } : {}]}>
-        <View>
-          <View style={styles.container}>
-            <TextInput
-              ref={inputRef}
-              blurOnSubmit={false}
-              multiline={true}
-              onChangeText={(e) => {
-                setBuffer(e);
-              }}
-              value={getValue()}
-              placeholder="Saisir ma nouvelle note"
-              style={styles.label}
-              textAlignVertical={"top"}
-              editable={editMode}
-              onBlur={() => {
-                setBuffer(initialValue);
-                setEditMode(false);
-                setToggled(false);
-              }}
-            />
-            <Text style={styles.timestamp}>{makeSureDate(note?.timestamp).getLocaleTime("fr")}</Text>
-          </View>
+        <View style={styles.container}>
+          <TextInput
+            ref={inputRef}
+            blurOnSubmit={false}
+            multiline={true}
+            onChangeText={(e) => {
+              setBuffer(e);
+            }}
+            value={getValue()}
+            placeholder="Saisir ma nouvelle note"
+            style={styles.label}
+            textAlignVertical={"top"}
+            editable={editMode}
+            onBlur={() => {
+              setBuffer(initialValue);
+              setEditMode(false);
+              setToggled(false);
+            }}
+          />
+          <Text style={styles.timestamp}>{makeSureDate(note?.timestamp).getLocaleTime("fr")}</Text>
         </View>
       </View>
       <View style={styles.buttonsContainer}>
@@ -131,7 +129,7 @@ const DiaryNote = ({ note, date }) => {
           }}
         />
       </View>
-    </>
+    </View>
   );
 };
 
@@ -140,7 +138,7 @@ const styles = StyleSheet.create({
     display: "flex",
     position: "absolute",
     right: 0,
-    bottom: 5,
+    bottom: -4,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
