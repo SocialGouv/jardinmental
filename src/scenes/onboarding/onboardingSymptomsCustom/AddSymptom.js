@@ -29,21 +29,21 @@ const AddSymptom = ({
           placeholderTextColor={colors.LIGHT_GRAY}
           style={styles.text}
         />
-        <View style={styles.buttonsContainer}>
-          <Button
-            backgroundColor={colors.LIGHT_BLUE}
-            iconColor={colors.WHITE}
-            borderColor={colors.WHITE}
-            icon="plus"
-            visible={true}
-            onPress={() => {
-              Keyboard.dismiss();
-              onChange(value);
-              setValue("");
-              onChangeText("");
-            }}
-          />
-        </View>
+      </View>
+      <View style={styles.buttonsContainer}>
+        <Button
+          backgroundColor={colors.LIGHT_BLUE}
+          iconColor={colors.WHITE}
+          borderColor={colors.WHITE}
+          icon="plus"
+          visible={true}
+          onPress={() => {
+            onChange(value);
+            setValue("");
+            onChangeText("");
+            Keyboard.dismiss();
+          }}
+        />
       </View>
     </View>
   );
@@ -70,14 +70,14 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     height: "100%",
     flex: 1,
-    borderWidth: 0.5,
-    borderColor: "#D4F0F2",
+    borderWidth: 1,
+    borderColor: colors.LIGHT_BLUE,
     backgroundColor: "#F4FCFD",
     borderRadius: 8,
     color: colors.DARK_BLUE,
   },
   container: {
-    marginVertical: 15,
+    marginVertical: 50,
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
