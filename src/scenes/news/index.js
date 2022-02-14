@@ -29,6 +29,44 @@ export default ({ navigation }) => {
         <Image style={styles.image} source={require("../../../assets/imgs/logo2.png")} />
       </View>
       <ScrollView style={styles.cgu} contentContainerStyle={styles.scrollContainer}>
+        <Card
+          title="L’écran du questionnaire de «&nbsp;Mon&nbsp;état&nbsp;» évolue et se simplifie"
+          version="v1.20"
+          date="02/2022"
+        >
+          <Item>
+            <Text style={styles.text}>
+              Vous pouvez maintenant rajouter des précisions pour chaque élément de votre questionnaire.
+            </Text>
+          </Item>
+          <Item>
+            <Text style={styles.text}>
+              Précisez le contexte général de votre journée à la suite du questionnaire.
+            </Text>
+          </Item>
+          <Item>
+            <Text style={styles.text}>
+              Toutes vos précisions (par élément et pour le contexte général) se retrouvent dans
+              «&nbsp;Mon&nbsp;Journal&nbsp;» sous forme de notes automatiques pour les relire plus facilement.
+            </Text>
+          </Item>
+          <Item>
+            <Text style={styles.text}>
+              En cliquant sur le lien{" "}
+              <Text style={styles.bold}>«&nbsp;modifier&nbsp;mon&nbsp;questionnaire&nbsp;»</Text> en haut de
+              l’écran, vous pouvez directement modifier votre questionnaire lorsque vous le remplissez. Cela
+              vous permet de rajouter un élément personnalisé, ou bien d’arrêter de suivre un élément si vous
+              ne le souhaitez plus voir apparaître dans votre questionnaire. Vous pourrez le réactiver plus
+              tard si nécessaire.
+            </Text>
+          </Item>
+          <Item>
+            <Text style={styles.text}>
+              Des nouveaux émojis font leur apparition, avec un état neutre (émoji jaune) et de nouvelles
+              couleurs plus contrastées.
+            </Text>
+          </Item>
+        </Card>
         <Card title="Menu de navigation à 4 boutons" version="v1.16" date="12/2021">
           <Item showDot={false}>
             <Text style={styles.text}>
