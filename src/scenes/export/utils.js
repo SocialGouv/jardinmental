@@ -1,5 +1,5 @@
 import { colors } from "../../utils/colors";
-import { displayedCategories, categories, translateCategories } from "../../utils/constants";
+import { displayedCategories, categories, translateCategories, scoresMapIcon } from "../../utils/constants";
 import { getArrayOfDates, formatDate } from "../../utils/date/helpers";
 import localStorage from "../../utils/localStorage";
 import { getDrugListWithLocalStorage } from "../../utils/drugs-list";
@@ -7,9 +7,6 @@ import { parseISO, format } from "date-fns";
 import { fr } from "date-fns/locale";
 
 // methods
-
-const colorsValue = ["#FFA1A1", "#FCD0A7", "#F8FB85", "#CCFD64", "#7AFD13"];
-const colorsText = ["#b86564", "#ba8553", "#ab9237", "#5c781f", "#407a12"];
 
 const hasNotes = (notes) =>
   !!notes &&
@@ -392,12 +389,11 @@ const formatHtmlTable = async (diaryData, diaryNotes) => {
                             ${res
                               .map((value) => {
                                 const height = 15 * value + 2;
-
                                 return generateBar(
                                   value,
                                   height,
-                                  colorsValue[value - 1],
-                                  colorsText[value - 1]
+                                  scoresMapIcon[value]?.color,
+                                  scoresMapIcon[value]?.iconColor
                                 );
                               })
                               .join("")}
