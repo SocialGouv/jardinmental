@@ -1,3 +1,15 @@
+## [1.20.5](https://github.com/SocialGouv/monsuivipsy/compare/v1.20.4...v1.20.5) (2022-02-14)
+
+
+### Bug Fixes
+
+* **bouton:** style ([ff542f4](https://github.com/SocialGouv/monsuivipsy/commit/ff542f49c1d7f92be47b7c3371c9f577e85b74d2))
+* **journal:** bouton cliquable ([343f2cd](https://github.com/SocialGouv/monsuivipsy/commit/343f2cdc2a4627d24ae3b8bbd5a9ac1bff5aff62))
+* **journal:** remove keyboard dismiss ([3b36210](https://github.com/SocialGouv/monsuivipsy/commit/3b3621080352a20122953408ae3fc7f183a4d60a))
+* **paramètres:** wording ([033fc6f](https://github.com/SocialGouv/monsuivipsy/commit/033fc6fb82359b9a9822c280d8fbe8addb8ffee4))
+* **setting:** couleur ajouter/retirer critère ([ac59146](https://github.com/SocialGouv/monsuivipsy/commit/ac5914690c269c990f05bc1bc4c727d38243cb4c))
+* **touchable:** les bouton est entièrement cliquable ([3d910c8](https://github.com/SocialGouv/monsuivipsy/commit/3d910c82ab4c1bd30de7ba233eb880ba14dd11fe))
+
 ## [1.20.4](https://github.com/SocialGouv/monsuivipsy/compare/v1.20.3...v1.20.4) (2022-02-09)
 
 
