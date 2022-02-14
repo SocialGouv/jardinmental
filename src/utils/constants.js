@@ -1,41 +1,41 @@
 export const icons = {
-  veryGood: 'VeryGoodSvg',
-  good: 'GoodSvg',
-  middle: 'MiddleSvg',
-  bad: 'BadSvg',
-  veryBad: 'VeryBadSvg',
-  today: 'TodaySvg',
-  yesterday: 'YesterdaySvg',
-  notes: 'NotesSvg',
+  veryGood: "VeryGoodSvg",
+  good: "GoodSvg",
+  middle: "MiddleSvg",
+  bad: "BadSvg",
+  veryBad: "VeryBadSvg",
+  today: "TodaySvg",
+  yesterday: "YesterdaySvg",
+  notes: "NotesSvg",
 };
 
 export const colors = {
-  veryBad: '#FFA1A1',
-  bad: '#FCD0A7',
-  middle: '#F8FB85',
-  good: '#CCFD64',
-  veryGood: '#7AFD13',
-  veryBadTrans: '#fdcccc',
-  badTrans: '#fbd8b8',
-  middleTrans: '#fbe79c',
-  goodTrans: '#f1f491',
-  veryGoodTrans: '#edfaca',
+  veryBad: "#F16B6B",
+  bad: "#FEAA5B",
+  middle: "#F2F478",
+  good: "#ACF352",
+  veryGood: "#5DEE5A",
+  veryBadTrans: "#fdcccc",
+  badTrans: "#fbd8b8",
+  middleTrans: "#fbe79c",
+  goodTrans: "#f1f491",
+  veryGoodTrans: "#edfaca",
 };
 
 export const iconBorderColors = {
-  veryBad: '#FF6262',
-  bad: '#FFB269',
-  middle: '#F0CC49',
-  good: '#A6DB0E',
-  veryGood: '#60C511',
+  veryBad: "#D13E3E",
+  bad: "#E7770F",
+  middle: "#F0DF49",
+  good: "#7CCF12",
+  veryGood: "#0FC321",
 };
 
 export const iconColors = {
-  veryBad: '#840707',
-  bad: '#6D3500',
-  middle: '#8C4C10',
-  good: '#616300',
-  veryGood: '#4F6300',
+  veryBad: "#840707",
+  bad: "#744519",
+  middle: "#6C630C",
+  good: "#496300",
+  veryGood: "#1A6300",
 };
 
 export const scoresMapIcon = {
@@ -75,213 +75,208 @@ export const colorsMap = Object.keys(colors).map((key) => colors[key]);
 
 export const categoryStates = {
   VERY_GOOD: {
-    id: 'VERY_GOOD',
+    id: "VERY_GOOD",
     level: 5,
     icon: icons.veryGood,
     color: colors.veryGood,
-    label: 'Très bien',
+    label: "Très bien",
   },
   GOOD: {
-    id: 'GOOD',
+    id: "GOOD",
     level: 4,
     icon: icons.good,
     color: colors.good,
-    label: 'Bien',
+    label: "Bien",
   },
   MIDDLE: {
-    id: 'MIDDLE',
+    id: "MIDDLE",
     level: 3,
     icon: icons.middle,
     color: colors.middle,
-    label: 'Moyen',
+    label: "Moyen",
   },
   BAD: {
-    id: 'BAD',
+    id: "BAD",
     level: 2,
     icon: icons.bad,
     color: colors.bad,
-    label: 'Mauvais',
+    label: "Mauvais",
   },
   VERY_BAD: {
-    id: 'VERY_BAD',
+    id: "VERY_BAD",
     level: 1,
     icon: icons.veryBad,
     color: colors.veryBad,
-    label: 'Très mauvais',
+    label: "Très mauvais",
   },
 };
 
 export const categories = {
-  MOOD: 'MOOD',
-  ANXIETY: 'ANXIETY',
-  BADTHOUGHTS: 'BADTHOUGHTS',
-  SENSATIONS: 'SENSATIONS',
-  SLEEP: 'SLEEP',
-  DAILYACTIVITIES: 'DAILYACTIVITIES',
-  COMMUNICATION: 'COMMUNICATION',
+  MOOD: "MOOD",
+  ANXIETY: "ANXIETY",
+  BADTHOUGHTS: "BADTHOUGHTS",
+  SENSATIONS: "SENSATIONS",
+  SLEEP: "SLEEP",
+  DAILYACTIVITIES: "DAILYACTIVITIES",
+  COMMUNICATION: "COMMUNICATION",
 };
 export const reliquatCategories = {
-  BADTHOUGHTS_FREQUENCE: 'BADTHOUGHTS_FREQUENCE',
-  ANXIETY_FREQUENCE: 'ANXIETY_FREQUENCE',
-  SENSATIONS_FREQUENCE: 'SENSATIONS_FREQUENCE',
+  BADTHOUGHTS_FREQUENCE: "BADTHOUGHTS_FREQUENCE",
+  ANXIETY_FREQUENCE: "ANXIETY_FREQUENCE",
+  SENSATIONS_FREQUENCE: "SENSATIONS_FREQUENCE",
 };
 
 export const displayedCategories = {
-  MOOD: 'Humeur',
-  ANXIETY: 'Anxiété',
-  BADTHOUGHTS: 'Idées parasites',
-  SLEEP: 'Sommeil',
-  SENSATIONS: 'Sensations étranges',
-  DAILYACTIVITIES: 'Faire mes activités quotidiennes',
-  COMMUNICATION: 'Communication avec mon entourage',
-  BADTHOUGHTS_FREQUENCE: 'Idées parasites',
-  ANXIETY_FREQUENCE: 'Anxiété',
-  SENSATIONS_FREQUENCE: 'Sensations étranges',
+  MOOD: "Humeur",
+  ANXIETY: "Anxiété",
+  BADTHOUGHTS: "Idées parasites",
+  SLEEP: "Sommeil",
+  SENSATIONS: "Sensations étranges",
+  DAILYACTIVITIES: "Faire mes activités quotidiennes",
+  COMMUNICATION: "Communication avec mon entourage",
+  BADTHOUGHTS_FREQUENCE: "Idées parasites",
+  ANXIETY_FREQUENCE: "Anxiété",
+  SENSATIONS_FREQUENCE: "Sensations étranges",
 };
 
 export const translateCategories = {
-  MOOD: 'Humeur',
-  ANXIETY: 'Anxiété',
-  BADTHOUGHTS: 'Idées parasites',
-  SLEEP: 'Sommeil',
-  SENSATIONS: 'Sensations étranges',
-  DAILYACTIVITIES: 'Faire mes activités quotidiennes',
-  COMMUNICATION: 'Communication avec mon entourage',
-  TOXIC: 'Substance',
-  CONTEXT: 'Contexte',
+  MOOD: "Humeur",
+  ANXIETY: "Anxiété",
+  BADTHOUGHTS: "Idées parasites",
+  SLEEP: "Sommeil",
+  SENSATIONS: "Sensations étranges",
+  DAILYACTIVITIES: "Faire mes activités quotidiennes",
+  COMMUNICATION: "Communication avec mon entourage",
+  TOXIC: "Substance",
+  CONTEXT: "Contexte",
 };
 
 export const surveyDate = {
   YESTERDAY: {
-    id: 'YESTERDAY',
+    id: "YESTERDAY",
     icon: icons.yesterday,
-    color: 'white',
-    label: 'Hier',
+    color: "white",
+    label: "Hier",
   },
   TODAY: {
-    id: 'TODAY',
+    id: "TODAY",
     icon: icons.today,
-    color: 'white',
+    color: "white",
     label: "Aujourd'hui",
   },
 };
 
 export const frequence = {
   NEVER: {
-    id: 'NEVER',
+    id: "NEVER",
     level: 3,
     icon: icons.veryGood,
     color: colors.veryGood,
-    label: 'Jamais',
+    label: "Jamais",
   },
   SEVERAL_TIMES: {
-    id: 'SEVERAL_TIMES',
+    id: "SEVERAL_TIMES",
     level: 2,
     icon: icons.middle,
     color: colors.middle,
-    label: 'Plusieurs fois',
+    label: "Plusieurs fois",
   },
   MANY_TIMES: {
-    id: 'MANY_TIMES',
+    id: "MANY_TIMES",
     level: 1,
     icon: icons.veryBad,
     color: colors.veryBad,
-    label: 'De nombreuses fois',
+    label: "De nombreuses fois",
   },
 };
 
 export const intensity = {
   LIGHT: {
-    id: 'LIGHT',
+    id: "LIGHT",
     level: 3,
     icon: icons.veryGood,
     color: colors.veryGood,
-    label: 'Légèrement pénible',
+    label: "Légèrement pénible",
   },
   MIDDLE: {
-    id: 'MIDDLE',
+    id: "MIDDLE",
     level: 2,
     icon: icons.middle,
     color: colors.middle,
-    label: 'Moyennement pénible',
+    label: "Moyennement pénible",
   },
   HIGH: {
-    id: 'HIGH',
+    id: "HIGH",
     level: 1,
     icon: icons.veryBad,
     color: colors.veryBad,
-    label: 'Très pénible',
+    label: "Très pénible",
   },
 };
 
-export const DEFAULT_BECK_WHERE_LIST = [
-  'À la maison',
-  'Au lycée',
-  'Dans la rue',
-  'Au travail',
-];
-export const DEFAULT_BECK_WHO_LIST = ['Charles', 'Karim', 'Inès'];
+export const DEFAULT_BECK_WHERE_LIST = ["À la maison", "Au lycée", "Dans la rue", "Au travail"];
+export const DEFAULT_BECK_WHO_LIST = ["Charles", "Karim", "Inès"];
 export const DEFAULT_BECK_EMOTION_LIST = [
-  'Anxiété',
-  'Colère',
-  'Tristesse',
-  'Peur',
-  'Déception',
-  'Culpabilité',
-  'Solitude',
-  'Honte',
-  'Frustration',
-  'Jalousie',
+  "Anxiété",
+  "Colère",
+  "Tristesse",
+  "Peur",
+  "Déception",
+  "Culpabilité",
+  "Solitude",
+  "Honte",
+  "Frustration",
+  "Jalousie",
 ];
 export const DEFAULT_BECK_SENSATION_LIST = [
-  'Tête qui tourne',
-  'Larmes aux yeux',
-  'Gorge serrée',
-  'Poids sur la poitrine',
-  'Mal au ventre',
-  'Coeur qui bat vite',
-  'Chaleur',
-  'Froid',
-  'Tremblements',
-  'Nausée',
-  'Souffle court',
+  "Tête qui tourne",
+  "Larmes aux yeux",
+  "Gorge serrée",
+  "Poids sur la poitrine",
+  "Mal au ventre",
+  "Coeur qui bat vite",
+  "Chaleur",
+  "Froid",
+  "Tremblements",
+  "Nausée",
+  "Souffle court",
 ];
 
 export const BeckStepTitles = [
-  'La situation',
-  'La situation',
-  'Vos émotions',
-  'Vos pensées',
-  'Comportement et Résultats',
-  'Restructuration',
+  "La situation",
+  "La situation",
+  "Vos émotions",
+  "Vos pensées",
+  "Comportement et Résultats",
+  "Restructuration",
 ];
 
-export const STORAGE_KEY_SURVEY_RESULTS = '@SURVEY_RESULTS';
-export const STORAGE_KEY_START_DATE = '@SURVEY_DATE';
-export const STORAGE_KEY_SYMPTOMS = '@SYMPTOMS';
-export const STORAGE_KEY_IS_FIRST_LAUNCH = '@IS_FIRST_LAUNCH';
-export const STORAGE_KEY_ONBOARDING_STEP = '@ONBOARDING_STEP';
-export const STORAGE_KEY_ONBOARDING_DONE = '@ONBOARDING_DONE';
-export const STORAGE_KEY_MEDICAL_TREATMENT = '@MEDICAL_TREATMENT';
-export const STORAGE_KEY_SUPPORTED = '@SUPPORTED';
-export const STORAGE_KEY_CUSTOM_SYMPTOMS = '@CUSTOM_SYMPTOMS';
-export const STORAGE_KEY_NOTES_VERSION = '@NOTES_VERSION';
-export const STORAGE_KEY_VISIT_PRO_NPS = '@VISIT_PRO_NPS';
-export const STORAGE_KEY_CUSTOM_DRUGS = '@CUSTOM_DRUGS';
-export const STORAGE_KEY_IS_BECK_ACTIVATED = '@STORAGE_KEY_IS_BECK_ACTIVATED';
-export const STORAGE_KEY_BECK_WHERE_LIST = '@BECK_WHERE_LIST';
-export const STORAGE_KEY_BECK_WHO_LIST = '@BECK_WHO_LIST';
-export const STORAGE_KEY_BECK_EMOTION_LIST = '@BECK_EMOTION_LIST';
-export const STORAGE_KEY_BECK_SENSATION_LIST = '@BECK_SENSATION_LIST';
-export const STORAGE_KEY_BECK_SHOW_WELCOME = '@BECK_SHOW_WELCOME_DEFAULT';
-export const STORAGE_KEY_DIARY_NOTES = '@DIARY_NOTES';
-export const STORAGE_KEY_NPS_PRO_CONTACT = '@NPS_PRO_CONTACT';
+export const STORAGE_KEY_SURVEY_RESULTS = "@SURVEY_RESULTS";
+export const STORAGE_KEY_START_DATE = "@SURVEY_DATE";
+export const STORAGE_KEY_SYMPTOMS = "@SYMPTOMS";
+export const STORAGE_KEY_IS_FIRST_LAUNCH = "@IS_FIRST_LAUNCH";
+export const STORAGE_KEY_ONBOARDING_STEP = "@ONBOARDING_STEP";
+export const STORAGE_KEY_ONBOARDING_DONE = "@ONBOARDING_DONE";
+export const STORAGE_KEY_MEDICAL_TREATMENT = "@MEDICAL_TREATMENT";
+export const STORAGE_KEY_SUPPORTED = "@SUPPORTED";
+export const STORAGE_KEY_CUSTOM_SYMPTOMS = "@CUSTOM_SYMPTOMS";
+export const STORAGE_KEY_NOTES_VERSION = "@NOTES_VERSION";
+export const STORAGE_KEY_VISIT_PRO_NPS = "@VISIT_PRO_NPS";
+export const STORAGE_KEY_CUSTOM_DRUGS = "@CUSTOM_DRUGS";
+export const STORAGE_KEY_IS_BECK_ACTIVATED = "@STORAGE_KEY_IS_BECK_ACTIVATED";
+export const STORAGE_KEY_BECK_WHERE_LIST = "@BECK_WHERE_LIST";
+export const STORAGE_KEY_BECK_WHO_LIST = "@BECK_WHO_LIST";
+export const STORAGE_KEY_BECK_EMOTION_LIST = "@BECK_EMOTION_LIST";
+export const STORAGE_KEY_BECK_SENSATION_LIST = "@BECK_SENSATION_LIST";
+export const STORAGE_KEY_BECK_SHOW_WELCOME = "@BECK_SHOW_WELCOME_DEFAULT";
+export const STORAGE_KEY_DIARY_NOTES = "@DIARY_NOTES";
+export const STORAGE_KEY_NPS_PRO_CONTACT = "@NPS_PRO_CONTACT";
 
 export const ONBOARDING_STEPS = {
-  STEP_CGU: 'STEP_CGU',
-  STEP_SUPPORTED: 'STEP_SUPPORTED',
-  STEP_SYMPTOMS: 'STEP_SYMPTOMS',
-  STEP_SYMPTOMS_CUSTOM: 'STEP_SYMPTOMS_CUSTOM',
-  STEP_DRUGS: 'STEP_DRUGS',
-  STEP_REMINDER: 'STEP_REMINDER',
+  STEP_CGU: "STEP_CGU",
+  STEP_SUPPORTED: "STEP_SUPPORTED",
+  STEP_SYMPTOMS: "STEP_SYMPTOMS",
+  STEP_SYMPTOMS_CUSTOM: "STEP_SYMPTOMS_CUSTOM",
+  STEP_DRUGS: "STEP_DRUGS",
+  STEP_REMINDER: "STEP_REMINDER",
 };
