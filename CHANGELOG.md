@@ -1,3 +1,10 @@
+## [1.20.7](https://github.com/SocialGouv/monsuivipsy/compare/v1.20.6...v1.20.7) (2022-02-14)
+
+
+### Bug Fixes
+
+* **export:** couleurs ([03cdf7f](https://github.com/SocialGouv/monsuivipsy/commit/03cdf7fc1c2cbc0f3dd621c3504a7c38a8a930c2))
+
 ## [1.20.6](https://github.com/SocialGouv/monsuivipsy/compare/v1.20.5...v1.20.6) (2022-02-14)
 
 
