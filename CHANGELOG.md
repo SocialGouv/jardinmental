@@ -1,3 +1,11 @@
+## [1.20.6](https://github.com/SocialGouv/monsuivipsy/compare/v1.20.5...v1.20.6) (2022-02-14)
+
+
+### Bug Fixes
+
+* **couleur:** maj ([6f433bb](https://github.com/SocialGouv/monsuivipsy/commit/6f433bbb8da489b0930ecfa556ac9c147c49b877))
+* **etat:** centrer bouton ([0bfdc97](https://github.com/SocialGouv/monsuivipsy/commit/0bfdc9796cc76497a3f6b59d4d62f043ae238cf5))
+
 ## [1.20.5](https://github.com/SocialGouv/monsuivipsy/compare/v1.20.4...v1.20.5) (2022-02-14)
 
 
