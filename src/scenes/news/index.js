@@ -21,7 +21,6 @@ export default ({ navigation }) => {
       await localStorage.setNotesVersion(LAST_NOTES_VERSION);
     })();
   }, []);
-
   return (
     <SafeAreaView style={styles.safe}>
       <View style={styles.headerContainer}>
