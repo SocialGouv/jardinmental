@@ -1,3 +1,10 @@
+## [1.20.8](https://github.com/SocialGouv/monsuivipsy/compare/v1.20.7...v1.20.8) (2022-02-14)
+
+
+### Bug Fixes
+
+* **nouveauté:** ajout nouveauté ([dd87ff6](https://github.com/SocialGouv/monsuivipsy/commit/dd87ff6bf70d632e429fa074b4278a650d99181f))
+
 ## [1.20.7](https://github.com/SocialGouv/monsuivipsy/compare/v1.20.6...v1.20.7) (2022-02-14)
 
 
