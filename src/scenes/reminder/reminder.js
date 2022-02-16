@@ -201,7 +201,7 @@ class Reminder extends React.Component {
           )}
         </View>
         {this.props.route?.params?.onboarding ? (
-          <>
+          <View style={styles.ctaContainer}>
             <TouchableOpacity
               onPress={reminder ? this.validateOnboarding : this.showTimePicker}
               style={styles.setupButton}
@@ -216,9 +216,9 @@ class Reminder extends React.Component {
             >
               <Text style={styles.later}>{reminder ? "Modifier l'heure du rappel" : "Plus tard"}</Text>
             </TouchableOpacity>
-          </>
+          </View>
         ) : (
-          <>
+          <View style={styles.ctaContainer}>
             <TouchableOpacity onPress={this.showTimePicker} style={styles.setupButton}>
               <Text style={styles.setupButtonText}>
                 {reminder ? "Modifier le rappel" : "Choisir l'heure du rappel"}
@@ -230,7 +230,7 @@ class Reminder extends React.Component {
             >
               <Text style={styles.later}>{reminder ? "Retirer le rappel" : "Plus tard"}</Text>
             </TouchableOpacity>
-          </>
+          </View>
         )}
         <TimePicker value={reminder} visible={timePickerVisible} selectDate={this.setReminder} />
       </SafeAreaView>
@@ -239,6 +239,13 @@ class Reminder extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  ctaContainer: {
+    display: "flex",
+    alignItems: "center",
+    position: "absolute",
+    bottom: 0,
+    margin: 30,
+  },
   smallImage: {
     color: colors.BLUE,
     height: 40,
@@ -248,8 +255,6 @@ const styles = StyleSheet.create({
   },
   bigImage: {
     color: "#C3C7D5",
-    height: 40,
-    width: 40,
     marginVertical: 0,
   },
   header: {
@@ -317,10 +322,6 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
     color: colors.BLUE,
   },
-  laterContainer: {
-    position: "absolute",
-    bottom: 60,
-  },
   later: {
     fontWeight: "700",
     textDecorationLine: "underline",
@@ -333,12 +334,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: 15,
+    marginBottom: 25,
   },
   setupButtonText: {
     color: "#fff",
     fontWeight: "700",
-    fontSize: 19,
+    fontSize: 16,
   },
   subtitle: {
     color: colors.DARK_BLUE,
