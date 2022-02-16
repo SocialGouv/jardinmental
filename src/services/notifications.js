@@ -66,6 +66,8 @@ class NotificationService {
       playSound,
       soundName,
       channelId,
+      largeIcon: "ic_launcher",
+      smallIcon: "ic_notification",
     });
   }
 
