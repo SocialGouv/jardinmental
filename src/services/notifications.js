@@ -1,6 +1,6 @@
-import PushNotification from 'react-native-push-notification';
-import PushNotificationIOS from '@react-native-community/push-notification-ios';
-import {Platform} from 'react-native';
+import PushNotification from "react-native-push-notification";
+import PushNotificationIOS from "@react-native-community/push-notification-ios";
+import { Platform } from "react-native";
 
 class NotificationService {
   listeners = {};
@@ -21,25 +21,25 @@ class NotificationService {
       },
 
       popInitialNotification: false,
-      requestPermissions: Platform.OS === 'ios',
+      requestPermissions: Platform.OS === "ios",
     });
     // required for android
     PushNotification.createChannel(
       {
-        channelId: 'REMINDER-CHANNEL-ID', // (required)
-        channelName: 'Reminder notifications', // (required)
-        soundName: 'default', // (optional) See `soundName` parameter of `localNotification` function
+        channelId: "REMINDER-CHANNEL-ID", // (required)
+        channelName: "Reminder notifications", // (required)
+        soundName: "default", // (optional) See `soundName` parameter of `localNotification` function
         importance: 4, // (optional) default: 4. Int value of the Android notification importance
         vibrate: true, // (optional) default: true. Creates the default vibration patten if true.
       },
-      (created) => console.log(`createChannel returned '${created}'`), // (optional) callback returns whether the channel was created, false means it already existed.
+      (created) => console.log(`createChannel returned '${created}'`) // (optional) callback returns whether the channel was created, false means it already existed.
     );
     this.isConfigured = true;
   }
 
   getInitNotification() {
     PushNotification.popInitialNotification((notification) => {
-      console.log('Initial Notification', notification);
+      console.log("Initial Notification", notification);
       this.handleNotification(notification);
     });
   }
@@ -49,8 +49,8 @@ class NotificationService {
     title,
     message,
     playSound = true,
-    soundName = 'default',
-    channelId = 'REMINDER-CHANNEL-ID', // same as in strings.xml, for Android
+    soundName = "default",
+    channelId = "REMINDER-CHANNEL-ID", // same as in strings.xml, for Android
   } = {}) {
     PushNotification.localNotificationSchedule({
       date,
@@ -64,7 +64,7 @@ class NotificationService {
 
   async checkPermission() {
     return await new Promise((resolve) => {
-      PushNotification.checkPermissions(({alert}) => {
+      PushNotification.checkPermissions(({ alert }) => {
         resolve(alert);
       });
     });
@@ -75,11 +75,11 @@ class NotificationService {
   }
 
   handleNotification = (notification) => {
-    console.log('handle Notification', JSON.stringify(notification, null, 2));
+    console.log("handle Notification", JSON.stringify(notification, null, 2));
 
     /* ANDROID FOREGROUND */
 
-    if (Platform.OS === 'android') {
+    if (Platform.OS === "android") {
       // if not the line below, the notification is launched without notifying
       // with the line below, there is a local notification triggered
       if (notification.foreground && !notification.userInteraction) {
