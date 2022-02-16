@@ -2,9 +2,10 @@ import React from "react";
 import Tabs from "./tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import DaySurveyScreen from "../scenes/survey/daySurvey";
 import SelectDayScreen from "../scenes/survey/selectDay";
-import Reminder from "../scenes/reminder/reminder";
+import Reminder, { scheduleEveryReminderNotification } from "../scenes/reminder/reminder";
 import Export from "../scenes/export/export";
 import DailyChart from "../scenes/calendar/daily-chart";
 import { AppState, Platform } from "react-native";
@@ -39,6 +40,10 @@ class Router extends React.Component {
     await logEvents.initMatomo();
     logEvents.logAppVisit();
     this.appListener = AppState.addEventListener("change", this.onAppChange);
+
+    // reset les notifications de rappels si l'utilisateur en a de programmées
+    const reminderStorageLocal = await AsyncStorage.getItem("@Reminder");
+    if (reminderStorageLocal) await scheduleEveryReminderNotification(reminderStorageLocal);
   }
 
   componentWillUnmount() {

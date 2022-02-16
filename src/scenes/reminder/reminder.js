@@ -29,6 +29,44 @@ const timeIsAfterNow = (inputDate) => {
   return minutes > new Date().getMinutes();
 };
 
+export const scheduleEveryReminderNotification = async (r) => {
+  if (!r) return;
+  console.log("🕒 scheduleEveryReminderNotification for", r);
+  const setReminder = ({ date, offset }) => {
+    const fireDate = dateWithTimeAndOffsetFromToday(date.getHours(), date.getMinutes(), offset);
+    NotificationService.scheduleNotification({
+      date: fireDate,
+      title: reminderTitle,
+      message: reminderMessage,
+    });
+  };
+  const reminderDate = new Date(r);
+
+  NotificationService.cancelAll();
+
+  // un rappel quotidien pendant 20 jours
+  const DAILY_REMINDER_DURATION = 20;
+  for (let i = timeIsAfterNow(reminderDate) ? 0 : 1; i <= DAILY_REMINDER_DURATION; i++) {
+    setReminder({ date: reminderDate, offset: i });
+  }
+  // puis un rappel tout les 2 jours pendant 10 itérations (20 jours)
+  const DAY_2_REMINDER_DURATION = 10;
+  for (let i = 0; i <= DAY_2_REMINDER_DURATION; i++) {
+    setReminder({
+      date: reminderDate,
+      offset: DAILY_REMINDER_DURATION + 1 + 2 * i,
+    });
+  }
+  // puis un rappel tout les 7 jours pendant 10 itérations (70 jours)
+  const WEEKLY_REMINDER_DURATION = 10;
+  for (let i = 0; i <= WEEKLY_REMINDER_DURATION; i++) {
+    setReminder({
+      date: reminderDate,
+      offset: DAILY_REMINDER_DURATION + DAY_2_REMINDER_DURATION + 1 + 7 * i,
+    });
+  }
+};
+
 const ReminderStorageKey = "@Reminder";
 const reminderTitle = "Comment ça va aujourd'hui ?";
 const reminderMessage = "N'oubliez pas de remplir votre application Mon Suivi Psy";
@@ -42,6 +80,7 @@ class Reminder extends React.Component {
     this.getReminder(false);
     this.notifcationListener = NotificationService.listen(this.handleNotification);
     this.setOnboardingStepIfNeeded();
+    // NotificationService.list();
   }
 
   componentWillUnmount() {
@@ -81,15 +120,7 @@ class Reminder extends React.Component {
   };
 
   scheduleNotification = async (reminder = new Date(Date.now() + 10 * 1000)) => {
-    NotificationService.cancelAll();
-    for (let i = !timeIsAfterNow(reminder); i <= 15; i++) {
-      const fireDate = dateWithTimeAndOffsetFromToday(reminder.getHours(), reminder.getMinutes(), i);
-      NotificationService.scheduleNotification({
-        date: fireDate,
-        title: reminderTitle,
-        message: reminderMessage,
-      });
-    }
+    await scheduleEveryReminderNotification(reminder);
     logEvents.logReminderAdd();
   };
 

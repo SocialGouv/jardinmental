@@ -37,6 +37,13 @@ class NotificationService {
     this.isConfigured = true;
   }
 
+  list() {
+    PushNotification.getScheduledLocalNotifications((e) => {
+      console.log(e.length, "local notification(s) scheduled");
+      e.forEach((x) => console.log("🕒", x.title, x.date));
+    });
+  }
+
   getInitNotification() {
     PushNotification.popInitialNotification((notification) => {
       console.log("Initial Notification", notification);
