@@ -40,7 +40,7 @@ class NotificationService {
   list() {
     PushNotification.getScheduledLocalNotifications((e) => {
       console.log(e.length, "local notification(s) scheduled");
-      e.forEach((x) => console.log("🕒", x.title, x.date));
+      e.forEach((x) => console.log("🕒", x.id, x.title, x.date));
     });
   }
 
