@@ -94,7 +94,7 @@ class Reminder extends React.Component {
       date: fireDate,
       title: reminderTitle,
       message: reminderMessage,
-      repeatType: "minute",
+      repeatType: "day",
     });
     logEvents.logReminderAdd();
   };
