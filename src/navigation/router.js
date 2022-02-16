@@ -1,36 +1,37 @@
-import React from 'react';
-import Tabs from './tabs';
-import {createStackNavigator} from '@react-navigation/stack';
-import {NavigationContainer} from '@react-navigation/native';
-import DaySurveyScreen from '../scenes/survey/daySurvey';
-import SelectDayScreen from '../scenes/survey/selectDay';
-import Reminder from '../scenes/reminder/reminder';
-import Export from '../scenes/export/export';
-import DailyChart from '../scenes/calendar/daily-chart';
-import {AppState, Platform} from 'react-native';
-import Notes from '../scenes/survey/notes-screen';
-import Onboarding from '../scenes/onboarding';
-import Supported from '../scenes/onboarding/onboardingSupported';
-import OnboardingSymptoms from '../scenes/onboarding/onboardingSymptoms';
-import OnboardingSymptomsCustom from '../scenes/onboarding/onboardingSymptomsCustom';
-import OnboardingDrugs from '../scenes/onboarding/onboardingDrugs';
-import OnboardingDrugsInformation from '../scenes/onboarding/onboardingDrugs/drugs-information';
-import OnboardingDrugsList from '../scenes/onboarding/onboardingDrugs/list';
-import CGU from '../scenes/legal/cgu-screen';
-import Privacy from '../scenes/legal/privacy-screen';
-import LegalMentions from '../scenes/legal/legal-mentions-screen';
-import logEvents from '../services/logEvents';
-import ContributePro from '../scenes/contribute/contributePro';
-import Drugs from '../scenes/drugs/drugs';
-import DrugsList from '../scenes/drugs/list';
-import TooLate from '../scenes/status/too-late';
-import News from '../scenes/news';
-import ActivateBeck from '../scenes/beck/activate';
-import ViewBeck from '../scenes/beck/view';
-import Beck from '../scenes/beck';
-import Infos from '../scenes/infos';
-import Contact from '../scenes/contact';
-import PrivacyLight from '../scenes/privacy-light';
+import React from "react";
+import Tabs from "./tabs";
+import { createStackNavigator } from "@react-navigation/stack";
+import { NavigationContainer } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import DaySurveyScreen from "../scenes/survey/daySurvey";
+import SelectDayScreen from "../scenes/survey/selectDay";
+import Reminder, { scheduleEveryReminderNotification } from "../scenes/reminder/reminder";
+import Export from "../scenes/export/export";
+import DailyChart from "../scenes/calendar/daily-chart";
+import { AppState, Platform } from "react-native";
+import Notes from "../scenes/survey/notes-screen";
+import Onboarding from "../scenes/onboarding";
+import Supported from "../scenes/onboarding/onboardingSupported";
+import OnboardingSymptoms from "../scenes/onboarding/onboardingSymptoms";
+import OnboardingSymptomsCustom from "../scenes/onboarding/onboardingSymptomsCustom";
+import OnboardingDrugs from "../scenes/onboarding/onboardingDrugs";
+import OnboardingDrugsInformation from "../scenes/onboarding/onboardingDrugs/drugs-information";
+import OnboardingDrugsList from "../scenes/onboarding/onboardingDrugs/list";
+import CGU from "../scenes/legal/cgu-screen";
+import Privacy from "../scenes/legal/privacy-screen";
+import LegalMentions from "../scenes/legal/legal-mentions-screen";
+import logEvents from "../services/logEvents";
+import ContributePro from "../scenes/contribute/contributePro";
+import Drugs from "../scenes/drugs/drugs";
+import DrugsList from "../scenes/drugs/list";
+import TooLate from "../scenes/status/too-late";
+import News from "../scenes/news";
+import ActivateBeck from "../scenes/beck/activate";
+import ViewBeck from "../scenes/beck/view";
+import Beck from "../scenes/beck";
+import Infos from "../scenes/infos";
+import Contact from "../scenes/contact";
+import PrivacyLight from "../scenes/privacy-light";
 
 const Stack = createStackNavigator();
 
@@ -38,7 +39,11 @@ class Router extends React.Component {
   async componentDidMount() {
     await logEvents.initMatomo();
     logEvents.logAppVisit();
-    this.appListener = AppState.addEventListener('change', this.onAppChange);
+    this.appListener = AppState.addEventListener("change", this.onAppChange);
+
+    // reset les notifications de rappels si l'utilisateur en a de programmées
+    const reminderStorageLocal = await AsyncStorage.getItem("@Reminder");
+    if (reminderStorageLocal) await scheduleEveryReminderNotification(reminderStorageLocal);
   }
 
   componentWillUnmount() {
@@ -48,10 +53,7 @@ class Router extends React.Component {
 
   appState = AppState.currentState;
   onAppChange = (nextAppState) => {
-    if (
-      this.appState.match(/inactive|background/) &&
-      nextAppState === 'active'
-    ) {
+    if (this.appState.match(/inactive|background/) && nextAppState === "active") {
       logEvents.logAppVisit();
     } else {
       logEvents.logAppClose();
@@ -69,9 +71,7 @@ class Router extends React.Component {
 
   render() {
     return (
-      <NavigationContainer
-        ref={(r) => (this.navigationRef = r)}
-        onStateChange={this.onStateChange}>
+      <NavigationContainer ref={(r) => (this.navigationRef = r)} onStateChange={this.onStateChange}>
         <Stack.Navigator initialRouteName="tabs" headerMode="none">
           <Stack.Screen name="day-survey" component={DaySurveyScreen} />
           <Stack.Screen name="select-day" component={SelectDayScreen} />
@@ -89,31 +89,15 @@ class Router extends React.Component {
           <Stack.Screen name="reminder" component={Reminder} />
           <Stack.Screen name="export" component={Export} />
           <Stack.Screen name="chart-day" component={DailyChart} />
-          <Stack.Screen
-            name="notes"
-            options={{animationEnabled: Platform.OS === 'ios'}}>
-            {({navigation, route}) => (
-              <Notes navigation={navigation} route={route} />
-            )}
+          <Stack.Screen name="notes" options={{ animationEnabled: Platform.OS === "ios" }}>
+            {({ navigation, route }) => <Notes navigation={navigation} route={route} />}
           </Stack.Screen>
           <Stack.Screen name="onboarding" component={Onboarding} />
-          <Stack.Screen
-            name="onboarding-symptoms"
-            component={OnboardingSymptoms}
-          />
-          <Stack.Screen
-            name="onboarding-symptoms-custom"
-            component={OnboardingSymptomsCustom}
-          />
+          <Stack.Screen name="onboarding-symptoms" component={OnboardingSymptoms} />
+          <Stack.Screen name="onboarding-symptoms-custom" component={OnboardingSymptomsCustom} />
           <Stack.Screen name="onboarding-drugs" component={OnboardingDrugs} />
-          <Stack.Screen
-            name="onboarding-drugs-information"
-            component={OnboardingDrugsInformation}
-          />
-          <Stack.Screen
-            name="onboarding-drugs-list"
-            component={OnboardingDrugsList}
-          />
+          <Stack.Screen name="onboarding-drugs-information" component={OnboardingDrugsInformation} />
+          <Stack.Screen name="onboarding-drugs-list" component={OnboardingDrugsList} />
           <Stack.Screen name="supported" component={Supported} />
           <Stack.Screen name="cgu" component={CGU} />
           <Stack.Screen name="privacy" component={Privacy} />
