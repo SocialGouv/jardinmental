@@ -1,31 +1,32 @@
-import React from 'react';
-import {StyleSheet, Platform} from 'react-native';
-import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import Diary from '../scenes/diary';
-import Status from '../scenes/status';
-import Exercise from '../scenes/exercise';
-import Calendar from '../scenes/calendar/calendar';
-import SurveyMenu from '../../assets/svg/SurveyMenu';
-import DiaryMenu from '../../assets/svg/DiaryMenu';
-import ExerciseMenu from '../../assets/svg/ExerciseMenu';
-import GraphMenu from '../../assets/svg/GraphMenu';
-import localStorage from '../utils/localStorage';
-import logEvents from '../services/logEvents';
-import {colors} from '../utils/colors';
+import React from "react";
+import { StyleSheet, Platform } from "react-native";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import Diary from "../scenes/diary";
+import Status from "../scenes/status";
+import Exercise from "../scenes/exercise";
+import Calendar from "../scenes/calendar/calendar";
+import Suivi from "../scenes/suivi";
+import SurveyMenu from "../../assets/svg/SurveyMenu";
+import DiaryMenu from "../../assets/svg/DiaryMenu";
+import ExerciseMenu from "../../assets/svg/ExerciseMenu";
+import GraphMenu from "../../assets/svg/GraphMenu";
+import localStorage from "../utils/localStorage";
+import logEvents from "../services/logEvents";
+import { colors } from "../utils/colors";
 
 const Tab = createMaterialTopTabNavigator();
 
-const Tabs = ({navigation, route}) => {
+const Tabs = ({ navigation, route }) => {
   const startSurvey = async () => {
     const symptoms = await localStorage.getSymptoms();
     logEvents.logFeelingStart();
     if (!symptoms) {
-      navigation.navigate('symptoms', {
+      navigation.navigate("symptoms", {
         showExplanation: true,
-        redirect: 'select-day',
+        redirect: "select-day",
       });
     } else {
-      navigation.navigate('select-day');
+      navigation.navigate("select-day");
     }
   };
 
@@ -39,54 +40,53 @@ const Tabs = ({navigation, route}) => {
           activeTintColor: colors.LIGHT_BLUE,
           inactiveTintColor: colors.BLUE,
           showIcon: true,
-          indicatorStyle: {height: 0},
+          indicatorStyle: { height: 0 },
           style: styles.tabBar,
           iconStyle: {
             // borderColor: 'red',
             // borderWidth: 1,
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
           },
           labelStyle: {
-            textTransform: 'capitalize',
+            textTransform: "capitalize",
             fontSize: 10,
             marginHorizontal: 0,
             padding: 0,
           },
-        }}>
+        }}
+      >
         <Tab.Screen
           name="Status"
           component={Status}
           options={{
-            tabBarLabel: 'Mon état',
-            tabBarIcon: ({color}) => <SurveyMenu height={24} style={{color}} />,
+            tabBarLabel: "Mon état",
+            tabBarIcon: ({ color }) => <SurveyMenu height={24} style={{ color }} />,
           }}
         />
         <Tab.Screen
           name="Diary"
           component={Diary}
           options={{
-            tabBarLabel: 'Mon journal',
-            tabBarIcon: ({color}) => <DiaryMenu height={24} style={{color}} />,
+            tabBarLabel: "Mon journal",
+            tabBarIcon: ({ color }) => <DiaryMenu height={24} style={{ color }} />,
           }}
         />
         <Tab.Screen
           name="Exercise"
           component={Exercise}
           options={{
-            tabBarLabel: 'Exercice',
-            tabBarIcon: ({color}) => (
-              <ExerciseMenu height={24} style={{color}} />
-            ),
+            tabBarLabel: "Exercice",
+            tabBarIcon: ({ color }) => <ExerciseMenu height={24} style={{ color }} />,
           }}
         />
         <Tab.Screen
           name="Calendar"
-          component={Calendar}
+          component={Suivi}
           options={{
-            tabBarLabel: 'Mon suivi',
-            tabBarIcon: ({color}) => <GraphMenu height={24} style={{color}} />,
+            tabBarLabel: "Mon suivi",
+            tabBarIcon: ({ color }) => <GraphMenu height={24} style={{ color }} />,
           }}
         />
       </Tab.Navigator>
@@ -101,19 +101,19 @@ const styles = StyleSheet.create({
     maxHeight: 80,
   },
   surveyButton: {
-    display: 'flex',
-    alignItems: 'center',
-    position: 'absolute',
-    bottom: Platform.OS === 'android' ? 40 : 50,
+    display: "flex",
+    alignItems: "center",
+    position: "absolute",
+    bottom: Platform.OS === "android" ? 40 : 50,
     zIndex: 1,
-    alignSelf: 'center',
+    alignSelf: "center",
   },
   text: {
     fontSize: 16,
-    color: 'white',
-    textAlign: 'center',
-    paddingVertical: Platform.OS === 'android' ? 5 : 17,
-    fontWeight: '700',
+    color: "white",
+    textAlign: "center",
+    paddingVertical: Platform.OS === "android" ? 5 : 17,
+    fontWeight: "700",
   },
 });
 

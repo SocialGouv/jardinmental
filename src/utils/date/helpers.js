@@ -1,11 +1,10 @@
-import {format, parseISO, isToday, isYesterday} from 'date-fns';
-import {fr} from 'date-fns/locale';
-import {firstLetterUppercase} from '../../utils/string-util';
+import { format, parseISO, isToday, isYesterday } from "date-fns";
+import { fr } from "date-fns/locale";
+import { firstLetterUppercase } from "../../utils/string-util";
 
 export const oneDay = 1000 * 60 * 60 * 24;
-export const beforeToday = (offset = 0, date = new Date()) =>
-  new Date(Date.parse(date) - offset * oneDay);
-export const formatDay = (date) => date.toISOString().split('T')[0];
+export const beforeToday = (offset = 0, date = new Date()) => new Date(Date.parse(date) - offset * oneDay);
+export const formatDay = (date) => date.toISOString().split("T")[0];
 export const makeSureDate = (date) => {
   if (date instanceof Date) {
     return date;
@@ -22,70 +21,53 @@ export const makeSureTimestamp = (date) => {
 export const today = (offset = 0, withTime = false) => {
   if (withTime) {
     const now = new Date();
-    return new Date(
-      now.getFullYear(),
-      now.getMonth(),
-      now.getDate(),
-      now.getHours(),
-      now.getMinutes() + 1,
-    );
+    return new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes() + 1);
   }
   return dateWithoutTime(new Date(), offset);
 };
 export const dateWithoutTime = (inputDate, offset = 0) => {
   const date = makeSureDate(inputDate);
-  return new Date(
-    date.getFullYear(),
-    date.getMonth(),
-    date.getDate() + offset,
-    0,
-    0,
-    0,
-  );
+  return new Date(date.getFullYear(), date.getMonth(), date.getDate() + offset, 0, 0, 0);
 };
 
-export const days = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
+export const days = ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"];
 export const months = [
-  'Janvier',
-  'Février',
-  'Mars',
-  'Avril',
-  'Mai',
-  'Juin',
-  'Juillet',
-  'Août',
-  'Septembre',
-  'Octobre',
-  'Novembre',
-  'Décembre',
+  "Janvier",
+  "Février",
+  "Mars",
+  "Avril",
+  "Mai",
+  "Juin",
+  "Juillet",
+  "Août",
+  "Septembre",
+  "Octobre",
+  "Novembre",
+  "Décembre",
 ];
 export const shortMonths = [
-  'Jan.',
-  'Fév.',
-  'Mars',
-  'Avr.',
-  'Mai',
-  'Juin',
-  'Juil.',
-  'Août',
-  'Sep.',
-  'Oct.',
-  'Nov.',
-  'Déc.',
+  "Jan.",
+  "Fév.",
+  "Mars",
+  "Avr.",
+  "Mai",
+  "Juin",
+  "Juil.",
+  "Août",
+  "Sep.",
+  "Oct.",
+  "Nov.",
+  "Déc.",
 ];
 
 export const getTodaySWeek = (date = new Date()) => {
   const weekDay = date.getDay() === 0 ? 6 : date.getDay() - 1;
   const firstDay = beforeToday(weekDay, date);
   const lastDay = beforeToday(-(6 - weekDay), date);
-  return {firstDay: new Date(firstDay), lastDay: new Date(lastDay)};
+  return { firstDay: new Date(firstDay), lastDay: new Date(lastDay) };
 };
 
-export const getArrayOfDates = ({
-  startDate,
-  numberOfDays = null,
-  reverse = false,
-}) => {
+export const getArrayOfDates = ({ startDate, numberOfDays = null, reverse = false }) => {
   const parsedStartDate = Date.parse(new Date(startDate));
   const dates = [parsedStartDate];
   const lastDay = numberOfDays
@@ -96,9 +78,7 @@ export const getArrayOfDates = ({
     dateAdded = dateAdded + oneDay;
     dates.push(dateAdded);
   }
-  const sortedDates = [...dates]
-    .map((parsed) => formatDay(new Date(parsed)))
-    .sort();
+  const sortedDates = [...dates].map((parsed) => formatDay(new Date(parsed))).sort();
   if (reverse) {
     return sortedDates.reverse();
   }
@@ -106,10 +86,10 @@ export const getArrayOfDates = ({
 };
 
 export const formatDate = (d) => {
-  if (!d) return '-';
+  if (!d) return "-";
   const isoDate = parseISO(d);
 
-  return format(isoDate, 'EEEE d MMMM', {locale: fr});
+  return format(isoDate, "EEEE d MMMM", { locale: fr });
 };
 
 export const formatRelativeDate = (date) => {
@@ -117,24 +97,24 @@ export const formatRelativeDate = (date) => {
   if (isToday(isoDate)) {
     return "aujourd'hui";
   } else if (isYesterday(isoDate)) {
-    return 'hier';
+    return "hier";
   } else {
-    return format(isoDate, 'EEEE d MMMM', {locale: fr});
+    return format(isoDate, "EEEE d MMMM", { locale: fr });
   }
 };
 
 export const getTime = (d) => {
   if (!d) return null;
-  return d.toLocaleTimeString('fr-FR', {
-    hour: '2-digit',
-    minute: '2-digit',
+  return d.toLocaleTimeString("fr-FR", {
+    hour: "2-digit",
+    minute: "2-digit",
   });
 };
 
 export const timeStringToISODate = (timeString) => {
   if (!timeString) return null;
   const date = new Date();
-  const [hours, minutes] = timeString.split(':');
+  const [hours, minutes] = timeString.split(":");
   date.setHours(hours);
   date.setMinutes(minutes);
   return date;
@@ -142,16 +122,16 @@ export const timeStringToISODate = (timeString) => {
 
 export const displayOnlyHourAndMinute = (timeString) => {
   if (!timeString) return null;
-  const [hours, minutes] = timeString.split(':');
+  const [hours, minutes] = timeString.split(":");
   return `${hours}:${minutes}`;
 };
 
 export const changeTimezone = (date, ianatz) => {
   // suppose the date is 12:00 UTC
   var invdate = new Date(
-    date.toLocaleString('fr-FR', {
+    date.toLocaleString("fr-FR", {
       timeZone: ianatz,
-    }),
+    })
   );
   console.log(invdate);
 
@@ -174,9 +154,9 @@ export const formatDateThread = (date) => {
   if (isToday(isoDate)) {
     return "Aujourd'hui";
   } else if (isYesterday(isoDate)) {
-    return 'Hier';
+    return "Hier";
   } else {
-    const formattedDate = format(isoDate, 'EEEE d MMMM', {locale: fr});
+    const formattedDate = format(isoDate, "EEEE d MMMM", { locale: fr });
     return firstLetterUppercase(formattedDate);
   }
 };
