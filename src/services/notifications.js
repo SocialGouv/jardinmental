@@ -58,6 +58,7 @@ class NotificationService {
     playSound = true,
     soundName = "default",
     channelId = "REMINDER-CHANNEL-ID", // same as in strings.xml, for Android
+    repeatType,
   } = {}) {
     PushNotification.localNotificationSchedule({
       date,
@@ -68,6 +69,7 @@ class NotificationService {
       channelId,
       largeIcon: "ic_launcher",
       smallIcon: "ic_notification",
+      repeatType,
     });
   }
 
