@@ -1,18 +1,18 @@
-import React, {useEffect, useState} from 'react';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import Text from '../../components/MyText';
-import CircledIcon from '../../components/CircledIcon';
-import {scoresMapIcon} from '../../utils/constants';
-import {getScoreWithState} from '../../utils';
-import ArrowRightSvg from '../../../assets/svg/arrow-right.js';
-import {colors} from '../../utils/colors';
+import React, { useEffect, useState } from "react";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
+import Text from "../../components/MyText";
+import CircledIcon from "../../components/CircledIcon";
+import { scoresMapIcon } from "../../utils/constants";
+import { getScoreWithState } from "../../utils";
+import ArrowRightSvg from "../../../assets/svg/arrow-right.js";
+import { colors } from "../../utils/colors";
 
-const PatientStateItem = ({patientState, category, label}) => {
-  const [{color, borderColor, faceIcon, iconColor}, setIcon] = useState({});
+const PatientStateItem = ({ patientState, category, label }) => {
+  const [{ color, borderColor, faceIcon, iconColor }, setIcon] = useState({});
   const [userCommentVisible, setUserCommentVisible] = useState(false);
 
   useEffect(() => {
-    const score = getScoreWithState({patientState, category});
+    const score = getScoreWithState({ patientState, category });
     const icon = scoresMapIcon[score];
     icon && setIcon(icon);
   }, [patientState, category]);
@@ -36,46 +36,37 @@ const PatientStateItem = ({patientState, category, label}) => {
           <Text style={styles.label}>{label}</Text>
         </View>
         {isTouchable() ? (
-          <ArrowRightSvg
-            style={userCommentVisible ? styles.arrowUp : styles.arrowDown}
-            color="#C7CED5"
-          />
+          <ArrowRightSvg style={userCommentVisible ? styles.arrowUp : styles.arrowDown} color="#C7CED5" />
         ) : null}
       </View>
       {userCommentVisible && isTouchable() ? (
         <View style={[styles.container, styles.tilt]}>
-          <Text style={styles.userComment}>
-            {patientState[category]?.userComment?.trim()}
-          </Text>
+          <Text style={styles.userComment}>{patientState[category]?.userComment?.trim()}</Text>
         </View>
       ) : null}
     </View>
   );
 
   if (isTouchable())
-    return (
-      <TouchableLayout onPress={() => setUserCommentVisible((e) => !e)}>
-        {content}
-      </TouchableLayout>
-    );
+    return <TouchableLayout onPress={() => setUserCommentVisible((e) => !e)}>{content}</TouchableLayout>;
   else return content;
 };
 
-const TouchableLayout = ({children, onPress}) => {
+const TouchableLayout = ({ children, onPress }) => {
   return <TouchableOpacity onPress={onPress}>{children}</TouchableOpacity>;
 };
 
 const styles = StyleSheet.create({
   arrowDown: {
-    transform: [{rotate: '90deg'}],
+    transform: [{ rotate: "90deg" }],
   },
   arrowUp: {
-    transform: [{rotate: '270deg'}],
+    transform: [{ rotate: "270deg" }],
   },
   container: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
     paddingVertical: 5,
     paddingHorizontal: 20,
   },
@@ -87,7 +78,7 @@ const styles = StyleSheet.create({
     // icon's marginRight: 20
     // icon's width : 40
     paddingLeft: 80, // 20 + 20 + 40 = 80
-    alignItems: 'flex-start',
+    alignItems: "flex-start",
   },
   label: {
     fontSize: 15,
@@ -96,12 +87,12 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 14,
     color: colors.BLUE,
-    fontStyle: 'italic',
+    fontStyle: "italic",
   },
   labelContainer: {
     flex: 1,
-    display: 'flex',
-    justifyContent: 'space-between',
+    display: "flex",
+    justifyContent: "space-between",
   },
 });
 
