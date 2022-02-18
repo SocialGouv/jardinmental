@@ -1,9 +1,7 @@
-/* eslint-disable quotes */
 import React from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
-import { makeSureDate, makeSureTimestamp } from "../../utils/date/helpers";
+import { makeSureDate } from "../../utils/date/helpers";
 import Text from "../../components/MyText";
-import { isToday } from "date-fns";
 import { colors } from "../../utils/colors";
 
 const DateOrTimeDisplay = ({ date, onPress, mode }) => {
@@ -21,9 +19,7 @@ const DateOrTimeDisplay = ({ date, onPress, mode }) => {
       {Boolean(date) && (
         <TouchableOpacity onPress={() => onPress(mode)}>
           <View style={styles.currentDateContainer}>
-            <Text style={styles.currentDate}>
-              {isToday(makeSureTimestamp(date)) ? "Aujourd'hui" : formatDate(makeSureDate(date))}
-            </Text>
+            <Text style={styles.currentDate}>{formatDate(makeSureDate(date))}</Text>
           </View>
         </TouchableOpacity>
       )}

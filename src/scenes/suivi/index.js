@@ -1,22 +1,16 @@
-import React, { useEffect, useState, useRef, useCallback } from "react";
-import { SafeAreaView, ScrollView, StyleSheet, View, Image, Dimensions } from "react-native";
-import { displayedCategories } from "../../utils/constants";
-import { beforeToday, getArrayOfDates, getTodaySWeek, formatDate } from "../../utils/date/helpers";
-import Header from "../../components/Header";
-import ChartPicker from "./chartPicker";
-import { DiaryDataContext } from "../../context/diaryData";
-import { useContext } from "react";
-import logEvents from "../../services/logEvents";
-import localStorage from "../../utils/localStorage";
-import Text from "../../components/MyText";
-import Icon from "../../components/Icon";
-import { colors } from "../../utils/colors";
-const screenHeight = Dimensions.get("window").height;
-import DateRange from "./dateRange";
+import React from "react";
+import { SafeAreaView, ScrollView, StyleSheet, View, Dimensions } from "react-native";
 
-import Frises from "./chartFrise";
+import { beforeToday } from "../../utils/date/helpers";
+import Header from "../../components/Header";
+import ChartPicker from "./ChartPicker";
+import RangeDate from "./RangeDate";
+import ScorePicker from "./ScorePicker";
+import ChartFrise from "./chartFrise";
+import ChartPie from "./chartPie";
 import Courbes from "../calendar/calendar";
 
+const screenHeight = Dimensions.get("window").height;
 // const CHART_TYPES = ["Frises", "Diagrammes", "Courbes", "Évènements"];
 const CHART_TYPES = ["Frises", "Courbes"];
 
@@ -32,20 +26,31 @@ const prevChartType = (chartType) => {
 };
 
 const Suivi = ({ navigation }) => {
-  const [chartType, setChartType] = useState(CHART_TYPES[0]);
+  const [chartType, setChartType] = React.useState(CHART_TYPES[0]);
+  const [fromDate, setFromDate] = React.useState(beforeToday(30));
+  const [toDate, setToDate] = React.useState(beforeToday(0));
+  const [focusedScores, setFocusedScores] = React.useState([]);
+
+  if (!toDate || !fromDate) return null;
 
   const renderChart = (chart) => {
     switch (chart) {
-      case "Frises":
-        return <Frises />;
-      // case "Diagrammes":
-      //   return <Diagrammes />;
+      case "Diagrammes":
+        return <ChartPie fromDate={fromDate} toDate={toDate} />;
       case "Courbes":
         return <Courbes navigation={navigation} />;
       // case "Évènements":
       //   return <Evenements />;
+      case "Frises":
       default:
-        return <Frises />;
+        return (
+          <ChartFrise
+            navigation={navigation}
+            fromDate={fromDate}
+            toDate={toDate}
+            focusedScores={focusedScores}
+          />
+        );
     }
   };
 
@@ -59,7 +64,26 @@ const Suivi = ({ navigation }) => {
           title={chartType}
         />
       </View>
-      <DateRange />
+      {chartType !== "Courbes" ? (
+        <RangeDate
+          fromDate={fromDate}
+          toDate={toDate}
+          onChangeFromDate={setFromDate}
+          onChangeToDate={setToDate}
+        />
+      ) : null}
+      {chartType === "Frises" ? (
+        <ScorePicker
+          focusedScores={focusedScores}
+          onPress={(i) => {
+            if (focusedScores.includes(i)) {
+              setFocusedScores((e) => e.filter((x) => x !== i));
+            } else {
+              setFocusedScores((e) => [...e, i]);
+            }
+          }}
+        />
+      ) : null}
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContainer}>
         {renderChart(chartType)}
       </ScrollView>
@@ -100,10 +124,11 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     flex: 1,
-    paddingHorizontal: 20,
     backgroundColor: "white",
   },
-  scrollContainer: {},
+  scrollContainer: {
+    flex: 1,
+  },
   title: {
     fontWeight: "700",
     fontSize: 22,

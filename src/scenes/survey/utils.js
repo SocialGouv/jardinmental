@@ -1,9 +1,4 @@
-import {
-  icons,
-  colors as colorsFromConstant,
-  iconBorderColors,
-  iconColors,
-} from '../../utils/constants';
+import { icons, colors as colorsFromConstant, iconBorderColors, iconColors } from "../../utils/constants";
 
 export const answers = [
   {
@@ -11,7 +6,7 @@ export const answers = [
     backgroundColor: colorsFromConstant.veryBad,
     inactiveBackgroundColor: colorsFromConstant.veryBadTrans,
     iconColor: iconColors.veryBad,
-    inactiveIconColor: '#666666',
+    inactiveIconColor: "#666666",
     borderColor: iconBorderColors.veryBad,
     icon: icons.veryBad,
   },
@@ -20,7 +15,7 @@ export const answers = [
     backgroundColor: colorsFromConstant.bad,
     inactiveBackgroundColor: colorsFromConstant.badTrans,
     iconColor: iconColors.bad,
-    inactiveIconColor: '#666666',
+    inactiveIconColor: "#666666",
     borderColor: iconBorderColors.bad,
     icon: icons.bad,
   },
@@ -29,7 +24,7 @@ export const answers = [
     backgroundColor: colorsFromConstant.middle,
     inactiveBackgroundColor: colorsFromConstant.middleTrans,
     iconColor: iconColors.middle,
-    inactiveIconColor: '#666666',
+    inactiveIconColor: "#666666",
     borderColor: iconBorderColors.middle,
     icon: icons.middle,
   },
@@ -38,7 +33,7 @@ export const answers = [
     backgroundColor: colorsFromConstant.good,
     inactiveBackgroundColor: colorsFromConstant.goodTrans,
     iconColor: iconColors.good,
-    inactiveIconColor: '#666666',
+    inactiveIconColor: "#666666",
     borderColor: iconBorderColors.good,
     icon: icons.good,
   },
@@ -47,7 +42,7 @@ export const answers = [
     backgroundColor: colorsFromConstant.veryGood,
     inactiveBackgroundColor: colorsFromConstant.veryGoodTrans,
     iconColor: iconColors.veryGood,
-    inactiveIconColor: '#666666',
+    inactiveIconColor: "#666666",
     borderColor: iconBorderColors.veryGood,
     icon: icons.veryGood,
   },
@@ -56,10 +51,10 @@ export const answers = [
 export const answersYesNo = [
   {
     score: true,
-    label: 'Oui',
+    label: "Oui",
   },
   {
     score: false,
-    label: 'Non',
+    label: "Non",
   },
 ];

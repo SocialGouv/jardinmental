@@ -85,6 +85,19 @@ export const getArrayOfDates = ({ startDate, numberOfDays = null, reverse = fals
   return sortedDates;
 };
 
+export const getArrayOfDatesFromTo = ({ fromDate, toDate }) => {
+  const parsedStartDate = Date.parse(new Date(fromDate));
+  const lastDay = Date.parse(new Date(toDate));
+  const dates = [parsedStartDate];
+  let dateAdded = parsedStartDate;
+  while (dateAdded < lastDay) {
+    dateAdded = dateAdded + oneDay;
+    dates.push(dateAdded);
+  }
+  const sortedDates = [...dates].map((parsed) => formatDay(new Date(parsed))).sort();
+  return sortedDates;
+};
+
 export const formatDate = (d) => {
   if (!d) return "-";
   const isoDate = parseISO(d);
