@@ -1,3 +1,20 @@
+## [1.20.9](https://github.com/SocialGouv/monsuivipsy/compare/v1.20.8...v1.20.9) (2022-02-16)
+
+
+### Bug Fixes
+
+*  rappel x days ([#130](https://github.com/SocialGouv/monsuivipsy/issues/130)) ([41e3ac9](https://github.com/SocialGouv/monsuivipsy/commit/41e3ac9eb88d9258498aba5ab5e0f736d899f6fc))
+* add notification icon ([003c14a](https://github.com/SocialGouv/monsuivipsy/commit/003c14af078267f765a603c290fc3793355c6a72))
+* upgrade notif package ([ac17096](https://github.com/SocialGouv/monsuivipsy/commit/ac1709620c70e3da53c78edf905bba105a400a24))
+* ux rappel ([7ca3750](https://github.com/SocialGouv/monsuivipsy/commit/7ca37509e2d8cff33a71e0460e4947bd36c6713f))
+
+## [1.20.8](https://github.com/SocialGouv/monsuivipsy/compare/v1.20.7...v1.20.8) (2022-02-14)
+
+
+### Bug Fixes
+
+* **nouveauté:** ajout nouveauté ([dd87ff6](https://github.com/SocialGouv/monsuivipsy/commit/dd87ff6bf70d632e429fa074b4278a650d99181f))
+
 ## [1.20.7](https://github.com/SocialGouv/monsuivipsy/compare/v1.20.6...v1.20.7) (2022-02-14)
 
 

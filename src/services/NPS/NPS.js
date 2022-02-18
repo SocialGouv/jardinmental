@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Dimensions,
   Modal,
@@ -12,29 +12,29 @@ import {
   TextInput,
   TouchableOpacity,
   Keyboard,
-} from 'react-native';
-import Text from '../../components/MyText';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import Mark from './Mark';
-import Notifications from '../notifications';
-import {sendTipimail} from '../sendTipimail';
-import {colors} from '../../utils/colors';
-import Matomo from '../matomo';
-import logEvents from '../logEvents';
-import localStorage from '../../utils/localStorage';
-import pck from '../../../package.json';
+} from "react-native";
+import Text from "../../components/MyText";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import Mark from "./Mark";
+import Notifications from "../notifications";
+import { sendTipimail } from "../sendTipimail";
+import { colors } from "../../utils/colors";
+import Matomo from "../matomo";
+import logEvents from "../logEvents";
+import localStorage from "../../utils/localStorage";
+import pck from "../../../package.json";
 
 // just to make sure nothing goes the bad way in production, debug is always false
 
 const lookUpSupported = {
-  YES: 'Je suis suivi, j’ai téléchargé l’application sur recommandation du professionnel qui me suit',
-  YES_SOLO: 'Je suis suivi, j’ai téléchargé l’application de moi-même',
-  NOT_YET: 'Je ne suis pas suivi mais je le souhaite',
-  NO: 'Je ne suis pas suivi',
-  PRO: 'Je suis professionnel de santé',
+  YES: "Je suis suivi, j’ai téléchargé l’application sur recommandation du professionnel qui me suit",
+  YES_SOLO: "Je suis suivi, j’ai téléchargé l’application de moi-même",
+  NOT_YET: "Je ne suis pas suivi mais je le souhaite",
+  NO: "Je ne suis pas suivi",
+  PRO: "Je suis professionnel de santé",
 };
 
-const formatText = ({useful, reco, feedback, userId, contact, supported}) =>
+const formatText = ({ useful, reco, feedback, userId, contact, supported }) =>
   `
 User: ${userId}
 Version: ${pck.version}
@@ -47,12 +47,11 @@ profil: ${lookUpSupported[supported]}
 `;
 
 const NPSTimeoutMS = __DEV__ ? 1000 * 3 * 100000000 : 1000 * 60 * 60 * 24 * 10;
-const emailFormat = (email) =>
-  /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,6}$/i.test(email);
+const emailFormat = (email) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,6}$/i.test(email);
 
 const STORE_KEYS = {
-  NPS_DONE: '@NPSDone',
-  INITIAL_OPENING: '@NPSInitialOpening',
+  NPS_DONE: "@NPSDone",
+  INITIAL_OPENING: "@NPSInitialOpening",
 };
 
 class NPS extends React.Component {
@@ -60,9 +59,9 @@ class NPS extends React.Component {
     visible: false,
     useful: null,
     reco: null,
-    feedback: '',
-    contact: '',
-    sendButton: getCaption('post'),
+    feedback: "",
+    contact: "",
+    sendButton: getCaption("post"),
     NPSKey: 0,
     page: 2,
   };
@@ -71,10 +70,7 @@ class NPS extends React.Component {
     if (__DEV__) {
       this.reset();
     }
-    this.NPSListener = AppState.addEventListener(
-      'change',
-      this.handleAppStateChange,
-    );
+    this.NPSListener = AppState.addEventListener("change", this.handleAppStateChange);
     this.notificationsListener = Notifications.listen(this.handleNotification);
     this.checkNeedNPS();
   }
@@ -90,7 +86,7 @@ class NPS extends React.Component {
     }
     if (!prevProps.forceView && this.props.forceView && !this.state.visible) {
       // eslint-disable-next-line react/no-did-update-set-state
-      this.setState({visible: true});
+      this.setState({ visible: true });
     }
     if (prevState.visible && !this.state.visible) {
       if (this.props.close) {
@@ -101,11 +97,8 @@ class NPS extends React.Component {
   }
 
   handleNotification = (notification) => {
-    if (
-      notification.title === getCaption('notifTitle') &&
-      notification.userInteraction === true
-    ) {
-      this.setState({visible: true});
+    if (notification.title === getCaption("notifTitle") && notification.userInteraction === true) {
+      this.setState({ visible: true });
     }
   };
 
@@ -120,66 +113,60 @@ class NPS extends React.Component {
       return;
     }
 
-    const appFirstOpening = await AsyncStorage.getItem(
-      STORE_KEYS.INITIAL_OPENING,
-    );
+    const appFirstOpening = await AsyncStorage.getItem(STORE_KEYS.INITIAL_OPENING);
     if (!appFirstOpening) {
-      await AsyncStorage.setItem(
-        STORE_KEYS.INITIAL_OPENING,
-        new Date().toISOString(),
-      );
+      await AsyncStorage.setItem(STORE_KEYS.INITIAL_OPENING, new Date().toISOString());
       Notifications.scheduleNotification({
         date: new Date(Date.now() + NPSTimeoutMS),
-        title: getCaption('notifTitle'),
-        message: getCaption('notifMessage'),
+        title: getCaption("notifTitle"),
+        message: getCaption("notifMessage"),
       });
       return;
     }
     const opening = await AsyncStorage.getItem(STORE_KEYS.INITIAL_OPENING);
-    const timeForNPS =
-      Date.now() - Date.parse(new Date(opening)) > NPSTimeoutMS;
+    const timeForNPS = Date.now() - Date.parse(new Date(opening)) > NPSTimeoutMS;
     if (!timeForNPS) {
       return;
     }
     logEvents.logNPSOpen();
-    await AsyncStorage.setItem(STORE_KEYS.NPS_DONE, 'true');
-    this.setState({visible: true});
+    await AsyncStorage.setItem(STORE_KEYS.NPS_DONE, "true");
+    this.setState({ visible: true });
   };
 
   handleAppStateChange = (newState) => {
-    const {NPSKey} = this.state;
-    if (newState === 'active' && !NPSKey) {
-      this.setState({NPSKey: 1});
+    const { NPSKey } = this.state;
+    if (newState === "active" && !NPSKey) {
+      this.setState({ NPSKey: 1 });
     }
     if (newState.match(/inactive|background/) && Boolean(NPSKey)) {
-      this.setState({NPSKey: 0});
+      this.setState({ NPSKey: 0 });
     }
   };
 
-  setUseful = (useful) => this.setState({useful});
-  setReco = (reco) => this.setState({reco});
-  setFeedback = (feedback) => this.setState({feedback});
-  setSendButton = (sendButton) => this.setState({sendButton});
-  setContact = (contact) => this.setState({contact});
+  setUseful = (useful) => this.setState({ useful });
+  setReco = (reco) => this.setState({ reco });
+  setFeedback = (feedback) => this.setState({ feedback });
+  setSendButton = (sendButton) => this.setState({ sendButton });
+  setContact = (contact) => this.setState({ contact });
 
   onClose = async () => {
-    const {useful, reco} = this.state;
+    const { useful, reco } = this.state;
     if ((useful !== null || reco !== null) && !this.npsSent) {
       await this.sendNPS();
     }
-    this.setState({visible: false});
+    this.setState({ visible: false });
   };
 
   nextPage = () => {
-    this.setState(({page}) => ({page: page + 1}));
+    this.setState(({ page }) => ({ page: page + 1 }));
   };
 
   sendNPS = async () => {
     if (this.npsSent) {
       return;
     }
-    const {useful, reco, feedback, contact} = this.state;
-    this.setSendButton('Merci !');
+    const { useful, reco, feedback, contact } = this.state;
+    this.setSendButton("Merci !");
     logEvents.logNPSUsefulSend(useful);
     logEvents.logNPSRecoSend(reco);
     const userId = Matomo.userId;
@@ -187,47 +174,38 @@ class NPS extends React.Component {
     sendTipimail(
       {
         from: {
-          address: 'contact@monsuivipsy.fr',
-          personalName: 'MonSuiviPsy - Application',
+          address: "contact@monsuivipsy.fr",
+          personalName: "MonSuiviPsy - Application",
         },
-        subject: 'MonSuiviPsy - NPS',
-        text: formatText({useful, reco, feedback, userId, contact, supported}),
+        subject: "MonSuiviPsy - NPS",
+        text: formatText({ useful, reco, feedback, userId, contact, supported }),
       },
-      __DEV__ ? 'tangimds@gmail.com' : 'monsuivipsy@fabrique.social.gouv.fr',
+      __DEV__ ? "tangimds@gmail.com" : "monsuivipsy@fabrique.social.gouv.fr"
     );
     this.npsSent = true;
-    this.setState({visible: false, useful: null, reco: null});
+    this.setState({ visible: false, useful: null, reco: null });
   };
 
   renderFirstPage() {
-    const {useful, reco, sendButton} = this.state;
+    const { useful, reco, sendButton } = this.state;
     return (
       <>
-        <Text style={styles.topTitle}>
-          {getCaption('feedback.rate-app.title')}
-        </Text>
-        <Text style={styles.topSubTitle}>
-          {getCaption('feedback.rate-app.useful')}
-        </Text>
+        <Text style={styles.topTitle}>{getCaption("feedback.rate-app.title")}</Text>
+        <Text style={styles.topSubTitle}>{getCaption("feedback.rate-app.useful")}</Text>
         <Mark
           selected={useful}
           onPress={this.setUseful}
-          bad={getCaption('feedback.rate-app.useful.not')}
-          good={getCaption('feedback.rate-app.useful.extremely')}
+          bad={getCaption("feedback.rate-app.useful.not")}
+          good={getCaption("feedback.rate-app.useful.extremely")}
         />
-        <Text style={styles.topSubTitle}>
-          {getCaption('feedback.rate-app.probable')}
-        </Text>
+        <Text style={styles.topSubTitle}>{getCaption("feedback.rate-app.probable")}</Text>
         <Mark
           selected={reco}
           onPress={this.setReco}
-          bad={getCaption('feedback.rate-app.probable.not')}
-          good={getCaption('feedback.rate-app.probable.extremely')}
+          bad={getCaption("feedback.rate-app.probable.not")}
+          good={getCaption("feedback.rate-app.probable.extremely")}
         />
-        <TouchableOpacity
-          style={styles.buttonContainer}
-          disabled={!useful || !reco}
-          onPress={this.nextPage}>
+        <TouchableOpacity style={styles.buttonContainer} disabled={!useful || !reco} onPress={this.nextPage}>
           <Text style={styles.buttonText}>{sendButton}</Text>
         </TouchableOpacity>
       </>
@@ -235,46 +213,38 @@ class NPS extends React.Component {
   }
 
   renderSecondPage() {
-    const {feedback, sendButton, contact, useful, reco} = this.state;
+    const { feedback, sendButton, contact, useful, reco } = this.state;
     return (
       <>
-        <Text style={styles.topSubTitle}>
-          {getCaption('feedback.improvements.question')}
-        </Text>
+        <Text style={styles.topSubTitle}>{getCaption("feedback.improvements.question")}</Text>
         <TextInput
           style={styles.feedback}
           onChangeText={this.setFeedback}
-          placeholder={getCaption('feedback.improvements.placeholder')}
+          placeholder={getCaption("feedback.improvements.placeholder")}
           value={feedback}
           multiline
           textAlignVertical="top"
           returnKeyType="next"
         />
-        <Text style={styles.topSubTitle}>
-          {getCaption('feedback.rate-app.useful')}
-        </Text>
+        <Text style={styles.topSubTitle}>{getCaption("feedback.rate-app.useful")}</Text>
         <Mark
           selected={useful}
           onPress={this.setUseful}
-          bad={getCaption('feedback.rate-app.useful.not')}
-          good={getCaption('feedback.rate-app.useful.extremely')}
+          bad={getCaption("feedback.rate-app.useful.not")}
+          good={getCaption("feedback.rate-app.useful.extremely")}
         />
-        <Text style={styles.topSubTitle}>
-          {getCaption('feedback.rate-app.probable')}
-        </Text>
+        <Text style={styles.topSubTitle}>{getCaption("feedback.rate-app.probable")}</Text>
         <Mark
           selected={reco}
           onPress={this.setReco}
-          bad={getCaption('feedback.rate-app.probable.not')}
-          good={getCaption('feedback.rate-app.probable.extremely')}
+          bad={getCaption("feedback.rate-app.probable.not")}
+          good={getCaption("feedback.rate-app.probable.extremely")}
         />
-        <Text style={styles.topSubTitle}>
-          {getCaption('feedback.contact.description')}
-        </Text>
+        <Text style={styles.topSubTitle}>{getCaption("feedback.contact.description")}</Text>
         <TextInput
           style={styles.contact}
           value={contact}
-          placeholder={getCaption('feedback.contact')}
+          placeholder={getCaption("feedback.contact")}
           onChangeText={this.setContact}
           autoCorrect={false}
           autoCapitalize="none"
@@ -283,8 +253,9 @@ class NPS extends React.Component {
         />
         <TouchableOpacity
           style={styles.buttonContainer}
-          disabled={sendButton === 'Merci !'}
-          onPress={this.sendNPS}>
+          disabled={sendButton === "Merci !"}
+          onPress={this.sendNPS}
+        >
           <Text style={styles.buttonText}>{sendButton}</Text>
         </TouchableOpacity>
       </>
@@ -292,26 +263,24 @@ class NPS extends React.Component {
   }
 
   render() {
-    const {visible, page} = this.state;
+    const { visible, page } = this.state;
     return (
-      <Modal
-        visible={visible}
-        animationType="slide"
-        presentationStyle="formSheet"
-        onDismiss={this.onClose}>
+      <Modal visible={visible} animationType="slide" presentationStyle="formSheet" onDismiss={this.onClose}>
         <View style={styles.container}>
           <KeyboardAvoidingView
             style={styles.keyboardAvoidingView}
-            behavior={Platform.select({ios: 'padding', android: null})}>
+            behavior={Platform.select({ ios: "padding", android: null })}
+          >
             <View style={styles.backContainer}>
               <TouchableOpacity onPress={this.onClose}>
-                <Text style={styles.backText}>{getCaption('back')}</Text>
+                <Text style={styles.backText}>{getCaption("back")}</Text>
               </TouchableOpacity>
             </View>
             <ScrollView
               style={styles.scrollView}
               keyboardDismissMode="on-drag"
-              onScrollBeginDrag={Keyboard.dismiss}>
+              onScrollBeginDrag={Keyboard.dismiss}
+            >
               {page === 1 && this.renderFirstPage()}
               {page === 2 && this.renderSecondPage()}
             </ScrollView>
@@ -324,49 +293,49 @@ class NPS extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    height: '100%',
-    width: Dimensions.get('window').width,
-    backgroundColor: '#f9f9f9',
+    height: "100%",
+    width: Dimensions.get("window").width,
+    backgroundColor: "#f9f9f9",
   },
   scrollView: {
     flex: 1,
-    flexBasis: '100%',
-    minHeight: '100%',
+    flexBasis: "100%",
+    minHeight: "100%",
     paddingVertical: 20,
     paddingHorizontal: 30,
   },
   keyboardAvoidingView: {
     flex: 1,
-    minHeight: '100%',
+    minHeight: "100%",
   },
   topTitle: {
-    width: '95%',
+    width: "95%",
     flexShrink: 0,
     marginTop: 10,
     color: colors.BLUE,
   },
   topSubTitle: {
-    width: '95%',
+    width: "95%",
     flexShrink: 0,
     marginTop: 35,
-    color: '#191919',
+    color: "#191919",
   },
   feedback: {
-    width: '100%',
+    width: "100%",
     height: 100,
     borderRadius: 7,
     borderWidth: 1,
-    borderColor: '#dbdbe9',
-    backgroundColor: '#f3f3f6',
+    borderColor: "#dbdbe9",
+    backgroundColor: "#f3f3f6",
     padding: 15,
     marginTop: 15,
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
   },
   buttonContainer: {
     marginVertical: 20,
-    alignItems: 'flex-start',
-    alignSelf: 'center',
+    alignItems: "flex-start",
+    alignSelf: "center",
     flexGrow: 0,
     marginBottom: 150,
     backgroundColor: colors.BLUE,
@@ -375,65 +344,64 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
   buttonText: {
-    color: '#dbdbe9',
+    color: "#dbdbe9",
   },
   contact: {
-    width: '100%',
+    width: "100%",
     height: 50,
     borderRadius: 7,
     borderWidth: 1,
-    borderColor: '#dbdbe9',
-    backgroundColor: '#f3f3f6',
+    borderColor: "#dbdbe9",
+    backgroundColor: "#f3f3f6",
     paddingLeft: 15,
     marginTop: 15,
     marginBottom: 10,
-    justifyContent: 'center',
+    justifyContent: "center",
     color: colors.BLUE,
   },
   backContainer: {
-    backgroundColor: '#f9f9f9',
+    backgroundColor: "#f9f9f9",
     marginVertical: 15,
     paddingHorizontal: 30,
-    alignItems: 'flex-start',
+    alignItems: "flex-start",
   },
   backText: {
-    fontWeight: '700',
-    textDecorationLine: 'underline',
+    fontWeight: "700",
+    textDecorationLine: "underline",
     color: colors.BLUE,
   },
   legalMessage: {
     fontSize: 12,
-    width: '95%',
+    width: "95%",
     flexShrink: 0,
     marginTop: 15,
-    color: '#666',
+    color: "#666",
   },
 });
 
 const captions = {
-  notifTitle: 'Vos retours sont importants pour nous',
-  notifMessage: 'Avez-vous quelques secondes pour donner votre avis ?',
-  post: 'Envoyer',
-  back: 'Retour',
-  'feedback.rate-app.title':
-    '5 secondes pour nous aider\u00A0?\u000AVos retours sont importants pour nous.',
-  'feedback.rate-app.useful': 'Ce service vous a-t-il été utile\u00A0?',
-  'feedback.rate-app.useful.not': 'Pas utile du tout',
-  'feedback.rate-app.useful.extremely': 'Extrêmement utile',
-  'feedback.rate-app.probable':
-    'Quelle est la probabilité que vous recommandiez ce service à un ami ou un proche\u00A0?',
-  'feedback.rate-app.probable.not': 'Pas du tout probable',
-  'feedback.rate-app.probable.extremely': 'Très probable',
-  'feedback.improvements.question':
-    'Pour améliorer notre service, avez-vous quelques recommandations à nous faire\u00A0?',
+  notifTitle: "Vos retours sont importants pour nous",
+  notifMessage: "Avez-vous quelques secondes pour donner votre avis ?",
+  post: "Envoyer",
+  back: "Retour",
+  "feedback.rate-app.title": "5 secondes pour nous aider\u00A0?\u000AVos retours sont importants pour nous.",
+  "feedback.rate-app.useful": "Ce service vous a-t-il été utile\u00A0?",
+  "feedback.rate-app.useful.not": "Pas utile du tout",
+  "feedback.rate-app.useful.extremely": "Extrêmement utile",
+  "feedback.rate-app.probable":
+    "Quelle est la probabilité que vous recommandiez ce service à un ami ou un proche\u00A0?",
+  "feedback.rate-app.probable.not": "Pas du tout probable",
+  "feedback.rate-app.probable.extremely": "Très probable",
+  "feedback.improvements.question":
+    "Pour améliorer notre service, avez-vous quelques recommandations à nous faire\u00A0?",
   // 'feedback.improvements.question':
   //   'Comment pouvons-nous vous être encore plus utile\u00A0? Comment pouvons-nous améliorer ce service\u00A0?',
-  'feedback.improvements.legal-message':
-    'Merci de ne mentionner aucune information personnelle qui permettrait de vous identifier (nom, prénom, adresse mail, n° de téléphone, toute information sur votre état de santé)',
-  'feedback.improvements.placeholder': "Idées d'améliorations (facultatif)",
-  'feedback.contact.description':
-    'Echanger avec vous serait précieux pour améliorer notre service, laissez-nous votre numéro de téléphone ou votre adresse mail si vous le souhaitez.',
-  'feedback.contact': 'Numéro de téléphone ou adresse mail (facultatif)',
+  "feedback.improvements.legal-message":
+    "Merci de ne mentionner aucune information personnelle qui permettrait de vous identifier (nom, prénom, adresse mail, n° de téléphone, toute information sur votre état de santé)",
+  "feedback.improvements.placeholder": "Idées d'améliorations (facultatif)",
+  "feedback.contact.description":
+    "Echanger avec vous serait précieux pour améliorer notre service, laissez-nous votre numéro de téléphone ou votre adresse mail si vous le souhaitez.",
+  "feedback.contact": "Numéro de téléphone ou adresse mail (facultatif)",
 };
 
 // in case of i18n, we need to get the caption with a function
