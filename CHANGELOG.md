@@ -1,3 +1,10 @@
+# [1.21.0](https://github.com/SocialGouv/monsuivipsy/compare/v1.20.9...v1.21.0) (2022-02-18)
+
+
+### Features
+
+* **suivi:** ajouter écran frise ([3fa5178](https://github.com/SocialGouv/monsuivipsy/commit/3fa5178f905cdb729666f6e31d7cbc732f20c40e))
+
 ## [1.20.9](https://github.com/SocialGouv/monsuivipsy/compare/v1.20.8...v1.20.9) (2022-02-16)
 
 
