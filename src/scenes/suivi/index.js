@@ -63,27 +63,27 @@ const Suivi = ({ navigation }) => {
           onBeforePress={() => setChartType(prevChartType(chartType))}
           title={chartType}
         />
+        {chartType !== "Courbes" ? (
+          <RangeDate
+            fromDate={fromDate}
+            toDate={toDate}
+            onChangeFromDate={setFromDate}
+            onChangeToDate={setToDate}
+          />
+        ) : null}
+        {chartType === "Frises" ? (
+          <ScorePicker
+            focusedScores={focusedScores}
+            onPress={(i) => {
+              if (focusedScores.includes(i)) {
+                setFocusedScores((e) => e.filter((x) => x !== i));
+              } else {
+                setFocusedScores((e) => [...e, i]);
+              }
+            }}
+          />
+        ) : null}
       </View>
-      {chartType !== "Courbes" ? (
-        <RangeDate
-          fromDate={fromDate}
-          toDate={toDate}
-          onChangeFromDate={setFromDate}
-          onChangeToDate={setToDate}
-        />
-      ) : null}
-      {chartType === "Frises" ? (
-        <ScorePicker
-          focusedScores={focusedScores}
-          onPress={(i) => {
-            if (focusedScores.includes(i)) {
-              setFocusedScores((e) => e.filter((x) => x !== i));
-            } else {
-              setFocusedScores((e) => [...e, i]);
-            }
-          }}
-        />
-      ) : null}
       {renderChart(chartType)}
     </SafeAreaView>
   );
@@ -92,7 +92,7 @@ const Suivi = ({ navigation }) => {
 const styles = StyleSheet.create({
   headerContainer: {
     padding: 5,
-    paddingBottom: 0,
+    paddingBottom: 15,
   },
   imageContainer: {
     display: "flex",

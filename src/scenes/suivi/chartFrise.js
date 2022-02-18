@@ -1,8 +1,8 @@
 import React from "react";
-import { StyleSheet, View, TouchableOpacity, Dimensions, ScrollView } from "react-native";
+import { StyleSheet, View, Dimensions, ScrollView } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 
-import { formatDate, formatDay, getArrayOfDatesFromTo } from "../../utils/date/helpers";
+import { getArrayOfDatesFromTo } from "../../utils/date/helpers";
 import { DiaryDataContext } from "../../context/diaryData";
 import Text from "../../components/MyText";
 import { displayedCategories, scoresMapIcon } from "../../utils/constants";
@@ -127,15 +127,13 @@ const ChartFrise = ({ navigation, fromDate, toDate, focusedScores }) => {
           title={getTitle(categoryId)}
           key={categoryId}
           data={computeChartData(categoryId)}
-          fromDate={fromDate}
-          toDate={toDate}
         />
       ))}
     </ScrollView>
   );
 };
 
-const Frise = ({ title, data, fromDate, toDate, focusedScores }) => {
+const Frise = ({ title, data, focusedScores }) => {
   return (
     <View style={styles.friseContainer}>
       <Text style={styles.friseTitle}>{title}</Text>
@@ -146,7 +144,7 @@ const Frise = ({ title, data, fromDate, toDate, focusedScores }) => {
           let opacity = 1;
           if (focusedScores.length && !focusedScores.includes(e?.value)) {
             // cet élément n'est pas focused
-            opacity = e?.value ? 0.15 : 0.5; // on reduit moins l'opacité si c'est une frise vide
+            opacity = e?.value ? 0.1 : 0.5; // on reduit moins l'opacité si c'est une frise vide
           }
 
           const isFocused = e?.value && focusedScores.length && focusedScores.includes(e?.value);
@@ -161,6 +159,13 @@ const Frise = ({ title, data, fromDate, toDate, focusedScores }) => {
                 shadowOpacity: 0.5,
                 shadowRadius: 2.5,
                 elevation: 1,
+              }
+            : {};
+
+          const borderBottom = isFocused
+            ? {
+                borderColor: scoresMapIcon[e?.value]?.borderColor,
+                borderBottomWidth: 2,
               }
             : {};
 
@@ -179,6 +184,7 @@ const Frise = ({ title, data, fromDate, toDate, focusedScores }) => {
                     borderTopStartRadius: firstSquare ? 5 : 0,
                     borderBottomEndRadius: lastSquare ? 5 : 0,
                     borderTopEndRadius: lastSquare ? 5 : 0,
+                    ...borderBottom,
                   },
                 ]}
               />
@@ -192,12 +198,6 @@ const Frise = ({ title, data, fromDate, toDate, focusedScores }) => {
           );
         })}
       </View>
-      {fromDate && toDate ? (
-        <View style={styles.legend}>
-          <Text style={styles.legendText}>{formatDate(formatDay(fromDate))}</Text>
-          <Text style={styles.legendText}>{formatDate(formatDay(toDate))}</Text>
-        </View>
-      ) : null}
     </View>
   );
 };
