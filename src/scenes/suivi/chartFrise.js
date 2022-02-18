@@ -143,9 +143,13 @@ const Frise = ({ title, data, fromDate, toDate, focusedScores }) => {
         {data?.map((e, i) => {
           let color = scoresMapIcon[e?.value]?.color || "#f5f5f5";
 
-          const isVisible =
-            (focusedScores.length && focusedScores.includes(e?.value)) || focusedScores.length === 0;
-          const isFocused = focusedScores.length && focusedScores.includes(e?.value);
+          let opacity = 1;
+          if (focusedScores.length && !focusedScores.includes(e?.value)) {
+            // cet élément n'est pas focused
+            opacity = e?.value ? 0.15 : 0.5; // on reduit moins l'opacité si c'est une frise vide
+          }
+
+          const isFocused = e?.value && focusedScores.length && focusedScores.includes(e?.value);
 
           const shadow = isFocused
             ? {
@@ -170,7 +174,7 @@ const Frise = ({ title, data, fromDate, toDate, focusedScores }) => {
                   // eslint-disable-next-line react-native/no-inline-styles
                   {
                     backgroundColor: color,
-                    opacity: isVisible ? 1 : 0.15,
+                    opacity,
                     borderBottomStartRadius: firstSquare ? 5 : 0,
                     borderTopStartRadius: firstSquare ? 5 : 0,
                     borderBottomEndRadius: lastSquare ? 5 : 0,
