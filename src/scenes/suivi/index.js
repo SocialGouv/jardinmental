@@ -84,9 +84,7 @@ const Suivi = ({ navigation }) => {
           }}
         />
       ) : null}
-      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContainer}>
-        {renderChart(chartType)}
-      </ScrollView>
+      {renderChart(chartType)}
     </SafeAreaView>
   );
 };
@@ -121,13 +119,6 @@ const styles = StyleSheet.create({
   safe: {
     flex: 1,
     backgroundColor: "white",
-  },
-  scrollView: {
-    flex: 1,
-    backgroundColor: "white",
-  },
-  scrollContainer: {
-    flex: 1,
   },
   title: {
     fontWeight: "700",

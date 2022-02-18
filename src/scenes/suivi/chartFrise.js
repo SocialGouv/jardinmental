@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View, TouchableOpacity, Dimensions } from "react-native";
+import { StyleSheet, View, TouchableOpacity, Dimensions, ScrollView } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 
 import { formatDate, formatDay, getArrayOfDatesFromTo } from "../../utils/date/helpers";
@@ -119,17 +119,20 @@ const ChartFrise = ({ navigation, fromDate, toDate, focusedScores }) => {
       </View>
     );
   }
-
-  return activeCategories.map((categoryId) => (
-    <Frise
-      focusedScores={focusedScores}
-      title={getTitle(categoryId)}
-      key={categoryId}
-      data={computeChartData(categoryId)}
-      fromDate={fromDate}
-      toDate={toDate}
-    />
-  ));
+  return (
+    <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContainer}>
+      {activeCategories.map((categoryId) => (
+        <Frise
+          focusedScores={focusedScores}
+          title={getTitle(categoryId)}
+          key={categoryId}
+          data={computeChartData(categoryId)}
+          fromDate={fromDate}
+          toDate={toDate}
+        />
+      ))}
+    </ScrollView>
+  );
 };
 
 const Frise = ({ title, data, fromDate, toDate, focusedScores }) => {
@@ -265,6 +268,13 @@ const styles = StyleSheet.create({
     fontSize: Dimensions.get("window").width > 350 ? 19 : 15,
     flexWrap: "wrap",
     textAlign: "center",
+  },
+  scrollView: {
+    flex: 1,
+    backgroundColor: "white",
+  },
+  scrollContainer: {
+    // flex: 1,
   },
 });
 
