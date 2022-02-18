@@ -1,17 +1,17 @@
-import React from 'react';
-import VeryGoodSvg from '../../assets/svg/veryGood.svg';
-import GoodSvg from '../../assets/svg/good.svg';
-import MiddleSvg from '../../assets/svg/middle.svg';
-import BadSvg from '../../assets/svg/bad.svg';
-import VeryBadSvg from '../../assets/svg/veryBad.svg';
-import TodaySvg from '../../assets/svg/today.svg';
-import YesterdaySvg from '../../assets/svg/yesterday.svg';
-import NotesSvg from '../../assets/svg/notes.svg';
-import DrugsSvg from '../../assets/svg/drugs.svg';
-import HeartsSvg from '../../assets/svg/hearts.svg';
-import PlusSvg from '../../assets/svg/plus-1.svg';
+import React from "react";
+import VeryGoodSvg from "../../assets/svg/veryGood.svg";
+import GoodSvg from "../../assets/svg/good.svg";
+import MiddleSvg from "../../assets/svg/middle.svg";
+import BadSvg from "../../assets/svg/bad.svg";
+import VeryBadSvg from "../../assets/svg/veryBad.svg";
+import TodaySvg from "../../assets/svg/today.svg";
+import YesterdaySvg from "../../assets/svg/yesterday.svg";
+import NotesSvg from "../../assets/svg/notes.svg";
+import DrugsSvg from "../../assets/svg/drugs.svg";
+import HeartsSvg from "../../assets/svg/hearts.svg";
+import PlusSvg from "../../assets/svg/plus-1.svg";
 
-import {StyleSheet, View} from 'react-native';
+import { StyleSheet, View } from "react-native";
 
 const styles = StyleSheet.create({
   iconContainer: {
@@ -19,10 +19,10 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: 20,
     borderWidth: 1,
-    borderColor: 'lightgrey',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    borderColor: "lightgrey",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
     marginRight: 20,
   },
 });
@@ -47,9 +47,9 @@ const mapIconToSvg = (icon) => {
 const CircledIcon = ({
   icon,
   color,
-  borderColor = 'lightgrey',
+  borderColor = "lightgrey",
   borderWidth = 1,
-  iconColor = 'black',
+  iconColor = "black",
   opacity = 1,
   iconContainerStyle,
   iconWidth = 20,
@@ -65,7 +65,8 @@ const CircledIcon = ({
         borderWidth,
         opacity,
         ...iconContainerStyle,
-      }}>
+      }}
+    >
       <Icon width={iconWidth} height={iconHeight} color={iconColor} />
     </View>
   );

@@ -1,32 +1,20 @@
-import React, {useEffect, useState, useRef, useCallback} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  View,
-  Image,
-  Dimensions,
-} from 'react-native';
-import {displayedCategories} from '../../utils/constants';
-import {
-  beforeToday,
-  getArrayOfDates,
-  getTodaySWeek,
-  formatDate,
-} from '../../utils/date/helpers';
-import Header from '../../components/Header';
-import Chart from './chart';
-import WeekPicker from './week-picker';
-import {DiaryDataContext} from '../../context/diaryData';
-import {useContext} from 'react';
-import logEvents from '../../services/logEvents';
-import localStorage from '../../utils/localStorage';
-import Text from '../../components/MyText';
-import Icon from '../../components/Icon';
-import {colors} from '../../utils/colors';
-const screenHeight = Dimensions.get('window').height;
+import React, { useEffect, useState, useRef, useCallback } from "react";
+import { SafeAreaView, ScrollView, StyleSheet, View, Image, Dimensions } from "react-native";
+import { displayedCategories } from "../../utils/constants";
+import { beforeToday, getArrayOfDates, getTodaySWeek, formatDate } from "../../utils/date/helpers";
+import Header from "../../components/Header";
+import Chart from "./chart";
+import WeekPicker from "./week-picker";
+import { DiaryDataContext } from "../../context/diaryData";
+import { useContext } from "react";
+import logEvents from "../../services/logEvents";
+import localStorage from "../../utils/localStorage";
+import Text from "../../components/MyText";
+import Icon from "../../components/Icon";
+import { colors } from "../../utils/colors";
+const screenHeight = Dimensions.get("window").height;
 
-const Calendar = ({navigation}) => {
+const Calendar = ({ navigation }) => {
   const [day, setDay] = useState(new Date());
   const [diaryData] = useContext(DiaryDataContext);
   const [customs, setCustoms] = useState([]);
@@ -56,13 +44,13 @@ const Calendar = ({navigation}) => {
     setCalendarIsEmpty(emptyCalendar);
   }, [day, customs, oldCustoms, isChartVisible]);
 
-  const {firstDay, lastDay} = getTodaySWeek(day);
+  const { firstDay, lastDay } = getTodaySWeek(day);
 
-  const chartDates = getArrayOfDates({startDate: firstDay, numberOfDays: 6});
+  const chartDates = getArrayOfDates({ startDate: firstDay, numberOfDays: 6 });
 
   const displayOnlyRequest = (categoryId, dayIndex) => {
     if (Date.parse(new Date(chartDates[dayIndex])) > Date.now()) return; // if clicked day is in the future, don't display it
-    navigation.navigate('chart-day', {
+    navigation.navigate("chart-day", {
       day: chartDates[dayIndex],
       categoryId,
       dayIndex,
@@ -86,14 +74,12 @@ const Calendar = ({navigation}) => {
       // -------
 
       // get the name and the suffix of the category
-      const [categoryName, suffix] = categoryId.split('_');
+      const [categoryName, suffix] = categoryId.split("_");
       let categoryStateIntensity = null;
-      if (suffix && suffix === 'FREQUENCE') {
+      if (suffix && suffix === "FREQUENCE") {
         // if it's one category with the suffix 'FREQUENCE' :
         // add the intensity (default level is 3 - for the frequence 'never')
-        categoryStateIntensity = diaryData[date][
-          `${categoryName}_INTENSITY`
-        ] || {level: 3};
+        categoryStateIntensity = diaryData[date][`${categoryName}_INTENSITY`] || { level: 3 };
         return categoryState.level + categoryStateIntensity.level - 2;
       }
       return categoryState.level - 1;
@@ -114,13 +100,13 @@ const Calendar = ({navigation}) => {
       });
       return visible;
     },
-    [diaryData, chartDates],
+    [diaryData, chartDates]
   );
 
   const getTitle = (cat) => {
     const category = displayedCategories[cat] || cat;
-    const [categoryName, suffix] = category.split('_');
-    if (suffix && suffix === 'FREQUENCE') {
+    const [categoryName, suffix] = category.split("_");
+    if (suffix && suffix === "FREQUENCE") {
       return categoryName;
     }
     return category;
@@ -129,7 +115,7 @@ const Calendar = ({navigation}) => {
   return (
     <SafeAreaView style={styles.safe}>
       <View style={styles.headerContainer}>
-        <Header title="Mon suivi" navigation={navigation} />
+        {/* <Header title="Mon suivi" navigation={navigation} /> */}
         <WeekPicker
           firstDay={firstDay}
           lastDay={lastDay}
@@ -138,20 +124,13 @@ const Calendar = ({navigation}) => {
           setDay={setDay}
         />
       </View>
-      <ScrollView
-        style={styles.scrollView}
-        contentContainerStyle={styles.scrollContainer}>
+      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContainer}>
         {!calendarIsEmpty ? (
           <>
             <View style={styles.subtitleContainer}>
-              <Icon
-                icon="InfoSvg"
-                width={25}
-                height={25}
-                color={colors.LIGHT_BLUE}
-              />
+              <Icon icon="InfoSvg" width={25} height={25} color={colors.LIGHT_BLUE} />
               <Text style={styles.subtitle}>
-                Tapez sur un jour ou un point pour retrouver une{' '}
+                Tapez sur un jour ou un point pour retrouver une{" "}
                 <Text style={styles.bold}>vue détaillée</Text>.
               </Text>
             </View>
@@ -165,32 +144,22 @@ const Calendar = ({navigation}) => {
                       title={getTitle(categoryId)}
                       key={categoryId}
                       data={computeChartData(categoryId)}
-                      onPress={(dayIndex) =>
-                        displayOnlyRequest(categoryId, dayIndex)
-                      }
+                      onPress={(dayIndex) => displayOnlyRequest(categoryId, dayIndex)}
                     />
-                  ),
+                  )
               )}
           </>
         ) : (
           <>
             <View style={styles.subtitleContainer}>
-              <Icon
-                icon="InfoSvg"
-                width={25}
-                height={25}
-                color={colors.LIGHT_BLUE}
-              />
+              <Icon icon="InfoSvg" width={25} height={25} color={colors.LIGHT_BLUE} />
               <Text style={styles.subtitle}>
-                Des <Text style={styles.bold}>courbes d'évolution</Text>{' '}
-                apparaîtront au fur et à mesure de vos saisies quotidiennes.
+                Des <Text style={styles.bold}>courbes d'évolution</Text> apparaîtront au fur et à mesure de
+                vos saisies quotidiennes.
               </Text>
             </View>
             <View style={styles.imageContainer}>
-              <Image
-                style={styles.image}
-                source={require('../../../assets/imgs/calendar.png')}
-              />
+              <Image style={styles.image} source={require("../../../assets/imgs/calendar.png")} />
             </View>
           </>
         )}
@@ -205,39 +174,39 @@ const styles = StyleSheet.create({
     paddingBottom: 0,
   },
   imageContainer: {
-    display: 'flex',
-    alignItems: 'center',
+    display: "flex",
+    alignItems: "center",
   },
   image: {
     height: screenHeight * 0.5,
-    resizeMode: 'contain',
+    resizeMode: "contain",
   },
   subtitle: {
     flex: 1,
-    color: '#000',
+    color: "#000",
     fontSize: 15,
-    fontWeight: 'normal',
+    fontWeight: "normal",
   },
   subtitleContainer: {
-    display: 'flex',
-    flexDirection: 'row',
+    display: "flex",
+    flexDirection: "row",
     marginVertical: 10,
   },
   bold: {
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   safe: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: "white",
   },
   scrollView: {
     flex: 1,
     paddingHorizontal: 20,
-    backgroundColor: 'white',
+    backgroundColor: "white",
   },
   scrollContainer: {},
   title: {
-    fontWeight: '700',
+    fontWeight: "700",
     fontSize: 22,
   },
 });

@@ -1,5 +1,5 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, {useEffect, useState} from 'react';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import React, { useEffect, useState } from "react";
 import {
   STORAGE_KEY_SURVEY_RESULTS,
   STORAGE_KEY_START_DATE,
@@ -18,12 +18,9 @@ import {
   STORAGE_KEY_BECK_EMOTION_LIST,
   STORAGE_KEY_ONBOARDING_STEP,
   STORAGE_KEY_ONBOARDING_DONE,
-} from '../utils/constants';
-import {
-  fakeDiaryData,
-  startDate as fakeStartDate,
-} from '../scenes/status/fake-diary-data';
-import {beforeToday, formatDay, getArrayOfDates} from '../utils/date/helpers';
+} from "../utils/constants";
+import { fakeDiaryData, startDate as fakeStartDate } from "../scenes/status/fake-diary-data";
+import { beforeToday, formatDay, getArrayOfDates } from "../utils/date/helpers";
 
 const wipeData = async () => {
   await AsyncStorage.removeItem(STORAGE_KEY_START_DATE);
@@ -43,19 +40,16 @@ const wipeData = async () => {
   await AsyncStorage.removeItem(STORAGE_KEY_BECK_EMOTION_LIST);
   await AsyncStorage.removeItem(STORAGE_KEY_ONBOARDING_STEP);
   await AsyncStorage.removeItem(STORAGE_KEY_ONBOARDING_DONE);
-  await AsyncStorage.removeItem('@Reminder');
+  await AsyncStorage.removeItem("@Reminder");
 };
 
 const setupFakeData = async () => {
   await AsyncStorage.setItem(STORAGE_KEY_START_DATE, formatDay(fakeStartDate));
-  await AsyncStorage.setItem(
-    STORAGE_KEY_SURVEY_RESULTS,
-    JSON.stringify(fakeDiaryData),
-  );
+  await AsyncStorage.setItem(STORAGE_KEY_SURVEY_RESULTS, JSON.stringify(fakeDiaryData));
 };
 
 const fillUpEmptyDates = (startDate, data) => {
-  const sortedDates = getArrayOfDates({startDate, reverse: true});
+  const sortedDates = getArrayOfDates({ startDate, reverse: true });
   const diary = {};
   for (let date of sortedDates) {
     diary[date] = data[date] || null;
@@ -65,24 +59,21 @@ const fillUpEmptyDates = (startDate, data) => {
 
 const DiaryDataContext = React.createContext([{}, () => {}]);
 
-const DiaryDataProvider = ({children}) => {
+const DiaryDataProvider = ({ children }) => {
   const [diaryData, setDiaryData] = useState({});
 
-  const setDiaryDataRequest = ({date: isoDate, answers: data}) => {
+  const setDiaryDataRequest = ({ date: isoDate, answers: data }) => {
     const resData = data?.becks
       ? // if we add becks, we keep all the previous diaryData
-        {...diaryData[isoDate], ...data}
+        { ...diaryData[isoDate], ...data }
       : // if not, it is a new version of a diary day, we overwrite it except becks data
-        {becks: diaryData[isoDate]?.becks, ...data};
+        { becks: diaryData[isoDate]?.becks, ...data };
     const newDiaryData = {
       ...diaryData,
       [isoDate]: resData,
     };
     setDiaryData(newDiaryData);
-    AsyncStorage.setItem(
-      STORAGE_KEY_SURVEY_RESULTS,
-      JSON.stringify(newDiaryData),
-    );
+    AsyncStorage.setItem(STORAGE_KEY_SURVEY_RESULTS, JSON.stringify(newDiaryData));
   };
 
   useEffect(() => {
@@ -93,8 +84,7 @@ const DiaryDataProvider = ({children}) => {
 
       // start date is needed to populate empty dates
       let startDate = await AsyncStorage.getItem(STORAGE_KEY_START_DATE);
-      let data =
-        (await AsyncStorage.getItem(STORAGE_KEY_SURVEY_RESULTS)) || '{}';
+      let data = (await AsyncStorage.getItem(STORAGE_KEY_SURVEY_RESULTS)) || "{}";
 
       // if no start date, it's the first time the user opens the app
       // so we initialize it
@@ -120,10 +110,8 @@ const DiaryDataProvider = ({children}) => {
   }, [setDiaryData]);
 
   return (
-    <DiaryDataContext.Provider value={[diaryData, setDiaryDataRequest]}>
-      {children}
-    </DiaryDataContext.Provider>
+    <DiaryDataContext.Provider value={[diaryData, setDiaryDataRequest]}>{children}</DiaryDataContext.Provider>
   );
 };
 
-export {DiaryDataContext, DiaryDataProvider};
+export { DiaryDataContext, DiaryDataProvider };
