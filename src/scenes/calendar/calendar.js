@@ -19,7 +19,7 @@ const Calendar = ({ navigation }) => {
   const [diaryData] = useContext(DiaryDataContext);
   const [customs, setCustoms] = useState([]);
   const [oldCustoms, setOldCustoms] = useState([]);
-  const [calendarIsEmpty, setCalendarIsEmpty] = useState(true);
+  const [calendarIsEmpty, setCalendarIsEmpty] = useState(false);
   let mounted = useRef(true);
 
   useEffect(() => {
