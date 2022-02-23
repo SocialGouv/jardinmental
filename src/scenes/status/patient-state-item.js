@@ -13,8 +13,8 @@ const PatientStateItem = ({ patientState, category, label }) => {
 
   useEffect(() => {
     const score = getScoreWithState({ patientState, category });
-    const icon = scoresMapIcon[score];
-    icon && setIcon(icon);
+    const icon = scoresMapIcon[score] || {};
+    setIcon(icon);
   }, [patientState, category]);
 
   const isTouchable = () => !!patientState[category]?.userComment?.trim();
