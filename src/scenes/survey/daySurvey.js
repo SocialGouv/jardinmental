@@ -144,8 +144,6 @@ const DaySurvey = ({ navigation, route }) => {
     });
   };
 
-  const allQuestionHasAnAnswer = () => [...questions, questionToxic].every((curr) => answers[curr.id]);
-
   const renderQuestion = () => {
     if (isYesterday(parseISO(route.params?.currentSurvey?.date)))
       return "Comment s'est passée la journée d'hier ?";
@@ -157,7 +155,7 @@ const DaySurvey = ({ navigation, route }) => {
 
   return (
     <SafeAreaView style={styles.safe}>
-      <BackButton onPress={navigation.goBack} />
+      <BackButton onPress={submitDay} />
       <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "position" : "height"} style={{ flex: 1 }}>
         <ScrollView
           style={styles.container}
@@ -207,13 +205,7 @@ const DaySurvey = ({ navigation, route }) => {
           />
           <View style={styles.divider} />
           <View style={styles.buttonWrapper}>
-            <Button
-              onPress={() => {
-                submitDay();
-              }}
-              title="Valider"
-              disabled={!allQuestionHasAnAnswer()}
-            />
+            <Button onPress={submitDay} title="Valider" />
           </View>
           <Text style={styles.subtitle}>
             Retrouvez toutes vos notes dans l'onglet &quot;Mon&nbsp;journal&quot;

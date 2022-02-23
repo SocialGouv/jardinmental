@@ -17,21 +17,31 @@ const PatientStateItem = ({ patientState, category, label }) => {
     icon && setIcon(icon);
   }, [patientState, category]);
 
-  if (!color || !faceIcon) return null;
-
   const isTouchable = () => !!patientState[category]?.userComment?.trim();
 
   const content = (
     <View>
       <View style={styles.container}>
-        <CircledIcon
-          color={color}
-          borderColor={borderColor}
-          iconColor={iconColor}
-          icon={faceIcon}
-          iconWidth={32}
-          iconHeight={32}
-        />
+        {color && faceIcon ? (
+          <CircledIcon
+            color={color}
+            borderColor={borderColor}
+            iconColor={iconColor}
+            icon={faceIcon}
+            iconWidth={32}
+            iconHeight={32}
+          />
+        ) : (
+          <CircledIcon
+            color="#cccccc"
+            borderColor="#999999"
+            iconColor="#888888"
+            icon="QuestionMarkSvg"
+            iconWidth={20}
+            iconHeight={20}
+          />
+        )}
+
         <View style={styles.labelContainer}>
           <Text style={styles.label}>{label}</Text>
         </View>
