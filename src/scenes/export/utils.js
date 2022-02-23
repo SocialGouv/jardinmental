@@ -284,7 +284,7 @@ const formatHtmlTable = async (diaryData, diaryNotes) => {
         };
         return categoryState.level + categoryStateIntensity.level - 1;
       }
-      return categoryState.level;
+      return categoryState.level ? categoryState.level - 1 : null;
     });
   };
 

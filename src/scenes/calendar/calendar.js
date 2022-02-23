@@ -82,7 +82,7 @@ const Calendar = ({ navigation }) => {
         categoryStateIntensity = diaryData[date][`${categoryName}_INTENSITY`] || { level: 3 };
         return categoryState.level + categoryStateIntensity.level - 2;
       }
-      return categoryState.level - 1;
+      return categoryState.level ? categoryState.level - 1 : null;
     });
   };
 
