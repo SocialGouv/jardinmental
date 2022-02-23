@@ -96,9 +96,16 @@ const Tabs = ({ navigation, route }) => {
 
 const styles = StyleSheet.create({
   tabBar: {
-    borderTopColor: colors.LIGHT_BLUE_TRANS,
-    borderTopWidth: 0.5,
     maxHeight: 80,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.27,
+    shadowRadius: 4.65,
+
+    elevation: 6,
   },
   surveyButton: {
     display: "flex",
