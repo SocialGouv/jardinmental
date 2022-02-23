@@ -172,7 +172,7 @@ const Frise = ({ title, data, focusedScores }) => {
           const firstSquare = i === 0;
           const lastSquare = i === data.length - 1;
           return (
-            <View style={styles.squareItemContainer}>
+            <View key={`${title}-${i}`} style={styles.squareItemContainer}>
               <View
                 style={[
                   styles.square,
@@ -180,9 +180,9 @@ const Frise = ({ title, data, focusedScores }) => {
                   {
                     backgroundColor: color,
                     opacity,
-                    borderBottomStartRadius: firstSquare ? 5 : 0,
+                    borderBottomStartRadius: !isFocused && firstSquare ? 5 : 0,
                     borderTopStartRadius: firstSquare ? 5 : 0,
-                    borderBottomEndRadius: lastSquare ? 5 : 0,
+                    borderBottomEndRadius: !isFocused && lastSquare ? 5 : 0,
                     borderTopEndRadius: lastSquare ? 5 : 0,
                     ...borderBottom,
                   },
