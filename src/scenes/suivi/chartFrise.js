@@ -15,7 +15,7 @@ import Button from "../../components/Button";
 
 const ChartFrise = ({ navigation, fromDate, toDate, focusedScores }) => {
   const [diaryData] = React.useContext(DiaryDataContext);
-  const [activeCategories, setActiveCategories] = React.useState([]);
+  const [activeCategories, setActiveCategories] = React.useState();
   const [isEmpty, setIsEmpty] = React.useState();
   const chartDates = getArrayOfDatesFromTo({ fromDate, toDate });
 
@@ -31,6 +31,7 @@ const ChartFrise = ({ navigation, fromDate, toDate, focusedScores }) => {
   );
 
   React.useEffect(() => {
+    if (!activeCategories) return;
     const empty = !activeCategories.reduce((showing, categoryId) => {
       return Boolean(isChartVisible(categoryId)) || showing;
     }, false);
@@ -121,7 +122,7 @@ const ChartFrise = ({ navigation, fromDate, toDate, focusedScores }) => {
   }
   return (
     <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContainer}>
-      {activeCategories.map((categoryId) => (
+      {activeCategories?.map((categoryId) => (
         <Frise
           focusedScores={focusedScores}
           title={getTitle(categoryId)}
