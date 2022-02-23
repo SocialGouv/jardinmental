@@ -47,8 +47,9 @@ const Question = ({ question, explanation, onPress, selected, isLast, onChangeUs
         <View style={styles.answersContainer}>
           {answers.map((answer, i) => {
             const active = selected === answer.score;
+            const value = selected === answer.score ? null : answer.score;
             return (
-              <TouchableOpacity key={i} onPress={() => onPress({ key: question.id, value: answer.score })}>
+              <TouchableOpacity key={i} onPress={() => onPress({ key: question.id, value })}>
                 <View style={[styles.selectionContainer, active && styles.activeSelectionContainer]}>
                   <CircledIcon
                     color={answer.backgroundColor}
