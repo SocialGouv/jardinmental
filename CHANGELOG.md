@@ -1,3 +1,17 @@
+## [1.21.1](https://github.com/SocialGouv/monsuivipsy/compare/v1.21.0...v1.21.1) (2022-02-28)
+
+
+### Bug Fixes
+
+* **questionnaire:** critère -> élément ([9a26797](https://github.com/SocialGouv/monsuivipsy/commit/9a26797a5b757fe5d97d5a8b3101cf6e8945ceed))
+* **suivi:** écran qui saute ([da34cbe](https://github.com/SocialGouv/monsuivipsy/commit/da34cbe736442ec282102b62c80730c5d9cd2497))
+* menu style ([5625241](https://github.com/SocialGouv/monsuivipsy/commit/5625241e549dee4a8cf30a76eafed19e5df04e21))
+* **couleur:** dynamique couleur icon ([e03bab0](https://github.com/SocialGouv/monsuivipsy/commit/e03bab088b85c359035eca8b8115f1bbffca3975))
+* **questionnaire:** enregistrer au retour + autoriser questionnaire incomplet ([648d354](https://github.com/SocialGouv/monsuivipsy/commit/648d3546366c7847add56d0431e4fa6103719dbf))
+* **questionnaire:** permettre d'annuler une réponse ([a36d162](https://github.com/SocialGouv/monsuivipsy/commit/a36d162b4e6473ca030324cfa400d40459615b97))
+* **suivi:** amélioration UX ([0d74e23](https://github.com/SocialGouv/monsuivipsy/commit/0d74e23fb5d7cba399d76552c0ebd68f55192666))
+* **suivi:** opacité minimum pour les jours sans saisies ([600e255](https://github.com/SocialGouv/monsuivipsy/commit/600e255cf4c3ffc8ba0515be8e63ddb6aa0483f2))
+
 # [1.21.0](https://github.com/SocialGouv/monsuivipsy/compare/v1.20.9...v1.21.0) (2022-02-18)
 
 
