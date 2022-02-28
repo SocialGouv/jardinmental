@@ -74,7 +74,7 @@ const Question = ({ question, explanation, onPress, selected, isLast, onChangeUs
             onChangeUserComment({ key: question.id, userComment: v });
           }}
           value={text}
-          placeholder="Ajouter une précision sur ce critère"
+          placeholder="Ajouter une précision sur cet élément"
           style={styles.textArea}
           textAlignVertical={"top"}
           // onFocus={() => setInputFocused(true)}
