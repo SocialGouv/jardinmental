@@ -13,7 +13,7 @@ export const getBadgeNotesVersion = async () => {
   return lastNotesVersion !== LAST_NOTES_VERSION;
 };
 
-export const LAST_NOTES_VERSION = "1.20";
+export const LAST_NOTES_VERSION = "1.21";
 
 export default ({ navigation }) => {
   useEffect(() => {
@@ -28,6 +28,25 @@ export default ({ navigation }) => {
         <Image style={styles.image} source={require("../../../assets/imgs/logo2.png")} />
       </View>
       <ScrollView style={styles.cgu} contentContainerStyle={styles.scrollContainer}>
+        <Card
+          title={"Mon Suivi s'étoffe avec l'écran \"Frises\" et validez votre questionnaire à tout moment"}
+          version="v1.21"
+          date="03/2022"
+        >
+          <Item>
+            <Text style={styles.text}>
+              Vous pouvez maintenant valider votre questionnaire sans avoir renseigné tous ses éléments, ce
+              qui vous permet de le remplir progressivement au cours de la journée.
+            </Text>
+          </Item>
+          <Item>
+            <Text style={styles.text}>
+              Dans Mon Suivi, vous pouvez maintenant visualiser les variations des éléments de votre
+              questionnaire sur la période de votre choix. Filtrez les emojis qui vous intéressent en cliquant
+              sur ceux de votre choix, et comparez l’évolution de vos éléments entre eux.
+            </Text>
+          </Item>
+        </Card>
         <Card
           title="L’écran du questionnaire de «&nbsp;Mon&nbsp;état&nbsp;» évolue et se simplifie"
           version="v1.20"
