@@ -8,11 +8,12 @@ import RangeDate from "./RangeDate";
 import ScorePicker from "./ScorePicker";
 import ChartFrise from "./chartFrise";
 import ChartPie from "./chartPie";
+import Evenements from "./events";
 import Courbes from "../calendar/calendar";
 
 const screenHeight = Dimensions.get("window").height;
 // const CHART_TYPES = ["Frises", "Diagrammes", "Courbes", "Évènements"];
-const CHART_TYPES = ["Frises", "Courbes"];
+const CHART_TYPES = ["Frises", "Courbes", "Évènements"];
 
 const nextChartType = (chartType) => {
   const i = CHART_TYPES.indexOf(chartType);
@@ -26,8 +27,8 @@ const prevChartType = (chartType) => {
 };
 
 const Suivi = ({ navigation }) => {
-  const [chartType, setChartType] = React.useState(CHART_TYPES[0]);
-  const [fromDate, setFromDate] = React.useState(beforeToday(30));
+  const [chartType, setChartType] = React.useState(CHART_TYPES[2]);
+  const [fromDate, setFromDate] = React.useState(beforeToday(7));
   const [toDate, setToDate] = React.useState(beforeToday(0));
   const [focusedScores, setFocusedScores] = React.useState([]);
 
@@ -39,8 +40,8 @@ const Suivi = ({ navigation }) => {
         return <ChartPie fromDate={fromDate} toDate={toDate} />;
       case "Courbes":
         return <Courbes navigation={navigation} />;
-      // case "Évènements":
-      //   return <Evenements />;
+      case "Évènements":
+        return <Evenements navigation={navigation} fromDate={fromDate} toDate={toDate} />;
       case "Frises":
       default:
         return (
