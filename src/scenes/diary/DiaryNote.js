@@ -1,5 +1,5 @@
 import React, { useState, useContext, useRef, useEffect } from "react";
-import { StyleSheet, View, TextInput, Alert, Keyboard } from "react-native";
+import { StyleSheet, View, TextInput, Alert } from "react-native";
 import Text from "../../components/MyText";
 import { colors } from "../../utils/colors";
 import { makeSureDate } from "../../utils/date/helpers";
@@ -14,29 +14,29 @@ const DiaryNote = ({ note, date }) => {
   const inputRef = useRef();
   const [toggled, setToggled] = useState(false);
   const [buffer, setBuffer] = useState(note?.value);
-  // const [valueDisplayed, setValueDisplayed] = useState('');
-  const [initialValue, setInitialValue] = useState(note?.value);
+  const [currentValue, setCurrentValue] = useState(note?.value);
   const [editMode, setEditMode] = useState(false);
+
   useEffect(() => {
     if (editMode) inputRef.current.focus();
-  }, [editMode]);
 
-  if (!note || !note?.value) return null;
-
-  const lines = note?.value?.split(/\r\n|\r|\n/);
-  const textIsLong = note?.value.length > MAX_SIZE || lines.length >= 3;
-
-  const getValue = (v) => {
-    if (editMode) return buffer;
+    let v = note?.value;
+    if (editMode) v = buffer;
     else if (!toggled)
-      return initialValue
+      v = note?.value
         ?.substring(0, MAX_SIZE)
         ?.split(/\r\n|\r|\n/)
         ?.slice(0, 3)
         ?.join("\n")
         ?.concat(textIsLong ? "..." : "");
-    else return initialValue;
-  };
+
+    setCurrentValue(v);
+  }, [buffer, editMode, currentValue, note?.value, textIsLong, toggled]);
+
+  if (!note || !note?.value) return null;
+
+  const lines = note?.value?.split(/\r\n|\r|\n/);
+  const textIsLong = note?.value.length > MAX_SIZE || lines.length >= 3;
 
   const saveNoteInContext = () => {
     updateDiaryNote({
@@ -79,13 +79,13 @@ const DiaryNote = ({ note, date }) => {
             onChangeText={(e) => {
               setBuffer(e);
             }}
-            value={getValue()}
+            value={currentValue}
             placeholder="Saisir ma nouvelle note"
             style={styles.label}
             textAlignVertical={"top"}
             editable={editMode}
             onBlur={() => {
-              setBuffer(initialValue);
+              setBuffer(note?.value);
               setEditMode(false);
               setToggled(false);
             }}
@@ -99,7 +99,8 @@ const DiaryNote = ({ note, date }) => {
           visible={!editMode}
           // autofocus input and show keyboard
           onPress={() => {
-            setEditMode((e) => !e);
+            if (textIsLong && !toggled) setToggled(true);
+            setEditMode(true);
             logEvents.logEditNoteDiary();
           }}
         />
@@ -123,9 +124,10 @@ const DiaryNote = ({ note, date }) => {
           icon="validate"
           visible={editMode}
           onPress={() => {
-            setInitialValue(buffer);
+            setCurrentValue(buffer);
             saveNoteInContext();
             setEditMode(false);
+            setToggled(false);
           }}
         />
       </View>
