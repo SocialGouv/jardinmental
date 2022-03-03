@@ -27,8 +27,8 @@ const prevChartType = (chartType) => {
 };
 
 const Suivi = ({ navigation }) => {
-  const [chartType, setChartType] = React.useState(CHART_TYPES[2]);
-  const [fromDate, setFromDate] = React.useState(beforeToday(7));
+  const [chartType, setChartType] = React.useState(CHART_TYPES[0]);
+  const [fromDate, setFromDate] = React.useState(beforeToday(30));
   const [toDate, setToDate] = React.useState(beforeToday(0));
   const [focusedScores, setFocusedScores] = React.useState([]);
 
