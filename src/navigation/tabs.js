@@ -4,31 +4,29 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import Diary from "../scenes/diary";
 import Status from "../scenes/status";
 import Exercise from "../scenes/exercise";
-import Calendar from "../scenes/calendar/calendar";
 import Suivi from "../scenes/suivi";
 import SurveyMenu from "../../assets/svg/SurveyMenu";
 import DiaryMenu from "../../assets/svg/DiaryMenu";
 import ExerciseMenu from "../../assets/svg/ExerciseMenu";
 import GraphMenu from "../../assets/svg/GraphMenu";
 import localStorage from "../utils/localStorage";
-import logEvents from "../services/logEvents";
 import { colors } from "../utils/colors";
+import { getAlertNotesVersion, LAST_NOTES_VERSION, NEWS_DATA } from "../scenes/news";
+import Text from "../components/MyText";
+import ModalBase from "../components/modal/ModalBase";
+import pck from "../../package.json";
 
 const Tab = createMaterialTopTabNavigator();
 
 const Tabs = ({ navigation, route }) => {
-  const startSurvey = async () => {
-    const symptoms = await localStorage.getSymptoms();
-    logEvents.logFeelingStart();
-    if (!symptoms) {
-      navigation.navigate("symptoms", {
-        showExplanation: true,
-        redirect: "select-day",
-      });
-    } else {
-      navigation.navigate("select-day");
-    }
-  };
+  const [alertNotesVersionVisible, setAlertNotesVersionVisible] = React.useState(false);
+
+  React.useEffect(() => {
+    (async () => {
+      const n = await getAlertNotesVersion();
+      setAlertNotesVersionVisible(n);
+    })();
+  }, []);
 
   return (
     <>
@@ -43,8 +41,6 @@ const Tabs = ({ navigation, route }) => {
           indicatorStyle: { height: 0 },
           style: styles.tabBar,
           iconStyle: {
-            // borderColor: 'red',
-            // borderWidth: 1,
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
@@ -90,9 +86,45 @@ const Tabs = ({ navigation, route }) => {
           }}
         />
       </Tab.Navigator>
+      <ModalBase
+        onModalHide={() => {
+          localStorage.setAlertNotesVersion(LAST_NOTES_VERSION);
+        }}
+        visible={alertNotesVersionVisible}
+        // maybe later
+        // onClick={() => navigation.navigate("news")}
+        renderContent={
+          <>
+            <Text style={stylesModal.title}>🎉 Nouvelle version installée !</Text>
+            <Text style={stylesModal.content}>
+              {NEWS_DATA.find((e) => e.version === pck.version)?.modalText}
+            </Text>
+            <Text style={stylesModal.footer}>version {pck.version}</Text>
+          </>
+        }
+        title="🎉 Nouvelle version disponible"
+      />
     </>
   );
 };
+
+const stylesModal = StyleSheet.create({
+  title: {
+    fontSize: 16,
+    color: colors.BLUE,
+    fontWeight: "bold",
+  },
+  content: {
+    fontSize: 14,
+    color: "#111",
+    padding: 10,
+  },
+  footer: {
+    fontSize: 11,
+    color: "#ccc",
+    textAlign: "center",
+  },
+});
 
 const styles = StyleSheet.create({
   tabBar: {

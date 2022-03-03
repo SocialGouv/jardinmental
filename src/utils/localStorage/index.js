@@ -6,6 +6,7 @@ import {
   STORAGE_KEY_CUSTOM_SYMPTOMS,
   STORAGE_KEY_MEDICAL_TREATMENT,
   STORAGE_KEY_NOTES_VERSION,
+  STORAGE_KEY_ALERT_NOTES_VERSION,
   STORAGE_KEY_VISIT_PRO_NPS,
   STORAGE_KEY_CUSTOM_DRUGS,
   STORAGE_KEY_ONBOARDING_STEP,
@@ -96,6 +97,15 @@ const setNotesVersion = async (v) => {
   await AsyncStorage.setItem(STORAGE_KEY_NOTES_VERSION, JSON.stringify(v));
 };
 
+const getAlertNotesVersion = async () => {
+  const a = await AsyncStorage.getItem(STORAGE_KEY_ALERT_NOTES_VERSION);
+  return JSON.parse(a);
+};
+
+const setAlertNotesVersion = async (v) => {
+  await AsyncStorage.setItem(STORAGE_KEY_ALERT_NOTES_VERSION, JSON.stringify(v));
+};
+
 const getVisitProNPS = async () => {
   const a = await AsyncStorage.getItem(STORAGE_KEY_VISIT_PRO_NPS);
   return JSON.parse(a);
@@ -145,6 +155,8 @@ export default {
   removeDrugFromTreatment,
   getNotesVersion,
   setNotesVersion,
+  getAlertNotesVersion,
+  setAlertNotesVersion,
   getVisitProNPS,
   setVisitProNPS,
   addCustomDrug,

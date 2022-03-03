@@ -12,8 +12,31 @@ export const getBadgeNotesVersion = async () => {
   let lastNotesVersion = await localStorage.getNotesVersion();
   return lastNotesVersion !== LAST_NOTES_VERSION;
 };
+export const getAlertNotesVersion = async () => {
+  let lastAlertNotesVersion = await localStorage.getAlertNotesVersion();
+  return lastAlertNotesVersion !== LAST_NOTES_VERSION;
+};
 
 export const LAST_NOTES_VERSION = "1.21";
+export const NEWS_DATA = [
+  {
+    version: "1.21.2",
+    title: "Mon Suivi s'étoffe avec l'écran \"Frises\" et validez votre questionnaire à tout moment",
+    date: "03/2022",
+    features: [
+      <Text style={{ color: "#333" }}>
+        Vous pouvez maintenant valider votre questionnaire sans avoir renseigné tous ses éléments, ce qui vous
+        permet de le remplir progressivement au cours de la journée.
+      </Text>,
+      <Text style={{ color: "#333" }}>
+        Dans Mon Suivi, vous pouvez maintenant visualiser les variations des éléments de votre questionnaire
+        sur la période de votre choix. Filtrez les emojis qui vous intéressent en cliquant sur ceux de votre
+        choix, et comparez l’évolution de vos éléments entre eux.
+      </Text>,
+    ],
+    modalText: "valider votre questionnaire sans avoir renseigné tous ses éléments, Frises !",
+  },
+];
 
 export default ({ navigation }) => {
   useEffect(() => {
@@ -28,25 +51,13 @@ export default ({ navigation }) => {
         <Image style={styles.image} source={require("../../../assets/imgs/logo2.png")} />
       </View>
       <ScrollView style={styles.cgu} contentContainerStyle={styles.scrollContainer}>
-        <Card
-          title={"Mon Suivi s'étoffe avec l'écran \"Frises\" et validez votre questionnaire à tout moment"}
-          version="v1.21"
-          date="03/2022"
-        >
-          <Item>
-            <Text style={styles.text}>
-              Vous pouvez maintenant valider votre questionnaire sans avoir renseigné tous ses éléments, ce
-              qui vous permet de le remplir progressivement au cours de la journée.
-            </Text>
-          </Item>
-          <Item>
-            <Text style={styles.text}>
-              Dans Mon Suivi, vous pouvez maintenant visualiser les variations des éléments de votre
-              questionnaire sur la période de votre choix. Filtrez les emojis qui vous intéressent en cliquant
-              sur ceux de votre choix, et comparez l’évolution de vos éléments entre eux.
-            </Text>
-          </Item>
-        </Card>
+        {NEWS_DATA?.map((item) => (
+          <Card key={item.version} title={item.title} version={`v${item.version}`} date={item.date}>
+            {item.features?.map((feature, i) => (
+              <Item key={i}>{feature}</Item>
+            ))}
+          </Card>
+        ))}
         <Card
           title="L’écran du questionnaire de «&nbsp;Mon&nbsp;état&nbsp;» évolue et se simplifie"
           version="v1.20"
@@ -195,54 +206,6 @@ export default ({ navigation }) => {
             </Text>
           </Item>
         </Card>
-        {/* <Card
-          title="Mon Suivi Psy se refait une beauté !"
-          version="v1.13"
-          date="05/2021">
-          <Item>
-            <Text style={styles.text}>
-              Le nouveau bouton en haut à gauche de votre écran ouvre un{' '}
-              <Text style={styles.bold}>menu</Text>. Il vous permet de naviguer
-              plus facilement entre tous les écrans secondaires de l'application
-              Mon Suivi Psy.
-            </Text>
-          </Item>
-          <Item>
-            <Text style={styles.text}>
-              Le nouveau bouton en haut à droite de votre écran ouvre les{' '}
-              <Text style={styles.bold}>paramètres</Text>. Vous pouvez
-              sélectionner vos symptômes, indiquer votre traitement
-              médicamenteux si besoin, définir un rappel, etc.
-            </Text>
-          </Item>
-          <Item>
-            <Text style={styles.text}>
-              Vous pouvez maintenant rentrer les{' '}
-              <Text style={styles.bold}>traitements</Text> que vous prenez dans
-              l’application. Tous les médicaments ne sont pas accessibles, vous
-              pouvez nous informer si vous souhaitez ajouter le vôtre. Lors de
-              l’export de vos données, les informations concernant vos prises de
-              traitements médicamenteux seront aussi transmises, en bas des
-              courbes de suivi des symptômes.
-            </Text>
-          </Item>
-          <Item>
-            <Text style={styles.text}>
-              La barre de navigation retrouve sa{' '}
-              <Text style={styles.bold}>simplicité</Text>, avec un accès rapide
-              à votre journal et à votre calendrier. Vous pouvez retrouver
-              l'onglet <Text style={[styles.italic, styles.bold]}>Infos</Text>{' '}
-              dans le menu (en haut à gauche de votre écran).
-            </Text>
-          </Item>
-          <Item>
-            <Text style={styles.text}>
-              L'<Text style={styles.bold}>export</Text> de vos données est
-              possible depuis le menu ainsi que depuis votre calendrier (le
-              bouton d'export vient remplacer le bouton des réglages).
-            </Text>
-          </Item>
-        </Card> */}
       </ScrollView>
     </SafeAreaView>
   );
