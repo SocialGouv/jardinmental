@@ -8,11 +8,12 @@ import RangeDate from "./RangeDate";
 import ScorePicker from "./ScorePicker";
 import ChartFrise from "./chartFrise";
 import ChartPie from "./chartPie";
+import Evenements from "./events";
 import Courbes from "../calendar/calendar";
 
 const screenHeight = Dimensions.get("window").height;
 // const CHART_TYPES = ["Frises", "Diagrammes", "Courbes", "Évènements"];
-const CHART_TYPES = ["Frises", "Courbes"];
+const CHART_TYPES = ["Frises", "Courbes", "Évènements"];
 
 const nextChartType = (chartType) => {
   const i = CHART_TYPES.indexOf(chartType);
@@ -39,8 +40,8 @@ const Suivi = ({ navigation }) => {
         return <ChartPie fromDate={fromDate} toDate={toDate} />;
       case "Courbes":
         return <Courbes navigation={navigation} />;
-      // case "Évènements":
-      //   return <Evenements />;
+      case "Évènements":
+        return <Evenements navigation={navigation} fromDate={fromDate} toDate={toDate} />;
       case "Frises":
       default:
         return (
