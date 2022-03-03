@@ -4,23 +4,46 @@ import Text from "../../../components/MyText";
 import { colors } from "../../../utils/colors";
 import { getArrayOfDatesFromTo, formatDateThread } from "../../../utils/date/helpers";
 
-const noData = "Non renseigné";
-const Card = ({ date, context = noData, userComment = noData }) => {
+const EVENTS = [
+  { label: "Contexte de la journée", value: "CONTEXT" },
+  { label: "Précisions élément", value: "USER_COMMENT" },
+  { label: "Traitements", value: "POSOLOGY" },
+  { label: "Substances", value: "TOXIC" },
+];
+
+const Card = ({ date, context, userComment, event }) => {
   if (!date) return null;
+
+  const getVariableByEvent = (e) => {
+    switch (e) {
+      case "CONTEXT":
+        return context;
+      case "USER_COMMENT":
+        return userComment;
+    }
+  };
+
+  const canDisplay = (e, v) => {
+    return v && (e === event || event === "ALL");
+  };
+
+  // on vérifie si on a quelque chose a afficher si on a un event en particuler de précisé
+  if (event !== "ALL" && !EVENTS.some((e) => canDisplay(e.value, getVariableByEvent(e.value)))) return null;
+
   return (
     <View>
       <Text style={styles.title}>{formatDateThread(date)}</Text>
       <View style={styles.container}>
-        {context ? (
+        {canDisplay("CONTEXT", context) ? (
           <>
             <Text style={styles.sectionTitle}>Contexte de la journée</Text>
-            <Text style={styles.message}>{context || noData}</Text>
+            <Text style={styles.message}>{context}</Text>
           </>
         ) : null}
-        {userComment ? (
+        {canDisplay("USER_COMMENT", userComment) ? (
           <>
             <Text style={styles.sectionTitle}>Précisions sur l'élément</Text>
-            <Text style={styles.message}>{userComment || noData}</Text>
+            <Text style={styles.message}>{userComment}</Text>
           </>
         ) : null}
       </View>

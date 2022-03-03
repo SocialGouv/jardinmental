@@ -72,10 +72,8 @@ const ChartFrise = ({ navigation, fromDate, toDate, focusedScores }) => {
       // { label: "Traitements", value: "POSOLOGY" },
       // { label: "Substances", value: "TOXIC" },
 
-      if (event === "CONTEXT" && dayData?.CONTEXT?.userComment)
-        infoDate = { ...infoDate, CONTEXT: dayData?.CONTEXT?.userComment };
-      if (event === "USER_COMMENT" && categoryState?.userComment)
-        infoDate = { ...infoDate, USER_COMMENT: categoryState?.userComment };
+      if (dayData?.CONTEXT?.userComment) infoDate = { ...infoDate, CONTEXT: dayData?.CONTEXT?.userComment };
+      if (categoryState?.userComment) infoDate = { ...infoDate, USER_COMMENT: categoryState?.userComment };
 
       console.log("✍️ ~ infoDate", infoDate);
 
@@ -167,7 +165,15 @@ const ChartFrise = ({ navigation, fromDate, toDate, focusedScores }) => {
           })
           ?.map((d) => {
             console.log("🎄", d);
-            return <Card key={d.date} date={d.date} context={d.CONTEXT} userComment={d.USER_COMMENT} />;
+            return (
+              <Card
+                key={d.date}
+                event={event}
+                date={d.date}
+                context={d.CONTEXT}
+                userComment={d.USER_COMMENT}
+              />
+            );
           })}
       </ScrollView>
     </>
