@@ -1,10 +1,10 @@
-import React, {useEffect} from 'react';
-import {StyleSheet, Platform, Modal, View} from 'react-native';
-import DateTimePicker from '@react-native-community/datetimepicker';
-import RoundButtonIcon from './RoundButtonIcon';
-import {today} from '../utils/date/helpers';
+import React, { useEffect } from "react";
+import { StyleSheet, Platform, Modal, View } from "react-native";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import RoundButtonIcon from "./RoundButtonIcon";
+import { today } from "../utils/date/helpers";
 
-const DatePicker = ({visible, selectDate, initDate = Date.now(), mode}) => {
+const DatePicker = ({ visible, selectDate, initDate = Date.now(), mode }) => {
   const [date, setDate] = React.useState(new Date(initDate));
   useEffect(() => {
     setDate(new Date(initDate));
@@ -13,7 +13,7 @@ const DatePicker = ({visible, selectDate, initDate = Date.now(), mode}) => {
   if (!visible) {
     return null;
   }
-  if (Platform.OS === 'ios') {
+  if (Platform.OS === "ios") {
     return (
       <Modal visible={visible} animationType="fade" transparent={true}>
         <View style={styles.modalContent}>
@@ -32,11 +32,7 @@ const DatePicker = ({visible, selectDate, initDate = Date.now(), mode}) => {
               }}
             />
             <View style={styles.buttonsContainer}>
-              <RoundButtonIcon
-                icon="cancel"
-                visible
-                onPress={() => selectDate(initDate)}
-              />
+              <RoundButtonIcon icon="cancel" visible onPress={() => selectDate(initDate)} />
               <RoundButtonIcon
                 icon="validate"
                 visible
@@ -68,23 +64,23 @@ const DatePicker = ({visible, selectDate, initDate = Date.now(), mode}) => {
 
 const styles = StyleSheet.create({
   modalContent: {
-    height: '100%',
-    width: '100%',
-    backgroundColor: 'rgba(0, 0, 0, 0.3)',
-    justifyContent: 'center',
-    alignItems: 'center',
+    height: "100%",
+    width: "100%",
+    backgroundColor: "rgba(0, 0, 0, 0.3)",
+    justifyContent: "center",
+    alignItems: "center",
   },
   datePickerContainer: {
-    display: 'flex',
-    width: '100%',
+    display: "flex",
+    width: "100%",
     maxWidth: 320,
     borderRadius: 20,
-    backgroundColor: 'white',
+    backgroundColor: "white",
   },
   buttonsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
     marginVertical: 15,
   },
   datePicker: {
