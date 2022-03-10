@@ -1,3 +1,15 @@
+# [1.22.0](https://github.com/SocialGouv/monsuivipsy/compare/v1.21.2...v1.22.0) (2022-03-10)
+
+
+### Bug Fixes
+
+* **journal:** clavier sur note longue ([ea18164](https://github.com/SocialGouv/monsuivipsy/commit/ea18164a8141cd143ee10f683eae1ae769e335c7))
+
+
+### Features
+
+* **suivi:** ajouter vue évènement ([#140](https://github.com/SocialGouv/monsuivipsy/issues/140)) ([3d564e8](https://github.com/SocialGouv/monsuivipsy/commit/3d564e80e752b7f59672a00bdda310284e71533b))
+
 ## [1.21.2](https://github.com/SocialGouv/monsuivipsy/compare/v1.21.1...v1.21.2) (2022-03-01)
 
 
