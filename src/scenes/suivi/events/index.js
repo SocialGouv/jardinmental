@@ -50,16 +50,16 @@ const ChartFrise = ({ navigation, fromDate, toDate, focusedScores }) => {
     // console.log("event", event);
     return chartDates.map((date) => {
       let infoDate = { date };
-      console.log("✍️ ~ date", date);
+      // console.log("✍️ ~ date", date);
       const dayData = diaryData[date];
       if (!dayData) {
-        console.log("no dayData");
+        // console.log("no dayData");
         return {};
       }
       const categoryState = diaryData[date][symptom];
-      console.log("✍️ ~ categoryState", categoryState);
+      // console.log("✍️ ~ categoryState", categoryState);
       if (!categoryState) {
-        console.log("categoryState");
+        // console.log("categoryState");
         return {};
       }
       if (diaryData[date][symptom]?.value !== targetScore) {
@@ -75,7 +75,7 @@ const ChartFrise = ({ navigation, fromDate, toDate, focusedScores }) => {
       if (dayData?.CONTEXT?.userComment) infoDate = { ...infoDate, CONTEXT: dayData?.CONTEXT?.userComment };
       if (categoryState?.userComment) infoDate = { ...infoDate, USER_COMMENT: categoryState?.userComment };
 
-      console.log("✍️ ~ infoDate", infoDate);
+      // console.log("✍️ ~ infoDate", infoDate);
 
       return infoDate;
 

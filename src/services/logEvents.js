@@ -1,13 +1,13 @@
-import NetInfo from '@react-native-community/netinfo';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import DeviceInfo from 'react-native-device-info';
-import {Platform} from 'react-native';
-import Matomo from './matomo';
-import {STORAGE_KEY_SUPPORTED} from '../utils/constants';
+import NetInfo from "@react-native-community/netinfo";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import DeviceInfo from "react-native-device-info";
+import { Platform } from "react-native";
+import Matomo from "./matomo";
+import { STORAGE_KEY_SUPPORTED } from "../utils/constants";
 
 const CONSTANTS = {
-  STORE_KEY_USER_ID: 'STORE_KEY_USER_ID',
-  STORE_KEY_NUMBER_OF_VISITS: 'STORE_KEY_NUMBER_OF_VISITS',
+  STORE_KEY_USER_ID: "STORE_KEY_USER_ID",
+  STORE_KEY_NUMBER_OF_VISITS: "STORE_KEY_NUMBER_OF_VISITS",
 };
 
 const initMatomo = async () => {
@@ -17,17 +17,12 @@ const initMatomo = async () => {
     await AsyncStorage.setItem(CONSTANTS.STORE_KEY_USER_ID, userId);
   }
 
-  const previousVisits = await AsyncStorage.getItem(
-    CONSTANTS.STORE_KEY_NUMBER_OF_VISITS,
-  );
+  const previousVisits = await AsyncStorage.getItem(CONSTANTS.STORE_KEY_NUMBER_OF_VISITS);
   const newVisits = previousVisits ? Number(previousVisits) + 1 : 1;
-  await AsyncStorage.setItem(
-    CONSTANTS.STORE_KEY_NUMBER_OF_VISITS,
-    `${newVisits}`,
-  );
+  await AsyncStorage.setItem(CONSTANTS.STORE_KEY_NUMBER_OF_VISITS, `${newVisits}`);
 
   Matomo.init({
-    baseUrl: 'https://matomo.fabrique.social.gouv.fr/piwik.php',
+    baseUrl: "https://matomo.fabrique.social.gouv.fr/piwik.php",
     idsite: 37,
     userId,
     _idvc: newVisits,
@@ -38,7 +33,7 @@ const initMatomo = async () => {
   Matomo.setUserProperties({
     version: DeviceInfo.getVersion(),
     system: Platform.OS,
-    supported: supported ? supported : '',
+    supported: supported ? supported : "",
   });
 };
 
@@ -47,16 +42,16 @@ const checkNetwork = async () => {
   return networkState.isConnected;
 };
 
-const logEvent = async ({category, action, name, value}) => {
+const logEvent = async ({ category, action, name, value }) => {
   try {
     const canSend = await checkNetwork();
     if (!canSend) {
-      throw new Error('no network');
+      throw new Error("no network");
     }
-    Matomo.logEvent({category, action, name, value});
+    Matomo.logEvent({ category, action, name, value });
   } catch (error) {
-    console.log('logEvent error', error);
-    console.log('logEvent error', {category, action, name, value});
+    console.log("logEvent error", error);
+    console.log("logEvent error", { category, action, name, value });
   }
 };
 
@@ -67,9 +62,9 @@ APP VISIT
 
 */
 
-const APP = 'APP';
-const APP_OPEN = 'APP_OPEN';
-const APP_CLOSE = 'APP_CLOSE';
+const APP = "APP";
+const APP_OPEN = "APP_OPEN";
+const APP_CLOSE = "APP_CLOSE";
 
 const logAppVisit = async () => {
   await logEvent({
@@ -85,23 +80,23 @@ const logAppClose = async () => {
   });
 };
 
-const ONBOARDING = 'ONBOARDING';
-const NEXT_CLICK = 'NEXT_CLICK';
+const ONBOARDING = "ONBOARDING";
+const NEXT_CLICK = "NEXT_CLICK";
 
 const logOnboardingSwipe = async (page) => {
   await logEvent({
     category: ONBOARDING,
     action: NEXT_CLICK,
-    name: 'page',
+    name: "page",
     value: page,
   });
 };
 
-const FEELING = 'FEELING';
-const FEELING_START = 'FEELING_START';
-const FEELING_DATE_CHOOSE = 'FEELING_DATE_CHOOSE';
-const FEELING_ADD = 'FEELING_ADD';
-const FEELING_START_YESTERDAY = 'FEELING_START_YESTERDAY';
+const FEELING = "FEELING";
+const FEELING_START = "FEELING_START";
+const FEELING_DATE_CHOOSE = "FEELING_DATE_CHOOSE";
+const FEELING_ADD = "FEELING_ADD";
+const FEELING_START_YESTERDAY = "FEELING_START_YESTERDAY";
 
 const logFeelingStart = async () => {
   await logEvent({
@@ -136,24 +131,24 @@ const logFeelingAdd = async () => {
 const logFeelingAddComment = async (value) => {
   await logEvent({
     category: FEELING,
-    action: 'FEELING_ADD_COMMENT',
-    name: 'comment',
+    action: "FEELING_ADD_COMMENT",
+    name: "comment",
     value,
   });
 };
 const logFeelingAddContext = async (value) => {
   await logEvent({
     category: FEELING,
-    action: 'FEELING_ADD_CONTEXT',
-    name: 'context',
+    action: "FEELING_ADD_CONTEXT",
+    name: "context",
     value,
   });
 };
 const logFeelingResponseToxic = async (value) => {
   await logEvent({
     category: FEELING,
-    action: 'FEELING_RESPONSE_TOXIC',
-    name: 'toxic',
+    action: "FEELING_RESPONSE_TOXIC",
+    name: "toxic",
     value,
   });
 };
@@ -161,13 +156,13 @@ const logFeelingResponseToxic = async (value) => {
 const logFeelingEditButtonClick = async () => {
   await logEvent({
     category: FEELING,
-    action: 'FEELING_EDIT_BUTTON_CLICK',
+    action: "FEELING_EDIT_BUTTON_CLICK",
   });
 };
 
-const PARAMETERS = 'PARAMETERS';
-const REMINDER_ADD = 'REMINDER_ADD';
-const REMINDER_CANCEL = 'REMINDER_CANCEL';
+const PARAMETERS = "PARAMETERS";
+const REMINDER_ADD = "REMINDER_ADD";
+const REMINDER_CANCEL = "REMINDER_CANCEL";
 
 const logReminderAdd = async () => {
   await logEvent({
@@ -183,12 +178,12 @@ const logReminderCancel = async () => {
   });
 };
 
-const SYMPTOM = 'SYMPTOM';
-const SYMPTOM_SETTING_FROM_SURVEY = 'SYMPTOM_SETTING_FROM_SURVEY';
-const SYMPTOM_ADD = 'SYMPTOM_ADD';
-const SYMPTOM_CANCEL = 'SYMPTOM_CANCEL';
-const CUSTOM_SYMPTOM = 'CUSTOM_SYMPTOM';
-const CUSTOM_SYMPTOM_ADD = 'CUSTOM_SYMPTOM_ADD';
+const SYMPTOM = "SYMPTOM";
+const SYMPTOM_SETTING_FROM_SURVEY = "SYMPTOM_SETTING_FROM_SURVEY";
+const SYMPTOM_ADD = "SYMPTOM_ADD";
+const SYMPTOM_CANCEL = "SYMPTOM_CANCEL";
+const CUSTOM_SYMPTOM = "CUSTOM_SYMPTOM";
+const CUSTOM_SYMPTOM_ADD = "CUSTOM_SYMPTOM_ADD";
 
 const logSettingsSymptomsFromSurvey = async () => {
   await logEvent({
@@ -201,7 +196,7 @@ const logSymptomAdd = async (symptom) => {
   await logEvent({
     category: SYMPTOM,
     action: SYMPTOM_ADD,
-    name: 'symptom',
+    name: "symptom",
     value: symptom,
   });
 };
@@ -210,7 +205,7 @@ const logSymptomCancel = async (symptom) => {
   await logEvent({
     category: SYMPTOM,
     action: SYMPTOM_CANCEL,
-    name: 'symptom',
+    name: "symptom",
     value: symptom,
   });
 };
@@ -224,123 +219,123 @@ const logCustomSymptomAdd = async () => {
 
 const logCalendarOpen = async () => {
   await logEvent({
-    category: 'CALENDAR',
-    action: 'CALENDAR_OPEN',
+    category: "CALENDAR",
+    action: "CALENDAR_OPEN",
   });
 };
 
 const logInfosOpen = async () => {
   await logEvent({
-    category: 'INFOS',
-    action: 'INFOS_OPEN',
+    category: "INFOS",
+    action: "INFOS_OPEN",
   });
 };
 const logContactOpen = async () => {
   await logEvent({
-    category: 'CONTACT',
-    action: 'CONTACT_OPEN',
+    category: "CONTACT",
+    action: "CONTACT_OPEN",
   });
 };
 
 const logDataExport = async () => {
   await logEvent({
-    category: 'DATA_EXPORT',
-    action: 'DATA_EXPORT',
+    category: "DATA_EXPORT",
+    action: "DATA_EXPORT",
   });
 };
 
 const logNPSOpen = async () => {
   await logEvent({
-    category: 'NPS',
-    action: 'NPS_OPEN',
+    category: "NPS",
+    action: "NPS_OPEN",
   });
 };
 
 const logNPSSend = async (useful, reco) => {
   await logEvent({
-    category: 'NPS',
-    action: 'NPS_SEND',
-    name: 'notes',
+    category: "NPS",
+    action: "NPS_SEND",
+    name: "notes",
     value: `${useful}-${reco}`,
   });
 };
 
 const logNPSUsefulSend = async (value) => {
   await logEvent({
-    category: 'NPS',
-    action: 'NPS_SEND',
-    name: 'notes-useful',
+    category: "NPS",
+    action: "NPS_SEND",
+    name: "notes-useful",
     value,
   });
 };
 
 const logNPSRecoSend = async (value) => {
   await logEvent({
-    category: 'NPS',
-    action: 'NPS_SEND',
-    name: 'notes-reco',
+    category: "NPS",
+    action: "NPS_SEND",
+    name: "notes-reco",
     value,
   });
 };
 
 const logProNPSSend = async () => {
   await logEvent({
-    category: 'NPS',
-    action: 'PRO_NPS_SEND',
+    category: "NPS",
+    action: "PRO_NPS_SEND",
   });
 };
 
 const logProNPSContactSend = async () => {
   await logEvent({
-    category: 'NPS',
-    action: 'PRO_NPS_CONTACT_SEND',
+    category: "NPS",
+    action: "PRO_NPS_CONTACT_SEND",
   });
 };
 
 const logSupportedSelect = async (supported) => {
   await logEvent({
-    category: 'SUPPORTED',
-    action: 'SUPPORTED_CHOOSE',
+    category: "SUPPORTED",
+    action: "SUPPORTED_CHOOSE",
     name: supported,
   });
 };
 
 const logInfoClick = async (link) => {
   await logEvent({
-    category: 'INFOS',
-    action: 'INFOS_CLICK',
+    category: "INFOS",
+    action: "INFOS_CLICK",
     name: link,
   });
 };
 
 const logDrugsOpen = async () => {
   await logEvent({
-    category: 'DRUG',
-    action: 'DRUG_OPEN',
+    category: "DRUG",
+    action: "DRUG_OPEN",
   });
 };
 
 const logTreatmentNotFound = async (value) => {
   await logEvent({
-    category: 'DRUG',
-    action: 'DRUG_NOT_FOUND',
+    category: "DRUG",
+    action: "DRUG_NOT_FOUND",
     name: value,
   });
 };
 
 const logDrugAdd = async (drug) => {
   await logEvent({
-    category: 'DRUG',
-    action: 'DRUG_ADD',
-    name: 'drug',
+    category: "DRUG",
+    action: "DRUG_ADD",
+    name: "drug",
     value: drug,
   });
 };
 const logInputDrugSurvey = async (numberOfInput) => {
   await logEvent({
-    category: 'DRUG',
-    action: 'DRUG_INPUT_SURVEY',
-    name: 'numberOfInput',
+    category: "DRUG",
+    action: "DRUG_INPUT_SURVEY",
+    name: "numberOfInput",
     value: numberOfInput,
   });
 };
@@ -348,89 +343,89 @@ const logInputDrugSurvey = async (numberOfInput) => {
 // beck
 const logActivateBeck = async (v) => {
   await logEvent({
-    category: 'BECK',
-    action: 'BECK_ACTIVATE',
+    category: "BECK",
+    action: "BECK_ACTIVATE",
     name: v,
   });
 };
 const logBeckAddCustomWhere = async (value) => {
   await logEvent({
-    category: 'BECK',
-    action: 'BECK_ADD_CUSTOM_ELEMENT_IN_WHERE_LIST',
+    category: "BECK",
+    action: "BECK_ADD_CUSTOM_ELEMENT_IN_WHERE_LIST",
     name: value,
   });
 };
 const logBeckAddCustomWho = async (value) => {
   await logEvent({
-    category: 'BECK',
-    action: 'BECK_ADD_CUSTOM_ELEMENT_IN_WHO_LIST',
+    category: "BECK",
+    action: "BECK_ADD_CUSTOM_ELEMENT_IN_WHO_LIST",
     name: value,
   });
 };
 const logBeckAddCustomEmotion = async (value) => {
   await logEvent({
-    category: 'BECK',
-    action: 'BECK_ADD_CUSTOM_ELEMENT_IN_EMOTION_LIST',
+    category: "BECK",
+    action: "BECK_ADD_CUSTOM_ELEMENT_IN_EMOTION_LIST",
     name: value,
   });
 };
 const logBeckAddCustomSensation = async (value) => {
   await logEvent({
-    category: 'BECK',
-    action: 'BECK_ADD_CUSTOM_ELEMENT_IN_SENSATION_LIST',
+    category: "BECK",
+    action: "BECK_ADD_CUSTOM_ELEMENT_IN_SENSATION_LIST",
     name: value,
   });
 };
 
 const logBeckStepOpen = async (step) => {
   await logEvent({
-    category: 'BECK',
-    action: 'BECK_STEP_OPEN',
+    category: "BECK",
+    action: "BECK_STEP_OPEN",
     name: step,
   });
 };
 const logBeckViewOpen = async () => {
   await logEvent({
-    category: 'BECK',
-    action: 'BECK_VIEW_OPEN',
+    category: "BECK",
+    action: "BECK_VIEW_OPEN",
   });
 };
 const logBeckEditClick = async () => {
   await logEvent({
-    category: 'BECK',
-    action: 'BECK_EDIT_CLICK',
+    category: "BECK",
+    action: "BECK_EDIT_CLICK",
   });
 };
 
 const logDeleteBeck = async () => {
   await logEvent({
-    category: 'BECK',
-    action: 'BECK_DELETE',
+    category: "BECK",
+    action: "BECK_DELETE",
   });
 };
 
 const logAddNoteDiary = async () => {
   await logEvent({
-    category: 'DIARY',
-    action: 'DIARY_ADD_NOTE',
+    category: "DIARY",
+    action: "DIARY_ADD_NOTE",
   });
 };
 const logEditNoteDiary = async () => {
   await logEvent({
-    category: 'DIARY',
-    action: 'DIARY_EDIT_NOTE',
+    category: "DIARY",
+    action: "DIARY_EDIT_NOTE",
   });
 };
 const logDeleteNoteDiary = async () => {
   await logEvent({
-    category: 'DIARY',
-    action: 'DIARY_DELETE_NOTE',
+    category: "DIARY",
+    action: "DIARY_DELETE_NOTE",
   });
 };
 
 const logOpenPage = async (category) => {
   await logEvent({
-    category: 'OPEN_TAB',
+    category: "OPEN_TAB",
     action: `${category.toUpperCase()}_OPEN`,
   });
 };
