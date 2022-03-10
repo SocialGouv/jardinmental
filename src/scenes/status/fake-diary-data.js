@@ -5,10 +5,14 @@ import { formatDay, oneDay } from "../../utils/date/helpers";
 const MAX_DAY = 10;
 export const startDate = new Date(Date.now() - MAX_DAY * oneDay);
 
-const fakeDaySurvey = () => ({
-  MOOD: { value: Math.ceil(Math.random() * 5) },
-  ANXIETY: { value: Math.ceil(Math.random() * 5) },
-});
+const fakeDaySurvey = () => {
+  const MOOD_hasComment = Math.random() > 0.5;
+  const ANXIETY_hasComment = Math.random() > 0.5;
+  return {
+    MOOD: { value: Math.ceil(Math.random() * 5), userComment: MOOD_hasComment ? "comment" : "" },
+    ANXIETY: { value: Math.ceil(Math.random() * 5), userComment: ANXIETY_hasComment ? "comment" : "" },
+  };
+};
 
 let fakeDiaryData2 = {};
 for (let i of Array(30).keys()) {
