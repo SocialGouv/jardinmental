@@ -45,7 +45,7 @@ const Drugs = ({ navigation, route }) => {
   }, [navigation, route, listDrugs]);
 
   useEffect(() => {
-    defaultValue();
+    if (!route?.params?.editingSurvey) defaultValue();
   }, [medicalTreatment]);
 
   const previousQuestion = () => {
