@@ -430,6 +430,14 @@ const logOpenPage = async (category) => {
   });
 };
 
+// SUIVI
+const logOpenPageSuivi = async (tab) => {
+  await logEvent({
+    category: "OPEN_SUB_TAB_SUIVI",
+    action: `${tab.toUpperCase()}_OPEN`,
+  });
+};
+
 export default {
   initMatomo,
   logAppVisit,
@@ -479,4 +487,5 @@ export default {
   logFeelingAddContext,
   logFeelingResponseToxic,
   logSettingsSymptomsFromSurvey,
+  logOpenPageSuivi,
 };

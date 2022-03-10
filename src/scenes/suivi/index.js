@@ -1,5 +1,6 @@
 import React from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View, Dimensions } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
 
 import { beforeToday } from "../../utils/date/helpers";
 import Header from "../../components/Header";
@@ -10,6 +11,7 @@ import ChartFrise from "./chartFrise";
 import ChartPie from "./chartPie";
 import Evenements from "./events";
 import Courbes from "../calendar/calendar";
+import logEvents from "../../services/logEvents";
 
 const screenHeight = Dimensions.get("window").height;
 // const CHART_TYPES = ["Frises", "Diagrammes", "Courbes", "Évènements"];
@@ -31,6 +33,12 @@ const Suivi = ({ navigation }) => {
   const [fromDate, setFromDate] = React.useState(beforeToday(30));
   const [toDate, setToDate] = React.useState(beforeToday(0));
   const [focusedScores, setFocusedScores] = React.useState([]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      logEvents.logOpenPageSuivi(chartType);
+    }, [chartType])
+  );
 
   if (!toDate || !fromDate) return null;
 
