@@ -89,6 +89,8 @@ const Suivi = ({ navigation }) => {
               } else {
                 setFocusedScores((e) => [...e, i]);
               }
+              //events
+              logEvents.logSuiviEditScoreFrise(i);
             }}
           />
         ) : null}
