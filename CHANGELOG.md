@@ -1,3 +1,15 @@
+## [1.22.1](https://github.com/SocialGouv/monsuivipsy/compare/v1.22.0...v1.22.1) (2022-03-10)
+
+
+### Bug Fixes
+
+* **évènement:** afficher tous les évènements + UX ([1f3a5fb](https://github.com/SocialGouv/monsuivipsy/commit/1f3a5fb4132c9f21ea42cd17a71b50ce11f29b4d))
+* **event:** add events input ([ef7be6f](https://github.com/SocialGouv/monsuivipsy/commit/ef7be6ff073eb42915005ddf59a95ceda43b73ad))
+* **event:** add view sub_tab ([068c352](https://github.com/SocialGouv/monsuivipsy/commit/068c352b6c171f989e4918059d453438afe6aa3f))
+* **export:** taille de police ([ab75e89](https://github.com/SocialGouv/monsuivipsy/commit/ab75e890be9038dbf2ced21e79fac60732781d87))
+* **questionnaire:** correction de la loop au retour si on avait des traitements ([8713258](https://github.com/SocialGouv/monsuivipsy/commit/871325871f7b180b16a77e5af1c40a5b4b5f181c))
+* **traitement:** mettre une valeur par défaut que si c'est une nouvelle entrée ([f930f7b](https://github.com/SocialGouv/monsuivipsy/commit/f930f7b4c228341bab2d34c03549915517c53f45))
+
 # [1.22.0](https://github.com/SocialGouv/monsuivipsy/compare/v1.21.2...v1.22.0) (2022-03-10)
 
 
