@@ -438,6 +438,43 @@ const logOpenPageSuivi = async (tab) => {
   });
 };
 
+const logSuiviEditDateFrom = async (tab) => {
+  await logEvent({
+    category: "SUIVI",
+    action: "EDIT_DATE_FROM",
+  });
+};
+
+const logSuiviEditDateTo = async (tab) => {
+  await logEvent({
+    category: "SUIVI",
+    action: "EDIT_DATE_TO",
+  });
+};
+
+const logSuiviEditScoreFrise = async (score) => {
+  await logEvent({
+    category: "SUIVI",
+    action: "EDIT_SCORE_FRISE",
+    name: score,
+  });
+};
+
+const logSuiviEditScoreEvents = async (score) => {
+  await logEvent({
+    category: "SUIVI",
+    action: "EDIT_SCORE_EVENTS",
+    name: score,
+  });
+};
+
+const logSuiviEditSymptom = async () => {
+  await logEvent({
+    category: "SUIVI",
+    action: "EDIT_SYMPTOM_EVENTS",
+  });
+};
+
 export default {
   initMatomo,
   logAppVisit,
@@ -488,4 +525,9 @@ export default {
   logFeelingResponseToxic,
   logSettingsSymptomsFromSurvey,
   logOpenPageSuivi,
+  logSuiviEditDateFrom,
+  logSuiviEditDateTo,
+  logSuiviEditScoreFrise,
+  logSuiviEditScoreEvents,
+  logSuiviEditSymptom,
 };

@@ -147,6 +147,7 @@ const ChartFrise = ({ navigation, fromDate, toDate, focusedScores }) => {
           <SelectSymptom
             options={activeCategories}
             onChange={setSymptom}
+            onOpen={logEvents.logSuiviEditSymptom}
             placeholder="Choisir critères"
             value={symptom}
           />
@@ -157,8 +158,9 @@ const ChartFrise = ({ navigation, fromDate, toDate, focusedScores }) => {
             if (score.includes(i)) {
               setScore([]);
             } else {
-              setScore((e) => [i]);
+              setScore([i]);
             }
+            logEvents.logSuiviEditScoreEvents(i);
           }}
         />
       </View>
@@ -192,7 +194,7 @@ const ChartFrise = ({ navigation, fromDate, toDate, focusedScores }) => {
   );
 };
 
-const SelectSymptom = ({ value, placeholder, options = [], onChange = () => {} }) => {
+const SelectSymptom = ({ value, placeholder, options = [], onChange = () => {}, onOpen = () => {} }) => {
   const getTitle = (cat) => {
     const category = displayedCategories[cat] || cat;
     const [categoryName, suffix] = category.split("_");
@@ -207,6 +209,7 @@ const SelectSymptom = ({ value, placeholder, options = [], onChange = () => {} }
       value={value}
       useNativeAndroidPickerStyle={false}
       onValueChange={onChange}
+      onOpen={onOpen}
       placeholder={{ label: placeholder, value: null }}
       items={options.map((o) => ({ label: getTitle(o), value: o })) || []}
       style={pickerSelectStyles}

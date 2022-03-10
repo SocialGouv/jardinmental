@@ -1,6 +1,7 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
 import DatePicker from "react-native-date-picker";
+import logEvents from "../../services/logEvents";
 
 import Text from "../../components/MyText";
 import DateOrTimeDisplay from "./DateOrTimeDisplay";
@@ -15,9 +16,23 @@ const DateRange = (props) => {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>du</Text>
-      <DateOrTimeDisplay mode="date" date={fromDate} onPress={() => setOpenFromDate(true)} />
+      <DateOrTimeDisplay
+        mode="date"
+        date={fromDate}
+        onPress={() => {
+          setOpenFromDate(true);
+          logEvents.logSuiviEditDateFrom();
+        }}
+      />
       <Text style={styles.text}>au</Text>
-      <DateOrTimeDisplay mode="date" date={toDate} onPress={() => setOpenToDate(true)} />
+      <DateOrTimeDisplay
+        mode="date"
+        date={toDate}
+        onPress={() => {
+          setOpenToDate(true);
+          logEvents.logSuiviEditDateTo();
+        }}
+      />
       <DatePicker
         timeZoneOffsetInMinutes={0}
         locale="fr"
