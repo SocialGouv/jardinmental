@@ -2,8 +2,8 @@ import React from "react";
 import { StyleSheet, View, Dimensions, ScrollView, TouchableOpacity } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import RNPickerSelect from "react-native-picker-select";
-
-import { getArrayOfDatesFromTo } from "../../../utils/date/helpers";
+import { isToday, isYesterday, parseISO } from "date-fns";
+import { getArrayOfDatesFromTo, formatDay, formatRelativeDate } from "../../../utils/date/helpers";
 import { DiaryDataContext } from "../../../context/diaryData";
 import Text from "../../../components/MyText";
 import { displayedCategories, scoresMapIcon } from "../../../utils/constants";
@@ -22,7 +22,7 @@ const ChartFrise = ({ navigation, fromDate, toDate, focusedScores }) => {
   const [isEmpty, setIsEmpty] = React.useState();
   const chartDates = getArrayOfDatesFromTo({ fromDate, toDate });
   const [symptom, setSymptom] = React.useState("ANXIETY");
-  const [event, setEvent] = React.useState("CONTEXT");
+  const [event, setEvent] = React.useState("ALL");
   const [score, setScore] = React.useState([1]);
 
   useFocusEffect(
@@ -109,6 +109,13 @@ const ChartFrise = ({ navigation, fromDate, toDate, focusedScores }) => {
     }
   };
 
+  const renderDate = (d) => {
+    if (isYesterday(parseISO(d))) return "hier";
+    if (isToday(parseISO(d))) return "aujourd'hui";
+    let relativeDate = formatRelativeDate(d);
+    return `le ${relativeDate}`;
+  };
+
   if (isEmpty) {
     return (
       <View style={styles.emptyContainer}>
@@ -125,18 +132,18 @@ const ChartFrise = ({ navigation, fromDate, toDate, focusedScores }) => {
   }
   return (
     <>
-      <View>
-        <View style={styles.datesContainer}>
-          <Text>Afficher</Text>
-          <SelectEvent
+      <View style={styles.filterContainer}>
+        <View style={styles.filterItemContainer}>
+          <Text style={styles.text}>Afficher tous les évènements associés à</Text>
+          {/* <SelectEvent
             options={activeCategories}
             onChange={setEvent}
             placeholder="Choisir évènement"
             value={event}
-          />
+          /> */}
         </View>
-        <View style={styles.datesContainer}>
-          <Text>associé(s)&nbsp;à</Text>
+        <View style={styles.filterItemContainer}>
+          {/* <Text>associé(s)&nbsp;à</Text> */}
           <SelectSymptom
             options={activeCategories}
             onChange={setSymptom}
@@ -156,6 +163,12 @@ const ChartFrise = ({ navigation, fromDate, toDate, focusedScores }) => {
         />
       </View>
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContainer}>
+        {memoizedCallback()?.filter((x) => x.date)?.length === 0 && (
+          <Text style={styles.noDataMessage}>
+            Aucun évènements à afficher entre {renderDate(formatDay(fromDate))} et{" "}
+            {renderDate(formatDay(toDate))}.
+          </Text>
+        )}
         {memoizedCallback()
           ?.filter((x) => x.date)
           ?.sort((a, b) => {
@@ -164,7 +177,6 @@ const ChartFrise = ({ navigation, fromDate, toDate, focusedScores }) => {
             return bd.localeCompare(ad);
           })
           ?.map((d) => {
-            console.log("🎄", d);
             return (
               <Card
                 key={d.date}
@@ -202,6 +214,7 @@ const SelectSymptom = ({ value, placeholder, options = [], onChange = () => {} }
     />
   );
 };
+
 const SelectEvent = ({ value, placeholder, onChange = () => {} }) => {
   return (
     <RNPickerSelect
@@ -224,17 +237,17 @@ const SelectEvent = ({ value, placeholder, onChange = () => {} }) => {
 
 const pickerSelectStyles = StyleSheet.create({
   inputIOS: {
+    paddingVertical: 8,
     backgroundColor: "transparent",
     borderColor: colors.DARK_BLUE,
     borderWidth: 1,
-    height: 30,
     borderRadius: 30,
     paddingHorizontal: 15,
     paddingRight: 40,
     justifyContent: "space-around",
     alignItems: "center",
     flexDirection: "row",
-    fontSize: 16,
+    fontSize: 14,
     color: colors.DARK_BLUE,
     // minWidth: "100%",
     // width: "100%",
@@ -242,9 +255,16 @@ const pickerSelectStyles = StyleSheet.create({
     // padding: 30, // to ensure the text is never behind the icon
   },
   inputAndroid: {
-    fontSize: 16,
-    paddingHorizontal: 10,
     paddingVertical: 8,
+    borderColor: colors.DARK_BLUE,
+    borderWidth: 1,
+    borderRadius: 30,
+    paddingHorizontal: 15,
+    paddingRight: 40,
+    justifyContent: "space-around",
+    alignItems: "center",
+    flexDirection: "row",
+    fontSize: 14,
     color: colors.DARK_BLUE,
     // minWidth: "100%",
     // width: "100%",
@@ -254,20 +274,22 @@ const pickerSelectStyles = StyleSheet.create({
     display: "flex",
     height: "100%",
     justifyContent: "center",
-    marginRight: 8,
+    marginHorizontal: 8,
     transform: [{ rotate: "180deg" }],
   },
 });
 
 const styles = StyleSheet.create({
-  datesContainer: {
+  filterContainer: {
+    paddingHorizontal: 20,
+  },
+  filterItemContainer: {
     flexDirection: "row",
     margin: 6,
   },
-
-  friseContainer: {
-    marginVertical: 10,
-    paddingHorizontal: 10,
+  text: {
+    color: colors.DARK_BLUE,
+    fontSize: 14,
   },
   emptyContainer: {
     flex: 1,
@@ -275,35 +297,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     justifyContent: "space-between",
     alignItems: "center",
-  },
-  friseTitle: {
-    fontSize: 19,
-    color: colors.BLUE,
-    fontWeight: "600",
-  },
-  squareContainer: {
-    marginVertical: 5,
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  squareItemContainer: {
-    display: "flex",
-    flex: 1,
-    height: 10,
-  },
-  square: {
-    flex: 1,
-    height: 10,
-  },
-  legend: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  legendText: {
-    fontSize: 12,
-    color: colors.BLUE,
   },
   subtitle: {
     flex: 1,
@@ -319,27 +312,18 @@ const styles = StyleSheet.create({
   bold: {
     fontWeight: "bold",
   },
-  setupButton: {
-    backgroundColor: colors.LIGHT_BLUE,
-    borderRadius: 45,
-    paddingHorizontal: 10,
-    paddingVertical: 10,
-    alignItems: "center",
-    justifyContent: "center",
-    display: "flex",
-  },
-  setupButtonText: {
-    color: "#fff",
-    fontWeight: "bold",
-    fontSize: Dimensions.get("window").width > 350 ? 19 : 15,
-    flexWrap: "wrap",
-    textAlign: "center",
-  },
   scrollView: {
     flex: 1,
   },
   scrollContainer: {
+    paddingTop: 30,
     paddingHorizontal: 15,
+  },
+  noDataMessage: {
+    color: "#111",
+    fontSize: 14,
+    fontStyle: "italic",
+    textAlign: "center",
   },
 });
 

@@ -35,16 +35,21 @@ const Card = ({ date, context, userComment, event }) => {
       <Text style={styles.title}>{formatDateThread(date)}</Text>
       <View style={styles.container}>
         {canDisplay("CONTEXT", context) ? (
-          <>
+          <View style={styles.item}>
             <Text style={styles.sectionTitle}>Contexte de la journée</Text>
             <Text style={styles.message}>{context}</Text>
-          </>
+          </View>
         ) : null}
         {canDisplay("USER_COMMENT", userComment) ? (
-          <>
+          <View style={styles.item}>
             <Text style={styles.sectionTitle}>Précisions sur l'élément</Text>
             <Text style={styles.message}>{userComment}</Text>
-          </>
+          </View>
+        ) : null}
+        {!canDisplay("CONTEXT", context) && !canDisplay("USER_COMMENT", userComment) ? (
+          <View style={styles.item}>
+            <Text style={[styles.message, styles.italic]}>Vous n'avez rien précisé pour ce jour-là</Text>
+          </View>
         ) : null}
       </View>
     </View>
@@ -56,7 +61,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#F9F6F6",
     borderRadius: 10,
     marginBottom: 20,
-    padding: 15,
+    paddingHorizontal: 15,
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -67,22 +72,28 @@ const styles = StyleSheet.create({
 
     elevation: 4,
   },
+  item: {
+    marginVertical: 15,
+  },
   title: {
     paddingHorizontal: 15,
     paddingBottom: 10,
     fontWeight: "bold",
     color: colors.BLUE,
-    fontSize: 12,
+    fontSize: 14,
   },
   sectionTitle: {
-    marginVertical: 10,
+    marginBottom: 10,
     color: colors.BLUE,
     fontSize: 12,
     textDecorationLine: "underline",
   },
   message: {
     color: "#111",
-    fontSize: 14,
+    fontSize: 12,
+  },
+  italic: {
+    fontStyle: "italic",
   },
   muted: {
     fontSize: 12,
