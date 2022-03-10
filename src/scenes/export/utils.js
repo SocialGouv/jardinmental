@@ -346,6 +346,10 @@ const formatHtmlTable = async (diaryData, diaryNotes) => {
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Karla&display=swap" rel="stylesheet">
         <style type="text/css">
+          * { font-size: 12px; }
+          h1 { font-size: 20px; }
+          h2 { font-size: 16px; }
+          h3 { font-size: 14px; }
           table {border-collapse:separate;}
           a, a:link, a:visited {text-decoration: none; color: #00788a;}
           a:hover {text-decoration: underline;}
