@@ -1,26 +1,19 @@
-import React, {useState, useEffect, useRef} from 'react';
-import {
-  StyleSheet,
-  ScrollView,
-  SafeAreaView,
-  View,
-  TextInput,
-  Keyboard,
-} from 'react-native';
-import Text from '../../components/MyText';
-import {colors} from '../../utils/colors';
-import Button from '../../components/Button';
-import localStorage from '../../utils/localStorage';
-import {getDrugListWithLocalStorage} from '../../utils/drugs-list';
-import CheckBox from '@react-native-community/checkbox';
-import NPS from '../../services/NPS/NPS';
-import BackButton from '../../components/BackButton';
-import AddElemToList from '../../components/AddElemToList';
-import {confirm} from '../../utils';
-import logEvents from '../../services/logEvents';
+import React, { useState, useEffect, useRef } from "react";
+import { StyleSheet, ScrollView, SafeAreaView, View, TextInput, Keyboard } from "react-native";
+import Text from "../../components/MyText";
+import { colors } from "../../utils/colors";
+import Button from "../../components/Button";
+import localStorage from "../../utils/localStorage";
+import { getDrugListWithLocalStorage } from "../../utils/drugs-list";
+import CheckBox from "@react-native-community/checkbox";
+import NPS from "../../services/NPS/NPS";
+import BackButton from "../../components/BackButton";
+import AddElemToList from "../../components/AddElemToList";
+import { confirm } from "../../utils";
+import logEvents from "../../services/logEvents";
 const ELEMENT_HEIGHT = 55;
 
-const Drugs = ({navigation, route}) => {
+const Drugs = ({ navigation, route }) => {
   const scrollRef = useRef();
   const [treatment, setTreatment] = useState([]);
   const [filter, setFilter] = useState();
@@ -49,10 +42,10 @@ const Drugs = ({navigation, route}) => {
 
   const cleanString = (s) => {
     let r = s
-      ?.replace(/\s*/g, '')
-      .replace(/é/g, 'e')
-      .replace(/è/g, 'e')
-      .replace(/(\(|\)|\||\^|\$)/g, '\\$1')
+      ?.replace(/\s*/g, "")
+      .replace(/é/g, "e")
+      .replace(/è/g, "e")
+      .replace(/(\(|\)|\||\^|\$)/g, "\\$1")
       .toLowerCase();
     return r;
   };
@@ -79,7 +72,7 @@ const Drugs = ({navigation, route}) => {
     list
       ?.sort((a, b) => cleanString(a.name1) > cleanString(b.name1))
       .filter((e) => {
-        const r = new RegExp(cleanString(filter), 'gi');
+        const r = new RegExp(cleanString(filter), "gi");
         return r.test(cleanString(e.id));
       });
 
@@ -90,7 +83,7 @@ const Drugs = ({navigation, route}) => {
       const i = treatment.indexOf(elem);
       t.splice(i, 1);
     } else {
-      t.push({id: d.id});
+      t.push({ id: d.id });
     }
     setTreatment(t);
   };
@@ -99,7 +92,7 @@ const Drugs = ({navigation, route}) => {
     //if there is something in the buffer, alert the user ...
     if (bufferCustomDrugs)
       return confirm({
-        title: 'Êtes-vous sûr de vouloir valider cette sélection ?',
+        title: "Êtes-vous sûr de vouloir valider cette sélection ?",
         message: `Il semblerait que vous n'avez pas correctement ajouter votre traitement personnalisé "${bufferCustomDrugs}"`,
         onConfirm: submit,
         onCancel: () => {
@@ -108,8 +101,8 @@ const Drugs = ({navigation, route}) => {
             animated: true,
           });
         },
-        cancelText: 'Retourner à la liste',
-        confirmText: 'Oui, valider quand même',
+        cancelText: "Retourner à la liste",
+        confirmText: "Oui, valider quand même",
       });
     //... else, submit the treatment
     else submit();
@@ -117,21 +110,19 @@ const Drugs = ({navigation, route}) => {
 
   const submit = async () => {
     await localStorage.setMedicalTreatment(treatment);
-    navigation.navigate('drugs', {treatment});
+    navigation.navigate("drugs", { treatment });
   };
 
   const handleAdd = async (value) => {
-    console.log('add drug', value);
+    console.log("add drug", value);
     if (!value) return;
-    const drug = {id: value, name1: value, values: []};
+    const drug = { id: value, name1: value, values: [] };
     await localStorage.addCustomDrug(drug);
     const drugsAfterAddition = await getDrugListWithLocalStorage();
     const filteredListAfterAddition = filterAndSortList(drugsAfterAddition);
     setFilteredList(filteredListAfterAddition);
     setToogleCheckbox(drug, true);
-    setViewElementIndex(
-      filteredListAfterAddition.map((e) => e.id).indexOf(value),
-    );
+    setViewElementIndex(filteredListAfterAddition.map((e) => e.id).indexOf(value));
     logEvents.logDrugAdd(value);
   };
 
@@ -143,11 +134,12 @@ const Drugs = ({navigation, route}) => {
       <NPS forceView={NPSvisible} close={closeNPS} page={3} />
       <View
         style={{
-          display: 'flex',
-          flexDirection: 'row',
+          display: "flex",
+          flexDirection: "row",
           marginBottom: 10,
-          alignItems: 'center',
-        }}>
+          alignItems: "center",
+        }}
+      >
         <BackButton onPress={navigation.goBack} />
         <TextInput
           autoCapitalize="none"
@@ -164,7 +156,8 @@ const Drugs = ({navigation, route}) => {
         contentContainerStyle={styles.scrollContainer}
         keyboardShouldPersistTaps="handled"
         keyboardDismissMode="on-drag"
-        onScrollBeginDrag={Keyboard.dismiss}>
+        onScrollBeginDrag={Keyboard.dismiss}
+      >
         {!filteredList ? (
           <Text>Chargement</Text>
         ) : (
@@ -172,12 +165,10 @@ const Drugs = ({navigation, route}) => {
             <AddElemToList
               onChange={handleAdd}
               onChangeText={setBufferCustomDrugs}
-              styleContainer={{marginHorizontal: 10}}
+              styleContainer={{ marginHorizontal: 10 }}
             />
             {filteredList?.length === 0 ? (
-              <Text style={styles.noResult}>
-                Aucun résultat pour la recherche "{filter}"
-              </Text>
+              <Text style={styles.noResult}>Aucun résultat pour la recherche "{filter}"</Text>
             ) : null}
             {filteredList?.map((e, index) => (
               <View
@@ -185,16 +176,13 @@ const Drugs = ({navigation, route}) => {
                 style={[
                   styles.drug,
                   {
-                    backgroundColor: treatment.find((x) => x.id === e.id)
-                      ? 'white'
-                      : '#26387c12',
+                    backgroundColor: treatment.find((x) => x.id === e.id) ? "white" : "#26387c12",
                   },
-                ]}>
+                ]}
+              >
                 <View style={styles.item}>
                   <Text style={styles.text1}>{e.name1}</Text>
-                  {e.name2 ? (
-                    <Text style={styles.text2}>({e.name2})</Text>
-                  ) : null}
+                  {e.name2 ? <Text style={styles.text2}>({e.name2})</Text> : null}
                 </View>
                 <CheckBox
                   animationDuration={0.2}
@@ -218,27 +206,27 @@ const Drugs = ({navigation, route}) => {
 const styles = StyleSheet.create({
   labelAddDrug: {
     flex: 1,
-    color: '#fff',
+    color: "#fff",
     fontSize: 20,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   plusIcon: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 30,
-    fontWeight: '300',
+    fontWeight: "300",
     margin: -10,
     marginRight: 10,
   },
   addDrug: {
     backgroundColor: colors.LIGHT_BLUE,
-    color: '#fff',
+    color: "#fff",
     margin: 10,
     borderRadius: 10,
     padding: 10,
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    shadowColor: '#0A215C',
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    shadowColor: "#0A215C",
     shadowOffset: {
       width: 0,
       height: 1,
@@ -252,68 +240,68 @@ const styles = StyleSheet.create({
     fontSize: 16,
     paddingVertical: 12,
     paddingHorizontal: 10,
-    borderColor: '#EDEDED',
-    backgroundColor: '#fff',
-    color: 'black',
+    borderColor: "#EDEDED",
+    backgroundColor: "#fff",
+    color: "black",
   },
   safe: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: "white",
   },
   container: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
   },
   scrollContainer: {
     paddingBottom: 80,
   },
   backButton: {
-    fontWeight: '700',
-    textDecorationLine: 'underline',
+    fontWeight: "700",
+    textDecorationLine: "underline",
     color: colors.BLUE,
-    width: '20%',
+    width: "20%",
   },
   buttonWrapper: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 20,
     left: 10,
   },
   drug: {
-    backgroundColor: '#26387c12',
+    backgroundColor: "#26387c12",
     paddingVertical: 10,
     paddingHorizontal: 20,
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
     flex: 1,
     height: 55,
   },
   item: {
-    display: 'flex',
-    flexDirection: 'column',
+    display: "flex",
+    flexDirection: "column",
     flex: 1,
-    alignItems: 'flex-start',
-    justifyContent: 'center',
+    alignItems: "flex-start",
+    justifyContent: "center",
   },
   text1: {
-    color: '#000',
+    color: "#000",
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   text2: {
     color: colors.BLUE,
     fontSize: 13,
-    fontWeight: '400',
-    fontStyle: 'italic',
+    fontWeight: "400",
+    fontStyle: "italic",
   },
   checkbox: {
     marginHorizontal: 10,
   },
   noResult: {
-    color: '#a3a3a3',
+    color: "#a3a3a3",
     fontSize: 16,
-    fontWeight: '400',
-    fontStyle: 'italic',
-    textAlign: 'center',
+    fontWeight: "400",
+    fontStyle: "italic",
+    textAlign: "center",
   },
 });
 
