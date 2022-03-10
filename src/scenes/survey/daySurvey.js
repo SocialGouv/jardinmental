@@ -145,6 +145,7 @@ const DaySurvey = ({ navigation, route }) => {
 
     navigation.navigate("drugs", {
       currentSurvey,
+      editingSurvey: route.params?.editingSurvey,
     });
   };
 

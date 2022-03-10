@@ -38,6 +38,7 @@ export default ({ navigation, patientState, date }) => {
     };
     navigation.navigate(tab, {
       currentSurvey,
+      editingSurvey: true,
     });
   };
   const hasAnswerSurvey = () =>
@@ -81,9 +82,11 @@ export default ({ navigation, patientState, date }) => {
             <Notes notes={patientState?.NOTES} date={date} onPress={() => handleEdit("notes")} />
           </View>
         </View>
-        <View style={styles.buttonsContainer}>
-          <Button icon="pencil" visible={true} onPress={handlePressItem} />
-        </View>
+        {canEdit(date) ? (
+          <View style={styles.buttonsContainer}>
+            <Button icon="pencil" visible={true} onPress={handlePressItem} />
+          </View>
+        ) : null}
       </View>
     );
   } else {
