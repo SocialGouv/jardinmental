@@ -104,7 +104,7 @@ const DaySurvey = ({ navigation, route }) => {
     });
   };
 
-  const submitDay = async () => {
+  const submitDay = async ({ redirectBack = false }) => {
     const prevCurrentSurvey = route.params?.currentSurvey;
     const currentSurvey = {
       date: prevCurrentSurvey?.date,
@@ -127,6 +127,10 @@ const DaySurvey = ({ navigation, route }) => {
         navigation,
       });
       return navigation.navigate("tabs");
+    }
+
+    if (redirectBack) {
+      return navigation.goBack();
     }
 
     const medicalTreatmentStorage = await localStorage.getMedicalTreatment();
@@ -155,7 +159,7 @@ const DaySurvey = ({ navigation, route }) => {
 
   return (
     <SafeAreaView style={styles.safe}>
-      <BackButton onPress={submitDay} />
+      <BackButton onPress={() => submitDay({ redirectBack: true })} />
       <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "position" : "height"} style={{ flex: 1 }}>
         <ScrollView
           style={styles.container}
