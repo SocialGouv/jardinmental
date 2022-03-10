@@ -19,7 +19,7 @@ import {
   STORAGE_KEY_ONBOARDING_STEP,
   STORAGE_KEY_ONBOARDING_DONE,
 } from "../utils/constants";
-import { fakeDiaryData, startDate as fakeStartDate } from "../scenes/status/fake-diary-data";
+import { fakeDiaryData, fakeDiaryData2, startDate as fakeStartDate } from "../scenes/status/fake-diary-data";
 import { beforeToday, formatDay, getArrayOfDates } from "../utils/date/helpers";
 
 const wipeData = async () => {
@@ -45,7 +45,7 @@ const wipeData = async () => {
 
 const setupFakeData = async () => {
   await AsyncStorage.setItem(STORAGE_KEY_START_DATE, formatDay(fakeStartDate));
-  await AsyncStorage.setItem(STORAGE_KEY_SURVEY_RESULTS, JSON.stringify(fakeDiaryData));
+  await AsyncStorage.setItem(STORAGE_KEY_SURVEY_RESULTS, JSON.stringify(fakeDiaryData2));
 };
 
 const fillUpEmptyDates = (startDate, data) => {
