@@ -80,23 +80,23 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     fontWeight: "bold",
     color: colors.BLUE,
-    fontSize: 12,
+    fontSize: 13,
   },
   sectionTitle: {
     marginBottom: 10,
     color: colors.BLUE,
-    fontSize: 12,
+    fontSize: 13,
     textDecorationLine: "underline",
   },
   message: {
     color: "#111",
-    fontSize: 12,
+    fontSize: 13,
   },
   italic: {
     fontStyle: "italic",
   },
   muted: {
-    fontSize: 12,
+    fontSize: 13,
     fontStyle: "italic",
   },
   buttonWrapper: {
