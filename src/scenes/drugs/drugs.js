@@ -45,7 +45,8 @@ const Drugs = ({ navigation, route }) => {
   }, [navigation, route, listDrugs]);
 
   useEffect(() => {
-    if (!route?.params?.editingSurvey) defaultValue();
+    if (!route?.params?.editingSurvey) getLatestValue();
+    else getValue();
   }, [medicalTreatment]);
 
   const previousQuestion = () => {
@@ -62,7 +63,7 @@ const Drugs = ({ navigation, route }) => {
     navigation.navigate("drugs-list");
   };
 
-  const defaultValue = () => {
+  const getLatestValue = () => {
     const lastSurvey =
       diaryData[
         Object.keys(diaryData)
@@ -75,6 +76,15 @@ const Drugs = ({ navigation, route }) => {
       ];
     if (!lastSurvey || !medicalTreatment) return;
     setPosology(lastSurvey?.POSOLOGY.filter((e) => !!medicalTreatment.find((t) => t.id === e.id)));
+  };
+
+  const getValue = () => {
+    if (!route?.params?.currentSurvey || !medicalTreatment) return;
+    setPosology(
+      route?.params?.currentSurvey?.answers?.POSOLOGY?.filter(
+        (e) => !!medicalTreatment.find((t) => t.id === e.id)
+      ) || []
+    );
   };
 
   const handleDrugChange = (d, value, isFreeText) => {
