@@ -13,7 +13,7 @@ export const getBadgeNotesVersion = async () => {
   return lastNotesVersion !== LAST_NOTES_VERSION;
 };
 
-export const LAST_NOTES_VERSION = "1.21";
+export const LAST_NOTES_VERSION = "1.22";
 
 export default ({ navigation }) => {
   useEffect(() => {
@@ -29,7 +29,26 @@ export default ({ navigation }) => {
       </View>
       <ScrollView style={styles.cgu} contentContainerStyle={styles.scrollContainer}>
         <Card
-          title={"Mon Suivi s'étoffe avec l'écran \"Frises\" et validez votre questionnaire à tout moment"}
+          title="Fonction «&nbsp;Évènements&nbsp;» dans «&nbsp;Mon&nbsp;Suivi&nbsp;» : identifiez les évènements qui influent sur vos ressentis"
+          version="v1.22"
+          date="03/2022"
+        >
+          <Item>
+            <Text style={styles.text}>
+              Sélectionnez un élément de votre questionnaire (par exemple votre humeur) ainsi que le niveau
+              (par exemple l’émoticône vert foncé) et visualisez tous les évènements qui sont arrivés les
+              jours où votre humeur était au plus haut.
+            </Text>
+          </Item>
+          <Item>
+            <Text style={styles.text}>
+              Les évènements correspondent aux précisions (contexte de la journée et pour chaque élément) que
+              vous renseignez dans le questionnaire de «&nbsp;Mon&nbsp;Etat&nbsp;»
+            </Text>
+          </Item>
+        </Card>
+        <Card
+          title="Mon Suivi s'étoffe avec l'écran «&nbsp;Frises&nbsp;» et validez votre questionnaire à tout moment"
           version="v1.21"
           date="03/2022"
         >
