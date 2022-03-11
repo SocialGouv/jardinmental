@@ -247,7 +247,7 @@ const pickerSelectStyles = StyleSheet.create({
     justifyContent: "space-around",
     alignItems: "center",
     flexDirection: "row",
-    fontSize: 14,
+    fontSize: 16,
     color: colors.DARK_BLUE,
     // minWidth: "100%",
     // width: "100%",
@@ -265,7 +265,7 @@ const pickerSelectStyles = StyleSheet.create({
     justifyContent: "space-around",
     alignItems: "center",
     flexDirection: "row",
-    fontSize: 14,
+    fontSize: 16,
     color: colors.DARK_BLUE,
     // minWidth: "100%",
     // width: "100%",
@@ -292,7 +292,7 @@ const styles = StyleSheet.create({
   text: {
     flex: 1,
     color: colors.DARK_BLUE,
-    fontSize: 15,
+    fontSize: 16,
     textAlign: "center",
   },
   emptyContainer: {
@@ -325,7 +325,7 @@ const styles = StyleSheet.create({
   },
   noDataMessage: {
     color: "#111",
-    fontSize: 12,
+    fontSize: 13,
     fontStyle: "italic",
     textAlign: "center",
   },
