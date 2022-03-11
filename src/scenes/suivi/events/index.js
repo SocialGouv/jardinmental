@@ -240,6 +240,7 @@ const SelectEvent = ({ value, placeholder, onChange = () => {} }) => {
 
 const pickerSelectStyles = StyleSheet.create({
   inputIOS: {
+    fontFamily: "Karla",
     paddingVertical: 8,
     backgroundColor: "transparent",
     borderColor: colors.DARK_BLUE,
@@ -258,6 +259,7 @@ const pickerSelectStyles = StyleSheet.create({
     // padding: 30, // to ensure the text is never behind the icon
   },
   inputAndroid: {
+    fontFamily: "Karla",
     paddingVertical: 8,
     borderColor: colors.DARK_BLUE,
     borderWidth: 1,
@@ -324,7 +326,7 @@ const styles = StyleSheet.create({
   },
   noDataMessage: {
     color: "#111",
-    fontSize: 14,
+    fontSize: 12,
     fontStyle: "italic",
     textAlign: "center",
   },
