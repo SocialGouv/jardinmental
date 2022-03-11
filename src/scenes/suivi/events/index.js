@@ -148,7 +148,7 @@ const ChartFrise = ({ navigation, fromDate, toDate, focusedScores }) => {
             options={activeCategories}
             onChange={setSymptom}
             onOpen={logEvents.logSuiviEditSymptom}
-            placeholder="Choisir critères"
+            placeholder="Sélectionner un élément"
             value={symptom}
           />
         </View>
@@ -167,7 +167,7 @@ const ChartFrise = ({ navigation, fromDate, toDate, focusedScores }) => {
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContainer}>
         {memoizedCallback()?.filter((x) => x.date)?.length === 0 && (
           <Text style={styles.noDataMessage}>
-            Aucun évènements à afficher entre {renderDate(formatDay(fromDate))} et{" "}
+            Aucun évènement à afficher entre {renderDate(formatDay(fromDate))} et{" "}
             {renderDate(formatDay(toDate))}.
           </Text>
         )}
@@ -210,7 +210,7 @@ const SelectSymptom = ({ value, placeholder, options = [], onChange = () => {}, 
       useNativeAndroidPickerStyle={false}
       onValueChange={onChange}
       onOpen={onOpen}
-      placeholder={{ label: placeholder, value: null }}
+      placeholder={{ label: placeholder, value: null, color: "grey", inputLabel: placeholder }}
       items={options.map((o) => ({ label: getTitle(o), value: o })) || []}
       style={pickerSelectStyles}
       Icon={() => <Icon icon="ArrowUpSvg" color={colors.DARK_BLUE} width={13} height={13} />}
