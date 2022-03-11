@@ -1,3 +1,16 @@
+## [1.22.2](https://github.com/SocialGouv/monsuivipsy/compare/v1.22.1...v1.22.2) (2022-03-11)
+
+
+### Bug Fixes
+
+* **questionnaire:** default value traitement ([55bab53](https://github.com/SocialGouv/monsuivipsy/commit/55bab53da195253a2fa8bea6af390ff0e342ce15))
+* fontSize ([3610d04](https://github.com/SocialGouv/monsuivipsy/commit/3610d04971c3731df460506e0c97499a1d5bef6a))
+* **suivi:** smiley de base a 5 ([352c00a](https://github.com/SocialGouv/monsuivipsy/commit/352c00ad9403cdbf6c8ba75fa7d9c3fee68bf00c))
+* UX ([b8064e2](https://github.com/SocialGouv/monsuivipsy/commit/b8064e2548cd4195664d456a0842262eb53a6451))
+* UX2 ([77c116d](https://github.com/SocialGouv/monsuivipsy/commit/77c116d65ab604603a814b60fa5882c0e1fffe89))
+* wording ([8f4eb1d](https://github.com/SocialGouv/monsuivipsy/commit/8f4eb1dcceaf21e51d244e7f1cb0bc5274a3e550))
+* **nouveauté:** texte nouveauté v1.22 ([02d8105](https://github.com/SocialGouv/monsuivipsy/commit/02d8105b3eed585864cbcc8a62e944d47d7749f5))
+
 ## [1.22.1](https://github.com/SocialGouv/monsuivipsy/compare/v1.22.0...v1.22.1) (2022-03-10)
 
 
