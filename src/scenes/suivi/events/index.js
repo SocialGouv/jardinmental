@@ -291,10 +291,13 @@ const styles = StyleSheet.create({
   filterItemContainer: {
     flexDirection: "row",
     margin: 6,
+    justifyContent: "center",
   },
   text: {
+    flex: 1,
     color: colors.DARK_BLUE,
-    fontSize: 14,
+    fontSize: 15,
+    textAlign: "center",
   },
   emptyContainer: {
     flex: 1,
