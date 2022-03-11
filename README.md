@@ -1,4 +1,4 @@
-![Mobile version](https://img.shields.io/badge/mobile%20app%20version-1.22.1-blue)
+![Mobile version](https://img.shields.io/badge/mobile%20app%20version-1.22.2-blue)
 
 # Mon Suivi Psy
 
