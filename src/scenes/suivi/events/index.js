@@ -23,7 +23,7 @@ const ChartFrise = ({ navigation, fromDate, toDate, focusedScores }) => {
   const chartDates = getArrayOfDatesFromTo({ fromDate, toDate });
   const [symptom, setSymptom] = React.useState("ANXIETY");
   const [event, setEvent] = React.useState("ALL");
-  const [score, setScore] = React.useState([1]);
+  const [score, setScore] = React.useState([5]);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -155,11 +155,7 @@ const ChartFrise = ({ navigation, fromDate, toDate, focusedScores }) => {
         <ScorePicker
           focusedScores={score}
           onPress={(i) => {
-            if (score.includes(i)) {
-              setScore([]);
-            } else {
-              setScore([i]);
-            }
+            setScore([i]);
             logEvents.logSuiviEditScoreEvents(i);
           }}
         />
