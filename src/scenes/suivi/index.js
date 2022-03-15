@@ -14,8 +14,7 @@ import Courbes from "../calendar/calendar";
 import logEvents from "../../services/logEvents";
 
 const screenHeight = Dimensions.get("window").height;
-// const CHART_TYPES = ["Frises", "Diagrammes", "Courbes", "Évènements"];
-const CHART_TYPES = ["Frises", "Courbes", "Évènements"];
+const CHART_TYPES = ["Frises", "Statistiques", "Courbes", "Évènements"];
 
 const nextChartType = (chartType) => {
   const i = CHART_TYPES.indexOf(chartType);
@@ -44,7 +43,7 @@ const Suivi = ({ navigation }) => {
 
   const renderChart = (chart) => {
     switch (chart) {
-      case "Diagrammes":
+      case "Statistiques":
         return <ChartPie fromDate={fromDate} toDate={toDate} />;
       case "Courbes":
         return <Courbes navigation={navigation} />;
