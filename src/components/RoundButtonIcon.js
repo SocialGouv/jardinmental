@@ -18,25 +18,55 @@ const RoundButtonIcon = ({
   isToggled,
   icon,
   borderWidth = 1,
+  small,
 }) => {
   if (!visible || !icon) return null;
   const render = () => {
     switch (icon) {
       case "plus":
-        return <Plus opacity={disabled ? 0.5 : 1} color={iconColor} />;
+        return (
+          <Plus
+            opacity={disabled ? 0.5 : 1}
+            color={iconColor}
+            width={small ? 9 : 19}
+            height={small ? 9 : 19}
+          />
+        );
       case "pencil":
-        return <Pencil opacity={disabled ? 0.5 : 1} color={iconColor} />;
+        return (
+          <Pencil
+            opacity={disabled ? 0.5 : 1}
+            color={iconColor}
+            width={small ? 9 : 19}
+            height={small ? 9 : 19}
+          />
+        );
       case "bin":
-        return <Bin opacity={disabled ? 0.5 : 1} color={iconColor} />;
+        return (
+          <Bin
+            opacity={disabled ? 0.5 : 1}
+            color={iconColor}
+            width={small ? 9 : 19}
+            height={small ? 9 : 19}
+          />
+        );
       case "cancel":
         return (
-          <Plus opacity={disabled ? 0.5 : 1} color={iconColor} style={{ transform: [{ rotate: "45deg" }] }} />
+          <Plus
+            opacity={disabled ? 0.5 : 1}
+            color={iconColor}
+            style={{ transform: [{ rotate: "45deg" }] }}
+            width={small ? 9 : 19}
+            height={small ? 9 : 19}
+          />
         );
       case "toggle":
         return (
           <ArrowUpSvg
             opacity={disabled ? 0.5 : 1}
             color={iconColor}
+            width={small ? 7 : 13}
+            height={small ? 7 : 13}
             style={{ transform: [{ rotate: isToggled ? "0deg" : "180deg" }] }}
           />
         );
@@ -50,7 +80,11 @@ const RoundButtonIcon = ({
     <TouchableOpacity
       disabled={disabled}
       onPress={onPress}
-      style={[styles.backButtonContainer, { backgroundColor, borderColor, borderWidth }]}
+      style={[
+        styles.backButtonContainer,
+        { backgroundColor, borderColor, borderWidth },
+        { width: small ? 20 : 40, height: small ? 20 : 40 },
+      ]}
     >
       {render()}
     </TouchableOpacity>
@@ -60,11 +94,8 @@ const RoundButtonIcon = ({
 const styles = StyleSheet.create({
   backButtonContainer: {
     marginHorizontal: 5,
-    paddingHorizontal: 10,
     borderRadius: 20,
     borderWidth: 1,
-    height: 40,
-    width: 40,
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
