@@ -44,7 +44,7 @@ const Suivi = ({ navigation }) => {
   const renderChart = (chart) => {
     switch (chart) {
       case "Statistiques":
-        return <ChartPie fromDate={fromDate} toDate={toDate} />;
+        return <ChartPie fromDate={fromDate} toDate={toDate} navigation={navigation} />;
       case "Courbes":
         return <Courbes navigation={navigation} />;
       case "Évènements":

@@ -10,12 +10,17 @@ import { colors } from "../../utils/colors";
 import { buildSurveyData } from "../survey/survey-data";
 import PieChart from "react-native-pie-chart";
 import CircledIcon from "../../components/CircledIcon";
-import Button from "../../components/RoundButtonIcon";
+import RoundButtonIcon from "../../components/RoundButtonIcon";
+import Icon from "../../components/Icon";
+import localStorage from "../../utils/localStorage";
+import logEvents from "../../services/logEvents";
+import Button from "../../components/Button";
 
 const ChartPie = ({ navigation, fromDate, toDate }) => {
   const [diaryData] = React.useContext(DiaryDataContext);
   const [activeCategories, setActiveCategories] = React.useState([]);
   const chartDates = getArrayOfDatesFromTo({ fromDate, toDate });
+  const [isEmpty, setIsEmpty] = React.useState();
 
   useFocusEffect(
     React.useCallback(() => {
@@ -27,6 +32,44 @@ const ChartPie = ({ navigation, fromDate, toDate }) => {
       })();
     }, [])
   );
+
+  React.useEffect(() => {
+    if (!activeCategories) return;
+    const empty = !activeCategories.reduce((showing, categoryId) => {
+      return Boolean(isChartVisible(categoryId)) || showing;
+    }, false);
+    setIsEmpty(empty);
+  }, [activeCategories, isChartVisible]);
+
+  const isChartVisible = React.useCallback(
+    (categoryId) => {
+      let visible = false;
+      chartDates.forEach((date) => {
+        if (!diaryData[date]) {
+          return;
+        }
+        if (!diaryData[date][categoryId]) {
+          return;
+        }
+        visible = true;
+      });
+      return visible;
+    },
+    [diaryData, chartDates]
+  );
+
+  const startSurvey = async () => {
+    const symptoms = await localStorage.getSymptoms();
+    logEvents.logFeelingStart();
+    if (!symptoms) {
+      navigation.navigate("symptoms", {
+        showExplanation: true,
+        redirect: "select-day",
+      });
+    } else {
+      navigation.navigate("select-day");
+    }
+  };
 
   const getTitle = (cat) => {
     const category = displayedCategories[cat] || cat;
@@ -65,6 +108,21 @@ const ChartPie = ({ navigation, fromDate, toDate }) => {
       return categoryState.level - 1;
     });
   };
+
+  if (isEmpty) {
+    return (
+      <View style={styles.emptyContainer}>
+        <View style={styles.subtitleContainer}>
+          <Icon icon="InfoSvg" width={25} height={25} color={colors.LIGHT_BLUE} />
+          <Text style={styles.subtitle}>
+            Des <Text style={styles.bold}>statistiques</Text> apparaîtront au fur et à mesure de vos saisies
+            quotidiennes.
+          </Text>
+        </View>
+        <Button title="Commencer à saisir" onPress={startSurvey} />
+      </View>
+    );
+  }
 
   return (
     <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContainer}>
@@ -186,7 +244,7 @@ const Pie = ({ title, data }) => {
       <View style={styles.titleContainer}>
         <TouchableOpacity onPress={() => setDetailsVisible((e) => !e)} style={styles.titleContainer}>
           <Text style={styles.title}>{title}</Text>
-          <Button
+          <RoundButtonIcon
             icon="toggle"
             visible
             onPress={() => setDetailsVisible((e) => !e)}
@@ -247,13 +305,14 @@ const Pie = ({ title, data }) => {
         <TableDeStatistiquesParLigne
           nombreDeJoursConsecutifs={nombreDeJoursConsecutifs}
           nombreDeValeurParScore={nombreDeValeurParScore}
+          title={title}
         />
       ) : null}
     </View>
   );
 };
 
-const TableDeStatistiquesParLigne = ({ nombreDeJoursConsecutifs, nombreDeValeurParScore }) => {
+const TableDeStatistiquesParLigne = ({ nombreDeJoursConsecutifs, nombreDeValeurParScore, title }) => {
   return (
     <View style={stylesTableLigne.container}>
       <View style={stylesTableLigne.ligne}>
@@ -261,7 +320,7 @@ const TableDeStatistiquesParLigne = ({ nombreDeJoursConsecutifs, nombreDeValeurP
           {/* on affiche un smiley transparent pour simuler la place qu'un smiley prend pour aligner les lignes */}
           <CircledIcon
             opacity={0}
-            key={`colonne_stat_${5}`}
+            key={`colonne_stat_${title}_header`}
             color={scoresMapIcon[5].color}
             borderColor={scoresMapIcon[5].borderColor}
             iconColor={scoresMapIcon[5].iconColor}
@@ -278,9 +337,11 @@ const TableDeStatistiquesParLigne = ({ nombreDeJoursConsecutifs, nombreDeValeurP
         </View>
         {[1, 2, 3, 4, 5].map((score) => {
           return (
-            <View style={[stylesTableLigne.cellule, stylesTableLigne.celluleAvecBordureAGauche]}>
+            <View
+              key={`colonne_stat_${title}_${score}`}
+              style={[stylesTableLigne.cellule, stylesTableLigne.celluleAvecBordureAGauche]}
+            >
               <CircledIcon
-                key={`colonne_stat_${score}`}
                 color={scoresMapIcon[score].color}
                 borderColor={scoresMapIcon[score].borderColor}
                 iconColor={scoresMapIcon[score].iconColor}
@@ -305,7 +366,10 @@ const TableDeStatistiquesParLigne = ({ nombreDeJoursConsecutifs, nombreDeValeurP
         {[1, 2, 3, 4, 5].map((score) => {
           const infoScore = nombreDeValeurParScore.find((e) => Number(e.score) === Number(score));
           return (
-            <View style={[stylesTableLigne.cellule, stylesTableLigne.celluleAvecBordureAGauche]}>
+            <View
+              key={`colonne_stat_pourcentage_${title}_${score}`}
+              style={[stylesTableLigne.cellule, stylesTableLigne.celluleAvecBordureAGauche]}
+            >
               <Text>{infoScore?.pourcentage || 0}&nbsp;%</Text>
             </View>
           );
@@ -318,7 +382,10 @@ const TableDeStatistiquesParLigne = ({ nombreDeJoursConsecutifs, nombreDeValeurP
         {[1, 2, 3, 4, 5].map((score) => {
           const infoScore = nombreDeValeurParScore.find((e) => Number(e.score) === Number(score));
           return (
-            <View style={[stylesTableLigne.cellule, stylesTableLigne.celluleAvecBordureAGauche]}>
+            <View
+              key={`colonne_stat_total_${title}_${score}`}
+              style={[stylesTableLigne.cellule, stylesTableLigne.celluleAvecBordureAGauche]}
+            >
               <Text>{infoScore?.count || 0}&nbsp;j</Text>
             </View>
           );
@@ -330,7 +397,10 @@ const TableDeStatistiquesParLigne = ({ nombreDeJoursConsecutifs, nombreDeValeurP
         </View>
         {[1, 2, 3, 4, 5].map((score) => {
           return (
-            <View style={[stylesTableLigne.cellule, stylesTableLigne.celluleAvecBordureAGauche]}>
+            <View
+              key={`colonne_stat_consecutif_${title}_${score}`}
+              style={[stylesTableLigne.cellule, stylesTableLigne.celluleAvecBordureAGauche]}
+            >
               <Text>{nombreDeJoursConsecutifs[score] || 0}&nbsp;j</Text>
             </View>
           );
@@ -375,6 +445,27 @@ const stylesTableLigne = StyleSheet.create({
 });
 
 const styles = StyleSheet.create({
+  emptyContainer: {
+    flex: 1,
+    marginVertical: 5,
+    paddingHorizontal: 10,
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  subtitleContainer: {
+    display: "flex",
+    flexDirection: "row",
+    marginVertical: 10,
+  },
+  subtitle: {
+    flex: 1,
+    color: "#000",
+    fontSize: 15,
+    fontWeight: "normal",
+  },
+  bold: {
+    fontWeight: "bold",
+  },
   averageIconsContainer: {
     display: "flex",
     flexDirection: "row-reverse",
