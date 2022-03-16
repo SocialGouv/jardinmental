@@ -1,8 +1,8 @@
 import React from "react";
-import { StyleSheet, View, ScrollView } from "react-native";
+import { StyleSheet, View, ScrollView, TouchableOpacity } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 
-import { formatDate, formatDay, getArrayOfDatesFromTo } from "../../utils/date/helpers";
+import { getArrayOfDatesFromTo } from "../../utils/date/helpers";
 import { DiaryDataContext } from "../../context/diaryData";
 import Text from "../../components/MyText";
 import { displayedCategories, scoresMapIcon } from "../../utils/constants";
@@ -10,6 +10,7 @@ import { colors } from "../../utils/colors";
 import { buildSurveyData } from "../survey/survey-data";
 import PieChart from "react-native-pie-chart";
 import CircledIcon from "../../components/CircledIcon";
+import Button from "../../components/RoundButtonIcon";
 
 const ChartPie = ({ navigation, fromDate, toDate }) => {
   const [diaryData] = React.useContext(DiaryDataContext);
@@ -86,6 +87,9 @@ const Pie = ({ title, data }) => {
   const [average, setAverage] = React.useState(0);
   const [averageIcons, setAverageIcons] = React.useState([]);
   const [joursRenseignes, setJoursRenseignes] = React.useState({});
+  const [detailsVisible, setDetailsVisible] = React.useState(false);
+  const [nombreDeValeurParScore, setNombreDeValeurParScore] = React.useState({});
+  const [nombreDeJoursConsecutifs, setNombreDeJoursConsecutifs] = React.useState({});
   const sliceColor = [
     "#f3f3f3",
     scoresMapIcon[1].color,
@@ -99,10 +103,18 @@ const Pie = ({ title, data }) => {
     // un object
     // key est le score (0 signifie que c'set non renseigné)
     // nombre de d'instance de ce score
-    const objectScoreCount = data.reduce((previous, current) => {
+    const tempNombreDeValeurParScore = data.reduce((previous, current) => {
       previous[current] = (previous[current] || 0) + 1;
       return previous;
     }, {});
+    setNombreDeValeurParScore(
+      Object.keys(tempNombreDeValeurParScore).map((score) => ({
+        score,
+        total: data.length,
+        count: tempNombreDeValeurParScore[score],
+        pourcentage: Math.round((tempNombreDeValeurParScore[score] / data.length) * 100),
+      }))
+    );
 
     // calcul du pourcentage de jours renseignés
     const tempJoursRenseignes = data.reduce((previous, current) => {
@@ -115,12 +127,26 @@ const Pie = ({ title, data }) => {
       count: tempJoursRenseignes,
     });
 
+    // calcul du nombre de jours consécutifs maximum par score
+    const maximumParScore = {};
+    let scoreEnCours = 0;
+    let scorePrecedent = 0;
+    data.forEach((current) => {
+      // console.log("✍️ ~ current", current);
+      scoreEnCours = current;
+      // console.log("✍️ ~ scoreEnCours", scoreEnCours);
+      if (scoreEnCours === scorePrecedent) {
+        maximumParScore[scoreEnCours] = (maximumParScore[scoreEnCours] || 1) + 1;
+      }
+      scorePrecedent = scoreEnCours;
+    });
+    setNombreDeJoursConsecutifs(maximumParScore);
+
     // un array, ou l'index correspondant au score
     const compute = [0, 1, 2, 3, 4, 5].reduce((previous, score) => {
-      previous.push(objectScoreCount[score] || 0);
+      previous.push(tempNombreDeValeurParScore[score] || 0);
       return previous;
     }, []);
-    // console.log("✍️ ~ compute", compute);
     setSeries(compute);
   }, [data]);
 
@@ -143,19 +169,32 @@ const Pie = ({ title, data }) => {
       setAverageIcons([num]);
     } else if (decimal <= 0.5) {
       // deuxieme quartile, on affiche le score du `num` et du `num+1`
-      setAverageIcons([num, num + 1]);
+      setAverageIcons([num + 1, num]);
     } else if (decimal <= 0.75) {
       // troisieme quartile, on affiche le score du `num + 1` et du `num`
-      setAverageIcons([num + 1, num]);
+      setAverageIcons([num, num + 1]);
     } else {
       // quatrieme quartile, on n'affiche que le score du `num+1`
       setAverageIcons([num + 1]);
     }
   }, [average, title]);
 
+  if (data.every((value) => value === 0)) return null;
+
   return (
     <View style={styles.categoryContainer}>
-      <Text style={styles.title}>{title}</Text>
+      <View style={styles.titleContainer}>
+        <TouchableOpacity onPress={() => setDetailsVisible((e) => !e)} style={styles.titleContainer}>
+          <Text style={styles.title}>{title}</Text>
+          <Button
+            icon="toggle"
+            visible
+            onPress={() => setDetailsVisible((e) => !e)}
+            isToggled={detailsVisible}
+            small
+          />
+        </TouchableOpacity>
+      </View>
       <View style={styles.contentCategoryContainer}>
         <View style={styles.pieContainer}>
           <PieChart widthAndHeight={widthAndHeight} series={series} sliceColor={sliceColor} />
@@ -170,11 +209,11 @@ const Pie = ({ title, data }) => {
                   { transform: [{ translateX: 8 * (averageIcons.length - 1) }] },
                 ]}
               >
-                {averageIcons.reverse().map((e, i) => {
+                {averageIcons.map((e, i) => {
                   if (!(e >= 1 && e <= 5)) return null;
                   const isSmall = i === 0 && averageIcons.length > 1;
                   const iconSize = isSmall ? 24 : 32;
-                  const iconContainerSize = isSmall ? 32 : 40;
+                  const iconContainerSize = isSmall ? 30 : 40;
                   return (
                     <CircledIcon
                       key={`${title}_${e}`}
@@ -195,16 +234,145 @@ const Pie = ({ title, data }) => {
                   );
                 })}
               </View>
-              <Text style={styles.pourcentageStyle}>
-                {100 - joursRenseignes.pourcentage}% de jours non renseignés
-              </Text>
+              {joursRenseignes.pourcentage < 100 ? (
+                <Text style={styles.pourcentageStyle}>
+                  {100 - joursRenseignes.pourcentage}% de jours non renseignés
+                </Text>
+              ) : null}
             </View>
           </View>
         ) : null}
       </View>
+      {detailsVisible ? (
+        <TableDeStatistiquesParLigne
+          nombreDeJoursConsecutifs={nombreDeJoursConsecutifs}
+          nombreDeValeurParScore={nombreDeValeurParScore}
+        />
+      ) : null}
     </View>
   );
 };
+
+const TableDeStatistiquesParLigne = ({ nombreDeJoursConsecutifs, nombreDeValeurParScore }) => {
+  return (
+    <View style={stylesTableLigne.container}>
+      <View style={stylesTableLigne.ligne}>
+        <View style={[stylesTableLigne.cellule, stylesTableLigne.titre]}>
+          {/* on affiche un smiley transparent pour simuler la place qu'un smiley prend pour aligner les lignes */}
+          <CircledIcon
+            opacity={0}
+            key={`colonne_stat_${5}`}
+            color={scoresMapIcon[5].color}
+            borderColor={scoresMapIcon[5].borderColor}
+            iconColor={scoresMapIcon[5].iconColor}
+            icon={scoresMapIcon[5].faceIcon}
+            // eslint-disable-next-line react-native/no-inline-styles
+            iconContainerStyle={{
+              marginRight: 0,
+              width: 25,
+              height: 25,
+            }}
+            iconWidth={20}
+            iconHeight={20}
+          />
+        </View>
+        {[1, 2, 3, 4, 5].map((score) => {
+          return (
+            <View style={[stylesTableLigne.cellule, stylesTableLigne.celluleAvecBordureAGauche]}>
+              <CircledIcon
+                key={`colonne_stat_${score}`}
+                color={scoresMapIcon[score].color}
+                borderColor={scoresMapIcon[score].borderColor}
+                iconColor={scoresMapIcon[score].iconColor}
+                icon={scoresMapIcon[score].faceIcon}
+                // eslint-disable-next-line react-native/no-inline-styles
+                iconContainerStyle={{
+                  marginRight: 0,
+                  width: 25,
+                  height: 25,
+                }}
+                iconWidth={20}
+                iconHeight={20}
+              />
+            </View>
+          );
+        })}
+      </View>
+      <View style={stylesTableLigne.ligne}>
+        <View style={[stylesTableLigne.cellule, stylesTableLigne.titre]}>
+          <Text style={stylesTableLigne.textTitre}>Pourcentage</Text>
+        </View>
+        {[1, 2, 3, 4, 5].map((score) => {
+          const infoScore = nombreDeValeurParScore.find((e) => Number(e.score) === Number(score));
+          return (
+            <View style={[stylesTableLigne.cellule, stylesTableLigne.celluleAvecBordureAGauche]}>
+              <Text>{infoScore?.pourcentage || 0}&nbsp;%</Text>
+            </View>
+          );
+        })}
+      </View>
+      <View style={stylesTableLigne.ligne}>
+        <View style={[stylesTableLigne.cellule, stylesTableLigne.titre]}>
+          <Text style={stylesTableLigne.textTitre}>Jour(s)</Text>
+        </View>
+        {[1, 2, 3, 4, 5].map((score) => {
+          const infoScore = nombreDeValeurParScore.find((e) => Number(e.score) === Number(score));
+          return (
+            <View style={[stylesTableLigne.cellule, stylesTableLigne.celluleAvecBordureAGauche]}>
+              <Text>{infoScore?.count || 0}&nbsp;j</Text>
+            </View>
+          );
+        })}
+      </View>
+      <View style={stylesTableLigne.ligne}>
+        <View style={[stylesTableLigne.cellule, stylesTableLigne.titre]}>
+          <Text style={stylesTableLigne.textTitre}>Jours consécutifs (maximum)</Text>
+        </View>
+        {[1, 2, 3, 4, 5].map((score) => {
+          return (
+            <View style={[stylesTableLigne.cellule, stylesTableLigne.celluleAvecBordureAGauche]}>
+              <Text>{nombreDeJoursConsecutifs[score] || 0}&nbsp;j</Text>
+            </View>
+          );
+        })}
+      </View>
+    </View>
+  );
+};
+
+const stylesTableLigne = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 20,
+  },
+  ligne: {
+    flex: 1,
+    alignSelf: "stretch",
+    flexDirection: "row",
+  },
+  cellule: {
+    flex: 1,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    alignSelf: "stretch",
+    padding: 5,
+  },
+  celluleAvecBordureAGauche: {
+    borderLeftColor: "#eee",
+    borderLeftWidth: 1,
+  },
+  titre: {
+    flex: 3,
+    justifyContent: "flex-start",
+  },
+  textTitre: {
+    color: colors.BLUE,
+  },
+});
 
 const styles = StyleSheet.create({
   averageIconsContainer: {
@@ -217,7 +385,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "stretch",
     display: "flex",
-    marginVertical: 5,
+    marginBottom: 15,
     paddingHorizontal: 10,
   },
   contentCategoryContainer: {
@@ -249,10 +417,17 @@ const styles = StyleSheet.create({
     fontStyle: "italic",
   },
   /// old
+  titleContainer: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+  },
   title: {
     fontSize: 19,
     color: colors.BLUE,
     fontWeight: "600",
+    marginRight: 5,
+    flexShrink: 1,
   },
   legend: {
     display: "flex",
