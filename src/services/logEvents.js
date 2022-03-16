@@ -474,6 +474,12 @@ const logSuiviEditSymptom = async () => {
     action: "EDIT_SYMPTOM_EVENTS",
   });
 };
+const logSuiviShowDetailStatistics = async () => {
+  await logEvent({
+    category: "SUIVI",
+    action: "SHOW_DETAIL_STATISTICS",
+  });
+};
 
 export default {
   initMatomo,
@@ -530,4 +536,5 @@ export default {
   logSuiviEditScoreFrise,
   logSuiviEditScoreEvents,
   logSuiviEditSymptom,
+  logSuiviShowDetailStatistics,
 };

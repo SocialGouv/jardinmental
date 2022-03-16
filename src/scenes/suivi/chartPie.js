@@ -237,20 +237,19 @@ const Pie = ({ title, data }) => {
     }
   }, [average, title]);
 
+  const toggleDetails = () => {
+    if (!detailsVisible) logEvents.logSuiviShowDetailStatistics();
+    setDetailsVisible((e) => !e);
+  };
+
   if (data.every((value) => value === 0)) return null;
 
   return (
     <View style={styles.categoryContainer}>
       <View style={styles.titleContainer}>
-        <TouchableOpacity onPress={() => setDetailsVisible((e) => !e)} style={styles.titleContainer}>
+        <TouchableOpacity onPress={toggleDetails} style={styles.titleContainer}>
           <Text style={styles.title}>{title}</Text>
-          <RoundButtonIcon
-            icon="toggle"
-            visible
-            onPress={() => setDetailsVisible((e) => !e)}
-            isToggled={detailsVisible}
-            small
-          />
+          <RoundButtonIcon icon="toggle" visible onPress={toggleDetails} isToggled={detailsVisible} small />
         </TouchableOpacity>
       </View>
       <View style={styles.contentCategoryContainer}>
