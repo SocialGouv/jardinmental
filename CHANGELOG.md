@@ -1,3 +1,17 @@
+# [1.23.0](https://github.com/SocialGouv/monsuivipsy/compare/v1.22.2...v1.23.0) (2022-03-17)
+
+
+### Bug Fixes
+
+* ajouter CTA dans statistiques ([b0f8e8c](https://github.com/SocialGouv/monsuivipsy/commit/b0f8e8c53b4c8d572571ac36e9bf34186acbda42))
+* ajouter event statistiques ([4dcde4b](https://github.com/SocialGouv/monsuivipsy/commit/4dcde4b21d7f8150d295ea4e54dec71fb6a60952))
+* **camembert:** smiley moyen + pourcentage ([a2af41b](https://github.com/SocialGouv/monsuivipsy/commit/a2af41bd611ef2d562b4cc1c08f78957640d593b))
+
+
+### Features
+
+* **suivi:** ajout des statistiques ([14e0bd8](https://github.com/SocialGouv/monsuivipsy/commit/14e0bd87cd792a048f70638073942cfaf3765b48))
+
 ## [1.22.2](https://github.com/SocialGouv/monsuivipsy/compare/v1.22.1...v1.22.2) (2022-03-11)
 
 
