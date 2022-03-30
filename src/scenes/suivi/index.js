@@ -14,7 +14,7 @@ import Courbes from "../calendar/calendar";
 import logEvents from "../../services/logEvents";
 
 const screenHeight = Dimensions.get("window").height;
-const CHART_TYPES = ["Frises", "Statistiques", "Courbes", "Évènements"];
+const CHART_TYPES = ["Frises", "Statistiques", "Évènements"];
 
 const nextChartType = (chartType) => {
   const i = CHART_TYPES.indexOf(chartType);
@@ -70,6 +70,8 @@ const Suivi = ({ navigation }) => {
           onAfterPress={() => setChartType(nextChartType(chartType))}
           onBeforePress={() => setChartType(prevChartType(chartType))}
           title={chartType}
+          previousTitle={prevChartType(chartType)}
+          nextTitle={nextChartType(chartType)}
         />
         {chartType !== "Courbes" ? (
           <RangeDate
