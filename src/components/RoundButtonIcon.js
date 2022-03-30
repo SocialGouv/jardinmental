@@ -73,7 +73,25 @@ const RoundButtonIcon = ({
       case "validate":
         return <Done opacity={disabled ? 0.5 : 1} color={iconColor} />;
       case "arrow-right":
-        return <ArrowRight opacity={disabled ? 0.5 : 1} color={iconColor} />;
+        return (
+          <ArrowUpSvg
+            opacity={disabled ? 0.5 : 1}
+            color={iconColor}
+            width={small ? 7 : 13}
+            height={small ? 7 : 13}
+            style={{ transform: [{ rotate: "90deg" }] }}
+          />
+        );
+      case "arrow-left":
+        return (
+          <ArrowUpSvg
+            opacity={disabled ? 0.5 : 1}
+            color={iconColor}
+            width={small ? 7 : 13}
+            height={small ? 7 : 13}
+            style={{ transform: [{ rotate: "270deg" }] }}
+          />
+        );
     }
   };
   return (
