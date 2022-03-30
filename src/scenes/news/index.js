@@ -13,7 +13,7 @@ export const getBadgeNotesVersion = async () => {
   return lastNotesVersion !== LAST_NOTES_VERSION;
 };
 
-export const LAST_NOTES_VERSION = "1.22";
+export const LAST_NOTES_VERSION = "1.23";
 
 export default ({ navigation }) => {
   useEffect(() => {
@@ -28,6 +28,29 @@ export default ({ navigation }) => {
         <Image style={styles.image} source={require("../../../assets/imgs/logo2.png")} />
       </View>
       <ScrollView style={styles.cgu} contentContainerStyle={styles.scrollContainer}>
+        <Card
+          title="Nouvelle fonction de «&nbsp;Mon&nbsp;Suivi&nbsp;» : écran «&nbsp;Statistiques&nbsp;»"
+          version="v1.23"
+          date="03/2022"
+        >
+          <Item>
+            <Text style={styles.text}>
+              En naviguant avec les flèches en haut de l’écran de l’onglet «&nbsp;Mon&nbsp;Suivi&nbsp;», vous
+              trouverez la nouvelle fonction «&nbsp;Statistiques&nbsp;».{"\n"}
+            </Text>
+            <Text style={styles.text}>
+              Celle-ci vous permet de visualiser pour chaque élément de votre questionnaire et sur la période
+              de votre choix&nbsp;:
+              {"\n"}•&nbsp;<Text style={styles.bold}>Le niveau moyen</Text> de l’élément, représenté par
+              l’émoticône correspondante.
+              {"\n"}•&nbsp;Le détail des <Text style={styles.bold}>proportions en pourcentages</Text> et en
+              nombre de jours pour chaque niveau atteint sur la période choisie.
+              {"\n"}•&nbsp;La plus longue série de <Text style={styles.bold}>jours consécutifs</Text> pour
+              chaque niveau. Le minimum étant de 2 jours d’affilée, un «&nbsp;0&nbsp;» est alors affiché s’il
+              n’y a pas au moins 2 jours consécutifs au même niveau sur la période choisie.
+            </Text>
+          </Item>
+        </Card>
         <Card
           title="Fonction «&nbsp;Évènements&nbsp;» dans «&nbsp;Mon&nbsp;Suivi&nbsp;» : identifiez les évènements qui influent sur vos ressentis"
           version="v1.22"
