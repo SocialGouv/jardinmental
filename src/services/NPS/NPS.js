@@ -34,11 +34,12 @@ const lookUpSupported = {
   PRO: "Je suis professionnel de santé",
 };
 
-const formatText = ({ useful, reco, feedback, userId, contact, supported }) =>
+const formatText = ({ useful, reco, feedback, userId, contact, supported, startDate }) =>
   `
 User: ${userId}
 Version: ${pck.version}
 OS: ${Platform.OS}
+Date de téléchargement: ${startDate}
 Comment pouvons-nous vous être encore plus utile: ${feedback}
 Ce service vous a-t-il été utile: ${useful}
 Quelle est la probabilité que vous recommandiez ce service à un ami ou un proche: ${reco}
@@ -171,6 +172,7 @@ class NPS extends React.Component {
     logEvents.logNPSRecoSend(reco);
     const userId = Matomo.userId;
     const supported = await localStorage.getSupported();
+    const startDate = await AsyncStorage.getItem("@SURVEY_DATE");
     sendTipimail(
       {
         from: {
@@ -178,7 +180,7 @@ class NPS extends React.Component {
           personalName: "MonSuiviPsy - Application",
         },
         subject: "MonSuiviPsy - NPS",
-        text: formatText({ useful, reco, feedback, userId, contact, supported }),
+        text: formatText({ useful, reco, feedback, userId, contact, supported, startDate }),
       },
       __DEV__ ? "tangimds@gmail.com" : "monsuivipsy@fabrique.social.gouv.fr"
     );
