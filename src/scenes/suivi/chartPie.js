@@ -248,6 +248,7 @@ const Pie = ({ title, data }) => {
   };
 
   if (data.every((value) => value === 0)) return null;
+  if (series.length !== sliceColor.length) return null;
 
   return (
     <View style={styles.categoryContainer}>
