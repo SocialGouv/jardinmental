@@ -1,22 +1,21 @@
 import React from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
-import ArrowLeftSvg from "../../../assets/svg/arrow-left.js";
-import ArrowRightSvg from "../../../assets/svg/arrow-right.js";
 import { colors } from "../../utils/colors";
 import Text from "../../components/MyText";
+import RoundButtonIcon from "../../components/RoundButtonIcon";
 
 const ChartPicker = ({ onBeforePress, onAfterPress, title = "XXX" }) => {
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={onBeforePress} style={styles.button}>
-        <ArrowLeftSvg />
-      </TouchableOpacity>
+      <View style={styles.button}>
+        <RoundButtonIcon icon="arrow-left" visible onPress={onBeforePress} small />
+      </View>
       <TouchableOpacity style={styles.contentContainer}>
         <Text style={styles.content}>{title}</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={(e) => onAfterPress(e)} style={styles.button}>
-        <ArrowRightSvg />
-      </TouchableOpacity>
+      <View style={styles.button}>
+        <RoundButtonIcon icon="arrow-right" visible onPress={onAfterPress} small />
+      </View>
     </View>
   );
 };
@@ -26,6 +25,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
+    paddingHorizontal: 15,
   },
   contentContainer: {
     flexGrow: 0,

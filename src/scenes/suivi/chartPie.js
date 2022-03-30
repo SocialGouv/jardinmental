@@ -19,7 +19,7 @@ import Button from "../../components/Button";
 const ChartPie = ({ navigation, fromDate, toDate }) => {
   const [diaryData] = React.useContext(DiaryDataContext);
   const [activeCategories, setActiveCategories] = React.useState([]);
-  const chartDates = getArrayOfDatesFromTo({ fromDate, toDate });
+  const [chartDates, setChartDates] = React.useState([]);
   const [isEmpty, setIsEmpty] = React.useState();
 
   useFocusEffect(
@@ -34,12 +34,17 @@ const ChartPie = ({ navigation, fromDate, toDate }) => {
   );
 
   React.useEffect(() => {
+    if (!fromDate || !toDate) return;
+    setChartDates(getArrayOfDatesFromTo({ fromDate, toDate }));
+  }, [fromDate, toDate]);
+
+  React.useEffect(() => {
     if (!activeCategories) return;
     const empty = !activeCategories.reduce((showing, categoryId) => {
       return Boolean(isChartVisible(categoryId)) || showing;
     }, false);
     setIsEmpty(empty);
-  }, [activeCategories, isChartVisible]);
+  }, [activeCategories, isChartVisible, chartDates]);
 
   const isChartVisible = React.useCallback(
     (categoryId) => {
