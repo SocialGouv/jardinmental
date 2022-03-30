@@ -30,7 +30,7 @@ export default ({ navigation, patientState, date }) => {
     return () => (mounted = false);
   }, [patientState]);
 
-  const handleEdit = (tab) => {
+  const handleEdit = (tab, editingSurvey = false) => {
     if (!canEdit(date)) return;
     const currentSurvey = {
       date,
@@ -38,7 +38,7 @@ export default ({ navigation, patientState, date }) => {
     };
     navigation.navigate(tab, {
       currentSurvey,
-      editingSurvey: true,
+      editingSurvey,
     });
   };
   const hasAnswerSurvey = () =>
@@ -48,10 +48,10 @@ export default ({ navigation, patientState, date }) => {
         return patientState && patientState[key];
       }).length;
 
-  const handlePressItem = () => {
+  const handlePressItem = ({ editingSurvey }) => {
     if (!canEdit(date)) return navigation.navigate("too-late", { date });
     logEvents.logFeelingEditButtonClick();
-    handleEdit("day-survey");
+    handleEdit("day-survey", editingSurvey);
   };
 
   if (hasAnswerSurvey()) {
@@ -84,7 +84,7 @@ export default ({ navigation, patientState, date }) => {
         </View>
         {canEdit(date) ? (
           <View style={styles.buttonsContainer}>
-            <Button icon="pencil" visible={true} onPress={handlePressItem} />
+            <Button icon="pencil" visible={true} onPress={() => handlePressItem({ editingSurvey: true })} />
           </View>
         ) : null}
       </View>

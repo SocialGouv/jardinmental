@@ -15,10 +15,22 @@ const SurveyScreen = ({ navigation }) => {
   const [diaryData] = useContext(DiaryDataContext);
   const startSurvey = (offset) => {
     const date = formatDay(beforeToday(offset));
+
+    const blackListKeys = ["becks", "NOTES"];
+    const filtered = Object.keys(diaryData[date] || [])
+      .filter((key) => !blackListKeys.includes(key))
+      .reduce((obj, key) => {
+        obj[key] = diaryData[date][key];
+        return obj;
+      }, {});
+
+    const dayIsDone = Object.keys(filtered).length !== 0;
+
     const answers = diaryData[date] || {};
     const currentSurvey = { date, answers };
     return navigation.navigate("day-survey", {
       currentSurvey,
+      editingSurvey: dayIsDone,
     });
   };
 
