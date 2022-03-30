@@ -1,4 +1,4 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   STORAGE_KEY_IS_FIRST_LAUNCH,
   STORAGE_KEY_SYMPTOMS,
@@ -11,8 +11,8 @@ import {
   STORAGE_KEY_ONBOARDING_STEP,
   STORAGE_KEY_ONBOARDING_DONE,
   STORAGE_KEY_NPS_PRO_CONTACT,
-} from '../../utils/constants';
-import localStorageBeck from './beck';
+} from "../../utils/constants";
+import localStorageBeck from "./beck";
 
 const getSymptoms = async () => {
   const symptoms = await AsyncStorage.getItem(STORAGE_KEY_SYMPTOMS);
@@ -25,35 +25,25 @@ const setSymptoms = async (symp) => {
   await AsyncStorage.setItem(STORAGE_KEY_SYMPTOMS, JSON.stringify(symp));
 };
 
-const getIsFirstAppLaunch = async () =>
-  await AsyncStorage.getItem(STORAGE_KEY_IS_FIRST_LAUNCH);
+const getIsFirstAppLaunch = async () => await AsyncStorage.getItem(STORAGE_KEY_IS_FIRST_LAUNCH);
 
 const setIsFirstAppLaunch = async (isAppFirstLaunch) => {
-  await AsyncStorage.setItem(
-    STORAGE_KEY_IS_FIRST_LAUNCH,
-    JSON.stringify(isAppFirstLaunch),
-  );
+  await AsyncStorage.setItem(STORAGE_KEY_IS_FIRST_LAUNCH, JSON.stringify(isAppFirstLaunch));
 };
-const getOnboardingStep = async () =>
-  await AsyncStorage.getItem(STORAGE_KEY_ONBOARDING_STEP);
+const getOnboardingStep = async () => await AsyncStorage.getItem(STORAGE_KEY_ONBOARDING_STEP);
 
 const setOnboardingStep = async (step) => {
   await AsyncStorage.setItem(STORAGE_KEY_ONBOARDING_STEP, step);
 };
 const getOnboardingDone = async () => {
-  const onboardingDone = await AsyncStorage.getItem(
-    STORAGE_KEY_ONBOARDING_DONE,
-  );
+  const onboardingDone = await AsyncStorage.getItem(STORAGE_KEY_ONBOARDING_DONE);
   if (onboardingDone) {
     return JSON.parse(onboardingDone);
   }
 };
 
 const setOnboardingDone = async (value) => {
-  await AsyncStorage.setItem(
-    STORAGE_KEY_ONBOARDING_DONE,
-    JSON.stringify(value),
-  );
+  await AsyncStorage.setItem(STORAGE_KEY_ONBOARDING_DONE, JSON.stringify(value));
 };
 
 const getSupported = async () => {
@@ -67,9 +57,7 @@ const setSupported = async (supported) =>
   await AsyncStorage.setItem(STORAGE_KEY_SUPPORTED, JSON.stringify(supported));
 
 const getCustomSymptoms = async () => {
-  const customSymptoms = await AsyncStorage.getItem(
-    STORAGE_KEY_CUSTOM_SYMPTOMS,
-  );
+  const customSymptoms = await AsyncStorage.getItem(STORAGE_KEY_CUSTOM_SYMPTOMS);
   return JSON.parse(customSymptoms) || [];
 };
 
@@ -80,10 +68,7 @@ const setCustomSymptoms = async (symp) => {
 const addCustomSymptoms = async (sym) => {
   const customSymptoms = await getCustomSymptoms();
   customSymptoms.push(sym);
-  await AsyncStorage.setItem(
-    STORAGE_KEY_CUSTOM_SYMPTOMS,
-    JSON.stringify(customSymptoms),
-  );
+  await AsyncStorage.setItem(STORAGE_KEY_CUSTOM_SYMPTOMS, JSON.stringify(customSymptoms));
 };
 
 const getMedicalTreatment = async () => {
@@ -98,10 +83,7 @@ const setMedicalTreatment = async (v) => {
 const removeDrugFromTreatment = async (drugId) => {
   let treatment = await getMedicalTreatment();
   treatment = treatment.filter((e) => e.id !== drugId);
-  await AsyncStorage.setItem(
-    STORAGE_KEY_MEDICAL_TREATMENT,
-    JSON.stringify(treatment),
-  );
+  await AsyncStorage.setItem(STORAGE_KEY_MEDICAL_TREATMENT, JSON.stringify(treatment));
   return treatment;
 };
 
@@ -140,10 +122,7 @@ const getCustomDrugs = async () => {
 const addCustomDrug = async (drug) => {
   const customDrugs = await getCustomDrugs();
   customDrugs.push(drug);
-  await AsyncStorage.setItem(
-    STORAGE_KEY_CUSTOM_DRUGS,
-    JSON.stringify(customDrugs),
-  );
+  await AsyncStorage.setItem(STORAGE_KEY_CUSTOM_DRUGS, JSON.stringify(customDrugs));
   return customDrugs;
 };
 
