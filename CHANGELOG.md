@@ -1,3 +1,14 @@
+## [1.23.1](https://github.com/SocialGouv/monsuivipsy/compare/v1.23.0...v1.23.1) (2022-03-31)
+
+
+### Bug Fixes
+
+* ajout de la date de téléchargement dans NPS ([afc22c2](https://github.com/SocialGouv/monsuivipsy/commit/afc22c264199eb81c9fe5fa3100282df53908cab))
+* bloquer l'affichage du pie si les données sont incomplètes ([c9712d1](https://github.com/SocialGouv/monsuivipsy/commit/c9712d1eb23d79e47044a1fae9b72f449c20026f))
+* prefill traitement edition/creation ([80af771](https://github.com/SocialGouv/monsuivipsy/commit/80af771c57ebadce773c50925ceddba8419a026f))
+* texte nouveauté ([210a079](https://github.com/SocialGouv/monsuivipsy/commit/210a079d85e3575ac5e766b33e4a595247b884d9))
+* **suivi:** reload page au changement de dates ([28fc22d](https://github.com/SocialGouv/monsuivipsy/commit/28fc22d733bcf88d70c9a31a0e806c9438ed9f72))
+
 # [1.23.0](https://github.com/SocialGouv/monsuivipsy/compare/v1.22.2...v1.23.0) (2022-03-17)
 
 
