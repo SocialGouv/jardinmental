@@ -279,7 +279,7 @@ PODS:
     - React-jsi (= 0.65.2)
     - React-perflogger (= 0.65.2)
   - React-jsinspector (0.65.2)
-  - react-native-date-picker (4.1.5):
+  - react-native-date-picker (4.2.0):
     - React-Core
   - react-native-fbsdk-next (6.1.1):
     - React-Core
@@ -375,7 +375,7 @@ PODS:
     - React-Core
   - RNCMaskedView (0.1.10):
     - React
-  - RNCPicker (2.2.1):
+  - RNCPicker (2.4.0):
     - React-Core
   - RNCPushNotificationIOS (1.10.1):
     - React-Core
@@ -628,7 +628,7 @@ SPEC CHECKSUMS:
   React-jsi: 29873f0fc48b330fbdd159f09df6d88e69c0f7dd
   React-jsiexecutor: 0fe3300621eb92ce5ae573560a88d24eb8818392
   React-jsinspector: d6addf5799e8dbf9d27b3191810225f0276dfb2d
-  react-native-date-picker: 93603f8a1c171fb8988cf472eff6f2d76652500f
+  react-native-date-picker: d83ab9cccbc497642a93fdca783ae76ecd6b17b6
   react-native-fbsdk-next: 50b2ce0e56ef9b68cb0fd7f19072364296896c20
   react-native-get-random-values: 2c4ff6b44cb71291dabe9a8ae87d3877dcf387da
   react-native-netinfo: 0212ce8604e88edf686f1481b925b17a42a52449
@@ -650,7 +650,7 @@ SPEC CHECKSUMS:
   RNCAsyncStorage: 05bae7ecfab1cbd5441993f1ca098f7c3b3f8d0e
   RNCCheckbox: 80ee60cd2e67b46986e8e244db520655372deab4
   RNCMaskedView: 5a8ec07677aa885546a0d98da336457e2bea557f
-  RNCPicker: cb57c823d5ce8d2d0b5dfb45ad97b737260dc59e
+  RNCPicker: 6d5d64e7b90c240c779ee0938ec433c11e2dd758
   RNCPushNotificationIOS: 87b8d16d3ede4532745e05b03c42cff33a36cc45
   RNDateTimePicker: 7658208086d86d09e1627b5c34ba0cf237c60140
   RNDeviceInfo: 0400a6d0c94186d1120c3cbd97b23abc022187a9

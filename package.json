@@ -52,7 +52,7 @@
     "react-native-modal": "^11.10.0",
     "react-native-modal-datetime-picker": "^9.2.3",
     "react-native-picker-select": "^8.0.4",
-    "react-native-pie-chart": "^2.0.2",
+    "react-native-pie": "^1.1.2",
     "react-native-push-notification": "^8.1.1",
     "react-native-reanimated": "^1.13.2",
     "react-native-safe-area-context": "^3.1.9",

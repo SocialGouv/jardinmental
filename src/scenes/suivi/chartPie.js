@@ -8,7 +8,7 @@ import Text from "../../components/MyText";
 import { displayedCategories, scoresMapIcon } from "../../utils/constants";
 import { colors } from "../../utils/colors";
 import { buildSurveyData } from "../survey/survey-data";
-import PieChart from "react-native-pie-chart";
+import PieChart from "react-native-pie";
 import CircledIcon from "../../components/CircledIcon";
 import RoundButtonIcon from "../../components/RoundButtonIcon";
 import Icon from "../../components/Icon";
@@ -144,30 +144,31 @@ const ChartPie = ({ navigation, fromDate, toDate }) => {
   );
 };
 
+const sliceColor = [
+  "#f3f3f3",
+  scoresMapIcon[1].color,
+  scoresMapIcon[2].color,
+  scoresMapIcon[3].color,
+  scoresMapIcon[4].color,
+  scoresMapIcon[5].color,
+];
+
 const Pie = ({ title, data }) => {
-  const widthAndHeight = 100;
-  const [series, setSeries] = React.useState([]);
+  const [sections, setSections] = React.useState([]);
   const [average, setAverage] = React.useState(0);
   const [averageIcons, setAverageIcons] = React.useState([]);
   const [joursRenseignes, setJoursRenseignes] = React.useState({});
   const [detailsVisible, setDetailsVisible] = React.useState(false);
   const [nombreDeValeurParScore, setNombreDeValeurParScore] = React.useState({});
   const [nombreDeJoursConsecutifs, setNombreDeJoursConsecutifs] = React.useState({});
-  const sliceColor = [
-    "#f3f3f3",
-    scoresMapIcon[1].color,
-    scoresMapIcon[2].color,
-    scoresMapIcon[3].color,
-    scoresMapIcon[4].color,
-    scoresMapIcon[5].color,
-  ];
 
   React.useEffect(() => {
     // un object
     // key est le score (0 signifie que c'set non renseigné)
     // nombre de d'instance de ce score
     const tempNombreDeValeurParScore = data.reduce((previous, current) => {
-      previous[current] = (previous[current] || 0) + 1;
+      const scoreEncours = current || 0; // on met 0 si la valeur est null
+      previous[scoreEncours] = (previous[scoreEncours] || 0) + 1;
       return previous;
     }, {});
     setNombreDeValeurParScore(
@@ -175,17 +176,17 @@ const Pie = ({ title, data }) => {
         score,
         total: data.length,
         count: tempNombreDeValeurParScore[score],
-        pourcentage: Math.round((tempNombreDeValeurParScore[score] / data.length) * 100),
+        pourcentage: (tempNombreDeValeurParScore[score] / data.length) * 100,
       }))
     );
 
     // calcul du pourcentage de jours renseignés
     const tempJoursRenseignes = data.reduce((previous, current) => {
-      if (current !== 0) return ++previous;
+      if (current && current !== 0) return ++previous;
       else return previous;
     }, 0);
     setJoursRenseignes({
-      pourcentage: Math.round((tempJoursRenseignes / data.length) * 100),
+      pourcentage: (tempJoursRenseignes / data.length) * 100,
       total: data.length,
       count: tempJoursRenseignes,
     });
@@ -204,21 +205,23 @@ const Pie = ({ title, data }) => {
       scorePrecedent = scoreEnCours;
     });
     setNombreDeJoursConsecutifs(maximumParScore);
-
-    // un array, ou l'index correspondant au score
-    const compute = [0, 1, 2, 3, 4, 5].reduce((previous, score) => {
-      previous.push(tempNombreDeValeurParScore[score] || 0);
-      return previous;
-    }, []);
-    setSeries(compute);
   }, [data]);
 
   React.useEffect(() => {
+    if (!nombreDeValeurParScore?.length) return;
+    const sectionsAvecCouleurEtPourcentage = nombreDeValeurParScore.map((e) => ({
+      color: sliceColor[e.score],
+      percentage: e.pourcentage,
+    }));
+    setSections(sectionsAvecCouleurEtPourcentage);
+  }, [nombreDeValeurParScore]);
+
+  React.useEffect(() => {
     const total = data.reduce((previous, current) => {
-      if (current === 0) return previous;
+      if (!current || current === 0) return previous;
       return previous + 1;
     }, 0);
-    const sum = data.reduce((previous, current) => previous + current, 0);
+    const sum = data.reduce((previous, current) => previous + (current || 0), 0);
     const avg = sum / total;
     setAverage(avg);
   }, [data]);
@@ -248,7 +251,6 @@ const Pie = ({ title, data }) => {
   };
 
   if (data.every((value) => value === 0)) return null;
-  if (series.length !== sliceColor.length) return null;
 
   return (
     <View style={styles.categoryContainer}>
@@ -260,7 +262,7 @@ const Pie = ({ title, data }) => {
       </View>
       <View style={styles.contentCategoryContainer}>
         <View style={styles.pieContainer}>
-          <PieChart widthAndHeight={widthAndHeight} series={series} sliceColor={sliceColor} />
+          <PieChart radius={50} sections={sections} />
         </View>
         {averageIcons.length ? (
           <View style={styles.pieContainer}>
@@ -299,7 +301,7 @@ const Pie = ({ title, data }) => {
               </View>
               {joursRenseignes.pourcentage < 100 ? (
                 <Text style={styles.pourcentageStyle}>
-                  {100 - joursRenseignes.pourcentage}% de jours non renseignés
+                  {Math.round(100 - joursRenseignes.pourcentage)}% de jours non renseignés
                 </Text>
               ) : null}
             </View>
@@ -375,7 +377,7 @@ const TableDeStatistiquesParLigne = ({ nombreDeJoursConsecutifs, nombreDeValeurP
               key={`colonne_stat_pourcentage_${title}_${score}`}
               style={[stylesTableLigne.cellule, stylesTableLigne.celluleAvecBordureAGauche]}
             >
-              <Text>{infoScore?.pourcentage || 0}&nbsp;%</Text>
+              <Text>{Math.round(infoScore?.pourcentage) || 0}&nbsp;%</Text>
             </View>
           );
         })}

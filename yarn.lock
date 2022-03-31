@@ -6108,10 +6108,10 @@ react-native-picker-select@^8.0.4:
     "@react-native-picker/picker" "^1.8.3"
     lodash.isequal "^4.5.0"
 
-react-native-pie-chart@^2.0.2:
-  version "2.0.2"
-  resolved "https://registry.npmjs.org/react-native-pie-chart/-/react-native-pie-chart-2.0.2.tgz"
-  integrity sha512-pMsbR35r4it5i3Ck/tL7pWvYKy9VO7EZfQNhR+Nfvo3qQHJ1ZHdpO8QYS4/HZcHG5kbAG8x+679jpvR9nubsFw==
+react-native-pie@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/react-native-pie/-/react-native-pie-1.1.2.tgz#9cd4d428e85cc232877e5f7cdb2bea9f724fcbac"
+  integrity sha512-aShbks0NA4QzXftKpdQd/lNfkvj23yS2pF1A61Y+bKhFMnky0xubN1m4edcDNVWC0a2l40rM9C3JwJOIchv3kQ==
 
 react-native-push-notification@^8.1.1:
   version "8.1.1"
