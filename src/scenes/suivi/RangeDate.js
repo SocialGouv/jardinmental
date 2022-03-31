@@ -43,11 +43,13 @@ const DateRange = (props) => {
         modal
         open={openFromDate}
         date={fromDate}
+        confirmText="Valider"
         onConfirm={(date) => {
           setFromDate(date);
           props.onChangeFromDate(date);
           setOpenFromDate(false);
         }}
+        cancelText="Annuler"
         onCancel={() => {
           setOpenFromDate(false);
         }}
@@ -62,11 +64,13 @@ const DateRange = (props) => {
         modal
         open={openToDate}
         date={toDate}
+        confirmText="Valider"
         onConfirm={(date) => {
           setToDate(date);
           props.onChangeToDate(date);
           setOpenToDate(false);
         }}
+        cancelText="Annuler"
         onCancel={() => {
           setOpenToDate(false);
         }}
