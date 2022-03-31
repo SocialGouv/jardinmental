@@ -1,44 +1,38 @@
-import React, {useEffect, useState} from 'react';
-import ReminderSettingSvg from '../../assets/svg/reminder-setting.svg';
-import ExportDataSettingSvg from '../../assets/svg/export-data-setting.svg';
-import ExportDataSvg from '../../assets/svg/export-data.svg';
-import SymptomsSetting from '../../assets/svg/symptoms-setting.svg';
-import CguSettingSvg from '../../assets/svg/cgu-setting.svg';
-import DrugsSvg from '../../assets/svg/drugs.svg';
-import InfoSvg from '../../assets/svg/info.svg';
-import BurgerSvg from '../../assets/svg/burger.svg';
-import PresentationSvg from '../../assets/svg/presentation.svg';
-import NewsSvg from '../../assets/svg/news.svg';
-import ProtectionSvg from '../../assets/svg/protection.svg';
-import GearSvg from '../../assets/svg/Gear.js';
-import PlusSvg from '../../assets/svg/plus.svg';
-import ClockSvg from '../../assets/svg/clock.svg';
-import LightBulbSvg from '../../assets/svg/light-bulb.svg';
-import HeartsSvg from '../../assets/svg/hearts.svg';
-import ThoughtsSvg from '../../assets/svg/thoughts.svg';
-import CalendarSvg from '../../assets/svg/calendar.svg';
-import ArrowUpSvg from '../../assets/svg/arrow-up.svg';
-import PlusSurveySvg from '../../assets/svg/plus-survey.svg';
-import PlusBeckSvg from '../../assets/svg/plus-beck.svg';
-import CrossSvg from '../../assets/svg/cross.svg';
-import ChevronUpSvg from '../../assets/svg/chevron-up.svg';
-import ChevronDownSvg from '../../assets/svg/chevron-down.svg';
-import BinSvg from '../../assets/svg/bin.svg';
-import NotesSvg from '../../assets/svg/notes.svg';
-import Text from '../components/MyText';
-import PhoneSvg from '../../assets/svg/Phone';
-import PeopleSvg from '../../assets/svg/People';
-import GlobeSvg from '../../assets/svg/Globe';
-import LockSvg from '../../assets/svg/Lock';
-import Arrow from '../../assets/svg/Arrow';
+import React, { useEffect, useState } from "react";
+import ReminderSettingSvg from "../../assets/svg/reminder-setting.svg";
+import ExportDataSettingSvg from "../../assets/svg/export-data-setting.svg";
+import ExportDataSvg from "../../assets/svg/export-data.svg";
+import SymptomsSetting from "../../assets/svg/symptoms-setting.svg";
+import CguSettingSvg from "../../assets/svg/cgu-setting.svg";
+import DrugsSvg from "../../assets/svg/drugs.svg";
+import InfoSvg from "../../assets/svg/info.svg";
+import BurgerSvg from "../../assets/svg/burger.svg";
+import PresentationSvg from "../../assets/svg/presentation.svg";
+import NewsSvg from "../../assets/svg/news.svg";
+import ProtectionSvg from "../../assets/svg/protection.svg";
+import GearSvg from "../../assets/svg/Gear.js";
+import PlusSvg from "../../assets/svg/plus.svg";
+import ClockSvg from "../../assets/svg/clock.svg";
+import LightBulbSvg from "../../assets/svg/light-bulb.svg";
+import HeartsSvg from "../../assets/svg/hearts.svg";
+import ThoughtsSvg from "../../assets/svg/thoughts.svg";
+import CalendarSvg from "../../assets/svg/calendar.svg";
+import ArrowUpSvg from "../../assets/svg/arrow-up.svg";
+import PlusSurveySvg from "../../assets/svg/plus-survey.svg";
+import PlusBeckSvg from "../../assets/svg/plus-beck.svg";
+import CrossSvg from "../../assets/svg/cross.svg";
+import ChevronUpSvg from "../../assets/svg/chevron-up.svg";
+import ChevronDownSvg from "../../assets/svg/chevron-down.svg";
+import BinSvg from "../../assets/svg/bin.svg";
+import NotesSvg from "../../assets/svg/notes.svg";
+import Text from "../components/MyText";
+import PhoneSvg from "../../assets/svg/Phone";
+import PeopleSvg from "../../assets/svg/People";
+import GlobeSvg from "../../assets/svg/Globe";
+import LockSvg from "../../assets/svg/Lock";
+import Arrow from "../../assets/svg/Arrow";
 
-import {
-  StyleSheet,
-  View,
-  Animated,
-  Easing,
-  TouchableOpacity,
-} from 'react-native';
+import { StyleSheet, View, Animated, Easing, TouchableOpacity } from "react-native";
 
 const mapIconToSvg = (icon) => {
   const iconMap = {
@@ -104,8 +98,8 @@ const Icon = ({
     setSpinFn(
       spinValue.interpolate({
         inputRange: [0, 1],
-        outputRange: ['0deg', '45deg'],
-      }),
+        outputRange: ["0deg", "45deg"],
+      })
     );
   }, [spin]);
 
@@ -113,17 +107,10 @@ const Icon = ({
 
   const render = () => (
     <Animated.View
-      style={[
-        styles.iconContainer,
-        styleContainer,
-        spinFn && {transform: [{rotate: spinFn}]},
-      ]}>
-      {badge ? (
-        <View style={styles.badge}>
-          {/* <Text style={styles.badgeText}></Text> */}
-        </View>
-      ) : null}
-      <Icon width={20} height={20} color={color || 'black'} {...props} />
+      style={[styles.iconContainer, styleContainer, spinFn && { transform: [{ rotate: spinFn }] }]}
+    >
+      {badge ? <View style={styles.badge}>{/* <Text style={styles.badgeText}></Text> */}</View> : null}
+      <Icon width={20} height={20} color={color || "black"} {...props} />
     </Animated.View>
   );
 
@@ -142,16 +129,16 @@ const styles = StyleSheet.create({
     // borderWidth: 1,
     width: 40,
     height: 40,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
     // marginRight: 20,
   },
   badge: {
-    position: 'absolute',
+    position: "absolute",
     top: 0,
     right: -5,
-    backgroundColor: '#E46C76',
+    backgroundColor: "#E46C76",
     borderRadius: 16,
     // paddingHorizontal: 6,
     // paddingVertical: 2,
@@ -160,9 +147,9 @@ const styles = StyleSheet.create({
     height: 12,
   },
   badgeText: {
-    color: 'white',
+    color: "white",
     fontSize: 11,
-    fontWeight: '600',
+    fontWeight: "600",
   },
 });
 
