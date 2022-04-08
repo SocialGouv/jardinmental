@@ -1,3 +1,11 @@
+## [1.23.2](https://github.com/SocialGouv/monsuivipsy/compare/v1.23.1...v1.23.2) (2022-04-08)
+
+
+### Bug Fixes
+
+* change library pie ([ba83dbf](https://github.com/SocialGouv/monsuivipsy/commit/ba83dbfc7804695eb63486f49f728da2f64d5182))
+* fr ([01cd5b5](https://github.com/SocialGouv/monsuivipsy/commit/01cd5b5f956bdfdf462721759b53b7638b1306ac))
+
 ## [1.23.1](https://github.com/SocialGouv/monsuivipsy/compare/v1.23.0...v1.23.1) (2022-03-31)
 
 
