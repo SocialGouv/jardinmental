@@ -19,6 +19,7 @@ const RoundButtonIcon = ({
   icon,
   borderWidth = 1,
   small,
+  shadow,
 }) => {
   if (!visible || !icon) return null;
   const render = () => {
@@ -100,6 +101,7 @@ const RoundButtonIcon = ({
       onPress={onPress}
       style={[
         styles.backButtonContainer,
+        shadow ? styles.withShadow : {},
         { backgroundColor, borderColor, borderWidth },
         { width: small ? 20 : 40, height: small ? 20 : 40 },
       ]}
@@ -119,6 +121,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     alignSelf: "flex-start",
+  },
+  withShadow: {
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
 });
 

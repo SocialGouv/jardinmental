@@ -10,6 +10,7 @@ import GraphMenu from "../../assets/svg/GraphMenu";
 import localStorage from "../utils/localStorage";
 import logEvents from "../services/logEvents";
 import { colors } from "../utils/colors";
+import FloatingPlusButton from "../components/FloatingPlusButton";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -79,6 +80,7 @@ const Tabs = ({ navigation, route }) => {
           }}
         />
       </Tab.Navigator>
+      <FloatingPlusButton shadow onPress={startSurvey} />
     </>
   );
 };
