@@ -68,7 +68,7 @@ class Reminder extends React.Component {
   validateOnboarding = async () => {
     await localStorage.setOnboardingDone(true);
     // await localStorage.setOnboardingStep(null);
-    this.props.navigation.navigate("tabs");
+    this.props.navigation.navigate("onboarding-drugs");
   };
 
   getReminder = async (showAlert = true) => {
@@ -217,7 +217,7 @@ class Reminder extends React.Component {
               style={styles.setupButton}
             >
               <Text style={styles.setupButtonText}>
-                {reminder ? "Je démarre Mon Suivi Psy" : "Choisir l'heure du rappel"}
+                {reminder ? "Continuer" : "Choisir l'heure du rappel"}
               </Text>
             </TouchableOpacity>
             <TouchableOpacity

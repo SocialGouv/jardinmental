@@ -121,7 +121,7 @@ const CustomSymptomScreen = ({ navigation, route, settings = false }) => {
             <Text style={[styles.h3, styles.spaceabove]}>
               Vous pourrez modifier à tout moment ce que vous suivez via le menu "Réglages" de l'application
             </Text>
-            <Button title="Valider" onPress={() => navigation.navigate("onboarding-drugs")} />
+            <Button title="Valider" onPress={() => navigation.navigate("reminder", { onboarding: true })} />
           </View>
         )}
       </ScrollView>
