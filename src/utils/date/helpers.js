@@ -115,6 +115,11 @@ export const formatRelativeDate = (date) => {
     return format(isoDate, "EEEE d MMMM", { locale: fr });
   }
 };
+export const getFirst3LetterWeekDay = (date) => {
+  const isoDate = parseISO(date);
+  const d = format(isoDate, "EEEE d MMMM", { locale: fr });
+  return d.substring(0, 3);
+};
 
 export const getTime = (d) => {
   if (!d) return null;
