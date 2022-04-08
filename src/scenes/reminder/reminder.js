@@ -30,6 +30,12 @@ const timeIsAfterNow = (inputDate) => {
 };
 
 const ReminderStorageKey = "@Reminder";
+
+const getAujourdhui20h00 = () => {
+  const date = new Date();
+  return new Date(date.getFullYear(), date.getMonth(), date.getDate(), 20, 0);
+};
+
 const reminderTitle = "Comment ça va aujourd'hui ?";
 const reminderMessage = "N'oubliez pas de remplir votre application Mon Suivi Psy";
 class Reminder extends React.Component {
@@ -74,6 +80,10 @@ class Reminder extends React.Component {
     }
     if (!isRegistered && reminder && showAlert) {
       this.showPermissionsAlert(this.deleteReminder);
+    }
+    if (!reminder && this.props.route?.params?.onboarding) {
+      this.setReminder(getAujourdhui20h00());
+      return;
     }
     if (!reminder) {
       return;
