@@ -178,8 +178,8 @@ class Reminder extends React.Component {
   renderHeader = () => {
     return this.props.route?.params?.onboarding ? (
       <View style={styles.header}>
-        <ReminderSvg style={styles.smallImage} height={30} width={30} />
-        <Text style={styles.smallTitle}>Je programme un rappel quotidien</Text>
+        <ReminderSvg style={styles.smallImage} width={30} height={30} />
+        <Text style={styles.smallTitle}>Votre rappel pour penser à remplir votre questionnaire</Text>
       </View>
     ) : (
       <>
@@ -198,18 +198,28 @@ class Reminder extends React.Component {
         <View style={styles.description}>
           {reminder ? (
             <>
-              <Text style={styles.subtitle}>Je receverai une notification à :</Text>
+              <Text style={styles.subtitle}>
+                Pour un <Text style={styles.lightBlue}>meilleur suivi</Text>, un rappel est programmé à :
+              </Text>
               <TouchableOpacity onPress={this.showTimePicker}>
                 <Text style={styles.time}>{`${reminder.getLocalePureTime("fr")}`}</Text>
               </TouchableOpacity>
             </>
           ) : (
             <Text style={styles.subtitle}>
-              <Text style={styles.lightblue}>Je n'oublie pas</Text> de renseigner comment s'est passée ma
-              journée, ce qui me permet d'avoir un <Text style={styles.lightblue}>meilleur suivi</Text>
+              Un rappel permet de remplir plus souvent l’application et obtenir des analyses plus pertinentes
             </Text>
           )}
         </View>
+        {this.props.route?.params?.onboarding && reminder ? (
+          <TouchableOpacity
+            onPress={reminder ? this.deleteReminderManually : this.onBackPress}
+            style={[styles.laterContainer]}
+          >
+            <Text style={styles.later}>Désactiver le rappel</Text>
+          </TouchableOpacity>
+        ) : null}
+
         {this.props.route?.params?.onboarding ? (
           <View style={styles.ctaContainer}>
             <TouchableOpacity
@@ -256,6 +266,9 @@ const styles = StyleSheet.create({
     bottom: 0,
     margin: 30,
   },
+  lightBlue: {
+    color: colors.LIGHT_BLUE,
+  },
   smallImage: {
     color: colors.BLUE,
     height: 40,
@@ -294,7 +307,7 @@ const styles = StyleSheet.create({
   smallTitle: {
     width: "80%",
     flexShrink: 0,
-    textAlign: "left",
+    textAlign: "center",
     fontSize: 22,
     color: colors.BLUE,
     fontWeight: "700",
