@@ -31,7 +31,7 @@ import DatePicker from "../../components/DatePicker";
 const LIMIT_PER_PAGE = __DEV__ ? 3 : 30;
 const screenHeight = Dimensions.get("window").height;
 
-const Diary = ({ navigation }) => {
+const Diary = ({ navigation, hideDeader = false }) => {
   const [diaryNotes, setDiaryNotes] = useContext(DiaryNotesContext);
   const [diaryData] = useContext(DiaryDataContext);
   const [NPSvisible, setNPSvisible] = useState(false);
@@ -91,9 +91,11 @@ const Diary = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.safe}>
       <NPS forceView={NPSvisible} close={() => setNPSvisible(false)} />
-      <View style={styles.headerContainer}>
-        <Header title="Mon journal" navigation={navigation} />
-      </View>
+      {!hideDeader ? (
+        <View style={styles.headerContainer}>
+          <Header title="Mon journal" navigation={navigation} />
+        </View>
+      ) : null}
       <ScrollView
         style={styles.container}
         contentContainerStyle={styles.scrollContainer}
