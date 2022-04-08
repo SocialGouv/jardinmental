@@ -38,7 +38,7 @@ const DaySurvey = ({ navigation, route }) => {
   };
   const questionContext = {
     id: "CONTEXT",
-    label: "Je précise le contexte de ma journée",
+    label: "J'ajoute une note générale sur ma journée",
   };
 
   useFocusEffect(
