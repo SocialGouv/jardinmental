@@ -34,7 +34,7 @@ const lookUpSupported = {
   PRO: "Je suis professionnel de santé",
 };
 
-const formatText = ({ useful, reco, feedback, userId, contact, supported, startDate }) =>
+const formatText = ({ useful, feedback, userId, contact, supported, startDate }) =>
   `
 User: ${userId}
 Version: ${pck.version}
@@ -42,7 +42,6 @@ OS: ${Platform.OS}
 Date de téléchargement: ${startDate}
 Comment pouvons-nous vous être encore plus utile: ${feedback}
 Ce service vous a-t-il été utile: ${useful}
-Quelle est la probabilité que vous recommandiez ce service à un ami ou un proche: ${reco}
 contact: ${contact}
 profil: ${lookUpSupported[supported]}
 `;
@@ -166,10 +165,9 @@ class NPS extends React.Component {
     if (this.npsSent) {
       return;
     }
-    const { useful, reco, feedback, contact } = this.state;
+    const { useful, feedback, contact } = this.state;
     this.setSendButton("Merci !");
     logEvents.logNPSUsefulSend(useful);
-    logEvents.logNPSRecoSend(reco);
     const userId = Matomo.userId;
     const supported = await localStorage.getSupported();
     const startDate = await AsyncStorage.getItem("@SURVEY_DATE");
@@ -180,7 +178,7 @@ class NPS extends React.Component {
           personalName: "MonSuiviPsy - Application",
         },
         subject: "MonSuiviPsy - NPS",
-        text: formatText({ useful, reco, feedback, userId, contact, supported, startDate }),
+        text: formatText({ useful, feedback, userId, contact, supported, startDate }),
       },
       __DEV__ ? "tangimds@gmail.com" : "monsuivipsy@fabrique.social.gouv.fr"
     );
@@ -218,6 +216,13 @@ class NPS extends React.Component {
     const { feedback, sendButton, contact, useful, reco } = this.state;
     return (
       <>
+        <Text style={styles.topSubTitle}>{getCaption("feedback.rate-app.useful")}</Text>
+        <Mark
+          selected={useful}
+          onPress={this.setUseful}
+          bad={getCaption("feedback.rate-app.useful.not")}
+          good={getCaption("feedback.rate-app.useful.extremely")}
+        />
         <Text style={styles.topSubTitle}>{getCaption("feedback.improvements.question")}</Text>
         <TextInput
           style={styles.feedback}
@@ -228,20 +233,13 @@ class NPS extends React.Component {
           textAlignVertical="top"
           returnKeyType="next"
         />
-        <Text style={styles.topSubTitle}>{getCaption("feedback.rate-app.useful")}</Text>
-        <Mark
-          selected={useful}
-          onPress={this.setUseful}
-          bad={getCaption("feedback.rate-app.useful.not")}
-          good={getCaption("feedback.rate-app.useful.extremely")}
-        />
-        <Text style={styles.topSubTitle}>{getCaption("feedback.rate-app.probable")}</Text>
+        {/* <Text style={styles.topSubTitle}>{getCaption("feedback.rate-app.probable")}</Text>
         <Mark
           selected={reco}
           onPress={this.setReco}
           bad={getCaption("feedback.rate-app.probable.not")}
           good={getCaption("feedback.rate-app.probable.extremely")}
-        />
+        /> */}
         <Text style={styles.topSubTitle}>{getCaption("feedback.contact.description")}</Text>
         <TextInput
           style={styles.contact}
