@@ -156,18 +156,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
   },
-  barContainer: {
-    display: "flex",
-    backgroundColor: "red",
-    borderRadius: 999,
-  },
-  barProgressContainer: {
-    display: "flex",
-    backgroundColor: "green",
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: 999,
-  },
   buttonsContainer: {
     display: "flex",
     flexDirection: "row-reverse",
@@ -183,7 +171,6 @@ const styles = StyleSheet.create({
     color: "#fff",
     textAlign: "center",
   },
-
   labelPourcentageOut: {
     marginLeft: 5,
     color: colors.BLUE,
