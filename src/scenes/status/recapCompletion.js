@@ -14,7 +14,7 @@ const RecapCompletion = ({ navigation }) => {
   const positionLabelTreshold = 25;
   const now = new Date(Date.now());
   const [diaryData] = React.useContext(DiaryDataContext);
-  const [width, setWidth] = React.useState(100);
+  const [width, setWidth] = React.useState(0);
 
   const startSurvey = (offset) => {
     const date = formatDay(beforeToday(offset));

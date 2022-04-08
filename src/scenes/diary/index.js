@@ -1,16 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import {
-  StyleSheet,
-  ScrollView,
-  View,
-  SafeAreaView,
-  TouchableOpacity,
-  TextInput,
-  Platform,
-  Keyboard,
-  Dimensions,
-} from "react-native";
-import { v4 as uuidv4 } from "uuid";
+import { StyleSheet, ScrollView, View, SafeAreaView, TouchableOpacity, Dimensions } from "react-native";
 import Text from "../../components/MyText";
 import DiaryNotes from "./DiaryNotes";
 import DiarySymptoms from "./DiarySymptoms";
@@ -22,22 +11,17 @@ import { DiaryDataContext } from "../../context/diaryData";
 import localStorage from "../../utils/localStorage";
 import NPS from "../../services/NPS/NPS";
 import ArrowUpSvg from "../../../assets/svg/arrow-up.svg";
-import logEvents from "../../services/logEvents";
-import { formatDateThread, formatDay, makeSureTimestamp } from "../../utils/date/helpers";
-import Button from "../../components/RoundButtonIcon";
-import DateOrTimeDisplay from "../../components/DateOrTimeDisplay";
+import { formatDateThread, makeSureTimestamp } from "../../utils/date/helpers";
 import DatePicker from "../../components/DatePicker";
 
 const LIMIT_PER_PAGE = __DEV__ ? 3 : 30;
 const screenHeight = Dimensions.get("window").height;
 
 const Diary = ({ navigation, hideDeader = false }) => {
-  const [diaryNotes, setDiaryNotes] = useContext(DiaryNotesContext);
+  const [diaryNotes] = useContext(DiaryNotesContext);
   const [diaryData] = useContext(DiaryDataContext);
   const [NPSvisible, setNPSvisible] = useState(false);
   const [page, setPage] = useState(1);
-  const [buffer, setBuffer] = useState("");
-  const [inputFocused, setInputFocused] = useState(false);
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [timestamp, setTimestamp] = useState(Date.now());
 
@@ -59,20 +43,6 @@ const Diary = ({ navigation, hideDeader = false }) => {
     };
     handleOnboarding();
   }, [navigation]);
-
-  useEffect(() => {}, [inputFocused]);
-
-  const addDiaryNote = () => {
-    const date = formatDay(new Date(timestamp));
-    const note = {
-      date,
-      value: { timestamp, id: uuidv4(), value: buffer, version: 1 },
-    };
-    setDiaryNotes(note);
-    setBuffer("");
-    setTimestamp(Date.now());
-    logEvents.logAddNoteDiary();
-  };
 
   const diaryDataWithUserComments = Object.keys(diaryData).reduce((prev, curr) => {
     const n = Object.keys(diaryData[curr] || [])?.some((category) =>
@@ -101,38 +71,6 @@ const Diary = ({ navigation, hideDeader = false }) => {
         contentContainerStyle={styles.scrollContainer}
         keyboardShouldPersistTaps="handled"
       >
-        <View>
-          <TextInput
-            multiline={true}
-            numberOfLines={Platform.OS === "ios" ? null : 1}
-            minHeight={Platform.OS === "ios" ? 30 * 1 : null}
-            onChangeText={setBuffer}
-            value={buffer}
-            placeholder="Saisir ma nouvelle note"
-            style={styles.textArea}
-            textAlignVertical={"top"}
-            onFocus={() => setInputFocused(true)}
-            onBlur={() => setInputFocused(false)}
-          />
-          {inputFocused ? (
-            <View style={styles.buttonContainer}>
-              <View style={styles.dateContainer}>
-                <DateOrTimeDisplay mode="date" date={timestamp} onPress={() => setShowDatePicker("date")} />
-                <DateOrTimeDisplay mode="time" date={timestamp} onPress={() => setShowDatePicker("time")} />
-              </View>
-              <Button
-                icon="validate"
-                visible
-                disabled={!buffer}
-                onPress={() => {
-                  Keyboard.dismiss();
-                  addDiaryNote();
-                }}
-              />
-            </View>
-          ) : null}
-        </View>
-        <View style={styles.divider} />
         {Object.keys({ ...diaryNotes, ...diaryDataWithUserComments })
           .sort((a, b) => {
             a = a.split("/").reverse().join("");
@@ -193,9 +131,6 @@ const styles = StyleSheet.create({
     padding: 5,
     paddingBottom: 0,
   },
-  dateContainer: {
-    flexDirection: "row",
-  },
   arrowDown: {
     transform: [{ rotate: "180deg" }],
   },
@@ -217,26 +152,8 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: "white",
   },
-  inputContainer: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "flex-start",
-    justifyContent: "space-between",
-    paddingVertical: 5,
-    paddingHorizontal: 15,
-  },
   scrollContainer: {
     paddingBottom: screenHeight / 2,
-  },
-  title: {
-    fontSize: 19,
-    paddingBottom: 10,
-    color: colors.BLUE,
-    fontWeight: "700",
-  },
-  flex: {
-    display: "flex",
-    flexDirection: "row",
   },
   subtitle: {
     color: colors.BLUE,
@@ -251,36 +168,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     fontWeight: "600",
     overflow: "hidden",
-  },
-  verticalBorder: {
-    borderLeftWidth: 1,
-    borderColor: "#00CEF7",
-  },
-  buttonContainer: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "flex-end",
-  },
-  buttonText: {
-    color: "#fff",
-    fontWeight: "bold",
-    fontSize: 14,
-    flexWrap: "wrap",
-    textAlign: "center",
-  },
-  divider: {
-    height: 1,
-    backgroundColor: "#E0E0E0",
-    marginVertical: 15,
-    width: "50%",
-    alignSelf: "center",
-  },
-  textArea: {
-    backgroundColor: "#F4FCFD",
-    borderRadius: 10,
-    marginBottom: 10,
-    padding: 10,
   },
 });
 
