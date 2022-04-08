@@ -16,6 +16,7 @@ import logEvents from "../../services/logEvents";
 import { formatDateThread } from "../../utils/date/helpers";
 import BannerProNPS from "./bannerProNPS";
 import TabPicker from "./TabPicker";
+import RecapCompletion from "./recapCompletion";
 import Diary from "../../scenes/diary";
 
 const LIMIT_PER_PAGE = __DEV__ ? 3 : 30;
@@ -79,11 +80,8 @@ const Status = ({ navigation }) => {
             <BannerProNPS onClose={() => setBannerProNPSVisible(false)} />
           ) : (
             <>
-              <TouchableOpacity onPress={startSurvey} style={styles.setupButton}>
-                <Text style={styles.setupButtonText}>Comment s'est passée ma journée</Text>
-              </TouchableOpacity>
+              <RecapCompletion navigation={navigation} />
               <View style={styles.divider} />
-              <ContributeCard onPress={() => setNPSvisible(true)} />
               {Object.keys(diaryData)
                 .sort((a, b) => {
                   a = a.split("/").reverse().join("");
@@ -207,7 +205,7 @@ const styles = StyleSheet.create({
   divider: {
     height: 1,
     backgroundColor: "#E0E0E0",
-    marginVertical: 15,
+    marginVertical: 40,
     width: "50%",
     alignSelf: "center",
   },

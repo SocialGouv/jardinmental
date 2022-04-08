@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { StyleSheet, View, TouchableOpacity } from "react-native";
 import { colors } from "../utils/colors";
 import Plus from "../../assets/svg/Plus";
 import Pencil from "../../assets/svg/Pencil";
@@ -19,6 +19,7 @@ const RoundButtonIcon = ({
   icon,
   borderWidth = 1,
   small,
+  medium,
   shadow,
 }) => {
   if (!visible || !icon) return null;
@@ -95,20 +96,35 @@ const RoundButtonIcon = ({
         );
     }
   };
-  return (
-    <TouchableOpacity
-      disabled={disabled}
-      onPress={onPress}
-      style={[
-        styles.backButtonContainer,
-        shadow ? styles.withShadow : {},
-        { backgroundColor, borderColor, borderWidth },
-        { width: small ? 20 : 40, height: small ? 20 : 40 },
-      ]}
-    >
-      {render()}
-    </TouchableOpacity>
-  );
+  if (onPress) {
+    return (
+      <TouchableOpacity
+        disabled={disabled}
+        onPress={onPress}
+        style={[
+          styles.backButtonContainer,
+          shadow ? styles.withShadow : {},
+          { backgroundColor, borderColor, borderWidth },
+          { width: small ? 20 : medium ? 32 : 40, height: small ? 20 : medium ? 32 : 40 },
+        ]}
+      >
+        {render()}
+      </TouchableOpacity>
+    );
+  } else {
+    return (
+      <View
+        style={[
+          styles.backButtonContainer,
+          shadow ? styles.withShadow : {},
+          { backgroundColor, borderColor, borderWidth },
+          { width: small ? 20 : medium ? 32 : 40, height: small ? 20 : medium ? 32 : 40 },
+        ]}
+      >
+        {render()}
+      </View>
+    );
+  }
 };
 
 const styles = StyleSheet.create({
