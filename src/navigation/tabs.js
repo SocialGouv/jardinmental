@@ -61,7 +61,7 @@ const Tabs = ({ navigation, route }) => {
           name="Status"
           component={Status}
           options={{
-            tabBarLabel: "Mon état",
+            tabBarLabel: "Mes entrées",
             tabBarIcon: ({ color }) => <SurveyMenu height={24} style={{ color }} />,
           }}
         />
@@ -69,24 +69,24 @@ const Tabs = ({ navigation, route }) => {
           name="Diary"
           component={Diary}
           options={{
-            tabBarLabel: "Mon journal",
+            tabBarLabel: "xxx",
             tabBarIcon: ({ color }) => <DiaryMenu height={24} style={{ color }} />,
-          }}
-        />
-        <Tab.Screen
-          name="Exercise"
-          component={Exercise}
-          options={{
-            tabBarLabel: "Exercice",
-            tabBarIcon: ({ color }) => <ExerciseMenu height={24} style={{ color }} />,
           }}
         />
         <Tab.Screen
           name="Calendar"
           component={Suivi}
           options={{
-            tabBarLabel: "Mon suivi",
+            tabBarLabel: "Mes Analyses",
             tabBarIcon: ({ color }) => <GraphMenu height={24} style={{ color }} />,
+          }}
+        />
+        <Tab.Screen
+          name="Exercise"
+          component={Exercise}
+          options={{
+            tabBarLabel: "Beck",
+            tabBarIcon: ({ color }) => <ExerciseMenu height={24} style={{ color }} />,
           }}
         />
       </Tab.Navigator>

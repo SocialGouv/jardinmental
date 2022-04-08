@@ -1,15 +1,12 @@
-import React from 'react';
-import {View, StyleSheet, Modal, TouchableOpacity} from 'react-native';
+import React from "react";
+import { View, StyleSheet, Modal, TouchableOpacity } from "react-native";
 
-import SettingItem from './setting-item';
+import SettingItem from "./setting-item";
 
-const SettingsModal = ({navigation, visible, onClick}) => {
+const SettingsModal = ({ navigation, visible, onClick }) => {
   return (
     <Modal animationType="slide" visible={visible} transparent={true}>
-      <TouchableOpacity
-        activeOpacity={1}
-        style={styles.container}
-        onPressOut={onClick}>
+      <TouchableOpacity activeOpacity={1} style={styles.container} onPressOut={onClick}>
         <View style={styles.card}>
           <SettingItem
             title="Définir un rappel"
@@ -33,7 +30,7 @@ const SettingsModal = ({navigation, visible, onClick}) => {
             icon="DrugsSvg"
           />
           <SettingItem
-            title="Exporter mes données"
+            title="Envoyer un récapitulatif de mes données"
             path="export"
             navigation={navigation}
             onClick={onClick}
@@ -48,11 +45,11 @@ const SettingsModal = ({navigation, visible, onClick}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'flex-end',
-    backgroundColor: '#0A215C50',
+    justifyContent: "flex-end",
+    backgroundColor: "#0A215C50",
   },
   card: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     borderRadius: 10,
     paddingBottom: 30,
   },

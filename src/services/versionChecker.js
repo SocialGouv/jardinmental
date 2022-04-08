@@ -4,7 +4,7 @@ import VersionCheck from "react-native-version-check";
 
 export const needUpdate = async () => {
   const res = await VersionCheck.needUpdate();
-  return res.isNeeded;
+  return res?.isNeeded;
 };
 
 export default () => {

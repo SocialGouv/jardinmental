@@ -14,7 +14,7 @@ import Courbes from "../calendar/calendar";
 import logEvents from "../../services/logEvents";
 
 const screenHeight = Dimensions.get("window").height;
-const CHART_TYPES = ["Frises", "Statistiques", "Courbes", "Évènements"];
+const CHART_TYPES = ["Frises", "Statistiques", "Courbes", "Analyse des notes"];
 
 const nextChartType = (chartType) => {
   const i = CHART_TYPES.indexOf(chartType);

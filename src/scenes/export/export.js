@@ -100,8 +100,8 @@ const Export = ({ navigation }) => {
             icon="ExportDataSvg"
             color="#d3d3e8"
             styleContainer={{
-              marginTop: "20%",
-              marginBottom: "20%",
+              marginTop: 0,
+              marginBottom: 50,
             }}
             width={80}
             height={80}
@@ -134,7 +134,7 @@ const Export = ({ navigation }) => {
             />
             <Text style={styles.indication}>Le nom choisi sera affiché dans l'objet du mail</Text>
           </View>
-          {!isLoading && <Button title="Exporter mes données" disabled={!mail} onPress={exportData} />}
+          {!isLoading && <Button title="Envoyer par mail" disabled={!mail} onPress={exportData} />}
         </ScrollView>
       </SafeAreaView>
     </KeyboardAvoidingView>
