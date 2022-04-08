@@ -11,6 +11,7 @@ import localStorage from "../utils/localStorage";
 import logEvents from "../services/logEvents";
 import { colors } from "../utils/colors";
 import FloatingPlusButton from "../components/FloatingPlusButton";
+import Text from "../components/MyText";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -59,7 +60,9 @@ const Tabs = ({ navigation, route }) => {
           name="Status"
           component={Status}
           options={{
-            tabBarLabel: "Mes entrées",
+            tabBarLabel: ({ color }) => (
+              <Text style={{ fontSize: 10, marginHorizontal: 0, padding: 0, color }}>Mes entrées</Text>
+            ),
             tabBarIcon: ({ color }) => <SurveyMenu height={24} style={{ color }} />,
           }}
         />
@@ -67,7 +70,9 @@ const Tabs = ({ navigation, route }) => {
           name="Calendar"
           component={Suivi}
           options={{
-            tabBarLabel: "Mes Analyses",
+            tabBarLabel: ({ color }) => (
+              <Text style={{ fontSize: 10, marginHorizontal: 0, padding: 0, color }}>Mes analyses</Text>
+            ),
             tabBarIcon: ({ color }) => <GraphMenu height={24} style={{ color }} />,
           }}
         />
@@ -75,7 +80,9 @@ const Tabs = ({ navigation, route }) => {
           name="Exercise"
           component={Exercise}
           options={{
-            tabBarLabel: "Beck",
+            tabBarLabel: ({ color }) => (
+              <Text style={{ fontSize: 10, marginHorizontal: 0, padding: 0, color }}>Beck</Text>
+            ),
             tabBarIcon: ({ color }) => <ExerciseMenu height={24} style={{ color }} />,
           }}
         />

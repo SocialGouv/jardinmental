@@ -119,7 +119,7 @@ const Status = ({ navigation }) => {
     <SafeAreaView style={styles.safe}>
       <NPS forceView={NPSvisible} close={() => setNPSvisible(false)} />
       <View style={styles.headerContainer}>
-        <Header title="Mon état et mes traitements" navigation={navigation} />
+        <Header title="Mes entrées" navigation={navigation} />
       </View>
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContainer}>
         <TabPicker ongletActif={ongletActif} onChange={setOngletActif} />
