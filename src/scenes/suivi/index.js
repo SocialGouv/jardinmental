@@ -65,7 +65,7 @@ const Suivi = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.safe}>
       <View style={styles.headerContainer}>
-        <Header title="Mon suivi" navigation={navigation} />
+        <Header title="Mes analyses" navigation={navigation} />
         <ChartPicker
           onAfterPress={() => setChartType(nextChartType(chartType))}
           onBeforePress={() => setChartType(prevChartType(chartType))}
