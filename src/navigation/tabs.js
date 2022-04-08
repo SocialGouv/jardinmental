@@ -1,13 +1,10 @@
 import React from "react";
 import { StyleSheet, Platform } from "react-native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import Diary from "../scenes/diary";
 import Status from "../scenes/status";
 import Exercise from "../scenes/exercise";
-import Calendar from "../scenes/calendar/calendar";
 import Suivi from "../scenes/suivi";
 import SurveyMenu from "../../assets/svg/SurveyMenu";
-import DiaryMenu from "../../assets/svg/DiaryMenu";
 import ExerciseMenu from "../../assets/svg/ExerciseMenu";
 import GraphMenu from "../../assets/svg/GraphMenu";
 import localStorage from "../utils/localStorage";
@@ -63,14 +60,6 @@ const Tabs = ({ navigation, route }) => {
           options={{
             tabBarLabel: "Mes entrées",
             tabBarIcon: ({ color }) => <SurveyMenu height={24} style={{ color }} />,
-          }}
-        />
-        <Tab.Screen
-          name="Diary"
-          component={Diary}
-          options={{
-            tabBarLabel: "xxx",
-            tabBarIcon: ({ color }) => <DiaryMenu height={24} style={{ color }} />,
           }}
         />
         <Tab.Screen
