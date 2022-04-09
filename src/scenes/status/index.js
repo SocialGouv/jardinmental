@@ -17,6 +17,7 @@ import { formatDateThread } from "../../utils/date/helpers";
 import BannerProNPS from "./bannerProNPS";
 import TabPicker from "./TabPicker";
 import RecapCompletion from "./recapCompletion";
+import NoData from "./NoData";
 import Diary from "../../scenes/diary";
 
 const LIMIT_PER_PAGE = __DEV__ ? 3 : 30;
@@ -70,6 +71,37 @@ const Status = ({ navigation }) => {
     }
   };
 
+  const noData = () => !Object.keys(diaryData).some((key) => diaryData[key]);
+
+  const renderJournalEntrees = () => {
+    if (noData()) {
+      return <NoData />;
+    } else {
+      <>
+        {Object.keys(diaryData)
+          .sort((a, b) => {
+            a = a.split("/").reverse().join("");
+            b = b.split("/").reverse().join("");
+            return b.localeCompare(a);
+          })
+          .slice(0, LIMIT_PER_PAGE * page)
+          .map((date) => (
+            <View key={date}>
+              <Text style={styles.subtitle}>{formatDateThread(date)}</Text>
+              <StatusItem date={date} patientState={diaryData[date]} navigation={navigation} />
+            </View>
+          ))}
+        <Bubble diaryData={diaryData} navigation={navigation} />
+        {Object.keys(diaryData)?.length > LIMIT_PER_PAGE * page && (
+          <TouchableOpacity onPress={() => setPage(page + 1)} style={styles.versionContainer}>
+            <Text style={styles.arrowDownLabel}>Voir plus</Text>
+            <ArrowUpSvg style={styles.arrowDown} color={colors.BLUE} />
+          </TouchableOpacity>
+        )}
+      </>;
+    }
+  };
+
   const renderOnglet = (onglet) => {
     if (onglet === "all") {
       // display only LIMIT_PER_PAGE days
@@ -82,26 +114,7 @@ const Status = ({ navigation }) => {
             <>
               <RecapCompletion navigation={navigation} />
               <View style={styles.divider} />
-              {Object.keys(diaryData)
-                .sort((a, b) => {
-                  a = a.split("/").reverse().join("");
-                  b = b.split("/").reverse().join("");
-                  return b.localeCompare(a);
-                })
-                .slice(0, LIMIT_PER_PAGE * page)
-                .map((date) => (
-                  <View key={date}>
-                    <Text style={styles.subtitle}>{formatDateThread(date)}</Text>
-                    <StatusItem date={date} patientState={diaryData[date]} navigation={navigation} />
-                  </View>
-                ))}
-              <Bubble diaryData={diaryData} navigation={navigation} />
-              {Object.keys(diaryData)?.length > LIMIT_PER_PAGE * page && (
-                <TouchableOpacity onPress={() => setPage(page + 1)} style={styles.versionContainer}>
-                  <Text style={styles.arrowDownLabel}>Voir plus</Text>
-                  <ArrowUpSvg style={styles.arrowDown} color={colors.BLUE} />
-                </TouchableOpacity>
-              )}
+              {renderJournalEntrees()}
             </>
           )}
         </View>
