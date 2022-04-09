@@ -22,7 +22,7 @@ const FloatingPlusButton = ({ onPress, shadow }) => {
 const styles = StyleSheet.create({
   buttonWrapper: {
     position: "absolute",
-    bottom: 80,
+    bottom: 75,
     right: 10,
     shadowColor: "#000",
     shadowOffset: {
