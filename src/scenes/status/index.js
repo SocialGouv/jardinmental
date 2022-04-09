@@ -77,28 +77,30 @@ const Status = ({ navigation }) => {
     if (noData()) {
       return <NoData />;
     } else {
-      <>
-        {Object.keys(diaryData)
-          .sort((a, b) => {
-            a = a.split("/").reverse().join("");
-            b = b.split("/").reverse().join("");
-            return b.localeCompare(a);
-          })
-          .slice(0, LIMIT_PER_PAGE * page)
-          .map((date) => (
-            <View key={date}>
-              <Text style={styles.subtitle}>{formatDateThread(date)}</Text>
-              <StatusItem date={date} patientState={diaryData[date]} navigation={navigation} />
-            </View>
-          ))}
-        <Bubble diaryData={diaryData} navigation={navigation} />
-        {Object.keys(diaryData)?.length > LIMIT_PER_PAGE * page && (
-          <TouchableOpacity onPress={() => setPage(page + 1)} style={styles.versionContainer}>
-            <Text style={styles.arrowDownLabel}>Voir plus</Text>
-            <ArrowUpSvg style={styles.arrowDown} color={colors.BLUE} />
-          </TouchableOpacity>
-        )}
-      </>;
+      return (
+        <>
+          {Object.keys(diaryData)
+            .sort((a, b) => {
+              a = a.split("/").reverse().join("");
+              b = b.split("/").reverse().join("");
+              return b.localeCompare(a);
+            })
+            .slice(0, LIMIT_PER_PAGE * page)
+            .map((date) => (
+              <View key={date}>
+                <Text style={styles.subtitle}>{formatDateThread(date)}</Text>
+                <StatusItem date={date} patientState={diaryData[date]} navigation={navigation} />
+              </View>
+            ))}
+          <Bubble diaryData={diaryData} navigation={navigation} />
+          {Object.keys(diaryData)?.length > LIMIT_PER_PAGE * page && (
+            <TouchableOpacity onPress={() => setPage(page + 1)} style={styles.versionContainer}>
+              <Text style={styles.arrowDownLabel}>Voir plus</Text>
+              <ArrowUpSvg style={styles.arrowDown} color={colors.BLUE} />
+            </TouchableOpacity>
+          )}
+        </>
+      );
     }
   };
 
