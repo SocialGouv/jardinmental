@@ -22,10 +22,10 @@ import InputQuestion from "./InputQuestion";
 import QuestionYesNo from "./QuestionYesNo";
 import logEvents from "../../services/logEvents";
 import { DiaryDataContext } from "../../context/diaryData";
-import { availableData, alertNoDataYesterday } from "./survey-data";
+import { alertNoDataYesterday } from "./survey-data";
 import localStorage from "../../utils/localStorage";
 import { useFocusEffect } from "@react-navigation/native";
-import Icon from "../../components/Icon";
+import ArrowUpSvg from "../../../assets/svg/arrow-up.svg";
 
 const DaySurvey = ({ navigation, route }) => {
   const [diaryData, setDiaryData] = useContext(DiaryDataContext);
@@ -167,7 +167,6 @@ const DaySurvey = ({ navigation, route }) => {
           keyboardDismissMode="on-drag"
           onScrollBeginDrag={Keyboard.dismiss}
         >
-          <Text style={styles.question}>{renderQuestion()}</Text>
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("symptoms");
@@ -175,10 +174,13 @@ const DaySurvey = ({ navigation, route }) => {
             }}
           >
             <View style={styles.linkContainer}>
-              <Icon icon="SymptomsSetting" color={colors.LIGHT_BLUE} width={20} height={20} />
-              <Text style={styles.link}>Modifier mon questionnaire ›</Text>
+              <Text style={styles.link}>Ajouter ou retirer des éléments de mon questionnaire</Text>
+              <View style={styles.linkButtonContainer}>
+                <ArrowUpSvg color="#fff" />
+              </View>
             </View>
           </TouchableOpacity>
+          <Text style={styles.question}>{renderQuestion()}</Text>
           {questions.map((q, i) => (
             <Question
               key={i}
@@ -328,18 +330,37 @@ const styles = StyleSheet.create({
     color: colors.BLUE,
     fontSize: 22,
     fontWeight: "700",
+    marginVertical: 25,
   },
   linkContainer: {
+    backgroundColor: "#D2F4F7",
+    borderColor: colors.LIGHT_BLUE,
+    borderWidth: 0.5,
+    borderRadius: 999,
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  link: {
+    color: colors.BLUE,
+    fontSize: 14,
+    flex: 1,
+    textAlign: "center",
+    paddingHorizontal: 10,
+  },
+  linkButtonContainer: {
+    borderRadius: 20,
+    backgroundColor: colors.LIGHT_BLUE,
+    height: 40,
+    width: 40,
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    marginVertical: 25,
-  },
-  link: {
-    color: colors.LIGHT_BLUE,
-    textDecorationLine: "underline",
-    fontSize: 18,
+    alignSelf: "flex-start",
+    transform: [{ rotate: "90deg" }],
+    margin: 7,
   },
   subtitleTop: {
     flex: 1,
