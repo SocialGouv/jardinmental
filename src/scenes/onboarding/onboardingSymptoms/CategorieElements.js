@@ -24,7 +24,7 @@ const CategorieElements = ({
             visible
             onPress={() => setIsOpen((e) => !e)}
             isToggled={isOpen}
-            small
+            medium
           />
         </View>
       </TouchableOpacity>
