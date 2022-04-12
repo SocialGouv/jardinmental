@@ -19,6 +19,8 @@ import Text from "../../../components/MyText";
 import Icon from "../../../components/Icon";
 import { INDICATEURS_LISTE } from "../../../utils/liste_indicateurs";
 import AjoutIndicateurPerso from "../onboardingSymptoms/AjoutIndicateurPerso";
+import CategorieElements from "../onboardingSymptoms/CategorieElements";
+import { INDICATEURS_LISTE_PAR_CATEGORIE } from "../../../utils/liste_indicateurs";
 
 const CustomSymptomScreen = ({ navigation, route, settings = false }) => {
   const [chosenCategories, setChosenCategories] = useState();
@@ -41,7 +43,12 @@ const CustomSymptomScreen = ({ navigation, route, settings = false }) => {
           // select it if we add it to the list (old and new version)
           // cat is the full name (SYMPTOM_FREQUENCE)
           // categoryName is the new format (SYMPTOM)
-          selected[categoryName] = preselectedCategories[cat] || preselectedCategories[categoryName];
+          if (
+            Object.keys(preselectedCategories).includes(cat) ||
+            Object.keys(preselectedCategories).includes(categoryName)
+          ) {
+            selected[categoryName] = preselectedCategories[cat] || preselectedCategories[categoryName];
+          }
         });
       setChosenCategories(selected);
     })();
@@ -74,6 +81,10 @@ const CustomSymptomScreen = ({ navigation, route, settings = false }) => {
     await localStorage.addCustomSymptoms(value);
     setChosenCategories((prev) => ({ ...prev, [value]: true }));
     logEvents.logCustomSymptomAdd();
+  };
+
+  const setToggleIndicateur = ({ indicateur, valeur }) => {
+    setChosenCategories((prev) => ({ ...prev, [indicateur]: valeur }));
   };
 
   const removeSymptom = async (value) => setChosenCategories({ ...chosenCategories, [value]: false });
@@ -121,7 +132,16 @@ const CustomSymptomScreen = ({ navigation, route, settings = false }) => {
         />
         <View style={styles.divider} />
         {settings ? (
-          <OldCriteria chosenCategories={chosenCategories} addSymptom={handleAddNewSymptom} />
+          <>
+            <Exemples
+              chosenCategories={chosenCategories}
+              addSymptom={handleAddNewSymptom}
+              setToggleIndicateur={setToggleIndicateur}
+              enableAddNewElement={false}
+            />
+            <View style={styles.divider} />
+            <OldCriteria chosenCategories={chosenCategories} addSymptom={handleAddNewSymptom} />
+          </>
         ) : null}
         {!settings && (
           <View style={styles.buttonWrapper}>
@@ -170,11 +190,45 @@ const OldCriteria = ({ chosenCategories, addSymptom }) => {
   );
 };
 
+const Exemples = ({ chosenCategories, addSymptom, setToggleIndicateur }) => {
+  const [showOldCriteria, setShowOldCriteria] = useState(false);
+
+  return (
+    <View>
+      <TouchableOpacity style={styles.flexRow} onPress={() => setShowOldCriteria((prev) => !prev)}>
+        <Text style={[styles.subtitle, styles.underline]}>Choisir parmi des exemples</Text>
+        {showOldCriteria ? (
+          <Icon icon="ChevronUpSvg" width={20} height={20} color={colors.BLUE} />
+        ) : (
+          <Icon icon="ChevronDownSvg" width={20} height={20} color={colors.BLUE} />
+        )}
+      </TouchableOpacity>
+      {showOldCriteria && (
+        <>
+          {Object.keys(INDICATEURS_LISTE_PAR_CATEGORIE).map((categorie) => {
+            const indicateurs = INDICATEURS_LISTE_PAR_CATEGORIE[categorie];
+            return (
+              <CategorieElements
+                key={categorie}
+                title={categorie}
+                options={indicateurs.map((e) => ({ id: e, label: e }))}
+                onClick={({ id, value }) => setToggleIndicateur({ indicateur: id, valeur: value })}
+                indicateursSelection={chosenCategories}
+                handleAddNewSymptom={addSymptom}
+              />
+            );
+          })}
+        </>
+      )}
+    </View>
+  );
+};
+
 const styles = StyleSheet.create({
   divider: {
     height: 1,
     backgroundColor: "#E0E0E0",
-    marginVertical: 40,
+    marginVertical: 10,
     width: "50%",
     alignSelf: "center",
   },
