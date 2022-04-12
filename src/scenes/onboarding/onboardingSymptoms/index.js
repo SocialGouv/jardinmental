@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { TouchableOpacity, StyleSheet, ScrollView, View, SafeAreaView } from "react-native";
 import Text from "../../../components/MyText";
-import CheckBox from "@react-native-community/checkbox";
 import { colors } from "../../../utils/colors";
-import { displayedCategories, categories } from "../../../utils/constants";
+import { displayedCategories } from "../../../utils/constants";
 import localStorage from "../../../utils/localStorage";
 import logEvents from "../../../services/logEvents";
 import BackButton from "../../../components/BackButton";
 import Button from "../../../components/Button";
 import SurveyMenu from "../../../../assets/svg/SurveyMenu";
-import Logo from "../../../../assets/svg/symptoms-setting";
 import { ONBOARDING_STEPS } from "../../../utils/constants";
+import RoundButtonIcon from "../../../components/RoundButtonIcon";
+import { INDICATEURS_LISTE_PAR_CATEGORIE } from "../../../utils/liste_indicateurs";
+import TextTag from "../../../components/TextTag";
+import AjoutIndicateurPerso from "./AjoutIndicateurPerso";
 
 const SymptomScreen = ({ navigation, route }) => {
-  const [chosenCategories, setChosenCategories] = useState({});
+  const [indicateursSelection, setIndicateursSelection] = useState({});
 
   useEffect(() => {
     (async () => {
@@ -23,52 +25,40 @@ const SymptomScreen = ({ navigation, route }) => {
 
   useEffect(() => {
     (async () => {
-      const preselectedCategories = await localStorage.getSymptoms();
-      if (!preselectedCategories || !Object.keys(preselectedCategories).length) {
+      const localStorageIndicateurs = await localStorage.getSymptoms();
+      if (!localStorageIndicateurs || !Object.keys(localStorageIndicateurs).length) {
         return init();
       }
-      setChosenCategories(preselectedCategories);
+      setIndicateursSelection(localStorageIndicateurs);
     })();
   }, []);
 
   const init = () => {
     let res = {};
-    Object.keys(categories).forEach((cat) => {
-      res[cat] = false;
+    Object.keys(indicateursSelection).forEach((ind) => {
+      res[ind] = false;
     });
-    setChosenCategories(res);
+    setIndicateursSelection(res);
   };
 
-  const setToogleCheckbox = (cat, value) => {
-    let categories = { ...chosenCategories };
-    categories[cat] = value;
-    setChosenCategories(categories);
+  const setToggleIndicateur = ({ indicateur, valeur }) => {
+    setIndicateursSelection((prev) => ({ ...prev, [indicateur]: valeur }));
   };
 
-  const noneSelected = () => {
-    let empty = true;
-    Object.keys(chosenCategories).forEach((cat) => {
-      chosenCategories[cat] && (empty = false);
-    });
-    return empty;
-  };
+  const getSelectionVide = () => !Object.keys(indicateursSelection).some((i) => indicateursSelection[i]);
 
   const nextOnboardingScreen = async () => {
-    if (noneSelected()) {
+    if (getSelectionVide()) {
       return;
     }
+    await localStorage.setSymptoms(indicateursSelection);
     navigation.navigate("onboarding-symptoms-custom");
   };
 
-  useEffect(() => {
-    (async () => await localStorage.setSymptoms(chosenCategories))();
-  }, [chosenCategories]);
-
   const handleAddNewSymptom = async (value) => {
     if (!value) return;
-    if (value in chosenCategories) return;
     await localStorage.addCustomSymptoms(value);
-    setChosenCategories({ [value]: true, ...chosenCategories });
+    setIndicateursSelection((prev) => ({ ...prev, [value]: true }));
     logEvents.logCustomSymptomAdd();
   };
 
@@ -84,46 +74,179 @@ const SymptomScreen = ({ navigation, route }) => {
       >
         <View style={styles.titleContainer}>
           <SurveyMenu style={styles.image} width={30} height={30} />
-          <Text style={styles.title}>Qu'est-ce que je souhaite suivre quotidiennement ?</Text>
+          <Text style={styles.title}>Que souhaitez-vous suivre quotidiennement ?</Text>
         </View>
-        <Text style={styles.subtitle}>Voici des exemples que vous pouvez sélectionner</Text>
-        {chosenCategories &&
-          Object.keys(chosenCategories).map((cat, index) => (
-            <View key={index} style={styles.categories}>
-              <Text style={styles.label}>{displayedCategories[cat] || cat}</Text>
-              <CheckBox
-                animationDuration={0.2}
-                boxType="square"
-                style={styles.checkbox}
-                value={chosenCategories[cat]}
-                onValueChange={(newValue) => setToogleCheckbox(cat, newValue)}
-                // for android
-                tintColors={{ true: colors.LIGHT_BLUE, false: "#aaa" }}
-                // for ios
-                tintColor="#aaa"
-                onCheckColor={colors.LIGHT_BLUE}
-                onTintColor={colors.LIGHT_BLUE}
-                onAnimationType="bounce"
-                offAnimationType="bounce"
-              />
-            </View>
-          ))}
+        {Object.keys(INDICATEURS_LISTE_PAR_CATEGORIE).map((categorie) => {
+          const indicateurs = INDICATEURS_LISTE_PAR_CATEGORIE[categorie];
+          return (
+            <CategorieElements
+              title={categorie}
+              options={indicateurs.map((e) => ({ id: e, label: e }))}
+              onClick={({ id, value }) => setToggleIndicateur({ indicateur: id, valeur: value })}
+              indicateursSelection={indicateursSelection}
+              handleAddNewSymptom={handleAddNewSymptom}
+            />
+          );
+        })}
+        <View style={styles.divider} />
+        <Text style={styles.subtitle}>Vous avez sélectionné&nbsp;:</Text>
+        <View style={styles.indicateursSelectionContainer}>
+          {Object.keys(indicateursSelection || {})
+            .filter((e) => indicateursSelection[e])
+            .map((e, i) => (
+              <TextTag key={i} value={displayedCategories[e] || e} selected={false} color="#D4F0F2" />
+            ))}
+        </View>
         <View style={styles.buttonWrapper}>
-          {noneSelected() ? (
+          {getSelectionVide() ? (
             <Text style={[styles.alert, styles.spaceabove]}>Ajouter ou sélectionner au moins 1 élément</Text>
           ) : (
             <Text style={[styles.h3, styles.spaceabove]}>
               Vous pourrez modifier à tout moment ce que vous suivez via le menu "Réglages" de l'application
             </Text>
           )}
-          <Button title="Valider" onPress={nextOnboardingScreen} disabled={noneSelected()} />
+          <Button title="Suivant" onPress={nextOnboardingScreen} disabled={getSelectionVide()} />
         </View>
       </ScrollView>
     </SafeAreaView>
   );
 };
 
+const CategorieElements = ({ title, options, onClick, indicateursSelection, handleAddNewSymptom }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [listeComplementaire, setListeComplementaire] = useState([]);
+  return (
+    <>
+      <TouchableOpacity style={stylesA.categorieContainer} onPress={() => setIsOpen((e) => !e)}>
+        <Text style={stylesA.categorieTitre}>{title}</Text>
+        <View>
+          <RoundButtonIcon
+            icon="toggle"
+            visible
+            onPress={() => setIsOpen((e) => !e)}
+            isToggled={isOpen}
+            small
+          />
+        </View>
+      </TouchableOpacity>
+      {isOpen ? (
+        <View style={stylesA.listeContainer}>
+          {(options || []).concat(listeComplementaire).map((option) => {
+            const indicateurSelectionne = indicateursSelection[option.id];
+            return (
+              <TouchableOpacity
+                key={`${title}_${option.id}`}
+                style={[
+                  stylesA.choixContainer,
+                  indicateurSelectionne ? stylesA.choixContainerSelected : null,
+                ]}
+                onPress={() => onClick({ id: option.id, value: !indicateurSelectionne })}
+              >
+                <Text style={stylesA.choixLabel}>{option.label}</Text>
+                {indicateurSelectionne ? (
+                  <View>
+                    <RoundButtonIcon
+                      backgroundColor="#5DEE5A"
+                      iconColor="#fff"
+                      borderWidth={0.5}
+                      borderColor="#5DEE5A"
+                      icon="validate"
+                      visible={true}
+                      medium
+                    />
+                  </View>
+                ) : (
+                  <View>
+                    <RoundButtonIcon
+                      backgroundColor="#f4f4f4"
+                      iconColor="#e1e1e1"
+                      borderWidth={0.5}
+                      borderColor="#e1e1e1"
+                      icon="validate"
+                      visible={true}
+                      medium
+                    />
+                  </View>
+                )}
+              </TouchableOpacity>
+            );
+          })}
+          <AjoutIndicateurPerso
+            onChange={(v) => {
+              if (Object.keys(indicateursSelection).find((e) => e === v)) return;
+              setListeComplementaire((prev) => [...prev, { id: v, label: v }]);
+              handleAddNewSymptom(v);
+            }}
+          />
+        </View>
+      ) : null}
+    </>
+  );
+};
+
+const stylesA = StyleSheet.create({
+  categorieContainer: {
+    backgroundColor: "#F4FCFD",
+    borderColor: "#D4F0F2",
+    borderWidth: 0.5,
+    marginBottom: 10,
+    borderRadius: 10,
+    padding: 10,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    height: 44, // standard
+  },
+  categorieTitre: {
+    fontSize: 15,
+    color: "#000",
+    fontWeight: "bold",
+  },
+  choixContainer: {
+    backgroundColor: "#fff",
+    borderColor: "#dadada",
+    borderBottomWidth: 0.5,
+    paddingHorizontal: 10,
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    height: 44, // standard
+  },
+  choixContainerSelected: {
+    backgroundColor: "#EFFDEF",
+  },
+  listeContainer: {
+    marginBottom: 44,
+  },
+  choixLabel: {
+    fontSize: 15,
+    color: "#000",
+    flex: 1,
+  },
+});
+
 const styles = StyleSheet.create({
+  indicateursSelectionContainer: {
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap",
+  },
+  subtitle: {
+    color: "#000",
+    fontSize: 15,
+    marginBottom: 20,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  divider: {
+    height: 1,
+    backgroundColor: "#E0E0E0",
+    marginVertical: 40,
+    width: "50%",
+    alignSelf: "center",
+  },
   image: {
     color: colors.BLUE,
     height: 40,
@@ -185,12 +308,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     fontWeight: "300",
     textAlign: "center",
-  },
-  subtitle: {
-    color: colors.BLUE,
-    fontSize: 18,
-    marginVertical: 30,
-    fontWeight: "400",
   },
   spaceabove: {
     marginTop: 15,
@@ -264,8 +381,7 @@ const styles = StyleSheet.create({
   buttonWrapper: {
     display: "flex",
     justifyContent: "flex-end",
-    alignItems: "center",
-    padding: 15,
+    alignItems: "flex-end",
   },
   okButtonText: {
     marginTop: 20,
