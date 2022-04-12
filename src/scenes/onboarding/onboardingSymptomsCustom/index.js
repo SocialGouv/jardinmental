@@ -17,6 +17,8 @@ import TextTag from "../../../components/TextTag";
 import Button from "../../../components/Button";
 import Text from "../../../components/MyText";
 import Icon from "../../../components/Icon";
+import { INDICATEURS_LISTE } from "../../../utils/liste_indicateurs";
+import AjoutIndicateurPerso from "../onboardingSymptoms/AjoutIndicateurPerso";
 
 const CustomSymptomScreen = ({ navigation, route, settings = false }) => {
   const [chosenCategories, setChosenCategories] = useState();
@@ -33,6 +35,7 @@ const CustomSymptomScreen = ({ navigation, route, settings = false }) => {
       Object.keys(categories)
         .concat(...Object.keys(reliquatCategories))
         .concat(customSymptoms)
+        .concat(INDICATEURS_LISTE)
         .forEach((cat) => {
           const [categoryName] = cat.split("_");
           // select it if we add it to the list (old and new version)
@@ -66,10 +69,10 @@ const CustomSymptomScreen = ({ navigation, route, settings = false }) => {
     })();
   }, [chosenCategories]);
 
-  const addSymptom = async (value) => {
+  const handleAddNewSymptom = async (value) => {
     if (!value) return;
     await localStorage.addCustomSymptoms(value);
-    setChosenCategories({ ...chosenCategories, [value]: true });
+    setChosenCategories((prev) => ({ ...prev, [value]: true }));
     logEvents.logCustomSymptomAdd();
   };
 
@@ -94,10 +97,6 @@ const CustomSymptomScreen = ({ navigation, route, settings = false }) => {
             <Text style={styles.bold}>propres éléments</Text>
           </Text>
         </View>
-        <AddSymptom
-          onChange={addSymptom}
-          placeholder="Ajoutez un ressenti, une activité, une sensation physique, un comportement, etc..."
-        />
         <Text style={styles.subtitle}>Vous suivez actuellement :</Text>
         <View style={styles.listContainer}>
           {Object.keys(chosenCategories || {})
@@ -114,8 +113,16 @@ const CustomSymptomScreen = ({ navigation, route, settings = false }) => {
               />
             ))}
         </View>
-
-        {settings ? <OldCriteria chosenCategories={chosenCategories} addSymptom={addSymptom} /> : null}
+        <AjoutIndicateurPerso
+          onChange={(v) => {
+            if (Object.keys(chosenCategories).find((e) => e === v)) return;
+            handleAddNewSymptom(v);
+          }}
+        />
+        <View style={styles.divider} />
+        {settings ? (
+          <OldCriteria chosenCategories={chosenCategories} addSymptom={handleAddNewSymptom} />
+        ) : null}
         {!settings && (
           <View style={styles.buttonWrapper}>
             <Text style={[styles.h3, styles.spaceabove]}>
@@ -164,6 +171,13 @@ const OldCriteria = ({ chosenCategories, addSymptom }) => {
 };
 
 const styles = StyleSheet.create({
+  divider: {
+    height: 1,
+    backgroundColor: "#E0E0E0",
+    marginVertical: 40,
+    width: "50%",
+    alignSelf: "center",
+  },
   safe: {
     flex: 1,
     backgroundColor: "white",
