@@ -130,7 +130,6 @@ const RecapCompletion = ({ navigation }) => {
             {
               backgroundColor: colors.LIGHT_BLUE,
               width: `${width}%`,
-              borderRadius: 999,
               textAlign: "center",
             })
           }
