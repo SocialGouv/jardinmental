@@ -1,5 +1,5 @@
 import React from "react";
-import { TouchableOpacity, StyleSheet, View, Animated } from "react-native";
+import { TouchableOpacity, StyleSheet, View, Animated, Easing } from "react-native";
 import { subDays } from "date-fns";
 import { useFocusEffect } from "@react-navigation/native";
 
@@ -66,6 +66,7 @@ const RecapCompletion = ({ navigation }) => {
       <Text style={[styles.title, styles.separatorBottom]}>
         Complétez votre semaine pour un meilleur suivi
       </Text>
+      <View style={styles.fil} />
       <View style={styles.buttonsContainer}>
         {[...Array(7)].map((_, i) => {
           const value = formatDay(subDays(now, i));
@@ -79,6 +80,7 @@ const RecapCompletion = ({ navigation }) => {
             }, {});
 
           const dayIsDone = Object.keys(filtered).length !== 0;
+          const isToday = i === 0;
 
           return (
             <TouchableOpacity key={i} onPress={() => startSurvey(i)}>
@@ -95,6 +97,8 @@ const RecapCompletion = ({ navigation }) => {
                       medium
                       styleContainer={{ marginHorizontal: 0 }}
                     />
+                  ) : isToday ? (
+                    <PulsationBouton />
                   ) : (
                     <RoundButtonIcon
                       backgroundColor="#E7F6F8"
@@ -107,7 +111,7 @@ const RecapCompletion = ({ navigation }) => {
                       styleContainer={{ marginHorizontal: 0 }}
                     />
                   )}
-                  <Text style={styles.dayLabel}>{label}</Text>
+                  <Text style={styles.dayLabel}>{label}.</Text>
                 </View>
               </View>
             </TouchableOpacity>
@@ -138,6 +142,53 @@ const RecapCompletion = ({ navigation }) => {
   );
 };
 
+const PulsationBouton = ({}) => {
+  const [scaleFn, setScaleFn] = React.useState(null);
+  const [destinationValue, setDestinationValue] = React.useState(1);
+
+  React.useEffect(() => {
+    const spinValue = new Animated.Value(1 - destinationValue);
+
+    Animated.timing(spinValue, {
+      toValue: destinationValue,
+      duration: 500,
+      easing: Easing.linear, // Easing is an additional import from react-native
+      useNativeDriver: true, // To make use of native driver for performance
+    }).start();
+
+    setScaleFn(
+      spinValue.interpolate({
+        inputRange: [0, 1],
+        outputRange: ["1", "1.1"],
+      })
+    );
+  }, [destinationValue]);
+
+  React.useEffect(() => {
+    const i = setInterval(() => {
+      setDestinationValue((p) => Math.abs(p - 1));
+    }, 2000);
+    return () => {
+      clearInterval(i);
+    };
+  }, []);
+
+  return (
+    <Animated.View style={[scaleFn && { transform: [{ scale: scaleFn }] }]}>
+      <RoundButtonIcon
+        backgroundColor={colors.LIGHT_BLUE}
+        iconColor={"#FFFFFF"}
+        borderWidth={0.5}
+        borderColor={colors.LIGHT_BLUE}
+        icon="plus"
+        visible={true}
+        medium
+        styleContainer={{ marginHorizontal: 0 }}
+      />
+    </Animated.View>
+  );
+};
+
 const styles = StyleSheet.create({
   answer: {
     display: "flex",
@@ -153,6 +204,11 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row-reverse",
     justifyContent: "space-between",
+  },
+  fil: {
+    height: 1,
+    backgroundColor: colors.LIGHT_BLUE,
+    top: 16,
   },
   dayLabel: {
     marginTop: 6,
