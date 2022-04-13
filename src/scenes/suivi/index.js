@@ -47,7 +47,7 @@ const Suivi = ({ navigation }) => {
         return <ChartPie fromDate={fromDate} toDate={toDate} navigation={navigation} />;
       case "Courbes":
         return <Courbes navigation={navigation} />;
-      case "Évènements":
+      case "Analyse des notes":
         return <Evenements navigation={navigation} fromDate={fromDate} toDate={toDate} />;
       case "Frises":
       default:
