@@ -114,7 +114,7 @@ const RecapCompletion = ({ navigation }) => {
           );
         })}
       </View>
-      <Text style={[styles.title, styles.separatorBottom, styles.separatorTop]}>
+      {/* <Text style={[styles.title, styles.separatorBottom, styles.separatorTop]}>
         Remplissage des 30 derniers jours
       </Text>
       <View style={styles.progressBar}>
@@ -133,7 +133,7 @@ const RecapCompletion = ({ navigation }) => {
         {width <= positionLabelTreshold ? (
           <Text style={[styles.labelPourcentage, styles.labelPourcentageOut]}>{width}%</Text>
         ) : null}
-      </View>
+      </View> */}
     </View>
   );
 };
