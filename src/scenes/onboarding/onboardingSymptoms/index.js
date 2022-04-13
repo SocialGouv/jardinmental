@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { TouchableOpacity, StyleSheet, ScrollView, View, SafeAreaView } from "react-native";
+import { StyleSheet, ScrollView, View, SafeAreaView } from "react-native";
 import Text from "../../../components/MyText";
 import { colors } from "../../../utils/colors";
 import { displayedCategories } from "../../../utils/constants";
@@ -9,10 +9,8 @@ import BackButton from "../../../components/BackButton";
 import Button from "../../../components/Button";
 import SurveyMenu from "../../../../assets/svg/SurveyMenu";
 import { ONBOARDING_STEPS } from "../../../utils/constants";
-import RoundButtonIcon from "../../../components/RoundButtonIcon";
 import { INDICATEURS_LISTE_PAR_CATEGORIE } from "../../../utils/liste_indicateurs";
 import TextTag from "../../../components/TextTag";
-import AjoutIndicateurPerso from "./AjoutIndicateurPerso";
 import CategorieElements from "./CategorieElements";
 
 const SymptomScreen = ({ navigation, route }) => {
@@ -53,7 +51,7 @@ const SymptomScreen = ({ navigation, route }) => {
       return;
     }
     await localStorage.setSymptoms(indicateursSelection);
-    navigation.navigate("onboarding-symptoms-custom");
+    navigation.navigate("reminder", { onboarding: true });
   };
 
   const handleAddNewSymptom = async (value) => {
@@ -87,27 +85,47 @@ const SymptomScreen = ({ navigation, route }) => {
               onClick={({ id, value }) => setToggleIndicateur({ indicateur: id, valeur: value })}
               indicateursSelection={indicateursSelection}
               handleAddNewSymptom={handleAddNewSymptom}
+              enableAddNewElement
             />
           );
         })}
-        <View style={styles.divider} />
-        <Text style={styles.subtitle}>Vous avez sélectionné&nbsp;:</Text>
-        <View style={styles.indicateursSelectionContainer}>
-          {Object.keys(indicateursSelection || {})
-            .filter((e) => indicateursSelection[e])
-            .map((e, i) => (
-              <TextTag key={i} value={displayedCategories[e] || e} selected={false} color="#D4F0F2" />
-            ))}
-        </View>
-        <View style={styles.buttonWrapper}>
-          {getSelectionVide() ? (
+        {!getSelectionVide() ? (
+          <>
+            <View style={styles.divider} />
+            <Text style={styles.subtitle}>Vous avez sélectionné&nbsp;:</Text>
+            <View style={styles.indicateursSelectionContainer}>
+              {Object.keys(indicateursSelection || {})
+                .filter((e) => indicateursSelection[e])
+                .map((e, i) => (
+                  <TextTag
+                    key={i}
+                    value={displayedCategories[e] || e}
+                    selected={false}
+                    color="#D4F0F2"
+                    onPress={() => {}}
+                    enableClosed
+                    onClose={() => setToggleIndicateur({ indicateur: e, valeur: false })}
+                  />
+                ))}
+            </View>
+          </>
+        ) : null}
+        {getSelectionVide() ? (
+          <View style={styles.buttonWrapperError}>
             <Text style={[styles.alert, styles.spaceabove]}>Ajouter ou sélectionner au moins 1 élément</Text>
-          ) : (
-            <Text style={[styles.h3, styles.spaceabove]}>
-              Vous pourrez modifier à tout moment ce que vous suivez via le menu "Réglages" de l'application
-            </Text>
-          )}
-          <Button title="Suivant" onPress={nextOnboardingScreen} disabled={getSelectionVide()} />
+          </View>
+        ) : (
+          <Text style={[styles.h3, styles.spaceabove]}>
+            Vous pourrez modifier à tout moment ce que vous suivez via le menu "Réglages" de l'application
+          </Text>
+        )}
+        <View style={styles.buttonWrapper}>
+          <Button
+            title="Suivant"
+            onPress={nextOnboardingScreen}
+            disabled={getSelectionVide()}
+            buttonStyle={{ minWidth: 0 }}
+          />
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -269,6 +287,10 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "flex-end",
     alignItems: "flex-end",
+  },
+  buttonWrapperError: {
+    display: "flex",
+    alignItems: "center",
   },
   okButtonText: {
     marginTop: 20,
