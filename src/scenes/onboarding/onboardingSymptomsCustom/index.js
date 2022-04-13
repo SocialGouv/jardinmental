@@ -270,6 +270,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   bold: {
+    color: colors.BLUE,
     fontWeight: "700",
   },
   subtitle: {
