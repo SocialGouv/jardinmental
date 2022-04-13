@@ -1,3 +1,29 @@
+# [1.24.0](https://github.com/SocialGouv/monsuivipsy/compare/v1.23.2...v1.24.0) (2022-04-13)
+
+
+### Bug Fixes
+
+* change worflow inscription (inverser traitement et rappel) ([9da0a28](https://github.com/SocialGouv/monsuivipsy/commit/9da0a28e7cdb7e35907a9320d1afdd4c54d2750f))
+* écran de bienvenu ([f550630](https://github.com/SocialGouv/monsuivipsy/commit/f5506300412369463f836b0295b12b6f072c392e))
+* mettre le rappel par défaut à `20:00` pendant l'onboarding ([42e0f6b](https://github.com/SocialGouv/monsuivipsy/commit/42e0f6bed51deaa2b5733e48f0734d6450ea67d1))
+* nom des onglets principaux ([c3bad19](https://github.com/SocialGouv/monsuivipsy/commit/c3bad19ead2e7c13bc3325a8a37edd74988e445a))
+* remove input diary ([280764a](https://github.com/SocialGouv/monsuivipsy/commit/280764ae4014eb685ba1151871b6ef8696673964))
+* style bar de progression ([6143b49](https://github.com/SocialGouv/monsuivipsy/commit/6143b490e290afecde01aa198f040d2e2a74b628))
+* style bouton personnaliser questionnaire ([c9d7e67](https://github.com/SocialGouv/monsuivipsy/commit/c9d7e677c3995f3d6dd344b9596a6ae2e74f9ad6))
+* style tab + floating bouton ([5701951](https://github.com/SocialGouv/monsuivipsy/commit/5701951f105f79288b122e99bdf7f54d318123c7))
+* taille bouton catégorie élement ([9d7fcde](https://github.com/SocialGouv/monsuivipsy/commit/9d7fcde700a78fa10cf3b2f7c19c750b283b2ef1))
+* **NPS:** enlever question recommandation à un proche ([33f2853](https://github.com/SocialGouv/monsuivipsy/commit/33f28537bd254b718c7e2d2f73130595520a8a49))
+* wording ([7201372](https://github.com/SocialGouv/monsuivipsy/commit/72013722d4b0599d440a7be1aee2926e46a27cc8))
+
+
+### Features
+
+* **entrees:** ajouter les recaps des 7 et 30 derniers jours ([3ac71f4](https://github.com/SocialGouv/monsuivipsy/commit/3ac71f4f204ef44dda36827037165071ed391f96))
+* **onboarding:** choix parmi liste d'exemple ([01a68bd](https://github.com/SocialGouv/monsuivipsy/commit/01a68bd7ff2128fa637423314a1fc49453613a9a))
+* **paramètres:** nouvelle ecran ([eba9ea6](https://github.com/SocialGouv/monsuivipsy/commit/eba9ea6cfa4f5e57d67ddfe3ba049eac2545686d))
+* bouton `+` flottant ([287062b](https://github.com/SocialGouv/monsuivipsy/commit/287062b4ce902d997d7ac53f1b97f75dc312b1ae))
+* mettre `Mon journal` en tant qu'onglet dans `Mes entrées` ([0a6987b](https://github.com/SocialGouv/monsuivipsy/commit/0a6987b51120b7ce8400c2543f504cc3348e70a5))
+
 ## [1.23.2](https://github.com/SocialGouv/monsuivipsy/compare/v1.23.1...v1.23.2) (2022-04-08)
 
 
