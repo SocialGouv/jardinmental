@@ -1,22 +1,10 @@
-import * as React from 'react';
-import {Platform, Text} from 'react-native';
+import * as React from "react";
+import { Platform, Text } from "react-native";
 
-export default ({
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  p,
-  bold,
-  italic,
-  children,
-  style,
-  ...rest
-}) => {
-  const s = {fontFamily: 'Karla'};
+export default ({ h1, h2, h3, h4, h5, p, bold, italic, children, style, ...rest }) => {
+  const s = { fontFamily: "Karla", color: "#111" };
   return (
-    <Text style={[style, s]} {...rest}>
+    <Text style={[s, style]} {...rest}>
       {children}
     </Text>
   );
