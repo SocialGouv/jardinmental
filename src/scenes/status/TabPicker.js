@@ -54,6 +54,7 @@ const tabStyles = StyleSheet.create({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+    minHeight: 40,
   },
   actif: {
     color: colors.LIGHT_BLUE,

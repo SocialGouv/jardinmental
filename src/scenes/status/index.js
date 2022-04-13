@@ -134,8 +134,8 @@ const Status = ({ navigation }) => {
       <View style={styles.headerContainer}>
         <Header title="Mes entrées" navigation={navigation} />
       </View>
+      <TabPicker ongletActif={ongletActif} onChange={setOngletActif} />
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContainer}>
-        <TabPicker ongletActif={ongletActif} onChange={setOngletActif} />
         {renderOnglet(ongletActif)}
       </ScrollView>
     </SafeAreaView>
