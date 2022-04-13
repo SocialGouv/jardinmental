@@ -82,17 +82,9 @@ const RecapCompletion = ({ navigation }) => {
 
           return (
             <TouchableOpacity key={i} onPress={() => startSurvey(i)}>
-              <View style={[styles.answer, dayIsDone ? styles.answerDone : styles.answerNotDone]}>
+              <View style={styles.answer}>
                 <View style={styles.answerLabel}>
                   {dayIsDone ? (
-                    // <RoundButtonIcon
-                    //   backgroundColor="#EFFDEF"
-                    //   iconColor="#5DEE5A"
-                    //   borderWidth={0.5}
-                    //   borderColor="#5DEE5A"
-                    //   icon="validate"
-                    //   visible={true}
-                    // />
                     <RoundButtonIcon
                       backgroundColor="#5DEE5A"
                       iconColor="#fff"
@@ -101,6 +93,7 @@ const RecapCompletion = ({ navigation }) => {
                       icon="validate"
                       visible={true}
                       medium
+                      styleContainer={{ marginHorizontal: 0 }}
                     />
                   ) : (
                     <RoundButtonIcon
@@ -111,6 +104,7 @@ const RecapCompletion = ({ navigation }) => {
                       icon="plus"
                       visible={true}
                       medium
+                      styleContainer={{ marginHorizontal: 0 }}
                     />
                   )}
                   <Text style={styles.dayLabel}>{label}</Text>

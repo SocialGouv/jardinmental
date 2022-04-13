@@ -21,6 +21,7 @@ const RoundButtonIcon = ({
   small,
   medium,
   shadow,
+  styleContainer = {},
 }) => {
   if (!visible || !icon) return null;
   const render = () => {
@@ -106,6 +107,7 @@ const RoundButtonIcon = ({
           shadow ? styles.withShadow : {},
           { backgroundColor, borderColor, borderWidth },
           { width: small ? 20 : medium ? 32 : 40, height: small ? 20 : medium ? 32 : 40 },
+          styleContainer,
         ]}
       >
         {render()}
@@ -119,6 +121,7 @@ const RoundButtonIcon = ({
           shadow ? styles.withShadow : {},
           { backgroundColor, borderColor, borderWidth },
           { width: small ? 20 : medium ? 32 : 40, height: small ? 20 : medium ? 32 : 40 },
+          styleContainer,
         ]}
       >
         {render()}
