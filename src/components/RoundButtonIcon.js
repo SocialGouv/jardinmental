@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, View, TouchableOpacity } from "react-native";
 import { colors } from "../utils/colors";
 import Plus from "../../assets/svg/Plus";
+import PlusCross from "../../assets/svg/PlusCross";
 import Pencil from "../../assets/svg/Pencil";
 import Bin from "../../assets/svg/Bin";
 import ArrowUpSvg from "../../assets/svg/arrow-up.svg";
@@ -33,6 +34,15 @@ const RoundButtonIcon = ({
             color={iconColor}
             width={small ? 9 : 19}
             height={small ? 9 : 19}
+          />
+        );
+      case "small-plus":
+        return (
+          <PlusCross
+            opacity={disabled ? 0.5 : 1}
+            color={iconColor}
+            // width={small ? 9 : 19}
+            // height={small ? 9 : 19}
           />
         );
       case "pencil":

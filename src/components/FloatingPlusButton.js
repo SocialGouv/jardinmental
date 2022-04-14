@@ -10,7 +10,7 @@ const FloatingPlusButton = ({ onPress, shadow }) => {
         backgroundColor={colors.LIGHT_BLUE}
         iconColor={colors.WHITE}
         borderWidth={0}
-        icon="plus"
+        icon="small-plus"
         visible={true}
         onPress={onPress}
         shadow={shadow}
