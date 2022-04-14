@@ -11,10 +11,8 @@ import RoundButtonIcon from "../../components/RoundButtonIcon";
 import Text from "../../components/MyText";
 
 const RecapCompletion = ({ navigation }) => {
-  const positionLabelTreshold = 25;
   const [diaryData] = React.useContext(DiaryDataContext);
   const [startDay, setStartDay] = React.useState(new Date(Date.now()));
-  const [width, setWidth] = React.useState(0);
 
   const startSurvey = (offset) => {
     const date = formatDay(beforeToday(offset));
@@ -36,29 +34,6 @@ const RecapCompletion = ({ navigation }) => {
       editingSurvey: dayIsDone,
     });
   };
-
-  useFocusEffect(
-    React.useCallback(() => {
-      const total = 30;
-      const p = [...Array(total)].reduce((prev, current, i) => {
-        const value = formatDay(subDays(startDay, i));
-        const blackListKeys = ["becks", "NOTES"];
-        const filtered = Object.keys(diaryData[value] || [])
-          .filter((key) => !blackListKeys.includes(key))
-          .reduce((obj, key) => {
-            obj[key] = diaryData[value][key];
-            return obj;
-          }, {});
-
-        const dayIsDone = Object.keys(filtered).length !== 0;
-        if (dayIsDone) {
-          return prev + 1;
-        }
-        return prev;
-      }, 0);
-      setWidth(Math.round((p / total) * 100));
-    }, [diaryData, startDay])
-  );
 
   useFocusEffect(
     React.useCallback(() => {
@@ -134,26 +109,6 @@ const RecapCompletion = ({ navigation }) => {
           );
         })}
       </View>
-      {/* <Text style={[styles.title, styles.separatorBottom, styles.separatorTop]}>
-        Remplissage des 30 derniers jours
-      </Text>
-      <View style={styles.progressBar}>
-        <View
-          style={
-            ([StyleSheet.absoluteFill],
-            {
-              backgroundColor: colors.LIGHT_BLUE,
-              width: `${width}%`,
-              textAlign: "center",
-            })
-          }
-        >
-          {width > positionLabelTreshold ? <Text style={[styles.labelPourcentage]}>{width}%</Text> : null}
-        </View>
-        {width <= positionLabelTreshold ? (
-          <Text style={[styles.labelPourcentage, styles.labelPourcentageOut]}>{width}%</Text>
-        ) : null}
-      </View> */}
     </View>
   );
 };
@@ -173,12 +128,6 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row-reverse",
     justifyContent: "space-between",
-  },
-  fil: {
-    marginLeft: -50,
-    height: 1,
-    backgroundColor: colors.LIGHT_BLUE,
-    top: 16,
   },
   dayLabel: {
     fontSize: 10,
@@ -202,31 +151,17 @@ const styles = StyleSheet.create({
     paddingVertical: 2,
     backgroundColor: colors.LIGHT_BLUE,
   },
-  labelPourcentage: {
-    paddingVertical: 5,
-    color: "#fff",
-    textAlign: "center",
-  },
-  labelPourcentageOut: {
-    marginLeft: 5,
-    color: colors.BLUE,
-  },
-  progressBar: {
-    flexDirection: "row",
-    width: "100%",
-    backgroundColor: "#E7F6F8",
-    borderColor: colors.LIGHT_BLUE,
-    borderRadius: 999,
-    overflow: "hidden",
+  fil: {
+    marginLeft: -50,
+    height: 1,
+    backgroundColor: colors.LIGHT_BLUE,
+    top: 16,
   },
   safe: {
     backgroundColor: "white",
   },
   separatorBottom: {
     marginBottom: 10,
-  },
-  separatorTop: {
-    marginTop: 20,
   },
   title: {
     textAlign: "center",
