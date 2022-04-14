@@ -1,5 +1,5 @@
 import React from "react";
-import { TouchableOpacity, StyleSheet, View, Animated, Easing } from "react-native";
+import { TouchableOpacity, StyleSheet, View } from "react-native";
 import { subDays } from "date-fns";
 import { useFocusEffect } from "@react-navigation/native";
 
@@ -12,8 +12,8 @@ import Text from "../../components/MyText";
 
 const RecapCompletion = ({ navigation }) => {
   const positionLabelTreshold = 25;
-  const now = new Date(Date.now());
   const [diaryData] = React.useContext(DiaryDataContext);
+  const [startDay, setStartDay] = React.useState(new Date(Date.now()));
   const [width, setWidth] = React.useState(0);
 
   const startSurvey = (offset) => {
@@ -40,9 +40,8 @@ const RecapCompletion = ({ navigation }) => {
   useFocusEffect(
     React.useCallback(() => {
       const total = 30;
-      const aujourdhui = new Date(Date.now());
       const p = [...Array(total)].reduce((prev, current, i) => {
-        const value = formatDay(subDays(aujourdhui, i));
+        const value = formatDay(subDays(startDay, i));
         const blackListKeys = ["becks", "NOTES"];
         const filtered = Object.keys(diaryData[value] || [])
           .filter((key) => !blackListKeys.includes(key))
@@ -58,18 +57,24 @@ const RecapCompletion = ({ navigation }) => {
         return prev;
       }, 0);
       setWidth(Math.round((p / total) * 100));
-    }, [diaryData])
+    }, [diaryData, startDay])
+  );
+
+  useFocusEffect(
+    React.useCallback(() => {
+      setStartDay(new Date(Date.now()));
+    }, [])
   );
 
   return (
     <View style={styles.safe}>
       <Text style={[styles.title, styles.separatorBottom]}>
-        Complétez votre semaine pour un meilleur suivi
+        Complétez les 7 derniers jours pour un meilleur suivi
       </Text>
       <View style={styles.fil} />
       <View style={styles.buttonsContainer}>
         {[...Array(7)].map((_, i) => {
-          const value = formatDay(subDays(now, i));
+          const value = formatDay(subDays(startDay, i));
           let label = firstLetterUppercase(getFirst3LetterWeekDay(value));
           const blackListKeys = ["becks", "NOTES"];
           const filtered = Object.keys(diaryData[value] || [])
@@ -98,20 +103,31 @@ const RecapCompletion = ({ navigation }) => {
                       styleContainer={{ marginHorizontal: 0 }}
                     />
                   ) : isToday ? (
-                    <PulsationBouton />
+                    <RoundButtonIcon
+                      backgroundColor={colors.LIGHT_BLUE}
+                      iconColor="#FFFFFF"
+                      borderWidth={0.5}
+                      borderColor={colors.LIGHT_BLUE}
+                      icon="small-plus"
+                      visible={true}
+                      medium
+                      styleContainer={{ marginHorizontal: 0 }}
+                    />
                   ) : (
                     <RoundButtonIcon
                       backgroundColor="#E7F6F8"
                       iconColor={colors.LIGHT_BLUE}
                       borderWidth={0.5}
                       borderColor={colors.LIGHT_BLUE}
-                      icon="plus"
+                      icon="small-plus"
                       visible={true}
                       medium
                       styleContainer={{ marginHorizontal: 0 }}
                     />
                   )}
-                  <Text style={styles.dayLabel}>{label}.</Text>
+                  <View style={isToday ? styles.dayLabelTodayContainer : styles.dayLabelContainer}>
+                    <Text style={isToday ? styles.dayLabelToday : styles.dayLabel}>{label}</Text>
+                  </View>
                 </View>
               </View>
             </TouchableOpacity>
@@ -142,53 +158,6 @@ const RecapCompletion = ({ navigation }) => {
   );
 };
 
-const PulsationBouton = ({}) => {
-  const [scaleFn, setScaleFn] = React.useState(null);
-  const [destinationValue, setDestinationValue] = React.useState(1);
-
-  React.useEffect(() => {
-    const spinValue = new Animated.Value(1 - destinationValue);
-
-    Animated.timing(spinValue, {
-      toValue: destinationValue,
-      duration: 500,
-      easing: Easing.linear, // Easing is an additional import from react-native
-      useNativeDriver: true, // To make use of native driver for performance
-    }).start();
-
-    setScaleFn(
-      spinValue.interpolate({
-        inputRange: [0, 1],
-        outputRange: ["1", "1.1"],
-      })
-    );
-  }, [destinationValue]);
-
-  React.useEffect(() => {
-    const i = setInterval(() => {
-      setDestinationValue((p) => Math.abs(p - 1));
-    }, 2000);
-    return () => {
-      clearInterval(i);
-    };
-  }, []);
-
-  return (
-    <Animated.View style={[scaleFn && { transform: [{ scale: scaleFn }] }]}>
-      <RoundButtonIcon
-        backgroundColor={colors.LIGHT_BLUE}
-        iconColor={"#FFFFFF"}
-        borderWidth={0.5}
-        borderColor={colors.LIGHT_BLUE}
-        icon="plus"
-        visible={true}
-        medium
-        styleContainer={{ marginHorizontal: 0 }}
-      />
-    </Animated.View>
-  );
-};
-
 const styles = StyleSheet.create({
   answer: {
     display: "flex",
@@ -206,14 +175,32 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   fil: {
+    marginLeft: -50,
     height: 1,
     backgroundColor: colors.LIGHT_BLUE,
     top: 16,
   },
   dayLabel: {
-    marginTop: 6,
     fontSize: 10,
     color: "#000",
+  },
+  dayLabelContainer: {
+    marginTop: 6,
+    paddingHorizontal: 3,
+    paddingVertical: 2,
+    backgroundColor: "transparent",
+  },
+  dayLabelToday: {
+    fontSize: 10,
+    fontWeight: "bold",
+    color: "#fff",
+  },
+  dayLabelTodayContainer: {
+    borderRadius: 99,
+    marginTop: 6,
+    paddingHorizontal: 5,
+    paddingVertical: 2,
+    backgroundColor: colors.LIGHT_BLUE,
   },
   labelPourcentage: {
     paddingVertical: 5,
