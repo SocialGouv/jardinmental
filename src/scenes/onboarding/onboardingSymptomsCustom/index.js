@@ -17,10 +17,9 @@ import TextTag from "../../../components/TextTag";
 import Button from "../../../components/Button";
 import Text from "../../../components/MyText";
 import Icon from "../../../components/Icon";
-import { INDICATEURS_LISTE } from "../../../utils/liste_indicateurs";
 import AjoutIndicateurPerso from "../onboardingSymptoms/AjoutIndicateurPerso";
 import CategorieElements from "../onboardingSymptoms/CategorieElements";
-import { INDICATEURS_LISTE_PAR_CATEGORIE } from "../../../utils/liste_indicateurs";
+import { INDICATEURS_LISTE_PAR_CATEGORIE, INDICATEURS_LISTE } from "../../../utils/liste_indicateurs";
 
 const CustomSymptomScreen = ({ navigation, route, settings = false }) => {
   const [chosenCategories, setChosenCategories] = useState();
@@ -63,8 +62,11 @@ const CustomSymptomScreen = ({ navigation, route, settings = false }) => {
   useEffect(() => {
     if (chosenCategories === undefined) return;
     (async () => {
-      const customSymptomsKeys = Object.keys(chosenCategories).filter((e) => !displayedCategories[e]);
-      const defaultSymptomsKeys = Object.keys(chosenCategories).filter((e) => !!displayedCategories[e]);
+      const isCustom = (e) => !displayedCategories[e] && !INDICATEURS_LISTE.includes(e);
+      const isDefault = (e) => !!displayedCategories[e] || INDICATEURS_LISTE.includes(e);
+
+      const customSymptomsKeys = Object.keys(chosenCategories).filter(isCustom);
+      const defaultSymptomsKeys = Object.keys(chosenCategories).filter(isDefault);
 
       let customSymptoms = {};
       customSymptomsKeys.forEach((e) => (customSymptoms[e] = chosenCategories[e]));
