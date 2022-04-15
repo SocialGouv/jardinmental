@@ -11,6 +11,7 @@ import Button from "../../components/RoundButtonIcon";
 import Toxic from "./toxic";
 import Context from "./context";
 import logEvents from "../../services/logEvents";
+import { INDICATEURS_LISTE } from "../../utils/liste_indicateurs";
 
 export default ({ navigation, patientState, date }) => {
   const [customs, setCustoms] = useState([]);
@@ -44,6 +45,7 @@ export default ({ navigation, patientState, date }) => {
   const hasAnswerSurvey = () =>
     Object.keys(displayedCategories)
       .concat(customs)
+      .concat(INDICATEURS_LISTE)
       .filter((key) => {
         return patientState && patientState[key];
       }).length;
@@ -62,6 +64,13 @@ export default ({ navigation, patientState, date }) => {
             {Object.keys(displayedCategories)
               .concat(customs)
               .concat(oldCustoms)
+              .concat(INDICATEURS_LISTE)
+              .reduce((acc, curr) => {
+                if (!acc.find((a) => a === curr)) {
+                  acc.push(curr);
+                }
+                return acc;
+              }, [])
               .map((key) => {
                 if (!patientState[key]) {
                   return;
