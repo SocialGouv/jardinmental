@@ -27,7 +27,7 @@ const prevChartType = (chartType) => {
   return CHART_TYPES[nextIndex];
 };
 
-const Suivi = ({ navigation }) => {
+const Suivi = ({ navigation, setPlusVisible }) => {
   const [chartType, setChartType] = React.useState(CHART_TYPES[0]);
   const [fromDate, setFromDate] = React.useState(beforeToday(30));
   const [toDate, setToDate] = React.useState(beforeToday(0));
@@ -35,8 +35,9 @@ const Suivi = ({ navigation }) => {
 
   useFocusEffect(
     React.useCallback(() => {
+      setPlusVisible(true);
       logEvents.logOpenPageSuivi(chartType);
-    }, [chartType])
+    }, [chartType, setPlusVisible])
   );
 
   if (!toDate || !fromDate) return null;

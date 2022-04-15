@@ -1,11 +1,34 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { StyleSheet, Animated, Easing } from "react-native";
 import { colors } from "../utils/colors";
 import Button from "./RoundButtonIcon";
 
-const FloatingPlusButton = ({ onPress, shadow }) => {
+const FloatingPlusButton = ({ onPress, shadow, plusVisible }) => {
+  const [animatedFn, setAnimatedFn] = React.useState(null);
+
+  React.useEffect(() => {
+    if (plusVisible === undefined) return;
+    const value = new Animated.Value(plusVisible ? 1 : 0);
+
+    Animated.timing(value, {
+      toValue: 1 - (plusVisible ? 1 : 0),
+      duration: 500,
+      easing: Easing.elastic(1), // Easing is an additional import from react-native
+      useNativeDriver: true, // To make use of native driver for performance
+    }).start();
+
+    setAnimatedFn(
+      value.interpolate({
+        inputRange: [0, 1],
+        outputRange: ["0", "80"],
+      })
+    );
+  }, [plusVisible]);
+
+  if (!animatedFn) return null;
+
   return (
-    <View style={styles.buttonWrapper}>
+    <Animated.View style={[styles.buttonWrapper, animatedFn && { transform: [{ translateX: animatedFn }] }]}>
       <Button
         backgroundColor={colors.LIGHT_BLUE}
         iconColor={colors.WHITE}
@@ -15,7 +38,7 @@ const FloatingPlusButton = ({ onPress, shadow }) => {
         onPress={onPress}
         shadow={shadow}
       />
-    </View>
+    </Animated.View>
   );
 };
 
@@ -34,24 +57,6 @@ const styles = StyleSheet.create({
 
     elevation: 5,
   },
-  // buttonStyle: {
-  //   position: "absolute",
-  //   width: 50,
-  //   height: 50,
-  //   alignItems: "center",
-  //   justifyContent: "center",
-  //   right: 30,
-  //   bottom: 30,
-  //   shadowColor: "#000",
-  //   shadowOffset: {
-  //     width: 0,
-  //     height: 2,
-  //   },
-  //   shadowOpacity: 0.25,
-  //   shadowRadius: 3.84,
-
-  //   elevation: 5,
-  // },
 });
 
 export default FloatingPlusButton;

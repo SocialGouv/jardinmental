@@ -3,7 +3,6 @@ import { StyleSheet, ScrollView, View, SafeAreaView, TouchableOpacity, Dimension
 import { useFocusEffect } from "@react-navigation/native";
 import Text from "../../components/MyText";
 import StatusItem from "./status-item";
-import ContributeCard from "../contribute/contributeCard";
 import Header from "../../components/Header";
 import { colors } from "../../utils/colors";
 import { useContext } from "react";
@@ -22,12 +21,19 @@ import Diary from "../../scenes/diary";
 
 const LIMIT_PER_PAGE = __DEV__ ? 3 : 30;
 
-const Status = ({ navigation }) => {
+const Status = ({ navigation, setPlusVisible }) => {
   const [diaryData] = useContext(DiaryDataContext);
   const [NPSvisible, setNPSvisible] = useState(false);
   const [page, setPage] = useState(1);
   const [bannerProNPSVisible, setBannerProNPSVisible] = useState(true);
   const [ongletActif, setOngletActif] = useState("all");
+  const [yPosition, setYPosition] = useState(0);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      setPlusVisible(yPosition > 100);
+    }, [setPlusVisible, yPosition])
+  );
 
   useEffect(() => {
     (async () => {
@@ -135,7 +141,12 @@ const Status = ({ navigation }) => {
       ) : (
         <>
           <TabPicker ongletActif={ongletActif} onChange={setOngletActif} />
-          <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContainer}>
+          <ScrollView
+            style={styles.scrollView}
+            contentContainerStyle={styles.scrollContainer}
+            onScroll={(event) => setYPosition(event.nativeEvent.contentOffset.y)}
+            scrollEventThrottle={100}
+          >
             {renderOnglet(ongletActif)}
           </ScrollView>
         </>

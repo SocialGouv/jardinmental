@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import CheckBox from "@react-native-community/checkbox";
+import { useFocusEffect } from "@react-navigation/native";
 
 import Text from "../../components/MyText";
 import { colors } from "../../utils/colors";
@@ -24,7 +25,7 @@ import ArrowUpSvg from "../../../assets/svg/arrow-up.svg";
 
 const LIMIT_PER_PAGE = __DEV__ ? 3 : 30;
 
-export default ({ navigation }) => {
+export default ({ navigation, setPlusVisible }) => {
   const [NPSvisible, setNPSvisible] = useState(false);
   const [diaryData] = useContext(DiaryDataContext);
   const [page, setPage] = useState(1);
@@ -36,6 +37,12 @@ export default ({ navigation }) => {
       setShowWelcome(await AsyncStorage.getItem(STORAGE_KEY_BECK_SHOW_WELCOME));
     })();
   }, []);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      setPlusVisible(true);
+    }, [setPlusVisible])
+  );
 
   const validateWelcomeMessage = async () => {
     setShowWelcome("false");
