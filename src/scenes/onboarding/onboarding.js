@@ -1,24 +1,17 @@
-import React, {useState, useEffect, useRef} from 'react';
-import {
-  StyleSheet,
-  SafeAreaView,
-  View,
-  TouchableOpacity,
-  ScrollView,
-  Dimensions,
-} from 'react-native';
-import Text from '../../components/MyText';
-import CheckBox from '@react-native-community/checkbox';
-import {colors} from '../../utils/colors';
-import Swiper from 'react-native-swiper';
-import localStorage from '../../utils/localStorage';
-import logEvents from '../../services/logEvents';
-import Button from '../../components/Button';
-import ActiveDot from './ActiveDot';
-import BackButton from '../../components/BackButton';
-import {Screen0, Screen1, Screen2, Screen3} from './screens';
+import React, { useState, useEffect, useRef } from "react";
+import { StyleSheet, SafeAreaView, View, TouchableOpacity, ScrollView, Dimensions } from "react-native";
+import Text from "../../components/MyText";
+import CheckBox from "@react-native-community/checkbox";
+import { colors } from "../../utils/colors";
+import Swiper from "react-native-swiper";
+import localStorage from "../../utils/localStorage";
+import logEvents from "../../services/logEvents";
+import Button from "../../components/Button";
+import ActiveDot from "./ActiveDot";
+import BackButton from "../../components/BackButton";
+import { Screen0, Screen1, Screen2, Screen3 } from "./screens";
 
-const Onboarding = ({navigation}) => {
+const Onboarding = ({ navigation }) => {
   const [isCguChecked, setIsCguChecked] = useState(false);
   const [firstTime, setFirstTime] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -28,29 +21,25 @@ const Onboarding = ({navigation}) => {
     (async () => {
       const onboardingIsDone = await localStorage.getOnboardingDone();
       const isFirstAppLaunch = await localStorage.getIsFirstAppLaunch();
-      setFirstTime(
-        __DEV__ ? true : isFirstAppLaunch !== 'false' && !onboardingIsDone,
-      );
+      setFirstTime(__DEV__ ? true : isFirstAppLaunch !== "false" && !onboardingIsDone);
     })();
   }, [navigation]);
 
   const validateOnboarding = async () => {
-    const target = firstTime ? 'supported' : 'tabs';
+    const target = firstTime ? "supported" : "tabs";
     navigation.navigate(target);
   };
 
-  const onCguClick = () => navigation.navigate('cgu');
-  const onLegalMentionsClick = () => navigation.navigate('legal-mentions');
-  const onPrivacyClick = () => navigation.navigate('privacy');
+  const onCguClick = () => navigation.navigate("cgu");
+  const onLegalMentionsClick = () => navigation.navigate("legal-mentions");
+  const onPrivacyClick = () => navigation.navigate("privacy");
 
   const onPressNext = () => swiperRef?.current?.scrollBy(1);
 
   return (
     <SafeAreaView style={styles.safe}>
       {!firstTime ? <BackButton onPress={navigation.goBack} /> : null}
-      <Text style={styles.title}>
-        Mon Suivi Psy m'accompagne entre mes consultations
-      </Text>
+      <Text style={styles.title}>Mon Suivi Psy m'accompagne entre mes consultations</Text>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <Swiper
           onIndexChanged={(page) => {
@@ -64,7 +53,8 @@ const Onboarding = ({navigation}) => {
           loop={false}
           ref={swiperRef}
           // showsButtons
-          activeDot={<ActiveDot />}>
+          activeDot={<ActiveDot />}
+        >
           <Screen0 />
           <Screen1 />
           <Screen2 />
@@ -79,25 +69,23 @@ const Onboarding = ({navigation}) => {
                 <CheckBox
                   animationDuration={0.2}
                   tintColor="#1FC6D5"
-                  tintColors={{true: '#1FC6D5', false: 'grey'}}
+                  tintColors={{ true: "#1FC6D5", false: "grey" }}
                   boxType="square"
                   style={styles.checkbox}
                   value={isCguChecked}
                   onValueChange={(newValue) => setIsCguChecked(newValue)}
                 />
                 <Text style={styles.textCgu}>
-                  En cochant cette case, vous acceptez nos{' '}
+                  En cochant cette case, vous acceptez nos{" "}
                   <Text onPress={onCguClick} style={styles.underlined}>
                     Conditions Générales d’Utilisation
                   </Text>
-                  , notre{' '}
+                  , notre{" "}
                   <Text onPress={onPrivacyClick} style={styles.underlined}>
                     Politique de Confidentialité
-                  </Text>{' '}
-                  et nos{' '}
-                  <Text
-                    onPress={onLegalMentionsClick}
-                    style={styles.underlined}>
+                  </Text>{" "}
+                  et nos{" "}
+                  <Text onPress={onLegalMentionsClick} style={styles.underlined}>
                     Mentions Légales
                   </Text>
                 </Text>
@@ -127,68 +115,68 @@ const Onboarding = ({navigation}) => {
 
 const styles = StyleSheet.create({
   CTAButtonContainer: {},
-  scrollContainer: {flex: 1},
+  scrollContainer: { flex: 1 },
   safe: {
     flex: 1,
-    backgroundColor: 'white',
-    display: 'flex',
+    backgroundColor: "white",
+    display: "flex",
   },
   checkbox: {
     marginRight: 20,
   },
   label: {
-    width: '100%',
+    width: "100%",
   },
   ValidationButton: {
     backgroundColor: colors.LIGHT_BLUE,
     height: 45,
     borderRadius: 45,
     paddingHorizontal: 30,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     marginBottom: 15,
   },
   ValidationButtonText: {
-    color: '#fff',
-    fontWeight: '700',
+    color: "#fff",
+    fontWeight: "700",
     fontSize: 19,
   },
   title: {
     color: colors.BLUE,
     fontSize: 22,
     padding: 20,
-    fontWeight: '700',
-    textAlign: 'center',
+    fontWeight: "700",
+    textAlign: "center",
   },
   container: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     padding: 20,
-    justifyContent: 'flex-end',
+    justifyContent: "flex-end",
   },
   buttonWrapper: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
+    display: "flex",
+    justifyContent: "flex-end",
+    alignItems: "center",
     padding: 15,
   },
   cgu: {
     padding: 15,
-    display: 'flex',
-    flexDirection: 'row',
+    display: "flex",
+    flexDirection: "row",
   },
   textCgu: {
     flex: 1,
-    fontSize: Dimensions.get('window').height > 700 ? 16 : 12,
+    fontSize: Dimensions.get("window").height > 700 ? 16 : 12,
   },
   emphasis: {
-    color: '#1FC6D5',
+    color: "#1FC6D5",
   },
   presentationText: {
     fontSize: 20,
-    color: '#0A215C',
+    color: "#0A215C",
   },
   underlined: {
-    textDecorationLine: 'underline',
+    textDecorationLine: "underline",
   },
   message: {
     fontSize: 22,
