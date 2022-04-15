@@ -16,6 +16,9 @@ import Text from "../components/MyText";
 const Tab = createMaterialTopTabNavigator();
 
 const Tabs = ({ navigation, route }) => {
+  const [plusVisible, setPlusVisible] = React.useState(false);
+  const MemoizedFloatingPlusButton = React.memo(FloatingPlusButton);
+
   const startSurvey = async () => {
     const symptoms = await localStorage.getSymptoms();
     logEvents.logFeelingStart();
@@ -27,6 +30,11 @@ const Tabs = ({ navigation, route }) => {
     } else {
       navigation.navigate("select-day");
     }
+  };
+
+  const handlePlusVisible = (v) => {
+    if (v === plusVisible) return;
+    setPlusVisible(v);
   };
 
   return (
@@ -42,8 +50,6 @@ const Tabs = ({ navigation, route }) => {
           indicatorStyle: { height: 0 },
           style: styles.tabBar,
           iconStyle: {
-            // borderColor: 'red',
-            // borderWidth: 1,
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
@@ -58,36 +64,39 @@ const Tabs = ({ navigation, route }) => {
       >
         <Tab.Screen
           name="Status"
-          component={Status}
           options={{
             tabBarLabel: ({ color }) => (
               <Text style={{ fontSize: 10, marginHorizontal: 0, padding: 0, color }}>Mes entrées</Text>
             ),
             tabBarIcon: ({ color }) => <SurveyMenu height={24} style={{ color }} />,
           }}
-        />
+        >
+          {(p) => <Status {...p} setPlusVisible={handlePlusVisible} />}
+        </Tab.Screen>
         <Tab.Screen
           name="Calendar"
-          component={Suivi}
           options={{
             tabBarLabel: ({ color }) => (
               <Text style={{ fontSize: 10, marginHorizontal: 0, padding: 0, color }}>Mes analyses</Text>
             ),
             tabBarIcon: ({ color }) => <GraphMenu height={24} style={{ color }} />,
           }}
-        />
+        >
+          {(p) => <Suivi {...p} setPlusVisible={handlePlusVisible} />}
+        </Tab.Screen>
         <Tab.Screen
           name="Exercise"
-          component={Exercise}
           options={{
             tabBarLabel: ({ color }) => (
               <Text style={{ fontSize: 10, marginHorizontal: 0, padding: 0, color }}>Beck</Text>
             ),
             tabBarIcon: ({ color }) => <ExerciseMenu height={24} style={{ color }} />,
           }}
-        />
+        >
+          {(p) => <Exercise {...p} setPlusVisible={handlePlusVisible} />}
+        </Tab.Screen>
       </Tab.Navigator>
-      <FloatingPlusButton shadow onPress={startSurvey} />
+      <MemoizedFloatingPlusButton shadow onPress={startSurvey} plusVisible={plusVisible} />
     </>
   );
 };
