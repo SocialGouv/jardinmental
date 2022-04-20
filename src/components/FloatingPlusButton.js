@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, Animated, Easing } from "react-native";
 import { colors } from "../utils/colors";
 import Button from "./RoundButtonIcon";
+import logEvents from "../services/logEvents";
 
 const FloatingPlusButton = ({ onPress, shadow, plusVisible }) => {
   const [animatedFn, setAnimatedFn] = React.useState(null);
@@ -35,7 +36,10 @@ const FloatingPlusButton = ({ onPress, shadow, plusVisible }) => {
         borderWidth={0}
         icon="small-plus"
         visible={true}
-        onPress={onPress}
+        onPress={() => {
+          logEvents.logFeelingStartFloatingPlus();
+          onPress();
+        }}
         shadow={shadow}
       />
     </Animated.View>
