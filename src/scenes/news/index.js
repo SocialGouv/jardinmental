@@ -13,7 +13,7 @@ export const getBadgeNotesVersion = async () => {
   return lastNotesVersion !== LAST_NOTES_VERSION;
 };
 
-export const LAST_NOTES_VERSION = "1.23";
+export const LAST_NOTES_VERSION = "1.24";
 
 export default ({ navigation }) => {
   useEffect(() => {
@@ -28,6 +28,44 @@ export default ({ navigation }) => {
         <Image style={styles.image} source={require("../../../assets/imgs/logo2.png")} />
       </View>
       <ScrollView style={styles.cgu} contentContainerStyle={styles.scrollContainer}>
+        <Card
+          title="Mon Suivi Psy change de présentation et vous propose de nouveaux exemples d’éléments à suivre dans votre questionnaire."
+          version="v1.24"
+          date="03/2022"
+        >
+          <Item>
+            <Text style={styles.text}>
+              Pour un parcours plus fluide et plus clair dans l’application, le menu de navigation a été
+              modifié&nbsp;:
+            </Text>
+            <Text style={styles.text}>
+              Vous retrouverez dans «&nbsp;Mes&nbsp;entrées&nbsp;»&nbsp;:
+              {"\n"}•&nbsp;Le <Text style={styles.bold}>récapitulatif</Text> de vos questionnaires quotidiens
+              {"\n"}•&nbsp;Vos <Text style={styles.bold}>notes personnelles</Text> (qui correspondent aux
+              précisions et au contexte général que vous saisissez dans votre questionnaire)
+            </Text>
+          </Item>
+          <Item>
+            <Text style={styles.text}>
+              Vous retrouvez dans «&nbsp;Mes&nbsp;analyses&nbsp;» tous vos outils&nbsp;: frises, courbes,
+              statistiques et analyses de notes
+            </Text>
+          </Item>
+          <Item>
+            <Text style={styles.text}>
+              Vous retrouverez dans «&nbsp;Beck&nbsp;» vos colonnes de Beck (un exercice sur les pensées
+              automatiques qui surviennent à la suite d’un évènement), si vous travaillez avec dans le cadre
+              de votre suivi, ou en autonomie.
+            </Text>
+          </Item>
+          <Item>
+            <Text style={[styles.text, styles.bold]}>
+              N’oubliez pas de personnaliser votre questionnaire en allant dans les réglages de l’application
+              et découvrez des nouveaux exemples pour vous aidez à trouver des éléments qui vous sont
+              pertinents&nbsp;!
+            </Text>
+          </Item>
+        </Card>
         <Card
           title="Nouvelle fonction de «&nbsp;Mon&nbsp;Suivi&nbsp;» : écran «&nbsp;Statistiques&nbsp;»"
           version="v1.23"
