@@ -77,17 +77,6 @@ const RecapCompletion = ({ navigation }) => {
                       medium
                       styleContainer={{ marginHorizontal: 0 }}
                     />
-                  ) : isToday ? (
-                    <RoundButtonIcon
-                      backgroundColor={colors.LIGHT_BLUE}
-                      iconColor="#FFFFFF"
-                      borderWidth={0.5}
-                      borderColor={colors.LIGHT_BLUE}
-                      icon="small-plus"
-                      visible={true}
-                      medium
-                      styleContainer={{ marginHorizontal: 0 }}
-                    />
                   ) : (
                     <RoundButtonIcon
                       backgroundColor="#E7F6F8"
