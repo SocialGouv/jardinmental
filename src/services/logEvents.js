@@ -97,11 +97,29 @@ const FEELING_START = "FEELING_START";
 const FEELING_DATE_CHOOSE = "FEELING_DATE_CHOOSE";
 const FEELING_ADD = "FEELING_ADD";
 const FEELING_START_YESTERDAY = "FEELING_START_YESTERDAY";
+const FEELING_START_FLOATING_PlUS = "FEELING_START_FLOATING_PLUS";
+const FEELING_START_FROM_RECAP = "FEELING_START_FROM_RECAP";
 
 const logFeelingStart = async () => {
   await logEvent({
     category: FEELING,
     action: FEELING_START,
+  });
+};
+
+const logFeelingStartFloatingPlus = async () => {
+  await logEvent({
+    category: FEELING,
+    action: FEELING_START_FLOATING_PlUS,
+  });
+};
+
+const logFeelingStartFromRecap = async (offset) => {
+  await logEvent({
+    category: FEELING,
+    action: FEELING_START_FROM_RECAP,
+    name: "offset",
+    value: offset,
   });
 };
 
@@ -430,6 +448,13 @@ const logOpenPage = async (category) => {
   });
 };
 
+const logStatusSubPage = async (tab) => {
+  await logEvent({
+    category: "OPEN_SUB_TAB_STATUS",
+    action: `${tab.toUpperCase()}_OPEN`,
+  });
+};
+
 // SUIVI
 const logOpenPageSuivi = async (tab) => {
   await logEvent({
@@ -537,4 +562,7 @@ export default {
   logSuiviEditScoreEvents,
   logSuiviEditSymptom,
   logSuiviShowDetailStatistics,
+  logFeelingStartFloatingPlus,
+  logFeelingStartFromRecap,
+  logStatusSubPage,
 };

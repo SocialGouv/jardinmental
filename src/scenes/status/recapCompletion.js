@@ -9,12 +9,14 @@ import { firstLetterUppercase } from "../../utils/string-util";
 import { DiaryDataContext } from "../../context/diaryData";
 import RoundButtonIcon from "../../components/RoundButtonIcon";
 import Text from "../../components/MyText";
+import logEvents from "../../services/logEvents";
 
 const RecapCompletion = ({ navigation }) => {
   const [diaryData] = React.useContext(DiaryDataContext);
   const [startDay, setStartDay] = React.useState(new Date(Date.now()));
 
   const startSurvey = (offset) => {
+    logEvents.logFeelingStartFromRecap(offset);
     const date = formatDay(beforeToday(offset));
 
     const blackListKeys = ["becks", "NOTES"];

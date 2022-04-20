@@ -2,12 +2,17 @@ import React from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { colors } from "../../utils/colors";
 import Text from "../../components/MyText";
+import logEvents from "../../services/logEvents";
 
 const TabPicker = ({ onChange, ongletActif = "all" }) => {
+  const handlePress = (tab) => {
+    logEvents.logStatusSubPage(tab);
+    onChange(tab);
+  };
   return (
     <View style={tabStyles.currentDateContainer}>
       <TouchableOpacity
-        onPress={() => onChange("all")}
+        onPress={() => handlePress("all")}
         style={[
           tabStyles.tabButtonContainer,
           ongletActif === "all" ? tabStyles.tabActif : tabStyles.tabInactif,
@@ -18,7 +23,7 @@ const TabPicker = ({ onChange, ongletActif = "all" }) => {
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={() => onChange("NOTES")}
+        onPress={() => handlePress("NOTES")}
         style={[
           tabStyles.tabButtonContainer,
           ongletActif === "NOTES" ? tabStyles.tabActif : tabStyles.tabInactif,
