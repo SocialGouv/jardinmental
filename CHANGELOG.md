@@ -1,3 +1,23 @@
+## [1.24.1](https://github.com/SocialGouv/monsuivipsy/compare/v1.24.0...v1.24.1) (2022-04-20)
+
+
+### Bug Fixes
+
+* accord féminin dans les exemples d'indicateurs ([6d83554](https://github.com/SocialGouv/monsuivipsy/commit/6d835541a029aaf155caea2116065da72ccdc6f5))
+* barre onglet "Mes entrées" fixe ([9d9181b](https://github.com/SocialGouv/monsuivipsy/commit/9d9181be8063a0e7d33a61659396e17b1f6622c5))
+* bouton plus afficher/masquer ([05adfbf](https://github.com/SocialGouv/monsuivipsy/commit/05adfbfe12a6680ca1e28d0e9e26769dbcfd12d1))
+* change UX recap ([7b5b532](https://github.com/SocialGouv/monsuivipsy/commit/7b5b532c810eb17c9f8030a2e2e50e04434d668c))
+* couleur composant Text par défaut ([bdc049d](https://github.com/SocialGouv/monsuivipsy/commit/bdc049d78b3109c50b6b4f4e521ebe5cc5ca7b0b))
+* doublon dans le questionnaire ([4ea6e17](https://github.com/SocialGouv/monsuivipsy/commit/4ea6e1724187205c7fc414cef12da1feca458ade))
+* écran Analyse de notes ([f352c32](https://github.com/SocialGouv/monsuivipsy/commit/f352c32c5aa954f5a268a085c2f27087534d29aa))
+* écran vide - activation ([61d132c](https://github.com/SocialGouv/monsuivipsy/commit/61d132ca701c47edd49d1dea40a100b4ca8121f2))
+* enlever barre de progression des 30 derniers jours ([9d2af57](https://github.com/SocialGouv/monsuivipsy/commit/9d2af5741ccc7b083bfbd93cc9bd45ce3c24b565))
+* status item ([9eaf66d](https://github.com/SocialGouv/monsuivipsy/commit/9eaf66d47c902ba0902841419a1639b749346096))
+* UX écran choix élément ([32d7e23](https://github.com/SocialGouv/monsuivipsy/commit/32d7e23b418ec285f3e9b9f62352a1d60bc2afa1))
+* UX fil ariane 7 derniers jours ([05235f6](https://github.com/SocialGouv/monsuivipsy/commit/05235f65412ebbac4059713cae4d5d135668f95d))
+* UX petit écran du recap des 7 derniers jours ([c00e120](https://github.com/SocialGouv/monsuivipsy/commit/c00e120fa414bf21bbd01616cda3d038ce5c29ed))
+* wording ajout élément ([12b3216](https://github.com/SocialGouv/monsuivipsy/commit/12b321635035e527e541fc09cb5e90bdaf18ebb5))
+
 # [1.24.0](https://github.com/SocialGouv/monsuivipsy/compare/v1.23.2...v1.24.0) (2022-04-13)
 
 
