@@ -1,3 +1,14 @@
+## [1.24.2](https://github.com/SocialGouv/monsuivipsy/compare/v1.24.1...v1.24.2) (2022-04-21)
+
+
+### Bug Fixes
+
+* couleur du "+" d'aujourd'hui comme les autres ([1cb3864](https://github.com/SocialGouv/monsuivipsy/commit/1cb386469e2a6d85ce72b05a1a1ec9d6d1fcda63))
+* events matomo ([d0f4e00](https://github.com/SocialGouv/monsuivipsy/commit/d0f4e006c3bc7877e9ebc1767da8c171d37f8513))
+* liste des indicateurs ([518d8b5](https://github.com/SocialGouv/monsuivipsy/commit/518d8b56f54ba4c7f8cf380e1dc2a2be488c9eeb))
+* ordre liste indicateur ([3c994f7](https://github.com/SocialGouv/monsuivipsy/commit/3c994f75c2edbafcaf1a4666ef9148a028618c5b))
+* texte nouveauté ([c76a237](https://github.com/SocialGouv/monsuivipsy/commit/c76a237859694cd67020f31acb21a6d722a7cb56))
+
 ## [1.24.1](https://github.com/SocialGouv/monsuivipsy/compare/v1.24.0...v1.24.1) (2022-04-20)
 
 
