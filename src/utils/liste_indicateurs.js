@@ -9,8 +9,8 @@ import localStorage from "../utils/localStorage";
 
 export const INDICATEURS_LISTE_PAR_CATEGORIE = {
   "Les plus courants": [
-    "Humeur matinale",
     "Humeur générale",
+    "Humeur matinale",
     "Humeur à la mi-journée",
     "Humeur au coucher",
     "Qualité sommeil",
