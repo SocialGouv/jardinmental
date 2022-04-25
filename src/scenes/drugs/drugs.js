@@ -12,6 +12,7 @@ import { getDrugListWithLocalStorage } from "../../utils/drugs-list";
 import logEvents from "../../services/logEvents";
 import { alertNoDataYesterday } from "../survey/survey-data";
 import Logo from "../../../assets/svg/drugs";
+import QuestionYesNo from "../../scenes/survey/QuestionYesNo";
 
 const Drugs = ({ navigation, route }) => {
   const [diaryData, setDiaryData] = useContext(DiaryDataContext);
@@ -19,6 +20,16 @@ const Drugs = ({ navigation, route }) => {
   const [posology, setPosology] = useState([]);
   const [inSurvey, setInSurvey] = useState(false);
   const [listDrugs, setListDrugs] = useState();
+  const [answers, setAnswers] = useState({});
+
+  const priseDeTraitement = {
+    id: "PRISE_DE_TRAITEMENT",
+    label: "Avez-vous pris correctement votre traitement quotidien ?",
+  };
+  const priseDeTraitementSiBesoin = {
+    id: "PRISE_DE_TRAITEMENT_SI_BESOIN",
+    label: "Avez-vous pris un “si besoin” ?",
+  };
 
   useEffect(() => {
     setInSurvey(!!route?.params?.currentSurvey);
@@ -27,6 +38,21 @@ const Drugs = ({ navigation, route }) => {
       setListDrugs(list);
     })();
   }, [route]);
+
+  useEffect(() => {
+    if ((route?.params?.currentSurvey?.answers || {})[priseDeTraitement.id]) {
+      toggleAnswer({
+        key: priseDeTraitement.id,
+        value: route?.params?.currentSurvey?.answers[priseDeTraitement?.id]?.value,
+      });
+    }
+    if ((route?.params?.currentSurvey?.answers || {})[priseDeTraitementSiBesoin.id]) {
+      toggleAnswer({
+        key: priseDeTraitementSiBesoin.id,
+        value: route?.params?.currentSurvey?.answers[priseDeTraitementSiBesoin?.id]?.value,
+      });
+    }
+  }, [route?.params?.currentSurvey?.answers, priseDeTraitement.id, priseDeTraitementSiBesoin.id]);
 
   const enrichTreatmentWithData = (list) => {
     if (list) {
@@ -105,6 +131,15 @@ const Drugs = ({ navigation, route }) => {
     setMedicalTreatment(enrichTreatmentWithData(treatmentAfterDeletion));
   };
 
+  const toggleAnswer = async ({ key, value }) => {
+    setAnswers((prev) => {
+      return {
+        ...prev,
+        [key]: { ...prev[key], value },
+      };
+    });
+  };
+
   const render = () => {
     if (!medicalTreatment || !medicalTreatment?.length) {
       return <NoData navigation={navigation} route={route} />;
@@ -120,6 +155,20 @@ const Drugs = ({ navigation, route }) => {
         >
           <Text style={styles.link}>Informations sur les traitements</Text>
         </TouchableOpacity>
+        <QuestionYesNo
+          question={priseDeTraitement}
+          onPress={toggleAnswer}
+          selected={answers[priseDeTraitement.id]?.value}
+          showUserCommentInput={false}
+        />
+        <QuestionYesNo
+          question={priseDeTraitementSiBesoin}
+          onPress={toggleAnswer}
+          selected={answers[priseDeTraitementSiBesoin.id]?.value}
+          showUserCommentInput={false}
+          isLast
+        />
+        <View style={styles.divider} />
         {medicalTreatment.map((e, i) => (
           <DrugItem
             key={i}
@@ -151,6 +200,7 @@ const Drugs = ({ navigation, route }) => {
         date: survey?.date,
         answers: {
           ...survey?.answers,
+          ...answers,
           POSOLOGY: posology,
         },
       };
@@ -186,6 +236,14 @@ const Drugs = ({ navigation, route }) => {
 };
 
 const styles = StyleSheet.create({
+  divider: {
+    height: 1,
+    backgroundColor: "#E0E0E0",
+    marginBottom: 30,
+    width: "50%",
+    alignSelf: "center",
+  },
+
   link: {
     color: "#181818",
     textDecorationLine: "underline",

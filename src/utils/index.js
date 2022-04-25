@@ -1,4 +1,4 @@
-import {Alert} from 'react-native';
+import { Alert } from "react-native";
 
 export const toggleSelectedInArray = (array, elem) => {
   const res = [...array];
@@ -15,32 +15,27 @@ export const toggleState = (v, f) => f(!v);
 
 export const confirm = ({
   title,
-  message = '',
+  message = "",
   onConfirm,
   onCancel,
-  confirmText = 'Oui',
-  cancelText = 'Non',
+  confirmText = "Oui",
+  cancelText = "Non",
 }) => {
   Alert.alert(title, message, [
     {
       text: confirmText,
       onPress: onConfirm,
-      style: 'default',
+      style: "default",
     },
     {
       text: cancelText,
       onPress: onCancel,
-      style: 'cancel',
+      style: "cancel",
     },
   ]);
 };
 
-export const deleteBeckfromDiaryData = ({
-  date,
-  beckId,
-  diaryData,
-  setDiaryData,
-}) => {
+export const deleteBeckfromDiaryData = ({ date, beckId, diaryData, setDiaryData }) => {
   if (!date || !beckId) return;
   const survey = diaryData[date];
   const becks = survey?.becks;
@@ -54,7 +49,14 @@ export const deleteBeckfromDiaryData = ({
   });
 };
 
-export const getScoreWithState = ({patientState, category}) => {
+export const getScoreWithState = ({ patientState, category }) => {
+  if (
+    patientState[category]?.value !== undefined &&
+    patientState[category]?.value !== null &&
+    !(typeof patientState[category]?.value === "number" && isFinite(patientState[category]?.value))
+  )
+    return;
+
   if (patientState[category]?.value) return patientState[category]?.value;
 
   // -------
@@ -65,7 +67,7 @@ export const getScoreWithState = ({patientState, category}) => {
   if (!patientState[category]) {
     return;
   }
-  const [categoryName, suffix] = category.split('_');
+  const [categoryName, suffix] = category.split("_");
 
   // if it is a 1 question category, return the level of the question
   if (!suffix) {
@@ -75,7 +77,7 @@ export const getScoreWithState = ({patientState, category}) => {
 
     // if it is never, the score is max, we dont look at the intensity,
     // i.e. 5
-    if (patientState[category].id === 'NEVER') {
+    if (patientState[category].id === "NEVER") {
       return 5;
     }
 

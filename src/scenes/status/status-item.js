@@ -86,8 +86,13 @@ export default ({ navigation, patientState, date }) => {
                 );
               })}
             <Context data={patientState?.CONTEXT} />
+            <Posology
+              posology={patientState?.POSOLOGY}
+              patientState={patientState}
+              date={date}
+              onPress={() => handleEdit("drugs")}
+            />
             <Toxic data={patientState?.TOXIC} />
-            <Posology data={patientState?.POSOLOGY} date={date} onPress={() => handleEdit("drugs")} />
             <Notes notes={patientState?.NOTES} date={date} onPress={() => handleEdit("notes")} />
           </View>
         </View>
