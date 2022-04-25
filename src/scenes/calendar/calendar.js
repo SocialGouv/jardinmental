@@ -13,6 +13,7 @@ import Text from "../../components/MyText";
 import Icon from "../../components/Icon";
 import { colors } from "../../utils/colors";
 const screenHeight = Dimensions.get("window").height;
+import { INDICATEURS_LISTE } from "../../utils/liste_indicateurs";
 
 const Calendar = ({ navigation }) => {
   const [day, setDay] = useState(new Date());
@@ -38,6 +39,13 @@ const Calendar = ({ navigation }) => {
     const emptyCalendar = !Object.keys(displayedCategories)
       .concat(customs)
       .concat(oldCustoms)
+      .concat(INDICATEURS_LISTE)
+      .reduce((acc, curr) => {
+        if (!acc.find((a) => a === curr)) {
+          acc.push(curr);
+        }
+        return acc;
+      }, [])
       .reduce((showing, categoryId) => {
         return Boolean(isChartVisible(categoryId)) || showing;
       }, false);
@@ -137,6 +145,13 @@ const Calendar = ({ navigation }) => {
             {Object.keys(displayedCategories)
               .concat(customs)
               .concat(oldCustoms)
+              .concat(INDICATEURS_LISTE)
+              .reduce((acc, curr) => {
+                if (!acc.find((a) => a === curr)) {
+                  acc.push(curr);
+                }
+                return acc;
+              }, [])
               .map(
                 (categoryId) =>
                   isChartVisible(categoryId) && (
