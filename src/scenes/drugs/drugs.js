@@ -170,7 +170,7 @@ const Drugs = ({ navigation, route }) => {
           <View style={styles.titleContainer}>
             <Logo style={styles.image} width={30} height={30} />
             <Text style={styles.title}>
-              {inSurvey ? "Quel traitement ai-je pris aujourd'hui ?" : "Suivi de mon traitement"}
+              {inSurvey ? "Quel traitement avez-vous pris aujourd'hui ?" : "Suivi de votre traitement"}
             </Text>
           </View>
         </View>
