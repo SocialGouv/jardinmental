@@ -34,11 +34,11 @@ const DaySurvey = ({ navigation, route }) => {
   const [answers, setAnswers] = useState({});
   const questionToxic = {
     id: "TOXIC",
-    label: "Ai-je consommé des substances aujourd’hui ?",
+    label: "Avez-vous consommé des substances aujourd'hui ?",
   };
   const questionContext = {
     id: "CONTEXT",
-    label: "J'ajoute une note générale sur ma journée",
+    label: "Ajoutez une note générale sur votre journée",
   };
 
   useFocusEffect(
