@@ -66,7 +66,8 @@ const QuestionYesNo = ({
                   }
                 }}
               >
-                <View style={[styles.selectionYesNoContainer, active && styles.activeSelectionContainer]}>
+                <View style={styles.itemContainer}>
+                  <View style={[styles.dot, active && styles.activeDot]} />
                   <Text style={active && styles.activeLabel}>{answer.label}</Text>
                 </View>
               </TouchableOpacity>
@@ -107,21 +108,26 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
   },
-  selectionYesNoContainer: {
+  itemContainer: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  dot: {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    width: 40,
-    height: 40,
+    width: 20,
+    height: 20,
     borderColor: "#DEF4F5",
     borderWidth: 1,
     borderRadius: 99999,
+    marginRight: 5,
   },
-  activeSelectionContainer: {
+  activeDot: {
     backgroundColor: colors.LIGHT_BLUE,
   },
   activeLabel: {
-    color: "#fff",
     fontWeight: "bold",
   },
   arrowDown: {
@@ -130,7 +136,6 @@ const styles = StyleSheet.create({
   arrowUp: {
     transform: [{ rotate: "0deg" }],
   },
-
   buttonWrapper: {
     display: "flex",
     alignItems: "center",
