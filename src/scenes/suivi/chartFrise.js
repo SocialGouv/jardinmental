@@ -13,7 +13,7 @@ import localStorage from "../../utils/localStorage";
 import logEvents from "../../services/logEvents";
 import Button from "../../components/Button";
 
-const ChartFrise = ({ navigation, fromDate, toDate, focusedScores }) => {
+const ChartFrise = ({ navigation, fromDate, toDate, focusedScores, showTraitement }) => {
   const [diaryData] = React.useContext(DiaryDataContext);
   const [activeCategories, setActiveCategories] = React.useState();
   const [isEmpty, setIsEmpty] = React.useState();
@@ -87,7 +87,7 @@ const ChartFrise = ({ navigation, fromDate, toDate, focusedScores }) => {
       if (!categoryState) {
         return {};
       }
-      if (categoryState?.value) return categoryState;
+      if (categoryState?.value !== null || categoryState?.value !== undefined) return categoryState;
 
       // -------
       // the following code is for the retrocompatibility
@@ -128,13 +128,23 @@ const ChartFrise = ({ navigation, fromDate, toDate, focusedScores }) => {
           title={getTitle(categoryId)}
           key={categoryId}
           data={computeChartData(categoryId)}
+          showTraitement={showTraitement}
+          priseDeTraitement={computeChartData("PRISE_DE_TRAITEMENT")}
+          priseDeTraitementSiBesoin={computeChartData("PRISE_DE_TRAITEMENT_SI_BESOIN")}
         />
       ))}
     </ScrollView>
   );
 };
 
-const Frise = ({ title, data, focusedScores }) => {
+const Frise = ({
+  title,
+  data,
+  focusedScores,
+  showTraitement,
+  priseDeTraitement,
+  priseDeTraitementSiBesoin,
+}) => {
   return (
     <View style={styles.friseContainer}>
       <Text style={styles.friseTitle}>{title}</Text>
@@ -148,7 +158,11 @@ const Frise = ({ title, data, focusedScores }) => {
             opacity = e?.value ? 0.1 : 0.5; // on reduit moins l'opacité si c'est une frise vide
           }
 
-          const isFocused = e?.value && focusedScores.length && focusedScores.includes(e?.value);
+          const isFocused =
+            e?.value &&
+            focusedScores.length > 0 &&
+            focusedScores.length < 5 &&
+            focusedScores.includes(e?.value);
 
           const shadow = isFocused
             ? {
@@ -199,6 +213,56 @@ const Frise = ({ title, data, focusedScores }) => {
           );
         })}
       </View>
+      {showTraitement ? (
+        <View style={styles.squareContainerTraitement}>
+          {priseDeTraitement?.map((e, i) => {
+            let color = "#D7D3D3";
+            if (e?.value === true) color = "#5956E8";
+            if (e?.value === false) color = "#E575F8";
+
+            const firstSquare = i === 0;
+            const lastSquare = i === data.length - 1;
+            return (
+              <View key={`${title}-${i}`} style={styles.squareItemContainerTraitement}>
+                <View
+                  style={[
+                    styles.square,
+                    // eslint-disable-next-line react-native/no-inline-styles
+                    {
+                      backgroundColor: color,
+                      borderBottomStartRadius: firstSquare ? 5 : 0,
+                      borderTopStartRadius: firstSquare ? 5 : 0,
+                      borderBottomEndRadius: lastSquare ? 5 : 0,
+                      borderTopEndRadius: lastSquare ? 5 : 0,
+                    },
+                  ]}
+                />
+              </View>
+            );
+          })}
+        </View>
+      ) : null}
+      {showTraitement ? (
+        <View style={styles.squareContainerTraitement}>
+          {priseDeTraitementSiBesoin?.map((e, i) => {
+            let color = "#5956E8";
+            if (e?.value !== true) color = "transparent";
+            return (
+              <View key={`${title}-${i}`} style={styles.squareItemContainerTraitementSiBesoin}>
+                <View
+                  style={[
+                    styles.dot,
+                    // eslint-disable-next-line react-native/no-inline-styles
+                    {
+                      backgroundColor: color,
+                    },
+                  ]}
+                />
+              </View>
+            );
+          })}
+        </View>
+      ) : null}
     </View>
   );
 };
@@ -219,9 +283,14 @@ const styles = StyleSheet.create({
     fontSize: 19,
     color: colors.BLUE,
     fontWeight: "600",
+    marginBottom: 5,
   },
   squareContainer: {
-    marginVertical: 5,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  squareContainerTraitement: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
@@ -231,9 +300,29 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 10,
   },
+  squareItemContainerTraitement: {
+    marginTop: 5,
+    display: "flex",
+    flex: 1,
+    height: 4,
+  },
+  squareItemContainerTraitementSiBesoin: {
+    marginTop: 5,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 1,
+    height: 4,
+  },
   square: {
     flex: 1,
     height: 10,
+  },
+  dot: {
+    flex: 1,
+    height: 4,
+    width: 4,
+    borderRadius: 2,
   },
   legend: {
     display: "flex",
