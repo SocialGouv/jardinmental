@@ -11,6 +11,7 @@ const QuestionYesNo = ({
   onPress,
   selected,
   isLast,
+  showUserCommentInput = true,
   onChangeUserComment,
   userComment,
 }) => {
@@ -62,7 +63,7 @@ const QuestionYesNo = ({
                   if (!answer.score) {
                     // if the user choose no, we clean the text input
                     setText("");
-                    onChangeUserComment({ key: question.id, userComment: "" });
+                    onChangeUserComment?.({ key: question.id, userComment: "" });
                   }
                 }}
               >
@@ -74,21 +75,23 @@ const QuestionYesNo = ({
             );
           })}
         </View>
-        <TextInput
-          multiline={true}
-          numberOfLines={Platform.OS === "ios" ? null : 1}
-          minHeight={Platform.OS === "ios" ? 30 * 1 : null}
-          onChangeText={(value) => {
-            setText(value);
-            onChangeUserComment({ key: question.id, userComment: value });
-          }}
-          value={text}
-          placeholder="Exemple: alcool, cannabis, tabac..."
-          style={styles.textArea}
-          textAlignVertical={"top"}
-          // onFocus={() => setInputFocused(true)}
-          // onBlur={() => setInputFocused(false)}
-        />
+        {showUserCommentInput ? (
+          <TextInput
+            multiline={true}
+            numberOfLines={Platform.OS === "ios" ? null : 1}
+            minHeight={Platform.OS === "ios" ? 30 * 1 : null}
+            onChangeText={(value) => {
+              setText(value);
+              onChangeUserComment?.({ key: question.id, userComment: value });
+            }}
+            value={text}
+            placeholder="Exemple: alcool, cannabis, tabac..."
+            style={styles.textArea}
+            textAlignVertical={"top"}
+            // onFocus={() => setInputFocused(true)}
+            // onBlur={() => setInputFocused(false)}
+          />
+        ) : null}
       </View>
     </View>
   );
