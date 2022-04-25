@@ -31,7 +31,7 @@ const Suivi = ({ navigation, setPlusVisible }) => {
   const [chartType, setChartType] = React.useState(CHART_TYPES[0]);
   const [fromDate, setFromDate] = React.useState(beforeToday(30));
   const [toDate, setToDate] = React.useState(beforeToday(0));
-  const [focusedScores, setFocusedScores] = React.useState([]);
+  const [focusedScores, setFocusedScores] = React.useState([1, 2, 3, 4, 5]);
 
   useFocusEffect(
     React.useCallback(() => {
