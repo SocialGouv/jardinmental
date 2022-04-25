@@ -199,7 +199,7 @@ const DaySurvey = ({ navigation, route }) => {
             explanation={questionContext.explanation}
             onChangeUserComment={handleChangeUserComment}
             userComment={answers[questionContext.id]?.userComment}
-            placeholder="Contexte, évènements, mes comportements ..."
+            placeholder="Contexte, évènements, comportement de l’entourage..."
           />
           <QuestionYesNo
             question={questionToxic}
