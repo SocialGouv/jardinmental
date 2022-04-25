@@ -1,5 +1,5 @@
 import React from "react";
-import { SafeAreaView, ScrollView, StyleSheet, View, Dimensions } from "react-native";
+import { SafeAreaView, ScrollView, StyleSheet, View, Dimensions, TouchableOpacity } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 
 import { beforeToday } from "../../utils/date/helpers";
@@ -12,6 +12,8 @@ import ChartPie from "./chartPie";
 import Evenements from "./events";
 import Courbes from "../calendar/calendar";
 import logEvents from "../../services/logEvents";
+import { colors } from "../../utils/colors";
+import Icon from "../../components/Icon";
 
 const screenHeight = Dimensions.get("window").height;
 const CHART_TYPES = ["Frises", "Statistiques", "Courbes", "Analyse des notes"];
@@ -32,6 +34,7 @@ const Suivi = ({ navigation, setPlusVisible }) => {
   const [fromDate, setFromDate] = React.useState(beforeToday(30));
   const [toDate, setToDate] = React.useState(beforeToday(0));
   const [focusedScores, setFocusedScores] = React.useState([1, 2, 3, 4, 5]);
+  const [showTraitement, setShowTraitement] = React.useState(true);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -58,6 +61,7 @@ const Suivi = ({ navigation, setPlusVisible }) => {
             fromDate={fromDate}
             toDate={toDate}
             focusedScores={focusedScores}
+            showTraitement={showTraitement}
           />
         );
     }
@@ -81,18 +85,32 @@ const Suivi = ({ navigation, setPlusVisible }) => {
           />
         ) : null}
         {chartType === "Frises" ? (
-          <ScorePicker
-            focusedScores={focusedScores}
-            onPress={(i) => {
-              if (focusedScores.includes(i)) {
-                setFocusedScores((e) => e.filter((x) => x !== i));
-              } else {
-                setFocusedScores((e) => [...e, i]);
-              }
-              //events
-              logEvents.logSuiviEditScoreFrise(i);
-            }}
-          />
+          <View style={styles.containerScorePickerFrise}>
+            <ScorePicker
+              focusedScores={focusedScores}
+              onPress={(i) => {
+                if (focusedScores.includes(i)) {
+                  setFocusedScores((e) => e.filter((x) => x !== i));
+                } else {
+                  setFocusedScores((e) => [...e, i]);
+                }
+                //events
+                logEvents.logSuiviEditScoreFrise(i);
+              }}
+            />
+            <View style={styles.verticalDivider} />
+            <TouchableOpacity onPress={() => setShowTraitement((e) => !e)}>
+              <View style={[styles.selectionContainer, showTraitement && styles.activeSelectionContainer]}>
+                <Icon
+                  icon="DrugsSvg"
+                  color={showTraitement ? "#FFFFFF" : "#58C8D2"}
+                  width={20}
+                  height={20}
+                  styleContainer={styles.icon}
+                />
+              </View>
+            </TouchableOpacity>
+          </View>
         ) : null}
       </View>
       {renderChart(chartType)}
@@ -101,6 +119,26 @@ const Suivi = ({ navigation, setPlusVisible }) => {
 };
 
 const styles = StyleSheet.create({
+  icon: {
+    width: 30,
+    height: 30,
+  },
+  selectionContainer: {
+    padding: 4,
+    borderColor: "#DEF4F5",
+    borderWidth: 1,
+    borderRadius: 10,
+    marginHorizontal: 10,
+  },
+  activeSelectionContainer: {
+    backgroundColor: colors.LIGHT_BLUE,
+  },
+  containerScorePickerFrise: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
   headerContainer: {
     padding: 5,
     paddingBottom: 15,
@@ -134,6 +172,12 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: "700",
     fontSize: 22,
+  },
+  verticalDivider: {
+    height: "50%",
+    backgroundColor: "#E0E0E0",
+    width: 1,
+    alignSelf: "center",
   },
 });
 
