@@ -101,9 +101,13 @@ export default ({ navigation, patientState, date }) => {
   } else {
     return (
       <View style={styles.container}>
-        <TouchableOpacity style={styles.item} onPress={handlePressItem}>
-          <NoDataDiaryItem date={date} />
-        </TouchableOpacity>
+        {canEdit(date) ? (
+          <TouchableOpacity style={styles.item} onPress={handlePressItem}>
+            <NoDataDiaryItem date={date} />
+          </TouchableOpacity>
+        ) : (
+          <View style={styles.emptyItem} />
+        )}
       </View>
     );
   }
@@ -121,12 +125,15 @@ const styles = StyleSheet.create({
     marginLeft: 15,
   },
   item: {
-    marginVertical: 15,
+    marginVertical: 20,
     backgroundColor: "rgba(38, 56, 124, 0.03)",
     borderRadius: 10,
     borderWidth: 1,
     borderColor: "rgba(38, 56, 124, 0.08)",
     paddingVertical: 15,
+  },
+  emptyItem: {
+    marginVertical: 15,
   },
   itemWithSpaceAbove: {
     marginTop: 25,
@@ -134,7 +141,8 @@ const styles = StyleSheet.create({
   },
   container: {
     paddingLeft: 15,
-    marginLeft: 10,
+    marginLeft: 4,
+    marginVertical: -5,
     borderLeftWidth: 0.4,
     borderColor: "#00CEF7",
   },

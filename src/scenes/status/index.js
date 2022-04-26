@@ -18,6 +18,7 @@ import TabPicker from "./TabPicker";
 import RecapCompletion from "./recapCompletion";
 import NoData from "./NoData";
 import Diary from "../../scenes/diary";
+import { canEdit } from "./utils/index.js";
 
 const LIMIT_PER_PAGE = __DEV__ ? 3 : 30;
 
@@ -91,7 +92,19 @@ const Status = ({ navigation, setPlusVisible }) => {
           .slice(0, LIMIT_PER_PAGE * page)
           .map((date) => (
             <View key={date}>
-              <Text style={styles.subtitle}>{formatDateThread(date)}</Text>
+              <View style={styles.dateContainer}>
+                <View style={styles.dateDot} />
+                {canEdit(date) ? (
+                  <Text style={styles.dateLabel}>{formatDateThread(date)}</Text>
+                ) : (
+                  <TouchableOpacity
+                    style={styles.item}
+                    onPress={() => navigation.navigate("too-late", { date })}
+                  >
+                    <Text style={styles.dateLabel}>{formatDateThread(date)}</Text>
+                  </TouchableOpacity>
+                )}
+              </View>
               <StatusItem date={date} patientState={diaryData[date]} navigation={navigation} />
             </View>
           ))}
@@ -196,19 +209,22 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
   },
-  subtitle: {
-    color: colors.BLUE,
-    fontSize: 17,
-    textAlign: "center",
-    paddingTop: 10,
+  dateContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  dateDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: colors.LIGHT_BLUE,
+  },
+  dateLabel: {
+    color: "#000",
+    fontSize: 13,
+    textAlign: "left",
     paddingLeft: 10,
-    paddingBottom: 10,
-    backgroundColor: "#F2FCFD",
-    borderColor: "#D9F5F6",
-    borderWidth: 1,
-    borderRadius: 10,
     fontWeight: "600",
-    overflow: "hidden",
   },
   verticalBorder: {
     borderLeftWidth: 1,
