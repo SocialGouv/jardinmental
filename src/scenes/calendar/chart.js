@@ -5,6 +5,14 @@ import { colors } from "../../utils/colors";
 import { colorsMap } from "../../utils/constants";
 import { days } from "../../utils/date/helpers";
 import Text from "../../components/MyText";
+
+import { scoresMapIcon } from "../../utils/constants";
+import VeryGoodSvg from "../../../assets/svg/veryGood.svg";
+import GoodSvg from "../../../assets/svg/good.svg";
+import MiddleSvg from "../../../assets/svg/middle.svg";
+import BadSvg from "../../../assets/svg/bad.svg";
+import VeryBadSvg from "../../../assets/svg/veryBad.svg";
+
 /* Chart setup */
 
 const dotSize = 7;
@@ -43,60 +51,123 @@ const dotsX = [
 const Chart = ({ onPress, title, data = [], lines = 5, withFocus = false, focused = null }) => (
   <View>
     <Text style={styles.title}>{title}</Text>
-    <View style={styles.chartContainer}>
-      {Array(lines)
-        .fill()
-        .map((_, i) => (
-          <Text key={i} style={styles.line} ellipsizeMode="clip" numberOfLines={1}>
-            {"".padEnd(300, "-")}
-          </Text>
-        ))}
-      <Svg style={styles.svgContainer} viewBox={`0 0 ${chartWidth} ${chartHeight}`}>
-        <G id="Group" strokeWidth={2} stroke={withFocus ? colors.DARK_BLUE_TRANS : colors.DARK_BLUE}>
-          {data.map((value, index) => {
-            if (index === 0) {
-              return null;
-            }
-            if (data[index] === null) {
-              return null;
-            }
-            if (data[index - 1] === null) {
-              return null;
-            }
-            return (
-              <Line
-                key={`${value}${index}`}
-                x1={dotsX[index - 1]}
-                y1={dotsY[data[index - 1]]}
-                x2={dotsX[index]}
-                y2={dotsY[data[index]]}
-              />
-            );
+    <View style={styles.globalContainer}>
+      <View style={styles.legend}>
+        {Array(lines)
+          .fill()
+          .map((_, i) => {
+            if (i === 0)
+              return (
+                <View style={styles.legendItem}>
+                  <VeryGoodSvg
+                    width={20}
+                    height={20}
+                    color={scoresMapIcon[5 - i].borderColor}
+                    style={{ opacity: 0.8 }}
+                  />
+                </View>
+              );
+            if (i === 1)
+              return (
+                <View style={styles.legendItem}>
+                  <GoodSvg
+                    width={20}
+                    height={20}
+                    color={scoresMapIcon[5 - i].borderColor}
+                    style={{ opacity: 0.8 }}
+                  />
+                </View>
+              );
+            if (i === 2)
+              return (
+                <View style={styles.legendItem}>
+                  <MiddleSvg
+                    width={20}
+                    height={20}
+                    color={scoresMapIcon[5 - i].borderColor}
+                    style={{ opacity: 0.8 }}
+                  />
+                </View>
+              );
+            if (i === 3)
+              return (
+                <View style={styles.legendItem}>
+                  <BadSvg
+                    width={20}
+                    height={20}
+                    color={scoresMapIcon[5 - i].borderColor}
+                    style={{ opacity: 0.8 }}
+                  />
+                </View>
+              );
+            if (i === 4)
+              return (
+                <View style={styles.legendItem}>
+                  <VeryBadSvg
+                    width={20}
+                    height={20}
+                    color={scoresMapIcon[5 - i].borderColor}
+                    style={{ opacity: 0.8 }}
+                  />
+                </View>
+              );
           })}
-          {data.map((value, index) => {
-            if (value === null) {
-              return null;
-            }
-            return (
-              <Circle
-                key={`${value}${index}`}
-                fill={colorsMap[value + (withFocus && focused !== index ? colorsMap.length / 2 : 0)]}
-                stroke={withFocus && focused !== index ? colors.DARK_BLUE_TRANS : colors.DARK_BLUE}
-                cx={dotsX[index]}
-                cy={dotsY[value]}
-                r={dotSize}
-                onPress={() => (onPress ? onPress(index) : null)}
-              />
-            );
-          })}
-        </G>
-      </Svg>
-      <View style={styles.days}>
-        {days.map((day, index) => (
-          <TouchableOpacity key={day} onPress={() => (onPress ? onPress(index) : null)}>
-            <Text style={styles.day}>{day}</Text>
-          </TouchableOpacity>
-        ))}
+      </View>
+      <View style={styles.chartContainer}>
+        {Array(lines)
+          .fill()
+          .map((_, i) => (
+            <Text key={i} style={styles.line} ellipsizeMode="clip" numberOfLines={1}>
+              {"".padEnd(300, "-")}
+            </Text>
+          ))}
+        <Svg style={styles.svgContainer} viewBox={`0 0 ${chartWidth} ${chartHeight}`}>
+          <G id="Group" strokeWidth={2} stroke={withFocus ? colors.DARK_BLUE_TRANS : colors.DARK_BLUE}>
+            {data.map((value, index) => {
+              if (index === 0) {
+                return null;
+              }
+              if (data[index] === null) {
+                return null;
+              }
+              if (data[index - 1] === null) {
+                return null;
+              }
+              return (
+                <Line
+                  key={`${value}${index}`}
+                  x1={dotsX[index - 1]}
+                  y1={dotsY[data[index - 1]]}
+                  x2={dotsX[index]}
+                  y2={dotsY[data[index]]}
+                />
+              );
+            })}
+            {data.map((value, index) => {
+              if (value === null) {
+                return null;
+              }
+              return (
+                <Circle
+                  key={`${value}${index}`}
+                  fill={colorsMap[value + (withFocus && focused !== index ? colorsMap.length / 2 : 0)]}
+                  stroke={withFocus && focused !== index ? colors.DARK_BLUE_TRANS : colors.DARK_BLUE}
+                  cx={dotsX[index]}
+                  cy={dotsY[value]}
+                  r={dotSize}
+                  onPress={() => (onPress ? onPress(index) : null)}
+                />
+              );
+            })}
+          </G>
+        </Svg>
+        <View style={styles.days}>
+          {days.map((day, index) => (
+            <TouchableOpacity key={day} onPress={() => (onPress ? onPress(index) : null)}>
+              <Text style={styles.day}>{day}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
       </View>
     </View>
   </View>
@@ -110,8 +181,20 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     marginLeft: 15,
   },
-  chartContainer: {
+  legendItem: {
+    marginBottom: 14,
+  },
+  globalContainer: {
     marginTop: 20,
+    display: "flex",
+    flexDirection: "row",
+  },
+  legend: {
+    marginTop: 18,
+    marginRight: 5,
+  },
+  chartContainer: {
+    flex: 1,
     borderWidth: 2,
     borderRadius: 10,
     backgroundColor: "#f5fafb",
