@@ -1,3 +1,15 @@
+## [1.24.3](https://github.com/SocialGouv/monsuivipsy/compare/v1.24.2...v1.24.3) (2022-04-26)
+
+
+### Bug Fixes
+
+* ajout légende sur les courbes ([e5a59ea](https://github.com/SocialGouv/monsuivipsy/commit/e5a59eae9e4b609a3b439bcc85912dc25b2905e0))
+* courbes ne s’affichent pas ([fc32407](https://github.com/SocialGouv/monsuivipsy/commit/fc324072031ce917106df8d33b72cd77d8d52f3f))
+* sélectionner les 5 smileys pas défaut ([3c34873](https://github.com/SocialGouv/monsuivipsy/commit/3c34873021b18e1c488df49d1386d16432802b4c))
+* style "mes entrées" ([ab5461d](https://github.com/SocialGouv/monsuivipsy/commit/ab5461d5073d6e10f8b8c89db7a9c62537363c4b))
+* style oui/non question ([f49ee50](https://github.com/SocialGouv/monsuivipsy/commit/f49ee50713e32a84f993d1b146ee5bdbd8024688))
+* wording "vous" ([d6f4863](https://github.com/SocialGouv/monsuivipsy/commit/d6f4863ad1771757935e5fa1f2be299bea096cec))
+
 ## [1.24.2](https://github.com/SocialGouv/monsuivipsy/compare/v1.24.1...v1.24.2) (2022-04-21)
 
 
