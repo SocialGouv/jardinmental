@@ -24,11 +24,11 @@ const chartHeight = 220;
 const chartInnerHeight = chartHeight - daysHeight;
 const spacingY = 0.172;
 const dotsY = [
-  chartPaddingTop + chartInnerHeight * spacingY * 4.5,
+  chartPaddingTop + chartInnerHeight * spacingY * 4.55,
   chartPaddingTop + chartInnerHeight * spacingY * 3.5,
-  chartPaddingTop + chartInnerHeight * spacingY * 2.5,
-  chartPaddingTop + chartInnerHeight * spacingY * 1.5,
-  chartPaddingTop + chartInnerHeight * spacingY * 0.5,
+  chartPaddingTop + chartInnerHeight * spacingY * 2.42,
+  chartPaddingTop + chartInnerHeight * spacingY * 1.35,
+  chartPaddingTop + chartInnerHeight * spacingY * 0.3,
 ];
 
 // Horizontal spacing
@@ -56,61 +56,58 @@ const Chart = ({ onPress, title, data = [], lines = 5, withFocus = false, focuse
         {Array(lines)
           .fill()
           .map((_, i) => {
-            if (i === 0)
-              return (
-                <View style={styles.legendItem}>
+            const icon = (score) => {
+              if (score === 1)
+                return (
                   <VeryGoodSvg
                     width={20}
                     height={20}
-                    color={scoresMapIcon[5 - i].borderColor}
+                    color={scoresMapIcon[score].borderColor}
                     style={{ opacity: 0.8 }}
                   />
-                </View>
-              );
-            if (i === 1)
-              return (
-                <View style={styles.legendItem}>
+                );
+              if (score === 2)
+                return (
                   <GoodSvg
                     width={20}
                     height={20}
-                    color={scoresMapIcon[5 - i].borderColor}
+                    color={scoresMapIcon[score].borderColor}
                     style={{ opacity: 0.8 }}
                   />
-                </View>
-              );
-            if (i === 2)
-              return (
-                <View style={styles.legendItem}>
+                );
+              if (score === 3)
+                return (
                   <MiddleSvg
                     width={20}
                     height={20}
-                    color={scoresMapIcon[5 - i].borderColor}
+                    color={scoresMapIcon[score].borderColor}
                     style={{ opacity: 0.8 }}
                   />
-                </View>
-              );
-            if (i === 3)
-              return (
-                <View style={styles.legendItem}>
+                );
+              if (score === 4)
+                return (
                   <BadSvg
                     width={20}
                     height={20}
-                    color={scoresMapIcon[5 - i].borderColor}
+                    color={scoresMapIcon[score].borderColor}
                     style={{ opacity: 0.8 }}
                   />
-                </View>
-              );
-            if (i === 4)
-              return (
-                <View style={styles.legendItem}>
+                );
+              if (score === 5)
+                return (
                   <VeryBadSvg
                     width={20}
                     height={20}
-                    color={scoresMapIcon[5 - i].borderColor}
+                    color={scoresMapIcon[score].borderColor}
                     style={{ opacity: 0.8 }}
                   />
-                </View>
-              );
+                );
+            };
+            return (
+              <View key={i} style={styles.legendItem}>
+                {icon(5 - i)}
+              </View>
+            );
           })}
       </View>
       <View style={styles.chartContainer}>
