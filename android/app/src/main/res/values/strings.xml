@@ -1,5 +1,4 @@
 <resources>
     <string name="app_name">Mon Suivi Psy</string>
     <string name="default_notification_channel_id">REMINDER-CHANNEL-ID</string>
-    <string name="facebook_app_id">100979222345072</string>
 </resources>
