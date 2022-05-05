@@ -1,3 +1,11 @@
+## [1.24.4](https://github.com/SocialGouv/monsuivipsy/compare/v1.24.3...v1.24.4) (2022-05-05)
+
+
+### Bug Fixes
+
+* enlever Facebook sdk ([ec84dfb](https://github.com/SocialGouv/monsuivipsy/commit/ec84dfb019fae209ec14baa5d5b92d0e457ed342))
+* **suivi:** position point chart suivi ([dbd8047](https://github.com/SocialGouv/monsuivipsy/commit/dbd8047fc7779bfd40a4a4468454d3fcd1d73736))
+
 ## [1.24.3](https://github.com/SocialGouv/monsuivipsy/compare/v1.24.2...v1.24.3) (2022-04-26)
 
 
