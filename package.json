@@ -46,7 +46,6 @@
     "react-native-date-picker": "^4.1.5",
     "react-native-device-info": "^8.3.1",
     "react-native-dotenv": "^2.4.3",
-    "react-native-fbsdk-next": "^6.1.1",
     "react-native-gesture-handler": "^1.9.0",
     "react-native-get-random-values": "^1.7.1",
     "react-native-modal": "^11.10.0",
