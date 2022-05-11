@@ -6,15 +6,12 @@ import { colors } from "../../utils/colors";
 import { canEdit } from "./utils/index.js";
 
 const Posology = ({ patientState, posology, date, onPress }) => {
-  if (
-    (!posology || posology.length === 0 || posology.every((e) => !e.value)) &&
-    patientState?.PRISE_DE_TRAITEMENT &&
-    patientState?.PRISE_DE_TRAITEMENT_SI_BESOIN &&
-    !Object.keys(patientState?.PRISE_DE_TRAITEMENT)?.length &&
-    !Object.keys(patientState?.PRISE_DE_TRAITEMENT_SI_BESOIN)?.length
-  ) {
-    return null;
-  }
+  const hasPosology = posology && posology.length > 0 && posology.some((e) => e.value);
+  const hasPriseDeTraitement =
+    Object.keys(patientState?.PRISE_DE_TRAITEMENT || {})?.length ||
+    Object.keys(patientState?.PRISE_DE_TRAITEMENT_SI_BESOIN || {})?.length;
+
+  if (!hasPosology && !hasPriseDeTraitement) return null;
 
   const renderPosology = () => {
     return (posology || []).map((p, i) => {
@@ -37,16 +34,20 @@ const Posology = ({ patientState, posology, date, onPress }) => {
       <View style={styles.divider} />
       <View style={styles.container}>
         <Text style={styles.title}>Traitements</Text>
-        <View style={styles.containerQuestionReponse}>
-          <Text>Avez-vous pris correctement votre traitement quotidien&nbsp;?</Text>
-          <Text style={styles.reponse}>{patientState?.PRISE_DE_TRAITEMENT?.value ? "Oui" : "Non"}</Text>
-        </View>
-        <View style={styles.containerQuestionReponse}>
-          <Text>Avez-vous pris un "si besoin"&nbsp;?</Text>
-          <Text style={styles.reponse}>
-            {patientState?.PRISE_DE_TRAITEMENT_SI_BESOIN?.value ? "Oui" : "Non"}
-          </Text>
-        </View>
+        {patientState?.PRISE_DE_TRAITEMENT?.value !== undefined ? (
+          <View style={styles.containerQuestionReponse}>
+            <Text>Avez-vous pris correctement votre traitement quotidien&nbsp;?</Text>
+            <Text style={styles.reponse}>{patientState?.PRISE_DE_TRAITEMENT?.value ? "Oui" : "Non"}</Text>
+          </View>
+        ) : null}
+        {patientState?.PRISE_DE_TRAITEMENT_SI_BESOIN?.value !== undefined ? (
+          <View style={styles.containerQuestionReponse}>
+            <Text>Avez-vous pris un "si besoin"&nbsp;?</Text>
+            <Text style={styles.reponse}>
+              {patientState?.PRISE_DE_TRAITEMENT_SI_BESOIN?.value ? "Oui" : "Non"}
+            </Text>
+          </View>
+        ) : null}
 
         <TouchableOpacity
           style={[
