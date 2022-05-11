@@ -121,19 +121,92 @@ const ChartFrise = ({ navigation, fromDate, toDate, focusedScores, showTraitemen
     );
   }
   return (
-    <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContainer}>
-      {activeCategories?.map((categoryId) => (
+    <>
+      <View style={styles.hintContainer}>
+        <Text style={styles.hintTitle}>Corrélez la prose de votre traitement avec vos frises</Text>
         <Frise
           focusedScores={focusedScores}
-          title={getTitle(categoryId)}
-          key={categoryId}
-          data={computeChartData(categoryId)}
-          showTraitement={showTraitement}
-          priseDeTraitement={computeChartData("PRISE_DE_TRAITEMENT")}
-          priseDeTraitementSiBesoin={computeChartData("PRISE_DE_TRAITEMENT_SI_BESOIN")}
+          data={[
+            { value: 1 },
+            { value: 2 },
+            { value: 3 },
+            { value: 1 },
+            { value: 3 },
+            { value: 1 },
+            { value: 4 },
+            { value: 5 },
+            { value: 5 },
+            { value: 4 },
+            { value: 4 },
+            { value: 3 },
+            { value: 4 },
+            { value: 4 },
+          ]}
+          showTraitement
+          priseDeTraitement={[
+            {},
+            { value: false },
+            {},
+            { value: true },
+            { value: true },
+            { value: true },
+            { value: true },
+            { value: true },
+            { value: true },
+            { value: true },
+            { value: true },
+            {},
+            { value: false },
+            {},
+          ]}
+          priseDeTraitementSiBesoin={[
+            {},
+            { value: false },
+            {},
+            { value: false },
+            { value: false },
+            { value: true },
+            { value: true },
+            { value: false },
+            { value: false },
+            { value: true },
+            { value: true },
+            {},
+            { value: false },
+            {},
+          ]}
         />
-      ))}
-    </ScrollView>
+        <View>
+          <View style={{ display: "flex", flexDirection: "row", alignItems: "center", marginVertical: 5 }}>
+            <View style={[styles.hintSquare, { backgroundColor: "#5956E8", marginRight: 15 }]} />
+            <Text style={styles.hintLegend}>J'ai pris correctement mon traitement</Text>
+          </View>
+          <View style={{ display: "flex", flexDirection: "row", alignItems: "center", marginVertical: 5 }}>
+            <View style={[styles.hintSquare, { backgroundColor: "#E575F8", marginRight: 15 }]} />
+            <Text style={styles.hintLegend}>Je n'ai pas pris correctement mon traitement</Text>
+          </View>
+          <View style={{ display: "flex", flexDirection: "row", alignItems: "center", marginVertical: 5 }}>
+            <View
+              style={[{ height: 4, width: 4, borderRadius: 2, backgroundColor: "#5956E8", marginRight: 26 }]}
+            />
+            <Text style={styles.hintLegend}>J'ai pris un "si besoin"</Text>
+          </View>
+        </View>
+      </View>
+      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContainer}>
+        {activeCategories?.map((categoryId) => (
+          <Frise
+            focusedScores={focusedScores}
+            title={getTitle(categoryId)}
+            key={categoryId}
+            data={computeChartData(categoryId)}
+            showTraitement={showTraitement}
+            priseDeTraitement={computeChartData("PRISE_DE_TRAITEMENT")}
+            priseDeTraitementSiBesoin={computeChartData("PRISE_DE_TRAITEMENT_SI_BESOIN")}
+          />
+        ))}
+      </ScrollView>
+    </>
   );
 };
 
@@ -147,7 +220,7 @@ const Frise = ({
 }) => {
   return (
     <View style={styles.friseContainer}>
-      <Text style={styles.friseTitle}>{title}</Text>
+      {title ? <Text style={styles.friseTitle}>{title}</Text> : null}
       <View style={styles.squareContainer}>
         {data?.map((e, i) => {
           let color = scoresMapIcon[e?.value]?.color || "#f5f5f5";
@@ -268,6 +341,22 @@ const Frise = ({
 };
 
 const styles = StyleSheet.create({
+  hintContainer: {
+    marginHorizontal: 15,
+    padding: 10,
+    borderColor: "#AEEDF8",
+    borderWidth: 1,
+    borderRadius: 10,
+    backgroundColor: "#F8FDFE",
+  },
+  hintTitle: {
+    fontSize: 15,
+    fontWeight: "bold",
+  },
+  hintSquare: {
+    height: 4,
+    width: 15,
+  },
   friseContainer: {
     marginVertical: 10,
     paddingHorizontal: 10,
