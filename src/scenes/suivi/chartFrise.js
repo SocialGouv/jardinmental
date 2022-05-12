@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View, Dimensions, ScrollView } from "react-native";
+import { StyleSheet, View, Dimensions, ScrollView, TouchableOpacity } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 
 import { getArrayOfDatesFromTo } from "../../utils/date/helpers";
@@ -13,7 +13,15 @@ import localStorage from "../../utils/localStorage";
 import logEvents from "../../services/logEvents";
 import Button from "../../components/Button";
 
-const ChartFrise = ({ navigation, fromDate, toDate, focusedScores, showTraitement }) => {
+const ChartFrise = ({
+  navigation,
+  fromDate,
+  toDate,
+  focusedScores,
+  showTraitement,
+  showHint,
+  onCloseHint,
+}) => {
   const [diaryData] = React.useContext(DiaryDataContext);
   const [activeCategories, setActiveCategories] = React.useState();
   const [isEmpty, setIsEmpty] = React.useState();
@@ -120,79 +128,89 @@ const ChartFrise = ({ navigation, fromDate, toDate, focusedScores, showTraitemen
       </View>
     );
   }
+
   return (
     <>
-      <View style={styles.hintContainer}>
-        <Text style={styles.hintTitle}>Corrélez la prose de votre traitement avec vos frises</Text>
-        <Frise
-          focusedScores={focusedScores}
-          data={[
-            { value: 1 },
-            { value: 2 },
-            { value: 3 },
-            { value: 1 },
-            { value: 3 },
-            { value: 1 },
-            { value: 4 },
-            { value: 5 },
-            { value: 5 },
-            { value: 4 },
-            { value: 4 },
-            { value: 3 },
-            { value: 4 },
-            { value: 4 },
-          ]}
-          showTraitement
-          priseDeTraitement={[
-            {},
-            { value: false },
-            {},
-            { value: true },
-            { value: true },
-            { value: true },
-            { value: true },
-            { value: true },
-            { value: true },
-            { value: true },
-            { value: true },
-            {},
-            { value: false },
-            {},
-          ]}
-          priseDeTraitementSiBesoin={[
-            {},
-            { value: false },
-            {},
-            { value: false },
-            { value: false },
-            { value: true },
-            { value: true },
-            { value: false },
-            { value: false },
-            { value: true },
-            { value: true },
-            {},
-            { value: false },
-            {},
-          ]}
-        />
-        <View>
-          <View style={{ display: "flex", flexDirection: "row", alignItems: "center", marginVertical: 5 }}>
-            <View style={[styles.hintSquare, { backgroundColor: "#5956E8", marginRight: 15 }]} />
-            <Text style={styles.hintLegend}>J'ai pris correctement mon traitement</Text>
+      {showHint ? (
+        <View style={styles.hintContainer}>
+          <View style={styles.hintTitleContainer}>
+            <Text style={styles.hintTitle}>Corrélez la prose de votre traitement avec vos frises</Text>
+            <TouchableOpacity style={styles.close} onPress={onCloseHint}>
+              <Icon icon="CrossSvg" width={8} height={8} color={colors.BLUE} />
+            </TouchableOpacity>
           </View>
-          <View style={{ display: "flex", flexDirection: "row", alignItems: "center", marginVertical: 5 }}>
-            <View style={[styles.hintSquare, { backgroundColor: "#E575F8", marginRight: 15 }]} />
-            <Text style={styles.hintLegend}>Je n'ai pas pris correctement mon traitement</Text>
-          </View>
-          <View style={{ display: "flex", flexDirection: "row", alignItems: "center", marginVertical: 5 }}>
-            <View
-              style={[{ height: 4, width: 4, borderRadius: 2, backgroundColor: "#5956E8", marginRight: 26 }]}
-            />
-            <Text style={styles.hintLegend}>J'ai pris un "si besoin"</Text>
+          <Frise
+            focusedScores={focusedScores}
+            data={[
+              { value: 1 },
+              { value: 2 },
+              { value: 3 },
+              { value: 1 },
+              { value: 3 },
+              { value: 1 },
+              { value: 4 },
+              { value: 5 },
+              { value: 5 },
+              { value: 4 },
+              { value: 4 },
+              { value: 3 },
+              { value: 4 },
+              { value: 4 },
+            ]}
+            showTraitement
+            priseDeTraitement={[
+              {},
+              { value: false },
+              {},
+              { value: true },
+              { value: true },
+              { value: true },
+              { value: true },
+              { value: true },
+              { value: true },
+              { value: true },
+              { value: true },
+              {},
+              { value: false },
+              {},
+            ]}
+            priseDeTraitementSiBesoin={[
+              {},
+              { value: false },
+              {},
+              { value: false },
+              { value: false },
+              { value: true },
+              { value: true },
+              { value: false },
+              { value: false },
+              { value: true },
+              { value: true },
+              {},
+              { value: false },
+              {},
+            ]}
+          />
+          <View>
+            <View style={{ display: "flex", flexDirection: "row", alignItems: "center", marginVertical: 5 }}>
+              <View style={[styles.hintSquare, { backgroundColor: "#5956E8", marginRight: 15 }]} />
+              <Text style={styles.hintLegend}>J'ai pris correctement mon traitement</Text>
+            </View>
+            <View style={{ display: "flex", flexDirection: "row", alignItems: "center", marginVertical: 5 }}>
+              <View style={[styles.hintSquare, { backgroundColor: "#E575F8", marginRight: 15 }]} />
+              <Text style={styles.hintLegend}>Je n'ai pas pris correctement mon traitement</Text>
+            </View>
+            <View style={{ display: "flex", flexDirection: "row", alignItems: "center", marginVertical: 5 }}>
+              <View
+                style={[
+                  { height: 4, width: 4, borderRadius: 2, backgroundColor: "#5956E8", marginRight: 26 },
+                ]}
+              />
+              <Text style={styles.hintLegend}>J'ai pris un "si besoin"</Text>
+            </View>
           </View>
         </View>
-      </View>
+      ) : null}
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContainer}>
         {activeCategories?.map((categoryId) => (
           <Frise
@@ -341,6 +359,24 @@ const Frise = ({
 };
 
 const styles = StyleSheet.create({
+  close: {
+    // position: "absolute",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    top: 0,
+    right: 0,
+    // borderRadius: 16,
+    // borderColor: "#D4F0F2",
+    // borderWidth: 1,
+    zIndex: 2,
+    width: 18,
+    height: 18,
+  },
+  hintTitleContainer: {
+    display: "flex",
+    flexDirection: "row",
+  },
   hintContainer: {
     marginHorizontal: 15,
     padding: 10,
@@ -350,6 +386,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#F8FDFE",
   },
   hintTitle: {
+    flex: 1,
     fontSize: 15,
     fontWeight: "bold",
   },

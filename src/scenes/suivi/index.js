@@ -4,6 +4,7 @@ import { useFocusEffect } from "@react-navigation/native";
 
 import { beforeToday } from "../../utils/date/helpers";
 import Header from "../../components/Header";
+import Text from "../../components/MyText";
 import ChartPicker from "./chartPicker";
 import RangeDate from "./RangeDate";
 import ScorePicker from "./ScorePicker";
@@ -35,6 +36,7 @@ const Suivi = ({ navigation, setPlusVisible }) => {
   const [toDate, setToDate] = React.useState(beforeToday(0));
   const [focusedScores, setFocusedScores] = React.useState([1, 2, 3, 4, 5]);
   const [showTraitement, setShowTraitement] = React.useState(false);
+  const [showHint, setShowHint] = React.useState(true);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -62,6 +64,8 @@ const Suivi = ({ navigation, setPlusVisible }) => {
             toDate={toDate}
             focusedScores={focusedScores}
             showTraitement={showTraitement}
+            showHint={showHint}
+            onCloseHint={() => setShowHint(false)}
           />
         );
     }
@@ -99,17 +103,24 @@ const Suivi = ({ navigation, setPlusVisible }) => {
               }}
             />
             <View style={styles.verticalDivider} />
-            <TouchableOpacity onPress={() => setShowTraitement((e) => !e)}>
-              <View style={[styles.selectionContainer, showTraitement && styles.activeSelectionContainer]}>
-                <Icon
-                  icon="DrugsSvg"
-                  color={showTraitement ? "#FFFFFF" : "#58C8D2"}
-                  width={20}
-                  height={20}
-                  styleContainer={styles.icon}
-                />
-              </View>
-            </TouchableOpacity>
+            <View style={styles.hintContainer}>
+              <TouchableOpacity onPress={() => setShowTraitement((e) => !e)}>
+                <View style={[styles.selectionContainer, showTraitement && styles.activeSelectionContainer]}>
+                  <Icon
+                    icon="DrugsSvg"
+                    color={showTraitement ? "#FFFFFF" : "#58C8D2"}
+                    width={20}
+                    height={20}
+                    styleContainer={styles.icon}
+                  />
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => setShowHint((e) => !e)}>
+                <View style={[styles.infoHintContainer, showHint && styles.activeInfoHintContainer]}>
+                  <Text style={[styles.infoHintText, showHint && styles.activeInfoHintText]}>i</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
           </View>
         ) : null}
       </View>
@@ -119,6 +130,34 @@ const Suivi = ({ navigation, setPlusVisible }) => {
 };
 
 const styles = StyleSheet.create({
+  hintContainer: {
+    marginVertical: 10,
+    marginHorizontal: 10,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-around",
+    display: "flex",
+  },
+  infoHintContainer: {
+    width: 20,
+    height: 20,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    borderColor: colors.LIGHT_BLUE,
+    borderWidth: 1,
+    borderRadius: 15,
+    marginLeft: 10,
+  },
+  activeInfoHintContainer: {
+    backgroundColor: colors.LIGHT_BLUE,
+  },
+  infoHintText: {
+    color: colors.LIGHT_BLUE,
+  },
+  activeInfoHintText: {
+    color: "#FFFFFF",
+  },
   icon: {
     width: 30,
     height: 30,
@@ -128,7 +167,6 @@ const styles = StyleSheet.create({
     borderColor: "#DEF4F5",
     borderWidth: 1,
     borderRadius: 10,
-    marginHorizontal: 10,
   },
   activeSelectionContainer: {
     backgroundColor: colors.LIGHT_BLUE,
