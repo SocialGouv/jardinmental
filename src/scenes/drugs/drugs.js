@@ -155,19 +155,23 @@ const Drugs = ({ navigation, route }) => {
         >
           <Text style={styles.link}>Informations sur les traitements</Text>
         </TouchableOpacity>
-        <QuestionYesNo
-          question={priseDeTraitement}
-          onPress={toggleAnswer}
-          selected={answers[priseDeTraitement.id]?.value}
-          showUserCommentInput={false}
-        />
-        <QuestionYesNo
-          question={priseDeTraitementSiBesoin}
-          onPress={toggleAnswer}
-          selected={answers[priseDeTraitementSiBesoin.id]?.value}
-          showUserCommentInput={false}
-          isLast
-        />
+        {inSurvey ? (
+          <>
+            <QuestionYesNo
+              question={priseDeTraitement}
+              onPress={toggleAnswer}
+              selected={answers[priseDeTraitement.id]?.value}
+              showUserCommentInput={false}
+            />
+            <QuestionYesNo
+              question={priseDeTraitementSiBesoin}
+              onPress={toggleAnswer}
+              selected={answers[priseDeTraitementSiBesoin.id]?.value}
+              showUserCommentInput={false}
+              isLast
+            />
+          </>
+        ) : null}
         <View style={styles.divider} />
         {medicalTreatment.map((e, i) => (
           <DrugItem
