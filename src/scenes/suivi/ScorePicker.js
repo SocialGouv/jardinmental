@@ -35,16 +35,16 @@ const styles = StyleSheet.create({
     borderColor: "#DEF4F5",
     borderWidth: 1,
     borderRadius: 10,
-    marginHorizontal: 10,
   },
   activeSelectionContainer: {
     backgroundColor: colors.LIGHT_BLUE,
   },
   answersContainer: {
+    flex: 1,
     marginVertical: 10,
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-around",
     display: "flex",
   },
 
