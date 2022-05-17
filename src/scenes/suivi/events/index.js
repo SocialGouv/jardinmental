@@ -331,6 +331,7 @@ const styles = StyleSheet.create({
   scrollContainer: {
     paddingTop: 30,
     paddingHorizontal: 15,
+    paddingBottom: 150,
   },
   noDataMessage: {
     color: "#111",

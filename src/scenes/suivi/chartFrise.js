@@ -503,7 +503,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   scrollContainer: {
-    // flex: 1,
+    paddingBottom: 150,
   },
 });
 
