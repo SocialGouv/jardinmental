@@ -136,7 +136,7 @@ const ChartFrise = ({
           <View style={styles.hintTitleContainer}>
             <Text style={styles.hintTitle}>Corrélez la prise de votre traitement avec vos frises</Text>
             <TouchableOpacity style={styles.close} onPress={onCloseHint}>
-              <Icon icon="CrossSvg" width={8} height={8} color={colors.BLUE} />
+              <Icon icon="CrossSvg" width={15} height={15} color={colors.BLUE} />
             </TouchableOpacity>
           </View>
           <Frise
@@ -367,18 +367,15 @@ const Frise = ({
 
 const styles = StyleSheet.create({
   close: {
-    // position: "absolute",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    top: 0,
-    right: 0,
-    // borderRadius: 16,
-    // borderColor: "#D4F0F2",
-    // borderWidth: 1,
+    borderRadius: 16,
+    borderColor: "#D4F0F2",
+    borderWidth: 1,
     zIndex: 2,
-    width: 18,
-    height: 18,
+    width: 32,
+    height: 32,
   },
   hintTitleContainer: {
     display: "flex",
@@ -387,6 +384,7 @@ const styles = StyleSheet.create({
   hintContainer: {
     marginHorizontal: 15,
     padding: 10,
+    marginBottom: 25,
     borderColor: "#AEEDF8",
     borderWidth: 1,
     borderRadius: 10,
@@ -396,6 +394,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 15,
     fontWeight: "bold",
+    paddingRight: 10,
   },
   hintLegend: {
     flex: 1,
