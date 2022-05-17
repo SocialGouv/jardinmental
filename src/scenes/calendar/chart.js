@@ -57,7 +57,7 @@ const Chart = ({ onPress, title, data = [], lines = 5, withFocus = false, focuse
           .fill()
           .map((_, i) => {
             const icon = (score) => {
-              if (score === 1)
+              if (score === 5)
                 return (
                   <VeryGoodSvg
                     width={20}
@@ -66,7 +66,7 @@ const Chart = ({ onPress, title, data = [], lines = 5, withFocus = false, focuse
                     style={{ opacity: 0.8 }}
                   />
                 );
-              if (score === 2)
+              if (score === 4)
                 return (
                   <GoodSvg
                     width={20}
@@ -84,7 +84,7 @@ const Chart = ({ onPress, title, data = [], lines = 5, withFocus = false, focuse
                     style={{ opacity: 0.8 }}
                   />
                 );
-              if (score === 4)
+              if (score === 2)
                 return (
                   <BadSvg
                     width={20}
@@ -93,7 +93,7 @@ const Chart = ({ onPress, title, data = [], lines = 5, withFocus = false, focuse
                     style={{ opacity: 0.8 }}
                   />
                 );
-              if (score === 5)
+              if (score === 1)
                 return (
                   <VeryBadSvg
                     width={20}
