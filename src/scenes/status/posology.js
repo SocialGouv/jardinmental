@@ -37,15 +37,21 @@ const Posology = ({ patientState, posology, date, onPress }) => {
         {patientState?.PRISE_DE_TRAITEMENT?.value !== undefined ? (
           <View style={styles.containerQuestionReponse}>
             <Text>Avez-vous pris correctement votre traitement quotidien&nbsp;?</Text>
-            <Text style={styles.reponse}>{patientState?.PRISE_DE_TRAITEMENT?.value ? "Oui" : "Non"}</Text>
+            {patientState?.PRISE_DE_TRAITEMENT?.value ? (
+              <Text style={styles.reponseOui}>Oui</Text>
+            ) : (
+              <Text style={styles.reponseNon}>Non</Text>
+            )}
           </View>
         ) : null}
         {patientState?.PRISE_DE_TRAITEMENT_SI_BESOIN?.value !== undefined ? (
           <View style={styles.containerQuestionReponse}>
             <Text>Avez-vous pris un "si besoin"&nbsp;?</Text>
-            <Text style={styles.reponse}>
-              {patientState?.PRISE_DE_TRAITEMENT_SI_BESOIN?.value ? "Oui" : "Non"}
-            </Text>
+            {patientState?.PRISE_DE_TRAITEMENT_SI_BESOIN?.value ? (
+              <Text style={styles.reponseOui}>Oui</Text>
+            ) : (
+              <Text style={styles.reponseNon}>Non</Text>
+            )}
           </View>
         ) : null}
 
@@ -102,7 +108,8 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: "600",
   },
-  reponse: { fontWeight: "bold" },
+  reponseOui: { fontWeight: "bold", color: "#26387C" },
+  reponseNon: { fontWeight: "bold", color: "#E575F8" },
   subcontainer: {
     display: "flex",
     flexDirection: "row",
