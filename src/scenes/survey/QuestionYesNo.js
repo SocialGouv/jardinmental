@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   answerContainer: {
-    paddingTop: 10,
+    paddingTop: 20,
     paddingBottom: 15,
     marginLeft: 18, // padding of the header question container + half of the dot size => 10 + 8 = 18
     display: "flex",
