@@ -1,3 +1,18 @@
+# [1.25.0](https://github.com/SocialGouv/monsuivipsy/compare/v1.24.4...v1.25.0) (2022-05-17)
+
+
+### Bug Fixes
+
+* add hint ([d0a3e27](https://github.com/SocialGouv/monsuivipsy/commit/d0a3e27e2b37d9b5727173d23e62bfe527c9dc04))
+* ajout hint carte ([e22cab0](https://github.com/SocialGouv/monsuivipsy/commit/e22cab0bb5ca6f931fb3c68dab8c962ed1ae3272))
+* hide yes no question in drugs ([f082b9a](https://github.com/SocialGouv/monsuivipsy/commit/f082b9a5d8b9394001347a8690f27445720e1793))
+
+
+### Features
+
+* ajout questions prise de traitement dans le questionnaire ([4a05fa8](https://github.com/SocialGouv/monsuivipsy/commit/4a05fa8c24aef2be4713eca4760e636d0c3c95a8))
+* ajout traitement dans les frises ([9a38bd3](https://github.com/SocialGouv/monsuivipsy/commit/9a38bd325649b3596b8888e88fc784f53f9a7bfd))
+
 ## [1.24.4](https://github.com/SocialGouv/monsuivipsy/compare/v1.24.3...v1.24.4) (2022-05-05)
 
 
