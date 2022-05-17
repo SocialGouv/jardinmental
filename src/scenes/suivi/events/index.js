@@ -16,7 +16,7 @@ import Button from "../../../components/Button";
 import ScorePicker from "../ScorePicker";
 import Card from "./Card";
 
-const ChartFrise = ({ navigation, fromDate, toDate, focusedScores }) => {
+const Events = ({ navigation, fromDate, toDate, focusedScores }) => {
   const [diaryData] = React.useContext(DiaryDataContext);
   const [activeCategories, setActiveCategories] = React.useState();
   const [isEmpty, setIsEmpty] = React.useState();
@@ -152,13 +152,15 @@ const ChartFrise = ({ navigation, fromDate, toDate, focusedScores }) => {
             value={symptom}
           />
         </View>
-        <ScorePicker
-          focusedScores={score}
-          onPress={(i) => {
-            setScore([i]);
-            logEvents.logSuiviEditScoreEvents(i);
-          }}
-        />
+        <View style={styles.containerScorePickerFrise}>
+          <ScorePicker
+            focusedScores={score}
+            onPress={(i) => {
+              setScore([i]);
+              logEvents.logSuiviEditScoreEvents(i);
+            }}
+          />
+        </View>
       </View>
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContainer}>
         {memoizedCallback()?.filter((x) => x.date)?.length === 0 && (
@@ -281,6 +283,13 @@ const pickerSelectStyles = StyleSheet.create({
 });
 
 const styles = StyleSheet.create({
+  containerScorePickerFrise: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+
   filterContainer: {
     paddingHorizontal: 20,
   },
@@ -331,4 +340,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ChartFrise;
+export default Events;
