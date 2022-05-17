@@ -194,19 +194,26 @@ const ChartFrise = ({
           <View>
             <View style={{ display: "flex", flexDirection: "row", alignItems: "center", marginVertical: 5 }}>
               <View style={[styles.hintSquare, { backgroundColor: "#5956E8", marginRight: 15 }]} />
-              <Text style={styles.hintLegend}>J'ai pris correctement mon traitement</Text>
+              <Text style={styles.hintLegend}>Prise correcte du traitement</Text>
             </View>
             <View style={{ display: "flex", flexDirection: "row", alignItems: "center", marginVertical: 5 }}>
               <View style={[styles.hintSquare, { backgroundColor: "#E575F8", marginRight: 15 }]} />
-              <Text style={styles.hintLegend}>Je n'ai pas pris correctement mon traitement</Text>
+              <Text style={styles.hintLegend}>Prise incomplète/oubli du traitement</Text>
             </View>
             <View style={{ display: "flex", flexDirection: "row", alignItems: "center", marginVertical: 5 }}>
               <View
                 style={[
-                  { height: 4, width: 4, borderRadius: 2, backgroundColor: "#5956E8", marginRight: 26 },
+                  {
+                    height: 4,
+                    width: 4,
+                    borderRadius: 2,
+                    backgroundColor: "#5956E8",
+                    marginRight: 21,
+                    marginLeft: 5,
+                  },
                 ]}
               />
-              <Text style={styles.hintLegend}>J'ai pris un "si besoin"</Text>
+              <Text style={styles.hintLegend}>Prise d’un "si besoin"</Text>
             </View>
           </View>
         </View>
@@ -389,6 +396,9 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 15,
     fontWeight: "bold",
+  },
+  hintLegend: {
+    flex: 1,
   },
   hintSquare: {
     height: 4,
