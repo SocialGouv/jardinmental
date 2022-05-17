@@ -162,6 +162,7 @@ const Drugs = ({ navigation, route }) => {
               onPress={toggleAnswer}
               selected={answers[priseDeTraitement.id]?.value}
               showUserCommentInput={false}
+              isLast
             />
             <QuestionYesNo
               question={priseDeTraitementSiBesoin}
