@@ -134,13 +134,13 @@ const ChartFrise = ({
       {showHint ? (
         <View style={styles.hintContainer}>
           <View style={styles.hintTitleContainer}>
-            <Text style={styles.hintTitle}>Corrélez la prose de votre traitement avec vos frises</Text>
+            <Text style={styles.hintTitle}>Corrélez la prise de votre traitement avec vos frises</Text>
             <TouchableOpacity style={styles.close} onPress={onCloseHint}>
               <Icon icon="CrossSvg" width={8} height={8} color={colors.BLUE} />
             </TouchableOpacity>
           </View>
           <Frise
-            focusedScores={focusedScores}
+            focusedScores={[]}
             data={[
               { value: 1 },
               { value: 2 },
