@@ -19,6 +19,7 @@ import RecapCompletion from "./recapCompletion";
 import NoData from "./NoData";
 import Diary from "../../scenes/diary";
 import { canEdit } from "./utils/index.js";
+import ContributeCard from "../contribute/contributeCard";
 
 const LIMIT_PER_PAGE = __DEV__ ? 3 : 30;
 
@@ -109,6 +110,7 @@ const Status = ({ navigation, setPlusVisible }) => {
             </View>
           ))}
         <Bubble diaryData={diaryData} navigation={navigation} />
+        <ContributeCard onPress={() => setNPSvisible(true)} />
         {Object.keys(diaryData)?.length > LIMIT_PER_PAGE * page && (
           <TouchableOpacity onPress={() => setPage(page + 1)} style={styles.versionContainer}>
             <Text style={styles.arrowDownLabel}>Voir plus</Text>
