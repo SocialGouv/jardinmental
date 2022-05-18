@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, View, Dimensions, ScrollView, TouchableOpacity } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { getArrayOfDatesFromTo } from "../../utils/date/helpers";
 import { DiaryDataContext } from "../../context/diaryData";
@@ -23,6 +24,8 @@ const ChartFrise = ({
   showHint,
   onCloseHint,
   aUnTraiement,
+  setShowHint,
+  setShowTraitement,
 }) => {
   const [diaryData] = React.useContext(DiaryDataContext);
   const [activeCategories, setActiveCategories] = React.useState();
@@ -38,6 +41,20 @@ const ChartFrise = ({
         }
       })();
     }, [])
+  );
+
+  useFocusEffect(
+    React.useCallback(() => {
+      (async () => {
+        const viewHint = await AsyncStorage.getItem("@AT_LEAST_VIEW_ONE_TIME_HINT_FRISE");
+        if (viewHint !== "true") {
+          setShowHint(true);
+          setShowTraitement(true);
+        } else {
+          setShowHint(false);
+        }
+      })();
+    }, [setShowHint, setShowTraitement])
   );
 
   React.useEffect(() => {
@@ -137,7 +154,13 @@ const ChartFrise = ({
         <View style={styles.hintContainer}>
           <View style={styles.hintTitleContainer}>
             <Text style={styles.hintTitle}>Corrélez la prise de votre traitement avec vos frises</Text>
-            <TouchableOpacity style={styles.close} onPress={onCloseHint}>
+            <TouchableOpacity
+              style={styles.close}
+              onPress={async () => {
+                await AsyncStorage.setItem("@AT_LEAST_VIEW_ONE_TIME_HINT_FRISE", "true");
+                onCloseHint();
+              }}
+            >
               <Icon icon="CrossSvg" width={15} height={15} color={colors.BLUE} />
             </TouchableOpacity>
           </View>
