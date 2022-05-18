@@ -15,6 +15,7 @@ import Courbes from "../calendar/calendar";
 import logEvents from "../../services/logEvents";
 import { colors } from "../../utils/colors";
 import Icon from "../../components/Icon";
+import localStorage from "../../utils/localStorage";
 
 const screenHeight = Dimensions.get("window").height;
 const CHART_TYPES = ["Frises", "Statistiques", "Courbes", "Analyse des notes"];
@@ -35,7 +36,8 @@ const Suivi = ({ navigation, setPlusVisible }) => {
   const [fromDate, setFromDate] = React.useState(beforeToday(30));
   const [toDate, setToDate] = React.useState(beforeToday(0));
   const [focusedScores, setFocusedScores] = React.useState([1, 2, 3, 4, 5]);
-  const [showTraitement, setShowTraitement] = React.useState(false);
+  const [showTraitement, setShowTraitement] = React.useState(true);
+  const [aUnTraiement, setAUnTraitement] = React.useState(false);
   const [showHint, setShowHint] = React.useState(true);
 
   useFocusEffect(
@@ -44,6 +46,18 @@ const Suivi = ({ navigation, setPlusVisible }) => {
       logEvents.logOpenPageSuivi(chartType);
     }, [chartType, setPlusVisible])
   );
+
+  React.useEffect(() => {
+    (async () => {
+      const medicalTreatmentStorage = await localStorage.getMedicalTreatment();
+      if (medicalTreatmentStorage.length === 0) {
+        setAUnTraitement(false);
+        setShowTraitement(false);
+      } else {
+        setAUnTraitement(true);
+      }
+    })();
+  }, []);
 
   if (!toDate || !fromDate) return null;
 
@@ -66,6 +80,7 @@ const Suivi = ({ navigation, setPlusVisible }) => {
             showTraitement={showTraitement}
             showHint={showHint}
             onCloseHint={() => setShowHint(false)}
+            aUnTraiement={aUnTraiement}
           />
         );
     }
@@ -104,11 +119,25 @@ const Suivi = ({ navigation, setPlusVisible }) => {
             />
             <View style={styles.verticalDivider} />
             <View style={styles.hintContainer}>
-              <TouchableOpacity onPress={() => setShowTraitement((e) => !e)}>
-                <View style={[styles.selectionContainer, showTraitement && styles.activeSelectionContainer]}>
+              <TouchableOpacity
+                onPress={() => {
+                  if (aUnTraiement) {
+                    setShowTraitement((e) => !e);
+                  } else {
+                    setShowHint((e) => !e);
+                  }
+                }}
+              >
+                <View
+                  style={[
+                    styles.selectionContainer,
+                    !aUnTraiement && styles.noTraitementSelectionContainer,
+                    showTraitement && styles.activeSelectionContainer,
+                  ]}
+                >
                   <Icon
                     icon="DrugsSvg"
-                    color={showTraitement ? "#FFFFFF" : "#58C8D2"}
+                    color={!aUnTraiement || showTraitement ? "#FFFFFF" : "#58C8D2"}
                     width={20}
                     height={20}
                     styleContainer={styles.icon}
@@ -170,6 +199,10 @@ const styles = StyleSheet.create({
   },
   activeSelectionContainer: {
     backgroundColor: colors.LIGHT_BLUE,
+  },
+  noTraitementSelectionContainer: {
+    backgroundColor: "#E9E9E9",
+    borderColor: "#DADADA",
   },
   containerScorePickerFrise: {
     display: "flex",
