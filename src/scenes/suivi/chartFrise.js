@@ -12,6 +12,7 @@ import Icon from "../../components/Icon";
 import localStorage from "../../utils/localStorage";
 import logEvents from "../../services/logEvents";
 import Button from "../../components/Button";
+import Plus from "../../../assets/svg/Plus";
 
 const ChartFrise = ({
   navigation,
@@ -21,6 +22,7 @@ const ChartFrise = ({
   showTraitement,
   showHint,
   onCloseHint,
+  aUnTraiement,
 }) => {
   const [diaryData] = React.useContext(DiaryDataContext);
   const [activeCategories, setActiveCategories] = React.useState();
@@ -215,6 +217,16 @@ const ChartFrise = ({
               />
               <Text style={styles.hintLegend}>Prise d’un "si besoin"</Text>
             </View>
+            {!aUnTraiement ? (
+              <View>
+                <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("drugs")}>
+                  <View style={styles.buttonPlusContainer}>
+                    <Plus opacity={1} color="white" width={19} height={19} />
+                  </View>
+                  <Text style={styles.textAjouter}>Créer un élément personnalisé</Text>
+                </TouchableOpacity>
+              </View>
+            ) : null}
           </View>
         </View>
       ) : null}
@@ -504,6 +516,37 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     paddingBottom: 150,
+  },
+
+  buttonPlusContainer: {
+    marginRight: 10,
+  },
+  button: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-around",
+    backgroundColor: "#1FC6D5",
+    minWidth: "70%",
+    minHeight: 45,
+    borderRadius: 45,
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    marginVertical: 10,
+    shadowColor: "#0A215C",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.18,
+    shadowRadius: 1.0,
+
+    elevation: 1,
+  },
+  textAjouter: {
+    fontWeight: "bold",
+    fontSize: 15,
+    color: "white",
   },
 });
 
