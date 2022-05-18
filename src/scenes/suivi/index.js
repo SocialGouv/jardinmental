@@ -1,6 +1,7 @@
 import React from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View, Dimensions, TouchableOpacity } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { beforeToday } from "../../utils/date/helpers";
 import Header from "../../components/Header";
@@ -38,7 +39,7 @@ const Suivi = ({ navigation, setPlusVisible }) => {
   const [focusedScores, setFocusedScores] = React.useState([1, 2, 3, 4, 5]);
   const [showTraitement, setShowTraitement] = React.useState(true);
   const [aUnTraiement, setAUnTraitement] = React.useState(false);
-  const [showHint, setShowHint] = React.useState(true);
+  const [showHint, setShowHint] = React.useState(false);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -46,18 +47,19 @@ const Suivi = ({ navigation, setPlusVisible }) => {
       logEvents.logOpenPageSuivi(chartType);
     }, [chartType, setPlusVisible])
   );
-
-  React.useEffect(() => {
-    (async () => {
-      const medicalTreatmentStorage = await localStorage.getMedicalTreatment();
-      if (medicalTreatmentStorage.length === 0) {
-        setAUnTraitement(false);
-        setShowTraitement(false);
-      } else {
-        setAUnTraitement(true);
-      }
-    })();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      (async () => {
+        const medicalTreatmentStorage = await localStorage.getMedicalTreatment();
+        if (medicalTreatmentStorage.length === 0) {
+          setAUnTraitement(false);
+          setShowTraitement(false);
+        } else {
+          setAUnTraitement(true);
+        }
+      })();
+    }, [])
+  );
 
   if (!toDate || !fromDate) return null;
 
@@ -80,7 +82,9 @@ const Suivi = ({ navigation, setPlusVisible }) => {
             showTraitement={showTraitement}
             showHint={showHint}
             onCloseHint={() => setShowHint(false)}
+            setShowHint={setShowHint}
             aUnTraiement={aUnTraiement}
+            setShowTraitement={setShowTraitement}
           />
         );
     }
@@ -144,7 +148,12 @@ const Suivi = ({ navigation, setPlusVisible }) => {
                   />
                 </View>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => setShowHint((e) => !e)}>
+              <TouchableOpacity
+                onPress={async () => {
+                  await AsyncStorage.setItem("@AT_LEAST_VIEW_ONE_TIME_HINT_FRISE", "true");
+                  setShowHint((e) => !e);
+                }}
+              >
                 <View style={[styles.infoHintContainer, showHint && styles.activeInfoHintContainer]}>
                   <Text style={[styles.infoHintText, showHint && styles.activeInfoHintText]}>i</Text>
                 </View>
