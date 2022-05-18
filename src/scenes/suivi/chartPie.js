@@ -96,6 +96,7 @@ const ChartPie = ({ navigation, fromDate, toDate }) => {
         return 0;
       }
       if (categoryState?.value) return categoryState.value;
+      if (categoryState?.value === false) return categoryState.value;
 
       // -------
       // the following code is for the retrocompatibility
@@ -140,6 +141,15 @@ const ChartPie = ({ navigation, fromDate, toDate }) => {
           toDate={toDate}
         />
       ))}
+      <View style={styles.divider} />
+      <PieYesNo
+        title="Ai-je pris correctement mon traitement quotidien ?"
+        data={computeChartData("PRISE_DE_TRAITEMENT")}
+      />
+      <PieYesNo
+        title='Ai-je pris un "si besoin" ?'
+        data={computeChartData("PRISE_DE_TRAITEMENT_SI_BESOIN")}
+      />
     </ScrollView>
   );
 };
@@ -159,7 +169,7 @@ const Pie = ({ title, data }) => {
   const [averageIcons, setAverageIcons] = React.useState([]);
   const [joursRenseignes, setJoursRenseignes] = React.useState({});
   const [detailsVisible, setDetailsVisible] = React.useState(false);
-  const [nombreDeValeurParScore, setNombreDeValeurParScore] = React.useState({});
+  const [nombreDeValeurParScore, setNombreDeValeurParScore] = React.useState([]);
   const [nombreDeJoursConsecutifs, setNombreDeJoursConsecutifs] = React.useState({});
 
   React.useEffect(() => {
@@ -319,6 +329,91 @@ const Pie = ({ title, data }) => {
   );
 };
 
+const sliceColorYesNo = ["#f3f3f3", "5956E8", "E575F8"];
+
+const PieYesNo = ({ title, data }) => {
+  const [sections, setSections] = React.useState([]);
+  const [joursRenseignes, setJoursRenseignes] = React.useState({});
+  const [nombreDeValeurParScore, setNombreDeValeurParScore] = React.useState([]);
+
+  React.useEffect(() => {
+    // un object
+    // key est le score (0 signifie que c'set non renseigné)
+    // nombre de d'instance de ce score
+    const tempNombreDeValeurParScore = data.reduce((previous, current) => {
+      const scoreEnCours = current === true ? 1 : current === false ? 2 : 0;
+      previous[scoreEnCours] = (previous[scoreEnCours] || 0) + 1;
+      return previous;
+    }, {});
+    setNombreDeValeurParScore(
+      Object.keys(tempNombreDeValeurParScore).map((score) => ({
+        score,
+        total: data.length,
+        count: tempNombreDeValeurParScore[score],
+        pourcentage: (tempNombreDeValeurParScore[score] / data.length) * 100,
+      }))
+    );
+
+    // calcul du pourcentage de jours renseignés
+    const tempJoursRenseignes = data.reduce((previous, current) => {
+      if (current !== 0) return ++previous;
+      else return previous;
+    }, 0);
+    setJoursRenseignes({
+      pourcentage: (tempJoursRenseignes / data.length) * 100,
+      total: data.length,
+      count: tempJoursRenseignes,
+    });
+  }, [data]);
+
+  React.useEffect(() => {
+    if (!nombreDeValeurParScore?.length) return;
+    const sectionsAvecCouleurEtPourcentage = nombreDeValeurParScore.map((e) => ({
+      color: sliceColorYesNo[e.score],
+      percentage: e.pourcentage,
+    }));
+    setSections(sectionsAvecCouleurEtPourcentage);
+  }, [nombreDeValeurParScore]);
+
+  if (data.every((value) => value === 0)) return null;
+
+  return (
+    <View style={styles.categoryContainer}>
+      <View style={styles.titleContainer}>
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>{title}</Text>
+        </View>
+      </View>
+      <View style={styles.contentCategoryContainer}>
+        <View style={styles.pieContainer}>
+          <PieChart radius={50} sections={sections} />
+        </View>
+        <View style={styles.pieContainer}>
+          <View>
+            <View style={{ display: "flex", flexDirection: "row", marginVertical: 5 }}>
+              <Text style={styles.yesLabel}>Oui:&nbsp;</Text>
+              <Text>
+                {Math.round(nombreDeValeurParScore?.find((e) => e.score === "1")?.pourcentage || 0)}%
+              </Text>
+            </View>
+            <View style={{ display: "flex", flexDirection: "row", marginVertical: 5 }}>
+              <Text style={styles.noLabel}>Non:&nbsp;</Text>
+              <Text>
+                {Math.round(nombreDeValeurParScore?.find((e) => e.score === "2")?.pourcentage || 0)}%
+              </Text>
+            </View>
+            {joursRenseignes.pourcentage < 100 ? (
+              <Text style={styles.pourcentageStyle}>
+                {Math.round(100 - joursRenseignes.pourcentage)}% de jours non renseignés
+              </Text>
+            ) : null}
+          </View>
+        </View>
+      </View>
+    </View>
+  );
+};
+
 const TableDeStatistiquesParLigne = ({ nombreDeJoursConsecutifs, nombreDeValeurParScore, title }) => {
   return (
     <View style={stylesTableLigne.container}>
@@ -452,6 +547,21 @@ const stylesTableLigne = StyleSheet.create({
 });
 
 const styles = StyleSheet.create({
+  yesLabel: {
+    color: "#5956E8",
+    fontSize: 15,
+  },
+  noLabel: {
+    fontSize: 15,
+    color: "#E575F8",
+  },
+  divider: {
+    height: 1,
+    backgroundColor: "#E0E0E0",
+    marginVertical: 30,
+    width: "50%",
+    alignSelf: "center",
+  },
   emptyContainer: {
     flex: 1,
     marginVertical: 5,
