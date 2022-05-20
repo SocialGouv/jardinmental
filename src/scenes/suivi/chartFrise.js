@@ -246,7 +246,7 @@ const ChartFrise = ({
                   <View style={styles.buttonPlusContainer}>
                     <Plus opacity={1} color="white" width={19} height={19} />
                   </View>
-                  <Text style={styles.textAjouter}>Créer un élément personnalisé</Text>
+                  <Text style={styles.textAjouter}>Ajouter votre traitement</Text>
                 </TouchableOpacity>
               </View>
             ) : null}
@@ -548,7 +548,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-around",
+    justifyContent: "space-between",
     backgroundColor: "#1FC6D5",
     minWidth: "70%",
     minHeight: 45,
@@ -567,9 +567,11 @@ const styles = StyleSheet.create({
     elevation: 1,
   },
   textAjouter: {
+    flex: 1,
     fontWeight: "bold",
     fontSize: 15,
     color: "white",
+    textAlign: "center",
   },
 });
 
