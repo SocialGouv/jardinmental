@@ -5,6 +5,7 @@ import localStorage from "../../utils/localStorage";
 import { getDrugListWithLocalStorage } from "../../utils/drugs-list";
 import { parseISO, format } from "date-fns";
 import { fr } from "date-fns/locale";
+import { INDICATEURS_LISTE } from "../../utils/liste_indicateurs";
 
 // methods
 
@@ -364,6 +365,13 @@ const formatHtmlTable = async (diaryData, diaryNotes) => {
         <h3 style="color: ${colors.BLUE}">Mes ressentis</h3>
         ${Object.keys(categories)
           .concat(customsSymptoms)
+          .concat(INDICATEURS_LISTE)
+          .reduce((acc, curr) => {
+            if (!acc.find((a) => a === curr)) {
+              acc.push(curr);
+            }
+            return acc;
+          }, [])
           .map((categoryId) => {
             const res = computeChartData(categoryId);
 
