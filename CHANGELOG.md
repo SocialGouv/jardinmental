@@ -1,3 +1,26 @@
+# [1.26.0](https://github.com/SocialGouv/monsuivipsy/compare/v1.25.0...v1.26.0) (2022-05-20)
+
+
+### Bug Fixes
+
+* ajout NPS carte en bas de "Mes entrées" ([b8bdf22](https://github.com/SocialGouv/monsuivipsy/commit/b8bdf226a93ca717187885b26c4cd5d685d4566b))
+* couleur oui/non prise de traitement ([fe77871](https://github.com/SocialGouv/monsuivipsy/commit/fe778716f1d4ef3d6a0a2da1910866f46795c179))
+* display traitement si besoin ([5acbb5b](https://github.com/SocialGouv/monsuivipsy/commit/5acbb5b60d23605a83592854bfa11ca59c4c6fbe))
+* enlever fil ariane question prise de traitement ([1a9c415](https://github.com/SocialGouv/monsuivipsy/commit/1a9c415da1f52a3c8fbf2321e30ade607ea5eb9e))
+* légende prise de traitement ([c50e06c](https://github.com/SocialGouv/monsuivipsy/commit/c50e06c909ff805c4b310255397c4631d58b1334))
+* nouvelle légende prise de traitement ([46dadf0](https://github.com/SocialGouv/monsuivipsy/commit/46dadf0a21ce340271ac7087f05d9e7ab6d36411))
+* ordre smiley dans courbes ([659cdd5](https://github.com/SocialGouv/monsuivipsy/commit/659cdd59ad841e27266a95bd8abbb5556857ed1a))
+* padding question/réponse oui/non ([7785276](https://github.com/SocialGouv/monsuivipsy/commit/7785276b084e3e50c99eaf33771a8b908097b36d))
+* permettre de voir les éléments cachés par le floating plus ([f851af6](https://github.com/SocialGouv/monsuivipsy/commit/f851af61d0535eb1d2235a4b41aa0f77fd1809eb))
+* style bouton fermer hint prise de traitement ([4bb1814](https://github.com/SocialGouv/monsuivipsy/commit/4bb1814971bdc95b39146216707658cbe4fd7eb6))
+* style scorePicker dans Evenement ([925d46c](https://github.com/SocialGouv/monsuivipsy/commit/925d46ce01301a12e695210541992dcab42cb19a))
+* vue sans traitement ([ed50efe](https://github.com/SocialGouv/monsuivipsy/commit/ed50efe8736ac076b6c59a47a1a0b9b1686a52bc))
+
+
+### Features
+
+* add chart prise de traitement ([4b0e2cd](https://github.com/SocialGouv/monsuivipsy/commit/4b0e2cd685bc4a8dffa63293050aca8b8805f0e5))
+
 # [1.25.0](https://github.com/SocialGouv/monsuivipsy/compare/v1.24.4...v1.25.0) (2022-05-17)
 
 
