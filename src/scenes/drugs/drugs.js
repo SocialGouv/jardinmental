@@ -174,6 +174,14 @@ const Drugs = ({ navigation, route }) => {
           </>
         ) : null}
         <View style={styles.divider} />
+        {inSurvey ? (
+          <View style={styles.titleContainer}>
+            <Text style={styles.titlePosology}>
+              Détail de vos traitements de la journée{" "}
+              <Text style={styles.titlePosologyOptionnel}>(Optionnel)</Text>
+            </Text>
+          </View>
+        ) : null}
         {medicalTreatment.map((e, i) => (
           <DrugItem
             key={i}
@@ -307,6 +315,20 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: "700",
     flex: 1,
+  },
+  titlePosology: {
+    color: colors.BLUE,
+    fontSize: 15,
+    fontWeight: "700",
+    flex: 1,
+    marginBottom: 25,
+  },
+  titlePosologyOptionnel: {
+    color: "#BABABA",
+    fontSize: 15,
+    fontWeight: "500",
+    flex: 1,
+    marginBottom: 25,
   },
   subtitle: {
     color: "#000",
