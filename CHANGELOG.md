@@ -1,3 +1,12 @@
+## [1.26.1](https://github.com/SocialGouv/monsuivipsy/compare/v1.26.0...v1.26.1) (2022-05-23)
+
+
+### Bug Fixes
+
+* ajouter tous les indicateurs dans export ([3ba661b](https://github.com/SocialGouv/monsuivipsy/commit/3ba661bad9f727ef3fd4d61b488dc97f1f7a97d4))
+* titre indiquant "optionnel" posology ([44b1437](https://github.com/SocialGouv/monsuivipsy/commit/44b143778866a75e98a91617d314e91e2a7de9b4))
+* wording bouton ajout traitement depuis onglet suivi ([06bce8f](https://github.com/SocialGouv/monsuivipsy/commit/06bce8f7becd536aad17481a1c6cb81553ebb852))
+
 # [1.26.0](https://github.com/SocialGouv/monsuivipsy/compare/v1.25.0...v1.26.0) (2022-05-20)
 
 
