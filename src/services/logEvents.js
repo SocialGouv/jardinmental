@@ -357,6 +357,18 @@ const logInputDrugSurvey = async (numberOfInput) => {
     value: numberOfInput,
   });
 };
+const logInputDrugSurveyPriseDeTraitement = async () => {
+  await logEvent({
+    category: "DRUG",
+    action: "DRUG_INPUT_SURVEY_PRISE_DE_TRAITEMENT",
+  });
+};
+const logInputDrugSurveyPriseDeTraitementSiBesoin = async () => {
+  await logEvent({
+    category: "DRUG",
+    action: "DRUG_INPUT_SURVEY_PRISE_DE_TRAITEMENT_SI_BESOIN",
+  });
+};
 
 // beck
 const logActivateBeck = async (v) => {
@@ -505,6 +517,22 @@ const logSuiviShowDetailStatistics = async () => {
     action: "SHOW_DETAIL_STATISTICS",
   });
 };
+const logSuiviShowLegendeInformationPriseDeTraitement = async (v) => {
+  await logEvent({
+    category: "SUIVI",
+    action: "SHOW_INFORMATIONS_LEGENDE_PRISE_DE_TRAITEMENT",
+    name: "affichage",
+    value: v,
+  });
+};
+const logSuiviShowPriseDeTraitement = async (v) => {
+  await logEvent({
+    category: "SUIVI",
+    action: "SHOW_PRISE_DE_TRAITEMENT",
+    name: "affichage",
+    value: v,
+  });
+};
 
 export default {
   initMatomo,
@@ -565,4 +593,8 @@ export default {
   logFeelingStartFloatingPlus,
   logFeelingStartFromRecap,
   logStatusSubPage,
+  logSuiviShowLegendeInformationPriseDeTraitement,
+  logSuiviShowPriseDeTraitement,
+  logInputDrugSurveyPriseDeTraitement,
+  logInputDrugSurveyPriseDeTraitementSiBesoin,
 };

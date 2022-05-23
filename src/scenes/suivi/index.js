@@ -81,7 +81,10 @@ const Suivi = ({ navigation, setPlusVisible }) => {
             focusedScores={focusedScores}
             showTraitement={showTraitement}
             showHint={showHint}
-            onCloseHint={() => setShowHint(false)}
+            onCloseHint={() => {
+              setShowHint(false);
+              logEvents.logSuiviShowLegendeInformationPriseDeTraitement(0); // 0 = masquer, 1 = afficher
+            }}
             setShowHint={setShowHint}
             aUnTraiement={aUnTraiement}
             setShowTraitement={setShowTraitement}
@@ -127,6 +130,7 @@ const Suivi = ({ navigation, setPlusVisible }) => {
                 onPress={() => {
                   if (aUnTraiement) {
                     setShowTraitement((e) => !e);
+                    logEvents.logSuiviShowPriseDeTraitement(showTraitement ? 0 : 1); // 0 = masquer, 1 = afficher
                   } else {
                     setShowHint((e) => !e);
                   }
@@ -152,6 +156,7 @@ const Suivi = ({ navigation, setPlusVisible }) => {
                 onPress={async () => {
                   await AsyncStorage.setItem("@AT_LEAST_VIEW_ONE_TIME_HINT_FRISE", "true");
                   setShowHint((e) => !e);
+                  logEvents.logSuiviShowLegendeInformationPriseDeTraitement(showHint ? 0 : 1); // 0 = masquer, 1 = afficher
                 }}
               >
                 <View style={[styles.infoHintContainer, showHint && styles.activeInfoHintContainer]}>
