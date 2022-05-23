@@ -174,15 +174,6 @@ export default ({ navigation }) => {
               en découlent.
             </Text>
           </Item>
-          <Item>
-            <Text style={styles.text}>
-              Pour <Text style={styles.bold}>créer de nouvelles colonnes de Beck</Text>, cliquez sur le bouton{" "}
-              <Text style={styles.bold}>+</Text> en bas de l'écran principal, et sélectionnez "Colonnes de
-              Beck".
-              {"\n"}
-              Cliquez sur "Suivi des symptômes" pour renseigner vos ressentis.
-            </Text>
-          </Item>
         </Card>
         {/* <Card
           title="Mon Suivi Psy se refait une beauté !"
