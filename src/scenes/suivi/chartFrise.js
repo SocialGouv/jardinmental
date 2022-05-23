@@ -14,6 +14,7 @@ import localStorage from "../../utils/localStorage";
 import logEvents from "../../services/logEvents";
 import Button from "../../components/Button";
 import Plus from "../../../assets/svg/Plus";
+import TriangleWithBorderTop from "../../../assets/svg/TriangleWithBorderTop";
 
 const ChartFrise = ({
   navigation,
@@ -151,105 +152,122 @@ const ChartFrise = ({
   return (
     <>
       {showHint ? (
-        <View style={styles.hintContainer}>
-          <View style={styles.hintTitleContainer}>
-            <Text style={styles.hintTitle}>Corrélez la prise de votre traitement avec vos frises</Text>
-            <TouchableOpacity
-              style={styles.close}
-              onPress={async () => {
-                await AsyncStorage.setItem("@AT_LEAST_VIEW_ONE_TIME_HINT_FRISE", "true");
-                onCloseHint();
-              }}
-            >
-              <Icon icon="CrossSvg" width={15} height={15} color={colors.BLUE} />
-            </TouchableOpacity>
+        <View style={styles.mainHintContainer}>
+          <View style={styles.hintTriangleContainer}>
+            <TriangleWithBorderTop
+              style={styles.triangle}
+              borderColor="#AEEDF8"
+              strokeWidth={6}
+              width={20}
+              height={20}
+            />
           </View>
-          <Frise
-            focusedScores={[]}
-            data={[
-              { value: 1 },
-              { value: 2 },
-              { value: 3 },
-              { value: 1 },
-              { value: 3 },
-              { value: 1 },
-              { value: 4 },
-              { value: 5 },
-              { value: 5 },
-              { value: 4 },
-              { value: 4 },
-              { value: 3 },
-              { value: 4 },
-              { value: 4 },
-            ]}
-            showTraitement
-            priseDeTraitement={[
-              {},
-              { value: false },
-              {},
-              { value: true },
-              { value: true },
-              { value: true },
-              { value: true },
-              { value: true },
-              { value: true },
-              { value: true },
-              { value: true },
-              {},
-              { value: false },
-              {},
-            ]}
-            priseDeTraitementSiBesoin={[
-              {},
-              { value: false },
-              {},
-              { value: false },
-              { value: false },
-              { value: true },
-              { value: true },
-              { value: false },
-              { value: false },
-              { value: true },
-              { value: true },
-              {},
-              { value: false },
-              {},
-            ]}
-          />
-          <View>
-            <View style={{ display: "flex", flexDirection: "row", alignItems: "center", marginVertical: 5 }}>
-              <View style={[styles.hintSquare, { backgroundColor: "#5956E8", marginRight: 15 }]} />
-              <Text style={styles.hintLegend}>Prise correcte du traitement</Text>
+          <View style={styles.hintContainer}>
+            <View style={styles.hintTitleContainer}>
+              <Text style={styles.hintTitle}>Corrélez la prise de votre traitement avec vos frises</Text>
+              <TouchableOpacity
+                style={styles.close}
+                onPress={async () => {
+                  await AsyncStorage.setItem("@AT_LEAST_VIEW_ONE_TIME_HINT_FRISE", "true");
+                  onCloseHint();
+                }}
+              >
+                <Icon icon="CrossSvg" width={15} height={15} color={colors.BLUE} />
+              </TouchableOpacity>
             </View>
-            <View style={{ display: "flex", flexDirection: "row", alignItems: "center", marginVertical: 5 }}>
-              <View style={[styles.hintSquare, { backgroundColor: "#E575F8", marginRight: 15 }]} />
-              <Text style={styles.hintLegend}>Prise incomplète/oubli du traitement</Text>
-            </View>
-            <View style={{ display: "flex", flexDirection: "row", alignItems: "center", marginVertical: 5 }}>
+            <Frise
+              focusedScores={[]}
+              data={[
+                { value: 1 },
+                { value: 2 },
+                { value: 3 },
+                { value: 1 },
+                { value: 3 },
+                { value: 1 },
+                { value: 4 },
+                { value: 5 },
+                { value: 5 },
+                { value: 4 },
+                { value: 4 },
+                { value: 3 },
+                { value: 4 },
+                { value: 4 },
+              ]}
+              showTraitement
+              priseDeTraitement={[
+                {},
+                { value: false },
+                {},
+                { value: true },
+                { value: true },
+                { value: true },
+                { value: true },
+                { value: true },
+                { value: true },
+                { value: true },
+                { value: true },
+                {},
+                { value: false },
+                {},
+              ]}
+              priseDeTraitementSiBesoin={[
+                {},
+                { value: false },
+                {},
+                { value: false },
+                { value: false },
+                { value: true },
+                { value: true },
+                { value: false },
+                { value: false },
+                { value: true },
+                { value: true },
+                {},
+                { value: false },
+                {},
+              ]}
+            />
+            <View>
               <View
-                style={[
-                  {
-                    height: 4,
-                    width: 4,
-                    borderRadius: 2,
-                    backgroundColor: "#5956E8",
-                    marginRight: 21,
-                    marginLeft: 5,
-                  },
-                ]}
-              />
-              <Text style={styles.hintLegend}>Prise d’un "si besoin"</Text>
-            </View>
-            {!aUnTraiement ? (
-              <View>
-                <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("drugs")}>
-                  <View style={styles.buttonPlusContainer}>
-                    <Plus opacity={1} color="white" width={19} height={19} />
-                  </View>
-                  <Text style={styles.textAjouter}>Ajouter votre traitement</Text>
-                </TouchableOpacity>
+                style={{ display: "flex", flexDirection: "row", alignItems: "center", marginVertical: 5 }}
+              >
+                <View style={[styles.hintSquare, { backgroundColor: "#5956E8", marginRight: 15 }]} />
+                <Text style={styles.hintLegend}>Prise correcte du traitement</Text>
               </View>
-            ) : null}
+              <View
+                style={{ display: "flex", flexDirection: "row", alignItems: "center", marginVertical: 5 }}
+              >
+                <View style={[styles.hintSquare, { backgroundColor: "#E575F8", marginRight: 15 }]} />
+                <Text style={styles.hintLegend}>Prise incomplète/oubli du traitement</Text>
+              </View>
+              <View
+                style={{ display: "flex", flexDirection: "row", alignItems: "center", marginVertical: 5 }}
+              >
+                <View
+                  style={[
+                    {
+                      height: 4,
+                      width: 4,
+                      borderRadius: 2,
+                      backgroundColor: "#5956E8",
+                      marginRight: 21,
+                      marginLeft: 5,
+                    },
+                  ]}
+                />
+                <Text style={styles.hintLegend}>Prise d’un "si besoin"</Text>
+              </View>
+              {!aUnTraiement ? (
+                <View>
+                  <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("drugs")}>
+                    <View style={styles.buttonPlusContainer}>
+                      <Plus opacity={1} color="white" width={19} height={19} />
+                    </View>
+                    <Text style={styles.textAjouter}>Ajouter votre traitement</Text>
+                  </TouchableOpacity>
+                </View>
+              ) : null}
+            </View>
           </View>
         </View>
       ) : null}
@@ -401,6 +419,19 @@ const Frise = ({
 };
 
 const styles = StyleSheet.create({
+  mainHintContainer: {
+    marginTop: -20,
+  },
+  hintTriangleContainer: {
+    marginHorizontal: 15 + 20,
+    right: 0,
+    bottom: -1,
+    alignItems: "flex-end",
+    zIndex: 5,
+  },
+  triangle: {
+    color: "#F8FDFE",
+  },
   close: {
     display: "flex",
     alignItems: "center",
@@ -424,6 +455,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     backgroundColor: "#F8FDFE",
+    zIndex: 1,
   },
   hintTitle: {
     flex: 1,
