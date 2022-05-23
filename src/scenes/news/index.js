@@ -13,7 +13,7 @@ export const getBadgeNotesVersion = async () => {
   return lastNotesVersion !== LAST_NOTES_VERSION;
 };
 
-export const LAST_NOTES_VERSION = "1.24";
+export const LAST_NOTES_VERSION = "1.26";
 
 export default ({ navigation }) => {
   useEffect(() => {
@@ -28,6 +28,38 @@ export default ({ navigation }) => {
         <Image style={styles.image} source={require("../../../assets/imgs/logo2.png")} />
       </View>
       <ScrollView style={styles.cgu} contentContainerStyle={styles.scrollContainer}>
+        <Card title="Amélioration du suivi de votre traitement." version="v1.26" date="05/2022">
+          <Item>
+            <Text style={styles.text}>
+              Le questionnaire est simplifié pour renseigner rapidement vos prises de traitement de la
+              journée, que vous pouvez maintenant suivre dans «&nbsp;Mes&nbsp;analyses&nbsp;»
+            </Text>
+          </Item>
+          <Item>
+            <Text style={styles.text}>
+              Dans votre questionnaire quotidien&nbsp;:
+              {"\n"}•&nbsp;Vous pouvez maintenant directement répondre à la question «&nbsp;Avez-vous pris
+              correctement votre traitement quotidien&nbsp;?&nbsp;» par «&nbsp;oui&nbsp;» si c’est le cas, ou
+              «&nbsp;non&nbsp;» si vous l’avez pris partiellement voire complètement oublié.
+              {"\n"}•&nbsp;Précisez si vous un avez pris un «&nbsp;si besoin&nbsp;» (Les «&nbsp;si
+              besoin&nbsp;» sont des médicaments que les médecins prescrivent au cas où, à prendre uniquement
+              si le besoin s’en fait ressentir)
+              {"\n"}•&nbsp;Optionnel : vous pouvez toujours renseigner le détails de vos prises, par
+              médicament et dose prise sur la journée
+            </Text>
+          </Item>
+          <Item>
+            <Text style={styles.text}>
+              Dans «&nbsp;Mes analyses&nbsp;»&nbsp;:
+              {"\n"}•&nbsp;Dans les «&nbsp;frises&nbsp;»&nbsp;: retrouvez vos prises de traitement en
+              corrélation avec vos frises de suivi, en cliquant sur l’icône «&nbsp;traitements&nbsp;» dans les
+              filtres, à côté des filtres par «&nbsp;emoji&nbsp;». Vous pouvez maintenant observer comment vos
+              prises de traitement influent sur vos indicateurs
+              {"\n"}•&nbsp;Dans les «&nbsp;Statistiques&nbsp;»&nbsp;: toujours sur la période de votre choix,
+              retrouvez des statistiques sur l’observance de votre traitement, à la suite de vos indicateurs
+            </Text>
+          </Item>
+        </Card>
         <Card
           title="Mon Suivi Psy change de présentation et vous propose de nouveaux exemples d’éléments à suivre dans votre questionnaire."
           version="v1.24"
@@ -127,122 +159,6 @@ export default ({ navigation }) => {
             </Text>
           </Item>
         </Card>
-        <Card
-          title="L’écran du questionnaire de «&nbsp;Mon&nbsp;état&nbsp;» évolue et se simplifie"
-          version="v1.20"
-          date="02/2022"
-        >
-          <Item>
-            <Text style={styles.text}>
-              Vous pouvez maintenant rajouter des précisions pour chaque élément de votre questionnaire.
-            </Text>
-          </Item>
-          <Item>
-            <Text style={styles.text}>
-              Précisez le contexte général de votre journée à la suite du questionnaire.
-            </Text>
-          </Item>
-          <Item>
-            <Text style={styles.text}>
-              Toutes vos précisions (par élément et pour le contexte général) se retrouvent dans
-              «&nbsp;Mon&nbsp;Journal&nbsp;» sous forme de notes automatiques pour les relire plus facilement.
-            </Text>
-          </Item>
-          <Item>
-            <Text style={styles.text}>
-              En cliquant sur le lien{" "}
-              <Text style={styles.bold}>«&nbsp;modifier&nbsp;mon&nbsp;questionnaire&nbsp;»</Text> en haut de
-              l’écran, vous pouvez directement modifier votre questionnaire lorsque vous le remplissez. Cela
-              vous permet de rajouter un élément personnalisé, ou bien d’arrêter de suivre un élément si vous
-              ne le souhaitez plus voir apparaître dans votre questionnaire. Vous pourrez le réactiver plus
-              tard si nécessaire.
-            </Text>
-          </Item>
-          <Item>
-            <Text style={styles.text}>
-              Des nouveaux émojis font leur apparition, avec un état neutre (émoji jaune) et de nouvelles
-              couleurs plus contrastées.
-            </Text>
-          </Item>
-        </Card>
-        <Card title="Menu de navigation à 4 boutons" version="v1.16" date="12/2021">
-          <Item showDot={false}>
-            <Text style={styles.text}>
-              Dans le nouveau menu, vous retrouverez des fonctions que vous connaissez déja bien, ainsi qu'une
-              nouvelle intitulée "Mon Journal" :
-            </Text>
-          </Item>
-          <Item>
-            <Text style={styles.text}>
-              <Text style={styles.bold}>Mon Etat</Text>
-              {"\n"}Remplissez votre questionnaire quotidien, avec les symptômes, les ressentis ou encore les
-              activités que vous suivez ! Vous pouvez toujours saisir des notes pour y apporter quelques
-              précisions, ainsi que le traitement pris dans votre journée.
-            </Text>
-          </Item>
-          <Item>
-            <Text style={styles.text}>
-              <Text style={styles.bold}>
-                Mon Journal <Text style={styles.bold}>(nouveau)</Text>
-              </Text>
-              {"\n"}• Comme un véritable journal intime, vous pouvez créer autant de notes que vous le
-              souhaitez, sans limitation de taille de texte.{"\n"}• N'hésitez pas à vous en servir pour
-              décrire précisément un évènement qui vous a marqué, des pensées, ou tout ce que vous voulez !{" "}
-              {"\n"}• Lorsque vous écrivez une nouvelle note, vous pouvez modifier la date et l'heure
-              auxquelles se réfère la note. Très utile pour décrire un évènement passé mais que vous n'auriez
-              pas eu le temps de noter par exemple.
-            </Text>
-          </Item>
-          <Item>
-            <Text style={styles.text}>
-              <Text style={styles.bold}>Exercice</Text>
-              {"\n"}Retrouvez ici vos colonnes de Beck. Afin de réaliser cet exercice, il est nécessaire
-              d'avoir eu au préalable des explications d'un thérapeute.
-            </Text>
-          </Item>
-          <Item>
-            <Text style={styles.text}>
-              <Text style={styles.bold}>Mon Suivi</Text>
-              {"\n"}Retrouvez ici vos courbes de suivi classées par semaine, ainsi que le détail de votre
-              journée en cliquant sur un point de la courbe.
-            </Text>
-          </Item>
-        </Card>
-        <Card title="Nouveau Questionnaire" version="v1.15" date="11/2021">
-          <Item>
-            <Text style={styles.text}>
-              Le questionnaire quotidien personnalisé se simplifie ! Plus{" "}
-              <Text style={styles.bold}>simple</Text>, plus <Text style={styles.bold}>rapide</Text> et plus{" "}
-              <Text style={styles.bold}>facile</Text> à remplir.
-            </Text>
-          </Item>
-          <Item>
-            <Text style={styles.text}>
-              Vous avez le choix entre <Text style={styles.bold}>5 niveaux</Text> différents pour chaque
-              critère.
-            </Text>
-          </Item>
-          <Item>
-            <Text style={styles.text}>
-              Vous avez toujours la possibilité de suivre vos <Text style={styles.bold}>ressentis</Text>, et
-              vous pouvez maintenant :{"\n"}• suivre des <Text style={styles.bold}>critères positifs</Text>{" "}
-              comme la motivation, le bien-être, la fierté …{"\n"}• suivre des{" "}
-              <Text style={styles.bold}>activités</Text>
-              («sortie avec mes amis », « activités quotidiennes » …)
-            </Text>
-          </Item>
-          <Item>
-            <Text style={styles.text}>
-              Vous pouvez toujours ajouter autant de critères à suivre que vous le souhaitez
-            </Text>
-          </Item>
-          <Item>
-            <Text style={styles.text}>
-              Vous pouvez maintenant suivre les critères sur les{" "}
-              <Text style={styles.bold}>7 derniers jours</Text> (et non plus les 2 derniers jours)
-            </Text>
-          </Item>
-        </Card>
         <Card title="Les colonnes de Beck !" version="v1.14" date="07/2021">
           <Item>
             <Text style={styles.text}>
@@ -260,16 +176,9 @@ export default ({ navigation }) => {
           </Item>
           <Item>
             <Text style={styles.text}>
-              Les colonnes de Beck sont activables/désactivables depuis les{" "}
-              <Text style={styles.bold}>paramètres</Text>
-            </Text>
-          </Item>
-          <Item>
-            <Text style={styles.text}>
-              Pour <Text style={styles.bold}>créer de nouvelles colonnes de Beck</Text> (
-              <Text style={styles.italic}>une fois la fonctionnalité activée</Text>
-              ), cliquez sur le bouton <Text style={styles.bold}>+</Text> en bas de l'écran principal, et
-              sélectionnez "Colonnes de Beck".
+              Pour <Text style={styles.bold}>créer de nouvelles colonnes de Beck</Text>, cliquez sur le bouton{" "}
+              <Text style={styles.bold}>+</Text> en bas de l'écran principal, et sélectionnez "Colonnes de
+              Beck".
               {"\n"}
               Cliquez sur "Suivi des symptômes" pour renseigner vos ressentis.
             </Text>
