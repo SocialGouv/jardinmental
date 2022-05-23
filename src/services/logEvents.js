@@ -3,7 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import DeviceInfo from "react-native-device-info";
 import { Platform } from "react-native";
 import Matomo from "./matomo";
-import { STORAGE_KEY_SUPPORTED } from "../utils/constants";
+import { MATOMO_DIMENSION, STORAGE_KEY_SUPPORTED } from "../utils/constants";
 
 const CONSTANTS = {
   STORE_KEY_USER_ID: "STORE_KEY_USER_ID",
@@ -35,6 +35,11 @@ const initMatomo = async () => {
     system: Platform.OS,
     supported: supported ? supported : "",
   });
+  Matomo.setDimensions({
+    [MATOMO_DIMENSION.VERSION]: DeviceInfo.getVersion(),
+    [MATOMO_DIMENSION.SYSTEM]: Platform.OS,
+    [MATOMO_DIMENSION.SUPPORTED]: supported ? supported : "",
+  })
 };
 
 const checkNetwork = async () => {

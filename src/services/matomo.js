@@ -1,7 +1,7 @@
 // https://developer.matomo.org/api-reference/tracking-api
 
 class Api {
-  init({baseUrl, idsite, userId, _idvc}) {
+  init({ baseUrl, idsite, userId, _idvc }) {
     this.baseUrl = baseUrl;
     this.idsite = idsite;
     this.userId = userId;
@@ -26,6 +26,13 @@ class Api {
     };
   }
 
+  setDimensions(newDimensions) {
+    this.dimensions = {
+      ...(this.dimensions || {}),
+      ...newDimensions,
+    };
+  }
+
   computeCvar(cvarObject) {
     const _cvar = {};
     for (let [index, key] of Object.keys(cvarObject).entries()) {
@@ -33,6 +40,16 @@ class Api {
     }
     return JSON.stringify(_cvar);
   }
+
+  computeDimentions(dimensions) {
+    // Get something like this:
+    const d = {};
+    for (let [key, value] of Object.entries(dimensions)) {
+      d[`dimension${key}`] = value;
+    }
+    return d;
+  }
+
 
   computeParams(params, idsite) {
     params = {
@@ -44,6 +61,7 @@ class Api {
       rand: Date.now(),
       _idvc: this._idvc,
       ...params,
+      ...this.computeDimentions(this.dimensions),
     };
     return Object.keys(params).reduce((paramString, key, index) => {
       const computedParam = `${key}=${params[key]}`;
@@ -54,7 +72,7 @@ class Api {
     }, '');
   }
 
-  async logEvent({category, action, name = '', value = null}) {
+  async logEvent({ category, action, name = '', value = null }) {
     // e_c — The event category. Must not be empty. (eg. Videos, Music, Games...)
     // e_a — The event action. Must not be empty. (eg. Play, Pause, Duration, Add Playlist, Downloaded, Clicked...)
     // e_n — The event name. (eg. a Movie name, or Song name, or File name...)

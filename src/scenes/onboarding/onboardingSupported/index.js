@@ -8,20 +8,23 @@ import {
   Dimensions,
 } from 'react-native';
 import Text from '../../../components/MyText';
-import {colors} from '../../../utils/colors';
+import { colors } from '../../../utils/colors';
 import localStorage from '../../../utils/localStorage';
 import logEvents from '../../../services/logEvents';
 import Matomo from '../../../services/matomo';
-import {ONBOARDING_STEPS} from '../../../utils/constants';
+import { MATOMO_DIMENSION, ONBOARDING_STEPS } from '../../../utils/constants';
 import HandShakeSvg from '../../../../assets/svg/HandShake';
 
-const Supported = ({navigation}) => {
+const Supported = ({ navigation }) => {
   const handleClick = async (value) => {
     //send matomo
     logEvents.logSupportedSelect(value);
     Matomo.setUserProperties({
       supported: value,
     });
+    Matomo.setDimensions({
+      [MATOMO_DIMENSION.SUPPORTED]: value,
+    })
     //navigate to tabs
     navigation.navigate('onboarding-symptoms');
     //set local storage
@@ -74,7 +77,7 @@ const Supported = ({navigation}) => {
   );
 };
 
-const Card = ({title, handleClick}) => {
+const Card = ({ title, handleClick }) => {
   return (
     <TouchableOpacity onPress={handleClick}>
       <View style={styles.card}>
@@ -83,7 +86,7 @@ const Card = ({title, handleClick}) => {
     </TouchableOpacity>
   );
 };
-const DarkCard = ({title, handleClick}) => {
+const DarkCard = ({ title, handleClick }) => {
   return (
     <TouchableOpacity onPress={handleClick}>
       <View style={styles.darkCard}>
