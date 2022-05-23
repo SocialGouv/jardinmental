@@ -159,14 +159,20 @@ const Drugs = ({ navigation, route }) => {
           <>
             <QuestionYesNo
               question={priseDeTraitement}
-              onPress={toggleAnswer}
+              onPress={(e) => {
+                toggleAnswer(e);
+                logEvents.logInputDrugSurveyPriseDeTraitement();
+              }}
               selected={answers[priseDeTraitement.id]?.value}
               showUserCommentInput={false}
               isLast
             />
             <QuestionYesNo
               question={priseDeTraitementSiBesoin}
-              onPress={toggleAnswer}
+              onPress={(e) => {
+                toggleAnswer(e);
+                logEvents.logInputDrugSurveyPriseDeTraitementSiBesoin();
+              }}
               selected={answers[priseDeTraitementSiBesoin.id]?.value}
               showUserCommentInput={false}
               isLast
