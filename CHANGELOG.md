@@ -1,3 +1,12 @@
+## [1.26.2](https://github.com/SocialGouv/monsuivipsy/compare/v1.26.1...v1.26.2) (2022-05-24)
+
+
+### Bug Fixes
+
+* ajout event matomo ([7ae736d](https://github.com/SocialGouv/monsuivipsy/commit/7ae736d9ebfa4cefc2443af6db686723d0f9a168))
+* ajout texte nouveauté ([247e033](https://github.com/SocialGouv/monsuivipsy/commit/247e033bd74f2795f9c87e976e4edadf8e4d9570))
+* ajout triangle légende frise prise de traitement ([77360a7](https://github.com/SocialGouv/monsuivipsy/commit/77360a73a6369d8e084fa1cca906b2ce56e33254))
+
 ## [1.26.1](https://github.com/SocialGouv/monsuivipsy/compare/v1.26.0...v1.26.1) (2022-05-23)
 
 
