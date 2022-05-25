@@ -10,8 +10,8 @@ class Api {
   }
 
   makeid(length = 16) {
-    var result = '';
-    var characters = '01234567890abcdefABCDEF';
+    var result = "";
+    var characters = "01234567890abcdefABCDEF";
     var charactersLength = characters.length;
     for (var i = 0; i < length; i++) {
       result += characters.charAt(Math.floor(Math.random() * charactersLength));
@@ -50,7 +50,6 @@ class Api {
     return d;
   }
 
-
   computeParams(params, idsite) {
     params = {
       _cvar: this.computeCvar(this.userProperties),
@@ -69,10 +68,10 @@ class Api {
         return computedParam;
       }
       return `${paramString}&${computedParam}`;
-    }, '');
+    }, "");
   }
 
-  async logEvent({ category, action, name = '', value = null }) {
+  async logEvent({ category, action, name = "", value = null }) {
     // e_c — The event category. Must not be empty. (eg. Videos, Music, Games...)
     // e_a — The event action. Must not be empty. (eg. Play, Pause, Duration, Add Playlist, Downloaded, Clicked...)
     // e_n — The event name. (eg. a Movie name, or Song name, or File name...)
@@ -81,7 +80,7 @@ class Api {
       e_c: category,
       e_a: action,
     };
-    if (name !== '') {
+    if (name !== "") {
       params.e_n = name;
     }
     if (value !== null && !isNaN(Number(value))) {
@@ -93,13 +92,11 @@ class Api {
   async execute(params) {
     try {
       if (!this.initDone) {
-        throw new Error('matomo not initialized yet');
+        throw new Error("matomo not initialized yet");
       }
       if (__DEV__) {
         // return;
-        console.log(
-          `${this.baseUrl}?${this.computeParams(params, this.idsite)}`,
-        );
+        console.log(`${this.baseUrl}?${this.computeParams(params, this.idsite)}`);
         return;
       }
       const url = `${this.baseUrl}?${this.computeParams(params, this.idsite)}`;
@@ -110,16 +107,13 @@ class Api {
       // }
       if (__DEV__ && res.status !== 200) {
         console.log(res);
-        throw new Error('error fetching matomo');
+        throw new Error("error fetching matomo");
       }
 
       if (!this.baseUrl2 || !this.idsite2) {
         return;
       }
-      const url2 = `${this.baseUrl2}?${this.computeParams(
-        params,
-        this.idsite2,
-      )}`;
+      const url2 = `${this.baseUrl2}?${this.computeParams(params, this.idsite2)}`;
       const res2 = await fetch(encodeURI(url2));
       if (__DEV__) {
         console.log(url2);
@@ -127,11 +121,11 @@ class Api {
       }
       if (__DEV__ && res2.status !== 200) {
         console.log(res);
-        throw new Error('error fetching matomo');
+        throw new Error("error fetching matomo");
       }
     } catch (e) {
       if (__DEV__) {
-        console.log('matomo error', e);
+        console.log("matomo error", e);
       }
     }
   }
