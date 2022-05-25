@@ -421,6 +421,7 @@ const Frise = ({
 const styles = StyleSheet.create({
   mainHintContainer: {
     marginTop: -20,
+    backgroundColor: "#fff",
   },
   hintTriangleContainer: {
     marginHorizontal: 15 + 20,

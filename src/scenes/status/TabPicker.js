@@ -11,27 +11,29 @@ const TabPicker = ({ onChange, ongletActif = "all" }) => {
   };
   return (
     <View style={tabStyles.currentDateContainer}>
-      <TouchableOpacity
-        onPress={() => handlePress("all")}
-        style={[
-          tabStyles.tabButtonContainer,
-          ongletActif === "all" ? tabStyles.tabActif : tabStyles.tabInactif,
-        ]}
-      >
-        <Text style={[tabStyles.button, ongletActif === "all" ? tabStyles.actif : tabStyles.inactif]}>
-          Tout voir
-        </Text>
+      <TouchableOpacity onPress={() => handlePress("all")} style={[tabStyles.tabButtonContainer]}>
+        <View
+          style={[
+            tabStyles.tabButtonContainer,
+            ongletActif === "all" ? tabStyles.tabActif : tabStyles.tabInactif,
+          ]}
+        >
+          <Text style={[tabStyles.button, ongletActif === "all" ? tabStyles.actif : tabStyles.inactif]}>
+            Tout voir
+          </Text>
+        </View>
       </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => handlePress("NOTES")}
-        style={[
-          tabStyles.tabButtonContainer,
-          ongletActif === "NOTES" ? tabStyles.tabActif : tabStyles.tabInactif,
-        ]}
-      >
-        <Text style={[tabStyles.button, ongletActif === "NOTES" ? tabStyles.actif : tabStyles.inactif]}>
-          Notes
-        </Text>
+      <TouchableOpacity onPress={() => handlePress("NOTES")} style={[tabStyles.tabButtonContainer]}>
+        <View
+          style={[
+            tabStyles.tabButtonContainer,
+            ongletActif === "NOTES" ? tabStyles.tabActif : tabStyles.tabInactif,
+          ]}
+        >
+          <Text style={[tabStyles.button, ongletActif === "NOTES" ? tabStyles.actif : tabStyles.inactif]}>
+            Notes
+          </Text>
+        </View>
       </TouchableOpacity>
     </View>
   );
@@ -39,13 +41,14 @@ const TabPicker = ({ onChange, ongletActif = "all" }) => {
 
 const tabStyles = StyleSheet.create({
   currentDateContainer: {
-    backgroundColor: "transparent",
+    backgroundColor: "#F6FCFD",
     justifyContent: "space-around",
     alignItems: "center",
     flexDirection: "row",
     overflow: "hidden",
-    marginBottom: 5,
     display: "flex",
+    borderColor: colors.BLUE,
+    borderBottomWidth: 1,
   },
   button: {
     padding: 10,
@@ -62,14 +65,14 @@ const tabStyles = StyleSheet.create({
     minHeight: 40,
   },
   actif: {
-    color: colors.LIGHT_BLUE,
+    color: colors.BLUE,
     fontWeight: "bold",
   },
   inactif: {
-    color: colors.BLUE,
+    color: "#666",
   },
   tabActif: {
-    borderColor: colors.LIGHT_BLUE,
+    borderColor: colors.BLUE,
     borderBottomWidth: 3,
   },
 });

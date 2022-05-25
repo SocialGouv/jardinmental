@@ -42,16 +42,16 @@ const Header = ({ title, navigation }) => {
         }}
       />
       <Icon
+        color="#fff"
         badge={badge}
         icon="BurgerSvg"
         width={20}
         height={20}
         onPress={() => setDrawerVisible(true)}
-        styleContainer={{ marginRight: 20 }}
       />
       <Text style={styles.title}>{title}</Text>
       <Icon
-        color={colors.BLUE}
+        color="#fff"
         spin={settingsVisible}
         icon="GearSvg"
         width={25}
@@ -64,10 +64,8 @@ const Header = ({ title, navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    // borderColor: 'blue',
-    // borderWidth: 1,
     flex: 0,
-    backgroundColor: "transparent",
+    // backgroundColor: "transparent",
     marginRight: "auto",
     display: "flex",
     flexDirection: "row",
@@ -75,10 +73,11 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
   },
   title: {
-    fontSize: Dimensions.get("window").width > 380 ? 19 : 16,
-    color: colors.BLUE,
+    textAlign: "center",
+    fontSize: Dimensions.get("window").width > 380 ? 15 : 14,
+    color: "#fff",
     marginRight: "auto",
-    fontWeight: "bold",
+    fontWeight: "600",
     flex: 1,
   },
 });

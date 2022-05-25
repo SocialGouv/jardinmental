@@ -143,10 +143,11 @@ const styles = StyleSheet.create({
   headerContainer: {
     padding: 5,
     paddingBottom: 0,
+    backgroundColor: "#1FC6D5",
   },
   safe: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: "#1FC6D5",
   },
   welcomeContainer: {
     padding: 20,

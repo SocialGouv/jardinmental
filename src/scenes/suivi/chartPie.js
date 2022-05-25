@@ -564,10 +564,11 @@ const styles = StyleSheet.create({
   },
   emptyContainer: {
     flex: 1,
-    marginVertical: 5,
+    paddingVertical: 5,
     paddingHorizontal: 10,
     justifyContent: "space-between",
     alignItems: "center",
+    backgroundColor: "#fff",
   },
   subtitleContainer: {
     display: "flex",

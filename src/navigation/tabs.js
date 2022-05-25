@@ -44,8 +44,8 @@ const Tabs = ({ navigation, route }) => {
         swipeEnabled={true}
         tabBarPosition="bottom"
         tabBarOptions={{
-          activeTintColor: colors.LIGHT_BLUE,
-          inactiveTintColor: colors.BLUE,
+          activeTintColor: colors.BLUE,
+          inactiveTintColor: "#a1a1a1",
           showIcon: true,
           indicatorStyle: { height: 0 },
           style: styles.tabBar,
