@@ -41,9 +41,9 @@ export default ({ navigation }) => {
               {"\n"}•&nbsp;Vous pouvez maintenant directement répondre à la question «&nbsp;Avez-vous pris
               correctement votre traitement quotidien&nbsp;?&nbsp;» par «&nbsp;oui&nbsp;» si c’est le cas, ou
               «&nbsp;non&nbsp;» si vous l’avez pris partiellement voire complètement oublié.
-              {"\n"}•&nbsp;Précisez si vous un avez pris un «&nbsp;si besoin&nbsp;» (Les «&nbsp;si
-              besoin&nbsp;» sont des médicaments que les médecins prescrivent au cas où, à prendre uniquement
-              si le besoin s’en fait ressentir)
+              {"\n"}•&nbsp;Précisez si vous avez pris un «&nbsp;si besoin&nbsp;» (Les «&nbsp;si besoin&nbsp;»
+              sont des médicaments que les médecins prescrivent au cas où, à prendre uniquement si le besoin
+              s’en fait ressentir)
               {"\n"}•&nbsp;Optionnel : vous pouvez toujours renseigner le détails de vos prises, par
               médicament et dose prise sur la journée
             </Text>
