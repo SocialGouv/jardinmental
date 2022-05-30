@@ -39,12 +39,12 @@ const ChartPie = ({ navigation, fromDate, toDate }) => {
   }, [fromDate, toDate]);
 
   React.useEffect(() => {
-    if (!activeCategories) return;
+    if (!activeCategories || activeCategories.length === 0) return;
     const empty = !activeCategories.reduce((showing, categoryId) => {
       return Boolean(isChartVisible(categoryId)) || showing;
     }, false);
     setIsEmpty(empty);
-  }, [activeCategories, isChartVisible, chartDates]);
+  }, [activeCategories, isChartVisible]);
 
   const isChartVisible = React.useCallback(
     (categoryId) => {
@@ -132,7 +132,7 @@ const ChartPie = ({ navigation, fromDate, toDate }) => {
 
   return (
     <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContainer}>
-      {activeCategories.map((categoryId) => (
+      {activeCategories?.map((categoryId) => (
         <Pie
           title={getTitle(categoryId)}
           key={categoryId}
