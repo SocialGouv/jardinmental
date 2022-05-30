@@ -79,6 +79,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 30,
+    backgroundColor: "#f9f9f9",
   },
   smileyContainer: {
     display: "flex",

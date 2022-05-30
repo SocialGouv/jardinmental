@@ -162,7 +162,7 @@ const Status = ({ navigation, startSurvey }) => {
   return (
     <>
       <SafeAreaView style={[styles.safe]}>
-        <Animated.View>
+        <Animated.View style={{ flex: 1 }}>
           <NPS forceView={NPSvisible} close={() => setNPSvisible(false)} />
           <Animated.View style={[styles.headerContainer, { transform: [{ translateY }] }]}>
             <Animated.View style={{ opacity }}>
