@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, ScrollView, View, SafeAreaView, TouchableOpacity, Dimensions } from "react-native";
+import { StyleSheet, View, SafeAreaView, TouchableOpacity, Dimensions, Animated } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import Text from "../../components/MyText";
 import StatusItem from "./status-item";
@@ -20,22 +20,63 @@ import NoData from "./NoData";
 import Diary from "../../scenes/diary";
 import { canEdit } from "./utils/index.js";
 import ContributeCard from "../contribute/contributeCard";
+import FloatingPlusButton from "../../components/FloatingPlusButton";
 
 const LIMIT_PER_PAGE = __DEV__ ? 3 : 30;
 
-const Status = ({ navigation, setPlusVisible }) => {
+const Status = ({ navigation, plusVisible, startSurvey }) => {
   const [diaryData] = useContext(DiaryDataContext);
   const [NPSvisible, setNPSvisible] = useState(false);
   const [page, setPage] = useState(1);
   const [bannerProNPSVisible, setBannerProNPSVisible] = useState(true);
   const [ongletActif, setOngletActif] = useState("all");
-  const [yPosition, setYPosition] = useState(0);
+  const scrollY = React.useRef(new Animated.Value(0));
 
-  useFocusEffect(
-    React.useCallback(() => {
-      setPlusVisible(yPosition > 100);
-    }, [setPlusVisible, yPosition])
+  const handleScroll = Animated.event(
+    [
+      {
+        nativeEvent: {
+          contentOffset: { y: scrollY.current },
+        },
+      },
+    ],
+    {
+      useNativeDriver: true,
+    }
   );
+
+  const headerHeight = 50;
+  const scrollYClampedForHeader = Animated.diffClamp(scrollY.current, 0, headerHeight);
+
+  let translateX = scrollY.current.interpolate({
+    inputRange: [0, 100],
+    outputRange: [80, 0],
+    extrapolateRight: "clamp",
+  });
+
+  const translateXNumber = React.useRef();
+  translateX.addListener(({ value }) => {
+    translateXNumber.current = value;
+  });
+
+  const translateY = scrollYClampedForHeader.interpolate({
+    inputRange: [0, headerHeight],
+    outputRange: [0, -headerHeight],
+  });
+
+  const translateYNumber = React.useRef();
+  translateY.addListener(({ value }) => {
+    translateYNumber.current = value;
+  });
+
+  const opacity = translateY.interpolate({
+    inputRange: [-headerHeight, 0],
+    outputRange: [0, 1],
+  });
+  const opacityNumber = React.useRef();
+  opacity.addListener(({ value }) => {
+    opacityNumber.current = value;
+  });
 
   useEffect(() => {
     (async () => {
@@ -65,19 +106,6 @@ const Status = ({ navigation, setPlusVisible }) => {
       })();
     }, [])
   );
-
-  const startSurvey = async () => {
-    const symptoms = await localStorage.getSymptoms();
-    logEvents.logFeelingStart();
-    if (!symptoms) {
-      navigation.navigate("symptoms", {
-        showExplanation: true,
-        redirect: "select-day",
-      });
-    } else {
-      navigation.navigate("select-day");
-    }
-  };
 
   const noData = () => !Object.keys(diaryData).some((key) => diaryData[key]);
 
@@ -146,27 +174,32 @@ const Status = ({ navigation, setPlusVisible }) => {
   };
 
   return (
-    <SafeAreaView style={styles.safe}>
-      <NPS forceView={NPSvisible} close={() => setNPSvisible(false)} />
-      <View style={styles.headerContainer}>
-        <Header title="Mes entrées" navigation={navigation} />
-      </View>
-      {noData() ? (
-        <NoData navigation={navigation} />
-      ) : (
-        <>
-          <TabPicker ongletActif={ongletActif} onChange={setOngletActif} />
-          <ScrollView
-            style={styles.scrollView}
-            contentContainerStyle={styles.scrollContainer}
-            onScroll={(event) => setYPosition(event.nativeEvent.contentOffset.y)}
-            scrollEventThrottle={100}
-          >
-            {renderOnglet(ongletActif)}
-          </ScrollView>
-        </>
-      )}
-    </SafeAreaView>
+    <>
+      <SafeAreaView style={[styles.safe]}>
+        <Animated.View style={{ transform: [{ translateY }] }}>
+          <NPS forceView={NPSvisible} close={() => setNPSvisible(false)} />
+          <Animated.View style={[styles.headerContainer, { opacity }]}>
+            <Header title="Mes entrées" navigation={navigation} />
+          </Animated.View>
+          {noData() ? (
+            <NoData navigation={navigation} />
+          ) : (
+            <>
+              <TabPicker ongletActif={ongletActif} onChange={setOngletActif} />
+              <Animated.ScrollView
+                bounces={false}
+                style={styles.scrollView}
+                contentContainerStyle={styles.scrollContainer}
+                onScroll={handleScroll}
+              >
+                {renderOnglet(ongletActif)}
+              </Animated.ScrollView>
+            </>
+          )}
+        </Animated.View>
+      </SafeAreaView>
+      <FloatingPlusButton shadow onPress={startSurvey} plusPosition={translateX} />
+    </>
   );
 };
 
