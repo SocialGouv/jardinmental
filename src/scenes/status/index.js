@@ -24,7 +24,7 @@ import FloatingPlusButton from "../../components/FloatingPlusButton";
 
 const LIMIT_PER_PAGE = __DEV__ ? 3 : 30;
 
-const Status = ({ navigation, plusVisible, startSurvey }) => {
+const Status = ({ navigation, startSurvey }) => {
   const [diaryData] = useContext(DiaryDataContext);
   const [NPSvisible, setNPSvisible] = useState(false);
   const [page, setPage] = useState(1);
@@ -54,28 +54,14 @@ const Status = ({ navigation, plusVisible, startSurvey }) => {
     extrapolateRight: "clamp",
   });
 
-  const translateXNumber = React.useRef();
-  translateX.addListener(({ value }) => {
-    translateXNumber.current = value;
-  });
-
   const translateY = scrollYClampedForHeader.interpolate({
     inputRange: [0, headerHeight],
     outputRange: [0, -headerHeight],
   });
 
-  const translateYNumber = React.useRef();
-  translateY.addListener(({ value }) => {
-    translateYNumber.current = value;
-  });
-
   const opacity = translateY.interpolate({
     inputRange: [-headerHeight, 0],
     outputRange: [0, 1],
-  });
-  const opacityNumber = React.useRef();
-  opacity.addListener(({ value }) => {
-    opacityNumber.current = value;
   });
 
   useEffect(() => {
@@ -176,21 +162,24 @@ const Status = ({ navigation, plusVisible, startSurvey }) => {
   return (
     <>
       <SafeAreaView style={[styles.safe]}>
-        <Animated.View style={{ transform: [{ translateY }] }}>
+        <Animated.View>
           <NPS forceView={NPSvisible} close={() => setNPSvisible(false)} />
-          <Animated.View style={[styles.headerContainer, { opacity }]}>
-            <Header title="Mes entrées" navigation={navigation} />
+          <Animated.View style={[styles.headerContainer, { transform: [{ translateY }] }]}>
+            <Animated.View style={{ opacity }}>
+              <Header title="Mes entrées" navigation={navigation} />
+            </Animated.View>
+            <TabPicker ongletActif={ongletActif} onChange={setOngletActif} />
           </Animated.View>
           {noData() ? (
             <NoData navigation={navigation} />
           ) : (
             <>
-              <TabPicker ongletActif={ongletActif} onChange={setOngletActif} />
               <Animated.ScrollView
                 bounces={false}
                 style={styles.scrollView}
                 contentContainerStyle={styles.scrollContainer}
                 onScroll={handleScroll}
+                scrollEventThrottle={16}
               >
                 {renderOnglet(ongletActif)}
               </Animated.ScrollView>
@@ -205,7 +194,13 @@ const Status = ({ navigation, plusVisible, startSurvey }) => {
 
 const styles = StyleSheet.create({
   headerContainer: {
-    padding: 5,
+    position: "absolute",
+    left: 0,
+    right: 0,
+    width: "100%",
+    zIndex: 1,
+
+    paddingTop: 5,
     paddingBottom: 0,
     backgroundColor: "#1FC6D5",
   },
@@ -234,6 +229,7 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     paddingBottom: 80,
+    paddingTop: 50 * 2,
   },
   title: {
     fontSize: 19,
