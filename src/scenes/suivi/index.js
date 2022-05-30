@@ -6,7 +6,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { beforeToday } from "../../utils/date/helpers";
 import Header from "../../components/Header";
 import Text from "../../components/MyText";
-import ChartPicker from "./chartPicker";
+// import ChartPicker from "./chartPicker";
+import ChartPicker from "./chartPicker2";
 import RangeDate from "./RangeDate";
 import ScorePicker from "./ScorePicker";
 import ChartFrise from "./chartFrise";
@@ -19,21 +20,9 @@ import Icon from "../../components/Icon";
 import localStorage from "../../utils/localStorage";
 
 const screenHeight = Dimensions.get("window").height;
-const CHART_TYPES = ["Frises", "Statistiques", "Courbes", "Analyse des notes"];
-
-const nextChartType = (chartType) => {
-  const i = CHART_TYPES.indexOf(chartType);
-  const nextIndex = (i + 1) % CHART_TYPES.length;
-  return CHART_TYPES[nextIndex];
-};
-const prevChartType = (chartType) => {
-  const i = CHART_TYPES.indexOf(chartType);
-  const nextIndex = (i + CHART_TYPES.length - 1) % CHART_TYPES.length;
-  return CHART_TYPES[nextIndex];
-};
 
 const Suivi = ({ navigation, setPlusVisible }) => {
-  const [chartType, setChartType] = React.useState(CHART_TYPES[0]);
+  const [chartType, setChartType] = React.useState("Frises");
   const [fromDate, setFromDate] = React.useState(beforeToday(30));
   const [toDate, setToDate] = React.useState(beforeToday(0));
   const [focusedScores, setFocusedScores] = React.useState([1, 2, 3, 4, 5]);
@@ -69,7 +58,7 @@ const Suivi = ({ navigation, setPlusVisible }) => {
         return <ChartPie fromDate={fromDate} toDate={toDate} navigation={navigation} />;
       case "Courbes":
         return <Courbes navigation={navigation} />;
-      case "Analyse des notes":
+      case "Déclencheurs":
         return <Evenements navigation={navigation} fromDate={fromDate} toDate={toDate} />;
       case "Frises":
       default:
@@ -95,12 +84,16 @@ const Suivi = ({ navigation, setPlusVisible }) => {
 
   return (
     <SafeAreaView style={styles.safe}>
-      <View style={styles.headerContainer}>
+      <View style={styles.headerContainerNavigation}>
         <Header title="Mes analyses" navigation={navigation} />
+      </View>
+      <View style={styles.headerContainer}>
         <ChartPicker
-          onAfterPress={() => setChartType(nextChartType(chartType))}
-          onBeforePress={() => setChartType(prevChartType(chartType))}
-          title={chartType}
+          // onAfterPress={() => setChartType(nextChartType(chartType))}
+          // onBeforePress={() => setChartType(prevChartType(chartType))}
+          // title={chartType}
+          onChange={(e) => setChartType(e)}
+          ongletActif={chartType}
         />
         {chartType !== "Courbes" ? (
           <RangeDate
@@ -224,9 +217,14 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
   },
-  headerContainer: {
+  headerContainerNavigation: {
     padding: 5,
+    paddingBottom: 0,
+    backgroundColor: "#1FC6D5",
+  },
+  headerContainer: {
     paddingBottom: 15,
+    backgroundColor: "#FFFFFF",
   },
   imageContainer: {
     display: "flex",
@@ -252,7 +250,7 @@ const styles = StyleSheet.create({
   },
   safe: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: "#1FC6D5",
   },
   title: {
     fontWeight: "700",
