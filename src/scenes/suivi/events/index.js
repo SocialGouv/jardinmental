@@ -292,6 +292,7 @@ const styles = StyleSheet.create({
 
   filterContainer: {
     paddingHorizontal: 20,
+    backgroundColor: "white",
   },
   filterItemContainer: {
     flexDirection: "row",
@@ -306,10 +307,11 @@ const styles = StyleSheet.create({
   },
   emptyContainer: {
     flex: 1,
-    marginVertical: 5,
+    paddingVertical: 5,
     paddingHorizontal: 10,
     justifyContent: "space-between",
     alignItems: "center",
+    backgroundColor: "#fff",
   },
   subtitle: {
     flex: 1,
@@ -327,6 +329,7 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     flex: 1,
+    backgroundColor: "white",
   },
   scrollContainer: {
     paddingTop: 30,
