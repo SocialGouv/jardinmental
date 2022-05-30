@@ -18,10 +18,11 @@ import logEvents from "../../services/logEvents";
 import { colors } from "../../utils/colors";
 import Icon from "../../components/Icon";
 import localStorage from "../../utils/localStorage";
+import FloatingPlusButton from "../../components/FloatingPlusButton";
 
 const screenHeight = Dimensions.get("window").height;
 
-const Suivi = ({ navigation, setPlusVisible }) => {
+const Suivi = ({ navigation, setPlusVisible, startSurvey }) => {
   const [chartType, setChartType] = React.useState("Frises");
   const [fromDate, setFromDate] = React.useState(beforeToday(30));
   const [toDate, setToDate] = React.useState(beforeToday(0));
@@ -32,9 +33,8 @@ const Suivi = ({ navigation, setPlusVisible }) => {
 
   useFocusEffect(
     React.useCallback(() => {
-      setPlusVisible(true);
       logEvents.logOpenPageSuivi(chartType);
-    }, [chartType, setPlusVisible])
+    }, [chartType])
   );
   useFocusEffect(
     React.useCallback(() => {
@@ -83,85 +83,88 @@ const Suivi = ({ navigation, setPlusVisible }) => {
   };
 
   return (
-    <SafeAreaView style={styles.safe}>
-      <View style={styles.headerContainerNavigation}>
-        <Header title="Mes analyses" navigation={navigation} />
-      </View>
-      <View style={styles.headerContainer}>
-        <ChartPicker
-          // onAfterPress={() => setChartType(nextChartType(chartType))}
-          // onBeforePress={() => setChartType(prevChartType(chartType))}
-          // title={chartType}
-          onChange={(e) => setChartType(e)}
-          ongletActif={chartType}
-        />
-        {chartType !== "Courbes" ? (
-          <RangeDate
-            fromDate={fromDate}
-            toDate={toDate}
-            onChangeFromDate={setFromDate}
-            onChangeToDate={setToDate}
+    <>
+      <SafeAreaView style={styles.safe}>
+        <View style={styles.headerContainerNavigation}>
+          <Header title="Mes analyses" navigation={navigation} />
+        </View>
+        <View style={styles.headerContainer}>
+          <ChartPicker
+            // onAfterPress={() => setChartType(nextChartType(chartType))}
+            // onBeforePress={() => setChartType(prevChartType(chartType))}
+            // title={chartType}
+            onChange={(e) => setChartType(e)}
+            ongletActif={chartType}
           />
-        ) : null}
-        {chartType === "Frises" ? (
-          <View style={styles.containerScorePickerFrise}>
-            <ScorePicker
-              focusedScores={focusedScores}
-              onPress={(i) => {
-                if (focusedScores.includes(i)) {
-                  setFocusedScores((e) => e.filter((x) => x !== i));
-                } else {
-                  setFocusedScores((e) => [...e, i]);
-                }
-                //events
-                logEvents.logSuiviEditScoreFrise(i);
-              }}
+          {chartType !== "Courbes" ? (
+            <RangeDate
+              fromDate={fromDate}
+              toDate={toDate}
+              onChangeFromDate={setFromDate}
+              onChangeToDate={setToDate}
             />
-            <View style={styles.verticalDivider} />
-            <View style={styles.hintContainer}>
-              <TouchableOpacity
-                onPress={() => {
-                  if (aUnTraiement) {
-                    setShowTraitement((e) => !e);
-                    logEvents.logSuiviShowPriseDeTraitement(showTraitement ? 0 : 1); // 0 = masquer, 1 = afficher
+          ) : null}
+          {chartType === "Frises" ? (
+            <View style={styles.containerScorePickerFrise}>
+              <ScorePicker
+                focusedScores={focusedScores}
+                onPress={(i) => {
+                  if (focusedScores.includes(i)) {
+                    setFocusedScores((e) => e.filter((x) => x !== i));
                   } else {
-                    setShowHint((e) => !e);
+                    setFocusedScores((e) => [...e, i]);
                   }
+                  //events
+                  logEvents.logSuiviEditScoreFrise(i);
                 }}
-              >
-                <View
-                  style={[
-                    styles.selectionContainer,
-                    !aUnTraiement && styles.noTraitementSelectionContainer,
-                    showTraitement && styles.activeSelectionContainer,
-                  ]}
+              />
+              <View style={styles.verticalDivider} />
+              <View style={styles.hintContainer}>
+                <TouchableOpacity
+                  onPress={() => {
+                    if (aUnTraiement) {
+                      setShowTraitement((e) => !e);
+                      logEvents.logSuiviShowPriseDeTraitement(showTraitement ? 0 : 1); // 0 = masquer, 1 = afficher
+                    } else {
+                      setShowHint((e) => !e);
+                    }
+                  }}
                 >
-                  <Icon
-                    icon="DrugsSvg"
-                    color={!aUnTraiement || showTraitement ? "#FFFFFF" : "#58C8D2"}
-                    width={20}
-                    height={20}
-                    styleContainer={styles.icon}
-                  />
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={async () => {
-                  await AsyncStorage.setItem("@AT_LEAST_VIEW_ONE_TIME_HINT_FRISE", "true");
-                  setShowHint((e) => !e);
-                  logEvents.logSuiviShowLegendeInformationPriseDeTraitement(showHint ? 0 : 1); // 0 = masquer, 1 = afficher
-                }}
-              >
-                <View style={[styles.infoHintContainer, showHint && styles.activeInfoHintContainer]}>
-                  <Text style={[styles.infoHintText, showHint && styles.activeInfoHintText]}>i</Text>
-                </View>
-              </TouchableOpacity>
+                  <View
+                    style={[
+                      styles.selectionContainer,
+                      !aUnTraiement && styles.noTraitementSelectionContainer,
+                      showTraitement && styles.activeSelectionContainer,
+                    ]}
+                  >
+                    <Icon
+                      icon="DrugsSvg"
+                      color={!aUnTraiement || showTraitement ? "#FFFFFF" : "#58C8D2"}
+                      width={20}
+                      height={20}
+                      styleContainer={styles.icon}
+                    />
+                  </View>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={async () => {
+                    await AsyncStorage.setItem("@AT_LEAST_VIEW_ONE_TIME_HINT_FRISE", "true");
+                    setShowHint((e) => !e);
+                    logEvents.logSuiviShowLegendeInformationPriseDeTraitement(showHint ? 0 : 1); // 0 = masquer, 1 = afficher
+                  }}
+                >
+                  <View style={[styles.infoHintContainer, showHint && styles.activeInfoHintContainer]}>
+                    <Text style={[styles.infoHintText, showHint && styles.activeInfoHintText]}>i</Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
-        ) : null}
-      </View>
-      {renderChart(chartType)}
-    </SafeAreaView>
+          ) : null}
+        </View>
+        {renderChart(chartType)}
+      </SafeAreaView>
+      <FloatingPlusButton shadow onPress={startSurvey} plusPosition={0} />
+    </>
   );
 };
 

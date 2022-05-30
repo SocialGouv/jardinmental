@@ -10,15 +10,11 @@ import GraphMenu from "../../assets/svg/GraphMenu";
 import localStorage from "../utils/localStorage";
 import logEvents from "../services/logEvents";
 import { colors } from "../utils/colors";
-import FloatingPlusButton from "../components/FloatingPlusButton";
 import Text from "../components/MyText";
 
 const Tab = createMaterialTopTabNavigator();
 
 const Tabs = ({ navigation, route }) => {
-  const [plusVisible, setPlusVisible] = React.useState(false);
-  const MemoizedFloatingPlusButton = React.memo(FloatingPlusButton);
-
   const startSurvey = async () => {
     const symptoms = await localStorage.getSymptoms();
     logEvents.logFeelingStart();
@@ -30,11 +26,6 @@ const Tabs = ({ navigation, route }) => {
     } else {
       navigation.navigate("select-day");
     }
-  };
-
-  const handlePlusVisible = (v) => {
-    if (v === plusVisible) return;
-    setPlusVisible(v);
   };
 
   return (
@@ -71,7 +62,7 @@ const Tabs = ({ navigation, route }) => {
             tabBarIcon: ({ color }) => <SurveyMenu height={24} style={{ color }} />,
           }}
         >
-          {(p) => <Status {...p} setPlusVisible={handlePlusVisible} />}
+          {(p) => <Status {...p} startSurvey={startSurvey} />}
         </Tab.Screen>
         <Tab.Screen
           name="Calendar"
@@ -82,7 +73,7 @@ const Tabs = ({ navigation, route }) => {
             tabBarIcon: ({ color }) => <GraphMenu height={24} style={{ color }} />,
           }}
         >
-          {(p) => <Suivi {...p} setPlusVisible={handlePlusVisible} />}
+          {(p) => <Suivi {...p} startSurvey={startSurvey} />}
         </Tab.Screen>
         <Tab.Screen
           name="Exercise"
@@ -93,10 +84,9 @@ const Tabs = ({ navigation, route }) => {
             tabBarIcon: ({ color }) => <ExerciseMenu height={24} style={{ color }} />,
           }}
         >
-          {(p) => <Exercise {...p} setPlusVisible={handlePlusVisible} />}
+          {(p) => <Exercise {...p} startSurvey={startSurvey} />}
         </Tab.Screen>
       </Tab.Navigator>
-      <MemoizedFloatingPlusButton shadow onPress={startSurvey} plusVisible={plusVisible} />
     </>
   );
 };
@@ -113,21 +103,6 @@ const styles = StyleSheet.create({
     shadowRadius: 4.65,
 
     elevation: 6,
-  },
-  surveyButton: {
-    display: "flex",
-    alignItems: "center",
-    position: "absolute",
-    bottom: Platform.OS === "android" ? 40 : 50,
-    zIndex: 1,
-    alignSelf: "center",
-  },
-  text: {
-    fontSize: 16,
-    color: "white",
-    textAlign: "center",
-    paddingVertical: Platform.OS === "android" ? 5 : 17,
-    fontWeight: "700",
   },
 });
 

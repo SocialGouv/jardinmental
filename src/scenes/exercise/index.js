@@ -10,7 +10,6 @@ import {
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import CheckBox from "@react-native-community/checkbox";
-import { useFocusEffect } from "@react-navigation/native";
 
 import Text from "../../components/MyText";
 import { colors } from "../../utils/colors";
@@ -22,10 +21,11 @@ import { formatDateThread } from "../../utils/date/helpers";
 import ContributeCard from "../contribute/contributeCard";
 import { STORAGE_KEY_BECK_SHOW_WELCOME } from "../../utils/constants";
 import ArrowUpSvg from "../../../assets/svg/arrow-up.svg";
+import FloatingPlusButton from "../../components/FloatingPlusButton";
 
 const LIMIT_PER_PAGE = __DEV__ ? 3 : 30;
 
-export default ({ navigation, setPlusVisible }) => {
+export default ({ navigation, startSurvey }) => {
   const [NPSvisible, setNPSvisible] = useState(false);
   const [diaryData] = useContext(DiaryDataContext);
   const [page, setPage] = useState(1);
@@ -38,104 +38,102 @@ export default ({ navigation, setPlusVisible }) => {
     })();
   }, []);
 
-  useFocusEffect(
-    React.useCallback(() => {
-      setPlusVisible(true);
-    }, [setPlusVisible])
-  );
-
   const validateWelcomeMessage = async () => {
     setShowWelcome("false");
     await AsyncStorage.setItem(STORAGE_KEY_BECK_SHOW_WELCOME, `${showWelcomeDefault}`);
   };
 
   return (
-    <SafeAreaView style={styles.safe}>
-      <NPS forceView={NPSvisible} close={() => setNPSvisible(false)} />
-      <View style={styles.headerContainer}>
-        <Header title="Beck" navigation={navigation} />
-      </View>
-      <ScrollView style={styles.container} contentContainerStyle={styles.scrollContainer}>
-        {showWelcome === "true" || !showWelcome ? (
-          <View style={styles.welcomeContainer}>
-            <Text style={[styles.welcomeText, styles.boldText]}>
-              Cet exercice nécessite des explications afin de le réaliser. Nous vous recommandons d’en
-              discuter préalablement avec un thérapeute.
-            </Text>
-            <Text style={styles.welcomeText}>
-              Voici une vidéo qui vous présente brièvement comment remplir vos fiches :{" "}
-              <Text
-                style={styles.link}
-                onPress={() => {
-                  // todo logevent voir video
-                  Linking.openURL("https://youtu.be/3U4J-_QsTc0");
-                }}
-              >
-                voir la vidéo
+    <>
+      <SafeAreaView style={styles.safe}>
+        <NPS forceView={NPSvisible} close={() => setNPSvisible(false)} />
+        <View style={styles.headerContainer}>
+          <Header title="Beck" navigation={navigation} />
+        </View>
+        <ScrollView style={styles.container} contentContainerStyle={styles.scrollContainer}>
+          {showWelcome === "true" || !showWelcome ? (
+            <View style={styles.welcomeContainer}>
+              <Text style={[styles.welcomeText, styles.boldText]}>
+                Cet exercice nécessite des explications afin de le réaliser. Nous vous recommandons d’en
+                discuter préalablement avec un thérapeute.
               </Text>
-            </Text>
-            <View style={styles.showWelcomeView}>
-              <CheckBox
-                animationDuration={0.2}
-                boxType="square"
-                style={styles.checkbox}
-                value={!showWelcomeDefault}
-                onValueChange={(value) => setShowWelcomeDefault(!value)}
-                // for android
-                tintColors={{ true: colors.LIGHT_BLUE, false: "#aaa" }}
-                // for ios
-                tintColor="#aaa"
-                onCheckColor={colors.LIGHT_BLUE}
-                onTintColor={colors.LIGHT_BLUE}
-                onAnimationType="bounce"
-                offAnimationType="bounce"
-              />
-              <TouchableOpacity activeOpacity={0.7} onPress={() => setShowWelcomeDefault((e) => !e)}>
-                <Text>Ne plus afficher ce message</Text>
+              <Text style={styles.welcomeText}>
+                Voici une vidéo qui vous présente brièvement comment remplir vos fiches :{" "}
+                <Text
+                  style={styles.link}
+                  onPress={() => {
+                    // todo logevent voir video
+                    Linking.openURL("https://youtu.be/3U4J-_QsTc0");
+                  }}
+                >
+                  voir la vidéo
+                </Text>
+              </Text>
+              <View style={styles.showWelcomeView}>
+                <CheckBox
+                  animationDuration={0.2}
+                  boxType="square"
+                  style={styles.checkbox}
+                  value={!showWelcomeDefault}
+                  onValueChange={(value) => setShowWelcomeDefault(!value)}
+                  // for android
+                  tintColors={{ true: colors.LIGHT_BLUE, false: "#aaa" }}
+                  // for ios
+                  tintColor="#aaa"
+                  onCheckColor={colors.LIGHT_BLUE}
+                  onTintColor={colors.LIGHT_BLUE}
+                  onAnimationType="bounce"
+                  offAnimationType="bounce"
+                />
+                <TouchableOpacity activeOpacity={0.7} onPress={() => setShowWelcomeDefault((e) => !e)}>
+                  <Text>Ne plus afficher ce message</Text>
+                </TouchableOpacity>
+              </View>
+              <TouchableOpacity onPress={validateWelcomeMessage} style={styles.button}>
+                <Text style={styles.buttonText}>Valider</Text>
               </TouchableOpacity>
             </View>
-            <TouchableOpacity onPress={validateWelcomeMessage} style={styles.button}>
-              <Text style={styles.buttonText}>Valider</Text>
-            </TouchableOpacity>
-          </View>
-        ) : (
-          <>
-            <TouchableOpacity onPress={() => navigation.navigate("beck")} style={styles.button}>
-              <Text style={styles.buttonText}>Faire le point sur un évènement</Text>
-            </TouchableOpacity>
-            <View style={styles.divider} />
-            {Object.keys(diaryData)
-              .sort((a, b) => {
-                a = a.split("/").reverse().join("");
-                b = b.split("/").reverse().join("");
-                return b.localeCompare(a);
-              })
-              .filter((el) => diaryData[el]?.becks && Object.keys(diaryData[el].becks).length > 0)
-              .slice(0, LIMIT_PER_PAGE * page)
-              .map((date) => (
-                <View key={date}>
-                  <Text style={styles.subtitle}>{formatDateThread(date)}</Text>
-                  <ExerciseItem patientState={diaryData[date]} date={date} navigation={navigation} />
-                </View>
-              ))}
-            <ContributeCard onPress={() => setNPSvisible(true)} />
-            {Object.keys(diaryData)
-              ?.sort((a, b) => {
-                a = a.split("/").reverse().join("");
-                b = b.split("/").reverse().join("");
-                return b.localeCompare(a);
-              })
-              ?.filter((el) => diaryData[el]?.becks && Object.keys(diaryData[el].becks).length > 0)?.length >
-              LIMIT_PER_PAGE * page && (
-              <TouchableOpacity onPress={() => setPage(page + 1)} style={styles.versionContainer}>
-                <Text style={styles.arrowDownLabel}>Voir plus</Text>
-                <ArrowUpSvg style={styles.arrowDown} color={colors.BLUE} />
+          ) : (
+            <>
+              <TouchableOpacity onPress={() => navigation.navigate("beck")} style={styles.button}>
+                <Text style={styles.buttonText}>Faire le point sur un évènement</Text>
               </TouchableOpacity>
-            )}
-          </>
-        )}
-      </ScrollView>
-    </SafeAreaView>
+              <View style={styles.divider} />
+              {Object.keys(diaryData)
+                .sort((a, b) => {
+                  a = a.split("/").reverse().join("");
+                  b = b.split("/").reverse().join("");
+                  return b.localeCompare(a);
+                })
+                .filter((el) => diaryData[el]?.becks && Object.keys(diaryData[el].becks).length > 0)
+                .slice(0, LIMIT_PER_PAGE * page)
+                .map((date) => (
+                  <View key={date}>
+                    <Text style={styles.subtitle}>{formatDateThread(date)}</Text>
+                    <ExerciseItem patientState={diaryData[date]} date={date} navigation={navigation} />
+                  </View>
+                ))}
+              <ContributeCard onPress={() => setNPSvisible(true)} />
+              {Object.keys(diaryData)
+                ?.sort((a, b) => {
+                  a = a.split("/").reverse().join("");
+                  b = b.split("/").reverse().join("");
+                  return b.localeCompare(a);
+                })
+                ?.filter((el) => diaryData[el]?.becks && Object.keys(diaryData[el].becks).length > 0)
+                ?.length >
+                LIMIT_PER_PAGE * page && (
+                <TouchableOpacity onPress={() => setPage(page + 1)} style={styles.versionContainer}>
+                  <Text style={styles.arrowDownLabel}>Voir plus</Text>
+                  <ArrowUpSvg style={styles.arrowDown} color={colors.BLUE} />
+                </TouchableOpacity>
+              )}
+            </>
+          )}
+        </ScrollView>
+      </SafeAreaView>
+      <FloatingPlusButton shadow onPress={startSurvey} plusPosition={0} />
+    </>
   );
 };
 
