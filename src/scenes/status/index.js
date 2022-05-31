@@ -33,7 +33,7 @@ const Status = ({ navigation, startSurvey }) => {
   const scrollRef = React.useRef();
 
   React.useEffect(() => {
-    scrollRef.current.scrollTo({
+    scrollRef.current?.scrollTo({
       y: 0,
       animated: false,
     });
