@@ -1,3 +1,20 @@
+# [1.27.0](https://github.com/SocialGouv/monsuivipsy/compare/v1.26.2...v1.27.0) (2022-05-31)
+
+
+### Bug Fixes
+
+* amélioration UX ([6176b46](https://github.com/SocialGouv/monsuivipsy/commit/6176b468f53de9b0436991d8729b6048bac2f71b))
+* hide header ([5e62216](https://github.com/SocialGouv/monsuivipsy/commit/5e622164b7ad8dff42f532eea3fb78cfe53c793f))
+* ui android ([a9fedba](https://github.com/SocialGouv/monsuivipsy/commit/a9fedba22eaa821faafe2cfb82e387ffcf2a4cfe))
+* **suivi:** onglet statistiques clignotement ([4b4f873](https://github.com/SocialGouv/monsuivipsy/commit/4b4f8735efc4e5e5fb892afcb3e7c1296154f52c))
+* wording nouveauté ([8aad645](https://github.com/SocialGouv/monsuivipsy/commit/8aad6450e514e0fe4f59251a23e3ea1fa795b59b))
+
+
+### Features
+
+* add dimensions ([#161](https://github.com/SocialGouv/monsuivipsy/issues/161)) ([f11c25c](https://github.com/SocialGouv/monsuivipsy/commit/f11c25c561090ffe530a626dbd9023c7a4365b48))
+* header UI ([#164](https://github.com/SocialGouv/monsuivipsy/issues/164)) ([8a7f105](https://github.com/SocialGouv/monsuivipsy/commit/8a7f10564b4fecb4f0770268dbb504553741c308))
+
 ## [1.26.2](https://github.com/SocialGouv/monsuivipsy/compare/v1.26.1...v1.26.2) (2022-05-24)
 
 
