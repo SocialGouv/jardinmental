@@ -56,7 +56,6 @@ const Status = ({ navigation, startSurvey }) => {
     }
   );
 
-  const headerHeight = 50;
   const scrollYClampedForHeader = Animated.diffClamp(scrollY.current, 0, headerHeight);
 
   let translateX = scrollY.current.interpolate({
