@@ -30,6 +30,14 @@ const Status = ({ navigation, startSurvey }) => {
   const [page, setPage] = useState(1);
   const [bannerProNPSVisible, setBannerProNPSVisible] = useState(true);
   const [ongletActif, setOngletActif] = useState("all");
+  const scrollRef = React.useRef();
+
+  React.useEffect(() => {
+    scrollRef.current.scrollTo({
+      y: 0,
+      animated: false,
+    });
+  }, [ongletActif]);
 
   // ****************
   // BEGIN - MASQUAGE DU HEADER AU SCROLL
@@ -181,6 +189,9 @@ const Status = ({ navigation, startSurvey }) => {
           ) : (
             <>
               <Animated.ScrollView
+                alwaysBounceHorizontal={false}
+                alwaysBounceVertical={false}
+                ref={scrollRef}
                 bounces={false}
                 style={styles.scrollView}
                 contentContainerStyle={styles.scrollContainer}

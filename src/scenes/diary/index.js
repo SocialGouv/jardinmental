@@ -61,11 +61,6 @@ const Diary = ({ navigation, hideDeader = false }) => {
   return (
     <SafeAreaView style={styles.safe}>
       <NPS forceView={NPSvisible} close={() => setNPSvisible(false)} />
-      {!hideDeader ? (
-        <View style={styles.headerContainer}>
-          <Header title="Mon journal" navigation={navigation} />
-        </View>
-      ) : null}
       <ScrollView
         style={styles.container}
         contentContainerStyle={styles.scrollContainer}
@@ -153,7 +148,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   scrollContainer: {
-    paddingBottom: screenHeight / 2,
+    paddingBottom: 100,
   },
   subtitle: {
     color: colors.BLUE,
