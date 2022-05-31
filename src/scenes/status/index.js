@@ -30,8 +30,11 @@ const Status = ({ navigation, startSurvey }) => {
   const [page, setPage] = useState(1);
   const [bannerProNPSVisible, setBannerProNPSVisible] = useState(true);
   const [ongletActif, setOngletActif] = useState("all");
-  const scrollY = React.useRef(new Animated.Value(0));
 
+  // ****************
+  // BEGIN - MASQUAGE DU HEADER AU SCROLL
+  const headerHeight = 50;
+  const scrollY = React.useRef(new Animated.Value(0));
   const handleScroll = Animated.event(
     [
       {
@@ -63,6 +66,9 @@ const Status = ({ navigation, startSurvey }) => {
     inputRange: [-headerHeight, 0],
     outputRange: [0, 1],
   });
+
+  // FIN - MASQUAGE DU HEADER AU SCROLL
+  // ****************
 
   useEffect(() => {
     (async () => {
