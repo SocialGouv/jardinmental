@@ -179,7 +179,7 @@ const Status = ({ navigation, startSurvey }) => {
                 style={styles.scrollView}
                 contentContainerStyle={styles.scrollContainer}
                 onScroll={handleScroll}
-                scrollEventThrottle={16}
+                showsVerticalScrollIndicator={false}
               >
                 {renderOnglet(ongletActif)}
               </Animated.ScrollView>
