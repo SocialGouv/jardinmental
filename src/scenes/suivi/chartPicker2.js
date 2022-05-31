@@ -111,7 +111,7 @@ const tabStyles = StyleSheet.create({
     fontWeight: "bold",
   },
   inactif: {
-    color: colors.BLUE,
+    color: "#666",
   },
   tabActif: {
     borderColor: colors.BLUE,
