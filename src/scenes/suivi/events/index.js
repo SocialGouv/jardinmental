@@ -31,6 +31,7 @@ const Events = ({ navigation, fromDate, toDate, focusedScores }) => {
         const q = await buildSurveyData();
         if (q) {
           setActiveCategories(q.map((e) => e.id));
+          setSymptom(q[0].id);
         }
       })();
     }, [])
