@@ -27,7 +27,7 @@ const CustomSymptomScreen = ({ navigation, route, settings = false }) => {
   useEffect(() => {
     (async () => {
       const preselectedCategories = await localStorage.getSymptoms();
-      if (!Object.keys(preselectedCategories).length) {
+      if (!preselectedCategories || !Object.keys(preselectedCategories).length) {
         return;
       }
 
@@ -60,7 +60,7 @@ const CustomSymptomScreen = ({ navigation, route, settings = false }) => {
   }, [settings]);
 
   useEffect(() => {
-    if (chosenCategories === undefined) return;
+    if (!chosenCategories || chosenCategories === undefined) return;
     (async () => {
       const isCustom = (e) => !displayedCategories[e] && !INDICATEURS_LISTE.includes(e);
       const isDefault = (e) => !!displayedCategories[e] || INDICATEURS_LISTE.includes(e);
@@ -128,7 +128,7 @@ const CustomSymptomScreen = ({ navigation, route, settings = false }) => {
         </View>
         <AjoutIndicateurPerso
           onChange={(v) => {
-            if (Object.keys(chosenCategories).find((e) => e === v)) return;
+            if (Object.keys(chosenCategories || {}).find((e) => e === v)) return;
             handleAddNewSymptom(v);
           }}
         />
