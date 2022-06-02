@@ -1,3 +1,16 @@
+## [1.27.2](https://github.com/SocialGouv/monsuivipsy/compare/v1.27.1...v1.27.2) (2022-06-02)
+
+
+### Bug Fixes
+
+* cacher vertical scroll bar ([93c95e3](https://github.com/SocialGouv/monsuivipsy/commit/93c95e33559f3fd6327584063129276956dbdcef))
+* desactivé header caché ([5564f2a](https://github.com/SocialGouv/monsuivipsy/commit/5564f2a98ef3279ab9b6c3cf98e0d2d82282875b))
+* undefined is not an object ([2c45c9c](https://github.com/SocialGouv/monsuivipsy/commit/2c45c9c4942acdaf04cd17e40630f8222106c3e7))
+* **android:** SCHEDULE_EXACT_ALARM ([9b15be9](https://github.com/SocialGouv/monsuivipsy/commit/9b15be94be15b9403c726835404e3113c6c4ecfc))
+* couleur onglet ([ac31b6f](https://github.com/SocialGouv/monsuivipsy/commit/ac31b6fb9ecd507cf62be754c42fe7713e0e9ca9))
+* indicateur par défaut dans déclencheur ([22f23c7](https://github.com/SocialGouv/monsuivipsy/commit/22f23c732ac5a338ba414158f91aad33d863be63))
+* scroll to top ([1a9b2cd](https://github.com/SocialGouv/monsuivipsy/commit/1a9b2cd26381ac26e345d944fe69abd2f67c4867))
+
 # [1.27.0](https://github.com/SocialGouv/monsuivipsy/compare/v1.26.2...v1.27.0) (2022-05-31)
 
 
