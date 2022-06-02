@@ -177,8 +177,14 @@ const Status = ({ navigation, startSurvey }) => {
       <SafeAreaView style={[styles.safe]}>
         <Animated.View style={{ flex: 1 }}>
           <NPS forceView={NPSvisible} close={() => setNPSvisible(false)} />
-          <Animated.View style={[styles.headerContainer, { transform: [{ translateY }] }]}>
-            <Animated.View style={{ opacity }}>
+          {/* todo : add this 👇 to make this component scrollable
+            { transform: [{ translateY }] }
+          */}
+          <Animated.View style={[styles.headerContainer]}>
+            {/* todo : add this 👇 to make this component scrollable
+            style={{ opacity }}
+          */}
+            <Animated.View>
               <Header title="Mes entrées" navigation={navigation} />
             </Animated.View>
             <TabPicker ongletActif={ongletActif} onChange={setOngletActif} />
