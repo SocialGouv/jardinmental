@@ -1,0 +1,38 @@
+{
+  "name": "api_mano",
+  "version": "1.79.4",
+  "mobileAppVersion": "1.6.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development nodemon ./src/index.js",
+    "start": "NODE_ENV=production node ./src/index.js",
+    "start:test": "NODE_ENV=test node ./src/index.js",
+    "initdb": "node ./src/db/scriptInit.js"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "prettier": {
+    "printWidth": 150
+  },
+  "dependencies": {
+    "@sentry/node": "^6.19.6",
+    "@sentry/tracing": "^6.17.6",
+    "@slack/webhook": "^6.1.0",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.1",
+    "helmet": "^4.0.0",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "nodemon": "^2.0.15"
+  },
+  "engines": {
+    "npm": "please-use-yarn",
+    "yarn": "< 2",
+    "node": ">= 14"
+  }
+}
