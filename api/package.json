@@ -1,7 +1,7 @@
 {
-  "name": "api_mano",
-  "version": "1.79.4",
-  "mobileAppVersion": "1.6.0",
+  "name": "api_monsuivipsy",
+  "version": "0.1.0",
+  "mobileAppVersion": "1.27.2",
   "description": "",
   "main": "index.js",
   "scripts": {
