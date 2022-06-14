@@ -30,16 +30,11 @@ const initMatomo = async () => {
 
   let supported = await AsyncStorage.getItem(STORAGE_KEY_SUPPORTED);
 
-  Matomo.setUserProperties({
-    version: DeviceInfo.getVersion(),
-    system: Platform.OS,
-    supported: supported ? supported : "",
-  });
   Matomo.setDimensions({
     [MATOMO_DIMENSION.VERSION]: DeviceInfo.getVersion(),
     [MATOMO_DIMENSION.SYSTEM]: Platform.OS,
     [MATOMO_DIMENSION.SUPPORTED]: supported ? supported : "",
-  })
+  });
 };
 
 const checkNetwork = async () => {

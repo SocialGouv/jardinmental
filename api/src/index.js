@@ -24,9 +24,6 @@ app.use(cors());
 app.get("/healthz", async (req, res) => {
   res.send(`Hello World`);
 });
-app.get("/version", async (req, res) => {
-  res.status(200).send({ ok: true, data: MOBILE_VERSION });
-});
 
 // hello world
 const now = new Date();
@@ -45,6 +42,10 @@ app.use((_req, res, next) => {
 //
 app.set("json replacer", (k, v) => (v === null ? undefined : v));
 app.use(versionCheck);
+app.get("/version", async (req, res) => {
+  res.status(200).send({ ok: true, data: MOBILE_VERSION });
+});
+
 // Pre middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json({ limit: "50mb" }));

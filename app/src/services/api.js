@@ -3,7 +3,6 @@ import { Alert, Linking, Platform } from "react-native";
 import NetInfo from "@react-native-community/netinfo";
 import fetchRetry from "fetch-retry";
 
-// todo : clean 👇
 import { SCHEME, HOST, VERSION } from "../config";
 import matomo from "./matomo";
 
@@ -18,7 +17,6 @@ const checkNetwork = async (test = false) => {
 };
 
 class ApiService {
-  // todo : clean 👇
   host = HOST;
   scheme = SCHEME;
   fetch = fetchRetry(fetch);
