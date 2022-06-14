@@ -2,10 +2,9 @@ import URI from "urijs";
 import { Alert, Linking, Platform } from "react-native";
 import NetInfo from "@react-native-community/netinfo";
 import fetchRetry from "fetch-retry";
-import deviceInfoModule from "react-native-device-info";
 
 // todo : clean 👇
-import { SCHEME, MW_API_HOST } from "../config";
+import { SCHEME, HOST, VERSION } from "../config";
 import matomo from "./matomo";
 
 const checkNetwork = async (test = false) => {
@@ -20,7 +19,7 @@ const checkNetwork = async (test = false) => {
 
 class ApiService {
   // todo : clean 👇
-  host = MW_API_HOST;
+  host = HOST;
   scheme = SCHEME;
   fetch = fetchRetry(fetch);
   getUrl = (path, query) => {
@@ -33,7 +32,7 @@ class ApiService {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
-          appversion: deviceInfoModule.getBuildNumber(),
+          appversion: VERSION,
           appdevice: Platform.OS,
           currentroute: this.navigation?.getCurrentRoute?.()?.name,
           ...headers,
@@ -65,6 +64,8 @@ class ApiService {
       };
     }
   };
+
+  needUpdate = false;
 
   get = async (args) => this.execute({ method: "GET", ...args });
   post = async (args) => this.execute({ method: "POST", ...args });

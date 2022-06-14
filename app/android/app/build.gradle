@@ -1,4 +1,5 @@
 apply plugin: "com.android.application"
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 
 import com.android.build.OutputFile
 import groovy.json.JsonSlurper
@@ -266,7 +267,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    
+
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:0.63.4"  // From node_modules
 

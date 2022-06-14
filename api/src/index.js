@@ -6,7 +6,7 @@ const cors = require("cors");
 const helmet = require("helmet");
 const logger = require("morgan");
 
-const { PORT, VERSION } = require("./config");
+const { PORT, VERSION, MOBILE_VERSION } = require("./config");
 const errors = require("./middlewares/errors");
 const versionCheck = require("./middlewares/versionCheck");
 
@@ -23,6 +23,9 @@ app.use(cors());
 // kube probe
 app.get("/healthz", async (req, res) => {
   res.send(`Hello World`);
+});
+app.get("/version", async (req, res) => {
+  res.status(200).send({ ok: true, data: MOBILE_VERSION });
 });
 
 // hello world

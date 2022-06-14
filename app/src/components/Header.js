@@ -1,34 +1,31 @@
-import React, { useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { StyleSheet, View, Dimensions } from "react-native";
-import { colors } from "../utils/colors";
 import Icon from "./Icon";
 import Text from "./MyText";
 import Settings from "../scenes/settings/settings-modal";
 import Drawer from "./drawer";
-import { useRoute, useFocusEffect } from "@react-navigation/native";
-import { needUpdate } from "../services/versionChecker";
+import { useIsFocused } from "@react-navigation/native";
 import { getBadgeNotesVersion } from "../scenes/news";
 import localStorage from "../utils/localStorage";
+import NeedUpdateContext from "../context/needUpdate";
 
 const Header = ({ title, navigation }) => {
+  const needUpdate = useContext(NeedUpdateContext);
   const [settingsVisible, setSettingsVisible] = useState(false);
   const [drawerVisible, setDrawerVisible] = useState();
   const [badge, setBadge] = useState(false);
-  const route = useRoute();
 
-  const updateBadge = async () => {
-    const update = await needUpdate();
+  const updateBadge = useCallback(async () => {
     const news = await getBadgeNotesVersion();
     const supported = await localStorage.getSupported();
     const badgeProNPS = await localStorage.getVisitProNPS();
-    setBadge(update || news || (supported === "PRO" && !badgeProNPS));
-  };
+    setBadge(needUpdate || news || (supported === "PRO" && !badgeProNPS));
+  }, [needUpdate]);
 
-  useFocusEffect(
-    React.useCallback(() => {
-      updateBadge();
-    }, [])
-  );
+  const isFocused = useIsFocused();
+  useEffect(() => {
+    if (isFocused) updateBadge();
+  }, [isFocused, updateBadge]);
 
   return (
     <View style={styles.container}>
