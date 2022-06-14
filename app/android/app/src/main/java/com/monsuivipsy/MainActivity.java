@@ -1,8 +1,10 @@
 package com.monsuivipsy;
 
+import android.os.Bundle;
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.ReactRootView;
+import com.zoontek.rnbootsplash.RNBootSplash; // <- add this necessary import
 
 public class MainActivity extends ReactActivity {
 
@@ -14,6 +16,12 @@ public class MainActivity extends ReactActivity {
   protected String getMainComponentName() {
     return "monsuivipsy";
   }
+
+  // https://stackoverflow.com/a/57712204/5225096
+  @Override
+    protected void onCreate(Bundle savedInstanceState) {
+       super.onCreate(null);
+   }
 
   /**
    * Returns the instance of the {@link ReactActivityDelegate}. There the RootView is created and
@@ -28,13 +36,19 @@ public class MainActivity extends ReactActivity {
     public MainActivityDelegate(ReactActivity activity, String mainComponentName) {
       super(activity, mainComponentName);
     }
-    
+
     @Override
     protected ReactRootView createRootView() {
       ReactRootView reactRootView = new ReactRootView(getContext());
       // If you opted-in for the New Architecture, we enable the Fabric Renderer.
       reactRootView.setIsFabric(BuildConfig.IS_NEW_ARCHITECTURE_ENABLED);
       return reactRootView;
+    }
+
+    @Override
+    protected void loadApp(String appKey) {
+      RNBootSplash.init(getPlainActivity()); // <- initialize the splash screen
+      super.loadApp(appKey);
     }
   }
 }

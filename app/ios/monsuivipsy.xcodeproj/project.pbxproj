@@ -25,13 +25,13 @@
 		4AA179307F334874AFDFBCAB /* Karla-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6EB5609B765D40FFADC23370 /* Karla-Medium.ttf */; };
 		635C798B93CDD12B58FBF72E /* libPods-monsuivipsy-monsuivipsyTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BD44BF361DF1385F0C97951B /* libPods-monsuivipsy-monsuivipsyTests.a */; };
 		6F6D0B0898F4448A887E7C1A /* Karla-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 17906A1BFA7A404FA6ABF626 /* Karla-Regular.ttf */; };
-		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		940669317F6A4B65B9C88268 /* Karla-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C534B0F9A1C9461ABF7F260C /* Karla-ExtraBold.ttf */; };
 		96314DCB76BA410391F6072A /* Karla-ExtraLightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F4F97E74FB83495F9484D7B1 /* Karla-ExtraLightItalic.ttf */; };
 		CF66681F049F4118B98A7B7C /* Karla-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5BD2B969293743488050A608 /* Karla-ExtraLight.ttf */; };
 		E4CED278E7EA4F8394DCCC8F /* Karla-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EF3CB7E8E56849B9A6C05F7B /* Karla-SemiBold.ttf */; };
 		E553C8D12DBA44D0B90DA5E7 /* Karla-ExtraBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 853A8655D33A42188EE988A8 /* Karla-ExtraBoldItalic.ttf */; };
 		E65E2318ABC64C8BAF59B460 /* Karla-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F7C6168A598E46388A49AF08 /* Karla-Bold.ttf */; };
+		F72716E22858B6470056011C /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F72716E12858B6470056011C /* BootSplash.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,7 +72,6 @@
 		630099BB83CB835D87FF8EF8 /* Pods-monsuivipsy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-monsuivipsy.debug.xcconfig"; path = "Target Support Files/Pods-monsuivipsy/Pods-monsuivipsy.debug.xcconfig"; sourceTree = "<group>"; };
 		63322AA5A0F16E74FD28F5E5 /* Pods-monsuivipsy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-monsuivipsy.release.xcconfig"; path = "Target Support Files/Pods-monsuivipsy/Pods-monsuivipsy.release.xcconfig"; sourceTree = "<group>"; };
 		6EB5609B765D40FFADC23370 /* Karla-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Karla-Medium.ttf"; path = "../assets/fonts/Karla-Medium.ttf"; sourceTree = "<group>"; };
-		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = monsuivipsy/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		853A8655D33A42188EE988A8 /* Karla-ExtraBoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Karla-ExtraBoldItalic.ttf"; path = "../assets/fonts/Karla-ExtraBoldItalic.ttf"; sourceTree = "<group>"; };
 		B728857160C4C76B9E59130D /* libPods-monsuivipsy.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-monsuivipsy.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BADD6D5ED79A4DE097DE4CA3 /* Karla-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Karla-Italic.ttf"; path = "../assets/fonts/Karla-Italic.ttf"; sourceTree = "<group>"; };
@@ -85,6 +84,7 @@
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		EF3CB7E8E56849B9A6C05F7B /* Karla-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Karla-SemiBold.ttf"; path = "../assets/fonts/Karla-SemiBold.ttf"; sourceTree = "<group>"; };
 		F4F97E74FB83495F9484D7B1 /* Karla-ExtraLightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Karla-ExtraLightItalic.ttf"; path = "../assets/fonts/Karla-ExtraLightItalic.ttf"; sourceTree = "<group>"; };
+		F72716E12858B6470056011C /* BootSplash.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = BootSplash.storyboard; path = monsuivipsy/BootSplash.storyboard; sourceTree = "<group>"; };
 		F7C6168A598E46388A49AF08 /* Karla-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Karla-Bold.ttf"; path = "../assets/fonts/Karla-Bold.ttf"; sourceTree = "<group>"; };
 		FD6D90E79AFB4E006865C584 /* Pods-monsuivipsy-monsuivipsyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-monsuivipsy-monsuivipsyTests.debug.xcconfig"; path = "Target Support Files/Pods-monsuivipsy-monsuivipsyTests/Pods-monsuivipsy-monsuivipsyTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -148,7 +148,7 @@
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
-				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
+				F72716E12858B6470056011C /* BootSplash.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
 			name = monsuivipsy;
@@ -375,12 +375,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				E65E2318ABC64C8BAF59B460 /* Karla-Bold.ttf in Resources */,
 				6F6D0B0898F4448A887E7C1A /* Karla-Regular.ttf in Resources */,
 				3AE7B40A81BC420A8983B11D /* Karla-BoldItalic.ttf in Resources */,
 				940669317F6A4B65B9C88268 /* Karla-ExtraBold.ttf in Resources */,
+				F72716E22858B6470056011C /* BootSplash.storyboard in Resources */,
 				E553C8D12DBA44D0B90DA5E7 /* Karla-ExtraBoldItalic.ttf in Resources */,
 				CF66681F049F4118B98A7B7C /* Karla-ExtraLight.ttf in Resources */,
 				96314DCB76BA410391F6072A /* Karla-ExtraLightItalic.ttf in Resources */,
