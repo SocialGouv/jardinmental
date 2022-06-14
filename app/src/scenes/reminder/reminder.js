@@ -1,5 +1,7 @@
-import React from "react";
-import { Alert, Linking, Platform, View, TouchableOpacity, StyleSheet, SafeAreaView } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
+import { Alert, View, TouchableOpacity, StyleSheet, SafeAreaView } from "react-native";
+import { openSettings } from "react-native-permissions";
+import dayjs from "dayjs";
 import Text from "../../components/MyText";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import localStorage from "../../utils/localStorage";
@@ -11,122 +13,88 @@ import { colors } from "../../utils/colors";
 import logEvents from "../../services/logEvents";
 import BackButton from "../../components/BackButton";
 
-const dateWithTimeAndOffsetFromToday = (hours, minutes, offset) => {
-  const date = new Date();
-  return new Date(date.getFullYear(), date.getMonth(), date.getDate() + offset, hours, minutes);
-};
-
-const timeIsAfterNow = (inputDate) => {
-  const date = new Date(inputDate);
-  const hours = date.getHours();
-  const minutes = date.getMinutes();
-  if (hours > new Date().getHours()) {
-    return true;
-  }
-  if (hours < new Date().getHours()) {
-    return false;
-  }
-  return minutes > new Date().getMinutes();
-};
-
 const ReminderStorageKey = "@Reminder";
 
-const getAujourdhui20h00 = () => {
-  const date = new Date();
-  return new Date(date.getFullYear(), date.getMonth(), date.getDate(), 20, 0);
-};
+const Reminder = ({
+  navigation,
+  route,
+  notifReminderTitle = "Comment ça va aujourd'hui ?",
+  notifReminderMessage = "N'oubliez pas de remplir votre application Mon Suivi Psy",
+}) => {
+  const [reminder, setReminder] = useState(null);
+  const [reminderSetupVisible, setReminderSetupVisible] = useState(false);
 
-const reminderTitle = "Comment ça va aujourd'hui ?";
-const reminderMessage = "N'oubliez pas de remplir votre application Jardin Mental";
-class Reminder extends React.Component {
-  state = {
-    reminder: null,
-    timePickerVisible: false,
-  };
-
-  componentDidMount() {
-    this.getReminder(false);
-    this.notifcationListener = NotificationService.listen(this.handleNotification);
-    this.setOnboardingStepIfNeeded();
-    // NotificationService.list();
-  }
-
-  componentWillUnmount() {
-    NotificationService.remove(this.notifcationListener);
-  }
-
-  setOnboardingStepIfNeeded = async () => {
-    if (this.props.route?.params?.onboarding)
-      await localStorage.setOnboardingStep(ONBOARDING_STEPS.STEP_REMINDER);
-  };
-
-  onOK = () => {
-    this.props.navigation.navigate("tabs");
-  };
-
-  onBackPress = () => this.props.navigation.navigate("tabs");
-  validateOnboarding = async () => {
-    await localStorage.setOnboardingDone(true);
-    // await localStorage.setOnboardingStep(null);
-    this.props.navigation.navigate("onboarding-drugs");
-  };
-
-  getReminder = async (showAlert = true) => {
+  const getReminder = async (showAlert = true) => {
     const isRegistered = await NotificationService.checkPermission();
-    const reminder = await AsyncStorage.getItem(ReminderStorageKey);
-    if (Boolean(reminder) && new Date(reminder) === "Invalid Date") {
-      this.deleteReminder();
+    let storedReminder = await AsyncStorage.getItem(ReminderStorageKey);
+    if (storedReminder) {
+      if (!dayjs(storedReminder).isValid()) {
+        try {
+          storedReminder = JSON.parse(storedReminder);
+        } catch (e) {}
+      }
+    }
+    if (Boolean(storedReminder) && !dayjs(storedReminder).isValid()) {
+      deleteReminder();
+    }
+    if (!isRegistered && storedReminder && showAlert) showPermissionsAlert();
+    if (!storedReminder && route?.params?.onboarding) {
+      setReminder(dayjs().set("hours", 20).set("minutes", 0));
       return;
     }
-    if (!isRegistered && reminder && showAlert) {
-      this.showPermissionsAlert(this.deleteReminder);
-    }
-    if (!reminder && this.props.route?.params?.onboarding) {
-      this.setReminder(getAujourdhui20h00());
-      return;
-    }
-    if (!reminder) {
-      return;
-    }
-    this.setState({ reminder: new Date(reminder) });
+    const scheduled = await NotificationService.getScheduledLocalNotifications();
+    if (!storedReminder) return;
+    setReminder(dayjs(storedReminder));
   };
 
-  scheduleNotification = async (reminder = new Date(Date.now() + 10 * 1000)) => {
-    NotificationService.cancelAll();
-    // todo cancel only the reminder
+  const handleNotification = (notification) => {
+    if (notification.title === notifReminderTitle) {
+      navigation.navigate("tabs");
+    }
+  };
 
-    const fireDate = dateWithTimeAndOffsetFromToday(
-      reminder.getHours(),
-      reminder.getMinutes(),
-      timeIsAfterNow(reminder) ? 0 : 1
-    );
+  const notificationListener = useRef();
+  useEffect(() => {
+    getReminder(false);
+    notificationListener.current = NotificationService.listen(handleNotification, "reminder");
+    if (route?.params?.onboarding) localStorage.setOnboardingStep(ONBOARDING_STEPS.STEP_REMINDER);
+    // return () => NotificationService.remove(notificationListener.current);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const scheduleNotification = async (newReminder = new Date(Date.now() + 10 * 1000)) => {
+    NotificationService.cancelAll();
+    const fireDate = dayjs()
+      .set("hours", newReminder.getHours())
+      .set("minutes", newReminder.getMinutes())
+      .set("seconds", 0)
+      .toDate();
     NotificationService.scheduleNotification({
       date: fireDate,
-      title: reminderTitle,
-      message: reminderMessage,
+      title: notifReminderTitle,
+      message: notifReminderMessage,
       repeatType: "day",
     });
     logEvents.logReminderAdd();
   };
 
-  showTimePicker = async () => {
-    const isRegistered = await NotificationService.checkPermission();
+  const showReminderSetup = async () => {
+    const isRegistered = await NotificationService.checkAndAskForPermission();
     if (!isRegistered) {
-      this.showPermissionsAlert(this.deleteReminder);
+      showPermissionsAlert();
       return;
     }
-    this.setState({ timePickerVisible: true });
+    setReminderSetupVisible(true);
   };
 
-  showPermissionsAlert = (deleteReminder) => {
-    // Alert.
+  const showPermissionsAlert = () => {
     Alert.alert(
       "Vous devez autoriser les notifications pour accéder à ce service",
       "Veuillez cliquer sur Réglages puis Notifications pour activer les notifications",
       [
         {
           text: "Réglages",
-          onPress: () => Linking.openURL("app-settings:"),
+          onPress: openSettings,
         },
         {
           text: "Annuler",
@@ -138,125 +106,103 @@ class Reminder extends React.Component {
     );
   };
 
-  setReminder = async (reminder) => {
-    if (!reminder) {
-      this.setState({ timePickerVisible: false });
-      return;
-    }
-    await AsyncStorage.setItem(ReminderStorageKey, reminder.toISOString());
-    await this.scheduleNotification(reminder);
-    this.setState({ reminder, timePickerVisible: false });
+  const setReminderRequest = async (newReminder) => {
+    setReminderSetupVisible(false);
+    if (!dayjs(newReminder).isValid()) return;
+    await scheduleNotification(newReminder);
+    setReminder(dayjs(newReminder));
+    await AsyncStorage.setItem(ReminderStorageKey, JSON.stringify(dayjs(newReminder)));
+    setReminderSetupVisible(false);
+    const scheduled = await NotificationService.getScheduledLocalNotifications();
   };
 
-  deleteReminderManually = () => {
-    logEvents.logReminderCancel();
-    this.deleteReminder();
-  };
-
-  deleteReminder = async () => {
-    await AsyncStorage.removeItem(ReminderStorageKey);
+  const deleteReminder = async () => {
     NotificationService.cancelAll();
-    this.setState({ reminder: null, timePickerVisible: false });
+    setReminder("");
+    setReminderSetupVisible(false);
+    await AsyncStorage.removeItem(ReminderStorageKey);
+  };
+  const deleteReminderManually = () => {
+    logEvents.logReminderCancel();
+    deleteReminder();
   };
 
-  handleNotification = (notification) => {
-    if (!notification) {
-      return;
-    }
-    if (Platform.OS === "android") {
-      if (notification.title === reminderTitle) {
-        this.onOK();
-      }
-    }
-    if (Platform.OS === "ios") {
-      if (notification.message === reminderMessage) {
-        this.onOK();
-      }
-    }
+  const validateOnboarding = async () => {
+    await localStorage.setOnboardingDone(true);
+    // await localStorage.setOnboardingStep(null);
+    navigation.navigate("onboarding-drugs");
   };
 
-  renderHeader = () => {
-    return this.props.route?.params?.onboarding ? (
-      <View style={styles.header}>
-        <ReminderSvg style={styles.smallImage} width={30} height={30} />
-        <Text style={styles.smallTitle}>Votre rappel pour penser à remplir votre questionnaire</Text>
-      </View>
-    ) : (
-      <>
-        <ReminderSvg style={styles.bigImage} />
-        <Text style={styles.bigTitle}>Je programme un rappel quotidien</Text>
-      </>
-    );
-  };
-
-  render() {
-    const { reminder, timePickerVisible } = this.state;
-    return (
-      <SafeAreaView style={styles.container}>
-        <BackButton onPress={this.props.navigation.goBack} />
-        {this.renderHeader()}
-        <View style={styles.description}>
-          {reminder ? (
-            <>
-              <Text style={styles.subtitle}>
-                Pour un <Text style={styles.lightBlue}>meilleur suivi</Text>, un rappel est programmé à :
-              </Text>
-              <TouchableOpacity onPress={this.showTimePicker}>
-                <Text style={styles.time}>{`${reminder.getLocalePureTime("fr")}`}</Text>
-              </TouchableOpacity>
-            </>
-          ) : (
-            <Text style={styles.subtitle}>
-              Un rappel permet de remplir plus souvent l’application et obtenir des analyses plus pertinentes
-            </Text>
-          )}
+  return (
+    <SafeAreaView style={styles.container}>
+      <BackButton onPress={navigation.goBack} />
+      {route?.params?.onboarding ? (
+        <View style={styles.header}>
+          <ReminderSvg style={styles.smallImage} width={30} height={30} />
+          <Text style={styles.smallTitle}>Votre rappel pour penser à remplir votre questionnaire</Text>
         </View>
-        {this.props.route?.params?.onboarding && reminder ? (
+      ) : (
+        <>
+          <ReminderSvg style={styles.bigImage} />
+          <Text style={styles.bigTitle}>Je programme un rappel quotidien</Text>
+        </>
+      )}
+      <View style={styles.description}>
+        {reminder ? (
+          <>
+            <Text style={styles.subtitle}>
+              Pour un <Text style={styles.lightBlue}>meilleur suivi</Text>, un rappel est programmé à :
+            </Text>
+            <TouchableOpacity onPress={showReminderSetup}>
+              <Text style={styles.time}>{`${dayjs(reminder).format("HH:mm")}`}</Text>
+            </TouchableOpacity>
+          </>
+        ) : (
+          <Text style={styles.subtitle}>
+            Un rappel permet de remplir plus souvent l’application et obtenir des analyses plus pertinentes
+          </Text>
+        )}
+      </View>
+      {!!route?.params?.onboarding && !!reminder && (
+        <TouchableOpacity onPress={deleteReminderManually} style={[styles.laterContainer]}>
+          <Text style={styles.later}>Désactiver le rappel</Text>
+        </TouchableOpacity>
+      )}
+
+      {route?.params?.onboarding ? (
+        <View style={styles.ctaContainer}>
           <TouchableOpacity
-            onPress={reminder ? this.deleteReminderManually : this.onBackPress}
+            onPress={reminder ? validateOnboarding : showReminderSetup}
+            style={styles.setupButton}
+          >
+            <Text style={styles.setupButtonText}>{reminder ? "Continuer" : "Choisir l'heure du rappel"}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={reminder ? showReminderSetup : validateOnboarding}
             style={[styles.laterContainer]}
           >
-            <Text style={styles.later}>Désactiver le rappel</Text>
+            <Text style={styles.later}>{reminder ? "Modifier l'heure du rappel" : "Plus tard"}</Text>
           </TouchableOpacity>
-        ) : null}
-
-        {this.props.route?.params?.onboarding ? (
-          <View style={styles.ctaContainer}>
-            <TouchableOpacity
-              onPress={reminder ? this.validateOnboarding : this.showTimePicker}
-              style={styles.setupButton}
-            >
-              <Text style={styles.setupButtonText}>
-                {reminder ? "Continuer" : "Choisir l'heure du rappel"}
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={reminder ? this.showTimePicker : this.validateOnboarding}
-              style={[styles.laterContainer]}
-            >
-              <Text style={styles.later}>{reminder ? "Modifier l'heure du rappel" : "Plus tard"}</Text>
-            </TouchableOpacity>
-          </View>
-        ) : (
-          <View style={styles.ctaContainer}>
-            <TouchableOpacity onPress={this.showTimePicker} style={styles.setupButton}>
-              <Text style={styles.setupButtonText}>
-                {reminder ? "Modifier le rappel" : "Choisir l'heure du rappel"}
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={reminder ? this.deleteReminderManually : this.onBackPress}
-              style={[styles.laterContainer]}
-            >
-              <Text style={styles.later}>{reminder ? "Retirer le rappel" : "Plus tard"}</Text>
-            </TouchableOpacity>
-          </View>
-        )}
-        <TimePicker value={reminder} visible={timePickerVisible} selectDate={this.setReminder} />
-      </SafeAreaView>
-    );
-  }
-}
+        </View>
+      ) : (
+        <View style={styles.ctaContainer}>
+          <TouchableOpacity onPress={showReminderSetup} style={styles.setupButton}>
+            <Text style={styles.setupButtonText}>
+              {reminder ? "Modifier le rappel" : "Choisir l'heure du rappel"}
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={reminder ? deleteReminderManually : () => navigation.navigate("tabs")}
+            style={[styles.laterContainer]}
+          >
+            <Text style={styles.later}>{reminder ? "Retirer le rappel" : "Plus tard"}</Text>
+          </TouchableOpacity>
+        </View>
+      )}
+      <TimePicker visible={reminderSetupVisible} selectDate={setReminderRequest} />
+    </SafeAreaView>
+  );
+};
 
 const styles = StyleSheet.create({
   ctaContainer: {
