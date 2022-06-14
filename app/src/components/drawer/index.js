@@ -1,28 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { SafeAreaView, StyleSheet, Platform, Dimensions, View, ScrollView, Linking } from "react-native";
 import Modal from "react-native-modal";
 import DrawerItem from "./drawer-item";
 import LegalItem from "./legal-item";
-import { needUpdate } from "../../services/versionChecker";
 import localStorage from "../../utils/localStorage";
 import { getBadgeNotesVersion } from "../../scenes/news";
 import pck from "../../../package.json";
 import Text from "../../components/MyText";
 import { colors } from "../../utils/colors";
+import NeedUpdateContext from "../../context/needUpdate";
 
 export default ({ navigation, visible, onClick }) => {
   const [isVisible, setIsVisible] = useState();
-  const [updateVisible, setUpdateVisible] = useState(false);
+  const updateVisible = useContext(NeedUpdateContext);
+
   const [npsProIsVisible, setNpsProIsVisible] = useState(true);
   const [badgeNpsProIsVisible, setBadgeNpsProIsVisible] = useState(false);
   const [badgeNotesVersionVisible, setBadgeNotesVersionVisible] = useState(false);
 
   useEffect(() => {
     setIsVisible(visible);
-
     (async () => {
-      const u = await needUpdate();
-      setUpdateVisible(u);
       const n = await getBadgeNotesVersion();
       setBadgeNotesVersionVisible(n);
       const proNPS = await localStorage.getSupported();

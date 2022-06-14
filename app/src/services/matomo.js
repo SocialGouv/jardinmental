@@ -19,13 +19,6 @@ class Api {
     return result;
   }
 
-  setUserProperties(newProperties) {
-    this.userProperties = {
-      ...this.userProperties,
-      ...newProperties,
-    };
-  }
-
   setDimensions(newDimensions) {
     this.dimensions = {
       ...(this.dimensions || {}),
@@ -33,15 +26,7 @@ class Api {
     };
   }
 
-  computeCvar(cvarObject) {
-    const _cvar = {};
-    for (let [index, key] of Object.keys(cvarObject).entries()) {
-      _cvar[`${index}`] = [key, cvarObject[key]];
-    }
-    return JSON.stringify(_cvar);
-  }
-
-  computeDimentions(dimensions) {
+  computeDimentions(dimensions = {}) {
     // Get something like this:
     const d = {};
     for (let [key, value] of Object.entries(dimensions)) {
@@ -52,7 +37,6 @@ class Api {
 
   computeParams(params, idsite) {
     params = {
-      _cvar: this.computeCvar(this.userProperties),
       idsite,
       _id: this.userId,
       uid: this.userId,
@@ -94,11 +78,7 @@ class Api {
       if (!this.initDone) {
         throw new Error("matomo not initialized yet");
       }
-      if (__DEV__) {
-        // return;
-        console.log(`${this.baseUrl}?${this.computeParams(params, this.idsite)}`);
-        return;
-      }
+      if (__DEV__) return console.log(params);
       const url = `${this.baseUrl}?${this.computeParams(params, this.idsite)}`;
       const res = await fetch(encodeURI(url));
       // if (__DEV__) {
