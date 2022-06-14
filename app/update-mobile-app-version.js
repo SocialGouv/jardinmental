@@ -48,6 +48,14 @@ const readme = fs.readFileSync("../README.md", "utf8");
 const newReadme = readme.replace(/version-(\d+\.\d+\.\d+)-blue/, `version-${newBuildName}-blue`);
 fs.writeFileSync("../README.md", newReadme);
 
+// Replace the mobileAppVersion in the ../api/package.json file via regex and save it
+const apiPackageJson = fs.readFileSync("../api/package.json", "utf8");
+const newApiPackageJson = apiPackageJson.replace(
+  /"mobileAppVersion": "[^"]+"/,
+  `"mobileAppVersion": "${newBuildName}"`
+);
+fs.writeFileSync("../api/package.json", newApiPackageJson);
+
 console.log("🥳 Bumped version number to " + newBuildNumber);
 if (release !== "bump") {
   console.log("🥳 Updated version name to " + newBuildName);
