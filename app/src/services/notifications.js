@@ -1,12 +1,17 @@
 import PushNotification from "react-native-push-notification";
 import PushNotificationIOS from "@react-native-community/push-notification-ios";
 import { Platform } from "react-native";
+import { checkNotifications, RESULTS } from "react-native-permissions";
 
 class NotificationService {
   listeners = {};
 
-  init = async () => {
-    await this.configure();
+  init = () => {
+    this.configure();
+  };
+
+  delete = () => {
+    PushNotificationIOS.removeEventListener("registrationError", this.failIOSToken);
   };
 
   async configure() {
@@ -20,36 +25,74 @@ class NotificationService {
         sound: true,
       },
 
-      popInitialNotification: false,
-      requestPermissions: Platform.OS === "ios",
+      popInitialNotification: true,
+      requestPermissions: false,
     });
-    // required for android
+    this.initAndroidLocalScheduledNotifications();
+    if (Platform.OS === "ios") {
+      PushNotificationIOS.addEventListener("registrationError", this.failIOSToken);
+    }
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+  }
+
+  failIOSToken = () => {
+    if (Platform.OS === "android") return;
+  };
+
+  checkPermission = async () => {
+    const authStatus = await checkNotifications().then(({ status }) => status);
+    // …'unavailable' | 'denied' | 'limited' | 'granted' | 'blocked'
+    let permission = { granted: false, canAsk: false };
+    switch (authStatus) {
+      case RESULTS.UNAVAILABLE:
+        permission = { granted: false, canAsk: false };
+        break;
+      case RESULTS.DENIED:
+        permission = { granted: false, canAsk: true };
+        break;
+      case RESULTS.LIMITED:
+        permission = { granted: true };
+        break;
+      case RESULTS.GRANTED:
+        permission = { granted: true };
+        break;
+      case RESULTS.BLOCKED:
+        permission = { granted: false, canAsk: false };
+        break;
+    }
+    return permission;
+  };
+
+  checkAndAskForPermission = async () => {
+    const { granted, canAsk } = await this.checkPermission();
+    if (granted) return true;
+    if (!canAsk) return false;
+    const permission = await PushNotification.requestPermissions();
+    return permission;
+  };
+
+  checkAndGetPermissionIfAlreadyGiven = async (from) => {
+    const { granted } = await this.checkPermission();
+    if (!granted) return true;
+    const permission = await PushNotification.requestPermissions();
+    return permission;
+  };
+  // LOCAL NOTIFICATIONS
+
+  channelId = "REMINDER-CHANNEL-ID"; // same as in strings.xml, for Android
+  initAndroidLocalScheduledNotifications = () => {
     PushNotification.createChannel(
       {
-        channelId: "REMINDER-CHANNEL-ID", // (required)
-        channelName: "Reminder notifications", // (required)
+        channelId: this.channelId, // (required)
+        channelName: "Push local notifications", // (required)
         soundName: "default", // (optional) See `soundName` parameter of `localNotification` function
         importance: 4, // (optional) default: 4. Int value of the Android notification importance
         vibrate: true, // (optional) default: true. Creates the default vibration patten if true.
       },
-      (created) => console.log(`createChannel returned '${created}'`) // (optional) callback returns whether the channel was created, false means it already existed.
+      (created) => console.log(`createChannel returned '${created}'`)
     );
-    this.isConfigured = true;
-  }
+  };
 
-  list() {
-    PushNotification.getScheduledLocalNotifications((e) => {
-      console.log(e.length, "local notification(s) scheduled");
-      e.forEach((x) => console.log("🕒", x.id, x.title, x.date));
-    });
-  }
-
-  getInitNotification() {
-    PushNotification.popInitialNotification((notification) => {
-      console.log("Initial Notification", notification);
-      this.handleNotification(notification);
-    });
-  }
   //Appears after a specified time. App does not have to be open.
   scheduleNotification({
     date,
@@ -57,8 +100,7 @@ class NotificationService {
     message,
     playSound = true,
     soundName = "default",
-    channelId = "REMINDER-CHANNEL-ID", // same as in strings.xml, for Android
-    repeatType,
+    repeatType = "day",
   } = {}) {
     PushNotification.localNotificationSchedule({
       date,
@@ -66,23 +108,32 @@ class NotificationService {
       message,
       playSound,
       soundName,
-      channelId,
-      largeIcon: "ic_launcher",
-      smallIcon: "ic_notification",
+      channelId: this.channelId,
       repeatType,
     });
   }
-
-  async checkPermission() {
-    return await new Promise((resolve) => {
-      PushNotification.checkPermissions(({ alert }) => {
-        resolve(alert);
-      });
+  getScheduledLocalNotifications = () =>
+    new Promise((resolve) => PushNotification.getScheduledLocalNotifications(resolve));
+  localNotification({ title, message, playSound = true, soundName = "default" } = {}) {
+    PushNotification.localNotification({
+      title,
+      message,
+      playSound,
+      soundName,
+      channelId: this.channelId,
     });
   }
 
   cancelAll() {
     PushNotification.cancelAllLocalNotifications();
+  }
+
+  // PUSH NOTIFICATIONS
+  getInitNotification() {
+    PushNotification.popInitialNotification((notification) => {
+      console.log("Initial Notification", notification);
+      this.handleNotification(notification);
+    });
   }
 
   handleNotification = (notification) => {
@@ -93,9 +144,7 @@ class NotificationService {
     if (Platform.OS === "android") {
       // if not the line below, the notification is launched without notifying
       // with the line below, there is a local notification triggered
-      if (notification.foreground && !notification.userInteraction) {
-        return;
-      }
+      if (notification.foreground && !notification.userInteraction) return;
     }
     /* LISTENERS */
 
@@ -116,12 +165,10 @@ class NotificationService {
     notification.finish(PushNotificationIOS.FetchResult.NoData);
   };
 
-  listen = (callback) => {
-    const listenerKey = `listener_${Date.now()}`;
+  listen = (callback, calledFrom) => {
+    const listenerKey = `listener_${calledFrom}`;
     this.listeners[listenerKey] = callback;
-    if (this.initNotification) {
-      this.handleNotification(this.initNotification);
-    }
+    if (this.initNotification) this.handleNotification(this.initNotification);
     return listenerKey;
   };
 

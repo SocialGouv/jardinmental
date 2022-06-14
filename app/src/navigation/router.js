@@ -32,6 +32,7 @@ import Infos from "../scenes/infos";
 import Contact from "../scenes/contact";
 import PrivacyLight from "../scenes/privacy-light";
 import RNBootsplash from "react-native-bootsplash";
+import Notifications from "../services/notifications";
 
 const Stack = createStackNavigator();
 
@@ -40,6 +41,7 @@ class Router extends React.Component {
     await logEvents.initMatomo();
     logEvents.logAppVisit();
     RNBootsplash.hide({ fade: true });
+    Notifications.init();
     this.appListener = AppState.addEventListener("change", this.onAppChange);
   }
 

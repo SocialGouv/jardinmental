@@ -1,6 +1,12 @@
 import "react-native-gesture-handler";
 import "react-native-get-random-values";
 import React from "react";
+import dayjs from "dayjs";
+import "dayjs/locale/fr";
+import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
+
+dayjs.extend(isSameOrAfter);
+dayjs.locale("fr");
 
 import Router from "./src/navigation/router";
 import { DiaryDataProvider } from "./src/context/diaryData";

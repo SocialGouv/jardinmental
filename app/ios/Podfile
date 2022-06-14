@@ -7,6 +7,10 @@ install! 'cocoapods', :deterministic_uuids => false
 target 'monsuivipsy' do
   config = use_native_modules!
 
+  permissions_path = '../node_modules/react-native-permissions/ios'
+  pod 'RNCPushNotificationIOS', :path => '../node_modules/@react-native-community/push-notification-ios'
+  pod 'Permission-Notifications', :path => "#{permissions_path}/Notifications"
+
   # Flags change depending on the env values.
   flags = get_default_flags()
 
