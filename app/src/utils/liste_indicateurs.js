@@ -7,6 +7,19 @@ import localStorage from "../utils/localStorage";
 //   return tempList;
 // };
 
+export const INDICATEURS_LISTE_ONBOARDING = [
+  "Humeur générale",
+  "Anxiété",
+  "Colère",
+  "Idées noires",
+  "Je suis fier(e) de moi",
+  "Confiance en soi",
+  "Qualité sommeil",
+  "Durée sommeil",
+  "Je fais une activité plaisir",
+  "Faire mes tâches ménagères",
+];
+
 export const INDICATEURS_LISTE_PAR_CATEGORIE = {
   "Les plus courants": [
     "Humeur générale",

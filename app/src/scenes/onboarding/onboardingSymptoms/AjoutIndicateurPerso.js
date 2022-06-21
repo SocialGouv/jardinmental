@@ -28,7 +28,7 @@ const AjoutIndicateurPerso = ({
           <View style={styles.buttonPlusContainer}>
             <Plus opacity={1} color="white" width={19} height={19} />
           </View>
-          <Text style={styles.textAjouter}>Créer un élément personnalisé</Text>
+          <Text style={styles.textAjouter}>Créer un indicateur personnalisé</Text>
         </TouchableOpacity>
       ) : null}
       {isOpen ? (

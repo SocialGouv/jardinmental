@@ -174,7 +174,7 @@ const DaySurvey = ({ navigation, route }) => {
             }}
           >
             <View style={styles.linkContainer}>
-              <Text style={styles.link}>Ajouter ou retirer des éléments de mon questionnaire</Text>
+              <Text style={styles.link}>Ajouter ou retirer des indicateurs de mon questionnaire</Text>
               <View style={styles.linkButtonContainer}>
                 <ArrowUpSvg color="#fff" />
               </View>
