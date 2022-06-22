@@ -1,3 +1,10 @@
+# [1.28.0](https://github.com/SocialGouv/monsuivipsy/compare/v1.27.2...v1.28.0) (2022-06-22)
+
+
+### Features
+
+* change onboarding ([#172](https://github.com/SocialGouv/monsuivipsy/issues/172)) ([f4d992e](https://github.com/SocialGouv/monsuivipsy/commit/f4d992e9a0afe7fd42ba3c253bd70a85e2e15843))
+
 ## [1.27.2](https://github.com/SocialGouv/monsuivipsy/compare/v1.27.1...v1.27.2) (2022-06-02)
 
 
