@@ -74,7 +74,7 @@ const Question = ({ question, explanation, onPress, selected, isLast, onChangeUs
             onChangeUserComment({ key: question.id, userComment: v });
           }}
           value={text}
-          placeholder="Ajouter une note sur cet élément"
+          placeholder="Ajouter une note sur cet indicateur"
           style={styles.textArea}
           textAlignVertical={"top"}
           // onFocus={() => setInputFocused(true)}

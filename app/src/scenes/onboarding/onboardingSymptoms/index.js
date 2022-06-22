@@ -9,9 +9,13 @@ import BackButton from "../../../components/BackButton";
 import Button from "../../../components/Button";
 import SurveyMenu from "../../../../assets/svg/SurveyMenu";
 import { ONBOARDING_STEPS } from "../../../utils/constants";
-import { INDICATEURS_LISTE_PAR_CATEGORIE } from "../../../utils/liste_indicateurs";
+import {
+  INDICATEURS_LISTE_PAR_CATEGORIE,
+  INDICATEURS_LISTE_ONBOARDING,
+} from "../../../utils/liste_indicateurs";
 import TextTag from "../../../components/TextTag";
 import CategorieElements from "./CategorieElements";
+import OnboardingElements from "./OnboardingElements";
 
 const SymptomScreen = ({ navigation, route }) => {
   const [indicateursSelection, setIndicateursSelection] = useState({});
@@ -73,22 +77,24 @@ const SymptomScreen = ({ navigation, route }) => {
       >
         <View style={styles.titleContainer}>
           <SurveyMenu style={styles.image} width={30} height={30} />
-          <Text style={styles.title}>Que souhaitez-vous suivre quotidiennement ?</Text>
+          <Text style={styles.title}>Que voulez-vous suivre dans votre questionnaire quotidien ?</Text>
         </View>
-        {Object.keys(INDICATEURS_LISTE_PAR_CATEGORIE).map((categorie) => {
-          const indicateurs = INDICATEURS_LISTE_PAR_CATEGORIE[categorie];
-          return (
-            <CategorieElements
-              key={categorie}
-              title={categorie}
-              options={indicateurs.map((e) => ({ id: e, label: e }))}
-              onClick={({ id, value }) => setToggleIndicateur({ indicateur: id, valeur: value })}
-              indicateursSelection={indicateursSelection}
-              handleAddNewSymptom={handleAddNewSymptom}
-              enableAddNewElement
-            />
-          );
-        })}
+        <View style={styles.titleContainer}>
+          <Text style={styles.sousTitre}>
+            Choisissez ou <Text style={[styles.sousTitre, styles.bold]}>créez vous-même</Text> les indicateurs
+            qui vous semblent <Text style={[styles.sousTitre, styles.bold]}>pertinents</Text> pour évaluer
+            votre état de santé mentale et ce qui influe dessus
+          </Text>
+        </View>
+        <OnboardingElements
+          key={"test"}
+          title={"test"}
+          options={INDICATEURS_LISTE_ONBOARDING.map((e) => ({ id: e, label: e }))}
+          onClick={({ id, value }) => setToggleIndicateur({ indicateur: id, valeur: value })}
+          indicateursSelection={indicateursSelection}
+          handleAddNewSymptom={handleAddNewSymptom}
+          enableAddNewElement
+        />
         {!getSelectionVide() ? (
           <>
             <View style={styles.divider} />
@@ -112,11 +118,17 @@ const SymptomScreen = ({ navigation, route }) => {
         ) : null}
         {getSelectionVide() ? (
           <View style={styles.buttonWrapperError}>
-            <Text style={[styles.alert, styles.spaceabove]}>Ajouter ou sélectionner au moins 1 élément</Text>
+            <Text style={[styles.alert, styles.spaceabove, styles.spacebottom]}>
+              Ajouter ou sélectionner au moins 1 indicateur
+            </Text>
           </View>
         ) : (
-          <Text style={[styles.h3, styles.spaceabove]}>
-            Vous pourrez modifier à tout moment ce que vous suivez via le menu "Réglages" de l'application
+          <Text style={[styles.h3, styles.spaceabove, styles.spacebottom]}>
+            Sélectionnez{" "}
+            <Text style={[styles.h3, styles.spaceabove, styles.medium]}>moins de 10 indicateurs</Text> pour
+            conserver un questionnaire rapide à remplir. Vous pourrez le faire évoluer à tout moment dans les{" "}
+            <Text style={[styles.h3, styles.spaceabove, styles.medium]}>paramètres</Text> de l’application, où
+            vous trouverez encore plus d’exemples !
           </Text>
         )}
         <View style={styles.buttonWrapper}>
@@ -201,11 +213,33 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
+  titleTextContainer: {
+    flex: 1,
+    borderColor: "red",
+    borderWidth: 1,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  },
   title: {
     flex: 1,
     color: colors.BLUE,
     fontSize: 22,
     fontWeight: "700",
+  },
+  sousTitre: {
+    paddingVertical: 15,
+    textAlign: "center",
+    flex: 1,
+    color: colors.BLUE,
+    fontSize: 15,
+    fontWeight: "400",
+  },
+  bold: {
+    fontWeight: "700",
+  },
+  medium: {
+    fontWeight: "500",
   },
   h3: {
     color: "#181818",
@@ -216,6 +250,9 @@ const styles = StyleSheet.create({
   },
   spaceabove: {
     marginTop: 15,
+  },
+  spacebottom: {
+    marginBottom: 15,
   },
   alert: {
     color: "red",
