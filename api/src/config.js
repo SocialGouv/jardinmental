@@ -1,4 +1,4 @@
-const { version, mobileAppVersion } = require("../package.json");
+const { version, mobileAppVersion, mobileAppBuildNumber } = require("../package.json");
 
 const PORT = process.env.PORT || 3000;
 const ENVIRONMENT = process.env.ENVIRONMENT || process.env.NODE_ENV || "development";
@@ -7,7 +7,8 @@ const SENTRY_KEY = process.env.SENTRY_KEY || "https://b43d73353b7b48b8857deb69bc
 
 const VERSION = version;
 const MOBILE_VERSION = mobileAppVersion;
-const MINIMUM_MOBILE_APP_VERSION = "1.27.2"; // manually change this number to force update app
+const MOBILE_BUILD_NUMBER = mobileAppBuildNumber;
+const MINIMUM_MOBILE_BUILD_NUMBER = 116; // manually change this number to force update app
 
 module.exports = {
   PORT,
@@ -15,5 +16,6 @@ module.exports = {
   SENTRY_KEY,
   VERSION,
   MOBILE_VERSION,
-  MINIMUM_MOBILE_APP_VERSION,
+  MOBILE_BUILD_NUMBER,
+  MINIMUM_MOBILE_BUILD_NUMBER,
 };

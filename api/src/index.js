@@ -6,7 +6,7 @@ const cors = require("cors");
 const helmet = require("helmet");
 const logger = require("morgan");
 
-const { PORT, VERSION, MOBILE_VERSION } = require("./config");
+const { PORT, VERSION, MOBILE_VERSION, MOBILE_BUILD_NUMBER } = require("./config");
 const errors = require("./middlewares/errors");
 const versionCheck = require("./middlewares/versionCheck");
 
@@ -28,7 +28,7 @@ app.get("/healthz", async (req, res) => {
 // hello world
 const now = new Date();
 app.get("/", async (req, res) => {
-  res.send(`Hello World at ${now.toISOString()}`);
+  res.send(`api MSP • ${now.toISOString()}`);
 });
 
 // Add header with API version to compare with client.
@@ -43,7 +43,7 @@ app.use((_req, res, next) => {
 app.set("json replacer", (k, v) => (v === null ? undefined : v));
 app.use(versionCheck);
 app.get("/version", async (req, res) => {
-  res.status(200).send({ ok: true, data: MOBILE_VERSION });
+  res.status(200).send({ ok: true, data: { MOBILE_VERSION, MOBILE_BUILD_NUMBER } });
 });
 
 // Pre middleware

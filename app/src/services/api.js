@@ -3,7 +3,7 @@ import { Alert, Linking, Platform } from "react-native";
 import NetInfo from "@react-native-community/netinfo";
 import fetchRetry from "fetch-retry";
 
-import { SCHEME, HOST, VERSION } from "../config";
+import { SCHEME, HOST, BUILD_NUMBER } from "../config";
 import matomo from "./matomo";
 
 const checkNetwork = async (test = false) => {
@@ -30,7 +30,7 @@ class ApiService {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
-          appversion: VERSION,
+          appversion: BUILD_NUMBER,
           appdevice: Platform.OS,
           currentroute: this.navigation?.getCurrentRoute?.()?.name,
           ...headers,
@@ -41,7 +41,7 @@ class ApiService {
       };
 
       const url = this.getUrl(path, query);
-      console.log("url: ", url);
+      console.log("api: ", { url });
       const canFetch = await checkNetwork();
       if (!canFetch) return;
 

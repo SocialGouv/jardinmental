@@ -1,6 +1,6 @@
 import { Alert, Linking, Platform } from "react-native";
 import React, { useEffect, useState } from "react";
-import { VERSION } from "../config";
+import { VERSION, BUILD_NUMBER } from "../config";
 import API from "../services/api";
 
 const NeedUpdateContext = React.createContext();
@@ -11,11 +11,11 @@ export const NeedUpdateContextProvider = ({ children }) => {
   useEffect(() => {
     (async () => {
       const response = await API.get({ path: "/version" });
-      if (response.ok && VERSION !== response.data) {
+      if (response.ok && BUILD_NUMBER !== response.data.MOBILE_BUILD_NUMBER) {
         setNeedUpdate(true);
         Alert.alert(
-          `La nouvelle version ${response.data} de Mon Suivi Psy est disponible !`,
-          `Vous avez la version ${VERSION} actuellement sur votre téléphone`,
+          `La nouvelle version ${response.data.MOBILE_VERSION}(${response.data.MOBILE_BUILD_NUMBER}) de Mon Suivi Psy est disponible !`,
+          `Vous avez la version ${VERSION}(${BUILD_NUMBER}) actuellement sur votre téléphone`,
           [
             {
               text: "Télécharger",

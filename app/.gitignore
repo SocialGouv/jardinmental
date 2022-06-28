@@ -65,3 +65,5 @@ buck-out/
 *.xls
 *.xlsx
 *.numbers
+
+!get-ip.sh
