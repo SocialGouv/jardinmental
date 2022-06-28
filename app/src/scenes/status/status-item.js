@@ -11,7 +11,7 @@ import Button from "../../components/RoundButtonIcon";
 import Toxic from "./toxic";
 import Context from "./context";
 import logEvents from "../../services/logEvents";
-import { INDICATEURS_LISTE } from "../../utils/liste_indicateurs";
+import { INDICATEURS_LISTE, INDICATEURS } from "../../utils/liste_indicateurs";
 
 export default ({ navigation, patientState, date }) => {
   const [customs, setCustoms] = useState([]);
@@ -81,7 +81,7 @@ export default ({ navigation, patientState, date }) => {
                     key={key}
                     category={key}
                     patientState={patientState}
-                    label={displayedCategories[key] || categoryName}
+                    label={INDICATEURS[key] || displayedCategories[key] || categoryName}
                   />
                 );
               })}
