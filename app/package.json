@@ -1,9 +1,11 @@
 {
   "name": "monsuivipsy",
   "version": "1.28.0",
+  "buildNumber": 116,
   "private": true,
   "scripts": {
-    "android": "react-native run-android",
+    "get-ip": "./get-ip.sh",
+    "android": "npm run get-ip && react-native run-android",
     "ios": "react-native run-ios",
     "ios:device": "react-native run-ios --device",
     "ios:SE": "react-native run-ios --simulator=\"iPhone SE\"",

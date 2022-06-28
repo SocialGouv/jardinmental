@@ -4,6 +4,7 @@ import DeviceInfo from "react-native-device-info";
 import { Platform } from "react-native";
 import Matomo from "./matomo";
 import { MATOMO_DIMENSION, STORAGE_KEY_SUPPORTED } from "../utils/constants";
+import api from "./api";
 
 const CONSTANTS = {
   STORE_KEY_USER_ID: "STORE_KEY_USER_ID",
@@ -49,6 +50,15 @@ const logEvent = async ({ category, action, name, value }) => {
       throw new Error("no network");
     }
     Matomo.logEvent({ category, action, name, value });
+    api.post({
+      path: "/event",
+      body: {
+        event: { category, action, name, value },
+        userId: Matomo.userId,
+        userProperties: Matomo.userProperties,
+        dimensions: Matomo.dimensions,
+      },
+    });
   } catch (error) {
     console.log("logEvent error", error);
     console.log("logEvent error", { category, action, name, value });

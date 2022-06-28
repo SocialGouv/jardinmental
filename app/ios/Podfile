@@ -29,6 +29,11 @@ target 'monsuivipsy' do
   # Note that if you have use_frameworks! enabled, Flipper will not work and
   # you should disable the next line.
   use_flipper!()
+  
+  ENVFILES = {
+    'Debug' => '$(PODS_ROOT)/../../.env.local',
+    'Release' => '$(PODS_ROOT)/../../.env',
+  }
 
   post_install do |installer|
     react_native_post_install(installer)
