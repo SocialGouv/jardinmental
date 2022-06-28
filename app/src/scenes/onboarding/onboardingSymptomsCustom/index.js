@@ -19,7 +19,7 @@ import Text from "../../../components/MyText";
 import Icon from "../../../components/Icon";
 import AjoutIndicateurPerso from "../onboardingSymptoms/AjoutIndicateurPerso";
 import CategorieElements from "../onboardingSymptoms/CategorieElements";
-import { INDICATEURS_LISTE_PAR_CATEGORIE, INDICATEURS_LISTE } from "../../../utils/liste_indicateurs";
+import { INDICATEURS_LISTE_PAR_CATEGORIE, INDICATEURS } from "../../../utils/liste_indicateurs";
 
 const CustomSymptomScreen = ({ navigation, route, settings = false }) => {
   const [chosenCategories, setChosenCategories] = useState();
@@ -36,7 +36,7 @@ const CustomSymptomScreen = ({ navigation, route, settings = false }) => {
       Object.keys(categories)
         .concat(...Object.keys(reliquatCategories))
         .concat(customSymptoms)
-        .concat(INDICATEURS_LISTE)
+        .concat(...Object.keys(INDICATEURS))
         .forEach((cat) => {
           const [categoryName] = cat.split("_");
           // select it if we add it to the list (old and new version)
@@ -62,8 +62,8 @@ const CustomSymptomScreen = ({ navigation, route, settings = false }) => {
   useEffect(() => {
     if (!chosenCategories || chosenCategories === undefined) return;
     (async () => {
-      const isCustom = (e) => !displayedCategories[e] && !INDICATEURS_LISTE.includes(e);
-      const isDefault = (e) => !!displayedCategories[e] || INDICATEURS_LISTE.includes(e);
+      const isCustom = (e) => !displayedCategories[e] && !Object.keys(INDICATEURS).includes(e);
+      const isDefault = (e) => !!displayedCategories[e] || Object.keys(INDICATEURS).includes(e);
 
       const customSymptomsKeys = Object.keys(chosenCategories).filter(isCustom);
       const defaultSymptomsKeys = Object.keys(chosenCategories).filter(isDefault);
@@ -117,7 +117,7 @@ const CustomSymptomScreen = ({ navigation, route, settings = false }) => {
             .map((e, i) => (
               <TextTag
                 key={i}
-                value={displayedCategories[e] || e}
+                value={INDICATEURS[e] || displayedCategories[e] || e}
                 selected={false}
                 color="#D4F0F2"
                 onPress={() => {}}
@@ -213,7 +213,7 @@ const Exemples = ({ chosenCategories, addSymptom, setToggleIndicateur }) => {
               <CategorieElements
                 key={categorie}
                 title={categorie}
-                options={indicateurs.map((e) => ({ id: e, label: e }))}
+                options={indicateurs.map((e) => ({ id: e, label: INDICATEURS[e] }))}
                 onClick={({ id, value }) => setToggleIndicateur({ indicateur: id, valeur: value })}
                 indicateursSelection={chosenCategories}
                 handleAddNewSymptom={addSymptom}
