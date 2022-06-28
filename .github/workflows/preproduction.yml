@@ -37,7 +37,7 @@ jobs:
     needs: [register]
     environment:
       name: preproduction
-      url: https:/api-monsuivipsy.dev.fabrique.social.gouv.fr
+      url: https:/api-monsuivipsy-preprod.dev.fabrique.social.gouv.fr
     steps:
       - uses: SocialGouv/kube-workflow@master
         with:
