@@ -33,7 +33,9 @@ fs.writeFileSync("ios/monsuivipsy.xcodeproj/project.pbxproj", newProjectPbxproj)
 
 // Replace the version in the package.json file via regex and save it
 const packageJson = fs.readFileSync("package.json", "utf8");
-const newPackageJson = packageJson.replace(/"version": "[^"]+"/, `"version": "${newBuildName}"`);
+const newPackageJson = packageJson
+  .replace(/"version": "[^"]+"/, `"version": "${newBuildName}"`)
+  .replace(/"buildNumber": [^,]+/, `"buildNumber": ${newBuildNumber}`);
 fs.writeFileSync("package.json", newPackageJson);
 
 // Replace the versions in the app.json file via regex and save it
@@ -50,10 +52,9 @@ fs.writeFileSync("../README.md", newReadme);
 
 // Replace the mobileAppVersion in the ../api/package.json file via regex and save it
 const apiPackageJson = fs.readFileSync("../api/package.json", "utf8");
-const newApiPackageJson = apiPackageJson.replace(
-  /"mobileAppVersion": "[^"]+"/,
-  `"mobileAppVersion": "${newBuildName}"`
-);
+const newApiPackageJson = apiPackageJson
+  .replace(/"mobileAppVersion": "[^"]+"/, `"mobileAppVersion": "${newBuildName}"`)
+  .replace(/"mobileAppBuildNumber": [^,]+/, `"mobileAppBuildNumber": ${newBuildNumber}`);
 fs.writeFileSync("../api/package.json", newApiPackageJson);
 
 console.log("🥳 Bumped version number to " + newBuildNumber);
