@@ -1,3 +1,10 @@
+# [1.29.0](https://github.com/SocialGouv/monsuivipsy/compare/v1.28.0...v1.29.0) (2022-07-06)
+
+
+### Features
+
+* add CI/CD with kube-workflow ([#174](https://github.com/SocialGouv/monsuivipsy/issues/174)) ([8339ef2](https://github.com/SocialGouv/monsuivipsy/commit/8339ef231169b1cfb96fbb0bbbc3d911d3661d67))
+
 # [1.28.0](https://github.com/SocialGouv/monsuivipsy/compare/v1.27.2...v1.28.0) (2022-06-22)
 
 
