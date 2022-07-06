@@ -1,3 +1,10 @@
+# [1.30.0](https://github.com/SocialGouv/monsuivipsy/compare/v1.29.0...v1.30.0) (2022-07-06)
+
+
+### Features
+
+* env files ([#176](https://github.com/SocialGouv/monsuivipsy/issues/176)) ([05cc68b](https://github.com/SocialGouv/monsuivipsy/commit/05cc68babee0b570ff808785d37e32cd838b8930))
+
 # [1.29.0](https://github.com/SocialGouv/monsuivipsy/compare/v1.28.0...v1.29.0) (2022-07-06)
 
 
