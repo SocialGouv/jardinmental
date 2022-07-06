@@ -1,3 +1,10 @@
+## [1.30.1](https://github.com/SocialGouv/monsuivipsy/compare/v1.30.0...v1.30.1) (2022-07-06)
+
+
+### Bug Fixes
+
+* fix prod workflow token ([#177](https://github.com/SocialGouv/monsuivipsy/issues/177)) ([84506b8](https://github.com/SocialGouv/monsuivipsy/commit/84506b866b00d24cba688cc3c2052c1fe4efa729))
+
 # [1.30.0](https://github.com/SocialGouv/monsuivipsy/compare/v1.29.0...v1.30.0) (2022-07-06)
 
 
