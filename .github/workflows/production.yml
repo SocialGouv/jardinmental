@@ -1,0 +1,49 @@
+name: Production
+
+on:
+  push:
+    tags:
+      - v*
+
+concurrency:
+  group: production
+  cancel-in-progress: true
+
+jobs:
+  ##############################################################################
+  ## BUILD AND REGISTER DOCKER IMAGE
+  ##############################################################################
+  register:
+    name: Build & Register docker images
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Application
+        uses: SocialGouv/actions/autodevops-build-register@v1
+        with:
+          environment: prod
+          imageName: monsuivipsy/app
+          token: ${{ secrets.GITHUB_TOKEN }}
+          dockercontext: ./api
+          dockerfile: ./api/Dockerfile
+          dockerbuildargs: |
+            PRODUCTION=true
+
+  ##############################################################################
+  ## DEPLOY PRODUCTION APPLICATION
+  ##############################################################################
+  deploy-prod:
+    name: Deploy production
+    runs-on: ubuntu-latest
+    needs: [register]
+    environment:
+      name: production
+      url: https://api-monsuivipsy.fabrique.social.gouv.fr
+    steps:
+      - uses: SocialGouv/kube-workflow@master
+        with:
+          environment: prod
+          token: ${{ secrets.GITHUB_TOKEN }}
+          kubeconfig: ${{ secrets.KUBECONFIG }}
+          rancherProjectId: ${{ secrets.RANCHER_PROJECT_ID }}
+          rancherProjectName: ${{ secrets.RANCHER_PROJECT_NAME }}

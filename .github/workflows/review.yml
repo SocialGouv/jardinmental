@@ -1,0 +1,45 @@
+name: Review
+
+on:
+  push:
+    branches-ignore:
+      - master
+    tags-ignore:
+      - v*
+
+concurrency:
+  cancel-in-progress: true
+  group: ${{ github.ref }}
+
+jobs:
+  ##############################################################################
+  ## BUILD AND REGISTER DOCKER IMAGES
+  ##############################################################################
+  register:
+    name: Build & Register
+    runs-on: ubuntu-latest
+    steps:
+      - name: Application
+        uses: SocialGouv/actions/autodevops-build-register@v1
+        with:
+          environment: dev
+          imageName: monsuivipsy/app
+          token: ${{ secrets.GITHUB_TOKEN }}
+          dockercontext: ./api
+          dockerfile: ./api/Dockerfile
+
+  ##############################################################################
+  ## DEPLOY APPLICATION OVER KUBERNETES
+  ##############################################################################
+  deploy:
+    name: Deploy application
+    runs-on: ubuntu-latest
+    needs: [ register ]
+    steps:
+      - uses: SocialGouv/kube-workflow@v1
+        with:
+          environment: dev
+          token: ${{ secrets.GITHUB_TOKEN }}
+          kubeconfig: ${{ secrets.KUBECONFIG }}
+          rancherProjectId: ${{ secrets.RANCHER_PROJECT_ID }}
+          rancherProjectName: ${{ secrets.RANCHER_PROJECT_NAME }}

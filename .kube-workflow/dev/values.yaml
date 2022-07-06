@@ -1,0 +1,10 @@
+app:
+  needs: [db]
+
+jobs:
+  runs:
+    db:
+      use: SocialGouv/kube-workflow/jobs/create-db
+      with:
+        pgAdminSecretRefName: azure-pg-admin-user
+    
