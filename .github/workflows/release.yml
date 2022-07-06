@@ -33,4 +33,4 @@ jobs:
             {name: 'alpha', prerelease: true}
           ]
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.SOCIALGROOVYBOT_BOTO_PAT }}
