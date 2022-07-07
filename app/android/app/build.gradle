@@ -1,9 +1,15 @@
 apply plugin: "com.android.application"
-apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 
 import com.android.build.OutputFile
 import groovy.json.JsonSlurper
 import org.apache.tools.ant.taskdefs.condition.Os
+
+project.ext.envConfigFiles = [
+    debug: ".env.local",
+    release: ".env",
+]
+
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 
 /**
  * The react.gradle file registers a task for each build variant (e.g. bundleDebugJsAndAssets
@@ -222,18 +228,16 @@ android {
     }
     signingConfigs {
         debug {
-            storeFile file('debug.keystore')
-            storePassword 'android'
-            keyAlias 'androiddebugkey'
-            keyPassword 'android'
+            storeFile file(project.env.get('MYAPP_UPLOAD_STORE_FILE'))
+            storePassword project.env.get("MYAPP_UPLOAD_STORE_PASSWORD")
+            keyAlias project.env.get("MYAPP_UPLOAD_KEY_ALIAS")
+            keyPassword project.env.get("MYAPP_UPLOAD_KEY_PASSWORD")
         }
         release {
-            if (project.hasProperty('MYAPP_UPLOAD_STORE_FILE')) {
-                storeFile file(MYAPP_UPLOAD_STORE_FILE)
-                storePassword MYAPP_UPLOAD_STORE_PASSWORD
-                keyAlias MYAPP_UPLOAD_KEY_ALIAS
-                keyPassword MYAPP_UPLOAD_KEY_PASSWORD
-            }
+            storeFile file(project.env.get('MYAPP_UPLOAD_STORE_FILE'))
+            storePassword project.env.get("MYAPP_UPLOAD_STORE_PASSWORD")
+            keyAlias project.env.get("MYAPP_UPLOAD_KEY_ALIAS")
+            keyPassword project.env.get("MYAPP_UPLOAD_KEY_PASSWORD")
         }
     }
     buildTypes {

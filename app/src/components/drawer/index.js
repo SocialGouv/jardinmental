@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
     color: "#ddd",
   },
   buildNumberLabel: {
-    color: "#dadada",
+    color: "#eee",
   },
   card: {
     width: "80%",
