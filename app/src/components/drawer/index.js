@@ -129,7 +129,10 @@ export default ({ navigation, visible, onClick }) => {
               onClick={onClick}
             />
             <View style={styles.versionContainer}>
-              <Text style={styles.versionLabel}>version {pck.version}</Text>
+              <Text style={styles.versionLabel}>
+                version {pck.version}
+                <Text style={styles.buildNumberLabel}>+{pck.buildNumber}</Text>
+              </Text>
             </View>
           </ScrollView>
         </SafeAreaView>
@@ -161,6 +164,9 @@ const styles = StyleSheet.create({
   },
   versionLabel: {
     color: "#ddd",
+  },
+  buildNumberLabel: {
+    color: "#dadada",
   },
   card: {
     width: "80%",
