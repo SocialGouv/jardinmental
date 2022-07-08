@@ -1,3 +1,10 @@
+## [1.31.3](https://github.com/SocialGouv/monsuivipsy/compare/v1.31.2...v1.31.3) (2022-07-08)
+
+
+### Bug Fixes
+
+* display host in app ([3ee15e2](https://github.com/SocialGouv/monsuivipsy/commit/3ee15e27994b3aefcd56b5f00fbf45defe256748))
+
 ## [1.31.2](https://github.com/SocialGouv/monsuivipsy/compare/v1.31.1...v1.31.2) (2022-07-08)
 
 
