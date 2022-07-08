@@ -130,7 +130,7 @@ const Drugs = ({ navigation, route }) => {
         </View>
         <View style={styles.buttonWrapper}>
           <TouchableOpacity onPress={() => navigation.navigate("tabs")} style={styles.setupButton}>
-            <Text style={styles.setupButtonText}>Je démarre MonSuiviPsy</Text>
+            <Text style={styles.setupButtonText}>Je démarre Ma Tête et Moi</Text>
           </TouchableOpacity>
         </View>
       </>

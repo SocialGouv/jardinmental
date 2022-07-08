@@ -37,12 +37,12 @@ export default ({ navigation, searchedValue }) => {
       {
         from: {
           address: "contact@monsuivipsy.fr",
-          personalName: "MonSuiviPsy - Application",
+          personalName: "Ma Tête et Moi - Application",
         },
-        subject: "MonSuiviPsy - NPS",
+        subject: "Ma Tête et Moi - NPS",
         text: formatText({ drugNotFound, userId }),
       },
-      __DEV__ ? "tangimds@gmail.com" : "monsuivipsy@fabrique.social.gouv.fr"
+      __DEV__ ? "tangimds@gmail.com" : "mateteetmoi@fabrique.social.gouv.fr"
     );
     setNpsSent(true);
   };

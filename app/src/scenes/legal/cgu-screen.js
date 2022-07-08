@@ -1,143 +1,120 @@
-import React from 'react';
-import LegalScreen from './legal-screen';
-import {StyleSheet, View} from 'react-native';
-import Text from '../../components/MyText';
-import {colors} from '../../utils/colors';
+import React from "react";
+import LegalScreen from "./legal-screen";
+import { StyleSheet, View } from "react-native";
+import Text from "../../components/MyText";
+import { colors } from "../../utils/colors";
 
-const CGU = ({navigation}) => {
+const CGU = ({ navigation }) => {
   const content = (
     <View>
       <Text style={styles.default}>
-        Les présentes conditions générales d'utilisation (dites
-        «&nbsp;CGU&nbsp;») fixent le cadre juridique de l'application
-        MonSuiviPsy et définissent les conditions d'accès et d'utilisation des
-        services par l'Utilisateur.
+        Les présentes conditions générales d'utilisation (dites «&nbsp;CGU&nbsp;») fixent le cadre juridique
+        de l'application Ma Tête et Moi et définissent les conditions d'accès et d'utilisation des services
+        par l'Utilisateur.
       </Text>
       <Text style={styles.h1}>Article 1 - Champ d'application</Text>
       <Text style={styles.default}>
-        L'application peut être téléchargée sans création de compte et demeure
-        d'accès libre. L'utilisation de l'application vaut acceptation des
-        présentes CGU.
+        L'application peut être téléchargée sans création de compte et demeure d'accès libre. L'utilisation de
+        l'application vaut acceptation des présentes CGU.
       </Text>
       <Text style={styles.h1}>Article 2 - Objet</Text>
       <Text style={styles.default}>
-        «&nbsp;MonSuiviPsy&nbsp;» vise à accompagner les personnes qui le
-        souhaitent à mieux connaître et suivre leurs symptômes, leurs ressentis
-        ou toute activité personnalisé, leur permettant ainsi de faciliter leur
-        accompagnement psychologique.
+        «&nbsp;Ma Tête et Moi&nbsp;» vise à accompagner les personnes qui le souhaitent à mieux connaître et
+        suivre leurs symptômes, leurs ressentis ou toute activité personnalisé, leur permettant ainsi de
+        faciliter leur accompagnement psychologique.
       </Text>
       <Text style={styles.h1}>Article 3 - Définitions</Text>
       <Text style={styles.default}>
-        L'Utilisateur&nbsp;est toute personne qui télécharge l'application et
-        l'utilise.
+        L'Utilisateur&nbsp;est toute personne qui télécharge l'application et l'utilise.
       </Text>
       <Text style={styles.default}>
-        Les «&nbsp;services&nbsp;» sont l'ensemble des fonctionnalités proposées
-        par MonSuiviPsy.
+        Les «&nbsp;services&nbsp;» sont l'ensemble des fonctionnalités proposées par Ma Tête et Moi.
       </Text>
       <Text style={styles.h1}>Article 4 - Fonctionnalités</Text>
       <Text style={styles.h2}>4.1 - Utiliser son journal</Text>
       <Text style={styles.h3}>A - Ajouter une note</Text>
       <Text style={styles.default}>
-        Le journal permet à l'Utilisateur d'utiliser un champ de texte
-        totalement libre. Pour ce faire, MonSuiviPsy met à sa disposition un
-        espace «&nbsp;note&nbsp;», dont l'ensemble des informations demeurent
-        sur le terminal de l'Utilisateur.
+        Le journal permet à l'Utilisateur d'utiliser un champ de texte totalement libre. Pour ce faire, Ma
+        Tête et Moi met à sa disposition un espace «&nbsp;note&nbsp;», dont l'ensemble des informations
+        demeurent sur le terminal de l'Utilisateur.
       </Text>
-      <Text style={styles.h2}>
-        4.2 - S'aider du questionnaire via «&nbsp;Mon&nbsp;Etat&nbsp;»
-      </Text>
+      <Text style={styles.h2}>4.2 - S'aider du questionnaire via «&nbsp;Mon&nbsp;Etat&nbsp;»</Text>
       <Text style={styles.default}>
-        Au sein de son espace, l'Utilisateur peut s'aider du questionnaire qui
-        lui permet de suivre son état par plusieurs moyens&nbsp;:
+        Au sein de son espace, l'Utilisateur peut s'aider du questionnaire qui lui permet de suivre son état
+        par plusieurs moyens&nbsp;:
       </Text>
       <Li>
         <Text style={styles.default}>
-          Remplir le questionnaire ou renseigner son état, est accessible via
-          «&nbsp;Mon État&nbsp;» par un simple clic, et peut se remplir de
-          manière journalière. De plus, la personne peut remplir l'état pour les
-          précédentes journées s'il ne l'a pas fait le jour même (dans une
-          amplitude de 7 jours)&nbsp;;
+          Remplir le questionnaire ou renseigner son état, est accessible via «&nbsp;Mon État&nbsp;» par un
+          simple clic, et peut se remplir de manière journalière. De plus, la personne peut remplir l'état
+          pour les précédentes journées s'il ne l'a pas fait le jour même (dans une amplitude de 7
+          jours)&nbsp;;
         </Text>
       </Li>
       <Li>
         <Text style={styles.default}>
-          Personnaliser le questionnaire, en fonction de son état du moment ou
-          de ses difficultés personnelles, accessible via les paramètres de
-          «&nbsp;Mon État&nbsp;». Cela permet de cibler le suivi souhaité. Le
-          suivi peut concerner&nbsp;: votre humeur, votre anxiété, vos idées
-          parasites, vos sensations étranges, votre sommeil, vos activités
-          quotidiennes, votre communication avec votre entourage. L'Utilisateur
-          peut également ajouter une autre caractéristique qui lui est propre et
-          qui ne figurerait pas dans la liste.
+          Personnaliser le questionnaire, en fonction de son état du moment ou de ses difficultés
+          personnelles, accessible via les paramètres de «&nbsp;Mon État&nbsp;». Cela permet de cibler le
+          suivi souhaité. Le suivi peut concerner&nbsp;: votre humeur, votre anxiété, vos idées parasites, vos
+          sensations étranges, votre sommeil, vos activités quotidiennes, votre communication avec votre
+          entourage. L'Utilisateur peut également ajouter une autre caractéristique qui lui est propre et qui
+          ne figurerait pas dans la liste.
         </Text>
       </Li>
       <Text style={styles.h2}>4.3 - Exercice</Text>
       <Text style={styles.default}>
-        Au sein de son espace, l'Utilisateur peut effectuer des exercices,
-        accessibles via «&nbsp;Exercice&nbsp;». Les exercices nécessitent des
-        explications afin de les réaliser, et il est recommandé d'en discuter
-        préalablement avec un thérapeute.
+        Au sein de son espace, l'Utilisateur peut effectuer des exercices, accessibles via
+        «&nbsp;Exercice&nbsp;». Les exercices nécessitent des explications afin de les réaliser, et il est
+        recommandé d'en discuter préalablement avec un thérapeute.
       </Text>
       <Text style={styles.h2}>4.4 - «&nbsp;MonSuivi&nbsp;» </Text>
       <Text style={styles.default}>
-        Au sein de son espace, l'Utilisateur peut à tout moment accéder aux
-        courbes d'évolution qui apparaissent au fur et à mesure des saisies
-        quotidiennes et qui permettent de suivre mon état sur 7 jours maximum.
+        Au sein de son espace, l'Utilisateur peut à tout moment accéder aux courbes d'évolution qui
+        apparaissent au fur et à mesure des saisies quotidiennes et qui permettent de suivre mon état sur 7
+        jours maximum.
       </Text>
       <Text style={styles.h2}>4.5 - Parler à quelqu'un </Text>
       <Text style={styles.default}>
-        S'il le souhaite, l'Utilisateur peut contacter une personne susceptible
-        de l'écouter via une liste de numéros officiels accessibles via
-        «&nbsp;Parler à quelqu'un&nbsp;».
+        S'il le souhaite, l'Utilisateur peut contacter une personne susceptible de l'écouter via une liste de
+        numéros officiels accessibles via «&nbsp;Parler à quelqu'un&nbsp;».
       </Text>
       <Text style={styles.h2}>4.6 - Exporter ses données </Text>
       <Text style={styles.default}>
-        L'Utilisateur peut exporter ses données sous format d'un mail, en
-        l'envoyant à la personne de son choix . Néanmoins, aucune donnée n'est
-        transférée à l'équipe de Mon Suivi Psy.
+        L'Utilisateur peut exporter ses données sous format d'un mail, en l'envoyant à la personne de son
+        choix . Néanmoins, aucune donnée n'est transférée à l'équipe de Ma Tête et Moi.
       </Text>
-      <Text style={styles.h2}>4.7 - Contacter l'équipe de Mon Suivi Psy </Text>
+      <Text style={styles.h2}>4.7 - Contacter l'équipe de Ma Tête et Moi </Text>
       <Text style={styles.default}>
-        Via la fonction «&nbsp;contribuer à Mon Suivi Psy&nbsp;», l'application
-        permet la mise en contact avec l'équipe si l'Utilisateur souhaite
-        transférer ses informations de contact à l'équipe.
+        Via la fonction «&nbsp;contribuer à Ma Tête et Moi&nbsp;», l'application permet la mise en contact
+        avec l'équipe si l'Utilisateur souhaite transférer ses informations de contact à l'équipe.
       </Text>
       <Text style={styles.h1}>Article 5 - Responsabilités</Text>
       <Text style={styles.h2}>5.1 - L'éditeur du Site</Text>
       <Text style={styles.default}>
-        Les sources des informations diffusées sur l'application sont réputées
-        fiables mais MonSuiviPsy ne garantit pas qu'il soit exempt de défauts,
-        d'erreurs ou d'omissions. .
+        Les sources des informations diffusées sur l'application sont réputées fiables mais Ma Tête et Moi ne
+        garantit pas qu'il soit exempt de défauts, d'erreurs ou d'omissions. .
       </Text>
       <Text style={styles.default}>
-        Tout événement dû à un cas de force majeure ayant pour conséquence un
-        dysfonctionnement du site et sous réserve de toute interruption ou
-        modification en cas de maintenance, n'engage pas la responsabilité de
-        l'éditeur.
+        Tout événement dû à un cas de force majeure ayant pour conséquence un dysfonctionnement du site et
+        sous réserve de toute interruption ou modification en cas de maintenance, n'engage pas la
+        responsabilité de l'éditeur.
       </Text>
+      <Text style={styles.default}>L'éditeur s'engage à la sécurisation du site.</Text>
       <Text style={styles.default}>
-        L'éditeur s'engage à la sécurisation du site.
-      </Text>
-      <Text style={styles.default}>
-        L'éditeur fournit les moyens nécessaires et raisonnables pour assurer un
-        accès continu, sans contrepartie financière, à la Plateforme. Il se
-        réserve la liberté de faire évoluer, de modifier ou de suspendre, sans
-        préavis, la plateforme pour des raisons de maintenance ou pour tout
-        autre motif jugé nécessaire.
+        L'éditeur fournit les moyens nécessaires et raisonnables pour assurer un accès continu, sans
+        contrepartie financière, à la Plateforme. Il se réserve la liberté de faire évoluer, de modifier ou de
+        suspendre, sans préavis, la plateforme pour des raisons de maintenance ou pour tout autre motif jugé
+        nécessaire.
       </Text>
       <Text style={styles.h2}>5.2 - L'Utilisateur</Text>
       <Text style={styles.default}>
-        L'Utilisateur s'engage à une utilisation personnelle de MonSuiviPsy.
+        L'Utilisateur s'engage à une utilisation personnelle de Ma Tête et Moi.
       </Text>
-      <Text style={styles.h1}>
-        Article 6 - Mise à jour des conditions d'utilisation
-      </Text>
+      <Text style={styles.h1}>Article 6 - Mise à jour des conditions d'utilisation</Text>
       <Text style={styles.default}>
-        Les termes des présentes conditions d'utilisation peuvent être amendés à
-        tout moment, sans préavis, en fonction des modifications apportées à la
-        plateforme, de l'évolution de la législation ou pour tout autre motif
-        jugé nécessaire.
+        Les termes des présentes conditions d'utilisation peuvent être amendés à tout moment, sans préavis, en
+        fonction des modifications apportées à la plateforme, de l'évolution de la législation ou pour tout
+        autre motif jugé nécessaire.
       </Text>
     </View>
   );
@@ -145,13 +122,13 @@ const CGU = ({navigation}) => {
   return (
     <LegalScreen
       navigation={navigation}
-      title="Conditions d'utilisation de l'application MonSuiviPsy"
+      title="Conditions d'utilisation de l'application Ma Tête et Moi"
       content={content}
     />
   );
 };
 
-const Li = ({children}) => (
+const Li = ({ children }) => (
   <View style={styles.li}>
     <Text style={styles.dotLi}>-</Text>
     {children}
@@ -164,7 +141,7 @@ const styles = StyleSheet.create({
     color: colors.DARK_BLUE,
     fontSize: 20,
     marginVertical: 10,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
 
   // x.y - Sous titre
@@ -190,8 +167,8 @@ const styles = StyleSheet.create({
   },
 
   li: {
-    display: 'flex',
-    flexDirection: 'row',
+    display: "flex",
+    flexDirection: "row",
     paddingLeft: 20,
   },
   dotLi: {

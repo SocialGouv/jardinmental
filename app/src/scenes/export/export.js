@@ -58,7 +58,7 @@ const Export = ({ navigation }) => {
       {
         from: {
           address: "contact@monsuivipsy.fr",
-          personalName: "MonSuiviPsy - Application",
+          personalName: "Ma Tête et Moi - Application",
         },
         subject,
         html: htmlExport,
