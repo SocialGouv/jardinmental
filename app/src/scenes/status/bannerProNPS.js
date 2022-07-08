@@ -32,7 +32,7 @@ export default ({ onClose }) => {
         subject: "Ma Tête et Moi - NPS Professionnel",
         text: formatText({ value, userId }),
       },
-      __DEV__ ? "tangimds@gmail.com" : "mateteetmoi@fabrique.social.gouv.fr"
+      __DEV__ ? "tangimds@gmail.com" : "monsuivipsy@fabrique.social.gouv.fr"
     );
     setNpsSent(true);
     localStorage.setNpsProContact(true);
