@@ -1,54 +1,41 @@
-import React from 'react';
-import {View, StyleSheet, SafeAreaView, ScrollView, Image} from 'react-native';
-import Text from '../../components/MyText';
-import {colors} from '../../utils/colors';
-import BackButton from '../../components/BackButton';
-import Icon from '../../components/Icon';
+import React from "react";
+import { View, StyleSheet, SafeAreaView, ScrollView, Image } from "react-native";
+import Text from "../../components/MyText";
+import { colors } from "../../utils/colors";
+import BackButton from "../../components/BackButton";
+import Icon from "../../components/Icon";
 
-export default ({navigation}) => {
+export default ({ navigation }) => {
   return (
     <SafeAreaView style={styles.safe}>
       <View style={styles.headerContainer}>
         <BackButton onPress={navigation.goBack} />
-        <Image
-          style={styles.image}
-          source={require('../../../assets/imgs/logo2.png')}
-        />
+        <Image style={styles.image} source={require("../../../assets/imgs/logo2.png")} />
       </View>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <Icon
-          styleContainer={styles.iconContainer}
-          icon="LockSvg"
-          color="#d3d3e8"
-          width={70}
-          height={70}
-        />
+        <Icon styleContainer={styles.iconContainer} icon="LockSvg" color="#d3d3e8" width={70} height={70} />
         <View style={styles.paragraph}>
           <Text style={styles.standardText}>
-            Les <Text style={styles.lightblue}>informations personnelles</Text>{' '}
-            que je saisis dans Mon Suivi Psy (ressentis, notes, traitements,
-            exercices, ...) ne sont{' '}
-            <Text style={styles.lightblue}>pas accessibles</Text> et ne peuvent{' '}
-            <Text style={styles.lightblue}>pas être lues</Text> ou{' '}
+            Les <Text style={styles.lightblue}>informations personnelles</Text> que je saisis dans Ma Tête et
+            Moi (ressentis, notes, traitements, exercices, ...) ne sont{" "}
+            <Text style={styles.lightblue}>pas accessibles</Text> et ne peuvent{" "}
+            <Text style={styles.lightblue}>pas être lues</Text> ou{" "}
             <Text style={styles.lightblue}>utilisées</Text>.
           </Text>
         </View>
         <View style={styles.paragraph}>
           <Text style={styles.standardText}>
-            <Text style={styles.lightblue}>Moi seul</Text> peux{' '}
-            <Text style={styles.lightblue}>décider</Text> de les{' '}
-            <Text style={styles.lightblue}>partager</Text> avec la fonction "
+            <Text style={styles.lightblue}>Moi seul</Text> peux <Text style={styles.lightblue}>décider</Text>{" "}
+            de les <Text style={styles.lightblue}>partager</Text> avec la fonction "
             <Text style={styles.lightblue}>exporter ses données</Text>".
           </Text>
         </View>
         <View style={styles.paragraph}>
           <Text style={styles.standardText}>
-            Dans le but d'<Text style={styles.lightblue}>améliorer</Text>{' '}
-            l'application, seules des données{' '}
-            <Text style={styles.lightblue}>anonymées</Text> concernant la{' '}
-            <Text style={styles.lightblue}>fréquence</Text> d'utilisation de
-            l'application et de ses fonctionnalités sont{' '}
-            <Text style={styles.lightblue}>recueillies</Text> par la Fabrique du
+            Dans le but d'<Text style={styles.lightblue}>améliorer</Text> l'application, seules des données{" "}
+            <Text style={styles.lightblue}>anonymées</Text> concernant la{" "}
+            <Text style={styles.lightblue}>fréquence</Text> d'utilisation de l'application et de ses
+            fonctionnalités sont <Text style={styles.lightblue}>recueillies</Text> par la Fabrique du
             Numérique des Minsitères Sociaux.
           </Text>
         </View>
@@ -67,10 +54,10 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   headerContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     paddingRight: 20,
   },
   image: {
@@ -79,20 +66,20 @@ const styles = StyleSheet.create({
   },
   safe: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: "white",
   },
   scrollContainer: {
     paddingBottom: 80,
-    display: 'flex',
-    alignItems: 'center',
+    display: "flex",
+    alignItems: "center",
   },
   standardText: {
     fontSize: 18,
     color: colors.DARK_BLUE,
-    textAlign: 'center',
+    textAlign: "center",
   },
   bold: {
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   lightblue: {
     color: colors.LIGHT_BLUE,

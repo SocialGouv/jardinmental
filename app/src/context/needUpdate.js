@@ -14,7 +14,7 @@ export const NeedUpdateContextProvider = ({ children }) => {
       if (response.ok && BUILD_NUMBER !== response.data.MOBILE_BUILD_NUMBER) {
         setNeedUpdate(true);
         Alert.alert(
-          `La nouvelle version ${response.data.MOBILE_VERSION}(${response.data.MOBILE_BUILD_NUMBER}) de Mon Suivi Psy est disponible !`,
+          `La nouvelle version ${response.data.MOBILE_VERSION}(${response.data.MOBILE_BUILD_NUMBER}) de Ma Tête et Moi est disponible !`,
           `Vous avez la version ${VERSION}(${BUILD_NUMBER}) actuellement sur votre téléphone`,
           [
             {

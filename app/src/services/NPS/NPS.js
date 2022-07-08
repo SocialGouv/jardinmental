@@ -175,12 +175,12 @@ class NPS extends React.Component {
       {
         from: {
           address: "contact@monsuivipsy.fr",
-          personalName: "MonSuiviPsy - Application",
+          personalName: "Ma Tête et Moi - Application",
         },
-        subject: "MonSuiviPsy - NPS",
+        subject: "Ma Tête et Moi - NPS",
         text: formatText({ useful, feedback, userId, contact, supported, startDate }),
       },
-      __DEV__ ? "tangimds@gmail.com" : "monsuivipsy@fabrique.social.gouv.fr"
+      __DEV__ ? "tangimds@gmail.com" : "mateteetmoi@fabrique.social.gouv.fr"
     );
     this.npsSent = true;
     this.setState({ visible: false, useful: null, reco: null });
