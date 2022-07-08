@@ -25,10 +25,14 @@ app.get("/healthz", async (req, res) => {
   res.send(`Hello World`);
 });
 
+app.get("/version", async (req, res) => {
+  res.send({VERSION, MOBILE_VERSION, MOBILE_BUILD_NUMBER});
+});
+
 // hello world
 const now = new Date();
 app.get("/", async (req, res) => {
-  res.send(`Ma Tête et Moi • ${now.toISOString()}`);
+  res.send(`Ma Tête et Moi - ${now.toISOString()}`);
 });
 
 // Add header with API version to compare with client.
