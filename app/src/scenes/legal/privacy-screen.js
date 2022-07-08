@@ -141,7 +141,7 @@ const Privacy = ({ navigation }) => {
       <Li>
         <Text style={styles.default}>
           par voie électronique à l'adresse suivante :{"\n"}
-          mateteetmoi@fabrique.social.gouv.fr
+          monsuivipsy@fabrique.social.gouv.fr
         </Text>
       </Li>
       <Li>

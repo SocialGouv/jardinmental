@@ -28,12 +28,12 @@ export default ({ navigation, searchedValue }) => {
       {
         from: {
           address: "contact@monsuivipsy.fr",
-          personalName: " - Application",
+          personalName: "Ma Tête et Moi - Application",
         },
         subject: "Ma Tête et Moi - NPS",
         text: formatText({ value, userId }),
       },
-      __DEV__ ? "tangimds@gmail.com" : "mateteetmoi@fabrique.social.gouv.fr"
+      __DEV__ ? "tangimds@gmail.com" : "monsuivipsy@fabrique.social.gouv.fr"
     );
     setNpsSent(true);
   };

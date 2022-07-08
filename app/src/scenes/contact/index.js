@@ -18,7 +18,7 @@ export default ({ navigation }) => {
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.paragraph}>
           <Text style={styles.standardText}>Pour plus d'informations rendez-vous sur notre site :</Text>
-          <TouchableOpacity onPress={() => Linking.openURL("https://mateteetmoi.fabrique.social.gouv.fr/")}>
+          <TouchableOpacity onPress={() => Linking.openURL("https://monsuivipsy.fabrique.social.gouv.fr/")}>
             <Text style={styles.link}>mateteetmoi.fr</Text>
           </TouchableOpacity>
         </View>
@@ -27,8 +27,8 @@ export default ({ navigation }) => {
             Afin d'améliorer Ma Tête et Moi, nous serions ravis d'échanger avec vous :
           </Text>
           {/* // todo mailto */}
-          <TouchableOpacity onPress={() => Linking.openURL("mailto:mateteetmoi@fabrique.social.gouv.fr")}>
-            <Text style={styles.link}>mateteetmoi@fabrique.social.gouv.fr</Text>
+          <TouchableOpacity onPress={() => Linking.openURL("mailto:monsuivipsy@fabrique.social.gouv.fr")}>
+            <Text style={styles.link}>monsuivipsy@fabrique.social.gouv.fr</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.paragraph}>
