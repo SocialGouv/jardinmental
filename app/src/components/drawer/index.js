@@ -1,5 +1,14 @@
 import React, { useState, useEffect, useContext } from "react";
-import { SafeAreaView, StyleSheet, Platform, Dimensions, View, ScrollView, Linking } from "react-native";
+import {
+  SafeAreaView,
+  StyleSheet,
+  Platform,
+  Dimensions,
+  View,
+  ScrollView,
+  Linking,
+  TouchableWithoutFeedback,
+} from "react-native";
 import Modal from "react-native-modal";
 import DrawerItem from "./drawer-item";
 import LegalItem from "./legal-item";
@@ -9,11 +18,13 @@ import pck from "../../../package.json";
 import Text from "../../components/MyText";
 import { colors } from "../../utils/colors";
 import NeedUpdateContext from "../../context/needUpdate";
+import { HOST } from "../../config";
 
 export default ({ navigation, visible, onClick }) => {
   const [isVisible, setIsVisible] = useState();
   const updateVisible = useContext(NeedUpdateContext);
 
+  const [devModeCount, setDevModeCount] = useState(0);
   const [npsProIsVisible, setNpsProIsVisible] = useState(true);
   const [badgeNpsProIsVisible, setBadgeNpsProIsVisible] = useState(false);
   const [badgeNotesVersionVisible, setBadgeNotesVersionVisible] = useState(false);
@@ -128,12 +139,15 @@ export default ({ navigation, visible, onClick }) => {
               navigation={navigation}
               onClick={onClick}
             />
-            <View style={styles.versionContainer}>
-              <Text style={styles.versionLabel}>
-                version {pck.version}
-                <Text style={styles.buildNumberLabel}>+{pck.buildNumber}</Text>
-              </Text>
-            </View>
+            <TouchableWithoutFeedback onPress={() => setDevModeCount((p) => p + 1)}>
+              <View style={styles.versionContainer}>
+                <Text style={styles.versionLabel}>
+                  version {pck.version}
+                  <Text style={styles.buildNumberLabel}>+{pck.buildNumber}</Text>
+                </Text>
+                {devModeCount % 5 === 0 ? <Text style={styles.versionLabel}>{HOST}</Text> : null}
+              </View>
+            </TouchableWithoutFeedback>
           </ScrollView>
         </SafeAreaView>
       </View>
