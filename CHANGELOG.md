@@ -1,3 +1,17 @@
+# [1.31.0](https://github.com/SocialGouv/monsuivipsy/compare/v1.30.1...v1.31.0) (2022-07-08)
+
+
+### Bug Fixes
+
+* label indicateurs ([2f93aa9](https://github.com/SocialGouv/monsuivipsy/commit/2f93aa95c1a950cd86a1fe500d675508a2213efe))
+* make the api work ([c225897](https://github.com/SocialGouv/monsuivipsy/commit/c225897dd3767eef484078d935e04873bc442f9d))
+* **app,api:**  need update check with api + matomo + react-native-config ([#170](https://github.com/SocialGouv/monsuivipsy/issues/170)) ([25bbb5e](https://github.com/SocialGouv/monsuivipsy/commit/25bbb5e0cb5374b918fa4ba1fc8509fb10681c06))
+
+
+### Features
+
+* **app:** bootsplash ([#169](https://github.com/SocialGouv/monsuivipsy/issues/169)) ([a151d73](https://github.com/SocialGouv/monsuivipsy/commit/a151d7343e7c62c33d35a343d78d422cb35e260d))
+
 ## [1.30.1](https://github.com/SocialGouv/monsuivipsy/compare/v1.30.0...v1.30.1) (2022-07-06)
 
 
