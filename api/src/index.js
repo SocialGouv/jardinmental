@@ -25,7 +25,7 @@ app.get("/healthz", async (req, res) => {
   res.send(`Hello World`);
 });
 
-app.get("/version", async (req, res) => {
+app.get("/config", async (req, res) => {
   res.send({VERSION, MOBILE_VERSION, MOBILE_BUILD_NUMBER});
 });
 
