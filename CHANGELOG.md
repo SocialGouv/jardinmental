@@ -1,3 +1,10 @@
+## [1.31.2](https://github.com/SocialGouv/monsuivipsy/compare/v1.31.1...v1.31.2) (2022-07-08)
+
+
+### Bug Fixes
+
+* **api:** route config ([7ddf3a0](https://github.com/SocialGouv/monsuivipsy/commit/7ddf3a09451ffd8b7a30a81b48c5bee425f20d1f))
+
 ## [1.31.1](https://github.com/SocialGouv/monsuivipsy/compare/v1.31.0...v1.31.1) (2022-07-08)
 
 
