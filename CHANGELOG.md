@@ -1,3 +1,10 @@
+## [1.31.4](https://github.com/SocialGouv/monsuivipsy/compare/v1.31.3...v1.31.4) (2022-07-12)
+
+
+### Bug Fixes
+
+* config ([835bbf5](https://github.com/SocialGouv/monsuivipsy/commit/835bbf557a5a045a9cc73d131a09509163733533))
+
 ## [1.31.3](https://github.com/SocialGouv/monsuivipsy/compare/v1.31.2...v1.31.3) (2022-07-08)
 
 
