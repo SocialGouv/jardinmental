@@ -24,7 +24,7 @@ export default ({ navigation, visible, onClick }) => {
   const [isVisible, setIsVisible] = useState();
   const updateVisible = useContext(NeedUpdateContext);
 
-  const [devModeCount, setDevModeCount] = useState(0);
+  const [devModeCount, setDevModeCount] = useState(1);
   const [npsProIsVisible, setNpsProIsVisible] = useState(true);
   const [badgeNpsProIsVisible, setBadgeNpsProIsVisible] = useState(false);
   const [badgeNotesVersionVisible, setBadgeNotesVersionVisible] = useState(false);

@@ -1,7 +1,7 @@
 {
   "name": "monsuivipsy",
-  "version": "1.31.1",
-  "buildNumber": 120,
+  "version": "1.31.7",
+  "buildNumber": 126,
   "private": true,
   "scripts": {
     "get-ip": "./get-ip.sh",

@@ -1,8 +1,8 @@
 {
   "name": "api_monsuivipsy",
   "version": "0.1.0",
-  "mobileAppVersion": "1.31.1",
-  "mobileAppBuildNumber": 120,
+  "mobileAppVersion": "1.31.7",
+  "mobileAppBuildNumber": 126,
   "description": "",
   "main": "index.js",
   "scripts": {
