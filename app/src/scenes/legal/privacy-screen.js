@@ -9,12 +9,12 @@ const Privacy = ({ navigation }) => {
     <View>
       <Text style={styles.h2}>Traitement des données à caractère personnel</Text>
       <Text style={styles.default}>
-        La présente application Ma Tête et Moi est à l'initiative de la Direction Générale de la Santé au sein
-        de la Fabrique numérique des ministères sociaux.
+        La présente application MonSuiviPsy est à l'initiative de la Direction Générale de la Santé au sein de
+        la Fabrique numérique des ministères sociaux.
       </Text>
       <Text style={styles.h2}>Finalité </Text>
       <Text style={styles.default}>
-        L'application «&nbsp;Ma Tête et Moi&nbsp;» vise à accompagner les personnes qui le souhaitent à mieux
+        L'application «&nbsp;MonSuiviPsy&nbsp;» vise à accompagner les personnes qui le souhaitent à mieux
         connaître et suivre leurs symptômes, leurs ressentis ou toute activité personnalisée, leur permettant
         de faciliter leur accompagnement psychologique. L'application permet notamment&nbsp;:
       </Text>
@@ -51,8 +51,8 @@ const Privacy = ({ navigation }) => {
       </Li>
       <Text style={[styles.default, styles.bold]}>
         Les données relatives aux notes libres et au suivi sont conservées sur le terminal de l'utilisateur et
-        ne sont pas transférées à l'équipe Ma Tête et Moi, à la Fabrique numérique des ministères sociaux ou à
-        la Direction Générale de la Santé.
+        ne sont pas transférées à l'équipe MonSuiviPsy, à la Fabrique numérique des ministères sociaux ou à la
+        Direction Générale de la Santé.
       </Text>
       <Text style={styles.h2}>Base juridique du traitement de données</Text>
       <Text style={styles.default}>
@@ -233,7 +233,7 @@ const Privacy = ({ navigation }) => {
       </Text>
       <Text style={styles.default}>
         Les données anonymisées issues de Matomo sont exportées vers un Metabase auquel aura accès l'équipe de
-        Ma Tête et Moi.
+        MonSuiviPsy.
       </Text>
       <Text style={styles.default}>Il convient d'indiquer que :</Text>
       <Li>

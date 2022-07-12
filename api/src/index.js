@@ -32,7 +32,7 @@ app.get("/config", async (req, res) => {
 // hello world
 const now = new Date();
 app.get("/", async (req, res) => {
-  res.send(`Ma Tête et Moi - ${now.toISOString()}`);
+  res.send(`api MSP • ${now.toISOString()}`);
 });
 
 // Add header with API version to compare with client.

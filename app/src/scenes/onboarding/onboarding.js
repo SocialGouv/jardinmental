@@ -39,7 +39,7 @@ const Onboarding = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.safe}>
       {!firstTime ? <BackButton onPress={navigation.goBack} /> : null}
-      <Text style={styles.title}>Ma Tête et Moi m'accompagne entre mes consultations</Text>
+      <Text style={styles.title}>Mon Suivi Psy m'accompagne entre mes consultations</Text>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <Swiper
           onIndexChanged={(page) => {

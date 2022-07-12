@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useState} from 'react';
 import {
   StyleSheet,
   SafeAreaView,
@@ -7,50 +7,53 @@ import {
   TextInput,
   ScrollView,
   Keyboard,
-} from "react-native";
-import Text from "../../components/MyText";
-import { colors } from "../../utils/colors";
-import localStorage from "../../utils/localStorage";
-import logEvents from "../../services/logEvents";
-import Matomo from "../../services/matomo";
-import { useEffect } from "react";
-import Button from "../../components/Button";
-import BackButton from "../../components/BackButton";
+} from 'react-native';
+import Text from '../../components/MyText';
+import {colors} from '../../utils/colors';
+import localStorage from '../../utils/localStorage';
+import logEvents from '../../services/logEvents';
+import Matomo from '../../services/matomo';
+import {useEffect} from 'react';
+import Button from '../../components/Button';
+import BackButton from '../../components/BackButton';
 
-const Supported = ({ navigation }) => {
-  const [contribution, setContribution] = useState("");
+const Supported = ({navigation}) => {
+  const [contribution, setContribution] = useState('');
   const [npsSent, setNpsSent] = useState(false);
-  const [sendButton, setSendButton] = useState("Valider");
+  const [sendButton, setSendButton] = useState('Valider');
 
   const sendNPS = async () => {
     if (npsSent) {
       return;
     }
-    const { useful, reco, feedback, email } = this.state;
-    setSendButton("Merci !");
+    const {useful, reco, feedback, email} = this.state;
+    setSendButton('Merci !');
     logEvents.logNPSSend(useful, reco);
     const userId = Matomo.userId;
     sendTipimail(
       {
         from: {
-          address: "contact@monsuivipsy.fr",
-          personalName: "Ma Tête et Moi - Application",
+          address: 'contact@monsuivipsy.fr',
+          personalName: 'MonSuiviPsy - Application',
         },
-        subject: "Ma Tête et Moi - NPS",
+        subject: 'MonSuiviPsy - NPS',
         text: formatText(useful, reco, feedback, email, userId),
       },
-      __DEV__ ? "tangimds@gmail.com" : "mateteetmoi@fabrique.social.gouv.fr"
+      __DEV__ ? 'tangimds@gmail.com' : 'monsuivipsy@fabrique.social.gouv.fr',
     );
     this.npsSent = true;
-    this.setState({ visible: false });
+    this.setState({visible: false});
   };
 
   return (
     <SafeAreaView style={styles.safe}>
-      <ScrollView style={styles.container} keyboardDismissMode="on-drag" onScrollBeginDrag={Keyboard.dismiss}>
+      <ScrollView
+        style={styles.container}
+        keyboardDismissMode="on-drag"
+        onScrollBeginDrag={Keyboard.dismiss}>
         <BackButton />
         <View style={styles.header}>
-          <Text style={styles.title}>Ma Tête et Moi</Text>
+          <Text style={styles.title}>Mon Suivi Psy</Text>
           <Text style={styles.title}>Nous vous écoutons :</Text>
         </View>
         <View style={styles.textArea}>
@@ -73,19 +76,19 @@ const Supported = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   buttonWrapper: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "flex-end",
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
     paddingBottom: 30,
   },
   backButtonContainer: {
-    alignSelf: "flex-start",
+    alignSelf: 'flex-start',
     paddingLeft: 20,
     marginTop: 20,
   },
   backButton: {
-    fontWeight: "700",
-    textDecorationLine: "underline",
+    fontWeight: '700',
+    textDecorationLine: 'underline',
     color: colors.BLUE,
   },
   card: {
@@ -93,15 +96,15 @@ const styles = StyleSheet.create({
     marginBottom: 30,
     borderRadius: 10,
     padding: 20,
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "flex-start",
-    minHeight: "20%",
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    minHeight: '20%',
   },
   cardTitle: {
     color: colors.DARK_BLUE,
-    fontWeight: "700",
+    fontWeight: '700',
     marginBottom: 10,
   },
   cardSubTitle: {
@@ -109,7 +112,7 @@ const styles = StyleSheet.create({
   },
   safe: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: 'white',
   },
   header: {
     marginBottom: 30,
@@ -118,20 +121,20 @@ const styles = StyleSheet.create({
     color: colors.BLUE,
     fontSize: 22,
     paddingBottom: 20,
-    fontWeight: "700",
+    fontWeight: '700',
   },
   container: {
-    backgroundColor: "white",
+    backgroundColor: 'white',
     padding: 20,
   },
   content: {
-    display: "flex",
+    display: 'flex',
     flex: 1,
   },
   textArea: {
-    backgroundColor: "#F4FCFD",
-    height: "50%",
-    borderColor: "#26387C",
+    backgroundColor: '#F4FCFD',
+    height: '50%',
+    borderColor: '#26387C',
     borderWidth: 1,
     borderRadius: 10,
     marginBottom: 10,
