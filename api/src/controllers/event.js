@@ -52,7 +52,7 @@ router.post(
           //     event: { category: "IN_APP_CLICK", action: "COMMENT_CLICK" },
           //   },
           // ],
-          { cancelable: true },
+          // { cancelable: true },
         ],
       });
     }
