@@ -1,3 +1,10 @@
+## [1.31.5](https://github.com/SocialGouv/monsuivipsy/compare/v1.31.4...v1.31.5) (2022-07-12)
+
+
+### Bug Fixes
+
+* remove cancelable ([0b4f3ce](https://github.com/SocialGouv/monsuivipsy/commit/0b4f3cec3f5f30c4cddab821b40a229d6356adf3))
+
 ## [1.31.4](https://github.com/SocialGouv/monsuivipsy/compare/v1.31.3...v1.31.4) (2022-07-12)
 
 
