@@ -1,3 +1,10 @@
+# [1.32.0](https://github.com/SocialGouv/monsuivipsy/compare/v1.31.5...v1.32.0) (2022-07-13)
+
+
+### Features
+
+* env indicator to app ([#178](https://github.com/SocialGouv/monsuivipsy/issues/178)) ([3eb2b94](https://github.com/SocialGouv/monsuivipsy/commit/3eb2b946054ed81c80749398fb6e1abd011c6f7d))
+
 ## [1.31.5](https://github.com/SocialGouv/monsuivipsy/compare/v1.31.4...v1.31.5) (2022-07-12)
 
 
