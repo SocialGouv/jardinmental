@@ -10,15 +10,17 @@ const MOBILE_VERSION = mobileAppVersion;
 const MOBILE_BUILD_NUMBER = mobileAppBuildNumber;
 const MINIMUM_MOBILE_BUILD_NUMBER = 116; // manually change this number to force update app
 
-console.log("✍️ ~CONFIG ", {
-  PORT,
-  ENVIRONMENT,
-  SENTRY_KEY,
-  VERSION,
-  MOBILE_VERSION,
-  MOBILE_BUILD_NUMBER,
-  MINIMUM_MOBILE_BUILD_NUMBER,
-})
+if (process.env.NODE_ENV === "development") {
+  console.log("✍️ ~CONFIG ", {
+    PORT,
+    ENVIRONMENT,
+    SENTRY_KEY,
+    VERSION,
+    MOBILE_VERSION,
+    MOBILE_BUILD_NUMBER,
+    MINIMUM_MOBILE_BUILD_NUMBER,
+  });
+}
 
 module.exports = {
   PORT,
