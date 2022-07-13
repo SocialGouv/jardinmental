@@ -34,7 +34,9 @@ router.post(
     // if (body.event?.category === "IN_APP_CLICK" && body.event?.action === "COMMENT_CLICK") {
     //   return res.status(200).send({ ok: true });
     // }
-    if (body.event?.category === "OPEN_TAB" && body.event?.action === "CALENDAR_OPEN") {
+    console.log(body);
+    if (body.event?.category === "APP" && body.event?.action === "APP_OPEN") {
+      console.log("la");
       return res.status(200).send({
         ok: true,
         sendInApp: [
