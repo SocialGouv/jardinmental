@@ -1,3 +1,10 @@
+## [1.33.1](https://github.com/SocialGouv/monsuivipsy/compare/v1.33.0...v1.33.1) (2022-07-13)
+
+
+### Bug Fixes
+
+* remove in-app test ([48a587f](https://github.com/SocialGouv/monsuivipsy/commit/48a587f7dc3d88884ef46416aa870236098511ab))
+
 # [1.33.0](https://github.com/SocialGouv/monsuivipsy/compare/v1.32.0...v1.33.0) (2022-07-13)
 
 
