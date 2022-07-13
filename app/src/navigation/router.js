@@ -2,6 +2,7 @@ import React from "react";
 import Tabs from "./tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
+import EnvironmentIndicator from '../services/EnvironmentIndicator'
 import DaySurveyScreen from "../scenes/survey/daySurvey";
 import SelectDayScreen from "../scenes/survey/selectDay";
 import Reminder from "../scenes/reminder/reminder";
@@ -68,6 +69,7 @@ class Router extends React.Component {
 
   render() {
     return (
+      <>
       <NavigationContainer ref={(r) => (this.navigationRef = r)} onStateChange={this.onStateChange}>
         <Stack.Navigator initialRouteName="tabs" headerMode="none">
           <Stack.Screen name="day-survey" component={DaySurveyScreen} />
@@ -113,6 +115,8 @@ class Router extends React.Component {
           {/* <Stack.Screen name="contribute" component={Contribute} /> */}
         </Stack.Navigator>
       </NavigationContainer>
+      <EnvironmentIndicator />
+      </>
     );
   }
 }
