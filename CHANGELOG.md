@@ -1,3 +1,10 @@
+# [1.33.0](https://github.com/SocialGouv/monsuivipsy/compare/v1.32.0...v1.33.0) (2022-07-13)
+
+
+### Features
+
+* trigger in-app test ([d90cabb](https://github.com/SocialGouv/monsuivipsy/commit/d90cabb4d85beae6f8f6179a64b43c26a4a992b3))
+
 # [1.32.0](https://github.com/SocialGouv/monsuivipsy/compare/v1.31.5...v1.32.0) (2022-07-13)
 
 
