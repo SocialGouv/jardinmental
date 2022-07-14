@@ -1,3 +1,10 @@
+## [1.33.3](https://github.com/SocialGouv/monsuivipsy/compare/v1.33.2...v1.33.3) (2022-07-14)
+
+
+### Bug Fixes
+
+* upgrade minor modules ([cc25532](https://github.com/SocialGouv/monsuivipsy/commit/cc25532d8115721ddfcec509e1c7a40918150fbf))
+
 ## [1.33.2](https://github.com/SocialGouv/monsuivipsy/compare/v1.33.1...v1.33.2) (2022-07-14)
 
 
