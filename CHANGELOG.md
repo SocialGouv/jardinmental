@@ -1,3 +1,10 @@
+## [1.33.2](https://github.com/SocialGouv/monsuivipsy/compare/v1.33.1...v1.33.2) (2022-07-14)
+
+
+### Bug Fixes
+
+* enable prod test inapp ([dab3e48](https://github.com/SocialGouv/monsuivipsy/commit/dab3e4857a9cea4c9ce95b5dfd754c627157a8db))
+
 ## [1.33.1](https://github.com/SocialGouv/monsuivipsy/compare/v1.33.0...v1.33.1) (2022-07-13)
 
 
