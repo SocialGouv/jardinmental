@@ -1,3 +1,10 @@
+## [1.33.5](https://github.com/SocialGouv/monsuivipsy/compare/v1.33.4...v1.33.5) (2022-07-21)
+
+
+### Bug Fixes
+
+* back to prod android ([135fb07](https://github.com/SocialGouv/monsuivipsy/commit/135fb07e2158526cb9e8d5ba15bb4972139d2374))
+
 ## [1.33.4](https://github.com/SocialGouv/monsuivipsy/compare/v1.33.3...v1.33.4) (2022-07-21)
 
 
