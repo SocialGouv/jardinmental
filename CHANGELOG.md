@@ -1,3 +1,10 @@
+# [1.34.0](https://github.com/SocialGouv/monsuivipsy/compare/v1.33.5...v1.34.0) (2022-07-22)
+
+
+### Features
+
+* MSP -> Jardin Mental ([09e5102](https://github.com/SocialGouv/monsuivipsy/commit/09e5102f29560f3cbcd1107d2cedc318e72d0030))
+
 ## [1.33.5](https://github.com/SocialGouv/monsuivipsy/compare/v1.33.4...v1.33.5) (2022-07-21)
 
 
