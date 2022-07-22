@@ -55,7 +55,7 @@ export default ({ navigation, visible, onClick }) => {
       <View style={styles.card}>
         <SafeAreaView>
           <ScrollView contentContainerStyle={styles.scrollContainer}>
-            <Text style={styles.title}>Mon Suivi Psy</Text>
+            <Text style={styles.title}>Jardin Mental</Text>
             <DrawerItem
               badge={badgeNotesVersionVisible}
               title="Nouveautés"

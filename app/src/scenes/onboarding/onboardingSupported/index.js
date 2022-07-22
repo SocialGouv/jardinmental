@@ -32,7 +32,7 @@ const Supported = ({ navigation }) => {
       <ScrollView style={styles.container} contentContainerStyle={styles.scrollContainer}>
         <View style={styles.header}>
           <HandShakeSvg width={88} height={88} color="#bebebe" />
-          <Text style={styles.title}>Bienvenue sur{"\n"}Mon Suivi Psy</Text>
+          <Text style={styles.title}>Bienvenue sur{"\n"}Jardin Mental</Text>
           <Text style={styles.subtitle}>Faisons connaissance :</Text>
         </View>
         <Card

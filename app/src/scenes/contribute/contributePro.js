@@ -28,9 +28,9 @@ export default ({ navigation, searchedValue }) => {
       {
         from: {
           address: "contact@monsuivipsy.fr",
-          personalName: "MonSuiviPsy - Application",
+          personalName: "Jardin Mental - Application",
         },
-        subject: "MonSuiviPsy - NPS",
+        subject: "Jardin Mental - NPS",
         text: formatText({ value, userId }),
       },
       __DEV__ ? "tangimds@gmail.com" : "monsuivipsy@fabrique.social.gouv.fr"

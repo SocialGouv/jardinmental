@@ -10,11 +10,12 @@ export const NeedUpdateContextProvider = ({ children }) => {
 
   useEffect(() => {
     (async () => {
+      //FIX ME : make it platform independent (ios / android)
       const response = await API.get({ path: "/version" });
-      if (response.ok && BUILD_NUMBER !== response.data.MOBILE_BUILD_NUMBER) {
+      if (response.ok && BUILD_NUMBER < response.data.MOBILE_BUILD_NUMBER) {
         setNeedUpdate(true);
         Alert.alert(
-          `La nouvelle version ${response.data.MOBILE_VERSION}(${response.data.MOBILE_BUILD_NUMBER}) de Mon Suivi Psy est disponible !`,
+          `La nouvelle version ${response.data.MOBILE_VERSION}(${response.data.MOBILE_BUILD_NUMBER}) de Jardin Mental est disponible !`,
           `Vous avez la version ${VERSION}(${BUILD_NUMBER}) actuellement sur votre téléphone`,
           [
             {

@@ -175,9 +175,9 @@ class NPS extends React.Component {
       {
         from: {
           address: "contact@monsuivipsy.fr",
-          personalName: "MonSuiviPsy - Application",
+          personalName: "Jardin Mental - Application",
         },
-        subject: "MonSuiviPsy - NPS",
+        subject: "Jardin Mental - NPS",
         text: formatText({ useful, feedback, userId, contact, supported, startDate }),
       },
       __DEV__ ? "tangimds@gmail.com" : "monsuivipsy@fabrique.social.gouv.fr"

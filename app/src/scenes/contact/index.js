@@ -18,13 +18,13 @@ export default ({ navigation }) => {
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.paragraph}>
           <Text style={styles.standardText}>Pour plus d'informations rendez-vous sur notre site :</Text>
-          <TouchableOpacity onPress={() => Linking.openURL("https://monsuivipsy.fabrique.social.gouv.fr/")}>
-            <Text style={styles.link}>monsuivipsy.fr</Text>
+          <TouchableOpacity onPress={() => Linking.openURL("https://jardinmental.fabrique.social.gouv.fr/")}>
+            <Text style={styles.link}>jardinmental.fr</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.paragraph}>
           <Text style={styles.standardText}>
-            Afin d'améliorer Mon Suivi Psy, nous serions ravis d'échanger avec vous :
+            Afin d'améliorer Jardin Mental, nous serions ravis d'échanger avec vous :
           </Text>
           {/* // todo mailto */}
           <TouchableOpacity onPress={() => Linking.openURL("mailto:monsuivipsy@fabrique.social.gouv.fr")}>
@@ -34,12 +34,12 @@ export default ({ navigation }) => {
         <View style={styles.paragraph}>
           <Text style={styles.standardText}>Faites-nous part de vos remarques ou suggestions en</Text>
           <TouchableOpacity onPress={() => setNPSvisible(true)}>
-            <Text style={styles.link}>évaluant Mon Suivi Psy</Text>
+            <Text style={styles.link}>évaluant Jardin Mental</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.paragraph}>
           <Text style={styles.bottomNote}>
-            Mon Suivi Psy est une application développée avec des professionnels de santé. Néanmoins, les
+            Jardin Mental est une application développée avec des professionnels de santé. Néanmoins, les
             entretiens proposés ont uniquement pour objectif d'améliorer l'application. Ils ne sauraient se
             substituer à une consultation.{"\n\n"}En cas d'urgence contactez le 15.
           </Text>

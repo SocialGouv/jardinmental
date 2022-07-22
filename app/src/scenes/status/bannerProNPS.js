@@ -27,9 +27,9 @@ export default ({ onClose }) => {
       {
         from: {
           address: "contact@monsuivipsy.fr",
-          personalName: "MonSuiviPsy - Application",
+          personalName: "Jardin Mental - Application",
         },
-        subject: "MonSuiviPsy - NPS Professionnel",
+        subject: "Jardin Mental - NPS Professionnel",
         text: formatText({ value, userId }),
       },
       __DEV__ ? "tangimds@gmail.com" : "monsuivipsy@fabrique.social.gouv.fr"
@@ -42,7 +42,7 @@ export default ({ onClose }) => {
   return (
     <View style={styles.welcomeContainer}>
       <Text style={[styles.welcomeText, styles.boldText]}>
-        Mon Suivi Psy est un service public développé avec des professionnels de santé et des patients
+        Jardin Mental est un service public développé avec des professionnels de santé et des patients
       </Text>
       <Text style={[styles.welcomeText, styles.boldText, styles.blueText]}>
         En tant que professionnel de santé, votre avis nous est particulièrement précieux.

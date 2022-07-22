@@ -37,7 +37,7 @@ const getAujourdhui20h00 = () => {
 };
 
 const reminderTitle = "Comment ça va aujourd'hui ?";
-const reminderMessage = "N'oubliez pas de remplir votre application Mon Suivi Psy";
+const reminderMessage = "N'oubliez pas de remplir votre application Jardin Mental";
 class Reminder extends React.Component {
   state = {
     reminder: null,
