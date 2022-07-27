@@ -19,7 +19,7 @@ const Reminder = ({
   navigation,
   route,
   notifReminderTitle = "Comment ça va aujourd'hui ?",
-  notifReminderMessage = "N'oubliez pas de remplir votre application Mon Suivi Psy",
+  notifReminderMessage = "N'oubliez pas de remplir votre application Jardin Mental",
 }) => {
   const [reminder, setReminder] = useState(null);
   const [reminderSetupVisible, setReminderSetupVisible] = useState(false);
