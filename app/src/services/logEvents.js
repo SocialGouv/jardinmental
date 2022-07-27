@@ -336,6 +336,27 @@ const logInfoClick = async (link) => {
   });
 };
 
+const logOnboardingExplainOpen = async () => {
+  await logEvent({
+    category: "EXPLANATION",
+    action: "EXPLANATION_OPEN",
+  });
+};
+const logOnboardingExplainNext = async (p) => {
+  await logEvent({
+    category: "EXPLANATION",
+    action: "EXPLANATION_NEXT",
+    name: "page",
+    value: p,
+  });
+};
+const logOnboardingExplainStart = async () => {
+  await logEvent({
+    category: "EXPLANATION",
+    action: "EXPLANATION_START",
+  });
+};
+
 const logDrugsOpen = async () => {
   await logEvent({
     category: "DRUG",
@@ -607,4 +628,7 @@ export default {
   logSuiviShowPriseDeTraitement,
   logInputDrugSurveyPriseDeTraitement,
   logInputDrugSurveyPriseDeTraitementSiBesoin,
+  logOnboardingExplainNext,
+  logOnboardingExplainOpen,
+  logOnboardingExplainStart,
 };
