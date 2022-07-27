@@ -1,3 +1,10 @@
+## [1.34.1](https://github.com/SocialGouv/monsuivipsy/compare/v1.34.0...v1.34.1) (2022-07-27)
+
+
+### Bug Fixes
+
+* rappel local v2 ([#179](https://github.com/SocialGouv/monsuivipsy/issues/179)) ([b490068](https://github.com/SocialGouv/monsuivipsy/commit/b490068e11c26f8cc0225299f9593144b9eb0c6f))
+
 # [1.34.0](https://github.com/SocialGouv/monsuivipsy/compare/v1.33.5...v1.34.0) (2022-07-22)
 
 
