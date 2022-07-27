@@ -46,7 +46,7 @@ contact: ${contact}
 profil: ${lookUpSupported[supported]}
 `;
 
-const NPSTimeoutMS = __DEV__ ? 1000 * 3 * 100000000 : 1000 * 60 * 60 * 24 * 10;
+const NPSTimeoutMS = __DEV__ ? 1000 * 3 : 1000 * 60 * 60 * 24 * 10;
 const emailFormat = (email) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,6}$/i.test(email);
 
 const STORE_KEYS = {
@@ -71,7 +71,9 @@ class NPS extends React.Component {
       this.reset();
     }
     this.NPSListener = AppState.addEventListener("change", this.handleAppStateChange);
-    this.notificationsListener = Notifications.listen(this.handleNotification);
+    if (!__DEV__) {
+      this.notificationsListener = Notifications.listen(this.handleNotification, "NPS");
+    }
     this.checkNeedNPS();
   }
 
@@ -114,7 +116,8 @@ class NPS extends React.Component {
     }
 
     const appFirstOpening = await AsyncStorage.getItem(STORE_KEYS.INITIAL_OPENING);
-    if (!appFirstOpening) {
+    if (__DEV__) return;
+    if (!appFirstOpening && !__DEV__) {
       await AsyncStorage.setItem(STORE_KEYS.INITIAL_OPENING, new Date().toISOString());
       Notifications.scheduleNotification({
         date: new Date(Date.now() + NPSTimeoutMS),
