@@ -7,6 +7,20 @@ import localStorage from "../utils/localStorage";
 //   return tempList;
 // };
 
+export const INDICATEURS_HUMEUR = "Humeur générale";
+export const INDICATEURS_SOMMEIL = "Qualité générale du sommeil";
+
+export const INDICATEURS_LISTE_ONBOARDING_HUMEUR = [
+  "Humeur matinale",
+  "Humeur à la mi-journée",
+  "Humeur au coucher"
+];
+export const INDICATEURS_LISTE_ONBOARDING_SOMMEIL = [
+  "Durée sommeil",
+  "Facilité endormissement",
+  "Se coucher tôt"
+];
+
 export const INDICATEURS_LISTE_ONBOARDING = [
   "Humeur générale",
   "Anxiété",

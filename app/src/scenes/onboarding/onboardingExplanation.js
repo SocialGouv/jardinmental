@@ -34,13 +34,11 @@ const OnboardingExplanation = ({ navigation }) => {
         {currentIndex === 2 && <ScreenCurves />}
         {currentIndex === 3 && <ScreenTriggers />}
       </ScrollView>
-      <View style={styles.CTAButtonContainer}>
-        <View style={styles.buttonWrapper}>
-          {
-            currentIndex === 3 ? <Button title="Je démarre" onPress={handleStart} />
-              : <Button title="Suivant" onPress={handleNext} />
-          }
-        </View>
+      <View style={styles.buttonWrapper}>
+        {
+          currentIndex === 3 ? <Button style={styles.validationButton} title="Je démarre" onPress={handleStart} />
+            : <Button style={styles.validationButton} title="Suivant" onPress={handleNext} />
+        }
       </View>
     </SafeAreaView>
   );
@@ -81,7 +79,6 @@ const ScreenTriggers = () => (
 );
 
 const styles = StyleSheet.create({
-  CTAButtonContainer: {},
   scrollContainer: { flex: 1 },
   safe: {
     flex: 1,
@@ -99,9 +96,9 @@ const styles = StyleSheet.create({
   },
   title: {
     color: colors.BLUE,
-    fontSize: 22,
+    fontSize: 18,
     padding: 20,
-    fontWeight: "700",
+    fontWeight: "500",
     textAlign: "center",
   },
   container: {
@@ -114,14 +111,17 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "flex-end",
     alignItems: "center",
-    padding: 15,
+  },
+  validationButton: {
+    width: 4,
   },
   bold: {
-    fontWeight: "bold",
-    color: colors.BLUE,
+    fontWeight: "700",
+    color: colors.BLUE
   },
   presentationText: {
-    fontSize: 20,
+    fontSize: 15,
+    fontWeight: "400",
     color: colors.BLUE,
   }
 });
