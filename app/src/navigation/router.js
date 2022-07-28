@@ -13,6 +13,7 @@ import Notes from "../scenes/survey/notes-screen";
 import Onboarding from "../scenes/onboarding";
 import Supported from "../scenes/onboarding/onboardingSupported";
 import OnboardingSymptoms from "../scenes/onboarding/onboardingSymptoms";
+import onboardingSymptomsStart from "../scenes/onboarding/onboardingSymptomsStart";
 import OnboardingSymptomsCustom from "../scenes/onboarding/onboardingSymptomsCustom";
 import OnboardingDrugs from "../scenes/onboarding/onboardingDrugs";
 import OnboardingDrugsInformation from "../scenes/onboarding/onboardingDrugs/drugs-information";
@@ -74,7 +75,7 @@ class Router extends React.Component {
     return (
       <>
         <NavigationContainer ref={(r) => (this.navigationRef = r)} onStateChange={this.onStateChange}>
-          <Stack.Navigator initialRouteName="onboarding-stats" headerMode="none">
+          <Stack.Navigator initialRouteName="tabs" headerMode="none">
             <Stack.Screen name="day-survey" component={DaySurveyScreen} />
             <Stack.Screen name="select-day" component={SelectDayScreen} />
             <Stack.Screen name="tabs" component={Tabs} />
@@ -96,6 +97,7 @@ class Router extends React.Component {
             </Stack.Screen>
             <Stack.Screen name="onboarding" component={Onboarding} />
             <Stack.Screen name="onboarding-symptoms" component={OnboardingSymptoms} />
+            <Stack.Screen name="onboarding-symptoms-start" component={onboardingSymptomsStart} />
             <Stack.Screen name="onboarding-symptoms-custom" component={OnboardingSymptomsCustom} />
             <Stack.Screen name="onboarding-drugs" component={OnboardingDrugs} />
             <Stack.Screen name="onboarding-drugs-information" component={OnboardingDrugsInformation} />
