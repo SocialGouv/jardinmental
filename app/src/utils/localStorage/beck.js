@@ -1,11 +1,11 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   STORAGE_KEY_IS_BECK_ACTIVATED,
   STORAGE_KEY_BECK_WHERE_LIST,
   STORAGE_KEY_BECK_WHO_LIST,
   STORAGE_KEY_BECK_EMOTION_LIST,
   STORAGE_KEY_BECK_SENSATION_LIST,
-} from '../../utils/constants';
+} from "../../utils/constants";
 
 const getIsBeckActivated = async () => {
   const a = await AsyncStorage.getItem(STORAGE_KEY_IS_BECK_ACTIVATED);
@@ -22,26 +22,17 @@ const getBeckWhereList = async () => {
   return JSON.parse(beckWhereList) || [];
 };
 const setBeckWhereList = async (wheres) => {
-  await AsyncStorage.setItem(
-    STORAGE_KEY_BECK_WHERE_LIST,
-    JSON.stringify(wheres),
-  );
+  await AsyncStorage.setItem(STORAGE_KEY_BECK_WHERE_LIST, JSON.stringify(wheres));
 };
 const addBeckWhereList = async (where) => {
   const beckWhereList = await getBeckWhereList();
   beckWhereList.push(where);
-  await AsyncStorage.setItem(
-    STORAGE_KEY_BECK_WHERE_LIST,
-    JSON.stringify(beckWhereList),
-  );
+  await AsyncStorage.setItem(STORAGE_KEY_BECK_WHERE_LIST, JSON.stringify(beckWhereList));
 };
 const removeBeckWhereList = async (where) => {
   let beckWhereList = await getBeckWhereList();
   beckWhereList = beckWhereList.filter((w) => w !== where);
-  await AsyncStorage.setItem(
-    STORAGE_KEY_BECK_WHERE_LIST,
-    JSON.stringify(beckWhereList),
-  );
+  await AsyncStorage.setItem(STORAGE_KEY_BECK_WHERE_LIST, JSON.stringify(beckWhereList));
   return beckWhereList;
 };
 
@@ -57,82 +48,54 @@ const setBeckWhoList = async (whos) => {
 const addBeckWhoList = async (who) => {
   const beckWhoList = await getBeckWhoList();
   beckWhoList.push(who);
-  await AsyncStorage.setItem(
-    STORAGE_KEY_BECK_WHO_LIST,
-    JSON.stringify(beckWhoList),
-  );
+  await AsyncStorage.setItem(STORAGE_KEY_BECK_WHO_LIST, JSON.stringify(beckWhoList));
 };
 const removeBeckWhoList = async (who) => {
   let beckWhoList = await getBeckWhoList();
   beckWhoList = beckWhoList.filter((w) => w !== who);
-  await AsyncStorage.setItem(
-    STORAGE_KEY_BECK_WHO_LIST,
-    JSON.stringify(beckWhoList),
-  );
+  await AsyncStorage.setItem(STORAGE_KEY_BECK_WHO_LIST, JSON.stringify(beckWhoList));
   return beckWhoList;
 };
 
 // emotion
 const getBeckEmotionList = async () => {
-  const beckEmotionList = await AsyncStorage.getItem(
-    STORAGE_KEY_BECK_EMOTION_LIST,
-  );
+  const beckEmotionList = await AsyncStorage.getItem(STORAGE_KEY_BECK_EMOTION_LIST);
   return JSON.parse(beckEmotionList) || [];
 };
 
 const setBeckEmotionList = async (emotions) => {
-  await AsyncStorage.setItem(
-    STORAGE_KEY_BECK_EMOTION_LIST,
-    JSON.stringify(emotions),
-  );
+  await AsyncStorage.setItem(STORAGE_KEY_BECK_EMOTION_LIST, JSON.stringify(emotions));
 };
 const addBeckEmotionList = async (emotion) => {
   const beckEmotionList = await getBeckEmotionList();
   beckEmotionList.push(emotion);
-  await AsyncStorage.setItem(
-    STORAGE_KEY_BECK_EMOTION_LIST,
-    JSON.stringify(beckEmotionList),
-  );
+  await AsyncStorage.setItem(STORAGE_KEY_BECK_EMOTION_LIST, JSON.stringify(beckEmotionList));
 };
 const removeBeckEmotionList = async (emotion) => {
   let beckEmotionList = await getBeckEmotionList();
   beckEmotionList = beckEmotionList.filter((e) => e !== emotion);
-  await AsyncStorage.setItem(
-    STORAGE_KEY_BECK_EMOTION_LIST,
-    JSON.stringify(beckEmotionList),
-  );
+  await AsyncStorage.setItem(STORAGE_KEY_BECK_EMOTION_LIST, JSON.stringify(beckEmotionList));
   return beckEmotionList;
 };
 
 // sensation
 const getBeckSensationList = async () => {
-  const beckEmotionList = await AsyncStorage.getItem(
-    STORAGE_KEY_BECK_SENSATION_LIST,
-  );
+  const beckEmotionList = await AsyncStorage.getItem(STORAGE_KEY_BECK_SENSATION_LIST);
   return JSON.parse(beckEmotionList) || [];
 };
 
 const setBeckSensationList = async (sensations) => {
-  await AsyncStorage.setItem(
-    STORAGE_KEY_BECK_SENSATION_LIST,
-    JSON.stringify(sensations),
-  );
+  await AsyncStorage.setItem(STORAGE_KEY_BECK_SENSATION_LIST, JSON.stringify(sensations));
 };
 const addBeckSensationList = async (sensation) => {
   const beckSensationList = await getBeckSensationList();
   beckSensationList.push(sensation);
-  await AsyncStorage.setItem(
-    STORAGE_KEY_BECK_SENSATION_LIST,
-    JSON.stringify(beckSensationList),
-  );
+  await AsyncStorage.setItem(STORAGE_KEY_BECK_SENSATION_LIST, JSON.stringify(beckSensationList));
 };
 const removeBeckSensationList = async (sensation) => {
   let beckSensationList = await getBeckSensationList();
   beckSensationList = beckSensationList.filter((e) => e !== sensation);
-  await AsyncStorage.setItem(
-    STORAGE_KEY_BECK_SENSATION_LIST,
-    JSON.stringify(beckSensationList),
-  );
+  await AsyncStorage.setItem(STORAGE_KEY_BECK_SENSATION_LIST, JSON.stringify(beckSensationList));
   return beckSensationList;
 };
 
