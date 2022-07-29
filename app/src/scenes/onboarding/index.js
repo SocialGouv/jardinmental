@@ -6,6 +6,7 @@ const Stack = createStackNavigator();
 import OnboardingPresentation from "./onboarding";
 import OnboardingSupported from "./onboardingSupported";
 import OnboardingSymptoms from "./onboardingSymptoms";
+import OnboardingExplanation from "./onboardingExplanation/screen0";
 import OnboardingDrugs from "./onboardingDrugs";
 import Reminder from "../reminder/reminder";
 import { ONBOARDING_STEPS } from "../../utils/constants";
@@ -15,6 +16,7 @@ const Onboarding = () => {
     <Stack.Navigator initialRouteName="OnboardingPresentation" headerMode="none">
       <Stack.Screen name={ONBOARDING_STEPS.STEP_CGU} component={OnboardingPresentation} />
       <Stack.Screen name={ONBOARDING_STEPS.STEP_SUPPORTED} component={OnboardingSupported} />
+      <Stack.Screen name={ONBOARDING_STEPS.STEP_EXPLANATION} component={OnboardingExplanation} />
       <Stack.Screen name={ONBOARDING_STEPS.STEP_SYMPTOMS} component={OnboardingSymptoms} />
       <Stack.Screen
         name={ONBOARDING_STEPS.STEP_REMINDER}
