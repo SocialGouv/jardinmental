@@ -1,3 +1,10 @@
+# [1.35.0](https://github.com/SocialGouv/monsuivipsy/compare/v1.34.1...v1.35.0) (2022-07-29)
+
+
+### Features
+
+* wip onboarding ([#183](https://github.com/SocialGouv/monsuivipsy/issues/183)) ([dbdb927](https://github.com/SocialGouv/monsuivipsy/commit/dbdb9275dcfe2529959b1c1ca646f7a36caafbf8))
+
 ## [1.34.1](https://github.com/SocialGouv/monsuivipsy/compare/v1.34.0...v1.34.1) (2022-07-27)
 
 
