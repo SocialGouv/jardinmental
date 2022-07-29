@@ -2,7 +2,7 @@ import React from "react";
 import Tabs from "./tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
-import EnvironmentIndicator from '../services/EnvironmentIndicator'
+import EnvironmentIndicator from "../services/EnvironmentIndicator";
 import DaySurveyScreen from "../scenes/survey/daySurvey";
 import SelectDayScreen from "../scenes/survey/selectDay";
 import Reminder from "../scenes/reminder/reminder";
@@ -13,6 +13,8 @@ import Notes from "../scenes/survey/notes-screen";
 import Onboarding from "../scenes/onboarding";
 import Supported from "../scenes/onboarding/onboardingSupported";
 import OnboardingSymptoms from "../scenes/onboarding/onboardingSymptoms";
+import OnboardingExplanationScreen0 from "../scenes/onboarding/onboardingExplanation/screen0";
+import OnboardingExplanationScreen1 from "../scenes/onboarding/onboardingExplanation/screen1";
 import onboardingSymptomsStart from "../scenes/onboarding/onboardingSymptomsStart";
 import OnboardingSymptomsCustom from "../scenes/onboarding/onboardingSymptomsCustom";
 import OnboardingDrugs from "../scenes/onboarding/onboardingDrugs";
@@ -97,6 +99,8 @@ class Router extends React.Component {
             </Stack.Screen>
             <Stack.Screen name="onboarding" component={Onboarding} />
             <Stack.Screen name="onboarding-symptoms" component={OnboardingSymptoms} />
+            <Stack.Screen name="onboarding-explanation-screen-0" component={OnboardingExplanationScreen0} />
+            <Stack.Screen name="onboarding-explanation-screen-1" component={OnboardingExplanationScreen1} />
             <Stack.Screen name="onboarding-symptoms-start" component={onboardingSymptomsStart} />
             <Stack.Screen name="onboarding-symptoms-custom" component={OnboardingSymptomsCustom} />
             <Stack.Screen name="onboarding-drugs" component={OnboardingDrugs} />
