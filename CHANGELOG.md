@@ -1,3 +1,10 @@
+## [1.35.1](https://github.com/SocialGouv/monsuivipsy/compare/v1.35.0...v1.35.1) (2022-07-29)
+
+
+### Reverts
+
+* Revert "feat: wip onboarding (#183)" ([573b978](https://github.com/SocialGouv/monsuivipsy/commit/573b9783e6e8286b9baeaa0baa877dbe8a613273)), closes [#183](https://github.com/SocialGouv/monsuivipsy/issues/183)
+
 # [1.35.0](https://github.com/SocialGouv/monsuivipsy/compare/v1.34.1...v1.35.0) (2022-07-29)
 
 
