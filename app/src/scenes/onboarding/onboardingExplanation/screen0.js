@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     paddingBottom: 15,
     fontWeight: "700",
     textAlign: "center",
-    paddingBottom: 75,
+    paddingBottom: 55,
   },
   subtitle: {
     color: colors.DARK_BLUE,
@@ -86,9 +86,10 @@ const styles = StyleSheet.create({
     fontFamily: "Karla",
     fontStyle: "normal",
     fontWeight: "700",
-    fontSize: 15,
+    fontSize: 18,
     lineHeight: 18,
     color: "#979797",
+    paddingTop: 20,
   },
   container: {
     backgroundColor: "white",

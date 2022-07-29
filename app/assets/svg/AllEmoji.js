@@ -2,7 +2,7 @@ import * as React from "react";
 import Svg, { G, Path, Defs, ClipPath } from "react-native-svg";
 
 const SvgComponent = (props) => (
-  <Svg width={112} height={21} fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+  <Svg viewBox="0 0 112 21" width={224} height={42} fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
     <G opacity={0.8}>
       <Path
         d="M18.694 10.481c0 4.404-3.67 7.996-8.224 7.996-4.555 0-8.225-3.592-8.225-7.996 0-4.403 3.67-7.996 8.224-7.996 4.556 0 8.225 3.593 8.225 7.996Z"
