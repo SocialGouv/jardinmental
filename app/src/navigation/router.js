@@ -15,10 +15,12 @@ import Supported from "../scenes/onboarding/onboardingSupported";
 import OnboardingSymptoms from "../scenes/onboarding/onboardingSymptoms";
 import OnboardingExplanationScreen0 from "../scenes/onboarding/onboardingExplanation/screen0";
 import OnboardingExplanationScreen1 from "../scenes/onboarding/onboardingExplanation/screen1";
+import onboardingSymptomsStart from "../scenes/onboarding/onboardingSymptomsStart";
 import OnboardingSymptomsCustom from "../scenes/onboarding/onboardingSymptomsCustom";
 import OnboardingDrugs from "../scenes/onboarding/onboardingDrugs";
 import OnboardingDrugsInformation from "../scenes/onboarding/onboardingDrugs/drugs-information";
 import OnboardingDrugsList from "../scenes/onboarding/onboardingDrugs/list";
+import OnboardingExplanation from "../scenes/onboarding/onboardingExplanation";
 import CGU from "../scenes/legal/cgu-screen";
 import Privacy from "../scenes/legal/privacy-screen";
 import LegalMentions from "../scenes/legal/legal-mentions-screen";
@@ -99,10 +101,12 @@ class Router extends React.Component {
             <Stack.Screen name="onboarding-symptoms" component={OnboardingSymptoms} />
             <Stack.Screen name="onboarding-explanation-screen-0" component={OnboardingExplanationScreen0} />
             <Stack.Screen name="onboarding-explanation-screen-1" component={OnboardingExplanationScreen1} />
+            <Stack.Screen name="onboarding-symptoms-start" component={onboardingSymptomsStart} />
             <Stack.Screen name="onboarding-symptoms-custom" component={OnboardingSymptomsCustom} />
             <Stack.Screen name="onboarding-drugs" component={OnboardingDrugs} />
             <Stack.Screen name="onboarding-drugs-information" component={OnboardingDrugsInformation} />
             <Stack.Screen name="onboarding-drugs-list" component={OnboardingDrugsList} />
+            <Stack.Screen name="onboarding-stats" component={OnboardingExplanation} />
             <Stack.Screen name="supported" component={Supported} />
             <Stack.Screen name="cgu" component={CGU} />
             <Stack.Screen name="privacy" component={Privacy} />

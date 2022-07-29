@@ -8,6 +8,7 @@ import OnboardingSupported from "./onboardingSupported";
 import OnboardingSymptoms from "./onboardingSymptoms";
 import OnboardingExplanation from "./onboardingExplanation/screen0";
 import OnboardingDrugs from "./onboardingDrugs";
+import OnboardingHint from "./onboardingHint";
 import Reminder from "../reminder/reminder";
 import { ONBOARDING_STEPS } from "../../utils/constants";
 
@@ -23,6 +24,7 @@ const Onboarding = () => {
         component={Reminder}
         initialParams={{ onboarding: true }}
       />
+      <Stack.Screen name={ONBOARDING_STEPS.STEP_HINT} component={OnboardingHint} />
       <Stack.Screen name={ONBOARDING_STEPS.STEP_DRUGS} component={OnboardingDrugs} />
     </Stack.Navigator>
   );
