@@ -5,7 +5,7 @@ import Button from "../../components/Button";
 import { colors } from "../../utils/colors";
 import Temps from "./assets/Temps";
 
-const Onboarding = ({}) => {
+const Onboarding = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.safe}>
       <ScrollView style={styles.container} contentContainerStyle={styles.scrollContainer}>
@@ -32,7 +32,12 @@ const Onboarding = ({}) => {
           </Text>
         </View>
         <View style={styles.buttonWrapper}>
-          <Button onPress={() => {}} title="Bien reçu !" />
+          <Button
+            onPress={() => {
+              navigation.navigate("reminder", { onboarding: true });
+            }}
+            title="Bien reçu !"
+          />
         </View>
       </ScrollView>
     </SafeAreaView>

@@ -2,10 +2,10 @@ import React from "react";
 import Tabs from "./tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
-import EnvironmentIndicator from '../services/EnvironmentIndicator'
+import EnvironmentIndicator from "../services/EnvironmentIndicator";
 import DaySurveyScreen from "../scenes/survey/daySurvey";
 import SelectDayScreen from "../scenes/survey/selectDay";
-import Reminder from "../scenes/reminder/reminder";
+import Reminder from "../scenes/reminder";
 import Export from "../scenes/export/export";
 import DailyChart from "../scenes/calendar/daily-chart";
 import { AppState, Platform } from "react-native";
@@ -13,12 +13,15 @@ import Notes from "../scenes/survey/notes-screen";
 import Onboarding from "../scenes/onboarding";
 import Supported from "../scenes/onboarding/onboardingSupported";
 import OnboardingSymptoms from "../scenes/onboarding/onboardingSymptoms";
+import OnboardingExplanationScreen0 from "../scenes/onboarding/onboardingExplanation/screen0";
+import OnboardingExplanationScreen1 from "../scenes/onboarding/onboardingExplanation/screen1";
 import onboardingSymptomsStart from "../scenes/onboarding/onboardingSymptomsStart";
 import OnboardingSymptomsCustom from "../scenes/onboarding/onboardingSymptomsCustom";
 import OnboardingDrugs from "../scenes/onboarding/onboardingDrugs";
 import OnboardingDrugsInformation from "../scenes/onboarding/onboardingDrugs/drugs-information";
 import OnboardingDrugsList from "../scenes/onboarding/onboardingDrugs/list";
 import OnboardingExplanation from "../scenes/onboarding/onboardingExplanation";
+import OnboardingHint from "../scenes/onboarding/onboardingHint";
 import CGU from "../scenes/legal/cgu-screen";
 import Privacy from "../scenes/legal/privacy-screen";
 import LegalMentions from "../scenes/legal/legal-mentions-screen";
@@ -97,12 +100,15 @@ class Router extends React.Component {
             </Stack.Screen>
             <Stack.Screen name="onboarding" component={Onboarding} />
             <Stack.Screen name="onboarding-symptoms" component={OnboardingSymptoms} />
+            <Stack.Screen name="onboarding-explanation-screen-0" component={OnboardingExplanationScreen0} />
+            <Stack.Screen name="onboarding-explanation-screen-1" component={OnboardingExplanationScreen1} />
             <Stack.Screen name="onboarding-symptoms-start" component={onboardingSymptomsStart} />
             <Stack.Screen name="onboarding-symptoms-custom" component={OnboardingSymptomsCustom} />
             <Stack.Screen name="onboarding-drugs" component={OnboardingDrugs} />
             <Stack.Screen name="onboarding-drugs-information" component={OnboardingDrugsInformation} />
             <Stack.Screen name="onboarding-drugs-list" component={OnboardingDrugsList} />
             <Stack.Screen name="onboarding-explanation" component={OnboardingExplanation} />
+            <Stack.Screen name="onboarding-hint" component={OnboardingHint} />
             <Stack.Screen name="supported" component={Supported} />
             <Stack.Screen name="cgu" component={CGU} />
             <Stack.Screen name="privacy" component={Privacy} />
