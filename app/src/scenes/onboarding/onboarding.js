@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { StyleSheet, SafeAreaView, View, TouchableOpacity, ScrollView, Dimensions } from "react-native";
 import Text from "../../components/MyText";
+import CheckBox from "@react-native-community/checkbox";
 import { colors } from "../../utils/colors";
 import Swiper from "react-native-swiper";
 import localStorage from "../../utils/localStorage";
@@ -29,12 +30,16 @@ const Onboarding = ({ navigation }) => {
     navigation.navigate(target);
   };
 
+  const onCguClick = () => navigation.navigate("cgu");
+  const onLegalMentionsClick = () => navigation.navigate("legal-mentions");
+  const onPrivacyClick = () => navigation.navigate("privacy");
+
   const onPressNext = () => swiperRef?.current?.scrollBy(1);
 
   return (
     <SafeAreaView style={styles.safe}>
       {!firstTime ? <BackButton onPress={navigation.goBack} /> : null}
-      {/* <Text style={styles.title}>Jardin Mental m'accompagne entre mes consultations</Text> */}
+      <Text style={styles.title}>Jardin Mental m'accompagne entre mes consultations</Text>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <Swiper
           onIndexChanged={(page) => {
@@ -52,17 +57,43 @@ const Onboarding = ({ navigation }) => {
         >
           <Screen0 />
           <Screen1 />
-          <Screen2 isCguChecked={isCguChecked} setIsCguChecked={setIsCguChecked} navigation={navigation} />
+          <Screen2 />
+          <Screen3 />
         </Swiper>
       </ScrollView>
       <View style={styles.CTAButtonContainer}>
-        {currentIndex === 2 ? (
+        {currentIndex === 3 ? (
           firstTime ? (
             <>
+              <View style={styles.cgu}>
+                <CheckBox
+                  animationDuration={0.2}
+                  tintColor="#1FC6D5"
+                  tintColors={{ true: "#1FC6D5", false: "grey" }}
+                  boxType="square"
+                  style={styles.checkbox}
+                  value={isCguChecked}
+                  onValueChange={(newValue) => setIsCguChecked(newValue)}
+                />
+                <Text style={styles.textCgu}>
+                  En cochant cette case, vous acceptez nos{" "}
+                  <Text onPress={onCguClick} style={styles.underlined}>
+                    Conditions Générales d’Utilisation
+                  </Text>
+                  , notre{" "}
+                  <Text onPress={onPrivacyClick} style={styles.underlined}>
+                    Politique de Confidentialité
+                  </Text>{" "}
+                  et nos{" "}
+                  <Text onPress={onLegalMentionsClick} style={styles.underlined}>
+                    Mentions Légales
+                  </Text>
+                </Text>
+              </View>
               <View style={styles.buttonWrapper}>
                 <Button
                   onPress={validateOnboarding}
-                  title="C'est parti !"
+                  title="Commencer"
                   disabled={!isCguChecked && firstTime}
                 />
               </View>
@@ -89,6 +120,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "white",
     display: "flex",
+  },
+  checkbox: {
+    marginRight: 20,
   },
   label: {
     width: "100%",
@@ -125,13 +159,24 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 15,
   },
-
+  cgu: {
+    padding: 15,
+    display: "flex",
+    flexDirection: "row",
+  },
+  textCgu: {
+    flex: 1,
+    fontSize: Dimensions.get("window").height > 700 ? 16 : 12,
+  },
   emphasis: {
     color: "#1FC6D5",
   },
   presentationText: {
     fontSize: 20,
     color: "#0A215C",
+  },
+  underlined: {
+    textDecorationLine: "underline",
   },
   message: {
     fontSize: 22,
