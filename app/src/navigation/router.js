@@ -2,7 +2,7 @@ import React from "react";
 import Tabs from "./tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
-import EnvironmentIndicator from '../services/EnvironmentIndicator'
+import EnvironmentIndicator from "../services/EnvironmentIndicator";
 import DaySurveyScreen from "../scenes/survey/daySurvey";
 import SelectDayScreen from "../scenes/survey/selectDay";
 import Reminder from "../scenes/reminder/reminder";
@@ -13,6 +13,8 @@ import Notes from "../scenes/survey/notes-screen";
 import Onboarding from "../scenes/onboarding";
 import Supported from "../scenes/onboarding/onboardingSupported";
 import OnboardingSymptoms from "../scenes/onboarding/onboardingSymptoms";
+import OnboardingExplanationScreen0 from "../scenes/onboarding/onboardingExplanation/screen0";
+import OnboardingExplanationScreen1 from "../scenes/onboarding/onboardingExplanation/screen1";
 import OnboardingSymptomsCustom from "../scenes/onboarding/onboardingSymptomsCustom";
 import OnboardingDrugs from "../scenes/onboarding/onboardingDrugs";
 import OnboardingDrugsInformation from "../scenes/onboarding/onboardingDrugs/drugs-information";
@@ -72,52 +74,54 @@ class Router extends React.Component {
   render() {
     return (
       <>
-      <NavigationContainer ref={(r) => (this.navigationRef = r)} onStateChange={this.onStateChange}>
-        <Stack.Navigator initialRouteName="tabs" headerMode="none">
-          <Stack.Screen name="day-survey" component={DaySurveyScreen} />
-          <Stack.Screen name="select-day" component={SelectDayScreen} />
-          <Stack.Screen name="tabs" component={Tabs} />
-          {/* <Stack.Screen
+        <NavigationContainer ref={(r) => (this.navigationRef = r)} onStateChange={this.onStateChange}>
+          <Stack.Navigator initialRouteName="tabs" headerMode="none">
+            <Stack.Screen name="day-survey" component={DaySurveyScreen} />
+            <Stack.Screen name="select-day" component={SelectDayScreen} />
+            <Stack.Screen name="tabs" component={Tabs} />
+            {/* <Stack.Screen
             name="question"
             options={{animationEnabled: Platform.OS === 'ios'}}>
             {({navigation, route}) => (
               <SurveyScreen navigation={navigation} route={route} />
             )}
           </Stack.Screen> */}
-          <Stack.Screen name="symptoms">
-            {(props) => <OnboardingSymptomsCustom settings={true} {...props} />}
-          </Stack.Screen>
-          <Stack.Screen name="reminder" component={Reminder} />
-          <Stack.Screen name="export" component={Export} />
-          <Stack.Screen name="chart-day" component={DailyChart} />
-          <Stack.Screen name="notes" options={{ animationEnabled: Platform.OS === "ios" }}>
-            {({ navigation, route }) => <Notes navigation={navigation} route={route} />}
-          </Stack.Screen>
-          <Stack.Screen name="onboarding" component={Onboarding} />
-          <Stack.Screen name="onboarding-symptoms" component={OnboardingSymptoms} />
-          <Stack.Screen name="onboarding-symptoms-custom" component={OnboardingSymptomsCustom} />
-          <Stack.Screen name="onboarding-drugs" component={OnboardingDrugs} />
-          <Stack.Screen name="onboarding-drugs-information" component={OnboardingDrugsInformation} />
-          <Stack.Screen name="onboarding-drugs-list" component={OnboardingDrugsList} />
-          <Stack.Screen name="supported" component={Supported} />
-          <Stack.Screen name="cgu" component={CGU} />
-          <Stack.Screen name="privacy" component={Privacy} />
-          <Stack.Screen name="legal-mentions" component={LegalMentions} />
-          <Stack.Screen name="drugs" component={Drugs} />
-          <Stack.Screen name="drugs-list" component={DrugsList} />
-          <Stack.Screen name="too-late" component={TooLate} />
-          <Stack.Screen name="news" component={News} />
-          <Stack.Screen name="infos" component={Infos} />
-          <Stack.Screen name="contact" component={Contact} />
-          <Stack.Screen name="privacy-light" component={PrivacyLight} />
-          <Stack.Screen name="contribute-pro" component={ContributePro} />
-          <Stack.Screen name="activate-beck" component={ActivateBeck} />
-          <Stack.Screen name="view-beck" component={ViewBeck} />
-          <Stack.Screen name="beck" component={Beck} />
-          {/* <Stack.Screen name="contribute" component={Contribute} /> */}
-        </Stack.Navigator>
-      </NavigationContainer>
-      <EnvironmentIndicator />
+            <Stack.Screen name="symptoms">
+              {(props) => <OnboardingSymptomsCustom settings={true} {...props} />}
+            </Stack.Screen>
+            <Stack.Screen name="reminder" component={Reminder} />
+            <Stack.Screen name="export" component={Export} />
+            <Stack.Screen name="chart-day" component={DailyChart} />
+            <Stack.Screen name="notes" options={{ animationEnabled: Platform.OS === "ios" }}>
+              {({ navigation, route }) => <Notes navigation={navigation} route={route} />}
+            </Stack.Screen>
+            <Stack.Screen name="onboarding" component={Onboarding} />
+            <Stack.Screen name="onboarding-symptoms" component={OnboardingSymptoms} />
+            <Stack.Screen name="onboarding-explanation-screen-0" component={OnboardingExplanationScreen0} />
+            <Stack.Screen name="onboarding-explanation-screen-1" component={OnboardingExplanationScreen1} />
+            <Stack.Screen name="onboarding-symptoms-custom" component={OnboardingSymptomsCustom} />
+            <Stack.Screen name="onboarding-drugs" component={OnboardingDrugs} />
+            <Stack.Screen name="onboarding-drugs-information" component={OnboardingDrugsInformation} />
+            <Stack.Screen name="onboarding-drugs-list" component={OnboardingDrugsList} />
+            <Stack.Screen name="supported" component={Supported} />
+            <Stack.Screen name="cgu" component={CGU} />
+            <Stack.Screen name="privacy" component={Privacy} />
+            <Stack.Screen name="legal-mentions" component={LegalMentions} />
+            <Stack.Screen name="drugs" component={Drugs} />
+            <Stack.Screen name="drugs-list" component={DrugsList} />
+            <Stack.Screen name="too-late" component={TooLate} />
+            <Stack.Screen name="news" component={News} />
+            <Stack.Screen name="infos" component={Infos} />
+            <Stack.Screen name="contact" component={Contact} />
+            <Stack.Screen name="privacy-light" component={PrivacyLight} />
+            <Stack.Screen name="contribute-pro" component={ContributePro} />
+            <Stack.Screen name="activate-beck" component={ActivateBeck} />
+            <Stack.Screen name="view-beck" component={ViewBeck} />
+            <Stack.Screen name="beck" component={Beck} />
+            {/* <Stack.Screen name="contribute" component={Contribute} /> */}
+          </Stack.Navigator>
+        </NavigationContainer>
+        <EnvironmentIndicator />
       </>
     );
   }
