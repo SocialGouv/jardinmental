@@ -52,7 +52,7 @@ const SymptomScreen = ({ navigation, route }) => {
       return;
     }
     await localStorage.setSymptoms(indicateursSelection);
-    navigation.navigate("reminder", { onboarding: true });
+    navigation.navigate("onboarding-hint", { onboarding: true });
   };
 
   const handleAddNewSymptom = async (value) => {

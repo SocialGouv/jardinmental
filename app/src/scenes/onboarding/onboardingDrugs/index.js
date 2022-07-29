@@ -129,7 +129,7 @@ const Drugs = ({ navigation, route }) => {
           </Text>
         </View>
         <View style={styles.buttonWrapper}>
-          <TouchableOpacity onPress={() => navigation.navigate("tabs")} style={styles.setupButton}>
+          <TouchableOpacity onPress={() => navigation.navigate("onboarding-hint")} style={styles.setupButton}>
             <Text style={styles.setupButtonText}>Je démarre Jardin Mental</Text>
           </TouchableOpacity>
         </View>
