@@ -6,12 +6,14 @@ import Text from "../../components/MyText";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import localStorage from "../../utils/localStorage";
 import { ONBOARDING_STEPS } from "../../utils/constants";
-import ReminderSvg from "../../../assets/svg/reminder.js";
 import TimePicker from "../../components/timePicker";
 import NotificationService from "../../services/notifications";
 import { colors } from "../../utils/colors";
 import logEvents from "../../services/logEvents";
 import BackButton from "../../components/BackButton";
+import Rappel from "../onboarding/assets/Rappel";
+import Button from "../../components/Button";
+import OutlineButton from "../../components/OutlineButton";
 
 const ReminderStorageKey = "@Reminder";
 
@@ -132,26 +134,26 @@ const Reminder = ({
     // await localStorage.setOnboardingStep(null);
     navigation.navigate("onboarding-drugs");
   };
+  const DesactivateReminder = async () => {
+    await localStorage.setOnboardingDone(true);
+    // await localStorage.setOnboardingStep(null);
+    navigation.navigate("onboarding-drugs");
+  };
 
   return (
     <SafeAreaView style={styles.container}>
       <BackButton onPress={navigation.goBack} />
-      {route?.params?.onboarding ? (
-        <View style={styles.header}>
-          <ReminderSvg style={styles.smallImage} width={30} height={30} />
-          <Text style={styles.smallTitle}>Votre rappel pour penser à remplir votre questionnaire</Text>
-        </View>
-      ) : (
-        <>
-          <ReminderSvg style={styles.bigImage} />
-          <Text style={styles.bigTitle}>Je programme un rappel quotidien</Text>
-        </>
-      )}
+      <View style={styles.containerSvg}>
+        <Rappel width={100} height={100} />
+      </View>
       <View style={styles.description}>
         {reminder ? (
           <>
-            <Text style={styles.subtitle}>
-              Pour un <Text style={styles.lightBlue}>meilleur suivi</Text>, un rappel est programmé à :
+            <Text style={styles.title}>
+              Plus vous remplirez votre questionnaire, plus vous en apprendrez sur vous et votre santé mentale
+            </Text>
+            <Text style={styles.body}>
+              Pour vous aider, je peux vous envoyer une notification de rappel à :
             </Text>
             <TouchableOpacity onPress={showReminderSetup}>
               <Text style={styles.time}>{`${dayjs(reminder).format("HH:mm")}`}</Text>
@@ -163,48 +165,34 @@ const Reminder = ({
           </Text>
         )}
       </View>
-      {!!route?.params?.onboarding && !!reminder && (
+      {!!reminder && (
         <TouchableOpacity onPress={deleteReminderManually} style={[styles.laterContainer]}>
           <Text style={styles.later}>Désactiver le rappel</Text>
         </TouchableOpacity>
       )}
-
-      {route?.params?.onboarding ? (
-        <View style={styles.ctaContainer}>
-          <TouchableOpacity
-            onPress={reminder ? validateOnboarding : showReminderSetup}
-            style={styles.setupButton}
-          >
-            <Text style={styles.setupButtonText}>{reminder ? "Continuer" : "Choisir l'heure du rappel"}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={reminder ? showReminderSetup : validateOnboarding}
-            style={[styles.laterContainer]}
-          >
-            <Text style={styles.later}>{reminder ? "Modifier l'heure du rappel" : "Plus tard"}</Text>
-          </TouchableOpacity>
-        </View>
-      ) : (
-        <View style={styles.ctaContainer}>
-          <TouchableOpacity onPress={showReminderSetup} style={styles.setupButton}>
-            <Text style={styles.setupButtonText}>
-              {reminder ? "Modifier le rappel" : "Choisir l'heure du rappel"}
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={reminder ? deleteReminderManually : () => navigation.navigate("tabs")}
-            style={[styles.laterContainer]}
-          >
-            <Text style={styles.later}>{reminder ? "Retirer le rappel" : "Plus tard"}</Text>
-          </TouchableOpacity>
-        </View>
-      )}
+      <View style={styles.buttonWrapper}>
+        <Button onPress={validateOnboarding} title="Suivant" />
+        <OutlineButton onPress={DesactivateReminder} title="Désactiver le rappel" />
+      </View>
       <TimePicker visible={reminderSetupVisible} selectDate={setReminderRequest} />
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  buttonWrapper: {
+    width: "100%",
+    display: "flex",
+    alignItems: "stretch",
+    position: "absolute",
+    bottom: 0,
+    padding: 20,
+  },
+
+  containerSvg: {
+    alignItems: "center",
+    marginVertical: 20,
+  },
   ctaContainer: {
     display: "flex",
     alignItems: "center",
@@ -263,10 +251,10 @@ const styles = StyleSheet.create({
     marginTop: "10%",
     marginBottom: "20%",
   },
-  subTitle: {
-    flexShrink: 0,
-    textAlign: "center",
-    paddingHorizontal: 20,
+  title: {
+    fontSize: 18,
+    color: colors.BLUE,
+    fontWeight: "700",
   },
   time: {
     color: colors.DARK_BLUE,
@@ -310,12 +298,12 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     fontSize: 16,
   },
-  subtitle: {
+  body: {
     color: colors.DARK_BLUE,
-    fontSize: 18,
-    marginBottom: 10,
+    fontSize: 15,
+    marginVertical: 10,
     fontWeight: "300",
-    textAlign: "center",
+    textAlign: "left",
   },
   link: {
     color: "#181818",

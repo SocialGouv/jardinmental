@@ -5,7 +5,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import EnvironmentIndicator from "../services/EnvironmentIndicator";
 import DaySurveyScreen from "../scenes/survey/daySurvey";
 import SelectDayScreen from "../scenes/survey/selectDay";
-import Reminder from "../scenes/reminder/reminder";
+import Reminder from "../scenes/reminder";
 import Export from "../scenes/export/export";
 import DailyChart from "../scenes/calendar/daily-chart";
 import { AppState, Platform } from "react-native";
