@@ -1,3 +1,10 @@
+## [1.35.2](https://github.com/SocialGouv/monsuivipsy/compare/v1.35.1...v1.35.2) (2022-08-01)
+
+
+### Bug Fixes
+
+* **deps:** update dependency androidx.core:core-splashscreen to v1.0.0 ([6e4579c](https://github.com/SocialGouv/monsuivipsy/commit/6e4579ca4d0016d35255caab071f2755054f9127))
+
 ## [1.35.1](https://github.com/SocialGouv/monsuivipsy/compare/v1.35.0...v1.35.1) (2022-07-29)
 
 
