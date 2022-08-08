@@ -1,3 +1,10 @@
+## [1.35.5](https://github.com/SocialGouv/jardinmental/compare/v1.35.4...v1.35.5) (2022-08-08)
+
+
+### Bug Fixes
+
+* size button ([e57fa83](https://github.com/SocialGouv/jardinmental/commit/e57fa838acaccb3a3687bbd888a45dbf089119fe))
+
 ## [1.35.4](https://github.com/SocialGouv/jardinmental/compare/v1.35.3...v1.35.4) (2022-08-08)
 
 
