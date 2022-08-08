@@ -92,6 +92,7 @@ const Onboarding = ({ navigation }) => {
               </View>
               <View style={styles.buttonWrapper}>
                 <Button
+                  buttonStyle={styles.buttonStyle}
                   onPress={validateOnboarding}
                   title="Commencer"
                   disabled={!isCguChecked && firstTime}
@@ -105,7 +106,7 @@ const Onboarding = ({ navigation }) => {
           )
         ) : (
           <View style={styles.buttonWrapper}>
-            <Button title="Suivant" onPress={onPressNext} />
+            <Button buttonStyle={styles.buttonStyle} title="Suivant" onPress={onPressNext} />
           </View>
         )}
       </View>
@@ -158,6 +159,9 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     alignItems: "center",
     padding: 15,
+  },
+  buttonStyle: {
+    width: "100%",
   },
   cgu: {
     padding: 15,
