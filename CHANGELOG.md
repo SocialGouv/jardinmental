@@ -1,3 +1,10 @@
+## [1.35.3](https://github.com/SocialGouv/jardinmental/compare/v1.35.2...v1.35.3) (2022-08-08)
+
+
+### Bug Fixes
+
+* alert new version ([12a4961](https://github.com/SocialGouv/jardinmental/commit/12a496107ab6444c2cb570ce1a7a0a4d49a2adff))
+
 ## [1.35.2](https://github.com/SocialGouv/monsuivipsy/compare/v1.35.1...v1.35.2) (2022-08-01)
 
 
