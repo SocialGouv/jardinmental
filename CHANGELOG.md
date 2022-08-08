@@ -1,3 +1,38 @@
+## [1.35.4](https://github.com/SocialGouv/jardinmental/compare/v1.35.3...v1.35.4) (2022-08-08)
+
+
+### Bug Fixes
+
+* image name ([60f1062](https://github.com/SocialGouv/jardinmental/commit/60f1062060000b314b0d742695c3f282d994c3b6))
+
+## [1.35.3](https://github.com/SocialGouv/jardinmental/compare/v1.35.2...v1.35.3) (2022-08-08)
+
+
+### Bug Fixes
+
+* alert new version ([12a4961](https://github.com/SocialGouv/jardinmental/commit/12a496107ab6444c2cb570ce1a7a0a4d49a2adff))
+
+## [1.35.2](https://github.com/SocialGouv/monsuivipsy/compare/v1.35.1...v1.35.2) (2022-08-01)
+
+
+### Bug Fixes
+
+* **deps:** update dependency androidx.core:core-splashscreen to v1.0.0 ([6e4579c](https://github.com/SocialGouv/monsuivipsy/commit/6e4579ca4d0016d35255caab071f2755054f9127))
+
+## [1.35.1](https://github.com/SocialGouv/monsuivipsy/compare/v1.35.0...v1.35.1) (2022-07-29)
+
+
+### Reverts
+
+* Revert "feat: wip onboarding (#183)" ([573b978](https://github.com/SocialGouv/monsuivipsy/commit/573b9783e6e8286b9baeaa0baa877dbe8a613273)), closes [#183](https://github.com/SocialGouv/monsuivipsy/issues/183)
+
+# [1.35.0](https://github.com/SocialGouv/monsuivipsy/compare/v1.34.1...v1.35.0) (2022-07-29)
+
+
+### Features
+
+* wip onboarding ([#183](https://github.com/SocialGouv/monsuivipsy/issues/183)) ([dbdb927](https://github.com/SocialGouv/monsuivipsy/commit/dbdb9275dcfe2529959b1c1ca646f7a36caafbf8))
+
 ## [1.34.1](https://github.com/SocialGouv/monsuivipsy/compare/v1.34.0...v1.34.1) (2022-07-27)
 
 
