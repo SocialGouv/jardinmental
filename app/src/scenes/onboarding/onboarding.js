@@ -61,6 +61,7 @@ const Onboarding = ({ navigation }) => {
             <>
               <View style={styles.buttonWrapper}>
                 <Button
+                  buttonStyle={styles.buttonStyle}
                   onPress={validateOnboarding}
                   title="C'est parti !"
                   disabled={!isCguChecked && firstTime}
@@ -74,7 +75,7 @@ const Onboarding = ({ navigation }) => {
           )
         ) : (
           <View style={styles.buttonWrapper}>
-            <Button title="Suivant" onPress={onPressNext} />
+            <Button buttonStyle={styles.buttonStyle} title="Suivant" onPress={onPressNext} />
           </View>
         )}
       </View>
@@ -125,7 +126,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 15,
   },
-
+  buttonStyle: {
+    width: "100%",
+  },
   emphasis: {
     color: "#1FC6D5",
   },
