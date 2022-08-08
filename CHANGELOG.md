@@ -1,3 +1,10 @@
+## [1.35.4](https://github.com/SocialGouv/jardinmental/compare/v1.35.3...v1.35.4) (2022-08-08)
+
+
+### Bug Fixes
+
+* image name ([60f1062](https://github.com/SocialGouv/jardinmental/commit/60f1062060000b314b0d742695c3f282d994c3b6))
+
 ## [1.35.3](https://github.com/SocialGouv/jardinmental/compare/v1.35.2...v1.35.3) (2022-08-08)
 
 
