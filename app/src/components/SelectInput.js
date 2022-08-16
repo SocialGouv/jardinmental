@@ -39,10 +39,10 @@ export const SelectInput = ({
         useNativeAndroidPickerStyle={false}
         items={items || []}
         value={value}
-        onValueChange={(value) => {
-          if (value) {
-            setVisibleValue(value);
-            onValueChange?.(value);
+        onValueChange={(_value) => {
+          if (_value) {
+            setVisibleValue(_value);
+            onValueChange?.(_value);
             LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
           }
         }}
