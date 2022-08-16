@@ -102,6 +102,7 @@ const Suivi = ({ navigation, setPlusVisible, startSurvey }) => {
               toDate={toDate}
               onChangeFromDate={setFromDate}
               onChangeToDate={setToDate}
+              withPreset={chartType === "Frises"}
             />
           ) : null}
           {chartType === "Frises" ? (

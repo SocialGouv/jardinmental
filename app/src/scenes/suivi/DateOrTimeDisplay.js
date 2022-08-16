@@ -4,7 +4,7 @@ import { makeSureDate } from "../../utils/date/helpers";
 import Text from "../../components/MyText";
 import { colors } from "../../utils/colors";
 
-const DateOrTimeDisplay = ({ date, onPress, mode }) => {
+const DateOrTimeDisplay = ({ date, onPress, mode, disabled }) => {
   if (!date) return null;
 
   function padTo2Digits(num) {
@@ -15,9 +15,9 @@ const DateOrTimeDisplay = ({ date, onPress, mode }) => {
   }
 
   return (
-    <View style={styles.datesContainer}>
+    <View style={[styles.datesContainer, disabled && { opacity: 0.4 }]}>
       {Boolean(date) && (
-        <TouchableOpacity onPress={() => onPress(mode)}>
+        <TouchableOpacity onPress={() => onPress(mode)} disabled={disabled}>
           <View style={styles.currentDateContainer}>
             <Text style={styles.currentDate}>{formatDate(makeSureDate(date))}</Text>
           </View>
