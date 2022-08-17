@@ -10,7 +10,7 @@ import { beforeToday } from "../../utils/date/helpers";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { STORAGE_KEY_START_DATE } from "../../utils/constants";
 
-const DateRange = ({ withPreset = false, ...props }) => {
+const DateRange = ({ withPreset = false, children, ...props }) => {
   const [presetValue, setPresetValue] = useState("lastDays7");
 
   const [fromDate, setFromDate] = useState(props.fromDate);
@@ -50,21 +50,25 @@ const DateRange = ({ withPreset = false, ...props }) => {
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
-        {withPreset && (
-          <SelectInput
-            placeholder="Sélectionnez une période..."
-            value={presetValue}
-            onValueChange={setPresetValue}
-            items={[
-              { label: "7 derniers jours", value: "lastDays7" },
-              { label: "14 derniers jours", value: "lastDays14" },
-              { label: "30 derniers jours", value: "lastDays30" },
-              { label: "Depuis le début", value: "fromBeginning" },
-              { label: "Choisir la période", value: "custom" },
-            ]}
-            containerStyle={{ marginBottom: 8 }}
-          />
-        )}
+        <View style={[styles.topContainer, (withPreset || children) && { marginBottom: 8 }]}>
+          {withPreset && (
+            <SelectInput
+              placeholder="Sélectionnez une période..."
+              value={presetValue}
+              onValueChange={setPresetValue}
+              items={[
+                { label: "7 derniers jours", value: "lastDays7" },
+                { label: "14 derniers jours", value: "lastDays14" },
+                { label: "30 derniers jours", value: "lastDays30" },
+                { label: "Depuis le début", value: "fromBeginning" },
+                { label: "Choisir la période", value: "custom" },
+              ]}
+              containerStyle={{ marginRight: 8 }}
+            />
+          )}
+
+          {children}
+        </View>
 
         <View style={styles.dateContainer}>
           <Text style={styles.text}>du</Text>
@@ -143,6 +147,10 @@ const styles = StyleSheet.create({
   contentContainer: {
     flexDirection: "column",
     alignItems: "flex-start",
+  },
+  topContainer: {
+    flexDirection: "row",
+    alignItems: "center",
   },
   dateContainer: {
     flexDirection: "row",

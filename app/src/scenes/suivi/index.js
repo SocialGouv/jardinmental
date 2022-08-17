@@ -19,6 +19,7 @@ import { colors } from "../../utils/colors";
 import Icon from "../../components/Icon";
 import localStorage from "../../utils/localStorage";
 import FloatingPlusButton from "../../components/FloatingPlusButton";
+import { FriseInfoButton } from "./frise/FriseInfoButton";
 
 const screenHeight = Dimensions.get("window").height;
 
@@ -103,7 +104,9 @@ const Suivi = ({ navigation, setPlusVisible, startSurvey }) => {
               onChangeFromDate={setFromDate}
               onChangeToDate={setToDate}
               withPreset={chartType === "Frises"}
-            />
+            >
+              {chartType === "Frises" && <FriseInfoButton />}
+            </RangeDate>
           ) : null}
           {chartType === "Frises" ? (
             <View style={styles.containerScorePickerFrise}>

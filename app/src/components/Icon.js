@@ -6,6 +6,7 @@ import SymptomsSetting from "../../assets/svg/symptoms-setting.svg";
 import CguSettingSvg from "../../assets/svg/cgu-setting.svg";
 import DrugsSvg from "../../assets/svg/drugs.svg";
 import InfoSvg from "../../assets/svg/info.svg";
+import Info2Svg from "../../assets/svg/info2.svg";
 import BurgerSvg from "../../assets/svg/burger.svg";
 import PresentationSvg from "../../assets/svg/presentation.svg";
 import NewsSvg from "../../assets/svg/news.svg";
@@ -42,6 +43,7 @@ const mapIconToSvg = (icon) => {
     CguSettingSvg,
     DrugsSvg,
     InfoSvg,
+    Info2Svg,
     BurgerSvg,
     PresentationSvg,
     NewsSvg,
