@@ -37,7 +37,7 @@ const Onboarding = ({ navigation }) => {
             textStyle={styles.buttonSecondaryText}
             buttonStyle={styles.buttonSecondary}
             onPress={() => {
-              navigation.navigate("onboarding-explanation-screen-2", { onboarding: true });
+              navigation.navigate("onboarding-explanation-details", { onboarding: true });
             }}
             title="J'ai besoin d'explication"
           />

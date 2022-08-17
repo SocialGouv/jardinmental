@@ -16,7 +16,7 @@ const Supported = ({ navigation }) => {
       [MATOMO_DIMENSION.SUPPORTED]: value,
     });
     //navigate to tabs
-    navigation.navigate("onboarding-explanation-screen-0");
+    navigation.navigate("onboarding-explanation-indicator-0");
     //set local storage
     await localStorage.setSupported(value);
   };

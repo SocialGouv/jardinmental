@@ -16,7 +16,7 @@ const Explanation = ({ navigation }) => {
   }, []);
 
   const handlePress = () => {
-    navigation.navigate("onboarding-explanation-screen-1");
+    navigation.navigate("onboarding-explanation-indicator-1");
   };
 
   return (

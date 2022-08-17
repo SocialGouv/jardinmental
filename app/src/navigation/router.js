@@ -101,14 +101,20 @@ class Router extends React.Component {
             </Stack.Screen>
             <Stack.Screen name="onboarding" component={Onboarding} />
             <Stack.Screen name="onboarding-symptoms" component={OnboardingSymptoms} />
-            <Stack.Screen name="onboarding-explanation-screen-0" component={OnboardingExplanationScreen0} />
-            <Stack.Screen name="onboarding-explanation-screen-1" component={OnboardingExplanationScreen1} />
+            <Stack.Screen
+              name="onboarding-explanation-indicator-0"
+              component={OnboardingExplanationScreen0}
+            />
+            <Stack.Screen
+              name="onboarding-explanation-indicator-1"
+              component={OnboardingExplanationScreen1}
+            />
             <Stack.Screen name="onboarding-symptoms-start" component={onboardingSymptomsStart} />
             <Stack.Screen name="onboarding-symptoms-custom" component={OnboardingSymptomsCustom} />
             <Stack.Screen name="onboarding-drugs" component={OnboardingDrugs} />
             <Stack.Screen name="onboarding-drugs-information" component={OnboardingDrugsInformation} />
             <Stack.Screen name="onboarding-drugs-list" component={OnboardingDrugsList} />
-            <Stack.Screen name="onboarding-explanation-screen-2" component={OnboardingExplanation} />
+            <Stack.Screen name="onboarding-explanation-details" component={OnboardingExplanation} />
             <Stack.Screen name="onboarding-hint" component={OnboardingHint} />
             <Stack.Screen name="onboarding-felicitation" component={OnboardingFelicitation} />
             <Stack.Screen name="supported" component={Supported} />
