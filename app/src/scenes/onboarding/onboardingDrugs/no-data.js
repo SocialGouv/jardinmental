@@ -9,7 +9,7 @@ import localStorage from "../../../utils/localStorage";
 export default ({ navigation }) => {
   const handleNoTreatment = async () => {
     await localStorage.setMedicalTreatment([]);
-    navigation.navigate("tabs");
+    navigation.navigate("onboarding-felicitation");
   };
   const handleDrugInformation = async () => {
     navigation.navigate("onboarding-drugs-information", { onboarding: true });
@@ -18,45 +18,40 @@ export default ({ navigation }) => {
   return (
     <View>
       <Text style={styles.subtitle}>
-        Je suis chaque jour mes <Text style={styles.lightblue}>prises</Text> de{" "}
-        <Text style={styles.lightblue}>traitement</Text>, cela me permet de{" "}
-        <Text style={styles.lightblue}>comprendre</Text> comment il influe sur mon{" "}
-        <Text style={styles.lightblue}>état</Text>
+        Cela vous permettra de mieux comprendre leurs effets sur votre état de santé mentale
       </Text>
       <Button
         onPress={() => navigation.navigate("onboarding-drugs-list")}
-        title="Ajouter un traitement"
+        title="Je renseigne mon traitement"
         buttonStyle={styles.button}
-        textStyle={{ fontSize: 14, fontWeight: "bold" }}
+        textStyle={{ fontSize: 16, fontWeight: "bold" }}
       />
-      <TouchableOpacity onPress={handleDrugInformation}>
-        <Text style={styles.link}>Informations sur les traitements</Text>
-      </TouchableOpacity>
 
       <Button
         onPress={handleNoTreatment}
-        title="Je ne prends pas de traitement"
+        title="Je n'en ai pas / Je le ferais plus tard"
         buttonStyle={styles.darkButton}
-        textStyle={{ fontSize: 14, fontWeight: "bold" }}
+        textStyle={{ fontSize: 16, fontWeight: "bold", color: colors.LIGHT_BLUE }}
       />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  button: { marginTop: 40, height: 60, alignSelf: "center" },
+  button: { marginTop: "80%", height: 40, width: "100%", alignSelf: "center" },
   darkButton: {
-    marginTop: 40,
-    backgroundColor: colors.DARK_BLUE,
-    height: 60,
+    marginTop: 10,
+    backgroundColor: colors.WHITE,
+    height: 40,
+    width: "100%",
     alignSelf: "center",
+    borderWidth: 1,
+    borderColor: colors.LIGHT_BLUE,
   },
   subtitle: {
     color: colors.DARK_BLUE,
     fontSize: 18,
-    marginBottom: 10,
-    fontWeight: "300",
-    textAlign: "center",
+    fontWeight: "400",
   },
   link: {
     color: "#181818",

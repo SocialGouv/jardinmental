@@ -130,6 +130,12 @@ const Reminder = ({
   };
 
   const validateOnboarding = async () => {
+    if (!reminder) {
+      const date = new Date();
+      date.setHours(20, 0, 0, 0);
+      setReminderRequest(date);
+    }
+
     await localStorage.setOnboardingDone(true);
     // await localStorage.setOnboardingStep(null);
     navigation.navigate("onboarding-drugs");

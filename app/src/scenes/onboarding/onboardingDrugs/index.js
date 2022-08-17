@@ -9,7 +9,7 @@ import NoData from "./no-data";
 import DrugItem from "./drug-item";
 import { getDrugListWithLocalStorage } from "../../../utils/drugs-list";
 import logEvents from "../../../services/logEvents";
-import Logo from "../../../../assets/svg/drugs";
+import Logo from "../../../../assets/svg/traitement";
 import { ONBOARDING_STEPS } from "../../../utils/constants";
 
 const Drugs = ({ navigation, route }) => {
@@ -112,25 +112,29 @@ const Drugs = ({ navigation, route }) => {
                 onboarding: true,
               })
             }
-          >
-            <Text style={styles.link}>Informations sur les traitements</Text>
-          </TouchableOpacity>
+          ></TouchableOpacity>
           {medicalTreatment.map((e, i) => (
-            <DrugItem
-              key={i}
-              drug={(posology && posology.find((i) => i.id === e.id)) || e}
-              onChange={handleDrugChange}
-              showPosology={false}
-              onClose={() => handleDelete(e)}
-            />
+            <View style={styles.drugItem}>
+              <DrugItem
+                key={i}
+                drug={(posology && posology.find((i) => i.id === e.id)) || e}
+                onChange={handleDrugChange}
+                showPosology={false}
+                onClose={() => handleDelete(e)}
+              />
+            </View>
           ))}
           <Text style={styles.addButton} onPress={handleAdd}>
             + Ajouter / Modifier mes médicaments suivis
           </Text>
+          <Text style={styles.link}>Informations sur les traitements</Text>
         </View>
         <View style={styles.buttonWrapper}>
-          <TouchableOpacity onPress={() => navigation.navigate("onboarding-hint")} style={styles.setupButton}>
-            <Text style={styles.setupButtonText}>Je démarre Jardin Mental</Text>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("onboarding-felicitation")}
+            style={styles.setupButton}
+          >
+            <Text style={styles.setupButtonText}>Suivant</Text>
           </TouchableOpacity>
         </View>
       </>
@@ -141,16 +145,14 @@ const Drugs = ({ navigation, route }) => {
     <SafeAreaView style={styles.safe}>
       <BackButton onPress={navigation.goBack} />
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContainer}>
-        <View style={styles.header}>
-          <View style={styles.titleContainer}>
-            <Logo style={styles.image} width={30} height={30} />
-            <Text style={styles.title}>
-              {medicalTreatment?.length
-                ? "Voici la liste des traitements que vous allez suivre :"
-                : "Quel traitement est-ce que je souhaite suivre ?"}
-            </Text>
-          </View>
+        <View style={styles.containerImage}>
+          <Logo style={styles.image} width={80} height={80} />
         </View>
+        <Text style={styles.title}>
+          {medicalTreatment?.length
+            ? "Voici la liste des traitements que vous allez suivre :"
+            : "Souhaitez-vous renseigner vos prises de traitements quotidiennes ?"}
+        </Text>
         {render()}
       </ScrollView>
     </SafeAreaView>
@@ -158,16 +160,23 @@ const Drugs = ({ navigation, route }) => {
 };
 
 const styles = StyleSheet.create({
+  drugItem: {
+    height: 60,
+  },
+  containerImage: {
+    width: "100%",
+    display: "flex",
+    alignItems: "center",
+    marginBottom: 40,
+  },
   buttonWrapper: {
-    position: "absolute",
-    bottom: 20,
-    left: 10,
+    marginTop: "auto",
   },
   link: {
     color: "#181818",
     textDecorationLine: "underline",
     fontSize: 14,
-    marginBottom: 20,
+    marginTop: 20,
     fontWeight: "300",
     textAlign: "center",
   },
@@ -186,12 +195,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginTop: 15,
-  },
-  titleContainer: {
-    flex: 1,
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
   },
   setupButtonText: {
     color: "#fff",
@@ -221,7 +224,7 @@ const styles = StyleSheet.create({
     color: colors.BLUE,
     fontSize: 22,
     fontWeight: "700",
-    flex: 1,
+    marginBottom: 20,
   },
   subtitle: {
     color: "#000",
@@ -237,6 +240,7 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
     fontWeight: "600",
     marginTop: 15,
+    textAlign: "center",
   },
 });
 

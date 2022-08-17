@@ -13,12 +13,13 @@ export const INDICATEURS_SOMMEIL = "Qualité générale du sommeil";
 export const INDICATEURS_LISTE_ONBOARDING_HUMEUR = [
   "Humeur matinale",
   "Humeur à la mi-journée",
-  "Humeur au coucher"
+  "Humeur au coucher",
 ];
 export const INDICATEURS_LISTE_ONBOARDING_SOMMEIL = [
   "Durée sommeil",
   "Facilité endormissement",
-  "Se coucher tôt"
+  "Se coucher tôt",
+  "Réveils nocturnes",
 ];
 
 export const INDICATEURS_LISTE_ONBOARDING = [
@@ -125,7 +126,8 @@ export const INDICATEURS = {
   "Qualité sommeil": "Qualité sommeil",
   "Durée sommeil": "Durée sommeil",
   "Facilité endormissement": "Facilité endormissement",
-  "Se coucher tôt": "Se coucher tôt",
+  "Se coucher tôt": "Me coucher tôt",
+  "Réveils nocturnes": "Réveils nocturnes",
   "Horaires réguliers de sommeil": "Horaires réguliers de sommeil",
   "30 min d’activité physique": "30 min d’activité physique",
   "J’ai cuisiné mes plats": "J’ai cuisiné mes plats",

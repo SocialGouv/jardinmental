@@ -22,6 +22,7 @@ import OnboardingDrugsInformation from "../scenes/onboarding/onboardingDrugs/dru
 import OnboardingDrugsList from "../scenes/onboarding/onboardingDrugs/list";
 import OnboardingExplanation from "../scenes/onboarding/onboardingExplanation";
 import OnboardingHint from "../scenes/onboarding/onboardingHint";
+import OnboardingFelicitation from "../scenes/onboarding/onboardingFelicitation";
 import CGU from "../scenes/legal/cgu-screen";
 import Privacy from "../scenes/legal/privacy-screen";
 import LegalMentions from "../scenes/legal/legal-mentions-screen";
@@ -107,8 +108,9 @@ class Router extends React.Component {
             <Stack.Screen name="onboarding-drugs" component={OnboardingDrugs} />
             <Stack.Screen name="onboarding-drugs-information" component={OnboardingDrugsInformation} />
             <Stack.Screen name="onboarding-drugs-list" component={OnboardingDrugsList} />
-            <Stack.Screen name="onboarding-explanation" component={OnboardingExplanation} />
+            <Stack.Screen name="onboarding-explanation-screen-2" component={OnboardingExplanation} />
             <Stack.Screen name="onboarding-hint" component={OnboardingHint} />
+            <Stack.Screen name="onboarding-felicitation" component={OnboardingFelicitation} />
             <Stack.Screen name="supported" component={Supported} />
             <Stack.Screen name="cgu" component={CGU} />
             <Stack.Screen name="privacy" component={Privacy} />
