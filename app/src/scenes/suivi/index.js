@@ -102,7 +102,7 @@ const Suivi = ({ navigation, setPlusVisible, startSurvey }) => {
               toDate={toDate}
               onChangeFromDate={setFromDate}
               onChangeToDate={setToDate}
-              withPreset={chartType === "Frises"}
+              withPreset={chartType === "Frises" || chartType === "Statistiques"}
             >
               {chartType === "Frises" && (
                 <FriseInfoButton navigation={navigation} hasTreatment={aUnTraiement} />
