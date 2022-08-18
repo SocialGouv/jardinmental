@@ -1,7 +1,6 @@
 import React from "react";
 import { StyleSheet, View, ScrollView } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { getArrayOfDatesFromTo } from "../../../utils/date/helpers";
 import { DiaryDataContext } from "../../../context/diaryData";
@@ -15,18 +14,7 @@ import logEvents from "../../../services/logEvents";
 import Button from "../../../components/Button";
 import { FriseGraph } from "./FriseGraph";
 
-export const FriseScreen = ({
-  navigation,
-  fromDate,
-  toDate,
-  focusedScores,
-  showTraitement,
-  showHint,
-  onCloseHint,
-  aUnTraiement,
-  setShowHint,
-  setShowTraitement,
-}) => {
+export const FriseScreen = ({ navigation, fromDate, toDate, focusedScores, showTraitement }) => {
   const [diaryData] = React.useContext(DiaryDataContext);
   const [activeCategories, setActiveCategories] = React.useState();
   const [isEmpty, setIsEmpty] = React.useState();

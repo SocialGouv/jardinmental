@@ -1,9 +1,6 @@
 import React from "react";
-import TriangleWithBorderTop from "../../../../assets/svg/TriangleWithBorderTop";
-import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
-import Icon from "../../../components/Icon";
+import { View, Text, StyleSheet } from "react-native";
 import { FriseGraph } from "./FriseGraph";
-import { colors } from "../../../utils/colors";
 
 export const FriseGraphExample = ({ hasTreatment }) => {
   return (

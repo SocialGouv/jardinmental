@@ -1,10 +1,9 @@
 import React from "react";
-import { SafeAreaView, ScrollView, StyleSheet, View, Dimensions, TouchableOpacity } from "react-native";
+import { SafeAreaView, StyleSheet, View, Dimensions, TouchableOpacity } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 
 import { beforeToday } from "../../utils/date/helpers";
 import Header from "../../components/Header";
-import Text from "../../components/MyText";
 // import ChartPicker from "./chartPicker";
 import ChartPicker from "./chartPicker2";
 import RangeDate from "./RangeDate";

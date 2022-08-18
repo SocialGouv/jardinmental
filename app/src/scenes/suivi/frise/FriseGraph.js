@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View, Dimensions } from "react-native";
+import { StyleSheet, View } from "react-native";
 import Text from "../../../components/MyText";
 import { scoresMapIcon } from "../../../utils/constants";
 import { colors } from "../../../utils/colors";
