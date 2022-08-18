@@ -146,11 +146,12 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     flexDirection: "column",
-    alignItems: "flex-start",
+    alignItems: "stretch",
   },
   topContainer: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "flex-start",
   },
   dateContainer: {
     flexDirection: "row",

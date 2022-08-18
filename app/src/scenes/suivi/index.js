@@ -18,6 +18,7 @@ import Icon from "../../components/Icon";
 import localStorage from "../../utils/localStorage";
 import FloatingPlusButton from "../../components/FloatingPlusButton";
 import { FriseInfoButton } from "./frise/FriseInfoButton";
+import { Button2 } from "../../components/Button2";
 
 const screenHeight = Dimensions.get("window").height;
 
@@ -104,7 +105,20 @@ const Suivi = ({ navigation, setPlusVisible, startSurvey }) => {
               withPreset={chartType === "Frises" || chartType === "Statistiques"}
             >
               {chartType === "Frises" && (
-                <FriseInfoButton navigation={navigation} hasTreatment={aUnTraiement} />
+                <>
+                  <Button2
+                    title="Filtrer"
+                    icon="TuneSvg"
+                    size="small"
+                    type="outline"
+                    containerStyle={{ marginRight: 8 }}
+                  />
+                  <FriseInfoButton
+                    navigation={navigation}
+                    hasTreatment={aUnTraiement}
+                    containerStyle={{ position: "absolute", right: 0 }}
+                  />
+                </>
               )}
             </RangeDate>
           ) : null}

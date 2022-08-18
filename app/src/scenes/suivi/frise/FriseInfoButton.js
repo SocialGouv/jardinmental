@@ -4,8 +4,9 @@ import { FriseGraphExample } from "./FriseGraphExample";
 import Button from "../../../components/Button";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
+import { Button2 } from "../../../components/Button2";
 
-export const FriseInfoButton = ({ navigation, hasTreatment }) => {
+export const FriseInfoButton = ({ navigation, hasTreatment, ...props }) => {
   const infoButtonRef = useRef();
   const infoModal = useInfoModal();
 
@@ -44,14 +45,16 @@ export const FriseInfoButton = ({ navigation, hasTreatment }) => {
             </InfoText>
           )}
           <FriseGraphExample hasTreatment={hasTreatment} />
-          {hasTreatment && (
-            <Button
+          {!hasTreatment && (
+            <Button2
+              fill
               title="Ajouter votre traitement"
-              buttonStyle={{ minWidth: 0, marginTop: 10 }}
+              containerStyle={{ marginTop: 10 }}
               onPress={() => {
                 navigation.navigate("drugs");
                 infoModal.hide();
               }}
+              icon="PlusSvg"
             />
           )}
         </>
@@ -59,5 +62,5 @@ export const FriseInfoButton = ({ navigation, hasTreatment }) => {
     });
   };
 
-  return <InfoButton ref={infoButtonRef} onPress={showInfoModal} />;
+  return <InfoButton ref={infoButtonRef} onPress={showInfoModal} {...props} />;
 };

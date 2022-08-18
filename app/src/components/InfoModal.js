@@ -30,7 +30,7 @@ export const InfoButton = forwardRef(({ onPress, containerStyle }, ref) => {
   });
 
   const getPosition = () => {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       if (subRef?.current?.measureInWindow) {
         subRef.current.measureInWindow((x, y) => {
           resolve({ x, y });
