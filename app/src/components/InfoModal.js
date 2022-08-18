@@ -59,7 +59,13 @@ export const InfoButton = forwardRef(({ onPress, containerStyle }, ref) => {
       }}
       style={[containerStyle]}
     >
-      <Icon icon="Info2Svg" width={25} height={25} color={colors.LIGHT_BLUE} />
+      <Icon
+        icon="Info2Svg"
+        width={25}
+        height={25}
+        color={colors.LIGHT_BLUE}
+        styleContainer={{ width: 30, height: 30 }}
+      />
     </TouchableOpacity>
   );
 });
