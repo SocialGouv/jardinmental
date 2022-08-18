@@ -1,7 +1,6 @@
 import React from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View, Dimensions, TouchableOpacity } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { beforeToday } from "../../utils/date/helpers";
 import Header from "../../components/Header";
@@ -10,7 +9,7 @@ import Text from "../../components/MyText";
 import ChartPicker from "./chartPicker2";
 import RangeDate from "./RangeDate";
 import ScorePicker from "./ScorePicker";
-import ChartFrise from "./chartFrise";
+import FriseScreen from "./frise/FriseScreen";
 import ChartPie from "./chartPie";
 import Evenements from "./events";
 import Courbes from "../calendar/calendar";
@@ -64,7 +63,7 @@ const Suivi = ({ navigation, setPlusVisible, startSurvey }) => {
       case "Frises":
       default:
         return (
-          <ChartFrise
+          <FriseScreen
             navigation={navigation}
             fromDate={fromDate}
             toDate={toDate}
@@ -105,7 +104,9 @@ const Suivi = ({ navigation, setPlusVisible, startSurvey }) => {
               onChangeToDate={setToDate}
               withPreset={chartType === "Frises"}
             >
-              {chartType === "Frises" && <FriseInfoButton />}
+              {chartType === "Frises" && (
+                <FriseInfoButton navigation={navigation} hasTreatment={aUnTraiement} />
+              )}
             </RangeDate>
           ) : null}
           {chartType === "Frises" ? (
@@ -148,17 +149,6 @@ const Suivi = ({ navigation, setPlusVisible, startSurvey }) => {
                       height={20}
                       styleContainer={styles.icon}
                     />
-                  </View>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={async () => {
-                    await AsyncStorage.setItem("@AT_LEAST_VIEW_ONE_TIME_HINT_FRISE", "true");
-                    setShowHint((e) => !e);
-                    logEvents.logSuiviShowLegendeInformationPriseDeTraitement(showHint ? 0 : 1); // 0 = masquer, 1 = afficher
-                  }}
-                >
-                  <View style={[styles.infoHintContainer, showHint && styles.activeInfoHintContainer]}>
-                    <Text style={[styles.infoHintText, showHint && styles.activeInfoHintText]}>i</Text>
                   </View>
                 </TouchableOpacity>
               </View>
