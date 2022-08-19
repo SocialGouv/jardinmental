@@ -31,29 +31,17 @@ export const Button2 = ({
   let _iconSize = iconSize ?? 30;
 
   if (preset === "primary") {
-    _style = {
-      backgroundColor: "#1FC6D5",
-      shadowColor: "#0A215C",
-      shadowOffset: {
-        width: 0,
-        height: 1,
-      },
-      shadowOpacity: 0.18,
-      shadowRadius: 1.0,
-      elevation: 1,
-    };
-    if (!fill && size === "normal") _style.minWidth = "70%";
-    _textStyle.color = "#FFF";
+    _style = { ..._style, ...styles.primary.button };
+    _textStyle = { ..._textStyle, ...styles.primary.text };
   } else if (preset === "secondary") {
-    _style.backgroundColor = "transparent";
-    _style.borderColor = colors.DARK_BLUE;
-    _style.borderWidth = 1;
-    _textStyle.color = colors.DARK_BLUE;
+    _style = { ..._style, ...styles.secondary.button };
+    _textStyle = { ..._textStyle, ...styles.secondary.text };
   }
+
+  if (!fill && size === "normal") _style.minWidth = "70%";
 
   if (checkable) {
     if (preset === "primary") {
-      // TODO
     } else if (preset === "secondary") {
       _style.backgroundColor = !checked ? "transparent" : colors.DARK_BLUE;
       _textStyle.color = !checked ? colors.DARK_BLUE : "white";
@@ -61,15 +49,13 @@ export const Button2 = ({
   }
 
   if (type === "outline") {
-    _style.backgroundColor = "transparent";
-    _style.borderColor = colors.DARK_BLUE;
-    _style.borderWidth = 1;
-    _textStyle.color = colors.DARK_BLUE;
+    _style = { ..._style, ...styles.outline.button };
+    _textStyle = { ..._textStyle, ...styles.outline.text };
   }
 
   if (type === "clear") {
-    _style.backgroundColor = "transparent";
-    _textStyle.color = textStyle?.color ?? colors.DARK_BLUE;
+    _style = { ..._style, ...styles.clear.button };
+    _textStyle = { ..._textStyle, ...styles.clear.text };
 
     if (square) {
       _style.minHeight = 0;
@@ -78,20 +64,20 @@ export const Button2 = ({
   }
 
   if (size === "small") {
-    _style.minHeight = 30;
-    _style.paddingHorizontal = 12;
-    _style.paddingVertical = 0;
-    _textStyle.fontSize = 14;
-    _textStyle.fontWeight = "normal";
-    _iconStyle.marginRight = 5;
+    _style = { ..._style, ...styles.small.button };
+    _textStyle = { ..._textStyle, ...styles.small.text };
+    _iconStyle = { ..._iconStyle, ...styles.small.icon };
     _iconSize = iconSize ?? 16;
   }
 
-  const frontColor = textStyle.color || _textStyle.color || styles.text.color;
+  const frontColor = textStyle.color || _textStyle.color || styles.base.text.color;
 
   const iconStyles = [
-    styles.icon,
-    { width: Math.min(_iconSize, styles.text.fontSize), height: Math.min(_iconSize, styles.text.fontSize) },
+    styles.base.icon,
+    {
+      width: Math.min(_iconSize, styles.base.text.fontSize),
+      height: Math.min(_iconSize, styles.base.text.fontSize),
+    },
     _iconStyle,
     iconStyle,
     !title?.length && { marginRight: 0 },
@@ -105,11 +91,11 @@ export const Button2 = ({
   }
 
   return (
-    <View style={[styles.container, _containerStyle, containerStyle, fill && { width: "100%" }]}>
+    <View style={[styles.base.container, _containerStyle, containerStyle, fill && { width: "100%" }]}>
       <TouchableOpacity onPress={onPress} disabled={disabled || loading} testID={testID}>
         <View
           style={[
-            styles.button,
+            styles.base.button,
             _style,
             style,
             fill && { width: "100%" },
@@ -118,7 +104,7 @@ export const Button2 = ({
               paddingHorizontal: 0,
               borderRadius: size === "small" ? 15 : 20,
             },
-            disabled && styles.disabled,
+            disabled && styles.base.disabled,
             disabled && _disabledStyle,
           ]}
         >
@@ -137,7 +123,7 @@ export const Button2 = ({
           {title && (
             <Text
               allowFontScaling={false}
-              style={[styles.text, _textStyle, textStyle]}
+              style={[styles.base.text, _textStyle, textStyle]}
               testID={`${testID}-text`}
             >
               {title}
@@ -149,27 +135,87 @@ export const Button2 = ({
   );
 };
 
-const styles = StyleSheet.create({
-  container: {},
-  button: {
-    flexDirection: "row",
-    minHeight: 45,
-    borderRadius: 45,
-    paddingHorizontal: 30,
-    paddingVertical: 10,
-    alignSelf: "center",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  text: {
-    fontWeight: "bold",
-    fontSize: 19,
-    textAlign: "center",
-  },
-  icon: {
-    marginRight: 12,
-  },
-  disabled: {
-    opacity: 0.6,
-  },
-});
+const styles = {
+  base: StyleSheet.create({
+    container: {},
+    button: {
+      flexDirection: "row",
+      minHeight: 45,
+      borderRadius: 45,
+      paddingHorizontal: 30,
+      paddingVertical: 10,
+      alignSelf: "center",
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    text: {
+      fontWeight: "bold",
+      fontSize: 19,
+      textAlign: "center",
+    },
+    icon: {
+      marginRight: 12,
+    },
+    disabled: {
+      opacity: 0.6,
+    },
+  }),
+  primary: StyleSheet.create({
+    button: {
+      backgroundColor: "#1FC6D5",
+      shadowColor: "#0A215C",
+      shadowOffset: {
+        width: 0,
+        height: 1,
+      },
+      shadowOpacity: 0.18,
+      shadowRadius: 1.0,
+      elevation: 1,
+    },
+    text: {
+      color: "white",
+    },
+  }),
+  secondary: StyleSheet.create({
+    button: {
+      backgroundColor: "transparent",
+      borderColor: colors.DARK_BLUE,
+      borderWidth: 1,
+    },
+    text: {
+      color: colors.DARK_BLUE,
+    },
+  }),
+  outline: StyleSheet.create({
+    button: {
+      backgroundColor: "transparent",
+      borderColor: colors.DARK_BLUE,
+      borderWidth: 1,
+    },
+    text: {
+      color: colors.DARK_BLUE,
+    },
+  }),
+  clear: StyleSheet.create({
+    button: {
+      backgroundColor: "transparent",
+    },
+    text: {
+      color: colors.DARK_BLUE,
+    },
+  }),
+  small: StyleSheet.create({
+    button: {
+      minHeight: 30,
+      paddingHorizontal: 12,
+      paddingVertical: 0,
+    },
+    text: {
+      fontSize: 14,
+      fontWeight: "normal",
+    },
+    icon: {
+      marginRight: 5,
+    },
+  }),
+};

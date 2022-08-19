@@ -1,7 +1,6 @@
 import React, { useRef, useImperativeHandle, forwardRef } from "react";
 import { InfoButton, InfoText, useInfoModal } from "../../../components/InfoModal";
 import { FriseGraphExample } from "./FriseGraphExample";
-import Button from "../../../components/Button";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
 import { Button2 } from "../../../components/Button2";
