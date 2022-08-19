@@ -13,7 +13,7 @@ import Courbes from "../calendar/calendar";
 import logEvents from "../../services/logEvents";
 import localStorage from "../../utils/localStorage";
 import FloatingPlusButton from "../../components/FloatingPlusButton";
-import { FriseScreen } from "./frise/FriseScreen";
+import { FriseScreen } from "./frise";
 
 const Suivi = ({ navigation, startSurvey }) => {
   const [chartType, setChartType] = React.useState("Frises");
@@ -50,7 +50,17 @@ const Suivi = ({ navigation, startSurvey }) => {
       case "Courbes":
         return <Courbes navigation={navigation} />;
       case "Déclencheurs":
-        return <Evenements navigation={navigation} fromDate={fromDate} toDate={toDate} />;
+        return (
+          <Evenements
+            navigation={navigation}
+            presetDate={presetDate}
+            setPresetDate={setPresetDate}
+            fromDate={fromDate}
+            setFromDate={setFromDate}
+            toDate={toDate}
+            setToDate={setToDate}
+          />
+        );
       case "Frises":
       default:
         return (
@@ -83,7 +93,7 @@ const Suivi = ({ navigation, startSurvey }) => {
             ongletActif={chartType}
           />
         </View>
-        {chartType !== "Courbes" && chartType !== "Frises" && (
+        {chartType === "Statistiques" && (
           <View style={styles.headerContainer}>
             <RangeDate
               presetValue={presetDate}
@@ -92,7 +102,7 @@ const Suivi = ({ navigation, startSurvey }) => {
               toDate={toDate}
               onChangeFromDate={setFromDate}
               onChangeToDate={setToDate}
-              withPreset={chartType === "Statistiques"}
+              withPreset={true}
             />
           </View>
         )}
@@ -116,6 +126,7 @@ export const styles = StyleSheet.create({
     alignItems: "center",
   },
   headerContainer: {
+    paddingTop: 15,
     paddingBottom: 15,
     backgroundColor: "#FFFFFF",
     flexDirection: "column",

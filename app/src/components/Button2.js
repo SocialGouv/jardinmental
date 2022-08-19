@@ -23,62 +23,19 @@ export const Button2 = ({
   checked = false,
   testID = "",
 }) => {
-  let _style = {};
-  let _containerStyle = {};
-  let _textStyle = {};
-  let _iconStyle = {};
-  let _disabledStyle = {};
+  const appliedStyles = applyStyles({ preset, type, checkable, checked, square, size, fill });
+
   let _iconSize = iconSize ?? 30;
+  if (size === "small") _iconSize = iconSize ?? 16;
 
-  if (preset === "primary") {
-    _style = { ..._style, ...styles.primary.button };
-    _textStyle = { ..._textStyle, ...styles.primary.text };
-  } else if (preset === "secondary") {
-    _style = { ..._style, ...styles.secondary.button };
-    _textStyle = { ..._textStyle, ...styles.secondary.text };
-  }
-
-  if (!fill && size === "normal") _style.minWidth = "70%";
-
-  if (checkable) {
-    if (preset === "primary") {
-    } else if (preset === "secondary") {
-      _style.backgroundColor = !checked ? "transparent" : colors.DARK_BLUE;
-      _textStyle.color = !checked ? colors.DARK_BLUE : "white";
-    }
-  }
-
-  if (type === "outline") {
-    _style = { ..._style, ...styles.outline.button };
-    _textStyle = { ..._textStyle, ...styles.outline.text };
-  }
-
-  if (type === "clear") {
-    _style = { ..._style, ...styles.clear.button };
-    _textStyle = { ..._textStyle, ...styles.clear.text };
-
-    if (square) {
-      _style.minHeight = 0;
-      _style.padding = 7;
-    }
-  }
-
-  if (size === "small") {
-    _style = { ..._style, ...styles.small.button };
-    _textStyle = { ..._textStyle, ...styles.small.text };
-    _iconStyle = { ..._iconStyle, ...styles.small.icon };
-    _iconSize = iconSize ?? 16;
-  }
-
-  const frontColor = textStyle.color || _textStyle.color || styles.base.text.color;
+  const frontColor = textStyle.color || appliedStyles.text.color;
 
   const iconStyles = [
-    styles.base.icon,
     {
       width: Math.min(_iconSize, styles.base.text.fontSize),
       height: Math.min(_iconSize, styles.base.text.fontSize),
     },
-    _iconStyle,
+    appliedStyles.icon,
     iconStyle,
     !title?.length && { marginRight: 0 },
   ];
@@ -91,21 +48,19 @@ export const Button2 = ({
   }
 
   return (
-    <View style={[styles.base.container, _containerStyle, containerStyle, fill && { width: "100%" }]}>
+    <View style={[appliedStyles.container, containerStyle, fill && { width: "100%" }]}>
       <TouchableOpacity onPress={onPress} disabled={disabled || loading} testID={testID}>
         <View
           style={[
-            styles.base.button,
-            _style,
-            style,
+            appliedStyles.button,
             fill && { width: "100%" },
             square && {
               aspectRatio: 1,
               paddingHorizontal: 0,
               borderRadius: size === "small" ? 15 : 20,
             },
-            disabled && styles.base.disabled,
-            disabled && _disabledStyle,
+            style,
+            disabled && appliedStyles.disabled,
           ]}
         >
           {!loading &&
@@ -121,11 +76,7 @@ export const Button2 = ({
           {loading && <ActivityIndicator size={_iconSize} color={frontColor} style={iconStyles} />}
 
           {title && (
-            <Text
-              allowFontScaling={false}
-              style={[styles.base.text, _textStyle, textStyle]}
-              testID={`${testID}-text`}
-            >
+            <Text allowFontScaling={false} style={[appliedStyles.text, textStyle]} testID={`${testID}-text`}>
               {title}
             </Text>
           )}
@@ -133,6 +84,42 @@ export const Button2 = ({
       </TouchableOpacity>
     </View>
   );
+};
+
+const applyStyles = ({ preset, type, checkable, checked, square, size, fill }) => {
+  const appliedStyles = {
+    ...styles.base,
+  };
+
+  const applyIfNeeded = (cumStyles, condition, styleKey) => {
+    if (eval(condition)) {
+      cumStyles.button = { ...cumStyles.button, ...styles[styleKey].button };
+      cumStyles.container = { ...cumStyles.container, ...styles[styleKey].container };
+      cumStyles.text = { ...cumStyles.text, ...styles[styleKey].text };
+      cumStyles.icon = { ...cumStyles.icon, ...styles[styleKey].icon };
+      cumStyles.disabled = { ...cumStyles.disabled, ...styles[styleKey].disabled };
+    }
+  };
+
+  applyIfNeeded(appliedStyles, "preset==='primary'", "primary");
+  applyIfNeeded(appliedStyles, "preset==='secondary'", "secondary");
+  applyIfNeeded(appliedStyles, "type==='outline'", "outline");
+  applyIfNeeded(appliedStyles, "type==='clear'", "clear");
+  applyIfNeeded(appliedStyles, "size==='small'", "small");
+
+  if (!fill && size === "normal") appliedStyles.button.minWidth = "70%";
+
+  if (checkable && preset === "secondary") {
+    appliedStyles.button.backgroundColor = !checked ? "transparent" : colors.DARK_BLUE;
+    appliedStyles.text.color = !checked ? colors.DARK_BLUE : "white";
+  }
+
+  if (type === "clear" && square) {
+    appliedStyles.button.minHeight = 0;
+    appliedStyles.button.padding = 7;
+  }
+
+  return appliedStyles;
 };
 
 const styles = {

@@ -43,7 +43,7 @@ export const FriseScreen = ({
             icon={!filterEnabled ? "TuneSvg" : "CheckSvg"}
             preset="secondary"
             size="small"
-            containerStyle={{ marginRight: 8 }}
+            containerStyle={{ marginHorizontal: 8 }}
             checked={filterEnabled}
             onPress={() => {
               const nextValue = !filterEnabled;
@@ -59,7 +59,7 @@ export const FriseScreen = ({
             ref={friseInfoButtonRef}
             navigation={navigation}
             hasTreatment={hasTreatment}
-            containerStyle={{ position: "absolute", right: 0 }}
+            containerStyle={{ position: "relative", right: 0 }}
           />
         </RangeDate>
         {filterEnabled && (

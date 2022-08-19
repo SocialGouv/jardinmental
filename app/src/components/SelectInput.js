@@ -10,17 +10,19 @@ export const SelectInput = ({
   onValueChange,
   placeholder,
   containerStyle,
+  style,
   textValueStyle,
   iconContainerStyle,
+  ...props
 }) => {
   const pickerRef = useRef();
 
   const [visibleValue, setVisibleValue] = useState(value);
 
   return (
-    <>
+    <View style={[styles.container, containerStyle]}>
       <TouchableOpacity onPress={() => pickerRef?.current?.togglePicker?.(true)}>
-        <View style={[styles.container, containerStyle]} pointerEvents="none">
+        <View style={[styles.button, style]} pointerEvents="none">
           <Text style={[styles.textValue, textValueStyle]}>
             {visibleValue ? items.find((item) => item.value === visibleValue)?.label : placeholder}
           </Text>
@@ -43,18 +45,20 @@ export const SelectInput = ({
           if (_value) {
             setVisibleValue(_value);
             onValueChange?.(_value);
-            LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+            if (value !== _value) LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
           }
         }}
         placeholder={placeholder && { label: placeholder, value: null }}
         style={pickerStyles}
+        {...props}
       />
-    </>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  container: {},
+  button: {
     backgroundColor: "transparent",
     borderColor: colors.DARK_BLUE,
     borderWidth: 1,

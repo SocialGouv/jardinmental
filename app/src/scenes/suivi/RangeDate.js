@@ -10,7 +10,14 @@ import { beforeToday } from "../../utils/date/helpers";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { STORAGE_KEY_START_DATE } from "../../utils/constants";
 
-const DateRange = ({ withPreset = false, children, ...props }) => {
+const DateRange = ({
+  withPreset = false,
+  children,
+  containerStyle,
+  topContainerStyle,
+  textStyle,
+  ...props
+}) => {
   const [presetValue, setPresetValue] = useState(props.presetValue || "lastDays7");
   useEffect(() => {
     if (presetValue !== props.presetValue) setPresetValue(props.presetValue);
@@ -58,9 +65,11 @@ const DateRange = ({ withPreset = false, children, ...props }) => {
   }, [presetValue]);
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, containerStyle]}>
       <View style={styles.contentContainer}>
-        <View style={[styles.topContainer, (withPreset || children) && { marginBottom: 8 }]}>
+        <View
+          style={[styles.topContainer, (withPreset || children) && { marginBottom: 8 }, topContainerStyle]}
+        >
           {withPreset && (
             <SelectInput
               placeholder="Sélectionnez une période..."
@@ -73,7 +82,6 @@ const DateRange = ({ withPreset = false, children, ...props }) => {
                 { label: "Depuis le début", value: "fromBeginning" },
                 { label: "Choisir la période", value: "custom" },
               ]}
-              containerStyle={{ marginRight: 8 }}
             />
           )}
 
@@ -81,7 +89,7 @@ const DateRange = ({ withPreset = false, children, ...props }) => {
         </View>
 
         <View style={styles.dateContainer}>
-          <Text style={styles.text}>du</Text>
+          <Text style={[styles.text, textStyle]}>du</Text>
           <DateOrTimeDisplay
             mode="date"
             date={fromDate}
@@ -90,8 +98,9 @@ const DateRange = ({ withPreset = false, children, ...props }) => {
               logEvents.logSuiviEditDateFrom();
             }}
             disabled={withPreset && presetValue !== "custom"}
+            containerStyle={styles.dateItemContainer}
           />
-          <Text style={styles.text}>au</Text>
+          <Text style={[styles.text, textStyle]}>au</Text>
           <DateOrTimeDisplay
             mode="date"
             date={toDate}
@@ -100,6 +109,7 @@ const DateRange = ({ withPreset = false, children, ...props }) => {
               logEvents.logSuiviEditDateTo();
             }}
             disabled={withPreset && presetValue !== "custom"}
+            containerStyle={styles.dateItemContainer}
           />
           <DatePicker
             timeZoneOffsetInMinutes={0}
@@ -167,8 +177,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
-  text: {
-    padding: 5,
+  dateItemContainer: {
+    marginHorizontal: 8,
   },
 });
 
