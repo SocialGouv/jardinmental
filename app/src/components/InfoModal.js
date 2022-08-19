@@ -25,9 +25,15 @@ export const InfoButton = forwardRef(({ onPress, containerStyle }, ref) => {
 
   useImperativeHandle(ref, () => {
     return {
+      press,
       getPosition,
     };
   });
+
+  const press = async () => {
+    const position = await getPosition();
+    onPress?.({ position });
+  };
 
   const getPosition = () => {
     return new Promise((resolve) => {
@@ -36,7 +42,7 @@ export const InfoButton = forwardRef(({ onPress, containerStyle }, ref) => {
           resolve({ x, y });
         });
       } else {
-        resolve({ x: 0, y: 0 });
+        resolve(undefined);
       }
     });
   };
@@ -92,6 +98,7 @@ export const InfoModalProvider = ({ children }) => {
   }, []);
 
   const hide = useCallback(() => {
+    onClose?.current?.();
     visibleAnim.value = withTiming(0, undefined, () => {
       runOnJS(setPayload)(null);
     });

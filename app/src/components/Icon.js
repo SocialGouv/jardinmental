@@ -27,6 +27,7 @@ import ChevronDownSvg from "../../assets/svg/chevron-down.svg";
 import BinSvg from "../../assets/svg/bin.svg";
 import NotesSvg from "../../assets/svg/notes.svg";
 import TuneSvg from "../../assets/svg/tune.svg";
+import CheckSvg from "../../assets/svg/check.svg";
 import Text from "../components/MyText";
 import PhoneSvg from "../../assets/svg/Phone";
 import PeopleSvg from "../../assets/svg/People";
@@ -71,6 +72,7 @@ const mapIconToSvg = (icon) => {
     LockSvg,
     Arrow,
     TuneSvg,
+    CheckSvg,
   };
   return iconMap[icon];
 };

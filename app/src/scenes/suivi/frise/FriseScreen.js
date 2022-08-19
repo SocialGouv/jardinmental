@@ -1,227 +1,84 @@
-import React from "react";
-import { StyleSheet, View, ScrollView } from "react-native";
-import { useFocusEffect } from "@react-navigation/native";
+import React, { useRef } from "react";
+import { View, LayoutAnimation } from "react-native";
+import RangeDate from "../RangeDate";
+import FriseGraphList from "./FriseGraphList";
+import { FriseInfoButton } from "./FriseInfoButton";
+import { Button2 } from "../../../components/Button2";
+import { FriseFilterBar } from "./FriseFilterBar";
+import { styles as commonStyles } from "..";
 
-import { getArrayOfDatesFromTo } from "../../../utils/date/helpers";
-import { DiaryDataContext } from "../../../context/diaryData";
-import Text from "../../../components/MyText";
-import { displayedCategories } from "../../../utils/constants";
-import { colors } from "../../../utils/colors";
-import { buildSurveyData } from "../../survey/survey-data";
-import Icon from "../../../components/Icon";
-import localStorage from "../../../utils/localStorage";
-import logEvents from "../../../services/logEvents";
-import Button from "../../../components/Button";
-import { FriseGraph } from "./FriseGraph";
+export const FriseScreen = ({
+  navigation,
+  presetDate,
+  setPresetDate,
+  fromDate,
+  setFromDate,
+  toDate,
+  setToDate,
+  hasTreatment,
+}) => {
+  const [focusedScores, setFocusedScores] = React.useState([1, 2, 3, 4, 5]);
+  const [showTraitement, setShowTraitement] = React.useState(true);
+  const [filterEnabled, setFilterEnabled] = React.useState(false);
 
-export const FriseScreen = ({ navigation, fromDate, toDate, focusedScores, showTraitement }) => {
-  const [diaryData] = React.useContext(DiaryDataContext);
-  const [activeCategories, setActiveCategories] = React.useState();
-  const [isEmpty, setIsEmpty] = React.useState();
-  const chartDates = getArrayOfDatesFromTo({ fromDate, toDate });
+  const friseInfoButtonRef = useRef();
 
-  useFocusEffect(
-    React.useCallback(() => {
-      (async () => {
-        const q = await buildSurveyData();
-        if (q) {
-          setActiveCategories(q.map((e) => e.id));
-        }
-      })();
-    }, [])
-  );
-
-  React.useEffect(() => {
-    if (!activeCategories) return;
-    const empty = !activeCategories.reduce((showing, categoryId) => {
-      return Boolean(isChartVisible(categoryId)) || showing;
-    }, false);
-    setIsEmpty(empty);
-  }, [activeCategories, isChartVisible]);
-
-  const isChartVisible = React.useCallback(
-    (categoryId) => {
-      let visible = false;
-      chartDates.forEach((date) => {
-        if (!diaryData[date]) {
-          return;
-        }
-        if (!diaryData[date][categoryId]) {
-          return;
-        }
-        visible = true;
-      });
-      return visible;
-    },
-    [diaryData, chartDates]
-  );
-
-  const startSurvey = async () => {
-    const symptoms = await localStorage.getSymptoms();
-    logEvents.logFeelingStart();
-    if (!symptoms) {
-      navigation.navigate("symptoms", {
-        showExplanation: true,
-        redirect: "select-day",
-      });
-    } else {
-      navigation.navigate("select-day");
-    }
-  };
-
-  const getTitle = (cat) => {
-    const category = displayedCategories[cat] || cat;
-    const [categoryName, suffix] = category.split("_");
-    if (suffix && suffix === "FREQUENCE") {
-      return categoryName;
-    }
-    return category;
-  };
-
-  const computeChartData = (categoryId) => {
-    return chartDates.map((date) => {
-      const dayData = diaryData[date];
-      if (!dayData) {
-        return {};
-      }
-      const categoryState = diaryData[date][categoryId];
-      if (!categoryState) {
-        return {};
-      }
-      if (categoryState?.value !== null || categoryState?.value !== undefined) return categoryState;
-
-      // -------
-      // the following code is for the retrocompatibility
-      // -------
-
-      // get the name and the suffix of the category
-      const [categoryName, suffix] = categoryId.split("_");
-      let categoryStateIntensity = null;
-      if (suffix && suffix === "FREQUENCE") {
-        // if it's one category with the suffix 'FREQUENCE' :
-        // add the intensity (default level is 3 - for the frequence 'never')
-        categoryStateIntensity = diaryData[date][`${categoryName}_INTENSITY`] || { level: 3 };
-        return { value: categoryState.level + categoryStateIntensity.level - 2 };
-      }
-      return { value: categoryState.level - 1 };
-    });
-  };
-
-  if (isEmpty) {
-    return (
-      <View style={styles.emptyContainer}>
-        <View style={styles.subtitleContainer}>
-          <Icon icon="InfoSvg" width={25} height={25} color={colors.LIGHT_BLUE} />
-          <Text style={styles.subtitle}>
-            Des <Text style={styles.bold}>frises</Text> apparaîtront au fur et à mesure de vos saisies
-            quotidiennes.
-          </Text>
-        </View>
-        <Button title="Commencer à saisir" onPress={startSurvey} />
-      </View>
-    );
-  }
+  if (!toDate || !fromDate) return null;
 
   return (
     <>
-      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContainer}>
-        {activeCategories?.map((categoryId) => (
-          <FriseGraph
-            focusedScores={focusedScores}
-            title={getTitle(categoryId)}
-            key={categoryId}
-            data={computeChartData(categoryId)}
-            showTraitement={showTraitement}
-            priseDeTraitement={computeChartData("PRISE_DE_TRAITEMENT")}
-            priseDeTraitementSiBesoin={computeChartData("PRISE_DE_TRAITEMENT_SI_BESOIN")}
+      <View style={commonStyles.headerContainer}>
+        <RangeDate
+          presetValue={presetDate}
+          onChangePresetValue={setPresetDate}
+          fromDate={fromDate}
+          toDate={toDate}
+          onChangeFromDate={setFromDate}
+          onChangeToDate={setToDate}
+          withPreset={true}
+        >
+          <Button2
+            checkable
+            title="Filtrer"
+            icon={!filterEnabled ? "TuneSvg" : "CheckSvg"}
+            preset="secondary"
+            size="small"
+            containerStyle={{ marginRight: 8 }}
+            checked={filterEnabled}
+            onPress={() => {
+              const nextValue = !filterEnabled;
+              if (!nextValue) {
+                setShowTraitement(true);
+                setFocusedScores([1, 2, 3, 4, 5]);
+              }
+              setFilterEnabled(nextValue);
+              LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+            }}
           />
-        ))}
-      </ScrollView>
+          <FriseInfoButton
+            ref={friseInfoButtonRef}
+            navigation={navigation}
+            hasTreatment={hasTreatment}
+            containerStyle={{ position: "absolute", right: 0 }}
+          />
+        </RangeDate>
+        {filterEnabled && (
+          <FriseFilterBar
+            hasTreatment={hasTreatment}
+            onShowInfo={() => friseInfoButtonRef?.current?.press?.()}
+            onShowTreatmentChanged={setShowTraitement}
+            onFocusedScoresChanged={setFocusedScores}
+          />
+        )}
+      </View>
+      <FriseGraphList
+        navigation={navigation}
+        fromDate={fromDate}
+        toDate={toDate}
+        focusedScores={focusedScores}
+        showTraitement={showTraitement}
+        hasTreatment={hasTreatment}
+      />
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  triangle: {
-    color: "#F8FDFE",
-  },
-  close: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: 16,
-    borderColor: "#D4F0F2",
-    borderWidth: 1,
-    zIndex: 2,
-    width: 32,
-    height: 32,
-  },
-  emptyContainer: {
-    flex: 1,
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-    justifyContent: "space-between",
-    alignItems: "center",
-    backgroundColor: "#ffffff",
-  },
-  squareItemContainer: {
-    display: "flex",
-    flex: 1,
-    height: 10,
-  },
-  squareItemContainerTraitement: {
-    marginTop: 5,
-    display: "flex",
-    flex: 1,
-    height: 4,
-  },
-  square: {
-    flex: 1,
-    height: 10,
-  },
-  subtitle: {
-    flex: 1,
-    color: "#000",
-    fontSize: 15,
-    fontWeight: "normal",
-  },
-  subtitleContainer: {
-    display: "flex",
-    flexDirection: "row",
-    marginVertical: 10,
-  },
-  bold: {
-    fontWeight: "bold",
-  },
-  scrollView: {
-    flex: 1,
-    backgroundColor: "white",
-  },
-  scrollContainer: {
-    paddingBottom: 150,
-  },
-  button: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    backgroundColor: "#1FC6D5",
-    minWidth: "70%",
-    minHeight: 45,
-    borderRadius: 45,
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-    marginVertical: 10,
-    shadowColor: "#0A215C",
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.18,
-    shadowRadius: 1.0,
-
-    elevation: 1,
-  },
-});
-
-export default FriseScreen;

@@ -11,16 +11,26 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { STORAGE_KEY_START_DATE } from "../../utils/constants";
 
 const DateRange = ({ withPreset = false, children, ...props }) => {
-  const [presetValue, setPresetValue] = useState("lastDays7");
+  const [presetValue, setPresetValue] = useState(props.presetValue || "lastDays7");
+  useEffect(() => {
+    if (presetValue !== props.presetValue) setPresetValue(props.presetValue);
+  }, [props.presetValue]);
 
   const [fromDate, setFromDate] = useState(props.fromDate);
+  useEffect(() => {
+    if (fromDate !== props.fromDate) setFromDate(props.fromDate);
+  }, [props.fromDate]);
   const [openFromDate, setOpenFromDate] = useState(false);
 
   const [toDate, setToDate] = useState(props.toDate);
+  useEffect(() => {
+    if (toDate !== props.toDate) setToDate(props.toDate);
+  }, [props.toDate]);
   const [openToDate, setOpenToDate] = useState(false);
 
   useEffect(() => {
     (async () => {
+      props.onChangePresetValue?.(presetValue);
       if (withPreset && presetValue !== "custom") {
         let _fromDate;
         let _toDate = beforeToday(0);

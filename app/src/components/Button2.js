@@ -4,7 +4,7 @@ import Icon from "./Icon";
 import { colors } from "../utils/colors";
 
 export const Button2 = ({
-  preset = "primary", // 'primary'
+  preset = "primary", // 'primary' | 'secondary'
   type = "solid", //'solid' | 'clear' | 'outline'
   size = "normal", // 'normal' | 'small'
   fill = false, // fill horizontally
@@ -44,14 +44,20 @@ export const Button2 = ({
     };
     if (!fill && size === "normal") _style.minWidth = "70%";
     _textStyle.color = "#FFF";
+  } else if (preset === "secondary") {
+    _style.backgroundColor = "transparent";
+    _style.borderColor = colors.DARK_BLUE;
+    _style.borderWidth = 1;
+    _textStyle.color = colors.DARK_BLUE;
   }
 
-  if (checkable && preset == "primary") {
-    _style.backgroundColor = "white";
-    _textStyle.color = colors.DARK_BLUE;
-
-    _style.borderColor = !checked ? "#E6E6E6" : "#1946C9";
-    _style.borderWidth = !checked ? 1 : 2;
+  if (checkable) {
+    if (preset === "primary") {
+      // TODO
+    } else if (preset === "secondary") {
+      _style.backgroundColor = !checked ? "transparent" : colors.DARK_BLUE;
+      _textStyle.color = !checked ? colors.DARK_BLUE : "white";
+    }
   }
 
   if (type === "outline") {
@@ -63,7 +69,7 @@ export const Button2 = ({
 
   if (type === "clear") {
     _style.backgroundColor = "transparent";
-    _textStyle.color = textStyle?.color ?? "#323232";
+    _textStyle.color = textStyle?.color ?? colors.DARK_BLUE;
 
     if (square) {
       _style.minHeight = 0;

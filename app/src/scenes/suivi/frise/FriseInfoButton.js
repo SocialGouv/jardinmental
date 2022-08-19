@@ -1,22 +1,28 @@
-import React, { useRef } from "react";
+import React, { useRef, useImperativeHandle, forwardRef } from "react";
 import { InfoButton, InfoText, useInfoModal } from "../../../components/InfoModal";
 import { FriseGraphExample } from "./FriseGraphExample";
 import Button from "../../../components/Button";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
 import { Button2 } from "../../../components/Button2";
+import logEvents from "../../../services/logEvents";
 
-export const FriseInfoButton = ({ navigation, hasTreatment, ...props }) => {
+export const FriseInfoButton = forwardRef(({ navigation, hasTreatment, ...props }, ref) => {
   const infoButtonRef = useRef();
   const infoModal = useInfoModal();
+
+  useImperativeHandle(ref, () => {
+    return {
+      press: () => infoButtonRef?.current?.press?.(),
+    };
+  });
 
   useFocusEffect(
     React.useCallback(() => {
       (async () => {
         const viewHint = await AsyncStorage.getItem("@AT_LEAST_VIEW_ONE_TIME_HINT_FRISE");
         if (viewHint !== "true") {
-          const position = await infoButtonRef?.current?.getPosition?.();
-          if (position) await showInfoModal({ position });
+          await infoButtonRef?.current?.press?.();
         }
       })();
     }, [infoModal])
@@ -26,6 +32,9 @@ export const FriseInfoButton = ({ navigation, hasTreatment, ...props }) => {
     await AsyncStorage.setItem("@AT_LEAST_VIEW_ONE_TIME_HINT_FRISE", "true");
     infoModal.show({
       position,
+      onClose: () => {
+        logEvents.logSuiviShowLegendeInformationPriseDeTraitement(0);
+      },
       content: (
         <>
           <InfoText title>Suivez votre évolution grâce aux frises</InfoText>
@@ -60,7 +69,8 @@ export const FriseInfoButton = ({ navigation, hasTreatment, ...props }) => {
         </>
       ),
     });
+    logEvents.logSuiviShowLegendeInformationPriseDeTraitement(1);
   };
 
   return <InfoButton ref={infoButtonRef} onPress={showInfoModal} {...props} />;
-};
+});
