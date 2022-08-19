@@ -1,34 +1,20 @@
 import React from "react";
-import { StyleSheet, View, Dimensions, ScrollView, TouchableOpacity } from "react-native";
+import { StyleSheet, View, ScrollView } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
-import RNPickerSelect from "react-native-picker-select";
 import { isToday, isYesterday, parseISO } from "date-fns";
 import { getArrayOfDatesFromTo, formatDay, formatRelativeDate } from "../../../utils/date/helpers";
 import { DiaryDataContext } from "../../../context/diaryData";
 import Text from "../../../components/MyText";
-import { displayedCategories, scoresMapIcon } from "../../../utils/constants";
 import { colors } from "../../../utils/colors";
 import { buildSurveyData } from "../../survey/survey-data";
 import Icon from "../../../components/Icon";
 import localStorage from "../../../utils/localStorage";
 import logEvents from "../../../services/logEvents";
 import Button from "../../../components/Button";
-import ScorePicker from "../ScorePicker";
 import Card from "./Card";
-import RangeDate from "../RangeDate";
-import { SelectInput } from "../../../components/SelectInput";
 import { EventFilterHeader } from "./EventFilterHeader";
 
-const Events = ({
-  navigation,
-  presetDate,
-  setPresetDate,
-  fromDate,
-  setFromDate,
-  toDate,
-  setToDate,
-  focusedScores,
-}) => {
+const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, toDate, setToDate }) => {
   const [diaryData] = React.useContext(DiaryDataContext);
   const [activeCategories, setActiveCategories] = React.useState();
   const [isEmpty, setIsEmpty] = React.useState();
