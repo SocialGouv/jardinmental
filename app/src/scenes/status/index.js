@@ -21,6 +21,7 @@ import Diary from "../../scenes/diary";
 import { canEdit } from "./utils/index.js";
 import ContributeCard from "../contribute/contributeCard";
 import FloatingPlusButton from "../../components/FloatingPlusButton";
+import { DiaryList } from "./DiaryList";
 
 const LIMIT_PER_PAGE = __DEV__ ? 3 : 30;
 
@@ -111,7 +112,7 @@ const Status = ({ navigation, startSurvey }) => {
   const renderJournalEntrees = () => {
     return (
       <>
-        {Object.keys(diaryData)
+        {/* {Object.keys(diaryData)
           .sort((a, b) => {
             a = a.split("/").reverse().join("");
             b = b.split("/").reverse().join("");
@@ -135,7 +136,8 @@ const Status = ({ navigation, startSurvey }) => {
               </View>
               <StatusItem date={date} patientState={diaryData[date]} navigation={navigation} />
             </View>
-          ))}
+          ))} */}
+        <DiaryList ListHeaderComponent={RecapCompletion} />
         <Bubble diaryData={diaryData} navigation={navigation} />
         <ContributeCard onPress={() => setNPSvisible(true)} />
         {Object.keys(diaryData)?.length > LIMIT_PER_PAGE * page && (
