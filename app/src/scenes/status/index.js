@@ -1,8 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { StyleSheet, View, SafeAreaView, TouchableOpacity, Dimensions, Animated } from "react-native";
+import { StyleSheet, View, SafeAreaView, Dimensions, Animated } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
-import Text from "../../components/MyText";
-import StatusItem from "./status-item";
 import Header from "../../components/Header";
 import { colors } from "../../utils/colors";
 import { useContext } from "react";
@@ -10,15 +8,11 @@ import { DiaryDataContext } from "../../context/diaryData";
 import localStorage from "../../utils/localStorage";
 import NPS from "../../services/NPS/NPS";
 import Bubble from "../../components/bubble";
-import ArrowUpSvg from "../../../assets/svg/arrow-up.svg";
-import logEvents from "../../services/logEvents";
-import { formatDateThread } from "../../utils/date/helpers";
 import BannerProNPS from "./bannerProNPS";
 import TabPicker from "./TabPicker";
 import RecapCompletion from "./recapCompletion";
 import NoData from "./NoData";
 import Diary from "../../scenes/diary";
-import { canEdit } from "./utils/index.js";
 import ContributeCard from "../contribute/contributeCard";
 import FloatingPlusButton from "../../components/FloatingPlusButton";
 import { DiaryList } from "./DiaryList";
@@ -28,7 +22,6 @@ const LIMIT_PER_PAGE = __DEV__ ? 3 : 30;
 const Status = ({ navigation, startSurvey }) => {
   const [diaryData] = useContext(DiaryDataContext);
   const [NPSvisible, setNPSvisible] = useState(false);
-  const [page, setPage] = useState(1);
   const [bannerProNPSVisible, setBannerProNPSVisible] = useState(true);
   const [ongletActif, setOngletActif] = useState("all");
   const scrollRef = React.useRef();
@@ -137,11 +130,11 @@ const Status = ({ navigation, startSurvey }) => {
   const renderFooter = useCallback(() => {
     return (
       <>
-        <Bubble diaryData={diaryData} navigation={navigation} />
+        <Bubble diaryData={diaryData} />
         <ContributeCard onPress={() => setNPSvisible(true)} />
       </>
     );
-  }, [diaryData, navigation]);
+  }, [diaryData]);
 
   return (
     <>

@@ -17,7 +17,7 @@ export const DiaryList = ({ ...props }) => {
   });
 
   const renderItem = useCallback(
-    ({ item: date, index }) => {
+    ({ item: date }) => {
       return (
         <View>
           <View style={styles.dateContainer}>
