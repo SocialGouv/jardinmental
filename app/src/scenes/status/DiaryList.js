@@ -1,5 +1,5 @@
 import React, { useContext, useCallback } from "react";
-import { FlatList, StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity, Animated } from "react-native";
 import { DiaryDataContext } from "../../context/diaryData";
 import { colors } from "../../utils/colors";
 import { formatDateThread } from "../../utils/date/helpers";
@@ -16,27 +16,32 @@ export const DiaryList = ({ ...props }) => {
     return b.localeCompare(a);
   });
 
-  const renderItem = useCallback(({ item: date, index }) => {
-    return (
-      <View>
-        <View style={styles.dateContainer}>
-          <View style={styles.dateDot} />
-          {canEdit(date) ? (
-            <Text style={styles.dateLabel}>{formatDateThread(date)}</Text>
-          ) : (
-            <TouchableOpacity style={styles.item} onPress={() => navigation.navigate("too-late", { date })}>
+  const renderItem = useCallback(
+    ({ item: date, index }) => {
+      return (
+        <View>
+          <View style={styles.dateContainer}>
+            <View style={styles.dateDot} />
+            {canEdit(date) ? (
               <Text style={styles.dateLabel}>{formatDateThread(date)}</Text>
-            </TouchableOpacity>
-          )}
+            ) : (
+              <TouchableOpacity style={styles.item} onPress={() => navigation.navigate("too-late", { date })}>
+                <Text style={styles.dateLabel}>{formatDateThread(date)}</Text>
+              </TouchableOpacity>
+            )}
+          </View>
+          <StatusItem date={date} patientState={diaryData[date]} navigation={navigation} />
         </View>
-        <StatusItem date={date} patientState={diaryData[date]} navigation={navigation} />
-      </View>
-    );
-  }, []);
+      );
+    },
+    [diaryData]
+  );
 
   const keyExtractor = useCallback((date) => date);
 
-  return <FlatList data={sortedData} renderItem={renderItem} keyExtractor={keyExtractor} {...props} />;
+  return (
+    <Animated.FlatList data={sortedData} renderItem={renderItem} keyExtractor={keyExtractor} {...props} />
+  );
 };
 
 const styles = StyleSheet.create({

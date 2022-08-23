@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { StyleSheet, View, SafeAreaView, TouchableOpacity, Dimensions, Animated } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import Text from "../../components/MyText";
@@ -34,7 +34,7 @@ const Status = ({ navigation, startSurvey }) => {
   const scrollRef = React.useRef();
 
   React.useEffect(() => {
-    scrollRef.current?.scrollTo({
+    scrollRef.current?.scrollTo?.({
       y: 0,
       animated: false,
     });
@@ -109,62 +109,13 @@ const Status = ({ navigation, startSurvey }) => {
 
   const noData = () => !Object.keys(diaryData).some((key) => diaryData[key]);
 
-  const renderJournalEntrees = () => {
-    return (
-      <>
-        {/* {Object.keys(diaryData)
-          .sort((a, b) => {
-            a = a.split("/").reverse().join("");
-            b = b.split("/").reverse().join("");
-            return b.localeCompare(a);
-          })
-          .slice(0, LIMIT_PER_PAGE * page)
-          .map((date) => (
-            <View key={date}>
-              <View style={styles.dateContainer}>
-                <View style={styles.dateDot} />
-                {canEdit(date) ? (
-                  <Text style={styles.dateLabel}>{formatDateThread(date)}</Text>
-                ) : (
-                  <TouchableOpacity
-                    style={styles.item}
-                    onPress={() => navigation.navigate("too-late", { date })}
-                  >
-                    <Text style={styles.dateLabel}>{formatDateThread(date)}</Text>
-                  </TouchableOpacity>
-                )}
-              </View>
-              <StatusItem date={date} patientState={diaryData[date]} navigation={navigation} />
-            </View>
-          ))} */}
-        <DiaryList ListHeaderComponent={RecapCompletion} />
-        <Bubble diaryData={diaryData} navigation={navigation} />
-        <ContributeCard onPress={() => setNPSvisible(true)} />
-        {Object.keys(diaryData)?.length > LIMIT_PER_PAGE * page && (
-          <TouchableOpacity onPress={() => setPage(page + 1)} style={styles.versionContainer}>
-            <Text style={styles.arrowDownLabel}>Voir plus</Text>
-            <ArrowUpSvg style={styles.arrowDown} color={colors.BLUE} />
-          </TouchableOpacity>
-        )}
-      </>
-    );
-  };
-
-  const renderOnglet = (onglet) => {
+  const renderScrollContent = (onglet) => {
     if (onglet === "all") {
       // display only LIMIT_PER_PAGE days
       // button that will display LIMIT_PER_PAGE more each time
       return (
         <View style={styles.container}>
-          {bannerProNPSVisible ? (
-            <BannerProNPS onClose={() => setBannerProNPSVisible(false)} />
-          ) : (
-            <>
-              <RecapCompletion navigation={navigation} />
-              <View style={styles.divider} />
-              {renderJournalEntrees()}
-            </>
-          )}
+          {bannerProNPSVisible && <BannerProNPS onClose={() => setBannerProNPSVisible(false)} />}
         </View>
       );
     }
@@ -173,6 +124,24 @@ const Status = ({ navigation, startSurvey }) => {
     }
     return null;
   };
+
+  const renderHeader = useCallback(() => {
+    return (
+      <>
+        <RecapCompletion />
+        <View style={styles.divider} />
+      </>
+    );
+  }, [diaryData]);
+
+  const renderFooter = useCallback(() => {
+    return (
+      <>
+        <Bubble diaryData={diaryData} navigation={navigation} />
+        <ContributeCard onPress={() => setNPSvisible(true)} />
+      </>
+    );
+  }, [diaryData, navigation]);
 
   return (
     <>
@@ -193,21 +162,28 @@ const Status = ({ navigation, startSurvey }) => {
           </Animated.View>
           {noData() ? (
             <NoData navigation={navigation} />
+          ) : ongletActif === "all" && !bannerProNPSVisible ? (
+            <DiaryList
+              ListHeaderComponent={renderHeader}
+              ListFooterComponent={renderFooter}
+              style={[styles.scrollView]}
+              contentContainerStyle={[styles.scrollContainer, styles.container]}
+              ref={scrollRef}
+              onScroll={handleScroll}
+            />
           ) : (
-            <>
-              <Animated.ScrollView
-                alwaysBounceHorizontal={false}
-                alwaysBounceVertical={false}
-                ref={scrollRef}
-                bounces={false}
-                style={styles.scrollView}
-                contentContainerStyle={styles.scrollContainer}
-                onScroll={handleScroll}
-                showsVerticalScrollIndicator={false}
-              >
-                {renderOnglet(ongletActif)}
-              </Animated.ScrollView>
-            </>
+            <Animated.ScrollView
+              alwaysBounceHorizontal={false}
+              alwaysBounceVertical={false}
+              ref={scrollRef}
+              bounces={false}
+              style={styles.scrollView}
+              contentContainerStyle={styles.scrollContainer}
+              onScroll={handleScroll}
+              showsVerticalScrollIndicator={false}
+            >
+              {renderScrollContent(ongletActif)}
+            </Animated.ScrollView>
           )}
         </Animated.View>
       </SafeAreaView>
@@ -247,13 +223,13 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     backgroundColor: "white",
+    marginTop: 90,
   },
   container: {
     padding: 20,
   },
   scrollContainer: {
     paddingBottom: 80,
-    paddingTop: 50 * 2,
   },
   title: {
     fontSize: 19,
@@ -264,23 +240,6 @@ const styles = StyleSheet.create({
   flex: {
     display: "flex",
     flexDirection: "row",
-  },
-  dateContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  dateDot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: colors.LIGHT_BLUE,
-  },
-  dateLabel: {
-    color: "#000",
-    fontSize: 13,
-    textAlign: "left",
-    paddingLeft: 10,
-    fontWeight: "600",
   },
   verticalBorder: {
     borderLeftWidth: 1,
