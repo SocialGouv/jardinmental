@@ -14,7 +14,7 @@ import { ONBOARDING_STEPS } from "../../utils/constants";
 
 const Onboarding = () => {
   return (
-    <Stack.Navigator initialRouteName={ONBOARDING_STEPS.STEP_HINT} headerMode="none">
+    <Stack.Navigator initialRouteName={ONBOARDING_STEPS.STEP_CGU} headerMode="none">
       <Stack.Screen name={ONBOARDING_STEPS.STEP_CGU} component={OnboardingPresentation} />
       <Stack.Screen name={ONBOARDING_STEPS.STEP_SUPPORTED} component={OnboardingSupported} />
       <Stack.Screen name={ONBOARDING_STEPS.STEP_EXPLANATION} component={OnboardingExplanation} />

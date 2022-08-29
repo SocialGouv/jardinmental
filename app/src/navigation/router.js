@@ -79,7 +79,7 @@ class Router extends React.Component {
     return (
       <>
         <NavigationContainer ref={(r) => (this.navigationRef = r)} onStateChange={this.onStateChange}>
-          <Stack.Navigator initialRouteName="onboarding-symptoms-start" headerMode="none">
+          <Stack.Navigator initialRouteName="tabs" headerMode="none">
             <Stack.Screen name="day-survey" component={DaySurveyScreen} />
             <Stack.Screen name="select-day" component={SelectDayScreen} />
             <Stack.Screen name="tabs" component={Tabs} />
