@@ -6,7 +6,7 @@ import fetchRetry from "fetch-retry";
 import { SCHEME, HOST, BUILD_NUMBER } from "../config";
 import matomo from "./matomo";
 
-const checkNetwork = async (test = false) => {
+export const checkNetwork = async (test = false) => {
   const isConnected = await NetInfo.fetch().then((state) => state.isConnected);
   if (!isConnected || test) {
     await new Promise((res) => setTimeout(res, 1500));

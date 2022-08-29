@@ -1,6 +1,10 @@
 import { TIPIMAIL_API_KEY, TIPIMAIL_API_USER } from "../config";
+import { checkNetwork } from "./api";
 
 export const sendTipimail = async (msg, address) => {
+  const canFetch = await checkNetwork();
+  if (!canFetch) return { ok: false, skipMessage: true };
+
   return await fetch("https://api.tipimail.com/v1/messages/send", {
     method: "POST",
     headers: {

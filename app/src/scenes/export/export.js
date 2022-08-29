@@ -76,7 +76,7 @@ const Export = ({ navigation }) => {
       ]);
     } else {
       console.log(res);
-      Alert.alert("Une erreur s'est produite !");
+      if (!res.skipMessage) Alert.alert("Une erreur s'est produite !");
     }
   };
 
