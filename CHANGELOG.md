@@ -1,3 +1,10 @@
+## [1.35.6](https://github.com/SocialGouv/jardinmental/compare/v1.35.5...v1.35.6) (2022-08-29)
+
+
+### Bug Fixes
+
+* 2Z export data no network error ([#190](https://github.com/SocialGouv/jardinmental/issues/190)) ([1f21cc4](https://github.com/SocialGouv/jardinmental/commit/1f21cc4c126adc3ee03995c1b45d44d807386b8f))
+
 ## [1.35.5](https://github.com/SocialGouv/jardinmental/compare/v1.35.4...v1.35.5) (2022-08-08)
 
 
