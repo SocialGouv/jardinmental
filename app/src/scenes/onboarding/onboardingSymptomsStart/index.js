@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, ScrollView, View, SafeAreaView, Switch } from "react-native";
 
-
 import Text from "../../../components/MyText";
 import { colors } from "../../../utils/colors";
 import localStorage from "../../../utils/localStorage";
 import BackButton from "../../../components/BackButton";
 import Button from "../../../components/Button";
 import LabelCheckBox from "./LabelCheckBox";
-import { INDICATEURS_HUMEUR, INDICATEURS_SOMMEIL, INDICATEURS_LISTE_ONBOARDING_HUMEUR, INDICATEURS_LISTE_ONBOARDING_SOMMEIL, INDICATEURS } from "../../../utils/liste_indicateurs";
-
+import {
+  INDICATEURS_HUMEUR,
+  INDICATEURS_SOMMEIL,
+  INDICATEURS_LISTE_ONBOARDING_HUMEUR,
+  INDICATEURS_LISTE_ONBOARDING_SOMMEIL,
+  INDICATEURS,
+} from "../../../utils/liste_indicateurs";
 
 const OnboardingSymptomStart = ({ navigation }) => {
   const [symptomSelection, setSymptomSelection] = useState({});
@@ -18,9 +22,9 @@ const OnboardingSymptomStart = ({ navigation }) => {
 
   useEffect(() => {
     (async () => {
-      const symptoms = await await localStorage.getSymptoms() || {};
-      INDICATEURS_LISTE_ONBOARDING_HUMEUR.forEach((v) => symptoms[v] = false);
-      INDICATEURS_LISTE_ONBOARDING_SOMMEIL.forEach((v) => symptoms[v] = false);
+      const symptoms = (await await localStorage.getSymptoms()) || {};
+      INDICATEURS_LISTE_ONBOARDING_HUMEUR.forEach((v) => (symptoms[v] = false));
+      INDICATEURS_LISTE_ONBOARDING_SOMMEIL.forEach((v) => (symptoms[v] = false));
       if (!Object.keys(symptoms).includes(INDICATEURS_HUMEUR)) symptoms[INDICATEURS_HUMEUR] = true;
       if (!Object.keys(symptoms).includes(INDICATEURS_SOMMEIL)) symptoms[INDICATEURS_SOMMEIL] = true;
 
@@ -31,24 +35,23 @@ const OnboardingSymptomStart = ({ navigation }) => {
   useEffect(() => {
     const symptoms = { ...symptomSelection };
     if (!isMoodTroubleEnable) {
-      INDICATEURS_LISTE_ONBOARDING_HUMEUR.forEach((v) => symptoms[v] = false);
+      INDICATEURS_LISTE_ONBOARDING_HUMEUR.forEach((v) => (symptoms[v] = false));
       setSymptomSelection(symptoms);
     }
     if (!isSleepTroubleEnable) {
-      INDICATEURS_LISTE_ONBOARDING_SOMMEIL.forEach((v) => symptoms[v] = false);
+      INDICATEURS_LISTE_ONBOARDING_SOMMEIL.forEach((v) => (symptoms[v] = false));
       setSymptomSelection(symptoms);
     }
-  }, [isMoodTroubleEnable, isSleepTroubleEnable])
+  }, [isMoodTroubleEnable, isSleepTroubleEnable, symptomSelection]);
 
   const handleNext = async () => {
     const symptoms = { ...symptomSelection };
-    if (!isMoodTroubleEnable) INDICATEURS_LISTE_ONBOARDING_HUMEUR.forEach((v) => symptoms[v] = false);
-    if (!isSleepTroubleEnable) INDICATEURS_LISTE_ONBOARDING_SOMMEIL.forEach((v) => symptoms[v] = false);
+    if (!isMoodTroubleEnable) INDICATEURS_LISTE_ONBOARDING_HUMEUR.forEach((v) => (symptoms[v] = false));
+    if (!isSleepTroubleEnable) INDICATEURS_LISTE_ONBOARDING_SOMMEIL.forEach((v) => (symptoms[v] = false));
 
     await localStorage.setSymptoms(symptoms);
     navigation.navigate("tabs");
   };
-
 
   return (
     <SafeAreaView style={styles.safe}>
@@ -64,7 +67,9 @@ const OnboardingSymptomStart = ({ navigation }) => {
           <Text style={styles.title}>Commençons par deux indicateurs que je vous recommande</Text>
         </View>
         <View style={styles.titleContainer}>
-          <Text style={styles.description}>Vous pouvez tout de même décider de ne pas les suivre en les décochant</Text>
+          <Text style={styles.description}>
+            Vous pouvez tout de même décider de ne pas les suivre en les décochant
+          </Text>
         </View>
         <View style={styles.divider} />
         <View>
@@ -74,21 +79,25 @@ const OnboardingSymptomStart = ({ navigation }) => {
             onValueChange={(v) => setSymptomSelection((prev) => ({ ...prev, INDICATEURS_HUMEUR: v }))}
             label={INDICATEURS_HUMEUR}
           />
-          <Text style={styles.question}>Avez-vous un trouble spécifique qui fait varier votre humeur au cours de la journée ?</Text>
+          <Text style={styles.question}>
+            Avez-vous un trouble spécifique qui fait varier votre humeur au cours de la journée ?
+          </Text>
           <Switch
             onValueChange={() => setIsMoodTroubleEnabled(!isMoodTroubleEnable)}
             value={isMoodTroubleEnable}
           />
-          {
-            isMoodTroubleEnable && <View>
-              <Text style={styles.description}>Vous pouvez suivre plus en détails les variations de votre humeur avec :</Text>
+          {isMoodTroubleEnable && (
+            <View>
+              <Text style={styles.description}>
+                Vous pouvez suivre plus en détails les variations de votre humeur avec :
+              </Text>
               <CheckBoxList
                 list={INDICATEURS_LISTE_ONBOARDING_HUMEUR}
                 selected={symptomSelection}
                 setSelected={(id, value) => setSymptomSelection((prev) => ({ ...prev, [id]: value }))}
               />
             </View>
-          }
+          )}
         </View>
         <View style={styles.divider} />
         <View>
@@ -99,21 +108,25 @@ const OnboardingSymptomStart = ({ navigation }) => {
             onValueChange={(v) => setSymptomSelection((prev) => ({ ...prev, INDICATEURS_SOMMEIL: v }))}
             label={INDICATEURS_SOMMEIL}
           />
-          <Text style={styles.subtitle}>Avez-vous un trouble du sommeil important qui nécessite un suivi ?</Text>
+          <Text style={styles.subtitle}>
+            Avez-vous un trouble du sommeil important qui nécessite un suivi ?
+          </Text>
           <Switch
             onValueChange={() => setIsSleepTroubleEnabled(!isSleepTroubleEnable)}
             value={isSleepTroubleEnable}
           />
-          {
-            isSleepTroubleEnable && <View>
-              <Text style={styles.description}>Vous pouvez suivre plus en détails les variations de votre humeur avec :</Text>
+          {isSleepTroubleEnable && (
+            <View>
+              <Text style={styles.description}>
+                Vous pouvez suivre plus en détails les variations de votre humeur avec :
+              </Text>
               <CheckBoxList
                 list={INDICATEURS_LISTE_ONBOARDING_SOMMEIL}
                 selected={symptomSelection}
                 setSelected={(id, value) => setSymptomSelection((prev) => ({ ...prev, [id]: value }))}
               />
             </View>
-          }
+          )}
         </View>
       </ScrollView>
       <View style={styles.buttonWrapper}>
@@ -126,21 +139,19 @@ const OnboardingSymptomStart = ({ navigation }) => {
 const CheckBoxList = ({ list, selected, setSelected }) => {
   return (
     <>
-      {
-        list.map((id, index) => {
-          return <LabelCheckBox
+      {list.map((id, index) => {
+        return (
+          <LabelCheckBox
             key={index}
             value={selected[id]}
             label={INDICATEURS[id]}
             onValueChange={(v) => setSelected(id, v)}
           />
-        })
-      }
+        );
+      })}
     </>
-  )
-}
-
-
+  );
+};
 
 const styles = StyleSheet.create({
   divider: {
@@ -181,7 +192,7 @@ const styles = StyleSheet.create({
     flex: 1,
     color: colors.BLUE,
     fontSize: 15,
-    fontWeight: "400"
+    fontWeight: "400",
   },
   subtitle: {
     paddingVertical: 15,
@@ -198,7 +209,7 @@ const styles = StyleSheet.create({
     color: colors.BLUE,
     fontSize: 15,
     fontWeight: "400",
-    fontStyle: "italic"
+    fontStyle: "italic",
   },
   container: {
     paddingHorizontal: 20,
@@ -208,7 +219,7 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     display: "flex",
     alignItems: "center",
-  }
+  },
 });
 
 export default OnboardingSymptomStart;

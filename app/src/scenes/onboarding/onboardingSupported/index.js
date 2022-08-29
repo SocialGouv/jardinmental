@@ -34,7 +34,9 @@ const Supported = ({ navigation }) => {
       </View>
       <ScrollView style={styles.container} contentContainerStyle={styles.scrollContainer}>
         <View style={styles.header}>
-          <Text style={styles.title}>Faisons connaissance pour personnaliser votre expérience</Text>
+          <Text style={styles.title}>
+            Faisons connaissance pour personnaliser votre expérience sur Jardin&nbsp;Mental
+          </Text>
           <Text style={styles.subtitle}>Vous êtes actuellement :</Text>
         </View>
         <Card
