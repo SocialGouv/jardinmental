@@ -12,7 +12,9 @@ import { AppState, Platform } from "react-native";
 import Notes from "../scenes/survey/notes-screen";
 import Onboarding from "../scenes/onboarding";
 import Supported from "../scenes/onboarding/onboardingSupported";
-import OnboardingSymptoms from "../scenes/onboarding/onboardingSymptoms";
+import OnboardingSymptoms1 from "../scenes/onboarding/onboardingSymptoms/indicateurs.js";
+import OnboardingSymptoms2 from "../scenes/onboarding/onboardingSymptoms/objectifs.js";
+import OnboardingSymptomsRecap from "../scenes/onboarding/onboardingSymptoms/recap.js";
 import OnboardingExplanationScreen0 from "../scenes/onboarding/onboardingExplanation/screen0";
 import OnboardingExplanationScreen1 from "../scenes/onboarding/onboardingExplanation/screen1";
 import onboardingSymptomsStart from "../scenes/onboarding/onboardingSymptomsStart";
@@ -100,7 +102,9 @@ class Router extends React.Component {
               {({ navigation, route }) => <Notes navigation={navigation} route={route} />}
             </Stack.Screen>
             <Stack.Screen name="onboarding" component={Onboarding} />
-            <Stack.Screen name="onboarding-symptoms" component={OnboardingSymptoms} />
+            <Stack.Screen name="onboarding-symptoms-1" component={OnboardingSymptoms1} />
+            <Stack.Screen name="onboarding-symptoms-2" component={OnboardingSymptoms2} />
+            <Stack.Screen name="onboarding-symptoms-recap" component={OnboardingSymptomsRecap} />
             <Stack.Screen
               name="onboarding-explanation-indicator-0"
               component={OnboardingExplanationScreen0}
