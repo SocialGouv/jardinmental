@@ -4,10 +4,14 @@ import Text from "../../components/MyText";
 import Button from "../../components/Button";
 import { colors } from "../../utils/colors";
 import Felicitation from "../../../assets/svg/felicitation";
+import BackButton from "../../components/BackButton";
 
 const Onboarding = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.safe}>
+      <View style={styles.buttonsContainer}>
+        <BackButton onPress={navigation.goBack} />
+      </View>
       <ScrollView style={styles.container} contentContainerStyle={styles.scrollContainer}>
         <View style={styles.containerSvg}>
           <Felicitation width={100} height={100} />
@@ -48,6 +52,11 @@ const Onboarding = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  buttonsContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
   buttonSecondary: {
     backgroundColor: colors.WHITE,
     borderWidth: 2,
