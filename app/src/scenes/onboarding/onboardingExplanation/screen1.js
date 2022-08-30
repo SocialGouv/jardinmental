@@ -16,7 +16,7 @@ const Explanation = ({ navigation }) => {
   }, []);
 
   const handlePress = () => {
-    navigation.navigate("onboarding-symptoms");
+    navigation.navigate("onboarding-symptoms-start");
   };
 
   return (

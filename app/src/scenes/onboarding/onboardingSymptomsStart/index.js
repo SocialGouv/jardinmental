@@ -42,7 +42,7 @@ const OnboardingSymptomStart = ({ navigation }) => {
       INDICATEURS_LISTE_ONBOARDING_SOMMEIL.forEach((v) => (symptoms[v] = false));
       setSymptomSelection(symptoms);
     }
-  }, [isMoodTroubleEnable, isSleepTroubleEnable, symptomSelection]);
+  }, [isMoodTroubleEnable, isSleepTroubleEnable]);
 
   const handleNext = async () => {
     const symptoms = { ...symptomSelection };
