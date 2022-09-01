@@ -128,10 +128,10 @@ const OnboardingSymptomStart = ({ navigation }) => {
             </View>
           )}
         </View>
+        <View style={styles.buttonWrapper}>
+          <Button onPress={handleNext} title="Suivant" />
+        </View>
       </ScrollView>
-      <View style={styles.buttonWrapper}>
-        <Button onPress={handleNext} title="Suivant" />
-      </View>
     </SafeAreaView>
   );
 };
@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
   divider: {
     height: 1,
     backgroundColor: "#E0E0E0",
-    marginVertical: 40,
+    marginVertical: 10,
     width: "50%",
     alignSelf: "center",
   },

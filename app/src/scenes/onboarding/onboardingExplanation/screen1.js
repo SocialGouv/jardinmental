@@ -36,10 +36,10 @@ const Explanation = ({ navigation }) => {
             mentale et de <Text style={styles.bold}>comprendre</Text> ce qui influe dessus
           </Text>
         </View>
-        <View style={styles.buttonWrapper}>
-          <Button title="D’accord, c’est parti !" onPress={handlePress} />
-        </View>
       </ScrollView>
+      <View style={styles.buttonWrapper}>
+        <Button title="D’accord, c’est parti !" onPress={handlePress} />
+      </View>
     </SafeAreaView>
   );
 };
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   scrollContainer: {
-    paddingBottom: 150,
+    flex: 1,
   },
   safe: {
     flex: 1,

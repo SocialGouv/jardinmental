@@ -96,6 +96,8 @@ export const Screen2 = ({ navigation, isCguChecked, setIsCguChecked }) => {
   );
 };
 
+const stylesButtons = StyleSheet.create({});
+
 const styles = StyleSheet.create({
   containerBottom: {
     flex: 1,

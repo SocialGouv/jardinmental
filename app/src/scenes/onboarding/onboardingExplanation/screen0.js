@@ -30,21 +30,21 @@ const Explanation = ({ navigation }) => {
             Vous allez évaluer quotidiennement des indicateurs de votre état de santé mentale
           </Text>
           <Text style={styles.text}>Humeur</Text>
-          <AllEmoji />
+          <AllEmoji width="100%" height="30" />
           <Text style={styles.text}>Anxiété</Text>
-          <AllEmoji />
+          <AllEmoji width="100%" height="30" />
           <Text style={styles.text}>Fatigue</Text>
-          <AllEmoji />
+          <AllEmoji width="100%" height="30" />
           <Text style={styles.subtitle}>
             Ces indicateurs peuvent être des <Text style={styles.bold}>émotions</Text>, des{" "}
             <Text style={styles.bold}>ressentis</Text>, des <Text style={styles.bold}>comportements</Text> ou
             même des <Text style={styles.bold}>activités</Text>
           </Text>
         </View>
-        <View style={styles.buttonWrapper}>
-          <Button title="Je comprends le principe" onPress={handlePress} />
-        </View>
       </ScrollView>
+      <View style={styles.buttonWrapper}>
+        <Button title="Je comprends le principe" onPress={handlePress} />
+      </View>
     </SafeAreaView>
   );
 };
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   scrollContainer: {
-    paddingBottom: 150,
+    flex: 1,
   },
   safe: {
     flex: 1,
@@ -72,15 +72,13 @@ const styles = StyleSheet.create({
     paddingBottom: 15,
     fontWeight: "700",
     textAlign: "center",
-    paddingBottom: 55,
   },
   subtitle: {
     color: colors.DARK_BLUE,
     paddingBottom: 10,
-    paddingTop: 10,
+    paddingTop: 15,
     fontWeight: "normal",
     fontSize: 15,
-    paddingTop: 75,
   },
   text: {
     fontFamily: "Karla",
