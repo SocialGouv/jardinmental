@@ -108,19 +108,24 @@ const SymptomScreen = ({ navigation, route }) => {
             </Text>
           </View>
         ) : null}
-
-        <View style={styles.buttonWrapper}>
-          <Button title={`Cela me correspond`} onPress={nextOnboardingScreen} buttonStyle={{ minWidth: 0 }} />
-          <TouchableOpacity style={styles.buttonSecondary} onPress={restart}>
-            <Text>Modifier mes indicateurs</Text>
-          </TouchableOpacity>
-        </View>
       </ScrollView>
+      <View style={stylesButton.buttonWrapper}>
+        <Button title={`Cela me correspond`} onPress={nextOnboardingScreen} buttonStyle={{ minWidth: 0 }} />
+        <TouchableOpacity style={stylesButton.buttonSecondary} onPress={restart}>
+          <Text>Modifier mes indicateurs</Text>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 };
 
-const styles = StyleSheet.create({
+const stylesButton = StyleSheet.create({
+  buttonWrapper: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "stretch",
+    paddingHorizontal: 10,
+  },
   buttonSecondary: {
     minWidth: "70%",
     minHeight: 45,
@@ -133,6 +138,9 @@ const styles = StyleSheet.create({
     borderColor: "#bbb",
     borderWidth: 1,
   },
+});
+
+const styles = StyleSheet.create({
   alertContainer: {
     backgroundColor: "#FEFFE4",
     borderColor: "#EDF053",
@@ -197,7 +205,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   scrollContainer: {
-    paddingBottom: 80,
+    flex: 1,
   },
   ValidationButtonText: {
     color: "#fff",
@@ -337,11 +345,6 @@ const styles = StyleSheet.create({
   },
   textInput: {
     fontSize: 20,
-  },
-  buttonWrapper: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "stretch",
   },
   buttonWrapperError: {
     display: "flex",

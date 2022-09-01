@@ -106,7 +106,7 @@ const SymptomScreen = ({ navigation, route }) => {
         <View style={styles.dividerS} />
         <View style={styles.alertContainer}>
           <Text style={styles.alertText}>
-            Essayez de ne pas sélectionner plus de <Text style={styles.bold}>8</Text> indicateurs{" "}
+            Essayez de ne pas sélectionner plus de <Text style={styles.bold}>10</Text> indicateurs{" "}
             <Text style={styles.bold}>au total</Text>
           </Text>
         </View>
@@ -144,7 +144,7 @@ const SymptomScreen = ({ navigation, route }) => {
             </Text>
           </View>
         ) : null}
-        <View style={styles.buttonWrapper}>
+        <View style={stylesButton.buttonWrapper}>
           <Button
             title={`Continuer avec ${countIndicateurs()} indicateur${countIndicateurs() > 1 ? "s" : ""}`}
             onPress={nextOnboardingScreen}
@@ -156,6 +156,26 @@ const SymptomScreen = ({ navigation, route }) => {
     </SafeAreaView>
   );
 };
+
+const stylesButton = StyleSheet.create({
+  buttonWrapper: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "stretch",
+  },
+  buttonSecondary: {
+    minWidth: "70%",
+    minHeight: 45,
+    borderRadius: 45,
+    paddingHorizontal: 30,
+    paddingVertical: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 10,
+    borderColor: "#bbb",
+    borderWidth: 1,
+  },
+});
 
 const styles = StyleSheet.create({
   alertContainer: {
