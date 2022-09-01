@@ -31,11 +31,9 @@ const SymptomScreen = ({ navigation, route }) => {
   }, []);
 
   useEffect(() => {
-    console.log(indicateursSelection);
     const total =
       Object.keys(indicateursSelection).filter((indicateur) => !!indicateursSelection[indicateur]).length ||
       0;
-    console.log("✍️ ~ total", total);
     setDisplayAlert(total > 10);
   }, [indicateursSelection]);
 
@@ -89,7 +87,7 @@ const SymptomScreen = ({ navigation, route }) => {
             .map((categorie) => {
               const indicateurs = INDICATEURS_LISTE_PAR_CATEGORIE[categorie];
               return (
-                <View>
+                <View key={categorie}>
                   <Text style={styles.categorieTitre}>{categorie}</Text>
                   <View style={styles.indicateursSelectionContainer}>
                     {indicateurs

@@ -35,18 +35,47 @@ const Onboarding = ({ navigation }) => {
             Parlez-en à un professionnel de santé mentale pour vous aider à choisir les indicateurs adaptés{" "}
           </Text>
         </View>
-        <View style={styles.buttonWrapper}>
-          <Button
-            onPress={() => {
-              navigation.navigate("reminder", { onboarding: true });
-            }}
-            title="Bien reçu !"
-          />
-        </View>
       </ScrollView>
+      <View style={stylesButton.buttonWrapper}>
+        <Button
+          onPress={() => {
+            navigation.navigate("reminder", { onboarding: true });
+          }}
+          title="Bien reçu !"
+        />
+      </View>
     </SafeAreaView>
   );
 };
+
+const stylesButton = StyleSheet.create({
+  buttonWrapper: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "stretch",
+    paddingHorizontal: 10,
+  },
+  button: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#FFF",
+    minWidth: "70%",
+    minHeight: 45,
+    borderRadius: 45,
+    borderWidth: 1,
+    borderColor: "#d1d5db",
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    marginBottom: 10,
+  },
+  text: {
+    fontWeight: "bold",
+    fontSize: 15,
+    color: "#1f2937",
+  },
+});
 
 const styles = StyleSheet.create({
   buttonsContainer: {
@@ -89,8 +118,6 @@ const styles = StyleSheet.create({
     display: "flex",
   },
   scrollContainer: {
-    flex: 1,
-    paddingBottom: 80,
     display: "flex",
     justifyContent: "center",
     alignItems: "stretch",

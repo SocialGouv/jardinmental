@@ -27,29 +27,56 @@ const Onboarding = ({ navigation }) => {
             la partie “mes analyses”
           </Text>
         </View>
-        <View style={styles.buttonPrimaryWrapper}>
-          <Button
-            textStyle={{ fontSize: 16, fontWeight: "bold" }}
-            onPress={() => {
-              navigation.navigate("tabs", { onboarding: true });
-            }}
-            title="Je démarre"
-          />
-        </View>
-        <View style={styles.buttonSecondaryWrapper}>
-          <Button
-            textStyle={styles.buttonSecondaryText}
-            buttonStyle={styles.buttonSecondary}
-            onPress={() => {
-              navigation.navigate("onboarding-explanation-details", { onboarding: true });
-            }}
-            title="J'ai besoin d'explication"
-          />
-        </View>
       </ScrollView>
+      <View style={stylesButton.buttonWrapper}>
+        <Button
+          textStyle={{ fontSize: 16, fontWeight: "bold" }}
+          onPress={() => {
+            navigation.navigate("tabs", { onboarding: true });
+          }}
+          title="Je démarre"
+        />
+        <Button
+          textStyle={stylesButton.text}
+          buttonStyle={stylesButton.button}
+          onPress={() => {
+            navigation.navigate("onboarding-explanation-details", { onboarding: true });
+          }}
+          title="J'ai besoin d'explication"
+        />
+      </View>
     </SafeAreaView>
   );
 };
+
+const stylesButton = StyleSheet.create({
+  buttonWrapper: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "stretch",
+    paddingHorizontal: 10,
+  },
+  button: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#FFF",
+    minWidth: "70%",
+    minHeight: 45,
+    borderRadius: 45,
+    borderWidth: 1,
+    borderColor: "#d1d5db",
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    marginBottom: 10,
+  },
+  text: {
+    fontWeight: "bold",
+    fontSize: 15,
+    color: "#1f2937",
+  },
+});
 
 const styles = StyleSheet.create({
   buttonsContainer: {

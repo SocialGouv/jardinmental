@@ -112,7 +112,7 @@ const Drugs = ({ navigation, route }) => {
                 onboarding: true,
               })
             }
-          ></TouchableOpacity>
+          />
           {medicalTreatment.map((e, i) => (
             <View style={styles.drugItem}>
               <DrugItem
@@ -206,9 +206,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     display: "flex",
   },
-  scrollContainer: {
-    flex: 1,
-  },
+  scrollContainer: {},
   header: {
     display: "flex",
     flexDirection: "row",

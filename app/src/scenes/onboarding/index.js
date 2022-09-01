@@ -5,7 +5,7 @@ const Stack = createStackNavigator();
 
 import OnboardingPresentation from "./onboarding";
 import OnboardingSupported from "./onboardingSupported";
-import OnboardingSymptoms from "./onboardingSymptoms";
+import OnboardingSymptoms from "./onboardingSymptoms/indexx";
 import OnboardingExplanation from "./onboardingExplanation/screen0";
 import OnboardingDrugs from "./onboardingDrugs";
 import OnboardingHint from "./onboardingHint";

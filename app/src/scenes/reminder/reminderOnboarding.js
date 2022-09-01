@@ -171,19 +171,45 @@ const Reminder = ({
           </Text>
         )}
       </View>
-      {!!reminder && (
-        <TouchableOpacity onPress={deleteReminderManually} style={[styles.laterContainer]}>
-          <Text style={styles.later}>Désactiver le rappel</Text>
-        </TouchableOpacity>
-      )}
       <View style={styles.buttonWrapper}>
         <Button onPress={validateOnboarding} title="Suivant" />
-        <OutlineButton onPress={DesactivateReminder} title="Désactiver le rappel" />
+        <TouchableOpacity style={stylesButton.button} onPress={DesactivateReminder}>
+          <Text style={stylesButton.text}>Désactiver le rappel</Text>
+        </TouchableOpacity>
       </View>
       <TimePicker visible={reminderSetupVisible} selectDate={setReminderRequest} />
     </SafeAreaView>
   );
 };
+
+const stylesButton = StyleSheet.create({
+  buttonWrapper: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "stretch",
+    paddingHorizontal: 10,
+  },
+  button: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#FFF",
+    minWidth: "70%",
+    minHeight: 45,
+    borderRadius: 45,
+    borderWidth: 1,
+    borderColor: "#d1d5db",
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    marginBottom: 10,
+  },
+  text: {
+    fontWeight: "bold",
+    fontSize: 15,
+    color: "#1f2937",
+  },
+});
 
 const styles = StyleSheet.create({
   buttonWrapper: {
@@ -263,6 +289,9 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
   time: {
+    borderColor: colors.DARK_BLUE,
+    borderRadius: 20,
+    borderWidth: 1,
     color: colors.DARK_BLUE,
     fontWeight: "500",
     fontSize: 35,
