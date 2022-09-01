@@ -41,7 +41,6 @@ const CategorieElements = ({
                 ]}
                 onPress={() => onClick({ id: option.id, value: !indicateurSelectionne })}
               >
-                <Text style={stylesA.choixLabel}>{option.label}</Text>
                 {indicateurSelectionne ? (
                   <View>
                     <RoundButtonIcon
@@ -67,6 +66,7 @@ const CategorieElements = ({
                     />
                   </View>
                 )}
+                <Text style={stylesA.choixLabel}>{option.label}</Text>
               </TouchableOpacity>
             );
           })}

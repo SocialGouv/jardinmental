@@ -83,19 +83,37 @@ const SymptomScreen = ({ navigation, route }) => {
           <Text style={styles.title}>Chaque jour, vous allez évaluer :</Text>
         </View>
         <View style={styles.indicateursSelectionContainer}>
-          {Object.keys(indicateursSelection || {})
-            .filter((e) => indicateursSelection[e])
-            .map((e, i) => (
-              <TextTag
-                key={i}
-                value={INDICATEURS[e] || displayedCategories[e] || e}
-                selected={false}
-                color="#D4F0F2"
-                onPress={() => {}}
-                enableClosed
-                onClose={() => setToggleIndicateur({ indicateur: e, valeur: false })}
-              />
-            ))}
+          {Object.keys(INDICATEURS_LISTE_PAR_CATEGORIE)
+            .filter((categorie) => {
+              const list_indicateurs = INDICATEURS_LISTE_PAR_CATEGORIE[categorie];
+              return Object.keys(indicateursSelection || {}).some(
+                (indicateur) =>
+                  indicateursSelection[indicateur] && list_indicateurs.some((e) => e === indicateur)
+              );
+            })
+            .map((categorie) => {
+              const indicateurs = INDICATEURS_LISTE_PAR_CATEGORIE[categorie];
+              return (
+                <View>
+                  <Text style={styles.categorieTitre}>{categorie}</Text>
+                  <View style={styles.indicateursSelectionContainer}>
+                    {indicateurs
+                      .filter((e) => indicateursSelection[e])
+                      .map((indicateur) => (
+                        <TextTag
+                          key={indicateur}
+                          value={INDICATEURS[indicateur] || displayedCategories[indicateur] || indicateur}
+                          selected={false}
+                          color="#D4F0F2"
+                          onPress={() => {}}
+                          enableClosed
+                          onClose={() => setToggleIndicateur({ indicateur: indicateur, valeur: false })}
+                        />
+                      ))}
+                  </View>
+                </View>
+              );
+            })}
         </View>
         {countAll() > 10 ? (
           <View style={styles.alertContainer}>
@@ -111,8 +129,8 @@ const SymptomScreen = ({ navigation, route }) => {
       </ScrollView>
       <View style={stylesButton.buttonWrapper}>
         <Button title={`Cela me correspond`} onPress={nextOnboardingScreen} buttonStyle={{ minWidth: 0 }} />
-        <TouchableOpacity style={stylesButton.buttonSecondary} onPress={restart}>
-          <Text>Modifier mes indicateurs</Text>
+        <TouchableOpacity style={stylesButton.button} onPress={restart}>
+          <Text style={stylesButton.text}>Modifier mes indicateurs</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -126,21 +144,33 @@ const stylesButton = StyleSheet.create({
     alignItems: "stretch",
     paddingHorizontal: 10,
   },
-  buttonSecondary: {
+  button: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#FFF",
     minWidth: "70%",
     minHeight: 45,
     borderRadius: 45,
-    paddingHorizontal: 30,
-    paddingVertical: 10,
-    alignItems: "center",
-    justifyContent: "center",
-    marginBottom: 10,
-    borderColor: "#bbb",
     borderWidth: 1,
+    borderColor: "#d1d5db",
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    marginBottom: 10,
+  },
+  text: {
+    fontWeight: "bold",
+    fontSize: 15,
+    color: "#1f2937",
   },
 });
 
 const styles = StyleSheet.create({
+  categorieTitre: {
+    marginBottom: 10,
+    fontWeight: "600",
+  },
   alertContainer: {
     backgroundColor: "#FEFFE4",
     borderColor: "#EDF053",
@@ -160,7 +190,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     flexWrap: "wrap",
-    marginVertical: 30,
+    marginBottom: 30,
   },
   subtitle: {
     color: "#000",

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, ScrollView, View, SafeAreaView, Switch } from "react-native";
+import { StyleSheet, ScrollView, View, SafeAreaView, Switch, TouchableOpacity } from "react-native";
 
 import Text from "../../../components/MyText";
 import { colors } from "../../../utils/colors";
@@ -14,6 +14,7 @@ import {
   INDICATEURS_LISTE_ONBOARDING_SOMMEIL,
   INDICATEURS,
 } from "../../../utils/liste_indicateurs";
+import RoundButtonIcon from "../../../components/RoundButtonIcon";
 
 const OnboardingSymptomStart = ({ navigation }) => {
   const [symptomSelection, setSymptomSelection] = useState({});
@@ -69,11 +70,42 @@ const OnboardingSymptomStart = ({ navigation }) => {
         <View style={styles.divider} />
         <View>
           <Text style={styles.subtitle}>Votre humeur générale indique votre état de bien-être global</Text>
-          <LabelCheckBox
-            value={symptomSelection[INDICATEURS_HUMEUR]}
-            onValueChange={(v) => setSymptomSelection((prev) => ({ ...prev, INDICATEURS_HUMEUR: v }))}
-            label={INDICATEURS_HUMEUR}
-          />
+          <TouchableOpacity
+            style={[
+              stylesA.choixContainer,
+              symptomSelection[INDICATEURS_HUMEUR] ? stylesA.choixContainerSelected : null,
+            ]}
+            onPress={() =>
+              setSymptomSelection((prev) => ({ ...prev, [INDICATEURS_HUMEUR]: !prev[INDICATEURS_HUMEUR] }))
+            }
+          >
+            {symptomSelection[INDICATEURS_HUMEUR] ? (
+              <View>
+                <RoundButtonIcon
+                  backgroundColor="#5DEE5A"
+                  iconColor="#fff"
+                  borderWidth={0.5}
+                  borderColor="#5DEE5A"
+                  icon="validate"
+                  visible={true}
+                  medium
+                />
+              </View>
+            ) : (
+              <View>
+                <RoundButtonIcon
+                  backgroundColor="#f4f4f4"
+                  iconColor="#e1e1e1"
+                  borderWidth={0.5}
+                  borderColor="#e1e1e1"
+                  icon="validate"
+                  visible={true}
+                  medium
+                />
+              </View>
+            )}
+            <Text style={stylesA.choixLabel}>{INDICATEURS_HUMEUR}</Text>
+          </TouchableOpacity>
           <Text style={styles.question}>
             Avez-vous un trouble spécifique qui fait varier votre humeur au cours de la journée ?
           </Text>
@@ -88,8 +120,8 @@ const OnboardingSymptomStart = ({ navigation }) => {
               </Text>
               <CheckBoxList
                 list={INDICATEURS_LISTE_ONBOARDING_HUMEUR}
-                selected={symptomSelection}
-                setSelected={(id, value) => setSymptomSelection((prev) => ({ ...prev, [id]: value }))}
+                symptomSelection={symptomSelection}
+                setSymptomSelection={setSymptomSelection}
               />
             </View>
           )}
@@ -100,12 +132,42 @@ const OnboardingSymptomStart = ({ navigation }) => {
             Le sommeil influe fortement sur votre état de santé mentale et peut souvent expliquer ses
             variations
           </Text>
-
-          <LabelCheckBox
-            value={symptomSelection[INDICATEURS_SOMMEIL]}
-            onValueChange={(v) => setSymptomSelection((prev) => ({ ...prev, INDICATEURS_SOMMEIL: v }))}
-            label={INDICATEURS_SOMMEIL}
-          />
+          <TouchableOpacity
+            style={[
+              stylesA.choixContainer,
+              symptomSelection[INDICATEURS_SOMMEIL] ? stylesA.choixContainerSelected : null,
+            ]}
+            onPress={() =>
+              setSymptomSelection((prev) => ({ ...prev, [INDICATEURS_SOMMEIL]: !prev[INDICATEURS_SOMMEIL] }))
+            }
+          >
+            {symptomSelection[INDICATEURS_SOMMEIL] ? (
+              <View>
+                <RoundButtonIcon
+                  backgroundColor="#5DEE5A"
+                  iconColor="#fff"
+                  borderWidth={0.5}
+                  borderColor="#5DEE5A"
+                  icon="validate"
+                  visible={true}
+                  medium
+                />
+              </View>
+            ) : (
+              <View>
+                <RoundButtonIcon
+                  backgroundColor="#f4f4f4"
+                  iconColor="#e1e1e1"
+                  borderWidth={0.5}
+                  borderColor="#e1e1e1"
+                  icon="validate"
+                  visible={true}
+                  medium
+                />
+              </View>
+            )}
+            <Text style={stylesA.choixLabel}>{INDICATEURS_SOMMEIL}</Text>
+          </TouchableOpacity>
           <Text style={styles.question}>
             Avez-vous un trouble du sommeil important qui nécessite un suivi ?
           </Text>
@@ -118,8 +180,8 @@ const OnboardingSymptomStart = ({ navigation }) => {
               <Text style={styles.description}>Vous pouvez suivre plus en détails votre sommeil avec :</Text>
               <CheckBoxList
                 list={INDICATEURS_LISTE_ONBOARDING_SOMMEIL}
-                selected={symptomSelection}
-                setSelected={(id, value) => setSymptomSelection((prev) => ({ ...prev, [id]: value }))}
+                symptomSelection={symptomSelection}
+                setSymptomSelection={setSymptomSelection}
               />
             </View>
           )}
@@ -132,22 +194,95 @@ const OnboardingSymptomStart = ({ navigation }) => {
   );
 };
 
-const CheckBoxList = ({ list, selected, setSelected }) => {
+const CheckBoxList = ({ list, symptomSelection, setSymptomSelection }) => {
   return (
     <>
-      {list.map((id, index) => {
+      {list.map((id) => {
         return (
-          <LabelCheckBox
-            key={index}
-            value={selected[id]}
-            label={INDICATEURS[id]}
-            onValueChange={(v) => setSelected(id, v)}
-          />
+          <>
+            <TouchableOpacity
+              style={[stylesA.choixContainer, symptomSelection[id] ? stylesA.choixContainerSelected : null]}
+              onPress={() =>
+                setSymptomSelection((prev) => ({
+                  ...prev,
+                  [id]: !prev[id],
+                }))
+              }
+            >
+              {symptomSelection[id] ? (
+                <View>
+                  <RoundButtonIcon
+                    backgroundColor="#5DEE5A"
+                    iconColor="#fff"
+                    borderWidth={0.5}
+                    borderColor="#5DEE5A"
+                    icon="validate"
+                    visible={true}
+                    medium
+                  />
+                </View>
+              ) : (
+                <View>
+                  <RoundButtonIcon
+                    backgroundColor="#f4f4f4"
+                    iconColor="#e1e1e1"
+                    borderWidth={0.5}
+                    borderColor="#e1e1e1"
+                    icon="validate"
+                    visible={true}
+                    medium
+                  />
+                </View>
+              )}
+              <Text style={stylesA.choixLabel}>{id}</Text>
+            </TouchableOpacity>
+          </>
         );
       })}
     </>
   );
 };
+
+const stylesA = StyleSheet.create({
+  categorieContainer: {
+    backgroundColor: "#F4FCFD",
+    borderColor: "#D4F0F2",
+    borderWidth: 0.5,
+    marginBottom: 10,
+    borderRadius: 10,
+    padding: 10,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    height: 44, // standard
+  },
+  categorieTitre: {
+    fontSize: 15,
+    color: "#000",
+    fontWeight: "bold",
+  },
+  choixContainer: {
+    backgroundColor: "#fff",
+    paddingHorizontal: 10,
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    height: 44, // standard
+  },
+  choixContainerSelected: {
+    backgroundColor: "#EFFDEF",
+  },
+  listeContainer: {
+    marginBottom: 44,
+  },
+  choixLabel: {
+    fontSize: 15,
+    color: "#000",
+    flex: 1,
+  },
+});
 
 const styles = StyleSheet.create({
   divider: {
