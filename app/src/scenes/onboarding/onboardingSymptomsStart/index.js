@@ -50,7 +50,7 @@ const OnboardingSymptomStart = ({ navigation }) => {
     if (!isSleepTroubleEnable) INDICATEURS_LISTE_ONBOARDING_SOMMEIL.forEach((v) => (symptoms[v] = false));
 
     await localStorage.setSymptoms(symptoms);
-    navigation.navigate("onboarding-hint");
+    navigation.navigate("onboarding-symptoms-1");
   };
 
   return (
