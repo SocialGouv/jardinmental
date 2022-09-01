@@ -16,28 +16,61 @@ export default ({ navigation }) => {
   };
 
   return (
-    <View>
+    <View style={styles.container}>
       <Text style={styles.subtitle}>
         Cela vous permettra de mieux comprendre leurs effets sur votre état de santé mentale
       </Text>
-      <Button
-        onPress={() => navigation.navigate("onboarding-drugs-list")}
-        title="Je renseigne mon traitement"
-        buttonStyle={styles.button}
-        textStyle={{ fontSize: 16, fontWeight: "bold" }}
-      />
-
-      <Button
-        onPress={handleNoTreatment}
-        title="Je n'en ai pas / Je le ferais plus tard"
-        buttonStyle={styles.darkButton}
-        textStyle={{ fontSize: 16, fontWeight: "bold", color: colors.LIGHT_BLUE }}
-      />
+      <View style={stylesButton.buttonWrapper}>
+        <Button
+          textStyle={{ fontSize: 16, fontWeight: "bold" }}
+          onPress={() => {
+            navigation.navigate("onboarding-drugs-list");
+          }}
+          title="Je renseigne mon traitement"
+        />
+        <Button
+          textStyle={stylesButton.text}
+          buttonStyle={stylesButton.button}
+          onPress={handleNoTreatment}
+          title="Je n'en ai pas / Je le ferais plus tard"
+        />
+      </View>
     </View>
   );
 };
 
+const stylesButton = StyleSheet.create({
+  buttonWrapper: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "stretch",
+  },
+  button: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#FFF",
+    minWidth: "70%",
+    minHeight: 45,
+    borderRadius: 45,
+    borderWidth: 1,
+    borderColor: "#d1d5db",
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    marginBottom: 10,
+  },
+  text: {
+    fontWeight: "bold",
+    fontSize: 15,
+    color: "#1f2937",
+  },
+});
+
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   button: { marginTop: "80%", height: 40, width: "100%", alignSelf: "center" },
   darkButton: {
     marginTop: 10,
@@ -49,6 +82,7 @@ const styles = StyleSheet.create({
     borderColor: colors.LIGHT_BLUE,
   },
   subtitle: {
+    flex: 1,
     color: colors.DARK_BLUE,
     fontSize: 18,
     fontWeight: "400",

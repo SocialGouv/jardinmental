@@ -105,7 +105,7 @@ const Drugs = ({ navigation, route }) => {
     }
     return (
       <>
-        <View>
+        <View style={{ flex: 1 }}>
           <TouchableOpacity
             onPress={() =>
               navigation.navigate("onboarding-drugs-information", {
@@ -129,7 +129,7 @@ const Drugs = ({ navigation, route }) => {
           </Text>
           <Text style={styles.link}>Informations sur les traitements</Text>
         </View>
-        <View style={styles.buttonWrapper}>
+        <View style={stylesButton.buttonWrapper}>
           <TouchableOpacity
             onPress={() => navigation.navigate("onboarding-felicitation")}
             style={styles.setupButton}
@@ -158,6 +158,35 @@ const Drugs = ({ navigation, route }) => {
     </SafeAreaView>
   );
 };
+
+const stylesButton = StyleSheet.create({
+  buttonWrapper: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "stretch",
+    padding: 10,
+  },
+  button: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#FFF",
+    minWidth: "70%",
+    minHeight: 45,
+    borderRadius: 45,
+    borderWidth: 1,
+    borderColor: "#d1d5db",
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    marginBottom: 10,
+  },
+  text: {
+    fontWeight: "bold",
+    fontSize: 15,
+    color: "#1f2937",
+  },
+});
 
 const styles = StyleSheet.create({
   drugItem: {
@@ -204,9 +233,9 @@ const styles = StyleSheet.create({
   scrollView: {
     paddingHorizontal: 20,
     backgroundColor: "white",
-    display: "flex",
+    flex: 1,
   },
-  scrollContainer: {},
+  scrollContainer: { flexGrow: 1 },
   header: {
     display: "flex",
     flexDirection: "row",
@@ -215,6 +244,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   safe: {
+    display: "flex",
     flex: 1,
     backgroundColor: "white",
   },
