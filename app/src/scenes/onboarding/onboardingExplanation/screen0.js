@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     paddingBottom: 15,
     fontWeight: "700",
-    textAlign: "center",
+    textAlign: "left",
   },
   subtitle: {
     color: colors.DARK_BLUE,

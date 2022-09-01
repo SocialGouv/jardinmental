@@ -64,15 +64,13 @@ const styles = StyleSheet.create({
   title: {
     color: colors.BLUE,
     fontSize: 22,
-    paddingBottom: 15,
     fontWeight: "700",
-    textAlign: "center",
+    textAlign: "left",
     paddingBottom: 75,
   },
   subtitle: {
     color: colors.DARK_BLUE,
     paddingBottom: 10,
-    paddingTop: 10,
     fontWeight: "normal",
     fontSize: 15,
     paddingTop: 75,

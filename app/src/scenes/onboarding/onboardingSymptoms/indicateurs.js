@@ -127,16 +127,11 @@ const SymptomScreen = ({ navigation, route }) => {
                   onClick={({ id, value }) => setToggleIndicateur({ indicateur: id, valeur: value })}
                   indicateursSelection={indicateursSelection}
                   handleAddNewSymptom={handleAddNewSymptom}
+                  enableAddNewElement
                 />
               );
             })}
         </>
-        <AjoutIndicateurPerso
-          onChange={(v) => {
-            if (Object.keys(indicateursSelection || {}).find((e) => e === v)) return;
-            handleAddNewSymptom(v);
-          }}
-        />
         {getSelectionVide() ? (
           <View style={styles.buttonWrapperError}>
             <Text style={[styles.alert, styles.spaceabove, styles.spacebottom]}>
@@ -144,24 +139,26 @@ const SymptomScreen = ({ navigation, route }) => {
             </Text>
           </View>
         ) : null}
-        <View style={stylesButton.buttonWrapper}>
-          <Button
-            title={`Continuer avec ${countIndicateurs()} indicateur${countIndicateurs() > 1 ? "s" : ""}`}
-            onPress={nextOnboardingScreen}
-            disabled={getSelectionVide()}
-            buttonStyle={{ minWidth: 0 }}
-          />
-        </View>
       </ScrollView>
+      <View style={stylesButton.buttonWrapper}>
+        <Button
+          title={`Continuer avec ${countIndicateurs()} indicateur${countIndicateurs() > 1 ? "s" : ""}`}
+          onPress={nextOnboardingScreen}
+          disabled={getSelectionVide()}
+          buttonStyle={{ minWidth: 0 }}
+        />
+      </View>
     </SafeAreaView>
   );
 };
 
 const stylesButton = StyleSheet.create({
   buttonWrapper: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "stretch",
+    position: "absolute",
+    bottom: 20,
+    paddingHorizontal: 10,
+    left: 0,
+    right: 0,
   },
   buttonSecondary: {
     minWidth: "70%",

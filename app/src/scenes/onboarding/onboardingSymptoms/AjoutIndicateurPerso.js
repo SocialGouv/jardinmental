@@ -26,7 +26,7 @@ const AjoutIndicateurPerso = ({
       {!isOpen ? (
         <TouchableOpacity style={styles.button} onPress={() => setIsOpen(true)}>
           <View style={styles.buttonPlusContainer}>
-            <Plus opacity={1} color="white" width={19} height={19} />
+            <Plus opacity={1} color="#111827" width={19} height={19} />
           </View>
           <Text style={styles.textAjouter}>Créer un indicateur personnalisé</Text>
         </TouchableOpacity>
@@ -73,27 +73,20 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    backgroundColor: "#1FC6D5",
+    backgroundColor: "#FFF",
     minWidth: "70%",
     minHeight: 45,
     borderRadius: 45,
+    borderWidth: 1,
+    borderColor: "#d1d5db",
     paddingHorizontal: 15,
     paddingVertical: 10,
     marginBottom: 10,
-    shadowColor: "#0A215C",
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.18,
-    shadowRadius: 1.0,
-
-    elevation: 1,
   },
   textAjouter: {
     fontWeight: "bold",
     fontSize: 15,
-    color: "white",
+    color: "#1f2937",
   },
   mainContainer: {
     flex: 1,
@@ -107,8 +100,8 @@ const styles = StyleSheet.create({
     height: "100%",
     flex: 1,
     borderWidth: 1,
-    borderColor: colors.LIGHT_BLUE,
-    backgroundColor: "#F4FCFD",
+    borderColor: "#d1d5db",
+    backgroundColor: "#FFF",
     borderRadius: 8,
     color: colors.DARK_BLUE,
     marginBottom: 5,

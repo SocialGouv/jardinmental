@@ -66,11 +66,6 @@ const OnboardingSymptomStart = ({ navigation }) => {
         <View style={styles.titleContainer}>
           <Text style={styles.title}>Commençons par deux indicateurs que je vous recommande</Text>
         </View>
-        <View style={styles.titleContainer}>
-          <Text style={styles.description}>
-            Vous pouvez tout de même décider de ne pas les suivre en les décochant
-          </Text>
-        </View>
         <View style={styles.divider} />
         <View>
           <Text style={styles.subtitle}>Votre humeur générale indique votre état de bien-être global</Text>
@@ -89,7 +84,7 @@ const OnboardingSymptomStart = ({ navigation }) => {
           {isMoodTroubleEnable && (
             <View>
               <Text style={styles.description}>
-                Vous pouvez suivre plus en détails les variations de votre humeur avec :
+                Suivre les variations de votre humeur au cours de la journée avec :
               </Text>
               <CheckBoxList
                 list={INDICATEURS_LISTE_ONBOARDING_HUMEUR}
@@ -101,14 +96,17 @@ const OnboardingSymptomStart = ({ navigation }) => {
         </View>
         <View style={styles.divider} />
         <View>
-          <Text style={styles.subtitle}>Votre humeur générale indique votre état de bien-être global</Text>
+          <Text style={styles.subtitle}>
+            Le sommeil influe fortement sur votre état de santé mentale et peut souvent expliquer ses
+            variations
+          </Text>
 
           <LabelCheckBox
             value={symptomSelection[INDICATEURS_SOMMEIL]}
             onValueChange={(v) => setSymptomSelection((prev) => ({ ...prev, INDICATEURS_SOMMEIL: v }))}
             label={INDICATEURS_SOMMEIL}
           />
-          <Text style={styles.subtitle}>
+          <Text style={styles.question}>
             Avez-vous un trouble du sommeil important qui nécessite un suivi ?
           </Text>
           <Switch
@@ -117,9 +115,7 @@ const OnboardingSymptomStart = ({ navigation }) => {
           />
           {isSleepTroubleEnable && (
             <View>
-              <Text style={styles.description}>
-                Vous pouvez suivre plus en détails les variations de votre humeur avec :
-              </Text>
+              <Text style={styles.description}>Vous pouvez suivre plus en détails votre sommeil avec :</Text>
               <CheckBoxList
                 list={INDICATEURS_LISTE_ONBOARDING_SOMMEIL}
                 selected={symptomSelection}
@@ -188,7 +184,7 @@ const styles = StyleSheet.create({
   },
   description: {
     paddingVertical: 15,
-    textAlign: "center",
+    textAlign: "left",
     flex: 1,
     color: colors.BLUE,
     fontSize: 15,
