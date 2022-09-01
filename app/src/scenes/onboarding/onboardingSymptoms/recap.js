@@ -74,7 +74,7 @@ const SymptomScreen = ({ navigation, route }) => {
         <View style={styles.titleContainer}>
           <Text style={styles.title}>Chaque jour, vous allez évaluer :</Text>
         </View>
-        <View style={styles.indicateursSelectionContainer}>
+        <View style={styles.indicateursContainer}>
           {Object.keys(INDICATEURS_LISTE_PAR_CATEGORIE)
             .filter((e) => e !== "Les plus courants")
             .filter((categorie) => {
@@ -185,6 +185,9 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     marginBottom: 30,
   },
+  indicateursContainer: {
+    flex: 1,
+  },
   subtitle: {
     color: "#000",
     fontSize: 15,
@@ -227,7 +230,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  scrollContainer: {},
+  scrollContainer: { flexGrow: 1 },
   ValidationButtonText: {
     color: "#fff",
     fontWeight: "700",
@@ -351,6 +354,7 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 20,
     backgroundColor: "white",
+    display: "flex",
   },
   backButtonContainer: {
     alignSelf: "flex-start",
