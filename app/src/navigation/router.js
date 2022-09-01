@@ -12,7 +12,7 @@ import { AppState, Platform } from "react-native";
 import Notes from "../scenes/survey/notes-screen";
 import Onboarding from "../scenes/onboarding";
 import Supported from "../scenes/onboarding/onboardingSupported";
-import OnboardingSymptoms1 from "../scenes/onboarding/onboardingSymptoms/indicateurs.js";
+import OnboardingSymptoms1 from "../scenes/onboarding/onboardingSymptoms";
 import OnboardingSymptoms2 from "../scenes/onboarding/onboardingSymptoms/objectifs.js";
 import OnboardingSymptomsRecap from "../scenes/onboarding/onboardingSymptoms/recap.js";
 import OnboardingExplanationScreen0 from "../scenes/onboarding/onboardingExplanation/screen0";

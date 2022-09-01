@@ -4,23 +4,15 @@ import Text from "../../../components/MyText";
 import { colors } from "../../../utils/colors";
 import { displayedCategories } from "../../../utils/constants";
 import localStorage from "../../../utils/localStorage";
-import logEvents from "../../../services/logEvents";
 import BackButton from "../../../components/BackButton";
 import Button from "../../../components/Button";
-import SurveyMenu from "../../../../assets/svg/SurveyMenu";
 import { ONBOARDING_STEPS } from "../../../utils/constants";
-import {
-  INDICATEURS_LISTE_ONBOARDING,
-  INDICATEURS,
-  INDICATEURS_LISTE_PAR_CATEGORIE,
-} from "../../../utils/liste_indicateurs";
+import { INDICATEURS, INDICATEURS_LISTE_PAR_CATEGORIE } from "../../../utils/liste_indicateurs";
 import TextTag from "../../../components/TextTag";
-import CategorieElements from "./CategorieElements";
-import OnboardingElements from "./OnboardingElements";
-import AjoutIndicateurPerso from "./AjoutIndicateurPerso";
 
 const SymptomScreen = ({ navigation, route }) => {
   const [indicateursSelection, setIndicateursSelection] = useState({});
+  const [displayAlert, setDisplayAlert] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -40,6 +32,11 @@ const SymptomScreen = ({ navigation, route }) => {
 
   useEffect(() => {
     console.log(indicateursSelection);
+    const total =
+      Object.keys(indicateursSelection).filter((indicateur) => !!indicateursSelection[indicateur]).length ||
+      0;
+    console.log("✍️ ~ total", total);
+    setDisplayAlert(total > 10);
   }, [indicateursSelection]);
 
   const init = () => {
@@ -66,9 +63,6 @@ const SymptomScreen = ({ navigation, route }) => {
 
   const restart = () => navigation.navigate("onboarding-symptoms-1", { onboarding: true });
 
-  const countAll = () =>
-    Object.keys(indicateursSelection).filter((indicateur) => !!indicateursSelection[indicateur]).length || 0;
-
   return (
     <SafeAreaView style={styles.safe}>
       <View style={styles.buttonsContainer}>
@@ -84,6 +78,7 @@ const SymptomScreen = ({ navigation, route }) => {
         </View>
         <View style={styles.indicateursSelectionContainer}>
           {Object.keys(INDICATEURS_LISTE_PAR_CATEGORIE)
+            .filter((e) => e !== "Les plus courants")
             .filter((categorie) => {
               const list_indicateurs = INDICATEURS_LISTE_PAR_CATEGORIE[categorie];
               return Object.keys(indicateursSelection || {}).some(
@@ -115,7 +110,7 @@ const SymptomScreen = ({ navigation, route }) => {
               );
             })}
         </View>
-        {countAll() > 10 ? (
+        {displayAlert ? (
           <View style={styles.alertContainer}>
             <Text style={[styles.bold, styles.alertText, { marginBottom: 15 }]}>
               Vous suivez plus de 10 indicateurs
@@ -126,13 +121,13 @@ const SymptomScreen = ({ navigation, route }) => {
             </Text>
           </View>
         ) : null}
+        <View style={stylesButton.buttonWrapper}>
+          <Button title={`Cela me correspond`} onPress={nextOnboardingScreen} buttonStyle={{ minWidth: 0 }} />
+          <TouchableOpacity style={stylesButton.button} onPress={restart}>
+            <Text style={stylesButton.text}>Modifier mes indicateurs</Text>
+          </TouchableOpacity>
+        </View>
       </ScrollView>
-      <View style={stylesButton.buttonWrapper}>
-        <Button title={`Cela me correspond`} onPress={nextOnboardingScreen} buttonStyle={{ minWidth: 0 }} />
-        <TouchableOpacity style={stylesButton.button} onPress={restart}>
-          <Text style={stylesButton.text}>Modifier mes indicateurs</Text>
-        </TouchableOpacity>
-      </View>
     </SafeAreaView>
   );
 };
@@ -234,9 +229,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  scrollContainer: {
-    flex: 1,
-  },
+  scrollContainer: {},
   ValidationButtonText: {
     color: "#fff",
     fontWeight: "700",
