@@ -32,7 +32,7 @@ export default ({ navigation }) => {
           textStyle={stylesButton.text}
           buttonStyle={stylesButton.button}
           onPress={handleNoTreatment}
-          title="Je n'en ai pas / Je le ferais plus tard"
+          title="Je n'en ai pas / Je le ferai plus tard"
         />
       </View>
     </View>

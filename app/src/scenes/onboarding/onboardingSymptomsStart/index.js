@@ -186,8 +186,8 @@ const OnboardingSymptomStart = ({ navigation }) => {
             </View>
           )}
         </View>
-        <View style={styles.buttonWrapper}>
-          <Button onPress={handleNext} title="Suivant" />
+        <View style={stylesButton.buttonWrapper}>
+          <Button title={`Suivant`} onPress={handleNext} buttonStyle={{ minWidth: 0 }} />
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -241,6 +241,27 @@ const CheckBoxList = ({ list, symptomSelection, setSymptomSelection }) => {
     </>
   );
 };
+
+const stylesButton = StyleSheet.create({
+  buttonWrapper: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "stretch",
+    marginTop: 50,
+  },
+  buttonSecondary: {
+    minWidth: "70%",
+    minHeight: 45,
+    borderRadius: 45,
+    paddingHorizontal: 30,
+    paddingVertical: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 10,
+    borderColor: "#bbb",
+    borderWidth: 1,
+  },
+});
 
 const stylesA = StyleSheet.create({
   categorieContainer: {
