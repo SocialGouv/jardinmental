@@ -147,31 +147,34 @@ const Reminder = ({
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <BackButton onPress={navigation.goBack} />
-      <View style={styles.containerSvg}>
-        <Rappel width={100} height={100} />
-      </View>
-      <View style={styles.description}>
-        {reminder ? (
-          <>
-            <Text style={styles.title}>
-              Plus vous remplirez votre questionnaire, plus vous en apprendrez sur vous et votre santé mentale
+    <SafeAreaView style={styles.safe}>
+      <View style={styles.container}>
+        <BackButton onPress={navigation.goBack} />
+        <View style={styles.containerSvg}>
+          <Rappel width={100} height={100} />
+        </View>
+        <View style={styles.description}>
+          {reminder ? (
+            <>
+              <Text style={styles.title}>
+                Plus vous remplirez votre questionnaire, plus vous en apprendrez sur vous et votre santé
+                mentale
+              </Text>
+              <Text style={styles.body}>
+                Pour vous aider, je peux vous envoyer une notification de rappel à :
+              </Text>
+              <TouchableOpacity onPress={showReminderSetup}>
+                <Text style={styles.time}>{`${dayjs(reminder).format("HH:mm")}`}</Text>
+              </TouchableOpacity>
+            </>
+          ) : (
+            <Text style={styles.subtitle}>
+              Un rappel permet de remplir plus souvent l’application et obtenir des analyses plus pertinentes
             </Text>
-            <Text style={styles.body}>
-              Pour vous aider, je peux vous envoyer une notification de rappel à :
-            </Text>
-            <TouchableOpacity onPress={showReminderSetup}>
-              <Text style={styles.time}>{`${dayjs(reminder).format("HH:mm")}`}</Text>
-            </TouchableOpacity>
-          </>
-        ) : (
-          <Text style={styles.subtitle}>
-            Un rappel permet de remplir plus souvent l’application et obtenir des analyses plus pertinentes
-          </Text>
-        )}
+          )}
+        </View>
       </View>
-      <View style={styles.buttonWrapper}>
+      <View style={stylesButton.buttonWrapper}>
         <Button onPress={validateOnboarding} title="Suivant" />
         <TouchableOpacity style={stylesButton.button} onPress={DesactivateReminder}>
           <Text style={stylesButton.text}>Désactiver le rappel</Text>
@@ -184,10 +187,13 @@ const Reminder = ({
 
 const stylesButton = StyleSheet.create({
   buttonWrapper: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "stretch",
+    position: "absolute",
+    bottom: 10,
     paddingHorizontal: 10,
+    left: 0,
+    right: 0,
+    borderColor: "red",
+    borderWidth: 1,
   },
   button: {
     display: "flex",
@@ -202,7 +208,6 @@ const stylesButton = StyleSheet.create({
     borderColor: "#d1d5db",
     paddingHorizontal: 15,
     paddingVertical: 10,
-    marginBottom: 10,
   },
   text: {
     fontWeight: "bold",
@@ -253,13 +258,16 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     marginVertical: 10,
   },
+  safe: {
+    borderColor: "red",
+    borderWidth: 1,
+    flexGrow: 1,
+    backgroundColor: "#f9f9f9",
+  },
   container: {
+    paddingHorizontal: 20,
     justifyContent: "flex-start",
     alignItems: "center",
-    paddingBottom: 100,
-    backgroundColor: "#f9f9f9",
-    flexGrow: 1,
-    height: "100%",
   },
   bigTitle: {
     width: "80%",
@@ -279,7 +287,6 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
   description: {
-    width: "80%",
     marginTop: "10%",
     marginBottom: "20%",
   },

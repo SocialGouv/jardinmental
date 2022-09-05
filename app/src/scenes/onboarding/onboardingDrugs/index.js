@@ -231,7 +231,6 @@ const styles = StyleSheet.create({
     fontSize: 19,
   },
   scrollView: {
-    paddingHorizontal: 20,
     backgroundColor: "white",
     flex: 1,
   },
@@ -249,6 +248,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   title: {
+    paddingHorizontal: 20,
     color: colors.BLUE,
     fontSize: 22,
     fontWeight: "700",

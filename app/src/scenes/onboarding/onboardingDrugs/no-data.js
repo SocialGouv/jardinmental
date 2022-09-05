@@ -41,9 +41,13 @@ export default ({ navigation }) => {
 
 const stylesButton = StyleSheet.create({
   buttonWrapper: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "stretch",
+    borderColor: "red",
+    borderWidth: 1,
+    position: "absolute",
+    bottom: 10,
+    paddingHorizontal: 10,
+    left: 0,
+    right: 0,
   },
   button: {
     display: "flex",
@@ -58,7 +62,6 @@ const stylesButton = StyleSheet.create({
     borderColor: "#d1d5db",
     paddingHorizontal: 15,
     paddingVertical: 10,
-    marginBottom: 10,
   },
   text: {
     fontWeight: "bold",
@@ -69,6 +72,7 @@ const stylesButton = StyleSheet.create({
 
 const styles = StyleSheet.create({
   container: {
+    paddingHorizontal: 20,
     flex: 1,
   },
   button: { marginTop: "80%", height: 40, width: "100%", alignSelf: "center" },
