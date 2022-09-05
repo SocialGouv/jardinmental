@@ -29,7 +29,9 @@ const Explanation = ({ navigation }) => {
           <Text style={styles.title}>
             Je vais vous aider à choisir les indicateurs qui vous correspondent
           </Text>
-          <CheckBoard />
+          <View style={styles.preview}>
+            <CheckBoard />
+          </View>
           <Text style={styles.subtitle}>
             Ces indicateurs doivent refléter votre <Text style={styles.bold}>situation</Text>, pour vous
             permettre d’avoir une <Text style={styles.bold}>vision globale</Text> de votre état de santé
@@ -37,29 +39,60 @@ const Explanation = ({ navigation }) => {
           </Text>
         </View>
       </ScrollView>
-      <View style={styles.buttonWrapper}>
-        <Button title="D’accord, c’est parti !" onPress={handlePress} />
+      <View style={stylesButton.buttonWrapper}>
+        <Button title={`D’accord, c’est parti !`} onPress={handlePress} buttonStyle={{ minWidth: 0 }} />
       </View>
     </SafeAreaView>
   );
 };
 
+const stylesButton = StyleSheet.create({
+  buttonWrapper: {
+    position: "absolute",
+    bottom: 20,
+    paddingHorizontal: 10,
+    left: 0,
+    right: 0,
+  },
+  buttonSecondary: {
+    minWidth: "70%",
+    minHeight: 45,
+    borderRadius: 45,
+    paddingHorizontal: 30,
+    paddingVertical: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 10,
+    borderColor: "#bbb",
+    borderWidth: 1,
+  },
+});
+
 const styles = StyleSheet.create({
+  preview: {
+    display: "flex",
+    alignItems: "center",
+    width: "100%",
+  },
   buttonsContainer: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
   },
   scrollContainer: {
-    flex: 1,
+    flexGrow: 1,
+    marginBottom: 60,
   },
   safe: {
     flex: 1,
     backgroundColor: "white",
   },
   header: {
+    flex: 1,
+    display: "flex",
+    justifyContent: "space-between",
     marginBottom: 15,
-    alignItems: "center",
+    alignItems: "flex-start",
   },
   title: {
     color: colors.BLUE,

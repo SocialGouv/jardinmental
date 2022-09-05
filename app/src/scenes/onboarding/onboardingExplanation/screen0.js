@@ -29,12 +29,14 @@ const Explanation = ({ navigation }) => {
           <Text style={styles.title}>
             Vous allez évaluer quotidiennement des indicateurs de votre état de santé mentale
           </Text>
-          <Text style={styles.text}>Humeur</Text>
-          <AllEmoji width="100%" height="30" />
-          <Text style={styles.text}>Anxiété</Text>
-          <AllEmoji width="100%" height="30" />
-          <Text style={styles.text}>Fatigue</Text>
-          <AllEmoji width="100%" height="30" />
+          <View style={styles.preview}>
+            <Text style={styles.text}>Humeur</Text>
+            <AllEmoji width="100%" height="30" />
+            <Text style={styles.text}>Anxiété</Text>
+            <AllEmoji width="100%" height="30" />
+            <Text style={styles.text}>Fatigue</Text>
+            <AllEmoji width="100%" height="30" />
+          </View>
           <Text style={styles.subtitle}>
             Ces indicateurs peuvent être des <Text style={styles.bold}>émotions</Text>, des{" "}
             <Text style={styles.bold}>ressentis</Text>, des <Text style={styles.bold}>comportements</Text> ou
@@ -42,29 +44,59 @@ const Explanation = ({ navigation }) => {
           </Text>
         </View>
       </ScrollView>
-      <View style={styles.buttonWrapper}>
-        <Button title="Je comprends le principe" onPress={handlePress} />
+      <View style={stylesButton.buttonWrapper}>
+        <Button title={`Je comprends le principe`} onPress={handlePress} buttonStyle={{ minWidth: 0 }} />
       </View>
     </SafeAreaView>
   );
 };
 
+const stylesButton = StyleSheet.create({
+  buttonWrapper: {
+    position: "absolute",
+    bottom: 20,
+    paddingHorizontal: 10,
+    left: 0,
+    right: 0,
+  },
+  buttonSecondary: {
+    minWidth: "70%",
+    minHeight: 45,
+    borderRadius: 45,
+    paddingHorizontal: 30,
+    paddingVertical: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 10,
+    borderColor: "#bbb",
+    borderWidth: 1,
+  },
+});
+
 const styles = StyleSheet.create({
+  preview: {
+    width: "100%",
+    textAlign: "center",
+  },
   buttonsContainer: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
   },
   scrollContainer: {
-    flex: 1,
+    flexGrow: 1,
+    marginBottom: 60,
   },
   safe: {
     flex: 1,
     backgroundColor: "white",
   },
   header: {
-    marginBottom: 15,
-    alignItems: "center",
+    flex: 1,
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+    marginBottom: 20,
   },
   title: {
     color: colors.BLUE,
@@ -88,6 +120,7 @@ const styles = StyleSheet.create({
     lineHeight: 18,
     color: "#979797",
     paddingTop: 20,
+    textAlign: "center",
   },
   container: {
     backgroundColor: "white",

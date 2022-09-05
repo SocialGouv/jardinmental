@@ -104,8 +104,6 @@ export const Screen2 = ({ navigation, isCguChecked, setIsCguChecked }) => {
 
 const styles = StyleSheet.create({
   containerBottom: {
-    borderColor: "red",
-    borderWidth: 1,
     flex: 1,
     backgroundColor: "white",
     marginBottom: Dimensions.get("window").height > 700 ? 20 : 60,
@@ -113,16 +111,12 @@ const styles = StyleSheet.create({
     alignItems: "stretch",
   },
   containerBottomTitle: {
-    borderColor: "blue",
-    borderWidth: 1,
     flex: 1,
     backgroundColor: "white",
     justifyContent: "flex-start",
     alignItems: "stretch",
   },
   containerBottomText: {
-    borderColor: "blue",
-    borderWidth: 1,
     flex: 2,
     backgroundColor: "white",
     justifyContent: "flex-start",
