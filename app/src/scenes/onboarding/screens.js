@@ -13,37 +13,43 @@ export const defaultPadding = Math.min(Dimensions.get("window").width * 0.7, 30)
 export const screenWidth = Dimensions.get("window").width;
 export const screenHeight = Dimensions.get("window").height;
 export const menuHeight = 80;
-const size = screenHeight * (Dimensions.get("window").height > 700 ? 0.15 : 0.1);
+const size = screenWidth * 0.25;
 
 export const Screen0 = () => (
   <View style={styles.container}>
     <View style={styles.imageContainer}>
-      <WelcomeIcon height="60%" width="60%" style={styles.image} />
+      <WelcomeIcon height={size} width={size} style={styles.image} />
     </View>
     <View style={styles.containerBottom}>
-      <Text style={styles.presentationText}>
+      <View style={styles.containerBottomTitle}>
         <Text style={styles.h1}>Bienvenue !</Text>
-        {"\n\n"}
-        Tenez <Text style={styles.bold}>chaque jour</Text> un journal de suivi des{" "}
-        <Text style={styles.bold}>indicateurs</Text> de votre état de{" "}
-        <Text style={styles.bold}>santé mentale</Text>
-      </Text>
+      </View>
+      <View style={styles.containerBottomText}>
+        <Text style={styles.presentationText}>
+          Tenez <Text style={styles.bold}>chaque jour</Text> un journal de suivi des{" "}
+          <Text style={styles.bold}>indicateurs</Text> de votre état de{" "}
+          <Text style={styles.bold}>santé mentale</Text>
+        </Text>
+      </View>
     </View>
   </View>
 );
 export const Screen1 = () => (
   <View style={styles.container}>
     <View style={styles.imageContainer}>
-      <IllustrationOnboarding height="60%" width="60%" style={[styles.image]} />
+      <IllustrationOnboarding height={size} width={size} style={[styles.image]} />
     </View>
     <View style={styles.containerBottom}>
-      <Text style={styles.presentationText}>
+      <View style={styles.containerBottomTitle}>
         <Text style={styles.h1}>Apprenez à mieux vous connaître</Text>
-        {"\n\n"}
-        En montrant vos <Text style={styles.bold}>analyses</Text> à votre{" "}
-        <Text style={styles.bold}>professionnel</Text> de santé qui pourra vous{" "}
-        <Text style={styles.bold}>accompagner</Text>
-      </Text>
+      </View>
+      <View style={styles.containerBottomText}>
+        <Text style={styles.presentationText}>
+          En montrant vos <Text style={styles.bold}>analyses</Text> à votre{" "}
+          <Text style={styles.bold}>professionnel</Text> de santé qui pourra vous{" "}
+          <Text style={styles.bold}>accompagner</Text>
+        </Text>
+      </View>
     </View>
   </View>
 );
@@ -56,7 +62,7 @@ export const Screen2 = ({ navigation, isCguChecked, setIsCguChecked }) => {
     <>
       <View style={styles.container}>
         <View style={styles.imageContainer}>
-          <Support height="60%" width="60%" style={[styles.image]} />
+          <Support height={size} width={size} style={[styles.image]} />
         </View>
         <View style={styles.containerBottom}>
           <Text style={styles.presentationText}>
@@ -96,13 +102,29 @@ export const Screen2 = ({ navigation, isCguChecked, setIsCguChecked }) => {
   );
 };
 
-const stylesButtons = StyleSheet.create({});
-
 const styles = StyleSheet.create({
   containerBottom: {
+    borderColor: "red",
+    borderWidth: 1,
     flex: 1,
     backgroundColor: "white",
     marginBottom: Dimensions.get("window").height > 700 ? 20 : 60,
+    justifyContent: "flex-start",
+    alignItems: "stretch",
+  },
+  containerBottomTitle: {
+    borderColor: "blue",
+    borderWidth: 1,
+    flex: 1,
+    backgroundColor: "white",
+    justifyContent: "flex-start",
+    alignItems: "stretch",
+  },
+  containerBottomText: {
+    borderColor: "blue",
+    borderWidth: 1,
+    flex: 2,
+    backgroundColor: "white",
     justifyContent: "flex-start",
     alignItems: "stretch",
   },
@@ -130,7 +152,7 @@ const styles = StyleSheet.create({
   },
   presentationText: {
     textAlign: "center",
-    padding: 20,
+    paddingHorizontal: 20,
     fontSize: Dimensions.get("window").height > 700 ? 20 : 17,
     color: "#0A215C",
     display: "flex",
