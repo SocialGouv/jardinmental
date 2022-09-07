@@ -41,10 +41,8 @@ export default ({ navigation }) => {
 
 const stylesButton = StyleSheet.create({
   buttonWrapper: {
-    borderColor: "red",
-    borderWidth: 1,
     position: "absolute",
-    bottom: 10,
+    bottom: 0,
     paddingHorizontal: 10,
     left: 0,
     right: 0,

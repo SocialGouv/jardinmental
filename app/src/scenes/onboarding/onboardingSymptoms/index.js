@@ -21,6 +21,7 @@ import AjoutIndicateurPerso from "./AjoutIndicateurPerso";
 
 const SymptomScreen = ({ navigation, route }) => {
   const [indicateursSelection, setIndicateursSelection] = useState({});
+  const [customSymptomsAdded, setCustomSymptomsAdded] = useState(0);
 
   useEffect(() => {
     (async () => {
@@ -72,7 +73,7 @@ const SymptomScreen = ({ navigation, route }) => {
   };
 
   const countIndicateurs = () =>
-    Object.keys(indicateursSelection)
+    (Object.keys(indicateursSelection)
       .filter((indicateur) => !!indicateursSelection[indicateur])
       .filter(
         (indicateur) =>
@@ -80,7 +81,7 @@ const SymptomScreen = ({ navigation, route }) => {
           INDICATEURS_LISTE_PAR_CATEGORIE["Manifestations physiques"].includes(indicateur) ||
           INDICATEURS_LISTE_PAR_CATEGORIE["Pensées"].includes(indicateur) ||
           INDICATEURS_LISTE_PAR_CATEGORIE.Comportements.includes(indicateur)
-      ).length || 0;
+      ).length || 0) + customSymptomsAdded;
 
   return (
     <SafeAreaView style={styles.safe}>
@@ -126,7 +127,10 @@ const SymptomScreen = ({ navigation, route }) => {
                   options={indicateurs.map((e) => ({ id: e, label: INDICATEURS[e] }))}
                   onClick={({ id, value }) => setToggleIndicateur({ indicateur: id, valeur: value })}
                   indicateursSelection={indicateursSelection}
-                  handleAddNewSymptom={handleAddNewSymptom}
+                  handleAddNewSymptom={(e) => {
+                    handleAddNewSymptom(e);
+                    setCustomSymptomsAdded((p) => p + 1);
+                  }}
                   enableAddNewElement
                 />
               );

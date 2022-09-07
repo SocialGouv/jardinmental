@@ -16,7 +16,7 @@ const OnboardingExplanation = ({ navigation }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handleNext = async () => {
-    currentIndex < 3 ? setCurrentIndex(currentIndex + 1) : setCurrentIndex(3)
+    currentIndex < 3 ? setCurrentIndex(currentIndex + 1) : setCurrentIndex(3);
     logEvents.logOnboardingExplainNext(currentIndex);
   };
   const handleStart = async () => {
@@ -35,10 +35,11 @@ const OnboardingExplanation = ({ navigation }) => {
         {currentIndex === 3 && <ScreenTriggers />}
       </ScrollView>
       <View style={styles.buttonWrapper}>
-        {
-          currentIndex === 3 ? <Button style={styles.validationButton} title="Je démarre" onPress={handleStart} />
-            : <Button style={styles.validationButton} title="Suivant" onPress={handleNext} />
-        }
+        {currentIndex === 3 ? (
+          <Button style={styles.validationButton} title="Je démarre" onPress={handleStart} />
+        ) : (
+          <Button style={styles.validationButton} title="Suivant" onPress={handleNext} />
+        )}
       </View>
     </SafeAreaView>
   );
@@ -47,7 +48,8 @@ const OnboardingExplanation = ({ navigation }) => {
 const ScreenStats = () => (
   <View style={styles.container}>
     <Text style={styles.presentationText}>
-      Les <Text style={styles.bold}>statistiques</Text> vous donneront un bilan de chaque indicateur sur la période de votre choix, ainsi que votre observance de vos prises de traitement
+      Les <Text style={styles.bold}>statistiques</Text> vous donneront un bilan de chaque indicateur sur la
+      période de votre choix, ainsi que votre observance de vos prises de traitement
     </Text>
     <PhoneViewStats style={styles.image} />
   </View>
@@ -56,7 +58,8 @@ const ScreenStats = () => (
 const ScreenFriezes = () => (
   <View style={styles.container}>
     <Text style={styles.presentationText}>
-      Les <Text style={styles.bold}>frises</Text> vous permettront de suivre l’évolution de vos indicateurs, de comprendre les corrélations entre eux, ainsi que les effets de votre traitement
+      Les <Text style={styles.bold}>frises</Text> vous permettront de suivre l’évolution de vos indicateurs,
+      de comprendre les corrélations entre eux, ainsi que les effets de votre traitement
     </Text>
     <PhoneViewFriezes style={styles.image} />
   </View>
@@ -64,7 +67,8 @@ const ScreenFriezes = () => (
 const ScreenCurves = () => (
   <View style={styles.container}>
     <Text style={styles.presentationText}>
-      Les <Text style={styles.bold}>courbes</Text> vous permettront de suivre votre évolution et de retrouver rapidement le détail de chaque journée en cliquant sur le point correspondant.
+      Les <Text style={styles.bold}>courbes</Text> vous permettront de suivre votre évolution et de retrouver
+      rapidement le détail de chaque journée en cliquant sur le point correspondant.
     </Text>
     <PhoneViewCurves style={styles.image} />
   </View>
@@ -72,7 +76,9 @@ const ScreenCurves = () => (
 const ScreenTriggers = () => (
   <View style={styles.container}>
     <Text style={styles.presentationText}>
-      Les <Text style={styles.bold}>déclencheurs</Text> vous aideront à comprendre ce qui influe sur votre état de santé mentale, en retrouvant vos notes personnelles liées à l’indicateur et son intensité de votre choix.
+      Les <Text style={styles.bold}>déclencheurs</Text> vous aideront à comprendre ce qui influe sur votre
+      état de santé mentale, en retrouvant vos notes personnelles liées à l’indicateur et son intensité de
+      votre choix.
     </Text>
     <PhoneViewTriggers style={styles.image} />
   </View>
@@ -105,7 +111,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     padding: 20,
     display: "flex",
-    alignItems: "center"
+    alignItems: "center",
   },
   buttonWrapper: {
     display: "flex",
@@ -117,13 +123,13 @@ const styles = StyleSheet.create({
   },
   bold: {
     fontWeight: "700",
-    color: colors.BLUE
+    color: colors.BLUE,
   },
   presentationText: {
     fontSize: 15,
     fontWeight: "400",
     color: colors.BLUE,
-  }
+  },
 });
 
 export default OnboardingExplanation;

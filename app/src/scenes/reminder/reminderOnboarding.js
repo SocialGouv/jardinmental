@@ -192,8 +192,6 @@ const stylesButton = StyleSheet.create({
     paddingHorizontal: 10,
     left: 0,
     right: 0,
-    borderColor: "red",
-    borderWidth: 1,
   },
   button: {
     display: "flex",
@@ -259,8 +257,6 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   safe: {
-    borderColor: "red",
-    borderWidth: 1,
     flexGrow: 1,
     backgroundColor: "#f9f9f9",
   },
