@@ -65,36 +65,39 @@ export const Screen2 = ({ navigation, isCguChecked, setIsCguChecked }) => {
           <Support height={size} width={size} style={[styles.image]} />
         </View>
         <View style={styles.containerBottom}>
-          <Text style={styles.presentationText}>
+          <View style={styles.containerBottomTitle}>
             <Text style={styles.h1}>En toute confiance</Text>
-            {"\n\n"}
-            C’est <Text style={styles.bold}>gratuit, anonyme</Text> et sans{" "}
-            <Text style={styles.bold}>aucune récupération</Text> de vos saisies personnelles
-          </Text>
-          <View style={styles.cgu}>
-            <CheckBox
-              animationDuration={0.2}
-              tintColor="#1FC6D5"
-              tintColors={{ true: "#1FC6D5", false: "grey" }}
-              boxType="square"
-              style={styles.checkbox}
-              value={isCguChecked}
-              onValueChange={(newValue) => setIsCguChecked(newValue)}
-            />
-            <Text style={styles.textCgu}>
-              En cochant cette case, vous acceptez nos{" "}
-              <Text onPress={onCguClick} style={styles.underlined}>
-                Conditions Générales d’Utilisation
-              </Text>
-              , notre{" "}
-              <Text onPress={onPrivacyClick} style={styles.underlined}>
-                Politique de Confidentialité
-              </Text>{" "}
-              et nos{" "}
-              <Text onPress={onLegalMentionsClick} style={styles.underlined}>
-                Mentions Légales
-              </Text>
+          </View>
+          <View style={styles.containerBottomText}>
+            <Text style={styles.presentationText}>
+              C’est <Text style={styles.bold}>gratuit, anonyme</Text> et sans{" "}
+              <Text style={styles.bold}>aucune récupération</Text> de vos saisies personnelles
             </Text>
+            <View style={styles.cgu}>
+              <CheckBox
+                animationDuration={0.2}
+                tintColor="#1FC6D5"
+                tintColors={{ true: "#1FC6D5", false: "grey" }}
+                boxType="square"
+                style={styles.checkbox}
+                value={isCguChecked}
+                onValueChange={(newValue) => setIsCguChecked(newValue)}
+              />
+              <Text style={styles.textCgu}>
+                En cochant cette case, vous acceptez nos{" "}
+                <Text onPress={onCguClick} style={styles.underlined}>
+                  Conditions Générales d’Utilisation
+                </Text>
+                , notre{" "}
+                <Text onPress={onPrivacyClick} style={styles.underlined}>
+                  Politique de Confidentialité
+                </Text>{" "}
+                et nos{" "}
+                <Text onPress={onLegalMentionsClick} style={styles.underlined}>
+                  Mentions Légales
+                </Text>
+              </Text>
+            </View>
           </View>
         </View>
       </View>
@@ -150,6 +153,7 @@ const styles = StyleSheet.create({
     fontSize: Dimensions.get("window").height > 700 ? 20 : 17,
     color: "#0A215C",
     display: "flex",
+    flex: 1,
   },
   imageContainer: {
     flex: 1,
