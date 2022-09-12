@@ -70,7 +70,7 @@ const Onboarding = ({ navigation }) => {
             </>
           ) : (
             <View style={styles.buttonWrapper}>
-              <Button title="Terminer" onPress={navigation.goBack} />
+              <Button buttonStyle={styles.buttonStyle} title="Terminer" onPress={navigation.goBack} />
             </View>
           )
         ) : (

@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
   containerBottom: {
     flex: 1,
     backgroundColor: "white",
-    marginBottom: Dimensions.get("window").height > 700 ? 20 : 60,
+    marginBottom: 60,
     justifyContent: "flex-start",
     alignItems: "stretch",
   },
