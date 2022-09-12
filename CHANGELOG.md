@@ -1,3 +1,10 @@
+## [1.35.7](https://github.com/SocialGouv/jardinmental/compare/v1.35.6...v1.35.7) (2022-09-12)
+
+
+### Bug Fixes
+
+* **deps:** update dependency react-native to v0.68.3 ([86a72f4](https://github.com/SocialGouv/jardinmental/commit/86a72f4a626452f09a797128048b77c5866e48e0))
+
 ## [1.35.6](https://github.com/SocialGouv/jardinmental/compare/v1.35.5...v1.35.6) (2022-08-29)
 
 
