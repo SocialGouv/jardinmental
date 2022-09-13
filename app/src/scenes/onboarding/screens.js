@@ -4,7 +4,8 @@ import CheckBox from "@react-native-community/checkbox";
 
 import WelcomeIcon from "../../../assets/svg/WelcomeIcon";
 import Support from "../../../assets/svg/Support";
-import IllustrationOnboarding from "../../../assets/svg/IllustrationOnboarding";
+import IllustrationOnboarding21Svg from "../../../assets/svg/IllustrationOnboarding2.1.svg";
+import IllustrationOnboarding22Svg from "../../../assets/svg/IllustrationOnboarding2.2.svg";
 
 import { StyleSheet, View, Dimensions } from "react-native";
 export const buttonHeight = 43;
@@ -36,8 +37,9 @@ export const Screen0 = () => (
 );
 export const Screen1 = () => (
   <View style={styles.container}>
-    <View style={styles.imageContainer}>
-      <IllustrationOnboarding height={size} width={size} style={[styles.image]} />
+    <View style={styles.multiImageContainer}>
+      <IllustrationOnboarding21Svg style={styles.image} height={size} />
+      <IllustrationOnboarding22Svg style={[styles.image, { marginTop: -40 }]} height={size} width={size} />
     </View>
     <View style={styles.containerBottom}>
       <View style={styles.containerBottomTitle}>
@@ -159,6 +161,12 @@ const styles = StyleSheet.create({
     flex: 1,
     display: "flex",
     flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  multiImageContainer: {
+    flex: 1,
+    display: "flex",
     justifyContent: "center",
     alignItems: "center",
   },
