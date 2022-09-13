@@ -160,7 +160,7 @@ const stylesButton = StyleSheet.create({
   buttonWrapper: {
     position: "absolute",
     bottom: 20,
-    paddingHorizontal: 10,
+    paddingHorizontal: 20,
     left: 0,
     right: 0,
   },

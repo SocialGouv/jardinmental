@@ -135,7 +135,6 @@ const stylesButton = StyleSheet.create({
     display: "flex",
     justifyContent: "center",
     alignItems: "stretch",
-    paddingHorizontal: 10,
   },
   button: {
     display: "flex",

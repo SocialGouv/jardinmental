@@ -116,7 +116,7 @@ const OnboardingSymptomStart = ({ navigation }) => {
           {isMoodTroubleEnable && (
             <View>
               <Text style={styles.description}>
-                Suivre les variations de votre humeur au cours de la journée avec :
+                Renseignez les variations de votre humeur au cours de la journée avec :
               </Text>
               <CheckBoxList
                 list={INDICATEURS_LISTE_ONBOARDING_HUMEUR}

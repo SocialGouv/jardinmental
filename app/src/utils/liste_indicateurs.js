@@ -18,7 +18,8 @@ export const INDICATEURS_LISTE_ONBOARDING_HUMEUR = [
 export const INDICATEURS_LISTE_ONBOARDING_SOMMEIL = [
   "Durée sommeil",
   "Facilité endormissement",
-  "Se coucher tôt",
+  // "Se coucher tôt",
+  "Energie",
   "Réveils nocturnes",
 ];
 
@@ -165,6 +166,7 @@ export const INDICATEURS_LISTE_PAR_CATEGORIE = {
     "Durée sommeil",
     "Facilité endormissement",
     "Se coucher tôt",
+    "Energie",
     "Anxiété",
     "Je suis fier(e) de moi",
     "Fatigue",
@@ -181,7 +183,6 @@ export const INDICATEURS_LISTE_PAR_CATEGORIE = {
     "Honte",
     "Motivation",
     "Plaisir",
-    "Energie",
     "Stress",
     "Estime de soi",
     "Irritabilité",
@@ -200,6 +201,10 @@ export const INDICATEURS_LISTE_PAR_CATEGORIE = {
   ],
   "Manifestations physiques": [
     "Fatigue",
+    "Energie",
+    "Qualité sommeil",
+    "Facilité endormissement",
+    "Réveils nocturnes",
     "Mal au ventre",
     "Menstruations",
     "Appétit",
@@ -264,9 +269,7 @@ export const INDICATEURS_LISTE_PAR_CATEGORIE = {
     'Faire un achat "plaisir" pour soi',
   ],
   "Prendre soin de sa santé": [
-    "Qualité sommeil",
     "Durée sommeil",
-    "Facilité endormissement",
     "Se coucher tôt",
     "Horaires réguliers de sommeil",
     "30 min d’activité physique",
