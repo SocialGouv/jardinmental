@@ -28,12 +28,9 @@ export default ({ navigation }) => {
           }}
           title="Je renseigne mon traitement"
         />
-        <Button
-          textStyle={stylesButton.text}
-          buttonStyle={stylesButton.button}
-          onPress={handleNoTreatment}
-          title="Je n'en ai pas / Je le ferai plus tard"
-        />
+        <TouchableOpacity style={stylesButton.button} onPress={handleNoTreatment}>
+          <Text style={stylesButton.text}>Je n'en ai pas / Je le ferai plus tard</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -42,8 +39,8 @@ export default ({ navigation }) => {
 const stylesButton = StyleSheet.create({
   buttonWrapper: {
     position: "absolute",
-    bottom: 0,
-    paddingHorizontal: 10,
+    bottom: 10,
+    paddingHorizontal: 20,
     left: 0,
     right: 0,
   },
@@ -86,7 +83,7 @@ const styles = StyleSheet.create({
   subtitle: {
     flex: 1,
     color: colors.DARK_BLUE,
-    fontSize: 18,
+    fontSize: 15,
     fontWeight: "400",
   },
   link: {

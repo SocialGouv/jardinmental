@@ -54,7 +54,7 @@ const stylesButton = StyleSheet.create({
     display: "flex",
     justifyContent: "center",
     alignItems: "stretch",
-    paddingHorizontal: 10,
+    paddingHorizontal: 20,
   },
   button: {
     display: "flex",
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    padding: 20,
+    paddingHorizontal: 20,
     backgroundColor: "white",
   },
   defaultContainer: {
@@ -136,17 +136,13 @@ const styles = StyleSheet.create({
     display: "flex",
   },
   scrollContainer: {
-    flex: 1,
-    paddingBottom: 80,
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "stretch",
+    flexGrow: 1,
   },
   title: {
     textAlign: "left",
-    fontWeight: "bold",
+    fontWeight: "700",
     color: colors.BLUE,
-    fontSize: 28,
+    fontSize: 18,
   },
   textCenter: {
     textAlign: "center",

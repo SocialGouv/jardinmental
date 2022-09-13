@@ -13,7 +13,6 @@ import logEvents from "../../services/logEvents";
 import BackButton from "../../components/BackButton";
 import Rappel from "../onboarding/assets/Rappel";
 import Button from "../../components/Button";
-import OutlineButton from "../../components/OutlineButton";
 
 const ReminderStorageKey = "@Reminder";
 
@@ -59,7 +58,7 @@ const Reminder = ({
   useEffect(() => {
     getReminder(false);
     notificationListener.current = NotificationService.listen(handleNotification, "reminder");
-    if (route?.params?.onboarding) localStorage.setOnboardingStep(ONBOARDING_STEPS.STEP_REMINDER);
+    localStorage.setOnboardingStep(ONBOARDING_STEPS.STEP_REMINDER);
     // return () => NotificationService.remove(notificationListener.current);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -156,16 +155,20 @@ const Reminder = ({
         <View style={styles.description}>
           {reminder ? (
             <>
-              <Text style={styles.title}>
-                Plus vous remplirez votre questionnaire, plus vous en apprendrez sur vous et votre santé
-                mentale
-              </Text>
-              <Text style={styles.body}>
-                Pour vous aider, je peux vous envoyer une notification de rappel à :
-              </Text>
-              <TouchableOpacity onPress={showReminderSetup}>
-                <Text style={styles.time}>{`${dayjs(reminder).format("HH:mm")}`}</Text>
-              </TouchableOpacity>
+              <View style={styles.titleContainer}>
+                <Text style={styles.title}>
+                  Plus vous remplirez votre questionnaire, plus vous en apprendrez sur vous et votre santé
+                  mentale
+                </Text>
+              </View>
+              <View style={styles.bodyContainer}>
+                <Text style={styles.body}>
+                  Pour vous aider, je peux vous envoyer une notification de rappel à :
+                </Text>
+                <TouchableOpacity onPress={showReminderSetup}>
+                  <Text style={styles.time}>{`${dayjs(reminder).format("HH:mm")}`}</Text>
+                </TouchableOpacity>
+              </View>
             </>
           ) : (
             <Text style={styles.subtitle}>
@@ -187,11 +190,8 @@ const Reminder = ({
 
 const stylesButton = StyleSheet.create({
   buttonWrapper: {
-    position: "absolute",
-    bottom: 10,
-    paddingHorizontal: 10,
-    left: 0,
-    right: 0,
+    paddingHorizontal: 20,
+    paddingBottom: 10,
   },
   button: {
     display: "flex",
@@ -223,7 +223,6 @@ const styles = StyleSheet.create({
     bottom: 0,
     padding: 20,
   },
-
   containerSvg: {
     alignItems: "center",
     marginVertical: 20,
@@ -259,11 +258,12 @@ const styles = StyleSheet.create({
   safe: {
     flexGrow: 1,
     backgroundColor: "#f9f9f9",
+    display: "flex",
   },
   container: {
+    flex: 1,
     paddingHorizontal: 20,
     justifyContent: "flex-start",
-    alignItems: "center",
   },
   bigTitle: {
     width: "80%",
@@ -283,8 +283,11 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
   description: {
-    marginTop: "10%",
-    marginBottom: "20%",
+    display: "flex",
+    flex: 1,
+  },
+  titleContainer: {
+    flex: 1,
   },
   title: {
     fontSize: 18,
@@ -336,11 +339,12 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     fontSize: 16,
   },
+  bodyContainer: { flex: 2 },
   body: {
     color: colors.DARK_BLUE,
     fontSize: 15,
     marginVertical: 10,
-    fontWeight: "300",
+    fontWeight: "400",
     textAlign: "left",
   },
   link: {

@@ -34,7 +34,7 @@ const OnboardingExplanation = ({ navigation }) => {
         {currentIndex === 2 && <ScreenCurves />}
         {currentIndex === 3 && <ScreenTriggers />}
       </ScrollView>
-      <View style={styles.buttonWrapper}>
+      <View style={stylesButton.buttonWrapper}>
         {currentIndex === 3 ? (
           <Button style={styles.validationButton} title="Je démarre" onPress={handleStart} />
         ) : (
@@ -83,6 +83,35 @@ const ScreenTriggers = () => (
     <PhoneViewTriggers style={styles.image} />
   </View>
 );
+
+const stylesButton = StyleSheet.create({
+  buttonWrapper: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "stretch",
+    paddingHorizontal: 20,
+  },
+  button: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#FFF",
+    minWidth: "70%",
+    minHeight: 45,
+    borderRadius: 45,
+    borderWidth: 1,
+    borderColor: "#d1d5db",
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    marginBottom: 10,
+  },
+  text: {
+    fontWeight: "bold",
+    fontSize: 15,
+    color: "#1f2937",
+  },
+});
 
 const styles = StyleSheet.create({
   scrollContainer: { flex: 1 },

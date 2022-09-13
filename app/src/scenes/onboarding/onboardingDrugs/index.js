@@ -146,7 +146,7 @@ const Drugs = ({ navigation, route }) => {
       <BackButton onPress={navigation.goBack} />
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContainer}>
         <View style={styles.containerImage}>
-          <Logo style={styles.image} width={80} height={80} />
+          <Logo style={styles.image} width={100} height={100} />
         </View>
         <Text style={styles.title}>
           {medicalTreatment?.length
@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
     width: "100%",
     display: "flex",
     alignItems: "center",
-    marginBottom: 40,
+    marginVertical: 20,
   },
   buttonWrapper: {
     marginTop: "auto",
@@ -250,7 +250,7 @@ const styles = StyleSheet.create({
   title: {
     paddingHorizontal: 20,
     color: colors.BLUE,
-    fontSize: 22,
+    fontSize: 18,
     fontWeight: "700",
     marginBottom: 20,
   },
