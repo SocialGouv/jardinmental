@@ -134,14 +134,10 @@ const Reminder = ({
       date.setHours(20, 0, 0, 0);
       setReminderRequest(date);
     }
-
-    await localStorage.setOnboardingDone(true);
-    // await localStorage.setOnboardingStep(null);
     navigation.navigate("onboarding-drugs");
   };
   const DesactivateReminder = async () => {
     await localStorage.setOnboardingDone(true);
-    // await localStorage.setOnboardingStep(null);
     navigation.navigate("onboarding-drugs");
   };
 

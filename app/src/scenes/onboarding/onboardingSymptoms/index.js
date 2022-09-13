@@ -18,6 +18,7 @@ import TextTag from "../../../components/TextTag";
 import CategorieElements from "./CategorieElements";
 import OnboardingElements from "./OnboardingElements";
 import AjoutIndicateurPerso from "./AjoutIndicateurPerso";
+import { useFocusEffect } from "@react-navigation/native";
 
 const SymptomScreen = ({ navigation, route }) => {
   const [indicateursSelection, setIndicateursSelection] = useState({});
@@ -29,15 +30,17 @@ const SymptomScreen = ({ navigation, route }) => {
     })();
   }, []);
 
-  useEffect(() => {
-    (async () => {
-      const localStorageIndicateurs = await localStorage.getSymptoms();
-      if (!localStorageIndicateurs || !Object.keys(localStorageIndicateurs).length) {
-        return init();
-      }
-      setIndicateursSelection(localStorageIndicateurs);
-    })();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      (async () => {
+        const localStorageIndicateurs = await localStorage.getSymptoms();
+        if (!localStorageIndicateurs || !Object.keys(localStorageIndicateurs).length) {
+          return init();
+        }
+        setIndicateursSelection(localStorageIndicateurs);
+      })();
+    }, [])
+  );
 
   useEffect(() => {
     console.log(indicateursSelection);

@@ -1,16 +1,11 @@
-import React, { useState, useEffect, useRef } from "react";
-import { StyleSheet, SafeAreaView, View, ScrollView, Image, Dimensions } from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, SafeAreaView, View, ScrollView, Image } from "react-native";
 
 import Text from "../../components/MyText";
 import { colors } from "../../utils/colors";
 import logEvents from "../../services/logEvents";
 import Button from "../../components/Button";
 import BackButton from "../../components/BackButton";
-
-import PhoneViewTriggers from "../../../assets/svg/PhoneViewTriggers";
-import PhoneViewCurves from "../../../assets/svg/PhoneViewCurves";
-import PhoneViewStats from "../../../assets/svg/PhoneViewStats";
-import PhoneViewFriezes from "../../../assets/svg/PhoneViewFriezes";
 
 const OnboardingExplanation = ({ navigation }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -51,7 +46,7 @@ const ScreenStats = () => (
       Les <Text style={styles.bold}>statistiques</Text> vous donneront un bilan de chaque indicateur sur la
       période de votre choix, ainsi que votre observance de vos prises de traitement
     </Text>
-    <PhoneViewStats style={styles.image} />
+    <Image style={styles.image} source={require("../../../assets/imgs/onboarding/screen_stats_1.png")} />
   </View>
 );
 
@@ -61,7 +56,7 @@ const ScreenFriezes = () => (
       Les <Text style={styles.bold}>frises</Text> vous permettront de suivre l’évolution de vos indicateurs,
       de comprendre les corrélations entre eux, ainsi que les effets de votre traitement
     </Text>
-    <PhoneViewFriezes style={styles.image} />
+    <Image style={styles.image} source={require("../../../assets/imgs/onboarding/screen_frises.png")} />
   </View>
 );
 const ScreenCurves = () => (
@@ -70,7 +65,7 @@ const ScreenCurves = () => (
       Les <Text style={styles.bold}>courbes</Text> vous permettront de suivre votre évolution et de retrouver
       rapidement le détail de chaque journée en cliquant sur le point correspondant.
     </Text>
-    <PhoneViewCurves style={styles.image} />
+    <Image style={styles.image} source={require("../../../assets/imgs/onboarding/screen_courbes.png")} />
   </View>
 );
 const ScreenTriggers = () => (
@@ -80,7 +75,7 @@ const ScreenTriggers = () => (
       état de santé mentale, en retrouvant vos notes personnelles liées à l’indicateur et son intensité de
       votre choix.
     </Text>
-    <PhoneViewTriggers style={styles.image} />
+    <Image style={styles.image} source={require("../../../assets/imgs/onboarding/screen_declencheurs.png")} />
   </View>
 );
 
@@ -126,19 +121,19 @@ const styles = StyleSheet.create({
   },
   image: {
     marginTop: 20,
-    height: Dimensions.get("window").height * 0.6, // Not working
+    height: 280,
     resizeMode: "contain",
   },
   title: {
     color: colors.BLUE,
     fontSize: 18,
     padding: 20,
-    fontWeight: "500",
+    fontWeight: "700",
     textAlign: "center",
   },
   container: {
     backgroundColor: "white",
-    padding: 20,
+    paddingHorizontal: 20,
     display: "flex",
     alignItems: "center",
   },

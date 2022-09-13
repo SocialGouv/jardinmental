@@ -5,6 +5,7 @@ import Button from "../../components/Button";
 import { colors } from "../../utils/colors";
 import Felicitation from "../../../assets/svg/felicitation";
 import BackButton from "../../components/BackButton";
+import localStorage from "../../utils/localStorage";
 
 const Onboarding = ({ navigation }) => {
   return (
@@ -31,7 +32,8 @@ const Onboarding = ({ navigation }) => {
       <View style={stylesButton.buttonWrapper}>
         <Button
           textStyle={{ fontSize: 16, fontWeight: "bold" }}
-          onPress={() => {
+          onPress={async () => {
+            await localStorage.setOnboardingDone(true);
             navigation.navigate("tabs", { onboarding: true });
           }}
           title="Je démarre"

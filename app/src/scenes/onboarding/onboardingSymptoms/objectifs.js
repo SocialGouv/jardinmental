@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet, ScrollView, View, SafeAreaView } from "react-native";
 import Text from "../../../components/MyText";
 import { colors } from "../../../utils/colors";
-import { displayedCategories } from "../../../utils/constants";
 import localStorage from "../../../utils/localStorage";
 import logEvents from "../../../services/logEvents";
 import BackButton from "../../../components/BackButton";
@@ -18,6 +17,7 @@ import TextTag from "../../../components/TextTag";
 import CategorieElements from "./CategorieElements";
 import OnboardingElements from "./OnboardingElements";
 import AjoutIndicateurPerso from "./AjoutIndicateurPerso";
+import { useFocusEffect } from "@react-navigation/native";
 
 const SymptomScreen = ({ navigation, route }) => {
   const [indicateursSelection, setIndicateursSelection] = useState({});
@@ -29,16 +29,17 @@ const SymptomScreen = ({ navigation, route }) => {
     })();
   }, []);
 
-  useEffect(() => {
-    (async () => {
-      const localStorageIndicateurs = await localStorage.getSymptoms();
-      if (!localStorageIndicateurs || !Object.keys(localStorageIndicateurs).length) {
-        return init();
-      }
-      setIndicateursSelection(localStorageIndicateurs);
-    })();
-  }, []);
-
+  useFocusEffect(
+    React.useCallback(() => {
+      (async () => {
+        const localStorageIndicateurs = await localStorage.getSymptoms();
+        if (!localStorageIndicateurs || !Object.keys(localStorageIndicateurs).length) {
+          return init();
+        }
+        setIndicateursSelection(localStorageIndicateurs);
+      })();
+    }, [])
+  );
   useEffect(() => {
     console.log(indicateursSelection);
   }, [indicateursSelection]);
