@@ -152,7 +152,7 @@ const SymptomScreen = ({ navigation, route }) => {
           title={`Continuer avec ${countIndicateurs()} indicateur${countIndicateurs() > 1 ? "s" : ""}`}
           onPress={nextOnboardingScreen}
           disabled={getSelectionVide()}
-          buttonStyle={{ minWidth: 0 }}
+          buttonStyle={{ minWidth: 0, paddingHorizontal: 10 }}
         />
       </View>
     </SafeAreaView>
