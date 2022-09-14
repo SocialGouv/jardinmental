@@ -175,6 +175,9 @@ export const INDICATEURS_LISTE_PAR_CATEGORIE = {
   ],
   "Emotions/sentiments": [
     "Humeur générale",
+    "Humeur matinale",
+    "Humeur à la mi-journée",
+    "Humeur au coucher",
     "Anxiété",
     "Colère",
     "Angoisse",
@@ -195,14 +198,12 @@ export const INDICATEURS_LISTE_PAR_CATEGORIE = {
     "Inquiétude",
     "Libido",
     "Idées suicidaires",
-    "Humeur matinale",
-    "Humeur à la mi-journée",
-    "Humeur au coucher",
   ],
   "Manifestations physiques": [
     "Fatigue",
     "Energie",
     "Qualité sommeil",
+    "Durée sommeil",
     "Facilité endormissement",
     "Réveils nocturnes",
     "Mal au ventre",
@@ -269,7 +270,6 @@ export const INDICATEURS_LISTE_PAR_CATEGORIE = {
     'Faire un achat "plaisir" pour soi',
   ],
   "Prendre soin de sa santé": [
-    "Durée sommeil",
     "Se coucher tôt",
     "Horaires réguliers de sommeil",
     "30 min d’activité physique",

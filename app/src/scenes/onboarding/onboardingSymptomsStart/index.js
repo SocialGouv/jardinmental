@@ -15,23 +15,36 @@ import {
   INDICATEURS,
 } from "../../../utils/liste_indicateurs";
 import RoundButtonIcon from "../../../components/RoundButtonIcon";
+import { useFocusEffect } from "@react-navigation/native";
 
 const OnboardingSymptomStart = ({ navigation }) => {
   const [symptomSelection, setSymptomSelection] = useState({});
   const [isMoodTroubleEnable, setIsMoodTroubleEnabled] = useState(false);
   const [isSleepTroubleEnable, setIsSleepTroubleEnabled] = useState(false);
 
-  useEffect(() => {
-    (async () => {
-      const symptoms = (await await localStorage.getSymptoms()) || {};
-      INDICATEURS_LISTE_ONBOARDING_HUMEUR.forEach((v) => (symptoms[v] = false));
-      INDICATEURS_LISTE_ONBOARDING_SOMMEIL.forEach((v) => (symptoms[v] = false));
-      if (!Object.keys(symptoms).includes(INDICATEURS_HUMEUR)) symptoms[INDICATEURS_HUMEUR] = true;
-      if (!Object.keys(symptoms).includes(INDICATEURS_SOMMEIL)) symptoms[INDICATEURS_SOMMEIL] = true;
+  const init = () => {
+    let res = {};
+    Object.keys(symptomSelection).forEach((ind) => {
+      res[ind] = false;
+    });
+    setSymptomSelection(res);
+  };
 
-      setSymptomSelection(symptoms);
-    })();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      (async () => {
+        const localStorageIndicateurs = await localStorage.getSymptoms();
+        if (!localStorageIndicateurs || !Object.keys(localStorageIndicateurs).length) {
+          return init();
+        }
+        if (!Object.keys(localStorageIndicateurs).includes(INDICATEURS_HUMEUR))
+          localStorageIndicateurs[INDICATEURS_HUMEUR] = true;
+        if (!Object.keys(localStorageIndicateurs).includes(INDICATEURS_SOMMEIL))
+          localStorageIndicateurs[INDICATEURS_SOMMEIL] = true;
+        setSymptomSelection(localStorageIndicateurs);
+      })();
+    }, [])
+  );
 
   useEffect(() => {
     const symptoms = { ...symptomSelection };
@@ -114,6 +127,8 @@ const OnboardingSymptomStart = ({ navigation }) => {
             <Switch
               onValueChange={() => setIsMoodTroubleEnabled(!isMoodTroubleEnable)}
               value={isMoodTroubleEnable}
+              trackColor={{ true: colors.LIGHT_BLUE }}
+              thumbColor="#EFEFEF"
             />
             <Text style={styleSwitch.label}>Oui</Text>
           </View>
