@@ -12,7 +12,6 @@ import TextTag from "../../../components/TextTag";
 
 const SymptomScreen = ({ navigation, route }) => {
   const [indicateursSelection, setIndicateursSelection] = useState({});
-  const [displayAlert, setDisplayAlert] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -29,13 +28,6 @@ const SymptomScreen = ({ navigation, route }) => {
       setIndicateursSelection(localStorageIndicateurs);
     })();
   }, []);
-
-  useEffect(() => {
-    const total =
-      Object.keys(indicateursSelection).filter((indicateur) => !!indicateursSelection[indicateur]).length ||
-      0;
-    setDisplayAlert(total > 10);
-  }, [indicateursSelection]);
 
   const init = () => {
     let res = {};
@@ -108,17 +100,6 @@ const SymptomScreen = ({ navigation, route }) => {
               );
             })}
         </View>
-        {displayAlert ? (
-          <View style={styles.alertContainer}>
-            <Text style={[styles.bold, styles.alertText, { marginBottom: 15 }]}>
-              Vous suivez plus de 10 indicateurs
-            </Text>
-            <Text style={styles.alertText}>
-              Essayez de ne sélectionner que <Text style={styles.bold}>les plus pertinents</Text>. Vous
-              pourrez aussi modifier votre choix plus tard dans l’application
-            </Text>
-          </View>
-        ) : null}
         <View style={stylesButton.buttonWrapper}>
           <Button title={`Cela me correspond`} onPress={nextOnboardingScreen} buttonStyle={{ minWidth: 0 }} />
           <TouchableOpacity style={stylesButton.button} onPress={restart}>
