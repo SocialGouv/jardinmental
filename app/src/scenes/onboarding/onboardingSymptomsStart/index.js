@@ -104,15 +104,19 @@ const OnboardingSymptomStart = ({ navigation }) => {
                 />
               </View>
             )}
-            <Text style={stylesA.choixLabel}>{INDICATEURS_HUMEUR}</Text>
+            <Text style={stylesA.choixLabel}>{INDICATEURS[INDICATEURS_HUMEUR]}</Text>
           </TouchableOpacity>
           <Text style={styles.question}>
             Avez-vous un trouble spécifique qui fait varier votre humeur au cours de la journée ?
           </Text>
-          <Switch
-            onValueChange={() => setIsMoodTroubleEnabled(!isMoodTroubleEnable)}
-            value={isMoodTroubleEnable}
-          />
+          <View style={styleSwitch.container}>
+            <Text style={styleSwitch.label}>Non</Text>
+            <Switch
+              onValueChange={() => setIsMoodTroubleEnabled(!isMoodTroubleEnable)}
+              value={isMoodTroubleEnable}
+            />
+            <Text style={styleSwitch.label}>Oui</Text>
+          </View>
           {isMoodTroubleEnable && (
             <View>
               <Text style={styles.description}>
@@ -166,15 +170,21 @@ const OnboardingSymptomStart = ({ navigation }) => {
                 />
               </View>
             )}
-            <Text style={stylesA.choixLabel}>{INDICATEURS_SOMMEIL}</Text>
+            <Text style={stylesA.choixLabel}>{INDICATEURS[INDICATEURS_SOMMEIL]}</Text>
           </TouchableOpacity>
           <Text style={styles.question}>
             Avez-vous un trouble du sommeil important qui nécessite un suivi ?
           </Text>
-          <Switch
-            onValueChange={() => setIsSleepTroubleEnabled(!isSleepTroubleEnable)}
-            value={isSleepTroubleEnable}
-          />
+          <View style={styleSwitch.container}>
+            <Text style={styleSwitch.label}>Non</Text>
+            <Switch
+              onValueChange={() => setIsSleepTroubleEnabled(!isSleepTroubleEnable)}
+              value={isSleepTroubleEnable}
+              trackColor={{ true: colors.LIGHT_BLUE }}
+              thumbColor="#EFEFEF"
+            />
+            <Text style={styleSwitch.label}>Oui</Text>
+          </View>
           {isSleepTroubleEnable && (
             <View>
               <Text style={styles.description}>Vous pouvez suivre plus en détails votre sommeil avec :</Text>
@@ -301,6 +311,19 @@ const stylesA = StyleSheet.create({
     fontSize: 15,
     color: "#000",
     flex: 1,
+  },
+});
+
+const styleSwitch = StyleSheet.create({
+  container: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  label: {
+    color: "#000",
+    fontSize: 15,
+    marginHorizontal: 5,
   },
 });
 

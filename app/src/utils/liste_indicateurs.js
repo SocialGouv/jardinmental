@@ -8,7 +8,7 @@ import localStorage from "../utils/localStorage";
 // };
 
 export const INDICATEURS_HUMEUR = "Humeur générale";
-export const INDICATEURS_SOMMEIL = "Qualité générale du sommeil";
+export const INDICATEURS_SOMMEIL = "Qualité sommeil";
 
 export const INDICATEURS_LISTE_ONBOARDING_HUMEUR = [
   "Humeur matinale",
@@ -124,8 +124,8 @@ export const INDICATEURS = {
   "Je pense à une chose positive": "Je pense à une chose positive",
   'Faire un achat "plaisir" pour soi': 'Faire un achat "plaisir" pour soi',
   //Prendre soin de sa santé
-  "Qualité sommeil": "Qualité sommeil",
-  "Durée sommeil": "Durée sommeil",
+  "Qualité sommeil": "Qualité du sommeil",
+  "Durée sommeil": "Durée du sommeil",
   "Facilité endormissement": "Facilité endormissement",
   "Se coucher tôt": "Me coucher tôt",
   "Réveils nocturnes": "Réveils nocturnes",
