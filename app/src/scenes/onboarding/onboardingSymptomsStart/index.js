@@ -21,21 +21,10 @@ const OnboardingSymptomStart = ({ navigation }) => {
   const [isMoodTroubleEnable, setIsMoodTroubleEnabled] = useState();
   const [isSleepTroubleEnable, setIsSleepTroubleEnabled] = useState();
 
-  const init = () => {
-    let res = {};
-    Object.keys(symptomSelection).forEach((ind) => {
-      res[ind] = false;
-    });
-    setSymptomSelection(res);
-  };
-
   useFocusEffect(
     React.useCallback(() => {
       (async () => {
-        const localStorageIndicateurs = await localStorage.getSymptoms();
-        if (!localStorageIndicateurs || !Object.keys(localStorageIndicateurs).length) {
-          return init();
-        }
+        const localStorageIndicateurs = (await localStorage.getSymptoms()) || {};
 
         // cocher par défaut si on a jamais enregistré notre choix
         if (!Object.keys(localStorageIndicateurs).includes(INDICATEURS_HUMEUR))
