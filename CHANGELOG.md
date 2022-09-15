@@ -1,3 +1,10 @@
+# [1.36.0](https://github.com/SocialGouv/jardinmental/compare/v1.35.8...v1.36.0) (2022-09-15)
+
+
+### Features
+
+* onboarding p6 ([#180](https://github.com/SocialGouv/jardinmental/issues/180)) ([54011c1](https://github.com/SocialGouv/jardinmental/commit/54011c1645add3911ba93ef7d5b621304adfd23e))
+
 ## [1.35.8](https://github.com/SocialGouv/jardinmental/compare/v1.35.7...v1.35.8) (2022-09-15)
 
 
