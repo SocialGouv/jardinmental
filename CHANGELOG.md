@@ -1,3 +1,10 @@
+## [1.36.1](https://github.com/SocialGouv/jardinmental/compare/v1.36.0...v1.36.1) (2022-09-15)
+
+
+### Bug Fixes
+
+* update version android app ([7ccb719](https://github.com/SocialGouv/jardinmental/commit/7ccb7193cb17f658b8bc9e7b453a9f80a8db371b))
+
 # [1.36.0](https://github.com/SocialGouv/jardinmental/compare/v1.35.8...v1.36.0) (2022-09-15)
 
 
