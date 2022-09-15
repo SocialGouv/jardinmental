@@ -15,9 +15,14 @@
   "eslint.validate": [
     "javascript"
   ],
-  "[javascriptreact]": {
-    "editor.formatOnSave": true
-  },
   // END NEW
   "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascriptreact]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }
