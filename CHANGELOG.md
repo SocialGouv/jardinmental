@@ -1,3 +1,10 @@
+## [1.35.8](https://github.com/SocialGouv/jardinmental/compare/v1.35.7...v1.35.8) (2022-09-15)
+
+
+### Bug Fixes
+
+* update by os ([b90ce07](https://github.com/SocialGouv/jardinmental/commit/b90ce07a3314df939708925e24d1fa6711c15245))
+
 ## [1.35.7](https://github.com/SocialGouv/jardinmental/compare/v1.35.6...v1.35.7) (2022-09-12)
 
 
