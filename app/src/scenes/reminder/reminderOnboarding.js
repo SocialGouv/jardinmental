@@ -6,12 +6,13 @@ import Text from "../../components/MyText";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import localStorage from "../../utils/localStorage";
 import { ONBOARDING_STEPS } from "../../utils/constants";
-import ReminderSvg from "../../../assets/svg/reminder.js";
 import TimePicker from "../../components/timePicker";
 import NotificationService from "../../services/notifications";
 import { colors } from "../../utils/colors";
 import logEvents from "../../services/logEvents";
 import BackButton from "../../components/BackButton";
+import Rappel from "../onboarding/assets/Rappel";
+import Button from "../../components/Button";
 
 const ReminderStorageKey = "@Reminder";
 
@@ -59,7 +60,7 @@ const Reminder = ({
   useEffect(() => {
     getReminder(false);
     notificationListener.current = NotificationService.listen(handleNotification, "reminder");
-    if (route?.params?.onboarding) localStorage.setOnboardingStep(ONBOARDING_STEPS.STEP_REMINDER);
+    localStorage.setOnboardingStep(ONBOARDING_STEPS.STEP_REMINDER);
     // return () => NotificationService.remove(notificationListener.current);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -124,89 +125,98 @@ const Reminder = ({
     setReminderSetupVisible(false);
     await AsyncStorage.removeItem(ReminderStorageKey);
   };
-  const deleteReminderManually = () => {
-    logEvents.logReminderCancel();
-    deleteReminder();
-  };
 
   const validateOnboarding = async () => {
-    await localStorage.setOnboardingDone(true);
-    // await localStorage.setOnboardingStep(null);
+    navigation.navigate("onboarding-drugs");
+  };
+
+  const desactivateReminder = async () => {
+    await deleteReminder();
     navigation.navigate("onboarding-drugs");
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <BackButton onPress={navigation.goBack} />
-      {route?.params?.onboarding ? (
-        <View style={styles.header}>
-          <ReminderSvg style={styles.smallImage} width={30} height={30} />
-          <Text style={styles.smallTitle}>Votre rappel pour penser à remplir votre questionnaire</Text>
+    <SafeAreaView style={styles.safe}>
+      <View style={styles.container}>
+        <BackButton onPress={navigation.goBack} />
+        <View style={styles.containerSvg}>
+          <Rappel width={100} height={100} />
         </View>
-      ) : (
-        <>
-          <ReminderSvg style={styles.bigImage} />
-          <Text style={styles.bigTitle}>Je programme un rappel quotidien</Text>
-        </>
-      )}
-      <View style={styles.description}>
-        {reminder ? (
-          <>
+        <View style={styles.description}>
+          {reminder ? (
+            <>
+              <View style={styles.titleContainer}>
+                <Text style={styles.title}>
+                  Plus vous remplirez votre questionnaire, plus vous en apprendrez sur vous et votre santé
+                  mentale
+                </Text>
+              </View>
+              <View style={styles.bodyContainer}>
+                <Text style={styles.body}>
+                  Pour vous aider, je peux vous envoyer une notification de rappel à :
+                </Text>
+                <TouchableOpacity onPress={showReminderSetup}>
+                  <Text style={styles.time}>{`${dayjs(reminder).format("HH:mm")}`}</Text>
+                </TouchableOpacity>
+              </View>
+            </>
+          ) : (
             <Text style={styles.subtitle}>
-              Pour un <Text style={styles.lightBlue}>meilleur suivi</Text>, un rappel est programmé à :
+              Un rappel permet de remplir plus souvent l’application et obtenir des analyses plus pertinentes
             </Text>
-            <TouchableOpacity onPress={showReminderSetup}>
-              <Text style={styles.time}>{`${dayjs(reminder).format("HH:mm")}`}</Text>
-            </TouchableOpacity>
-          </>
-        ) : (
-          <Text style={styles.subtitle}>
-            Un rappel permet de remplir plus souvent l’application et obtenir des analyses plus pertinentes
-          </Text>
-        )}
+          )}
+        </View>
       </View>
-      {!!route?.params?.onboarding && !!reminder && (
-        <TouchableOpacity onPress={deleteReminderManually} style={[styles.laterContainer]}>
-          <Text style={styles.later}>Désactiver le rappel</Text>
+      <View style={stylesButton.buttonWrapper}>
+        <Button onPress={validateOnboarding} title="Suivant" />
+        <TouchableOpacity style={stylesButton.button} onPress={desactivateReminder}>
+          <Text style={stylesButton.text}>Désactiver le rappel</Text>
         </TouchableOpacity>
-      )}
-
-      {route?.params?.onboarding ? (
-        <View style={styles.ctaContainer}>
-          <TouchableOpacity
-            onPress={reminder ? validateOnboarding : showReminderSetup}
-            style={styles.setupButton}
-          >
-            <Text style={styles.setupButtonText}>{reminder ? "Continuer" : "Choisir l'heure du rappel"}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={reminder ? showReminderSetup : validateOnboarding}
-            style={[styles.laterContainer]}
-          >
-            <Text style={styles.later}>{reminder ? "Modifier l'heure du rappel" : "Plus tard"}</Text>
-          </TouchableOpacity>
-        </View>
-      ) : (
-        <View style={styles.ctaContainer}>
-          <TouchableOpacity onPress={showReminderSetup} style={styles.setupButton}>
-            <Text style={styles.setupButtonText}>
-              {reminder ? "Modifier le rappel" : "Choisir l'heure du rappel"}
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={reminder ? deleteReminderManually : () => navigation.navigate("tabs")}
-            style={[styles.laterContainer]}
-          >
-            <Text style={styles.later}>{reminder ? "Retirer le rappel" : "Plus tard"}</Text>
-          </TouchableOpacity>
-        </View>
-      )}
+      </View>
       <TimePicker visible={reminderSetupVisible} selectDate={setReminderRequest} />
     </SafeAreaView>
   );
 };
 
+const stylesButton = StyleSheet.create({
+  buttonWrapper: {
+    paddingHorizontal: 20,
+    paddingBottom: 10,
+  },
+  button: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#FFF",
+    minWidth: "70%",
+    minHeight: 45,
+    borderRadius: 45,
+    borderWidth: 1,
+    borderColor: "#d1d5db",
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+  },
+  text: {
+    fontWeight: "bold",
+    fontSize: 15,
+    color: "#1f2937",
+  },
+});
+
 const styles = StyleSheet.create({
+  buttonWrapper: {
+    width: "100%",
+    display: "flex",
+    alignItems: "stretch",
+    position: "absolute",
+    bottom: 0,
+    padding: 20,
+  },
+  containerSvg: {
+    alignItems: "center",
+    marginVertical: 20,
+  },
   ctaContainer: {
     display: "flex",
     alignItems: "center",
@@ -235,13 +245,15 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     marginVertical: 10,
   },
-  container: {
-    justifyContent: "flex-start",
-    alignItems: "center",
-    paddingBottom: 100,
-    backgroundColor: "#f9f9f9",
+  safe: {
     flexGrow: 1,
-    height: "100%",
+    backgroundColor: "#f9f9f9",
+    display: "flex",
+  },
+  container: {
+    flex: 1,
+    paddingHorizontal: 20,
+    justifyContent: "flex-start",
   },
   bigTitle: {
     width: "80%",
@@ -261,16 +273,21 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
   description: {
-    width: "80%",
-    marginTop: "10%",
-    marginBottom: "20%",
+    display: "flex",
+    flex: 1,
   },
-  subTitle: {
-    flexShrink: 0,
-    textAlign: "center",
-    paddingHorizontal: 20,
+  titleContainer: {
+    flex: 1,
+  },
+  title: {
+    fontSize: 18,
+    color: colors.BLUE,
+    fontWeight: "700",
   },
   time: {
+    borderColor: colors.DARK_BLUE,
+    borderRadius: 20,
+    borderWidth: 1,
     color: colors.DARK_BLUE,
     fontWeight: "500",
     fontSize: 35,
@@ -312,12 +329,13 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     fontSize: 16,
   },
-  subtitle: {
+  bodyContainer: { flex: 2 },
+  body: {
     color: colors.DARK_BLUE,
-    fontSize: 18,
-    marginBottom: 10,
-    fontWeight: "300",
-    textAlign: "center",
+    fontSize: 15,
+    marginVertical: 10,
+    fontWeight: "400",
+    textAlign: "left",
   },
   link: {
     color: "#181818",

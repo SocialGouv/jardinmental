@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet, ScrollView, View, SafeAreaView } from "react-native";
 import Text from "../../../components/MyText";
 import { colors } from "../../../utils/colors";
-import { displayedCategories } from "../../../utils/constants";
 import localStorage from "../../../utils/localStorage";
 import logEvents from "../../../services/logEvents";
 import BackButton from "../../../components/BackButton";
@@ -41,7 +40,6 @@ const SymptomScreen = ({ navigation, route }) => {
       })();
     }, [])
   );
-
   useEffect(() => {
     console.log(indicateursSelection);
   }, [indicateursSelection]);
@@ -65,7 +63,7 @@ const SymptomScreen = ({ navigation, route }) => {
       return;
     }
     await localStorage.setSymptoms(indicateursSelection);
-    navigation.navigate("onboarding-symptoms-2", { onboarding: true });
+    navigation.navigate("onboarding-symptoms-recap", { onboarding: true });
   };
 
   const handleAddNewSymptom = async (value) => {
@@ -75,15 +73,14 @@ const SymptomScreen = ({ navigation, route }) => {
     logEvents.logCustomSymptomAdd();
   };
 
-  const countIndicateurs = () =>
+  const countObjectifs = () =>
     (Object.keys(indicateursSelection)
       .filter((indicateur) => !!indicateursSelection[indicateur])
       .filter(
         (indicateur) =>
-          INDICATEURS_LISTE_PAR_CATEGORIE["Emotions/sentiments"].includes(indicateur) ||
-          INDICATEURS_LISTE_PAR_CATEGORIE["Manifestations physiques"].includes(indicateur) ||
-          INDICATEURS_LISTE_PAR_CATEGORIE["Pensées"].includes(indicateur) ||
-          INDICATEURS_LISTE_PAR_CATEGORIE.Comportements.includes(indicateur)
+          INDICATEURS_LISTE_PAR_CATEGORIE["Se faire plaisir"].includes(indicateur) ||
+          INDICATEURS_LISTE_PAR_CATEGORIE["Prendre soin de sa santé"].includes(indicateur) ||
+          INDICATEURS_LISTE_PAR_CATEGORIE["Au quotidien"].includes(indicateur)
       ).length || 0) + customSymptomsAdded;
 
   return (
@@ -97,29 +94,25 @@ const SymptomScreen = ({ navigation, route }) => {
         contentContainerStyle={styles.scrollContainer}
       >
         <View style={styles.titleContainer}>
-          <Text style={styles.title}>
-            Sélectionnons les autres indicateurs qui vous correspondent le mieux
-          </Text>
+          <Text style={styles.title}>On se fixe des objectifs quotidiens ?</Text>
         </View>
         <View style={styles.sousTitreContainer}>
           <Text style={styles.sousTitre}>
-            Voici des exemples et vous pouvez aussi en{" "}
-            <Text style={[styles.sousTitre, styles.bold]}>créer vous-même</Text>.
+            Réaliser certaines activités peut vous faire du bien. Voici quelques exemples, et pouvez aussi
+            créer vos propres objectifs.
           </Text>
         </View>
         <View style={styles.dividerS} />
         <View style={styles.alertContainer}>
           <Text style={styles.alertText}>
-            Essayez de ne pas sélectionner plus de <Text style={styles.bold}>10</Text> indicateurs{" "}
-            <Text style={styles.bold}>au total</Text>
+            Se fixer <Text style={styles.bold}>5</Text> objectifs <Text style={styles.bold}>maximum</Text> est
+            un bon départ
           </Text>
         </View>
         <>
           {Object.keys(INDICATEURS_LISTE_PAR_CATEGORIE)
             .filter((categorie) =>
-              ["Emotions/sentiments", "Manifestations physiques", "Pensées", "Comportements"].includes(
-                categorie
-              )
+              ["Se faire plaisir", "Prendre soin de sa santé", "Au quotidien"].includes(categorie)
             )
             .map((categorie) => {
               const indicateurs = INDICATEURS_LISTE_PAR_CATEGORIE[categorie];
@@ -135,7 +128,7 @@ const SymptomScreen = ({ navigation, route }) => {
                     setCustomSymptomsAdded((p) => p + 1);
                   }}
                   enableAddNewElement
-                  labelAddSymptom="Créer un indicateur personnalisé"
+                  labelAddSymptom="Créer un objectif personnalisé"
                 />
               );
             })}
@@ -150,10 +143,10 @@ const SymptomScreen = ({ navigation, route }) => {
       </ScrollView>
       <View style={stylesButton.buttonWrapper}>
         <Button
-          title={`Continuer avec ${countIndicateurs()} indicateur${countIndicateurs() > 1 ? "s" : ""}`}
+          title={`Continuer avec ${countObjectifs()} objectif${countObjectifs() > 1 ? "s" : ""}`}
           onPress={nextOnboardingScreen}
           disabled={getSelectionVide()}
-          buttonStyle={{ minWidth: 0, paddingHorizontal: 10 }}
+          buttonStyle={{ minWidth: 0 }}
         />
       </View>
     </SafeAreaView>

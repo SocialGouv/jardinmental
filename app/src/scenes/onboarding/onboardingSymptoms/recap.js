@@ -1,28 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, ScrollView, View, SafeAreaView } from "react-native";
+import { StyleSheet, ScrollView, View, SafeAreaView, TouchableOpacity } from "react-native";
 import Text from "../../../components/MyText";
 import { colors } from "../../../utils/colors";
 import { displayedCategories } from "../../../utils/constants";
 import localStorage from "../../../utils/localStorage";
-import logEvents from "../../../services/logEvents";
 import BackButton from "../../../components/BackButton";
 import Button from "../../../components/Button";
-import SurveyMenu from "../../../../assets/svg/SurveyMenu";
 import { ONBOARDING_STEPS } from "../../../utils/constants";
 import {
-  INDICATEURS_LISTE_ONBOARDING,
   INDICATEURS,
   INDICATEURS_LISTE_PAR_CATEGORIE,
+  INDICATEURS_LISTE,
 } from "../../../utils/liste_indicateurs";
 import TextTag from "../../../components/TextTag";
-import CategorieElements from "./CategorieElements";
-import OnboardingElements from "./OnboardingElements";
-import AjoutIndicateurPerso from "./AjoutIndicateurPerso";
-import { useFocusEffect } from "@react-navigation/native";
 
 const SymptomScreen = ({ navigation, route }) => {
   const [indicateursSelection, setIndicateursSelection] = useState({});
-  const [customSymptomsAdded, setCustomSymptomsAdded] = useState(0);
 
   useEffect(() => {
     (async () => {
@@ -30,21 +23,15 @@ const SymptomScreen = ({ navigation, route }) => {
     })();
   }, []);
 
-  useFocusEffect(
-    React.useCallback(() => {
-      (async () => {
-        const localStorageIndicateurs = await localStorage.getSymptoms();
-        if (!localStorageIndicateurs || !Object.keys(localStorageIndicateurs).length) {
-          return init();
-        }
-        setIndicateursSelection(localStorageIndicateurs);
-      })();
-    }, [])
-  );
-
   useEffect(() => {
-    console.log(indicateursSelection);
-  }, [indicateursSelection]);
+    (async () => {
+      const localStorageIndicateurs = await localStorage.getSymptoms();
+      if (!localStorageIndicateurs || !Object.keys(localStorageIndicateurs).length) {
+        return init();
+      }
+      setIndicateursSelection(localStorageIndicateurs);
+    })();
+  }, []);
 
   const init = () => {
     let res = {};
@@ -65,26 +52,10 @@ const SymptomScreen = ({ navigation, route }) => {
       return;
     }
     await localStorage.setSymptoms(indicateursSelection);
-    navigation.navigate("onboarding-symptoms-2", { onboarding: true });
+    navigation.navigate("onboarding-hint", { onboarding: true });
   };
 
-  const handleAddNewSymptom = async (value) => {
-    if (!value) return;
-    await localStorage.addCustomSymptoms(value);
-    setIndicateursSelection((prev) => ({ ...prev, [value]: true }));
-    logEvents.logCustomSymptomAdd();
-  };
-
-  const countIndicateurs = () =>
-    (Object.keys(indicateursSelection)
-      .filter((indicateur) => !!indicateursSelection[indicateur])
-      .filter(
-        (indicateur) =>
-          INDICATEURS_LISTE_PAR_CATEGORIE["Emotions/sentiments"].includes(indicateur) ||
-          INDICATEURS_LISTE_PAR_CATEGORIE["Manifestations physiques"].includes(indicateur) ||
-          INDICATEURS_LISTE_PAR_CATEGORIE["Pensées"].includes(indicateur) ||
-          INDICATEURS_LISTE_PAR_CATEGORIE.Comportements.includes(indicateur)
-      ).length || 0) + customSymptomsAdded;
+  const restart = () => navigation.navigate("onboarding-symptoms-1", { onboarding: true });
 
   return (
     <SafeAreaView style={styles.safe}>
@@ -97,92 +68,109 @@ const SymptomScreen = ({ navigation, route }) => {
         contentContainerStyle={styles.scrollContainer}
       >
         <View style={styles.titleContainer}>
-          <Text style={styles.title}>
-            Sélectionnons les autres indicateurs qui vous correspondent le mieux
-          </Text>
+          <Text style={styles.title}>Chaque jour, vous allez évaluer :</Text>
         </View>
-        <View style={styles.sousTitreContainer}>
-          <Text style={styles.sousTitre}>
-            Voici des exemples et vous pouvez aussi en{" "}
-            <Text style={[styles.sousTitre, styles.bold]}>créer vous-même</Text>.
-          </Text>
-        </View>
-        <View style={styles.dividerS} />
-        <View style={styles.alertContainer}>
-          <Text style={styles.alertText}>
-            Essayez de ne pas sélectionner plus de <Text style={styles.bold}>10</Text> indicateurs{" "}
-            <Text style={styles.bold}>au total</Text>
-          </Text>
-        </View>
-        <>
+        <View style={styles.indicateursContainer}>
           {Object.keys(INDICATEURS_LISTE_PAR_CATEGORIE)
-            .filter((categorie) =>
-              ["Emotions/sentiments", "Manifestations physiques", "Pensées", "Comportements"].includes(
-                categorie
-              )
-            )
+            .filter((e) => e !== "Les plus courants")
+            .filter((categorie) => {
+              const list_indicateurs = INDICATEURS_LISTE_PAR_CATEGORIE[categorie];
+              return Object.keys(indicateursSelection || {}).some(
+                (indicateur) =>
+                  indicateursSelection[indicateur] && list_indicateurs.some((e) => e === indicateur)
+              );
+            })
             .map((categorie) => {
               const indicateurs = INDICATEURS_LISTE_PAR_CATEGORIE[categorie];
               return (
-                <CategorieElements
-                  key={categorie}
-                  title={categorie}
-                  options={indicateurs.map((e) => ({ id: e, label: INDICATEURS[e] }))}
-                  onClick={({ id, value }) => setToggleIndicateur({ indicateur: id, valeur: value })}
-                  indicateursSelection={indicateursSelection}
-                  handleAddNewSymptom={(e) => {
-                    handleAddNewSymptom(e);
-                    setCustomSymptomsAdded((p) => p + 1);
-                  }}
-                  enableAddNewElement
-                  labelAddSymptom="Créer un indicateur personnalisé"
-                />
+                <View key={categorie}>
+                  <Text style={styles.categorieTitre}>{categorie}</Text>
+                  <View style={styles.indicateursSelectionContainer}>
+                    {indicateurs
+                      .filter((e) => indicateursSelection[e])
+                      .map((indicateur) => (
+                        <TextTag
+                          key={indicateur}
+                          value={INDICATEURS[indicateur] || displayedCategories[indicateur] || indicateur}
+                          selected={false}
+                          color="#D4F0F2"
+                          onPress={() => {}}
+                          enableClosed
+                          onClose={() => setToggleIndicateur({ indicateur: indicateur, valeur: false })}
+                        />
+                      ))}
+                  </View>
+                </View>
               );
             })}
-        </>
-        {getSelectionVide() ? (
-          <View style={styles.buttonWrapperError}>
-            <Text style={[styles.alert, styles.spaceabove, styles.spacebottom]}>
-              Ajouter ou sélectionner au moins 1 indicateur
-            </Text>
-          </View>
-        ) : null}
+          {Object.keys(indicateursSelection)
+            .filter((e) => !INDICATEURS_LISTE.includes(e))
+            .filter((e) => indicateursSelection[e])?.length ? (
+            <View>
+              <Text style={styles.categorieTitre}>Personnalisés</Text>
+              <View style={styles.indicateursSelectionContainer}>
+                {Object.keys(indicateursSelection)
+                  .filter((e) => !INDICATEURS_LISTE.includes(e))
+                  .filter((e) => indicateursSelection[e])
+                  .map((indicateur) => (
+                    <TextTag
+                      key={indicateur}
+                      value={INDICATEURS[indicateur] || displayedCategories[indicateur] || indicateur}
+                      selected={false}
+                      color="#D4F0F2"
+                      onPress={() => {}}
+                      enableClosed
+                      onClose={() => setToggleIndicateur({ indicateur: indicateur, valeur: false })}
+                    />
+                  ))}
+              </View>
+            </View>
+          ) : null}
+        </View>
+        <View style={stylesButton.buttonWrapper}>
+          <Button title={`Cela me correspond`} onPress={nextOnboardingScreen} buttonStyle={{ minWidth: 0 }} />
+          <TouchableOpacity style={stylesButton.button} onPress={restart}>
+            <Text style={stylesButton.text}>Modifier mes indicateurs</Text>
+          </TouchableOpacity>
+        </View>
       </ScrollView>
-      <View style={stylesButton.buttonWrapper}>
-        <Button
-          title={`Continuer avec ${countIndicateurs()} indicateur${countIndicateurs() > 1 ? "s" : ""}`}
-          onPress={nextOnboardingScreen}
-          disabled={getSelectionVide()}
-          buttonStyle={{ minWidth: 0, paddingHorizontal: 10 }}
-        />
-      </View>
     </SafeAreaView>
   );
 };
 
 const stylesButton = StyleSheet.create({
   buttonWrapper: {
-    position: "absolute",
-    bottom: 20,
-    paddingHorizontal: 20,
-    left: 0,
-    right: 0,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "stretch",
   },
-  buttonSecondary: {
+  button: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#FFF",
     minWidth: "70%",
     minHeight: 45,
     borderRadius: 45,
-    paddingHorizontal: 30,
-    paddingVertical: 10,
-    alignItems: "center",
-    justifyContent: "center",
-    marginBottom: 10,
-    borderColor: "#bbb",
     borderWidth: 1,
+    borderColor: "#d1d5db",
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    marginBottom: 10,
+  },
+  text: {
+    fontWeight: "bold",
+    fontSize: 15,
+    color: "#1f2937",
   },
 });
 
 const styles = StyleSheet.create({
+  categorieTitre: {
+    marginBottom: 10,
+    fontWeight: "600",
+  },
   alertContainer: {
     backgroundColor: "#FEFFE4",
     borderColor: "#EDF053",
@@ -190,7 +178,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderRadius: 10,
     display: "flex",
-    flexDirection: "row",
+    flexDirection: "column",
     alignItems: "center",
     padding: 10,
   },
@@ -202,6 +190,10 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     flexWrap: "wrap",
+    marginBottom: 30,
+  },
+  indicateursContainer: {
+    flex: 1,
   },
   subtitle: {
     color: "#000",
@@ -245,9 +237,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  scrollContainer: {
-    paddingBottom: 80,
-  },
+  scrollContainer: { flexGrow: 1 },
   ValidationButtonText: {
     color: "#fff",
     fontWeight: "700",
@@ -371,6 +361,7 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 20,
     backgroundColor: "white",
+    display: "flex",
   },
   backButtonContainer: {
     alignSelf: "flex-start",
@@ -386,11 +377,6 @@ const styles = StyleSheet.create({
   },
   textInput: {
     fontSize: 20,
-  },
-  buttonWrapper: {
-    display: "flex",
-    justifyContent: "flex-end",
-    alignItems: "flex-end",
   },
   buttonWrapperError: {
     display: "flex",

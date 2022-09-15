@@ -1,12 +1,11 @@
 import React from "react";
 import Text from "../../components/MyText";
+import CheckBox from "@react-native-community/checkbox";
 
-import LockSvg from "../../../assets/svg/Lock";
-import SurveyMenu from "../../../assets/svg/SurveyMenu";
-import DiaryMenu from "../../../assets/svg/DiaryMenu";
-import ExerciseMenu from "../../../assets/svg/ExerciseMenu";
-import GraphMenu from "../../../assets/svg/GraphMenu";
-import Screen3Image from "../../../assets/svg/Chat";
+import WelcomeIcon from "../../../assets/svg/WelcomeIcon";
+import Support from "../../../assets/svg/Support";
+import IllustrationOnboarding21Svg from "../../../assets/svg/IllustrationOnboarding2.1.svg";
+import IllustrationOnboarding22Svg from "../../../assets/svg/IllustrationOnboarding2.2.svg";
 
 import { StyleSheet, View, Dimensions } from "react-native";
 export const buttonHeight = 43;
@@ -15,92 +14,179 @@ export const defaultPadding = Math.min(Dimensions.get("window").width * 0.7, 30)
 export const screenWidth = Dimensions.get("window").width;
 export const screenHeight = Dimensions.get("window").height;
 export const menuHeight = 80;
-const size = screenHeight * (Dimensions.get("window").height > 700 ? 0.15 : 0.1);
+const size = screenWidth * 0.25;
 
 export const Screen0 = () => (
   <View style={styles.container}>
     <View style={styles.imageContainer}>
-      <LockSvg height={size} width={size} style={styles.image} />
+      <WelcomeIcon height={size} width={size} style={styles.image} />
     </View>
-    <Text style={styles.presentationText}>
-      <Text style={styles.bold}>
-        Jardin Mental est un service public développé par des professionnels de santé et des patients,
-        entièrement <Text style={[styles.bold, styles.emphasis]}>gratuit</Text> et{" "}
-        <Text style={[styles.bold, styles.emphasis]}>anonyme</Text>
-      </Text>
-      {"\n\n"}
-      <Text style={styles.emphasis}>Personne</Text> ne peut accéder aux informations que je saisis, et moi
-      seul décide si je souhaite les <Text style={styles.emphasis}>partager</Text>.
-    </Text>
+    <View style={styles.containerBottom}>
+      <View style={styles.containerBottomTitle}>
+        <Text style={styles.h1}>Bienvenue !</Text>
+      </View>
+      <View style={styles.containerBottomText}>
+        <Text style={styles.presentationText}>
+          Tenez <Text style={styles.bold}>chaque jour</Text> un journal de suivi des{" "}
+          <Text style={styles.bold}>indicateurs</Text> de votre état de{" "}
+          <Text style={styles.bold}>santé mentale</Text>
+        </Text>
+      </View>
+    </View>
   </View>
 );
 export const Screen1 = () => (
   <View style={styles.container}>
-    <View style={styles.imageContainer}>
-      <SurveyMenu height={size} width={size} style={[styles.image, styles.tiltUp]} />
-      <DiaryMenu height={size} width={size} style={styles.image} />
+    <View style={styles.multiImageContainer}>
+      <IllustrationOnboarding21Svg style={styles.image} height={size} />
+      <IllustrationOnboarding22Svg style={[styles.image, { marginTop: -40 }]} height={size} width={size} />
     </View>
-    <Text style={styles.presentationText}>
-      <Text style={styles.bold}>Auto-observation</Text>
-      {"\n\n"}Chaque jour, j'évalue mes <Text style={styles.emphasis}>ressentis</Text>, je note les{" "}
-      <Text style={styles.emphasis}>traitements</Text> que je prends et les{" "}
-      <Text style={styles.emphasis}>évènements</Text> qui m'ont marqué.
-    </Text>
+    <View style={styles.containerBottom}>
+      <View style={styles.containerBottomTitle}>
+        <Text style={styles.h1}>Apprenez à mieux vous connaître</Text>
+      </View>
+      <View style={styles.containerBottomText}>
+        <Text style={styles.presentationText}>
+          En montrant vos <Text style={styles.bold}>analyses</Text> à votre{" "}
+          <Text style={styles.bold}>professionnel</Text> de santé qui pourra vous{" "}
+          <Text style={styles.bold}>accompagner</Text>
+        </Text>
+      </View>
+    </View>
   </View>
 );
-export const Screen2 = () => (
-  <View style={styles.container}>
-    <GraphMenu height={size} width={size} style={styles.image} />
-    <Text style={styles.presentationText}>
-      <Text style={styles.bold}>Courbes de mes ressentis</Text>
-      {"\n\n"}Plus j'utilise l'application, plus je peux <Text style={styles.emphasis}>observer</Text> mes{" "}
-      <Text style={styles.emphasis}>ressentis</Text> et <Text style={styles.emphasis}>comprendre</Text> leur
-      évolution.
-    </Text>
-  </View>
-);
-export const Screen3 = () => (
-  <View style={styles.container}>
-    <Screen3Image style={styles.image} />
-    <Text style={styles.presentationText}>
-      <Text style={styles.bold}>Arriver préparé</Text>
-      {"\n\n"}Le jour de ma consultation, j'ai une <Text style={styles.emphasis}>vision complète</Text> de ce
-      que j'ai vécu et de ce qui m'a interrogé pour en <Text style={styles.emphasis}>parler</Text> avec mon
-      thérapeute.
-    </Text>
-  </View>
-);
+export const Screen2 = ({ navigation, isCguChecked, setIsCguChecked }) => {
+  const onCguClick = () => navigation.navigate("cgu");
+  const onLegalMentionsClick = () => navigation.navigate("legal-mentions");
+  const onPrivacyClick = () => navigation.navigate("privacy");
+
+  return (
+    <>
+      <View style={styles.container}>
+        <View style={styles.imageContainer}>
+          <Support height={size} width={size} style={[styles.image]} />
+        </View>
+        <View style={styles.containerBottom}>
+          <View style={styles.containerBottomTitle}>
+            <Text style={styles.h1}>En toute confiance</Text>
+          </View>
+          <View style={styles.containerBottomText}>
+            <Text style={styles.presentationText}>
+              C’est <Text style={styles.bold}>gratuit, anonyme</Text> et sans{" "}
+              <Text style={styles.bold}>aucune récupération</Text> de vos saisies personnelles
+            </Text>
+            <View style={styles.cgu}>
+              <CheckBox
+                animationDuration={0.2}
+                tintColor="#1FC6D5"
+                tintColors={{ true: "#1FC6D5", false: "grey" }}
+                boxType="square"
+                style={styles.checkbox}
+                value={isCguChecked}
+                onValueChange={(newValue) => setIsCguChecked(newValue)}
+              />
+              <Text style={styles.textCgu}>
+                En cochant cette case, vous acceptez nos{" "}
+                <Text onPress={onCguClick} style={styles.underlined}>
+                  Conditions Générales d’Utilisation
+                </Text>
+                , notre{" "}
+                <Text onPress={onPrivacyClick} style={styles.underlined}>
+                  Politique de Confidentialité
+                </Text>{" "}
+                et nos{" "}
+                <Text onPress={onLegalMentionsClick} style={styles.underlined}>
+                  Mentions Légales
+                </Text>
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+    </>
+  );
+};
 
 const styles = StyleSheet.create({
+  containerBottom: {
+    flex: 1,
+    backgroundColor: "white",
+    marginBottom: 60,
+    justifyContent: "flex-start",
+    alignItems: "stretch",
+  },
+  containerBottomTitle: {
+    flex: 1,
+    backgroundColor: "white",
+    justifyContent: "flex-start",
+    alignItems: "stretch",
+  },
+  containerBottomText: {
+    flex: 2,
+    backgroundColor: "white",
+    justifyContent: "flex-start",
+    alignItems: "stretch",
+  },
   container: {
     flex: 1,
     backgroundColor: "white",
-    padding: 20,
-    marginBottom: Dimensions.get("window").height > 700 ? 20 : 60,
     justifyContent: "center",
-    alignItems: "center",
+    alignItems: "stretch",
   },
   emphasis: {
     color: "#1FC6D5",
   },
+  h1: {
+    fontFamily: "Karla",
+    fontStyle: "normal",
+    fontWeight: "700",
+    fontSize: 28,
+    lineHeight: 33,
+    textAlign: "center",
+    color: "#26387C",
+  },
   bold: {
     fontWeight: "bold",
+    color: "#26387C",
   },
   presentationText: {
     textAlign: "center",
-    marginTop: 20,
+    paddingHorizontal: 20,
     fontSize: Dimensions.get("window").height > 700 ? 20 : 17,
     color: "#0A215C",
+    display: "flex",
+    flex: 1,
   },
   imageContainer: {
+    flex: 1,
     display: "flex",
     flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  multiImageContainer: {
+    flex: 1,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
   image: {
     color: "#C3C7D5",
     marginVertical: 0,
   },
-  tiltUp: {
-    marginTop: -0.1 * size,
+  cgu: {
+    display: "flex",
+    flexDirection: "row",
+    padding: 10,
+  },
+  textCgu: {
+    flex: 1,
+    fontSize: Dimensions.get("window").height > 700 ? 16 : 12,
+  },
+  underlined: {
+    textDecorationLine: "underline",
+  },
+  checkbox: {
+    marginRight: 20,
   },
 });

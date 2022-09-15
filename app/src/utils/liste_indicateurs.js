@@ -7,6 +7,22 @@ import localStorage from "../utils/localStorage";
 //   return tempList;
 // };
 
+export const INDICATEURS_HUMEUR = "Humeur générale";
+export const INDICATEURS_SOMMEIL = "Qualité sommeil";
+
+export const INDICATEURS_LISTE_ONBOARDING_HUMEUR = [
+  "Humeur matinale",
+  "Humeur à la mi-journée",
+  "Humeur au coucher",
+];
+export const INDICATEURS_LISTE_ONBOARDING_SOMMEIL = [
+  "Durée sommeil",
+  "Facilité endormissement",
+  // "Se coucher tôt",
+  "Energie",
+  "Réveils nocturnes",
+];
+
 export const INDICATEURS_LISTE_ONBOARDING = [
   "Humeur générale",
   "Anxiété",
@@ -108,10 +124,11 @@ export const INDICATEURS = {
   "Je pense à une chose positive": "Je pense à une chose positive",
   'Faire un achat "plaisir" pour soi': 'Faire un achat "plaisir" pour soi',
   //Prendre soin de sa santé
-  "Qualité sommeil": "Qualité sommeil",
-  "Durée sommeil": "Durée sommeil",
+  "Qualité sommeil": "Qualité du sommeil",
+  "Durée sommeil": "Durée du sommeil",
   "Facilité endormissement": "Facilité endormissement",
-  "Se coucher tôt": "Se coucher tôt",
+  "Se coucher tôt": "Me coucher tôt",
+  "Réveils nocturnes": "Réveils nocturnes",
   "Horaires réguliers de sommeil": "Horaires réguliers de sommeil",
   "30 min d’activité physique": "30 min d’activité physique",
   "J’ai cuisiné mes plats": "J’ai cuisiné mes plats",
@@ -149,9 +166,9 @@ export const INDICATEURS_LISTE_PAR_CATEGORIE = {
     "Durée sommeil",
     "Facilité endormissement",
     "Se coucher tôt",
+    "Energie",
     "Anxiété",
     "Je suis fier(e) de moi",
-    "Fatigue",
     "Je fais une activité plaisir",
     "Faire mes tâches ménagères",
   ],
@@ -165,7 +182,6 @@ export const INDICATEURS_LISTE_PAR_CATEGORIE = {
     "Honte",
     "Motivation",
     "Plaisir",
-    "Energie",
     "Stress",
     "Estime de soi",
     "Irritabilité",
@@ -183,7 +199,7 @@ export const INDICATEURS_LISTE_PAR_CATEGORIE = {
     "Humeur au coucher",
   ],
   "Manifestations physiques": [
-    "Fatigue",
+    "Energie",
     "Mal au ventre",
     "Menstruations",
     "Appétit",
@@ -196,6 +212,11 @@ export const INDICATEURS_LISTE_PAR_CATEGORIE = {
     "Douleur",
     "Maux de tête",
     "Agitation",
+    "Qualité sommeil",
+    "Durée sommeil",
+    "Facilité endormissement",
+    "Réveils nocturnes",
+    "Fatigue",
   ],
   Pensées: [
     "Je suis fier(e) de moi",
@@ -248,9 +269,6 @@ export const INDICATEURS_LISTE_PAR_CATEGORIE = {
     'Faire un achat "plaisir" pour soi',
   ],
   "Prendre soin de sa santé": [
-    "Qualité sommeil",
-    "Durée sommeil",
-    "Facilité endormissement",
     "Se coucher tôt",
     "Horaires réguliers de sommeil",
     "30 min d’activité physique",
@@ -261,7 +279,6 @@ export const INDICATEURS_LISTE_PAR_CATEGORIE = {
     "J’ai pris correctement mon traitement",
     "Faire ma cohérence cardiaque",
     "Je limite mon temps d’écran",
-    "Me promener dehors",
     "Je ne fume pas",
     "Je respecte mes limites",
     "Méditation",
