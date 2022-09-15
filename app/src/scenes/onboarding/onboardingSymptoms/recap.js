@@ -7,7 +7,11 @@ import localStorage from "../../../utils/localStorage";
 import BackButton from "../../../components/BackButton";
 import Button from "../../../components/Button";
 import { ONBOARDING_STEPS } from "../../../utils/constants";
-import { INDICATEURS, INDICATEURS_LISTE_PAR_CATEGORIE } from "../../../utils/liste_indicateurs";
+import {
+  INDICATEURS,
+  INDICATEURS_LISTE_PAR_CATEGORIE,
+  INDICATEURS_LISTE,
+} from "../../../utils/liste_indicateurs";
 import TextTag from "../../../components/TextTag";
 
 const SymptomScreen = ({ navigation, route }) => {
@@ -99,6 +103,29 @@ const SymptomScreen = ({ navigation, route }) => {
                 </View>
               );
             })}
+          {Object.keys(indicateursSelection)
+            .filter((e) => !INDICATEURS_LISTE.includes(e))
+            .filter((e) => indicateursSelection[e])?.length ? (
+            <View>
+              <Text style={styles.categorieTitre}>Personnalisés</Text>
+              <View style={styles.indicateursSelectionContainer}>
+                {Object.keys(indicateursSelection)
+                  .filter((e) => !INDICATEURS_LISTE.includes(e))
+                  .filter((e) => indicateursSelection[e])
+                  .map((indicateur) => (
+                    <TextTag
+                      key={indicateur}
+                      value={INDICATEURS[indicateur] || displayedCategories[indicateur] || indicateur}
+                      selected={false}
+                      color="#D4F0F2"
+                      onPress={() => {}}
+                      enableClosed
+                      onClose={() => setToggleIndicateur({ indicateur: indicateur, valeur: false })}
+                    />
+                  ))}
+              </View>
+            </View>
+          ) : null}
         </View>
         <View style={stylesButton.buttonWrapper}>
           <Button title={`Cela me correspond`} onPress={nextOnboardingScreen} buttonStyle={{ minWidth: 0 }} />

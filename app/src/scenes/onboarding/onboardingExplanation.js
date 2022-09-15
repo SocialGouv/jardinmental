@@ -6,6 +6,7 @@ import { colors } from "../../utils/colors";
 import logEvents from "../../services/logEvents";
 import Button from "../../components/Button";
 import BackButton from "../../components/BackButton";
+import localStorage from "../../utils/localStorage";
 
 const OnboardingExplanation = ({ navigation }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -16,6 +17,7 @@ const OnboardingExplanation = ({ navigation }) => {
   };
   const handleStart = async () => {
     logEvents.logOnboardingExplainStart();
+    await localStorage.setOnboardingDone(true);
     navigation.navigate("tabs");
   };
 

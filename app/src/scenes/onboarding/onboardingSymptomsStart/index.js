@@ -6,7 +6,6 @@ import { colors } from "../../../utils/colors";
 import localStorage from "../../../utils/localStorage";
 import BackButton from "../../../components/BackButton";
 import Button from "../../../components/Button";
-import LabelCheckBox from "./LabelCheckBox";
 import {
   INDICATEURS_HUMEUR,
   INDICATEURS_SOMMEIL,
@@ -19,8 +18,8 @@ import { useFocusEffect } from "@react-navigation/native";
 
 const OnboardingSymptomStart = ({ navigation }) => {
   const [symptomSelection, setSymptomSelection] = useState({});
-  const [isMoodTroubleEnable, setIsMoodTroubleEnabled] = useState(false);
-  const [isSleepTroubleEnable, setIsSleepTroubleEnabled] = useState(false);
+  const [isMoodTroubleEnable, setIsMoodTroubleEnabled] = useState();
+  const [isSleepTroubleEnable, setIsSleepTroubleEnabled] = useState();
 
   const init = () => {
     let res = {};
@@ -37,10 +36,29 @@ const OnboardingSymptomStart = ({ navigation }) => {
         if (!localStorageIndicateurs || !Object.keys(localStorageIndicateurs).length) {
           return init();
         }
+
+        // cocher par défaut si on a jamais enregistré notre choix
         if (!Object.keys(localStorageIndicateurs).includes(INDICATEURS_HUMEUR))
           localStorageIndicateurs[INDICATEURS_HUMEUR] = true;
         if (!Object.keys(localStorageIndicateurs).includes(INDICATEURS_SOMMEIL))
           localStorageIndicateurs[INDICATEURS_SOMMEIL] = true;
+
+        // deplier par defaut si au moins un des enfants est selectionné
+        if (
+          Object.keys(localStorageIndicateurs).some(
+            (e) => INDICATEURS_LISTE_ONBOARDING_HUMEUR.includes(e) && localStorageIndicateurs[e]
+          )
+        ) {
+          setIsMoodTroubleEnabled(true);
+        }
+        if (
+          Object.keys(localStorageIndicateurs).some(
+            (e) => INDICATEURS_LISTE_ONBOARDING_SOMMEIL.includes(e) && localStorageIndicateurs[e]
+          )
+        ) {
+          setIsSleepTroubleEnabled(true);
+        }
+
         setSymptomSelection(localStorageIndicateurs);
       })();
     }, [])
@@ -48,11 +66,11 @@ const OnboardingSymptomStart = ({ navigation }) => {
 
   useEffect(() => {
     const symptoms = { ...symptomSelection };
-    if (!isMoodTroubleEnable) {
+    if (!isMoodTroubleEnable && isMoodTroubleEnable !== undefined) {
       INDICATEURS_LISTE_ONBOARDING_HUMEUR.forEach((v) => (symptoms[v] = false));
       setSymptomSelection(symptoms);
     }
-    if (!isSleepTroubleEnable) {
+    if (!isSleepTroubleEnable && isSleepTroubleEnable !== undefined) {
       INDICATEURS_LISTE_ONBOARDING_SOMMEIL.forEach((v) => (symptoms[v] = false));
       setSymptomSelection(symptoms);
     }
