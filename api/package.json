@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "mobileAppVersion": "1.32.0",
   "mobileAppBuildNumber": 131,
+  "mobileAppAndroidBuildNumber": 131,
+  "mobileAppIosBuildNumber": 131,
   "description": "",
   "main": "index.js",
   "scripts": {
