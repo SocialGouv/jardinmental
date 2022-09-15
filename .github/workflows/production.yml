@@ -22,7 +22,7 @@ jobs:
         uses: SocialGouv/actions/autodevops-build-register@v1
         with:
           environment: prod
-          imageName: monsuivipsy/app
+          imageName: jardinmental/app
           token: ${{ secrets.GITHUB_TOKEN }}
           dockercontext: ./api
           dockerfile: ./api/Dockerfile
