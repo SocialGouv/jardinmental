@@ -10,6 +10,7 @@ const AjoutIndicateurPerso = ({
   placeholder = "Ajouter...",
   styleContainer,
   onChangeText = () => {},
+  label = "Créer un indicateur personnalisé",
 }) => {
   const [value, setValue] = useState();
   const [isOpen, setIsOpen] = useState(false);
@@ -28,7 +29,7 @@ const AjoutIndicateurPerso = ({
           <View style={styles.buttonPlusContainer}>
             <Plus opacity={1} color="#111827" width={19} height={19} />
           </View>
-          <Text style={styles.textAjouter}>Créer un indicateur personnalisé</Text>
+          <Text style={styles.textAjouter}>{label}</Text>
         </TouchableOpacity>
       ) : null}
       {isOpen ? (

@@ -11,6 +11,7 @@ const CategorieElements = ({
   indicateursSelection,
   handleAddNewSymptom,
   enableAddNewElement,
+  labelAddSymptom,
 }) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [listeComplementaire, setListeComplementaire] = React.useState([]);
@@ -77,6 +78,7 @@ const CategorieElements = ({
                 setListeComplementaire((prev) => [...prev, { id: v, label: v }]);
                 handleAddNewSymptom(v);
               }}
+              label={labelAddSymptom}
             />
           ) : null}
         </View>

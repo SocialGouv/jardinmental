@@ -135,6 +135,7 @@ const SymptomScreen = ({ navigation, route }) => {
                     setCustomSymptomsAdded((p) => p + 1);
                   }}
                   enableAddNewElement
+                  labelAddSymptom="Créer un indicateur personnalisé"
                 />
               );
             })}
