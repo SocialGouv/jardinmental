@@ -39,7 +39,9 @@ const Reminder = ({
     }
     if (!isRegistered && storedReminder && showAlert) showPermissionsAlert();
     if (!storedReminder && route?.params?.onboarding) {
-      setReminder(dayjs().set("hours", 17).set("minutes", 9));
+      const date = new Date();
+      date.setHours(20, 0, 0, 0);
+      setReminderRequest(date);
       return;
     }
     const scheduled = await NotificationService.getScheduledLocalNotifications();

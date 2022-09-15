@@ -40,7 +40,9 @@ const Reminder = ({
     }
     if (!isRegistered && storedReminder && showAlert) showPermissionsAlert();
     if (!storedReminder && route?.params?.onboarding) {
-      setReminder(dayjs().set("hours", 20).set("minutes", 0));
+      const date = new Date();
+      date.setHours(20, 0, 0, 0);
+      setReminderRequest(date);
       return;
     }
     const scheduled = await NotificationService.getScheduledLocalNotifications();
@@ -123,21 +125,13 @@ const Reminder = ({
     setReminderSetupVisible(false);
     await AsyncStorage.removeItem(ReminderStorageKey);
   };
-  const deleteReminderManually = () => {
-    logEvents.logReminderCancel();
-    deleteReminder();
-  };
 
   const validateOnboarding = async () => {
-    if (!reminder) {
-      const date = new Date();
-      date.setHours(20, 0, 0, 0);
-      setReminderRequest(date);
-    }
     navigation.navigate("onboarding-drugs");
   };
-  const DesactivateReminder = async () => {
-    await localStorage.setOnboardingDone(true);
+
+  const desactivateReminder = async () => {
+    await deleteReminder();
     navigation.navigate("onboarding-drugs");
   };
 
@@ -175,7 +169,7 @@ const Reminder = ({
       </View>
       <View style={stylesButton.buttonWrapper}>
         <Button onPress={validateOnboarding} title="Suivant" />
-        <TouchableOpacity style={stylesButton.button} onPress={DesactivateReminder}>
+        <TouchableOpacity style={stylesButton.button} onPress={desactivateReminder}>
           <Text style={stylesButton.text}>Désactiver le rappel</Text>
         </TouchableOpacity>
       </View>
