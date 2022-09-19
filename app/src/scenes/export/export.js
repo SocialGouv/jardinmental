@@ -66,7 +66,7 @@ const Export = ({ navigation }) => {
       mail
     );
     setIsLoading(false);
-    if (res.ok) {
+    if (res?.ok) {
       Alert.alert("Mail envoyé !", `Retrouvez vos données sur votre boîte mail : ${mail}`, [
         {
           text: "Retour",

@@ -45,6 +45,7 @@ const DaySurvey = ({ navigation, route }) => {
     React.useCallback(() => {
       (async () => {
         const q = await buildSurveyData();
+        console.log("plopi", q);
         if (q) {
           setQuestions(q);
         }
