@@ -11,6 +11,7 @@ const CategorieElements = ({
   indicateursSelection,
   handleAddNewSymptom,
   enableAddNewElement,
+  labelAddSymptom,
 }) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [listeComplementaire, setListeComplementaire] = React.useState([]);
@@ -41,7 +42,6 @@ const CategorieElements = ({
                 ]}
                 onPress={() => onClick({ id: option.id, value: !indicateurSelectionne })}
               >
-                <Text style={stylesA.choixLabel}>{option.label}</Text>
                 {indicateurSelectionne ? (
                   <View>
                     <RoundButtonIcon
@@ -67,6 +67,7 @@ const CategorieElements = ({
                     />
                   </View>
                 )}
+                <Text style={stylesA.choixLabel}>{option.label}</Text>
               </TouchableOpacity>
             );
           })}
@@ -77,6 +78,7 @@ const CategorieElements = ({
                 setListeComplementaire((prev) => [...prev, { id: v, label: v }]);
                 handleAddNewSymptom(v);
               }}
+              label={labelAddSymptom}
             />
           ) : null}
         </View>

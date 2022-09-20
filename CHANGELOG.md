@@ -1,3 +1,38 @@
+## [1.36.1](https://github.com/SocialGouv/jardinmental/compare/v1.36.0...v1.36.1) (2022-09-15)
+
+
+### Bug Fixes
+
+* update version android app ([7ccb719](https://github.com/SocialGouv/jardinmental/commit/7ccb7193cb17f658b8bc9e7b453a9f80a8db371b))
+
+# [1.36.0](https://github.com/SocialGouv/jardinmental/compare/v1.35.8...v1.36.0) (2022-09-15)
+
+
+### Features
+
+* onboarding p6 ([#180](https://github.com/SocialGouv/jardinmental/issues/180)) ([54011c1](https://github.com/SocialGouv/jardinmental/commit/54011c1645add3911ba93ef7d5b621304adfd23e))
+
+## [1.35.8](https://github.com/SocialGouv/jardinmental/compare/v1.35.7...v1.35.8) (2022-09-15)
+
+
+### Bug Fixes
+
+* update by os ([b90ce07](https://github.com/SocialGouv/jardinmental/commit/b90ce07a3314df939708925e24d1fa6711c15245))
+
+## [1.35.7](https://github.com/SocialGouv/jardinmental/compare/v1.35.6...v1.35.7) (2022-09-12)
+
+
+### Bug Fixes
+
+* **deps:** update dependency react-native to v0.68.3 ([86a72f4](https://github.com/SocialGouv/jardinmental/commit/86a72f4a626452f09a797128048b77c5866e48e0))
+
+## [1.35.6](https://github.com/SocialGouv/jardinmental/compare/v1.35.5...v1.35.6) (2022-08-29)
+
+
+### Bug Fixes
+
+* 2Z export data no network error ([#190](https://github.com/SocialGouv/jardinmental/issues/190)) ([1f21cc4](https://github.com/SocialGouv/jardinmental/commit/1f21cc4c126adc3ee03995c1b45d44d807386b8f))
+
 ## [1.35.5](https://github.com/SocialGouv/jardinmental/compare/v1.35.4...v1.35.5) (2022-08-08)
 
 
