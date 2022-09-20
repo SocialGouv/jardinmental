@@ -544,6 +544,32 @@ const logSuiviShowPriseDeTraitement = async (v) => {
   });
 };
 
+const logRecommendAppShow = async () => {
+  await logEvent({
+    category: "RECOMMEND",
+    action: "SHOW_MODAL",
+  });
+};
+const logRecommendAppSent = async (type) => {
+  await logEvent({
+    category: "RECOMMEND",
+    action: "SENT",
+    type,
+  });
+};
+const logRecommendAppDismissed = async () => {
+  await logEvent({
+    category: "RECOMMEND",
+    action: "DISMISSED",
+  });
+};
+const logRecommendAppError = async () => {
+  await logEvent({
+    category: "RECOMMEND",
+    action: "ERROR",
+  });
+};
+
 export default {
   initMatomo,
   logAppVisit,
@@ -607,4 +633,8 @@ export default {
   logSuiviShowPriseDeTraitement,
   logInputDrugSurveyPriseDeTraitement,
   logInputDrugSurveyPriseDeTraitementSiBesoin,
+  logRecommendAppShow,
+  logRecommendAppSent,
+  logRecommendAppDismissed,
+  logRecommendAppError,
 };
