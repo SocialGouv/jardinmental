@@ -225,6 +225,7 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   text: {
+    color: "#222",
     fontSize: 12,
     fontWeight: "400",
     marginVertical: 5,
