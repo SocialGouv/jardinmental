@@ -12,7 +12,7 @@ export const NeedUpdateContextProvider = ({ children }) => {
     (async () => {
       //FIX ME : make it platform independent (ios / android)
       const response = await API.get({ path: "/version" });
-      if (response.ok && BUILD_NUMBER < response.data.MOBILE_BUILD_NUMBER) {
+      if (response?.ok && BUILD_NUMBER < response.data.MOBILE_BUILD_NUMBER) {
         setNeedUpdate(true);
         Alert.alert(
           `Une nouvelle version de Jardin Mental est disponible !`,
