@@ -147,7 +147,7 @@ export const InfoModalProvider = ({ children }) => {
               </ScrollView>
 
               <TouchableOpacity onPress={hide} style={[styles.closeButton]}>
-                <Icon icon="CrossSvg" width={15} height={15} color={colors.LIGHT_BLUE} />
+                <Icon icon="CrossSvg" width={15} height={15} color="#bec1c8" />
               </TouchableOpacity>
             </View>
           </View>
@@ -170,8 +170,8 @@ export const InfoModalProvider = ({ children }) => {
                 <Path
                   style="stroke-linecap:round;stroke-linejoin:round"
                   strokeWidth="1.5"
-                  stroke="#aeedf8"
-                  fill="#f8fdfe"
+                  stroke="#d1d5db"
+                  fill="#fff"
                   d="M 0.50078499,22.970395 19.052127,0.50064545 14.236094,23.046521"
                 />
               </Svg>
@@ -211,8 +211,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   frameContainer: {
-    backgroundColor: "#F8FDFE",
-    borderColor: "#AEEDF8",
+    backgroundColor: "#FFF",
+    borderColor: "#d1d5db",
     borderWidth: 1,
     borderRadius: 10,
     justifyContent: "flex-start",

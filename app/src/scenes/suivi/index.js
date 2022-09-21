@@ -33,7 +33,6 @@ const Suivi = ({ navigation, startSurvey }) => {
         const medicalTreatmentStorage = await localStorage.getMedicalTreatment();
         if (medicalTreatmentStorage.length === 0) {
           setAUnTraitement(false);
-          setShowTraitement(false);
         } else {
           setAUnTraitement(true);
         }
