@@ -75,7 +75,6 @@ const TabPicker = ({ onChange, ongletActif = "Frises" }) => {
 const tabStyles = StyleSheet.create({
   scrollView: {
     backgroundColor: "#F6FCFD",
-    marginBottom: 15,
     borderColor: colors.BLUE,
     borderBottomWidth: 1,
   },

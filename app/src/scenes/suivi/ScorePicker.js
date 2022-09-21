@@ -4,14 +4,14 @@ import { colors } from "../../utils/colors";
 import { answers } from "../../scenes/survey/utils";
 import CircledIcon from "../../components/CircledIcon";
 
-const ScorePicker = ({ focusedScores, onPress }) => {
+const ScorePicker = ({ focusedScores, onPress, containerStyle, itemStyle, children }) => {
   return (
-    <View style={styles.answersContainer}>
+    <View style={[styles.answersContainer, containerStyle]}>
       {answers.map((answer, i) => {
         const active = focusedScores.includes(answer.score);
         return (
           <TouchableOpacity key={i} onPress={() => onPress(answer.score)}>
-            <View style={[styles.selectionContainer, active && styles.activeSelectionContainer]}>
+            <View style={[styles.selectionContainer, itemStyle, active && styles.activeSelectionContainer]}>
               <CircledIcon
                 color={answer.backgroundColor}
                 borderColor={answer.borderColor}
@@ -25,6 +25,7 @@ const ScorePicker = ({ focusedScores, onPress }) => {
           </TouchableOpacity>
         );
       })}
+      {children}
     </View>
   );
 };
