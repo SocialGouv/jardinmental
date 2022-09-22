@@ -14,8 +14,11 @@ const DateRange = ({
   withPreset = false,
   children,
   containerStyle,
+  contentContainerStyle,
   topContainerStyle,
   textStyle,
+  selectInputProps,
+  dateOrTimeProps,
   ...props
 }) => {
   const [presetValue, setPresetValue] = useState(props.presetValue || "lastDays7");
@@ -66,7 +69,7 @@ const DateRange = ({
 
   return (
     <View style={[styles.container, containerStyle]}>
-      <View style={styles.contentContainer}>
+      <View style={[styles.contentContainer, contentContainerStyle]}>
         <View
           style={[styles.topContainer, (withPreset || children) && { marginBottom: 8 }, topContainerStyle]}
         >
@@ -82,6 +85,7 @@ const DateRange = ({
                 { label: "Depuis le début", value: "fromBeginning" },
                 { label: "Choisir la période", value: "custom" },
               ]}
+              {...selectInputProps}
             />
           )}
 
@@ -89,7 +93,7 @@ const DateRange = ({
         </View>
 
         <View style={styles.dateContainer}>
-          <Text style={[styles.text, textStyle]}>du</Text>
+          <Text style={[styles.text, { marginRight: 8 }, textStyle]}>du</Text>
           <DateOrTimeDisplay
             mode="date"
             date={fromDate}
@@ -99,8 +103,9 @@ const DateRange = ({
             }}
             disabled={withPreset && presetValue !== "custom"}
             containerStyle={styles.dateItemContainer}
+            {...dateOrTimeProps}
           />
-          <Text style={[styles.text, textStyle]}>au</Text>
+          <Text style={[styles.text, { marginHorizontal: 8 }, textStyle]}>au</Text>
           <DateOrTimeDisplay
             mode="date"
             date={toDate}
@@ -110,6 +115,7 @@ const DateRange = ({
             }}
             disabled={withPreset && presetValue !== "custom"}
             containerStyle={styles.dateItemContainer}
+            {...dateOrTimeProps}
           />
           <DatePicker
             timeZoneOffsetInMinutes={0}
@@ -178,7 +184,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   dateItemContainer: {
-    marginHorizontal: 8,
+    //marginHorizontal: 8,
   },
 });
 

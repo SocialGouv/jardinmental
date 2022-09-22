@@ -18,8 +18,10 @@ export const EventInfoButton = ({ ...props }) => {
             qui sont associées à cet état.
           </InfoText>
           <InfoText>
-            Par exemple, si vous sélectionnez l’indicateur “anxiété” et le smiley “rouge”, vous retrouverez
+            Par exemple, si vous sélectionnez l'indicateur "anxiété" et le smiley "rouge", vous retrouverez
             toutes les notes que vous avez prises les jours où vous étiez anxieux.
+            {"\n"}A l'inverse, sélectionnez "humeur générale" et le smiley vert pour comprendre ce qui vous
+            met de bonne humeur !
           </InfoText>
           <InfoText>
             Prendre régulièrement des notes sur votre journée et les relire vous aide à comprendre ce qui
