@@ -26,29 +26,31 @@ export const EventFilterHeader = ({
     <View style={styles.container}>
       <View style={styles.contentContainer}>
         <View style={[styles.lineContainer]}>
-          <Text style={[styles.text, { lineHeight: 36 }]}>
-            Retrouvez toutes les notes que vous avez écrites les jours où
-            <SelectSymptom
-              options={activeCategories}
-              onChange={setSymptom}
-              onOpen={logEvents.logSuiviEditSymptom}
-              placeholder="Sélectionner un élément"
-              value={symptom}
-              containerStyle={{ paddingLeft: 8 }}
-            />
+          <Text style={[styles.text, { lineHeight: 22 }]}>
+            Retrouvez toutes les notes que vous avez écrites les jours où :
           </Text>
+        </View>
+        <View style={[styles.lineContainer, styles.withSpace]}>
+          <SelectSymptom
+            options={activeCategories}
+            onChange={setSymptom}
+            onOpen={logEvents.logSuiviEditSymptom}
+            placeholder="Sélectionner un élément"
+            value={symptom}
+            containerStyle={{ flex: 1 }}
+          />
+          <EventInfoButton containerStyle={{ marginLeft: 26 }} />
         </View>
         <View style={[styles.lineContainer, styles.withSpace]}>
           <Text style={[styles.text, { marginRight: 8 }]}>était</Text>
           <View style={[styles.scorePickerBorder]}>
             <ScorePicker
+              size="small"
               focusedScores={score}
               onPress={(i) => {
                 setScore([i]);
                 logEvents.logSuiviEditScoreEvents(i);
               }}
-              containerStyle={styles.scorePickerContainer}
-              itemStyle={styles.scorePickerItem}
             />
           </View>
         </View>
@@ -60,14 +62,26 @@ export const EventFilterHeader = ({
           onChangeFromDate={setFromDate}
           onChangeToDate={setToDate}
           withPreset={true}
-          topContainerStyle={{ flexDirection: "row-reverse", marginBottom: 10 }}
-          containerStyle={[styles.withSpace]}
+          containerStyle={[styles.lineContainer, styles.withSpace]}
+          contentContainerStyle={[{ flex: 1 }]}
+          topContainerStyle={{
+            flexDirection: "row-reverse",
+            marginBottom: 10,
+          }}
+          selectInputProps={{
+            containerStyle: {
+              flex: 1,
+            },
+          }}
+          dateOrTimeProps={{
+            containerStyle: { flex: 1 },
+            touchableStyle: { flex: 1 },
+          }}
           textStyle={styles.text}
         >
           <Text style={[styles.text, { marginRight: 8 }]}>sur la période des</Text>
         </RangeDate>
       </View>
-      <EventInfoButton containerStyle={{ position: "absolute", right: 10, top: 0 }} />
     </View>
   );
 };
@@ -111,6 +125,7 @@ const styles = StyleSheet.create({
   contentContainer: {
     backgroundColor: "white",
     alignItems: "flex-start",
+    maxWidth: 300,
   },
   lineContainer: {
     maxWidth: 360,
@@ -130,17 +145,7 @@ const styles = StyleSheet.create({
     borderColor: colors.DARK_BLUE,
     borderWidth: 1,
     paddingHorizontal: 10,
-    maxWidth: "100%",
-  },
-  scorePickerContainer: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    flexWrap: "wrap",
-    flex: 0,
-    marginVertical: 0,
-  },
-  scorePickerItem: {
-    margin: 5,
+    flex: 1,
   },
   text: {
     color: colors.DARK_BLUE,

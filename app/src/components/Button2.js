@@ -193,7 +193,7 @@ const styles = {
   }),
   small: StyleSheet.create({
     button: {
-      minHeight: 30,
+      minHeight: 36,
       paddingHorizontal: 12,
       paddingVertical: 0,
     },

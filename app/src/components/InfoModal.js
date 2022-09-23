@@ -59,8 +59,8 @@ export const InfoButton = forwardRef(({ onPress, containerStyle }, ref) => {
     >
       <Icon
         icon="Info2Svg"
-        width={25}
-        height={25}
+        width={30}
+        height={30}
         color={colors.LIGHT_BLUE}
         styleContainer={{ width: 30, height: 30 }}
       />
