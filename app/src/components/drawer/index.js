@@ -19,6 +19,7 @@ import Text from "../../components/MyText";
 import { colors } from "../../utils/colors";
 import NeedUpdateContext from "../../context/needUpdate";
 import { HOST } from "../../config";
+import { recommendApp } from "../../utils/share";
 
 export default ({ navigation, visible, onClick }) => {
   const [isVisible, setIsVisible] = useState();
@@ -72,6 +73,7 @@ export default ({ navigation, visible, onClick }) => {
               onClick={onClick}
               icon="PresentationSvg"
             />
+            <DrawerItem title="Recommander" onClick={recommendApp} icon="ThumbsUpSvg" />
             <DrawerItem
               title="Parler à quelqu'un et s'informer"
               path="infos"

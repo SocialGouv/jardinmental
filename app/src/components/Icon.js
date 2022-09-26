@@ -34,6 +34,7 @@ import PeopleSvg from "../../assets/svg/People";
 import GlobeSvg from "../../assets/svg/Globe";
 import LockSvg from "../../assets/svg/Lock";
 import Arrow from "../../assets/svg/Arrow";
+import ThumbsUpSvg from "../../assets/svg/thumbs-up.svg";
 
 import { StyleSheet, View, Animated, Easing, TouchableOpacity } from "react-native";
 
@@ -71,6 +72,7 @@ const mapIconToSvg = (icon) => {
     ChevronDownSvg,
     LockSvg,
     Arrow,
+    ThumbsUpSvg,
     TuneSvg,
     CheckSvg,
   };
