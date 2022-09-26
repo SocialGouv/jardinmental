@@ -1,22 +1,20 @@
 import React from "react";
-import { StyleSheet, View, Dimensions, ScrollView, TouchableOpacity } from "react-native";
+import { StyleSheet, View, ScrollView } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
-import RNPickerSelect from "react-native-picker-select";
 import { isToday, isYesterday, parseISO } from "date-fns";
 import { getArrayOfDatesFromTo, formatDay, formatRelativeDate } from "../../../utils/date/helpers";
 import { DiaryDataContext } from "../../../context/diaryData";
 import Text from "../../../components/MyText";
-import { displayedCategories, scoresMapIcon } from "../../../utils/constants";
 import { colors } from "../../../utils/colors";
 import { buildSurveyData } from "../../survey/survey-data";
 import Icon from "../../../components/Icon";
 import localStorage from "../../../utils/localStorage";
 import logEvents from "../../../services/logEvents";
 import Button from "../../../components/Button";
-import ScorePicker from "../ScorePicker";
 import Card from "./Card";
+import { EventFilterHeader } from "./EventFilterHeader";
 
-const Events = ({ navigation, fromDate, toDate, focusedScores }) => {
+const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, toDate, setToDate }) => {
   const [diaryData] = React.useContext(DiaryDataContext);
   const [activeCategories, setActiveCategories] = React.useState();
   const [isEmpty, setIsEmpty] = React.useState();
@@ -133,107 +131,48 @@ const Events = ({ navigation, fromDate, toDate, focusedScores }) => {
   }
   return (
     <>
-      <View style={styles.filterContainer}>
-        <View style={styles.filterItemContainer}>
-          <Text style={styles.text}>Afficher tous les évènements associés à</Text>
-          {/* <SelectEvent
-            options={activeCategories}
-            onChange={setEvent}
-            placeholder="Choisir évènement"
-            value={event}
-          /> */}
-        </View>
-        <View style={styles.filterItemContainer}>
-          {/* <Text>associé(s)&nbsp;à</Text> */}
-          <SelectSymptom
-            options={activeCategories}
-            onChange={setSymptom}
-            onOpen={logEvents.logSuiviEditSymptom}
-            placeholder="Sélectionner un élément"
-            value={symptom}
-          />
-        </View>
-        <View style={styles.containerScorePickerFrise}>
-          <ScorePicker
-            focusedScores={score}
-            onPress={(i) => {
-              setScore([i]);
-              logEvents.logSuiviEditScoreEvents(i);
-            }}
-          />
-        </View>
-      </View>
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContainer}>
-        {memoizedCallback()?.filter((x) => x.date)?.length === 0 && (
-          <Text style={styles.noDataMessage}>
-            Aucun évènement à afficher entre {renderDate(formatDay(fromDate))} et{" "}
-            {renderDate(formatDay(toDate))}.
-          </Text>
-        )}
-        {memoizedCallback()
-          ?.filter((x) => x.date)
-          ?.sort((a, b) => {
-            const ad = a.date.split("/").reverse().join("");
-            const bd = b.date.split("/").reverse().join("");
-            return bd.localeCompare(ad);
-          })
-          ?.map((d) => {
-            return (
-              <Card
-                key={d.date}
-                event={event}
-                date={d.date}
-                context={d.CONTEXT}
-                userComment={d.USER_COMMENT}
-              />
-            );
-          })}
+        <EventFilterHeader
+          presetDate={presetDate}
+          setPresetDate={setPresetDate}
+          fromDate={fromDate}
+          setFromDate={setFromDate}
+          toDate={toDate}
+          setToDate={setToDate}
+          symptom={symptom}
+          setSymptom={setSymptom}
+          score={score}
+          setScore={setScore}
+          activeCategories={activeCategories}
+        />
+        <View style={styles.dataContainer}>
+          {memoizedCallback()?.filter((x) => x.date)?.length === 0 && (
+            <Text style={styles.noDataMessage}>
+              Aucun évènement à afficher entre {renderDate(formatDay(fromDate))} et{" "}
+              {renderDate(formatDay(toDate))}.
+            </Text>
+          )}
+          {memoizedCallback()
+            ?.filter((x) => x.date)
+            ?.sort((a, b) => {
+              const ad = a.date.split("/").reverse().join("");
+              const bd = b.date.split("/").reverse().join("");
+              return bd.localeCompare(ad);
+            })
+            ?.map((d) => {
+              return (
+                <Card
+                  key={d.date}
+                  event={event}
+                  date={d.date}
+                  context={d.CONTEXT}
+                  userComment={d.USER_COMMENT}
+                />
+              );
+            })}
+        </View>
       </ScrollView>
     </>
-  );
-};
-
-const SelectSymptom = ({ value, placeholder, options = [], onChange = () => {}, onOpen = () => {} }) => {
-  const getTitle = (cat) => {
-    const category = displayedCategories[cat] || cat;
-    const [categoryName, suffix] = category.split("_");
-    if (suffix && suffix === "FREQUENCE") {
-      return categoryName;
-    }
-    return category;
-  };
-
-  return (
-    <RNPickerSelect
-      value={value}
-      useNativeAndroidPickerStyle={false}
-      onValueChange={onChange}
-      onOpen={onOpen}
-      placeholder={{ label: placeholder, value: null, color: "grey", inputLabel: placeholder }}
-      items={options.map((o) => ({ label: getTitle(o), value: o })) || []}
-      style={pickerSelectStyles}
-      Icon={() => <Icon icon="ArrowUpSvg" color={colors.DARK_BLUE} width={13} height={13} />}
-    />
-  );
-};
-
-const SelectEvent = ({ value, placeholder, onChange = () => {} }) => {
-  return (
-    <RNPickerSelect
-      value={value}
-      useNativeAndroidPickerStyle={false}
-      onValueChange={onChange}
-      placeholder={{ label: placeholder, value: null }}
-      items={[
-        { label: "Tous les évènement", value: "ALL" },
-        { label: "Contexte de la journée", value: "CONTEXT" },
-        { label: "Précisions élément", value: "USER_COMMENT" },
-        { label: "Traitements", value: "POSOLOGY" },
-        { label: "Substances", value: "TOXIC" },
-      ]}
-      style={pickerSelectStyles}
-      Icon={() => <Icon icon="ArrowUpSvg" color={colors.DARK_BLUE} width={13} height={13} />}
-    />
   );
 };
 
@@ -284,27 +223,10 @@ const pickerSelectStyles = StyleSheet.create({
 });
 
 const styles = StyleSheet.create({
-  containerScorePickerFrise: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-
-  filterContainer: {
-    paddingHorizontal: 20,
-    backgroundColor: "white",
-  },
-  filterItemContainer: {
-    flexDirection: "row",
-    margin: 6,
-    justifyContent: "center",
-  },
   text: {
-    flex: 1,
     color: colors.DARK_BLUE,
     fontSize: 16,
-    textAlign: "center",
+    textAlign: "left",
   },
   emptyContainer: {
     flex: 1,
@@ -333,9 +255,12 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   scrollContainer: {
-    paddingTop: 30,
-    paddingHorizontal: 15,
-    paddingBottom: 150,
+    paddingTop: 20,
+    paddingBottom: 30,
+  },
+  dataContainer: {
+    marginTop: 40,
+    paddingHorizontal: 20,
   },
   noDataMessage: {
     color: "#111",

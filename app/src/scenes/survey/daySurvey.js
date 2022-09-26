@@ -186,10 +186,10 @@ const DaySurvey = ({ navigation, route }) => {
               key={i}
               question={q}
               onPress={toggleAnswer}
-              selected={answers[q.id]?.value}
+              selected={answers[q?.id]?.value}
               explanation={q.explanation}
               onChangeUserComment={handleChangeUserComment}
-              userComment={answers[q.id]?.userComment}
+              userComment={answers[q?.id]?.userComment}
             />
           ))}
           <InputQuestion
