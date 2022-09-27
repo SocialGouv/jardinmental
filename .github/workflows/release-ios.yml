@@ -63,10 +63,10 @@ jobs:
         run: cd app/ios && bundle install && cd ..
 
       - name: Install packages
-        run: yarn install
+        run: cd app && yarn install && cd ..
 
       - name: Install pods
         run: cd app/ios && pod install && cd ..
 
       - name: Execute Fastlane command
-        run: cd app && yarn publish:ios:github ${{ secrets.DISTRIBUTION_P12_PASSWORD}}
+        run: cd app && yarn publish:ios:github ${{ secrets.DISTRIBUTION_P12_PASSWORD}} && cd ..

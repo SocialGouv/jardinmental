@@ -73,7 +73,7 @@ jobs:
         run: cd app/android && bundle install && cd ..
 
       - name: Install packages
-        run: cd app && yarn install
+        run: cd app && yarn install  && cd ..
 
       - name: Execute Fastlane command
-        run: cd app && yarn publish:android
+        run: cd app && yarn publish:android  && cd ..
