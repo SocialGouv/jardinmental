@@ -72,8 +72,11 @@ jobs:
       - name: Install Fastlane
         run: cd app/android && bundle install && cd ..
 
+      - name: disable post install
+        run: cd app && npm pkg set scripts.postinstall="echo no-postinstall" && cd ..
+
       - name: Install packages
-        run: cd app && yarn install  && cd ..
+        run: cd app && yarn install && cd ..
 
       - name: Execute Fastlane command
         run: cd app && yarn publish:android  && cd ..
