@@ -67,3 +67,18 @@ buck-out/
 *.numbers
 
 !get-ip.sh
+
+#fastlane 
+*/fastlane/.env
+*/fastlane/.env.*
+# fastlane android
+**/android/fastlane/google-cloud-api-key.json
+**/android/key.properties
+*.jks
+# fastlane ios
+*.p8
+*.p12
+**/ios/fastlane/appleApiKey.json
+**/Gemfile.lock
+**/ios/tmp.xcconfig
+*.dSYM.zip

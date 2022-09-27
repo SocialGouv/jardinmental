@@ -1,0 +1,5 @@
+require('dotenv')
+Dotenv.load
+
+#Set here global fastlane values
+# to get variables from .env files : ENV["MY_VAR_NAME"]
