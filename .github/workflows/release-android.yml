@@ -73,7 +73,7 @@ jobs:
         run: cd app/android && bundle install && cd ..
 
       - name: remove ios part of post install
-        run: cd app && npm pkg set scripts.postinstall="npx jetify -r" && cd ..
+        run: cd app && npm pkg set scripts.postinstall="npx jetify" && cd ..
 
       - name: Install packages
         run: cd app && yarn install && cd ..
