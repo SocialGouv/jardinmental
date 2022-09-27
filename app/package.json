@@ -19,7 +19,10 @@
     "android:build-aab": "cd android && ./gradlew clean && ./gradlew bundleRelease && cd ../",
     "postinstall": "pod install --project-directory=ios/ --repo-update && npx jetify -r",
     "update-mobile-app-version": "node ./update-mobile-app-version.js",
-    "clean-project": "rm -rf node_modules && echo ✨ node_modules deleted && rm -rf ios/Pods && echo ✨ Pods deleted && watchman watch-del-all"
+    "clean-project": "rm -rf node_modules && echo ✨ node_modules deleted && rm -rf ios/Pods && echo ✨ Pods deleted && watchman watch-del-all",
+    "publish:android": "./scripts/publish_android.sh",
+    "publish:ios": "./scripts/publish_ios.sh",
+    "publish:ios:github": "./scripts/publish_ios_github.sh"
   },
   "prettier": {
     "printWidth": 110
