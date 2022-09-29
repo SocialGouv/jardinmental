@@ -10,9 +10,6 @@ project.ext.envConfigFiles = [
 ]
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 
-println("**ENVIRONMENT**")
-println(project.env)
-println("**ENVIRONMENT**")
 
 /**
  * The react.gradle file registers a task for each build variant (e.g. bundleDebugJsAndAssets
