@@ -13,7 +13,7 @@ export const getBadgeNotesVersion = async () => {
   return lastNotesVersion !== LAST_NOTES_VERSION;
 };
 
-export const LAST_NOTES_VERSION = "1.26";
+export const LAST_NOTES_VERSION = "1.34";
 
 export default ({ navigation }) => {
   useEffect(() => {
@@ -28,6 +28,23 @@ export default ({ navigation }) => {
         <Image style={styles.image} source={require("../../../assets/imgs/logo2.png")} />
       </View>
       <ScrollView style={styles.cgu} contentContainerStyle={styles.scrollContainer}>
+        <Card title="Amélioration de l'analyse et recommandation" version="v1.34" date="05/2022">
+          <Item>
+            <Text style={styles.text}>
+              Recommander l’application Jardin Mental aux personnes de votre choix, directement à partir de
+              votre téléphone, en cliquant sur le bouton «&nbsp;Recommander&nbsp;» du menu de l’application.
+            </Text>
+          </Item>
+          <Item>
+            <Text style={styles.text}>
+              Mes Analyses&nbsp;:
+              {"\n"}Utilisez le sélecteur de date pour retrouver rapidement la période qui vous intéresse. Si
+              besoin, vous pouvez toujours sélectionner manuelle une date de début et une date de fin pour une
+              période personnalisé. Les filtres par intensité ainsi que pour afficher vos prises de
+              traitements sur vos frises sont maintenant accessibles via le bouton «&nbsp;filtres&nbsp;».
+            </Text>
+          </Item>
+        </Card>
         <Card title="Amélioration du suivi de votre traitement." version="v1.26" date="05/2022">
           <Item>
             <Text style={styles.text}>
