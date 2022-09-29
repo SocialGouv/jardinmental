@@ -25,7 +25,8 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: "16.x"
-          #cache: 'yarn'
+          cache: 'yarn'
+          cache-dependency-path: "app/yarn.lock"
 
       - uses: actions/setup-ruby@v1
         with:
@@ -60,16 +61,16 @@ jobs:
           echo "${{ secrets.DISTRIBUTION_MOBILE_PROVISION_B64}}" | base64 --decode > app/ios/distribution.mobileprovision
 
       - name: Install Fastlane
-        run: cd app/ios && bundle install && cd ..
+        run: cd app/ios && bundle install
 
       - name: disable post install
-        run: cd app && npm pkg set scripts.postinstall="echo no-postinstall" && cd ..
+        run: cd app && npm pkg set scripts.postinstall="echo no-postinstall"
 
       - name: Install packages
-        run: cd app && yarn install && cd ..
+        run: cd app && yarn install
 
       - name: Install pods
-        run: cd app/ios && pod install && cd ..
+        run: cd app/ios && pod install
 
       - name: Execute Fastlane command
-        run: cd app && yarn publish:ios:github ${{ secrets.DISTRIBUTION_P12_PASSWORD}} && cd ..
+        run: cd app && yarn publish:ios:github ${{ secrets.DISTRIBUTION_P12_PASSWORD}}
