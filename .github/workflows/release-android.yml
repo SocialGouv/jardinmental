@@ -11,7 +11,7 @@ concurrency:
 
 # Needed secrets :
 # DOTENV
-# GOOGLE_CLOUD_API_KEY
+# GOOGLE_CLOUD_API_KEY_B64
 # KEY_PROPERTIES
 # KEYSTORE_B64
 
@@ -57,7 +57,7 @@ jobs:
       - name: Write Google Cloud API Key
         shell: bash
         run: |
-          echo "${{ secrets.GOOGLE_CLOUD_API_KEY}}" > app/android/fastlane/google-cloud-api-key.json
+          echo "${{ secrets.GOOGLE_CLOUD_API_KEY_B64}}" | base64 --decode > app/android/fastlane/google-cloud-api-key.json
 
       - name: Write key properties
         shell: bash

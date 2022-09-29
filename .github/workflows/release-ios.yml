@@ -11,7 +11,7 @@ concurrency:
 
 # Needed secrets :
 # DOTENV
-# APPLE_API_KEY_SETTINGS
+# APPLE_API_KEY_SETTINGS_B64
 # DISTRIBUTION_P12_B64
 # DISTRIBUTION_P12_PASSWORD
 # DISTRIBUTION_MOBILE_PROVISION_B64
@@ -47,7 +47,7 @@ jobs:
       - name: Write Apple API Key config
         shell: bash
         run: |
-          echo "${{ secrets.APPLE_API_KEY_SETTINGS}}" > app/ios/fastlane/appleApiKey.json
+          echo "${{ secrets.APPLE_API_KEY_SETTINGS_B64}}" | base64 --decode > app/ios/fastlane/appleApiKey.json
 
       - name: Write distribution.p12 file
         shell: bash
