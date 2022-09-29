@@ -4,27 +4,54 @@ import { colors } from "../../utils/colors";
 import { answers } from "../../scenes/survey/utils";
 import CircledIcon from "../../components/CircledIcon";
 
-const ScorePicker = ({ focusedScores, onPress }) => {
+const ScorePicker = ({
+  focusedScores,
+  onPress,
+  containerStyle,
+  itemStyle,
+  children,
+  size = "normal",
+  inline = false,
+}) => {
   return (
-    <View style={styles.answersContainer}>
+    <View
+      style={[
+        styles.answersContainer,
+        size === "small" && { padding: 0, marginVertical: 0, height: 36 },
+        inline && styles.answersContainerInline,
+        containerStyle,
+      ]}
+    >
       {answers.map((answer, i) => {
         const active = focusedScores.includes(answer.score);
         return (
           <TouchableOpacity key={i} onPress={() => onPress(answer.score)}>
-            <View style={[styles.selectionContainer, active && styles.activeSelectionContainer]}>
+            <View
+              style={[
+                styles.selectionContainer,
+                inline && { marginHorizontal: 5 },
+                itemStyle,
+                active && styles.activeSelectionContainer,
+              ]}
+            >
               <CircledIcon
                 color={answer.backgroundColor}
                 borderColor={answer.borderColor}
                 iconColor={answer.iconColor}
                 icon={answer.icon}
-                iconContainerStyle={{ marginRight: 0, width: 30, height: 30 }}
-                iconWidth={24}
-                iconHeight={24}
+                iconContainerStyle={{
+                  marginRight: 0,
+                  width: size === "small" ? 21 : 30,
+                  height: size === "small" ? 21 : 30,
+                }}
+                iconWidth={size === "small" ? 17 : 24}
+                iconHeight={size === "small" ? 17 : 24}
               />
             </View>
           </TouchableOpacity>
         );
       })}
+      {children}
     </View>
   );
 };
@@ -47,7 +74,10 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     display: "flex",
   },
-
+  answersContainerInline: {
+    flexWrap: "wrap",
+    flex: 0,
+  },
   container: {
     flexDirection: "row",
     alignItems: "center",

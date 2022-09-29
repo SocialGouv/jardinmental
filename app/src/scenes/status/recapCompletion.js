@@ -1,7 +1,7 @@
 import React from "react";
 import { TouchableOpacity, StyleSheet, View } from "react-native";
 import { subDays } from "date-fns";
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
 import { beforeToday, formatDay, getFirst3LetterWeekDay } from "../../utils/date/helpers";
 import { colors } from "../../utils/colors";
@@ -11,7 +11,8 @@ import RoundButtonIcon from "../../components/RoundButtonIcon";
 import Text from "../../components/MyText";
 import logEvents from "../../services/logEvents";
 
-const RecapCompletion = ({ navigation }) => {
+const RecapCompletion = () => {
+  const navigation = useNavigation();
   const [diaryData] = React.useContext(DiaryDataContext);
   const [startDay, setStartDay] = React.useState(new Date(Date.now()));
 

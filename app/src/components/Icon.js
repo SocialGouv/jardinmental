@@ -6,6 +6,7 @@ import SymptomsSetting from "../../assets/svg/symptoms-setting.svg";
 import CguSettingSvg from "../../assets/svg/cgu-setting.svg";
 import DrugsSvg from "../../assets/svg/drugs.svg";
 import InfoSvg from "../../assets/svg/info.svg";
+import Info2Svg from "../../assets/svg/info2.svg";
 import BurgerSvg from "../../assets/svg/burger.svg";
 import PresentationSvg from "../../assets/svg/presentation.svg";
 import NewsSvg from "../../assets/svg/news.svg";
@@ -25,12 +26,15 @@ import ChevronUpSvg from "../../assets/svg/chevron-up.svg";
 import ChevronDownSvg from "../../assets/svg/chevron-down.svg";
 import BinSvg from "../../assets/svg/bin.svg";
 import NotesSvg from "../../assets/svg/notes.svg";
+import TuneSvg from "../../assets/svg/tune.svg";
+import CheckSvg from "../../assets/svg/check.svg";
 import Text from "../components/MyText";
 import PhoneSvg from "../../assets/svg/Phone";
 import PeopleSvg from "../../assets/svg/People";
 import GlobeSvg from "../../assets/svg/Globe";
 import LockSvg from "../../assets/svg/Lock";
 import Arrow from "../../assets/svg/Arrow";
+import ThumbsUpSvg from "../../assets/svg/thumbs-up.svg";
 
 import { StyleSheet, View, Animated, Easing, TouchableOpacity } from "react-native";
 
@@ -42,6 +46,7 @@ const mapIconToSvg = (icon) => {
     CguSettingSvg,
     DrugsSvg,
     InfoSvg,
+    Info2Svg,
     BurgerSvg,
     PresentationSvg,
     NewsSvg,
@@ -67,6 +72,9 @@ const mapIconToSvg = (icon) => {
     ChevronDownSvg,
     LockSvg,
     Arrow,
+    ThumbsUpSvg,
+    TuneSvg,
+    CheckSvg,
   };
   return iconMap[icon];
 };
