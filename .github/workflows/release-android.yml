@@ -24,7 +24,8 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: "16.x"
-          #cache: 'yarn'
+          cache: 'yarn'
+          cache-dependency-path: "app/yarn.lock"
 
       - name: Setup JDK 11
         uses: actions/setup-java@v2
@@ -70,13 +71,13 @@ jobs:
           echo "${{ secrets.KEYSTORE_B64}}" | base64 --decode > app/android/app/my-upload-key.jks
 
       - name: Install Fastlane
-        run: cd app/android && bundle install && cd ..
+        run: cd app/android && bundle install
 
       - name: remove ios part of post install
-        run: cd app && npm pkg set scripts.postinstall="npx jetify" && cd ..
+        run: cd app && npm pkg set scripts.postinstall="npx jetify"
 
       - name: Install packages
-        run: cd app && yarn install && cd ..
+        run: cd app && yarn install
 
       - name: Execute Fastlane command
-        run: cd app && yarn publish:android  && cd ..
+        run: cd app && yarn publish:android
