@@ -23,7 +23,7 @@ default_platform(:ios)
 platform :ios do
   desc "Auto Increment BuildNumber"
   lane :IncrementBuildNumber do
-    increment_build_number(xcodeproj: "ere360.xcodeproj")
+    increment_build_number(xcodeproj: "monsuivipsy.xcodeproj")
   end
 
   desc "Set version number"
