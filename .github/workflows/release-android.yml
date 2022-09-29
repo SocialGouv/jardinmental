@@ -2,6 +2,8 @@ name: release-android
 
 on:
   workflow_dispatch:
+  push:
+    branches: ['deployment/fastlane-github-actions']
 
 concurrency:
   cancel-in-progress: true
