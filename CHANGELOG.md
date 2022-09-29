@@ -1,3 +1,10 @@
+# [1.37.0](https://github.com/SocialGouv/jardinmental/compare/v1.36.1...v1.37.0) (2022-09-29)
+
+
+### Features
+
+* filtres analyses + recommendation  ([#195](https://github.com/SocialGouv/jardinmental/issues/195)) ([8017c80](https://github.com/SocialGouv/jardinmental/commit/8017c80e0d39357fffb8f089558864ea6cfc374a)), closes [#189](https://github.com/SocialGouv/jardinmental/issues/189) [#191](https://github.com/SocialGouv/jardinmental/issues/191) [#193](https://github.com/SocialGouv/jardinmental/issues/193) [#196](https://github.com/SocialGouv/jardinmental/issues/196) [#194](https://github.com/SocialGouv/jardinmental/issues/194)
+
 ## [1.36.1](https://github.com/SocialGouv/jardinmental/compare/v1.36.0...v1.36.1) (2022-09-15)
 
 
