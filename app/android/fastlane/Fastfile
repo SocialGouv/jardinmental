@@ -1,0 +1,66 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+opt_out_usage # prevent metrics track from fastlane
+
+default_platform(:android)
+
+platform :android do
+  desc "Auto increment build number"
+  lane :IncrementBuildNumber do
+
+    path = '../app/build.gradle'
+    re = /versionCode\s+(\d+)/
+    s = File.read(path)
+    versionCode = s[re, 1].to_i
+    s[re, 1] = (versionCode + 1).to_s
+    f = File.new(path, 'w')
+    f.write(s)
+    f.close
+
+  end
+
+  desc "Set version name"
+  lane :SetVersiondNameToMatchPackageJson do |options|
+
+    if options[:version_name]
+      # extract options to a variable
+      version_name = options[:version_name]
+      path = '../app/build.gradle'
+      re = /versionName\s+("\d+.\d+.\d+")/
+      s = File.read(path)
+      s[re, 1] = "\"#{version_name}\""
+      f = File.new(path, 'w')
+      f.write(s)
+      f.close
+    end
+
+  end
+
+  desc "Submit a new Test Build to internal"
+  lane :internal do 
+
+    gradle(task: "clean bundleRelease")
+    upload_to_play_store(
+      skip_upload_metadata: true,
+      skip_upload_changelogs: true,
+      skip_upload_screenshots: true,
+      skip_upload_images: true,
+      skip_upload_apk: true,
+      track: 'internal'
+    )
+  end
+  
+end

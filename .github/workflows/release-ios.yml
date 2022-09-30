@@ -1,0 +1,74 @@
+name: release-ios
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  cancel-in-progress: true
+  group: release-ios 
+
+# Needed secrets :
+# DOTENV
+# APPLE_API_KEY_SETTINGS_B64
+# DISTRIBUTION_P12_B64
+# DISTRIBUTION_P12_PASSWORD
+# DISTRIBUTION_MOBILE_PROVISION_B64
+
+jobs:
+  release-ios:
+    name: Build and release Ios app
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "16.x"
+          cache: 'yarn'
+          cache-dependency-path: "app/yarn.lock"
+
+      - uses: actions/setup-ruby@v1
+        with:
+          ruby-version: "2.x"
+      
+      - name: Cache CocoaPods packages
+        uses: actions/cache@v3
+        with:
+          path: Pods
+          key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pods-
+      
+      - name: Write .env
+        shell: bash
+        run: |
+          echo "${{ secrets.DOTENV}}" > app/.env
+
+      - name: Write Apple API Key config
+        shell: bash
+        run: |
+          echo "${{ secrets.APPLE_API_KEY_SETTINGS_B64}}" | base64 --decode > app/ios/fastlane/appleApiKey.json
+
+      - name: Write distribution.p12 file
+        shell: bash
+        run: |
+          echo "${{ secrets.DISTRIBUTION_P12_B64}}" | base64 --decode > app/ios/distribution.p12
+      
+      - name: Write distribution.mobileprovision file
+        shell: bash
+        run: |
+          echo "${{ secrets.DISTRIBUTION_MOBILE_PROVISION_B64}}" | base64 --decode > app/ios/distribution.mobileprovision
+
+      - name: Install Fastlane
+        run: cd app/ios && bundle install
+
+      - name: disable post install
+        run: cd app && npm pkg set scripts.postinstall="echo no-postinstall"
+
+      - name: Install packages
+        run: cd app && yarn install
+
+      - name: Install pods
+        run: cd app/ios && pod install
+
+      - name: Execute Fastlane command
+        run: cd app && yarn publish:ios:github ${{ secrets.DISTRIBUTION_P12_PASSWORD}}

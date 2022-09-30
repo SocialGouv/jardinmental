@@ -10,9 +10,6 @@ project.ext.envConfigFiles = [
 ]
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 
-println("**ENVIRONMENT**")
-println(project.env)
-println("**ENVIRONMENT**")
 
 /**
  * The react.gradle file registers a task for each build variant (e.g. bundleDebugJsAndAssets
@@ -140,6 +137,13 @@ def reactNativeArchitectures() {
     return value ? value.split(",") : ["armeabi-v7a", "x86", "x86_64", "arm64-v8a"]
 }
 
+// get signing key properties from key.properties
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('key.properties')
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
 android {
     ndkVersion rootProject.ext.ndkVersion
 
@@ -150,8 +154,8 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         multiDexEnabled true
-        versionCode 144
-        versionName "1.34.3"
+        versionCode 146
+        versionName "1.34.5"
         buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
         if (isNewArchitectureEnabled()) {
             // We configure the NDK build only if you decide to opt-in for the New Architecture.
@@ -231,16 +235,16 @@ android {
     }
     signingConfigs {
         debug {
-            storeFile file(project.env.get('MYAPP_UPLOAD_STORE_FILE'))
-            storePassword project.env.get("MYAPP_UPLOAD_STORE_PASSWORD")
-            keyAlias project.env.get("MYAPP_UPLOAD_KEY_ALIAS")
-            keyPassword project.env.get("MYAPP_UPLOAD_KEY_PASSWORD")
+            storeFile file('debug.keystore')
+            storePassword 'android'
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
         }
         release {
-            storeFile file(project.env.get('MYAPP_UPLOAD_STORE_FILE'))
-            storePassword project.env.get("MYAPP_UPLOAD_STORE_PASSWORD")
-            keyAlias project.env.get("MYAPP_UPLOAD_KEY_ALIAS")
-            keyPassword project.env.get("MYAPP_UPLOAD_KEY_PASSWORD")
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+            storePassword keystoreProperties['storePassword']
         }
     }
     buildTypes {

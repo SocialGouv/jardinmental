@@ -37,13 +37,23 @@ So be careful when you name those.
 
 ### Android
 
+#### Manual
 Just run `yarn build:android`.
 Get the `.aab` file located at `./android/app/build/outputs/bundle/release/app-release.aab`
 
 Upload it in Google Play console, Internal Testing or Production directly, as you prefer. Better to have at least one Internal Testing tester that can check the app is properly compiled (like with a real API connection, not localhost).
 
-### iOS
+#### Automatic local
+(ask SRE Team to get needed files)
+- obtain and add `key.properties` to `./app/android` folder
+- obtain and add `my-upload-key.jks` to `./app/android/app` folder
+- obtain and add `google-cloud-api-key.json` to `./app/android/fastlane` folder
+- Execute this command from `./app` folder : ```yarn publish:android```
 
+This command will build and upload your app to Google Play Console - internal tests
+
+### iOS
+#### Manual
 - Open `ios/monsuivipsy.xcodeproj`, and click Product > Archive
 
 - At the end of archiving, a new window opens: click "Distribute App". Then:
@@ -55,3 +65,11 @@ Upload it in Google Play console, Internal Testing or Production directly, as yo
   - Finally, click on "Upload"
 
 - Your app is now in the Test Flight tab in your App Store Connect. After it is reviewed, you can use it in your next App Store release.
+
+#### Automatic local
+(ask SRE Team to get needed files)
+- First ensure to obtain and install the distribution certificate in your mac keychain (double click .p12 file with password) and the mobile provionning profile in xcode (double click .mobileprovision file it will open xcode). 
+- obtain and add `appleApiKey.json` to `./app/ios/fastlane` folder
+- Execute this command from `./app` folder : ```yarn publish:ios```
+
+This command will build and upload your app to App Store Connect - TestFlight
