@@ -112,6 +112,7 @@ const DaySurvey = ({ navigation, route }) => {
     };
     setDiaryData(currentSurvey);
     logEvents.logFeelingAdd();
+    logEvents.logFeelingSubmitSurvey(questions.length);
     logEvents.logFeelingAddComment(
       Object.keys(answers).filter(
         (key) => ![questionToxic.id, questionContext.id].includes(key) && answers[key].userComment
