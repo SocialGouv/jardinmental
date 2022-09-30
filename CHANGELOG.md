@@ -1,3 +1,10 @@
+## [1.37.2](https://github.com/SocialGouv/jardinmental/compare/v1.37.1...v1.37.2) (2022-09-30)
+
+
+### Bug Fixes
+
+* add event count indicateur ([5776260](https://github.com/SocialGouv/jardinmental/commit/577626018834aa70910bda6e7e0b988de38d7e06))
+
 ## [1.37.1](https://github.com/SocialGouv/jardinmental/compare/v1.37.0...v1.37.1) (2022-09-30)
 
 
