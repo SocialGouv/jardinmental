@@ -42,6 +42,9 @@ import Contact from "../scenes/contact";
 import PrivacyLight from "../scenes/privacy-light";
 import RNBootsplash from "react-native-bootsplash";
 import Notifications from "../services/notifications";
+import { OnboardingMood } from "../scenes/onboarding/onboardingSymptomsStart/MoodScreen";
+import { OnboardingSleep } from "../scenes/onboarding/onboardingSymptomsStart/SleepScreen";
+import { OnboardingSimpleCustomSymptoms } from "../scenes/onboarding/onboardingSymptomsCustom/SimpleCustomScreen";
 
 const Stack = createStackNavigator();
 
@@ -106,12 +109,14 @@ class Router extends React.Component {
             <Stack.Screen name="onboarding-symptoms-2" component={OnboardingSymptoms2} />
             <Stack.Screen name="onboarding-symptoms-recap" component={OnboardingSymptomsRecap} />
             <Stack.Screen
-              name="onboarding-explanation-indicator-0"
-              component={OnboardingExplanationScreen0}
-            />
-            <Stack.Screen
               name="onboarding-explanation-indicator-1"
               component={OnboardingExplanationScreen1}
+            />
+            <Stack.Screen name="onboarding-symptoms-mood" component={OnboardingMood} />
+            <Stack.Screen name="onboarding-symptoms-sleep" component={OnboardingSleep} />
+            <Stack.Screen
+              name="onboarding-symptoms-custom-simple"
+              component={OnboardingSimpleCustomSymptoms}
             />
             <Stack.Screen name="onboarding-symptoms-start" component={onboardingSymptomsStart} />
             <Stack.Screen name="onboarding-symptoms-custom" component={OnboardingSymptomsCustom} />

@@ -22,6 +22,20 @@ export const INDICATEURS_LISTE_ONBOARDING_SOMMEIL = [
   "Energie",
   "Réveils nocturnes",
 ];
+export const INDICATEURS_LISTE_ONBOARDING_CUSTOM_SIMPLE = [
+  "Anxiété",
+  "Confiance",
+  "Colère",
+  "Idées noires",
+  null,
+  "Fatigue",
+  "Crise de larmes",
+  "Procrastination",
+  "Ruminations sur le passé",
+  null,
+  "Je suis fier(e) de moi",
+  "Je me sens seul(e)",
+];
 
 export const INDICATEURS_LISTE_ONBOARDING = [
   "Humeur générale",

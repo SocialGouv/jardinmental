@@ -295,7 +295,7 @@ const stylesButton = StyleSheet.create({
   },
 });
 
-const stylesA = StyleSheet.create({
+export const stylesA = StyleSheet.create({
   categorieContainer: {
     backgroundColor: "#F4FCFD",
     borderColor: "#D4F0F2",
@@ -333,10 +333,11 @@ const stylesA = StyleSheet.create({
     fontSize: 15,
     color: "#000",
     flex: 1,
+    marginLeft: 6,
   },
 });
 
-const styleSwitch = StyleSheet.create({
+export const styleSwitch = StyleSheet.create({
   container: {
     display: "flex",
     flexDirection: "row",
@@ -349,7 +350,7 @@ const styleSwitch = StyleSheet.create({
   },
 });
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
   divider: {
     height: 1,
     backgroundColor: "#E0E0E0",
@@ -401,7 +402,7 @@ const styles = StyleSheet.create({
   question: {
     paddingVertical: 15,
     textAlign: "left",
-    flex: 1,
+    //flex: 1,
     color: colors.BLUE,
     fontSize: 15,
     fontWeight: "400",

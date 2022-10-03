@@ -1,5 +1,13 @@
 import React from "react";
-import { StyleSheet, SafeAreaView, View, TouchableOpacity, ScrollView, Dimensions } from "react-native";
+import {
+  StyleSheet,
+  SafeAreaView,
+  View,
+  TouchableOpacity,
+  ScrollView,
+  Dimensions,
+  Image,
+} from "react-native";
 import Text from "../../../components/MyText";
 import { colors } from "../../../utils/colors";
 import localStorage from "../../../utils/localStorage";
@@ -15,8 +23,8 @@ const Supported = ({ navigation }) => {
     Matomo.setDimensions({
       [MATOMO_DIMENSION.SUPPORTED]: value,
     });
-    //navigate to tabs
-    navigation.navigate("onboarding-explanation-indicator-0");
+    //navigate to explanation
+    navigation.navigate("onboarding-explanation-indicator-1");
     //set local storage
     await localStorage.setSupported(value);
   };
@@ -34,9 +42,7 @@ const Supported = ({ navigation }) => {
       </View>
       <ScrollView style={styles.container} contentContainerStyle={styles.scrollContainer}>
         <View style={styles.header}>
-          <Text style={styles.title}>
-            Faisons connaissance pour personnaliser votre expérience sur Jardin&nbsp;Mental
-          </Text>
+          <Text style={styles.title}>Faisons connaissance</Text>
           <Text style={styles.subtitle}>Vous êtes actuellement :</Text>
         </View>
         <Card
@@ -56,6 +62,16 @@ const Supported = ({ navigation }) => {
         />
         <Card title="Sans suivi" color="#F4FCFD" handleClick={() => handleClick("NO")} />
         <DarkCard title="Professionnel de santé" color="#F4FCFD" handleClick={() => handleClick("PRO")} />
+
+        <View style={styles.hintContainer}>
+          <Image
+            source={require("../../../../assets/imgs/onboarding/professionnel-sante.png")}
+            style={styles.hintImage}
+          />
+          <Text style={styles.hintText}>
+            N’hésitez pas à montrer l’application à un professionnel de santé pour vous aider
+          </Text>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -149,6 +165,30 @@ const styles = StyleSheet.create({
     padding: 20,
     flex: 1,
     display: "flex",
+    overflow: "visible",
+  },
+  hintContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    margin: 20,
+    padding: 10,
+    borderRadius: 15,
+    borderWidth: 1,
+    borderColor: "#26387C",
+  },
+  hintImage: {
+    width: 41,
+    height: 41,
+    marginRight: 12,
+  },
+  hintText: {
+    flex: 1,
+    fontFamily: "Karla",
+    fontWeight: "700",
+    fontSize: 13,
+    lineHeight: 15,
+    color: "#26387C",
   },
 });
 
