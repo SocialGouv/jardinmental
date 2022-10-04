@@ -1,14 +1,14 @@
 import React from "react";
-import { SafeAreaView, View, ScrollView } from "react-native";
+import { View, ScrollView } from "react-native";
 import Text from "../../../components/MyText";
-import { colors } from "../../../utils/colors";
 import Button from "../../../components/Button";
-import BackButton from "../../../components/BackButton";
 import localStorage from "../../../utils/localStorage";
 import { ONBOARDING_STEPS } from "../../../utils/constants";
 import CheckBoard from "../../../../assets/svg/CheckBoard";
 import { onboardingStyles } from "../styles";
 import { StickyButtonContainer } from "../StickyButton";
+import { SafeAreaViewWithOptionalHeader } from "../ProgressHeader";
+import { OnboardingBackButton } from "../BackButton";
 
 const Explanation = ({ navigation }) => {
   React.useEffect(() => {
@@ -22,9 +22,9 @@ const Explanation = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={onboardingStyles.safe}>
+    <SafeAreaViewWithOptionalHeader style={onboardingStyles.safe}>
       <View style={onboardingStyles.topContainer}>
-        <BackButton onPress={navigation.goBack} />
+        <OnboardingBackButton onPress={navigation.goBack} />
       </View>
       <ScrollView
         style={onboardingStyles.scroll}
@@ -50,7 +50,7 @@ const Explanation = ({ navigation }) => {
       <StickyButtonContainer>
         <Button title={`D’accord, c’est parti !`} onPress={handlePress} buttonStyle={{ minWidth: 0 }} />
       </StickyButtonContainer>
-    </SafeAreaView>
+    </SafeAreaViewWithOptionalHeader>
   );
 };
 

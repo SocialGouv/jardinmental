@@ -1,19 +1,20 @@
 import React from "react";
-import { StyleSheet, SafeAreaView, View, ScrollView } from "react-native";
+import { StyleSheet, View, ScrollView } from "react-native";
 import Text from "../../components/MyText";
 import Button from "../../components/Button";
 import { colors } from "../../utils/colors";
 import Felicitation from "../../../assets/svg/felicitation";
-import BackButton from "../../components/BackButton";
 import localStorage from "../../utils/localStorage";
 import { onboardingStyles } from "./styles";
 import { StickyButtonContainer } from "./StickyButton";
+import { OnboardingBackButton } from "./BackButton";
+import { SafeAreaViewWithOptionalHeader } from "./ProgressHeader";
 
 const Onboarding = ({ navigation }) => {
   return (
-    <SafeAreaView style={onboardingStyles.safe}>
+    <SafeAreaViewWithOptionalHeader style={onboardingStyles.safe}>
       <View style={onboardingStyles.topContainer}>
-        <BackButton onPress={navigation.goBack} />
+        <OnboardingBackButton onPress={navigation.goBack} />
       </View>
       <ScrollView
         style={onboardingStyles.scroll}
@@ -55,7 +56,7 @@ const Onboarding = ({ navigation }) => {
           title="J'ai besoin d'explication"
         />
       </StickyButtonContainer>
-    </SafeAreaView>
+    </SafeAreaViewWithOptionalHeader>
   );
 };
 

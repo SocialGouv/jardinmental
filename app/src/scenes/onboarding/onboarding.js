@@ -25,8 +25,11 @@ const Onboarding = ({ navigation }) => {
   }, [navigation]);
 
   const validateOnboarding = async () => {
-    const target = firstTime ? "supported" : "tabs";
-    navigation.navigate(target);
+    if (firstTime) {
+      navigation.navigate("deepOnboarding", { name: "supported" });
+    } else {
+      navigation.navigate("tabs");
+    }
   };
 
   const onPressNext = () => swiperRef?.current?.scrollBy(1);

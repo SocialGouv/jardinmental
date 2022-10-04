@@ -1,9 +1,8 @@
 import React, { useContext, useState, useEffect } from "react";
-import { StyleSheet, ScrollView, SafeAreaView, View, TouchableOpacity } from "react-native";
+import { StyleSheet, ScrollView, View, TouchableOpacity } from "react-native";
 import Text from "../../../components/MyText";
 import { colors } from "../../../utils/colors";
 import { DiaryDataContext } from "../../../context/diaryData";
-import BackButton from "../../../components/BackButton";
 import localStorage from "../../../utils/localStorage";
 import NoData from "./no-data";
 import DrugItem from "./drug-item";
@@ -13,6 +12,8 @@ import Logo from "../../../../assets/svg/traitement";
 import { ONBOARDING_STEPS } from "../../../utils/constants";
 import { onboardingStyles } from "../styles";
 import { StickyButtonContainer } from "../StickyButton";
+import { SafeAreaViewWithOptionalHeader } from "../ProgressHeader";
+import { OnboardingBackButton } from "../BackButton";
 
 const Drugs = ({ navigation, route }) => {
   const [diaryData, setDiaryData] = useContext(DiaryDataContext);
@@ -161,12 +162,12 @@ const Drugs = ({ navigation, route }) => {
   };
 
   return (
-    <SafeAreaView style={onboardingStyles.safe}>
+    <SafeAreaViewWithOptionalHeader style={onboardingStyles.safe}>
       <View style={onboardingStyles.topContainer}>
-        <BackButton onPress={navigation.goBack} />
+        <OnboardingBackButton onPress={navigation.goBack} />
       </View>
       {render()}
-    </SafeAreaView>
+    </SafeAreaViewWithOptionalHeader>
   );
 };
 

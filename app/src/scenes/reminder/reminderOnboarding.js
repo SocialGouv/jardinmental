@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Alert, View, TouchableOpacity, StyleSheet, SafeAreaView, ScrollView } from "react-native";
+import { Alert, View, TouchableOpacity, StyleSheet, ScrollView } from "react-native";
 import { openSettings } from "react-native-permissions";
 import dayjs from "dayjs";
 import Text from "../../components/MyText";
@@ -10,11 +10,12 @@ import TimePicker from "../../components/timePicker";
 import NotificationService from "../../services/notifications";
 import { colors } from "../../utils/colors";
 import logEvents from "../../services/logEvents";
-import BackButton from "../../components/BackButton";
 import Rappel from "../onboarding/assets/Rappel";
 import Button from "../../components/Button";
 import { onboardingStyles } from "../onboarding/styles";
 import { StickyButtonContainer } from "../onboarding/StickyButton";
+import { SafeAreaViewWithOptionalHeader } from "../onboarding/ProgressHeader";
+import { OnboardingBackButton } from "../onboarding/BackButton";
 
 const ReminderStorageKey = "@Reminder";
 
@@ -138,9 +139,9 @@ const Reminder = ({
   };
 
   return (
-    <SafeAreaView style={onboardingStyles.safe}>
+    <SafeAreaViewWithOptionalHeader style={onboardingStyles.safe}>
       <View style={onboardingStyles.topContainer}>
-        <BackButton onPress={navigation.goBack} />
+        <OnboardingBackButton onPress={navigation.goBack} />
       </View>
       <ScrollView
         style={onboardingStyles.scroll}
@@ -181,7 +182,7 @@ const Reminder = ({
         </TouchableOpacity>
       </StickyButtonContainer>
       <TimePicker visible={reminderSetupVisible} selectDate={setReminderRequest} />
-    </SafeAreaView>
+    </SafeAreaViewWithOptionalHeader>
   );
 };
 

@@ -1,13 +1,14 @@
-import React, { useState, useCallback, useEffect } from "react";
-import { SafeAreaView, View, ScrollView, Text, Image } from "react-native";
+import React, { useState, useCallback } from "react";
+import { View, ScrollView, Text, Image } from "react-native";
 import Button from "../../../components/Button";
-import BackButton from "../../../components/BackButton";
 import { onboardingStyles } from "../styles";
 import localStorage from "../../../utils/localStorage";
 import { useFocusEffect } from "@react-navigation/native";
 import { INDICATEURS_LISTE_ONBOARDING_CUSTOM_SIMPLE } from "../../../utils/liste_indicateurs";
 import { StickyButtonContainer } from "../StickyButton";
 import { CheckBoxList } from "../CheckBoxList";
+import { OnboardingBackButton } from "../BackButton";
+import { SafeAreaViewWithOptionalHeader } from "../ProgressHeader";
 
 export const OnboardingSimpleCustomSymptoms = ({ navigation }) => {
   const [symptomSelection, setSymptomSelection] = useState({});
@@ -30,9 +31,9 @@ export const OnboardingSimpleCustomSymptoms = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={onboardingStyles.safe}>
+    <SafeAreaViewWithOptionalHeader style={onboardingStyles.safe}>
       <View style={onboardingStyles.topContainer}>
-        <BackButton onPress={navigation.goBack} />
+        <OnboardingBackButton onPress={navigation.goBack} />
       </View>
       <ScrollView
         keyboardShouldPersistTaps="handled"
@@ -62,6 +63,6 @@ export const OnboardingSimpleCustomSymptoms = ({ navigation }) => {
       <StickyButtonContainer>
         <Button title="Suivant" onPress={handleNext} buttonStyle={{ minWidth: 0 }} />
       </StickyButtonContainer>
-    </SafeAreaView>
+    </SafeAreaViewWithOptionalHeader>
   );
 };

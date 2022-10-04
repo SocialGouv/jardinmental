@@ -1,20 +1,13 @@
 import React from "react";
-import {
-  StyleSheet,
-  SafeAreaView,
-  View,
-  TouchableOpacity,
-  ScrollView,
-  Dimensions,
-  Image,
-} from "react-native";
+import { StyleSheet, View, TouchableOpacity, ScrollView, Dimensions, Image } from "react-native";
 import Text from "../../../components/MyText";
 import { colors } from "../../../utils/colors";
 import localStorage from "../../../utils/localStorage";
 import logEvents from "../../../services/logEvents";
 import Matomo from "../../../services/matomo";
 import { MATOMO_DIMENSION, ONBOARDING_STEPS } from "../../../utils/constants";
-import BackButton from "../../../components/BackButton";
+import { SafeAreaViewWithOptionalHeader } from "../ProgressHeader";
+import { OnboardingBackButton } from "../BackButton";
 
 const Supported = ({ navigation }) => {
   const handleClick = async (value) => {
@@ -36,9 +29,9 @@ const Supported = ({ navigation }) => {
   }, []);
 
   return (
-    <SafeAreaView style={styles.safe}>
+    <SafeAreaViewWithOptionalHeader style={styles.safe}>
       <View style={styles.buttonsContainer}>
-        <BackButton onPress={navigation.goBack} />
+        <OnboardingBackButton onPress={navigation.goBack} />
       </View>
       <ScrollView style={styles.container} contentContainerStyle={styles.scrollContainer}>
         <View style={styles.header}>
@@ -73,7 +66,7 @@ const Supported = ({ navigation }) => {
           </Text>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </SafeAreaViewWithOptionalHeader>
   );
 };
 
@@ -127,7 +120,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scrollContainer: {
-    paddingBottom: 150,
+    paddingBottom: 40,
   },
   cardTitle: {
     color: "#fff",
