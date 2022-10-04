@@ -19,7 +19,7 @@ export const onboardingStyles = StyleSheet.create({
   },
   scrollContentContainer: {
     flexGrow: 1,
-    marginBottom: 60,
+    paddingBottom: 60,
   },
   containerBottom: {
     //flex: 1,
@@ -40,10 +40,11 @@ export const onboardingStyles = StyleSheet.create({
     alignItems: "stretch",
   },
   container: {
-    flex: 1,
+    flexGrow: 1,
     justifyContent: "center",
     alignItems: "stretch",
     paddingHorizontal: 20,
+    paddingVertical: 20,
   },
   emphasis: {
     color: "#1FC6D5",

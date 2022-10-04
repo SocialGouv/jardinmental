@@ -8,6 +8,8 @@ import Matomo from "../../../services/matomo";
 import { MATOMO_DIMENSION, ONBOARDING_STEPS } from "../../../utils/constants";
 import { SafeAreaViewWithOptionalHeader } from "../ProgressHeader";
 import { OnboardingBackButton } from "../BackButton";
+import { onboardingStyles } from "../styles";
+import { StickyButtonContainer } from "../StickyButton";
 
 const Supported = ({ navigation }) => {
   const handleClick = async (value) => {
@@ -29,41 +31,46 @@ const Supported = ({ navigation }) => {
   }, []);
 
   return (
-    <SafeAreaViewWithOptionalHeader style={styles.safe}>
-      <View style={styles.buttonsContainer}>
+    <SafeAreaViewWithOptionalHeader style={onboardingStyles.safe}>
+      <View style={onboardingStyles.topContainer}>
         <OnboardingBackButton onPress={navigation.goBack} />
       </View>
-      <ScrollView style={styles.container} contentContainerStyle={styles.scrollContainer}>
-        <View style={styles.header}>
-          <Text style={styles.title}>Faisons connaissance</Text>
-          <Text style={styles.subtitle}>Vous êtes actuellement :</Text>
-        </View>
-        <Card
-          title="Suivi et le professionnel qui me suit m’a recommandé l’application"
-          color="#F4FCFD"
-          handleClick={() => handleClick("YES")}
-        />
-        <Card
-          title="Suivi et j’ai téléchargé moi-même l’application"
-          color="#F4FCFD"
-          handleClick={() => handleClick("YES_SOLO")}
-        />
-        <Card
-          title="Sans suivi mais je le souhaite"
-          color="#F4FCFD"
-          handleClick={() => handleClick("NOT_YET")}
-        />
-        <Card title="Sans suivi" color="#F4FCFD" handleClick={() => handleClick("NO")} />
-        <DarkCard title="Professionnel de santé" color="#F4FCFD" handleClick={() => handleClick("PRO")} />
-
-        <View style={styles.hintContainer}>
-          <Image
-            source={require("../../../../assets/imgs/onboarding/professionnel-sante.png")}
-            style={styles.hintImage}
+      <ScrollView
+        style={onboardingStyles.scroll}
+        contentContainerStyle={onboardingStyles.scrollContentContainer}
+      >
+        <View style={onboardingStyles.container}>
+          <View style={styles.header}>
+            <Text style={styles.title}>Faisons connaissance</Text>
+            <Text style={styles.subtitle}>Vous êtes actuellement :</Text>
+          </View>
+          <Card
+            title="Suivi et le professionnel qui me suit m’a recommandé l’application"
+            color="#F4FCFD"
+            handleClick={() => handleClick("YES")}
           />
-          <Text style={styles.hintText}>
-            N’hésitez pas à montrer l’application à un professionnel de santé pour vous aider
-          </Text>
+          <Card
+            title="Suivi et j’ai téléchargé moi-même l’application"
+            color="#F4FCFD"
+            handleClick={() => handleClick("YES_SOLO")}
+          />
+          <Card
+            title="Sans suivi mais je le souhaite"
+            color="#F4FCFD"
+            handleClick={() => handleClick("NOT_YET")}
+          />
+          <Card title="Sans suivi" color="#F4FCFD" handleClick={() => handleClick("NO")} />
+          <DarkCard title="Professionnel de santé" color="#F4FCFD" handleClick={() => handleClick("PRO")} />
+
+          <View style={styles.hintContainer}>
+            <Image
+              source={require("../../../../assets/imgs/onboarding/professionnel-sante.png")}
+              style={styles.hintImage}
+            />
+            <Text style={styles.hintText}>
+              N’hésitez pas à montrer l’application à un professionnel de santé pour vous aider
+            </Text>
+          </View>
         </View>
       </ScrollView>
     </SafeAreaViewWithOptionalHeader>
@@ -105,7 +112,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     minHeight: Dimensions.get("window").height > 700 ? 75 : 40,
-    flex: 1,
+    //flexGrow: 1,
   },
   darkCard: {
     backgroundColor: colors.DARK_BLUE,
@@ -117,7 +124,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     minHeight: Dimensions.get("window").height > 700 ? 75 : 40,
-    flex: 1,
+    //flexGrow: 1,
   },
   scrollContainer: {
     paddingBottom: 40,
@@ -137,6 +144,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   header: {
+    marginTop: 10,
     marginBottom: 15,
     alignItems: "center",
   },

@@ -11,7 +11,6 @@ import OnboardingDrugs from "./onboardingDrugs";
 import OnboardingHint from "./onboardingHint";
 import Reminder from "../reminder";
 import { ONBOARDING_STEPS } from "../../utils/constants";
-import Supported from "./onboardingSupported";
 import OnboardingExplanationScreen1 from "./onboardingExplanation/screen1";
 import { OnboardingMood } from "./onboardingSymptomsStart/MoodScreen";
 import { OnboardingSleep } from "./onboardingSymptomsStart/SleepScreen";
@@ -26,7 +25,7 @@ const Onboarding = () => {
   return (
     <Stack.Navigator initialRouteName={ONBOARDING_STEPS.STEP_CGU} headerMode="none">
       <Stack.Screen name={ONBOARDING_STEPS.STEP_CGU} component={OnboardingPresentation} />
-      <Stack.Screen name={ONBOARDING_STEPS.STEP_SUPPORTED} component={OnboardingSupported} />
+      {/* <Stack.Screen name={ONBOARDING_STEPS.STEP_SUPPORTED} component={OnboardingSupported} /> */}
       <Stack.Screen name={ONBOARDING_STEPS.STEP_EXPLANATION} component={OnboardingExplanation} />
       <Stack.Screen name={ONBOARDING_STEPS.STEP_SYMPTOMS} component={OnboardingSymptoms} />
       <Stack.Screen
@@ -64,8 +63,8 @@ const DeepOnboarding = () => {
       screenOptions={{ ...progressHeaderOptions({ insets, slidesCount }) }}
     >
       <DeepStack.Screen
-        name="supported"
-        component={ProgressScreen({ slideIndex: 1, Component: Supported })}
+        name={ONBOARDING_STEPS.STEP_SUPPORTED}
+        component={ProgressScreen({ slideIndex: 1, Component: OnboardingSupported })}
       />
       <DeepStack.Screen
         name="onboarding-explanation-indicator-1"

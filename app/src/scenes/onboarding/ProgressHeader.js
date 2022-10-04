@@ -5,7 +5,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { BlurView } from "@react-native-community/blur";
 import BackButton from "../../components/BackButton";
 
-export const PROGRESS_HEADER_HEIGHT = 40;
+export const PROGRESS_HEADER_HEIGHT = 60;
 export const PROGRESS_HEADER_PADDING_HORIZONTAL = 0;
 
 const ProgressHeaderContext = createContext();
