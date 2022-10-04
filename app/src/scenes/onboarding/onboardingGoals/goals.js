@@ -5,12 +5,19 @@ import BackButton from "../../../components/BackButton";
 import { onboardingStyles } from "../styles";
 import localStorage from "../../../utils/localStorage";
 import { useFocusEffect } from "@react-navigation/native";
-import { INDICATEURS_LISTE_ONBOARDING_CUSTOM_SIMPLE } from "../../../utils/liste_indicateurs";
+import { INDICATEURS_GOALS_SIMPLE } from "../../../utils/liste_indicateurs";
 import { StickyButtonContainer } from "../StickyButton";
 import { CheckBoxList } from "../CheckBoxList";
 
-export const OnboardingSimpleCustomSymptoms = ({ navigation }) => {
+export const OnboardingGoals = ({ navigation }) => {
   const [symptomSelection, setSymptomSelection] = useState({});
+  const countGoals = () =>
+    INDICATEURS_GOALS_SIMPLE.reduce((acc, id) => {
+      if (symptomSelection?.[id]) return acc + 1;
+      return acc;
+    }, 0);
+  const [count, setCount] = useState(countGoals());
+  useEffect(() => setCount(countGoals()), [symptomSelection]);
 
   useFocusEffect(
     useCallback(() => {
@@ -26,7 +33,7 @@ export const OnboardingSimpleCustomSymptoms = ({ navigation }) => {
     const symptoms = { ...symptomSelection };
 
     await localStorage.setSymptoms(symptoms);
-    navigation.navigate("onboarding-goals", { onboarding: true });
+    navigation.navigate("reminder", { onboarding: true });
   };
 
   return (
@@ -41,26 +48,33 @@ export const OnboardingSimpleCustomSymptoms = ({ navigation }) => {
       >
         <View style={onboardingStyles.container}>
           <View style={onboardingStyles.containerTopTitle} key="title">
-            <Text style={onboardingStyles.h1}>Que souhaitez-vous suivre ?</Text>
+            <Text style={onboardingStyles.h1}>Suivre un objectif ?</Text>
           </View>
           <View style={onboardingStyles.imageContainer} key="image">
             <Image
-              source={require("../../../../assets/imgs/onboarding/custom-symptoms.png")}
+              source={require("../../../../assets/imgs/onboarding/goals.png")}
               style={onboardingStyles.imageSize}
             />
           </View>
-          <View style={{ marginBottom: 20 }}>
-            <Text style={onboardingStyles.h3}>Vous sentez-vous concerné(e) par :</Text>
-          </View>
           <CheckBoxList
-            list={INDICATEURS_LISTE_ONBOARDING_CUSTOM_SIMPLE}
+            list={INDICATEURS_GOALS_SIMPLE}
             symptomSelection={symptomSelection}
             setSymptomSelection={setSymptomSelection}
           />
         </View>
       </ScrollView>
       <StickyButtonContainer>
-        <Button title="Suivant" onPress={handleNext} buttonStyle={{ minWidth: 0 }} />
+        <View style={onboardingStyles.alertContainer}>
+          <Text style={onboardingStyles.alertText}>
+            Se fixer <Text style={onboardingStyles.bold}>5</Text> objectifs{" "}
+            <Text style={onboardingStyles.bold}>maximum</Text> est un bon départ
+          </Text>
+        </View>
+        <Button
+          title={`Continuer avec ${count} objectif${count > 1 ? "s" : ""}`}
+          onPress={handleNext}
+          buttonStyle={{ minWidth: 0 }}
+        />
       </StickyButtonContainer>
     </SafeAreaView>
   );

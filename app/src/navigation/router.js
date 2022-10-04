@@ -45,6 +45,7 @@ import Notifications from "../services/notifications";
 import { OnboardingMood } from "../scenes/onboarding/onboardingSymptomsStart/MoodScreen";
 import { OnboardingSleep } from "../scenes/onboarding/onboardingSymptomsStart/SleepScreen";
 import { OnboardingSimpleCustomSymptoms } from "../scenes/onboarding/onboardingSymptomsCustom/SimpleCustomScreen";
+import { OnboardingGoals } from "../scenes/onboarding/onboardingGoals/goals";
 
 const Stack = createStackNavigator();
 
@@ -120,6 +121,7 @@ class Router extends React.Component {
             />
             <Stack.Screen name="onboarding-symptoms-start" component={onboardingSymptomsStart} />
             <Stack.Screen name="onboarding-symptoms-custom" component={OnboardingSymptomsCustom} />
+            <Stack.Screen name="onboarding-goals" component={OnboardingGoals} />
             <Stack.Screen name="onboarding-drugs" component={OnboardingDrugs} />
             <Stack.Screen name="onboarding-drugs-information" component={OnboardingDrugsInformation} />
             <Stack.Screen name="onboarding-drugs-list" component={OnboardingDrugsList} />

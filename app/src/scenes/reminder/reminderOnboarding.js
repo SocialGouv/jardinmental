@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Alert, View, TouchableOpacity, StyleSheet, SafeAreaView } from "react-native";
+import { Alert, View, TouchableOpacity, StyleSheet, SafeAreaView, ScrollView } from "react-native";
 import { openSettings } from "react-native-permissions";
 import dayjs from "dayjs";
 import Text from "../../components/MyText";
@@ -13,6 +13,8 @@ import logEvents from "../../services/logEvents";
 import BackButton from "../../components/BackButton";
 import Rappel from "../onboarding/assets/Rappel";
 import Button from "../../components/Button";
+import { onboardingStyles } from "../onboarding/styles";
+import { StickyButtonContainer } from "../onboarding/StickyButton";
 
 const ReminderStorageKey = "@Reminder";
 
@@ -136,29 +138,34 @@ const Reminder = ({
   };
 
   return (
-    <SafeAreaView style={styles.safe}>
-      <View style={styles.container}>
+    <SafeAreaView style={onboardingStyles.safe}>
+      <View style={onboardingStyles.topContainer}>
         <BackButton onPress={navigation.goBack} />
-        <View style={styles.containerSvg}>
-          <Rappel width={100} height={100} />
-        </View>
-        <View style={styles.description}>
+      </View>
+      <ScrollView
+        style={onboardingStyles.scroll}
+        contentContainerStyle={onboardingStyles.scrollContentContainer}
+      >
+        <View style={onboardingStyles.container}>
+          <View style={onboardingStyles.imageContainer}>
+            <Rappel width={100} height={100} />
+          </View>
           {reminder ? (
             <>
-              <View style={styles.titleContainer}>
-                <Text style={styles.title}>
-                  Plus vous remplirez votre questionnaire, plus vous en apprendrez sur vous et votre santé
-                  mentale
-                </Text>
+              <View style={onboardingStyles.containerBottom}>
+                <View style={onboardingStyles.containerBottomTitle}>
+                  <Text style={onboardingStyles.h1}>Programmez un rappel</Text>
+                </View>
+                <View style={onboardingStyles.containerBottomText}>
+                  <Text style={onboardingStyles.presentationText}>
+                    Plus vous remplirez votre questionnaire, plus vous en apprendrez sur vous et votre santé
+                    mentale
+                  </Text>
+                </View>
               </View>
-              <View style={styles.bodyContainer}>
-                <Text style={styles.body}>
-                  Pour vous aider, je peux vous envoyer une notification de rappel à :
-                </Text>
-                <TouchableOpacity onPress={showReminderSetup}>
-                  <Text style={styles.time}>{`${dayjs(reminder).format("HH:mm")}`}</Text>
-                </TouchableOpacity>
-              </View>
+              <TouchableOpacity onPress={showReminderSetup}>
+                <Text style={styles.time}>{`${dayjs(reminder).format("HH:mm")}`}</Text>
+              </TouchableOpacity>
             </>
           ) : (
             <Text style={styles.subtitle}>
@@ -166,13 +173,13 @@ const Reminder = ({
             </Text>
           )}
         </View>
-      </View>
-      <View style={stylesButton.buttonWrapper}>
+      </ScrollView>
+      <StickyButtonContainer>
         <Button onPress={validateOnboarding} title="Suivant" />
         <TouchableOpacity style={stylesButton.button} onPress={desactivateReminder}>
           <Text style={stylesButton.text}>Désactiver le rappel</Text>
         </TouchableOpacity>
-      </View>
+      </StickyButtonContainer>
       <TimePicker visible={reminderSetupVisible} selectDate={setReminderRequest} />
     </SafeAreaView>
   );

@@ -57,6 +57,15 @@ export const onboardingStyles = StyleSheet.create({
     textAlign: "left",
     color: "#26387C",
   },
+  h2: {
+    fontFamily: "Karla",
+    fontStyle: "normal",
+    fontWeight: "700",
+    fontSize: 20,
+    lineHeight: 23,
+    textAlign: "left",
+    color: "#26387C",
+  },
   h3: {
     fontFamily: "Karla",
     fontStyle: "normal",
@@ -114,5 +123,20 @@ export const onboardingStyles = StyleSheet.create({
   },
   checkbox: {
     marginRight: 20,
+  },
+  alertContainer: {
+    backgroundColor: "#FEFFE4",
+    borderColor: "#EDF053",
+    borderWidth: 0.5,
+    marginBottom: 10,
+    borderRadius: 10,
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 10,
+  },
+  alertText: {
+    display: "flex",
+    flex: 1,
   },
 });

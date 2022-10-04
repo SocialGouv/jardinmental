@@ -6,32 +6,40 @@ import { colors } from "../../utils/colors";
 import Felicitation from "../../../assets/svg/felicitation";
 import BackButton from "../../components/BackButton";
 import localStorage from "../../utils/localStorage";
+import { onboardingStyles } from "./styles";
+import { StickyButtonContainer } from "./StickyButton";
 
 const Onboarding = ({ navigation }) => {
   return (
-    <SafeAreaView style={styles.safe}>
-      <View style={styles.buttonsContainer}>
+    <SafeAreaView style={onboardingStyles.safe}>
+      <View style={onboardingStyles.topContainer}>
         <BackButton onPress={navigation.goBack} />
       </View>
-      <ScrollView style={styles.container} contentContainerStyle={styles.scrollContainer}>
-        <View style={styles.containerSvg}>
-          <Felicitation width={100} height={100} />
-        </View>
-        <View>
-          <Text style={styles.title}>
-            Félicitations ! Vous êtes désormais prêt(e) à démarrer votre suivi quotidien
-          </Text>
-        </View>
-        <View style={styles.defaultContainer}>
-          <Text style={styles.body}>
-            Si vous le souhaitez, je peux d’abord vous expliquer les outils de suivi que vous trouverez dans
-            la partie “mes analyses”
-          </Text>
+      <ScrollView
+        style={onboardingStyles.scroll}
+        contentContainerStyle={onboardingStyles.scrollContentContainer}
+      >
+        <View style={onboardingStyles.container}>
+          <View style={onboardingStyles.imageContainer}>
+            <Felicitation width={100} height={100} />
+          </View>
+          <View style={onboardingStyles.containerBottom}>
+            <View style={onboardingStyles.containerBottomTitle}>
+              <Text style={onboardingStyles.h1}>Félicitations !</Text>
+              <Text style={onboardingStyles.h2}>Vous êtes prêt(e) à démarrer</Text>
+            </View>
+            <View style={onboardingStyles.containerBottomText}>
+              <Text style={onboardingStyles.presentationText}>
+                Si vous le souhaitez, je peux vous expliquer les outils de suivi que vous trouverez dans
+                l’application
+              </Text>
+            </View>
+          </View>
         </View>
       </ScrollView>
-      <View style={stylesButton.buttonWrapper}>
+      <StickyButtonContainer>
         <Button
-          textStyle={{ fontSize: 16, fontWeight: "bold" }}
+          //textStyle={{ fontSize: 16, fontWeight: "bold" }}
           onPress={async () => {
             await localStorage.setOnboardingDone(true);
             navigation.navigate("tabs", { onboarding: true });
@@ -46,7 +54,7 @@ const Onboarding = ({ navigation }) => {
           }}
           title="J'ai besoin d'explication"
         />
-      </View>
+      </StickyButtonContainer>
     </SafeAreaView>
   );
 };

@@ -37,6 +37,20 @@ export const INDICATEURS_LISTE_ONBOARDING_CUSTOM_SIMPLE = [
   "Je me sens seul(e)",
 ];
 
+export const INDICATEURS_GOALS_SIMPLE = [
+  "Trouver 3 choses positives de la journée",
+  "Je fais une activité plaisir",
+  "Contact social",
+  null,
+  "Horaires réguliers de sommeil",
+  "30 min d’activité physique",
+  "Pas de grignotage entre les repas",
+  null,
+  "Me lever le matin",
+  "Faire mes tâches ménagères",
+  "Faire mes tâches administratives",
+];
+
 export const INDICATEURS_LISTE_ONBOARDING = [
   "Humeur générale",
   "Anxiété",
