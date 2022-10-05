@@ -40,8 +40,8 @@ const Explanation = ({ navigation }) => {
             </View>
             <View style={onboardingStyles.containerBottomText}>
               <Text style={onboardingStyles.presentationText}>
-                Pas d’inquiétude, vous pourrez modifier votre sélection plus tard et créer vos propres
-                indicateurs dans l’application
+                Ce sont des ressentis, des pensées ou des manifestations physiques qui vous permettent de
+                comprendre votre état de santé mentale
               </Text>
             </View>
           </View>

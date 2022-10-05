@@ -13,7 +13,7 @@ import { StickyButtonContainer } from "../StickyButton";
 export default ({ navigation, route }) => {
   const handleNoTreatment = async () => {
     await localStorage.setMedicalTreatment([]);
-    navigation.navigate("onboarding-felicitation");
+    navigation.navigate("onboarding-custom-more");
   };
   const handleDrugInformation = async () => {
     navigation.navigate("onboarding-drugs-information", { onboarding: true });

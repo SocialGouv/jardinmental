@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState, useContext, createContext, useCallback } from "react";
-import { View, StyleSheet, Animated, Easing } from "react-native";
+import { View, StyleSheet, Animated, Easing, Platform } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { BlurView } from "@react-native-community/blur";
@@ -146,18 +146,6 @@ const ProgressHeader = ({ insets, slidesCount }) => {
         ]}
         collapsable={false}
       >
-        <BlurView
-          style={{
-            position: "absolute",
-            top: 0,
-            bottom: 0,
-            left: 0,
-            right: 0,
-          }}
-          blurType="light"
-          blurAmount={3}
-          reducedTransparencyFallbackColor="white"
-        />
         <Animated.View
           style={[{ paddingTop: insets.top }, { transform: [{ translateY: animatedVisibleY }] }]}
         >

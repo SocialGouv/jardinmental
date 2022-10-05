@@ -20,6 +20,7 @@ import OnboardingFelicitation from "./onboardingFelicitation";
 import { progressHeaderOptions, ProgressScreen, useOnboardingProgressHeader } from "./ProgressHeader";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useFocusEffect } from "@react-navigation/native";
+import { OnboardingCustomMore } from "./onboardingCustomMore";
 
 const Onboarding = () => {
   const { setIsVisible } = useOnboardingProgressHeader();
@@ -33,7 +34,7 @@ const Onboarding = () => {
   );
 
   const insets = useSafeAreaInsets();
-  const slidesCount = 9;
+  const slidesCount = 10;
   const headerOptions = progressHeaderOptions({ insets, slidesCount });
 
   return (
@@ -83,9 +84,14 @@ const Onboarding = () => {
         component={ProgressScreen({ slideIndex: 8, Component: OnboardingDrugs })}
       />
       <Stack.Screen
+        name={"onboarding-custom-more"}
+        options={headerOptions}
+        component={ProgressScreen({ slideIndex: 9, Component: OnboardingCustomMore })}
+      />
+      <Stack.Screen
         name="onboarding-felicitation"
         options={headerOptions}
-        component={ProgressScreen({ slideIndex: 9, Component: OnboardingFelicitation })}
+        component={ProgressScreen({ slideIndex: 10, Component: OnboardingFelicitation })}
       />
     </Stack.Navigator>
   );

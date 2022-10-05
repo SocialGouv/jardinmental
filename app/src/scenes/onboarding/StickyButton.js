@@ -5,14 +5,14 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 export const StickyButtonContainer = ({ children }) => {
   const insets = useSafeAreaInsets();
 
-  const containerBottomStyle = { paddingBottom: insets.bottom + Platform.select({ android: 20, ios: 0 }) };
+  const margin = Platform.select({ android: 20, ios: 0 });
 
   return (
     <>
-      <View style={[containerBottomStyle, { opacity: 0 }]} pointerEvents="none">
+      <View style={[{ paddingBottom: margin, opacity: 0 }]} pointerEvents="none">
         {children}
       </View>
-      <View style={[styles.container, containerBottomStyle]}>{children}</View>
+      <View style={[styles.container, { paddingBottom: insets.bottom + margin }]}>{children}</View>
     </>
   );
 };

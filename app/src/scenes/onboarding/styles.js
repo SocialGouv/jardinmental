@@ -142,6 +142,7 @@ export const onboardingStyles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     padding: 10,
+    marginHorizontal: 20,
   },
   alertText: {
     display: "flex",

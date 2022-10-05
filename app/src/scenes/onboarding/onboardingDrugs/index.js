@@ -151,7 +151,7 @@ const Drugs = ({ navigation, route }) => {
         </ScrollView>
         <StickyButtonContainer>
           <TouchableOpacity
-            onPress={() => navigation.navigate("onboarding-felicitation")}
+            onPress={() => navigation.navigate("onboarding-custom-more")}
             style={styles.setupButton}
           >
             <Text style={styles.setupButtonText}>Suivant</Text>

@@ -76,14 +76,14 @@ export const OnboardingGoals = ({ navigation }) => {
             setSymptomSelection={setSymptomSelection}
           />
         </View>
-      </ScrollView>
-      <StickyButtonContainer>
         <View style={onboardingStyles.alertContainer}>
           <Text style={onboardingStyles.alertText}>
             Se fixer <Text style={onboardingStyles.bold}>3</Text> objectifs{" "}
             <Text style={onboardingStyles.bold}>maximum</Text> est un bon départ
           </Text>
         </View>
+      </ScrollView>
+      <StickyButtonContainer>
         <Button
           title={`Continuer avec ${count} objectif${count > 1 ? "s" : ""}`}
           onPress={handleNext}
