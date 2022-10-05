@@ -561,13 +561,13 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Distribution: Fabrique numerique des ministeres sociaux (76GBKHVK25)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 148;
+				CURRENT_PROJECT_VERSION = 149;
 				DEVELOPMENT_TEAM = 76GBKHVK25;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = monsuivipsy/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.34.7;
+				MARKETING_VERSION = 1.34.8;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -590,12 +590,12 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Distribution: Fabrique numerique des ministeres sociaux (76GBKHVK25)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 148;
+				CURRENT_PROJECT_VERSION = 149;
 				DEVELOPMENT_TEAM = 76GBKHVK25;
 				INFOPLIST_FILE = monsuivipsy/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.34.7;
+				MARKETING_VERSION = 1.34.8;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
