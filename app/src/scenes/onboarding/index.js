@@ -22,29 +22,6 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useFocusEffect } from "@react-navigation/native";
 
 const Onboarding = () => {
-  return (
-    <Stack.Navigator initialRouteName={ONBOARDING_STEPS.STEP_CGU} headerMode="none">
-      <Stack.Screen name={ONBOARDING_STEPS.STEP_CGU} component={OnboardingPresentation} />
-      {/* <Stack.Screen name={ONBOARDING_STEPS.STEP_SUPPORTED} component={OnboardingSupported} /> */}
-      <Stack.Screen name={ONBOARDING_STEPS.STEP_EXPLANATION} component={OnboardingExplanation} />
-      <Stack.Screen name={ONBOARDING_STEPS.STEP_SYMPTOMS} component={OnboardingSymptoms} />
-      <Stack.Screen
-        name={ONBOARDING_STEPS.STEP_REMINDER}
-        component={Reminder}
-        initialParams={{ onboarding: true }}
-      />
-      <Stack.Screen name={ONBOARDING_STEPS.STEP_HINT} component={OnboardingHint} />
-      <Stack.Screen name={ONBOARDING_STEPS.STEP_DRUGS} component={OnboardingDrugs} />
-      <Stack.Screen name="deepOnboarding">{(props) => <DeepOnboarding {...props} />}</Stack.Screen>
-    </Stack.Navigator>
-  );
-};
-
-const DeepStack = createStackNavigator();
-
-const DeepOnboarding = () => {
-  const insets = useSafeAreaInsets();
-
   const { setIsVisible } = useOnboardingProgressHeader();
   useFocusEffect(
     useCallback(() => {
@@ -55,47 +32,62 @@ const DeepOnboarding = () => {
     }, [])
   );
 
+  const insets = useSafeAreaInsets();
   const slidesCount = 9;
+  const headerOptions = progressHeaderOptions({ insets, slidesCount });
 
   return (
-    <DeepStack.Navigator
-      initialRouteName={"supported"}
-      screenOptions={{ ...progressHeaderOptions({ insets, slidesCount }) }}
-    >
-      <DeepStack.Screen
+    <Stack.Navigator initialRouteName={ONBOARDING_STEPS.STEP_CGU} screenOptions={{ headerShown: false }}>
+      <Stack.Screen name={ONBOARDING_STEPS.STEP_CGU} component={OnboardingPresentation} />
+
+      <Stack.Screen
         name={ONBOARDING_STEPS.STEP_SUPPORTED}
+        options={headerOptions}
         component={ProgressScreen({ slideIndex: 1, Component: OnboardingSupported })}
       />
-      <DeepStack.Screen
-        name="onboarding-explanation-indicator-1"
+      <Stack.Screen
+        name={ONBOARDING_STEPS.STEP_EXPLANATION}
+        options={headerOptions}
         component={ProgressScreen({ slideIndex: 2, Component: OnboardingExplanationScreen1 })}
       />
-      <DeepStack.Screen
-        name="onboarding-symptoms-mood"
+      <Stack.Screen
+        name={ONBOARDING_STEPS.STEP_SYMPTOMS}
+        options={headerOptions}
         component={ProgressScreen({ slideIndex: 3, Component: OnboardingMood })}
       />
-      <DeepStack.Screen
-        name="onboarding-symptoms-sleep"
+      <Stack.Screen
+        name={ONBOARDING_STEPS.STEP_SYMPTOMS_SLEEP}
+        options={headerOptions}
         component={ProgressScreen({ slideIndex: 4, Component: OnboardingSleep })}
       />
-      <DeepStack.Screen
-        name="onboarding-symptoms-custom-simple"
+      <Stack.Screen
+        name={ONBOARDING_STEPS.STEP_SYMPTOMS_CUSTOM}
+        options={headerOptions}
         component={ProgressScreen({ slideIndex: 5, Component: OnboardingSimpleCustomSymptoms })}
       />
-      <DeepStack.Screen
-        name="onboarding-goals"
+      <Stack.Screen
+        name={ONBOARDING_STEPS.STEP_GOALS}
+        options={headerOptions}
         component={ProgressScreen({ slideIndex: 6, Component: OnboardingGoals })}
       />
-      <DeepStack.Screen name="reminder" component={ProgressScreen({ slideIndex: 7, Component: Reminder })} />
-      <DeepStack.Screen
-        name="onboarding-drugs"
+      <Stack.Screen
+        name={ONBOARDING_STEPS.STEP_REMINDER}
+        initialParams={{ onboarding: true }}
+        options={headerOptions}
+        component={ProgressScreen({ slideIndex: 7, Component: Reminder })}
+      />
+      <Stack.Screen
+        name={ONBOARDING_STEPS.STEP_DRUGS}
+        initialParams={{ onboarding: true }}
+        options={headerOptions}
         component={ProgressScreen({ slideIndex: 8, Component: OnboardingDrugs })}
       />
-      <DeepStack.Screen
+      <Stack.Screen
         name="onboarding-felicitation"
+        options={headerOptions}
         component={ProgressScreen({ slideIndex: 9, Component: OnboardingFelicitation })}
       />
-    </DeepStack.Navigator>
+    </Stack.Navigator>
   );
 };
 

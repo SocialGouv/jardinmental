@@ -16,10 +16,17 @@ import { StickyButtonContainer } from "../StickyButton";
 import { CheckBoxList } from "../CheckBoxList";
 import { SafeAreaViewWithOptionalHeader } from "../ProgressHeader";
 import { OnboardingBackButton } from "../BackButton";
+import { ONBOARDING_STEPS } from "../../../utils/constants";
 
 export const OnboardingSleep = ({ navigation }) => {
   const [symptomSelection, setSymptomSelection] = useState({});
   const [isSleepTroubleEnable, setIsSleepTroubleEnabled] = useState();
+
+  useEffect(() => {
+    (async () => {
+      await localStorage.setOnboardingStep(ONBOARDING_STEPS.STEP_SYMPTOMS_SLEEP);
+    })();
+  }, []);
 
   useFocusEffect(
     useCallback(() => {
@@ -57,7 +64,7 @@ export const OnboardingSleep = ({ navigation }) => {
     if (!isSleepTroubleEnable) INDICATEURS_LISTE_ONBOARDING_SOMMEIL.forEach((v) => (symptoms[v] = false));
 
     await localStorage.setSymptoms(symptoms);
-    navigation.navigate("onboarding-symptoms-custom-simple");
+    navigation.navigate(ONBOARDING_STEPS.STEP_SYMPTOMS_CUSTOM);
   };
 
   return (

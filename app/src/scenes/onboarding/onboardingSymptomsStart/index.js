@@ -406,7 +406,7 @@ export const styles = StyleSheet.create({
     color: colors.BLUE,
     fontSize: 15,
     fontWeight: "400",
-    fontStyle: "italic",
+    //fontStyle: "italic",
   },
   container: {
     paddingHorizontal: 20,

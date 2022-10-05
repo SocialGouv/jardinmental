@@ -66,7 +66,7 @@ const Drugs = ({ navigation, route }) => {
   };
 
   const handleAdd = () => {
-    navigation.navigate("onboarding-drugs-list");
+    navigation.navigate("onboarding-drugs-list", { onboarding: route?.params?.onboarding });
   };
 
   const defaultValue = () => {

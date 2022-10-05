@@ -18,7 +18,7 @@ const Explanation = ({ navigation }) => {
   }, []);
 
   const handlePress = () => {
-    navigation.navigate("onboarding-symptoms-mood");
+    navigation.navigate(ONBOARDING_STEPS.STEP_SYMPTOMS);
   };
 
   return (
@@ -30,7 +30,7 @@ const Explanation = ({ navigation }) => {
         style={onboardingStyles.scroll}
         contentContainerStyle={onboardingStyles.scrollContentContainer}
       >
-        <View style={onboardingStyles.container}>
+        <View style={onboardingStyles.containerCentered}>
           <View style={onboardingStyles.imageContainer}>
             <CheckBoard />
           </View>

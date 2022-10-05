@@ -9,8 +9,15 @@ import { StickyButtonContainer } from "../StickyButton";
 import { CheckBoxList } from "../CheckBoxList";
 import { SafeAreaViewWithOptionalHeader } from "../ProgressHeader";
 import { OnboardingBackButton } from "../BackButton";
+import { ONBOARDING_STEPS } from "../../../utils/constants";
 
 export const OnboardingGoals = ({ navigation }) => {
+  useEffect(() => {
+    (async () => {
+      await localStorage.setOnboardingStep(ONBOARDING_STEPS.STEP_GOALS);
+    })();
+  }, []);
+
   const [symptomSelection, setSymptomSelection] = useState({});
   const countGoals = () =>
     INDICATEURS_GOALS_SIMPLE.reduce((acc, id) => {
@@ -34,7 +41,7 @@ export const OnboardingGoals = ({ navigation }) => {
     const symptoms = { ...symptomSelection };
 
     await localStorage.setSymptoms(symptoms);
-    navigation.navigate("reminder", { onboarding: true });
+    navigation.navigate(ONBOARDING_STEPS.STEP_REMINDER);
   };
 
   return (
@@ -50,6 +57,12 @@ export const OnboardingGoals = ({ navigation }) => {
         <View style={onboardingStyles.container}>
           <View style={onboardingStyles.containerTopTitle} key="title">
             <Text style={onboardingStyles.h1}>Suivre un objectif ?</Text>
+          </View>
+          <View style={onboardingStyles.containerBottomText}>
+            <Text style={onboardingStyles.presentationText}>
+              Réaliser certaines activités peut vous faire du bien. Sélectionnez-en parmi les exemples ou
+              créez les vôtres plus tard
+            </Text>
           </View>
           <View style={onboardingStyles.imageContainer} key="image">
             <Image
@@ -67,7 +80,7 @@ export const OnboardingGoals = ({ navigation }) => {
       <StickyButtonContainer>
         <View style={onboardingStyles.alertContainer}>
           <Text style={onboardingStyles.alertText}>
-            Se fixer <Text style={onboardingStyles.bold}>5</Text> objectifs{" "}
+            Se fixer <Text style={onboardingStyles.bold}>3</Text> objectifs{" "}
             <Text style={onboardingStyles.bold}>maximum</Text> est un bon départ
           </Text>
         </View>

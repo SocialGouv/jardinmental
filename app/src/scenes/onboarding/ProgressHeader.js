@@ -4,6 +4,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { BlurView } from "@react-native-community/blur";
 import BackButton from "../../components/BackButton";
+import { TransitionPresets } from "@react-navigation/stack";
 
 export const PROGRESS_HEADER_HEIGHT = 60;
 export const PROGRESS_HEADER_PADDING_HORIZONTAL = 0;
@@ -14,7 +15,7 @@ export const useOnboardingProgressHeader = () => useContext(ProgressHeaderContex
 
 export const OnboardingProgressHeaderProvider = ({ children }) => {
   const [isVisible, setIsVisible] = useState(false);
-  const [slideIndex, setSlideIndex] = useState(1);
+  const [slideIndex, setSlideIndex] = useState(-1);
 
   const value = {
     slideIndex,
@@ -35,6 +36,7 @@ export const progressHeaderOptions = ({ insets, slidesCount }) => {
     headerMode: "float",
     headerTransparent: true,
     header: ProgressHeader({ insets, slidesCount }),
+    ...TransitionPresets.SlideFromRightIOS,
   };
 };
 
@@ -130,7 +132,7 @@ const ProgressHeader = ({ insets, slidesCount }) => {
   );
 
   return ({ navigation }) => {
-    if (!visible) return <Ghost />;
+    if (!visible) return null;
 
     return (
       <View
@@ -160,7 +162,7 @@ const ProgressHeader = ({ insets, slidesCount }) => {
           style={[{ paddingTop: insets.top }, { transform: [{ translateY: animatedVisibleY }] }]}
         >
           <View style={styles.container}>
-            <View>
+            <View style={{ opacity: navigation.canGoBack() ? 1 : 0 }}>
               <BackButton onPress={navigation.goBack} />
             </View>
             <View style={styles.progressBarContainer}>

@@ -19,7 +19,7 @@ const Supported = ({ navigation }) => {
       [MATOMO_DIMENSION.SUPPORTED]: value,
     });
     //navigate to explanation
-    navigation.navigate("onboarding-explanation-indicator-1");
+    navigation.navigate(ONBOARDING_STEPS.STEP_EXPLANATION);
     //set local storage
     await localStorage.setSupported(value);
   };

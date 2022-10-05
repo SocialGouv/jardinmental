@@ -20,7 +20,7 @@ const Onboarding = ({ navigation }) => {
         style={onboardingStyles.scroll}
         contentContainerStyle={onboardingStyles.scrollContentContainer}
       >
-        <View style={onboardingStyles.container}>
+        <View style={onboardingStyles.containerCentered}>
           <View style={onboardingStyles.imageContainer}>
             <Felicitation width={100} height={100} />
           </View>

@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { View, ScrollView, Text, Image } from "react-native";
 import Button from "../../../components/Button";
 import { onboardingStyles } from "../styles";
@@ -9,9 +9,16 @@ import { StickyButtonContainer } from "../StickyButton";
 import { CheckBoxList } from "../CheckBoxList";
 import { OnboardingBackButton } from "../BackButton";
 import { SafeAreaViewWithOptionalHeader } from "../ProgressHeader";
+import { ONBOARDING_STEPS } from "../../../utils/constants";
 
 export const OnboardingSimpleCustomSymptoms = ({ navigation }) => {
   const [symptomSelection, setSymptomSelection] = useState({});
+
+  useEffect(() => {
+    (async () => {
+      await localStorage.setOnboardingStep(ONBOARDING_STEPS.STEP_SYMPTOMS_CUSTOM);
+    })();
+  }, []);
 
   useFocusEffect(
     useCallback(() => {
@@ -27,7 +34,7 @@ export const OnboardingSimpleCustomSymptoms = ({ navigation }) => {
     const symptoms = { ...symptomSelection };
 
     await localStorage.setSymptoms(symptoms);
-    navigation.navigate("onboarding-goals", { onboarding: true });
+    navigation.navigate(ONBOARDING_STEPS.STEP_GOALS);
   };
 
   return (

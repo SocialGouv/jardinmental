@@ -9,6 +9,7 @@ import Button from "../../components/Button";
 import ActiveDot from "./ActiveDot";
 import BackButton from "../../components/BackButton";
 import { Screen0, Screen1, Screen2, Screen3 } from "./screens";
+import { ONBOARDING_STEPS } from "../../utils/constants";
 
 const Onboarding = ({ navigation }) => {
   const [isCguChecked, setIsCguChecked] = useState(false);
@@ -26,7 +27,7 @@ const Onboarding = ({ navigation }) => {
 
   const validateOnboarding = async () => {
     if (firstTime) {
-      navigation.navigate("deepOnboarding", { name: "supported" });
+      navigation.navigate(ONBOARDING_STEPS.STEP_SUPPORTED);
     } else {
       navigation.navigate("tabs");
     }

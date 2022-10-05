@@ -14,12 +14,12 @@ export const onboardingStyles = StyleSheet.create({
   scroll: {
     backgroundColor: "white",
     flex: 1,
-    display: "flex",
+    //display: "flex",
     overflow: "visible",
   },
   scrollContentContainer: {
     flexGrow: 1,
-    paddingBottom: 60,
+    //paddingBottom: 60,
   },
   containerBottom: {
     //flex: 1,
@@ -39,9 +39,16 @@ export const onboardingStyles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "stretch",
   },
-  container: {
+  containerCentered: {
     flexGrow: 1,
     justifyContent: "center",
+    alignItems: "stretch",
+    paddingHorizontal: 20,
+    paddingVertical: 20,
+  },
+  container: {
+    flexGrow: 1,
+    justifyContent: "flex-start",
     alignItems: "stretch",
     paddingHorizontal: 20,
     paddingVertical: 20,
@@ -83,7 +90,7 @@ export const onboardingStyles = StyleSheet.create({
   },
   presentationText: {
     textAlign: "left",
-    fontSize: Dimensions.get("window").height > 700 ? 20 : 17,
+    fontSize: Dimensions.get("window").height > 700 ? 18 : 16,
     color: "#0A215C",
     display: "flex",
     //flex: 1,

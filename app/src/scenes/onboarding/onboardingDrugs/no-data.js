@@ -10,7 +10,7 @@ import { onboardingStyles } from "../styles";
 import Logo from "../../../../assets/svg/traitement";
 import { StickyButtonContainer } from "../StickyButton";
 
-export default ({ navigation }) => {
+export default ({ navigation, route }) => {
   const handleNoTreatment = async () => {
     await localStorage.setMedicalTreatment([]);
     navigation.navigate("onboarding-felicitation");
@@ -45,7 +45,7 @@ export default ({ navigation }) => {
         <Button
           textStyle={{ fontSize: 16, fontWeight: "bold" }}
           onPress={() => {
-            navigation.navigate("onboarding-drugs-list");
+            navigation.navigate("onboarding-drugs-list", { onboarding: route?.params?.onboarding });
           }}
           title="Je renseigne mon traitement"
         />

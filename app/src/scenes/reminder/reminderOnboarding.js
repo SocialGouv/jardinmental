@@ -130,12 +130,12 @@ const Reminder = ({
   };
 
   const validateOnboarding = async () => {
-    navigation.navigate("onboarding-drugs");
+    navigation.navigate(ONBOARDING_STEPS.STEP_DRUGS);
   };
 
   const desactivateReminder = async () => {
     await deleteReminder();
-    navigation.navigate("onboarding-drugs");
+    navigation.navigate(ONBOARDING_STEPS.STEP_DRUGS);
   };
 
   return (
