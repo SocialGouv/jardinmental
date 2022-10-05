@@ -1,0 +1,13 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+            "name": "app-dev-ios",
+            "request": "launch",
+            "type": "reactnativedirect",
+            "cwd": "${workspaceFolder}/app",
+            "platform": "ios",
+            "target": "iPhone 14"
+        }
+	]
+}

@@ -79,6 +79,9 @@ buck-out/
 *.p8
 *.p12
 **/ios/fastlane/appleApiKey.json
+**/ios/fastlane/api-sub-elements
+**/ios/fastlane/jardinmental_app_store_2.mobileprovision
+**/ios/fastlane/passphrase-p12.txt
 **/Gemfile.lock
 **/ios/tmp.xcconfig
 *.dSYM.zip
