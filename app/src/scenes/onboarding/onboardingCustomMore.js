@@ -39,7 +39,7 @@ export const OnboardingCustomMore = ({ navigation }) => {
       </ScrollView>
       <StickyButtonContainer>
         <Button
-          title="Suivant"
+          title="J'y penserai !"
           onPress={() => {
             navigation.navigate("onboarding-felicitation");
           }}

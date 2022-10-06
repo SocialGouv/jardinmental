@@ -19,7 +19,7 @@ export const INDICATEURS_LISTE_ONBOARDING_SOMMEIL = [
   "Durée sommeil",
   "Facilité endormissement",
   // "Se coucher tôt",
-  "Energie",
+  "Fatigue",
   "Réveils nocturnes",
 ];
 export const INDICATEURS_LISTE_ONBOARDING_CUSTOM_SIMPLE = [

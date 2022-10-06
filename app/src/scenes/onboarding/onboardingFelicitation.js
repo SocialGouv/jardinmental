@@ -53,7 +53,7 @@ const Onboarding = ({ navigation }) => {
           onPress={() => {
             navigation.navigate("onboarding-explanation-details", { onboarding: true });
           }}
-          title="J'ai besoin d'explication"
+          title="J'ai besoin d'explications"
         />
       </StickyButtonContainer>
     </SafeAreaViewWithOptionalHeader>
