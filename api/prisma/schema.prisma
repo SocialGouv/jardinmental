@@ -1,0 +1,59 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model AnonymisedUser {
+  id        String     @id @default(uuid())
+  reminders Reminder[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+model Reminder {
+  id          String              @id @default(uuid())
+  user        AnonymisedUser      @relation(fields: [userId], references: [id])
+  userId      String
+  type        ReminderType        @default(MAIN)
+  daysOfWeek  ReminderDaysOfWeek?
+  timeHours   Int                 @default(0)
+  timeMinutes Int                 @default(0)
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @updatedAt
+
+  @@index([type], type: Hash)
+  @@index([timeHours, timeMinutes], type: BTree)
+}
+
+enum ReminderType {
+  MAIN
+  GOAL
+}
+
+model ReminderDaysOfWeek {
+  id         String   @id @default(uuid())
+  reminder   Reminder @relation(fields: [reminderId], references: [id])
+  reminderId String   @unique
+  sunday     Boolean  @default(false)
+  monday     Boolean  @default(false)
+  tuesday    Boolean  @default(false)
+  wednesday  Boolean  @default(false)
+  thursday   Boolean  @default(false)
+  friday     Boolean  @default(false)
+  saturday   Boolean  @default(false)
+
+  @@index([sunday], type: Hash)
+  @@index([monday], type: Hash)
+  @@index([tuesday], type: Hash)
+  @@index([wednesday], type: Hash)
+  @@index([thursday], type: Hash)
+  @@index([friday], type: Hash)
+  @@index([saturday], type: Hash)
+}

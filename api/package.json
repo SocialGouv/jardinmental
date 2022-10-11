@@ -19,6 +19,7 @@
     "printWidth": 150
   },
   "dependencies": {
+    "@prisma/client": "4.4.0",
     "@sentry/node": "^6.19.6",
     "@sentry/tracing": "^6.17.6",
     "@slack/webhook": "^6.1.0",
@@ -27,11 +28,13 @@
     "dotenv": "^16.0.0",
     "express": "^4.17.1",
     "helmet": "^4.0.0",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "node-pushnotifications": "^2.0.3"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "prisma": "^4.4.0"
   },
   "engines": {
     "npm": "please-use-yarn",
