@@ -11,33 +11,40 @@ datasource db {
 }
 
 model AnonymisedUser {
-  id        String     @id @default(uuid())
-  reminders Reminder[]
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
+  id             String     @id @default(uuid())
+  pushNotifToken String     @unique
+  reminders      Reminder[]
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+
+  @@index([pushNotifToken], type: Hash)
 }
 
 model Reminder {
-  id          String              @id @default(uuid())
-  user        AnonymisedUser      @relation(fields: [userId], references: [id])
-  userId      String
-  type        ReminderType        @default(MAIN)
-  daysOfWeek  ReminderDaysOfWeek?
-  timeHours   Int                 @default(0)
-  timeMinutes Int                 @default(0)
-  createdAt   DateTime            @default(now())
-  updatedAt   DateTime            @updatedAt
+  id             String                 @id @default(uuid())
+  localId        String?
+  user           AnonymisedUser         @relation(fields: [userId], references: [id])
+  userId         String
+  type           ReminderType           @default(Main)
+  utcDaysOfWeek  ReminderUtcDaysOfWeek?
+  utcTimeHours   Int                    @default(0)
+  utcTimeMinutes Int                    @default(0)
+  disabled       Boolean                @default(false)
+  createdAt      DateTime               @default(now())
+  updatedAt      DateTime               @updatedAt
 
+  @@index([localId], type: Hash)
   @@index([type], type: Hash)
-  @@index([timeHours, timeMinutes], type: BTree)
+  @@index([type, localId], type: BTree)
+  @@index([utcTimeHours, utcTimeMinutes], type: BTree)
 }
 
 enum ReminderType {
-  MAIN
-  GOAL
+  Main
+  Goal
 }
 
-model ReminderDaysOfWeek {
+model ReminderUtcDaysOfWeek {
   id         String   @id @default(uuid())
   reminder   Reminder @relation(fields: [reminderId], references: [id])
   reminderId String   @unique
