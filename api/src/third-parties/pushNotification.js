@@ -13,20 +13,23 @@ const push = new PushNotifications({
   },
 });
 
-const sendNotification = async (tokens) => {
+const sendNotification = async ({ pushNotifToken, title, body, clickAction, topic }) => {
   const data = {
-    title: "Crossplattform push is working!",
-    body: "Powered by node.js and React Native",
+    title,
+    body,
+    clickAction,
+    topic,
   };
+  console.log("notif push : sending...", pushNotifToken, data);
 
-  try {
-    const results = await push.send(tokens, data);
-    debug("Results for sending notifications:", results);
-    return results;
-  } catch (err) {
-    debug("Error while sending notifications:", err);
-    throw err;
-  }
+  // try {
+  //   const results = await push.send([pushNotifToken], data);
+  //   debug("Results for sending notifications:", results);
+  //   return results;
+  // } catch (err) {
+  //   debug("Error while sending notifications:", err);
+  //   throw err;
+  // }
 };
 
 module.exports = {

@@ -1,9 +1,10 @@
 const express = require("express");
 const { setDay, setHours, setMinutes } = require("date-fns");
-const { zonedTimeToUtc, utcToZonedTime } = require("date-fns-tz");
+const { zonedTimeToUtc } = require("date-fns-tz");
 const { catchErrors } = require("../middlewares/errors");
 const { prisma } = require("../prisma");
 const { capture } = require("../third-parties/sentry");
+const { sendNotification } = require("../third-parties/pushNotification");
 const router = express.Router();
 
 const DAYS_OF_WEEK = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
@@ -134,20 +135,46 @@ const reminderCronJob = async (req, res) => {
       utcTimeHours,
       utcTimeMinutes,
     },
+    include: {
+      user: true,
+    },
   });
   for (const reminder of mainReminders) {
-    //sendNotification({ title: "Comment allez-vous aujourd’hui ?", body: "N’oubliez pas de renseigner votre journée dans Jardin Mental" });
+    if (!reminder?.user?.pushNotifToken) continue;
+    sendNotification({
+      pushNotifToken: reminder.user.pushNotifToken,
+      title: "Comment allez-vous aujourd’hui ?",
+      body: "N’oubliez pas de renseigner votre journée dans Jardin Mental",
+      clickAction: "jardinmental://reminder",
+      topic: "Rappel général",
+    });
   }
 
-  //   const utcDaysOfWeek = await prisma.reminderutcDaysOfWeek.findMany({});
-  //   const goalReminders = await prisma.findMany({
-  //     where: {
-  //       type: "Goal",
-  //       disabled: false,
-  //       utcTimeHours,
-  //       utcTimeMinutes,
-  //     },
-  //   });
+  const goalReminders = await prisma.reminderUtcDaysOfWeek.findMany({
+    where: {
+      [utcDayOfWeek]: true,
+    },
+    select: {
+      reminder: {
+        where: {
+          type: "Goal",
+          disabled: false,
+          utcTimeHours,
+          utcTimeMinutes,
+        },
+      },
+    },
+  });
+  for (const reminder of goalReminders) {
+    if (!reminder?.user?.pushNotifToken) continue;
+    sendNotification({
+      pushNotifToken: reminder.user.pushNotifToken,
+      title: "Vous avez un objectif aujourd’hui 🎯",
+      body: "N’oubliez de préciser si vous l’avez réalisé dans Jardin Mental",
+      clickAction: "jardinmental://goals",
+      topic: "Rappel d'objectif",
+    });
+  }
 };
 
 module.exports = { router, reminderCronJob };
