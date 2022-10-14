@@ -17,7 +17,9 @@ class NotificationService {
   async configure() {
     PushNotification.configure({
       onNotification: this.handleNotification,
-      onRegister: () => null,
+      onRegister: (token) => {
+        console.log("PushNotification onRegister token:", token);
+      },
       // IOS ONLY (optional): default: all - Permissions to register.
       permissions: {
         alert: true,
@@ -141,28 +143,28 @@ class NotificationService {
 
     /* ANDROID FOREGROUND */
 
-    if (Platform.OS === "android") {
-      // if not the line below, the notification is launched without notifying
-      // with the line below, there is a local notification triggered
-      if (notification.foreground && !notification.userInteraction) return;
-    }
-    /* LISTENERS */
+    // if (Platform.OS === "android") {
+    //   // if not the line below, the notification is launched without notifying
+    //   // with the line below, there is a local notification triggered
+    //   if (notification.foreground && !notification.userInteraction) return;
+    // }
+    // /* LISTENERS */
 
-    const listenerKeys = Object.keys(this.listeners);
-    //  handle initial notification if any, if no listener is mounted yet
-    if (!listenerKeys.length) {
-      this.initNotification = notification;
-      notification.finish(PushNotificationIOS.FetchResult.NoData);
-      return;
-    }
-    this.initNotification = null;
+    // const listenerKeys = Object.keys(this.listeners);
+    // //  handle initial notification if any, if no listener is mounted yet
+    // if (!listenerKeys.length) {
+    //   this.initNotification = notification;
+    //   notification.finish(PushNotificationIOS.FetchResult.NoData);
+    //   return;
+    // }
+    // this.initNotification = null;
 
-    //handle normal notification
-    for (let i = listenerKeys.length - 1; i >= 0; i--) {
-      const notificationHandler = this.listeners[listenerKeys[i]];
-      notificationHandler(notification);
-    }
-    notification.finish(PushNotificationIOS.FetchResult.NoData);
+    // //handle normal notification
+    // for (let i = listenerKeys.length - 1; i >= 0; i--) {
+    //   const notificationHandler = this.listeners[listenerKeys[i]];
+    //   notificationHandler(notification);
+    // }
+    // notification.finish(PushNotificationIOS.FetchResult.NoData);
   };
 
   listen = (callback, calledFrom) => {

@@ -153,19 +153,22 @@ const reminderCronJob = async (req, res) => {
   const goalReminders = await prisma.reminderUtcDaysOfWeek.findMany({
     where: {
       [utcDayOfWeek]: true,
-    },
-    select: {
       reminder: {
-        where: {
-          type: "Goal",
-          disabled: false,
-          utcTimeHours,
-          utcTimeMinutes,
+        type: "Goal",
+        disabled: false,
+        utcTimeHours,
+        utcTimeMinutes,
+      },
+    },
+    include: {
+      reminder: {
+        include: {
+          user: true,
         },
       },
     },
   });
-  for (const reminder of goalReminders) {
+  for (const { reminder } of goalReminders) {
     if (!reminder?.user?.pushNotifToken) continue;
     sendNotification({
       pushNotifToken: reminder.user.pushNotifToken,
