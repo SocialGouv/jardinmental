@@ -2,7 +2,11 @@ import PushNotification from "react-native-push-notification";
 import PushNotificationIOS from "@react-native-community/push-notification-ios";
 import { Platform } from "react-native";
 import { checkNotifications, RESULTS } from "react-native-permissions";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import {
+  STORAGE_KEY_PUSH_NOTIFICATION_TOKEN,
+  STORAGE_KEY_PUSH_NOTIFICATION_TOKEN_ERROR,
+} from "../utils/constants";
 class NotificationService {
   listeners = {};
 
@@ -18,7 +22,12 @@ class NotificationService {
     PushNotification.configure({
       onNotification: this.handleNotification,
       onRegister: (token) => {
-        console.log("PushNotification onRegister token:", token);
+        AsyncStorage.setItem(STORAGE_KEY_PUSH_NOTIFICATION_TOKEN, token);
+        AsyncStorage.setItem(STORAGE_KEY_PUSH_NOTIFICATION_TOKEN_ERROR, null);
+      },
+      onRegistrationError: (err) => {
+        AsyncStorage.setItem(STORAGE_KEY_PUSH_NOTIFICATION_TOKEN_ERROR, err.message);
+        console.error("PushNotification onRegistrationError:", err.message, err);
       },
       // IOS ONLY (optional): default: all - Permissions to register.
       permissions: {
@@ -176,6 +185,14 @@ class NotificationService {
 
   remove = (listenerKey) => {
     delete this.listeners[listenerKey];
+  };
+
+  getToken = async () => {
+    return await AsyncStorage.getItem(STORAGE_KEY_PUSH_NOTIFICATION_TOKEN, null);
+  };
+
+  getTokenError = async () => {
+    return await AsyncStorage.getItem(STORAGE_KEY_PUSH_NOTIFICATION_TOKEN_ERROR, null);
   };
 }
 

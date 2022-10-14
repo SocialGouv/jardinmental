@@ -1,8 +1,9 @@
 const PushNotifications = require("node-pushnotifications");
+const { PUSH_NOTIFICATION_GCM_ID } = require("../config");
 
 const push = new PushNotifications({
   gcm: {
-    id: "AAAA9U3NkO8:APA91bE9XnPD1WQGYle0dbJs6KO6HmAq_73f_z2PHoPr3sbRovXbn9q-PyJAKYlxgNI88rBpTzNWCXRuxhX9FcwbDBhT4h0BAiJr4BiEx8uSkWHXM92q04Q6cydK-dHGSnR20bsgH0Lg",
+    id: PUSH_NOTIFICATION_GCM_ID,
   },
   apn: {
     token: {
@@ -22,14 +23,14 @@ const sendNotification = async ({ pushNotifToken, title, body, clickAction, topi
   };
   console.log("notif push : sending...", pushNotifToken, data);
 
-  // try {
-  //   const results = await push.send([pushNotifToken], data);
-  //   debug("Results for sending notifications:", results);
-  //   return results;
-  // } catch (err) {
-  //   debug("Error while sending notifications:", err);
-  //   throw err;
-  // }
+  try {
+    const results = await push.send([pushNotifToken], data);
+    console.log("notif push sent", results);
+    return { ok: true, results };
+  } catch (error) {
+    console.error("notif push error", error);
+    return { ok: false, error };
+  }
 };
 
 module.exports = {

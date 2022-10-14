@@ -15,6 +15,8 @@ const DATABASE_URL = process.env.DATABASE_URL;
 
 const CRONJOBS_ENABLED = process.env.CRONJOBS_ENABLED === "true";
 
+const PUSH_NOTIFICATION_GCM_ID = process.env.PUSH_NOTIFICATION_GCM_ID;
+
 if (process.env.NODE_ENV === "development") {
   console.log("✍️ ~CONFIG ", {
     PORT,
@@ -41,4 +43,5 @@ module.exports = {
   MINIMUM_MOBILE_BUILD_NUMBER,
   DATABASE_URL,
   CRONJOBS_ENABLED,
+  PUSH_NOTIFICATION_GCM_ID,
 };

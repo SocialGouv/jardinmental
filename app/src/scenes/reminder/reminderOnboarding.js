@@ -75,12 +75,12 @@ const Reminder = ({
       .set("minutes", newReminder.getMinutes())
       .set("seconds", 0)
       .toDate();
-    NotificationService.scheduleNotification({
+    /*NotificationService.scheduleNotification({
       date: fireDate,
       title: notifReminderTitle,
       message: notifReminderMessage,
       repeatType: "day",
-    });
+    });*/
     logEvents.logReminderAdd();
   };
 

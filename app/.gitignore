@@ -85,3 +85,6 @@ buck-out/
 **/Gemfile.lock
 **/ios/tmp.xcconfig
 *.dSYM.zip
+
+# google services
+**/android/app/google-services.json
