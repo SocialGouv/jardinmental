@@ -19,8 +19,35 @@ export const INDICATEURS_LISTE_ONBOARDING_SOMMEIL = [
   "Durée sommeil",
   "Facilité endormissement",
   // "Se coucher tôt",
-  "Energie",
+  "Fatigue",
   "Réveils nocturnes",
+];
+export const INDICATEURS_LISTE_ONBOARDING_CUSTOM_SIMPLE = [
+  "Anxiété",
+  "Confiance",
+  "Colère",
+  "Idées noires",
+  null,
+  "Fatigue",
+  "Crise de larmes",
+  "Procrastination",
+  "Ruminations sur le passé",
+  null,
+  "Je suis fier(e) de moi",
+  "Je me sens seul(e)",
+];
+
+export const INDICATEURS_GOALS_SIMPLE = [
+  "Trouver 3 choses positives de la journée",
+  "Je fais une activité plaisir",
+  "Contact social",
+  null,
+  "Horaires réguliers de sommeil",
+  "30 min d’activité physique",
+  null,
+  "Me lever le matin",
+  "Faire mes tâches ménagères",
+  "Faire mes tâches administratives",
 ];
 
 export const INDICATEURS_LISTE_ONBOARDING = [
