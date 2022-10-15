@@ -19,31 +19,25 @@ class NotificationService {
   };
 
   async configure() {
-    PushNotification.configure({
-      onNotification: this.handleNotification,
-      onRegister: (token) => {
-        AsyncStorage.setItem(STORAGE_KEY_PUSH_NOTIFICATION_TOKEN, token);
-        AsyncStorage.setItem(STORAGE_KEY_PUSH_NOTIFICATION_TOKEN_ERROR, null);
-      },
-      onRegistrationError: (err) => {
-        AsyncStorage.setItem(STORAGE_KEY_PUSH_NOTIFICATION_TOKEN_ERROR, err.message);
-        console.error("PushNotification onRegistrationError:", err.message, err);
-      },
-      // IOS ONLY (optional): default: all - Permissions to register.
-      permissions: {
-        alert: true,
-        badge: true,
-        sound: true,
-      },
-
-      popInitialNotification: true,
-      requestPermissions: false,
-    });
-    this.initAndroidLocalScheduledNotifications();
+    this.initChannels();
     if (Platform.OS === "ios") {
       PushNotificationIOS.addEventListener("registrationError", this.failIOSToken);
     }
     await new Promise((resolve) => setTimeout(resolve, 1000));
+  }
+
+  onRegister = (tokenPayload) => {
+    console.log("PushNotification onRegister:", tokenPayload);
+    AsyncStorage.setItem(STORAGE_KEY_PUSH_NOTIFICATION_TOKEN, tokenPayload.token);
+    AsyncStorage.removeItem(STORAGE_KEY_PUSH_NOTIFICATION_TOKEN_ERROR);
+  };
+  onRegistrationError = (err) => {
+    console.error("PushNotification onRegistrationError:", err.message, err);
+    AsyncStorage.setItem(STORAGE_KEY_PUSH_NOTIFICATION_TOKEN_ERROR, err.message);
+  };
+
+  initChannels() {
+    this.initDefaultChannel();
   }
 
   failIOSToken = () => {
@@ -91,7 +85,7 @@ class NotificationService {
   // LOCAL NOTIFICATIONS
 
   channelId = "REMINDER-CHANNEL-ID"; // same as in strings.xml, for Android
-  initAndroidLocalScheduledNotifications = () => {
+  initDefaultChannel = () => {
     PushNotification.createChannel(
       {
         channelId: this.channelId, // (required)
@@ -196,6 +190,22 @@ class NotificationService {
   };
 }
 
-const Notifications = new NotificationService();
+const service = new NotificationService();
 
-export default Notifications;
+PushNotification.configure({
+  onNotification: service.handleNotification.bind(service),
+  onRegister: service.onRegister.bind(service),
+  onRegistrationError: service.onRegistrationError.bind(service),
+
+  // IOS ONLY (optional): default: all - Permissions to register.
+  permissions: {
+    alert: true,
+    badge: true,
+    sound: true,
+  },
+
+  popInitialNotification: true,
+  requestPermissions: false,
+});
+
+export default service;
