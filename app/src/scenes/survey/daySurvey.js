@@ -12,7 +12,7 @@ import {
 import Text from "../../components/MyText";
 import { colors } from "../../utils/colors";
 import { buildSurveyData } from "./survey-data";
-import { formatRelativeDate } from "../../utils/date/helpers";
+import { beforeToday, formatDay, formatRelativeDate } from "../../utils/date/helpers";
 import { isToday, isYesterday, parseISO } from "date-fns";
 import BackButton from "../../components/BackButton";
 import Button from "../../components/Button";
@@ -28,6 +28,12 @@ import { useFocusEffect } from "@react-navigation/native";
 import ArrowUpSvg from "../../../assets/svg/arrow-up.svg";
 
 const DaySurvey = ({ navigation, route }) => {
+  const initSurvey = route?.params?.currentSurvey ?? {
+    date: formatDay(beforeToday(0)),
+    answers: {},
+  };
+  const initEditiingSurvey = route?.params?.editingSurvey ?? false;
+
   const [diaryData, setDiaryData] = useContext(DiaryDataContext);
 
   const [questions, setQuestions] = useState([]);
@@ -54,9 +60,9 @@ const DaySurvey = ({ navigation, route }) => {
 
   useEffect(() => {
     //init the survey if there is already answers
-    Object.keys(route?.params?.currentSurvey?.answers || {})?.forEach((key) => {
+    Object.keys(initSurvey?.answers || {})?.forEach((key) => {
       const score = getScoreWithState({
-        patientState: route?.params?.currentSurvey?.answers,
+        patientState: initSurvey?.answers,
         category: key,
       });
       const cleanedQuestionId = key.split("_")[0];
@@ -64,27 +70,27 @@ const DaySurvey = ({ navigation, route }) => {
         toggleAnswer({ key: cleanedQuestionId, value: score });
         handleChangeUserComment({
           key: cleanedQuestionId,
-          userComment: route?.params?.currentSurvey?.answers[cleanedQuestionId]?.userComment,
+          userComment: initSurvey?.answers[cleanedQuestionId]?.userComment,
         });
       }
     });
-    if ((route?.params?.currentSurvey?.answers || {})[questionToxic.id]) {
+    if ((initSurvey?.answers || {})[questionToxic.id]) {
       toggleAnswer({
         key: questionToxic.id,
-        value: route?.params?.currentSurvey?.answers[questionToxic?.id]?.value,
+        value: initSurvey?.answers[questionToxic?.id]?.value,
       });
       handleChangeUserComment({
         key: questionToxic.id,
-        userComment: route?.params?.currentSurvey?.answers[questionToxic?.id]?.userComment,
+        userComment: initSurvey?.answers[questionToxic?.id]?.userComment,
       });
     }
-    if ((route?.params?.currentSurvey?.answers || {})[questionContext.id]) {
+    if ((initSurvey?.answers || {})[questionContext.id]) {
       handleChangeUserComment({
         key: questionContext.id,
-        userComment: route?.params?.currentSurvey?.answers[questionContext?.id]?.userComment,
+        userComment: initSurvey?.answers[questionContext?.id]?.userComment,
       });
     }
-  }, [route?.params?.currentSurvey?.answers, questions, questionToxic.id, questionContext?.id]);
+  }, [initSurvey?.answers, questions, questionToxic.id, questionContext?.id]);
 
   const toggleAnswer = async ({ key, value }) => {
     setAnswers((prev) => {
@@ -105,7 +111,7 @@ const DaySurvey = ({ navigation, route }) => {
   };
 
   const submitDay = async ({ redirectBack = false }) => {
-    const prevCurrentSurvey = route.params?.currentSurvey;
+    const prevCurrentSurvey = initSurvey;
     const currentSurvey = {
       date: prevCurrentSurvey?.date,
       answers: { ...prevCurrentSurvey.answers, ...answers },
@@ -131,7 +137,8 @@ const DaySurvey = ({ navigation, route }) => {
     }
 
     if (redirectBack) {
-      return navigation.goBack();
+      if (navigation.canGoBack()) return navigation.goBack();
+      else navigation.navigate("tabs");
     }
 
     const medicalTreatmentStorage = await localStorage.getMedicalTreatment();
@@ -146,15 +153,14 @@ const DaySurvey = ({ navigation, route }) => {
 
     navigation.navigate("drugs", {
       currentSurvey,
-      editingSurvey: route.params?.editingSurvey,
+      editingSurvey: initEditiingSurvey,
     });
   };
 
   const renderQuestion = () => {
-    if (isYesterday(parseISO(route.params?.currentSurvey?.date)))
-      return "Comment s'est passée la journée d'hier ?";
-    if (isToday(parseISO(route.params?.currentSurvey?.date))) return "Comment s'est passée votre journée ?";
-    let relativeDate = formatRelativeDate(route.params?.currentSurvey?.date);
+    if (isYesterday(parseISO(initSurvey?.date))) return "Comment s'est passée la journée d'hier ?";
+    if (isToday(parseISO(initSurvey?.date))) return "Comment s'est passée votre journée ?";
+    let relativeDate = formatRelativeDate(initSurvey?.date);
     relativeDate = `le ${relativeDate}`;
     return `Comment s'est passé ${relativeDate} ?`;
   };

@@ -14,21 +14,23 @@ const push = new PushNotifications({
   },
 });
 
-const sendNotification = async ({ pushNotifToken, title, body, clickAction, topic }) => {
+const sendNotification = async ({ pushNotifToken, title, body, topic, link }) => {
   const data = {
     title,
     body,
-    clickAction,
     topic,
+    custom: {
+      link,
+    },
   };
-  console.log("notif push : sending...", pushNotifToken, data);
+  //console.log("notif push : sending...", pushNotifToken, data);
 
   try {
     const results = await push.send([pushNotifToken], data);
-    console.log("notif push sent", results);
+    //console.log("notif push sent", results);
     return { ok: true, results };
   } catch (error) {
-    console.error("notif push error", error);
+    //console.error("notif push error", error);
     return { ok: false, error };
   }
 };

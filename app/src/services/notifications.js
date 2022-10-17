@@ -9,6 +9,7 @@ import {
 } from "../utils/constants";
 class NotificationService {
   listeners = {};
+  listeners = {};
 
   init = () => {
     this.configure();
@@ -151,30 +152,51 @@ class NotificationService {
     //   // with the line below, there is a local notification triggered
     //   if (notification.foreground && !notification.userInteraction) return;
     // }
-    // /* LISTENERS */
 
-    // const listenerKeys = Object.keys(this.listeners);
-    // //  handle initial notification if any, if no listener is mounted yet
-    // if (!listenerKeys.length) {
-    //   this.initNotification = notification;
-    //   notification.finish(PushNotificationIOS.FetchResult.NoData);
-    //   return;
-    // }
-    // this.initNotification = null;
+    /* LISTENERS */
 
-    // //handle normal notification
-    // for (let i = listenerKeys.length - 1; i >= 0; i--) {
-    //   const notificationHandler = this.listeners[listenerKeys[i]];
-    //   notificationHandler(notification);
-    // }
-    // notification.finish(PushNotificationIOS.FetchResult.NoData);
+    const listenerKeys = Object.keys(this.listeners);
+    // handle initial notification if any, if no listener is mounted yet
+    if (!listenerKeys.length) {
+      this.initNotification = notification;
+      notification.finish(PushNotificationIOS.FetchResult.NoData);
+      return;
+    }
+    this.initNotification = null;
+
+    //handle normal notification
+    for (let i = listenerKeys.length - 1; i >= 0; i--) {
+      const notificationHandler = this.listeners[listenerKeys[i]];
+      notificationHandler(notification);
+    }
+    notification.finish(PushNotificationIOS.FetchResult.NoData);
+  };
+
+  popInitialNotification = () => {
+    const initialNotification = this.initNotification;
+    this.initNotification = null;
+    return initialNotification;
+  };
+
+  subscribe = (callback) => {
+    let listenerKey = null;
+    while (!listenerKey) {
+      listenerKey = parseInt(Math.random() * 9999).toString();
+      if (this.listeners.hasOwnProperty(listenerKey)) {
+        listenerKey = null;
+      }
+    }
+    this.listeners[listenerKey] = callback;
+    return () => {
+      delete this.listeners[listenerKey];
+    };
   };
 
   listen = (callback, calledFrom) => {
-    const listenerKey = `listener_${calledFrom}`;
-    this.listeners[listenerKey] = callback;
-    if (this.initNotification) this.handleNotification(this.initNotification);
-    return listenerKey;
+    // const listenerKey = `listener_${calledFrom}`;
+    // this.listeners[listenerKey] = callback;
+    // if (this.initNotification) this.handleNotification(this.initNotification);
+    // return listenerKey;
   };
 
   remove = (listenerKey) => {
