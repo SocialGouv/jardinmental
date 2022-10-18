@@ -57,64 +57,68 @@ router.put(
   catchErrors(async (req, res) => {
     const { pushNotifToken, type, timeHours, timeMinutes, localId, daysOfWeek, timezone, disabled } = req.body || {};
 
-    if (
-      !pushNotifToken ||
-      (type !== "Main" && type !== "Goal") ||
-      !timezone ||
-      isNaN(timeHours) ||
-      isNaN(timeMinutes) ||
-      (type === "Goal" && !localId && !daysOfWeek)
-    )
-      return res.status(400).json({ ok: false, error: "wrong parameters" });
+    try {
+      if (
+        !pushNotifToken ||
+        (type !== "Main" && type !== "Goal") ||
+        !timezone ||
+        isNaN(timeHours) ||
+        isNaN(timeMinutes) ||
+        (type === "Goal" && !localId && !daysOfWeek)
+      )
+        return res.status(400).json({ ok: false, error: "wrong parameters" });
 
-    const { utcTimeHours, utcTimeMinutes, utcDaysOfWeek } = toUtcData({ timeHours, timeMinutes, daysOfWeek, timezone });
+      const { utcTimeHours, utcTimeMinutes, utcDaysOfWeek } = toUtcData({ timeHours, timeMinutes, daysOfWeek, timezone });
 
-    let user = await prisma.anonymisedUser.findUnique({ where: { pushNotifToken } });
-    if (!user) {
-      user = await prisma.anonymisedUser.create({
-        data: {
-          pushNotifToken,
-        },
-      });
-    }
+      let user = await prisma.anonymisedUser.findUnique({ where: { pushNotifToken } });
+      if (!user) {
+        user = await prisma.anonymisedUser.create({
+          data: {
+            pushNotifToken,
+          },
+        });
+      }
 
-    const reminderUpdatedData = (createOrUpdate) => ({
-      utcTimeHours,
-      utcTimeMinutes,
-      utcDaysOfWeek: utcDaysOfWeek
-        ? createOrUpdate === "create"
-          ? { create: utcDaysOfWeek }
-          : { upsert: { create: utcDaysOfWeek, update: utcDaysOfWeek } }
-        : undefined,
-      type,
-      localId,
-      disabled,
-    });
-    let reminder = await prisma.reminder.findFirst({
-      where: {
-        userId: user.id,
+      const reminderUpdatedData = (createOrUpdate) => ({
+        utcTimeHours,
+        utcTimeMinutes,
+        utcDaysOfWeek: utcDaysOfWeek
+          ? createOrUpdate === "create"
+            ? { create: utcDaysOfWeek }
+            : { upsert: { create: utcDaysOfWeek, update: utcDaysOfWeek } }
+          : undefined,
         type,
         localId,
-      },
-    });
-    if (!reminder) {
-      reminder = await prisma.reminder.create({
-        data: {
-          user: { connect: { id: user.id } },
-          ...reminderUpdatedData("create"),
-        },
-        include: {
-          utcDaysOfWeek: true,
+        disabled,
+      });
+      let reminder = await prisma.reminder.findFirst({
+        where: {
+          userId: user.id,
+          type,
+          localId,
         },
       });
-    } else {
-      reminder = await prisma.reminder.update({
-        where: { id: reminder.id },
-        data: reminderUpdatedData("update"),
-        include: {
-          utcDaysOfWeek: true,
-        },
-      });
+      if (!reminder) {
+        reminder = await prisma.reminder.create({
+          data: {
+            user: { connect: { id: user.id } },
+            ...reminderUpdatedData("create"),
+          },
+          include: {
+            utcDaysOfWeek: true,
+          },
+        });
+      } else {
+        reminder = await prisma.reminder.update({
+          where: { id: reminder.id },
+          data: reminderUpdatedData("update"),
+          include: {
+            utcDaysOfWeek: true,
+          },
+        });
+      }
+    } catch (error) {
+      return res.status(500).json({ ok: false, error });
     }
 
     return res.status(200).send({ ok: true, reminder });
