@@ -37,7 +37,7 @@ const sendError = (err, req, res, next) => {
 
   return res
     .status(err.status || 500)
-    .send({ ok: false, code: "SERVER_ERROR", error: "Désolé, une erreur est survenue, l'équipe technique est prévenue." });
+    .send({ ok: false, code: "SERVER_ERROR", error: "Désolé, une erreur est survenue, l'équipe technique est prévenue.", err });
 };
 
 module.exports = { catchErrors, notFound, sendError };
