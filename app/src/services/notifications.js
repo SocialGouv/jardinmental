@@ -7,6 +7,8 @@ import {
   STORAGE_KEY_PUSH_NOTIFICATION_TOKEN,
   STORAGE_KEY_PUSH_NOTIFICATION_TOKEN_ERROR,
 } from "../utils/constants";
+import logEvents from "./logEvents";
+
 class NotificationService {
   listeners = {};
   listeners = {};
@@ -22,7 +24,7 @@ class NotificationService {
   async configure() {
     this.initChannels();
     if (Platform.OS === "ios") {
-      PushNotificationIOS.addEventListener("registrationError", this.failIOSToken);
+      PushNotificationIOS.addEventListener("registrationError", this.onIOSRegistrationError);
     }
     await new Promise((resolve) => setTimeout(resolve, 1000));
   }
@@ -31,19 +33,24 @@ class NotificationService {
     console.log("PushNotification onRegister:", tokenPayload);
     AsyncStorage.setItem(STORAGE_KEY_PUSH_NOTIFICATION_TOKEN, tokenPayload.token);
     AsyncStorage.removeItem(STORAGE_KEY_PUSH_NOTIFICATION_TOKEN_ERROR);
+    logEvents.logPushNotifTokenRegisterSuccess();
   };
   onRegistrationError = (err) => {
     console.error("PushNotification onRegistrationError:", err.message, err);
     AsyncStorage.setItem(STORAGE_KEY_PUSH_NOTIFICATION_TOKEN_ERROR, err.message);
+    logEvents.logPushNotifTokenRegisterError();
+  };
+
+  onIOSRegistrationError = (err) => {
+    if (Platform.OS === "android") return;
+    console.error("PushNotification onRegistrationError:", err.message, err);
+    AsyncStorage.setItem(STORAGE_KEY_PUSH_NOTIFICATION_TOKEN_ERROR, err.message);
+    logEvents.logPushNotifTokenRegisterError();
   };
 
   initChannels() {
     this.initDefaultChannel();
   }
-
-  failIOSToken = () => {
-    if (Platform.OS === "android") return;
-  };
 
   checkPermission = async () => {
     const authStatus = await checkNotifications().then(({ status }) => status);
@@ -145,6 +152,8 @@ class NotificationService {
   handleNotification = (notification) => {
     console.log("handle Notification", JSON.stringify(notification, null, 2));
 
+    logEvents.logPushNotifReceiveClicked();
+
     /* ANDROID FOREGROUND */
 
     // if (Platform.OS === "android") {
@@ -205,6 +214,10 @@ class NotificationService {
 
   getToken = async () => {
     return await AsyncStorage.getItem(STORAGE_KEY_PUSH_NOTIFICATION_TOKEN, null);
+  };
+
+  hasToken = async () => {
+    return (await AsyncStorage.getItem(STORAGE_KEY_PUSH_NOTIFICATION_TOKEN, null)) !== null;
   };
 
   getTokenError = async () => {

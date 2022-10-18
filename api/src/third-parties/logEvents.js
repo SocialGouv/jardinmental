@@ -44,7 +44,6 @@ const checkNetwork = async () => {
 };
 
 const logEvent = async ({ category, action, name, value }) => {
-  if (!Matomo.initDone) await initMatomo();
   try {
     const canSend = await checkNetwork();
     if (!canSend) {
@@ -614,12 +613,6 @@ const logPushNotifTokenRegisterError = async () => {
     action: "ERROR",
   });
 };
-const logPushNotifReceiveClicked = async () => {
-  await logEvent({
-    category: "PUSH_NOTIFICATION_RECEIVE",
-    action: "CLICKED",
-  });
-};
 
 export default {
   initMatomo,
@@ -694,5 +687,4 @@ export default {
   logOnboardingExplainStart,
   logPushNotifTokenRegisterSuccess,
   logPushNotifTokenRegisterError,
-  logPushNotifReceiveClicked,
 };

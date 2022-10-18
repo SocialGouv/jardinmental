@@ -86,7 +86,7 @@ const linking = {
 };
 class Router extends React.Component {
   async componentDidMount() {
-    await logEvents.initMatomo();
+    //await logEvents.initMatomo();
     logEvents.logAppVisit();
     RNBootsplash.hide({ fade: true });
     NotificationService.init();

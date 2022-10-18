@@ -83,6 +83,7 @@ const Reminder = ({
       message: notifReminderMessage,
       repeatType: "day",
     });*/
+    if (!(await NotificationService.hasToken())) return;
     await API.put({
       path: "/reminder",
       body: {
