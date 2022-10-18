@@ -16,6 +16,8 @@ import { onboardingStyles } from "../onboarding/styles";
 import { StickyButtonContainer } from "../onboarding/StickyButton";
 import { SafeAreaViewWithOptionalHeader } from "../onboarding/ProgressHeader";
 import { OnboardingBackButton } from "../onboarding/BackButton";
+import API from "../../services/api";
+import * as RNLocalize from "react-native-localize";
 
 const ReminderStorageKey = "@Reminder";
 
@@ -75,11 +77,22 @@ const Reminder = ({
       .set("minutes", newReminder.getMinutes())
       .set("seconds", 0)
       .toDate();
-    NotificationService.scheduleNotification({
+    /*NotificationService.scheduleNotification({
       date: fireDate,
       title: notifReminderTitle,
       message: notifReminderMessage,
       repeatType: "day",
+    });*/
+    if (!(await NotificationService.hasToken())) return;
+    await API.put({
+      path: "/reminder",
+      body: {
+        pushNotifToken: await NotificationService.getToken(),
+        type: "Main",
+        timezone: RNLocalize.getTimeZone(),
+        timeHours: newReminder.getHours(),
+        timeMinutes: newReminder.getMinutes(),
+      },
     });
     logEvents.logReminderAdd();
   };
