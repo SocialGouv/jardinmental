@@ -1,3 +1,10 @@
+# [1.38.0](https://github.com/SocialGouv/jardinmental/compare/v1.37.2...v1.38.0) (2022-10-19)
+
+
+### Features
+
+* notif push to production ([#206](https://github.com/SocialGouv/jardinmental/issues/206)) ([bf54012](https://github.com/SocialGouv/jardinmental/commit/bf5401205c2acd8cf76f247c535b2a2e475b09ed)), closes [#199](https://github.com/SocialGouv/jardinmental/issues/199) [#201](https://github.com/SocialGouv/jardinmental/issues/201) [#202](https://github.com/SocialGouv/jardinmental/issues/202) [#204](https://github.com/SocialGouv/jardinmental/issues/204) [#203](https://github.com/SocialGouv/jardinmental/issues/203)
+
 ## [1.37.2](https://github.com/SocialGouv/jardinmental/compare/v1.37.1...v1.37.2) (2022-09-30)
 
 
