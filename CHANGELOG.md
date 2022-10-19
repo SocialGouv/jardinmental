@@ -1,3 +1,10 @@
+## [1.38.2](https://github.com/SocialGouv/jardinmental/compare/v1.38.1...v1.38.2) (2022-10-19)
+
+
+### Bug Fixes
+
+* ios secrets ([#207](https://github.com/SocialGouv/jardinmental/issues/207)) ([ab7cc44](https://github.com/SocialGouv/jardinmental/commit/ab7cc44093c3dc1fecf587d704171f854d340aff))
+
 ## [1.38.1](https://github.com/SocialGouv/jardinmental/compare/v1.38.0...v1.38.1) (2022-10-19)
 
 
