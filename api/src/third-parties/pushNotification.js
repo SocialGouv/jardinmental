@@ -16,7 +16,6 @@ const push = new PushNotifications({
 });
 
 const sendNotification = async ({ pushNotifToken, title, body, link, channelId }) => {
-  console.log("sending notif to:", pushNotifToken);
   const data = {
     title,
     body,
@@ -35,7 +34,6 @@ const sendNotification = async ({ pushNotifToken, title, body, link, channelId }
     const results = await push.send([pushNotifToken], data);
     if (results?.length > 0) {
       if (results[0].success) {
-        console.log("success");
         await matomo.logEvent({
           category: "PUSH_NOTIFICATION_SEND",
           action: "SUCCESS",
