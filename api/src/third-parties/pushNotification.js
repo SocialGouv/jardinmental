@@ -15,11 +15,12 @@ const push = new PushNotifications({
   },
 });
 
-const sendNotification = async ({ pushNotifToken, title, body, link }) => {
+const sendNotification = async ({ pushNotifToken, title, body, link, channelId }) => {
   const data = {
     title,
     body,
     topic: "org.reactjs.native.example.monsuivipsy",
+    android_channel_id: channelId,
     custom: {
       link,
     },
