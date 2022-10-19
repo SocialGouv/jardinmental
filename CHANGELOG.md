@@ -1,3 +1,10 @@
+## [1.38.3](https://github.com/SocialGouv/jardinmental/compare/v1.38.2...v1.38.3) (2022-10-19)
+
+
+### Bug Fixes
+
+* notif push remove useless logs ([3d1fb64](https://github.com/SocialGouv/jardinmental/commit/3d1fb647a50b54859ef532cdb91800db2652e112))
+
 ## [1.38.2](https://github.com/SocialGouv/jardinmental/compare/v1.38.1...v1.38.2) (2022-10-19)
 
 
