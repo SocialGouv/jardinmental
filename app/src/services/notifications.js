@@ -49,7 +49,7 @@ class NotificationService {
   };
 
   initChannels() {
-    this.initDefaultChannel();
+    this.initDefaultChannels();
   }
 
   checkPermission = async () => {
@@ -93,11 +93,32 @@ class NotificationService {
   // LOCAL NOTIFICATIONS
 
   channelId = "REMINDER-CHANNEL-ID"; // same as in strings.xml, for Android
-  initDefaultChannel = () => {
+
+  initDefaultChannels = () => {
+    PushNotification.createChannel(
+      {
+        channelId: "reminder_main", // (required)
+        channelName: "Rappel questionnaire", // (required)
+        soundName: "default", // (optional) See `soundName` parameter of `localNotification` function
+        importance: 4, // (optional) default: 4. Int value of the Android notification importance
+        vibrate: true, // (optional) default: true. Creates the default vibration patten if true.
+      },
+      (created) => console.log(`createChannel returned '${created}'`)
+    );
+    PushNotification.createChannel(
+      {
+        channelId: "reminder_goal", // (required)
+        channelName: "Rappel d'objectif", // (required)
+        soundName: "default", // (optional) See `soundName` parameter of `localNotification` function
+        importance: 4, // (optional) default: 4. Int value of the Android notification importance
+        vibrate: true, // (optional) default: true. Creates the default vibration patten if true.
+      },
+      (created) => console.log(`createChannel returned '${created}'`)
+    );
     PushNotification.createChannel(
       {
         channelId: this.channelId, // (required)
-        channelName: "Push local notifications", // (required)
+        channelName: "Autres", // (required)
         soundName: "default", // (optional) See `soundName` parameter of `localNotification` function
         importance: 4, // (optional) default: 4. Int value of the Android notification importance
         vibrate: true, // (optional) default: true. Creates the default vibration patten if true.
