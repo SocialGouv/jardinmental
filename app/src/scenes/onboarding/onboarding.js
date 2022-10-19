@@ -9,6 +9,7 @@ import Button from "../../components/Button";
 import ActiveDot from "./ActiveDot";
 import BackButton from "../../components/BackButton";
 import { Screen0, Screen1, Screen2, Screen3 } from "./screens";
+import { ONBOARDING_STEPS } from "../../utils/constants";
 
 const Onboarding = ({ navigation }) => {
   const [isCguChecked, setIsCguChecked] = useState(false);
@@ -25,8 +26,11 @@ const Onboarding = ({ navigation }) => {
   }, [navigation]);
 
   const validateOnboarding = async () => {
-    const target = firstTime ? "supported" : "tabs";
-    navigation.navigate(target);
+    if (firstTime) {
+      navigation.navigate(ONBOARDING_STEPS.STEP_SUPPORTED);
+    } else {
+      navigation.navigate("tabs");
+    }
   };
 
   const onPressNext = () => swiperRef?.current?.scrollBy(1);

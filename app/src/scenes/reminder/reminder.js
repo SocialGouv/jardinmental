@@ -12,6 +12,8 @@ import NotificationService from "../../services/notifications";
 import { colors } from "../../utils/colors";
 import logEvents from "../../services/logEvents";
 import BackButton from "../../components/BackButton";
+import * as RNLocalize from "react-native-localize";
+import API from "../../services/api";
 
 const ReminderStorageKey = "@Reminder";
 
@@ -71,11 +73,22 @@ const Reminder = ({
       .set("minutes", newReminder.getMinutes())
       .set("seconds", 0)
       .toDate();
-    NotificationService.scheduleNotification({
+    /*NotificationService.scheduleNotification({
       date: fireDate,
       title: notifReminderTitle,
       message: notifReminderMessage,
       repeatType: "day",
+    });*/
+    if (!(await NotificationService.hasToken())) return;
+    await API.put({
+      path: "/reminder",
+      body: {
+        pushNotifToken: await NotificationService.getToken(),
+        type: "Main",
+        timezone: RNLocalize.getTimeZone(),
+        timeHours: newReminder.getHours(),
+        timeMinutes: newReminder.getMinutes(),
+      },
     });
     logEvents.logReminderAdd();
   };

@@ -8,7 +8,7 @@ import SelectDayScreen from "../scenes/survey/selectDay";
 import Reminder from "../scenes/reminder";
 import Export from "../scenes/export/export";
 import DailyChart from "../scenes/calendar/daily-chart";
-import { AppState, Platform } from "react-native";
+import { AppState, Platform, Linking } from "react-native";
 import Notes from "../scenes/survey/notes-screen";
 import Onboarding from "../scenes/onboarding";
 import Supported from "../scenes/onboarding/onboardingSupported";
@@ -41,16 +41,55 @@ import Infos from "../scenes/infos";
 import Contact from "../scenes/contact";
 import PrivacyLight from "../scenes/privacy-light";
 import RNBootsplash from "react-native-bootsplash";
-import Notifications from "../services/notifications";
+import NotificationService from "../services/notifications";
+import { OnboardingMood } from "../scenes/onboarding/onboardingSymptomsStart/MoodScreen";
+import { OnboardingSleep } from "../scenes/onboarding/onboardingSymptomsStart/SleepScreen";
+import { OnboardingSimpleCustomSymptoms } from "../scenes/onboarding/onboardingSymptomsCustom/SimpleCustomScreen";
+import { OnboardingGoals } from "../scenes/onboarding/onboardingGoals/goals";
 
 const Stack = createStackNavigator();
 
+const linking = {
+  prefixes: ["jardinmental://"],
+  async getInitialURL() {
+    // Check if app was opened from a deep link
+    const url = await Linking.getInitialURL();
+
+    if (url != null) {
+      return url;
+    }
+
+    // Check if there is an initial notification
+    const notification = NotificationService.popInitialNotification();
+
+    // Get deep link from data
+    // if this is undefined, the app will open the default/home page
+    return notification?.data?.link;
+  },
+  subscribe(listener) {
+    // default deep link handling
+    const onReceiveURL = ({ url }) => listener(url);
+
+    // Listen to incoming links from deep linking
+    Linking.addEventListener("url", onReceiveURL);
+
+    const unsubscribeNotificationService = NotificationService.subscribe((notification) => {
+      if (notification?.data?.link) listener(notification.data.link);
+    });
+
+    return () => {
+      // Clean up the event listeners
+      Linking.removeEventListener("url", onReceiveURL);
+      unsubscribeNotificationService();
+    };
+  },
+};
 class Router extends React.Component {
   async componentDidMount() {
-    await logEvents.initMatomo();
+    //await logEvents.initMatomo();
     logEvents.logAppVisit();
     RNBootsplash.hide({ fade: true });
-    Notifications.init();
+    NotificationService.init();
     this.appListener = AppState.addEventListener("change", this.onAppChange);
   }
 
@@ -80,7 +119,11 @@ class Router extends React.Component {
   render() {
     return (
       <>
-        <NavigationContainer ref={(r) => (this.navigationRef = r)} onStateChange={this.onStateChange}>
+        <NavigationContainer
+          ref={(r) => (this.navigationRef = r)}
+          onStateChange={this.onStateChange}
+          linking={linking}
+        >
           <Stack.Navigator initialRouteName="tabs" headerMode="none">
             <Stack.Screen name="day-survey" component={DaySurveyScreen} />
             <Stack.Screen name="select-day" component={SelectDayScreen} />
@@ -106,15 +149,18 @@ class Router extends React.Component {
             <Stack.Screen name="onboarding-symptoms-2" component={OnboardingSymptoms2} />
             <Stack.Screen name="onboarding-symptoms-recap" component={OnboardingSymptomsRecap} />
             <Stack.Screen
-              name="onboarding-explanation-indicator-0"
-              component={OnboardingExplanationScreen0}
-            />
-            <Stack.Screen
               name="onboarding-explanation-indicator-1"
               component={OnboardingExplanationScreen1}
             />
+            <Stack.Screen name="onboarding-symptoms-mood" component={OnboardingMood} />
+            <Stack.Screen name="onboarding-symptoms-sleep" component={OnboardingSleep} />
+            <Stack.Screen
+              name="onboarding-symptoms-custom-simple"
+              component={OnboardingSimpleCustomSymptoms}
+            />
             <Stack.Screen name="onboarding-symptoms-start" component={onboardingSymptomsStart} />
             <Stack.Screen name="onboarding-symptoms-custom" component={OnboardingSymptomsCustom} />
+            <Stack.Screen name="onboarding-goals" component={OnboardingGoals} />
             <Stack.Screen name="onboarding-drugs" component={OnboardingDrugs} />
             <Stack.Screen name="onboarding-drugs-information" component={OnboardingDrugsInformation} />
             <Stack.Screen name="onboarding-drugs-list" component={OnboardingDrugsList} />

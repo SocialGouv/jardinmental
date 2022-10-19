@@ -16,6 +16,7 @@ import { Sentry } from "react-native-sentry";
 import { NeedUpdateContextProvider } from "./src/context/needUpdate";
 import { InfoModalProvider } from "./src/components/InfoModal";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { OnboardingProgressHeaderProvider } from "./src/scenes/onboarding/ProgressHeader";
 
 if (!__DEV__) {
   Sentry.config("https://9f0bd8f8af8444eea9f470d00a1bb411@sentry.fabrique.social.gouv.fr/54").install();
@@ -26,10 +27,12 @@ const App = () => (
     <NeedUpdateContextProvider>
       <DiaryNotesProvider>
         <DiaryDataProvider>
-          <InfoModalProvider>
-            <Router />
-            <NPS />
-          </InfoModalProvider>
+          <OnboardingProgressHeaderProvider>
+            <InfoModalProvider>
+              <Router />
+              <NPS />
+            </InfoModalProvider>
+          </OnboardingProgressHeaderProvider>
         </DiaryDataProvider>
       </DiaryNotesProvider>
     </NeedUpdateContextProvider>

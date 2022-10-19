@@ -1,9 +1,8 @@
 import React, { useContext, useState, useEffect } from "react";
-import { StyleSheet, ScrollView, SafeAreaView, View, TouchableOpacity } from "react-native";
+import { StyleSheet, ScrollView, View, TouchableOpacity } from "react-native";
 import Text from "../../../components/MyText";
 import { colors } from "../../../utils/colors";
 import { DiaryDataContext } from "../../../context/diaryData";
-import BackButton from "../../../components/BackButton";
 import localStorage from "../../../utils/localStorage";
 import NoData from "./no-data";
 import DrugItem from "./drug-item";
@@ -11,6 +10,10 @@ import { getDrugListWithLocalStorage } from "../../../utils/drugs-list";
 import logEvents from "../../../services/logEvents";
 import Logo from "../../../../assets/svg/traitement";
 import { ONBOARDING_STEPS } from "../../../utils/constants";
+import { onboardingStyles } from "../styles";
+import { StickyButtonContainer } from "../StickyButton";
+import { SafeAreaViewWithOptionalHeader } from "../ProgressHeader";
+import { OnboardingBackButton } from "../BackButton";
 
 const Drugs = ({ navigation, route }) => {
   const [diaryData, setDiaryData] = useContext(DiaryDataContext);
@@ -63,7 +66,7 @@ const Drugs = ({ navigation, route }) => {
   };
 
   const handleAdd = () => {
-    navigation.navigate("onboarding-drugs-list");
+    navigation.navigate("onboarding-drugs-list", { onboarding: route?.params?.onboarding });
   };
 
   const defaultValue = () => {
@@ -105,57 +108,66 @@ const Drugs = ({ navigation, route }) => {
     }
     return (
       <>
-        <View style={{ flex: 1 }}>
-          <TouchableOpacity
-            onPress={() =>
-              navigation.navigate("onboarding-drugs-information", {
-                onboarding: true,
-              })
-            }
-          />
-          {medicalTreatment.map((e, i) => (
-            <View style={styles.drugItem}>
-              <DrugItem
-                key={i}
-                drug={(posology && posology.find((i) => i.id === e.id)) || e}
-                onChange={handleDrugChange}
-                showPosology={false}
-                onClose={() => handleDelete(e)}
-              />
+        <ScrollView
+          style={onboardingStyles.scroll}
+          contentContainerStyle={onboardingStyles.scrollContentContainer}
+        >
+          <View style={onboardingStyles.container}>
+            <View style={onboardingStyles.imageContainer}>
+              <Logo style={styles.image} width={100} height={100} />
             </View>
-          ))}
-          <Text style={styles.addButton} onPress={handleAdd}>
-            + Ajouter / Modifier mes médicaments suivis
-          </Text>
-          <Text style={styles.link}>Informations sur les traitements</Text>
-        </View>
-        <View style={stylesButton.buttonWrapper}>
+            <View style={onboardingStyles.containerBottom}>
+              <View style={onboardingStyles.containerBottomTitle}>
+                <Text style={onboardingStyles.h1}>
+                  Voici la liste des traitements que vous allez suivre :
+                </Text>
+              </View>
+              <View style={{ flex: 1 }}>
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate("onboarding-drugs-information", {
+                      onboarding: true,
+                    })
+                  }
+                />
+                {medicalTreatment.map((e, i) => (
+                  <View style={styles.drugItem}>
+                    <DrugItem
+                      key={i}
+                      drug={(posology && posology.find((i) => i.id === e.id)) || e}
+                      onChange={handleDrugChange}
+                      showPosology={false}
+                      onClose={() => handleDelete(e)}
+                    />
+                  </View>
+                ))}
+                <Text style={styles.addButton} onPress={handleAdd}>
+                  + Ajouter / Modifier mes médicaments suivis
+                </Text>
+                <Text style={styles.link}>Informations sur les traitements</Text>
+              </View>
+            </View>
+          </View>
+        </ScrollView>
+        <StickyButtonContainer>
           <TouchableOpacity
-            onPress={() => navigation.navigate("onboarding-felicitation")}
+            onPress={() => navigation.navigate("onboarding-custom-more")}
             style={styles.setupButton}
           >
             <Text style={styles.setupButtonText}>Suivant</Text>
           </TouchableOpacity>
-        </View>
+        </StickyButtonContainer>
       </>
     );
   };
 
   return (
-    <SafeAreaView style={styles.safe}>
-      <BackButton onPress={navigation.goBack} />
-      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContainer}>
-        <View style={styles.containerImage}>
-          <Logo style={styles.image} width={100} height={100} />
-        </View>
-        <Text style={styles.title}>
-          {medicalTreatment?.length
-            ? "Voici la liste des traitements que vous allez suivre :"
-            : "Souhaitez-vous renseigner vos prises de traitements quotidiennes ?"}
-        </Text>
-        {render()}
-      </ScrollView>
-    </SafeAreaView>
+    <SafeAreaViewWithOptionalHeader style={onboardingStyles.safe}>
+      <View style={onboardingStyles.topContainer}>
+        <OnboardingBackButton onPress={navigation.goBack} />
+      </View>
+      {render()}
+    </SafeAreaViewWithOptionalHeader>
   );
 };
 
@@ -223,7 +235,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 15,
+    //marginTop: 15,
   },
   setupButtonText: {
     color: "#fff",

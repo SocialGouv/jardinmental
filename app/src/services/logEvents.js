@@ -44,6 +44,7 @@ const checkNetwork = async () => {
 };
 
 const logEvent = async ({ category, action, name, value }) => {
+  if (!Matomo.initDone) await initMatomo();
   try {
     const canSend = await checkNetwork();
     if (!canSend) {
@@ -601,6 +602,25 @@ const logRecommendAppError = async () => {
   });
 };
 
+const logPushNotifTokenRegisterSuccess = async () => {
+  await logEvent({
+    category: "PUSH_NOTIFICATION_TOKEN_REGISTER",
+    action: "SUCCESS",
+  });
+};
+const logPushNotifTokenRegisterError = async () => {
+  await logEvent({
+    category: "PUSH_NOTIFICATION_TOKEN_REGISTER",
+    action: "ERROR",
+  });
+};
+const logPushNotifReceiveClicked = async () => {
+  await logEvent({
+    category: "PUSH_NOTIFICATION_RECEIVE",
+    action: "CLICKED",
+  });
+};
+
 export default {
   initMatomo,
   logAppVisit,
@@ -672,4 +692,7 @@ export default {
   logOnboardingExplainNext,
   logOnboardingExplainOpen,
   logOnboardingExplainStart,
+  logPushNotifTokenRegisterSuccess,
+  logPushNotifTokenRegisterError,
+  logPushNotifReceiveClicked,
 };

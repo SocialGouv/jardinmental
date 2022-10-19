@@ -3,4 +3,5 @@ app:
   envFrom:
     - secretRef:
         name: "{{ .Values.global.pgSecretName }}"
-   
+    - secretRef:
+        name: api

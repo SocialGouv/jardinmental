@@ -1,38 +1,59 @@
 import React from "react";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View, ScrollView } from "react-native";
 
 import Text from "../../../components/MyText";
 import { colors } from "../../../utils/colors";
 import Button from "../../../components/Button";
 import localStorage from "../../../utils/localStorage";
+import { onboardingStyles } from "../styles";
 
-export default ({ navigation }) => {
+import Logo from "../../../../assets/svg/traitement";
+import { StickyButtonContainer } from "../StickyButton";
+
+export default ({ navigation, route }) => {
   const handleNoTreatment = async () => {
     await localStorage.setMedicalTreatment([]);
-    navigation.navigate("onboarding-felicitation");
+    navigation.navigate("onboarding-custom-more");
   };
   const handleDrugInformation = async () => {
     navigation.navigate("onboarding-drugs-information", { onboarding: true });
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.subtitle}>
-        Cela vous permettra de mieux comprendre leurs effets sur votre état de santé mentale
-      </Text>
-      <View style={stylesButton.buttonWrapper}>
+    <>
+      <ScrollView
+        style={onboardingStyles.scroll}
+        contentContainerStyle={onboardingStyles.scrollContentContainer}
+      >
+        <View style={onboardingStyles.container}>
+          <View style={onboardingStyles.imageContainer}>
+            <Logo style={styles.image} width={100} height={100} />
+          </View>
+          <View style={onboardingStyles.containerBottom}>
+            <View style={onboardingStyles.containerBottomTitle}>
+              <Text style={onboardingStyles.h1}>Suivez vos prises de traitement</Text>
+            </View>
+            <View style={onboardingStyles.containerBottomText}>
+              <Text style={onboardingStyles.presentationText}>
+                Cela vous permettra de mieux comprendre leurs effets sur votre état de santé mentale
+              </Text>
+            </View>
+          </View>
+        </View>
+      </ScrollView>
+      <StickyButtonContainer>
         <Button
           textStyle={{ fontSize: 16, fontWeight: "bold" }}
           onPress={() => {
-            navigation.navigate("onboarding-drugs-list");
+            navigation.navigate("onboarding-drugs-list", { onboarding: route?.params?.onboarding });
           }}
           title="Je renseigne mon traitement"
         />
         <TouchableOpacity style={stylesButton.button} onPress={handleNoTreatment}>
           <Text style={stylesButton.text}>Je n'en ai pas / Je le ferai plus tard</Text>
         </TouchableOpacity>
-      </View>
-    </View>
+      </StickyButtonContainer>
+    </>
   );
 };
 
