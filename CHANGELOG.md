@@ -1,3 +1,31 @@
+## [1.38.3](https://github.com/SocialGouv/jardinmental/compare/v1.38.2...v1.38.3) (2022-10-19)
+
+
+### Bug Fixes
+
+* notif push remove useless logs ([3d1fb64](https://github.com/SocialGouv/jardinmental/commit/3d1fb647a50b54859ef532cdb91800db2652e112))
+
+## [1.38.2](https://github.com/SocialGouv/jardinmental/compare/v1.38.1...v1.38.2) (2022-10-19)
+
+
+### Bug Fixes
+
+* ios secrets ([#207](https://github.com/SocialGouv/jardinmental/issues/207)) ([ab7cc44](https://github.com/SocialGouv/jardinmental/commit/ab7cc44093c3dc1fecf587d704171f854d340aff))
+
+## [1.38.1](https://github.com/SocialGouv/jardinmental/compare/v1.38.0...v1.38.1) (2022-10-19)
+
+
+### Bug Fixes
+
+* notif push more logs ([7d2adcc](https://github.com/SocialGouv/jardinmental/commit/7d2adcc7690a7711392fdf2dd3ee2be02595adb8))
+
+# [1.38.0](https://github.com/SocialGouv/jardinmental/compare/v1.37.2...v1.38.0) (2022-10-19)
+
+
+### Features
+
+* notif push to production ([#206](https://github.com/SocialGouv/jardinmental/issues/206)) ([bf54012](https://github.com/SocialGouv/jardinmental/commit/bf5401205c2acd8cf76f247c535b2a2e475b09ed)), closes [#199](https://github.com/SocialGouv/jardinmental/issues/199) [#201](https://github.com/SocialGouv/jardinmental/issues/201) [#202](https://github.com/SocialGouv/jardinmental/issues/202) [#204](https://github.com/SocialGouv/jardinmental/issues/204) [#203](https://github.com/SocialGouv/jardinmental/issues/203)
+
 ## [1.37.2](https://github.com/SocialGouv/jardinmental/compare/v1.37.1...v1.37.2) (2022-09-30)
 
 

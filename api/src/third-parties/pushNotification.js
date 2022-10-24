@@ -32,14 +32,14 @@ const sendNotification = async ({ pushNotifToken, title, body, link, channelId }
 
   try {
     const results = await push.send([pushNotifToken], data);
-    if (results.length > 0) {
+    if (results?.length > 0) {
       if (results[0].success) {
         await matomo.logEvent({
           category: "PUSH_NOTIFICATION_SEND",
           action: "SUCCESS",
         });
       } else if (results[0].failure) {
-        console.log("push notification sent failure:", results[0].message?.[0]?.errorMsg);
+        console.error("push notification sent failure:", results[0].message?.[0]?.errorMsg);
         await matomo.logEvent({
           category: "PUSH_NOTIFICATION_SEND",
           action: "FAILED",
@@ -50,6 +50,7 @@ const sendNotification = async ({ pushNotifToken, title, body, link, channelId }
     }
     return { ok: true, results };
   } catch (error) {
+    console.error("push notification sent error:", error?.message);
     await matomo.logEvent({
       category: "PUSH_NOTIFICATION_SEND",
       action: "ERROR",
