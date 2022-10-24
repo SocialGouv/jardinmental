@@ -21,7 +21,7 @@ import { DiaryNotesContext } from "../../context/diaryNotes";
 import { formatHtmlTable } from "./utils";
 import Icon from "../../components/Icon";
 import logEvents from "../../services/logEvents";
-import { sendTipimail } from "../../services/sendTipimail";
+import { sendMail } from "../../services/mail";
 import BackButton from "../../components/BackButton";
 import Button from "../../components/Button";
 const MailStorageKey = "@Mail";
@@ -54,12 +54,8 @@ const Export = ({ navigation }) => {
     logEvents.logDataExport();
     let subject = "Export de données";
     if (pseudo) subject += ` - ${pseudo}`;
-    const res = await sendTipimail(
+    const res = await sendMail(
       {
-        from: {
-          address: "contact@monsuivipsy.fr",
-          personalName: "Jardin Mental - Application",
-        },
         subject,
         html: htmlExport,
       },

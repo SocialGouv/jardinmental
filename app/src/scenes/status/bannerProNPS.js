@@ -4,7 +4,7 @@ import Text from "../../components/MyText";
 import { colors } from "../../utils/colors";
 import Matomo from "../../services/matomo";
 import logEvents from "../../services/logEvents";
-import { sendTipimail } from "../../services/sendTipimail";
+import { sendMail } from "../../services/mail";
 import localStorage from "../../utils/localStorage";
 
 export default ({ onClose }) => {
@@ -23,17 +23,10 @@ export default ({ onClose }) => {
     }
     logEvents.logProNPSContactSend();
     const userId = Matomo.userId;
-    sendTipimail(
-      {
-        from: {
-          address: "contact@monsuivipsy.fr",
-          personalName: "Jardin Mental - Application",
-        },
-        subject: "Jardin Mental - NPS Professionnel",
-        text: formatText({ value, userId }),
-      },
-      __DEV__ ? "tangimds@gmail.com" : "monsuivipsy@fabrique.social.gouv.fr"
-    );
+    sendMail({
+      subject: "Jardin Mental - NPS Professionnel",
+      text: formatText({ value, userId }),
+    });
     setNpsSent(true);
     localStorage.setNpsProContact(true);
     onClose();
