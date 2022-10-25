@@ -1,3 +1,20 @@
+# [1.39.0](https://github.com/SocialGouv/jardinmental/compare/v1.38.3...v1.39.0) (2022-10-25)
+
+
+### Bug Fixes
+
+* tipi to api ([#209](https://github.com/SocialGouv/jardinmental/issues/209)) ([8824b64](https://github.com/SocialGouv/jardinmental/commit/8824b64e9c5d6938731fd99febb4cb1107d1af8d))
+* **api:** disable cronjobs in dev ([#203](https://github.com/SocialGouv/jardinmental/issues/203)) ([91d47ee](https://github.com/SocialGouv/jardinmental/commit/91d47ee13cf48f8394531211069d2f0049bcb762))
+* api reminder ([9494d50](https://github.com/SocialGouv/jardinmental/commit/9494d501a46f3371e0c3d3e4596a7588625bfb14))
+* secrets ([#202](https://github.com/SocialGouv/jardinmental/issues/202)) ([744b6d7](https://github.com/SocialGouv/jardinmental/commit/744b6d78525d99d1819b8c5861fd5b8feeba34b9))
+
+
+### Features
+
+* notif push fix channels ([#204](https://github.com/SocialGouv/jardinmental/issues/204)) ([be27221](https://github.com/SocialGouv/jardinmental/commit/be27221e7eb92c09b79d095aa4a5c4bc42807486))
+* onboarding p7 ([#199](https://github.com/SocialGouv/jardinmental/issues/199)) ([e15b697](https://github.com/SocialGouv/jardinmental/commit/e15b6972781e3e572c35dad2a3200715676f4479))
+* remote push notification ([#201](https://github.com/SocialGouv/jardinmental/issues/201)) ([032c6ad](https://github.com/SocialGouv/jardinmental/commit/032c6adb7a6bb150b50d12093be48e55f90bfd9d))
+
 ## [1.38.3](https://github.com/SocialGouv/jardinmental/compare/v1.38.2...v1.38.3) (2022-10-19)
 
 
