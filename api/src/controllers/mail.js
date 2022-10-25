@@ -1,6 +1,6 @@
 const express = require("express");
 const fetch = require("node-fetch");
-const { TIPIMAIL_API_USER, TIPIMAIL_API_KEY } = require("../config");
+const { TIPIMAIL_API_USER, TIPIMAIL_API_KEY, ENVIRONMENT } = require("../config");
 const { catchErrors } = require("../middlewares/errors");
 const router = express.Router();
 const { capture } = require("../third-parties/sentry");
@@ -8,13 +8,12 @@ const { capture } = require("../third-parties/sentry");
 router.post(
   "/",
   catchErrors(async (req, res) => {
-    console.log(JSON.stringify(req.body));
     let { to, replyTo, replyToName, subject, text, html } = req.body || {};
 
     if (!subject || (!text && !html)) return res.status(400).json({ ok: false, error: "wrong parameters" });
 
     if (!to) {
-      to = __DEV__ ? "tangimds@gmail.com" : "monsuivipsy@fabrique.social.gouv.fr";
+      to = ENVIRONMENT === "development" ? "tangimds@gmail.com" : "monsuivipsy@fabrique.social.gouv.fr";
     }
 
     if (!replyTo) {
