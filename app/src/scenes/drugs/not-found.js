@@ -6,7 +6,7 @@ import Button from "../../components/Button";
 import localStorage from "../../utils/localStorage";
 import Matomo from "../../services/matomo";
 import logEvents from "../../services/logEvents";
-import { sendTipimail } from "../../services/sendTipimail";
+import { sendMail } from "../../services/mail";
 
 export default ({ navigation, searchedValue }) => {
   const [drugNotFound, setDrugNotFound] = useState();
@@ -33,17 +33,10 @@ export default ({ navigation, searchedValue }) => {
     }
     logEvents.logTreatmentNotFound(searchedValue);
     const userId = Matomo.userId;
-    await sendTipimail(
-      {
-        from: {
-          address: "contact@monsuivipsy.fr",
-          personalName: "Jardin Mental - Application",
-        },
-        subject: "Jardin Mental - NPS",
-        text: formatText({ drugNotFound, userId }),
-      },
-      __DEV__ ? "tangimds@gmail.com" : "monsuivipsy@fabrique.social.gouv.fr"
-    );
+    await sendMail({
+      subject: "Jardin Mental - NPS",
+      text: formatText({ drugNotFound, userId }),
+    });
     setNpsSent(true);
   };
 

@@ -17,7 +17,7 @@ import Text from "../../components/MyText";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Mark from "./Mark";
 import Notifications from "../notifications";
-import { sendTipimail } from "../sendTipimail";
+import { sendMail } from "../mail";
 import { colors } from "../../utils/colors";
 import Matomo from "../matomo";
 import logEvents from "../logEvents";
@@ -174,17 +174,10 @@ class NPS extends React.Component {
     const userId = Matomo.userId;
     const supported = await localStorage.getSupported();
     const startDate = await AsyncStorage.getItem("@SURVEY_DATE");
-    sendTipimail(
-      {
-        from: {
-          address: "contact@monsuivipsy.fr",
-          personalName: "Jardin Mental - Application",
-        },
-        subject: "Jardin Mental - NPS",
-        text: formatText({ useful, feedback, userId, contact, supported, startDate }),
-      },
-      __DEV__ ? "tangimds@gmail.com" : "monsuivipsy@fabrique.social.gouv.fr"
-    );
+    sendMail({
+      subject: "Jardin Mental - NPS",
+      text: formatText({ useful, feedback, userId, contact, supported, startDate }),
+    });
     this.npsSent = true;
     this.setState({ visible: false, useful: null, reco: null });
   };

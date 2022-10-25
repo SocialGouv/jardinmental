@@ -5,7 +5,7 @@ import { colors } from "../../utils/colors";
 import Button from "../../components/Button";
 import Matomo from "../../services/matomo";
 import logEvents from "../../services/logEvents";
-import { sendTipimail } from "../../services/sendTipimail";
+import { sendMail } from "../../services/mail";
 import BackButton from "../../components/BackButton";
 
 export default ({ navigation, searchedValue }) => {
@@ -24,17 +24,10 @@ export default ({ navigation, searchedValue }) => {
     }
     logEvents.logProNPSSend();
     const userId = Matomo.userId;
-    await sendTipimail(
-      {
-        from: {
-          address: "contact@monsuivipsy.fr",
-          personalName: "Jardin Mental - Application",
-        },
-        subject: "Jardin Mental - NPS",
-        text: formatText({ value, userId }),
-      },
-      __DEV__ ? "tangimds@gmail.com" : "monsuivipsy@fabrique.social.gouv.fr"
-    );
+    await sendMail({
+      subject: "Jardin Mental - NPS",
+      text: formatText({ value, userId }),
+    });
     setNpsSent(true);
   };
 

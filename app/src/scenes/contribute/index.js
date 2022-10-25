@@ -16,6 +16,7 @@ import Matomo from "../../services/matomo";
 import { useEffect } from "react";
 import Button from "../../components/Button";
 import BackButton from "../../components/BackButton";
+import { sendMail } from "../../services/mail";
 
 const Supported = ({ navigation }) => {
   const [contribution, setContribution] = useState("");
@@ -30,17 +31,10 @@ const Supported = ({ navigation }) => {
     setSendButton("Merci !");
     logEvents.logNPSSend(useful, reco);
     const userId = Matomo.userId;
-    sendTipimail(
-      {
-        from: {
-          address: "contact@monsuivipsy.fr",
-          personalName: "Jardin Mental - Application",
-        },
-        subject: "Jardin Mental - NPS",
-        text: formatText(useful, reco, feedback, email, userId),
-      },
-      __DEV__ ? "tangimds@gmail.com" : "monsuivipsy@fabrique.social.gouv.fr"
-    );
+    sendMail({
+      subject: "Jardin Mental - NPS",
+      text: formatText(useful, reco, feedback, email, userId),
+    });
     this.npsSent = true;
     this.setState({ visible: false });
   };
