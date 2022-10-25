@@ -1,15 +1,15 @@
 import API, { checkNetwork } from "./api";
 
-export const sendMail = async (msg, address) => {
+export const sendMail = async (msg, toAddress) => {
   const canFetch = await checkNetwork();
   if (!canFetch) return { ok: false, skipMessage: true };
 
   return await API.post({
     path: "/mail",
     body: {
-      to: address,
-      from: msg?.from?.address,
-      fromName: msg?.from?.personalName,
+      to: toAddress,
+      replyTo: msg?.replyTo?.address,
+      replyToName: msg?.replyTo?.personalName,
       subject: msg?.subject,
       text: msg?.text,
       html: msg?.html,

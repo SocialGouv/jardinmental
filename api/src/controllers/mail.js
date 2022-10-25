@@ -9,7 +9,7 @@ router.post(
   "/",
   catchErrors(async (req, res) => {
     console.log(JSON.stringify(req.body));
-    let { to, from, fromName, subject, text, html } = req.body || {};
+    let { to, replyTo, replyToName, subject, text, html } = req.body || {};
 
     if (!subject || (!text && !html)) return res.status(400).json({ ok: false, error: "wrong parameters" });
 
@@ -17,10 +17,13 @@ router.post(
       to = __DEV__ ? "tangimds@gmail.com" : "monsuivipsy@fabrique.social.gouv.fr";
     }
 
-    if (!from) {
-      from = "contact@jardinmental.fr";
-      fromName = "Jardin Mental - Application";
+    if (!replyTo) {
+      replyTo = undefined;
+      replyToName = undefined;
     }
+
+    const from = "contact@jardinmental.fr";
+    const fromName = "Jardin Mental - Application";
 
     const apiRes = await fetch("https://api.tipimail.com/v1/messages/send", {
       method: "POST",
@@ -40,6 +43,10 @@ router.post(
           from: {
             address: from,
             personalName: fromName,
+          },
+          replyTo: replyTo && {
+            address: replyTo,
+            personalName: replyToName,
           },
           subject,
           text,
