@@ -1,3 +1,10 @@
+## [1.39.1](https://github.com/SocialGouv/jardinmental/compare/v1.39.0...v1.39.1) (2022-10-27)
+
+
+### Bug Fixes
+
+* prevent old app that mail is not working any more ([#210](https://github.com/SocialGouv/jardinmental/issues/210)) ([8bdd751](https://github.com/SocialGouv/jardinmental/commit/8bdd75136670fa49a9da1836a81504e96cf532fc))
+
 # [1.39.0](https://github.com/SocialGouv/jardinmental/compare/v1.38.3...v1.39.0) (2022-10-25)
 
 
