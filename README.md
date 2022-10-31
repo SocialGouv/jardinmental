@@ -6,6 +6,10 @@
 
 Permettre à chacun de mieux connaitre son trouble pour faciliter le choix du bon traitement
 
+Site officiel et présentation grand public : https://jardinmental.fabrique.social.gouv.fr/
+
+Note d'intension du projet : https://beta.gouv.fr/startups/monsuivipsy.html
+
 ## Deploy
 
 ### For all: bump versions
