@@ -1,7 +1,8 @@
 ![Mobile version](https://img.shields.io/badge/app-1.31.0-blue)
 ![Mobile version](https://img.shields.io/badge/api-0.1.0-purple)
 
-# Mon Suivi Psy
+# Jardin Mental
+(anciènement nommée : Mon Suivi Psy)
 
 Permettre à chacun de mieux connaitre son trouble pour faciliter le choix du bon traitement
 
