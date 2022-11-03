@@ -22,8 +22,8 @@ const Indicateurs = ({ navigation }) => {
     React.useCallback(() => {
       (async () => {
         const user_indicateurs = await localStorage.getIndicateurs();
+        console.log("✍️ ~ user_indicateurs", JSON.stringify(user_indicateurs, null, 2));
         if (user_indicateurs) {
-          console.log("✍️ ~ user_indicateurs", JSON.stringify(user_indicateurs, null, 2));
           setUserIndicateurs(user_indicateurs);
         }
       })();
