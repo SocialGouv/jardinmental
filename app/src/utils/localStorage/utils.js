@@ -12,7 +12,7 @@ export const versionsTransformation = {
   }
   */
   0: (dataV0) => {
-    const indicateurFromUtils = INDICATEURS.map((ind) => ind.name === dataV0.name);
+    const indicateurFromUtils = INDICATEURS.find((ind) => ind.name === dataV0.name);
     if (indicateurFromUtils) {
       return {
         version: 1,
