@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
+import { INDICATEURS } from "../liste_indicateurs.1";
 
 export const latestVersion = 1;
 
@@ -11,7 +12,21 @@ export const versionsTransformation = {
   }
   */
   0: (dataV0) => {
-    const dataV1 = {
+    const indicateurFromUtils = INDICATEURS.map((ind) => ind.name === dataV0.name);
+    if (indicateurFromUtils) {
+      return {
+        version: 1,
+        uuid: indicateurFromUtils.uuid,
+        name: indicateurFromUtils.name,
+        order: "ASC",
+        type: "smiley",
+        category: indicateurFromUtils.category,
+        active: dataV0.active,
+        position: 0,
+        created_at: new Date(),
+      };
+    }
+    return {
       version: 1,
       uuid: uuidv4(),
       name: dataV0.name,
@@ -21,7 +36,6 @@ export const versionsTransformation = {
       position: 0,
       created_at: new Date(),
     };
-    return dataV1;
   },
   /*
   {
