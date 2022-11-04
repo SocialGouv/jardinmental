@@ -224,6 +224,8 @@ const DaySurvey = ({ navigation, route }) => {
           <Text style={styles.subtitle}>
             Retrouvez toutes vos notes dans l'onglet &quot;Mon&nbsp;journal&quot;
           </Text>
+
+          <View style={styles.spacer} />
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
@@ -436,6 +438,10 @@ const styles = StyleSheet.create({
   bottom: {
     justifyContent: "flex-end",
     marginBottom: 36,
+  },
+
+  spacer: {
+    height: 40,
   },
 });
 
