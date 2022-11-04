@@ -1,5 +1,6 @@
 import React, { useContext, useCallback } from "react";
-import { StyleSheet, View, Text, TouchableOpacity, Animated } from "react-native";
+import { StyleSheet, View, TouchableOpacity, Animated } from "react-native";
+import Text from "../../components/MyText";
 import { DiaryDataContext } from "../../context/diaryData";
 import { colors } from "../../utils/colors";
 import { formatDateThread } from "../../utils/date/helpers";
