@@ -4,10 +4,12 @@ import Text from "../../components/MyText";
 import { colors } from "../../utils/colors";
 import { canEdit } from "./utils/index.js";
 import ArrowRightSvg from "../../../assets/svg/arrow-right.js";
+import HeartBubble from "../../../assets/svg/HeartBubble";
 
 const NoDataDiaryItem = ({ date }) => {
   return (
     <View style={styles.textContainer}>
+      <HeartBubble />
       <Text style={styles.noDataTitle}>
         {canEdit(date)
           ? "Renseigner mon état pour ce jour-là"

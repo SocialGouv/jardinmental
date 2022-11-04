@@ -27,31 +27,29 @@ const QuestionYesNo = ({
   return (
     <View style={styles.questionContainer}>
       <TouchableOpacity onPress={toggleShowExplanation}>
-        <View style={styles.questionHeaderContainer}>
-          <View style={styles.questionHeader}>
-            {explanation ? (
-              <Icon
-                icon="InfoSvg"
-                width={25}
-                height={25}
-                color={colors.LIGHT_BLUE}
-                styleContainer={{ width: 25, height: 25 }}
-              />
-            ) : (
-              <View />
-            )}
-            <Text style={styles.questionTitle}>{question.label}</Text>
-            {/* we put a view here because we'll add a item here later */}
+        <View style={styles.questionHeader}>
+          {explanation ? (
+            <Icon
+              icon="InfoSvg"
+              width={25}
+              height={25}
+              color={colors.LIGHT_BLUE}
+              styleContainer={{ width: 25, height: 25 }}
+            />
+          ) : (
             <View />
-          </View>
-          {explanation && showExplanation ? (
-            <View style={styles.questionInfo}>
-              <Text>{explanation}</Text>
-            </View>
-          ) : null}
+          )}
+          <Text style={styles.questionTitle}>{question.label}</Text>
+          {/* we put a view here because we'll add a item here later */}
+          <View />
         </View>
+        {explanation && showExplanation ? (
+          <View style={styles.questionInfo}>
+            <Text>{explanation}</Text>
+          </View>
+        ) : null}
       </TouchableOpacity>
-      <View style={[styles.answerContainer, !isLast && styles.leftFileAriane]}>
+      <View style={styles.answerContainer}>
         <View style={styles.answersContainer}>
           {answersYesNo.map((answer, i) => {
             const active = selected === answer.score;
@@ -99,11 +97,11 @@ const QuestionYesNo = ({
 
 const styles = StyleSheet.create({
   textArea: {
-    backgroundColor: "#F4FCFD",
+    backgroundColor: "#fff",
+    borderColor: "#DEF4F5",
+    borderWidth: 1,
     borderRadius: 10,
-    marginBottom: 10,
     padding: 10,
-    marginHorizontal: 15,
   },
   selectionContainer: {
     padding: 3,
@@ -154,20 +152,17 @@ const styles = StyleSheet.create({
   },
 
   questionContainer: {
-    display: "flex",
-  },
-  questionHeaderContainer: {
     backgroundColor: "#F4FCFD",
     borderColor: "#DEF4F5",
     borderWidth: 1,
     borderRadius: 10,
-    padding: 10,
+    padding: 20,
+    marginBottom: 25,
   },
+
   questionHeader: {
     display: "flex",
-    flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center",
   },
   questionInfo: {
     marginTop: 15,
@@ -184,21 +179,14 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   answerContainer: {
-    paddingTop: 20,
-    paddingBottom: 15,
-    marginLeft: 18, // padding of the header question container + half of the dot size => 10 + 8 = 18
-    display: "flex",
-    justifyContent: "space-around",
+    paddingTop: 10,
   },
   answersContainer: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-around",
-    paddingBottom: 15,
-  },
-  leftFileAriane: {
-    borderLeftColor: "#DEF4F5",
-    borderLeftWidth: 2,
+    paddingTop: 10,
+    paddingBottom: 25,
   },
   safe: {
     flex: 1,
