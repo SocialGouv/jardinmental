@@ -36,7 +36,7 @@ export default ({ navigation }) => {
             <Text style={styles.lightblue}>anonymées</Text> concernant la{" "}
             <Text style={styles.lightblue}>fréquence</Text> d'utilisation de l'application et de ses
             fonctionnalités sont <Text style={styles.lightblue}>recueillies</Text> par la Fabrique du
-            Numérique des Minsitères Sociaux.
+            Numérique des Ministères Sociaux.
           </Text>
         </View>
       </ScrollView>
