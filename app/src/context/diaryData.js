@@ -30,7 +30,6 @@ const wipeData = async () => {
   await AsyncStorage.removeItem(STORAGE_KEY_INDICATEURS);
   await AsyncStorage.removeItem(STORAGE_KEY_IS_FIRST_LAUNCH);
   await AsyncStorage.removeItem(STORAGE_KEY_SUPPORTED);
-  await AsyncStorage.removeItem(STORAGE_KEY_CUSTOM_SYMPTOMS);
   await AsyncStorage.removeItem(STORAGE_KEY_MEDICAL_TREATMENT);
   await AsyncStorage.removeItem(STORAGE_KEY_NOTES_VERSION);
   await AsyncStorage.removeItem(STORAGE_KEY_VISIT_PRO_NPS);
