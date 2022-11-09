@@ -16,6 +16,7 @@ import Diary from "../../scenes/diary";
 import ContributeCard from "../contribute/contributeCard";
 import FloatingPlusButton from "../../components/FloatingPlusButton";
 import { DiaryList } from "./DiaryList";
+import { checkOldReminderBefore154 } from "../reminder/checkReminder";
 
 const LIMIT_PER_PAGE = __DEV__ ? 3 : 30;
 
@@ -25,6 +26,10 @@ const Status = ({ navigation, startSurvey }) => {
   const [bannerProNPSVisible, setBannerProNPSVisible] = useState(true);
   const [ongletActif, setOngletActif] = useState("all");
   const scrollRef = React.useRef();
+
+  React.useEffect(() => {
+    checkOldReminderBefore154();
+  }, []);
 
   React.useEffect(() => {
     scrollRef.current?.scrollTo?.({
