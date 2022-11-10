@@ -2,7 +2,6 @@ import API from "../../services/api";
 import NotificationService from "../../services/notifications";
 import * as RNLocalize from "react-native-localize";
 import { add } from "date-fns";
-import { weekday } from "dayjs/plugin/weekday";
 import { DAYS_OF_WEEK } from ".";
 
 export const updateInactivityReminder = async () => {
@@ -12,7 +11,7 @@ export const updateInactivityReminder = async () => {
     hours: -1,
   });
 
-  const res = await API.put({
+  await API.put({
     path: "/reminder",
     body: {
       pushNotifToken: await NotificationService.getToken(),
