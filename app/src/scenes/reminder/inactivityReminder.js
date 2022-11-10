@@ -9,8 +9,7 @@ export const updateInactivityReminder = async () => {
   if (!(await NotificationService.hasToken())) return;
 
   const nextDate = add(new Date(), {
-    //hours: -1,
-    minutes: 1, //test
+    hours: -1,
   });
 
   const res = await API.put({
