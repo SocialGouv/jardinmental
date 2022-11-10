@@ -13,7 +13,7 @@ export const updateInactivityReminder = async () => {
     minutes: 1, //test
   });
 
-  await API.put({
+  const res = await API.put({
     path: "/reminder",
     body: {
       pushNotifToken: await NotificationService.getToken(),
@@ -21,7 +21,7 @@ export const updateInactivityReminder = async () => {
       timezone: RNLocalize.getTimeZone(),
       timeHours: nextDate.getHours(),
       timeMinutes: nextDate.getMinutes(),
-      weekday: {
+      daysOfWeek: {
         ...DAYS_OF_WEEK.reduce((acc, day, index) => {
           if (nextDate.getDay() === index) acc[day] = true;
           else acc[day] = false;

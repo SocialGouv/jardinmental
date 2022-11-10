@@ -117,6 +117,16 @@ class NotificationService {
     );
     PushNotification.createChannel(
       {
+        channelId: "reminder_inactivity", // (required)
+        channelName: "Rappel d'inactivité", // (required)
+        soundName: "default", // (optional) See `soundName` parameter of `localNotification` function
+        importance: 4, // (optional) default: 4. Int value of the Android notification importance
+        vibrate: true, // (optional) default: true. Creates the default vibration patten if true.
+      },
+      (created) => console.log(`createChannel returned '${created}'`)
+    );
+    PushNotification.createChannel(
+      {
         channelId: this.channelId, // (required)
         channelName: "Autres", // (required)
         soundName: "default", // (optional) See `soundName` parameter of `localNotification` function
@@ -177,11 +187,11 @@ class NotificationService {
 
     /* ANDROID FOREGROUND */
 
-    // if (Platform.OS === "android") {
-    //   // if not the line below, the notification is launched without notifying
-    //   // with the line below, there is a local notification triggered
-    //   if (notification.foreground && !notification.userInteraction) return;
-    // }
+    if (Platform.OS === "android") {
+      // if not the line below, the notification is launched without notifying
+      // with the line below, there is a local notification triggered
+      if (notification.foreground && !notification.userInteraction) return;
+    }
 
     /* LISTENERS */
 
