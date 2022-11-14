@@ -286,9 +286,9 @@ PODS:
     - glog
   - react-native-blur (4.2.0):
     - React-Core
-  - react-native-config (1.4.6):
-    - react-native-config/App (= 1.4.6)
-  - react-native-config/App (1.4.6):
+  - react-native-config (1.4.11):
+    - react-native-config/App (= 1.4.11)
+  - react-native-config/App (1.4.11):
     - React-Core
   - react-native-date-picker (4.2.2):
     - React-Core
@@ -672,7 +672,7 @@ SPEC CHECKSUMS:
   React-jsinspector: 86e89b9f135787a2e8eb74b3fc00ec61e9a80ae1
   React-logger: f790bd10f86b38012e108fb4b564023602702270
   react-native-blur: 3e9c8e8e9f7d17fa1b94e1a0ae9fd816675f5382
-  react-native-config: 7cd105e71d903104e8919261480858940a6b9c0e
+  react-native-config: bcafda5b4c51491ee1b0e1d0c4e3905bc7b56c1b
   react-native-date-picker: 9088350e06918f7d842a34c171acadc66583cb94
   react-native-get-random-values: a6ea6a8a65dc93e96e24a11105b1a9c8cfe1d72a
   react-native-netinfo: 30fb89fa913c342be82a887b56e96be6d71201dd

@@ -1,0 +1,10 @@
+{
+  "devDependencies": {
+    "husky": "^8.0.1",
+    "is-ci": "^3.0.1",
+    "node-talisman": "^1.29.3"
+  },
+  "scripts": {
+    "postinstall": "is-ci || husky install"
+  }
+}
