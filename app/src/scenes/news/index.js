@@ -13,7 +13,7 @@ export const getBadgeNotesVersion = async () => {
   return lastNotesVersion !== LAST_NOTES_VERSION;
 };
 
-export const LAST_NOTES_VERSION = "1.34";
+export const LAST_NOTES_VERSION = "1.35";
 
 export default ({ navigation }) => {
   useEffect(() => {
@@ -28,6 +28,14 @@ export default ({ navigation }) => {
         <Image style={styles.image} source={require("../../../assets/imgs/logo2.png")} />
       </View>
       <ScrollView style={styles.cgu} contentContainerStyle={styles.scrollContainer}>
+        <Card title="Amélioration des notifications de rappel" version="v1.35" date="11/2022">
+          <Item>
+            <Text style={styles.text}>
+              Le système de notifications de rappel à été amélioré ! Pensez à bien autoriser les notifications
+              et les bannières de Jardin Mental dans les réglages de votre téléphone.
+            </Text>
+          </Item>
+        </Card>
         <Card title="Amélioration de l'analyse et recommandation" version="v1.34" date="05/2022">
           <Item>
             <Text style={styles.text}>
