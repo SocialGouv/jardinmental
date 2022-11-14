@@ -59,11 +59,12 @@ router.put(
 
     if (
       !pushNotifToken ||
-      (type !== "Main" && type !== "Goal") ||
+      (type !== "Main" && type !== "Goal" && type !== "Inactivity") ||
       !timezone ||
       isNaN(timeHours) ||
       isNaN(timeMinutes) ||
-      (type === "Goal" && !localId && !daysOfWeek)
+      (type === "Goal" && !localId && !daysOfWeek) ||
+      (type === "Inactivity" && !daysOfWeek)
     )
       return res.status(400).json({ ok: false, error: "wrong parameters" });
 
@@ -176,6 +177,35 @@ const reminderCronJob = async (req, res) => {
       body: "N’oubliez de préciser si vous l’avez réalisé dans Jardin Mental",
       //link: "jardinmental://goals"
       channelId: "reminder_goal",
+    });
+  }
+
+  const inactivityReminders = await prisma.reminderUtcDaysOfWeek.findMany({
+    where: {
+      [utcDayOfWeek]: true,
+      reminder: {
+        type: "Inactivity",
+        disabled: false,
+        utcTimeHours,
+        utcTimeMinutes,
+      },
+    },
+    include: {
+      reminder: {
+        include: {
+          user: true,
+        },
+      },
+    },
+  });
+  for (const { reminder } of inactivityReminders) {
+    if (!reminder?.user?.pushNotifToken) continue;
+    sendNotification({
+      pushNotifToken: reminder.user.pushNotifToken,
+      title: "Comment s’est passée cette semaine ?",
+      body: "Prenez le temps de la renseigner sur Jardin Mental",
+      link: "jardinmental://tabs/Status",
+      channelId: "reminder_inactivity",
     });
   }
 };
