@@ -46,8 +46,8 @@ const toUtcData = ({ timeHours, timeMinutes, daysOfWeek, timezone }) => {
   }
 
   return {
-    utcTimeHours,
-    utcTimeMinutes,
+    utcTimeHours: !isNaN(utcTimeHours) ? utcTimeHours : undefined,
+    utcTimeMinutes: !isNaN(utcTimeMinutes) ? utcTimeMinutes : undefined,
     utcDaysOfWeek,
   };
 };
@@ -60,11 +60,12 @@ router.put(
     if (
       !pushNotifToken ||
       (type !== "Main" && type !== "Goal" && type !== "Inactivity") ||
-      !timezone ||
-      isNaN(timeHours) ||
-      isNaN(timeMinutes) ||
-      (type === "Goal" && !localId && !daysOfWeek) ||
-      (type === "Inactivity" && !daysOfWeek)
+      (disabled !== true &&
+        (!timezone ||
+          isNaN(timeHours) ||
+          isNaN(timeMinutes) ||
+          (type === "Goal" && !localId && !daysOfWeek) ||
+          (type === "Inactivity" && !daysOfWeek)))
     )
       return res.status(400).json({ ok: false, error: "wrong parameters" });
 
