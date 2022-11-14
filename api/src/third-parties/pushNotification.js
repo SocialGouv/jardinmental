@@ -8,7 +8,7 @@ const push = new PushNotifications({
   },
   apn: {
     token: {
-      key: PUSH_NOTIFICATION_APN_KEY.replace(/\\n/g, "\n"),
+      key: PUSH_NOTIFICATION_APN_KEY,
       keyId: PUSH_NOTIFICATION_APN_KEY_ID,
       teamId: PUSH_NOTIFICATION_APN_TEAM_ID,
     },
