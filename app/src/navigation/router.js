@@ -67,11 +67,10 @@ const linking = {
     return notification?.data?.link;
   },
   subscribe(listener) {
-    // default deep link handling
-    const onReceiveURL = ({ url }) => listener(url);
-
-    // Listen to incoming links from deep linking
-    Linking.addEventListener("url", onReceiveURL);
+    /// Listen to incoming links from deep linking
+    const linkingSubscription = Linking.addEventListener("url", ({ url }) => {
+      listener(url);
+    });
 
     const unsubscribeNotificationService = NotificationService.subscribe((notification) => {
       if (notification?.data?.link) listener(notification.data.link);
@@ -79,7 +78,7 @@ const linking = {
 
     return () => {
       // Clean up the event listeners
-      Linking.removeEventListener("url", onReceiveURL);
+      linkingSubscription.remove();
       unsubscribeNotificationService();
     };
   },
