@@ -42,6 +42,7 @@ model Reminder {
 enum ReminderType {
   Main
   Goal
+  Inactivity
 }
 
 model ReminderUtcDaysOfWeek {

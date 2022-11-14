@@ -16,8 +16,8 @@ import Diary from "../../scenes/diary";
 import ContributeCard from "../contribute/contributeCard";
 import FloatingPlusButton from "../../components/FloatingPlusButton";
 import { DiaryList } from "./DiaryList";
+import { updateInactivityReminder } from "../reminder/inactivityReminder";
 import { checkOldReminderBefore154 } from "../reminder/checkOldReminder";
-
 const LIMIT_PER_PAGE = __DEV__ ? 3 : 30;
 
 const Status = ({ navigation, startSurvey }) => {
@@ -28,6 +28,7 @@ const Status = ({ navigation, startSurvey }) => {
   const scrollRef = React.useRef();
 
   React.useEffect(() => {
+    updateInactivityReminder();
     checkOldReminderBefore154(); // can be deleted in few months
   }, []);
 
