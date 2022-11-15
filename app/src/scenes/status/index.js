@@ -18,6 +18,7 @@ import FloatingPlusButton from "../../components/FloatingPlusButton";
 import { DiaryList } from "./DiaryList";
 import { updateInactivityReminder } from "../reminder/inactivityReminder";
 import { checkOldReminderBefore154 } from "../reminder/checkOldReminder";
+import { useLatestChangesModal } from "../news/latestChangesModal";
 const LIMIT_PER_PAGE = __DEV__ ? 3 : 30;
 
 const Status = ({ navigation, startSurvey }) => {
@@ -26,6 +27,7 @@ const Status = ({ navigation, startSurvey }) => {
   const [bannerProNPSVisible, setBannerProNPSVisible] = useState(true);
   const [ongletActif, setOngletActif] = useState("all");
   const scrollRef = React.useRef();
+  const { showLatestChangesModal } = useLatestChangesModal();
 
   React.useEffect(() => {
     updateInactivityReminder();
@@ -107,6 +109,7 @@ const Status = ({ navigation, startSurvey }) => {
         const bannerProNPSDone = await localStorage.getNpsProContact();
         const supported = await localStorage.getSupported();
         setBannerProNPSVisible(supported === "PRO" && !bannerProNPSDone);
+        showLatestChangesModal();
       })();
     }, [])
   );
