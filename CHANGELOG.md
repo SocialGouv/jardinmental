@@ -1,3 +1,10 @@
+## [1.39.2](https://github.com/SocialGouv/jardinmental/compare/v1.39.1...v1.39.2) (2022-11-14)
+
+
+### Bug Fixes
+
+* update react-native-config to compile on ios ([#222](https://github.com/SocialGouv/jardinmental/issues/222)) ([c31b9d9](https://github.com/SocialGouv/jardinmental/commit/c31b9d949cc7d6c556929324c52fce47cf2264f9))
+
 ## [1.39.1](https://github.com/SocialGouv/jardinmental/compare/v1.39.0...v1.39.1) (2022-10-27)
 
 
