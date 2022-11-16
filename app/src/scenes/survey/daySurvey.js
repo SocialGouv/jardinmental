@@ -116,7 +116,6 @@ const DaySurvey = ({ navigation, route }) => {
       answers: { ...prevCurrentSurvey.answers, ...answers },
     };
     setDiaryData(currentSurvey);
-    console.log("✍️ ~ currentSurvey", JSON.stringify(currentSurvey, null, 2));
     logEvents.logFeelingAdd();
     logEvents.logFeelingSubmitSurvey(userIndicateurs.filter((i) => i.active).length);
     logEvents.logFeelingAddComment(
