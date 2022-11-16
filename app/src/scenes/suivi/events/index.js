@@ -17,19 +17,20 @@ import { EventFilterHeader } from "./EventFilterHeader";
 const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, toDate, setToDate }) => {
   const [diaryData] = React.useContext(DiaryDataContext);
   const [activeCategories, setActiveCategories] = React.useState();
+  const [userIndicateurs, setUserIndicateurs] = React.useState([]);
   const [isEmpty, setIsEmpty] = React.useState();
   const chartDates = getArrayOfDatesFromTo({ fromDate, toDate });
-  const [symptom, setSymptom] = React.useState("ANXIETY");
+  const [symptom, setSymptom] = React.useState();
   const [event, setEvent] = React.useState("ALL");
   const [score, setScore] = React.useState([5]);
 
   useFocusEffect(
     React.useCallback(() => {
       (async () => {
-        const q = await buildSurveyData();
-        if (q) {
-          setActiveCategories(q.map((e) => e.id));
-          setSymptom(q[0].id);
+        const user_indicateurs = await localStorage.getIndicateurs();
+        if (user_indicateurs) {
+          setUserIndicateurs(user_indicateurs);
+          setSymptom(user_indicateurs[0].name);
         }
       })();
     }, [])
@@ -143,7 +144,7 @@ const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, 
           setSymptom={setSymptom}
           score={score}
           setScore={setScore}
-          activeCategories={activeCategories}
+          userIndicateurs={userIndicateurs.filter(({ active }) => active).map(({ name }) => name)}
         />
         <View style={styles.dataContainer}>
           {memoizedCallback()?.filter((x) => x.date)?.length === 0 && (

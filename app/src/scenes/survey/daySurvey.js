@@ -11,7 +11,6 @@ import {
 } from "react-native";
 import Text from "../../components/MyText";
 import { colors } from "../../utils/colors";
-import { buildSurveyData } from "./survey-data";
 import { beforeToday, formatDay, formatRelativeDate } from "../../utils/date/helpers";
 import { isToday, isYesterday, parseISO } from "date-fns";
 import BackButton from "../../components/BackButton";
@@ -36,7 +35,7 @@ const DaySurvey = ({ navigation, route }) => {
 
   const [diaryData, setDiaryData] = useContext(DiaryDataContext);
 
-  const [questions, setQuestions] = useState([]);
+  const [userIndicateurs, setUserIndicateurs] = useState([]);
   const [answers, setAnswers] = useState({});
   const questionToxic = {
     id: "TOXIC",
@@ -50,9 +49,9 @@ const DaySurvey = ({ navigation, route }) => {
   useFocusEffect(
     React.useCallback(() => {
       (async () => {
-        const q = await buildSurveyData();
-        if (q) {
-          setQuestions(q);
+        const user_indicateurs = await localStorage.getIndicateurs();
+        if (user_indicateurs) {
+          setUserIndicateurs(user_indicateurs);
         }
       })();
     }, [])
@@ -66,7 +65,7 @@ const DaySurvey = ({ navigation, route }) => {
         category: key,
       });
       const cleanedQuestionId = key.split("_")[0];
-      if (questions.find((q) => q.id === cleanedQuestionId)) {
+      if (userIndicateurs.find((i) => i.name === cleanedQuestionId)) {
         toggleAnswer({ key: cleanedQuestionId, value: score });
         handleChangeUserComment({
           key: cleanedQuestionId,
@@ -90,13 +89,13 @@ const DaySurvey = ({ navigation, route }) => {
         userComment: initSurvey?.answers[questionContext?.id]?.userComment,
       });
     }
-  }, [initSurvey?.answers, questions, questionToxic.id, questionContext?.id]);
+  }, [initSurvey?.answers, questionToxic.id, questionContext?.id, userIndicateurs]);
 
   const toggleAnswer = async ({ key, value }) => {
     setAnswers((prev) => {
       return {
         ...prev,
-        [key]: { ...prev[key], value },
+        [key]: { ...prev[key], value, _indicateur: userIndicateurs.find((i) => i.name === key) },
       };
     });
   };
@@ -118,7 +117,7 @@ const DaySurvey = ({ navigation, route }) => {
     };
     setDiaryData(currentSurvey);
     logEvents.logFeelingAdd();
-    logEvents.logFeelingSubmitSurvey(questions.length);
+    logEvents.logFeelingSubmitSurvey(userIndicateurs.filter((i) => i.active).length);
     logEvents.logFeelingAddComment(
       Object.keys(answers).filter(
         (key) => ![questionToxic.id, questionContext.id].includes(key) && answers[key].userComment
@@ -188,17 +187,19 @@ const DaySurvey = ({ navigation, route }) => {
             </View>
           </TouchableOpacity>
           <Text style={styles.question}>{renderQuestion()}</Text>
-          {questions.map((q, i) => (
-            <Question
-              key={i}
-              question={q}
-              onPress={toggleAnswer}
-              selected={answers[q?.id]?.value}
-              explanation={q.explanation}
-              onChangeUserComment={handleChangeUserComment}
-              userComment={answers[q?.id]?.userComment}
-            />
-          ))}
+          {userIndicateurs
+            .filter((ind) => ind.active)
+            .map((ind) => (
+              <Question
+                key={ind.uuid}
+                indicateur={ind}
+                onPress={toggleAnswer}
+                selected={answers[ind.name]?.value}
+                explanation={ind.explanation}
+                onChangeUserComment={handleChangeUserComment}
+                userComment={answers[ind.name]?.userComment}
+              />
+            ))}
           <InputQuestion
             question={questionContext}
             onPress={toggleAnswer}
