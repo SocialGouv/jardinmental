@@ -26,6 +26,7 @@ import { alertNoDataYesterday } from "./survey-data";
 import localStorage from "../../utils/localStorage";
 import { useFocusEffect } from "@react-navigation/native";
 import ArrowUpSvg from "../../../assets/svg/arrow-up.svg";
+import { GoalsDaySurvey } from "../goals/daySurvey/GoalsDaySurvey";
 
 const DaySurvey = ({ navigation, route }) => {
   const initSurvey = route?.params?.currentSurvey ?? {
@@ -224,6 +225,7 @@ const DaySurvey = ({ navigation, route }) => {
           <Text style={styles.subtitle}>
             Retrouvez toutes vos notes dans l'onglet &quot;Mon&nbsp;journal&quot;
           </Text>
+          <GoalsDaySurvey />
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
