@@ -11,7 +11,7 @@ import Text from "../../components/MyText";
 import Icon from "../../components/Icon";
 import AjoutIndicateurPerso from "./AjoutIndicateurPerso";
 import CategorieElements from "./CategorieElements";
-import { INDICATEURS } from "../../utils/liste_indicateurs.1";
+import { INDICATEURS, INDICATEURS_LES_PLUS_COURANTS } from "../../utils/liste_indicateurs.1";
 import { useFocusEffect } from "@react-navigation/native";
 
 const Indicateurs = ({ navigation }) => {
@@ -22,7 +22,7 @@ const Indicateurs = ({ navigation }) => {
     React.useCallback(() => {
       (async () => {
         const user_indicateurs = await localStorage.getIndicateurs();
-        console.log("✍️ ~ user_indicateurs", JSON.stringify(user_indicateurs, null, 2));
+        // console.log("✍️ ~ user_indicateurs", JSON.stringify(user_indicateurs, null, 2));
         if (user_indicateurs) {
           setUserIndicateurs(user_indicateurs);
         }
@@ -189,6 +189,12 @@ const Exemples = ({ setToggleIndicateur, userIndicateurs }) => {
       </TouchableOpacity>
       {open && (
         <>
+          <CategorieElements
+            title="Les plus courants"
+            options={INDICATEURS_LES_PLUS_COURANTS}
+            onClick={(value) => setToggleIndicateur(value)}
+            userIndicateurs={userIndicateurs}
+          />
           {Object.keys(indicateursByCategory).map((_category) => {
             const _indicateurs = indicateursByCategory[_category];
             return (

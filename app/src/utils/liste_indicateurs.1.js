@@ -777,3 +777,21 @@ export const INDICATEURS = [
     type: "smiley",
   },
 ];
+
+export const INDICATEURS_LES_PLUS_COURANTS = INDICATEURS.filter((indicateur) =>
+  [
+    "3e15ed99-f2f9-4716-b6a2-5348c35266da",
+    "60f6eb32-698c-47c0-b99e-fb03a576b7c1",
+    "51ead8a8-0f08-4527-98ce-e101cd7da50d",
+    "e190182b-e2d3-4d09-bee6-21ba6baf0b25",
+    "d21db60d-ffa7-4063-a011-d7faef93bed2",
+    "6fb2564a-c2ab-44ca-80d7-88473fe0e414",
+    "b36556bb-5f13-4214-a05b-f31619115f5b",
+    "07ff691d-09b1-4ec9-8902-8dae02521f3d",
+    "d019eb7c-6552-4e9b-97b9-6aac86c1d8bc",
+    "cde300cd-aecd-4821-b21b-73db4cfa6354",
+    "eac70ab8-ee01-4ffd-8627-7903c3a861c0",
+    "0e1467c1-e422-4383-a9b4-d4179457cc8b",
+    "43688363-b5aa-4f44-ac78-56b43eb72923",
+  ].includes(indicateur.uuid)
+);
