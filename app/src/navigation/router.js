@@ -46,6 +46,9 @@ import { OnboardingMood } from "../scenes/onboarding/onboardingSymptomsStart/Moo
 import { OnboardingSleep } from "../scenes/onboarding/onboardingSymptomsStart/SleepScreen";
 import { OnboardingSimpleCustomSymptoms } from "../scenes/onboarding/onboardingSymptomsCustom/SimpleCustomScreen";
 import { OnboardingGoals } from "../scenes/onboarding/onboardingGoals/goals";
+import { GoalsSettings } from "../scenes/goals/settings/GoalsSettings";
+import { GoalsAddOptions } from "../scenes/goals/settings/GoalsAddOptions";
+import { GoalsCreateForm } from "../scenes/goals/settings/GoalsCreateForm";
 
 const Stack = createStackNavigator();
 
@@ -182,6 +185,10 @@ class Router extends React.Component {
             <Stack.Screen name="view-beck" component={ViewBeck} />
             <Stack.Screen name="beck" component={Beck} />
             {/* <Stack.Screen name="contribute" component={Contribute} /> */}
+
+            <Stack.Screen name="goals-settings" component={GoalsSettings} />
+            <Stack.Screen name="goals-add-options" component={GoalsAddOptions} />
+            <Stack.Screen name="goals-create-form" component={GoalsCreateForm} />
           </Stack.Navigator>
         </NavigationContainer>
         <EnvironmentIndicator />

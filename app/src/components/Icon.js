@@ -13,6 +13,7 @@ import NewsSvg from "../../assets/svg/news.svg";
 import ProtectionSvg from "../../assets/svg/protection.svg";
 import GearSvg from "../../assets/svg/Gear.js";
 import PlusSvg from "../../assets/svg/plus.svg";
+import Plus2Svg from "../../assets/svg/plus2.svg";
 import ClockSvg from "../../assets/svg/clock.svg";
 import LightBulbSvg from "../../assets/svg/light-bulb.svg";
 import HeartsSvg from "../../assets/svg/hearts.svg";
@@ -54,6 +55,7 @@ const mapIconToSvg = (icon) => {
     GearSvg,
     ExportDataSvg,
     PlusSvg,
+    Plus2Svg,
     ClockSvg,
     LightBulbSvg,
     HeartsSvg,

@@ -1,12 +1,17 @@
-import { Text, View } from "react-native";
+import React from "react";
+import { Text, TouchableOpacity, View } from "react-native";
 
-export const HintButton = ({}) => {
+export const HintButton = ({ title, subtitle, onPress, disabled, testID }) => {
   return (
     <View>
-      <View>
-        {title && <Text>{title}</Text>}
-        {subtitle && <Text>{subtitle}</Text>}
-      </View>
+      <TouchableOpacity onPress={onPress} disabled={disabled} testID={testID}>
+        <View>
+          <View>
+            {title && <Text>{title}</Text>}
+            {subtitle && <Text>{subtitle}</Text>}
+          </View>
+        </View>
+      </TouchableOpacity>
     </View>
   );
 };

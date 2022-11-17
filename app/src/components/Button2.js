@@ -6,9 +6,10 @@ import { colors } from "../utils/colors";
 export const Button2 = ({
   preset = "primary", // 'primary' | 'secondary'
   type = "solid", //'solid' | 'clear' | 'outline'
-  size = "normal", // 'normal' | 'small'
+  size = "default", // 'normal' | 'small'
   fill = false, // fill horizontally
   square = false,
+  circle = false,
   checkable = false,
   title,
   onPress,
@@ -23,9 +24,10 @@ export const Button2 = ({
   checked = false,
   testID = "",
 }) => {
-  const appliedStyles = applyStyles({ preset, type, checkable, checked, square, size, fill });
+  square = square || circle;
+  const appliedStyles = applyStyles({ preset, type, checkable, checked, square, circle, size, fill });
 
-  let _iconSize = iconSize ?? 30;
+  let _iconSize = iconSize ?? 20;
   if (size === "small") _iconSize = iconSize ?? 16;
 
   const frontColor = textStyle.color || appliedStyles.text.color;
@@ -44,7 +46,7 @@ export const Button2 = ({
   if (React.isValidElement(icon)) {
     _icon = icon;
   } else if (typeof icon === "string") {
-    _icon = <Icon icon={icon} />;
+    _icon = <Icon icon={icon} width={_iconSize} height={_iconSize} />;
   }
 
   return (
@@ -57,7 +59,7 @@ export const Button2 = ({
             square && {
               aspectRatio: 1,
               paddingHorizontal: 0,
-              borderRadius: size === "small" ? 15 : 20,
+              borderRadius: circle ? 100 : size === "small" ? 15 : 20,
             },
             style,
             disabled && appliedStyles.disabled,
@@ -107,7 +109,7 @@ const applyStyles = ({ preset, type, checkable, checked, square, size, fill }) =
   applyIfNeeded(appliedStyles, "type==='clear'", "clear");
   applyIfNeeded(appliedStyles, "size==='small'", "small");
 
-  if (!fill && size === "normal") appliedStyles.button.minWidth = "70%";
+  if (!fill && size === "default") appliedStyles.button.minWidth = "70%";
 
   if (checkable && preset === "secondary") {
     appliedStyles.button.backgroundColor = !checked ? "transparent" : colors.DARK_BLUE;
@@ -165,7 +167,7 @@ const styles = {
   }),
   secondary: StyleSheet.create({
     button: {
-      backgroundColor: "transparent",
+      backgroundColor: "white",
       borderColor: colors.DARK_BLUE,
       borderWidth: 1,
     },
@@ -175,12 +177,12 @@ const styles = {
   }),
   outline: StyleSheet.create({
     button: {
-      backgroundColor: "transparent",
-      borderColor: colors.DARK_BLUE,
+      backgroundColor: "#f8f9fb",
+      borderColor: "#e2e6ee",
       borderWidth: 1,
     },
     text: {
-      color: colors.DARK_BLUE,
+      color: "#26387C",
     },
   }),
   clear: StyleSheet.create({
