@@ -17,9 +17,11 @@ import ArrowRightSvg from "../../../../../assets/svg/arrow-right";
 import CircledIcon from "../../../../components/CircledIcon";
 import { answers } from "../../../survey/utils";
 import YesNoIndicator from "../../../../components/YesNoIndicator";
+import { RadioButton } from "react-native-paper";
+import { screenWidth } from "../../screens";
 
 const ChooseIndicatorOrder = ({ navigation, route }) => {
-  //   const [nameNewIndicator, setNameNewIndicator] = useState("");
+  const [indicatorDirection, setIndicatorDirection] = useState(0); // 0 : first direction (green to red) ; 1 : second direction (red to green)
 
   //   const handleAddNewIndicator = async (value) => {
   //     if (!value) return;
@@ -39,56 +41,147 @@ const ChooseIndicatorOrder = ({ navigation, route }) => {
       <View style={styles.container}>
         <View style={styles.topContainer}>
           <Text style={styles.topTitle}>{route.params.nameNewIndicator}</Text>
-          {/* indicator preview */}
-          {route.params.indicatorType === "smileys" && (
-            <View style={styles.smileysContainer}>
-              {answers.map((answer) => (
-                <View key={answer.score} style={{}}>
-                  <CircledIcon
-                    color={answer.backgroundColor}
-                    borderColor={answer.borderColor}
-                    iconColor={answer.iconColor}
-                    icon={answer.icon}
-                    iconContainerStyle={{ marginRight: 0 }}
-                    iconWidth={32}
-                    iconHeight={32}
-                  />
-                </View>
-              ))}
-            </View>
-          )}
 
-          <View style={styles.intensityContainer}>
-            <View style={styles.intenstiyDiamond} />
-            <View style={styles.intensityLine} />
-            <Text style={styles.intensityText}>intensité</Text>
-            <View style={styles.intensityLine} />
-            <View style={styles.intenstiyArrow} />
-          </View>
+          <RenderCurrentIndicator
+            indicatorType={route.params.indicatorType}
+            itensity
+            direction={indicatorDirection}
+            size={screenWidth * 0.1}
+          />
         </View>
 
         <Text style={styles.subtitle}>
           Vous pouvez choisir le sens d’évaluation qui correspond à votre indicateur
         </Text>
 
-        {/* <View style={styles.typeContainer}>
-          <View style={styles.typeInside}>
-            <Text style={styles.typeTitle}>Avec une jauge</Text>
-          </View>
-          <ArrowRightSvg color="#26387C" style={{ marginLeft: 20 }} />
-        </View>
+        <TouchableOpacity
+          style={[
+            styles.setDirectionContainer,
+            indicatorDirection === 0 && styles.activeSetDirectionContainer,
+          ]}
+          onPress={() => setIndicatorDirection(0)}
+        >
+          <RadioButton
+            status={indicatorDirection === 0 ? "checked" : "unchecked"}
+            onPress={() => setIndicatorDirection(0)}
+          />
 
-        <View style={styles.typeContainer}>
-          <View style={styles.typeInside}>
-            <Text style={styles.typeTitle}>En répondant par Oui ou Non</Text>
-            <YesNoIndicator no={"green"} yes={"red"} />
+          <View style={styles.setDirectionInside}>
+            <RenderCurrentIndicator indicatorType={route.params.indicatorType} direction={0} />
+            <Text style={styles.setDirectionTitle}>
+              {renderSetDirectionTitle(route.params.indicatorType)[0]}
+            </Text>
           </View>
-          <ArrowRightSvg color="#26387C" style={{ marginLeft: 20 }} />
-        </View> */}
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[
+            styles.setDirectionContainer,
+            indicatorDirection === 1 && styles.activeSetDirectionContainer,
+          ]}
+          onPress={() => setIndicatorDirection(1)}
+        >
+          <RadioButton
+            status={indicatorDirection === 1 ? "checked" : "unchecked"}
+            onPress={() => setIndicatorDirection(1)}
+          />
+
+          <View style={styles.setDirectionInside}>
+            <RenderCurrentIndicator indicatorType={route.params.indicatorType} direction={1} />
+            <Text style={styles.setDirectionTitle}>
+              {renderSetDirectionTitle(route.params.indicatorType)[1]}
+            </Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+
+      {/* TODO: add navigation */}
+      <View style={styles.bottomButtonsContainer}>
+        <Button
+          buttonStyle={{ backgroundColor: "#1FC6D5", marginBottom: 20 }}
+          textStyle={{ color: "white", textAlign: "center" }}
+          onPress={() => {}}
+          title="Créer mon indicateur"
+        />
       </View>
     </SafeAreaView>
   );
 };
+
+const renderSetDirectionTitle = (indicatorType) => {
+  switch (indicatorType) {
+    case "smileys":
+      return { 0: "Évaluer du positif vers le négatif", 1: "Évaluer du négatif vers le positif" };
+
+    case "gauge":
+      return { 0: "Évaluer du positif vers le négatif", 1: "Évaluer du négatif vers le positif" };
+
+    case "yesno":
+      return { 0: "Le non est négatif, le oui est positif", 1: "Le non est positif, le oui est négatif" };
+
+    default:
+      break;
+  }
+};
+
+const RenderCurrentIndicator = ({ indicatorType, itensity, direction = 0, size = "small" }) => {
+  switch (indicatorType) {
+    case "smileys":
+      const answerDirection = direction === 0 ? answers.slice().reverse() : answers;
+      return (
+        <>
+          <View style={styles.smileysContainer}>
+            {answerDirection.map((answer) => (
+              <View key={answer.score} style={{}}>
+                <CircledIcon
+                  color={answer.backgroundColor}
+                  borderColor={answer.borderColor}
+                  iconColor={answer.iconColor}
+                  icon={answer.icon}
+                  iconContainerStyle={{ marginRight: 0 }}
+                  iconWidth={size === "small" ? 32 : size}
+                  iconHeight={size === "small" ? 32 : size}
+                />
+              </View>
+            ))}
+          </View>
+          {itensity && <Intensity />}
+        </>
+      );
+
+    case "gauge":
+      return (
+        <>
+          {/* TODO: add gauge */}
+          {itensity && <Intensity />}
+        </>
+      );
+
+    case "yesno":
+      return (
+        <>
+          {direction === 0 ? (
+            <YesNoIndicator no={"red"} yes={"green"} />
+          ) : (
+            <YesNoIndicator no={"green"} yes={"red"} />
+          )}
+        </>
+      );
+
+    default:
+      return <></>;
+  }
+};
+
+const Intensity = () => (
+  <View style={styles.intensityContainer}>
+    <View style={styles.intenstiyDiamond} />
+    <View style={styles.intensityLine} />
+    <Text style={styles.intensityText}>intensité</Text>
+    <View style={styles.intensityLine} />
+    <View style={styles.intenstiyArrow} />
+  </View>
+);
 
 const styles = StyleSheet.create({
   title: {
@@ -119,6 +212,7 @@ const styles = StyleSheet.create({
   intensityContainer: {
     flexDirection: "row",
     alignItems: "center",
+    marginTop: 20,
   },
   intensityLine: {
     borderTopWidth: 1,
@@ -146,7 +240,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     right: 0,
   },
-  typeContainer: {
+  setDirectionContainer: {
     borderWidth: 1,
     borderRadius: 10,
     borderColor: "#E7EAF1",
@@ -157,22 +251,25 @@ const styles = StyleSheet.create({
     padding: 20,
     marginBottom: 20,
   },
-  typeInside: {
+  activeSetDirectionContainer: {
+    borderColor: "#1FC6D5",
+    backgroundColor: "#F4FCFD",
+  },
+  setDirectionInside: {
     flex: 1,
     maxWidth: "80%",
   },
-  typeTitle: {
+  setDirectionTitle: {
     fontSize: 15,
     fontWeight: "700",
     color: "#26387C",
-    marginBottom: 15,
+    marginTop: 15,
   },
   smileysContainer: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: 20,
-    width: "80%",
+    width: "100%",
   },
 
   safe: {
@@ -231,43 +328,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 
-  sectionRowContainer: {
-    width: "100%",
-    flexDirection: "row",
-    justifyContent: "flex-start",
-    alignItems: "center",
-    paddingVertical: 10,
-    marginTop: 30,
-  },
-  circleNumber: {
-    backgroundColor: "#1FC6D5",
-    borderRadius: 999,
-    width: 35,
-    height: 35,
-    marginLeft: 15,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  circleText: {
-    color: "#fff",
-    fontWeight: "700",
-    fontSize: 18,
-  },
-
-  indicatorItem: {
-    width: "100%",
-    backgroundColor: "#F8F9FB",
-    borderColor: colors.LIGHT_BLUE,
-    borderWidth: 1,
-    borderRadius: 10,
-    borderColor: "#E7EAF1",
-    padding: 20,
-    marginBottom: 12,
-  },
-
   bottomButtonsContainer: {
     backgroundColor: "#fff",
     padding: 20,
+    position: "absolute",
+    bottom: 0,
+    width: "100%",
   },
 });
 export default ChooseIndicatorOrder;

@@ -1,2 +1,6 @@
+fileignoreconfig:
+- filename: app/src/scenes/onboarding/onboardingSymptomsCustom/CreateIndicator/ChooseIndicatorOrder.js
+  checksum: bdb40467b60296ef959cac383488b52e879619d362093020f547896ddf9921bf
 scopeconfig:
-  - scope: node
+- scope: node
+version: "1.0"

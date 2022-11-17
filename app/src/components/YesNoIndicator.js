@@ -14,7 +14,6 @@ const styles = StyleSheet.create({
     borderColor: "#26387C",
     paddingHorizontal: 20,
     paddingVertical: 10,
-    marginRight: 15,
   },
   buttonRed: {
     backgroundColor: "#F16B6B",
@@ -34,7 +33,14 @@ const styles = StyleSheet.create({
 const YesNoIndicator = ({ no, yes }) => {
   return (
     <View style={styles.container}>
-      <View style={[styles.button, no === "red" && styles.buttonRed, no === "green" && styles.buttonGreen]}>
+      <View
+        style={[
+          styles.button,
+          { marginRight: 15 },
+          no === "red" && styles.buttonRed,
+          no === "green" && styles.buttonGreen,
+        ]}
+      >
         <Text style={styles.buttonText}>Non</Text>
       </View>
       <View style={[styles.button, yes === "red" && styles.buttonRed, yes === "green" && styles.buttonGreen]}>

@@ -67,6 +67,10 @@ const CircledIcon = ({
         borderWidth,
         opacity,
         ...iconContainerStyle,
+
+        width: iconWidth * 1.25,
+        height: iconHeight * 1.25,
+        borderRadius: iconWidth,
       }}
     >
       <Icon width={iconWidth} height={iconHeight} color={iconColor} />
