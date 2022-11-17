@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, View, SafeAreaView, ScrollView, TouchableOpacity, Keyboard } from "react-native";
 
-import BackButton from "../../../components/BackButton";
-import { colors } from "../../../utils/colors";
-import localStorage from "../../../utils/localStorage";
-import { categories, displayedCategories, reliquatCategories } from "../../../utils/constants";
-import Button from "../../../components/Button";
-import Text from "../../../components/MyText";
-import Plus from "../../../../assets/svg/Plus";
-import ArrowUpSvg from "../../../../assets/svg/arrow-up.svg";
-import { INDICATEURS, INDICATEURS_LISTE_PAR_CATEGORIE } from "../../../utils/liste_indicateurs";
-import { toggleState } from "../../../utils";
+import BackButton from "../../../../components/BackButton";
+import { colors } from "../../../../utils/colors";
+import localStorage from "../../../../utils/localStorage";
+import { categories, displayedCategories, reliquatCategories } from "../../../../utils/constants";
+import Button from "../../../../components/Button";
+import Text from "../../../../components/MyText";
+import Plus from "../../../../../assets/svg/Plus";
+import ArrowUpSvg from "../../../../../assets/svg/arrow-up.svg";
+import { INDICATEURS, INDICATEURS_LISTE_PAR_CATEGORIE } from "../../../../utils/liste_indicateurs";
+import { toggleState } from "../../../../utils";
 import ExistingIndicators from "./ExistingIndicators";
 import IndicatorCategoryToggle from "./IndicatorCategoryToggle";
-import DangerIcon from "../../../../assets/svg/DangerIcon";
+import DangerIcon from "../../../../../assets/svg/DangerIcon";
 
 const AddIndicator = ({ navigation, route }) => {
   const [chosenCategories, setChosenCategories] = useState();
@@ -110,7 +110,9 @@ const AddIndicator = ({ navigation, route }) => {
                 borderWidth: 1,
               }}
               textStyle={{ color: "#26387C", textAlign: "center" }}
-              onPress={() => {}}
+              onPress={() => {
+                navigation.push("CREATE_INDICATOR");
+              }}
               title="Créer un indicateur"
               Icon={<Plus style={styles.plusButton} opacity={1} color={"#000"} width={19} height={19} />}
             />
@@ -232,6 +234,11 @@ const AddIndicator = ({ navigation, route }) => {
           }}
         />
         <View style={styles.divider} />
+        <View
+          style={{
+            height: 50,
+          }}
+        />
       </ScrollView>
     </SafeAreaView>
   );
