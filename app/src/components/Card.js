@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 16,
-    marginBottom: 4,
+    marginBottom: 2,
     fontFamily: "Karla",
     fontWeight: "700",
     textAlign: "left",
@@ -75,13 +75,13 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 14,
-    marginVertical: 4,
+    marginVertical: 2,
     fontFamily: "Karla",
     fontWeight: "400",
     textAlign: "left",
     color: "#26387C",
   },
   childrenContainer: {
-    marginTop: 12,
+    marginTop: 14,
   },
 });

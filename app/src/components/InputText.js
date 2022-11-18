@@ -1,6 +1,15 @@
 import React, { useRef } from "react";
 import { Pressable, StyleSheet, TextInput, View } from "react-native";
 
+const PressableIfNeeded = ({ onPress, children }) =>
+  onPress ? (
+    <Pressable onPress={onPress} hitSlop={{ bottom: 10, left: 10, right: 10, top: 10 }}>
+      {children}
+    </Pressable>
+  ) : (
+    <>{children}</>
+  );
+
 export const InputText = ({ fill, onPress, disabled, containerStyle, style, ...props }) => {
   const inputRef = useRef();
 
@@ -13,18 +22,9 @@ export const InputText = ({ fill, onPress, disabled, containerStyle, style, ...p
     onPress = focus;
   }
 
-  const PressableIfNeeded = ({ children }) =>
-    onPress ? (
-      <Pressable onPress={onPress} hitSlop={{ bottom: 10, left: 10, right: 10, top: 10 }}>
-        {children}
-      </Pressable>
-    ) : (
-      <>{children}</>
-    );
-
   return (
     <View style={[styles.container, fill && { width: "100%" }, containerStyle]}>
-      <PressableIfNeeded>
+      <PressableIfNeeded onPress={onPress}>
         <View style={[styles.contentContainer]}>
           <TextInput
             ref={inputRef}

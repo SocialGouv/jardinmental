@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, ScrollView, KeyboardAvoidingView, Platform } from "react-native";
+import { View, StyleSheet, ScrollView, KeyboardAvoidingView, Platform, FlatList } from "react-native";
 import { ScreenHeader } from "./ScreenHeader";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -13,6 +13,7 @@ export const Screen = ({
   ScrollComponent = ScrollView,
   scrollRef = null,
   scrollTestId,
+  scrollProps,
   header,
   bottomChildren,
   bottomContainerStyle,
@@ -39,19 +40,16 @@ export const Screen = ({
           contentContainerStyle={[styles.scrollContentContainer, _scrollContentStyle, scrollContentStyle]}
           testID={scrollTestId}
           bounces={true}
+          {...(ScrollComponent === FlatList && {
+            ListHeaderComponent: (
+              <ScreenContent {...{ children, marginHorizontal, centerContentVertically }} />
+            ),
+          })}
+          {...scrollProps}
         >
-          <View
-            style={[
-              styles.contentContainer,
-              { marginHorizontal },
-              centerContentVertically && {
-                flexGrow: 1,
-                justifyContent: "center",
-              },
-            ]}
-          >
-            {children}
-          </View>
+          {ScrollComponent !== FlatList && (
+            <ScreenContent {...{ children, marginHorizontal, centerContentVertically }} />
+          )}
         </ScrollComponent>
       </ScreenKeyboardAvoidingView>
 
@@ -59,6 +57,23 @@ export const Screen = ({
 
       <View style={{ height: insets.bottom + (Platform.OS === "android" && 20) }} collapsable={false} />
     </ContainerComponent>
+  );
+};
+
+const ScreenContent = ({ children, marginHorizontal, centerContentVertically }) => {
+  return (
+    <View
+      style={[
+        styles.contentContainer,
+        { marginHorizontal },
+        centerContentVertically && {
+          flexGrow: 1,
+          justifyContent: "center",
+        },
+      ]}
+    >
+      {children}
+    </View>
   );
 };
 
