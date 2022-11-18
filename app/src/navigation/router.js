@@ -54,6 +54,10 @@ import { GoalDaySelector } from "../scenes/goals/settings/GoalDaySelector";
 import { GoalConfig } from "../scenes/goals/settings/GoalConfig";
 import { IndicatorsSettingsMore } from "../scenes/indicateurs/settings/IndicatorsSettingsMore";
 import { GoalsSettingsMore } from "../scenes/goals/settings/GoalsSettingsMore";
+import AddIndicator from "../scenes/onboarding/onboardingSymptomsCustom/AddIndicator";
+import CreateIndicator from "../scenes/onboarding/onboardingSymptomsCustom/CreateIndicator";
+import ChooseIndicatorType from "../scenes/onboarding/onboardingSymptomsCustom/CreateIndicator/ChooseIndicatorType";
+import ChooseIndicatorOrder from "../scenes/onboarding/onboardingSymptomsCustom/CreateIndicator/ChooseIndicatorOrder";
 
 const Stack = createStackNavigator();
 
@@ -158,6 +162,10 @@ class Router extends React.Component {
             />
             <Stack.Screen name="onboarding-symptoms-start" component={onboardingSymptomsStart} />
             <Stack.Screen name="onboarding-symptoms-custom" component={OnboardingSymptomsCustom} />
+            <Stack.Screen name="ADD_INDICATOR" component={AddIndicator} />
+            <Stack.Screen name="CREATE_INDICATOR" component={CreateIndicator} />
+            <Stack.Screen name="CHOOSE_INDICATOR_TYPE" component={ChooseIndicatorType} />
+            <Stack.Screen name="CHOOSE_INDICATOR_ORDER" component={ChooseIndicatorOrder} />
             <Stack.Screen name="onboarding-goals" component={OnboardingGoals} />
             <Stack.Screen name="onboarding-drugs" component={OnboardingDrugs} />
             <Stack.Screen name="onboarding-drugs-information" component={OnboardingDrugsInformation} />

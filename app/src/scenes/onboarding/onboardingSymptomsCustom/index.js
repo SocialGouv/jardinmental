@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View, SafeAreaView, ScrollView, TouchableOpacity, Keyboard } from "react-native";
+import { StyleSheet, View, SafeAreaView, ScrollView, Keyboard } from "react-native";
 
 import BackButton from "../../../components/BackButton";
 import { colors } from "../../../utils/colors";
-import SurveyMenu from "../../../../assets/svg/SurveyMenu";
 import localStorage from "../../../utils/localStorage";
 import logEvents from "../../../services/logEvents";
 import {
@@ -12,13 +11,8 @@ import {
   displayedCategories,
   reliquatCategories,
 } from "../../../utils/constants";
-import TextTag from "../../../components/TextTag";
 import Button from "../../../components/Button";
 import Text from "../../../components/MyText";
-import Icon from "../../../components/Icon";
-import AjoutIndicateurPerso from "../onboardingSymptoms/AjoutIndicateurPerso";
-import CategorieElements from "../onboardingSymptoms/CategorieElements";
-import { INDICATEURS_LISTE_PAR_CATEGORIE, INDICATEURS } from "../../../utils/liste_indicateurs";
 import HeartBubble from "../../../../assets/svg/HeartBubble";
 
 const CustomSymptomScreen = ({ navigation, route, settings = false }) => {
@@ -153,74 +147,6 @@ const CustomSymptomScreen = ({ navigation, route, settings = false }) => {
   );
 };
 
-const OldCriteria = ({ chosenCategories, addSymptom }) => {
-  const [showOldCriteria, setShowOldCriteria] = useState(false);
-
-  return (
-    <View>
-      <TouchableOpacity style={styles.flexRow} onPress={() => setShowOldCriteria((prev) => !prev)}>
-        <Text style={[styles.subtitle, styles.underline]}>Réactiver vos anciens indicateurs</Text>
-        {showOldCriteria ? (
-          <Icon icon="ChevronUpSvg" width={20} height={20} color={colors.BLUE} />
-        ) : (
-          <Icon icon="ChevronDownSvg" width={20} height={20} color={colors.BLUE} />
-        )}
-      </TouchableOpacity>
-      {showOldCriteria && (
-        <View style={styles.listContainer}>
-          {Object.keys(chosenCategories || {})
-            .filter((e) => !chosenCategories[e])
-            .map((e, i) => (
-              <TextTag
-                key={i}
-                value={displayedCategories[e] || e}
-                selected={false}
-                color="#D4F0F2"
-                onPress={() => addSymptom(e)}
-                enableAdd
-                onAdd={() => addSymptom(e)}
-              />
-            ))}
-        </View>
-      )}
-    </View>
-  );
-};
-
-const Exemples = ({ chosenCategories, addSymptom, setToggleIndicateur }) => {
-  const [showOldCriteria, setShowOldCriteria] = useState(false);
-
-  return (
-    <View>
-      <TouchableOpacity style={styles.flexRow} onPress={() => setShowOldCriteria((prev) => !prev)}>
-        <Text style={[styles.subtitle, styles.underline]}>Choisir parmi des exemples</Text>
-        {showOldCriteria ? (
-          <Icon icon="ChevronUpSvg" width={20} height={20} color={colors.BLUE} />
-        ) : (
-          <Icon icon="ChevronDownSvg" width={20} height={20} color={colors.BLUE} />
-        )}
-      </TouchableOpacity>
-      {showOldCriteria && (
-        <>
-          {Object.keys(INDICATEURS_LISTE_PAR_CATEGORIE).map((categorie) => {
-            const indicateurs = INDICATEURS_LISTE_PAR_CATEGORIE[categorie];
-            return (
-              <CategorieElements
-                key={categorie}
-                title={categorie}
-                options={indicateurs.map((e) => ({ id: e, label: INDICATEURS[e] }))}
-                onClick={({ id, value }) => setToggleIndicateur({ indicateur: id, valeur: value })}
-                indicateursSelection={chosenCategories}
-                handleAddNewSymptom={addSymptom}
-              />
-            );
-          })}
-        </>
-      )}
-    </View>
-  );
-};
-
 const styles = StyleSheet.create({
   safe: {
     flex: 1,
@@ -316,88 +242,5 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     padding: 20,
   },
-
-  //
-
-  // divider: {
-  //   height: 1,
-  //   backgroundColor: "#E0E0E0",
-  //   marginVertical: 10,
-  //   width: "50%",
-  //   alignSelf: "center",
-  // },
-  // safe: {
-  //   flex: 1,
-  //   backgroundColor: "white",
-  // },
-
-  // container: {
-  //   paddingHorizontal: 20,
-  //   backgroundColor: "white",
-  // },
-  // scrollContainer: {
-  //   paddingBottom: 80,
-  // },
-  // titleContainer: {
-  //   marginBottom: 13,
-  //   display: "flex",
-  //   flexDirection: "row",
-  //   alignItems: "center",
-  // },
-  // image: {
-  //   color: colors.BLUE,
-  //   height: 40,
-  //   width: 40,
-  //   marginVertical: 0,
-  //   marginRight: 10,
-  // },
-  // title: {
-  //   flex: 1,
-  //   color: colors.BLUE,
-  //   fontSize: 22,
-  //   fontWeight: "400",
-  //   textAlign: "center",
-  // },
-  // bold: {
-  //   color: colors.BLUE,
-  //   fontWeight: "700",
-  // },
-  // subtitle: {
-  //   color: colors.BLUE,
-  //   fontSize: 18,
-  //   marginVertical: 30,
-  //   fontWeight: "400",
-  //   textAlign: "center",
-  // },
-  // underline: {
-  //   textDecorationLine: "underline",
-  // },
-  // listContainer: {
-  //   display: "flex",
-  //   flexDirection: "row",
-  //   flexWrap: "wrap",
-  // },
-  // buttonWrapper: {
-  //   display: "flex",
-  //   justifyContent: "flex-end",
-  //   alignItems: "center",
-  //   padding: 15,
-  // },
-  // h3: {
-  //   color: "#181818",
-  //   fontSize: 14,
-  //   marginBottom: 10,
-  //   fontWeight: "300",
-  //   textAlign: "center",
-  // },
-  // spaceabove: {
-  //   marginTop: 15,
-  // },
-  // flexRow: {
-  //   display: "flex",
-  //   flexDirection: "row",
-  //   justifyContent: "center",
-  //   alignItems: "center",
-  // },
 });
 export default CustomSymptomScreen;

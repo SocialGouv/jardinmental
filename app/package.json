@@ -29,6 +29,7 @@
     "printWidth": 110
   },
   "dependencies": {
+    "@miblanchard/react-native-slider": "^2.1.0",
     "@react-native-async-storage/async-storage": "^1.17.7",
     "@react-native-community/art": "react-native-community/art",
     "@react-native-community/blur": "^4.2.0",
@@ -63,9 +64,11 @@
     "react-native-draggable-flatlist": "3.1.2",
     "react-native-gesture-handler": "^1.9.0",
     "react-native-get-random-values": "^1.7.1",
+    "react-native-linear-gradient": "^2.6.2",
     "react-native-localize": "^2.2.4",
     "react-native-modal": "^11.10.0",
     "react-native-modal-datetime-picker": "^9.2.3",
+    "react-native-paper": "^4.12.5",
     "react-native-permissions": "^3.3.1",
     "react-native-picker-select": "^8.0.4",
     "react-native-pie": "^1.1.2",

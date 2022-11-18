@@ -1,13 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  StyleSheet,
-  View,
-  SafeAreaView,
-  ScrollView,
-  TouchableOpacity,
-  Keyboard,
-  TextInput,
-} from "react-native";
+import { StyleSheet, View, SafeAreaView, TouchableOpacity } from "react-native";
 
 import BackButton from "../../../../components/BackButton";
 import { colors } from "../../../../utils/colors";
@@ -19,8 +11,6 @@ import { answers } from "../../../survey/utils";
 import YesNoIndicator from "../../../../components/YesNoIndicator";
 
 const ChooseIndicatorType = ({ navigation, route }) => {
-  //   const [nameNewIndicator, setNameNewIndicator] = useState("");
-
   //   const handleAddNewIndicator = async (value) => {
   //     if (!value) return;
   //     await localStorage.addCustomSymptoms(value);
@@ -169,73 +159,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-  },
-  personnalizeContainer: {
-    backgroundColor: "rgba(31,198,213,0.2)",
-    borderColor: colors.LIGHT_BLUE,
-    borderWidth: 0.5,
-    borderRadius: 10,
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    padding: 15,
-    paddingRight: 20,
-  },
-  personnalizeTextContainer: {
-    flex: 1,
-    marginHorizontal: 20,
-  },
-  personnalizeTitle: {
-    color: colors.BLUE,
-    fontSize: 14,
-    fontWeight: "700",
-    flex: 1,
-    marginBottom: 5,
-  },
-  personnalizeText: {
-    color: colors.BLUE,
-    fontSize: 14,
-    flex: 1,
-  },
-
-  sectionRowContainer: {
-    width: "100%",
-    flexDirection: "row",
-    justifyContent: "flex-start",
-    alignItems: "center",
-    paddingVertical: 10,
-    marginTop: 30,
-  },
-  circleNumber: {
-    backgroundColor: "#1FC6D5",
-    borderRadius: 999,
-    width: 35,
-    height: 35,
-    marginLeft: 15,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  circleText: {
-    color: "#fff",
-    fontWeight: "700",
-    fontSize: 18,
-  },
-
-  indicatorItem: {
-    width: "100%",
-    backgroundColor: "#F8F9FB",
-    borderColor: colors.LIGHT_BLUE,
-    borderWidth: 1,
-    borderRadius: 10,
-    borderColor: "#E7EAF1",
-    padding: 20,
-    marginBottom: 12,
-  },
-
-  bottomButtonsContainer: {
-    backgroundColor: "#fff",
-    padding: 20,
   },
 });
 export default ChooseIndicatorType;

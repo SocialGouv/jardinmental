@@ -39,21 +39,27 @@ const CreateIndicator = ({ navigation, route }) => {
 
         <TextInput
           onChangeText={setNameNewIndicator}
+          autoFocus={true}
           value={nameNewIndicator}
           placeholder={"Entrez le nom de votre indicateur"}
           placeholderTextColor="lightgrey"
           style={styles.textInput}
         />
 
-        <Button
-          buttonStyle={{ backgroundColor: "#1FC6D5", marginBottom: 20 }}
-          textStyle={{ color: "white", textAlign: "center" }}
-          onPress={() => {
-            handleAddNewIndicator(nameNewIndicator);
-            navigation.push("CHOOSE_INDICATOR_TYPE", { nameNewIndicator });
-          }}
-          title="Valider"
-        />
+        {nameNewIndicator.length > 0 && (
+          <Button
+            buttonStyle={{ backgroundColor: "#1FC6D5", marginBottom: 20 }}
+            textStyle={{ color: "white", textAlign: "center" }}
+            onPress={() => {
+              if (nameNewIndicator.length === 0) {
+                return;
+              }
+              handleAddNewIndicator(nameNewIndicator);
+              navigation.push("CHOOSE_INDICATOR_TYPE", { nameNewIndicator });
+            }}
+            title="Valider"
+          />
+        )}
       </View>
     </SafeAreaView>
   );
