@@ -42,6 +42,7 @@ export const Screen = ({
         >
           <View
             style={[
+              styles.contentContainer,
               { marginHorizontal },
               centerContentVertically && {
                 flexGrow: 1,
@@ -83,4 +84,8 @@ const styles = StyleSheet.create({
     overflow: "visible",
   },
   scrollContentContainer: { flexGrow: 1 },
+  contentContainer: {
+    flexDirection: "column",
+    alignItems: "center",
+  },
 });

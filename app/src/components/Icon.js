@@ -25,6 +25,7 @@ import PlusBeckSvg from "../../assets/svg/plus-beck.svg";
 import CrossSvg from "../../assets/svg/cross.svg";
 import ChevronUpSvg from "../../assets/svg/chevron-up.svg";
 import ChevronDownSvg from "../../assets/svg/chevron-down.svg";
+import ChevronRightSvg from "../../assets/svg/chevron-right.svg";
 import BinSvg from "../../assets/svg/bin.svg";
 import NotesSvg from "../../assets/svg/notes.svg";
 import TuneSvg from "../../assets/svg/tune.svg";
@@ -36,6 +37,7 @@ import GlobeSvg from "../../assets/svg/Globe";
 import LockSvg from "../../assets/svg/Lock";
 import Arrow from "../../assets/svg/Arrow";
 import ThumbsUpSvg from "../../assets/svg/thumbs-up.svg";
+import ImportantSvg from "../../assets/svg/important.svg";
 
 import { StyleSheet, View, Animated, Easing, TouchableOpacity } from "react-native";
 
@@ -72,11 +74,13 @@ const mapIconToSvg = (icon) => {
     PeopleSvg,
     ChevronUpSvg,
     ChevronDownSvg,
+    ChevronRightSvg,
     LockSvg,
     Arrow,
     ThumbsUpSvg,
     TuneSvg,
     CheckSvg,
+    ImportantSvg,
   };
   return iconMap[icon];
 };

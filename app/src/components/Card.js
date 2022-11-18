@@ -1,5 +1,6 @@
 import React from "react";
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
+import Icon from "./Icon";
 
 export const Card = ({
   title,
@@ -7,19 +8,34 @@ export const Card = ({
   containerStyle,
   contentContainerStyle,
   innerContentContainerStyle,
-  children,
+  icon,
   image,
+  onPress,
+  children,
 }) => {
+  const PressableIfNeeded = ({ children }) =>
+    onPress ? (
+      <TouchableOpacity onPress={onPress} hitSlop={{ bottom: 10, left: 10, right: 10, top: 10 }}>
+        {children}
+      </TouchableOpacity>
+    ) : (
+      <>{children}</>
+    );
+
   return (
     <View style={[styles.container, containerStyle]}>
-      <View style={[styles.contentContainer, contentContainerStyle]}>
-        {image && <Image {...image} style={styles.image} />}
-        <View style={[styles.innerContentContainer, innerContentContainerStyle]}>
-          {title && <Text style={styles.title}>{title}</Text>}
-          {text && <Text style={styles.text}>{text}</Text>}
-          {children && <View style={styles.childrenContainer}>{children}</View>}
+      <PressableIfNeeded>
+        <View style={[styles.contentContainer, contentContainerStyle]}>
+          {icon && <Icon width="26" height="26" color="#000091" {...icon} style={styles.image} />}
+          {image && <Image {...image} style={styles.image} />}
+          <View style={[styles.innerContentContainer, innerContentContainerStyle]}>
+            {title && <Text style={styles.title}>{title}</Text>}
+            {text && <Text style={styles.text}>{text}</Text>}
+            {children && <View style={styles.childrenContainer}>{children}</View>}
+          </View>
+          {onPress && <Icon icon="ChevronRightSvg" color="#000091" height="16" width="16" />}
         </View>
-      </View>
+      </PressableIfNeeded>
     </View>
   );
 };
