@@ -6,7 +6,15 @@ import CircledIcon from "../../components/CircledIcon";
 import Icon from "../../components/Icon";
 import { answers } from "./utils";
 
-const Question = ({ question, explanation, onPress, selected, isLast, onChangeUserComment, userComment }) => {
+const Question = ({
+  indicateur,
+  explanation,
+  onPress,
+  selected,
+  isLast,
+  onChangeUserComment,
+  userComment,
+}) => {
   const [showExplanation, setShowExplanation] = useState(false);
   const toggleShowExplanation = async () => {
     setShowExplanation((prev) => !prev);
@@ -32,7 +40,7 @@ const Question = ({ question, explanation, onPress, selected, isLast, onChangeUs
             ) : (
               <View />
             )}
-            <Text style={styles.questionTitle}>{question.label}</Text>
+            <Text style={styles.questionTitle}>{indicateur.name}</Text>
             {/* we put a view here because we'll add a item here later */}
             <View />
           </View>
@@ -49,7 +57,7 @@ const Question = ({ question, explanation, onPress, selected, isLast, onChangeUs
             const active = selected === answer.score;
             const value = selected === answer.score ? null : answer.score;
             return (
-              <TouchableOpacity key={i} onPress={() => onPress({ key: question.id, value })}>
+              <TouchableOpacity key={i} onPress={() => onPress({ key: indicateur.name, value })}>
                 <View style={[styles.selectionContainer, active && styles.activeSelectionContainer]}>
                   <CircledIcon
                     color={answer.backgroundColor}
@@ -71,7 +79,7 @@ const Question = ({ question, explanation, onPress, selected, isLast, onChangeUs
           minHeight={Platform.OS === "ios" ? 30 * 1 : null}
           onChangeText={(v) => {
             setText(v);
-            onChangeUserComment({ key: question.id, userComment: v });
+            onChangeUserComment({ key: indicateur.name, userComment: v });
           }}
           value={text}
           placeholder="Ajouter une note sur cet indicateur"

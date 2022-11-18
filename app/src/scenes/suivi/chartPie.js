@@ -19,15 +19,16 @@ import Button from "../../components/Button";
 const ChartPie = ({ navigation, fromDate, toDate }) => {
   const [diaryData] = React.useContext(DiaryDataContext);
   const [activeCategories, setActiveCategories] = React.useState([]);
+  const [userIndicateurs, setUserIndicateurs] = React.useState([]);
   const [chartDates, setChartDates] = React.useState([]);
   const [isEmpty, setIsEmpty] = React.useState();
 
   useFocusEffect(
     React.useCallback(() => {
       (async () => {
-        const q = await buildSurveyData();
-        if (q) {
-          setActiveCategories(q.map((e) => e.id));
+        const user_indicateurs = await localStorage.getIndicateurs();
+        if (user_indicateurs) {
+          setUserIndicateurs(user_indicateurs);
         }
       })();
     }, [])
@@ -39,12 +40,10 @@ const ChartPie = ({ navigation, fromDate, toDate }) => {
   }, [fromDate, toDate]);
 
   React.useEffect(() => {
-    if (!activeCategories || activeCategories.length === 0) return;
-    const empty = !activeCategories.reduce((showing, categoryId) => {
-      return Boolean(isChartVisible(categoryId)) || showing;
-    }, false);
+    if (!userIndicateurs || userIndicateurs.length === 0) return;
+    const empty = userIndicateurs.every(({ name }) => !isChartVisible(name));
     setIsEmpty(empty);
-  }, [activeCategories, isChartVisible]);
+  }, [userIndicateurs, isChartVisible]);
 
   const isChartVisible = React.useCallback(
     (categoryId) => {
@@ -64,9 +63,8 @@ const ChartPie = ({ navigation, fromDate, toDate }) => {
   );
 
   const startSurvey = async () => {
-    const symptoms = await localStorage.getSymptoms();
     logEvents.logFeelingStart();
-    if (!symptoms) {
+    if (!userIndicateurs) {
       navigation.navigate("symptoms", {
         showExplanation: true,
         redirect: "select-day",
@@ -132,15 +130,17 @@ const ChartPie = ({ navigation, fromDate, toDate }) => {
 
   return (
     <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContainer}>
-      {activeCategories?.map((categoryId) => (
-        <Pie
-          title={getTitle(categoryId)}
-          key={categoryId}
-          data={computeChartData(categoryId)}
-          fromDate={fromDate}
-          toDate={toDate}
-        />
-      ))}
+      {userIndicateurs
+        ?.filter((ind) => isChartVisible(ind.name))
+        ?.map(({ name }) => (
+          <Pie
+            title={getTitle(name)}
+            key={name}
+            data={computeChartData(name)}
+            fromDate={fromDate}
+            toDate={toDate}
+          />
+        ))}
       <View style={styles.divider} />
       <PieYesNo
         title="Ai-je pris correctement mon traitement quotidien ?"

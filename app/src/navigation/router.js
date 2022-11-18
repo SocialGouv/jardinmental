@@ -49,6 +49,7 @@ import { OnboardingGoals } from "../scenes/onboarding/onboardingGoals/goals";
 import { GoalsSettings } from "../scenes/goals/settings/GoalsSettings";
 import { GoalsAddOptions } from "../scenes/goals/settings/GoalsAddOptions";
 import { GoalsCreateForm } from "../scenes/goals/settings/GoalsCreateForm";
+import Indicateurs from "../scenes/indicateurs";
 
 const Stack = createStackNavigator();
 
@@ -130,16 +131,7 @@ class Router extends React.Component {
             <Stack.Screen name="day-survey" component={DaySurveyScreen} />
             <Stack.Screen name="select-day" component={SelectDayScreen} />
             <Stack.Screen name="tabs" component={Tabs} />
-            {/* <Stack.Screen
-            name="question"
-            options={{animationEnabled: Platform.OS === 'ios'}}>
-            {({navigation, route}) => (
-              <SurveyScreen navigation={navigation} route={route} />
-            )}
-          </Stack.Screen> */}
-            <Stack.Screen name="symptoms">
-              {(props) => <OnboardingSymptomsCustom settings={true} {...props} />}
-            </Stack.Screen>
+            <Stack.Screen name="symptoms" component={Indicateurs} />
             <Stack.Screen name="reminder" component={Reminder} />
             <Stack.Screen name="export" component={Export} />
             <Stack.Screen name="chart-day" component={DailyChart} />
