@@ -1,7 +1,8 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   STORAGE_KEY_IS_FIRST_LAUNCH,
-  STORAGE_KEY_SYMPTOMS,
+  STORAGE_KEY_SYMPTOMS, //legacy
+  STORAGE_KEY_INDICATEURS,
   STORAGE_KEY_SUPPORTED,
   STORAGE_KEY_CUSTOM_SYMPTOMS,
   STORAGE_KEY_MEDICAL_TREATMENT,
@@ -12,6 +13,7 @@ import {
   STORAGE_KEY_ONBOARDING_DONE,
   STORAGE_KEY_NPS_PRO_CONTACT,
 } from "../../utils/constants";
+import { updateSymptomsFormatIfNeeded } from "./utils";
 import localStorageBeck from "./beck";
 
 const getSymptoms = async () => {
@@ -23,6 +25,30 @@ const getSymptoms = async () => {
 
 const setSymptoms = async (symp) => {
   await AsyncStorage.setItem(STORAGE_KEY_SYMPTOMS, JSON.stringify(symp));
+};
+
+const getIndicateurs = async () => {
+  let _indicateurs = await AsyncStorage.getItem(STORAGE_KEY_INDICATEURS);
+  if (!_indicateurs) {
+    // si on n'a pas d'indicateurs, on les récupère depuis le localStorage de symptoms, et on migre si besoin
+    // sinon, c'est qu'on ne l'a pas encore configuré
+    const symptoms = await AsyncStorage.getItem(STORAGE_KEY_SYMPTOMS);
+    if (symptoms) {
+      _indicateurs = updateSymptomsFormatIfNeeded(JSON.parse(symptoms));
+      _indicateurs = JSON.stringify(_indicateurs);
+    }
+    if (_indicateurs) {
+      // si on a migré, on sauvegarde
+      await AsyncStorage.setItem(STORAGE_KEY_INDICATEURS, _indicateurs);
+    }
+  }
+  if (_indicateurs) {
+    return JSON.parse(_indicateurs);
+  }
+};
+
+const setIndicateurs = async (v) => {
+  await AsyncStorage.setItem(STORAGE_KEY_INDICATEURS, JSON.stringify(v));
 };
 
 const getIsFirstAppLaunch = async () => await AsyncStorage.getItem(STORAGE_KEY_IS_FIRST_LAUNCH);
@@ -151,5 +177,7 @@ export default {
   getCustomDrugs,
   setNpsProContact,
   getNpsProContact,
+  getIndicateurs,
+  setIndicateurs,
   ...localStorageBeck,
 };

@@ -20,7 +20,7 @@ export const EventFilterHeader = ({
   setSymptom,
   score,
   setScore,
-  activeCategories,
+  userIndicateurs,
 }) => {
   return (
     <View style={styles.container}>
@@ -32,7 +32,7 @@ export const EventFilterHeader = ({
         </View>
         <View style={[styles.lineContainer, styles.withSpace]}>
           <SelectSymptom
-            options={activeCategories}
+            options={userIndicateurs}
             onChange={setSymptom}
             onOpen={logEvents.logSuiviEditSymptom}
             placeholder="Sélectionner un élément"

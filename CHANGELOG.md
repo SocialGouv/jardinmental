@@ -1,3 +1,10 @@
+# [1.40.0](https://github.com/SocialGouv/jardinmental/compare/v1.39.2...v1.40.0) (2022-11-16)
+
+
+### Features
+
+* migrate localstorage indicateur ([#214](https://github.com/SocialGouv/jardinmental/issues/214)) ([e0d9988](https://github.com/SocialGouv/jardinmental/commit/e0d9988ce6d5b8abcf8a6318e022b4e8766fa2c5))
+
 ## [1.39.2](https://github.com/SocialGouv/jardinmental/compare/v1.39.1...v1.39.2) (2022-11-14)
 
 
