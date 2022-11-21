@@ -1,3 +1,10 @@
+## [1.40.1](https://github.com/SocialGouv/jardinmental/compare/v1.40.0...v1.40.1) (2022-11-21)
+
+
+### Bug Fixes
+
+* liste indicateurs legacy ([87a8a6e](https://github.com/SocialGouv/jardinmental/commit/87a8a6e97eaec206a7b7875334da9c7f87ac3d9e))
+
 # [1.40.0](https://github.com/SocialGouv/jardinmental/compare/v1.39.2...v1.40.0) (2022-11-16)
 
 
