@@ -40,8 +40,14 @@ export const createStorage = ({
     return data;
   };
 
+  const clearData = async () => {
+    const data = await updateDataIfNeeded({});
+    return data;
+  };
+
   return {
     getData,
     saveData,
+    clearData,
   };
 };

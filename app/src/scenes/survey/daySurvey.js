@@ -226,7 +226,7 @@ const DaySurvey = ({ navigation, route }) => {
           <Text style={styles.subtitle}>
             Retrouvez toutes vos notes dans l'onglet &quot;Mon&nbsp;journal&quot;
           </Text>
-          <GoalsDaySurvey />
+          <GoalsDaySurvey date={initSurvey?.date} />
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>

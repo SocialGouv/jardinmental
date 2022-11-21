@@ -7,10 +7,15 @@ import { Screen } from "../../../components/Screen";
 import { setGoalTracked } from "../../../utils/localStorage/goals";
 
 export const GoalsCreateForm = ({ navigation }) => {
+  const [loading, setLoading] = useState(false);
   const [goalName, setGoalName] = useState("");
 
-  const onValidate = () => {
-    setGoalTracked({ label: goalName });
+  const onValidate = async () => {
+    if (loading) return;
+    setLoading(true);
+    await setGoalTracked({ label: goalName });
+    setLoading(false);
+    navigation.navigate("goals-settings");
   };
 
   return (
@@ -34,6 +39,7 @@ export const GoalsCreateForm = ({ navigation }) => {
         containerStyle={styles.spacing}
         onPress={onValidate}
         disabled={!(goalName?.length > 0)}
+        loading={loading}
       />
     </Screen>
   );
