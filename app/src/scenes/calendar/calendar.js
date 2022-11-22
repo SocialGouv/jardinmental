@@ -152,6 +152,7 @@ const Calendar = ({ navigation }) => {
             </View>
             {userIndicateurs
               .concat(INDICATEURS)
+              .filter((ind) => ind.active)
               .reduce((acc, curr) => {
                 if (!acc.find((a) => a === curr.name)) {
                   acc.push(curr.name);

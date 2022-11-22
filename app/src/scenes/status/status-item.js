@@ -70,6 +70,7 @@ export default ({ navigation, patientState, date }) => {
                   "NOTES",
                   "PRISE_DE_TRAITEMENT",
                   "PRISE_DE_TRAITEMENT_SI_BESOIN",
+                  "becks",
                 ].includes(key);
               })
               .map(([key, value]) => {
