@@ -122,7 +122,7 @@ export const FriseGraphList = ({ navigation, fromDate, toDate, focusedScores, sh
     <>
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContainer}>
         {userIndicateurs
-          ?.filter((ind) => isChartVisible(ind.name))
+          ?.filter((ind) => isChartVisible(ind.name) && ind.active)
           ?.map(({ name }) => (
             <FriseGraph
               focusedScores={focusedScores}

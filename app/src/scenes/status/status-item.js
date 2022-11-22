@@ -61,18 +61,20 @@ export default ({ navigation, patientState, date }) => {
       <View style={styles.container}>
         <View style={[styles.item, styles.itemWithSpaceAbove]}>
           <View>
-            {Object.keys(displayedCategories)
-              .concat(customs)
-              .concat(oldCustoms)
-              .concat(INDICATEURS_LISTE)
-              .reduce((acc, curr) => {
-                if (!acc.find((a) => a === curr)) {
-                  acc.push(curr);
-                }
-                return acc;
-              }, [])
-              .map((key) => {
-                if (!patientState[key]) {
+            {Object.entries(patientState)
+              .filter(([key, value]) => {
+                return ![
+                  "CONTEXT",
+                  "POSOLOGY",
+                  "TOXIC",
+                  "NOTES",
+                  "PRISE_DE_TRAITEMENT",
+                  "PRISE_DE_TRAITEMENT_SI_BESOIN",
+                  "becks",
+                ].includes(key);
+              })
+              .map(([key, value]) => {
+                if (!value) {
                   return;
                 }
                 const [categoryName] = key.split("_");
@@ -81,7 +83,12 @@ export default ({ navigation, patientState, date }) => {
                     key={key}
                     category={key}
                     patientState={patientState}
-                    label={INDICATEURS[key] || displayedCategories[key] || categoryName}
+                    label={
+                      patientState?._indicateur?.name ||
+                      INDICATEURS[key] ||
+                      displayedCategories[key] ||
+                      categoryName
+                    }
                   />
                 );
               })}

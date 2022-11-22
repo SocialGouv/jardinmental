@@ -13,7 +13,7 @@ import Text from "../../components/MyText";
 import Icon from "../../components/Icon";
 import { colors } from "../../utils/colors";
 const screenHeight = Dimensions.get("window").height;
-import { INDICATEURS_LISTE } from "../../utils/liste_indicateurs";
+import { INDICATEURS } from "../../utils/liste_indicateurs.1";
 
 const Calendar = ({ navigation }) => {
   const [day, setDay] = useState(new Date());
@@ -22,6 +22,7 @@ const Calendar = ({ navigation }) => {
   const [oldCustoms, setOldCustoms] = useState([]);
   const [calendarIsEmpty, setCalendarIsEmpty] = useState(false);
   let mounted = useRef(true);
+  const [userIndicateurs, setUserIndicateurs] = React.useState([]);
 
   useEffect(() => {
     (async () => {
@@ -36,13 +37,20 @@ const Calendar = ({ navigation }) => {
   }, [diaryData]);
 
   useEffect(() => {
-    const emptyCalendar = !Object.keys(displayedCategories)
-      .concat(customs)
-      .concat(oldCustoms)
-      .concat(INDICATEURS_LISTE)
+    (async () => {
+      const user_indicateurs = await localStorage.getIndicateurs();
+      if (user_indicateurs) {
+        setUserIndicateurs(user_indicateurs);
+      }
+    })();
+  }, []);
+
+  useEffect(() => {
+    const emptyCalendar = !userIndicateurs
+      .concat(INDICATEURS)
       .reduce((acc, curr) => {
-        if (!acc.find((a) => a === curr)) {
-          acc.push(curr);
+        if (!acc.find((a) => a === curr.name)) {
+          acc.push(curr.name);
         }
         return acc;
       }, [])
@@ -50,7 +58,7 @@ const Calendar = ({ navigation }) => {
         return Boolean(isChartVisible(categoryId)) || showing;
       }, false);
     setCalendarIsEmpty(emptyCalendar);
-  }, [day, customs, oldCustoms, isChartVisible]);
+  }, [day, customs, oldCustoms, isChartVisible, userIndicateurs]);
 
   const { firstDay, lastDay } = getTodaySWeek(day);
 
@@ -142,13 +150,12 @@ const Calendar = ({ navigation }) => {
                 <Text style={styles.bold}>vue détaillée</Text>.
               </Text>
             </View>
-            {Object.keys(displayedCategories)
-              .concat(customs)
-              .concat(oldCustoms)
-              .concat(INDICATEURS_LISTE)
+            {userIndicateurs
+              .concat(INDICATEURS)
+              .filter((ind) => ind.active)
               .reduce((acc, curr) => {
-                if (!acc.find((a) => a === curr)) {
-                  acc.push(curr);
+                if (!acc.find((a) => a === curr.name)) {
+                  acc.push(curr.name);
                 }
                 return acc;
               }, [])
