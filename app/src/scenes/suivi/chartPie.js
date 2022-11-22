@@ -131,7 +131,7 @@ const ChartPie = ({ navigation, fromDate, toDate }) => {
   return (
     <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContainer}>
       {userIndicateurs
-        ?.filter((ind) => isChartVisible(ind.name))
+        ?.filter((ind) => isChartVisible(ind.name) && ind.active)
         ?.map(({ name }) => (
           <Pie
             title={getTitle(name)}
