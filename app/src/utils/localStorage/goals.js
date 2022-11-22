@@ -2,6 +2,9 @@ import { createStorage } from "./createStorage";
 import { STORAGE_KEY_GOALS } from "../constants";
 import uuid from "react-native-uuid";
 import { dayFormat } from "./utils";
+import { DAYS_OF_WEEK } from "../date/daysOfWeek";
+import { setDay, getDay, format } from "date-fns";
+import { fr } from "date-fns/locale";
 
 const { getData, saveData, clearData } = createStorage({
   storageKey: STORAGE_KEY_GOALS,
@@ -11,10 +14,21 @@ export const getGoalsData = getData;
 export const saveGoalsData = saveData;
 export const clearGoalsData = clearData;
 
-export const setGoalTracked = async ({ id, label, enabled = true, order = 0 }) => {
-  id = id ?? label ? label.toLowerCase().trim().split(" ").join("_") : undefined;
+export const setGoalTracked = async ({ id, label, enabled, order, daysOfWeek, reminder }) => {
+  if (!id) id = label ? label.toLowerCase().trim().split(" ").join("_") : undefined;
 
   let data = await getData();
+
+  const existingGoal = data.goals?.data?.[id];
+
+  const goal = {
+    id,
+    label: label ?? existingGoal?.label ?? undefined,
+    enabled: enabled ?? existingGoal?.enabled ?? true,
+    order: order ?? existingGoal?.order ?? 0,
+    daysOfWeek: daysOfWeek ?? existingGoal?.daysOfWeek ?? undefined,
+    reminder: reminder !== undefined ? reminder : existingGoal?.reminder ?? null,
+  };
 
   data = {
     ...data,
@@ -22,12 +36,7 @@ export const setGoalTracked = async ({ id, label, enabled = true, order = 0 }) =
       ...data.goals,
       data: {
         ...data.goals?.data,
-        [id]: {
-          id,
-          label,
-          enabled,
-          order,
-        },
+        [id]: goal,
       },
     },
   };
@@ -43,15 +52,21 @@ export const setGoalTracked = async ({ id, label, enabled = true, order = 0 }) =
   };
 
   await saveData(data);
-  return data;
+  return goal;
 };
 
-export const getGoalsTracked = async () => {
+export const getGoalsTracked = async ({ date } = { date: undefined }) => {
   const data = await getData();
 
   if (!data.goals?.byOrder?.length) return [];
 
-  return data.goals.byOrder.map((id) => data.goals.data[id]);
+  const goalsTracked = data.goals.byOrder.map((id) => data.goals.data[id]);
+
+  if (!date) return goalsTracked;
+
+  const day = DAYS_OF_WEEK[getDay(new Date(date))];
+
+  return goalsTracked.filter((goal) => goal.daysOfWeek?.[day] === true);
 };
 
 export const setGoalDailyRecord = async ({ goalId, value, comment, date }) => {
@@ -105,4 +120,21 @@ export const getGoalsDailyRecords = async ({ date } = { date: new Date() }) => {
   return data.records.byDate[date]
     .map((recordId) => data.records.data[recordId])
     .filter((record) => !!record);
+};
+
+export const getDaysOfWeekLabel = (daysOfWeek) => {
+  if (!daysOfWeek) return null;
+
+  const _daysOfWeek = DAYS_OF_WEEK.map((day, index) => ({
+    day,
+    index,
+  })).filter(({ day, index }) => daysOfWeek[day]);
+  if (_daysOfWeek.length === 7) return "all";
+  else
+    return _daysOfWeek
+      .sort((a, b) => (b.index === 0 ? -1 : 0))
+      .map(({ day, index }) => format(setDay(new Date(), index), "eee", { locale: fr }))
+      .map((label) => `${label[0].toUpperCase()}${label.slice(1)}`)
+      .map((label) => (label.slice(-1) === "." ? label.slice(0, -1) : label))
+      .join(" ");
 };

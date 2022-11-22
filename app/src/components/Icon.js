@@ -19,6 +19,7 @@ import LightBulbSvg from "../../assets/svg/light-bulb.svg";
 import HeartsSvg from "../../assets/svg/hearts.svg";
 import ThoughtsSvg from "../../assets/svg/thoughts.svg";
 import CalendarSvg from "../../assets/svg/calendar.svg";
+import Calendar2Svg from "../../assets/svg/calendar2.svg";
 import ArrowUpSvg from "../../assets/svg/arrow-up.svg";
 import PlusSurveySvg from "../../assets/svg/plus-survey.svg";
 import PlusBeckSvg from "../../assets/svg/plus-beck.svg";
@@ -38,6 +39,7 @@ import LockSvg from "../../assets/svg/Lock";
 import Arrow from "../../assets/svg/Arrow";
 import ThumbsUpSvg from "../../assets/svg/thumbs-up.svg";
 import ImportantSvg from "../../assets/svg/important.svg";
+import EditSvg from "../../assets/svg/edit.svg";
 
 import { StyleSheet, View, Animated, Easing, TouchableOpacity } from "react-native";
 
@@ -62,6 +64,7 @@ const mapIconToSvg = (icon) => {
     LightBulbSvg,
     HeartsSvg,
     CalendarSvg,
+    Calendar2Svg,
     ArrowUpSvg,
     PlusSurveySvg,
     PlusBeckSvg,
@@ -81,6 +84,7 @@ const mapIconToSvg = (icon) => {
     TuneSvg,
     CheckSvg,
     ImportantSvg,
+    EditSvg,
   };
   return iconMap[icon];
 };

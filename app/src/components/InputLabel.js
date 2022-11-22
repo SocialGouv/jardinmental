@@ -1,16 +1,19 @@
 import React from "react";
 import { StyleSheet, Text } from "react-native";
 
-export const InputLabel = ({ children, style }) => {
-  return <Text style={[styles.text, style]}>{children}</Text>;
+export const InputLabel = ({ children, style, sublabel }) => {
+  return <Text style={[styles.label, sublabel && styles.sublabel, style]}>{children}</Text>;
 };
 
 const styles = StyleSheet.create({
-  text: {
+  label: {
     width: "100%",
     fontFamily: "Karla",
     fontWeight: "400",
     fontSize: 16,
     color: "#000",
+  },
+  sublabel: {
+    color: "#5A5A5A",
   },
 });

@@ -16,8 +16,7 @@ export const GoalsDaySurvey = ({ date }) => {
   useFocusEffect(
     useCallback(() => {
       (async () => {
-        const _goals = await getGoalsTracked();
-
+        const _goals = await getGoalsTracked({ date });
         setGoals(_goals);
         const records = await getGoalsDailyRecords({ date });
         const _goalsRecords = {};
@@ -52,6 +51,7 @@ export const GoalsDaySurvey = ({ date }) => {
         {goals.map((goal, index) => {
           return (
             <GoalCheckboxItem
+              key={goal.id}
               {...{ goal, index }}
               onCheckedChanged={onGoalChanged}
               onCommentChanged={onGoalChanged}

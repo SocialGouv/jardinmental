@@ -1,12 +1,13 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import { Button2 } from "../../../components/Button2";
 import { Screen } from "../../../components/Screen";
 import { Card } from "../../../components/Card";
-import { useFocusEffect } from "@react-navigation/native";
-import { getGoalsTracked } from "../../../utils/localStorage/goals";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { getDaysOfWeekLabel, getGoalsTracked } from "../../../utils/localStorage/goals";
 import { Title } from "../../../components/Title";
 import { Badge } from "../../../components/Badge";
+import Icon from "../../../components/Icon";
 
 export const GoalsSettings = ({ navigation }) => {
   const [goals, setGoals] = useState([]);
@@ -60,9 +61,34 @@ export const GoalsSettings = ({ navigation }) => {
 };
 
 const GoalItem = ({ goal, index }) => {
+  const [daysOfWeekLabel, setDaysOfWeekLabel] = useState();
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    const label = getDaysOfWeekLabel(goal.daysOfWeek);
+    if (label === "all") setDaysOfWeekLabel("Chaque jour");
+    else setDaysOfWeekLabel(label);
+  }, [goal]);
+
   return (
     <View style={[itemStyles.container]}>
-      <Text>{goal.label}</Text>
+      <View style={[itemStyles.contentContainer]}>
+        <Text style={[itemStyles.label]}>{goal.label}</Text>
+        <View style={[itemStyles.daysOfWeekContainer]}>
+          <Icon icon="Calendar2Svg" color="#2D2D2D" styleContainer={itemStyles.daysOfWeekIcon} />
+          {daysOfWeekLabel && <Text style={[itemStyles.daysOfWeekText]}>{daysOfWeekLabel}</Text>}
+        </View>
+      </View>
+      <Button2
+        square
+        type="clear"
+        icon="EditSvg"
+        textStyle={{ color: "#26387C" }}
+        iconSize={16}
+        onPress={() => {
+          navigation.navigate("goal-config", { editing: true, goalId: goal.id });
+        }}
+      />
     </View>
   );
 };
@@ -76,6 +102,35 @@ const itemStyles = StyleSheet.create({
     padding: 16,
     marginHorizontal: 16,
     marginVertical: 4,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  contentContainer: {
+    flex: 1,
+  },
+  label: {
+    fontFamily: "Karla",
+    fontWeight: "700",
+    fontSize: 16,
+    color: "#26387C",
+    textAlign: "left",
+  },
+  daysOfWeekContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 8,
+  },
+  daysOfWeekIcon: {
+    width: 16,
+    height: 16,
+    marginRight: 6,
+  },
+  daysOfWeekText: {
+    fontFamily: "Karla",
+    fontWeight: "400",
+    fontSize: 14,
+    color: "#2D2D2D",
+    textAlign: "left",
   },
 });
 

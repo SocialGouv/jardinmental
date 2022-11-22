@@ -109,7 +109,7 @@ const applyStyles = ({ preset, type, checkable, checked, square, size, fill }) =
   applyIfNeeded(appliedStyles, "type==='clear'", "clear");
   applyIfNeeded(appliedStyles, "size==='small'", "small");
 
-  if (!fill && size === "default") appliedStyles.button.minWidth = "70%";
+  if (!fill && size === "default" && !square && !circle) appliedStyles.button.minWidth = "70%";
 
   if (checkable && preset === "secondary") {
     appliedStyles.button.backgroundColor = !checked ? "transparent" : colors.DARK_BLUE;

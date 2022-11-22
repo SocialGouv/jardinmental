@@ -4,7 +4,6 @@ import { Button2 } from "../../../components/Button2";
 import { InputLabel } from "../../../components/InputLabel";
 import { InputText } from "../../../components/InputText";
 import { Screen } from "../../../components/Screen";
-import { setGoalTracked } from "../../../utils/localStorage/goals";
 
 export const GoalsCreateForm = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
@@ -12,10 +11,7 @@ export const GoalsCreateForm = ({ navigation }) => {
 
   const onValidate = async () => {
     if (loading) return;
-    setLoading(true);
-    await setGoalTracked({ label: goalName });
-    setLoading(false);
-    navigation.navigate("goals-settings");
+    navigation.navigate("goal-day-selector", { editing: false, goalLabel: goalName });
   };
 
   return (
