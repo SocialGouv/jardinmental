@@ -54,8 +54,7 @@ export const GoalConfig = ({ navigation, route }) => {
     if (!editing) {
       await setGoalTracked({ id: goalId, daysOfWeek: goalDaysOfWeek, label: goalLabel, reminder });
     } else {
-      console.log({ id: goalId, reminder });
-      const goal = await setGoalTracked({ id: goalId, reminder });
+      await setGoalTracked({ id: goalId, reminder });
     }
     setLoading(false);
     if (!editing) {

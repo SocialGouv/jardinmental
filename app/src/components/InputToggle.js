@@ -16,7 +16,16 @@ export const InputToggle = forwardRef(({ checked, onCheckedChanged, containerSty
   const toggle = () => {
     const nextChecked = !_checked;
     _setChecked(nextChecked);
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    LayoutAnimation.configureNext({
+      duration: 300,
+      create: {
+        type: LayoutAnimation.Types.easeInEaseOut,
+        property: LayoutAnimation.Properties.opacity,
+      },
+      update: {
+        type: LayoutAnimation.Types.easeInEaseOut,
+      },
+    });
     onCheckedChanged?.({ checked: nextChecked });
   };
 

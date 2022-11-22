@@ -30,12 +30,6 @@ export const ScreenHeader = ({
     };
   }
 
-  const HeaderButton = ({ ...buttonProps }) => {
-    return <Button2 preset="" type="outline" circle size="normal" {...buttonProps} />;
-  };
-
-  const HeaderButtonGhost = () => <View style={{ width: 45 }} collapsable={false} />;
-
   return (
     <View
       style={[
@@ -60,6 +54,12 @@ export const ScreenHeader = ({
     </View>
   );
 };
+
+const HeaderButton = ({ ...buttonProps }) => {
+  return <Button2 preset="" type="outline" circle size="normal" {...buttonProps} />;
+};
+
+const HeaderButtonGhost = () => <View style={{ width: 45 }} collapsable={false} />;
 
 const styles = StyleSheet.create({
   container: {

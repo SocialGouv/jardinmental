@@ -16,7 +16,6 @@ export const GoalsSettings = ({ navigation }) => {
     useCallback(() => {
       (async () => {
         const _goals = await getGoalsTracked();
-        console.log({ _goals });
         setGoals(_goals);
       })();
     }, [])
