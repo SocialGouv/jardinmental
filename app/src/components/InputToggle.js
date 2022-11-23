@@ -1,5 +1,6 @@
 import React, { forwardRef, useEffect, useState, useImperativeHandle } from "react";
-import { StyleSheet, View, Pressable, LayoutAnimation } from "react-native";
+import { StyleSheet, View, Pressable } from "react-native";
+import { autoLayoutAnimation } from "../utils/autoLayoutAnimation";
 
 export const InputToggle = forwardRef(({ checked, onCheckedChanged, containerStyle }, ref) => {
   useImperativeHandle(ref, () => {
@@ -16,16 +17,7 @@ export const InputToggle = forwardRef(({ checked, onCheckedChanged, containerSty
   const toggle = () => {
     const nextChecked = !_checked;
     _setChecked(nextChecked);
-    LayoutAnimation.configureNext({
-      duration: 300,
-      create: {
-        type: LayoutAnimation.Types.easeInEaseOut,
-        property: LayoutAnimation.Properties.opacity,
-      },
-      update: {
-        type: LayoutAnimation.Types.easeInEaseOut,
-      },
-    });
+    autoLayoutAnimation();
     onCheckedChanged?.({ checked: nextChecked });
   };
 
