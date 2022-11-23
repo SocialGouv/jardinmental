@@ -80,9 +80,11 @@ const GoalItem = ({ goal, index }) => {
       </View>
       <Button2
         square
+        preset=""
         type="clear"
         icon="EditSvg"
         textStyle={{ color: "#26387C" }}
+        style={{ backgroundColor: "#F8F9FB" }}
         iconSize={16}
         onPress={() => {
           navigation.navigate("goal-config", { editing: true, goalId: goal.id });

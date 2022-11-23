@@ -5,6 +5,9 @@ import { dayFormat } from "./utils";
 import { DAYS_OF_WEEK } from "../date/daysOfWeek";
 import { setDay, getDay, format } from "date-fns";
 import { fr } from "date-fns/locale";
+import NotificationService from "../../services/notifications";
+import * as RNLocalize from "react-native-localize";
+import API from "../../services/api";
 
 const { getData, saveData, clearData } = createStorage({
   storageKey: STORAGE_KEY_GOALS,
@@ -52,7 +55,43 @@ export const setGoalTracked = async ({ id, label, enabled, order, daysOfWeek, re
   };
 
   await saveData(data);
+
+  await updateApiReminer(goal);
+
   return goal;
+};
+
+const updateApiReminer = async ({ id, daysOfWeek, reminder }) => {
+  if (!(await NotificationService.hasToken())) return;
+
+  const body = {
+    pushNotifToken: await NotificationService.getToken(),
+    type: "Goal",
+    timezone: RNLocalize.getTimeZone(),
+    localId: id,
+    disabled: true,
+    timeHours: undefined,
+    timeMinutes: undefined,
+    daysOfWeek: null,
+  };
+
+  if (reminder) {
+    body.disabled = false;
+
+    const time = new Date(reminder);
+    body.timeHours = time.getHours();
+    body.timeMinutes = time.getMinutes();
+
+    body.daysOfWeek = DAYS_OF_WEEK.reduce((acc, day) => {
+      acc[day] = daysOfWeek[day] ?? false;
+      return acc;
+    }, {});
+  }
+
+  return await API.put({
+    path: "/reminder",
+    body,
+  });
 };
 
 export const getGoalsTracked = async ({ date } = { date: undefined }) => {
