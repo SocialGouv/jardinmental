@@ -12,6 +12,7 @@ import dayjs from "dayjs";
 import { format, set } from "date-fns";
 import { Card } from "../../../components/Card";
 import { useFocusEffect } from "@react-navigation/native";
+import Icon from "../../../components/Icon";
 
 export const GoalConfig = ({ navigation, route }) => {
   const goalId = route.params?.goalId;
@@ -70,7 +71,7 @@ export const GoalConfig = ({ navigation, route }) => {
   useEffect(() => {
     if (!editingGoal) return;
     const label = getDaysOfWeekLabel(editingGoal.daysOfWeek);
-    if (label === "all") setDaysOfWeekLabel("Chaque jour");
+    if (label === "all") setDaysOfWeekLabel("Tous les jours");
     else setDaysOfWeekLabel(label);
   }, [editingGoal]);
 
@@ -104,7 +105,14 @@ export const GoalConfig = ({ navigation, route }) => {
                 navigation.navigate("goal-day-selector", { editing: true, goalId });
               }}
             >
-              <Text>{daysOfWeekLabel}</Text>
+              <Text style={styles.daysOfWeekValue}>{daysOfWeekLabel}</Text>
+              <Icon
+                icon="ArrowUpSvg"
+                color="#26387C"
+                width={12}
+                height={12}
+                styleContainer={{ width: 12, height: 12, marginLeft: 8, transform: [{ rotate: "90deg" }] }}
+              />
             </InputGroupItem>
           )}
           <InputGroupItem label="Programmer un rappel" onPress={() => reminderToggleRef?.current?.toggle?.()}>
@@ -146,5 +154,11 @@ export const GoalConfig = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   spacing: {
     marginVertical: 8,
+  },
+  daysOfWeekValue: {
+    fontSize: 14,
+    fontFamily: "Karla",
+    fontWeight: "700",
+    color: "#26387C",
   },
 });

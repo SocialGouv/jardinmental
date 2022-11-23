@@ -149,16 +149,28 @@ export const setGoalDailyRecord = async ({ goalId, value, comment, date }) => {
   return data;
 };
 
-export const getGoalsDailyRecords = async ({ date } = { date: new Date() }) => {
-  date = dayFormat(date);
-
+export const getGoalsDailyRecords = async ({ date, goalId } = { date: undefined, goalId: undefined }) => {
   let data = await getData();
 
-  if (!data.records?.byDate?.[date]?.length) return [];
+  if (date) {
+    date = dayFormat(date);
 
-  return data.records.byDate[date]
-    .map((recordId) => data.records.data[recordId])
-    .filter((record) => !!record);
+    if (!data.records?.byDate?.[date]?.length) return [];
+
+    return data.records.byDate[date]
+      .map((recordId) => data.records.data[recordId])
+      .filter((record) => !!record);
+  }
+
+  if (goalId) {
+    if (!data.records?.byGoalId?.[goalId]?.length) return [];
+
+    return data.records.byGoalId[goalId]
+      .map((recordId) => data.records.data[recordId])
+      .filter((record) => !!record);
+  }
+
+  return [];
 };
 
 export const getDaysOfWeekLabel = (daysOfWeek) => {
@@ -176,4 +188,15 @@ export const getDaysOfWeekLabel = (daysOfWeek) => {
       .map((label) => `${label[0].toUpperCase()}${label.slice(1)}`)
       .map((label) => (label.slice(-1) === "." ? label.slice(0, -1) : label))
       .join(" ");
+};
+
+export const getGoalsAndRecords = async () => {
+  let _goals = await getGoalsTracked();
+  _goals = await Promise.all(
+    _goals.map(async (goal) => {
+      const records = await getGoalsDailyRecords({ goalId: goal.id });
+      return { goal, records };
+    })
+  );
+  return _goals;
 };

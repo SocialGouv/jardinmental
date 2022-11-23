@@ -37,6 +37,8 @@ export const GoalsDaySurvey = ({ date }) => {
     });
   }, []);
 
+  if (goals.length === 0) return null;
+
   return (
     <View style={styles.container}>
       <Separator />

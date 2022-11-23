@@ -7,6 +7,7 @@ export const Screen = ({
   preset = "primary", // 'primary'
   children,
   containerStyle,
+  contentContainerStyle,
   ContainerComponent = View,
   scrollStyle,
   scrollContentStyle,
@@ -40,15 +41,20 @@ export const Screen = ({
           contentContainerStyle={[styles.scrollContentContainer, _scrollContentStyle, scrollContentStyle]}
           testID={scrollTestId}
           bounces={true}
+          keyboardDismissMode="on-drag"
           {...(ScrollComponent === FlatList && {
             ListHeaderComponent: (
-              <ScreenContent {...{ children, marginHorizontal, centerContentVertically }} />
+              <ScreenContent
+                {...{ children, marginHorizontal, centerContentVertically, contentContainerStyle }}
+              />
             ),
           })}
           {...scrollProps}
         >
           {ScrollComponent !== FlatList && (
-            <ScreenContent {...{ children, marginHorizontal, centerContentVertically }} />
+            <ScreenContent
+              {...{ children, marginHorizontal, centerContentVertically, contentContainerStyle }}
+            />
           )}
         </ScrollComponent>
       </ScreenKeyboardAvoidingView>
@@ -60,7 +66,7 @@ export const Screen = ({
   );
 };
 
-const ScreenContent = ({ children, marginHorizontal, centerContentVertically }) => {
+const ScreenContent = ({ children, marginHorizontal, centerContentVertically, contentContainerStyle }) => {
   return (
     <View
       style={[
@@ -70,6 +76,7 @@ const ScreenContent = ({ children, marginHorizontal, centerContentVertically }) 
           flexGrow: 1,
           justifyContent: "center",
         },
+        contentContainerStyle,
       ]}
     >
       {children}

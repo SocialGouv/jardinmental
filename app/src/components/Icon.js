@@ -40,6 +40,8 @@ import Arrow from "../../assets/svg/Arrow";
 import ThumbsUpSvg from "../../assets/svg/thumbs-up.svg";
 import ImportantSvg from "../../assets/svg/important.svg";
 import EditSvg from "../../assets/svg/edit.svg";
+import IndicateurSvg from "../../assets/svg/indicateur.svg";
+import GoalSvg from "../../assets/svg/goal.svg";
 
 import { StyleSheet, View, Animated, Easing, TouchableOpacity } from "react-native";
 
@@ -85,6 +87,8 @@ const mapIconToSvg = (icon) => {
     CheckSvg,
     ImportantSvg,
     EditSvg,
+    IndicateurSvg,
+    GoalSvg,
   };
   return iconMap[icon];
 };

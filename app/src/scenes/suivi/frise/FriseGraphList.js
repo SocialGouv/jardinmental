@@ -12,6 +12,7 @@ import localStorage from "../../../utils/localStorage";
 import logEvents from "../../../services/logEvents";
 import Button from "../../../components/Button";
 import { FriseGraph } from "./FriseGraph";
+import { GoalsFriseGraph } from "../../goals/suivi/GoalsFriseGraph";
 
 export const FriseGraphList = ({ navigation, fromDate, toDate, focusedScores, showTraitement }) => {
   const [diaryData] = React.useContext(DiaryDataContext);
@@ -134,6 +135,12 @@ export const FriseGraphList = ({ navigation, fromDate, toDate, focusedScores, sh
               priseDeTraitementSiBesoin={computeChartData("PRISE_DE_TRAITEMENT_SI_BESOIN")}
             />
           ))}
+        <GoalsFriseGraph
+          {...{ chartDates, focusedScores }}
+          showTraitement={showTraitement}
+          priseDeTraitement={computeChartData("PRISE_DE_TRAITEMENT")}
+          priseDeTraitementSiBesoin={computeChartData("PRISE_DE_TRAITEMENT_SI_BESOIN")}
+        />
       </ScrollView>
     </>
   );
