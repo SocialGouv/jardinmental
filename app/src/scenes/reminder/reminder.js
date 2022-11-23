@@ -88,6 +88,7 @@ const Reminder = ({
         timezone: RNLocalize.getTimeZone(),
         timeHours: newReminder.getHours(),
         timeMinutes: newReminder.getMinutes(),
+        disabled: false,
       },
     });
     logEvents.logReminderAdd();
@@ -137,9 +138,18 @@ const Reminder = ({
     setReminderSetupVisible(false);
     await AsyncStorage.removeItem(ReminderStorageKey);
   };
-  const deleteReminderManually = () => {
+  const deleteReminderManually = async () => {
     logEvents.logReminderCancel();
     deleteReminder();
+    if (!(await NotificationService.hasToken())) return;
+    await API.put({
+      path: "/reminder",
+      body: {
+        pushNotifToken: await NotificationService.getToken(),
+        type: "Main",
+        disabled: true,
+      },
+    });
   };
 
   const validateOnboarding = async () => {
