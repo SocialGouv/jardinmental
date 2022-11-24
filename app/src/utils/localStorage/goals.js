@@ -174,13 +174,14 @@ export const getGoalsDailyRecords = async ({ date, goalId } = { date: undefined,
 };
 
 export const getDaysOfWeekLabel = (daysOfWeek) => {
-  if (!daysOfWeek) return null;
+  if (!daysOfWeek) return "";
 
   const _daysOfWeek = DAYS_OF_WEEK.map((day, index) => ({
     day,
     index,
   })).filter(({ day, index }) => daysOfWeek[day]);
   if (_daysOfWeek.length === 7) return "all";
+  else if (_daysOfWeek.length === 0) return "";
   else
     return _daysOfWeek
       .sort((a, b) => (b.index === 0 ? -1 : 0))

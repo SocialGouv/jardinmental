@@ -75,7 +75,7 @@ const GoalItem = ({ goal, index }) => {
         <Text style={[itemStyles.label]}>{goal.label}</Text>
         <View style={[itemStyles.daysOfWeekContainer]}>
           <Icon icon="Calendar2Svg" color="#2D2D2D" styleContainer={itemStyles.daysOfWeekIcon} />
-          {daysOfWeekLabel && <Text style={[itemStyles.daysOfWeekText]}>{daysOfWeekLabel}</Text>}
+          <Text style={[itemStyles.daysOfWeekText]}>{daysOfWeekLabel}</Text>
         </View>
       </View>
       <Button2
