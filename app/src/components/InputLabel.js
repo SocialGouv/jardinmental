@@ -9,11 +9,12 @@ const styles = StyleSheet.create({
   label: {
     width: "100%",
     fontFamily: "Karla",
-    fontWeight: "400",
+    fontWeight: "500",
     fontSize: 16,
     color: "#000",
   },
   sublabel: {
     color: "#5A5A5A",
+    fontWeight: "400",
   },
 });

@@ -12,7 +12,7 @@ export const GoalsAddOptions = ({ navigation }) => {
     >
       <Card
         title="Créez votre objectif personnalisé"
-        text="Définissez votre objectif et planifier le sur les jours de la semaine que vous souhaitez"
+        text="Définissez votre objectif et planifiez le sur les jours de la semaine que vous souhaitez"
       >
         <Button2
           preset="secondary"

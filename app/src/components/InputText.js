@@ -65,6 +65,7 @@ const _styles = {
     container: {
       alignItems: "stretch",
       borderRadius: 12,
+      backgroundColor: "#FFFFFF",
       borderColor: "#26387C",
       borderWidth: 1,
     },

@@ -44,7 +44,7 @@ export const GoalsSettings = ({ navigation }) => {
     >
       <Card
         title="Personnaliser mes objectifs"
-        text="Gérez vos objectifs et créez en de nouveaux"
+        text="Gérez vos objectifs et créez-en de nouveaux"
         image={{ source: require("./../../../../assets/imgs/goal.png") }}
       />
       <View style={titleStyles.container}>
