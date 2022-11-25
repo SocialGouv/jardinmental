@@ -39,6 +39,9 @@ export const iconColors = {
 };
 
 export const scoresMapIcon = {
+  "-1": {
+    color: "transparent",
+  },
   1: {
     color: colors.veryBad,
     faceIcon: icons.veryBad,

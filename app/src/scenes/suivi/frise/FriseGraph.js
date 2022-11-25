@@ -17,7 +17,7 @@ export const FriseGraph = ({
       {title ? <Text style={styles.friseTitle}>{title}</Text> : null}
       <View style={styles.squareContainer}>
         {data?.map((e, i) => {
-          let color = scoresMapIcon[e?.value]?.color || "#f5f5f5";
+          let color = scoresMapIcon[e?.value]?.color || "#D7D3D3";
 
           let opacity = 1;
           if (focusedScores.length && !focusedScores.includes(e?.value)) {

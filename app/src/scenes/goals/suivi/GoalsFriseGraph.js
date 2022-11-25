@@ -2,6 +2,8 @@ import React, { useCallback, useState, useEffect } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import { getGoalsAndRecords } from "../../../utils/localStorage/goals";
 import { FriseGraph } from "../../suivi/frise/FriseGraph";
+import { parseISO, getDay } from "date-fns";
+import { DAYS_OF_WEEK } from "../../../utils/date/daysOfWeek";
 
 export const GoalsFriseGraph = ({
   chartDates,
@@ -31,7 +33,10 @@ export const GoalsFriseGraph = ({
         records: chartDates.map((date) => {
           const existingRecord = _records.find((record) => record.date === date);
           if (existingRecord) return existingRecord;
-          else return {};
+          else {
+            if (goal?.daysOfWeek?.[DAYS_OF_WEEK[getDay(parseISO(date))]]) return { value: 0 };
+            else return { value: -1 };
+          }
         }),
       };
     });
