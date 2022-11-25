@@ -30,7 +30,6 @@ import { GoalsDaySurvey } from "../goals/survey/GoalsDaySurvey";
 import { Screen } from "../../components/Screen";
 import { Button2 } from "../../components/Button2";
 import { Card } from "../../components/Card";
-import Separator from "../../components/Separator";
 
 const DaySurvey = ({ navigation, route }) => {
   const initSurvey = route?.params?.currentSurvey ?? {
@@ -43,6 +42,8 @@ const DaySurvey = ({ navigation, route }) => {
 
   const [userIndicateurs, setUserIndicateurs] = useState([]);
   const [answers, setAnswers] = useState({});
+
+  const scrollRef = useRef();
 
   const goalsRef = useRef();
 
@@ -184,6 +185,7 @@ const DaySurvey = ({ navigation, route }) => {
         onScrollBeginDrag: Keyboard.dismiss,
       }}
       contentContainerStyle={{ alignItems: "stretch" }}
+      scrollRef={scrollRef}
     >
       <View>
         <View style={{ marginBottom: 8 }}>
@@ -218,7 +220,7 @@ const DaySurvey = ({ navigation, route }) => {
           />
         </View>
       </View>
-      <GoalsDaySurvey date={initSurvey?.date} ref={goalsRef} />
+      <GoalsDaySurvey date={initSurvey?.date} ref={goalsRef} scrollRef={scrollRef} route={route} />
       <InputQuestion
         question={questionContext}
         onPress={toggleAnswer}

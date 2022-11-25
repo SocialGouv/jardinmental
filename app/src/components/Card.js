@@ -12,6 +12,7 @@ export const Card = ({
   icon,
   image,
   onPress,
+  mergeChildren = true,
   children,
 }) => {
   const styles = applyStyles({ preset });
@@ -34,10 +35,11 @@ export const Card = ({
           <View style={[styles.innerContentContainer, innerContentContainerStyle]}>
             {title && <Text style={styles.title}>{title}</Text>}
             {text && <Text style={styles.text}>{text}</Text>}
-            {children && <View style={styles.childrenContainer}>{children}</View>}
+            {children && mergeChildren && <View style={styles.childrenContainer}>{children}</View>}
           </View>
           {onPress && <Icon icon="ChevronRightSvg" color="#000091" height="16" width="16" />}
         </View>
+        {children && !mergeChildren && <View style={styles.childrenContainer}>{children}</View>}
       </PressableIfNeeded>
     </View>
   );
@@ -56,6 +58,7 @@ const applyStyles = ({ preset }) => {
   };
 
   applyIfNeeded(appliedStyles, "preset==='lighten'", "lighten");
+  applyIfNeeded(appliedStyles, "preset==='grey'", "grey");
 
   return appliedStyles;
 };
@@ -113,6 +116,12 @@ const _styles = {
     },
     title: {
       fontSize: 18,
+    },
+  }),
+  grey: StyleSheet.create({
+    container: {
+      backgroundColor: "#F8F9FB",
+      borderColor: "#E7EAF1",
     },
   }),
 };

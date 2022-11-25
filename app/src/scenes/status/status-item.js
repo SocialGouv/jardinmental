@@ -13,6 +13,8 @@ import Context from "./context";
 import logEvents from "../../services/logEvents";
 import { INDICATEURS_LISTE, INDICATEURS } from "../../utils/liste_indicateurs";
 import { GoalsStatus } from "../goals/status/GoalsStatus";
+import { Card } from "../../components/Card";
+import { GoalsStatusNoData } from "../goals/status/GoalsStatusNoData";
 
 export default ({ navigation, patientState, goalsData, date }) => {
   const [customs, setCustoms] = useState([]);
@@ -32,7 +34,7 @@ export default ({ navigation, patientState, goalsData, date }) => {
     return () => (mounted = false);
   }, [patientState]);
 
-  const handleEdit = (tab, editingSurvey = false) => {
+  const handleEdit = (tab, editingSurvey = false, toGoals) => {
     if (!canEdit(date)) return;
     const currentSurvey = {
       date,
@@ -41,6 +43,7 @@ export default ({ navigation, patientState, goalsData, date }) => {
     navigation.navigate(tab, {
       currentSurvey,
       editingSurvey,
+      toGoals,
     });
   };
 
@@ -52,10 +55,10 @@ export default ({ navigation, patientState, goalsData, date }) => {
         return patientState && patientState[key];
       })?.length > 0 || goalsData?.records?.byDate?.[date]?.length > 0;
 
-  const handlePressItem = ({ editingSurvey }) => {
+  const handlePressItem = ({ editingSurvey, toGoals } = {}) => {
     if (!canEdit(date)) return navigation.navigate("too-late", { date });
     logEvents.logFeelingEditButtonClick();
-    handleEdit("day-survey", editingSurvey);
+    handleEdit("day-survey", editingSurvey, toGoals);
   };
 
   const patientStateRecords = patientState
@@ -122,9 +125,19 @@ export default ({ navigation, patientState, goalsData, date }) => {
     return (
       <View style={styles.container}>
         {canEdit(date) ? (
-          <TouchableOpacity style={styles.item} onPress={handlePressItem}>
-            <NoDataDiaryItem date={date} />
-          </TouchableOpacity>
+          <View style={styles.noDataContainer}>
+            <Card
+              preset="grey"
+              title={
+                canEdit(date)
+                  ? "Renseigner mon état pour ce jour-là"
+                  : "Je ne peux plus saisir mon questionnaire pour ce jour"
+              }
+              image={{ source: require("./../../../assets/imgs/indicateur.png") }}
+              onPress={handlePressItem}
+            />
+            <GoalsStatusNoData goalsData={goalsData} date={date} onPress={handlePressItem} />
+          </View>
         ) : (
           <View style={styles.emptyItem} />
         )}
@@ -165,5 +178,10 @@ const styles = StyleSheet.create({
     marginVertical: -5,
     borderLeftWidth: 0.4,
     borderColor: "#00CEF7",
+  },
+  noDataContainer: {
+    marginVertical: 5,
+    paddingTop: 12,
+    paddingBottom: 39,
   },
 });

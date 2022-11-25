@@ -97,7 +97,11 @@ const updateApiReminer = async ({ id, daysOfWeek, reminder }) => {
 export const getGoalsTracked = async ({ date } = { date: undefined }) => {
   const data = await getData();
 
-  if (!data.goals?.byOrder?.length) return [];
+  return getGoalsTrackedFromData({ data, date });
+};
+
+export const getGoalsTrackedFromData = ({ data, date } = { data: {}, date: undefined }) => {
+  if (!data?.goals?.byOrder?.length) return [];
 
   const goalsTracked = data.goals.byOrder.map((id) => data.goals.data[id]);
 

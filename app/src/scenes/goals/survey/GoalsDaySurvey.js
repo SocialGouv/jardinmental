@@ -1,4 +1,4 @@
-import React, { useCallback, useState, forwardRef, useImperativeHandle } from "react";
+import React, { useCallback, useState, forwardRef, useImperativeHandle, useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { Card } from "../../../components/Card";
@@ -6,8 +6,9 @@ import Separator from "../../../components/Separator";
 import { Title } from "../../../components/Title";
 import { getGoalsDailyRecords, getGoalsTracked, setGoalDailyRecord } from "../../../utils/localStorage/goals";
 import { GoalCheckboxItem } from "./GoalCheckboxItem";
+import { useLayout } from "@react-native-community/hooks";
 
-export const GoalsDaySurvey = forwardRef(({ date }, ref) => {
+export const GoalsDaySurvey = forwardRef(({ date, scrollRef, route }, ref) => {
   useImperativeHandle(ref, () => {
     return {
       onSubmit,
@@ -69,10 +70,17 @@ export const GoalsDaySurvey = forwardRef(({ date }, ref) => {
     }
   }, [goals, goalsRecords, goalsRecordsToUpdate]);
 
+  const { onLayout, ...layout } = useLayout();
+  useEffect(() => {
+    if (layout?.y > 0 && route?.params?.toGoals === true) {
+      scrollRef?.current?.scrollTo?.({ y: layout.y, animated: false });
+    }
+  }, [layout]);
+
   if (goals.length === 0) return null;
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} onLayout={onLayout}>
       <Separator />
       <View style={styles.contentContainer}>
         <Title style={styles.spacing}>Mes objectifs</Title>
