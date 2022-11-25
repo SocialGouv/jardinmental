@@ -12,8 +12,9 @@ import Toxic from "./toxic";
 import Context from "./context";
 import logEvents from "../../services/logEvents";
 import { INDICATEURS_LISTE, INDICATEURS } from "../../utils/liste_indicateurs";
+import { GoalsStatus } from "../goals/status/GoalsStatus";
 
-export default ({ navigation, patientState, date }) => {
+export default ({ navigation, patientState, goalsData, date }) => {
   const [customs, setCustoms] = useState([]);
   const [oldCustoms, setOldCustoms] = useState([]);
   let mounted = useRef(true);
@@ -42,13 +43,14 @@ export default ({ navigation, patientState, date }) => {
       editingSurvey,
     });
   };
+
   const hasAnswerSurvey = () =>
     Object.keys(displayedCategories)
       .concat(customs)
       .concat(INDICATEURS_LISTE)
       .filter((key) => {
         return patientState && patientState[key];
-      }).length;
+      })?.length > 0 || goalsData?.records?.byDate?.[date]?.length > 0;
 
   const handlePressItem = ({ editingSurvey }) => {
     if (!canEdit(date)) return navigation.navigate("too-late", { date });
@@ -56,42 +58,48 @@ export default ({ navigation, patientState, date }) => {
     handleEdit("day-survey", editingSurvey);
   };
 
+  const patientStateRecords = patientState
+    ? Object.entries(patientState)
+        .filter(([key, value]) => {
+          return ![
+            "CONTEXT",
+            "POSOLOGY",
+            "TOXIC",
+            "NOTES",
+            "PRISE_DE_TRAITEMENT",
+            "PRISE_DE_TRAITEMENT_SI_BESOIN",
+            "becks",
+          ].includes(key);
+        })
+        .filter(([key, value]) => !!value)
+    : [];
+
   if (hasAnswerSurvey()) {
     return (
       <View style={styles.container}>
         <View style={[styles.item, styles.itemWithSpaceAbove]}>
           <View>
-            {Object.entries(patientState)
-              .filter(([key, value]) => {
-                return ![
-                  "CONTEXT",
-                  "POSOLOGY",
-                  "TOXIC",
-                  "NOTES",
-                  "PRISE_DE_TRAITEMENT",
-                  "PRISE_DE_TRAITEMENT_SI_BESOIN",
-                  "becks",
-                ].includes(key);
-              })
-              .map(([key, value]) => {
-                if (!value) {
-                  return;
-                }
-                const [categoryName] = key.split("_");
-                return (
-                  <PatientStateItem
-                    key={key}
-                    category={key}
-                    patientState={patientState}
-                    label={
-                      patientState?._indicateur?.name ||
-                      INDICATEURS[key] ||
-                      displayedCategories[key] ||
-                      categoryName
-                    }
-                  />
-                );
-              })}
+            {patientStateRecords.map(([key, value]) => {
+              if (!value) {
+                return;
+              }
+              const [categoryName] = key.split("_");
+              return (
+                <PatientStateItem
+                  key={key}
+                  category={key}
+                  patientState={patientState}
+                  label={
+                    patientState?._indicateur?.name ||
+                    INDICATEURS[key] ||
+                    displayedCategories[key] ||
+                    categoryName
+                  }
+                />
+              );
+            })}
+
+            <GoalsStatus goalsData={goalsData} date={date} withSeparator={patientStateRecords?.length > 0} />
             <Context data={patientState?.CONTEXT} />
             <Posology
               posology={patientState?.POSOLOGY}

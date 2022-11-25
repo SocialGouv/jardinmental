@@ -9,18 +9,22 @@ export const GoalsFriseGraph = ({
   showTraitement,
   priseDeTraitement,
   priseDeTraitementSiBesoin,
+  onIsEmptyChanged,
 }) => {
   const [goals, setGoals] = useState([]);
 
   const updateGoals = async () => {
     let _goals = await getGoalsAndRecords();
+    let isEmpty = true;
     _goals = _goals.map(({ goal, records }) => {
       const _records = records
         .filter((record) => chartDates.includes(record.date))
         .map((record) => ({
           ...record,
-          value: record.value === true ? 5 : 0,
+          value: record.value === true ? 5 : 1,
         }));
+
+      if (_records.length > 0) isEmpty = false;
 
       return {
         goal,
@@ -31,8 +35,8 @@ export const GoalsFriseGraph = ({
         }),
       };
     });
-    console.log(JSON.stringify(_goals, null, 2));
     setGoals(_goals);
+    onIsEmptyChanged?.(isEmpty);
   };
 
   useFocusEffect(

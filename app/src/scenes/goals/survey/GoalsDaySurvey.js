@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, forwardRef, useImperativeHandle } from "react";
 import { View, StyleSheet } from "react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { Card } from "../../../components/Card";
@@ -7,11 +7,18 @@ import { Title } from "../../../components/Title";
 import { getGoalsDailyRecords, getGoalsTracked, setGoalDailyRecord } from "../../../utils/localStorage/goals";
 import { GoalCheckboxItem } from "./GoalCheckboxItem";
 
-export const GoalsDaySurvey = ({ date }) => {
+export const GoalsDaySurvey = forwardRef(({ date }, ref) => {
+  useImperativeHandle(ref, () => {
+    return {
+      onSubmit,
+    };
+  });
+
   const navigation = useNavigation();
 
   const [goals, setGoals] = useState([]);
   const [goalsRecords, setGoalsRecords] = useState({});
+  const [goalsRecordsToUpdate, setGoalsRecordsToUpdate] = useState({});
 
   useFocusEffect(
     useCallback(() => {
@@ -28,14 +35,39 @@ export const GoalsDaySurvey = ({ date }) => {
     }, [])
   );
 
-  const onGoalChanged = useCallback(async ({ checked, comment, goal }) => {
-    await setGoalDailyRecord({
-      goalId: goal.id,
-      value: checked,
-      comment,
-      date,
-    });
-  }, []);
+  const onGoalChanged = useCallback(
+    ({ checked, comment, goal }) => {
+      setGoalsRecordsToUpdate({
+        ...goalsRecordsToUpdate,
+        [goal?.id]: {
+          goalId: goal?.id,
+          value: checked,
+          comment,
+          date,
+        },
+      });
+    },
+    [goalsRecordsToUpdate, date]
+  );
+
+  const onSubmit = useCallback(async () => {
+    for (const goal of goals) {
+      if (!goal?.id) continue;
+
+      if (goalsRecordsToUpdate?.[goal.id]) {
+        await setGoalDailyRecord(goalsRecordsToUpdate[goal.id]);
+        continue;
+      }
+
+      if (goalsRecords?.[goal.id]) continue;
+
+      await setGoalDailyRecord({
+        goalId: goal.id,
+        value: false,
+        date,
+      });
+    }
+  }, [goals, goalsRecords, goalsRecordsToUpdate]);
 
   if (goals.length === 0) return null;
 
@@ -73,7 +105,7 @@ export const GoalsDaySurvey = ({ date }) => {
       <Separator />
     </View>
   );
-};
+});
 
 const styles = StyleSheet.create({
   container: {

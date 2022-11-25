@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useRef } from "react";
 import {
   StyleSheet,
   ScrollView,
@@ -26,7 +26,7 @@ import { alertNoDataYesterday } from "./survey-data";
 import localStorage from "../../utils/localStorage";
 import { useFocusEffect } from "@react-navigation/native";
 import ArrowUpSvg from "../../../assets/svg/arrow-up.svg";
-import { GoalsDaySurvey } from "../goals/daySurvey/GoalsDaySurvey";
+import { GoalsDaySurvey } from "../goals/survey/GoalsDaySurvey";
 import { Screen } from "../../components/Screen";
 import { Button2 } from "../../components/Button2";
 import { Card } from "../../components/Card";
@@ -43,6 +43,9 @@ const DaySurvey = ({ navigation, route }) => {
 
   const [userIndicateurs, setUserIndicateurs] = useState([]);
   const [answers, setAnswers] = useState({});
+
+  const goalsRef = useRef();
+
   const questionToxic = {
     id: "TOXIC",
     label: "Avez-vous consommé des substances aujourd'hui ?",
@@ -122,6 +125,7 @@ const DaySurvey = ({ navigation, route }) => {
       answers: { ...prevCurrentSurvey.answers, ...answers },
     };
     setDiaryData(currentSurvey);
+    await goalsRef?.current?.onSubmit?.();
     logEvents.logFeelingAdd();
     logEvents.logFeelingSubmitSurvey(userIndicateurs.filter((i) => i.active).length);
     logEvents.logFeelingAddComment(
@@ -214,7 +218,7 @@ const DaySurvey = ({ navigation, route }) => {
           />
         </View>
       </View>
-      <GoalsDaySurvey date={initSurvey?.date} />
+      <GoalsDaySurvey date={initSurvey?.date} ref={goalsRef} />
       <InputQuestion
         question={questionContext}
         onPress={toggleAnswer}

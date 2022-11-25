@@ -120,19 +120,21 @@ export const setGoalDailyRecord = async ({ goalId, value, comment, date }) => {
 
   const id = existingRecordId ?? uuid.v4();
 
+  const record = {
+    id,
+    goalId,
+    value: value ?? existingRecord?.value,
+    comment: comment ?? existingRecord?.comment,
+    date,
+  };
+
   data = {
     ...data,
     records: {
       ...data.records,
       data: {
         ...data.records?.data,
-        [id]: {
-          id,
-          goalId,
-          value: value ?? existingRecord?.value,
-          comment: comment ?? existingRecord?.comment,
-          date,
-        },
+        [id]: record,
       },
       byDate: {
         ...data.records?.byDate,
