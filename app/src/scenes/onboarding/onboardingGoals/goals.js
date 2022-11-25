@@ -10,6 +10,8 @@ import { CheckBoxList } from "../CheckBoxList";
 import { SafeAreaViewWithOptionalHeader } from "../ProgressHeader";
 import { OnboardingBackButton } from "../BackButton";
 import { ONBOARDING_STEPS } from "../../../utils/constants";
+import { getGoalsTracked, setGoalTracked } from "../../../utils/localStorage/goals";
+import { DAYS_OF_WEEK } from "../../../utils/date/daysOfWeek";
 
 export const OnboardingGoals = ({ navigation }) => {
   useEffect(() => {
@@ -18,29 +20,41 @@ export const OnboardingGoals = ({ navigation }) => {
     })();
   }, []);
 
-  const [symptomSelection, setSymptomSelection] = useState({});
+  const [goalSelection, setGoalSelection] = useState({});
   const countGoals = () =>
-    INDICATEURS_GOALS_SIMPLE.reduce((acc, id) => {
-      if (symptomSelection?.[id]) return acc + 1;
+    INDICATEURS_GOALS_SIMPLE.reduce((acc, goalLabel) => {
+      if (goalSelection?.[goalLabel]) return acc + 1;
       return acc;
     }, 0);
   const [count, setCount] = useState(countGoals());
-  useEffect(() => setCount(countGoals()), [symptomSelection]);
+  useEffect(() => setCount(countGoals()), [goalSelection]);
 
   useFocusEffect(
     useCallback(() => {
       (async () => {
-        const localStorageIndicateurs = (await localStorage.getSymptoms()) || {};
+        const _goals = await getGoalsTracked();
 
-        setSymptomSelection(localStorageIndicateurs);
+        setGoalSelection(
+          INDICATEURS_GOALS_SIMPLE.reduce((acc, goalLabel) => {
+            if (_goals.find((goal) => goal.label === goalLabel)) acc[goalLabel] = true;
+            return acc;
+          }, {})
+        );
       })();
     }, [])
   );
 
   const handleNext = async () => {
-    const symptoms = { ...symptomSelection };
-
-    await localStorage.setSymptoms(symptoms);
+    for (const goalLabel of Object.keys(goalSelection)) {
+      await setGoalTracked({
+        label: goalLabel,
+        enabled: goalSelection[goalLabel],
+        daysOfWeek: DAYS_OF_WEEK.reduce((acc, day) => {
+          acc[day] = true;
+          return acc;
+        }, {}),
+      });
+    }
     navigation.navigate(ONBOARDING_STEPS.STEP_REMINDER);
   };
 
@@ -72,8 +86,8 @@ export const OnboardingGoals = ({ navigation }) => {
           </View>
           <CheckBoxList
             list={INDICATEURS_GOALS_SIMPLE}
-            symptomSelection={symptomSelection}
-            setSymptomSelection={setSymptomSelection}
+            symptomSelection={goalSelection}
+            setSymptomSelection={setGoalSelection}
           />
         </View>
         <View style={onboardingStyles.alertContainer}>
