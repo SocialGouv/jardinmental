@@ -182,12 +182,12 @@ const DaySurvey = ({ navigation, route }) => {
       contentContainerStyle={{ alignItems: "stretch" }}
     >
       <View>
-        <View style={styles.spacing}>
+        <View style={{ marginBottom: 8 }}>
           <Card
             preset="lighten"
             title={renderQuestion()}
             image={{ source: require("./../../../assets/imgs/indicateur.png") }}
-            containerStyle={styles.spacing}
+            containerStyle={{ marginBottom: 16 }}
           />
           {userIndicateurs
             .filter((ind) => ind.active)
@@ -204,7 +204,7 @@ const DaySurvey = ({ navigation, route }) => {
             ))}
           <Card
             title="Personnaliser mon questionnaire"
-            text="Vous pouvez gérez vos indicateurs et en créer de nouveaux"
+            text="Vous pouvez gérer vos indicateurs et en créer de nouveaux"
             icon={{ icon: "ImportantSvg" }}
             onPress={() => {
               navigation.navigate("symptoms");

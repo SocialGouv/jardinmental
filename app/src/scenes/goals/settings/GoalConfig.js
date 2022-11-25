@@ -90,8 +90,8 @@ export const GoalConfig = ({ navigation, route }) => {
         {!editing ? (
           <>
             <InputLabel style={styles.spacing}>Programmer un rappel</InputLabel>
-            <InputLabel style={styles.spacing} sublabel>
-              Souhaitez-vous recevoir une notification pour cet objectif ?
+            <InputLabel style={styles.spacingBottom} sublabel>
+              Souhaitez-vous recevoir une notification pour l'objectif "{goalLabel}" ?
             </InputLabel>
           </>
         ) : (
@@ -154,6 +154,9 @@ export const GoalConfig = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   spacing: {
     marginVertical: 8,
+  },
+  spacingBottom: {
+    marginBottom: 8,
   },
   daysOfWeekValue: {
     fontSize: 14,

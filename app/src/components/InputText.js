@@ -56,6 +56,7 @@ const applyStyles = ({ preset }) => {
   };
 
   applyIfNeeded(appliedStyles, "preset==='groupItem'", "groupItem");
+  applyIfNeeded(appliedStyles, "preset==='lighten'", "lighten");
 
   return appliedStyles;
 };
@@ -96,6 +97,11 @@ const _styles = {
     },
     disabled: {
       opacity: 1,
+    },
+  }),
+  lighten: StyleSheet.create({
+    container: {
+      borderColor: "#E7EAF1",
     },
   }),
 };

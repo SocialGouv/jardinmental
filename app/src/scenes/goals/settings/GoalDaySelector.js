@@ -13,6 +13,7 @@ export const GoalDaySelector = ({ navigation, route }) => {
   const goalId = route.params?.goalId;
   const goalLabel = route.params?.goalLabel;
   const editing = route.params?.editing;
+  const [editingGoal, setEditingGoal] = useState();
 
   const [ready, setReady] = useState(!editing ? true : false);
   const [loading, setLoading] = useState(false);
@@ -24,6 +25,7 @@ export const GoalDaySelector = ({ navigation, route }) => {
         const data = await getGoalsData();
         const goal = data.goals?.data?.[goalId];
         if (goal) {
+          setEditingGoal(goal);
           if (!!goal.daysOfWeek) {
             setDaysOfWeek(goal.daysOfWeek);
           }
@@ -58,8 +60,9 @@ export const GoalDaySelector = ({ navigation, route }) => {
       bottomChildren={!editing && <Button2 fill title="Suivant" onPress={onValidate} loading={loading} />}
     >
       <InputLabel style={styles.spacing}>Planifier votre objectif</InputLabel>
-      <InputLabel style={styles.spacing} sublabel>
-        Sélectionnez les jours de la semaine où vous souhaitez réaliser cet objectif.
+      <InputLabel style={styles.spacingBottom} sublabel>
+        Sélectionnez les jours de la semaine où vous souhaitez réaliser l'objectif "
+        {!editing ? goalLabel : editingGoal?.label}"
       </InputLabel>
       <View style={styles.daysContainer}>
         {DAYS_OF_WEEK.map((day, index) => ({ day, index }))
@@ -85,6 +88,9 @@ export const GoalDaySelector = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   spacing: {
     marginVertical: 8,
+  },
+  spacingBottom: {
+    marginBottom: 8,
   },
   daysContainer: {
     alignSelf: "flex-start",

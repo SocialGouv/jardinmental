@@ -18,8 +18,8 @@ export const GoalCheckboxItem = ({ goal, index, checked, comment, onCheckedChang
       style={[
         styles.container,
         {
-          backgroundColor: _checked ? "#F4FCFD" : "#F8F9FB",
-          borderColor: _checked ? "#DEF4F5" : "#E7EAF1",
+          backgroundColor: _checked ? "#F0FFF0" : "#F8F9FB",
+          borderColor: _checked ? "#D0E8D0" : "#E7EAF1",
         },
       ]}
     >
@@ -65,6 +65,7 @@ export const GoalCheckboxItem = ({ goal, index, checked, comment, onCheckedChang
           </View>
           <InputText
             fill
+            preset="lighten"
             placeholder="Ajoutez une note sur cet objectif"
             containerStyle={{ marginTop: 16 }}
             value={_comment}
