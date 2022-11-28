@@ -42,7 +42,8 @@ const Question = ({
             )}
             <Text style={styles.questionTitle}>{indicateur.name}</Text>
             {/* we put a view here because we'll add a item here later */}
-          <View />
+            <View />
+          </View>
         </View>
         {explanation && showExplanation ? (
           <View style={styles.questionInfo}>
