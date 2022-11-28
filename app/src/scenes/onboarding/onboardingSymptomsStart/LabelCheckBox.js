@@ -1,5 +1,6 @@
-import React from 'react'
-import { View, StyleSheet, Text } from "react-native";
+import React from "react";
+import { View, StyleSheet } from "react-native";
+import Text from "../../../components/MyText";
 import CheckBox from "@react-native-community/checkbox";
 
 import { colors } from "../../../utils/colors";
@@ -25,7 +26,7 @@ const LabelCheckBox = ({ value, onValueChange, label }) => {
       />
       <Text>{label}</Text>
     </View>
-  )
+  );
 };
 
 const styles = StyleSheet.create({
@@ -33,7 +34,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    marginVertical: 10
+    marginVertical: 10,
   },
   checkbox: {
     marginHorizontal: 10,
@@ -44,7 +45,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     color: "#000",
     fontSize: 12,
-  }
+  },
 });
 
 export default LabelCheckBox;

@@ -1,5 +1,6 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
+import Text from "../../../components/MyText";
 import { FriseGraph } from "./FriseGraph";
 
 export const FriseGraphExample = ({ hasTreatment }) => {
