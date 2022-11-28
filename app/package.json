@@ -1,7 +1,7 @@
 {
   "name": "jardinmental",
-  "version": "1.36.6",
-  "buildNumber": 166,
+  "version": "1.36.7",
+  "buildNumber": 167,
   "private": true,
   "scripts": {
     "get-ip": "./get-ip.sh",
