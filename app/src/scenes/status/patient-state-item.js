@@ -38,8 +38,8 @@ const PatientStateItem = ({ patientState, category, label }) => {
             borderColor="#999999"
             iconColor="#888888"
             icon="QuestionMarkSvg"
-            iconWidth={20}
-            iconHeight={20}
+            iconWidth={32}
+            iconHeight={32}
           />
         )}
 
@@ -90,6 +90,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingVertical: 5,
     paddingHorizontal: 20,
+    // width: 32,
+    // height: 32,
   },
   tilt: {
     // small negative marginTop for narrowing the texts
