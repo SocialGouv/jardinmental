@@ -9,12 +9,12 @@ import {
   TextInput,
 } from "react-native";
 
-import BackButton from "../../../../components/BackButton";
-import { colors } from "../../../../utils/colors";
-import Button from "../../../../components/Button";
-import Text from "../../../../components/MyText";
-import localStorage from "../../../../utils/localStorage";
-import logEvents from "../../../../services/logEvents";
+import BackButton from "../../../components/BackButton";
+import { colors } from "../../../utils/colors";
+import Button from "../../../components/Button";
+import Text from "../../../components/MyText";
+import localStorage from "../../../utils/localStorage";
+import logEvents from "../../../services/logEvents";
 
 const CreateIndicator = ({ navigation, route }) => {
   const [nameNewIndicator, setNameNewIndicator] = useState("");

@@ -8,7 +8,7 @@ import { categories, displayedCategories, reliquatCategories } from "../../../ut
 import Button from "../../../components/Button";
 import Text from "../../../components/MyText";
 import Plus from "../../../../assets/svg/Plus";
-import ArrowUpSvg from "../../../../../assets/svg/arrow-up.svg";
+import ArrowUpSvg from "../../../../assets/svg/arrow-up.svg";
 import { INDICATEURS, INDICATEURS_LISTE_PAR_CATEGORIE } from "../../../utils/liste_indicateurs";
 import { toggleState } from "../../../utils";
 import ExistingIndicators from "./ExistingIndicators";
@@ -123,8 +123,8 @@ const AddIndicator = ({ navigation, route }) => {
           <View style={styles.warningContainer}>
             <DangerIcon />
             <Text style={styles.warningText}>
-              Essayez de ne pas sélectionner plus de <Text style={styles.bold}>8</Text> indicateurs{" "}
-              <Text style={styles.bold}>au total</Text>
+              Essayez de ne pas sélectionner plus de <Text style={[styles.bold, styles.warningText]}>8</Text>{" "}
+              indicateurs <Text style={[styles.bold, styles.warningText]}>au total</Text>
             </Text>
           </View>
         )}
