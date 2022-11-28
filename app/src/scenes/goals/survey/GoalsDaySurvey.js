@@ -104,7 +104,7 @@ export const GoalsDaySurvey = forwardRef(({ date, scrollRef, route }, ref) => {
         })}
         <Card
           title="Personnaliser mes objectifs"
-          text="Vous pouvez gérez vos objectifs et en créer de nouveaux"
+          //text="Vous pouvez gérez vos objectifs et en créer de nouveaux"
           icon={{ icon: "ImportantSvg" }}
           onPress={() => navigation.navigate("goals-settings")}
           containerStyle={styles.spacing}

@@ -210,7 +210,7 @@ const DaySurvey = ({ navigation, route }) => {
             ))}
           <Card
             title="Personnaliser mon questionnaire"
-            text="Vous pouvez gérer vos indicateurs et en créer de nouveaux"
+            //text="Vous pouvez gérer vos indicateurs et en créer de nouveaux"
             icon={{ icon: "ImportantSvg" }}
             onPress={() => {
               navigation.navigate("symptoms");

@@ -10,7 +10,7 @@ import { parseISO, getDay } from "date-fns";
 export const GoalsChartPie = ({ chartDates, onIsEmptyChanged }) => {
   const [goals, setGoals] = useState([]);
 
-  const updateGoals = async () => {
+  const updateGoals = useCallback(async () => {
     let _goals = await getGoalsAndRecords();
     let isEmpty = true;
     _goals = _goals.map(({ goal, records }) => {
@@ -39,12 +39,12 @@ export const GoalsChartPie = ({ chartDates, onIsEmptyChanged }) => {
     });
     setGoals(_goals);
     onIsEmptyChanged?.(isEmpty);
-  };
+  }, [chartDates]);
 
   useFocusEffect(
     useCallback(() => {
       updateGoals();
-    }, [])
+    }, [chartDates])
   );
 
   useEffect(() => {
@@ -67,21 +67,30 @@ const colors = {
 };
 
 const GoalPie = ({ title, records }) => {
-  const sections = records.reduce((acc, record) => {
-    if (record === null) return acc;
-    const count = (acc[record.value]?.count || 0) + 1;
-    acc[record.value] = {
-      ...acc[record.value],
-      score: record.value,
-      total: records.length,
-      count,
-      percentage: (count / records.length) * 100,
-      color: colors[record.value],
-    };
-    return acc;
-  }, {});
+  const [sections, setSections] = useState({});
+  const [sectionValues, setSectionValues] = useState([]);
 
-  const sectionsArray = Object.values(sections);
+  const updateSections = useCallback(() => {
+    const _sections = records.reduce((acc, record) => {
+      if (record === null) return acc;
+      const count = (acc[record.value]?.count || 0) + 1;
+      acc[record.value] = {
+        ...acc[record.value],
+        score: record.value,
+        total: records.length,
+        count,
+        percentage: (count / records.length) * 100,
+        color: colors[record.value],
+      };
+      return acc;
+    }, {});
+    setSections(_sections);
+    setSectionValues(Object.values(_sections).map(({ percentage, color }) => ({ percentage, color })));
+  }, [records]);
+
+  useEffect(() => {
+    updateSections();
+  }, [records]);
 
   return (
     <View>
@@ -92,14 +101,14 @@ const GoalPie = ({ title, records }) => {
       </View>
       <View style={styles.contentCategoryContainer}>
         <View style={styles.pieContainer}>
-          <PieChart radius={50} sections={sectionsArray} />
+          <PieChart radius={50} sections={sectionValues} />
         </View>
         <View style={styles.pieContainer}>
           <View style={styles.numbersContainer}>
             <Text style={styles.legendTitle}>Taux de réussite :</Text>
-            <Text style={styles.percentageBig}>{Math.round(sections[5]?.percentage || 0)}%</Text>
+            <Text style={styles.percentageBig}>{Math.round(sections?.[5]?.percentage || 0)}%</Text>
             <Text style={styles.percentageSmall}>
-              {Math.round(sections[1]?.percentage || 0)}% de jours non renseignés
+              {Math.round(sections?.[0]?.percentage || 0)}% de jours non renseignés
             </Text>
           </View>
         </View>
@@ -148,7 +157,7 @@ const styles = StyleSheet.create({
   },
   legendTitle: {
     fontSize: 14,
-    ontFamily: "Karla",
+    fontFamily: "Karla",
     fontWeight: "400",
     color: "#26387C",
     marginTop: 5,
@@ -156,7 +165,7 @@ const styles = StyleSheet.create({
   },
   percentageSmall: {
     fontSize: 12,
-    ontFamily: "Karla",
+    fontFamily: "Karla",
     fontWeight: "400",
     color: "#26387C",
     marginVertical: 5,
@@ -164,7 +173,7 @@ const styles = StyleSheet.create({
   },
   percentageBig: {
     fontSize: 14,
-    ontFamily: "Karla",
+    fontFamily: "Karla",
     fontWeight: "400",
     color: "#26387C",
     marginBottom: 5,
