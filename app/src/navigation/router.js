@@ -52,6 +52,7 @@ import { GoalsAddOptions } from "../scenes/goals/settings/GoalsAddOptions";
 import { GoalsCreateForm } from "../scenes/goals/settings/GoalsCreateForm";
 import { GoalDaySelector } from "../scenes/goals/settings/GoalDaySelector";
 import { GoalConfig } from "../scenes/goals/settings/GoalConfig";
+import { IndicatorsSettingsMore } from "../scenes/indicateurs/settings/IndicatorsSettingsMore";
 
 const Stack = createStackNavigator();
 
@@ -179,6 +180,8 @@ class Router extends React.Component {
             <Stack.Screen name="view-beck" component={ViewBeck} />
             <Stack.Screen name="beck" component={Beck} />
             {/* <Stack.Screen name="contribute" component={Contribute} /> */}
+
+            <Stack.Screen name="indicators-settings-more" component={IndicatorsSettingsMore} />
 
             <Stack.Screen name="goals-settings" component={GoalsSettings} />
             <Stack.Screen name="goals-add-options" component={GoalsAddOptions} />

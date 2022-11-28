@@ -12,6 +12,7 @@ export const Screen = ({
   scrollStyle,
   scrollContentStyle,
   ScrollComponent = ScrollView,
+  scrollAsFlatList = false,
   scrollRef = null,
   scrollTestId,
   scrollProps,
@@ -42,7 +43,7 @@ export const Screen = ({
           testID={scrollTestId}
           bounces={true}
           keyboardDismissMode="on-drag"
-          {...(ScrollComponent === FlatList && {
+          {...((ScrollComponent === FlatList || scrollAsFlatList) && {
             ListHeaderComponent: (
               <ScreenContent
                 {...{ children, marginHorizontal, centerContentVertically, contentContainerStyle }}
@@ -51,7 +52,7 @@ export const Screen = ({
           })}
           {...scrollProps}
         >
-          {ScrollComponent !== FlatList && (
+          {ScrollComponent !== FlatList && !scrollAsFlatList && (
             <ScreenContent
               {...{ children, marginHorizontal, centerContentVertically, contentContainerStyle }}
             />
