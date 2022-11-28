@@ -55,22 +55,20 @@ export const GoalConfig = ({ navigation, route }) => {
     if (!editing) {
       await setGoalTracked({ id: goalId, daysOfWeek: goalDaysOfWeek, label: goalLabel, reminder });
     } else {
-      await setGoalTracked({ id: goalId, reminder });
+      await setGoalTracked({ id: goalId, daysOfWeek: goalDaysOfWeek, reminder });
     }
     setLoading(false);
-    if (!editing) {
-      navigation.navigate("goals-settings");
-    }
+    navigation.navigate("goals-settings");
   };
 
-  useEffect(() => {
-    if (editing && ready) onValidate();
-  }, [reminderEnabled, reminderTime]);
+  // useEffect(() => {
+  //   if (editing && ready) onValidate();
+  // }, [reminderEnabled, reminderTime]);
 
   const [daysOfWeekLabel, setDaysOfWeekLabel] = useState();
   useEffect(() => {
     if (!editingGoal) return;
-    const label = getDaysOfWeekLabel(editingGoal.daysOfWeek);
+    const label = getDaysOfWeekLabel(goalDaysOfWeek || editingGoal.daysOfWeek);
     if (label === "all") setDaysOfWeekLabel("Tous les jours");
     else setDaysOfWeekLabel(label);
   }, [editingGoal]);
@@ -84,7 +82,12 @@ export const GoalConfig = ({ navigation, route }) => {
           title: !editing ? "Créer un objectif" : "Mon objectif",
         }}
         bottomChildren={
-          !editing && <Button2 fill title="Créer mon objectif" onPress={onValidate} loading={loading} />
+          <Button2
+            fill
+            title={!editing ? "Créer mon objectif" : "Valider"}
+            onPress={onValidate}
+            loading={loading}
+          />
         }
       >
         {!editing ? (
@@ -102,7 +105,11 @@ export const GoalConfig = ({ navigation, route }) => {
             <InputGroupItem
               label="Récurrence"
               onPress={() => {
-                navigation.navigate("goal-day-selector", { editing: true, goalId });
+                navigation.navigate("goal-day-selector", {
+                  editing: true,
+                  goalId,
+                  goalDaysOfWeek: goalDaysOfWeek || editingGoal?.daysOfWeek,
+                });
               }}
             >
               <Text style={styles.daysOfWeekValue}>{daysOfWeekLabel}</Text>

@@ -12,12 +12,13 @@ import { fr } from "date-fns/locale";
 export const GoalDaySelector = ({ navigation, route }) => {
   const goalId = route.params?.goalId;
   const goalLabel = route.params?.goalLabel;
+  const goalDaysOfWeek = route.params?.goalDaysOfWeek;
   const editing = route.params?.editing;
   const [editingGoal, setEditingGoal] = useState();
 
   const [ready, setReady] = useState(!editing ? true : false);
   const [loading, setLoading] = useState(false);
-  const [daysOfWeek, setDaysOfWeek] = useState({});
+  const [daysOfWeek, setDaysOfWeek] = useState(goalDaysOfWeek);
 
   useEffect(() => {
     async function _() {
@@ -27,7 +28,7 @@ export const GoalDaySelector = ({ navigation, route }) => {
         if (goal) {
           setEditingGoal(goal);
           if (!!goal.daysOfWeek) {
-            setDaysOfWeek(goal.daysOfWeek);
+            setDaysOfWeek(goalDaysOfWeek || goal.daysOfWeek);
           }
           setReady(true);
         }
@@ -38,17 +39,23 @@ export const GoalDaySelector = ({ navigation, route }) => {
 
   const onValidate = async () => {
     if (loading) return;
-    setLoading(true);
-    if (goalId) await setGoalTracked({ id: goalId, daysOfWeek });
-    setLoading(false);
+    // setLoading(true);
+    // if (goalId) await setGoalTracked({ id: goalId, daysOfWeek });
+    // setLoading(false);
     if (!editing) {
       navigation.navigate("goal-config", { editing: false, goalDaysOfWeek: daysOfWeek, goalLabel });
+    } else {
+      navigation.navigate("goal-config", {
+        editing: true,
+        goalId: editingGoal.id,
+        goalDaysOfWeek: daysOfWeek,
+      });
     }
   };
 
-  useEffect(() => {
-    if (editing && ready) onValidate();
-  }, [daysOfWeek]);
+  // useEffect(() => {
+  //   if (editing && ready) onValidate();
+  // }, [daysOfWeek]);
 
   if (!ready) return null;
 
@@ -56,6 +63,11 @@ export const GoalDaySelector = ({ navigation, route }) => {
     <Screen
       header={{
         title: !editing ? "Créer un objectif" : "Récurrence",
+        leftButton: editing && {
+          icon: "ArrowUpSvg",
+          iconStyle: { transform: [{ rotate: "270deg" }] },
+          onPress: onValidate,
+        },
       }}
       bottomChildren={!editing && <Button2 fill title="Suivant" onPress={onValidate} loading={loading} />}
     >
