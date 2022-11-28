@@ -9,7 +9,9 @@ import { Title } from "../../../components/Title";
 import { Badge } from "../../../components/Badge";
 import Icon from "../../../components/Icon";
 
-export const GoalsSettings = ({ navigation }) => {
+export const GoalsSettings = ({ navigation, route }) => {
+  const onboarding = route.params?.onboarding;
+
   const [goals, setGoals] = useState([]);
 
   useFocusEffect(
@@ -33,7 +35,15 @@ export const GoalsSettings = ({ navigation }) => {
         title: "Mes objectifs",
       }}
       bottomChildren={
-        <Button2 fill title="Ajouter un objectif" onPress={() => navigation.navigate("goals-add-options")} />
+        !onboarding ? (
+          <Button2
+            fill
+            title="Ajouter un objectif"
+            onPress={() => navigation.navigate("goals-add-options")}
+          />
+        ) : (
+          <Button2 fill title="Valider" onPress={() => navigation.goBack()} />
+        )
       }
       ScrollComponent={FlatList}
       scrollProps={{
@@ -43,8 +53,12 @@ export const GoalsSettings = ({ navigation }) => {
       }}
     >
       <Card
-        title="Personnaliser mes objectifs"
-        text="Gérez vos objectifs et créez-en de nouveaux"
+        title={
+          !onboarding
+            ? "Personnaliser mes objectifs"
+            : "Choisissez les jours de vos objectifs et programmez un rappel"
+        }
+        text={!onboarding && "Gérez vos objectifs et créez-en de nouveaux"}
         image={{ source: require("./../../../../assets/imgs/goal.png") }}
       />
       <View style={titleStyles.container}>

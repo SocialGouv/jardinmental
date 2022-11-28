@@ -12,6 +12,7 @@ import { OnboardingBackButton } from "../BackButton";
 import { ONBOARDING_STEPS } from "../../../utils/constants";
 import { getGoalsTracked, setGoalTracked } from "../../../utils/localStorage/goals";
 import { DAYS_OF_WEEK } from "../../../utils/date/daysOfWeek";
+import { Button2 } from "../../../components/Button2";
 
 export const OnboardingGoals = ({ navigation }) => {
   useEffect(() => {
@@ -98,10 +99,17 @@ export const OnboardingGoals = ({ navigation }) => {
         </View>
       </ScrollView>
       <StickyButtonContainer>
-        <Button
+        <Button2
+          fill
           title={`Continuer avec ${count} objectif${count > 1 ? "s" : ""}`}
           onPress={handleNext}
-          buttonStyle={{ minWidth: 0 }}
+        />
+        <Button2
+          fill
+          preset="onboarding2"
+          title="Paramétrer les objectifs sélectionnés"
+          onPress={() => navigation.navigate("goals-settings", { onboarding: true })}
+          containerStyle={{ marginTop: 10 }}
         />
       </StickyButtonContainer>
     </SafeAreaViewWithOptionalHeader>

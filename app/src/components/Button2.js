@@ -88,7 +88,7 @@ export const Button2 = ({
   );
 };
 
-const applyStyles = ({ preset, type, checkable, checked, square, size, fill }) => {
+const applyStyles = ({ preset, type, checkable, checked, square, circle, size, fill }) => {
   const appliedStyles = {
     ...styles.base,
   };
@@ -108,6 +108,7 @@ const applyStyles = ({ preset, type, checkable, checked, square, size, fill }) =
   applyIfNeeded(appliedStyles, "type==='outline'", "outline");
   applyIfNeeded(appliedStyles, "type==='clear'", "clear");
   applyIfNeeded(appliedStyles, "size==='small'", "small");
+  applyIfNeeded(appliedStyles, "preset==='onboarding2'", "onboarding2");
 
   if (!fill && size === "default" && !square && !circle) appliedStyles.button.minWidth = "70%";
 
@@ -205,6 +206,18 @@ const styles = {
     },
     icon: {
       marginRight: 5,
+    },
+  }),
+  onboarding2: StyleSheet.create({
+    button: {
+      borderWidth: 1,
+      borderColor: "#d1d5db",
+      backgroundColor: "#FFF",
+    },
+    text: {
+      fontWeight: "bold",
+      fontSize: 15,
+      color: "#1f2937",
     },
   }),
 };
