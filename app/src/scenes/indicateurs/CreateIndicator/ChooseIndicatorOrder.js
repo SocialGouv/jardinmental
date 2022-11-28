@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View, SafeAreaView, TouchableOpacity } from "react-native";
+import { StyleSheet, View, SafeAreaView, TouchableOpacity, Dimensions } from "react-native";
 
-import BackButton from "../../../../components/BackButton";
-import { colors } from "../../../../utils/colors";
-import Button from "../../../../components/Button";
-import Text from "../../../../components/MyText";
-import CircledIcon from "../../../../components/CircledIcon";
-import { answers } from "../../../survey/utils";
-import YesNoIndicator from "../../../../components/YesNoIndicator";
+import BackButton from "../../../components/BackButton";
+import { colors } from "../../../utils/colors";
+import Button from "../../../components/Button";
+import Text from "../../../components/MyText";
+import CircledIcon from "../../../components/CircledIcon";
+import { answers } from "../../survey/utils";
+import YesNoIndicator from "../../../components/YesNoIndicator";
 import { RadioButton } from "react-native-paper";
-import { screenWidth } from "../../screens";
+const screenWidth = Dimensions.get("window").width;
 
 const ChooseIndicatorOrder = ({ navigation, route }) => {
   const [indicatorDirection, setIndicatorDirection] = useState(0); // 0 : first direction (green to red) ; 1 : second direction (red to green)

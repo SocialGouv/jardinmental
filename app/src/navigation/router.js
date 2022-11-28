@@ -54,10 +54,10 @@ import { GoalDaySelector } from "../scenes/goals/settings/GoalDaySelector";
 import { GoalConfig } from "../scenes/goals/settings/GoalConfig";
 import { IndicatorsSettingsMore } from "../scenes/indicateurs/settings/IndicatorsSettingsMore";
 import { GoalsSettingsMore } from "../scenes/goals/settings/GoalsSettingsMore";
-import AddIndicator from "../scenes/onboarding/onboardingSymptomsCustom/AddIndicator";
-import CreateIndicator from "../scenes/onboarding/onboardingSymptomsCustom/CreateIndicator";
-import ChooseIndicatorType from "../scenes/onboarding/onboardingSymptomsCustom/CreateIndicator/ChooseIndicatorType";
-import ChooseIndicatorOrder from "../scenes/onboarding/onboardingSymptomsCustom/CreateIndicator/ChooseIndicatorOrder";
+import AddIndicator from "../scenes/indicateurs/AddIndicator";
+import CreateIndicator from "../scenes/indicateurs/CreateIndicator";
+import ChooseIndicatorType from "../scenes/indicateurs/CreateIndicator/ChooseIndicatorType";
+import ChooseIndicatorOrder from "../scenes/indicateurs/CreateIndicator/ChooseIndicatorOrder";
 
 const Stack = createStackNavigator();
 

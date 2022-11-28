@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, View, SafeAreaView, TouchableOpacity } from "react-native";
 
-import BackButton from "../../../../components/BackButton";
-import { colors } from "../../../../utils/colors";
-import Button from "../../../../components/Button";
-import Text from "../../../../components/MyText";
-import ArrowRightSvg from "../../../../../assets/svg/arrow-right";
-import CircledIcon from "../../../../components/CircledIcon";
-import { answers } from "../../../survey/utils";
-import YesNoIndicator from "../../../../components/YesNoIndicator";
+import BackButton from "../../../components/BackButton";
+import { colors } from "../../../utils/colors";
+import Button from "../../../components/Button";
+import Text from "../../../components/MyText";
+import ArrowRightSvg from "../../../../assets/svg/arrow-right";
+import CircledIcon from "../../../components/CircledIcon";
+import { answers } from "../../survey/utils";
+import YesNoIndicator from "../../../components/YesNoIndicator";
 
 const ChooseIndicatorType = ({ navigation, route }) => {
   //   const handleAddNewIndicator = async (value) => {

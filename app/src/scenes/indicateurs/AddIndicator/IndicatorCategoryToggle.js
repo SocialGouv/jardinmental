@@ -1,11 +1,11 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { colors } from "../../../../utils/colors";
+import { colors } from "../../../utils/colors";
 import { TouchableOpacity } from "react-native";
-import Text from "../../../../components/MyText";
+import Text from "../../../components/MyText";
 import ArrowUpSvg from "../../../../../assets/svg/arrow-up.svg";
 import CheckBox from "@react-native-community/checkbox";
-import { INDICATEURS_LISTE_PAR_CATEGORIE } from "../../../../utils/liste_indicateurs";
+import { INDICATEURS_LISTE_PAR_CATEGORIE } from "../../../utils/liste_indicateurs";
 
 const IndicatorCategoryToggle = ({
   currentExempleVisible,

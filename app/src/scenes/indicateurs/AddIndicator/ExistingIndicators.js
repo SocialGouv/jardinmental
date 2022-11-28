@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { colors } from "../../../../utils/colors";
-import Text from "../../../../components/MyText";
+import { colors } from "../../../utils/colors";
+import Text from "../../../components/MyText";
 import CheckBox from "@react-native-community/checkbox";
 
 const ExistingIndicators = ({ chosenCategories, setToogleCheckbox, existingIndicatorsList }) => {
