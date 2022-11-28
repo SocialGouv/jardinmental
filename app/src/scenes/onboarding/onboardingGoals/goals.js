@@ -45,19 +45,22 @@ export const OnboardingGoals = ({ navigation }) => {
     }, [])
   );
 
-  const handleNext = async () => {
-    for (const goalLabel of Object.keys(goalSelection)) {
-      await setGoalTracked({
-        label: goalLabel,
-        enabled: goalSelection[goalLabel],
-        daysOfWeek: DAYS_OF_WEEK.reduce((acc, day) => {
-          acc[day] = true;
-          return acc;
-        }, {}),
-      });
-    }
-    navigation.navigate(ONBOARDING_STEPS.STEP_REMINDER);
-  };
+  const handleNext =
+    ({ goToGoalsSettings }) =>
+    async () => {
+      for (const goalLabel of Object.keys(goalSelection)) {
+        await setGoalTracked({
+          label: goalLabel,
+          enabled: goalSelection[goalLabel],
+          daysOfWeek: DAYS_OF_WEEK.reduce((acc, day) => {
+            acc[day] = true;
+            return acc;
+          }, {}),
+        });
+      }
+      if (goToGoalsSettings) navigation.navigate("goals-settings", { onboarding: true });
+      else navigation.navigate(ONBOARDING_STEPS.STEP_REMINDER);
+    };
 
   return (
     <SafeAreaViewWithOptionalHeader style={onboardingStyles.safe}>
@@ -102,13 +105,13 @@ export const OnboardingGoals = ({ navigation }) => {
         <Button2
           fill
           title={`Continuer avec ${count} objectif${count > 1 ? "s" : ""}`}
-          onPress={handleNext}
+          onPress={handleNext({ goToGoalsSettings: false })}
         />
         <Button2
           fill
           preset="onboarding2"
           title="Paramétrer les objectifs sélectionnés"
-          onPress={() => navigation.navigate("goals-settings", { onboarding: true })}
+          onPress={handleNext({ goToGoalsSettings: true })}
           containerStyle={{ marginTop: 10 }}
         />
       </StickyButtonContainer>
