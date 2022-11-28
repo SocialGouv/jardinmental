@@ -1,3 +1,10 @@
+## [1.40.3](https://github.com/SocialGouv/jardinmental/compare/v1.40.2...v1.40.3) (2022-11-28)
+
+
+### Bug Fixes
+
+* android-force-font-with-MyText ([#215](https://github.com/SocialGouv/jardinmental/issues/215)) ([5e594b6](https://github.com/SocialGouv/jardinmental/commit/5e594b630959101fe021b9cb0bdc8b6534f62994))
+
 ## [1.40.2](https://github.com/SocialGouv/jardinmental/compare/v1.40.1...v1.40.2) (2022-11-22)
 
 
