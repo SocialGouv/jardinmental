@@ -30,6 +30,7 @@ import { GoalsDaySurvey } from "../goals/survey/GoalsDaySurvey";
 import { Screen } from "../../components/Screen";
 import { Button2 } from "../../components/Button2";
 import { Card } from "../../components/Card";
+import { IndicatorSurveyItem } from "../indicateurs/survey/IndicatorSurveyItem";
 
 const DaySurvey = ({ navigation, route }) => {
   const initSurvey = route?.params?.currentSurvey ?? {
@@ -198,14 +199,24 @@ const DaySurvey = ({ navigation, route }) => {
           {userIndicateurs
             .filter((ind) => ind.active)
             .map((ind) => (
-              <Question
-                key={ind.uuid}
-                indicateur={ind}
-                onPress={toggleAnswer}
-                selected={answers[ind.name]?.value}
-                explanation={ind.explanation}
-                onChangeUserComment={handleChangeUserComment}
-                userComment={answers[ind.name]?.userComment}
+              // <Question
+              //   key={ind.uuid}
+              //   indicateur={ind}
+              //   onPress={toggleAnswer}
+              //   selected={answers[ind.name]?.value}
+              //   explanation={ind.explanation}
+              //   onChangeUserComment={handleChangeUserComment}
+              //   userComment={answers[ind.name]?.userComment}
+              // />
+              <IndicatorSurveyItem
+                key={ind?.uuid}
+                indicator={ind}
+                value={answers?.[ind?.name]?.value}
+                onValueChanged={({ indicator, value }) => toggleAnswer({ key: indicator?.name, value })}
+                onCommentChanged={({ indicator, comment }) =>
+                  handleChangeUserComment({ key: indicator?.name, userComment: comment })
+                }
+                comment={answers?.[ind?.name]?.userComment}
               />
             ))}
           <Card
