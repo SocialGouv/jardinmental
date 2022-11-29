@@ -17,7 +17,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import logEvents from "../../../services/logEvents";
 import TextTag from "../../../components/TextTag";
 
-const AddIndicator = ({ navigation, route }) => {
+const EditIndicateurs = ({ navigation, route }) => {
   const [exemplesVisible, setExemplesVisible] = useState(false);
   const [existingIndicatorsVisible, setExistingIndicatorsVisible] = useState(false);
   const [userIndicateurs, setUserIndicateurs] = useState([]);
@@ -344,4 +344,4 @@ const styles = StyleSheet.create({
     padding: 20,
   },
 });
-export default AddIndicator;
+export default EditIndicateurs;

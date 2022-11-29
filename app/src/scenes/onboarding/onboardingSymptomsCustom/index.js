@@ -133,7 +133,7 @@ const CustomSymptomScreen = ({ navigation, route, settings = false }) => {
         <Button
           buttonStyle={{ backgroundColor: "#1FC6D5", marginBottom: 20 }}
           textStyle={{ color: "white", textAlign: "center" }}
-          onPress={() => navigation.navigate("ADD_INDICATOR")}
+          onPress={() => navigation.navigate("EDIT_INDICATOR")}
           title="Ajouter un indicateur"
         />
         <Button
