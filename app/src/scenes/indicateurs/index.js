@@ -142,28 +142,7 @@ const CustomSymptomScreen = ({ navigation, route, settings = false }) => {
               );
             })}
         </View>
-        <AjoutIndicateurPerso
-          onChange={(v) => {
-            if (Object.keys(chosenCategories || {}).find((e) => e === v)) return;
-            handleAddNewIndicateur(v);
-          }}
-        />
-        <Button2
-          title="Modifier l'ordre des indicateurs"
-          preset="onboarding2"
-          onPress={() => navigation.navigate("indicators-settings-more")}
-          containerStyle={{ marginBottom: 20 }}
-        />
-
-        <View className="h-[1px] w-full bg-gray-200" />
-        <>
-          <Exemples setToggleIndicateur={setToggleIndicateur} userIndicateurs={userIndicateurs} />
-          <View className="h-[1px] w-full bg-gray-200" />
-          <OldCriteria userIndicateurs={userIndicateurs} reactivateIndicateur={reactivateIndicateur} />
-        </>
       </ScrollView>
-
-      {/* TODO: add navigation */}
       <View style={styles.bottomButtonsContainer}>
         <Button
           buttonStyle={{ backgroundColor: "#1FC6D5", marginBottom: 20 }}
@@ -174,7 +153,7 @@ const CustomSymptomScreen = ({ navigation, route, settings = false }) => {
         <Button
           buttonStyle={{ backgroundColor: "white", borderColor: "#26387C", borderWidth: 1 }}
           textStyle={{ color: "#26387C", textAlign: "center" }}
-          onPress={() => {}}
+          onPress={() => navigation.navigate("indicators-settings-more")}
           title="Modifier mon questionnaire"
         />
       </View>

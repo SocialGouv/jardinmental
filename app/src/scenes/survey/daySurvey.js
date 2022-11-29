@@ -300,15 +300,6 @@ const styles = StyleSheet.create({
     transform: [{ rotate: "0deg" }],
   },
 
-  buttonWrapper: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "flex-end",
-    width: "100%",
-    height: screenHeight - 50,
-    position: "absolute",
-    paddingHorizontal: 20,
-  },
   buttonValidate: {
     width: "100%",
   },
