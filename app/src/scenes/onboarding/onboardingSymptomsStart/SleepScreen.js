@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { View, ScrollView, TouchableOpacity, Switch, Text, Image } from "react-native";
+import { View, ScrollView, TouchableOpacity, Switch, Image } from "react-native";
+import Text from "../../../components/MyText";
 import Button from "../../../components/Button";
 import { onboardingStyles } from "../styles";
 import localStorage from "../../../utils/localStorage";

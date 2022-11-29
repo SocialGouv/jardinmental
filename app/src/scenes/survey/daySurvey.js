@@ -468,6 +468,10 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     marginBottom: 36,
   },
+
+  spacer: {
+    height: 40,
+  },
 });
 
 export default DaySurvey;

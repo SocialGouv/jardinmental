@@ -246,7 +246,7 @@ const Privacy = ({ navigation }) => {
           Les cookies ne permettent pas de suivre la navigation de l'internaute sur d'autres sites.
         </Text>
       </Li>
-      <Text style={styles.h2}>[BOUTON MODIFIER LES REGLAGES]</Text>
+      {/* <Text style={styles.h2}>[BOUTON MODIFIER LES REGLAGES]</Text> */}
       <Text style={styles.default}>
         À tout moment, vous pouvez refuser l'utilisation des cookies et désactiver le dépôt sur votre
         ordinateur en utilisant la fonction dédiée de votre navigateur (fonction disponible notamment sur

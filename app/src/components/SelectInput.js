@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
-import { View, StyleSheet, Text, TouchableOpacity, Platform } from "react-native";
+import { View, StyleSheet, TouchableOpacity, Platform } from "react-native";
+import Text from "./MyText";
 import { colors } from "../utils/colors";
 import RNPickerSelect from "react-native-picker-select";
 import Icon from "./Icon";

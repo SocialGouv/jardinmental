@@ -1,6 +1,7 @@
 import React from "react";
 import RoundButtonIcon from "../../components/RoundButtonIcon";
-import { View, TouchableOpacity, Text } from "react-native";
+import { View, TouchableOpacity } from "react-native";
+import Text from "../../components/MyText";
 import { stylesA } from "./onboardingSymptomsStart";
 
 export const CheckBoxList = ({ list, symptomSelection, setSymptomSelection }) => {

@@ -7,7 +7,8 @@ import React, {
   forwardRef,
   useImperativeHandle,
 } from "react";
-import { View, StyleSheet, Text, TouchableOpacity, ScrollView, Pressable } from "react-native";
+import { View, StyleSheet, TouchableOpacity, ScrollView, Pressable } from "react-native";
+import Text from "./MyText";
 import Icon from "./Icon";
 import { colors } from "../utils/colors";
 import { BlurView } from "@react-native-community/blur";
