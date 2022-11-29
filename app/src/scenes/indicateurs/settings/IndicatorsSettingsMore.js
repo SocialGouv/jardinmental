@@ -52,6 +52,9 @@ export const IndicatorsSettingsMore = ({ navigation, route }) => {
         renderItem,
         keyExtractor,
         onDragEnd: (data) => setIndicators(data?.data),
+        containerStyle: {
+          flex: 1,
+        },
       }}
     >
       <Card
