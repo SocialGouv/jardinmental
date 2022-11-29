@@ -4,83 +4,77 @@ import { StyleSheet, View, SafeAreaView, ScrollView, TouchableOpacity, Keyboard 
 import BackButton from "../../../components/BackButton";
 import { colors } from "../../../utils/colors";
 import localStorage from "../../../utils/localStorage";
-import { categories, displayedCategories, reliquatCategories } from "../../../utils/constants";
+import { displayedCategories } from "../../../utils/constants";
 import Button from "../../../components/Button";
 import Text from "../../../components/MyText";
 import Plus from "../../../../assets/svg/Plus";
 import ArrowUpSvg from "../../../../assets/svg/arrow-up.svg";
-import { INDICATEURS, INDICATEURS_LISTE_PAR_CATEGORIE } from "../../../utils/liste_indicateurs";
+import { INDICATEURS, INDICATEURS_LES_PLUS_COURANTS } from "../../../utils/liste_indicateurs.1";
 import { toggleState } from "../../../utils";
-import ExistingIndicators from "./ExistingIndicators";
-import IndicatorCategoryToggle from "./IndicatorCategoryToggle";
 import DangerIcon from "../../../../assets/svg/DangerIcon";
+import CategorieElements from "../CategorieElements";
+import { useFocusEffect } from "@react-navigation/native";
+import logEvents from "../../../services/logEvents";
+import TextTag from "../../../components/TextTag";
 
 const AddIndicator = ({ navigation, route }) => {
-  const [chosenCategories, setChosenCategories] = useState();
   const [exemplesVisible, setExemplesVisible] = useState(false);
-  const [existingIndicators, setExistingIndicators] = useState();
   const [existingIndicatorsVisible, setExistingIndicatorsVisible] = useState(false);
-  const [currentExempleVisible, setCurrentExempleVisible] = useState(null);
+  const [userIndicateurs, setUserIndicateurs] = useState([]);
 
-  const toggleCurrentExempleVisible = (clicked) =>
-    currentExempleVisible === clicked ? setCurrentExempleVisible(null) : setCurrentExempleVisible(clicked);
+  const indicateursByCategory = INDICATEURS.reduce((prev, curr) => {
+    if (!prev[curr.category]) {
+      prev[curr.category] = [];
+    }
+    prev[curr.category].push(curr);
+    return prev;
+  }, {});
 
-  const setToogleCheckbox = (cat, value) => {
-    let res = { ...chosenCategories };
-    res[cat] = value;
-    setChosenCategories(res);
+  useFocusEffect(
+    React.useCallback(() => {
+      (async () => {
+        const user_indicateurs = await localStorage.getIndicateurs();
+        // console.log("✍️ ~ user_indicateurs", JSON.stringify(user_indicateurs, null, 2));
+        if (user_indicateurs) {
+          setUserIndicateurs(user_indicateurs);
+        }
+      })();
+    }, [])
+  );
+
+  const reactivateIndicateur = async (_indicateur) => {
+    const _userIndicateurs = userIndicateurs.map((indicateur) => {
+      if (indicateur.uuid === _indicateur.uuid) {
+        indicateur.active = true;
+      }
+      return indicateur;
+    });
+    setUserIndicateurs(_userIndicateurs);
+    await localStorage.setIndicateurs(_userIndicateurs);
   };
 
-  useEffect(() => {
-    (async () => {
-      const preselectedCategories = await localStorage.getSymptoms();
-      if (!preselectedCategories || !Object.keys(preselectedCategories).length) {
-        return;
-      }
+  const handleAddNewIndicateur = async (_indicateur) => {
+    if (!_indicateur) return;
+    const _userIndicateurs = [...userIndicateurs, _indicateur];
+    setUserIndicateurs(_userIndicateurs);
+    await localStorage.setIndicateurs(_userIndicateurs);
+    logEvents.logCustomSymptomAdd();
+  };
 
-      const customSymptoms = await localStorage.getCustomSymptoms();
-      let selected = {};
-      Object.keys(categories)
-        .concat(...Object.keys(reliquatCategories))
-        .concat(customSymptoms)
-        .concat(...Object.keys(INDICATEURS))
-        .forEach((cat) => {
-          const [categoryName] = cat.split("_");
-          // select it if we add it to the list (old and new version)
-          // cat is the full name (SYMPTOM_FREQUENCE)
-          // categoryName is the new format (SYMPTOM)
-          if (
-            Object.keys(preselectedCategories).includes(cat) ||
-            Object.keys(preselectedCategories).includes(categoryName)
-          ) {
-            selected[categoryName] = preselectedCategories[cat] || preselectedCategories[categoryName];
-          }
-        });
-      setChosenCategories(selected);
-      setExistingIndicators(Object.keys(selected).filter((cat) => !selected[cat]));
-    })();
-  }, []);
-
-  useEffect(() => {
-    if (!chosenCategories || chosenCategories === undefined) return;
-    (async () => {
-      const isCustom = (e) => !displayedCategories[e] && !Object.keys(INDICATEURS).includes(e);
-      const isDefault = (e) => !!displayedCategories[e] || Object.keys(INDICATEURS).includes(e);
-
-      const customSymptomsKeys = Object.keys(chosenCategories).filter(isCustom);
-      const defaultSymptomsKeys = Object.keys(chosenCategories).filter(isDefault);
-
-      let customSymptoms = {};
-      customSymptomsKeys.forEach((e) => (customSymptoms[e] = chosenCategories[e]));
-      await localStorage.setCustomSymptoms(customSymptomsKeys);
-
-      let defaultSymptoms = {};
-      defaultSymptomsKeys.forEach((e) => (defaultSymptoms[e] = chosenCategories[e]));
-      await localStorage.setSymptoms(chosenCategories);
-    })();
-  }, [chosenCategories]);
-
-  const indicators = Object.keys(chosenCategories || {}).filter((e) => chosenCategories[e]);
+  const setToggleIndicateur = async (_indicateur) => {
+    if (userIndicateurs.find((e) => e.uuid === _indicateur.uuid)) {
+      const _userIndicateurs = userIndicateurs.map((indicateur) => {
+        if (indicateur.uuid === _indicateur.uuid) {
+          indicateur.active = !indicateur.active;
+        }
+        return indicateur;
+      });
+      setUserIndicateurs(_userIndicateurs);
+      await localStorage.setIndicateurs(_userIndicateurs);
+    } else {
+      handleAddNewIndicateur({ ..._indicateur, active: true });
+    }
+  };
 
   return (
     <SafeAreaView style={styles.safe}>
@@ -154,38 +148,24 @@ const AddIndicator = ({ navigation, route }) => {
         </TouchableOpacity>
         {exemplesVisible && (
           <>
-            <IndicatorCategoryToggle
-              exempleName={"Emotions/sentiments"}
-              currentExempleVisible={currentExempleVisible}
-              toggleCurrentExempleVisible={toggleCurrentExempleVisible}
-              chosenCategories={chosenCategories}
-              setChosenCategories={setChosenCategories}
-              setToogleCheckbox={setToogleCheckbox}
+            <CategorieElements
+              title="Les plus courants"
+              options={INDICATEURS_LES_PLUS_COURANTS}
+              onClick={(value) => setToggleIndicateur(value)}
+              userIndicateurs={userIndicateurs}
             />
-            <IndicatorCategoryToggle
-              exempleName={"Manifestations physiques"}
-              currentExempleVisible={currentExempleVisible}
-              toggleCurrentExempleVisible={toggleCurrentExempleVisible}
-              chosenCategories={chosenCategories}
-              setChosenCategories={setChosenCategories}
-              setToogleCheckbox={setToogleCheckbox}
-            />
-            <IndicatorCategoryToggle
-              exempleName={"Pensées"}
-              currentExempleVisible={currentExempleVisible}
-              toggleCurrentExempleVisible={toggleCurrentExempleVisible}
-              chosenCategories={chosenCategories}
-              setChosenCategories={setChosenCategories}
-              setToogleCheckbox={setToogleCheckbox}
-            />
-            <IndicatorCategoryToggle
-              exempleName={"Comportements"}
-              currentExempleVisible={currentExempleVisible}
-              toggleCurrentExempleVisible={toggleCurrentExempleVisible}
-              chosenCategories={chosenCategories}
-              setChosenCategories={setChosenCategories}
-              setToogleCheckbox={setToogleCheckbox}
-            />
+            {Object.keys(indicateursByCategory).map((_category) => {
+              const _indicateurs = indicateursByCategory[_category];
+              return (
+                <CategorieElements
+                  key={_category}
+                  title={_category}
+                  options={_indicateurs}
+                  onClick={(value) => setToggleIndicateur(value)}
+                  userIndicateurs={userIndicateurs}
+                />
+              );
+            })}
           </>
         )}
 
@@ -219,12 +199,23 @@ const AddIndicator = ({ navigation, route }) => {
                 height: 10,
               }}
             />
-            <ExistingIndicators
-              chosenCategories={chosenCategories}
-              setChosenCategories={setChosenCategories}
-              setToogleCheckbox={setToogleCheckbox}
-              existingIndicatorsList={existingIndicators}
-            />
+            <View style={styles.listContainer}>
+              {userIndicateurs
+                .filter((_indicateur) => !_indicateur.active)
+                .map((_indicateur, i) => {
+                  return (
+                    <TextTag
+                      key={i}
+                      value={_indicateur.name}
+                      selected={false}
+                      color="#D4F0F2"
+                      onPress={() => reactivateIndicateur(_indicateur)}
+                      enableAdd
+                      onAdd={() => reactivateIndicateur(_indicateur)}
+                    />
+                  );
+                })}
+            </View>
           </>
         )}
 
@@ -274,6 +265,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
+  },
+  listContainer: {
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap",
   },
   personnalizeContainer: {
     backgroundColor: "rgba(31,198,213,0.2)",
@@ -340,20 +336,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     paddingEnd: 5,
-    marginBottom: 15,
-    marginTop: 15,
+    paddingBottom: 15,
+    paddingTop: 15,
   },
-  indicatorItem: {
-    width: "100%",
-    backgroundColor: "#F8F9FB",
-    borderColor: colors.LIGHT_BLUE,
-    borderWidth: 1,
-    borderRadius: 10,
-    borderColor: "#E7EAF1",
-    padding: 20,
-    marginBottom: 12,
-  },
-
   bottomButtonsContainer: {
     backgroundColor: "#fff",
     padding: 20,
