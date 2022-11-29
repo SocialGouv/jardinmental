@@ -49,6 +49,7 @@
     "fetch-retry": "^5.0.3",
     "fs": "^0.0.1-security",
     "ip-anonymize": "^0.1.0",
+    "lottie-react-native": "^5.1.4",
     "nativewind": "^2.0.11",
     "prettier": "^2.5.1",
     "react": "17.0.2",
