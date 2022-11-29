@@ -16,7 +16,7 @@ const SettingsModal = ({ navigation, visible, onClick }) => {
             icon="ReminderSettingSvg"
           />
           <SettingItem
-            title="Personnaliser mon questionnaire"
+            title="Personnaliser mes indicateurs"
             path="symptoms"
             navigation={navigation}
             onClick={onClick}
