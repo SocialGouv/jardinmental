@@ -14,9 +14,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Button2 } from "../../components/Button2";
 import Svg, { Path } from "react-native-svg";
 import Lottie from "lottie-react-native";
+import localStorage from "../../utils/localStorage";
 
 const latestChanges = {
-  appversion: 168,
+  appversion: 169,
   content: [
     { title: "1. Fixez vous des objectifs" },
     {
@@ -59,7 +60,15 @@ export const LatestChangesModalProvider = ({ children }) => {
 
   const showLatestChangesModal = useCallback(async () => {
     const lastDisplayed = await AsyncStorage.getItem(STORAGE_LATEST_CHANGES_DISPLAYED);
-    if (lastDisplayed && parseInt(lastDisplayed) < latestChanges.appversion) {
+    let shouldDisplay = false;
+    if (!lastDisplayed) {
+      const lastNotesVersion = await localStorage.getNotesVersion();
+      if (lastNotesVersion) shouldDisplay = true;
+    } else if (lastDisplayed && parseInt(lastDisplayed) < latestChanges.appversion) {
+      shouldDisplay = true;
+    }
+
+    if (shouldDisplay) {
       setVisible(true);
       visibleAnim.value = withTiming(1, { duration: 300, easing: Easing.out(Easing.quad) });
     }
