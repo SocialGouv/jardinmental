@@ -24,7 +24,7 @@ export const GoalsStatusNoData = ({ goalsData, date, onPress }) => {
       mergeChildren={false}
     >
       {goals.map((goal) => (
-        <View>
+        <View key={goal?.id}>
           <Separator />
           <Text style={styles.label}>{goal.label}</Text>
         </View>

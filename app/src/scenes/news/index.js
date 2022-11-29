@@ -28,6 +28,31 @@ export default ({ navigation }) => {
         <Image style={styles.image} source={require("../../../assets/imgs/logo2.png")} />
       </View>
       <ScrollView style={styles.cgu} contentContainerStyle={styles.scrollContainer}>
+        <Card
+          title="Nouvelle fonction : les objectifs et choix de l’organisation de son questionnaire"
+          version="v1.37"
+          date="11/2022"
+        >
+          <Item>
+            <Text style={styles.text}>
+              <Text style={styles.bold}>Fixez-vous des objectifs !</Text>
+              {"\n"}Vous pouvez maintenant suivre des objectifs, choisir les jours où vous devez les réaliser
+              et programmer un rappel pour chacun d’entre eux afin de ne pas les oublier !{"\n"}Vous trouverez
+              des exemples d’objectifs à suivre dans le menu des réglages puis “personnaliser mes objectifs”,
+              et vous pouvez même créer les vôtres.
+              {"\n\n"}Vous retrouverez vos objectifs dans votre questionnaire quotidien, il vous suffit de les
+              cocher pour dire s’ils ont été réalises (ou décochés si ce n’est pas le cas)
+            </Text>
+          </Item>
+          <Item>
+            <Text style={styles.text}>
+              <Text style={styles.bold}>Réorganisez l’ordre de votre questionnaire quotidien</Text>
+              {"\n"}Pour cela, allez dans le menu des réglages puis “personnaliser mes indicateurs”. Maintenez
+              appuyé sur l’indicateur de votre choix et déplacer le dans la liste et relâcher le pour modifier
+              l’ordre de votre questionnaire.
+            </Text>
+          </Item>
+        </Card>
         <Card title="Amélioration des notifications de rappel" version="v1.35" date="11/2022">
           <Item>
             <Text style={styles.text}>

@@ -17,7 +17,7 @@ export const GoalsStatus = ({ goalsData, date, withSeparator }) => {
       {withSeparator && <Separator style={{ paddingHorizontal: 40 }} />}
       <View style={styles.container}>
         {records.map((record, index) => (
-          <GoalStatusItem goalsData={goalsData} record={record} />
+          <GoalStatusItem key={record?.id} goalsData={goalsData} record={record} />
         ))}
       </View>
     </>

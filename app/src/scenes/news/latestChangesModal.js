@@ -16,11 +16,17 @@ import Svg, { Path } from "react-native-svg";
 import Lottie from "lottie-react-native";
 
 const latestChanges = {
-  appversion: 155,
-  title: "Fixez vous des objectifs",
-  description: `Sélectionnez vos objectifs dans le menu ⚙️ ou créez les vôtres.
+  appversion: 168,
+  content: [
+    { title: "1. Fixez vous des objectifs" },
+    {
+      paragraph: `Sélectionnez vos objectifs dans le menu ⚙️ ou créez les vôtres.
 
 Choisissez les jours de la semaine et un rappel pour chacun de vos objectifs à réaliser !`,
+    },
+    { title: "2. Réorganisez l’ordre de vos indicateurs dans votre questionnaire" },
+    { paragraph: `En allant dans le menu ⚙️ puis “personnaliser mes indicateurs”` },
+  ],
   button: {
     title: "Super !",
   },
@@ -89,7 +95,7 @@ export const LatestChangesModalProvider = ({ children }) => {
             pointerEvents="box-none"
             onLayout={onAreaLayout}
           >
-            <View style={[styles.frameContainer, { height: contentLayout.height + 110 + 80 }]}>
+            <View style={[styles.frameContainer, { height: contentLayout?.height + 110 + 80 }]}>
               <View style={[styles.headerContainer]}>
                 <Svg
                   style={{
@@ -99,15 +105,17 @@ export const LatestChangesModalProvider = ({ children }) => {
                     right: 0,
                     bottom: 0,
                   }}
-                  viewBox={`0 0 ${areaLayout.width} 110`}
+                  viewBox={`0 0 ${areaLayout?.width || 320} 110`}
                 >
                   <Path
                     style="stroke-linecap:round;stroke-linejoin:round"
                     fill="#5D71BD"
-                    d={`M -1,-1 ${areaLayout.width + 1},-1 ${areaLayout.width + 1},110 -1,50`}
+                    d={`M -1,-1 ${(areaLayout?.width || 320) + 1},-1 ${
+                      (areaLayout?.width || 320) + 1
+                    },110 -1,50`}
                   />
                 </Svg>
-                <Text style={[styles.title, styles.headerTitle]}>Nouveautés !</Text>
+                <Text style={[styles.headerTitle]}>Nouveautés !</Text>
                 <Lottie
                   source={require("../../../assets/lottiefiles/54953-confetti.json")}
                   style={styles.lottieAnim}
@@ -117,8 +125,12 @@ export const LatestChangesModalProvider = ({ children }) => {
               </View>
               <ScrollView bounces={contentLayout.height > areaLayout.height}>
                 <View style={[styles.contentContainer]} onLayout={onContentLayout}>
-                  <Text style={[styles.title]}>{latestChanges?.title}</Text>
-                  <Text style={[styles.description]}>{latestChanges?.description}</Text>
+                  {latestChanges?.content?.map((item) => (
+                    <>
+                      {item?.title && <Text style={[styles.title]}>{item?.title}</Text>}
+                      {item?.paragraph && <Text style={[styles.paragraph]}>{item?.paragraph}</Text>}
+                    </>
+                  ))}
                 </View>
               </ScrollView>
               <Button2
@@ -173,8 +185,14 @@ const styles = StyleSheet.create({
     height: 110,
   },
   headerTitle: {
+    fontFamily: "Karla",
+    color: "black",
+    fontSize: 16,
+    fontWeight: "700",
     marginTop: 24,
     color: "white",
+    textAlign: "center",
+    alignSelf: "center",
   },
   lottieAnim: {
     position: "absolute",
@@ -199,10 +217,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "700",
     marginTop: 19,
-    alignSelf: "center",
-    textAlign: "center",
+    paddingLeft: 16,
+    textAlign: "left",
   },
-  description: {
+  paragraph: {
     fontFamily: "Karla",
     color: "black",
     fontSize: 15,
