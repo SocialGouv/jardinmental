@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useRef } from "react";
 import {
   StyleSheet,
   ScrollView,
@@ -12,7 +12,8 @@ import {
 import Text from "../../components/MyText";
 import { colors } from "../../utils/colors";
 import { beforeToday, formatDay, formatRelativeDate } from "../../utils/date/helpers";
-import { isToday, isYesterday, parseISO } from "date-fns";
+import { isToday, isYesterday, parseISO, format } from "date-fns";
+import { fr } from "date-fns/locale";
 import BackButton from "../../components/BackButton";
 import Button from "../../components/Button";
 import { getScoreWithState } from "../../utils";
@@ -25,6 +26,11 @@ import { alertNoDataYesterday } from "./survey-data";
 import localStorage from "../../utils/localStorage";
 import { useFocusEffect } from "@react-navigation/native";
 import ArrowUpSvg from "../../../assets/svg/arrow-up.svg";
+import { GoalsDaySurvey } from "../goals/survey/GoalsDaySurvey";
+import { Screen } from "../../components/Screen";
+import { Button2 } from "../../components/Button2";
+import { Card } from "../../components/Card";
+import { IndicatorSurveyItem } from "../indicateurs/survey/IndicatorSurveyItem";
 
 const DaySurvey = ({ navigation, route }) => {
   const initSurvey = route?.params?.currentSurvey ?? {
@@ -37,6 +43,11 @@ const DaySurvey = ({ navigation, route }) => {
 
   const [userIndicateurs, setUserIndicateurs] = useState([]);
   const [answers, setAnswers] = useState({});
+
+  const scrollRef = useRef();
+
+  const goalsRef = useRef();
+
   const questionToxic = {
     id: "TOXIC",
     label: "Avez-vous consommé des substances aujourd'hui ?",
@@ -116,6 +127,7 @@ const DaySurvey = ({ navigation, route }) => {
       answers: { ...prevCurrentSurvey.answers, ...answers },
     };
     setDiaryData(currentSurvey);
+    await goalsRef?.current?.onSubmit?.();
     logEvents.logFeelingAdd();
     logEvents.logFeelingSubmitSurvey(userIndicateurs.filter((i) => i.active).length);
     logEvents.logFeelingAddComment(
@@ -165,75 +177,91 @@ const DaySurvey = ({ navigation, route }) => {
   };
 
   return (
-    <SafeAreaView style={styles.safe}>
-      <BackButton onPress={() => submitDay({ redirectBack: true })} />
-      <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "position" : "height"} style={{ flex: 1 }}>
-        <ScrollView
-          style={styles.container}
-          keyboardDismissMode="on-drag"
-          onScrollBeginDrag={Keyboard.dismiss}
-        >
-          <TouchableOpacity
+    <Screen
+      header={{
+        title: "Mon questionnaire",
+      }}
+      bottomChildren={<Button2 fill title="Valider" onPress={submitDay} />}
+      scrollProps={{
+        onScrollBeginDrag: Keyboard.dismiss,
+      }}
+      contentContainerStyle={{ alignItems: "stretch" }}
+      scrollRef={scrollRef}
+    >
+      <View>
+        <View style={{ marginBottom: 8 }}>
+          <Card
+            preset="lighten"
+            title={renderQuestion()}
+            image={{ source: require("./../../../assets/imgs/indicateur.png") }}
+            containerStyle={{ marginBottom: 16 }}
+          />
+          {userIndicateurs
+            .filter((ind) => ind.active)
+            .map((ind) => (
+              // <Question
+              //   key={ind.uuid}
+              //   indicateur={ind}
+              //   onPress={toggleAnswer}
+              //   selected={answers[ind.name]?.value}
+              //   explanation={ind.explanation}
+              //   onChangeUserComment={handleChangeUserComment}
+              //   userComment={answers[ind.name]?.userComment}
+              // />
+              <IndicatorSurveyItem
+                key={ind?.uuid}
+                indicator={ind}
+                value={answers?.[ind?.name]?.value}
+                onValueChanged={({ indicator, value }) => toggleAnswer({ key: indicator?.name, value })}
+                onCommentChanged={({ indicator, comment }) =>
+                  handleChangeUserComment({ key: indicator?.name, userComment: comment })
+                }
+                comment={answers?.[ind?.name]?.userComment}
+              />
+            ))}
+          <Card
+            title="Personnaliser mes indicateurs"
+            //text="Vous pouvez gérer vos indicateurs et en créer de nouveaux"
+            icon={{ icon: "ImportantSvg" }}
             onPress={() => {
               navigation.navigate("symptoms");
               logEvents.logSettingsSymptomsFromSurvey();
             }}
-          >
-            <View style={styles.linkContainer}>
-              <Text style={styles.link}>Ajouter ou retirer des indicateurs de mon questionnaire</Text>
-              <View style={styles.linkButtonContainer}>
-                <ArrowUpSvg color="#fff" />
-              </View>
-            </View>
-          </TouchableOpacity>
-          <Text style={styles.question}>{renderQuestion()}</Text>
-          {userIndicateurs
-            .filter((ind) => ind.active)
-            .map((ind) => (
-              <Question
-                key={ind.uuid}
-                indicateur={ind}
-                onPress={toggleAnswer}
-                selected={answers[ind.name]?.value}
-                explanation={ind.explanation}
-                onChangeUserComment={handleChangeUserComment}
-                userComment={answers[ind.name]?.userComment}
-              />
-            ))}
-          <InputQuestion
-            question={questionContext}
-            onPress={toggleAnswer}
-            selected={answers[questionContext.id]?.value}
-            explanation={questionContext.explanation}
-            onChangeUserComment={handleChangeUserComment}
-            userComment={answers[questionContext.id]?.userComment}
-            placeholder="Contexte, évènements, comportement de l’entourage..."
+            containerStyle={styles.spacing}
           />
-          <QuestionYesNo
-            question={questionToxic}
-            onPress={toggleAnswer}
-            selected={answers[questionToxic.id]?.value}
-            explanation={questionToxic.explanation}
-            isLast
-            onChangeUserComment={handleChangeUserComment}
-            userComment={answers[questionToxic.id]?.userComment}
-          />
-          <View style={styles.divider} />
-          <View style={styles.buttonWrapper}>
-            <Button onPress={submitDay} title="Valider" />
-          </View>
-          <Text style={styles.subtitle}>
-            Retrouvez toutes vos notes dans l'onglet &quot;Mon&nbsp;journal&quot;
-          </Text>
-
-          <View style={styles.spacer} />
-        </ScrollView>
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+        </View>
+      </View>
+      <GoalsDaySurvey date={initSurvey?.date} ref={goalsRef} scrollRef={scrollRef} route={route} />
+      <InputQuestion
+        question={questionContext}
+        onPress={toggleAnswer}
+        selected={answers[questionContext.id]?.value}
+        explanation={questionContext.explanation}
+        onChangeUserComment={handleChangeUserComment}
+        userComment={answers[questionContext.id]?.userComment}
+        placeholder="Contexte, évènements, comportement de l’entourage..."
+      />
+      <QuestionYesNo
+        question={questionToxic}
+        onPress={toggleAnswer}
+        selected={answers[questionToxic.id]?.value}
+        explanation={questionToxic.explanation}
+        isLast
+        onChangeUserComment={handleChangeUserComment}
+        userComment={answers[questionToxic.id]?.userComment}
+      />
+      <View style={styles.divider} />
+      <Text style={styles.subtitle}>
+        Retrouvez toutes vos notes dans l'onglet &quot;Mon&nbsp;journal&quot;
+      </Text>
+    </Screen>
   );
 };
 
 const styles = StyleSheet.create({
+  spacing: {
+    marginVertical: 8,
+  },
   textArea: {
     backgroundColor: "#F4FCFD",
     borderRadius: 10,

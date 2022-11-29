@@ -13,17 +13,20 @@ import NewsSvg from "../../assets/svg/news.svg";
 import ProtectionSvg from "../../assets/svg/protection.svg";
 import GearSvg from "../../assets/svg/Gear.js";
 import PlusSvg from "../../assets/svg/plus.svg";
+import Plus2Svg from "../../assets/svg/plus2.svg";
 import ClockSvg from "../../assets/svg/clock.svg";
 import LightBulbSvg from "../../assets/svg/light-bulb.svg";
 import HeartsSvg from "../../assets/svg/hearts.svg";
 import ThoughtsSvg from "../../assets/svg/thoughts.svg";
 import CalendarSvg from "../../assets/svg/calendar.svg";
+import Calendar2Svg from "../../assets/svg/calendar2.svg";
 import ArrowUpSvg from "../../assets/svg/arrow-up.svg";
 import PlusSurveySvg from "../../assets/svg/plus-survey.svg";
 import PlusBeckSvg from "../../assets/svg/plus-beck.svg";
 import CrossSvg from "../../assets/svg/cross.svg";
 import ChevronUpSvg from "../../assets/svg/chevron-up.svg";
 import ChevronDownSvg from "../../assets/svg/chevron-down.svg";
+import ChevronRightSvg from "../../assets/svg/chevron-right.svg";
 import BinSvg from "../../assets/svg/bin.svg";
 import NotesSvg from "../../assets/svg/notes.svg";
 import TuneSvg from "../../assets/svg/tune.svg";
@@ -35,6 +38,11 @@ import GlobeSvg from "../../assets/svg/Globe";
 import LockSvg from "../../assets/svg/Lock";
 import Arrow from "../../assets/svg/Arrow";
 import ThumbsUpSvg from "../../assets/svg/thumbs-up.svg";
+import ImportantSvg from "../../assets/svg/important.svg";
+import EditSvg from "../../assets/svg/edit.svg";
+import IndicateurSvg from "../../assets/svg/indicateur.svg";
+import GoalSvg from "../../assets/svg/goal.svg";
+import ReorderSvg from "../../assets/svg/reorder.svg";
 
 import { StyleSheet, View, Animated, Easing, TouchableOpacity } from "react-native";
 
@@ -54,10 +62,12 @@ const mapIconToSvg = (icon) => {
     GearSvg,
     ExportDataSvg,
     PlusSvg,
+    Plus2Svg,
     ClockSvg,
     LightBulbSvg,
     HeartsSvg,
     CalendarSvg,
+    Calendar2Svg,
     ArrowUpSvg,
     PlusSurveySvg,
     PlusBeckSvg,
@@ -70,11 +80,17 @@ const mapIconToSvg = (icon) => {
     PeopleSvg,
     ChevronUpSvg,
     ChevronDownSvg,
+    ChevronRightSvg,
     LockSvg,
     Arrow,
     ThumbsUpSvg,
     TuneSvg,
     CheckSvg,
+    ImportantSvg,
+    EditSvg,
+    IndicateurSvg,
+    GoalSvg,
+    ReorderSvg,
   };
   return iconMap[icon];
 };

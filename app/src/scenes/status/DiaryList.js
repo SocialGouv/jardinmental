@@ -1,4 +1,4 @@
-import React, { useContext, useCallback } from "react";
+import React, { useContext, useCallback, useState } from "react";
 import { StyleSheet, View, TouchableOpacity, Animated } from "react-native";
 import Text from "../../components/MyText";
 import { DiaryDataContext } from "../../context/diaryData";
@@ -6,7 +6,8 @@ import { colors } from "../../utils/colors";
 import { formatDateThread } from "../../utils/date/helpers";
 import StatusItem from "./status-item";
 import { canEdit } from "./utils/index";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { getGoalsData } from "../../utils/localStorage/goals";
 
 export const DiaryList = ({ ...props }) => {
   const navigation = useNavigation();
@@ -16,6 +17,15 @@ export const DiaryList = ({ ...props }) => {
     b = b.split("/").reverse().join("");
     return b.localeCompare(a);
   });
+
+  const [goalsData, setGoalsData] = useState();
+  useFocusEffect(
+    useCallback(() => {
+      (async () => {
+        setGoalsData(await getGoalsData());
+      })();
+    }, [])
+  );
 
   const renderItem = useCallback(
     ({ item: date }) => {
@@ -31,11 +41,16 @@ export const DiaryList = ({ ...props }) => {
               </TouchableOpacity>
             )}
           </View>
-          <StatusItem date={date} patientState={diaryData[date]} navigation={navigation} />
+          <StatusItem
+            date={date}
+            patientState={diaryData[date]}
+            goalsData={goalsData}
+            navigation={navigation}
+          />
         </View>
       );
     },
-    [diaryData]
+    [diaryData, goalsData]
   );
 
   const keyExtractor = useCallback((date) => date);

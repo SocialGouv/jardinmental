@@ -70,3 +70,5 @@ export const updateSymptomsFormatIfNeeded = (data) => {
     return [...previous, _data];
   }, []);
 };
+
+export const dayFormat = (date) => new Date(date).toISOString().split("T")[0];

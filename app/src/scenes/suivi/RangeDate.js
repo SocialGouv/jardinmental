@@ -46,13 +46,13 @@ const DateRange = ({
         let _toDate = beforeToday(0);
         switch (presetValue) {
           case "lastDays7":
-            _fromDate = beforeToday(7);
+            _fromDate = beforeToday(7 - 1);
             break;
           case "lastDays14":
-            _fromDate = beforeToday(14);
+            _fromDate = beforeToday(14 - 1);
             break;
           case "lastDays30":
-            _fromDate = beforeToday(30);
+            _fromDate = beforeToday(30 - 1);
             break;
           case "fromBeginning":
             const beginningDate = await AsyncStorage.getItem(STORAGE_KEY_START_DATE);

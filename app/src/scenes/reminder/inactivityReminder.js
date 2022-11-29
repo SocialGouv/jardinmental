@@ -2,7 +2,7 @@ import API from "../../services/api";
 import NotificationService from "../../services/notifications";
 import * as RNLocalize from "react-native-localize";
 import { add } from "date-fns";
-import { DAYS_OF_WEEK } from ".";
+import { DAYS_OF_WEEK } from "../../utils/date/daysOfWeek";
 
 export const updateInactivityReminder = async () => {
   if (!(await NotificationService.hasToken())) return;

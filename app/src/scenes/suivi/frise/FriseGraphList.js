@@ -12,11 +12,13 @@ import localStorage from "../../../utils/localStorage";
 import logEvents from "../../../services/logEvents";
 import Button from "../../../components/Button";
 import { FriseGraph } from "./FriseGraph";
+import { GoalsFriseGraph } from "../../goals/suivi/GoalsFriseGraph";
 
 export const FriseGraphList = ({ navigation, fromDate, toDate, focusedScores, showTraitement }) => {
   const [diaryData] = React.useContext(DiaryDataContext);
   const [userIndicateurs, setUserIndicateurs] = React.useState([]);
   const [isEmpty, setIsEmpty] = React.useState();
+  const [goalsIsEmpty, setGoalsIsEmpty] = React.useState();
   const chartDates = getArrayOfDatesFromTo({ fromDate, toDate });
 
   useFocusEffect(
@@ -103,7 +105,7 @@ export const FriseGraphList = ({ navigation, fromDate, toDate, focusedScores, sh
     });
   };
 
-  if (isEmpty) {
+  if (isEmpty && goalsIsEmpty) {
     return (
       <View style={styles.emptyContainer}>
         <View style={styles.subtitleContainer}>
@@ -134,6 +136,13 @@ export const FriseGraphList = ({ navigation, fromDate, toDate, focusedScores, sh
               priseDeTraitementSiBesoin={computeChartData("PRISE_DE_TRAITEMENT_SI_BESOIN")}
             />
           ))}
+        <GoalsFriseGraph
+          {...{ chartDates, focusedScores }}
+          showTraitement={showTraitement}
+          priseDeTraitement={computeChartData("PRISE_DE_TRAITEMENT")}
+          priseDeTraitementSiBesoin={computeChartData("PRISE_DE_TRAITEMENT_SI_BESOIN")}
+          onIsEmptyChanged={setGoalsIsEmpty}
+        />
       </ScrollView>
     </>
   );

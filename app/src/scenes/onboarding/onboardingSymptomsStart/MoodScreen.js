@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { View, ScrollView, TouchableOpacity, Switch, Image, LayoutAnimation } from "react-native";
+import { View, ScrollView, TouchableOpacity, Switch, Image } from "react-native";
 import Text from "../../../components/MyText";
 import Button from "../../../components/Button";
 import { onboardingStyles } from "../styles";
@@ -18,6 +18,7 @@ import { CheckBoxList } from "../CheckBoxList";
 import { SafeAreaViewWithOptionalHeader } from "../ProgressHeader";
 import { OnboardingBackButton } from "../BackButton";
 import { ONBOARDING_STEPS } from "../../../utils/constants";
+import { autoLayoutAnimation } from "../../../utils/autoLayoutAnimation";
 
 export const OnboardingMood = ({ navigation }) => {
   const [symptomSelection, setSymptomSelection] = useState({});
@@ -134,7 +135,7 @@ export const OnboardingMood = ({ navigation }) => {
             <Text style={styleSwitch.label}>Non</Text>
             <Switch
               onValueChange={() => {
-                LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+                autoLayoutAnimation();
                 setIsMoodTroubleEnabled(!isMoodTroubleEnable);
               }}
               value={isMoodTroubleEnable}
