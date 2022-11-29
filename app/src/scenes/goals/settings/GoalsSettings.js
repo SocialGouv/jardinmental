@@ -8,6 +8,7 @@ import { getDaysOfWeekLabel, getGoalsTracked } from "../../../utils/localStorage
 import { Title } from "../../../components/Title";
 import { Badge } from "../../../components/Badge";
 import Icon from "../../../components/Icon";
+import { ONBOARDING_STEPS } from "../../../utils/constants";
 
 export const GoalsSettings = ({ navigation, route }) => {
   const onboarding = route.params?.onboarding;
@@ -42,7 +43,7 @@ export const GoalsSettings = ({ navigation, route }) => {
             onPress={() => navigation.navigate("goals-add-options")}
           />
         ) : (
-          <Button2 fill title="Valider" onPress={() => navigation.goBack()} />
+          <Button2 fill title="Valider" onPress={() => navigation.navigate(ONBOARDING_STEPS.STEP_REMINDER)} />
         )
       }
       ScrollComponent={FlatList}

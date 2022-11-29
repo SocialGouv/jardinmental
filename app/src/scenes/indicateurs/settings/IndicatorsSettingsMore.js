@@ -72,17 +72,18 @@ export const IndicatorsSettingsMore = ({ navigation, route }) => {
 
 const IndicatorItem = ({ indicator, drag, isActive, index }) => {
   return (
-    <TouchableOpacity onLongPress={drag} disabled={isActive}>
-      <View style={[itemStyles.container]}>
-        <Icon
-          icon="ReorderSvg"
-          color="#26387C"
-          width="16"
-          height="16"
-          styleContainer={{ width: 16, height: 16 }}
-        />
-        <Text style={[itemStyles.label]}>{indicator?.name}</Text>
-        {/* <Button2
+    <ScaleDecorator>
+      <TouchableOpacity onLongPress={drag} disabled={isActive} delayLongPress={100}>
+        <View style={[itemStyles.container, isActive && { backgroundColor: "#D4F0F2" }]}>
+          <Icon
+            icon="ReorderSvg"
+            color="#26387C"
+            width="16"
+            height="16"
+            styleContainer={{ width: 16, height: 16 }}
+          />
+          <Text style={[itemStyles.label]}>{indicator?.name}</Text>
+          {/* <Button2
         square
         preset=""
         type="clear"
@@ -92,8 +93,9 @@ const IndicatorItem = ({ indicator, drag, isActive, index }) => {
         iconSize={16}
         onPress={() => {}}
       /> */}
-      </View>
-    </TouchableOpacity>
+        </View>
+      </TouchableOpacity>
+    </ScaleDecorator>
   );
 };
 
