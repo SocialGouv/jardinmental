@@ -39,6 +39,9 @@ export const iconColors = {
 };
 
 export const scoresMapIcon = {
+  "-1": {
+    color: "transparent",
+  },
   1: {
     color: colors.veryBad,
     faceIcon: icons.veryBad,
@@ -254,6 +257,7 @@ export const BeckStepTitles = [
 export const STORAGE_KEY_SURVEY_RESULTS = "@SURVEY_RESULTS";
 export const STORAGE_KEY_START_DATE = "@SURVEY_DATE";
 export const STORAGE_KEY_SYMPTOMS = "@SYMPTOMS";
+export const STORAGE_KEY_GOALS = "@GOALS_TMP";
 export const STORAGE_KEY_INDICATEURS = "@INDICATEURS";
 export const STORAGE_KEY_IS_FIRST_LAUNCH = "@IS_FIRST_LAUNCH";
 export const STORAGE_KEY_ONBOARDING_STEP = "@ONBOARDING_STEP";

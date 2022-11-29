@@ -10,6 +10,9 @@ import { CheckBoxList } from "../CheckBoxList";
 import { SafeAreaViewWithOptionalHeader } from "../ProgressHeader";
 import { OnboardingBackButton } from "../BackButton";
 import { ONBOARDING_STEPS } from "../../../utils/constants";
+import { getGoalsTracked, setGoalTracked } from "../../../utils/localStorage/goals";
+import { DAYS_OF_WEEK } from "../../../utils/date/daysOfWeek";
+import { Button2 } from "../../../components/Button2";
 
 export const OnboardingGoals = ({ navigation }) => {
   useEffect(() => {
@@ -18,31 +21,46 @@ export const OnboardingGoals = ({ navigation }) => {
     })();
   }, []);
 
-  const [symptomSelection, setSymptomSelection] = useState({});
+  const [goalSelection, setGoalSelection] = useState({});
   const countGoals = () =>
-    INDICATEURS_GOALS_SIMPLE.reduce((acc, id) => {
-      if (symptomSelection?.[id]) return acc + 1;
+    INDICATEURS_GOALS_SIMPLE.reduce((acc, goalLabel) => {
+      if (goalSelection?.[goalLabel]) return acc + 1;
       return acc;
     }, 0);
   const [count, setCount] = useState(countGoals());
-  useEffect(() => setCount(countGoals()), [symptomSelection]);
+  useEffect(() => setCount(countGoals()), [goalSelection]);
 
   useFocusEffect(
     useCallback(() => {
       (async () => {
-        const localStorageIndicateurs = (await localStorage.getSymptoms()) || {};
+        const _goals = await getGoalsTracked();
 
-        setSymptomSelection(localStorageIndicateurs);
+        setGoalSelection(
+          INDICATEURS_GOALS_SIMPLE.reduce((acc, goalLabel) => {
+            if (_goals.find((goal) => goal.label === goalLabel)) acc[goalLabel] = true;
+            return acc;
+          }, {})
+        );
       })();
     }, [])
   );
 
-  const handleNext = async () => {
-    const symptoms = { ...symptomSelection };
-
-    await localStorage.setSymptoms(symptoms);
-    navigation.navigate(ONBOARDING_STEPS.STEP_REMINDER);
-  };
+  const handleNext =
+    ({ goToGoalsSettings }) =>
+    async () => {
+      for (const goalLabel of Object.keys(goalSelection)) {
+        await setGoalTracked({
+          label: goalLabel,
+          enabled: goalSelection[goalLabel],
+          daysOfWeek: DAYS_OF_WEEK.reduce((acc, day) => {
+            acc[day] = true;
+            return acc;
+          }, {}),
+        });
+      }
+      if (goToGoalsSettings) navigation.navigate("goals-settings", { onboarding: true });
+      else navigation.navigate(ONBOARDING_STEPS.STEP_REMINDER);
+    };
 
   return (
     <SafeAreaViewWithOptionalHeader style={onboardingStyles.safe}>
@@ -72,8 +90,8 @@ export const OnboardingGoals = ({ navigation }) => {
           </View>
           <CheckBoxList
             list={INDICATEURS_GOALS_SIMPLE}
-            symptomSelection={symptomSelection}
-            setSymptomSelection={setSymptomSelection}
+            symptomSelection={goalSelection}
+            setSymptomSelection={setGoalSelection}
           />
         </View>
         <View style={onboardingStyles.alertContainer}>
@@ -84,10 +102,17 @@ export const OnboardingGoals = ({ navigation }) => {
         </View>
       </ScrollView>
       <StickyButtonContainer>
-        <Button
+        <Button2
+          fill
           title={`Continuer avec ${count} objectif${count > 1 ? "s" : ""}`}
-          onPress={handleNext}
-          buttonStyle={{ minWidth: 0 }}
+          onPress={handleNext({ goToGoalsSettings: false })}
+        />
+        <Button2
+          fill
+          preset="onboarding2"
+          title="Paramétrer les objectifs sélectionnés"
+          onPress={handleNext({ goToGoalsSettings: true })}
+          containerStyle={{ marginTop: 10 }}
         />
       </StickyButtonContainer>
     </SafeAreaViewWithOptionalHeader>

@@ -176,7 +176,7 @@ const reminderCronJob = async (req, res) => {
       pushNotifToken: reminder.user.pushNotifToken,
       title: "Vous avez un objectif aujourd’hui 🎯",
       body: "N’oubliez de préciser si vous l’avez réalisé dans Jardin Mental",
-      //link: "jardinmental://goals"
+      link: "jardinmental://day-survey",
       channelId: "reminder_goal",
     });
   }

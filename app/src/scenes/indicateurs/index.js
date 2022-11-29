@@ -13,6 +13,7 @@ import AjoutIndicateurPerso from "./AjoutIndicateurPerso";
 import CategorieElements from "./CategorieElements";
 import { INDICATEURS, INDICATEURS_LES_PLUS_COURANTS } from "../../utils/liste_indicateurs.1";
 import { useFocusEffect } from "@react-navigation/native";
+import { Button2 } from "../../components/Button2";
 
 const Indicateurs = ({ navigation }) => {
   const [chosenCategories, setChosenCategories] = useState();
@@ -117,6 +118,12 @@ const Indicateurs = ({ navigation }) => {
             if (Object.keys(chosenCategories || {}).find((e) => e === v)) return;
             handleAddNewIndicateur(v);
           }}
+        />
+        <Button2
+          title="Modifier l'ordre des indicateurs"
+          preset="onboarding2"
+          onPress={() => navigation.navigate("indicators-settings-more")}
+          containerStyle={{ marginBottom: 20 }}
         />
 
         <View className="h-[1px] w-full bg-gray-200" />

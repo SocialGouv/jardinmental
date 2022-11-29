@@ -42,11 +42,17 @@ import Contact from "../scenes/contact";
 import PrivacyLight from "../scenes/privacy-light";
 import RNBootsplash from "react-native-bootsplash";
 import NotificationService from "../services/notifications";
+import Indicateurs from "../scenes/indicateurs";
 import { OnboardingMood } from "../scenes/onboarding/onboardingSymptomsStart/MoodScreen";
 import { OnboardingSleep } from "../scenes/onboarding/onboardingSymptomsStart/SleepScreen";
 import { OnboardingSimpleCustomSymptoms } from "../scenes/onboarding/onboardingSymptomsCustom/SimpleCustomScreen";
 import { OnboardingGoals } from "../scenes/onboarding/onboardingGoals/goals";
-import Indicateurs from "../scenes/indicateurs";
+import { GoalsSettings } from "../scenes/goals/settings/GoalsSettings";
+import { GoalsAddOptions } from "../scenes/goals/settings/GoalsAddOptions";
+import { GoalsCreateForm } from "../scenes/goals/settings/GoalsCreateForm";
+import { GoalDaySelector } from "../scenes/goals/settings/GoalDaySelector";
+import { GoalConfig } from "../scenes/goals/settings/GoalConfig";
+import { IndicatorsSettingsMore } from "../scenes/indicateurs/settings/IndicatorsSettingsMore";
 
 const Stack = createStackNavigator();
 
@@ -174,6 +180,14 @@ class Router extends React.Component {
             <Stack.Screen name="view-beck" component={ViewBeck} />
             <Stack.Screen name="beck" component={Beck} />
             {/* <Stack.Screen name="contribute" component={Contribute} /> */}
+
+            <Stack.Screen name="indicators-settings-more" component={IndicatorsSettingsMore} />
+
+            <Stack.Screen name="goals-settings" component={GoalsSettings} />
+            <Stack.Screen name="goals-add-options" component={GoalsAddOptions} />
+            <Stack.Screen name="goals-create-form" component={GoalsCreateForm} />
+            <Stack.Screen name="goal-day-selector" component={GoalDaySelector} />
+            <Stack.Screen name="goal-config" component={GoalConfig} />
           </Stack.Navigator>
         </NavigationContainer>
         <EnvironmentIndicator />

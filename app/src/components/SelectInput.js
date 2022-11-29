@@ -1,8 +1,9 @@
 import React, { useRef, useState } from "react";
-import { View, StyleSheet, Text, TouchableOpacity, LayoutAnimation, Platform } from "react-native";
+import { View, StyleSheet, Text, TouchableOpacity, Platform } from "react-native";
 import { colors } from "../utils/colors";
 import RNPickerSelect from "react-native-picker-select";
 import Icon from "./Icon";
+import { autoLayoutAnimation } from "../utils/autoLayoutAnimation";
 
 export const SelectInput = ({
   items,
@@ -51,7 +52,7 @@ export const SelectInput = ({
           if (_value) {
             setVisibleValue(_value);
             onValueChange?.(_value);
-            if (value !== _value) LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+            if (value !== _value) autoLayoutAnimation();
           }
         }}
         placeholder={placeholder && { label: placeholder, value: null }}

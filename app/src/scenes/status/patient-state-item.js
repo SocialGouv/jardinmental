@@ -6,6 +6,7 @@ import { scoresMapIcon } from "../../utils/constants";
 import { getScoreWithState } from "../../utils";
 import ArrowRightSvg from "../../../assets/svg/arrow-right.js";
 import { colors } from "../../utils/colors";
+import Icon from "../../components/Icon";
 
 const PatientStateItem = ({ patientState, category, label }) => {
   const [{ color, borderColor, faceIcon, iconColor }, setIcon] = useState({});
@@ -46,7 +47,17 @@ const PatientStateItem = ({ patientState, category, label }) => {
           <Text style={styles.label}>{label}</Text>
         </View>
         {isTouchable() ? (
-          <ArrowRightSvg style={userCommentVisible ? styles.arrowUp : styles.arrowDown} color="#C7CED5" />
+          <Icon
+            icon="ArrowUpSvg"
+            color="#C7CED5"
+            width={13}
+            height={13}
+            styleContainer={{
+              width: 13,
+              height: 13,
+              transform: [{ rotate: userCommentVisible ? "0deg" : "180deg" }],
+            }}
+          />
         ) : null}
       </View>
       {userCommentVisible && isTouchable() ? (

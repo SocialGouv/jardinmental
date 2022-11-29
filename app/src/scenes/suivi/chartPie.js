@@ -15,6 +15,7 @@ import Icon from "../../components/Icon";
 import localStorage from "../../utils/localStorage";
 import logEvents from "../../services/logEvents";
 import Button from "../../components/Button";
+import { GoalsChartPie } from "../goals/suivi/GoalsChartPie";
 
 const ChartPie = ({ navigation, fromDate, toDate }) => {
   const [diaryData] = React.useContext(DiaryDataContext);
@@ -141,6 +142,7 @@ const ChartPie = ({ navigation, fromDate, toDate }) => {
             toDate={toDate}
           />
         ))}
+      <GoalsChartPie chartDates={chartDates} />
       <View style={styles.divider} />
       <PieYesNo
         title="Ai-je pris correctement mon traitement quotidien ?"

@@ -1,11 +1,12 @@
 import React, { useRef } from "react";
-import { View, LayoutAnimation } from "react-native";
+import { View } from "react-native";
 import RangeDate from "../RangeDate";
 import FriseGraphList from "./FriseGraphList";
 import { FriseInfoButton } from "./FriseInfoButton";
 import { Button2 } from "../../../components/Button2";
 import { FriseFilterBar } from "./FriseFilterBar";
 import { styles as commonStyles } from "..";
+import { autoLayoutAnimation } from "../../../utils/autoLayoutAnimation";
 
 export const FriseScreen = ({
   navigation,
@@ -52,7 +53,7 @@ export const FriseScreen = ({
                 setFocusedScores([1, 2, 3, 4, 5]);
               }
               setFilterEnabled(nextValue);
-              LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+              autoLayoutAnimation();
             }}
           />
           <FriseInfoButton

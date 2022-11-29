@@ -44,6 +44,7 @@ export const INDICATEURS_GOALS_SIMPLE = [
   null,
   "Horaires réguliers de sommeil",
   "30 min d’activité physique",
+  "Pas de grignotage entre les repas",
   null,
   "Me lever le matin",
   "Faire mes tâches ménagères",

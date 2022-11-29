@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { View, ScrollView, TouchableOpacity, Switch, Text, Image, LayoutAnimation } from "react-native";
+import { View, ScrollView, TouchableOpacity, Switch, Text, Image } from "react-native";
 import Button from "../../../components/Button";
 import { onboardingStyles } from "../styles";
 import localStorage from "../../../utils/localStorage";
@@ -17,6 +17,7 @@ import { CheckBoxList } from "../CheckBoxList";
 import { SafeAreaViewWithOptionalHeader } from "../ProgressHeader";
 import { OnboardingBackButton } from "../BackButton";
 import { ONBOARDING_STEPS } from "../../../utils/constants";
+import { autoLayoutAnimation } from "../../../utils/autoLayoutAnimation";
 
 export const OnboardingSleep = ({ navigation }) => {
   const [symptomSelection, setSymptomSelection] = useState({});
@@ -133,7 +134,7 @@ export const OnboardingSleep = ({ navigation }) => {
             <Text style={styleSwitch.label}>Non</Text>
             <Switch
               onValueChange={() => {
-                LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+                autoLayoutAnimation();
                 setIsSleepTroubleEnabled(!isSleepTroubleEnable);
               }}
               value={isSleepTroubleEnable}

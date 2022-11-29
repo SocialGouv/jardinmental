@@ -12,8 +12,11 @@ import Toxic from "./toxic";
 import Context from "./context";
 import logEvents from "../../services/logEvents";
 import { INDICATEURS_LISTE, INDICATEURS } from "../../utils/liste_indicateurs";
+import { GoalsStatus } from "../goals/status/GoalsStatus";
+import { Card } from "../../components/Card";
+import { GoalsStatusNoData } from "../goals/status/GoalsStatusNoData";
 
-export default ({ navigation, patientState, date }) => {
+export default ({ navigation, patientState, goalsData, date }) => {
   const [customs, setCustoms] = useState([]);
   const [oldCustoms, setOldCustoms] = useState([]);
   let mounted = useRef(true);
@@ -31,7 +34,7 @@ export default ({ navigation, patientState, date }) => {
     return () => (mounted = false);
   }, [patientState]);
 
-  const handleEdit = (tab, editingSurvey = false) => {
+  const handleEdit = (tab, editingSurvey = false, toGoals) => {
     if (!canEdit(date)) return;
     const currentSurvey = {
       date,
@@ -40,58 +43,66 @@ export default ({ navigation, patientState, date }) => {
     navigation.navigate(tab, {
       currentSurvey,
       editingSurvey,
+      toGoals,
     });
   };
+
   const hasAnswerSurvey = () =>
     Object.keys(displayedCategories)
       .concat(customs)
       .concat(INDICATEURS_LISTE)
       .filter((key) => {
         return patientState && patientState[key];
-      }).length;
+      })?.length > 0 || goalsData?.records?.byDate?.[date]?.length > 0;
 
-  const handlePressItem = ({ editingSurvey }) => {
+  const handlePressItem = ({ editingSurvey, toGoals } = {}) => {
     if (!canEdit(date)) return navigation.navigate("too-late", { date });
     logEvents.logFeelingEditButtonClick();
-    handleEdit("day-survey", editingSurvey);
+    handleEdit("day-survey", editingSurvey, toGoals);
   };
+
+  const patientStateRecords = patientState
+    ? Object.entries(patientState)
+        .filter(([key, value]) => {
+          return ![
+            "CONTEXT",
+            "POSOLOGY",
+            "TOXIC",
+            "NOTES",
+            "PRISE_DE_TRAITEMENT",
+            "PRISE_DE_TRAITEMENT_SI_BESOIN",
+            "becks",
+          ].includes(key);
+        })
+        .filter(([key, value]) => !!value)
+    : [];
 
   if (hasAnswerSurvey()) {
     return (
       <View style={styles.container}>
         <View style={[styles.item, styles.itemWithSpaceAbove]}>
           <View>
-            {Object.entries(patientState)
-              .filter(([key, value]) => {
-                return ![
-                  "CONTEXT",
-                  "POSOLOGY",
-                  "TOXIC",
-                  "NOTES",
-                  "PRISE_DE_TRAITEMENT",
-                  "PRISE_DE_TRAITEMENT_SI_BESOIN",
-                  "becks",
-                ].includes(key);
-              })
-              .map(([key, value]) => {
-                if (!value) {
-                  return;
-                }
-                const [categoryName] = key.split("_");
-                return (
-                  <PatientStateItem
-                    key={key}
-                    category={key}
-                    patientState={patientState}
-                    label={
-                      patientState?._indicateur?.name ||
-                      INDICATEURS[key] ||
-                      displayedCategories[key] ||
-                      categoryName
-                    }
-                  />
-                );
-              })}
+            {patientStateRecords.map(([key, value]) => {
+              if (!value) {
+                return;
+              }
+              const [categoryName] = key.split("_");
+              return (
+                <PatientStateItem
+                  key={key}
+                  category={key}
+                  patientState={patientState}
+                  label={
+                    patientState?._indicateur?.name ||
+                    INDICATEURS[key] ||
+                    displayedCategories[key] ||
+                    categoryName
+                  }
+                />
+              );
+            })}
+
+            <GoalsStatus goalsData={goalsData} date={date} withSeparator={patientStateRecords?.length > 0} />
             <Context data={patientState?.CONTEXT} />
             <Posology
               posology={patientState?.POSOLOGY}
@@ -114,9 +125,19 @@ export default ({ navigation, patientState, date }) => {
     return (
       <View style={styles.container}>
         {canEdit(date) ? (
-          <TouchableOpacity style={styles.item} onPress={handlePressItem}>
-            <NoDataDiaryItem date={date} />
-          </TouchableOpacity>
+          <View style={styles.noDataContainer}>
+            <Card
+              preset="grey"
+              title={
+                canEdit(date)
+                  ? "Renseigner mon état pour ce jour-là"
+                  : "Je ne peux plus saisir mon questionnaire pour ce jour"
+              }
+              image={{ source: require("./../../../assets/imgs/indicateur.png") }}
+              onPress={handlePressItem}
+            />
+            <GoalsStatusNoData goalsData={goalsData} date={date} onPress={handlePressItem} />
+          </View>
         ) : (
           <View style={styles.emptyItem} />
         )}
@@ -157,5 +178,10 @@ const styles = StyleSheet.create({
     marginVertical: -5,
     borderLeftWidth: 0.4,
     borderColor: "#00CEF7",
+  },
+  noDataContainer: {
+    marginVertical: 5,
+    paddingTop: 12,
+    paddingBottom: 39,
   },
 });
