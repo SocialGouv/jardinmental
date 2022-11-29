@@ -186,7 +186,6 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontFamily: "Karla",
-    color: "black",
     fontSize: 16,
     fontWeight: "700",
     marginTop: 24,
