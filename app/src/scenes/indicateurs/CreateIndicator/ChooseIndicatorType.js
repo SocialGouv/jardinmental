@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { StyleSheet, View, SafeAreaView, TouchableOpacity } from "react-native";
 
 import BackButton from "../../../components/BackButton";
 import { colors } from "../../../utils/colors";
-import Button from "../../../components/Button";
+
 import Text from "../../../components/MyText";
 import ArrowRightSvg from "../../../../assets/svg/arrow-right";
 import CircledIcon from "../../../components/CircledIcon";
@@ -11,12 +11,6 @@ import { answers } from "../../survey/utils";
 import YesNoIndicator from "../../../components/YesNoIndicator";
 
 const ChooseIndicatorType = ({ navigation, route }) => {
-  //   const handleAddNewIndicator = async (value) => {
-  //     if (!value) return;
-  //     await localStorage.addCustomSymptoms(value);
-  //     logEvents.logCustomSymptomAdd();
-  //   };
-
   return (
     <SafeAreaView style={styles.safe}>
       <View style={styles.header}>
@@ -35,7 +29,7 @@ const ChooseIndicatorType = ({ navigation, route }) => {
           onPress={() => {
             navigation.push("CHOOSE_INDICATOR_ORDER", {
               nameNewIndicator: route.params.nameNewIndicator,
-              indicatorType: "smileys",
+              indicatorType: "smiley",
             });
           }}
         >
@@ -80,7 +74,7 @@ const ChooseIndicatorType = ({ navigation, route }) => {
           onPress={() => {
             navigation.push("CHOOSE_INDICATOR_ORDER", {
               nameNewIndicator: route.params.nameNewIndicator,
-              indicatorType: "yesno",
+              indicatorType: "boolean",
             });
           }}
         >

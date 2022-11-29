@@ -21,7 +21,7 @@ const CreateIndicator = ({ navigation, route }) => {
 
   const handleAddNewIndicator = async (value) => {
     if (!value) return;
-    await localStorage.addCustomSymptoms(value);
+    // await localStorage.addCustomSymptoms(value);
     logEvents.logCustomSymptomAdd();
   };
 

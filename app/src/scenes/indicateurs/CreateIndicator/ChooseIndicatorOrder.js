@@ -10,15 +10,30 @@ import { answers } from "../../survey/utils";
 import YesNoIndicator from "../../../components/YesNoIndicator";
 import { RadioButton } from "react-native-paper";
 const screenWidth = Dimensions.get("window").width;
+import localStorage from "../../../utils/localStorage";
+import { v4 as uuidv4 } from "uuid";
 
 const ChooseIndicatorOrder = ({ navigation, route }) => {
-  const [indicatorDirection, setIndicatorDirection] = useState(0); // 0 : first direction (green to red) ; 1 : second direction (red to green)
+  const [indicatorDirection, setIndicatorDirection] = useState("ASC"); // ASC : first direction (red to green) ; DESC : second direction (green to red)
+  const [loading, setLoading] = useState(false);
 
-  //   const handleAddNewIndicator = async (value) => {
-  //     if (!value) return;
-  //     await localStorage.addCustomSymptoms(value);
-  //     logEvents.logCustomSymptomAdd();
-  //   };
+  const onValidate = async () => {
+    if (loading) return;
+    setLoading(true);
+    await localStorage.addIndicateur({
+      version: 1,
+      uuid: uuidv4(),
+      name: route.params?.nameNewIndicator,
+      order: indicatorDirection,
+      type: route.params?.indicatorType,
+      active: true,
+      position: 0,
+      created_at: new Date(),
+    });
+
+    setLoading(false);
+    navigation.navigate("symptoms");
+  };
 
   return (
     <SafeAreaView style={styles.safe}>
@@ -48,19 +63,19 @@ const ChooseIndicatorOrder = ({ navigation, route }) => {
         <TouchableOpacity
           style={[
             styles.setDirectionContainer,
-            indicatorDirection === 0 && styles.activeSetDirectionContainer,
+            indicatorDirection === "ASC" && styles.activeSetDirectionContainer,
           ]}
-          onPress={() => setIndicatorDirection(0)}
+          onPress={() => setIndicatorDirection("ASC")}
         >
           <RadioButton
-            status={indicatorDirection === 0 ? "checked" : "unchecked"}
-            onPress={() => setIndicatorDirection(0)}
+            status={indicatorDirection === "ASC" ? "checked" : "unchecked"}
+            onPress={() => setIndicatorDirection("ASC")}
           />
 
           <View style={styles.setDirectionInside}>
-            <RenderCurrentIndicator indicatorType={route.params.indicatorType} direction={0} />
+            <RenderCurrentIndicator indicatorType={route.params.indicatorType} direction={"ASC"} />
             <Text style={styles.setDirectionTitle}>
-              {renderSetDirectionTitle(route.params.indicatorType)[0]}
+              {renderSetDirectionTitle(route.params.indicatorType).ASC}
             </Text>
           </View>
         </TouchableOpacity>
@@ -68,19 +83,19 @@ const ChooseIndicatorOrder = ({ navigation, route }) => {
         <TouchableOpacity
           style={[
             styles.setDirectionContainer,
-            indicatorDirection === 1 && styles.activeSetDirectionContainer,
+            indicatorDirection === "DESC" && styles.activeSetDirectionContainer,
           ]}
-          onPress={() => setIndicatorDirection(1)}
+          onPress={() => setIndicatorDirection("DESC")}
         >
           <RadioButton
-            status={indicatorDirection === 1 ? "checked" : "unchecked"}
-            onPress={() => setIndicatorDirection(1)}
+            status={indicatorDirection === "DESC" ? "checked" : "unchecked"}
+            onPress={() => setIndicatorDirection("DESC")}
           />
 
           <View style={styles.setDirectionInside}>
-            <RenderCurrentIndicator indicatorType={route.params.indicatorType} direction={1} />
+            <RenderCurrentIndicator indicatorType={route.params.indicatorType} direction={"DESC"} />
             <Text style={styles.setDirectionTitle}>
-              {renderSetDirectionTitle(route.params.indicatorType)[1]}
+              {renderSetDirectionTitle(route.params.indicatorType).DESC}
             </Text>
           </View>
         </TouchableOpacity>
@@ -91,7 +106,7 @@ const ChooseIndicatorOrder = ({ navigation, route }) => {
         <Button
           buttonStyle={{ backgroundColor: "#1FC6D5", marginBottom: 20 }}
           textStyle={{ color: "white", textAlign: "center" }}
-          onPress={() => {}}
+          onPress={onValidate}
           title="Créer mon indicateur"
         />
       </View>
@@ -101,24 +116,27 @@ const ChooseIndicatorOrder = ({ navigation, route }) => {
 
 const renderSetDirectionTitle = (indicatorType) => {
   switch (indicatorType) {
-    case "smileys":
-      return { 0: "Évaluer du positif vers le négatif", 1: "Évaluer du négatif vers le positif" };
+    case "smiley":
+      return { DESC: "Évaluer du positif vers le négatif", ASC: "Évaluer du négatif vers le positif" };
 
     case "gauge":
-      return { 0: "Évaluer du positif vers le négatif", 1: "Évaluer du négatif vers le positif" };
+      return { DESC: "Évaluer du positif vers le négatif", ASC: "Évaluer du négatif vers le positif" };
 
-    case "yesno":
-      return { 0: "Le non est négatif, le oui est positif", 1: "Le non est positif, le oui est négatif" };
+    case "boolean":
+      return {
+        ASC: "Le non est négatif, le oui est positif",
+        DESC: "Le non est positif, le oui est négatif",
+      };
 
     default:
       break;
   }
 };
 
-const RenderCurrentIndicator = ({ indicatorType, itensity, direction = 0, size = "small" }) => {
+const RenderCurrentIndicator = ({ indicatorType, itensity, direction = "ASC", size = "small" }) => {
   switch (indicatorType) {
-    case "smileys":
-      const answerDirection = direction === 0 ? answers.slice().reverse() : answers;
+    case "smiley":
+      const answerDirection = direction === "DESC" ? answers.slice().reverse() : answers;
       return (
         <>
           <View style={styles.smileysContainer}>
@@ -148,10 +166,10 @@ const RenderCurrentIndicator = ({ indicatorType, itensity, direction = 0, size =
         </>
       );
 
-    case "yesno":
+    case "boolean":
       return (
         <>
-          {direction === 0 ? (
+          {direction === "ASC" ? (
             <YesNoIndicator no={"red"} yes={"green"} />
           ) : (
             <YesNoIndicator no={"green"} yes={"red"} />
