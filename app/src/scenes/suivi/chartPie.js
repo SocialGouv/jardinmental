@@ -133,11 +133,12 @@ const ChartPie = ({ navigation, fromDate, toDate }) => {
     <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContainer}>
       {userIndicateurs
         ?.filter((ind) => isChartVisible(ind.name) && ind.active)
-        ?.map(({ name }) => (
+        ?.map((_indicateur) => (
           <Pie
-            title={getTitle(name)}
-            key={name}
-            data={computeChartData(name)}
+            indicateur={_indicateur}
+            title={getTitle(_indicateur.name)}
+            key={_indicateur.name}
+            data={computeChartData(_indicateur.name)}
             fromDate={fromDate}
             toDate={toDate}
           />
@@ -156,16 +157,26 @@ const ChartPie = ({ navigation, fromDate, toDate }) => {
   );
 };
 
-const sliceColor = [
-  "#f3f3f3",
-  scoresMapIcon[1].color,
-  scoresMapIcon[2].color,
-  scoresMapIcon[3].color,
-  scoresMapIcon[4].color,
-  scoresMapIcon[5].color,
-];
+const _colors = {
+  ASC: [
+    "#f3f3f3",
+    scoresMapIcon[1].color,
+    scoresMapIcon[2].color,
+    scoresMapIcon[3].color,
+    scoresMapIcon[4].color,
+    scoresMapIcon[5].color,
+  ],
+  DESC: [
+    "#f3f3f3",
+    scoresMapIcon[5].color,
+    scoresMapIcon[4].color,
+    scoresMapIcon[3].color,
+    scoresMapIcon[2].color,
+    scoresMapIcon[1].color,
+  ],
+};
 
-const Pie = ({ title, data }) => {
+const Pie = ({ title, data, indicateur }) => {
   const [sections, setSections] = React.useState([]);
   const [average, setAverage] = React.useState(0);
   const [averageIcons, setAverageIcons] = React.useState([]);
@@ -222,11 +233,11 @@ const Pie = ({ title, data }) => {
   React.useEffect(() => {
     if (!nombreDeValeurParScore?.length) return;
     const sectionsAvecCouleurEtPourcentage = nombreDeValeurParScore.map((e) => ({
-      color: sliceColor[e.score],
+      color: _colors[indicateur.order || "ASC"][e.score],
       percentage: e.pourcentage,
     }));
     setSections(sectionsAvecCouleurEtPourcentage);
-  }, [nombreDeValeurParScore]);
+  }, [indicateur.order, nombreDeValeurParScore]);
 
   React.useEffect(() => {
     const total = data.reduce((previous, current) => {
@@ -291,13 +302,19 @@ const Pie = ({ title, data }) => {
                   const isSmall = i === 0 && averageIcons.length > 1;
                   const iconSize = isSmall ? 24 : 32;
                   const iconContainerSize = isSmall ? 30 : 40;
+                  let _icon;
+                  if (indicateur?.order === "DESC") {
+                    _icon = scoresMapIcon[5 + 1 - e];
+                  } else {
+                    _icon = scoresMapIcon[e];
+                  }
                   return (
                     <CircledIcon
                       key={`${title}_${e}`}
-                      color={scoresMapIcon[e].color}
-                      borderColor={scoresMapIcon[e].borderColor}
-                      iconColor={scoresMapIcon[e].iconColor}
-                      icon={scoresMapIcon[e].faceIcon}
+                      color={_icon.color}
+                      borderColor={_icon.borderColor}
+                      iconColor={_icon.iconColor}
+                      icon={_icon.faceIcon}
                       // eslint-disable-next-line react-native/no-inline-styles
                       iconContainerStyle={{
                         marginRight: 0,
