@@ -8,7 +8,6 @@ import Text from "../../../components/MyText";
 import CircledIcon from "../../../components/CircledIcon";
 import { answers } from "../../survey/utils";
 import YesNoIndicator from "../../../components/YesNoIndicator";
-import { RadioButton } from "react-native-paper";
 const screenWidth = Dimensions.get("window").width;
 import localStorage from "../../../utils/localStorage";
 import { v4 as uuidv4 } from "uuid";
@@ -67,10 +66,13 @@ const ChooseIndicatorOrder = ({ navigation, route }) => {
           ]}
           onPress={() => setIndicatorDirection("ASC")}
         >
-          <RadioButton
-            status={indicatorDirection === "ASC" ? "checked" : "unchecked"}
-            onPress={() => setIndicatorDirection("ASC")}
-          />
+          {indicatorDirection === "ASC" ? (
+            <View className="flex justify-center items-center w-4 h-4 border border-primary rounded-full">
+              <View className="w-2 h-2 border border-primary bg-primary rounded-full" />
+            </View>
+          ) : (
+            <View className="flex justify-center items-center w-4 h-4 border border-blue-800 rounded-full" />
+          )}
 
           <View style={styles.setDirectionInside}>
             <RenderCurrentIndicator indicatorType={route.params.indicatorType} direction={"ASC"} />
@@ -87,10 +89,13 @@ const ChooseIndicatorOrder = ({ navigation, route }) => {
           ]}
           onPress={() => setIndicatorDirection("DESC")}
         >
-          <RadioButton
-            status={indicatorDirection === "DESC" ? "checked" : "unchecked"}
-            onPress={() => setIndicatorDirection("DESC")}
-          />
+          {indicatorDirection === "DESC" ? (
+            <View className="flex justify-center items-center w-4 h-4 border border-primary rounded-full">
+              <View className="w-2 h-2 border border-primary bg-primary rounded-full" />
+            </View>
+          ) : (
+            <View className="flex justify-center items-center w-4 h-4 border border-blue-800 rounded-full" />
+          )}
 
           <View style={styles.setDirectionInside}>
             <RenderCurrentIndicator indicatorType={route.params.indicatorType} direction={"DESC"} />
@@ -222,10 +227,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginTop: 20,
+    overflow: "hidden",
   },
   intensityLine: {
     borderTopWidth: 1,
-    borderStyle: "dashed",
+    borderStyle: "solid",
     flex: 1,
     height: 1,
   },
