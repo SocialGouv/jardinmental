@@ -31,7 +31,7 @@ import { GoalsDaySurvey } from "../goals/survey/GoalsDaySurvey";
 import { Screen } from "../../components/Screen";
 import { Button2 } from "../../components/Button2";
 import { Card } from "../../components/Card";
-import { IndicatorSurveyItem } from "../indicateurs/survey/IndicatorSurveyItem";
+import { IndicatorSurveyItem } from "./components/IndicatorSurveyItem";
 
 const DaySurvey = ({ navigation, route }) => {
   const initSurvey = route?.params?.currentSurvey ?? {
