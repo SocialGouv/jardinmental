@@ -48,12 +48,8 @@ export default ({ navigation, indicateurs, patientState, goalsData, date }) => {
   };
 
   const hasAnswerSurvey = () =>
-    Object.keys(displayedCategories)
-      .concat(customs)
-      .concat(INDICATEURS_LISTE)
-      .filter((key) => {
-        return patientState && patientState[key];
-      })?.length > 0 || goalsData?.records?.byDate?.[date]?.length > 0;
+    patientStateRecords.some(([key, value]) => value?.value !== undefined) ||
+    goalsData?.records?.byDate?.[date]?.length > 0;
 
   const handlePressItem = ({ editingSurvey, toGoals } = {}) => {
     if (!canEdit(date)) return navigation.navigate("too-late", { date });

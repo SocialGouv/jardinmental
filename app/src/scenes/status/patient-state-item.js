@@ -20,18 +20,33 @@ const PatientStateItem = ({ patientState, category, label }) => {
 
   const isTouchable = () => !!patientState[category]?.userComment?.trim();
 
+  const renderResponse = () => {
+    if (patientState[category]?._indicateur?.type === "smiley") {
+      let _icon;
+      if (patientState[category]?._indicateur?.order === "DESC") {
+        _icon = scoresMapIcon[5 + 1 - patientState[category]?.value];
+      } else {
+        _icon = scoresMapIcon[patientState[category]?.value];
+      }
+      return (
+        <CircledIcon
+          color={_icon.color}
+          borderColor={_icon.borderColor}
+          iconColor={_icon.iconColor}
+          icon={_icon.faceIcon}
+          iconWidth={32}
+          iconHeight={32}
+        />
+      );
+    }
+    return <View />;
+  };
+
   const content = (
     <View>
       <View style={styles.container}>
         {color && faceIcon ? (
-          <CircledIcon
-            color={color}
-            borderColor={borderColor}
-            iconColor={iconColor}
-            icon={faceIcon}
-            iconWidth={32}
-            iconHeight={32}
-          />
+          renderResponse()
         ) : (
           <CircledIcon
             color="#cccccc"

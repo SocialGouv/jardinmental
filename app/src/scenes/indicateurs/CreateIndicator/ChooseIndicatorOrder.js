@@ -141,7 +141,7 @@ const renderSetDirectionTitle = (indicatorType) => {
 const RenderCurrentIndicator = ({ indicatorType, itensity, direction = "ASC", size = "small" }) => {
   switch (indicatorType) {
     case "smiley":
-      const answerDirection = direction === "DESC" ? answers.slice().reverse() : answers;
+      const answerDirection = direction === "ASC" ? answers : answers.slice().reverse();
       return (
         <>
           <View style={styles.smileysContainer}>

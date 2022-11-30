@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View, TouchableOpacity } from "react-native";
+import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
 import CircledIcon from "../../../components/CircledIcon";
 import { answers as emojis } from "../utils";
 
@@ -9,7 +9,7 @@ export const Smiley = ({ indicator, value, onValueChanged }) => {
       {emojis
         .map((emoji, i) => {
           let _emoji = {};
-          if (indicator.order === "ASC") {
+          if (indicator.order === "DESC") {
             _emoji = emojis[emojis.length - 1 - i];
           } else {
             Object.assign(_emoji, emoji);
