@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { InputText } from "../../../components/InputText";
 
 import { Smiley } from "./Smiley";
+import { Boolean } from "./Boolean";
 import Gauge from "../../../components/gauge";
 
 export const IndicatorSurveyItem = ({
@@ -24,6 +25,14 @@ export const IndicatorSurveyItem = ({
     switch (indicator?.type) {
       case "smiley":
         return <Smiley indicator={indicator} value={value} onValueChanged={onValueChanged} />;
+      case "boolean":
+        return (
+          <Boolean
+            indicator={indicator}
+            value={value}
+            onChange={(v) => onValueChanged({ indicator, value: v })}
+          />
+        );
       case "gauge":
         return (
           <Gauge
