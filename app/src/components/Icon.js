@@ -28,6 +28,7 @@ import ChevronUpSvg from "../../assets/svg/chevron-up.svg";
 import ChevronDownSvg from "../../assets/svg/chevron-down.svg";
 import ChevronRightSvg from "../../assets/svg/chevron-right.svg";
 import BinSvg from "../../assets/svg/bin.svg";
+import Bin2Svg from "../../assets/svg/bin2.svg";
 import NotesSvg from "../../assets/svg/notes.svg";
 import TuneSvg from "../../assets/svg/tune.svg";
 import CheckSvg from "../../assets/svg/check.svg";
@@ -75,6 +76,7 @@ const mapIconToSvg = (icon) => {
     ThoughtsSvg,
     CrossSvg,
     BinSvg,
+    Bin2Svg,
     NotesSvg,
     PhoneSvg,
     GlobeSvg,

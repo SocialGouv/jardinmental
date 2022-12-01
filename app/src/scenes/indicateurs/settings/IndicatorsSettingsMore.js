@@ -33,7 +33,10 @@ export const IndicatorsSettingsMore = ({ navigation, route }) => {
   };
 
   const renderItem = useCallback(({ item: indicator, drag, isActive, index }) => {
-    return <IndicatorItem {...{ indicator, drag, isActive, index }} />;
+    const desactivateIndicateur = (uuid) => {
+      setIndicators((prev) => prev.map((i) => (i.uuid === uuid ? { ...i, active: false } : i)));
+    };
+    return <IndicatorItem {...{ indicator, drag, isActive, index, desactivateIndicateur }} />;
   }, []);
 
   const keyExtractor = useCallback((indicator) => indicator.uuid);
@@ -72,7 +75,7 @@ export const IndicatorsSettingsMore = ({ navigation, route }) => {
   );
 };
 
-const IndicatorItem = ({ indicator, drag, isActive, index }) => {
+const IndicatorItem = ({ indicator, drag, isActive, index, desactivateIndicateur }) => {
   return (
     <ScaleDecorator>
       <TouchableOpacity onLongPress={drag} disabled={isActive} delayLongPress={100}>
@@ -85,16 +88,15 @@ const IndicatorItem = ({ indicator, drag, isActive, index }) => {
             styleContainer={{ width: 16, height: 16 }}
           />
           <Text style={[itemStyles.label]}>{indicator?.name}</Text>
-          {/* <Button2
-        square
-        preset=""
-        type="clear"
-        icon="EditSvg"
-        textStyle={{ color: "#26387C" }}
-        style={{ backgroundColor: "#F8F9FB" }}
-        iconSize={16}
-        onPress={() => {}}
-      /> */}
+          <TouchableOpacity onPress={() => desactivateIndicateur(indicator.uuid)}>
+            <Icon
+              icon="Bin2Svg"
+              color="#26387C"
+              width="16"
+              height="16"
+              styleContainer={{ width: 16, height: 16 }}
+            />
+          </TouchableOpacity>
         </View>
       </TouchableOpacity>
     </ScaleDecorator>
@@ -114,6 +116,7 @@ const itemStyles = StyleSheet.create({
     alignItems: "center",
   },
   label: {
+    flex: 1,
     fontFamily: "Karla",
     fontWeight: "700",
     fontSize: 16,
