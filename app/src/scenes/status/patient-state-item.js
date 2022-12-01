@@ -9,7 +9,7 @@ import { colors } from "../../utils/colors";
 import Icon from "../../components/Icon";
 
 const PatientStateItem = ({ patientState, category, label }) => {
-  // console.log("✍️  patientState", patientState);
+  // console.log("✍️  patientState", JSON.stringify(patientState, null, 2));
   const [{ color, borderColor, faceIcon, iconColor }, setIcon] = useState({});
   const [userCommentVisible, setUserCommentVisible] = useState(false);
 
@@ -52,7 +52,29 @@ const PatientStateItem = ({ patientState, category, label }) => {
       );
     }
     if (patientState[category]?._indicateur?.type === "boolean") {
-      return <Text>{patientState[category]?.value}</Text>;
+      const _color = {
+        ASC: {
+          false: { text: "text-red-900", bg: "border-red-500 bg-red-500" },
+          true: { text: "text-green-900", bg: "border-green-500 bg-green-500" },
+        },
+        DESC: {
+          true: { text: "text-red-900", bg: "border-red-500 bg-red-500" },
+          false: { text: "text-green-900", bg: "border-green-500 bg-green-500" },
+        },
+      };
+
+      const _value = patientState[category]?.value;
+      const _label = typeof _value === "boolean" && !_value ? "Non" : "Oui";
+
+      return (
+        <View
+          className={`flex justify-center items-center h-10 w-10 mr-5 rounded-full ${
+            _color[patientState[category]?._indicateur?.order]?.[_value].bg
+          }`}
+        >
+          <Text className={_color[patientState[category]?._indicateur?.order]?.[_value].text}>{_label}</Text>
+        </View>
+      );
     }
     if (patientState[category]?._indicateur?.type === "gauge") {
       const _value = patientState[category]?.value;
