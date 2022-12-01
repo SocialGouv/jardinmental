@@ -8,6 +8,7 @@ import Text from "../../../components/MyText";
 import CircledIcon from "../../../components/CircledIcon";
 import { answers } from "../../survey/utils";
 import YesNoIndicator from "../../../components/YesNoIndicator";
+import Gauge from "../../../components/gauge";
 const screenWidth = Dimensions.get("window").width;
 import localStorage from "../../../utils/localStorage";
 import { v4 as uuidv4 } from "uuid";
@@ -46,7 +47,6 @@ const ChooseIndicatorOrder = ({ navigation, route }) => {
       <View style={styles.container}>
         <View style={styles.topContainer}>
           <Text style={styles.topTitle}>{route.params.nameNewIndicator}</Text>
-
           <RenderCurrentIndicator
             indicatorType={route.params.indicatorType}
             itensity
@@ -164,11 +164,12 @@ const RenderCurrentIndicator = ({ indicatorType, itensity, direction = "ASC", si
       );
 
     case "gauge":
+      const reverse = direction === "DESC";
       return (
-        <>
-          {/* TODO: add gauge */}
+        <View className="w-full">
+          <Gauge hideSlider defaultValue={1} reverse={reverse} />
           {itensity && <Intensity />}
-        </>
+        </View>
       );
 
     case "boolean":

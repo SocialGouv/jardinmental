@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import LinearGradient from "react-native-linear-gradient";
-import MaskedView from "@react-native-community/masked-view";
+import MaskedView from "@react-native-masked-view/masked-view";
 import { Slider } from "@miblanchard/react-native-slider";
 
 import { StyleSheet, View } from "react-native";
@@ -14,23 +14,30 @@ const styles = StyleSheet.create({
   gaugeGrey: {},
 });
 
-const Mask = ({ unit, value }) => {
+const Mask = ({ width, value, reverse }) => {
   const numberOfBars = 24;
-  const widthBar = (unit / (numberOfBars - 1)) * 0.4;
+  const widthBar = (width / (numberOfBars - 1)) * 0.4;
   const marginBar =
-    (unit / (numberOfBars - 1)) * 0.6 + ((unit / (numberOfBars - 1)) * 0.6) / (numberOfBars - 1);
+    (width / (numberOfBars - 1)) * 0.6 + ((width / (numberOfBars - 1)) * 0.6) / (numberOfBars - 1);
   const unitWidth = widthBar + marginBar;
   const arrayBarsIndex = [...Array(numberOfBars).keys()];
-  const widthGreyMask = unitWidth * arrayBarsIndex.slice().reverse()[Math.floor(value * (24 / 100) * 100)];
+  const widthGreyMask =
+    unitWidth *
+    arrayBarsIndex.slice().reverse()[
+      Math.min(arrayBarsIndex.length - 1, Math.floor(value * (numberOfBars / 100) * 100))
+    ];
+
+  const colors = reverse
+    ? ["#5DEE5A", "#F2F478", "#F2F478", "#F16B6B"]
+    : ["#F16B6B", "#F2F478", "#F2F478", "#5DEE5A"];
 
   return (
     <MaskedView
       style={{
-        width: unit,
-        height: unit * HEIGHT_RATIO_GAUGE,
+        width: width,
+        height: width * HEIGHT_RATIO_GAUGE,
         flex: 1,
         flexDirection: "row",
-        height: "100%",
       }}
       maskElement={
         <View
@@ -49,8 +56,8 @@ const Mask = ({ unit, value }) => {
                 borderRadius: 999,
                 width: widthBar,
                 height:
-                  unit * HEIGHT_RATIO_GAUGE * 0.2 +
-                  unit * HEIGHT_RATIO_GAUGE * ((n * (80 / (numberOfBars - 1))) / 100), // height * 0.2 + height * [0 to 0.8]
+                  width * HEIGHT_RATIO_GAUGE * 0.2 +
+                  width * HEIGHT_RATIO_GAUGE * ((n * (80 / (numberOfBars - 1))) / 100), // height * 0.2 + height * [0 to 0.8]
                 backgroundColor: "#000", // backgroundColor needed to make the mask work
                 marginRight: n == numberOfBars - 1 ? 0 : marginBar, // no margin right on the last one
               }}
@@ -60,8 +67,8 @@ const Mask = ({ unit, value }) => {
       }
     >
       <LinearGradient
-        colors={["#F16B6B", "#F2F478", "#F2F478", "#5DEE5A"]}
-        angle={-90}
+        colors={colors}
+        angle={90}
         useAngle={true}
         locations={[0, 0.479167, 0.526042, 1]}
         style={{ flex: 1 }}
@@ -80,22 +87,36 @@ const Mask = ({ unit, value }) => {
   );
 };
 
-const Gauge = ({}) => {
-  const [value, setValue] = useState(0);
-  return (
-    <>
-      <View style={styles.gaugeContainer}>
-        <Mask unit={screenWidth} value={value} />
-      </View>
+const Gauge = ({ hideSlider = false, defaultValue = 0, onChange, reverse }) => {
+  const [value, setValue] = useState(defaultValue);
+  const [width, setWidth] = useState(0);
 
-      <Slider
-        value={value}
-        onValueChange={setValue}
-        maximumTrackTintColor={"#26387C"}
-        minimumTrackTintColor={"#26387C"}
-        thumbTintColor={"#26387C"}
-      />
-    </>
+  const handleChange = (v) => {
+    console.log(v);
+    setValue(v);
+    onChange?.(v);
+  };
+
+  return (
+    <View
+      onLayout={(event) => {
+        const layout = event.nativeEvent.layout;
+        setWidth(layout.width);
+      }}
+    >
+      <View style={styles.gaugeContainer}>
+        <Mask width={width} value={value} reverse={reverse} />
+      </View>
+      {hideSlider ? null : (
+        <Slider
+          value={value}
+          onValueChange={handleChange}
+          maximumTrackTintColor={"#26387C"}
+          minimumTrackTintColor={"#26387C"}
+          thumbTintColor={"#26387C"}
+        />
+      )}
+    </View>
   );
 };
 

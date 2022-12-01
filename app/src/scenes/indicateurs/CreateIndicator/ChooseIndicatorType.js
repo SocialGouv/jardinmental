@@ -9,6 +9,7 @@ import ArrowRightSvg from "../../../../assets/svg/arrow-right";
 import CircledIcon from "../../../components/CircledIcon";
 import { answers } from "../../survey/utils";
 import YesNoIndicator from "../../../components/YesNoIndicator";
+import Gauge from "../../../components/gauge";
 
 const ChooseIndicatorType = ({ navigation, route }) => {
   return (
@@ -65,6 +66,7 @@ const ChooseIndicatorType = ({ navigation, route }) => {
         >
           <View style={styles.typeInside}>
             <Text style={styles.typeTitle}>Avec une jauge</Text>
+            <Gauge hideSlider defaultValue={1} />
           </View>
           <ArrowRightSvg color="#26387C" style={{ marginLeft: 20 }} />
         </TouchableOpacity>
