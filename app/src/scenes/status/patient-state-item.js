@@ -9,6 +9,7 @@ import { colors } from "../../utils/colors";
 import Icon from "../../components/Icon";
 
 const PatientStateItem = ({ patientState, category, label }) => {
+  // console.log("✍️  patientState", patientState);
   const [{ color, borderColor, faceIcon, iconColor }, setIcon] = useState({});
   const [userCommentVisible, setUserCommentVisible] = useState(false);
 
@@ -28,6 +29,17 @@ const PatientStateItem = ({ patientState, category, label }) => {
       } else {
         _icon = scoresMapIcon[patientState[category]?.value];
       }
+      if (!_icon.color && !_icon.faceIcon)
+        return (
+          <CircledIcon
+            color="#cccccc"
+            borderColor="#999999"
+            iconColor="#888888"
+            icon="QuestionMarkSvg"
+            iconWidth={32}
+            iconHeight={32}
+          />
+        );
       return (
         <CircledIcon
           color={_icon.color}
@@ -39,25 +51,36 @@ const PatientStateItem = ({ patientState, category, label }) => {
         />
       );
     }
+    if (patientState[category]?._indicateur?.type === "boolean") {
+      return <Text>{patientState[category]?.value}</Text>;
+    }
+    if (patientState[category]?._indicateur?.type === "gauge") {
+      const _value = patientState[category]?.value;
+      const _color =
+        _value < 0.2
+          ? "#F16B6B"
+          : _value < 0.4
+          ? "#FEAA5B"
+          : _value < 0.6
+          ? "#F2F478"
+          : _value < 0.8
+          ? "#ACF352"
+          : "#5DEE5A";
+      return (
+        <View className="flex flex-row space-x-2 items-end mr-7">
+          <View className="h-2 rounded-full w-1" style={{ backgroundColor: _color }} />
+          <View className="h-5 rounded-full w-1" style={{ backgroundColor: _color }} />
+          <View className="h-8 rounded-full w-1" style={{ backgroundColor: _color }} />
+        </View>
+      );
+    }
     return <View />;
   };
 
   const content = (
     <View>
       <View style={styles.container}>
-        {color && faceIcon ? (
-          renderResponse()
-        ) : (
-          <CircledIcon
-            color="#cccccc"
-            borderColor="#999999"
-            iconColor="#888888"
-            icon="QuestionMarkSvg"
-            iconWidth={32}
-            iconHeight={32}
-          />
-        )}
-
+        {renderResponse()}
         <View style={styles.labelContainer}>
           <Text style={styles.label}>{label}</Text>
         </View>
