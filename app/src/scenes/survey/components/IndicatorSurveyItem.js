@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import CircledIcon from "../../../components/CircledIcon";
+import { StyleSheet, Text, View } from "react-native";
 import { InputText } from "../../../components/InputText";
-import { answers as emojis } from "../utils";
 
 import { Smiley } from "./Smiley";
+import Gauge from "../../../components/gauge";
 
 export const IndicatorSurveyItem = ({
   indicator,
@@ -22,8 +21,21 @@ export const IndicatorSurveyItem = ({
   }, [comment]);
 
   const renderInput = () => {
-    if (indicator?.type === "smiley") {
-      return <Smiley indicator={indicator} value={value} onValueChanged={onValueChanged} />;
+    switch (indicator?.type) {
+      case "smiley":
+        return <Smiley indicator={indicator} value={value} onValueChanged={onValueChanged} />;
+      case "gauge":
+        return (
+          <Gauge
+            defaultValue={value}
+            onChange={(v) => onValueChanged({ indicator, value: v })}
+            reverse={indicator?.order === "DESC"}
+          />
+        );
+      default:
+        <View>
+          <Text>pas encore geré</Text>
+        </View>;
     }
     return (
       <View>

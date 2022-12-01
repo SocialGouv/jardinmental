@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import LinearGradient from "react-native-linear-gradient";
 import MaskedView from "@react-native-masked-view/masked-view";
 import { Slider } from "@miblanchard/react-native-slider";
 
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 import { screenWidth } from "../../scenes/onboarding/screens";
 const HEIGHT_RATIO_GAUGE = 48 / 256;
 
@@ -94,8 +94,12 @@ const Gauge = ({ hideSlider = false, defaultValue = 0, onChange, reverse }) => {
   const handleChange = (v) => {
     console.log(v);
     setValue(v);
-    onChange?.(v);
+    onChange?.(v[0]);
   };
+
+  useEffect(() => {
+    setValue(defaultValue);
+  }, [defaultValue]);
 
   return (
     <View
@@ -107,6 +111,7 @@ const Gauge = ({ hideSlider = false, defaultValue = 0, onChange, reverse }) => {
       <View style={styles.gaugeContainer}>
         <Mask width={width} value={value} reverse={reverse} />
       </View>
+      {/* <Text>{defaultValue}</Text> */}
       {hideSlider ? null : (
         <Slider
           value={value}

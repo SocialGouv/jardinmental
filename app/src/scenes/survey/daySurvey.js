@@ -77,12 +77,21 @@ const DaySurvey = ({ navigation, route }) => {
         category: key,
       });
       const cleanedQuestionId = key.split("_")[0];
-      if (userIndicateurs.find((i) => i.name === cleanedQuestionId)) {
-        toggleAnswer({ key: cleanedQuestionId, value: score });
-        handleChangeUserComment({
-          key: cleanedQuestionId,
-          userComment: initSurvey?.answers[cleanedQuestionId]?.userComment,
-        });
+      const _indicateur = userIndicateurs.find((i) => i.name === cleanedQuestionId);
+      if (_indicateur) {
+        if (_indicateur.type === "gauge") {
+          toggleAnswer({ key: cleanedQuestionId, value: initSurvey?.answers[key]?.value });
+          handleChangeUserComment({
+            key: cleanedQuestionId,
+            userComment: initSurvey?.answers[cleanedQuestionId]?.userComment,
+          });
+        } else {
+          toggleAnswer({ key: cleanedQuestionId, value: score });
+          handleChangeUserComment({
+            key: cleanedQuestionId,
+            userComment: initSurvey?.answers[cleanedQuestionId]?.userComment,
+          });
+        }
       }
     });
     if ((initSurvey?.answers || {})[questionToxic.id]) {
@@ -200,15 +209,6 @@ const DaySurvey = ({ navigation, route }) => {
           {userIndicateurs
             .filter((ind) => ind.active)
             .map((ind) => (
-              // <Question
-              //   key={ind.uuid}
-              //   indicateur={ind}
-              //   onPress={toggleAnswer}
-              //   selected={answers[ind.name]?.value}
-              //   explanation={ind.explanation}
-              //   onChangeUserComment={handleChangeUserComment}
-              //   userComment={answers[ind.name]?.userComment}
-              // />
               <IndicatorSurveyItem
                 key={ind?.uuid}
                 indicator={ind}
