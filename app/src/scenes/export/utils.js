@@ -332,9 +332,9 @@ const formatHtmlTable = async (diaryData, diaryNotes) => {
     return category;
   };
 
-  let customsSymptoms = await localStorage.getCustomSymptoms();
-
   const drugListWithLocalStorage = await getDrugListWithLocalStorage();
+
+  const user_indicateurs = await localStorage.getIndicateurs();
 
   return `
   <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -363,21 +363,16 @@ const formatHtmlTable = async (diaryData, diaryNotes) => {
         <h1 style="text-align:center;color: ${colors.BLUE}">Mes données de Jardin Mental</h1>
         <h2 style="color: ${colors.BLUE}">Mon état et mon traitement</h2>
         <h3 style="color: ${colors.BLUE}">Mes ressentis</h3>
-        ${Object.keys(categories)
-          .concat(customsSymptoms)
-          .concat(Object.keys(INDICATEURS))
+        ${user_indicateurs
+          ?.filter((ind) => isChartVisible(ind.name) && ind.active)
           .reduce((acc, curr) => {
-            if (!acc.find((a) => a === curr)) {
-              acc.push(curr);
+            if (!acc.find((a) => a === curr.name)) {
+              acc.push(curr.name);
             }
             return acc;
           }, [])
           .map((categoryId) => {
             const res = computeChartData(categoryId);
-
-            if (!isChartVisible(categoryId)) {
-              return "";
-            }
 
             return `
               <table width="100%" style="width: 100%; max-width: 100%;">
