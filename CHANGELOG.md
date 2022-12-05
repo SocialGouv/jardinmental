@@ -1,3 +1,10 @@
+## [1.40.4](https://github.com/SocialGouv/jardinmental/compare/v1.40.3...v1.40.4) (2022-12-05)
+
+
+### Bug Fixes
+
+* export indicateurs v2 ([78e2c1c](https://github.com/SocialGouv/jardinmental/commit/78e2c1c21aa9eef741c8fda10c476a227af4f9a9))
+
 ## [1.40.3](https://github.com/SocialGouv/jardinmental/compare/v1.40.2...v1.40.3) (2022-11-28)
 
 
