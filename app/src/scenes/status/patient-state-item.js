@@ -54,12 +54,12 @@ const PatientStateItem = ({ patientState, category, label }) => {
     if (patientState[category]?._indicateur?.type === "boolean") {
       const _color = {
         ASC: {
-          false: { text: "text-red-900", bg: "border-red-500 bg-red-500" },
-          true: { text: "text-green-900", bg: "border-green-500 bg-green-500" },
+          false: { text: "text-white", bg: "border-red-400 bg-red-400" },
+          true: { text: "text-white", bg: "border-green-400 bg-green-400" },
         },
         DESC: {
-          true: { text: "text-red-900", bg: "border-red-500 bg-red-500" },
-          false: { text: "text-green-900", bg: "border-green-500 bg-green-500" },
+          true: { text: "text-white", bg: "border-red-400 bg-red-400" },
+          false: { text: "text-white", bg: "border-green-400 bg-green-400" },
         },
       };
 
@@ -69,27 +69,29 @@ const PatientStateItem = ({ patientState, category, label }) => {
       return (
         <View
           className={`flex justify-center items-center h-10 w-10 mr-5 rounded-full ${
-            _color[patientState[category]?._indicateur?.order]?.[_value].bg
+            _color[patientState[category]?._indicateur?.order]?.[_value]?.bg
           }`}
         >
-          <Text className={_color[patientState[category]?._indicateur?.order]?.[_value].text}>{_label}</Text>
+          <Text className={_color[patientState[category]?._indicateur?.order]?.[_value]?.text}>{_label}</Text>
         </View>
       );
     }
     if (patientState[category]?._indicateur?.type === "gauge") {
       const _value = patientState[category]?.value;
-      const _color =
-        _value < 0.2
-          ? "#F16B6B"
-          : _value < 0.4
-          ? "#FEAA5B"
-          : _value < 0.6
-          ? "#F2F478"
-          : _value < 0.8
-          ? "#ACF352"
-          : "#5DEE5A";
+      const _colors =
+        patientState[category]?._indicateur?.order === "DESC"
+          ? ["#5DEE5A", "#ACF352", "#F2F478", "#FEAA5B", "#F16B6B"]
+          : ["#F16B6B", "#FEAA5B", "#F2F478", "#ACF352", "#5DEE5A"];
+
+      let _color;
+      if (_value < 0.2) _color = _colors[0];
+      if (_value >= 0.2 && _value < 0.4) _color = _colors[1];
+      if (_value >= 0.4 && _value < 0.6) _color = _colors[2];
+      if (_value >= 0.6 && _value < 0.8) _color = _colors[3];
+      if (_value >= 0.8) _color = _colors[4];
+
       return (
-        <View className="flex flex-row space-x-2 items-end mr-7">
+        <View className="flex flex-row justify-center w-10 space-x-2 items-end mr-5">
           <View className="h-2 rounded-full w-1" style={{ backgroundColor: _color }} />
           <View className="h-5 rounded-full w-1" style={{ backgroundColor: _color }} />
           <View className="h-8 rounded-full w-1" style={{ backgroundColor: _color }} />
@@ -104,7 +106,10 @@ const PatientStateItem = ({ patientState, category, label }) => {
       <View style={styles.container}>
         {renderResponse()}
         <View style={styles.labelContainer}>
-          <Text style={styles.label}>{label}</Text>
+          <Text style={styles.label}>
+            {label}
+            {/* -{patientState[category]?.value} */}
+          </Text>
         </View>
         {isTouchable() ? (
           <Icon

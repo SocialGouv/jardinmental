@@ -88,7 +88,7 @@ export default ({ navigation, indicateurs, patientState, goalsData, date }) => {
         <View style={[styles.item, styles.itemWithSpaceAbove]}>
           <View>
             {patientStateRecords.map(([key, value]) => {
-              if (!value) {
+              if (!value || (!value.value && typeof value.value !== "boolean")) {
                 return;
               }
               const [categoryName] = key.split("_");

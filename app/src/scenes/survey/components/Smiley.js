@@ -38,6 +38,7 @@ export const Smiley = ({ indicator, value, onValueChanged }) => {
                   iconWidth={32}
                   iconHeight={32}
                 />
+                {/* <Text>{emoji?.score}</Text> */}
               </View>
             </TouchableOpacity>
           );

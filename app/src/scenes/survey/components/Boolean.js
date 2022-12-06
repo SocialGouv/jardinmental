@@ -5,12 +5,12 @@ import Text from "../../../components/MyText";
 export const Boolean = ({ indicator, value, onChange }) => {
   const color = {
     ASC: {
-      false: { text: "text-red-900", bg: "border-red-500 bg-red-500" },
-      true: { text: "text-green-900", bg: "border-green-500 bg-green-500" },
+      false: { text: "text-white", bg: "border-red-400 bg-red-400" },
+      true: { text: "text-white", bg: "border-green-400 bg-green-400" },
     },
     DESC: {
-      true: { text: "text-red-900", bg: "border-red-500 bg-red-500" },
-      false: { text: "text-green-900", bg: "border-green-500 bg-green-500" },
+      true: { text: "text-white", bg: "border-red-400 bg-red-400" },
+      false: { text: "text-white", bg: "border-green-400 bg-green-400" },
     },
   };
 
