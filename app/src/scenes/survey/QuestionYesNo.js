@@ -25,7 +25,15 @@ const QuestionYesNo = ({
   }, [userComment]);
 
   return (
-    <View style={styles.questionContainer}>
+    <View
+      style={[
+        styles.questionContainer,
+        {
+          backgroundColor: typeof selected === "boolean" ? "#F0FFF0" : "#F8F9FB",
+          borderColor: typeof selected === "boolean" ? "#D0E8D0" : "#E7EAF1",
+        },
+      ]}
+    >
       <TouchableOpacity onPress={toggleShowExplanation}>
         <View style={styles.questionHeader}>
           {explanation ? (

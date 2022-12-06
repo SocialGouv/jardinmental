@@ -22,7 +22,15 @@ const Question = ({
   }, [userComment]);
 
   return (
-    <View style={styles.questionContainer}>
+    <View
+      style={[
+        styles.questionContainer,
+        {
+          backgroundColor: text !== undefined && text?.length > 0 ? "#F0FFF0" : "#F8F9FB",
+          borderColor: text !== undefined && text?.length > 0 ? "#D0E8D0" : "#E7EAF1",
+        },
+      ]}
+    >
       <TouchableOpacity onPress={toggleShowExplanation}>
         <View style={styles.questionHeader}>
           {explanation ? (
