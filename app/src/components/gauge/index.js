@@ -10,22 +10,16 @@ const HEIGHT_RATIO_GAUGE = 48 / 256;
 const styles = StyleSheet.create({
   gaugeContainer: {
     height: screenWidth * HEIGHT_RATIO_GAUGE,
+    marginHorizontal: 10,
   },
-  gaugeGrey: {},
 });
 
 const Mask = ({ width, value, reverse }) => {
   const numberOfBars = 24;
   const widthBar = (width / (numberOfBars - 1)) * 0.4;
-  const marginBar =
-    (width / (numberOfBars - 1)) * 0.6 + ((width / (numberOfBars - 1)) * 0.6) / (numberOfBars - 1);
-  const unitWidth = widthBar + marginBar;
+  const marginRightBar = (width - numberOfBars * widthBar) / (numberOfBars - 1);
   const arrayBarsIndex = [...Array(numberOfBars).keys()];
-  const widthGreyMask =
-    unitWidth *
-    arrayBarsIndex.slice().reverse()[
-      Math.min(arrayBarsIndex.length - 1, Math.floor(value * (numberOfBars / 100) * 100))
-    ];
+  const widthGreyMask = width - width * value;
 
   const colors = reverse
     ? ["#5DEE5A", "#F2F478", "#F2F478", "#F16B6B"]
@@ -34,7 +28,7 @@ const Mask = ({ width, value, reverse }) => {
   return (
     <MaskedView
       style={{
-        width: width,
+        width: "100%",
         height: width * HEIGHT_RATIO_GAUGE,
         flex: 1,
         flexDirection: "row",
@@ -59,7 +53,7 @@ const Mask = ({ width, value, reverse }) => {
                   width * HEIGHT_RATIO_GAUGE * 0.2 +
                   width * HEIGHT_RATIO_GAUGE * ((n * (80 / (numberOfBars - 1))) / 100), // height * 0.2 + height * [0 to 0.8]
                 backgroundColor: "#000", // backgroundColor needed to make the mask work
-                marginRight: n == numberOfBars - 1 ? 0 : marginBar, // no margin right on the last one
+                marginRight: n === arrayBarsIndex.length - 1 ? 0 : marginRightBar, // no margin right on the last one
               }}
             />
           ))}
@@ -92,8 +86,7 @@ const Gauge = ({ hideSlider = false, defaultValue = 0, onChange, reverse }) => {
   const [width, setWidth] = useState(0);
 
   const handleChange = (v) => {
-    console.log(v);
-    setValue(v);
+    setValue(v[0]);
     onChange?.(v[0]);
   };
 
@@ -105,7 +98,7 @@ const Gauge = ({ hideSlider = false, defaultValue = 0, onChange, reverse }) => {
     <View
       onLayout={(event) => {
         const layout = event.nativeEvent.layout;
-        setWidth(layout.width);
+        setWidth(layout.width - 20);
       }}
     >
       <View style={styles.gaugeContainer}>
@@ -116,9 +109,10 @@ const Gauge = ({ hideSlider = false, defaultValue = 0, onChange, reverse }) => {
         <Slider
           value={value}
           onValueChange={handleChange}
-          maximumTrackTintColor={"#26387C"}
-          minimumTrackTintColor={"#26387C"}
+          maximumTrackTintColor={"#D9DBE0"}
+          minimumTrackTintColor={"#26387c"}
           thumbTintColor={"#26387C"}
+          renderThumbComponent={() => <View className="h-5 w-5 bg-[#26387c] rounded-full" />}
         />
       )}
     </View>
