@@ -85,6 +85,12 @@ const DaySurvey = ({ navigation, route }) => {
             key: cleanedQuestionId,
             userComment: initSurvey?.answers[cleanedQuestionId]?.userComment,
           });
+        } else if (_indicateur.type === "boolean") {
+          toggleAnswer({ key: cleanedQuestionId, value: initSurvey?.answers[key]?.value });
+          handleChangeUserComment({
+            key: cleanedQuestionId,
+            userComment: initSurvey?.answers[cleanedQuestionId]?.userComment,
+          });
         } else {
           toggleAnswer({ key: cleanedQuestionId, value: score });
           handleChangeUserComment({
