@@ -18,7 +18,6 @@ export const IndicatorsSettingsMore = ({ navigation, route }) => {
     useCallback(() => {
       (async () => {
         let _indicators = await localStorage.getIndicateurs();
-        _indicators = _indicators.filter((indicator) => indicator.active);
         setIndicators(_indicators);
       })();
     }, [])
@@ -33,10 +32,7 @@ export const IndicatorsSettingsMore = ({ navigation, route }) => {
   };
 
   const renderItem = useCallback(({ item: indicator, drag, isActive, index }) => {
-    const desactivateIndicateur = (uuid) => {
-      setIndicators((prev) => prev.map((i) => (i.uuid === uuid ? { ...i, active: false } : i)));
-    };
-    return <IndicatorItem {...{ indicator, drag, isActive, index, desactivateIndicateur }} />;
+    return <IndicatorItem {...{ indicator, drag, isActive, index, setIndicators }} />;
   }, []);
 
   const keyExtractor = useCallback((indicator) => indicator.uuid, []);
@@ -50,7 +46,7 @@ export const IndicatorsSettingsMore = ({ navigation, route }) => {
       ScrollComponent={DraggableFlatList}
       scrollAsFlatList={true}
       scrollProps={{
-        data: indicators,
+        data: indicators.filter((indicator) => indicator.active),
         renderItem,
         keyExtractor,
         onDragEnd: (data) => setIndicators(data?.data),
@@ -75,7 +71,7 @@ export const IndicatorsSettingsMore = ({ navigation, route }) => {
   );
 };
 
-const IndicatorItem = ({ indicator, drag, isActive, index, desactivateIndicateur }) => {
+const IndicatorItem = ({ indicator, drag, isActive, index, setIndicators }) => {
   return (
     <ScaleDecorator>
       <TouchableOpacity onLongPress={drag} disabled={isActive} delayLongPress={100}>
@@ -88,7 +84,13 @@ const IndicatorItem = ({ indicator, drag, isActive, index, desactivateIndicateur
             styleContainer={{ width: 16, height: 16 }}
           />
           <Text style={[itemStyles.label]}>{indicator?.name}</Text>
-          <TouchableOpacity onPress={() => desactivateIndicateur(indicator.uuid)}>
+          <TouchableOpacity
+            onPress={() =>
+              setIndicators((prev) =>
+                prev.map((i) => (i.uuid === indicator.uuid ? { ...i, active: false } : i))
+              )
+            }
+          >
             <Icon
               icon="Bin2Svg"
               color="#26387C"
