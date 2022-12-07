@@ -39,7 +39,7 @@ export const IndicatorsSettingsMore = ({ navigation, route }) => {
     return <IndicatorItem {...{ indicator, drag, isActive, index, desactivateIndicateur }} />;
   }, []);
 
-  const keyExtractor = useCallback((indicator) => indicator.uuid);
+  const keyExtractor = useCallback((indicator) => indicator.uuid, []);
 
   return (
     <Screen

@@ -11,6 +11,7 @@ import Text from "../../components/MyText";
 import HeartBubble from "../../../assets/svg/HeartBubble";
 import { useFocusEffect } from "@react-navigation/native";
 import { Button2 } from "../../components/Button2";
+import { Card } from "../../components/Card";
 
 const CustomSymptomScreen = ({ navigation, route, settings = false }) => {
   const [chosenCategories, setChosenCategories] = useState();
@@ -111,16 +112,11 @@ const CustomSymptomScreen = ({ navigation, route, settings = false }) => {
         keyboardDismissMode="on-drag"
         onScrollBeginDrag={Keyboard.dismiss}
       >
-        <View style={styles.personnalizeContainer}>
-          <HeartBubble size={40} />
-          <View style={styles.personnalizeTextContainer}>
-            <Text style={styles.personnalizeTitle}>Personnaliser mon questionnaire</Text>
-            <Text style={styles.personnalizeText}>
-              Gérez vos indicateurs, ajoutez-en de nouveaux et choisissez la manière dont vous les évaluez !
-            </Text>
-          </View>
-        </View>
-
+        <Card
+          title="Personnaliser mon questionnaire"
+          text="Gérez vos indicateurs, ajoutez-en de nouveaux et choisissez la manière dont vous les évaluez !"
+          image={{ source: require("./../../../assets/imgs/indicateur.png") }}
+        />
         <View style={styles.sectionRowContainer}>
           <View>
             <Text style={styles.headerText}>Mes indicateurs</Text>
@@ -136,7 +132,7 @@ const CustomSymptomScreen = ({ navigation, route, settings = false }) => {
             .filter((_indicateur) => _indicateur.active)
             .map((_indicateur) => {
               return (
-                <View key={_indicateur.id} style={styles.indicatorItem}>
+                <View key={_indicateur.uuid} style={styles.indicatorItem}>
                   <Text>{_indicateur.name}</Text>
                 </View>
               );
