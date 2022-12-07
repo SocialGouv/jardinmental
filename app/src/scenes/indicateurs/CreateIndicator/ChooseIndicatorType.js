@@ -1,7 +1,6 @@
 import React from "react";
-import { StyleSheet, View, SafeAreaView, TouchableOpacity } from "react-native";
+import { StyleSheet, View, TouchableOpacity } from "react-native";
 
-import BackButton from "../../../components/BackButton";
 import { colors } from "../../../utils/colors";
 
 import Text from "../../../components/MyText";
@@ -10,21 +9,26 @@ import CircledIcon from "../../../components/CircledIcon";
 import { answers } from "../../survey/utils";
 import YesNoIndicator from "../../../components/YesNoIndicator";
 import Gauge from "../../../components/gauge";
+import { Screen } from "../../../components/Screen";
+import { InputLabel } from "../../../components/InputLabel";
 
 const ChooseIndicatorType = ({ navigation, route }) => {
   return (
-    <SafeAreaView style={styles.safe}>
-      <View style={styles.header}>
-        <BackButton style={styles.headerBackButton} onPress={navigation.goBack} />
-        <View style={styles.headerTextContainer}>
-          <Text style={styles.headerText}>Créer un indicateur</Text>
-        </View>
-      </View>
-
-      <View style={styles.container}>
-        <Text style={styles.title}>Comment souhaitez-vous évaluer votre indicateur ?</Text>
-        <Text style={styles.subtitle}>Choisissez parmi les 3 critères d’évaluation suivants</Text>
-
+    <Screen
+      header={{
+        title: "Créer un indicateur",
+        leftButton: {
+          icon: "ArrowUpSvg",
+          iconStyle: { transform: [{ rotate: "270deg" }] },
+          onPress: navigation.goBack,
+        },
+      }}
+    >
+      <InputLabel style={styles.spacing}>Comment souhaitez-vous évaluer votre indicateur ?</InputLabel>
+      <InputLabel style={styles.spacingBottom} sublabel>
+        Choisissez parmi les 3 critères d’évaluation suivants
+      </InputLabel>
+      <View className="w-full" style={styles.container}>
         <TouchableOpacity
           style={styles.typeContainer}
           onPress={() => {
@@ -87,11 +91,17 @@ const ChooseIndicatorType = ({ navigation, route }) => {
           <ArrowRightSvg color="#26387C" style={{ marginLeft: 20 }} />
         </TouchableOpacity>
       </View>
-    </SafeAreaView>
+    </Screen>
   );
 };
 
 const styles = StyleSheet.create({
+  spacing: {
+    marginVertical: 8,
+  },
+  spacingBottom: {
+    marginBottom: 8,
+  },
   title: {
     fontSize: 18,
     marginTop: 25,
@@ -112,6 +122,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 20,
     marginBottom: 20,
+    width: "100%",
   },
   typeInside: {
     flex: 1,
@@ -134,8 +145,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   container: {
-    paddingHorizontal: 20,
-    backgroundColor: "white",
+    alignItems: "flex-start",
   },
 
   headerText: {

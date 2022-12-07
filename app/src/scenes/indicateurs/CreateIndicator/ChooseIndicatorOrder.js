@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { StyleSheet, View, SafeAreaView, TouchableOpacity, Dimensions } from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, View, TouchableOpacity, Dimensions } from "react-native";
 
-import BackButton from "../../../components/BackButton";
 import { colors } from "../../../utils/colors";
-import Button from "../../../components/Button";
+
 import Text from "../../../components/MyText";
 import CircledIcon from "../../../components/CircledIcon";
 import { answers } from "../../survey/utils";
@@ -12,6 +11,8 @@ import Gauge from "../../../components/gauge";
 const screenWidth = Dimensions.get("window").width;
 import localStorage from "../../../utils/localStorage";
 import { v4 as uuidv4 } from "uuid";
+import { Screen } from "../../../components/Screen";
+import { Button2 } from "../../../components/Button2";
 
 const ChooseIndicatorOrder = ({ navigation, route }) => {
   const [indicatorDirection, setIndicatorDirection] = useState("ASC"); // ASC : first direction (red to green) ; DESC : second direction (green to red)
@@ -36,15 +37,18 @@ const ChooseIndicatorOrder = ({ navigation, route }) => {
   };
 
   return (
-    <SafeAreaView style={styles.safe}>
-      <View style={styles.header}>
-        <BackButton style={styles.headerBackButton} onPress={navigation.goBack} />
-        <View style={styles.headerTextContainer}>
-          <Text style={styles.headerText}>Créer un indicateur</Text>
-        </View>
-      </View>
-
-      <View style={styles.container}>
+    <Screen
+      header={{
+        title: "Créer un indicateur",
+        leftButton: {
+          icon: "ArrowUpSvg",
+          iconStyle: { transform: [{ rotate: "270deg" }] },
+          onPress: navigation.goBack,
+        },
+      }}
+      bottomChildren={<Button2 fill title="Créer mon indicateur" onPress={onValidate} loading={loading} />}
+    >
+      <View className="w-full">
         <View style={styles.topContainer}>
           <Text style={styles.topTitle}>{route.params.nameNewIndicator}</Text>
           <RenderCurrentIndicator
@@ -105,17 +109,7 @@ const ChooseIndicatorOrder = ({ navigation, route }) => {
           </View>
         </TouchableOpacity>
       </View>
-
-      {/* TODO: add navigation */}
-      <View style={styles.bottomButtonsContainer}>
-        <Button
-          buttonStyle={{ backgroundColor: "#1FC6D5", marginBottom: 20 }}
-          textStyle={{ color: "white", textAlign: "center" }}
-          onPress={onValidate}
-          title="Créer mon indicateur"
-        />
-      </View>
-    </SafeAreaView>
+    </Screen>
   );
 };
 
@@ -144,7 +138,7 @@ const RenderCurrentIndicator = ({ indicatorType, itensity, direction = "ASC", si
       const answerDirection = direction === "ASC" ? answers : answers.slice().reverse();
       return (
         <>
-          <View style={styles.smileysContainer}>
+          <View className="w-full" style={styles.smileysContainer}>
             {answerDirection.map((answer) => (
               <View key={answer.score} style={{}}>
                 <CircledIcon
@@ -285,15 +279,11 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
-    width: "100%",
+    // width: "100%",
   },
 
   safe: {
     flex: 1,
-    backgroundColor: "white",
-  },
-  container: {
-    paddingHorizontal: 20,
     backgroundColor: "white",
   },
 
