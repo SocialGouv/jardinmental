@@ -73,6 +73,9 @@ export const GoalCheckboxItem = ({ goal, index, checked, comment, onCheckedChang
               _setComment(nextComment);
               onCommentChanged?.({ comment: nextComment, goal });
             }}
+            multiline={true}
+            textAlignVertical="top"
+            className="p-0" // remove space that multiline adds
           />
         </View>
       </Pressable>
