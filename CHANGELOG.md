@@ -1,3 +1,10 @@
+## [1.40.5](https://github.com/SocialGouv/jardinmental/compare/v1.40.4...v1.40.5) (2022-12-08)
+
+
+### Bug Fixes
+
+* multiline in survey ([1e57e73](https://github.com/SocialGouv/jardinmental/commit/1e57e7316e9e83f99d20fa84e883396e1d1bbbbf))
+
 ## [1.40.4](https://github.com/SocialGouv/jardinmental/compare/v1.40.3...v1.40.4) (2022-12-05)
 
 
