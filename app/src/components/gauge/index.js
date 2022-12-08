@@ -113,6 +113,7 @@ const Gauge = ({ hideSlider = false, defaultValue = 0, onChange, reverse }) => {
           minimumTrackTintColor={"#26387c"}
           thumbTintColor={"#26387C"}
           renderThumbComponent={() => <View className="h-5 w-5 bg-[#26387c] rounded-full" />}
+          trackStyle={{ marginHorizontal: 10 }}
         />
       )}
     </View>
