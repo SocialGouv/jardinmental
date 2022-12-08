@@ -24,6 +24,8 @@ export const FriseGraph = ({
             } else {
               _icon = scoresMapIcon[e?.value];
             }
+          } else {
+            _icon = scoresMapIcon[e?.value];
           }
 
           let color = _icon?.color || "#D7D3D3";
