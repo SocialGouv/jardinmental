@@ -183,6 +183,7 @@ const Pie = ({ title, data, indicateur }) => {
   const [joursRenseignes, setJoursRenseignes] = React.useState({});
   const [detailsVisible, setDetailsVisible] = React.useState(false);
   const [nombreDeValeurParScore, setNombreDeValeurParScore] = React.useState([]);
+  console.log("✍️  nombreDeValeurParScore", indicateur, nombreDeValeurParScore);
   const [nombreDeJoursConsecutifs, setNombreDeJoursConsecutifs] = React.useState({});
 
   React.useEffect(() => {
@@ -190,7 +191,19 @@ const Pie = ({ title, data, indicateur }) => {
     // key est le score (0 signifie que c'set non renseigné)
     // nombre de d'instance de ce score
     const tempNombreDeValeurParScore = data.reduce((previous, current) => {
-      const scoreEncours = current || 0; // on met 0 si la valeur est null
+      let scoreEncours = 0; // on met 0 si la valeur est null
+      if (indicateur.type === "boolean") {
+        scoreEncours =
+          typeof current === "boolean" && current
+            ? 5
+            : typeof current === "boolean" && current === false
+            ? 1
+            : 0;
+      } else if (indicateur.type === "gauge") {
+        scoreEncours = Math.ceil(current * 5);
+      } else {
+        scoreEncours = current ? current : 0;
+      }
       previous[scoreEncours] = (previous[scoreEncours] || 0) + 1;
       return previous;
     }, {});

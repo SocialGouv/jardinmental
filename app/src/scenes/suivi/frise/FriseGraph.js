@@ -25,7 +25,7 @@ export const FriseGraph = ({
               _icon = scoresMapIcon[e?.value];
             }
           } else if (e?._indicateur?.type === "boolean") {
-            const _value = e?.value === true ? 5 : 0;
+            const _value = e?.value === true ? 5 : 1;
             if (e?._indicateur?.order === "DESC") {
               _icon = scoresMapIcon[5 + 1 - _value];
             } else {
