@@ -68,33 +68,6 @@ export const IndicatorSurveyItem = ({
           <Text style={[styles.label]}>{indicator.name}</Text>
         </View>
         {renderInput()}
-        {/* <View style={[styles.emojisContainer]}>
-          {emojis.map((emoji, i) => {
-            const active = _value === emoji.score;
-            return (
-              <TouchableOpacity
-                key={i}
-                onPress={() => {
-                  const nextValue = emoji?.score;
-                  _setValue(nextValue);
-                  onValueChanged?.({ indicator, value: nextValue });
-                }}
-              >
-                <View style={[styles.selectionContainer, active && styles.activeSelectionContainer]}>
-                  <CircledIcon
-                    color={emoji.backgroundColor}
-                    borderColor={emoji.borderColor}
-                    iconColor={emoji.iconColor}
-                    icon={emoji.icon}
-                    iconContainerStyle={{ marginRight: 0 }}
-                    iconWidth={32}
-                    iconHeight={32}
-                  />
-                </View>
-              </TouchableOpacity>
-            );
-          })}
-        </View> */}
         <InputText
           fill
           preset="lighten"
@@ -104,6 +77,9 @@ export const IndicatorSurveyItem = ({
             _setComment(nextComment);
             onCommentChanged?.({ comment: nextComment, indicator });
           }}
+          multiline={true}
+          textAlignVertical="top"
+          className="p-0" // remove space that multiline adds
         />
       </View>
     </View>

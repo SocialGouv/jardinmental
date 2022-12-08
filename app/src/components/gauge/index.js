@@ -15,8 +15,8 @@ const styles = StyleSheet.create({
 });
 
 const Mask = ({ width, value, reverse }) => {
-  const numberOfBars = 24;
-  const widthBar = (width / (numberOfBars - 1)) * 0.4;
+  const numberOfBars = 20;
+  const widthBar = (width / (numberOfBars - 1)) * 0.75;
   const marginRightBar = (width - numberOfBars * widthBar) / (numberOfBars - 1);
   const arrayBarsIndex = [...Array(numberOfBars).keys()];
   const widthGreyMask = width - width * value;
@@ -47,7 +47,7 @@ const Mask = ({ width, value, reverse }) => {
             <View
               key={n}
               style={{
-                borderRadius: 999,
+                borderRadius: 3,
                 width: widthBar,
                 height:
                   width * HEIGHT_RATIO_GAUGE * 0.2 +

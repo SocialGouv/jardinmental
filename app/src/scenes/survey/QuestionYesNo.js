@@ -3,6 +3,7 @@ import { TouchableOpacity, StyleSheet, View, TextInput, Platform } from "react-n
 import Text from "../../components/MyText";
 import { colors } from "../../utils/colors";
 import Icon from "../../components/Icon";
+import { classNames } from "../../utils";
 import { answersYesNo } from "./utils";
 
 const QuestionYesNo = ({
@@ -74,7 +75,19 @@ const QuestionYesNo = ({
                 }}
               >
                 <View style={styles.itemContainer}>
-                  <View style={[styles.dot, active && styles.activeDot]} />
+                  <View
+                    className={classNames(
+                      active ? "border border-primary" : "border border-gray-400",
+                      "flex justify-center items-center w-5 h-5 rounded-full mr-1"
+                    )}
+                  >
+                    <View
+                      className={classNames(
+                        active ? "border border-primary bg-primary" : "",
+                        "w-3 h-3 rounded-full"
+                      )}
+                    />
+                  </View>
                   <Text style={active && styles.activeLabel}>{answer.label}</Text>
                 </View>
               </TouchableOpacity>
