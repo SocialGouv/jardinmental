@@ -24,6 +24,22 @@ export const FriseGraph = ({
             } else {
               _icon = scoresMapIcon[e?.value];
             }
+          } else if (e?._indicateur?.type === "boolean") {
+            const _value = e?.value === true ? 5 : 0;
+            if (e?._indicateur?.order === "DESC") {
+              _icon = scoresMapIcon[5 + 1 - _value];
+            } else {
+              _icon = scoresMapIcon[_value];
+            }
+          } else if (e?._indicateur?.type === "gauge") {
+            const _value = e?.value;
+            const scores = e?._indicateur?.order === "DESC" ? [5, 4, 3, 2, 1] : [1, 2, 3, 4, 5];
+
+            if (_value < 0.2) _icon = scoresMapIcon[scores[0]];
+            if (_value >= 0.2 && _value < 0.4) _icon = scoresMapIcon[scores[1]];
+            if (_value >= 0.4 && _value < 0.6) _icon = scoresMapIcon[scores[2]];
+            if (_value >= 0.6 && _value < 0.8) _icon = scoresMapIcon[scores[3]];
+            if (_value >= 0.8) _icon = scoresMapIcon[scores[4]];
           } else {
             _icon = scoresMapIcon[e?.value];
           }
@@ -31,10 +47,10 @@ export const FriseGraph = ({
           let color = _icon?.color || "#D7D3D3";
 
           let opacity = 1;
-          if (focusedScores.length && !focusedScores.includes(e?.value)) {
-            // cet élément n'est pas focused
-            opacity = e?.value ? 0.1 : 0.5; // on reduit moins l'opacité si c'est une frise vide
-          }
+          // if (focusedScores.length && !focusedScores.includes(e?.value)) {
+          //   // cet élément n'est pas focused
+          //   opacity = e?.value ? 0.1 : 0.5; // on reduit moins l'opacité si c'est une frise vide
+          // }
 
           const isFocused =
             e?.value &&
