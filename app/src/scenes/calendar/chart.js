@@ -48,7 +48,7 @@ const dotsX = [
 
 /* End chart spacing */
 
-const Chart = ({ onPress, title, data = [], lines = 5, withFocus = false, focused = null }) => (
+const Chart = ({ indicateur, onPress, title, data = [], lines = 5, withFocus = false, focused = null }) => (
   <View>
     <Text style={styles.title}>{title}</Text>
     <View style={styles.globalContainer}>
@@ -57,6 +57,9 @@ const Chart = ({ onPress, title, data = [], lines = 5, withFocus = false, focuse
           .fill()
           .map((_, i) => {
             const icon = (score) => {
+              if (indicateur.order === "DESC") {
+                score = 6 - score;
+              }
               if (score === 5)
                 return (
                   <VeryGoodSvg
@@ -144,10 +147,16 @@ const Chart = ({ onPress, title, data = [], lines = 5, withFocus = false, focuse
               if (value === null) {
                 return null;
               }
+
+              let _colors = [...colorsMap];
+              if (indicateur.order === "DESC") {
+                _colors = [..._colors.slice(0, 5).reverse(), ..._colors.slice(5, 10).reverse()];
+              }
+
               return (
                 <Circle
                   key={`${value}${index}`}
-                  fill={colorsMap[value + (withFocus && focused !== index ? colorsMap.length / 2 : 0)]}
+                  fill={_colors[value + (withFocus && focused !== index ? _colors.length / 2 : 0)]}
                   stroke={withFocus && focused !== index ? colors.DARK_BLUE_TRANS : colors.DARK_BLUE}
                   cx={dotsX[index]}
                   cy={dotsY[value]}
