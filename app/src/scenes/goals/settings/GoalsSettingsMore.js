@@ -1,78 +1,107 @@
-import React, { useCallback, useState } from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import React, { useCallback, useState, useEffect } from "react";
+import { FlatList, StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { Button2 } from "../../../components/Button2";
 import { Screen } from "../../../components/Screen";
 import { Card } from "../../../components/Card";
 import { useFocusEffect } from "@react-navigation/native";
+import { getGoalsTracked, setGoalTracked } from "../../../utils/localStorage/goals";
 import { Title } from "../../../components/Title";
 import { Badge } from "../../../components/Badge";
 import Icon from "../../../components/Icon";
-import localStorage from "../../../utils/localStorage";
 import DraggableFlatList, { ScaleDecorator } from "react-native-draggable-flatlist";
+import { autoLayoutAnimation } from "../../../utils/autoLayoutAnimation";
+import { confirm } from "../../../utils";
 
-export const IndicatorsSettingsMore = ({ navigation, route }) => {
-  const [indicators, setIndicators] = useState([]);
+export const GoalsSettingsMore = ({ navigation, route }) => {
+  const [goals, setGoals] = useState([]);
+  const [goalsToRemove, setGoalsToRemove] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useFocusEffect(
     useCallback(() => {
       (async () => {
-        let _indicators = await localStorage.getIndicateurs();
-        _indicators = _indicators.filter((indicator) => indicator.active);
-        setIndicators(_indicators);
+        const _goals = await getGoalsTracked();
+        setGoals(_goals);
       })();
     }, [])
+  );
+
+  const onRemove = useCallback(
+    ({ goal: goalToRemove }) => {
+      const _goals = goals.reduce((acc, goal) => {
+        if (goalToRemove.id === goal.id) return acc;
+        return [...acc, goal];
+      }, []);
+      setGoalsToRemove([...goalsToRemove, goalToRemove]);
+      setGoals(_goals);
+      autoLayoutAnimation();
+    },
+    [goals, goalsToRemove]
   );
 
   const onValidate = async () => {
     if (loading) return;
     setLoading(true);
-    await localStorage.setIndicateurs(indicators);
+    for (const goalToRemove of goalsToRemove) {
+      await setGoalTracked({
+        id: goalToRemove.id,
+        enabled: false,
+      });
+    }
+    for (const { goal, index } of goals.map((goal, index) => ({ goal, index }))) {
+      await setGoalTracked({
+        id: goal.id,
+        order: index,
+      });
+    }
     setLoading(false);
     navigation.goBack();
   };
 
-  const renderItem = useCallback(({ item: indicator, drag, isActive, index }) => {
-    return <IndicatorItem {...{ indicator, drag, isActive, index }} />;
-  }, []);
+  const renderItem = useCallback(
+    ({ item: goal, drag, isActive, index }) => {
+      return <GoalItem {...{ goal, drag, isActive, index, onRemove }} />;
+    },
+    [onRemove]
+  );
 
-  const keyExtractor = useCallback((indicator) => indicator.uuid);
+  const keyExtractor = useCallback((goal) => goal.id);
 
   return (
     <Screen
       header={{
-        title: "Mon questionnaire",
+        title: "Mes objectifs",
       }}
       bottomChildren={<Button2 fill title="Enregistrer" onPress={onValidate} />}
       ScrollComponent={DraggableFlatList}
       scrollAsFlatList={true}
       scrollProps={{
-        data: indicators,
+        data: goals,
         renderItem,
         keyExtractor,
-        onDragEnd: (data) => setIndicators(data?.data),
+        onDragEnd: (data) => setGoals(data?.data),
         containerStyle: {
           flex: 1,
         },
       }}
     >
       <Card
-        title="Modifier mon questionnaire"
-        text="Vous pouvez changer l’ordre d’apparition de vos indicateurs"
+        title="Modifier mes objectifs"
+        text="Vous pouvez changer l’ordre d’apparition de vos objectifs et/ou les supprimer"
       />
       <View style={titleStyles.container}>
         <Title align="left" fill={false}>
-          Vos indicateurs
+          Mes objectifs
         </Title>
         <Badge style={{ marginLeft: 8 }} circle>
-          {indicators?.length || 0}
+          {goals?.length || 0}
         </Badge>
       </View>
     </Screen>
   );
 };
 
-const IndicatorItem = ({ indicator, drag, isActive, index }) => {
+const GoalItem = ({ goal, drag, isActive, index, onRemove }) => {
   return (
     <ScaleDecorator>
       <TouchableOpacity onLongPress={drag} disabled={isActive} delayLongPress={100}>
@@ -84,17 +113,17 @@ const IndicatorItem = ({ indicator, drag, isActive, index }) => {
             height="16"
             styleContainer={{ width: 16, height: 16 }}
           />
-          <Text style={[itemStyles.label]}>{indicator?.name}</Text>
-          {/* <Button2
-        square
-        preset=""
-        type="clear"
-        icon="EditSvg"
-        textStyle={{ color: "#26387C" }}
-        style={{ backgroundColor: "#F8F9FB" }}
-        iconSize={16}
-        onPress={() => {}}
-      /> */}
+          <Text style={[itemStyles.label]}>{goal?.label}</Text>
+          <Button2
+            square
+            preset=""
+            type="clear"
+            icon="DeleteSvg"
+            textStyle={{ color: "#26387C" }}
+            style={{ backgroundColor: "#F8F9FB" }}
+            iconSize={16}
+            onPress={() => onRemove({ goal })}
+          />
         </View>
       </TouchableOpacity>
     </ScaleDecorator>
@@ -120,6 +149,7 @@ const itemStyles = StyleSheet.create({
     color: "#26387C",
     textAlign: "left",
     marginLeft: 16,
+    flex: 1,
   },
 });
 

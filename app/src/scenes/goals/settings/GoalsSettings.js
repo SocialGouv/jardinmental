@@ -37,11 +37,20 @@ export const GoalsSettings = ({ navigation, route }) => {
       }}
       bottomChildren={
         !onboarding ? (
-          <Button2
-            fill
-            title="Ajouter un objectif"
-            onPress={() => navigation.navigate("goals-add-options")}
-          />
+          <>
+            <Button2
+              fill
+              title="Ajouter un objectif"
+              onPress={() => navigation.navigate("goals-add-options")}
+            />
+            <Button2
+              fill
+              preset="secondary"
+              title="Modifier mes objectifs"
+              onPress={() => navigation.navigate("goals-settings-more")}
+              containerStyle={{ marginTop: 12 }}
+            />
+          </>
         ) : (
           <Button2 fill title="Valider" onPress={() => navigation.navigate(ONBOARDING_STEPS.STEP_REMINDER)} />
         )

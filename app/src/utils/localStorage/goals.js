@@ -61,7 +61,7 @@ export const setGoalTracked = async ({ id, label, enabled, order, daysOfWeek, re
   return goal;
 };
 
-const updateApiReminer = async ({ id, daysOfWeek, reminder }) => {
+const updateApiReminer = async ({ id, daysOfWeek, enabled, reminder }) => {
   if (!(await NotificationService.hasToken())) return;
 
   const body = {
@@ -75,7 +75,7 @@ const updateApiReminer = async ({ id, daysOfWeek, reminder }) => {
     daysOfWeek: null,
   };
 
-  if (reminder) {
+  if (reminder && enabled) {
     body.disabled = false;
 
     const time = new Date(reminder);
@@ -103,7 +103,9 @@ export const getGoalsTracked = async ({ date } = { date: undefined }) => {
 export const getGoalsTrackedFromData = ({ data, date } = { data: {}, date: undefined }) => {
   if (!data?.goals?.byOrder?.length) return [];
 
-  const goalsTracked = data.goals.byOrder.map((id) => data.goals.data[id]);
+  const goalsTracked = data.goals.byOrder
+    .map((id) => data.goals.data[id])
+    .filter((goal) => goal.enabled !== false);
 
   if (!date) return goalsTracked;
 
