@@ -4,7 +4,7 @@ import LinearGradient from "react-native-linear-gradient";
 import MaskedView from "@react-native-masked-view/masked-view";
 import { Slider } from "@miblanchard/react-native-slider";
 
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Platform } from "react-native";
 import { screenWidth } from "../../scenes/onboarding/screens";
 const HEIGHT_RATIO_GAUGE = 48 / 256;
 
@@ -16,6 +16,15 @@ const styles = StyleSheet.create({
 });
 
 const Mask = ({ width, value, reverse }) => {
+  const [key, setKey] = useState(0);
+
+  // This is a hack to make the gauge work on Android
+  useEffect(() => {
+    if (Platform.OS === "android") {
+      setTimeout(() => setKey((prev) => prev + 1), 0);
+    }
+  }, []);
+
   const numberOfBars = 20;
   const widthBar = (width / (numberOfBars - 1)) * 0.75;
   const marginRightBar = (width - numberOfBars * widthBar) / (numberOfBars - 1);
@@ -28,6 +37,7 @@ const Mask = ({ width, value, reverse }) => {
 
   return (
     <MaskedView
+      key={key}
       androidRenderingMode="software"
       style={{
         width: "100%",
