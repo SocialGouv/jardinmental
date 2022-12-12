@@ -64,7 +64,7 @@ export const IndicatorsSettingsMore = ({ navigation, route }) => {
           Vos indicateurs
         </Title>
         <Badge style={{ marginLeft: 8 }} circle>
-          {indicators?.length || 0}
+          {indicators?.filter((indicator) => indicator.active)?.length || 0}
         </Badge>
       </View>
     </Screen>
