@@ -43,7 +43,8 @@ const getIndicateurs = async () => {
     }
   }
   if (_indicateurs) {
-    return JSON.parse(_indicateurs);
+    _indicateurs = updateSymptomsFormatIfNeeded(JSON.parse(_indicateurs));
+    return _indicateurs;
   }
 };
 

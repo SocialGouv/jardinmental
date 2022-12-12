@@ -1,7 +1,8 @@
 import { v4 as uuidv4 } from "uuid";
 import { INDICATEURS } from "../liste_indicateurs.1";
+import { translateCategories } from "../constants";
 
-export const latestVersion = 1;
+export const latestVersion = 2;
 
 export const versionsTransformation = {
   /*
@@ -37,20 +38,12 @@ export const versionsTransformation = {
       created_at: new Date(),
     };
   },
-  /*
-  {
-    version: number,
-    uuid: uuid,
-    name: string,
-    category: string,
-    order: ASC | DESC,
-    type: "smiley" | "boolean" | "slider",
-    active: boolean,
-    position: number,
-  }
-  */
   1: (dataV1) => {
-    return dataV1;
+    return {
+      ...dataV1,
+      version: 2,
+      name: translateCategories[dataV1?.name] || dataV1?.name,
+    };
   },
 };
 
@@ -59,11 +52,10 @@ export const updateSymptomsFormatIfNeeded = (data) => {
     let _data = data[labelSymptom];
     const dataVersion = _data?.version || 0;
     if (dataVersion === 0) _data = versionsTransformation[0]({ name: labelSymptom, active: _data });
-    else {
-      if (dataVersion < latestVersion) {
-        for (let i = dataVersion; i < latestVersion; i++) {
-          _data = versionsTransformation[i](_data);
-        }
+
+    if (dataVersion < latestVersion) {
+      for (let i = dataVersion; i < latestVersion; i++) {
+        _data = versionsTransformation[i](_data);
       }
     }
 
