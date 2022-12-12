@@ -17,8 +17,11 @@ export const getGoalsData = getData;
 export const saveGoalsData = saveData;
 export const clearGoalsData = clearData;
 
+export const goalIdFromLabel = (label) =>
+  label ? label.toLowerCase().trim().split(" ").join("_") : undefined;
+
 export const setGoalTracked = async ({ id, label, enabled, order, daysOfWeek, reminder }) => {
-  if (!id) id = label ? label.toLowerCase().trim().split(" ").join("_") : undefined;
+  if (!id) id = goalIdFromLabel(label);
 
   let data = await getData();
 
@@ -94,18 +97,20 @@ const updateApiReminer = async ({ id, daysOfWeek, enabled, reminder }) => {
   });
 };
 
-export const getGoalsTracked = async ({ date } = { date: undefined }) => {
+export const getGoalsTracked = async ({ date, enabled = true } = { date: undefined, enabled: true }) => {
   const data = await getData();
 
-  return getGoalsTrackedFromData({ data, date });
+  return getGoalsTrackedFromData({ data, date, enabled });
 };
 
-export const getGoalsTrackedFromData = ({ data, date } = { data: {}, date: undefined }) => {
+export const getGoalsTrackedFromData = (
+  { data, date, enabled = true } = { data: {}, date: undefined, enabled: true }
+) => {
   if (!data?.goals?.byOrder?.length) return [];
 
   const goalsTracked = data.goals.byOrder
     .map((id) => data.goals.data[id])
-    .filter((goal) => goal.enabled !== false);
+    .filter((goal) => goal.enabled === enabled);
 
   if (!date) return goalsTracked;
 
