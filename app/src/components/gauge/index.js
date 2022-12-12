@@ -28,6 +28,7 @@ const Mask = ({ width, value, reverse }) => {
 
   return (
     <MaskedView
+      androidRenderingMode="software"
       style={{
         width: "100%",
         height: width * HEIGHT_RATIO_GAUGE,
