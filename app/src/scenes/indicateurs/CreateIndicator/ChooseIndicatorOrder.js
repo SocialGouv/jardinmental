@@ -183,7 +183,7 @@ const RenderCurrentIndicator = ({ indicatorType, itensity, direction = "ASC", si
 };
 
 const Intensity = () => (
-  <View style={styles.intensityContainer}>
+  <View className="flex flex-row items-center mt-5">
     <View style={styles.intenstiyDiamond} />
     <View style={styles.intensityLine} />
     <Text style={styles.intensityText}>intensité</Text>
