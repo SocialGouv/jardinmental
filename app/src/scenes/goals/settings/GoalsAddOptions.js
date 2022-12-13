@@ -120,7 +120,7 @@ export const GoalsAddOptions = ({ navigation }) => {
           );
         })}
       </Collapsable>
-      <Collapsable preset="primary" title="Réactiver un ancien indicateur">
+      <Collapsable preset="primary" title="Réactiver un ancien objectif">
         {disabledGoals.map((goal) => {
           return (
             <GoalAddCheckable
