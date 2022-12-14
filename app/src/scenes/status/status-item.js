@@ -16,7 +16,7 @@ import { GoalsStatus } from "../goals/status/GoalsStatus";
 import { Card } from "../../components/Card";
 import { GoalsStatusNoData } from "../goals/status/GoalsStatusNoData";
 
-export default ({ navigation, patientState, goalsData, date }) => {
+export default ({ navigation, indicateurs, patientState, goalsData, date }) => {
   const [customs, setCustoms] = useState([]);
   const [oldCustoms, setOldCustoms] = useState([]);
   let mounted = useRef(true);
@@ -75,6 +75,15 @@ export default ({ navigation, patientState, goalsData, date }) => {
           ].includes(key);
         })
         .filter(([key, value]) => !!value)
+        .sort((_a, _b) => {
+          const a = _a?.[1];
+          const b = _b?.[1];
+          const aIndex =
+            indicateurs?.findIndex?.((indicateur) => indicateur?.uuid === a?._indicateur?.uuid) || 0;
+          const bIndex =
+            indicateurs?.findIndex?.((indicateur) => indicateur?.uuid === b?._indicateur?.uuid) || 0;
+          return aIndex - bIndex;
+        })
     : [];
 
   if (hasAnswerSurvey()) {

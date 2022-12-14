@@ -8,6 +8,7 @@ import StatusItem from "./status-item";
 import { canEdit } from "./utils/index";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { getGoalsData } from "../../utils/localStorage/goals";
+import localStorage from "../../utils/localStorage";
 
 export const DiaryList = ({ ...props }) => {
   const navigation = useNavigation();
@@ -18,10 +19,12 @@ export const DiaryList = ({ ...props }) => {
     return b.localeCompare(a);
   });
 
+  const [indicateurs, setIndicateurs] = useState();
   const [goalsData, setGoalsData] = useState();
   useFocusEffect(
     useCallback(() => {
       (async () => {
+        setIndicateurs(await localStorage.getIndicateurs());
         setGoalsData(await getGoalsData());
       })();
     }, [])
@@ -43,6 +46,7 @@ export const DiaryList = ({ ...props }) => {
           </View>
           <StatusItem
             date={date}
+            indicateurs={indicateurs}
             patientState={diaryData[date]}
             goalsData={goalsData}
             navigation={navigation}
@@ -50,7 +54,7 @@ export const DiaryList = ({ ...props }) => {
         </View>
       );
     },
-    [diaryData, goalsData]
+    [diaryData, goalsData, indicateurs]
   );
 
   const keyExtractor = useCallback((date) => date);
