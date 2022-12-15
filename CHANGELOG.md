@@ -1,3 +1,10 @@
+# [1.41.0](https://github.com/SocialGouv/jardinmental/compare/v1.40.5...v1.41.0) (2022-12-15)
+
+
+### Features
+
+* goals part2 ([#229](https://github.com/SocialGouv/jardinmental/issues/229)) ([d6bc5c7](https://github.com/SocialGouv/jardinmental/commit/d6bc5c7384c181f4961909384d6633cb3ab4738e))
+
 ## [1.40.5](https://github.com/SocialGouv/jardinmental/compare/v1.40.4...v1.40.5) (2022-12-08)
 
 
