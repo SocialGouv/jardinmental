@@ -33,7 +33,7 @@ export const InputText = ({ fill, preset, onPress, disabled, containerStyle, sty
             maxFontSizeMultiplier={2}
             placeholderTextColor="#4D4D4D"
             editable={!disabled}
-            pointerEvents={(disabled || !props.editable) && "none"}
+            pointerEvents={disabled || props.editable === false ? "none" : "auto"}
             {...props}
             style={[styles.input, disabled && styles.disabled, style]}
           />

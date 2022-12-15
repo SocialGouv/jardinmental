@@ -53,6 +53,7 @@ import { GoalsCreateForm } from "../scenes/goals/settings/GoalsCreateForm";
 import { GoalDaySelector } from "../scenes/goals/settings/GoalDaySelector";
 import { GoalConfig } from "../scenes/goals/settings/GoalConfig";
 import { IndicatorsSettingsMore } from "../scenes/indicateurs/settings/IndicatorsSettingsMore";
+import { GoalsSettingsMore } from "../scenes/goals/settings/GoalsSettingsMore";
 
 const Stack = createStackNavigator();
 
@@ -184,6 +185,7 @@ class Router extends React.Component {
             <Stack.Screen name="indicators-settings-more" component={IndicatorsSettingsMore} />
 
             <Stack.Screen name="goals-settings" component={GoalsSettings} />
+            <Stack.Screen name="goals-settings-more" component={GoalsSettingsMore} />
             <Stack.Screen name="goals-add-options" component={GoalsAddOptions} />
             <Stack.Screen name="goals-create-form" component={GoalsCreateForm} />
             <Stack.Screen name="goal-day-selector" component={GoalDaySelector} />

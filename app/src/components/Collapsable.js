@@ -1,25 +1,42 @@
-import React from "react";
+import React, { useState, useCallback } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import ArrowUpSvg from "../../../assets/svg/arrow-up.svg";
+import ArrowUpSvg from "../../assets/svg/arrow-up.svg";
+import { autoLayoutAnimation } from "../utils/autoLayoutAnimation";
+import Animated, { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 
 export const Collapsable = ({
-  preset = "primary", // 'primary' | 'secondary'
+  preset, // 'primary' | 'secondary'
   title,
   children,
+  containerStyle,
 }) => {
-  const styles = applyStyles({ preset, type, checkable, checked, square, size, fill });
+  const [collapsed, setCollapsed] = useState(true);
+  const styles = applyStyles({ preset });
+
+  const onPress = useCallback(() => {
+    setCollapsed(!collapsed);
+    arrowAnimated.value = withTiming(collapsed ? 360 : 180);
+    autoLayoutAnimation();
+  }, [collapsed]);
+
+  const arrowAnimated = useSharedValue(180);
+  const arrowAnimatedStyle = useAnimatedStyle(() => ({
+    transform: [{ rotate: `${arrowAnimated.value}deg` }],
+  }));
 
   return (
-    <View style={[styles.container]}>
+    <View style={[styles.container, containerStyle]}>
       <View style={[styles.pressableContainer]}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={onPress}>
           <View style={[styles.headerContainer]}>
             {title && <Text style={[styles.title]}>{title}</Text>}
-            <ArrowUpSvg style={{ transform: [{ rotate: "180deg" }] }} color="#26387C" />
+            <Animated.View style={arrowAnimatedStyle}>
+              <ArrowUpSvg color="#26387C" />
+            </Animated.View>
           </View>
         </TouchableOpacity>
       </View>
-      {children}
+      {!collapsed && <View style={[styles.childrenContainer]}>{children}</View>}
     </View>
   );
 };
@@ -31,7 +48,8 @@ const applyStyles = ({ preset }) => {
 
   const applyIfNeeded = (cumStyles, condition, styleKey) => {
     if (eval(condition)) {
-      cumStyles.container = { ...cumStyles.container, ..._styles[styleKey].container };
+      for (let key of Object.keys(_styles[styleKey]))
+        cumStyles[key] = { ...cumStyles[key], ..._styles[styleKey][key] };
     }
   };
 
@@ -43,12 +61,51 @@ const applyStyles = ({ preset }) => {
 
 const _styles = {
   base: StyleSheet.create({
-    container: {},
+    container: {
+      width: "100%",
+    },
+    headerContainer: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    title: {
+      flex: 1,
+      fontSize: 14,
+      marginBottom: 2,
+      fontFamily: "Karla",
+      fontWeight: "700",
+      color: "#26387C",
+    },
   }),
   primary: StyleSheet.create({
-    container: {},
+    container: {
+      borderTopWidth: 1,
+      borderColor: "rgba(38, 56, 124, 0.1)",
+    },
+    headerContainer: {
+      minHeight: 52,
+    },
+    childrenContainer: {
+      paddingBottom: 10,
+    },
   }),
   secondary: StyleSheet.create({
-    container: {},
+    container: {
+      borderWidth: 1,
+      borderColor: "#E7EAF1",
+      borderRadius: 12,
+
+      backgroundColor: "#F8F9FB",
+      marginVertical: 8,
+    },
+    headerContainer: {
+      paddingVertical: 12,
+      paddingHorizontal: 15,
+    },
+    childrenContainer: {
+      paddingTop: 10,
+      paddingHorizontal: 15,
+    },
   }),
 };

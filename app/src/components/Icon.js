@@ -43,6 +43,7 @@ import EditSvg from "../../assets/svg/edit.svg";
 import IndicateurSvg from "../../assets/svg/indicateur.svg";
 import GoalSvg from "../../assets/svg/goal.svg";
 import ReorderSvg from "../../assets/svg/reorder.svg";
+import DeleteSvg from "../../assets/svg/delete.svg";
 
 import { StyleSheet, View, Animated, Easing, TouchableOpacity } from "react-native";
 
@@ -91,6 +92,7 @@ const mapIconToSvg = (icon) => {
     IndicateurSvg,
     GoalSvg,
     ReorderSvg,
+    DeleteSvg,
   };
   return iconMap[icon];
 };

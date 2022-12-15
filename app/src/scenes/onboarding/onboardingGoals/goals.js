@@ -5,7 +5,6 @@ import Button from "../../../components/Button";
 import { onboardingStyles } from "../styles";
 import localStorage from "../../../utils/localStorage";
 import { useFocusEffect } from "@react-navigation/native";
-import { INDICATEURS_GOALS_SIMPLE } from "../../../utils/liste_indicateurs";
 import { StickyButtonContainer } from "../StickyButton";
 import { CheckBoxList } from "../CheckBoxList";
 import { SafeAreaViewWithOptionalHeader } from "../ProgressHeader";
@@ -14,6 +13,7 @@ import { ONBOARDING_STEPS } from "../../../utils/constants";
 import { getGoalsTracked, setGoalTracked } from "../../../utils/localStorage/goals";
 import { DAYS_OF_WEEK } from "../../../utils/date/daysOfWeek";
 import { Button2 } from "../../../components/Button2";
+import { GOALS_ONBOARDING } from "../../../utils/goalsConstants";
 
 export const OnboardingGoals = ({ navigation }) => {
   useEffect(() => {
@@ -24,7 +24,7 @@ export const OnboardingGoals = ({ navigation }) => {
 
   const [goalSelection, setGoalSelection] = useState({});
   const countGoals = () =>
-    INDICATEURS_GOALS_SIMPLE.reduce((acc, goalLabel) => {
+    GOALS_ONBOARDING.reduce((acc, goalLabel) => {
       if (goalSelection?.[goalLabel]) return acc + 1;
       return acc;
     }, 0);
@@ -37,7 +37,7 @@ export const OnboardingGoals = ({ navigation }) => {
         const _goals = await getGoalsTracked();
 
         setGoalSelection(
-          INDICATEURS_GOALS_SIMPLE.reduce((acc, goalLabel) => {
+          GOALS_ONBOARDING.reduce((acc, goalLabel) => {
             if (_goals.find((goal) => goal.label === goalLabel)) acc[goalLabel] = true;
             return acc;
           }, {})
@@ -90,7 +90,7 @@ export const OnboardingGoals = ({ navigation }) => {
             />
           </View>
           <CheckBoxList
-            list={INDICATEURS_GOALS_SIMPLE}
+            list={GOALS_ONBOARDING}
             symptomSelection={goalSelection}
             setSymptomSelection={setGoalSelection}
           />

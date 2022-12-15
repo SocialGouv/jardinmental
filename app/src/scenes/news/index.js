@@ -13,7 +13,7 @@ export const getBadgeNotesVersion = async () => {
   return lastNotesVersion !== LAST_NOTES_VERSION;
 };
 
-export const LAST_NOTES_VERSION = "1.35";
+export const LAST_NOTES_VERSION = "1.38";
 
 export default ({ navigation }) => {
   useEffect(() => {
@@ -28,6 +28,14 @@ export default ({ navigation }) => {
         <Image style={styles.image} source={require("../../../assets/imgs/logo2.png")} />
       </View>
       <ScrollView style={styles.cgu} contentContainerStyle={styles.scrollContainer}>
+        <Card title="Objectifs" version="v1.38" date="12/2022">
+          <Item>
+            <Text style={styles.text}>
+              Vous pouvez maintenant choisir des objectifs parmi des exemples, en supprimer ou modifier leur
+              ordre dans votre questionnaire.
+            </Text>
+          </Item>
+        </Card>
         <Card
           title="Nouvelle fonction : les objectifs et choix de l’organisation de son questionnaire"
           version="v1.37"

@@ -124,7 +124,7 @@ export const OnboardingSleep = ({ navigation }) => {
                 />
               </View>
             )}
-            <Text style={stylesA.choixLabel}>{INDICATEURS[INDICATEURS_SOMMEIL]}</Text>
+            <Text style={stylesA.choixLabel}>Qualité sommeil</Text>
           </TouchableOpacity>
           <View key="question">
             <Text style={styles.question}>
