@@ -18,8 +18,8 @@ export const EventFilterHeader = ({
   setToDate,
   symptom,
   setSymptom,
-  score,
-  setScore,
+  level,
+  setLevel,
   userIndicateurs,
 }) => {
   return (
@@ -46,11 +46,12 @@ export const EventFilterHeader = ({
           <View style={[styles.scorePickerBorder]}>
             <ScorePicker
               size="small"
-              focusedScores={score}
+              focusedScores={level}
               onPress={(i) => {
-                setScore([i]);
+                setLevel([i]);
                 logEvents.logSuiviEditScoreEvents(i);
               }}
+              showIcon={false}
             />
           </View>
         </View>

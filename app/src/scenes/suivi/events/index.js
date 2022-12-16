@@ -22,7 +22,7 @@ const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, 
   const chartDates = getArrayOfDatesFromTo({ fromDate, toDate });
   const [symptom, setSymptom] = React.useState();
   const [event, setEvent] = React.useState("ALL");
-  const [score, setScore] = React.useState([5]);
+  const [level, setLevel] = React.useState([5]);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -43,9 +43,9 @@ const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, 
   const memoizedCallback = React.useCallback(() => {
     if (!symptom) return [];
     // console.log("SYMPTOME", symptom);
-    if (!score || !score.length) return [];
-    const targetScore = score[0];
-    // console.log("score", score);
+    if (!level || !level.length) return [];
+    let _targetLevel = level[0];
+    // console.log("level", level);
     if (!event) return [];
     // console.log("event", event);
     return chartDates.map((date) => {
@@ -62,7 +62,20 @@ const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, 
         // console.log("categoryState");
         return {};
       }
-      if (diaryData[date][symptom]?.value !== targetScore) {
+      let targetLevel = _targetLevel;
+      if (diaryData[date][symptom]?._indicateur?.order === "DESC") targetLevel = 6 - _targetLevel;
+      let _value;
+      if (diaryData[date][symptom]?._indicateur?.type === "smiley") {
+        _value = diaryData[date][symptom]?.value;
+      } else if (diaryData[date][symptom]?._indicateur?.type === "boolean") {
+        _value = diaryData[date][symptom]?.value === true ? 5 : 1;
+      } else if (diaryData[date][symptom]?._indicateur?.type === "gauge") {
+        _value = Math.ceil(diaryData[date][symptom]?.value * 5);
+      } else {
+        _value = 0;
+      }
+
+      if (_value !== targetLevel) {
         return {};
       }
 
@@ -94,7 +107,7 @@ const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, 
       // }
       // return { value: categoryState.level - 1 };
     });
-  }, [symptom, score, event, chartDates, diaryData]);
+  }, [symptom, level, event, chartDates, diaryData]);
 
   const startSurvey = async () => {
     const symptoms = await localStorage.getSymptoms();
@@ -142,8 +155,8 @@ const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, 
           setToDate={setToDate}
           symptom={symptom}
           setSymptom={setSymptom}
-          score={score}
-          setScore={setScore}
+          level={level}
+          setLevel={setLevel}
           userIndicateurs={userIndicateurs.filter(({ active }) => active).map(({ name }) => name)}
         />
         <View style={styles.dataContainer}>
