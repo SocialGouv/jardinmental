@@ -84,7 +84,7 @@ const Calendar = ({ navigation }) => {
         return null;
       }
       if (indicateur?.type === "boolean") return categoryState?.value === true ? 4 : 0;
-      if (indicateur?.type === "gauge") return Math.floor(categoryState?.value * 5);
+      if (indicateur?.type === "gauge") return Math.min(Math.floor(categoryState?.value * 5), 4);
       if (categoryState?.value) return categoryState?.value - 1;
 
       // -------

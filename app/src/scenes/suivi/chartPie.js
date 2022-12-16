@@ -183,7 +183,6 @@ const Pie = ({ title, data, indicateur }) => {
   const [joursRenseignes, setJoursRenseignes] = React.useState({});
   const [detailsVisible, setDetailsVisible] = React.useState(false);
   const [nombreDeValeurParScore, setNombreDeValeurParScore] = React.useState([]);
-  console.log("✍️  nombreDeValeurParScore", indicateur, nombreDeValeurParScore);
   const [nombreDeJoursConsecutifs, setNombreDeJoursConsecutifs] = React.useState({});
 
   React.useEffect(() => {
@@ -254,13 +253,41 @@ const Pie = ({ title, data, indicateur }) => {
 
   React.useEffect(() => {
     const total = data.reduce((previous, current) => {
-      if (!current || current === 0) return previous;
+      let scoreEncours = 0; // on met 0 si la valeur est null
+      if (indicateur.type === "boolean") {
+        scoreEncours =
+          typeof current === "boolean" && current
+            ? 5
+            : typeof current === "boolean" && current === false
+            ? 1
+            : 0;
+      } else if (indicateur.type === "gauge") {
+        scoreEncours = Math.ceil(current * 5);
+      } else {
+        scoreEncours = current ? current : 0;
+      }
+      if (!scoreEncours || scoreEncours === 0) return previous;
       return previous + 1;
     }, 0);
-    const sum = data.reduce((previous, current) => previous + (current || 0), 0);
+    const sum = data.reduce((previous, current) => {
+      let scoreEncours = 0; // on met 0 si la valeur est null
+      if (indicateur.type === "boolean") {
+        scoreEncours =
+          typeof current === "boolean" && current
+            ? 5
+            : typeof current === "boolean" && current === false
+            ? 1
+            : 0;
+      } else if (indicateur.type === "gauge") {
+        scoreEncours = Math.ceil(current * 5);
+      } else {
+        scoreEncours = current ? current : 0;
+      }
+      return previous + (scoreEncours || 0);
+    }, 0);
     const avg = sum / total;
     setAverage(avg);
-  }, [data]);
+  }, [data, indicateur]);
 
   React.useEffect(() => {
     const num = Math.floor(average);
@@ -284,6 +311,87 @@ const Pie = ({ title, data, indicateur }) => {
   const toggleDetails = () => {
     if (!detailsVisible) logEvents.logSuiviShowDetailStatistics();
     setDetailsVisible((e) => !e);
+  };
+
+  const renderResponse = ({ value, isSmall }) => {
+    if (indicateur?.type === "smiley") {
+      let _icon;
+      if (indicateur?.order === "DESC") {
+        _icon = scoresMapIcon[5 + 1 - value];
+      } else {
+        _icon = scoresMapIcon[value];
+      }
+      const iconSize = isSmall ? 24 : 32;
+      const iconContainerSize = isSmall ? 30 : 40;
+
+      if (!_icon.color && !_icon.faceIcon)
+        return (
+          <CircledIcon
+            color="#cccccc"
+            borderColor="#999999"
+            iconColor="#888888"
+            icon="QuestionMarkSvg"
+            iconWidth={iconSize}
+            iconHeight={iconSize}
+            iconContainerStyle={{
+              marginRight: 0,
+              transform: [{ translateX: isSmall ? -10 : 0 }],
+              width: iconContainerSize,
+              height: iconContainerSize,
+            }}
+          />
+        );
+      return (
+        <CircledIcon
+          color={_icon.color}
+          borderColor={_icon.borderColor}
+          iconColor={_icon.iconColor}
+          icon={_icon.faceIcon}
+          iconWidth={iconSize}
+          iconHeight={iconSize}
+          iconContainerStyle={{
+            marginRight: 0,
+            transform: [{ translateX: isSmall ? -10 : 0 }],
+            width: iconContainerSize,
+            height: iconContainerSize,
+          }}
+        />
+      );
+    }
+    if (indicateur?.type === "boolean") {
+      // a voir si on veut afficher un smiley ou un cercle ou du texte
+      return null;
+    }
+    if (indicateur?.type === "gauge") {
+      const _value = value;
+      const _colors =
+        indicateur?.order === "DESC"
+          ? ["#5DEE5A", "#ACF352", "#F2F478", "#FEAA5B", "#F16B6B"]
+          : ["#F16B6B", "#FEAA5B", "#F2F478", "#ACF352", "#5DEE5A"];
+
+      let _color = _colors[_value - 1];
+
+      return (
+        <View
+          style={{ transform: [{ translateX: isSmall ? -10 : 0 }] }}
+          className={`flex flex-row justify-center w-10 ${isSmall ? "space-x-1" : "space-x-2"} items-end`}
+        >
+          <View
+            className={`${isSmall ? "h-1" : "h-2"} rounded-full w-1`}
+            style={{ backgroundColor: _color }}
+          />
+          <View
+            className={`${isSmall ? "h-2" : "h-5"} rounded-full w-1`}
+            style={{ backgroundColor: _color }}
+          />
+          <View
+            className={`${isSmall ? "h-4" : "h-8"} rounded-full w-1`}
+            style={{ backgroundColor: _color }}
+          />
+        </View>
+      );
+    }
+    return <View />;
   };
 
   if (data.every((value) => value === 0)) return null;
@@ -313,32 +421,7 @@ const Pie = ({ title, data, indicateur }) => {
                 {averageIcons.map((e, i) => {
                   if (!(e >= 1 && e <= 5)) return null;
                   const isSmall = i === 0 && averageIcons.length > 1;
-                  const iconSize = isSmall ? 24 : 32;
-                  const iconContainerSize = isSmall ? 30 : 40;
-                  let _icon;
-                  if (indicateur?.order === "DESC") {
-                    _icon = scoresMapIcon[5 + 1 - e];
-                  } else {
-                    _icon = scoresMapIcon[e];
-                  }
-                  return (
-                    <CircledIcon
-                      key={`${title}_${e}`}
-                      color={_icon.color}
-                      borderColor={_icon.borderColor}
-                      iconColor={_icon.iconColor}
-                      icon={_icon.faceIcon}
-                      // eslint-disable-next-line react-native/no-inline-styles
-                      iconContainerStyle={{
-                        marginRight: 0,
-                        transform: [{ translateX: isSmall ? -10 : 0 }],
-                        width: iconContainerSize,
-                        height: iconContainerSize,
-                      }}
-                      iconWidth={iconSize}
-                      iconHeight={iconSize}
-                    />
-                  );
+                  return renderResponse({ value: e, isSmall });
                 })}
               </View>
               {joursRenseignes.pourcentage < 100 ? (
