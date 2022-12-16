@@ -38,7 +38,8 @@ export const FriseScreen = ({
           onChangeToDate={setToDate}
           withPreset={true}
         >
-          <Button2
+          {/* TODO : make it work avec les autres types d'indicateur */}
+          {/* <Button2
             checkable
             title="Filtrer"
             icon={!filterEnabled ? "TuneSvg" : "CheckSvg"}
@@ -55,12 +56,12 @@ export const FriseScreen = ({
               setFilterEnabled(nextValue);
               autoLayoutAnimation();
             }}
-          />
+          /> */}
           <FriseInfoButton
             ref={friseInfoButtonRef}
             navigation={navigation}
             hasTreatment={hasTreatment}
-            containerStyle={{ position: "relative", right: 0 }}
+            containerStyle={{ marginLeft: 10, position: "relative", right: 0 }}
           />
         </RangeDate>
         {filterEnabled && (
