@@ -8,6 +8,7 @@ import ScorePicker from "../ScorePicker";
 import RangeDate from "../RangeDate";
 import { SelectInput } from "../../../components/SelectInput";
 import { EventInfoButton } from "./EventInfoButton";
+import { answers } from "../../../scenes/survey/utils";
 
 export const EventFilterHeader = ({
   presetDate,
@@ -16,8 +17,8 @@ export const EventFilterHeader = ({
   setFromDate,
   toDate,
   setToDate,
-  symptom,
-  setSymptom,
+  indicateur,
+  setIndicateur,
   level,
   setLevel,
   userIndicateurs,
@@ -32,11 +33,11 @@ export const EventFilterHeader = ({
         </View>
         <View style={[styles.lineContainer, styles.withSpace]}>
           <SelectSymptom
-            options={userIndicateurs}
-            onChange={setSymptom}
+            options={userIndicateurs?.map(({ name }) => name)}
+            onChange={setIndicateur}
             onOpen={logEvents.logSuiviEditSymptom}
             placeholder="Sélectionner un élément"
-            value={symptom}
+            value={indicateur}
             containerStyle={{ flex: 1 }}
           />
           <EventInfoButton containerStyle={{ marginLeft: 26 }} />
@@ -52,6 +53,11 @@ export const EventFilterHeader = ({
                 logEvents.logSuiviEditScoreEvents(i);
               }}
               showIcon={false}
+              options={
+                userIndicateurs?.find((ui) => ui.name === indicateur)?.type === "boolean"
+                  ? answers.filter((a) => a.score === 1 || a.score === 5)
+                  : answers
+              }
             />
           </View>
         </View>

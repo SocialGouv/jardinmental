@@ -20,7 +20,7 @@ const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, 
   const [userIndicateurs, setUserIndicateurs] = React.useState([]);
   const [isEmpty, setIsEmpty] = React.useState();
   const chartDates = getArrayOfDatesFromTo({ fromDate, toDate });
-  const [symptom, setSymptom] = React.useState();
+  const [indicateur, setIndicateur] = React.useState();
   const [event, setEvent] = React.useState("ALL");
   const [level, setLevel] = React.useState([5]);
 
@@ -30,19 +30,19 @@ const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, 
         const user_indicateurs = await localStorage.getIndicateurs();
         if (user_indicateurs) {
           setUserIndicateurs(user_indicateurs);
-          setSymptom(user_indicateurs[0].name);
+          setIndicateur(user_indicateurs[0].name);
         }
       })();
     }, [])
   );
 
   // React.useEffect(() => {
-  //   console.log("✍️ ~ symptom", symptom);
-  // }, [symptom]);
+  //   console.log("✍️ ~ indicateur", indicateur);
+  // }, [indicateur]);
 
   const memoizedCallback = React.useCallback(() => {
-    if (!symptom) return [];
-    // console.log("SYMPTOME", symptom);
+    if (!indicateur) return [];
+    // console.log("SYMPTOME", indicateur);
     if (!level || !level.length) return [];
     let _targetLevel = level[0];
     // console.log("level", level);
@@ -56,21 +56,21 @@ const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, 
         // console.log("no dayData");
         return {};
       }
-      const categoryState = diaryData[date][symptom];
+      const categoryState = diaryData[date][indicateur];
       // console.log("✍️ ~ categoryState", categoryState);
       if (!categoryState) {
         // console.log("categoryState");
         return {};
       }
       let targetLevel = _targetLevel;
-      if (diaryData[date][symptom]?._indicateur?.order === "DESC") targetLevel = 6 - _targetLevel;
+      if (diaryData[date][indicateur]?._indicateur?.order === "DESC") targetLevel = 6 - _targetLevel;
       let _value;
-      if (diaryData[date][symptom]?._indicateur?.type === "smiley") {
-        _value = diaryData[date][symptom]?.value;
-      } else if (diaryData[date][symptom]?._indicateur?.type === "boolean") {
-        _value = diaryData[date][symptom]?.value === true ? 5 : 1;
-      } else if (diaryData[date][symptom]?._indicateur?.type === "gauge") {
-        _value = Math.ceil(diaryData[date][symptom]?.value * 5);
+      if (diaryData[date][indicateur]?._indicateur?.type === "smiley") {
+        _value = diaryData[date][indicateur]?.value;
+      } else if (diaryData[date][indicateur]?._indicateur?.type === "boolean") {
+        _value = diaryData[date][indicateur]?.value === true ? 5 : 1;
+      } else if (diaryData[date][indicateur]?._indicateur?.type === "gauge") {
+        _value = Math.ceil(diaryData[date][indicateur]?.value * 5);
       } else {
         _value = 0;
       }
@@ -97,7 +97,7 @@ const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, 
       // -------
 
       // get the name and the suffix of the category
-      // const [categoryName, suffix] = symptom.split("_");
+      // const [categoryName, suffix] = indicateur.split("_");
       // let categoryStateIntensity = null;
       // if (suffix && suffix === "FREQUENCE") {
       //   // if it's one category with the suffix 'FREQUENCE' :
@@ -107,7 +107,7 @@ const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, 
       // }
       // return { value: categoryState.level - 1 };
     });
-  }, [symptom, level, event, chartDates, diaryData]);
+  }, [indicateur, level, event, chartDates, diaryData]);
 
   const startSurvey = async () => {
     const symptoms = await localStorage.getSymptoms();
@@ -153,11 +153,11 @@ const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, 
           setFromDate={setFromDate}
           toDate={toDate}
           setToDate={setToDate}
-          symptom={symptom}
-          setSymptom={setSymptom}
+          indicateur={indicateur}
+          setIndicateur={setIndicateur}
           level={level}
           setLevel={setLevel}
-          userIndicateurs={userIndicateurs.filter(({ active }) => active).map(({ name }) => name)}
+          userIndicateurs={userIndicateurs.filter(({ active }) => active)}
         />
         <View style={styles.dataContainer}>
           {memoizedCallback()?.filter((x) => x.date)?.length === 0 && (

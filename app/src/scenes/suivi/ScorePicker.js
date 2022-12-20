@@ -13,6 +13,7 @@ const ScorePicker = ({
   size = "normal",
   inline = false,
   showIcon = true,
+  options = answers,
 }) => {
   return (
     <View
@@ -23,7 +24,7 @@ const ScorePicker = ({
         containerStyle,
       ]}
     >
-      {answers.map((answer, i) => {
+      {options.map((answer, i) => {
         const active = focusedScores.includes(answer.score);
         return (
           <TouchableOpacity key={i} onPress={() => onPress(answer.score)}>
