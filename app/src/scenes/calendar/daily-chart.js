@@ -37,7 +37,7 @@ const DailyChart = ({
         return null;
       }
       if (_indicateur?.type === "boolean") return categoryState?.value === true ? 4 : 0;
-      if (_indicateur?.type === "gauge") return Math.floor(categoryState?.value * 5);
+      if (indicateur?.type === "gauge") return Math.min(Math.floor(categoryState?.value * 5), 4);
       if (categoryState?.value) return categoryState?.value - 1;
 
       // -------

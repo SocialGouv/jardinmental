@@ -24,11 +24,11 @@ const chartHeight = 220;
 const chartInnerHeight = chartHeight - daysHeight;
 const spacingY = 0.172;
 const dotsY = [
-  chartPaddingTop + chartInnerHeight * spacingY * 4.55,
+  chartPaddingTop + chartInnerHeight * spacingY * 4.5,
   chartPaddingTop + chartInnerHeight * spacingY * 3.5,
-  chartPaddingTop + chartInnerHeight * spacingY * 2.42,
-  chartPaddingTop + chartInnerHeight * spacingY * 1.35,
-  chartPaddingTop + chartInnerHeight * spacingY * 0.3,
+  chartPaddingTop + chartInnerHeight * spacingY * 2.5,
+  chartPaddingTop + chartInnerHeight * spacingY * 1.55,
+  chartPaddingTop + chartInnerHeight * spacingY * 0.5,
 ];
 
 // Horizontal spacing
@@ -52,67 +52,6 @@ const Chart = ({ indicateur, onPress, title, data = [], lines = 5, withFocus = f
   <View>
     <Text style={styles.title}>{title}</Text>
     <View style={styles.globalContainer}>
-      <View style={styles.legend}>
-        {Array(lines)
-          .fill()
-          .map((_, i) => {
-            const icon = (score) => {
-              if (indicateur.order === "DESC") {
-                score = 6 - score;
-              }
-              if (score === 5)
-                return (
-                  <VeryGoodSvg
-                    width={20}
-                    height={20}
-                    color={scoresMapIcon[score].borderColor}
-                    style={{ opacity: 0.8 }}
-                  />
-                );
-              if (score === 4)
-                return (
-                  <GoodSvg
-                    width={20}
-                    height={20}
-                    color={scoresMapIcon[score].borderColor}
-                    style={{ opacity: 0.8 }}
-                  />
-                );
-              if (score === 3)
-                return (
-                  <MiddleSvg
-                    width={20}
-                    height={20}
-                    color={scoresMapIcon[score].borderColor}
-                    style={{ opacity: 0.8 }}
-                  />
-                );
-              if (score === 2)
-                return (
-                  <BadSvg
-                    width={20}
-                    height={20}
-                    color={scoresMapIcon[score].borderColor}
-                    style={{ opacity: 0.8 }}
-                  />
-                );
-              if (score === 1)
-                return (
-                  <VeryBadSvg
-                    width={20}
-                    height={20}
-                    color={scoresMapIcon[score].borderColor}
-                    style={{ opacity: 0.8 }}
-                  />
-                );
-            };
-            return (
-              <View key={i} style={styles.legendItem}>
-                {icon(5 - i)}
-              </View>
-            );
-          })}
-      </View>
       <View style={styles.chartContainer}>
         {Array(lines)
           .fill()
