@@ -16,8 +16,8 @@ export const GaugeChart = ({ value, reverse, containerStyle }) => {
   const horizontalSpacing = (width / NUMBER_OF_BARS - widthBar) / 2;
 
   const colors = reverse
-    ? ["#5DEE5A", "#F2F478", "#F2F478", "#F16B6B"]
-    : ["#F16B6B", "#F2F478", "#F2F478", "#5DEE5A"];
+    ? ["#5DEE5A", "#ACF352", "#F2F478", "#FEAA5B", "#F16B6B"]
+    : ["#F16B6B", "#FEAA5B", "#F2F478", "#ACF352", "#5DEE5A"];
 
   return (
     <View style={[styles.container, containerStyle]} onLayout={onLayout}>
@@ -26,7 +26,7 @@ export const GaugeChart = ({ value, reverse, containerStyle }) => {
           <Defs>
             <LinearGradient id="gradient" x1="0" y1="0" x2="1" y2="0">
               {colors.map((color, index) => (
-                <Stop key={index} offset={index / colors.length} stopColor={color} stopOpacity={1} />
+                <Stop key={index} offset={index / (colors.length - 1)} stopColor={color} stopOpacity={1} />
               ))}
             </LinearGradient>
 
