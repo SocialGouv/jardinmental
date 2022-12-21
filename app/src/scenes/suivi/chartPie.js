@@ -243,12 +243,21 @@ const Pie = ({ title, data, indicateur }) => {
 
     // calcul du nombre de jours consécutifs maximum par score
     const maximumParScore = {};
-    let scoreEnCours = 0;
     let scorePrecedent = 0;
     data.forEach((current) => {
-      // console.log("✍️ ~ current", current);
-      scoreEnCours = current;
-      // console.log("✍️ ~ scoreEnCours", scoreEnCours);
+      let scoreEnCours = 0; // on met 0 si la valeur est null
+      if (indicateur.type === "boolean") {
+        scoreEnCours =
+          typeof current === "boolean" && current
+            ? 5
+            : typeof current === "boolean" && current === false
+            ? 1
+            : 0;
+      } else if (indicateur.type === "gauge") {
+        scoreEnCours = Math.ceil(current * 5);
+      } else {
+        scoreEnCours = current ? current : 0;
+      }
       if (scoreEnCours === scorePrecedent) {
         maximumParScore[scoreEnCours] = (maximumParScore[scoreEnCours] || 1) + 1;
       }
@@ -453,6 +462,7 @@ const Pie = ({ title, data, indicateur }) => {
           nombreDeJoursConsecutifs={nombreDeJoursConsecutifs}
           nombreDeValeurParScore={nombreDeValeurParScore}
           title={title}
+          indicateur={indicateur}
         />
       ) : null}
     </View>
@@ -556,7 +566,15 @@ const PieYesNo = ({ title, data, parialsColors = ["#f3f3f3", "#5956E8", "#E575F8
   );
 };
 
-const TableDeStatistiquesParLigne = ({ nombreDeJoursConsecutifs, nombreDeValeurParScore, title }) => {
+const TableDeStatistiquesParLigne = ({
+  nombreDeJoursConsecutifs,
+  nombreDeValeurParScore,
+  title,
+  indicateur,
+}) => {
+  const isReverse = indicateur?.order === "DESC";
+  const scores = isReverse ? [5, 4, 3, 2, 1] : [1, 2, 3, 4, 5];
+
   return (
     <View style={stylesTableLigne.container}>
       <View style={stylesTableLigne.ligne}>
@@ -608,7 +626,7 @@ const TableDeStatistiquesParLigne = ({ nombreDeJoursConsecutifs, nombreDeValeurP
           <Text style={stylesTableLigne.textTitre}>Pourcentage</Text>
         </View>
         {[1, 2, 3, 4, 5].map((score) => {
-          const infoScore = nombreDeValeurParScore.find((e) => Number(e.score) === Number(score));
+          const infoScore = nombreDeValeurParScore.find((e) => Number(e.score) === Number(scores[score - 1]));
           return (
             <View
               key={`colonne_stat_pourcentage_${title}_${score}`}
@@ -624,7 +642,7 @@ const TableDeStatistiquesParLigne = ({ nombreDeJoursConsecutifs, nombreDeValeurP
           <Text style={stylesTableLigne.textTitre}>Jour(s)</Text>
         </View>
         {[1, 2, 3, 4, 5].map((score) => {
-          const infoScore = nombreDeValeurParScore.find((e) => Number(e.score) === Number(score));
+          const infoScore = nombreDeValeurParScore.find((e) => Number(e.score) === Number(scores[score - 1]));
           return (
             <View
               key={`colonne_stat_total_${title}_${score}`}
@@ -645,7 +663,7 @@ const TableDeStatistiquesParLigne = ({ nombreDeJoursConsecutifs, nombreDeValeurP
               key={`colonne_stat_consecutif_${title}_${score}`}
               style={[stylesTableLigne.cellule, stylesTableLigne.celluleAvecBordureAGauche]}
             >
-              <Text>{nombreDeJoursConsecutifs[score] || 0}&nbsp;j</Text>
+              <Text>{nombreDeJoursConsecutifs[scores[score - 1]] || 0}&nbsp;j</Text>
             </View>
           );
         })}
