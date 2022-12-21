@@ -17,7 +17,11 @@ export const FriseGraph = ({
       {title ? <Text style={styles.friseTitle}>{title}</Text> : null}
       <View style={styles.squareContainer}>
         {data?.map((e, i) => {
+          const isReverse = e?._indicateur?.order === "DESC";
+
+          const scores = isReverse ? [5, 4, 3, 2, 1] : [1, 2, 3, 4, 5];
           let _icon;
+          let _value = e?.value;
           if (e?._indicateur?.type === "smiley") {
             if (e?._indicateur?.order === "DESC") {
               _icon = scoresMapIcon[5 + 1 - e?.value];
@@ -25,21 +29,15 @@ export const FriseGraph = ({
               _icon = scoresMapIcon[e?.value];
             }
           } else if (e?._indicateur?.type === "boolean") {
-            const _value = e?.value === true ? 5 : 1;
+            _value = e?.value === true ? 5 : 1;
             if (e?._indicateur?.order === "DESC") {
               _icon = scoresMapIcon[5 + 1 - _value];
             } else {
               _icon = scoresMapIcon[_value];
             }
           } else if (e?._indicateur?.type === "gauge") {
-            const _value = e?.value;
-            const scores = e?._indicateur?.order === "DESC" ? [5, 4, 3, 2, 1] : [1, 2, 3, 4, 5];
-
-            if (_value < 0.2) _icon = scoresMapIcon[scores[0]];
-            if (_value >= 0.2 && _value < 0.4) _icon = scoresMapIcon[scores[1]];
-            if (_value >= 0.4 && _value < 0.6) _icon = scoresMapIcon[scores[2]];
-            if (_value >= 0.6 && _value < 0.8) _icon = scoresMapIcon[scores[3]];
-            if (_value >= 0.8) _icon = scoresMapIcon[scores[4]];
+            _value = Math.min(Math.ceil(e?.value * 5), 5);
+            _icon = scoresMapIcon[scores[_value - 1]];
           } else {
             _icon = scoresMapIcon[e?.value];
           }
@@ -47,16 +45,18 @@ export const FriseGraph = ({
           let color = _icon?.color || "#D7D3D3";
 
           let opacity = 1;
-          // if (focusedScores.length && !focusedScores.includes(e?.value)) {
-          //   // cet élément n'est pas focused
-          //   opacity = e?.value ? 0.1 : 0.5; // on reduit moins l'opacité si c'est une frise vide
-          // }
 
           const isFocused =
-            e?.value &&
+            _value &&
             focusedScores.length > 0 &&
-            focusedScores.length < 5 &&
-            focusedScores.includes(e?.value);
+            focusedScores.length <= 5 &&
+            ((!isReverse && focusedScores.includes(_value)) ||
+              (isReverse && focusedScores.includes(6 - _value)));
+
+          if (focusedScores.length && !isFocused) {
+            // cet élément n'est pas focused
+            opacity = _value ? 0.1 : 0.5; // on reduit moins l'opacité si c'est une frise vide
+          }
 
           const shadow = isFocused
             ? {
@@ -73,7 +73,7 @@ export const FriseGraph = ({
 
           const borderBottom = isFocused
             ? {
-                borderColor: scoresMapIcon[e?.value]?.borderColor,
+                borderColor: scoresMapIcon[scores[_value - 1]]?.borderColor,
                 borderBottomWidth: 2,
               }
             : {};

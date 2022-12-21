@@ -18,7 +18,7 @@ export const FriseScreen = ({
   setToDate,
   hasTreatment,
 }) => {
-  const [focusedScores, setFocusedScores] = React.useState([1, 2, 3, 4, 5]);
+  const [focusedScores, setFocusedScores] = React.useState([]);
   const [showTraitement, setShowTraitement] = React.useState(true);
   const [filterEnabled, setFilterEnabled] = React.useState(false);
 
@@ -39,7 +39,7 @@ export const FriseScreen = ({
           withPreset={true}
         >
           {/* TODO : make it work avec les autres types d'indicateur */}
-          {/* <Button2
+          <Button2
             checkable
             title="Filtrer"
             icon={!filterEnabled ? "TuneSvg" : "CheckSvg"}
@@ -51,12 +51,12 @@ export const FriseScreen = ({
               const nextValue = !filterEnabled;
               if (!nextValue) {
                 setShowTraitement(true);
-                setFocusedScores([1, 2, 3, 4, 5]);
+                setFocusedScores([]);
               }
               setFilterEnabled(nextValue);
               autoLayoutAnimation();
             }}
-          /> */}
+          />
           <FriseInfoButton
             ref={friseInfoButtonRef}
             navigation={navigation}
