@@ -133,16 +133,31 @@ const ChartPie = ({ navigation, fromDate, toDate }) => {
     <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContainer}>
       {userIndicateurs
         ?.filter((ind) => isChartVisible(ind.name) && ind.active)
-        ?.map((_indicateur) => (
-          <Pie
-            indicateur={_indicateur}
-            title={getTitle(_indicateur.name)}
-            key={_indicateur.name}
-            data={computeChartData(_indicateur.name)}
-            fromDate={fromDate}
-            toDate={toDate}
-          />
-        ))}
+        ?.map((_indicateur) => {
+          const isReverse = _indicateur?.order === "DESC";
+          if (_indicateur?.type === "boolean")
+            return (
+              <PieYesNo
+                indicateur={_indicateur}
+                title={getTitle(_indicateur.name)}
+                key={_indicateur.name}
+                data={computeChartData(_indicateur.name)}
+                parialsColors={[
+                  "#f3f3f3",
+                  isReverse ? "#F16B6B" : "#5DEE5A",
+                  isReverse ? "#5DEE5A" : "#F16B6B",
+                ]}
+              />
+            );
+          return (
+            <Pie
+              indicateur={_indicateur}
+              title={getTitle(_indicateur.name)}
+              key={_indicateur.name}
+              data={computeChartData(_indicateur.name)}
+            />
+          );
+        })}
       <GoalsChartPie chartDates={chartDates} />
       <View style={styles.divider} />
       <PieYesNo
@@ -444,9 +459,8 @@ const Pie = ({ title, data, indicateur }) => {
   );
 };
 
-const sliceColorYesNo = ["#f3f3f3", "5956E8", "E575F8"];
-
-const PieYesNo = ({ title, data }) => {
+// parialsColors 0 -> no data, 1 -> yes, 2 -> no
+const PieYesNo = ({ title, data, parialsColors = ["#f3f3f3", "#5956E8", "#E575F8"] }) => {
   const [sections, setSections] = React.useState([]);
   const [joursRenseignes, setJoursRenseignes] = React.useState({});
   const [nombreDeValeurParScore, setNombreDeValeurParScore] = React.useState([]);
@@ -484,7 +498,7 @@ const PieYesNo = ({ title, data }) => {
   React.useEffect(() => {
     if (!nombreDeValeurParScore?.length) return;
     const sectionsAvecCouleurEtPourcentage = nombreDeValeurParScore.map((e) => ({
-      color: sliceColorYesNo[e.score],
+      color: parialsColors[e.score],
       percentage: e.pourcentage,
     }));
     setSections(sectionsAvecCouleurEtPourcentage);
@@ -505,17 +519,30 @@ const PieYesNo = ({ title, data }) => {
         </View>
         <View style={styles.pieContainer}>
           <View>
-            <View style={{ display: "flex", flexDirection: "row", marginVertical: 5 }}>
-              <Text style={styles.yesLabel}>Oui:&nbsp;</Text>
-              <Text>
-                {Math.round(nombreDeValeurParScore?.find((e) => e.score === "1")?.pourcentage || 0)}%
-              </Text>
-            </View>
-            <View style={{ display: "flex", flexDirection: "row", marginVertical: 5 }}>
-              <Text style={styles.noLabel}>Non:&nbsp;</Text>
-              <Text>
-                {Math.round(nombreDeValeurParScore?.find((e) => e.score === "2")?.pourcentage || 0)}%
-              </Text>
+            <View className="flex flex-row gap-3 items-center">
+              <View className="flex flex-row mt-2 items-center">
+                <View
+                  style={{ backgroundColor: parialsColors[1] }}
+                  className={`flex justify-center items-center h-10 w-10 mr-1 rounded-full`}
+                >
+                  <Text className="text-white text-sm">Oui</Text>
+                </View>
+                <Text>
+                  {Math.round(nombreDeValeurParScore?.find((e) => e.score === "1")?.pourcentage || 0)}%
+                </Text>
+              </View>
+              <View className="flex flex-row mt-2 items-center">
+                <View
+                  style={{ backgroundColor: parialsColors[2] }}
+                  className={`flex justify-center items-center h-10 w-10 mr-1 rounded-full`}
+                >
+                  <Text className="text-white text-sm">Non</Text>
+                </View>
+
+                <Text>
+                  {Math.round(nombreDeValeurParScore?.find((e) => e.score === "2")?.pourcentage || 0)}%
+                </Text>
+              </View>
             </View>
             {joursRenseignes.pourcentage < 100 ? (
               <Text style={styles.pourcentageStyle}>
