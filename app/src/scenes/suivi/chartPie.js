@@ -191,6 +191,78 @@ const _colors = {
   ],
 };
 
+const renderResponse = ({ indicateur, value, isSmall, translateX }) => {
+  if (indicateur?.type === "smiley") {
+    let _icon;
+    if (indicateur?.order === "DESC") {
+      _icon = scoresMapIcon[5 + 1 - value];
+    } else {
+      _icon = scoresMapIcon[value];
+    }
+    const iconSize = isSmall ? 24 : 32;
+    const iconContainerSize = isSmall ? 30 : 40;
+
+    if (!_icon.color && !_icon.faceIcon)
+      return (
+        <CircledIcon
+          color="#cccccc"
+          borderColor="#999999"
+          iconColor="#888888"
+          icon="QuestionMarkSvg"
+          iconWidth={iconSize}
+          iconHeight={iconSize}
+          iconContainerStyle={{
+            marginRight: 0,
+            transform: [{ translateX: translateX ? -10 : 0 }],
+            width: iconContainerSize,
+            height: iconContainerSize,
+          }}
+        />
+      );
+    return (
+      <CircledIcon
+        color={_icon.color}
+        borderColor={_icon.borderColor}
+        iconColor={_icon.iconColor}
+        icon={_icon.faceIcon}
+        iconWidth={iconSize}
+        iconHeight={iconSize}
+        iconContainerStyle={{
+          marginRight: 0,
+          transform: [{ translateX: translateX ? -10 : 0 }],
+          width: iconContainerSize,
+          height: iconContainerSize,
+        }}
+      />
+    );
+  }
+  if (indicateur?.type === "boolean") {
+    // a voir si on veut afficher un smiley ou un cercle ou du texte
+    return null;
+  }
+  if (indicateur?.type === "gauge") {
+    const _value = value;
+    const _colors =
+      indicateur?.order === "DESC"
+        ? ["#5DEE5A", "#ACF352", "#F2F478", "#FEAA5B", "#F16B6B"]
+        : ["#F16B6B", "#FEAA5B", "#F2F478", "#ACF352", "#5DEE5A"];
+
+    let _color = _colors[_value - 1];
+
+    return (
+      <View
+        style={{ transform: [{ translateX: translateX ? -10 : 0 }] }}
+        className={`flex flex-row justify-center w-10 ${isSmall ? "space-x-1" : "space-x-2"} items-end`}
+      >
+        <View className={`${isSmall ? "h-1" : "h-2"} rounded-full w-1`} style={{ backgroundColor: _color }} />
+        <View className={`${isSmall ? "h-2" : "h-5"} rounded-full w-1`} style={{ backgroundColor: _color }} />
+        <View className={`${isSmall ? "h-4" : "h-8"} rounded-full w-1`} style={{ backgroundColor: _color }} />
+      </View>
+    );
+  }
+  return <View />;
+};
+
 const Pie = ({ title, data, indicateur }) => {
   const [sections, setSections] = React.useState([]);
   const [average, setAverage] = React.useState(0);
@@ -337,87 +409,6 @@ const Pie = ({ title, data, indicateur }) => {
     setDetailsVisible((e) => !e);
   };
 
-  const renderResponse = ({ value, isSmall }) => {
-    if (indicateur?.type === "smiley") {
-      let _icon;
-      if (indicateur?.order === "DESC") {
-        _icon = scoresMapIcon[5 + 1 - value];
-      } else {
-        _icon = scoresMapIcon[value];
-      }
-      const iconSize = isSmall ? 24 : 32;
-      const iconContainerSize = isSmall ? 30 : 40;
-
-      if (!_icon.color && !_icon.faceIcon)
-        return (
-          <CircledIcon
-            color="#cccccc"
-            borderColor="#999999"
-            iconColor="#888888"
-            icon="QuestionMarkSvg"
-            iconWidth={iconSize}
-            iconHeight={iconSize}
-            iconContainerStyle={{
-              marginRight: 0,
-              transform: [{ translateX: isSmall ? -10 : 0 }],
-              width: iconContainerSize,
-              height: iconContainerSize,
-            }}
-          />
-        );
-      return (
-        <CircledIcon
-          color={_icon.color}
-          borderColor={_icon.borderColor}
-          iconColor={_icon.iconColor}
-          icon={_icon.faceIcon}
-          iconWidth={iconSize}
-          iconHeight={iconSize}
-          iconContainerStyle={{
-            marginRight: 0,
-            transform: [{ translateX: isSmall ? -10 : 0 }],
-            width: iconContainerSize,
-            height: iconContainerSize,
-          }}
-        />
-      );
-    }
-    if (indicateur?.type === "boolean") {
-      // a voir si on veut afficher un smiley ou un cercle ou du texte
-      return null;
-    }
-    if (indicateur?.type === "gauge") {
-      const _value = value;
-      const _colors =
-        indicateur?.order === "DESC"
-          ? ["#5DEE5A", "#ACF352", "#F2F478", "#FEAA5B", "#F16B6B"]
-          : ["#F16B6B", "#FEAA5B", "#F2F478", "#ACF352", "#5DEE5A"];
-
-      let _color = _colors[_value - 1];
-
-      return (
-        <View
-          style={{ transform: [{ translateX: isSmall ? -10 : 0 }] }}
-          className={`flex flex-row justify-center w-10 ${isSmall ? "space-x-1" : "space-x-2"} items-end`}
-        >
-          <View
-            className={`${isSmall ? "h-1" : "h-2"} rounded-full w-1`}
-            style={{ backgroundColor: _color }}
-          />
-          <View
-            className={`${isSmall ? "h-2" : "h-5"} rounded-full w-1`}
-            style={{ backgroundColor: _color }}
-          />
-          <View
-            className={`${isSmall ? "h-4" : "h-8"} rounded-full w-1`}
-            style={{ backgroundColor: _color }}
-          />
-        </View>
-      );
-    }
-    return <View />;
-  };
-
   if (data.every((value) => value === 0)) return null;
 
   return (
@@ -445,7 +436,7 @@ const Pie = ({ title, data, indicateur }) => {
                 {averageIcons.map((e, i) => {
                   if (!(e >= 1 && e <= 5)) return null;
                   const isSmall = i === 0 && averageIcons.length > 1;
-                  return renderResponse({ value: e, isSmall });
+                  return renderResponse({ indicateur, value: e, isSmall, translateX: isSmall });
                 })}
               </View>
               {joursRenseignes.pourcentage < 100 ? (
@@ -601,22 +592,9 @@ const TableDeStatistiquesParLigne = ({
           return (
             <View
               key={`colonne_stat_${title}_${score}`}
-              style={[stylesTableLigne.cellule, stylesTableLigne.celluleAvecBordureAGauche]}
+              className="flex-1 flex flex-row justify-center items-center p-[5] border-l border-gray-100"
             >
-              <CircledIcon
-                color={scoresMapIcon[score].color}
-                borderColor={scoresMapIcon[score].borderColor}
-                iconColor={scoresMapIcon[score].iconColor}
-                icon={scoresMapIcon[score].faceIcon}
-                // eslint-disable-next-line react-native/no-inline-styles
-                iconContainerStyle={{
-                  marginRight: 0,
-                  width: 25,
-                  height: 25,
-                }}
-                iconWidth={20}
-                iconHeight={20}
-              />
+              {renderResponse({ indicateur, value: score, isSmall: true })}
             </View>
           );
         })}
@@ -630,7 +608,7 @@ const TableDeStatistiquesParLigne = ({
           return (
             <View
               key={`colonne_stat_pourcentage_${title}_${score}`}
-              style={[stylesTableLigne.cellule, stylesTableLigne.celluleAvecBordureAGauche]}
+              className="flex-1 flex flex-row justify-center items-center p-[5] border-l border-gray-100"
             >
               <Text>{Math.round(infoScore?.pourcentage) || 0}&nbsp;%</Text>
             </View>
@@ -646,7 +624,7 @@ const TableDeStatistiquesParLigne = ({
           return (
             <View
               key={`colonne_stat_total_${title}_${score}`}
-              style={[stylesTableLigne.cellule, stylesTableLigne.celluleAvecBordureAGauche]}
+              className="flex-1 flex flex-row justify-center items-center p-[5] border-l border-gray-100"
             >
               <Text>{infoScore?.count || 0}&nbsp;j</Text>
             </View>
