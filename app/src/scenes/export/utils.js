@@ -257,17 +257,19 @@ const formatHtmlTable = async (diaryData, diaryNotes) => {
     numberOfDays: 30,
   });
 
-  const computeChartData = (categoryId) => {
+  const computeChartData = (indicateur) => {
     return chartDates.map((date) => {
       const dayData = diaryData[date];
       if (!dayData) {
         return null;
       }
-      const categoryState = dayData[categoryId] || dayData[`${categoryId}_FREQUENCE`];
+      const categoryState = dayData[indicateur.name] || dayData[`${indicateur.name}_FREQUENCE`];
       if (!categoryState) {
         return null;
       }
 
+      if (indicateur?.type === "boolean") return categoryState?.value === true ? 5 : 1;
+      if (indicateur?.type === "gauge") return Math.min(Math.ceil(categoryState?.value * 5), 5);
       if (categoryState?.value) return categoryState?.value;
 
       // -------
@@ -275,7 +277,7 @@ const formatHtmlTable = async (diaryData, diaryNotes) => {
       // -------
 
       // get the name and the suffix of the category
-      const [categoryName, suffix] = categoryId.split("_");
+      const [categoryName, suffix] = indicateur.name.split("_");
       let categoryStateIntensity = null;
       if (suffix && suffix === "FREQUENCE") {
         // if it's one category with the suffix 'FREQUENCE' :
@@ -365,14 +367,12 @@ const formatHtmlTable = async (diaryData, diaryNotes) => {
         <h3 style="color: ${colors.BLUE}">Mes ressentis</h3>
         ${user_indicateurs
           ?.filter((ind) => isChartVisible(ind.name) && ind.active)
-          .reduce((acc, curr) => {
-            if (!acc.find((a) => a === curr.name)) {
-              acc.push(curr.name);
-            }
-            return acc;
-          }, [])
-          .map((categoryId) => {
-            const res = computeChartData(categoryId);
+          .map((indicateur) => {
+            const res = computeChartData(indicateur);
+            const categoryId = indicateur.name;
+            const isReverse = indicateur?.order === "DESC";
+
+            const scores = isReverse ? [5, 4, 3, 2, 1] : [1, 2, 3, 4, 5];
 
             return `
               <table width="100%" style="width: 100%; max-width: 100%;">
@@ -399,8 +399,8 @@ const formatHtmlTable = async (diaryData, diaryNotes) => {
                                 return generateBar(
                                   value,
                                   height,
-                                  scoresMapIcon[value]?.color,
-                                  scoresMapIcon[value]?.iconColor
+                                  scoresMapIcon[scores[value - 1]]?.color,
+                                  scoresMapIcon[scores[value - 1]]?.iconColor
                                 );
                               })
                               .join("")}
