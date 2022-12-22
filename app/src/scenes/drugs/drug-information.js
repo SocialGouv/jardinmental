@@ -38,8 +38,8 @@ export default ({ visible = false, onClose }) => {
             <Text
               style={styles.link}
               onPress={() => {
-                logEvents.logInfoClick("reseau_pic");
-                Linking.openURL("http://www.reseau-pic.info/?dest=fiches/nom.php");
+                logEvents.logInfoClick("base-donnees-publique.medicaments.gouv");
+                Linking.openURL("https://base-donnees-publique.medicaments.gouv.fr/");
               }}
             >
               reseau-pic.com{" "}
