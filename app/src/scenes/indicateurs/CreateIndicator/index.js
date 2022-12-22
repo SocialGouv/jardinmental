@@ -15,15 +15,41 @@ import Button from "../../../components/Button";
 import Text from "../../../components/MyText";
 import localStorage from "../../../utils/localStorage";
 import logEvents from "../../../services/logEvents";
+import { useFocusEffect } from "@react-navigation/native";
 
 const CreateIndicator = ({ navigation, route }) => {
   const [nameNewIndicator, setNameNewIndicator] = useState("");
+  const [userIndicateurs, setUserIndicateurs] = useState();
+  const [error, setError] = useState();
 
-  const handleAddNewIndicator = async (value) => {
-    if (!value) return;
+  const handleAddNewIndicator = async () => {
+    const _value = nameNewIndicator?.trim();
+    if (!_value) return;
+    if (_value?.length === 0) {
+      return;
+    }
+
+    if (
+      userIndicateurs &&
+      userIndicateurs.some((indicateur) => indicateur.name?.toLowerCase() === _value?.toLowerCase())
+    ) {
+      return setError(true);
+    }
     // await localStorage.addCustomSymptoms(value);
     logEvents.logCustomSymptomAdd();
+    navigation.push("CHOOSE_INDICATOR_TYPE", { nameNewIndicator: _value });
   };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      (async () => {
+        const user_indicateurs = await localStorage.getIndicateurs();
+        if (user_indicateurs) {
+          setUserIndicateurs(user_indicateurs);
+        }
+      })();
+    }, [])
+  );
 
   return (
     <SafeAreaView style={styles.safe}>
@@ -38,7 +64,10 @@ const CreateIndicator = ({ navigation, route }) => {
         <Text style={styles.label}>Comment souhaitez-vous appeler votre nouvel indicateur ?</Text>
 
         <TextInput
-          onChangeText={setNameNewIndicator}
+          onChangeText={(e) => {
+            setNameNewIndicator(e);
+            setError(false);
+          }}
           autoFocus={true}
           value={nameNewIndicator}
           placeholder={"Entrez le nom de votre indicateur"}
@@ -46,16 +75,23 @@ const CreateIndicator = ({ navigation, route }) => {
           style={styles.textInput}
         />
 
+        {error ? (
+          <View className="border border-red-400 bg-red-50 rounded-lg px-3 py-2 mb-5">
+            <Text className="text-gray-900">
+              Vous avez déjà un indicateur qui porte le nom "{nameNewIndicator?.trim()}".
+            </Text>
+            <Text className="text-gray-900">
+              Si il est inactif, vous pouvez le réactiver dans la liste des "anciens indicateurs".
+            </Text>
+          </View>
+        ) : null}
+
         {nameNewIndicator.length > 0 && (
           <Button
             buttonStyle={{ backgroundColor: "#1FC6D5", marginBottom: 20 }}
             textStyle={{ color: "white", textAlign: "center" }}
             onPress={() => {
-              if (nameNewIndicator.length === 0) {
-                return;
-              }
-              handleAddNewIndicator(nameNewIndicator);
-              navigation.push("CHOOSE_INDICATOR_TYPE", { nameNewIndicator });
+              handleAddNewIndicator();
             }}
             title="Valider"
           />
