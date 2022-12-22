@@ -1,14 +1,15 @@
 import React from "react";
-import { TouchableOpacity, StyleSheet, View } from "react-native";
+import { TouchableOpacity, StyleSheet, View, Pressable } from "react-native";
 import Text from "../../components/MyText";
 import RoundButtonIcon from "../../components/RoundButtonIcon";
+import { InputCheckbox } from "../../components/InputCheckbox";
 
 const CategorieElements = ({ title, options, onClick, userIndicateurs }) => {
   const [isOpen, setIsOpen] = React.useState(false);
   return (
     <>
-      <TouchableOpacity style={stylesA.categorieContainer} onPress={() => setIsOpen((e) => !e)}>
-        <Text style={stylesA.categorieTitre}>{title}</Text>
+      <TouchableOpacity style={styles.categorieContainer} onPress={() => setIsOpen((e) => !e)}>
+        <Text style={styles.categorieTitre}>{title}</Text>
         <View>
           <RoundButtonIcon
             icon="toggle"
@@ -20,7 +21,7 @@ const CategorieElements = ({ title, options, onClick, userIndicateurs }) => {
         </View>
       </TouchableOpacity>
       {isOpen ? (
-        <View style={stylesA.listeContainer}>
+        <View style={styles.listeContainer}>
           {(options || [])
             .filter((e) => !e.active)
             .map((option) => {
@@ -28,41 +29,28 @@ const CategorieElements = ({ title, options, onClick, userIndicateurs }) => {
                 (_ind) => _ind.uuid === option.uuid && _ind.active
               );
               return (
-                <TouchableOpacity
+                <View
                   key={`${option.uuid}`}
                   style={[
-                    stylesA.choixContainer,
-                    indicateurSelectionne ? stylesA.choixContainerSelected : null,
+                    styles.container,
+                    {
+                      backgroundColor: indicateurSelectionne ? "#F4FCFD" : "#F8F9FB",
+                      borderColor: indicateurSelectionne ? "#DEF4F5" : "#E7EAF1",
+                    },
                   ]}
-                  onPress={() => onClick(option)}
                 >
-                  {indicateurSelectionne ? (
-                    <View>
-                      <RoundButtonIcon
-                        backgroundColor="#5DEE5A"
-                        iconColor="#fff"
-                        borderWidth={0.5}
-                        borderColor="#5DEE5A"
-                        icon="validate"
-                        visible={true}
-                        medium
-                      />
+                  <Pressable
+                    onPress={() => {
+                      console.log("✍️  option", option);
+                      onClick(option);
+                    }}
+                    hitSlop={{ bottom: 8, left: 8, right: 8, top: 8 }}
+                  >
+                    <View style={[styles.contentContainer]} pointerEvents="none">
+                      <InputCheckbox label={option.name} checked={indicateurSelectionne} />
                     </View>
-                  ) : (
-                    <View>
-                      <RoundButtonIcon
-                        backgroundColor="#f4f4f4"
-                        iconColor="#e1e1e1"
-                        borderWidth={0.5}
-                        borderColor="#e1e1e1"
-                        icon="validate"
-                        visible={true}
-                        medium
-                      />
-                    </View>
-                  )}
-                  <Text style={stylesA.choixLabel}>{option.name}</Text>
-                </TouchableOpacity>
+                  </Pressable>
+                </View>
               );
             })}
         </View>
@@ -71,7 +59,7 @@ const CategorieElements = ({ title, options, onClick, userIndicateurs }) => {
   );
 };
 
-const stylesA = StyleSheet.create({
+const styles = StyleSheet.create({
   categorieContainer: {
     backgroundColor: "#F4FCFD",
     borderColor: "#D4F0F2",

@@ -72,7 +72,7 @@ const EditIndicateurs = ({ navigation, route }) => {
       setUserIndicateurs(_userIndicateurs);
       await localStorage.setIndicateurs(_userIndicateurs);
     } else {
-      handleAddNewIndicateur({ ..._indicateur, active: true });
+      handleAddNewIndicateur({ ..._indicateur, version: 1, active: true });
     }
   };
 
