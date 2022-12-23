@@ -81,7 +81,7 @@ const CreateIndicator = ({ navigation, route }) => {
               Vous avez déjà un indicateur qui porte le nom "{nameNewIndicator?.trim()}".
             </Text>
             <Text className="text-gray-900">
-              Si il est inactif, vous pouvez le réactiver dans la liste des "anciens indicateurs".
+              S'il est inactif, vous pouvez le réactiver dans la liste des "anciens indicateurs".
             </Text>
           </View>
         ) : null}
