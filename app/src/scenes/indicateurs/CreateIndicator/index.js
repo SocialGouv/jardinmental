@@ -11,6 +11,7 @@ import {
 
 import BackButton from "../../../components/BackButton";
 import { colors } from "../../../utils/colors";
+import { INDICATEURS } from "../../../utils/liste_indicateurs.1.js";
 import Button from "../../../components/Button";
 import Text from "../../../components/MyText";
 import localStorage from "../../../utils/localStorage";
@@ -32,9 +33,12 @@ const CreateIndicator = ({ navigation, route }) => {
     if (
       userIndicateurs &&
       userIndicateurs.some((indicateur) => indicateur.name?.toLowerCase() === _value?.toLowerCase())
-    ) {
+    )
       return setError(true);
-    }
+
+    if (INDICATEURS.some((indicateur) => indicateur.name?.toLowerCase() === _value?.toLowerCase()))
+      return setError(true);
+
     // await localStorage.addCustomSymptoms(value);
     logEvents.logCustomSymptomAdd();
     navigation.push("CHOOSE_INDICATOR_TYPE", { nameNewIndicator: _value });
@@ -78,10 +82,11 @@ const CreateIndicator = ({ navigation, route }) => {
         {error ? (
           <View className="border border-red-400 bg-red-50 rounded-lg px-3 py-2 mb-5">
             <Text className="text-gray-900">
-              Vous avez déjà un indicateur qui porte le nom "{nameNewIndicator?.trim()}".
+              Il existe déjà un indicateur qui porte le nom "{nameNewIndicator?.trim()}".
             </Text>
             <Text className="text-gray-900">
-              S'il est inactif, vous pouvez le réactiver dans la liste des "anciens indicateurs".
+              S'il est inactif, vous pouvez le réactiver dans la liste des "anciens indicateurs" ou depuis la
+              liste d&apos;exemples.
             </Text>
           </View>
         ) : null}
