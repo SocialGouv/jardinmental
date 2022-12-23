@@ -611,3 +611,25 @@ export const INDICATEURS_LES_PLUS_COURANTS = INDICATEURS.filter((indicateur) =>
     "43688363-b5aa-4f44-ac78-56b43eb72923",
   ].includes(indicateur.uuid)
 );
+
+export const INDICATEURS_LISTE_ONBOARDING_CUSTOM_SIMPLE = [
+  INDICATEURS.filter((indicateur) =>
+    [
+      "cde300cd-aecd-4821-b21b-73db4cfa6354",
+      "49cf6796-e1b3-4878-875b-5851e8a58b5f",
+      "f2cdd835-fb9c-453f-a6ca-cf85d731bb4f",
+      "ae48397d-f491-46d4-923f-7d553aed225d",
+    ].includes(indicateur.uuid)
+  ),
+  INDICATEURS.filter((indicateur) =>
+    [
+      "1c7d836a-2174-49a0-9b98-888b577dc212",
+      "5cfc6e92-1f98-487d-a8a7-6af0c4b1c84f",
+      "70b93828-1a42-4887-a000-87754a4bcca7",
+      "0d277137-afb5-4926-a81c-3d278139f764",
+    ].includes(indicateur.uuid)
+  ),
+  INDICATEURS.filter((indicateur) =>
+    ["eac70ab8-ee01-4ffd-8627-7903c3a861c0", "6058c367-e5c6-4f08-ae8b-e6032b4c94af"].includes(indicateur.uuid)
+  ),
+];
