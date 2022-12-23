@@ -5,24 +5,34 @@ import Button from "../../../components/Button";
 import { onboardingStyles } from "../styles";
 import localStorage from "../../../utils/localStorage";
 import { useFocusEffect } from "@react-navigation/native";
-import {
-  INDICATEURS_HUMEUR,
-  INDICATEURS_LISTE_ONBOARDING_HUMEUR,
-  INDICATEURS,
-} from "../../../utils/liste_indicateurs";
+import { INDICATEURS_HUMEUR, INDICATEURS_LISTE_ONBOARDING_HUMEUR } from "../../../utils/liste_indicateurs.1";
 import RoundButtonIcon from "../../../components/RoundButtonIcon";
 import { colors } from "../../../utils/colors";
 import { stylesA, styles, styleSwitch } from ".";
 import { StickyButtonContainer } from "../StickyButton";
-import { CheckBoxList } from "../CheckBoxList";
 import { SafeAreaViewWithOptionalHeader } from "../ProgressHeader";
 import { OnboardingBackButton } from "../BackButton";
 import { ONBOARDING_STEPS } from "../../../utils/constants";
 import { autoLayoutAnimation } from "../../../utils/autoLayoutAnimation";
 
 export const OnboardingMood = ({ navigation }) => {
-  const [symptomSelection, setSymptomSelection] = useState({});
   const [isMoodTroubleEnable, setIsMoodTroubleEnabled] = useState();
+  const [userIndicateurs, setUserIndicateurs] = useState();
+
+  useFocusEffect(
+    React.useCallback(() => {
+      (async () => {
+        const user_indicateurs = await localStorage.getIndicateurs();
+        if (user_indicateurs) {
+          console.log("oui");
+          setUserIndicateurs(user_indicateurs);
+        } else {
+          console.log("non");
+          setToggleIndicateur(INDICATEURS_HUMEUR);
+        }
+      })();
+    }, [])
+  );
 
   useEffect(() => {
     (async () => {
@@ -30,42 +40,59 @@ export const OnboardingMood = ({ navigation }) => {
     })();
   }, []);
 
+  const handleAddNewIndicateur = async (_indicateur) => {
+    if (!_indicateur) return;
+    const _userIndicateurs = [...(userIndicateurs || []), _indicateur];
+    setUserIndicateurs(_userIndicateurs);
+    await localStorage.setIndicateurs(_userIndicateurs);
+    // logEvents.logCustomSymptomAdd();
+  };
+
+  const setToggleIndicateur = async (_indicateur) => {
+    if ((userIndicateurs || [])?.find((e) => e.uuid === _indicateur.uuid)) {
+      const _userIndicateurs = userIndicateurs?.map((indicateur) => {
+        if (indicateur.uuid === _indicateur.uuid) {
+          indicateur.active = !indicateur.active;
+        }
+        return indicateur;
+      });
+      setUserIndicateurs(_userIndicateurs);
+      await localStorage.setIndicateurs(_userIndicateurs);
+    } else {
+      handleAddNewIndicateur({ ..._indicateur, version: 1, active: true });
+    }
+  };
+
   useFocusEffect(
     useCallback(() => {
-      (async () => {
-        const localStorageIndicateurs = (await localStorage.getSymptoms()) || {};
+      if (!userIndicateurs) return;
+      // cocher par défaut si on a jamais enregistré notre choix
+      if (!userIndicateurs?.some((_ind) => _ind.uuid === INDICATEURS_HUMEUR.uuid))
+        setToggleIndicateur(INDICATEURS_HUMEUR);
 
-        // cocher par défaut si on a jamais enregistré notre choix
-        if (!Object.keys(localStorageIndicateurs).includes(INDICATEURS_HUMEUR))
-          localStorageIndicateurs[INDICATEURS_HUMEUR] = true;
-
-        // deplier par defaut si au moins un des enfants est selectionné
-        if (
-          Object.keys(localStorageIndicateurs).some(
-            (e) => INDICATEURS_LISTE_ONBOARDING_HUMEUR.includes(e) && localStorageIndicateurs[e]
-          )
-        ) {
-          setIsMoodTroubleEnabled(true);
-        }
-
-        setSymptomSelection(localStorageIndicateurs);
-      })();
-    }, [])
+      // deplier par defaut si au moins un des enfants est selectionné
+      if (
+        userIndicateurs?.some(
+          (_ind) => INDICATEURS_LISTE_ONBOARDING_HUMEUR.map((e) => e.uuid).includes(_ind.uuid) && _ind.active
+        )
+      ) {
+        setIsMoodTroubleEnabled(true);
+      }
+    }, [userIndicateurs])
   );
 
-  useEffect(() => {
-    const symptoms = { ...symptomSelection };
-    if (!isMoodTroubleEnable && isMoodTroubleEnable !== undefined) {
-      INDICATEURS_LISTE_ONBOARDING_HUMEUR.forEach((v) => (symptoms[v] = false));
-      setSymptomSelection(symptoms);
-    }
-  }, [isMoodTroubleEnable]);
-
   const handleNext = async () => {
-    const symptoms = { ...symptomSelection };
-    if (!isMoodTroubleEnable) INDICATEURS_LISTE_ONBOARDING_HUMEUR.forEach((v) => (symptoms[v] = false));
+    if (!isMoodTroubleEnable) {
+      const _userIndicateurs = userIndicateurs?.map((_ind) => {
+        if (INDICATEURS_LISTE_ONBOARDING_HUMEUR.map((e) => e.uuid).includes(_ind.uuid)) {
+          _ind.active = false;
+        }
+        return _ind;
+      });
+      setUserIndicateurs(_userIndicateurs);
+      await localStorage.setIndicateurs(_userIndicateurs);
+    }
 
-    await localStorage.setSymptoms(symptoms);
     navigation.navigate(ONBOARDING_STEPS.STEP_SYMPTOMS_SLEEP);
   };
 
@@ -93,13 +120,13 @@ export const OnboardingMood = ({ navigation }) => {
             key="main-checkbox"
             style={[
               stylesA.choixContainer,
-              symptomSelection[INDICATEURS_HUMEUR] ? stylesA.choixContainerSelected : null,
+              userIndicateurs?.find((_ind) => _ind.uuid === INDICATEURS_HUMEUR.uuid && _ind.active)
+                ? stylesA.choixContainerSelected
+                : null,
             ]}
-            onPress={() =>
-              setSymptomSelection((prev) => ({ ...prev, [INDICATEURS_HUMEUR]: !prev[INDICATEURS_HUMEUR] }))
-            }
+            onPress={() => setToggleIndicateur(INDICATEURS_HUMEUR)}
           >
-            {symptomSelection[INDICATEURS_HUMEUR] ? (
+            {userIndicateurs?.find((_ind) => _ind.uuid === INDICATEURS_HUMEUR.uuid && _ind.active) ? (
               <View>
                 <RoundButtonIcon
                   backgroundColor="#5DEE5A"
@@ -124,7 +151,7 @@ export const OnboardingMood = ({ navigation }) => {
                 />
               </View>
             )}
-            <Text style={stylesA.choixLabel}>{INDICATEURS[INDICATEURS_HUMEUR]}</Text>
+            <Text style={stylesA.choixLabel}>{INDICATEURS_HUMEUR.name}</Text>
           </TouchableOpacity>
           <View key="question">
             <Text style={styles.question}>
@@ -136,7 +163,7 @@ export const OnboardingMood = ({ navigation }) => {
             <Switch
               onValueChange={() => {
                 autoLayoutAnimation();
-                setIsMoodTroubleEnabled(!isMoodTroubleEnable);
+                setIsMoodTroubleEnabled((e) => !e);
               }}
               value={isMoodTroubleEnable}
               trackColor={{ true: colors.LIGHT_BLUE }}
@@ -144,23 +171,68 @@ export const OnboardingMood = ({ navigation }) => {
             />
             <Text style={styleSwitch.label}>Oui</Text>
           </View>
-          {isMoodTroubleEnable && (
+          {isMoodTroubleEnable ? (
             <View key="secondary-details">
               <Text style={styles.description}>
                 Renseignez les variations de votre humeur au cours de la journée avec :
               </Text>
               <CheckBoxList
                 list={INDICATEURS_LISTE_ONBOARDING_HUMEUR}
-                symptomSelection={symptomSelection}
-                setSymptomSelection={setSymptomSelection}
+                userIndicateurs={userIndicateurs}
+                setToggleIndicateur={setToggleIndicateur}
               />
             </View>
-          )}
+          ) : null}
         </View>
       </ScrollView>
       <StickyButtonContainer>
         <Button title="Suivant" onPress={handleNext} buttonStyle={{ minWidth: 0 }} />
       </StickyButtonContainer>
     </SafeAreaViewWithOptionalHeader>
+  );
+};
+
+const CheckBoxList = ({ list, userIndicateurs, setToggleIndicateur }) => {
+  return (
+    <>
+      {list.map((_indicateur) => {
+        if (_indicateur === null) return <View style={{ height: 40 }} collapsable={false} />;
+        const isActive = userIndicateurs?.find((_ind) => _ind.uuid === _indicateur.uuid && _ind.active);
+        return (
+          <TouchableOpacity
+            key={_indicateur.uuid}
+            style={[stylesA.choixContainer, isActive ? stylesA.choixContainerSelected : null]}
+            onPress={() => setToggleIndicateur(_indicateur)}
+          >
+            {isActive ? (
+              <View>
+                <RoundButtonIcon
+                  backgroundColor="#5DEE5A"
+                  iconColor="#fff"
+                  borderWidth={0.5}
+                  borderColor="#5DEE5A"
+                  icon="validate"
+                  visible={true}
+                  medium
+                />
+              </View>
+            ) : (
+              <View>
+                <RoundButtonIcon
+                  backgroundColor="#f4f4f4"
+                  iconColor="#e1e1e1"
+                  borderWidth={0.5}
+                  borderColor="#e1e1e1"
+                  icon="validate"
+                  visible={true}
+                  medium
+                />
+              </View>
+            )}
+            <Text style={stylesA.choixLabel}>{_indicateur.name}</Text>
+          </TouchableOpacity>
+        );
+      })}
+    </>
   );
 };

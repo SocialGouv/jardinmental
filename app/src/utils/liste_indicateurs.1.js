@@ -1,3 +1,74 @@
+export const INDICATEURS_HUMEUR = {
+  uuid: "3e15ed99-f2f9-4716-b6a2-5348c35266da",
+  name: "Humeur générale",
+  category: "Emotions/sentiments",
+  order: "ASC",
+  type: "smiley",
+};
+
+export const INDICATEURS_SOMMEIL = {
+  uuid: "d21db60d-ffa7-4063-a011-d7faef93bed2",
+  name: "Qualité sommeil",
+  category: "Manifestations physiques",
+  order: "ASC",
+  type: "gauge",
+};
+
+export const INDICATEURS_LISTE_ONBOARDING_HUMEUR = [
+  {
+    uuid: "60f6eb32-698c-47c0-b99e-fb03a576b7c1",
+    name: "Humeur matinale",
+    category: "Emotions/sentiments",
+    order: "ASC",
+    type: "smiley",
+  },
+  {
+    uuid: "51ead8a8-0f08-4527-98ce-e101cd7da50d",
+    name: "Humeur à la mi-journée",
+    category: "Emotions/sentiments",
+    order: "ASC",
+    type: "smiley",
+  },
+  {
+    uuid: "e190182b-e2d3-4d09-bee6-21ba6baf0b25",
+    name: "Humeur au coucher",
+    category: "Emotions/sentiments",
+    order: "ASC",
+    type: "smiley",
+  },
+];
+
+export const INDICATEURS_LISTE_ONBOARDING_SOMMEIL = [
+  {
+    uuid: "6fb2564a-c2ab-44ca-80d7-88473fe0e414",
+    name: "Durée sommeil",
+    category: "Manifestations physiques",
+    order: "ASC",
+    type: "gauge",
+  },
+  {
+    uuid: "b36556bb-5f13-4214-a05b-f31619115f5b",
+    name: "Facilité endormissement",
+    category: "Manifestations physiques",
+    order: "ASC",
+    type: "smiley",
+  },
+  {
+    uuid: "1c7d836a-2174-49a0-9b98-888b577dc212",
+    name: "Fatigue",
+    category: "Manifestations physiques",
+    order: "ASC",
+    type: "smiley",
+  },
+  {
+    uuid: "0eefce3d-7955-4eff-b6cc-7da2de12bdce",
+    name: "Réveils nocturnes",
+    category: "Manifestations physiques",
+    order: "ASC",
+    type: "smiley",
+  },
+];
+
 export const INDICATEURS = [
   // Emotions/sentiments
   {
@@ -67,8 +138,8 @@ export const INDICATEURS = [
     uuid: "4d5b67c3-6919-4033-8374-c8f089b54cb8",
     name: "Stress",
     category: "Emotions/sentiments",
-    order: "ASC",
-    type: "smiley",
+    order: "DESC",
+    type: "gauge",
   },
   {
     uuid: "6872adcb-3e40-4d47-8b86-8b5edb024103",
@@ -265,14 +336,14 @@ export const INDICATEURS = [
     name: "Qualité sommeil",
     category: "Manifestations physiques",
     order: "ASC",
-    type: "smiley",
+    type: "gauge",
   },
   {
     uuid: "6fb2564a-c2ab-44ca-80d7-88473fe0e414",
     name: "Durée sommeil",
     category: "Manifestations physiques",
     order: "ASC",
-    type: "smiley",
+    type: "gauge",
   },
   {
     uuid: "b36556bb-5f13-4214-a05b-f31619115f5b",
