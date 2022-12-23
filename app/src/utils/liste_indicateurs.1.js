@@ -551,13 +551,6 @@ export const INDICATEURS = [
     type: "boolean",
   },
   {
-    uuid: "933ae75d-8271-4e30-9107-232310bae4b7",
-    name: "Inhibition",
-    category: "Comportements",
-    order: "DESC",
-    type: "gauge",
-  },
-  {
     uuid: "be9d1193-68e1-494d-b069-91302767259f",
     name: "Grignotage entre les repas",
     category: "Comportements",
@@ -584,6 +577,13 @@ export const INDICATEURS = [
     category: "Comportements",
     order: "DESC",
     type: "boolean",
+  },
+  {
+    uuid: "933ae75d-8271-4e30-9107-232310bae4b7",
+    name: "Inhibition",
+    category: "Comportements",
+    order: "DESC",
+    type: "gauge",
   },
   {
     uuid: "1a4ce5e5-82ea-46cb-8cac-737ffd9a610b",
