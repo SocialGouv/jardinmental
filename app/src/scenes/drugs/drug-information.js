@@ -42,7 +42,7 @@ export default ({ visible = false, onClose }) => {
                 Linking.openURL("https://base-donnees-publique.medicaments.gouv.fr/");
               }}
             >
-              reseau-pic.com{" "}
+              médicaments.gouv.fr{" "}
             </Text>
           </Text>
         </ScrollView>

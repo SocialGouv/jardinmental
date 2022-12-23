@@ -185,7 +185,7 @@ const Infos = ({ navigation }) => {
                 Linking.openURL("https://base-donnees-publique.medicaments.gouv.fr/");
               }}
             >
-              <Text style={styles.link}>reseau-pic.com </Text>
+              <Text style={styles.link}>médicaments.gouv.fr </Text>
             </TouchableOpacity>
           </Text>
           {"\n\n"}
