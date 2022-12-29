@@ -50,7 +50,10 @@ export const versionsTransformation = {
 export const updateSymptomsFormatIfNeeded = (data) => {
   return Object.keys(data).reduce((previous, labelSymptom) => {
     let _data = data[labelSymptom];
-    const dataVersion = _data?.version || 0;
+
+    let dataVersion = _data?.version || 0;
+    if (dataVersion === 0 && _data.type) dataVersion = 1;
+
     if (dataVersion === 0) _data = versionsTransformation[0]({ name: labelSymptom, active: _data });
 
     if (dataVersion < latestVersion) {
