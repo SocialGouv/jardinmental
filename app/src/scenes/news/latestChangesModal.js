@@ -17,16 +17,15 @@ import Lottie from "lottie-react-native";
 import localStorage from "../../utils/localStorage";
 
 const latestChanges = {
-  appversion: 169,
+  appversion: 193,
   content: [
-    { title: "1. Fixez vous des objectifs" },
+    { title: "Vous pouvez choisir comment vous évaluer vos indicateurs" },
     {
-      paragraph: `Sélectionnez vos objectifs dans le menu ⚙️ ou créez les vôtres.
-
-Choisissez les jours de la semaine et un rappel pour chacun de vos objectifs à réaliser !`,
+      paragraph: `Vous pouvez maintenant utiliser une jauge, ou un “non/oui” à la place des emojis.`,
     },
-    { title: "2. Réorganisez l’ordre de vos indicateurs dans votre questionnaire" },
-    { paragraph: `En allant dans le menu ⚙️ puis “personnaliser mes indicateurs”` },
+    {
+      paragraph: `Choisissez le mode le plus adapté pour vos nouveaux indicateurs (il n’est pas possible de modifier les anciens) !`,
+    },
   ],
   button: {
     title: "Super !",
@@ -136,8 +135,8 @@ export const LatestChangesModalProvider = ({ children }) => {
                 <View style={[styles.contentContainer]} onLayout={onContentLayout}>
                   {latestChanges?.content?.map((item) => (
                     <>
-                      {item?.title && <Text style={[styles.title]}>{item?.title}</Text>}
-                      {item?.paragraph && <Text style={[styles.paragraph]}>{item?.paragraph}</Text>}
+                      {item?.title ? <Text style={[styles.title]}>{item?.title}</Text> : null}
+                      {item?.paragraph ? <Text style={[styles.paragraph]}>{item?.paragraph}</Text> : null}
                     </>
                   ))}
                 </View>
