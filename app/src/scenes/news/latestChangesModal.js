@@ -7,7 +7,7 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Pressable, ScrollView, StyleSheet, View } from "react-native";
 import { BlurView } from "@react-native-community/blur";
 import { useLayout } from "@react-native-community/hooks";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -15,6 +15,7 @@ import { Button2 } from "../../components/Button2";
 import Svg, { Path } from "react-native-svg";
 import Lottie from "lottie-react-native";
 import localStorage from "../../utils/localStorage";
+import Text from "../../components/MyText";
 
 const latestChanges = {
   appversion: 193,
@@ -135,8 +136,14 @@ export const LatestChangesModalProvider = ({ children }) => {
                 <View style={[styles.contentContainer]} onLayout={onContentLayout}>
                   {latestChanges?.content?.map((item) => (
                     <>
-                      {item?.title ? <Text style={[styles.title]}>{item?.title}</Text> : null}
-                      {item?.paragraph ? <Text style={[styles.paragraph]}>{item?.paragraph}</Text> : null}
+                      {item?.title ? (
+                        <Text className="text-black text-base font-bold mt-5">{item?.title}</Text>
+                      ) : null}
+                      {item?.paragraph ? (
+                        <Text className="text-black text-sm font-normal mt-4" style={[styles.paragraph]}>
+                          {item?.paragraph}
+                        </Text>
+                      ) : null}
                     </>
                   ))}
                 </View>
