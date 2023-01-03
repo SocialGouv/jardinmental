@@ -20,9 +20,9 @@ const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, 
   const [userIndicateurs, setUserIndicateurs] = React.useState([]);
   const [isEmpty, setIsEmpty] = React.useState();
   const chartDates = getArrayOfDatesFromTo({ fromDate, toDate });
-  const [symptom, setSymptom] = React.useState();
+  const [indicateur, setIndicateur] = React.useState();
   const [event, setEvent] = React.useState("ALL");
-  const [score, setScore] = React.useState([5]);
+  const [level, setLevel] = React.useState([5]);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -30,22 +30,22 @@ const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, 
         const user_indicateurs = await localStorage.getIndicateurs();
         if (user_indicateurs) {
           setUserIndicateurs(user_indicateurs);
-          setSymptom(user_indicateurs[0].name);
+          setIndicateur(user_indicateurs[0].name);
         }
       })();
     }, [])
   );
 
   // React.useEffect(() => {
-  //   console.log("✍️ ~ symptom", symptom);
-  // }, [symptom]);
+  //   console.log("✍️ ~ indicateur", indicateur);
+  // }, [indicateur]);
 
   const memoizedCallback = React.useCallback(() => {
-    if (!symptom) return [];
-    // console.log("SYMPTOME", symptom);
-    if (!score || !score.length) return [];
-    const targetScore = score[0];
-    // console.log("score", score);
+    if (!indicateur) return [];
+    // console.log("SYMPTOME", indicateur);
+    if (!level || !level.length) return [];
+    let _targetLevel = level[0];
+    // console.log("level", level);
     if (!event) return [];
     // console.log("event", event);
     return chartDates.map((date) => {
@@ -56,13 +56,26 @@ const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, 
         // console.log("no dayData");
         return {};
       }
-      const categoryState = diaryData[date][symptom];
+      const categoryState = diaryData[date][indicateur];
       // console.log("✍️ ~ categoryState", categoryState);
       if (!categoryState) {
         // console.log("categoryState");
         return {};
       }
-      if (diaryData[date][symptom]?.value !== targetScore) {
+      let targetLevel = _targetLevel;
+      if (diaryData[date][indicateur]?._indicateur?.order === "DESC") targetLevel = 6 - _targetLevel;
+      let _value;
+      if (diaryData[date][indicateur]?._indicateur?.type === "smiley") {
+        _value = diaryData[date][indicateur]?.value;
+      } else if (diaryData[date][indicateur]?._indicateur?.type === "boolean") {
+        _value = diaryData[date][indicateur]?.value === true ? 5 : 1;
+      } else if (diaryData[date][indicateur]?._indicateur?.type === "gauge") {
+        _value = Math.ceil(diaryData[date][indicateur]?.value * 5);
+      } else {
+        _value = 0;
+      }
+
+      if (_value !== targetLevel) {
         return {};
       }
 
@@ -84,7 +97,7 @@ const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, 
       // -------
 
       // get the name and the suffix of the category
-      // const [categoryName, suffix] = symptom.split("_");
+      // const [categoryName, suffix] = indicateur.split("_");
       // let categoryStateIntensity = null;
       // if (suffix && suffix === "FREQUENCE") {
       //   // if it's one category with the suffix 'FREQUENCE' :
@@ -94,7 +107,7 @@ const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, 
       // }
       // return { value: categoryState.level - 1 };
     });
-  }, [symptom, score, event, chartDates, diaryData]);
+  }, [indicateur, level, event, chartDates, diaryData]);
 
   const startSurvey = async () => {
     const symptoms = await localStorage.getSymptoms();
@@ -140,11 +153,11 @@ const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, 
           setFromDate={setFromDate}
           toDate={toDate}
           setToDate={setToDate}
-          symptom={symptom}
-          setSymptom={setSymptom}
-          score={score}
-          setScore={setScore}
-          userIndicateurs={userIndicateurs.filter(({ active }) => active).map(({ name }) => name)}
+          indicateur={indicateur}
+          setIndicateur={setIndicateur}
+          level={level}
+          setLevel={setLevel}
+          userIndicateurs={userIndicateurs.filter(({ active }) => active)}
         />
         <View style={styles.dataContainer}>
           {memoizedCallback()?.filter((x) => x.date)?.length === 0 && (

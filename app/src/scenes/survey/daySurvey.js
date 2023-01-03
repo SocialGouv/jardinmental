@@ -8,6 +8,7 @@ import {
   KeyboardAvoidingView,
   TouchableOpacity,
   Platform,
+  Dimensions,
 } from "react-native";
 import Text from "../../components/MyText";
 import { colors } from "../../utils/colors";
@@ -30,7 +31,7 @@ import { GoalsDaySurvey } from "../goals/survey/GoalsDaySurvey";
 import { Screen } from "../../components/Screen";
 import { Button2 } from "../../components/Button2";
 import { Card } from "../../components/Card";
-import { IndicatorSurveyItem } from "../indicateurs/survey/IndicatorSurveyItem";
+import { IndicatorSurveyItem } from "./components/IndicatorSurveyItem";
 
 const DaySurvey = ({ navigation, route }) => {
   const initSurvey = route?.params?.currentSurvey ?? {
@@ -76,12 +77,27 @@ const DaySurvey = ({ navigation, route }) => {
         category: key,
       });
       const cleanedQuestionId = key.split("_")[0];
-      if (userIndicateurs.find((i) => i.name === cleanedQuestionId)) {
-        toggleAnswer({ key: cleanedQuestionId, value: score });
-        handleChangeUserComment({
-          key: cleanedQuestionId,
-          userComment: initSurvey?.answers[cleanedQuestionId]?.userComment,
-        });
+      const _indicateur = userIndicateurs.find((i) => i.name === cleanedQuestionId);
+      if (_indicateur) {
+        if (_indicateur.type === "gauge") {
+          toggleAnswer({ key: cleanedQuestionId, value: initSurvey?.answers[key]?.value });
+          handleChangeUserComment({
+            key: cleanedQuestionId,
+            userComment: initSurvey?.answers[cleanedQuestionId]?.userComment,
+          });
+        } else if (_indicateur.type === "boolean") {
+          toggleAnswer({ key: cleanedQuestionId, value: initSurvey?.answers[key]?.value });
+          handleChangeUserComment({
+            key: cleanedQuestionId,
+            userComment: initSurvey?.answers[cleanedQuestionId]?.userComment,
+          });
+        } else {
+          toggleAnswer({ key: cleanedQuestionId, value: score });
+          handleChangeUserComment({
+            key: cleanedQuestionId,
+            userComment: initSurvey?.answers[cleanedQuestionId]?.userComment,
+          });
+        }
       }
     });
     if ((initSurvey?.answers || {})[questionToxic.id]) {
@@ -199,15 +215,6 @@ const DaySurvey = ({ navigation, route }) => {
           {userIndicateurs
             .filter((ind) => ind.active)
             .map((ind) => (
-              // <Question
-              //   key={ind.uuid}
-              //   indicateur={ind}
-              //   onPress={toggleAnswer}
-              //   selected={answers[ind.name]?.value}
-              //   explanation={ind.explanation}
-              //   onChangeUserComment={handleChangeUserComment}
-              //   userComment={answers[ind.name]?.userComment}
-              // />
               <IndicatorSurveyItem
                 key={ind?.uuid}
                 indicator={ind}
@@ -299,18 +306,19 @@ const styles = StyleSheet.create({
     transform: [{ rotate: "0deg" }],
   },
 
-  buttonWrapper: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "flex-end",
-    paddingVertical: 20,
+  buttonValidate: {
+    width: "100%",
   },
   divider: {
     height: 1,
     backgroundColor: "rgba(0,183,200, .09)",
-    marginVertical: 10,
-    width: "65%",
+    marginTop: 20,
+    marginBottom: 10,
+    width: "100%",
     alignSelf: "center",
+  },
+  spacer: {
+    height: 120,
   },
 
   questionContainer: {
@@ -365,27 +373,54 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   question: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 15,
+    marginBottom: 25,
+    backgroundColor: "#F4FCFD",
+    borderColor: "#DEF4F5",
+    borderWidth: 1,
+    borderRadius: 10,
+    padding: 10,
+    paddingVertical: 20,
+  },
+  questionTextContainer: {
+    flex: 1,
+    marginLeft: 20,
+  },
+  questionText: {
     color: colors.BLUE,
     fontSize: 22,
     fontWeight: "700",
-    marginVertical: 25,
   },
   linkContainer: {
-    backgroundColor: "#D2F4F7",
+    backgroundColor: "rgba(31,198,213,0.2)",
     borderColor: colors.LIGHT_BLUE,
     borderWidth: 0.5,
-    borderRadius: 999,
+    borderRadius: 10,
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
+    padding: 15,
+    paddingRight: 20,
   },
-  link: {
+  linkTextContainer: {
+    flex: 1,
+    marginHorizontal: 20,
+  },
+  linkTitle: {
+    color: colors.BLUE,
+    fontSize: 14,
+    fontWeight: "700",
+    flex: 1,
+    marginBottom: 5,
+  },
+  linkText: {
     color: colors.BLUE,
     fontSize: 14,
     flex: 1,
-    textAlign: "center",
-    paddingHorizontal: 10,
   },
   linkButtonContainer: {
     borderRadius: 20,
@@ -467,10 +502,6 @@ const styles = StyleSheet.create({
   bottom: {
     justifyContent: "flex-end",
     marginBottom: 36,
-  },
-
-  spacer: {
-    height: 40,
   },
 });
 

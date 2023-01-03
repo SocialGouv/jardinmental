@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import Text from "./MyText";
 
 const styles = StyleSheet.create({
@@ -26,6 +26,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 19,
   },
+
+  iconContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
 });
 
 const Button = ({
@@ -36,6 +41,7 @@ const Button = ({
   disabled = false,
   buttonStyle,
   textStyle,
+  Icon = null,
 }) => {
   const color = disabled ? "lightgrey" : buttonColor;
   return (
@@ -44,9 +50,20 @@ const Button = ({
       onPress={onPress}
       disabled={disabled}
     >
-      <Text style={[{ ...styles.text, color: textColor || "white" }, textStyle]}>{title}</Text>
+      {Icon ? (
+        <View style={styles.iconContainer}>
+          {Icon}
+          <InsideText textStyle={textStyle} title={title} textColor={textColor} />
+        </View>
+      ) : (
+        <InsideText textStyle={textStyle} title={title} textColor={textColor} />
+      )}
     </TouchableOpacity>
   );
 };
+
+const InsideText = ({ textStyle, title, textColor }) => (
+  <Text style={[{ ...styles.text, color: textColor || "white" }, textStyle]}>{title}</Text>
+);
 
 export default Button;

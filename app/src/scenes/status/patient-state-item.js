@@ -9,6 +9,7 @@ import { colors } from "../../utils/colors";
 import Icon from "../../components/Icon";
 
 const PatientStateItem = ({ patientState, category, label }) => {
+  // console.log("✍️  patientState", JSON.stringify(patientState, null, 2));
   const [{ color, borderColor, faceIcon, iconColor }, setIcon] = useState({});
   const [userCommentVisible, setUserCommentVisible] = useState(false);
 
@@ -20,31 +21,95 @@ const PatientStateItem = ({ patientState, category, label }) => {
 
   const isTouchable = () => !!patientState[category]?.userComment?.trim();
 
-  const content = (
-    <View>
-      <View style={styles.container}>
-        {color && faceIcon ? (
-          <CircledIcon
-            color={color}
-            borderColor={borderColor}
-            iconColor={iconColor}
-            icon={faceIcon}
-            iconWidth={32}
-            iconHeight={32}
-          />
-        ) : (
+  const renderResponse = () => {
+    if (patientState[category]?._indicateur?.type === "smiley") {
+      let _icon;
+      if (patientState[category]?._indicateur?.order === "DESC") {
+        _icon = scoresMapIcon[5 + 1 - patientState[category]?.value];
+      } else {
+        _icon = scoresMapIcon[patientState[category]?.value];
+      }
+      if (!_icon.color && !_icon.faceIcon)
+        return (
           <CircledIcon
             color="#cccccc"
             borderColor="#999999"
             iconColor="#888888"
             icon="QuestionMarkSvg"
-            iconWidth={20}
-            iconHeight={20}
+            iconWidth={32}
+            iconHeight={32}
           />
-        )}
+        );
+      return (
+        <CircledIcon
+          color={_icon.color}
+          borderColor={_icon.borderColor}
+          iconColor={_icon.iconColor}
+          icon={_icon.faceIcon}
+          iconWidth={32}
+          iconHeight={32}
+        />
+      );
+    }
+    if (patientState[category]?._indicateur?.type === "boolean") {
+      const _color = {
+        ASC: {
+          false: { text: "text-white", bg: "border-red-400 bg-red-400" },
+          true: { text: "text-white", bg: "border-green-400 bg-green-400" },
+        },
+        DESC: {
+          true: { text: "text-white", bg: "border-red-400 bg-red-400" },
+          false: { text: "text-white", bg: "border-green-400 bg-green-400" },
+        },
+      };
 
+      const _value = patientState[category]?.value;
+      const _label = typeof _value === "boolean" && !_value ? "Non" : "Oui";
+
+      return (
+        <View
+          className={`flex justify-center items-center h-10 w-10 mr-5 rounded-full ${
+            _color[patientState[category]?._indicateur?.order]?.[_value]?.bg
+          }`}
+        >
+          <Text className={_color[patientState[category]?._indicateur?.order]?.[_value]?.text}>{_label}</Text>
+        </View>
+      );
+    }
+    if (patientState[category]?._indicateur?.type === "gauge") {
+      const _value = patientState[category]?.value;
+      const _colors =
+        patientState[category]?._indicateur?.order === "DESC"
+          ? ["#5DEE5A", "#ACF352", "#F2F478", "#FEAA5B", "#F16B6B"]
+          : ["#F16B6B", "#FEAA5B", "#F2F478", "#ACF352", "#5DEE5A"];
+
+      let _color;
+      if (_value < 0.2) _color = _colors[0];
+      if (_value >= 0.2 && _value < 0.4) _color = _colors[1];
+      if (_value >= 0.4 && _value < 0.6) _color = _colors[2];
+      if (_value >= 0.6 && _value < 0.8) _color = _colors[3];
+      if (_value >= 0.8) _color = _colors[4];
+
+      return (
+        <View className="flex flex-row justify-center w-10 space-x-2 items-end mr-5">
+          <View className="h-2 rounded-full w-1" style={{ backgroundColor: _color }} />
+          <View className="h-5 rounded-full w-1" style={{ backgroundColor: _color }} />
+          <View className="h-8 rounded-full w-1" style={{ backgroundColor: _color }} />
+        </View>
+      );
+    }
+    return <View />;
+  };
+
+  const content = (
+    <View>
+      <View style={styles.container}>
+        {renderResponse()}
         <View style={styles.labelContainer}>
-          <Text style={styles.label}>{label}</Text>
+          <Text style={styles.label}>
+            {label}
+            {/* -{patientState[category]?.value} */}
+          </Text>
         </View>
         {isTouchable() ? (
           <Icon
@@ -90,6 +155,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingVertical: 5,
     paddingHorizontal: 20,
+    // width: 32,
+    // height: 32,
   },
   tilt: {
     // small negative marginTop for narrowing the texts

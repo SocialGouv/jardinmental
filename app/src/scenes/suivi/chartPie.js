@@ -133,15 +133,31 @@ const ChartPie = ({ navigation, fromDate, toDate }) => {
     <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContainer}>
       {userIndicateurs
         ?.filter((ind) => isChartVisible(ind.name) && ind.active)
-        ?.map(({ name }) => (
-          <Pie
-            title={getTitle(name)}
-            key={name}
-            data={computeChartData(name)}
-            fromDate={fromDate}
-            toDate={toDate}
-          />
-        ))}
+        ?.map((_indicateur) => {
+          const isReverse = _indicateur?.order === "DESC";
+          if (_indicateur?.type === "boolean")
+            return (
+              <PieYesNo
+                indicateur={_indicateur}
+                title={getTitle(_indicateur.name)}
+                key={_indicateur.name}
+                data={computeChartData(_indicateur.name)}
+                parialsColors={[
+                  "#f3f3f3",
+                  isReverse ? "#F16B6B" : "#5DEE5A",
+                  isReverse ? "#5DEE5A" : "#F16B6B",
+                ]}
+              />
+            );
+          return (
+            <Pie
+              indicateur={_indicateur}
+              title={getTitle(_indicateur.name)}
+              key={_indicateur.name}
+              data={computeChartData(_indicateur.name)}
+            />
+          );
+        })}
       <GoalsChartPie chartDates={chartDates} />
       <View style={styles.divider} />
       <PieYesNo
@@ -156,16 +172,98 @@ const ChartPie = ({ navigation, fromDate, toDate }) => {
   );
 };
 
-const sliceColor = [
-  "#f3f3f3",
-  scoresMapIcon[1].color,
-  scoresMapIcon[2].color,
-  scoresMapIcon[3].color,
-  scoresMapIcon[4].color,
-  scoresMapIcon[5].color,
-];
+const _colors = {
+  ASC: [
+    "#f3f3f3",
+    scoresMapIcon[1].color,
+    scoresMapIcon[2].color,
+    scoresMapIcon[3].color,
+    scoresMapIcon[4].color,
+    scoresMapIcon[5].color,
+  ],
+  DESC: [
+    "#f3f3f3",
+    scoresMapIcon[5].color,
+    scoresMapIcon[4].color,
+    scoresMapIcon[3].color,
+    scoresMapIcon[2].color,
+    scoresMapIcon[1].color,
+  ],
+};
 
-const Pie = ({ title, data }) => {
+const renderResponse = ({ indicateur, value, isSmall, translateX }) => {
+  if (indicateur?.type === "smiley") {
+    let _icon;
+    if (indicateur?.order === "DESC") {
+      _icon = scoresMapIcon[5 + 1 - value];
+    } else {
+      _icon = scoresMapIcon[value];
+    }
+    const iconSize = isSmall ? 24 : 32;
+    const iconContainerSize = isSmall ? 30 : 40;
+
+    if (!_icon.color && !_icon.faceIcon)
+      return (
+        <CircledIcon
+          color="#cccccc"
+          borderColor="#999999"
+          iconColor="#888888"
+          icon="QuestionMarkSvg"
+          iconWidth={iconSize}
+          iconHeight={iconSize}
+          iconContainerStyle={{
+            marginRight: 0,
+            transform: [{ translateX: translateX ? -10 : 0 }],
+            width: iconContainerSize,
+            height: iconContainerSize,
+          }}
+        />
+      );
+    return (
+      <CircledIcon
+        color={_icon.color}
+        borderColor={_icon.borderColor}
+        iconColor={_icon.iconColor}
+        icon={_icon.faceIcon}
+        iconWidth={iconSize}
+        iconHeight={iconSize}
+        iconContainerStyle={{
+          marginRight: 0,
+          transform: [{ translateX: translateX ? -10 : 0 }],
+          width: iconContainerSize,
+          height: iconContainerSize,
+        }}
+      />
+    );
+  }
+  if (indicateur?.type === "boolean") {
+    // a voir si on veut afficher un smiley ou un cercle ou du texte
+    return null;
+  }
+  if (indicateur?.type === "gauge") {
+    const _value = value;
+    const _colors =
+      indicateur?.order === "DESC"
+        ? ["#5DEE5A", "#ACF352", "#F2F478", "#FEAA5B", "#F16B6B"]
+        : ["#F16B6B", "#FEAA5B", "#F2F478", "#ACF352", "#5DEE5A"];
+
+    let _color = _colors[_value - 1];
+
+    return (
+      <View
+        style={{ transform: [{ translateX: translateX ? -10 : 0 }] }}
+        className={`flex flex-row justify-center w-10 ${isSmall ? "space-x-1" : "space-x-2"} items-end`}
+      >
+        <View className={`${isSmall ? "h-1" : "h-2"} rounded-full w-1`} style={{ backgroundColor: _color }} />
+        <View className={`${isSmall ? "h-2" : "h-5"} rounded-full w-1`} style={{ backgroundColor: _color }} />
+        <View className={`${isSmall ? "h-4" : "h-8"} rounded-full w-1`} style={{ backgroundColor: _color }} />
+      </View>
+    );
+  }
+  return <View />;
+};
+
+const Pie = ({ title, data, indicateur }) => {
   const [sections, setSections] = React.useState([]);
   const [average, setAverage] = React.useState(0);
   const [averageIcons, setAverageIcons] = React.useState([]);
@@ -179,7 +277,19 @@ const Pie = ({ title, data }) => {
     // key est le score (0 signifie que c'set non renseigné)
     // nombre de d'instance de ce score
     const tempNombreDeValeurParScore = data.reduce((previous, current) => {
-      const scoreEncours = current || 0; // on met 0 si la valeur est null
+      let scoreEncours = 0; // on met 0 si la valeur est null
+      if (indicateur.type === "boolean") {
+        scoreEncours =
+          typeof current === "boolean" && current
+            ? 5
+            : typeof current === "boolean" && current === false
+            ? 1
+            : 0;
+      } else if (indicateur.type === "gauge") {
+        scoreEncours = Math.ceil(current * 5);
+      } else {
+        scoreEncours = current ? current : 0;
+      }
       previous[scoreEncours] = (previous[scoreEncours] || 0) + 1;
       return previous;
     }, {});
@@ -205,12 +315,21 @@ const Pie = ({ title, data }) => {
 
     // calcul du nombre de jours consécutifs maximum par score
     const maximumParScore = {};
-    let scoreEnCours = 0;
     let scorePrecedent = 0;
     data.forEach((current) => {
-      // console.log("✍️ ~ current", current);
-      scoreEnCours = current;
-      // console.log("✍️ ~ scoreEnCours", scoreEnCours);
+      let scoreEnCours = 0; // on met 0 si la valeur est null
+      if (indicateur.type === "boolean") {
+        scoreEnCours =
+          typeof current === "boolean" && current
+            ? 5
+            : typeof current === "boolean" && current === false
+            ? 1
+            : 0;
+      } else if (indicateur.type === "gauge") {
+        scoreEnCours = Math.ceil(current * 5);
+      } else {
+        scoreEnCours = current ? current : 0;
+      }
       if (scoreEnCours === scorePrecedent) {
         maximumParScore[scoreEnCours] = (maximumParScore[scoreEnCours] || 1) + 1;
       }
@@ -222,21 +341,49 @@ const Pie = ({ title, data }) => {
   React.useEffect(() => {
     if (!nombreDeValeurParScore?.length) return;
     const sectionsAvecCouleurEtPourcentage = nombreDeValeurParScore.map((e) => ({
-      color: sliceColor[e.score],
+      color: _colors[indicateur.order || "ASC"][e.score],
       percentage: e.pourcentage,
     }));
     setSections(sectionsAvecCouleurEtPourcentage);
-  }, [nombreDeValeurParScore]);
+  }, [indicateur.order, nombreDeValeurParScore]);
 
   React.useEffect(() => {
     const total = data.reduce((previous, current) => {
-      if (!current || current === 0) return previous;
+      let scoreEncours = 0; // on met 0 si la valeur est null
+      if (indicateur.type === "boolean") {
+        scoreEncours =
+          typeof current === "boolean" && current
+            ? 5
+            : typeof current === "boolean" && current === false
+            ? 1
+            : 0;
+      } else if (indicateur.type === "gauge") {
+        scoreEncours = Math.ceil(current * 5);
+      } else {
+        scoreEncours = current ? current : 0;
+      }
+      if (!scoreEncours || scoreEncours === 0) return previous;
       return previous + 1;
     }, 0);
-    const sum = data.reduce((previous, current) => previous + (current || 0), 0);
+    const sum = data.reduce((previous, current) => {
+      let scoreEncours = 0; // on met 0 si la valeur est null
+      if (indicateur.type === "boolean") {
+        scoreEncours =
+          typeof current === "boolean" && current
+            ? 5
+            : typeof current === "boolean" && current === false
+            ? 1
+            : 0;
+      } else if (indicateur.type === "gauge") {
+        scoreEncours = Math.ceil(current * 5);
+      } else {
+        scoreEncours = current ? current : 0;
+      }
+      return previous + (scoreEncours || 0);
+    }, 0);
     const avg = sum / total;
     setAverage(avg);
-  }, [data]);
+  }, [data, indicateur]);
 
   React.useEffect(() => {
     const num = Math.floor(average);
@@ -289,26 +436,7 @@ const Pie = ({ title, data }) => {
                 {averageIcons.map((e, i) => {
                   if (!(e >= 1 && e <= 5)) return null;
                   const isSmall = i === 0 && averageIcons.length > 1;
-                  const iconSize = isSmall ? 24 : 32;
-                  const iconContainerSize = isSmall ? 30 : 40;
-                  return (
-                    <CircledIcon
-                      key={`${title}_${e}`}
-                      color={scoresMapIcon[e].color}
-                      borderColor={scoresMapIcon[e].borderColor}
-                      iconColor={scoresMapIcon[e].iconColor}
-                      icon={scoresMapIcon[e].faceIcon}
-                      // eslint-disable-next-line react-native/no-inline-styles
-                      iconContainerStyle={{
-                        marginRight: 0,
-                        transform: [{ translateX: isSmall ? -10 : 0 }],
-                        width: iconContainerSize,
-                        height: iconContainerSize,
-                      }}
-                      iconWidth={iconSize}
-                      iconHeight={iconSize}
-                    />
-                  );
+                  return renderResponse({ indicateur, value: e, isSmall, translateX: isSmall });
                 })}
               </View>
               {joursRenseignes.pourcentage < 100 ? (
@@ -325,15 +453,15 @@ const Pie = ({ title, data }) => {
           nombreDeJoursConsecutifs={nombreDeJoursConsecutifs}
           nombreDeValeurParScore={nombreDeValeurParScore}
           title={title}
+          indicateur={indicateur}
         />
       ) : null}
     </View>
   );
 };
 
-const sliceColorYesNo = ["#f3f3f3", "5956E8", "E575F8"];
-
-const PieYesNo = ({ title, data }) => {
+// parialsColors 0 -> no data, 1 -> yes, 2 -> no
+const PieYesNo = ({ title, data, parialsColors = ["#f3f3f3", "#5956E8", "#E575F8"] }) => {
   const [sections, setSections] = React.useState([]);
   const [joursRenseignes, setJoursRenseignes] = React.useState({});
   const [nombreDeValeurParScore, setNombreDeValeurParScore] = React.useState([]);
@@ -371,7 +499,7 @@ const PieYesNo = ({ title, data }) => {
   React.useEffect(() => {
     if (!nombreDeValeurParScore?.length) return;
     const sectionsAvecCouleurEtPourcentage = nombreDeValeurParScore.map((e) => ({
-      color: sliceColorYesNo[e.score],
+      color: parialsColors[e.score],
       percentage: e.pourcentage,
     }));
     setSections(sectionsAvecCouleurEtPourcentage);
@@ -392,17 +520,30 @@ const PieYesNo = ({ title, data }) => {
         </View>
         <View style={styles.pieContainer}>
           <View>
-            <View style={{ display: "flex", flexDirection: "row", marginVertical: 5 }}>
-              <Text style={styles.yesLabel}>Oui:&nbsp;</Text>
-              <Text>
-                {Math.round(nombreDeValeurParScore?.find((e) => e.score === "1")?.pourcentage || 0)}%
-              </Text>
-            </View>
-            <View style={{ display: "flex", flexDirection: "row", marginVertical: 5 }}>
-              <Text style={styles.noLabel}>Non:&nbsp;</Text>
-              <Text>
-                {Math.round(nombreDeValeurParScore?.find((e) => e.score === "2")?.pourcentage || 0)}%
-              </Text>
+            <View className="flex flex-row gap-3 items-center">
+              <View className="flex flex-row mt-2 items-center">
+                <View
+                  style={{ backgroundColor: parialsColors[1] }}
+                  className={`flex justify-center items-center h-10 w-10 mr-1 rounded-full`}
+                >
+                  <Text className="text-white text-sm">Oui</Text>
+                </View>
+                <Text>
+                  {Math.round(nombreDeValeurParScore?.find((e) => e.score === "1")?.pourcentage || 0)}%
+                </Text>
+              </View>
+              <View className="flex flex-row mt-2 items-center">
+                <View
+                  style={{ backgroundColor: parialsColors[2] }}
+                  className={`flex justify-center items-center h-10 w-10 mr-1 rounded-full`}
+                >
+                  <Text className="text-white text-sm">Non</Text>
+                </View>
+
+                <Text>
+                  {Math.round(nombreDeValeurParScore?.find((e) => e.score === "2")?.pourcentage || 0)}%
+                </Text>
+              </View>
             </View>
             {joursRenseignes.pourcentage < 100 ? (
               <Text style={styles.pourcentageStyle}>
@@ -416,7 +557,15 @@ const PieYesNo = ({ title, data }) => {
   );
 };
 
-const TableDeStatistiquesParLigne = ({ nombreDeJoursConsecutifs, nombreDeValeurParScore, title }) => {
+const TableDeStatistiquesParLigne = ({
+  nombreDeJoursConsecutifs,
+  nombreDeValeurParScore,
+  title,
+  indicateur,
+}) => {
+  const isReverse = indicateur?.order === "DESC";
+  const scores = isReverse ? [5, 4, 3, 2, 1] : [1, 2, 3, 4, 5];
+
   return (
     <View style={stylesTableLigne.container}>
       <View style={stylesTableLigne.ligne}>
@@ -443,22 +592,9 @@ const TableDeStatistiquesParLigne = ({ nombreDeJoursConsecutifs, nombreDeValeurP
           return (
             <View
               key={`colonne_stat_${title}_${score}`}
-              style={[stylesTableLigne.cellule, stylesTableLigne.celluleAvecBordureAGauche]}
+              className="flex-1 flex flex-row justify-center items-center p-[5] border-l border-gray-100"
             >
-              <CircledIcon
-                color={scoresMapIcon[score].color}
-                borderColor={scoresMapIcon[score].borderColor}
-                iconColor={scoresMapIcon[score].iconColor}
-                icon={scoresMapIcon[score].faceIcon}
-                // eslint-disable-next-line react-native/no-inline-styles
-                iconContainerStyle={{
-                  marginRight: 0,
-                  width: 25,
-                  height: 25,
-                }}
-                iconWidth={20}
-                iconHeight={20}
-              />
+              {renderResponse({ indicateur, value: score, isSmall: true })}
             </View>
           );
         })}
@@ -468,11 +604,11 @@ const TableDeStatistiquesParLigne = ({ nombreDeJoursConsecutifs, nombreDeValeurP
           <Text style={stylesTableLigne.textTitre}>Pourcentage</Text>
         </View>
         {[1, 2, 3, 4, 5].map((score) => {
-          const infoScore = nombreDeValeurParScore.find((e) => Number(e.score) === Number(score));
+          const infoScore = nombreDeValeurParScore.find((e) => Number(e.score) === Number(scores[score - 1]));
           return (
             <View
               key={`colonne_stat_pourcentage_${title}_${score}`}
-              style={[stylesTableLigne.cellule, stylesTableLigne.celluleAvecBordureAGauche]}
+              className="flex-1 flex flex-row justify-center items-center p-[5] border-l border-gray-100"
             >
               <Text>{Math.round(infoScore?.pourcentage) || 0}&nbsp;%</Text>
             </View>
@@ -484,11 +620,11 @@ const TableDeStatistiquesParLigne = ({ nombreDeJoursConsecutifs, nombreDeValeurP
           <Text style={stylesTableLigne.textTitre}>Jour(s)</Text>
         </View>
         {[1, 2, 3, 4, 5].map((score) => {
-          const infoScore = nombreDeValeurParScore.find((e) => Number(e.score) === Number(score));
+          const infoScore = nombreDeValeurParScore.find((e) => Number(e.score) === Number(scores[score - 1]));
           return (
             <View
               key={`colonne_stat_total_${title}_${score}`}
-              style={[stylesTableLigne.cellule, stylesTableLigne.celluleAvecBordureAGauche]}
+              className="flex-1 flex flex-row justify-center items-center p-[5] border-l border-gray-100"
             >
               <Text>{infoScore?.count || 0}&nbsp;j</Text>
             </View>
@@ -505,7 +641,7 @@ const TableDeStatistiquesParLigne = ({ nombreDeJoursConsecutifs, nombreDeValeurP
               key={`colonne_stat_consecutif_${title}_${score}`}
               style={[stylesTableLigne.cellule, stylesTableLigne.celluleAvecBordureAGauche]}
             >
-              <Text>{nombreDeJoursConsecutifs[score] || 0}&nbsp;j</Text>
+              <Text>{nombreDeJoursConsecutifs[scores[score - 1]] || 0}&nbsp;j</Text>
             </View>
           );
         })}

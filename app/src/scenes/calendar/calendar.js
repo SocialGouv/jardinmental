@@ -64,25 +64,27 @@ const Calendar = ({ navigation }) => {
 
   const chartDates = getArrayOfDates({ startDate: firstDay, numberOfDays: 6 });
 
-  const displayOnlyRequest = (categoryId, dayIndex) => {
+  const displayOnlyRequest = (indicateur, dayIndex) => {
     if (Date.parse(new Date(chartDates[dayIndex])) > Date.now()) return; // if clicked day is in the future, don't display it
     navigation.navigate("chart-day", {
       day: chartDates[dayIndex],
-      categoryId,
+      indicateur,
       dayIndex,
     });
   };
 
-  const computeChartData = (categoryId) => {
+  const computeChartData = (indicateur) => {
     return chartDates.map((date) => {
       const dayData = diaryData[date];
       if (!dayData) {
         return null;
       }
-      const categoryState = diaryData[date][categoryId];
+      const categoryState = diaryData[date][indicateur.name];
       if (!categoryState) {
         return null;
       }
+      if (indicateur?.type === "boolean") return categoryState?.value === true ? 4 : 0;
+      if (indicateur?.type === "gauge") return Math.min(Math.floor(categoryState?.value * 5), 4);
       if (categoryState?.value) return categoryState?.value - 1;
 
       // -------
@@ -90,7 +92,7 @@ const Calendar = ({ navigation }) => {
       // -------
 
       // get the name and the suffix of the category
-      const [categoryName, suffix] = categoryId.split("_");
+      const [categoryName, suffix] = indicateur.name.split("_");
       let categoryStateIntensity = null;
       if (suffix && suffix === "FREQUENCE") {
         // if it's one category with the suffix 'FREQUENCE' :
@@ -153,20 +155,15 @@ const Calendar = ({ navigation }) => {
             {userIndicateurs
               .concat(INDICATEURS)
               .filter((ind) => ind.active)
-              .reduce((acc, curr) => {
-                if (!acc.find((a) => a === curr.name)) {
-                  acc.push(curr.name);
-                }
-                return acc;
-              }, [])
               .map(
-                (categoryId) =>
-                  isChartVisible(categoryId) && (
+                (indicateur) =>
+                  isChartVisible(indicateur.name) && (
                     <Chart
-                      title={getTitle(categoryId)}
-                      key={categoryId}
-                      data={computeChartData(categoryId)}
-                      onPress={(dayIndex) => displayOnlyRequest(categoryId, dayIndex)}
+                      indicateur={indicateur}
+                      title={getTitle(indicateur.name)}
+                      key={indicateur.name}
+                      data={computeChartData(indicateur)}
+                      onPress={(dayIndex) => displayOnlyRequest(indicateur, dayIndex)}
                     />
                   )
               )}

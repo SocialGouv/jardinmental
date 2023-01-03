@@ -48,12 +48,8 @@ export default ({ navigation, indicateurs, patientState, goalsData, date }) => {
   };
 
   const hasAnswerSurvey = () =>
-    Object.keys(displayedCategories)
-      .concat(customs)
-      .concat(INDICATEURS_LISTE)
-      .filter((key) => {
-        return patientState && patientState[key];
-      })?.length > 0 || goalsData?.records?.byDate?.[date]?.length > 0;
+    patientStateRecords.some(([key, value]) => value?.value !== undefined) ||
+    goalsData?.records?.byDate?.[date]?.length > 0;
 
   const handlePressItem = ({ editingSurvey, toGoals } = {}) => {
     if (!canEdit(date)) return navigation.navigate("too-late", { date });
@@ -92,7 +88,7 @@ export default ({ navigation, indicateurs, patientState, goalsData, date }) => {
         <View style={[styles.item, styles.itemWithSpaceAbove]}>
           <View>
             {patientStateRecords.map(([key, value]) => {
-              if (!value) {
+              if (!value || (!value.value && typeof value.value !== "boolean")) {
                 return;
               }
               const [categoryName] = key.split("_");
