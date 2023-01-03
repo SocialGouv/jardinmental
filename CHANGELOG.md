@@ -1,3 +1,10 @@
+# [1.42.0](https://github.com/SocialGouv/jardinmental/compare/v1.41.0...v1.42.0) (2023-01-03)
+
+
+### Features
+
+* questionnaire, new indicators and design ([#216](https://github.com/SocialGouv/jardinmental/issues/216)) ([f51399d](https://github.com/SocialGouv/jardinmental/commit/f51399dfec20955b7e4c4d99c77134721ef11268)), closes [#230](https://github.com/SocialGouv/jardinmental/issues/230)
+
 # [1.41.0](https://github.com/SocialGouv/jardinmental/compare/v1.40.5...v1.41.0) (2022-12-15)
 
 
