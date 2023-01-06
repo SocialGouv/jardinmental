@@ -13,7 +13,7 @@ export const getBadgeNotesVersion = async () => {
   return lastNotesVersion !== LAST_NOTES_VERSION;
 };
 
-export const LAST_NOTES_VERSION = "1.35";
+export const LAST_NOTES_VERSION = "1.39";
 
 export default ({ navigation }) => {
   useEffect(() => {
@@ -28,6 +28,38 @@ export default ({ navigation }) => {
         <Image style={styles.image} source={require("../../../assets/imgs/logo2.png")} />
       </View>
       <ScrollView style={styles.cgu} contentContainerStyle={styles.scrollContainer}>
+        <Card title="Vous pouvez choisir comment évaluer vos indicateurs" version="v1.39" date="12/2022">
+          <Item>
+            <Text style={styles.text}>
+              Si les emojis ne sont pas adaptés à votre indicateur, vous pouvez maintenant les remplacer par
+              une jauge ou par un “non/oui”.
+            </Text>
+          </Item>
+          <Item>
+            <Text style={styles.text}>
+              En plus du mode d’évaluation de votre indicateur, vous pouvez aussi choisir le sens des couleurs
+              sur la jauge ou le non/oui.
+            </Text>
+          </Item>
+          <Item>
+            <Text style={styles.text}>
+              <Text style={styles.bold}>Remarque</Text>
+              {"\n"}Pour éviter de perdre ou endommager vos anciennes entrées, vous ne pouvez pas modifier le
+              mode d’évaluation de vos anciens indicateurs. Vous devez en créer des nouveaux pour cela.
+              {"\n\n"}De même, vous ne pouvez pas non plus avoir 2 indicateurs qui ont exactement le même nom.
+              Si par exemple vous souhaitez dorénavant suivre “Anxiété” avec une jauge, vous pouvez créer
+              “Mon&nbsp;Anxiété” ou encore “Anxiété 2” pour cela.
+            </Text>
+          </Item>
+        </Card>
+        <Card title="Objectifs" version="v1.38" date="12/2022">
+          <Item>
+            <Text style={styles.text}>
+              Vous pouvez maintenant choisir des objectifs parmi des exemples, en supprimer ou modifier leur
+              ordre dans votre questionnaire.
+            </Text>
+          </Item>
+        </Card>
         <Card
           title="Nouvelle fonction : les objectifs et choix de l’organisation de son questionnaire"
           version="v1.37"

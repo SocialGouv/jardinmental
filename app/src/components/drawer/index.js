@@ -73,7 +73,7 @@ export default ({ navigation, visible, onClick }) => {
               onClick={onClick}
               icon="PresentationSvg"
             />
-            <DrawerItem title="Recommander" onClick={recommendApp} icon="ThumbsUpSvg" />
+            <DrawerItem title="Recommander Jardin&nbsp;Mental" onClick={recommendApp} icon="ShareSvg" />
             <DrawerItem
               title="Parler à quelqu'un et s'informer"
               path="infos"

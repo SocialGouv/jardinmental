@@ -53,6 +53,11 @@ import { GoalsCreateForm } from "../scenes/goals/settings/GoalsCreateForm";
 import { GoalDaySelector } from "../scenes/goals/settings/GoalDaySelector";
 import { GoalConfig } from "../scenes/goals/settings/GoalConfig";
 import { IndicatorsSettingsMore } from "../scenes/indicateurs/settings/IndicatorsSettingsMore";
+import { GoalsSettingsMore } from "../scenes/goals/settings/GoalsSettingsMore";
+import EditIndicateurs from "../scenes/indicateurs/editIndicateurs";
+import CreateIndicator from "../scenes/indicateurs/CreateIndicator";
+import ChooseIndicatorType from "../scenes/indicateurs/CreateIndicator/ChooseIndicatorType";
+import ChooseIndicatorOrder from "../scenes/indicateurs/CreateIndicator/ChooseIndicatorOrder";
 
 const Stack = createStackNavigator();
 
@@ -157,6 +162,10 @@ class Router extends React.Component {
             />
             <Stack.Screen name="onboarding-symptoms-start" component={onboardingSymptomsStart} />
             <Stack.Screen name="onboarding-symptoms-custom" component={OnboardingSymptomsCustom} />
+            <Stack.Screen name="EDIT_INDICATOR" component={EditIndicateurs} />
+            <Stack.Screen name="CREATE_INDICATOR" component={CreateIndicator} />
+            <Stack.Screen name="CHOOSE_INDICATOR_TYPE" component={ChooseIndicatorType} />
+            <Stack.Screen name="CHOOSE_INDICATOR_ORDER" component={ChooseIndicatorOrder} />
             <Stack.Screen name="onboarding-goals" component={OnboardingGoals} />
             <Stack.Screen name="onboarding-drugs" component={OnboardingDrugs} />
             <Stack.Screen name="onboarding-drugs-information" component={OnboardingDrugsInformation} />
@@ -184,6 +193,7 @@ class Router extends React.Component {
             <Stack.Screen name="indicators-settings-more" component={IndicatorsSettingsMore} />
 
             <Stack.Screen name="goals-settings" component={GoalsSettings} />
+            <Stack.Screen name="goals-settings-more" component={GoalsSettingsMore} />
             <Stack.Screen name="goals-add-options" component={GoalsAddOptions} />
             <Stack.Screen name="goals-create-form" component={GoalsCreateForm} />
             <Stack.Screen name="goal-day-selector" component={GoalDaySelector} />

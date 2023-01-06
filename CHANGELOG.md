@@ -1,3 +1,31 @@
+# [1.42.0](https://github.com/SocialGouv/jardinmental/compare/v1.41.0...v1.42.0) (2023-01-03)
+
+
+### Features
+
+* questionnaire, new indicators and design ([#216](https://github.com/SocialGouv/jardinmental/issues/216)) ([f51399d](https://github.com/SocialGouv/jardinmental/commit/f51399dfec20955b7e4c4d99c77134721ef11268)), closes [#230](https://github.com/SocialGouv/jardinmental/issues/230)
+
+# [1.41.0](https://github.com/SocialGouv/jardinmental/compare/v1.40.5...v1.41.0) (2022-12-15)
+
+
+### Features
+
+* goals part2 ([#229](https://github.com/SocialGouv/jardinmental/issues/229)) ([d6bc5c7](https://github.com/SocialGouv/jardinmental/commit/d6bc5c7384c181f4961909384d6633cb3ab4738e))
+
+## [1.40.5](https://github.com/SocialGouv/jardinmental/compare/v1.40.4...v1.40.5) (2022-12-08)
+
+
+### Bug Fixes
+
+* multiline in survey ([1e57e73](https://github.com/SocialGouv/jardinmental/commit/1e57e7316e9e83f99d20fa84e883396e1d1bbbbf))
+
+## [1.40.4](https://github.com/SocialGouv/jardinmental/compare/v1.40.3...v1.40.4) (2022-12-05)
+
+
+### Bug Fixes
+
+* export indicateurs v2 ([78e2c1c](https://github.com/SocialGouv/jardinmental/commit/78e2c1c21aa9eef741c8fda10c476a227af4f9a9))
+
 ## [1.40.3](https://github.com/SocialGouv/jardinmental/compare/v1.40.2...v1.40.3) (2022-11-28)
 
 

@@ -70,7 +70,7 @@ const GoalStatusItem = ({ goalsData, record }) => {
               />
             </View>
             <Text style={[styles.label]}>{goal?.label}</Text>
-            {record.comment?.length && (
+            {record.comment?.length ? (
               <Icon
                 icon="ArrowUpSvg"
                 color="#C7CED5"
@@ -82,7 +82,7 @@ const GoalStatusItem = ({ goalsData, record }) => {
                   transform: [{ rotate: commentVisible ? "0deg" : "180deg" }],
                 }}
               />
-            )}
+            ) : null}
           </View>
           {commentVisible && <Text style={styles.comment}>{record?.comment}</Text>}
         </View>

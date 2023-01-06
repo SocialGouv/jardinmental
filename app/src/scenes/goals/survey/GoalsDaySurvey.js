@@ -42,8 +42,8 @@ export const GoalsDaySurvey = forwardRef(({ date, scrollRef, route }, ref) => {
         ...goalsRecordsToUpdate,
         [goal?.id]: {
           goalId: goal?.id,
-          value: checked,
-          comment,
+          value: checked !== undefined ? checked : goalsRecordsToUpdate?.[goal?.id]?.value,
+          comment: comment !== undefined ? comment : goalsRecordsToUpdate?.[goal?.id]?.comment,
           date,
         },
       });

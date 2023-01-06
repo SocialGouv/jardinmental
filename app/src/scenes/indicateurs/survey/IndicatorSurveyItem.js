@@ -71,6 +71,9 @@ export const IndicatorSurveyItem = ({
             _setComment(nextComment);
             onCommentChanged?.({ comment: nextComment, indicator });
           }}
+          multiline={true}
+          textAlignVertical="top"
+          className="p-0" // remove space that multiline adds
         />
       </View>
     </View>

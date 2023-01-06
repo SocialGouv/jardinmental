@@ -1,10 +1,9 @@
-import React, { useCallback, useState, useEffect } from "react";
-import { FlatList, StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import React, { useCallback, useState } from "react";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { Button2 } from "../../../components/Button2";
 import { Screen } from "../../../components/Screen";
 import { Card } from "../../../components/Card";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import { getDaysOfWeekLabel, getGoalsTracked } from "../../../utils/localStorage/goals";
+import { useFocusEffect } from "@react-navigation/native";
 import { Title } from "../../../components/Title";
 import { Badge } from "../../../components/Badge";
 import Icon from "../../../components/Icon";
@@ -19,7 +18,6 @@ export const IndicatorsSettingsMore = ({ navigation, route }) => {
     useCallback(() => {
       (async () => {
         let _indicators = await localStorage.getIndicateurs();
-        _indicators = _indicators.filter((indicator) => indicator.active);
         setIndicators(_indicators);
       })();
     }, [])
@@ -34,10 +32,10 @@ export const IndicatorsSettingsMore = ({ navigation, route }) => {
   };
 
   const renderItem = useCallback(({ item: indicator, drag, isActive, index }) => {
-    return <IndicatorItem {...{ indicator, drag, isActive, index }} />;
+    return <IndicatorItem {...{ indicator, drag, isActive, index, setIndicators }} />;
   }, []);
 
-  const keyExtractor = useCallback((indicator) => indicator.uuid);
+  const keyExtractor = useCallback((indicator) => indicator.uuid, []);
 
   return (
     <Screen
@@ -48,7 +46,7 @@ export const IndicatorsSettingsMore = ({ navigation, route }) => {
       ScrollComponent={DraggableFlatList}
       scrollAsFlatList={true}
       scrollProps={{
-        data: indicators,
+        data: indicators.filter((indicator) => indicator.active),
         renderItem,
         keyExtractor,
         onDragEnd: (data) => setIndicators(data?.data),
@@ -66,14 +64,14 @@ export const IndicatorsSettingsMore = ({ navigation, route }) => {
           Vos indicateurs
         </Title>
         <Badge style={{ marginLeft: 8 }} circle>
-          {indicators?.length || 0}
+          {indicators?.filter((indicator) => indicator.active)?.length || 0}
         </Badge>
       </View>
     </Screen>
   );
 };
 
-const IndicatorItem = ({ indicator, drag, isActive, index }) => {
+const IndicatorItem = ({ indicator, drag, isActive, index, setIndicators }) => {
   return (
     <ScaleDecorator>
       <TouchableOpacity onLongPress={drag} disabled={isActive} delayLongPress={100}>
@@ -86,16 +84,21 @@ const IndicatorItem = ({ indicator, drag, isActive, index }) => {
             styleContainer={{ width: 16, height: 16 }}
           />
           <Text style={[itemStyles.label]}>{indicator?.name}</Text>
-          {/* <Button2
-        square
-        preset=""
-        type="clear"
-        icon="EditSvg"
-        textStyle={{ color: "#26387C" }}
-        style={{ backgroundColor: "#F8F9FB" }}
-        iconSize={16}
-        onPress={() => {}}
-      /> */}
+          <TouchableOpacity
+            onPress={() =>
+              setIndicators((prev) =>
+                prev.map((i) => (i.uuid === indicator.uuid ? { ...i, active: false } : i))
+              )
+            }
+          >
+            <Icon
+              icon="Bin2Svg"
+              color="#26387C"
+              width="16"
+              height="16"
+              styleContainer={{ width: 16, height: 16 }}
+            />
+          </TouchableOpacity>
         </View>
       </TouchableOpacity>
     </ScaleDecorator>
@@ -115,6 +118,7 @@ const itemStyles = StyleSheet.create({
     alignItems: "center",
   },
   label: {
+    flex: 1,
     fontFamily: "Karla",
     fontWeight: "700",
     fontSize: 16,

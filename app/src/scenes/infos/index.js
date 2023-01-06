@@ -1,24 +1,16 @@
-import React, {useEffect, useState} from 'react';
-import {
-  StyleSheet,
-  SafeAreaView,
-  ScrollView,
-  Linking,
-  View,
-  Image,
-  TouchableOpacity,
-} from 'react-native';
-import Text from '../../components/MyText';
-import {colors} from '../../utils/colors';
-import logEvents from '../../services/logEvents';
-import BackButton from '../../components/BackButton';
-import Icon from '../../components/Icon';
+import React, { useEffect, useState } from "react";
+import { StyleSheet, SafeAreaView, ScrollView, Linking, View, Image, TouchableOpacity } from "react-native";
+import Text from "../../components/MyText";
+import { colors } from "../../utils/colors";
+import logEvents from "../../services/logEvents";
+import BackButton from "../../components/BackButton";
+import Icon from "../../components/Icon";
 
-const Infos = ({navigation}) => {
+const Infos = ({ navigation }) => {
   const [isFullScreen, setIsFullScreen] = useState(false);
 
   useEffect(() => {
-    const unsubscribe = navigation.addListener('tabPress', (e) => {
+    const unsubscribe = navigation.addListener("tabPress", (e) => {
       logEvents.logContactOpen();
     });
 
@@ -29,54 +21,51 @@ const Infos = ({navigation}) => {
     <SafeAreaView style={styles.safe}>
       <View style={styles.headerContainer}>
         <BackButton onPress={navigation.goBack} />
-        <Image
-          style={styles.image}
-          source={require('../../../assets/imgs/logo2.png')}
-        />
+        <Image style={styles.image} source={require("../../../assets/imgs/logo2.png")} />
       </View>
-      <ScrollView
-        style={styles.cgu}
-        contentContainerStyle={styles.scrollContainer}>
+      <ScrollView style={styles.cgu} contentContainerStyle={styles.scrollContainer}>
         <Text style={styles.title}>Pour simplement parler à quelqu’un :</Text>
         <Text style={styles.content}>
           Numéro national de prévention du suicide, Gratuit, 24h/24 et 7j/7
-          {'\n\n'}
+          {"\n\n"}
           <TouchableOpacity
             style={styles.content}
             onPress={() => {
-              logEvents.logInfoClick(
-                'Numéro national de prévention du suicide',
-              );
-              Linking.openURL('tel:3114');
-            }}>
+              logEvents.logInfoClick("Numéro national de prévention du suicide");
+              Linking.openURL("tel:3114");
+            }}
+          >
             <Text style={styles.link}>3114</Text>
           </TouchableOpacity>
-          {'\n\n'}
-          SOS-amitiés, 24h/24 et 7j/7{'\n\n'}
+          {"\n\n"}
+          SOS-amitiés, 24h/24 et 7j/7{"\n\n"}
           <TouchableOpacity
             style={styles.content}
             onPress={() => {
-              logEvents.logInfoClick('SOS-amitiés');
-              Linking.openURL('tel:09 72 39 40 50');
-            }}>
+              logEvents.logInfoClick("SOS-amitiés");
+              Linking.openURL("tel:09 72 39 40 50");
+            }}
+          >
             <Text style={styles.link}>09 72 39 40 50</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.content}
             onPress={() => {
-              logEvents.logInfoClick('SOS-amitiés');
-              Linking.openURL('tel:01 40 09 15 22');
-            }}>
+              logEvents.logInfoClick("SOS-amitiés");
+              Linking.openURL("tel:01 40 09 15 22");
+            }}
+          >
             <Text style={styles.link}>01 40 09 15 22</Text>
           </TouchableOpacity>
-          {'\n\n\n'}
-          Fil Santé Jeune, Tous les jours, 9h-23h {'\n\n'}
+          {"\n\n\n"}
+          Fil Santé Jeune, Tous les jours, 9h-23h {"\n\n"}
           <TouchableOpacity
             style={styles.content}
             onPress={() => {
-              logEvents.logInfoClick('SOS-amitiés');
-              Linking.openURL('tel:0 800 235 236');
-            }}>
+              logEvents.logInfoClick("SOS-amitiés");
+              Linking.openURL("tel:0 800 235 236");
+            }}
+          >
             <Text style={styles.link}>0 800 235 236</Text>
           </TouchableOpacity>
         </Text>
@@ -96,46 +85,33 @@ const Infos = ({navigation}) => {
             {isFullScreen ? (
               <>
                 <Text style={styles.explanation}>
-                  Quand on a un doute, quand on se pose la question, c’est
-                  toujours une bonne idée de consulter un professionnel de
-                  santé, qui saura nous informer et nous orienter.{'\n\n'}
-                  La santé mentale est une composante de la santé. Prendre soin
-                  de soi passe aussi par le fait de prendre soin de sa santé
-                  mentale.
-                  {'\n'}
-                  Il arrive qu’à certains moments de la vie, on se sente moins
-                  bien psychiquement. Notre santé mentale est alors moins bonne
-                  et l’on peut présenter un trouble psychiatrique. Les troubles
-                  psychiatriques sont très fréquents, ils peuvent toucher
-                  n’importe qui à n’importe quel moment de la vie, surtout quand
-                  on se retrouve dans des situations difficiles.{'\n\n'}
-                  Le fait d’avoir un trouble psychiatrique n’a aucun rapport
-                  avec une quelconque faiblesse ou manque de volonté. C’est
-                  juste que parfois, pour plein de raisons différentes, notre
-                  santé mentale est moins bonne, comme n’importe quelle autre
-                  composante de notre santé.
-                  {'\n'}Les troubles psychiatriques se soignent, encore plus
-                  s’ils sont pris en charge rapidement. Quand on a un doute,
-                  quand on se pose la question, c’est toujours une bonne idée de
-                  consulter un professionnel de santé, qui saura nous informer
-                  et nous orienter.
+                  Quand on a un doute, quand on se pose la question, c’est toujours une bonne idée de
+                  consulter un professionnel de santé, qui saura nous informer et nous orienter.{"\n\n"}
+                  La santé mentale est une composante de la santé. Prendre soin de soi passe aussi par le fait
+                  de prendre soin de sa santé mentale.
+                  {"\n"}
+                  Il arrive qu’à certains moments de la vie, on se sente moins bien psychiquement. Notre santé
+                  mentale est alors moins bonne et l’on peut présenter un trouble psychiatrique. Les troubles
+                  psychiatriques sont très fréquents, ils peuvent toucher n’importe qui à n’importe quel
+                  moment de la vie, surtout quand on se retrouve dans des situations difficiles.{"\n\n"}
+                  Le fait d’avoir un trouble psychiatrique n’a aucun rapport avec une quelconque faiblesse ou
+                  manque de volonté. C’est juste que parfois, pour plein de raisons différentes, notre santé
+                  mentale est moins bonne, comme n’importe quelle autre composante de notre santé.
+                  {"\n"}Les troubles psychiatriques se soignent, encore plus s’ils sont pris en charge
+                  rapidement. Quand on a un doute, quand on se pose la question, c’est toujours une bonne idée
+                  de consulter un professionnel de santé, qui saura nous informer et nous orienter.
                 </Text>
-                <Text
-                  style={styles.lessButton}
-                  onPress={() => setIsFullScreen((e) => !e)}>
+                <Text style={styles.lessButton} onPress={() => setIsFullScreen((e) => !e)}>
                   Reduire
                 </Text>
               </>
             ) : (
               <>
                 <Text numberOfLines={5} style={styles.explanation}>
-                  Quand on a un doute, quand on se pose la question, c’est
-                  toujours une bonne idée de consulter un professionnel de
-                  santé, qui saura nous informer et nous orienter.
+                  Quand on a un doute, quand on se pose la question, c’est toujours une bonne idée de
+                  consulter un professionnel de santé, qui saura nous informer et nous orienter.
                 </Text>
-                <Text
-                  style={styles.moreButton}
-                  onPress={() => setIsFullScreen((e) => !e)}>
+                <Text style={styles.moreButton} onPress={() => setIsFullScreen((e) => !e)}>
                   Afficher la suite
                 </Text>
               </>
@@ -144,87 +120,84 @@ const Infos = ({navigation}) => {
         </View>
         <Text>
           <Text style={styles.contentText}>
-            La santé mentale, qu’est-ce que c’est ?{'\n'}
+            La santé mentale, qu’est-ce que c’est ?{"\n"}
             <TouchableOpacity
               style={styles.content}
               onPress={() => {
-                logEvents.logInfoClick('en_savoir_plus_mentale');
+                logEvents.logInfoClick("en_savoir_plus_mentale");
                 Linking.openURL(
-                  'https://www.psycom.org/comprendre/la-sante-mentale/on-a-toutes-et-tous-une-sante-mentale/',
+                  "https://www.psycom.org/comprendre/la-sante-mentale/on-a-toutes-et-tous-une-sante-mentale/"
                 );
-              }}>
+              }}
+            >
               <Text style={styles.link}>en savoir plus</Text>
             </TouchableOpacity>
           </Text>
-          {'\n\n'}
+          {"\n\n"}
           <Text style={styles.contentText}>
-            Avoir un trouble psychiatrique, c’est fréquent ? 1&nbsp;personne sur
-            4 souffre de troubles mentaux.{'\n'}
+            Avoir un trouble psychiatrique, c’est fréquent ? 1&nbsp;personne sur 4 souffre de troubles
+            mentaux.{"\n"}
             <TouchableOpacity
               style={styles.content}
               onPress={() => {
-                logEvents.logInfoClick('article_OMS');
-                Linking.openURL(
-                  'https://www.who.int/whr/2001/media_centre/press_release/fr/',
-                );
-              }}>
+                logEvents.logInfoClick("article_OMS");
+                Linking.openURL("https://www.who.int/whr/2001/media_centre/press_release/fr/");
+              }}
+            >
               <Text style={styles.link}>Article de l'OMS</Text>
             </TouchableOpacity>
           </Text>
-          {'\n\n'}
+          {"\n\n"}
           <Text style={styles.contentText}>
             On a tous besoin d'aide à un moment ou un autre de notre vie.
-            {'\n'}
+            {"\n"}
             <TouchableOpacity
               style={styles.content}
               onPress={() => {
-                logEvents.logInfoClick('voir_un_psy');
-                Linking.openURL(
-                  'https://pasapas-jeunes.com/j-ai-besoin-d-aide',
-                );
-              }}>
+                logEvents.logInfoClick("voir_un_psy");
+                Linking.openURL("https://pasapas-jeunes.com/j-ai-besoin-d-aide");
+              }}
+            >
               <Text style={styles.link}>C’est grave d’aller voir un psy ?</Text>
             </TouchableOpacity>
           </Text>
-          {'\n\n'}
+          {"\n\n"}
           <Text style={styles.contentText}>
-            Quels sont les différents troubles psy&nbsp;?{'\n'}
+            Quels sont les différents troubles psy&nbsp;?{"\n"}
             <TouchableOpacity
               style={styles.content}
               onPress={() => {
-                logEvents.logInfoClick('en_savoir_plus_troubles');
-                Linking.openURL(
-                  'https://www.psycom.org/comprendre/la-sante-mentale/les-troubles-psy/',
-                );
-              }}>
+                logEvents.logInfoClick("en_savoir_plus_troubles");
+                Linking.openURL("https://www.psycom.org/comprendre/la-sante-mentale/les-troubles-psy/");
+              }}
+            >
               <Text style={styles.link}>en savoir plus</Text>
             </TouchableOpacity>
           </Text>
-          {'\n\n'}
+          {"\n\n"}
           <Text style={styles.contentText}>
             Je voudrais des informations sur les traitement médicamenteux&nbsp;:
-            {'\n'}
+            {"\n"}
             <TouchableOpacity
               style={styles.content}
               onPress={() => {
-                logEvents.logInfoClick('reseau_pic');
-                Linking.openURL(
-                  'http://www.reseau-pic.info/?dest=fiches/nom.php',
-                );
-              }}>
-              <Text style={styles.link}>reseau-pic.com </Text>
+                logEvents.logInfoClick("base-donnees-publique.medicaments.gouv");
+                Linking.openURL("https://base-donnees-publique.medicaments.gouv.fr/");
+              }}
+            >
+              <Text style={styles.link}>médicaments.gouv.fr </Text>
             </TouchableOpacity>
           </Text>
-          {'\n\n'}
+          {"\n\n"}
           <Text style={styles.contentText}>
-            Je suis étudiant et j'aimerais consulter gratuitement un
-            psychologue&nbsp;:{' '}
+            Je suis étudiant et j'aimerais consulter gratuitement un psychologue&nbsp;:{" "}
             <TouchableOpacity
               style={styles.content}
               onPress={() => {
-                logEvents.logInfoClick('reseau_pic');
-                Linking.openURL('https://santepsy.etudiant.gouv.fr/');
-              }}>
+                logEvents.logInfoClick("santepsy.etudiant.gouv.fr");
+                Linking.openURL("https://santepsy.etudiant.gouv.fr/");
+              }}
+            >
               <Text style={styles.link}>santepsy.etudiant.gouv.fr </Text>
             </TouchableOpacity>
           </Text>
@@ -241,10 +214,10 @@ const styles = StyleSheet.create({
     height: 25,
   },
   headerContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     paddingRight: 20,
   },
   image: {
@@ -252,27 +225,27 @@ const styles = StyleSheet.create({
     width: 50,
   },
   containerInfos: {
-    backgroundColor: 'rgba(38,56,124, 0.03)',
+    backgroundColor: "rgba(38,56,124, 0.03)",
     borderRadius: 10,
     borderWidth: 0,
     paddingTop: 25,
     paddingLeft: 30,
     paddingRight: 30,
     paddingBottom: 30,
-    display: 'flex',
-    flexDirection: 'row',
+    display: "flex",
+    flexDirection: "row",
     marginTop: 10,
     marginBottom: 40,
   },
   lessButton: {
-    fontWeight: '700',
-    textDecorationLine: 'underline',
+    fontWeight: "700",
+    textDecorationLine: "underline",
     color: colors.BLUE,
     paddingTop: 10,
   },
   moreButton: {
-    fontWeight: '700',
-    textDecorationLine: 'underline',
+    fontWeight: "700",
+    textDecorationLine: "underline",
     color: colors.BLUE,
     paddingTop: 10,
   },
@@ -283,7 +256,7 @@ const styles = StyleSheet.create({
     color: colors.BLUE,
     fontSize: 20,
     padding: 20,
-    fontWeight: '700',
+    fontWeight: "700",
   },
   cgu: {
     paddingVertical: 5,
@@ -302,19 +275,19 @@ const styles = StyleSheet.create({
     paddingBottom: 80,
   },
   container: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   button: {
     width: 45,
     height: 45,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   link: {
     color: colors.LIGHT_BLUE,
-    fontWeight: '700',
-    textDecorationLine: 'underline',
+    fontWeight: "700",
+    textDecorationLine: "underline",
   },
 });
 

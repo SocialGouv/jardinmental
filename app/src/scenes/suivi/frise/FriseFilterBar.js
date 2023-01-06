@@ -11,7 +11,7 @@ export const FriseFilterBar = ({
   onShowTreatmentChanged,
   onFocusedScoresChanged,
 }) => {
-  const [focusedScores, setFocusedScores] = React.useState([1, 2, 3, 4, 5]);
+  const [focusedScores, setFocusedScores] = React.useState([]);
   useEffect(() => {
     onFocusedScoresChanged?.(focusedScores);
   }, [focusedScores]);
@@ -23,6 +23,7 @@ export const FriseFilterBar = ({
   return (
     <View style={styles.container}>
       <ScorePicker
+        showIcon={false}
         focusedScores={focusedScores}
         onPress={(i) => {
           if (focusedScores.includes(i)) {

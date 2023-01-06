@@ -12,6 +12,8 @@ const ScorePicker = ({
   children,
   size = "normal",
   inline = false,
+  showIcon = true,
+  options = answers,
 }) => {
   return (
     <View
@@ -22,7 +24,7 @@ const ScorePicker = ({
         containerStyle,
       ]}
     >
-      {answers.map((answer, i) => {
+      {options.map((answer, i) => {
         const active = focusedScores.includes(answer.score);
         return (
           <TouchableOpacity key={i} onPress={() => onPress(answer.score)}>
@@ -34,19 +36,26 @@ const ScorePicker = ({
                 active && styles.activeSelectionContainer,
               ]}
             >
-              <CircledIcon
-                color={answer.backgroundColor}
-                borderColor={answer.borderColor}
-                iconColor={answer.iconColor}
-                icon={answer.icon}
-                iconContainerStyle={{
-                  marginRight: 0,
-                  width: size === "small" ? 21 : 30,
-                  height: size === "small" ? 21 : 30,
-                }}
-                iconWidth={size === "small" ? 17 : 24}
-                iconHeight={size === "small" ? 17 : 24}
-              />
+              {showIcon ? (
+                <CircledIcon
+                  color={answer.backgroundColor}
+                  borderColor={answer.borderColor}
+                  iconColor={answer.iconColor}
+                  icon={answer.icon}
+                  iconContainerStyle={{
+                    marginRight: 0,
+                    width: size === "small" ? 21 : 30,
+                    height: size === "small" ? 21 : 30,
+                  }}
+                  iconWidth={size === "small" ? 17 : 24}
+                  iconHeight={size === "small" ? 17 : 24}
+                />
+              ) : (
+                <View
+                  className={`${size === "small" ? "w-5 h-5" : "w-7 h-7"} rounded-full`}
+                  style={{ backgroundColor: answer.backgroundColor }}
+                />
+              )}
             </View>
           </TouchableOpacity>
         );

@@ -13,6 +13,10 @@ export const toggleSelectedInArray = (array, elem) => {
 
 export const toggleState = (v, f) => f(!v);
 
+export const classNames = (...classes) => {
+  return classes.filter(Boolean).join(" ");
+};
+
 export const confirm = ({
   title,
   message = "",

@@ -43,12 +43,19 @@ const getIndicateurs = async () => {
     }
   }
   if (_indicateurs) {
-    return JSON.parse(_indicateurs);
+    _indicateurs = updateSymptomsFormatIfNeeded(JSON.parse(_indicateurs));
+    return _indicateurs;
   }
 };
 
 const setIndicateurs = async (v) => {
   await AsyncStorage.setItem(STORAGE_KEY_INDICATEURS, JSON.stringify(v));
+};
+const addIndicateur = async (indicateur) => {
+  let _indicateurs = await AsyncStorage.getItem(STORAGE_KEY_INDICATEURS);
+  _indicateurs = JSON.parse(_indicateurs);
+  _indicateurs.push(indicateur);
+  await AsyncStorage.setItem(STORAGE_KEY_INDICATEURS, JSON.stringify(_indicateurs));
 };
 
 const getIsFirstAppLaunch = async () => await AsyncStorage.getItem(STORAGE_KEY_IS_FIRST_LAUNCH);
@@ -179,5 +186,6 @@ export default {
   getNpsProContact,
   getIndicateurs,
   setIndicateurs,
+  addIndicateur,
   ...localStorageBeck,
 };

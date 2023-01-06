@@ -16,7 +16,7 @@ import { GoalsStatus } from "../goals/status/GoalsStatus";
 import { Card } from "../../components/Card";
 import { GoalsStatusNoData } from "../goals/status/GoalsStatusNoData";
 
-export default ({ navigation, patientState, goalsData, date }) => {
+export default ({ navigation, indicateurs, patientState, goalsData, date }) => {
   const [customs, setCustoms] = useState([]);
   const [oldCustoms, setOldCustoms] = useState([]);
   let mounted = useRef(true);
@@ -48,12 +48,8 @@ export default ({ navigation, patientState, goalsData, date }) => {
   };
 
   const hasAnswerSurvey = () =>
-    Object.keys(displayedCategories)
-      .concat(customs)
-      .concat(INDICATEURS_LISTE)
-      .filter((key) => {
-        return patientState && patientState[key];
-      })?.length > 0 || goalsData?.records?.byDate?.[date]?.length > 0;
+    patientStateRecords.some(([key, value]) => value?.value !== undefined) ||
+    goalsData?.records?.byDate?.[date]?.length > 0;
 
   const handlePressItem = ({ editingSurvey, toGoals } = {}) => {
     if (!canEdit(date)) return navigation.navigate("too-late", { date });
@@ -75,6 +71,15 @@ export default ({ navigation, patientState, goalsData, date }) => {
           ].includes(key);
         })
         .filter(([key, value]) => !!value)
+        .sort((_a, _b) => {
+          const a = _a?.[1];
+          const b = _b?.[1];
+          const aIndex =
+            indicateurs?.findIndex?.((indicateur) => indicateur?.uuid === a?._indicateur?.uuid) || 0;
+          const bIndex =
+            indicateurs?.findIndex?.((indicateur) => indicateur?.uuid === b?._indicateur?.uuid) || 0;
+          return aIndex - bIndex;
+        })
     : [];
 
   if (hasAnswerSurvey()) {
@@ -83,7 +88,7 @@ export default ({ navigation, patientState, goalsData, date }) => {
         <View style={[styles.item, styles.itemWithSpaceAbove]}>
           <View>
             {patientStateRecords.map(([key, value]) => {
-              if (!value) {
+              if (!value || (!value.value && typeof value.value !== "boolean")) {
                 return;
               }
               const [categoryName] = key.split("_");

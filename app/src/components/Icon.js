@@ -28,6 +28,7 @@ import ChevronUpSvg from "../../assets/svg/chevron-up.svg";
 import ChevronDownSvg from "../../assets/svg/chevron-down.svg";
 import ChevronRightSvg from "../../assets/svg/chevron-right.svg";
 import BinSvg from "../../assets/svg/bin.svg";
+import Bin2Svg from "../../assets/svg/bin2.svg";
 import NotesSvg from "../../assets/svg/notes.svg";
 import TuneSvg from "../../assets/svg/tune.svg";
 import CheckSvg from "../../assets/svg/check.svg";
@@ -43,6 +44,8 @@ import EditSvg from "../../assets/svg/edit.svg";
 import IndicateurSvg from "../../assets/svg/indicateur.svg";
 import GoalSvg from "../../assets/svg/goal.svg";
 import ReorderSvg from "../../assets/svg/reorder.svg";
+import DeleteSvg from "../../assets/svg/delete.svg";
+import ShareSvg from "../../assets/svg/share.svg";
 
 import { StyleSheet, View, Animated, Easing, TouchableOpacity } from "react-native";
 
@@ -74,6 +77,7 @@ const mapIconToSvg = (icon) => {
     ThoughtsSvg,
     CrossSvg,
     BinSvg,
+    Bin2Svg,
     NotesSvg,
     PhoneSvg,
     GlobeSvg,
@@ -91,6 +95,8 @@ const mapIconToSvg = (icon) => {
     IndicateurSvg,
     GoalSvg,
     ReorderSvg,
+    DeleteSvg,
+    ShareSvg,
   };
   return iconMap[icon];
 };
