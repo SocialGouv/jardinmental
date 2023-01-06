@@ -8,6 +8,7 @@ import {
   STORAGE_KEY_PUSH_NOTIFICATION_TOKEN_ERROR,
 } from "../utils/constants";
 import logEvents from "./logEvents";
+import API from "./api";
 
 class NotificationService {
   listeners = {};
@@ -30,10 +31,22 @@ class NotificationService {
   }
 
   onRegister = (tokenPayload) => {
-    console.log("PushNotification onRegister:", tokenPayload);
-    AsyncStorage.setItem(STORAGE_KEY_PUSH_NOTIFICATION_TOKEN, tokenPayload.token);
-    AsyncStorage.removeItem(STORAGE_KEY_PUSH_NOTIFICATION_TOKEN_ERROR);
-    logEvents.logPushNotifTokenRegisterSuccess();
+    (async () => {
+      const oldToken = await AsyncStorage.getItem(STORAGE_KEY_PUSH_NOTIFICATION_TOKEN);
+      console.log("PushNotification onRegister newToken:", tokenPayload.token, "oldToken:", oldToken);
+      if (oldToken) {
+        await API.put({
+          path: "/reminder/refreshPushNotifToken",
+          body: {
+            oldPushNotifToken: oldToken,
+            newPushNotifToken: tokenPayload.token,
+          },
+        });
+      }
+      AsyncStorage.setItem(STORAGE_KEY_PUSH_NOTIFICATION_TOKEN, tokenPayload.token);
+      AsyncStorage.removeItem(STORAGE_KEY_PUSH_NOTIFICATION_TOKEN_ERROR);
+      logEvents.logPushNotifTokenRegisterSuccess();
+    })();
   };
   onRegistrationError = (err) => {
     console.error("PushNotification onRegistrationError:", err.message, err);
