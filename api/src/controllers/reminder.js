@@ -211,4 +211,25 @@ const reminderCronJob = async (req, res) => {
   }
 };
 
+router.put(
+  "/refreshPushNotifToken",
+  catchErrors(async (req, res) => {
+    const { newPushNotifToken, oldPushNotifToken } = req.body || {};
+
+    if (!newPushNotifToken || !oldPushNotifToken) return res.status(400).json({ ok: false, error: "wrong parameters" });
+
+    const user = await prisma.anonymisedUser.findUnique({ where: { pushNotifToken: oldPushNotifToken } });
+    if (user) {
+      await prisma.anonymisedUser.update({
+        where: { id: user.id },
+        data: {
+          pushNotifToken: newPushNotifToken,
+        },
+      });
+    }
+
+    return res.status(200).send({ ok: true });
+  })
+);
+
 module.exports = { router, reminderCronJob };
