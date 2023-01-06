@@ -4,6 +4,7 @@ import dayjs from "dayjs";
 import NotificationService from "../../services/notifications";
 import API from "../../services/api";
 import * as RNLocalize from "react-native-localize";
+import { getGoalsTracked, updateApiReminer } from "../../utils/localStorage/goals";
 
 const ReminderStorageKey = "@Reminder";
 
@@ -57,4 +58,43 @@ export const checkOldReminderBefore154 = async () => {
     },
   });
   await AsyncStorage.setItem(REMINDER_VERSION_OLDER_154, "1");
+};
+
+const REMINDER_VERSION_OLDER_193 = "REMINDER_VERSION_OLDER_193";
+export const checkOldReminderBefore193 = async () => {
+  const alreadyChecked = await AsyncStorage.getItem(REMINDER_VERSION_OLDER_193);
+  if (alreadyChecked === "1") return;
+
+  if (!(await NotificationService.hasToken())) return;
+
+  const pushNotifToken = await NotificationService.getToken();
+
+  let storedReminder = await AsyncStorage.getItem(ReminderStorageKey);
+  if (Boolean(storedReminder) && !dayjs(storedReminder).isValid()) {
+    try {
+      storedReminder = JSON.parse(storedReminder);
+    } catch (e) {
+      storedReminder = null;
+    }
+  }
+  if (Boolean(storedReminder) && dayjs(storedReminder).isValid()) {
+    storedReminder = dayjs(storedReminder);
+    await API.put({
+      path: "/reminder",
+      body: {
+        pushNotifToken,
+        type: "Main",
+        timezone: RNLocalize.getTimeZone(),
+        timeHours: storedReminder.hour(),
+        timeMinutes: storedReminder.minute(),
+      },
+    });
+  }
+
+  const goals = await getGoalsTracked();
+  for (const goal of goals) {
+    await updateApiReminer(goal);
+  }
+
+  await AsyncStorage.setItem(REMINDER_VERSION_OLDER_193, "1");
 };

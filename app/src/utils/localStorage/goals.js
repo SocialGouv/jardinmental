@@ -64,7 +64,7 @@ export const setGoalTracked = async ({ id, label, enabled, order, daysOfWeek, re
   return goal;
 };
 
-const updateApiReminer = async ({ id, daysOfWeek, enabled, reminder }) => {
+export const updateApiReminer = async ({ id, daysOfWeek, enabled, reminder }) => {
   if (!(await NotificationService.hasToken())) return;
 
   const body = {
