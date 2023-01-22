@@ -567,13 +567,13 @@
 				CODE_SIGN_ENTITLEMENTS = monsuivipsy/monsuivipsy.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 193;
+				CURRENT_PROJECT_VERSION = 195;
 				DEVELOPMENT_TEAM = 76GBKHVK25;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = monsuivipsy/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.39.6;
+				MARKETING_VERSION = 1.39.8;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -597,13 +597,13 @@
 				CODE_SIGN_ENTITLEMENTS = monsuivipsy/monsuivipsy.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Distribution: Fabrique numerique des ministeres sociaux (76GBKHVK25)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 193;
+				CURRENT_PROJECT_VERSION = 195;
 				DEVELOPMENT_TEAM = 76GBKHVK25;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 76GBKHVK25;
 				INFOPLIST_FILE = monsuivipsy/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.39.6;
+				MARKETING_VERSION = 1.39.8;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

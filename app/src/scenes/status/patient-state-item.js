@@ -29,7 +29,7 @@ const PatientStateItem = ({ patientState, category, label }) => {
       } else {
         _icon = scoresMapIcon[patientState[category]?.value];
       }
-      if (!_icon.color && !_icon.faceIcon)
+      if (!_icon || (!_icon.color && !_icon.faceIcon))
         return (
           <CircledIcon
             color="#cccccc"

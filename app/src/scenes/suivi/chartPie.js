@@ -202,7 +202,7 @@ const renderResponse = ({ indicateur, value, isSmall, translateX }) => {
     const iconSize = isSmall ? 24 : 32;
     const iconContainerSize = isSmall ? 30 : 40;
 
-    if (!_icon.color && !_icon.faceIcon)
+    if (!_icon || (!_icon.color && !_icon.faceIcon))
       return (
         <CircledIcon
           color="#cccccc"
