@@ -1,3 +1,15 @@
+# [1.43.0](https://github.com/SocialGouv/jardinmental/compare/v1.42.1...v1.43.0) (2023-02-14)
+
+
+### Bug Fixes
+
+* **api:** add node-fetch in matomo.js ([#235](https://github.com/SocialGouv/jardinmental/issues/235)) ([ed9e7c1](https://github.com/SocialGouv/jardinmental/commit/ed9e7c128f8d944bcf33b66fd057ecfb38f977bb))
+
+
+### Features
+
+* view notice pdf inapp ([#236](https://github.com/SocialGouv/jardinmental/issues/236)) ([4a67aeb](https://github.com/SocialGouv/jardinmental/commit/4a67aeb438fb30a4c77ddb4df757d2a2b7d7038f))
+
 ## [1.42.1](https://github.com/SocialGouv/jardinmental/compare/v1.42.0...v1.42.1) (2023-01-13)
 
 
