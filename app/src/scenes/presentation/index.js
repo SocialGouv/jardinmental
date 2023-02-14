@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View, Dimensions } from "react-native";
+import { View, StyleSheet, SafeAreaView, Dimensions } from "react-native";
 import Pdf from "react-native-pdf";
 
 const PdfViewer = () => {
@@ -9,19 +9,15 @@ const PdfViewer = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <Pdf trustAllCerts={false} source={source} style={styles.pdf} />
-    </View>
+    <SafeAreaView className="flex-1 bg-white">
+      <View className="flex-1 justify-start items-center">
+        <Pdf trustAllCerts={false} source={source} style={styles.pdf} />
+      </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "flex-start",
-    alignItems: "center",
-    marginTop: 25,
-  },
   pdf: {
     flex: 1,
     width: Dimensions.get("window").width,
