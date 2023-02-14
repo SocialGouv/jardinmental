@@ -1,4 +1,5 @@
 // https://developer.matomo.org/api-reference/tracking-api
+const fetch = require("node-fetch");
 
 const __DEV__ = process.env.NODE_ENV === "development";
 
