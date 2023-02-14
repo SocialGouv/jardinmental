@@ -25,6 +25,8 @@ target 'monsuivipsy' do
 
   pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
 
+  pod 'react-native-pdf', :path => '../node_modules/react-native-pdf'
+
   target 'monsuivipsyTests' do
     inherit! :complete
     # Pods for testing

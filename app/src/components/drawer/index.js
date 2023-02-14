@@ -68,7 +68,7 @@ export default ({ navigation, visible, onClick }) => {
             <Separator />
             <DrawerItem
               title="Présentation"
-              path="onboarding"
+              path="presentation"
               navigation={navigation}
               onClick={onClick}
               icon="PresentationSvg"

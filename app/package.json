@@ -1,7 +1,7 @@
 {
   "name": "jardinmental",
-  "version": "1.39.8",
-  "buildNumber": 195,
+  "version": "1.40.0",
+  "buildNumber": 196,
   "private": true,
   "scripts": {
     "get-ip": "./get-ip.sh",
@@ -56,6 +56,7 @@
     "prettier": "^2.5.1",
     "react": "17.0.2",
     "react-native": "0.68.3",
+    "react-native-blob-util": "^0.17.1",
     "react-native-bootsplash": "^4.1.5",
     "react-native-config": "^1.4.11",
     "react-native-date-picker": "^4.1.5",
@@ -69,6 +70,7 @@
     "react-native-modal": "^11.10.0",
     "react-native-modal-datetime-picker": "^9.2.3",
     "react-native-paper": "^4.12.5",
+    "react-native-pdf": "^6.6.2",
     "react-native-permissions": "^3.3.1",
     "react-native-picker-select": "^8.0.4",
     "react-native-pie": "^1.1.2",
