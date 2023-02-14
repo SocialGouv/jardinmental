@@ -43,6 +43,7 @@ import PrivacyLight from "../scenes/privacy-light";
 import RNBootsplash from "react-native-bootsplash";
 import NotificationService from "../services/notifications";
 import Indicateurs from "../scenes/indicateurs";
+import Presentation from "../scenes/presentation";
 import { OnboardingMood } from "../scenes/onboarding/onboardingSymptomsStart/MoodScreen";
 import { OnboardingSleep } from "../scenes/onboarding/onboardingSymptomsStart/SleepScreen";
 import { OnboardingSimpleCustomSymptoms } from "../scenes/onboarding/onboardingSymptomsCustom/SimpleCustomScreen";
@@ -136,6 +137,7 @@ class Router extends React.Component {
           linking={linking}
         >
           <Stack.Navigator initialRouteName="tabs" headerMode="none">
+            <Stack.Screen name="presentation" component={Presentation} />
             <Stack.Screen name="day-survey" component={DaySurveyScreen} />
             <Stack.Screen name="select-day" component={SelectDayScreen} />
             <Stack.Screen name="tabs" component={Tabs} />
