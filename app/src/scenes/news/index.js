@@ -13,7 +13,7 @@ export const getBadgeNotesVersion = async () => {
   return lastNotesVersion !== LAST_NOTES_VERSION;
 };
 
-export const LAST_NOTES_VERSION = "1.39";
+export const LAST_NOTES_VERSION = "1.40";
 
 export default ({ navigation }) => {
   useEffect(() => {
@@ -28,6 +28,14 @@ export default ({ navigation }) => {
         <Image style={styles.image} source={require("../../../assets/imgs/logo2.png")} />
       </View>
       <ScrollView style={styles.cgu} contentContainerStyle={styles.scrollContainer}>
+        <Card title="Notice et conseils d’utilisation" version="v1.40" date="02/2023">
+          <Item>
+            <Text style={styles.text}>
+              Retrouvez la notice et des conseils d’utlisation de Jardin Mental dans le menu, onglet
+              "Présentation".
+            </Text>
+          </Item>
+        </Card>
         <Card title="Vous pouvez choisir comment évaluer vos indicateurs" version="v1.39" date="12/2022">
           <Item>
             <Text style={styles.text}>

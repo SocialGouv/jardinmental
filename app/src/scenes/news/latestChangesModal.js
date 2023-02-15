@@ -18,14 +18,14 @@ import localStorage from "../../utils/localStorage";
 import Text from "../../components/MyText";
 
 const latestChanges = {
-  appversion: 193,
+  appversion: 197,
   content: [
-    { title: "Vous pouvez choisir comment vous évaluer vos indicateurs" },
+    { title: "Notice et conseils d’utilisation" },
     {
-      paragraph: `Vous pouvez maintenant utiliser une jauge, ou un “non/oui” à la place des emojis.`,
+      paragraph: `Retrouvez la notice et des conseils d’utlisation de Jardin Mental dans le menu, onglet "Présentation".`,
     },
     {
-      paragraph: `Choisissez le mode le plus adapté pour vos nouveaux indicateurs (il n’est pas possible de modifier les anciens) !`,
+      paragraph: `N’hésitez pas à nous faire des retours ou à nous proposer d’autres conseils à partager avec les autres utilisateurs !`,
     },
   ],
   button: {
