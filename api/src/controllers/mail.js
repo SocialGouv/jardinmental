@@ -13,7 +13,7 @@ router.post(
     if (!subject || (!text && !html)) return res.status(400).json({ ok: false, error: "wrong parameters" });
 
     if (!to) {
-      to = ENVIRONMENT === "development" ? "tangimds@gmail.com" : "monsuivipsy@fabrique.social.gouv.fr";
+      to = ENVIRONMENT === "development" ? "tangimds@gmail.com" : "jardinmental@fabrique.social.gouv.fr";
     }
 
     if (!replyTo) {
