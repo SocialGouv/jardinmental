@@ -1,18 +1,18 @@
-import React from 'react';
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
-import {parseISO, differenceInDays} from 'date-fns';
+import React from "react";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { parseISO, differenceInDays } from "date-fns";
 
-import Icon from '../../components/Icon';
-import {colors} from '../../utils/colors';
+import Icon from "../../components/Icon";
+import { colors } from "../../utils/colors";
 
-export default ({patientState, date, navigation}) => {
+export default ({ patientState, date, navigation }) => {
   const data = patientState?.becks;
   if (!data || Object.keys(data).length === 0) {
     return null;
   }
 
   const handleViewBeck = (beck, beckId) => {
-    navigation.navigate('view-beck', {
+    navigation.navigate("view-beck", {
       beckId,
       beck,
       redirect: true,
@@ -32,22 +32,16 @@ export default ({patientState, date, navigation}) => {
             key={j}
             style={[styles.item, isDraft && styles.containerEditable]}
             onPress={() => handleViewBeck(beck, beckId)}
-            disabled={!canEdit}>
-            <Icon
-              icon="ThoughtsSvg"
-              color="#58C8D2"
-              width={25}
-              height={25}
-              styleContainer={styles.icon}
-            />
+            disabled={!canEdit}
+          >
+            <Icon icon="ThoughtsSvg" color="#58C8D2" width={25} height={25} styleContainer={styles.icon} />
 
             <View style={styles.containerContent}>
               {!isDraft ? (
                 <>
                   <View style={styles.line}>
                     <Text>
-                      {beck?.mainEmotion} -{' '}
-                      {`${beck?.mainEmotionIntensity * 10}%`}&nbsp;
+                      {beck?.mainEmotion} - {`${beck?.mainEmotionIntensity * 10}%`}&nbsp;
                       {beck?.mainEmotionIntensityNuanced ? (
                         <Text style={styles.mainEmotionIntensityNuancedStyle}>
                           &gt;&nbsp;{beck?.mainEmotionIntensityNuanced * 10}%
@@ -55,9 +49,7 @@ export default ({patientState, date, navigation}) => {
                       ) : null}
                     </Text>
                   </View>
-                  {beck?.where ? (
-                    <Text style={styles.place}>{beck?.where}</Text>
-                  ) : null}
+                  {beck?.where ? <Text style={styles.place}>{beck?.where}</Text> : null}
                 </>
               ) : (
                 <Text style={styles.place}>Brouillon</Text>
@@ -80,18 +72,18 @@ const styles = StyleSheet.create({
     paddingBottom: 15,
     marginLeft: 10,
     borderLeftWidth: 0.4,
-    borderColor: '#00CEF7',
-    display: 'flex',
-    flexDirection: 'column',
+    borderColor: "#00CEF7",
+    display: "flex",
+    flexDirection: "column",
   },
   item: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: 'rgba(38, 56, 124, 0.03)',
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "rgba(38, 56, 124, 0.03)",
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: 'rgba(38, 56, 124, 0.08)',
+    borderColor: "rgba(38, 56, 124, 0.08)",
     paddingVertical: 10,
     marginTop: 15,
   },
@@ -103,27 +95,27 @@ const styles = StyleSheet.create({
     height: 10,
   },
   containerEditable: {
-    backgroundColor: 'rgba(31, 198, 213, 0.2)',
+    backgroundColor: "rgba(31, 198, 213, 0.2)",
   },
   place: {
-    fontStyle: 'italic',
-    color: '#26387C',
+    fontStyle: "italic",
+    color: "#26387C",
   },
   time: {
-    marginLeft: 'auto',
+    marginLeft: "auto",
     marginRight: 20,
-    marginBottom: 'auto',
+    marginBottom: "auto",
     fontSize: 12,
-    fontStyle: 'italic',
-    color: '#26387C',
+    fontStyle: "italic",
+    color: "#26387C",
   },
   mainEmotionIntensityNuancedStyle: {
     color: colors.LIGHT_BLUE,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   line: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
   },
 });

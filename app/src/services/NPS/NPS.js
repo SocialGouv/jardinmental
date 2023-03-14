@@ -396,8 +396,8 @@ const captions = {
     "Merci de ne mentionner aucune information personnelle qui permettrait de vous identifier (nom, prénom, adresse mail, n° de téléphone, toute information sur votre état de santé)",
   "feedback.improvements.placeholder": "Idées d'améliorations (facultatif)",
   "feedback.contact.description":
-    "Echanger avec vous serait précieux pour améliorer notre service, laissez-nous votre numéro de téléphone ou votre adresse mail si vous le souhaitez.",
-  "feedback.contact": "Numéro de téléphone ou adresse mail (facultatif)",
+    "Echanger avec vous serait précieux pour améliorer notre service, laissez-nous votre adresse mail si vous le souhaitez.",
+  "feedback.contact": "Adresse mail (facultatif)",
 };
 
 // in case of i18n, we need to get the caption with a function
