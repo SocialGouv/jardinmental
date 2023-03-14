@@ -19,8 +19,6 @@ export default ({ patientState, date, navigation }) => {
     });
   };
 
-  const canEdit = differenceInDays(new Date(), parseISO(date)) <= 30; //isToday(parseISO(date)) || isYesterday(parseISO(date));
-
   return (
     <View style={styles.container}>
       {Object.keys(data).map((beckId, j) => {
@@ -32,7 +30,6 @@ export default ({ patientState, date, navigation }) => {
             key={j}
             style={[styles.item, isDraft && styles.containerEditable]}
             onPress={() => handleViewBeck(beck, beckId)}
-            disabled={!canEdit}
           >
             <Icon icon="ThoughtsSvg" color="#58C8D2" width={25} height={25} styleContainer={styles.icon} />
 
