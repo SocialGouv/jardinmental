@@ -1,3 +1,10 @@
+## [1.43.2](https://github.com/SocialGouv/jardinmental/compare/v1.43.1...v1.43.2) (2023-03-14)
+
+
+### Bug Fixes
+
+* view beck ([6045fc2](https://github.com/SocialGouv/jardinmental/commit/6045fc2fbb05c0b5113ec0dbbe96d08e57177ee1))
+
 ## [1.43.1](https://github.com/SocialGouv/jardinmental/compare/v1.43.0...v1.43.1) (2023-02-24)
 
 
