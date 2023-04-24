@@ -86,3 +86,5 @@ This command will build and upload your app to Google Play Console - internal te
 - Execute this command from `./app` folder : `yarn publish:ios`
 
 This command will build and upload your app to App Store Connect - TestFlight.
+
+
