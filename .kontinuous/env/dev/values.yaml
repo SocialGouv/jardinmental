@@ -1,0 +1,7 @@
+app:
+  needs: [db, build-app]
+
+jobs:
+  runs:
+    db:
+      use: create-db
