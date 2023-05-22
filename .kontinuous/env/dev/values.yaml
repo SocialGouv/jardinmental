@@ -1,5 +1,5 @@
 app:
-  needs: [db]
+  needs: [db, build-app]
 
 jobs:
   runs:
