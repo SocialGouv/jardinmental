@@ -1,3 +1,10 @@
+# [1.44.0](https://github.com/SocialGouv/jardinmental/compare/v1.43.3...v1.44.0) (2023-05-22)
+
+
+### Features
+
+* ci on kontinuous ([#237](https://github.com/SocialGouv/jardinmental/issues/237)) ([008b7f0](https://github.com/SocialGouv/jardinmental/commit/008b7f02e05a1e5a100a83ea38adeb4ad506cfe3))
+
 ## [1.43.3](https://github.com/SocialGouv/jardinmental/compare/v1.43.2...v1.43.3) (2023-04-24)
 
 
