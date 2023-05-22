@@ -4,7 +4,7 @@ app:
 jobs:
   runs:
     db:
-      use: SocialGouv/kube-workflow/jobs/create-db
+      use: create-db
       with:
         pgAdminSecretRefName: azure-pg-admin-user
     
