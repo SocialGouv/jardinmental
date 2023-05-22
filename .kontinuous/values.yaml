@@ -5,3 +5,8 @@ app:
         name: "{{ .Values.global.pgSecretName }}"
     - secretRef:
         name: api
+jobs:
+  runs:
+    build-app:
+      with:
+        context: api

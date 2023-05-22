@@ -5,6 +5,3 @@ jobs:
   runs:
     db:
       use: create-db
-      with:
-        pgAdminSecretRefName: azure-pg-admin-user
-    
