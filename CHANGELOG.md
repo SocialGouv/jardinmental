@@ -1,3 +1,10 @@
+# [1.45.0](https://github.com/SocialGouv/jardinmental/compare/v1.44.0...v1.45.0) (2023-08-09)
+
+
+### Features
+
+* use ovh for dev/preprod ([#239](https://github.com/SocialGouv/jardinmental/issues/239)) ([06d5f49](https://github.com/SocialGouv/jardinmental/commit/06d5f49847e9b2d74902a3b2c0fa72f8d39e2131))
+
 # [1.44.0](https://github.com/SocialGouv/jardinmental/compare/v1.43.3...v1.44.0) (2023-05-22)
 
 
