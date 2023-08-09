@@ -1,7 +1,10 @@
-app:
-  needs: [db, build-app]
+pg:
+  ~chart: pg
 
-jobs:
-  runs:
-    db:
-      use: create-db
+app:
+  needs: [build-app, pg]
+  envFrom:
+    - secretRef:
+        name: "pg-app"
+    - secretRef:
+        name: api
