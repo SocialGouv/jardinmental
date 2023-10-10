@@ -1,3 +1,10 @@
+## [1.45.1](https://github.com/SocialGouv/jardinmental/compare/v1.45.0...v1.45.1) (2023-10-10)
+
+
+### Bug Fixes
+
+* **k8s:** add backup secrets ([f3176ef](https://github.com/SocialGouv/jardinmental/commit/f3176eff5f69765f5e425a6eac334cfbecd6ea3c))
+
 # [1.45.0](https://github.com/SocialGouv/jardinmental/compare/v1.44.0...v1.45.0) (2023-08-09)
 
 
