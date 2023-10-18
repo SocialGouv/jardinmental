@@ -1,3 +1,11 @@
 .env
 .env.production
 node_modules
+
+# Yarn Berry
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
