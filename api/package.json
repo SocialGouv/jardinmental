@@ -9,7 +9,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon ./src/index.js",
-    "start": "NODE_ENV=production npx prisma migrate deploy && NODE_ENV=production node ./src/index.js",
+    "start": "NODE_ENV=production yarn prisma migrate deploy && NODE_ENV=production node ./src/index.js",
     "start:test": "NODE_ENV=test node ./src/index.js",
     "initdb": "node ./src/db/scriptInit.js"
   },
