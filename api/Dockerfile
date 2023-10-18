@@ -16,4 +16,6 @@ RUN if [ -z "$PRODUCTION" ]; then echo "Copy staging values"; cp .env.staging .e
 
 ENV NODE_ENV=production
 
+RUN npx prisma generate
+
 ENTRYPOINT ["yarn", "start"]
