@@ -44,5 +44,6 @@
     "npm": "please-use-yarn",
     "yarn": "< 2",
     "node": ">= 14"
-  }
+  },
+  "packageManager": "yarn@3.6.4"
 }
