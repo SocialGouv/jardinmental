@@ -1,3 +1,10 @@
+## [1.45.2](https://github.com/SocialGouv/jardinmental/compare/v1.45.1...v1.45.2) (2023-10-30)
+
+
+### Bug Fixes
+
+* yarn berry + fetch + docker opti ([#242](https://github.com/SocialGouv/jardinmental/issues/242)) ([72689f0](https://github.com/SocialGouv/jardinmental/commit/72689f05560cfe141f9b123ac500f309da589c17))
+
 ## [1.45.1](https://github.com/SocialGouv/jardinmental/compare/v1.45.0...v1.45.1) (2023-10-10)
 
 
