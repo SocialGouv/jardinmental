@@ -1,11 +1,2 @@
-pg:
-  ~chart: pg
-
 app:
   host: "api-monsuivipsy-preprod.ovh.fabrique.social.gouv.fr"
-  needs: [build-app, pg]
-  envFrom:
-    - secretRef:
-        name: "pg-app"
-    - secretRef:
-        name: api
