@@ -1,3 +1,10 @@
+## [1.45.3](https://github.com/SocialGouv/jardinmental/compare/v1.45.2...v1.45.3) (2023-11-22)
+
+
+### Bug Fixes
+
+* add prod cnpg ([#243](https://github.com/SocialGouv/jardinmental/issues/243)) ([7431719](https://github.com/SocialGouv/jardinmental/commit/7431719574a1e05dfae652885775b1e03f7a74fa))
+
 ## [1.45.2](https://github.com/SocialGouv/jardinmental/compare/v1.45.1...v1.45.2) (2023-10-30)
 
 
