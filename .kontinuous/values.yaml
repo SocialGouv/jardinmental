@@ -1,13 +1,20 @@
 app:
+  ~chart: app
   probesPath: "/healthz"
+  ~needs: [pg, build-app]
   containerPort: 3000
   envFrom:
     - secretRef:
-        name: "{{ .Values.global.pgSecretName }}"
+        name: pg-app
     - secretRef:
         name: api
+
+pg:
+  ~chart: pg
+
 jobs:
   runs:
     build-app:
+      use: build
       with:
         context: api
