@@ -1,2 +1,7 @@
 app:
   host: "api-monsuivipsy.fabrique.social.gouv.fr"
+  envFrom:
+    - secretRef:
+        name: "{{ .Values.global.pgSecretName }}" # to replace after CNPG migration
+    - secretRef:
+        name: api
