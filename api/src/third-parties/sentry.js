@@ -17,10 +17,7 @@ if (sentryEnabled) {
 }
 
 function capture(err, context = {}) {
-  if (!sentryEnabled) {
-    console.log("capture", err, JSON.stringify(context));
-    return;
-  }
+  console.log("capture", err, JSON.stringify(context));
 
   if (typeof context === "string") {
     context = JSON.parse(context);
