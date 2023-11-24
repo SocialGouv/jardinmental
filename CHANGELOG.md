@@ -1,3 +1,10 @@
+## [1.45.7](https://github.com/SocialGouv/jardinmental/compare/v1.45.6...v1.45.7) (2023-11-24)
+
+
+### Bug Fixes
+
+* await job to catch exception ([2f41249](https://github.com/SocialGouv/jardinmental/commit/2f41249cbd34e159dde94ee5077351cd89cd1039))
+
 ## [1.45.6](https://github.com/SocialGouv/jardinmental/compare/v1.45.5...v1.45.6) (2023-11-24)
 
 
