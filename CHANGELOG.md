@@ -1,3 +1,10 @@
+## [1.45.5](https://github.com/SocialGouv/jardinmental/compare/v1.45.4...v1.45.5) (2023-11-24)
+
+
+### Bug Fixes
+
+* restore prod DB ([#245](https://github.com/SocialGouv/jardinmental/issues/245)) ([a4503d3](https://github.com/SocialGouv/jardinmental/commit/a4503d38c4fe455800e704d3c86c57e715333496))
+
 ## [1.45.4](https://github.com/SocialGouv/jardinmental/compare/v1.45.3...v1.45.4) (2023-11-24)
 
 
