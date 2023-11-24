@@ -1,3 +1,10 @@
+## [1.45.6](https://github.com/SocialGouv/jardinmental/compare/v1.45.5...v1.45.6) (2023-11-24)
+
+
+### Bug Fixes
+
+* logs error in addition to sending them to sentry ([6505522](https://github.com/SocialGouv/jardinmental/commit/6505522279261e3b88cac9f7a6233d9cb2d970f4))
+
 ## [1.45.5](https://github.com/SocialGouv/jardinmental/compare/v1.45.4...v1.45.5) (2023-11-24)
 
 
