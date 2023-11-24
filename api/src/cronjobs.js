@@ -16,7 +16,7 @@ const launchCronJob = async (name, job) => {
   }
 
   try {
-    job();
+    await job();
   } catch (e) {
     capture(e, { level: "error", extra: { name } });
   }
