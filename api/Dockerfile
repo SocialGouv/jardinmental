@@ -1,9 +1,9 @@
-FROM node:20-bullseye@sha256:16a459d48168e18e3c1cc63c7bf53f248c50ca8391d6345b4c4d0e62fc9b201f
+FROM node:lts-bullseye-slim@sha256:f959c0047e2cc2dc01459067d9e898b7780862e52f4e7e80bb674f6040298f32
 
 ARG PRODUCTION
 
 RUN mkdir /app && chown 1000:1000 /app
-USER 1000
+
 WORKDIR /app
 
 COPY yarn.lock .yarnrc.yml ./
@@ -17,5 +17,7 @@ RUN if [ -z "$PRODUCTION" ]; then echo "Copy staging values"; cp .env.staging .e
 ENV NODE_ENV=production
 
 RUN npx prisma generate
+
+USER 1000
 
 ENTRYPOINT ["yarn", "start"]
