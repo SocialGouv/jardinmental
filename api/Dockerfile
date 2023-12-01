@@ -1,5 +1,6 @@
-# Note: https://github.com/prisma/prisma/issues/10649
-FROM node:18.15.0-bullseye@sha256:16d7247706d3f3c52f0d7a8c73fe5805387d7c8007e1f7b05f6b5ef232ea5551
+
+# Note: https://github.com/prisma/prisma/issues/16182#issuecomment-1371283457
+FROM node:16-bullseye@sha256:8bdf5c089572f136904071bff5f94e3fcc19af232e0fe86f93c4fa08a184bc7b
 
 ARG PRODUCTION
 
@@ -9,6 +10,7 @@ WORKDIR /app
 
 COPY yarn.lock .yarnrc.yml ./
 COPY --chown=1000:1000 .yarn .yarn
+
 RUN yarn fetch workspaces focus --production && yarn cache clean
 
 COPY . .
