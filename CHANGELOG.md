@@ -1,3 +1,10 @@
+## [1.45.8](https://github.com/SocialGouv/jardinmental/compare/v1.45.7...v1.45.8) (2023-12-01)
+
+
+### Bug Fixes
+
+* upgrade api docker image ([#247](https://github.com/SocialGouv/jardinmental/issues/247)) ([e880588](https://github.com/SocialGouv/jardinmental/commit/e880588d3207a843a65b9187426397542267070b))
+
 ## [1.45.7](https://github.com/SocialGouv/jardinmental/compare/v1.45.6...v1.45.7) (2023-11-24)
 
 
