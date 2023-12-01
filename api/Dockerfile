@@ -1,13 +1,17 @@
-FROM node:18.15.0-bullseye@sha256:16d7247706d3f3c52f0d7a8c73fe5805387d7c8007e1f7b05f6b5ef232ea5551
+
+# Note: https://github.com/prisma/prisma/issues/16182#issuecomment-1371283457
+FROM node:20-bullseye-slim@sha256:f959c0047e2cc2dc01459067d9e898b7780862e52f4e7e80bb674f6040298f32
 
 ARG PRODUCTION
 
+RUN apt-get update && apt-get install -y openssl
 RUN mkdir /app && chown 1000:1000 /app
 
 WORKDIR /app
 
 COPY yarn.lock .yarnrc.yml ./
 COPY --chown=1000:1000 .yarn .yarn
+
 RUN yarn fetch workspaces focus --production && yarn cache clean
 
 COPY . .
