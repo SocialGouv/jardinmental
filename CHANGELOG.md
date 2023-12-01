@@ -1,3 +1,10 @@
+## [1.45.9](https://github.com/SocialGouv/jardinmental/compare/v1.45.8...v1.45.9) (2023-12-01)
+
+
+### Bug Fixes
+
+* docker+prisma+ssl ([#248](https://github.com/SocialGouv/jardinmental/issues/248)) ([3c24351](https://github.com/SocialGouv/jardinmental/commit/3c243511b25749c357ae6d04574a81f92bccdd92))
+
 ## [1.45.8](https://github.com/SocialGouv/jardinmental/compare/v1.45.7...v1.45.8) (2023-12-01)
 
 
