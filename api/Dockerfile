@@ -1,9 +1,10 @@
 
 # Note: https://github.com/prisma/prisma/issues/16182#issuecomment-1371283457
-FROM node:16-bullseye@sha256:8bdf5c089572f136904071bff5f94e3fcc19af232e0fe86f93c4fa08a184bc7b
+FROM node:20-bullseye-slim@sha256:f959c0047e2cc2dc01459067d9e898b7780862e52f4e7e80bb674f6040298f32
 
 ARG PRODUCTION
 
+RUN apt-get update && apt-get install -y openssl
 RUN mkdir /app && chown 1000:1000 /app
 
 WORKDIR /app
