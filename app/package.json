@@ -67,7 +67,7 @@
     "react-native-get-random-values": "^1.7.1",
     "react-native-linear-gradient": "^2.6.2",
     "react-native-localize": "^2.2.4",
-    "react-native-modal": "^11.10.0",
+    "react-native-modal": "^13.0.0",
     "react-native-modal-datetime-picker": "^9.2.3",
     "react-native-paper": "^4.12.5",
     "react-native-pdf": "^6.6.2",
