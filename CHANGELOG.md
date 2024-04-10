@@ -1,3 +1,10 @@
+## [1.45.12](https://github.com/SocialGouv/jardinmental/compare/v1.45.11...v1.45.12) (2024-04-10)
+
+
+### Bug Fixes
+
+* add pg recovery from last wal ([f9b97b5](https://github.com/SocialGouv/jardinmental/commit/f9b97b5a457f09c356332cb3cf968b0d0701bce3))
+
 ## [1.45.11](https://github.com/SocialGouv/jardinmental/compare/v1.45.10...v1.45.11) (2023-12-11)
 
 
