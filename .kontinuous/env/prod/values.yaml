@@ -1,2 +1,24 @@
 app:
   host: "api-monsuivipsy.fabrique.social.gouv.fr"
+
+pg:
+  backup:
+    name: "202404101316" # backup on a new folder
+  cnpg-cluster:
+    recovery:
+      enabled: true
+      ~tpl~database: "{{ .Values.global.pgDatabase }}"
+      ~tpl~owner: "{{ .Values.global.pgUser }}"
+      secretName: "pg-db"
+      barmanObjectStore:
+        ~tpl~destinationPath: "s3://monsuivipsy-prod-backups/monsuivipsy"
+        s3Credentials:
+          accessKeyId:
+            ~tpl~name: "monsuivipsy-prod-backups-access-key"
+            key: bucket_access_key
+          secretAccessKey:
+            ~tpl~name: "monsuivipsy-prod-backups-access-key"
+            key: bucket_secret_key
+          region:
+            ~tpl~name: "monsuivipsy-prod-backups-access-key"
+            key: bucket_region
