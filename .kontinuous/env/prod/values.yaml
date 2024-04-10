@@ -11,7 +11,7 @@ pg:
       ~tpl~owner: "{{ .Values.global.pgUser }}"
       secretName: "pg-db"
       barmanObjectStore:
-        ~tpl~destinationPath: "s3://monsuivipsy-prod-backups/monsuivipsy"
+        ~tpl~destinationPath: "s3://monsuivipsy-prod-backups/jardinmental"
         s3Credentials:
           accessKeyId:
             ~tpl~name: "monsuivipsy-prod-backups-access-key"
