@@ -1,2 +1,7 @@
 projectName: monsuivipsy
 ciNamespace: ci-monsuivipsy
+
+dependencies:
+  fabrique:
+    extends:
+      - name: ovh
