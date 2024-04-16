@@ -1,17 +1,2 @@
 projectName: monsuivipsy
 ciNamespace: ci-monsuivipsy
-
-dependencies:
-  fabrique:
-    extends:
-      - name: ovh
-        ifEnv: [dev, preprod]
-      - name: buildkit-service
-    dependencies:
-      contrib:
-        preDeploy:
-          importSecrets:
-            options:
-              secrets:
-                monsuivipsy-dev-backups-access-key:
-                monsuivipsy-prod-backups-access-key:
