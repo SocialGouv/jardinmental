@@ -1,3 +1,10 @@
+## [1.45.15](https://github.com/SocialGouv/jardinmental/compare/v1.45.14...v1.45.15) (2024-04-16)
+
+
+### Bug Fixes
+
+* fix kontinuous config ([f4c86a2](https://github.com/SocialGouv/jardinmental/commit/f4c86a299bd01c4bb60cfbcde495c9148db9096e))
+
 ## [1.45.14](https://github.com/SocialGouv/jardinmental/compare/v1.45.13...v1.45.14) (2024-04-16)
 
 
