@@ -1,5 +1,7 @@
 app:
   host: "api-monsuivipsy.fabrique.social.gouv.fr"
+  autoscale:
+    enabled: true
 
 pg:
   backup:
