@@ -1,7 +1,22 @@
 app:
   host: "api-monsuivipsy.fabrique.social.gouv.fr"
-
+  resources:
+    requests:
+      cpu: 100m
+      memory: 512Mi
+    limits:
+      cpu: 200m
+      memory: 768Mi
+  autoscale:
+    enabled: true
 pg:
+  cnpg-cluster:
+    resources:
+      requests:
+        memory: 1Gi
+      limits:
+        cpu: "1"
+        memory: 1Gi
   backup:
     name: "202404161204" # backup on a new folder
   cnpg-cluster:
