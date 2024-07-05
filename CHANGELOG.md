@@ -1,3 +1,10 @@
+## [1.45.16](https://github.com/SocialGouv/jardinmental/compare/v1.45.15...v1.45.16) (2024-07-05)
+
+
+### Bug Fixes
+
+* jm update resources ([#253](https://github.com/SocialGouv/jardinmental/issues/253)) ([58dc90e](https://github.com/SocialGouv/jardinmental/commit/58dc90ec5ea1cc271e295e62bd8817be8bf0e0da))
+
 ## [1.45.15](https://github.com/SocialGouv/jardinmental/compare/v1.45.14...v1.45.15) (2024-04-16)
 
 
