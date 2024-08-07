@@ -292,7 +292,7 @@ dependencies {
     implementation "com.facebook.react:react-native:+"  // From node_modules
     implementation "androidx.core:core-splashscreen:1.0.0" // Add this line
 
-    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 
     //implementation 'com.google.firebase:firebase-analytics:17.3.0', don't use this one, it will replace react-native-push-notification
 
