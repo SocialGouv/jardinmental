@@ -1,3 +1,9 @@
+# Expo
+.expo/
+# Ios
+/ios
+# Android
+/android
 # OSX
 #
 .DS_Store

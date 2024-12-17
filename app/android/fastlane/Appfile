@@ -1,5 +1,0 @@
-require 'dotenv'
-Dotenv.load
-
-json_key_file("./fastlane/google-cloud-api-key.json")
-package_name('com.monsuivipsy')

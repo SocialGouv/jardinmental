@@ -3,18 +3,16 @@
     "titleBar.activeBackground": "#1FC6D5",
     "titleBar.inactiveBackground": "#1FC6D599",
     "titleBar.activeForeground": "#14484d",
-    "titleBar.inactiveForeground": "#afd0d399",
+    "titleBar.inactiveForeground": "#afd0d399"
   },
   // NEW
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true,
-    "source.organizeImports": false,
-    "source.fixAll": true,
-    "source.fixAll.stylelint": true
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "never",
+    "source.fixAll": "explicit",
+    "source.fixAll.stylelint": "explicit"
   },
-  "eslint.validate": [
-    "javascript"
-  ],
+  "eslint.validate": ["javascript"],
   // END NEW
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",

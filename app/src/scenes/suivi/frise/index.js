@@ -1,12 +1,12 @@
-import React, { useRef } from "react";
-import { View } from "react-native";
-import RangeDate from "../RangeDate";
-import FriseGraphList from "./FriseGraphList";
-import { FriseInfoButton } from "./FriseInfoButton";
-import { Button2 } from "../../../components/Button2";
-import { FriseFilterBar } from "./FriseFilterBar";
-import { styles as commonStyles } from "..";
-import { autoLayoutAnimation } from "../../../utils/autoLayoutAnimation";
+import React, {useRef} from 'react';
+import {View} from 'react-native';
+import RangeDate from '../RangeDate';
+import FriseGraphList from './FriseGraphList';
+import {FriseInfoButton} from './FriseInfoButton';
+import {Button2} from '../../../components/Button2';
+import {FriseFilterBar} from './FriseFilterBar';
+import {styles as commonStyles} from '..';
+import {autoLayoutAnimation} from '../../../utils/autoLayoutAnimation';
 
 export const FriseScreen = ({
   navigation,
@@ -36,16 +36,15 @@ export const FriseScreen = ({
           toDate={toDate}
           onChangeFromDate={setFromDate}
           onChangeToDate={setToDate}
-          withPreset={true}
-        >
+          withPreset={true}>
           {/* TODO : make it work avec les autres types d'indicateur */}
           <Button2
             checkable
             title="Filtrer"
-            icon={!filterEnabled ? "TuneSvg" : "CheckSvg"}
+            icon={!filterEnabled ? 'TuneSvg' : 'CheckSvg'}
             preset="secondary"
             size="small"
-            containerStyle={{ marginHorizontal: 8 }}
+            containerStyle={{marginHorizontal: 8}}
             checked={filterEnabled}
             onPress={() => {
               const nextValue = !filterEnabled;
@@ -61,7 +60,7 @@ export const FriseScreen = ({
             ref={friseInfoButtonRef}
             navigation={navigation}
             hasTreatment={hasTreatment}
-            containerStyle={{ marginLeft: 10, position: "relative", right: 0 }}
+            containerStyle={{marginLeft: 10, position: 'relative', right: 0}}
           />
         </RangeDate>
         {filterEnabled && (

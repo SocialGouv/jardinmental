@@ -1,4 +1,7 @@
-module.exports = {
-  presets: ["module:metro-react-native-babel-preset"],
-  plugins: ["module:react-native-dotenv", "react-native-reanimated/plugin", "nativewind/babel"],
+module.exports = function (api) {
+  api.cache(true);
+  return {
+    presets: ['babel-preset-expo'],
+    plugins: ['nativewind/babel', 'react-native-reanimated/plugin'],
+  };
 };
