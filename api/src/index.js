@@ -22,17 +22,11 @@ app.use(cors());
 
 // kube probe
 app.get("/healthz", async (req, res) => {
-  res.send(`Hello World`);
+  res.status(200).send();
 });
 
-app.get("/config", async (req, res) => {
-  res.send({ VERSION, MOBILE_VERSION, MOBILE_ANDROID_BUILD_NUMBER, MOBILE_IOS_BUILD_NUMBER });
-});
-
-// hello world
-const now = new Date();
 app.get("/", async (req, res) => {
-  res.send(`api MSP • ${now.toISOString()}`);
+  res.send({ VERSION, MOBILE_VERSION, MOBILE_ANDROID_BUILD_NUMBER, MOBILE_IOS_BUILD_NUMBER });
 });
 
 // Add header with API version to compare with client.
