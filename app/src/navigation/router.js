@@ -194,7 +194,7 @@ class Router extends React.Component {
           </Stack.Navigator>
         </NavigationContainer>
         <EnvironmentIndicator />
-        <StatusBar style="auto" />
+        <StatusBar style="dark" />
       </>
     );
   }
