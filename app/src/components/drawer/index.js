@@ -1,27 +1,18 @@
-import React, { useState, useEffect, useContext } from "react";
-import {
-  SafeAreaView,
-  StyleSheet,
-  Platform,
-  Dimensions,
-  View,
-  ScrollView,
-  Linking,
-  TouchableWithoutFeedback,
-} from "react-native";
-import Modal from "react-native-modal";
-import DrawerItem from "./drawer-item";
-import LegalItem from "./legal-item";
-import localStorage from "../../utils/localStorage";
-import { getBadgeNotesVersion } from "../../scenes/news";
-import pck from "../../../package.json";
-import Text from "../../components/MyText";
-import { colors } from "../../utils/colors";
-import NeedUpdateContext from "../../context/needUpdate";
-import { HOST } from "../../config";
-import { recommendApp } from "../../utils/share";
+import React, {useState, useEffect, useContext} from 'react';
+import {SafeAreaView, StyleSheet, Platform, Dimensions, View, ScrollView, Linking, TouchableWithoutFeedback} from 'react-native';
+import Modal from 'react-native-modal';
+import DrawerItem from './drawer-item';
+import LegalItem from './legal-item';
+import localStorage from '../../utils/localStorage';
+import {getBadgeNotesVersion} from '../../scenes/news';
+import pck from '../../../package.json';
+import Text from '../../components/MyText';
+import {colors} from '../../utils/colors';
+import NeedUpdateContext from '../../context/needUpdate';
+import {HOST} from '../../config';
+import {recommendApp} from '../../utils/share';
 
-export default ({ navigation, visible, onClick }) => {
+export default ({navigation, visible, onClick}) => {
   const [isVisible, setIsVisible] = useState();
   const updateVisible = useContext(NeedUpdateContext);
 
@@ -36,13 +27,13 @@ export default ({ navigation, visible, onClick }) => {
       const n = await getBadgeNotesVersion();
       setBadgeNotesVersionVisible(n);
       const proNPS = await localStorage.getSupported();
-      setNpsProIsVisible(proNPS === "PRO");
+      setNpsProIsVisible(proNPS === 'PRO');
       const badgeProNPS = await localStorage.getVisitProNPS();
       setBadgeNpsProIsVisible(!badgeProNPS);
     })();
   }, [visible]);
 
-  const deviceHeight = Dimensions.get("window").height;
+  const deviceHeight = Dimensions.get('window').height;
   return (
     <Modal
       style={styles.modal}
@@ -51,50 +42,18 @@ export default ({ navigation, visible, onClick }) => {
       onSwipeComplete={onClick}
       animationIn="slideInLeft"
       animationOut="slideOutLeft"
-      deviceHeight={deviceHeight}
-    >
+      deviceHeight={deviceHeight}>
       <View style={styles.card}>
         <SafeAreaView>
           <ScrollView contentContainerStyle={styles.scrollContainer}>
             <Text style={styles.title}>Jardin Mental</Text>
-            <DrawerItem
-              badge={badgeNotesVersionVisible}
-              title="Nouveautés"
-              path="news"
-              navigation={navigation}
-              onClick={onClick}
-              icon="NewsSvg"
-            />
+            <DrawerItem badge={badgeNotesVersionVisible} title="Nouveautés" path="news" navigation={navigation} onClick={onClick} icon="NewsSvg" />
             <Separator />
-            <DrawerItem
-              title="Présentation"
-              path="presentation"
-              navigation={navigation}
-              onClick={onClick}
-              icon="PresentationSvg"
-            />
+            <DrawerItem title="Présentation" path="presentation" navigation={navigation} onClick={onClick} icon="PresentationSvg" />
             <DrawerItem title="Recommander Jardin&nbsp;Mental" onClick={recommendApp} icon="ShareSvg" />
-            <DrawerItem
-              title="Parler à quelqu'un et s'informer"
-              path="infos"
-              navigation={navigation}
-              onClick={onClick}
-              icon="PhoneSvg"
-            />
-            <DrawerItem
-              title="Nous contacter"
-              path="contact"
-              navigation={navigation}
-              onClick={onClick}
-              icon="PeopleSvg"
-            />
-            <DrawerItem
-              title="Qui peut voir mes données ?"
-              path="privacy-light"
-              navigation={navigation}
-              onClick={onClick}
-              icon="LockSvg"
-            />
+            <DrawerItem title="Parler à quelqu'un et s'informer" path="infos" navigation={navigation} onClick={onClick} icon="PhoneSvg" />
+            <DrawerItem title="Nous contacter" path="contact" navigation={navigation} onClick={onClick} icon="PeopleSvg" />
+            <DrawerItem title="Qui peut voir mes données ?" path="privacy-light" navigation={navigation} onClick={onClick} icon="LockSvg" />
             {updateVisible ? (
               <DrawerItem
                 badge
@@ -102,46 +61,31 @@ export default ({ navigation, visible, onClick }) => {
                 icon="NewsSvg"
                 onClick={() =>
                   Linking.openURL(
-                    Platform.OS === "ios"
-                      ? "itms-apps://apps.apple.com/FR/app/id1540061393"
-                      : "https://play.app.goo.gl/?link=https://play.google.com/store/apps/details?id=com.monsuivipsy"
+                    Platform.OS === 'ios'
+                      ? 'itms-apps://apps.apple.com/FR/app/id1540061393'
+                      : 'https://play.app.goo.gl/?link=https://play.google.com/store/apps/details?id=com.monsuivipsy',
                   )
                 }
               />
             ) : null}
-            {npsProIsVisible ? (
-              <DrawerItem
-                badge={badgeNpsProIsVisible}
-                title="Donner mon avis"
-                icon="LightBulbSvg"
-                path="contribute-pro"
-                navigation={navigation}
-                onClick={async () => {
-                  await localStorage.setVisitProNPS(true);
-                  onClick();
-                }}
-              />
-            ) : null}
+            {/* {npsProIsVisible ? ( */}
+            <DrawerItem
+              badge={badgeNpsProIsVisible}
+              title="Donner mon avis"
+              icon="LightBulbSvg"
+              path="contribute-pro"
+              navigation={navigation}
+              onClick={async () => {
+                await localStorage.setVisitProNPS(true);
+                onClick();
+              }}
+            />
+            {/* ) : null} */}
             <Separator />
-            <LegalItem
-              title="Conditions générales d'utilisation"
-              path="cgu"
-              navigation={navigation}
-              onClick={onClick}
-            />
-            <LegalItem
-              title="Politique de confidentialité"
-              path="privacy"
-              navigation={navigation}
-              onClick={onClick}
-            />
-            <LegalItem
-              title="Mentions légales"
-              path="legal-mentions"
-              navigation={navigation}
-              onClick={onClick}
-            />
-            <TouchableWithoutFeedback onPress={() => setDevModeCount((p) => p + 1)}>
+            <LegalItem title="Conditions générales d'utilisation" path="cgu" navigation={navigation} onClick={onClick} />
+            <LegalItem title="Politique de confidentialité" path="privacy" navigation={navigation} onClick={onClick} />
+            <LegalItem title="Mentions légales" path="legal-mentions" navigation={navigation} onClick={onClick} />
+            <TouchableWithoutFeedback onPress={() => setDevModeCount(p => p + 1)}>
               <View style={styles.versionContainer}>
                 <Text style={styles.versionLabel}>
                   version {pck.version}
@@ -165,7 +109,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   separator: {
-    borderColor: "#eee",
+    borderColor: '#eee',
     borderTopWidth: 1,
     marginHorizontal: 30,
     marginVertical: 15,
@@ -176,18 +120,18 @@ const styles = StyleSheet.create({
   versionContainer: {
     marginTop: 47,
     flex: 1,
-    alignItems: "center",
+    alignItems: 'center',
   },
   versionLabel: {
-    color: "#ddd",
+    color: '#ddd',
   },
   buildNumberLabel: {
-    color: "#eee",
+    color: '#eee',
   },
   card: {
-    width: "80%",
-    height: "100%",
-    backgroundColor: "#fff",
+    width: '80%',
+    height: '100%',
+    backgroundColor: '#fff',
     borderRadius: 10,
     borderTopLeftRadius: 0,
     borderBottomLeftRadius: 0,
@@ -195,7 +139,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     padding: 30,
     paddingTop: 15,
     color: colors.DARK_BLUE,

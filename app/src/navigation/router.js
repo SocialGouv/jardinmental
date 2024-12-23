@@ -9,6 +9,7 @@ import Reminder from '../scenes/reminder';
 import Export from '../scenes/export/export';
 import DailyChart from '../scenes/calendar/daily-chart';
 import {AppState, Platform, Linking} from 'react-native';
+import {StatusBar} from 'expo-status-bar';
 import Notes from '../scenes/survey/notes-screen';
 import Onboarding from '../scenes/onboarding';
 import Supported from '../scenes/onboarding/onboardingSupported';
@@ -53,7 +54,7 @@ import {GoalsAddOptions} from '../scenes/goals/settings/GoalsAddOptions';
 import {GoalsCreateForm} from '../scenes/goals/settings/GoalsCreateForm';
 import {GoalDaySelector} from '../scenes/goals/settings/GoalDaySelector';
 import {GoalConfig} from '../scenes/goals/settings/GoalConfig';
-import {IndicatorsSettingsMore} from '../scenes/indicateurs/settings/IndicatorsSettingsMore';
+import IndicatorsSettingsMore from '../scenes/indicateurs/settings/IndicatorsSettingsMore';
 import {GoalsSettingsMore} from '../scenes/goals/settings/GoalsSettingsMore';
 import EditIndicateurs from '../scenes/indicateurs/editIndicateurs';
 import CreateIndicator from '../scenes/indicateurs/CreateIndicator';
@@ -129,6 +130,7 @@ class Router extends React.Component {
   };
 
   render() {
+    console.log(process.env.EXPO_PUBLIC_SCHEME);
     return (
       <>
         <NavigationContainer ref={r => (this.navigationRef = r)} onStateChange={this.onStateChange} linking={linking}>
@@ -182,13 +184,9 @@ class Router extends React.Component {
             <Stack.Screen name="beck" component={Beck} />
             {/* <Stack.Screen name="contribute" component={Contribute} /> */}
 
-            {/* <Stack.Screen name="indicators-settings-more" component={IndicatorsSettingsMore} /> */}
-
+            <Stack.Screen name="indicators-settings-more" component={IndicatorsSettingsMore} />
             <Stack.Screen name="goals-settings" component={GoalsSettings} />
-            {/* <Stack.Screen
-              name="goals-settings-more"
-              component={GoalsSettingsMore}
-            /> */}
+            <Stack.Screen name="goals-settings-more" component={GoalsSettingsMore} />
             <Stack.Screen name="goals-add-options" component={GoalsAddOptions} />
             <Stack.Screen name="goals-create-form" component={GoalsCreateForm} />
             <Stack.Screen name="goal-day-selector" component={GoalDaySelector} />
@@ -196,6 +194,7 @@ class Router extends React.Component {
           </Stack.Navigator>
         </NavigationContainer>
         <EnvironmentIndicator />
+        <StatusBar style="auto" />
       </>
     );
   }

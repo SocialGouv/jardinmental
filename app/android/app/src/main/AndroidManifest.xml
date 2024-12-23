@@ -33,7 +33,6 @@
         <category android:name="android.intent.category.BROWSABLE"/>
         <data android:scheme="monsuivipsy"/>
         <data android:scheme="com.monsuivipsy"/>
-        <data android:scheme="exp+monsuivipsy"/>
       </intent-filter>
     </activity>
     <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" android:exported="false"/>

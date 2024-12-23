@@ -10,14 +10,16 @@ import {View, Text} from 'react-native';
 import {colors} from '../utils/colors';
 import localStorage from '../utils/localStorage';
 import logEvents from '../services/logEvents';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 const Tab = createMaterialTopTabNavigator();
 
 const Tabs = ({navigation, route}) => {
+  const insets = useSafeAreaInsets();
   const startSurvey = async () => {
-    const symptoms = await localStorage.getSymptoms();
+    const user_indicateurs = await localStorage.getIndicateurs();
     logEvents.logFeelingStart();
-    if (!symptoms) {
+    if (!user_indicateurs) {
       navigation.navigate('symptoms', {
         showExplanation: true,
         redirect: 'select-day',
@@ -72,7 +74,11 @@ const Tabs = ({navigation, route}) => {
             </View>
           ),
         }}>
-        {p => <Status {...p} startSurvey={startSurvey} />}
+        {p => (
+          <View style={{paddingTop: insets.top, flex: 1}}>
+            <Status {...p} startSurvey={startSurvey} />
+          </View>
+        )}
       </Tab.Screen>
       <Tab.Screen
         name="Calendar"
@@ -84,7 +90,11 @@ const Tabs = ({navigation, route}) => {
             </View>
           ),
         }}>
-        {p => <Suivi {...p} startSurvey={startSurvey} />}
+        {p => (
+          <View style={{paddingTop: insets.top, flex: 1}}>
+            <Suivi {...p} startSurvey={startSurvey} />
+          </View>
+        )}
       </Tab.Screen>
       <Tab.Screen
         name="Exercise"
@@ -96,7 +106,11 @@ const Tabs = ({navigation, route}) => {
             </View>
           ),
         }}>
-        {p => <Exercise {...p} startSurvey={startSurvey} />}
+        {p => (
+          <View style={{paddingTop: insets.top, flex: 1}}>
+            <Exercise {...p} startSurvey={startSurvey} />
+          </View>
+        )}
       </Tab.Screen>
     </Tab.Navigator>
   );

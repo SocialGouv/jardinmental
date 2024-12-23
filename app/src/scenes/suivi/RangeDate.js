@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {View, StyleSheet} from 'react-native';
-// import DatePicker from 'react-native-date-picker';
+import DatePicker from 'react-native-date-picker';
 import logEvents from '../../services/logEvents';
 
 import Text from '../../components/MyText';
@@ -105,7 +105,7 @@ const DateRange = ({withPreset = false, children, containerStyle, contentContain
             containerStyle={styles.dateItemContainer}
             {...dateOrTimeProps}
           />
-          {/* <DatePicker
+          <DatePicker
             timeZoneOffsetInMinutes={0}
             locale="fr"
             title="Du"
@@ -117,6 +117,7 @@ const DateRange = ({withPreset = false, children, containerStyle, contentContain
             date={fromDate}
             confirmText="Valider"
             onConfirm={date => {
+              console.log('date', date);
               setFromDate(date);
               props.onChangeFromDate(date);
               setOpenFromDate(false);
@@ -146,7 +147,7 @@ const DateRange = ({withPreset = false, children, containerStyle, contentContain
             onCancel={() => {
               setOpenToDate(false);
             }}
-          /> */}
+          />
         </View>
       </View>
     </View>

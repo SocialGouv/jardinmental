@@ -6,13 +6,34 @@
   "build": {
     "development": {
       "developmentClient": true,
-      "distribution": "internal"
+      "distribution": "internal",
+      "env": {
+        "EXPO_PUBLIC_SCHEME": "http",
+        "EXPO_PUBLIC_HOST": "localhost",
+        "EXPO_PUBLIC_APP_ENV": "development",
+        "EXPO_PUBLIC_TIPIMAIL_API_KEY": "1234567890",
+        "EXPO_PUBLIC_TIPIMAIL_API_USER": "1234567890"
+      }
     },
     "preview": {
-      "distribution": "internal"
+      "distribution": "internal",
+      "env": {
+        "EXPO_PUBLIC_SCHEME": "https",
+        "EXPO_PUBLIC_HOST": "api-monsuivipsy.fabrique.social.gouv.fr",
+        "EXPO_PUBLIC_APP_ENV": "production",
+        "EXPO_PUBLIC_TIPIMAIL_API_KEY": "1234567890",
+        "EXPO_PUBLIC_TIPIMAIL_API_USER": "1234567890"
+      }
     },
     "production": {
-      "autoIncrement": true
+      "autoIncrement": true,
+      "env": {
+        "EXPO_PUBLIC_SCHEME": "https",
+        "EXPO_PUBLIC_HOST": "api-monsuivipsy.fabrique.social.gouv.fr",
+        "EXPO_PUBLIC_APP_ENV": "production",
+        "EXPO_PUBLIC_TIPIMAIL_API_KEY": "1234567890",
+        "EXPO_PUBLIC_TIPIMAIL_API_USER": "1234567890"
+      }
     }
   },
   "submit": {

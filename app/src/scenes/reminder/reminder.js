@@ -86,6 +86,7 @@ const Reminder = ({navigation, route, notifReminderTitle = "Comment ça va aujou
   };
 
   const showReminderSetup = async () => {
+    console.log('showReminderSetup');
     const isRegistered = await NotificationService.checkAndAskForPermission();
     if (!isRegistered) {
       showPermissionsAlert();

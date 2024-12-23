@@ -9,7 +9,7 @@ import {displayedCategories, scoresMapIcon} from '../../utils/constants';
 import {colors} from '../../utils/colors';
 import {buildSurveyData} from '../survey/survey-data';
 import PieChart from 'react-native-pie-chart';
-// import PieChart from "react-native-pie";
+// import PieChart from "react-native-pie"; change in migration
 import CircledIcon from '../../components/CircledIcon';
 import RoundButtonIcon from '../../components/RoundButtonIcon';
 import Icon from '../../components/Icon';
@@ -133,14 +133,14 @@ const ChartPie = ({navigation, fromDate, toDate}) => {
     <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContainer}>
       {userIndicateurs
         ?.filter(ind => isChartVisible(ind.name) && ind.active)
-        ?.map(_indicateur => {
+        ?.map((_indicateur, index) => {
           const isReverse = _indicateur?.order === 'DESC';
           if (_indicateur?.type === 'boolean')
             return (
               <PieYesNo
+                key={index}
                 indicateur={_indicateur}
                 title={getTitle(_indicateur.name)}
-                key={_indicateur.name}
                 data={computeChartData(_indicateur.name)}
                 parialsColors={['#f3f3f3', isReverse ? '#F16B6B' : '#5DEE5A', isReverse ? '#5DEE5A' : '#F16B6B']}
               />
@@ -367,7 +367,7 @@ const Pie = ({title, data, indicateur}) => {
       <View style={styles.contentCategoryContainer}>
         <View style={styles.pieContainer}>
           {/* <PieChart radius={50} sections={sections} /> */}
-          {sections.reduce((sum, section) => sum + section.percentage, 0) > 0 ? (
+          {sections?.reduce((sum, section) => sum + section.percentage, 0) > 0 ? (
             <PieChart
               widthAndHeight={100}
               series={sections.map(section => section.percentage)}
@@ -462,7 +462,7 @@ const PieYesNo = ({title, data, parialsColors = ['#f3f3f3', '#5956E8', '#E575F8'
       <View style={styles.contentCategoryContainer}>
         <View style={styles.pieContainer}>
           {/* <PieChart radius={50} sections={sections} /> */}
-          {sections.reduce((sum, section) => sum + section.percentage, 0) > 0 ? (
+          {sections?.reduce((sum, section) => sum + section.percentage, 0) > 0 ? (
             <PieChart
               widthAndHeight={100}
               series={sections.map(section => section.percentage)}

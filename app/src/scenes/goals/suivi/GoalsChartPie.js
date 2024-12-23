@@ -104,11 +104,11 @@ const GoalPie = ({title, records}) => {
         <View style={styles.pieContainer}>
           {/* <PieChart radius={50} sections={sectionValues} /> */}
           <View style={styles.pieContainer}>
-            {sections.reduce((sum, section) => sum + section.percentage, 0) > 0 ? (
+            {sectionValues?.reduce((sum, section) => sum + section.percentage, 0) > 0 ? (
               <PieChart
                 widthAndHeight={100}
-                series={sections.map(section => section.percentage)}
-                sliceColor={sections.map(section => section.color)}
+                series={sectionValues.map(section => section.percentage)}
+                sliceColor={sectionValues.map(section => section.color)}
                 coverRadius={0.45}
                 coverFill={'#FFF'}
               />

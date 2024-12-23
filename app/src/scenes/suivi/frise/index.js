@@ -8,16 +8,7 @@ import {FriseFilterBar} from './FriseFilterBar';
 import {styles as commonStyles} from '..';
 import {autoLayoutAnimation} from '../../../utils/autoLayoutAnimation';
 
-export const FriseScreen = ({
-  navigation,
-  presetDate,
-  setPresetDate,
-  fromDate,
-  setFromDate,
-  toDate,
-  setToDate,
-  hasTreatment,
-}) => {
+export const FriseScreen = ({navigation, presetDate, setPresetDate, fromDate, setFromDate, toDate, setToDate, hasTreatment}) => {
   const [focusedScores, setFocusedScores] = React.useState([]);
   const [showTraitement, setShowTraitement] = React.useState(true);
   const [filterEnabled, setFilterEnabled] = React.useState(false);
@@ -56,12 +47,7 @@ export const FriseScreen = ({
               autoLayoutAnimation();
             }}
           />
-          <FriseInfoButton
-            ref={friseInfoButtonRef}
-            navigation={navigation}
-            hasTreatment={hasTreatment}
-            containerStyle={{marginLeft: 10, position: 'relative', right: 0}}
-          />
+          <FriseInfoButton ref={friseInfoButtonRef} navigation={navigation} hasTreatment={hasTreatment} containerStyle={{marginLeft: 10, position: 'relative', right: 0}} />
         </RangeDate>
         {filterEnabled && (
           <FriseFilterBar
@@ -72,14 +58,7 @@ export const FriseScreen = ({
           />
         )}
       </View>
-      <FriseGraphList
-        navigation={navigation}
-        fromDate={fromDate}
-        toDate={toDate}
-        focusedScores={focusedScores}
-        showTraitement={showTraitement}
-        hasTreatment={hasTreatment}
-      />
+      <FriseGraphList navigation={navigation} fromDate={fromDate} toDate={toDate} focusedScores={focusedScores} showTraitement={showTraitement} hasTreatment={hasTreatment} />
     </>
   );
 };

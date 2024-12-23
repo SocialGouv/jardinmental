@@ -20,6 +20,13 @@
 - - scenes/suivi/chartPie.js
 - - scenes/goals/suivi/GoalsChartPie.js
 
+- asset moved
+- - fonts to assets/fonts
+- - - all the `fontFamily: "Karla"` style were changed to `fontFamily: "Karla-Regular"` (follow the best practices of expo naming file https://docs.expo.dev/develop/user-interface/fonts/#how-to-determine-which-font-family-name-to-use)
+- - images to assets/imgs
+- status/DiaryList.js was not working having a warning, so I use forwardRef to fix it
+- scenes/indicateurs/settings/IndicatorsSettingsMore.js and goals/settings/GoalsSettingsMore.js were crashing the app cause of incompatible version of react-native-draggable-flatlist (v3) and react-native-reanimated, so I use the react-native-draggable-flatlist@4
+
 # What's removed
 
 - removed the /ios and /android folders, as they are now generated automatically from the code
@@ -32,6 +39,7 @@
 - - fix the pdf viewer for android not working
 - - check the notification system
 - - add sentry
+- - check if assets are how they were before (icons, fonts and splash screen)
 - P1
 - - Safe Area View badly handled (android the top is cut and ios with not rectangle screen the bottom is hidden)
 - - Use nativewind
