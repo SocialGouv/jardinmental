@@ -1,17 +1,22 @@
 import React from 'react';
-import {View, Platform} from 'react-native';
+import {View, Platform, Text, SafeAreaView, Pressable} from 'react-native';
 import {WebView} from 'react-native-webview';
 
-const PdfViewer = () => {
+const PdfViewer = ({navigation}) => {
   const uri =
     Platform.OS === 'android'
       ? 'https://docs.google.com/gview?embedded=true&url=https://jardinmental.fabrique.social.gouv.fr/Notice%20Jardin%20Mental.pdf'
       : 'https://jardinmental.fabrique.social.gouv.fr/Notice%20Jardin%20Mental.pdf';
 
   return (
-    <View className="flex-1 flex-col w-full h-full">
+    <SafeAreaView className="flex-1 flex-col w-full h-full">
+      <View className="flex-row items-center p-4">
+        <Pressable onPress={() => navigation.goBack()} className="mr-4">
+          <Text className="text-gray-700 text-sm">Retour</Text>
+        </Pressable>
+      </View>
       <WebView style={{width: '100%', height: '100%'}} source={{uri}} originWhitelist={['*']} javaScriptEnabled={true} domStorageEnabled={true} />
-    </View>
+    </SafeAreaView>
   );
 };
 
