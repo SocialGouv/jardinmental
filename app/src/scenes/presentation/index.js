@@ -15,7 +15,9 @@ const PdfViewer = ({navigation}) => {
           <Text className="text-gray-700 text-sm">Retour</Text>
         </Pressable>
       </View>
-      <WebView style={{width: '100%', height: '100%'}} source={{uri}} originWhitelist={['*']} javaScriptEnabled={true} domStorageEnabled={true} />
+      <View className="flex-1">
+        <WebView style={{width: '100%', height: '100%'}} source={{uri}} originWhitelist={['*']} javaScriptEnabled={true} domStorageEnabled={true} />
+      </View>
     </SafeAreaView>
   );
 };
