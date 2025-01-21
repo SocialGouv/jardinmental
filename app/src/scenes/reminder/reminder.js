@@ -1,28 +1,23 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Alert, View, TouchableOpacity, StyleSheet, SafeAreaView } from "react-native";
-import { openSettings } from "react-native-permissions";
-import dayjs from "dayjs";
-import Text from "../../components/MyText";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import localStorage from "../../utils/localStorage";
-import { ONBOARDING_STEPS } from "../../utils/constants";
-import ReminderSvg from "../../../assets/svg/reminder.js";
-import TimePicker from "../../components/timePicker";
-import NotificationService from "../../services/notifications";
-import { colors } from "../../utils/colors";
-import logEvents from "../../services/logEvents";
-import BackButton from "../../components/BackButton";
-import * as RNLocalize from "react-native-localize";
-import API from "../../services/api";
+import React, {useEffect, useRef, useState} from 'react';
+import {Alert, View, TouchableOpacity, StyleSheet, SafeAreaView, Linking} from 'react-native';
+// import { openSettings } from "react-native-permissions";
+import dayjs from 'dayjs';
+import Text from '../../components/MyText';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import localStorage from '../../utils/localStorage';
+import {ONBOARDING_STEPS} from '../../utils/constants';
+import ReminderSvg from '../../../assets/svg/reminder.js';
+import TimePicker from '../../components/timePicker';
+import NotificationService from '../../services/notifications';
+import {colors} from '../../utils/colors';
+import logEvents from '../../services/logEvents';
+import BackButton from '../../components/BackButton';
+import * as RNLocalize from 'react-native-localize';
+import API from '../../services/api';
 
-const ReminderStorageKey = "@Reminder";
+const ReminderStorageKey = '@Reminder';
 
-const Reminder = ({
-  navigation,
-  route,
-  notifReminderTitle = "Comment ça va aujourd'hui ?",
-  notifReminderMessage = "N'oubliez pas de remplir votre application Jardin Mental",
-}) => {
+const Reminder = ({navigation, route, notifReminderTitle = "Comment ça va aujourd'hui ?", notifReminderMessage = "N'oubliez pas de remplir votre application Jardin Mental"}) => {
   const [reminder, setReminder] = useState(null);
   const [reminderSetupVisible, setReminderSetupVisible] = useState(false);
 
@@ -51,16 +46,16 @@ const Reminder = ({
     setReminder(dayjs(storedReminder));
   };
 
-  const handleNotification = (notification) => {
+  const handleNotification = notification => {
     if (notification.title === notifReminderTitle) {
-      navigation.navigate("tabs");
+      navigation.navigate('tabs');
     }
   };
 
   const notificationListener = useRef();
   useEffect(() => {
     getReminder(false);
-    notificationListener.current = NotificationService.listen(handleNotification, "reminder");
+    notificationListener.current = NotificationService.listen(handleNotification, 'reminder');
     if (route?.params?.onboarding) localStorage.setOnboardingStep(ONBOARDING_STEPS.STEP_REMINDER);
     // return () => NotificationService.remove(notificationListener.current);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -68,11 +63,7 @@ const Reminder = ({
 
   const scheduleNotification = async (newReminder = new Date(Date.now() + 10 * 1000)) => {
     NotificationService.cancelAll();
-    const fireDate = dayjs()
-      .set("hours", newReminder.getHours())
-      .set("minutes", newReminder.getMinutes())
-      .set("seconds", 0)
-      .toDate();
+    const fireDate = dayjs().set('hours', newReminder.getHours()).set('minutes', newReminder.getMinutes()).set('seconds', 0).toDate();
     /*NotificationService.scheduleNotification({
       date: fireDate,
       title: notifReminderTitle,
@@ -81,10 +72,10 @@ const Reminder = ({
     });*/
     if (!(await NotificationService.hasToken())) return;
     await API.put({
-      path: "/reminder",
+      path: '/reminder',
       body: {
         pushNotifToken: await NotificationService.getToken(),
-        type: "Main",
+        type: 'Main',
         timezone: RNLocalize.getTimeZone(),
         timeHours: newReminder.getHours(),
         timeMinutes: newReminder.getMinutes(),
@@ -95,6 +86,7 @@ const Reminder = ({
   };
 
   const showReminderSetup = async () => {
+    console.log('showReminderSetup');
     const isRegistered = await NotificationService.checkAndAskForPermission();
     if (!isRegistered) {
       showPermissionsAlert();
@@ -105,24 +97,24 @@ const Reminder = ({
 
   const showPermissionsAlert = () => {
     Alert.alert(
-      "Vous devez autoriser les notifications pour accéder à ce service",
-      "Veuillez cliquer sur Réglages puis Notifications pour activer les notifications",
+      'Vous devez autoriser les notifications pour accéder à ce service',
+      'Veuillez cliquer sur Réglages puis Notifications pour activer les notifications',
       [
         {
-          text: "Réglages",
-          onPress: openSettings,
+          text: 'Réglages',
+          onPress: () => Linking.openSettings(),
         },
         {
-          text: "Annuler",
+          text: 'Annuler',
           onPress: deleteReminder,
-          style: "cancel",
+          style: 'cancel',
         },
       ],
-      { cancelable: true }
+      {cancelable: true},
     );
   };
 
-  const setReminderRequest = async (newReminder) => {
+  const setReminderRequest = async newReminder => {
     setReminderSetupVisible(false);
     if (!dayjs(newReminder).isValid()) return;
     await scheduleNotification(newReminder);
@@ -134,7 +126,7 @@ const Reminder = ({
 
   const deleteReminder = async () => {
     NotificationService.cancelAll();
-    setReminder("");
+    setReminder('');
     setReminderSetupVisible(false);
     await AsyncStorage.removeItem(ReminderStorageKey);
   };
@@ -143,10 +135,10 @@ const Reminder = ({
     deleteReminder();
     if (!(await NotificationService.hasToken())) return;
     await API.put({
-      path: "/reminder",
+      path: '/reminder',
       body: {
         pushNotifToken: await NotificationService.getToken(),
-        type: "Main",
+        type: 'Main',
         disabled: true,
       },
     });
@@ -155,7 +147,7 @@ const Reminder = ({
   const validateOnboarding = async () => {
     await localStorage.setOnboardingDone(true);
     // await localStorage.setOnboardingStep(null);
-    navigation.navigate("onboarding-drugs");
+    navigation.navigate('onboarding-drugs');
   };
 
   return (
@@ -179,13 +171,11 @@ const Reminder = ({
               Pour un <Text style={styles.lightBlue}>meilleur suivi</Text>, un rappel est programmé à :
             </Text>
             <TouchableOpacity onPress={showReminderSetup}>
-              <Text style={styles.time}>{`${dayjs(reminder).format("HH:mm")}`}</Text>
+              <Text style={styles.time}>{`${dayjs(reminder).format('HH:mm')}`}</Text>
             </TouchableOpacity>
           </>
         ) : (
-          <Text style={styles.subtitle}>
-            Un rappel permet de remplir plus souvent l’application et obtenir des analyses plus pertinentes
-          </Text>
+          <Text style={styles.subtitle}>Un rappel permet de remplir plus souvent l’application et obtenir des analyses plus pertinentes</Text>
         )}
       </View>
       {!!route?.params?.onboarding && !!reminder && (
@@ -196,31 +186,20 @@ const Reminder = ({
 
       {route?.params?.onboarding ? (
         <View style={styles.ctaContainer}>
-          <TouchableOpacity
-            onPress={reminder ? validateOnboarding : showReminderSetup}
-            style={styles.setupButton}
-          >
-            <Text style={styles.setupButtonText}>{reminder ? "Continuer" : "Choisir l'heure du rappel"}</Text>
+          <TouchableOpacity onPress={reminder ? validateOnboarding : showReminderSetup} style={styles.setupButton}>
+            <Text style={styles.setupButtonText}>{reminder ? 'Continuer' : "Choisir l'heure du rappel"}</Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={reminder ? showReminderSetup : validateOnboarding}
-            style={[styles.laterContainer]}
-          >
-            <Text style={styles.later}>{reminder ? "Modifier l'heure du rappel" : "Plus tard"}</Text>
+          <TouchableOpacity onPress={reminder ? showReminderSetup : validateOnboarding} style={[styles.laterContainer]}>
+            <Text style={styles.later}>{reminder ? "Modifier l'heure du rappel" : 'Plus tard'}</Text>
           </TouchableOpacity>
         </View>
       ) : (
         <View style={styles.ctaContainer}>
           <TouchableOpacity onPress={showReminderSetup} style={styles.setupButton}>
-            <Text style={styles.setupButtonText}>
-              {reminder ? "Modifier le rappel" : "Choisir l'heure du rappel"}
-            </Text>
+            <Text style={styles.setupButtonText}>{reminder ? 'Modifier le rappel' : "Choisir l'heure du rappel"}</Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={reminder ? deleteReminderManually : () => navigation.navigate("tabs")}
-            style={[styles.laterContainer]}
-          >
-            <Text style={styles.later}>{reminder ? "Retirer le rappel" : "Plus tard"}</Text>
+          <TouchableOpacity onPress={reminder ? deleteReminderManually : () => navigation.navigate('tabs')} style={[styles.laterContainer]}>
+            <Text style={styles.later}>{reminder ? 'Retirer le rappel' : 'Plus tard'}</Text>
           </TouchableOpacity>
         </View>
       )}
@@ -231,9 +210,9 @@ const Reminder = ({
 
 const styles = StyleSheet.create({
   ctaContainer: {
-    display: "flex",
-    alignItems: "center",
-    position: "absolute",
+    display: 'flex',
+    alignItems: 'center',
+    position: 'absolute',
     bottom: 0,
     margin: 30,
   },
@@ -248,77 +227,77 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   bigImage: {
-    color: "#C3C7D5",
+    color: '#C3C7D5',
     marginVertical: 0,
   },
   header: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     marginVertical: 10,
   },
   container: {
-    justifyContent: "flex-start",
-    alignItems: "center",
+    justifyContent: 'flex-start',
+    alignItems: 'center',
     paddingBottom: 100,
-    backgroundColor: "#f9f9f9",
+    backgroundColor: '#f9f9f9',
     flexGrow: 1,
-    height: "100%",
+    height: '100%',
   },
   bigTitle: {
-    width: "80%",
+    width: '80%',
     flexShrink: 0,
-    textAlign: "center",
+    textAlign: 'center',
     fontSize: 22,
     color: colors.BLUE,
-    fontWeight: "700",
-    marginTop: "10%",
+    fontWeight: '700',
+    marginTop: '10%',
   },
   smallTitle: {
-    width: "80%",
+    width: '80%',
     flexShrink: 0,
-    textAlign: "center",
+    textAlign: 'center',
     fontSize: 22,
     color: colors.BLUE,
-    fontWeight: "700",
+    fontWeight: '700',
   },
   description: {
-    width: "80%",
-    marginTop: "10%",
-    marginBottom: "20%",
+    width: '80%',
+    marginTop: '10%',
+    marginBottom: '20%',
   },
   subTitle: {
     flexShrink: 0,
-    textAlign: "center",
+    textAlign: 'center',
     paddingHorizontal: 20,
   },
   time: {
     color: colors.DARK_BLUE,
-    fontWeight: "500",
+    fontWeight: '500',
     fontSize: 35,
-    textAlign: "center",
+    textAlign: 'center',
     paddingVertical: 10,
   },
   buttons: {
-    justifyContent: "space-around",
+    justifyContent: 'space-around',
     marginVertical: 15,
-    marginBottom: "20%",
+    marginBottom: '20%',
   },
   backButtonContainer: {
-    alignSelf: "flex-start",
+    alignSelf: 'flex-start',
     paddingLeft: 20,
-    marginBottom: "20%",
+    marginBottom: '20%',
     marginTop: 20,
   },
   backButton: {
-    fontWeight: "700",
-    textDecorationLine: "underline",
+    fontWeight: '700',
+    textDecorationLine: 'underline',
     color: colors.BLUE,
   },
   later: {
-    fontWeight: "700",
-    textDecorationLine: "underline",
+    fontWeight: '700',
+    textDecorationLine: 'underline',
     color: colors.BLUE,
   },
   setupButton: {
@@ -326,29 +305,29 @@ const styles = StyleSheet.create({
     height: 45,
     borderRadius: 45,
     paddingHorizontal: 30,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     marginBottom: 25,
   },
   setupButtonText: {
-    color: "#fff",
-    fontWeight: "700",
+    color: '#fff',
+    fontWeight: '700',
     fontSize: 16,
   },
   subtitle: {
     color: colors.DARK_BLUE,
     fontSize: 18,
     marginBottom: 10,
-    fontWeight: "300",
-    textAlign: "center",
+    fontWeight: '300',
+    textAlign: 'center',
   },
   link: {
-    color: "#181818",
-    textDecorationLine: "underline",
+    color: '#181818',
+    textDecorationLine: 'underline',
     fontSize: 14,
     marginBottom: 10,
-    fontWeight: "300",
-    textAlign: "center",
+    fontWeight: '300',
+    textAlign: 'center',
   },
   lightblue: {
     color: colors.LIGHT_BLUE,

@@ -1,12 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
-export default ({
-  visible,
-  selectDate,
-  value,
-  headerTextIOS = 'Définir un rappel',
-}) => {
+export default ({visible, selectDate, value, headerTextIOS = 'Définir un rappel'}) => {
   const [date, setDate] = useState(value || new Date(Date.now() + 60 * 1000));
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
@@ -15,7 +10,7 @@ export default ({
     setDatePickerVisibility(false);
   };
 
-  const handleConfirm = (d) => {
+  const handleConfirm = d => {
     selectDate(d);
     setDatePickerVisibility(false);
   };

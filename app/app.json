@@ -1,8 +1,71 @@
 {
-  "name": "monsuivipsy",
-  "displayName": "Jardin Mental",
-  "version": {
-    "buildNumber": 199,
-    "buildName": "1.40.3"
+  "expo": {
+    "name": "Jardin Mental",
+    "slug": "monsuivipsy",
+    "version": "1.41.0",
+    "orientation": "portrait",
+    "icon": "./assets/imgs/playstore-icon.png",
+    "scheme": "monsuivipsy",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "org.reactjs.native.example.monsuivipsy",
+      "buildNumber": "205"
+    },
+    "android": {
+      "versionCode": 205,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/imgs/logo2.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.monsuivipsy",
+      "permissions": [
+        "NOTIFICATIONS",
+        "SCHEDULE_EXACT_ALARM",
+        "POST_NOTIFICATIONS"
+      ]
+    },
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/imgs/ic_notification.png",
+          "color": "#ffffff"
+        }
+      ],
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#ffffff",
+          "image": "./assets/imgs/ic_launcher_foreground.png"
+        }
+      ],
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./assets/fonts/Karla-Bold.ttf",
+            "./assets/fonts/Karla-BoldItalic.ttf",
+            "./assets/fonts/Karla-ExtraBold.ttf",
+            "./assets/fonts/Karla-ExtraBoldItalic.ttf",
+            "./assets/fonts/Karla-ExtraLight.ttf",
+            "./assets/fonts/Karla-ExtraLightItalic.ttf",
+            "./assets/fonts/Karla-Italic.ttf",
+            "./assets/fonts/Karla-Light.ttf",
+            "./assets/fonts/Karla-LightItalic.ttf",
+            "./assets/fonts/Karla-Medium.ttf",
+            "./assets/fonts/Karla-MediumItalic.ttf",
+            "./assets/fonts/Karla-Regular.ttf",
+            "./assets/fonts/Karla-SemiBold.ttf",
+            "./assets/fonts/Karla-SemiBoldItalic.ttf"
+          ]
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "6567f752-92f9-4452-9841-71f6dd09842f"
+      }
+    },
+    "owner": "selegodev"
   }
 }
