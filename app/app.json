@@ -9,10 +9,10 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "org.reactjs.native.example.monsuivipsy",
-      "buildNumber": "204"
+      "buildNumber": "205"
     },
     "android": {
-      "versionCode": 204,
+      "versionCode": 205,
       "adaptiveIcon": {
         "foregroundImage": "./assets/imgs/logo2.png",
         "backgroundColor": "#ffffff"
