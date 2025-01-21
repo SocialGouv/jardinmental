@@ -1,3 +1,10 @@
+# [1.46.0](https://github.com/SocialGouv/jardinmental/compare/v1.45.16...v1.46.0) (2025-01-21)
+
+
+### Features
+
+* migrate-to-expo ([#254](https://github.com/SocialGouv/jardinmental/issues/254)) ([9b91e9e](https://github.com/SocialGouv/jardinmental/commit/9b91e9e5447b25b2d56cd63f961426ad882020f1))
+
 ## [1.45.16](https://github.com/SocialGouv/jardinmental/compare/v1.45.15...v1.45.16) (2024-07-05)
 
 
