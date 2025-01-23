@@ -1,3 +1,10 @@
+## [1.46.1](https://github.com/SocialGouv/jardinmental/compare/v1.46.0...v1.46.1) (2025-01-23)
+
+
+### Bug Fixes
+
+* add hmac check ([#256](https://github.com/SocialGouv/jardinmental/issues/256)) ([66cdfd8](https://github.com/SocialGouv/jardinmental/commit/66cdfd8a57d03384e88e9b4033c08f21ad67af35))
+
 # [1.46.0](https://github.com/SocialGouv/jardinmental/compare/v1.45.16...v1.46.0) (2025-01-21)
 
 
