@@ -1,3 +1,10 @@
+## [1.46.2](https://github.com/SocialGouv/jardinmental/compare/v1.46.1...v1.46.2) (2025-01-23)
+
+
+### Bug Fixes
+
+* add eas updates ([4e8469e](https://github.com/SocialGouv/jardinmental/commit/4e8469edca0166de3821e7a5efbfcdc3d63351bf))
+
 ## [1.46.1](https://github.com/SocialGouv/jardinmental/compare/v1.46.0...v1.46.1) (2025-01-23)
 
 
