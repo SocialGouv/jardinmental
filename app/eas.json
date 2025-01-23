@@ -11,7 +11,8 @@
         "EXPO_PUBLIC_SCHEME": "http",
         "EXPO_PUBLIC_HOST": "localhost:3000",
         "EXPO_PUBLIC_APP_ENV": "development"
-      }
+      },
+      "channel": "development"
     },
     "preview": {
       "distribution": "internal",
@@ -19,7 +20,8 @@
         "EXPO_PUBLIC_SCHEME": "https",
         "EXPO_PUBLIC_HOST": "api-monsuivipsy.fabrique.social.gouv.fr",
         "EXPO_PUBLIC_APP_ENV": "production"
-      }
+      },
+      "channel": "preview"
     },
     "production": {
       "autoIncrement": true,
@@ -30,7 +32,8 @@
       },
       "android": {
         "credentialsSource": "local"
-      }
+      },
+      "channel": "production"
     }
   },
   "submit": {
