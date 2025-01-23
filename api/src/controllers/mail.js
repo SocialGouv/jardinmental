@@ -4,16 +4,20 @@ const { TIPIMAIL_API_USER, TIPIMAIL_API_KEY, ENVIRONMENT } = require("../config"
 const { catchErrors } = require("../middlewares/errors");
 const router = express.Router();
 const { capture } = require("../third-parties/sentry");
+const { validateHMAC } = require("../middlewares/hmac");
+const { mailLimiter } = require("../middlewares/rateLimit");
 
 router.post(
   "/",
+  validateHMAC,
+  mailLimiter,
   catchErrors(async (req, res) => {
     let { to, replyTo, replyToName, subject, text, html } = req.body || {};
 
     if (!subject || (!text && !html)) return res.status(400).json({ ok: false, error: "wrong parameters" });
 
     if (!to) {
-      to = ENVIRONMENT === "development" ? "tangimds@gmail.com" : "jardinmental@fabrique.social.gouv.fr";
+      to = ENVIRONMENT === "development" ? process.env.MAIL_TO_DEV : "jardinmental@fabrique.social.gouv.fr";
     }
 
     if (!replyTo) {

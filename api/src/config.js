@@ -16,12 +16,14 @@ const DATABASE_URL = process.env.DATABASE_URL;
 const CRONJOBS_ENABLED = process.env.CRONJOBS_ENABLED === "true";
 
 const PUSH_NOTIFICATION_GCM_ID = process.env.PUSH_NOTIFICATION_GCM_ID;
-const PUSH_NOTIFICATION_APN_KEY = process.env.PUSH_NOTIFICATION_APN_KEY.replace(/\\n/g, "\n");
+const PUSH_NOTIFICATION_APN_KEY = process.env.PUSH_NOTIFICATION_APN_KEY?.replace(/\\n/g, "\n");
 const PUSH_NOTIFICATION_APN_KEY_ID = process.env.PUSH_NOTIFICATION_APN_KEY_ID;
 const PUSH_NOTIFICATION_APN_TEAM_ID = process.env.PUSH_NOTIFICATION_APN_TEAM_ID;
 
 const TIPIMAIL_API_KEY = process.env.TIPIMAIL_API_KEY;
 const TIPIMAIL_API_USER = process.env.TIPIMAIL_API_USER;
+
+const HMAC_SECRET = process.env.HMAC_SECRET;
 
 if (process.env.NODE_ENV === "development") {
   console.log("✍️ ~CONFIG ", {
@@ -37,6 +39,7 @@ if (process.env.NODE_ENV === "development") {
     CRONJOBS_ENABLED,
     TIPIMAIL_API_KEY,
     TIPIMAIL_API_USER,
+    HMAC_SECRET,
   });
 }
 
@@ -57,4 +60,5 @@ module.exports = {
   PUSH_NOTIFICATION_APN_TEAM_ID,
   TIPIMAIL_API_KEY,
   TIPIMAIL_API_USER,
+  HMAC_SECRET,
 };
