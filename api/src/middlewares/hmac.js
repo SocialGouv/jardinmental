@@ -3,6 +3,9 @@ const { HMAC_SECRET } = require("../config");
 
 const validateHMAC = (req, res, next) => {
   const secret = HMAC_SECRET;
+  if (!secret) {
+    return next();
+  }
   const { "x-signature": signature, "x-timestamp": timestamp } = req.headers;
 
   if (!signature || !timestamp) {
