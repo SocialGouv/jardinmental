@@ -1,3 +1,10 @@
+## [1.46.3](https://github.com/SocialGouv/jardinmental/compare/v1.46.2...v1.46.3) (2025-01-24)
+
+
+### Bug Fixes
+
+* prepare hmac deployment ([a9132e0](https://github.com/SocialGouv/jardinmental/commit/a9132e0ff81fbe02c4f7e4bbb5b0a91abc270f78))
+
 ## [1.46.2](https://github.com/SocialGouv/jardinmental/compare/v1.46.1...v1.46.2) (2025-01-23)
 
 
