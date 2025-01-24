@@ -5,12 +5,12 @@ import DrawerItem from './drawer-item';
 import LegalItem from './legal-item';
 import localStorage from '../../utils/localStorage';
 import {getBadgeNotesVersion} from '../../scenes/news';
-import pck from '../../../package.json';
 import Text from '../../components/MyText';
 import {colors} from '../../utils/colors';
 import NeedUpdateContext from '../../context/needUpdate';
-import {HOST} from '../../config';
+import {HOST, HMAC_SECRET} from '../../config';
 import {recommendApp} from '../../utils/share';
+import app from '../../../app.json';
 
 export default ({navigation, visible, onClick}) => {
   const [isVisible, setIsVisible] = useState();
@@ -88,10 +88,14 @@ export default ({navigation, visible, onClick}) => {
             <TouchableWithoutFeedback onPress={() => setDevModeCount(p => p + 1)}>
               <View style={styles.versionContainer}>
                 <Text style={styles.versionLabel}>
-                  version {pck.version}
-                  <Text style={styles.buildNumberLabel}>+{pck.buildNumber}</Text>
+                  {Platform.OS === 'ios' ? `${app.expo.version} (${app.expo.ios.buildNumber})` : `${app.expo.version} (${app.expo.android.versionCode})`}
                 </Text>
-                {devModeCount % 5 === 0 ? <Text style={styles.versionLabel}>{HOST}</Text> : null}
+                {devModeCount % 5 === 0 ? (
+                  <View>
+                    <Text style={styles.versionLabel}>{HOST}</Text>
+                    <Text style={styles.versionLabel}>{HMAC_SECRET ? HMAC_SECRET?.slice(-5) : 'empty'}</Text>
+                  </View>
+                ) : null}
               </View>
             </TouchableWithoutFeedback>
           </ScrollView>

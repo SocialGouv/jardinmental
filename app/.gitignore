@@ -94,3 +94,4 @@ buck-out/
 
 # google services
 **/android/app/google-services.json
+dist
