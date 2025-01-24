@@ -54,6 +54,28 @@ router.post(
       });
     }
 
+    // todo : activate once the app is deployed
+
+    // if (appversion < 207 && ((body.event?.category === "OPEN_TAB" && body.event?.action === "EXPORT_OPEN") || body.event?.category === "NPS")) {
+    //   return res.status(200).send({
+    //     ok: true,
+    //     sendInApp: [
+    //       "L'envoi d'email n'est plus disponible sur cette version d'application",
+    //       "Mettez à jour votre application !",
+    //       [
+    //         {
+    //           text: "Mettre à jour",
+    //           link:
+    //             appdevice === "ios"
+    //               ? "https://apps.apple.com/us/app/mon-suivi-psy/id1540061393"
+    //               : "https://play.google.com/store/apps/details?id=com.monsuivipsy",
+    //         },
+    //       ],
+    //       { cancelable: true },
+    //     ],
+    //   });
+    // }
+
     // if (body.event?.category === "IN_APP_CLICK" && body.event?.action === "COMMENT_CLICK") {
     //   return res.status(200).send({ ok: true });
     // }
