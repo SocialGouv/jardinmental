@@ -1,3 +1,10 @@
+## [1.46.4](https://github.com/SocialGouv/jardinmental/compare/v1.46.3...v1.46.4) (2025-01-27)
+
+
+### Bug Fixes
+
+* test email secure ([07cc9bb](https://github.com/SocialGouv/jardinmental/commit/07cc9bb0707eed1bf9024728b1cade7900a4441b))
+
 ## [1.46.3](https://github.com/SocialGouv/jardinmental/compare/v1.46.2...v1.46.3) (2025-01-24)
 
 
