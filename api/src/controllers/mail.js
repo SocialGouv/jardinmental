@@ -10,7 +10,7 @@ const { mailLimiter } = require("../middlewares/rateLimit");
 router.post(
   "/",
   // todo : activate once the app is deployed
-  // validateHMAC,
+  validateHMAC,
   mailLimiter,
   catchErrors(async (req, res) => {
     let { to, replyTo, replyToName, subject, text, html } = req.body || {};
