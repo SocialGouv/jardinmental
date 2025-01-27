@@ -1,3 +1,10 @@
+## [1.46.5](https://github.com/SocialGouv/jardinmental/compare/v1.46.4...v1.46.5) (2025-01-27)
+
+
+### Bug Fixes
+
+* standby hmac ([6764e36](https://github.com/SocialGouv/jardinmental/commit/6764e36666a18ebcff5b0b26150d68206650d8d7))
+
 ## [1.46.4](https://github.com/SocialGouv/jardinmental/compare/v1.46.3...v1.46.4) (2025-01-27)
 
 
