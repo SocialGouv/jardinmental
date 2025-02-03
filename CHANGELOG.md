@@ -1,3 +1,10 @@
+## [1.46.6](https://github.com/SocialGouv/jardinmental/compare/v1.46.5...v1.46.6) (2025-02-03)
+
+
+### Bug Fixes
+
+* **ci-cd:** use token-bureau ([#255](https://github.com/SocialGouv/jardinmental/issues/255)) ([ae586ea](https://github.com/SocialGouv/jardinmental/commit/ae586ea75545c41fcefe7eef8470f39ab107d37a))
+
 ## [1.46.5](https://github.com/SocialGouv/jardinmental/compare/v1.46.4...v1.46.5) (2025-01-27)
 
 
