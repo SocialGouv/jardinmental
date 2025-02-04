@@ -1,3 +1,10 @@
+## [1.46.7](https://github.com/SocialGouv/jardinmental/compare/v1.46.6...v1.46.7) (2025-02-04)
+
+
+### Bug Fixes
+
+* activate hmac api ([913cf92](https://github.com/SocialGouv/jardinmental/commit/913cf92a0fbba39d76951af2ae78f6adae875363))
+
 ## [1.46.6](https://github.com/SocialGouv/jardinmental/compare/v1.46.5...v1.46.6) (2025-02-03)
 
 
