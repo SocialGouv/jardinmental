@@ -6,6 +6,7 @@ import fetchRetry from 'fetch-retry';
 import {SCHEME, HOST, BUILD_NUMBER} from '../config';
 import matomo from './matomo';
 import {generateHMAC} from '../utils/generateHmac';
+import app from '../../app.json';
 
 export const checkNetwork = async (test = false) => {
   const isConnected = await NetInfo.fetch().then(state => state.isConnected);
@@ -39,7 +40,7 @@ class ApiService {
         headers: {
           'Content-Type': 'application/json',
           Accept: 'application/json',
-          appversion: BUILD_NUMBER,
+          appversion: Platform.OS === 'ios' ? app.expo.ios.buildNumber : app.expo.android.versionCode,
           appdevice: Platform.OS,
           currentroute: this.navigation?.getCurrentRoute?.()?.name,
           ...headers,
