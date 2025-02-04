@@ -9,10 +9,11 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "org.reactjs.native.example.monsuivipsy",
-      "buildNumber": "207"
+      "buildNumber": "208"
     },
     "android": {
-      "versionCode": 206,
+      "googleServicesFile": "./google-services.json",
+      "versionCode": 208,
       "adaptiveIcon": {
         "foregroundImage": "./assets/imgs/logo2.png",
         "backgroundColor": "#ffffff"
@@ -21,13 +22,6 @@
       "permissions": ["NOTIFICATIONS", "SCHEDULE_EXACT_ALARM", "POST_NOTIFICATIONS"]
     },
     "plugins": [
-      [
-        "expo-notifications",
-        {
-          "icon": "./assets/imgs/ic_notification.png",
-          "color": "#ffffff"
-        }
-      ],
       [
         "expo-splash-screen",
         {

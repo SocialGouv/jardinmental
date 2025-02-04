@@ -60,6 +60,9 @@ import EditIndicateurs from '../scenes/indicateurs/editIndicateurs';
 import CreateIndicator from '../scenes/indicateurs/CreateIndicator';
 import ChooseIndicatorType from '../scenes/indicateurs/CreateIndicator/ChooseIndicatorType';
 import ChooseIndicatorOrder from '../scenes/indicateurs/CreateIndicator/ChooseIndicatorOrder';
+import * as Notifications from 'expo-notifications';
+import {registerForPushNotificationsAsync} from '../services/notifications-expo';
+import * as Device from 'expo-device';
 
 const Stack = createStackNavigator();
 
@@ -97,18 +100,59 @@ const linking = {
     };
   },
 };
+
+// Add this before the Router class
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: false,
+  }),
+});
+
 class Router extends React.Component {
   async componentDidMount() {
     //await logEvents.initMatomo();
     logEvents.logAppVisit();
     RNBootsplash.hide({fade: true});
-    NotificationService.init();
+
+    try {
+      // Get device ID
+      const deviceId = Device.deviceName + '_' + Device.modelName;
+
+      // Setup notification handler
+      const notificationListener = Notifications.addNotificationReceivedListener(notification => {
+        console.log('Notification received:', notification);
+      });
+
+      const responseListener = Notifications.addNotificationResponseReceivedListener(response => {
+        const data = response.notification.request.content.data;
+        if (data?.link) {
+          this.navigationRef?.navigate(data.link);
+        }
+      });
+
+      // Register for push notifications using device ID
+      await registerForPushNotificationsAsync({
+        userId: deviceId,
+      });
+
+      this.cleanupNotifications = () => {
+        notificationListener.remove();
+        responseListener.remove();
+      };
+    } catch (error) {
+      console.log('Error setting up notifications:', error);
+    }
+
     this.appListener = AppState.addEventListener('change', this.onAppChange);
   }
 
   componentWillUnmount() {
     logEvents.logAppClose();
     this.appListener?.remove();
+    // Clean up notification listeners
+    this.cleanupNotifications?.();
   }
 
   appState = AppState.currentState;
