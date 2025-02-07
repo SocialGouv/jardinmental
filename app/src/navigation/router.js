@@ -63,6 +63,8 @@ import ChooseIndicatorOrder from '../scenes/indicateurs/CreateIndicator/ChooseIn
 import * as Notifications from 'expo-notifications';
 import {registerForPushNotificationsAsync} from '../services/notifications-expo';
 import * as Device from 'expo-device';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import uuid from 'react-native-uuid';
 
 const Stack = createStackNavigator();
 
@@ -117,8 +119,12 @@ class Router extends React.Component {
     RNBootsplash.hide({fade: true});
 
     try {
-      // Get device ID
-      const deviceId = Device.deviceName + '_' + Device.modelName;
+      // Get or generate device ID
+      let deviceId = await AsyncStorage.getItem('deviceId');
+      if (!deviceId) {
+        deviceId = uuid.v4();
+        await AsyncStorage.setItem('deviceId', deviceId);
+      }
 
       // Setup notification handler
       const notificationListener = Notifications.addNotificationReceivedListener(notification => {

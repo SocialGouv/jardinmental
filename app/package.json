@@ -86,7 +86,7 @@
     "react-native-svg": "15.10.1",
     "react-native-swiper": "^1.6.0",
     "react-native-tab-view": "^3.5.2",
-    "react-native-uuid": "^2.0.1",
+    "react-native-uuid": "^2.0.3",
     "react-native-webview": "13.8.6",
     "urijs": "^1.19.11",
     "uuid": "^8.3.2"

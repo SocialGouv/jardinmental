@@ -62,15 +62,10 @@ const Reminder = ({navigation, route, notifReminderTitle = "Comment ça va aujou
   }, []);
 
   const scheduleNotification = async (newReminder = new Date(Date.now() + 10 * 1000)) => {
-    NotificationService.cancelAll();
     const fireDate = dayjs().set('hours', newReminder.getHours()).set('minutes', newReminder.getMinutes()).set('seconds', 0).toDate();
-    /*NotificationService.scheduleNotification({
-      date: fireDate,
-      title: notifReminderTitle,
-      message: notifReminderMessage,
-      repeatType: "day",
-    });*/
+
     if (!(await NotificationService.hasToken())) return;
+
     await API.put({
       path: '/reminder',
       body: {
@@ -125,7 +120,6 @@ const Reminder = ({navigation, route, notifReminderTitle = "Comment ça va aujou
   };
 
   const deleteReminder = async () => {
-    NotificationService.cancelAll();
     setReminder('');
     setReminderSetupVisible(false);
     await AsyncStorage.removeItem(ReminderStorageKey);
@@ -134,6 +128,7 @@ const Reminder = ({navigation, route, notifReminderTitle = "Comment ça va aujou
     logEvents.logReminderCancel();
     deleteReminder();
     if (!(await NotificationService.hasToken())) return;
+
     await API.put({
       path: '/reminder',
       body: {
@@ -175,7 +170,7 @@ const Reminder = ({navigation, route, notifReminderTitle = "Comment ça va aujou
             </TouchableOpacity>
           </>
         ) : (
-          <Text style={styles.subtitle}>Un rappel permet de remplir plus souvent l’application et obtenir des analyses plus pertinentes</Text>
+          <Text style={styles.subtitle}>Un rappel permet de remplir plus souvent l'application et obtenir des analyses plus pertinentes</Text>
         )}
       </View>
       {!!route?.params?.onboarding && !!reminder && (

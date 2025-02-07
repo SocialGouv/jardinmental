@@ -4,6 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {STORAGE_KEY_PUSH_NOTIFICATION_TOKEN, STORAGE_KEY_PUSH_NOTIFICATION_TOKEN_ERROR} from '../utils/constants';
 import logEvents from './logEvents';
 import API from './api';
+import {registerForPushNotificationsAsync} from './notifications-expo';
 
 class NotificationService {
   listeners = {};
@@ -85,31 +86,19 @@ class NotificationService {
     }
   }
 
-  checkPermission = async () => {
-    const {status: existingStatus} = await Notifications.getPermissionsAsync();
-    let permission = {granted: false, canAsk: false};
-
-    switch (existingStatus) {
-      case 'undetermined':
-        permission = {granted: false, canAsk: true};
-        break;
-      case 'denied':
-        permission = {granted: false, canAsk: false};
-        break;
-      case 'granted':
-        permission = {granted: true};
-        break;
-    }
-    return permission;
-  };
-
-  checkAndAskForPermission = async () => {
-    const {status: existingStatus} = await Notifications.getPermissionsAsync();
-    if (existingStatus === 'granted') return true;
-
-    const {status} = await Notifications.requestPermissionsAsync();
+  async checkPermission() {
+    const {status} = await Notifications.getPermissionsAsync();
     return status === 'granted';
-  };
+  }
+
+  async checkAndAskForPermission() {
+    const {status: existingStatus} = await Notifications.getPermissionsAsync();
+    if (existingStatus !== 'granted') {
+      const {status} = await Notifications.requestPermissionsAsync();
+      return status === 'granted';
+    }
+    return true;
+  }
 
   checkAndGetPermissionIfAlreadyGiven = async from => {
     const {status: existingStatus} = await Notifications.getPermissionsAsync();
@@ -210,13 +199,26 @@ class NotificationService {
     delete this.listeners[listenerKey];
   };
 
-  getToken = async () => {
-    return await AsyncStorage.getItem(STORAGE_KEY_PUSH_NOTIFICATION_TOKEN, null);
-  };
+  async getToken() {
+    try {
+      let deviceId = await AsyncStorage.getItem('deviceId');
+      if (!deviceId) {
+        deviceId = uuid.v4();
+        await AsyncStorage.setItem('deviceId', deviceId);
+      }
 
-  hasToken = async () => {
-    return (await AsyncStorage.getItem(STORAGE_KEY_PUSH_NOTIFICATION_TOKEN, null)) !== null;
-  };
+      const token = await registerForPushNotificationsAsync({userId: deviceId});
+      return token;
+    } catch (error) {
+      console.error('Error getting push token:', error);
+      return null;
+    }
+  }
+
+  async hasToken() {
+    const token = await this.getToken();
+    return !!token;
+  }
 
   getTokenError = async () => {
     return await AsyncStorage.getItem(STORAGE_KEY_PUSH_NOTIFICATION_TOKEN_ERROR, null);
