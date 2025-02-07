@@ -1,3 +1,10 @@
+## [1.46.8](https://github.com/SocialGouv/jardinmental/compare/v1.46.7...v1.46.8) (2025-02-07)
+
+
+### Bug Fixes
+
+* env expo notification ([91d01d4](https://github.com/SocialGouv/jardinmental/commit/91d01d47b2d53db12b362af6ed30f360fe7aebea))
+
 ## [1.46.7](https://github.com/SocialGouv/jardinmental/compare/v1.46.6...v1.46.7) (2025-02-04)
 
 
