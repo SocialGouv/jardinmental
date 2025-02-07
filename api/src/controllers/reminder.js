@@ -4,7 +4,7 @@ const { zonedTimeToUtc } = require("date-fns-tz");
 const { catchErrors } = require("../middlewares/errors");
 const { prisma } = require("../prisma");
 const { capture } = require("../third-parties/sentry");
-const { sendNotification } = require("../third-parties/pushNotification");
+const { sendNotifications } = require("../third-parties/expo-notifications");
 const router = express.Router();
 
 const DAYS_OF_WEEK = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
@@ -128,7 +128,6 @@ const reminderCronJob = async (req, res) => {
   const utcTimeHours = now.getUTCHours();
   const utcTimeMinutes = now.getUTCMinutes();
   const utcDayOfWeek = DAYS_OF_WEEK[now.getDay()];
-  //console.log(utcDayOfWeek, utcTimeHours, utcTimeMinutes);
 
   const mainReminders = await prisma.reminder.findMany({
     where: {
@@ -141,14 +140,11 @@ const reminderCronJob = async (req, res) => {
       user: true,
     },
   });
-  for (const reminder of mainReminders) {
-    if (!reminder?.user?.pushNotifToken) continue;
-    sendNotification({
-      pushNotifToken: reminder.user.pushNotifToken,
-      title: "Comment allez-vous aujourd’hui ?",
-      body: "N’oubliez pas de renseigner votre journée dans Jardin Mental",
-      link: "jardinmental://day-survey",
-      channelId: "reminder_main",
+  if (mainReminders.length > 0) {
+    await sendNotifications({
+      pushTokens: mainReminders.map((reminder) => reminder.user?.pushNotifToken).filter(Boolean),
+      title: "Comment allez-vous aujourd'hui ?",
+      body: "N'oubliez pas de renseigner votre journée dans Jardin Mental",
     });
   }
 
@@ -170,14 +166,11 @@ const reminderCronJob = async (req, res) => {
       },
     },
   });
-  for (const { reminder } of goalReminders) {
-    if (!reminder?.user?.pushNotifToken) continue;
-    sendNotification({
-      pushNotifToken: reminder.user.pushNotifToken,
-      title: "Vous avez un objectif aujourd’hui 🎯",
-      body: "N’oubliez de préciser si vous l’avez réalisé dans Jardin Mental",
-      link: "jardinmental://day-survey",
-      channelId: "reminder_goal",
+  if (goalReminders.length > 0) {
+    await sendNotifications({
+      pushTokens: goalReminders.map((r) => r.reminder?.user?.pushNotifToken).filter(Boolean),
+      title: "Vous avez un objectif aujourd'hui 🎯",
+      body: "N'oubliez de préciser si vous l'avez réalisé dans Jardin Mental",
     });
   }
 
@@ -199,14 +192,11 @@ const reminderCronJob = async (req, res) => {
       },
     },
   });
-  for (const { reminder } of inactivityReminders) {
-    if (!reminder?.user?.pushNotifToken) continue;
-    sendNotification({
-      pushNotifToken: reminder.user.pushNotifToken,
-      title: "Comment s’est passée cette semaine ?",
+  if (inactivityReminders.length > 0) {
+    await sendNotifications({
+      pushTokens: inactivityReminders.map((r) => r.reminder?.user?.pushNotifToken).filter(Boolean),
+      title: "Comment s'est passée cette semaine ?",
       body: "Prenez le temps de la renseigner sur Jardin Mental",
-      link: "jardinmental://tabs/Status",
-      channelId: "reminder_inactivity",
     });
   }
 };
