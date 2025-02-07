@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
-import {SafeAreaView, StyleSheet, Platform, Dimensions, View, ScrollView, Linking, TouchableWithoutFeedback} from 'react-native';
+import {SafeAreaView, StyleSheet, Platform, Dimensions, View, ScrollView, Linking, TouchableWithoutFeedback, Alert} from 'react-native';
 import Modal from 'react-native-modal';
 import DrawerItem from './drawer-item';
 import LegalItem from './legal-item';
@@ -11,12 +11,14 @@ import NeedUpdateContext from '../../context/needUpdate';
 import {HOST, HMAC_SECRET} from '../../config';
 import {recommendApp} from '../../utils/share';
 import app from '../../../app.json';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default ({navigation, visible, onClick}) => {
   const [isVisible, setIsVisible] = useState();
   const updateVisible = useContext(NeedUpdateContext);
 
   const [devModeCount, setDevModeCount] = useState(1);
+  const [isDevMode, setIsDevMode] = useState(false);
   const [npsProIsVisible, setNpsProIsVisible] = useState(true);
   const [badgeNpsProIsVisible, setBadgeNpsProIsVisible] = useState(false);
   const [badgeNotesVersionVisible, setBadgeNotesVersionVisible] = useState(false);
@@ -30,8 +32,20 @@ export default ({navigation, visible, onClick}) => {
       setNpsProIsVisible(proNPS === 'PRO');
       const badgeProNPS = await localStorage.getVisitProNPS();
       setBadgeNpsProIsVisible(!badgeProNPS);
+      const devMode = await AsyncStorage.getItem('devMode');
+      setIsDevMode(devMode === 'true');
     })();
   }, [visible]);
+
+  const handleDevModePress = async () => {
+    const newCount = devModeCount + 1;
+    setDevModeCount(newCount);
+    if (newCount % 5 === 0) {
+      await AsyncStorage.setItem('devMode', 'true');
+      setIsDevMode('true');
+      Alert.alert('Dev Mode', 'Dev mode activated!');
+    }
+  };
 
   const deviceHeight = Dimensions.get('window').height;
   return (
@@ -68,7 +82,6 @@ export default ({navigation, visible, onClick}) => {
                 }
               />
             ) : null}
-            {/* {npsProIsVisible ? ( */}
             <DrawerItem
               badge={badgeNpsProIsVisible}
               title="Donner mon avis"
@@ -80,22 +93,16 @@ export default ({navigation, visible, onClick}) => {
                 onClick();
               }}
             />
-            {/* ) : null} */}
+            {isDevMode && <DrawerItem title="Dev Mode" path="dev-mode" navigation={navigation} onClick={onClick} icon="GearSvg" />}
             <Separator />
             <LegalItem title="Conditions générales d'utilisation" path="cgu" navigation={navigation} onClick={onClick} />
             <LegalItem title="Politique de confidentialité" path="privacy" navigation={navigation} onClick={onClick} />
             <LegalItem title="Mentions légales" path="legal-mentions" navigation={navigation} onClick={onClick} />
-            <TouchableWithoutFeedback onPress={() => setDevModeCount(p => p + 1)}>
+            <TouchableWithoutFeedback onPress={handleDevModePress}>
               <View style={styles.versionContainer}>
                 <Text style={styles.versionLabel}>
                   {Platform.OS === 'ios' ? `${app.expo.version} (${app.expo.ios.buildNumber})` : `${app.expo.version} (${app.expo.android.versionCode})`}
                 </Text>
-                {devModeCount % 5 === 0 ? (
-                  <View>
-                    <Text style={styles.versionLabel}>{HOST}</Text>
-                    <Text style={styles.versionLabel}>{HMAC_SECRET ? HMAC_SECRET?.slice(-5) : 'empty'}</Text>
-                  </View>
-                ) : null}
               </View>
             </TouchableWithoutFeedback>
           </ScrollView>

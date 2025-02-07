@@ -65,6 +65,7 @@ import {registerForPushNotificationsAsync} from '../services/notifications-expo'
 import * as Device from 'expo-device';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import uuid from 'react-native-uuid';
+import DevMode from '../scenes/dev-mode';
 
 const Stack = createStackNavigator();
 
@@ -241,6 +242,7 @@ class Router extends React.Component {
             <Stack.Screen name="goals-create-form" component={GoalsCreateForm} />
             <Stack.Screen name="goal-day-selector" component={GoalDaySelector} />
             <Stack.Screen name="goal-config" component={GoalConfig} />
+            <Stack.Screen name="dev-mode" component={DevMode} options={{headerShown: true}} />
           </Stack.Navigator>
         </NavigationContainer>
         <EnvironmentIndicator />
