@@ -40,14 +40,13 @@ const Gauge = ({hideSlider = false, defaultValue = 0, onChange, reverse}) => {
       {/* <Text>{defaultValue}</Text> */}
       {hideSlider ? null : (
         <Slider
+          trackClickable={false}
           value={value}
           onValueChange={handleChange}
           maximumTrackTintColor={'#D9DBE0'}
           minimumTrackTintColor={'#26387c'}
           thumbTintColor={'#26387C'}
-          renderThumbComponent={() => (
-            <View className="h-5 w-5 bg-[#26387c] rounded-full" />
-          )}
+          renderThumbComponent={() => <View className="h-5 w-5 bg-[#26387c] rounded-full" />}
           trackStyle={{marginHorizontal: 10}}
         />
       )}
