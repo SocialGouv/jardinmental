@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, TouchableOpacity} from 'react-native';
 import Text from '../MyText';
 
 const LegalItem = ({title, navigation, path = 'tabs', onClick}) => {
@@ -9,33 +9,13 @@ const LegalItem = ({title, navigation, path = 'tabs', onClick}) => {
   };
   return (
     <TouchableOpacity onPress={handleClick}>
-      <View style={styles.container}>
-        <View style={styles.answer}>
-          <Text style={styles.label}>{title}</Text>
+      <View className="py-2.5 pl-5">
+        <View className="flex flex-row items-center">
+          <Text className="flex-1 text-[13px] font-medium text-neutral-600 underline">{title}</Text>
         </View>
       </View>
     </TouchableOpacity>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    paddingVertical: 10,
-    paddingLeft: 20,
-    paddingRight: 10,
-  },
-  label: {
-    fontSize: 13,
-    fontWeight: '500',
-    color: '#ccc',
-    flex: 1,
-    textDecorationLine: 'underline',
-  },
-  answer: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-});
 
 export default LegalItem;

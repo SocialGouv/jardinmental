@@ -1,180 +1,166 @@
-import React from "react";
-import LegalScreen from "./legal-screen";
-import { StyleSheet, View } from "react-native";
-import Text from "../../components/MyText";
-import { colors } from "../../utils/colors";
+import React from 'react';
+import LegalScreen from './legal-screen';
+import {View} from 'react-native';
+import Text from '../../components/MyText';
 
-const CGU = ({ navigation }) => {
+const CGU = ({navigation}) => {
   const content = (
-    <View>
-      <Text style={styles.default}>
-        Les présentes conditions générales d'utilisation (dites «&nbsp;CGU&nbsp;») fixent le cadre juridique
-        de l'application Jardin Mental et définissent les conditions d'accès et d'utilisation des services par
-        l'Utilisateur.
+    <View className="px-2">
+      <Text className="text-blue-900 text-base my-2">
+        Les présentes conditions générales d'utilisation (ci-après « CGU ») fixent le cadre juridique de l'application Jardin Mental (ci-après « Application ») et définissent les
+        conditions d'accès et d'utilisation des Services par l'Utilisateur.
       </Text>
-      <Text style={styles.h1}>Article 1 - Champ d'application</Text>
-      <Text style={styles.default}>
-        L'application peut être téléchargée sans création de compte et demeure d'accès libre. L'utilisation de
-        l'application vaut acceptation des présentes CGU.
+
+      <Text className="text-blue-900 text-xl font-bold my-3">Article 1 - Champ d'application</Text>
+      <Text className="text-blue-900 text-base my-2">
+        L'Application peut être téléchargée sans création de compte et demeure d'accès libre. L'utilisation de l'Application est subordonnée au respect et à l'acceptation des
+        présentes CGU.
       </Text>
-      <Text style={styles.h1}>Article 2 - Objet</Text>
-      <Text style={styles.default}>
-        «&nbsp;Jardin Mental&nbsp;» vise à accompagner les personnes qui le souhaitent à mieux connaître et
-        suivre leurs symptômes, leurs ressentis ou toute activité personnalisé, leur permettant ainsi de
-        faciliter leur accompagnement psychologique.
+
+      <Text className="text-blue-900 text-xl font-bold my-3">Article 2 - Objet</Text>
+      <Text className="text-blue-900 text-base my-2">
+        L'Application vise à accompagner les personnes qui le souhaitent à mieux connaître leur santé mentale et suivre leurs symptômes, leurs ressentis, leurs comportements, leurs
+        pensées, ou toute activité personnalisée, leur permettant ainsi de faciliter leur accompagnement psychologique, notamment par un ou une professionnel(le) de santé.
       </Text>
-      <Text style={styles.h1}>Article 3 - Définitions</Text>
-      <Text style={styles.default}>
-        L'Utilisateur&nbsp;est toute personne qui télécharge l'application et l'utilise.
+
+      <Text className="text-blue-900 text-xl font-bold my-3">Article 3 - Définitions</Text>
+      <Text className="text-blue-900 text-base my-2">
+        « Application » désigne l'application mobile Jardin Mental sous la responsabilité de la Direction générale de la santé (DGS) à l'initiative de la Fabrique numérique des
+        ministères sociaux
       </Text>
-      <Text style={styles.default}>
-        Les «&nbsp;services&nbsp;» sont l'ensemble des fonctionnalités proposées par Jardin Mental.
+      <Text className="text-blue-900 text-base my-2">« Éditeur » désigne la personne morale qui met à la disposition du public l'Application, à savoir la DGS</Text>
+      <Text className="text-blue-900 text-base my-2">« Services » désigne les fonctionnalités proposées par l'Application pour répondre à ses finalités</Text>
+      <Text className="text-blue-900 text-base my-2">
+        « Utilisateur » désigne toute personne physique qui télécharge l'application et l'utilise après avoir accepté les présentes CGU
       </Text>
-      <Text style={styles.h1}>Article 4 - Fonctionnalités</Text>
-      <Text style={styles.h2}>4.1 - Utiliser son journal</Text>
-      <Text style={styles.h3}>A - Ajouter une note</Text>
-      <Text style={styles.default}>
-        Le journal permet à l'Utilisateur d'utiliser un champ de texte totalement libre. Pour ce faire, Jardin
-        Mental met à sa disposition un espace «&nbsp;note&nbsp;», dont l'ensemble des informations demeurent
-        sur le terminal de l'Utilisateur.
-      </Text>
-      <Text style={styles.h2}>4.2 - S'aider du questionnaire via «&nbsp;Mon&nbsp;Etat&nbsp;»</Text>
-      <Text style={styles.default}>
-        Au sein de son espace, l'Utilisateur peut s'aider du questionnaire qui lui permet de suivre son état
-        par plusieurs moyens&nbsp;:
+
+      <Text className="text-blue-900 text-xl font-bold my-3">Article 4 - Fonctionnalités</Text>
+      <Text className="text-blue-900 text-xl font-bold my-2">4.1 - S'aider du questionnaire via « Mes Entrées »</Text>
+      <Text className="text-blue-900 text-base my-2">
+        Au sein de son espace, l'Utilisateur peut s'aider du questionnaire qui lui permet de suivre son état par plusieurs moyens :
       </Text>
       <Li>
-        <Text style={styles.default}>
-          Remplir le questionnaire ou renseigner son état, est accessible via «&nbsp;Mon État&nbsp;» par un
-          simple clic, et peut se remplir de manière journalière. De plus, la personne peut remplir l'état
-          pour les précédentes journées s'il ne l'a pas fait le jour même (dans une amplitude de 7
-          jours)&nbsp;;
+        <Text className="text-blue-900 text-base my-2">
+          Remplir le questionnaire ou renseigner son état, est accessible via « Mes Entrées » par un simple clic, et peut se remplir de manière journalière. De plus, l'Utilisateur
+          peut remplir l'état pour les précédentes journées s'il ne l'a pas fait le jour même (dans une amplitude de 7 jours) ;
         </Text>
       </Li>
       <Li>
-        <Text style={styles.default}>
-          Personnaliser le questionnaire, en fonction de son état du moment ou de ses difficultés
-          personnelles, accessible via les paramètres de «&nbsp;Mon État&nbsp;». Cela permet de cibler le
-          suivi souhaité. Le suivi peut concerner&nbsp;: votre humeur, votre anxiété, vos idées parasites, vos
-          sensations étranges, votre sommeil, vos activités quotidiennes, votre communication avec votre
-          entourage. L'Utilisateur peut également ajouter une autre caractéristique qui lui est propre et qui
-          ne figurerait pas dans la liste.
+        <Text className="text-blue-900 text-base my-2">
+          Renseigner son état, notamment en renseignant l'intensité des indicateurs de son choix, reflète l'état de santé mentale de l'Utilisateur ;
         </Text>
       </Li>
-      <Text style={styles.h2}>4.3 - Exercice</Text>
-      <Text style={styles.default}>
-        Au sein de son espace, l'Utilisateur peut effectuer des exercices, accessibles via
-        «&nbsp;Exercice&nbsp;». Les exercices nécessitent des explications afin de les réaliser, et il est
-        recommandé d'en discuter préalablement avec un thérapeute.
+      <Li>
+        <Text className="text-blue-900 text-base my-2">
+          Le questionnaire permet à l'Utilisateur d'utiliser des champs de texte totalement libres. Pour ce faire, l'Application met à sa disposition des espaces « note », dont
+          l'ensemble des informations demeurent sur le téléphone mobile de l'Utilisateur ;
+        </Text>
+      </Li>
+      <Li>
+        <Text className="text-blue-900 text-base my-2">L'Utilisateur peut se fixer des objectifs à respecter et effectuer un suivi de ces derniers ;</Text>
+      </Li>
+      <Li>
+        <Text className="text-blue-900 text-base my-2">
+          L'Utilisateur peut personnaliser le questionnaire, en fonction de son état du moment ou de ses difficultés personnelles, accessible via les paramètres de l'application.
+          Cela permet de cibler le suivi souhaité. Le suivi peut concerner tous les aspects qui sont le reflet ou ont un impact sur la santé mentale de l'Utilisateur : humeur,
+          ressentis, symptômes physiques, comportements spécifiques, pensées récurrentes, activités quotidiennes, etc ... L'Utilisateur peut également ajouter d'autres indicateurs
+          qui lui sont propres et qui ne figureraient pas dans la liste.
+        </Text>
+      </Li>
+
+      <Text className="text-blue-900 text-xl font-bold my-2">4.2 - Beck</Text>
+      <Text className="text-blue-900 text-base my-2">
+        Au sein de son espace, l'Utilisateur peut effectuer l'exercice des colonnes de Beck. Cet exercice peut nécessiter des explications afin de le réaliser, et il est recommandé
+        d'en discuter préalablement avec un thérapeute.
       </Text>
-      <Text style={styles.h2}>4.4 - «&nbsp;MonSuivi&nbsp;» </Text>
-      <Text style={styles.default}>
-        Au sein de son espace, l'Utilisateur peut à tout moment accéder aux courbes d'évolution qui
-        apparaissent au fur et à mesure des saisies quotidiennes et qui permettent de suivre mon état sur 7
-        jours maximum.
+
+      <Text className="text-blue-900 text-xl font-bold my-2">4.3 - Mes Analyses</Text>
+      <Text className="text-blue-900 text-base my-2">Au sein de son espace, l'Utilisateur peut à tout moment accéder :</Text>
+      <Li>
+        <Text className="text-blue-900 text-base my-2">
+          Aux courbes d'évolution qui apparaissent au fur et à mesure des saisies quotidiennes et qui permettent de suivre son état sur des périodes de 7 jours.
+        </Text>
+      </Li>
+      <Li>
+        <Text className="text-blue-900 text-base my-2">Aux des statistiques (en diagramme circulaire)</Text>
+      </Li>
+      <Li>
+        <Text className="text-blue-900 text-base my-2">Aux frises d'évolution</Text>
+      </Li>
+      <Li>
+        <Text className="text-blue-900 text-base my-2">
+          A un moteur de recherche (« Déclencheurs ») de ses notes personnelles en lien avec un indicateur et une intensité de son choix
+        </Text>
+      </Li>
+
+      <Text className="text-blue-900 text-xl font-bold my-2">4.4 - Parler à quelqu'un</Text>
+      <Text className="text-blue-900 text-base my-2">
+        S'il le souhaite, l'Utilisateur peut contacter une personne susceptible de l'écouter via une liste de numéros officiels accessibles via la fonctionnalité « Parler à
+        quelqu'un ».
       </Text>
-      <Text style={styles.h2}>4.5 - Parler à quelqu'un </Text>
-      <Text style={styles.default}>
-        S'il le souhaite, l'Utilisateur peut contacter une personne susceptible de l'écouter via une liste de
-        numéros officiels accessibles via «&nbsp;Parler à quelqu'un&nbsp;».
+
+      <Text className="text-blue-900 text-xl font-bold my-2">4.5 - Envoyer un récapitulatif de mes données</Text>
+      <Text className="text-blue-900 text-base my-2">
+        L'Utilisateur peut exporter les données qu'il renseigne dans l'application sous format d'un courriel, en l'envoyant à la personne de son choix via une solution gérée par la
+        société française « Sarbacane ». Un contrat de sous-traitance conforme aux dispositions de l'article 28-3 du RGPD a été conclu entre la DGS et Sarbacane, qui atteste des
+        mesures prises par Sarbacane pour garantir la sécurité et la confidentialité des informations fournies par l'Utilisateur. Néanmoins, aucune donnée n'est transférée à
+        l'équipe de Jardin Mental.
       </Text>
-      <Text style={styles.h2}>4.6 - Exporter ses données </Text>
-      <Text style={styles.default}>
-        L'Utilisateur peut exporter ses données sous format d'un mail, en l'envoyant à la personne de son
-        choix . Néanmoins, aucune donnée n'est transférée à l'équipe de Jardin Mental.
+
+      <Text className="text-blue-900 text-xl font-bold my-2">4.6 - Contacter l'équipe de Jardin Mental</Text>
+      <Text className="text-blue-900 text-base my-2">
+        Via la fonction « contribuer à Jardin Mental », l'Application permet la mise en contact avec l'équipe si l'Utilisateur souhaite transférer ses informations de contact à
+        l'équipe.
       </Text>
-      <Text style={styles.h2}>4.7 - Contacter l'équipe de Jardin Mental </Text>
-      <Text style={styles.default}>
-        Via la fonction «&nbsp;contribuer à Jardin Mental&nbsp;», l'application permet la mise en contact avec
-        l'équipe si l'Utilisateur souhaite transférer ses informations de contact à l'équipe.
+
+      <Text className="text-blue-900 text-xl font-bold my-3">Article 5 - Responsabilités</Text>
+      <Text className="text-blue-900 text-xl font-bold my-2">5.1 L'Éditeur de l'Application</Text>
+      <Text className="text-blue-900 text-base my-2">
+        Les sources des informations diffusées sur l'application sont réputées fiables mais l'Application ne garantit pas être exempte de défauts, d'erreurs ou d'omissions.
       </Text>
-      <Text style={styles.h1}>Article 5 - Responsabilités</Text>
-      <Text style={styles.h2}>5.1 - L'éditeur du Site</Text>
-      <Text style={styles.default}>
-        Les sources des informations diffusées sur l'application sont réputées fiables mais Jardin Mental ne
-        garantit pas qu'il soit exempt de défauts, d'erreurs ou d'omissions. .
+      <Text className="text-blue-900 text-base my-2">
+        L'Éditeur s'engage à la sécurisation de l'Application, notamment en prenant toutes les mesures nécessaires permettant de garantir la sécurité et la confidentialité des
+        informations fournies.
       </Text>
-      <Text style={styles.default}>
-        Tout événement dû à un cas de force majeure ayant pour conséquence un dysfonctionnement du site et
-        sous réserve de toute interruption ou modification en cas de maintenance, n'engage pas la
-        responsabilité de l'éditeur.
+      <Text className="text-blue-900 text-base my-2">
+        L'Éditeur fournit les moyens nécessaires et raisonnables pour assurer un accès continu, sans contrepartie financière, à l'Application Il se réserve la liberté de faire
+        évoluer, de modifier ou de suspendre, sans préavis, l'Application pour des raisons de maintenance ou pour tout autre motif jugé nécessaire.
       </Text>
-      <Text style={styles.default}>L'éditeur s'engage à la sécurisation du site.</Text>
-      <Text style={styles.default}>
-        L'éditeur fournit les moyens nécessaires et raisonnables pour assurer un accès continu, sans
-        contrepartie financière, à la Plateforme. Il se réserve la liberté de faire évoluer, de modifier ou de
-        suspendre, sans préavis, la plateforme pour des raisons de maintenance ou pour tout autre motif jugé
-        nécessaire.
+      <Text className="text-blue-900 text-base my-2">
+        En cas de manquement à une ou plusieurs des stipulations des présentes CGU, l'Éditeur se réserve le droit de rendre inaccessible l'accès à l'Application à l'Utilisateur
+        responsable.
       </Text>
-      <Text style={styles.h2}>5.2 - L'Utilisateur</Text>
-      <Text style={styles.default}>
-        L'Utilisateur s'engage à une utilisation personnelle de Jardin Mental.
+
+      <Text className="text-blue-900 text-xl font-bold my-2">5.2 L'Utilisateur</Text>
+      <Text className="text-blue-900 text-base my-2">
+        L'Utilisateur est seul responsable de tout contenu qu'il renseigne sur l'Application. Il s'engage notamment à ne pas mettre en ligne de contenus ou informations contraires
+        au cadre juridique en vigueur.
       </Text>
-      <Text style={styles.h1}>Article 6 - Mise à jour des conditions d'utilisation</Text>
-      <Text style={styles.default}>
-        Les termes des présentes conditions d'utilisation peuvent être amendés à tout moment, sans préavis, en
-        fonction des modifications apportées à la plateforme, de l'évolution de la législation ou pour tout
-        autre motif jugé nécessaire.
+      <Text className="text-blue-900 text-base my-2">
+        L'Utilisateur qui utilise la fonctionnalité d'envoi du récapitulatif des données par courriel est seul responsable des éléments qu'il renseigne dans le courriel et des
+        personnes qui vont recevoir ses informations. Il doit veiller à ne pas transmettre à des personnes non habilitées à en prendre connaissance des données sensibles ou des
+        secrets protégés par la loi.
+      </Text>
+      <Text className="text-blue-900 text-base my-2">
+        La responsabilité de l'Éditeur ne saurait être engagée dans le cadre de l'utilisation par l'Utilisateur de cette fonctionnalité.
+      </Text>
+
+      <Text className="text-blue-900 text-xl font-bold my-3">Article 6 - Mise à jour des conditions générales d'utilisation</Text>
+      <Text className="text-blue-900 text-base my-2">
+        Les termes des présentes CGU peuvent être amendés à tout moment, sans préavis, en fonction des modifications apportées à la plateforme, de l'évolution de la législation ou
+        pour tout autre motif jugé nécessaire. Chaque modification donne lieu à une nouvelle version qui est acceptée par l'Utilisateur.
       </Text>
     </View>
   );
 
-  return (
-    <LegalScreen
-      navigation={navigation}
-      title="Conditions d'utilisation de l'application Jardin Mental"
-      content={content}
-    />
-  );
+  return <LegalScreen navigation={navigation} title="Conditions générales d'utilisation de l'application Jardin Mental" content={content} />;
 };
 
-const Li = ({ children }) => (
-  <View style={styles.li}>
-    <Text style={styles.dotLi}>-</Text>
+const Li = ({children}) => (
+  <View className="flex flex-row pl-5">
+    <Text className="pt-2 mr-2">•</Text>
     {children}
   </View>
 );
-
-const styles = StyleSheet.create({
-  //Article x - Titre
-  h1: {
-    color: colors.DARK_BLUE,
-    fontSize: 20,
-    marginVertical: 10,
-    fontWeight: "bold",
-  },
-
-  // x.y - Sous titre
-  h2: {
-    color: colors.DARK_BLUE,
-    fontSize: 17,
-    marginVertical: 8,
-  },
-
-  // A - Paragraphe
-  h3: {
-    color: colors.DARK_BLUE,
-    fontSize: 15,
-    marginVertical: 8,
-  },
-
-  // corps de texte
-  default: {
-    flex: 1,
-    color: colors.BLUE,
-    fontSize: 15,
-    marginVertical: 8,
-  },
-
-  li: {
-    display: "flex",
-    flexDirection: "row",
-    paddingLeft: 20,
-  },
-  dotLi: {
-    paddingTop: 8,
-    marginRight: 10,
-  },
-});
 
 export default CGU;
