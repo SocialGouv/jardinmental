@@ -1,3 +1,10 @@
+## [1.46.10](https://github.com/SocialGouv/jardinmental/compare/v1.46.9...v1.46.10) (2025-02-12)
+
+
+### Bug Fixes
+
+* add tooltip beck ([1bf0403](https://github.com/SocialGouv/jardinmental/commit/1bf040302dbd1d6134d74a9d57d6ec62e702043e))
+
 ## [1.46.9](https://github.com/SocialGouv/jardinmental/compare/v1.46.8...v1.46.9) (2025-02-07)
 
 
