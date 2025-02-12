@@ -1,11 +1,5 @@
 import React, {useEffect, useState, useContext} from 'react';
-import {
-  View,
-  StyleSheet,
-  SafeAreaView,
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native';
+import {View, StyleSheet, SafeAreaView, ScrollView, TouchableOpacity} from 'react-native';
 
 import styleBeck from '../../styles/beck';
 import Text from '../../components/MyText';
@@ -82,7 +76,7 @@ export default ({navigation, route}) => {
     });
   };
 
-  const percentage = (x) => x && `${x * 10}%`;
+  const percentage = x => x && `${x * 10}%`;
 
   return (
     <SafeAreaView style={styles.safe}>
@@ -99,9 +93,12 @@ export default ({navigation, route}) => {
           </TouchableOpacity>
         </View>
       </View>
-      <ScrollView
-        style={styles.container}
-        contentContainerStyle={styles.scrollContainer}>
+      {!canEdit && (
+        <View className="bg-gray-100 p-3 mx-4 rounded-lg">
+          <Text className="text-gray-600 text-center">Les colonnes de Beck ne peuvent être modifiées après 30 jours</Text>
+        </View>
+      )}
+      <ScrollView style={styles.container} contentContainerStyle={styles.scrollContainer}>
         <View style={styles.stepContainer}>
           <Text style={styleBeck.sectionTitle}>{BeckStepTitles[0]}</Text>
           {date && time ? (
@@ -118,58 +115,26 @@ export default ({navigation, route}) => {
           <ItemText title="Description factuelle" value={what} />
           <View style={styleBeck.XSseparator} />
           <Text style={styleBeck.sectionTitle}>{BeckStepTitles[2]}</Text>
-          <ItemTag
-            title="Émotion principale"
-            values={mainEmotion}
-            intensity={percentage(mainEmotionIntensity)}
-          />
+          <ItemTag title="Émotion principale" values={mainEmotion} intensity={percentage(mainEmotionIntensity)} />
           <ItemTag title="Autres émotions" values={otherEmotions} />
           <ItemTag title="Sensations" values={physicalSensations} />
           <View style={styleBeck.XSseparator} />
           <Text style={styleBeck.sectionTitle}>{BeckStepTitles[3]}</Text>
-          <ItemText
-            title="Pensée immédiate"
-            value={thoughtsBeforeMainEmotion}
-            intensity={percentage(trustInThoughsThen)}
-          />
+          <ItemText title="Pensée immédiate" value={thoughtsBeforeMainEmotion} intensity={percentage(trustInThoughsThen)} />
           <ItemText title="Images et souvenirs" value={memories} />
           <View style={styleBeck.XSseparator} />
           <Text style={styleBeck.sectionTitle}>{BeckStepTitles[4]}</Text>
-          <ItemText title="Qu’avez vous fait ?" value={actions} />
+          <ItemText title="Qu'avez vous fait ?" value={actions} />
           <ItemText title="Conséquences pour vous" value={consequencesForYou} />
-          <ItemText
-            title="Conséquences pour votre entourage"
-            value={consequencesForRelatives}
-          />
+          <ItemText title="Conséquences pour votre entourage" value={consequencesForRelatives} />
           <View style={styleBeck.XSseparator} />
           <Text style={styleBeck.sectionTitle}>{BeckStepTitles[5]}</Text>
-          <ItemText
-            title="Arguments en faveur de votre pensée"
-            value={argumentPros}
-          />
-          <ItemText
-            title="Arguments en défaveur de votre pensée"
-            value={argumentCons}
-          />
-          <ItemText
-            title="Pensée plus nuancée/adaptée"
-            value={nuancedThoughts}
-          />
-          <ItemText
-            title="Croyance dans la pensée principale"
-            value={thoughtsBeforeMainEmotion}
-            intensity={percentage(trustInThoughsNow)}
-          />
-          <ItemTag
-            title="Émotions après coup"
-            values={mainEmotion}
-            intensity={percentage(mainEmotionIntensityNuanced)}
-          />
-          <Button
-            title="Terminer"
-            onPress={navigation.goBack}
-            buttonStyle={styleBeck.submitButton}
-          />
+          <ItemText title="Arguments en faveur de votre pensée" value={argumentPros} />
+          <ItemText title="Arguments en défaveur de votre pensée" value={argumentCons} />
+          <ItemText title="Pensée plus nuancée/adaptée" value={nuancedThoughts} />
+          <ItemText title="Croyance dans la pensée principale" value={thoughtsBeforeMainEmotion} intensity={percentage(trustInThoughsNow)} />
+          <ItemTag title="Émotions après coup" values={mainEmotion} intensity={percentage(mainEmotionIntensityNuanced)} />
+          <Button title="Terminer" onPress={navigation.goBack} buttonStyle={styleBeck.submitButton} />
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -187,11 +152,7 @@ const ItemText = ({title, value, intensity}) => {
         </View>
         {intensity && (
           <View style={styleBeck.listContainer}>
-            <TextTag
-              value={intensity}
-              color="#D3D7E4"
-              buttonStyle={{marginBottom: 0}}
-            />
+            <TextTag value={intensity} color="#D3D7E4" buttonStyle={{marginBottom: 0}} />
           </View>
         )}
       </View>
@@ -210,13 +171,7 @@ const ItemTag = ({title, values, intensity}) => {
             <TextTag key={i} value={e} color="#D4F0F2" />
           ))}
         </View>
-        {intensity && (
-          <TextTag
-            value={intensity}
-            color="#D3D7E4"
-            buttonStyle={{marginBottom: 0}}
-          />
-        )}
+        {intensity && <TextTag value={intensity} color="#D3D7E4" buttonStyle={{marginBottom: 0}} />}
       </View>
     </View>
   );
