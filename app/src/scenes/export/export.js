@@ -1,34 +1,23 @@
-import React, { useContext, useEffect, useState } from "react";
-import {
-  TouchableOpacity,
-  StyleSheet,
-  SafeAreaView,
-  TextInput,
-  Alert,
-  KeyboardAvoidingView,
-  Platform,
-  View,
-  ScrollView,
-  Keyboard,
-} from "react-native";
-import KeyboardAvoidingViewScreen from "../../components/KeyboardAvoidingViewScreen";
-import Text from "../../components/MyText";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import ExportDataSvg from "../../../assets/svg/export-data.svg";
-import { colors } from "../../utils/colors";
-import { DiaryDataContext } from "../../context/diaryData";
-import { DiaryNotesContext } from "../../context/diaryNotes";
-import { formatHtmlTable } from "./utils";
-import Icon from "../../components/Icon";
-import logEvents from "../../services/logEvents";
-import { sendMail } from "../../services/mail";
-import BackButton from "../../components/BackButton";
-import Button from "../../components/Button";
-const MailStorageKey = "@Mail";
+import React, {useContext, useEffect, useState} from 'react';
+import {TouchableOpacity, StyleSheet, SafeAreaView, TextInput, Alert, KeyboardAvoidingView, Platform, View, ScrollView, Keyboard} from 'react-native';
+import KeyboardAvoidingViewScreen from '../../components/KeyboardAvoidingViewScreen';
+import Text from '../../components/MyText';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import ExportDataSvg from '../../../assets/svg/export-data.svg';
+import {colors} from '../../utils/colors';
+import {DiaryDataContext} from '../../context/diaryData';
+import {DiaryNotesContext} from '../../context/diaryNotes';
+import {formatHtmlTable} from './utils';
+import Icon from '../../components/Icon';
+import logEvents from '../../services/logEvents';
+import {sendMail} from '../../services/mail';
+import BackButton from '../../components/BackButton';
+import Button from '../../components/Button';
+const MailStorageKey = '@Mail';
 
-const Export = ({ navigation }) => {
-  const [mail, setMail] = useState("");
-  const [pseudo, setPseudo] = useState("");
+const Export = ({navigation}) => {
+  const [mail, setMail] = useState('');
+  const [pseudo, setPseudo] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [diaryData] = useContext(DiaryDataContext);
   const [diaryNotes] = useContext(DiaryNotesContext);
@@ -37,37 +26,33 @@ const Export = ({ navigation }) => {
     (async () => {
       const storageMail = await AsyncStorage.getItem(MailStorageKey);
       if (storageMail) {
-        setMail(storageMail.trim().replace(/\s*/g, ""));
+        setMail(storageMail.trim().replace(/\s*/g, ''));
       }
     })();
   }, []);
 
   const exportData = async () => {
-    if (!mail)
-      return Alert.alert(
-        "Oups",
-        `Aucun mail n'a été renseigné.\n\nMerci d'indiquer l'adresse mail sur laquelle vous désirez recevoir vos données.`
-      );
+    if (!mail) return Alert.alert('Oups', `Aucun mail n'a été renseigné.\n\nMerci d'indiquer l'adresse mail sur laquelle vous désirez recevoir vos données.`);
     await AsyncStorage.setItem(MailStorageKey, mail);
     const htmlExport = await formatHtmlTable(diaryData, diaryNotes);
     setIsLoading(true);
     logEvents.logDataExport();
-    let subject = "Export de données";
+    let subject = 'Export de données';
     if (pseudo) subject += ` - ${pseudo}`;
     const res = await sendMail(
       {
         subject,
         html: htmlExport,
       },
-      mail
+      mail,
     );
     setIsLoading(false);
     if (res?.ok) {
-      Alert.alert("Mail envoyé !", `Retrouvez vos données sur votre boîte mail : ${mail}`, [
+      Alert.alert('Mail envoyé !', `Retrouvez vos données sur votre boîte mail : ${mail}`, [
         {
-          text: "Retour",
-          onPress: () => navigation.navigate("tabs"),
-          style: "default",
+          text: 'Retour',
+          onPress: () => navigation.navigate('tabs'),
+          style: 'default',
         },
       ]);
     } else {
@@ -76,21 +61,20 @@ const Export = ({ navigation }) => {
     }
   };
 
-  const handleChangeMail = (value) => {
-    setMail(value.trim().replace(/\s*/g, ""));
+  const handleChangeMail = value => {
+    setMail(value.trim().replace(/\s*/g, ''));
   };
 
   return (
-    <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={{ flex: 1 }}>
-      <SafeAreaView style={{ flex: 1 }}>
+    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{flex: 1}}>
+      <SafeAreaView style={{flex: 1}}>
         <ScrollView
           contentInsetAdjustmentBehavior="automatic"
           keyboardShouldPersistTaps="handled"
           style={styles.container}
           contentContainerStyle={styles.scrollContainer}
           keyboardDismissMode="on-drag"
-          onScrollBeginDrag={Keyboard.dismiss}
-        >
+          onScrollBeginDrag={Keyboard.dismiss}>
           <BackButton onPress={navigation.goBack} />
           <Icon
             icon="ExportDataSvg"
@@ -118,19 +102,16 @@ const Export = ({ navigation }) => {
           </View>
           <View style={styles.inputContainer}>
             <Text style={styles.label}>
-              <Text style={styles.italic}>Optionnel</Text> : je peux donner un nom à mon bilan pour mieux
-              l'identifier
+              <Text style={styles.italic}>Optionnel</Text> : je peux donner un nom à mon bilan pour mieux l'identifier
             </Text>
-            <TextInput
-              autoCapitalize="none"
-              onChangeText={setPseudo}
-              value={pseudo}
-              placeholder="Ex: Arthur M. décembre 2020, ..."
-              style={styles.inputMail}
-            />
+            <TextInput autoCapitalize="none" onChangeText={setPseudo} value={pseudo} placeholder="Ex: Arthur M. décembre 2020, ..." style={styles.inputMail} />
             <Text style={styles.indication}>Le nom choisi sera affiché dans l'objet du mail</Text>
           </View>
           {!isLoading && <Button title="Envoyer par mail" disabled={!mail} onPress={exportData} />}
+          <View className="bg-gray-200 p-3 mx-4 rounded-lg">
+            <Text className="text-gray-600 text-center text-xs mb-1">Veillez à transmettre vos données aux seules personnes habilitées.</Text>
+            <Text className="text-gray-600 text-center text-xs">L'envoi se fait via la solution Sarbacane, qui n'accède pas à vos données renseignées dans l'application</Text>
+          </View>
         </ScrollView>
       </SafeAreaView>
     </KeyboardAvoidingView>
@@ -139,46 +120,46 @@ const Export = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   indication: {
-    fontStyle: "italic",
-    textAlign: "center",
-    color: "#888888",
+    fontStyle: 'italic',
+    textAlign: 'center',
+    color: '#888888',
     marginTop: 3,
   },
 
   icon: {
-    margin: "20%",
+    margin: '20%',
   },
   container: {
     padding: 20,
   },
   scrollContainer: {
-    display: "flex",
-    justifyContent: "flex-start",
-    alignItems: "center",
+    display: 'flex',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
     paddingBottom: 40,
   },
   title: {
-    width: "80%",
+    width: '80%',
     flexShrink: 0,
-    textAlign: "center",
+    textAlign: 'center',
     fontSize: 22,
     color: colors.BLUE,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
   backButtonContainer: {
-    position: "absolute",
+    position: 'absolute',
     top: 20,
     left: 20,
-    marginBottom: "20%",
+    marginBottom: '20%',
   },
   backButton: {
-    fontWeight: "700",
-    textDecorationLine: "underline",
+    fontWeight: '700',
+    textDecorationLine: 'underline',
     color: colors.BLUE,
   },
   inputMail: {
-    textAlign: "center",
-    backgroundColor: "#F4FCFD",
+    textAlign: 'center',
+    backgroundColor: '#F4FCFD',
     borderWidth: 0.5,
     borderRadius: 10,
     borderColor: colors.LIGHT_BLUE,
@@ -187,16 +168,16 @@ const styles = StyleSheet.create({
   label: {
     marginBottom: 5,
     color: colors.BLUE,
-    textAlign: "center",
+    textAlign: 'center',
   },
   inputContainer: {
     paddingHorizontal: 30,
-    display: "flex",
-    alignSelf: "stretch",
+    display: 'flex',
+    alignSelf: 'stretch',
     marginVertical: 30,
   },
   italic: {
-    fontStyle: "italic",
+    fontStyle: 'italic',
   },
 });
 
