@@ -11,14 +11,15 @@ const Privacy = ({navigation}) => {
     <View>
       <Text style={styles.h2}>Qui est responsable de Jardin mental?</Text>
       <Text style={styles.default}>
-        Le service numérique « Jardin mental » est à l'initiative de la Direction générale de la santé au sein de la Fabrique numérique des ministères sociaux.
+        L'application mobile « Jardin mental » est à l'initiative de la Direction générale de la santé (DGS) au sein de la Fabrique numérique des ministères sociaux. L'objectif de
+        l'application vise à accompagner les personnes qui le souhaitent à mieux connaître leur santé mentale et suivre leurs symptômes, leurs ressentis, leurs comportements, leurs
+        pensées, ou toute activité personnalisée, leur permettant ainsi de faciliter leur accompagnement psychologique, notamment par un ou une professionnel(le) de santé.
       </Text>
       <Text style={styles.h2}>Pourquoi traitons-nous des données à caractère personnel ?</Text>
-      <Text style={styles.default}>Jardin mental traite des données à caractère personnel pour les raisons suivantes :</Text>
+      <Text style={styles.default}>L'application mobile Jardin mental traite des données à caractère personnel pour les raisons suivantes :</Text>
       <Li>
         <Text style={styles.default}>
-          Accompagner les personnes qui le souhaitent à mieux connaître et suivre leurs symptômes, leurs ressentis ou toute activité personnalisée, leur permettant de faciliter
-          leur accompagnement psychologique.
+          Permettre aux utilisateurs de l'application de contacter l'équipe de Jardin Mental pour proposer des améliorations sur l'application mobile.
         </Text>
       </Li>
       <Text style={styles.h2}>Quelles sont les données à caractère personnel que nous traitons ?</Text>
@@ -31,12 +32,19 @@ const Privacy = ({navigation}) => {
       </Li>
 
       <Text style={styles.h2}>Qu'est-ce qui nous autorise à traiter des données à caractère personnel ?</Text>
-      <Text style={styles.default}>Jardin mental traite des données à caractère personnel en se basant sur :</Text>
+      <Text style={styles.default}>L'application mobile Jardin mental traite des données à caractère personnel en se basant sur :</Text>
       <Li>
         <Text style={styles.default}>
           L'exécution d'une mission d'intérêt public ou relevant de l'exercice de l'autorité publique dont est investi le responsable de traitement au sens de l'article 6-1 e) du
           RGPD.
         </Text>
+      </Li>
+      <Text style={styles.default}>Cette mission d'intérêt public se traduit en pratique par :</Text>
+      <Li>
+        <Text style={styles.default}>L'article D. 1421-1 du code de la santé publique ;</Text>
+      </Li>
+      <Li>
+        <Text style={styles.default}>L'arrêté du 6 avril 2016 portant organisation de la direction générale de la santé, notamment ses articles 5 et 6.</Text>
       </Li>
 
       <Text style={styles.h2}>Pendant combien de temps conservons-nous ces données ?</Text>
@@ -66,10 +74,11 @@ const Privacy = ({navigation}) => {
       </Text>
 
       <Text style={styles.default}>Par voie postale :</Text>
-      <Text style={styles.default}>Direction du Numérique des ministères sociaux</Text>
-      <Text style={styles.default}>Ministère des solidarités et de la santé</Text>
-      <Text style={styles.default}>39-43 Quai André Citroën</Text>
-      <Text style={styles.default}>75015 Paris</Text>
+      <Text style={styles.default}>Ministère du Travail, de la Santé et des Solidarités</Text>
+      <Text style={styles.default}>Direction générale de la santé</Text>
+      <Text style={styles.default}>14 avenue Duquesne</Text>
+      <Text style={styles.default}>75007 Paris</Text>
+      <Text style={styles.default}>France</Text>
 
       <View style={styles.break} />
 
@@ -126,32 +135,11 @@ const Privacy = ({navigation}) => {
       <ConservationTable />
 
       <View style={styles.break} />
-      <Text style={styles.h2}>Cookies</Text>
+      <Text style={styles.h2}>Témoins de connexion et traceurs</Text>
       <Text style={styles.default}>
-        Un cookie est un fichier déposé sur votre terminal lors de la visite d'un site. Il a pour but de collecter des informations relatives à votre navigation et de vous adresser
-        des services adaptés à votre terminal (ordinateur, mobile ou tablette).
-      </Text>
-      <Text style={styles.default}>
-        En application de l'article 5(3) de la directive 2002/58/CE modifiée concernant le traitement des données à caractère personnel et la protection de la vie privée dans le
-        secteur des communications électroniques, transposée à l'article 82 de la loi n° 78-17 du 6 janvier 1978 relative à l'informatique, aux fichiers et aux libertés, les
-        traceurs ou cookies suivent deux régimes distincts.
-      </Text>
-      <Text style={styles.default}>
-        Les cookies strictement nécessaires au service ou ayant pour finalité exclusive de faciliter la communication par voie électronique sont dispensés de consentement préalable
-        au titre de l'article 82 de la loi n° 78-17 du 6 janvier 1978.
-      </Text>
-      <Text style={styles.default}>
-        Les cookies n'étant pas strictement nécessaires au service ou n'ayant pas pour finalité exclusive de faciliter la communication par voie électronique doivent être consenti
-        par l'utilisateur.
-      </Text>
-      <Text style={styles.default}>
-        Ce consentement de la personne concernée pour une ou plusieurs finalités spécifiques constitue une base légale au sens du RGPD et doit être entendu au sens de l'article 6-a
-        du Règlement (UE) 2016/679 du Parlement européen et du Conseil du 27 avril 2016 relatif à la protection des personnes physiques à l'égard du traitement des données à
-        caractère personnel et à la libre circulation de ces données.
-      </Text>
-      <Text style={styles.default}>
-        À tout moment, vous pouvez refuser l'utilisation des cookies et désactiver le dépôt sur votre ordinateur en utilisant la fonction dédiée de votre navigateur (fonction
-        disponible notamment sur Microsoft Internet Explorer 11, Google Chrome, Mozilla Firefox, Apple Safari et Opera).
+        Un témoin de connexion ou traceur est un fichier déposé sur votre appareil lorsque vous accédez à l'application mobile pour collecter certaines de vos informations. Sur
+        l'application Jardin Mental, des témoins de connexion ou traceurs de mesure d'audience sont déposés mais ne nécessitent pas le recueil de votre consentement conformément
+        aux recommandations de la CNIL. Nous utilisons la solution « Matomo » configurée en mode exempté.
       </Text>
       <Text style={styles.default}>Pour aller plus loin, vous pouvez consulter les fiches proposées par la Commission Nationale de l'Informatique et des Libertés (CNIL) :</Text>
       <TouchableOpacity onPress={() => Linking.openURL('https://www.cnil.fr/fr/cookies-traceurs-que-dit-la-loi')}>
@@ -160,10 +148,6 @@ const Privacy = ({navigation}) => {
       <TouchableOpacity onPress={() => Linking.openURL('https://www.cnil.fr/fr/cookies-les-outils-pour-les-maitriser')}>
         <Text style={styles.link}>Cookies : les outils pour les maîtriser</Text>
       </TouchableOpacity>
-      <Text style={styles.default}>
-        Nous utilisons Matomo, une solution de mesure d'audience, configuré en "mode exempté" ne nécessitant pas le recueil du consentement des utilisateurs conformément aux
-        recommandations de la CNIL.
-      </Text>
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
         <TouchableOpacity onPress={() => setIsTracked(!isTracked)}>
           <Text style={[styles.default, {marginRight: 10}]}>{isTracked ? '☒' : '☐'}</Text>
@@ -195,36 +179,33 @@ const ConservationTable = () => {
       </View>
       <View style={styles.tableRow}>
         <View style={styles.tableCol}>
-          <Text style={styles.default}>OVH</Text>
+          <Text style={styles.default}>OVH SAS France</Text>
         </View>
         <View style={styles.tableCol}>
           <Text style={styles.default}>France</Text>
         </View>
         <View style={styles.tableCol}>
-          <Text style={styles.default}>Hébergement</Text>
+          <Text style={styles.default}>Hébergement des données</Text>
         </View>
         <View style={styles.tableCol}>
-          <TouchableOpacity
-            onPress={() =>
-              Linking.openURL('https://storage.gra.cloud.ovh.net/v1/AUTH_325716a587c64897acbef9a4a4726e38/contracts/9e74492-OVH_Data_Protection_Agreement-FR-6.0.pdf')
-            }>
-            <Text style={styles.link}>https://storage.gra.cloud.ovh.net/v1/AUTH_325716a587c64897acbef9a4a4726e38/contracts/9e74492-OVH_Data_Protection_Agreement-FR-6.0.pdf</Text>
+          <TouchableOpacity onPress={() => Linking.openURL('https://us.ovhcloud.com/legal/data-processing-agreement/')}>
+            <Text style={styles.link}>https://us.ovhcloud.com/legal/data-processing-agreement/</Text>
           </TouchableOpacity>
         </View>
       </View>
       <View style={styles.tableRow}>
         <View style={styles.tableCol}>
-          <Text style={styles.default}>Tipimail </Text>
+          <Text style={styles.default}>Positive Group France SAS (Sarbacane)</Text>
         </View>
         <View style={styles.tableCol}>
           <Text style={styles.default}>France</Text>
         </View>
         <View style={styles.tableCol}>
-          <Text style={styles.default}>Envoi d'e-mails</Text>
+          <Text style={styles.default}>Solution utilisée lorsque l'utilisateur choisit d'envoyer par courriel un récapitulatif de ses données à la personne de son choix</Text>
         </View>
         <View style={styles.tableCol}>
-          <TouchableOpacity onPress={() => Linking.openURL('https://fr.tipimail.com/dpa')}>
-            <Text style={styles.link}>https://fr.tipimail.com/dpa</Text>
+          <TouchableOpacity onPress={() => Linking.openURL('https://assets.sarbacane-cdn.com/legal/FR_DataProcessingAddendum.pdf')}>
+            <Text style={styles.link}>https://assets.sarbacane-cdn.com/legal/FR_DataProcessingAddendum.pdf</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -245,10 +226,10 @@ const DataTable = () => {
       </View>
       <View style={styles.tableRow}>
         <View style={styles.tableCol}>
-          <Text style={styles.default}>Données relatives aux usagers du service Données relatives aux usagers du service </Text>
+          <Text style={styles.default}>Données relatives aux usagers du service</Text>
         </View>
         <View style={styles.tableCol}>
-          <Text style={styles.default}>3 ans à compter de la dernière utilisation</Text>
+          <Text style={styles.default}>1 an à compter de la dernière proposition d'amélioration de l'application mobile</Text>
         </View>
       </View>
     </View>
