@@ -1,39 +1,29 @@
-import React, { useEffect, useState, useContext, useRef } from "react";
-import {
-  StyleSheet,
-  ScrollView,
-  View,
-  SafeAreaView,
-  Keyboard,
-  KeyboardAvoidingView,
-  TouchableOpacity,
-  Platform,
-  Dimensions,
-} from "react-native";
-import Text from "../../components/MyText";
-import { colors } from "../../utils/colors";
-import { beforeToday, formatDay, formatRelativeDate } from "../../utils/date/helpers";
-import { isToday, isYesterday, parseISO, format } from "date-fns";
-import { fr } from "date-fns/locale";
-import BackButton from "../../components/BackButton";
-import Button from "../../components/Button";
-import { getScoreWithState } from "../../utils";
-import Question from "./Question";
-import InputQuestion from "./InputQuestion";
-import QuestionYesNo from "./QuestionYesNo";
-import logEvents from "../../services/logEvents";
-import { DiaryDataContext } from "../../context/diaryData";
-import { alertNoDataYesterday } from "./survey-data";
-import localStorage from "../../utils/localStorage";
-import { useFocusEffect } from "@react-navigation/native";
-import ArrowUpSvg from "../../../assets/svg/arrow-up.svg";
-import { GoalsDaySurvey } from "../goals/survey/GoalsDaySurvey";
-import { Screen } from "../../components/Screen";
-import { Button2 } from "../../components/Button2";
-import { Card } from "../../components/Card";
-import { IndicatorSurveyItem } from "./components/IndicatorSurveyItem";
+import React, {useEffect, useState, useContext, useRef} from 'react';
+import {StyleSheet, ScrollView, View, SafeAreaView, Keyboard, KeyboardAvoidingView, TouchableOpacity, Platform, Dimensions} from 'react-native';
+import Text from '../../components/MyText';
+import {colors} from '../../utils/colors';
+import {beforeToday, formatDay, formatRelativeDate} from '../../utils/date/helpers';
+import {isToday, isYesterday, parseISO, format} from 'date-fns';
+import {fr} from 'date-fns/locale';
+import BackButton from '../../components/BackButton';
+import Button from '../../components/Button';
+import {getScoreWithState} from '../../utils';
+import Question from './Question';
+import InputQuestion from './InputQuestion';
+import QuestionYesNo from './QuestionYesNo';
+import logEvents from '../../services/logEvents';
+import {DiaryDataContext} from '../../context/diaryData';
+import {alertNoDataYesterday} from './survey-data';
+import localStorage from '../../utils/localStorage';
+import {useFocusEffect} from '@react-navigation/native';
+import ArrowUpSvg from '../../../assets/svg/arrow-up.svg';
+import {GoalsDaySurvey} from '../goals/survey/GoalsDaySurvey';
+import {Screen} from '../../components/Screen';
+import {Button2} from '../../components/Button2';
+import {Card} from '../../components/Card';
+import {IndicatorSurveyItem} from './components/IndicatorSurveyItem';
 
-const DaySurvey = ({ navigation, route }) => {
+const DaySurvey = ({navigation, route}) => {
   const initSurvey = route?.params?.currentSurvey ?? {
     date: formatDay(beforeToday(0)),
     answers: {},
@@ -50,12 +40,12 @@ const DaySurvey = ({ navigation, route }) => {
   const goalsRef = useRef();
 
   const questionToxic = {
-    id: "TOXIC",
+    id: 'TOXIC',
     label: "Avez-vous consommé des substances aujourd'hui ?",
   };
   const questionContext = {
-    id: "CONTEXT",
-    label: "Ajoutez une note générale sur votre journée",
+    id: 'CONTEXT',
+    label: 'Ajoutez une note générale sur votre journée',
   };
 
   useFocusEffect(
@@ -66,33 +56,33 @@ const DaySurvey = ({ navigation, route }) => {
           setUserIndicateurs(user_indicateurs);
         }
       })();
-    }, [])
+    }, []),
   );
 
   useEffect(() => {
     //init the survey if there is already answers
-    Object.keys(initSurvey?.answers || {})?.forEach((key) => {
+    Object.keys(initSurvey?.answers || {})?.forEach(key => {
       const score = getScoreWithState({
         patientState: initSurvey?.answers,
         category: key,
       });
-      const cleanedQuestionId = key.split("_")[0];
-      const _indicateur = userIndicateurs.find((i) => i.name === cleanedQuestionId);
+      const cleanedQuestionId = key.split('_')[0];
+      const _indicateur = userIndicateurs.find(i => i.name === cleanedQuestionId);
       if (_indicateur) {
-        if (_indicateur.type === "gauge") {
-          toggleAnswer({ key: cleanedQuestionId, value: initSurvey?.answers[key]?.value });
+        if (_indicateur.type === 'gauge') {
+          toggleAnswer({key: cleanedQuestionId, value: initSurvey?.answers[key]?.value});
           handleChangeUserComment({
             key: cleanedQuestionId,
             userComment: initSurvey?.answers[cleanedQuestionId]?.userComment,
           });
-        } else if (_indicateur.type === "boolean") {
-          toggleAnswer({ key: cleanedQuestionId, value: initSurvey?.answers[key]?.value });
+        } else if (_indicateur.type === 'boolean') {
+          toggleAnswer({key: cleanedQuestionId, value: initSurvey?.answers[key]?.value});
           handleChangeUserComment({
             key: cleanedQuestionId,
             userComment: initSurvey?.answers[cleanedQuestionId]?.userComment,
           });
         } else {
-          toggleAnswer({ key: cleanedQuestionId, value: score });
+          toggleAnswer({key: cleanedQuestionId, value: score});
           handleChangeUserComment({
             key: cleanedQuestionId,
             userComment: initSurvey?.answers[cleanedQuestionId]?.userComment,
@@ -118,39 +108,35 @@ const DaySurvey = ({ navigation, route }) => {
     }
   }, [initSurvey?.answers, questionToxic.id, questionContext?.id, userIndicateurs]);
 
-  const toggleAnswer = async ({ key, value }) => {
-    setAnswers((prev) => {
+  const toggleAnswer = async ({key, value}) => {
+    setAnswers(prev => {
       return {
         ...prev,
-        [key]: { ...prev[key], value, _indicateur: userIndicateurs.find((i) => i.name === key) },
+        [key]: {...prev[key], value, _indicateur: userIndicateurs.find(i => i.name === key)},
       };
     });
   };
 
-  const handleChangeUserComment = ({ key, userComment }) => {
-    setAnswers((prev) => {
+  const handleChangeUserComment = ({key, userComment}) => {
+    setAnswers(prev => {
       return {
         ...prev,
-        [key]: { ...prev[key], userComment },
+        [key]: {...prev[key], userComment},
       };
     });
   };
 
-  const submitDay = async ({ redirectBack = false }) => {
+  const submitDay = async ({redirectBack = false}) => {
     const prevCurrentSurvey = initSurvey;
     const currentSurvey = {
       date: prevCurrentSurvey?.date,
-      answers: { ...prevCurrentSurvey.answers, ...answers },
+      answers: {...prevCurrentSurvey.answers, ...answers},
     };
     setDiaryData(currentSurvey);
     await goalsRef?.current?.onSubmit?.();
     logEvents.logFeelingAdd();
-    logEvents.logFeelingSubmitSurvey(userIndicateurs.filter((i) => i.active).length);
-    logEvents.logFeelingAddComment(
-      Object.keys(answers).filter(
-        (key) => ![questionToxic.id, questionContext.id].includes(key) && answers[key].userComment
-      )?.length
-    );
+    logEvents.logFeelingSubmitSurvey(userIndicateurs.filter(i => i.active).length);
+    logEvents.logFeelingAddComment(Object.keys(answers).filter(key => ![questionToxic.id, questionContext.id].includes(key) && answers[key].userComment)?.length);
     logEvents.logFeelingAddContext(answers[questionContext.id]?.userComment ? 1 : 0);
     logEvents.logFeelingResponseToxic(answers[questionToxic.id]?.value ? 1 : 0);
 
@@ -160,12 +146,12 @@ const DaySurvey = ({ navigation, route }) => {
         diaryData,
         navigation,
       });
-      return navigation.navigate("tabs");
+      return navigation.navigate('tabs');
     }
 
     if (redirectBack) {
       if (navigation.canGoBack()) return navigation.goBack();
-      else navigation.navigate("tabs");
+      else navigation.navigate('tabs');
     }
 
     const medicalTreatmentStorage = await localStorage.getMedicalTreatment();
@@ -175,10 +161,10 @@ const DaySurvey = ({ navigation, route }) => {
         diaryData,
         navigation,
       });
-      return navigation.navigate("tabs");
+      return navigation.navigate('tabs');
     }
 
-    navigation.navigate("drugs", {
+    navigation.navigate('drugs', {
       currentSurvey,
       editingSurvey: initEditiingSurvey,
     });
@@ -195,43 +181,35 @@ const DaySurvey = ({ navigation, route }) => {
   return (
     <Screen
       header={{
-        title: "Mon questionnaire",
+        title: 'Mon questionnaire',
       }}
       bottomChildren={<Button2 fill title="Valider" onPress={submitDay} />}
       scrollProps={{
         onScrollBeginDrag: Keyboard.dismiss,
       }}
-      contentContainerStyle={{ alignItems: "stretch" }}
-      scrollRef={scrollRef}
-    >
+      contentContainerStyle={{alignItems: 'stretch'}}
+      scrollRef={scrollRef}>
       <View>
-        <View style={{ marginBottom: 8 }}>
-          <Card
-            preset="lighten"
-            title={renderQuestion()}
-            image={{ source: require("./../../../assets/imgs/indicateur.png") }}
-            containerStyle={{ marginBottom: 16 }}
-          />
+        <View style={{marginBottom: 8}}>
+          <Card preset="lighten" title={renderQuestion()} image={{source: require('./../../../assets/imgs/indicateur.png')}} containerStyle={{marginBottom: 16}} />
           {userIndicateurs
-            .filter((ind) => ind.active)
-            .map((ind) => (
+            .filter(ind => ind.active)
+            .map(ind => (
               <IndicatorSurveyItem
                 key={ind?.uuid}
                 indicator={ind}
                 value={answers?.[ind?.name]?.value}
-                onValueChanged={({ indicator, value }) => toggleAnswer({ key: indicator?.name, value })}
-                onCommentChanged={({ indicator, comment }) =>
-                  handleChangeUserComment({ key: indicator?.name, userComment: comment })
-                }
+                onValueChanged={({indicator, value}) => toggleAnswer({key: indicator?.name, value})}
+                onCommentChanged={({indicator, comment}) => handleChangeUserComment({key: indicator?.name, userComment: comment})}
                 comment={answers?.[ind?.name]?.userComment}
               />
             ))}
           <Card
             title="Personnaliser mes indicateurs"
             //text="Vous pouvez gérer vos indicateurs et en créer de nouveaux"
-            icon={{ icon: "ImportantSvg" }}
+            icon={{icon: 'ImportantSvg'}}
             onPress={() => {
-              navigation.navigate("symptoms");
+              navigation.navigate('symptoms');
               logEvents.logSettingsSymptomsFromSurvey();
             }}
             containerStyle={styles.spacing}
@@ -258,9 +236,7 @@ const DaySurvey = ({ navigation, route }) => {
         userComment={answers[questionToxic.id]?.userComment}
       />
       <View style={styles.divider} />
-      <Text style={styles.subtitle}>
-        Retrouvez toutes vos notes dans l'onglet &quot;Mon&nbsp;journal&quot;
-      </Text>
+      <Text style={styles.subtitle}>Retrouvez toutes vos notes dans l'onglet &quot;Mon&nbsp;journal&quot;</Text>
     </Screen>
   );
 };
@@ -270,7 +246,7 @@ const styles = StyleSheet.create({
     marginVertical: 8,
   },
   textArea: {
-    backgroundColor: "#F4FCFD",
+    backgroundColor: '#F4FCFD',
     borderRadius: 10,
     marginBottom: 10,
     padding: 10,
@@ -278,17 +254,17 @@ const styles = StyleSheet.create({
   },
   selectionContainer: {
     padding: 3,
-    borderColor: "#DEF4F5",
+    borderColor: '#DEF4F5',
     borderWidth: 1,
     borderRadius: 10,
   },
   selectionYesNoContainer: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
     width: 40,
     height: 40,
-    borderColor: "#DEF4F5",
+    borderColor: '#DEF4F5',
     borderWidth: 1,
     borderRadius: 99999,
   },
@@ -296,46 +272,46 @@ const styles = StyleSheet.create({
     backgroundColor: colors.LIGHT_BLUE,
   },
   activeLabel: {
-    color: "#fff",
-    fontWeight: "bold",
+    color: '#fff',
+    fontWeight: 'bold',
   },
   arrowDown: {
-    transform: [{ rotate: "180deg" }],
+    transform: [{rotate: '180deg'}],
   },
   arrowUp: {
-    transform: [{ rotate: "0deg" }],
+    transform: [{rotate: '0deg'}],
   },
 
   buttonValidate: {
-    width: "100%",
+    width: '100%',
   },
   divider: {
     height: 1,
-    backgroundColor: "rgba(0,183,200, .09)",
+    backgroundColor: 'rgba(0,183,200, .09)',
     marginTop: 20,
     marginBottom: 10,
-    width: "100%",
-    alignSelf: "center",
+    width: '100%',
+    alignSelf: 'center',
   },
   spacer: {
     height: 120,
   },
 
   questionContainer: {
-    display: "flex",
+    display: 'flex',
   },
   questionHeaderContainer: {
-    backgroundColor: "#F4FCFD",
-    borderColor: "#DEF4F5",
+    backgroundColor: '#F4FCFD',
+    borderColor: '#DEF4F5',
     borderWidth: 1,
     borderRadius: 10,
     padding: 10,
   },
   questionHeader: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   questionInfo: {
     marginTop: 15,
@@ -347,39 +323,39 @@ const styles = StyleSheet.create({
     backgroundColor: colors.LIGHT_BLUE,
   },
   questionTitle: {
-    textAlign: "center",
+    textAlign: 'center',
     fontSize: 18,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
   answerContainer: {
     paddingTop: 10,
     paddingBottom: 15,
     marginLeft: 18, // padding of the header question container + half of the dot size => 10 + 8 = 18
-    display: "flex",
-    justifyContent: "space-around",
+    display: 'flex',
+    justifyContent: 'space-around',
   },
   answersContainer: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-around",
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
     paddingBottom: 15,
   },
   leftFileAriane: {
-    borderLeftColor: "#DEF4F5",
+    borderLeftColor: '#DEF4F5',
     borderLeftWidth: 2,
   },
   safe: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: 'white',
   },
   question: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
     marginTop: 15,
     marginBottom: 25,
-    backgroundColor: "#F4FCFD",
-    borderColor: "#DEF4F5",
+    backgroundColor: '#F4FCFD',
+    borderColor: '#DEF4F5',
     borderWidth: 1,
     borderRadius: 10,
     padding: 10,
@@ -392,17 +368,17 @@ const styles = StyleSheet.create({
   questionText: {
     color: colors.BLUE,
     fontSize: 22,
-    fontWeight: "700",
+    fontWeight: '700',
   },
   linkContainer: {
-    backgroundColor: "rgba(31,198,213,0.2)",
+    backgroundColor: 'rgba(31,198,213,0.2)',
     borderColor: colors.LIGHT_BLUE,
     borderWidth: 0.5,
     borderRadius: 10,
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     padding: 15,
     paddingRight: 20,
   },
@@ -413,7 +389,7 @@ const styles = StyleSheet.create({
   linkTitle: {
     color: colors.BLUE,
     fontSize: 14,
-    fontWeight: "700",
+    fontWeight: '700',
     flex: 1,
     marginBottom: 5,
   },
@@ -427,57 +403,57 @@ const styles = StyleSheet.create({
     backgroundColor: colors.LIGHT_BLUE,
     height: 40,
     width: 40,
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    alignSelf: "flex-start",
-    transform: [{ rotate: "90deg" }],
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignSelf: 'flex-start',
+    transform: [{rotate: '90deg'}],
     margin: 7,
   },
   subtitleTop: {
     flex: 1,
     color: colors.LIGHT_BLUE,
     fontSize: 18,
-    fontWeight: "700",
+    fontWeight: '700',
     marginTop: 15,
-    textAlign: "center",
+    textAlign: 'center',
   },
   subtitle: {
     flex: 1,
-    color: "#000",
+    color: '#000',
     fontSize: 15,
-    fontWeight: "normal",
-    textAlign: "center",
+    fontWeight: 'normal',
+    textAlign: 'center',
   },
   answer: {
-    backgroundColor: "#F4FCFD",
-    borderColor: "#D4F0F2",
+    backgroundColor: '#F4FCFD',
+    borderColor: '#D4F0F2',
     marginBottom: 10,
     borderRadius: 10,
     padding: 10,
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   answerLabel: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   label: {
-    fontWeight: "600",
+    fontWeight: '600',
   },
   container: {
-    backgroundColor: "white",
+    backgroundColor: 'white',
     padding: 20,
     paddingTop: 0,
   },
   backButton: {
-    fontWeight: "700",
-    textDecorationLine: "underline",
+    fontWeight: '700',
+    textDecorationLine: 'underline',
     color: colors.BLUE,
     paddingTop: 15,
     paddingBottom: 30,
@@ -487,20 +463,20 @@ const styles = StyleSheet.create({
     height: 45,
     borderRadius: 45,
     paddingHorizontal: 30,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     marginBottom: 15,
   },
   ValidationButtonText: {
-    color: "#fff",
-    fontWeight: "700",
+    color: '#fff',
+    fontWeight: '700',
     fontSize: 19,
   },
   textInput: {
     fontSize: 20,
   },
   bottom: {
-    justifyContent: "flex-end",
+    justifyContent: 'flex-end',
     marginBottom: 36,
   },
 });
