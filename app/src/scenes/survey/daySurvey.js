@@ -1,14 +1,9 @@
 import React, {useEffect, useState, useContext, useRef} from 'react';
-import {StyleSheet, ScrollView, View, SafeAreaView, Keyboard, KeyboardAvoidingView, TouchableOpacity, Platform, Dimensions} from 'react-native';
+import {ScrollView, View, SafeAreaView, KeyboardAvoidingView, Platform} from 'react-native';
 import Text from '../../components/MyText';
-import {colors} from '../../utils/colors';
 import {beforeToday, formatDay, formatRelativeDate} from '../../utils/date/helpers';
-import {isToday, isYesterday, parseISO, format} from 'date-fns';
-import {fr} from 'date-fns/locale';
-import BackButton from '../../components/BackButton';
-import Button from '../../components/Button';
+import {isToday, isYesterday, parseISO} from 'date-fns';
 import {getScoreWithState} from '../../utils';
-import Question from './Question';
 import InputQuestion from './InputQuestion';
 import QuestionYesNo from './QuestionYesNo';
 import logEvents from '../../services/logEvents';
@@ -16,9 +11,7 @@ import {DiaryDataContext} from '../../context/diaryData';
 import {alertNoDataYesterday} from './survey-data';
 import localStorage from '../../utils/localStorage';
 import {useFocusEffect} from '@react-navigation/native';
-import ArrowUpSvg from '../../../assets/svg/arrow-up.svg';
 import {GoalsDaySurvey} from '../goals/survey/GoalsDaySurvey';
-import {Screen} from '../../components/Screen';
 import {Button2} from '../../components/Button2';
 import {Card} from '../../components/Card';
 import {IndicatorSurveyItem} from './components/IndicatorSurveyItem';
@@ -179,306 +172,79 @@ const DaySurvey = ({navigation, route}) => {
   };
 
   return (
-    <Screen
-      header={{
-        title: 'Mon questionnaire',
-      }}
-      bottomChildren={<Button2 fill title="Valider" onPress={submitDay} />}
-      scrollProps={{
-        onScrollBeginDrag: Keyboard.dismiss,
-      }}
-      contentContainerStyle={{alignItems: 'stretch'}}
-      scrollRef={scrollRef}>
-      <View>
-        <View style={{marginBottom: 8}}>
-          <Card preset="lighten" title={renderQuestion()} image={{source: require('./../../../assets/imgs/indicateur.png')}} containerStyle={{marginBottom: 16}} />
-          {userIndicateurs
-            .filter(ind => ind.active)
-            .map(ind => (
-              <IndicatorSurveyItem
-                key={ind?.uuid}
-                indicator={ind}
-                value={answers?.[ind?.name]?.value}
-                onValueChanged={({indicator, value}) => toggleAnswer({key: indicator?.name, value})}
-                onCommentChanged={({indicator, comment}) => handleChangeUserComment({key: indicator?.name, userComment: comment})}
-                comment={answers?.[ind?.name]?.userComment}
-              />
-            ))}
-          <Card
-            title="Personnaliser mes indicateurs"
-            //text="Vous pouvez gérer vos indicateurs et en créer de nouveaux"
-            icon={{icon: 'ImportantSvg'}}
-            onPress={() => {
-              navigation.navigate('symptoms');
-              logEvents.logSettingsSymptomsFromSurvey();
-            }}
-            containerStyle={styles.spacing}
-          />
+    <SafeAreaView className="flex-1 bg-white">
+      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} className="flex-1" keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 25}>
+        <View className="absolute top-0 left-0 right-0 flex-row items-center justify-between px-4 pt-5 bg-white/90 z-50">
+          {navigation.canGoBack() && (
+            <Button2 preset="" type="outline" circle size="normal" icon="ArrowUpSvg" iconStyle={{transform: [{rotate: '270deg'}]}} onPress={() => navigation.goBack()} />
+          )}
+          <Text className="flex-1 text-lg font-bold font-karla text-center px-1">Mon questionnaire</Text>
+          <View className="w-[45px]" />
         </View>
-      </View>
-      <GoalsDaySurvey date={initSurvey?.date} ref={goalsRef} scrollRef={scrollRef} route={route} />
-      <InputQuestion
-        question={questionContext}
-        onPress={toggleAnswer}
-        selected={answers[questionContext.id]?.value}
-        explanation={questionContext.explanation}
-        onChangeUserComment={handleChangeUserComment}
-        userComment={answers[questionContext.id]?.userComment}
-        placeholder="Contexte, évènements, comportement de l’entourage..."
-      />
-      <QuestionYesNo
-        question={questionToxic}
-        onPress={toggleAnswer}
-        selected={answers[questionToxic.id]?.value}
-        explanation={questionToxic.explanation}
-        isLast
-        onChangeUserComment={handleChangeUserComment}
-        userComment={answers[questionToxic.id]?.userComment}
-      />
-      <View style={styles.divider} />
-      <Text style={styles.subtitle}>Retrouvez toutes vos notes dans l'onglet &quot;Mon&nbsp;journal&quot;</Text>
-    </Screen>
+        <ScrollView
+          ref={scrollRef}
+          keyboardShouldPersistTaps="handled"
+          keyboardDismissMode="interactive"
+          className="grow"
+          contentContainerStyle={{
+            paddingTop: 80,
+            paddingHorizontal: 16,
+            paddingBottom: 80,
+          }}>
+          <View>
+            <View className="mb-2">
+              <Card preset="lighten" title={renderQuestion()} image={{source: require('./../../../assets/imgs/indicateur.png')}} containerStyle={{marginBottom: 16}} />
+              {userIndicateurs
+                .filter(ind => ind.active)
+                .map(ind => (
+                  <IndicatorSurveyItem
+                    key={ind?.uuid}
+                    indicator={ind}
+                    value={answers?.[ind?.name]?.value}
+                    onValueChanged={({indicator, value}) => toggleAnswer({key: indicator?.name, value})}
+                    onCommentChanged={({indicator, comment}) => handleChangeUserComment({key: indicator?.name, userComment: comment})}
+                    comment={answers?.[ind?.name]?.userComment}
+                  />
+                ))}
+              <Card
+                title="Personnaliser mes indicateurs"
+                icon={{icon: 'ImportantSvg'}}
+                onPress={() => {
+                  navigation.navigate('symptoms');
+                  logEvents.logSettingsSymptomsFromSurvey();
+                }}
+                className="my-2"
+              />
+            </View>
+          </View>
+          <GoalsDaySurvey date={initSurvey?.date} ref={goalsRef} scrollRef={scrollRef} route={route} />
+          <InputQuestion
+            question={questionContext}
+            onPress={toggleAnswer}
+            selected={answers[questionContext.id]?.value}
+            explanation={questionContext.explanation}
+            onChangeUserComment={handleChangeUserComment}
+            userComment={answers[questionContext.id]?.userComment}
+            placeholder="Contexte, évènements, comportement de l'entourage..."
+          />
+          <QuestionYesNo
+            question={questionToxic}
+            onPress={toggleAnswer}
+            selected={answers[questionToxic.id]?.value}
+            explanation={questionToxic.explanation}
+            isLast
+            onChangeUserComment={handleChangeUserComment}
+            userComment={answers[questionToxic.id]?.userComment}
+          />
+          <View className="h-[1px] bg-neutral-200 mx-5 my-2.5 w-full self-center" />
+          <Text className="flex-1 text-black text-sm font-normal text-center">Retrouvez toutes vos notes dans l'onglet "Mon&nbsp;journal"</Text>
+        </ScrollView>
+        <View className={`absolute bottom-0 left-0 right-0 p-4 bg-white z-50 ${Platform.OS === 'android' ? 'pb-4' : 'pb-0'}`}>
+          <Button2 fill title="Valider" onPress={submitDay} />
+        </View>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  spacing: {
-    marginVertical: 8,
-  },
-  textArea: {
-    backgroundColor: '#F4FCFD',
-    borderRadius: 10,
-    marginBottom: 10,
-    padding: 10,
-    marginHorizontal: 15,
-  },
-  selectionContainer: {
-    padding: 3,
-    borderColor: '#DEF4F5',
-    borderWidth: 1,
-    borderRadius: 10,
-  },
-  selectionYesNoContainer: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 40,
-    height: 40,
-    borderColor: '#DEF4F5',
-    borderWidth: 1,
-    borderRadius: 99999,
-  },
-  activeSelectionContainer: {
-    backgroundColor: colors.LIGHT_BLUE,
-  },
-  activeLabel: {
-    color: '#fff',
-    fontWeight: 'bold',
-  },
-  arrowDown: {
-    transform: [{rotate: '180deg'}],
-  },
-  arrowUp: {
-    transform: [{rotate: '0deg'}],
-  },
-
-  buttonValidate: {
-    width: '100%',
-  },
-  divider: {
-    height: 1,
-    backgroundColor: 'rgba(0,183,200, .09)',
-    marginTop: 20,
-    marginBottom: 10,
-    width: '100%',
-    alignSelf: 'center',
-  },
-  spacer: {
-    height: 120,
-  },
-
-  questionContainer: {
-    display: 'flex',
-  },
-  questionHeaderContainer: {
-    backgroundColor: '#F4FCFD',
-    borderColor: '#DEF4F5',
-    borderWidth: 1,
-    borderRadius: 10,
-    padding: 10,
-  },
-  questionHeader: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  questionInfo: {
-    marginTop: 15,
-  },
-  questionPoint: {
-    height: 16,
-    width: 16,
-    borderRadius: 8,
-    backgroundColor: colors.LIGHT_BLUE,
-  },
-  questionTitle: {
-    textAlign: 'center',
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  answerContainer: {
-    paddingTop: 10,
-    paddingBottom: 15,
-    marginLeft: 18, // padding of the header question container + half of the dot size => 10 + 8 = 18
-    display: 'flex',
-    justifyContent: 'space-around',
-  },
-  answersContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    paddingBottom: 15,
-  },
-  leftFileAriane: {
-    borderLeftColor: '#DEF4F5',
-    borderLeftWidth: 2,
-  },
-  safe: {
-    flex: 1,
-    backgroundColor: 'white',
-  },
-  question: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 15,
-    marginBottom: 25,
-    backgroundColor: '#F4FCFD',
-    borderColor: '#DEF4F5',
-    borderWidth: 1,
-    borderRadius: 10,
-    padding: 10,
-    paddingVertical: 20,
-  },
-  questionTextContainer: {
-    flex: 1,
-    marginLeft: 20,
-  },
-  questionText: {
-    color: colors.BLUE,
-    fontSize: 22,
-    fontWeight: '700',
-  },
-  linkContainer: {
-    backgroundColor: 'rgba(31,198,213,0.2)',
-    borderColor: colors.LIGHT_BLUE,
-    borderWidth: 0.5,
-    borderRadius: 10,
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: 15,
-    paddingRight: 20,
-  },
-  linkTextContainer: {
-    flex: 1,
-    marginHorizontal: 20,
-  },
-  linkTitle: {
-    color: colors.BLUE,
-    fontSize: 14,
-    fontWeight: '700',
-    flex: 1,
-    marginBottom: 5,
-  },
-  linkText: {
-    color: colors.BLUE,
-    fontSize: 14,
-    flex: 1,
-  },
-  linkButtonContainer: {
-    borderRadius: 20,
-    backgroundColor: colors.LIGHT_BLUE,
-    height: 40,
-    width: 40,
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    alignSelf: 'flex-start',
-    transform: [{rotate: '90deg'}],
-    margin: 7,
-  },
-  subtitleTop: {
-    flex: 1,
-    color: colors.LIGHT_BLUE,
-    fontSize: 18,
-    fontWeight: '700',
-    marginTop: 15,
-    textAlign: 'center',
-  },
-  subtitle: {
-    flex: 1,
-    color: '#000',
-    fontSize: 15,
-    fontWeight: 'normal',
-    textAlign: 'center',
-  },
-  answer: {
-    backgroundColor: '#F4FCFD',
-    borderColor: '#D4F0F2',
-    marginBottom: 10,
-    borderRadius: 10,
-    padding: 10,
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  answerLabel: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  label: {
-    fontWeight: '600',
-  },
-  container: {
-    backgroundColor: 'white',
-    padding: 20,
-    paddingTop: 0,
-  },
-  backButton: {
-    fontWeight: '700',
-    textDecorationLine: 'underline',
-    color: colors.BLUE,
-    paddingTop: 15,
-    paddingBottom: 30,
-  },
-  ValidationButton: {
-    backgroundColor: colors.LIGHT_BLUE,
-    height: 45,
-    borderRadius: 45,
-    paddingHorizontal: 30,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 15,
-  },
-  ValidationButtonText: {
-    color: '#fff',
-    fontWeight: '700',
-    fontSize: 19,
-  },
-  textInput: {
-    fontSize: 20,
-  },
-  bottom: {
-    justifyContent: 'flex-end',
-    marginBottom: 36,
-  },
-});
 
 export default DaySurvey;
