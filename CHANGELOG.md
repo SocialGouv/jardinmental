@@ -1,3 +1,10 @@
+## [1.46.12](https://github.com/SocialGouv/jardinmental/compare/v1.46.11...v1.46.12) (2025-02-19)
+
+
+### Bug Fixes
+
+* add goo destinataire newsletter ([3db7cd8](https://github.com/SocialGouv/jardinmental/commit/3db7cd8fb00e2310d204769735d73f530643a3f7))
+
 ## [1.46.11](https://github.com/SocialGouv/jardinmental/compare/v1.46.10...v1.46.11) (2025-02-19)
 
 
