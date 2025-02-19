@@ -66,4 +66,48 @@ router.post(
   })
 );
 
+router.post("/subscribe", async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      return res.status(400).json({ error: "Email is required" });
+    }
+
+    const apiRes = await fetch("https://api.tipimail.com/v1/messages/send", {
+      method: "POST",
+      headers: {
+        "X-Tipimail-ApiUser": TIPIMAIL_API_USER,
+        "X-Tipimail-ApiKey": TIPIMAIL_API_KEY,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        apiKey: TIPIMAIL_API_KEY,
+        to: [
+          {
+            address: "tangi.mendes@selego.co",
+          },
+        ],
+        msg: {
+          from: {
+            address: "contact@jardinmental.fr",
+            personalName: "Jardin Mental - Application",
+          },
+          subject: "New Newsletter Subscription",
+          text: `New subscription to the newsletter from: ${email}`,
+        },
+      }),
+    }).catch((err) => capture(err, { extra: { route: "POST /mail/subscribe", body: req.body } }));
+
+    if (apiRes?.ok) {
+      return res.status(200).json({ message: "Subscription successful" });
+    }
+
+    res.status(200).json({ ok: true, message: "Subscription successful" });
+  } catch (error) {
+    console.error("Newsletter subscription error:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 module.exports = { router };
