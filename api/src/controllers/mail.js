@@ -85,7 +85,7 @@ router.post("/subscribe", async (req, res) => {
         apiKey: TIPIMAIL_API_KEY,
         to: [
           {
-            address: "tangi.mendes@selego.co",
+            address: "jardinmental@fabrique.social.gouv.fr",
           },
         ],
         msg: {
@@ -93,8 +93,8 @@ router.post("/subscribe", async (req, res) => {
             address: "contact@jardinmental.fr",
             personalName: "Jardin Mental - Application",
           },
-          subject: "New Newsletter Subscription",
-          text: `New subscription to the newsletter from: ${email}`,
+          subject: "Nouvelle inscription à la newsletter",
+          text: `Nouvelle inscription à la newsletter de l'application Jardin Mental : ${email}`,
         },
       }),
     }).catch((err) => capture(err, { extra: { route: "POST /mail/subscribe", body: req.body } }));
