@@ -1,3 +1,10 @@
+## [1.46.11](https://github.com/SocialGouv/jardinmental/compare/v1.46.10...v1.46.11) (2025-02-19)
+
+
+### Bug Fixes
+
+* wip newsletter ([0e50602](https://github.com/SocialGouv/jardinmental/commit/0e50602ecefc1ddedb908d5b875ca4a6f716a664))
+
 ## [1.46.10](https://github.com/SocialGouv/jardinmental/compare/v1.46.9...v1.46.10) (2025-02-12)
 
 
