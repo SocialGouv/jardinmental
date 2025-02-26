@@ -1,5 +1,6 @@
 import React, {useEffect, useState, useContext} from 'react';
-import {View, StyleSheet, SafeAreaView, ScrollView, TouchableOpacity} from 'react-native';
+import {View, StyleSheet, ScrollView, TouchableOpacity} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 import styleBeck from '../../styles/beck';
 import Text from '../../components/MyText';

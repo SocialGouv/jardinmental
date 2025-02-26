@@ -1,5 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {TouchableOpacity, StyleSheet, SafeAreaView, TextInput, Alert, KeyboardAvoidingView, Platform, View, ScrollView, Keyboard} from 'react-native';
+import {TouchableOpacity, StyleSheet, TextInput, Alert, KeyboardAvoidingView, Platform, View, ScrollView, Keyboard} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import KeyboardAvoidingViewScreen from '../../components/KeyboardAvoidingViewScreen';
 import Text from '../../components/MyText';
 import AsyncStorage from '@react-native-async-storage/async-storage';

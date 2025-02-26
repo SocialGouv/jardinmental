@@ -1,5 +1,6 @@
 import React, {useEffect, useState, useContext, useRef} from 'react';
-import {ScrollView, View, SafeAreaView, KeyboardAvoidingView, Platform} from 'react-native';
+import {ScrollView, View, KeyboardAvoidingView, Platform} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import Text from '../../components/MyText';
 import {beforeToday, formatDay, formatRelativeDate} from '../../utils/date/helpers';
 import {isToday, isYesterday, parseISO} from 'date-fns';

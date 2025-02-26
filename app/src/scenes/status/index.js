@@ -1,5 +1,6 @@
 import React, {useEffect, useState, useCallback} from 'react';
 import {StyleSheet, View, SafeAreaView, Dimensions, Animated} from 'react-native';
+
 import {useFocusEffect} from '@react-navigation/native';
 import Header from '../../components/Header';
 import {colors} from '../../utils/colors';

@@ -1,6 +1,7 @@
 import React from 'react';
-import {View, Platform, Text, SafeAreaView, Pressable} from 'react-native';
+import {View, Platform, Text, Pressable} from 'react-native';
 import {WebView} from 'react-native-webview';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 const PdfViewer = ({navigation}) => {
   const uri =

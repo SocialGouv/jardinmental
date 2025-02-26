@@ -1,11 +1,7 @@
 import React, {useState, useEffect} from 'react';
-import {
-  View,
-  TouchableOpacity,
-  StyleSheet,
-  SafeAreaView,
-  ScrollView,
-} from 'react-native';
+import {View, TouchableOpacity, StyleSheet, ScrollView} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
+
 import Text from '../../components/MyText';
 import ReminderSvg from '../../../assets/svg/reminder.svg';
 import {colors} from '../../utils/colors';
@@ -37,19 +33,13 @@ export default ({navigation, route}) => {
           height={100}
         />
         {/* <ReminderSvg /> */}
-        <Text style={styles.title}>
-          Il est trop tard pour modifier les informations du {formatDate(date)}.
-        </Text>
+        <Text style={styles.title}>Il est trop tard pour modifier les informations du {formatDate(date)}.</Text>
         <View style={styles.description}>
           <Text style={styles.subTitle}>
-            Pour que les informations saisies soient les plus fiables possibles,
-            il n'est possible de saisir que les données des{' '}
-            <Text style={styles.bold}>7 derniers jours</Text>.
+            Pour que les informations saisies soient les plus fiables possibles, il n'est possible de saisir que les données des <Text style={styles.bold}>7 derniers jours</Text>.
           </Text>
         </View>
-        <TouchableOpacity
-          onPress={navigation.goBack}
-          style={styles.setupButton}>
+        <TouchableOpacity onPress={navigation.goBack} style={styles.setupButton}>
           <Text style={styles.setupButtonText}>Retour</Text>
         </TouchableOpacity>
       </ScrollView>

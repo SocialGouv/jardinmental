@@ -1,5 +1,6 @@
 import React from 'react';
-import {StyleSheet, SafeAreaView, ScrollView, View, Image} from 'react-native';
+import {StyleSheet, ScrollView, View, Image} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import Text from '../../components/MyText';
 import BackButton from '../../components/BackButton';
 import {colors} from '../../utils/colors';
@@ -9,17 +10,12 @@ const LegalScreen = ({navigation, title, content}) => {
     <SafeAreaView style={styles.safe}>
       <View style={styles.headerContainer}>
         <BackButton onPress={navigation.goBack} />
-        <Image
-          style={styles.image}
-          source={require('../../../assets/imgs/logo2.png')}
-        />
+        <Image style={styles.image} source={require('../../../assets/imgs/logo2.png')} />
       </View>
       <Text style={styles.content}>
         <Text style={styles.title}>{title}</Text>
       </Text>
-      <ScrollView
-        style={styles.container}
-        contentContainerStyle={styles.scrollContainer}>
+      <ScrollView style={styles.container} contentContainerStyle={styles.scrollContainer}>
         {content}
       </ScrollView>
     </SafeAreaView>

@@ -1,12 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import {
-  View,
-  TouchableOpacity,
-  StyleSheet,
-  SafeAreaView,
-  ScrollView,
-  Alert,
-} from 'react-native';
+import {View, TouchableOpacity, StyleSheet, ScrollView, Alert} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import Text from '../../components/MyText';
 import {colors} from '../../utils/colors';
 import BackButton from '../../components/BackButton';
@@ -24,11 +18,9 @@ export default ({navigation}) => {
     )
       return setIsBeckActivated(true);
   };
-  const handleClick = async (v) => {
+  const handleClick = async v => {
     const alertTitle = v ? 'Activées' : 'Désactivées';
-    const alertMessage = v
-      ? 'Les colonnes de Beck sont activées sur cet appareil.'
-      : 'Les colonnes de Beck sont désactivées sur cet appareil.';
+    const alertMessage = v ? 'Les colonnes de Beck sont activées sur cet appareil.' : 'Les colonnes de Beck sont désactivées sur cet appareil.';
     Alert.alert(alertTitle, alertMessage, [
       {
         text: 'Retourner au journal',
@@ -48,25 +40,14 @@ export default ({navigation}) => {
     <SafeAreaView style={styles.safe}>
       <BackButton onPress={navigation.goBack} />
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <Icon
-          icon="HeartsSvg"
-          color="#1FC6D5"
-          styleContainer={styles.icon}
-          width={60}
-          height={60}
-        />
+        <Icon icon="HeartsSvg" color="#1FC6D5" styleContainer={styles.icon} width={60} height={60} />
         <Text style={styles.title}>Colonnes de Beck</Text>
         <View style={styles.description}>
-          <Text style={styles.subTitle}>
-            Apprenez à identifier, comprendre et gérer vos pensées et vos
-            émotions au quotidien.
-          </Text>
+          <Text style={styles.subTitle}>Apprenez à identifier, comprendre et gérer vos pensées et vos émotions au quotidien.</Text>
         </View>
         {isBeckActivated ? (
           <>
-            <TouchableOpacity
-              onPress={() => handleClick(false)}
-              style={styles.desactivateButton}>
+            <TouchableOpacity onPress={() => handleClick(false)} style={styles.desactivateButton}>
               <Text style={styles.desactivateButtonText}>Désactiver</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={navigation.goBack}>
@@ -75,9 +56,7 @@ export default ({navigation}) => {
           </>
         ) : (
           <>
-            <TouchableOpacity
-              onPress={() => handleClick(true)}
-              style={styles.activateButton}>
+            <TouchableOpacity onPress={() => handleClick(true)} style={styles.activateButton}>
               <Text style={styles.activateButtonText}>Activer</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={navigation.goBack}>

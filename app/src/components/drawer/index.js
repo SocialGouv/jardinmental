@@ -1,5 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react';
-import {SafeAreaView, StyleSheet, Platform, Dimensions, View, ScrollView, Linking, TouchableWithoutFeedback, Alert} from 'react-native';
+import {StyleSheet, Platform, Dimensions, View, ScrollView, Linking, TouchableWithoutFeedback, Alert} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import Modal from 'react-native-modal';
 import DrawerItem from './drawer-item';
 import LegalItem from './legal-item';

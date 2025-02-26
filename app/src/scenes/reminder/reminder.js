@@ -1,6 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {Alert, View, TouchableOpacity, StyleSheet, SafeAreaView, Linking} from 'react-native';
+import {Alert, View, TouchableOpacity, StyleSheet, Linking} from 'react-native';
 // import { openSettings } from "react-native-permissions";
+import {SafeAreaView} from 'react-native-safe-area-context';
 import dayjs from 'dayjs';
 import Text from '../../components/MyText';
 import AsyncStorage from '@react-native-async-storage/async-storage';
