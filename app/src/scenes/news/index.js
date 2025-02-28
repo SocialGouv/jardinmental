@@ -14,7 +14,7 @@ export const getBadgeNotesVersion = async () => {
   return lastNotesVersion !== LAST_NOTES_VERSION;
 };
 
-export const LAST_NOTES_VERSION = '1.40';
+export const LAST_NOTES_VERSION = '1.42.3';
 
 export default ({navigation}) => {
   useEffect(() => {
@@ -29,25 +29,48 @@ export default ({navigation}) => {
         <Image style={styles.image} source={require('../../../assets/imgs/logo2.png')} />
       </View>
       <ScrollView style={styles.cgu} contentContainerStyle={styles.scrollContainer}>
-        <Card title="Notice et conseils d’utilisation" version="v1.40" date="02/2023">
+        <Card title="Mises à jour importantes" version="v1.42" date="03/2025">
           <Item>
-            <Text style={styles.text}>Retrouvez la notice et des conseils d’utlisation de Jardin Mental dans le menu, onglet "Présentation".</Text>
+            <Text style={styles.text}>
+              <Text style={styles.bold}>Correction du système de notifications</Text>
+              {'\n'}Pour réactiver vos notifications, pensez à reprogrammer votre rappel quotidien ("Définir un rappel" dans le menu "Paramètres") ainsi que ceux liés à vos
+              objectifs ("Personnaliser mes objectifs" dans le menu "Paramètres"). Si nécessaire, veillez à autoriser les notifications de Jardin Mental dans les paramètres de
+              votre téléphone.
+            </Text>
+          </Item>
+          <Item>
+            <Text style={styles.text}>
+              <Text style={styles.bold}>Mise à jour des CGU</Text>
+              {'\n'}Mise à jour des Conditions Générales d'Utilisation (CGU), de la politique de confidentialité et des mentions légales : Nous vous invitons à les consulter pour
+              rester informé des dernières modifications.
+            </Text>
+          </Item>
+          <Item>
+            <Text style={styles.text}>
+              <Text style={styles.bold}>Améliorations et corrections mineures</Text>
+              {'\n'}Optimisation de l'affichage, corrections de bugs mineurs et améliorations de l'accessibilité pour une expérience utilisateur plus fluide.
+            </Text>
+          </Item>
+        </Card>
+        <Card title="Notice et conseils d'utilisation" version="v1.40" date="02/2023">
+          <Item>
+            <Text style={styles.text}>Retrouvez la notice et des conseils d'utlisation de Jardin Mental dans le menu, onglet "Présentation".</Text>
           </Item>
         </Card>
         <Card title="Vous pouvez choisir comment évaluer vos indicateurs" version="v1.39" date="12/2022">
           <Item>
-            <Text style={styles.text}>Si les emojis ne sont pas adaptés à votre indicateur, vous pouvez maintenant les remplacer par une jauge ou par un “non/oui”.</Text>
+            <Text style={styles.text}>Si les emojis ne sont pas adaptés à votre indicateur, vous pouvez maintenant les remplacer par une jauge ou par un "non/oui".</Text>
           </Item>
           <Item>
-            <Text style={styles.text}>En plus du mode d’évaluation de votre indicateur, vous pouvez aussi choisir le sens des couleurs sur la jauge ou le non/oui.</Text>
+            <Text style={styles.text}>En plus du mode d'évaluation de votre indicateur, vous pouvez aussi choisir le sens des couleurs sur la jauge ou le non/oui.</Text>
           </Item>
           <Item>
             <Text style={styles.text}>
               <Text style={styles.bold}>Remarque</Text>
-              {'\n'}Pour éviter de perdre ou endommager vos anciennes entrées, vous ne pouvez pas modifier le mode d’évaluation de vos anciens indicateurs. Vous devez en créer des
+              {'\n'}Pour éviter de perdre ou endommager vos anciennes entrées, vous ne pouvez pas modifier le mode d'évaluation de vos anciens indicateurs. Vous devez en créer des
               nouveaux pour cela.
-              {'\n\n'}De même, vous ne pouvez pas non plus avoir 2 indicateurs qui ont exactement le même nom. Si par exemple vous souhaitez dorénavant suivre “Anxiété” avec une
-              jauge, vous pouvez créer “Mon&nbsp;Anxiété” ou encore “Anxiété 2” pour cela.
+              {'\n\n'}De même, vous ne pouvez pas non plus avoir 2 indicateurs qui ont exactement le même nom. Si par exemple vous souhaitez dorénavant suivre "Anxiété" avec une
+              jauge, vous pouvez créer "Mon&nbsp;Anxiété" ou encore "Anxiété 2" pour cela.
             </Text>
           </Item>
         </Card>
@@ -56,21 +79,21 @@ export default ({navigation}) => {
             <Text style={styles.text}>Vous pouvez maintenant choisir des objectifs parmi des exemples, en supprimer ou modifier leur ordre dans votre questionnaire.</Text>
           </Item>
         </Card>
-        <Card title="Nouvelle fonction : les objectifs et choix de l’organisation de son questionnaire" version="v1.37" date="11/2022">
+        <Card title="Nouvelle fonction : les objectifs et choix de l'organisation de son questionnaire" version="v1.37" date="11/2022">
           <Item>
             <Text style={styles.text}>
               <Text style={styles.bold}>Fixez-vous des objectifs !</Text>
-              {'\n'}Vous pouvez maintenant suivre des objectifs, choisir les jours où vous devez les réaliser et programmer un rappel pour chacun d’entre eux afin de ne pas les
-              oublier !{'\n'}Vous trouverez des exemples d’objectifs à suivre dans le menu des réglages puis “personnaliser mes objectifs”, et vous pouvez même créer les vôtres.
-              {'\n\n'}Vous retrouverez vos objectifs dans votre questionnaire quotidien, il vous suffit de les cocher pour dire s’ils ont été réalises (ou décochés si ce n’est pas
+              {'\n'}Vous pouvez maintenant suivre des objectifs, choisir les jours où vous devez les réaliser et programmer un rappel pour chacun d'entre eux afin de ne pas les
+              oublier !{'\n'}Vous trouverez des exemples d'objectifs à suivre dans le menu des réglages puis "personnaliser mes objectifs", et vous pouvez même créer les vôtres.
+              {'\n\n'}Vous retrouverez vos objectifs dans votre questionnaire quotidien, il vous suffit de les cocher pour dire s'ils ont été réalises (ou décochés si ce n'est pas
               le cas)
             </Text>
           </Item>
           <Item>
             <Text style={styles.text}>
-              <Text style={styles.bold}>Réorganisez l’ordre de votre questionnaire quotidien</Text>
-              {'\n'}Pour cela, allez dans le menu des réglages puis “personnaliser mes indicateurs”. Maintenez appuyé sur l’indicateur de votre choix et déplacer le dans la liste
-              et relâcher le pour modifier l’ordre de votre questionnaire.
+              <Text style={styles.bold}>Réorganisez l'ordre de votre questionnaire quotidien</Text>
+              {'\n'}Pour cela, allez dans le menu des réglages puis "personnaliser mes indicateurs". Maintenez appuyé sur l'indicateur de votre choix et déplacer le dans la liste
+              et relâcher le pour modifier l'ordre de votre questionnaire.
             </Text>
           </Item>
         </Card>
@@ -85,8 +108,8 @@ export default ({navigation}) => {
         <Card title="Amélioration de l'analyse et recommandation" version="v1.34" date="05/2022">
           <Item>
             <Text style={styles.text}>
-              Recommander l’application Jardin Mental aux personnes de votre choix, directement à partir de votre téléphone, en cliquant sur le bouton «&nbsp;Recommander&nbsp;» du
-              menu de l’application.
+              Recommander l'application Jardin Mental aux personnes de votre choix, directement à partir de votre téléphone, en cliquant sur le bouton «&nbsp;Recommander&nbsp;» du
+              menu de l'application.
             </Text>
           </Item>
           <Item>
@@ -109,26 +132,26 @@ export default ({navigation}) => {
             <Text style={styles.text}>
               Dans votre questionnaire quotidien&nbsp;:
               {'\n'}•&nbsp;Vous pouvez maintenant directement répondre à la question «&nbsp;Avez-vous pris correctement votre traitement quotidien&nbsp;?&nbsp;» par
-              «&nbsp;oui&nbsp;» si c’est le cas, ou «&nbsp;non&nbsp;» si vous l’avez pris partiellement voire complètement oublié.
+              «&nbsp;oui&nbsp;» si c'est le cas, ou «&nbsp;non&nbsp;» si vous l'avez pris partiellement voire complètement oublié.
               {'\n'}•&nbsp;Précisez si vous avez pris un «&nbsp;si besoin&nbsp;» (Les «&nbsp;si besoin&nbsp;» sont des médicaments que les médecins prescrivent au cas où, à prendre
-              uniquement si le besoin s’en fait ressentir)
+              uniquement si le besoin s'en fait ressentir)
               {'\n'}•&nbsp;Optionnel : vous pouvez toujours renseigner le détails de vos prises, par médicament et dose prise sur la journée
             </Text>
           </Item>
           <Item>
             <Text style={styles.text}>
               Dans «&nbsp;Mes analyses&nbsp;»&nbsp;:
-              {'\n'}•&nbsp;Dans les «&nbsp;frises&nbsp;»&nbsp;: retrouvez vos prises de traitement en corrélation avec vos frises de suivi, en cliquant sur l’icône
+              {'\n'}•&nbsp;Dans les «&nbsp;frises&nbsp;»&nbsp;: retrouvez vos prises de traitement en corrélation avec vos frises de suivi, en cliquant sur l'icône
               «&nbsp;traitements&nbsp;» dans les filtres, à côté des filtres par «&nbsp;emoji&nbsp;». Vous pouvez maintenant observer comment vos prises de traitement influent sur
               vos indicateurs
-              {'\n'}•&nbsp;Dans les «&nbsp;Statistiques&nbsp;»&nbsp;: toujours sur la période de votre choix, retrouvez des statistiques sur l’observance de votre traitement, à la
+              {'\n'}•&nbsp;Dans les «&nbsp;Statistiques&nbsp;»&nbsp;: toujours sur la période de votre choix, retrouvez des statistiques sur l'observance de votre traitement, à la
               suite de vos indicateurs
             </Text>
           </Item>
         </Card>
-        <Card title="Mon Suivi Psy change de présentation et vous propose de nouveaux exemples d’éléments à suivre dans votre questionnaire." version="v1.24" date="03/2022">
+        <Card title="Mon Suivi Psy change de présentation et vous propose de nouveaux exemples d'éléments à suivre dans votre questionnaire." version="v1.24" date="03/2022">
           <Item>
-            <Text style={styles.text}>Pour un parcours plus fluide et plus clair dans l’application, le menu de navigation a été modifié&nbsp;:</Text>
+            <Text style={styles.text}>Pour un parcours plus fluide et plus clair dans l'application, le menu de navigation a été modifié&nbsp;:</Text>
             <Text style={styles.text}>
               Vous retrouverez dans «&nbsp;Mes&nbsp;entrées&nbsp;»&nbsp;:
               {'\n'}•&nbsp;Le <Text style={styles.bold}>récapitulatif</Text> de vos questionnaires quotidiens
@@ -141,13 +164,13 @@ export default ({navigation}) => {
           </Item>
           <Item>
             <Text style={styles.text}>
-              Vous retrouverez dans «&nbsp;Beck&nbsp;» vos colonnes de Beck (un exercice sur les pensées automatiques qui surviennent à la suite d’un évènement), si vous travaillez
+              Vous retrouverez dans «&nbsp;Beck&nbsp;» vos colonnes de Beck (un exercice sur les pensées automatiques qui surviennent à la suite d'un évènement), si vous travaillez
               avec dans le cadre de votre suivi, ou en autonomie.
             </Text>
           </Item>
           <Item>
             <Text style={[styles.text, styles.bold]}>
-              N’oubliez pas de personnaliser votre questionnaire en allant dans les réglages de l’application et découvrez des nouveaux exemples pour vous aidez à trouver des
+              N'oubliez pas de personnaliser votre questionnaire en allant dans les réglages de l'application et découvrez des nouveaux exemples pour vous aidez à trouver des
               éléments qui vous sont pertinents&nbsp;!
             </Text>
           </Item>
@@ -155,21 +178,21 @@ export default ({navigation}) => {
         <Card title="Nouvelle fonction de «&nbsp;Mon&nbsp;Suivi&nbsp;» : écran «&nbsp;Statistiques&nbsp;»" version="v1.23" date="03/2022">
           <Item>
             <Text style={styles.text}>
-              En naviguant avec les flèches en haut de l’écran de l’onglet «&nbsp;Mon&nbsp;Suivi&nbsp;», vous trouverez la nouvelle fonction «&nbsp;Statistiques&nbsp;».{'\n'}
+              En naviguant avec les flèches en haut de l'écran de l'onglet «&nbsp;Mon&nbsp;Suivi&nbsp;», vous trouverez la nouvelle fonction «&nbsp;Statistiques&nbsp;».{'\n'}
             </Text>
             <Text style={styles.text}>
               Celle-ci vous permet de visualiser pour chaque élément de votre questionnaire et sur la période de votre choix&nbsp;:
-              {'\n'}•&nbsp;<Text style={styles.bold}>Le niveau moyen</Text> de l’élément, représenté par l’émoticône correspondante.
+              {'\n'}•&nbsp;<Text style={styles.bold}>Le niveau moyen</Text> de l'élément, représenté par l'émoticône correspondante.
               {'\n'}•&nbsp;Le détail des <Text style={styles.bold}>proportions en pourcentages</Text> et en nombre de jours pour chaque niveau atteint sur la période choisie.
-              {'\n'}•&nbsp;La plus longue série de <Text style={styles.bold}>jours consécutifs</Text> pour chaque niveau. Le minimum étant de 2 jours d’affilée, un «&nbsp;0&nbsp;»
-              est alors affiché s’il n’y a pas au moins 2 jours consécutifs au même niveau sur la période choisie.
+              {'\n'}•&nbsp;La plus longue série de <Text style={styles.bold}>jours consécutifs</Text> pour chaque niveau. Le minimum étant de 2 jours d'affilée, un «&nbsp;0&nbsp;»
+              est alors affiché s'il n'y a pas au moins 2 jours consécutifs au même niveau sur la période choisie.
             </Text>
           </Item>
         </Card>
         <Card title="Fonction «&nbsp;Évènements&nbsp;» dans «&nbsp;Mon&nbsp;Suivi&nbsp;» : identifiez les évènements qui influent sur vos ressentis" version="v1.22" date="03/2022">
           <Item>
             <Text style={styles.text}>
-              Sélectionnez un élément de votre questionnaire (par exemple votre humeur) ainsi que le niveau (par exemple l’émoticône vert foncé) et visualisez tous les évènements
+              Sélectionnez un élément de votre questionnaire (par exemple votre humeur) ainsi que le niveau (par exemple l'émoticône vert foncé) et visualisez tous les évènements
               qui sont arrivés les jours où votre humeur était au plus haut.
             </Text>
           </Item>
@@ -188,7 +211,7 @@ export default ({navigation}) => {
           <Item>
             <Text style={styles.text}>
               Dans Mon Suivi, vous pouvez maintenant visualiser les variations des éléments de votre questionnaire sur la période de votre choix. Filtrez les emojis qui vous
-              intéressent en cliquant sur ceux de votre choix, et comparez l’évolution de vos éléments entre eux.
+              intéressent en cliquant sur ceux de votre choix, et comparez l'évolution de vos éléments entre eux.
             </Text>
           </Item>
         </Card>
