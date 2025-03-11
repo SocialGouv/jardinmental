@@ -1,14 +1,16 @@
 require("dotenv").config();
-// const { prisma } = require("./prisma");
+const { prisma } = require("./prisma");
 const { capture } = require("./third-parties/sentry");
 const { sendNotifications } = require("./third-parties/expo-notifications");
 
 // todo : activate notifications once the setup id done
+const nowUtc = () => {
+  const now = new Date();
+  return new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds()));
+};
+const DAYS_OF_WEEK = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
 
 const executeReminderCronJob = async () => {
-  console.log("✅ executeReminderCronJob");
-  return;
-  
   const now = nowUtc();
   const utcTimeHours = now.getUTCHours();
   const utcTimeMinutes = now.getUTCMinutes();
