@@ -1,3 +1,10 @@
+# [1.47.0](https://github.com/SocialGouv/jardinmental/compare/v1.46.12...v1.47.0) (2025-03-14)
+
+
+### Features
+
+* cronjobs-kubernetes ([#262](https://github.com/SocialGouv/jardinmental/issues/262)) ([61643ed](https://github.com/SocialGouv/jardinmental/commit/61643ed0b81058226e417a837f149f2becbe0f80))
+
 ## [1.46.12](https://github.com/SocialGouv/jardinmental/compare/v1.46.11...v1.46.12) (2025-02-19)
 
 
