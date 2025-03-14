@@ -1,0 +1,36 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: cron-reminder
+  # annotations:
+  #   oblik.socialgouv.io/min-request-cpu: "1500m"
+  #   oblik.socialgouv.io/min-request-memory: "2.5Gi"
+  #   oblik.socialgouv.io/min-limit-memory: "4.5Gi"
+spec:
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  schedule: 0 1 * * *
+  jobTemplate:
+    spec:
+      backoffLimit: 1
+      template:
+        spec:
+          restartPolicy: Never
+          securityContext:
+            fsGroup: 1000
+            runAsUser: 1000
+            runAsGroup: 1000
+          containers:
+            - name: reminder
+              image: "{{ or .Values.registry .Values.global.registry }}/{{ .Values.global.imageProject }}/{{ .Values.global.imageRepository }}/reminder:{{ .Values.global.imageTag }}"
+              resources:
+                requests:
+                  cpu: 1500m
+                  memory: 2.5Gi
+                limits:
+                  cpu: 2000m
+                  memory: 4.5Gi
+              envFrom:
+                - secretRef:
+                    name: pg-app

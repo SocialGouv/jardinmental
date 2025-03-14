@@ -18,3 +18,9 @@ jobs:
       use: build
       with:
         context: api
+    build-reminder:
+      use: build
+      with:
+        context: api
+        imagePackage: reminder
+        dockerfile: Dockerfile.cron

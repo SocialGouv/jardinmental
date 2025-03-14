@@ -3,8 +3,6 @@ const { setDay, setHours, setMinutes } = require("date-fns");
 const { zonedTimeToUtc } = require("date-fns-tz");
 const { catchErrors } = require("../middlewares/errors");
 const { prisma } = require("../prisma");
-const { capture } = require("../third-parties/sentry");
-const { sendNotifications } = require("../third-parties/expo-notifications");
 const router = express.Router();
 
 const DAYS_OF_WEEK = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
@@ -123,84 +121,6 @@ router.put(
   })
 );
 
-const reminderCronJob = async (req, res) => {
-  const now = nowUtc();
-  const utcTimeHours = now.getUTCHours();
-  const utcTimeMinutes = now.getUTCMinutes();
-  const utcDayOfWeek = DAYS_OF_WEEK[now.getDay()];
-
-  const mainReminders = await prisma.reminder.findMany({
-    where: {
-      type: "Main",
-      disabled: false,
-      utcTimeHours,
-      utcTimeMinutes,
-    },
-    include: {
-      user: true,
-    },
-  });
-  if (mainReminders.length > 0) {
-    await sendNotifications({
-      pushTokens: mainReminders.map((reminder) => reminder.user?.pushNotifToken).filter(Boolean),
-      title: "Comment allez-vous aujourd'hui ?",
-      body: "N'oubliez pas de renseigner votre journée dans Jardin Mental",
-    });
-  }
-
-  const goalReminders = await prisma.reminderUtcDaysOfWeek.findMany({
-    where: {
-      [utcDayOfWeek]: true,
-      reminder: {
-        type: "Goal",
-        disabled: false,
-        utcTimeHours,
-        utcTimeMinutes,
-      },
-    },
-    include: {
-      reminder: {
-        include: {
-          user: true,
-        },
-      },
-    },
-  });
-  if (goalReminders.length > 0) {
-    await sendNotifications({
-      pushTokens: goalReminders.map((r) => r.reminder?.user?.pushNotifToken).filter(Boolean),
-      title: "Vous avez un objectif aujourd'hui 🎯",
-      body: "N'oubliez de préciser si vous l'avez réalisé dans Jardin Mental",
-    });
-  }
-
-  const inactivityReminders = await prisma.reminderUtcDaysOfWeek.findMany({
-    where: {
-      [utcDayOfWeek]: true,
-      reminder: {
-        type: "Inactivity",
-        disabled: false,
-        utcTimeHours,
-        utcTimeMinutes,
-      },
-    },
-    include: {
-      reminder: {
-        include: {
-          user: true,
-        },
-      },
-    },
-  });
-  if (inactivityReminders.length > 0) {
-    await sendNotifications({
-      pushTokens: inactivityReminders.map((r) => r.reminder?.user?.pushNotifToken).filter(Boolean),
-      title: "Comment s'est passée cette semaine ?",
-      body: "Prenez le temps de la renseigner sur Jardin Mental",
-    });
-  }
-};
-
 router.put(
   "/refreshPushNotifToken",
   catchErrors(async (req, res) => {
@@ -222,4 +142,4 @@ router.put(
   })
 );
 
-module.exports = { router, reminderCronJob };
+module.exports = { router };
