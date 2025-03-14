@@ -36,8 +36,8 @@ spec:
               #   - name: PRODUCTION
               #     value: 'true'
               envFrom:
-              - secretRef:
-                name: pg-app
+                - secretRef:
+                  name: pg-app
               #   - configMapRef:
               #       name: alert
               #       name: alert
