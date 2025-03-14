@@ -2,7 +2,7 @@
 
 ## Overview
 
-The application uses Matomo analytics to track user interactions. All event tracking functions are located in `app/src/services/logEvents.js`.
+The application uses Matomo analytics to track user interactions. All event tracking functions are located in `app/src/services/logEvents.js`. See [logEvents.js](https://github.com/SocialGouv/jardinmental/blob/master/app/src/services/logEvents.js) for implementation details.
 
 ## Event Structure
 
@@ -50,7 +50,7 @@ logEvents.logStatusSubPage(tab);
 
 ## Indicators Configuration
 
-The application uses a predefined set of indicators to track user's health and well-being, defined in `app/src/utils/liste_indicateurs.1.js`.
+The application uses a predefined set of indicators to track user's health and well-being, defined in `app/src/utils/liste_indicateurs.1.js`. . See [logEvents.js](https://github.com/SocialGouv/jardinmental/blob/master/app/src/utils/liste_indicateurs.1.js) for implementation details.
 
 ### Indicator Structure
 
