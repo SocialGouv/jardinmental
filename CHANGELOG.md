@@ -1,3 +1,10 @@
+# [1.48.0](https://github.com/SocialGouv/jardinmental/compare/v1.47.0...v1.48.0) (2025-03-17)
+
+
+### Features
+
+* every minutes cron ([c3f37bb](https://github.com/SocialGouv/jardinmental/commit/c3f37bbe365483ceb9049a4a71b0d5234943054a))
+
 # [1.47.0](https://github.com/SocialGouv/jardinmental/compare/v1.46.12...v1.47.0) (2025-03-14)
 
 
