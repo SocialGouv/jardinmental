@@ -1,3 +1,10 @@
+## [1.48.1](https://github.com/SocialGouv/jardinmental/compare/v1.48.0...v1.48.1) (2025-03-17)
+
+
+### Bug Fixes
+
+* schedule every minute ([a5ff4f3](https://github.com/SocialGouv/jardinmental/commit/a5ff4f3d3820ec7748b75981300751f839a9e5b9))
+
 # [1.48.0](https://github.com/SocialGouv/jardinmental/compare/v1.47.0...v1.48.0) (2025-03-17)
 
 
