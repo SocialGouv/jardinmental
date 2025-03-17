@@ -6,7 +6,7 @@ const { reminderCronJob } = require("./controllers/reminder");
 
 cron.schedule("* * * * *", async () => {
   // every minute
-  launchCronJob("reminder", reminderCronJob);
+  // launchCronJob("reminder", reminderCronJob);
 });
 
 const launchCronJob = async (name, job) => {
