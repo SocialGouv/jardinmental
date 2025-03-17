@@ -67,7 +67,5 @@ app.use("/mail", require("./controllers/mail").router);
 
 app.use(errors.sendError);
 
-require("./cronjobs");
-
 // Start the server
 app.listen(PORT, () => console.log(`RUN ON PORT ${PORT}`));
