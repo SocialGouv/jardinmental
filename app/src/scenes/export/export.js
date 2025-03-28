@@ -1,69 +1,50 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {TouchableOpacity, StyleSheet, TextInput, Alert, KeyboardAvoidingView, Platform, View, ScrollView, Keyboard} from 'react-native';
+import React, {useContext, useState} from 'react';
+import {StyleSheet, TextInput, Alert, KeyboardAvoidingView, Platform, View, ScrollView, Keyboard} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import KeyboardAvoidingViewScreen from '../../components/KeyboardAvoidingViewScreen';
+import * as Print from 'expo-print';
+import {shareAsync} from 'expo-sharing';
+import * as FileSystem from 'expo-file-system';
+
 import Text from '../../components/MyText';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import ExportDataSvg from '../../../assets/svg/export-data.svg';
 import {colors} from '../../utils/colors';
+import {formatHtmlTable} from './utils';
+import logEvents from '../../services/logEvents';
 import {DiaryDataContext} from '../../context/diaryData';
 import {DiaryNotesContext} from '../../context/diaryNotes';
-import {formatHtmlTable} from './utils';
 import Icon from '../../components/Icon';
-import logEvents from '../../services/logEvents';
-import {sendMail} from '../../services/mail';
 import BackButton from '../../components/BackButton';
 import Button from '../../components/Button';
-const MailStorageKey = '@Mail';
 
 const Export = ({navigation}) => {
-  const [mail, setMail] = useState('');
-  const [pseudo, setPseudo] = useState('');
+  const [name, setName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [diaryData] = useContext(DiaryDataContext);
   const [diaryNotes] = useContext(DiaryNotesContext);
 
-  useEffect(() => {
-    (async () => {
-      const storageMail = await AsyncStorage.getItem(MailStorageKey);
-      if (storageMail) {
-        setMail(storageMail.trim().replace(/\s*/g, ''));
+  const printToFile = async () => {
+    try {
+      logEvents.logDataExport();
+      setIsLoading(true);
+      const html = await formatHtmlTable(diaryData, diaryNotes);
+      const {uri} = await Print.printToFileAsync({html, margins: {top: 15, right: 15, bottom: 15, left: 15}});
+
+      let pdfName = uri;
+      if (name) {
+        pdfName = `${uri.slice(0, uri.lastIndexOf('/') + 1)}${name}.pdf`;
+        await FileSystem.moveAsync({
+          from: uri,
+          to: pdfName,
+        });
       }
-    })();
-  }, []);
 
-  const exportData = async () => {
-    if (!mail) return Alert.alert('Oups', `Aucun mail n'a été renseigné.\n\nMerci d'indiquer l'adresse mail sur laquelle vous désirez recevoir vos données.`);
-    await AsyncStorage.setItem(MailStorageKey, mail);
-    const htmlExport = await formatHtmlTable(diaryData, diaryNotes);
-    setIsLoading(true);
-    logEvents.logDataExport();
-    let subject = 'Export de données';
-    if (pseudo) subject += ` - ${pseudo}`;
-    const res = await sendMail(
-      {
-        subject,
-        html: htmlExport,
-      },
-      mail,
-    );
-    setIsLoading(false);
-    if (res?.ok) {
-      Alert.alert('Mail envoyé !', `Retrouvez vos données sur votre boîte mail : ${mail}`, [
-        {
-          text: 'Retour',
-          onPress: () => navigation.navigate('tabs'),
-          style: 'default',
-        },
-      ]);
-    } else {
-      console.log(res);
-      if (!res.skipMessage) Alert.alert("Une erreur s'est produite !");
+      await shareAsync(pdfName, {UTI: '.pdf', mimeType: 'application/pdf'});
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+      Alert.alert("Une erreur s'est produite !");
+    } finally {
+      setIsLoading(false);
     }
-  };
-
-  const handleChangeMail = value => {
-    setMail(value.trim().replace(/\s*/g, ''));
   };
 
   return (
@@ -87,32 +68,14 @@ const Export = ({navigation}) => {
             width={80}
             height={80}
           />
-          <Text style={styles.title}>J'envoie par mail mes données des 30 derniers jours</Text>
-
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>Je souhaite envoyer mes données à :</Text>
-            <TextInput
-              autoCapitalize="none"
-              keyboardType="email-address"
-              textContentType="emailAddress"
-              onChangeText={handleChangeMail}
-              value={mail}
-              placeholder="destinataire@mail.com"
-              style={styles.inputMail}
-            />
-          </View>
+          <Text style={styles.title}>Je génère un fichier avec mes données des 30 derniers jours.</Text>
           <View style={styles.inputContainer}>
             <Text style={styles.label}>
               <Text style={styles.italic}>Optionnel</Text> : je peux donner un nom à mon bilan pour mieux l'identifier
             </Text>
-            <TextInput autoCapitalize="none" onChangeText={setPseudo} value={pseudo} placeholder="Ex: Arthur M. décembre 2020, ..." style={styles.inputMail} />
-            <Text style={styles.indication}>Le nom choisi sera affiché dans l'objet du mail</Text>
+            <TextInput autoCapitalize="none" onChangeText={setName} value={name} placeholder="Ex: Arthur M. décembre 2020, ..." style={styles.inputMail} />
           </View>
-          {!isLoading && <Button title="Envoyer par mail" disabled={!mail} onPress={exportData} />}
-          <View className="bg-gray-200 p-3 mx-4 rounded-lg">
-            <Text className="text-gray-600 text-center text-xs mb-1">Veillez à transmettre vos données aux seules personnes habilitées.</Text>
-            <Text className="text-gray-600 text-center text-xs">L'envoi se fait via la solution Sarbacane, qui n'accède pas à vos données renseignées dans l'application</Text>
-          </View>
+          {isLoading ? <Button title="Génération en cours..." disabled /> : <Button title="Générer un fichier" onPress={printToFile} />}
         </ScrollView>
       </SafeAreaView>
     </KeyboardAvoidingView>
