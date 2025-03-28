@@ -26,7 +26,15 @@ const Export = ({navigation}) => {
       logEvents.logDataExport();
       setIsLoading(true);
       const html = await formatHtmlTable(diaryData, diaryNotes);
-      const {uri} = await Print.printToFileAsync({html, margins: {top: 15, right: 15, bottom: 15, left: 15}});
+      const {uri} = await Print.printToFileAsync({
+        html,
+        margins: {
+          top: 38,
+          right: 38,
+          bottom: 38,
+          left: 38,
+        },
+      });
 
       let pdfName = uri;
       if (name) {

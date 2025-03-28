@@ -348,6 +348,7 @@ const formatHtmlTable = async (diaryData, diaryNotes) => {
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Karla&display=swap" rel="stylesheet">
         <style type="text/css">
+          * { print-color-adjust:exact !important; }
           * { font-size: 12px; }
           h1 { font-size: 20px; }
           h2 { font-size: 16px; }
