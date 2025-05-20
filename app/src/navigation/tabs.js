@@ -1,20 +1,20 @@
 import React from 'react';
-import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Status from '../scenes/status';
 import Exercise from '../scenes/exercise';
 import Suivi from '../scenes/suivi';
 import SurveyMenu from '../../assets/svg/SurveyMenu';
 import ExerciseMenu from '../../assets/svg/ExerciseMenu';
 import GraphMenu from '../../assets/svg/GraphMenu';
-import {View, Text} from 'react-native';
-import {colors} from '../utils/colors';
+import { View, Text } from 'react-native';
+import { colors } from '../utils/colors';
 import localStorage from '../utils/localStorage';
 import logEvents from '../services/logEvents';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-const Tab = createMaterialTopTabNavigator();
+const Tab = createBottomTabNavigator();
 
-const Tabs = ({navigation, route}) => {
+const Tabs = ({ navigation, route }) => {
   const insets = useSafeAreaInsets();
   const startSurvey = async () => {
     const user_indicateurs = await localStorage.getIndicateurs();
@@ -32,14 +32,12 @@ const Tabs = ({navigation, route}) => {
   return (
     <Tab.Navigator
       initialRouteName="Status"
-      tabBarPosition="bottom"
       screenOptions={{
-        swipeEnabled: true,
+        headerShown: false,
         tabBarShowIcon: true,
         tabBarShowLabel: true,
-        tabBarIndicatorStyle: {display: 'none'}, // Hide the indicator
         tabBarStyle: {
-          maxHeight: 80,
+          height: 80,
           shadowColor: '#000',
           shadowOffset: {
             width: 0,
@@ -47,7 +45,6 @@ const Tabs = ({navigation, route}) => {
           },
           shadowOpacity: 0.27,
           shadowRadius: 4.65,
-
           elevation: 6,
         },
         tabBarIconStyle: {
@@ -68,14 +65,14 @@ const Tabs = ({navigation, route}) => {
         name="Status"
         options={{
           tabBarLabel: 'Mes entrées',
-          tabBarIcon: ({focused, color}) => (
-            <View style={{alignItems: 'center'}}>
+          tabBarIcon: ({ focused, color }) => (
+            <View style={{ alignItems: 'center' }}>
               <SurveyMenu height={24} width={24} color={color} />
             </View>
           ),
         }}>
         {p => (
-          <View style={{paddingTop: insets.top, flex: 1}}>
+          <View style={{ paddingTop: insets.top, flex: 1 }}>
             <Status {...p} startSurvey={startSurvey} />
           </View>
         )}
@@ -84,14 +81,14 @@ const Tabs = ({navigation, route}) => {
         name="Calendar"
         options={{
           tabBarLabel: 'Mes analyses',
-          tabBarIcon: ({focused, color}) => (
-            <View style={{alignItems: 'center'}}>
+          tabBarIcon: ({ focused, color }) => (
+            <View style={{ alignItems: 'center' }}>
               <GraphMenu height={24} width={24} color={color} />
             </View>
           ),
         }}>
         {p => (
-          <View style={{paddingTop: insets.top, flex: 1}}>
+          <View style={{ paddingTop: insets.top, flex: 1 }}>
             <Suivi {...p} startSurvey={startSurvey} />
           </View>
         )}
@@ -100,14 +97,14 @@ const Tabs = ({navigation, route}) => {
         name="Exercise"
         options={{
           tabBarLabel: 'Beck',
-          tabBarIcon: ({focused, color}) => (
-            <View style={{alignItems: 'center'}}>
+          tabBarIcon: ({ focused, color }) => (
+            <View style={{ alignItems: 'center' }}>
               <ExerciseMenu height={24} width={24} color={color} />
             </View>
           ),
         }}>
         {p => (
-          <View style={{paddingTop: insets.top, flex: 1}}>
+          <View style={{ paddingTop: insets.top, flex: 1 }}>
             <Exercise {...p} startSurvey={startSurvey} />
           </View>
         )}
