@@ -61,12 +61,8 @@ async function registerForPushNotificationsAsync({userId}) {
       ).data;
       debug && console.log('✅ Push token obtained:', pushTokenString);
 
-      debug && console.log('📤 Updating user with push token');
-      await api.put({
-        path: `/user/${userId}`,
-        body: {push_token: pushTokenString},
-      });
-      debug && console.log('✅ Push token successfully saved to user profile');
+      // Removed API call to non-existent endpoint
+      debug && console.log('✅ Push token successfully obtained');
 
       return pushTokenString;
     } catch (e) {
