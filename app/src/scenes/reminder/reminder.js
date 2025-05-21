@@ -13,7 +13,7 @@ import NotificationService from '../../services/notifications';
 import {colors} from '../../utils/colors';
 import logEvents from '../../services/logEvents';
 import BackButton from '../../components/BackButton';
-import * as RNLocalize from 'react-native-localize';
+import * as Localization from 'expo-localization';
 import API from '../../services/api';
 
 const ReminderStorageKey = '@Reminder';
@@ -72,7 +72,7 @@ const Reminder = ({navigation, route, notifReminderTitle = "Comment ça va aujou
       body: {
         pushNotifToken: await NotificationService.getToken(),
         type: 'Main',
-        timezone: RNLocalize.getTimeZone(),
+        timezone: Localization.timezone,
         timeHours: newReminder.getHours(),
         timeMinutes: newReminder.getMinutes(),
         disabled: false,

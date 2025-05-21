@@ -1,6 +1,6 @@
 import API from "../../services/api";
 import NotificationService from "../../services/notifications";
-import * as RNLocalize from "react-native-localize";
+import * as Localization from "expo-localization";
 import { add } from "date-fns";
 import { DAYS_OF_WEEK } from "../../utils/date/daysOfWeek";
 
@@ -16,7 +16,7 @@ export const updateInactivityReminder = async () => {
     body: {
       pushNotifToken: await NotificationService.getToken(),
       type: "Inactivity",
-      timezone: RNLocalize.getTimeZone(),
+      timezone: Localization.timezone,
       timeHours: nextDate.getHours(),
       timeMinutes: nextDate.getMinutes(),
       daysOfWeek: {
