@@ -4417,7 +4417,7 @@ expect@^29.7.0:
     jest-message-util "^29.7.0"
     jest-util "^29.7.0"
 
-expo-application@~5.9.0:
+expo-application@~5.9.0, expo-application@~5.9.1:
   version "5.9.1"
   resolved "https://registry.npmjs.org/expo-application/-/expo-application-5.9.1.tgz"
   integrity sha512-uAfLBNZNahnDZLRU41ZFmNSKtetHUT9Ua557/q189ua0AWV7pQjoVAx49E4953feuvqc9swtU3ScZ/hN1XO/FQ==
@@ -7900,11 +7900,6 @@ react-native-date-picker@^5.0.8:
   version "5.0.8"
   resolved "https://registry.npmjs.org/react-native-date-picker/-/react-native-date-picker-5.0.8.tgz"
   integrity sha512-1l4w4+iLuhOZUSyQrt5DclXnNx3RwEyp+wUrSaBfaHr/3FWtRWjLjS0E9FL4FWuq6vn09Hy9hn8lZJ1DmPc9YQ==
-
-react-native-device-info@^8.3.1:
-  version "8.7.1"
-  resolved "https://registry.npmjs.org/react-native-device-info/-/react-native-device-info-8.7.1.tgz"
-  integrity sha512-cVMZztFa2Qn6qpQa601W61CtUwZQ1KXfqCOeltejAWEXmgIWivC692WGSdtGudj4upSi1UgMSaGcvKjfcpdGjg==
 
 react-native-draggable-flatlist@^4.0.1:
   version "4.0.1"
