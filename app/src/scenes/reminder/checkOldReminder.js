@@ -3,7 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import dayjs from "dayjs";
 import NotificationService from "../../services/notifications";
 import API from "../../services/api";
-import * as Localization from "expo-localization";
+import { getCalendars } from "expo-localization";
 import { getGoalsTracked, updateApiReminer } from "../../utils/localStorage/goals";
 
 const ReminderStorageKey = "@Reminder";
@@ -52,7 +52,7 @@ export const checkOldReminderBefore154 = async () => {
     body: {
       pushNotifToken: await NotificationService.getToken(),
       type: "Main",
-      timezone: Localization.timezone,
+      timezone: getCalendars()[0].timeZone,
       timeHours: storedReminder.hour(),
       timeMinutes: storedReminder.minute(),
     },

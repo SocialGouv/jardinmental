@@ -17,7 +17,7 @@ import {StickyButtonContainer} from '../onboarding/StickyButton';
 import {SafeAreaViewWithOptionalHeader} from '../onboarding/ProgressHeader';
 import {OnboardingBackButton} from '../onboarding/BackButton';
 import API from '../../services/api';
-import * as Localization from 'expo-localization';
+import { getCalendars } from "expo-localization";
 
 const ReminderStorageKey = '@Reminder';
 
@@ -75,7 +75,7 @@ const Reminder = ({navigation, route, notifReminderTitle = "Comment ça va aujou
       body: {
         pushNotifToken: await NotificationService.getToken(),
         type: 'Main',
-        timezone: Localization.timezone,
+        timezone: getCalendars()[0].timeZone,
         timeHours: newReminder.getHours(),
         timeMinutes: newReminder.getMinutes(),
         disabled: false,

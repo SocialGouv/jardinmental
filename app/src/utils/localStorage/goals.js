@@ -6,7 +6,7 @@ import { DAYS_OF_WEEK } from "../date/daysOfWeek";
 import { setDay, getDay, format } from "date-fns";
 import { fr } from "date-fns/locale";
 import NotificationService from "../../services/notifications";
-import * as Localization from "expo-localization";
+import { getCalendars } from "expo-localization";
 import API from "../../services/api";
 
 const { getData, saveData, clearData } = createStorage({
@@ -70,7 +70,7 @@ export const updateApiReminer = async ({ id, daysOfWeek, enabled, reminder }) =>
   const body = {
     pushNotifToken: await NotificationService.getToken(),
     type: "Goal",
-    timezone: Localization.timezone,
+    timezone: getCalendars()[0].timeZone,
     localId: id,
     disabled: true,
     timeHours: undefined,
