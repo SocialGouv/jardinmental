@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, ScrollView, View, SafeAreaView } from "react-native";
 import Text from "../../components/MyText";
-import CheckBox from "@react-native-community/checkbox";
+import Checkbox from "expo-checkbox";
 import { colors } from "../../utils/colors";
 import SymptomsExplanation from "../symptoms/symptoms-explanation";
 import { displayedCategories, categories, reliquatCategories } from "../../utils/constants";
@@ -129,20 +129,11 @@ const SymptomScreen = ({ navigation, route }) => {
           Object.keys(chosenCategories).map((cat, index) => (
             <View key={index} style={styles.categories}>
               <Text style={styles.label}>{displayedCategories[cat] || cat}</Text>
-              <CheckBox
-                animationDuration={0.2}
-                boxType="square"
+              <Checkbox
                 style={styles.checkbox}
                 value={chosenCategories[cat]}
                 onValueChange={(newValue) => setToogleCheckbox(cat, newValue)}
-                // for android
-                tintColors={{ true: colors.LIGHT_BLUE, false: "#aaa" }}
-                // for ios
-                tintColor="#aaa"
-                onCheckColor={colors.LIGHT_BLUE}
-                onTintColor={colors.LIGHT_BLUE}
-                onAnimationType="bounce"
-                offAnimationType="bounce"
+                color={chosenCategories[cat] ? colors.LIGHT_BLUE : undefined}
               />
             </View>
           ))}

@@ -1,7 +1,7 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
 import Text from "../../../components/MyText";
-import CheckBox from "@react-native-community/checkbox";
+import Checkbox from "expo-checkbox";
 
 import { colors } from "../../../utils/colors";
 
@@ -9,20 +9,11 @@ import { colors } from "../../../utils/colors";
 const LabelCheckBox = ({ value, onValueChange, label }) => {
   return (
     <View style={styles.container}>
-      <CheckBox
-        animationDuration={0.2}
-        boxType="square"
+      <Checkbox
         style={styles.checkbox}
         value={value}
         onValueChange={onValueChange}
-        // for android
-        tintColors={{ true: colors.LIGHT_BLUE, false: "#aaa" }}
-        // for ios
-        tintColor="#aaa"
-        onCheckColor={colors.LIGHT_BLUE}
-        onTintColor={colors.LIGHT_BLUE}
-        onAnimationType="bounce"
-        offAnimationType="bounce"
+        color={value ? colors.LIGHT_BLUE : undefined}
       />
       <Text>{label}</Text>
     </View>
