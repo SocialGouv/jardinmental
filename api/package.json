@@ -8,9 +8,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development nodemon ./src/index.js",
-    "start": "NODE_ENV=production npx prisma migrate deploy && NODE_ENV=production node ./src/index.js",
-    "start:test": "NODE_ENV=test node ./src/index.js",
+    "dev": "cross-env NODE_ENV=development nodemon --config nodemon.json",
+    "start": "NODE_ENV=production npx prisma migrate deploy && NODE_ENV=production node ./dist/index.js",
+    "start:test": "NODE_ENV=test node ./dist/index.js",
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "type-check": "tsc --noEmit",
     "initdb": "node ./src/db/scriptInit.js"
   },
   "author": "",
@@ -41,7 +44,15 @@
     "prisma": "^4.4.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.15"
+    "@types/cors": "^2.8.18",
+    "@types/crypto-js": "^4.2.2",
+    "@types/express": "^5.0.2",
+    "@types/morgan": "^1.9.9",
+    "@types/node": "^22.15.21",
+    "@types/node-cron": "^3.0.11",
+    "nodemon": "^2.0.15",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
   },
   "engines": {
     "npm": "please-use-yarn",

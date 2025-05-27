@@ -2,6 +2,8 @@
 .env.production
 node_modules
 
+dist/*
+
 # Yarn Berry
 .yarn/*
 !.yarn/patches
