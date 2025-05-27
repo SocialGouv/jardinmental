@@ -1,3 +1,10 @@
+## [1.48.2](https://github.com/SocialGouv/jardinmental/compare/v1.48.1...v1.48.2) (2025-05-27)
+
+
+### Bug Fixes
+
+* add missing expo-print expo-sharing imports ([#267](https://github.com/SocialGouv/jardinmental/issues/267)) ([e94c255](https://github.com/SocialGouv/jardinmental/commit/e94c2552835962f8aba6d2821593b2744e8fcd63))
+
 ## [1.48.1](https://github.com/SocialGouv/jardinmental/compare/v1.48.0...v1.48.1) (2025-03-17)
 
 
