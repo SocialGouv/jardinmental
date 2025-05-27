@@ -1,4 +1,9 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
-
-# exec < /dev/tty; yarn node-talisman --githook pre-commit -i
+# interactive only in shells
+if sh -c ': >/dev/tty' >/dev/null 2>/dev/null; then
+  exec </dev/tty;
+  npx node-talisman --githook pre-commit -i;
+else
+  npx node-talisman --githook pre-commit;
+fi
