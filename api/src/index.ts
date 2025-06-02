@@ -1,5 +1,9 @@
 import 'dotenv/config';
+
+// Initialize Sentry FIRST, before any other imports
+import './third-parties/sentry';
 import * as Sentry from '@sentry/node';
+
 import express, { Request, Response, NextFunction, Application } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
@@ -15,11 +19,12 @@ const versionCheck = require('./middlewares/versionCheck');
 // Put together a schema
 const app: Application = express();
 
+// Sentry is automatically instrumented via the expressIntegration in the init
+
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
-app.use(Sentry.Handlers.requestHandler());
 app.use(cors());
 
 // kube probe
@@ -72,6 +77,9 @@ app.use(helmet());
 app.use('/event', require('./controllers/event'));
 app.use('/reminder', require('./controllers/reminder').router);
 app.use('/mail', require('./controllers/mail').router);
+
+// Sentry error handler must be before other error handlers
+app.use(Sentry.expressErrorHandler());
 
 app.use(errors.sendError);
 
