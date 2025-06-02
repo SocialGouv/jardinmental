@@ -8,7 +8,7 @@ const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf8'));
 export const PORT = Number(process.env.PORT) || 3000;
 export const ENVIRONMENT = process.env.ENVIRONMENT || process.env.NODE_ENV || "development";
 
-export const SENTRY_KEY = process.env.SENTRY_KEY || "https://b43d73353b7b48b8857deb69bca98da2@o348403.ingest.sentry.io/2213011";
+export const SENTRY_KEY = process.env.SENTRY_KEY;
 
 export const VERSION = packageJson.version;
 export const MOBILE_VERSION = packageJson.mobileAppVersion;

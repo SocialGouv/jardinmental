@@ -1,6 +1,6 @@
 fileignoreconfig:
 - filename: api/src/config.ts
-  checksum: b029d9369ab169a8267fcc6638711f4bb220e8a87fe9f9bdcdc5b6c73a5e6dfb
+  checksum: 31e38a78927264f160f3652037cf34acc78b7f63234d9571346a9af86be44c5a
 - filename: app/ios/Podfile.lock
   checksum: fada845491cbe03825f5445bf764d11cd0754ac2d6ead0db9a890f24334c5d02
 - filename: app/src/scenes/onboarding/onboardingSymptomsCustom/CreateIndicator/ChooseIndicatorOrder.js
