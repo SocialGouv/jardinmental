@@ -5,6 +5,7 @@ import {STORAGE_KEY_PUSH_NOTIFICATION_TOKEN, STORAGE_KEY_PUSH_NOTIFICATION_TOKEN
 import logEvents from './logEvents';
 import API from './api';
 import {registerForPushNotificationsAsync} from './notifications-expo';
+import uuid from 'uuid';
 
 class NotificationService {
   listeners = {};
