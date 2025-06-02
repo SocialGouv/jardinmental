@@ -1,3 +1,10 @@
+# [1.50.0](https://github.com/SocialGouv/jardinmental/compare/v1.49.0...v1.50.0) (2025-06-02)
+
+
+### Features
+
+* switch js api to typescript ([#277](https://github.com/SocialGouv/jardinmental/issues/277)) ([e3996f9](https://github.com/SocialGouv/jardinmental/commit/e3996f94a3cfc5bfed7855c77fd892a56d8ad9f2))
+
 # [1.49.0](https://github.com/SocialGouv/jardinmental/compare/v1.48.2...v1.49.0) (2025-06-02)
 
 
