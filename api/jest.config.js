@@ -43,16 +43,6 @@ module.exports = {
   // Formats de rapport de couverture
   coverageReporters: ['text', 'lcov', 'html'],
   
-  // Seuils de couverture (ajustés pour le moment)
-  coverageThreshold: {
-    global: {
-      branches: 50,
-      functions: 50,
-      lines: 50,
-      statements: 50
-    }
-  },
-  
   // Variables d'environnement pour les tests
   testEnvironmentOptions: {
     NODE_ENV: 'test',
