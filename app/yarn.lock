@@ -2169,6 +2169,26 @@
     deepmerge "^4.3.1"
     svgo "^3.0.2"
 
+"@testing-library/jest-native@^5.4.3":
+  version "5.4.3"
+  resolved "https://registry.npmjs.org/@testing-library/jest-native/-/jest-native-5.4.3.tgz"
+  integrity sha512-/sSDGaOuE+PJ1Z9Kp4u7PQScSVVXGud59I/qsBFFJvIbcn4P6yYw6cBnBmbPF+X9aRIsTJRDl6gzw5ZkJNm66w==
+  dependencies:
+    chalk "^4.1.2"
+    jest-diff "^29.0.1"
+    jest-matcher-utils "^29.0.1"
+    pretty-format "^29.0.3"
+    redent "^3.0.0"
+
+"@testing-library/react-native@^12.4.0":
+  version "12.9.0"
+  resolved "https://registry.yarnpkg.com/@testing-library/react-native/-/react-native-12.9.0.tgz#9c727d9ffec91024be3288ed9376df3673154784"
+  integrity sha512-wIn/lB1FjV2N4Q7i9PWVRck3Ehwq5pkhAef5X5/bmQ78J/NoOsGbVY2/DG5Y9Lxw+RfE+GvSEh/fe5Tz6sKSvw==
+  dependencies:
+    jest-matcher-utils "^29.7.0"
+    pretty-format "^29.7.0"
+    redent "^3.0.0"
+
 "@trysound/sax@0.2.0":
   version "0.2.0"
   resolved "https://registry.npmjs.org/@trysound/sax/-/sax-0.2.0.tgz"
@@ -4552,12 +4572,12 @@ expo-notifications@~0.28.19:
 
 expo-print@~13.0.1:
   version "13.0.1"
-  resolved "https://registry.yarnpkg.com/expo-print/-/expo-print-13.0.1.tgz#2fe419593aa812642f4ad7057928d2e712578e97"
+  resolved "https://registry.npmjs.org/expo-print/-/expo-print-13.0.1.tgz"
   integrity sha512-o8LuCguGrkyC5RaWEfL5N2J0V9mfbZ3GVzLpaf3KU5RrdYzGEjoiv4xlhVVzh/++hMUqOgnIrtF7tzWYhwu/7g==
 
 expo-sharing@~12.0.1:
   version "12.0.1"
-  resolved "https://registry.yarnpkg.com/expo-sharing/-/expo-sharing-12.0.1.tgz#6c4d951beda47dac47112e679d60fc06c233b7aa"
+  resolved "https://registry.npmjs.org/expo-sharing/-/expo-sharing-12.0.1.tgz"
   integrity sha512-wBT+WeXwapj/9NWuLJO01vi9bdlchYu/Q/xD8slL/Ls4vVYku8CPqzkTtDFcjLrjtlJqyeHsdQXwKLvORmBIew==
 
 expo-splash-screen@~0.27.7:
@@ -5862,7 +5882,7 @@ jest-config@^29.7.0:
     slash "^3.0.0"
     strip-json-comments "^3.1.1"
 
-jest-diff@^29.7.0:
+jest-diff@^29.0.1, jest-diff@^29.7.0:
   version "29.7.0"
   resolved "https://registry.npmjs.org/jest-diff/-/jest-diff-29.7.0.tgz"
   integrity sha512-LMIgiIrhigmPrs03JHpxUh2yISK3vLFPkAodPeo0+BuF7wA2FoQbkEg1u8gBYBThncu7e1oEDUfIXVuTqLRUjw==
@@ -5934,7 +5954,7 @@ jest-leak-detector@^29.7.0:
     jest-get-type "^29.6.3"
     pretty-format "^29.7.0"
 
-jest-matcher-utils@^29.7.0:
+jest-matcher-utils@^29.0.1, jest-matcher-utils@^29.7.0:
   version "29.7.0"
   resolved "https://registry.npmjs.org/jest-matcher-utils/-/jest-matcher-utils-29.7.0.tgz"
   integrity sha512-sBkD+Xi9DtcChsI3L3u0+N0opgPYnCRPtGcQYrgXmR+hmt/fYfWAL0xRXYU8eWOdfuLgBe0YCW3AFtnRLagq/g==
@@ -6886,6 +6906,11 @@ mimic-response@^3.1.0:
   resolved "https://registry.npmjs.org/mimic-response/-/mimic-response-3.1.0.tgz"
   integrity sha512-z0yWI+4FDrrweS8Zmt4Ej5HdJmky15+L2e6Wgn3+iK5fWzb6T3fhNFq2+MeTRb064c6Wr4N/wv0DzQTjNzHNGQ==
 
+min-indent@^1.0.0:
+  version "1.0.1"
+  resolved "https://registry.npmjs.org/min-indent/-/min-indent-1.0.1.tgz"
+  integrity sha512-I9jwMn07Sy/IwOj3zVkVik2JTvgpaykDZEigL6Rx6N9LbMywwUSMtxET+7lVoDLLd3O3IXwJwvuuns8UB/HeAg==
+
 minimatch@^3.0.2, minimatch@^3.0.4, minimatch@^3.1.1, minimatch@^3.1.2:
   version "3.1.2"
   resolved "https://registry.npmjs.org/minimatch/-/minimatch-3.1.2.tgz"
@@ -7719,7 +7744,7 @@ pretty-format@^26.5.2, pretty-format@^26.6.2:
     ansi-styles "^4.0.0"
     react-is "^17.0.1"
 
-pretty-format@^29.7.0:
+pretty-format@^29.0.3, pretty-format@^29.7.0:
   version "29.7.0"
   resolved "https://registry.npmjs.org/pretty-format/-/pretty-format-29.7.0.tgz"
   integrity sha512-Pdlw/oPxN+aXdmM9R00JVC9WVFoCLTKJvDVLgmJ+qAffBMxsV85l/Lu7sNx4zSzPyoL2euImuEwHhOXdEgNFZQ==
@@ -7867,7 +7892,7 @@ react-is@^17.0.1:
   resolved "https://registry.npmjs.org/react-is/-/react-is-17.0.2.tgz"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
 
-react-is@^18.0.0, react-is@^18.1.0:
+react-is@^18.0.0, react-is@^18.1.0, react-is@^18.2.0:
   version "18.3.1"
   resolved "https://registry.npmjs.org/react-is/-/react-is-18.3.1.tgz"
   integrity sha512-/LLMVyas0ljjAtoYiPqYiL8VWXzUUdThrmU5+n20DZv+a+ClRoevUzw5JxU+Ieh5/c87ytoTBV9G1FiKfNJdmg==
@@ -8119,6 +8144,15 @@ react-shallow-renderer@^16.15.0:
     object-assign "^4.1.1"
     react-is "^16.12.0 || ^17.0.0 || ^18.0.0"
 
+react-test-renderer@18.2.0:
+  version "18.2.0"
+  resolved "https://registry.yarnpkg.com/react-test-renderer/-/react-test-renderer-18.2.0.tgz#1dd912bd908ff26da5b9fca4fd1c489b9523d37e"
+  integrity sha512-JWD+aQ0lh2gvh4NM3bBM42Kx+XybOxCpgYK7F8ugAlpaTSnWsX+39Z4XkOykGZAHrjwwTZT3x3KxswVWxHPUqA==
+  dependencies:
+    react-is "^18.2.0"
+    react-shallow-renderer "^16.15.0"
+    scheduler "^0.23.0"
+
 react@18.2.0:
   version "18.2.0"
   resolved "https://registry.npmjs.org/react/-/react-18.2.0.tgz"
@@ -8176,6 +8210,14 @@ recast@^0.21.0:
     esprima "~4.0.0"
     source-map "~0.6.1"
     tslib "^2.0.1"
+
+redent@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.npmjs.org/redent/-/redent-3.0.0.tgz"
+  integrity sha512-6tDA8g98We0zd0GvVeMT9arEOnTw9qM03L9cJXaCjrip1OO764RDBLBfrB4cwzNGDj5OA5ioymC9GkizgWJDUg==
+  dependencies:
+    indent-string "^4.0.0"
+    strip-indent "^3.0.0"
 
 reflect.getprototypeof@^1.0.6, reflect.getprototypeof@^1.0.8:
   version "1.0.8"
@@ -8419,6 +8461,13 @@ scheduler@0.24.0-canary-efb381bbf-20230505:
   version "0.24.0-canary-efb381bbf-20230505"
   resolved "https://registry.npmjs.org/scheduler/-/scheduler-0.24.0-canary-efb381bbf-20230505.tgz"
   integrity sha512-ABvovCDe/k9IluqSh4/ISoq8tIJnW8euVAWYt5j/bg6dRnqwQwiGO1F/V4AyK96NGF/FB04FhOUDuWj8IKfABA==
+  dependencies:
+    loose-envify "^1.1.0"
+
+scheduler@^0.23.0:
+  version "0.23.2"
+  resolved "https://registry.npmjs.org/scheduler/-/scheduler-0.23.2.tgz"
+  integrity sha512-UOShsPwz7NrMUqhR6t0hWjFduvOzbtv7toDH1/hIrfRNIDBnnBWd0CwJTGvTpngVlmwGCdP9/Zl/tVrDqcuYzQ==
   dependencies:
     loose-envify "^1.1.0"
 
@@ -8963,6 +9012,13 @@ strip-final-newline@^2.0.0:
   version "2.0.0"
   resolved "https://registry.npmjs.org/strip-final-newline/-/strip-final-newline-2.0.0.tgz"
   integrity sha512-BrpvfNAE3dcvq7ll3xVumzjKjZQ5tI1sEUIKr3Uoks0XUl45St3FlatVqef9prk4jRDzhW6WZg+3bk93y6pLjA==
+
+strip-indent@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.npmjs.org/strip-indent/-/strip-indent-3.0.0.tgz"
+  integrity sha512-laJTa3Jb+VQpaC6DseHhF7dXVqHTfJPCRDaEbid/drOhgitgYku/letMUqOXFoWV0zIIUbjpdH2t+tYj4bQMRQ==
+  dependencies:
+    min-indent "^1.0.0"
 
 strip-json-comments@^3.1.0, strip-json-comments@^3.1.1:
   version "3.1.1"
