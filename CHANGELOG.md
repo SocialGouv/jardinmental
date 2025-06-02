@@ -1,3 +1,10 @@
+# [1.49.0](https://github.com/SocialGouv/jardinmental/compare/v1.48.2...v1.49.0) (2025-06-02)
+
+
+### Features
+
+* add docker-compose for easier api dev experience ([#276](https://github.com/SocialGouv/jardinmental/issues/276)) ([7319f3d](https://github.com/SocialGouv/jardinmental/commit/7319f3da372e3758424328cdba9ca4a7cf400231))
+
 ## [1.48.2](https://github.com/SocialGouv/jardinmental/compare/v1.48.1...v1.48.2) (2025-05-27)
 
 
