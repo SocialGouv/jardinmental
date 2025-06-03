@@ -9,7 +9,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 
-import { PORT, VERSION, MOBILE_VERSION, MOBILE_ANDROID_BUILD_NUMBER, MOBILE_IOS_BUILD_NUMBER, DEBUG_ENDPOINTS_ENABLED } from './config';
+import { PORT, VERSION, MOBILE_VERSION, MOBILE_ANDROID_BUILD_NUMBER, MOBILE_IOS_BUILD_NUMBER, DEBUG_ENDPOINTS_ENABLED, SENTRY_KEY } from './config';
 import { ApiResponse } from './types/api.types';
 
 // Import des middlewares et contrôleurs (encore en JS)
@@ -89,4 +89,9 @@ app.use(Sentry.Handlers.errorHandler());
 app.use(errors.sendError);
 
 // Start the server
-app.listen(PORT, () => console.log(`RUN ON PORT ${PORT}`));
+app.listen(PORT, () => {
+  console.log(`RUN ON PORT ${PORT}`)
+  console.log(`ENVIRONMENT: ${process.env.ENVIRONMENT}`);
+  console.log(`DEBUG ENABLE: ${DEBUG_ENDPOINTS_ENABLED}`);
+  console.log(`SENTRY: ${SENTRY_KEY}`);
+});
