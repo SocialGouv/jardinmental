@@ -54,6 +54,13 @@ app.use((_req: Request, res: Response, next: NextFunction) => {
 });
 
 app.set('json replacer', (k: string, v: any) => (v === null ? undefined : v));
+
+// Debug routes (only available when feature flag is enabled) - registered BEFORE versionCheck
+if (DEBUG_ENDPOINTS_ENABLED) {
+  console.log(`Debug endpoints are enabled`);
+  app.use('/debug', require('./controllers/debug').router);
+}
+
 app.use(versionCheck);
 
 app.get('/version', async (req: Request, res: Response) => {
@@ -77,12 +84,6 @@ app.use(helmet());
 app.use('/event', require('./controllers/event'));
 app.use('/reminder', require('./controllers/reminder').router);
 app.use('/mail', require('./controllers/mail').router);
-
-// Debug routes (only available when feature flag is enabled)
-if (DEBUG_ENDPOINTS_ENABLED) {
-  console.log(`Debug endpoints are enabled`);
-  app.use('/debug', require('./controllers/debug').router);
-}
 
 // Sentry error handler must be before other error handlers
 app.use(Sentry.Handlers.errorHandler());
