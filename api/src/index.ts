@@ -57,7 +57,7 @@ app.set('json replacer', (k: string, v: any) => (v === null ? undefined : v));
 
 // Debug routes (only available when feature flag is enabled) - registered BEFORE versionCheck
 if (DEBUG_ENDPOINTS_ENABLED) {
-  console.log(`Debug endpoints are enabled`);
+  console.log(`Debug endpoint is enabled`);
   app.use('/debug', require('./controllers/debug').router);
 }
 
@@ -93,7 +93,4 @@ app.use(errors.sendError);
 // Start the server
 app.listen(PORT, () => {
   console.log(`RUN ON PORT ${PORT}`)
-  console.log(`ENVIRONMENT: ${process.env.ENVIRONMENT}`);
-  console.log(`DEBUG ENABLE: ${DEBUG_ENDPOINTS_ENABLED}`);
-  console.log(`SENTRY: ${SENTRY_KEY}`);
 });
