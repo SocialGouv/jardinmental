@@ -11,11 +11,14 @@ const router = Router();
  */
 const checkDebugEnabled = (req: Request, res: Response, next: NextFunction): void => {
   if (!DEBUG_ENDPOINTS_ENABLED) {
+    console.log(`Debug endpoint is not enabled`);
     res.status(404).json({
       ok: false,
       data: { error: 'Not found' }
     });
     return;
+  } else {
+    console.log(`Debug endpoint is enabled`);
   }
   next();
 };
@@ -25,6 +28,7 @@ const checkDebugEnabled = (req: Request, res: Response, next: NextFunction): voi
  * GET /debug/test-sentry
  */
 router.get('/test-sentry', checkDebugEnabled, async (req: Request, res: Response): Promise<void> => {
+  console.log(`Test entry route`);
   try {
     // Create a test error
     const testError = new Error('Sentry test error - this is intentional for testing purposes');
