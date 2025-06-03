@@ -80,6 +80,7 @@ app.use('/mail', require('./controllers/mail').router);
 
 // Debug routes (only available when feature flag is enabled)
 if (DEBUG_ENDPOINTS_ENABLED) {
+  console.log(`Debug endpoints are enabled`);
   app.use('/debug', require('./controllers/debug').router);
 }
 

@@ -6,6 +6,7 @@ const sentryEnabled = ENVIRONMENT !== 'development' && ENVIRONMENT !== 'test';
 
 // Initialize Sentry
 if (sentryEnabled && SENTRY_KEY) {
+  console.log('Sentry init')
   Sentry.init({
     dsn: SENTRY_KEY,
     environment: `api-${ENVIRONMENT}`,
