@@ -30,6 +30,8 @@ export const TIPIMAIL_API_USER = process.env.TIPIMAIL_API_USER;
 
 export const HMAC_SECRET = process.env.HMAC_SECRET;
 
+export const DEBUG_ENDPOINTS_ENABLED = process.env.DEBUG_ENDPOINTS_ENABLED === "true";
+
 if (process.env.NODE_ENV === "development") {
   console.log("✍️ ~CONFIG ", {
     PORT,

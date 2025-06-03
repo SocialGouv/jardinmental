@@ -9,7 +9,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 
-import { PORT, VERSION, MOBILE_VERSION, MOBILE_ANDROID_BUILD_NUMBER, MOBILE_IOS_BUILD_NUMBER } from './config';
+import { PORT, VERSION, MOBILE_VERSION, MOBILE_ANDROID_BUILD_NUMBER, MOBILE_IOS_BUILD_NUMBER, DEBUG_ENDPOINTS_ENABLED } from './config';
 import { ApiResponse } from './types/api.types';
 
 // Import des middlewares et contrôleurs (encore en JS)
@@ -77,6 +77,11 @@ app.use(helmet());
 app.use('/event', require('./controllers/event'));
 app.use('/reminder', require('./controllers/reminder').router);
 app.use('/mail', require('./controllers/mail').router);
+
+// Debug routes (only available when feature flag is enabled)
+if (DEBUG_ENDPOINTS_ENABLED) {
+  app.use('/debug', require('./controllers/debug').router);
+}
 
 // Sentry error handler must be before other error handlers
 app.use(Sentry.Handlers.errorHandler());
