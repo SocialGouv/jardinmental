@@ -23,12 +23,6 @@ if (sentryEnabled && SENTRY_KEY) {
       
       // HTTP integration for automatic instrumentation
       Sentry.httpIntegration(),
-      
-      // Express integration for automatic Express.js instrumentation
-      Sentry.expressIntegration(),
-      
-      // Prisma integration for database query monitoring
-      Sentry.prismaIntegration(),
     ],
     
     // Configure what gets sent to Sentry

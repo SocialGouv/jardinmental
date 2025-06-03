@@ -23,8 +23,8 @@
   },
   "dependencies": {
     "@prisma/client": "^4.4.0",
-    "@sentry/node": "latest",
-    "@sentry/profiling-node": "latest",
+    "@sentry/node": "^7.120.3",
+    "@sentry/profiling-node": "^7.120.3",
     "@slack/webhook": "^6.1.0",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",

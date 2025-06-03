@@ -79,7 +79,7 @@ app.use('/reminder', require('./controllers/reminder').router);
 app.use('/mail', require('./controllers/mail').router);
 
 // Sentry error handler must be before other error handlers
-app.use(Sentry.expressErrorHandler());
+app.use(Sentry.Handlers.errorHandler());
 
 app.use(errors.sendError);
 
