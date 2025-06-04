@@ -38,7 +38,6 @@ router.get('/test-sentry', checkDebugEnabled, async (req: Request, res: Response
       extra: {
         timestamp: new Date().toISOString(),
         userAgent: req.headers['user-agent'],
-        ip: req.ip,
       },
     });
 
