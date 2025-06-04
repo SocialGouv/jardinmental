@@ -2,7 +2,7 @@ fileignoreconfig:
 - filename: .kontinuous/env/dev/templates/api.sealed-secret.yaml
   checksum: aab0afdd1cef8c0236417f8c3573492a5da0dd64491f06237a98ad9d2aff0b67
 - filename: .kontinuous/env/prod/templates/api.sealed-secret.yaml
-  checksum: 2304414364ae49eac8362be021c2554ae03b9a7cf255e2b7cbc2d3fb3e03fbf6
+  checksum: f1dfe60bbe8a6604443fe3629b2239fa969304beeca8eff2b7528cf9b5728e3d
 - filename: api/src/config.ts
   checksum: 31e38a78927264f160f3652037cf34acc78b7f63234d9571346a9af86be44c5a
 - filename: app/ios/Podfile.lock
