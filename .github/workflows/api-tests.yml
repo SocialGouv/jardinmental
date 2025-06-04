@@ -42,86 +42,13 @@ jobs:
           cd api
           yarn type-check
       
-      - name: Run tests with coverage
+      - name: Run tests
         run: |
           cd api
-          yarn test:ci
+          yarn test
         env:
           NODE_ENV: test
       
-      - name: Upload coverage reports to Codecov
-        if: matrix.node-version == '18.x'
-        uses: codecov/codecov-action@v4
-        with:
-          directory: api/coverage
-          flags: api
-          name: api-coverage
-          fail_ci_if_error: false
-          token: ${{ secrets.CODECOV_TOKEN }}
-      
-      - name: Upload coverage to GitHub
-        if: matrix.node-version == '18.x'
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage-report
-          path: api/coverage/
-          retention-days: 30
-      
-      - name: Comment PR with coverage
-        if: github.event_name == 'pull_request' && matrix.node-version == '18.x'
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const fs = require('fs');
-            const path = require('path');
-            
-            try {
-              // Lire le résumé de couverture depuis lcov.info
-              const coveragePath = path.join('api', 'coverage', 'lcov.info');
-              if (fs.existsSync(coveragePath)) {
-                const coverage = fs.readFileSync(coveragePath, 'utf8');
-                const lines = coverage.split('\n');
-                
-                let totalLines = 0;
-                let coveredLines = 0;
-                let totalFunctions = 0;
-                let coveredFunctions = 0;
-                let totalBranches = 0;
-                let coveredBranches = 0;
-                
-                lines.forEach(line => {
-                  if (line.startsWith('LF:')) totalLines += parseInt(line.split(':')[1]);
-                  if (line.startsWith('LH:')) coveredLines += parseInt(line.split(':')[1]);
-                  if (line.startsWith('FNF:')) totalFunctions += parseInt(line.split(':')[1]);
-                  if (line.startsWith('FNH:')) coveredFunctions += parseInt(line.split(':')[1]);
-                  if (line.startsWith('BRF:')) totalBranches += parseInt(line.split(':')[1]);
-                  if (line.startsWith('BRH:')) coveredBranches += parseInt(line.split(':')[1]);
-                });
-                
-                const linesCoverage = totalLines > 0 ? ((coveredLines / totalLines) * 100).toFixed(2) : 0;
-                const functionsCoverage = totalFunctions > 0 ? ((coveredFunctions / totalFunctions) * 100).toFixed(2) : 0;
-                const branchesCoverage = totalBranches > 0 ? ((coveredBranches / totalBranches) * 100).toFixed(2) : 0;
-                
-                const comment = `## 📊 Test Coverage Report
-                
-                | Metric | Coverage |
-                |--------|----------|
-                | Lines | ${linesCoverage}% (${coveredLines}/${totalLines}) |
-                | Functions | ${functionsCoverage}% (${coveredFunctions}/${totalFunctions}) |
-                | Branches | ${branchesCoverage}% (${coveredBranches}/${totalBranches}) |
-                
-                📁 [View detailed coverage report](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})`;
-                
-                github.rest.issues.createComment({
-                  issue_number: context.issue.number,
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  body: comment
-                });
-              }
-            } catch (error) {
-              console.log('Could not generate coverage comment:', error);
-            }
 
   build:
     name: Build API
