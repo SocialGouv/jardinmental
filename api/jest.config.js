@@ -26,23 +26,6 @@ module.exports = {
     'node_modules/(?!(supertest)/)'
   ],
   
-  // Configuration de la couverture de code
-  collectCoverage: true,
-  collectCoverageFrom: [
-    'src/**/*.{ts,js}',
-    '!src/**/*.d.ts',
-    '!src/**/__tests__/**',
-    '!src/**/*.test.{ts,js}',
-    '!src/**/*.spec.{ts,js}',
-    '!src/types/**',
-  ],
-  
-  // Répertoire de sortie pour la couverture
-  coverageDirectory: 'coverage',
-  
-  // Formats de rapport de couverture
-  coverageReporters: ['text', 'lcov', 'html'],
-  
   // Variables d'environnement pour les tests
   testEnvironmentOptions: {
     NODE_ENV: 'test',
