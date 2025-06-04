@@ -29,7 +29,7 @@ jest.mock('expo-notifications', () => ({
 jest.mock('react-native', () => ({
   Platform: {
     OS: 'ios',
-    select: jest.fn((obj) => obj.ios),
+    select: jest.fn((obj: any) => obj.ios),
   },
   Alert: {
     alert: jest.fn(),
@@ -47,11 +47,11 @@ jest.mock('react-native', () => ({
 // Mock date-fns
 jest.mock('date-fns', () => ({
   ...jest.requireActual('date-fns'),
-  format: jest.fn((date, formatStr) => {
+  format: jest.fn((date: Date, formatStr: string) => {
     if (formatStr === 'eee') return 'lun';
     return '2024-01-01';
   }),
-  setDay: jest.fn((date, day) => new Date('2024-01-01')),
+  setDay: jest.fn((date: Date, day: number) => new Date('2024-01-01')),
   getDay: jest.fn(() => 1), // Monday
 }));
 
@@ -82,7 +82,7 @@ jest.mock('../src/utils/date/daysOfWeek', () => ({
 }));
 
 // Global test setup
-global.__DEV__ = true;
+(global as any).__DEV__ = true;
 
 // Silence console warnings during tests
 global.console = {
