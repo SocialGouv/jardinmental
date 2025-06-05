@@ -1,7 +1,7 @@
 app:
   ~chart: app
   probesPath: "/healthz"
-  ~needs: [pg, build-app]
+  ~needs: [pg]
   containerPort: 3000
   envFrom:
     - secretRef:
@@ -11,16 +11,3 @@ app:
 
 pg:
   ~chart: pg
-
-jobs:
-  runs:
-    build-app:
-      use: build
-      with:
-        context: api
-    build-reminder:
-      use: build
-      with:
-        context: api
-        imagePackage: reminder
-        dockerfile: Dockerfile.cron
