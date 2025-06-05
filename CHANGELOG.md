@@ -1,3 +1,10 @@
+# [1.51.0](https://github.com/SocialGouv/jardinmental/compare/v1.50.0...v1.51.0) (2025-06-05)
+
+
+### Features
+
+* configure sentry for api ([#279](https://github.com/SocialGouv/jardinmental/issues/279)) ([9ad413d](https://github.com/SocialGouv/jardinmental/commit/9ad413d6d5265897a3601cf37e04390768295412))
+
 # [1.50.0](https://github.com/SocialGouv/jardinmental/compare/v1.49.0...v1.50.0) (2025-06-02)
 
 
