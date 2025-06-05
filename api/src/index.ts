@@ -1,11 +1,15 @@
 import 'dotenv/config';
+
+// Initialize Sentry FIRST, before any other imports
+import './third-parties/sentry';
 import * as Sentry from '@sentry/node';
+
 import express, { Request, Response, NextFunction, Application } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 
-import { PORT, VERSION, MOBILE_VERSION, MOBILE_ANDROID_BUILD_NUMBER, MOBILE_IOS_BUILD_NUMBER } from './config';
+import { PORT, VERSION, MOBILE_VERSION, MOBILE_ANDROID_BUILD_NUMBER, MOBILE_IOS_BUILD_NUMBER, DEBUG_ENDPOINTS_ENABLED, SENTRY_KEY } from './config';
 import { ApiResponse } from './types/api.types';
 
 // Import des middlewares et contrôleurs (encore en JS)
@@ -15,11 +19,12 @@ const versionCheck = require('./middlewares/versionCheck');
 // Put together a schema
 const app: Application = express();
 
+// Sentry is automatically instrumented via the expressIntegration in the init
+
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
-app.use(Sentry.Handlers.requestHandler());
 app.use(cors());
 
 // kube probe
@@ -49,6 +54,13 @@ app.use((_req: Request, res: Response, next: NextFunction) => {
 });
 
 app.set('json replacer', (k: string, v: any) => (v === null ? undefined : v));
+
+// Debug routes (only available when feature flag is enabled) - registered BEFORE versionCheck
+if (DEBUG_ENDPOINTS_ENABLED) {
+  console.log(`Debug endpoint is enabled`);
+  app.use('/debug', require('./controllers/debug').router);
+}
+
 app.use(versionCheck);
 
 app.get('/version', async (req: Request, res: Response) => {
@@ -73,7 +85,12 @@ app.use('/event', require('./controllers/event'));
 app.use('/reminder', require('./controllers/reminder').router);
 app.use('/mail', require('./controllers/mail').router);
 
+// Sentry error handler must be before other error handlers
+app.use(Sentry.Handlers.errorHandler());
+
 app.use(errors.sendError);
 
 // Start the server
-app.listen(PORT, () => console.log(`RUN ON PORT ${PORT}`));
+app.listen(PORT, () => {
+  console.log(`RUN ON PORT ${PORT}`)
+});

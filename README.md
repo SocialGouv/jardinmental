@@ -87,4 +87,14 @@ This command will build and upload your app to Google Play Console - internal te
 
 This command will build and upload your app to App Store Connect - TestFlight.
 
+## Debug
 
+### Sentry Test Endpoint
+
+To test Sentry error reporting:
+
+1. Enable debug endpoints: `export DEBUG_ENDPOINTS_ENABLED=true`
+2. Restart the API
+3. Test: `curl http://localhost:3000/debug/test-sentry`
+
+This will send a test error to Sentry with proper context and tags. Only enable in development/staging environments.
