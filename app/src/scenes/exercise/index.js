@@ -2,7 +2,7 @@ import React, {useContext, useState, useEffect} from 'react';
 import {StyleSheet, View, SafeAreaView, TouchableOpacity, ScrollView, Dimensions, Linking} from 'react-native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import CheckBox from '@react-native-community/checkbox';
+import Checkbox from 'expo-checkbox';
 
 import Text from '../../components/MyText';
 import {colors} from '../../utils/colors';
@@ -61,20 +61,11 @@ export default ({navigation, startSurvey}) => {
                 </Text>
               </Text>
               <View style={styles.showWelcomeView}>
-                <CheckBox
-                  animationDuration={0.2}
-                  boxType="square"
+                <Checkbox
                   style={styles.checkbox}
                   value={!showWelcomeDefault}
                   onValueChange={value => setShowWelcomeDefault(!value)}
-                  // for android
-                  tintColors={{true: colors.LIGHT_BLUE, false: '#aaa'}}
-                  // for ios
-                  tintColor="#aaa"
-                  onCheckColor={colors.LIGHT_BLUE}
-                  onTintColor={colors.LIGHT_BLUE}
-                  onAnimationType="bounce"
-                  offAnimationType="bounce"
+                  color={!showWelcomeDefault ? colors.LIGHT_BLUE : undefined}
                 />
                 <TouchableOpacity activeOpacity={0.7} onPress={() => setShowWelcomeDefault(e => !e)}>
                   <Text>Ne plus afficher ce message</Text>

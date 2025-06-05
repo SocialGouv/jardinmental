@@ -6,7 +6,7 @@ import {colors} from '../../../utils/colors';
 import Button from '../../../components/Button';
 import localStorage from '../../../utils/localStorage';
 import {getDrugListWithLocalStorage} from '../../../utils/drugs-list';
-import CheckBox from '@react-native-community/checkbox';
+import Checkbox from 'expo-checkbox';
 import NPS from '../../../services/NPS/NPS';
 import BackButton from '../../../components/BackButton';
 import AddElemToList from '../../../components/AddElemToList';
@@ -164,12 +164,11 @@ const Drugs = ({navigation, route}) => {
                   <Text style={styles.text1}>{e.name1}</Text>
                   {e.name2 ? <Text style={styles.text2}>({e.name2})</Text> : null}
                 </View>
-                <CheckBox
-                  animationDuration={0.2}
-                  boxType="square"
+                <Checkbox
                   style={styles.checkbox}
                   value={!!treatment.find(x => x.id === e.id)}
                   onValueChange={newValue => setToogleCheckbox(e, newValue)}
+                  color={!!treatment.find(x => x.id === e.id) ? colors.LIGHT_BLUE : undefined}
                 />
               </View>
             ))}

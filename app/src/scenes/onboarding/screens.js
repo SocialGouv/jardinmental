@@ -1,6 +1,6 @@
 import React from 'react';
 import Text from '../../components/MyText';
-import CheckBox from '@react-native-community/checkbox';
+import Checkbox from 'expo-checkbox';
 
 import WelcomeIcon from '../../../assets/svg/WelcomeIcon';
 import Support from '../../../assets/svg/Support';
@@ -73,14 +73,11 @@ export const Screen2 = ({navigation, isCguChecked, setIsCguChecked}) => {
               C’est <Text style={styles.bold}>gratuit, anonyme</Text> et sans <Text style={styles.bold}>aucune récupération</Text> de vos saisies personnelles
             </Text>
             <View style={styles.cgu}>
-              <CheckBox
-                animationDuration={0.2}
-                tintColor="#1FC6D5"
-                tintColors={{true: '#1FC6D5', false: 'grey'}}
-                boxType="square"
+              <Checkbox
                 style={styles.checkbox}
                 value={isCguChecked}
                 onValueChange={newValue => setIsCguChecked(newValue)}
+                color={isCguChecked ? '#1FC6D5' : undefined}
               />
               <Text style={styles.textCgu}>
                 En cochant cette case, vous acceptez nos{' '}

@@ -1,6 +1,6 @@
 import NetInfo from "@react-native-community/netinfo";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import DeviceInfo from "react-native-device-info";
+import * as Application from 'expo-application';
 import { Platform } from "react-native";
 import Matomo from "./matomo";
 import { MATOMO_DIMENSION, STORAGE_KEY_SUPPORTED } from "../utils/constants";
@@ -32,7 +32,7 @@ const initMatomo = async () => {
   let supported = await AsyncStorage.getItem(STORAGE_KEY_SUPPORTED);
 
   Matomo.setDimensions({
-    [MATOMO_DIMENSION.VERSION]: DeviceInfo.getVersion(),
+    [MATOMO_DIMENSION.VERSION]: Application.nativeApplicationVersion,
     [MATOMO_DIMENSION.SYSTEM]: Platform.OS,
     [MATOMO_DIMENSION.SUPPORTED]: supported ? supported : "",
   });
