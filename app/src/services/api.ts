@@ -25,6 +25,7 @@ class ApiService {
   getUrl = (path, query) => {
     return new URI().host(this.host).scheme(this.scheme).path(path).setSearch(query).toString();
   };
+  navigation: any;
   execute = async ({method = 'GET', path = '', query = {}, headers = {}, body = null}) => {
     try {
       if (body) {
