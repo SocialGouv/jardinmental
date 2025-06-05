@@ -1,4 +1,17 @@
 {
-  "compilerOptions": {},
-  "extends": "expo/tsconfig.base"
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "types": ["jest", "@testing-library/jest-native", "node"]
+  },
+  "include": [
+    "src/**/*",
+    "__tests__/**/*",
+    "*.ts",
+    "*.tsx"
+  ],
+  "exclude": [
+    "node_modules",
+    "android",
+    "ios"
+  ]
 }
