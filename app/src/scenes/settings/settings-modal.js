@@ -37,7 +37,7 @@ const SettingsModal = ({ navigation, visible, onClick }) => {
             icon="DrugsSvg"
           />
           <SettingItem
-            title="Envoyer un récapitulatif de mes données"
+            title="Générer un récapitulatif de mes données"
             path="export"
             navigation={navigation}
             onClick={onClick}

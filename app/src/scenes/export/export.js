@@ -79,7 +79,7 @@ const Export = ({navigation}) => {
           <Text style={styles.title}>Je génère un fichier avec mes données des 30 derniers jours.</Text>
           <View style={styles.inputContainer}>
             <Text style={styles.label}>
-              <Text style={styles.italic}>Optionnel</Text> : je peux donner un nom à mon bilan pour mieux l'identifier
+              <Text>Nom du fichier (optionnel) :</Text>
             </Text>
             <TextInput autoCapitalize="none" onChangeText={setName} value={name} placeholder="Ex: Arthur M. décembre 2020, ..." style={styles.inputMail} />
           </View>
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
   label: {
     marginBottom: 5,
     color: colors.BLUE,
-    textAlign: 'center',
+    textAlign: 'left',
   },
   inputContainer: {
     paddingHorizontal: 30,
