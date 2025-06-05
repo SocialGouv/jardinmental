@@ -121,11 +121,7 @@ class Router extends React.Component {
 
     try {
       // Get or generate device ID
-      let deviceId = await AsyncStorage.getItem('deviceId');
-      if (!deviceId) {
-        deviceId = uuid.v4();
-        await AsyncStorage.setItem('deviceId', deviceId);
-      }
+      let deviceId = await deviceIdService.getDeviceId();
 
       // Setup notification handler
       const notificationListener = Notifications.addNotificationReceivedListener(notification => {

@@ -29,7 +29,7 @@ const DevMode = ({navigation}) => {
   const [deviceId, setDeviceId] = useState(null);
 
   const fetchDeviceId = async () => {
-    const id = await AsyncStorage.getItem('deviceId');
+    const id = await deviceIdService.getDeviceId();
     setDeviceId(id);
   };
   useEffect(() => {

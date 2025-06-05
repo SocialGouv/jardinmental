@@ -5,6 +5,7 @@ import {STORAGE_KEY_PUSH_NOTIFICATION_TOKEN, STORAGE_KEY_PUSH_NOTIFICATION_TOKEN
 import logEvents from './logEvents';
 import API from './api';
 import {registerForPushNotificationsAsync} from './notifications-expo';
+import deviceIdService from './deviceId';
 
 class NotificationService {
   listeners = {};
@@ -16,6 +17,7 @@ class NotificationService {
   delete = () => {
     // Clean up if needed
   };
+  initNotification: null;
 
   async configure() {
     this.initChannels();
@@ -109,7 +111,21 @@ class NotificationService {
   };
   channelId = 'REMINDER-CHANNEL-ID';
 
-  scheduleNotification({date, title, message, playSound = true, soundName = 'default', repeatType = 'day'} = {}) {
+  scheduleNotification({
+    date,
+    title,
+    message,
+    playSound = true,
+    soundName = 'default',
+    repeatType = 'day',
+  }: {
+    date: Date;
+    title: string;
+    message: string;
+    playSound?: boolean;
+    soundName?: string;
+    repeatType?: string;
+  }) {
     Notifications.scheduleNotificationAsync({
       content: {
         title,
@@ -130,7 +146,17 @@ class NotificationService {
     return await Notifications.getAllScheduledNotificationsAsync();
   };
 
-  localNotification({title, message, playSound = true, soundName = 'default'} = {}) {
+  localNotification({
+    title,
+    message,
+    playSound = true,
+    soundName = 'default',
+  }: {
+    title: string;
+    message: string;
+    playSound?: boolean;
+    soundName?: string;
+  }) {
     Notifications.scheduleNotificationAsync({
       content: {
         title,
@@ -179,7 +205,7 @@ class NotificationService {
   subscribe = callback => {
     let listenerKey = null;
     while (!listenerKey) {
-      listenerKey = parseInt(Math.random() * 9999).toString();
+      listenerKey = Math.floor(Math.random() * 9999).toString();
       if (this.listeners.hasOwnProperty(listenerKey)) {
         listenerKey = null;
       }
@@ -201,12 +227,8 @@ class NotificationService {
 
   async getToken() {
     try {
-      let deviceId = await AsyncStorage.getItem('deviceId');
-      if (!deviceId) {
-        deviceId = uuid.v4();
-        await AsyncStorage.setItem('deviceId', deviceId);
-      }
-
+      const deviceId = await deviceIdService.getDeviceId();
+      console.log('REGISTER PUSH NOTIFICAITON ASYNC NOTIFICATION SERVICE', deviceId)
       const token = await registerForPushNotificationsAsync({userId: deviceId});
       return token;
     } catch (error) {

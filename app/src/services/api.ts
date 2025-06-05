@@ -1,11 +1,11 @@
 import URI from 'urijs';
-import {Alert, Linking, Platform} from 'react-native';
+import { Alert, Linking, Platform } from 'react-native';
 import NetInfo from '@react-native-community/netinfo';
 import fetchRetry from 'fetch-retry';
 
-import {SCHEME, HOST, BUILD_NUMBER} from '../config';
+import { SCHEME, HOST } from '../config';
 import matomo from './matomo';
-import {generateHMAC} from '../utils/generateHmac';
+import { generateHMAC } from '../utils/generateHmac';
 import app from '../../app.json';
 
 export const checkNetwork = async (test = false) => {
@@ -51,12 +51,10 @@ class ApiService {
       };
 
       const url = this.getUrl(path, query);
-      // console.log('api: ', {url});
+      console.log('HOST', url)
       const canFetch = await checkNetwork();
       if (!canFetch) return;
-
       const response = await this.fetch(url, config);
-
       if (response.json) {
         const readableRes = await response.json();
         if (readableRes.sendInApp) this.handleInAppMessage(readableRes.sendInApp);
@@ -65,6 +63,7 @@ class ApiService {
 
       return response;
     } catch (e) {
+      console.error(e)
       return {
         ok: false,
         error:
