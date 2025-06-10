@@ -20,7 +20,7 @@ jobs:
         with:
           node-version: '20'
           cache: 'yarn'
-          cache-dependency-path: yarn.lock
+          cache-dependency-path: app/yarn.lock
 
       - name: Install dependencies
         working-directory: app
