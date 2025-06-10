@@ -34,18 +34,15 @@ jobs:
       
       - name: Install dependencies
         run: |
-          cd api
-          yarn install --frozen-lockfile
+          yarn workspace api install --frozen-lockfile
       
       - name: Type check
         run: |
-          cd api
-          yarn type-check
+          yarn workspace api type-check
       
       - name: Run tests
         run: |
-          cd api
-          yarn test
+          yarn workspace api test
         env:
           NODE_ENV: test
       
@@ -68,13 +65,11 @@ jobs:
       
       - name: Install dependencies
         run: |
-          cd api
-          yarn install --frozen-lockfile
+          yarn workspace api install --frozen-lockfile
       
       - name: Build TypeScript
         run: |
-          cd api
-          yarn build
+          yarn workspace api build
       
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
