@@ -11,7 +11,8 @@ import {
   STORAGE_KEY_CUSTOM_DRUGS,
   STORAGE_KEY_MEDICAL_TREATMENT,
   STORAGE_KEY_CUSTOM_SYMPTOMS,
-  STORAGE_KEY_ONBOARDING_STEP
+  STORAGE_KEY_ONBOARDING_STEP,
+  STORAGE_KEY_ONBOARDING_DONE
 } from '../../src/utils/constants';
 
 describe('localStorage utils', () => {
@@ -24,7 +25,7 @@ describe('localStorage utils', () => {
   describe('Symptoms management', () => {
     test('should get symptoms from storage', async () => {
       const mockSymptoms = [{ id: 1, name: 'Anxiété', level: 3 }];
-      AsyncStorage.getItem.mockResolvedValueOnce(JSON.stringify(mockSymptoms));
+      AsyncStorage.setItem(STORAGE_KEY_SYMPTOMS, JSON.stringify(mockSymptoms))
 
       const result = await localStorage.getSymptoms();
 
@@ -33,7 +34,7 @@ describe('localStorage utils', () => {
     });
 
     test('should return undefined when no symptoms in storage', async () => {
-      AsyncStorage.getItem.mockResolvedValueOnce(null);
+      AsyncStorage.setItem(STORAGE_KEY_SYMPTOMS, null)
 
       const result = await localStorage.getSymptoms();
 
@@ -100,8 +101,7 @@ describe('localStorage utils', () => {
 
   describe('Onboarding management', () => {
     test('should get first app launch status', async () => {
-      AsyncStorage.getItem.mockResolvedValueOnce('false');
-
+      AsyncStorage.setItem(STORAGE_KEY_IS_FIRST_LAUNCH, 'false')
       const result = await localStorage.getIsFirstAppLaunch();
 
       expect(AsyncStorage.getItem).toHaveBeenCalledWith(STORAGE_KEY_IS_FIRST_LAUNCH);
@@ -118,7 +118,7 @@ describe('localStorage utils', () => {
     });
 
     test('should get onboarding step', async () => {
-      AsyncStorage.getItem.mockResolvedValueOnce('step2');
+      AsyncStorage.setItem(STORAGE_KEY_ONBOARDING_STEP, 'step2');
 
       const result = await localStorage.getOnboardingStep();
 
@@ -135,7 +135,7 @@ describe('localStorage utils', () => {
     });
 
     test('should get onboarding done status', async () => {
-      AsyncStorage.getItem.mockResolvedValueOnce(JSON.stringify(true));
+      AsyncStorage.setItem(STORAGE_KEY_ONBOARDING_DONE, JSON.stringify(true));
 
       const result = await localStorage.getOnboardingDone();
 
@@ -143,8 +143,6 @@ describe('localStorage utils', () => {
     });
 
     test('should return undefined when onboarding done is not set', async () => {
-      AsyncStorage.getItem.mockResolvedValueOnce(null);
-
       const result = await localStorage.getOnboardingDone();
 
       expect(result).toBeUndefined();
@@ -154,7 +152,7 @@ describe('localStorage utils', () => {
   describe('Custom symptoms management', () => {
     test('should get custom symptoms', async () => {
       const mockCustomSymptoms = [{ id: 'custom1', name: 'Mon symptôme' }];
-      AsyncStorage.getItem.mockResolvedValueOnce(JSON.stringify(mockCustomSymptoms));
+      AsyncStorage.setItem(STORAGE_KEY_CUSTOM_SYMPTOMS, JSON.stringify(mockCustomSymptoms));
 
       const result = await localStorage.getCustomSymptoms();
 
@@ -162,7 +160,7 @@ describe('localStorage utils', () => {
     });
 
     test('should return empty array when no custom symptoms', async () => {
-      AsyncStorage.getItem.mockResolvedValueOnce(null);
+      AsyncStorage.setItem(STORAGE_KEY_CUSTOM_SYMPTOMS, null);
 
       const result = await localStorage.getCustomSymptoms();
 
@@ -173,7 +171,7 @@ describe('localStorage utils', () => {
       const existingSymptoms = [{ id: 'custom1', name: 'Symptôme 1' }];
       const newSymptom = { id: 'custom2', name: 'Symptôme 2' };
       
-      AsyncStorage.getItem.mockResolvedValueOnce(JSON.stringify(existingSymptoms));
+      AsyncStorage.setItem(STORAGE_KEY_CUSTOM_SYMPTOMS, JSON.stringify(existingSymptoms));
 
       await localStorage.addCustomSymptoms(newSymptom);
 
@@ -187,7 +185,7 @@ describe('localStorage utils', () => {
   describe('Medical treatment management', () => {
     test('should get medical treatment', async () => {
       const mockTreatment = [{ id: 1, name: 'Médicament A', dosage: '10mg' }];
-      AsyncStorage.getItem.mockResolvedValueOnce(JSON.stringify(mockTreatment));
+      AsyncStorage.setItem(STORAGE_KEY_MEDICAL_TREATMENT, JSON.stringify(mockTreatment));
 
       const result = await localStorage.getMedicalTreatment();
 
@@ -210,7 +208,7 @@ describe('localStorage utils', () => {
         { id: 1, name: 'Médicament A' },
         { id: 2, name: 'Médicament B' },
       ];
-      AsyncStorage.getItem.mockResolvedValueOnce(JSON.stringify(treatment));
+      AsyncStorage.setItem(STORAGE_KEY_MEDICAL_TREATMENT, JSON.stringify(treatment));
 
       const result = await localStorage.removeDrugFromTreatment(1);
 
@@ -225,7 +223,7 @@ describe('localStorage utils', () => {
   describe('Custom drugs management', () => {
     test('should get custom drugs', async () => {
       const mockDrugs = [{ id: 'drug1', name: 'Mon médicament' }];
-      AsyncStorage.getItem.mockResolvedValueOnce(JSON.stringify(mockDrugs));
+      AsyncStorage.setItem(STORAGE_KEY_CUSTOM_DRUGS, JSON.stringify(mockDrugs));
 
       const result = await localStorage.getCustomDrugs();
 
@@ -233,7 +231,7 @@ describe('localStorage utils', () => {
     });
 
     test('should return empty array when no custom drugs', async () => {
-      AsyncStorage.getItem.mockResolvedValueOnce(null);
+      AsyncStorage.setItem(STORAGE_KEY_CUSTOM_DRUGS, null);
 
       const result = await localStorage.getCustomDrugs();
 
@@ -244,7 +242,7 @@ describe('localStorage utils', () => {
       const existingDrugs = [{ id: 'drug1', name: 'Médicament 1' }];
       const newDrug = { id: 'drug2', name: 'Médicament 2' };
       
-      AsyncStorage.getItem.mockResolvedValueOnce(JSON.stringify(existingDrugs));
+      AsyncStorage.setItem(STORAGE_KEY_CUSTOM_DRUGS, JSON.stringify(existingDrugs));
 
       const result = await localStorage.addCustomDrug(newDrug);
 
@@ -266,7 +264,6 @@ describe('localStorage utils', () => {
         JSON.stringify(supportedData)
       );
 
-      AsyncStorage.getItem.mockResolvedValueOnce(JSON.stringify(supportedData));
       const result = await localStorage.getSupported();
       expect(result).toEqual(supportedData);
     });
@@ -280,7 +277,6 @@ describe('localStorage utils', () => {
         JSON.stringify(npsData)
       );
 
-      AsyncStorage.getItem.mockResolvedValueOnce(JSON.stringify(npsData));
       const result = await localStorage.getVisitProNPS();
       expect(result).toEqual(npsData);
     });
@@ -294,7 +290,6 @@ describe('localStorage utils', () => {
         JSON.stringify(contactData)
       );
 
-      AsyncStorage.getItem.mockResolvedValueOnce(JSON.stringify(contactData));
       const result = await localStorage.getNpsProContact();
       expect(result).toEqual(contactData);
     });
@@ -310,7 +305,6 @@ describe('localStorage utils', () => {
         JSON.stringify(version)
       );
 
-      AsyncStorage.getItem.mockResolvedValueOnce(JSON.stringify(version));
       const result = await localStorage.getNotesVersion();
       expect(result).toEqual(version);
     });
