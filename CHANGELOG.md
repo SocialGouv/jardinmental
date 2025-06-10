@@ -1,3 +1,10 @@
+## [1.51.2](https://github.com/SocialGouv/jardinmental/compare/v1.51.1...v1.51.2) (2025-06-10)
+
+
+### Bug Fixes
+
+* change typo in readme ([#286](https://github.com/SocialGouv/jardinmental/issues/286)) ([582cb2c](https://github.com/SocialGouv/jardinmental/commit/582cb2cac2f3bdea5fac06ae99a478484d8fde6a))
+
 ## [1.51.1](https://github.com/SocialGouv/jardinmental/compare/v1.51.0...v1.51.1) (2025-06-10)
 
 
