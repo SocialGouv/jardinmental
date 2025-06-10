@@ -4,6 +4,8 @@
     "is-ci": "^3.0.1",
     "node-talisman": "^1.29.3"
   },
+  "private": true,
+  "workspaces": ["api", "app"],
   "scripts": {
     "postinstall": "is-ci || husky install"
   }
