@@ -1,3 +1,10 @@
+## [1.51.1](https://github.com/SocialGouv/jardinmental/compare/v1.51.0...v1.51.1) (2025-06-10)
+
+
+### Bug Fixes
+
+* removed disfunctionnal sentry ([#283](https://github.com/SocialGouv/jardinmental/issues/283)) ([1013c0a](https://github.com/SocialGouv/jardinmental/commit/1013c0ad01d6f4b742900b4da4c1959913e78066))
+
 # [1.51.0](https://github.com/SocialGouv/jardinmental/compare/v1.50.0...v1.51.0) (2025-06-05)
 
 
