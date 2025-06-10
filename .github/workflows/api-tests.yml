@@ -33,16 +33,19 @@ jobs:
           cache-dependency-path: api/yarn.lock
       
       - name: Install dependencies
+        working-directory: api
         run: |
-          yarn workspace api_monsuivipsy install --frozen-lockfile
+          yarn install --frozen-lockfile
       
       - name: Type check
+        working-directory: api
         run: |
-          yarn workspace api_monsuivipsy type-check
+          yarn type-check
       
       - name: Run tests
+        working-directory: api
         run: |
-          yarn workspace api_monsuivipsy test
+          yarn test
         env:
           NODE_ENV: test
       
@@ -64,12 +67,14 @@ jobs:
           cache-dependency-path: api/yarn.lock
       
       - name: Install dependencies
+        working-directory: api
         run: |
-          yarn workspace api_monsuivipsy install --frozen-lockfile
+          yarn install --frozen-lockfile
       
       - name: Build TypeScript
+        working-directory: api
         run: |
-          yarn workspace api_monsuivipsy build
+          yarn build
       
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
