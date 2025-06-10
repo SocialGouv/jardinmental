@@ -1,6 +1,5 @@
 require("dotenv").config();
 const { prisma } = require("./prisma");
-const { capture } = require("./third-parties/sentry");
 const { sendNotifications } = require("./third-parties/expo-notifications");
 
 const nowUtc = () => {
@@ -94,7 +93,6 @@ const run = async () => {
     console.log("Reminder cron job completed successfully");
   } catch (error) {
     console.error("Error running reminder cron job:", error);
-    capture(error, { level: "error", extra: { name: "reminderCronJob" } });
   } finally {
     process.exit(0);
   }
