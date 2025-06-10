@@ -20,8 +20,10 @@ RUN if [ -z "$PRODUCTION" ]; then echo "Copy staging values"; cp .env.staging .e
 
 ENV NODE_ENV=production
 
+RUN yarn build
+
 RUN npx prisma generate
 
 USER 1000
 
-CMD ["node", "src/reminderCronJobRunner.js"] 
+CMD ["node", "dist/reminderCronJobRunner.js"]
