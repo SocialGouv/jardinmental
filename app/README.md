@@ -1,3 +1,19 @@
+# Test
+
+```bash
+# Exécuter tous les tests
+yarn test
+
+# Exécuter les tests en mode watch
+yarn test:watch
+
+# Générer un rapport de couverture
+yarn test:coverage
+
+# Tests pour CI/CD
+yarn test:ci
+```
+
 # Event Tracking Documentation
 
 ## Overview
@@ -86,3 +102,5 @@ The file defines several special collections of indicators:
 - **smiley**: Mood selection using emoji-style interface
 - **gauge**: Sliding scale for intensity measurement
 - **boolean**: Yes/No toggle for binary states
+
+
