@@ -91,7 +91,7 @@ This command will build and upload your app to App Store Connect - TestFlight.
 
 ### Sentry Test Endpoint
 
-Sentry run in the container of the API and in the container of the cron.
+Sentry runs in the container of the API and in the container of the cron.
 In the cron it passes as extra params the value: 'reminderCronJob'.
 
 
