@@ -32,8 +32,129 @@ describe('Export Component', () => {
     navigate: jest.fn(),
   };
 
-  const mockDiaryData = {};
-  const mockDiaryNotes = {};
+  // Realistic mock data based on actual application structure
+  const mockDiaryData = {
+    "2025-01-01": {
+      MOOD: { value: 4, userComment: "Feeling good today" },
+      ANXIETY: { value: 2, userComment: "Mild anxiety in the morning" },
+      SLEEP: 3,
+      NOTES: "Had a productive day at work",
+      POSOLOGY: [
+        {
+          id: "Lamictal (Lamotrigine)",
+          name1: "Lamictal",
+          name2: "Lamotrigine",
+          value: "25 mg",
+          values: ["12.5 mg", "25 mg", "50 mg", "100 mg"]
+        }
+      ]
+    },
+    "2025-01-02": {
+      MOOD: { value: 3, userComment: "" },
+      ANXIETY: { value: 4, userComment: "High anxiety during meeting" },
+      SLEEP: 2,
+      NOTES: "",
+      POSOLOGY: [
+        {
+          id: "Lamictal (Lamotrigine)",
+          name1: "Lamictal",
+          name2: "Lamotrigine",
+          value: "25 mg",
+          values: ["12.5 mg", "25 mg", "50 mg", "100 mg"]
+        },
+        {
+          id: "Mélatonine",
+          name1: "Mélatonine",
+          value: "10 mg",
+          values: ["10 mg", "25 mg", "50 mg"]
+        }
+      ]
+    },
+    "2025-01-03": {
+      MOOD: { value: 5, userComment: "Excellent mood!" },
+      ANXIETY: { value: 1, userComment: "Very calm" },
+      SLEEP: 4,
+      NOTES: "Great day with family",
+      becks: {
+        "beck1": {
+          date: "2025-01-03",
+          time: "14:30",
+          where: "At home",
+          who: ["Family", "Friends"],
+          what: "Family gathering for lunch",
+          mainEmotion: "Joy",
+          mainEmotionIntensity: 8,
+          otherEmotions: ["Gratitude", "Love"],
+          physicalSensations: ["Warmth", "Relaxation"],
+          thoughtsBeforeMainEmotion: "This is wonderful",
+          trustInThoughsThen: 9,
+          memories: "Previous happy family moments",
+          actions: "Enjoyed the moment, took photos",
+          consequencesForYou: "Felt very happy and connected",
+          consequencesForRelatives: "Everyone seemed to enjoy",
+          argumentPros: "Family time is precious",
+          argumentCons: "None really",
+          nuancedThoughts: "Family time brings me joy and connection",
+          trustInThoughsNow: 9,
+          mainEmotionIntensityNuanced: 8
+        }
+      }
+    },
+    "2025-01-04": null, // Empty day
+    "2025-01-05": {
+      MOOD: { value: 2, userComment: "Difficult day" },
+      ANXIETY: { value: 5, userComment: "Very anxious" },
+      SLEEP: 1,
+      NOTES: "Struggled with work stress",
+      POSOLOGY: [
+        {
+          id: "Imovane (Zopiclone)",
+          name1: "Imovane",
+          name2: "Zopiclone",
+          values: ["3.75 mg", "7.5 mg"],
+          value: "7.5 mg"
+        }
+      ]
+    },
+    "2025-01-06": {
+      MOOD: { value: 3, userComment: "Getting better" },
+      ANXIETY: { value: 3, userComment: "Manageable anxiety" },
+      SLEEP: 3,
+      NOTES: { notesEvents: "Therapy session was helpful" }
+    }
+  };
+
+  const mockDiaryNotes = {
+    "2025-01-01": {
+      values: [
+        { id: "note1", value: "Morning reflection: feeling optimistic about the new year" },
+        { id: "note2", value: "Evening note: meditation helped with relaxation" }
+      ]
+    },
+    "2025-01-02": {
+      values: [
+        { id: "note3", value: "Work meeting was stressful but manageable" }
+      ]
+    },
+    "2025-01-03": {
+      values: [
+        { id: "note4", value: "Family time was wonderful" },
+        { id: "note5", value: "Feeling grateful for support system" },
+        { id: "note6", value: "Exercise helped boost mood" }
+      ]
+    },
+    "2025-01-05": {
+      values: [
+        { id: "note7", value: "Difficult day but trying to stay positive" },
+        { id: "note8", value: "Need to practice self-care more" }
+      ]
+    },
+    "2025-01-06": {
+      values: [
+        { id: "note9", value: "Therapy insights: working on coping strategies" }
+      ]
+    }
+  };
 
   const renderWithContext = (component) => {
     return render(
