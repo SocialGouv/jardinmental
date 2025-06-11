@@ -16,17 +16,27 @@ import {GoalsDaySurvey} from '../goals/survey/GoalsDaySurvey';
 import {Button2} from '../../components/Button2';
 import {Card} from '../../components/Card';
 import {IndicatorSurveyItem} from './components/IndicatorSurveyItem';
+import { DiaryDataNewEntryInput } from '../../entities/DiaryData';
+import { Indicator } from '../../entities/Indicator';
 
-const DaySurvey = ({navigation, route}) => {
-  const initSurvey = route?.params?.currentSurvey ?? {
+const DaySurvey = ({navigation, route}: {
+  navigation: any,
+  route: {
+    params?: {
+      currentSurvey:DiaryDataNewEntryInput
+      editingSurvey: boolean
+    }
+  }
+}) => {
+  const initSurvey: DiaryDataNewEntryInput = route?.params?.currentSurvey ?? {
     date: formatDay(beforeToday(0)),
     answers: {},
   };
   const initEditiingSurvey = route?.params?.editingSurvey ?? false;
 
-  const [diaryData, setDiaryData] = useContext(DiaryDataContext);
+  const [diaryData, addNewEntryToDiaryData] = useContext(DiaryDataContext);
 
-  const [userIndicateurs, setUserIndicateurs] = useState([]);
+  const [userIndicateurs, setUserIndicateurs] = useState<Indicator[]>([]);
   const [answers, setAnswers] = useState({});
 
   const scrollRef = useRef();
@@ -122,11 +132,11 @@ const DaySurvey = ({navigation, route}) => {
 
   const submitDay = async ({redirectBack = false}) => {
     const prevCurrentSurvey = initSurvey;
-    const currentSurvey = {
+    const currentSurvey: DiaryDataNewEntryInput = {
       date: prevCurrentSurvey?.date,
       answers: {...prevCurrentSurvey.answers, ...answers},
     };
-    setDiaryData(currentSurvey);
+    addNewEntryToDiaryData(currentSurvey);
     await goalsRef?.current?.onSubmit?.();
     logEvents.logFeelingAdd();
     logEvents.logFeelingSubmitSurvey(userIndicateurs.filter(i => i.active).length);
