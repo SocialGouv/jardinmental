@@ -6,13 +6,25 @@ import Suivi from '../scenes/suivi';
 import SurveyMenu from '../../assets/svg/SurveyMenu';
 import ExerciseMenu from '../../assets/svg/ExerciseMenu';
 import GraphMenu from '../../assets/svg/GraphMenu';
-import {View, Text} from 'react-native';
+import {View, Text, SafeAreaView, Platform} from 'react-native';
 import {colors} from '../utils/colors';
 import localStorage from '../utils/localStorage';
 import logEvents from '../services/logEvents';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 const Tab = createMaterialTopTabNavigator();
+
+const IosStatusBarColor = () => <View
+  style={{
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    height: 100, // Covers status bar area and a bit more
+    backgroundColor: colors.LIGHT_BLUE,
+    zIndex: -1,
+  }}
+/>
 
 const Tabs = ({navigation, route}) => {
   const insets = useSafeAreaInsets();
@@ -76,6 +88,7 @@ const Tabs = ({navigation, route}) => {
         }}>
         {p => (
           <View style={{paddingTop: insets.top, flex: 1}}>
+            {Platform.OS === 'ios' && <IosStatusBarColor/>}
             <Status {...p} startSurvey={startSurvey} />
           </View>
         )}
@@ -92,6 +105,7 @@ const Tabs = ({navigation, route}) => {
         }}>
         {p => (
           <View style={{paddingTop: insets.top, flex: 1}}>
+            {Platform.OS === 'ios' && <IosStatusBarColor/>}
             <Suivi {...p} startSurvey={startSurvey} />
           </View>
         )}
@@ -108,6 +122,7 @@ const Tabs = ({navigation, route}) => {
         }}>
         {p => (
           <View style={{paddingTop: insets.top, flex: 1}}>
+            {Platform.OS === 'ios' && <IosStatusBarColor/>}
             <Exercise {...p} startSurvey={startSurvey} />
           </View>
         )}

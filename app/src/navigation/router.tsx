@@ -9,7 +9,7 @@ import Reminder from '../scenes/reminder';
 import Export from '../scenes/export/export';
 import DailyChart from '../scenes/calendar/daily-chart';
 import {AppState, Platform, Linking} from 'react-native';
-import {StatusBar} from 'expo-status-bar';
+import {StatusBar, StatusBarStyle} from 'expo-status-bar';
 import Notes from '../scenes/survey/notes-screen';
 import Onboarding from '../scenes/onboarding';
 import Supported from '../scenes/onboarding/onboardingSupported';
@@ -66,6 +66,11 @@ import * as Device from 'expo-device';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import uuid from 'react-native-uuid';
 import DevMode from '../scenes/dev-mode';
+import { colors } from '../utils/colors';
+
+const STYLES: StatusBarStyle[] = ['default', 'dark-content', 'light-content'];
+const TRANSITIONS: Array<'fade' | 'slide' | 'none'> = ['fade', 'slide', 'none'];
+
 
 const Stack = createStackNavigator();
 
@@ -114,11 +119,15 @@ Notifications.setNotificationHandler({
 });
 
 class Router extends React.Component {
+
+  state = {
+    backgroundColor: colors.LIGHT_BLUE
+  };
+
   async componentDidMount() {
     //await logEvents.initMatomo();
     logEvents.logAppVisit();
     RNBootsplash.hide({fade: true});
-
     try {
       // Get or generate device ID
       let deviceId = await AsyncStorage.getItem('deviceId');
@@ -162,6 +171,17 @@ class Router extends React.Component {
     this.cleanupNotifications?.();
   }
 
+  updateStatusBarColor() {
+    const route = this.navigationRef.getCurrentRoute();
+    console.log('UPDATE STATUS COLOR', route)
+    if (['Calendar', 'Status', 'Exercise'].includes(route.name)) {
+      console.log('COLOR BLUE')
+      this.setState(prevState => ({ backgroundColor: colors.LIGHT_BLUE  }));
+    } else {
+      this.setState(prevState => ({ backgroundColor: colors.WHITE  }));
+    }
+  }
+
   appState = AppState.currentState;
   onAppChange = nextAppState => {
     if (this.appState.match(/inactive|background/) && nextAppState === 'active') {
@@ -175,6 +195,7 @@ class Router extends React.Component {
   onStateChange = async () => {
     if (!this.navigationRef) return;
     const route = this.navigationRef.getCurrentRoute();
+    this.updateStatusBarColor()
     if (route.name === this.prevCurrentRouteName) return;
     this.prevCurrentRouteName = route.name;
     logEvents.logOpenPage(route.name);
@@ -185,7 +206,7 @@ class Router extends React.Component {
     return (
       <>
         <NavigationContainer ref={r => (this.navigationRef = r)} onStateChange={this.onStateChange} linking={linking}>
-          <Stack.Navigator initialRouteName="tabs" screenOptions={{headerShown: false}}>
+          <Stack.Navigator initialRouteName="tabs" screenOptions={{headerShown: false}} style>
             <Stack.Screen name="presentation" component={Presentation} />
             <Stack.Screen name="day-survey" component={DaySurveyScreen} />
             <Stack.Screen name="select-day" component={SelectDayScreen} />
@@ -246,7 +267,10 @@ class Router extends React.Component {
           </Stack.Navigator>
         </NavigationContainer>
         <EnvironmentIndicator />
-        <StatusBar style="dark" />
+        <StatusBar
+          animated={true}
+          backgroundColor={this.state.backgroundColor}
+        />
       </>
     );
   }
