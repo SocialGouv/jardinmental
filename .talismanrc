@@ -13,6 +13,8 @@ fileignoreconfig:
   checksum: 84dafb30ab00b0177996fc145bc98f44e90282f0f2681187c63e16c999e6f40f
 - filename: app/ios/Podfile.lock
   checksum: fada845491cbe03825f5445bf764d11cd0754ac2d6ead0db9a890f24334c5d02
+- filename: app/src/context/diaryData.tsx
+  checksum: 7ebf59b94ce815a22fb60424e74ae5a17a74eb07e941c5c72c8e71bce1a1c4ed
 - filename: app/src/scenes/onboarding/onboardingSymptomsCustom/CreateIndicator/ChooseIndicatorOrder.js
   checksum: bdb40467b60296ef959cac383488b52e879619d362093020f547896ddf9921bf
 scopeconfig:
