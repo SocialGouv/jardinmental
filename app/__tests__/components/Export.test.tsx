@@ -187,7 +187,7 @@ describe('Export Component', () => {
 
   test('should render optional label', () => {
     renderWithContext(<Export navigation={mockNavigation} />);
-    expect(screen.getByText(/Optionnel/)).toBeTruthy();
+    expect(screen.getByText(/optionnel/)).toBeTruthy();
   });
 
   describe('Input Action Tests', () => {
