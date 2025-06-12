@@ -24,7 +24,8 @@ const DaySurvey = ({navigation, route}: {
   route: {
     params?: {
       currentSurvey:DiaryDataNewEntryInput
-      editingSurvey: boolean
+      editingSurvey: boolean,
+      redirect?: boolean
     }
   }
 }) => {
@@ -37,11 +38,11 @@ const DaySurvey = ({navigation, route}: {
   const [diaryData, addNewEntryToDiaryData] = useContext(DiaryDataContext);
 
   const [userIndicateurs, setUserIndicateurs] = useState<Indicator[]>([]);
-  const [answers, setAnswers] = useState({});
+  const [answers, setAnswers] = useState<DiaryDataNewEntryInput['answers']>({});
 
-  const scrollRef = useRef();
+  const scrollRef = useRef<ScrollView | null>(null);
 
-  const goalsRef = useRef();
+  const goalsRef = useRef<{ onSubmit?: () => Promise<void> }>(null);
 
   const questionToxic = {
     id: 'TOXIC',
@@ -64,32 +65,40 @@ const DaySurvey = ({navigation, route}: {
   );
 
   useEffect(() => {
+    const surveyAnswers = initSurvey?.answers
+    if (!surveyAnswers) {
+      return
+    }
     //init the survey if there is already answers
-    Object.keys(initSurvey?.answers || {})?.forEach(key => {
+    Object.keys(surveyAnswers || {}).forEach(key => {
+      const answer = surveyAnswers[key];
+      if (!answer) return; // Extra safety if answers[key] might be null
+
       const score = getScoreWithState({
         patientState: initSurvey?.answers,
         category: key,
       });
+      // @todo why the cleaned questionId ?
       const cleanedQuestionId = key.split('_')[0];
       const _indicateur = userIndicateurs.find(i => i.name === cleanedQuestionId);
       if (_indicateur) {
         if (_indicateur.type === 'gauge') {
-          toggleAnswer({key: cleanedQuestionId, value: initSurvey?.answers[key]?.value});
+          toggleAnswer({key: cleanedQuestionId, value: answers[key]?.value});
           handleChangeUserComment({
             key: cleanedQuestionId,
-            userComment: initSurvey?.answers[cleanedQuestionId]?.userComment,
+            userComment: answers[cleanedQuestionId]?.userComment,
           });
         } else if (_indicateur.type === 'boolean') {
-          toggleAnswer({key: cleanedQuestionId, value: initSurvey?.answers[key]?.value});
+          toggleAnswer({key: cleanedQuestionId, value: answers[key]?.value});
           handleChangeUserComment({
             key: cleanedQuestionId,
-            userComment: initSurvey?.answers[cleanedQuestionId]?.userComment,
+            userComment: answers[cleanedQuestionId]?.userComment,
           });
         } else {
           toggleAnswer({key: cleanedQuestionId, value: score});
           handleChangeUserComment({
             key: cleanedQuestionId,
-            userComment: initSurvey?.answers[cleanedQuestionId]?.userComment,
+            userComment: answers[cleanedQuestionId]?.userComment,
           });
         }
       }
@@ -97,17 +106,17 @@ const DaySurvey = ({navigation, route}: {
     if ((initSurvey?.answers || {})[questionToxic.id]) {
       toggleAnswer({
         key: questionToxic.id,
-        value: initSurvey?.answers[questionToxic?.id]?.value,
+        value: answers[questionToxic?.id]?.value,
       });
       handleChangeUserComment({
         key: questionToxic.id,
-        userComment: initSurvey?.answers[questionToxic?.id]?.userComment,
+        userComment: answers[questionToxic?.id]?.userComment,
       });
     }
     if ((initSurvey?.answers || {})[questionContext.id]) {
       handleChangeUserComment({
         key: questionContext.id,
-        userComment: initSurvey?.answers[questionContext?.id]?.userComment,
+        userComment: answers[questionContext?.id]?.userComment,
       });
     }
   }, [initSurvey?.answers, questionToxic.id, questionContext?.id, userIndicateurs]);
@@ -133,11 +142,13 @@ const DaySurvey = ({navigation, route}: {
   const submitDay = async ({redirectBack = false}) => {
     const prevCurrentSurvey = initSurvey;
     const currentSurvey: DiaryDataNewEntryInput = {
-      date: prevCurrentSurvey?.date,
+      date: prevCurrentSurvey.date,
       answers: {...prevCurrentSurvey.answers, ...answers},
     };
     addNewEntryToDiaryData(currentSurvey);
-    await goalsRef?.current?.onSubmit?.();
+    if (goalsRef.current && typeof goalsRef.current.onSubmit === 'function') {
+      await goalsRef.current.onSubmit();
+    }
     logEvents.logFeelingAdd();
     logEvents.logFeelingSubmitSurvey(userIndicateurs.filter(i => i.active).length);
     logEvents.logFeelingAddComment(Object.keys(answers).filter(key => ![questionToxic.id, questionContext.id].includes(key) && answers[key].userComment)?.length);

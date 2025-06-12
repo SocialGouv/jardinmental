@@ -75,11 +75,11 @@ export const DiaryEntrySchema = DiaryDataAnswerListSchema.and(
     // 
     CONTEXT: z.object({
       userComment: z.string().optional(),
-    }).describe(`Ajoutez une note générale sur votre journée`),
+    }).describe(`Ajoutez une note générale sur votre journée`).optional(),
     TOXIC: z.object({
       value: z.boolean().optional(),
       userComment: z.string().optional(),
-    }).describe(`Avez-vous consommé des substances aujourd'hui ?`)
+    }).describe(`Avez-vous consommé des substances aujourd'hui ?`).optional(),
 }))
 export type DiaryEntry = z.infer<typeof DiaryEntrySchema>;
 
