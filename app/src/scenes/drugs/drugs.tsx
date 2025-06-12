@@ -13,10 +13,10 @@ import {getDrugListWithLocalStorage} from '../../utils/drugs-list';
 import logEvents from '../../services/logEvents';
 import {alertNoDataYesterday} from '../survey/survey-data';
 import Logo from '../../../assets/svg/drugs';
-import QuestionYesNo from '../../scenes/survey/QuestionYesNo';
+import QuestionYesNo from '../survey/QuestionYesNo';
 
 const Drugs = ({navigation, route}) => {
-  const [diaryData, setDiaryData] = useContext(DiaryDataContext);
+  const [diaryData, addNewEntryToDiaryData] = useContext(DiaryDataContext);
   const [medicalTreatment, setMedicalTreatment] = useState();
   const [posology, setPosology] = useState([]);
   const [inSurvey, setInSurvey] = useState(false);
@@ -212,7 +212,7 @@ const Drugs = ({navigation, route}) => {
           POSOLOGY: posology,
         },
       };
-      setDiaryData(currentSurvey);
+      addNewEntryToDiaryData(currentSurvey);
       logEvents.logInputDrugSurvey(posology?.filter(e => e?.value)?.length);
       alertNoDataYesterday({date: survey?.date, diaryData, navigation});
     }

@@ -22,6 +22,7 @@ import {
 } from "../utils/constants";
 import { fakeDiaryData, fakeDiaryData2, startDate as fakeStartDate } from "../scenes/status/fake-diary-data";
 import { beforeToday, formatDay, getArrayOfDates } from "../utils/date/helpers";
+import { DiaryData, DiaryDataNewEntryInput } from "../entities/DiaryData";
 
 const wipeData = async () => {
   await AsyncStorage.removeItem(STORAGE_KEY_START_DATE);
@@ -58,12 +59,18 @@ const fillUpEmptyDates = (startDate, data) => {
   return diary;
 };
 
-const DiaryDataContext = React.createContext([{}, () => {}]);
+const DiaryDataContext = React.createContext<[
+  DiaryData,
+  ({ date , answers }: {
+    date: string;
+    answers: DiaryData;
+}) => void
+]>([{}, () => {}]);
 
 const DiaryDataProvider = ({ children }) => {
-  const [diaryData, setDiaryData] = useState({});
+  const [diaryData, setDiaryData] = useState<DiaryData>({});
 
-  const setDiaryDataRequest = ({ date: isoDate, answers: data }) => {
+  const addNewEntryToDiaryData = ({ date: isoDate, answers: data }: DiaryDataNewEntryInput) => {
     const resData = data?.becks
       ? // if we add becks, we keep all the previous diaryData
         { ...diaryData[isoDate], ...data }
@@ -98,10 +105,10 @@ const DiaryDataProvider = ({ children }) => {
       }
 
       // we set data first for a better UX
-      data = JSON.parse(data);
-      setDiaryData(data);
+      let parsedData: DiaryData = JSON.parse(data) as DiaryData;
+      setDiaryData(parsedData);
 
-      let startDateMinus7 = beforeToday(7, startDate);
+      let startDateMinus7 = beforeToday(7, new Date(startDate));
 
       const diary = fillUpEmptyDates(startDateMinus7, data);
       setDiaryData(diary);
@@ -111,7 +118,7 @@ const DiaryDataProvider = ({ children }) => {
   }, [setDiaryData]);
 
   return (
-    <DiaryDataContext.Provider value={[diaryData, setDiaryDataRequest]}>{children}</DiaryDataContext.Provider>
+    <DiaryDataContext.Provider value={[diaryData, addNewEntryToDiaryData]}>{children}</DiaryDataContext.Provider>
   );
 };
 

@@ -16,22 +16,33 @@ import {GoalsDaySurvey} from '../goals/survey/GoalsDaySurvey';
 import {Button2} from '../../components/Button2';
 import {Card} from '../../components/Card';
 import {IndicatorSurveyItem} from './components/IndicatorSurveyItem';
+import { DiaryDataNewEntryInput } from '../../entities/DiaryData';
+import { Indicator } from '../../entities/Indicator';
 
-const DaySurvey = ({navigation, route}) => {
-  const initSurvey = route?.params?.currentSurvey ?? {
+const DaySurvey = ({navigation, route}: {
+  navigation: any,
+  route: {
+    params?: {
+      currentSurvey:DiaryDataNewEntryInput
+      editingSurvey: boolean,
+      redirect?: boolean
+    }
+  }
+}) => {
+  const initSurvey: DiaryDataNewEntryInput = route?.params?.currentSurvey ?? {
     date: formatDay(beforeToday(0)),
     answers: {},
   };
   const initEditiingSurvey = route?.params?.editingSurvey ?? false;
 
-  const [diaryData, setDiaryData] = useContext(DiaryDataContext);
+  const [diaryData, addNewEntryToDiaryData] = useContext(DiaryDataContext);
 
-  const [userIndicateurs, setUserIndicateurs] = useState([]);
-  const [answers, setAnswers] = useState({});
+  const [userIndicateurs, setUserIndicateurs] = useState<Indicator[]>([]);
+  const [answers, setAnswers] = useState<DiaryDataNewEntryInput['answers']>({});
 
-  const scrollRef = useRef();
+  const scrollRef = useRef<ScrollView | null>(null);
 
-  const goalsRef = useRef();
+  const goalsRef = useRef<{ onSubmit?: () => Promise<void> }>(null);
 
   const questionToxic = {
     id: 'TOXIC',
@@ -55,52 +66,45 @@ const DaySurvey = ({navigation, route}) => {
 
   useEffect(() => {
     //init the survey if there is already answers
-    Object.keys(initSurvey?.answers || {})?.forEach(key => {
-      const score = getScoreWithState({
-        patientState: initSurvey?.answers,
-        category: key,
-      });
+    const initialAnswers = {};
+    const surveyAnswers = initSurvey?.answers || {};
+    if (!surveyAnswers || userIndicateurs.length === 0) {
+        return;
+      }
+    Object.keys(surveyAnswers).forEach(key => {
+      const answer = surveyAnswers[key];
+      if (!answer) return;
+      // Handle special questions (TOXIC, CONTEXT)
+      if (key === questionToxic.id || key === questionContext.id) {
+        initialAnswers[key] = {
+          ...answer,
+          value: answer.value,
+          userComment: answer.userComment,
+        };
+        return;
+      }
       const cleanedQuestionId = key.split('_')[0];
+      // previous indicators where using '_', we cleaned it when editing it apparently
       const _indicateur = userIndicateurs.find(i => i.name === cleanedQuestionId);
       if (_indicateur) {
-        if (_indicateur.type === 'gauge') {
-          toggleAnswer({key: cleanedQuestionId, value: initSurvey?.answers[key]?.value});
-          handleChangeUserComment({
-            key: cleanedQuestionId,
-            userComment: initSurvey?.answers[cleanedQuestionId]?.userComment,
-          });
-        } else if (_indicateur.type === 'boolean') {
-          toggleAnswer({key: cleanedQuestionId, value: initSurvey?.answers[key]?.value});
-          handleChangeUserComment({
-            key: cleanedQuestionId,
-            userComment: initSurvey?.answers[cleanedQuestionId]?.userComment,
-          });
-        } else {
-          toggleAnswer({key: cleanedQuestionId, value: score});
-          handleChangeUserComment({
-            key: cleanedQuestionId,
-            userComment: initSurvey?.answers[cleanedQuestionId]?.userComment,
+        let value = answer.value
+        if (!['gauge', 'boolean'].includes(_indicateur.type)) {
+          // for retro caompatibility with certain types of indicators
+          value = getScoreWithState({
+            patientState: initSurvey?.answers,
+            category: key,
           });
         }
+        initialAnswers[cleanedQuestionId] = {
+          value: answer.value,
+          userComment: answer.userComment,
+          _indicateur,
+        };
       }
     });
-    if ((initSurvey?.answers || {})[questionToxic.id]) {
-      toggleAnswer({
-        key: questionToxic.id,
-        value: initSurvey?.answers[questionToxic?.id]?.value,
-      });
-      handleChangeUserComment({
-        key: questionToxic.id,
-        userComment: initSurvey?.answers[questionToxic?.id]?.userComment,
-      });
-    }
-    if ((initSurvey?.answers || {})[questionContext.id]) {
-      handleChangeUserComment({
-        key: questionContext.id,
-        userComment: initSurvey?.answers[questionContext?.id]?.userComment,
-      });
-    }
+    setAnswers(initialAnswers);
   }, [initSurvey?.answers, questionToxic.id, questionContext?.id, userIndicateurs]);
+
 
   const toggleAnswer = async ({key, value}) => {
     setAnswers(prev => {
@@ -122,12 +126,14 @@ const DaySurvey = ({navigation, route}) => {
 
   const submitDay = async ({redirectBack = false}) => {
     const prevCurrentSurvey = initSurvey;
-    const currentSurvey = {
-      date: prevCurrentSurvey?.date,
+    const currentSurvey: DiaryDataNewEntryInput = {
+      date: prevCurrentSurvey.date,
       answers: {...prevCurrentSurvey.answers, ...answers},
     };
-    setDiaryData(currentSurvey);
-    await goalsRef?.current?.onSubmit?.();
+    addNewEntryToDiaryData(currentSurvey);
+    if (goalsRef.current && typeof goalsRef.current.onSubmit === 'function') {
+      await goalsRef.current.onSubmit();
+    }
     logEvents.logFeelingAdd();
     logEvents.logFeelingSubmitSurvey(userIndicateurs.filter(i => i.active).length);
     logEvents.logFeelingAddComment(Object.keys(answers).filter(key => ![questionToxic.id, questionContext.id].includes(key) && answers[key].userComment)?.length);
@@ -177,7 +183,15 @@ const DaySurvey = ({navigation, route}) => {
       <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} className="flex-1" keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 25}>
         <View className="absolute top-0 left-0 right-0 flex-row items-center justify-between px-4 pt-5 bg-white/90 z-50">
           {navigation.canGoBack() && (
-            <Button2 preset="" type="outline" circle size="normal" icon="ArrowUpSvg" iconStyle={{transform: [{rotate: '270deg'}]}} onPress={() => navigation.goBack()} />
+            <Button2
+              preset=""
+              type="outline"
+              circle
+              size="normal"
+              icon="ArrowUpSvg"
+              iconStyle={{transform: [{rotate: '270deg'}]}}
+              onPress={() => navigation.goBack()} 
+            />
           )}
           <Text className="flex-1 text-lg font-bold font-karla text-center px-1">Mon questionnaire</Text>
           <View className="w-[45px]" />
@@ -197,10 +211,11 @@ const DaySurvey = ({navigation, route}) => {
               <Card preset="lighten" title={renderQuestion()} image={{source: require('./../../../assets/imgs/indicateur.png')}} containerStyle={{marginBottom: 16}} />
               {userIndicateurs
                 .filter(ind => ind.active)
-                .map(ind => (
+                .map((ind, index) => (
                   <IndicatorSurveyItem
                     key={ind?.uuid}
                     indicator={ind}
+                    index={index}
                     value={answers?.[ind?.name]?.value}
                     onValueChanged={({indicator, value}) => toggleAnswer({key: indicator?.name, value})}
                     onCommentChanged={({indicator, comment}) => handleChangeUserComment({key: indicator?.name, userComment: comment})}

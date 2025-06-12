@@ -18,6 +18,7 @@ import Step2 from './Step2';
 import Step3 from './Step3';
 import Step4 from './Step4';
 import Step5 from './Step5';
+import { DiaryData } from '../../entities/DiaryData';
 
 export default ({navigation, route}) => {
   const scrollRef = useRef();
@@ -25,7 +26,7 @@ export default ({navigation, route}) => {
   const [beck, setBeck] = useState({});
   const [originalBeckDate, setOriginalBeckDate] = useState(null);
   const [id, setId] = useState();
-  const [diaryData, setDiaryData] = useContext(DiaryDataContext);
+  const [diaryData, addNewEntryToDiaryData] = useContext(DiaryDataContext);
 
   useEffect(() => {
     scrollRef.current?.scrollTo({
@@ -50,7 +51,7 @@ export default ({navigation, route}) => {
         date: originalBeckDate,
         beckId: id,
         diaryData,
-        setDiaryData,
+        addNewEntryToDiaryData,
       });
 
     // save progression
@@ -62,14 +63,17 @@ export default ({navigation, route}) => {
       setId(beckId);
     }
     becks[beckId] = beck;
-    const currentSurvey = {
+    const currentSurvey: {
+        date: string,
+        answers: DiaryData
+      } = {
       date: beck?.date,
       answers: {
         ...survey?.answers,
         becks,
       },
     };
-    setDiaryData(currentSurvey);
+    addNewEntryToDiaryData(currentSurvey);
   };
   const nextStep = () => {
     save();
