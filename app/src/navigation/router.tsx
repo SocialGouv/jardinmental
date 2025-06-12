@@ -9,7 +9,7 @@ import Reminder from '../scenes/reminder';
 import Export from '../scenes/export/export';
 import DailyChart from '../scenes/calendar/daily-chart';
 import {AppState, Platform, Linking} from 'react-native';
-import {StatusBar, StatusBarStyle} from 'expo-status-bar';
+import {StatusBar} from 'expo-status-bar';
 import Notes from '../scenes/survey/notes-screen';
 import Onboarding from '../scenes/onboarding';
 import Supported from '../scenes/onboarding/onboardingSupported';
@@ -67,10 +67,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import uuid from 'react-native-uuid';
 import DevMode from '../scenes/dev-mode';
 import { colors } from '../utils/colors';
-
-const STYLES: StatusBarStyle[] = ['default', 'dark-content', 'light-content'];
-const TRANSITIONS: Array<'fade' | 'slide' | 'none'> = ['fade', 'slide', 'none'];
-
 
 const Stack = createStackNavigator();
 
