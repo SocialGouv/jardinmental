@@ -198,7 +198,15 @@ const DaySurvey = ({navigation, route}: {
       <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} className="flex-1" keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 25}>
         <View className="absolute top-0 left-0 right-0 flex-row items-center justify-between px-4 pt-5 bg-white/90 z-50">
           {navigation.canGoBack() && (
-            <Button2 preset="" type="outline" circle size="normal" icon="ArrowUpSvg" iconStyle={{transform: [{rotate: '270deg'}]}} onPress={() => navigation.goBack()} />
+            <Button2
+              preset=""
+              type="outline"
+              circle
+              size="normal"
+              icon="ArrowUpSvg"
+              iconStyle={{transform: [{rotate: '270deg'}]}}
+              onPress={() => navigation.goBack()} 
+            />
           )}
           <Text className="flex-1 text-lg font-bold font-karla text-center px-1">Mon questionnaire</Text>
           <View className="w-[45px]" />
@@ -218,10 +226,11 @@ const DaySurvey = ({navigation, route}: {
               <Card preset="lighten" title={renderQuestion()} image={{source: require('./../../../assets/imgs/indicateur.png')}} containerStyle={{marginBottom: 16}} />
               {userIndicateurs
                 .filter(ind => ind.active)
-                .map(ind => (
+                .map((ind, index) => (
                   <IndicatorSurveyItem
                     key={ind?.uuid}
                     indicator={ind}
+                    index={index}
                     value={answers?.[ind?.name]?.value}
                     onValueChanged={({indicator, value}) => toggleAnswer({key: indicator?.name, value})}
                     onCommentChanged={({indicator, comment}) => handleChangeUserComment({key: indicator?.name, userComment: comment})}
