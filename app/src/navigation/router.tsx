@@ -169,9 +169,7 @@ class Router extends React.Component {
 
   updateStatusBarColor() {
     const route = this.navigationRef.getCurrentRoute();
-    console.log('UPDATE STATUS COLOR', route)
     if (['Calendar', 'Status', 'Exercise'].includes(route.name)) {
-      console.log('COLOR BLUE')
       this.setState(prevState => ({ backgroundColor: colors.LIGHT_BLUE  }));
     } else {
       this.setState(prevState => ({ backgroundColor: colors.WHITE  }));
