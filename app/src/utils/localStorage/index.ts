@@ -12,9 +12,10 @@ import {
   STORAGE_KEY_ONBOARDING_STEP,
   STORAGE_KEY_ONBOARDING_DONE,
   STORAGE_KEY_NPS_PRO_CONTACT,
-} from "../../utils/constants";
+} from "../constants";
 import { updateSymptomsFormatIfNeeded } from "./utils";
 import localStorageBeck from "./beck";
+import { Indicator } from "../../entities/Indicator";
 
 const getSymptoms = async () => {
   const symptoms = await AsyncStorage.getItem(STORAGE_KEY_SYMPTOMS);
@@ -27,15 +28,15 @@ const setSymptoms = async (symp) => {
   await AsyncStorage.setItem(STORAGE_KEY_SYMPTOMS, JSON.stringify(symp));
 };
 
-const getIndicateurs = async () => {
+const getIndicateurs = async ():Promise<Indicator[]>  => {
   let _indicateurs = await AsyncStorage.getItem(STORAGE_KEY_INDICATEURS);
   if (!_indicateurs) {
     // si on n'a pas d'indicateurs, on les récupère depuis le localStorage de symptoms, et on migre si besoin
     // sinon, c'est qu'on ne l'a pas encore configuré
     const symptoms = await AsyncStorage.getItem(STORAGE_KEY_SYMPTOMS);
     if (symptoms) {
-      _indicateurs = updateSymptomsFormatIfNeeded(JSON.parse(symptoms));
-      _indicateurs = JSON.stringify(_indicateurs);
+      let parsedIndicateurs = updateSymptomsFormatIfNeeded(JSON.parse(symptoms));
+      _indicateurs = JSON.stringify(parsedIndicateurs);
     }
     if (_indicateurs) {
       // si on a migré, on sauvegarde
@@ -43,8 +44,10 @@ const getIndicateurs = async () => {
     }
   }
   if (_indicateurs) {
-    _indicateurs = updateSymptomsFormatIfNeeded(JSON.parse(_indicateurs));
-    return _indicateurs;
+    let parsedIndicateurs = updateSymptomsFormatIfNeeded(JSON.parse(_indicateurs));
+    return parsedIndicateurs;
+  } else {
+    return []
   }
 };
 

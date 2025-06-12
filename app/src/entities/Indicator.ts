@@ -13,9 +13,9 @@ export const IndicatorSchema = z.object({
   active: z.boolean(),
   position: z.number().int().min(0).describe(`Indicators are shown in a defined order. The position allow to sort them`),
   created_at: z.date(),
-}).strict()
+})
 
 export const IndicatorsArraySchema = z.array(IndicatorSchema);
 
-export type IndicatorSchemaType = z.infer<typeof IndicatorSchema>;
+export type Indicator = z.infer<typeof IndicatorSchema>;
 
