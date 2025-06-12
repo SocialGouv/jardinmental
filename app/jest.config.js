@@ -8,7 +8,7 @@ module.exports = {
     '<rootDir>/__tests__/setup.ts',
   ],
   transformIgnorePatterns: [
-    'node_modules/(?!(react-native|@react-native|react-native-.*|@react-navigation|expo.*|@expo.*|react-native-uuid|@react-native-async-storage|react-native-localize|date-fns)/)',
+    'node_modules/(?!(react-native|@react-native|react-native-.*|@react-navigation|expo.*|@expo.*|react-native-uuid|@react-native-async-storage|react-native-localize|date-fns|@miblanchard)/)',
   ],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   testEnvironment: 'node',
@@ -18,6 +18,8 @@ module.exports = {
   },
   moduleNameMapper: {
     '\\.(jpg|jpeg|png|gif|eot|otf|webp|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
-      'identity-obj-proxy',
+      '<rootDir>/__mocks__/fileMock.js',
+    '^.+\\.(jpg|jpeg|png|gif|eot|otf|webp|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
+      '<rootDir>/__mocks__/fileMock.js',
   },
 };
