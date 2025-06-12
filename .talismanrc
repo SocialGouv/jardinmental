@@ -8,7 +8,7 @@ fileignoreconfig:
 - filename: api/src/config.ts
   checksum: 31e38a78927264f160f3652037cf34acc78b7f63234d9571346a9af86be44c5a
 - filename: app/__tests__/components/DaySurvey.test.tsx
-  checksum: b72398118e5bdea34e7de1a9eac6f8bfe707c74adf6e7aaf89c211c0f72ef6f3
+  checksum: c25c3ec46ae00ac4e9a8e52d0f8b2507ff16af8ee8a1c3db747a7b3a9939c3a4
 - filename: app/__tests__/components/MyText.test.tsx
   checksum: 84dafb30ab00b0177996fc145bc98f44e90282f0f2681187c63e16c999e6f40f
 - filename: app/ios/Podfile.lock
