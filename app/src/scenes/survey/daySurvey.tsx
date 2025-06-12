@@ -65,61 +65,46 @@ const DaySurvey = ({navigation, route}: {
   );
 
   useEffect(() => {
-    const surveyAnswers = initSurvey?.answers
-    if (!surveyAnswers) {
-      return
-    }
     //init the survey if there is already answers
-    Object.keys(surveyAnswers || {}).forEach(key => {
+    const initialAnswers = {};
+    const surveyAnswers = initSurvey?.answers || {};
+    if (!surveyAnswers || userIndicateurs.length === 0) {
+        return;
+      }
+    Object.keys(surveyAnswers).forEach(key => {
       const answer = surveyAnswers[key];
-      if (!answer) return; // Extra safety if answers[key] might be null
-
-      const score = getScoreWithState({
-        patientState: initSurvey?.answers,
-        category: key,
-      });
-      // @todo why the cleaned questionId ?
+      if (!answer) return;
+      // Handle special questions (TOXIC, CONTEXT)
+      if (key === questionToxic.id || key === questionContext.id) {
+        initialAnswers[key] = {
+          ...answer,
+          value: answer.value,
+          userComment: answer.userComment,
+        };
+        return;
+      }
       const cleanedQuestionId = key.split('_')[0];
+      // previous indicators where using '_', we cleaned it when editing it apparently
       const _indicateur = userIndicateurs.find(i => i.name === cleanedQuestionId);
       if (_indicateur) {
-        if (_indicateur.type === 'gauge') {
-          toggleAnswer({key: cleanedQuestionId, value: answers[key]?.value});
-          handleChangeUserComment({
-            key: cleanedQuestionId,
-            userComment: answers[cleanedQuestionId]?.userComment,
-          });
-        } else if (_indicateur.type === 'boolean') {
-          toggleAnswer({key: cleanedQuestionId, value: answers[key]?.value});
-          handleChangeUserComment({
-            key: cleanedQuestionId,
-            userComment: answers[cleanedQuestionId]?.userComment,
-          });
-        } else {
-          toggleAnswer({key: cleanedQuestionId, value: score});
-          handleChangeUserComment({
-            key: cleanedQuestionId,
-            userComment: answers[cleanedQuestionId]?.userComment,
+        let value = answer.value
+        if (!['gauge', 'boolean'].includes(_indicateur.type)) {
+          // for retro caompatibility with certain types of indicators
+          value = getScoreWithState({
+            patientState: initSurvey?.answers,
+            category: key,
           });
         }
+        initialAnswers[cleanedQuestionId] = {
+          value: answer.value,
+          userComment: answer.userComment,
+          _indicateur,
+        };
       }
     });
-    if ((initSurvey?.answers || {})[questionToxic.id]) {
-      toggleAnswer({
-        key: questionToxic.id,
-        value: answers[questionToxic?.id]?.value,
-      });
-      handleChangeUserComment({
-        key: questionToxic.id,
-        userComment: answers[questionToxic?.id]?.userComment,
-      });
-    }
-    if ((initSurvey?.answers || {})[questionContext.id]) {
-      handleChangeUserComment({
-        key: questionContext.id,
-        userComment: answers[questionContext?.id]?.userComment,
-      });
-    }
+    setAnswers(initialAnswers);
   }, [initSurvey?.answers, questionToxic.id, questionContext?.id, userIndicateurs]);
+
 
   const toggleAnswer = async ({key, value}) => {
     setAnswers(prev => {

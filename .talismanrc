@@ -18,7 +18,7 @@ fileignoreconfig:
 - filename: app/src/scenes/onboarding/onboardingSymptomsCustom/CreateIndicator/ChooseIndicatorOrder.js
   checksum: bdb40467b60296ef959cac383488b52e879619d362093020f547896ddf9921bf
 - filename: app/src/scenes/survey/daySurvey.tsx
-  checksum: 33521d95e17a5f0f7ba0c813107497cf741b5eb05fe31c885da38b5275011232
+  checksum: 440ba524fd17674f06dd0ef4158be6f3ce291bf4be450c361ec4ae883a60534f
 scopeconfig:
 - scope: node
 version: "1.0"
