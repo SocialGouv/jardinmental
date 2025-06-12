@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet, ActivityIndicator, TouchableOpacity} from 'react-native';
+import {View, StyleSheet, ActivityIndicator, TouchableOpacity, StyleProp, ViewStyle, TextStyle} from 'react-native';
 import Text from './MyText';
 import Icon from './Icon';
 import {colors} from '../utils/colors';
@@ -24,6 +24,26 @@ export const Button2 = ({
   iconStyle = {},
   checked = false,
   testID = '',
+} : {
+  title: string,
+  onPress: () => {},
+  icon: string | JSX.Element, // can be a component or a string
+  iconSize: number,
+  preset?: 'primary' | 'secondary', // 'primary' | 'secondary'
+  type?: 'solid' | 'clear' | 'outline',
+  size?: 'default'|'normal' | 'small',
+  fill?: boolean,
+  square?: boolean,
+  circle?: boolean,
+  checkable?: boolean,
+  disabled?: boolean,
+  loading?: boolean,
+  style?: ViewStyle,
+  containerStyle?: ViewStyle,
+  textStyle?: TextStyle,
+  iconStyle?: ViewStyle,
+  checked?: boolean,
+  testID?: string,
 }) => {
   square = square || circle;
   const appliedStyles = applyStyles({
@@ -52,11 +72,11 @@ export const Button2 = ({
     !title?.length && {marginRight: 0},
   ];
 
-  let _icon = null;
+  let _icon: JSX.Element|null = null;
   if (React.isValidElement(icon)) {
     _icon = icon;
   } else if (typeof icon === 'string') {
-    _icon = <Icon icon={icon} width={_iconSize} height={_iconSize} />;
+    _icon = <Icon icon={icon} width={_iconSize} height={_iconSize} color={undefined} styleContainer={undefined} spin={undefined} onPress={undefined} />;
   }
 
   return (
