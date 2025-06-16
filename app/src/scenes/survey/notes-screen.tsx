@@ -17,6 +17,7 @@ import logEvents from '../../services/logEvents';
 import BackButton from '../../components/BackButton';
 import RoundButtonIcon from '../../components/RoundButtonIcon';
 import localStorage from '../../utils/localStorage';
+import { DiaryDataNewEntryInput } from '../../entities/DiaryData';
 
 const Notes = ({navigation, route}) => {
   const [notesEvents, setNotesEvents] = useState(
@@ -28,7 +29,7 @@ const Notes = ({navigation, route}) => {
   const [notesToxic, setNotesToxic] = useState(
     route?.params?.currentSurvey?.answers?.NOTES?.notesToxic,
   );
-  const [diaryData, setDiaryData] = useContext(DiaryDataContext);
+  const [diaryData, addNewEntryToDiaryData] = useContext(DiaryDataContext);
 
   const [inputFocused, setInputFocused] = useState();
   const inputRef1 = useRef();
@@ -44,14 +45,14 @@ const Notes = ({navigation, route}) => {
 
   const validateSurvey = async () => {
     const survey = route.params?.currentSurvey;
-    const currentSurvey = {
+    const currentSurvey: DiaryDataNewEntryInput = {
       date: survey?.date,
       answers: {
         ...survey?.answers,
         ['NOTES']: {notesEvents, notesSymptoms, notesToxic},
       },
     };
-    setDiaryData(currentSurvey);
+    addNewEntryToDiaryData(currentSurvey);
     logEvents.logFeelingAdd();
 
     if (route.params?.redirect) {
