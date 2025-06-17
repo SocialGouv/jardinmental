@@ -6,6 +6,7 @@ import DaySurvey from '../../src/scenes/survey/daySurvey';
 import { DiaryDataProvider } from '../../src/context/diaryData';
 import { STORAGE_KEY_INDICATEURS, STORAGE_KEY_GOALS } from '../../src/utils/constants';
 import { DiaryDataNewEntryInput } from '../../src/entities/DiaryData';
+import { saveGoalsData } from '../../src/utils/localStorage/goals';
 
 // Only mock what absolutely cannot run in test environment
 jest.mock('@react-navigation/native', () => ({
@@ -160,21 +161,133 @@ describe('DaySurvey Component', () => {
     }
   ];
 
-  // Helper function to create fake goals
-  const createFakeGoals = () => [
-    {
-      id: 'goal-1',
-      title: 'Faire du sport',
-      description: 'Faire 30 minutes de sport par jour',
-      active: true,
+  // Helper function to create fake goals data structure for localStorage
+  const createFakeGoalsData = () => ({
+    goals: {
+      data: {
+        'faire_du_sport': {
+          id: 'faire_du_sport',
+          label: 'Faire du sport',
+          enabled: true,
+          order: 0,
+          daysOfWeek: {
+            monday: true,
+            tuesday: true,
+            wednesday: true,
+            thursday: true,
+            friday: true,
+            saturday: false,
+            sunday: false,
+          },
+          reminder: null,
+        },
+        'mediter': {
+          id: 'mediter',
+          label: 'Méditer',
+          enabled: true,
+          order: 1,
+          daysOfWeek: {
+            monday: true,
+            tuesday: true,
+            wednesday: true,
+            thursday: true,
+            friday: true,
+            saturday: true,
+            sunday: true,
+          },
+          reminder: null,
+        },
+        'lire_un_livre': {
+          id: 'lire_un_livre',
+          label: 'Lire un livre',
+          enabled: true,
+          order: 2,
+          daysOfWeek: {
+            monday: true,
+            tuesday: true,
+            wednesday: true,
+            thursday: true,
+            friday: true,
+            saturday: true,
+            sunday: true,
+          },
+          reminder: null,
+        },
+      },
+      byOrder: ['faire_du_sport', 'mediter', 'lire_un_livre'],
     },
-    {
-      id: 'goal-2',
-      title: 'Méditer',
-      description: 'Méditer 10 minutes le matin',
-      active: true,
+    records: {
+      data: {},
+      byDate: {},
+      byGoalId: {},
     },
-  ];
+  });
+
+  // Helper function to create goals data with existing records
+  const createFakeGoalsDataWithRecords = (date = '2024-01-15') => ({
+    goals: {
+      data: {
+        'faire_du_sport': {
+          id: 'faire_du_sport',
+          label: 'Faire du sport',
+          enabled: true,
+          order: 0,
+          daysOfWeek: {
+            monday: true,
+            tuesday: true,
+            wednesday: true,
+            thursday: true,
+            friday: true,
+            saturday: false,
+            sunday: false,
+          },
+          reminder: null,
+        },
+        'mediter': {
+          id: 'mediter',
+          label: 'Méditer',
+          enabled: true,
+          order: 1,
+          daysOfWeek: {
+            monday: true,
+            tuesday: true,
+            wednesday: true,
+            thursday: true,
+            friday: true,
+            saturday: true,
+            sunday: true,
+          },
+          reminder: null,
+        },
+      },
+      byOrder: ['faire_du_sport', 'mediter'],
+    },
+    records: {
+      data: {
+        'record-1': {
+          id: 'record-1',
+          goalId: 'faire_du_sport',
+          value: true,
+          comment: 'J\'ai fait 30 minutes de course',
+          date,
+        },
+        'record-2': {
+          id: 'record-2',
+          goalId: 'mediter',
+          value: false,
+          comment: 'Pas eu le temps aujourd\'hui',
+          date,
+        },
+      },
+      byDate: {
+        [date]: ['record-1', 'record-2'],
+      },
+      byGoalId: {
+        'faire_du_sport': ['record-1'],
+        'mediter': ['record-2'],
+      },
+    },
+  });
 
   test('should render correctly without crashing', () => {
     renderWithProvider(
@@ -260,10 +373,10 @@ describe('DaySurvey Component', () => {
   test('should render with goals data', async () => {
     // Setup: Store fake indicators and goals
     const fakeIndicators = createFakeIndicators();
-    const fakeGoals = createFakeGoals();
+    const fakeGoalsData = createFakeGoalsData();
     
     await AsyncStorage.setItem(STORAGE_KEY_INDICATEURS, JSON.stringify(fakeIndicators));
-    await AsyncStorage.setItem(STORAGE_KEY_GOALS, JSON.stringify(fakeGoals));
+    await saveGoalsData(fakeGoalsData);
 
     renderWithProvider(
       <DaySurvey navigation={mockNavigation} route={mockRoute} />
@@ -271,6 +384,78 @@ describe('DaySurvey Component', () => {
 
     // Verify the main title is present
     expect(screen.getByText('Mon questionnaire')).toBeTruthy();
+
+    // Wait for goals to load and verify they are displayed
+    await waitFor(() => {
+      expect(screen.getByText('Mes objectifs')).toBeTruthy();
+      expect(screen.getByText('Qu\’avez-vous réalisé aujourd\’hui ?')).toBeTruthy();
+      expect(screen.getByText('Faire du sport')).toBeTruthy();
+      expect(screen.getByText('Méditer')).toBeTruthy();
+      expect(screen.getByText('Lire un livre')).toBeTruthy();
+      expect(screen.getByText('Personnaliser mes objectifs')).toBeTruthy();
+    });
+  });
+
+  test('should display goals correctly with existing records', async () => {
+    // Setup: Store fake indicators and goals with records
+    const fakeIndicators = createFakeIndicators();
+    const fakeGoalsDataWithRecords = createFakeGoalsDataWithRecords('2024-01-15');
+    
+    await AsyncStorage.setItem(STORAGE_KEY_INDICATEURS, JSON.stringify(fakeIndicators));
+    await saveGoalsData(fakeGoalsDataWithRecords);
+
+    const routeWithDate = {
+      params: {
+        currentSurvey: {
+          date: '2024-01-15',
+          answers: {},
+        },
+        editingSurvey: false,
+      },
+    };
+
+    renderWithProvider(
+      <DaySurvey navigation={mockNavigation} route={routeWithDate} />
+    );
+
+    // Verify the main title is present
+    expect(screen.getByText('Mon questionnaire')).toBeTruthy();
+
+    // Wait for goals to load and verify they are displayed
+    await waitFor(() => {
+      expect(screen.getByText('Mes objectifs')).toBeTruthy();
+      expect(screen.getByText('Qu\’avez-vous réalisé aujourd\’hui ?')).toBeTruthy();
+      expect(screen.getByText('Faire du sport')).toBeTruthy();
+      expect(screen.getByText('Méditer')).toBeTruthy();
+    });
+
+    // Verify that goal comments are pre-filled
+    await waitFor(() => {
+      expect(screen.getByDisplayValue('J\'ai fait 30 minutes de course')).toBeTruthy();
+      expect(screen.getByDisplayValue('Pas eu le temps aujourd\'hui')).toBeTruthy();
+    });
+  });
+
+  test('should not display goals section when no goals exist', async () => {
+    // Setup: Store fake indicators but no goals
+    const fakeIndicators = createFakeIndicators();
+    await AsyncStorage.setItem(STORAGE_KEY_INDICATEURS, JSON.stringify(fakeIndicators));
+
+    renderWithProvider(
+      <DaySurvey navigation={mockNavigation} route={mockRoute} />
+    );
+
+    // Verify the main title is present
+    expect(screen.getByText('Mon questionnaire')).toBeTruthy();
+
+    // Wait for indicators to load
+    await waitFor(() => {
+      expect(screen.getByText('Humeur le soir')).toBeTruthy();
+    });
+
+    // Verify that goals section is not displayed
+    expect(screen.queryByText('Mes objectifs')).toBeNull();
+    expect(screen.queryByText('Qu\’avez-vous réalisé aujourd\’hui ?')).toBeNull();
   });
 
   test('should render with pre-filled notes and context', async () => {

@@ -11,7 +11,7 @@ import localStorage from '../../../utils/localStorage';
 import logEvents from '../../../services/logEvents';
 import {useFocusEffect} from '@react-navigation/native';
 
-const CreateIndicator = ({navigation, route}) => {
+const CreateIndicator = ({ navigation, route }) => {
   const [nameNewIndicator, setNameNewIndicator] = useState('');
   const [userIndicateurs, setUserIndicateurs] = useState();
   const [error, setError] = useState();
