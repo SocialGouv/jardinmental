@@ -15,8 +15,40 @@ fileignoreconfig:
   checksum: fada845491cbe03825f5445bf764d11cd0754ac2d6ead0db9a890f24334c5d02
 - filename: app/src/context/diaryData.tsx
   checksum: 7ebf59b94ce815a22fb60424e74ae5a17a74eb07e941c5c72c8e71bce1a1c4ed
+- filename: app/src/scenes/onboarding-v2/components/ProgressIndicator.tsx
+  checksum: dc7b2bed449fd294af610f8fd941b9dd7257aaf65ec7f51e01ac9f903d029520
+- filename: app/src/scenes/onboarding-v2/context/OnboardingContext.tsx
+  checksum: f9d4eefe958b170a2a556551b685495b3f85d66604e0e87032b6cd3ea335e541
+- filename: app/src/scenes/onboarding-v2/screens/CarouselScreen.tsx
+  checksum: c506bc42996f4c3aecaddcecb502e884b33c6d7e0a0a7e4a2a9d7cc2f820c43b
+- filename: app/src/scenes/onboarding-v2/screens/ProfileScreen.tsx
+  checksum: 839a9b922dc506c3b0836e5094777130f5c7625f11b8297aae5b409134623e7a
+- filename: app/src/scenes/onboarding-v2/screens/checkIn/mood/OnboardingCheckInHowDoYouFeelDetailsScreen.tsx
+  checksum: 1d5c774d3290b4fc7924fc3f8ed2a9a99891147b0218fcce88d52e8f3ee60484
+- filename: app/src/scenes/onboarding-v2/screens/checkIn/mood/OnboardingCheckInHowDoYouFeelScreen.tsx
+  checksum: b7cb8bb56643b8257c227e16e3202b821898da2d2ab8e62ef5b2c56445193a6d
+- filename: app/src/scenes/onboarding-v2/screens/checkIn/sleep/OnboardingCheckInSleepScreen.tsx
+  checksum: 8551b8b80f7d79ae3a0c6aefa3c05791e59e91f574508af5b34a4a83b481ad29
+- filename: app/src/scenes/onboarding-v2/screens/indicators/OnboardingChooseIndicatorScreen.tsx
+  checksum: c4b730b2e47523ea54b38e8c53a4a82a58e420cca3468b479b3236b57324c857
+- filename: app/src/scenes/onboarding-v2/screens/personalization/CarouselPersonalizationScreen.tsx
+  checksum: 29933bbdaba2bbff2cba8deb7ebe97f6c32c422bfff2dc5b1525662606dcb9a8
+- filename: app/src/scenes/onboarding-v2/screens/personalization/DifficultiesScreen.tsx
+  checksum: 7a3be3df276f46547d2f6867a808a1df99887a391210ab88a9d46ec262e30aee
+- filename: app/src/scenes/onboarding-v2/screens/personalization/ObjectiveScreen.tsx
+  checksum: 767aeda61332f9c975693c427569fe1b68cc97a637e8981ccade3a15157b38ab
 - filename: app/src/scenes/onboarding/onboardingSymptomsCustom/CreateIndicator/ChooseIndicatorOrder.js
   checksum: bdb40467b60296ef959cac383488b52e879619d362093020f547896ddf9921bf
+- filename: app/src/scenes/survey-v2/multiScreenSurvey/ContextScreen.tsx
+  checksum: 5a6ba8693e36beb788cd925777b32e0e753d2407bc9fec606112ac2f41395d81
+- filename: app/src/scenes/survey-v2/multiScreenSurvey/GoalsScreen.tsx
+  checksum: 860a7816efda180b1629ff6c4fd47eafab5d0aea40d91cc9cf3925dfae11c075
+- filename: app/src/scenes/survey-v2/multiScreenSurvey/IndicatorScreen.tsx
+  checksum: 3e77d85b0b2cf71a842b7038497cee70dc80b1886e0acdbeacf4a68d1477b2e6
+- filename: app/src/scenes/survey-v2/multiScreenSurvey/SurveyNavigator.tsx
+  checksum: 81dcb7f42137f1703f08020680dbf9040f88c3da7761199055d3b37bddefb210
+- filename: app/src/scenes/survey-v2/multiScreenSurvey/ToxicScreen.tsx
+  checksum: 9105b5c150d188867a8dce781bbdc2ad04828392f1945481cac138331fc50f47
 - filename: app/src/scenes/survey/daySurvey.tsx
   checksum: 440ba524fd17674f06dd0ef4158be6f3ce291bf4be450c361ec4ae883a60534f
 scopeconfig:

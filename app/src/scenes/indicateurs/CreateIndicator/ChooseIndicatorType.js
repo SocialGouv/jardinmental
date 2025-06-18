@@ -6,7 +6,7 @@ import { colors } from "../../../utils/colors";
 import Text from "../../../components/MyText";
 import ArrowRightSvg from "../../../../assets/svg/arrow-right";
 import CircledIcon from "../../../components/CircledIcon";
-import { answers } from "../../survey/utils";
+import { answers } from "../../survey-v2/utils";
 import YesNoIndicator from "../../../components/YesNoIndicator";
 import Gauge from "../../../components/gauge";
 import { Screen } from "../../../components/Screen";

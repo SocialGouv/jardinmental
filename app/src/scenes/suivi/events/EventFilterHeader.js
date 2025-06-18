@@ -8,7 +8,7 @@ import ScorePicker from "../ScorePicker";
 import RangeDate from "../RangeDate";
 import { SelectInput } from "../../../components/SelectInput";
 import { EventInfoButton } from "./EventInfoButton";
-import { answers } from "../../../scenes/survey/utils";
+import { answers } from "../../survey-v2/utils";
 
 export const EventFilterHeader = ({
   presetDate,

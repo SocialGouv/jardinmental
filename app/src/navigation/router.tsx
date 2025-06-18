@@ -3,7 +3,7 @@ import Tabs from './tabs';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
 import EnvironmentIndicator from '../services/EnvironmentIndicator';
-import DaySurveyScreen from '../scenes/survey/daySurvey';
+import SurveyNavigator from '../scenes/survey-v2/multiScreenSurvey/SurveyNavigator';
 import SelectDayScreen from '../scenes/survey/selectDay';
 import Reminder from '../scenes/reminder';
 import Export from '../scenes/export/export';
@@ -67,6 +67,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import uuid from 'react-native-uuid';
 import DevMode from '../scenes/dev-mode';
 import { colors } from '../utils/colors';
+import OnboardingV2 from '../scenes/onboarding-v2';
 
 const Stack = createStackNavigator();
 
@@ -202,7 +203,7 @@ class Router extends React.Component {
         <NavigationContainer ref={r => (this.navigationRef = r)} onStateChange={this.onStateChange} linking={linking}>
           <Stack.Navigator initialRouteName="tabs" screenOptions={{headerShown: false}}>
             <Stack.Screen name="presentation" component={Presentation} />
-            <Stack.Screen name="day-survey" component={DaySurveyScreen} />
+            <Stack.Screen name="day-survey" component={SurveyNavigator} />
             <Stack.Screen name="select-day" component={SelectDayScreen} />
             <Stack.Screen name="tabs" component={Tabs} />
             <Stack.Screen name="symptoms" component={Indicateurs} />
@@ -212,7 +213,8 @@ class Router extends React.Component {
             <Stack.Screen name="notes" options={{animationEnabled: Platform.OS === 'ios'}}>
               {({navigation, route}) => <Notes navigation={navigation} route={route} />}
             </Stack.Screen>
-            <Stack.Screen name="onboarding" component={Onboarding} />
+            {/* <Stack.Screen name="onboarding" component={Onboarding} /> */}
+            <Stack.Screen name="onboarding" component={OnboardingV2} />
             <Stack.Screen name="onboarding-symptoms-1" component={OnboardingSymptoms1} />
             <Stack.Screen name="onboarding-symptoms-2" component={OnboardingSymptoms2} />
             <Stack.Screen name="onboarding-symptoms-recap" component={OnboardingSymptomsRecap} />

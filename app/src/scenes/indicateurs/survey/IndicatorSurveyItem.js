@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import CircledIcon from "../../../components/CircledIcon";
 import { InputText } from "../../../components/InputText";
-import { answers as emojis } from "../../survey/utils";
+import { answers as emojis } from "../../survey-v2/utils";
 
 export const IndicatorSurveyItem = ({
   indicator,
