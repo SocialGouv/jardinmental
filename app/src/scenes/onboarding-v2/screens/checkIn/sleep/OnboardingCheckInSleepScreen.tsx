@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { View, Text, SafeAreaView, TouchableOpacity, TextInput, Alert } from 'react-native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -7,6 +7,10 @@ import CheckInHeader from '../../../components/CheckInHeader';
 import { STORAGE_KEYS, COLORS } from '../../../constants';
 import { useOnboarding } from '../../../context/OnboardingContext';
 import { OnboardingV2ScreenProps, CheckInData } from '../../../types';
+import { DiaryDataContext } from '@/context/diaryData';
+import { beforeToday, formatDay } from '@/utils/date/helpers';
+import { INDICATEURS, INDICATEURS_SOMMEIL } from '@/utils/liste_indicateurs.1';
+import { generateIndicatorFromPredefinedIndicator } from '@/entities/Indicator';
 
 type Props = OnboardingV2ScreenProps<'OnboardingCheckInHowDoYouFeel'>;
 
@@ -14,51 +18,28 @@ const moodEmojis = ['😢', '😕', '😐', '🙂', '😊'];
 const moodLabels = ['Très mal dormi', 'Mal dormi', 'Ok', 'Bien dormi', 'Très bien dormi'];
 
 export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
-  const { updateCheckIn, state } = useOnboarding();
-  const [checkInData, setCheckInData] = useState<CheckInData>({
-    mood: 3,
-    energy: 3,
-    stress: 3,
-    notes: ''
-  });
+  const [checkInData, setCheckInData] = useState<number|null>(null);
   const [loading, setLoading] = useState(false);
-
-  const updateValue = (key: keyof CheckInData, value: number | string) => {
-    setCheckInData(prev => ({ ...prev, [key]: value }));
-  };
+  const [diaryData, addNewEntryToDiaryData] = useContext(DiaryDataContext);
 
   const handleComplete = async () => {
-    setLoading(true);
-    try {
+      setLoading(true);
       // Sauvegarder les données du check-in
-      updateCheckIn(checkInData);
-      
+      const date = formatDay(beforeToday(0))
+      const prev = diaryData[date] || {}
+
+      const key = INDICATEURS_SOMMEIL.name
+      const updatedAnswers = {
+          ...prev,
+          [key]: { ...prev[key], value: checkInData, _indicateur: generateIndicatorFromPredefinedIndicator(INDICATEURS_SOMMEIL)
+          }
+      }
+      addNewEntryToDiaryData({
+          date,
+          answers: updatedAnswers
+      });
       // Marquer l'onboarding comme terminé
-      await AsyncStorage.setItem(STORAGE_KEYS.ONBOARDING_V2_COMPLETED, 'true');
       navigation.navigate('OnboardingCheckInIntroductionCompleted')
-      // Afficher un message de félicitations et terminer l'onboarding
-      // Alert.alert(
-      //   'Félicitations ! 🎉',
-      //   'Votre profil est maintenant configuré. Bienvenue dans Jardin Mental !',
-      //   [
-      //     {
-      //       text: 'Commencer',
-      //       onPress: () => {
-      //         // Naviguer vers l'application principale
-      //         // @ts-ignore - Navigation vers l'app principale
-      //         navigation.getParent()?.reset({
-      //           index: 0,
-      //           routes: [{ name: 'tabs' }],
-      //         });
-      //       }
-      //     }
-      //   ]
-    } catch (error) {
-      console.error('Error completing onboarding:', error);
-      Alert.alert('Erreur', 'Une erreur est survenue. Veuillez réessayer.');
-    } finally {
-      setLoading(false);
-    }
   };
 
   const handlePrevious = () => {
@@ -75,11 +56,11 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
       <View className="flex-row justify-between">
         {moodEmojis.map((emoji, index) => {
           const value = index + 1;
-          const isSelected = checkInData.mood === value;
+          const isSelected = checkInData === value
           return (
             <TouchableOpacity
               key={index}
-              onPress={() => updateValue('mood', value)}
+              onPress={() => setCheckInData(value)}
               className="items-center p-2 rounded-lg"
               style={{
                 backgroundColor: isSelected ? COLORS.PRIMARY + '20' : 'transparent',

@@ -16,7 +16,7 @@ export const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
   const progress = (currentStep / totalSteps) * 100;
 
   return (
-    <View className="px-4 py-3 bg-white">
+    <View className="px-8 py-0 bg-white">
       {showText && (
         <Text 
           className="text-sm font-medium mb-2 text-center"
@@ -41,7 +41,7 @@ export const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
       </View>
       
       {/* Indicateurs de points */}
-      <View className="flex-row justify-between mt-2">
+      {/* <View className="flex-row justify-between mt-2">
         {Array.from({ length: totalSteps }, (_, index) => {
           const stepNumber = index + 1;
           const isCompleted = stepNumber < currentStep;
@@ -58,7 +58,7 @@ export const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
             />
           );
         })}
-      </View>
+      </View> */}
     </View>
   );
 };

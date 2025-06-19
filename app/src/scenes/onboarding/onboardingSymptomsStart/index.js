@@ -7,12 +7,12 @@ import localStorage from "../../../utils/localStorage";
 import BackButton from "../../../components/BackButton";
 import Button from "../../../components/Button";
 import {
-  INDICATEURS_HUMEUR,
-  INDICATEURS_SOMMEIL,
-  INDICATEURS_LISTE_ONBOARDING_HUMEUR,
-  INDICATEURS_LISTE_ONBOARDING_SOMMEIL,
-  INDICATEURS,
-} from "../../../utils/liste_indicateurs";
+  OLD_INDICATEURS_HUMEUR,
+  OLD_INDICATEURS_SOMMEIL,
+  OLD_INDICATEURS_LISTE_ONBOARDING_HUMEUR,
+  OLD_INDICATEURS_LISTE_ONBOARDING_SOMMEIL,
+  INDICATEURS_LIST,
+} from "../../../utils/liste_indicateurs.1";
 import RoundButtonIcon from "../../../components/RoundButtonIcon";
 import { useFocusEffect } from "@react-navigation/native";
 
@@ -27,22 +27,22 @@ const OnboardingSymptomStart = ({ navigation }) => {
         const localStorageIndicateurs = (await localStorage.getSymptoms()) || {};
 
         // cocher par défaut si on a jamais enregistré notre choix
-        if (!Object.keys(localStorageIndicateurs).includes(INDICATEURS_HUMEUR))
-          localStorageIndicateurs[INDICATEURS_HUMEUR] = true;
-        if (!Object.keys(localStorageIndicateurs).includes(INDICATEURS_SOMMEIL))
-          localStorageIndicateurs[INDICATEURS_SOMMEIL] = true;
+        if (!Object.keys(localStorageIndicateurs).includes(OLD_INDICATEURS_HUMEUR))
+          localStorageIndicateurs[OLD_INDICATEURS_HUMEUR] = true;
+        if (!Object.keys(localStorageIndicateurs).includes(OLD_INDICATEURS_SOMMEIL))
+          localStorageIndicateurs[OLD_INDICATEURS_SOMMEIL] = true;
 
         // deplier par defaut si au moins un des enfants est selectionné
         if (
           Object.keys(localStorageIndicateurs).some(
-            (e) => INDICATEURS_LISTE_ONBOARDING_HUMEUR.includes(e) && localStorageIndicateurs[e]
+            (e) => OLD_INDICATEURS_LISTE_ONBOARDING_HUMEUR.includes(e) && localStorageIndicateurs[e]
           )
         ) {
           setIsMoodTroubleEnabled(true);
         }
         if (
           Object.keys(localStorageIndicateurs).some(
-            (e) => INDICATEURS_LISTE_ONBOARDING_SOMMEIL.includes(e) && localStorageIndicateurs[e]
+            (e) => OLD_INDICATEURS_LISTE_ONBOARDING_SOMMEIL.includes(e) && localStorageIndicateurs[e]
           )
         ) {
           setIsSleepTroubleEnabled(true);
@@ -56,19 +56,19 @@ const OnboardingSymptomStart = ({ navigation }) => {
   useEffect(() => {
     const symptoms = { ...symptomSelection };
     if (!isMoodTroubleEnable && isMoodTroubleEnable !== undefined) {
-      INDICATEURS_LISTE_ONBOARDING_HUMEUR.forEach((v) => (symptoms[v] = false));
+      OLD_INDICATEURS_LISTE_ONBOARDING_HUMEUR.forEach((v) => (symptoms[v] = false));
       setSymptomSelection(symptoms);
     }
     if (!isSleepTroubleEnable && isSleepTroubleEnable !== undefined) {
-      INDICATEURS_LISTE_ONBOARDING_SOMMEIL.forEach((v) => (symptoms[v] = false));
+      OLD_INDICATEURS_LISTE_ONBOARDING_SOMMEIL.forEach((v) => (symptoms[v] = false));
       setSymptomSelection(symptoms);
     }
   }, [isMoodTroubleEnable, isSleepTroubleEnable]);
 
   const handleNext = async () => {
     const symptoms = { ...symptomSelection };
-    if (!isMoodTroubleEnable) INDICATEURS_LISTE_ONBOARDING_HUMEUR.forEach((v) => (symptoms[v] = false));
-    if (!isSleepTroubleEnable) INDICATEURS_LISTE_ONBOARDING_SOMMEIL.forEach((v) => (symptoms[v] = false));
+    if (!isMoodTroubleEnable) OLD_INDICATEURS_LISTE_ONBOARDING_HUMEUR.forEach((v) => (symptoms[v] = false));
+    if (!isSleepTroubleEnable) OLD_INDICATEURS_LISTE_ONBOARDING_SOMMEIL.forEach((v) => (symptoms[v] = false));
 
     await localStorage.setSymptoms(symptoms);
     navigation.navigate("onboarding-symptoms-1");
@@ -93,13 +93,13 @@ const OnboardingSymptomStart = ({ navigation }) => {
           <TouchableOpacity
             style={[
               stylesA.choixContainer,
-              symptomSelection[INDICATEURS_HUMEUR] ? stylesA.choixContainerSelected : null,
+              symptomSelection[OLD_INDICATEURS_HUMEUR] ? stylesA.choixContainerSelected : null,
             ]}
             onPress={() =>
-              setSymptomSelection((prev) => ({ ...prev, [INDICATEURS_HUMEUR]: !prev[INDICATEURS_HUMEUR] }))
+              setSymptomSelection((prev) => ({ ...prev, [OLD_INDICATEURS_HUMEUR]: !prev[OLD_INDICATEURS_HUMEUR] }))
             }
           >
-            {symptomSelection[INDICATEURS_HUMEUR] ? (
+            {symptomSelection[OLD_INDICATEURS_HUMEUR] ? (
               <View>
                 <RoundButtonIcon
                   backgroundColor="#5DEE5A"
@@ -124,7 +124,7 @@ const OnboardingSymptomStart = ({ navigation }) => {
                 />
               </View>
             )}
-            <Text style={stylesA.choixLabel}>{INDICATEURS[INDICATEURS_HUMEUR]}</Text>
+            <Text style={stylesA.choixLabel}>{INDICATEURS_LIST[OLD_INDICATEURS_HUMEUR]}</Text>
           </TouchableOpacity>
           <Text style={styles.question}>
             Avez-vous un trouble spécifique qui fait varier votre humeur au cours de la journée ?
@@ -161,13 +161,13 @@ const OnboardingSymptomStart = ({ navigation }) => {
           <TouchableOpacity
             style={[
               stylesA.choixContainer,
-              symptomSelection[INDICATEURS_SOMMEIL] ? stylesA.choixContainerSelected : null,
+              symptomSelection[OLD_INDICATEURS_SOMMEIL] ? stylesA.choixContainerSelected : null,
             ]}
             onPress={() =>
-              setSymptomSelection((prev) => ({ ...prev, [INDICATEURS_SOMMEIL]: !prev[INDICATEURS_SOMMEIL] }))
+              setSymptomSelection((prev) => ({ ...prev, [OLD_INDICATEURS_SOMMEIL]: !prev[OLD_INDICATEURS_SOMMEIL] }))
             }
           >
-            {symptomSelection[INDICATEURS_SOMMEIL] ? (
+            {symptomSelection[OLD_INDICATEURS_SOMMEIL] ? (
               <View>
                 <RoundButtonIcon
                   backgroundColor="#5DEE5A"
@@ -192,7 +192,7 @@ const OnboardingSymptomStart = ({ navigation }) => {
                 />
               </View>
             )}
-            <Text style={stylesA.choixLabel}>{INDICATEURS[INDICATEURS_SOMMEIL]}</Text>
+            <Text style={stylesA.choixLabel}>{INDICATEURS_LIST[OLD_INDICATEURS_SOMMEIL]}</Text>
           </TouchableOpacity>
           <Text style={styles.question}>
             Avez-vous un trouble du sommeil important qui nécessite un suivi ?

@@ -1,33 +1,44 @@
-import React, { useEffect, useState, useContext, useCallback } from 'react';
+import React, { useEffect, useState, useMemo, useContext, useCallback } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useFocusEffect } from '@react-navigation/native';
 import { View, ActivityIndicator } from 'react-native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RouteProp } from '@react-navigation/native';
 import localStorage from '../../../utils/localStorage';
-import { useSurveyScreens, SurveyScreen } from './hooks/useSurveyScreens';
+import { useSurveyScreens } from './hooks/useSurveyScreens';
 import { Indicator } from '../../../entities/Indicator';
 import { DiaryDataNewEntryInput } from '../../../entities/DiaryData';
 import SurveyScreenWrapper from './SurveyScreenWrapper';
 import SurveyContext, { SurveyContextType } from './SurveyContext';
+import { getScoreWithState } from '@/utils';
+import { beforeToday, formatDay } from '@/utils/date/helpers';
+import { SurveyStackParamList, SurveyNavigatorRouteParams } from '../../../entities/SurveyScreen';
+import { DiaryDataContext } from '@/context/diaryData';
+import { INDICATEURS_HUMEUR, INDICATEURS_SOMMEIL } from '@/utils/liste_indicateurs.1';
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator<SurveyStackParamList>();
 
 interface SurveyNavigatorProps {
-  navigation: any;
-  route: {
-    params?: {
-      currentSurvey: DiaryDataNewEntryInput;
-      editingSurvey: boolean;
-      redirect?: boolean;
-    };
+  navigation: StackNavigationProp<any>;
+  route: RouteProp<any, any> & {
+    params?: SurveyNavigatorRouteParams;
   };
 }
 
+// Constants moved outside the component to avoid re-creation
+const QUESTION_TOXIC = {
+  id: 'TOXIC',
+  label: "Avez-vous consommé des substances aujourd'hui ?",
+};
+const QUESTION_CONTEXT = {
+  id: 'CONTEXT',
+  label: 'Ajoutez une note générale sur votre journée',
+};
 
 // Main navigator component
 const SurveyStackNavigator: React.FC<{ context: SurveyContextType; isLoading: boolean }> = ({ context, isLoading }) => {
   const { screens } = context;
 
-  // Show loading indicator while screens are being prepared
   if (isLoading || screens.length === 0) {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -57,11 +68,18 @@ const SurveyStackNavigator: React.FC<{ context: SurveyContextType; isLoading: bo
 };
 
 export const SurveyNavigator: React.FC<SurveyNavigatorProps> = ({ navigation, route }) => {
-
   const initEditingSurvey = route?.params?.editingSurvey ?? false;
-
   const [userIndicateurs, setUserIndicateurs] = useState<Indicator[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [diaryData, addNewEntryToDiaryData]= useContext(DiaryDataContext)
+  console.log('SURVEY NAVIGATOR 1', diaryData)
+  const initSurvey: DiaryDataNewEntryInput = useMemo(() => {
+    return route?.params?.currentSurvey ?? {
+      date: formatDay(beforeToday(0)),
+      answers: {},
+    };
+  }, [route?.params?.currentSurvey]);
+  console.log('SURVEY NAVIGATOR 2', initSurvey)
 
   const screens = useSurveyScreens(userIndicateurs);
 
@@ -80,12 +98,84 @@ export const SurveyNavigator: React.FC<SurveyNavigatorProps> = ({ navigation, ro
           setIsLoading(false);
         }
       })();
-    }, []),
+    }, [])
   );
+
+  const [answers, setAnswers] = useState<DiaryDataNewEntryInput['answers']>(initSurvey.answers || {});
+
+  useEffect(() => {
+    const initialAnswers = {};
+    const surveyAnswers = initSurvey.answers || {};
+    if (!surveyAnswers || userIndicateurs.length === 0) return;
+
+    Object.keys(surveyAnswers).forEach((key) => {
+      const answer = surveyAnswers[key];
+      if (!answer) return;
+
+      if (key === QUESTION_TOXIC.id || key === QUESTION_CONTEXT.id || key === INDICATEURS_HUMEUR.name || key === INDICATEURS_SOMMEIL.name) {
+        initialAnswers[key] = {
+          ...answer,
+          value: answer.value,
+          userComment: answer.userComment,
+        };
+        return;
+      }
+
+      const cleanedQuestionId = key.split('_')[0];
+      const _indicateur = userIndicateurs.find((i) => i.name === cleanedQuestionId);
+      if (_indicateur) {
+        let value = answer.value;
+        if (!['gauge', 'boolean'].includes(_indicateur.type)) {
+          value = getScoreWithState({
+            patientState: initSurvey.answers,
+            category: key,
+          });
+        }
+        initialAnswers[cleanedQuestionId] = {
+          value,
+          userComment: answer.userComment,
+          _indicateur,
+        };
+      }
+    });
+    console.log('============', initialAnswers)
+    setAnswers(initialAnswers);
+  }, [initSurvey.answers, userIndicateurs]);
+
+  const saveAnswerForIndicator = ({ key, value }: { key: string; value: boolean | number }): void => {
+    setAnswers((prev) => {
+      const updatedAnswers = {
+        ...prev,
+        [key]: { ...prev[key], value, _indicateur: userIndicateurs.find((i) => i.name === key) },
+      };
+      addNewEntryToDiaryData({
+        date: initSurvey.date,
+        answers: updatedAnswers
+      });
+      return updatedAnswers;
+    });
+  };
+
+  const saveCommentForIndicator = ({ key, userComment }: { key: string; userComment: string }): void => {
+    setAnswers((prev) => {
+      const updatedAnswers = {
+        ...prev,
+        [key]: { ...prev[key], userComment },
+      };
+      addNewEntryToDiaryData({
+        date: initSurvey.date,
+        answers: updatedAnswers
+      });
+      return updatedAnswers;
+    });
+  };
 
   const contextValue: SurveyContextType = {
     userIndicateurs,
     initEditingSurvey,
+    answers,
+    saveAnswerForIndicator,
+    saveCommentForIndicator,
     screens,
     parentNavigation: navigation,
     parentRoute: route,

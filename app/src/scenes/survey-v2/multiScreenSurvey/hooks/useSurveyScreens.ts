@@ -64,7 +64,7 @@ export const useSurveyScreens = (userIndicateurs: Indicator[]): SurveyScreenInte
     // Create individual screens for uncategorized indicators
     const individualScreens = uncategorizedIndicators.map(indicator => ({
       id: `individual-${indicator.uuid}`,
-      type: SurveyScreenType.individual,
+      type: SurveyScreenType.individual as const,
       title: indicator.name,
       indicators: [indicator]
     }));
@@ -75,18 +75,24 @@ export const useSurveyScreens = (userIndicateurs: Indicator[]): SurveyScreenInte
     screens.push(
       // {
       //   id: 'goals',
-      //   type: 'goals' as const,
+      //   type: SurveyScreenType.goals,
       //   title: 'Mes objectifs'
       // },
       {
         id: 'context',
-        type: 'context' as const,
+        type: SurveyScreenType.context,
         title: 'Contexte'
       },
       {
         id: 'toxic',
-        type: 'toxic' as const,
+        type: SurveyScreenType.toxic,
         title: 'Substances'
+      },
+      {
+        id: 'final',
+        type: SurveyScreenType.encouragement,
+        title: '👏 Un pas de plus vers une meilleure connaissance de vous.',
+        description: 'Votre observation du jour a bien été enregistrée.'
       }
     );
 

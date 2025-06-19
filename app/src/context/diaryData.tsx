@@ -24,7 +24,7 @@ import { fakeDiaryData, fakeDiaryData2, startDate as fakeStartDate } from "../sc
 import { beforeToday, formatDay, getArrayOfDates } from "../utils/date/helpers";
 import { DiaryData, DiaryDataNewEntryInput } from "../entities/DiaryData";
 
-const wipeData = async () => {
+export const wipeData = async () => {
   await AsyncStorage.removeItem(STORAGE_KEY_START_DATE);
   await AsyncStorage.removeItem(STORAGE_KEY_SURVEY_RESULTS);
   await AsyncStorage.removeItem(STORAGE_KEY_SYMPTOMS);
@@ -107,10 +107,8 @@ const DiaryDataProvider = ({ children }) => {
       // we set data first for a better UX
       let parsedData: DiaryData = JSON.parse(data) as DiaryData;
       setDiaryData(parsedData);
-
       let startDateMinus7 = beforeToday(7, new Date(startDate));
-
-      const diary = fillUpEmptyDates(startDateMinus7, data);
+      const diary = fillUpEmptyDates(startDateMinus7, parsedData);
       setDiaryData(diary);
     };
 

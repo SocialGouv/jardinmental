@@ -5,4 +5,3 @@ export { ContextScreen } from './ContextScreen';
 export { ToxicScreen } from './ToxicScreen';
 export { SurveyProgressBar } from './components/SurveyProgressBar';
 export { useSurveyScreens } from './hooks/useSurveyScreens';
-export type { SurveyScreen } from './hooks/useSurveyScreens';

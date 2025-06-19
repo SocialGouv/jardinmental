@@ -5,7 +5,7 @@ import localStorage from '../../utils/localStorage';
 import {getDrugListWithLocalStorage} from '../../utils/drugs-list';
 import {parseISO, format} from 'date-fns';
 import {fr} from 'date-fns/locale';
-import {INDICATEURS} from '../../utils/liste_indicateurs';
+import { INDICATEURS_LIST } from '../../utils/liste_indicateurs.1';
 
 // methods
 const hasNotes = notes =>
@@ -325,7 +325,7 @@ const formatHtmlTable = async (diaryData, diaryNotes) => {
   };
 
   const getTitle = cat => {
-    const category = INDICATEURS[cat] || displayedCategories[cat] || cat;
+    const category = INDICATEURS_LIST[cat] || displayedCategories[cat] || cat;
     const [categoryName, suffix] = category.split('_');
     if (suffix && suffix === 'FREQUENCE') {
       return categoryName;

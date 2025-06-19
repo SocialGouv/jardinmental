@@ -1,4 +1,6 @@
 
+import { Indicator } from './Indicator';
+
 export enum SurveyScreenType {
     'category'='category',
     'individual'='individual',
@@ -14,30 +16,53 @@ interface BaseSurveyScreen {
     title: string;
 }
 
-interface EncouragementSurveyScreen {
-    type: SurveyScreenType.encouragement
+interface EncouragementSurveyScreen extends BaseSurveyScreen {
+    type: SurveyScreenType.encouragement;
     description?: string;
     extraInfo?: string;
 }
 
-interface CaregoryScreen  {
-    type: SurveyScreenType.category
+interface CategoryScreen extends BaseSurveyScreen {
+    type: SurveyScreenType.category;
+    indicators: Indicator[];
+    category: string;
 }
 
-interface IndividualScreen {
-    type: SurveyScreenType.individual
+interface IndividualScreen extends BaseSurveyScreen {
+    type: SurveyScreenType.individual;
+    indicators: Indicator[];
 }
 
-interface GoalsScreen  {
-    type: SurveyScreenType.goals
+interface GoalsScreen extends BaseSurveyScreen {
+    type: SurveyScreenType.goals;
 }
 
-interface ToxicScreen  {
-    type: SurveyScreenType.toxic
+interface ToxicScreen extends BaseSurveyScreen {
+    type: SurveyScreenType.toxic;
 }
 
-interface ContextScreen {
-    type: SurveyScreenType.context
+interface ContextScreen extends BaseSurveyScreen {
+    type: SurveyScreenType.context;
 }
 
-export type SurveyScreenInterface = BaseSurveyScreen & (EncouragementSurveyScreen | IndividualScreen | IndividualScreen | ToxicScreen | ContextScreen | CaregoryScreen | GoalsScreen)
+export type SurveyScreenInterface = 
+    | EncouragementSurveyScreen 
+    | CategoryScreen 
+    | IndividualScreen 
+    | GoalsScreen 
+    | ToxicScreen 
+    | ContextScreen;
+
+// Navigation types
+export type SurveyStackParamList = {
+    [key: `screen-${string}`]: {
+        screenData: SurveyScreenInterface;
+        screenIndex: number;
+    };
+};
+
+export interface SurveyNavigatorRouteParams {
+    currentSurvey?: import('./DiaryData').DiaryDataNewEntryInput;
+    editingSurvey?: boolean;
+    redirect?: boolean;
+}

@@ -26,11 +26,6 @@ export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
     navigation.goBack();
   };
 
-  const handleSkip = () => {
-    nextStep();
-    navigation.navigate('Difficulties');
-  };
-
   const onViewableItemsChanged = useRef(({ viewableItems }: any) => {
     if (viewableItems.length > 0) {
       setCurrentIndex(viewableItems[0].index || 0);
@@ -82,7 +77,7 @@ export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
       {/* Bouton Passer en haut à droite */}
       <View className="absolute top-12 right-4 z-10">
         <TouchableOpacity
-          onPress={handleSkip}
+          onPress={handleNext}
           className="px-4 py-2 rounded-full"
           style={{ backgroundColor: COLORS.WHITE + 'CC' }}
         >

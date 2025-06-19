@@ -6,6 +6,7 @@ import { useOnboarding } from '../context/OnboardingContext';
 import { COLORS } from '../constants';
 import carouselSlides from '../data/carouselData';
 import NavigationButtons from '../components/NavigationButtons';
+import { useUserProfile } from '../../../context/userProfile';
 
 type Props = OnboardingV2ScreenProps<'Carousel'>;
 
@@ -14,6 +15,7 @@ const { width: screenWidth } = Dimensions.get('window');
 export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
   const { slides } = route.params;
   const { nextStep, previousStep } = useOnboarding();
+  const { profile, isLoading } = useUserProfile()
   const [currentIndex, setCurrentIndex] = useState(0);
   const flatListRef = useRef<FlatList>(null);
 
@@ -79,7 +81,7 @@ export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
   );
 
   return (
-    <SafeAreaView className="flex-1">
+    <SafeAreaView className="flex-1 bg-white">
       {/* Bouton Passer en haut à droite */}
       <View className="absolute top-12 right-4 z-10">
         <TouchableOpacity
@@ -132,25 +134,9 @@ export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
 
       {/* Indicateurs de pagination et navigation */}
       <View className="absolute bottom-8 left-0 right-0">
-        {/* Dots de pagination */}
         <View className="flex-row justify-center mb-6">
           {slides.map((_, index) => renderPaginationDot(index))}
         </View>
-
-        {/* <View className="flex-row justify-between items-center px-6">
-          <TouchableOpacity
-            onPress={goToNextSlide}
-            className="px-6 py-3 rounded-lg w-full"
-            style={{ backgroundColor: COLORS.PRIMARY }}
-          >
-            <Text 
-              className="text-base font-semibold"
-              style={{ color: COLORS.WHITE }}
-            >
-              {currentIndex === slides.length - 1 ? 'Continuer' : 'Suivant'}
-            </Text>
-          </TouchableOpacity>
-        </View> */}
         <NavigationButtons nextText={
           currentIndex === slides.length - 1 ? 'Continuer' : 'Suivant'
           }

@@ -56,7 +56,7 @@ export const carouselSlidesSuivi: CarouselSlide[] = [
     title: "Des ressources pour avancer, à votre rythme.",
     description: "Des contenus utiles, concrets et validés, pour prendre soin de vous entre deux séances.",
     type: 'generic',
-    backgroundColor: '#FFF3E0',
+    backgroundColor: '#FFFFFF',
   },
   SlideFinal
 ];

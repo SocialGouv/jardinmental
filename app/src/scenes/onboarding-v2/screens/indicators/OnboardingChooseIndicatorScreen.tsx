@@ -1,145 +1,111 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { View, Text, SafeAreaView, TouchableOpacity, ScrollView } from 'react-native';
-import { NavigationButtons } from '../../components/NavigationButtons';
-import { useOnboarding } from '../../context/OnboardingContext';
-import { COLORS } from '../../constants';
-import { IndicatorItem, OnboardingV2ScreenProps } from '../../types';
+import { NavigationButtons } from '@/scenes/onboarding-v2/components/NavigationButtons';
+import { useOnboarding } from '@/scenes/onboarding-v2/context/OnboardingContext';
+import { COLORS } from '@/scenes/onboarding-v2/constants';
+import { Difficulty, IndicatorItem, OnboardingV2ScreenProps } from '@/scenes/onboarding-v2/types';
+import CheckInHeader from '@/scenes/onboarding-v2/components/CheckInHeader';
+import { useUserProfile } from '@/context/userProfile';
+import { INDICATEURS, INDICATEURS_LES_PLUS_COURANTS } from '@/utils/liste_indicateurs.1';
+import { generateIndicatorFromPredefinedIndicator, PredefineIndicatorSchemaType } from '@/entities/Indicator';
+import localStorage from '@/utils/localStorage';
+import { beforeToday, formatDay } from '@/utils/date/helpers';
+import { DiaryDataContext } from '@/context/diaryData';
 
-// Données des indicateurs selon les spécifications
-const indicatorsData: IndicatorItem[] = [
-  // Catégorie Sommeil
-  {
-    id: 'sleep_wake_ups',
-    name: 'Vos réveils nocturnes',
-    category: 'sommeil',
-    selected: false
-  },
-  {
-    id: 'sleep_ease',
-    name: 'Votre facilité à vous endormir',
-    category: 'sommeil',
-    selected: false
-  },
-  // Catégorie Émotions
-  {
-    id: 'irritability',
-    name: 'Votre niveau d\'irritabilité',
-    category: 'émotions',
-    selected: false
-  },
-  {
-    id: 'anxiety_level',
-    name: 'Votre niveau d\'anxiété',
-    category: 'émotions',
-    selected: false
-  },
-  // Catégorie Comportements
-  {
-    id: 'avoidance',
-    name: 'Évitements de certaines situations',
-    category: 'comportements',
-    selected: false
-  }
-];
-
-// Indicateurs "Les plus suivis"
-const popularIndicatorsData: IndicatorItem[] = [
-  {
-    id: 'anxiety_popular',
-    name: 'Anxiété',
-    description: 'Suivez votre niveau d\'anxiété au quotidien',
-    category: 'populaire',
-    selected: false
-  },
-  {
-    id: 'stress_popular',
-    name: 'Stress',
-    description: 'Mesurez votre niveau de stress',
-    category: 'populaire',
-    selected: false
-  },
-  {
-    id: 'anger_popular',
-    name: 'Colère',
-    description: 'Observez vos épisodes de colère',
-    category: 'populaire',
-    selected: false
-  }
-];
-
-// Icônes par catégorie
-const categoryIcons: Record<string, string> = {
-  sommeil: '😴',
-  émotions: '💭',
-  comportements: '🎯',
-  populaire: '⭐'
+const DIFFICULTY_KEYWORDS: Record<string, string[]> = {
+  sleep: ['sommeil', 'réveil', 'fatigue', 'endormissement'],
+  mood: ['humeur', 'tristesse', 'colère', 'optimisme', 'plaisir'],
+  anxiety: ['anxiété', 'angoisse', 'inquiétude', 'stress'],
+  stress: ['stress', 'tension', 'irritabilité'],
+  work_stress: ['stress', 'tension', 'irritabilité'],
+  concentration: ['confiance', 'motivation', 'procrastination'],
+  motivation: ['motivation', 'découragement'],
+  social_relations: ['relation', 'soutien', 'seul', 'jugé', 'harcelé'],
+  self_esteem: ['estime', 'confiance', 'culpabilité'],
+  family_issues: ['famille', 'relation', 'soutien']
 };
+
+export function suggestIndicatorsForDifficulties(selectedDifficulties: Difficulty['id'][]): PredefineIndicatorSchemaType[] {
+  const keywords = selectedDifficulties
+    .flatMap(difficulty => DIFFICULTY_KEYWORDS[difficulty] || []);
+
+  const uniqueIndicators = new Map<string, typeof INDICATEURS[number]>();
+
+  INDICATEURS.forEach(ind => {
+    const nameLower = ind.name.toLowerCase();
+    if (keywords.some(keyword => nameLower.includes(keyword))) {
+      uniqueIndicators.set(ind.uuid, ind);
+    }
+  });
+
+  return Array.from(uniqueIndicators.values());
+}
 
 type Props = OnboardingV2ScreenProps<'OnboardingChooseIndicator'>;
 
 export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation }) => {
   const { updateIndicators } = useOnboarding();
-  const [selectedIndicators, setSelectedIndicators] = useState<IndicatorItem[]>(indicatorsData);
-  const [selectedPopularIndicators, setSelectedPopularIndicators] = useState<IndicatorItem[]>(popularIndicatorsData);
+  const [selectedIndicators, setSelectedIndicators] = useState<string[]>([]);
+  // const [selectedPopularIndicators, setSelectedPopularIndicators] = useState<IndicatorItem[]>(popularIndicatorsData);
   const [showMoreIndicators, setShowMoreIndicators] = useState(false);
+  const { profile, isLoading } = useUserProfile()
+  const [userIndicateurs, setUserIndicateurs] = useState([]);
+  const [diaryData, addNewEntryToDiaryData] = useContext(DiaryDataContext);
 
-  const toggleIndicator = (id: string, isPopular: boolean = false) => {
-    if (isPopular) {
-      setSelectedPopularIndicators(prev =>
-        prev.map(indicator =>
-          indicator.id === id
-            ? { ...indicator, selected: !indicator.selected }
-            : indicator
-        )
-      );
-    } else {
-      setSelectedIndicators(prev =>
-        prev.map(indicator =>
-          indicator.id === id
-            ? { ...indicator, selected: !indicator.selected }
-            : indicator
-        )
-      );
+
+  const allIndicatorsByCategory: Record<string, PredefineIndicatorSchemaType[]> = INDICATEURS.reduce((prev, curr) => {
+    if (!prev[curr.category]) {
+      prev[curr.category] = [];
     }
+    prev[curr.category].push(curr);
+    return prev;
+  }, {});
+
+  const recommendedIndicators = profile ? suggestIndicatorsForDifficulties(profile.selectedDifficulties.map(difficulty => (difficulty.id))) : [] 
+  const recommendedIndicatorsByCategory:  Record<string, PredefineIndicatorSchemaType[]> = recommendedIndicators.reduce((prev, curr) => {
+    if (!prev[curr.category]) {
+      prev[curr.category] = [];
+    }
+    prev[curr.category].push(curr);
+    return prev;
+  }, {});
+  const recommendedIndicatorsUuidList = recommendedIndicators.map(r => r.uuid)
+
+  const popularIndicatorsByCategory: PredefineIndicatorSchemaType[] = INDICATEURS_LES_PLUS_COURANTS
+    .filter(indicator => !recommendedIndicatorsUuidList.includes(indicator.uuid))
+
+  const toggleIndicator = (id: string) => {
+    setSelectedIndicators(prev => prev.includes(id) ? prev.filter(selectedId => selectedId !== id) : [...prev, id])
   };
 
-  const handleNext = () => {
-    const allSelected = [
-      ...selectedIndicators.filter(i => i.selected),
-      ...selectedPopularIndicators.filter(i => i.selected)
-    ];
-    updateIndicators(allSelected);
-    // Navigation vers l'étape suivante
-    console.log('Indicateurs sélectionnés:', allSelected);
-    navigation.navigate('OnboardingReminder')
+  const handleNext = async () => {
+    const indicatorsToSave = INDICATEURS.filter(indicator => selectedIndicators.includes(indicator.uuid))
+    await localStorage.setIndicateurs(indicatorsToSave.map(generateIndicatorFromPredefinedIndicator));
+    await localStorage.setOnboardingDone(true);
+    const date = formatDay(beforeToday(0));
+    const answers = diaryData[date] || {};
+    const currentSurvey = { date, answers };
+    console.log('CURRENT SURVEY', currentSurvey)
+    return navigation.navigate("day-survey", {
+      currentSurvey,
+      editingSurvey: true
+    });
+    // navigation.navigate('OnboardingReminder')
+
   };
 
-  const selectedCount = selectedIndicators.filter(i => i.selected).length + 
-                       selectedPopularIndicators.filter(i => i.selected).length;
-
-  // Grouper les indicateurs par catégorie
-  const groupedIndicators = selectedIndicators.reduce((acc, indicator) => {
-    if (!acc[indicator.category]) {
-      acc[indicator.category] = [];
-    }
-    acc[indicator.category].push(indicator);
-    return acc;
-  }, {} as Record<string, IndicatorItem[]>);
-
-  const renderIndicatorItem = (item: IndicatorItem, isPopular: boolean = false) => (
-    <TouchableOpacity
-      key={item.id}
-      onPress={() => toggleIndicator(item.id, isPopular)}
+  const renderIndicatorItem = (item: PredefineIndicatorSchemaType) => {
+    const selected = selectedIndicators.includes(item.uuid)
+    return <TouchableOpacity
+      key={item.uuid}
+      onPress={() => toggleIndicator(item.uuid)}
       className="mx-4 mb-3 p-4 rounded-xl border-2"
       style={{
-        borderColor: item.selected ? COLORS.PRIMARY : COLORS.GRAY_LIGHT,
-        backgroundColor: item.selected ? COLORS.PRIMARY + '10' : COLORS.WHITE,
+        borderColor: selected ? COLORS.PRIMARY : COLORS.GRAY_LIGHT,
+        backgroundColor: selected ? COLORS.PRIMARY + '10' : COLORS.WHITE,
       }}
     >
       <View className="flex-row items-center">
-        <Text className="text-2xl mr-3">
-          {categoryIcons[item.category] || '📝'}
-        </Text>
         <View className="flex-1">
           <Text 
             className="text-lg font-medium"
@@ -147,16 +113,8 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
           >
             {item.name}
           </Text>
-          {item.description && (
-            <Text 
-              className="text-sm mt-1"
-              style={{ color: COLORS.TEXT_SECONDARY }}
-            >
-              {item.description}
-            </Text>
-          )}
         </View>
-        {item.selected && (
+        {selected && (
           <View 
             className="w-6 h-6 rounded-full items-center justify-center"
             style={{ backgroundColor: COLORS.PRIMARY }}
@@ -166,9 +124,9 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
         )}
       </View>
     </TouchableOpacity>
-  );
+  };
 
-  const renderCategorySection = (categoryName: string, indicators: IndicatorItem[]) => (
+  const renderCategorySection = (categoryName: string, indicators: PredefineIndicatorSchemaType[]) => (
     <View key={categoryName} className="mb-6">
       <Text 
         className="text-lg font-semibold mb-3 mx-4 capitalize"
@@ -187,6 +145,13 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ flexGrow: 1 }}
       >
+        <CheckInHeader
+          title="Observation du jour"
+          onPrevious={() => navigation.goBack()}
+          onSkip={handleNext}
+          showPrevious={true}
+          showSkip={true}
+        />
         {/* En-tête */}
         <View className="px-6 py-6">
           <Text 
@@ -199,7 +164,7 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
 
         {/* Indicateurs groupés par catégorie */}
         <View>
-          {Object.entries(groupedIndicators).map(([category, indicators]) =>
+          {Object.entries(recommendedIndicatorsByCategory).map(([category, indicators]) =>
             renderCategorySection(category, indicators)
           )}
         </View>
@@ -229,7 +194,7 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
             >
               Les plus suivis
             </Text>
-            {selectedPopularIndicators.map(indicator => renderIndicatorItem(indicator, true))}
+            {popularIndicatorsByCategory.map(indicator => renderIndicatorItem(indicator))}
           </View>
         )}
 
@@ -240,7 +205,7 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
       {/* Bouton fixe en bas */}
       <NavigationButtons
         onNext={handleNext}
-        nextDisabled={selectedCount === 0}
+        nextDisabled={selectedIndicators.length === 0}
         nextText="Continuer"
       />
     </SafeAreaView>

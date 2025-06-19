@@ -5,6 +5,7 @@ import { COLORS } from '../../constants';
 import NavigationButtons from '../../components/NavigationButtons';
 import ProgressIndicator from '../../components/ProgressIndicator';
 import { OnboardingV2ScreenProps } from '../../types';
+import CheckInHeader from '../../components/CheckInHeader';
 
 type Props = OnboardingV2ScreenProps<'Intro'>;
 
@@ -17,20 +18,27 @@ export const OnboardingPersonalizationStartScreen: React.FC<Props> = ({ navigati
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-white">      
-      <ProgressIndicator currentStep={1} totalSteps={4} />
+    <SafeAreaView className="flex-1 bg-white">    
+          <CheckInHeader
+            title=""
+            onPrevious={() => navigation.goBack()}
+            onSkip={nextStep}
+            showPrevious={true}
+            showSkip={true}
+          />   
+          <ProgressIndicator currentStep={1} totalSteps={4} />  
   
       <View className="flex-1 justify-center items-center px-8">
         {/* Titre principal */}
         <Text 
-          className="text-4xl font-bold text-center mb-6"
+          className="text-2xl font-bold text-center mb-6"
           style={{ color: COLORS.TEXT_PRIMARY }}
         >
           Créons ensemble un suivi qui vous ressemble
         </Text>
 
         <Text 
-          className="text-xl text-center mb-8 leading-8"
+          className="text-xl text-left mb-8 leading-8"
           style={{ color: COLORS.TEXT_SECONDARY }}
         >
           Commençons avec quelques questions, simples et sans jugement, pour personnaliser vos observations

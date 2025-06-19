@@ -4,7 +4,9 @@ import { OnboardingV2ScreenProps, Difficulty } from '../../types';
 import { NavigationButtons } from '../../components/NavigationButtons';
 import { ProgressIndicator } from '../../components/ProgressIndicator';
 import { useOnboarding } from '../../context/OnboardingContext';
+import { useUserProfile } from '../../../../context/userProfile';
 import { COLORS } from '../../constants';
+import CheckInHeader from '../../components/CheckInHeader';
 
 type Props = OnboardingV2ScreenProps<'PersonalizationDifficulties'>;
 
@@ -12,77 +14,70 @@ const difficultiesData: Difficulty[] = [
   {
     id: 'sleep',
     name: 'Mon sommeil',
-    category: 'physical',
     selected: false
   },
   {
     id: 'mood',
     name: 'Humeur',
-    category: 'emotional',
     selected: false
   },
   {
     id: 'anxiety',
     name: 'Anxiété',
-    category: 'emotional',
     selected: false
   },
   {
     id: 'stress',
     name: 'Stress',
-    category: 'emotional',
     selected: false
   },
-
   {
     id: 'concentration',
     name: 'Concentration',
-    category: 'cognitive',
     selected: false
   },
   {
     id: 'motivation',
     name: 'Motivation',
-    category: 'behavioral',
     selected: false
   },
   {
     id: 'social_relations',
     name: 'Relations sociales',
-    category: 'social',
     selected: false
   },
   {
     id: 'self_esteem',
     name: 'Estime de soi',
-    category: 'emotional',
     selected: false
   },
   {
     id: 'work_stress',
     name: 'Stress professionnel',
-    category: 'environmental',
     selected: false
   },
   {
     id: 'family_issues',
     name: 'Problèmes familiaux',
-    category: 'social',
     selected: false
   }
 ];
 
-const categoryIcons: Record<string, string> = {
-  emotional: '💭',
-  physical: '💪',
-  cognitive: '🧠',
-  behavioral: '🎯',
+const categoryIcons: Record<Difficulty['name'], string> = {
+  mood: '💭',
+  anxiety: '💭',
+  stress: '💭',
+  self_esteem: '💭',
+  sleep: '💪',
+  concentration: '🧠',
+  motivation: '🎯',
   social: '👥',
   environmental: '🏢'
 };
 
 export const DifficultiesScreen: React.FC<Props> = ({ navigation }) => {
   const { updateDifficulties, nextStep, previousStep } = useOnboarding();
+  const { updateUserDifficulties } = useUserProfile();
   const [selectedDifficulties, setSelectedDifficulties] = useState<Difficulty[]>(difficultiesData);
 
   const toggleDifficulty = (id: string) => {
@@ -95,9 +90,10 @@ export const DifficultiesScreen: React.FC<Props> = ({ navigation }) => {
     );
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
     const selected = selectedDifficulties.filter(d => d.selected);
     updateDifficulties(selected);
+    await updateUserDifficulties(selected);
     nextStep();
     navigation.navigate('PersonalizationObjective');
   };
@@ -107,8 +103,9 @@ export const DifficultiesScreen: React.FC<Props> = ({ navigation }) => {
     navigation.goBack();
   };
 
-  const handleSkip = () => {
+  const handleSkip = async () => {
     updateDifficulties([]);
+    await updateUserDifficulties([]);
     nextStep();
     navigation.navigate('PersonalizationObjective');
   };
@@ -117,8 +114,14 @@ export const DifficultiesScreen: React.FC<Props> = ({ navigation }) => {
 
   return (
     <SafeAreaView className="flex-1 bg-white">
+      <CheckInHeader
+        title=""
+        onPrevious={handlePrevious}
+        onSkip={nextStep}
+        showPrevious={true}
+        showSkip={true}
+      />   
       <ProgressIndicator currentStep={2} totalSteps={4} />
-      
       <ScrollView 
         className="flex-1"
         showsVerticalScrollIndicator={false}
@@ -154,7 +157,7 @@ export const DifficultiesScreen: React.FC<Props> = ({ navigation }) => {
             >
               <View className="flex-row items-center">
                 <Text className="text-2xl mr-3">
-                  {categoryIcons[item.category] || '📝'}
+                  {categoryIcons[item.id] || '📝'}
                 </Text>
                 <View className="flex-1">
                   <Text 

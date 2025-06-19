@@ -4,29 +4,29 @@ import { OnboardingV2ScreenProps, Objective } from '../../types';
 import { NavigationButtons } from '../../components/NavigationButtons';
 import { ProgressIndicator } from '../../components/ProgressIndicator';
 import { useOnboarding } from '../../context/OnboardingContext';
+import { useUserProfile } from '../../../../context/userProfile';
 import { COLORS } from '../../constants';
+import CheckInHeader from '../../components/CheckInHeader';
 
 type Props = OnboardingV2ScreenProps<'PersonalizationObjective'>;
 
 const objectivesData: Objective[] = [
   {
-    id: 'daily_tracking',
-    title: 'Mieux gérer mon stress ou mon anxiété'
-    // description: 'Suivre mon humeur et mes ressentis au quotidien',
-    // icon: '📊',
+    id: 'stress_management',
+    title: 'Mieux gérer mon stress ou mon anxiété',
   },
   {
-    id: 'stress_management',
+    id: 'emotions_understanding',
     title: 'M’aider à mieux comprendre mes ressentis',
   },
   {
-    id: 'sleep_improvement',
+    id: 'daily_tracking',
     title: 'Suivre mon état entre deux rendez-vous thérapeutiques',
   },
   {
-    id: 'mood_stability',
+    id: 'other',
     title: 'Autre',
-  },
+  }
 ];
 
 const priorityColors = {
@@ -45,11 +45,28 @@ const NextScreen = 'OnboardingCheckInStart'
 
 export const ObjectiveScreen: React.FC<Props> = ({ navigation, route }) => {
   const { updateObjective, nextStep, previousStep, state } = useOnboarding();
+  const { updateUserObjectives, profile } = useUserProfile();
   const [selectedObjective, setSelectedObjective] = useState<Objective | null>(null);
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (selectedObjective) {
+      // Update onboarding context (for flow continuity)
       updateObjective(selectedObjective);
+      
+      // Update user profile (for permanent storage)
+      if (profile) {
+        const existingObjectives = profile.objectives || [];
+        const updatedObjectives = [...existingObjectives];
+        
+        // Check if objective already exists, if not add it
+        const existingIndex = updatedObjectives.findIndex(obj => obj.id === selectedObjective.id);
+        if (existingIndex === -1) {
+          updatedObjectives.push(selectedObjective);
+        }
+        
+        await updateUserObjectives(updatedObjectives);
+      }
+      
       nextStep();
       navigation.navigate(NextScreen);
     }
@@ -84,24 +101,7 @@ export const ObjectiveScreen: React.FC<Props> = ({ navigation, route }) => {
             >
               {item.title}
             </Text>
-            {/* <View 
-              className="px-2 py-1 rounded-full"
-              style={{ backgroundColor: priorityColors[item.priority] + '20' }}
-            >
-              <Text 
-                className="text-xs font-medium"
-                style={{ color: priorityColors[item.priority] }}
-              >
-                {priorityLabels[item.priority]}
-              </Text>
-            </View> */}
           </View>
-          {/* <Text 
-            className="text-sm leading-5"
-            style={{ color: COLORS.TEXT_SECONDARY }}
-          >
-            {item.description}
-          </Text> */}
         </View>
         {selectedObjective?.id === item.id && (
           <View 
@@ -117,6 +117,13 @@ export const ObjectiveScreen: React.FC<Props> = ({ navigation, route }) => {
 
   return (
     <SafeAreaView className="flex-1 bg-white">
+      <CheckInHeader
+        title=""
+        onPrevious={handlePrevious}
+        onSkip={nextStep}
+        showPrevious={true}
+        showSkip={true}
+      />   
       <ProgressIndicator currentStep={3} totalSteps={4} />
       
       <View className="flex-1">

@@ -9,6 +9,9 @@ export type OnboardingStep =
 export interface UserProfile {
   id: string;
   name: string;
+  selectedDifficulties: Difficulty[];
+  difficultyDomains?: string[];
+  objectives?: Objective[];
 }
 
 export interface CarouselSlide {
@@ -23,7 +26,6 @@ export interface CarouselSlide {
 export interface Difficulty {
   id: string;
   name: string;
-  category: string;
   selected: boolean;
 }
 

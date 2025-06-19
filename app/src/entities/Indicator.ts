@@ -3,14 +3,22 @@ import { categories } from '../utils/constants';
 
 export const IndicatorTypeSchema = z.enum(['smiley', 'gauge', 'boolean']);
 export const IndicatorOrderSchema = z.enum(['ASC', 'DESC']);
-export const IndicatorCategorySchema = z.nativeEnum(categories)
-export type IndicatorCategory = z.infer<typeof IndicatorCategorySchema>
+export const IndicatorPredefinedDomaineSchema = z.nativeEnum(categories)
+export type IndicatorPredefinedDomaine = z.infer<typeof IndicatorPredefinedDomaineSchema>
+
+export enum INDICATORS_CATEGORIES {
+  "Emotions/sentiments"="Emotions/sentiments",
+  "Manifestations physiques"="Manifestations physiques",
+  "Pensées"="Pensées",
+  "Comportements"="Comportements"
+}
 
 export const IndicatorSchema = z.object({
   version: z.number().int().positive(),
   uuid: z.string().uuid().describe('A generated id'),
   description: z.string().optional().describe('A description for this indicator when it is given.'),
-  category: IndicatorCategorySchema.optional(),
+  predefinedIndicatorDomaine: IndicatorPredefinedDomaineSchema.optional(),
+  category: z.nativeEnum(INDICATORS_CATEGORIES),
   name: z.string().min(1).describe(`A name for the indicator. Can be suggested or personnalized one.`), 
   order: IndicatorOrderSchema.describe(`
     Define in which order to display the indicator, from positive to negative or the other way around.`),
@@ -20,7 +28,34 @@ export const IndicatorSchema = z.object({
   created_at: z.date(),
 })
 
+export const PredefineIndicatorSchema = z.object({
+  uuid: z.string().uuid(), // Vérifie un UUID valide
+  name: z.string().min(1), // Non vide
+  category: z.nativeEnum(INDICATORS_CATEGORIES),
+  type: IndicatorTypeSchema,
+  order: IndicatorOrderSchema.describe(`
+    Define in which order to display the indicator, from positive to negative or the other way around.`),
+});
+
+export type PredefineIndicatorSchemaType = z.infer<typeof PredefineIndicatorSchema>
+
+
 export const IndicatorsArraySchema = z.array(IndicatorSchema);
 
 export type Indicator = z.infer<typeof IndicatorSchema>;
 
+
+export const generateIndicatorFromPredefinedIndicator = (predefinedIndicator: PredefineIndicatorSchemaType):Indicator => {
+  return {
+      uuid: predefinedIndicator.uuid,
+      name: predefinedIndicator.name,
+      category: predefinedIndicator.category,
+      type: predefinedIndicator.type,
+      order: predefinedIndicator.order,
+      version: 1,
+      active: true,
+      position: 0,
+      created_at: new Date()
+  }
+}
+ 

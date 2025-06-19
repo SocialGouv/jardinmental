@@ -11,6 +11,7 @@ import dayjs from 'dayjs';
 import TimePicker from '../../../../components/timePicker';
 import { colors } from '../../../../utils/colors';
 import { OnboardingV2ScreenProps } from '../../types';
+import CheckInHeader from '../../components/CheckInHeader';
 
 type Props = OnboardingV2ScreenProps<'OnboardingReminder'>;
 
@@ -54,6 +55,13 @@ const ReminderScreen: React.FC<Props> = ({
 
   return (
     <SafeAreaView style={styles.container}>
+      <CheckInHeader
+          title=""
+          onPrevious={() => navigation.goBack()}
+          onSkip={() => navigation.goBack()}
+          showPrevious={true}
+          showSkip={true}
+        />
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <View style={styles.content}>
           {/* Title */}
@@ -108,7 +116,7 @@ const ReminderScreen: React.FC<Props> = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f9f9f9',
+    backgroundColor: '#ffffff',
   },
   scrollContent: {
     flexGrow: 1,

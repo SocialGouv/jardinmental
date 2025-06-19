@@ -1,15 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, SafeAreaView } from 'react-native';
 import { useOnboarding } from '../../context/OnboardingContext';
 import { OnboardingV2ScreenProps } from '../../types';
 import { COLORS } from '../../constants';
 import NavigationButtons from '../../components/NavigationButtons';
 import CheckInHeader from '../../components/CheckInHeader';
+import { INDICATEURS_HUMEUR, INDICATEURS_SOMMEIL } from '@/utils/liste_indicateurs.1';
+import { generateIndicatorFromPredefinedIndicator } from '@/entities/Indicator';
 
 type Props = OnboardingV2ScreenProps<'Intro'>;
 
 export const OnboardingCheckInStartScreen: React.FC<Props> = ({ navigation }) => {
   const { nextStep } = useOnboarding();
+
+  useEffect(() => {
+    const createIndicators = async () => {
+      await localStorage.setIndicateurs([INDICATEURS_HUMEUR, INDICATEURS_SOMMEIL].map(generateIndicatorFromPredefinedIndicator));
+    }
+    createIndicators()
+  })
 
   const handleNext = () => {
     nextStep();

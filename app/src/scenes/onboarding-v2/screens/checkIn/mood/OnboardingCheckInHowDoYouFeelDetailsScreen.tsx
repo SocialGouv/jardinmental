@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { View, Text, SafeAreaView, TouchableOpacity, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NavigationButtons from '../../../components/NavigationButtons';
@@ -6,6 +6,9 @@ import CheckInHeader from '../../../components/CheckInHeader';
 import { STORAGE_KEYS, COLORS } from '../../../constants';
 import { useOnboarding } from '../../../context/OnboardingContext';
 import { OnboardingV2ScreenProps } from '../../../types';
+import { beforeToday, formatDay } from '@/utils/date/helpers';
+import { DiaryDataContext } from '@/context/diaryData';
+import { INDICATEURS_HUMEUR } from '@/utils/liste_indicateurs.1';
 
 type Props = OnboardingV2ScreenProps<'OnboardingCheckInHowDoYouFeelDetails'>;
 
@@ -65,10 +68,10 @@ const getMoodOptions = (mood: number): string[] => {
 }
 
 export const OnboardingCheckInLastMoods: React.FC<Props> = ({ navigation, route }) => {
-  const { updateCheckIn, state } = useOnboarding();
   const [selectedMoods, setSelectedMoods] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const moodOptions = React.useMemo(() => getMoodOptions(route.params.mood), [route.params.mood])
+  const [diaryData, addNewEntryToDiaryData] = useContext(DiaryDataContext);
 
   const toggleMood = (mood: string) => {
     setSelectedMoods(prev => {
@@ -84,16 +87,22 @@ export const OnboardingCheckInLastMoods: React.FC<Props> = ({ navigation, route 
     setLoading(true);
     try {
       // Mettre à jour les données du check-in avec les humeurs sélectionnées
-      const updatedCheckInData = {
-        ...state.checkInData,
-        mood: state.checkInData?.mood || 3,
-        energy: state.checkInData?.energy || 3,
-        stress: state.checkInData?.stress || 3,
-        notes: state.checkInData?.notes || '',
-        selectedMoods: selectedMoods
-      };
-      
-      updateCheckIn(updatedCheckInData);
+        const date = formatDay(beforeToday(0))
+        const prev = diaryData[date] || {}
+        const key = INDICATEURS_HUMEUR.name
+        const updatedAnswers = {
+            ...prev,
+            [key]: { ...prev[key], userComment: selectedMoods.join(', ') },
+
+        }
+        console.log({
+          date,
+          answers: updatedAnswers
+      })
+        addNewEntryToDiaryData({
+            date,
+            answers: updatedAnswers
+        });
       
       // Marquer l'onboarding comme terminé
       await AsyncStorage.setItem(STORAGE_KEYS.ONBOARDING_V2_COMPLETED, 'true');

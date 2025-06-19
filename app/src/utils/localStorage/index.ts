@@ -16,6 +16,7 @@ import {
 import { updateSymptomsFormatIfNeeded } from "./utils";
 import localStorageBeck from "./beck";
 import { Indicator } from "../../entities/Indicator";
+import { UserProfile } from "../../scenes/onboarding-v2/types";
 
 const getSymptoms = async () => {
   const symptoms = await AsyncStorage.getItem(STORAGE_KEY_SYMPTOMS);
@@ -51,7 +52,7 @@ const getIndicateurs = async ():Promise<Indicator[]>  => {
   }
 };
 
-const setIndicateurs = async (v) => {
+const setIndicateurs = async (v:Indicator[]) => {
   await AsyncStorage.setItem(STORAGE_KEY_INDICATEURS, JSON.stringify(v));
 };
 const addIndicateur = async (indicateur) => {
@@ -162,6 +163,33 @@ const addCustomDrug = async (drug) => {
   return customDrugs;
 };
 
+// User Profile functions
+const getUserProfile = async (): Promise<UserProfile | null> => {
+  try {
+    const profile = await AsyncStorage.getItem('@USER_PROFILE');
+    return profile ? JSON.parse(profile) : null;
+  } catch (error) {
+    console.error('Error getting user profile:', error);
+    return null;
+  }
+};
+
+const setUserProfile = async (profile: UserProfile): Promise<void> => {
+  try {
+    await AsyncStorage.setItem('@USER_PROFILE', JSON.stringify(profile));
+  } catch (error) {
+    console.error('Error setting user profile:', error);
+  }
+};
+
+const clearUserProfile = async (): Promise<void> => {
+  try {
+    await AsyncStorage.removeItem('@USER_PROFILE');
+  } catch (error) {
+    console.error('Error clearing user profile:', error);
+  }
+};
+
 export default {
   getSymptoms,
   setSymptoms,
@@ -190,5 +218,8 @@ export default {
   getIndicateurs,
   setIndicateurs,
   addIndicateur,
+  getUserProfile,
+  setUserProfile,
+  clearUserProfile,
   ...localStorageBeck,
 };

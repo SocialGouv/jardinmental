@@ -102,7 +102,7 @@ export const ContextScreen: React.FC<ContextScreenProps> = ({
             explanation={questionContext.explanation}
             isLast={false}
             onChangeUserComment={onCommentChanged}
-            // userComment={answers[questionContext.id]?.userComment}
+            userComment={answers[questionContext.id]?.userComment}
             placeholder="Contexte, évènements, comportement de l'entourage..."
           />
           </View>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, SafeAreaView, TouchableOpacity, TextInput, Alert } from 'react-native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -7,6 +7,10 @@ import CheckInHeader from '../../../components/CheckInHeader';
 import { STORAGE_KEYS, COLORS } from '../../../constants';
 import { useOnboarding } from '../../../context/OnboardingContext';
 import { OnboardingV2ScreenProps, CheckInData } from '../../../types';
+import { beforeToday, formatDay } from '@/utils/date/helpers';
+import { DiaryDataContext } from '@/context/diaryData';
+import { INDICATEURS_HUMEUR, INDICATEURS_SOMMEIL } from '@/utils/liste_indicateurs.1';
+import { generateIndicatorFromPredefinedIndicator } from '@/entities/Indicator';
 
 type Props = OnboardingV2ScreenProps<'OnboardingCheckInHowDoYouFeel'>;
 
@@ -14,30 +18,45 @@ const moodEmojis = ['😢', '😕', '😐', '🙂', '😊'];
 const moodLabels = ['Très mauvais', 'Mauvais', 'Moyen', 'Bon', 'Très bon'];
 
 export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
-  const { updateCheckIn, state } = useOnboarding();
-  const [checkInData, setCheckInData] = useState<CheckInData>({
-    mood: 3,
-    energy: 3,
-    stress: 3,
-    notes: ''
-  });
+  const [checkInData, setCheckInData] = useState<number|null>(null);
   const [loading, setLoading] = useState(false);
+  const [diaryData, addNewEntryToDiaryData] = useContext(DiaryDataContext);
 
-  const updateValue = (key: keyof CheckInData, value: number | string) => {
-    setCheckInData(prev => ({ ...prev, [key]: value }));
-  };
+
+// await localStorage.setIndicateurs(indicatorsToSave.map(predefinedIndicator => ({
+//         uuid: predefinedIndicator.uuid,
+//         name: predefinedIndicator.name,
+//         category: predefinedIndicator.category,
+//         type: predefinedIndicator.type,
+//         order: predefinedIndicator.order,
+//         version: 1,
+//         active: true,
+//         position: 0,
+//         created_at: new Date()
+//     })));
 
   const handleComplete = async () => {
     setLoading(true);
     try {
       // Sauvegarder les données du check-in
-      updateCheckIn(checkInData);
-      
+      // updateCheckIn(checkInData);
+      const date = formatDay(beforeToday(0))
+      const prev = diaryData[date] || {}
+
+      const key = INDICATEURS_HUMEUR.name
+      const updatedAnswers = {
+          ...prev,
+          [key]: { ...prev[key], value: checkInData, _indicateur: generateIndicatorFromPredefinedIndicator(INDICATEURS_HUMEUR) }
+      }
+      addNewEntryToDiaryData({
+          date,
+          answers: updatedAnswers
+      });
       // Marquer l'onboarding comme terminé
       await AsyncStorage.setItem(STORAGE_KEYS.ONBOARDING_V2_COMPLETED, 'true');
       
       // Afficher un message de félicitations
-      navigation.navigate('OnboardingCheckInHowDoYouFeelDetails', { mood: checkInData.mood })
+      navigation.navigate('OnboardingCheckInHowDoYouFeelDetails', { mood: checkInData })
     //   Alert.alert(
     //     'Félicitations ! 🎉',
     //     'Votre profil est maintenant configuré. Bienvenue dans Jardin Mental !',
@@ -77,11 +96,11 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
       <View className="flex-row justify-between">
         {moodEmojis.map((emoji, index) => {
           const value = index + 1;
-          const isSelected = checkInData.mood === value;
+          const isSelected = checkInData === value
           return (
             <TouchableOpacity
               key={index}
-              onPress={() => updateValue('mood', value)}
+              onPress={() => setCheckInData(value)}
               className="items-center p-2 rounded-lg"
               style={{
                 backgroundColor: isSelected ? COLORS.PRIMARY + '20' : 'transparent',
@@ -132,11 +151,11 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
       </View>
       <View className="flex-row justify-between">
         {[1, 2, 3, 4, 5].map((value) => {
-          const isSelected = checkInData[key] === value;
+          const isSelected = checkInData === value;
           return (
             <TouchableOpacity
               key={value}
-              onPress={() => updateValue(key, value)}
+              onPress={() => setCheckInData(value)}
               className="w-12 h-12 rounded-full items-center justify-center border-2"
               style={{
                 backgroundColor: isSelected ? COLORS.PRIMARY : COLORS.WHITE,

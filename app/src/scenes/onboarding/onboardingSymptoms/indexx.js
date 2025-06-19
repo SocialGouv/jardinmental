@@ -9,7 +9,7 @@ import BackButton from "../../../components/BackButton";
 import Button from "../../../components/Button";
 import SurveyMenu from "../../../../assets/svg/SurveyMenu";
 import { ONBOARDING_STEPS } from "../../../utils/constants";
-import { INDICATEURS_LISTE_ONBOARDING, INDICATEURS } from "../../../utils/liste_indicateurs";
+import { INDICATEURS_LISTE_ONBOARDING, INDICATEURS_LIST } from "../../../utils/liste_indicateurs.1";
 import TextTag from "../../../components/TextTag";
 import CategorieElements from "./CategorieElements";
 import OnboardingElements from "./OnboardingElements";
@@ -86,7 +86,7 @@ const SymptomScreen = ({ navigation, route }) => {
         <OnboardingElements
           key={"test"}
           title={"test"}
-          options={INDICATEURS_LISTE_ONBOARDING.map((e) => ({ id: e, label: INDICATEURS[e] }))}
+          options={INDICATEURS_LISTE_ONBOARDING.map((e) => ({ id: e, label: INDICATEURS_LIST[e] }))}
           onClick={({ id, value }) => setToggleIndicateur({ indicateur: id, valeur: value })}
           indicateursSelection={indicateursSelection}
           handleAddNewSymptom={handleAddNewSymptom}
@@ -102,7 +102,7 @@ const SymptomScreen = ({ navigation, route }) => {
                 .map((e, i) => (
                   <TextTag
                     key={i}
-                    value={INDICATEURS[e] || displayedCategories[e] || e}
+                    value={INDICATEURS_LIST[e] || displayedCategories[e] || e}
                     selected={false}
                     color="#D4F0F2"
                     onPress={() => {}}

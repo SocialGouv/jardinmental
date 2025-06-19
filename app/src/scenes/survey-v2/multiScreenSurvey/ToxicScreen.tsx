@@ -99,12 +99,12 @@ export const ToxicScreen: React.FC<ToxicScreenProps> = ({
         > */}
           <QuestionYesNo
             question={questionToxic}
-            onPress={() => {}}
-            // selected={answers[questionToxic.id]?.value}
+            onPress={onValueChanged}
+            selected={answers[questionToxic.id]?.value}
             explanation={questionToxic.explanation}
             isLast={true}
             onChangeUserComment={onCommentChanged}
-            // userComment={answers[questionToxic.id]?.userComment}
+            userComment={answers[questionToxic.id]?.userComment}
           />
           </View>
           {/* <View className="h-[1px] bg-neutral-200 mx-5 my-2.5 w-full self-center" />
