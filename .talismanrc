@@ -43,6 +43,10 @@ fileignoreconfig:
   checksum: 767aeda61332f9c975693c427569fe1b68cc97a637e8981ccade3a15157b38ab
 - filename: app/src/scenes/onboarding/onboardingSymptomsCustom/CreateIndicator/ChooseIndicatorOrder.js
   checksum: bdb40467b60296ef959cac383488b52e879619d362093020f547896ddf9921bf
+- filename: app/src/scenes/survey-v2/ContextScreen.tsx
+  checksum: 6371ed197788ce03cb6c42e3151135d106c684e295b66a25ebd841ca1d3a01dd
+- filename: app/src/scenes/survey-v2/ToxicScreen.tsx
+  checksum: 033a3b6b40b07e8d7369d7d1abc7a0e25f4df71c5aebfd43d8253b0fe83c5a69
 - filename: app/src/scenes/survey-v2/multiScreenSurvey/ContextScreen.tsx
   checksum: 5a6ba8693e36beb788cd925777b32e0e753d2407bc9fec606112ac2f41395d81
 - filename: app/src/scenes/survey-v2/multiScreenSurvey/GoalsScreen.tsx

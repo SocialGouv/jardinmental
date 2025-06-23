@@ -1,24 +1,21 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { OnboardingV2StackParamList } from './types';
-import { OnboardingProvider } from './context/OnboardingContext';
 
-// Import des écrans
-import IntroScreen from './screens/IntroScreen';
-import ProfileScreen from './screens/ProfileScreen';
-import CarouselScreen from './screens/CarouselScreen';
-import DifficultiesScreen from './screens/personalization/DifficultiesScreen';
-import ObjectiveScreen from './screens/personalization/ObjectiveScreen';
-import CarouselPersonalizationScreen from './screens/personalization/CarouselPersonalizationScreen';
-import OnboardingPersonalizationStartScreen from './screens/personalization/OnboardingPersonalizationStartScreen';
-import OnboardingCheckInStartScreen from './screens/checkIn/OnboardingCheckInStartScreen';
-import OnboardingCheckInHowDoYouFeelScreen from './screens/checkIn/mood/OnboardingCheckInHowDoYouFeelScreen';
-import OnboardingCheckInLastMoodsScreen from './screens/checkIn/mood/OnboardingCheckInHowDoYouFeelDetailsScreen';
-import OnboardingCheckInSleepScreen from './screens/checkIn/sleep/OnboardingCheckInSleepScreen';
-import OnboardingCheckInMoodSummaryScreen from './screens/checkIn/mood/OnboardingCheckInMoodSummaryScreen';
-import OnboardingCheckInIntroductionCompletedScreen from './screens/checkIn/OnboardingCheckInIntroductionCompletedScreen';
-import OnboardingChooseIndicatorScreen from './screens/indicators/OnboardingChooseIndicatorScreen';
-import ReminderScreen from './screens/reminder/ReminderScreen';
+import IntroScreen from './IntroScreen';
+import ProfileScreen from './ProfileScreen';
+import CarouselScreen from './CarouselScreen';
+import DifficultiesScreen from './personalization/DifficultiesScreen';
+import ObjectiveScreen from './personalization/ObjectiveScreen';
+import OnboardingPersonalizationStartScreen from './personalization/OnboardingPersonalizationStartScreen';
+import OnboardingCheckInStartScreen from './checkIn/OnboardingCheckInStartScreen';
+import OnboardingCheckInHowDoYouFeelScreen from './checkIn/mood/OnboardingCheckInHowDoYouFeelScreen';
+import OnboardingCheckInLastMoodsScreen from './checkIn/mood/OnboardingCheckInHowDoYouFeelDetailsScreen';
+import OnboardingCheckInSleepScreen from './checkIn/sleep/OnboardingCheckInSleepScreen';
+import OnboardingCheckInMoodSummaryScreen from './checkIn/mood/OnboardingCheckInMoodSummaryScreen';
+import OnboardingCheckInIntroductionCompletedScreen from './checkIn/OnboardingCheckInIntroductionCompletedScreen';
+import OnboardingChooseIndicatorScreen from './indicators/OnboardingChooseIndicatorScreen';
+import ReminderScreen from './reminder/ReminderScreen';
 
 const Stack = createStackNavigator<OnboardingV2StackParamList>();
 
@@ -28,7 +25,7 @@ const OnboardingV2Navigator: React.FC = () => {
       initialRouteName="Intro"
       screenOptions={{
         headerShown: false,
-        gestureEnabled: false, // Désactiver les gestes de retour
+        gestureEnabled: false, 
         cardStyleInterpolator: ({ current, layouts }) => {
           return {
             cardStyle: {
@@ -60,11 +57,6 @@ const OnboardingV2Navigator: React.FC = () => {
         name="Carousel" 
         component={CarouselScreen}
       />
-      {/* <Stack.Screen 
-        name="Personalization" 
-        component={CarouselPersonalizationScreen}
-      /> */}
-      {/* Peronalization */}
       <Stack.Screen 
         name="PersonalizationStart" 
         component={OnboardingPersonalizationStartScreen}
@@ -117,9 +109,7 @@ const OnboardingV2Navigator: React.FC = () => {
 
 const OnboardingV2: React.FC = () => {
   return (
-    <OnboardingProvider>
       <OnboardingV2Navigator />
-    </OnboardingProvider>
   );
 };
 

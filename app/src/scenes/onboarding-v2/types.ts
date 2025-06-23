@@ -1,3 +1,6 @@
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RouteProp } from '@react-navigation/native';
+
 export type OnboardingStep = 
   | 'INTRO' 
   | 'PROFILE' 
@@ -9,9 +12,6 @@ export type OnboardingStep =
 export interface UserProfile {
   id: string;
   name: string;
-  selectedDifficulties: Difficulty[];
-  difficultyDomains?: string[];
-  objectives?: Objective[];
 }
 
 export interface CarouselSlide {
@@ -32,9 +32,6 @@ export interface Difficulty {
 export interface Objective {
   id: string;
   title: string;
-  // description: string;
-  // icon: string;
-  // priority: 'high' | 'medium' | 'low';
 }
 
 export interface CheckInData {
@@ -88,10 +85,6 @@ export interface CarouselScreenProps {
   onComplete: () => void;
   onSkip: () => void;
 }
-
-// Navigation types
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
 
 export type OnboardingV2StackParamList = {
   Intro: undefined;

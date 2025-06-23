@@ -3,7 +3,7 @@ import Tabs from './tabs';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
 import EnvironmentIndicator from '../services/EnvironmentIndicator';
-import SurveyNavigator from '../scenes/survey-v2/multiScreenSurvey/SurveyNavigator';
+import SurveyNavigator from '../scenes/survey-v2/SurveyNavigator';
 import SelectDayScreen from '../scenes/survey/selectDay';
 import Reminder from '../scenes/reminder';
 import Export from '../scenes/export/export';

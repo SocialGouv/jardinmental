@@ -690,6 +690,8 @@ export const INDICATEURS_LES_PLUS_COURANTS = INDICATEURS.filter((indicateur) =>
   ].includes(indicateur.uuid)
 );
 
+export const BASE_INDICATORS = [INDICATEURS_HUMEUR.uuid, INDICATEURS_SOMMEIL.uuid]
+
 export const INDICATEURS_LISTE_ONBOARDING_CUSTOM_SIMPLE = [
   INDICATEURS.filter((indicateur) =>
     [

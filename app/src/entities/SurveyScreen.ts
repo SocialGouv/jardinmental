@@ -2,6 +2,7 @@
 import { Indicator } from './Indicator';
 
 export enum SurveyScreenType {
+    // group information by category
     'category'='category',
     'individual'='individual',
     'goals'='goals',
