@@ -300,15 +300,6 @@ export const MATOMO_DIMENSION = {
   SUPPORTED: 3,
 };
 
-export const ONBOARDING_V2_STEPS: Record<OnboardingStep, OnboardingStep> = {
-  INTRO: 'INTRO',
-  PROFILE: 'PROFILE',
-  CAROUSEL: 'CAROUSEL',
-  DIFFICULTIES: 'DIFFICULTIES',
-  OBJECTIVE: 'OBJECTIVE',
-  CHECKIN: 'CHECKIN',
-};
-
 export const STEP_ORDER: OnboardingStep[] = [
   'INTRO',
   'PROFILE', 
@@ -318,26 +309,7 @@ export const STEP_ORDER: OnboardingStep[] = [
   'CHECKIN',
 ];
 
-export const STEP_PROGRESS: Record<OnboardingStep, number> = {
-  INTRO: 1,
-  PROFILE: 2,
-  CAROUSEL: 3,
-  DIFFICULTIES: 4,
-  OBJECTIVE: 5,
-  CHECKIN: 6,
-};
-
 export const TOTAL_STEPS = STEP_ORDER.length;
-
-// Storage keys
-export const STORAGE_KEYS = {
-  ONBOARDING_V2_STATE: '@ONBOARDING_V2_STATE',
-  ONBOARDING_V2_PROFILE: '@ONBOARDING_V2_PROFILE',
-  ONBOARDING_V2_DIFFICULTIES: '@ONBOARDING_V2_DIFFICULTIES',
-  ONBOARDING_V2_OBJECTIVE: '@ONBOARDING_V2_OBJECTIVE',
-  ONBOARDING_V2_CHECKIN: '@ONBOARDING_V2_CHECKIN',
-  ONBOARDING_V2_COMPLETED: '@ONBOARDING_V2_COMPLETED',
-};
 
 // Colors
 export const COLORS = {

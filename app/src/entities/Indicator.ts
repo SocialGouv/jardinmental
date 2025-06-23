@@ -1,7 +1,18 @@
 import { z } from 'zod';
 import { categories } from '../utils/constants';
 
-export const IndicatorTypeSchema = z.enum(['smiley', 'gauge', 'boolean']);
+export enum INDICATOR_TYPE {
+  'smiley'='smiley',
+  'gauge'='gauge',
+  'boolean'='boolean'
+}
+
+export enum INDICATOR_ORDER {
+  'ASC'='ASC',
+  'DESC'='DESC'
+}
+
+export const IndicatorTypeSchema = z.nativeEnum(INDICATOR_TYPE);
 export const IndicatorOrderSchema = z.enum(['ASC', 'DESC']);
 export const IndicatorPredefinedDomaineSchema = z.nativeEnum(categories)
 export type IndicatorPredefinedDomaine = z.infer<typeof IndicatorPredefinedDomaineSchema>

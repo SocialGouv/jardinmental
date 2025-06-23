@@ -1,19 +1,19 @@
-import { INDICATORS_CATEGORIES, PredefineIndicatorSchemaType } from "../entities/Indicator";
+import { INDICATOR_ORDER, INDICATOR_TYPE, INDICATORS_CATEGORIES, PredefineIndicatorSchemaType } from "../entities/Indicator";
 
 export const INDICATEURS_HUMEUR = {
   uuid: "3e15ed99-f2f9-4716-b6a2-5348c35266da",
   name: "Humeur générale",
   category: INDICATORS_CATEGORIES["Emotions/sentiments"],
-  order: "ASC",
-  type: "smiley",
+  order: INDICATOR_ORDER.ASC,
+  type: INDICATOR_TYPE.smiley,
 };
 
 export const INDICATEURS_SOMMEIL = {
   uuid: "d21db60d-ffa7-4063-a011-d7faef93bed2",
   name: "Qualité sommeil",
   category: INDICATORS_CATEGORIES["Manifestations physiques"],
-  order: "ASC",
-  type: "gauge",
+  order: INDICATOR_ORDER.ASC,
+  type: INDICATOR_TYPE.gauge,
 };
 
 export const INDICATEURS_LISTE_ONBOARDING_HUMEUR = [

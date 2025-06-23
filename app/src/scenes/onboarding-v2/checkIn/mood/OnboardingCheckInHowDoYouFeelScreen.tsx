@@ -1,14 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, SafeAreaView, TouchableOpacity, TextInput, Alert } from 'react-native';
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import CheckInHeader from '@/components/onboarding/CheckInHeader';
 import { OnboardingV2ScreenProps, CheckInData } from '../../types';
 import { beforeToday, formatDay } from '@/utils/date/helpers';
 import { DiaryDataContext } from '@/context/diaryData';
 import { INDICATEURS_HUMEUR, INDICATEURS_SOMMEIL } from '@/utils/liste_indicateurs.1';
 import { generateIndicatorFromPredefinedIndicator } from '@/entities/Indicator';
-import { COLORS, STORAGE_KEYS } from '@/utils/constants';
+import { COLORS } from '@/utils/constants';
 
 type Props = OnboardingV2ScreenProps<'OnboardingCheckInHowDoYouFeel'>;
 
@@ -46,8 +45,6 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
           date,
           answers: updatedAnswers
       });
-      // Marquer l'onboarding comme terminé
-      await AsyncStorage.setItem(STORAGE_KEYS.ONBOARDING_V2_COMPLETED, 'true');
       
       // Afficher un message de félicitations
       navigation.navigate('OnboardingCheckInHowDoYouFeelDetails', { mood: checkInData })

@@ -103,7 +103,6 @@ export const OnboardingCheckInLastMoods: React.FC<Props> = ({ navigation, route 
             answers: updatedAnswers
         });
       
-      await AsyncStorage.setItem(STORAGE_KEYS.ONBOARDING_V2_COMPLETED, 'true');
       navigation.navigate('OnboardingCheckInMoodSummary')
 
     } catch (error) {
