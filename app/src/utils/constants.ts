@@ -300,7 +300,6 @@ export const MATOMO_DIMENSION = {
   SUPPORTED: 3,
 };
 
-
 export const ONBOARDING_V2_STEPS: Record<OnboardingStep, OnboardingStep> = {
   INTRO: 'INTRO',
   PROFILE: 'PROFILE',

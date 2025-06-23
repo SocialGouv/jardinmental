@@ -32,7 +32,7 @@ export const ProfileScreen: React.FC<Props> = ({ navigation }) => {
   const handleNext = () => {
     if (selectedProfile) {
       setProfile(selectedProfile); // For global app access
-      navigation.navigate('Carousel', { slides: selectedProfile.id === 'suivi' ? carouselSlidesSuivi : carouselSlides });
+      navigation.navigate('Carousel');
     }
   };
 

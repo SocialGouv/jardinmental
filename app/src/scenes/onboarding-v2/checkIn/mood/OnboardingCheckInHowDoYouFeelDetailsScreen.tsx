@@ -69,7 +69,7 @@ const getMoodOptions = (mood: number): string[] => {
 export const OnboardingCheckInLastMoods: React.FC<Props> = ({ navigation, route }) => {
   const [selectedMoods, setSelectedMoods] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
-  const moodOptions = React.useMemo(() => getMoodOptions(route.params.mood), [route.params.mood])
+  const moodOptions = React.useMemo(() => getMoodOptions(route.params?.mood), [route.params?.mood])
   const [diaryData, addNewEntryToDiaryData] = useContext(DiaryDataContext);
 
   const toggleMood = (mood: string) => {

@@ -7,7 +7,6 @@ import { COLORS } from '@/utils/constants';
 type Props = OnboardingV2ScreenProps<'Intro'>;
 
 export const IntroScreen: React.FC<Props> = ({ navigation }) => {
-
   const handleNext = () => {
     navigation.navigate('Profile');
   };

@@ -89,7 +89,7 @@ export interface CarouselScreenProps {
 export type OnboardingV2StackParamList = {
   Intro: undefined;
   Profile: undefined;
-  Carousel: { slides: CarouselSlide[] };
+  Carousel: undefined;
   PersonalizationStart: undefined;
   PersonalizationDifficulties: undefined,
   PersonalizationObjective: undefined;

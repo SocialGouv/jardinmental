@@ -1,20 +1,28 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, SafeAreaView, FlatList, TouchableOpacity, Dimensions } from 'react-native';
 import { OnboardingV2ScreenProps, CarouselSlide } from './types';
 import { CarouselSlide as CarouselSlideComponent } from '../../components/onboarding/CarouselSlide';
 import NavigationButtons from '../../components/onboarding/NavigationButtons';
 import { useUserProfile } from '../../context/userProfile';
 import { COLORS } from '@/utils/constants';
+import { useFocusEffect } from '@react-navigation/native';
+import carouselSlides, { carouselSlidesSuivi } from './data/carouselData';
 
 type Props = OnboardingV2ScreenProps<'Carousel'>;
 
 const { width: screenWidth } = Dimensions.get('window');
 
 export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
-  const { slides } = route.params;
   const { profile, isLoading } = useUserProfile()
+  const [slides, setSlides] = useState<CarouselSlide[]>([])
   const [currentIndex, setCurrentIndex] = useState(0);
   const flatListRef = useRef<FlatList>(null);
+
+  useEffect(() => {
+    if (profile) {
+      setSlides(profile.id === 'suivi' ? carouselSlidesSuivi : carouselSlides)
+    }
+  }, [profile])
 
   const handleNext = () => {
     navigation.navigate('PersonalizationStart');

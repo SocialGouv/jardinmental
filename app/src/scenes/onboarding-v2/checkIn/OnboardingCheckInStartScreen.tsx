@@ -11,12 +11,12 @@ type Props = OnboardingV2ScreenProps<'Intro'>;
 
 export const OnboardingCheckInStartScreen: React.FC<Props> = ({ navigation }) => {
 
-  useEffect(() => {
-    const createIndicators = async () => {
-      await localStorage.setIndicateurs([INDICATEURS_HUMEUR, INDICATEURS_SOMMEIL].map(generateIndicatorFromPredefinedIndicator));
-    }
-    createIndicators()
-  })
+  // useEffect(() => {
+  //   const createIndicators = async () => {
+  //     await localStorage.setIndicateurs([INDICATEURS_HUMEUR, INDICATEURS_SOMMEIL].map(generateIndicatorFromPredefinedIndicator));
+  //   }
+  //   createIndicators()
+  // })
 
   const handleNext = () => {
     navigation.navigate('OnboardingCheckInHowDoYouFeel');

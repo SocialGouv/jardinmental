@@ -23,6 +23,8 @@ fileignoreconfig:
   checksum: dc7b2bed449fd294af610f8fd941b9dd7257aaf65ec7f51e01ac9f903d029520
 - filename: app/src/scenes/onboarding-v2/context/OnboardingContext.tsx
   checksum: f9d4eefe958b170a2a556551b685495b3f85d66604e0e87032b6cd3ea335e541
+- filename: app/src/scenes/onboarding-v2/index.tsx
+  checksum: af33d6e660927dd853545c02e2c930a03ceb0a7b6bf59529ee871e8e893ca2aa
 - filename: app/src/scenes/onboarding-v2/screens/CarouselScreen.tsx
   checksum: c506bc42996f4c3aecaddcecb502e884b33c6d7e0a0a7e4a2a9d7cc2f820c43b
 - filename: app/src/scenes/onboarding-v2/screens/ProfileScreen.tsx

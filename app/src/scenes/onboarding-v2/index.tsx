@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { OnboardingV2StackParamList } from './types';
+import localStorage from '../../utils/localStorage';
 
 import IntroScreen from './IntroScreen';
 import ProfileScreen from './ProfileScreen';
@@ -16,13 +17,71 @@ import OnboardingCheckInMoodSummaryScreen from './checkIn/mood/OnboardingCheckIn
 import OnboardingCheckInIntroductionCompletedScreen from './checkIn/OnboardingCheckInIntroductionCompletedScreen';
 import OnboardingChooseIndicatorScreen from './indicators/OnboardingChooseIndicatorScreen';
 import ReminderScreen from './reminder/ReminderScreen';
+import { useNavigation } from '@react-navigation/native';
 
 const Stack = createStackNavigator<OnboardingV2StackParamList>();
 
+// Valid screen names for validation
+export const VALID_SCREEN_NAMES: (keyof OnboardingV2StackParamList)[] = [
+  'Intro',
+  'Profile',
+  'Carousel',
+  'PersonalizationStart',
+  'PersonalizationDifficulties',
+  'PersonalizationObjective',
+  'OnboardingCheckInStart',
+  'OnboardingCheckInHowDoYouFeel',
+  'OnboardingCheckInHowDoYouFeelDetails',
+  'OnboardingCheckInMoodSummary',
+  'OnboardingCheckInSleep',
+  'OnboardingCheckInIntroductionCompleted',
+  'OnboardingChooseIndicator',
+  'OnboardingReminder',
+];
+
 const OnboardingV2Navigator: React.FC = () => {
+  const [initialRouteName, setInitialRouteName] = useState<keyof OnboardingV2StackParamList>('Intro');
+  const [isLoading, setIsLoading] = useState(true);
+
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    const setupStack = async () => {
+      const onboardingStep = await localStorage.getOnboardingStep() as keyof OnboardingV2StackParamList;
+
+      if (onboardingStep && VALID_SCREEN_NAMES.includes(onboardingStep)) {
+        const index = VALID_SCREEN_NAMES.indexOf(onboardingStep);
+        const routes = VALID_SCREEN_NAMES.slice(0, index + 1).map(name => ({ name: name as never, key: name }));
+
+        navigation.reset({
+          index,
+          routes,
+        });
+      }
+    };
+
+    setupStack();
+  }, [navigation]);
+
+
+  // Handle navigation state changes - save current screen automatically
+  const handleNavigationStateChange = useCallback(async (state: any) => {
+    if (state && state.routes && state.routes.length > 0) {
+      const currentRoute = state.routes[state.index];
+      const currentScreenName = currentRoute.name;
+      
+      try {
+        await localStorage.setOnboardingStep(currentScreenName);        
+      } catch (error) {
+        console.error('Error saving navigation state:', error);
+      }
+    }
+  }, []);
+
+
   return (
     <Stack.Navigator
-      initialRouteName="Intro"
+      initialRouteName={initialRouteName}
       screenOptions={{
         headerShown: false,
         gestureEnabled: false, 
@@ -39,6 +98,11 @@ const OnboardingV2Navigator: React.FC = () => {
               ],
             },
           };
+        },
+      }}
+      screenListeners={{
+        state: (e) => {
+          handleNavigationStateChange(e.data.state);
         },
       }}
     >
@@ -69,8 +133,6 @@ const OnboardingV2Navigator: React.FC = () => {
         name="PersonalizationObjective" 
         component={ObjectiveScreen}
       />
-
-      {/* First Check In */}
       <Stack.Screen 
         name="OnboardingCheckInStart" 
         component={OnboardingCheckInStartScreen}
@@ -98,10 +160,6 @@ const OnboardingV2Navigator: React.FC = () => {
       <Stack.Screen 
         name="OnboardingChooseIndicator" 
         component={OnboardingChooseIndicatorScreen}
-      />
-      <Stack.Screen 
-        name="OnboardingReminder" 
-        component={ReminderScreen}
       />
     </Stack.Navigator>
   );
