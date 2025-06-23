@@ -2,8 +2,8 @@
   "expo": {
     "name": "Jardin Mental",
     "slug": "monsuivipsy",
-    "version": "1.43.2",
-    "orientation": "portrait",
+    "version": "1.43.3",
+    "orientation": "default",
     "icon": "./assets/imgs/playstore-icon.png",
     "scheme": "monsuivipsy",
     "ios": {
