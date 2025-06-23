@@ -48,7 +48,6 @@ const EditIndicateurs = ({navigation, route}) => {
   useEffect(() => {
     const handleIndicatorsChange = async () => {
       const savedUserIndicateurs = await localStorage.getIndicateurs();
-      console.log(savedUserIndicateurs.length, userIndicateurs.length)
       if (areIdenticals(savedUserIndicateurs.filter(i => i.active)
         .map(i => i.uuid), userIndicateurs.filter(i => i.active).map(i => i.uuid)
       )) {
