@@ -17,11 +17,25 @@ import CategorieElements from '../CategorieElements';
 import {useFocusEffect} from '@react-navigation/native';
 import logEvents from '../../../services/logEvents';
 import TextTag from '../../../components/TextTag';
+import { Button2 } from '../../../components/Button2';
+import { StickyButtonContainer } from '../../onboarding/StickyButton';
+
+
+const areIdenticals = (arr1: string[], arr2: string[]) => {
+  if (arr1.length !== arr2.length) return false;
+
+  const sorted1 = [...arr1].sort();
+  const sorted2 = [...arr2].sort();
+
+  return sorted1.every((value, index) => value === sorted2[index]);
+}
 
 const EditIndicateurs = ({navigation, route}) => {
   const [exemplesVisible, setExemplesVisible] = useState(false);
   const [existingIndicatorsVisible, setExistingIndicatorsVisible] = useState(false);
   const [userIndicateurs, setUserIndicateurs] = useState([]);
+  const [isChanged, setIsChanged] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   const indicateursByCategory = INDICATEURS.reduce((prev, curr) => {
     if (!prev[curr.category]) {
@@ -30,6 +44,22 @@ const EditIndicateurs = ({navigation, route}) => {
     prev[curr.category].push(curr);
     return prev;
   }, {});
+
+  useEffect(() => {
+    const handleIndicatorsChange = async () => {
+      const savedUserIndicateurs = await localStorage.getIndicateurs();
+      console.log(savedUserIndicateurs.length, userIndicateurs.length)
+      if (areIdenticals(savedUserIndicateurs.filter(i => i.active)
+        .map(i => i.uuid), userIndicateurs.filter(i => i.active).map(i => i.uuid)
+      )) {
+        setIsChanged(false)
+      } else {
+        setIsChanged(true)
+      }
+    }
+    handleIndicatorsChange()
+    return 
+  }, [userIndicateurs])
 
   useFocusEffect(
     React.useCallback(() => {
@@ -43,6 +73,13 @@ const EditIndicateurs = ({navigation, route}) => {
     }, []),
   );
 
+  const onValidate = async () => {
+    setIsLoading(true)
+    await localStorage.setIndicateurs(userIndicateurs);
+    setIsLoading(false)
+    navigation.goBack();
+  }
+
   const reactivateIndicateur = async _indicateur => {
     const _userIndicateurs = userIndicateurs.map(indicateur => {
       if (indicateur.uuid === _indicateur.uuid) {
@@ -51,14 +88,13 @@ const EditIndicateurs = ({navigation, route}) => {
       return indicateur;
     });
     setUserIndicateurs(_userIndicateurs);
-    await localStorage.setIndicateurs(_userIndicateurs);
+    // await localStorage.setIndicateurs(_userIndicateurs);
   };
 
   const handleAddNewIndicateur = async _indicateur => {
     if (!_indicateur) return;
     const _userIndicateurs = [...userIndicateurs, _indicateur];
     setUserIndicateurs(_userIndicateurs);
-    await localStorage.setIndicateurs(_userIndicateurs);
     logEvents.logCustomSymptomAdd();
   };
 
@@ -71,7 +107,6 @@ const EditIndicateurs = ({navigation, route}) => {
         return indicateur;
       });
       setUserIndicateurs(_userIndicateurs);
-      await localStorage.setIndicateurs(_userIndicateurs);
     } else {
       handleAddNewIndicateur({..._indicateur, version: 1, active: true});
     }
@@ -206,6 +241,9 @@ const EditIndicateurs = ({navigation, route}) => {
           }}
         />
       </ScrollView>
+      <StickyButtonContainer>
+        <Button2 style={{ padding: 20 }} fill title="Enregistrer" onPress={onValidate} loading={isLoading} disabled={!isChanged} />
+      </StickyButtonContainer>
     </SafeAreaView>
   );
 };
@@ -221,6 +259,13 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 20,
     backgroundColor: 'white',
+  },
+    buttonContainer: {
+    width: '100%',
+    paddingHorizontal: 19,
+    height: 80,
+    alignItems: 'flex-end',
+    justifyContent: 'center',
   },
 
   headerText: {
