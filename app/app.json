@@ -3,7 +3,7 @@
     "name": "Jardin Mental",
     "slug": "monsuivipsy",
     "version": "1.42.3",
-    "orientation": "portrait",
+    "orientation": "default",
     "icon": "./assets/imgs/playstore-icon.png",
     "scheme": "monsuivipsy",
     "ios": {
