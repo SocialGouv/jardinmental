@@ -25,8 +25,6 @@ export const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
           Étape {currentStep} sur {totalSteps}
         </Text>
       )}
-      
-      {/* Barre de progression */}
       <View 
         className="h-2 rounded-full overflow-hidden"
         style={{ backgroundColor: COLORS.GRAY_LIGHT }}
@@ -39,26 +37,6 @@ export const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
           }}
         />
       </View>
-      
-      {/* Indicateurs de points */}
-      {/* <View className="flex-row justify-between mt-2">
-        {Array.from({ length: totalSteps }, (_, index) => {
-          const stepNumber = index + 1;
-          const isCompleted = stepNumber < currentStep;
-          const isCurrent = stepNumber === currentStep;
-          
-          return (
-            <View
-              key={stepNumber}
-              className="w-3 h-3 rounded-full border-2"
-              style={{
-                backgroundColor: isCompleted || isCurrent ? COLORS.PRIMARY : COLORS.WHITE,
-                borderColor: isCompleted || isCurrent ? COLORS.PRIMARY : COLORS.GRAY_LIGHT,
-              }}
-            />
-          );
-        })}
-      </View> */}
     </View>
   );
 };

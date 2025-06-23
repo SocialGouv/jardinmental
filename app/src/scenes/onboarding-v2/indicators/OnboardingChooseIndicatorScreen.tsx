@@ -11,6 +11,7 @@ import { beforeToday, formatDay } from '@/utils/date/helpers';
 import { DiaryDataContext } from '@/context/diaryData';
 import { COLORS } from '@/utils/constants';
 
+// @todo generated with AI, see which values we want to keep
 const DIFFICULTY_KEYWORDS: Record<string, string[]> = {
   sleep: ['sommeil', 'réveil', 'fatigue', 'endormissement'],
   mood: ['humeur', 'tristesse', 'colère', 'optimisme', 'plaisir'],
@@ -75,14 +76,11 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
     const date = formatDay(beforeToday(0));
     const answers = diaryData[date] || {};
     const currentSurvey = { date, answers };
-    console.log('CURRENT SURVEY', currentSurvey)
     return navigation.navigate("day-survey", {
       currentSurvey,
       editingSurvey: true,
       isOnboarding: true
     });
-    // navigation.navigate('OnboardingReminder')
-
   };
 
   const renderIndicatorItem = (item: PredefineIndicatorSchemaType) => {
@@ -143,7 +141,6 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
           showPrevious={true}
           showSkip={true}
         />
-        {/* En-tête */}
         <View className="px-6 py-6">
           <Text 
             className="text-2xl font-bold text-center mb-2"
@@ -153,14 +150,12 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
           </Text>
         </View>
 
-        {/* Indicateurs groupés par catégorie */}
+        {/* indicators grouped by categories */}
         <View>
           {Object.entries(recommendedIndicatorsByCategory).map(([category, indicators]) =>
             renderCategorySection(category, indicators)
           )}
         </View>
-
-        {/* Bouton "Voir plus d'indicateurs" */}
         <View className="px-4 mb-4">
           <TouchableOpacity
             onPress={() => setShowMoreIndicators(!showMoreIndicators)}
@@ -176,7 +171,7 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
           </TouchableOpacity>
         </View>
 
-        {/* Section "Les plus suivis" */}
+        {/* popular indicators */}
         {showMoreIndicators && (
           <View className="mb-6">
             <Text 
@@ -188,12 +183,8 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
             {popularIndicatorsByCategory.map(indicator => renderIndicatorItem(indicator))}
           </View>
         )}
-
-        {/* Espacement pour le bouton fixe */}
         <View className="h-20" />
       </ScrollView>
-
-      {/* Bouton fixe en bas */}
       <NavigationButtons
         onNext={handleNext}
         nextDisabled={selectedIndicators.length === 0}

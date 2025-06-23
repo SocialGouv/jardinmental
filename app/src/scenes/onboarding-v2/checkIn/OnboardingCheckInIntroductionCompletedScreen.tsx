@@ -19,7 +19,6 @@ export const OnboardingCheckInIntroductionCompleted: React.FC<Props> = ({ naviga
   };
 
   const handleSkip = () => {
-    // Logique pour passer cette étape si nécessaire
     handleNext();
   };
 

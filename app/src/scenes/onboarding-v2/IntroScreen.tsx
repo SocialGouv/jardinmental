@@ -14,7 +14,7 @@ export const IntroScreen: React.FC<Props> = ({ navigation }) => {
   return (
     <SafeAreaView className="flex-1 bg-white">      
       <View className="flex-1 justify-center items-center px-8">
-        {/* Logo ou illustration */}
+        {/* Logo/illustration */}
         <View className="mb-8">
           <View 
             className="w-40 h-40 rounded-full items-center justify-center"
@@ -24,7 +24,7 @@ export const IntroScreen: React.FC<Props> = ({ navigation }) => {
           </View>
         </View>
 
-        {/* Titre principal */}
+        {/* Title */}
         <Text 
           className="text-4xl font-bold text-center mb-6"
           style={{ color: COLORS.TEXT_PRIMARY }}
@@ -32,7 +32,7 @@ export const IntroScreen: React.FC<Props> = ({ navigation }) => {
           Jargin Mental est un outils de suivi de votre santé mentale.
         </Text>
 
-        {/* Sous-titre */}
+        {/* Subtitle */}
         <Text 
           className="text-xl text-center mb-8 leading-8"
           style={{ color: COLORS.TEXT_SECONDARY }}

@@ -1,4 +1,4 @@
-import { IndicatorCategory } from "../../../entities/Indicator";
+import { INDICATORS_CATEGORIES } from "@/entities/Indicator"
 
 interface EncouragementScreenData {
     title: string,
@@ -6,36 +6,22 @@ interface EncouragementScreenData {
     extraInfo: string
 }
 
-export const ENCOURAGEMENT_DATA: Record<IndicatorCategory, EncouragementScreenData> = {
+// @todo define what we should exaclty do for this content
+export const ENCOURAGEMENT_DATA: Record<INDICATORS_CATEGORIES, EncouragementScreenData> = {
     "Emotions/sentiments": {
       title: 'Merci d’avoir pris ce moment pour observer votre humeur.',
       description: `C'est noté`,
       extraInfo: `🌤 Suivre son humeur au quotidien aide à repérer les variations et à mieux comprendre ses émotions.`
     },
-    "ANXIETY": {
-      title: 'Merci d’avoir pris ce moment pour observer votre anxiété.',
+    "Comportements": {
+      title: 'Merci d’avoir pris ce moment pour observer votre comportement.',
       description: `C'est noté`,
-      extraInfo: `🌱 Prendre conscience de son niveau d’anxiété est une première étape pour mieux la gérer.`
+      extraInfo: `🌱 Lorem ipsum`
     },
-    BADTHOUGHTS: {
+    "Pensées": {
       title: 'Merci d’avoir pris ce moment pour observer vos pensées négatives.',
       description: `C'est noté`,
       extraInfo: `🧠 Identifier ses pensées négatives permet de mieux les apprivoiser et de prendre du recul.`
-    },
-    SENSATIONS: {
-      title: 'Merci d’avoir pris ce moment pour observer vos sensations.',
-      description: `C'est noté`,
-      extraInfo: `👁 Être à l’écoute de ses sensations physiques aide à mieux comprendre les signaux de son corps.`
-    },
-    DAILYACTIVITIES: {
-      title: 'Merci d’avoir pris ce moment pour observer vos activités quotidiennes.',
-      description: `C'est noté`,
-      extraInfo: `🏃 Suivre ses activités aide à trouver un bon équilibre entre action et repos.`
-    },
-    COMMUNICATION: {
-      title: 'Merci d’avoir pris ce moment pour observer votre communication.',
-      description: `C'est noté`,
-      extraInfo: `💬 Être attentif à ses échanges avec les autres est une clé pour des relations plus sereines.`
     },
     "Manifestations physiques": {
       title: 'Merci d’avoir pris ce moment pour observer votre sommeil.',

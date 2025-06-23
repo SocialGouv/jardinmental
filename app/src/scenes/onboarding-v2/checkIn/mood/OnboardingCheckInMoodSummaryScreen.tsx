@@ -19,7 +19,6 @@ export const OnboardingCheckInMoodSummaryScreen: React.FC<Props> = ({ navigation
   };
 
   const handleSkip = () => {
-    // Logique pour passer cette étape si nécessaire
     handleNext();
   };
 

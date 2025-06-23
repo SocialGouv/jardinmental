@@ -1,22 +1,13 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { View, Text, SafeAreaView } from 'react-native';
 import { OnboardingV2ScreenProps } from '../types';
-import NavigationButtons from '../../../components/onboarding/NavigationButtons';
-import CheckInHeader from '../../../components/onboarding/CheckInHeader';
-import { INDICATEURS_HUMEUR, INDICATEURS_SOMMEIL } from '@/utils/liste_indicateurs.1';
-import { generateIndicatorFromPredefinedIndicator } from '@/entities/Indicator';
+import NavigationButtons from '@/components/onboarding/NavigationButtons';
+import CheckInHeader from '@/components/onboarding/CheckInHeader';
 import { COLORS } from '@/utils/constants';
 
 type Props = OnboardingV2ScreenProps<'Intro'>;
 
 export const OnboardingCheckInStartScreen: React.FC<Props> = ({ navigation }) => {
-
-  // useEffect(() => {
-  //   const createIndicators = async () => {
-  //     await localStorage.setIndicateurs([INDICATEURS_HUMEUR, INDICATEURS_SOMMEIL].map(generateIndicatorFromPredefinedIndicator));
-  //   }
-  //   createIndicators()
-  // })
 
   const handleNext = () => {
     navigation.navigate('OnboardingCheckInHowDoYouFeel');
@@ -27,7 +18,6 @@ export const OnboardingCheckInStartScreen: React.FC<Props> = ({ navigation }) =>
   };
 
   const handleSkip = () => {
-    // Logique pour passer cette étape si nécessaire
     handleNext();
   };
 

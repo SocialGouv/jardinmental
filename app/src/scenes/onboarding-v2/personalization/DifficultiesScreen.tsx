@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { View, Text, SafeAreaView, TouchableOpacity, ScrollView } from 'react-native';
 import { OnboardingV2ScreenProps, Difficulty } from '../types';
-import { NavigationButtons } from '../../../components/onboarding/NavigationButtons';
-import { ProgressIndicator } from '../../../components/onboarding/ProgressIndicator';
-import { useUserProfile } from '../../../context/userProfile';
-import CheckInHeader from '../../../components/onboarding/CheckInHeader';
+import { NavigationButtons } from '@/components/onboarding/NavigationButtons';
+import { ProgressIndicator } from '@/components/onboarding/ProgressIndicator';
+import { useUserProfile } from '@/context/userProfile';
+import CheckInHeader from '@/components/onboarding/CheckInHeader';
 import { COLORS } from '@/utils/constants';
 
 type Props = OnboardingV2ScreenProps<'PersonalizationDifficulties'>;
 
+// @todo defined which difficulties we keep
 const difficultiesData: Difficulty[] = [
   {
     id: 'sleep',
@@ -120,7 +121,6 @@ export const DifficultiesScreen: React.FC<Props> = ({ navigation }) => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ flexGrow: 1 }}
       >
-        {/* En-tête */}
         <View className="px-6 py-4">
           <Text 
             className="text-2xl font-bold text-center mb-2"
@@ -136,7 +136,6 @@ export const DifficultiesScreen: React.FC<Props> = ({ navigation }) => {
           </Text>
         </View>
 
-        {/* Liste des difficultés */}
         <View style={{ paddingVertical: 8 }}>
           {selectedDifficulties.map((item) => (
             <TouchableOpacity

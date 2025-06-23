@@ -31,11 +31,8 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
   const handleComplete = async () => {
     setLoading(true);
     try {
-      // Sauvegarder les données du check-in
-      // updateCheckIn(checkInData);
       const date = formatDay(beforeToday(0))
       const prev = diaryData[date] || {}
-      console.log('checkIndata')
       const key = INDICATEURS_HUMEUR.name
       const updatedAnswers = {
           ...prev,
@@ -46,7 +43,7 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
           answers: updatedAnswers
       });
       
-      // Afficher un message de félicitations
+      // @todo see what to do if user 'skip' the value selection
       navigation.navigate('OnboardingCheckInHowDoYouFeelDetails', { mood: checkInData })
 
     } catch (error) {
@@ -62,7 +59,6 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
   };
 
   const handleSkip = () => {
-    // Logique pour passer cette étape si nécessaire
     handleComplete();
   };
 
@@ -117,13 +113,6 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
         
         {renderMoodSelector()}
       </View>
-
-      {/* <NavigationButtons
-        onNext={handleComplete}
-        showPrevious={false}
-        loading={loading}
-        nextText="Suivant"
-      /> */}
     </SafeAreaView>
   );
 };

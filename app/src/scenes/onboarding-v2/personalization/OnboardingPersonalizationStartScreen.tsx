@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, Text, SafeAreaView } from 'react-native';
-import NavigationButtons from '../../../components/onboarding/NavigationButtons';
-import ProgressIndicator from '../../../components/onboarding/ProgressIndicator';
+import NavigationButtons from '@/components/onboarding/NavigationButtons';
+import ProgressIndicator from '@/components/onboarding/ProgressIndicator';
 import { OnboardingV2ScreenProps } from '../types';
-import CheckInHeader from '../../../components/onboarding/CheckInHeader';
+import CheckInHeader from '@/components/onboarding/CheckInHeader';
 import { COLORS } from '@/utils/constants';
 
 type Props = OnboardingV2ScreenProps<'Intro'>;

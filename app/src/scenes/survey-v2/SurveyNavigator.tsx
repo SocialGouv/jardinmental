@@ -4,10 +4,9 @@ import { useFocusEffect } from '@react-navigation/native';
 import { View, ActivityIndicator } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
-import localStorage from '../../utils/localStorage';
-import { useSurveyScreens } from './hooks/useSurveyScreens';
-import { Indicator } from '../../entities/Indicator';
-import { DiaryDataNewEntryInput } from '../../entities/DiaryData';
+import localStorage from '@/utils/localStorage';
+import { Indicator } from '@/entities/Indicator';
+import { DiaryDataNewEntryInput } from '@/entities/DiaryData';
 import SurveyScreenWrapper from './SurveyScreenWrapper';
 import SurveyContext, { SurveyContextType } from './SurveyContext';
 import { getScoreWithState } from '@/utils';
@@ -15,6 +14,7 @@ import { beforeToday, formatDay } from '@/utils/date/helpers';
 import { SurveyStackParamList, SurveyNavigatorRouteParams } from '../../entities/SurveyScreen';
 import { DiaryDataContext } from '@/context/diaryData';
 import { INDICATEURS_HUMEUR, INDICATEURS_SOMMEIL } from '@/utils/liste_indicateurs.1';
+import { useSurveyScreens } from './hooks/useSurveyScreens';
 
 const Stack = createStackNavigator<SurveyStackParamList>();
 
@@ -78,7 +78,6 @@ export const SurveyNavigator: React.FC<SurveyNavigatorProps> = ({ navigation, ro
       answers: {},
     };
   }, [route?.params?.currentSurvey]);
-  console.log('INIT SURVEY', initSurvey)
   const screens = useSurveyScreens(userIndicateurs, {
     isOnboarding: route?.params?.isOnboarding
   });

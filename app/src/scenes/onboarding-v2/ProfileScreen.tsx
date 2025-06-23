@@ -1,9 +1,8 @@
 import React, { useCallback, useRef, useState } from 'react';
-import { View, Text, SafeAreaView, FlatList, TouchableOpacity } from 'react-native';
+import { View, Text, SafeAreaView, TouchableOpacity } from 'react-native';
 import { OnboardingV2ScreenProps, UserProfile } from './types';
 import { NavigationButtons } from '@/components/onboarding/NavigationButtons';
 import { useUserProfile } from '@/context/userProfile';
-import { carouselSlides, carouselSlidesSuivi} from './data/carouselData';
 import CheckInHeader from '@/components/onboarding/CheckInHeader';
 import QuestionMark from '../../../assets/svg/QuestionMark';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -31,7 +30,7 @@ export const ProfileScreen: React.FC<Props> = ({ navigation }) => {
 
   const handleNext = () => {
     if (selectedProfile) {
-      setProfile(selectedProfile); // For global app access
+      setProfile(selectedProfile);
       navigation.navigate('Carousel');
     }
   };
@@ -40,13 +39,11 @@ export const ProfileScreen: React.FC<Props> = ({ navigation }) => {
     navigation.goBack();
   };
 
-    // ref
-    const bottomSheetRef = useRef<BottomSheetModal>(null);
+  const bottomSheetRef = useRef<BottomSheetModal>(null);
 
-    // callbacks
-    const handleSheetChanges = useCallback((index: number) => {
-      console.log('handleSheetChanges', index);
-    }, []);
+  const handleSheetChanges = useCallback((index: number) => {
+    console.log('handleSheetChanges', index);
+  }, []);
 
   const renderProfileItem = ({ item }: { item: UserProfile }) => (
     <TouchableOpacity
@@ -107,7 +104,6 @@ export const ProfileScreen: React.FC<Props> = ({ navigation }) => {
             >
               Êtes-vous actuellement suivi(e) par un professionnel de la santé mentale ?
             </Text>
-            {/* Liste des profils */}
             {profiles.map((item) => renderProfileItem({ item }))}
             <Text 
               className="text-base text-center mt-4"
@@ -125,16 +121,12 @@ export const ProfileScreen: React.FC<Props> = ({ navigation }) => {
               </TouchableOpacity>
             </View>
           </View>
-          
-          {/* Boutons de navigation */}
           <NavigationButtons
             onNext={handleNext}
             onPrevious={handlePrevious}
             nextDisabled={!selectedProfile}
             nextText="Continuer"
           />
-
-
           {/* Help Popup */}
           <BottomSheetModal
             ref={bottomSheetRef}

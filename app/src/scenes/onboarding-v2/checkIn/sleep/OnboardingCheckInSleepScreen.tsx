@@ -41,7 +41,6 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
           date,
           answers: updatedAnswers
       });
-      // Marquer l'onboarding comme terminé
       navigation.navigate('OnboardingCheckInIntroductionCompleted')
   };
 
@@ -50,7 +49,6 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
   };
 
   const handleSkip = () => {
-    // Logique pour passer cette étape si nécessaire
     handleComplete();
   };
 

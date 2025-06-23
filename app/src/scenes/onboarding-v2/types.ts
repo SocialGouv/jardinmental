@@ -102,6 +102,11 @@ export type OnboardingV2StackParamList = {
   OnboardingCheckInIntroductionCompleted: undefined
   OnboardingChooseIndicator: undefined
   OnboardingReminder: undefined
+  'day-survey': {
+    currentSurvey: {},
+    editingSurvey: boolean,
+    isOnboarding: boolean
+  }
 };
 
 export type OnboardingV2ScreenProps<T extends keyof OnboardingV2StackParamList> = {

@@ -1,9 +1,9 @@
 import { useMemo } from 'react';
-import { Indicator, PredefineIndicatorSchemaType } from '../../../entities/Indicator';
-import { translateCategories } from '../../../utils/constants';
-import { ENCOURAGEMENT_DATA } from '../data/encouragementData';
-import { SurveyScreenInterface, SurveyScreenType } from '../../../entities/SurveyScreen';
-import { BASE_INDICATORS, INDICATEURS_HUMEUR, INDICATEURS_SOMMEIL } from '@/utils/liste_indicateurs.1';
+import { Indicator } from '@/entities/Indicator';
+import { translateCategories } from '@/utils/constants';
+import { ENCOURAGEMENT_DATA } from '@/scenes/survey-v2/data/encouragementData';
+import { SurveyScreenInterface, SurveyScreenType } from '@/entities/SurveyScreen';
+import { BASE_INDICATORS } from '@/utils/liste_indicateurs.1';
 
 
 const FEATURE_ADD_ENCOURAGEMENT = true

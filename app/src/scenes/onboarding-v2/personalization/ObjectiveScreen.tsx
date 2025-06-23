@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { View, Text, SafeAreaView, FlatList, TouchableOpacity } from 'react-native';
 import { OnboardingV2ScreenProps, Objective } from '../types';
-import { NavigationButtons } from '../../../components/onboarding/NavigationButtons';
-import { ProgressIndicator } from '../../../components/onboarding/ProgressIndicator';
-import { useUserProfile } from '../../../context/userProfile';
-import CheckInHeader from '../../../components/onboarding/CheckInHeader';
+import { NavigationButtons } from '@/components/onboarding/NavigationButtons';
+import { ProgressIndicator } from '@/components/onboarding/ProgressIndicator';
+import { useUserProfile } from '@/context/userProfile';
+import CheckInHeader from '@/components/onboarding/CheckInHeader';
 import { COLORS } from '@/utils/constants';
 
 type Props = OnboardingV2ScreenProps<'PersonalizationObjective'>;
 
+// @todo what do we do when others is selected, is this the final list ?
 const objectivesData: Objective[] = [
   {
     id: 'stress_management',
@@ -38,7 +39,6 @@ export const ObjectiveScreen: React.FC<Props> = ({ navigation, route }) => {
   const handleNext = async () => {
     if (selectedObjective) {
       
-      // Update user profile (for permanent storage)
       if (profile) {
         const existingObjectives = profile.objectives || [];
         const updatedObjectives = [...existingObjectives];
@@ -124,7 +124,6 @@ export const ObjectiveScreen: React.FC<Props> = ({ navigation, route }) => {
           </Text>
         </View>
 
-        {/* Liste des objectifs */}
         <FlatList
           data={objectivesData}
           keyExtractor={(item) => item.id}
