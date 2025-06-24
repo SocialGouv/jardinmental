@@ -1,7 +1,7 @@
 export const firstLetterUppercase = (inputString) =>
   inputString.charAt(0).toUpperCase() + inputString.slice(1);
 
-export const areStringArrayIdenticals = (arr1: string[], arr2: string[]) => {
+export const areStringArrayIdentical = (arr1: string[], arr2: string[]) => {
   if (arr1.length !== arr2.length) return false;
 
   const sorted1 = [...arr1].sort((a,b) => a.localeCompare(b));
