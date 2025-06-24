@@ -67,6 +67,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import uuid from 'react-native-uuid';
 import DevMode from '../scenes/dev-mode';
 import { colors } from '../utils/colors';
+import { trackScreen, setIdentity, setProperties } from "@screeb/react-native";
 
 const Stack = createStackNavigator();
 
@@ -129,6 +130,7 @@ class Router extends React.Component {
       let deviceId = await AsyncStorage.getItem('deviceId');
       if (!deviceId) {
         deviceId = uuid.v4();
+        setIdentity(deviceId)
         await AsyncStorage.setItem('deviceId', deviceId);
       }
 
@@ -193,6 +195,7 @@ class Router extends React.Component {
     if (route.name === this.prevCurrentRouteName) return;
     this.prevCurrentRouteName = route.name;
     logEvents.logOpenPage(route.name);
+    trackScreen(route.name);
   };
 
   render() {

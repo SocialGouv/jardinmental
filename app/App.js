@@ -19,13 +19,22 @@ import {InfoModalProvider} from './src/components/InfoModal';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {OnboardingProgressHeaderProvider} from './src/scenes/onboarding/ProgressHeader';
 import {LatestChangesModalProvider} from './src/scenes/news/latestChangesModal';
+import { initSdk, trackScreen, trackEvent, setProperties, setIdentity } from "@screeb/react-native";
 
 // if (!__DEV__) {
 //   Sentry.config("https://9f0bd8f8af8444eea9f470d00a1bb411@sentry.fabrique.social.gouv.fr/54").install();
 // }
 
-const App = () => (
-  <SafeAreaProvider>
+const App = () => {
+
+  React.useEffect(() => {
+     initSdk(
+        process.env.SCREEB_IOS_CHANNEL,
+        process.env.SCREEB_ANDROID_CHANNEL,
+     );
+  }, []);
+
+  return <SafeAreaProvider>
     <NeedUpdateContextProvider>
       <DiaryNotesProvider>
         <DiaryDataProvider>
@@ -41,6 +50,6 @@ const App = () => (
       </DiaryNotesProvider>
     </NeedUpdateContextProvider>
   </SafeAreaProvider>
-);
+};
 
 export default App;

@@ -21,6 +21,7 @@ import { progressHeaderOptions, ProgressScreen, useOnboardingProgressHeader } fr
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useFocusEffect } from "@react-navigation/native";
 import { OnboardingCustomMore } from "./onboardingCustomMore";
+import { trackScreen } from "@screeb/react-native";
 
 const Onboarding = () => {
   const { setIsVisible } = useOnboardingProgressHeader();
@@ -32,13 +33,30 @@ const Onboarding = () => {
       };
     }, [])
   );
+  const navigationRef = useRef();
 
   const insets = useSafeAreaInsets();
   const slidesCount = 10;
   const headerOptions = progressHeaderOptions({ insets, slidesCount });
 
+  const onStateChange = async () => {
+    if (!navigationRef.current) return;
+    const route = navigationRef.current.getCurrentRoute();
+    if (route.name === onStateChange.prevCurrentRouteName) return;
+    trackScreen(route.name);
+    onStateChange.prevCurrentRouteName = route.name;
+  };
+
+  useEffect(() => {
+    onStateChange.prevCurrentRouteName = null;
+  }, []);
+
   return (
-    <Stack.Navigator initialRouteName={ONBOARDING_STEPS.STEP_CGU} screenOptions={{ headerShown: false }}>
+    <Stack.Navigator
+      ref={navigationRef}
+      onStateChange={onStateChange}
+      initialRouteName={ONBOARDING_STEPS.STEP_CGU}
+      screenOptions={{ headerShown: false }}>
       <Stack.Screen name={ONBOARDING_STEPS.STEP_CGU} component={OnboardingPresentation} />
 
       <Stack.Screen
