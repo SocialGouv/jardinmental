@@ -10,7 +10,7 @@ fileignoreconfig:
 - filename: app/__tests__/components/MyText.test.tsx
   checksum: 84dafb30ab00b0177996fc145bc98f44e90282f0f2681187c63e16c999e6f40f
 - filename: app/ios/Podfile.lock
-  checksum: fada845491cbe03825f5445bf764d11cd0754ac2d6ead0db9a890f24334c5d02
+  checksum: fa5f93080007a68c3304f6e0b7f1781416821d3d6bc917d4ae552be95b55c648
 - filename: app/src/scenes/onboarding/onboardingSymptomsCustom/CreateIndicator/ChooseIndicatorOrder.js
   checksum: bdb40467b60296ef959cac383488b52e879619d362093020f547896ddf9921bf
 scopeconfig:

@@ -511,7 +511,7 @@ const renderSurvey = (data, date) => {
           padding-top: 2px;
           padding-bottom: 2px;
         ">
-      <b>Toxique : </b>${value || 'oui'}
+      <b>Consommation de substance : </b>${value || 'oui'}
     </p>`;
     } else {
       return `<p

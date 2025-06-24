@@ -29,6 +29,19 @@ export default ({navigation}) => {
         <Image style={styles.image} source={require('../../../assets/imgs/logo2.png')} />
       </View>
       <ScrollView style={styles.cgu} contentContainerStyle={styles.scrollContainer}>
+        <Card title="Export PDF de votre historique" version="v1.43" date="06/2025">
+          <Item>
+            <Text style={styles.bold}>Gardez une trace claire de votre suivi</Text>
+            <Text style={styles.text}>Vous pouvez désormais exporter les 30 derniers jours de votre historique au format PDF.
+              {'\n\n'}
+              Un document lisible, utile pour &nbsp;:
+              {'\n'}•&nbsp;Partager facilement vos données avec un professionnel de santé (cela remplace de manière plus sécurisée la fonctionnalité d’envoi par mail de votre historique)
+              {'\n'}•&nbsp;Préparer un rendez-vous thérapeutique
+              {'\n'}•&nbsp;Conserver un aperçu structuré de votre état au fil du temps
+              {'\n\n'}Accès direct depuis le menu "Paramètres" puis "Générer un récapitulatif de mes données".
+            </Text>
+          </Item>
+        </Card>
         <Card title="Mises à jour importantes" version="v1.42" date="03/2025">
           <Item>
             <Text style={styles.text}>
