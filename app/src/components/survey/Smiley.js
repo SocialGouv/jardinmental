@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
-import CircledIcon from "../../../components/CircledIcon";
-import { answers as emojis } from "../utils";
+import CircledIcon from "../CircledIcon";
+import { answers as emojis } from "../../scenes/survey-v2/utils";
 
 export const Smiley = ({ indicator, value, onValueChanged }) => {
   return (

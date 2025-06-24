@@ -1,3 +1,5 @@
+import { OnboardingStep } from "@/scenes/onboarding-v2/types";
+
 export const icons = {
   veryGood: "VeryGoodSvg",
   good: "GoodSvg",
@@ -296,4 +298,32 @@ export const MATOMO_DIMENSION = {
   VERSION: 1,
   SYSTEM: 2,
   SUPPORTED: 3,
+};
+
+export const STEP_ORDER: OnboardingStep[] = [
+  'INTRO',
+  'PROFILE', 
+  'CAROUSEL',
+  'DIFFICULTIES',
+  'OBJECTIVE',
+  'CHECKIN',
+];
+
+export const TOTAL_STEPS = STEP_ORDER.length;
+
+// Colors
+export const COLORS = {
+  PRIMARY: '#1FC6D5',
+  SECONDARY: '#00CEF7',
+  SUCCESS: '#4CAF50',
+  WARNING: '#FF9800',
+  ERROR: '#F44336',
+  BACKGROUND: '#F5F5F5',
+  WHITE: '#FFFFFF',
+  BLACK: '#000000',
+  GRAY_LIGHT: '#E0E0E0',
+  GRAY_MEDIUM: '#9E9E9E',
+  GRAY_DARK: '#424242',
+  TEXT_PRIMARY: '#212121',
+  TEXT_SECONDARY: '#757575',
 };

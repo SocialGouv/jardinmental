@@ -143,7 +143,10 @@ const Reminder = ({navigation, route, notifReminderTitle = "Comment ça va aujou
   const validateOnboarding = async () => {
     await localStorage.setOnboardingDone(true);
     // await localStorage.setOnboardingStep(null);
-    navigation.navigate('onboarding-drugs');
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'tabs' }],
+    });
   };
 
   return (

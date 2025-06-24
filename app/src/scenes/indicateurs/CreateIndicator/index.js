@@ -4,7 +4,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 
 import BackButton from '../../../components/BackButton';
 import {colors} from '../../../utils/colors';
-import {INDICATEURS} from '../../../utils/liste_indicateurs.1.js';
+import {INDICATEURS} from '../../../utils/liste_indicateurs.1';
 import Button from '../../../components/Button';
 import Text from '../../../components/MyText';
 import localStorage from '../../../utils/localStorage';

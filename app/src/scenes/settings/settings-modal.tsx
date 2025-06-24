@@ -2,6 +2,8 @@ import React from "react";
 import { View, StyleSheet, Modal, TouchableOpacity } from "react-native";
 
 import SettingItem from "./setting-item";
+import { wipeData } from "@/context/diaryData";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const SettingsModal = ({ navigation, visible, onClick }) => {
   return (
@@ -41,6 +43,16 @@ const SettingsModal = ({ navigation, visible, onClick }) => {
             path="export"
             navigation={navigation}
             onClick={onClick}
+            icon="ExportDataSettingSvg"
+          />
+          <SettingItem
+            title="Supprimer toutes mes donnés"
+            path=""
+            navigation={navigation}
+            onClick={async () => {
+              await wipeData();
+              await AsyncStorage.clear();
+            }}
             icon="ExportDataSettingSvg"
           />
         </View>

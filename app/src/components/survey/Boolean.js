@@ -1,6 +1,6 @@
 import React from "react";
 import { View, TouchableOpacity } from "react-native";
-import Text from "../../../components/MyText";
+import Text from "../MyText";
 
 export const Boolean = ({ indicator, value, onChange }) => {
   const color = {

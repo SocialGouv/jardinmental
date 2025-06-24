@@ -4,7 +4,7 @@ import localStorage from '../../utils/localStorage';
 import {beforeToday, formatDay} from '../../utils/date/helpers';
 import {isToday, parseISO} from 'date-fns';
 import logEvents from '../../services/logEvents';
-import {INDICATEURS_LISTE, INDICATEURS} from '../../utils/liste_indicateurs';
+import {INDICATEURS_LISTE, INDICATEURS_LIST} from '../../utils/liste_indicateurs.1';
 
 // build an array of the question that the user has selected.
 export const buildSurveyData = async () => {
@@ -57,7 +57,7 @@ export const getListExemplesData = () => {
       ...prev,
       {
         id: current,
-        label: INDICATEURS[current],
+        label: INDICATEURS_LIST[current],
       },
     ];
   }, []);

@@ -11,12 +11,62 @@ fileignoreconfig:
   checksum: b660cdd0063782024bc63269789f1e79f84dd6591c82f71985a73dca55158740
 - filename: app/__tests__/components/MyText.test.tsx
   checksum: 84dafb30ab00b0177996fc145bc98f44e90282f0f2681187c63e16c999e6f40f
+- filename: app/ios/Podfile.lock
+  checksum: fada845491cbe03825f5445bf764d11cd0754ac2d6ead0db9a890f24334c5d02
 - filename: app/src/context/diaryData.tsx
   checksum: 7ebf59b94ce815a22fb60424e74ae5a17a74eb07e941c5c72c8e71bce1a1c4ed
+- filename: app/src/context/userProfile.tsx
+  checksum: fa700b84c6ced31f07459c3d54b35226c4239f902494750fb42a86e841044ed8
+- filename: app/src/entities/SurveyScreen.ts
+  checksum: adce116e39eb8ba8fae33399ae2b92f6317c362be960b298c8a795d84a11f421
+- filename: app/src/scenes/onboarding-v2/components/ProgressIndicator.tsx
+  checksum: dc7b2bed449fd294af610f8fd941b9dd7257aaf65ec7f51e01ac9f903d029520
+- filename: app/src/scenes/onboarding-v2/context/OnboardingContext.tsx
+  checksum: f9d4eefe958b170a2a556551b685495b3f85d66604e0e87032b6cd3ea335e541
+- filename: app/src/scenes/onboarding-v2/index.tsx
+  checksum: af33d6e660927dd853545c02e2c930a03ceb0a7b6bf59529ee871e8e893ca2aa
+- filename: app/src/scenes/onboarding-v2/screens/CarouselScreen.tsx
+  checksum: c506bc42996f4c3aecaddcecb502e884b33c6d7e0a0a7e4a2a9d7cc2f820c43b
+- filename: app/src/scenes/onboarding-v2/screens/ProfileScreen.tsx
+  checksum: c9bcffff7785d64a2a2d08d92cc9fb1307d8a8675189f528485f96bd14d4824f
+- filename: app/src/scenes/onboarding-v2/screens/checkIn/mood/OnboardingCheckInHowDoYouFeelDetailsScreen.tsx
+  checksum: 0d82a92e62a3ddaef3b4f41d363c035be4d2b01a94a599a036ba583d92b4433f
+- filename: app/src/scenes/onboarding-v2/screens/checkIn/mood/OnboardingCheckInHowDoYouFeelScreen.tsx
+  checksum: 0d06f9cd3eb8fec2b3537d4425b5b943c31b97f707e47c3f27a690906219e87d
+- filename: app/src/scenes/onboarding-v2/screens/checkIn/sleep/OnboardingCheckInSleepScreen.tsx
+  checksum: 12f2addb3c20b9474d930178cc1fa967876d168af467fd9b27ba7740db43dec8
+- filename: app/src/scenes/onboarding-v2/screens/indicators/OnboardingChooseIndicatorScreen.tsx
+  checksum: f652078a2ef76a19e87837c450637f1c99aab1d7d97d862b19e7a4a4383fc28b
+- filename: app/src/scenes/onboarding-v2/screens/personalization/CarouselPersonalizationScreen.tsx
+  checksum: 29933bbdaba2bbff2cba8deb7ebe97f6c32c422bfff2dc5b1525662606dcb9a8
+- filename: app/src/scenes/onboarding-v2/screens/personalization/DifficultiesScreen.tsx
+  checksum: 7a3be3df276f46547d2f6867a808a1df99887a391210ab88a9d46ec262e30aee
+- filename: app/src/scenes/onboarding-v2/screens/personalization/ObjectiveScreen.tsx
+  checksum: 767aeda61332f9c975693c427569fe1b68cc97a637e8981ccade3a15157b38ab
 - filename: app/src/scenes/onboarding/onboardingSymptomsCustom/CreateIndicator/ChooseIndicatorOrder.js
   checksum: bdb40467b60296ef959cac383488b52e879619d362093020f547896ddf9921bf
+- filename: app/src/scenes/survey-v2/ContextScreen.tsx
+  checksum: 6371ed197788ce03cb6c42e3151135d106c684e295b66a25ebd841ca1d3a01dd
+- filename: app/src/scenes/survey-v2/ToxicScreen.tsx
+  checksum: 033a3b6b40b07e8d7369d7d1abc7a0e25f4df71c5aebfd43d8253b0fe83c5a69
+- filename: app/src/scenes/survey-v2/multiScreenSurvey/ContextScreen.tsx
+  checksum: 5a6ba8693e36beb788cd925777b32e0e753d2407bc9fec606112ac2f41395d81
+- filename: app/src/scenes/survey-v2/multiScreenSurvey/GoalsScreen.tsx
+  checksum: 860a7816efda180b1629ff6c4fd47eafab5d0aea40d91cc9cf3925dfae11c075
+- filename: app/src/scenes/survey-v2/multiScreenSurvey/IndicatorScreen.tsx
+  checksum: dc3f38fba615b598173e7fd644d25fcd5ff948dc173a8e871de009f2e54bce2a
+- filename: app/src/scenes/survey-v2/multiScreenSurvey/SurveyContext.tsx
+  checksum: 9532c399ea60399a0ffd1e1b547cf2382f9306bb8439c7702d7b6360eeee486b
+- filename: app/src/scenes/survey-v2/multiScreenSurvey/SurveyNavigator.tsx
+  checksum: 7f5c1e61a8f6fae00cb96feb22bbe418d950afac74adc180beababe38164349d
+- filename: app/src/scenes/survey-v2/multiScreenSurvey/ToxicScreen.tsx
+  checksum: 9105b5c150d188867a8dce781bbdc2ad04828392f1945481cac138331fc50f47
 - filename: app/src/scenes/survey/daySurvey.tsx
   checksum: 440ba524fd17674f06dd0ef4158be6f3ce291bf4be450c361ec4ae883a60534f
+- filename: app/src/scenes/survey/survey-data.js
+  checksum: 1ac3021625ed8fb4ed188c80035b12789aa03989dc7276893900ed96dc2a2509
+- filename: app/src/utils/constants.ts
+  checksum: e5b984d3c7d443965007d6ae7784bea8b6ab445f3eb8e779529c5b7e7de9fda7
 scopeconfig:
 - scope: node
 version: "1.0"

@@ -129,7 +129,13 @@ const Reminder = ({navigation, route, notifReminderTitle = "Comment ça va aujou
   };
 
   const validateOnboarding = async () => {
-    navigation.navigate(ONBOARDING_STEPS.STEP_DRUGS);
+    // navigation.navigate(ONBOARDING_STEPS.STEP_DRUGS);
+    await localStorage.setOnboardingDone(true);
+      // await localStorage.setOnboardingStep(null);
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'tabs' }],
+      });
   };
 
   const desactivateReminder = async () => {
@@ -145,7 +151,14 @@ const Reminder = ({navigation, route, notifReminderTitle = "Comment ça va aujou
         disabled: true,
       },
     });
-    navigation.navigate(ONBOARDING_STEPS.STEP_DRUGS);
+    await localStorage.setOnboardingDone(true);
+      // await localStorage.setOnboardingStep(null);
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'tabs', params: {
+          onboarding: true
+        }}],
+      });
   };
 
   return (

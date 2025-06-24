@@ -12,6 +12,7 @@ dayjs.locale('fr');
 import Router from './src/navigation/router';
 import {DiaryDataProvider} from './src/context/diaryData';
 import {DiaryNotesProvider} from './src/context/diaryNotes';
+import {UserProfileProvider} from './src/context/userProfile';
 import NPS from './src/services/NPS/NPS';
 // import { Sentry } from "react-native-sentry";
 import {NeedUpdateContextProvider} from './src/context/needUpdate';
@@ -26,20 +27,22 @@ import {LatestChangesModalProvider} from './src/scenes/news/latestChangesModal';
 
 const App = () => (
   <SafeAreaProvider>
-    <NeedUpdateContextProvider>
-      <DiaryNotesProvider>
-        <DiaryDataProvider>
-          <OnboardingProgressHeaderProvider>
-            <LatestChangesModalProvider>
-              <InfoModalProvider>
-                <Router />
-                <NPS />
-              </InfoModalProvider>
-            </LatestChangesModalProvider>
-          </OnboardingProgressHeaderProvider>
-        </DiaryDataProvider>
-      </DiaryNotesProvider>
-    </NeedUpdateContextProvider>
+    <UserProfileProvider>
+      <NeedUpdateContextProvider>
+        <DiaryNotesProvider>
+          <DiaryDataProvider>
+            <OnboardingProgressHeaderProvider>
+              <LatestChangesModalProvider>
+                <InfoModalProvider>
+                  <Router />
+                  <NPS />
+                </InfoModalProvider>
+              </LatestChangesModalProvider>
+            </OnboardingProgressHeaderProvider>
+          </DiaryDataProvider>
+        </DiaryNotesProvider>
+      </NeedUpdateContextProvider>
+    </UserProfileProvider>
   </SafeAreaProvider>
 );
 

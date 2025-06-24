@@ -4,7 +4,7 @@ import Text from "../../components/MyText";
 import { colors } from "../../utils/colors";
 import Icon from "../../components/Icon";
 import { classNames } from "../../utils";
-import { answersYesNo } from "./utils";
+import { answersYesNo } from "../survey-v2/utils";
 
 const QuestionYesNo = ({
   question,

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { InputText } from "../../../components/InputText";
+import { InputText } from "../InputText";
 
-import { Smiley } from "./Smiley";
+import { Smiley } from "@/components/survey/Smiley";
 import { Boolean } from "./Boolean";
-import Gauge from "../../../components/gauge";
+import Gauge from "../gauge";
 
 export const IndicatorSurveyItem = ({
   indicator,
