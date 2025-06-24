@@ -78,7 +78,6 @@ const EditIndicateurs = ({navigation, route}) => {
       return indicateur;
     });
     setUserIndicateurs(_userIndicateurs);
-    // await localStorage.setIndicateurs(_userIndicateurs);
   };
 
   const handleAddNewIndicateur = async _indicateur => {
