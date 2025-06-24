@@ -1,3 +1,10 @@
+## [1.51.3](https://github.com/SocialGouv/jardinmental/compare/v1.51.2...v1.51.3) (2025-06-24)
+
+
+### Bug Fixes
+
+* buildkit in gh ([#282](https://github.com/SocialGouv/jardinmental/issues/282)) ([4e0eb0f](https://github.com/SocialGouv/jardinmental/commit/4e0eb0f6b0bb64c5ec6038694708938400a1b79f))
+
 ## [1.51.2](https://github.com/SocialGouv/jardinmental/compare/v1.51.1...v1.51.2) (2025-06-10)
 
 
