@@ -19,7 +19,7 @@ import TextTag from '../../../components/TextTag';
 import { Button2 } from '../../../components/Button2';
 import { StickyButtonContainer } from '../../onboarding/StickyButton';
 import { Indicator } from '../../../entities/Indicator';
-import { areStringArrayIdenticals } from '../../../utils/string-util';
+import { areStringArraysIdentical } from '../../../utils/string-util';
 
 const EditIndicateurs = ({navigation, route}) => {
   const [exemplesVisible, setExemplesVisible] = useState(false);
@@ -41,7 +41,7 @@ const EditIndicateurs = ({navigation, route}) => {
       const savedUserIndicators = await localStorage.getIndicateurs();
       const savedActiveIndicators = savedUserIndicators.filter(i => i.active).map(i => i.uuid)
       const modifiedIndicators = userIndicateurs.filter(i => i.active).map(i => i.uuid)
-      if (areStringArrayIdenticals(savedActiveIndicators, modifiedIndicators)) {
+      if (areStringArraysIdentical(savedActiveIndicators, modifiedIndicators)) {
         setIsChanged(false)
       } else {
         setIsChanged(true)
