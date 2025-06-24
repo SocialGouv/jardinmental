@@ -5,7 +5,6 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import BackButton from '../../../components/BackButton';
 import {colors} from '../../../utils/colors';
 import localStorage from '../../../utils/localStorage';
-import {displayedCategories} from '../../../utils/constants';
 import Button from '../../../components/Button';
 import Text from '../../../components/MyText';
 import Plus from '../../../../assets/svg/Plus';
@@ -19,21 +18,13 @@ import logEvents from '../../../services/logEvents';
 import TextTag from '../../../components/TextTag';
 import { Button2 } from '../../../components/Button2';
 import { StickyButtonContainer } from '../../onboarding/StickyButton';
-
-
-const areIdenticals = (arr1: string[], arr2: string[]) => {
-  if (arr1.length !== arr2.length) return false;
-
-  const sorted1 = [...arr1].sort();
-  const sorted2 = [...arr2].sort();
-
-  return sorted1.every((value, index) => value === sorted2[index]);
-}
+import { Indicator } from '../../../entities/Indicator';
+import { areStringArrayIdenticals } from '../../../utils/string-util';
 
 const EditIndicateurs = ({navigation, route}) => {
   const [exemplesVisible, setExemplesVisible] = useState(false);
   const [existingIndicatorsVisible, setExistingIndicatorsVisible] = useState(false);
-  const [userIndicateurs, setUserIndicateurs] = useState([]);
+  const [userIndicateurs, setUserIndicateurs] = useState<Indicator[]>([]);
   const [isChanged, setIsChanged] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
@@ -47,10 +38,10 @@ const EditIndicateurs = ({navigation, route}) => {
 
   useEffect(() => {
     const handleIndicatorsChange = async () => {
-      const savedUserIndicateurs = await localStorage.getIndicateurs();
-      if (areIdenticals(savedUserIndicateurs.filter(i => i.active)
-        .map(i => i.uuid), userIndicateurs.filter(i => i.active).map(i => i.uuid)
-      )) {
+      const savedUserIndicators = await localStorage.getIndicateurs();
+      const savedActiveIndicators = savedUserIndicators.filter(i => i.active).map(i => i.uuid)
+      const modifiedIndicators = userIndicateurs.filter(i => i.active).map(i => i.uuid)
+      if (areStringArrayIdenticals(savedActiveIndicators, modifiedIndicators)) {
         setIsChanged(false)
       } else {
         setIsChanged(true)
