@@ -5,7 +5,6 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import BackButton from '../../../components/BackButton';
 import {colors} from '../../../utils/colors';
 import localStorage from '../../../utils/localStorage';
-import {displayedCategories} from '../../../utils/constants';
 import Button from '../../../components/Button';
 import Text from '../../../components/MyText';
 import Plus from '../../../../assets/svg/Plus';
@@ -17,11 +16,17 @@ import CategorieElements from '../CategorieElements';
 import {useFocusEffect} from '@react-navigation/native';
 import logEvents from '../../../services/logEvents';
 import TextTag from '../../../components/TextTag';
+import { Button2 } from '../../../components/Button2';
+import { StickyButtonContainer } from '../../onboarding/StickyButton';
+import { Indicator } from '../../../entities/Indicator';
+import { areStringArraysIdentical } from '../../../utils/string-util';
 
 const EditIndicateurs = ({navigation, route}) => {
   const [exemplesVisible, setExemplesVisible] = useState(false);
   const [existingIndicatorsVisible, setExistingIndicatorsVisible] = useState(false);
-  const [userIndicateurs, setUserIndicateurs] = useState([]);
+  const [userIndicateurs, setUserIndicateurs] = useState<Indicator[]>([]);
+  const [isChanged, setIsChanged] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   const indicateursByCategory = INDICATEURS.reduce((prev, curr) => {
     if (!prev[curr.category]) {
@@ -30,6 +35,21 @@ const EditIndicateurs = ({navigation, route}) => {
     prev[curr.category].push(curr);
     return prev;
   }, {});
+
+  useEffect(() => {
+    const handleIndicatorsChange = async () => {
+      const savedUserIndicators = await localStorage.getIndicateurs();
+      const savedActiveIndicators = savedUserIndicators.filter(i => i.active).map(i => i.uuid)
+      const modifiedIndicators = userIndicateurs.filter(i => i.active).map(i => i.uuid)
+      if (areStringArraysIdentical(savedActiveIndicators, modifiedIndicators)) {
+        setIsChanged(false)
+      } else {
+        setIsChanged(true)
+      }
+    }
+    handleIndicatorsChange()
+    return 
+  }, [userIndicateurs])
 
   useFocusEffect(
     React.useCallback(() => {
@@ -43,6 +63,13 @@ const EditIndicateurs = ({navigation, route}) => {
     }, []),
   );
 
+  const onValidate = async () => {
+    setIsLoading(true)
+    await localStorage.setIndicateurs(userIndicateurs);
+    setIsLoading(false)
+    navigation.goBack();
+  }
+
   const reactivateIndicateur = async _indicateur => {
     const _userIndicateurs = userIndicateurs.map(indicateur => {
       if (indicateur.uuid === _indicateur.uuid) {
@@ -51,14 +78,12 @@ const EditIndicateurs = ({navigation, route}) => {
       return indicateur;
     });
     setUserIndicateurs(_userIndicateurs);
-    await localStorage.setIndicateurs(_userIndicateurs);
   };
 
   const handleAddNewIndicateur = async _indicateur => {
     if (!_indicateur) return;
     const _userIndicateurs = [...userIndicateurs, _indicateur];
     setUserIndicateurs(_userIndicateurs);
-    await localStorage.setIndicateurs(_userIndicateurs);
     logEvents.logCustomSymptomAdd();
   };
 
@@ -71,7 +96,6 @@ const EditIndicateurs = ({navigation, route}) => {
         return indicateur;
       });
       setUserIndicateurs(_userIndicateurs);
-      await localStorage.setIndicateurs(_userIndicateurs);
     } else {
       handleAddNewIndicateur({..._indicateur, version: 1, active: true});
     }
@@ -206,6 +230,9 @@ const EditIndicateurs = ({navigation, route}) => {
           }}
         />
       </ScrollView>
+      <StickyButtonContainer>
+        <Button2 style={{ padding: 20 }} fill title="Enregistrer" onPress={onValidate} loading={isLoading} disabled={!isChanged} />
+      </StickyButtonContainer>
     </SafeAreaView>
   );
 };
@@ -221,6 +248,13 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 20,
     backgroundColor: 'white',
+  },
+    buttonContainer: {
+    width: '100%',
+    paddingHorizontal: 19,
+    height: 80,
+    alignItems: 'flex-end',
+    justifyContent: 'center',
   },
 
   headerText: {
