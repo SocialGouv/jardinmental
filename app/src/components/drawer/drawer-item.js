@@ -36,7 +36,7 @@ export default ({
           )}
           <Text style={styles.label}>{title}</Text>
           <View style={styles.button}>
-            <ArrowRightSvg color="#1FC6D5" />
+            <ArrowRightSvg color={colors.LIGHT_BLUE} />
           </View>
         </View>
       </View>

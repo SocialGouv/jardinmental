@@ -5,6 +5,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { BlurView } from "@react-native-community/blur";
 import BackButton from "../../components/BackButton";
 import { TransitionPresets } from "@react-navigation/stack";
+import { colors } from "../../utils/colors";
 
 export const PROGRESS_HEADER_HEIGHT = 60;
 export const PROGRESS_HEADER_PADDING_HORIZONTAL = 0;
@@ -191,6 +192,6 @@ const styles = StyleSheet.create({
     height: "100%",
     minWidth: 16,
     borderRadius: 8,
-    backgroundColor: "#26387C",
+    backgroundColor: colors.BLUE,
   },
 });

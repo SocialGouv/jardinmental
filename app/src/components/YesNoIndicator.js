@@ -1,6 +1,6 @@
 import React from "react";
 import Text from "./MyText";
-
+import { colors } from "@/utils/colors";
 import { StyleSheet, View } from "react-native";
 
 const styles = StyleSheet.create({
@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     borderRadius: 40,
     backgroundColor: "#fff",
     borderWidth: 2,
-    borderColor: "#26387C",
+    borderColor: colors.BLUE,
     paddingHorizontal: 20,
     paddingVertical: 10,
   },
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     borderColor: "#5DEE5A",
   },
   buttonText: {
-    color: "#26387C",
+    color: colors.BLUE,
     fontWeight: "700",
     fontSize: 17,
   },

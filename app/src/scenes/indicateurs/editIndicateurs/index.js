@@ -1,24 +1,25 @@
-import React, {useEffect, useState} from 'react';
-import {StyleSheet, View, ScrollView, TouchableOpacity, Keyboard} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, View, ScrollView, TouchableOpacity, Keyboard } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import BackButton from '../../../components/BackButton';
-import {colors} from '../../../utils/colors';
+import { colors } from '../../../utils/colors';
 import localStorage from '../../../utils/localStorage';
-import {displayedCategories} from '../../../utils/constants';
+import { displayedCategories } from '../../../utils/constants';
 import Button from '../../../components/Button';
 import Text from '../../../components/MyText';
 import Plus from '../../../../assets/svg/Plus';
 import ArrowUpSvg from '../../../../assets/svg/arrow-up.svg';
-import {INDICATEURS, INDICATEURS_LES_PLUS_COURANTS} from '../../../utils/liste_indicateurs.1';
-import {toggleState} from '../../../utils';
+import { INDICATEURS, INDICATEURS_LES_PLUS_COURANTS } from '../../../utils/liste_indicateurs.1';
+import { toggleState } from '../../../utils';
 import DangerIcon from '../../../../assets/svg/DangerIcon';
 import CategorieElements from '../CategorieElements';
-import {useFocusEffect} from '@react-navigation/native';
+import { useFocusEffect } from '@react-navigation/native';
 import logEvents from '../../../services/logEvents';
 import TextTag from '../../../components/TextTag';
+import JMButton from '@/components/JMButton';
 
-const EditIndicateurs = ({navigation, route}) => {
+const EditIndicateurs = ({ navigation, route }) => {
   const [exemplesVisible, setExemplesVisible] = useState(false);
   const [existingIndicatorsVisible, setExistingIndicatorsVisible] = useState(false);
   const [userIndicateurs, setUserIndicateurs] = useState([]);
@@ -73,7 +74,7 @@ const EditIndicateurs = ({navigation, route}) => {
       setUserIndicateurs(_userIndicateurs);
       await localStorage.setIndicateurs(_userIndicateurs);
     } else {
-      handleAddNewIndicateur({..._indicateur, version: 1, active: true});
+      handleAddNewIndicateur({ ..._indicateur, version: 1, active: true });
     }
   };
 
@@ -90,19 +91,14 @@ const EditIndicateurs = ({navigation, route}) => {
           <View style={styles.personnalizeTextContainer}>
             <Text style={styles.personnalizeTitle}>Créez votre indicateur personnalisé</Text>
             <Text style={styles.personnalizeText}>Vous pouvez choisir la manière dont vous souhaitez l’évaluer</Text>
-            <Button
-              buttonStyle={{
-                marginTop: 20,
-                backgroundColor: 'white',
-                borderColor: '#26387C',
-                borderWidth: 1,
-              }}
-              textStyle={{color: '#26387C', textAlign: 'center'}}
+            <JMButton
+              variant='outline'
               onPress={() => {
                 navigation.push('CREATE_INDICATOR');
               }}
+              className='mt-10'
               title="Créer un indicateur"
-              Icon={<Plus style={styles.plusButton} opacity={1} color={'#000'} width={19} height={19} />}
+              icon={<Plus style={styles.plusButton} opacity={1} color={'#000'} width={19} height={19} />}
             />
           </View>
         </View>
@@ -131,7 +127,7 @@ const EditIndicateurs = ({navigation, route}) => {
           ) : (
             <ArrowUpSvg
               style={{
-                transform: [{rotateX: '180deg'}],
+                transform: [{ rotateX: '180deg' }],
               }}
               color={colors.BLUE}
             />
@@ -161,7 +157,7 @@ const EditIndicateurs = ({navigation, route}) => {
           ) : (
             <ArrowUpSvg
               style={{
-                transform: [{rotateX: '180deg'}],
+                transform: [{ rotateX: '180deg' }],
               }}
               color={colors.BLUE}
             />

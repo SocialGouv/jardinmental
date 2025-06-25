@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
 import CircledIcon from "../CircledIcon";
 import { answers as emojis } from "../../scenes/survey-v2/utils";
+import { colors } from "@/utils/colors";
 
 export const Smiley = ({ indicator, value, onValueChanged }) => {
   return (
@@ -66,7 +67,7 @@ const styles = StyleSheet.create({
     fontFamily: "Karla",
     fontWeight: "400",
     textAlign: "left",
-    color: "#26387C",
+    color: colors.BLUE,
     flexShrink: 1,
     marginLeft: 8,
     paddingTop: 3,
@@ -86,6 +87,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   activeSelectionContainer: {
-    backgroundColor: "#1FC6D5",
+    backgroundColor: colors.LIGHT_BLUE,
   },
 });

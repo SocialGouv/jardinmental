@@ -7,6 +7,7 @@ import { colors } from "../../utils/colors";
 import Button from "../../components/Button";
 import localStorage from "../../utils/localStorage";
 import { alertNoDataYesterday } from "../survey/survey-data";
+import JMButton from "@/components/JMButton";
 
 export default ({ navigation, route }) => {
   const [diaryData] = useContext(DiaryDataContext);
@@ -32,21 +33,19 @@ export default ({ navigation, route }) => {
         <Text style={styles.lightblue}>comprendre</Text> comment il influe mon{" "}
         <Text style={styles.lightblue}>état</Text>
       </Text>
-      <Button
+      <JMButton
         onPress={() => navigation.navigate("drugs-list")}
         title="Ajouter un traitement"
-        buttonStyle={styles.button}
-        textStyle={{ fontSize: 14, fontWeight: "bold" }}
+        className={'mt-6 mb-2'}
       />
       <TouchableOpacity onPress={handleDrugInformation}>
         <Text style={styles.link}>Informations sur les traitements</Text>
       </TouchableOpacity>
 
-      <Button
+      <JMButton
+        variant="outline"
         onPress={handleNoTreatment}
         title="Je ne prends pas de traitement"
-        buttonStyle={styles.darkButton}
-        textStyle={{ fontSize: 14, fontWeight: "bold" }}
       />
     </View>
   );

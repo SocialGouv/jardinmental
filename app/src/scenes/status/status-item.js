@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from "react";
 import { StyleSheet, View, TouchableOpacity } from "react-native";
 import PatientStateItem from "./patient-state-item";
 import { displayedCategories } from "../../utils/constants";
-import NoDataDiaryItem from "./no-data-status-item";
 import Notes from "./notes";
 import localStorage from "../../utils/localStorage";
 import Posology from "./posology";

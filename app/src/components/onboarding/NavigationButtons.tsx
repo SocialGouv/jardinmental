@@ -2,6 +2,7 @@ import React from 'react';
 import { View, TouchableOpacity, Text, ActivityIndicator } from 'react-native';
 import { NavigationButtonsProps } from '@/scenes/onboarding-v2/types';
 import { COLORS } from '@/utils/constants';
+import JMButton from '../JMButton';
 
 export const NavigationButtons: React.FC<NavigationButtonsProps> = ({
   onNext,
@@ -16,7 +17,13 @@ export const NavigationButtons: React.FC<NavigationButtonsProps> = ({
 }) => {
   return (
     <View className="flex-row justify-between items-center p-6 px-6 bg-white">
-      <TouchableOpacity 
+      <JMButton
+        onPress={onNext}
+        title={nextText}
+        loading={loading}
+        disabled={nextDisabled}
+      />
+      {/* <TouchableOpacity 
         onPress={onNext}
         disabled={nextDisabled || loading}
         className="px-6 py-3 rounded-lg items-center justify-center w-full"
@@ -35,7 +42,7 @@ export const NavigationButtons: React.FC<NavigationButtonsProps> = ({
             {nextText}
           </Text>
         )}
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </View>
   );
 };

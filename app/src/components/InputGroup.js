@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, View, Text, Pressable } from "react-native";
 import Separator from "./Separator";
-
+import { colors } from "@/utils/colors";
 export const InputGroup = ({ children, containerStyle, highlight }) => {
   return (
     <View
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     fontFamily: "Karla",
     fontWeight: "400",
     textAlign: "left",
-    color: "#26387C",
+    color: colors.BLUE,
     flex: 1,
     marginRight: 8,
   },

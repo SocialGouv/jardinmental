@@ -1,12 +1,12 @@
-import React, {useEffect, useState} from 'react';
-import {View, StyleSheet, TextInput, Platform} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet, TextInput, Platform } from 'react-native';
 
 import styleBeck from '../../styles/beck';
 import Text from '../../components/MyText';
 import Button from '../../components/Button';
 import logEvents from '../../services/logEvents';
 
-export default ({onChange, onSubmit, data}) => {
+export default ({ onChange, onSubmit, data }) => {
   const numberOfLines = 8;
   const [whatSelected, setWhatSelected] = useState(data?.what);
 
@@ -26,16 +26,15 @@ export default ({onChange, onSubmit, data}) => {
         minHeight={Platform.OS === 'ios' ? 20 * numberOfLines : null}
         onChangeText={(what) => {
           setWhatSelected(what);
-          onChange({what});
+          onChange({ what });
         }}
         value={whatSelected}
         placeholder="Je me suis disputé avec un ami..."
         style={styleBeck.textArea}
         textAlignVertical={'top'}
       />
-      <Button
+      <JMButton
         title="Continuer"
-        buttonStyle={styleBeck.submitButton}
         onPress={onSubmit}
       />
     </View>

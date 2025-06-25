@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
   },
   place: {
     fontStyle: "italic",
-    color: "#26387C",
+    color: colors.BLUE,
   },
   time: {
     marginLeft: "auto",
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     marginBottom: "auto",
     fontSize: 12,
     fontStyle: "italic",
-    color: "#26387C",
+    color: colors.BLUE,
   },
   mainEmotionIntensityNuancedStyle: {
     color: colors.LIGHT_BLUE,

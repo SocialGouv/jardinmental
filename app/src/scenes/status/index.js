@@ -206,7 +206,7 @@ const styles = StyleSheet.create({
 
     paddingTop: 5,
     paddingBottom: 0,
-    backgroundColor: '#1FC6D5',
+    backgroundColor: colors.LIGHT_BLUE,
   },
   arrowDown: {
     transform: [{rotate: '180deg'}],
@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
   },
   safe: {
     flex: 1,
-    backgroundColor: '#1FC6D5',
+    backgroundColor: colors.LIGHT_BLUE,
   },
   scrollView: {
     backgroundColor: 'white',

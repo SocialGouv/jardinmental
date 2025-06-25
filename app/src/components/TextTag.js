@@ -14,7 +14,7 @@ export default ({
   textStyle,
   value,
   selected,
-  color = "#1FC6D5",
+  color = colors.LIGHT_BLUE,
   enableClosed = false,
   enableAdd = false,
 }) => {

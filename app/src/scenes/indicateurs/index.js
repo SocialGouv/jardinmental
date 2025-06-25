@@ -1,20 +1,21 @@
-import React, {useEffect, useState} from 'react';
-import {StyleSheet, View, ScrollView, Keyboard} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, View, ScrollView, Keyboard } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import BackButton from '../../components/BackButton';
-import {colors} from '../../utils/colors';
+import { colors } from '../../utils/colors';
 import localStorage from '../../utils/localStorage';
 import logEvents from '../../services/logEvents';
-import {ONBOARDING_STEPS, categories, displayedCategories, reliquatCategories} from '../../utils/constants';
+import { ONBOARDING_STEPS, categories, displayedCategories, reliquatCategories } from '../../utils/constants';
 import Button from '../../components/Button';
 import Text from '../../components/MyText';
 import HeartBubble from '../../../assets/svg/HeartBubble';
-import {useFocusEffect} from '@react-navigation/native';
-import {Button2} from '../../components/Button2';
-import {Card} from '../../components/Card';
+import { useFocusEffect } from '@react-navigation/native';
+import { Button2 } from '../../components/Button2';
+import { Card } from '../../components/Card';
+import JMButton from '@/components/JMButton'
 
-const CustomSymptomScreen = ({navigation, route, settings = false}) => {
+const CustomSymptomScreen = ({ navigation, route, settings = false }) => {
   const [chosenCategories, setChosenCategories] = useState();
   const [userIndicateurs, setUserIndicateurs] = useState([]);
 
@@ -87,15 +88,15 @@ const CustomSymptomScreen = ({navigation, route, settings = false}) => {
   const handleAddNewSymptom = async value => {
     if (!value) return;
     await localStorage.addCustomSymptoms(value);
-    setChosenCategories(prev => ({...prev, [value]: true}));
+    setChosenCategories(prev => ({ ...prev, [value]: true }));
     logEvents.logCustomSymptomAdd();
   };
 
-  const setToggleIndicateur = ({indicateur, valeur}) => {
-    setChosenCategories(prev => ({...prev, [indicateur]: valeur}));
+  const setToggleIndicateur = ({ indicateur, valeur }) => {
+    setChosenCategories(prev => ({ ...prev, [indicateur]: valeur }));
   };
 
-  const removeSymptom = async value => setChosenCategories({...chosenCategories, [value]: false});
+  const removeSymptom = async value => setChosenCategories({ ...chosenCategories, [value]: false });
 
   const indicators = Object.keys(chosenCategories || {}).filter(e => chosenCategories[e]);
 
@@ -111,7 +112,7 @@ const CustomSymptomScreen = ({navigation, route, settings = false}) => {
         <Card
           title="Personnaliser mon questionnaire"
           text="Gérez vos indicateurs, ajoutez-en de nouveaux et choisissez la manière dont vous les évaluez !"
-          image={{source: require('./../../../assets/imgs/indicateur.png')}}
+          image={{ source: require('./../../../assets/imgs/indicateur.png') }}
         />
         <View style={styles.sectionRowContainer}>
           <View>
@@ -134,15 +135,14 @@ const CustomSymptomScreen = ({navigation, route, settings = false}) => {
         </View>
       </ScrollView>
       <View style={styles.bottomButtonsContainer}>
-        <Button
-          buttonStyle={{backgroundColor: '#1FC6D5', marginBottom: 20}}
-          textStyle={{color: 'white', textAlign: 'center'}}
+        <JMButton
+          variant='primary'
+          className='mb-2'
           onPress={() => navigation.navigate('EDIT_INDICATOR')}
           title="Ajouter un indicateur"
         />
-        <Button
-          buttonStyle={{backgroundColor: 'white', borderColor: '#26387C', borderWidth: 1}}
-          textStyle={{color: '#26387C', textAlign: 'center'}}
+        <JMButton
+          variant='outline'
           onPress={() => navigation.navigate('indicators-settings-more')}
           title="Modifier mon questionnaire"
         />
@@ -160,7 +160,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     backgroundColor: 'white',
   },
-
   headerText: {
     color: colors.BLUE,
     fontSize: 19,
@@ -217,7 +216,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   circleNumber: {
-    backgroundColor: '#1FC6D5',
+    backgroundColor: colors.LIGHT_BLUE,
     borderRadius: 999,
     width: 35,
     height: 35,

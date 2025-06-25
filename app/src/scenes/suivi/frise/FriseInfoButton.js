@@ -3,8 +3,10 @@ import { InfoButton, InfoText, useInfoModal } from "../../../components/InfoModa
 import { FriseGraphExample } from "./FriseGraphExample";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
-import { Button2 } from "../../../components/Button2";
 import logEvents from "../../../services/logEvents";
+import JMButton from "@/components/JMButton";
+import Icon from '@/components/Icon'
+
 
 export const FriseInfoButton = forwardRef(({ navigation, hasTreatment, ...props }, ref) => {
   const infoButtonRef = useRef();
@@ -54,15 +56,14 @@ export const FriseInfoButton = forwardRef(({ navigation, hasTreatment, ...props 
           )}
           <FriseGraphExample hasTreatment={hasTreatment} />
           {!hasTreatment && (
-            <Button2
-              fill
+            <JMButton
               title="Ajouter votre traitement"
-              containerStyle={{ marginTop: 10 }}
+              className={'mt-10'}
               onPress={() => {
                 navigation.navigate("drugs");
                 infoModal.hide();
               }}
-              icon="PlusSvg"
+              icon={<Icon icon={'PlusSvg'} />}
             />
           )}
         </>

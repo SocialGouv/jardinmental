@@ -24,7 +24,7 @@ export default ({visible = false, onClose}) => {
       <TouchableOpacity style={styles.arrow} onPress={toggleFullScreen}>
         <InfoSvg style={styles.icon} />
         <Text style={styles.title}>Informations</Text>
-        <ArrowUpSvg style={{transform: [{rotate: '180deg'}]}} color="#26387C" />
+        <ArrowUpSvg style={{transform: [{rotate: '180deg'}]}} color={colors.BLUE} />
       </TouchableOpacity>
       <View style={styles.container}>
         <ScrollView>

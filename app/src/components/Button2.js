@@ -192,7 +192,7 @@ const styles = {
   }),
   primary: StyleSheet.create({
     button: {
-      backgroundColor: '#1FC6D5',
+      backgroundColor: colors.LIGHT_BLUE,
       shadowColor: '#0A215C',
       shadowOffset: {
         width: 0,
@@ -223,7 +223,7 @@ const styles = {
       borderWidth: 1,
     },
     text: {
-      color: '#26387C',
+      color: colors.BLUE,
     },
   }),
   clear: StyleSheet.create({

@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
   textArea: {
     backgroundColor: '#F4FCFD',
     height: '50%',
-    borderColor: '#26387C',
+    borderColor: colors.BLUE,
     borderWidth: 1,
     borderRadius: 10,
     marginBottom: 10,

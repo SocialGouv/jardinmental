@@ -3,6 +3,7 @@ import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import Icon from "../../../components/Icon";
 import Separator from "../../../components/Separator";
 import { autoLayoutAnimation } from "../../../utils/autoLayoutAnimation";
+import { colors } from "@/utils/colors";
 
 export const GoalsStatus = ({ goalsData, date, withSeparator }) => {
   const recordIds = goalsData?.records?.byDate?.[date] || [];
@@ -130,7 +131,7 @@ const styles = StyleSheet.create({
   comment: {
     flex: 1,
     fontSize: 14,
-    color: "#26387C",
+    color: colors.BLUE,
     fontStyle: "italic",
     marginLeft: 60,
     marginRight: 13,

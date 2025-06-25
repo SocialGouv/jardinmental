@@ -1,4 +1,5 @@
 import { OnboardingStep } from "@/scenes/onboarding-v2/types";
+import { colors as mainColors } from "./colors";
 
 export const icons = {
   veryGood: "VeryGoodSvg",
@@ -313,7 +314,7 @@ export const TOTAL_STEPS = STEP_ORDER.length;
 
 // Colors
 export const COLORS = {
-  PRIMARY: '#1FC6D5',
+  PRIMARY: mainColors.LIGHT_BLUE,
   SECONDARY: '#00CEF7',
   SUCCESS: '#4CAF50',
   WARNING: '#FF9800',
@@ -324,6 +325,6 @@ export const COLORS = {
   GRAY_LIGHT: '#E0E0E0',
   GRAY_MEDIUM: '#9E9E9E',
   GRAY_DARK: '#424242',
-  TEXT_PRIMARY: '#212121',
+  TEXT_PRIMARY: '#134449',//'#212121',
   TEXT_SECONDARY: '#757575',
 };

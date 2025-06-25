@@ -40,7 +40,7 @@ export default ({navigation}) => {
     <SafeAreaView style={styles.safe}>
       <BackButton onPress={navigation.goBack} />
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <Icon icon="HeartsSvg" color="#1FC6D5" styleContainer={styles.icon} width={60} height={60} />
+        <Icon icon="HeartsSvg" color={colors.LIGHT_BLUE} styleContainer={styles.icon} width={60} height={60} />
         <Text style={styles.title}>Colonnes de Beck</Text>
         <View style={styles.description}>
           <Text style={styles.subTitle}>Apprenez à identifier, comprendre et gérer vos pensées et vos émotions au quotidien.</Text>

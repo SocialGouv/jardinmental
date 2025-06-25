@@ -1,16 +1,18 @@
-import React, {useCallback, useState} from 'react';
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
-import {Button2} from '../../../components/Button2';
-import {Screen} from '../../../components/Screen';
-import {Card} from '../../../components/Card';
-import {useFocusEffect} from '@react-navigation/native';
-import {Title} from '../../../components/Title';
-import {Badge} from '../../../components/Badge';
+import React, { useCallback, useState } from 'react';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { Button2 } from '../../../components/Button2';
+import { Screen } from '../../../components/Screen';
+import { Card } from '../../../components/Card';
+import { useFocusEffect } from '@react-navigation/native';
+import { Title } from '../../../components/Title';
+import { Badge } from '../../../components/Badge';
 import Icon from '../../../components/Icon';
 import localStorage from '../../../utils/localStorage';
-import DraggableFlatList, {ScaleDecorator} from 'react-native-draggable-flatlist';
+import DraggableFlatList, { ScaleDecorator } from 'react-native-draggable-flatlist';
+import { colors } from '@/utils/colors';
+import JMButton from '@/components/JMButton';
 
-const IndicatorsSettingsMore = ({navigation, route}) => {
+const IndicatorsSettingsMore = ({ navigation, route }) => {
   const [indicators, setIndicators] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -31,8 +33,8 @@ const IndicatorsSettingsMore = ({navigation, route}) => {
     navigation.goBack();
   };
 
-  const renderItem = useCallback(({item: indicator, drag, isActive, index}) => {
-    return <IndicatorItem {...{indicator, drag, isActive, index, setIndicators}} />;
+  const renderItem = useCallback(({ item: indicator, drag, isActive, index }) => {
+    return <IndicatorItem {...{ indicator, drag, isActive, index, setIndicators }} />;
   }, []);
 
   const keyExtractor = useCallback(indicator => indicator.uuid, []);
@@ -42,7 +44,7 @@ const IndicatorsSettingsMore = ({navigation, route}) => {
       header={{
         title: 'Mon questionnaire',
       }}
-      bottomChildren={<Button2 fill title="Enregistrer" onPress={onValidate} />}
+      bottomChildren={<JMButton title="Enregistrer" onPress={onValidate} />}
       ScrollComponent={DraggableFlatList}
       scrollAsFlatList={true}
       scrollProps={{
@@ -59,7 +61,7 @@ const IndicatorsSettingsMore = ({navigation, route}) => {
         <Title align="left" fill={false}>
           Vos indicateurs
         </Title>
-        <Badge style={{marginLeft: 8}} circle>
+        <Badge style={{ marginLeft: 8 }} circle>
           {indicators?.filter(indicator => indicator.active)?.length || 0}
         </Badge>
       </View>
@@ -67,15 +69,15 @@ const IndicatorsSettingsMore = ({navigation, route}) => {
   );
 };
 
-const IndicatorItem = ({indicator, drag, isActive, index, setIndicators}) => {
+const IndicatorItem = ({ indicator, drag, isActive, index, setIndicators }) => {
   return (
     <ScaleDecorator>
       <TouchableOpacity onLongPress={drag} disabled={isActive} delayLongPress={100}>
-        <View style={[itemStyles.container, isActive && {backgroundColor: '#D4F0F2'}]}>
-          <Icon icon="ReorderSvg" color="#26387C" width="16" height="16" styleContainer={{width: 16, height: 16}} />
+        <View style={[itemStyles.container, isActive && { backgroundColor: '#D4F0F2' }]}>
+          <Icon icon="ReorderSvg" color={colors.BLUE} width="16" height="16" styleContainer={{ width: 16, height: 16 }} />
           <Text style={[itemStyles.label]}>{indicator?.name}</Text>
-          <TouchableOpacity onPress={() => setIndicators(prev => prev.map(i => (i.uuid === indicator.uuid ? {...i, active: false} : i)))}>
-            <Icon icon="Bin2Svg" color="#26387C" width="16" height="16" styleContainer={{width: 16, height: 16}} />
+          <TouchableOpacity onPress={() => setIndicators(prev => prev.map(i => (i.uuid === indicator.uuid ? { ...i, active: false } : i)))}>
+            <Icon icon="Bin2Svg" color={colors.BLUE} width="16" height="16" styleContainer={{ width: 16, height: 16 }} />
           </TouchableOpacity>
         </View>
       </TouchableOpacity>
@@ -100,7 +102,7 @@ const itemStyles = StyleSheet.create({
     fontFamily: 'Karla',
     fontWeight: '700',
     fontSize: 16,
-    color: '#26387C',
+    color: colors.BLUE,
     textAlign: 'left',
     marginLeft: 16,
   },

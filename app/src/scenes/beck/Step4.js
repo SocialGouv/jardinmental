@@ -1,12 +1,12 @@
-import React, {useEffect, useState} from 'react';
-import {View, StyleSheet, TextInput, Platform} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet, TextInput, Platform } from 'react-native';
 
 import styleBeck from '../../styles/beck';
 import Text from '../../components/MyText';
 import Button from '../../components/Button';
 import logEvents from '../../services/logEvents';
 
-export default ({onChange, onSubmit, data}) => {
+export default ({ onChange, onSubmit, data }) => {
   const numberOfLines = 8;
   const [actionsSelected, setActionsSelected] = useState(data?.actions);
   const [consequencesForYouSelected, setConsequencesForYouSelected] = useState(
@@ -35,7 +35,7 @@ export default ({onChange, onSubmit, data}) => {
         minHeight={Platform.OS === 'ios' ? 20 * numberOfLines : null}
         onChangeText={(actions) => {
           setActionsSelected(actions);
-          onChange({actions});
+          onChange({ actions });
         }}
         value={actionsSelected}
         placeholder="J'ai fait..."
@@ -52,7 +52,7 @@ export default ({onChange, onSubmit, data}) => {
         minHeight={Platform.OS === 'ios' ? 20 * numberOfLines : null}
         onChangeText={(consequencesForYou) => {
           setConsequencesForYouSelected(consequencesForYou);
-          onChange({consequencesForYou});
+          onChange({ consequencesForYou });
         }}
         value={consequencesForYouSelected}
         placeholder="Message..."
@@ -71,16 +71,15 @@ export default ({onChange, onSubmit, data}) => {
         minHeight={Platform.OS === 'ios' ? 20 * numberOfLines : null}
         onChangeText={(consequencesForRelatives) => {
           setConsequencesForRelativesSelected(consequencesForRelatives);
-          onChange({consequencesForRelatives});
+          onChange({ consequencesForRelatives });
         }}
         value={consequencesForRelativesSelected}
         placeholder="Message..."
         style={styleBeck.textArea}
         textAlignVertical={'top'}
       />
-      <Button
+      <JMButton
         title="Continuer"
-        buttonStyle={styleBeck.submitButton}
         onPress={onSubmit}
       />
     </View>

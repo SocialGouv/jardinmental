@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {View, StyleSheet, TouchableOpacity} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 
 import styleBeck from '../../styles/beck';
 import Text from '../../components/MyText';
@@ -7,7 +7,7 @@ import Button from '../../components/Button';
 import TextTag from '../../components/TextTag';
 import Separator from '../../components/Separator';
 import DiscretSlider from '../../components/DiscretSlider';
-import {toggleSelectedInArray, toggleState} from '../../utils';
+import { toggleSelectedInArray, toggleState } from '../../utils';
 import localStorage from '../../utils/localStorage';
 import AddElemToList from '../../components/AddElemToList';
 import {
@@ -16,7 +16,7 @@ import {
 } from '../../utils/constants';
 import logEvents from '../../services/logEvents';
 
-export default ({onChange, onSubmit, data}) => {
+export default ({ onChange, onSubmit, data }) => {
   // lists that will be displayed
   const [listEmotion, setListEmotion] = useState();
   const [listPhysicalSensations, setListPhysicalSensations] = useState();
@@ -33,11 +33,11 @@ export default ({onChange, onSubmit, data}) => {
   const handleClickMainEmotion = (emotion) => {
     if (emotion === mainEmotionSelected) emotion = null;
     setMainEmotionSelected(emotion);
-    onChange({mainEmotion: emotion});
+    onChange({ mainEmotion: emotion });
   };
   const handleClickMainEmotionIntensity = (mainEmotionIntensity) => {
     setMainEmotionIntensitySelected(mainEmotionIntensity);
-    onChange({mainEmotionIntensity});
+    onChange({ mainEmotionIntensity });
   };
   const handleClickOtherEmotions = (otherEmotionClicked) => {
     const otherEmotions = toggleSelectedInArray(
@@ -45,7 +45,7 @@ export default ({onChange, onSubmit, data}) => {
       otherEmotionClicked,
     );
     setOtherEmotionsSelected(otherEmotions);
-    onChange({otherEmotions});
+    onChange({ otherEmotions });
   };
   const handleClickPhysicalSensations = (physicalSensationClicked) => {
     const physicalSensations = toggleSelectedInArray(
@@ -53,14 +53,14 @@ export default ({onChange, onSubmit, data}) => {
       physicalSensationClicked,
     );
     setPhysicalSensationsSelected(physicalSensations);
-    onChange({physicalSensations});
+    onChange({ physicalSensations });
   };
 
   //handlers close
   const handleCloseMainEmotion = (emotion) => {
     if (mainEmotionSelected === emotion) {
       setMainEmotionSelected(null);
-      onChange({mainEmotion: null});
+      onChange({ mainEmotion: null });
     }
     if (otherEmotionsSelected.indexOf(emotion) !== -1) {
       handleCloseOtherEmotion(emotion);
@@ -71,7 +71,7 @@ export default ({onChange, onSubmit, data}) => {
     if (otherEmotionsSelected.indexOf(emotion) !== -1)
       otherEmotions = otherEmotionsSelected.filter((w) => w !== emotion);
     setOtherEmotionsSelected(otherEmotions);
-    onChange({otherEmotions});
+    onChange({ otherEmotions });
   };
   const handleCloseSensation = (sensation) => {
     let physicalSensations = [...physicalSensationsSelected];
@@ -80,11 +80,11 @@ export default ({onChange, onSubmit, data}) => {
         (w) => w !== sensation,
       );
     setPhysicalSensationsSelected(physicalSensations);
-    onChange({physicalSensations});
+    onChange({ physicalSensations });
   };
 
   // handle new value, add it in the list and select it if needed
-  const addNewEmotion = async (emotion, {selectAsMain, selectAsOther}) => {
+  const addNewEmotion = async (emotion, { selectAsMain, selectAsOther }) => {
     // store the new 'emotion' value for next times
     await localStorage.addBeckEmotionList(emotion);
     // add the new emotion in the list
@@ -112,7 +112,7 @@ export default ({onChange, onSubmit, data}) => {
     // unselect it if needed
     handleCloseSensation(sensation);
   };
-  const removeEmotion = async (emotion, {main, other}) => {
+  const removeEmotion = async (emotion, { main, other }) => {
     // remove the 'emotion' value for next times
     const list = await localStorage.removeBeckEmotionList(emotion);
     // update the list displayed
@@ -179,7 +179,7 @@ export default ({onChange, onSubmit, data}) => {
             color="#D4F0F2"
             onPress={handleClickMainEmotion}
             enableClosed
-            onClose={(emotion) => removeEmotion(emotion, {main: true})}
+            onClose={(emotion) => removeEmotion(emotion, { main: true })}
           />
         ))}
       </View>
@@ -191,7 +191,7 @@ export default ({onChange, onSubmit, data}) => {
       </TouchableOpacity>
       {addEmotionVisible ? (
         <AddElemToList
-          onChange={(e) => addNewEmotion(e, {selectAsMain: true})}
+          onChange={(e) => addNewEmotion(e, { selectAsMain: true })}
         />
       ) : null}
       <Separator style={styleBeck.separator} />
@@ -216,7 +216,7 @@ export default ({onChange, onSubmit, data}) => {
             color="#D4F0F2"
             onPress={handleClickOtherEmotions}
             enableClosed
-            onClose={(emotion) => removeEmotion(emotion, {other: true})}
+            onClose={(emotion) => removeEmotion(emotion, { other: true })}
           />
         ))}
       </View>
@@ -230,7 +230,7 @@ export default ({onChange, onSubmit, data}) => {
       </TouchableOpacity>
       {addOtherEmotionVisible ? (
         <AddElemToList
-          onChange={(e) => addNewEmotion(e, {selectAsOther: true})}
+          onChange={(e) => addNewEmotion(e, { selectAsOther: true })}
         />
       ) : null}
       <Separator style={styleBeck.separator} />
@@ -262,9 +262,8 @@ export default ({onChange, onSubmit, data}) => {
       {addPhysicalSensationVisible ? (
         <AddElemToList onChange={addPhysicalSensation} />
       ) : null}
-      <Button
+      <JMButton
         title="Continuer"
-        buttonStyle={styleBeck.submitButton}
         onPress={onSubmit}
       />
     </View>

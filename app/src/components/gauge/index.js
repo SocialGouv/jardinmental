@@ -6,6 +6,7 @@ import {Slider} from '@miblanchard/react-native-slider';
 import {StyleSheet, View, Platform} from 'react-native';
 import {screenWidth} from '../../scenes/onboarding/screens';
 import {GaugeChart} from './GaugeChart';
+import { colors } from '@/utils/colors';
 const HEIGHT_RATIO_GAUGE = 48 / 256;
 
 const styles = StyleSheet.create({
@@ -44,9 +45,8 @@ const Gauge = ({hideSlider = false, defaultValue = 0, onChange, reverse}) => {
           value={value}
           onValueChange={handleChange}
           maximumTrackTintColor={'#D9DBE0'}
-          minimumTrackTintColor={'#26387c'}
-          thumbTintColor={'#26387C'}
-          renderThumbComponent={() => <View className="h-5 w-5 bg-[#26387c] rounded-full" />}
+          minimumTrackTintColor={colors.BLUE}
+          thumbTintColor={colors.BLUE}
           trackStyle={{marginHorizontal: 10}}
         />
       )}

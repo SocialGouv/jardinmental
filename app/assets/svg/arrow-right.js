@@ -1,10 +1,11 @@
 import * as React from 'react';
 import Svg, {Path} from 'react-native-svg';
+import { colors } from '@/utils/colors';
 
 function SvgComponent(props) {
   return (
     <Svg
-      color="#1FC6D5"
+      color={colors.LIGHT_BLUE}
       width={8}
       height={13}
       fill="none"

@@ -13,6 +13,8 @@ import { format, set } from "date-fns";
 import { Card } from "../../../components/Card";
 import { useFocusEffect } from "@react-navigation/native";
 import Icon from "../../../components/Icon";
+import { colors } from "@/utils/colors";
+import JMButton from "@/components/JMButton";
 
 export const GoalConfig = ({ navigation, route }) => {
   const goalId = route.params?.goalId;
@@ -82,7 +84,7 @@ export const GoalConfig = ({ navigation, route }) => {
           title: !editing ? "Créer un objectif" : "Mon objectif",
         }}
         bottomChildren={
-          <Button2
+          <JMButton
             fill
             title={!editing ? "Créer mon objectif" : "Valider"}
             onPress={onValidate}
@@ -115,7 +117,7 @@ export const GoalConfig = ({ navigation, route }) => {
               <Text style={styles.daysOfWeekValue}>{daysOfWeekLabel}</Text>
               <Icon
                 icon="ArrowUpSvg"
-                color="#26387C"
+                color={colors.BLUE}
                 width={12}
                 height={12}
                 styleContainer={{ width: 12, height: 12, marginLeft: 8, transform: [{ rotate: "90deg" }] }}
@@ -169,6 +171,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: "Karla",
     fontWeight: "700",
-    color: "#26387C",
+    color: colors.BLUE,
   },
 });

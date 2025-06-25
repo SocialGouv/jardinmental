@@ -11,6 +11,8 @@ import Icon from "../../../components/Icon";
 import DraggableFlatList, { ScaleDecorator } from "react-native-draggable-flatlist";
 import { autoLayoutAnimation } from "../../../utils/autoLayoutAnimation";
 import { confirm } from "../../../utils";
+import { colors } from "@/utils/colors";
+import JMButton from "@/components/JMButton";
 
 export const GoalsSettingsMore = ({ navigation, route }) => {
   const [goals, setGoals] = useState([]);
@@ -72,7 +74,7 @@ export const GoalsSettingsMore = ({ navigation, route }) => {
       header={{
         title: "Mes objectifs",
       }}
-      bottomChildren={<Button2 fill title="Enregistrer" onPress={onValidate} />}
+      bottomChildren={<JMButton variant="primary" title="Enregistrer" onPress={onValidate} />}
       ScrollComponent={DraggableFlatList}
       scrollAsFlatList={true}
       scrollProps={{
@@ -108,7 +110,7 @@ const GoalItem = ({ goal, drag, isActive, index, onRemove }) => {
         <View style={[itemStyles.container, isActive && { backgroundColor: "#D4F0F2" }]}>
           <Icon
             icon="ReorderSvg"
-            color="#26387C"
+            color={colors.BLUE}
             width="16"
             height="16"
             styleContainer={{ width: 16, height: 16 }}
@@ -119,7 +121,7 @@ const GoalItem = ({ goal, drag, isActive, index, onRemove }) => {
             preset=""
             type="clear"
             icon="DeleteSvg"
-            textStyle={{ color: "#26387C" }}
+            textStyle={{ color: colors.BLUE }}
             style={{ backgroundColor: "#F8F9FB" }}
             iconSize={16}
             onPress={() => onRemove({ goal })}
@@ -146,7 +148,7 @@ const itemStyles = StyleSheet.create({
     fontFamily: "Karla",
     fontWeight: "700",
     fontSize: 16,
-    color: "#26387C",
+    color: colors.BLUE,
     textAlign: "left",
     marginLeft: 16,
     flex: 1,

@@ -1,5 +1,6 @@
 import * as React from "react";
 import Svg, { Ellipse, Path } from "react-native-svg";
+import { colors } from "../../src/utils/colors";
 
 function SvgComponent({ size = 15, down = false }) {
   return (
@@ -16,7 +17,7 @@ function SvgComponent({ size = 15, down = false }) {
         fillRule="evenodd"
         clipRule="evenodd"
         d="M10.479 8.91L7.143 5.678l-3.336 3.23-.77-.745 4.105-3.976 4.106 3.976-.769.745z"
-        fill="#26387C"
+        fill={colors.BLUE}
       />
     </Svg>
   );

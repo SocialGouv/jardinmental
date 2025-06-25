@@ -5,6 +5,7 @@ import { InputText } from "../InputText";
 import { Smiley } from "@/components/survey/Smiley";
 import { Boolean } from "./Boolean";
 import Gauge from "../gauge";
+import { colors } from "@/utils/colors";
 
 export const IndicatorSurveyItem = ({
   indicator,
@@ -105,7 +106,7 @@ const styles = StyleSheet.create({
     fontFamily: "Karla",
     fontWeight: "400",
     textAlign: "left",
-    color: "#26387C",
+    color: colors.BLUE,
     flexShrink: 1,
     marginLeft: 8,
     paddingTop: 3,
@@ -125,6 +126,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   activeSelectionContainer: {
-    backgroundColor: "#1FC6D5",
+    backgroundColor: colors.LIGHT_BLUE,
   },
 });

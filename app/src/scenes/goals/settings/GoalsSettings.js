@@ -9,6 +9,8 @@ import { Title } from "../../../components/Title";
 import { Badge } from "../../../components/Badge";
 import Icon from "../../../components/Icon";
 import { ONBOARDING_STEPS } from "../../../utils/constants";
+import { colors } from "@/utils/colors";
+import JMButton from '@/components/JMButton'
 
 export const GoalsSettings = ({ navigation, route }) => {
   const onboarding = route.params?.onboarding;
@@ -38,17 +40,15 @@ export const GoalsSettings = ({ navigation, route }) => {
       bottomChildren={
         !onboarding ? (
           <>
-            <Button2
-              fill
+            <JMButton
               title="Ajouter un objectif"
               onPress={() => navigation.navigate("goals-add-options")}
             />
-            <Button2
-              fill
-              preset="secondary"
+            <JMButton
+              variant="outline"
               title="Modifier mes objectifs"
               onPress={() => navigation.navigate("goals-settings-more")}
-              containerStyle={{ marginTop: 12 }}
+              className="mt-2"
             />
           </>
         ) : (
@@ -107,7 +107,7 @@ const GoalItem = ({ goal, index }) => {
         preset=""
         type="clear"
         icon="EditSvg"
-        textStyle={{ color: "#26387C" }}
+        textStyle={{ color: colors.BLUE }}
         style={{ backgroundColor: "#F8F9FB" }}
         iconSize={16}
         onPress={() => {
@@ -137,7 +137,7 @@ const itemStyles = StyleSheet.create({
     fontFamily: "Karla",
     fontWeight: "700",
     fontSize: 16,
-    color: "#26387C",
+    color: colors.BLUE,
     textAlign: "left",
   },
   daysOfWeekContainer: {
