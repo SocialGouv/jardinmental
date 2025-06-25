@@ -1,56 +1,151 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { View, Text, SafeAreaView, TouchableOpacity, TextInput, Alert } from 'react-native';
+import React, { useState, useRef, useEffect } from 'react';
+import { View, Text, SafeAreaView, TouchableOpacity, Platform, Dimensions, FlatList } from 'react-native';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withSpring,
+  interpolateColor,
+} from 'react-native-reanimated';
 
 import CheckInHeader from '@/components/onboarding/CheckInHeader';
-import { OnboardingV2ScreenProps, CheckInData } from '../../types';
-import { beforeToday, formatDay } from '@/utils/date/helpers';
-import { DiaryDataContext } from '@/context/diaryData';
-import { INDICATEURS_HUMEUR, INDICATEURS_SOMMEIL } from '@/utils/liste_indicateurs.1';
-import { generateIndicatorFromPredefinedIndicator } from '@/entities/Indicator';
-import { TW_COLORS } from '@/utils/constants';
+import { OnboardingV2ScreenProps } from '../../types';
+import { EMOTION_COLORS, TW_COLORS } from '@/utils/constants';
+import SmileyVeryGood from '@assets/svg/smileys/veryGood'
+import SmileyBad from '@assets/svg/smileys/bad'
+import SmileyVeryBad from '@assets/svg/smileys/veryBad'
+import SmileyMiddle from '@assets/svg/smileys/middle'
+import SmileyGood from '@assets/svg/smileys/good'
+import { useFocusEffect } from '@react-navigation/native';
+
+const { width: screenWidth } = Dimensions.get('window');
+
 
 type Props = OnboardingV2ScreenProps<'OnboardingCheckInHowDoYouFeel'>;
 
-const moodEmojis = ['😢', '😕', '😐', '🙂', '😊'];
-const moodLabels = ['Très mauvais', 'Mauvais', 'Moyen', 'Bon', 'Très bon'];
+const moodEmojis = [
+  {
+    backgroundColor: EMOTION_COLORS.veryBad,
+    label: 'Très mauvais',
+    icon: <SmileyVeryBad />
+  },
+  {
+    backgroundColor: EMOTION_COLORS.bad,
+    label: 'Mauvais',
+    icon: <SmileyBad />
+  },
+  {
+    backgroundColor: EMOTION_COLORS.middle,
+    label: 'Middle',
+    icon: <SmileyMiddle />
+  },
+  {
+    backgroundColor: EMOTION_COLORS.good,
+    label: 'Bon',
+    icon: <SmileyGood />
+  },
+  {
+    backgroundColor: EMOTION_COLORS.veryGood,
+    label: 'Très bon',
+    icon: <SmileyVeryGood />
+  },
+];
 
 export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
-  const [checkInData, setCheckInData] = useState<number|null>(null);
-  const [loading, setLoading] = useState(false);
-  const [diaryData, addNewEntryToDiaryData] = useContext(DiaryDataContext);
+  const [selectedMoodIndex, setSelectedMoodIndex] = useState<number | null>(null);
+  const [hasSelectedOnce, setHasSelectedOnce] = useState<boolean>(false);
+  const flatListRef = useRef<FlatList>(null);
+
+  // Animated values
+  const scrollViewScale = useSharedValue(1);
+  const statusBarColorProgress = useSharedValue(0);
+  const textOpacity = useSharedValue(0);
+  const scrollPosition = useSharedValue(0);
+
+  // FlatList configuration
+  const itemWidth = screenWidth / 5; // Show all 5 items at once
+  const getItemLayout = (data: any, index: number) => ({
+    length: itemWidth,
+    offset: itemWidth * index,
+    index,
+  });
+
+
   useEffect(() => {
-    if (checkInData !== null) {  // or another condition
-      handleComplete();
+    // Give it a small delay to ensure FlatList has finished initial rendering
+    const timeout = setTimeout(() => {
+      flatListRef.current?.scrollToIndex({ index: 2, animated: false });
+    }, 0); // you can also try 50ms if it's flaky
+
+    return () => clearTimeout(timeout);
+  }, []);
+
+  const scrollToSelectedItem = (moodIndex: number, willHaveSelection: boolean = true) => {
+    if (!flatListRef.current) return;
+
+    // Calculate the scroll offset manually to ensure accuracy
+    // After selection, the FlatList will have padding, so we need to account for that
+    const paddingHorizontal = willHaveSelection ? (screenWidth - itemWidth) / 2 : 0;
+    const scrollOffset = moodIndex * itemWidth - paddingHorizontal;
+
+    flatListRef.current.scrollToOffset({
+      offset: Math.max(0, scrollOffset),
+      animated: true,
+    });
+  };
+
+  const onSelectEmotion = (value: number) => {
+    const moodIndex = value - 1; // Convert to 0-based index
+    const wasFirstSelection = !hasSelectedOnce;
+
+    setSelectedMoodIndex(value);
+
+    if (!hasSelectedOnce) {
+      setHasSelectedOnce(true);
     }
-  }, [checkInData])
 
-  const onSelectEmotion = (value) => {
-    setCheckInData(value)
-  }
-  
-  const handleComplete = async () => {
-    setLoading(true);
-    try {
-      const date = formatDay(beforeToday(0))
-      const prev = diaryData[date] || {}
-      const key = INDICATEURS_HUMEUR.name
-      const updatedAnswers = {
-          ...prev,
-          [key]: { ...prev[key], value: checkInData, _indicateur: generateIndicatorFromPredefinedIndicator(INDICATEURS_HUMEUR) }
-      }
-      addNewEntryToDiaryData({
-          date,
-          answers: updatedAnswers
-      });
-      
-      // @todo see what to do if user 'skip' the value selection
-      navigation.navigate('OnboardingCheckInHowDoYouFeelDetails', { mood: checkInData })
+    // Unified spring configuration for synchronized animations
+    const springConfig = { damping: 20, stiffness: 80 };
 
-    } catch (error) {
-      console.error('Error completing onboarding:', error);
-      Alert.alert('Erreur', 'Une erreur est survenue. Veuillez réessayer.');
-    } finally {
-      setLoading(false);
+    // Animate all elements with synchronized timing
+    scrollViewScale.value = withSpring(2.5, springConfig);
+    statusBarColorProgress.value = withSpring(moodIndex / (moodEmojis.length - 1), springConfig);
+    textOpacity.value = withSpring(1, springConfig);
+
+    // Scroll to center the selected item with improved timing
+    if (flatListRef.current) {
+      // Use requestAnimationFrame for better timing coordination
+      const performScroll = () => {
+        requestAnimationFrame(() => {
+          // Additional delay for first selection to allow scale animation to start
+          if (wasFirstSelection) {
+            //scrollToSelectedItem(moodIndex + 2, true)
+            setTimeout(() => scrollToSelectedItem(moodIndex + 2, true), 150);
+          } else {
+            scrollToSelectedItem(moodIndex + 2, true);
+          }
+        });
+      };
+
+      performScroll();
+    }
+  };
+
+  // Handle snap-to-select behavior when scrolling
+  const onMomentumScrollEnd = (event: any) => {
+    if (!hasSelectedOnce) return;
+
+    const scrollX = event.nativeEvent.contentOffset.x;
+    const index = Math.round(scrollX / itemWidth);
+    const clampedIndex = Math.max(0, Math.min(index, moodEmojis.length - 1));
+
+    if (clampedIndex !== (selectedMoodIndex ? selectedMoodIndex - 1 : -1)) {
+      const newValue = clampedIndex + 1;
+      setSelectedMoodIndex(newValue);
+
+      // Trigger animations for the newly selected item
+      const springConfig = { damping: 20, stiffness: 80 };
+      statusBarColorProgress.value = withSpring(clampedIndex / (moodEmojis.length - 1), springConfig);
+      textOpacity.value = withSpring(1, springConfig);
     }
   };
 
@@ -59,59 +154,144 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
   };
 
   const handleSkip = () => {
-    handleComplete();
+    navigation.goBack();
+  };
+
+  // Animated styles
+  const animatedScrollViewStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ scale: scrollViewScale.value }],
+    };
+  });
+
+  const animatedStatusBarColor = useAnimatedStyle(() => {
+    if (selectedMoodIndex === null) {
+      return {
+        backgroundColor: TW_COLORS.PRIMARY,
+      };
+    }
+
+    const colors = [
+      EMOTION_COLORS.veryBad,
+      EMOTION_COLORS.bad,
+      EMOTION_COLORS.middle,
+      EMOTION_COLORS.good,
+      EMOTION_COLORS.veryGood,
+    ];
+
+    const color = interpolateColor(
+      statusBarColorProgress.value,
+      [0, 0.25, 0.5, 0.75, 1],
+      colors
+    );
+
+    return {
+      backgroundColor: color,
+    };
+  });
+
+  const animatedTextStyle = useAnimatedStyle(() => {
+    return {
+      opacity: textOpacity.value,
+    };
+  });
+
+  const renderMoodItem = ({ item, index }: { item: any; index: number }) => {
+    const value = index + 1;
+    const isSelected = selectedMoodIndex === value;
+
+    return (
+      <TouchableOpacity
+        onPress={() => onSelectEmotion(value)}
+        className="items-center p-2 rounded-3xl justify-center"
+        style={{
+          backgroundColor: item.backgroundColor,
+          width: 64,
+          height: 80,
+          marginHorizontal: (itemWidth - 64) / 2, // Center the item within its allocated width
+        }}
+      >
+        <View className="flex-1 justify-center items-center">
+          {item.icon}
+        </View>
+      </TouchableOpacity>
+    );
   };
 
   const renderMoodSelector = () => (
-    <View className="mb-6">
-      <View className="flex-row justify-between">
-        {moodEmojis.map((emoji, index) => {
-          const value = index + 1;
-          const isSelected = checkInData === value
-          return (
-            <TouchableOpacity
-              key={index}
-              onPress={() => onSelectEmotion(value)}
-              className="items-center p-2 rounded-lg"
-              style={{
-                backgroundColor: isSelected ? TW_COLORS.PRIMARY + '20' : 'transparent',
-                borderWidth: isSelected ? 2 : 1,
-                borderColor: isSelected ? TW_COLORS.PRIMARY : TW_COLORS.GRAY_LIGHT,
-              }}
+    <Animated.View style={animatedScrollViewStyle} className="mb-6">
+      <FlatList
+        ref={flatListRef}
+        data={moodEmojis}
+        renderItem={renderMoodItem}
+        keyExtractor={(item, index) => index.toString()}
+        horizontal={true}
+        scrollEnabled={hasSelectedOnce}
+        showsHorizontalScrollIndicator={false}
+        snapToInterval={itemWidth}
+        snapToAlignment="center"
+        decelerationRate="fast"
+        getItemLayout={getItemLayout}
+        onMomentumScrollEnd={onMomentumScrollEnd}
+        contentContainerStyle={{
+          paddingHorizontal: (screenWidth - itemWidth) / 2,
+          // marginHorizontal: -((screenWidth - itemWidth) / 2),
+          alignItems: 'center',
+        }}
+        style={{
+          width: screenWidth,
+          flexGrow: 0,
+        }}
+      />
+
+      {/* Animated description text */}
+      {
+        selectedMoodIndex !== null && (
+          <Animated.View style={animatedTextStyle} className="mt-4 items-center">
+            <Text
+              className="text-lg font-semibold text-center"
+              style={{ color: TW_COLORS.TEXT_PRIMARY }}
             >
-              <Text className="text-2xl mb-1">{emoji}</Text>
-              <Text 
-                className="text-xs text-center"
-                style={{ color: TW_COLORS.TEXT_SECONDARY }}
-              >
-                {moodLabels[index]}
-              </Text>
-            </TouchableOpacity>
-          );
-        })}
-      </View>
-    </View>
+              {moodEmojis[selectedMoodIndex - 1]?.label}
+            </Text>
+          </Animated.View>
+        )
+      }
+    </Animated.View >
   );
 
   return (
     <SafeAreaView className="flex-1 bg-white">
-      <CheckInHeader
-        title="Observation du jour"
-        onPrevious={handlePrevious}
-        onSkip={handleSkip}
-        showPrevious={true}
-        showSkip={true}
-      />
-      
-      <View className="flex-1 justify-center items-center px-8">
-        <Text 
-          className="text-2xl font-bold text-center mb-8"
-          style={{ color: TW_COLORS.TEXT_PRIMARY }}
+      {Platform.OS === 'ios' && (
+        <Animated.View style={[animatedStatusBarColor, { position: 'absolute', top: 0, left: 0, right: 0, height: 100, zIndex: 1000 }]} />
+      )}
+      <Animated.View
+        style={[animatedStatusBarColor]}
+        className="rounded-b-3xl py-4 pb-8"
+      >
+        <CheckInHeader
+          title="Observation du jour"
+          onPrevious={handlePrevious}
+          onSkip={handleSkip}
+          showPrevious={true}
+          showSkip={true}
+        />
+        <Text
+          className="text-2xl font-bold text-center mt-8"
+          style={{ color: TW_COLORS.WHITE }}
         >
           Comment vous sentez-vous actuellement ?
         </Text>
-        
-        {renderMoodSelector()}
+      </Animated.View>
+      <View className="flex-1 p-8">
+        <Text
+          className=""
+        >
+          Sélectionnez votre ressenti du moment
+        </Text>
+        <View className="flex-1 p-8 justify-center items-center">
+          {renderMoodSelector()}
+        </View>
       </View>
     </SafeAreaView>
   );
