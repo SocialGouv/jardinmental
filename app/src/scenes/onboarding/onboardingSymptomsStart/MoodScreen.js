@@ -14,6 +14,7 @@ import { SafeAreaViewWithOptionalHeader } from "../ProgressHeader";
 import { OnboardingBackButton } from "../BackButton";
 import { ONBOARDING_STEPS } from "../../../utils/constants";
 import { autoLayoutAnimation } from "../../../utils/autoLayoutAnimation";
+import { TW_COLORS } from "../../../utils/constants";
 
 export const OnboardingMood = ({ navigation }) => {
   const [isMoodTroubleEnable, setIsMoodTroubleEnabled] = useState();
@@ -129,10 +130,10 @@ export const OnboardingMood = ({ navigation }) => {
             {userIndicateurs?.find((_ind) => _ind.uuid === INDICATEURS_HUMEUR.uuid && _ind.active) ? (
               <View>
                 <RoundButtonIcon
-                  backgroundColor="#5DEE5A"
+                  backgroundColor={TW_COLORS.SUCCESS}
                   iconColor="#fff"
                   borderWidth={0.5}
-                  borderColor="#5DEE5A"
+                  borderColor={TW_COLORS.SUCCESS}
                   icon="validate"
                   visible={true}
                   medium
@@ -207,10 +208,10 @@ const CheckBoxList = ({ list, userIndicateurs, setToggleIndicateur }) => {
             {isActive ? (
               <View>
                 <RoundButtonIcon
-                  backgroundColor="#5DEE5A"
+                  backgroundColor={TW_COLORS.SUCCESS}
                   iconColor="#fff"
                   borderWidth={0.5}
-                  borderColor="#5DEE5A"
+                  borderColor={TW_COLORS.SUCCESS}
                   icon="validate"
                   visible={true}
                   medium

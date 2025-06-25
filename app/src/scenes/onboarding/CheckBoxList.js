@@ -3,6 +3,7 @@ import RoundButtonIcon from '../../components/RoundButtonIcon';
 import {View, TouchableOpacity} from 'react-native';
 import Text from '../../components/MyText';
 import {stylesA} from './onboardingSymptomsStart';
+import { TW_COLORS } from '@/utils/constants';
 
 export const CheckBoxList = ({list, symptomSelection, setSymptomSelection}) => {
   return (
@@ -21,7 +22,7 @@ export const CheckBoxList = ({list, symptomSelection, setSymptomSelection}) => {
             }>
             {symptomSelection[id] ? (
               <View>
-                <RoundButtonIcon backgroundColor="#5DEE5A" iconColor="#fff" borderWidth={0.5} borderColor="#5DEE5A" icon="validate" visible={true} medium />
+                <RoundButtonIcon backgroundColor={TW_COLORS.SUCCESS} iconColor="#fff" borderWidth={0.5} borderColor={TW_COLORS.SUCCESS} icon="validate" visible={true} medium />
               </View>
             ) : (
               <View>

@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: "600",
   },
-  reponseOui: { fontWeight: "bold", color: "#26387C" },
+  reponseOui: { fontWeight: "bold", color: colors.BLUE },
   reponseNon: { fontWeight: "bold", color: "#E575F8" },
   subcontainer: {
     display: "flex",

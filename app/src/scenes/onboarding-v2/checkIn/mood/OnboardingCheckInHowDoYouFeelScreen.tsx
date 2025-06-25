@@ -7,7 +7,7 @@ import { beforeToday, formatDay } from '@/utils/date/helpers';
 import { DiaryDataContext } from '@/context/diaryData';
 import { INDICATEURS_HUMEUR, INDICATEURS_SOMMEIL } from '@/utils/liste_indicateurs.1';
 import { generateIndicatorFromPredefinedIndicator } from '@/entities/Indicator';
-import { COLORS } from '@/utils/constants';
+import { TW_COLORS } from '@/utils/constants';
 
 type Props = OnboardingV2ScreenProps<'OnboardingCheckInHowDoYouFeel'>;
 
@@ -74,15 +74,15 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
               onPress={() => onSelectEmotion(value)}
               className="items-center p-2 rounded-lg"
               style={{
-                backgroundColor: isSelected ? COLORS.PRIMARY + '20' : 'transparent',
+                backgroundColor: isSelected ? TW_COLORS.PRIMARY + '20' : 'transparent',
                 borderWidth: isSelected ? 2 : 1,
-                borderColor: isSelected ? COLORS.PRIMARY : COLORS.GRAY_LIGHT,
+                borderColor: isSelected ? TW_COLORS.PRIMARY : TW_COLORS.GRAY_LIGHT,
               }}
             >
               <Text className="text-2xl mb-1">{emoji}</Text>
               <Text 
                 className="text-xs text-center"
-                style={{ color: COLORS.TEXT_SECONDARY }}
+                style={{ color: TW_COLORS.TEXT_SECONDARY }}
               >
                 {moodLabels[index]}
               </Text>
@@ -106,7 +106,7 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
       <View className="flex-1 justify-center items-center px-8">
         <Text 
           className="text-2xl font-bold text-center mb-8"
-          style={{ color: COLORS.TEXT_PRIMARY }}
+          style={{ color: TW_COLORS.TEXT_PRIMARY }}
         >
           Comment vous sentez-vous actuellement ?
         </Text>

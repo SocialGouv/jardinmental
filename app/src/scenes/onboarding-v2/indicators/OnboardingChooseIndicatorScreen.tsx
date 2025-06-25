@@ -9,7 +9,7 @@ import { generateIndicatorFromPredefinedIndicator, PredefineIndicatorSchemaType 
 import localStorage from '@/utils/localStorage';
 import { beforeToday, formatDay } from '@/utils/date/helpers';
 import { DiaryDataContext } from '@/context/diaryData';
-import { COLORS } from '@/utils/constants';
+import { TW_COLORS } from '@/utils/constants';
 
 // @todo generated with AI, see which values we want to keep
 const DIFFICULTY_KEYWORDS: Record<string, string[]> = {
@@ -90,15 +90,15 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
       onPress={() => toggleIndicator(item.uuid)}
       className="mx-4 mb-3 p-4 rounded-xl border-2"
       style={{
-        borderColor: selected ? COLORS.PRIMARY : COLORS.GRAY_LIGHT,
-        backgroundColor: selected ? COLORS.PRIMARY + '10' : COLORS.WHITE,
+        borderColor: selected ? TW_COLORS.PRIMARY : TW_COLORS.GRAY_LIGHT,
+        backgroundColor: selected ? TW_COLORS.PRIMARY + '10' : TW_COLORS.WHITE,
       }}
     >
       <View className="flex-row items-center">
         <View className="flex-1">
           <Text 
             className="text-lg font-medium"
-            style={{ color: COLORS.TEXT_PRIMARY }}
+            style={{ color: TW_COLORS.TEXT_PRIMARY }}
           >
             {item.name}
           </Text>
@@ -106,7 +106,7 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
         {selected && (
           <View 
             className="w-6 h-6 rounded-full items-center justify-center"
-            style={{ backgroundColor: COLORS.PRIMARY }}
+            style={{ backgroundColor: TW_COLORS.PRIMARY }}
           >
             <Text className="text-white text-xs">✓</Text>
           </View>
@@ -119,7 +119,7 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
     <View key={categoryName} className="mb-6">
       <Text 
         className="text-lg font-semibold mb-3 mx-4 capitalize"
-        style={{ color: COLORS.TEXT_PRIMARY }}
+        style={{ color: TW_COLORS.TEXT_PRIMARY }}
       >
         {categoryName}
       </Text>
@@ -144,7 +144,7 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
         <View className="px-6 py-6">
           <Text 
             className="text-2xl font-bold text-center mb-2"
-            style={{ color: COLORS.TEXT_PRIMARY }}
+            style={{ color: TW_COLORS.TEXT_PRIMARY }}
           >
             Je vous propose de suivre
           </Text>
@@ -176,7 +176,7 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
           <View className="mb-6">
             <Text 
               className="text-xl font-bold mb-4 mx-4"
-              style={{ color: COLORS.TEXT_PRIMARY }}
+              style={{ color: TW_COLORS.TEXT_PRIMARY }}
             >
               Les plus suivis
             </Text>

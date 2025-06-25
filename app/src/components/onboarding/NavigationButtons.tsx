@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, TouchableOpacity, Text, ActivityIndicator } from 'react-native';
 import { NavigationButtonsProps } from '@/scenes/onboarding-v2/types';
-import { COLORS } from '@/utils/constants';
+import { TW_COLORS } from '@/utils/constants';
 import JMButton from '../JMButton';
 
 export const NavigationButtons: React.FC<NavigationButtonsProps> = ({
@@ -28,16 +28,16 @@ export const NavigationButtons: React.FC<NavigationButtonsProps> = ({
         disabled={nextDisabled || loading}
         className="px-6 py-3 rounded-lg items-center justify-center w-full"
         style={{ 
-          backgroundColor: nextDisabled ? COLORS.GRAY_LIGHT : COLORS.PRIMARY,
+          backgroundColor: nextDisabled ? TW_COLORS.GRAY_LIGHT : TW_COLORS.PRIMARY,
           opacity: nextDisabled ? 0.6 : 1
         }}
       >
         {loading ? (
-          <ActivityIndicator color={COLORS.WHITE} size="small" />
+          <ActivityIndicator color={TW_COLORS.WHITE} size="small" />
         ) : (
           <Text 
             className="text-base font-semibold"
-            style={{ color: COLORS.WHITE }}
+            style={{ color: TW_COLORS.WHITE }}
           >
             {nextText}
           </Text>

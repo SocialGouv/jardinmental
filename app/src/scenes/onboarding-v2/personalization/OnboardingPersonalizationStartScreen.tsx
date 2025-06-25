@@ -4,7 +4,7 @@ import NavigationButtons from '@/components/onboarding/NavigationButtons';
 import ProgressIndicator from '@/components/onboarding/ProgressIndicator';
 import { OnboardingV2ScreenProps } from '../types';
 import CheckInHeader from '@/components/onboarding/CheckInHeader';
-import { COLORS } from '@/utils/constants';
+import { TW_COLORS } from '@/utils/constants';
 
 type Props = OnboardingV2ScreenProps<'Intro'>;
 
@@ -29,14 +29,14 @@ export const OnboardingPersonalizationStartScreen: React.FC<Props> = ({ navigati
         {/* Titre principal */}
         <Text 
           className="text-2xl font-bold text-center mb-6"
-          style={{ color: COLORS.TEXT_PRIMARY }}
+          style={{ color: TW_COLORS.TEXT_PRIMARY }}
         >
           Créons ensemble un suivi qui vous ressemble
         </Text>
 
         <Text 
           className="text-xl text-left mb-8 leading-8"
-          style={{ color: COLORS.TEXT_SECONDARY }}
+          style={{ color: TW_COLORS.TEXT_SECONDARY }}
         >
           Commençons avec quelques questions, simples et sans jugement, pour personnaliser vos observations
           {'\n\n'}
@@ -47,7 +47,7 @@ export const OnboardingPersonalizationStartScreen: React.FC<Props> = ({ navigati
 
         <Text 
           className="text-base text-center leading-6"
-          style={{ color: COLORS.TEXT_SECONDARY }}
+          style={{ color: TW_COLORS.TEXT_SECONDARY }}
         >
 
         </Text>

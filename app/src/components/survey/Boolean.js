@@ -18,13 +18,13 @@ export const Boolean = ({ indicator, value, onChange }) => {
     <View className={`flex flex-row justify-start gap-2 items-center my-3`}>
       <TouchableOpacity onPress={() => onChange(false)}>
         <View
-          className={`flex justify-center h-8 py-1 px-4 rounded-full border border-[#26387C] ${
+          className={`flex justify-center h-8 py-1 px-4 rounded-full border border-[${colors.BLUE}] ${
             typeof value === "boolean" && !value ? color[indicator?.order]?.false.bg : ""
           }`}
         >
           <Text
             className={`${
-              typeof value === "boolean" && !value ? color[indicator?.order]?.false.text : "text-[#26387C]"
+              typeof value === "boolean" && !value ? color[indicator?.order]?.false.text : `text-[${colors.BLUE}]`
             }`}
           >
             Non
@@ -33,13 +33,13 @@ export const Boolean = ({ indicator, value, onChange }) => {
       </TouchableOpacity>
       <TouchableOpacity onPress={() => onChange(true)}>
         <View
-          className={`flex justify-center h-8 py-1 px-4 rounded-full border border-[#26387C] ${
+          className={`flex justify-center h-8 py-1 px-4 rounded-full border border-[${colors.BLUE}] ${
             typeof value === "boolean" && value ? color[indicator?.order]?.true.bg : ""
           }`}
         >
           <Text
             className={`${
-              typeof value === "boolean" && value ? color[indicator?.order]?.true.text : "text-[#26387C]"
+              typeof value === "boolean" && value ? color[indicator?.order]?.true.text : `text-[${colors.BLUE}]`
             }`}
           >
             Oui

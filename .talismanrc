@@ -68,7 +68,7 @@ fileignoreconfig:
 - filename: app/src/scenes/survey/survey-data.js
   checksum: 1ac3021625ed8fb4ed188c80035b12789aa03989dc7276893900ed96dc2a2509
 - filename: app/src/utils/constants.ts
-  checksum: e5b984d3c7d443965007d6ae7784bea8b6ab445f3eb8e779529c5b7e7de9fda7
+  checksum: 9b3edfe2f18f9c41089a33177d0a3ce3d46bf82c7d7748106b2f12e513b6b010
 scopeconfig:
 - scope: node
 version: "1.0"

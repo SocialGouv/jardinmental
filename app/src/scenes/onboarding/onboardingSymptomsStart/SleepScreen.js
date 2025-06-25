@@ -17,6 +17,7 @@ import {SafeAreaViewWithOptionalHeader} from '../ProgressHeader';
 import {OnboardingBackButton} from '../BackButton';
 import {ONBOARDING_STEPS} from '../../../utils/constants';
 import {autoLayoutAnimation} from '../../../utils/autoLayoutAnimation';
+import { TW_COLORS } from '../../../utils/constants';
 
 export const OnboardingSleep = ({navigation}) => {
   const [isSleepTroubleEnable, setIsSleepTroubleEnabled] = useState();
@@ -143,10 +144,10 @@ export const OnboardingSleep = ({navigation}) => {
             ) ? (
               <View>
                 <RoundButtonIcon
-                  backgroundColor="#5DEE5A"
+                  backgroundColor={TW_COLORS.SUCCESS}
                   iconColor="#fff"
                   borderWidth={0.5}
-                  borderColor="#5DEE5A"
+                  borderColor={TW_COLORS.SUCCESS}
                   icon="validate"
                   visible={true}
                   medium
@@ -230,10 +231,10 @@ const CheckBoxList = ({list, userIndicateurs, setToggleIndicateur}) => {
             {isActive ? (
               <View>
                 <RoundButtonIcon
-                  backgroundColor="#5DEE5A"
+                  backgroundColor={TW_COLORS.SUCCESS}
                   iconColor="#fff"
                   borderWidth={0.5}
-                  borderColor="#5DEE5A"
+                  borderColor={TW_COLORS.SUCCESS}
                   icon="validate"
                   visible={true}
                   medium

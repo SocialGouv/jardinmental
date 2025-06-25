@@ -5,7 +5,7 @@ import { NavigationButtons } from '@/components/onboarding/NavigationButtons';
 import { ProgressIndicator } from '@/components/onboarding/ProgressIndicator';
 import { useUserProfile } from '@/context/userProfile';
 import CheckInHeader from '@/components/onboarding/CheckInHeader';
-import { COLORS } from '@/utils/constants';
+import { TW_COLORS } from '@/utils/constants';
 
 type Props = OnboardingV2ScreenProps<'PersonalizationDifficulties'>;
 
@@ -124,13 +124,13 @@ export const DifficultiesScreen: React.FC<Props> = ({ navigation }) => {
         <View className="px-6 py-4">
           <Text 
             className="text-2xl font-bold text-center mb-2"
-            style={{ color: COLORS.TEXT_PRIMARY }}
+            style={{ color: TW_COLORS.TEXT_PRIMARY }}
           >
             Sur quoi avez-vous ressenti une difficulté ?
           </Text>
           <Text 
             className="text-base text-center mb-2"
-            style={{ color: COLORS.TEXT_SECONDARY }}
+            style={{ color: TW_COLORS.TEXT_SECONDARY }}
           >
             Sélectionnez les domaines sur lesquels vous aimeriez travailler
           </Text>
@@ -143,8 +143,8 @@ export const DifficultiesScreen: React.FC<Props> = ({ navigation }) => {
               onPress={() => toggleDifficulty(item.id)}
               className="mx-4 mb-3 p-4 rounded-xl border-2"
               style={{
-                borderColor: item.selected ? COLORS.PRIMARY : COLORS.GRAY_LIGHT,
-                backgroundColor: item.selected ? COLORS.PRIMARY + '10' : COLORS.WHITE,
+                borderColor: item.selected ? TW_COLORS.PRIMARY : TW_COLORS.GRAY_LIGHT,
+                backgroundColor: item.selected ? TW_COLORS.PRIMARY + '10' : TW_COLORS.WHITE,
               }}
             >
               <View className="flex-row items-center">
@@ -154,7 +154,7 @@ export const DifficultiesScreen: React.FC<Props> = ({ navigation }) => {
                 <View className="flex-1">
                   <Text 
                     className="text-lg font-medium"
-                    style={{ color: COLORS.TEXT_PRIMARY }}
+                    style={{ color: TW_COLORS.TEXT_PRIMARY }}
                   >
                     {item.name}
                   </Text>
@@ -162,7 +162,7 @@ export const DifficultiesScreen: React.FC<Props> = ({ navigation }) => {
                 {item.selected && (
                   <View 
                     className="w-6 h-6 rounded-full items-center justify-center"
-                    style={{ backgroundColor: COLORS.PRIMARY }}
+                    style={{ backgroundColor: TW_COLORS.PRIMARY }}
                   >
                     <Text className="text-white text-xs">✓</Text>
                   </View>

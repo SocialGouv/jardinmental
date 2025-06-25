@@ -1,4 +1,4 @@
-import { COLORS, TOTAL_STEPS } from '@/utils/constants';
+import { TW_COLORS, TOTAL_STEPS } from '@/utils/constants';
 import React from 'react';
 import { View, Text } from 'react-native';
 
@@ -20,19 +20,19 @@ export const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
       {showText && (
         <Text 
           className="text-sm font-medium mb-2 text-center"
-          style={{ color: COLORS.TEXT_SECONDARY }}
+          style={{ color: TW_COLORS.TEXT_SECONDARY }}
         >
           Étape {currentStep} sur {totalSteps}
         </Text>
       )}
       <View 
         className="h-2 rounded-full overflow-hidden"
-        style={{ backgroundColor: COLORS.GRAY_LIGHT }}
+        style={{ backgroundColor: TW_COLORS.GRAY_LIGHT }}
       >
         <View 
           className="h-full rounded-full transition-all duration-300"
           style={{ 
-            backgroundColor: COLORS.PRIMARY,
+            backgroundColor: TW_COLORS.PRIMARY,
             width: `${progress}%`
           }}
         />

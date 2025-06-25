@@ -1,4 +1,4 @@
-import { COLORS } from '@/utils/constants';
+import { TW_COLORS } from '@/utils/constants';
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 
@@ -30,7 +30,7 @@ export const CheckInHeader: React.FC<CheckInHeaderProps> = ({
         >
           <Text 
             className="text-base font-medium"
-            style={{ color: COLORS.PRIMARY }}
+            style={{ color: TW_COLORS.PRIMARY }}
           >
             ←
           </Text>
@@ -42,7 +42,7 @@ export const CheckInHeader: React.FC<CheckInHeaderProps> = ({
       {/* Titre */}
       <Text 
         className="text-lg font-bold text-center flex-1 mx-4"
-        style={{ color: COLORS.TEXT_PRIMARY }}
+        style={{ color: TW_COLORS.TEXT_PRIMARY }}
         numberOfLines={2}
       >
         {title}
@@ -57,7 +57,7 @@ export const CheckInHeader: React.FC<CheckInHeaderProps> = ({
         >
           <Text 
             className="text-base font-medium"
-            style={{ color: COLORS.SECONDARY }}
+            style={{ color: TW_COLORS.SECONDARY }}
           >
             {skipText}
           </Text>

@@ -5,7 +5,7 @@ import { NavigationButtons } from '@/components/onboarding/NavigationButtons';
 import { ProgressIndicator } from '@/components/onboarding/ProgressIndicator';
 import { useUserProfile } from '@/context/userProfile';
 import CheckInHeader from '@/components/onboarding/CheckInHeader';
-import { COLORS } from '@/utils/constants';
+import { TW_COLORS } from '@/utils/constants';
 
 type Props = OnboardingV2ScreenProps<'PersonalizationObjective'>;
 
@@ -69,8 +69,8 @@ export const ObjectiveScreen: React.FC<Props> = ({ navigation, route }) => {
       onPress={() => setSelectedObjective(item)}
       className="mx-4 mb-4 p-4 rounded-xl border-2"
       style={{
-        borderColor: selectedObjective?.id === item.id ? COLORS.PRIMARY : COLORS.GRAY_LIGHT,
-        backgroundColor: selectedObjective?.id === item.id ? COLORS.PRIMARY + '10' : COLORS.WHITE,
+        borderColor: selectedObjective?.id === item.id ? TW_COLORS.PRIMARY : TW_COLORS.GRAY_LIGHT,
+        backgroundColor: selectedObjective?.id === item.id ? TW_COLORS.PRIMARY + '10' : TW_COLORS.WHITE,
       }}
     >
       <View className="flex-row items-start">
@@ -78,7 +78,7 @@ export const ObjectiveScreen: React.FC<Props> = ({ navigation, route }) => {
           <View className="flex-row items-center justify-between mb-1">
             <Text 
               className="text-lg font-semibold"
-              style={{ color: COLORS.TEXT_PRIMARY }}
+              style={{ color: TW_COLORS.TEXT_PRIMARY }}
             >
               {item.title}
             </Text>
@@ -87,7 +87,7 @@ export const ObjectiveScreen: React.FC<Props> = ({ navigation, route }) => {
         {selectedObjective?.id === item.id && (
           <View 
             className="w-6 h-6 rounded-full items-center justify-center ml-2"
-            style={{ backgroundColor: COLORS.PRIMARY }}
+            style={{ backgroundColor: TW_COLORS.PRIMARY }}
           >
             <Text className="text-white text-xs">✓</Text>
           </View>
@@ -112,13 +112,13 @@ export const ObjectiveScreen: React.FC<Props> = ({ navigation, route }) => {
         <View className="px-6 py-4">
           <Text 
             className="text-2xl font-bold text-center mb-2"
-            style={{ color: COLORS.TEXT_PRIMARY }}
+            style={{ color: TW_COLORS.TEXT_PRIMARY }}
           >
             Quel est votre priorité aujourd'hui dans Jardin Mental
           </Text>
           <Text 
             className="text-base text-center mb-2"
-            style={{ color: COLORS.TEXT_SECONDARY }}
+            style={{ color: TW_COLORS.TEXT_SECONDARY }}
           >
             Votre réponse nous aide à vous orienter vers un suivi plus utile.
           </Text>

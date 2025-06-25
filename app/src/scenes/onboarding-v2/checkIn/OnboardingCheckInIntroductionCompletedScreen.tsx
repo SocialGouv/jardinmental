@@ -3,7 +3,7 @@ import { View, Text, SafeAreaView } from 'react-native';
 import { OnboardingV2ScreenProps } from '../types';
 import CheckInHeader from '@/components/onboarding/CheckInHeader';
 import NavigationButtons from '@/components/onboarding/NavigationButtons';
-import { COLORS } from '@/utils/constants';
+import { TW_COLORS } from '@/utils/constants';
 
 
 type Props = OnboardingV2ScreenProps<'Intro'>;
@@ -35,14 +35,14 @@ export const OnboardingCheckInIntroductionCompleted: React.FC<Props> = ({ naviga
       <View className="flex-1 justify-center items-center px-8">
         <Text 
           className="text-4xl font-bold text-center mb-6"
-          style={{ color: COLORS.TEXT_PRIMARY }}
+          style={{ color: TW_COLORS.TEXT_PRIMARY }}
         >
           Vous avez commencé votre suivi, bravo!
         </Text>
 
         <Text 
           className="text-xl text-center mb-8 leading-8"
-          style={{ color: COLORS.TEXT_SECONDARY }}
+          style={{ color: TW_COLORS.TEXT_SECONDARY }}
         >
             Pour aller plus loin, je vous propose quelques éléments à suivre régulièrement, en fonction de ce que vous avez partagé.
             {'\n\n'}

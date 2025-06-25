@@ -3,7 +3,7 @@ import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import Text from '../../components/MyText';
 import {colors} from '../../utils/colors';
 import CircledIcon from '../../components/CircledIcon';
-import {icons, colors as colorsFromConstant, iconBorderColors, iconColors} from '../../utils/constants';
+import {icons, EMOTION_COLORS as colorsFromConstant, iconBorderColors, iconColors} from '../../utils/constants';
 import RoundButtonIcon from '../../components/RoundButtonIcon';
 import {beforeToday, formatDay} from '../../utils/date/helpers';
 import SurveyMenu from '../../../assets/svg/SurveyMenu';

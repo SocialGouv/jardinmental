@@ -10,6 +10,7 @@ import { DiaryDataContext } from "../../context/diaryData";
 import RoundButtonIcon from "../../components/RoundButtonIcon";
 import Text from "../../components/MyText";
 import logEvents from "../../services/logEvents";
+import { TW_COLORS } from "@/utils/constants";
 
 const RecapCompletion = () => {
   const navigation = useNavigation();
@@ -71,10 +72,10 @@ const RecapCompletion = () => {
                 <View style={styles.answerLabel}>
                   {dayIsDone ? (
                     <RoundButtonIcon
-                      backgroundColor="#5DEE5A"
+                      backgroundColor={TW_COLORS.SUCCESS}
                       iconColor="#fff"
                       borderWidth={0.5}
-                      borderColor="#5DEE5A"
+                      borderColor={TW_COLORS.SUCCESS}
                       icon="validate"
                       visible={true}
                       medium

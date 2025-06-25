@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, SafeAreaView } from 'react-native';
 import { OnboardingV2ScreenProps } from './types';
 import { NavigationButtons } from '../../components/onboarding/NavigationButtons';
-import { COLORS } from '@/utils/constants';
+import { TW_COLORS } from '@/utils/constants';
 
 type Props = OnboardingV2ScreenProps<'Intro'>;
 
@@ -18,7 +18,7 @@ export const IntroScreen: React.FC<Props> = ({ navigation }) => {
         <View className="mb-8">
           <View 
             className="w-40 h-40 rounded-full items-center justify-center"
-            style={{ backgroundColor: COLORS.PRIMARY + '20' }}
+            style={{ backgroundColor: TW_COLORS.PRIMARY + '20' }}
           >
             <Text className="text-6xl">🌱</Text>
           </View>
@@ -27,7 +27,7 @@ export const IntroScreen: React.FC<Props> = ({ navigation }) => {
         {/* Title */}
         <Text 
           className="text-4xl font-bold text-center mb-6"
-          style={{ color: COLORS.TEXT_PRIMARY }}
+          style={{ color: TW_COLORS.TEXT_PRIMARY }}
         >
           Jargin Mental est un outils de suivi de votre santé mentale.
         </Text>
@@ -35,7 +35,7 @@ export const IntroScreen: React.FC<Props> = ({ navigation }) => {
         {/* Subtitle */}
         <Text 
           className="text-xl text-center mb-8 leading-8"
-          style={{ color: COLORS.TEXT_SECONDARY }}
+          style={{ color: TW_COLORS.TEXT_SECONDARY }}
         >
           Gratuit à vie{'\n'}
           Totalement anonyme{'\n'}
@@ -45,7 +45,7 @@ export const IntroScreen: React.FC<Props> = ({ navigation }) => {
         {/* Description */}
         <Text 
           className="text-base text-center leading-6"
-          style={{ color: COLORS.TEXT_SECONDARY }}
+          style={{ color: TW_COLORS.TEXT_SECONDARY }}
         >
           Créer avec des professionels et soutenu par la CNAM
         </Text>

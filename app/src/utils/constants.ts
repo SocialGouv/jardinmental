@@ -12,7 +12,7 @@ export const icons = {
   notes: "NotesSvg",
 };
 
-export const colors = {
+export const EMOTION_COLORS = {
   veryBad: "#F16B6B",
   bad: "#FEAA5B",
   middle: "#F2F478",
@@ -46,73 +46,73 @@ export const scoresMapIcon = {
     color: "transparent",
   },
   1: {
-    color: colors.veryBad,
+    color: EMOTION_COLORS.veryBad,
     faceIcon: icons.veryBad,
     borderColor: iconBorderColors.veryBad,
     iconColor: iconColors.veryBad,
   },
   2: {
-    color: colors.bad,
+    color: EMOTION_COLORS.bad,
     faceIcon: icons.bad,
     borderColor: iconBorderColors.bad,
     iconColor: iconColors.bad,
   },
   3: {
-    color: colors.middle,
+    color: EMOTION_COLORS.middle,
     faceIcon: icons.middle,
     borderColor: iconBorderColors.middle,
     iconColor: iconColors.middle,
   },
   4: {
-    color: colors.good,
+    color: EMOTION_COLORS.good,
     faceIcon: icons.good,
     borderColor: iconBorderColors.good,
     iconColor: iconColors.good,
   },
   5: {
-    color: colors.veryGood,
+    color: EMOTION_COLORS.veryGood,
     faceIcon: icons.veryGood,
     borderColor: iconBorderColors.veryGood,
     iconColor: iconColors.veryGood,
   },
 };
 
-export const colorsMap = Object.keys(colors).map((key) => colors[key]);
+export const colorsMap = Object.keys(EMOTION_COLORS).map((key) => EMOTION_COLORS[key]);
 
 export const categoryStates = {
   VERY_GOOD: {
     id: "VERY_GOOD",
     level: 5,
     icon: icons.veryGood,
-    color: colors.veryGood,
+    color: EMOTION_COLORS.veryGood,
     label: "Très bien",
   },
   GOOD: {
     id: "GOOD",
     level: 4,
     icon: icons.good,
-    color: colors.good,
+    color: EMOTION_COLORS.good,
     label: "Bien",
   },
   MIDDLE: {
     id: "MIDDLE",
     level: 3,
     icon: icons.middle,
-    color: colors.middle,
+    color: EMOTION_COLORS.middle,
     label: "Moyen",
   },
   BAD: {
     id: "BAD",
     level: 2,
     icon: icons.bad,
-    color: colors.bad,
+    color: EMOTION_COLORS.bad,
     label: "Mauvais",
   },
   VERY_BAD: {
     id: "VERY_BAD",
     level: 1,
     icon: icons.veryBad,
-    color: colors.veryBad,
+    color: EMOTION_COLORS.veryBad,
     label: "Très mauvais",
   },
 };
@@ -177,21 +177,21 @@ export const frequence = {
     id: "NEVER",
     level: 3,
     icon: icons.veryGood,
-    color: colors.veryGood,
+    color: EMOTION_COLORS.veryGood,
     label: "Jamais",
   },
   SEVERAL_TIMES: {
     id: "SEVERAL_TIMES",
     level: 2,
     icon: icons.middle,
-    color: colors.middle,
+    color: EMOTION_COLORS.middle,
     label: "Plusieurs fois",
   },
   MANY_TIMES: {
     id: "MANY_TIMES",
     level: 1,
     icon: icons.veryBad,
-    color: colors.veryBad,
+    color: EMOTION_COLORS.veryBad,
     label: "De nombreuses fois",
   },
 };
@@ -201,21 +201,21 @@ export const intensity = {
     id: "LIGHT",
     level: 3,
     icon: icons.veryGood,
-    color: colors.veryGood,
+    color: EMOTION_COLORS.veryGood,
     label: "Légèrement pénible",
   },
   MIDDLE: {
     id: "MIDDLE",
     level: 2,
     icon: icons.middle,
-    color: colors.middle,
+    color: EMOTION_COLORS.middle,
     label: "Moyennement pénible",
   },
   HIGH: {
     id: "HIGH",
     level: 1,
     icon: icons.veryBad,
-    color: colors.veryBad,
+    color: EMOTION_COLORS.veryBad,
     label: "Très pénible",
   },
 };
@@ -313,10 +313,12 @@ export const STEP_ORDER: OnboardingStep[] = [
 export const TOTAL_STEPS = STEP_ORDER.length;
 
 // Colors
-export const COLORS = {
+export const TW_COLORS = {
   PRIMARY: mainColors.LIGHT_BLUE,
-  SECONDARY: '#00CEF7',
-  SUCCESS: '#4CAF50',
+  SECONDARY: '#12747D', //'#00CEF7',
+  POSITIVE: '#5DEE5A', // positive for action relative to mental health !== 'success action in app'
+  NEGATIVE: '#F16B6B', // negative feeling for action relative to mental health
+  SUCCESS: '#5DEE5A', //#4CAF50',
   WARNING: '#FF9800',
   ERROR: '#F44336',
   BACKGROUND: '#F5F5F5',

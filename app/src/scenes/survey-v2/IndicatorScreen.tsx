@@ -6,7 +6,7 @@ import { DiaryDataNewEntryInput } from '@/entities/DiaryData';
 import { IndicatorSurveyItem } from '@/components/survey/IndicatorSurveyItem';
 import CheckInHeader from '@/components/onboarding/CheckInHeader';
 import NavigationButtons from '@/components/onboarding/NavigationButtons';
-import { COLORS } from '@/utils/constants';
+import { TW_COLORS } from '@/utils/constants';
 
 interface IndicatorScreenProps {
   navigation: any;
@@ -42,7 +42,7 @@ export const IndicatorScreen: React.FC<IndicatorScreenProps> = ({
         <View className="flex-1 justify-center items-center px-8">
           <Text 
             className="text-lg font-bold text-center mb-8"
-            style={{ color: COLORS.TEXT_PRIMARY }}
+            style={{ color: TW_COLORS.TEXT_PRIMARY }}
           >
             {title}
           </Text>
@@ -63,7 +63,7 @@ export const IndicatorScreen: React.FC<IndicatorScreenProps> = ({
             ))}
           <Text 
             className="text-sm text-center mt-4 px-4"
-            style={{ color: COLORS.TEXT_SECONDARY }}
+            style={{ color: TW_COLORS.TEXT_SECONDARY }}
           >
             Vous pouvez sélectionner plusieurs options
           </Text>

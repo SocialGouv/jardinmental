@@ -4,6 +4,7 @@ import Icon from "../../../components/Icon";
 import Separator from "../../../components/Separator";
 import { autoLayoutAnimation } from "../../../utils/autoLayoutAnimation";
 import { colors } from "@/utils/colors";
+import { TW_COLORS } from "@/utils/constants";
 
 export const GoalsStatus = ({ goalsData, date, withSeparator }) => {
   const recordIds = goalsData?.records?.byDate?.[date] || [];
@@ -54,11 +55,11 @@ const GoalStatusItem = ({ goalsData, record }) => {
                 styles.iconContainer,
                 record.value === true
                   ? {
-                      backgroundColor: "#5DEE5A",
+                      backgroundColor: TW_COLORS.POSITIVE,
                       borderColor: "#1A6300",
                     }
                   : {
-                      backgroundColor: "#F16B6B",
+                      backgroundColor: TW_COLORS.NEGATIVE,
                       borderColor: "#5E000",
                     },
               ]}

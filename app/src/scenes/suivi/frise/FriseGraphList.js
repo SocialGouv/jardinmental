@@ -13,6 +13,7 @@ import logEvents from "../../../services/logEvents";
 import Button from "../../../components/Button";
 import { FriseGraph } from "./FriseGraph";
 import { GoalsFriseGraph } from "../../goals/suivi/GoalsFriseGraph";
+import JMButton from "@/components/JMButton";
 
 export const FriseGraphList = ({ navigation, fromDate, toDate, focusedScores, showTraitement }) => {
   const [diaryData] = React.useContext(DiaryDataContext);
@@ -115,7 +116,7 @@ export const FriseGraphList = ({ navigation, fromDate, toDate, focusedScores, sh
             quotidiennes.
           </Text>
         </View>
-        <Button title="Commencer à saisir" onPress={startSurvey} />
+        <JMButton title="Commencer à saisir" onPress={startSurvey} />
       </View>
     );
   }

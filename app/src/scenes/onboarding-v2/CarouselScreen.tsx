@@ -4,7 +4,7 @@ import { OnboardingV2ScreenProps, CarouselSlide } from './types';
 import { CarouselSlide as CarouselSlideComponent } from '../../components/onboarding/CarouselSlide';
 import NavigationButtons from '../../components/onboarding/NavigationButtons';
 import { useUserProfile } from '../../context/userProfile';
-import { COLORS } from '@/utils/constants';
+import { TW_COLORS } from '@/utils/constants';
 import { useFocusEffect } from '@react-navigation/native';
 import carouselSlides, { carouselSlidesSuivi } from './data/carouselData';
 
@@ -77,7 +77,7 @@ export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
       onPress={() => goToSlide(index)}
       className="w-3 h-3 rounded-full mx-1"
       style={{
-        backgroundColor: index === currentIndex ? COLORS.PRIMARY : COLORS.GRAY_LIGHT,
+        backgroundColor: index === currentIndex ? TW_COLORS.PRIMARY : TW_COLORS.GRAY_LIGHT,
       }}
     />
   );
@@ -89,11 +89,11 @@ export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
         <TouchableOpacity
           onPress={handleSkip}
           className="px-4 py-2 rounded-full"
-          style={{ backgroundColor: COLORS.WHITE + 'CC' }}
+          style={{ backgroundColor: TW_COLORS.WHITE + 'CC' }}
         >
           <Text 
             className="text-base font-medium"
-            style={{ color: COLORS.PRIMARY }}
+            style={{ color: TW_COLORS.PRIMARY }}
           >
             Passer
           </Text>
@@ -105,11 +105,11 @@ export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
         <TouchableOpacity
           onPress={handlePrevious}
           className="px-4 py-2 rounded-full"
-          style={{ backgroundColor: COLORS.WHITE + 'CC' }}
+          style={{ backgroundColor: TW_COLORS.WHITE + 'CC' }}
         >
           <Text 
             className="text-base font-medium"
-            style={{ color: COLORS.GRAY_DARK }}
+            style={{ color: TW_COLORS.GRAY_DARK }}
           >
             ← Retour
           </Text>

@@ -34,7 +34,7 @@ export default function JMButton({
   icon,
   ...props
 }: ButtonProps) {
-  const baseClasses = 'w-full px-6 py-3 rounded-lg items-center justify-center flex-row';
+  const baseClasses = 'w-full px-6 py-3 rounded-full items-center justify-center flex-row';
   let variantClasses = '';
 
   switch (variant) {

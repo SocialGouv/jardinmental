@@ -6,7 +6,7 @@ import { OnboardingV2ScreenProps } from '../../types';
 import { beforeToday, formatDay } from '@/utils/date/helpers';
 import { DiaryDataContext } from '@/context/diaryData';
 import { INDICATEURS_HUMEUR } from '@/utils/liste_indicateurs.1';
-import { COLORS } from '@/utils/constants';
+import { TW_COLORS } from '@/utils/constants';
 
 type Props = OnboardingV2ScreenProps<'OnboardingCheckInHowDoYouFeelDetails'>;
 
@@ -131,16 +131,16 @@ export const OnboardingCheckInLastMoods: React.FC<Props> = ({ navigation, route 
               onPress={() => toggleMood(mood)}
               className="m-1 px-4 py-2 rounded-full"
               style={{
-                backgroundColor: isSelected ? COLORS.PRIMARY : COLORS.WHITE,
+                backgroundColor: isSelected ? TW_COLORS.PRIMARY : TW_COLORS.WHITE,
                 borderWidth: 2,
-                borderColor: isSelected ? COLORS.PRIMARY : COLORS.GRAY_LIGHT,
+                borderColor: isSelected ? TW_COLORS.PRIMARY : TW_COLORS.GRAY_LIGHT,
                 minWidth: 80,
               }}
             >
               <Text 
                 className="text-center font-medium"
                 style={{ 
-                  color: isSelected ? COLORS.WHITE : COLORS.TEXT_PRIMARY,
+                  color: isSelected ? TW_COLORS.WHITE : TW_COLORS.TEXT_PRIMARY,
                   fontSize: 14
                 }}
               >
@@ -166,7 +166,7 @@ export const OnboardingCheckInLastMoods: React.FC<Props> = ({ navigation, route 
       <View className="flex-1 justify-center items-center px-8">
         <Text 
           className="text-lg font-bold text-center mb-8"
-          style={{ color: COLORS.TEXT_PRIMARY }}
+          style={{ color: TW_COLORS.TEXT_PRIMARY }}
         >
           Y-a-t-il une émotion, un état ou un comportement qui a pris un peu de place aujourd'hui ?
         </Text>
@@ -175,7 +175,7 @@ export const OnboardingCheckInLastMoods: React.FC<Props> = ({ navigation, route 
         
         <Text 
           className="text-sm text-center mt-4 px-4"
-          style={{ color: COLORS.TEXT_SECONDARY }}
+          style={{ color: TW_COLORS.TEXT_SECONDARY }}
         >
           Vous pouvez sélectionner plusieurs options
         </Text>

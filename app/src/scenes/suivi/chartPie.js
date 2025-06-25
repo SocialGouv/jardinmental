@@ -5,7 +5,7 @@ import {useFocusEffect} from '@react-navigation/native';
 import {getArrayOfDatesFromTo} from '../../utils/date/helpers';
 import {DiaryDataContext} from '../../context/diaryData';
 import Text from '../../components/MyText';
-import {displayedCategories, scoresMapIcon} from '../../utils/constants';
+import {displayedCategories, EMOTION_COLORS, scoresMapIcon} from '../../utils/constants';
 import {colors} from '../../utils/colors';
 import {buildSurveyData} from '../survey/survey-data';
 import PieChart from 'react-native-pie-chart';
@@ -17,6 +17,8 @@ import localStorage from '../../utils/localStorage';
 import logEvents from '../../services/logEvents';
 import Button from '../../components/Button';
 import {GoalsChartPie} from '../goals/suivi/GoalsChartPie';
+import JMButton from '@/components/JMButton';
+import { TW_COLORS } from '../../utils/constants';
 
 const ChartPie = ({navigation, fromDate, toDate}) => {
   const [diaryData] = React.useContext(DiaryDataContext);
@@ -124,7 +126,7 @@ const ChartPie = ({navigation, fromDate, toDate}) => {
             Des <Text style={styles.bold}>statistiques</Text> apparaîtront au fur et à mesure de vos saisies quotidiennes.
           </Text>
         </View>
-        <Button title="Commencer à saisir" onPress={startSurvey} />
+        <JMButton title="Commencer à saisir" onPress={startSurvey} />
       </View>
     );
   }
@@ -142,7 +144,7 @@ const ChartPie = ({navigation, fromDate, toDate}) => {
                 indicateur={_indicateur}
                 title={getTitle(_indicateur.name)}
                 data={computeChartData(_indicateur.name)}
-                parialsColors={['#f3f3f3', isReverse ? '#F16B6B' : '#5DEE5A', isReverse ? '#5DEE5A' : '#F16B6B']}
+                parialsColors={['#f3f3f3', isReverse ? TW_COLORS.NEGATIVE : TW_COLORS.POSITIVE, isReverse ? TW_COLORS.POSITIVE : TW_COLORS.NEGATIVE]}
               />
             );
           return <Pie indicateur={_indicateur} title={getTitle(_indicateur.name)} key={_indicateur.name} data={computeChartData(_indicateur.name)} />;
@@ -211,7 +213,7 @@ const renderResponse = ({indicateur, value, isSmall, translateX}) => {
   }
   if (indicateur?.type === 'gauge') {
     const _value = value;
-    const _colors = indicateur?.order === 'DESC' ? ['#5DEE5A', '#ACF352', '#F2F478', '#FEAA5B', '#F16B6B'] : ['#F16B6B', '#FEAA5B', '#F2F478', '#ACF352', '#5DEE5A'];
+    const _colors = indicateur?.order === 'DESC' ? [TW_COLORS.POSITIVE, EMOTION_COLORS.good,EMOTION_COLORS.middle, EMOTION_COLORS.bad, TW_COLORS.NEGATIVE] : [TW_COLORS.NEGATIVE, EMOTION_COLORS.bad, EMOTION_COLORS.middle, EMOTION_COLORS.good, TW_COLORS.POSITIVE];
 
     let _color = _colors[_value - 1];
 
@@ -226,184 +228,6 @@ const renderResponse = ({indicateur, value, isSmall, translateX}) => {
   return <View />;
 };
 
-const Pie = ({title, data, indicateur}) => {
-  const [sections, setSections] = React.useState([]);
-  const [average, setAverage] = React.useState(0);
-  const [averageIcons, setAverageIcons] = React.useState([]);
-  const [joursRenseignes, setJoursRenseignes] = React.useState({});
-  const [detailsVisible, setDetailsVisible] = React.useState(false);
-  const [nombreDeValeurParScore, setNombreDeValeurParScore] = React.useState([]);
-  const [nombreDeJoursConsecutifs, setNombreDeJoursConsecutifs] = React.useState({});
-
-  console.log('sections', sections);
-
-  React.useEffect(() => {
-    // un object
-    // key est le score (0 signifie que c'set non renseigné)
-    // nombre de d'instance de ce score
-    const tempNombreDeValeurParScore = data.reduce((previous, current) => {
-      let scoreEncours = 0; // on met 0 si la valeur est null
-      if (indicateur.type === 'boolean') {
-        scoreEncours = typeof current === 'boolean' && current ? 5 : typeof current === 'boolean' && current === false ? 1 : 0;
-      } else if (indicateur.type === 'gauge') {
-        scoreEncours = Math.ceil(current * 5);
-      } else {
-        scoreEncours = current ? current : 0;
-      }
-      previous[scoreEncours] = (previous[scoreEncours] || 0) + 1;
-      return previous;
-    }, {});
-    setNombreDeValeurParScore(
-      Object.keys(tempNombreDeValeurParScore).map(score => ({
-        score,
-        total: data.length,
-        count: tempNombreDeValeurParScore[score],
-        pourcentage: (tempNombreDeValeurParScore[score] / data.length) * 100,
-      })),
-    );
-
-    // calcul du pourcentage de jours renseignés
-    const tempJoursRenseignes = data.reduce((previous, current) => {
-      if (current && current !== 0) return ++previous;
-      else return previous;
-    }, 0);
-    setJoursRenseignes({
-      pourcentage: (tempJoursRenseignes / data.length) * 100,
-      total: data.length,
-      count: tempJoursRenseignes,
-    });
-
-    // calcul du nombre de jours consécutifs maximum par score
-    const maximumParScore = {};
-    let scorePrecedent = 0;
-    data.forEach(current => {
-      let scoreEnCours = 0; // on met 0 si la valeur est null
-      if (indicateur.type === 'boolean') {
-        scoreEnCours = typeof current === 'boolean' && current ? 5 : typeof current === 'boolean' && current === false ? 1 : 0;
-      } else if (indicateur.type === 'gauge') {
-        scoreEnCours = Math.ceil(current * 5);
-      } else {
-        scoreEnCours = current ? current : 0;
-      }
-      if (scoreEnCours === scorePrecedent) {
-        maximumParScore[scoreEnCours] = (maximumParScore[scoreEnCours] || 1) + 1;
-      }
-      scorePrecedent = scoreEnCours;
-    });
-    setNombreDeJoursConsecutifs(maximumParScore);
-  }, [data]);
-
-  React.useEffect(() => {
-    if (!nombreDeValeurParScore?.length) return;
-    const sectionsAvecCouleurEtPourcentage = nombreDeValeurParScore.map(e => ({
-      color: _colors[indicateur.order || 'ASC'][e.score],
-      percentage: e.pourcentage,
-    }));
-    setSections(sectionsAvecCouleurEtPourcentage);
-  }, [indicateur.order, nombreDeValeurParScore]);
-
-  React.useEffect(() => {
-    const total = data.reduce((previous, current) => {
-      let scoreEncours = 0; // on met 0 si la valeur est null
-      if (indicateur.type === 'boolean') {
-        scoreEncours = typeof current === 'boolean' && current ? 5 : typeof current === 'boolean' && current === false ? 1 : 0;
-      } else if (indicateur.type === 'gauge') {
-        scoreEncours = Math.ceil(current * 5);
-      } else {
-        scoreEncours = current ? current : 0;
-      }
-      if (!scoreEncours || scoreEncours === 0) return previous;
-      return previous + 1;
-    }, 0);
-    const sum = data.reduce((previous, current) => {
-      let scoreEncours = 0; // on met 0 si la valeur est null
-      if (indicateur.type === 'boolean') {
-        scoreEncours = typeof current === 'boolean' && current ? 5 : typeof current === 'boolean' && current === false ? 1 : 0;
-      } else if (indicateur.type === 'gauge') {
-        scoreEncours = Math.ceil(current * 5);
-      } else {
-        scoreEncours = current ? current : 0;
-      }
-      return previous + (scoreEncours || 0);
-    }, 0);
-    const avg = sum / total;
-    setAverage(avg);
-  }, [data, indicateur]);
-
-  React.useEffect(() => {
-    const num = Math.floor(average);
-    const decimal = (average - Math.floor(average)).toFixed(2);
-
-    if (decimal <= 0.25) {
-      // premier quartile, on n'affiche que le score du `num`
-      setAverageIcons([num]);
-    } else if (decimal <= 0.5) {
-      // deuxieme quartile, on affiche le score du `num` et du `num+1`
-      setAverageIcons([num + 1, num]);
-    } else if (decimal <= 0.75) {
-      // troisieme quartile, on affiche le score du `num + 1` et du `num`
-      setAverageIcons([num, num + 1]);
-    } else {
-      // quatrieme quartile, on n'affiche que le score du `num+1`
-      setAverageIcons([num + 1]);
-    }
-  }, [average, title]);
-
-  const toggleDetails = () => {
-    if (!detailsVisible) logEvents.logSuiviShowDetailStatistics();
-    setDetailsVisible(e => !e);
-  };
-
-  if (data.every(value => value === 0)) return null;
-
-  return (
-    <View style={styles.categoryContainer}>
-      <View style={styles.titleContainer}>
-        <TouchableOpacity onPress={toggleDetails} style={styles.titleContainer}>
-          <Text style={styles.title}>{title}</Text>
-          <RoundButtonIcon icon="toggle" visible onPress={toggleDetails} isToggled={detailsVisible} small />
-        </TouchableOpacity>
-      </View>
-      <View style={styles.contentCategoryContainer}>
-        <View style={styles.pieContainer}>
-          {/* <PieChart radius={50} sections={sections} /> */}
-          {sections?.reduce((sum, section) => sum + section.percentage, 0) > 0 ? (
-            <PieChart
-              widthAndHeight={100}
-              series={sections.map(section => section.percentage)}
-              sliceColor={sections.map(section => section.color)}
-              coverRadius={0.45}
-              coverFill={'#FFF'}
-            />
-          ) : (
-            // Show empty state or placeholder when all values are 0
-            <View className="w-[100px] h-[100px] border border-gray-200 rounded-full justify-center items-center">
-              <Text className="text-gray-400 text-xs">Pas de données</Text>
-            </View>
-          )}
-        </View>
-        {averageIcons.length ? (
-          <View style={styles.pieContainer}>
-            <View style={styles.averageContainer}>
-              <Text style={styles.legendText}>Moyenne</Text>
-              <View style={[styles.averageIconsContainer, {transform: [{translateX: 8 * (averageIcons.length - 1)}]}]}>
-                {averageIcons.map((e, i) => {
-                  if (!(e >= 1 && e <= 5)) return null;
-                  const isSmall = i === 0 && averageIcons.length > 1;
-                  return renderResponse({indicateur, value: e, isSmall, translateX: isSmall});
-                })}
-              </View>
-              {joursRenseignes.pourcentage < 100 ? <Text style={styles.pourcentageStyle}>{Math.round(100 - joursRenseignes.pourcentage)}% de jours non renseignés</Text> : null}
-            </View>
-          </View>
-        ) : null}
-      </View>
-      {detailsVisible ? (
-        <TableDeStatistiquesParLigne nombreDeJoursConsecutifs={nombreDeJoursConsecutifs} nombreDeValeurParScore={nombreDeValeurParScore} title={title} indicateur={indicateur} />
-      ) : null}
-    </View>
-  );
-};
 
 // parialsColors 0 -> no data, 1 -> yes, 2 -> no
 const PieYesNo = ({title, data, parialsColors = ['#f3f3f3', '#5956E8', '#E575F8']}) => {

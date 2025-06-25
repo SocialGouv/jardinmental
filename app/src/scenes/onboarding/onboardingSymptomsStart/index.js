@@ -15,6 +15,7 @@ import {
 } from "../../../utils/liste_indicateurs.1";
 import RoundButtonIcon from "../../../components/RoundButtonIcon";
 import { useFocusEffect } from "@react-navigation/native";
+import { TW_COLORS } from "@/utils/constants";
 
 const OnboardingSymptomStart = ({ navigation }) => {
   const [symptomSelection, setSymptomSelection] = useState({});
@@ -102,10 +103,10 @@ const OnboardingSymptomStart = ({ navigation }) => {
             {symptomSelection[OLD_INDICATEURS_HUMEUR] ? (
               <View>
                 <RoundButtonIcon
-                  backgroundColor="#5DEE5A"
+                  backgroundColor={TW_COLORS.SUCCESS}
                   iconColor="#fff"
                   borderWidth={0.5}
-                  borderColor="#5DEE5A"
+                  borderColor={TW_COLORS.SUCCESS}
                   icon="validate"
                   visible={true}
                   medium
@@ -170,10 +171,10 @@ const OnboardingSymptomStart = ({ navigation }) => {
             {symptomSelection[OLD_INDICATEURS_SOMMEIL] ? (
               <View>
                 <RoundButtonIcon
-                  backgroundColor="#5DEE5A"
+                  backgroundColor={TW_COLORS.SUCCESS}
                   iconColor="#fff"
                   borderWidth={0.5}
-                  borderColor="#5DEE5A"
+                  borderColor={TW_COLORS.SUCCESS}
                   icon="validate"
                   visible={true}
                   medium
@@ -244,10 +245,10 @@ const CheckBoxList = ({ list, symptomSelection, setSymptomSelection }) => {
             {symptomSelection[id] ? (
               <View>
                 <RoundButtonIcon
-                  backgroundColor="#5DEE5A"
+                  backgroundColor={TW_COLORS.SUCCESS}
                   iconColor="#fff"
                   borderWidth={0.5}
-                  borderColor="#5DEE5A"
+                  borderColor={TW_COLORS.SUCCESS}
                   icon="validate"
                   visible={true}
                   medium
