@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     height: 10,
   },
   containerEditable: {
-    backgroundColor: "rgba(31, 198, 213, 0.2)",
+    backgroundColor: colors.LIGHT_BLUE_TRANS_02,
   },
   place: {
     fontStyle: "italic",

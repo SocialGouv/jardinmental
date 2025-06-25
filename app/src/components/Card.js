@@ -74,8 +74,8 @@ const _styles = {
   base: StyleSheet.create({
     container: {
       width: '100%',
-      backgroundColor: 'rgba(31, 198, 213, 0.2)',
-      borderColor: 'rgba(31, 198, 213, 0.2)',
+      backgroundColor: colors.LIGHT_BLUE_TRANS_02,
+      borderColor: colors.LIGHT_BLUE_TRANS_02,
       borderWidth: 1,
       borderRadius: 16,
       padding: 16,

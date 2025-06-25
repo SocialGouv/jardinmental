@@ -11,20 +11,9 @@ import {colors} from '../utils/colors';
 import localStorage from '../utils/localStorage';
 import logEvents from '../services/logEvents';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import IosStatusBarColor from '@/components/IosStatusBar';
 
 const Tab = createMaterialTopTabNavigator();
-
-const IosStatusBarColor = () => <View
-  style={{
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    height: 100, // Covers status bar area and a bit more
-    backgroundColor: colors.LIGHT_BLUE,
-    zIndex: -1,
-  }}
-/>
 
 const Tabs = ({navigation, route}) => {
   const insets = useSafeAreaInsets();

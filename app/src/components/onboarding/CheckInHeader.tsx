@@ -20,7 +20,7 @@ export const CheckInHeader: React.FC<CheckInHeaderProps> = ({
   skipText = 'Passer'
 }) => {
   return (
-    <View className="flex-row justify-between items-center px-6 py-4 bg-white">
+    <View className="flex-row justify-between items-center px-6 py-4">
       {/* Bouton Précédent */}
       {showPrevious && onPrevious ? (
         <TouchableOpacity 

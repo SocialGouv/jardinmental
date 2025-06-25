@@ -14,7 +14,7 @@ const ExportItem = ({ onPress }) => (
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "rgba(31, 198, 213, 0.2)",
+    backgroundColor: colors.LIGHT_BLUE_TRANS_02,
     borderRadius: 10,
     borderWidth: 1,
     borderColor: "#F4FCFD",

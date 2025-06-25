@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
   },
   containerEditable: {
     borderRadius: 10,
-    backgroundColor: 'rgba(31, 198, 213, 0.2)',
+    backgroundColor: colors.LIGHT_BLUE_TRANS_02,
     marginTop: 2,
   },
   posologyContainer: {
