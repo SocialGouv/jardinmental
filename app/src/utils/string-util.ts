@@ -1,5 +1,7 @@
-export const firstLetterUppercase = (inputString: string) =>
+export const firstLetterUppercase = (inputString: string) => {
+  if (!inputString) return '';
   inputString.charAt(0).toUpperCase() + inputString.slice(1);
+}
 
 export const areStringArraysIdentical = (arr1: string[], arr2: string[]) => {
   if (arr1.length !== arr2.length) return false;
