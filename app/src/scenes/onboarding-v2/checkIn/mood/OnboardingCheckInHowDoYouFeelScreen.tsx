@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import { View, Text, SafeAreaView, TouchableOpacity, Platform, Dimensions, FlatList } from 'react-native';
 import Animated, {
   useSharedValue,
@@ -9,57 +9,38 @@ import Animated, {
 
 import CheckInHeader from '@/components/onboarding/CheckInHeader';
 import { OnboardingV2ScreenProps } from '../../types';
-import { EMOTION_COLORS, TW_COLORS } from '@/utils/constants';
-import SmileyVeryGood from '@assets/svg/smileys/veryGood'
-import SmileyBad from '@assets/svg/smileys/bad'
-import SmileyVeryBad from '@assets/svg/smileys/veryBad'
-import SmileyMiddle from '@assets/svg/smileys/middle'
-import SmileyGood from '@assets/svg/smileys/good'
-import { useFocusEffect } from '@react-navigation/native';
+import { EMOTION_COLORS, iconColors, TW_COLORS } from '@/utils/constants';
+import JMButton from '@/components/JMButton';
+import NavigationButtons from '@/components/onboarding/NavigationButtons';
+import { beforeToday, formatDay } from '@/utils/date/helpers';
+import { INDICATEURS_HUMEUR } from '@/utils/liste_indicateurs.1';
+import { DiaryDataContext } from '@/context/diaryData';
+import { generateIndicatorFromPredefinedIndicator } from '@/entities/Indicator';
+import BannerHeader from '../../BannerHeader';
+import { moodBackgroundColors, MoodEmoji, moodEmojis } from '@/utils/mood'
+import InstructionText from '../../InstructionText';
 
 const { width: screenWidth } = Dimensions.get('window');
 
 
 type Props = OnboardingV2ScreenProps<'OnboardingCheckInHowDoYouFeel'>;
 
-const moodEmojis = [
-  {
-    backgroundColor: EMOTION_COLORS.veryBad,
-    label: 'Très mauvais',
-    icon: <SmileyVeryBad />
-  },
-  {
-    backgroundColor: EMOTION_COLORS.bad,
-    label: 'Mauvais',
-    icon: <SmileyBad />
-  },
-  {
-    backgroundColor: EMOTION_COLORS.middle,
-    label: 'Middle',
-    icon: <SmileyMiddle />
-  },
-  {
-    backgroundColor: EMOTION_COLORS.good,
-    label: 'Bon',
-    icon: <SmileyGood />
-  },
-  {
-    backgroundColor: EMOTION_COLORS.veryGood,
-    label: 'Très bon',
-    icon: <SmileyVeryGood />
-  },
-];
+
+const springConfig = { damping: 20, stiffness: 80 };
 
 export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
   const [selectedMoodIndex, setSelectedMoodIndex] = useState<number | null>(null);
   const [hasSelectedOnce, setHasSelectedOnce] = useState<boolean>(false);
   const flatListRef = useRef<FlatList>(null);
+  const [loading, setLoading] = useState<boolean>(false)
+  const [checkInData, setCheckInData] = useState<number | null>(null);
+  const [diaryData, addNewEntryToDiaryData] = useContext(DiaryDataContext);
 
   // Animated values
   const scrollViewScale = useSharedValue(1);
   const statusBarColorProgress = useSharedValue(0);
   const textOpacity = useSharedValue(0);
-  const scrollPosition = useSharedValue(0);
+  const rotateSelectorProgress = useSharedValue(0);
 
   // FlatList configuration
   const itemWidth = screenWidth / 5; // Show all 5 items at once
@@ -78,6 +59,30 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
 
     return () => clearTimeout(timeout);
   }, []);
+
+  const handleComplete = async () => {
+    setLoading(true);
+    // Sauvegarder les données du check-in
+    const date = formatDay(beforeToday(0))
+    const prev = diaryData[date] || {}
+
+    const key = INDICATEURS_HUMEUR.name
+    const updatedAnswers = {
+      ...prev,
+      [key]: {
+        ...prev[key], value: checkInData, _indicateur: generateIndicatorFromPredefinedIndicator(INDICATEURS_HUMEUR)
+      }
+    }
+    addNewEntryToDiaryData({
+      date,
+      answers: updatedAnswers
+    });
+    navigation.navigate('OnboardingCheckInHowDoYouFeelDetails', {
+      mood: selectedMoodIndex !== null ? selectedMoodIndex - 1 : 2 // default is 2, the midde
+    })
+    setLoading(false);
+
+  };
 
   const scrollToSelectedItem = (moodIndex: number, willHaveSelection: boolean = true) => {
     if (!flatListRef.current) return;
@@ -104,13 +109,12 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
     }
 
     // Unified spring configuration for synchronized animations
-    const springConfig = { damping: 20, stiffness: 80 };
 
     // Animate all elements with synchronized timing
     scrollViewScale.value = withSpring(2.5, springConfig);
     statusBarColorProgress.value = withSpring(moodIndex / (moodEmojis.length - 1), springConfig);
     textOpacity.value = withSpring(1, springConfig);
-
+    rotateSelectorProgress.value = withSpring(20, springConfig)
     // Scroll to center the selected item with improved timing
     if (flatListRef.current) {
       // Use requestAnimationFrame for better timing coordination
@@ -171,12 +175,31 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
       };
     }
 
+    const color = interpolateColor(
+      statusBarColorProgress.value,
+      [0, 0.25, 0.5, 0.75, 1],
+      moodBackgroundColors
+    );
+
+    return {
+      backgroundColor: color,
+    };
+  });
+
+  const animatedTextColor = useAnimatedStyle(() => {
+    if (selectedMoodIndex === null) {
+      return {
+        color: TW_COLORS.WHITE,
+        backgroundColor: 'transparent'
+      };
+    }
+
     const colors = [
-      EMOTION_COLORS.veryBad,
-      EMOTION_COLORS.bad,
-      EMOTION_COLORS.middle,
-      EMOTION_COLORS.good,
-      EMOTION_COLORS.veryGood,
+      TW_COLORS.PRIMARY,
+      TW_COLORS.PRIMARY,
+      TW_COLORS.PRIMARY,
+      TW_COLORS.PRIMARY,
+      TW_COLORS.PRIMARY,
     ];
 
     const color = interpolateColor(
@@ -186,9 +209,10 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
     );
 
     return {
-      backgroundColor: color,
+      color: color,
+      backgroundColor: 'transparent'
     };
-  });
+  })
 
   const animatedTextStyle = useAnimatedStyle(() => {
     return {
@@ -196,25 +220,18 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
     };
   });
 
-  const renderMoodItem = ({ item, index }: { item: any; index: number }) => {
-    const value = index + 1;
-    const isSelected = selectedMoodIndex === value;
 
+
+  const renderMoodItem = ({ item, index }: { item: MoodEmoji; index: number }) => {
+    const value = index + 1;
     return (
-      <TouchableOpacity
-        onPress={() => onSelectEmotion(value)}
-        className="items-center p-2 rounded-3xl justify-center"
-        style={{
-          backgroundColor: item.backgroundColor,
-          width: 64,
-          height: 80,
-          marginHorizontal: (itemWidth - 64) / 2, // Center the item within its allocated width
-        }}
-      >
-        <View className="flex-1 justify-center items-center">
-          {item.icon}
-        </View>
-      </TouchableOpacity>
+      <MoodItem
+        item={item}
+        index={index}
+        selected={selectedMoodIndex - 1 === index}
+        scrollViewScaled={!!selectedMoodIndex}
+        onSelect={() => onSelectEmotion(value)}
+      />
     );
   };
 
@@ -235,6 +252,7 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
         onMomentumScrollEnd={onMomentumScrollEnd}
         contentContainerStyle={{
           paddingHorizontal: (screenWidth - itemWidth) / 2,
+          paddingVertical: 5,
           // marginHorizontal: -((screenWidth - itemWidth) / 2),
           alignItems: 'center',
         }}
@@ -247,9 +265,9 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
       {/* Animated description text */}
       {
         selectedMoodIndex !== null && (
-          <Animated.View style={animatedTextStyle} className="mt-4 items-center">
+          <Animated.View style={animatedTextStyle} className="mt-1 items-center">
             <Text
-              className="text-lg font-semibold text-center"
+              className="text-sm font-semibold text-center"
               style={{ color: TW_COLORS.TEXT_PRIMARY }}
             >
               {moodEmojis[selectedMoodIndex - 1]?.label}
@@ -262,38 +280,82 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
 
   return (
     <SafeAreaView className="flex-1 bg-white">
-      {Platform.OS === 'ios' && (
-        <Animated.View style={[animatedStatusBarColor, { position: 'absolute', top: 0, left: 0, right: 0, height: 100, zIndex: 1000 }]} />
-      )}
-      <Animated.View
-        style={[animatedStatusBarColor]}
-        className="rounded-b-3xl py-4 pb-8"
-      >
-        <CheckInHeader
-          title="Observation du jour"
-          onPrevious={handlePrevious}
-          onSkip={handleSkip}
-          showPrevious={true}
-          showSkip={true}
-        />
-        <Text
-          className="text-2xl font-bold text-center mt-8"
-          style={{ color: TW_COLORS.WHITE }}
-        >
-          Comment vous sentez-vous actuellement ?
-        </Text>
-      </Animated.View>
+      <BannerHeader
+        animatedStatusBarColor={animatedStatusBarColor}
+        animatedTextColor={animatedTextColor}
+        title={'Comment vous sentez-vous actuellement ?'}
+        handlePrevious={handlePrevious}
+        handleSkip={handleSkip}
+      />
       <View className="flex-1 p-8">
-        <Text
-          className=""
-        >
+        <InstructionText>
           Sélectionnez votre ressenti du moment
-        </Text>
+        </InstructionText>
         <View className="flex-1 p-8 justify-center items-center">
           {renderMoodSelector()}
         </View>
       </View>
+      <NavigationButtons
+        onNext={handleComplete}
+        showPrevious={false}
+        loading={loading}
+        nextDisabled={!selectedMoodIndex}
+        nextText="Continuer"
+      />
     </SafeAreaView>
+  );
+};
+
+const MoodItem = ({
+  item,
+  index,
+  selected,
+  scrollViewScaled,
+  onSelect,
+}: {
+  item: MoodEmoji;
+  index: number;
+  selected: boolean;
+  scrollViewScaled: boolean;
+  onSelect: () => void;
+}) => {
+  const rotateSelectorProgress = useSharedValue(0);
+
+  useEffect(() => {
+    // Lance l'animation quand sélectionné
+    rotateSelectorProgress.value = withSpring(scrollViewScaled ? 10 : 0, springConfig);
+  }, [scrollViewScaled]);
+
+  const animatedItemStyle = useAnimatedStyle(() => {
+    const direction = index % 2 === 0 ? -1 : 1;
+    return {
+      transform: [
+        {
+          rotate: `${direction * rotateSelectorProgress.value}deg`,
+        },
+      ],
+    };
+  });
+
+  return (
+    <Animated.View style={animatedItemStyle}>
+      <TouchableOpacity
+        onPress={onSelect}
+        className="items-center p-2 rounded-3xl justify-center"
+        style={{
+          backgroundColor: item.backgroundColor,
+          width: 64,
+          height: 80,
+          borderWidth: selected ? 2 : 0,
+          borderColor: TW_COLORS.PRIMARY,
+          marginHorizontal: (screenWidth / 5 - 64) / 2,
+        }}
+      >
+        <View className="flex-1 justify-center items-center">
+          {item.icon}
+        </View>
+      </TouchableOpacity>
+    </Animated.View>
   );
 };
 

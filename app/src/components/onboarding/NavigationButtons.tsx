@@ -13,10 +13,21 @@ export const NavigationButtons: React.FC<NavigationButtonsProps> = ({
   nextDisabled = false,
   nextText = 'Suivant',
   skipText = 'Passer',
-  loading = false
+  loading = false,
+  absolute = false
 }) => {
   return (
-    <View className="flex-row justify-between items-center p-6 px-6 bg-white">
+    <View
+      style={absolute ? {
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
+      } : null}
+      className={`flex-row justify-between items-center p-6 px-6 ${absolute ? 'bg-white/50 pb-10' : ''}`}>
+
+      {/* <View
+        className="flex-row justify-between items-center p-6 px-6 bg-white/50"> */}
       <JMButton
         onPress={onNext}
         title={nextText}

@@ -5,6 +5,7 @@ import CheckInHeader from '@/components/onboarding/CheckInHeader';
 import NavigationButtons from '@/components/onboarding/NavigationButtons';
 import { TW_COLORS } from '@/utils/constants';
 
+
 type Props = OnboardingV2ScreenProps<'Intro'>;
 
 export const OnboardingCheckInIntroductionCompleted: React.FC<Props> = ({ navigation }) => {
@@ -30,27 +31,26 @@ export const OnboardingCheckInIntroductionCompleted: React.FC<Props> = ({ naviga
         showPrevious={true}
         showSkip={true}
       />
-      
       <View className="flex-1 justify-center items-center px-8">
-        <Text 
+        <Text
           className="text-4xl font-bold text-center mb-6"
           style={{ color: TW_COLORS.TEXT_PRIMARY }}
         >
           👏 Un pas de plus vers une meilleure connaissance de vous.
         </Text>
 
-        <Text 
+        <Text
           className="text-xl text-center mb-8 leading-8"
           style={{ color: TW_COLORS.TEXT_SECONDARY }}
         >
-            Votre observation du jour a bien été enregistrée.
+          Votre observation du jour a bien été enregistrée.
         </Text>
-        <Text 
+        <Text
           className="text-s text-center mb-8 leading-8"
           style={{ color: TW_COLORS.TEXT_SECONDARY }}
         >
-            Vous pouvez revenir chaque jour pour observez votre état
-            et suivre ces éléments.
+          Vous pouvez revenir chaque jour pour observez votre état
+          et suivre ces éléments.
         </Text>
       </View>
 

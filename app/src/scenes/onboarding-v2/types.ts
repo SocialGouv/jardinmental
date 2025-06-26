@@ -1,12 +1,12 @@
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 
-export type OnboardingStep = 
-  | 'INTRO' 
-  | 'PROFILE' 
-  | 'CAROUSEL' 
-  | 'DIFFICULTIES' 
-  | 'OBJECTIVE' 
+export type OnboardingStep =
+  | 'INTRO'
+  | 'PROFILE'
+  | 'CAROUSEL'
+  | 'DIFFICULTIES'
+  | 'OBJECTIVE'
   | 'CHECKIN';
 
 export interface UserProfile {
@@ -71,6 +71,7 @@ export interface NavigationButtonsProps {
   nextText?: string;
   skipText?: string;
   loading?: boolean;
+  absolute?: boolean
 }
 
 // Carousel Props

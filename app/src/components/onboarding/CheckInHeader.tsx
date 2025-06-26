@@ -1,6 +1,8 @@
 import { TW_COLORS } from '@/utils/constants';
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
+import { ViewStyle } from 'react-native';
+import Animated from 'react-native-reanimated';
 
 interface CheckInHeaderProps {
   title: string;
@@ -9,6 +11,8 @@ interface CheckInHeaderProps {
   showPrevious?: boolean;
   showSkip?: boolean;
   skipText?: string;
+  animatedTextColor?: Animated.AnimateStyle<ViewStyle>;
+  withMargin?: boolean;
 }
 
 export const CheckInHeader: React.FC<CheckInHeaderProps> = ({
@@ -17,53 +21,71 @@ export const CheckInHeader: React.FC<CheckInHeaderProps> = ({
   onSkip,
   showPrevious = true,
   showSkip = false,
-  skipText = 'Passer'
+  skipText = 'Passer',
+  animatedTextColor,
+  withMargin = true
 }) => {
   return (
-    <View className="flex-row justify-between items-center px-6 py-4">
+    <View className={`justify-center items-center py-4 ${withMargin ? 'px-6' : ''}`} style={{ position: 'relative' }}>
       {/* Bouton Précédent */}
       {showPrevious && onPrevious ? (
-        <TouchableOpacity 
-          onPress={onPrevious} 
+        <TouchableOpacity
+          onPress={onPrevious}
           className="px-3 py-2 rounded-lg"
-          style={{ backgroundColor: 'transparent' }}
+          style={{
+            position: 'absolute',
+            left: withMargin ? 24 : 0,
+            backgroundColor: 'transparent',
+          }}
         >
-          <Text 
-            className="text-base font-medium"
-            style={{ color: TW_COLORS.PRIMARY }}
-          >
+          <Animated.Text className="text-base font-medium" style={[{ color: TW_COLORS.PRIMARY }, animatedTextColor]}>
             ←
-          </Text>
+          </Animated.Text>
         </TouchableOpacity>
       ) : (
-        <View className="px-3 py-2" />
+        <View
+          style={{
+            position: 'absolute',
+            left: withMargin ? 24 : 0,
+            width: 48, // même largeur que le bouton
+            height: 40,
+          }}
+        />
       )}
 
-      {/* Titre */}
-      <Text 
-        className="text-lg font-bold text-center flex-1 mx-4"
-        style={{ color: TW_COLORS.TEXT_PRIMARY }}
+      {/* Titre centré */}
+      <Animated.Text
         numberOfLines={2}
+        className="text-base text-center"
+        style={[{ color: TW_COLORS.TEXT_PRIMARY }, animatedTextColor]}
       >
         {title}
-      </Text>
+      </Animated.Text>
 
       {/* Bouton Passer */}
       {showSkip && onSkip ? (
-        <TouchableOpacity 
-          onPress={onSkip} 
+        <TouchableOpacity
+          onPress={onSkip}
           className="px-3 py-2 rounded-lg"
-          style={{ backgroundColor: 'transparent' }}
+          style={{
+            position: 'absolute',
+            right: withMargin ? 24 : 0,
+            backgroundColor: 'transparent',
+          }}
         >
-          <Text 
-            className="text-base font-medium"
-            style={{ color: TW_COLORS.SECONDARY }}
-          >
+          <Animated.Text className="text-base" style={[{ color: TW_COLORS.SECONDARY }, animatedTextColor]}>
             {skipText}
-          </Text>
+          </Animated.Text>
         </TouchableOpacity>
       ) : (
-        <View className="px-3 py-2" />
+        <View
+          style={{
+            position: 'absolute',
+            right: withMargin ? 24 : 0,
+            width: 48,
+            height: 40,
+          }}
+        />
       )}
     </View>
   );
