@@ -6,6 +6,7 @@ import { TW_COLORS } from '@/utils/constants';
 import Leaf from '@assets/svg/illustrations/Leaf'
 import TwoLeaf from '@assets/svg/illustrations/TwoLeaf'
 import { OnboardingV2ScreenProps } from './types';
+import BeigeCard from './BeigeCard';
 type Props = OnboardingV2ScreenProps<'Intro'>;
 
 export const BeigeWrapperScreen: React.FC<Props> = ({
@@ -25,11 +26,9 @@ export const BeigeWrapperScreen: React.FC<Props> = ({
                 showSkip={true}
             />
 
-            <View className="flex-1 justify-center items-center p-4">
-                <View className={'rounded-3xl bg-white p-8 w-full border border-[#FCEBD9]'}>
-                    {children}
-                </View>
-            </View>
+            <BeigeCard>
+                {children}
+            </BeigeCard>
             <Leaf
                 style={{
                     position: 'absolute',

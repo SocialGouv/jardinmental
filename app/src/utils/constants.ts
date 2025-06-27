@@ -303,7 +303,7 @@ export const MATOMO_DIMENSION = {
 
 export const STEP_ORDER: OnboardingStep[] = [
   'INTRO',
-  'PROFILE', 
+  'PROFILE',
   'CAROUSEL',
   'DIFFICULTIES',
   'OBJECTIVE',

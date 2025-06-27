@@ -1,8 +1,8 @@
 import CheckInHeader from "@/components/onboarding/CheckInHeader";
-import { ReactNode } from "react";
+import React, { ReactNode } from "react";
 import { Platform, ViewStyle } from "react-native";
 import Animated from "react-native-reanimated";
-
+import MonochromeLogo from "@assets/svg/illustrations/MonochromeLogo"
 
 export default function BannerHeader({
     animatedStatusBarColor,
@@ -27,6 +27,7 @@ export default function BannerHeader({
             style={[animatedStatusBarColor]}
             className="rounded-b-3xl py-4 pb-8 px-6"
         >
+            {/* <MonochromeLogo style={{ position: 'absolute', top: -20, left: 0 }} /> */}
             <CheckInHeader
                 title="Observation du jour"
                 withMargin={false}

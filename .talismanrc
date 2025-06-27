@@ -21,6 +21,8 @@ fileignoreconfig:
   checksum: fa700b84c6ced31f07459c3d54b35226c4239f902494750fb42a86e841044ed8
 - filename: app/src/entities/SurveyScreen.ts
   checksum: adce116e39eb8ba8fae33399ae2b92f6317c362be960b298c8a795d84a11f421
+- filename: app/src/scenes/onboarding-v2/CarouselScreen.tsx
+  checksum: 4f0aaf86c03496f7e5d81b837058253040ed186f9e2a7f5939e5a7dd95ef0867
 - filename: app/src/scenes/onboarding-v2/checkIn/mood/OnboardingCheckInHowDoYouFeelDetailsScreen.tsx
   checksum: 8a737e4021e9d7c66a54fbf4b5df8a91ad528a6af70a25d7c75f60fb3f444a2c
 - filename: app/src/scenes/onboarding-v2/checkIn/mood/OnboardingCheckInHowDoYouFeelScreen.tsx
