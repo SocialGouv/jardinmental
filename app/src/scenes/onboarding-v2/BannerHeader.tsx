@@ -20,9 +20,9 @@ export default function BannerHeader({
     children?: ReactNode;
 }) {
     return <>
-        {Platform.OS === 'ios' && (
-            <Animated.View style={[animatedStatusBarColor, { position: 'absolute', top: 0, left: 0, right: 0, height: 70, zIndex: 1000 }]} />
-        )}
+        {/* {Platform.OS === 'ios' && ( */}
+        <Animated.View style={[animatedStatusBarColor, { position: 'absolute', top: 0, left: 0, right: 0, height: 70, zIndex: 1000 }]} />
+        {/* )} */}
         <Animated.View
             style={[animatedStatusBarColor]}
             className="rounded-b-3xl py-4 pb-8 px-6"

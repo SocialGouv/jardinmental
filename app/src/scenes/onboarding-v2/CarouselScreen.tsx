@@ -11,6 +11,7 @@ import BeigeWrapperScreen from './BeigeWrapperScreen';
 import Leaf from '@assets/svg/illustrations/Leaf';
 import TwoLeaf from '@assets/svg/illustrations/TwoLeaf';
 import CheckInHeader from '@/components/onboarding/CheckInHeader';
+import { SafeAreaViewWithOptionalHeader } from '../onboarding/ProgressHeader';
 
 type Props = OnboardingV2ScreenProps<'Carousel'>;
 
@@ -86,12 +87,13 @@ export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
     />
   );
 
-  return <SafeAreaView className="flex-1 bg-[#FDF2E7]">
+  return <SafeAreaViewWithOptionalHeader className="flex-1 bg-[#FDF2E7]">
     <CheckInHeader
       title=""
       onPrevious={handlePrevious}
       onSkip={handleSkip}
       showPrevious={true}
+      skipText='Passer'
       showSkip={true}
     />
 
@@ -113,12 +115,12 @@ export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
     />
 
     {/* Indicateurs de pagination et navigation */}
-    <View className="absolute bottom-8 left-0 right-0">
+    <View className="left-0 right-0">
       <View className="flex-row justify-center mb-6">
         {slides.map((_, index) => renderPaginationDot(index))}
       </View>
       <NavigationButtons nextText={
-        currentIndex === slides.length - 1 ? 'Continuer' : 'Suivant'
+        currentIndex === slides.length - 1 ? 'Démarrer sur jardin' : 'Suivant'
       }
         onNext={goToNextSlide} />
     </View>
@@ -150,12 +152,12 @@ export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
         left: -60,
         zIndex: 2
       }} />
-    <NavigationButtons
+    {/* <NavigationButtons
       onNext={handleNext}
       showPrevious={false}
       nextText="Continuer vers ma première"
-    />
-  </SafeAreaView>
+    /> */}
+  </SafeAreaViewWithOptionalHeader>
 
   // return (
   //   <SafeAreaView className="flex-1 bg-white">

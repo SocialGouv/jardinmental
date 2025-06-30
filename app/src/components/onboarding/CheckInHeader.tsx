@@ -26,7 +26,7 @@ export const CheckInHeader: React.FC<CheckInHeaderProps> = ({
   withMargin = true
 }) => {
   return (
-    <View className={`justify-center items-center py-4 ${withMargin ? 'px-6' : ''}`} style={{ position: 'relative' }}>
+    <View className={`justify-center items-center py-4 ${withMargin ? 'px-6' : ''}`} style={{ position: 'relative', zIndex: 10 }}>
       {/* Bouton Précédent */}
       {showPrevious && onPrevious ? (
         <TouchableOpacity

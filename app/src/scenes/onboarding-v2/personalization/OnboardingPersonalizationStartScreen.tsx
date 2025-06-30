@@ -5,6 +5,7 @@ import ProgressIndicator from '@/components/onboarding/ProgressIndicator';
 import { OnboardingV2ScreenProps } from '../types';
 import CheckInHeader from '@/components/onboarding/CheckInHeader';
 import { TW_COLORS } from '@/utils/constants';
+import { SafeAreaViewWithOptionalHeader } from '@/scenes/onboarding/ProgressHeader';
 
 type Props = OnboardingV2ScreenProps<'Intro'>;
 
@@ -15,26 +16,26 @@ export const OnboardingPersonalizationStartScreen: React.FC<Props> = ({ navigati
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-white">    
-          <CheckInHeader
-            title=""
-            onPrevious={() => navigation.goBack()}
-            onSkip={handleNext}
-            showPrevious={true}
-            showSkip={true}
-          />   
-          <ProgressIndicator currentStep={1} totalSteps={4} />  
-  
+    <SafeAreaViewWithOptionalHeader className="flex-1 bg-white">
+      <CheckInHeader
+        title=""
+        onPrevious={() => navigation.goBack()}
+        onSkip={handleNext}
+        showPrevious={true}
+        showSkip={true}
+      />
+      <ProgressIndicator currentStep={1} totalSteps={4} />
+
       <View className="flex-1 justify-center items-center px-8">
         {/* Titre principal */}
-        <Text 
+        <Text
           className="text-2xl font-bold text-center mb-6"
           style={{ color: TW_COLORS.TEXT_PRIMARY }}
         >
           Créons ensemble un suivi qui vous ressemble
         </Text>
 
-        <Text 
+        <Text
           className="text-xl text-left mb-8 leading-8"
           style={{ color: TW_COLORS.TEXT_SECONDARY }}
         >
@@ -45,7 +46,7 @@ export const OnboardingPersonalizationStartScreen: React.FC<Props> = ({ navigati
           Sentez vous libre d’avancer à votre rythme.{'\n'}
         </Text>
 
-        <Text 
+        <Text
           className="text-base text-center leading-6"
           style={{ color: TW_COLORS.TEXT_SECONDARY }}
         >
@@ -58,7 +59,7 @@ export const OnboardingPersonalizationStartScreen: React.FC<Props> = ({ navigati
         showPrevious={false}
         nextText="Créer mon suivi personnalisé"
       />
-    </SafeAreaView>
+    </SafeAreaViewWithOptionalHeader>
   );
 };
 

@@ -5,12 +5,14 @@ import { NavigationButtons } from '../../components/onboarding/NavigationButtons
 import { TW_COLORS } from '@/utils/constants';
 import BannerHeader from './BannerHeader';
 import { useAnimatedStyle } from 'react-native-reanimated';
+import BannerHeaderIntro from './BannerHeaderIntro';
+import { SafeAreaViewWithOptionalHeader } from '../onboarding/ProgressHeader';
 
 type Props = OnboardingV2ScreenProps<'Intro'>;
 
 export const IntroScreen: React.FC<Props> = ({ navigation }) => {
   const handleNext = () => {
-    navigation.navigate('Profile');
+    navigation.navigate('Carousel');
   };
 
   const animatedStatusBarColor = useAnimatedStyle(() => {
@@ -30,7 +32,7 @@ export const IntroScreen: React.FC<Props> = ({ navigation }) => {
 
 
   return (
-    <SafeAreaView className="flex-1 bg-white">
+    <SafeAreaViewWithOptionalHeader className="flex-1 bg-white">
       {/* <View className="flex-1 justify-center items-center px-8">
         <View className="mb-8">
           <View
@@ -65,14 +67,14 @@ export const IntroScreen: React.FC<Props> = ({ navigation }) => {
         </Text>
       </View> */}
 
-      <BannerHeader
+      <BannerHeaderIntro
         animatedStatusBarColor={animatedStatusBarColor}
         animatedTextColor={animatedTextColor}
         title={`Jardin Mental est un outils de suivi de votre santé mentale.`}
         handlePrevious={() => { }}
         handleSkip={() => { }}
       >
-      </BannerHeader>
+      </BannerHeaderIntro>
       <View className="flex-1 justify-center items-center px-8">
         {/* <View className="mb-8">
           <View
@@ -112,7 +114,7 @@ export const IntroScreen: React.FC<Props> = ({ navigation }) => {
         showPrevious={false}
         nextText="Découvrir Jardin Mental"
       />
-    </SafeAreaView>
+    </SafeAreaViewWithOptionalHeader>
   );
 };
 

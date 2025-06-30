@@ -18,6 +18,8 @@ import OnboardingCheckInIntroductionCompletedScreen from './checkIn/OnboardingCh
 import OnboardingChooseIndicatorScreen from './indicators/OnboardingChooseIndicatorScreen';
 import ReminderScreen from './reminder/ReminderScreen';
 import { useNavigation } from '@react-navigation/native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { progressHeaderOptions } from '../onboarding/ProgressHeader';
 
 const Stack = createStackNavigator<OnboardingV2StackParamList>();
 
@@ -44,6 +46,9 @@ const OnboardingV2Navigator: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const navigation = useNavigation();
+  const insets = useSafeAreaInsets();
+  const slidesCount = 10;
+  const headerOptions = progressHeaderOptions({ insets, slidesCount });
 
   useEffect(() => {
     const setupStack = async () => {
@@ -69,9 +74,9 @@ const OnboardingV2Navigator: React.FC = () => {
     if (state && state.routes && state.routes.length > 0) {
       const currentRoute = state.routes[state.index];
       const currentScreenName = currentRoute.name;
-      
+
       try {
-        await localStorage.setOnboardingStep(currentScreenName);        
+        await localStorage.setOnboardingStep(currentScreenName);
       } catch (error) {
         console.error('Error saving navigation state:', error);
       }
@@ -84,7 +89,7 @@ const OnboardingV2Navigator: React.FC = () => {
       initialRouteName={initialRouteName}
       screenOptions={{
         headerShown: false,
-        gestureEnabled: false, 
+        gestureEnabled: false,
         cardStyleInterpolator: ({ current, layouts }) => {
           return {
             cardStyle: {
@@ -106,59 +111,57 @@ const OnboardingV2Navigator: React.FC = () => {
         },
       }}
     >
-      <Stack.Screen 
-        name="Intro" 
+      <Stack.Screen
+        name="Intro"
         component={IntroScreen}
-        options={{
-          gestureEnabled: false,
-        }}
       />
-      <Stack.Screen 
-        name="Profile" 
+      <Stack.Screen
+        name="Profile"
         component={ProfileScreen}
       />
-      <Stack.Screen 
-        name="Carousel" 
+      <Stack.Screen
+        name="Carousel"
         component={CarouselScreen}
       />
-      <Stack.Screen 
-        name="PersonalizationStart" 
+      {/* Use header */}
+      <Stack.Screen
+        name="PersonalizationStart"
         component={OnboardingPersonalizationStartScreen}
       />
-      <Stack.Screen 
-        name="PersonalizationDifficulties" 
+      <Stack.Screen
+        name="PersonalizationDifficulties"
         component={DifficultiesScreen}
       />
-      <Stack.Screen 
-        name="PersonalizationObjective" 
+      <Stack.Screen
+        name="PersonalizationObjective"
         component={ObjectiveScreen}
       />
-      <Stack.Screen 
-        name="OnboardingCheckInStart" 
+      <Stack.Screen
+        name="OnboardingCheckInStart"
         component={OnboardingCheckInStartScreen}
       />
-      <Stack.Screen 
-        name="OnboardingCheckInHowDoYouFeel" 
+      <Stack.Screen
+        name="OnboardingCheckInHowDoYouFeel"
         component={OnboardingCheckInHowDoYouFeelScreen}
       />
-      <Stack.Screen 
-        name="OnboardingCheckInHowDoYouFeelDetails" 
+      <Stack.Screen
+        name="OnboardingCheckInHowDoYouFeelDetails"
         component={OnboardingCheckInLastMoodsScreen}
       />
-      <Stack.Screen 
-        name="OnboardingCheckInMoodSummary" 
+      <Stack.Screen
+        name="OnboardingCheckInMoodSummary"
         component={OnboardingCheckInMoodSummaryScreen}
       />
-      <Stack.Screen 
-        name="OnboardingCheckInSleep" 
+      <Stack.Screen
+        name="OnboardingCheckInSleep"
         component={OnboardingCheckInSleepScreen}
       />
-      <Stack.Screen 
-        name="OnboardingCheckInIntroductionCompleted" 
+      <Stack.Screen
+        name="OnboardingCheckInIntroductionCompleted"
         component={OnboardingCheckInIntroductionCompletedScreen}
       />
-      <Stack.Screen 
-        name="OnboardingChooseIndicator" 
+      <Stack.Screen
+        name="OnboardingChooseIndicator"
         component={OnboardingChooseIndicatorScreen}
       />
     </Stack.Navigator>
@@ -167,7 +170,7 @@ const OnboardingV2Navigator: React.FC = () => {
 
 const OnboardingV2: React.FC = () => {
   return (
-      <OnboardingV2Navigator />
+    <OnboardingV2Navigator />
   );
 };
 

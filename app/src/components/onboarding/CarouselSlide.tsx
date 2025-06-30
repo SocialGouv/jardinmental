@@ -38,7 +38,6 @@ export const CarouselSlide: React.FC<CarouselSlideProps> = ({
         className="text-2xl font-bold text-center mb-6 text-primary"
         style={{
           color: TW_COLORS.TEXT_PRIMARY,
-          lineHeight: 40
         }}
       >
         {slide.title}
