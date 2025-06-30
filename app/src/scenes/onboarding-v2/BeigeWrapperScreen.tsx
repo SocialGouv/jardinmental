@@ -7,6 +7,7 @@ import Leaf from '@assets/svg/illustrations/Leaf'
 import TwoLeaf from '@assets/svg/illustrations/TwoLeaf'
 import { OnboardingV2ScreenProps } from './types';
 import BeigeCard from './BeigeCard';
+import { SafeAreaViewWithOptionalHeader } from '../onboarding/ProgressHeader';
 type Props = OnboardingV2ScreenProps<'Intro'>;
 
 export const BeigeWrapperScreen: React.FC<Props> = ({
@@ -17,7 +18,7 @@ export const BeigeWrapperScreen: React.FC<Props> = ({
 
 
     return (
-        <SafeAreaView className="flex-1 bg-[#FDF2E7]">
+        <SafeAreaViewWithOptionalHeader className="flex-1 bg-[#FDF2E7]">
             <CheckInHeader
                 title=""
                 onPrevious={handlePrevious}
@@ -62,7 +63,7 @@ export const BeigeWrapperScreen: React.FC<Props> = ({
                 showPrevious={false}
                 nextText="Continuer vers ma première"
             />
-        </SafeAreaView>
+        </SafeAreaViewWithOptionalHeader>
     );
 };
 

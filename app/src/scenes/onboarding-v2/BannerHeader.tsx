@@ -11,18 +11,20 @@ export default function BannerHeader({
     handleSkip,
     title,
     children,
+    header
 }: {
     animatedStatusBarColor?: Animated.AnimateStyle<ViewStyle>;
     animatedTextColor?: Animated.AnimateStyle<ViewStyle>;
     handlePrevious: () => void;
     handleSkip: () => void;
     title: string;
+    header?: ReactNode;
     children?: ReactNode;
 }) {
     return <>
-        {/* {Platform.OS === 'ios' && ( */}
-        <Animated.View style={[animatedStatusBarColor, { position: 'absolute', top: 0, left: 0, right: 0, height: 70, zIndex: 1000 }]} />
-        {/* )} */}
+        {Platform.OS === 'ios' && (
+            <Animated.View style={[animatedStatusBarColor, { position: 'absolute', top: 0, left: 0, right: 0, height: 70, zIndex: 1000 }]} />
+        )}
         <Animated.View
             style={[animatedStatusBarColor]}
             className="rounded-b-3xl py-4 pb-8 px-6"
@@ -37,6 +39,7 @@ export default function BannerHeader({
                 animatedTextColor={animatedTextColor}
                 showSkip={true}
             />
+            {header}
             <Animated.Text
                 className="text-2xl font-bold text-left mt-8"
                 style={[animatedTextColor]}

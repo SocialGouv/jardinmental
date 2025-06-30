@@ -7,6 +7,7 @@ import { TW_COLORS } from '@/utils/constants';
 import { useAnimatedStyle } from 'react-native-reanimated';
 import { moodBackgroundColors, moodEmojis } from '@/utils/mood';
 import BannerHeader from '../../BannerHeader';
+import { SafeAreaViewWithOptionalHeader } from '@/scenes/onboarding/ProgressHeader';
 
 
 type Props = OnboardingV2ScreenProps<'Intro'>;
@@ -41,7 +42,7 @@ export const OnboardingCheckInMoodSummaryScreen: React.FC<Props> = ({ navigation
   })
 
   return (
-    <SafeAreaView className="flex-1 bg-white">
+    <SafeAreaViewWithOptionalHeader className="flex-1 bg-white">
       <BannerHeader
         animatedStatusBarColor={animatedStatusBarColor}
         animatedTextColor={animatedTextColor}
@@ -75,7 +76,7 @@ export const OnboardingCheckInMoodSummaryScreen: React.FC<Props> = ({ navigation
         showPrevious={false}
         nextText="Passer au bilan sommeil"
       />
-    </SafeAreaView>
+    </SafeAreaViewWithOptionalHeader>
   );
 };
 

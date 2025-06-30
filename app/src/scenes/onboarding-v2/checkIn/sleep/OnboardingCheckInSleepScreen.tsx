@@ -8,6 +8,7 @@ import { beforeToday, formatDay } from '@/utils/date/helpers';
 import { INDICATEURS_SOMMEIL } from '@/utils/liste_indicateurs.1';
 import { generateIndicatorFromPredefinedIndicator } from '@/entities/Indicator';
 import { TW_COLORS } from '@/utils/constants';
+import { SafeAreaViewWithOptionalHeader } from '@/scenes/onboarding/ProgressHeader';
 
 type Props = OnboardingV2ScreenProps<'OnboardingCheckInHowDoYouFeel'>;
 
@@ -15,7 +16,7 @@ const moodEmojis = ['😢', '😕', '😐', '🙂', '😊'];
 const moodLabels = ['Très mal dormi', 'Mal dormi', 'Ok', 'Bien dormi', 'Très bien dormi'];
 
 export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
-  const [checkInData, setCheckInData] = useState<number|null>(null);
+  const [checkInData, setCheckInData] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
   const [diaryData, addNewEntryToDiaryData] = useContext(DiaryDataContext);
 
@@ -26,22 +27,23 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
   }, [checkInData])
 
   const handleComplete = async () => {
-      setLoading(true);
-      // Sauvegarder les données du check-in
-      const date = formatDay(beforeToday(0))
-      const prev = diaryData[date] || {}
+    setLoading(true);
+    // Sauvegarder les données du check-in
+    const date = formatDay(beforeToday(0))
+    const prev = diaryData[date] || {}
 
-      const key = INDICATEURS_SOMMEIL.name
-      const updatedAnswers = {
-          ...prev,
-          [key]: { ...prev[key], value: checkInData, _indicateur: generateIndicatorFromPredefinedIndicator(INDICATEURS_SOMMEIL)
-          }
+    const key = INDICATEURS_SOMMEIL.name
+    const updatedAnswers = {
+      ...prev,
+      [key]: {
+        ...prev[key], value: checkInData, _indicateur: generateIndicatorFromPredefinedIndicator(INDICATEURS_SOMMEIL)
       }
-      addNewEntryToDiaryData({
-          date,
-          answers: updatedAnswers
-      });
-      navigation.navigate('OnboardingCheckInIntroductionCompleted')
+    }
+    addNewEntryToDiaryData({
+      date,
+      answers: updatedAnswers
+    });
+    navigation.navigate('OnboardingCheckInIntroductionCompleted')
   };
 
   const handlePrevious = () => {
@@ -74,7 +76,7 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
               }}
             >
               <Text className="text-2xl mb-1">{emoji}</Text>
-              <Text 
+              <Text
                 className="text-xs text-center"
                 style={{ color: TW_COLORS.TEXT_SECONDARY }}
               >
@@ -88,7 +90,7 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
   );
 
   return (
-    <SafeAreaView className="flex-1 bg-white">
+    <SafeAreaViewWithOptionalHeader className="flex-1 bg-white">
       <CheckInHeader
         title="Qualité du sommeil"
         onPrevious={handlePrevious}
@@ -96,18 +98,18 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
         showPrevious={true}
         showSkip={true}
       />
-      
+
       <View className="flex-1 justify-center items-center px-8">
-        <Text 
+        <Text
           className="text-2xl font-bold text-center mb-8"
           style={{ color: TW_COLORS.TEXT_PRIMARY }}
         >
           Comment avez-vous dormi ?
         </Text>
-        
+
         {renderSleepSelector()}
       </View>
-    </SafeAreaView>
+    </SafeAreaViewWithOptionalHeader>
   );
 };
 

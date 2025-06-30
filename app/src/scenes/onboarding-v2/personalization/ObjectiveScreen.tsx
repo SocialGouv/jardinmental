@@ -6,6 +6,9 @@ import { ProgressIndicator } from '@/components/onboarding/ProgressIndicator';
 import { useUserProfile } from '@/context/userProfile';
 import CheckInHeader from '@/components/onboarding/CheckInHeader';
 import { TW_COLORS } from '@/utils/constants';
+import { SafeAreaViewWithOptionalHeader } from '@/scenes/onboarding/ProgressHeader';
+import BannerHeader from '../BannerHeader';
+import { useAnimatedStyle } from 'react-native-reanimated';
 
 type Props = OnboardingV2ScreenProps<'PersonalizationObjective'>;
 
@@ -38,20 +41,20 @@ export const ObjectiveScreen: React.FC<Props> = ({ navigation, route }) => {
 
   const handleNext = async () => {
     if (selectedObjective) {
-      
+
       if (profile) {
         const existingObjectives = profile.objectives || [];
         const updatedObjectives = [...existingObjectives];
-        
+
         // Check if objective already exists, if not add it
         const existingIndex = updatedObjectives.findIndex(obj => obj.id === selectedObjective.id);
         if (existingIndex === -1) {
           updatedObjectives.push(selectedObjective);
         }
-        
+
         await updateUserObjectives(updatedObjectives);
       }
-      
+
       navigation.navigate(NextScreen);
     }
   };
@@ -76,7 +79,7 @@ export const ObjectiveScreen: React.FC<Props> = ({ navigation, route }) => {
       <View className="flex-row items-start">
         <View className="flex-1">
           <View className="flex-row items-center justify-between mb-1">
-            <Text 
+            <Text
               className="text-lg font-semibold"
               style={{ color: TW_COLORS.TEXT_PRIMARY }}
             >
@@ -85,7 +88,7 @@ export const ObjectiveScreen: React.FC<Props> = ({ navigation, route }) => {
           </View>
         </View>
         {selectedObjective?.id === item.id && (
-          <View 
+          <View
             className="w-6 h-6 rounded-full items-center justify-center ml-2"
             style={{ backgroundColor: TW_COLORS.PRIMARY }}
           >
@@ -96,27 +99,49 @@ export const ObjectiveScreen: React.FC<Props> = ({ navigation, route }) => {
     </TouchableOpacity>
   );
 
+  const animatedStatusBarColor = useAnimatedStyle(() => {
+    return {
+      backgroundColor: TW_COLORS.PRIMARY,
+    };
+  })
+
+  const animatedTextColor = useAnimatedStyle(() => {
+    return {
+      backgroundColor: 'transparent',
+      color: TW_COLORS.WHITE,
+      alignContent: 'center',
+      textAlign: 'center'
+    };
+  })
+
   return (
-    <SafeAreaView className="flex-1 bg-white">
-      <CheckInHeader
+    <SafeAreaViewWithOptionalHeader className="flex-1 bg-white">
+      {/* <CheckInHeader
         title=""
         onPrevious={handlePrevious}
         onSkip={handleSkip}
         showPrevious={true}
         showSkip={true}
-      />   
-      <ProgressIndicator currentStep={3} totalSteps={4} />
-      
+      /> */}
+      {/* <ProgressIndicator currentStep={3} totalSteps={4} /> */}
+      <BannerHeader
+        animatedStatusBarColor={animatedStatusBarColor}
+        animatedTextColor={animatedTextColor}
+        header={<ProgressIndicator currentStep={3} totalSteps={3} />}
+        title={'Créons ensemble un suivi qui vous ressemble'}
+        handlePrevious={handlePrevious}
+        handleSkip={handleSkip}
+      />
       <View className="flex-1">
         {/* En-tête */}
         <View className="px-6 py-4">
-          <Text 
+          <Text
             className="text-2xl font-bold text-center mb-2"
             style={{ color: TW_COLORS.TEXT_PRIMARY }}
           >
             Quel est votre priorité aujourd'hui dans Jardin Mental
           </Text>
-          <Text 
+          <Text
             className="text-base text-center mb-2"
             style={{ color: TW_COLORS.TEXT_SECONDARY }}
           >
@@ -142,7 +167,7 @@ export const ObjectiveScreen: React.FC<Props> = ({ navigation, route }) => {
         nextText="Continuer"
         skipText="Passer cette étape"
       />
-    </SafeAreaView>
+    </SafeAreaViewWithOptionalHeader>
   );
 };
 

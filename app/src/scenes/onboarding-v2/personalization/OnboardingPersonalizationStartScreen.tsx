@@ -6,6 +6,8 @@ import { OnboardingV2ScreenProps } from '../types';
 import CheckInHeader from '@/components/onboarding/CheckInHeader';
 import { TW_COLORS } from '@/utils/constants';
 import { SafeAreaViewWithOptionalHeader } from '@/scenes/onboarding/ProgressHeader';
+import BannerHeader from '../BannerHeader';
+import { useAnimatedStyle } from 'react-native-reanimated';
 
 type Props = OnboardingV2ScreenProps<'Intro'>;
 
@@ -15,25 +17,55 @@ export const OnboardingPersonalizationStartScreen: React.FC<Props> = ({ navigati
     navigation.navigate('PersonalizationDifficulties');
   };
 
+  const animatedStatusBarColor = useAnimatedStyle(() => {
+    return {
+      backgroundColor: TW_COLORS.PRIMARY,
+    };
+  })
+
+  const animatedTextColor = useAnimatedStyle(() => {
+    return {
+      backgroundColor: 'transparent',
+      color: TW_COLORS.WHITE,
+      alignContent: 'center',
+      textAlign: 'center'
+    };
+  })
+
+  const handlePrevious = () => {
+    navigation.goBack();
+  }
+  const handleSkip = () => {
+    handleNext()
+  }
+
   return (
     <SafeAreaViewWithOptionalHeader className="flex-1 bg-white">
-      <CheckInHeader
+      <BannerHeader
+        animatedStatusBarColor={animatedStatusBarColor}
+        animatedTextColor={animatedTextColor}
+        header={<ProgressIndicator currentStep={1} totalSteps={3} />}
+        title={'Créons ensemble un suivi qui vous ressemble'}
+        handlePrevious={handlePrevious}
+        handleSkip={handleSkip}
+      />
+      {/* <CheckInHeader
         title=""
         onPrevious={() => navigation.goBack()}
         onSkip={handleNext}
         showPrevious={true}
         showSkip={true}
-      />
-      <ProgressIndicator currentStep={1} totalSteps={4} />
+      /> */}
+      {/* <ProgressIndicator currentStep={1} totalSteps={4} /> */}
 
       <View className="flex-1 justify-center items-center px-8">
         {/* Titre principal */}
-        <Text
+        {/* <Text
           className="text-2xl font-bold text-center mb-6"
           style={{ color: TW_COLORS.TEXT_PRIMARY }}
         >
           Créons ensemble un suivi qui vous ressemble
-        </Text>
+        </Text> */}
 
         <Text
           className="text-xl text-left mb-8 leading-8"

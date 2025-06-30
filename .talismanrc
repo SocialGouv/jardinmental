@@ -27,6 +27,8 @@ fileignoreconfig:
   checksum: 8a737e4021e9d7c66a54fbf4b5df8a91ad528a6af70a25d7c75f60fb3f444a2c
 - filename: app/src/scenes/onboarding-v2/checkIn/mood/OnboardingCheckInHowDoYouFeelScreen.tsx
   checksum: 575b515356d2eb99c800dd7a63f09c26a9e545136aadbdcbe64278202c379af0
+- filename: app/src/scenes/onboarding-v2/checkIn/sleep/OnboardingCheckInSleepScreen.tsx
+  checksum: 395ba599b156e52606ad89266eb7bb2aab8172c73eed794edebaea3dd363db0f
 - filename: app/src/scenes/onboarding-v2/components/ProgressIndicator.tsx
   checksum: dc7b2bed449fd294af610f8fd941b9dd7257aaf65ec7f51e01ac9f903d029520
 - filename: app/src/scenes/onboarding-v2/context/OnboardingContext.tsx

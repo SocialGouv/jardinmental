@@ -6,6 +6,9 @@ import { ProgressIndicator } from '@/components/onboarding/ProgressIndicator';
 import { useUserProfile } from '@/context/userProfile';
 import CheckInHeader from '@/components/onboarding/CheckInHeader';
 import { TW_COLORS } from '@/utils/constants';
+import BannerHeader from '../BannerHeader';
+import { useAnimatedStyle } from 'react-native-reanimated';
+import { SafeAreaViewWithOptionalHeader } from '@/scenes/onboarding/ProgressHeader';
 
 type Props = OnboardingV2ScreenProps<'PersonalizationDifficulties'>;
 
@@ -104,31 +107,54 @@ export const DifficultiesScreen: React.FC<Props> = ({ navigation }) => {
     navigation.navigate('PersonalizationObjective');
   };
 
+  const animatedStatusBarColor = useAnimatedStyle(() => {
+    return {
+      backgroundColor: TW_COLORS.PRIMARY,
+    };
+  })
+
+  const animatedTextColor = useAnimatedStyle(() => {
+    return {
+      backgroundColor: 'transparent',
+      color: TW_COLORS.WHITE,
+      alignContent: 'center',
+      textAlign: 'center'
+    };
+  })
+
   const selectedCount = selectedDifficulties.filter(d => d.selected).length;
 
   return (
-    <SafeAreaView className="flex-1 bg-white">
-      <CheckInHeader
+    <SafeAreaViewWithOptionalHeader className="flex-1 bg-white">
+      {/* <CheckInHeader
         title=""
         onPrevious={handlePrevious}
         onSkip={handleNext}
         showPrevious={true}
         showSkip={true}
       />   
-      <ProgressIndicator currentStep={2} totalSteps={4} />
-      <ScrollView 
+      */}
+      <BannerHeader
+        animatedStatusBarColor={animatedStatusBarColor}
+        animatedTextColor={animatedTextColor}
+        header={<ProgressIndicator currentStep={2} totalSteps={3} />}
+        title={'Créons ensemble un suivi qui vous ressemble'}
+        handlePrevious={handlePrevious}
+        handleSkip={handleSkip}
+      />
+      <ScrollView
         className="flex-1"
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ flexGrow: 1 }}
       >
         <View className="px-6 py-4">
-          <Text 
+          <Text
             className="text-2xl font-bold text-center mb-2"
             style={{ color: TW_COLORS.TEXT_PRIMARY }}
           >
             Sur quoi avez-vous ressenti une difficulté ?
           </Text>
-          <Text 
+          <Text
             className="text-base text-center mb-2"
             style={{ color: TW_COLORS.TEXT_SECONDARY }}
           >
@@ -152,7 +178,7 @@ export const DifficultiesScreen: React.FC<Props> = ({ navigation }) => {
                   {categoryIcons[item.id] || '📝'}
                 </Text>
                 <View className="flex-1">
-                  <Text 
+                  <Text
                     className="text-lg font-medium"
                     style={{ color: TW_COLORS.TEXT_PRIMARY }}
                   >
@@ -160,7 +186,7 @@ export const DifficultiesScreen: React.FC<Props> = ({ navigation }) => {
                   </Text>
                 </View>
                 {item.selected && (
-                  <View 
+                  <View
                     className="w-6 h-6 rounded-full items-center justify-center"
                     style={{ backgroundColor: TW_COLORS.PRIMARY }}
                   >
@@ -173,15 +199,15 @@ export const DifficultiesScreen: React.FC<Props> = ({ navigation }) => {
         </View>
       </ScrollView>
       <NavigationButtons
-          onNext={handleNext}
-          onPrevious={handlePrevious}
-          onSkip={handleSkip}
-          nextDisabled={!selectedCount}
-          showSkip={true}
-          nextText="Continuer"
-          skipText="Passer cette étape"
-        />
-    </SafeAreaView>
+        onNext={handleNext}
+        onPrevious={handlePrevious}
+        onSkip={handleSkip}
+        nextDisabled={!selectedCount}
+        showSkip={true}
+        nextText="Continuer"
+        skipText="Passer cette étape"
+      />
+    </SafeAreaViewWithOptionalHeader>
   );
 };
 

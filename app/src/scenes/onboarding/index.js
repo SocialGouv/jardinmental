@@ -2,7 +2,6 @@ import React, { useCallback } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 
 const Stack = createStackNavigator();
-
 import OnboardingPresentation from "./onboarding";
 import OnboardingSupported from "./onboardingSupported";
 import OnboardingSymptoms from "./onboardingSymptoms";

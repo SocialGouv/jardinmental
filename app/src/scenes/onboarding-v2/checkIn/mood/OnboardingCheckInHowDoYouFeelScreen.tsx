@@ -19,6 +19,7 @@ import { generateIndicatorFromPredefinedIndicator } from '@/entities/Indicator';
 import BannerHeader from '../../BannerHeader';
 import { moodBackgroundColors, MoodEmoji, moodEmojis } from '@/utils/mood'
 import InstructionText from '../../InstructionText';
+import { SafeAreaViewWithOptionalHeader } from '@/scenes/onboarding/ProgressHeader';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -279,7 +280,7 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
   );
 
   return (
-    <SafeAreaView className="flex-1 bg-white">
+    <SafeAreaViewWithOptionalHeader className="flex-1 bg-white">
       <BannerHeader
         animatedStatusBarColor={animatedStatusBarColor}
         animatedTextColor={animatedTextColor}
@@ -302,7 +303,7 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
         nextDisabled={!selectedMoodIndex}
         nextText="Continuer"
       />
-    </SafeAreaView>
+    </SafeAreaViewWithOptionalHeader>
   );
 };
 

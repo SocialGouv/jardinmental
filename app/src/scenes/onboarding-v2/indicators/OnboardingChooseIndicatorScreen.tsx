@@ -10,6 +10,9 @@ import localStorage from '@/utils/localStorage';
 import { beforeToday, formatDay } from '@/utils/date/helpers';
 import { DiaryDataContext } from '@/context/diaryData';
 import { TW_COLORS } from '@/utils/constants';
+import { useAnimatedStyle } from 'react-native-reanimated';
+import BannerHeader from '../BannerHeader';
+import { SafeAreaViewWithOptionalHeader } from '@/scenes/onboarding/ProgressHeader';
 
 // @todo generated with AI, see which values we want to keep
 const DIFFICULTY_KEYWORDS: Record<string, string[]> = {
@@ -47,12 +50,12 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
   const [selectedIndicators, setSelectedIndicators] = useState<string[]>([]);
   const [showMoreIndicators, setShowMoreIndicators] = useState(false);
   const { profile, isLoading } = useUserProfile()
-  const [diaryData ] = useContext(DiaryDataContext);
+  const [diaryData] = useContext(DiaryDataContext);
 
   const recommendedIndicators = profile ? suggestIndicatorsForDifficulties(profile.selectedDifficulties.map(difficulty => (difficulty.id)))
     .filter(indicator => !BASE_INDICATORS.includes(indicator.uuid))
-  : [] 
-  const recommendedIndicatorsByCategory:  Record<string, PredefineIndicatorSchemaType[]> = recommendedIndicators.reduce((prev, curr) => {
+    : []
+  const recommendedIndicatorsByCategory: Record<string, PredefineIndicatorSchemaType[]> = recommendedIndicators.reduce((prev, curr) => {
     if (!prev[curr.category]) {
       prev[curr.category] = [];
     }
@@ -96,7 +99,7 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
     >
       <View className="flex-row items-center">
         <View className="flex-1">
-          <Text 
+          <Text
             className="text-lg font-medium"
             style={{ color: TW_COLORS.TEXT_PRIMARY }}
           >
@@ -104,7 +107,7 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
           </Text>
         </View>
         {selected && (
-          <View 
+          <View
             className="w-6 h-6 rounded-full items-center justify-center"
             style={{ backgroundColor: TW_COLORS.PRIMARY }}
           >
@@ -117,7 +120,7 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
 
   const renderCategorySection = (categoryName: string, indicators: PredefineIndicatorSchemaType[]) => (
     <View key={categoryName} className="mb-6">
-      <Text 
+      <Text
         className="text-lg font-semibold mb-3 mx-4 capitalize"
         style={{ color: TW_COLORS.TEXT_PRIMARY }}
       >
@@ -127,28 +130,36 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
     </View>
   );
 
+  const animatedStatusBarColor = useAnimatedStyle(() => {
+    return {
+      backgroundColor: TW_COLORS.PRIMARY,
+    };
+  })
+
+  const animatedTextColor = useAnimatedStyle(() => {
+    return {
+      backgroundColor: 'transparent',
+      color: TW_COLORS.WHITE,
+      alignContent: 'center',
+      textAlign: 'center'
+    };
+  })
+
   return (
-    <SafeAreaView className="flex-1 bg-white">
-      <ScrollView 
-        className="flex-1"
+    <SafeAreaViewWithOptionalHeader className="flex-1 bg-white">
+      <BannerHeader
+        animatedStatusBarColor={animatedStatusBarColor}
+        animatedTextColor={animatedTextColor}
+        title={`Je vous propose de suivre`}
+        handlePrevious={() => { }}
+        handleSkip={handleNext}
+      />
+      <ScrollView
+        className="flex-1 pt-4"
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ flexGrow: 1 }}
       >
-        <CheckInHeader
-          title="Observation du jour"
-          onPrevious={() => navigation.goBack()}
-          onSkip={handleNext}
-          showPrevious={true}
-          showSkip={true}
-        />
-        <View className="px-6 py-6">
-          <Text 
-            className="text-2xl font-bold text-center mb-2"
-            style={{ color: TW_COLORS.TEXT_PRIMARY }}
-          >
-            Je vous propose de suivre
-          </Text>
-        </View>
+
 
         {/* indicators grouped by categories */}
         <View>
@@ -161,10 +172,11 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
             onPress={() => setShowMoreIndicators(!showMoreIndicators)}
             className="py-3 px-4"
           >
-            <Text 
+            <Text
               className="text-center font-medium"
               style={{
-                textDecorationLine: 'underline' }}
+                textDecorationLine: 'underline'
+              }}
             >
               {showMoreIndicators ? 'Masquer' : 'Voir plus d\'indicateurs'}
             </Text>
@@ -174,7 +186,7 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
         {/* popular indicators */}
         {showMoreIndicators && (
           <View className="mb-6">
-            <Text 
+            <Text
               className="text-xl font-bold mb-4 mx-4"
               style={{ color: TW_COLORS.TEXT_PRIMARY }}
             >
@@ -190,7 +202,7 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
         nextDisabled={selectedIndicators.length === 0}
         nextText="Continuer"
       />
-    </SafeAreaView>
+    </SafeAreaViewWithOptionalHeader>
   );
 };
 

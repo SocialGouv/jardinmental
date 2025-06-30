@@ -15,6 +15,7 @@ import { firstLetterUppercase } from '@/utils/string-util';
 import { colors } from '@/utils/colors';
 import CheckMarkIcon from '@assets/svg/icon/check'
 import PlusIcon from '@assets/svg/icon/plus'
+import { SafeAreaViewWithOptionalHeader } from '@/scenes/onboarding/ProgressHeader';
 
 
 type Props = OnboardingV2ScreenProps<'OnboardingCheckInHowDoYouFeelDetails'>;
@@ -188,7 +189,7 @@ export const OnboardingCheckInLastMoods: React.FC<Props> = ({ navigation, route 
   })
 
   return (
-    <SafeAreaView className="flex-1 bg-white">
+    <SafeAreaViewWithOptionalHeader className="flex-1 bg-white">
       {/* <CheckInHeader
         title="Observation du jour"
         onPrevious={handlePrevious}
@@ -238,7 +239,7 @@ export const OnboardingCheckInLastMoods: React.FC<Props> = ({ navigation, route 
         loading={loading}
         nextText="Renseigner mes émotions"
       />
-    </SafeAreaView>
+    </SafeAreaViewWithOptionalHeader>
   );
 };
 

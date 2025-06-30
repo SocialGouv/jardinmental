@@ -24,9 +24,9 @@ export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
   const flatListRef = useRef<FlatList>(null);
 
   useEffect(() => {
-    if (profile) {
-      setSlides(profile.id === 'suivi' ? carouselSlidesSuivi : carouselSlides)
-    }
+    // if (profile) {
+    setSlides(carouselSlides)
+    // }
   }, [profile])
 
   const handleNext = () => {

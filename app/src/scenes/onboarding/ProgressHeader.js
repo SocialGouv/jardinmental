@@ -43,19 +43,19 @@ export const progressHeaderOptions = ({ insets, slidesCount }) => {
 
 export const ProgressScreen =
   ({ slideIndex: _slideIndex, Component }) =>
-  ({ ...props }) => {
-    const { setSlideIndex } = useOnboardingProgressHeader();
+    ({ ...props }) => {
+      const { setSlideIndex } = useOnboardingProgressHeader();
 
-    useFocusEffect(
-      useCallback(() => {
-        setSlideIndex(_slideIndex);
+      useFocusEffect(
+        useCallback(() => {
+          setSlideIndex(_slideIndex);
 
-        return () => {};
-      }, [])
-    );
+          return () => { };
+        }, [])
+      );
 
-    return <Component {...props} />;
-  };
+      return <Component {...props} />;
+    };
 
 export const SafeAreaViewWithOptionalHeader = ({ children, style, ...props }) => {
   const insets = useSafeAreaInsets();
@@ -133,7 +133,7 @@ const ProgressHeader = ({ insets, slidesCount }) => {
   );
 
   return ({ navigation }) => {
-    if (!visible) return null;
+    // if (!visible) return null;
 
     return (
       <View
@@ -142,7 +142,7 @@ const ProgressHeader = ({ insets, slidesCount }) => {
           {
             height: insets.top + PROGRESS_HEADER_HEIGHT,
             width: "100%",
-            backgroundColor: "#ffffff88",
+            backgroundColor: 'transparent',
           },
         ]}
         collapsable={false}
@@ -161,7 +161,7 @@ const ProgressHeader = ({ insets, slidesCount }) => {
               />
             </View>
             <View style={{ opacity: 0 }} pointerEvents="none">
-              <BackButton onPress={() => {}} />
+              <BackButton onPress={() => { }} />
             </View>
           </View>
         </Animated.View>
@@ -185,6 +185,7 @@ const styles = StyleSheet.create({
   progressBarContainer: {
     flex: 1,
     height: 4,
+    top: 50,
     backgroundColor: "#E5E5E5",
     borderRadius: 8,
   },
@@ -192,6 +193,6 @@ const styles = StyleSheet.create({
     height: "100%",
     minWidth: 16,
     borderRadius: 8,
-    backgroundColor: colors.BLUE,
+    backgroundColor: colors.LIGHT_BLUE_TRANS,
   },
 });

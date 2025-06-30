@@ -19,7 +19,7 @@ import OnboardingChooseIndicatorScreen from './indicators/OnboardingChooseIndica
 import ReminderScreen from './reminder/ReminderScreen';
 import { useNavigation } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { progressHeaderOptions } from '../onboarding/ProgressHeader';
+import { progressHeaderOptions, ProgressScreen } from '../onboarding/ProgressHeader';
 
 const Stack = createStackNavigator<OnboardingV2StackParamList>();
 
@@ -47,7 +47,7 @@ const OnboardingV2Navigator: React.FC = () => {
 
   const navigation = useNavigation();
   const insets = useSafeAreaInsets();
-  const slidesCount = 10;
+  const slidesCount = 3;
   const headerOptions = progressHeaderOptions({ insets, slidesCount });
 
   useEffect(() => {
@@ -126,15 +126,18 @@ const OnboardingV2Navigator: React.FC = () => {
       {/* Use header */}
       <Stack.Screen
         name="PersonalizationStart"
-        component={OnboardingPersonalizationStartScreen}
+        // options={headerOptions}
+        component={ProgressScreen({ slideIndex: 0, Component: OnboardingPersonalizationStartScreen })}
       />
       <Stack.Screen
         name="PersonalizationDifficulties"
-        component={DifficultiesScreen}
+        // options={headerOptions}
+        component={ProgressScreen({ slideIndex: 1, Component: DifficultiesScreen })}
       />
       <Stack.Screen
         name="PersonalizationObjective"
-        component={ObjectiveScreen}
+        // options={headerOptions}
+        component={ProgressScreen({ slideIndex: 2, Component: ObjectiveScreen })}
       />
       <Stack.Screen
         name="OnboardingCheckInStart"
