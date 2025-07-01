@@ -1,6 +1,6 @@
 
 # Note: https://github.com/prisma/prisma/issues/16182#issuecomment-1371283457
-FROM node:20-bullseye-slim@sha256:f959c0047e2cc2dc01459067d9e898b7780862e52f4e7e80bb674f6040298f32
+FROM node:20-bullseye-slim@sha256:6d93008ba7baffb5cc0ced7f3b394f2982adf643ba774ea54f6d6f426fe3b244
 
 ARG PRODUCTION
 
