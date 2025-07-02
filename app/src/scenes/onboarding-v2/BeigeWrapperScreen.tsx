@@ -23,14 +23,15 @@ type Props = {
 const VARIANT_COLORS = {
     beige: 'bg-[#FDF2E7]',
     white: TW_COLORS.WHITE,
-    green: `bg-[#EBFDFF]`,
+    green: `bg-[#FAFBEA]`,
     blue: `bg-[#FAFFFF]`,
 }
 
 const VARIANT_LEAF_COLORS = {
     beige: '#FCEBD9',
     white: TW_COLORS.WHITE,
-    blue: TW_COLORS.LIGHT_BLUE
+    blue: TW_COLORS.LIGHT_BLUE,
+    green: '#EBEEAC',
 }
 
 export const BeigeWrapperScreen: React.FC<Props> = ({

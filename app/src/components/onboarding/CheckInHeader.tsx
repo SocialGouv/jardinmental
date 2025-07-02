@@ -16,6 +16,9 @@ interface CheckInHeaderProps {
   className?: string;
   leftComponent?: ReactNode; // custom left component, used in shared header
   leftAction?: () => void;
+  dynamicTitle?: string; // dynamic title that replaces original title on scroll
+  headerTitleStyle?: Animated.AnimateStyle<ViewStyle>; // animated style for original title
+  dynamicTitleStyle?: Animated.AnimateStyle<ViewStyle>; // animated style for dynamic title
 }
 
 export const CheckInHeader: React.FC<CheckInHeaderProps> = ({
@@ -29,7 +32,10 @@ export const CheckInHeader: React.FC<CheckInHeaderProps> = ({
   withMargin = true,
   className = '',
   leftAction,
-  leftComponent
+  leftComponent,
+  dynamicTitle,
+  headerTitleStyle,
+  dynamicTitleStyle
 }) => {
   const horizontalPadding = withMargin ? 24 : 0;
   const headerHeight = 48; // 👈 fixed height ensures proper alignment
@@ -80,13 +86,35 @@ export const CheckInHeader: React.FC<CheckInHeaderProps> = ({
       }
 
       {/* Titre centré */}
-      <Animated.Text
-        numberOfLines={2}
-        className="text-base text-center"
-        style={[{ color: TW_COLORS.WHITE }, animatedTextColor]}
-      >
-        {title}
-      </Animated.Text>
+      <View style={{ position: 'relative', justifyContent: 'center', alignItems: 'center' }}>
+        {/* Original title */}
+        <Animated.Text
+          numberOfLines={2}
+          className="text-base text-center"
+          style={[
+            { color: TW_COLORS.WHITE, position: 'absolute' },
+            animatedTextColor,
+            headerTitleStyle
+          ]}
+        >
+          {title}
+        </Animated.Text>
+
+        {/* Dynamic title that appears on scroll */}
+        {dynamicTitle && (
+          <Animated.Text
+            numberOfLines={2}
+            className="text-base text-center"
+            style={[
+              { color: TW_COLORS.WHITE, position: 'absolute' },
+              animatedTextColor,
+              dynamicTitleStyle
+            ]}
+          >
+            {dynamicTitle}
+          </Animated.Text>
+        )}
+      </View>
 
       {/* Bouton Passer */}
       {

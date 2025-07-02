@@ -19,6 +19,13 @@ export default function BannerHeader({
     leftComponent,
     leftAction,
     hideHeader = false, // temporary variable to hide headers
+    dynamicTitle,
+    headerTitleStyle,
+    dynamicTitleStyle,
+    bannerContentStyle,
+    bannerContainerStyle,
+    titleMarginStyle,
+    onBannerLayout,
 }: {
     animatedStatusBarColor?: Animated.AnimateStyle<ViewStyle>;
     animatedTextColor?: Animated.AnimateStyle<ViewStyle>;
@@ -32,6 +39,13 @@ export default function BannerHeader({
     leftComponent?: ReactNode; // custom left component, used in shared header
     leftAction?: () => void; // custom left action, used in shared header
     hideHeader?: boolean; // temporary variable to hide headers
+    dynamicTitle?: string; // dynamic title that replaces header title on scroll
+    headerTitleStyle?: Animated.AnimateStyle<ViewStyle>; // animated style for original header title
+    dynamicTitleStyle?: Animated.AnimateStyle<ViewStyle>; // animated style for dynamic title
+    bannerContentStyle?: Animated.AnimateStyle<ViewStyle>; // animated style for banner content
+    bannerContainerStyle?: Animated.AnimateStyle<ViewStyle>; // animated style for banner container
+    titleMarginStyle?: Animated.AnimateStyle<ViewStyle>; // animated style for title margin
+    onBannerLayout?: (event: any) => void; // callback to measure banner height
 }) {
     return <>
         {Platform.OS === 'ios' && (
@@ -48,6 +62,7 @@ export default function BannerHeader({
             {/* <MonochromeLogo style={{ position: 'absolute', top: -20, left: 0 }} /> */}
             {(!(SHARED_HEADER || hideHeader) || HEADER_WITH_BANNER) && <CheckInHeader
                 title={headerTitle || ''}
+                dynamicTitle={dynamicTitle}
                 withMargin={false}
                 onPrevious={handlePrevious}
                 leftAction={leftAction}
@@ -56,19 +71,33 @@ export default function BannerHeader({
                 showPrevious={true}
                 animatedTextColor={animatedTextColor}
                 showSkip={true}
+                headerTitleStyle={headerTitleStyle}
+                dynamicTitleStyle={dynamicTitleStyle}
             />}
-            <View className="py-4 pb-8 px-6">
-                {header}
+            <Animated.View
+                className={bannerContainerStyle ? "" : "py-4 pb-8 px-6"}
+                style={[
+                    bannerContainerStyle,
+                    // Default padding when no animated style is provided
+                    !bannerContainerStyle ? {
+                        paddingVertical: 16,
+                        paddingBottom: 32,
+                        paddingHorizontal: 24,
+                    } : {}
+                ]}
+                onLayout={onBannerLayout}
+            >
+                {header && <Animated.View style={bannerContentStyle}>{header}</Animated.View>}
                 {title && <Animated.Text
                     className="text-2xl font-bold text-left mt-8"
                     style={[{
                         color: TW_COLORS.WHITE
-                    }, animatedTextColor]}
+                    }, animatedTextColor, bannerContentStyle, titleMarginStyle]}
                 >
                     {title}
                 </Animated.Text>}
                 {children}
-            </View>
+            </Animated.View>
         </Animated.View>
     </>
 }

@@ -23,7 +23,8 @@ export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const flatListRef = useRef<FlatList>(null);
   const { setSlideIndex } = useOnboardingProgressHeader();
-  
+  const [variant, setVariant] = useState<'beige' | 'white' | 'green' | 'blue'>('beige');
+
   useFocusEffect(
     React.useCallback(() => {
       // Reset current index when the screen is focused
@@ -50,7 +51,9 @@ export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
   };
 
   const onViewableItemsChanged = useRef(({ viewableItems }: any) => {
+    console.log(viewableItems)
     if (viewableItems.length > 0) {
+      setVariant(viewableItems[0].item.variant || 'beige');
       setCurrentIndex(viewableItems[0].index || 0);
     }
   }).current;
@@ -65,6 +68,7 @@ export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
 
   const goToNextSlide = () => {
     if (currentIndex < slides.length - 1) {
+      // setVariant(slides[currentIndex + 1].variant || 'beige');
       goToSlide(currentIndex + 1);
     } else {
       handleNext();
@@ -95,15 +99,18 @@ export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
     />
   );
 
-  return <SafeAreaViewWithOptionalHeader className="flex-1 bg-[#FDF2E7]">
-    <CheckInHeader
+
+  return <BeigeWrapperScreen variant={variant} handlePrevious={handlePrevious}
+
+    handleSkip={handleSkip}>
+    {/* <CheckInHeader
       title=""
       onPrevious={handlePrevious}
       onSkip={handleSkip}
       showPrevious={true}
       skipText='Passer'
       showSkip={true}
-    />
+    /> */}
 
     <FlatList
       ref={flatListRef}
@@ -132,7 +139,7 @@ export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
       }
         onNext={goToNextSlide} />
     </View>
-    <Leaf
+    {/* <Leaf
       style={{
         position: 'absolute',
         top: -60,
@@ -159,13 +166,13 @@ export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
         bottom: '15%',
         left: -60,
         zIndex: 2
-      }} />
+      }} /> */}
     {/* <NavigationButtons
       onNext={handleNext}
       showPrevious={false}
       nextText="Continuer vers ma première"
     /> */}
-  </SafeAreaViewWithOptionalHeader>
+  </BeigeWrapperScreen>
 
   // return (
   //   <SafeAreaView className="flex-1 bg-white">

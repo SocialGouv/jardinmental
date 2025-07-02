@@ -1,7 +1,7 @@
 import React from "react";
 import { View, TouchableOpacity } from "react-native";
 import Text from "../MyText";
-import colors from "@/utils/colors";
+import { colors } from "@/utils/colors";
 
 export const Boolean = ({ indicator, value, onChange }) => {
   const color = {
