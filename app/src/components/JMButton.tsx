@@ -20,10 +20,14 @@ type ButtonProps = TouchableOpacityProps & {
   disabled?: boolean;
   loading?: boolean;
   icon?: JSX.Element;
+  size?: 'small' | 'medium' | 'large';
+  width?: 'full' | 'fixed' | 'adapt';
 };
 
 export default function JMButton({
   variant = 'primary',
+  size = 'medium',
+  width = 'full',
   className = '',
   style,
   textClassName = '',
@@ -34,7 +38,31 @@ export default function JMButton({
   icon,
   ...props
 }: ButtonProps) {
-  const baseClasses = 'w-full px-6 py-3 rounded-full items-center justify-center flex-row';
+  const heightMap: Record<'small' | 'medium' | 'large', number> = {
+    small: 32,
+    large: 52,
+    medium: 48,
+  };
+
+  const paddingMap: Record<'small' | 'medium' | 'large', string> = {
+    small: 'px-3 py-1.5',
+    large: 'px-6 py-4',
+    medium: 'px-5 py-3',
+  };
+
+  const textSizeMap: Record<'small' | 'medium' | 'large', string> = {
+    small: 'text-sm',
+    medium: 'text-base',
+    large: 'text-lg',
+  };
+
+  const classMap: Record<'full' | 'adapt' | 'fixed', string> = {
+    full: 'w-full',
+    adapt: 'flex-1', // the button should be in a row
+    fixed: '',
+  };
+
+  const baseClasses = `${classMap[width]} ${paddingMap[size]} rounded-3xl items-center justify-center flex-row`;
   let variantClasses = '';
 
   switch (variant) {
@@ -55,29 +83,27 @@ export default function JMButton({
   const disabledClasses = disabled || loading ? 'opacity-50' : '';
   const finalClassName = mergeClassNames(baseClasses, variantClasses, disabledClasses, className);
 
-  // Determine text color
   let textColor = 'text-white';
   if (variant === 'outline') textColor = 'text-primary';
   if (variant === 'secondary') textColor = 'text-black';
   if (variant === 'text') textColor = 'text-primary';
 
-  // Styled icon with fixed size
   const styledIcon = icon
     ? React.cloneElement(icon, {
+      width: 15,
+      height: 15,
+      styleContainer: {
+        ...(icon.props?.styleContainer || {}),
         width: 15,
         height: 15,
-        styleContainer: {
-          ...(icon.props?.styleContainer || {}),
-          width: 15,
-          height: 15,
-        },
-      })
+      },
+    })
     : null;
-
+  console.log('TITLE', title, heightMap[size])
   return (
     <TouchableOpacity
       className={finalClassName}
-      style={style}
+      style={[{ height: heightMap[size] }, style]}
       disabled={disabled || loading}
       {...props}
     >
@@ -88,10 +114,17 @@ export default function JMButton({
           className="mr-2"
         />
       )}
-      {!loading && styledIcon && <View className="mr-2">{styledIcon}</View>}
-      <Text className={mergeClassNames('text-base font-semibold', textColor, textClassName)}>
-        {children ?? title}
-      </Text>
+      {!loading && styledIcon && <View className={!!(children ?? title) ? `mr-2` : ''}>{styledIcon}</View>}
+      {!!(children || title) && <Text
+        className={mergeClassNames(
+          'font-semibold',
+          textSizeMap[size],
+          textColor,
+          textClassName
+        )}
+      >
+        {title}
+      </Text>}
     </TouchableOpacity>
   );
 }

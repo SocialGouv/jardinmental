@@ -138,6 +138,7 @@ const CustomSymptomScreen = ({ navigation, route, settings = false }) => {
         <JMButton
           variant='primary'
           className='mb-2'
+          size="medium"
           onPress={() => navigation.navigate('EDIT_INDICATOR')}
           title="Ajouter un indicateur"
         />

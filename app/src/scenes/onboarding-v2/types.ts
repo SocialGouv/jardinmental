@@ -12,15 +12,18 @@ export type OnboardingStep =
 export interface UserProfile {
   id: string;
   name: string;
+  selectedDifficulties: Difficulty[];
+  objectives: Objective[];
 }
 
 export interface CarouselSlide {
   id: string;
   title: string;
-  description: string;
+  description?: string;
   type: 'generic' | 'special';
   backgroundColor?: string;
   illustration?: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 export interface Difficulty {

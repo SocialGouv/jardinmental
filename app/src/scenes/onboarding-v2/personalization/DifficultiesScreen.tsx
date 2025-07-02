@@ -5,7 +5,7 @@ import { NavigationButtons } from '@/components/onboarding/NavigationButtons';
 import { ProgressIndicator } from '@/components/onboarding/ProgressIndicator';
 import { useUserProfile } from '@/context/userProfile';
 import CheckInHeader from '@/components/onboarding/CheckInHeader';
-import { TW_COLORS } from '@/utils/constants';
+import { HEADER_WITH_BANNER, PROGRESS_BAR, PROGRESS_BAR_AND_HEADER, SHARED_HEADER, TW_COLORS } from '@/utils/constants';
 import BannerHeader from '../BannerHeader';
 import { useAnimatedStyle } from 'react-native-reanimated';
 import { SafeAreaViewWithOptionalHeader } from '@/scenes/onboarding/ProgressHeader';
@@ -107,20 +107,20 @@ export const DifficultiesScreen: React.FC<Props> = ({ navigation }) => {
     navigation.navigate('PersonalizationObjective');
   };
 
-  const animatedStatusBarColor = useAnimatedStyle(() => {
-    return {
-      backgroundColor: TW_COLORS.PRIMARY,
-    };
-  })
+  // const animatedStatusBarColor = useAnimatedStyle(() => {
+  //   return {
+  //     backgroundColor: TW_COLORS.PRIMARY,
+  //   };
+  // })
 
-  const animatedTextColor = useAnimatedStyle(() => {
-    return {
-      backgroundColor: 'transparent',
-      color: TW_COLORS.WHITE,
-      alignContent: 'center',
-      textAlign: 'center'
-    };
-  })
+  // const animatedTextColor = useAnimatedStyle(() => {
+  //   return {
+  //     backgroundColor: 'transparent',
+  //     color: TW_COLORS.WHITE,
+  //     alignContent: 'center',
+  //     textAlign: 'center'
+  //   };
+  // })
 
   const selectedCount = selectedDifficulties.filter(d => d.selected).length;
 
@@ -134,26 +134,28 @@ export const DifficultiesScreen: React.FC<Props> = ({ navigation }) => {
         showSkip={true}
       />   
       */}
-      <BannerHeader
-        animatedStatusBarColor={animatedStatusBarColor}
-        animatedTextColor={animatedTextColor}
-        header={<ProgressIndicator currentStep={2} totalSteps={3} />}
-        title={'Créons ensemble un suivi qui vous ressemble'}
+      {<BannerHeader
+        hidden={HEADER_WITH_BANNER}
+        hideHeader={PROGRESS_BAR_AND_HEADER}
+        // animatedStatusBarColor={animatedStatusBarColor}
+        // animatedTextColor={animatedTextColor}
+        header={SHARED_HEADER || PROGRESS_BAR || PROGRESS_BAR_AND_HEADER ? undefined : <ProgressIndicator currentStep={2} totalSteps={3} />}
+        title={'Sur quoi avez-vous ressenti une difficulté ou une gêne ces deux dernières semaines?'}
         handlePrevious={handlePrevious}
         handleSkip={handleSkip}
-      />
+      />}
       <ScrollView
         className="flex-1"
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ flexGrow: 1 }}
       >
         <View className="px-6 py-4">
-          <Text
+          {/* <Text
             className="text-2xl font-bold text-center mb-2"
             style={{ color: TW_COLORS.TEXT_PRIMARY }}
           >
             Sur quoi avez-vous ressenti une difficulté ?
-          </Text>
+          </Text> */}
           <Text
             className="text-base text-center mb-2"
             style={{ color: TW_COLORS.TEXT_SECONDARY }}
@@ -187,10 +189,18 @@ export const DifficultiesScreen: React.FC<Props> = ({ navigation }) => {
                 </View>
                 {item.selected && (
                   <View
-                    className="w-6 h-6 rounded-full items-center justify-center"
+                    className="w-6 h-6 rounded-md items-center justify-center"
                     style={{ backgroundColor: TW_COLORS.PRIMARY }}
                   >
                     <Text className="text-white text-xs">✓</Text>
+                  </View>
+                )}
+                {!item.selected && (
+                  <View
+                    className="w-6 h-6 rounded-md items-center justify-center"
+                    style={{ borderColor: TW_COLORS.GRAY_LIGHT, borderWidth: 2 }}
+                  >
+                    <Text className="text-white text-xs"></Text>
                   </View>
                 )}
               </View>

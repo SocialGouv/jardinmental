@@ -3,6 +3,7 @@ import { View, TouchableOpacity, Text, ActivityIndicator } from 'react-native';
 import { NavigationButtonsProps } from '@/scenes/onboarding-v2/types';
 import { TW_COLORS } from '@/utils/constants';
 import JMButton from '../JMButton';
+import ChevronIcon from '@assets/svg/icon/chevron';
 
 export const NavigationButtons: React.FC<NavigationButtonsProps> = ({
   onNext,
@@ -28,9 +29,20 @@ export const NavigationButtons: React.FC<NavigationButtonsProps> = ({
 
       {/* <View
         className="flex-row justify-between items-center p-6 px-6 bg-white/50"> */}
+      {typeof onPrevious === 'function' && <JMButton
+        onPress={onPrevious}
+        variant='outline'
+        width='fixed'
+        icon={<ChevronIcon />}
+        // title='<'
+        className='mr-2'
+        loading={loading}
+      />}
+
       <JMButton
         onPress={onNext}
         title={nextText}
+        width='adapt'
         loading={loading}
         disabled={nextDisabled}
       />

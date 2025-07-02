@@ -7,10 +7,12 @@ import BannerHeader from './BannerHeader';
 import { useAnimatedStyle } from 'react-native-reanimated';
 import BannerHeaderIntro from './BannerHeaderIntro';
 import { SafeAreaViewWithOptionalHeader } from '../onboarding/ProgressHeader';
+import { useUserProfile } from '@/context/userProfile';
 
 type Props = OnboardingV2ScreenProps<'Intro'>;
 
 export const IntroScreen: React.FC<Props> = ({ navigation }) => {
+
   const handleNext = () => {
     navigation.navigate('Carousel');
   };
@@ -93,20 +95,19 @@ export const IntroScreen: React.FC<Props> = ({ navigation }) => {
         </Text> */}
 
         <Text
-          className="text-xl text-center mb-8 leading-8"
-          style={{ color: TW_COLORS.TEXT_SECONDARY }}
+          className="text-xl text-center mb-8 leading-6 text-primary"
         >
-          Gratuit à vie{'\n'}
-          Totalement anonyme{'\n'}
-          Sans inscription
+          Gratuit à vie.{'\n'}
+          Totalement anonyme.{'\n'}
+          Sans inscription.
         </Text>
       </View>
-      <View className="px-8">
+      <View className="px-10">
         <Text
-          className="text-base text-center leading-6"
-          style={{ color: TW_COLORS.TEXT_SECONDARY }}
+          className="text-base text-center leading-8"
+          style={{ color: TW_COLORS.SECONDARY }}
         >
-          Créer avec des professionels et soutenu par la CNAM
+          Créer avec des professionels et{'\n'}soutenu par la CNAM
         </Text>
       </View>
       <NavigationButtons

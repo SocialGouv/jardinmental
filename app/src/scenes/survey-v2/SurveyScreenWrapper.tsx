@@ -64,11 +64,23 @@ const SurveyScreenWrapper: React.FC<SurveyScreenWrapperProps> = ({ navigation, r
     currentStep,
     totalSteps,
     onNext: handleNext,
+    
   };
 
 
   switch (screenData.type) {
     case 'category':
+      return (
+        <IndicatorScreen
+          answers={answers}
+          onValueChanged={context.saveAnswerForIndicator}
+          onCommentChanged={context.saveCommentForIndicator}
+          {...screenProps}
+          category={screenData.category}
+          title={screenData.title}
+          indicators={screenData.indicators || []}
+        />
+      );
     case 'individual':
       return (
         <IndicatorScreen

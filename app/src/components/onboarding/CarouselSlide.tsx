@@ -3,6 +3,7 @@ import { View, Text, Dimensions } from 'react-native';
 import { CarouselSlideProps } from '@/scenes/onboarding-v2/types';
 import { TW_COLORS } from '@/utils/constants';
 import BeigeCard from '@/scenes/onboarding-v2/BeigeCard';
+import { AvatarGroup } from '../AvatarGroup';
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
@@ -44,7 +45,7 @@ export const CarouselSlide: React.FC<CarouselSlideProps> = ({
       </Text>
 
       {/* Description */}
-      <Text
+      { slide.description && <Text
         className="text-lg text-center leading-7"
         style={{
           color: TW_COLORS.TEXT_SECONDARY,
@@ -52,7 +53,8 @@ export const CarouselSlide: React.FC<CarouselSlideProps> = ({
         }}
       >
         {slide.description}
-      </Text>
+      </Text>}
+      {slide.children}
     </BeigeCard>
   );
 };

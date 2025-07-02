@@ -109,7 +109,13 @@ export const UserProfileProvider: React.FC<UserProfileProviderProps> = ({ childr
         const parsedProfile = JSON.parse(savedProfile);
         dispatch({ type: 'SET_PROFILE', payload: parsedProfile });
       } else {
-        dispatch({ type: 'SET_PROFILE', payload: null });
+        // default profile
+        dispatch({ type: 'SET_PROFILE', payload: {
+          id: 'non-suivi',
+          name: 'Non, je ne suis pas suivi(e)',
+          selectedDifficulties: [],
+          objectives: []
+        }});
       }
     } catch (error) {
       console.error('Error loading user profile:', error);

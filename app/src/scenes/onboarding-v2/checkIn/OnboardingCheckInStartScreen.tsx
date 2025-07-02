@@ -7,6 +7,7 @@ import { TW_COLORS } from '@/utils/constants';
 import Leaf from '@assets/svg/illustrations/Leaf'
 import TwoLeaf from '@assets/svg/illustrations/TwoLeaf'
 import BeigeWrapperScreen from '../BeigeWrapperScreen';
+import BeigeCard from '../BeigeCard';
 type Props = OnboardingV2ScreenProps<'Intro'>;
 
 export const OnboardingCheckInStartScreen: React.FC<Props> = ({ navigation }) => {
@@ -27,6 +28,8 @@ export const OnboardingCheckInStartScreen: React.FC<Props> = ({ navigation }) =>
     handleSkip={handleSkip}
     handlePrevious={handlePrevious}
     handleNext={handleNext}>
+        <BeigeCard>
+
     <Text
       className="text-3xl text-center mb-6"
       style={{ color: TW_COLORS.TEXT_PRIMARY }}
@@ -40,6 +43,8 @@ export const OnboardingCheckInStartScreen: React.FC<Props> = ({ navigation }) =>
     >
       Réalisons ensemble votre première observation.
     </Text>
+    </BeigeCard>
+
   </BeigeWrapperScreen>
 
   // return (

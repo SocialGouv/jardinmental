@@ -19,6 +19,9 @@ module.exports = {
           800: "#1f5e6b",
           900: "#1e4e5b",
         },
+        secondary: {
+          DEFAULT:'#12747D',
+        },
         red: {
           DEFAULT: "#f16b6b",
           50: "#fdf3f3",

@@ -9,7 +9,7 @@ import Animated, {
 
 import CheckInHeader from '@/components/onboarding/CheckInHeader';
 import { OnboardingV2ScreenProps } from '../../types';
-import { EMOTION_COLORS, iconColors, TW_COLORS } from '@/utils/constants';
+import { EMOTION_COLORS, iconColors, PROGRESS_BAR_AND_HEADER, TW_COLORS } from '@/utils/constants';
 import JMButton from '@/components/JMButton';
 import NavigationButtons from '@/components/onboarding/NavigationButtons';
 import { beforeToday, formatDay } from '@/utils/date/helpers';
@@ -284,9 +284,9 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
       <BannerHeader
         animatedStatusBarColor={animatedStatusBarColor}
         animatedTextColor={animatedTextColor}
+        headerTitle='Observation du jour'
         title={'Comment vous sentez-vous actuellement ?'}
         handlePrevious={handlePrevious}
-        handleSkip={handleSkip}
       />
       <View className="flex-1 p-8">
         <InstructionText>

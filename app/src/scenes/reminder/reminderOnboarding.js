@@ -1,27 +1,28 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {Alert, View, TouchableOpacity, StyleSheet, ScrollView, Linking} from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { Alert, View, TouchableOpacity, StyleSheet, ScrollView, Linking } from 'react-native';
 // import { openSettings } from "react-native-permissions";
 import dayjs from 'dayjs';
 import Text from '../../components/MyText';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import localStorage from '../../utils/localStorage';
-import {ONBOARDING_STEPS} from '../../utils/constants';
+import { ONBOARDING_STEPS } from '../../utils/constants';
 import TimePicker from '../../components/timePicker';
 import NotificationService from '../../services/notifications';
-import {colors} from '../../utils/colors';
+import { colors } from '../../utils/colors';
 import logEvents from '../../services/logEvents';
 import Rappel from '../onboarding/assets/Rappel';
 import Button from '../../components/Button';
-import {onboardingStyles} from '../onboarding/styles';
-import {StickyButtonContainer} from '../onboarding/StickyButton';
-import {SafeAreaViewWithOptionalHeader} from '../onboarding/ProgressHeader';
-import {OnboardingBackButton} from '../onboarding/BackButton';
+import { onboardingStyles } from '../onboarding/styles';
+import { StickyButtonContainer } from '../onboarding/StickyButton';
+import { SafeAreaViewWithOptionalHeader } from '../onboarding/ProgressHeader';
+import { OnboardingBackButton } from '../onboarding/BackButton';
 import API from '../../services/api';
 import * as RNLocalize from 'react-native-localize';
+import BeigeWrapperScreen from '../onboarding-v2/BeigeWrapperScreen';
 
 const ReminderStorageKey = '@Reminder';
 
-const Reminder = ({navigation, route, notifReminderTitle = "Comment ça va aujourd'hui ?", notifReminderMessage = "N'oubliez pas de remplir votre application Jardin Mental"}) => {
+const Reminder = ({ navigation, route, notifReminderTitle = "Comment ça va aujourd'hui ?", notifReminderMessage = "N'oubliez pas de remplir votre application Jardin Mental" }) => {
   const [reminder, setReminder] = useState(null);
   const [reminderSetupVisible, setReminderSetupVisible] = useState(false);
 
@@ -32,7 +33,7 @@ const Reminder = ({navigation, route, notifReminderTitle = "Comment ça va aujou
       if (!dayjs(storedReminder).isValid()) {
         try {
           storedReminder = JSON.parse(storedReminder);
-        } catch (e) {}
+        } catch (e) { }
       }
     }
     if (Boolean(storedReminder) && !dayjs(storedReminder).isValid()) {
@@ -108,7 +109,7 @@ const Reminder = ({navigation, route, notifReminderTitle = "Comment ça va aujou
           style: 'cancel',
         },
       ],
-      {cancelable: true},
+      { cancelable: true },
     );
   };
 
@@ -131,11 +132,11 @@ const Reminder = ({navigation, route, notifReminderTitle = "Comment ça va aujou
   const validateOnboarding = async () => {
     // navigation.navigate(ONBOARDING_STEPS.STEP_DRUGS);
     await localStorage.setOnboardingDone(true);
-      // await localStorage.setOnboardingStep(null);
-      navigation.reset({
-        index: 0,
-        routes: [{ name: 'tabs' }],
-      });
+    // await localStorage.setOnboardingStep(null);
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'tabs' }],
+    });
   };
 
   const desactivateReminder = async () => {
@@ -152,54 +153,108 @@ const Reminder = ({navigation, route, notifReminderTitle = "Comment ça va aujou
       },
     });
     await localStorage.setOnboardingDone(true);
-      // await localStorage.setOnboardingStep(null);
-      navigation.reset({
-        index: 0,
-        routes: [{ name: 'tabs', params: {
+    // await localStorage.setOnboardingStep(null);
+    navigation.reset({
+      index: 0,
+      routes: [{
+        name: 'tabs', params: {
           onboarding: true
-        }}],
-      });
+        }
+      }],
+    });
   };
 
-  return (
-    <SafeAreaViewWithOptionalHeader style={onboardingStyles.safe}>
-      <View style={onboardingStyles.topContainer}>
-        <OnboardingBackButton onPress={navigation.goBack} />
-      </View>
-      <ScrollView style={onboardingStyles.scroll} contentContainerStyle={onboardingStyles.scrollContentContainer}>
-        <View style={onboardingStyles.container}>
-          <View style={onboardingStyles.imageContainer}>
-            <Rappel width={100} height={100} />
-          </View>
-          {reminder ? (
-            <>
-              <View style={onboardingStyles.containerBottom}>
-                <View style={onboardingStyles.containerBottomTitle}>
-                  <Text style={onboardingStyles.h1}>Programmez un rappel</Text>
-                </View>
-                <View style={onboardingStyles.containerBottomText}>
-                  <Text style={onboardingStyles.presentationText}>Plus vous remplirez votre questionnaire, plus vous en apprendrez sur vous et votre santé mentale</Text>
-                </View>
-              </View>
-              <TouchableOpacity onPress={showReminderSetup}>
-                <Text style={styles.time}>{`${dayjs(reminder).format('HH:mm')}`}</Text>
-              </TouchableOpacity>
-            </>
-          ) : (
-            <Text style={styles.subtitle}>Un rappel permet de remplir plus souvent l'application et obtenir des analyses plus pertinentes</Text>
-          )}
-        </View>
-      </ScrollView>
-      <StickyButtonContainer>
-        <Button onPress={validateOnboarding} title="Suivant" />
-        <TouchableOpacity style={stylesButton.button} onPress={desactivateReminder}>
-          <Text style={stylesButton.text}>Désactiver le rappel</Text>
+  return <BeigeWrapperScreen
+    variant="blue"
+    handlePrevious={navigation.goBack}
+    nextText='Programmer mon rappel quotidien'
+    handleSkip={() => navigation.navigate('tabs')}
+    handleNext={validateOnboarding}
+  >
+    <View className='flex-1 p-6 z-10 flex justify-center'>
+      <Text className='text-2xl font-bold text-left mb-6 text-primary'>Trouvez votre rythme</Text>
+      <Text className='text-xl text-left mb-6 text-base'>Programmer un rappel quotidien peut vous aider à installer une routine bienveillante.</Text>
+      <Text className='text-xl text-left mb-6 text-base'>Consigner chaque jour votre état permet de découvrir progressivement ce qui vous fait du bien, et ce qui vous freine.</Text>
+      <View className='border border-gray-300 rounded-3xl px-10 py-6 items-center justify-center mb-6 bg-white w-auto self-center'>
+        <Text className='text-base mb-2'>Recevez un rappel à :</Text>
+        <TouchableOpacity className='py-2 px-8 border-2 border-secondary rounded-3xl w-auto flew-column' onPress={showReminderSetup}>
+          <Text className="font-bold text-5xl text-secondary">{`${dayjs(reminder).format('HH:mm')}`}</Text>
         </TouchableOpacity>
-      </StickyButtonContainer>
-      <TimePicker visible={reminderSetupVisible} selectDate={setReminderRequest} />
-    </SafeAreaViewWithOptionalHeader>
-  );
+        <Text className='text-base mt-4'>Éditer</Text>
+      </View>
+    </View>
+    {/* <ScrollView style={onboardingStyles.scroll} contentContainerStyle={onboardingStyles.scrollContentContainer}>
+      <View style={onboardingStyles.container}>
+        <View style={onboardingStyles.imageContainer}>
+          <Rappel width={100} height={100} />
+        </View>
+        {reminder ? (
+          <>
+            <View style={onboardingStyles.containerBottom}>
+              <View style={onboardingStyles.containerBottomTitle}>
+                <Text style={onboardingStyles.h1}>Programmez un rappel</Text>
+              </View>
+              <View style={onboardingStyles.containerBottomText}>
+                <Text style={onboardingStyles.presentationText}>Plus vous remplirez votre questionnaire, plus vous en apprendrez sur vous et votre santé mentale</Text>
+              </View>
+            </View>
+            <TouchableOpacity onPress={showReminderSetup}>
+              <Text style={styles.time}>{`${dayjs(reminder).format('HH:mm')}`}</Text>
+            </TouchableOpacity>
+          </>
+        ) : (
+          <Text style={styles.subtitle}>Un rappel permet de remplir plus souvent l'application et obtenir des analyses plus pertinentes</Text>
+        )}
+      </View>
+    </ScrollView> */}
+    {/* <StickyButtonContainer>
+      <Button onPress={validateOnboarding} title="Suivant" />
+      <TouchableOpacity style={stylesButton.button} onPress={desactivateReminder}>
+        <Text style={stylesButton.text}>Désactiver le rappel</Text>
+      </TouchableOpacity>
+    </StickyButtonContainer> */}
+    <TimePicker visible={reminderSetupVisible} selectDate={setReminderRequest} />
+  </BeigeWrapperScreen>
 };
+
+// return (
+//   <SafeAreaViewWithOptionalHeader style={onboardingStyles.safe}>
+//     <View style={onboardingStyles.topContainer}>
+//       <OnboardingBackButton onPress={navigation.goBack} />
+//     </View>
+//     <ScrollView style={onboardingStyles.scroll} contentContainerStyle={onboardingStyles.scrollContentContainer}>
+//       <View style={onboardingStyles.container}>
+//         <View style={onboardingStyles.imageContainer}>
+//           <Rappel width={100} height={100} />
+//         </View>
+//         {reminder ? (
+//           <>
+//             <View style={onboardingStyles.containerBottom}>
+//               <View style={onboardingStyles.containerBottomTitle}>
+//                 <Text style={onboardingStyles.h1}>Programmez un rappel</Text>
+//               </View>
+//               <View style={onboardingStyles.containerBottomText}>
+//                 <Text style={onboardingStyles.presentationText}>Plus vous remplirez votre questionnaire, plus vous en apprendrez sur vous et votre santé mentale</Text>
+//               </View>
+//             </View>
+//             <TouchableOpacity onPress={showReminderSetup}>
+//               <Text style={styles.time}>{`${dayjs(reminder).format('HH:mm')}`}</Text>
+//             </TouchableOpacity>
+//           </>
+//         ) : (
+//           <Text style={styles.subtitle}>Un rappel permet de remplir plus souvent l'application et obtenir des analyses plus pertinentes</Text>
+//         )}
+//       </View>
+//     </ScrollView>
+//     <StickyButtonContainer>
+//       <Button onPress={validateOnboarding} title="Suivant" />
+//       <TouchableOpacity style={stylesButton.button} onPress={desactivateReminder}>
+//         <Text style={stylesButton.text}>Désactiver le rappel</Text>
+//       </TouchableOpacity>
+//     </StickyButtonContainer>
+//     <TimePicker visible={reminderSetupVisible} selectDate={setReminderRequest} />
+//   </SafeAreaViewWithOptionalHeader>
+// );
 
 const stylesButton = StyleSheet.create({
   buttonWrapper: {
@@ -352,7 +407,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     fontSize: 16,
   },
-  bodyContainer: {flex: 2},
+  bodyContainer: { flex: 2 },
   body: {
     color: colors.DARK_BLUE,
     fontSize: 15,

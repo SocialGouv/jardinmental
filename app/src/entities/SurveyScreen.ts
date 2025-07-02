@@ -1,5 +1,5 @@
 
-import { Indicator } from './Indicator';
+import { Indicator, INDICATORS_CATEGORIES } from './Indicator';
 
 export enum SurveyScreenType {
     // group information by category
@@ -26,7 +26,7 @@ interface EncouragementSurveyScreen extends BaseSurveyScreen {
 interface CategoryScreen extends BaseSurveyScreen {
     type: SurveyScreenType.category;
     indicators: Indicator[];
-    category: string;
+    category: INDICATORS_CATEGORIES
 }
 
 interface IndividualScreen extends BaseSurveyScreen {

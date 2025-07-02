@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import InputQuestion from '../survey/InputQuestion';
 import NavigationButtons from '../../components/onboarding/NavigationButtons';
 import CheckInHeader from '../../components/onboarding/CheckInHeader';
+import BannerHeader from '../onboarding-v2/BannerHeader';
 
 interface ContextScreenProps {
   navigation: any;
@@ -29,13 +30,20 @@ export const ContextScreen: React.FC<ContextScreenProps> = ({
 
   return (
     <SafeAreaView className="flex-1 bg-white">
-          <CheckInHeader
+          {/* <CheckInHeader
             title="Observation du jour"
             onPrevious={() => navigation.goBack()}
             onSkip={onNext}
             showPrevious={true}
             showSkip={true}
-          /> 
+          />  */}
+          <BannerHeader
+            headerTitle='Observation du jour'
+            header={undefined}
+            title={'Note générale'}
+            handlePrevious={() => navigation.goBack()}
+            handleSkip={onNext}
+          ></BannerHeader>
           <View className="flex-1 justify-center items-center">
           <InputQuestion
             question={questionContext}

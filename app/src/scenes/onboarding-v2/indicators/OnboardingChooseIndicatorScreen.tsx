@@ -108,10 +108,18 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
         </View>
         {selected && (
           <View
-            className="w-6 h-6 rounded-full items-center justify-center"
+            className="w-6 h-6 rounded-md items-center justify-center"
             style={{ backgroundColor: TW_COLORS.PRIMARY }}
           >
             <Text className="text-white text-xs">✓</Text>
+          </View>
+        )}
+        {!selected && (
+          <View
+            className="w-6 h-6 rounded-md items-center justify-center"
+            style={{ borderColor: TW_COLORS.GRAY_LIGHT, borderWidth: 2 }}
+          >
+            <Text className="text-white text-xs"></Text>
           </View>
         )}
       </View>
@@ -130,28 +138,28 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
     </View>
   );
 
-  const animatedStatusBarColor = useAnimatedStyle(() => {
-    return {
-      backgroundColor: TW_COLORS.PRIMARY,
-    };
-  })
+  // const animatedStatusBarColor = useAnimatedStyle(() => {
+  //   return {
+  //     backgroundColor: TW_COLORS.PRIMARY,
+  //   };
+  // })
 
-  const animatedTextColor = useAnimatedStyle(() => {
-    return {
-      backgroundColor: 'transparent',
-      color: TW_COLORS.WHITE,
-      alignContent: 'center',
-      textAlign: 'center'
-    };
-  })
+  // const animatedTextColor = useAnimatedStyle(() => {
+  //   return {
+  //     backgroundColor: 'transparent',
+  //     color: TW_COLORS.WHITE,
+  //     alignContent: 'center',
+  //     textAlign: 'left'
+  //   };
+  // })
 
   return (
     <SafeAreaViewWithOptionalHeader className="flex-1 bg-white">
       <BannerHeader
-        animatedStatusBarColor={animatedStatusBarColor}
-        animatedTextColor={animatedTextColor}
-        title={`Je vous propose de suivre`}
-        handlePrevious={() => { }}
+        // animatedStatusBarColor={animatedStatusBarColor}
+        // animatedTextColor={animatedTextColor}    
+        title={`Je vous recommande de suivre ces éléments au quotidien`}
+        handlePrevious={() => navigation.goBack()}
         handleSkip={handleNext}
       />
       <ScrollView

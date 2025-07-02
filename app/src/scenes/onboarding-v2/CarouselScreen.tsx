@@ -11,7 +11,7 @@ import BeigeWrapperScreen from './BeigeWrapperScreen';
 import Leaf from '@assets/svg/illustrations/Leaf';
 import TwoLeaf from '@assets/svg/illustrations/TwoLeaf';
 import CheckInHeader from '@/components/onboarding/CheckInHeader';
-import { SafeAreaViewWithOptionalHeader } from '../onboarding/ProgressHeader';
+import { SafeAreaViewWithOptionalHeader, useOnboardingProgressHeader } from '../onboarding/ProgressHeader';
 
 type Props = OnboardingV2ScreenProps<'Carousel'>;
 
@@ -22,6 +22,14 @@ export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
   const [slides, setSlides] = useState<CarouselSlide[]>([])
   const [currentIndex, setCurrentIndex] = useState(0);
   const flatListRef = useRef<FlatList>(null);
+  const { setSlideIndex } = useOnboardingProgressHeader();
+  
+  useFocusEffect(
+    React.useCallback(() => {
+      // Reset current index when the screen is focused
+      setSlideIndex(-1)
+    }, [])
+  );
 
   useEffect(() => {
     // if (profile) {

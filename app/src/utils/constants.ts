@@ -1,5 +1,6 @@
 import { OnboardingStep } from "@/scenes/onboarding-v2/types";
 import { colors as mainColors } from "./colors";
+import { INDICATORS_CATEGORIES } from "@/entities/Indicator";
 
 export const icons = {
   veryGood: "VeryGoodSvg",
@@ -155,6 +156,10 @@ export const translateCategories = {
   COMMUNICATION: "Communication avec mon entourage",
   TOXIC: "Substance",
   CONTEXT: "Contexte",
+  [INDICATORS_CATEGORIES["Emotions/sentiments"]]: "Vos émotions",
+  [INDICATORS_CATEGORIES["Manifestations physiques"]]: "Votre sommeil",
+  [INDICATORS_CATEGORIES["Pensées"]]: "Vos pensées",
+  [INDICATORS_CATEGORIES["Comportements"]]: "Vos comportements",
 };
 
 export const surveyDate = {
@@ -329,5 +334,11 @@ export const TW_COLORS = {
   GRAY_DARK: '#424242',
   TEXT_PRIMARY: '#134449',//'#212121',
   TEXT_SECONDARY: '#757575',
-  LIGHT_COLORS: "#1FC6D5"
+  LIGHT_COLORS: "#1FC6D5",
+  LIGHT_BLUE: "#EBFDFF"
 };
+
+export const SHARED_HEADER = false
+export const HEADER_WITH_BANNER = false
+export const PROGRESS_BAR = true
+export const PROGRESS_BAR_AND_HEADER = true

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useCallback, useContext, useRef, useState } from 'react';
 import { View, Text, SafeAreaView, TouchableOpacity, Alert, ScrollView } from 'react-native';
 import NavigationButtons from '@/components/onboarding/NavigationButtons';
 import CheckInHeader from '@/components/onboarding/CheckInHeader';
@@ -16,6 +16,7 @@ import { colors } from '@/utils/colors';
 import CheckMarkIcon from '@assets/svg/icon/check'
 import PlusIcon from '@assets/svg/icon/plus'
 import { SafeAreaViewWithOptionalHeader } from '@/scenes/onboarding/ProgressHeader';
+import { BottomSheetBackdrop, BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
 
 
 type Props = OnboardingV2ScreenProps<'OnboardingCheckInHowDoYouFeelDetails'>;
@@ -113,9 +114,10 @@ export const OnboardingCheckInLastMoods: React.FC<Props> = ({ navigation, route 
       });
 
       navigation.navigate('OnboardingCheckInMoodSummary', {
-        mood: route.params?.mood
+        mood: route.params?.mood,
+        selectedMoods: selectedMoods,
       })
-
+      console.log(route.params?.mood, 'route.params?.mood')
     } catch (error) {
       console.error('Error completing onboarding:', error);
       Alert.alert('Erreur', 'Une erreur est survenue. Veuillez réessayer.');
@@ -134,14 +136,14 @@ export const OnboardingCheckInLastMoods: React.FC<Props> = ({ navigation, route 
 
   const renderMoodSelector = () => (
     <View className="mb-6 mt-6">
-      <View className="flex-row flex-wrap justify-left">
+      <View className="flex-row flex-wrap gap-x-3 gap-y-3">
         {moodOptions.map((mood, index) => {
           const isSelected = selectedMoods.includes(mood);
           return (
             <TouchableOpacity
               key={index}
               onPress={() => toggleMood(mood)}
-              className="mr-4 mb-4 px-4 py-3 rounded-lg"
+              className="px-4 py-3 rounded-lg"
               style={{
                 borderWidth: 2,
                 position: 'relative',
@@ -188,6 +190,23 @@ export const OnboardingCheckInLastMoods: React.FC<Props> = ({ navigation, route 
     };
   })
 
+
+  const bottomSheetRef = useRef<BottomSheetModal>(null);
+
+  const handleSheetChanges = useCallback((index: number) => {
+    console.log('handleSheetChanges', index);
+  }, []);
+
+  const renderBackdrop = useCallback(
+    props => (<BottomSheetBackdrop {...props}
+      opacity={0.5}
+      enableTouchThrough={false}
+      appearsOnIndex={0}
+      disappearsOnIndex={-1}
+      style={[{ backgroundColor: 'rgba(0, 0, 0, 1)' }]} />),
+    []
+  );
+
   return (
     <SafeAreaViewWithOptionalHeader className="flex-1 bg-white">
       {/* <CheckInHeader
@@ -218,15 +237,18 @@ export const OnboardingCheckInLastMoods: React.FC<Props> = ({ navigation, route 
       <BannerHeader
         animatedStatusBarColor={animatedStatusBarColor}
         animatedTextColor={animatedTextColor}
+        headerTitle='Observation du jour'
         title={`Y-a-t-il une émotion, un état ou un comportement qui a pris un peu de place aujourd'hui ?`}
-        handlePrevious={handlePrevious}
-        handleSkip={handleSkip}
+        leftAction={() => bottomSheetRef.current?.present()}
+        leftComponent={<View><Text>Aide (?)</Text></View>}
+      // handlePrevious={handlePrevious}
+      // handleSkip={handleSkip}
       >
         {route.params?.mood !== null && <View className='justify-center items-center mt-4'>
           {moodEmojis[route.params?.mood]?.icon}
         </View>}
       </BannerHeader>
-      <ScrollView className="flex-1 p-8" contentContainerStyle={{ paddingBottom: 100 }}>
+      <ScrollView className="flex-1 p-6" contentContainerStyle={{ paddingBottom: 100 }}>
         <InstructionText>
           Sélectionnez votre ressenti du moment
         </InstructionText>
@@ -236,9 +258,27 @@ export const OnboardingCheckInLastMoods: React.FC<Props> = ({ navigation, route 
         onNext={handleComplete}
         absolute={true}
         showPrevious={false}
+        onPrevious={handlePrevious}
         loading={loading}
         nextText="Renseigner mes émotions"
       />
+      <BottomSheetModal
+        ref={bottomSheetRef}
+        backdropComponent={renderBackdrop}
+        onChange={handleSheetChanges}
+      >
+        <BottomSheetView>
+          <View className="flex-1 bg-white p-4">
+            <Text className="text-lg font-semibold mb-4" style={{ color: TW_COLORS.TEXT_PRIMARY }}>
+              Comment observer une émotion?
+            </Text>
+            <Text className="text-base mb-4 leading-6" style={{ color: TW_COLORS.TEXT_SECONDARY }}>
+              Pensez à son intensité aujourd’hui, sa durée ou son impact sur vous.</Text>
+            <Text className="text-base mb-4 leading-6" style={{ color: TW_COLORS.TEXT_SECONDARY }}>
+              Il n’y a pas de bonne réponse — l’essentiel, c’est d’en prendre conscience au fil du temps.</Text>
+          </View>
+        </BottomSheetView>
+      </BottomSheetModal>
     </SafeAreaViewWithOptionalHeader>
   );
 };

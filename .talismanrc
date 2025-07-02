@@ -27,6 +27,8 @@ fileignoreconfig:
   checksum: 8a737e4021e9d7c66a54fbf4b5df8a91ad528a6af70a25d7c75f60fb3f444a2c
 - filename: app/src/scenes/onboarding-v2/checkIn/mood/OnboardingCheckInHowDoYouFeelScreen.tsx
   checksum: 575b515356d2eb99c800dd7a63f09c26a9e545136aadbdcbe64278202c379af0
+- filename: app/src/scenes/onboarding-v2/checkIn/mood/OnboardingCheckInMoodSummaryScreen.tsx
+  checksum: 62b7f70e73e8f19062fdad757ffdd70063398e0014e9daa674e748ead10259a7
 - filename: app/src/scenes/onboarding-v2/checkIn/sleep/OnboardingCheckInSleepScreen.tsx
   checksum: 395ba599b156e52606ad89266eb7bb2aab8172c73eed794edebaea3dd363db0f
 - filename: app/src/scenes/onboarding-v2/components/ProgressIndicator.tsx
@@ -57,6 +59,8 @@ fileignoreconfig:
   checksum: bdb40467b60296ef959cac383488b52e879619d362093020f547896ddf9921bf
 - filename: app/src/scenes/survey-v2/ContextScreen.tsx
   checksum: 6371ed197788ce03cb6c42e3151135d106c684e295b66a25ebd841ca1d3a01dd
+- filename: app/src/scenes/survey-v2/IndicatorScreen.tsx
+  checksum: 9152fc6ce26ed1b1366e6329825aff19da49a13f771435d6821923fff5ba5902
 - filename: app/src/scenes/survey-v2/ToxicScreen.tsx
   checksum: 033a3b6b40b07e8d7369d7d1abc7a0e25f4df71c5aebfd43d8253b0fe83c5a69
 - filename: app/src/scenes/survey-v2/multiScreenSurvey/ContextScreen.tsx

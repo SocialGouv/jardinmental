@@ -5,8 +5,8 @@ import { NavigationButtons } from '@/components/onboarding/NavigationButtons';
 import { ProgressIndicator } from '@/components/onboarding/ProgressIndicator';
 import { useUserProfile } from '@/context/userProfile';
 import CheckInHeader from '@/components/onboarding/CheckInHeader';
-import { TW_COLORS } from '@/utils/constants';
-import { SafeAreaViewWithOptionalHeader } from '@/scenes/onboarding/ProgressHeader';
+import { HEADER_WITH_BANNER, PROGRESS_BAR, PROGRESS_BAR_AND_HEADER, SHARED_HEADER, TW_COLORS } from '@/utils/constants';
+import { SafeAreaViewWithOptionalHeader, useOnboardingProgressHeader } from '@/scenes/onboarding/ProgressHeader';
 import BannerHeader from '../BannerHeader';
 import { useAnimatedStyle } from 'react-native-reanimated';
 
@@ -38,6 +38,7 @@ const NextScreen = 'OnboardingCheckInStart'
 export const ObjectiveScreen: React.FC<Props> = ({ navigation, route }) => {
   const { updateUserObjectives, profile } = useUserProfile();
   const [selectedObjective, setSelectedObjective] = useState<Objective | null>(null);
+  const { setSlideIndex } = useOnboardingProgressHeader();
 
   const handleNext = async () => {
     if (selectedObjective) {
@@ -56,6 +57,7 @@ export const ObjectiveScreen: React.FC<Props> = ({ navigation, route }) => {
       }
 
       navigation.navigate(NextScreen);
+      setSlideIndex(-1);
     }
   };
 
@@ -76,7 +78,7 @@ export const ObjectiveScreen: React.FC<Props> = ({ navigation, route }) => {
         backgroundColor: selectedObjective?.id === item.id ? TW_COLORS.PRIMARY + '10' : TW_COLORS.WHITE,
       }}
     >
-      <View className="flex-row items-start">
+      <View className="flex-row items-start items-center justify-center">
         <View className="flex-1">
           <View className="flex-row items-center justify-between mb-1">
             <Text
@@ -89,10 +91,18 @@ export const ObjectiveScreen: React.FC<Props> = ({ navigation, route }) => {
         </View>
         {selectedObjective?.id === item.id && (
           <View
-            className="w-6 h-6 rounded-full items-center justify-center ml-2"
+            className="w-6 h-6 rounded-md items-center justify-center ml-2"
             style={{ backgroundColor: TW_COLORS.PRIMARY }}
           >
             <Text className="text-white text-xs">✓</Text>
+          </View>
+        )}
+        {selectedObjective?.id !== item.id && (
+          <View
+            className="w-6 h-6 rounded-md items-center justify-center"
+            style={{ borderColor: TW_COLORS.GRAY_LIGHT, borderWidth: 2 }}
+          >
+            <Text className="text-white text-xs"></Text>
           </View>
         )}
       </View>
@@ -124,14 +134,16 @@ export const ObjectiveScreen: React.FC<Props> = ({ navigation, route }) => {
         showSkip={true}
       /> */}
       {/* <ProgressIndicator currentStep={3} totalSteps={4} /> */}
-      <BannerHeader
+      {<BannerHeader
+        hidden={HEADER_WITH_BANNER}
+        hideHeader={PROGRESS_BAR_AND_HEADER}
         animatedStatusBarColor={animatedStatusBarColor}
         animatedTextColor={animatedTextColor}
-        header={<ProgressIndicator currentStep={3} totalSteps={3} />}
-        title={'Créons ensemble un suivi qui vous ressemble'}
+        header={SHARED_HEADER || PROGRESS_BAR || PROGRESS_BAR_AND_HEADER ? undefined : <ProgressIndicator currentStep={2} totalSteps={3} />}
+        title={'Sur quoi avez-vous ressenti une difficulté ou une gêne ces deux dernières semaines?'}
         handlePrevious={handlePrevious}
         handleSkip={handleSkip}
-      />
+      />}
       <View className="flex-1">
         {/* En-tête */}
         <View className="px-6 py-4">
@@ -139,7 +151,6 @@ export const ObjectiveScreen: React.FC<Props> = ({ navigation, route }) => {
             className="text-2xl font-bold text-center mb-2"
             style={{ color: TW_COLORS.TEXT_PRIMARY }}
           >
-            Quel est votre priorité aujourd'hui dans Jardin Mental
           </Text>
           <Text
             className="text-base text-center mb-2"
