@@ -10,6 +10,9 @@ import { SafeAreaViewWithOptionalHeader, useOnboardingProgressHeader } from '@/s
 import BannerHeader from '../BannerHeader';
 import { useAnimatedStyle } from 'react-native-reanimated';
 import { ScrollView } from 'react-native-gesture-handler';
+import { mergeClassNames } from '@/utils/className';
+import { typography } from '@/utils/typography';
+import SelectionnableItem from '@/components/SelectionnableItem';
 
 type Props = OnboardingV2ScreenProps<'PersonalizationObjective'>;
 
@@ -71,43 +74,12 @@ export const ObjectiveScreen: React.FC<Props> = ({ navigation, route }) => {
   };
 
   const renderObjectiveItem = ({ item }: { item: Objective }) => (
-    <TouchableOpacity
+    <SelectionnableItem
       onPress={() => setSelectedObjective(item)}
-      className="mx-4 mb-4 p-4 rounded-xl border-2"
-      style={{
-        borderColor: selectedObjective?.id === item.id ? TW_COLORS.PRIMARY : TW_COLORS.GRAY_LIGHT,
-        backgroundColor: selectedObjective?.id === item.id ? TW_COLORS.PRIMARY + '10' : TW_COLORS.WHITE,
-      }}
-    >
-      <View className="flex-row items-start items-center justify-center">
-        <View className="flex-1">
-          <View className="flex-row items-center justify-between mb-1">
-            <Text
-              className="text-lg font-semibold"
-              style={{ color: TW_COLORS.TEXT_PRIMARY }}
-            >
-              {item.title}
-            </Text>
-          </View>
-        </View>
-        {selectedObjective?.id === item.id && (
-          <View
-            className="w-6 h-6 rounded-md items-center justify-center ml-2"
-            style={{ backgroundColor: TW_COLORS.PRIMARY }}
-          >
-            <Text className="text-white text-xs">✓</Text>
-          </View>
-        )}
-        {selectedObjective?.id !== item.id && (
-          <View
-            className="w-6 h-6 rounded-md items-center justify-center"
-            style={{ borderColor: TW_COLORS.GRAY_LIGHT, borderWidth: 2 }}
-          >
-            <Text className="text-white text-xs"></Text>
-          </View>
-        )}
-      </View>
-    </TouchableOpacity>
+      id={item.id}
+      label={item.title}
+      selected={selectedObjective?.id === item.id}>
+    </SelectionnableItem>
   );
 
   const animatedStatusBarColor = useAnimatedStyle(() => {
@@ -119,9 +91,9 @@ export const ObjectiveScreen: React.FC<Props> = ({ navigation, route }) => {
   const animatedTextColor = useAnimatedStyle(() => {
     return {
       backgroundColor: 'transparent',
-      color: TW_COLORS.WHITE,
-      alignContent: 'center',
-      textAlign: 'center'
+      // color: TW_COLORS.WHITE,
+      alignContent: 'left',
+      textAlign: 'left'
     };
   })
 
@@ -133,7 +105,7 @@ export const ObjectiveScreen: React.FC<Props> = ({ navigation, route }) => {
         animatedStatusBarColor={animatedStatusBarColor}
         animatedTextColor={animatedTextColor}
         header={SHARED_HEADER || PROGRESS_BAR || PROGRESS_BAR_AND_HEADER ? undefined : <ProgressIndicator currentStep={2} totalSteps={3} />}
-        title={'Sur quoi avez-vous ressenti une difficulté ou une gêne ces deux dernières semaines?'}
+        title={'Quelle est votre priorité aujourd’hui dans Jardin Mental ?'}
         handleSkip={handleSkip}
       />}
       <ScrollView className="flex-1" contentContainerStyle={{ paddingBottom: 100 }}>
@@ -145,13 +117,11 @@ export const ObjectiveScreen: React.FC<Props> = ({ navigation, route }) => {
           >
           </Text>
           <Text
-            className="text-base text-center mb-2"
-            style={{ color: TW_COLORS.TEXT_SECONDARY }}
+            className={mergeClassNames(typography.textSmMedium, 'text-brand-900 text-left')}
           >
             Votre réponse nous aide à vous orienter vers un suivi plus utile.
           </Text>
         </View>
-
         <FlatList
           data={objectivesData}
           keyExtractor={(item) => item.id}

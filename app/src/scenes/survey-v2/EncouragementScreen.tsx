@@ -5,6 +5,8 @@ import NavigationButtons from '../../components/onboarding/NavigationButtons';
 import { TW_COLORS } from '@/utils/constants';
 import BeigeWrapperScreen from '../onboarding-v2/BeigeWrapperScreen';
 import BeigeCard from '../onboarding-v2/BeigeCard';
+import { mergeClassNames } from '@/utils/className';
+import { typography } from '@/utils/typography';
 
 interface EncouragementScreenProps {
   navigation: any;
@@ -12,56 +14,43 @@ interface EncouragementScreenProps {
   totalSteps: number;
   title: string;
   description: string;
+  headingTitle: string;
   extraInfo: string;
   onNext: () => void;
 }
 
 export const EncouragementScreen: React.FC<EncouragementScreenProps> = ({
   navigation,
+  headingTitle,
   title,
   extraInfo,
   onNext,
 }) => {
   return (
     <BeigeWrapperScreen
-    handlePrevious={() => navigation.goBack()}
-    handleSkip={onNext}
-    handleNext={onNext}>
-        {/* <CheckInHeader
-        title="Observation du jour"
-        onPrevious={() => navigation.goBack()}
-        onSkip={onNext}
-        showPrevious={true}
-        showSkip={true}
-        /> */}
-        <BeigeCard>
-          <View className="justify-center items-center px-8">
-              <Text 
-                  className="text-xl font-bold text-center mb-8"
-                  style={{ color: TW_COLORS.TEXT_PRIMARY }}
-              >
-                  C'est noté !
-              </Text>
-              <Text 
-                  className="text-lg font-bold text-center mb-8"
-                  style={{ color: TW_COLORS.TEXT_PRIMARY }}
-              >
-                  {title}
-              </Text>
-              {/* <Text 
-                  className="text-sm text-center mt-4 px-4"
-                  style={{ color: TW_COLORS.TEXT_SECONDARY }}
-              >
-                Ce que vous avez observé aujourd’hui contribue à mieux vous comprendre, un jour après l’autre.
-              </Text> */}
-          </View>
-          <View className="px-2 pb-4">
-            <Text className="text-sm text-left" style={{ color: TW_COLORS.TEXT_SECONDARY }}>
-              {extraInfo}
-            </Text>
-          </View>
-        </BeigeCard>
-        {/* <NavigationButtons
+      handlePrevious={() => navigation.goBack()}
+      handleSkip={onNext}
+      handleNext={onNext}>
+      <BeigeCard>
+        <View className="justify-center items-center px-8">
+          <Text
+            className={mergeClassNames(typography.displayXsRegular, 'text-brand-950 mb-8')}
+          >
+            {headingTitle || `C'est noté ! 🌱`}
+          </Text>
+          <Text
+            className={mergeClassNames(typography.textMdSemibold, 'text-brand-900 mb-8')}
+          >
+            {title}
+          </Text>
+        </View>
+        <View className="px-0 pb-4">
+          <Text className={mergeClassNames(typography.textMdRegular, 'text-left text-gray-800')}>
+            {extraInfo}
+          </Text>
+        </View>
+      </BeigeCard>
+      {/* <NavigationButtons
         onNext={onNext}
         showPrevious={false}
         nextText="Suivant"

@@ -1,4 +1,6 @@
+import { mergeClassNames } from '@/utils/className';
 import { TW_COLORS } from '@/utils/constants';
+import { typography } from '@/utils/typography';
 import React, { ReactNode } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { ViewStyle } from 'react-native';
@@ -53,7 +55,7 @@ export const CheckInHeader: React.FC<CheckInHeaderProps> = ({
     >
       {/* Bouton Précédent */}
       {
-        (showPrevious && onPrevious) || leftAction ? (
+        !!leftAction ? (
           <TouchableOpacity
             onPress={leftAction || onPrevious}
             className="px-3 py-2 rounded-lg"
@@ -90,7 +92,7 @@ export const CheckInHeader: React.FC<CheckInHeaderProps> = ({
         {/* Original title */}
         <Animated.Text
           numberOfLines={2}
-          className="text-base text-center"
+          className={mergeClassNames(typography.textMdRegular, 'text-center')}
           style={[
             { color: TW_COLORS.WHITE, position: 'absolute' },
             animatedTextColor,

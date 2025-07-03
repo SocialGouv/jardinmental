@@ -8,6 +8,8 @@ import { useAnimatedStyle } from 'react-native-reanimated';
 import BannerHeaderIntro from './BannerHeaderIntro';
 import { SafeAreaViewWithOptionalHeader } from '../onboarding/ProgressHeader';
 import { useUserProfile } from '@/context/userProfile';
+import { typography } from '@/utils/typography';
+import { mergeClassNames } from '@/utils/className';
 
 type Props = OnboardingV2ScreenProps<'Intro'>;
 
@@ -35,40 +37,6 @@ export const IntroScreen: React.FC<Props> = ({ navigation }) => {
 
   return (
     <SafeAreaViewWithOptionalHeader className="flex-1 bg-white">
-      {/* <View className="flex-1 justify-center items-center px-8">
-        <View className="mb-8">
-          <View
-            className="w-40 h-40 rounded-full items-center justify-center"
-            style={{ backgroundColor: TW_COLORS.PRIMARY + '20' }}
-          >
-            <Text className="text-6xl">🌱</Text>
-          </View>
-        </View>
-
-        <Text
-          className="text-4xl font-bold text-center mb-6"
-          style={{ color: TW_COLORS.TEXT_PRIMARY }}
-        >
-          Jargin Mental est un outils de suivi de votre santé mentale.
-        </Text>
-
-        <Text
-          className="text-xl text-center mb-8 leading-8"
-          style={{ color: TW_COLORS.TEXT_SECONDARY }}
-        >
-          Gratuit à vie{'\n'}
-          Totalement anonyme{'\n'}
-          Sans inscription
-        </Text>
-
-        <Text
-          className="text-base text-center leading-6"
-          style={{ color: TW_COLORS.TEXT_SECONDARY }}
-        >
-          Créer avec des professionels et soutenu par la CNAM
-        </Text>
-      </View> */}
-
       <BannerHeaderIntro
         animatedStatusBarColor={animatedStatusBarColor}
         animatedTextColor={animatedTextColor}
@@ -78,24 +46,8 @@ export const IntroScreen: React.FC<Props> = ({ navigation }) => {
       >
       </BannerHeaderIntro>
       <View className="flex-1 justify-center items-center px-8">
-        {/* <View className="mb-8">
-          <View
-            className="w-40 h-40 rounded-full items-center justify-center"
-            style={{ backgroundColor: TW_COLORS.PRIMARY + '20' }}
-          >
-            <Text className="text-6xl">🌱</Text>
-          </View>
-        </View> */}
-
-        {/* <Text
-          className="text-4xl font-bold text-center mb-6"
-          style={{ color: TW_COLORS.TEXT_PRIMARY }}
-        >
-          Jardin Mental est un outils de suivi de votre santé mentale.
-        </Text> */}
-
         <Text
-          className="text-xl text-center mb-8 leading-6 text-primary"
+          className={mergeClassNames(typography.textXlMedium, 'text-primary')}
         >
           Gratuit à vie.{'\n'}
           Totalement anonyme.{'\n'}
@@ -104,7 +56,7 @@ export const IntroScreen: React.FC<Props> = ({ navigation }) => {
       </View>
       <View className="px-10">
         <Text
-          className="text-base text-center leading-8"
+          className={mergeClassNames(typography.textSmSemibold, 'text-center')}
           style={{ color: TW_COLORS.SECONDARY }}
         >
           Créer avec des professionels et{'\n'}soutenu par la CNAM

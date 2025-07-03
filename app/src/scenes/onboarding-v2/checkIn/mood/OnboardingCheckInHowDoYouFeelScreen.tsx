@@ -20,6 +20,8 @@ import BannerHeader from '../../BannerHeader';
 import { moodBackgroundColors, MoodEmoji, moodEmojis } from '@/utils/mood'
 import InstructionText from '../../InstructionText';
 import { SafeAreaViewWithOptionalHeader } from '@/scenes/onboarding/ProgressHeader';
+import { typography } from '@/utils/typography';
+import { mergeClassNames } from '@/utils/className';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -236,7 +238,7 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
     );
   };
 
-  const renderMoodSelector = () => (
+  const renderMoodSelector = () => (<View>
     <Animated.View style={animatedScrollViewStyle} className="mb-6">
       <FlatList
         ref={flatListRef}
@@ -264,19 +266,17 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
       />
 
       {/* Animated description text */}
-      {
-        selectedMoodIndex !== null && (
-          <Animated.View style={animatedTextStyle} className="mt-1 items-center">
-            <Text
-              className="text-sm font-semibold text-center"
-              style={{ color: TW_COLORS.TEXT_PRIMARY }}
-            >
-              {moodEmojis[selectedMoodIndex - 1]?.label}
-            </Text>
-          </Animated.View>
-        )
-      }
     </Animated.View >
+    {
+      selectedMoodIndex !== null && (
+        <Animated.View style={animatedTextStyle} className="mt-14 items-center">
+          <Text
+            className={mergeClassNames(typography.displayMdBold, 'text-brand-900')}
+          >
+            {moodEmojis[selectedMoodIndex - 1]?.label}
+          </Text>
+        </Animated.View>
+      )}</View>
   );
 
   return (

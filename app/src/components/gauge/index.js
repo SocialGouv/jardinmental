@@ -1,22 +1,22 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 
-import {Slider} from '@miblanchard/react-native-slider';
+import { Slider } from '@miblanchard/react-native-slider';
 
-import {StyleSheet, View, Platform} from 'react-native';
-import {screenWidth} from '../../scenes/onboarding/screens';
-import {GaugeChart} from './GaugeChart';
+import { StyleSheet, View, Platform } from 'react-native';
+import { screenWidth } from '../../scenes/onboarding/screens';
+import { GaugeChart } from './GaugeChart';
 import { colors } from '@/utils/colors';
 const HEIGHT_RATIO_GAUGE = 48 / 256;
 
 const styles = StyleSheet.create({
   gaugeContainer: {
     height: screenWidth * HEIGHT_RATIO_GAUGE,
-    marginHorizontal: 10,
+    // marginHorizontal: 10,
   },
 });
 
-const Gauge = ({hideSlider = false, defaultValue = 0, onChange, reverse}) => {
+const Gauge = ({ hideSlider = false, defaultValue = 0, onChange, reverse }) => {
   const [value, setValue] = useState(defaultValue);
   const [width, setWidth] = useState(0);
 
@@ -47,7 +47,7 @@ const Gauge = ({hideSlider = false, defaultValue = 0, onChange, reverse}) => {
           maximumTrackTintColor={'#D9DBE0'}
           minimumTrackTintColor={colors.BLUE}
           thumbTintColor={colors.BLUE}
-          trackStyle={{marginHorizontal: 10}}
+        // trackStyle={{ marginHorizontal: 10 }}
         />
       )}
     </View>

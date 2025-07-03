@@ -8,7 +8,7 @@ import { BASE_INDICATORS } from '@/utils/liste_indicateurs.1';
 
 const FEATURE_ADD_ENCOURAGEMENT = false
 
-export const useSurveyScreens = (userIndicateurs: Indicator[], { isOnboarding } : { isOnboarding: boolean }): SurveyScreenInterface[] => {
+export const useSurveyScreens = (userIndicateurs: Indicator[], { isOnboarding }: { isOnboarding: boolean }): SurveyScreenInterface[] => {
   return useMemo(() => {
     const screens: SurveyScreenInterface[] = [];
 
@@ -22,7 +22,7 @@ export const useSurveyScreens = (userIndicateurs: Indicator[], { isOnboarding } 
       }
       return true
     }
-    
+
     // Filter active indicators and sort by position
     const activeIndicators = userIndicateurs
       .filter(indicator => indicator.active)
@@ -32,7 +32,7 @@ export const useSurveyScreens = (userIndicateurs: Indicator[], { isOnboarding } 
     // Group indicators by category
     const categoryGroups = new Map<INDICATORS_CATEGORIES, Indicator[]>();
     const uncategorizedIndicators: Indicator[] = [];
-    
+
     activeIndicators.forEach(indicator => {
       if (indicator.category) {
         if (!categoryGroups.has(indicator.category)) {
@@ -98,8 +98,9 @@ export const useSurveyScreens = (userIndicateurs: Indicator[], { isOnboarding } 
       {
         id: 'final',
         type: SurveyScreenType.encouragement,
-        title: '👏 Un pas de plus vers une meilleure connaissance de vous.',
-        description: 'Votre observation du jour a bien été enregistrée.'
+        headingTitle: '👏 Un pas de plus vers une meilleure connaissance de vous.',
+        title: 'Votre observation du jour a bien été enregistrée.',
+        description: 'Vous pourrez revenir chaque jour pour observer votre état et suivre ces éléments.'
       }
     );
 

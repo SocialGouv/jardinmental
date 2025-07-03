@@ -50,15 +50,33 @@ module.exports = {
         },
         blue: {
           DEFAULT: "#EBFDFF"
+        },
+        brand: {
+          DEFAULT: '#134449',
+          900: '#134449',
+          950: '#093F43',
+          800: '#12747D',
+          25: '#FAFFFF'
+        },
+        gray: {
+          950: '#093F43',
+          800: '#4A5D5F',
+          700: '#617778',
+          300: '#C7DDDE'
         }
+      },
+      fontFamily: {
+        title: ['Karla', 'sans-serif'],
+        body: ['Karla', 'sans-serif'],
       },
       fontSize: {
         'display-md': ['36px', { lineHeight: '44px', letterSpacing: '-0.02em' }],
         'display-xs': ['24px', { lineHeight: '32px', letterSpacing: '0em' }],
         'display-xs-regular': ['24px', { lineHeight: '32px', letterSpacing: '0em' }],
         'text-xl': ['20px', { lineHeight: '30px', letterSpacing: '0em' }],
-        'text-md': ['16px', { lineHeight: '100%', letterSpacing: '0em' }],
+        'text-md': ['16px', { lineHeight: '24px', letterSpacing: '0em' }],
         'text-sm': ['14px', { lineHeight: '100%', letterSpacing: '0em' }],
+        'text-xs': ['12px', { lineHeight: '100%', letterSpacing: '0em' }],
       },
     },
   },

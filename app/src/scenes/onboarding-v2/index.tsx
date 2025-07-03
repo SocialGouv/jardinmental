@@ -86,13 +86,13 @@ const OnboardingV2Navigator: React.FC = () => {
   }, []);
 
   const IntroChooseIndicatorScreen = () => <EncouragementScreen
-      navigation={navigation}
-      currentStep={0}
-      totalSteps={0}
-      title={'Merci d’avoir pris ce moment pour observer votre sommeil.'}
-      description={''}
-      extraInfo={'En France, 32 % des adultes se déclarent insatisfaits de leur sommeil.En faire le suivi, c’est déjà prendre soin de soi. (ifop mars 2022)'}
-      onNext={() => navigation.navigate('OnboardingChooseIndicatorInto')} />
+    navigation={navigation}
+    currentStep={0}
+    totalSteps={0}
+    title={'Merci d’avoir pris ce moment pour observer votre sommeil.'}
+    description={''}
+    extraInfo={'En France, 32 % des adultes se déclarent insatisfaits de leur sommeil.\nEn faire le suivi, c’est déjà prendre soin de soi. (ifop mars 2022)'}
+    onNext={() => navigation.navigate('OnboardingChooseIndicatorInto')} />
 
 
   return (
@@ -159,47 +159,47 @@ const OnboardingV2Navigator: React.FC = () => {
         name="PersonalizationObjective"
         options={SHARED_HEADER || PROGRESS_BAR ? headerOptions : undefined}
         component={ProgressScreen({
-            slideIndex: 2,
-            showProgressbar: true,
-            Component: ObjectiveScreen,
-            title:"Quels sont vos objectifs ?"
+          slideIndex: 2,
+          showProgressbar: true,
+          Component: ObjectiveScreen,
+          title: "Quels sont vos objectifs ?"
         })}
       />
       <Stack.Screen
         options={SHARED_HEADER ? headerOptions : undefined}
         name="OnboardingCheckInStart"
-        component={SHARED_HEADER? ProgressScreen({
+        component={SHARED_HEADER ? ProgressScreen({
           slideIndex: -1,
           showProgressbar: false,
           Component: OnboardingCheckInStartScreen,
-          title:"Quels sont vos objectifs ?"
-      }) : OnboardingCheckInStartScreen}
+          title: "Quels sont vos objectifs ?"
+        }) : OnboardingCheckInStartScreen}
       />
       <Stack.Screen
         options={SHARED_HEADER ? headerOptions : undefined}
         name="OnboardingCheckInHowDoYouFeel"
-        component={SHARED_HEADER? ProgressScreen({
+        component={SHARED_HEADER ? ProgressScreen({
           slideIndex: 2,
           Component: OnboardingCheckInHowDoYouFeelScreen,
-          title:"Quels sont vos objectifs ?"
-      }) : OnboardingCheckInHowDoYouFeelScreen}
+          title: "Quels sont vos objectifs ?"
+        }) : OnboardingCheckInHowDoYouFeelScreen}
       />
       <Stack.Screen
         options={SHARED_HEADER ? headerOptions : undefined}
         name="OnboardingCheckInHowDoYouFeelDetails"
-        component={SHARED_HEADER? ProgressScreen({
+        component={SHARED_HEADER ? ProgressScreen({
           slideIndex: 2,
           Component: OnboardingCheckInLastMoodsScreen,
-          title:"Quels sont vos objectifs ?"
+          title: "Quels sont vos objectifs ?"
         }) : OnboardingCheckInLastMoodsScreen}
       />
       <Stack.Screen
         options={SHARED_HEADER ? headerOptions : undefined}
         name="OnboardingCheckInMoodSummary"
-        component={SHARED_HEADER? ProgressScreen({
+        component={SHARED_HEADER ? ProgressScreen({
           slideIndex: 2,
           Component: OnboardingCheckInMoodSummaryScreen,
-          title:"Quels sont vos objectifs ?"
+          title: "Quels sont vos objectifs ?"
         }) : OnboardingCheckInMoodSummaryScreen}
       />
       <Stack.Screen

@@ -9,6 +9,9 @@ import { moodBackgroundColors, moodEmojis } from '@/utils/mood';
 import BannerHeader from '../../BannerHeader';
 import { SafeAreaViewWithOptionalHeader } from '@/scenes/onboarding/ProgressHeader';
 import { bg } from 'date-fns/locale';
+import { mergeClassNames } from '@/utils/className';
+import { typography } from '@/utils/typography';
+import { firstLetterUppercase } from '@/utils/string-util';
 
 
 type Props = OnboardingV2ScreenProps<'Intro'>;
@@ -52,9 +55,9 @@ export const OnboardingCheckInMoodSummaryScreen: React.FC<Props> = ({ navigation
       // handleSkip={handleSkip}
       >
 
-        <View className="p-8 rounded-3xl bg-white w-full">
+        <View className="px-4 py-6 rounded-3xl bg-white w-full">
           <Text
-            className="text-2xl font-bold text-left mb-4"
+            className={mergeClassNames(typography.displayXsRegular, 'text-center mb-4 text-brand-950 font-bold')}
             style={{ color: TW_COLORS.TEXT_PRIMARY }}
           >
             Votre bilan d'aujourd'hui
@@ -83,7 +86,7 @@ export const OnboardingCheckInMoodSummaryScreen: React.FC<Props> = ({ navigation
             {(route.params?.selectedMoods || []).map((mood, index) => (
               <View key={index} style={{ margin: 4 }}>
                 <Tag
-                  text={mood}
+                  text={firstLetterUppercase(mood)}
                   bgcolor={
                     route.params?.mood != null
                       ? moodBackgroundColors[route.params?.mood]
@@ -95,19 +98,17 @@ export const OnboardingCheckInMoodSummaryScreen: React.FC<Props> = ({ navigation
           </View>
         </View>
       </BannerHeader>
-      <View className="flex-1 justify-center items-center p-6">
+      <View className="flex-1 p-6">
         <View className="w-full">
           <Text
-            className="text-2xl text-left mb-6 text-primary font-bold"
-            style={{ color: TW_COLORS.TEXT_PRIMARY }}
+            className={mergeClassNames(typography.textXlSemibold, 'text-brand-900 mb-6')}
           >
             Merci, c'est une première étape précieuse.
           </Text>
           <Text
-            className="text-lg text-left mb-8 leading-8 text-base"
-            style={{ color: TW_COLORS.TEXT_SECONDARY }}
+            className={mergeClassNames(typography.textMdRegular, 'text-gray-800 text-left')}
           >
-            Certains jours pèsent un peu plus que d’autres,  c’est déjà précieux de l’avoir noté.          </Text>
+            Observer votre humeur au fil du temps peut aider à mieux comprendre ce qui vous influence.          </Text>
         </View>
       </View>
 
@@ -130,7 +131,7 @@ export const Tag = ({ text, bgcolor }: { text: string, bgcolor: string }) => {
       }}
     >
       <Text
-        className="text-md text-center"
+        className="text-xs text-center font-bold"
         style={{ color: TW_COLORS.TEXT_PRIMARY }}
       >
         {text}

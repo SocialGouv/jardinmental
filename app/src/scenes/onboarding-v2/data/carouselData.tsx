@@ -6,7 +6,7 @@ import { View } from 'react-native';
 const SlideWelcome: CarouselSlide = {
   id: 'slide-jm-help-you',
   title: "Jardin Mental vous aide à y voir plus clair.",
-  description: "Vous traversez peut-être une période floue ou pesante. \nIci, vous pourrez poser des mots sur ce que vous ressentez,et mieux comprendre ce que vous vivez.",
+  description: "Vous traversez peut-être une période floue ou pesante.\n\nIci, vous pourrez poser des mots sur ce que vous ressentez,et mieux comprendre ce que vous vivez.",
   type: 'generic',
   backgroundColor: colors.WHITE,
   variant: 'beige'

@@ -8,6 +8,8 @@ import Leaf from '@assets/svg/illustrations/Leaf'
 import TwoLeaf from '@assets/svg/illustrations/TwoLeaf'
 import BeigeWrapperScreen from '../BeigeWrapperScreen';
 import BeigeCard from '../BeigeCard';
+import { mergeClassNames } from '@/utils/className';
+import { typography } from '@/utils/typography';
 type Props = OnboardingV2ScreenProps<'Intro'>;
 
 export const OnboardingCheckInStartScreen: React.FC<Props> = ({ navigation }) => {
@@ -31,15 +33,13 @@ export const OnboardingCheckInStartScreen: React.FC<Props> = ({ navigation }) =>
     <BeigeCard>
 
       <Text
-        className="text-3xl text-center mb-6"
-        style={{ color: TW_COLORS.TEXT_PRIMARY }}
+        className={mergeClassNames(typography.displayXsRegular, "text-center mb-6 text-brand-950")}
       >
-        Un pas après l'autre,{'\n'}<Text className="font-bold">vous avancez déjà</Text>
+        Un pas après l'autre,{'\n'}<Text className="font-bold">vous avancez déjà.</Text>
       </Text>
 
       <Text
-        className="text-xl text-center mb-8 leading-8"
-        style={{ color: TW_COLORS.TEXT_SECONDARY }}
+        className={mergeClassNames(typography.textMdSemibold, "text-center text-brand-900")}
       >
         Réalisons ensemble votre première observation.
       </Text>

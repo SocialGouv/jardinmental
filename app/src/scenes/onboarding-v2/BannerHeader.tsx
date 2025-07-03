@@ -5,6 +5,9 @@ import Animated from "react-native-reanimated";
 import MonochromeLogo from "@assets/svg/illustrations/MonochromeLogo"
 import { HEADER_WITH_BANNER, PROGRESS_BAR_AND_HEADER, SHARED_HEADER, TW_COLORS } from "@/utils/constants";
 import { opacity } from "react-native-reanimated/lib/typescript/Colors";
+import { mergeClassNames } from "@/utils/className";
+import { typography } from "@/utils/typography";
+import { firstLetterUppercase } from "@/utils/string-util";
 
 export default function BannerHeader({
     animatedStatusBarColor,
@@ -89,12 +92,12 @@ export default function BannerHeader({
             >
                 {header && <Animated.View style={bannerContentStyle}>{header}</Animated.View>}
                 {title && <Animated.Text
-                    className="text-2xl font-bold text-left mt-8"
+                    className={mergeClassNames(typography.displayXsBold, 'mt-8 text-left')}
                     style={[{
                         color: TW_COLORS.WHITE
                     }, animatedTextColor, bannerContentStyle, titleMarginStyle]}
                 >
-                    {title}
+                    {firstLetterUppercase(title)}
                 </Animated.Text>}
                 {children}
             </Animated.View>

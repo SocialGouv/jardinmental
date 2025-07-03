@@ -156,10 +156,10 @@ export const translateCategories = {
   COMMUNICATION: "Communication avec mon entourage",
   TOXIC: "Substance",
   CONTEXT: "Contexte",
-  [INDICATORS_CATEGORIES["Emotions/sentiments"]]: "Vos émotions",
-  [INDICATORS_CATEGORIES["Manifestations physiques"]]: "Votre sommeil",
-  [INDICATORS_CATEGORIES["Pensées"]]: "Vos pensées",
-  [INDICATORS_CATEGORIES["Comportements"]]: "Vos comportements",
+  [INDICATORS_CATEGORIES["Emotions/sentiments"]]: "vos émotions",
+  [INDICATORS_CATEGORIES["Manifestations physiques"]]: "votre sommeil",
+  [INDICATORS_CATEGORIES["Pensées"]]: "vos pensées",
+  [INDICATORS_CATEGORIES["Comportements"]]: "vos comportements",
 };
 
 export const surveyDate = {

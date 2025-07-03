@@ -195,10 +195,10 @@ export const IndicatorScreen: React.FC<IndicatorScreenProps> = ({
         {ICON_FOR_CATEGORY?.[category]}
       </View> : null}
       title={title}
-      leftAction={onClickHelp}
+      leftAction={category && HELP_FOR_CATEGORY[category] ? onClickHelp : null}
       leftComponent={category && HELP_FOR_CATEGORY[category] ? <HelpText /> : null}
       handleSkip={onNext}
-      handlePrevious={() => navigation.goBack()}
+      // handlePrevious={() => navigation.goBack()}
       // animation on scroll
       headerTitleStyle={headerTitleStyle}
       dynamicTitleStyle={dynamicTitleStyle}
@@ -209,7 +209,7 @@ export const IndicatorScreen: React.FC<IndicatorScreenProps> = ({
     ></BannerHeader>
     <Animated.ScrollView
       className={'flex-1'}
-      contentContainerStyle={{ paddingBottom: 200 }}
+      contentContainerStyle={{ paddingBottom: 250 }}
       onScroll={scrollHandler}
       scrollEventThrottle={16}>
 

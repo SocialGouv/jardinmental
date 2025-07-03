@@ -22,6 +22,8 @@ import HelpView from '@/components/HelpView';
 import { HELP_FOR_CATEGORY } from '@/scenes/onboarding-v2/data/helperData';
 import { INDICATORS_CATEGORIES } from '@/entities/Indicator';
 import { useBottomSheet } from '@/context/BottomSheetContext';
+import { mergeClassNames } from '@/utils/className';
+import { typography } from '@/utils/typography';
 
 
 type Props = OnboardingV2ScreenProps<'OnboardingCheckInHowDoYouFeelDetails'>;
@@ -151,7 +153,7 @@ export const OnboardingCheckInLastMoods: React.FC<Props> = ({ navigation, route 
             <TouchableOpacity
               key={index}
               onPress={() => toggleMood(mood)}
-              className="px-4 py-3 rounded-lg"
+              className="px-4 py-2 rounded-lg"
               style={{
                 borderWidth: 2,
                 position: 'relative',
@@ -160,7 +162,7 @@ export const OnboardingCheckInLastMoods: React.FC<Props> = ({ navigation, route 
             >
               <View className="flex-row items-center justify-center">
                 <Text
-                  className="text-center font-medium text-primary mr-1"
+                  className={mergeClassNames(typography.textSmSemibold, 'text-brand-900 mr-1')}
                 >
                   {firstLetterUppercase(mood)}
                 </Text>

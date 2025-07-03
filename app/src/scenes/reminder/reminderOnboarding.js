@@ -19,6 +19,8 @@ import { OnboardingBackButton } from '../onboarding/BackButton';
 import API from '../../services/api';
 import * as RNLocalize from 'react-native-localize';
 import BeigeWrapperScreen from '../onboarding-v2/BeigeWrapperScreen';
+import { mergeClassNames } from '@/utils/className';
+import { typography } from '@/utils/typography';
 
 const ReminderStorageKey = '@Reminder';
 
@@ -172,9 +174,9 @@ const Reminder = ({ navigation, route, notifReminderTitle = "Comment ça va aujo
     handleNext={validateOnboarding}
   >
     <View className='flex-1 p-6 z-10 flex justify-center'>
-      <Text className='text-2xl font-bold text-left mb-6 text-primary'>Trouvez votre rythme</Text>
-      <Text className='text-xl text-left mb-6 text-base'>Programmer un rappel quotidien peut vous aider à installer une routine bienveillante.</Text>
-      <Text className='text-xl text-left mb-6 text-base'>Consigner chaque jour votre état permet de découvrir progressivement ce qui vous fait du bien, et ce qui vous freine.</Text>
+      <Text className={mergeClassNames(typography.displayXsBold, 'text-gray-950 mb-6 text-left')}>Trouvez votre rythme</Text>
+      <Text className={mergeClassNames(typography.textMdMedium, 'text-gray-800 text-left mb-6')}>Programmer un rappel quotidien peut vous aider à installer une routine bienveillante.</Text>
+      <Text className={mergeClassNames(typography.textMdMedium, 'text-gray-800 text-left mb-6')} > Consigner chaque jour votre état permet de découvrir progressivement ce qui vous fait du bien, et ce qui vous freine.</Text>
       <TouchableOpacity
         onPress={showReminderSetup}
         className='border border-gray-300 rounded-3xl px-10 py-6 items-center justify-center mb-6 bg-white w-auto self-center'>
@@ -216,7 +218,7 @@ const Reminder = ({ navigation, route, notifReminderTitle = "Comment ça va aujo
       </TouchableOpacity>
     </StickyButtonContainer> */}
     <TimePicker visible={reminderSetupVisible} selectDate={setReminderRequest} />
-  </BeigeWrapperScreen>
+  </BeigeWrapperScreen >
 };
 
 // return (

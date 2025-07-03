@@ -9,6 +9,9 @@ import { HEADER_WITH_BANNER, PROGRESS_BAR, PROGRESS_BAR_AND_HEADER, SHARED_HEADE
 import BannerHeader from '../BannerHeader';
 import { useAnimatedStyle } from 'react-native-reanimated';
 import { SafeAreaViewWithOptionalHeader } from '@/scenes/onboarding/ProgressHeader';
+import { mergeClassNames } from '@/utils/className';
+import { typography } from '@/utils/typography';
+import SelectionnableItem from '@/components/SelectionnableItem';
 
 type Props = OnboardingV2ScreenProps<'PersonalizationDifficulties'>;
 
@@ -21,12 +24,12 @@ const difficultiesData: Difficulty[] = [
   },
   {
     id: 'mood',
-    name: 'Humeur',
+    name: 'Mon Humeur',
     selected: false
   },
   {
     id: 'anxiety',
-    name: 'Anxiété',
+    name: `Mon niveau d'énergie`,
     selected: false
   },
   {
@@ -140,8 +143,7 @@ export const DifficultiesScreen: React.FC<Props> = ({ navigation }) => {
       >
         <View className="px-6 py-4">
           <Text
-            className="text-base text-center mb-2"
-            style={{ color: TW_COLORS.TEXT_SECONDARY }}
+            className={mergeClassNames(typography.textSmMedium, 'text-brand-900')}
           >
             Sélectionnez les domaines sur lesquels vous aimeriez travailler
           </Text>
@@ -149,45 +151,12 @@ export const DifficultiesScreen: React.FC<Props> = ({ navigation }) => {
 
         <View style={{ paddingVertical: 8 }}>
           {selectedDifficulties.map((item) => (
-            <TouchableOpacity
-              key={item.id}
+            <SelectionnableItem
               onPress={() => toggleDifficulty(item.id)}
-              className="mx-4 mb-3 p-4 rounded-xl border-2"
-              style={{
-                borderColor: item.selected ? TW_COLORS.PRIMARY : TW_COLORS.GRAY_LIGHT,
-                backgroundColor: item.selected ? TW_COLORS.PRIMARY + '10' : TW_COLORS.WHITE,
-              }}
-            >
-              <View className="flex-row items-center">
-                <Text className="text-2xl mr-3">
-                  {categoryIcons[item.id] || '📝'}
-                </Text>
-                <View className="flex-1">
-                  <Text
-                    className="text-lg font-medium"
-                    style={{ color: TW_COLORS.TEXT_PRIMARY }}
-                  >
-                    {item.name}
-                  </Text>
-                </View>
-                {item.selected && (
-                  <View
-                    className="w-6 h-6 rounded-md items-center justify-center"
-                    style={{ backgroundColor: TW_COLORS.PRIMARY }}
-                  >
-                    <Text className="text-white text-xs">✓</Text>
-                  </View>
-                )}
-                {!item.selected && (
-                  <View
-                    className="w-6 h-6 rounded-md items-center justify-center"
-                    style={{ borderColor: TW_COLORS.GRAY_LIGHT, borderWidth: 2 }}
-                  >
-                    <Text className="text-white text-xs"></Text>
-                  </View>
-                )}
-              </View>
-            </TouchableOpacity>
+              id={item.id}
+              label={item.name}
+              selected={item.selected}>
+            </SelectionnableItem>
           ))}
         </View>
       </ScrollView>

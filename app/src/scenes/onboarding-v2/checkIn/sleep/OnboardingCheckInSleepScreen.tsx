@@ -15,11 +15,13 @@ import InstructionText from '../../InstructionText';
 import Gauge from '@/components/gauge';
 import NavigationButtons from '@/components/onboarding/NavigationButtons';
 import MoonIcon from '@assets/svg/icon/moon';
+import { typography } from '@/utils/typography';
+import { mergeClassNames } from '@/utils/className';
 
 type Props = OnboardingV2ScreenProps<'OnboardingCheckInHowDoYouFeel'>;
 
 const moodEmojis = ['😢', '😕', '😐', '🙂', '😊'];
-const moodLabels = ['Très mal dormi', 'Mal dormi', 'Ok', 'Bien dormi', 'Très bien dormi'];
+const moodLabels = [`J'ai très mal dormi`, `J'ai mal dormi`, 'Ok', `J'ai bien dormi`, `J'ai très bien dormi`];
 
 
 export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
@@ -76,7 +78,7 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
   const renderSleepSelector = () => {
     return <View className='p-4 py-8 rounded-xl bg-blue'>
       <Gauge onChange={onSelectValue} reverse={undefined} />
-      <Text>{computeMoodLabel()}</Text>
+      <Text className={mergeClassNames(typography.textMdMedium, 'text-gray-700')}>{computeMoodLabel()}</Text>
     </View>
   };
 

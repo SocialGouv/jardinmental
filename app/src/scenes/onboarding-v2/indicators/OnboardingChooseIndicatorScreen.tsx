@@ -13,6 +13,9 @@ import { TW_COLORS } from '@/utils/constants';
 import { useAnimatedStyle } from 'react-native-reanimated';
 import BannerHeader from '../BannerHeader';
 import { SafeAreaViewWithOptionalHeader } from '@/scenes/onboarding/ProgressHeader';
+import { mergeClassNames } from '@/utils/className';
+import { typography } from '@/utils/typography';
+import SelectionnableItem from '@/components/SelectionnableItem';
 
 // @todo generated with AI, see which values we want to keep
 const DIFFICULTY_KEYWORDS: Record<string, string[]> = {
@@ -88,49 +91,18 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
 
   const renderIndicatorItem = (item: PredefineIndicatorSchemaType) => {
     const selected = selectedIndicators.includes(item.uuid)
-    return <TouchableOpacity
+    return <SelectionnableItem
       key={item.uuid}
-      onPress={() => toggleIndicator(item.uuid)}
-      className="mx-4 mb-3 p-4 rounded-xl border-2"
-      style={{
-        borderColor: selected ? TW_COLORS.PRIMARY : TW_COLORS.GRAY_LIGHT,
-        backgroundColor: selected ? TW_COLORS.PRIMARY + '10' : TW_COLORS.WHITE,
-      }}
-    >
-      <View className="flex-row items-center">
-        <View className="flex-1">
-          <Text
-            className="text-lg font-medium"
-            style={{ color: TW_COLORS.TEXT_PRIMARY }}
-          >
-            {item.name}
-          </Text>
-        </View>
-        {selected && (
-          <View
-            className="w-6 h-6 rounded-md items-center justify-center"
-            style={{ backgroundColor: TW_COLORS.PRIMARY }}
-          >
-            <Text className="text-white text-xs">✓</Text>
-          </View>
-        )}
-        {!selected && (
-          <View
-            className="w-6 h-6 rounded-md items-center justify-center"
-            style={{ borderColor: TW_COLORS.GRAY_LIGHT, borderWidth: 2 }}
-          >
-            <Text className="text-white text-xs"></Text>
-          </View>
-        )}
-      </View>
-    </TouchableOpacity>
+      id={item.uuid}
+      label={item.name}
+      selected={selected}
+      onPress={() => toggleIndicator(item.uuid)} />
   };
 
   const renderCategorySection = (categoryName: string, indicators: PredefineIndicatorSchemaType[]) => (
     <View key={categoryName} className="mb-6">
       <Text
-        className="text-lg font-semibold mb-3 mx-4 capitalize"
-        style={{ color: TW_COLORS.TEXT_PRIMARY }}
+        className={mergeClassNames(typography.textSmBold, 'text-brand-900 mb-3 mx-8 capitalize')}
       >
         {categoryName}
       </Text>

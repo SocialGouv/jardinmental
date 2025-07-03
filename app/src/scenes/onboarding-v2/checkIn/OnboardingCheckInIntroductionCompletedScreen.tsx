@@ -6,6 +6,8 @@ import NavigationButtons from '@/components/onboarding/NavigationButtons';
 import { TW_COLORS } from '@/utils/constants';
 import BeigeWrapperScreen from '../BeigeWrapperScreen';
 import BeigeCard from '../BeigeCard';
+import { typography } from '@/utils/typography';
+import { mergeClassNames } from '@/utils/className';
 
 
 type Props = OnboardingV2ScreenProps<'Intro'>;
@@ -27,22 +29,21 @@ export const OnboardingCheckInIntroductionCompleted: React.FC<Props> = ({ naviga
   return <BeigeWrapperScreen
     handleSkip={handleSkip}
     handlePrevious={handlePrevious}
+    nextText='Continuer vers mon suivi'
     handleNext={handleNext}>
-                  <BeigeCard>
-      
-    <Text
-      className="text-2xl font-bold text-center mb-6"
-      style={{ color: TW_COLORS.TEXT_PRIMARY }}
-    >
-      Vous avez commencé votre suivi, bravo!
-    </Text>
+    <BeigeCard>
 
-    <Text
-      className="text-xl text-center mb-8 leading-8"
-      style={{ color: TW_COLORS.TEXT_SECONDARY }}
-    >
-      Pour aller plus loin, je vous propose quelques éléments à suivre régulièrement, en fonction de ce que vous avez partagé.
-    </Text> 
+      <Text
+        className={mergeClassNames(typography.displayXsRegular, 'text-brand-950 mb-8 px-12')}
+      >
+        Vous avez commencé votre suivi, bravo !
+      </Text>
+
+      <Text
+        className={mergeClassNames(typography.textMdSemibold, 'text-brand-900 text-left')}
+      >
+        Pour aller plus loin, je vous propose quelques éléments à suivre régulièrement, en fonction de ce que vous avez partagé.
+      </Text>
     </BeigeCard>
 
   </BeigeWrapperScreen>

@@ -3,6 +3,7 @@ import React, { ReactNode } from "react";
 import { Platform, ViewStyle } from "react-native";
 import Animated from "react-native-reanimated";
 import MonochromeLogo from "@assets/svg/illustrations/MonochromeLogo"
+import { typography } from "@/utils/typography";
 
 export default function BannerHeader({
     animatedStatusBarColor,
@@ -52,7 +53,7 @@ export default function BannerHeader({
                 showSkip={true}
             /> */}
             <Animated.Text
-                className="text-2xl font-bold text-left mt-6"
+                className={typography.displayXsMedium}
                 style={[animatedTextColor]}
             >
                 {title}
