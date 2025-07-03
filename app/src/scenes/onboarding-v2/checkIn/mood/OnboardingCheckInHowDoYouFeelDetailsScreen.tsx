@@ -17,6 +17,11 @@ import CheckMarkIcon from '@assets/svg/icon/check'
 import PlusIcon from '@assets/svg/icon/plus'
 import { SafeAreaViewWithOptionalHeader } from '@/scenes/onboarding/ProgressHeader';
 import { BottomSheetBackdrop, BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
+import HelpText from '@/components/HelpText';
+import HelpView from '@/components/HelpView';
+import { HELP_FOR_CATEGORY } from '@/scenes/onboarding-v2/data/helperData';
+import { INDICATORS_CATEGORIES } from '@/entities/Indicator';
+import { useBottomSheet } from '@/context/BottomSheetContext';
 
 
 type Props = OnboardingV2ScreenProps<'OnboardingCheckInHowDoYouFeelDetails'>;
@@ -82,6 +87,13 @@ export const OnboardingCheckInLastMoods: React.FC<Props> = ({ navigation, route 
   const [loading, setLoading] = useState(false);
   const moodOptions = React.useMemo(() => getMoodOptions(route.params?.mood), [route.params?.mood])
   const [diaryData, addNewEntryToDiaryData] = useContext(DiaryDataContext);
+  const { showBottomSheet } = useBottomSheet();
+
+  const showHelpModal = () => {
+    return showBottomSheet(<HelpView
+      title={HELP_FOR_CATEGORY[INDICATORS_CATEGORIES["Emotions/sentiments"]].title}
+      description={HELP_FOR_CATEGORY[INDICATORS_CATEGORIES["Emotions/sentiments"]]?.description} />)
+  }
 
   const toggleMood = (mood: string) => {
     setSelectedMoods(prev => {
@@ -128,10 +140,6 @@ export const OnboardingCheckInLastMoods: React.FC<Props> = ({ navigation, route 
 
   const handlePrevious = () => {
     navigation.goBack();
-  };
-
-  const handleSkip = () => {
-    handleComplete();
   };
 
   const renderMoodSelector = () => (
@@ -190,7 +198,6 @@ export const OnboardingCheckInLastMoods: React.FC<Props> = ({ navigation, route 
     };
   })
 
-
   const bottomSheetRef = useRef<BottomSheetModal>(null);
 
   const handleSheetChanges = useCallback((index: number) => {
@@ -209,38 +216,13 @@ export const OnboardingCheckInLastMoods: React.FC<Props> = ({ navigation, route 
 
   return (
     <SafeAreaViewWithOptionalHeader className="flex-1 bg-white">
-      {/* <CheckInHeader
-        title="Observation du jour"
-        onPrevious={handlePrevious}
-        onSkip={handleSkip}
-        showPrevious={true}
-        showSkip={true}
-      />
-      
-      <View className="flex-1 justify-center items-center px-8">
-        <Text 
-          className="text-lg font-bold text-center mb-8"
-          style={{ color: TW_COLORS.TEXT_PRIMARY }}
-        >
-          Y-a-t-il une émotion, un état ou un comportement qui a pris un peu de place aujourd'hui ?
-        </Text>
-        
-        {renderMoodSelector()}
-        
-        <Text 
-          className="text-sm text-center mt-4 px-4"
-          style={{ color: TW_COLORS.TEXT_SECONDARY }}
-        >
-          Vous pouvez sélectionner plusieurs options
-        </Text>
-      </View> */}
       <BannerHeader
         animatedStatusBarColor={animatedStatusBarColor}
         animatedTextColor={animatedTextColor}
         headerTitle='Observation du jour'
         title={`Y-a-t-il une émotion, un état ou un comportement qui a pris un peu de place aujourd'hui ?`}
-        leftAction={() => bottomSheetRef.current?.present()}
-        leftComponent={<View><Text>Aide (?)</Text></View>}
+        leftAction={showHelpModal}
+        leftComponent={<HelpText />}
       // handlePrevious={handlePrevious}
       // handleSkip={handleSkip}
       >
@@ -257,28 +239,11 @@ export const OnboardingCheckInLastMoods: React.FC<Props> = ({ navigation, route 
       <NavigationButtons
         onNext={handleComplete}
         absolute={true}
-        showPrevious={false}
+        // showPrevious={false}
         onPrevious={handlePrevious}
         loading={loading}
         nextText="Renseigner mes émotions"
       />
-      <BottomSheetModal
-        ref={bottomSheetRef}
-        backdropComponent={renderBackdrop}
-        onChange={handleSheetChanges}
-      >
-        <BottomSheetView>
-          <View className="flex-1 bg-white p-4">
-            <Text className="text-lg font-semibold mb-4" style={{ color: TW_COLORS.TEXT_PRIMARY }}>
-              Comment observer une émotion?
-            </Text>
-            <Text className="text-base mb-4 leading-6" style={{ color: TW_COLORS.TEXT_SECONDARY }}>
-              Pensez à son intensité aujourd’hui, sa durée ou son impact sur vous.</Text>
-            <Text className="text-base mb-4 leading-6" style={{ color: TW_COLORS.TEXT_SECONDARY }}>
-              Il n’y a pas de bonne réponse — l’essentiel, c’est d’en prendre conscience au fil du temps.</Text>
-          </View>
-        </BottomSheetView>
-      </BottomSheetModal>
     </SafeAreaViewWithOptionalHeader>
   );
 };

@@ -286,7 +286,7 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
         animatedTextColor={animatedTextColor}
         headerTitle='Observation du jour'
         title={'Comment vous sentez-vous actuellement ?'}
-        handlePrevious={handlePrevious}
+      // handlePrevious={handlePrevious}
       />
       <View className="flex-1 p-8">
         <InstructionText>

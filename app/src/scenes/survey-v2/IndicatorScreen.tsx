@@ -11,7 +11,6 @@ import Animated, {
 import { Indicator, INDICATORS_CATEGORIES } from '@/entities/Indicator';
 import { DiaryDataNewEntryInput } from '@/entities/DiaryData';
 import { IndicatorSurveyItem } from '@/components/survey/IndicatorSurveyItem';
-import CheckInHeader from '@/components/onboarding/CheckInHeader';
 import NavigationButtons from '@/components/onboarding/NavigationButtons';
 import { TW_COLORS } from '@/utils/constants';
 import BannerHeader from '../onboarding-v2/BannerHeader';
@@ -19,6 +18,11 @@ import MoonIcon from '@assets/svg/icon/moon';
 import ThoughtIcon from '@assets/svg/icon/thought';
 import BehaviourIcon from '@assets/svg/icon/behaviour';
 import InstructionText from '../onboarding-v2/InstructionText';
+import HelpText from '@/components/HelpText';
+import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
+import { useBottomSheet } from '@/context/BottomSheetContext';
+import HelpView from '@/components/HelpView';
+import { HELP_FOR_CATEGORY } from '../onboarding-v2/data/helperData';
 
 interface IndicatorScreenProps {
   navigation: any;
@@ -40,6 +44,7 @@ const ICON_FOR_CATEGORY: Record<INDICATORS_CATEGORIES, React.ReactNode> = {
   [INDICATORS_CATEGORIES["Comportements"]]: <BehaviourIcon />,
 }
 
+
 export const IndicatorScreen: React.FC<IndicatorScreenProps> = ({
   navigation,
   title,
@@ -50,8 +55,16 @@ export const IndicatorScreen: React.FC<IndicatorScreenProps> = ({
   onNext,
   category
 }) => {
-  console.log('IndicatorScreen', category, title);
 
+  const { showBottomSheet } = useBottomSheet();
+
+  const onClickHelp = () => {
+    if (category && HELP_FOR_CATEGORY[category]) {
+      showBottomSheet(<HelpView
+        description={HELP_FOR_CATEGORY[category].description}
+        title={HELP_FOR_CATEGORY[category].title} />)
+    }
+  }
   // Scroll tracking
   const scrollY = useSharedValue(0);
   const measuredHeight = useSharedValue(0); // Store the measured natural height
@@ -175,13 +188,6 @@ export const IndicatorScreen: React.FC<IndicatorScreenProps> = ({
   });
 
   return <SafeAreaView className="flex-1 bg-white">
-    {/* <CheckInHeader
-        title="Observation du jour"
-        onPrevious={() => navigation.goBack()}
-        onSkip={onNext}
-        showPrevious={true}
-        showSkip={true}
-      /> */}
     <BannerHeader
       headerTitle='Observation du jour'
       dynamicTitle={title}
@@ -189,8 +195,11 @@ export const IndicatorScreen: React.FC<IndicatorScreenProps> = ({
         {ICON_FOR_CATEGORY?.[category]}
       </View> : null}
       title={title}
-      handlePrevious={() => navigation.goBack()}
+      leftAction={onClickHelp}
+      leftComponent={category && HELP_FOR_CATEGORY[category] ? <HelpText /> : null}
       handleSkip={onNext}
+      handlePrevious={() => navigation.goBack()}
+      // animation on scroll
       headerTitleStyle={headerTitleStyle}
       dynamicTitleStyle={dynamicTitleStyle}
       bannerContentStyle={bannerContentStyle}
@@ -199,7 +208,8 @@ export const IndicatorScreen: React.FC<IndicatorScreenProps> = ({
       onBannerLayout={handleBannerLayout}
     ></BannerHeader>
     <Animated.ScrollView
-      contentContainerStyle={{ paddingBottom: 100 }}
+      className={'flex-1'}
+      contentContainerStyle={{ paddingBottom: 200 }}
       onScroll={scrollHandler}
       scrollEventThrottle={16}>
 
@@ -229,7 +239,9 @@ export const IndicatorScreen: React.FC<IndicatorScreenProps> = ({
       </View>
     </Animated.ScrollView>
     <NavigationButtons
+      absolute={true}
       onNext={onNext}
+      onPrevious={() => navigation.goBack()}
       showPrevious={false}
       // loading={loading}
       nextText="Suivant"

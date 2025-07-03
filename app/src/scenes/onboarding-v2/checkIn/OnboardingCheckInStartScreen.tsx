@@ -28,21 +28,21 @@ export const OnboardingCheckInStartScreen: React.FC<Props> = ({ navigation }) =>
     handleSkip={handleSkip}
     handlePrevious={handlePrevious}
     handleNext={handleNext}>
-        <BeigeCard>
+    <BeigeCard>
 
-    <Text
-      className="text-3xl text-center mb-6"
-      style={{ color: TW_COLORS.TEXT_PRIMARY }}
-    >
-      Un pas après l'autre,{'\n'}<Text className="font-bold">vous avancez déjà</Text>
-    </Text>
+      <Text
+        className="text-3xl text-center mb-6"
+        style={{ color: TW_COLORS.TEXT_PRIMARY }}
+      >
+        Un pas après l'autre,{'\n'}<Text className="font-bold">vous avancez déjà</Text>
+      </Text>
 
-    <Text
-      className="text-xl text-center mb-8 leading-8"
-      style={{ color: TW_COLORS.TEXT_SECONDARY }}
-    >
-      Réalisons ensemble votre première observation.
-    </Text>
+      <Text
+        className="text-xl text-center mb-8 leading-8"
+        style={{ color: TW_COLORS.TEXT_SECONDARY }}
+      >
+        Réalisons ensemble votre première observation.
+      </Text>
     </BeigeCard>
 
   </BeigeWrapperScreen>

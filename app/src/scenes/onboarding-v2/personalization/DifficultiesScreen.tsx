@@ -126,36 +126,19 @@ export const DifficultiesScreen: React.FC<Props> = ({ navigation }) => {
 
   return (
     <SafeAreaViewWithOptionalHeader className="flex-1 bg-white">
-      {/* <CheckInHeader
-        title=""
-        onPrevious={handlePrevious}
-        onSkip={handleNext}
-        showPrevious={true}
-        showSkip={true}
-      />   
-      */}
       {<BannerHeader
         hidden={HEADER_WITH_BANNER}
         hideHeader={PROGRESS_BAR_AND_HEADER}
-        // animatedStatusBarColor={animatedStatusBarColor}
-        // animatedTextColor={animatedTextColor}
         header={SHARED_HEADER || PROGRESS_BAR || PROGRESS_BAR_AND_HEADER ? undefined : <ProgressIndicator currentStep={2} totalSteps={3} />}
         title={'Sur quoi avez-vous ressenti une difficulté ou une gêne ces deux dernières semaines?'}
-        handlePrevious={handlePrevious}
         handleSkip={handleSkip}
       />}
       <ScrollView
         className="flex-1"
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ flexGrow: 1 }}
+        contentContainerStyle={{ flexGrow: 1, paddingBottom: 100 }}
       >
         <View className="px-6 py-4">
-          {/* <Text
-            className="text-2xl font-bold text-center mb-2"
-            style={{ color: TW_COLORS.TEXT_PRIMARY }}
-          >
-            Sur quoi avez-vous ressenti une difficulté ?
-          </Text> */}
           <Text
             className="text-base text-center mb-2"
             style={{ color: TW_COLORS.TEXT_SECONDARY }}
@@ -209,6 +192,7 @@ export const DifficultiesScreen: React.FC<Props> = ({ navigation }) => {
         </View>
       </ScrollView>
       <NavigationButtons
+        absolute={true}
         onNext={handleNext}
         onPrevious={handlePrevious}
         onSkip={handleSkip}

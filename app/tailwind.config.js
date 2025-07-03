@@ -20,7 +20,7 @@ module.exports = {
           900: "#1e4e5b",
         },
         secondary: {
-          DEFAULT:'#12747D',
+          DEFAULT: '#12747D',
         },
         red: {
           DEFAULT: "#f16b6b",
@@ -51,6 +51,14 @@ module.exports = {
         blue: {
           DEFAULT: "#EBFDFF"
         }
+      },
+      fontSize: {
+        'display-md': ['36px', { lineHeight: '44px', letterSpacing: '-0.02em' }],
+        'display-xs': ['24px', { lineHeight: '32px', letterSpacing: '0em' }],
+        'display-xs-regular': ['24px', { lineHeight: '32px', letterSpacing: '0em' }],
+        'text-xl': ['20px', { lineHeight: '30px', letterSpacing: '0em' }],
+        'text-md': ['16px', { lineHeight: '100%', letterSpacing: '0em' }],
+        'text-sm': ['14px', { lineHeight: '100%', letterSpacing: '0em' }],
       },
     },
   },

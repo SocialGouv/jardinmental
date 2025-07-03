@@ -47,7 +47,7 @@ export const BeigeWrapperScreen: React.FC<Props> = ({
         <SafeAreaViewWithOptionalHeader className={`flex-1 ${VARIANT_COLORS[variant]}`}>
             <CheckInHeader
                 title=""
-                onPrevious={handlePrevious}
+                // onPrevious={handlePrevious}
                 onSkip={handleSkip}
                 showPrevious={true}
                 showSkip={true}
@@ -88,6 +88,7 @@ export const BeigeWrapperScreen: React.FC<Props> = ({
                 }} />
             {handleNext && <NavigationButtons
                 onNext={handleNext}
+                onPrevious={handlePrevious}
                 showPrevious={false}
                 nextText={nextText || "Suivant"}
             />}

@@ -17,21 +17,6 @@ export const OnboardingPersonalizationStartScreen: React.FC<Props> = ({ navigati
     navigation.navigate('PersonalizationDifficulties');
   };
 
-  // const animatedStatusBarColor = useAnimatedStyle(() => {
-  //   return {
-  //     backgroundColor: TW_COLORS.PRIMARY,
-  //   };
-  // })
-
-  // const animatedTextColor = useAnimatedStyle(() => {
-  //   return {
-  //     backgroundColor: 'transparent',
-  //     color: TW_COLORS.WHITE,
-  //     alignContent: 'center',
-  //     textAlign: 'center'
-  //   };
-  // })
-
   const handlePrevious = () => {
     navigation.goBack();
   }
@@ -44,31 +29,11 @@ export const OnboardingPersonalizationStartScreen: React.FC<Props> = ({ navigati
       {<BannerHeader
         hidden={HEADER_WITH_BANNER}
         hideHeader={PROGRESS_BAR_AND_HEADER}
-        // animatedStatusBarColor={animatedStatusBarColor}
-        // animatedTextColor={animatedTextColor}
         header={SHARED_HEADER || PROGRESS_BAR || PROGRESS_BAR_AND_HEADER ? undefined : <ProgressIndicator currentStep={2} totalSteps={3} />}
         title={'Sur quoi avez-vous ressenti une difficulté ou une gêne ces deux dernières semaines?'}
-        handlePrevious={handlePrevious}
         handleSkip={handleSkip}
       />}
-      {/* <CheckInHeader
-        title=""
-        onPrevious={() => navigation.goBack()}
-        onSkip={handleNext}
-        showPrevious={true}
-        showSkip={true}
-      /> */}
-      {/* <ProgressIndicator currentStep={1} totalSteps={4} /> */}
-
       <View className="flex-1 justify-center items-center px-8">
-        {/* Titre principal */}
-        {/* <Text
-          className="text-2xl font-bold text-center mb-6"
-          style={{ color: TW_COLORS.TEXT_PRIMARY }}
-        >
-          Créons ensemble un suivi qui vous ressemble
-        </Text> */}
-
         <Text
           className="text-lg text-left mb-8 font-bold text-primary"
         >
@@ -83,8 +48,8 @@ export const OnboardingPersonalizationStartScreen: React.FC<Props> = ({ navigati
           Sentez vous libre d’avancer à votre rythme.{'\n'}
         </Text>
       </View>
-
       <NavigationButtons
+        onPrevious={handlePrevious}
         onNext={handleNext}
         showPrevious={false}
         nextText="Créer mon suivi personnalisé"

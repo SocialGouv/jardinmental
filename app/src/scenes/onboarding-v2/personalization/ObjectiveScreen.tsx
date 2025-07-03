@@ -9,6 +9,7 @@ import { HEADER_WITH_BANNER, PROGRESS_BAR, PROGRESS_BAR_AND_HEADER, SHARED_HEADE
 import { SafeAreaViewWithOptionalHeader, useOnboardingProgressHeader } from '@/scenes/onboarding/ProgressHeader';
 import BannerHeader from '../BannerHeader';
 import { useAnimatedStyle } from 'react-native-reanimated';
+import { ScrollView } from 'react-native-gesture-handler';
 
 type Props = OnboardingV2ScreenProps<'PersonalizationObjective'>;
 
@@ -126,14 +127,6 @@ export const ObjectiveScreen: React.FC<Props> = ({ navigation, route }) => {
 
   return (
     <SafeAreaViewWithOptionalHeader className="flex-1 bg-white">
-      {/* <CheckInHeader
-        title=""
-        onPrevious={handlePrevious}
-        onSkip={handleSkip}
-        showPrevious={true}
-        showSkip={true}
-      /> */}
-      {/* <ProgressIndicator currentStep={3} totalSteps={4} /> */}
       {<BannerHeader
         hidden={HEADER_WITH_BANNER}
         hideHeader={PROGRESS_BAR_AND_HEADER}
@@ -141,10 +134,9 @@ export const ObjectiveScreen: React.FC<Props> = ({ navigation, route }) => {
         animatedTextColor={animatedTextColor}
         header={SHARED_HEADER || PROGRESS_BAR || PROGRESS_BAR_AND_HEADER ? undefined : <ProgressIndicator currentStep={2} totalSteps={3} />}
         title={'Sur quoi avez-vous ressenti une difficulté ou une gêne ces deux dernières semaines?'}
-        handlePrevious={handlePrevious}
         handleSkip={handleSkip}
       />}
-      <View className="flex-1">
+      <ScrollView className="flex-1" contentContainerStyle={{ paddingBottom: 100 }}>
         {/* En-tête */}
         <View className="px-6 py-4">
           <Text
@@ -167,9 +159,10 @@ export const ObjectiveScreen: React.FC<Props> = ({ navigation, route }) => {
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ paddingVertical: 8 }}
         />
-      </View>
+      </ScrollView>
 
       <NavigationButtons
+        absolute={true}
         onNext={handleNext}
         onPrevious={handlePrevious}
         onSkip={handleSkip}

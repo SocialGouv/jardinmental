@@ -99,19 +99,9 @@ export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
     />
   );
 
-
-  return <BeigeWrapperScreen variant={variant} handlePrevious={handlePrevious}
-
+  return <BeigeWrapperScreen
+    variant={variant}
     handleSkip={handleSkip}>
-    {/* <CheckInHeader
-      title=""
-      onPrevious={handlePrevious}
-      onSkip={handleSkip}
-      showPrevious={true}
-      skipText='Passer'
-      showSkip={true}
-    /> */}
-
     <FlatList
       ref={flatListRef}
       data={slides}
@@ -139,105 +129,7 @@ export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
       }
         onNext={goToNextSlide} />
     </View>
-    {/* <Leaf
-      style={{
-        position: 'absolute',
-        top: -60,
-        right: -60,
-        zIndex: 2
-      }}
-      width={234}
-      height={240}
-    />
-    <Leaf
-      width={140}
-      height={125}
-      style={{
-        position: 'absolute',
-        top: '60%',
-        right: -40,
-        zIndex: 2
-      }} />
-    <TwoLeaf
-      width={262}
-      height={197}
-      style={{
-        position: 'absolute',
-        bottom: '15%',
-        left: -60,
-        zIndex: 2
-      }} /> */}
-    {/* <NavigationButtons
-      onNext={handleNext}
-      showPrevious={false}
-      nextText="Continuer vers ma première"
-    /> */}
   </BeigeWrapperScreen>
-
-  // return (
-  //   <SafeAreaView className="flex-1 bg-white">
-  //     {/* Bouton Passer en haut à droite */}
-  //     <View className="absolute top-12 right-4 z-10">
-  //       <TouchableOpacity
-  //         onPress={handleSkip}
-  //         className="px-4 py-2 rounded-full"
-  //         style={{ backgroundColor: TW_COLORS.WHITE + 'CC' }}
-  //       >
-  //         <Text 
-  //           className="text-base font-medium"
-  //           style={{ color: TW_COLORS.PRIMARY }}
-  //         >
-  //           Passer
-  //         </Text>
-  //       </TouchableOpacity>
-  //     </View>
-
-  //     {/* Bouton Précédent en haut à gauche */}
-  //     <View className="absolute top-12 left-4 z-10">
-  //       <TouchableOpacity
-  //         onPress={handlePrevious}
-  //         className="px-4 py-2 rounded-full"
-  //         style={{ backgroundColor: TW_COLORS.WHITE + 'CC' }}
-  //       >
-  //         <Text 
-  //           className="text-base font-medium"
-  //           style={{ color: TW_COLORS.GRAY_DARK }}
-  //         >
-  //           ← Retour
-  //         </Text>
-  //       </TouchableOpacity>
-  //     </View>
-
-  //     {/* Carrousel */}
-  //     <FlatList
-  //       ref={flatListRef}
-  //       data={slides}
-  //       renderItem={renderSlide}
-  //       keyExtractor={(item) => item.id.toString()}
-  //       horizontal
-  //       pagingEnabled
-  //       showsHorizontalScrollIndicator={false}
-  //       onViewableItemsChanged={onViewableItemsChanged}
-  //       viewabilityConfig={viewabilityConfig}
-  //       getItemLayout={(data, index) => ({
-  //         length: screenWidth,
-  //         offset: screenWidth * index,
-  //         index,
-  //       })}
-  //     />
-
-  //     {/* Indicateurs de pagination et navigation */}
-  //     <View className="absolute bottom-8 left-0 right-0">
-  //       <View className="flex-row justify-center mb-6">
-  //         {slides.map((_, index) => renderPaginationDot(index))}
-  //       </View>
-  //       <NavigationButtons nextText={
-  //         currentIndex === slides.length - 1 ? 'Continuer' : 'Suivant'
-  //         }
-  //       onNext={goToNextSlide} />
-  //     </View>
-  //   </SafeAreaView>
-  // );
 };
 
 export default CarouselScreen;

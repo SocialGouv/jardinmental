@@ -206,6 +206,7 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
         <View className="h-20" />
       </ScrollView>
       <NavigationButtons
+        absolute={true}
         onNext={handleNext}
         nextDisabled={selectedIndicators.length === 0}
         nextText="Continuer"

@@ -175,13 +175,15 @@ const Reminder = ({ navigation, route, notifReminderTitle = "Comment ça va aujo
       <Text className='text-2xl font-bold text-left mb-6 text-primary'>Trouvez votre rythme</Text>
       <Text className='text-xl text-left mb-6 text-base'>Programmer un rappel quotidien peut vous aider à installer une routine bienveillante.</Text>
       <Text className='text-xl text-left mb-6 text-base'>Consigner chaque jour votre état permet de découvrir progressivement ce qui vous fait du bien, et ce qui vous freine.</Text>
-      <View className='border border-gray-300 rounded-3xl px-10 py-6 items-center justify-center mb-6 bg-white w-auto self-center'>
+      <TouchableOpacity
+        onPress={showReminderSetup}
+        className='border border-gray-300 rounded-3xl px-10 py-6 items-center justify-center mb-6 bg-white w-auto self-center'>
         <Text className='text-base mb-2'>Recevez un rappel à :</Text>
-        <TouchableOpacity className='py-2 px-8 border-2 border-secondary rounded-3xl w-auto flew-column' onPress={showReminderSetup}>
+        <View className='py-2 px-8 border-2 border-secondary rounded-3xl w-auto flew-column'>
           <Text className="font-bold text-5xl text-secondary">{`${dayjs(reminder).format('HH:mm')}`}</Text>
-        </TouchableOpacity>
+        </View>
         <Text className='text-base mt-4'>Éditer</Text>
-      </View>
+      </TouchableOpacity>
     </View>
     {/* <ScrollView style={onboardingStyles.scroll} contentContainerStyle={onboardingStyles.scrollContentContainer}>
       <View style={onboardingStyles.container}>
@@ -198,7 +200,7 @@ const Reminder = ({ navigation, route, notifReminderTitle = "Comment ça va aujo
                 <Text style={onboardingStyles.presentationText}>Plus vous remplirez votre questionnaire, plus vous en apprendrez sur vous et votre santé mentale</Text>
               </View>
             </View>
-            <TouchableOpacity onPress={showReminderSetup}>
+            <TouchableOpacity>
               <Text style={styles.time}>{`${dayjs(reminder).format('HH:mm')}`}</Text>
             </TouchableOpacity>
           </>

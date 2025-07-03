@@ -94,27 +94,23 @@ export const SafeAreaViewWithOptionalHeader = ({ children, style, ...props }) =>
   const { isVisible } = useOnboardingProgressHeader();
 
   return (
-    <GestureHandlerRootView className='flex-1'>
-      <BottomSheetModalProvider>
-        <View
-          style={[
-            {
-              flex: 1,
-              paddingTop: insets.top + (isVisible ? PROGRESS_HEADER_HEIGHT : 0),
-              paddingBottom: insets.bottom,
-            },
-            style,
-          ]}
-          {...props}
-        >
-          {children}
-        </View>
-      </BottomSheetModalProvider>
-    </GestureHandlerRootView>
+    <View
+      style={[
+        {
+          flex: 1,
+          paddingTop: insets.top + (isVisible ? PROGRESS_HEADER_HEIGHT : 0),
+          paddingBottom: insets.bottom,
+        },
+        style,
+      ]}
+      {...props}
+    >
+      {children}
+    </View>
   );
 };
 
-const ProgressHeader = ({ insets, slidesCount }) => {
+const ProgressHeader = ({ insets, slidesCount, navigation }) => {
   const { slideIndex, title, showProgressbar, setSlideIndex } = useOnboardingProgressHeader();
   const [hideHeader, setHideHeader] = useState(false)
   const animatedProgressValue = useRef(new Animated.Value(0)).current;
@@ -134,6 +130,19 @@ const ProgressHeader = ({ insets, slidesCount }) => {
       color: TW_COLORS.WHITE
     };
   })
+
+  const handlePrevious = () => {
+    console.log('lcs slide index', slideIndex)
+    if (slideIndex === 0) {
+      setHideHeader(true)
+      setSlideIndex(-1);
+    }
+    // timeout needed to make the hide header done before the go back
+    setTimeout(() => {
+      navigation.goBack()
+      setHideHeader(false)
+    }, 0)
+  }
 
 
   useEffect(() => {
@@ -279,18 +288,6 @@ const ProgressHeader = ({ insets, slidesCount }) => {
           </BannerAnimatedHeader>}
           {!HEADER_WITH_BANNER && !hideHeader && (SHARED_HEADER || PROGRESS_BAR_AND_HEADER) && <CheckInHeader
             withMargin={false}
-            onPrevious={() => {
-              console.log('lcs slide index', slideIndex)
-              if (slideIndex === 0) {
-                setHideHeader(true)
-                setSlideIndex(-1);
-              }
-              // timeout needed to make the hide header done before the go back
-              setTimeout(() => {
-                navigation.goBack()
-                setHideHeader(false)
-              }, 0)
-            }}
             onSkip={() => navigation.goNext()}
             showPrevious={true}
             animatedTextColor={animatedTextColor}
