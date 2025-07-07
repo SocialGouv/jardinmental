@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { InputText } from "../InputText";
+import { mergeClassNames } from '@/utils/className';
 
 import { Smiley } from "@/components/survey/Smiley";
 import { Boolean } from "./Boolean";
 import Gauge from "../gauge";
 import { colors } from "@/utils/colors";
+import { typography } from "@/utils/typography";
+import { IndicatorItem } from "@/scenes/onboarding-v2/types";
+import { INDICATOR_TYPE, PredefineIndicatorSchemaType } from "@/entities/Indicator";
+import { DEFAULT_INDICATOR_LABELS, INDICATOR_LABELS } from "@/utils/liste_indicateurs.1";
+import BasicCard from "../BasicCard";
 
 export const IndicatorSurveyItem = ({
   indicator,
@@ -14,8 +20,21 @@ export const IndicatorSurveyItem = ({
   onValueChanged,
   comment,
   onCommentChanged,
+}: {
+  indicator: PredefineIndicatorSchemaType,
+  index: number,
+  value: number,
+  comment?: string,
+  onValueChanged: () => {},
+  onCommentChanged: () => {}
 }) => {
   // console.log("✍️  i. ndicator", indicator);
+
+  const computeIndicatorLabel = (): string => {
+    if (value === null) return '';
+    const index = Math.min(Math.floor(value * 5), 4);
+    return (INDICATOR_LABELS[indicator.uuid] || DEFAULT_INDICATOR_LABELS)[index] ?? '';
+  };
 
   const [_comment, _setComment] = useState(comment);
   useEffect(() => {
@@ -23,6 +42,7 @@ export const IndicatorSurveyItem = ({
   }, [comment]);
 
   const renderInput = () => {
+    console.log(indicator.uuid)
     switch (indicator?.type) {
       case "smiley":
         return <Smiley indicator={indicator} value={value} onValueChanged={onValueChanged} />;
@@ -53,38 +73,44 @@ export const IndicatorSurveyItem = ({
       </View>
     );
   };
-
-  return (
-    <View
-      style={[
-        styles.container,
-        {
-          backgroundColor: value !== undefined ? "#F0FFF0" : "#F8F9FB",
-          borderColor: value !== undefined ? "#D0E8D0" : "#E7EAF1",
-        },
-      ]}
-    >
-      <View style={[styles.contentContainer]}>
-        <View style={[styles.topContainer]}>
-          <Text style={[styles.label]}>{indicator.name}</Text>
-        </View>
-        {renderInput()}
-        <InputText
-          fill
-          preset="lighten"
-          placeholder="Ajoutez une note sur cet élément"
-          value={_comment}
-          onChangeText={(nextComment) => {
-            _setComment(nextComment);
-            onCommentChanged?.({ comment: nextComment, indicator });
-          }}
-          multiline={true}
-          textAlignVertical="top"
-          className="p-0" // remove space that multiline adds
-        />
-      </View>
+  return <BasicCard>
+    <View>
+      <Text className={mergeClassNames(typography.textMdMedium, 'text-brand-950', 'mb-6')}>{indicator.name}</Text>
     </View>
-  );
+    {renderInput()}
+    {indicator.type === INDICATOR_TYPE.gauge && <Text className={mergeClassNames(typography.textMdMedium, 'text-gray-700')}>{computeIndicatorLabel()}</Text>}
+  </BasicCard>
+  // return (
+  //   <View
+  //     style={[
+  //       styles.container,
+  //       {
+  //         backgroundColor: value !== undefined ? "#F0FFF0" : "#F8F9FB",
+  //         borderColor: value !== undefined ? "#D0E8D0" : "#E7EAF1",
+  //       },
+  //     ]}
+  //   >
+  //     <View style={[styles.contentContainer]}>
+  //       <View style={[styles.topContainer]}>
+  //         <Text style={[styles.label]}>{indicator.name}</Text>
+  //       </View>
+  //       {renderInput()}
+  //       <InputText
+  //         fill
+  //         preset="lighten"
+  //         placeholder="Ajoutez une note sur cet élément"
+  //         value={_comment}
+  //         onChangeText={(nextComment) => {
+  //           _setComment(nextComment);
+  //           onCommentChanged?.({ comment: nextComment, indicator });
+  //         }}
+  //         multiline={true}
+  //         textAlignVertical="top"
+  //         className="p-0" // remove space that multiline adds
+  //       />
+  //     </View>
+  //   </View>
+  //);
 };
 
 const styles = StyleSheet.create({

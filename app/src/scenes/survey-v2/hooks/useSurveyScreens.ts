@@ -85,16 +85,16 @@ export const useSurveyScreens = (userIndicateurs: Indicator[], { isOnboarding }:
 
     // Add final screens
     screens.push(
-      {
-        id: 'context',
-        type: SurveyScreenType.context,
-        title: 'Contexte'
-      },
-      {
-        id: 'toxic',
-        type: SurveyScreenType.toxic,
-        title: 'Substances'
-      },
+      // {
+      //   id: 'context',
+      //   type: SurveyScreenType.context,
+      //   title: 'Contexte'
+      // },
+      // {
+      //   id: 'toxic',
+      //   type: SurveyScreenType.toxic,
+      //   title: 'Substances'
+      // },
       {
         id: 'final',
         type: SurveyScreenType.encouragement,

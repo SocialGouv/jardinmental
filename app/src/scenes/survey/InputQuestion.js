@@ -3,6 +3,7 @@ import { TouchableOpacity, StyleSheet, View, TextInput, Platform } from "react-n
 import Text from "../../components/MyText";
 import { colors } from "../../utils/colors";
 import Icon from "../../components/Icon";
+import BasicCard from "@/components/BasicCard";
 
 const Question = ({
   question,
@@ -22,15 +23,7 @@ const Question = ({
   }, [userComment]);
 
   return (
-    <View
-      style={[
-        styles.questionContainer,
-        {
-          backgroundColor: text !== undefined && text?.length > 0 ? "#F0FFF0" : "#F8F9FB",
-          borderColor: text !== undefined && text?.length > 0 ? "#D0E8D0" : "#E7EAF1",
-        },
-      ]}
-    >
+    <BasicCard>
       <TouchableOpacity onPress={toggleShowExplanation}>
         <View style={styles.questionHeader}>
           {explanation ? (
@@ -70,7 +63,7 @@ const Question = ({
           textAlignVertical={"top"}
         />
       </View>
-    </View>
+    </BasicCard>
   );
 };
 

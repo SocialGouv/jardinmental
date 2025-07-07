@@ -14,11 +14,13 @@ export const icons = {
 };
 
 export const EMOTION_COLORS = {
-  veryBad: "#F16B6B",
-  bad: "#FEAA5B",
-  middle: "#F2F478",
-  good: "#ACF352",
-  veryGood: "#5DEE5A",
+  // bg
+  veryBad: "#F4A6A6",//"#F16B6B",
+  bad: "#FDD6A5",//"#FEAA5B",
+  middle: "#FFF4B2",//"#F2F478",
+  good: "#D0F0C0",//"#ACF352",
+  veryGood: "#A8E6CF",//"#5DEE5A",
+  //
   veryBadTrans: "#fdcccc",
   badTrans: "#fbd8b8",
   middleTrans: "#fbe79c",
@@ -35,11 +37,11 @@ export const iconBorderColors = {
 };
 
 export const iconColors = {
-  veryBad: "#840707",
-  bad: "#744519",
-  middle: "#6C630C",
-  good: "#496300",
-  veryGood: "#1A6300",
+  veryBad: "#822F2F", //"#840707",
+  bad: "#91501A", //"#744519",
+  middle: "#91501A",//"#6C630C",
+  good: '#317535',//"#496300",
+  veryGood: '#21896B',//"#1A6300",
 };
 
 export const scoresMapIcon = {

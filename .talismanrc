@@ -75,6 +75,8 @@ fileignoreconfig:
   checksum: 7f5c1e61a8f6fae00cb96feb22bbe418d950afac74adc180beababe38164349d
 - filename: app/src/scenes/survey-v2/multiScreenSurvey/ToxicScreen.tsx
   checksum: 9105b5c150d188867a8dce781bbdc2ad04828392f1945481cac138331fc50f47
+- filename: app/src/scenes/survey/QuestionYesNo.js
+  checksum: 875b5da90b88e67d3fb94b760306cb7f7c12b2e35458152db49cdaf988f59d12
 - filename: app/src/scenes/survey/daySurvey.tsx
   checksum: 440ba524fd17674f06dd0ef4158be6f3ce291bf4be450c361ec4ae883a60534f
 - filename: app/src/scenes/survey/survey-data.js

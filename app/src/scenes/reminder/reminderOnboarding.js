@@ -180,9 +180,9 @@ const Reminder = ({ navigation, route, notifReminderTitle = "Comment ça va aujo
       <TouchableOpacity
         onPress={showReminderSetup}
         className='border border-gray-300 rounded-3xl px-10 py-6 items-center justify-center mb-6 bg-white w-auto self-center'>
-        <Text className='text-base mb-2'>Recevez un rappel à :</Text>
-        <View className='py-2 px-8 border-2 border-secondary rounded-3xl w-auto flew-column'>
-          <Text className="font-bold text-5xl text-secondary">{`${dayjs(reminder).format('HH:mm')}`}</Text>
+        <Text className={mergeClassNames(typography.textSmMedium, 'mb-2')}> Recevez un rappel à:</Text>
+        <View className='py-3 pt-4 px-8 border-2 border-secondary rounded-3xl w-auto flew-column'>
+          <Text className="font-bold text-5xl text-brand-600">{`${dayjs(reminder).format('HH:mm')}`}h</Text>
         </View>
         <Text className='text-base mt-4'>Éditer</Text>
       </TouchableOpacity>

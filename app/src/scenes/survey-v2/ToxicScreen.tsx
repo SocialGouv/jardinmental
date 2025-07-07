@@ -47,7 +47,7 @@ export const ToxicScreen: React.FC<ToxicScreenProps> = ({
         // handlePrevious={() => navigation.goBack()}
         handleSkip={onNext}
       ></BannerHeader>
-      <View className="flex-1 justify-center items-center">
+      <View className="flex-1 justify-center items-center p-4">
         <QuestionYesNo
           question={questionToxic}
           onPress={onValueChanged}

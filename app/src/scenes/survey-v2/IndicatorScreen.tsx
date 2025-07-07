@@ -23,6 +23,7 @@ import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
 import { useBottomSheet } from '@/context/BottomSheetContext';
 import HelpView from '@/components/HelpView';
 import { HELP_FOR_CATEGORY } from '../onboarding-v2/data/helperData';
+import { firstLetterUppercase } from '@/utils/string-util';
 
 interface IndicatorScreenProps {
   navigation: any;
@@ -190,7 +191,7 @@ export const IndicatorScreen: React.FC<IndicatorScreenProps> = ({
   return <SafeAreaView className="flex-1 bg-white">
     <BannerHeader
       headerTitle='Observation du jour'
-      dynamicTitle={title}
+      dynamicTitle={firstLetterUppercase(title)}
       header={category ? <View className='rounded-full bg-white/30 p-2 self-start w-auto'>
         {ICON_FOR_CATEGORY?.[category]}
       </View> : null}
@@ -230,12 +231,6 @@ export const IndicatorScreen: React.FC<IndicatorScreenProps> = ({
             comment={answers?.[indicator.name]?.userComment}
           />
         ))}
-        <Text
-          className="text-sm text-center mt-4 px-4"
-          style={{ color: TW_COLORS.TEXT_SECONDARY }}
-        >
-          Vous pouvez sélectionner plusieurs options
-        </Text>
       </View>
     </Animated.ScrollView>
     <NavigationButtons

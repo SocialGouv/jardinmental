@@ -44,7 +44,7 @@ export const ContextScreen: React.FC<ContextScreenProps> = ({
         // handlePrevious={() => navigation.goBack()}
         handleSkip={onNext}
       ></BannerHeader>
-      <View className="flex-1 justify-center items-center">
+      <View className="flex-1 justify-center items-center p-4">
         <InputQuestion
           question={questionContext}
           explanation={questionContext.explanation}

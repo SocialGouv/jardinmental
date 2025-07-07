@@ -863,3 +863,8 @@ export const INDICATEURS_LISTE_ONBOARDING_CUSTOM_SIMPLE_LIST = [
   "Je me sens seul(e)",
 ];
 
+export const INDICATOR_LABELS: Record<string, string[]> = {
+  '3e15ed99-f2f9-4716-b6a2-5348c35266da': ['Très mal', 'Mal', 'OK', 'Bien', 'Très bien'],
+}
+
+export const DEFAULT_INDICATOR_LABELS = ['Très faible', 'Faible', 'Normal', 'Élevé', 'Trés élevé']

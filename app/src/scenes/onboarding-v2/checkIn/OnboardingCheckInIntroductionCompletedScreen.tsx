@@ -40,7 +40,7 @@ export const OnboardingCheckInIntroductionCompleted: React.FC<Props> = ({ naviga
       </Text>
 
       <Text
-        className={mergeClassNames(typography.textMdSemibold, 'text-brand-900 text-left')}
+        className={mergeClassNames(typography.textMdSemibold, 'text-brand-900 text-center px-12')}
       >
         Pour aller plus loin, je vous propose quelques éléments à suivre régulièrement, en fonction de ce que vous avez partagé.
       </Text>

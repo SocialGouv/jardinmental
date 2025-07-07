@@ -40,7 +40,7 @@ export const IntroScreen: React.FC<Props> = ({ navigation }) => {
       <BannerHeaderIntro
         animatedStatusBarColor={animatedStatusBarColor}
         animatedTextColor={animatedTextColor}
-        title={`Jardin Mental est un outils de suivi de votre santé mentale.`}
+        title={`Jardin Mental est un outil de suivi de votre santé mentale.`}
         handlePrevious={() => { }}
         handleSkip={() => { }}
       >

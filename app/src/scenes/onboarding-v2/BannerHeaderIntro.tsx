@@ -5,7 +5,7 @@ import Animated from "react-native-reanimated";
 import MonochromeLogo from "@assets/svg/illustrations/MonochromeLogo"
 import { typography } from "@/utils/typography";
 
-export default function BannerHeader({
+export default function BannerHeaderIntro({
     animatedStatusBarColor,
     animatedTextColor,
     handlePrevious,
@@ -22,7 +22,7 @@ export default function BannerHeader({
 }) {
     return <>
         <Animated.View
-            className={"rounded-b-3xl"}
+            className={"rounded-b-3xl items-center"}
             style={[animatedStatusBarColor, { position: 'absolute', top: 0, left: 0, right: 0, height: 260, zIndex: 1, overflow: 'hidden' }]}>
             <MonochromeLogo
                 width={'130%'}
@@ -32,33 +32,23 @@ export default function BannerHeader({
                     left: -30,
                     top: '-30%'
                 }}
-            />
-        </Animated.View>
-        <Animated.View
-            style={[animatedStatusBarColor, {
-                zIndex: 2,
-                overflow: 'hidden',
-                backgroundColor: 'transparent'
-            }]}
-            className="rounded-b-3xl py-4 pb-8 px-10"
-        >
-
-            {/* <CheckInHeader
-                title="Observation du jour"
-                withMargin={false}
-                onPrevious={handlePrevious}
-                onSkip={handleSkip}
-                showPrevious={true}
-                animatedTextColor={animatedTextColor}
-                showSkip={true}
-            /> */}
-            <Animated.Text
-                className={typography.displayXsMedium}
-                style={[animatedTextColor]}
+            /><Animated.View
+                style={[animatedStatusBarColor, {
+                    zIndex: 2,
+                    overflow: 'hidden',
+                    backgroundColor: 'transparent',
+                }]}
+                className="rounded-b-3xl py-4 pb-8 px-10 items-center h-full justify-center mt-8"
             >
-                {title}
-            </Animated.Text>
-            {children}
+                <Animated.Text
+                    className={typography.displayXsMedium}
+                    style={[animatedTextColor]}
+                >
+                    {title}
+                </Animated.Text>
+                {children}
+            </Animated.View>
         </Animated.View>
+
     </>
 }
