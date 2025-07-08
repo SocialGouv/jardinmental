@@ -1,24 +1,25 @@
-import React, {useEffect, useState, useContext} from 'react';
-import {StyleSheet, ScrollView, View, TouchableOpacity, Dimensions} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import React, { useEffect, useState, useContext } from 'react';
+import { StyleSheet, ScrollView, View, TouchableOpacity, Dimensions } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Text from '../../components/MyText';
 import DiaryNotes from './DiaryNotes';
 import DiarySymptoms from './DiarySymptoms';
 import ContributeCard from '../contribute/contributeCard';
 import Header from '../../components/Header';
-import {colors} from '../../utils/colors';
-import {DiaryNotesContext} from '../../context/diaryNotes';
-import {DiaryDataContext} from '../../context/diaryData';
+import { colors } from '../../utils/colors';
+import { DiaryNotesContext } from '../../context/diaryNotes';
+import { DiaryDataContext } from '../../context/diaryData';
 import localStorage from '../../utils/localStorage';
 import NPS from '../../services/NPS/NPS';
 import ArrowUpSvg from '../../../assets/svg/arrow-up.svg';
-import {formatDateThread, makeSureTimestamp} from '../../utils/date/helpers';
+import { formatDateThread, makeSureTimestamp } from '../../utils/date/helpers';
 import DatePicker from '../../components/DatePicker';
+import { VALID_SCREEN_NAMES } from '@/scenes/onboarding-v2/index'
 
 const LIMIT_PER_PAGE = __DEV__ ? 3 : 30;
 const screenHeight = Dimensions.get('window').height;
 
-const Diary = ({navigation, hideDeader = false}) => {
+const Diary = ({ navigation, hideDeader = false }) => {
   const [diaryNotes] = useContext(DiaryNotesContext);
   const [diaryData] = useContext(DiaryDataContext);
   const [NPSvisible, setNPSvisible] = useState(false);
@@ -36,13 +37,22 @@ const Diary = ({navigation, hideDeader = false}) => {
       else {
         const isFirstAppLaunch = await localStorage.getIsFirstAppLaunch();
         if (isFirstAppLaunch !== 'false') {
+          const onboardingStep = await localStorage.getOnboardingStep()
+          let state
+          if (onboardingStep && VALID_SCREEN_NAMES.includes(onboardingStep)) {
+            const index = VALID_SCREEN_NAMES.indexOf(onboardingStep);
+            const routes = VALID_SCREEN_NAMES.slice(0, index + 1).map(name => ({ name: name, key: name }));
+            state = {
+              index,
+              routes
+            }
+          }
           navigation.reset({
-            routes: [
-              {
-                name: 'onboarding',
-                params: {screen: onboardingStep || 'OnboardingPresentation'},
-              },
-            ],
+            routes: [{
+              name: 'onboarding',
+              params: { screen: onboardingStep || 'OnboardingPresentation' },
+              state
+            }]
           });
         }
       }

@@ -20,6 +20,7 @@ export const IndicatorSurveyItem = ({
   onValueChanged,
   comment,
   onCommentChanged,
+  showComment
 }: {
   indicator: PredefineIndicatorSchemaType,
   index: number,
@@ -27,6 +28,7 @@ export const IndicatorSurveyItem = ({
   comment?: string,
   onValueChanged: () => {},
   onCommentChanged: () => {}
+  showComment: boolean
 }) => {
   // console.log("✍️  i. ndicator", indicator);
 
@@ -78,7 +80,22 @@ export const IndicatorSurveyItem = ({
       <Text className={mergeClassNames(typography.textMdMedium, 'text-brand-950', 'mb-6')}>{indicator.name}</Text>
     </View>
     {renderInput()}
-    {indicator.type === INDICATOR_TYPE.gauge && <Text className={mergeClassNames(typography.textMdMedium, 'text-gray-700')}>{computeIndicatorLabel()}</Text>}
+    {indicator.type === INDICATOR_TYPE.gauge &&
+      <Text className={mergeClassNames(typography.textMdMedium, 'text-gray-700 h-5')}>{computeIndicatorLabel() || ''}</Text>
+    }
+    {showComment && <InputText
+      fill
+      preset="lighten"
+      placeholder="Ajoutez une note sur cet élément"
+      value={_comment}
+      onChangeText={(nextComment) => {
+        _setComment(nextComment);
+        onCommentChanged?.({ comment: nextComment, indicator });
+      }}
+      multiline={true}
+      textAlignVertical="top"
+      containerStyle={{ marginTop: 20 }}
+    />}
   </BasicCard>
   // return (
   //   <View

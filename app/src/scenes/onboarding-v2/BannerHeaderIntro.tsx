@@ -32,7 +32,8 @@ export default function BannerHeaderIntro({
                     left: -30,
                     top: '-30%'
                 }}
-            /><Animated.View
+            />
+            <Animated.View
                 style={[animatedStatusBarColor, {
                     zIndex: 2,
                     overflow: 'hidden',

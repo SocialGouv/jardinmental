@@ -1,10 +1,11 @@
 import * as Notifications from 'expo-notifications';
-import {Platform} from 'react-native';
+import { Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {STORAGE_KEY_PUSH_NOTIFICATION_TOKEN, STORAGE_KEY_PUSH_NOTIFICATION_TOKEN_ERROR} from '../utils/constants';
+import { STORAGE_KEY_PUSH_NOTIFICATION_TOKEN, STORAGE_KEY_PUSH_NOTIFICATION_TOKEN_ERROR } from '../utils/constants';
 import logEvents from './logEvents';
 import API from './api';
-import {registerForPushNotificationsAsync} from './notifications-expo';
+import { registerForPushNotificationsAsync } from './notifications-expo';
+import uuid from 'react-native-uuid';
 
 class NotificationService {
   listeners = {};
@@ -87,29 +88,29 @@ class NotificationService {
   }
 
   async checkPermission() {
-    const {status} = await Notifications.getPermissionsAsync();
+    const { status } = await Notifications.getPermissionsAsync();
     return status === 'granted';
   }
 
   async checkAndAskForPermission() {
-    const {status: existingStatus} = await Notifications.getPermissionsAsync();
+    const { status: existingStatus } = await Notifications.getPermissionsAsync();
     if (existingStatus !== 'granted') {
-      const {status} = await Notifications.requestPermissionsAsync();
+      const { status } = await Notifications.requestPermissionsAsync();
       return status === 'granted';
     }
     return true;
   }
 
   checkAndGetPermissionIfAlreadyGiven = async from => {
-    const {status: existingStatus} = await Notifications.getPermissionsAsync();
+    const { status: existingStatus } = await Notifications.getPermissionsAsync();
     if (existingStatus !== 'granted') return false;
 
-    const {status} = await Notifications.requestPermissionsAsync();
+    const { status } = await Notifications.requestPermissionsAsync();
     return status === 'granted';
   };
   channelId = 'REMINDER-CHANNEL-ID';
 
-  scheduleNotification({date, title, message, playSound = true, soundName = 'default', repeatType = 'day'} = {}) {
+  scheduleNotification({ date, title, message, playSound = true, soundName = 'default', repeatType = 'day' } = {}) {
     Notifications.scheduleNotificationAsync({
       content: {
         title,

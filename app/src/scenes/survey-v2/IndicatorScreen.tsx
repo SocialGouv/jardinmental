@@ -1,6 +1,9 @@
 import React from 'react';
-import { ScrollView, View, Text } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {
+  ScrollView, View, Text, Platform,
+  // KeyboardAvoidingView
+} from 'react-native';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import Animated, {
   useSharedValue,
   useAnimatedScrollHandler,
@@ -24,6 +27,7 @@ import { useBottomSheet } from '@/context/BottomSheetContext';
 import HelpView from '@/components/HelpView';
 import { HELP_FOR_CATEGORY } from '../onboarding-v2/data/helperData';
 import { firstLetterUppercase } from '@/utils/string-util';
+import { KeyboardAvoidingView } from "react-native-keyboard-controller";
 
 interface IndicatorScreenProps {
   navigation: any;
@@ -36,6 +40,7 @@ interface IndicatorScreenProps {
   onCommentChanged: ({ key, userComment }: { key: string; userComment: string }) => void;
   onNext: () => void;
   category?: INDICATORS_CATEGORIES;
+  showComment?: boolean
 }
 
 const ICON_FOR_CATEGORY: Record<INDICATORS_CATEGORIES, React.ReactNode> = {
@@ -54,10 +59,12 @@ export const IndicatorScreen: React.FC<IndicatorScreenProps> = ({
   onValueChanged,
   onCommentChanged,
   onNext,
-  category
+  category,
+  showComment = true
 }) => {
 
   const { showBottomSheet } = useBottomSheet();
+  const insets = useSafeAreaInsets();
 
   const onClickHelp = () => {
     if (category && HELP_FOR_CATEGORY[category]) {
@@ -189,50 +196,61 @@ export const IndicatorScreen: React.FC<IndicatorScreenProps> = ({
   });
 
   return <SafeAreaView className="flex-1 bg-white">
-    <BannerHeader
-      headerTitle='Observation du jour'
-      dynamicTitle={firstLetterUppercase(title)}
-      header={category ? <View className='rounded-full bg-white/30 p-2 self-start w-auto'>
-        {ICON_FOR_CATEGORY?.[category]}
-      </View> : null}
-      title={title}
-      leftAction={category && HELP_FOR_CATEGORY[category] ? onClickHelp : null}
-      leftComponent={category && HELP_FOR_CATEGORY[category] ? <HelpText /> : null}
-      handleSkip={onNext}
-      // handlePrevious={() => navigation.goBack()}
-      // animation on scroll
-      headerTitleStyle={headerTitleStyle}
-      dynamicTitleStyle={dynamicTitleStyle}
-      bannerContentStyle={bannerContentStyle}
-      bannerContainerStyle={bannerContainerStyle}
-      titleMarginStyle={titleMarginStyle}
-      onBannerLayout={handleBannerLayout}
-    ></BannerHeader>
-    <Animated.ScrollView
-      className={'flex-1'}
-      contentContainerStyle={{ paddingBottom: 250 }}
-      onScroll={scrollHandler}
-      scrollEventThrottle={16}>
-
-      <View className="flex-1 justify-center items-center px-6 py-6">
-        <InstructionText>Prenons un instant pour faire le point sur {title}</InstructionText>
-        {indicators.map((indicator, index) => (
-          <IndicatorSurveyItem
-            key={indicator.uuid}
-            indicator={indicator}
-            index={index}
-            value={answers?.[indicator.name]?.value}
-            onValueChanged={({ indicator, value }) =>
-              onValueChanged({ key: indicator.name, value })
-            }
-            onCommentChanged={({ indicator, comment }) =>
-              onCommentChanged({ key: indicator.name, userComment: comment })
-            }
-            comment={answers?.[indicator.name]?.userComment}
-          />
-        ))}
-      </View>
-    </Animated.ScrollView>
+    <View style={{
+      position: 'absolute', top: Platform.OS === 'android' ? insets.top : 0, left: 0, right: 0, zIndex: 10
+    }}>
+      <BannerHeader
+        inAbsoluteView={true}
+        headerTitle='Observation du jour'
+        dynamicTitle={firstLetterUppercase(title)}
+        header={category ? <View className='rounded-full bg-white/30 p-2 self-start w-auto'>
+          {ICON_FOR_CATEGORY?.[category]}
+        </View> : null}
+        title={title}
+        leftAction={category && HELP_FOR_CATEGORY[category] ? onClickHelp : null}
+        leftComponent={category && HELP_FOR_CATEGORY[category] ? <HelpText /> : null}
+        handleSkip={onNext}
+        // handlePrevious={() => navigation.goBack()}
+        // animation on scroll
+        headerTitleStyle={headerTitleStyle}
+        dynamicTitleStyle={dynamicTitleStyle}
+        bannerContentStyle={bannerContentStyle}
+        bannerContainerStyle={bannerContainerStyle}
+        titleMarginStyle={titleMarginStyle}
+        onBannerLayout={handleBannerLayout}
+      ></BannerHeader>
+    </View>
+    <KeyboardAvoidingView
+      behavior={"padding"}
+      // keyboardVerticalOffset={0}
+      keyboardVerticalOffset={40}
+      style={{ flex: 1 }}>
+      <Animated.ScrollView
+        className={'flex-1'}
+        contentContainerStyle={{ paddingBottom: 250, paddingTop: 200 }}
+        onScroll={scrollHandler}
+        scrollEventThrottle={16}>
+        <View className="flex-1 justify-center items-center px-6 py-6">
+          <InstructionText>Prenons un instant pour faire le point sur {title}</InstructionText>
+          {indicators.map((indicator, index) => (
+            <IndicatorSurveyItem
+              key={indicator.uuid}
+              indicator={indicator}
+              index={index}
+              showComment={showComment}
+              value={answers?.[indicator.name]?.value}
+              onValueChanged={({ indicator, value }) => {
+                onValueChanged({ key: indicator.name, value })
+              }}
+              onCommentChanged={({ indicator, comment }) =>
+                onCommentChanged({ key: indicator.name, userComment: comment })
+              }
+              comment={answers?.[indicator.name]?.userComment}
+            />
+          ))}
+        </View>
+      </Animated.ScrollView>
+    </KeyboardAvoidingView>
     <NavigationButtons
       absolute={true}
       onNext={onNext}

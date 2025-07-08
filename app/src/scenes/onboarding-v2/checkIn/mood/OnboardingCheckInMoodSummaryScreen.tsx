@@ -65,14 +65,6 @@ export const OnboardingCheckInMoodSummaryScreen: React.FC<Props> = ({ navigation
           {route.params?.mood !== null && <View className='justify-center items-center mt-2'>
             {moodEmojis[route.params?.mood]?.icon}
           </View>}
-          {/* <View className='justify-center items-center mt-2'>
-            {route.params?.mood !== null && <Text
-              className="text-lg font-bold text-center"
-              style={{ color: TW_COLORS.TEXT_PRIMARY }}
-            >
-              {moodEmojis[route.params?.mood]?.label}
-            </Text>}
-          </View> */}
           <View
             style={{
               flexDirection: 'row',

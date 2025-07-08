@@ -115,13 +115,13 @@ export const OnboardingCheckInLastMoods: React.FC<Props> = ({ navigation, route 
       const key = INDICATEURS_HUMEUR.name
       const updatedAnswers = {
         ...prev,
-        [key]: { ...prev[key], userComment: selectedMoods.join(', ') },
-
+        [key]: {
+          ...prev[key],
+          // duplicating the information in userComments and moods for the time being
+          userComment: selectedMoods.join(', '),
+          moods: selectedMoods
+        },
       }
-      console.log({
-        date,
-        answers: updatedAnswers
-      })
       addNewEntryToDiaryData({
         date,
         answers: updatedAnswers

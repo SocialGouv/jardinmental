@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo, useContext, useCallback } from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import { CardStyleInterpolators, createStackNavigator, TransitionSpecs } from '@react-navigation/stack';
 import { useFocusEffect } from '@react-navigation/native';
 import { View, ActivityIndicator } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -36,7 +36,7 @@ const QUESTION_CONTEXT = {
 };
 
 // Main navigator component
-const SurveyStackNavigator: React.FC<{ context: SurveyContextType; isLoading: boolean }> = ({ context, isLoading }) => {
+const SurveyStackNavigator: React.FC<{ context: SurveyContextType; isLoading: boolean, isOnboarding: boolean }> = ({ context, isLoading, isOnboarding }) => {
   const { screens } = context;
 
   if (isLoading || screens.length === 0) {
@@ -49,17 +49,25 @@ const SurveyStackNavigator: React.FC<{ context: SurveyContextType; isLoading: bo
 
   return (
     <Stack.Navigator
-      initialRouteName={`screen-${screens[0].id}`}
-      screenOptions={{ headerShown: false }}
+      initialRouteName={`screen-survey-${screens[0].id}`}
+      screenOptions={{
+        headerShown: false,
+        cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+        transitionSpec: {
+          open: TransitionSpecs.TransitionIOSSpec,
+          close: TransitionSpecs.TransitionIOSSpec,
+        }
+      }}
     >
       {screens.map((screen, index) => (
         <Stack.Screen
           key={screen.id}
-          name={`screen-${screen.id}`}
+          name={`screen-survey-${screen.id}`}
           component={SurveyScreenWrapper}
           initialParams={{
             screenData: screen,
             screenIndex: index,
+            isOnboarding
           }}
         />
       ))}
@@ -146,10 +154,16 @@ export const SurveyNavigator: React.FC<SurveyNavigatorProps> = ({ navigation, ro
         ...prev,
         [key]: { ...prev[key], value, _indicateur: userIndicateurs.find((i) => i.name === key) },
       };
-      addNewEntryToDiaryData({
-        date: initSurvey.date,
-        answers: updatedAnswers
-      });
+      setTimeout(() => {
+        // add timeout to fix warning : 
+        // Cannot update a component(`DiaryDataProvider`) while rendering a different component(`SurveyNavigator`).
+        // setAnswer trigger a rendering, addNewEntryToDiaryData as well, we differe it to the next frame with
+        // set timeout
+        addNewEntryToDiaryData({
+          date: initSurvey.date,
+          answers: updatedAnswers
+        });
+      })
       return updatedAnswers;
     });
   };
@@ -160,10 +174,13 @@ export const SurveyNavigator: React.FC<SurveyNavigatorProps> = ({ navigation, ro
         ...prev,
         [key]: { ...prev[key], userComment },
       };
-      addNewEntryToDiaryData({
-        date: initSurvey.date,
-        answers: updatedAnswers
-      });
+      setTimeout(() => {
+        // use timeout see saveAnswerForIndicator for explanation
+        addNewEntryToDiaryData({
+          date: initSurvey.date,
+          answers: updatedAnswers
+        });
+      })
       return updatedAnswers;
     });
   };
@@ -181,7 +198,11 @@ export const SurveyNavigator: React.FC<SurveyNavigatorProps> = ({ navigation, ro
 
   return (
     <SurveyContext.Provider value={contextValue}>
-      <SurveyStackNavigator context={contextValue} isLoading={isLoading} />
+      <SurveyStackNavigator
+
+        isOnboarding={route?.params?.isOnboarding}
+        context={contextValue}
+        isLoading={isLoading} />
     </SurveyContext.Provider>
   );
 };

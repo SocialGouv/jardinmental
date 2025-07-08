@@ -43,8 +43,7 @@ export const IntroScreen: React.FC<Props> = ({ navigation }) => {
         title={`Jardin Mental est un outil de suivi de votre santé mentale.`}
         handlePrevious={() => { }}
         handleSkip={() => { }}
-      >
-      </BannerHeaderIntro>
+      />
       <View className="flex-1 justify-center items-center px-8">
         <Text
           className={mergeClassNames(typography.textXlMedium, 'text-primary')}

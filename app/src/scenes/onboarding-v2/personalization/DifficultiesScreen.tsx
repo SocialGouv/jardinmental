@@ -152,6 +152,7 @@ export const DifficultiesScreen: React.FC<Props> = ({ navigation }) => {
         <View style={{ paddingVertical: 8 }}>
           {selectedDifficulties.map((item) => (
             <SelectionnableItem
+              key={item.id}
               onPress={() => toggleDifficulty(item.id)}
               id={item.id}
               label={item.name}

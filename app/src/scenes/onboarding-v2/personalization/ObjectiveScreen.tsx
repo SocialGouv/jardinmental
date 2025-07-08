@@ -76,6 +76,7 @@ export const ObjectiveScreen: React.FC<Props> = ({ navigation, route }) => {
   const renderObjectiveItem = ({ item }: { item: Objective }) => (
     <SelectionnableItem
       onPress={() => setSelectedObjective(item)}
+      key={item.id}
       id={item.id}
       label={item.title}
       selected={selectedObjective?.id === item.id}>
@@ -122,13 +123,7 @@ export const ObjectiveScreen: React.FC<Props> = ({ navigation, route }) => {
             Votre réponse nous aide à vous orienter vers un suivi plus utile.
           </Text>
         </View>
-        <FlatList
-          data={objectivesData}
-          keyExtractor={(item) => item.id}
-          renderItem={renderObjectiveItem}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingVertical: 8 }}
-        />
+        {objectivesData.map((item) => renderObjectiveItem({ item }))}
       </ScrollView>
 
       <NavigationButtons

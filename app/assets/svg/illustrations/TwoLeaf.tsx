@@ -2,6 +2,7 @@ import Svg, { Path } from "react-native-svg";
 
 export default function TwoLeaf({ style, width, height, color }: { style: any, width?: number, height?: number, color?: string }) {
     return <Svg style={style}
+        pointerEvents="box-none"
         width={width || "219"}
         height={height || "164"}
         viewBox="0 0 234 240"

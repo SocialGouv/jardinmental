@@ -28,16 +28,17 @@ const SurveyScreenWrapper: React.FC<SurveyScreenWrapperProps> = ({ navigation, r
     answers
   } = context;
 
-  const { screenData, screenIndex } = route.params;
+  const { screenData, screenIndex, isOnboarding } = route.params;
   const currentStep = screenIndex + 1;
   const totalSteps = screens.length;
 
   const handleNext = async () => {
     if (screenIndex < screens.length - 1) {
       const nextScreen = screens[screenIndex + 1];
-      navigation.navigate(`screen-${nextScreen.id}`, {
+      navigation.navigate(`screen-survey-${nextScreen.id}`, {
         screenData: nextScreen,
         screenIndex: screenIndex + 1,
+        isOnboarding
       });
     } else {
       // Final submission
@@ -54,19 +55,12 @@ const SurveyScreenWrapper: React.FC<SurveyScreenWrapperProps> = ({ navigation, r
     }
   };
 
-
-  const onCommentChanged = () => {
-
-  }
-
   const screenProps = {
     navigation,
     currentStep,
     totalSteps,
     onNext: handleNext,
-    
   };
-
 
   switch (screenData.type) {
     case 'category':
@@ -79,6 +73,7 @@ const SurveyScreenWrapper: React.FC<SurveyScreenWrapperProps> = ({ navigation, r
           category={screenData.category}
           title={screenData.title}
           indicators={screenData.indicators || []}
+          showComment={!isOnboarding}
         />
       );
     case 'individual':
@@ -90,6 +85,7 @@ const SurveyScreenWrapper: React.FC<SurveyScreenWrapperProps> = ({ navigation, r
           {...screenProps}
           title={screenData.title}
           indicators={screenData.indicators || []}
+          showComment={!isOnboarding}
         />
       );
     case 'goals':
@@ -121,11 +117,11 @@ const SurveyScreenWrapper: React.FC<SurveyScreenWrapperProps> = ({ navigation, r
     case 'encouragement':
       return (
         <EncouragementScreen
+          headingTitle={"👏 Un pas de plus vers une meilleure connaissance de vous."}
           title={screenData.title}
-          description={screenData.description || ""}
+          description={'Vous pourrez revenir chaque jour pour observer votre état et suivre ces éléments.'}
           extraInfo={screenData.extraInfo || ""}
-          {...screenProps}
-        />
+          {...screenProps} />
       );
     default:
       return null;

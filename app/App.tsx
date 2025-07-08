@@ -23,6 +23,7 @@ import { InfoModalProvider } from './src/components/InfoModal';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { OnboardingProgressHeaderProvider } from './src/scenes/onboarding/ProgressHeader';
 import { LatestChangesModalProvider } from './src/scenes/news/latestChangesModal';
+import { KeyboardProvider } from 'react-native-keyboard-controller';
 
 // if (!__DEV__) {
 //   Sentry.config("https://9f0bd8f8af8444eea9f470d00a1bb411@sentry.fabrique.social.gouv.fr/54").install();
@@ -60,24 +61,26 @@ const App = () => {
   if (!fontsLoaded) return null;
 
   return <SafeAreaProvider>
-    <UserProfileProvider>
-      <NeedUpdateContextProvider>
-        <DiaryNotesProvider>
-          <DiaryDataProvider>
-            <BottomSheetProvider>
-              <OnboardingProgressHeaderProvider>
-                <LatestChangesModalProvider>
-                  <InfoModalProvider>
-                    <Router />
-                    <NPS />
-                  </InfoModalProvider>
-                </LatestChangesModalProvider>
-              </OnboardingProgressHeaderProvider>
-            </BottomSheetProvider>
-          </DiaryDataProvider>
-        </DiaryNotesProvider>
-      </NeedUpdateContextProvider>
-    </UserProfileProvider>
+    <KeyboardProvider>
+      <UserProfileProvider>
+        <NeedUpdateContextProvider>
+          <DiaryNotesProvider>
+            <DiaryDataProvider>
+              <BottomSheetProvider>
+                <OnboardingProgressHeaderProvider>
+                  <LatestChangesModalProvider>
+                    <InfoModalProvider>
+                      <Router />
+                      <NPS />
+                    </InfoModalProvider>
+                  </LatestChangesModalProvider>
+                </OnboardingProgressHeaderProvider>
+              </BottomSheetProvider>
+            </DiaryDataProvider>
+          </DiaryNotesProvider>
+        </NeedUpdateContextProvider>
+      </UserProfileProvider>
+    </KeyboardProvider>
   </SafeAreaProvider>
 };
 

@@ -197,31 +197,10 @@ const ProgressHeader = ({ insets, slidesCount, navigation }) => {
 
   return ({ navigation }) => {
     if (!visible) return null;
-    // return <nnerHeader
-    //   animatedStatusBarColor={animatedStatusBarColor}
-    //   animatedTextColor={animatedTextColor}
-    //   title={title || 'un super titre'}
-    //   handlePrevious={() => {
-    //     navigation.goBack()
-    //   }}
-    //   handleSkip={() => { }}
-    // >
-    {/* {route.params?.mood !== null && <View className='justify-center items-center mt-4'>
-        {moodEmojis[route.params?.mood]?.icon}
-      </View>} */}
-    // </BannerHeader>
     const content = (<View style={styles.container}>
       <View style={{ opacity: 0 }}>
         <BackButton onPress={navigation.goBack} />
       </View>
-      {/* <View style={styles.progressBarContainer}>
-      <Animated.View
-        style={[styles.progressBar, { width: animatedProgressWidth }]}
-        collapsable={false}
-      />
-
-
-    </View> */}
       {showProgressbar &&
         <View className="flex-row items-center px-6" >
           <View
@@ -264,7 +243,6 @@ const ProgressHeader = ({ insets, slidesCount, navigation }) => {
           style={[
             (PROGRESS_BAR && !PROGRESS_BAR_AND_HEADER) ? { top: insets.top + PROGRESS_HEADER_HEIGHT - 20 } : { paddingTop: insets.top },
             { opacity: animatedVisibleValue },
-            // { transform: [{ translateY: animatedVisibleY }]}
           ]}
         >
           {HEADER_WITH_BANNER && !hideHeader && <BannerAnimatedHeader
@@ -277,7 +255,6 @@ const ProgressHeader = ({ insets, slidesCount, navigation }) => {
               if (slideIndex === 0) {
                 setHideHeader(true)
               }
-              // timeout needed to make the hide header done before the go back
               setTimeout(() => {
                 navigation.goBack()
                 setHideHeader(false)

@@ -23,6 +23,7 @@ export const EncouragementScreen: React.FC<EncouragementScreenProps> = ({
   navigation,
   headingTitle,
   title,
+  description,
   extraInfo,
   onNext,
 }) => {
@@ -44,11 +45,16 @@ export const EncouragementScreen: React.FC<EncouragementScreenProps> = ({
             {title}
           </Text>
         </View>
-        <View className="px-0 pb-4">
+        {description && <View className="px-10 pb-4">
+          <Text className={mergeClassNames(typography.textMdRegular, 'text-center text-brand-900')}>
+            {description}
+          </Text>
+        </View>}
+        {extraInfo && <View className="px-0 pb-4">
           <Text className={mergeClassNames(typography.textMdRegular, 'text-left text-gray-800')}>
             {extraInfo}
           </Text>
-        </View>
+        </View>}
       </BeigeCard>
       {/* <NavigationButtons
         onNext={onNext}

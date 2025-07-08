@@ -29,6 +29,7 @@ export default function BannerHeader({
     bannerContainerStyle,
     titleMarginStyle,
     onBannerLayout,
+    inAbsoluteView
 }: {
     animatedStatusBarColor?: Animated.AnimateStyle<ViewStyle>;
     animatedTextColor?: Animated.AnimateStyle<ViewStyle>;
@@ -49,12 +50,13 @@ export default function BannerHeader({
     bannerContainerStyle?: Animated.AnimateStyle<ViewStyle>; // animated style for banner container
     titleMarginStyle?: Animated.AnimateStyle<ViewStyle>; // animated style for title margin
     onBannerLayout?: (event: any) => void; // callback to measure banner height
+    inAbsoluteView?: boolean
 }) {
     return <>
         {Platform.OS === 'ios' && (
             <Animated.View style={[{
                 backgroundColor: TW_COLORS.PRIMARY
-            }, animatedStatusBarColor, { position: 'absolute', top: 0, left: 0, right: 0, height: 60, zIndex: 1000 }, hidden ? { opacity: 0 } : undefined]} />
+            }, animatedStatusBarColor, { position: !inAbsoluteView ? 'absolute' : 'relative', top: 0, left: 0, right: 0, height: 60, zIndex: 1000 }, hidden ? { opacity: 0 } : undefined]} />
         )}
         <Animated.View
             style={[{

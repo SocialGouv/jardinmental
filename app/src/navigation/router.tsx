@@ -170,10 +170,10 @@ class Router extends React.Component {
 
   updateStatusBarColor() {
     const route = this.navigationRef.getCurrentRoute();
-    if (['Calendar', 'Status', 'Exercise'].includes(route.name)) {
-      this.setState(prevState => ({ backgroundColor: colors.LIGHT_BLUE  }));
+    if (['Calendar', 'Status', 'Exercise'].includes(route.name) || route.name.startsWith('screen-survey-')) {
+      this.setState(prevState => ({ backgroundColor: colors.LIGHT_BLUE }));
     } else {
-      this.setState(prevState => ({ backgroundColor: colors.WHITE  }));
+      this.setState(prevState => ({ backgroundColor: colors.WHITE }));
     }
   }
 
@@ -201,7 +201,7 @@ class Router extends React.Component {
     return (
       <>
         <NavigationContainer ref={r => (this.navigationRef = r)} onStateChange={this.onStateChange} linking={linking}>
-          <Stack.Navigator initialRouteName="tabs" screenOptions={{headerShown: false}}>
+          <Stack.Navigator initialRouteName="tabs" screenOptions={{ headerShown: false }}>
             <Stack.Screen name="presentation" component={Presentation} />
             <Stack.Screen name="day-survey" component={SurveyNavigator} />
             <Stack.Screen name="select-day" component={SelectDayScreen} />

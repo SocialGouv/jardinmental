@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import { CardStyleInterpolators, createStackNavigator, TransitionSpecs } from '@react-navigation/stack';
 import { OnboardingV2StackParamList } from './types';
 import localStorage from '../../utils/localStorage';
 
@@ -52,23 +52,23 @@ const OnboardingV2Navigator: React.FC = () => {
   const slidesCount = 3;
   const headerOptions = progressHeaderOptions({ insets, slidesCount });
 
-  useEffect(() => {
-    const setupStack = async () => {
-      const onboardingStep = await localStorage.getOnboardingStep() as keyof OnboardingV2StackParamList;
+  // useEffect(() => {
+  //   const setupStack = async () => {
+  //     const onboardingStep = await localStorage.getOnboardingStep() as keyof OnboardingV2StackParamList;
 
-      if (onboardingStep && VALID_SCREEN_NAMES.includes(onboardingStep)) {
-        const index = VALID_SCREEN_NAMES.indexOf(onboardingStep);
-        const routes = VALID_SCREEN_NAMES.slice(0, index + 1).map(name => ({ name: name as never, key: name }));
+  //     if (onboardingStep && VALID_SCREEN_NAMES.includes(onboardingStep)) {
+  //       const index = VALID_SCREEN_NAMES.indexOf(onboardingStep);
+  //       const routes = VALID_SCREEN_NAMES.slice(0, index + 1).map(name => ({ name: name as never, key: name }));
 
-        navigation.reset({
-          index,
-          routes,
-        });
-      }
-    };
+  //       navigation.reset({
+  //         index,
+  //         routes,
+  //       });
+  //     }
+  //   };
 
-    setupStack();
-  }, [navigation]);
+  //   setupStack();
+  // }, [navigation]);
 
 
   // Handle navigation state changes - save current screen automatically
@@ -101,20 +101,25 @@ const OnboardingV2Navigator: React.FC = () => {
       screenOptions={{
         headerShown: false,
         gestureEnabled: false,
-        cardStyleInterpolator: ({ current, layouts }) => {
-          return {
-            cardStyle: {
-              transform: [
-                {
-                  translateX: current.progress.interpolate({
-                    inputRange: [0, 1],
-                    outputRange: [layouts.screen.width, 0],
-                  }),
-                },
-              ],
-            },
-          };
-        },
+        // cardStyleInterpolator: ({ current, layouts }) => {
+        //   return {
+        //     cardStyle: {
+        //       transform: [
+        //         {
+        //           translateX: current.progress.interpolate({
+        //             inputRange: [0, 1],
+        //             outputRange: [layouts.screen.width, 0],
+        //           }),
+        //         },
+        //       ],
+        //     },
+        //   };
+        // },
+        cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+        transitionSpec: {
+          open: TransitionSpecs.TransitionIOSSpec,
+          close: TransitionSpecs.TransitionIOSSpec,
+        }
       }}
       screenListeners={{
         state: (e) => {

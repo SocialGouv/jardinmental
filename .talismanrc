@@ -13,6 +13,8 @@ fileignoreconfig:
   checksum: 84dafb30ab00b0177996fc145bc98f44e90282f0f2681187c63e16c999e6f40f
 - filename: app/ios/Podfile.lock
   checksum: fada845491cbe03825f5445bf764d11cd0754ac2d6ead0db9a890f24334c5d02
+- filename: app/package.json
+  checksum: c542c7135b521f9ba1e0489383dd8f1d383ca51252f7ffd8bc8fc6b3f46c6037
 - filename: app/src/components/Collapsable.js
   checksum: 280e7a5a76d8804045a5a07dbf8062e4cca77a937c969f1ee89cf45ff3d855b2
 - filename: app/src/context/diaryData.tsx
@@ -20,13 +22,15 @@ fileignoreconfig:
 - filename: app/src/context/userProfile.tsx
   checksum: fa700b84c6ced31f07459c3d54b35226c4239f902494750fb42a86e841044ed8
 - filename: app/src/entities/SurveyScreen.ts
-  checksum: adce116e39eb8ba8fae33399ae2b92f6317c362be960b298c8a795d84a11f421
+  checksum: 68279ddbf41bdc3fdbe9ec5073122f73b74c992dad22768d69bf6b0c6d7f5f6f
+- filename: app/src/scenes/diary/index.js
+  checksum: 88b925c9ac1915e0d3427c07a7f9f5a3cee0f191b2052ecb9d2dad51c38d12bc
 - filename: app/src/scenes/onboarding-v2/CarouselScreen.tsx
   checksum: 4f0aaf86c03496f7e5d81b837058253040ed186f9e2a7f5939e5a7dd95ef0867
 - filename: app/src/scenes/onboarding-v2/checkIn/mood/OnboardingCheckInHowDoYouFeelDetailsScreen.tsx
   checksum: 8a737e4021e9d7c66a54fbf4b5df8a91ad528a6af70a25d7c75f60fb3f444a2c
 - filename: app/src/scenes/onboarding-v2/checkIn/mood/OnboardingCheckInHowDoYouFeelScreen.tsx
-  checksum: 575b515356d2eb99c800dd7a63f09c26a9e545136aadbdcbe64278202c379af0
+  checksum: 0dcfcad0f62a7b475755d15fbd1499734016e4ad1a3913bf9621d23c70f2f30f
 - filename: app/src/scenes/onboarding-v2/checkIn/mood/OnboardingCheckInMoodSummaryScreen.tsx
   checksum: 62b7f70e73e8f19062fdad757ffdd70063398e0014e9daa674e748ead10259a7
 - filename: app/src/scenes/onboarding-v2/checkIn/sleep/OnboardingCheckInSleepScreen.tsx
@@ -36,7 +40,11 @@ fileignoreconfig:
 - filename: app/src/scenes/onboarding-v2/context/OnboardingContext.tsx
   checksum: f9d4eefe958b170a2a556551b685495b3f85d66604e0e87032b6cd3ea335e541
 - filename: app/src/scenes/onboarding-v2/index.tsx
-  checksum: af33d6e660927dd853545c02e2c930a03ceb0a7b6bf59529ee871e8e893ca2aa
+  checksum: 397a9d500493e7778dd039fb94b8c28b962c34d4e6115588a9cd345e98ad6b41
+- filename: app/src/scenes/onboarding-v2/personalization/DifficultiesScreen.tsx
+  checksum: 84d451d1bbd2bc2775786ca3265e1c116b7f018abfa2b1508320bec84f91a4b3
+- filename: app/src/scenes/onboarding-v2/personalization/ObjectiveScreen.tsx
+  checksum: ae1b9aec4323312d0d7b3848aaf163f5461777a5e0bb05b93ea70adf806e165a
 - filename: app/src/scenes/onboarding-v2/screens/CarouselScreen.tsx
   checksum: c506bc42996f4c3aecaddcecb502e884b33c6d7e0a0a7e4a2a9d7cc2f820c43b
 - filename: app/src/scenes/onboarding-v2/screens/ProfileScreen.tsx
@@ -57,10 +65,12 @@ fileignoreconfig:
   checksum: 767aeda61332f9c975693c427569fe1b68cc97a637e8981ccade3a15157b38ab
 - filename: app/src/scenes/onboarding/onboardingSymptomsCustom/CreateIndicator/ChooseIndicatorOrder.js
   checksum: bdb40467b60296ef959cac383488b52e879619d362093020f547896ddf9921bf
+- filename: app/src/scenes/status/index.js
+  checksum: 5f9e42e3b0cf566b702885826b9b417fd0b0b58be969354716386d909b4e3651
 - filename: app/src/scenes/survey-v2/ContextScreen.tsx
   checksum: 6371ed197788ce03cb6c42e3151135d106c684e295b66a25ebd841ca1d3a01dd
 - filename: app/src/scenes/survey-v2/IndicatorScreen.tsx
-  checksum: 9152fc6ce26ed1b1366e6329825aff19da49a13f771435d6821923fff5ba5902
+  checksum: a0f3a761f28e2bca8fc00a7dde543e88d8db67797626eee40f6fe507043b80e2
 - filename: app/src/scenes/survey-v2/ToxicScreen.tsx
   checksum: 033a3b6b40b07e8d7369d7d1abc7a0e25f4df71c5aebfd43d8253b0fe83c5a69
 - filename: app/src/scenes/survey-v2/multiScreenSurvey/ContextScreen.tsx
@@ -81,6 +91,8 @@ fileignoreconfig:
   checksum: 440ba524fd17674f06dd0ef4158be6f3ce291bf4be450c361ec4ae883a60534f
 - filename: app/src/scenes/survey/survey-data.js
   checksum: 1ac3021625ed8fb4ed188c80035b12789aa03989dc7276893900ed96dc2a2509
+- filename: app/src/services/notifications.js
+  checksum: 00046388d0509346e97a4d365477dd2b85f4eaefb4f67f4d7351bc198db4b725
 - filename: app/src/utils/constants.ts
   checksum: 9b3edfe2f18f9c41089a33177d0a3ce3d46bf82c7d7748106b2f12e513b6b010
 scopeconfig:

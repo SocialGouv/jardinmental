@@ -68,12 +68,12 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
     // Sauvegarder les données du check-in
     const date = formatDay(beforeToday(0))
     const prev = diaryData[date] || {}
-
+    const mood = selectedMoodIndex !== null ? selectedMoodIndex - 1 : 2 // default is 2, the midde
     const key = INDICATEURS_HUMEUR.name
     const updatedAnswers = {
       ...prev,
       [key]: {
-        ...prev[key], value: checkInData, _indicateur: generateIndicatorFromPredefinedIndicator(INDICATEURS_HUMEUR)
+        ...prev[key], value: mood, _indicateur: generateIndicatorFromPredefinedIndicator(INDICATEURS_HUMEUR)
       }
     }
     addNewEntryToDiaryData({
@@ -81,7 +81,7 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
       answers: updatedAnswers
     });
     navigation.navigate('OnboardingCheckInHowDoYouFeelDetails', {
-      mood: selectedMoodIndex !== null ? selectedMoodIndex - 1 : 2 // default is 2, the midde
+      mood
     })
     setLoading(false);
 
@@ -154,14 +154,6 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
       statusBarColorProgress.value = withSpring(clampedIndex / (moodEmojis.length - 1), springConfig);
       textOpacity.value = withSpring(1, springConfig);
     }
-  };
-
-  const handlePrevious = () => {
-    navigation.goBack();
-  };
-
-  const handleSkip = () => {
-    navigation.goBack();
   };
 
   // Animated styles
@@ -248,8 +240,8 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
         horizontal={true}
         scrollEnabled={hasSelectedOnce}
         showsHorizontalScrollIndicator={false}
-        snapToInterval={itemWidth}
-        snapToAlignment="center"
+        snapToInterval={screenWidth / 5}
+        snapToAlignment="start" // on ios "center" works
         decelerationRate="fast"
         getItemLayout={getItemLayout}
         onMomentumScrollEnd={onMomentumScrollEnd}

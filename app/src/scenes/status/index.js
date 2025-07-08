@@ -1,11 +1,11 @@
-import React, {useEffect, useState, useCallback} from 'react';
-import {StyleSheet, View, SafeAreaView, Dimensions, Animated} from 'react-native';
+import React, { useEffect, useState, useCallback } from 'react';
+import { StyleSheet, View, SafeAreaView, Dimensions, Animated } from 'react-native';
 
-import {useFocusEffect} from '@react-navigation/native';
+import { useFocusEffect } from '@react-navigation/native';
 import Header from '../../components/Header';
-import {colors} from '../../utils/colors';
-import {useContext} from 'react';
-import {DiaryDataContext} from '../../context/diaryData';
+import { colors } from '../../utils/colors';
+import { useContext } from 'react';
+import { DiaryDataContext } from '../../context/diaryData';
 import localStorage from '../../utils/localStorage';
 import NPS from '../../services/NPS/NPS';
 import Bubble from '../../components/bubble';
@@ -16,19 +16,20 @@ import NoData from './NoData';
 import Diary from '../../scenes/diary';
 import ContributeCard from '../contribute/contributeCard';
 import FloatingPlusButton from '../../components/FloatingPlusButton';
-import {DiaryList} from './DiaryList';
-import {updateInactivityReminder} from '../reminder/inactivityReminder';
-import {checkOldReminderBefore154, checkOldReminderBefore193} from '../reminder/checkOldReminder';
-import {useLatestChangesModal} from '../news/latestChangesModal';
+import { DiaryList } from './DiaryList';
+import { updateInactivityReminder } from '../reminder/inactivityReminder';
+import { checkOldReminderBefore154, checkOldReminderBefore193 } from '../reminder/checkOldReminder';
+import { useLatestChangesModal } from '../news/latestChangesModal';
+import { VALID_SCREEN_NAMES } from '@/scenes/onboarding-v2/index'
 const LIMIT_PER_PAGE = __DEV__ ? 3 : 30;
 
-const Status = ({navigation, startSurvey}) => {
+const Status = ({ navigation, startSurvey }) => {
   const [diaryData] = useContext(DiaryDataContext);
   const [NPSvisible, setNPSvisible] = useState(false);
   const [bannerProNPSVisible, setBannerProNPSVisible] = useState(true);
   const [ongletActif, setOngletActif] = useState('all');
   const scrollRef = React.useRef();
-  const {showLatestChangesModal} = useLatestChangesModal();
+  const { showLatestChangesModal } = useLatestChangesModal();
 
   React.useEffect(() => {
     updateInactivityReminder();
@@ -51,7 +52,7 @@ const Status = ({navigation, startSurvey}) => {
     [
       {
         nativeEvent: {
-          contentOffset: {y: scrollY.current},
+          contentOffset: { y: scrollY.current },
         },
       },
     ],
@@ -92,13 +93,22 @@ const Status = ({navigation, startSurvey}) => {
       } else {
         const isFirstAppLaunch = await localStorage.getIsFirstAppLaunch();
         if (isFirstAppLaunch !== 'false') {
+          const onboardingStep = await localStorage.getOnboardingStep()
+          let state
+          if (onboardingStep && VALID_SCREEN_NAMES.includes(onboardingStep)) {
+            const index = VALID_SCREEN_NAMES.indexOf(onboardingStep);
+            const routes = VALID_SCREEN_NAMES.slice(0, index + 1).map(name => ({ name: name, key: name }));
+            state = {
+              index,
+              routes
+            }
+          }
           navigation.reset({
-            routes: [
-              {
-                name: 'onboarding',
-                params: {screen: onboardingStep || 'OnboardingPresentation'},
-              },
-            ],
+            routes: [{
+              name: 'onboarding',
+              params: { screen: onboardingStep || 'OnboardingPresentation' },
+              state
+            }]
           });
         }
       }
@@ -151,7 +161,7 @@ const Status = ({navigation, startSurvey}) => {
   return (
     <>
       <SafeAreaView style={[styles.safe]}>
-        <Animated.View style={{flex: 1}}>
+        <Animated.View style={{ flex: 1 }}>
           <NPS forceView={NPSvisible} close={() => setNPSvisible(false)} />
           {/* todo : add this 👇 to make this component scrollable
             { transform: [{ translateY }] }

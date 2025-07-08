@@ -46,19 +46,20 @@ interface ContextScreen extends BaseSurveyScreen {
     type: SurveyScreenType.context;
 }
 
-export type SurveyScreenInterface = 
-    | EncouragementSurveyScreen 
-    | CategoryScreen 
-    | IndividualScreen 
-    | GoalsScreen 
-    | ToxicScreen 
+export type SurveyScreenInterface =
+    | EncouragementSurveyScreen
+    | CategoryScreen
+    | IndividualScreen
+    | GoalsScreen
+    | ToxicScreen
     | ContextScreen;
 
 // Navigation types
 export type SurveyStackParamList = {
-    [key: `screen-${string}`]: {
+    [key: `screen-survey-${string}`]: {
         screenData: SurveyScreenInterface;
         screenIndex: number;
+        isOnboarding: boolean;
     };
 };
 

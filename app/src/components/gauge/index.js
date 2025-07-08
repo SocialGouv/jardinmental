@@ -1,7 +1,8 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 
 import { Slider } from '@miblanchard/react-native-slider';
+import debounce from "lodash.debounce";
 
 import { StyleSheet, View, Platform } from 'react-native';
 import { screenWidth } from '../../scenes/onboarding/screens';
@@ -20,10 +21,14 @@ const Gauge = ({ hideSlider = false, defaultValue = 0, onChange, reverse }) => {
   const [value, setValue] = useState(defaultValue);
   const [width, setWidth] = useState(0);
 
-  const handleChange = v => {
-    setValue(v[0]);
-    onChange?.(v[0]);
-  };
+
+  const handleChange = useMemo(() => {
+    return debounce((v) => {
+      console.log('LCS DEBOUNCE', v)
+      setValue(v[0]);
+      onChange?.(v[0]);
+    }, 300) // 300ms debounce
+  }, [onChange]);
 
   useEffect(() => {
     setValue(defaultValue);
@@ -43,7 +48,10 @@ const Gauge = ({ hideSlider = false, defaultValue = 0, onChange, reverse }) => {
         <Slider
           trackClickable={false}
           value={value}
-          onValueChange={handleChange}
+          onValueChange={(v) => setValue(v[0])} // immediate local update
+          onSlidingComplete={(v) => {
+            onChange?.(v[0]); // called only once at the end
+          }}
           maximumTrackTintColor={'#D9DBE0'}
           minimumTrackTintColor={colors.BLUE}
           thumbTintColor={colors.BLUE}
