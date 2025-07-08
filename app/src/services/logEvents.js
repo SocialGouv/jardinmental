@@ -1,5 +1,6 @@
 import NetInfo from "@react-native-community/netinfo";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { trackEvent } from "@screeb/react-native";
 import DeviceInfo from "react-native-device-info";
 import { Platform } from "react-native";
 import Matomo from "./matomo";
@@ -51,6 +52,7 @@ const logEvent = async ({ category, action, name, value }) => {
       throw new Error("no network");
     }
     Matomo.logEvent({ category, action, name, value });
+    trackEvent(action)
     api.post({
       path: "/event",
       body: {

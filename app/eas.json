@@ -10,7 +10,10 @@
       "env": {
         "EXPO_PUBLIC_SCHEME": "http",
         "EXPO_PUBLIC_HOST": "localhost:3000",
-        "EXPO_PUBLIC_APP_ENV": "development"
+        "EXPO_PUBLIC_APP_ENV": "development",
+        "EXPO_PUBLIC_SCREEB_IOS_CHANNEL": "f8d10497-12dd-4328-96af-c02bb538fad1",
+        "EXPO_PUBLIC_SCREEB_ANDROID_CHANNEL": "f8d10497-12dd-4328-96af-c02bb538fad1",
+        "EXPO_PUBLIC_SENTRY_DSN": "https://ef0a8dc4e75e610176515a504b012678@sentry2.fabrique.social.gouv.fr/10"
       },
       "channel": "development"
     },
@@ -19,7 +22,10 @@
       "env": {
         "EXPO_PUBLIC_SCHEME": "https",
         "EXPO_PUBLIC_HOST": "api-monsuivipsy.fabrique.social.gouv.fr",
-        "EXPO_PUBLIC_APP_ENV": "production"
+        "EXPO_PUBLIC_APP_ENV": "production",
+        "EXPO_PUBLIC_SCREEB_IOS_CHANNEL": "f8d10497-12dd-4328-96af-c02bb538fad1",
+        "EXPO_PUBLIC_SCREEB_ANDROID_CHANNEL": "f8d10497-12dd-4328-96af-c02bb538fad1",
+        "EXPO_PUBLIC_SENTRY_DSN": "https://ef0a8dc4e75e610176515a504b012678@sentry2.fabrique.social.gouv.fr/10"
       },
       "channel": "preview"
     },
@@ -28,7 +34,10 @@
       "env": {
         "EXPO_PUBLIC_SCHEME": "https",
         "EXPO_PUBLIC_HOST": "api-monsuivipsy.fabrique.social.gouv.fr",
-        "EXPO_PUBLIC_APP_ENV": "production"
+        "EXPO_PUBLIC_APP_ENV": "production",
+        "EXPO_PUBLIC_SCREEB_IOS_CHANNEL": "f8d10497-12dd-4328-96af-c02bb538fad1",
+        "EXPO_PUBLIC_SCREEB_ANDROID_CHANNEL": "f8d10497-12dd-4328-96af-c02bb538fad1",
+        "EXPO_PUBLIC_SENTRY_DSN": "https://ef0a8dc4e75e610176515a504b012678@sentry2.fabrique.social.gouv.fr/10"
       },
       "android": {
         "credentialsSource": "local"
