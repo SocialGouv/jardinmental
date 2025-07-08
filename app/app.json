@@ -8,7 +8,7 @@
     "scheme": "monsuivipsy",
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "org.reactjs.native.example.monsuivipsy.beta",
+      "bundleIdentifier": "org.reactjs.native.example.monsuivipsy",
       "buildNumber": "232",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
