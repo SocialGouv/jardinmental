@@ -7,10 +7,14 @@ fileignoreconfig:
   checksum: 979473d3e8ad091d57424dc057cf0b40a884f0fbf6821554ea0121e63a173d6b
 - filename: api/src/config.ts
   checksum: 31e38a78927264f160f3652037cf34acc78b7f63234d9571346a9af86be44c5a
+- filename: app/.env.example
+  checksum: 80fff4cf940cd34dfd42f64978408bdf56d88500b473577e8d1c310cb62bcba0
 - filename: app/__tests__/components/DaySurvey.test.tsx
   checksum: b660cdd0063782024bc63269789f1e79f84dd6591c82f71985a73dca55158740
 - filename: app/__tests__/components/MyText.test.tsx
   checksum: 84dafb30ab00b0177996fc145bc98f44e90282f0f2681187c63e16c999e6f40f
+- filename: app/eas.json
+  checksum: b9c76c1b292fc63ab8f83cb11d84681f699b17a6065b0a03b699e9c0e4b26c1e
 - filename: app/ios/Podfile.lock
   checksum: fada845491cbe03825f5445bf764d11cd0754ac2d6ead0db9a890f24334c5d02
 - filename: app/src/context/diaryData.tsx

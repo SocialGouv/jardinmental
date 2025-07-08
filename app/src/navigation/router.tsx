@@ -199,7 +199,6 @@ class Router extends React.Component {
   };
 
   render() {
-    console.log(process.env.EXPO_PUBLIC_SCHEME);
     return (
       <>
         <NavigationContainer ref={r => (this.navigationRef = r)} onStateChange={this.onStateChange} linking={linking}>
