@@ -45,29 +45,30 @@ import RNBootsplash from 'react-native-bootsplash';
 import NotificationService from '../services/notifications';
 import Indicateurs from '../scenes/indicateurs';
 import Presentation from '../scenes/presentation';
-import {OnboardingMood} from '../scenes/onboarding/onboardingSymptomsStart/MoodScreen';
-import {OnboardingSleep} from '../scenes/onboarding/onboardingSymptomsStart/SleepScreen';
-import {OnboardingSimpleCustomSymptoms} from '../scenes/onboarding/onboardingSymptomsCustom/SimpleCustomScreen';
-import {OnboardingGoals} from '../scenes/onboarding/onboardingGoals/goals';
-import {GoalsSettings} from '../scenes/goals/settings/GoalsSettings';
-import {GoalsAddOptions} from '../scenes/goals/settings/GoalsAddOptions';
-import {GoalsCreateForm} from '../scenes/goals/settings/GoalsCreateForm';
-import {GoalDaySelector} from '../scenes/goals/settings/GoalDaySelector';
-import {GoalConfig} from '../scenes/goals/settings/GoalConfig';
+import { OnboardingMood } from '../scenes/onboarding/onboardingSymptomsStart/MoodScreen';
+import { OnboardingSleep } from '../scenes/onboarding/onboardingSymptomsStart/SleepScreen';
+import { OnboardingSimpleCustomSymptoms } from '../scenes/onboarding/onboardingSymptomsCustom/SimpleCustomScreen';
+import { OnboardingGoals } from '../scenes/onboarding/onboardingGoals/goals';
+import { GoalsSettings } from '../scenes/goals/settings/GoalsSettings';
+import { GoalsAddOptions } from '../scenes/goals/settings/GoalsAddOptions';
+import { GoalsCreateForm } from '../scenes/goals/settings/GoalsCreateForm';
+import { GoalDaySelector } from '../scenes/goals/settings/GoalDaySelector';
+import { GoalConfig } from '../scenes/goals/settings/GoalConfig';
 import IndicatorsSettingsMore from '../scenes/indicateurs/settings/IndicatorsSettingsMore';
-import {GoalsSettingsMore} from '../scenes/goals/settings/GoalsSettingsMore';
+import { GoalsSettingsMore } from '../scenes/goals/settings/GoalsSettingsMore';
 import EditIndicateurs from '../scenes/indicateurs/editIndicateurs';
 import CreateIndicator from '../scenes/indicateurs/CreateIndicator';
 import ChooseIndicatorType from '../scenes/indicateurs/CreateIndicator/ChooseIndicatorType';
 import ChooseIndicatorOrder from '../scenes/indicateurs/CreateIndicator/ChooseIndicatorOrder';
 import * as Notifications from 'expo-notifications';
-import {registerForPushNotificationsAsync} from '../services/notifications-expo';
+import { registerForPushNotificationsAsync } from '../services/notifications-expo';
 import * as Device from 'expo-device';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import uuid from 'react-native-uuid';
 import DevMode from '../scenes/dev-mode';
 import { colors } from '../utils/colors';
 import OnboardingV2 from '../scenes/onboarding-v2';
+import CheckListScreen from '@/scenes/checklist/CheckListScreen';
 
 const Stack = createStackNavigator();
 
@@ -90,7 +91,7 @@ const linking = {
   },
   subscribe(listener) {
     /// Listen to incoming links from deep linking
-    const linkingSubscription = Linking.addEventListener('url', ({url}) => {
+    const linkingSubscription = Linking.addEventListener('url', ({ url }) => {
       listener(url);
     });
 
@@ -124,7 +125,7 @@ class Router extends React.Component {
   async componentDidMount() {
     //await logEvents.initMatomo();
     logEvents.logAppVisit();
-    RNBootsplash.hide({fade: true});
+    RNBootsplash.hide({ fade: true });
     try {
       // Get or generate device ID
       let deviceId = await AsyncStorage.getItem('deviceId');
@@ -210,8 +211,8 @@ class Router extends React.Component {
             <Stack.Screen name="reminder" component={Reminder} />
             <Stack.Screen name="export" component={Export} />
             <Stack.Screen name="chart-day" component={DailyChart} />
-            <Stack.Screen name="notes" options={{animationEnabled: Platform.OS === 'ios'}}>
-              {({navigation, route}) => <Notes navigation={navigation} route={route} />}
+            <Stack.Screen name="notes" options={{ animationEnabled: Platform.OS === 'ios' }}>
+              {({ navigation, route }) => <Notes navigation={navigation} route={route} />}
             </Stack.Screen>
             {/* <Stack.Screen name="onboarding" component={Onboarding} /> */}
             <Stack.Screen name="onboarding" component={OnboardingV2} />
@@ -224,6 +225,7 @@ class Router extends React.Component {
             <Stack.Screen name="onboarding-symptoms-custom-simple" component={OnboardingSimpleCustomSymptoms} />
             <Stack.Screen name="onboarding-symptoms-start" component={onboardingSymptomsStart} />
             <Stack.Screen name="onboarding-symptoms-custom" component={OnboardingSymptomsCustom} />
+            <Stack.Screen name="checklist" component={CheckListScreen} />
             <Stack.Screen name="EDIT_INDICATOR" component={EditIndicateurs} />
             <Stack.Screen name="CREATE_INDICATOR" component={CreateIndicator} />
             <Stack.Screen name="CHOOSE_INDICATOR_TYPE" component={ChooseIndicatorType} />
@@ -259,7 +261,7 @@ class Router extends React.Component {
             <Stack.Screen name="goals-create-form" component={GoalsCreateForm} />
             <Stack.Screen name="goal-day-selector" component={GoalDaySelector} />
             <Stack.Screen name="goal-config" component={GoalConfig} />
-            <Stack.Screen name="dev-mode" component={DevMode} options={{headerShown: true}} />
+            <Stack.Screen name="dev-mode" component={DevMode} options={{ headerShown: true }} />
           </Stack.Navigator>
         </NavigationContainer>
         <EnvironmentIndicator />

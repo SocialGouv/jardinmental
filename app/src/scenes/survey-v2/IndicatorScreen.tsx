@@ -223,8 +223,9 @@ export const IndicatorScreen: React.FC<IndicatorScreenProps> = ({
     <KeyboardAvoidingView
       behavior={"padding"}
       // keyboardVerticalOffset={0}
-      keyboardVerticalOffset={40}
-      style={{ flex: 1 }}>
+      keyboardVerticalOffset={Platform.OS === 'android' ? 40 : 0}
+      style={{ flex: 1 }}
+    >
       <Animated.ScrollView
         className={'flex-1'}
         contentContainerStyle={{ paddingBottom: 250, paddingTop: 200 }}
@@ -250,7 +251,7 @@ export const IndicatorScreen: React.FC<IndicatorScreenProps> = ({
           ))}
         </View>
       </Animated.ScrollView>
-    </KeyboardAvoidingView>
+    </KeyboardAvoidingView >
     <NavigationButtons
       absolute={true}
       onNext={onNext}
@@ -259,5 +260,5 @@ export const IndicatorScreen: React.FC<IndicatorScreenProps> = ({
       // loading={loading}
       nextText="Suivant"
     />
-  </SafeAreaView>
+  </SafeAreaView >
 };

@@ -12,6 +12,7 @@ import {
   STORAGE_KEY_ONBOARDING_STEP,
   STORAGE_KEY_ONBOARDING_DONE,
   STORAGE_KEY_NPS_PRO_CONTACT,
+  STORAGE_KEY_CHECKLIST_BANNER_DISMISSED,
 } from "../constants";
 import { updateSymptomsFormatIfNeeded } from "./utils";
 import localStorageBeck from "./beck";
@@ -29,7 +30,7 @@ const setSymptoms = async (symp) => {
   await AsyncStorage.setItem(STORAGE_KEY_SYMPTOMS, JSON.stringify(symp));
 };
 
-const getIndicateurs = async ():Promise<Indicator[]>  => {
+const getIndicateurs = async (): Promise<Indicator[]> => {
   let _indicateurs = await AsyncStorage.getItem(STORAGE_KEY_INDICATEURS);
   if (!_indicateurs) {
     // si on n'a pas d'indicateurs, on les récupère depuis le localStorage de symptoms, et on migre si besoin
@@ -52,7 +53,7 @@ const getIndicateurs = async ():Promise<Indicator[]>  => {
   }
 };
 
-const setIndicateurs = async (v:Indicator[]) => {
+const setIndicateurs = async (v: Indicator[]) => {
   await AsyncStorage.setItem(STORAGE_KEY_INDICATEURS, JSON.stringify(v));
 };
 const addIndicateur = async (indicateur) => {
@@ -190,6 +191,16 @@ const clearUserProfile = async (): Promise<void> => {
   }
 };
 
+// Checklist banner functions
+const getChecklistBannerDismissed = async () => {
+  const dismissed = await AsyncStorage.getItem(STORAGE_KEY_CHECKLIST_BANNER_DISMISSED);
+  return dismissed ? JSON.parse(dismissed) : false;
+};
+
+const setChecklistBannerDismissed = async (dismissed: boolean) => {
+  await AsyncStorage.setItem(STORAGE_KEY_CHECKLIST_BANNER_DISMISSED, JSON.stringify(dismissed));
+};
+
 export default {
   getSymptoms,
   setSymptoms,
@@ -221,5 +232,7 @@ export default {
   getUserProfile,
   setUserProfile,
   clearUserProfile,
+  getChecklistBannerDismissed,
+  setChecklistBannerDismissed,
   ...localStorageBeck,
 };

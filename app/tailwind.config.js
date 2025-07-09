@@ -65,7 +65,14 @@ module.exports = {
           700: '#617778',
           300: '#C7DDDE',
           200: '#E3F6F8',
-          100: '#EEF9FA'
+          100: '#EEF9FA',
+          50: '#F7FCFD'
+        },
+        beige: {
+          DEFAULT: '#FCEBD9'
+        },
+        mood: {
+          5: '#21896B'
         }
       },
       fontFamily: {

@@ -72,10 +72,10 @@ const RecapCompletion = () => {
                 <View style={styles.answerLabel}>
                   {dayIsDone ? (
                     <RoundButtonIcon
-                      backgroundColor={TW_COLORS.SUCCESS}
+                      backgroundColor={TW_COLORS.PRIMARY}
                       iconColor="#fff"
                       borderWidth={0.5}
-                      borderColor={TW_COLORS.SUCCESS}
+                      borderColor={TW_COLORS.PRIMARY}
                       icon="validate"
                       visible={true}
                       medium

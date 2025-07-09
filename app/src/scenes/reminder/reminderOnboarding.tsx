@@ -1,11 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Alert, View, TouchableOpacity, StyleSheet, ScrollView, Linking } from 'react-native';
+import { Alert, View, TouchableOpacity, StyleSheet, ScrollView, Linking, Text } from 'react-native';
 // import { openSettings } from "react-native-permissions";
 import dayjs from 'dayjs';
-import Text from '../../components/MyText';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import localStorage from '../../utils/localStorage';
-import { ONBOARDING_STEPS } from '../../utils/constants';
+import { ONBOARDING_STEPS, TW_COLORS } from '../../utils/constants';
 import TimePicker from '../../components/timePicker';
 import NotificationService from '../../services/notifications';
 import { colors } from '../../utils/colors';
@@ -21,11 +20,12 @@ import * as RNLocalize from 'react-native-localize';
 import BeigeWrapperScreen from '../onboarding-v2/BeigeWrapperScreen';
 import { mergeClassNames } from '@/utils/className';
 import { typography } from '@/utils/typography';
+import Pencil from '@assets/svg/Pencil';
 
 const ReminderStorageKey = '@Reminder';
 
 const Reminder = ({ navigation, route, notifReminderTitle = "Comment ça va aujourd'hui ?", notifReminderMessage = "N'oubliez pas de remplir votre application Jardin Mental" }) => {
-  const [reminder, setReminder] = useState(null);
+  const [reminder, setReminder] = useState<dayjs.Dayjs | null>(null);
   const [reminderSetupVisible, setReminderSetupVisible] = useState(false);
 
   const getReminder = async (showAlert = true) => {
@@ -42,7 +42,7 @@ const Reminder = ({ navigation, route, notifReminderTitle = "Comment ça va aujo
       deleteReminder();
     }
     if (!isRegistered && storedReminder && showAlert) showPermissionsAlert();
-    if (!storedReminder && route?.params?.onboarding) {
+    if (!storedReminder) {
       const date = new Date();
       date.setHours(20, 0, 0, 0);
       setReminderRequest(date);
@@ -126,19 +126,28 @@ const Reminder = ({ navigation, route, notifReminderTitle = "Comment ça va aujo
   };
 
   const deleteReminder = async () => {
-    setReminder('');
+    setReminder(null);
     setReminderSetupVisible(false);
     await AsyncStorage.removeItem(ReminderStorageKey);
   };
 
   const validateOnboarding = async () => {
     // navigation.navigate(ONBOARDING_STEPS.STEP_DRUGS);
+    const isRegistered = await NotificationService.checkAndAskForPermission();
+    if (!isRegistered) {
+      showPermissionsAlert();
+      return;
+    }
     await localStorage.setOnboardingDone(true);
     // await localStorage.setOnboardingStep(null);
-    navigation.reset({
-      index: 0,
-      routes: [{ name: 'tabs' }],
-    });
+    if (route?.params?.onboarding) {
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'tabs' }],
+      });
+    } else {
+      navigation.navigate('tabs')
+    }
   };
 
   const desactivateReminder = async () => {
@@ -166,6 +175,8 @@ const Reminder = ({ navigation, route, notifReminderTitle = "Comment ça va aujo
     });
   };
 
+  console.log('LCS TOTO REMINDER', reminder)
+
   return <BeigeWrapperScreen
     variant="blue"
     handlePrevious={navigation.goBack}
@@ -181,10 +192,17 @@ const Reminder = ({ navigation, route, notifReminderTitle = "Comment ça va aujo
         onPress={showReminderSetup}
         className='border border-gray-300 rounded-3xl px-10 py-6 items-center justify-center mb-6 bg-white w-auto self-center'>
         <Text className={mergeClassNames(typography.textSmMedium, 'mb-2')}> Recevez un rappel à:</Text>
-        <View className='py-3 pt-4 px-8 border-2 border-secondary rounded-3xl w-auto flew-column'>
-          <Text className="font-bold text-5xl text-brand-600">{`${dayjs(reminder).format('HH:mm')}`}h</Text>
+        <View className='py-3 pt-5 px-8 border-2 border-secondary rounded-3xl w-auto flew-column h-auto'>
+          <Text className="font-bold text-5xl text-brand-600">{`${dayjs(reminder).format('HH:mm')}`}</Text>
         </View>
-        <Text className='text-base mt-4'>Éditer</Text>
+        <View className="flex-row items-center justify-center mt-4">
+          <Text className='text-base mr-2 items-center justify-center'>Éditer</Text>
+          <Pencil
+            color={TW_COLORS.BRAND_700}
+            width={16}
+            height={16}
+          />
+        </View>
       </TouchableOpacity>
     </View>
     {/* <ScrollView style={onboardingStyles.scroll} contentContainerStyle={onboardingStyles.scrollContentContainer}>

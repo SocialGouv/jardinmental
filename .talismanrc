@@ -70,7 +70,7 @@ fileignoreconfig:
 - filename: app/src/scenes/survey-v2/ContextScreen.tsx
   checksum: 6371ed197788ce03cb6c42e3151135d106c684e295b66a25ebd841ca1d3a01dd
 - filename: app/src/scenes/survey-v2/IndicatorScreen.tsx
-  checksum: a0f3a761f28e2bca8fc00a7dde543e88d8db67797626eee40f6fe507043b80e2
+  checksum: 685b08d724c88e755147be9801557f30eebc6f16551bdd693d464330c08843da
 - filename: app/src/scenes/survey-v2/ToxicScreen.tsx
   checksum: 033a3b6b40b07e8d7369d7d1abc7a0e25f4df71c5aebfd43d8253b0fe83c5a69
 - filename: app/src/scenes/survey-v2/multiScreenSurvey/ContextScreen.tsx
@@ -94,7 +94,9 @@ fileignoreconfig:
 - filename: app/src/services/notifications.js
   checksum: 00046388d0509346e97a4d365477dd2b85f4eaefb4f67f4d7351bc198db4b725
 - filename: app/src/utils/constants.ts
-  checksum: 9b3edfe2f18f9c41089a33177d0a3ce3d46bf82c7d7748106b2f12e513b6b010
+  checksum: d253777852f0048c98254519893885803849b2392dde9853e4973600d5034721
+- filename: app/src/utils/localStorage/index.ts
+  checksum: 7c183b28ca55d187e414c4dc68705a5dda13fd2d1e0286ef5b8e48b8a0c2b98e
 scopeconfig:
 - scope: node
 version: "1.0"

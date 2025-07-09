@@ -79,7 +79,7 @@ export const SurveyNavigator: React.FC<SurveyNavigatorProps> = ({ navigation, ro
   const initEditingSurvey = route?.params?.editingSurvey ?? false;
   const [userIndicateurs, setUserIndicateurs] = useState<Indicator[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [diaryData, addNewEntryToDiaryData]= useContext(DiaryDataContext)
+  const [diaryData, addNewEntryToDiaryData] = useContext(DiaryDataContext)
   const initSurvey: DiaryDataNewEntryInput = useMemo(() => {
     return route?.params?.currentSurvey ?? {
       date: formatDay(beforeToday(0)),
@@ -108,7 +108,7 @@ export const SurveyNavigator: React.FC<SurveyNavigatorProps> = ({ navigation, ro
     }, [])
   );
 
-  const [answers, setAnswers] = useState<DiaryDataNewEntryInput['answers']>(initSurvey.answers || {});
+  const [answers, setAnswers] = useState<DiaryDataNewEntryInput['answers']>(initSurvey.answers || {});
 
   useEffect(() => {
     const initialAnswers = {};
