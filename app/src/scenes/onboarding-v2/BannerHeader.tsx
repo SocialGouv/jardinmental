@@ -56,11 +56,11 @@ export default function BannerHeader({
         {Platform.OS === 'ios' && (
             <Animated.View style={[{
                 backgroundColor: TW_COLORS.PRIMARY
-            }, animatedStatusBarColor, { position: !inAbsoluteView ? 'absolute' : 'relative', top: 0, left: 0, right: 0, height: 60, zIndex: 1000 }, hidden ? { opacity: 0 } : undefined]} />
+            }, animatedStatusBarColor, { position: !inAbsoluteView ? 'absolute' : 'relative', top: 0, left: 0, right: 0, height: 65, zIndex: 1000 }, hidden ? { opacity: 0 } : undefined]} />
         )}
         <Animated.View
             style={[{
-                backgroundColor: TW_COLORS.PRIMARY
+                backgroundColor: TW_COLORS.PRIMARY, borderWidth: 0,
             }, animatedStatusBarColor, hidden ? { opacity: 0 } : undefined]}
             className={`rounded-b-3xl ${(SHARED_HEADER || hideHeader) && !HEADER_WITH_BANNER ? 'pt-16' : ''}`}
         >

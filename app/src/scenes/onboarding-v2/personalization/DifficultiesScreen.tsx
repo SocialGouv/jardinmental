@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { View, Text, SafeAreaView, TouchableOpacity, ScrollView } from 'react-native';
 import { OnboardingV2ScreenProps, Difficulty } from '../types';
 import { NavigationButtons } from '@/components/onboarding/NavigationButtons';
@@ -8,7 +8,7 @@ import CheckInHeader from '@/components/onboarding/CheckInHeader';
 import { HEADER_WITH_BANNER, PROGRESS_BAR, PROGRESS_BAR_AND_HEADER, SHARED_HEADER, TW_COLORS } from '@/utils/constants';
 import BannerHeader from '../BannerHeader';
 import { useAnimatedStyle } from 'react-native-reanimated';
-import { SafeAreaViewWithOptionalHeader } from '@/scenes/onboarding/ProgressHeader';
+import { SafeAreaViewWithOptionalHeader, useOnboardingProgressHeader } from '@/scenes/onboarding/ProgressHeader';
 import { mergeClassNames } from '@/utils/className';
 import { typography } from '@/utils/typography';
 import SelectionnableItem from '@/components/SelectionnableItem';
@@ -69,21 +69,24 @@ const difficultiesData: Difficulty[] = [
   }
 ];
 
-const categoryIcons: Record<Difficulty['name'], string> = {
-  mood: '💭',
-  anxiety: '💭',
-  stress: '💭',
-  self_esteem: '💭',
-  sleep: '💪',
-  concentration: '🧠',
-  motivation: '🎯',
-  social: '👥',
-  environmental: '🏢'
-};
+const NextScreen = 'PersonalizationObjective'
 
 export const DifficultiesScreen: React.FC<Props> = ({ navigation }) => {
   const { updateUserDifficulties } = useUserProfile();
   const [selectedDifficulties, setSelectedDifficulties] = useState<Difficulty[]>(difficultiesData);
+  const { setSlideIndex, setNextPath } = useOnboardingProgressHeader();
+
+  // useEffect(() => {
+  //   setNextPath(() => handleNext)
+  // }, [])
+
+  const handleSkip = useCallback(() => {
+    navigation.navigate(NextScreen);
+  }, [navigation]);
+
+  useEffect(() => {
+    setNextPath(handleSkip);
+  }, [handleSkip])
 
   const toggleDifficulty = (id: string) => {
     setSelectedDifficulties(prev =>
@@ -98,16 +101,11 @@ export const DifficultiesScreen: React.FC<Props> = ({ navigation }) => {
   const handleNext = async () => {
     const selected = selectedDifficulties.filter(d => d.selected);
     await updateUserDifficulties(selected);
-    navigation.navigate('PersonalizationObjective');
+    navigation.navigate(NextScreen);
   };
 
   const handlePrevious = () => {
     navigation.goBack();
-  };
-
-  const handleSkip = async () => {
-    await updateUserDifficulties([]);
-    navigation.navigate('PersonalizationObjective');
   };
 
   // const animatedStatusBarColor = useAnimatedStyle(() => {

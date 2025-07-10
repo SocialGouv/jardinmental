@@ -339,7 +339,9 @@ export const TW_COLORS = {
   TEXT_SECONDARY: '#757575',
   LIGHT_COLORS: "#134449",
   LIGHT_BLUE: "#EBFDFF",
-  BRAND_700: "#158993"
+  BRAND_700: "#158993",
+  BRAND_500: "#1FC6D5",
+  BEIGE: '#FCEBD9'
 };
 
 export const SHARED_HEADER = false

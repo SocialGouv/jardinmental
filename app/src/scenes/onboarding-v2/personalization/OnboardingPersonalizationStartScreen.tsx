@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { View, Text, SafeAreaView } from 'react-native';
 import NavigationButtons from '@/components/onboarding/NavigationButtons';
 import ProgressIndicator from '@/components/onboarding/ProgressIndicator';
 import { OnboardingV2ScreenProps } from '../types';
 import CheckInHeader from '@/components/onboarding/CheckInHeader';
 import { HEADER_WITH_BANNER, PROGRESS_BAR, PROGRESS_BAR_AND_HEADER, SHARED_HEADER, TW_COLORS } from '@/utils/constants';
-import { SafeAreaViewWithOptionalHeader } from '@/scenes/onboarding/ProgressHeader';
+import { SafeAreaViewWithOptionalHeader, useOnboardingProgressHeader } from '@/scenes/onboarding/ProgressHeader';
 import BannerHeader from '../BannerHeader';
 import { useAnimatedStyle } from 'react-native-reanimated';
 import { mergeClassNames } from '@/utils/className';
@@ -13,11 +13,19 @@ import { typography } from '@/utils/typography';
 
 type Props = OnboardingV2ScreenProps<'Intro'>;
 
+const NextScreen = 'PersonalizationDifficulties'
+
 export const OnboardingPersonalizationStartScreen: React.FC<Props> = ({ navigation }) => {
 
-  const handleNext = () => {
+  const { setSlideIndex, setNextPath } = useOnboardingProgressHeader();
+
+  const handleNext = useCallback(() => {
     navigation.navigate('PersonalizationDifficulties');
-  };
+  }, [navigation]);
+
+  useEffect(() => {
+    setNextPath(handleNext);
+  }, [handleNext])
 
   const handlePrevious = () => {
     navigation.goBack();
@@ -27,13 +35,14 @@ export const OnboardingPersonalizationStartScreen: React.FC<Props> = ({ navigati
   }
 
   return (
-    <SafeAreaViewWithOptionalHeader className="flex-1 bg-white">
+    <SafeAreaViewWithOptionalHeader className="flex-1 bg-white" style={{}}>
       {<BannerHeader
         hidden={HEADER_WITH_BANNER}
         hideHeader={PROGRESS_BAR_AND_HEADER}
         header={SHARED_HEADER || PROGRESS_BAR || PROGRESS_BAR_AND_HEADER ? undefined : <ProgressIndicator currentStep={2} totalSteps={3} />}
         title={'Créons ensemble un suivi qui vous ressemble.'}
         handleSkip={handleSkip}
+        handlePrevious={handlePrevious}
       />}
       <View className="flex-1 justify-center items-center px-8">
         <Text

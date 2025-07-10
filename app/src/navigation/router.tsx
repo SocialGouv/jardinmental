@@ -1,15 +1,15 @@
 import React from 'react';
 import Tabs from './tabs';
-import {createStackNavigator} from '@react-navigation/stack';
-import {NavigationContainer} from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
 import EnvironmentIndicator from '../services/EnvironmentIndicator';
 import SurveyNavigator from '../scenes/survey-v2/SurveyNavigator';
 import SelectDayScreen from '../scenes/survey/selectDay';
 import Reminder from '../scenes/reminder';
 import Export from '../scenes/export/export';
 import DailyChart from '../scenes/calendar/daily-chart';
-import {AppState, Platform, Linking} from 'react-native';
-import {StatusBar} from 'expo-status-bar';
+import { AppState, Platform, Linking } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
 import Notes from '../scenes/survey/notes-screen';
 import Onboarding from '../scenes/onboarding';
 import Supported from '../scenes/onboarding/onboardingSupported';
@@ -69,6 +69,8 @@ import DevMode from '../scenes/dev-mode';
 import { colors } from '../utils/colors';
 import OnboardingV2 from '../scenes/onboarding-v2';
 import CheckListScreen from '@/scenes/checklist/CheckListScreen';
+import { StatusBarProvider, useStatusBarInternal } from '../context/StatusBarContext';
+import { TW_COLORS } from '@/utils/constants';
 
 const Stack = createStackNavigator();
 
@@ -116,7 +118,33 @@ Notifications.setNotificationHandler({
   }),
 });
 
-class Router extends React.Component {
+// StatusBar wrapper component that uses the context
+const StatusBarWrapper = () => {
+  const { backgroundColor } = useStatusBarInternal();
+
+  return (
+    <StatusBar
+      animated={true}
+      backgroundColor={backgroundColor}
+    />
+  );
+};
+
+interface RouterProps {
+  statusBarContext: any;
+}
+
+class Router extends React.Component<RouterProps> {
+  navigationRef: any;
+  appListener: any;
+  cleanupNotifications: any;
+  prevCurrentRouteName: string;
+  statusBarContext: any;
+
+  constructor(props: RouterProps) {
+    super(props);
+    this.statusBarContext = props.statusBarContext;
+  }
 
   state = {
     backgroundColor: colors.LIGHT_BLUE
@@ -171,11 +199,36 @@ class Router extends React.Component {
 
   updateStatusBarColor() {
     const route = this.navigationRef.getCurrentRoute();
-    if (['Calendar', 'Status', 'Exercise'].includes(route.name) || route.name.startsWith('screen-survey-')) {
-      this.setState(prevState => ({ backgroundColor: colors.LIGHT_BLUE }));
-    } else {
-      this.setState(prevState => ({ backgroundColor: colors.WHITE }));
+    console.log('route name', route.name)
+
+    let newColor;
+    if (['Calendar', 'Status', 'Exercise',
+      'OnboardingChooseIndicator',
+      'OnboardingPersonalizationStartScreen',
+      'Intro',
+      'PersonalizationStart',
+      'PersonalizationDifficulties',
+      'PersonalizationObjective',
+      'OnboardingCheckInStart',
+      'OnboardingCheckInHowDoYouFeel',
+      // 'OnboardingCheckInHowDoYouFeelDetails',
+      // 'OnboardingCheckInMoodSummary',
+      'OnboardingCheckInSleep',
+      'OnboardingChooseIndicator',
+      'OnboardingReminder',
+
+    ].includes(route.name) || route.name.startsWith('screen-survey-')) {
+      newColor = colors.LIGHT_BLUE;
+    } else if (['Carousel', 'OnboardingCheckInIntroductionCompleted'].includes(route.name)) {
+      newColor = TW_COLORS.BEIGE;
     }
+    // if (newColor) {
+    // Update both local state (for backward compatibility) and context
+    this.setState(prevState => ({ backgroundColor: newColor }));
+    if (this.statusBarContext?.setDefaultColor) {
+      this.statusBarContext.setDefaultColor(newColor);
+    }
+    // }
   }
 
   appState = AppState.currentState;
@@ -265,13 +318,26 @@ class Router extends React.Component {
           </Stack.Navigator>
         </NavigationContainer>
         <EnvironmentIndicator />
-        <StatusBar
-          animated={true}
-          backgroundColor={this.state.backgroundColor}
-        />
+        <StatusBarWrapper />
       </>
     );
   }
 }
 
-export default Router;
+// Wrapper component that provides StatusBar context to Router
+const RouterWithStatusBar = () => {
+  return (
+    <StatusBarProvider>
+      <RouterWithContext />
+    </StatusBarProvider>
+  );
+};
+
+// Router component that receives the context
+const RouterWithContext = () => {
+  const statusBarContext = useStatusBarInternal();
+
+  return <Router statusBarContext={statusBarContext} />;
+};
+
+export default RouterWithStatusBar;

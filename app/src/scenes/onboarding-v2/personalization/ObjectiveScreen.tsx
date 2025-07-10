@@ -42,7 +42,7 @@ const NextScreen = 'OnboardingCheckInStart'
 export const ObjectiveScreen: React.FC<Props> = ({ navigation, route }) => {
   const { updateUserObjectives, profile } = useUserProfile();
   const [selectedObjective, setSelectedObjective] = useState<Objective | null>(null);
-  const { setSlideIndex } = useOnboardingProgressHeader();
+  const { setSlideIndex, setIsVisible } = useOnboardingProgressHeader();
 
   const handleNext = async () => {
     if (selectedObjective) {
@@ -62,6 +62,7 @@ export const ObjectiveScreen: React.FC<Props> = ({ navigation, route }) => {
 
       navigation.navigate(NextScreen);
       setSlideIndex(-1);
+      setIsVisible(false)
     }
   };
 

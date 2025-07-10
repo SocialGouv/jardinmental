@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useContext } from 'react';
+import React, { useState, useRef, useEffect, useContext, useCallback } from 'react';
 import { View, Text, SafeAreaView, TouchableOpacity, Platform, Dimensions, FlatList } from 'react-native';
 import Animated, {
   useSharedValue,
@@ -22,6 +22,8 @@ import InstructionText from '../../InstructionText';
 import { SafeAreaViewWithOptionalHeader } from '@/scenes/onboarding/ProgressHeader';
 import { typography } from '@/utils/typography';
 import { mergeClassNames } from '@/utils/className';
+import { useStatusBar } from '@/context/StatusBarContext';
+import { useFocusEffect } from '@react-navigation/native';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -38,6 +40,7 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
   const [loading, setLoading] = useState<boolean>(false)
   const [checkInData, setCheckInData] = useState<number | null>(null);
   const [diaryData, addNewEntryToDiaryData] = useContext(DiaryDataContext);
+  const { setCustomColor } = useStatusBar();
 
   // Animated values
   const scrollViewScale = useSharedValue(1);
@@ -62,6 +65,26 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
 
     return () => clearTimeout(timeout);
   }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      if (selectedMoodIndex !== null) {
+        setTimeout(() => {
+          setCustomColor(moodBackgroundColors[selectedMoodIndex - 1]);
+        }, 0)
+      }
+
+      return () => {
+        // Optional cleanup here
+      };
+    }, [selectedMoodIndex])
+  );
+
+  useEffect(() => {
+    if (selectedMoodIndex !== null) {
+      setCustomColor(moodBackgroundColors[selectedMoodIndex - 1])
+    }
+  }, [selectedMoodIndex])
 
   const handleComplete = async () => {
     setLoading(true);

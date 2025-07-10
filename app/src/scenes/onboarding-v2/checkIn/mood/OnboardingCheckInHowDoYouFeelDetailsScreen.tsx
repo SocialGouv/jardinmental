@@ -24,6 +24,8 @@ import { INDICATORS_CATEGORIES } from '@/entities/Indicator';
 import { useBottomSheet } from '@/context/BottomSheetContext';
 import { mergeClassNames } from '@/utils/className';
 import { typography } from '@/utils/typography';
+import { useFocusEffect } from '@react-navigation/native';
+import { useStatusBar } from '@/context/StatusBarContext';
 
 
 type Props = OnboardingV2ScreenProps<'OnboardingCheckInHowDoYouFeelDetails'>;
@@ -90,6 +92,21 @@ export const OnboardingCheckInLastMoods: React.FC<Props> = ({ navigation, route 
   const moodOptions = React.useMemo(() => getMoodOptions(route.params?.mood), [route.params?.mood])
   const [diaryData, addNewEntryToDiaryData] = useContext(DiaryDataContext);
   const { showBottomSheet } = useBottomSheet();
+  const { setCustomColor } = useStatusBar();
+
+  useFocusEffect(
+    useCallback(() => {
+      if (route.params?.mood !== null) {
+        setTimeout(() => {
+          setCustomColor(moodBackgroundColors[route.params?.mood]);
+        }, 0)
+      }
+
+      return () => {
+        // Optional cleanup here
+      };
+    }, [route.params?.mood])
+  );
 
   const showHelpModal = () => {
     return showBottomSheet(<HelpView

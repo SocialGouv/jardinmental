@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { View, Text, SafeAreaView } from 'react-native';
 import CheckInHeader from '@/components/onboarding/CheckInHeader';
 import NavigationButtons from '@/components/onboarding/NavigationButtons';
@@ -12,11 +12,29 @@ import { bg } from 'date-fns/locale';
 import { mergeClassNames } from '@/utils/className';
 import { typography } from '@/utils/typography';
 import { firstLetterUppercase } from '@/utils/string-util';
+import { useStatusBar } from '@/context/StatusBarContext';
+import { useFocusEffect } from '@react-navigation/native';
 
 
 type Props = OnboardingV2ScreenProps<'Intro'>;
 
 export const OnboardingCheckInMoodSummaryScreen: React.FC<Props> = ({ navigation, route }) => {
+
+  const { setCustomColor } = useStatusBar();
+
+  useFocusEffect(
+    useCallback(() => {
+      if (route.params?.mood !== null) {
+        setTimeout(() => {
+          setCustomColor(moodBackgroundColors[route.params?.mood]);
+        }, 0)
+      }
+
+      return () => {
+        // Optional cleanup here
+      };
+    }, [route.params?.mood])
+  );
 
   const handleNext = () => {
     navigation.navigate('OnboardingCheckInSleep');

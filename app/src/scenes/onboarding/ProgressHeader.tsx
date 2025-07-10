@@ -18,15 +18,35 @@ import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 export const PROGRESS_HEADER_HEIGHT = 60;
 export const PROGRESS_HEADER_PADDING_HORIZONTAL = 0;
 
-const ProgressHeaderContext = createContext();
+interface ProgressHeaderContextType {
+  slideIndex: number;
+  setSlideIndex: (index: number) => void;
+  isVisible: boolean;
+  setIsVisible: (visible: boolean) => void;
+  setTitle: (title: string) => void;
+  title: string;
+  showProgressbar: boolean;
+  setShowProgressbar: (show: boolean) => void;
+  setNextPath: (func: () => void) => void;
+  nextPath: React.MutableRefObject<(() => void) | null>;
+}
 
-export const useOnboardingProgressHeader = () => useContext(ProgressHeaderContext);
+const ProgressHeaderContext = createContext<ProgressHeaderContextType | undefined>(undefined);
+
+export const useOnboardingProgressHeader = () => {
+  const context = useContext(ProgressHeaderContext);
+  if (!context) {
+    throw new Error('useOnboardingProgressHeader must be used within OnboardingProgressHeaderProvider');
+  }
+  return context;
+};
 
 export const OnboardingProgressHeaderProvider = ({ children }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [slideIndex, setSlideIndex] = useState(-1);
   const [title, setTitle] = useState<string>('')
   const [showProgressbar, setShowProgressbar] = useState<boolean>(false);
+  const nextPathRef = useRef<(() => void) | null>(null);
   // const animatedStatusBarColor = useAnimatedStyle(() => {
   //   return {
   //     backgroundColor: route.params?.mood !== null ? moodBackgroundColors[route.params?.mood] : TW_COLORS.WHITE,
@@ -39,7 +59,9 @@ export const OnboardingProgressHeaderProvider = ({ children }) => {
   //     color: TW_COLORS.PRIMARY
   //   };
   // })
-
+  const setNextCallback = useCallback((func: () => void) => {
+    nextPathRef.current = func;
+  }, [])
 
   const value = {
     slideIndex,
@@ -50,6 +72,8 @@ export const OnboardingProgressHeaderProvider = ({ children }) => {
     title,
     showProgressbar,
     setShowProgressbar,
+    setNextPath: setNextCallback,
+    nextPath: nextPathRef
     // animatedStatusBarColor,
     // animatedTextColor
   };
@@ -111,7 +135,7 @@ export const SafeAreaViewWithOptionalHeader = ({ children, style, ...props }) =>
 };
 
 const ProgressHeader = ({ insets, slidesCount, navigation }) => {
-  const { slideIndex, title, showProgressbar, setSlideIndex } = useOnboardingProgressHeader();
+  const { slideIndex, showProgressbar, nextPath } = useOnboardingProgressHeader();
   const [hideHeader, setHideHeader] = useState(false)
   const animatedProgressValue = useRef(new Animated.Value(0)).current;
   const animatedProgressWidth = animatedProgressValue.interpolate({
@@ -131,20 +155,6 @@ const ProgressHeader = ({ insets, slidesCount, navigation }) => {
     };
   })
 
-  const handlePrevious = () => {
-    console.log('lcs slide index', slideIndex)
-    if (slideIndex === 0) {
-      setHideHeader(true)
-      setSlideIndex(-1);
-    }
-    // timeout needed to make the hide header done before the go back
-    setTimeout(() => {
-      navigation.goBack()
-      setHideHeader(false)
-    }, 0)
-  }
-
-
   useEffect(() => {
     if (slideIndex >= 0) {
       Animated.timing(animatedProgressValue, {
@@ -163,7 +173,6 @@ const ProgressHeader = ({ insets, slidesCount, navigation }) => {
   });
   const [visible, setVisible] = useState(false);
   useEffect(() => {
-    console.log('PROGRESS HEADER VISIBLE EFFECT', slideIndex, visible)
     if (slideIndex >= 0 && !visible) {
       setVisible(true);
       Animated.timing(animatedVisibleValue, {
@@ -210,7 +219,7 @@ const ProgressHeader = ({ insets, slidesCount, navigation }) => {
             <Animated.View
               className="h-full rounded-full transition-all duration-300"
               style={{
-                backgroundColor: TW_COLORS.LIGHT_COLORS,
+                backgroundColor: TW_COLORS.BRAND_500,
                 width: animatedProgressWidth
               }}
             />
@@ -265,7 +274,11 @@ const ProgressHeader = ({ insets, slidesCount, navigation }) => {
           </BannerAnimatedHeader>}
           {!HEADER_WITH_BANNER && !hideHeader && (SHARED_HEADER || PROGRESS_BAR_AND_HEADER) && <CheckInHeader
             withMargin={false}
-            onSkip={() => navigation.goNext()}
+            onSkip={() => {
+              if (nextPath && nextPath.current) {
+                nextPath.current();
+              }
+            }}
             showPrevious={true}
             animatedTextColor={animatedTextColor}
             showSkip={true}

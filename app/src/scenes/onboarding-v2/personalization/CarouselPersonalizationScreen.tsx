@@ -1,9 +1,10 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, SafeAreaView, FlatList, TouchableOpacity, Dimensions } from 'react-native';
 import { OnboardingV2ScreenProps, CarouselSlide } from '../types';
 import { CarouselSlide as CarouselSlideComponent } from '../../../components/onboarding/CarouselSlide';
 import ProgressIndicator from '../../../components/onboarding/ProgressIndicator';
 import { TW_COLORS } from '@/utils/constants';
+import { useOnboardingProgressHeader } from '@/scenes/onboarding/ProgressHeader';
 
 type Props = OnboardingV2ScreenProps<'Carousel'>;
 
@@ -12,6 +13,11 @@ const { width: screenWidth } = Dimensions.get('window');
 export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
   const { slides } = route.params;
   const [currentIndex, setCurrentIndex] = useState(0);
+  const { setSlideIndex, setNextPath } = useOnboardingProgressHeader();
+
+  useEffect(() => {
+    setNextPath('Onboarding')
+  }, [])
   const flatListRef = useRef<FlatList>(null);
 
   const handleNext = () => {
@@ -77,7 +83,7 @@ export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
           className="px-4 py-2 rounded-full"
           style={{ backgroundColor: TW_COLORS.WHITE + 'CC' }}
         >
-          <Text 
+          <Text
             className="text-base font-medium"
             style={{ color: TW_COLORS.PRIMARY }}
           >
@@ -93,7 +99,7 @@ export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
           className="px-4 py-2 rounded-full"
           style={{ backgroundColor: TW_COLORS.WHITE + 'CC' }}
         >
-          <Text 
+          <Text
             className="text-base font-medium"
             style={{ color: TW_COLORS.GRAY_DARK }}
           >
@@ -102,7 +108,7 @@ export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
         </TouchableOpacity>
       </View>
       <ProgressIndicator currentStep={0}
-        totalSteps={4}/>
+        totalSteps={4} />
       {/* Carrousel */}
       <FlatList
         ref={flatListRef}
