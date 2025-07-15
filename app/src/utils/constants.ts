@@ -341,7 +341,8 @@ export const TW_COLORS = {
   LIGHT_BLUE: "#EBFDFF",
   BRAND_700: "#158993",
   BRAND_500: "#1FC6D5",
-  BEIGE: '#FCEBD9'
+  BEIGE: '#FCEBD9',
+  GRAY_700: '#617778',
 };
 
 export const SHARED_HEADER = false
