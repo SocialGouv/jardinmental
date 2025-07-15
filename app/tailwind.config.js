@@ -92,6 +92,7 @@ module.exports = {
           lineHeight: '32px',
           // letterSpacing: '0em'
         }],
+        'text-5xl': ['48px', { lineHeight: '48px' }],
         'text-xl': ['20px', {
           lineHeight: '30px',
           // letterSpacing: '0em'

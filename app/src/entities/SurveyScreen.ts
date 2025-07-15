@@ -3,12 +3,12 @@ import { Indicator, INDICATORS_CATEGORIES } from './Indicator';
 
 export enum SurveyScreenType {
     // group information by category
-    'category'='category',
-    'individual'='individual',
-    'goals'='goals',
-    'context'='context',
-    'toxic'='toxic',
-    'encouragement'='encouragement'
+    'category' = 'category',
+    'individual' = 'individual',
+    'goals' = 'goals',
+    'context' = 'context',
+    'toxic' = 'toxic',
+    'encouragement' = 'encouragement'
 }
 
 interface BaseSurveyScreen {

@@ -22,6 +22,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { progressHeaderOptions, ProgressScreen } from '../onboarding/ProgressHeader';
 import { SHARED_HEADER, PROGRESS_BAR } from '@/utils/constants';
 import { EncouragementScreen } from '../survey-v2/EncouragementScreen';
+import SubcategoriesScreen from './personalization/SubCategoriesScreen';
 
 const Stack = createStackNavigator<OnboardingV2StackParamList>();
 
@@ -30,16 +31,16 @@ export const VALID_SCREEN_NAMES: (keyof OnboardingV2StackParamList)[] = [
   'Intro',
   // 'Profile',
   'Carousel',
+  'OnboardingCheckInHowDoYouFeel',
   'PersonalizationStart',
   'PersonalizationDifficulties',
-  'PersonalizationObjective',
-  'OnboardingCheckInStart',
-  'OnboardingCheckInHowDoYouFeel',
-  'OnboardingCheckInHowDoYouFeelDetails',
-  'OnboardingCheckInMoodSummary',
-  'OnboardingCheckInSleep',
-  'OnboardingCheckInIntroductionCompleted',
+  'SubCategoriesScreen',
   'OnboardingChooseIndicator',
+  'OnboardingCheckInStart',
+  // 'OnboardingCheckInHowDoYouFeelDetails',
+  // 'OnboardingCheckInMoodSummary',
+  // 'OnboardingCheckInSleep',
+  'OnboardingCheckInIntroductionCompleted',
   'OnboardingReminder',
 ];
 
@@ -92,7 +93,7 @@ const OnboardingV2Navigator: React.FC = () => {
     title={'Merci d’avoir pris ce moment pour observer votre sommeil.'}
     description={''}
     extraInfo={'En France, 32 % des adultes se déclarent insatisfaits de leur sommeil.\nEn faire le suivi, c’est déjà prendre soin de soi. (ifop mars 2022)'}
-    onNext={() => navigation.navigate('OnboardingChooseIndicatorInto')} />
+    onNext={() => navigation.navigate('OnboardingChooseIndicatorIntro')} />
 
 
   return (
@@ -161,6 +162,16 @@ const OnboardingV2Navigator: React.FC = () => {
         })}
       />
       <Stack.Screen
+        name="SubCategoriesScreen"
+        options={SHARED_HEADER || PROGRESS_BAR ? headerOptions : undefined}
+        component={ProgressScreen({
+          slideIndex: 2,
+          showProgressbar: true,
+          Component: SubcategoriesScreen,
+          title: ""
+        })}
+      />
+      {/* <Stack.Screen
         name="PersonalizationObjective"
         options={SHARED_HEADER || PROGRESS_BAR ? headerOptions : undefined}
         component={ProgressScreen({
@@ -169,7 +180,7 @@ const OnboardingV2Navigator: React.FC = () => {
           Component: ObjectiveScreen,
           title: "Quels sont vos objectifs ?"
         })}
-      />
+      /> */}
       <Stack.Screen
         options={SHARED_HEADER ? headerOptions : undefined}
         name="OnboardingCheckInStart"
@@ -219,7 +230,7 @@ const OnboardingV2Navigator: React.FC = () => {
       />
       <Stack.Screen
         options={SHARED_HEADER ? headerOptions : undefined}
-        name="OnboardingChooseIndicatorInto"
+        name="OnboardingChooseIndicatorIntro"
         component={OnboardingCheckInIntroductionCompletedScreen}
       />
       <Stack.Screen

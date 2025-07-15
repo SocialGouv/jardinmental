@@ -33,6 +33,8 @@ type Props = OnboardingV2ScreenProps<'OnboardingCheckInHowDoYouFeel'>;
 
 const springConfig = { damping: 20, stiffness: 80 };
 
+const NextRoute = "PersonalizationStart"
+
 export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
   const [selectedMoodIndex, setSelectedMoodIndex] = useState<number | null>(null);
   const [hasSelectedOnce, setHasSelectedOnce] = useState<boolean>(false);
@@ -103,7 +105,7 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
       date,
       answers: updatedAnswers
     });
-    navigation.navigate('OnboardingCheckInHowDoYouFeelDetails', {
+    navigation.navigate(NextRoute, {
       mood
     })
     setLoading(false);
@@ -148,10 +150,10 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
         requestAnimationFrame(() => {
           // Additional delay for first selection to allow scale animation to start
           if (wasFirstSelection) {
-            //scrollToSelectedItem(moodIndex + 2, true)
             setTimeout(() => scrollToSelectedItem(moodIndex + 2, true), 150);
           } else {
-            scrollToSelectedItem(moodIndex + 2, true);
+            setTimeout(() =>
+              scrollToSelectedItem(moodIndex + 2, true), 0)
           }
         });
       };

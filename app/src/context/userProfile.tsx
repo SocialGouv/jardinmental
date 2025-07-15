@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useReducer, useEffect, ReactNode } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { UserProfile, Difficulty, Objective } from '../scenes/onboarding-v2/types';
+import { NEW_INDICATORS_CATEGORIES, NEW_INDICATORS_SUBCATEGORIES } from '@/utils/liste_indicateurs.1';
 
 const STORAGE_KEY_USER_PROFILE = '@USER_PROFILE';
 
@@ -14,8 +15,9 @@ interface UserProfileContextType {
   isLoading: boolean;
   isProfileSelected: boolean;
   setProfile: (profile: UserProfile) => void;
-  updateUserDifficulties: (difficulties: Difficulty[]) => Promise<void>;
+  updateUserDifficulties: (difficulties: NEW_INDICATORS_CATEGORIES[]) => Promise<void>;
   updateUserObjectives: (objectives: Objective[]) => Promise<void>;
+  updateUserSubcategories: (subcategories: NEW_INDICATORS_SUBCATEGORIES[]) => Promise<void>;
   clearProfile: () => void;
   loadProfile: () => Promise<void>;
 }
@@ -34,13 +36,13 @@ const userProfileReducer = (state: UserProfileState, action: UserProfileAction):
   switch (action.type) {
     case 'SET_LOADING':
       return { ...state, isLoading: action.payload };
-    
+
     case 'SET_PROFILE':
       return { ...state, profile: action.payload, isLoading: false };
-    
+
     case 'CLEAR_PROFILE':
       return { ...state, profile: null, isLoading: false };
-    
+
     default:
       return state;
   }
@@ -73,7 +75,7 @@ export const UserProfileProvider: React.FC<UserProfileProviderProps> = ({ childr
     }
   };
 
-  const updateUserDifficulties = async (difficulties: Difficulty[]) => {
+  const updateUserDifficulties = async (difficulties: NEW_INDICATORS_CATEGORIES[]) => {
     if (state.profile) {
       try {
         const updatedProfile = {
@@ -101,6 +103,20 @@ export const UserProfileProvider: React.FC<UserProfileProviderProps> = ({ childr
     }
   };
 
+  const updateUserSubcategories = async (subcategories: NEW_INDICATORS_SUBCATEGORIES[]) => {
+    if (state.profile) {
+      try {
+        const updatedProfile = {
+          ...state.profile,
+          selectedSubcategories: subcategories
+        };
+        await setProfile(updatedProfile);
+      } catch (error) {
+        console.error('Error updating user subcategories:', error);
+      }
+    }
+  };
+
   const loadProfile = async () => {
     try {
       dispatch({ type: 'SET_LOADING', payload: true });
@@ -110,12 +126,14 @@ export const UserProfileProvider: React.FC<UserProfileProviderProps> = ({ childr
         dispatch({ type: 'SET_PROFILE', payload: parsedProfile });
       } else {
         // default profile
-        dispatch({ type: 'SET_PROFILE', payload: {
-          id: 'non-suivi',
-          name: 'Non, je ne suis pas suivi(e)',
-          selectedDifficulties: [],
-          objectives: []
-        }});
+        dispatch({
+          type: 'SET_PROFILE', payload: {
+            id: 'non-suivi',
+            name: 'Non, je ne suis pas suivi(e)',
+            selectedDifficulties: [],
+            objectives: []
+          }
+        });
       }
     } catch (error) {
       console.error('Error loading user profile:', error);
@@ -135,6 +153,7 @@ export const UserProfileProvider: React.FC<UserProfileProviderProps> = ({ childr
     setProfile,
     updateUserDifficulties,
     updateUserObjectives,
+    updateUserSubcategories,
     clearProfile,
     loadProfile,
   };

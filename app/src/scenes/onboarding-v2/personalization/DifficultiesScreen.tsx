@@ -12,68 +12,21 @@ import { SafeAreaViewWithOptionalHeader, useOnboardingProgressHeader } from '@/s
 import { mergeClassNames } from '@/utils/className';
 import { typography } from '@/utils/typography';
 import SelectionnableItem from '@/components/SelectionnableItem';
+import { difficultiesData, INDICATOR_CATEGORIES_DATA } from '../data/helperData';
 
 type Props = OnboardingV2ScreenProps<'PersonalizationDifficulties'>;
 
 // @todo defined which difficulties we keep
-const difficultiesData: Difficulty[] = [
-  {
-    id: 'sleep',
-    name: 'Mon sommeil',
-    selected: false
-  },
-  {
-    id: 'mood',
-    name: 'Mon Humeur',
-    selected: false
-  },
-  {
-    id: 'anxiety',
-    name: `Mon niveau d'énergie`,
-    selected: false
-  },
-  {
-    id: 'stress',
-    name: 'Stress',
-    selected: false
-  },
-  {
-    id: 'concentration',
-    name: 'Concentration',
-    selected: false
-  },
-  {
-    id: 'motivation',
-    name: 'Motivation',
-    selected: false
-  },
-  {
-    id: 'social_relations',
-    name: 'Relations sociales',
-    selected: false
-  },
-  {
-    id: 'self_esteem',
-    name: 'Estime de soi',
-    selected: false
-  },
-  {
-    id: 'work_stress',
-    name: 'Stress professionnel',
-    selected: false
-  },
-  {
-    id: 'family_issues',
-    name: 'Problèmes familiaux',
-    selected: false
-  }
-];
 
-const NextScreen = 'PersonalizationObjective'
+
+const NextScreen = 'SubCategoriesScreen'
 
 export const DifficultiesScreen: React.FC<Props> = ({ navigation }) => {
-  const { updateUserDifficulties } = useUserProfile();
-  const [selectedDifficulties, setSelectedDifficulties] = useState<Difficulty[]>(difficultiesData);
+  const { updateUserDifficulties, profile } = useUserProfile();
+  const [selectedDifficulties, setSelectedDifficulties] = useState<Difficulty[]>(Object.values(INDICATOR_CATEGORIES_DATA).map(d => ({
+    ...d,
+    selected: !!profile?.selectedDifficulties.includes(d.category)
+  })))
   const { setSlideIndex, setNextPath } = useOnboardingProgressHeader();
 
   // useEffect(() => {
@@ -100,7 +53,8 @@ export const DifficultiesScreen: React.FC<Props> = ({ navigation }) => {
 
   const handleNext = async () => {
     const selected = selectedDifficulties.filter(d => d.selected);
-    await updateUserDifficulties(selected);
+    const selectedCategories = selected.map(d => d.category);
+    await updateUserDifficulties(selectedCategories);
     navigation.navigate(NextScreen);
   };
 
@@ -150,7 +104,9 @@ export const DifficultiesScreen: React.FC<Props> = ({ navigation }) => {
         <View style={{ paddingVertical: 8 }}>
           {selectedDifficulties.map((item) => (
             <SelectionnableItem
+              icon={item.icon}
               key={item.id}
+              description={item.description}
               onPress={() => toggleDifficulty(item.id)}
               id={item.id}
               label={item.name}

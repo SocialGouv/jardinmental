@@ -1,5 +1,7 @@
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
+import { ReactNode } from 'react';
+import { NEW_INDICATORS_SUBCATEGORIES, NEW_INDICATORS_CATEGORIES } from '@/utils/liste_indicateurs.1';
 
 export type OnboardingStep =
   | 'INTRO'
@@ -12,8 +14,9 @@ export type OnboardingStep =
 export interface UserProfile {
   id: string;
   name: string;
-  selectedDifficulties: Difficulty[];
+  selectedDifficulties: NEW_INDICATORS_CATEGORIES[];
   objectives: Objective[];
+  selectedSubcategories?: NEW_INDICATORS_SUBCATEGORIES[];
 }
 
 export interface CarouselSlide {
@@ -29,7 +32,12 @@ export interface CarouselSlide {
 export interface Difficulty {
   id: string;
   name: string;
+  label: string;
   selected: boolean;
+  icon: () => React.JSX.Element,
+  description?: string,
+  category: NEW_INDICATORS_CATEGORIES;
+  subCat: NEW_INDICATORS_SUBCATEGORIES[]
 }
 
 export interface Objective {

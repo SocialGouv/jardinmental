@@ -62,13 +62,13 @@ const Diary = ({ navigation, hideDeader = false }) => {
 
   const diaryDataWithUserComments = Object.keys(diaryData).reduce((prev, curr) => {
     const n = Object.keys(diaryData[curr] || [])?.some(category => diaryData[curr][category]?.userComment?.trim());
-    return n ? {...prev, [curr]: diaryData[curr]} : prev;
+    return n ? { ...prev, [curr]: diaryData[curr] } : prev;
   }, {});
 
   const getUserComments = (obj, key) => {
     const userComments = Object.keys(obj[key] || [])
       ?.filter(s => obj[key][s]?.userComment?.trim())
-      .map(e => ({id: e, value: obj[key][e].userComment?.trim()}));
+      .map(e => ({ id: e, value: obj[key][e].userComment?.trim() }));
     return userComments;
   };
 
@@ -76,7 +76,7 @@ const Diary = ({ navigation, hideDeader = false }) => {
     <SafeAreaView style={styles.safe}>
       <NPS forceView={NPSvisible} close={() => setNPSvisible(false)} />
       <ScrollView style={styles.container} contentContainerStyle={styles.scrollContainer} keyboardShouldPersistTaps="handled">
-        {Object.keys({...diaryNotes, ...diaryDataWithUserComments})
+        {Object.keys({ ...diaryNotes, ...diaryDataWithUserComments })
           .sort((a, b) => {
             a = a.split('/').reverse().join('');
             b = b.split('/').reverse().join('');
@@ -94,7 +94,7 @@ const Diary = ({ navigation, hideDeader = false }) => {
             );
           })}
         <ContributeCard onPress={() => setNPSvisible(true)} />
-        {Object.keys({...diaryNotes, ...diaryDataWithUserComments})?.length > LIMIT_PER_PAGE * page && (
+        {Object.keys({ ...diaryNotes, ...diaryDataWithUserComments })?.length > LIMIT_PER_PAGE * page && (
           <TouchableOpacity onPress={() => setPage(page + 1)} style={styles.versionContainer}>
             <Text style={styles.arrowDownLabel}>Voir plus</Text>
             <ArrowUpSvg style={styles.arrowDown} color={colors.BLUE} />
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
     paddingBottom: 0,
   },
   arrowDown: {
-    transform: [{rotate: '180deg'}],
+    transform: [{ rotate: '180deg' }],
   },
   arrowDownLabel: {
     color: colors.BLUE,

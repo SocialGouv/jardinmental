@@ -81,6 +81,7 @@
     "react-native-localize": "^2.2.4",
     "react-native-modal": "^13.0.1",
     "react-native-modal-datetime-picker": "^18.0.0",
+    "react-native-multiple-select": "^0.5.12",
     "react-native-pager-view": "6.3.0",
     "react-native-paper": "^4.12.5",
     "react-native-picker-select": "^9.3.1",

@@ -99,7 +99,6 @@ export default function JMButton({
       },
     })
     : null;
-  console.log('TITLE', title, heightMap[size])
   return (
     <TouchableOpacity
       className={finalClassName}

@@ -1,21 +1,21 @@
 import React from 'react';
-import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import Status from '../scenes/status';
 import Exercise from '../scenes/exercise';
 import Suivi from '../scenes/suivi';
 import SurveyMenu from '../../assets/svg/SurveyMenu';
 import ExerciseMenu from '../../assets/svg/ExerciseMenu';
 import GraphMenu from '../../assets/svg/GraphMenu';
-import {View, Text, SafeAreaView, Platform} from 'react-native';
-import {colors} from '../utils/colors';
+import { View, Text, SafeAreaView, Platform } from 'react-native';
+import { colors } from '../utils/colors';
 import localStorage from '../utils/localStorage';
 import logEvents from '../services/logEvents';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import IosStatusBarColor from '@/components/IosStatusBar';
 
 const Tab = createMaterialTopTabNavigator();
 
-const Tabs = ({navigation, route}) => {
+const Tabs = ({ navigation, route }) => {
   const insets = useSafeAreaInsets();
   const startSurvey = async () => {
     const user_indicateurs = await localStorage.getIndicateurs();
@@ -38,7 +38,7 @@ const Tabs = ({navigation, route}) => {
         swipeEnabled: true,
         tabBarShowIcon: true,
         tabBarShowLabel: true,
-        tabBarIndicatorStyle: {display: 'none'}, // Hide the indicator
+        tabBarIndicatorStyle: { display: 'none' }, // Hide the indicator
         tabBarStyle: {
           maxHeight: 80,
           shadowColor: '#000',
@@ -69,15 +69,15 @@ const Tabs = ({navigation, route}) => {
         name="Status"
         options={{
           tabBarLabel: 'Mes entrées',
-          tabBarIcon: ({focused, color}) => (
-            <View style={{alignItems: 'center'}}>
+          tabBarIcon: ({ focused, color }) => (
+            <View style={{ alignItems: 'center' }}>
               <SurveyMenu height={24} width={24} color={color} />
             </View>
           ),
         }}>
         {p => (
-          <View style={{paddingTop: insets.top, flex: 1}}>
-            {Platform.OS === 'ios' && <IosStatusBarColor/>}
+          <View style={{ paddingTop: insets.top, flex: 1 }}>
+            {Platform.OS === 'ios' && <IosStatusBarColor />}
             <Status {...p} startSurvey={startSurvey} />
           </View>
         )}
@@ -86,15 +86,15 @@ const Tabs = ({navigation, route}) => {
         name="Calendar"
         options={{
           tabBarLabel: 'Mes analyses',
-          tabBarIcon: ({focused, color}) => (
-            <View style={{alignItems: 'center'}}>
+          tabBarIcon: ({ focused, color }) => (
+            <View style={{ alignItems: 'center' }}>
               <GraphMenu height={24} width={24} color={color} />
             </View>
           ),
         }}>
         {p => (
-          <View style={{paddingTop: insets.top, flex: 1}}>
-            {Platform.OS === 'ios' && <IosStatusBarColor/>}
+          <View style={{ paddingTop: insets.top, flex: 1 }}>
+            {Platform.OS === 'ios' && <IosStatusBarColor />}
             <Suivi {...p} startSurvey={startSurvey} />
           </View>
         )}
@@ -103,15 +103,15 @@ const Tabs = ({navigation, route}) => {
         name="Exercise"
         options={{
           tabBarLabel: 'Beck',
-          tabBarIcon: ({focused, color}) => (
-            <View style={{alignItems: 'center'}}>
+          tabBarIcon: ({ focused, color }) => (
+            <View style={{ alignItems: 'center' }}>
               <ExerciseMenu height={24} width={24} color={color} />
             </View>
           ),
         }}>
         {p => (
-          <View style={{paddingTop: insets.top, flex: 1}}>
-            {Platform.OS === 'ios' && <IosStatusBarColor/>}
+          <View style={{ paddingTop: insets.top, flex: 1 }}>
+            {Platform.OS === 'ios' && <IosStatusBarColor />}
             <Exercise {...p} startSurvey={startSurvey} />
           </View>
         )}

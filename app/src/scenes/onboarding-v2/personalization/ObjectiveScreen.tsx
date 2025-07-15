@@ -37,7 +37,7 @@ const objectivesData: Objective[] = [
 ];
 
 
-const NextScreen = 'OnboardingCheckInStart'
+const NextScreen = 'OnboardingChooseIndicator'
 
 export const ObjectiveScreen: React.FC<Props> = ({ navigation, route }) => {
   const { updateUserObjectives, profile } = useUserProfile();

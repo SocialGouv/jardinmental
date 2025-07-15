@@ -17,6 +17,8 @@ type Props = OnboardingV2ScreenProps<'Carousel'>;
 
 const { width: screenWidth } = Dimensions.get('window');
 
+const NextRoute = 'OnboardingCheckInHowDoYouFeel'
+
 export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
   const { profile, isLoading } = useUserProfile()
   const [slides, setSlides] = useState<CarouselSlide[]>([])
@@ -39,7 +41,7 @@ export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
   }, [profile])
 
   const handleNext = () => {
-    navigation.navigate('PersonalizationStart');
+    navigation.navigate(NextRoute);
   };
 
   const handlePrevious = () => {
@@ -47,7 +49,7 @@ export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
   };
 
   const handleSkip = () => {
-    navigation.navigate('PersonalizationStart');
+    navigation.navigate(NextRoute);
   };
 
   const onViewableItemsChanged = useRef(({ viewableItems }: any) => {

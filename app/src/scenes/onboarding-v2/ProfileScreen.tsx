@@ -88,72 +88,72 @@ export const ProfileScreen: React.FC<Props> = ({ navigation }) => {
   );
 
   return (
-    <GestureHandlerRootView className='flex-1'>
-      <BottomSheetModalProvider>
-        <SafeAreaViewWithOptionalHeader className="flex-1 bg-white" children={undefined} style={undefined}>
-          <CheckInHeader
-            title=""
-            onPrevious={handlePrevious}
-            onSkip={handleNext}
-            showPrevious={true}
-            showSkip={false}
-          />
-          <View className="flex-1 justify-center px-6">
-            <Text
-              className="text-2xl font-bold text-center mb-4"
-              style={{ color: TW_COLORS.TEXT_PRIMARY }}
-            >
-              Êtes-vous actuellement suivi(e) par un professionnel de la santé mentale ?
-            </Text>
-            {profiles.map((item) => renderProfileItem({ item }))}
-            <Text
-              className="text-base text-center mt-4"
-              style={{ color: TW_COLORS.TEXT_SECONDARY }}
-            >
-              Cela nous aide à personnaliser votre expérience
-            </Text>
-            <View className='items-center mt-2'>
-              <TouchableOpacity
-                onPress={() => bottomSheetRef.current?.present()}
-                className="w-10 h-10 rounded-full items-center justify-center"
-                style={{ backgroundColor: TW_COLORS.PRIMARY + '20' }}
-              >
-                <QuestionMark width={20} height={20} color={TW_COLORS.PRIMARY} />
-              </TouchableOpacity>
-            </View>
-          </View>
-          <NavigationButtons
-            onNext={handleNext}
-            onPrevious={handlePrevious}
-            nextDisabled={!selectedProfile}
-            nextText="Continuer"
-          />
-          {/* Help Popup */}
-          <BottomSheetModal
-            ref={bottomSheetRef}
-            backdropComponent={renderBackdrop}
-            onChange={handleSheetChanges}
+    // <GestureHandlerRootView className='flex-1'>
+    <BottomSheetModalProvider>
+      <SafeAreaViewWithOptionalHeader className="flex-1 bg-white" children={undefined} style={undefined}>
+        <CheckInHeader
+          title=""
+          onPrevious={handlePrevious}
+          onSkip={handleNext}
+          showPrevious={true}
+          showSkip={false}
+        />
+        <View className="flex-1 justify-center px-6">
+          <Text
+            className="text-2xl font-bold text-center mb-4"
+            style={{ color: TW_COLORS.TEXT_PRIMARY }}
           >
-            <BottomSheetView>
-              <View className="flex-1 bg-white p-4">
-                <Text className="text-lg font-semibold mb-4" style={{ color: TW_COLORS.TEXT_PRIMARY }}>
-                  Qu’est-ce qu’un professionnel de la santé mentale
-                </Text>
-                <Text className="text-base mb-4 leading-6" style={{ color: TW_COLORS.TEXT_SECONDARY }}>
-                  Pas toujours facile de s’y retrouver...
-                </Text>
-                <Text className="text-base mb-4 leading-6" style={{ color: TW_COLORS.TEXT_SECONDARY }}>
-                  Un professionnel de la santé mentale peut être un médecin généraliste, psychiatre, un psychologue, un psychothérapeute…
-                </Text>
-                <Text className="text-base mb-4 leading-6" style={{ color: TW_COLORS.TEXT_SECONDARY }}>
-                  Si vous hésitez, choisissez ce qui vous semble le plus proche de votre situation.
-                </Text>
-              </View>
-            </BottomSheetView>
-          </BottomSheetModal>
-        </SafeAreaViewWithOptionalHeader>
-      </BottomSheetModalProvider>
-    </GestureHandlerRootView>
+            Êtes-vous actuellement suivi(e) par un professionnel de la santé mentale ?
+          </Text>
+          {profiles.map((item) => renderProfileItem({ item }))}
+          <Text
+            className="text-base text-center mt-4"
+            style={{ color: TW_COLORS.TEXT_SECONDARY }}
+          >
+            Cela nous aide à personnaliser votre expérience
+          </Text>
+          <View className='items-center mt-2'>
+            <TouchableOpacity
+              onPress={() => bottomSheetRef.current?.present()}
+              className="w-10 h-10 rounded-full items-center justify-center"
+              style={{ backgroundColor: TW_COLORS.PRIMARY + '20' }}
+            >
+              <QuestionMark width={20} height={20} color={TW_COLORS.PRIMARY} />
+            </TouchableOpacity>
+          </View>
+        </View>
+        <NavigationButtons
+          onNext={handleNext}
+          onPrevious={handlePrevious}
+          nextDisabled={!selectedProfile}
+          nextText="Continuer"
+        />
+        {/* Help Popup */}
+        <BottomSheetModal
+          ref={bottomSheetRef}
+          backdropComponent={renderBackdrop}
+          onChange={handleSheetChanges}
+        >
+          <BottomSheetView>
+            <View className="flex-1 bg-white p-4">
+              <Text className="text-lg font-semibold mb-4" style={{ color: TW_COLORS.TEXT_PRIMARY }}>
+                Qu’est-ce qu’un professionnel de la santé mentale
+              </Text>
+              <Text className="text-base mb-4 leading-6" style={{ color: TW_COLORS.TEXT_SECONDARY }}>
+                Pas toujours facile de s’y retrouver...
+              </Text>
+              <Text className="text-base mb-4 leading-6" style={{ color: TW_COLORS.TEXT_SECONDARY }}>
+                Un professionnel de la santé mentale peut être un médecin généraliste, psychiatre, un psychologue, un psychothérapeute…
+              </Text>
+              <Text className="text-base mb-4 leading-6" style={{ color: TW_COLORS.TEXT_SECONDARY }}>
+                Si vous hésitez, choisissez ce qui vous semble le plus proche de votre situation.
+              </Text>
+            </View>
+          </BottomSheetView>
+        </BottomSheetModal>
+      </SafeAreaViewWithOptionalHeader>
+    </BottomSheetModalProvider>
+    // </GestureHandlerRootView>
 
   );
 };

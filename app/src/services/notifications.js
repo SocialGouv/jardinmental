@@ -131,7 +131,7 @@ class NotificationService {
     return await Notifications.getAllScheduledNotificationsAsync();
   };
 
-  localNotification({title, message, playSound = true, soundName = 'default'} = {}) {
+  localNotification({ title, message, playSound = true, soundName = 'default' } = {}) {
     Notifications.scheduleNotificationAsync({
       content: {
         title,
@@ -208,7 +208,7 @@ class NotificationService {
         await AsyncStorage.setItem('deviceId', deviceId);
       }
 
-      const token = await registerForPushNotificationsAsync({userId: deviceId});
+      const token = await registerForPushNotificationsAsync({ userId: deviceId });
       return token;
     } catch (error) {
       console.error('Error getting push token:', error);

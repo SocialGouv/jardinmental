@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, Text, SafeAreaView } from 'react-native';
 import { OnboardingV2ScreenProps } from '../types';
 import NavigationButtons from '@/components/onboarding/NavigationButtons';
@@ -10,13 +10,27 @@ import BeigeWrapperScreen from '../BeigeWrapperScreen';
 import BeigeCard from '../BeigeCard';
 import { mergeClassNames } from '@/utils/className';
 import { typography } from '@/utils/typography';
+import { beforeToday, formatDay } from '@/utils/date/helpers';
+import { DiaryDataContext } from '@/context/diaryData';
 type Props = OnboardingV2ScreenProps<'Intro'>;
+
+const NextRoute = 'OnboardingCheckInHowDoYouFeel';
 
 export const OnboardingCheckInStartScreen: React.FC<Props> = ({ navigation }) => {
 
+  const [diaryData] = useContext(DiaryDataContext);
+
   const handleNext = () => {
-    navigation.navigate('OnboardingCheckInHowDoYouFeel');
-  };
+    // navigation.navigate(NextRoute)
+    const date = formatDay(beforeToday(0));
+    const answers = diaryData[date] || {};
+    const currentSurvey = { date, answers };
+    return navigation.navigate("day-survey", {
+      currentSurvey,
+      editingSurvey: true,
+      isOnboarding: true
+    });
+  }
 
   const handlePrevious = () => {
     navigation.goBack();
