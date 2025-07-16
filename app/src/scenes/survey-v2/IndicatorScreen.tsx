@@ -25,9 +25,10 @@ import HelpText from '@/components/HelpText';
 import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
 import { useBottomSheet } from '@/context/BottomSheetContext';
 import HelpView from '@/components/HelpView';
-import { HELP_FOR_CATEGORY } from '../onboarding-v2/data/helperData';
+import { HELP_FOR_CATEGORY, INDICATOR_CATEGORIES_DATA } from '../onboarding-v2/data/helperData';
 import { firstLetterUppercase } from '@/utils/string-util';
 import { KeyboardAvoidingView } from "react-native-keyboard-controller";
+import { NEW_INDICATORS_CATEGORIES } from '@/utils/liste_indicateurs.1';
 
 interface IndicatorScreenProps {
   navigation: any;
@@ -39,15 +40,23 @@ interface IndicatorScreenProps {
   onValueChanged: ({ key, value }: { key: string; value: any }) => void;
   onCommentChanged: ({ key, userComment }: { key: string; userComment: string }) => void;
   onNext: () => void;
-  category?: INDICATORS_CATEGORIES;
+  category?: NEW_INDICATORS_CATEGORIES;
   showComment?: boolean
 }
 
-const ICON_FOR_CATEGORY: Record<INDICATORS_CATEGORIES, React.ReactNode> = {
-  [INDICATORS_CATEGORIES["Emotions/sentiments"]]: <MoonIcon />,
-  [INDICATORS_CATEGORIES["Manifestations physiques"]]: <MoonIcon />,
-  [INDICATORS_CATEGORIES["Pensées"]]: <ThoughtIcon />,
-  [INDICATORS_CATEGORIES["Comportements"]]: <BehaviourIcon />,
+const ICON_FOR_CATEGORY: Record<NEW_INDICATORS_CATEGORIES, React.ReactNode> = {
+  [NEW_INDICATORS_CATEGORIES.SLEEP]: undefined,
+  [NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR]: undefined,
+  [NEW_INDICATORS_CATEGORIES.WORK]: undefined,
+  [NEW_INDICATORS_CATEGORIES.PHYSICAL_SIGNS]: undefined,
+  [NEW_INDICATORS_CATEGORIES.EMOTIONS]: undefined,
+  [NEW_INDICATORS_CATEGORIES.ENERGY]: undefined,
+  [NEW_INDICATORS_CATEGORIES.INTRUSIVE_THOUGHTS]: undefined,
+  [NEW_INDICATORS_CATEGORIES.FOOD]: undefined,
+  [NEW_INDICATORS_CATEGORIES.SUBSTANCE]: undefined,
+  [NEW_INDICATORS_CATEGORIES.SOCIAL_RELATIONS]: undefined,
+  [NEW_INDICATORS_CATEGORIES.LIFE_EVENT]: undefined,
+  [NEW_INDICATORS_CATEGORIES.COGNITIVE]: undefined
 }
 
 
@@ -204,7 +213,9 @@ export const IndicatorScreen: React.FC<IndicatorScreenProps> = ({
         headerTitle='Observation du jour'
         dynamicTitle={firstLetterUppercase(title)}
         header={category ? <View className='rounded-full bg-white/30 p-2 self-start w-auto'>
-          {ICON_FOR_CATEGORY?.[category]}
+          {React.createElement(INDICATOR_CATEGORIES_DATA[category].icon, {
+            color: TW_COLORS.WHITE
+          })}
         </View> : null}
         title={title}
         leftAction={category && HELP_FOR_CATEGORY[category] ? onClickHelp : null}

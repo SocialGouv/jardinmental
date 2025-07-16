@@ -19,7 +19,7 @@ interface SurveyScreenWrapperProps {
 // Screen wrapper component that renders the appropriate screen based on type
 const SurveyScreenWrapper: React.FC<SurveyScreenWrapperProps> = ({ navigation, route }) => {
   const context = useContext(SurveyContext);
-   
+
   if (!context) return null;
 
   const {

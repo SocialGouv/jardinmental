@@ -14,22 +14,30 @@ import Substance from '@assets/svg/icon/Substance'
 
 
 import { Difficulty } from "../types";
-import { NEW_INDICATORS, NEW_INDICATORS_CATEGORIES, NEW_INDICATORS_SUBCATEGORIES } from "@/utils/liste_indicateurs.1";
+import { NEW_INDICATORS_CATEGORIES, NEW_INDICATORS_SUBCATEGORIES } from "@/utils/liste_indicateurs.1";
 
-export const HELP_FOR_CATEGORY: Record<INDICATORS_CATEGORIES, { title: string, description: string } | null> = {
-    [INDICATORS_CATEGORIES["Comportements"]]: {
+export const HELP_FOR_CATEGORY: Record<NEW_INDICATORS_CATEGORIES, { title: string, description: string } | null> = {
+    [NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR]: {
         title: 'Comment observer un comportement?',
         description: `Appuyez-vous sur ce que vous avez vécu aujourd’hui : sa fréquence, son intensité ou l’effet qu’il a eu sur vous.\n
 Pas besoin d’être précis·e : c’est l’observation régulière qui compte.\n
 Il ne s’agit pas de bien ou mal faire, mais de mieux comprendre ce que vous vivez.`
     },
-    [INDICATORS_CATEGORIES["Manifestations physiques"]]: null,
-    [INDICATORS_CATEGORIES["Pensées"]]: null,
-    [INDICATORS_CATEGORIES["Emotions/sentiments"]]: {
+    [NEW_INDICATORS_CATEGORIES.PHYSICAL_SIGNS]: null,
+    [NEW_INDICATORS_CATEGORIES.INTRUSIVE_THOUGHTS]: null,
+    [NEW_INDICATORS_CATEGORIES.EMOTIONS]: {
         title: 'Comment observer une émotion?',
         description: `Pensez à son intensité aujourd’hui, sa durée ou son impact sur vous.\n
 Il n’y a pas de bonne réponse — l’essentiel, c’est d’en prendre conscience au fil du temps.`
-    }
+    },
+    [NEW_INDICATORS_CATEGORIES.SLEEP]: null,
+    [NEW_INDICATORS_CATEGORIES.WORK]: null,
+    [NEW_INDICATORS_CATEGORIES.ENERGY]: null,
+    [NEW_INDICATORS_CATEGORIES.FOOD]: null,
+    [NEW_INDICATORS_CATEGORIES.SUBSTANCE]: null,
+    [NEW_INDICATORS_CATEGORIES.SOCIAL_RELATIONS]: null,
+    [NEW_INDICATORS_CATEGORIES.LIFE_EVENT]: null,
+    [NEW_INDICATORS_CATEGORIES.COGNITIVE]: null
 }
 
 export const INDICATOR_CATEGORIES_DATA: Record<NEW_INDICATORS_CATEGORIES, Difficulty> = {

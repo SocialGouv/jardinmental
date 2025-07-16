@@ -3,7 +3,8 @@ import { Indicator, INDICATORS_CATEGORIES } from '@/entities/Indicator';
 import { translateCategories } from '@/utils/constants';
 import { ENCOURAGEMENT_DATA } from '@/scenes/survey-v2/data/encouragementData';
 import { SurveyScreenInterface, SurveyScreenType } from '@/entities/SurveyScreen';
-import { BASE_INDICATORS } from '@/utils/liste_indicateurs.1';
+import { BASE_INDICATORS, INDICATEURS_HUMEUR, NEW_INDICATORS_CATEGORIES } from '@/utils/liste_indicateurs.1';
+import { INDICATOR_CATEGORIES_DATA } from '@/scenes/onboarding-v2/data/helperData';
 
 
 const FEATURE_ADD_ENCOURAGEMENT = false
@@ -24,21 +25,22 @@ export const useSurveyScreens = (userIndicateurs: Indicator[], { isOnboarding }:
     }
 
     // Filter active indicators and sort by position
-    const activeIndicators = userIndicateurs
+    const activeIndicators = [...userIndicateurs]
       .filter(indicator => indicator.active)
       .filter(filterOnboardingIndicator)
       .sort((a, b) => a.position - b.position);
 
     // Group indicators by category
-    const categoryGroups = new Map<INDICATORS_CATEGORIES, Indicator[]>();
+    const categoryGroups = new Map<NEW_INDICATORS_CATEGORIES, Indicator[]>();
     const uncategorizedIndicators: Indicator[] = [];
 
+    console.log('LCS TOTO ACTIVE INDICATOR', userIndicateurs)
     activeIndicators.forEach(indicator => {
-      if (indicator.category) {
-        if (!categoryGroups.has(indicator.category)) {
-          categoryGroups.set(indicator.category, []);
+      if (indicator.mainCategory) {
+        if (!categoryGroups.has(indicator.mainCategory)) {
+          categoryGroups.set(indicator.mainCategory, []);
         }
-        categoryGroups.get(indicator.category)!.push(indicator);
+        categoryGroups.get(indicator.mainCategory)!.push(indicator);
       } else {
         uncategorizedIndicators.push(indicator);
       }
@@ -55,7 +57,7 @@ export const useSurveyScreens = (userIndicateurs: Indicator[], { isOnboarding }:
       .map(({ category, indicators }) => ({
         id: `category-${category}`,
         type: SurveyScreenType.category,
-        title: translateCategories[category] || category,
+        title: INDICATOR_CATEGORIES_DATA[category].label,
         indicators,
         category
       }));

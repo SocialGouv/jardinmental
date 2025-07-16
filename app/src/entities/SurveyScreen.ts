@@ -1,4 +1,5 @@
 
+import { NEW_INDICATORS_CATEGORIES } from '@/utils/liste_indicateurs.1';
 import { Indicator, INDICATORS_CATEGORIES } from './Indicator';
 
 export enum SurveyScreenType {
@@ -26,7 +27,7 @@ interface EncouragementSurveyScreen extends BaseSurveyScreen {
 interface CategoryScreen extends BaseSurveyScreen {
     type: SurveyScreenType.category;
     indicators: Indicator[];
-    category: INDICATORS_CATEGORIES
+    category: NEW_INDICATORS_CATEGORIES
 }
 
 interface IndividualScreen extends BaseSurveyScreen {

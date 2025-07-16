@@ -31,7 +31,8 @@ export const IndicatorSchema = z.object({
   description: z.string().optional().describe('A description for this indicator when it is given.'),
   predefinedIndicatorDomaine: IndicatorPredefinedDomaineSchema.optional(),
   category: z.nativeEnum(INDICATORS_CATEGORIES),
-  newCategory: z.nativeEnum(NEW_INDICATORS_CATEGORIES),
+  newCategories: z.array(z.nativeEnum(NEW_INDICATORS_CATEGORIES).optional()),
+  mainCategory: z.nativeEnum(NEW_INDICATORS_CATEGORIES).optional(),
   name: z.string().min(1).describe(`A name for the indicator. Can be suggested or personnalized one.`),
   order: IndicatorOrderSchema.describe(`
     Define in which order to display the indicator, from positive to negative or the other way around.`),
@@ -45,7 +46,6 @@ export const PredefineIndicatorSchema = z.object({
   uuid: z.string().uuid(), // Vérifie un UUID valide
   name: z.string().min(1), // Non vide
   category: z.nativeEnum(INDICATORS_CATEGORIES),
-  newCategories: z.array(z.nativeEnum(NEW_INDICATORS_CATEGORIES)),
   type: IndicatorTypeSchema,
   order: IndicatorOrderSchema.describe(`
     Define in which order to display the indicator, from positive to negative or the other way around.`),
@@ -53,21 +53,37 @@ export const PredefineIndicatorSchema = z.object({
 
 export type PredefineIndicatorSchemaType = z.infer<typeof PredefineIndicatorSchema>
 
+export const PredefineIndicatorV2Schema = z.object({
+  uuid: PredefineIndicatorSchema.shape.uuid,
+  name: PredefineIndicatorSchema.shape.name,
+  category: PredefineIndicatorSchema.shape.category,
+  categories: z.array(z.nativeEnum(NEW_INDICATORS_CATEGORIES)),
+  mainCategory: z.nativeEnum(NEW_INDICATORS_CATEGORIES),
+  type: PredefineIndicatorSchema.shape.type,
+  priority: z.number(),
+  order: PredefineIndicatorSchema.shape.order
+});
+
+export type PredefineIndicatorV2SchemaType = z.infer<typeof PredefineIndicatorV2Schema>
+
+
 
 export const IndicatorsArraySchema = z.array(IndicatorSchema);
 
 export type Indicator = z.infer<typeof IndicatorSchema>;
 
 
-export const generateIndicatorFromPredefinedIndicator = (predefinedIndicator: PredefineIndicatorSchemaType): Indicator => {
+export const generateIndicatorFromPredefinedIndicator = (predefinedIndicator: PredefineIndicatorV2SchemaType): Indicator => {
+  console.log('LCS PREDEFINED INDICATOR GENERATE', predefinedIndicator)
   return {
     uuid: predefinedIndicator.uuid,
     name: predefinedIndicator.name,
     category: predefinedIndicator.category,
-    newCategory: predefinedIndicator.newCategory,
+    newCategories: predefinedIndicator.categories,
+    mainCategory: predefinedIndicator.mainCategory || predefinedIndicator.categories[0],
     type: predefinedIndicator.type,
     order: predefinedIndicator.order,
-    version: 1,
+    version: 3,
     active: true,
     position: 0,
     created_at: new Date()

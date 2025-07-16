@@ -1,24 +1,18 @@
 import React, { useContext, useState } from 'react';
 import { View, Text, SafeAreaView, TouchableOpacity, ScrollView, TextInput } from 'react-native';
 import { NavigationButtons } from '@/components/onboarding/NavigationButtons';
-import { Difficulty, IndicatorItem, OnboardingV2ScreenProps } from '@/scenes/onboarding-v2/types';
-import CheckInHeader from '@/components/onboarding/CheckInHeader';
+import { OnboardingV2ScreenProps } from '@/scenes/onboarding-v2/types';
 import { useUserProfile } from '@/context/userProfile';
-import { BASE_INDICATORS, INDICATEURS, INDICATEURS_HUMEUR, INDICATEURS_LES_PLUS_COURANTS, INDICATEURS_SOMMEIL, INDICATORS, NEW_INDICATORS_CATEGORIES, NEW_INDICATORS_SUBCATEGORIES } from '@/utils/liste_indicateurs.1';
-import { generateIndicatorFromPredefinedIndicator, PredefineIndicatorSchemaType, INDICATOR_TYPE, INDICATORS_CATEGORIES, PredefineIndicatorSchema } from '@/entities/Indicator';
+import { BASE_INDICATORS, INDICATEURS_HUMEUR, INDICATORS, NEW_INDICATORS_CATEGORIES, NEW_INDICATORS_SUBCATEGORIES } from '@/utils/liste_indicateurs.1';
+import { generateIndicatorFromPredefinedIndicator, PredefineIndicatorV2SchemaType, INDICATOR_TYPE, INDICATORS_CATEGORIES, Indicator } from '@/entities/Indicator';
 import localStorage from '@/utils/localStorage';
-import { beforeToday, formatDay } from '@/utils/date/helpers';
-import { DiaryDataContext } from '@/context/diaryData';
 import { categories, TW_COLORS } from '@/utils/constants';
-import { useAnimatedStyle } from 'react-native-reanimated';
 import BannerHeader from '../BannerHeader';
 import { SafeAreaViewWithOptionalHeader } from '@/scenes/onboarding/ProgressHeader';
 import { mergeClassNames } from '@/utils/className';
 import { typography } from '@/utils/typography';
-import SelectionnableItem, { InputSelectionnableItem } from '@/components/SelectionnableItem';
-import MultiSelect from 'react-native-multiple-select';
+import SelectionnableItem from '@/components/SelectionnableItem';
 import { INDICATOR_CATEGORIES_DATA } from '../data/helperData';
-import JMButton from '@/components/JMButton';
 import InstructionText from '../InstructionText';
 import IconBg from '@assets/svg/icon/IconBg'
 import ChevronUp from '@assets/svg/icon/ChevronUp'
@@ -32,7 +26,7 @@ import PlusIcon from '@assets/svg/icon/plus';
 export function suggestIndicatorsForDifficulties(
   selectedDifficulties: NEW_INDICATORS_CATEGORIES[],
   selectedSubcategories: NEW_INDICATORS_SUBCATEGORIES[] = []
-): PredefineIndicatorSchemaType[] {
+): PredefineIndicatorV2SchemaType[] {
 
   // Savoir si une de ses catégories a des sous-catégories sélectionnées
 
@@ -77,8 +71,8 @@ export function suggestIndicatorsForDifficulties(
   // Convert to PredefineIndicatorSchemaType format
   return finalIndicators.map(indicator => ({
     uuid: indicator.uuid || '',
-    name: indicator.indicator || indicator.name || '',
-    indicator: indicator.indicator || indicator.name || '',
+    name: indicator.name || '',
+    indicator: indicator.name || indicator.name || '',
     category: (indicator.categories[0] as unknown as INDICATORS_CATEGORIES),
     type: indicator.type as INDICATOR_TYPE || INDICATOR_TYPE.gauge,
     order: indicator.order as 'ASC' | 'DESC' || 'ASC'
@@ -91,7 +85,7 @@ const NextRoute = 'OnboardingCheckInStart'
 
 export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation }) => {
   const [showMoreIndicators, setShowMoreIndicators] = useState(false);
-  const [customIndicators, setCustomIndicators] = useState<PredefineIndicatorSchemaType[]>([]);
+  const [customIndicators, setCustomIndicators] = useState<PredefineIndicatorV2SchemaType[]>([]);
 
   // Special category states - organized by category
   const [selectedItemsByCategory, setSelectedItemsByCategory] = useState<Record<NEW_INDICATORS_CATEGORIES, string[]>>({
@@ -142,29 +136,36 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
   // State for managing custom inputs for indicators with needCustom
   const [customInputs, setCustomInputs] = useState<Record<string, string[]>>({});
   const [currentCustomInput, setCurrentCustomInput] = useState<Record<string, string>>({});
-  const [addedIndicators, setAddedIndicators] = useState<Record<NEW_INDICATORS_CATEGORIES, PredefineIndicatorSchemaType[]>>({})
+  const [addedIndicators, setAddedIndicators] = useState<Record<NEW_INDICATORS_CATEGORIES, PredefineIndicatorV2SchemaType[]>>({})
 
   const { profile, isLoading } = useUserProfile()
 
   const recommendedIndicators = profile ? suggestIndicatorsForDifficulties(
-    profile.selectedDifficulties,
+    profile.selectedDifficulties.filter(difficulty => ![
+      // ignore this as it is the user that will select specific indicators
+      NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR,
+      NEW_INDICATORS_CATEGORIES.SUBSTANCE,
+      NEW_INDICATORS_CATEGORIES.LIFE_EVENT
+    ].includes(difficulty)),
     profile.selectedSubcategories || []
   ).filter(indicator => !BASE_INDICATORS.includes(indicator.uuid))
     : []
   const [selectedIndicators, setSelectedIndicators] = useState<string[]>(recommendedIndicators.map(indicator => indicator.uuid));
 
-  const recommendedIndicatorsByCategory: Record<NEW_INDICATORS_CATEGORIES, PredefineIndicatorSchemaType[]> = recommendedIndicators.reduce((prev, curr) => {
+  const recommendedIndicatorsByCategory: Record<NEW_INDICATORS_CATEGORIES, PredefineIndicatorV2SchemaType[]> = recommendedIndicators.reduce((prev, curr) => {
     if (!prev[curr.category]) {
       prev[curr.category] = [];
     }
     prev[curr.category].push(curr);
     return prev;
-  }, {} as Record<NEW_INDICATORS_CATEGORIES, PredefineIndicatorSchemaType[]>)
+  }, {} as Record<NEW_INDICATORS_CATEGORIES, PredefineIndicatorV2SchemaType[]>)
   const recommendedIndicatorsUuidList = recommendedIndicators.map(r => r.uuid)
 
-  const popularIndicatorsByCategory: PredefineIndicatorSchemaType[] = INDICATEURS_LES_PLUS_COURANTS
-    .filter(indicator => !recommendedIndicatorsUuidList.includes(indicator.uuid))
-    .filter(indicator => !BASE_INDICATORS.includes(indicator.uuid))
+  const popularIndicatorsByCategory: PredefineIndicatorV2SchemaType[] = []
+
+  // INDICATEURS_LES_PLUS_COURANTS
+  //   .filter(indicator => !recommendedIndicatorsUuidList.includes(indicator.uuid))
+  //   .filter(indicator => !BASE_INDICATORS.includes(indicator.uuid))
 
   const toggleIndicator = (id: string) => {
     setSelectedIndicators(prev => prev.includes(id) ? prev.filter(selectedId => selectedId !== id) : [...prev, id])
@@ -180,11 +181,14 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
   };
 
   // Create custom indicator
-  const createCustomIndicator = (name: string, category: INDICATORS_CATEGORIES): PredefineIndicatorSchemaType => {
+  const createCustomIndicator = (name: string, category: NEW_INDICATORS_CATEGORIES): PredefineIndicatorV2SchemaType => {
     return {
       uuid: generateUUID(),
       name,
-      category,
+      // @ts-ignore
+      category: 'old',
+      categories: [category],
+      mainCategory: category,
       type: INDICATOR_TYPE.boolean,
       order: 'DESC' as const
     };
@@ -202,7 +206,7 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
       // Remove previous selections for this category
       const otherCategorySelections = prev.filter(id => {
         const indicator = INDICATORS.find(ind => ind.uuid === id);
-        return !indicator?.categories.includes(category);
+        return !indicator?.newCategories.includes(category);
       });
 
       // Add new selections for this category
@@ -253,29 +257,40 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
 
   const handleNext = async () => {
     // Get predefined indicators
-    const predefinedIndicatorsToSave = INDICATEURS.filter(indicator =>
+    const indicators = [
+      ...INDICATORS,
+      ...(Object.values(addedIndicators).flat()),
+    ];
+
+    // Filter only the ones whose uuid is in BASE_INDICATORS or selectedIndicators
+    const filteredIndicators = indicators.filter(indicator =>
       [...BASE_INDICATORS, ...selectedIndicators].includes(indicator.uuid)
     );
 
+    // Deduplicate based on uuid
+    const predefinedIndicatorsToSave = Array.from(
+      new Map([INDICATEURS_HUMEUR,
+        ...filteredIndicators].map(indicator => [indicator.uuid, indicator])).values()
+    );
     // Get custom indicators that are selected
     const customIndicatorsToSave = customIndicators.filter(indicator =>
       selectedIndicators.includes(indicator.uuid)
     );
 
     if (lifeEventName.trim()) {
-      const lifeEventIndicator = createCustomIndicator(lifeEventName, INDICATORS_CATEGORIES['Emotions/sentiments']);
+      const lifeEventIndicator = createCustomIndicator(lifeEventName, NEW_INDICATORS_CATEGORIES.LIFE_EVENT);
       customIndicatorsToSave.push(lifeEventIndicator)
     }
-
     // Convert predefined indicators
-    const predefinedConverted = predefinedIndicatorsToSave.map(generateIndicatorFromPredefinedIndicator);
+    const predefinedConverted: Indicator[] = predefinedIndicatorsToSave.map(generateIndicatorFromPredefinedIndicator);
 
     // Convert custom indicators
-    const customConverted = customIndicatorsToSave.map(indicator => ({
+    const customConverted: Indicator[] = customIndicatorsToSave.map(indicator => ({
       uuid: indicator.uuid,
       name: indicator.name,
       category: indicator.category,
-      categories: indicator.categories,
+      mainCategory: indicator.mainCategory,
+      newCategories: indicator.categories,
       type: indicator.type,
       order: indicator.order,
       version: 1,
@@ -285,32 +300,40 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
     }));
 
     // Combine all indicators
-    const allIndicators = [...predefinedConverted, ...customConverted];
-
-    await localStorage.setIndicateurs(allIndicators);
-    await localStorage.setOnboardingDone(true);
-    navigation.navigate(NextRoute);
+    const allIndicators: Indicator[] = [...predefinedConverted, ...customConverted];
+    allIndicators.map(indicator => {
+      console.log('-------', indicator)
+      console.log('LCS CHOOSE INDICATOR', indicator)
+      return indicator
+    })
+    // await localStorage.setIndicateurs(allIndicators);
+    // await localStorage.setOnboardingDone(true);
+    // navigation.navigate(NextRoute);
   };
 
-  const addIndicatorForCategory = (category: NEW_INDICATORS_CATEGORIES, indicators: PredefineIndicatorSchemaType[]) => {
+  const addIndicatorForCategory = (category: NEW_INDICATORS_CATEGORIES, indicators: PredefineIndicatorV2SchemaType[]) => {
     console.log('LCS ADD INDICATOR CATEGORY', indicators)
     setAddedIndicators(prev => ({
       ...prev,
       [category]: indicators
     }))
+    setSelectedIndicators(prev => ([
+      ...prev,
+      ...indicators.map(indicator => indicator.uuid)
+    ]))
   }
 
-  const renderIndicatorItem = (item: PredefineIndicatorSchemaType) => {
+  const renderIndicatorItem = (item: PredefineIndicatorV2SchemaType) => {
     const selected = selectedIndicators.includes(item.uuid)
     return <SelectionnableItem
       key={item.uuid}
       id={item.uuid}
-      label={item.indicator}
+      label={item.name}
       selected={selected}
       onPress={() => toggleIndicator(item.uuid)} />
   };
 
-  const renderCategorySection = (categoryName: NEW_INDICATORS_CATEGORIES, indicators: PredefineIndicatorSchemaType[]) => (
+  const renderCategorySection = (categoryName: NEW_INDICATORS_CATEGORIES, indicators: PredefineIndicatorV2SchemaType[]) => (
     <CategoryCard
       indicators={indicators}
       categoryName={categoryName}
@@ -409,9 +432,9 @@ const MultiInput = ({
 }: {
   type: 'select' | 'select-and-input' | 'input'
   categoryName: NEW_INDICATORS_CATEGORIES,
-  indicators?: PredefineIndicatorSchemaType[],
-  addIndicatorForCategory?: (category: NEW_INDICATORS_CATEGORIES, indicators: PredefineIndicatorSchemaType[]) => void,
-  renderIndicatorItem?: (item: PredefineIndicatorSchemaType) => JSX.Element
+  indicators?: PredefineIndicatorV2SchemaType[],
+  addIndicatorForCategory?: (category: NEW_INDICATORS_CATEGORIES, indicators: PredefineIndicatorV2SchemaType[]) => void,
+  renderIndicatorItem?: (item: PredefineIndicatorV2SchemaType) => JSX.Element
 }) => {
 
   const [addedInputs, setAddedInputs] = useState([''])
@@ -457,9 +480,9 @@ const CategoryCard = ({
 }: {
   type: 'select' | 'select-and-input' | 'input'
   categoryName: NEW_INDICATORS_CATEGORIES,
-  indicators?: PredefineIndicatorSchemaType[],
-  addIndicatorForCategory?: (category: NEW_INDICATORS_CATEGORIES, indicators: PredefineIndicatorSchemaType[]) => void,
-  renderIndicatorItem?: (item: PredefineIndicatorSchemaType) => JSX.Element
+  indicators?: PredefineIndicatorV2SchemaType[],
+  addIndicatorForCategory?: (category: NEW_INDICATORS_CATEGORIES, indicators: PredefineIndicatorV2SchemaType[]) => void,
+  renderIndicatorItem?: (item: PredefineIndicatorV2SchemaType) => JSX.Element
 }) => {
 
   const [showIndicators, setShowMoreIndicators] = useState<boolean>(false)
