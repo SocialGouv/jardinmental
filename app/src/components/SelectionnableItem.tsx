@@ -1,7 +1,7 @@
 import { mergeClassNames } from '@/utils/className';
 import { typography } from '@/utils/typography';
-import React from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import React, { useState } from 'react';
+import { Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 type DifficultyOptionProps = {
     id: string | number;
@@ -26,7 +26,7 @@ export default function SelectionnableItem({
         <TouchableOpacity
             onPress={() => onPress(id)}
             className={mergeClassNames(
-                'mx-4 mb-3 p-4 rounded-xl border-2',
+                'mb-3 p-4 rounded-xl border-2 flex-1',
                 selected ? 'border-brand-800 bg-brand-25' : 'border-gray-300 bg-transparent',
                 className
             )}
@@ -57,6 +57,111 @@ export default function SelectionnableItem({
                         <Text className="text-white text-xs" />
                     </View>
                 )}
+            </View>
+        </TouchableOpacity>
+    );
+};
+
+export function LightSelectionnableItem({
+    id,
+    label,
+    description,
+    selected,
+    onPress,
+    className,
+    icon,
+}: DifficultyOptionProps) {
+    return (
+        <TouchableOpacity
+            onPress={() => onPress(id)}
+            className={mergeClassNames(
+                'mb-3 py-3 border-b',
+                'border-gray-300 bg-transparent',
+                className
+            )}
+        >
+            <View className="flex-row items-center">
+                {selected ? (
+                    <View className="w-6 h-6 rounded-md items-center justify-center bg-primary mr-4">
+                        <Text className="text-white text-base font-bold">✓</Text>
+                    </View>
+                ) : (
+                    <View className="w-6 h-6 rounded-md items-center justify-center border-2 border-gray-300 mr-4">
+                        <Text className="text-white text-xs" />
+                    </View>
+                )}
+                {icon && (
+                    <View className="mr-3 rounded-lg border border-1 border-gray-300 bg-white w-10 h-10 items-center justify-center">
+                        {React.createElement(icon)}
+                    </View>
+                )}
+                <View className="flex-1">
+                    <Text className={mergeClassNames(typography.textMdMedium, 'text-brand-950')}>
+                        {label}
+                    </Text>
+                    {description && (
+                        <Text className={mergeClassNames(typography.textSmMedium, 'text-gray-600 mt-1')}>
+                            {description}
+                        </Text>
+                    )}
+                </View>
+
+            </View>
+        </TouchableOpacity>
+    );
+};
+
+export function InputSelectionnableItem({
+    id,
+    label,
+    description,
+    selected,
+    onPress,
+    className,
+    icon,
+}: DifficultyOptionProps) {
+    const [value, setValue] = useState<string>('')
+    return (
+        <TouchableOpacity
+            onPress={() => onPress(id)}
+            className={mergeClassNames(
+                'mb-3 py-3 border-b',
+                selected ? 'border-brand-800 bg-brand-25' : 'border-gray-300 bg-transparent',
+                className
+            )}
+        >
+            <View className="flex-row items-center">
+                {selected ? (
+                    <View className="w-6 h-6 rounded-md items-center justify-center bg-primary mr-2">
+                        <Text className="text-white text-base font-bold">✓</Text>
+                    </View>
+                ) : (
+                    <View className="w-6 h-6 rounded-md items-center justify-center border-2 border-gray-300 mr-4">
+                        <Text className="text-white text-xs" />
+                    </View>
+                )}
+                {icon && (
+                    <View className="mr-3 rounded-lg border border-1 border-gray-300 bg-white w-10 h-10 items-center justify-center">
+                        {React.createElement(icon)}
+                    </View>
+                )}
+                <View className='flex-1 flex-column'>
+                    <Text className={mergeClassNames(typography.textSmMedium, 'text-gray-700 mb-2')}>{label}</Text>
+                    <View className='rounded rounded-lg flex-1'>
+                        <TextInput
+                            onChangeText={(text) => setValue(text)}
+                            className={mergeClassNames(typography.textMdRegular, 'text-left border border-gray-300 p-2 rounded rounded-lg flex-1')} />
+                        <TouchableOpacity style={
+                            {
+                                position: 'absolute',
+                                right: 10,
+                                bottom: 5
+                            }
+                        } onPress={() => onPress(value)}>
+                            <Text className={mergeClassNames(typography.textMdSemibold, 'text-brand-800')}>Valider</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
             </View>
         </TouchableOpacity>
     );

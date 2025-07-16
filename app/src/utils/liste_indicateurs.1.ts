@@ -86,7 +86,7 @@ export enum NEW_INDICATORS_CATEGORIES {
   SLEEP = 'SLEEP',
   RISK_BEHAVIOR = 'RISK_BEHAVIOR',
   WORK = 'WORK',
-  PHYSICAL_SIGNS = ' PHYSICAL_SIGNS',
+  PHYSICAL_SIGNS = 'PHYSICAL_SIGNS',
   EMOTIONS = 'EMOTIONS',
   ENERGY = 'ENERGY',
   INTRUSIVE_THOUGHTS = 'INTRUSIVE_THOUGHTS',
@@ -194,7 +194,7 @@ export const SUBCATEGORIES: Record<NEW_INDICATORS_SUBCATEGORIES, { id: string, l
   }
 }
 
-export const indicators = [
+export const INDICATORS: PredefineIndicatorSchemaType[] = [
   {
     indicator: "Qualité sommeil",
     priority: 0,
@@ -300,6 +300,7 @@ export const indicators = [
     priority: 2,
     order: "DESC",
     type: "gauge",
+    uuid: '3b3f1d10-fc45-4b12-a476-508531ce127c'
   },
   {
     indicator: "Temps réseaux sociaux",
@@ -307,6 +308,7 @@ export const indicators = [
     priority: 0,
     order: "DESC",
     type: "gauge",
+    uuid: '64bcb067-8a64-4b67-a3d7-e45c5b9e1c95'
   },
   {
     indicator: "Auto-mutilation",

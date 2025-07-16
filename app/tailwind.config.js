@@ -97,6 +97,10 @@ module.exports = {
           lineHeight: '30px',
           // letterSpacing: '0em'
         }],
+        'text-lg': ['18px', {
+          lineHeight: '26px',
+          // letterSpacing: '0em'
+        }],
         'text-md': ['16px', {
           lineHeight: '24px',
           // letterSpacing: '0em'

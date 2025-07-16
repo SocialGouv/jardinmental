@@ -12,7 +12,7 @@ import { SafeAreaViewWithOptionalHeader, useOnboardingProgressHeader } from '@/s
 import { mergeClassNames } from '@/utils/className';
 import { typography } from '@/utils/typography';
 import SelectionnableItem from '@/components/SelectionnableItem';
-import { difficultiesData, INDICATOR_CATEGORIES_DATA } from '../data/helperData';
+import { INDICATOR_CATEGORIES_DATA } from '../data/helperData';
 
 type Props = OnboardingV2ScreenProps<'PersonalizationDifficulties'>;
 
@@ -101,7 +101,7 @@ export const DifficultiesScreen: React.FC<Props> = ({ navigation }) => {
           </Text>
         </View>
 
-        <View style={{ paddingVertical: 8 }}>
+        <View className='px-4' style={{ paddingVertical: 8 }}>
           {selectedDifficulties.map((item) => (
             <SelectionnableItem
               icon={item.icon}

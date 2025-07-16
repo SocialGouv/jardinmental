@@ -8,6 +8,11 @@ import HeartHand from '@assets/svg/icon/HeartHand'
 import Work from '@assets/svg/icon/Work'
 import AlertTriangle from '@assets/svg/icon/AlertTriangle'
 import LifeEvent from '@assets/svg/icon/LifeEvent'
+import Zap from '@assets/svg/icon/Zap'
+import PuzzlePiece from '@assets/svg/icon/PuzzlePiece'
+import Substance from '@assets/svg/icon/Substance'
+
+
 import { Difficulty } from "../types";
 import { NEW_INDICATORS, NEW_INDICATORS_CATEGORIES, NEW_INDICATORS_SUBCATEGORIES } from "@/utils/liste_indicateurs.1";
 
@@ -33,24 +38,13 @@ export const INDICATOR_CATEGORIES_DATA: Record<NEW_INDICATORS_CATEGORIES, Diffic
         name: 'Mon sommeil',
         category: NEW_INDICATORS_CATEGORIES.SLEEP,
         selected: false,
+        indicatorText: "Votre sommeil a un impact sur votre vie. Suivez ce qui compte pour vous",
         icon: MoonStar,
         label: 'Sommeil',
         subCat: [
             NEW_INDICATORS_SUBCATEGORIES.UNRESTORATIVE_SLEEP,
             NEW_INDICATORS_SUBCATEGORIES.SLEEP_DIFFICULTY,
             NEW_INDICATORS_SUBCATEGORIES.BAD_SLEEP_HABITS
-            // {
-            //     id: 'unrestorative-sleep',
-            //     name: `Mon sommeil n'est pas réparateur ou régulier`
-            // },
-            // {
-            //     id: 'sleep-difficulty',
-            //     name: `J’ai des difficultés à dormir ou je dors mal`
-            // },
-            // {
-            //     id: 'bad-sleep-habits',
-            //     name: `Certaines habitudes gênent mon sommeil`
-            // }
         ]
     },
     [NEW_INDICATORS_CATEGORIES.EMOTIONS]: {
@@ -74,6 +68,14 @@ export const INDICATOR_CATEGORIES_DATA: Record<NEW_INDICATORS_CATEGORIES, Diffic
         selected: false,
         icon: Cart
     },
+    [NEW_INDICATORS_CATEGORIES.ENERGY]: {
+        id: 'energy',
+        category: NEW_INDICATORS_CATEGORIES.ENERGY,
+        name: 'Mon énergie',
+        selected: false,
+        label: 'Énergie',
+        icon: Zap,
+    },
     [NEW_INDICATORS_CATEGORIES.INTRUSIVE_THOUGHTS]: {
         id: 'thought',
         category: NEW_INDICATORS_CATEGORIES.INTRUSIVE_THOUGHTS,
@@ -87,12 +89,21 @@ export const INDICATOR_CATEGORIES_DATA: Record<NEW_INDICATORS_CATEGORIES, Diffic
         name: `Ma consommation de produits`,
         label: `Consommations de produits & addictions`,
         category: NEW_INDICATORS_CATEGORIES.SUBSTANCE,
+        indicatorText: 'Précisez quelle consommation de produits ou addictions vous souhaitez observer.',
         selected: false,
-        icon: Cognitive,
+        icon: Substance,
         subCat: [
             NEW_INDICATORS_SUBCATEGORIES.BEHAVIORAL_ADDICTION,
             NEW_INDICATORS_SUBCATEGORIES.SUBSTANCE_USE
         ]
+    },
+    [NEW_INDICATORS_CATEGORIES.PHYSICAL_SIGNS]: {
+        id: 'physical_signs',
+        category: NEW_INDICATORS_CATEGORIES.PHYSICAL_SIGNS,
+        name: 'Manifestation physique',
+        selected: false,
+        label: 'Manifestation physique',
+        icon: Heart,
     },
     [NEW_INDICATORS_CATEGORIES.SOCIAL_RELATIONS]: {
         id: 'social_relations',
@@ -115,6 +126,7 @@ export const INDICATOR_CATEGORIES_DATA: Record<NEW_INDICATORS_CATEGORIES, Diffic
         name: 'Un événement de vie difficile',
         label: 'Un évènement de vie difficile',
         category: NEW_INDICATORS_CATEGORIES.LIFE_EVENT,
+        indicatorText: 'Un moment dur ? Notez-le pour prendre du recul plus tard.',
         description: `Divorce, deuil, perte d'emploi...`,
         selected: false,
         icon: LifeEvent
@@ -125,6 +137,7 @@ export const INDICATOR_CATEGORIES_DATA: Record<NEW_INDICATORS_CATEGORIES, Diffic
         name: `Des comportements à risque`,
         selected: false,
         category: NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR,
+        indicatorText: 'Dites-moi ce qui vous concerne le plus',
         icon: AlertTriangle
     },
     [NEW_INDICATORS_CATEGORIES.COGNITIVE]: {
@@ -132,131 +145,8 @@ export const INDICATOR_CATEGORIES_DATA: Record<NEW_INDICATORS_CATEGORIES, Diffic
         name: `Cognitif`,
         label: 'Cognitif',
         selected: false,
-        icon: Cognitive,
+        icon: PuzzlePiece,
         category: NEW_INDICATORS_CATEGORIES.COGNITIVE,
         description: "Mémorisation, attention, projection..."
     }
 };
-
-export const difficultiesData: Difficulty[] = [
-    {
-        id: 'sleep',
-        name: 'Mon sommeil',
-        category: NEW_INDICATORS_CATEGORIES.SLEEP,
-        selected: false,
-        icon: MoonStar,
-        subCat: [
-            {
-                id: 'unrestorative-sleep',
-                name: `Mon sommeil n'est pas réparateur ou régulier`
-            },
-            {
-                id: 'sleep-difficulty',
-                name: `J’ai des difficultés à dormir ou je dors mal`
-            },
-            {
-                id: 'bad-sleep-habits',
-                name: `Certaines habitudes gênent mon sommeil`
-            }
-        ]
-    },
-    {
-        id: 'mood',
-        category: NEW_INDICATORS_CATEGORIES.EMOTIONS,
-        name: 'Mes émotions / Mon humeur',
-        selected: false,
-        icon: Heart,
-        subCat: [
-            {
-                id: 'positive-emotions',
-                name: `Emotions positivies`
-            },
-            {
-                id: 'negative-emotions',
-                name: `Emotions négatives`
-            },
-            {
-                id: 'emotional-stability',
-                name: `Stabilité émotionnelle`
-            }
-        ]
-    },
-    {
-        id: 'food',
-        category: NEW_INDICATORS_CATEGORIES.FOOD,
-        name: `Mon alimentation`,
-        selected: false,
-        icon: Cart,
-        subCat: [
-            {
-                id: 'food-relationship',
-                name: `Rapport à l'alimentation`
-            },
-            {
-                id: 'appetite',
-                name: `Appétit`
-            }
-        ]
-    },
-    {
-        id: 'thought',
-        category: NEW_INDICATORS_CATEGORIES.INTRUSIVE_THOUGHTS,
-        name: `Des pensées envahissantes`,
-        selected: false,
-        icon: Huricane
-    },
-    {
-        id: 'toxic',
-        name: `Ma consommation de produits`,
-        category: NEW_INDICATORS_CATEGORIES.SUBSTANCE,
-        selected: false,
-        icon: Cognitive,
-        subCat: [
-            {
-                id: 'substance-use',
-                name: `Consommation de produit`
-            },
-            {
-                id: 'behavioral-addiction',
-                name: `Addiction sans substance`
-            }
-        ]
-    },
-    {
-        id: 'social_relations',
-        name: `Mes relations sociales`,
-        category: NEW_INDICATORS_CATEGORIES.SOCIAL_RELATIONS,
-        selected: false,
-        icon: HeartHand
-    },
-    {
-        id: 'work_stress',
-        name: `Mon travail`,
-        category: NEW_INDICATORS_CATEGORIES.WORK,
-        selected: false,
-        icon: Work
-    },
-    {
-        id: 'family_issues',
-        name: 'Un événement de vie difficile',
-        category: NEW_INDICATORS_CATEGORIES.LIFE_EVENT,
-        description: `Divorce, deuil, perte d'emploi...`,
-        selected: false,
-        icon: LifeEvent
-    },
-    {
-        id: 'behaviour',
-        name: `Des comportements à risque`,
-        selected: false,
-        category: NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR,
-        icon: AlertTriangle
-    },
-    {
-        id: 'cognitive',
-        name: `Cognitif`,
-        selected: false,
-        icon: Cognitive,
-        category: NEW_INDICATORS_CATEGORIES.COGNITIVE,
-        description: "Mémorisation, attention, projection..."
-    }
-];

@@ -124,7 +124,9 @@ export const ObjectiveScreen: React.FC<Props> = ({ navigation, route }) => {
             Votre réponse nous aide à vous orienter vers un suivi plus utile.
           </Text>
         </View>
-        {objectivesData.map((item) => renderObjectiveItem({ item }))}
+        <View className="px-6 py-4">
+          {objectivesData.map((item) => renderObjectiveItem({ item }))}
+        </View>
       </ScrollView>
 
       <NavigationButtons

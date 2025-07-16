@@ -13,7 +13,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { mergeClassNames } from '@/utils/className';
 import { typography } from '@/utils/typography';
 import SelectionnableItem from '@/components/SelectionnableItem';
-import { difficultiesData, INDICATOR_CATEGORIES_DATA } from '../data/helperData';
+import { INDICATOR_CATEGORIES_DATA } from '../data/helperData';
 import { SUBCATEGORIES, NEW_INDICATORS_SUBCATEGORIES } from '@/utils/liste_indicateurs.1';
 
 type Props = OnboardingV2ScreenProps<'PersonalizationObjective'>;
@@ -90,15 +90,15 @@ export const SubcategoriesScreen: React.FC<Props> = ({ navigation, route }) => {
                 header={<View className="flex-row flex-wrap gap-2 mt-8">
                     {profile?.selectedDifficulties.map(difficulty => (
                         <View
-                        key={difficulty}
-                        className={mergeClassNames(
-                            typography.textXlSemibold,
-                            'border border-1 border-gray-700 w-auto rounded rounded-md'
-                        )}
+                            key={difficulty}
+                            className={mergeClassNames(
+                                typography.textXlSemibold,
+                                'border border-1 border-gray-700 w-auto rounded rounded-md'
+                            )}
                         >
-                        <Text className='text-white py-1 px-2'>
-                            {INDICATOR_CATEGORIES_DATA[difficulty].label}
-                        </Text>
+                            <Text className='text-white py-1 px-2'>
+                                {INDICATOR_CATEGORIES_DATA[difficulty].label}
+                            </Text>
                         </View>
                     ))}
                 </View>}
@@ -120,15 +120,17 @@ export const SubcategoriesScreen: React.FC<Props> = ({ navigation, route }) => {
                         Votre réponse nous aide à vous orienter vers un suivi plus utile.
                     </Text>
                 </View>
-                {Object.values(INDICATOR_CATEGORIES_DATA)
-                    .filter(item => profile?.selectedDifficulties.includes(item.category))
-                    .filter(item => item.subCat && item.subCat.length > 0)
-                    .map((cat) => {
-                        return <View key={cat.id}>
-                            <View className='flex-row p-4'>{React.createElement(cat.icon, { color: TW_COLORS.GRAY_700 })}<Text className={mergeClassNames(typography.textSmBold, 'text-left text-brand-900 ml-2')}>{cat.name}</Text></View>
-                            {cat.subCat.map(item => renderSubCategoryItem({ item }))}
-                        </View>
-                    })}
+                <View className="px-6" style={{}}>
+                    {Object.values(INDICATOR_CATEGORIES_DATA)
+                        .filter(item => profile?.selectedDifficulties.includes(item.category))
+                        .filter(item => item.subCat && item.subCat.length > 0)
+                        .map((cat) => {
+                            return <View key={cat.id}>
+                                <View className='flex-row p-4'>{React.createElement(cat.icon, { color: TW_COLORS.GRAY_700 })}<Text className={mergeClassNames(typography.textSmBold, 'text-left text-brand-900 ml-2')}>{cat.name}</Text></View>
+                                {cat.subCat.map(item => renderSubCategoryItem({ item }))}
+                            </View>
+                        })}
+                </View>
             </ScrollView>
 
             <NavigationButtons

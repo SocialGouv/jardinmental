@@ -4,8 +4,8 @@ import { NavigationButtons } from '@/components/onboarding/NavigationButtons';
 import { Difficulty, IndicatorItem, OnboardingV2ScreenProps } from '@/scenes/onboarding-v2/types';
 import CheckInHeader from '@/components/onboarding/CheckInHeader';
 import { useUserProfile } from '@/context/userProfile';
-import { BASE_INDICATORS, INDICATEURS, INDICATEURS_HUMEUR, INDICATEURS_LES_PLUS_COURANTS, INDICATEURS_SOMMEIL, indicators, NEW_INDICATORS_CATEGORIES, NEW_INDICATORS_SUBCATEGORIES } from '@/utils/liste_indicateurs.1';
-import { generateIndicatorFromPredefinedIndicator, PredefineIndicatorSchemaType, INDICATOR_TYPE, INDICATORS_CATEGORIES } from '@/entities/Indicator';
+import { BASE_INDICATORS, INDICATEURS, INDICATEURS_HUMEUR, INDICATEURS_LES_PLUS_COURANTS, INDICATEURS_SOMMEIL, INDICATORS, NEW_INDICATORS_CATEGORIES, NEW_INDICATORS_SUBCATEGORIES } from '@/utils/liste_indicateurs.1';
+import { generateIndicatorFromPredefinedIndicator, PredefineIndicatorSchemaType, INDICATOR_TYPE, INDICATORS_CATEGORIES, PredefineIndicatorSchema } from '@/entities/Indicator';
 import localStorage from '@/utils/localStorage';
 import { beforeToday, formatDay } from '@/utils/date/helpers';
 import { DiaryDataContext } from '@/context/diaryData';
@@ -15,11 +15,19 @@ import BannerHeader from '../BannerHeader';
 import { SafeAreaViewWithOptionalHeader } from '@/scenes/onboarding/ProgressHeader';
 import { mergeClassNames } from '@/utils/className';
 import { typography } from '@/utils/typography';
-import SelectionnableItem from '@/components/SelectionnableItem';
+import SelectionnableItem, { InputSelectionnableItem } from '@/components/SelectionnableItem';
 import MultiSelect from 'react-native-multiple-select';
 import { INDICATOR_CATEGORIES_DATA } from '../data/helperData';
 import JMButton from '@/components/JMButton';
 import InstructionText from '../InstructionText';
+import IconBg from '@assets/svg/icon/IconBg'
+import ChevronUp from '@assets/svg/icon/ChevronUp'
+import ChevronDown from '@assets/svg/icon/ChevronDown'
+import CircleCheckMark from '@assets/svg/icon/CircleCheckMark'
+import ArrowIcon from '@assets/svg/icon/Arrow';
+import { useBottomSheet } from '@/context/BottomSheetContext';
+import IndicatorModal from './IndicatorModal';
+import PlusIcon from '@assets/svg/icon/plus';
 
 export function suggestIndicatorsForDifficulties(
   selectedDifficulties: NEW_INDICATORS_CATEGORIES[],
@@ -29,7 +37,7 @@ export function suggestIndicatorsForDifficulties(
   // Savoir si une de ses catégories a des sous-catégories sélectionnées
 
   // Filter indicators by selected categories and subcategories
-  const filteredIndicators = indicators.filter(indicator => {
+  const filteredIndicators = INDICATORS.filter(indicator => {
     const hasMatchingCategory = indicator.categories?.some(cat => selectedDifficulties.includes(cat));
 
     // Trouver les sous-catégories sélectionnées qui appartiennent à une des catégories de l'indicateur
@@ -70,6 +78,7 @@ export function suggestIndicatorsForDifficulties(
   return finalIndicators.map(indicator => ({
     uuid: indicator.uuid || '',
     name: indicator.indicator || indicator.name || '',
+    indicator: indicator.indicator || indicator.name || '',
     category: (indicator.categories[0] as unknown as INDICATORS_CATEGORIES),
     type: indicator.type as INDICATOR_TYPE || INDICATOR_TYPE.gauge,
     order: indicator.order as 'ASC' | 'DESC' || 'ASC'
@@ -81,7 +90,6 @@ type Props = OnboardingV2ScreenProps<'OnboardingChooseIndicator'>;
 const NextRoute = 'OnboardingCheckInStart'
 
 export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation }) => {
-  const [selectedIndicators, setSelectedIndicators] = useState<string[]>([]);
   const [showMoreIndicators, setShowMoreIndicators] = useState(false);
   const [customIndicators, setCustomIndicators] = useState<PredefineIndicatorSchemaType[]>([]);
 
@@ -134,22 +142,24 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
   // State for managing custom inputs for indicators with needCustom
   const [customInputs, setCustomInputs] = useState<Record<string, string[]>>({});
   const [currentCustomInput, setCurrentCustomInput] = useState<Record<string, string>>({});
+  const [addedIndicators, setAddedIndicators] = useState<Record<NEW_INDICATORS_CATEGORIES, PredefineIndicatorSchemaType[]>>({})
 
   const { profile, isLoading } = useUserProfile()
-  console.log('=== LCS PROFILE =====', profile)
 
   const recommendedIndicators = profile ? suggestIndicatorsForDifficulties(
     profile.selectedDifficulties,
     profile.selectedSubcategories || []
   ).filter(indicator => !BASE_INDICATORS.includes(indicator.uuid))
     : []
-  const recommendedIndicatorsByCategory: Record<string, PredefineIndicatorSchemaType[]> = recommendedIndicators.reduce((prev, curr) => {
+  const [selectedIndicators, setSelectedIndicators] = useState<string[]>(recommendedIndicators.map(indicator => indicator.uuid));
+
+  const recommendedIndicatorsByCategory: Record<NEW_INDICATORS_CATEGORIES, PredefineIndicatorSchemaType[]> = recommendedIndicators.reduce((prev, curr) => {
     if (!prev[curr.category]) {
       prev[curr.category] = [];
     }
     prev[curr.category].push(curr);
     return prev;
-  }, {});
+  }, {} as Record<NEW_INDICATORS_CATEGORIES, PredefineIndicatorSchemaType[]>)
   const recommendedIndicatorsUuidList = recommendedIndicators.map(r => r.uuid)
 
   const popularIndicatorsByCategory: PredefineIndicatorSchemaType[] = INDICATEURS_LES_PLUS_COURANTS
@@ -191,7 +201,7 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
     setSelectedIndicators(prev => {
       // Remove previous selections for this category
       const otherCategorySelections = prev.filter(id => {
-        const indicator = indicators.find(ind => ind.uuid === id);
+        const indicator = INDICATORS.find(ind => ind.uuid === id);
         return !indicator?.categories.includes(category);
       });
 
@@ -282,43 +292,36 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
     navigation.navigate(NextRoute);
   };
 
+  const addIndicatorForCategory = (category: NEW_INDICATORS_CATEGORIES, indicators: PredefineIndicatorSchemaType[]) => {
+    console.log('LCS ADD INDICATOR CATEGORY', indicators)
+    setAddedIndicators(prev => ({
+      ...prev,
+      [category]: indicators
+    }))
+  }
+
   const renderIndicatorItem = (item: PredefineIndicatorSchemaType) => {
     const selected = selectedIndicators.includes(item.uuid)
     return <SelectionnableItem
       key={item.uuid}
       id={item.uuid}
-      label={item.name}
+      label={item.indicator}
       selected={selected}
       onPress={() => toggleIndicator(item.uuid)} />
   };
 
-  const renderCategorySection = (categoryName: string, indicators: PredefineIndicatorSchemaType[]) => (
-    <View key={categoryName} className="mb-6 w-full">
-      <View className="flex-row items-center">
-        {INDICATOR_CATEGORIES_DATA[categoryName].icon && (
-          <View className="w-10 h-10 items-center justify-center">
-            {React.createElement(INDICATOR_CATEGORIES_DATA[categoryName].icon)}
-          </View>
-        )}
-        <Text
-          className={mergeClassNames(
-            typography.textSmBold,
-            'text-brand-900 capitalize'
-          )}
-        >
-          {INDICATOR_CATEGORIES_DATA[categoryName].label || categoryName}
-        </Text>
-      </View>
-      {indicators.map(indicator => renderIndicatorItem(indicator))}
-    </View>
+  const renderCategorySection = (categoryName: NEW_INDICATORS_CATEGORIES, indicators: PredefineIndicatorSchemaType[]) => (
+    <CategoryCard
+      indicators={indicators}
+      categoryName={categoryName}
+      renderIndicatorItem={renderIndicatorItem}
+    />
   );
 
   return (
     <SafeAreaViewWithOptionalHeader className="flex-1 bg-white">
       <BannerHeader
-        // animatedStatusBarColor={animatedStatusBarColor}
-        // animatedTextColor={animatedTextColor}    
-        title={`Je vous propose de suivre 9 éléments importants`}
+        title={`Je vous propose de suivre ${recommendedIndicators.length} éléments importants`}
         handlePrevious={() => navigation.goBack()}
         handleSkip={handleNext}
       />
@@ -328,190 +331,31 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
         contentContainerStyle={{ flexGrow: 1 }}
         style={{ flex: 1 }}
       >
-      <View className='px-6'>
-        <InstructionText>Voici les éléments que je vous propose de suivre au quotidien. Vous pouvez en enlever ou en ajouter.</InstructionText>
-      </View>
+        <View className='px-6'>
+          <InstructionText>Voici les éléments que je vous propose de suivre au quotidien. Vous pouvez en enlever ou en ajouter.</InstructionText>
+        </View>
         {/* indicators grouped by categories */}
         <View className="px-2">
           {Object.entries(recommendedIndicatorsByCategory)
-          .filter(([cat]) => {
-            return ![NEW_INDICATORS_CATEGORIES.SUBSTANCE, NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR].includes(cat)
-          }).map(([category, indicators]) =>
-            renderCategorySection(category, indicators)
+            .filter(([cat]) => {
+              return ![NEW_INDICATORS_CATEGORIES.SUBSTANCE, NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR].includes(cat)
+            }).map(([category, indicators]) =>
+              renderCategorySection(category, indicators)
+            )}
+          {[NEW_INDICATORS_CATEGORIES.SUBSTANCE, NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR].filter(cat => profile?.selectedDifficulties.includes(cat)).map(cat => {
+            return <CategoryCard
+              type={'select-and-input'}
+              indicators={addedIndicators[cat]}
+              renderIndicatorItem={renderIndicatorItem}
+              addIndicatorForCategory={addIndicatorForCategory}
+              categoryName={cat} />
+          })}
+          {profile?.selectedDifficulties.includes(NEW_INDICATORS_CATEGORIES.LIFE_EVENT) && (
+            <CategoryCard
+              type="input"
+              categoryName={NEW_INDICATORS_CATEGORIES.LIFE_EVENT} />
           )}
         </View>
-
-        {[NEW_INDICATORS_CATEGORIES.SUBSTANCE, NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR].filter(cat => profile?.selectedDifficulties.includes(cat)).map(cat => {
-          const categoryLabel = cat === NEW_INDICATORS_CATEGORIES.SUBSTANCE ? 'Consommation de produits' : 'Comportements à risque';
-          const categoryItems = indicators.filter(indicator => indicator.categories.includes(cat));
-          const selectedItems = selectedItemsByCategory[cat];
-
-          return (
-            <View key={cat} className="mb-6 px-6">
-              <Text className={mergeClassNames(typography.textSmBold, 'text-brand-900 mb-3 capitalize')}>
-                {categoryLabel}
-              </Text>
-              <MultiSelect
-                items={categoryItems.map(item => ({
-                  id: item.uuid,
-                  name: item.indicator
-                }))}
-                uniqueKey="id"
-                onSelectedItemsChange={(items) => handleCategorySelection(cat, items)}
-                selectedItems={selectedItems}
-                selectText={`Sélectionner ${categoryLabel.toLowerCase()}...`}
-                searchInputPlaceholderText="Rechercher..."
-                displayKey="name"
-                // Styling to match SelectionnableItem
-                styleDropdownMenu={{
-                  borderRadius: 12,
-                  borderWidth: 2,
-                  borderColor: selectedItems.length > 0 ? '#158993' : '#D1D5DB',
-                  backgroundColor: selectedItems.length > 0 ? '#F0FDFF' : 'transparent',
-                  height: 50,
-                  paddingLeft: 10,
-                  marginHorizontal: 0,
-                  marginBottom: 12,
-                }}
-                styleDropdownMenuSubsection={{
-                  paddingHorizontal: 0,
-                  paddingVertical: 0,
-                  backgroundColor: 'transparent',
-                }}
-                styleRowList={{
-                  paddingHorizontal: 16,
-                  paddingVertical: 16,
-                  marginBottom: 12,
-                  borderRadius: 12,
-                  borderWidth: 2,
-                  borderColor: '#D1D5DB',
-                  backgroundColor: 'transparent',
-                }}
-                styleTextDropdown={{
-                  fontSize: 16,
-                  fontWeight: '500',
-                  color: '#134449',
-                  textAlign: 'left',
-                }}
-                styleTextDropdownSelected={{
-                  color: '#134449',
-                  fontWeight: '500',
-                }}
-                styleInputGroup={{
-                  paddingHorizontal: 16,
-                  paddingVertical: 12,
-                  borderRadius: 8,
-                  borderWidth: 1,
-                  borderColor: '#D1D5DB',
-                  marginBottom: 16,
-                }}
-                searchInputStyle={{
-                  color: '#134449',
-                  fontSize: 16,
-                  paddingHorizontal: 0,
-                  padding: 5,
-                }}
-                tagRemoveIconColor="#158993"
-                tagBorderColor="#158993"
-                tagTextColor="#134449"
-                selectedItemTextColor="#134449"
-                selectedItemIconColor="#158993"
-                itemTextColor="#134449"
-                submitButtonColor="#158993"
-                hideSubmitButton={true}
-                submitButtonText="Valider"
-                styleMainWrapper={{
-                  backgroundColor: 'transparent',
-                }}
-                styleSelectorContainer={{
-                  borderRadius: 12,
-                  borderWidth: 2,
-                  borderColor: selectedItems.length > 0 ? '#158993' : '#D1D5DB',
-                  paddingHorizontal: 16,
-                  paddingVertical: 16,
-                }}
-              />
-
-              {/* Show custom inputs for indicators with needCustom */}
-              {selectedItems.map(itemId => {
-                const indicator = categoryItems.find(item => item.uuid === itemId);
-                const originalIndicator = indicators.find(ind => ind.uuid === itemId);
-
-                if (originalIndicator?.needCustom) {
-                  return (
-                    <View key={itemId} className="mt-3">
-                      <Text className={mergeClassNames(typography.textSmBold, 'text-brand-900 mb-2')}>
-                        Vous avez sélectionné autre :
-                      </Text>
-
-                      {/* Show existing custom inputs */}
-                      {customInputs[itemId]?.map((customInput, index) => (
-                        <View key={index} className="mb-2 p-3 bg-gray-100 rounded-lg">
-                          <Text className="text-gray-700">{customInput}</Text>
-                        </View>
-                      ))}
-
-                      {/* Input for new custom entry */}
-                      <TextInput
-                        className="border border-gray-300 rounded-lg p-3 mb-2"
-                        placeholder="Préciser..."
-                        value={currentCustomInput[itemId] || ''}
-                        onChangeText={(text) => setCurrentCustomInput(prev => ({ ...prev, [itemId]: text }))}
-                      />
-                      <JMButton
-                        title='Ajouter'
-                        onPress={() => addCustomInputForIndicator(itemId)}
-                      />
-                    </View>
-                  );
-                }
-                return null;
-              })}
-
-              {showOtherInput[cat] && (
-                <View className="mt-3">
-                  <TextInput
-                    className="border border-gray-300 rounded-lg p-3 mb-2"
-                    placeholder={`Nommer ce ${categoryLabel.toLowerCase()}...`}
-                    value={customNames[cat]}
-                    onChangeText={(text) => setCustomNames(prev => ({ ...prev, [cat]: text }))}
-                  />
-                  <TouchableOpacity
-                    className="bg-blue-500 rounded-lg p-3"
-                    onPress={() => addCustomIndicator(cat)}
-                  >
-                    <Text className="text-white text-center font-medium">Ajouter</Text>
-                  </TouchableOpacity>
-                </View>
-              )}
-            </View>
-          );
-        })}
-
-        {profile?.selectedDifficulties.includes(NEW_INDICATORS_CATEGORIES.LIFE_EVENT) && (
-          <View className="mb-6 px-6">
-            <Text className={mergeClassNames(typography.textSmBold, 'text-brand-900 mb-3 capitalize')}>
-              Évènement de vie difficile
-            </Text>
-            <TextInput
-              className="border border-gray-300 rounded-lg p-3 mb-2"
-              // onChange={addLifeEventIndicator}
-              placeholder="Nommer cet évènement..."
-              value={lifeEventName}
-              onChangeText={setLifeEventName}
-            />
-          </View>
-        )}
-
-        {/* Custom indicators */}
-        {/* {customIndicators.length > 0 && (
-          <View className="mb-6">
-            <Text className={mergeClassNames(typography.textSmBold, 'text-brand-900 mb-3 mx-8 capitalize')}>
-              Indicateurs personnalisés
-            </Text>
-            {customIndicators.map(indicator => renderIndicatorItem(indicator))}
-          </View>
-        )} */}
         <View className="px-4 mb-4">
           <TouchableOpacity
             onPress={() => setShowMoreIndicators(!showMoreIndicators)}
@@ -555,5 +399,155 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
     </SafeAreaViewWithOptionalHeader>
   );
 };
+
+const MultiInput = ({
+  categoryName,
+  renderIndicatorItem,
+  addIndicatorForCategory,
+  indicators,
+  type
+}: {
+  type: 'select' | 'select-and-input' | 'input'
+  categoryName: NEW_INDICATORS_CATEGORIES,
+  indicators?: PredefineIndicatorSchemaType[],
+  addIndicatorForCategory?: (category: NEW_INDICATORS_CATEGORIES, indicators: PredefineIndicatorSchemaType[]) => void,
+  renderIndicatorItem?: (item: PredefineIndicatorSchemaType) => JSX.Element
+}) => {
+
+  const [addedInputs, setAddedInputs] = useState([''])
+
+  return <View className='flex'>
+    {addedInputs.map((input, index) => <View className='rounded rounded-lg flex-1 flex-row mb-2'>
+      <TextInput
+        onChangeText={(text) => {
+          addedInputs[index] = text
+          setAddedInputs(addedInputs)
+        }}
+        placeholder={INDICATOR_CATEGORIES_DATA[categoryName].description}
+        className={mergeClassNames(typography.textMdRegular, 'text-left border border-gray-300 p-2 rounded rounded-lg flex-1')} />
+      <TouchableOpacity style={
+        {
+          position: 'absolute',
+          right: 10,
+          bottom: 5
+        }
+      } onPress={() => {
+        //onPress(value)
+        setAddedInputs((prev) => [...prev.slice(0, index), ...prev.slice(index + 1)])
+      }}>
+        <Text className={mergeClassNames(typography.textMdSemibold, 'text-brand-800')}>Supprimer</Text>
+      </TouchableOpacity>
+    </View>)}
+    <TouchableOpacity onPress={() => {
+      setAddedInputs(prev => ([...prev, '']))
+    }} className='flex-row ml-auto items-center justify-center mt-2'>
+      <Text className={mergeClassNames(typography.textMdSemibold, 'text-brand-950 mr-1')}>Ajouter un autre événement</Text>
+      <PlusIcon color={TW_COLORS.BRAND_700} />
+    </TouchableOpacity>
+  </View>
+}
+
+
+const CategoryCard = ({
+  categoryName,
+  renderIndicatorItem,
+  addIndicatorForCategory,
+  indicators,
+  type
+}: {
+  type: 'select' | 'select-and-input' | 'input'
+  categoryName: NEW_INDICATORS_CATEGORIES,
+  indicators?: PredefineIndicatorSchemaType[],
+  addIndicatorForCategory?: (category: NEW_INDICATORS_CATEGORIES, indicators: PredefineIndicatorSchemaType[]) => void,
+  renderIndicatorItem?: (item: PredefineIndicatorSchemaType) => JSX.Element
+}) => {
+
+  const [showIndicators, setShowMoreIndicators] = useState<boolean>(false)
+  const { showBottomSheet, closeBottomSheet } = useBottomSheet()
+
+  return <View key={categoryName}
+    className="mb-6 w-full rounded rounded-3xl border border-1 border-gray-300 bg-gray-50 py-4">
+    <View className='px-4 gap-6 flex-colum mb-6'>
+      <View className="flex-row items-center mb-2">
+        <View className="items-center justify-center">
+          <IconBg
+            type={categoryName}
+            frontSquareColor={TW_COLORS.GRAY_200}
+            backSquareColor={TW_COLORS.BRAND_600}
+          />
+        </View>
+        {indicators && <View className='ml-auto rounded py-1 px-2 border border-brand-800 bg-white flex-row justify-content items-center'>
+          <Text
+            className={mergeClassNames(
+              typography.textSmBold,
+              'text-brand-900 mr-2'
+            )}
+          >
+            {indicators.length} indicateur{indicators.length > 1 ? 's' : ''}
+          </Text>
+          <CircleCheckMark />
+        </View>}
+        {!indicators && <View className='ml-auto rounded py-1 px-2 border border-brand-800 bg-gray-200 flex-row justify-content items-center'>
+          <Text
+            className={mergeClassNames(
+              typography.textSmBold,
+              'text-brand-900'
+            )}
+          >
+            à préciser
+          </Text>
+        </View>}
+      </View>
+      <Text
+        className={mergeClassNames(
+          typography.textLgBold,
+          'text-brand-900'
+        )}
+      >
+        {INDICATOR_CATEGORIES_DATA[categoryName].name || categoryName}
+      </Text>
+      <Text className={mergeClassNames(typography.textMdRegular, 'text-gray-800 text-left')}>
+        {INDICATOR_CATEGORIES_DATA[categoryName].indicatorText}
+      </Text>
+      {indicators && <TouchableOpacity
+        onPress={() => setShowMoreIndicators(!showIndicators)}
+        className='flex-row items-center justify-center'>
+        <Text className={mergeClassNames(typography.textMdSemibold, 'text-brand-950 mr-2')}>Afficher les indicateurs</Text>
+        <ChevronDown color={TW_COLORS.BRAND_700} />
+      </TouchableOpacity>
+      }
+      {indicators && showIndicators && <View className='flex-column h-auto'>
+        {indicators.map(indicator => {
+          console.log('indicator', indicator)
+          return renderIndicatorItem(indicator)
+        })}
+      </View>
+      }
+      {
+        type === 'select-and-input' && <View className='flex-row'>
+          <TouchableOpacity onPress={() => {
+            showBottomSheet(<IndicatorModal
+              category={categoryName}
+              onClose={(categoryName: NEW_INDICATORS_CATEGORIES, indicators: PredefineIndicatorSchemaType[]) => {
+                if (typeof addIndicatorForCategory === 'function') {
+                  addIndicatorForCategory(categoryName, indicators)
+                  closeBottomSheet()
+                }
+              }}
+            />)
+          }} className='flex-row ml-auto items-center justify-center'>
+            <Text className={mergeClassNames(typography.textMdSemibold, 'text-brand-950 mr-1')}>Préciser</Text>
+            <ArrowIcon color={TW_COLORS.BRAND_700} />
+          </TouchableOpacity>
+        </View>
+      }
+      {
+        type === 'input' && <View className='flex-column'><MultiInput
+          categoryName={categoryName} /></View>
+      }
+    </View>
+  </View>
+}
+
 
 export default OnboardingChooseIndicatorScreen;
