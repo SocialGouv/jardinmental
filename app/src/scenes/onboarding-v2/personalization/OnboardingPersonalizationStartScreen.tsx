@@ -54,9 +54,9 @@ export const OnboardingPersonalizationStartScreen: React.FC<Props> = ({ navigati
           className={mergeClassNames(typography.textMdMedium, 'text-left')}
           style={{ color: TW_COLORS.TEXT_SECONDARY }}
         >
-          {'\u2022'} Il n’y a pas de bonnes ou mauvaises réponses.{'\n'}
-          {'\u2022'} Vous pourrez ajuster vos choix à tout moment.{'\n'}
-          {'\u2022'} Sentez vous libre d’avancer à votre rythme.{'\n'}
+          {'\u2022'} ✅ Pas de bonne ou mauvaise réponse{'\n'}
+          {'\u2022'} 🔄 Vos choix sont modifiables à tout moment{'\n'}
+          {'\u2022'} 🧘 Avancez à votre rythme, sans pression{'\n'}
         </Text>
       </View>
       <NavigationButtons

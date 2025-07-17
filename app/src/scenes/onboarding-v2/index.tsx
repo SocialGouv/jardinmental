@@ -86,14 +86,14 @@ const OnboardingV2Navigator: React.FC = () => {
     }
   }, []);
 
-  const IntroChooseIndicatorScreen = () => <EncouragementScreen
+  const CheckInSleepCompleted = () => <EncouragementScreen
     navigation={navigation}
     currentStep={0}
     totalSteps={0}
     title={'Merci d’avoir pris ce moment pour observer votre sommeil.'}
     description={''}
     extraInfo={'En France, 32 % des adultes se déclarent insatisfaits de leur sommeil.\nEn faire le suivi, c’est déjà prendre soin de soi. (ifop mars 2022)'}
-    onNext={() => navigation.navigate('OnboardingChooseIndicatorIntro')} />
+    onNext={() => navigation.navigate('PersonalizationStart')} />
 
 
   return (
@@ -225,8 +225,8 @@ const OnboardingV2Navigator: React.FC = () => {
       />
       <Stack.Screen
         options={SHARED_HEADER ? headerOptions : undefined}
-        name="OnboardingCheckInIntroductionCompleted"
-        component={IntroChooseIndicatorScreen}
+        name="CheckInSleepCompleted"
+        component={CheckInSleepCompleted}
       />
       <Stack.Screen
         options={SHARED_HEADER ? headerOptions : undefined}

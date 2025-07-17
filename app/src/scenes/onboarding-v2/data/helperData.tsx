@@ -94,16 +94,16 @@ export const INDICATOR_CATEGORIES_DATA: Record<NEW_INDICATORS_CATEGORIES, Diffic
     },
     [NEW_INDICATORS_CATEGORIES.SUBSTANCE]: {
         id: 'toxic',
-        name: `Ma consommation de produits`,
+        name: `Consommations de produits & addictions`,
         label: `Consommations de produits & addictions`,
         category: NEW_INDICATORS_CATEGORIES.SUBSTANCE,
         indicatorText: 'Précisez quelle consommation de produits ou addictions vous souhaitez observer.',
         selected: false,
         icon: Substance,
-        subCat: [
-            NEW_INDICATORS_SUBCATEGORIES.BEHAVIORAL_ADDICTION,
-            NEW_INDICATORS_SUBCATEGORIES.SUBSTANCE_USE
-        ]
+        // subCat: [
+        //     NEW_INDICATORS_SUBCATEGORIES.BEHAVIORAL_ADDICTION,
+        //     NEW_INDICATORS_SUBCATEGORIES.SUBSTANCE_USE
+        // ]
     },
     [NEW_INDICATORS_CATEGORIES.PHYSICAL_SIGNS]: {
         id: 'physical_signs',

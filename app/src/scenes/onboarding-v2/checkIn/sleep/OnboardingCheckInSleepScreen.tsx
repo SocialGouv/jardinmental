@@ -23,7 +23,7 @@ type Props = OnboardingV2ScreenProps<'OnboardingCheckInHowDoYouFeel'>;
 const moodEmojis = ['😢', '😕', '😐', '🙂', '😊'];
 const moodLabels = [`J'ai très mal dormi`, `J'ai mal dormi`, 'Ok', `J'ai bien dormi`, `J'ai très bien dormi`];
 
-const NextScreen = 'PersonalizationStart'
+const NextScreen = 'CheckInSleepCompleted'
 
 export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
   const [checkInData, setCheckInData] = useState<number | null>(null);

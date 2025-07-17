@@ -91,7 +91,6 @@ export const DifficultiesScreen: React.FC<Props> = ({ navigation }) => {
       {<BannerHeader
         hidden={HEADER_WITH_BANNER}
         hideHeader={PROGRESS_BAR_AND_HEADER}
-        header={SHARED_HEADER || PROGRESS_BAR || PROGRESS_BAR_AND_HEADER ? undefined : <ProgressIndicator currentStep={2} totalSteps={3} />}
         title={'Sur quoi avez-vous ressenti une difficulté ou une gêne ces deux dernières semaines?'}
         handleSkip={handleSkip}
         handlePrevious={handlePrevious}
@@ -103,9 +102,9 @@ export const DifficultiesScreen: React.FC<Props> = ({ navigation }) => {
       >
         <View className="px-6 py-4">
           <Text
-            className={mergeClassNames(typography.textSmMedium, 'text-brand-900')}
+            className={mergeClassNames(typography.textMdRegular, 'text-brand-900 text-lect')}
           >
-            Sélectionnez les domaines sur lesquels vous aimeriez travailler
+            Sélectionnez un ou plusieurs domaine
           </Text>
         </View>
 
