@@ -38,9 +38,9 @@ export const CheckInHeader: React.FC<CheckInHeaderProps> = ({
   leftComponent,
   dynamicTitle,
   headerTitleStyle,
-  dynamicTitleStyle
+  dynamicTitleStyle,
+  backgroundColor
 }) => {
-  const horizontalPadding = withMargin ? 24 : 0;
   const headerHeight = 48; // 👈 fixed height ensures proper alignment
   return (
     <View
@@ -50,7 +50,8 @@ export const CheckInHeader: React.FC<CheckInHeaderProps> = ({
         position: 'relative',
         justifyContent: 'center',
         alignItems: 'center',
-        zIndex: 1001
+        zIndex: 1001,
+        // backgroundColor: backgroundColor || 'green'
       }}
     >
       {/* Bouton Précédent */}

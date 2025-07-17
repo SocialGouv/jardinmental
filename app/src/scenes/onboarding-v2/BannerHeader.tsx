@@ -13,7 +13,7 @@ import { firstLetterUppercase } from "@/utils/string-util";
 const deviceId = DeviceInfo.getDeviceId(); // e.g., "iPhone10,1"
 const isSmallDevice = ['iPhone8,4', 'iPhone5,x', 'iPhone7,2', 'iPhone9,1/3', 'iPhone10,1/4', 'iPhone12,8', 'iPhone14,6'].includes(deviceId);
 
-const statusBarHeight = isSmallDevice ? 20 : 60;
+const statusBarHeight = isSmallDevice ? 20 : 47;
 
 
 export default function BannerHeader({
@@ -36,7 +36,8 @@ export default function BannerHeader({
     bannerContainerStyle,
     titleMarginStyle,
     onBannerLayout,
-    inAbsoluteView
+    inAbsoluteView,
+    backgroundColor
 }: {
     animatedStatusBarColor?: Animated.AnimateStyle<ViewStyle>;
     animatedTextColor?: Animated.AnimateStyle<ViewStyle>;
@@ -57,7 +58,7 @@ export default function BannerHeader({
     bannerContainerStyle?: Animated.AnimateStyle<ViewStyle>; // animated style for banner container
     titleMarginStyle?: Animated.AnimateStyle<ViewStyle>; // animated style for title margin
     onBannerLayout?: (event: any) => void; // callback to measure banner height
-    inAbsoluteView?: boolean
+    inAbsoluteView?: boolean,
 }) {
     return <>
         {Platform.OS === 'ios' && (
@@ -84,6 +85,7 @@ export default function BannerHeader({
                 showSkip={true}
                 headerTitleStyle={headerTitleStyle}
                 dynamicTitleStyle={dynamicTitleStyle}
+                backgroundColor={backgroundColor}
             />}
             <Animated.View
                 className={bannerContainerStyle ? "" : "py-4 pb-8 px-6"}

@@ -16,6 +16,7 @@ import SelectionnableItem from '@/components/SelectionnableItem';
 import { INDICATOR_CATEGORIES_DATA } from '../data/helperData';
 import { SUBCATEGORIES, NEW_INDICATORS_SUBCATEGORIES } from '@/utils/liste_indicateurs.1';
 import InstructionText from '../InstructionText';
+import { AnimatedHeaderScrollScreen } from '@/scenes/survey-v2/AnimatedHeaderScrollScreen';
 
 type Props = OnboardingV2ScreenProps<'PersonalizationObjective'>;
 
@@ -80,8 +81,50 @@ export const SubcategoriesScreen: React.FC<Props> = ({ navigation, route }) => {
             // color: TW_COLORS.WHITE,
         };
     })
-
-    return (
+    return (<AnimatedHeaderScrollScreen
+        title={`Précisez ce que souhaitez vous suivre en priorité`}
+        dynamicTitle={'Priorités'}
+        navigation={navigation}
+        hasProgressBar={true}
+        bottomComponent={<NavigationButtons
+            absolute={true}
+            onNext={handleNext}
+            headerContent={
+                <View>
+                    <View className='my-2'>
+                        <Text className={mergeClassNames(typography.textSmMedium, 'text-gray-700 text-center')}>Vous pourrez modifier cette sélection plus tard</Text>
+                    </View>
+                </View>
+            }
+            // onPrevious={handlePrevious}
+            onSkip={handleSkip}
+            showSkip={true}
+            nextDisabled={selectedSubcategories.length === 0}
+            nextText="Continuer"
+            skipText="Passer cette étape"
+        />}
+    >
+        <View className="px-6 py-4" style={{}}>
+            <InstructionText
+            >
+                Parmis {profile?.selectedDifficulties.filter(diff => INDICATOR_CATEGORIES_DATA[diff].subCat).map(difficulty =>
+                    `"${INDICATOR_CATEGORIES_DATA[difficulty].name}"`
+                ).join(', ')}, quels sont les éléments les plus importants que vous souhaitez observer ?
+            </InstructionText>
+        </View>
+        <View className="px-6" style={{}}>
+            {Object.values(INDICATOR_CATEGORIES_DATA)
+                .filter(item => profile?.selectedDifficulties.includes(item.category))
+                .filter(item => item.subCat && item.subCat.length > 0)
+                .map((cat) => {
+                    return <View key={cat.id}>
+                        <View className='flex-row p-4'>{React.createElement(cat.icon, { color: TW_COLORS.GRAY_700 })}<Text className={mergeClassNames(typography.textSmBold, 'text-left text-brand-900 ml-2')}>{cat.name}</Text></View>
+                        {cat.subCat.map(item => renderSubCategoryItem({ item }))}
+                    </View>
+                })}
+        </View>
+    </AnimatedHeaderScrollScreen>)
+    {/* return (
         <SafeAreaViewWithOptionalHeader className="flex-1 bg-white" style={{ flex: 1 }}>
             <BannerHeader
                 hidden={HEADER_WITH_BANNER}
@@ -109,7 +152,6 @@ export const SubcategoriesScreen: React.FC<Props> = ({ navigation, route }) => {
             />
             <ScrollView className="flex-1" style={{ flex: 1 }}
                 contentContainerStyle={{ paddingBottom: 200 }}>
-                {/* En-tête */}
                 <View className="px-6 py-4" style={{}}>
                     <InstructionText
                     >
@@ -149,7 +191,7 @@ export const SubcategoriesScreen: React.FC<Props> = ({ navigation, route }) => {
                 skipText="Passer cette étape"
             />
         </SafeAreaViewWithOptionalHeader>
-    );
+    ); */}
 };
 
 export default SubcategoriesScreen;

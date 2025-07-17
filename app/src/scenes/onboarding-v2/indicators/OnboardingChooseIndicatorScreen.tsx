@@ -23,6 +23,7 @@ import { useBottomSheet } from '@/context/BottomSheetContext';
 import IndicatorModal from './IndicatorModal';
 import PlusIcon from '@assets/svg/icon/plus';
 import { v4 as uuidv4 } from "uuid";
+import { AnimatedHeaderScrollScreen } from '@/scenes/survey-v2/AnimatedHeaderScrollScreen';
 
 const BASE_INDICATORS_FOR_CUSTOM_CATEGORIES = {
   [NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR]: [INDICATORS.find(ind => ind.uuid === "1d4c3f59-dc3e-4b45-ae82-2ea77a62e6c6")],
@@ -229,102 +230,192 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
     )
   }, [selectedIndicators, toggleIndicator]);
 
-  return (
-    <SafeAreaViewWithOptionalHeader className="flex-1 bg-white">
-      <BannerHeader
-        title={`Je vous propose de suivre ${recommendedIndicators.length} éléments importants`}
-        handlePrevious={() => navigation.goBack()}
-        handleSkip={handleNext}
-      />
-      <ScrollView
-        className="flex-1 pt-4"
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ flexGrow: 1, paddingBottom: 200 }}
-        style={{ flex: 1 }}
-      >
-        <View className='px-6'>
-          <InstructionText>Voici les éléments que je vous propose de suivre au quotidien. Vous pouvez en enlever ou en ajouter.</InstructionText>
-        </View>
-        {/* indicators grouped by categories */}
-        <View className="px-2 flex-1">
-          {Object.entries(recommendedIndicatorsByCategory)
-            .filter(([cat]) => {
-              return ![NEW_INDICATORS_CATEGORIES.SUBSTANCE, NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR].includes(cat as NEW_INDICATORS_CATEGORIES)
-            }).map(([category, indicators]) =>
-              <CategoryCard
-                type='select'
-                key={category}
-                indicators={indicators}
-                selectedIndicators={selectedIndicators}
-                categoryName={category as NEW_INDICATORS_CATEGORIES}
-                renderIndicatorItem={renderIndicatorItem}
-              />
-            )}
-          {[NEW_INDICATORS_CATEGORIES.SUBSTANCE, NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR, NEW_INDICATORS_CATEGORIES.LIFE_EVENT].filter(cat => profile?.selectedDifficulties.includes(cat)).map(cat => {
-            return <CategoryCard
-              key={cat}
-              type={'select-and-input'}
-              selectedIndicators={selectedIndicators}
-              indicators={addedIndicators[cat] && addedIndicators[cat].length ? addedIndicators[cat] : BASE_INDICATORS_FOR_CUSTOM_CATEGORIES[cat]}
-              renderIndicatorItem={renderIndicatorItem}
-              addIndicatorForCategory={addIndicatorForCategory}
-              categoryName={cat} />
-          })}
-        </View>
-        <View className="px-4 mb-4">
-          <TouchableOpacity
-            onPress={() => setShowMoreIndicators(!showMoreIndicators)}
-            className="py-3 px-4"
-          >
-            <Text
-              className="text-center font-medium"
-              style={{
-                textDecorationLine: 'underline'
-              }}
-            >
-              {showMoreIndicators ? 'Masquer' : 'Voir plus d\'indicateurs'}
-            </Text>
-          </TouchableOpacity>
-        </View>
+  const handlePrevious = () => navigation.goBack()
 
-        {/* popular indicators */}
-        {showMoreIndicators && (
-          <View className="mb-6">
-            <Text
-              className="text-xl font-bold mb-4 mx-4"
-              style={{ color: TW_COLORS.TEXT_PRIMARY }}
-            >
-              Les plus suivis
-            </Text>
-            {popularIndicatorsByCategory.map((indicator, index) => (
-              <React.Fragment key={`popular-${indicator.uuid}-${index}`}>
-                {renderIndicatorItem(indicator)}
-              </React.Fragment>
-            ))}
+  return <AnimatedHeaderScrollScreen
+    title={`Je vous propose de suivre ${recommendedIndicators.length} éléments importants`}
+    dynamicTitle={'Indicateurs'}
+    navigation={navigation}
+    hasProgressBar={false}
+    handlePrevious={handlePrevious}
+    bottomComponent={<NavigationButtons
+      absolute={true}
+      onNext={handleNext}
+      headerContent={
+        <View>
+          <View className='my-2'>
+            <Text className={mergeClassNames(typography.textSmMedium, 'text-gray-700 text-center')}>Vous pourrez modifier cette sélection plus tard</Text>
           </View>
+        </View>
+      }
+      onSkip={handleNext}
+      showSkip={true}
+      nextDisabled={selectedIndicators.length === 0}
+      nextText="Continuer"
+      skipText="Passer cette étape"
+    />}
+  >
+    <View className='px-6'>
+      <InstructionText>Voici les éléments que je vous propose de suivre au quotidien. Vous pouvez en enlever ou en ajouter.</InstructionText>
+    </View>
+    {/* indicators grouped by categories */}
+    <View className="px-2 flex-1">
+      {Object.entries(recommendedIndicatorsByCategory)
+        .filter(([cat]) => {
+          return ![NEW_INDICATORS_CATEGORIES.SUBSTANCE, NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR].includes(cat as NEW_INDICATORS_CATEGORIES)
+        }).map(([category, indicators]) =>
+          <CategoryCard
+            type='select'
+            key={category}
+            indicators={indicators}
+            selectedIndicators={selectedIndicators}
+            categoryName={category as NEW_INDICATORS_CATEGORIES}
+            renderIndicatorItem={renderIndicatorItem}
+          />
         )}
-        <View className="h-20" />
-      </ScrollView>
-      <NavigationButtons
-        absolute={true}
-        // showPrevious={true}
-        // onPrevious={() => (
-        //   navigation.goBack()
-        // )}
-        headerContent={
-          <View>
-            <View className='my-2'>
-              <Text className={mergeClassNames(typography.textSmMedium, 'text-gray-700 text-center')}>Vous pourrez modifier cette sélection plus tard</Text>
-            </View>
-          </View>
-        }
-        onNext={handleNext}
-        nextDisabled={selectedIndicators.length === 0}
-        nextText="Continuer"
-      />
-    </SafeAreaViewWithOptionalHeader>
-  );
-};
+      {[NEW_INDICATORS_CATEGORIES.SUBSTANCE, NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR, NEW_INDICATORS_CATEGORIES.LIFE_EVENT].filter(cat => profile?.selectedDifficulties.includes(cat)).map(cat => {
+        return <CategoryCard
+          key={cat}
+          type={'select-and-input'}
+          selectedIndicators={selectedIndicators}
+          indicators={addedIndicators[cat] && addedIndicators[cat].length ? addedIndicators[cat] : BASE_INDICATORS_FOR_CUSTOM_CATEGORIES[cat]}
+          renderIndicatorItem={renderIndicatorItem}
+          addIndicatorForCategory={addIndicatorForCategory}
+          categoryName={cat} />
+      })}
+    </View>
+    <View className="px-4 mb-4">
+      <TouchableOpacity
+        onPress={() => setShowMoreIndicators(!showMoreIndicators)}
+        className="py-3 px-4"
+      >
+        <Text
+          className="text-center font-medium"
+          style={{
+            textDecorationLine: 'underline'
+          }}
+        >
+          {showMoreIndicators ? 'Masquer' : 'Voir plus d\'indicateurs'}
+        </Text>
+      </TouchableOpacity>
+    </View>
+
+    {/* popular indicators */}
+    {showMoreIndicators && (
+      <View className="mb-6">
+        <Text
+          className="text-xl font-bold mb-4 mx-4"
+          style={{ color: TW_COLORS.TEXT_PRIMARY }}
+        >
+          Les plus suivis
+        </Text>
+        {popularIndicatorsByCategory.map((indicator, index) => (
+          <React.Fragment key={`popular-${indicator.uuid}-${index}`}>
+            {renderIndicatorItem(indicator)}
+          </React.Fragment>
+        ))}
+      </View>
+    )}
+    <View className="h-20" />
+  </AnimatedHeaderScrollScreen>
+}
+
+// return (
+//   <SafeAreaViewWithOptionalHeader className="flex-1 bg-white">
+//     <BannerHeader
+//       title={`Je vous propose de suivre ${recommendedIndicators.length} éléments importants`}
+//       handlePrevious={() => navigation.goBack()}
+//       handleSkip={handleNext}
+//     />
+//     <ScrollView
+//       className="flex-1 pt-4"
+//       showsVerticalScrollIndicator={false}
+//       contentContainerStyle={{ flexGrow: 1, paddingBottom: 200 }}
+//       style={{ flex: 1 }}
+//     >
+//       <View className='px-6'>
+//         <InstructionText>Voici les éléments que je vous propose de suivre au quotidien. Vous pouvez en enlever ou en ajouter.</InstructionText>
+//       </View>
+//       {/* indicators grouped by categories */}
+//       <View className="px-2 flex-1">
+//         {Object.entries(recommendedIndicatorsByCategory)
+//           .filter(([cat]) => {
+//             return ![NEW_INDICATORS_CATEGORIES.SUBSTANCE, NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR].includes(cat as NEW_INDICATORS_CATEGORIES)
+//           }).map(([category, indicators]) =>
+//             <CategoryCard
+//               type='select'
+//               key={category}
+//               indicators={indicators}
+//               selectedIndicators={selectedIndicators}
+//               categoryName={category as NEW_INDICATORS_CATEGORIES}
+//               renderIndicatorItem={renderIndicatorItem}
+//             />
+//           )}
+//         {[NEW_INDICATORS_CATEGORIES.SUBSTANCE, NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR, NEW_INDICATORS_CATEGORIES.LIFE_EVENT].filter(cat => profile?.selectedDifficulties.includes(cat)).map(cat => {
+//           return <CategoryCard
+//             key={cat}
+//             type={'select-and-input'}
+//             selectedIndicators={selectedIndicators}
+//             indicators={addedIndicators[cat] && addedIndicators[cat].length ? addedIndicators[cat] : BASE_INDICATORS_FOR_CUSTOM_CATEGORIES[cat]}
+//             renderIndicatorItem={renderIndicatorItem}
+//             addIndicatorForCategory={addIndicatorForCategory}
+//             categoryName={cat} />
+//         })}
+//       </View>
+//       <View className="px-4 mb-4">
+//         <TouchableOpacity
+//           onPress={() => setShowMoreIndicators(!showMoreIndicators)}
+//           className="py-3 px-4"
+//         >
+//           <Text
+//             className="text-center font-medium"
+//             style={{
+//               textDecorationLine: 'underline'
+//             }}
+//           >
+//             {showMoreIndicators ? 'Masquer' : 'Voir plus d\'indicateurs'}
+//           </Text>
+//         </TouchableOpacity>
+//       </View>
+
+//       {/* popular indicators */}
+//       {showMoreIndicators && (
+//         <View className="mb-6">
+//           <Text
+//             className="text-xl font-bold mb-4 mx-4"
+//             style={{ color: TW_COLORS.TEXT_PRIMARY }}
+//           >
+//             Les plus suivis
+//           </Text>
+//           {popularIndicatorsByCategory.map((indicator, index) => (
+//             <React.Fragment key={`popular-${indicator.uuid}-${index}`}>
+//               {renderIndicatorItem(indicator)}
+//             </React.Fragment>
+//           ))}
+//         </View>
+//       )}
+//       <View className="h-20" />
+//     </ScrollView>
+//     <NavigationButtons
+//       absolute={true}
+//       // showPrevious={true}
+//       // onPrevious={() => (
+//       //   navigation.goBack()
+//       // )}
+//       headerContent={
+//         <View>
+//           <View className='my-2'>
+//             <Text className={mergeClassNames(typography.textSmMedium, 'text-gray-700 text-center')}>Vous pourrez modifier cette sélection plus tard</Text>
+//           </View>
+//         </View>
+//       }
+//       onNext={handleNext}
+//       nextDisabled={selectedIndicators.length === 0}
+//       nextText="Continuer"
+//     />
+//   </SafeAreaViewWithOptionalHeader>
+// );
+
 
 const MultiInput = ({
   categoryName,
