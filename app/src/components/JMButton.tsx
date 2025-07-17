@@ -80,13 +80,14 @@ export default function JMButton({
       break;
   }
 
-  const disabledClasses = disabled || loading ? 'opacity-50' : '';
+  const disabledClasses = disabled || loading ? 'bg-[#EFF1F5]' : '';
   const finalClassName = mergeClassNames(baseClasses, variantClasses, disabledClasses, className);
 
   let textColor = 'text-white';
   if (variant === 'outline') textColor = 'text-primary';
   if (variant === 'secondary') textColor = 'text-black';
   if (variant === 'text') textColor = 'text-primary';
+  if (disabled || loading) textColor = 'text-gray-800'
 
   const styledIcon = icon
     ? React.cloneElement(icon, {
