@@ -24,7 +24,6 @@ const Gauge = ({ hideSlider = false, defaultValue = 0, onChange, reverse }) => {
 
   const handleChange = useMemo(() => {
     return debounce((v) => {
-      console.log('LCS DEBOUNCE', v)
       setValue(v[0]);
       onChange?.(v[0]);
     }, 300) // 300ms debounce

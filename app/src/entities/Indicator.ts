@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { categories } from '../utils/constants';
-import { NEW_INDICATORS_CATEGORIES } from '@/utils/liste_indicateurs.1';
+import { NEW_INDICATORS_CATEGORIES, NEW_INDICATORS_SUBCATEGORIES } from '@/utils/liste_indicateurs.1';
+import { v4 as uuidv4 } from "uuid";
 
 export enum INDICATOR_TYPE {
   'smiley' = 'smiley',
@@ -58,10 +59,13 @@ export const PredefineIndicatorV2Schema = z.object({
   name: PredefineIndicatorSchema.shape.name,
   category: PredefineIndicatorSchema.shape.category,
   categories: z.array(z.nativeEnum(NEW_INDICATORS_CATEGORIES)),
+  subcategories: z.array(z.nativeEnum(NEW_INDICATORS_SUBCATEGORIES)).optional(),
   mainCategory: z.nativeEnum(NEW_INDICATORS_CATEGORIES),
   type: PredefineIndicatorSchema.shape.type,
   priority: z.number(),
-  order: PredefineIndicatorSchema.shape.order
+  order: PredefineIndicatorSchema.shape.order,
+  new: z.boolean().optional(),
+  isGeneric: z.boolean().optional()
 });
 
 export type PredefineIndicatorV2SchemaType = z.infer<typeof PredefineIndicatorV2Schema>
@@ -74,9 +78,11 @@ export type Indicator = z.infer<typeof IndicatorSchema>;
 
 
 export const generateIndicatorFromPredefinedIndicator = (predefinedIndicator: PredefineIndicatorV2SchemaType): Indicator => {
-  console.log('LCS PREDEFINED INDICATOR GENERATE', predefinedIndicator)
+  // when predefinedIndicator is generic, we create a unique indicator from it.
+  // the user can then edit the name of this indicator and eventually add the same
+  // predefinedIndicator
   return {
-    uuid: predefinedIndicator.uuid,
+    uuid: predefinedIndicator.isGeneric ? uuidv4() : predefinedIndicator.uuid,
     name: predefinedIndicator.name,
     category: predefinedIndicator.category,
     newCategories: predefinedIndicator.categories,

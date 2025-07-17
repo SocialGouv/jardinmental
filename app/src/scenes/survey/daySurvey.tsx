@@ -1,29 +1,29 @@
-import React, {useEffect, useState, useContext, useRef} from 'react';
-import {ScrollView, View, KeyboardAvoidingView, Platform} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import React, { useEffect, useState, useContext, useRef } from 'react';
+import { ScrollView, View, KeyboardAvoidingView, Platform } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Text from '../../components/MyText';
-import {beforeToday, formatDay, formatRelativeDate} from '../../utils/date/helpers';
-import {isToday, isYesterday, parseISO} from 'date-fns';
-import {getScoreWithState} from '../../utils';
+import { beforeToday, formatDay, formatRelativeDate } from '../../utils/date/helpers';
+import { isToday, isYesterday, parseISO } from 'date-fns';
+import { getScoreWithState } from '../../utils';
 import InputQuestion from './InputQuestion';
 import QuestionYesNo from './QuestionYesNo';
 import logEvents from '../../services/logEvents';
-import {DiaryDataContext} from '../../context/diaryData';
-import {alertNoDataYesterday} from './survey-data';
+import { DiaryDataContext } from '../../context/diaryData';
+import { alertNoDataYesterday } from './survey-data';
 import localStorage from '../../utils/localStorage';
-import {useFocusEffect} from '@react-navigation/native';
-import {GoalsDaySurvey} from '../goals/survey/GoalsDaySurvey';
-import {Button2} from '../../components/Button2';
-import {Card} from '../../components/Card';
-import {IndicatorSurveyItem} from './components/IndicatorSurveyItem';
+import { useFocusEffect } from '@react-navigation/native';
+import { GoalsDaySurvey } from '../goals/survey/GoalsDaySurvey';
+import { Button2 } from '../../components/Button2';
+import { Card } from '../../components/Card';
 import { DiaryDataNewEntryInput } from '../../entities/DiaryData';
 import { Indicator } from '../../entities/Indicator';
+import { IndicatorSurveyItem } from '@/components/survey/IndicatorSurveyItem';
 
-const DaySurvey = ({navigation, route}: {
+const DaySurvey = ({ navigation, route }: {
   navigation: any,
   route: {
     params?: {
-      currentSurvey:DiaryDataNewEntryInput
+      currentSurvey: DiaryDataNewEntryInput
       editingSurvey: boolean,
       redirect?: boolean
     }
@@ -67,10 +67,10 @@ const DaySurvey = ({navigation, route}: {
   useEffect(() => {
     //init the survey if there is already answers
     const initialAnswers = {};
-    const surveyAnswers = initSurvey?.answers || {};
+    const surveyAnswers = initSurvey?.answers || {};
     if (!surveyAnswers || userIndicateurs.length === 0) {
-        return;
-      }
+      return;
+    }
     Object.keys(surveyAnswers).forEach(key => {
       const answer = surveyAnswers[key];
       if (!answer) return;
@@ -106,29 +106,29 @@ const DaySurvey = ({navigation, route}: {
   }, [initSurvey?.answers, questionToxic.id, questionContext?.id, userIndicateurs]);
 
 
-  const toggleAnswer = async ({key, value}) => {
+  const toggleAnswer = async ({ key, value }) => {
     setAnswers(prev => {
       return {
         ...prev,
-        [key]: {...prev[key], value, _indicateur: userIndicateurs.find(i => i.name === key)},
+        [key]: { ...prev[key], value, _indicateur: userIndicateurs.find(i => i.name === key) },
       };
     });
   };
 
-  const handleChangeUserComment = ({key, userComment}) => {
+  const handleChangeUserComment = ({ key, userComment }) => {
     setAnswers(prev => {
       return {
         ...prev,
-        [key]: {...prev[key], userComment},
+        [key]: { ...prev[key], userComment },
       };
     });
   };
 
-  const submitDay = async ({redirectBack = false}) => {
+  const submitDay = async ({ redirectBack = false }) => {
     const prevCurrentSurvey = initSurvey;
     const currentSurvey: DiaryDataNewEntryInput = {
       date: prevCurrentSurvey.date,
-      answers: {...prevCurrentSurvey.answers, ...answers},
+      answers: { ...prevCurrentSurvey.answers, ...answers },
     };
     addNewEntryToDiaryData(currentSurvey);
     if (goalsRef.current && typeof goalsRef.current.onSubmit === 'function') {
@@ -189,8 +189,8 @@ const DaySurvey = ({navigation, route}: {
               circle
               size="normal"
               icon="ArrowUpSvg"
-              iconStyle={{transform: [{rotate: '270deg'}]}}
-              onPress={() => navigation.goBack()} 
+              iconStyle={{ transform: [{ rotate: '270deg' }] }}
+              onPress={() => navigation.goBack()}
             />
           )}
           <Text className="flex-1 text-lg font-bold font-karla text-center px-1">Mon questionnaire</Text>
@@ -208,23 +208,24 @@ const DaySurvey = ({navigation, route}: {
           }}>
           <View>
             <View className="mb-2">
-              <Card preset="lighten" title={renderQuestion()} image={{source: require('./../../../assets/imgs/indicateur.png')}} containerStyle={{marginBottom: 16}} />
+              <Card preset="lighten" title={renderQuestion()} image={{ source: require('./../../../assets/imgs/indicateur.png') }} containerStyle={{ marginBottom: 16 }} />
               {userIndicateurs
                 .filter(ind => ind.active)
                 .map((ind, index) => (
                   <IndicatorSurveyItem
                     key={ind?.uuid}
+                    showComment={true}
                     indicator={ind}
                     index={index}
                     value={answers?.[ind?.name]?.value}
-                    onValueChanged={({indicator, value}) => toggleAnswer({key: indicator?.name, value})}
-                    onCommentChanged={({indicator, comment}) => handleChangeUserComment({key: indicator?.name, userComment: comment})}
+                    onValueChanged={({ indicator, value }) => toggleAnswer({ key: indicator?.name, value })}
+                    onCommentChanged={({ indicator, comment }) => handleChangeUserComment({ key: indicator?.name, userComment: comment })}
                     comment={answers?.[ind?.name]?.userComment}
                   />
                 ))}
               <Card
                 title="Personnaliser mes indicateurs"
-                icon={{icon: 'ImportantSvg'}}
+                icon={{ icon: 'ImportantSvg' }}
                 onPress={() => {
                   navigation.navigate('symptoms');
                   logEvents.logSettingsSymptomsFromSurvey();

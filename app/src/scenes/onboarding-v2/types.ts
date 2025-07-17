@@ -71,20 +71,6 @@ export interface OnboardingState {
   progress: number;
 }
 
-// Navigation Props
-export interface NavigationButtonsProps {
-  onNext?: () => void;
-  onPrevious?: () => void;
-  onSkip?: () => void;
-  showPrevious?: boolean;
-  showSkip?: boolean;
-  nextDisabled?: boolean;
-  nextText?: string;
-  skipText?: string;
-  loading?: boolean;
-  absolute?: boolean
-}
-
 // Carousel Props
 export interface CarouselSlideProps {
   slide: CarouselSlide;

@@ -31,7 +31,7 @@ export default function SelectionnableItem({
                 className
             )}
         >
-            <View className="flex-row items-center">
+            <View className="flex-row flex-1 items-center">
                 {icon && (
                     <View className="mr-3 rounded-lg border border-1 border-gray-300 bg-white w-10 h-10 items-center justify-center">
                         {React.createElement(icon)}
@@ -114,7 +114,6 @@ export function LightSelectionnableItem({
 export function InputSelectionnableItem({
     id,
     label,
-    description,
     selected,
     onPress,
     className,
@@ -123,6 +122,7 @@ export function InputSelectionnableItem({
     const [value, setValue] = useState<string>('')
     return (
         <TouchableOpacity
+            key={id}
             onPress={() => onPress(id)}
             className={mergeClassNames(
                 'mb-3 py-3 border-b',
@@ -145,7 +145,7 @@ export function InputSelectionnableItem({
                         {React.createElement(icon)}
                     </View>
                 )}
-                <View className='flex-1 flex-column'>
+                <View className='flex-1 flex-col'>
                     <Text className={mergeClassNames(typography.textSmMedium, 'text-gray-700 mb-2')}>{label}</Text>
                     <View className='rounded rounded-lg flex-1'>
                         <TextInput

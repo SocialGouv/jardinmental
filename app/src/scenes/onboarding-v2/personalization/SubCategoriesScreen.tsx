@@ -15,6 +15,7 @@ import { typography } from '@/utils/typography';
 import SelectionnableItem from '@/components/SelectionnableItem';
 import { INDICATOR_CATEGORIES_DATA } from '../data/helperData';
 import { SUBCATEGORIES, NEW_INDICATORS_SUBCATEGORIES } from '@/utils/liste_indicateurs.1';
+import InstructionText from '../InstructionText';
 
 type Props = OnboardingV2ScreenProps<'PersonalizationObjective'>;
 
@@ -87,38 +88,35 @@ export const SubcategoriesScreen: React.FC<Props> = ({ navigation, route }) => {
                 hideHeader={PROGRESS_BAR_AND_HEADER}
                 animatedStatusBarColor={animatedStatusBarColor}
                 animatedTextColor={animatedTextColor}
-                header={<View className="flex-row flex-wrap gap-2 mt-8">
-                    {profile?.selectedDifficulties.map(difficulty => (
-                        <View
-                            key={difficulty}
-                            className={mergeClassNames(
-                                typography.textXlSemibold,
-                                'border border-1 border-gray-700 w-auto rounded rounded-md'
-                            )}
-                        >
-                            <Text className='text-white py-1 px-2'>
-                                {INDICATOR_CATEGORIES_DATA[difficulty].label}
-                            </Text>
-                        </View>
-                    ))}
-                </View>}
+                // header={<View className="flex-row flex-wrap gap-2 mt-8">
+                //     {profile?.selectedDifficulties.map(difficulty => (
+                //         <View
+                //             key={difficulty}
+                //             className={mergeClassNames(
+                //                 typography.textXlSemibold,
+                //                 'border border-1 border-gray-700 w-auto rounded rounded-md'
+                //             )}
+                //         >
+                //             <Text className='text-white py-1 px-2'>
+                //                 {INDICATOR_CATEGORIES_DATA[difficulty].label}
+                //             </Text>
+                //         </View>
+                //     ))}
+                // </View>}
                 title={`Précisez ce que souhaitez vous suivre en priorité`}
                 handleSkip={handleSkip}
                 handlePrevious={handlePrevious}
             />
-            <ScrollView className="flex-1" style={{ flex: 1 }} contentContainerStyle={{ paddingBottom: 100 }}>
+            <ScrollView className="flex-1" style={{ flex: 1 }}
+                contentContainerStyle={{ paddingBottom: 200 }}>
                 {/* En-tête */}
                 <View className="px-6 py-4" style={{}}>
-                    <Text
-                        className="text-2xl font-bold text-center mb-2"
-                        style={{ color: TW_COLORS.TEXT_PRIMARY }}
+                    <InstructionText
                     >
-                    </Text>
-                    <Text
-                        className={mergeClassNames(typography.textSmMedium, 'text-brand-900 text-left')}
-                    >
-                        Votre réponse nous aide à vous orienter vers un suivi plus utile.
-                    </Text>
+                        Parmis {profile?.selectedDifficulties.filter(diff => INDICATOR_CATEGORIES_DATA[diff].subCat).map(difficulty =>
+                            `"${INDICATOR_CATEGORIES_DATA[difficulty].name}"`
+                        ).join(', ')}, quels sont les éléments les plus importants que vous souhaitez observer ?
+                    </InstructionText>
                 </View>
                 <View className="px-6" style={{}}>
                     {Object.values(INDICATOR_CATEGORIES_DATA)
@@ -136,7 +134,14 @@ export const SubcategoriesScreen: React.FC<Props> = ({ navigation, route }) => {
             <NavigationButtons
                 absolute={true}
                 onNext={handleNext}
-                onPrevious={handlePrevious}
+                headerContent={
+                    <View>
+                        <View className='my-2'>
+                            <Text className={mergeClassNames(typography.textSmMedium, 'text-gray-700 text-center')}>Vous pourrez modifier cette sélection plus tard</Text>
+                        </View>
+                    </View>
+                }
+                // onPrevious={handlePrevious}
                 onSkip={handleSkip}
                 showSkip={true}
                 nextDisabled={selectedSubcategories.length === 0}

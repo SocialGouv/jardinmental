@@ -33,7 +33,7 @@ type Props = OnboardingV2ScreenProps<'OnboardingCheckInHowDoYouFeel'>;
 
 const springConfig = { damping: 20, stiffness: 80 };
 
-const NextRoute = "PersonalizationStart"
+const NextRoute = "OnboardingCheckInSleep"
 
 export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
   const [selectedMoodIndex, setSelectedMoodIndex] = useState<number | null>(null);
@@ -303,7 +303,9 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
         animatedTextColor={animatedTextColor}
         headerTitle='Observation du jour'
         title={'Comment vous sentez-vous actuellement ?'}
-      // handlePrevious={handlePrevious}
+      // handlePrevious={() => {
+      //   navigation.goBack()
+      // }}
       />
       <View className="flex-1 p-8">
         <InstructionText>

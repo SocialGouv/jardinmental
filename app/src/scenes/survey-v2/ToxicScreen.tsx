@@ -44,7 +44,7 @@ export const ToxicScreen: React.FC<ToxicScreenProps> = ({
         headerTitle='Observation du jour'
         header={undefined}
         title={'Substances'}
-        // handlePrevious={() => navigation.goBack()}
+        handlePrevious={() => navigation.goBack()}
         handleSkip={onNext}
       ></BannerHeader>
       <View className="flex-1 justify-center items-center p-4">
@@ -61,7 +61,7 @@ export const ToxicScreen: React.FC<ToxicScreenProps> = ({
       <NavigationButtons
         onNext={onNext}
         showPrevious={false}
-        onPrevious={() => navigation.goBack()}
+        //onPrevious={() => navigation.goBack()}
         // loading={loading}
         nextText="Suivant"
       />

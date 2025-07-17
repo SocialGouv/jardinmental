@@ -41,7 +41,7 @@ export const ContextScreen: React.FC<ContextScreenProps> = ({
         headerTitle='Observation du jour'
         header={undefined}
         title={'Note générale'}
-        // handlePrevious={() => navigation.goBack()}
+        handlePrevious={() => navigation.goBack()}
         handleSkip={onNext}
       ></BannerHeader>
       <View className="flex-1 justify-center items-center p-4">
@@ -56,7 +56,7 @@ export const ContextScreen: React.FC<ContextScreenProps> = ({
       </View>
       <NavigationButtons
         onNext={onNext}
-        onPrevious={() => navigation.goBack()}
+        // onPrevious={() => navigation.goBack()}
         showPrevious={false}
         nextText="Suivant"
       />

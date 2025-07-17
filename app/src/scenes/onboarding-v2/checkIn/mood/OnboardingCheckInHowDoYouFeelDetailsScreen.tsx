@@ -148,7 +148,6 @@ export const OnboardingCheckInLastMoods: React.FC<Props> = ({ navigation, route 
         mood: route.params?.mood,
         selectedMoods: selectedMoods,
       })
-      console.log(route.params?.mood, 'route.params?.mood')
     } catch (error) {
       console.error('Error completing onboarding:', error);
       Alert.alert('Erreur', 'Une erreur est survenue. Veuillez réessayer.');
@@ -240,9 +239,9 @@ export const OnboardingCheckInLastMoods: React.FC<Props> = ({ navigation, route 
         animatedTextColor={animatedTextColor}
         headerTitle='Observation du jour'
         title={`Y-a-t-il une émotion, un état ou un comportement qui a pris un peu de place aujourd'hui ?`}
-        leftAction={showHelpModal}
-        leftComponent={<HelpText />}
-      // handlePrevious={handlePrevious}
+        // leftAction={showHelpModal}
+        // leftComponent={<HelpText />}
+        handlePrevious={handlePrevious}
       // handleSkip={handleSkip}
       >
         {route.params?.mood !== null && <View className='justify-center items-center mt-4'>
@@ -259,7 +258,8 @@ export const OnboardingCheckInLastMoods: React.FC<Props> = ({ navigation, route 
         onNext={handleComplete}
         absolute={true}
         // showPrevious={false}
-        onPrevious={handlePrevious}
+        onLeftAction={showHelpModal}
+        // onPrevious={handlePrevious}
         loading={loading}
         nextText="Renseigner mes émotions"
       />

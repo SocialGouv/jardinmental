@@ -60,7 +60,7 @@ export const OnboardingPersonalizationStartScreen: React.FC<Props> = ({ navigati
         </Text>
       </View>
       <NavigationButtons
-        onPrevious={handlePrevious}
+        // onPrevious={handlePrevious}
         onNext={handleNext}
         showPrevious={false}
         nextText="Créer mon suivi personnalisé"

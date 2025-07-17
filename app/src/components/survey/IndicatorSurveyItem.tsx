@@ -44,7 +44,6 @@ export const IndicatorSurveyItem = ({
   }, [comment]);
 
   const renderInput = () => {
-    console.log(indicator.uuid)
     switch (indicator?.type) {
       case "smiley":
         return <Smiley indicator={indicator} value={value} onValueChanged={onValueChanged} />;

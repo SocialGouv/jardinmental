@@ -10,6 +10,7 @@ import BeigeCard from './BeigeCard';
 import { SafeAreaViewWithOptionalHeader } from '../onboarding/ProgressHeader';
 import { blue } from 'react-native-reanimated/lib/typescript/Colors';
 import { colors } from '@/utils/colors';
+import ChevronIcon from '@assets/svg/icon/chevron';
 
 type Props = {
     variant?: 'beige' | 'white' | 'green' | 'blue';
@@ -47,10 +48,11 @@ export const BeigeWrapperScreen: React.FC<Props> = ({
         <SafeAreaViewWithOptionalHeader className={`flex-1 ${VARIANT_COLORS[variant]}`}>
             <CheckInHeader
                 title=""
-                // onPrevious={handlePrevious}
+                onPrevious={handlePrevious}
                 onSkip={handleSkip}
                 showPrevious={true}
                 showSkip={true}
+                leftComponent={<ChevronIcon color={TW_COLORS.PRIMARY} />}
                 animatedTextColor={{ color: TW_COLORS.PRIMARY }}
             />
 
@@ -88,7 +90,7 @@ export const BeigeWrapperScreen: React.FC<Props> = ({
                 }} />
             {handleNext && <NavigationButtons
                 onNext={handleNext}
-                onPrevious={handlePrevious}
+                // onPrevious={handlePrevious}
                 showPrevious={false}
                 nextText={nextText || "Suivant"}
             />}

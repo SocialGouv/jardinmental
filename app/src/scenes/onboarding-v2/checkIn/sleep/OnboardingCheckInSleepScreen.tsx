@@ -23,6 +23,7 @@ type Props = OnboardingV2ScreenProps<'OnboardingCheckInHowDoYouFeel'>;
 const moodEmojis = ['😢', '😕', '😐', '🙂', '😊'];
 const moodLabels = [`J'ai très mal dormi`, `J'ai mal dormi`, 'Ok', `J'ai bien dormi`, `J'ai très bien dormi`];
 
+const NextScreen = 'PersonalizationStart'
 
 export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
   const [checkInData, setCheckInData] = useState<number | null>(null);
@@ -52,7 +53,7 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
       date,
       answers: updatedAnswers
     });
-    navigation.navigate('OnboardingCheckInIntroductionCompleted')
+    navigation.navigate(NextScreen)
   };
 
   const handlePrevious = () => {
@@ -106,7 +107,7 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
         </View>}
         headerTitle='Observation du jour'
         title={`Cette nuit, avez-vous bien dormi ?`}
-      // handlePrevious={handlePrevious}
+        handlePrevious={handlePrevious}
       // handleSkip={handleSkip}
       >
       </BannerHeader>
@@ -120,7 +121,7 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
       </View>
       <NavigationButtons
         onNext={handleComplete}
-        onPrevious={handlePrevious}
+        // onPrevious={handlePrevious}
         onSkip={handleSkip}
       />
     </SafeAreaViewWithOptionalHeader>

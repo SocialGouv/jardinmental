@@ -34,7 +34,6 @@ export const useSurveyScreens = (userIndicateurs: Indicator[], { isOnboarding }:
     const categoryGroups = new Map<NEW_INDICATORS_CATEGORIES, Indicator[]>();
     const uncategorizedIndicators: Indicator[] = [];
 
-    console.log('LCS TOTO ACTIVE INDICATOR', userIndicateurs)
     activeIndicators.forEach(indicator => {
       if (indicator.mainCategory) {
         if (!categoryGroups.has(indicator.mainCategory)) {

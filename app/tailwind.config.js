@@ -57,7 +57,8 @@ module.exports = {
           950: '#093F43',
           800: '#12747D',
           600: '#1CB2BF',
-          25: '#FAFFFF'
+          25: '#FAFFFF',
+          accent: '#FDF2E7'
         },
         gray: {
           950: '#093F43',
@@ -69,11 +70,12 @@ module.exports = {
           50: '#F7FCFD'
         },
         beige: {
-          DEFAULT: '#FCEBD9'
+          DEFAULT: '#FCEBD9',
         },
         mood: {
-          5: '#21896B'
-        }
+          5: '#21896B',
+          1: '#822F2F'
+        },
       },
       fontFamily: {
         title: ['Karla', 'sans-serif'],

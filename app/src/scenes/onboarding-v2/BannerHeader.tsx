@@ -1,13 +1,20 @@
-import CheckInHeader from "@/components/onboarding/CheckInHeader";
 import React, { ReactNode } from "react";
-import { Platform, View, ViewStyle } from "react-native";
+
 import Animated from "react-native-reanimated";
-import MonochromeLogo from "@assets/svg/illustrations/MonochromeLogo"
-import { HEADER_WITH_BANNER, PROGRESS_BAR_AND_HEADER, SHARED_HEADER, TW_COLORS } from "@/utils/constants";
-import { opacity } from "react-native-reanimated/lib/typescript/Colors";
+import DeviceInfo from 'react-native-device-info';
+
+import CheckInHeader from "@/components/onboarding/CheckInHeader";
+import { Platform, ViewStyle } from "react-native";
+import { HEADER_WITH_BANNER, SHARED_HEADER, TW_COLORS } from "@/utils/constants";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
 import { firstLetterUppercase } from "@/utils/string-util";
+
+const deviceId = DeviceInfo.getDeviceId(); // e.g., "iPhone10,1"
+const isSmallDevice = ['iPhone8,4', 'iPhone5,x', 'iPhone7,2', 'iPhone9,1/3', 'iPhone10,1/4', 'iPhone12,8', 'iPhone14,6'].includes(deviceId);
+
+const statusBarHeight = isSmallDevice ? 20 : 60;
+
 
 export default function BannerHeader({
     animatedStatusBarColor,
@@ -56,7 +63,7 @@ export default function BannerHeader({
         {Platform.OS === 'ios' && (
             <Animated.View style={[{
                 backgroundColor: TW_COLORS.PRIMARY
-            }, animatedStatusBarColor, { position: !inAbsoluteView ? 'absolute' : 'relative', top: 0, left: 0, right: 0, height: 65, zIndex: 1000 }, hidden ? { opacity: 0 } : undefined]} />
+            }, animatedStatusBarColor, { position: !inAbsoluteView ? 'absolute' : 'relative', top: 0, left: 0, right: 0, height: statusBarHeight, zIndex: 1000 }, hidden ? { opacity: 0 } : undefined]} />
         )}
         <Animated.View
             style={[{
@@ -64,7 +71,6 @@ export default function BannerHeader({
             }, animatedStatusBarColor, hidden ? { opacity: 0 } : undefined]}
             className={`rounded-b-3xl ${(SHARED_HEADER || hideHeader) && !HEADER_WITH_BANNER ? 'pt-16' : ''}`}
         >
-            {/* <MonochromeLogo style={{ position: 'absolute', top: -20, left: 0 }} /> */}
             {(!(SHARED_HEADER || hideHeader) || HEADER_WITH_BANNER) && <CheckInHeader
                 title={headerTitle || ''}
                 dynamicTitle={dynamicTitle}

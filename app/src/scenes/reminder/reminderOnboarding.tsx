@@ -175,8 +175,6 @@ const Reminder = ({ navigation, route, notifReminderTitle = "Comment ça va aujo
     });
   };
 
-  console.log('LCS TOTO REMINDER', reminder)
-
   return <BeigeWrapperScreen
     variant="blue"
     handlePrevious={navigation.goBack}

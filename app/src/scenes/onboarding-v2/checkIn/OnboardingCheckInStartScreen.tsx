@@ -25,7 +25,7 @@ export const OnboardingCheckInStartScreen: React.FC<Props> = ({ navigation }) =>
     const date = formatDay(beforeToday(0));
     const answers = diaryData[date] || {};
     const currentSurvey = { date, answers };
-    return navigation.navigate("day-survey", {
+    return navigation.navigate("day-survey-v2", {
       currentSurvey,
       editingSurvey: true,
       isOnboarding: true

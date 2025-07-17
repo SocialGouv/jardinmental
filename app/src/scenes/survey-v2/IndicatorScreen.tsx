@@ -218,11 +218,12 @@ export const IndicatorScreen: React.FC<IndicatorScreenProps> = ({
           })}
         </View> : null}
         title={title}
-        leftAction={category && HELP_FOR_CATEGORY[category] ? onClickHelp : null}
-        leftComponent={category && HELP_FOR_CATEGORY[category] ? <HelpText /> : null}
+        // leftAction={category && HELP_FOR_CATEGORY[category] ? onClickHelp : null}
+        // leftComponent={category && HELP_FOR_CATEGORY[category] ? <HelpText /> : null}
         handleSkip={onNext}
         // handlePrevious={() => navigation.goBack()}
         // animation on scroll
+        handlePrevious={() => navigation.goBack()}
         headerTitleStyle={headerTitleStyle}
         dynamicTitleStyle={dynamicTitleStyle}
         bannerContentStyle={bannerContentStyle}
@@ -266,7 +267,8 @@ export const IndicatorScreen: React.FC<IndicatorScreenProps> = ({
     <NavigationButtons
       absolute={true}
       onNext={onNext}
-      onPrevious={() => navigation.goBack()}
+      onLeftAction={category && HELP_FOR_CATEGORY[category] ? onClickHelp : undefined}
+      // onPrevious={() => navigation.goBack()}
       showPrevious={false}
       // loading={loading}
       nextText="Suivant"

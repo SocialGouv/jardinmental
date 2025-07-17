@@ -8,27 +8,7 @@ import { answersYesNo } from "../survey-v2/utils";
 import BasicCard from "@/components/BasicCard";
 import { typography } from "@/utils/typography";
 import { mergeClassNames } from "@/utils/className";
-
-export function ToggleButtons() {
-  const [selected, setSelected] = useState(0);
-
-  return (
-    <View className="flex-row rounded-lg border border-gray-300">
-      <TouchableOpacity
-        className={`p-3 items-center ${selected === 0 ? 'bg-brand-800' : 'bg-white'} rounded-l-lg`}
-        onPress={() => setSelected(0)}
-      >
-        <Text className={`${selected === 0 ? 'text-white' : 'text-gray-800'} font-medium`}>Oui</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        className={`p-3 items-center ${selected === 1 ? 'bg-brand-800' : 'bg-white'} rounded-r-lg border-l border-gray-300`}
-        onPress={() => setSelected(1)}
-      >
-        <Text className={`${selected === 1 ? 'text-white' : 'text-gray-800'} font-medium`}>Non</Text>
-      </TouchableOpacity>
-    </View>
-  );
-}
+import ToggleButtons from "@/components/ToggleButton";
 
 const QuestionYesNo = ({
   question,

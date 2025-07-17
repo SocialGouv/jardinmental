@@ -41,7 +41,7 @@ export const BottomSheetProvider = ({ children }: { children: ReactNode }) => {
             ref={bottomSheetRef}
             backdropComponent={renderBackdrop}
             onDismiss={() => setContent(null)}
-            snapPoints={['50%']}
+            snapPoints={['100%']}
           >
             <BottomSheetView>
               <View className="flex-1 bg-white p-4">

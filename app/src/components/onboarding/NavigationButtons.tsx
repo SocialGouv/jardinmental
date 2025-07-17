@@ -1,9 +1,26 @@
 import React from 'react';
 import { View, TouchableOpacity, Text, ActivityIndicator } from 'react-native';
-import { NavigationButtonsProps } from '@/scenes/onboarding-v2/types';
 import { TW_COLORS } from '@/utils/constants';
 import JMButton from '../JMButton';
 import ChevronIcon from '@assets/svg/icon/chevron';
+import CircleQuestionMark from '@assets/svg/icon/CircleQuestionMark'
+
+// Navigation Props
+interface NavigationButtonsProps {
+  onNext?: () => void;
+  onPrevious?: () => void;
+  onSkip?: () => void;
+  showPrevious?: boolean;
+  showSkip?: boolean;
+  nextDisabled?: boolean;
+  nextText?: string;
+  skipText?: string;
+  loading?: boolean;
+  absolute?: boolean;
+  onLeftAction?: () => void;
+  onLeftIconAction?: JSX.Element,
+  headerContent?: JSX.Element
+}
 
 export const NavigationButtons: React.FC<NavigationButtonsProps> = ({
   onNext,
@@ -15,7 +32,10 @@ export const NavigationButtons: React.FC<NavigationButtonsProps> = ({
   nextText = 'Suivant',
   skipText = 'Passer',
   loading = false,
-  absolute = false
+  absolute = false,
+  onLeftAction,
+  onLeftIconAction,
+  headerContent
 }) => {
   return (
     <View
@@ -25,28 +45,38 @@ export const NavigationButtons: React.FC<NavigationButtonsProps> = ({
         left: 0,
         right: 0,
       } : null}
-      className={`flex-row justify-between items-center p-6 px-6 ${absolute ? 'bg-white/50 pb-10' : ''}`}>
-
-      {/* <View
+      className={`p-6 px-6 ${absolute ? 'bg-white/50 pb-10' : ''}`}>
+      {headerContent}
+      <View className='flex-row justify-between items-center'>
+        {/* <View
         className="flex-row justify-between items-center p-6 px-6 bg-white/50"> */}
-      {typeof onPrevious === 'function' && <JMButton
-        onPress={onPrevious}
-        variant='outline'
-        width='fixed'
-        icon={<ChevronIcon />}
-        // title='<'
-        className='mr-2'
-        loading={loading}
-      />}
+        {typeof onPrevious === 'function' && <JMButton
+          onPress={onPrevious}
+          variant='outline'
+          width='fixed'
+          icon={<ChevronIcon />}
+          // title='<'
+          className='mr-2'
+          loading={loading}
+        />}
+        {typeof onLeftAction === 'function' && <JMButton
+          onPress={onLeftAction}
+          variant='outline'
+          width='fixed'
+          icon={onLeftIconAction || <CircleQuestionMark />}
+          className='mr-2'
+          loading={loading}
+        />
+        }
 
-      <JMButton
-        onPress={onNext}
-        title={nextText}
-        width='adapt'
-        loading={loading}
-        disabled={nextDisabled}
-      />
-      {/* <TouchableOpacity 
+        <JMButton
+          onPress={onNext}
+          title={nextText}
+          width='adapt'
+          loading={loading}
+          disabled={nextDisabled}
+        />
+        {/* <TouchableOpacity 
         onPress={onNext}
         disabled={nextDisabled || loading}
         className="px-6 py-3 rounded-lg items-center justify-center w-full"
@@ -66,6 +96,7 @@ export const NavigationButtons: React.FC<NavigationButtonsProps> = ({
           </Text>
         )}
       </TouchableOpacity> */}
+      </View>
     </View>
   );
 };

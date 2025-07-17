@@ -71,6 +71,7 @@ import OnboardingV2 from '../scenes/onboarding-v2';
 import CheckListScreen from '@/scenes/checklist/CheckListScreen';
 import { StatusBarProvider, useStatusBarInternal } from '../context/StatusBarContext';
 import { TW_COLORS } from '@/utils/constants';
+import SurveyV1 from '../scenes/survey/daySurvey';
 
 const Stack = createStackNavigator();
 
@@ -251,13 +252,13 @@ class Router extends React.Component<RouterProps> {
   };
 
   render() {
-    console.log(process.env.EXPO_PUBLIC_SCHEME);
     return (
       <>
         <NavigationContainer ref={r => (this.navigationRef = r)} onStateChange={this.onStateChange} linking={linking}>
           <Stack.Navigator initialRouteName="tabs" screenOptions={{ headerShown: false }}>
             <Stack.Screen name="presentation" component={Presentation} />
-            <Stack.Screen name="day-survey" component={SurveyNavigator} />
+            <Stack.Screen name="day-survey" component={SurveyV1} />
+            <Stack.Screen name="day-survey-v2" component={SurveyNavigator} />
             <Stack.Screen name="select-day" component={SelectDayScreen} />
             <Stack.Screen name="tabs" component={Tabs} />
             <Stack.Screen name="symptoms" component={Indicateurs} />

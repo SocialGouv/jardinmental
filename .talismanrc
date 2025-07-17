@@ -41,14 +41,16 @@ fileignoreconfig:
   checksum: f9d4eefe958b170a2a556551b685495b3f85d66604e0e87032b6cd3ea335e541
 - filename: app/src/scenes/onboarding-v2/index.tsx
   checksum: 397a9d500493e7778dd039fb94b8c28b962c34d4e6115588a9cd345e98ad6b41
+- filename: app/src/scenes/onboarding-v2/indicators/IndicatorModal.tsx
+  checksum: 358dd3693226d27f8f0786f17ef35721743e9331657dd5fc2c410f22e7ba8c74
 - filename: app/src/scenes/onboarding-v2/indicators/OnboardingChooseIndicatorScreen.tsx
-  checksum: 6838779f44b86d00ac69298094948c450673ee7a8097b193f59ab41f41d10e51
+  checksum: 3e2a084369395e1568273f40c8096d692c0231e52b4e67e5a70fa5c8be31fcfb
 - filename: app/src/scenes/onboarding-v2/personalization/DifficultiesScreen.tsx
   checksum: 84d451d1bbd2bc2775786ca3265e1c116b7f018abfa2b1508320bec84f91a4b3
 - filename: app/src/scenes/onboarding-v2/personalization/ObjectiveScreen.tsx
   checksum: ae1b9aec4323312d0d7b3848aaf163f5461777a5e0bb05b93ea70adf806e165a
 - filename: app/src/scenes/onboarding-v2/personalization/SubCategoriesScreen.tsx
-  checksum: c2fda027ab4ce319d1f95051096afaf0a0399704a3c4b97e5842566a2960e85f
+  checksum: b341ddc0cd7888ecd109ee3d81470a7bb6e66ab2b55654defaef7363787bbdf6
 - filename: app/src/scenes/onboarding-v2/screens/CarouselScreen.tsx
   checksum: c506bc42996f4c3aecaddcecb502e884b33c6d7e0a0a7e4a2a9d7cc2f820c43b
 - filename: app/src/scenes/onboarding-v2/screens/ProfileScreen.tsx
@@ -92,7 +94,7 @@ fileignoreconfig:
 - filename: app/src/scenes/survey/QuestionYesNo.js
   checksum: 875b5da90b88e67d3fb94b760306cb7f7c12b2e35458152db49cdaf988f59d12
 - filename: app/src/scenes/survey/daySurvey.tsx
-  checksum: 440ba524fd17674f06dd0ef4158be6f3ce291bf4be450c361ec4ae883a60534f
+  checksum: 9549de9fe266b88e295af47c6467939212c7e6360622194193237d2b13657b5f
 - filename: app/src/scenes/survey/survey-data.js
   checksum: 1ac3021625ed8fb4ed188c80035b12789aa03989dc7276893900ed96dc2a2509
 - filename: app/src/services/notifications.js

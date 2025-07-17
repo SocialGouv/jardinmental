@@ -260,7 +260,6 @@ const ProgressHeader = ({ insets, slidesCount, navigation }) => {
             header={content}
             title={title || ''}
             handlePrevious={() => {
-              console.log('lcs slide index', slideIndex)
               if (slideIndex === 0) {
                 setHideHeader(true)
               }
@@ -279,10 +278,13 @@ const ProgressHeader = ({ insets, slidesCount, navigation }) => {
                 nextPath.current();
               }
             }}
+            onPrevious={() => {
+              navigation.goBack();
+            }}
             showPrevious={true}
             animatedTextColor={animatedTextColor}
             showSkip={true}
-          />}
+            title={""} />}
 
           {!HEADER_WITH_BANNER && !hideHeader && content}
         </Animated.View>

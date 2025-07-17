@@ -69,7 +69,7 @@ export const OnboardingCheckInMoodSummaryScreen: React.FC<Props> = ({ navigation
         animatedStatusBarColor={animatedStatusBarColor}
         animatedTextColor={animatedTextColor}
         headerTitle="Observation du jour"
-      // handlePrevious={handlePrevious}
+        handlePrevious={handlePrevious}
       // handleSkip={handleSkip}
       >
 
@@ -124,7 +124,7 @@ export const OnboardingCheckInMoodSummaryScreen: React.FC<Props> = ({ navigation
 
       <NavigationButtons
         onNext={handleNext}
-        onPrevious={handlePrevious}
+        // onPrevious={handlePrevious}
         showPrevious={false}
         nextText="Passer au bilan sommeil"
       />

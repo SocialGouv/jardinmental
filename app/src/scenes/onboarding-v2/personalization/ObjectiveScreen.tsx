@@ -109,6 +109,7 @@ export const ObjectiveScreen: React.FC<Props> = ({ navigation, route }) => {
         header={SHARED_HEADER || PROGRESS_BAR || PROGRESS_BAR_AND_HEADER ? undefined : <ProgressIndicator currentStep={2} totalSteps={3} />}
         title={'Quelle est votre priorité aujourd’hui dans Jardin Mental ?'}
         handleSkip={handleSkip}
+        handlePrevious={handlePrevious}
       />}
       <ScrollView className="flex-1" contentContainerStyle={{ paddingBottom: 100 }}>
         {/* En-tête */}
@@ -132,7 +133,7 @@ export const ObjectiveScreen: React.FC<Props> = ({ navigation, route }) => {
       <NavigationButtons
         absolute={true}
         onNext={handleNext}
-        onPrevious={handlePrevious}
+        // onPrevious={handlePrevious}
         onSkip={handleSkip}
         showSkip={true}
         nextDisabled={!selectedObjective}
