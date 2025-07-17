@@ -12,6 +12,7 @@ import Leaf from '@assets/svg/illustrations/Leaf';
 import TwoLeaf from '@assets/svg/illustrations/TwoLeaf';
 import CheckInHeader from '@/components/onboarding/CheckInHeader';
 import { SafeAreaViewWithOptionalHeader, useOnboardingProgressHeader } from '../onboarding/ProgressHeader';
+import { mergeClassNames } from '@/utils/className';
 
 type Props = OnboardingV2ScreenProps<'Carousel'>;
 
@@ -94,10 +95,7 @@ export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
     <TouchableOpacity
       key={index}
       onPress={() => goToSlide(index)}
-      className="w-3 h-3 rounded-full mx-1"
-      style={{
-        backgroundColor: index === currentIndex ? TW_COLORS.PRIMARY : TW_COLORS.GRAY_LIGHT,
-      }}
+      className={mergeClassNames('rounded-full mx-1', index === currentIndex ? 'w-5 h-5 bg-gray-950' : 'w-3 h-3 bg-gray-500 border border-gray-600')}
     />
   );
 
@@ -123,7 +121,7 @@ export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
 
     {/* Indicateurs de pagination et navigation */}
     <View className="left-0 right-0">
-      <View className="flex-row justify-center mb-6">
+      <View className="flex-row justify-center items-center mb-6">
         {slides.map((_, index) => renderPaginationDot(index))}
       </View>
       <NavigationButtons nextText={
