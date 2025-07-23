@@ -1,3 +1,10 @@
+## [1.51.4](https://github.com/SocialGouv/jardinmental/compare/v1.51.3...v1.51.4) (2025-07-23)
+
+
+### Bug Fixes
+
+* increase prod resources ([d91edbc](https://github.com/SocialGouv/jardinmental/commit/d91edbc96fc0da96f5d84a19d52a31f72e5ef1da))
+
 ## [1.51.3](https://github.com/SocialGouv/jardinmental/compare/v1.51.2...v1.51.3) (2025-06-24)
 
 
