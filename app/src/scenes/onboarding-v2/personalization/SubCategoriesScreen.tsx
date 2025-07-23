@@ -24,7 +24,7 @@ const NextScreen = 'OnboardingChooseIndicator'
 
 export const SubcategoriesScreen: React.FC<Props> = ({ navigation, route }) => {
     const { updateUserSubcategories, profile } = useUserProfile();
-    const [selectedSubcategories, setSelectedSubcategories] = useState<NEW_INDICATORS_SUBCATEGORIES[]>([]);
+    const [selectedSubcategories, setSelectedSubcategories] = useState<NEW_INDICATORS_SUBCATEGORIES[]>(profile?.selectedSubcategories || []);
     const { setSlideIndex, setIsVisible } = useOnboardingProgressHeader();
 
     const handleNext = async () => {
@@ -88,6 +88,7 @@ export const SubcategoriesScreen: React.FC<Props> = ({ navigation, route }) => {
         hasProgressBar={true}
         bottomComponent={<NavigationButtons
             absolute={true}
+            withArrow={true}
             onNext={handleNext}
             headerContent={
                 <View>
@@ -100,25 +101,25 @@ export const SubcategoriesScreen: React.FC<Props> = ({ navigation, route }) => {
             onSkip={handleSkip}
             showSkip={true}
             nextDisabled={selectedSubcategories.length === 0}
-            nextText="Continuer"
+            nextText="Valider et continuer"
             skipText="Passer cette étape"
         />}
     >
-        <View className="px-6 py-4" style={{}}>
+        <View className="px-6 py-4 pb-0" style={{}}>
             <InstructionText
             >
-                Parmis {profile?.selectedDifficulties.filter(diff => INDICATOR_CATEGORIES_DATA[diff].subCat).map(difficulty =>
+                Parmi {profile?.selectedDifficulties.filter(diff => INDICATOR_CATEGORIES_DATA[diff].subCat).map(difficulty =>
                     `"${INDICATOR_CATEGORIES_DATA[difficulty].name}"`
                 ).join(', ')}, quels sont les éléments les plus importants que vous souhaitez observer ?
             </InstructionText>
         </View>
-        <View className="px-6" style={{}}>
+        <View className="px-6">
             {Object.values(INDICATOR_CATEGORIES_DATA)
                 .filter(item => profile?.selectedDifficulties.includes(item.category))
                 .filter(item => item.subCat && item.subCat.length > 0)
-                .map((cat) => {
+                .map((cat, index) => {
                     return <View key={cat.id}>
-                        <View className='flex-row p-4'>{React.createElement(cat.icon, { color: TW_COLORS.GRAY_700 })}<Text className={mergeClassNames(typography.textSmBold, 'text-left text-brand-900 ml-2')}>{cat.name}</Text></View>
+                        <View className={`flex-row p-4 px-0 pb-6 ${index === 0 ? 'pt-2' : 'pt-6'}`}>{React.createElement(cat.icon, { color: TW_COLORS.BRAND_900 })}<Text className={mergeClassNames(typography.textSmBold, 'text-left text-brand-900 ml-2')}>{cat.name}</Text></View>
                         {cat.subCat.map(item => renderSubCategoryItem({ item }))}
                     </View>
                 })}

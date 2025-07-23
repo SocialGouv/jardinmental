@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     ScrollView, View, Text, Platform,
     // KeyboardAvoidingView
@@ -41,8 +41,12 @@ interface IndicatorScreenProps {
     onCommentChanged: ({ key, userComment }: { key: string; userComment: string }) => void;
     onNext: () => void;
     category?: NEW_INDICATORS_CATEGORIES;
-    showComment?: boolean
-    handlePrevious?: () => void
+    showComment?: boolean;
+    handlePrevious?: () => void;
+    children?: React.ReactNode;
+    dynamicTitle?: string;
+    hasProgressBar?: boolean;
+    bottomComponent?: React.ReactNode;
 }
 
 const ICON_FOR_CATEGORY: Record<NEW_INDICATORS_CATEGORIES, React.ReactNode> = {
@@ -77,7 +81,6 @@ export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
     bottomComponent,
     handlePrevious
 }) => {
-    console.log('LCS HANDLE PREVIOUS', handlePrevious)
     const { showBottomSheet } = useBottomSheet();
     const insets = useSafeAreaInsets();
 
@@ -88,6 +91,9 @@ export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
                 title={HELP_FOR_CATEGORY[category].title} />)
         }
     }
+    // State for dynamic padding
+    const [dynamicPaddingTop, setDynamicPaddingTop] = useState(0); // Default fallback
+
     // Scroll tracking
     const scrollY = useSharedValue(0);
     const measuredHeight = useSharedValue(0); // Store the measured natural height
@@ -102,7 +108,15 @@ export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
     // Handle layout measurement to capture natural height
     const handleBannerLayout = (event) => {
         if (measuredHeight.value === 0) { // Only measure once
-            measuredHeight.value = event.nativeEvent.layout.height;
+            const bannerHeight = event.nativeEvent.layout.height;
+            measuredHeight.value = bannerHeight;
+
+            // Calculate total header height including safe area insets
+            const totalHeaderHeight = bannerHeight + (Platform.OS === 'android' ? insets.top : 50);
+            setDynamicPaddingTop(totalHeaderHeight);
+
+            console.log('Banner height measured:', bannerHeight);
+            console.log('Total header height (with insets):', totalHeaderHeight);
         }
     };
 
@@ -149,7 +163,7 @@ export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
             height,
             paddingTop: paddingVertical,
             paddingBottom,
-            paddingHorizontal,
+            paddingHorizontal: 24,
             minHeight: 0,
             overflow: 'hidden', // Ensure content doesn't overflow during height animation
         };
@@ -210,6 +224,12 @@ export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
         };
     });
 
+    // Dynamic content container style for ScrollView (regular style object)
+    const scrollViewContentStyle = {
+        paddingTop: dynamicPaddingTop,
+        paddingBottom: 250,
+    };
+
     return <SafeAreaView className="flex-1 bg-white">
         <View style={{
             position: 'absolute', top: Platform.OS === 'android' ? insets.top : 0, left: 0, right: 0, zIndex: 10
@@ -226,7 +246,7 @@ export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
                 title={title}
                 // leftAction={category && HELP_FOR_CATEGORY[category] ? onClickHelp : null}
                 // leftComponent={category && HELP_FOR_CATEGORY[category] ? <HelpText /> : null}
-                handleSkip={onNext}
+                // handleSkip={onNext}
                 handlePrevious={handlePrevious}
                 // animation on scroll
                 // handlePrevious={() => navigation.goBack()}
@@ -236,7 +256,6 @@ export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
                 bannerContainerStyle={bannerContainerStyle}
                 titleMarginStyle={titleMarginStyle}
                 onBannerLayout={handleBannerLayout}
-                backgroundColor={'red'}
             ></BannerHeader>
         </View>
         <KeyboardAvoidingView
@@ -245,17 +264,18 @@ export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
             keyboardVerticalOffset={Platform.OS === 'android' ? 40 : 0}
             style={{ flex: 1 }}
         >
-            <Animated.ScrollView
+            {!!dynamicPaddingTop && <Animated.ScrollView
                 className={'flex-1'}
-                contentContainerStyle={{ paddingBottom: 250, paddingTop: 300 }}
+                contentContainerStyle={scrollViewContentStyle}
                 onScroll={scrollHandler}
                 scrollEventThrottle={16}>
                 {children}
-            </Animated.ScrollView>
+            </Animated.ScrollView>}
         </KeyboardAvoidingView >
         {!bottomComponent && <NavigationButtons
             absolute={true}
             onNext={onNext}
+            withArrow={true}
             onLeftAction={category && HELP_FOR_CATEGORY[category] ? onClickHelp : undefined}
             // onPrevious={() => navigation.goBack()}
             showPrevious={false}

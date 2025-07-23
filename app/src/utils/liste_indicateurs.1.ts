@@ -133,6 +133,8 @@ export const CATEGORIES = [
   }
 ];
 
+
+
 export const SUBCATEGORIES: Record<NEW_INDICATORS_SUBCATEGORIES, { id: string, label: string, category: NEW_INDICATORS_CATEGORIES }> = {
   [NEW_INDICATORS_SUBCATEGORIES.UNRESTORATIVE_SLEEP]: {
     id: "e601f450-0c10-4c7d-b1b0-b1b7405b6010",
@@ -179,18 +181,42 @@ export const SUBCATEGORIES: Record<NEW_INDICATORS_SUBCATEGORIES, { id: string, l
   }
 }
 
+export const INDICATEURS_HUMEUR: PredefineIndicatorV2SchemaType = {
+  uuid: "3e15ed99-f2f9-4716-b6a2-5348c35266da",
+  name: "Humeur générale",
+  category: INDICATORS_CATEGORIES["Emotions/sentiments"],
+  categories: [NEW_INDICATORS_CATEGORIES.EMOTIONS],
+  mainCategory: NEW_INDICATORS_CATEGORIES.EMOTIONS,
+  order: INDICATOR_ORDER.ASC,
+  type: INDICATOR_TYPE.smiley,
+  priority: 0
+};
+
+export const INDICATEURS_SOMMEIL: PredefineIndicatorV2SchemaType = {
+  uuid: "d21db60d-ffa7-4063-a011-d7faef93bed2",
+  name: "Qualité sommeil",
+  category: INDICATORS_CATEGORIES["Manifestations physiques"],
+  categories: [NEW_INDICATORS_CATEGORIES.SLEEP],
+  mainCategory: NEW_INDICATORS_CATEGORIES.SLEEP,
+  order: INDICATOR_ORDER.ASC,
+  type: INDICATOR_TYPE.gauge,
+  priority: 0
+};
+
 export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
-  {
-    name: "Qualité sommeil",
-    priority: 0,
-    categories: [NEW_INDICATORS_CATEGORIES.SLEEP],
-    subcategories: [NEW_INDICATORS_SUBCATEGORIES.UNRESTORATIVE_SLEEP],
-    uuid: "d21db60d-ffa7-4063-a011-d7faef93bed2",
-    order: "ASC",
-    type: INDICATOR_TYPE.gauge,
-    category: INDICATORS_CATEGORIES["Emotions/sentiments"],
-    mainCategory: NEW_INDICATORS_CATEGORIES.SLEEP
-  },
+  INDICATEURS_HUMEUR,
+  INDICATEURS_SOMMEIL,
+  // {
+  //   name: "Qualité sommeil",
+  //   priority: 0,
+  //   categories: [NEW_INDICATORS_CATEGORIES.SLEEP],
+  //   subcategories: [NEW_INDICATORS_SUBCATEGORIES.UNRESTORATIVE_SLEEP],
+  //   uuid: "d21db60d-ffa7-4063-a011-d7faef93bed2",
+  //   order: "ASC",
+  //   type: INDICATOR_TYPE.gauge,
+  //   category: INDICATORS_CATEGORIES["Emotions/sentiments"],
+  //   mainCategory: NEW_INDICATORS_CATEGORIES.SLEEP
+  // },
   {
     name: "Durée du sommeil",
     priority: 0,
@@ -1009,28 +1035,6 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
   }
 ];
 
-export const INDICATEURS_HUMEUR: PredefineIndicatorV2SchemaType = {
-  uuid: "3e15ed99-f2f9-4716-b6a2-5348c35266da",
-  name: "Humeur générale",
-  category: INDICATORS_CATEGORIES["Emotions/sentiments"],
-  categories: [NEW_INDICATORS_CATEGORIES.EMOTIONS],
-  mainCategory: NEW_INDICATORS_CATEGORIES.EMOTIONS,
-  order: INDICATOR_ORDER.ASC,
-  type: INDICATOR_TYPE.smiley,
-  priority: 0
-};
-
-export const INDICATEURS_SOMMEIL: PredefineIndicatorV2SchemaType = {
-  uuid: "d21db60d-ffa7-4063-a011-d7faef93bed2",
-  name: "Qualité sommeil",
-  category: INDICATORS_CATEGORIES["Manifestations physiques"],
-  categories: [NEW_INDICATORS_CATEGORIES.SLEEP],
-  mainCategory: NEW_INDICATORS_CATEGORIES.SLEEP,
-  order: INDICATOR_ORDER.ASC,
-  type: INDICATOR_TYPE.gauge,
-  priority: 0
-};
-
 export const INDICATEURS: PredefineIndicatorSchemaType[] = [
   // Emotions/sentiments
   {
@@ -1653,7 +1657,7 @@ export const INDICATEURS_LIST = {
   Désinhibition: "Désinhibition",
 };
 
-export const INDICATEURS_LES_PLUS_COURANTS = INDICATEURS.filter((indicateur) =>
+export const INDICATEURS_LES_PLUS_COURANTS = INDICATORS.filter((indicateur) =>
   [
     "3e15ed99-f2f9-4716-b6a2-5348c35266da",
     "60f6eb32-698c-47c0-b99e-fb03a576b7c1",

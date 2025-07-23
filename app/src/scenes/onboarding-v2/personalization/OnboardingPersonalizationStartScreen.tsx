@@ -48,7 +48,7 @@ export const OnboardingPersonalizationStartScreen: React.FC<Props> = ({ navigati
         <Text
           className={mergeClassNames(typography.textXlMedium, 'mb-8 text-brand-900 text-left')}
         >
-          Commençons avec quelques questions simples pour, que le suivi vous ressemble vraiment.
+          Commençons avec quelques questions simples, pour que le suivi vous ressemble vraiment.
         </Text>
         <Text
           className={mergeClassNames(typography.textMdMedium, 'text-left')}
@@ -63,6 +63,7 @@ export const OnboardingPersonalizationStartScreen: React.FC<Props> = ({ navigati
         // onPrevious={handlePrevious}
         onNext={handleNext}
         showPrevious={false}
+        withArrow={true}
         nextText="Créer mon suivi personnalisé"
       />
     </SafeAreaViewWithOptionalHeader>

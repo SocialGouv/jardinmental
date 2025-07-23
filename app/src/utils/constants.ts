@@ -345,7 +345,9 @@ export const TW_COLORS = {
   BRAND_500: "#1FC6D5",
   BEIGE: '#FCEBD9',
   GRAY_700: '#617778',
-  GRAY_200: '#E3F6F8'
+  GRAY_200: '#E3F6F8',
+  BRAND_25: '#FAFFFF',
+  BRAND_900: '#134449'
 };
 
 export const SHARED_HEADER = false

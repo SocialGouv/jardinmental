@@ -42,7 +42,7 @@ export default function SelectionnableItem({
                         {label}
                     </Text>
                     {description && (
-                        <Text className={mergeClassNames(typography.textSmMedium, 'text-gray-600 mt-1')}>
+                        <Text className={mergeClassNames(typography.textSmMedium, 'text-gray-700 mt-1')}>
                             {description}
                         </Text>
                     )}

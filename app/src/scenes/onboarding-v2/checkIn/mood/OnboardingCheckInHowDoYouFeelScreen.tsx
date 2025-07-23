@@ -5,6 +5,7 @@ import Animated, {
   useAnimatedStyle,
   withSpring,
   interpolateColor,
+  withTiming,
 } from 'react-native-reanimated';
 
 import CheckInHeader from '@/components/onboarding/CheckInHeader';
@@ -43,9 +44,13 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
   const [checkInData, setCheckInData] = useState<number | null>(null);
   const [diaryData, addNewEntryToDiaryData] = useContext(DiaryDataContext);
   const { setCustomColor } = useStatusBar();
+  const measuredHeight = useSharedValue(0); // Store the measured natural height
+  const [dynamicPaddingTop, setDynamicPaddingTop] = useState(0); // Default fallback
 
   // Animated values
   const scrollViewScale = useSharedValue(1);
+  const heightScale = useSharedValue(100);
+  const marginScale = useSharedValue(0);
   const statusBarColorProgress = useSharedValue(0);
   const textOpacity = useSharedValue(0);
   const rotateSelectorProgress = useSharedValue(0);
@@ -140,6 +145,8 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
 
     // Animate all elements with synchronized timing
     scrollViewScale.value = withSpring(2.5, springConfig);
+    heightScale.value = withSpring(200, springConfig);
+    marginScale.value = withSpring(dynamicPaddingTop, springConfig);
     statusBarColorProgress.value = withSpring(moodIndex / (moodEmojis.length - 1), springConfig);
     textOpacity.value = withSpring(1, springConfig);
     rotateSelectorProgress.value = withSpring(20, springConfig)
@@ -185,6 +192,8 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
   const animatedScrollViewStyle = useAnimatedStyle(() => {
     return {
       transform: [{ scale: scrollViewScale.value }],
+      // marginTop: marginScale.value,
+      //height: heightScale.value
     };
   });
 
@@ -237,6 +246,10 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
   const animatedTextStyle = useAnimatedStyle(() => {
     return {
       opacity: textOpacity.value,
+      position: 'absolute',
+      bottom: -100,
+      left: 0,
+      right: 0,
     };
   });
 
@@ -286,15 +299,30 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
     </Animated.View >
     {
       selectedMoodIndex !== null && (
-        <Animated.View style={animatedTextStyle} className="mt-14 items-center">
+        <Animated.View style={animatedTextStyle} className="items-center">
           <Text
             className={mergeClassNames(typography.displayMdBold, 'text-brand-900')}
           >
             {moodEmojis[selectedMoodIndex - 1]?.label}
           </Text>
         </Animated.View>
-      )}</View>
+      )}
+  </View>
   );
+
+  const handleBannerLayout = (event) => {
+    if (measuredHeight.value === 0) { // Only measure once
+      const bannerHeight = event.nativeEvent.layout.height;
+      measuredHeight.value = bannerHeight;
+
+      // Calculate total header height including safe area insets
+      const totalHeaderHeight = bannerHeight + (Platform.OS === 'android' ? insets.top : -50);
+      setDynamicPaddingTop(totalHeaderHeight);
+
+      console.log('Banner height measured:', bannerHeight);
+      console.log('Total header height (with insets):', totalHeaderHeight);
+    }
+  };
 
   return (
     <SafeAreaViewWithOptionalHeader className="flex-1 bg-white">
@@ -303,6 +331,7 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
         animatedTextColor={animatedTextColor}
         headerTitle='Observation du jour'
         title={'Comment vous sentez-vous actuellement ?'}
+        onBannerLayout={handleBannerLayout}
       // handlePrevious={() => {
       //   navigation.goBack()
       // }}
@@ -311,7 +340,12 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
         <InstructionText>
           Sélectionnez votre ressenti du moment
         </InstructionText>
-        <View className="flex-1 p-8 justify-center items-center">
+        <View
+          className="flex-1 p-8 justify-center items-center"
+        // style={{
+        //   marginTop: dynamicPaddingTop
+        // }}
+        >
           {renderMoodSelector()}
         </View>
       </View>

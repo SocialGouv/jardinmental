@@ -9,6 +9,7 @@ import {
   View,
 } from 'react-native';
 import { mergeClassNames } from '@/utils/className';
+import ArrowIcon from '@assets/svg/icon/Arrow';
 
 type ButtonProps = TouchableOpacityProps & {
   variant?: 'primary' | 'secondary' | 'outline' | 'text';
@@ -20,6 +21,7 @@ type ButtonProps = TouchableOpacityProps & {
   disabled?: boolean;
   loading?: boolean;
   icon?: JSX.Element;
+  iconPosition?: 'right' | 'left',
   size?: 'small' | 'medium' | 'large';
   width?: 'full' | 'fixed' | 'adapt';
 };
@@ -35,6 +37,7 @@ export default function JMButton({
   children,
   disabled = false,
   loading = false,
+  iconPosition = 'left',
   icon,
   ...props
 }: ButtonProps) {
@@ -114,7 +117,7 @@ export default function JMButton({
           className="mr-2"
         />
       )}
-      {!loading && styledIcon && <View className={!!(children ?? title) ? `mr-2` : ''}>{styledIcon}</View>}
+      {!loading && styledIcon && iconPosition === 'left' && <View className={!!(children ?? title) ? `mr-2` : ''}>{styledIcon}</View>}
       {!!(children || title) && <Text
         className={mergeClassNames(
           'font-semibold',
@@ -125,6 +128,7 @@ export default function JMButton({
       >
         {title}
       </Text>}
+      {!loading && icon && iconPosition === 'right' && <View className={!!(children ?? title) ? `ml-2` : ''}>{icon}</View>}
     </TouchableOpacity>
   );
 }

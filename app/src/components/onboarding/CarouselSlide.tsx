@@ -21,7 +21,7 @@ export const CarouselSlide: React.FC<CarouselSlideProps> = ({
       }}
     >
       <Text
-        className={mergeClassNames(typography.displayXsBold, 'text-brand-950 mb-10')}
+        className={mergeClassNames(typography.displayXsBold, 'text-brand-950 mb-10 text-left')}
         style={{
           color: TW_COLORS.TEXT_PRIMARY,
         }}
@@ -31,7 +31,7 @@ export const CarouselSlide: React.FC<CarouselSlideProps> = ({
 
       {/* Description */}
       {slide.description && <Text
-        className={mergeClassNames(typography.textMdRegular, 'text-brand-900 px-6')}
+        className={mergeClassNames(typography.textMdRegular, 'text-brand-900 text-left')}
         style={{
           maxWidth: screenWidth - 64
         }}

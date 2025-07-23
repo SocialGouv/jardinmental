@@ -180,7 +180,14 @@ const DaySurvey = ({ navigation, route }: {
 
   return (
     <SafeAreaView className="flex-1 bg-white">
-      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} className="flex-1" keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 25}>
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0} // adjust to your header height
+    
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        className="flex-1"
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 25}>
         <View className="absolute top-0 left-0 right-0 flex-row items-center justify-between px-4 pt-5 bg-white/90 z-50">
           {navigation.canGoBack() && (
             <Button2
@@ -199,6 +206,7 @@ const DaySurvey = ({ navigation, route }: {
         <ScrollView
           ref={scrollRef}
           keyboardShouldPersistTaps="handled"
+          contentInsetAdjustmentBehavior="automatic"
           keyboardDismissMode="interactive"
           className="grow"
           contentContainerStyle={{

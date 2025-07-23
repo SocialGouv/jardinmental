@@ -158,7 +158,7 @@ const ProgressHeader = ({ insets, slidesCount, navigation }) => {
   useEffect(() => {
     if (slideIndex >= 0) {
       Animated.timing(animatedProgressValue, {
-        toValue: Math.max(0, Math.min(1, (slideIndex + 1) / (slidesCount))),
+        toValue: Math.max(0, Math.min(1, (slideIndex) / (slidesCount))),
         duration: 300,
         easing: Easing.out(Easing.quad),
         useNativeDriver: false,
@@ -228,7 +228,7 @@ const ProgressHeader = ({ insets, slidesCount, navigation }) => {
             className="text-sm font-medium ml-2"
             style={{ color: TW_COLORS.WHITE }}
           >
-            {slideIndex + 1}/{slidesCount}
+            {slideIndex}/{slidesCount}
           </Text>
         </View>}
 

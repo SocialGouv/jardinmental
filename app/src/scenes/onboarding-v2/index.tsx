@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useContext } from 'react';
 import { CardStyleInterpolators, createStackNavigator, TransitionSpecs } from '@react-navigation/stack';
 import { OnboardingV2StackParamList } from './types';
 import localStorage from '../../utils/localStorage';
@@ -23,6 +23,8 @@ import { progressHeaderOptions, ProgressScreen } from '../onboarding/ProgressHea
 import { SHARED_HEADER, PROGRESS_BAR } from '@/utils/constants';
 import { EncouragementScreen } from '../survey-v2/EncouragementScreen';
 import SubcategoriesScreen from './personalization/SubCategoriesScreen';
+import { beforeToday, formatDay } from '@/utils/date/helpers';
+import { DiaryDataContext } from '@/context/diaryData';
 
 const Stack = createStackNavigator<OnboardingV2StackParamList>();
 
@@ -31,7 +33,10 @@ export const VALID_SCREEN_NAMES: (keyof OnboardingV2StackParamList)[] = [
   'Intro',
   // 'Profile',
   'Carousel',
+  'OnboardingCheckInStart',
   'OnboardingCheckInHowDoYouFeel',
+  'OnboardingCheckInSleep',
+  "CheckInSleepCompleted",
   'PersonalizationStart',
   'PersonalizationDifficulties',
   'SubCategoriesScreen',
@@ -94,6 +99,28 @@ const OnboardingV2Navigator: React.FC = () => {
     description={''}
     extraInfo={'En France, 32 % des adultes se déclarent insatisfaits de leur sommeil.\nEn faire le suivi, c’est déjà prendre soin de soi. (ifop mars 2022)'}
     onNext={() => navigation.navigate('PersonalizationStart')} />
+
+  const StartFirstSurvey = () => {
+    const [diaryData, setDiaryData] = useContext(DiaryDataContext);
+
+    return <EncouragementScreen
+      navigation={navigation}
+      currentStep={0}
+      totalSteps={0}
+      title={'Vous êtes prêts à faire vos observations quotidiennes, bravo !'}
+      description={'Complétez maintenant votre première observation'}
+      onNext={() => {
+        const date = formatDay(beforeToday(0));
+        const answers = diaryData[date] || {};
+        const currentSurvey = { date, answers };
+        return navigation.navigate("day-survey-v2", {
+          currentSurvey,
+          editingSurvey: true,
+          isOnboarding: true
+        });
+      }} />
+  }
+
 
 
   return (
@@ -222,6 +249,11 @@ const OnboardingV2Navigator: React.FC = () => {
         options={SHARED_HEADER ? headerOptions : undefined}
         name="OnboardingCheckInSleep"
         component={OnboardingCheckInSleepScreen}
+      />
+      <Stack.Screen
+        options={SHARED_HEADER ? headerOptions : undefined}
+        name="StartFirstSurvey"
+        component={StartFirstSurvey}
       />
       <Stack.Screen
         options={SHARED_HEADER ? headerOptions : undefined}

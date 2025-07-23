@@ -41,7 +41,7 @@ export default function BannerHeader({
 }: {
     animatedStatusBarColor?: Animated.AnimateStyle<ViewStyle>;
     animatedTextColor?: Animated.AnimateStyle<ViewStyle>;
-    handlePrevious: () => void;
+    handlePrevious?: () => void;
     handleSkip?: () => void;
     title?: string;
     header?: ReactNode;

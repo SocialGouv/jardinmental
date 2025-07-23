@@ -3,8 +3,8 @@ import Svg, { Path } from "react-native-svg";
 export default function ArrowIcon(
     {
         color
-    } : {
-        color: string
+    }: {
+        color?: string
     }
 ) {
     return <Svg width="20" height="20" viewBox="0 0 20 20" fill="none">

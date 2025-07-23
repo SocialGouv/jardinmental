@@ -12,6 +12,7 @@ export default function BannerHeaderIntro({
     handleSkip,
     title,
     children,
+    onBannerLayout
 }: {
     animatedStatusBarColor?: Animated.AnimateStyle<ViewStyle>;
     animatedTextColor?: Animated.AnimateStyle<ViewStyle>;
@@ -19,10 +20,12 @@ export default function BannerHeaderIntro({
     handleSkip: () => void;
     title: string;
     children?: ReactNode;
+    onBannerLayout?: (event: any) => void; // callback to measure banner height
 }) {
     return <>
         <Animated.View
             className={"rounded-b-3xl items-center"}
+            onLayout={onBannerLayout}
             style={[animatedStatusBarColor, { position: 'absolute', top: 0, left: 0, right: 0, height: 260, zIndex: 1, overflow: 'hidden' }]}>
             <MonochromeLogo
                 width={'130%'}

@@ -100,9 +100,10 @@ export const DifficultiesScreen: React.FC<Props> = ({ navigation }) => {
     hasProgressBar={true}
     bottomComponent={<NavigationButtons
       absolute={true}
+      withArrow={true}
       onNext={handleNext}
       headerContent={<View>
-        {selectedCount >= 2 && <View className={'bg-[#FDF2E7] py-3 px-2 mb-1'}>
+        {selectedCount >= 3 && <View className={'bg-[#FDF2E7] py-3 px-2 mb-1'}>
           <Text className={mergeClassNames(typography.textSmMedium, 'text-mood-1')}>
             Nous vous recommandons de ne pas choisir plus de 2 domaines pour commencer
           </Text>
@@ -123,7 +124,7 @@ export const DifficultiesScreen: React.FC<Props> = ({ navigation }) => {
       <Text
         className={mergeClassNames(typography.textMdRegular, 'text-brand-900 text-lect')}
       >
-        Sélectionnez un ou plusieurs domaine
+        Sélectionnez un ou plusieurs domaines
       </Text>
     </View>
 
@@ -159,7 +160,7 @@ export const DifficultiesScreen: React.FC<Props> = ({ navigation }) => {
           <Text
             className={mergeClassNames(typography.textMdRegular, 'text-brand-900 text-lect')}
           >
-            Sélectionnez un ou plusieurs domaine
+            Sélectionnez un ou plusieurs domaines
           </Text>
         </View>
 
@@ -181,7 +182,7 @@ export const DifficultiesScreen: React.FC<Props> = ({ navigation }) => {
         absolute={true}
         onNext={handleNext}
         headerContent={<View>
-          {selectedCount >= 2 && <View className={'bg-[#FDF2E7] py-3 px-2 mb-1'}>
+          {selectedCount >= 3 && <View className={'bg-[#FDF2E7] py-3 px-2 mb-1'}>
             <Text className={mergeClassNames(typography.textSmMedium, 'text-mood-1')}>
               Nous vous recommandons de ne pas choisir plus de 2 domaines pour commencer
             </Text>

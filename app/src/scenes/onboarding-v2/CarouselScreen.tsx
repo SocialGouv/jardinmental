@@ -18,7 +18,7 @@ type Props = OnboardingV2ScreenProps<'Carousel'>;
 
 const { width: screenWidth } = Dimensions.get('window');
 
-const NextRoute = 'OnboardingCheckInHowDoYouFeel'
+const NextRoute = 'OnboardingCheckInStart'
 
 export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
   const { profile, isLoading } = useUserProfile()

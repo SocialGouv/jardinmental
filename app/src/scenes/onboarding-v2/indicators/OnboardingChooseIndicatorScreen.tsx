@@ -104,7 +104,7 @@ export function suggestIndicatorsForDifficulties(
 
 type Props = OnboardingV2ScreenProps<'OnboardingChooseIndicator'>;
 
-const NextRoute = 'OnboardingCheckInStart'
+const NextRoute = 'StartFirstSurvey'
 
 export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation }) => {
   const [showMoreIndicators, setShowMoreIndicators] = useState(false);
@@ -255,7 +255,7 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
       skipText="Passer cette étape"
     />}
   >
-    <View className='px-6'>
+    <View className='px-6 py-4'>
       <InstructionText>Voici les éléments que je vous propose de suivre au quotidien. Vous pouvez en enlever ou en ajouter.</InstructionText>
     </View>
     {/* indicators grouped by categories */}

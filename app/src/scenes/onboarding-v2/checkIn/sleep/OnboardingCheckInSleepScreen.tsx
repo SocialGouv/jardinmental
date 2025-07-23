@@ -21,7 +21,7 @@ import { mergeClassNames } from '@/utils/className';
 type Props = OnboardingV2ScreenProps<'OnboardingCheckInHowDoYouFeel'>;
 
 const moodEmojis = ['😢', '😕', '😐', '🙂', '😊'];
-const moodLabels = [`J'ai très mal dormi`, `J'ai mal dormi`, 'Ok', `J'ai bien dormi`, `J'ai très bien dormi`];
+const moodLabels = [`J'ai très mal dormi`, `J'ai mal dormi`, 'J’ai passé une nuit normale', `J'ai bien dormi`, `J'ai très bien dormi`];
 
 const NextScreen = 'CheckInSleepCompleted'
 
@@ -77,7 +77,8 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
   };
 
   const renderSleepSelector = () => {
-    return <View className='p-4 py-8 rounded-xl bg-blue'>
+    return <View className='p-4 py-6 rounded-xl bg-blue'>
+      <Text className={mergeClassNames(typography.textMdMedium, 'text-brand-950 mb-2')}>Qualité du sommeil</Text>
       <Gauge onChange={onSelectValue} reverse={undefined} />
       <Text className={mergeClassNames(typography.textMdMedium, 'text-gray-700')}>{computeMoodLabel()}</Text>
     </View>

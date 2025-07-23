@@ -21,15 +21,16 @@ export const OnboardingCheckInStartScreen: React.FC<Props> = ({ navigation }) =>
   const [diaryData] = useContext(DiaryDataContext);
 
   const handleNext = () => {
+    navigation.navigate(NextRoute)
+    // const date = formatDay(beforeToday(0));
+    // const answers = diaryData[date] || {};
+    // const currentSurvey = { date, answers };
     // navigation.navigate(NextRoute)
-    const date = formatDay(beforeToday(0));
-    const answers = diaryData[date] || {};
-    const currentSurvey = { date, answers };
-    return navigation.navigate("day-survey-v2", {
-      currentSurvey,
-      editingSurvey: true,
-      isOnboarding: true
-    });
+    // return navigation.navigate("day-survey-v2", {
+    //   currentSurvey,
+    //   editingSurvey: true,
+    //   isOnboarding: true
+    // });
   }
 
   const handlePrevious = () => {
@@ -42,6 +43,7 @@ export const OnboardingCheckInStartScreen: React.FC<Props> = ({ navigation }) =>
 
   return <BeigeWrapperScreen
     handleSkip={handleSkip}
+    nextText='Commencer ma première observation'
     handlePrevious={handlePrevious}
     handleNext={handleNext}>
     <BeigeCard>

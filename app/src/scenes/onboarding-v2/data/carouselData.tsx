@@ -72,19 +72,19 @@ const SlideFinal: CarouselSlide = {
     size={40}
   /></View>,
   backgroundColor: colors.WHITE,
-  variant: 'beige'
+  variant: 'green'
 }
 
 export const carouselSlides: CarouselSlide[] = [
   SlideWelcome,
-  {
-    id: 'slide-non-suivi-jm-give-ressources',
-    title: "Des ressources pour avancer, à votre rythme.",
-    description: "Des contenus simples et concrets pour prendre soin de votre santé mentale, à votre rythme.",
-    type: 'generic',
-    backgroundColor: colors.WHITE,
-    variant: 'green'
-  },
+  // {
+  //   id: 'slide-non-suivi-jm-give-ressources',
+  //   title: "Des ressources pour avancer, à votre rythme.",
+  //   description: "Des contenus simples et concrets pour prendre soin de votre santé mentale, à votre rythme.",
+  //   type: 'generic',
+  //   backgroundColor: colors.WHITE,
+  //   variant: 'green'
+  // },
   {
     id: 'slide-non-suivi-jm-give-tools',
     title: "Des outils pour comprendre vos émotions, au quotidien",
@@ -92,6 +92,13 @@ export const carouselSlides: CarouselSlide[] = [
     type: 'generic',
     backgroundColor: colors.WHITE,
     variant: 'blue'
+  },
+  {
+    id: 'slide-suivi-share-with-you-psy',
+    title: "Suivi par un thérapeute?",
+    description: "Vous pouvez choisir de partager ce que vous notez avec votre thérapeute, pour appuyer vos échanges.\n\nTout est sous votre contrôle.",
+    type: 'generic',
+    backgroundColor: colors.WHITE,
   },
   SlideFinal,
 ];
@@ -108,17 +115,17 @@ export const carouselSlidesSuivi: CarouselSlide[] = [
   {
     id: 'slide-suivi-share-with-you-psy',
     title: "Partager avec votre thérapeute.",
-    description: "Vous pouvez choisir de partager ce que vous notez avec votre thérapeute,pour appuyer vos échanges.\nTout est sous votre contrôle.",
+    description: "Vous pouvez choisir de partager ce que vous notez avec votre thérapeute,pour appuyer vos échanges.\n\nTout est sous votre contrôle.",
     type: 'generic',
     backgroundColor: colors.WHITE,
   },
-  {
-    id: 'slide-suivi-ressources',
-    title: "Des ressources pour avancer, à votre rythme.",
-    description: "Des contenus utiles, concrets et validés, pour prendre soin de vous entre deux séances.",
-    type: 'generic',
-    backgroundColor: colors.WHITE,
-  },
+  // {
+  //   id: 'slide-suivi-ressources',
+  //   title: "Des ressources pour avancer, à votre rythme.",
+  //   description: "Des contenus utiles, concrets et validés, pour prendre soin de vous entre deux séances.",
+  //   type: 'generic',
+  //   backgroundColor: colors.WHITE,
+  // },
   SlideFinal
 ];
 

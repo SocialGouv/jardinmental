@@ -34,7 +34,7 @@ fileignoreconfig:
 - filename: app/src/scenes/onboarding-v2/checkIn/mood/OnboardingCheckInMoodSummaryScreen.tsx
   checksum: 62b7f70e73e8f19062fdad757ffdd70063398e0014e9daa674e748ead10259a7
 - filename: app/src/scenes/onboarding-v2/checkIn/sleep/OnboardingCheckInSleepScreen.tsx
-  checksum: 395ba599b156e52606ad89266eb7bb2aab8172c73eed794edebaea3dd363db0f
+  checksum: 14224cbec000817ce208d29c765b7401a1e0652a6e3fad6e913047279adaa7c6
 - filename: app/src/scenes/onboarding-v2/components/ProgressIndicator.tsx
   checksum: dc7b2bed449fd294af610f8fd941b9dd7257aaf65ec7f51e01ac9f903d029520
 - filename: app/src/scenes/onboarding-v2/context/OnboardingContext.tsx
@@ -96,7 +96,7 @@ fileignoreconfig:
 - filename: app/src/scenes/survey/QuestionYesNo.js
   checksum: 875b5da90b88e67d3fb94b760306cb7f7c12b2e35458152db49cdaf988f59d12
 - filename: app/src/scenes/survey/daySurvey.tsx
-  checksum: 9549de9fe266b88e295af47c6467939212c7e6360622194193237d2b13657b5f
+  checksum: 662ec66228249f3480fe2b425eec54260614e64fa6b3124a9a6b0447512a4d0c
 - filename: app/src/scenes/survey/survey-data.js
   checksum: 1ac3021625ed8fb4ed188c80035b12789aa03989dc7276893900ed96dc2a2509
 - filename: app/src/services/notifications.js
