@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import QuestionYesNo from '../survey/QuestionYesNo';
 import NavigationButtons from '../../components/onboarding/NavigationButtons';
 import CheckInHeader from '../../components/onboarding/CheckInHeader';
+import BannerHeader from '../onboarding-v2/BannerHeader';
 
 interface ToxicScreenProps {
   navigation: any;
@@ -32,14 +33,21 @@ export const ToxicScreen: React.FC<ToxicScreenProps> = ({
 
   return (
     <SafeAreaView className="flex-1 bg-white">
-      <CheckInHeader
+      {/* <CheckInHeader
         title="Observation du jour"
         onPrevious={() => navigation.goBack()}
         onSkip={onNext}
         showPrevious={true}
         showSkip={true}
-      />
-      <View className="flex-1 justify-center items-center">
+      /> */}
+      <BannerHeader
+        headerTitle='Observation du jour'
+        header={undefined}
+        title={'Substances'}
+        handlePrevious={() => navigation.goBack()}
+        handleSkip={onNext}
+      ></BannerHeader>
+      <View className="flex-1 justify-center items-center p-4">
         <QuestionYesNo
           question={questionToxic}
           onPress={onValueChanged}
@@ -53,6 +61,7 @@ export const ToxicScreen: React.FC<ToxicScreenProps> = ({
       <NavigationButtons
         onNext={onNext}
         showPrevious={false}
+        //onPrevious={() => navigation.goBack()}
         // loading={loading}
         nextText="Suivant"
       />

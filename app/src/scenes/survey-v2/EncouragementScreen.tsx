@@ -1,8 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, SafeAreaView } from 'react-native';
 import CheckInHeader from '../../components/onboarding/CheckInHeader';
 import NavigationButtons from '../../components/onboarding/NavigationButtons';
-import { COLORS } from '@/utils/constants';
+import { TW_COLORS } from '@/utils/constants';
+import BeigeWrapperScreen from '../onboarding-v2/BeigeWrapperScreen';
+import BeigeCard from '../onboarding-v2/BeigeCard';
+import { mergeClassNames } from '@/utils/className';
+import { typography } from '@/utils/typography';
+import { useOnboardingProgressHeader } from '../onboarding/ProgressHeader';
+import { useFocusEffect } from '@react-navigation/native';
 
 interface EncouragementScreenProps {
   navigation: any;
@@ -10,57 +16,64 @@ interface EncouragementScreenProps {
   totalSteps: number;
   title: string;
   description: string;
+  headingTitle: string;
   extraInfo: string;
   onNext: () => void;
 }
 
 export const EncouragementScreen: React.FC<EncouragementScreenProps> = ({
   navigation,
+  headingTitle,
   title,
+  description,
   extraInfo,
   onNext,
 }) => {
+
+  const { setSlideIndex } = useOnboardingProgressHeader();
+
+  useFocusEffect(
+    React.useCallback(() => {
+      // Reset current index when the screen is focused
+      setSlideIndex(-1)
+    }, [])
+  );
+
   return (
-    <SafeAreaView className="flex-1 bg-white">
-        <CheckInHeader
-        title="Observation du jour"
-        onPrevious={() => navigation.goBack()}
-        onSkip={onNext}
-        showPrevious={true}
-        showSkip={true}
-        />
-        
-        <View className="flex-1 justify-center items-center px-8">
-            <Text 
-                className="text-xl font-bold text-center mb-8"
-                style={{ color: COLORS.TEXT_PRIMARY }}
-            >
-                C'est noté !
-            </Text>
-            <Text 
-                className="text-lg font-bold text-center mb-8"
-                style={{ color: COLORS.TEXT_PRIMARY }}
-            >
-                {title}
-            </Text>
-            <Text 
-                className="text-sm text-center mt-4 px-4"
-                style={{ color: COLORS.TEXT_SECONDARY }}
-            >
-              Ce que vous avez observé aujourd’hui contribue à mieux vous comprendre, un jour après l’autre.
-            </Text>
-        </View>
-        <View className="px-8 pb-4">
-          <Text className="text-sm text-left" style={{ color: COLORS.TEXT_SECONDARY }}>
-            {extraInfo}
+    <BeigeWrapperScreen
+      handlePrevious={() => navigation.goBack()}
+      handleSkip={onNext}
+      handleNext={onNext}>
+      <BeigeCard>
+        <View className="justify-center items-center w-full">
+          <Text
+            className={mergeClassNames(typography.displayXsBold, 'text-brand-950 mb-8 text-left w-full')}
+          >
+            {headingTitle || `C'est noté 🌱`}
+          </Text>
+          <Text
+            className={mergeClassNames(typography.textMdSemibold, 'text-brand-900 mb-8 text-left w-full')}
+          >
+            {title}
           </Text>
         </View>
-        <NavigationButtons
+        {description && <View className="pb-4 w-full">
+          <Text className={mergeClassNames(typography.textMdRegular, 'text-center text-brand-900 text-left')}>
+            {description}
+          </Text>
+        </View>}
+        {extraInfo && <View className="px-0 pb-4">
+          <Text className={mergeClassNames(typography.textMdRegular, 'text-left text-gray-800 text-left')}>
+            {extraInfo}
+          </Text>
+        </View>}
+      </BeigeCard>
+      {/* <NavigationButtons
         onNext={onNext}
         showPrevious={false}
         nextText="Suivant"
-        />
-    </SafeAreaView>
+        /> */}
+    </BeigeWrapperScreen>
   );
 };
 

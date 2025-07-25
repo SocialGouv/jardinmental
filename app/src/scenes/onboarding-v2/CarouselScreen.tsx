@@ -4,28 +4,45 @@ import { OnboardingV2ScreenProps, CarouselSlide } from './types';
 import { CarouselSlide as CarouselSlideComponent } from '../../components/onboarding/CarouselSlide';
 import NavigationButtons from '../../components/onboarding/NavigationButtons';
 import { useUserProfile } from '../../context/userProfile';
-import { COLORS } from '@/utils/constants';
+import { TW_COLORS } from '@/utils/constants';
 import { useFocusEffect } from '@react-navigation/native';
 import carouselSlides, { carouselSlidesSuivi } from './data/carouselData';
+import BeigeWrapperScreen from './BeigeWrapperScreen';
+import Leaf from '@assets/svg/illustrations/Leaf';
+import TwoLeaf from '@assets/svg/illustrations/TwoLeaf';
+import CheckInHeader from '@/components/onboarding/CheckInHeader';
+import { SafeAreaViewWithOptionalHeader, useOnboardingProgressHeader } from '../onboarding/ProgressHeader';
+import { mergeClassNames } from '@/utils/className';
 
 type Props = OnboardingV2ScreenProps<'Carousel'>;
 
 const { width: screenWidth } = Dimensions.get('window');
+
+const NextRoute = 'OnboardingCheckInStart'
 
 export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
   const { profile, isLoading } = useUserProfile()
   const [slides, setSlides] = useState<CarouselSlide[]>([])
   const [currentIndex, setCurrentIndex] = useState(0);
   const flatListRef = useRef<FlatList>(null);
+  const { setSlideIndex } = useOnboardingProgressHeader();
+  const [variant, setVariant] = useState<'beige' | 'white' | 'green' | 'blue'>('beige');
+
+  useFocusEffect(
+    React.useCallback(() => {
+      // Reset current index when the screen is focused
+      setSlideIndex(-1)
+    }, [])
+  );
 
   useEffect(() => {
-    if (profile) {
-      setSlides(profile.id === 'suivi' ? carouselSlidesSuivi : carouselSlides)
-    }
+    // if (profile) {
+    setSlides(carouselSlides)
+    // }
   }, [profile])
 
   const handleNext = () => {
-    navigation.navigate('PersonalizationStart');
+    navigation.navigate(NextRoute);
   };
 
   const handlePrevious = () => {
@@ -33,11 +50,13 @@ export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
   };
 
   const handleSkip = () => {
-    navigation.navigate('PersonalizationStart');
+    navigation.navigate(NextRoute);
   };
 
   const onViewableItemsChanged = useRef(({ viewableItems }: any) => {
+    console.log(viewableItems)
     if (viewableItems.length > 0) {
+      setVariant(viewableItems[0].item.variant || 'beige');
       setCurrentIndex(viewableItems[0].index || 0);
     }
   }).current;
@@ -52,6 +71,7 @@ export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
 
   const goToNextSlide = () => {
     if (currentIndex < slides.length - 1) {
+      // setVariant(slides[currentIndex + 1].variant || 'beige');
       goToSlide(currentIndex + 1);
     } else {
       handleNext();
@@ -75,77 +95,41 @@ export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
     <TouchableOpacity
       key={index}
       onPress={() => goToSlide(index)}
-      className="w-3 h-3 rounded-full mx-1"
-      style={{
-        backgroundColor: index === currentIndex ? COLORS.PRIMARY : COLORS.GRAY_LIGHT,
-      }}
+      className={mergeClassNames('rounded-full mx-1', index === currentIndex ? 'w-5 h-5 bg-gray-950' : 'w-3 h-3 bg-gray-500 border border-gray-600')}
     />
   );
 
-  return (
-    <SafeAreaView className="flex-1 bg-white">
-      {/* Bouton Passer en haut à droite */}
-      <View className="absolute top-12 right-4 z-10">
-        <TouchableOpacity
-          onPress={handleSkip}
-          className="px-4 py-2 rounded-full"
-          style={{ backgroundColor: COLORS.WHITE + 'CC' }}
-        >
-          <Text 
-            className="text-base font-medium"
-            style={{ color: COLORS.PRIMARY }}
-          >
-            Passer
-          </Text>
-        </TouchableOpacity>
+  return <BeigeWrapperScreen
+    variant={variant}
+    handleSkip={handleSkip}>
+    <FlatList
+      ref={flatListRef}
+      data={slides}
+      renderItem={renderSlide}
+      keyExtractor={(item) => item.id.toString()}
+      horizontal
+      pagingEnabled
+      showsHorizontalScrollIndicator={false}
+      onViewableItemsChanged={onViewableItemsChanged}
+      viewabilityConfig={viewabilityConfig}
+      getItemLayout={(data, index) => ({
+        length: screenWidth,
+        offset: screenWidth * index,
+        index,
+      })}
+    />
+
+    {/* Indicateurs de pagination et navigation */}
+    <View className="left-0 right-0">
+      <View className="flex-row justify-center items-center mb-6">
+        {slides.map((_, index) => renderPaginationDot(index))}
       </View>
-
-      {/* Bouton Précédent en haut à gauche */}
-      <View className="absolute top-12 left-4 z-10">
-        <TouchableOpacity
-          onPress={handlePrevious}
-          className="px-4 py-2 rounded-full"
-          style={{ backgroundColor: COLORS.WHITE + 'CC' }}
-        >
-          <Text 
-            className="text-base font-medium"
-            style={{ color: COLORS.GRAY_DARK }}
-          >
-            ← Retour
-          </Text>
-        </TouchableOpacity>
-      </View>
-
-      {/* Carrousel */}
-      <FlatList
-        ref={flatListRef}
-        data={slides}
-        renderItem={renderSlide}
-        keyExtractor={(item) => item.id.toString()}
-        horizontal
-        pagingEnabled
-        showsHorizontalScrollIndicator={false}
-        onViewableItemsChanged={onViewableItemsChanged}
-        viewabilityConfig={viewabilityConfig}
-        getItemLayout={(data, index) => ({
-          length: screenWidth,
-          offset: screenWidth * index,
-          index,
-        })}
-      />
-
-      {/* Indicateurs de pagination et navigation */}
-      <View className="absolute bottom-8 left-0 right-0">
-        <View className="flex-row justify-center mb-6">
-          {slides.map((_, index) => renderPaginationDot(index))}
-        </View>
-        <NavigationButtons nextText={
-          currentIndex === slides.length - 1 ? 'Continuer' : 'Suivant'
-          }
+      <NavigationButtons nextText={
+        currentIndex === slides.length - 1 ? 'Démarrer sur jardin' : 'Suivant'
+      }
         onNext={goToNextSlide} />
-      </View>
-    </SafeAreaView>
-  );
+    </View>
+  </BeigeWrapperScreen>
 };
 
 export default CarouselScreen;

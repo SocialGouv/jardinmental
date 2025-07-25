@@ -7,41 +7,53 @@ import { DiaryDataContext } from '@/context/diaryData';
 import { beforeToday, formatDay } from '@/utils/date/helpers';
 import { INDICATEURS_SOMMEIL } from '@/utils/liste_indicateurs.1';
 import { generateIndicatorFromPredefinedIndicator } from '@/entities/Indicator';
-import { COLORS } from '@/utils/constants';
+import { TW_COLORS } from '@/utils/constants';
+import { SafeAreaViewWithOptionalHeader } from '@/scenes/onboarding/ProgressHeader';
+import BannerHeader from '../../BannerHeader';
+import { useAnimatedStyle } from 'react-native-reanimated';
+import InstructionText from '../../InstructionText';
+import Gauge from '@/components/gauge';
+import NavigationButtons from '@/components/onboarding/NavigationButtons';
+import MoonIcon from '@assets/svg/icon/moon';
+import { typography } from '@/utils/typography';
+import { mergeClassNames } from '@/utils/className';
 
 type Props = OnboardingV2ScreenProps<'OnboardingCheckInHowDoYouFeel'>;
 
 const moodEmojis = ['😢', '😕', '😐', '🙂', '😊'];
-const moodLabels = ['Très mal dormi', 'Mal dormi', 'Ok', 'Bien dormi', 'Très bien dormi'];
+const moodLabels = [`J'ai très mal dormi`, `J'ai mal dormi`, 'J’ai passé une nuit normale', `J'ai bien dormi`, `J'ai très bien dormi`];
+
+const NextScreen = 'CheckInSleepCompleted'
 
 export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
-  const [checkInData, setCheckInData] = useState<number|null>(null);
+  const [checkInData, setCheckInData] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
   const [diaryData, addNewEntryToDiaryData] = useContext(DiaryDataContext);
 
-  useEffect(() => {
-    if (checkInData !== null) {  // or another condition
-      handleComplete();
-    }
-  }, [checkInData])
+  // useEffect(() => {
+  //   if (checkInData !== null) {  // or another condition
+  //     handleComplete();
+  //   }
+  // }, [checkInData])
 
   const handleComplete = async () => {
-      setLoading(true);
-      // Sauvegarder les données du check-in
-      const date = formatDay(beforeToday(0))
-      const prev = diaryData[date] || {}
+    setLoading(true);
+    // Sauvegarder les données du check-in
+    const date = formatDay(beforeToday(0))
+    const prev = diaryData[date] || {}
 
-      const key = INDICATEURS_SOMMEIL.name
-      const updatedAnswers = {
-          ...prev,
-          [key]: { ...prev[key], value: checkInData, _indicateur: generateIndicatorFromPredefinedIndicator(INDICATEURS_SOMMEIL)
-          }
+    const key = INDICATEURS_SOMMEIL.name
+    const updatedAnswers = {
+      ...prev,
+      [key]: {
+        ...prev[key], value: checkInData, _indicateur: generateIndicatorFromPredefinedIndicator(INDICATEURS_SOMMEIL)
       }
-      addNewEntryToDiaryData({
-          date,
-          answers: updatedAnswers
-      });
-      navigation.navigate('OnboardingCheckInIntroductionCompleted')
+    }
+    addNewEntryToDiaryData({
+      date,
+      answers: updatedAnswers
+    });
+    navigation.navigate(NextScreen)
   };
 
   const handlePrevious = () => {
@@ -54,60 +66,66 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
 
   const onSelectValue = (value) => {
     setCheckInData(value)
+
   }
 
-  const renderSleepSelector = () => (
-    <View className="mb-6">
-      <View className="flex-row justify-between">
-        {moodEmojis.map((emoji, index) => {
-          const value = index + 1;
-          const isSelected = checkInData === value
-          return (
-            <TouchableOpacity
-              key={index}
-              onPress={() => onSelectValue(value)}
-              className="items-center p-2 rounded-lg"
-              style={{
-                backgroundColor: isSelected ? COLORS.PRIMARY + '20' : 'transparent',
-                borderWidth: isSelected ? 2 : 1,
-                borderColor: isSelected ? COLORS.PRIMARY : COLORS.GRAY_LIGHT,
-              }}
-            >
-              <Text className="text-2xl mb-1">{emoji}</Text>
-              <Text 
-                className="text-xs text-center"
-                style={{ color: COLORS.TEXT_SECONDARY }}
-              >
-                {moodLabels[index]}
-              </Text>
-            </TouchableOpacity>
-          );
-        })}
-      </View>
+  const computeMoodLabel = (): string => {
+    if (checkInData === null) return '';
+
+    const index = Math.min(Math.floor(checkInData * 5), 4);
+    return moodLabels[index] ?? '';
+  };
+
+  const renderSleepSelector = () => {
+    return <View className='p-4 py-6 rounded-xl bg-blue'>
+      <Text className={mergeClassNames(typography.textMdMedium, 'text-brand-950 mb-2')}>Qualité du sommeil</Text>
+      <Gauge onChange={onSelectValue} reverse={undefined} />
+      <Text className={mergeClassNames(typography.textMdMedium, 'text-gray-700')}>{computeMoodLabel()}</Text>
     </View>
-  );
+  };
+
+  const animatedStatusBarColor = useAnimatedStyle(() => {
+    return {
+      backgroundColor: TW_COLORS.PRIMARY,
+    };
+  })
+
+  const animatedTextColor = useAnimatedStyle(() => {
+    return {
+      backgroundColor: 'transparent',
+      color: TW_COLORS.WHITE,
+      textAlign: 'left'
+    };
+  })
 
   return (
-    <SafeAreaView className="flex-1 bg-white">
-      <CheckInHeader
-        title="Qualité du sommeil"
-        onPrevious={handlePrevious}
-        onSkip={handleSkip}
-        showPrevious={true}
-        showSkip={true}
-      />
-      
-      <View className="flex-1 justify-center items-center px-8">
-        <Text 
-          className="text-2xl font-bold text-center mb-8"
-          style={{ color: COLORS.TEXT_PRIMARY }}
-        >
-          Comment avez-vous dormi ?
-        </Text>
-        
+    <SafeAreaViewWithOptionalHeader className="flex-1 bg-white">
+      <BannerHeader
+        animatedStatusBarColor={animatedStatusBarColor}
+        animatedTextColor={animatedTextColor}
+        header={<View className='rounded-full bg-white/30 p-2 self-start w-auto'>
+          <MoonIcon />
+        </View>}
+        headerTitle='Observation du jour'
+        title={`Cette nuit, avez-vous bien dormi ?`}
+        handlePrevious={handlePrevious}
+      // handleSkip={handleSkip}
+      >
+      </BannerHeader>
+
+
+      <View className="flex-1 p-6">
+        <InstructionText>
+          Évaluez la qualité de votre sommeil
+        </InstructionText>
         {renderSleepSelector()}
       </View>
-    </SafeAreaView>
+      <NavigationButtons
+        onNext={handleComplete}
+        // onPrevious={handlePrevious}
+        onSkip={handleSkip}
+      />
+    </SafeAreaViewWithOptionalHeader>
   );
 };
 

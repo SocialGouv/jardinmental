@@ -1,83 +1,49 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { View, Text, SafeAreaView, TouchableOpacity, ScrollView } from 'react-native';
 import { OnboardingV2ScreenProps, Difficulty } from '../types';
 import { NavigationButtons } from '@/components/onboarding/NavigationButtons';
 import { ProgressIndicator } from '@/components/onboarding/ProgressIndicator';
 import { useUserProfile } from '@/context/userProfile';
 import CheckInHeader from '@/components/onboarding/CheckInHeader';
-import { COLORS } from '@/utils/constants';
+import { HEADER_WITH_BANNER, PROGRESS_BAR, PROGRESS_BAR_AND_HEADER, SHARED_HEADER, TW_COLORS } from '@/utils/constants';
+import BannerHeader from '../BannerHeader';
+import Animated, { useAnimatedScrollHandler, useAnimatedStyle } from 'react-native-reanimated';
+import { SafeAreaViewWithOptionalHeader, useOnboardingProgressHeader } from '@/scenes/onboarding/ProgressHeader';
+import { mergeClassNames } from '@/utils/className';
+import { typography } from '@/utils/typography';
+import SelectionnableItem from '@/components/SelectionnableItem';
+import { INDICATOR_CATEGORIES_DATA } from '../data/helperData';
+import { NEW_INDICATORS_CATEGORIES } from '@/utils/liste_indicateurs.1';
+import { AnimatedHeaderScrollScreen } from '@/scenes/survey-v2/AnimatedHeaderScrollScreen';
 
 type Props = OnboardingV2ScreenProps<'PersonalizationDifficulties'>;
 
 // @todo defined which difficulties we keep
-const difficultiesData: Difficulty[] = [
-  {
-    id: 'sleep',
-    name: 'Mon sommeil',
-    selected: false
-  },
-  {
-    id: 'mood',
-    name: 'Humeur',
-    selected: false
-  },
-  {
-    id: 'anxiety',
-    name: 'Anxiété',
-    selected: false
-  },
-  {
-    id: 'stress',
-    name: 'Stress',
-    selected: false
-  },
-  {
-    id: 'concentration',
-    name: 'Concentration',
-    selected: false
-  },
-  {
-    id: 'motivation',
-    name: 'Motivation',
-    selected: false
-  },
-  {
-    id: 'social_relations',
-    name: 'Relations sociales',
-    selected: false
-  },
-  {
-    id: 'self_esteem',
-    name: 'Estime de soi',
-    selected: false
-  },
-  {
-    id: 'work_stress',
-    name: 'Stress professionnel',
-    selected: false
-  },
-  {
-    id: 'family_issues',
-    name: 'Problèmes familiaux',
-    selected: false
-  }
-];
 
-const categoryIcons: Record<Difficulty['name'], string> = {
-  mood: '💭',
-  anxiety: '💭',
-  stress: '💭',
-  self_esteem: '💭',
-  sleep: '💪',
-  concentration: '🧠',
-  motivation: '🎯',
-  social: '👥',
-  environmental: '🏢'
-};
+
+const NextScreen = 'SubCategoriesScreen'
+
+
 
 export const DifficultiesScreen: React.FC<Props> = ({ navigation }) => {
-  const { updateUserDifficulties } = useUserProfile();
-  const [selectedDifficulties, setSelectedDifficulties] = useState<Difficulty[]>(difficultiesData);
+  const { updateUserDifficulties, profile } = useUserProfile();
+  const [selectedDifficulties, setSelectedDifficulties] = useState<Difficulty[]>(Object.values(INDICATOR_CATEGORIES_DATA).map(d => ({
+    ...d,
+    selected: !!profile?.selectedDifficulties.includes(d.category)
+  })).filter(cat => cat.category !== NEW_INDICATORS_CATEGORIES.PHYSICAL_SIGNS))
+  const { setSlideIndex, setNextPath, setIsVisible } = useOnboardingProgressHeader();
+
+  // useEffect(() => {
+  //   setNextPath(() => handleNext)
+  // }, [])
+
+  const handleSkip = useCallback(() => {
+    navigation.navigate(NextScreen);
+  }, [navigation]);
+
+  useEffect(() => {
+    setNextPath(handleSkip);
+  }, [handleSkip])
 
   const toggleDifficulty = (id: string) => {
     setSelectedDifficulties(prev =>
@@ -91,97 +57,152 @@ export const DifficultiesScreen: React.FC<Props> = ({ navigation }) => {
 
   const handleNext = async () => {
     const selected = selectedDifficulties.filter(d => d.selected);
-    await updateUserDifficulties(selected);
-    navigation.navigate('PersonalizationObjective');
+    const selectedCategories = selected.map(d => d.category);
+    await updateUserDifficulties(selectedCategories);
+    if (selectedCategories.find(cat => INDICATOR_CATEGORIES_DATA[cat].subCat)) {
+      navigation.navigate(NextScreen);
+    } else {
+      navigation.navigate('OnboardingLoadingScreen');
+      setTimeout(() => {
+        setSlideIndex(-1);
+        setIsVisible(false)
+      })
+    }
   };
 
   const handlePrevious = () => {
     navigation.goBack();
   };
 
-  const handleSkip = async () => {
-    await updateUserDifficulties([]);
-    navigation.navigate('PersonalizationObjective');
-  };
+  // const animatedStatusBarColor = useAnimatedStyle(() => {
+  //   return {
+  //     backgroundColor: TW_COLORS.PRIMARY,
+  //   };
+  // })
+
+  // const animatedTextColor = useAnimatedStyle(() => {
+  //   return {
+  //     backgroundColor: 'transparent',
+  //     color: TW_COLORS.WHITE,
+  //     alignContent: 'center',
+  //     textAlign: 'center'
+  //   };
+  // })
+
+  const scrollHandler = useAnimatedScrollHandler({
+    onScroll: (event) => {
+      // scrollY.value = event.contentOffset.y;
+    },
+  });
 
   const selectedCount = selectedDifficulties.filter(d => d.selected).length;
 
-  return (
-    <SafeAreaView className="flex-1 bg-white">
-      <CheckInHeader
-        title=""
-        onPrevious={handlePrevious}
-        onSkip={handleNext}
-        showPrevious={true}
-        showSkip={true}
-      />   
-      <ProgressIndicator currentStep={2} totalSteps={4} />
-      <ScrollView 
+  return (<AnimatedHeaderScrollScreen
+    title={'Sur quoi avez-vous ressenti une difficulté ou une gêne ces deux dernières semaines?'}
+    dynamicTitle={'Difficultés'}
+    navigation={navigation}
+    hasProgressBar={true}
+    bottomComponent={<NavigationButtons
+      absolute={true}
+      withArrow={true}
+      onNext={handleNext}
+      headerContent={<View>
+        {selectedCount >= 3 && <View className={'bg-[#FDF2E7] py-3 px-2 mb-1'}>
+          <Text className={mergeClassNames(typography.textSmMedium, 'text-mood-1')}>
+            Nous vous recommandons de ne pas choisir plus de 2 domaines pour commencer
+          </Text>
+        </View>}
+        <View className='my-2'>
+          <Text className={mergeClassNames(typography.textSmMedium, 'text-gray-700 text-center')}>Vous pourrez modifier cette sélection plus tard</Text>
+        </View>
+      </View>}
+      // onPrevious={handlePrevious}
+      onSkip={handleSkip}
+      nextDisabled={!selectedCount}
+      showSkip={true}
+      nextText="Continuer"
+      skipText="Passer cette étape"
+    />}
+  >
+    <View className="px-6 py-4">
+      <Text
+        className={mergeClassNames(typography.textMdRegular, 'text-brand-900 text-lect')}
+      >
+        Sélectionnez un ou plusieurs domaines
+      </Text>
+    </View>
+
+    <View className='px-4' style={{ paddingVertical: 8 }}>
+      {selectedDifficulties.map((item) => (
+        <SelectionnableItem
+          icon={item.icon}
+          key={item.id}
+          description={item.description}
+          onPress={() => toggleDifficulty(item.id)}
+          id={item.id}
+          label={item.name}
+          selected={item.selected}>
+        </SelectionnableItem>
+      ))}
+    </View>
+    {/* </AnimatedHeaderScrollScreen>
+    <SafeAreaViewWithOptionalHeader className="flex-1 bg-white">
+      {<BannerHeader
+        hidden={HEADER_WITH_BANNER}
+        hideHeader={PROGRESS_BAR_AND_HEADER}
+        title={'Sur quoi avez-vous ressenti une difficulté ou une gêne ces deux dernières semaines?'}
+        handleSkip={handleSkip}
+        handlePrevious={handlePrevious}
+      />}
+      <Animated.ScrollView
         className="flex-1"
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ flexGrow: 1 }}
-      >
+        contentContainerStyle={{ flexGrow: 1, paddingBottom: 200 }}
+        onScroll={scrollHandler}
+        scrollEventThrottle={16}>
         <View className="px-6 py-4">
-          <Text 
-            className="text-2xl font-bold text-center mb-2"
-            style={{ color: COLORS.TEXT_PRIMARY }}
+          <Text
+            className={mergeClassNames(typography.textMdRegular, 'text-brand-900 text-lect')}
           >
-            Sur quoi avez-vous ressenti une difficulté ?
-          </Text>
-          <Text 
-            className="text-base text-center mb-2"
-            style={{ color: COLORS.TEXT_SECONDARY }}
-          >
-            Sélectionnez les domaines sur lesquels vous aimeriez travailler
+            Sélectionnez un ou plusieurs domaines
           </Text>
         </View>
 
-        <View style={{ paddingVertical: 8 }}>
+        <View className='px-4' style={{ paddingVertical: 8 }}>
           {selectedDifficulties.map((item) => (
-            <TouchableOpacity
+            <SelectionnableItem
+              icon={item.icon}
               key={item.id}
+              description={item.description}
               onPress={() => toggleDifficulty(item.id)}
-              className="mx-4 mb-3 p-4 rounded-xl border-2"
-              style={{
-                borderColor: item.selected ? COLORS.PRIMARY : COLORS.GRAY_LIGHT,
-                backgroundColor: item.selected ? COLORS.PRIMARY + '10' : COLORS.WHITE,
-              }}
-            >
-              <View className="flex-row items-center">
-                <Text className="text-2xl mr-3">
-                  {categoryIcons[item.id] || '📝'}
-                </Text>
-                <View className="flex-1">
-                  <Text 
-                    className="text-lg font-medium"
-                    style={{ color: COLORS.TEXT_PRIMARY }}
-                  >
-                    {item.name}
-                  </Text>
-                </View>
-                {item.selected && (
-                  <View 
-                    className="w-6 h-6 rounded-full items-center justify-center"
-                    style={{ backgroundColor: COLORS.PRIMARY }}
-                  >
-                    <Text className="text-white text-xs">✓</Text>
-                  </View>
-                )}
-              </View>
-            </TouchableOpacity>
+              id={item.id}
+              label={item.name}
+              selected={item.selected}>
+            </SelectionnableItem>
           ))}
         </View>
-      </ScrollView>
+      </Animated.ScrollView>
       <NavigationButtons
-          onNext={handleNext}
-          onPrevious={handlePrevious}
-          onSkip={handleSkip}
-          nextDisabled={!selectedCount}
-          showSkip={true}
-          nextText="Continuer"
-          skipText="Passer cette étape"
-        />
-    </SafeAreaView>
+        absolute={true}
+        onNext={handleNext}
+        headerContent={<View>
+          {selectedCount >= 3 && <View className={'bg-[#FDF2E7] py-3 px-2 mb-1'}>
+            <Text className={mergeClassNames(typography.textSmMedium, 'text-mood-1')}>
+              Nous vous recommandons de ne pas choisir plus de 2 domaines pour commencer
+            </Text>
+          </View>}
+          <View className='my-2'>
+            <Text className={mergeClassNames(typography.textSmMedium, 'text-gray-700 text-center')}>Vous pourrez modifier cette sélection plus tard</Text>
+          </View>
+        </View>}
+        // onPrevious={handlePrevious}
+        onSkip={handleSkip}
+        nextDisabled={!selectedCount}
+        showSkip={true}
+        nextText="Continuer"
+        skipText="Passer cette étape"
+      /> */}
+  </AnimatedHeaderScrollScreen>
   );
 };
 

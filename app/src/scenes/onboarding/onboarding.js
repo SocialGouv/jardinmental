@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   emphasis: {
-    color: "#1FC6D5",
+    color: colors.LIGHT_BLUE,
   },
   presentationText: {
     fontSize: 20,

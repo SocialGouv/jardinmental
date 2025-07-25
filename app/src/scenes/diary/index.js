@@ -1,24 +1,25 @@
-import React, {useEffect, useState, useContext} from 'react';
-import {StyleSheet, ScrollView, View, TouchableOpacity, Dimensions} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import React, { useEffect, useState, useContext } from 'react';
+import { StyleSheet, ScrollView, View, TouchableOpacity, Dimensions } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Text from '../../components/MyText';
 import DiaryNotes from './DiaryNotes';
 import DiarySymptoms from './DiarySymptoms';
 import ContributeCard from '../contribute/contributeCard';
 import Header from '../../components/Header';
-import {colors} from '../../utils/colors';
-import {DiaryNotesContext} from '../../context/diaryNotes';
-import {DiaryDataContext} from '../../context/diaryData';
+import { colors } from '../../utils/colors';
+import { DiaryNotesContext } from '../../context/diaryNotes';
+import { DiaryDataContext } from '../../context/diaryData';
 import localStorage from '../../utils/localStorage';
 import NPS from '../../services/NPS/NPS';
 import ArrowUpSvg from '../../../assets/svg/arrow-up.svg';
-import {formatDateThread, makeSureTimestamp} from '../../utils/date/helpers';
+import { formatDateThread, makeSureTimestamp } from '../../utils/date/helpers';
 import DatePicker from '../../components/DatePicker';
+import { VALID_SCREEN_NAMES } from '@/scenes/onboarding-v2/index'
 
 const LIMIT_PER_PAGE = __DEV__ ? 3 : 30;
 const screenHeight = Dimensions.get('window').height;
 
-const Diary = ({navigation, hideDeader = false}) => {
+const Diary = ({ navigation, hideDeader = false }) => {
   const [diaryNotes] = useContext(DiaryNotesContext);
   const [diaryData] = useContext(DiaryDataContext);
   const [NPSvisible, setNPSvisible] = useState(false);
@@ -36,13 +37,22 @@ const Diary = ({navigation, hideDeader = false}) => {
       else {
         const isFirstAppLaunch = await localStorage.getIsFirstAppLaunch();
         if (isFirstAppLaunch !== 'false') {
+          const onboardingStep = await localStorage.getOnboardingStep()
+          let state
+          if (onboardingStep && VALID_SCREEN_NAMES.includes(onboardingStep)) {
+            const index = VALID_SCREEN_NAMES.indexOf(onboardingStep);
+            const routes = VALID_SCREEN_NAMES.slice(0, index + 1).map(name => ({ name: name, key: name }));
+            state = {
+              index,
+              routes
+            }
+          }
           navigation.reset({
-            routes: [
-              {
-                name: 'onboarding',
-                params: {screen: onboardingStep || 'OnboardingPresentation'},
-              },
-            ],
+            routes: [{
+              name: 'onboarding',
+              params: { screen: onboardingStep || 'OnboardingPresentation' },
+              state
+            }]
           });
         }
       }
@@ -52,13 +62,13 @@ const Diary = ({navigation, hideDeader = false}) => {
 
   const diaryDataWithUserComments = Object.keys(diaryData).reduce((prev, curr) => {
     const n = Object.keys(diaryData[curr] || [])?.some(category => diaryData[curr][category]?.userComment?.trim());
-    return n ? {...prev, [curr]: diaryData[curr]} : prev;
+    return n ? { ...prev, [curr]: diaryData[curr] } : prev;
   }, {});
 
   const getUserComments = (obj, key) => {
     const userComments = Object.keys(obj[key] || [])
       ?.filter(s => obj[key][s]?.userComment?.trim())
-      .map(e => ({id: e, value: obj[key][e].userComment?.trim()}));
+      .map(e => ({ id: e, value: obj[key][e].userComment?.trim() }));
     return userComments;
   };
 
@@ -66,7 +76,7 @@ const Diary = ({navigation, hideDeader = false}) => {
     <SafeAreaView style={styles.safe}>
       <NPS forceView={NPSvisible} close={() => setNPSvisible(false)} />
       <ScrollView style={styles.container} contentContainerStyle={styles.scrollContainer} keyboardShouldPersistTaps="handled">
-        {Object.keys({...diaryNotes, ...diaryDataWithUserComments})
+        {Object.keys({ ...diaryNotes, ...diaryDataWithUserComments })
           .sort((a, b) => {
             a = a.split('/').reverse().join('');
             b = b.split('/').reverse().join('');
@@ -84,7 +94,7 @@ const Diary = ({navigation, hideDeader = false}) => {
             );
           })}
         <ContributeCard onPress={() => setNPSvisible(true)} />
-        {Object.keys({...diaryNotes, ...diaryDataWithUserComments})?.length > LIMIT_PER_PAGE * page && (
+        {Object.keys({ ...diaryNotes, ...diaryDataWithUserComments })?.length > LIMIT_PER_PAGE * page && (
           <TouchableOpacity onPress={() => setPage(page + 1)} style={styles.versionContainer}>
             <Text style={styles.arrowDownLabel}>Voir plus</Text>
             <ArrowUpSvg style={styles.arrowDown} color={colors.BLUE} />
@@ -117,7 +127,7 @@ const styles = StyleSheet.create({
     paddingBottom: 0,
   },
   arrowDown: {
-    transform: [{rotate: '180deg'}],
+    transform: [{ rotate: '180deg' }],
   },
   arrowDownLabel: {
     color: colors.BLUE,

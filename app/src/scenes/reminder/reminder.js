@@ -1,24 +1,25 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {Alert, View, TouchableOpacity, StyleSheet, Linking} from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { Alert, View, TouchableOpacity, StyleSheet, Linking } from 'react-native';
 // import { openSettings } from "react-native-permissions";
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import dayjs from 'dayjs';
 import Text from '../../components/MyText';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import localStorage from '../../utils/localStorage';
-import {ONBOARDING_STEPS} from '../../utils/constants';
+import { ONBOARDING_STEPS } from '../../utils/constants';
 import ReminderSvg from '../../../assets/svg/reminder.js';
 import TimePicker from '../../components/timePicker';
 import NotificationService from '../../services/notifications';
-import {colors} from '../../utils/colors';
+import { colors } from '../../utils/colors';
 import logEvents from '../../services/logEvents';
 import BackButton from '../../components/BackButton';
 import * as RNLocalize from 'react-native-localize';
 import API from '../../services/api';
+import JMButton from '@/components/JMButton';
 
 const ReminderStorageKey = '@Reminder';
 
-const Reminder = ({navigation, route, notifReminderTitle = "Comment ça va aujourd'hui ?", notifReminderMessage = "N'oubliez pas de remplir votre application Jardin Mental"}) => {
+const Reminder = ({ navigation, route, notifReminderTitle = "Comment ça va aujourd'hui ?", notifReminderMessage = "N'oubliez pas de remplir votre application Jardin Mental" }) => {
   const [reminder, setReminder] = useState(null);
   const [reminderSetupVisible, setReminderSetupVisible] = useState(false);
 
@@ -29,7 +30,7 @@ const Reminder = ({navigation, route, notifReminderTitle = "Comment ça va aujou
       if (!dayjs(storedReminder).isValid()) {
         try {
           storedReminder = JSON.parse(storedReminder);
-        } catch (e) {}
+        } catch (e) { }
       }
     }
     if (Boolean(storedReminder) && !dayjs(storedReminder).isValid()) {
@@ -82,7 +83,6 @@ const Reminder = ({navigation, route, notifReminderTitle = "Comment ça va aujou
   };
 
   const showReminderSetup = async () => {
-    console.log('showReminderSetup');
     const isRegistered = await NotificationService.checkAndAskForPermission();
     if (!isRegistered) {
       showPermissionsAlert();
@@ -106,7 +106,7 @@ const Reminder = ({navigation, route, notifReminderTitle = "Comment ça va aujou
           style: 'cancel',
         },
       ],
-      {cancelable: true},
+      { cancelable: true },
     );
   };
 
@@ -178,9 +178,10 @@ const Reminder = ({navigation, route, notifReminderTitle = "Comment ça va aujou
         )}
       </View>
       {!!route?.params?.onboarding && !!reminder && (
-        <TouchableOpacity onPress={deleteReminderManually} style={[styles.laterContainer]}>
-          <Text style={styles.later}>Désactiver le rappel</Text>
-        </TouchableOpacity>
+        <JMButton
+          onPress={deleteReminderManually}
+          title='Désactiver le rappel'>
+        </JMButton>
       )}
 
       {route?.params?.onboarding ? (
@@ -194,12 +195,15 @@ const Reminder = ({navigation, route, notifReminderTitle = "Comment ça va aujou
         </View>
       ) : (
         <View style={styles.ctaContainer}>
-          <TouchableOpacity onPress={showReminderSetup} style={styles.setupButton}>
-            <Text style={styles.setupButtonText}>{reminder ? 'Modifier le rappel' : "Choisir l'heure du rappel"}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={reminder ? deleteReminderManually : () => navigation.navigate('tabs')} style={[styles.laterContainer]}>
-            <Text style={styles.later}>{reminder ? 'Retirer le rappel' : 'Plus tard'}</Text>
-          </TouchableOpacity>
+          <JMButton
+            onPress={showReminderSetup}
+            className={'mb-5'}
+            title={reminder ? 'Modifier le rappel' : "Choisir l'heure du rappel"}
+          />
+          <JMButton variant='text'
+            onPress={reminder ? deleteReminderManually : () => navigation.navigate('tabs')}
+            title={reminder ? 'Retirer le rappel' : 'Plus tard'}
+          />
         </View>
       )}
       <TimePicker visible={reminderSetupVisible} selectDate={setReminderRequest} />
@@ -213,7 +217,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     position: 'absolute',
     bottom: 0,
-    margin: 30,
+    marginVertical: 30,
+    padding: 0,
+    width: '100%'
   },
   lightBlue: {
     color: colors.LIGHT_BLUE,
@@ -243,6 +249,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#f9f9f9',
     flexGrow: 1,
     height: '100%',
+    width: '100%',
+    paddingHorizontal: 20,
   },
   bigTitle: {
     width: '80%',

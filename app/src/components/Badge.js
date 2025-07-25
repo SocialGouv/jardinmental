@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { colors } from "@/utils/colors";
 
 export const Badge = ({ children, textStyle, style, circle }) => {
   return (
@@ -11,7 +12,7 @@ export const Badge = ({ children, textStyle, style, circle }) => {
 
 const styles = StyleSheet.create({
   badge: {
-    backgroundColor: "#1FC6D5",
+    backgroundColor: colors.LIGHT_BLUE,
     minHeight: 24,
     borderRadius: 100,
     alignItems: "center",

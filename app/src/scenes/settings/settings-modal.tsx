@@ -46,7 +46,7 @@ const SettingsModal = ({ navigation, visible, onClick }) => {
             icon="ExportDataSettingSvg"
           />
           <SettingItem
-            title="Supprimer toutes mes donnés"
+            title="Supprimer toutes mes données"
             path=""
             navigation={navigation}
             onClick={async () => {

@@ -2,6 +2,7 @@ import React from "react";
 import { View, StyleSheet } from "react-native";
 import Svg, { Defs, LinearGradient, Mask, Rect, Stop, Use, G } from "react-native-svg";
 import { useLayout } from "@react-native-community/hooks";
+import { EMOTION_COLORS, TW_COLORS } from "@/utils/constants";
 
 const HEIGHT_RATIO_GAUGE = 48 / 256;
 const NUMBER_OF_BARS = 20;
@@ -16,8 +17,8 @@ export const GaugeChart = ({ value, reverse, containerStyle }) => {
   const horizontalSpacing = (width / NUMBER_OF_BARS - widthBar) / 2;
 
   const colors = reverse
-    ? ["#5DEE5A", "#ACF352", "#F2F478", "#FEAA5B", "#F16B6B"]
-    : ["#F16B6B", "#FEAA5B", "#F2F478", "#ACF352", "#5DEE5A"];
+    ? [TW_COLORS.POSITIVE, EMOTION_COLORS.good, EMOTION_COLORS.middle, EMOTION_COLORS.bad, TW_COLORS.NEGATIVE]
+    : [TW_COLORS.NEGATIVE, EMOTION_COLORS.bad, EMOTION_COLORS.middle,EMOTION_COLORS.good, TW_COLORS.POSITIVE];
 
   return (
     <View style={[styles.container, containerStyle]} onLayout={onLayout}>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import Text from "../../components/MyText";
 import CircledIcon from "../../components/CircledIcon";
-import { scoresMapIcon } from "../../utils/constants";
+import { EMOTION_COLORS, TW_COLORS, scoresMapIcon } from "../../utils/constants";
 import { getScoreWithState } from "../../utils";
 import ArrowRightSvg from "../../../assets/svg/arrow-right.js";
 import { colors } from "../../utils/colors";
@@ -80,8 +80,8 @@ const PatientStateItem = ({ patientState, category, label }) => {
       const _value = patientState[category]?.value;
       const _colors =
         patientState[category]?._indicateur?.order === "DESC"
-          ? ["#5DEE5A", "#ACF352", "#F2F478", "#FEAA5B", "#F16B6B"]
-          : ["#F16B6B", "#FEAA5B", "#F2F478", "#ACF352", "#5DEE5A"];
+          ? [TW_COLORS.SUCCESS, EMOTION_COLORS.good, EMOTION_COLORS.middle, EMOTION_COLORS.bad, TW_COLORS.NEGATIVE]
+          : [TW_COLORS.NEGATIVE, EMOTION_COLORS.bad, EMOTION_COLORS.middle, EMOTION_COLORS.good, TW_COLORS.SUCCESS];
 
       let _color;
       if (_value < 0.2) _color = _colors[0];

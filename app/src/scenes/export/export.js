@@ -14,6 +14,7 @@ import {DiaryNotesContext} from '../../context/diaryNotes';
 import Icon from '../../components/Icon';
 import BackButton from '../../components/BackButton';
 import Button from '../../components/Button';
+import JMButton from '@/components/JMButton';
 
 const Export = ({navigation}) => {
   const [name, setName] = useState('');
@@ -83,7 +84,7 @@ const Export = ({navigation}) => {
             </Text>
             <TextInput autoCapitalize="none" onChangeText={setName} value={name} placeholder="Ex: Arthur M. décembre 2020, ..." style={styles.inputMail} />
           </View>
-          {isLoading ? <Button title="Génération en cours..." disabled /> : <Button title="Générer un fichier" onPress={printToFile} />}
+          {isLoading ? <JMButton title="Génération en cours..." disabled /> : <JMButton title="Générer un fichier" onPress={printToFile} />}
         </ScrollView>
       </SafeAreaView>
     </KeyboardAvoidingView>

@@ -1,22 +1,22 @@
-import React, {useEffect, useState, useContext} from 'react';
-import {View, StyleSheet, ScrollView, TouchableOpacity} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import React, { useEffect, useState, useContext } from 'react';
+import { View, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import styleBeck from '../../styles/beck';
 import Text from '../../components/MyText';
 import Button from '../../components/Button';
 import Icon from '../../components/Icon';
 import BackButton from '../../components/BackButton';
-import {colors} from '../../utils/colors';
-import {formatDate, displayOnlyHourAndMinute} from '../../utils/date/helpers';
+import { colors } from '../../utils/colors';
+import { formatDate, displayOnlyHourAndMinute } from '../../utils/date/helpers';
 import TextTag from '../../components/TextTag';
-import {BeckStepTitles} from '../../utils/constants';
-import {DiaryDataContext} from '../../context/diaryData';
-import {confirm, deleteBeckfromDiaryData} from '../../utils';
+import { BeckStepTitles } from '../../utils/constants';
+import { DiaryDataContext } from '../../context/diaryData';
+import { confirm, deleteBeckfromDiaryData } from '../../utils';
 import logEvents from '../../services/logEvents';
-import {parseISO, differenceInDays} from 'date-fns';
+import { parseISO, differenceInDays } from 'date-fns';
 
-export default ({navigation, route}) => {
+export default ({ navigation, route }) => {
   const [beck, setBeck] = useState({});
   const [beckId, setBeckId] = useState();
   const [diaryData, setDiaryData] = useContext(DiaryDataContext);
@@ -68,7 +68,7 @@ export default ({navigation, route}) => {
     confirm({
       title: 'Êtes-vous sûr de vouloir supprimer cet élément ?',
       onConfirm: () => {
-        deleteBeckfromDiaryData({date, beckId, diaryData, setDiaryData});
+        deleteBeckfromDiaryData({ date, beckId, diaryData, setDiaryData });
         logEvents.logDeleteBeck();
         navigation.goBack();
       },
@@ -135,14 +135,17 @@ export default ({navigation, route}) => {
           <ItemText title="Pensée plus nuancée/adaptée" value={nuancedThoughts} />
           <ItemText title="Croyance dans la pensée principale" value={thoughtsBeforeMainEmotion} intensity={percentage(trustInThoughsNow)} />
           <ItemTag title="Émotions après coup" values={mainEmotion} intensity={percentage(mainEmotionIntensityNuanced)} />
-          <Button title="Terminer" onPress={navigation.goBack} buttonStyle={styleBeck.submitButton} />
+          <JMButton
+            title="Terminer"
+            onPress={navigation.goBack}
+          />
         </View>
       </ScrollView>
     </SafeAreaView>
   );
 };
 
-const ItemText = ({title, value, intensity}) => {
+const ItemText = ({ title, value, intensity }) => {
   if (!value) return null;
   return (
     <View style={styles.stepContainer}>
@@ -153,14 +156,14 @@ const ItemText = ({title, value, intensity}) => {
         </View>
         {intensity && (
           <View style={styleBeck.listContainer}>
-            <TextTag value={intensity} color="#D3D7E4" buttonStyle={{marginBottom: 0}} />
+            <TextTag value={intensity} color="#D3D7E4" buttonStyle={{ marginBottom: 0 }} />
           </View>
         )}
       </View>
     </View>
   );
 };
-const ItemTag = ({title, values, intensity}) => {
+const ItemTag = ({ title, values, intensity }) => {
   if (!values || !values.length) return null;
   if (!Array.isArray(values)) values = [values];
   return (
@@ -172,7 +175,7 @@ const ItemTag = ({title, values, intensity}) => {
             <TextTag key={i} value={e} color="#D4F0F2" />
           ))}
         </View>
-        {intensity && <TextTag value={intensity} color="#D3D7E4" buttonStyle={{marginBottom: 0}} />}
+        {intensity && <TextTag value={intensity} color="#D3D7E4" buttonStyle={{ marginBottom: 0 }} />}
       </View>
     </View>
   );
@@ -197,12 +200,12 @@ const styles = StyleSheet.create({
     borderLeftColor: '#ADB4CD7F',
     paddingLeft: 15,
   },
-  bold: {fontWeight: 'bold'},
+  bold: { fontWeight: 'bold' },
   safe: {
     flex: 1,
     backgroundColor: 'white',
   },
-  stepContainer: {width: '100%'},
+  stepContainer: { width: '100%' },
   buttonsContainer: {
     display: 'flex',
     flexDirection: 'row',
@@ -225,7 +228,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
   },
-  stepIndicatorContainer: {marginTop: 15, marginBottom: 35},
+  stepIndicatorContainer: { marginTop: 15, marginBottom: 35 },
   mainDescription: {
     width: '80%',
     marginTop: 15,

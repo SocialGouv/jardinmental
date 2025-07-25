@@ -1,18 +1,19 @@
-import React, {useContext} from 'react';
-import {TouchableOpacity, StyleSheet, ScrollView, View} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import React, { useContext } from 'react';
+import { TouchableOpacity, StyleSheet, ScrollView, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Text from '../../components/MyText';
-import {colors} from '../../utils/colors';
+import { colors } from '../../utils/colors';
 import CircledIcon from '../../components/CircledIcon';
-import {beforeToday, formatDay, formatRelativeDate} from '../../utils/date/helpers';
-import {subDays} from 'date-fns';
+import { beforeToday, formatDay, formatRelativeDate } from '../../utils/date/helpers';
+import { subDays } from 'date-fns';
 import BackButton from '../../components/BackButton';
-import {firstLetterUppercase} from '../../utils/string-util';
+import { firstLetterUppercase } from '../../utils/string-util';
 import ArrowUpSvg from '../../../assets/svg/arrow-up.svg';
-import {DiaryDataContext} from '../../context/diaryData';
+import { DiaryDataContext } from '../../context/diaryData';
 import Done from '../../../assets/svg/Done';
+import ScreenTitle from '@/components/survey/ScreenTitle';
 
-const SurveyScreen = ({navigation}) => {
+const SurveyScreen = ({ navigation }) => {
   const [diaryData] = useContext(DiaryDataContext);
   const startSurvey = offset => {
     const date = formatDay(beforeToday(offset));
@@ -28,7 +29,7 @@ const SurveyScreen = ({navigation}) => {
     const dayIsDone = Object.keys(filtered).length !== 0;
 
     const answers = diaryData[date] || {};
-    const currentSurvey = {date, answers};
+    const currentSurvey = { date, answers };
     return navigation.navigate('day-survey', {
       currentSurvey,
       editingSurvey: dayIsDone,
@@ -41,7 +42,7 @@ const SurveyScreen = ({navigation}) => {
     <SafeAreaView style={styles.safe}>
       <BackButton onPress={navigation.goBack} />
       <ScrollView style={styles.container}>
-        <Text style={styles.question}>Commençons ! Pour quel jour souhaites-tu remplir ton questionnaire ?</Text>
+        <ScreenTitle>Commençons ! Pour quel jour souhaites-tu remplir ton questionnaire ?</ScreenTitle>
         {[...Array(7)].map((_, i) => {
           const value = formatDay(subDays(now, i));
           let label = firstLetterUppercase(formatRelativeDate(value));
@@ -76,18 +77,12 @@ const SurveyScreen = ({navigation}) => {
 
 const styles = StyleSheet.create({
   arrowRight: {
-    transform: [{rotate: '90deg'}],
+    transform: [{ rotate: '90deg' }],
     marginRight: 10,
   },
   safe: {
     flex: 1,
     backgroundColor: 'white',
-  },
-  question: {
-    color: colors.BLUE,
-    fontSize: 22,
-    marginBottom: 26,
-    fontWeight: '700',
   },
   subtitleTop: {
     flex: 1,

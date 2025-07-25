@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {View, StyleSheet, TextInput, Platform} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet, TextInput, Platform } from 'react-native';
 
 import styleBeck from '../../styles/beck';
 import Text from '../../components/MyText';
@@ -8,7 +8,7 @@ import Separator from '../../components/Separator';
 import DiscretSlider from '../../components/DiscretSlider';
 import logEvents from '../../services/logEvents';
 
-export default ({onChange, onSubmit, data}) => {
+export default ({ onChange, onSubmit, data }) => {
   const numberOfLines = 8;
   const [trustInThoughsNowSelected, setTrustInThoughsNowSelected] = useState(
     data?.trustInThoughsNow,
@@ -43,7 +43,7 @@ export default ({onChange, onSubmit, data}) => {
         minHeight={Platform.OS === 'ios' ? 20 * numberOfLines : null}
         onChangeText={(argumentPros) => {
           setArgumentProsSelected(argumentPros);
-          onChange({argumentPros});
+          onChange({ argumentPros });
         }}
         value={argumentProsSelected}
         placeholder="Message..."
@@ -60,7 +60,7 @@ export default ({onChange, onSubmit, data}) => {
         minHeight={Platform.OS === 'ios' ? 20 * numberOfLines : null}
         onChangeText={(argumentCons) => {
           setArgumentConsSelected(argumentCons);
-          onChange({argumentCons});
+          onChange({ argumentCons });
         }}
         value={argumentConsSelected}
         placeholder="Message..."
@@ -78,7 +78,7 @@ export default ({onChange, onSubmit, data}) => {
         minHeight={Platform.OS === 'ios' ? 20 * numberOfLines : null}
         onChangeText={(nuancedThoughts) => {
           setNuancedThoughtsSelected(nuancedThoughts);
-          onChange({nuancedThoughts});
+          onChange({ nuancedThoughts });
         }}
         value={nuancedThoughtsSelected}
         placeholder="Message..."
@@ -98,7 +98,7 @@ export default ({onChange, onSubmit, data}) => {
         step={trustInThoughsNowSelected}
         onChange={(trustInThoughsNow) => {
           setTrustInThoughsNowSelected(trustInThoughsNow);
-          onChange({trustInThoughsNow});
+          onChange({ trustInThoughsNow });
         }}
       />
       <View style={styleBeck.separator} />
@@ -110,12 +110,11 @@ export default ({onChange, onSubmit, data}) => {
         step={mainEmotionIntensityNuancedSelected}
         onChange={(mainEmotionIntensityNuanced) => {
           setMainEmotionIntensityNuancedSelected(mainEmotionIntensityNuanced);
-          onChange({mainEmotionIntensityNuanced});
+          onChange({ mainEmotionIntensityNuanced });
         }}
       />
-      <Button
+      <JMButton
         title="Terminer"
-        buttonStyle={styleBeck.submitButton}
         onPress={onSubmit}
       />
     </View>

@@ -1,14 +1,15 @@
 import { useMemo } from 'react';
-import { Indicator } from '@/entities/Indicator';
+import { Indicator, INDICATORS_CATEGORIES } from '@/entities/Indicator';
 import { translateCategories } from '@/utils/constants';
 import { ENCOURAGEMENT_DATA } from '@/scenes/survey-v2/data/encouragementData';
 import { SurveyScreenInterface, SurveyScreenType } from '@/entities/SurveyScreen';
-import { BASE_INDICATORS } from '@/utils/liste_indicateurs.1';
+import { BASE_INDICATORS, INDICATEURS_HUMEUR, NEW_INDICATORS_CATEGORIES } from '@/utils/liste_indicateurs.1';
+import { INDICATOR_CATEGORIES_DATA } from '@/scenes/onboarding-v2/data/helperData';
 
 
-const FEATURE_ADD_ENCOURAGEMENT = true
+const FEATURE_ADD_ENCOURAGEMENT = false
 
-export const useSurveyScreens = (userIndicateurs: Indicator[], { isOnboarding } : { isOnboarding: boolean }): SurveyScreenInterface[] => {
+export const useSurveyScreens = (userIndicateurs: Indicator[], { isOnboarding }: { isOnboarding: boolean }): SurveyScreenInterface[] => {
   return useMemo(() => {
     const screens: SurveyScreenInterface[] = [];
 
@@ -22,23 +23,23 @@ export const useSurveyScreens = (userIndicateurs: Indicator[], { isOnboarding } 
       }
       return true
     }
-    
+
     // Filter active indicators and sort by position
-    const activeIndicators = userIndicateurs
+    const activeIndicators = [...userIndicateurs]
       .filter(indicator => indicator.active)
       .filter(filterOnboardingIndicator)
       .sort((a, b) => a.position - b.position);
 
     // Group indicators by category
-    const categoryGroups = new Map<string, Indicator[]>();
+    const categoryGroups = new Map<NEW_INDICATORS_CATEGORIES, Indicator[]>();
     const uncategorizedIndicators: Indicator[] = [];
-    
+
     activeIndicators.forEach(indicator => {
-      if (indicator.category) {
-        if (!categoryGroups.has(indicator.category)) {
-          categoryGroups.set(indicator.category, []);
+      if (indicator.mainCategory) {
+        if (!categoryGroups.has(indicator.mainCategory)) {
+          categoryGroups.set(indicator.mainCategory, []);
         }
-        categoryGroups.get(indicator.category)!.push(indicator);
+        categoryGroups.get(indicator.mainCategory)!.push(indicator);
       } else {
         uncategorizedIndicators.push(indicator);
       }
@@ -55,15 +56,15 @@ export const useSurveyScreens = (userIndicateurs: Indicator[], { isOnboarding } 
       .map(({ category, indicators }) => ({
         id: `category-${category}`,
         type: SurveyScreenType.category,
-        title: translateCategories[category] || category,
+        title: INDICATOR_CATEGORIES_DATA[category].label,
         indicators,
         category
       }));
 
     // Add category screens with encouragement screens after each category
-    if (FEATURE_ADD_ENCOURAGEMENT) {
-      categoryScreens.forEach(categoryScreen => {
-        screens.push(categoryScreen);
+    categoryScreens.forEach(categoryScreen => {
+      screens.push(categoryScreen);
+      if (FEATURE_ADD_ENCOURAGEMENT) {
         screens.push({
           id: `encouragement-after-${categoryScreen.category}`,
           type: SurveyScreenType.encouragement,
@@ -71,8 +72,8 @@ export const useSurveyScreens = (userIndicateurs: Indicator[], { isOnboarding } 
           description: ENCOURAGEMENT_DATA[categoryScreen.category]?.description || 'Merci d’avoir pris ce moment pour compléter cette information.',
           extraInfo: ENCOURAGEMENT_DATA[categoryScreen.category]?.extraInfo || undefined
         });
-      });
-    }
+      }
+    });
 
     // Create individual screens for uncategorized indicators
     const individualScreens = uncategorizedIndicators.map(indicator => ({
@@ -85,21 +86,22 @@ export const useSurveyScreens = (userIndicateurs: Indicator[], { isOnboarding } 
 
     // Add final screens
     screens.push(
-      {
-        id: 'context',
-        type: SurveyScreenType.context,
-        title: 'Contexte'
-      },
-      {
-        id: 'toxic',
-        type: SurveyScreenType.toxic,
-        title: 'Substances'
-      },
+      // {
+      //   id: 'context',
+      //   type: SurveyScreenType.context,
+      //   title: 'Contexte'
+      // },
+      // {
+      //   id: 'toxic',
+      //   type: SurveyScreenType.toxic,
+      //   title: 'Substances'
+      // },
       {
         id: 'final',
         type: SurveyScreenType.encouragement,
-        title: '👏 Un pas de plus vers une meilleure connaissance de vous.',
-        description: 'Votre observation du jour a bien été enregistrée.'
+        headingTitle: '👏 Un pas de plus vers une meilleure connaissance de vous.',
+        title: 'Votre observation du jour a bien été enregistrée.',
+        description: 'Vous pourrez revenir chaque jour pour observer votre état et suivre ces éléments.'
       }
     );
 

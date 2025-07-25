@@ -1,12 +1,13 @@
 import React from 'react';
-import {StyleSheet, View, TouchableOpacity} from 'react-native';
+import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import Text from '../../components/MyText';
 import Button from '../../components/Button';
-import {colors} from '../../utils/colors';
-import {beforeToday, formatDay} from '../../utils/date/helpers';
+import { colors } from '../../utils/colors';
+import { beforeToday, formatDay } from '../../utils/date/helpers';
 import logEvents from '../../services/logEvents';
+import { Button2 } from '../Button2';
 
-export default ({startAtFirstQuestion, navigation}) => {
+export default ({ startAtFirstQuestion, navigation }) => {
   const onStartPress = () => {
     logEvents.logFeelingDateChoose('yesterday');
     startAtFirstQuestion(formatDay(beforeToday(1)), navigation);
@@ -19,13 +20,13 @@ export default ({startAtFirstQuestion, navigation}) => {
       </Text>
       <Text style={styles.noDataText}>Faisons un point sur vos ressentis</Text>
       <View style={styles.buttonWrapper}>
-        <Button
+        <Button2
           title="Commencer"
           buttonColor="white"
           textColor={colors.BLUE}
           onPress={onStartPress}
-          buttonStyle={{width: '50%', height: 30}}
-          textStyle={{fontSize: 15, fontWeight: 'normal'}}
+        // buttonStyle={{width: '50%', height: 30}}
+        // textStyle={{fontSize: 15, fontWeight: 'normal'}}
         />
       </View>
     </TouchableOpacity>
@@ -34,7 +35,7 @@ export default ({startAtFirstQuestion, navigation}) => {
 
 const styles = StyleSheet.create({
   noDataContainer: {
-    backgroundColor: 'rgba(31, 198, 213, 0.2)',
+    backgroundColor: colors.LIGHT_BLUE_TRANS_02,
     borderRadius: 10,
     borderWidth: 1,
     borderColor: '#F4FCFD',

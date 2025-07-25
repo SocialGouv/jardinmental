@@ -1,9 +1,10 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, SafeAreaView, FlatList, TouchableOpacity, Dimensions } from 'react-native';
 import { OnboardingV2ScreenProps, CarouselSlide } from '../types';
 import { CarouselSlide as CarouselSlideComponent } from '../../../components/onboarding/CarouselSlide';
 import ProgressIndicator from '../../../components/onboarding/ProgressIndicator';
-import { COLORS } from '@/utils/constants';
+import { TW_COLORS } from '@/utils/constants';
+import { useOnboardingProgressHeader } from '@/scenes/onboarding/ProgressHeader';
 
 type Props = OnboardingV2ScreenProps<'Carousel'>;
 
@@ -12,6 +13,11 @@ const { width: screenWidth } = Dimensions.get('window');
 export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
   const { slides } = route.params;
   const [currentIndex, setCurrentIndex] = useState(0);
+  const { setSlideIndex, setNextPath } = useOnboardingProgressHeader();
+
+  useEffect(() => {
+    setNextPath('Onboarding')
+  }, [])
   const flatListRef = useRef<FlatList>(null);
 
   const handleNext = () => {
@@ -63,7 +69,7 @@ export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
       onPress={() => goToSlide(index)}
       className="w-3 h-3 rounded-full mx-1"
       style={{
-        backgroundColor: index === currentIndex ? COLORS.PRIMARY : COLORS.GRAY_LIGHT,
+        backgroundColor: index === currentIndex ? TW_COLORS.PRIMARY : TW_COLORS.GRAY_LIGHT,
       }}
     />
   );
@@ -75,11 +81,11 @@ export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
         <TouchableOpacity
           onPress={handleNext}
           className="px-4 py-2 rounded-full"
-          style={{ backgroundColor: COLORS.WHITE + 'CC' }}
+          style={{ backgroundColor: TW_COLORS.WHITE + 'CC' }}
         >
-          <Text 
+          <Text
             className="text-base font-medium"
-            style={{ color: COLORS.PRIMARY }}
+            style={{ color: TW_COLORS.PRIMARY }}
           >
             Passer
           </Text>
@@ -91,18 +97,18 @@ export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
         <TouchableOpacity
           onPress={handlePrevious}
           className="px-4 py-2 rounded-full"
-          style={{ backgroundColor: COLORS.WHITE + 'CC' }}
+          style={{ backgroundColor: TW_COLORS.WHITE + 'CC' }}
         >
-          <Text 
+          <Text
             className="text-base font-medium"
-            style={{ color: COLORS.GRAY_DARK }}
+            style={{ color: TW_COLORS.GRAY_DARK }}
           >
             ← Retour
           </Text>
         </TouchableOpacity>
       </View>
       <ProgressIndicator currentStep={0}
-        totalSteps={4}/>
+        totalSteps={4} />
       {/* Carrousel */}
       <FlatList
         ref={flatListRef}

@@ -27,7 +27,7 @@ const SurveyExplanation = ({title = 'Explications', explanation}) => {
       <TouchableOpacity style={styles.arrow} onPress={toggleFullScreen}>
         <InfoSvg style={styles.icon} />
         <Text style={styles.title}>{title}</Text>
-        <ArrowUpSvg style={{transform: [{rotate: '180deg'}]}} color="#26387C" />
+        <ArrowUpSvg style={{transform: [{rotate: '180deg'}]}} color={colors.BLUE} />
       </TouchableOpacity>
       <View style={styles.container}>
         <ScrollView>
@@ -40,7 +40,7 @@ const SurveyExplanation = ({title = 'Explications', explanation}) => {
       <TouchableOpacity style={styles.arrow} onPress={toggleFullScreen}>
         <InfoSvg style={styles.icon} />
         <Text style={styles.title}>{title}</Text>
-        <ArrowUpSvg color="#26387C" />
+        <ArrowUpSvg color={colors.BLUE} />
       </TouchableOpacity>
       <View style={[styles.container, {paddingBottom: 10}]}>
         <Text numberOfLines={1} style={styles.text}>

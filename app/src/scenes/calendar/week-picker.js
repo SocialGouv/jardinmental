@@ -48,7 +48,7 @@ const WeekPicker = ({
         onPress={(e) => !isAfterToday(lastDay) && onAfterPress(e)}
         style={styles.button}>
         <ArrowRightSvg
-          color={isAfterToday(lastDay) ? 'transparent' : '#1FC6D5'}
+          color={isAfterToday(lastDay) ? 'transparent' : colors.LIGHT_BLUE}
         />
       </TouchableOpacity>
     </View>

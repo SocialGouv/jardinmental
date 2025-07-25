@@ -5,7 +5,7 @@ import {useFocusEffect} from '@react-navigation/native';
 import {getArrayOfDatesFromTo} from '../../utils/date/helpers';
 import {DiaryDataContext} from '../../context/diaryData';
 import Text from '../../components/MyText';
-import {displayedCategories, scoresMapIcon} from '../../utils/constants';
+import {displayedCategories, EMOTION_COLORS, scoresMapIcon} from '../../utils/constants';
 import {colors} from '../../utils/colors';
 import {buildSurveyData} from '../survey/survey-data';
 import PieChart from 'react-native-pie-chart';
@@ -17,6 +17,8 @@ import localStorage from '../../utils/localStorage';
 import logEvents from '../../services/logEvents';
 import Button from '../../components/Button';
 import {GoalsChartPie} from '../goals/suivi/GoalsChartPie';
+import JMButton from '@/components/JMButton';
+import { TW_COLORS } from '../../utils/constants';
 
 const ChartPie = ({navigation, fromDate, toDate}) => {
   const [diaryData] = React.useContext(DiaryDataContext);
@@ -124,7 +126,7 @@ const ChartPie = ({navigation, fromDate, toDate}) => {
             Des <Text style={styles.bold}>statistiques</Text> apparaîtront au fur et à mesure de vos saisies quotidiennes.
           </Text>
         </View>
-        <Button title="Commencer à saisir" onPress={startSurvey} />
+        <JMButton title="Commencer à saisir" onPress={startSurvey} />
       </View>
     );
   }
@@ -142,7 +144,7 @@ const ChartPie = ({navigation, fromDate, toDate}) => {
                 indicateur={_indicateur}
                 title={getTitle(_indicateur.name)}
                 data={computeChartData(_indicateur.name)}
-                parialsColors={['#f3f3f3', isReverse ? '#F16B6B' : '#5DEE5A', isReverse ? '#5DEE5A' : '#F16B6B']}
+                parialsColors={['#f3f3f3', isReverse ? TW_COLORS.NEGATIVE : TW_COLORS.POSITIVE, isReverse ? TW_COLORS.POSITIVE : TW_COLORS.NEGATIVE]}
               />
             );
           return <Pie indicateur={_indicateur} title={getTitle(_indicateur.name)} key={_indicateur.name} data={computeChartData(_indicateur.name)} />;
@@ -211,7 +213,7 @@ const renderResponse = ({indicateur, value, isSmall, translateX}) => {
   }
   if (indicateur?.type === 'gauge') {
     const _value = value;
-    const _colors = indicateur?.order === 'DESC' ? ['#5DEE5A', '#ACF352', '#F2F478', '#FEAA5B', '#F16B6B'] : ['#F16B6B', '#FEAA5B', '#F2F478', '#ACF352', '#5DEE5A'];
+    const _colors = indicateur?.order === 'DESC' ? [TW_COLORS.POSITIVE, EMOTION_COLORS.good,EMOTION_COLORS.middle, EMOTION_COLORS.bad, TW_COLORS.NEGATIVE] : [TW_COLORS.NEGATIVE, EMOTION_COLORS.bad, EMOTION_COLORS.middle, EMOTION_COLORS.good, TW_COLORS.POSITIVE];
 
     let _color = _colors[_value - 1];
 

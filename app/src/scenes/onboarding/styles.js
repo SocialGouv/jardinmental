@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet, View, Dimensions } from "react-native";
+import { colors } from "@/utils/colors";
 
 export const onboardingStyles = StyleSheet.create({
   safe: {
@@ -54,7 +55,7 @@ export const onboardingStyles = StyleSheet.create({
     paddingVertical: 20,
   },
   emphasis: {
-    color: "#1FC6D5",
+    color: colors.LIGHT_BLUE,
   },
   h1: {
     fontFamily: "Karla",
@@ -63,7 +64,7 @@ export const onboardingStyles = StyleSheet.create({
     fontSize: 28,
     lineHeight: 33,
     textAlign: "left",
-    color: "#26387C",
+    color: colors.BLUE,
   },
   h2: {
     fontFamily: "Karla",
@@ -72,7 +73,7 @@ export const onboardingStyles = StyleSheet.create({
     fontSize: 20,
     lineHeight: 23,
     textAlign: "left",
-    color: "#26387C",
+    color: colors.BLUE,
   },
   h3: {
     fontFamily: "Karla",
@@ -81,12 +82,12 @@ export const onboardingStyles = StyleSheet.create({
     fontSize: 15,
     lineHeight: 17,
     textAlign: "left",
-    color: "#26387C",
+    color: colors.BLUE,
     marginVertical: 10,
   },
   bold: {
     fontWeight: "bold",
-    color: "#26387C",
+    color:colors.BLUE,
   },
   presentationText: {
     textAlign: "left",

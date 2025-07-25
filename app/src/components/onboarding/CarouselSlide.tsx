@@ -1,7 +1,11 @@
 import React from 'react';
 import { View, Text, Dimensions } from 'react-native';
 import { CarouselSlideProps } from '@/scenes/onboarding-v2/types';
-import { COLORS } from '@/utils/constants';
+import { TW_COLORS } from '@/utils/constants';
+import BeigeCard from '@/scenes/onboarding-v2/BeigeCard';
+import { AvatarGroup } from '../AvatarGroup';
+import { mergeClassNames } from '@/utils/className';
+import { typography } from '@/utils/typography';
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
@@ -11,49 +15,31 @@ export const CarouselSlide: React.FC<CarouselSlideProps> = ({
   onPress
 }) => {
   return (
-    <View 
-      className="flex-1 justify-center items-center px-8"
-      style={{ 
+    <BeigeCard
+      style={{
         width: screenWidth,
-        backgroundColor: slide.backgroundColor || COLORS.BACKGROUND,
       }}
     >
-      {/* Illustration placeholder */}
-      <View className="mb-8">
-        {slide.illustration || (
-          <View 
-            className="w-32 h-32 rounded-full items-center justify-center"
-            style={{ backgroundColor: COLORS.PRIMARY + '20' }}
-          >
-            <Text className="text-4xl">
-              {slide.type === 'special' ? '🎉' : '✨'}
-            </Text>
-          </View>
-        )}
-      </View>
-
-      {/* Titre */}
-      <Text 
-        className="text-3xl font-bold text-center mb-6"
-        style={{ 
-          color: COLORS.TEXT_PRIMARY,
-          lineHeight: 40
+      <Text
+        className={mergeClassNames(typography.displayXsBold, 'text-brand-950 mb-10 text-left')}
+        style={{
+          color: TW_COLORS.TEXT_PRIMARY,
         }}
       >
         {slide.title}
       </Text>
 
       {/* Description */}
-      <Text 
-        className="text-lg text-center leading-7"
-        style={{ 
-          color: COLORS.TEXT_SECONDARY,
+      {slide.description && <Text
+        className={mergeClassNames(typography.textMdRegular, 'text-brand-900 text-left')}
+        style={{
           maxWidth: screenWidth - 64
         }}
       >
         {slide.description}
-      </Text>
-    </View>
+      </Text>}
+      {slide.children}
+    </BeigeCard>
   );
 };
 

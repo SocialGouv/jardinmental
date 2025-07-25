@@ -1,15 +1,15 @@
 import React from 'react';
 import Tabs from './tabs';
-import {createStackNavigator} from '@react-navigation/stack';
-import {NavigationContainer} from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
 import EnvironmentIndicator from '../services/EnvironmentIndicator';
 import SurveyNavigator from '../scenes/survey-v2/SurveyNavigator';
 import SelectDayScreen from '../scenes/survey/selectDay';
 import Reminder from '../scenes/reminder';
 import Export from '../scenes/export/export';
 import DailyChart from '../scenes/calendar/daily-chart';
-import {AppState, Platform, Linking} from 'react-native';
-import {StatusBar} from 'expo-status-bar';
+import { AppState, Platform, Linking } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
 import Notes from '../scenes/survey/notes-screen';
 import Onboarding from '../scenes/onboarding';
 import Supported from '../scenes/onboarding/onboardingSupported';
@@ -45,29 +45,33 @@ import RNBootsplash from 'react-native-bootsplash';
 import NotificationService from '../services/notifications';
 import Indicateurs from '../scenes/indicateurs';
 import Presentation from '../scenes/presentation';
-import {OnboardingMood} from '../scenes/onboarding/onboardingSymptomsStart/MoodScreen';
-import {OnboardingSleep} from '../scenes/onboarding/onboardingSymptomsStart/SleepScreen';
-import {OnboardingSimpleCustomSymptoms} from '../scenes/onboarding/onboardingSymptomsCustom/SimpleCustomScreen';
-import {OnboardingGoals} from '../scenes/onboarding/onboardingGoals/goals';
-import {GoalsSettings} from '../scenes/goals/settings/GoalsSettings';
-import {GoalsAddOptions} from '../scenes/goals/settings/GoalsAddOptions';
-import {GoalsCreateForm} from '../scenes/goals/settings/GoalsCreateForm';
-import {GoalDaySelector} from '../scenes/goals/settings/GoalDaySelector';
-import {GoalConfig} from '../scenes/goals/settings/GoalConfig';
+import { OnboardingMood } from '../scenes/onboarding/onboardingSymptomsStart/MoodScreen';
+import { OnboardingSleep } from '../scenes/onboarding/onboardingSymptomsStart/SleepScreen';
+import { OnboardingSimpleCustomSymptoms } from '../scenes/onboarding/onboardingSymptomsCustom/SimpleCustomScreen';
+import { OnboardingGoals } from '../scenes/onboarding/onboardingGoals/goals';
+import { GoalsSettings } from '../scenes/goals/settings/GoalsSettings';
+import { GoalsAddOptions } from '../scenes/goals/settings/GoalsAddOptions';
+import { GoalsCreateForm } from '../scenes/goals/settings/GoalsCreateForm';
+import { GoalDaySelector } from '../scenes/goals/settings/GoalDaySelector';
+import { GoalConfig } from '../scenes/goals/settings/GoalConfig';
 import IndicatorsSettingsMore from '../scenes/indicateurs/settings/IndicatorsSettingsMore';
-import {GoalsSettingsMore} from '../scenes/goals/settings/GoalsSettingsMore';
+import { GoalsSettingsMore } from '../scenes/goals/settings/GoalsSettingsMore';
 import EditIndicateurs from '../scenes/indicateurs/editIndicateurs';
 import CreateIndicator from '../scenes/indicateurs/CreateIndicator';
 import ChooseIndicatorType from '../scenes/indicateurs/CreateIndicator/ChooseIndicatorType';
 import ChooseIndicatorOrder from '../scenes/indicateurs/CreateIndicator/ChooseIndicatorOrder';
 import * as Notifications from 'expo-notifications';
-import {registerForPushNotificationsAsync} from '../services/notifications-expo';
+import { registerForPushNotificationsAsync } from '../services/notifications-expo';
 import * as Device from 'expo-device';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import uuid from 'react-native-uuid';
 import DevMode from '../scenes/dev-mode';
 import { colors } from '../utils/colors';
 import OnboardingV2 from '../scenes/onboarding-v2';
+import CheckListScreen from '@/scenes/checklist/CheckListScreen';
+import { StatusBarProvider, useStatusBarInternal } from '../context/StatusBarContext';
+import { TW_COLORS } from '@/utils/constants';
+import SurveyV1 from '../scenes/survey/daySurvey';
 
 const Stack = createStackNavigator();
 
@@ -90,7 +94,7 @@ const linking = {
   },
   subscribe(listener) {
     /// Listen to incoming links from deep linking
-    const linkingSubscription = Linking.addEventListener('url', ({url}) => {
+    const linkingSubscription = Linking.addEventListener('url', ({ url }) => {
       listener(url);
     });
 
@@ -115,7 +119,33 @@ Notifications.setNotificationHandler({
   }),
 });
 
-class Router extends React.Component {
+// StatusBar wrapper component that uses the context
+const StatusBarWrapper = () => {
+  const { backgroundColor } = useStatusBarInternal();
+
+  return (
+    <StatusBar
+      animated={true}
+      backgroundColor={backgroundColor}
+    />
+  );
+};
+
+interface RouterProps {
+  statusBarContext: any;
+}
+
+class Router extends React.Component<RouterProps> {
+  navigationRef: any;
+  appListener: any;
+  cleanupNotifications: any;
+  prevCurrentRouteName: string;
+  statusBarContext: any;
+
+  constructor(props: RouterProps) {
+    super(props);
+    this.statusBarContext = props.statusBarContext;
+  }
 
   state = {
     backgroundColor: colors.LIGHT_BLUE
@@ -124,7 +154,7 @@ class Router extends React.Component {
   async componentDidMount() {
     //await logEvents.initMatomo();
     logEvents.logAppVisit();
-    RNBootsplash.hide({fade: true});
+    RNBootsplash.hide({ fade: true });
     try {
       // Get or generate device ID
       let deviceId = await AsyncStorage.getItem('deviceId');
@@ -170,11 +200,36 @@ class Router extends React.Component {
 
   updateStatusBarColor() {
     const route = this.navigationRef.getCurrentRoute();
-    if (['Calendar', 'Status', 'Exercise'].includes(route.name)) {
-      this.setState(prevState => ({ backgroundColor: colors.LIGHT_BLUE  }));
-    } else {
-      this.setState(prevState => ({ backgroundColor: colors.WHITE  }));
+    console.log('route name', route.name)
+
+    let newColor;
+    if (['Calendar', 'Status', 'Exercise',
+      'OnboardingChooseIndicator',
+      'OnboardingPersonalizationStartScreen',
+      'Intro',
+      'PersonalizationStart',
+      'PersonalizationDifficulties',
+      'PersonalizationObjective',
+      'OnboardingCheckInStart',
+      'OnboardingCheckInHowDoYouFeel',
+      // 'OnboardingCheckInHowDoYouFeelDetails',
+      // 'OnboardingCheckInMoodSummary',
+      'OnboardingCheckInSleep',
+      'OnboardingChooseIndicator',
+      'OnboardingReminder',
+
+    ].includes(route.name) || route.name.startsWith('screen-survey-')) {
+      newColor = colors.LIGHT_BLUE;
+    } else if (['Carousel', 'OnboardingCheckInIntroductionCompleted'].includes(route.name)) {
+      newColor = TW_COLORS.BEIGE;
     }
+    // if (newColor) {
+    // Update both local state (for backward compatibility) and context
+    this.setState(prevState => ({ backgroundColor: newColor }));
+    if (this.statusBarContext?.setDefaultColor) {
+      this.statusBarContext.setDefaultColor(newColor);
+    }
+    // }
   }
 
   appState = AppState.currentState;
@@ -197,21 +252,21 @@ class Router extends React.Component {
   };
 
   render() {
-    console.log(process.env.EXPO_PUBLIC_SCHEME);
     return (
       <>
         <NavigationContainer ref={r => (this.navigationRef = r)} onStateChange={this.onStateChange} linking={linking}>
-          <Stack.Navigator initialRouteName="tabs" screenOptions={{headerShown: false}}>
+          <Stack.Navigator initialRouteName="tabs" screenOptions={{ headerShown: false }}>
             <Stack.Screen name="presentation" component={Presentation} />
-            <Stack.Screen name="day-survey" component={SurveyNavigator} />
+            <Stack.Screen name="day-survey" component={SurveyV1} />
+            <Stack.Screen name="day-survey-v2" component={SurveyNavigator} />
             <Stack.Screen name="select-day" component={SelectDayScreen} />
             <Stack.Screen name="tabs" component={Tabs} />
             <Stack.Screen name="symptoms" component={Indicateurs} />
             <Stack.Screen name="reminder" component={Reminder} />
             <Stack.Screen name="export" component={Export} />
             <Stack.Screen name="chart-day" component={DailyChart} />
-            <Stack.Screen name="notes" options={{animationEnabled: Platform.OS === 'ios'}}>
-              {({navigation, route}) => <Notes navigation={navigation} route={route} />}
+            <Stack.Screen name="notes" options={{ animationEnabled: Platform.OS === 'ios' }}>
+              {({ navigation, route }) => <Notes navigation={navigation} route={route} />}
             </Stack.Screen>
             {/* <Stack.Screen name="onboarding" component={Onboarding} /> */}
             <Stack.Screen name="onboarding" component={OnboardingV2} />
@@ -224,6 +279,7 @@ class Router extends React.Component {
             <Stack.Screen name="onboarding-symptoms-custom-simple" component={OnboardingSimpleCustomSymptoms} />
             <Stack.Screen name="onboarding-symptoms-start" component={onboardingSymptomsStart} />
             <Stack.Screen name="onboarding-symptoms-custom" component={OnboardingSymptomsCustom} />
+            <Stack.Screen name="checklist" component={CheckListScreen} />
             <Stack.Screen name="EDIT_INDICATOR" component={EditIndicateurs} />
             <Stack.Screen name="CREATE_INDICATOR" component={CreateIndicator} />
             <Stack.Screen name="CHOOSE_INDICATOR_TYPE" component={ChooseIndicatorType} />
@@ -259,17 +315,30 @@ class Router extends React.Component {
             <Stack.Screen name="goals-create-form" component={GoalsCreateForm} />
             <Stack.Screen name="goal-day-selector" component={GoalDaySelector} />
             <Stack.Screen name="goal-config" component={GoalConfig} />
-            <Stack.Screen name="dev-mode" component={DevMode} options={{headerShown: true}} />
+            <Stack.Screen name="dev-mode" component={DevMode} options={{ headerShown: true }} />
           </Stack.Navigator>
         </NavigationContainer>
         <EnvironmentIndicator />
-        <StatusBar
-          animated={true}
-          backgroundColor={this.state.backgroundColor}
-        />
+        <StatusBarWrapper />
       </>
     );
   }
 }
 
-export default Router;
+// Wrapper component that provides StatusBar context to Router
+const RouterWithStatusBar = () => {
+  return (
+    <StatusBarProvider>
+      <RouterWithContext />
+    </StatusBarProvider>
+  );
+};
+
+// Router component that receives the context
+const RouterWithContext = () => {
+  const statusBarContext = useStatusBarInternal();
+
+  return <Router statusBarContext={statusBarContext} />;
+};
+
+export default RouterWithStatusBar;

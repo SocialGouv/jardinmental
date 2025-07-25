@@ -1,64 +1,72 @@
-import React from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { View, Text, SafeAreaView } from 'react-native';
 import NavigationButtons from '@/components/onboarding/NavigationButtons';
 import ProgressIndicator from '@/components/onboarding/ProgressIndicator';
 import { OnboardingV2ScreenProps } from '../types';
 import CheckInHeader from '@/components/onboarding/CheckInHeader';
-import { COLORS } from '@/utils/constants';
+import { HEADER_WITH_BANNER, PROGRESS_BAR, PROGRESS_BAR_AND_HEADER, SHARED_HEADER, TW_COLORS } from '@/utils/constants';
+import { SafeAreaViewWithOptionalHeader, useOnboardingProgressHeader } from '@/scenes/onboarding/ProgressHeader';
+import BannerHeader from '../BannerHeader';
+import { useAnimatedStyle } from 'react-native-reanimated';
+import { mergeClassNames } from '@/utils/className';
+import { typography } from '@/utils/typography';
 
 type Props = OnboardingV2ScreenProps<'Intro'>;
 
+const NextScreen = 'PersonalizationDifficulties'
+
 export const OnboardingPersonalizationStartScreen: React.FC<Props> = ({ navigation }) => {
 
-  const handleNext = () => {
+  const { setSlideIndex, setNextPath } = useOnboardingProgressHeader();
+
+  const handleNext = useCallback(() => {
     navigation.navigate('PersonalizationDifficulties');
-  };
+  }, [navigation]);
+
+  useEffect(() => {
+    setNextPath(handleNext);
+  }, [handleNext])
+
+  const handlePrevious = () => {
+    navigation.goBack();
+  }
+  const handleSkip = () => {
+    handleNext()
+  }
 
   return (
-    <SafeAreaView className="flex-1 bg-white">    
-          <CheckInHeader
-            title=""
-            onPrevious={() => navigation.goBack()}
-            onSkip={handleNext}
-            showPrevious={true}
-            showSkip={true}
-          />   
-          <ProgressIndicator currentStep={1} totalSteps={4} />  
-  
+    <SafeAreaViewWithOptionalHeader className="flex-1 bg-white" style={{}}>
+      {<BannerHeader
+        hidden={HEADER_WITH_BANNER}
+        hideHeader={PROGRESS_BAR_AND_HEADER}
+        header={SHARED_HEADER || PROGRESS_BAR || PROGRESS_BAR_AND_HEADER ? undefined : <ProgressIndicator currentStep={2} totalSteps={3} />}
+        title={'Créons ensemble un suivi qui vous ressemble.'}
+        handleSkip={handleSkip}
+        handlePrevious={handlePrevious}
+      />}
       <View className="flex-1 justify-center items-center px-8">
-        {/* Titre principal */}
-        <Text 
-          className="text-2xl font-bold text-center mb-6"
-          style={{ color: COLORS.TEXT_PRIMARY }}
+        <Text
+          className={mergeClassNames(typography.textXlMedium, 'mb-8 text-brand-900 text-left')}
         >
-          Créons ensemble un suivi qui vous ressemble
+          Commençons avec quelques questions simples, pour que le suivi vous ressemble vraiment.
         </Text>
-
-        <Text 
-          className="text-xl text-left mb-8 leading-8"
-          style={{ color: COLORS.TEXT_SECONDARY }}
+        <Text
+          className={mergeClassNames(typography.textMdMedium, 'text-left')}
+          style={{ color: TW_COLORS.TEXT_SECONDARY }}
         >
-          Commençons avec quelques questions, simples et sans jugement, pour personnaliser vos observations
-          {'\n\n'}
-          Il n’y a pas de bonnes ou mauvaises réponses.{'\n'}
-          Vous pourrez ajuster vos choix à tout moment.{'\n'}
-          Sentez vous libre d’avancer à votre rythme.{'\n'}
-        </Text>
-
-        <Text 
-          className="text-base text-center leading-6"
-          style={{ color: COLORS.TEXT_SECONDARY }}
-        >
-
+          {'\u2022'} ✅ Pas de bonne ou mauvaise réponse{'\n'}
+          {'\u2022'} 🔄 Vos choix sont modifiables à tout moment{'\n'}
+          {'\u2022'} 🧘 Avancez à votre rythme, sans pression{'\n'}
         </Text>
       </View>
-
       <NavigationButtons
+        // onPrevious={handlePrevious}
         onNext={handleNext}
         showPrevious={false}
+        withArrow={true}
         nextText="Créer mon suivi personnalisé"
       />
-    </SafeAreaView>
+    </SafeAreaViewWithOptionalHeader>
   );
 };
 

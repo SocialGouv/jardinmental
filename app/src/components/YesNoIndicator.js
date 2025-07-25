@@ -1,7 +1,8 @@
 import React from "react";
 import Text from "./MyText";
-
+import { colors } from "@/utils/colors";
 import { StyleSheet, View } from "react-native";
+import { TW_COLORS } from "@/utils/constants";
 
 const styles = StyleSheet.create({
   container: {
@@ -11,20 +12,20 @@ const styles = StyleSheet.create({
     borderRadius: 40,
     backgroundColor: "#fff",
     borderWidth: 2,
-    borderColor: "#26387C",
+    borderColor: colors.BLUE,
     paddingHorizontal: 20,
     paddingVertical: 10,
   },
   buttonRed: {
-    backgroundColor: "#F16B6B",
-    borderColor: "#F16B6B",
+    backgroundColor: TW_COLORS.NEGATIVE,
+    borderColor: TW_COLORS.NEGATIVE,
   },
   buttonGreen: {
-    backgroundColor: "#5DEE5A",
-    borderColor: "#5DEE5A",
+    backgroundColor: TW_COLORS.POSITIVE,
+    borderColor: TW_COLORS.POSITIVE,
   },
   buttonText: {
-    color: "#26387C",
+    color: colors.BLUE,
     fontWeight: "700",
     fontSize: 17,
   },

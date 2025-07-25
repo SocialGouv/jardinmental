@@ -1,4 +1,4 @@
-import { icons, colors as colorsFromConstant, iconBorderColors, iconColors } from "../../utils/constants";
+import { icons, EMOTION_COLORS as colorsFromConstant, iconBorderColors, iconColors } from "../../utils/constants";
 
 export const answers = [
   {

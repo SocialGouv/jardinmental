@@ -6,6 +6,7 @@ import WelcomeIcon from '../../../assets/svg/WelcomeIcon';
 import Support from '../../../assets/svg/Support';
 import IllustrationOnboarding21Svg from '../../../assets/svg/IllustrationOnboarding2.1.svg';
 import IllustrationOnboarding22Svg from '../../../assets/svg/IllustrationOnboarding2.2.svg';
+import { colors } from '@/utils/colors';
 
 import {StyleSheet, View, Dimensions} from 'react-native';
 export const buttonHeight = 43;
@@ -75,8 +76,8 @@ export const Screen2 = ({navigation, isCguChecked, setIsCguChecked}) => {
             <View style={styles.cgu}>
               <CheckBox
                 animationDuration={0.2}
-                tintColor="#1FC6D5"
-                tintColors={{true: '#1FC6D5', false: 'grey'}}
+                tintColor={colors.LIGHT_BLUE}
+                tintColors={{true: colors.LIGHT_BLUE, false: 'grey'}}
                 boxType="square"
                 style={styles.checkbox}
                 value={isCguChecked}
@@ -123,7 +124,7 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
   },
   emphasis: {
-    color: '#1FC6D5',
+    color: colors.LIGHT_BLUE,
   },
   h1: {
     fontFamily: 'Karla',
@@ -132,11 +133,11 @@ const styles = StyleSheet.create({
     fontSize: 28,
     lineHeight: 33,
     textAlign: 'center',
-    color: '#26387C',
+    color: colors.BLUE,
   },
   bold: {
     fontWeight: 'bold',
-    color: '#26387C',
+    color: colors.BLUE,
   },
   presentationText: {
     textAlign: 'center',

@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {StyleSheet, View, Text, Pressable} from 'react-native';
 import Lottie from 'lottie-react-native';
 import checkmarkAnimation from '../../assets/lottiefiles/checkmark.json';
+import { colors } from '@/utils/colors';
 
 export const InputCheckbox = ({label, checked, fill, onCheckedChanged, containerStyle, contentContainerStyle}) => {
   const [_checked, _setChecked] = useState(checked);
@@ -24,11 +25,11 @@ export const InputCheckbox = ({label, checked, fill, onCheckedChanged, container
               styles.checkboxContainer,
               !_checked
                 ? {
-                    borderColor: '#26387C',
+                    borderColor: colors.BLUE,
                   }
                 : {
-                    borderColor: '#1FC6D5',
-                    backgroundColor: '#1FC6D5',
+                    borderColor: colors.LIGHT_BLUE,
+                    backgroundColor: colors.LIGHT_BLUE,
                   },
             ]}>
             {_checked && (
@@ -67,7 +68,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Karla',
     fontWeight: '400',
     textAlign: 'left',
-    color: '#26387C',
+    color: colors.BLUE,
     flexShrink: 1,
     marginLeft: 8,
     paddingTop: 2,

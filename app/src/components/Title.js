@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet, Text } from "react-native";
+import { colors } from "@/utils/colors";
 
 export const Title = ({ children, style, fill = true, align }) => {
   return (
@@ -14,7 +15,7 @@ const styles = StyleSheet.create({
     fontFamily: "Karla",
     fontWeight: "700",
     fontSize: 16,
-    color: "#26387C",
+    color: colors.BLUE,
     textAlign: "center",
   },
 });

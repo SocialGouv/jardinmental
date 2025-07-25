@@ -1,25 +1,26 @@
-import React, {useState, useEffect} from 'react';
-import {View, StyleSheet, TouchableOpacity} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import Text from '../../components/MyText';
-import {colors} from '../../utils/colors';
+import { colors } from '../../utils/colors';
 import TextTag from '../../components/TextTag';
 import SelectDateComponent from './SelectDateComponent';
 import SelectTimeComponent from './SelectTimeComponent';
 import styleBeck from '../../styles/beck';
 import Separator from '../../components/Separator';
 import Button from '../../components/Button';
-import {toggleSelectedInArray, toggleState} from '../../utils';
+import { toggleSelectedInArray, toggleState } from '../../utils';
 import localStorage from '../../utils/localStorage';
 import AddElemToList from '../../components/AddElemToList';
 import {
   DEFAULT_BECK_WHERE_LIST,
   DEFAULT_BECK_WHO_LIST,
 } from '../../utils/constants';
-import {formatDate, formatDay, getTime} from '../../utils/date/helpers';
-import {subDays, isToday, isYesterday, parseISO} from 'date-fns';
+import { formatDate, formatDay, getTime } from '../../utils/date/helpers';
+import { subDays, isToday, isYesterday, parseISO } from 'date-fns';
 import logEvents from '../../services/logEvents';
+import JMButton from '@/components/JMButton';
 
-export default ({onChange, onSubmit, data, id}) => {
+export default ({ onChange, onSubmit, data, id }) => {
   // lists that will be displayed
   const [listWhere, setListWhere] = useState();
   const [listWhen, setListWhen] = useState();
@@ -33,26 +34,26 @@ export default ({onChange, onSubmit, data, id}) => {
   const handleClickWhere = (where) => {
     if (where === whereSelected) where = null;
     setWhereSelected(where);
-    onChange({where});
+    onChange({ where });
   };
   const handleClickWho = (whoClicked) => {
     const who = toggleSelectedInArray(whosSelected, whoClicked);
     setWhosSelected(who);
-    onChange({who});
+    onChange({ who });
   };
 
   //handlers close
   const handleCloseWhere = (where) => {
     if (whereSelected !== where) return;
     setWhereSelected(null);
-    onChange({where: null});
+    onChange({ where: null });
   };
   const handleCloseWho = (whoClicked) => {
     let who = [...whosSelected];
     if (whosSelected.indexOf(whoClicked) !== -1)
       who = whosSelected.filter((w) => w !== whoClicked);
     setWhosSelected(who);
-    onChange({who});
+    onChange({ who });
   };
 
   // handle new value, add it in the list and select it if needed
@@ -127,7 +128,7 @@ export default ({onChange, onSubmit, data, id}) => {
       let label = formatDate(value);
       if (isToday(parseISO(value))) label = "Aujourd'hui";
       if (isYesterday(parseISO(value))) label = 'Hier';
-      return {label, value};
+      return { label, value };
     });
     setListWhen(options);
   }, []);
@@ -148,7 +149,7 @@ export default ({onChange, onSubmit, data, id}) => {
       setTimeSelected(data?.time || getTime(now));
     } else {
       setTimeSelected(getTime(now));
-      onChange({time: getTime(now)});
+      onChange({ time: getTime(now) });
     }
   }, [data?.time]);
 
@@ -161,7 +162,7 @@ export default ({onChange, onSubmit, data, id}) => {
         <SelectDateComponent
           placeholder="Choisir la date"
           iconName="CalendarSvg"
-          onChange={(date) => onChange({date})}
+          onChange={(date) => onChange({ date })}
           styleContainer={styles.selectDateComponentContainer}
           value={dateSelected}
           items={listWhen}
@@ -169,7 +170,7 @@ export default ({onChange, onSubmit, data, id}) => {
         <SelectTimeComponent
           placeholder="Choisir l'heure"
           iconName="ClockSvg"
-          onChange={(time) => onChange({time})}
+          onChange={(time) => onChange({ time })}
           value={timeSelected}
         />
       </View>
@@ -215,9 +216,8 @@ export default ({onChange, onSubmit, data, id}) => {
         </Text>
       </TouchableOpacity>
       {addWhoVisible ? <AddElemToList onChange={addNewWho} /> : null}
-      <Button
+      <JMButton
         title="Continuer"
-        buttonStyle={styleBeck.submitButton}
         onPress={onSubmit}
       />
     </View>
@@ -243,7 +243,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'flex-start',
   },
-  stepIndicatorContainer: {marginVertical: 15},
+  stepIndicatorContainer: { marginVertical: 15 },
   mainTitle: {
     width: '80%',
     fontSize: 22,
@@ -255,5 +255,5 @@ const styles = StyleSheet.create({
     width: '80%',
     marginTop: 15,
   },
-  selectDateComponentContainer: {marginBottom: 15},
+  selectDateComponentContainer: { marginBottom: 15 },
 });

@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import Icon from './Icon';
+import { colors } from '@/utils/colors';
 
 export const Card = ({
   preset, // 'lighten'
@@ -73,8 +74,8 @@ const _styles = {
   base: StyleSheet.create({
     container: {
       width: '100%',
-      backgroundColor: 'rgba(31, 198, 213, 0.2)',
-      borderColor: 'rgba(31, 198, 213, 0.2)',
+      backgroundColor: colors.LIGHT_BLUE_TRANS_02,
+      borderColor: colors.LIGHT_BLUE_TRANS_02,
       borderWidth: 1,
       borderRadius: 16,
       padding: 16,
@@ -101,7 +102,7 @@ const _styles = {
       fontFamily: 'Karla',
       fontWeight: '700',
       textAlign: 'left',
-      color: '#26387C',
+      color: colors.BLUE,
     },
     text: {
       fontSize: 14,
@@ -109,7 +110,7 @@ const _styles = {
       fontFamily: 'Karla',
       fontWeight: '400',
       textAlign: 'left',
-      color: '#26387C',
+      color: colors.BLUE,
     },
     childrenContainer: {
       marginTop: 14,

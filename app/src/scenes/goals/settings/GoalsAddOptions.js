@@ -9,6 +9,8 @@ import { useFocusEffect } from "@react-navigation/native";
 import { getGoalsTracked, setGoalTracked } from "../../../utils/localStorage/goals";
 import { GoalAddCheckable } from "./GoalAddCheckable";
 import { DAYS_OF_WEEK } from "../../../utils/date/daysOfWeek";
+import JMButton from "@/components/JMButton";
+import Plus from '../../../../assets/svg/Plus';
 
 const GOALS_EXAMPLE_FLAT = Object.values(GOALS_EXAMPLE).reduce((acc, subGoalCategory) => {
   return [...acc, ...subGoalCategory];
@@ -81,18 +83,22 @@ export const GoalsAddOptions = ({ navigation }) => {
         title: "Ajouter un objectif",
       }}
       bottomChildren={
-        <Button2 fill title="Enregistrer" onPress={onValidate} loading={loading} disabled={!isChanged} />
+        <JMButton
+          variant="primary"
+          title="Enregistrer"
+          onPress={onValidate}
+          loading={loading}
+          disabled={!isChanged} />
       }
     >
       <Card
         title="Créez votre objectif personnalisé"
         text="Définissez votre objectif et planifiez le sur les jours de la semaine que vous souhaitez"
       >
-        <Button2
-          preset="secondary"
-          fill
+        <JMButton
+          variant="outline"
           title="Créer un objectif"
-          icon="Plus2Svg"
+          icon={<Plus opacity={1} color={'#000'} width={19} height={19} />}
           onPress={() => navigation.navigate("goals-create-form")}
         />
       </Card>

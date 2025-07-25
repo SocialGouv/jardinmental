@@ -5,7 +5,14 @@ import { NavigationButtons } from '@/components/onboarding/NavigationButtons';
 import { ProgressIndicator } from '@/components/onboarding/ProgressIndicator';
 import { useUserProfile } from '@/context/userProfile';
 import CheckInHeader from '@/components/onboarding/CheckInHeader';
-import { COLORS } from '@/utils/constants';
+import { HEADER_WITH_BANNER, PROGRESS_BAR, PROGRESS_BAR_AND_HEADER, SHARED_HEADER, TW_COLORS } from '@/utils/constants';
+import { SafeAreaViewWithOptionalHeader, useOnboardingProgressHeader } from '@/scenes/onboarding/ProgressHeader';
+import BannerHeader from '../BannerHeader';
+import { useAnimatedStyle } from 'react-native-reanimated';
+import { ScrollView } from 'react-native-gesture-handler';
+import { mergeClassNames } from '@/utils/className';
+import { typography } from '@/utils/typography';
+import SelectionnableItem from '@/components/SelectionnableItem';
 
 type Props = OnboardingV2ScreenProps<'PersonalizationObjective'>;
 
@@ -30,29 +37,32 @@ const objectivesData: Objective[] = [
 ];
 
 
-const NextScreen = 'OnboardingCheckInStart'
+const NextScreen = 'OnboardingChooseIndicator'
 
 export const ObjectiveScreen: React.FC<Props> = ({ navigation, route }) => {
   const { updateUserObjectives, profile } = useUserProfile();
   const [selectedObjective, setSelectedObjective] = useState<Objective | null>(null);
+  const { setSlideIndex, setIsVisible } = useOnboardingProgressHeader();
 
   const handleNext = async () => {
     if (selectedObjective) {
-      
+
       if (profile) {
         const existingObjectives = profile.objectives || [];
         const updatedObjectives = [...existingObjectives];
-        
+
         // Check if objective already exists, if not add it
         const existingIndex = updatedObjectives.findIndex(obj => obj.id === selectedObjective.id);
         if (existingIndex === -1) {
           updatedObjectives.push(selectedObjective);
         }
-        
+
         await updateUserObjectives(updatedObjectives);
       }
-      
+
       navigation.navigate(NextScreen);
+      setSlideIndex(-1);
+      setIsVisible(false)
     }
   };
 
@@ -65,84 +75,72 @@ export const ObjectiveScreen: React.FC<Props> = ({ navigation, route }) => {
   };
 
   const renderObjectiveItem = ({ item }: { item: Objective }) => (
-    <TouchableOpacity
+    <SelectionnableItem
       onPress={() => setSelectedObjective(item)}
-      className="mx-4 mb-4 p-4 rounded-xl border-2"
-      style={{
-        borderColor: selectedObjective?.id === item.id ? COLORS.PRIMARY : COLORS.GRAY_LIGHT,
-        backgroundColor: selectedObjective?.id === item.id ? COLORS.PRIMARY + '10' : COLORS.WHITE,
-      }}
-    >
-      <View className="flex-row items-start">
-        <View className="flex-1">
-          <View className="flex-row items-center justify-between mb-1">
-            <Text 
-              className="text-lg font-semibold"
-              style={{ color: COLORS.TEXT_PRIMARY }}
-            >
-              {item.title}
-            </Text>
-          </View>
-        </View>
-        {selectedObjective?.id === item.id && (
-          <View 
-            className="w-6 h-6 rounded-full items-center justify-center ml-2"
-            style={{ backgroundColor: COLORS.PRIMARY }}
-          >
-            <Text className="text-white text-xs">✓</Text>
-          </View>
-        )}
-      </View>
-    </TouchableOpacity>
+      key={item.id}
+      id={item.id}
+      label={item.title}
+      selected={selectedObjective?.id === item.id}>
+    </SelectionnableItem>
   );
 
+  const animatedStatusBarColor = useAnimatedStyle(() => {
+    return {
+      backgroundColor: TW_COLORS.PRIMARY,
+    };
+  })
+
+  const animatedTextColor = useAnimatedStyle(() => {
+    return {
+      backgroundColor: 'transparent',
+      // color: TW_COLORS.WHITE,
+      alignContent: 'left',
+      textAlign: 'left'
+    };
+  })
+
   return (
-    <SafeAreaView className="flex-1 bg-white">
-      <CheckInHeader
-        title=""
-        onPrevious={handlePrevious}
-        onSkip={handleSkip}
-        showPrevious={true}
-        showSkip={true}
-      />   
-      <ProgressIndicator currentStep={3} totalSteps={4} />
-      
-      <View className="flex-1">
+    <SafeAreaViewWithOptionalHeader className="flex-1 bg-white">
+      {<BannerHeader
+        hidden={HEADER_WITH_BANNER}
+        hideHeader={PROGRESS_BAR_AND_HEADER}
+        animatedStatusBarColor={animatedStatusBarColor}
+        animatedTextColor={animatedTextColor}
+        header={SHARED_HEADER || PROGRESS_BAR || PROGRESS_BAR_AND_HEADER ? undefined : <ProgressIndicator currentStep={2} totalSteps={3} />}
+        title={'Quelle est votre priorité aujourd’hui dans Jardin Mental ?'}
+        handleSkip={handleSkip}
+        handlePrevious={handlePrevious}
+      />}
+      <ScrollView className="flex-1" contentContainerStyle={{ paddingBottom: 100 }}>
         {/* En-tête */}
         <View className="px-6 py-4">
-          <Text 
+          <Text
             className="text-2xl font-bold text-center mb-2"
-            style={{ color: COLORS.TEXT_PRIMARY }}
+            style={{ color: TW_COLORS.TEXT_PRIMARY }}
           >
-            Quel est votre priorité aujourd'hui dans Jardin Mental
           </Text>
-          <Text 
-            className="text-base text-center mb-2"
-            style={{ color: COLORS.TEXT_SECONDARY }}
+          <Text
+            className={mergeClassNames(typography.textSmMedium, 'text-brand-900 text-left')}
           >
             Votre réponse nous aide à vous orienter vers un suivi plus utile.
           </Text>
         </View>
-
-        <FlatList
-          data={objectivesData}
-          keyExtractor={(item) => item.id}
-          renderItem={renderObjectiveItem}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingVertical: 8 }}
-        />
-      </View>
+        <View className="px-6 py-4">
+          {objectivesData.map((item) => renderObjectiveItem({ item }))}
+        </View>
+      </ScrollView>
 
       <NavigationButtons
+        absolute={true}
         onNext={handleNext}
-        onPrevious={handlePrevious}
+        // onPrevious={handlePrevious}
         onSkip={handleSkip}
         showSkip={true}
         nextDisabled={!selectedObjective}
         nextText="Continuer"
         skipText="Passer cette étape"
       />
-    </SafeAreaView>
+    </SafeAreaViewWithOptionalHeader>
   );
 };
 

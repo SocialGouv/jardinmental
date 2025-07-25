@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {View, StyleSheet, TextInput, Platform} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet, TextInput, Platform } from 'react-native';
 
 import styleBeck from '../../styles/beck';
 import Text from '../../components/MyText';
@@ -8,7 +8,7 @@ import Separator from '../../components/Separator';
 import DiscretSlider from '../../components/DiscretSlider';
 import logEvents from '../../services/logEvents';
 
-export default ({onChange, onSubmit, data}) => {
+export default ({ onChange, onSubmit, data }) => {
   const numberOfLines = 8;
   const [trustInThoughsThenSelected, setTrustInThoughsThenSelected] = useState(
     data?.trustInThoughsThen,
@@ -34,7 +34,7 @@ export default ({onChange, onSubmit, data}) => {
         minHeight={Platform.OS === 'ios' ? 20 * numberOfLines : null}
         onChangeText={(thoughtsBeforeMainEmotion) => {
           setThoughtsBeforeMainEmotionSelected(thoughtsBeforeMainEmotion);
-          onChange({thoughtsBeforeMainEmotion});
+          onChange({ thoughtsBeforeMainEmotion });
         }}
         value={thoughtsBeforeMainEmotionSelected}
         placeholder="Mes pensées..."
@@ -49,7 +49,7 @@ export default ({onChange, onSubmit, data}) => {
         step={trustInThoughsThenSelected}
         onChange={(trustInThoughsThen) => {
           setTrustInThoughsThenSelected(trustInThoughsThen);
-          onChange({trustInThoughsThen});
+          onChange({ trustInThoughsThen });
         }}
       />
       <Separator style={styleBeck.separator} />
@@ -62,16 +62,15 @@ export default ({onChange, onSubmit, data}) => {
         minHeight={Platform.OS === 'ios' ? 20 * numberOfLines : null}
         onChangeText={(memories) => {
           setMemoriesSelected(memories);
-          onChange({memories});
+          onChange({ memories });
         }}
         value={memoriesSelected}
         placeholder="Message..."
         style={styleBeck.textArea}
         textAlignVertical={'top'}
       />
-      <Button
+      <JMButton
         title="Continuer"
-        buttonStyle={styleBeck.submitButton}
         onPress={onSubmit}
       />
     </View>

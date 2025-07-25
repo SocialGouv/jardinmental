@@ -1,7 +1,9 @@
 import React from "react";
 import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
-import CircledIcon from "../CircledIcon";
+import { BasicIcon } from "../CircledIcon";
 import { answers as emojis } from "../../scenes/survey-v2/utils";
+import { colors } from "@/utils/colors";
+import { TW_COLORS } from "@/utils/constants";
 
 export const Smiley = ({ indicator, value, onValueChanged }) => {
   return (
@@ -28,17 +30,17 @@ export const Smiley = ({ indicator, value, onValueChanged }) => {
                 onValueChanged?.({ indicator, value: nextValue });
               }}
             >
-              <View style={[styles.selectionContainer, active && styles.activeSelectionContainer]}>
-                <CircledIcon
+              <View>
+                <BasicIcon
                   color={emoji.backgroundColor}
-                  borderColor={emoji.borderColor}
+                  borderColor={TW_COLORS.PRIMARY}
                   iconColor={emoji.iconColor}
                   icon={emoji.icon}
+                  borderWidth={active ? 1 : 0}
                   iconContainerStyle={{ marginRight: 0 }}
                   iconWidth={32}
                   iconHeight={32}
                 />
-                {/* <Text>{emoji?.score}</Text> */}
               </View>
             </TouchableOpacity>
           );
@@ -66,7 +68,7 @@ const styles = StyleSheet.create({
     fontFamily: "Karla",
     fontWeight: "400",
     textAlign: "left",
-    color: "#26387C",
+    color: colors.BLUE,
     flexShrink: 1,
     marginLeft: 8,
     paddingTop: 3,
@@ -79,13 +81,13 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   selectionContainer: {
-    padding: 6,
-    backgroundColor: "white",
-    borderColor: "#DEF4F5",
-    borderWidth: 1,
-    borderRadius: 8,
+    // padding: 6,
+    // backgroundColor: "white",
+    // borderColor: "#DEF4F5",
+    // borderWidth: 1,
+    // borderRadius: 8,
   },
   activeSelectionContainer: {
-    backgroundColor: "#1FC6D5",
+    backgroundColor: colors.LIGHT_BLUE,
   },
 });

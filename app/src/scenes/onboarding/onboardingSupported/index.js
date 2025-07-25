@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 15,
     borderWidth: 1,
-    borderColor: "#26387C",
+    borderColor: colors.BLUE,
   },
   hintImage: {
     width: 41,
@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     fontSize: 13,
     lineHeight: 15,
-    color: "#26387C",
+    color: colors.BLUE,
   },
 });
 

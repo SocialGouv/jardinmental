@@ -1,4 +1,6 @@
 import { OnboardingStep } from "@/scenes/onboarding-v2/types";
+import { colors as mainColors } from "./colors";
+import { INDICATORS_CATEGORIES } from "@/entities/Indicator";
 
 export const icons = {
   veryGood: "VeryGoodSvg",
@@ -11,12 +13,14 @@ export const icons = {
   notes: "NotesSvg",
 };
 
-export const colors = {
-  veryBad: "#F16B6B",
-  bad: "#FEAA5B",
-  middle: "#F2F478",
-  good: "#ACF352",
-  veryGood: "#5DEE5A",
+export const EMOTION_COLORS = {
+  // bg
+  veryBad: "#F4A6A6",//"#F16B6B",
+  bad: "#FDD6A5",//"#FEAA5B",
+  middle: "#FFF4B2",//"#F2F478",
+  good: "#D0F0C0",//"#ACF352",
+  veryGood: "#A8E6CF",//"#5DEE5A",
+  //
   veryBadTrans: "#fdcccc",
   badTrans: "#fbd8b8",
   middleTrans: "#fbe79c",
@@ -33,11 +37,11 @@ export const iconBorderColors = {
 };
 
 export const iconColors = {
-  veryBad: "#840707",
-  bad: "#744519",
-  middle: "#6C630C",
-  good: "#496300",
-  veryGood: "#1A6300",
+  veryBad: "#822F2F", //"#840707",
+  bad: "#91501A", //"#744519",
+  middle: "#91501A",//"#6C630C",
+  good: '#317535',//"#496300",
+  veryGood: '#21896B',//"#1A6300",
 };
 
 export const scoresMapIcon = {
@@ -45,73 +49,73 @@ export const scoresMapIcon = {
     color: "transparent",
   },
   1: {
-    color: colors.veryBad,
+    color: EMOTION_COLORS.veryBad,
     faceIcon: icons.veryBad,
     borderColor: iconBorderColors.veryBad,
     iconColor: iconColors.veryBad,
   },
   2: {
-    color: colors.bad,
+    color: EMOTION_COLORS.bad,
     faceIcon: icons.bad,
     borderColor: iconBorderColors.bad,
     iconColor: iconColors.bad,
   },
   3: {
-    color: colors.middle,
+    color: EMOTION_COLORS.middle,
     faceIcon: icons.middle,
     borderColor: iconBorderColors.middle,
     iconColor: iconColors.middle,
   },
   4: {
-    color: colors.good,
+    color: EMOTION_COLORS.good,
     faceIcon: icons.good,
     borderColor: iconBorderColors.good,
     iconColor: iconColors.good,
   },
   5: {
-    color: colors.veryGood,
+    color: EMOTION_COLORS.veryGood,
     faceIcon: icons.veryGood,
     borderColor: iconBorderColors.veryGood,
     iconColor: iconColors.veryGood,
   },
 };
 
-export const colorsMap = Object.keys(colors).map((key) => colors[key]);
+export const colorsMap = Object.keys(EMOTION_COLORS).map((key) => EMOTION_COLORS[key]);
 
 export const categoryStates = {
   VERY_GOOD: {
     id: "VERY_GOOD",
     level: 5,
     icon: icons.veryGood,
-    color: colors.veryGood,
+    color: EMOTION_COLORS.veryGood,
     label: "Très bien",
   },
   GOOD: {
     id: "GOOD",
     level: 4,
     icon: icons.good,
-    color: colors.good,
+    color: EMOTION_COLORS.good,
     label: "Bien",
   },
   MIDDLE: {
     id: "MIDDLE",
     level: 3,
     icon: icons.middle,
-    color: colors.middle,
+    color: EMOTION_COLORS.middle,
     label: "Moyen",
   },
   BAD: {
     id: "BAD",
     level: 2,
     icon: icons.bad,
-    color: colors.bad,
+    color: EMOTION_COLORS.bad,
     label: "Mauvais",
   },
   VERY_BAD: {
     id: "VERY_BAD",
     level: 1,
     icon: icons.veryBad,
-    color: colors.veryBad,
+    color: EMOTION_COLORS.veryBad,
     label: "Très mauvais",
   },
 };
@@ -154,6 +158,10 @@ export const translateCategories = {
   COMMUNICATION: "Communication avec mon entourage",
   TOXIC: "Substance",
   CONTEXT: "Contexte",
+  [INDICATORS_CATEGORIES["Emotions/sentiments"]]: "vos émotions",
+  [INDICATORS_CATEGORIES["Manifestations physiques"]]: "votre sommeil",
+  [INDICATORS_CATEGORIES["Pensées"]]: "vos pensées",
+  [INDICATORS_CATEGORIES["Comportements"]]: "vos comportements",
 };
 
 export const surveyDate = {
@@ -176,21 +184,21 @@ export const frequence = {
     id: "NEVER",
     level: 3,
     icon: icons.veryGood,
-    color: colors.veryGood,
+    color: EMOTION_COLORS.veryGood,
     label: "Jamais",
   },
   SEVERAL_TIMES: {
     id: "SEVERAL_TIMES",
     level: 2,
     icon: icons.middle,
-    color: colors.middle,
+    color: EMOTION_COLORS.middle,
     label: "Plusieurs fois",
   },
   MANY_TIMES: {
     id: "MANY_TIMES",
     level: 1,
     icon: icons.veryBad,
-    color: colors.veryBad,
+    color: EMOTION_COLORS.veryBad,
     label: "De nombreuses fois",
   },
 };
@@ -200,21 +208,21 @@ export const intensity = {
     id: "LIGHT",
     level: 3,
     icon: icons.veryGood,
-    color: colors.veryGood,
+    color: EMOTION_COLORS.veryGood,
     label: "Légèrement pénible",
   },
   MIDDLE: {
     id: "MIDDLE",
     level: 2,
     icon: icons.middle,
-    color: colors.middle,
+    color: EMOTION_COLORS.middle,
     label: "Moyennement pénible",
   },
   HIGH: {
     id: "HIGH",
     level: 1,
     icon: icons.veryBad,
-    color: colors.veryBad,
+    color: EMOTION_COLORS.veryBad,
     label: "Très pénible",
   },
 };
@@ -278,6 +286,7 @@ export const STORAGE_KEY_BECK_SENSATION_LIST = "@BECK_SENSATION_LIST";
 export const STORAGE_KEY_BECK_SHOW_WELCOME = "@BECK_SHOW_WELCOME_DEFAULT";
 export const STORAGE_KEY_DIARY_NOTES = "@DIARY_NOTES";
 export const STORAGE_KEY_NPS_PRO_CONTACT = "@NPS_PRO_CONTACT";
+export const STORAGE_KEY_CHECKLIST_BANNER_DISMISSED = "@CHECKLIST_BANNER_DISMISSED";
 export const STORAGE_KEY_PUSH_NOTIFICATION_TOKEN = "@PUSH_NOTIFICATION_TOKEN";
 export const STORAGE_KEY_PUSH_NOTIFICATION_TOKEN_ERROR = "@PUSH_NOTIFICATION_TOKEN_ERROR";
 
@@ -302,7 +311,7 @@ export const MATOMO_DIMENSION = {
 
 export const STEP_ORDER: OnboardingStep[] = [
   'INTRO',
-  'PROFILE', 
+  'PROFILE',
   'CAROUSEL',
   'DIFFICULTIES',
   'OBJECTIVE',
@@ -312,10 +321,12 @@ export const STEP_ORDER: OnboardingStep[] = [
 export const TOTAL_STEPS = STEP_ORDER.length;
 
 // Colors
-export const COLORS = {
-  PRIMARY: '#1FC6D5',
-  SECONDARY: '#00CEF7',
-  SUCCESS: '#4CAF50',
+export const TW_COLORS = {
+  PRIMARY: mainColors.LIGHT_BLUE,
+  SECONDARY: '#12747D', //'#00CEF7',
+  POSITIVE: '#5DEE5A', // positive for action relative to mental health !== 'success action in app'
+  NEGATIVE: '#F16B6B', // negative feeling for action relative to mental health
+  SUCCESS: '#5DEE5A', //#4CAF50',
   WARNING: '#FF9800',
   ERROR: '#F44336',
   BACKGROUND: '#F5F5F5',
@@ -324,6 +335,22 @@ export const COLORS = {
   GRAY_LIGHT: '#E0E0E0',
   GRAY_MEDIUM: '#9E9E9E',
   GRAY_DARK: '#424242',
-  TEXT_PRIMARY: '#212121',
+  TEXT_PRIMARY: '#134449',//'#212121',
   TEXT_SECONDARY: '#757575',
+  LIGHT_COLORS: "#134449",
+  LIGHT_BLUE: "#EBFDFF",
+  BRAND_800: '#12747D',
+  BRAND_700: "#158993",
+  BRAND_600: "#1CB2BF",
+  BRAND_500: "#1FC6D5",
+  BEIGE: '#FCEBD9',
+  GRAY_700: '#617778',
+  GRAY_200: '#E3F6F8',
+  BRAND_25: '#FAFFFF',
+  BRAND_900: '#134449'
 };
+
+export const SHARED_HEADER = false
+export const HEADER_WITH_BANNER = false
+export const PROGRESS_BAR = true
+export const PROGRESS_BAR_AND_HEADER = true

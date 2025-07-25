@@ -24,7 +24,7 @@ export default ({navigation, route}) => {
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <Icon
           icon="ClockSvg"
-          color="#1FC6D5"
+          color={colors.LIGHT_BLUE}
           styleContainer={{
             marginTop: '20%',
             marginBottom: '20%',

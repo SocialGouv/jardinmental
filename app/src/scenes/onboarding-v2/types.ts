@@ -1,32 +1,43 @@
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
+import { ReactNode } from 'react';
+import { NEW_INDICATORS_SUBCATEGORIES, NEW_INDICATORS_CATEGORIES } from '@/utils/liste_indicateurs.1';
 
-export type OnboardingStep = 
-  | 'INTRO' 
-  | 'PROFILE' 
-  | 'CAROUSEL' 
-  | 'DIFFICULTIES' 
-  | 'OBJECTIVE' 
+export type OnboardingStep =
+  | 'INTRO'
+  | 'PROFILE'
+  | 'CAROUSEL'
+  | 'DIFFICULTIES'
+  | 'OBJECTIVE'
   | 'CHECKIN';
 
 export interface UserProfile {
   id: string;
   name: string;
+  selectedDifficulties: NEW_INDICATORS_CATEGORIES[];
+  objectives: Objective[];
+  selectedSubcategories?: NEW_INDICATORS_SUBCATEGORIES[];
 }
 
 export interface CarouselSlide {
   id: string;
   title: string;
-  description: string;
+  description?: string;
   type: 'generic' | 'special';
   backgroundColor?: string;
   illustration?: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 export interface Difficulty {
   id: string;
   name: string;
+  label: string;
   selected: boolean;
+  icon: () => React.JSX.Element,
+  description?: string,
+  category: NEW_INDICATORS_CATEGORIES;
+  subCat: NEW_INDICATORS_SUBCATEGORIES[]
 }
 
 export interface Objective {
@@ -60,19 +71,6 @@ export interface OnboardingState {
   progress: number;
 }
 
-// Navigation Props
-export interface NavigationButtonsProps {
-  onNext?: () => void;
-  onPrevious?: () => void;
-  onSkip?: () => void;
-  showPrevious?: boolean;
-  showSkip?: boolean;
-  nextDisabled?: boolean;
-  nextText?: string;
-  skipText?: string;
-  loading?: boolean;
-}
-
 // Carousel Props
 export interface CarouselSlideProps {
   slide: CarouselSlide;
@@ -100,6 +98,7 @@ export type OnboardingV2StackParamList = {
   OnboardingCheckInSleep: undefined
   OnboardingCheckInMoodSummary: undefined
   OnboardingCheckInIntroductionCompleted: undefined
+  OnboardingLoadingScreen: undefined;
   OnboardingChooseIndicator: undefined
   OnboardingReminder: undefined
   'day-survey': {

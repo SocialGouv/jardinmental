@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import Text from "./MyText";
+import { colors } from "@/utils/colors";
 
 const styles = StyleSheet.create({
   button: {
@@ -46,7 +47,7 @@ const Button = ({
   const color = disabled ? "lightgrey" : buttonColor;
   return (
     <TouchableOpacity
-      style={[{ ...styles.button, backgroundColor: color || "#1FC6D5" }, buttonStyle]}
+      style={[{ ...styles.button, backgroundColor: color || colors.LIGHT_BLUE }, buttonStyle]}
       onPress={onPress}
       disabled={disabled}
     >

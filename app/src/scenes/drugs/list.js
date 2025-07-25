@@ -1,20 +1,21 @@
-import React, {useState, useEffect, useRef} from 'react';
-import {StyleSheet, ScrollView, View, TextInput, Keyboard} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import React, { useState, useEffect, useRef } from 'react';
+import { StyleSheet, ScrollView, View, TextInput, Keyboard } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Text from '../../components/MyText';
-import {colors} from '../../utils/colors';
+import { colors } from '../../utils/colors';
 import Button from '../../components/Button';
 import localStorage from '../../utils/localStorage';
-import {getDrugListWithLocalStorage} from '../../utils/drugs-list';
+import { getDrugListWithLocalStorage } from '../../utils/drugs-list';
 import CheckBox from '@react-native-community/checkbox';
 import NPS from '../../services/NPS/NPS';
 import BackButton from '../../components/BackButton';
 import AddElemToList from '../../components/AddElemToList';
-import {confirm} from '../../utils';
+import { confirm } from '../../utils';
 import logEvents from '../../services/logEvents';
+import JMButton from '@/components/JMButton';
 const ELEMENT_HEIGHT = 55;
 
-const Drugs = ({navigation, route}) => {
+const Drugs = ({ navigation, route }) => {
   const scrollRef = useRef();
   const [treatment, setTreatment] = useState([]);
   const [filter, setFilter] = useState();
@@ -84,7 +85,7 @@ const Drugs = ({navigation, route}) => {
       const i = treatment.indexOf(elem);
       t.splice(i, 1);
     } else {
-      t.push({id: d.id});
+      t.push({ id: d.id });
     }
     setTreatment(t);
   };
@@ -111,13 +112,13 @@ const Drugs = ({navigation, route}) => {
 
   const submit = async () => {
     await localStorage.setMedicalTreatment(treatment);
-    navigation.navigate('drugs', {treatment});
+    navigation.navigate('drugs', { treatment });
   };
 
   const handleAdd = async value => {
     console.log('add drug', value);
     if (!value) return;
-    const drug = {id: value, name1: value, values: []};
+    const drug = { id: value, name1: value, values: [] };
     await localStorage.addCustomDrug(drug);
     const drugsAfterAddition = await getDrugListWithLocalStorage();
     const filteredListAfterAddition = filterAndSortList(drugsAfterAddition);
@@ -154,7 +155,7 @@ const Drugs = ({navigation, route}) => {
           <Text>Chargement</Text>
         ) : (
           <>
-            <AddElemToList onChange={handleAdd} onChangeText={setBufferCustomDrugs} styleContainer={{marginHorizontal: 10}} />
+            <AddElemToList onChange={handleAdd} onChangeText={setBufferCustomDrugs} styleContainer={{ marginHorizontal: 10 }} />
             {filteredList?.length === 0 ? <Text style={styles.noResult}>Aucun résultat pour la recherche "{filter}"</Text> : null}
             {filteredList?.map((e, index) => (
               <View
@@ -182,7 +183,7 @@ const Drugs = ({navigation, route}) => {
         )}
       </ScrollView>
       <View style={styles.buttonWrapper}>
-        <Button onPress={handleSubmit} title="Valider" />
+        <JMButton onPress={handleSubmit} title="Valider" />
       </View>
     </SafeAreaView>
   );

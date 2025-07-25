@@ -215,7 +215,7 @@ const styles = StyleSheet.create({
   topTitle: {
     fontSize: 17,
     fontWeight: "700",
-    color: "#26387C",
+    color: colors.BLUE,
     marginBottom: 15,
   },
   intensityContainer: {
@@ -233,11 +233,11 @@ const styles = StyleSheet.create({
   intensityText: {
     marginHorizontal: 7,
     fontSize: 15,
-    color: "#26387C",
+    color: colors.BLUE,
   },
   intenstiyDiamond: {
     transform: [{ rotate: "45deg" }],
-    backgroundColor: "#26387C",
+    backgroundColor: colors.BLUE,
     height: 8,
     width: 8,
   },
@@ -262,7 +262,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   activeSetDirectionContainer: {
-    borderColor: "#1FC6D5",
+    borderColor: colors.LIGHT_BLUE,
     backgroundColor: "#F4FCFD",
   },
   setDirectionInside: {
@@ -272,7 +272,7 @@ const styles = StyleSheet.create({
   setDirectionTitle: {
     fontSize: 15,
     fontWeight: "700",
-    color: "#26387C",
+    color: colors.BLUE,
     marginTop: 15,
   },
   smileysContainer: {
