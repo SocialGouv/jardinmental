@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   ScrollView, View, Text, Platform,
   // KeyboardAvoidingView
@@ -74,6 +74,7 @@ export const IndicatorScreen: React.FC<IndicatorScreenProps> = ({
 
   const { showBottomSheet } = useBottomSheet();
   const insets = useSafeAreaInsets();
+  const [dynamicPaddingTop, setDynamicPaddingTop] = useState(0); // Default fallback
 
   const onClickHelp = () => {
     if (category && HELP_FOR_CATEGORY[category]) {
@@ -97,6 +98,14 @@ export const IndicatorScreen: React.FC<IndicatorScreenProps> = ({
   const handleBannerLayout = (event) => {
     if (measuredHeight.value === 0) { // Only measure once
       measuredHeight.value = event.nativeEvent.layout.height;
+      const bannerHeight = event.nativeEvent.layout.height;
+      measuredHeight.value = bannerHeight;
+      // Calculate total header height including safe area insets
+      const totalHeaderHeight = bannerHeight + (Platform.OS === 'android' ? insets.top : 50);
+      setDynamicPaddingTop(totalHeaderHeight);
+
+      console.log('Banner height measured:', bannerHeight);
+      console.log('Total header height (with insets):', totalHeaderHeight);
     }
   };
 
@@ -236,11 +245,16 @@ export const IndicatorScreen: React.FC<IndicatorScreenProps> = ({
       behavior={"padding"}
       // keyboardVerticalOffset={0}
       keyboardVerticalOffset={Platform.OS === 'android' ? 40 : 0}
-      style={{ flex: 1 }}
+      style={{
+        flex: 1,
+      }}
     >
       <Animated.ScrollView
         className={'flex-1'}
-        contentContainerStyle={{ paddingBottom: 250, paddingTop: 200 }}
+        contentContainerStyle={{ 
+          paddingTop: dynamicPaddingTop,
+          paddingBottom: 250
+        }}
         onScroll={scrollHandler}
         scrollEventThrottle={16}>
         <View className="flex-1 justify-center items-center px-6 py-6">

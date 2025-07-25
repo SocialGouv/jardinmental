@@ -16,6 +16,7 @@ import OnboardingCheckInSleepScreen from './checkIn/sleep/OnboardingCheckInSleep
 import OnboardingCheckInMoodSummaryScreen from './checkIn/mood/OnboardingCheckInMoodSummaryScreen';
 import OnboardingCheckInIntroductionCompletedScreen from './checkIn/OnboardingCheckInIntroductionCompletedScreen';
 import OnboardingChooseIndicatorScreen from './indicators/OnboardingChooseIndicatorScreen';
+import OnboardingLoadingScreen from './OnboardingLoadingScreen';
 import ReminderScreen from './reminder/ReminderScreen';
 import { useNavigation } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -264,6 +265,10 @@ const OnboardingV2Navigator: React.FC = () => {
         options={SHARED_HEADER ? headerOptions : undefined}
         name="OnboardingChooseIndicatorIntro"
         component={OnboardingCheckInIntroductionCompletedScreen}
+      />
+      <Stack.Screen
+        name="OnboardingLoadingScreen"
+        component={OnboardingLoadingScreen}
       />
       <Stack.Screen
         name="OnboardingChooseIndicator"

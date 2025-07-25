@@ -8,7 +8,7 @@ import { generateIndicatorFromPredefinedIndicator, PredefineIndicatorV2SchemaTyp
 import localStorage from '@/utils/localStorage';
 import { categories, TW_COLORS } from '@/utils/constants';
 import BannerHeader from '../BannerHeader';
-import { SafeAreaViewWithOptionalHeader } from '@/scenes/onboarding/ProgressHeader';
+import { SafeAreaViewWithOptionalHeader, useOnboardingProgressHeader } from '@/scenes/onboarding/ProgressHeader';
 import { mergeClassNames } from '@/utils/className';
 import { typography } from '@/utils/typography';
 import SelectionnableItem from '@/components/SelectionnableItem';
@@ -24,6 +24,7 @@ import IndicatorModal from './IndicatorModal';
 import PlusIcon from '@assets/svg/icon/plus';
 import { v4 as uuidv4 } from "uuid";
 import { AnimatedHeaderScrollScreen } from '@/scenes/survey-v2/AnimatedHeaderScrollScreen';
+import { useFocusEffect } from '@react-navigation/native';
 
 const BASE_INDICATORS_FOR_CUSTOM_CATEGORIES = {
   [NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR]: [INDICATORS.find(ind => ind.uuid === "1d4c3f59-dc3e-4b45-ae82-2ea77a62e6c6")],
@@ -111,8 +112,16 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
   const [customIndicators, setCustomIndicators] = useState<PredefineIndicatorV2SchemaType[]>([]);
 
   const [addedIndicators, setAddedIndicators] = useState<Record<NEW_INDICATORS_CATEGORIES, PredefineIndicatorV2SchemaType[]>>({})
-
+  const {setSlideIndex, setIsVisible} = useOnboardingProgressHeader()
   const { profile, isLoading } = useUserProfile()
+
+  useFocusEffect(
+    React.useCallback(() => {
+      // Reset current index when the screen is focused
+      setIsVisible(false)
+      setSlideIndex(-1)
+    }, [])
+  );
 
   const recommendedIndicators = profile ? suggestIndicatorsForDifficulties(
     profile.selectedDifficulties.filter(difficulty => ![
@@ -230,10 +239,19 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
     )
   }, [selectedIndicators, toggleIndicator]);
 
-  const handlePrevious = () => navigation.goBack()
+  const handlePrevious = () => {
+    if (profile?.selectedDifficulties.find(cat => INDICATOR_CATEGORIES_DATA[cat].subCat)) {
+      navigation.navigate('SubCategoriesScreen')
+    } else {
+      navigation.navigate('PersonalizationDifficulties')
+    }
+  }
+  const indicatorsWithCustomCount = [NEW_INDICATORS_CATEGORIES.SUBSTANCE, NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR, NEW_INDICATORS_CATEGORIES.LIFE_EVENT].filter(cat => profile?.selectedDifficulties.includes(cat)).length
+  const indicatorsCount = Object.values(recommendedIndicatorsByCategory).reduce((acc, indicators) => indicators.length + acc, 0) + indicatorsWithCustomCount
+  const recommendedIndicatorsUuid = recommendedIndicators.map(reco => reco.uuid)
 
   return <AnimatedHeaderScrollScreen
-    title={`Je vous propose de suivre ${recommendedIndicators.length} éléments importants`}
+    title={`Je vous propose de suivre ${indicatorsCount} élément${indicatorsCount > 1 ? 's' : ''} importants`}
     dynamicTitle={'Indicateurs'}
     navigation={navigation}
     hasProgressBar={false}
@@ -251,18 +269,18 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
       onSkip={handleNext}
       showSkip={true}
       nextDisabled={selectedIndicators.length === 0}
-      nextText="Continuer"
+      nextText={`Valider ${indicatorsCount} élément${indicatorsCount > 1 ? 's':''} à suivre`}
       skipText="Passer cette étape"
     />}
   >
-    <View className='px-6 py-4'>
+    <View className='px-6 py-4 pb-0'>
       <InstructionText>Voici les éléments que je vous propose de suivre au quotidien. Vous pouvez en enlever ou en ajouter.</InstructionText>
     </View>
     {/* indicators grouped by categories */}
-    <View className="px-2 flex-1">
+    <View className="px-4 flex-1">
       {Object.entries(recommendedIndicatorsByCategory)
         .filter(([cat]) => {
-          return ![NEW_INDICATORS_CATEGORIES.SUBSTANCE, NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR].includes(cat as NEW_INDICATORS_CATEGORIES)
+          return ![NEW_INDICATORS_CATEGORIES.SUBSTANCE, NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR, NEW_INDICATORS_CATEGORIES.LIFE_EVENT].includes(cat as NEW_INDICATORS_CATEGORIES)
         }).map(([category, indicators]) =>
           <CategoryCard
             type='select'
@@ -300,16 +318,17 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
       </TouchableOpacity>
     </View>
 
-    {/* popular indicators */}
     {showMoreIndicators && (
-      <View className="mb-6">
+      <View className="mb-6 px-4 flex-1">
         <Text
-          className="text-xl font-bold mb-4 mx-4"
+          className="text-xl font-bold mb-4 mx-0"
           style={{ color: TW_COLORS.TEXT_PRIMARY }}
         >
           Les plus suivis
         </Text>
-        {popularIndicatorsByCategory.map((indicator, index) => (
+        {INDICATORS.filter(indicator => indicator.priority === 0 &&
+          !indicator.isGeneric && 
+          ![recommendedIndicatorsUuid, INDICATEURS_HUMEUR.uuid, INDICATEURS_SOMMEIL.uuid].includes(indicator.uuid)).map((indicator, index) => (
           <React.Fragment key={`popular-${indicator.uuid}-${index}`}>
             {renderIndicatorItem(indicator)}
           </React.Fragment>
@@ -495,7 +514,7 @@ const CategoryCard = ({
             backSquareColor={TW_COLORS.BRAND_600}
           />
         </View>
-        {indicators && <View className='ml-auto rounded py-1 px-2 border border-brand-800 bg-white flex-row justify-content items-center'>
+        {/* {indicators && <View className='ml-auto rounded py-1 px-2 border border-brand-800 bg-white flex-row justify-content items-center'>
           <Text
             className={mergeClassNames(
               typography.textSmBold,
@@ -505,7 +524,7 @@ const CategoryCard = ({
             {indicators.length} indicateur{indicators.length > 1 ? 's' : ''}
           </Text>
           <CircleCheckMark />
-        </View>}
+        </View>} */}
         {!indicators && <View className='ml-auto rounded py-1 px-2 border border-brand-800 bg-gray-200 flex-row justify-content items-center'>
           <Text
             className={mergeClassNames(

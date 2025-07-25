@@ -98,6 +98,7 @@ export type OnboardingV2StackParamList = {
   OnboardingCheckInSleep: undefined
   OnboardingCheckInMoodSummary: undefined
   OnboardingCheckInIntroductionCompleted: undefined
+  OnboardingLoadingScreen: undefined;
   OnboardingChooseIndicator: undefined
   OnboardingReminder: undefined
   'day-survey': {

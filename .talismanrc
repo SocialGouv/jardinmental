@@ -25,6 +25,8 @@ fileignoreconfig:
   checksum: 68279ddbf41bdc3fdbe9ec5073122f73b74c992dad22768d69bf6b0c6d7f5f6f
 - filename: app/src/scenes/diary/index.js
   checksum: 3ce2456ab1ef9b4d523326b4e6e796eeab6a3588e8ac9b6c8fb3abd37b70c9d6
+- filename: app/src/scenes/indicateurs/editIndicateurs/index.tsx
+  checksum: da39a551c3cf5760751f04c9083a2e720d10874a38f8ae39861a127d59288487
 - filename: app/src/scenes/onboarding-v2/CarouselScreen.tsx
   checksum: 4f0aaf86c03496f7e5d81b837058253040ed186f9e2a7f5939e5a7dd95ef0867
 - filename: app/src/scenes/onboarding-v2/checkIn/mood/OnboardingCheckInHowDoYouFeelDetailsScreen.tsx

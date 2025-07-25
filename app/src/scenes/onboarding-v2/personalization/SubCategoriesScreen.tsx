@@ -20,7 +20,7 @@ import { AnimatedHeaderScrollScreen } from '@/scenes/survey-v2/AnimatedHeaderScr
 
 type Props = OnboardingV2ScreenProps<'PersonalizationObjective'>;
 
-const NextScreen = 'OnboardingChooseIndicator'
+const NextScreen = 'OnboardingLoadingScreen'
 
 export const SubcategoriesScreen: React.FC<Props> = ({ navigation, route }) => {
     const { updateUserSubcategories, profile } = useUserProfile();

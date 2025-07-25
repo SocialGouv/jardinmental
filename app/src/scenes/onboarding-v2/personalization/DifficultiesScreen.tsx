@@ -31,7 +31,7 @@ export const DifficultiesScreen: React.FC<Props> = ({ navigation }) => {
     ...d,
     selected: !!profile?.selectedDifficulties.includes(d.category)
   })).filter(cat => cat.category !== NEW_INDICATORS_CATEGORIES.PHYSICAL_SIGNS))
-  const { setSlideIndex, setNextPath } = useOnboardingProgressHeader();
+  const { setSlideIndex, setNextPath, setIsVisible } = useOnboardingProgressHeader();
 
   // useEffect(() => {
   //   setNextPath(() => handleNext)
@@ -62,7 +62,11 @@ export const DifficultiesScreen: React.FC<Props> = ({ navigation }) => {
     if (selectedCategories.find(cat => INDICATOR_CATEGORIES_DATA[cat].subCat)) {
       navigation.navigate(NextScreen);
     } else {
-      navigation.navigate('OnboardingChooseIndicator');
+      navigation.navigate('OnboardingLoadingScreen');
+      setTimeout(() => {
+        setSlideIndex(-1);
+        setIsVisible(false)
+      })
     }
   };
 
