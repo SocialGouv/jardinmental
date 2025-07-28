@@ -49,7 +49,7 @@ export const OnboardingCheckInStartScreen: React.FC<Props> = ({ navigation }) =>
     <BeigeCard>
 
       <Text
-        className={mergeClassNames(typography.displayXsRegular, "text-center mb-6 text-brand-950 text-left")}
+        className={mergeClassNames(typography.displayXsRegular, "text-left mb-6 text-brand-950")}
       >
         Un pas après l'autre, <Text className="font-bold">vous avancez déjà.</Text>
       </Text>
