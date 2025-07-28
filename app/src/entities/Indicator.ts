@@ -2,6 +2,7 @@ import { z } from 'zod';
 import { categories } from '../utils/constants';
 import { NEW_INDICATORS_CATEGORIES, NEW_INDICATORS_SUBCATEGORIES } from '@/utils/liste_indicateurs.1';
 import { v4 as uuidv4 } from "uuid";
+import { INDICATORS_CATEGORIES } from './IndicatorCategories';
 
 export enum INDICATOR_TYPE {
   'smiley' = 'smiley',
@@ -19,12 +20,6 @@ export const IndicatorOrderSchema = z.enum(['ASC', 'DESC']);
 export const IndicatorPredefinedDomaineSchema = z.nativeEnum(categories)
 export type IndicatorPredefinedDomaine = z.infer<typeof IndicatorPredefinedDomaineSchema>
 
-export enum INDICATORS_CATEGORIES {
-  "Emotions/sentiments" = "Emotions/sentiments",
-  "Manifestations physiques" = "Manifestations physiques",
-  "Pensées" = "Pensées",
-  "Comportements" = "Comportements"
-}
 
 export const IndicatorSchema = z.object({
   version: z.number().int().positive(),
@@ -95,4 +90,3 @@ export const generateIndicatorFromPredefinedIndicator = (predefinedIndicator: Pr
     created_at: new Date()
   }
 }
-

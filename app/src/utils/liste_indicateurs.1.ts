@@ -1,4 +1,5 @@
-import { INDICATOR_ORDER, INDICATOR_TYPE, INDICATORS_CATEGORIES, PredefineIndicatorSchemaType, PredefineIndicatorV2SchemaType } from "../entities/Indicator";
+import { INDICATOR_ORDER, INDICATOR_TYPE, PredefineIndicatorSchemaType, PredefineIndicatorV2SchemaType } from "@/entities/Indicator";
+import { INDICATORS_CATEGORIES } from "@/entities/IndicatorCategories";
 
 
 export const INDICATEURS_LISTE_ONBOARDING_HUMEUR = [
@@ -7,21 +8,21 @@ export const INDICATEURS_LISTE_ONBOARDING_HUMEUR = [
     name: "Humeur matinale",
     category: INDICATORS_CATEGORIES["Emotions/sentiments"],
     order: "ASC",
-    type: "smiley",
+    type: INDICATOR_TYPE.smiley,
   },
   {
     uuid: "51ead8a8-0f08-4527-98ce-e101cd7da50d",
     name: "Humeur à la mi-journée",
     category: INDICATORS_CATEGORIES["Emotions/sentiments"],
     order: "ASC",
-    type: "smiley",
+    type: INDICATOR_TYPE.smiley,
   },
   {
     uuid: "e190182b-e2d3-4d09-bee6-21ba6baf0b25",
     name: "Humeur au coucher",
     category: INDICATORS_CATEGORIES["Emotions/sentiments"],
     order: "ASC",
-    type: "smiley",
+    type: INDICATOR_TYPE.smiley,
   },
 ];
 
@@ -1042,7 +1043,7 @@ export const INDICATEURS: PredefineIndicatorSchemaType[] = [
     name: "Humeur générale",
     category: INDICATORS_CATEGORIES["Emotions/sentiments"],
     order: "ASC",
-    type: "smiley",
+    type: INDICATOR_TYPE.smiley,
   },
   {
     uuid: "cde300cd-aecd-4821-b21b-73db4cfa6354",
