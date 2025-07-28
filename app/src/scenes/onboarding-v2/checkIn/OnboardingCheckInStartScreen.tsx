@@ -55,7 +55,7 @@ export const OnboardingCheckInStartScreen: React.FC<Props> = ({ navigation }) =>
       </Text>
 
       <Text
-        className={mergeClassNames(typography.textMdSemibold, "text-center text-brand-900 text-left")}
+        className={mergeClassNames(typography.textMdSemibold, "text-left text-brand-900")}
       >
         Réalisons ensemble votre première observation.
       </Text>
