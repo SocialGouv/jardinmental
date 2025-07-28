@@ -14,10 +14,11 @@ pg:
   cnpg-cluster:
     resources:
       requests:
-        memory: 1Gi
-      limits:
         cpu: "1"
-        memory: 1Gi
+        memory: 2Gi
+      limits:
+        cpu: "1.5"
+        memory: 2Gi
     recovery:
       enabled: true
       ~tpl~database: "{{ .Values.global.pgDatabase }}"

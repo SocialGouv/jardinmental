@@ -1,6 +1,5 @@
 # [1.52.0-alpha.1](https://github.com/SocialGouv/jardinmental/compare/v1.51.3...v1.52.0-alpha.1) (2025-07-28)
 
-
 ### Features
 
 * add beige screen with leaf illustration ([f94f9ec](https://github.com/SocialGouv/jardinmental/commit/f94f9ec83158e3f182e5455dab2758bb5846fed8))
@@ -22,6 +21,14 @@
 * change statusbar color according to displayed route ([#290](https://github.com/SocialGouv/jardinmental/issues/290)) ([5134672](https://github.com/SocialGouv/jardinmental/commit/5134672504b5f43af819066c149d1342de87dfa0))
 * replace Button/Button2 by JMButton, use colors variable in all files" ([cda0a2f](https://github.com/SocialGouv/jardinmental/commit/cda0a2fd69d82bc84b5415dbbfb050d93e57386b))
 * use typography help class to stick to figma class ([797aeac](https://github.com/SocialGouv/jardinmental/commit/797aeac3b38a55b251595a0ff8401e04aa835a2a))
+
+## [1.51.4](https://github.com/SocialGouv/jardinmental/compare/v1.51.3...v1.51.4) (2025-07-23)
+
+
+### Bug Fixes
+
+* increase prod resources ([d91edbc](https://github.com/SocialGouv/jardinmental/commit/d91edbc96fc0da96f5d84a19d52a31f72e5ef1da))
+
 
 ## [1.51.3](https://github.com/SocialGouv/jardinmental/compare/v1.51.2...v1.51.3) (2025-06-24)
 
