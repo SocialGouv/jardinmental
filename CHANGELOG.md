@@ -1,3 +1,28 @@
+# [1.52.0-alpha.1](https://github.com/SocialGouv/jardinmental/compare/v1.51.3...v1.52.0-alpha.1) (2025-07-28)
+
+
+### Features
+
+* add beige screen with leaf illustration ([f94f9ec](https://github.com/SocialGouv/jardinmental/commit/f94f9ec83158e3f182e5455dab2758bb5846fed8))
+* add bottomSheetProvider and bottomSheetContext ([83a85f5](https://github.com/SocialGouv/jardinmental/commit/83a85f53278435cea86da8a0ea2ad5ee5614b79a))
+* add colored carousel, add assets files ([10f79f7](https://github.com/SocialGouv/jardinmental/commit/10f79f7339689ec54ff909477376e21566290311))
+* add draggable modal ([a5857ff](https://github.com/SocialGouv/jardinmental/commit/a5857ffbfceeab0e49e387e2da8da031cef80dbb))
+* add emotion slider ([d06e9a5](https://github.com/SocialGouv/jardinmental/commit/d06e9a5a5fca33447bd3eda89d5a5425e7a5d14a))
+* add figma colors ([f365b55](https://github.com/SocialGouv/jardinmental/commit/f365b557eab5b440ab63cf30f2ca30e4872ca1ab))
+* add gradiant ([7ae28e0](https://github.com/SocialGouv/jardinmental/commit/7ae28e026de185e713b04f272200cbb92ecdd9d0))
+* add header and back button in navigation buttons ([fd56c69](https://github.com/SocialGouv/jardinmental/commit/fd56c69d15d6b954bf88964414ddf6ffeaebad07))
+* add new icon ([00b1abc](https://github.com/SocialGouv/jardinmental/commit/00b1abc3984a088a5276281f5564b2453e4c3af0))
+* add new onboarding ([ae46957](https://github.com/SocialGouv/jardinmental/commit/ae4695773f6374c079c793a03e8a69136cd7ee10))
+* add new page with subcategories ([ead619e](https://github.com/SocialGouv/jardinmental/commit/ead619e4dadf085a5fd6202859530c02d333d6c1))
+* add new svg icon ([a4d0d22](https://github.com/SocialGouv/jardinmental/commit/a4d0d22d63a89672a725e3388f9c99f835f3a14b))
+* add smiley svg ([b80fd69](https://github.com/SocialGouv/jardinmental/commit/b80fd697d8120fe6c1314288103da631e554add3))
+* add userProfileContext, and save indicators changed in diaryData ([9ed85a0](https://github.com/SocialGouv/jardinmental/commit/9ed85a038522a49b59212cd5b1e46b988b3d0e0e))
+* added scrollable view with animated reducing title ([31792f8](https://github.com/SocialGouv/jardinmental/commit/31792f89311e9eb045e3724567a2d661f0335eab))
+* authorize horizontal mode ([#299](https://github.com/SocialGouv/jardinmental/issues/299)) ([a97bc77](https://github.com/SocialGouv/jardinmental/commit/a97bc772a3a792f655e15cb9be3c5472e78b9af5))
+* change statusbar color according to displayed route ([#290](https://github.com/SocialGouv/jardinmental/issues/290)) ([5134672](https://github.com/SocialGouv/jardinmental/commit/5134672504b5f43af819066c149d1342de87dfa0))
+* replace Button/Button2 by JMButton, use colors variable in all files" ([cda0a2f](https://github.com/SocialGouv/jardinmental/commit/cda0a2fd69d82bc84b5415dbbfb050d93e57386b))
+* use typography help class to stick to figma class ([797aeac](https://github.com/SocialGouv/jardinmental/commit/797aeac3b38a55b251595a0ff8401e04aa835a2a))
+
 ## [1.51.3](https://github.com/SocialGouv/jardinmental/compare/v1.51.2...v1.51.3) (2025-06-24)
 
 
