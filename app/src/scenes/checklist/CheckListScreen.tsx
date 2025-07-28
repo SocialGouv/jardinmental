@@ -41,12 +41,6 @@ const checklistItems : {
         path: "symptoms",
         id: "indicators"
     },
-    // {
-    //     label: 'Personnaliser mon profil',
-    //     icon: <Profile />,
-    //     path: "profile",
-    //     id: "profile"
-    // },
     {
         label: 'Personnaliser mes objectifs',
         icon: <Goal />,
