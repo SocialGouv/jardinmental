@@ -22,11 +22,14 @@ const Reminder = ({ navigation, route, notifReminderTitle = "Comment ça va aujo
   const [reminder, setReminder] = useState<dayjs.Dayjs | null>(null);
   const [reminderSetupVisible, setReminderSetupVisible] = useState(false);
 
+  // Default reminder time constant
+  const DEFAULT_REMINDER_TIME = '20:00';
+
   // Helper function to safely format reminder time with fallback
   const formatReminderTime = (reminderDate: dayjs.Dayjs | null): string => {
     if (!reminderDate || !dayjs(reminderDate).isValid()) {
-      // Return default time (20:00) when reminder is null or invalid
-      return '20:00';
+      // Return default time when reminder is null or invalid
+      return DEFAULT_REMINDER_TIME;
     }
     return dayjs(reminderDate).format('HH:mm');
   };
