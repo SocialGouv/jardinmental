@@ -108,7 +108,7 @@ export default function CheckListScreen({ navigation, route }) {
                         const isDone = item.isDone || checklistItemValues[item.id]
                         return <TouchableOpacity
                             key={index}
-                            disabled={item.isDone}
+                            disabled={isDone}
                             onPress={() => handleItemPress(item)}
                             className={mergeClassNames('flex-row items-center p-4 mb-3 bg-white rounded-xl border border-gray-200', isDone ? 'bg-[#EBF9F4]' : '')}
                         >
