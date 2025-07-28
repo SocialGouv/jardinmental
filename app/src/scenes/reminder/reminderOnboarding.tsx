@@ -242,7 +242,11 @@ const Reminder = ({ navigation, route, notifReminderTitle = "Comment ça va aujo
     <TimePicker 
       visible={reminderSetupVisible} 
       selectDate={setReminderRequest} 
-      value={reminder ? reminder.toDate() : new Date()} 
+      value={reminder ? reminder.toDate() : (() => {
+        const defaultDate = new Date();
+        defaultDate.setHours(20, 0, 0, 0);
+        return defaultDate;
+      })()} 
     />
   </BeigeWrapperScreen >
 };
