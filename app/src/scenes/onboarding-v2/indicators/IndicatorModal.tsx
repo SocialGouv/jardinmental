@@ -85,7 +85,7 @@ export default function IndicatorModal({
                     color: TW_COLORS.BRAND_600
                 })}
                 <Text className={mergeClassNames(typography.textSmBold, 'ml-2 text-brand-600 text-left')}>
-                    Consommations de produits & addictions
+                    {INDICATOR_CATEGORIES_DATA[category].label}
                 </Text>
             </View>
             <Text className={mergeClassNames(typography.displayXsBold, 'text-left text-brand-950')}>
