@@ -1,6 +1,6 @@
 import { OnboardingStep } from "@/scenes/onboarding-v2/types";
 import { colors as mainColors } from "./colors";
-import { INDICATORS_CATEGORIES } from "@/entities/Indicator";
+import { INDICATORS_CATEGORIES } from "@/entities/IndicatorCategories";
 
 export const icons = {
   veryGood: "VeryGoodSvg",
