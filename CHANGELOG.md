@@ -1,3 +1,10 @@
+# [1.52.0-alpha.2](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.1...v1.52.0-alpha.2) (2025-07-28)
+
+
+### Bug Fixes
+
+* increase prod resources ([d91edbc](https://github.com/SocialGouv/jardinmental/commit/d91edbc96fc0da96f5d84a19d52a31f72e5ef1da))
+
 # [1.52.0-alpha.1](https://github.com/SocialGouv/jardinmental/compare/v1.51.3...v1.52.0-alpha.1) (2025-07-28)
 
 ### Features
