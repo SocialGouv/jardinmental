@@ -78,7 +78,6 @@ export default function CheckListScreen({ navigation, route }) {
                 const drugs = await localStorage.getMedicalTreatment()
                 const userIndicators = await localStorage.getIndicateurs();
                 
-                console.log(userIndicators.filter(ind => ![INDICATEURS_HUMEUR.uuid, INDICATEURS_SOMMEIL.uuid].includes(ind.uuid)))
                 setChecklistItemValues((prev => ({
                     ...prev,
                     reminder,
