@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState, useContext, createContext, useCallback } from "react";
-import { View, StyleSheet, Animated, Easing, Text, Platform } from "react-native";
+import { View, StyleSheet, Animated as RNAnimated, Easing, Text, Platform } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { BlurView } from "@react-native-community/blur";
@@ -7,7 +7,7 @@ import BackButton from "../../components/BackButton";
 import { TransitionPresets } from "@react-navigation/stack";
 import { colors } from "../../utils/colors";
 import BannerHeader from "../onboarding-v2/BannerHeader";
-import { useAnimatedStyle } from "react-native-reanimated";
+import Animated, { useAnimatedStyle, useSharedValue, SharedValue } from "react-native-reanimated";
 import { HEADER_WITH_BANNER, PROGRESS_BAR, PROGRESS_BAR_AND_HEADER, SHARED_HEADER, TW_COLORS } from "@/utils/constants";
 import CheckInHeader from "@/components/onboarding/CheckInHeader";
 import BannerAnimatedHeader from "../onboarding-v2/BannerAnimatedHeader";
@@ -29,8 +29,8 @@ interface ProgressHeaderContextType {
   setShowProgressbar: (show: boolean) => void;
   setNextPath: (func: () => void) => void;
   nextPath: React.MutableRefObject<(() => void) | null>;
-  hideOnScrollProgressValue: Animated.Value;
-  setHideOnScrollProgressValue: (value: Animated.Value) => void;
+  hideOnScrollProgressValue: SharedValue<number>;
+  setHideOnScrollProgressValue: SharedValue<number>;
 }
 
 const ProgressHeaderContext = createContext<ProgressHeaderContextType | undefined>(undefined);
@@ -48,7 +48,7 @@ export const OnboardingProgressHeaderProvider = ({ children }) => {
   const [slideIndex, setSlideIndex] = useState(-1);
   const [title, setTitle] = useState<string>('')
   const [showProgressbar, setShowProgressbar] = useState<boolean>(false);
-  const [hideOnScrollProgressValue, setHideOnScrollProgressValue] = useState<Animated.Value>(new Animated.Value(1))
+  const hideOnScrollProgressValue = useSharedValue(1);
   const nextPathRef = useRef<(() => void) | null>(null);
 
   const setNextCallback = useCallback((func: () => void) => {
@@ -67,7 +67,7 @@ export const OnboardingProgressHeaderProvider = ({ children }) => {
     setNextPath: setNextCallback,
     nextPath: nextPathRef,
     hideOnScrollProgressValue,
-    setHideOnScrollProgressValue
+    setHideOnScrollProgressValue: hideOnScrollProgressValue
     // animatedStatusBarColor,
     // animatedTextColor
   };
@@ -132,7 +132,7 @@ export const SafeAreaViewWithOptionalHeader = ({ children, style, ...props }) =>
 const ProgressHeader = ({ insets, slidesCount, navigation }) => {
   const { slideIndex, showProgressbar, nextPath, hideOnScrollProgressValue } = useOnboardingProgressHeader();
   const [hideHeader, setHideHeader] = useState(false)
-  const animatedProgressValue = useRef(new Animated.Value(0)).current;
+  const animatedProgressValue = useRef(new RNAnimated.Value(0)).current;
   const animatedProgressWidth = animatedProgressValue.interpolate({
     inputRange: [0, 1],
     outputRange: ["0%", "100%"],
@@ -152,7 +152,7 @@ const ProgressHeader = ({ insets, slidesCount, navigation }) => {
 
   useEffect(() => {
     if (slideIndex >= 0) {
-      Animated.timing(animatedProgressValue, {
+      RNAnimated.timing(animatedProgressValue, {
         toValue: Math.max(0, Math.min(1, (slideIndex) / (slidesCount))),
         duration: 300,
         easing: Easing.out(Easing.quad),
@@ -161,12 +161,12 @@ const ProgressHeader = ({ insets, slidesCount, navigation }) => {
     }
   }, [slideIndex]);
 
-  const animatedVisibleValue = useRef(new Animated.Value(0)).current;
+  const animatedVisibleValue = useRef(new RNAnimated.Value(0)).current;
   const [visible, setVisible] = useState(false);
   useEffect(() => {
     if (slideIndex >= 0 && !visible) {
       setVisible(true);
-      Animated.timing(animatedVisibleValue, {
+      RNAnimated.timing(animatedVisibleValue, {
         toValue: 1,
         delay: 200,
         duration: 300,
@@ -175,7 +175,7 @@ const ProgressHeader = ({ insets, slidesCount, navigation }) => {
       }).start();
     } else if ((slideIndex === slidesCount || slideIndex === -1) && visible) {
       setVisible(false)
-      Animated.timing(animatedVisibleValue, {
+      RNAnimated.timing(animatedVisibleValue, {
         toValue: 0,
         delay: 0,
         duration: 0,
@@ -185,6 +185,13 @@ const ProgressHeader = ({ insets, slidesCount, navigation }) => {
     }
   }, [slideIndex]);
 
+  // Animated style for progress bar opacity using SharedValue
+  const progressBarAnimatedStyle = useAnimatedStyle(() => {
+    return {
+      opacity: hideOnScrollProgressValue.value,
+    };
+  });
+
   return ({ navigation }) => {
     if (!visible) return null;
     const content = (<View style={styles.container}>
@@ -193,15 +200,13 @@ const ProgressHeader = ({ insets, slidesCount, navigation }) => {
       </View>
       {showProgressbar &&
         <Animated.View className="flex-row items-center px-6"
-          style={{
-            opacity: hideOnScrollProgressValue
-          }}
+          style={progressBarAnimatedStyle}
         >
           <View
             className="h-2 rounded-full overflow-hidden flex-1"
             style={{ backgroundColor: TW_COLORS.GRAY_LIGHT }}
           >
-            <Animated.View
+            <RNAnimated.View
               className="h-full rounded-full transition-all duration-300"
               style={{
                 backgroundColor: TW_COLORS.BRAND_500,
@@ -233,7 +238,7 @@ const ProgressHeader = ({ insets, slidesCount, navigation }) => {
         ]}
         collapsable={false}
       >
-        <Animated.View
+        <RNAnimated.View
           style={[
             (PROGRESS_BAR && !PROGRESS_BAR_AND_HEADER) ? { top: insets.top + PROGRESS_HEADER_HEIGHT - 20 } : { paddingTop: insets.top },
             { opacity: animatedVisibleValue },
@@ -272,7 +277,7 @@ const ProgressHeader = ({ insets, slidesCount, navigation }) => {
             title={""} />}
 
           {!HEADER_WITH_BANNER && !hideHeader && content}
-        </Animated.View>
+        </RNAnimated.View>
       </View>
     );
   };

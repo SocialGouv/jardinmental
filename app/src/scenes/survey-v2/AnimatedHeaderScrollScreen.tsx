@@ -13,7 +13,7 @@ import Animated, {
     useDerivedValue,
     runOnJS
 } from 'react-native-reanimated';
-import { Indicator, INDICATORS_CATEGORIES } from '@/entities/Indicator';
+import { Indicator } from '@/entities/Indicator';
 import { DiaryDataNewEntryInput } from '@/entities/DiaryData';
 import { IndicatorSurveyItem } from '@/components/survey/IndicatorSurveyItem';
 import NavigationButtons from '@/components/onboarding/NavigationButtons';
@@ -93,7 +93,7 @@ export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
     useEffect(() => {
         const unsubscribe = navigation.addListener('blur', () => {
             scrollRef.current?.scrollTo({ y: 0, animated: false });
-            setHideOnScrollProgressValue(1)
+            setHideOnScrollProgressValue.value = 1;
         });
 
         return unsubscribe; // Clean up listener on unmount
@@ -123,7 +123,7 @@ export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
                 [1, 0], //hasProgressBar ? 40 : 10], // From measured height to 0
                 Extrapolate.CLAMP
             );
-            runOnJS(setHideOnScrollProgressValue)(opacity)
+            setHideOnScrollProgressValue.value = opacity;
         },
     });
 
