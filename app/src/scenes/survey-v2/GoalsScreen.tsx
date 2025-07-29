@@ -60,7 +60,7 @@ export const GoalsScreen: React.FC<GoalsScreenProps> = ({
             flex: 1,
             fontSize: 18,
             fontWeight: 'bold',
-            fontFamily: 'Karla',
+            fontFamily: 'SourceSans3',
             textAlign: 'center',
             paddingHorizontal: 4,
             color: '#111'

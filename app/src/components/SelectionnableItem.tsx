@@ -32,9 +32,13 @@ export default function SelectionnableItem({
             )}
         >
             <View className="flex-row flex-1 items-center">
-                {icon && (
-                    <View className="mr-3 rounded-lg border border-1 border-gray-300 bg-white w-10 h-10 items-center justify-center">
-                        {React.createElement(icon)}
+                {selected ? (
+                    <View className="mr-3 w-6 h-6 rounded-md items-center justify-center bg-primary">
+                        <Text className="text-white text-base font-bold">✓</Text>
+                    </View>
+                ) : (
+                    <View className="mr-3 w-6 h-6 rounded-md items-center justify-center border-2 border-gray-300">
+                        <Text className="text-white text-xs" />
                     </View>
                 )}
                 <View className="flex-1">
@@ -47,14 +51,9 @@ export default function SelectionnableItem({
                         </Text>
                     )}
                 </View>
-
-                {selected ? (
-                    <View className="w-6 h-6 rounded-md items-center justify-center bg-primary">
-                        <Text className="text-white text-base font-bold">✓</Text>
-                    </View>
-                ) : (
-                    <View className="w-6 h-6 rounded-md items-center justify-center border-2 border-gray-300">
-                        <Text className="text-white text-xs" />
+                {icon && (
+                    <View className="rounded-full border border-1 border-gray-700 bg-white w-10 h-10 items-center justify-center">
+                        {React.createElement(icon)}
                     </View>
                 )}
             </View>

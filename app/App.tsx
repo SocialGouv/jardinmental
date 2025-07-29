@@ -51,6 +51,22 @@ const App = () => {
         'Karla-ExtraLightItalic': require('./assets/fonts/Karla-ExtraLightItalic.ttf'),
         'Karla-ExtraBold': require('./assets/fonts/Karla-ExtraBold.ttf'),
         'Karla-ExtraBoldItalic': require('./assets/fonts/Karla-ExtraBoldItalic.ttf'),
+        // Source Sans 3 variable fonts
+        // 'SourceSans3': require('./assets/fonts/SourceSans3-VariableFont_wght.ttf'),
+        'SourceSans3-Regular': require('./assets/fonts/SourceSans3-Regular.ttf'),
+        'SourceSans3-Italic': require('./assets/fonts/SourceSans3-Italic.ttf'),
+        'SourceSans3-Medium': require('./assets/fonts/SourceSans3-Medium.ttf'),
+        'SourceSans3-MediumItalic': require('./assets/fonts/SourceSans3-MediumItalic.ttf'),
+        'SourceSans3-SemiBold': require('./assets/fonts/SourceSans3-SemiBold.ttf'),
+        'SourceSans3-SemiBoldItalic': require('./assets/fonts/SourceSans3-SemiBoldItalic.ttf'),
+        'SourceSans3-Bold': require('./assets/fonts/SourceSans3-Bold.ttf'),
+        'SourceSans3-BoldItalic': require('./assets/fonts/SourceSans3-BoldItalic.ttf'),
+        'SourceSans3-Light': require('./assets/fonts/SourceSans3-Light.ttf'),
+        'SourceSans3-LightItalic': require('./assets/fonts/SourceSans3-LightItalic.ttf'),
+        'SourceSans3-ExtraLight': require('./assets/fonts/SourceSans3-ExtraLight.ttf'),
+        'SourceSans3-ExtraLightItalic': require('./assets/fonts/SourceSans3-ExtraLightItalic.ttf'),
+        'SourceSans3-ExtraBold': require('./assets/fonts/SourceSans3-ExtraBold.ttf'),
+        'SourceSans3-ExtraBoldItalic': require('./assets/fonts/SourceSans3-ExtraBoldItalic.ttf'),
       });
 
       setFontsLoaded(true);

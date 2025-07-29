@@ -76,7 +76,7 @@ export const BeigeWrapperScreen: React.FC<Props> = ({
             />
 
             {children}
-            <Leaf
+            {/* <Leaf
                 style={{
                     position: 'absolute',
                     top: -60 * scaleFactor,
@@ -106,7 +106,7 @@ export const BeigeWrapperScreen: React.FC<Props> = ({
                     bottom: '15%',
                     left: -60 * scaleFactor,
                     zIndex: 2
-                }} />
+                }} /> */}
             {handleNext && <NavigationButtons
                 onNext={handleNext}
                 // onPrevious={handlePrevious}

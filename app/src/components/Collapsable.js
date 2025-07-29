@@ -82,7 +82,7 @@ const _styles = {
       flex: 1,
       fontSize: 14,
       marginBottom: 2,
-      fontFamily: 'Karla',
+      fontFamily: 'SourceSans3',
       fontWeight: '700',
       color: colors.BLUE,
     },

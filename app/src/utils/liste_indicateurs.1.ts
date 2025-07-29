@@ -234,7 +234,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     priority: 1,
     categories: [NEW_INDICATORS_CATEGORIES.SLEEP],
     subcategories: [NEW_INDICATORS_SUBCATEGORIES.SLEEP_DIFFICULTY],
-    order: "ASC",
+    order: "DESC",
     type: INDICATOR_TYPE.gauge,
     uuid: "b36556bb-5f13-4214-a05b-f31619115f5b",
     category: INDICATORS_CATEGORIES["Emotions/sentiments"],
@@ -291,7 +291,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     subcategories: [NEW_INDICATORS_SUBCATEGORIES.BAD_SLEEP_HABITS],
     category: INDICATORS_CATEGORIES.Comportements,
     order: "DESC",
-    type: INDICATOR_TYPE.gauge,
+    type: INDICATOR_TYPE.boolean,
     new: true,
     uuid: 'bf9014c2-8e47-4c5f-9a2a-41e48c46496a',
     mainCategory: NEW_INDICATORS_CATEGORIES.SLEEP
@@ -484,14 +484,14 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
   },
   {
     name: "Trouble d'ideation\nDifficulté à organiser ses pensées, à plannifier...",
-    categories: [NEW_INDICATORS_CATEGORIES.PHYSICAL_SIGNS],
+    categories: [NEW_INDICATORS_CATEGORIES.COGNITIVE],
     priority: 1,
     order: "DESC",
     type: INDICATOR_TYPE.gauge,
     category: INDICATORS_CATEGORIES["Manifestations physiques"],
     new: true,
     uuid: 'ed5f6b2e-6a32-420f-9b71-4c3d42222cd6',
-    mainCategory: NEW_INDICATORS_CATEGORIES.PHYSICAL_SIGNS
+    mainCategory: NEW_INDICATORS_CATEGORIES.COGNITIVE
   },
   {
     name: "Procrastination",
@@ -634,12 +634,12 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     mainCategory: NEW_INDICATORS_CATEGORIES.EMOTIONS
   },
   {
-    name: "Stabillité de l'humeur",
+    name: "Stabilité de l'humeur",
     categories: [NEW_INDICATORS_CATEGORIES.EMOTIONS],
     subcategories: [NEW_INDICATORS_SUBCATEGORIES.EMOTIONAL_STABILITY],
     priority: 1,
     category: INDICATORS_CATEGORIES["Emotions/sentiments"],
-    order: "DESC",
+    order: "ASC",
     type: INDICATOR_TYPE.gauge,
     new: true,
     uuid: 'cfb3c6a0-b511-495e-b39e-8a8c35bb4d6f',
@@ -762,18 +762,16 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     categories: [NEW_INDICATORS_CATEGORIES.FOOD],
     priority: 1,
     uuid: "e5137f70-8e94-4009-b2ec-ee86516e32e8",
-    name: "Crise de boulimie",
     category: INDICATORS_CATEGORIES["Comportements"],
     order: "DESC",
     type: INDICATOR_TYPE.boolean,
     mainCategory: NEW_INDICATORS_CATEGORIES.FOOD
   },
   {
-    name: "Perte Appétit",
     categories: [NEW_INDICATORS_CATEGORIES.FOOD],
     priority: 0,
     uuid: "c6099cd3-2b10-46d8-930e-f08ed97b2505",
-    //name: "Appétit",
+    name: "Appétit",
     category: INDICATORS_CATEGORIES["Manifestations physiques"],
     order: "ASC",
     type: INDICATOR_TYPE.gauge,
@@ -980,7 +978,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     mainCategory: NEW_INDICATORS_CATEGORIES.LIFE_EVENT,
   },
   {
-    name: "Chômage",
+    name: "Perte d’emploi",
     categories: [NEW_INDICATORS_CATEGORIES.LIFE_EVENT],
     category: INDICATORS_CATEGORIES["Emotions/sentiments"],
     priority: 1,
@@ -991,7 +989,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     mainCategory: NEW_INDICATORS_CATEGORIES.LIFE_EVENT,
   },
   {
-    name: "Décès",
+    name: "Deuil",
     categories: [NEW_INDICATORS_CATEGORIES.LIFE_EVENT],
     category: INDICATORS_CATEGORIES["Emotions/sentiments"],
     priority: 1,

@@ -125,7 +125,7 @@ export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
         {slides.map((_, index) => renderPaginationDot(index))}
       </View>
       <NavigationButtons nextText={
-        currentIndex === slides.length - 1 ? 'Démarrer sur jardin' : 'Suivant'
+        currentIndex === slides.length - 1 ? 'Démarrer sur Jardin Mental' : 'Suivant'
       }
         onNext={goToNextSlide} />
     </View>

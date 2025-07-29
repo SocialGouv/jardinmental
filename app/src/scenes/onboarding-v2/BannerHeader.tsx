@@ -70,7 +70,7 @@ export default function BannerHeader({
             style={[{
                 backgroundColor: TW_COLORS.PRIMARY, borderWidth: 0,
             }, animatedStatusBarColor, hidden ? { opacity: 0 } : undefined]}
-            className={`rounded-b-3xl ${(SHARED_HEADER || hideHeader) && !HEADER_WITH_BANNER ? 'pt-16' : ''}`}
+            className={`${(SHARED_HEADER || hideHeader) && !HEADER_WITH_BANNER ? 'pt-16' : ''}`}
         >
             {(!(SHARED_HEADER || hideHeader) || HEADER_WITH_BANNER) && <CheckInHeader
                 title={headerTitle || ''}

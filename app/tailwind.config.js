@@ -73,13 +73,17 @@ module.exports = {
           DEFAULT: '#FCEBD9',
         },
         mood: {
-          5: '#21896B',
-          1: '#822F2F'
+          5: '#99DDDD', //'#21896B',
+          4: '#BBE7C6',
+          3: '#F9E1A7',
+          2: '#F3B9B0',
+          1: '#F3A3CD', //'#822F2F'
         },
       },
       fontFamily: {
-        title: ['Karla', 'sans-serif'],
-        body: ['Karla', 'sans-serif'],
+        title: ['SourceSans3', 'sans-serif'],
+        body: ['SourceSans3', 'sans-serif'],
+        sans: ['SourceSans3', 'sans-serif'],
       },
       fontSize: {
         'display-md': ['36px', {

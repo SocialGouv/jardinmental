@@ -9,9 +9,10 @@ import { INDICATOR_CATEGORIES_DATA } from "../data/helperData";
 import React, { useEffect, useState } from "react";
 import { TW_COLORS } from "@/utils/constants";
 import { TouchableOpacity } from "@gorhom/bottom-sheet";
-import { INDICATOR_TYPE, INDICATORS_CATEGORIES, PredefineIndicatorSchemaType, PredefineIndicatorV2SchemaType } from "@/entities/Indicator";
+import { INDICATOR_TYPE, PredefineIndicatorSchemaType, PredefineIndicatorV2SchemaType } from "@/entities/Indicator";
 import { v4 as uuidv4 } from "uuid";
 import JMButton from "@/components/JMButton";
+import { INDICATORS_CATEGORIES } from "@/entities/IndicatorCategories";
 
 const screenHeight = Dimensions.get('window').height;
 const height90vh = screenHeight * 0.9;
