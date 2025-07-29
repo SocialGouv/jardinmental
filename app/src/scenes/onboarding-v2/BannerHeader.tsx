@@ -11,9 +11,30 @@ import { typography } from "@/utils/typography";
 import { firstLetterUppercase } from "@/utils/string-util";
 
 const deviceId = DeviceInfo.getDeviceId(); // e.g., "iPhone10,1"
-const isSmallDevice = ['iPhone8,4', 'iPhone5,x', 'iPhone7,2', 'iPhone9,1/3', 'iPhone10,1/4', 'iPhone12,8', 'iPhone14,6'].includes(deviceId);
 
-const statusBarHeight = isSmallDevice ? 20 : 47;
+// Small devices (should get 20px)
+const smallDeviceIds = ['iPhone8,4', 'iPhone5,1', 'iPhone5,2', 'iPhone7,2', 'iPhone9,1', 'iPhone9,3', 'iPhone10,1', 'iPhone10,4', 'iPhone12,8', 'iPhone14,6'];
+
+// Large devices (should get 67px) 
+const largeDeviceIds = [
+    'iPhone13,4', // iPhone 12 Pro Max
+    'iPhone14,3', // iPhone 13 Pro Max  
+    'iPhone15,3', // iPhone 14 Pro Max
+    'iPhone16,2', // iPhone 15 Pro Max
+    'iPhone17,2', // iPhone 16 Pro Max
+];
+
+const isSmallDevice = smallDeviceIds.includes(deviceId);
+const isLargeDevice = largeDeviceIds.includes(deviceId);
+
+let statusBarHeight;
+if (isSmallDevice) {
+    statusBarHeight = 20;
+} else if (isLargeDevice) {
+    statusBarHeight = 67;
+} else {
+    statusBarHeight = 57; // Normal devices
+}
 
 
 export default function BannerHeader({
