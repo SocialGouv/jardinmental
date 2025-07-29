@@ -127,14 +127,6 @@ export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
         },
     });
 
-    useDerivedValue(() => {
-        if (scrollY.value > 50 && showProgressbar) {
-            runOnJS(setShowProgressbar)(false);
-        } else {
-            runOnJS(setShowProgressbar)(true);
-        }
-    }, [scrollY]);
-
     // Handle layout measurement to capture natural height
     const handleBannerLayout = (event) => {
         if (measuredHeight.value === 0) { // Only measure once
