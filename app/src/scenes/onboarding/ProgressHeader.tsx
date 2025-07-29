@@ -29,6 +29,8 @@ interface ProgressHeaderContextType {
   setShowProgressbar: (show: boolean) => void;
   setNextPath: (func: () => void) => void;
   nextPath: React.MutableRefObject<(() => void) | null>;
+  hideOnScrollProgressValue: Animated.Value;
+  setHideOnScrollProgressValue: (value: Animated.Value) => void;
 }
 
 const ProgressHeaderContext = createContext<ProgressHeaderContextType | undefined>(undefined);
@@ -46,19 +48,9 @@ export const OnboardingProgressHeaderProvider = ({ children }) => {
   const [slideIndex, setSlideIndex] = useState(-1);
   const [title, setTitle] = useState<string>('')
   const [showProgressbar, setShowProgressbar] = useState<boolean>(false);
+  const [hideOnScrollProgressValue, setHideOnScrollProgressValue] = useState<Animated.Value>(new Animated.Value(1))
   const nextPathRef = useRef<(() => void) | null>(null);
-  // const animatedStatusBarColor = useAnimatedStyle(() => {
-  //   return {
-  //     backgroundColor: route.params?.mood !== null ? moodBackgroundColors[route.params?.mood] : TW_COLORS.WHITE,
-  //   };
-  // })
 
-  // const animatedTextColor = useAnimatedStyle(() => {
-  //   return {
-  //     backgroundColor: 'transparent',
-  //     color: TW_COLORS.PRIMARY
-  //   };
-  // })
   const setNextCallback = useCallback((func: () => void) => {
     nextPathRef.current = func;
   }, [])
@@ -73,7 +65,9 @@ export const OnboardingProgressHeaderProvider = ({ children }) => {
     showProgressbar,
     setShowProgressbar,
     setNextPath: setNextCallback,
-    nextPath: nextPathRef
+    nextPath: nextPathRef,
+    hideOnScrollProgressValue,
+    setHideOnScrollProgressValue
     // animatedStatusBarColor,
     // animatedTextColor
   };
@@ -97,11 +91,10 @@ export const progressHeaderOptions = ({ insets, slidesCount }) => {
 export const ProgressScreen =
   ({ slideIndex: _slideIndex, Component, title, showProgressbar }) =>
     ({ ...props }) => {
-      const { setSlideIndex, setTitle, setShowProgressbar } = useOnboardingProgressHeader();
+      const { setSlideIndex, setTitle, setShowProgressbar, setHideOnScrollProgressValue } = useOnboardingProgressHeader();
 
       useFocusEffect(
         useCallback(() => {
-          // console.log('FOCUS')
           setSlideIndex(_slideIndex);
           setTimeout(() => {
             setTitle(title)
@@ -134,8 +127,10 @@ export const SafeAreaViewWithOptionalHeader = ({ children, style, ...props }) =>
   );
 };
 
+
+
 const ProgressHeader = ({ insets, slidesCount, navigation }) => {
-  const { slideIndex, showProgressbar, nextPath } = useOnboardingProgressHeader();
+  const { slideIndex, showProgressbar, nextPath, hideOnScrollProgressValue } = useOnboardingProgressHeader();
   const [hideHeader, setHideHeader] = useState(false)
   const animatedProgressValue = useRef(new Animated.Value(0)).current;
   const animatedProgressWidth = animatedProgressValue.interpolate({
@@ -167,10 +162,6 @@ const ProgressHeader = ({ insets, slidesCount, navigation }) => {
   }, [slideIndex]);
 
   const animatedVisibleValue = useRef(new Animated.Value(0)).current;
-  const animatedVisibleY = animatedVisibleValue.interpolate({
-    inputRange: [0, 1],
-    outputRange: [-(insets.top + PROGRESS_HEADER_HEIGHT), 0],
-  });
   const [visible, setVisible] = useState(false);
   useEffect(() => {
     if (slideIndex >= 0 && !visible) {
@@ -194,16 +185,6 @@ const ProgressHeader = ({ insets, slidesCount, navigation }) => {
     }
   }, [slideIndex]);
 
-  const Ghost = () => (
-    <View
-      style={{
-        height: insets.top + PROGRESS_HEADER_HEIGHT,
-        width: "100%",
-      }}
-      collapsable={false}
-    />
-  );
-
   return ({ navigation }) => {
     if (!visible) return null;
     const content = (<View style={styles.container}>
@@ -211,7 +192,11 @@ const ProgressHeader = ({ insets, slidesCount, navigation }) => {
         <BackButton onPress={navigation.goBack} />
       </View>
       {showProgressbar &&
-        <View className="flex-row items-center px-6" >
+        <Animated.View className="flex-row items-center px-6"
+          style={{
+            opacity: hideOnScrollProgressValue
+          }}
+        >
           <View
             className="h-2 rounded-full overflow-hidden flex-1"
             style={{ backgroundColor: TW_COLORS.GRAY_LIGHT }}
@@ -230,7 +215,7 @@ const ProgressHeader = ({ insets, slidesCount, navigation }) => {
           >
             {slideIndex}/{slidesCount}
           </Text>
-        </View>}
+        </Animated.View>}
 
       <View style={{ opacity: 0 }} pointerEvents="none">
         <BackButton onPress={() => { }} />
