@@ -24,17 +24,13 @@ const largeDeviceIds = [
     'iPhone17,2', // iPhone 16 Pro Max
 ];
 
-const isSmallDevice = smallDeviceIds.includes(deviceId);
-const isLargeDevice = largeDeviceIds.includes(deviceId);
+const STATUS_BAR_HEIGHTS = {
+  small: 20,
+  large: 67,
+  normal: 57
+};
 
-let statusBarHeight;
-if (isSmallDevice) {
-    statusBarHeight = 20;
-} else if (isLargeDevice) {
-    statusBarHeight = 67;
-} else {
-    statusBarHeight = 57; // Normal devices
-}
+const statusBarHeight = STATUS_BAR_HEIGHTS[deviceCategory];
 
 
 export default function BannerHeader({
