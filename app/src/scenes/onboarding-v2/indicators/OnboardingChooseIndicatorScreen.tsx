@@ -112,7 +112,7 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
   const [customIndicators, setCustomIndicators] = useState<PredefineIndicatorV2SchemaType[]>([]);
 
   const [addedIndicators, setAddedIndicators] = useState<Record<NEW_INDICATORS_CATEGORIES, PredefineIndicatorV2SchemaType[]>>({})
-  const {setSlideIndex, setIsVisible} = useOnboardingProgressHeader()
+  const { setSlideIndex, setIsVisible } = useOnboardingProgressHeader()
   const { profile, isLoading } = useUserProfile()
 
   useFocusEffect(
@@ -269,7 +269,7 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
       onSkip={handleNext}
       showSkip={true}
       nextDisabled={selectedIndicators.length === 0}
-      nextText={`Valider ${indicatorsCount} élément${indicatorsCount > 1 ? 's':''} à suivre`}
+      nextText={`Valider ${indicatorsCount} élément${indicatorsCount > 1 ? 's' : ''} à suivre`}
       skipText="Passer cette étape"
     />}
   >
@@ -327,12 +327,12 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
           Les plus suivis
         </Text>
         {INDICATORS.filter(indicator => indicator.priority === 0 &&
-          !indicator.isGeneric && 
+          !indicator.isGeneric &&
           ![recommendedIndicatorsUuid, INDICATEURS_HUMEUR.uuid, INDICATEURS_SOMMEIL.uuid].includes(indicator.uuid)).map((indicator, index) => (
-          <React.Fragment key={`popular-${indicator.uuid}-${index}`}>
-            {renderIndicatorItem(indicator)}
-          </React.Fragment>
-        ))}
+            <React.Fragment key={`popular-${indicator.uuid}-${index}`}>
+              {renderIndicatorItem(indicator)}
+            </React.Fragment>
+          ))}
       </View>
     )}
     <View className="h-20" />

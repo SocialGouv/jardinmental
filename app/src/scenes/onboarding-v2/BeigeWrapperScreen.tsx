@@ -1,22 +1,18 @@
 import React from 'react';
-import { View, Text, SafeAreaView, Dimensions } from 'react-native';
+import { Dimensions } from 'react-native';
 import NavigationButtons from '@/components/onboarding/NavigationButtons';
 import CheckInHeader from '@/components/onboarding/CheckInHeader';
 import { TW_COLORS } from '@/utils/constants';
 import Leaf from '@assets/svg/illustrations/Leaf'
 import TwoLeaf from '@assets/svg/illustrations/TwoLeaf'
-import { OnboardingV2ScreenProps } from './types';
-import BeigeCard from './BeigeCard';
 import { SafeAreaViewWithOptionalHeader } from '../onboarding/ProgressHeader';
-import { blue } from 'react-native-reanimated/lib/typescript/Colors';
-import { colors } from '@/utils/colors';
 import ChevronIcon from '@assets/svg/icon/chevron';
 
 type Props = {
     variant?: 'beige' | 'white' | 'green' | 'blue';
-    handlePrevious: () => void;
-    handleSkip: () => void;
-    handleNext: () => void;
+    handlePrevious?: () => void;
+    handleSkip?: () => void;
+    handleNext?: () => void;
     children: React.ReactNode;
     nextText?: string;
 };
@@ -41,7 +37,7 @@ export const BeigeWrapperScreen: React.FC<Props> = ({
     handleNext,
     nextText,
     variant = 'beige',
-    children }) => {
+    children }: Props) => {
 
     // Get screen dimensions and calculate scale factor
     const { width: screenWidth } = Dimensions.get('window');

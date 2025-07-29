@@ -4,7 +4,7 @@ import Svg, { Path } from "react-native-svg";
 export default function CheckMarkIcon({
     color
 }: {
-    color: string
+    color?: string
 }) {
     return <View className={'ml-2 mr-2 p-2'}><Svg
         width="20"

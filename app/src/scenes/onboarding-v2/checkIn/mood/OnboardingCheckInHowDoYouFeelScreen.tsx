@@ -1,17 +1,14 @@
 import React, { useState, useRef, useEffect, useContext, useCallback } from 'react';
-import { View, Text, SafeAreaView, TouchableOpacity, Platform, Dimensions, FlatList } from 'react-native';
+import { View, Text, TouchableOpacity, Platform, Dimensions, FlatList } from 'react-native';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withSpring,
   interpolateColor,
-  withTiming,
 } from 'react-native-reanimated';
 
-import CheckInHeader from '@/components/onboarding/CheckInHeader';
 import { OnboardingV2ScreenProps } from '../../types';
-import { EMOTION_COLORS, iconColors, PROGRESS_BAR_AND_HEADER, TW_COLORS } from '@/utils/constants';
-import JMButton from '@/components/JMButton';
+import { TW_COLORS } from '@/utils/constants';
 import NavigationButtons from '@/components/onboarding/NavigationButtons';
 import { beforeToday, formatDay } from '@/utils/date/helpers';
 import { INDICATEURS_HUMEUR } from '@/utils/liste_indicateurs.1';
@@ -41,7 +38,6 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
   const [hasSelectedOnce, setHasSelectedOnce] = useState<boolean>(false);
   const flatListRef = useRef<FlatList>(null);
   const [loading, setLoading] = useState<boolean>(false)
-  const [checkInData, setCheckInData] = useState<number | null>(null);
   const [diaryData, addNewEntryToDiaryData] = useContext(DiaryDataContext);
   const { setCustomColor } = useStatusBar();
   const measuredHeight = useSharedValue(0); // Store the measured natural height
@@ -62,7 +58,6 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
     offset: itemWidth * index,
     index,
   });
-
 
   useEffect(() => {
     // Give it a small delay to ensure FlatList has finished initial rendering
@@ -110,9 +105,7 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
       date,
       answers: updatedAnswers
     });
-    navigation.navigate(NextRoute, {
-      mood
-    })
+    navigation.navigate(NextRoute)
     setLoading(false);
 
   };
@@ -140,8 +133,6 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
     if (!hasSelectedOnce) {
       setHasSelectedOnce(true);
     }
-
-    // Unified spring configuration for synchronized animations
 
     // Animate all elements with synchronized timing
     scrollViewScale.value = withSpring(2.5, springConfig);
@@ -192,8 +183,6 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
   const animatedScrollViewStyle = useAnimatedStyle(() => {
     return {
       transform: [{ scale: scrollViewScale.value }],
-      // marginTop: marginScale.value,
-      //height: heightScale.value
     };
   });
 
@@ -253,15 +242,13 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
     };
   });
 
-
-
   const renderMoodItem = ({ item, index }: { item: MoodEmoji; index: number }) => {
     const value = index + 1;
     return (
       <MoodItem
         item={item}
         index={index}
-        selected={selectedMoodIndex - 1 === index}
+        selected={selectedMoodIndex !== null ? selectedMoodIndex - 1 === index : false}
         scrollViewScaled={!!selectedMoodIndex}
         onSelect={() => onSelectEmotion(value)}
       />
@@ -286,7 +273,6 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
         contentContainerStyle={{
           paddingHorizontal: (screenWidth - itemWidth) / 2,
           paddingVertical: 5,
-          // marginHorizontal: -((screenWidth - itemWidth) / 2),
           alignItems: 'center',
         }}
         style={{
@@ -294,8 +280,6 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
           flexGrow: 0,
         }}
       />
-
-      {/* Animated description text */}
     </Animated.View >
     {
       selectedMoodIndex !== null && (
@@ -332,9 +316,6 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
         headerTitle='Observation du jour'
         title={'Comment vous sentez-vous actuellement ?'}
         onBannerLayout={handleBannerLayout}
-      // handlePrevious={() => {
-      //   navigation.goBack()
-      // }}
       />
       <View className="flex-1 p-8">
         <InstructionText>
@@ -342,9 +323,6 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
         </InstructionText>
         <View
           className="flex-1 p-8 justify-center items-center"
-        // style={{
-        //   marginTop: dynamicPaddingTop
-        // }}
         >
           {renderMoodSelector()}
         </View>
@@ -376,7 +354,6 @@ const MoodItem = ({
   const rotateSelectorProgress = useSharedValue(0);
 
   useEffect(() => {
-    // Lance l'animation quand sélectionné
     rotateSelectorProgress.value = withSpring(scrollViewScaled ? 10 : 0, springConfig);
   }, [scrollViewScaled]);
 

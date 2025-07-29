@@ -1,6 +1,5 @@
 import React, { useCallback } from 'react';
-import { View, Text, SafeAreaView } from 'react-native';
-import CheckInHeader from '@/components/onboarding/CheckInHeader';
+import { View, Text } from 'react-native';
 import NavigationButtons from '@/components/onboarding/NavigationButtons';
 import { OnboardingV2ScreenProps } from '../../types';
 import { TW_COLORS } from '@/utils/constants';
@@ -8,7 +7,6 @@ import { useAnimatedStyle } from 'react-native-reanimated';
 import { moodBackgroundColors, moodEmojis } from '@/utils/mood';
 import BannerHeader from '../../BannerHeader';
 import { SafeAreaViewWithOptionalHeader } from '@/scenes/onboarding/ProgressHeader';
-import { bg } from 'date-fns/locale';
 import { mergeClassNames } from '@/utils/className';
 import { typography } from '@/utils/typography';
 import { firstLetterUppercase } from '@/utils/string-util';
@@ -16,7 +14,7 @@ import { useStatusBar } from '@/context/StatusBarContext';
 import { useFocusEffect } from '@react-navigation/native';
 
 
-type Props = OnboardingV2ScreenProps<'Intro'>;
+type Props = OnboardingV2ScreenProps<'OnboardingCheckInMoodSummary'>;
 
 export const OnboardingCheckInMoodSummaryScreen: React.FC<Props> = ({ navigation, route }) => {
 
@@ -42,10 +40,6 @@ export const OnboardingCheckInMoodSummaryScreen: React.FC<Props> = ({ navigation
 
   const handlePrevious = () => {
     navigation.goBack();
-  };
-
-  const handleSkip = () => {
-    handleNext();
   };
 
   const animatedStatusBarColor = useAnimatedStyle(() => {
@@ -90,7 +84,6 @@ export const OnboardingCheckInMoodSummaryScreen: React.FC<Props> = ({ navigation
               justifyContent: 'center',
               alignItems: 'center',
               marginTop: 16,
-              // maxHeight: MAX_ROWS * TAG_HEIGHT + (MAX_ROWS - 1) * 8, // + gap between rows
             }}
           >
             {(route.params?.selectedMoods || []).map((mood, index) => (
@@ -118,7 +111,8 @@ export const OnboardingCheckInMoodSummaryScreen: React.FC<Props> = ({ navigation
           <Text
             className={mergeClassNames(typography.textMdRegular, 'text-gray-800 text-left')}
           >
-            Observer votre humeur au fil du temps peut aider à mieux comprendre ce qui vous influence.          </Text>
+            Observer votre humeur au fil du temps peut aider à mieux comprendre ce qui vous influence.
+          </Text>
         </View>
       </View>
 

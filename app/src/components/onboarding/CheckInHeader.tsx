@@ -11,12 +11,9 @@ interface CheckInHeaderProps {
   title: string;
   onPrevious?: () => void;
   onSkip?: () => void;
-  showPrevious?: boolean;
   showSkip?: boolean;
   skipText?: string;
   animatedTextColor?: Animated.AnimateStyle<ViewStyle> | ViewStyle;
-  withMargin?: boolean;
-  className?: string;
   leftComponent?: ReactNode; // custom left component, used in shared header
   leftAction?: () => void;
   dynamicTitle?: string; // dynamic title that replaces original title on scroll
@@ -28,18 +25,14 @@ export const CheckInHeader: React.FC<CheckInHeaderProps> = ({
   title,
   onPrevious,
   onSkip,
-  showPrevious = true,
   showSkip = false,
   skipText = 'Passer',
   animatedTextColor,
-  withMargin = true,
-  className = '',
   leftAction,
   leftComponent,
   dynamicTitle,
   headerTitleStyle,
   dynamicTitleStyle,
-  backgroundColor
 }) => {
   const headerHeight = 48; // 👈 fixed height ensures proper alignment
   return (
@@ -51,7 +44,6 @@ export const CheckInHeader: React.FC<CheckInHeaderProps> = ({
         justifyContent: 'center',
         alignItems: 'center',
         zIndex: 1001,
-        // backgroundColor: backgroundColor || 'green'
       }}
     >
       {/* Bouton Précédent */}

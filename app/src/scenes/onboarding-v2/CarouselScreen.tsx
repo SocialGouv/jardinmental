@@ -1,17 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, SafeAreaView, FlatList, TouchableOpacity, Dimensions } from 'react-native';
+import { View, FlatList, TouchableOpacity, Dimensions } from 'react-native';
 import { OnboardingV2ScreenProps, CarouselSlide } from './types';
 import { CarouselSlide as CarouselSlideComponent } from '../../components/onboarding/CarouselSlide';
 import NavigationButtons from '../../components/onboarding/NavigationButtons';
 import { useUserProfile } from '../../context/userProfile';
-import { TW_COLORS } from '@/utils/constants';
 import { useFocusEffect } from '@react-navigation/native';
-import carouselSlides, { carouselSlidesSuivi } from './data/carouselData';
+import carouselSlides from './data/carouselData';
 import BeigeWrapperScreen from './BeigeWrapperScreen';
-import Leaf from '@assets/svg/illustrations/Leaf';
-import TwoLeaf from '@assets/svg/illustrations/TwoLeaf';
-import CheckInHeader from '@/components/onboarding/CheckInHeader';
-import { SafeAreaViewWithOptionalHeader, useOnboardingProgressHeader } from '../onboarding/ProgressHeader';
+import { useOnboardingProgressHeader } from '../onboarding/ProgressHeader';
 import { mergeClassNames } from '@/utils/className';
 
 type Props = OnboardingV2ScreenProps<'Carousel'>;
@@ -36,9 +32,7 @@ export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
   );
 
   useEffect(() => {
-    // if (profile) {
     setSlides(carouselSlides)
-    // }
   }, [profile])
 
   const handleNext = () => {
@@ -71,7 +65,6 @@ export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
 
   const goToNextSlide = () => {
     if (currentIndex < slides.length - 1) {
-      // setVariant(slides[currentIndex + 1].variant || 'beige');
       goToSlide(currentIndex + 1);
     } else {
       handleNext();
@@ -118,8 +111,6 @@ export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
         index,
       })}
     />
-
-    {/* Indicateurs de pagination et navigation */}
     <View className="left-0 right-0">
       <View className="flex-row justify-center items-center mb-6">
         {slides.map((_, index) => renderPaginationDot(index))}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback, useContext } from 'react';
+import React, { useState, useCallback, useContext } from 'react';
 import { CardStyleInterpolators, createStackNavigator, TransitionSpecs } from '@react-navigation/stack';
 import { OnboardingV2StackParamList } from './types';
 import localStorage from '../../utils/localStorage';
@@ -7,7 +7,6 @@ import IntroScreen from './IntroScreen';
 import ProfileScreen from './ProfileScreen';
 import CarouselScreen from './CarouselScreen';
 import DifficultiesScreen from './personalization/DifficultiesScreen';
-import ObjectiveScreen from './personalization/ObjectiveScreen';
 import OnboardingPersonalizationStartScreen from './personalization/OnboardingPersonalizationStartScreen';
 import OnboardingCheckInStartScreen from './checkIn/OnboardingCheckInStartScreen';
 import OnboardingCheckInHowDoYouFeelScreen from './checkIn/mood/OnboardingCheckInHowDoYouFeelScreen';
@@ -17,15 +16,14 @@ import OnboardingCheckInMoodSummaryScreen from './checkIn/mood/OnboardingCheckIn
 import OnboardingCheckInIntroductionCompletedScreen from './checkIn/OnboardingCheckInIntroductionCompletedScreen';
 import OnboardingChooseIndicatorScreen from './indicators/OnboardingChooseIndicatorScreen';
 import OnboardingLoadingScreen from './OnboardingLoadingScreen';
-import ReminderScreen from './reminder/ReminderScreen';
 import { useNavigation } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { progressHeaderOptions, ProgressScreen } from '../onboarding/ProgressHeader';
-import { SHARED_HEADER, PROGRESS_BAR } from '@/utils/constants';
 import { EncouragementScreen } from '../survey-v2/EncouragementScreen';
 import SubcategoriesScreen from './personalization/SubCategoriesScreen';
 import { beforeToday, formatDay } from '@/utils/date/helpers';
 import { DiaryDataContext } from '@/context/diaryData';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 const Stack = createStackNavigator<OnboardingV2StackParamList>();
 
@@ -43,40 +41,17 @@ export const VALID_SCREEN_NAMES: (keyof OnboardingV2StackParamList)[] = [
   'SubCategoriesScreen',
   'OnboardingChooseIndicator',
   'OnboardingCheckInStart',
-  // 'OnboardingCheckInHowDoYouFeelDetails',
-  // 'OnboardingCheckInMoodSummary',
-  // 'OnboardingCheckInSleep',
   'OnboardingCheckInIntroductionCompleted',
   'OnboardingReminder',
 ];
 
 const OnboardingV2Navigator: React.FC = () => {
   const [initialRouteName, setInitialRouteName] = useState<keyof OnboardingV2StackParamList>('Intro');
-  const [isLoading, setIsLoading] = useState(true);
 
-  const navigation = useNavigation();
+  const navigation = useNavigation<StackNavigationProp<OnboardingV2StackParamList>>();
   const insets = useSafeAreaInsets();
   const slidesCount = 3;
-  const headerOptions = progressHeaderOptions({ insets, slidesCount });
-
-  // useEffect(() => {
-  //   const setupStack = async () => {
-  //     const onboardingStep = await localStorage.getOnboardingStep() as keyof OnboardingV2StackParamList;
-
-  //     if (onboardingStep && VALID_SCREEN_NAMES.includes(onboardingStep)) {
-  //       const index = VALID_SCREEN_NAMES.indexOf(onboardingStep);
-  //       const routes = VALID_SCREEN_NAMES.slice(0, index + 1).map(name => ({ name: name as never, key: name }));
-
-  //       navigation.reset({
-  //         index,
-  //         routes,
-  //       });
-  //     }
-  //   };
-
-  //   setupStack();
-  // }, [navigation]);
-
+  const headerOptions = progressHeaderOptions({ insets, slidesCount, navigation });
 
   // Handle navigation state changes - save current screen automatically
   const handleNavigationStateChange = useCallback(async (state: any) => {
@@ -99,10 +74,11 @@ const OnboardingV2Navigator: React.FC = () => {
     title={'Merci d’avoir pris ce moment pour observer votre sommeil.'}
     description={''}
     extraInfo={'En France, 32 % des adultes se déclarent insatisfaits de leur sommeil.\nEn faire le suivi, c’est déjà prendre soin de soi. (ifop mars 2022)'}
-    onNext={() => navigation.navigate('PersonalizationStart')} />
+    onNext={() => navigation.navigate('PersonalizationStart')}
+    headingTitle={''} />
 
   const StartFirstSurvey = () => {
-    const [diaryData, setDiaryData] = useContext(DiaryDataContext);
+    const [diaryData] = useContext(DiaryDataContext);
 
     return <EncouragementScreen
       navigation={navigation}
@@ -122,28 +98,12 @@ const OnboardingV2Navigator: React.FC = () => {
       }} />
   }
 
-
-
   return (
     <Stack.Navigator
       initialRouteName={initialRouteName}
       screenOptions={{
         headerShown: false,
         gestureEnabled: false,
-        // cardStyleInterpolator: ({ current, layouts }) => {
-        //   return {
-        //     cardStyle: {
-        //       transform: [
-        //         {
-        //           translateX: current.progress.interpolate({
-        //             inputRange: [0, 1],
-        //             outputRange: [layouts.screen.width, 0],
-        //           }),
-        //         },
-        //       ],
-        //     },
-        //   };
-        // },
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         transitionSpec: {
           open: TransitionSpecs.TransitionIOSSpec,
@@ -171,7 +131,7 @@ const OnboardingV2Navigator: React.FC = () => {
       {/* Use header */}
       <Stack.Screen
         name="PersonalizationStart"
-        options={SHARED_HEADER || PROGRESS_BAR ? headerOptions : undefined}
+        options={headerOptions}
         component={ProgressScreen({
           slideIndex: 0,
           showProgressbar: true,
@@ -181,7 +141,7 @@ const OnboardingV2Navigator: React.FC = () => {
       />
       <Stack.Screen
         name="PersonalizationDifficulties"
-        options={SHARED_HEADER || PROGRESS_BAR ? headerOptions : undefined}
+        options={headerOptions}
         component={ProgressScreen({
           slideIndex: 1,
           showProgressbar: true,
@@ -191,7 +151,7 @@ const OnboardingV2Navigator: React.FC = () => {
       />
       <Stack.Screen
         name="SubCategoriesScreen"
-        options={SHARED_HEADER || PROGRESS_BAR ? headerOptions : undefined}
+        options={headerOptions}
         component={ProgressScreen({
           slideIndex: 2,
           showProgressbar: true,
@@ -199,70 +159,35 @@ const OnboardingV2Navigator: React.FC = () => {
           title: ""
         })}
       />
-      {/* <Stack.Screen
-        name="PersonalizationObjective"
-        options={SHARED_HEADER || PROGRESS_BAR ? headerOptions : undefined}
-        component={ProgressScreen({
-          slideIndex: 2,
-          showProgressbar: true,
-          Component: ObjectiveScreen,
-          title: "Quels sont vos objectifs ?"
-        })}
-      /> */}
       <Stack.Screen
-        options={SHARED_HEADER ? headerOptions : undefined}
         name="OnboardingCheckInStart"
-        component={SHARED_HEADER ? ProgressScreen({
-          slideIndex: -1,
-          showProgressbar: false,
-          Component: OnboardingCheckInStartScreen,
-          title: "Quels sont vos objectifs ?"
-        }) : OnboardingCheckInStartScreen}
+        component={OnboardingCheckInStartScreen}
       />
       <Stack.Screen
-        options={SHARED_HEADER ? headerOptions : undefined}
         name="OnboardingCheckInHowDoYouFeel"
-        component={SHARED_HEADER ? ProgressScreen({
-          slideIndex: 2,
-          Component: OnboardingCheckInHowDoYouFeelScreen,
-          title: "Quels sont vos objectifs ?"
-        }) : OnboardingCheckInHowDoYouFeelScreen}
+        component={OnboardingCheckInHowDoYouFeelScreen}
       />
       <Stack.Screen
-        options={SHARED_HEADER ? headerOptions : undefined}
         name="OnboardingCheckInHowDoYouFeelDetails"
-        component={SHARED_HEADER ? ProgressScreen({
-          slideIndex: 2,
-          Component: OnboardingCheckInLastMoodsScreen,
-          title: "Quels sont vos objectifs ?"
-        }) : OnboardingCheckInLastMoodsScreen}
+        component={OnboardingCheckInLastMoodsScreen}
       />
       <Stack.Screen
-        options={SHARED_HEADER ? headerOptions : undefined}
         name="OnboardingCheckInMoodSummary"
-        component={SHARED_HEADER ? ProgressScreen({
-          slideIndex: 2,
-          Component: OnboardingCheckInMoodSummaryScreen,
-          title: "Quels sont vos objectifs ?"
-        }) : OnboardingCheckInMoodSummaryScreen}
+        component={OnboardingCheckInMoodSummaryScreen}
       />
       <Stack.Screen
-        options={SHARED_HEADER ? headerOptions : undefined}
         name="OnboardingCheckInSleep"
         component={OnboardingCheckInSleepScreen}
       />
       <Stack.Screen
-        options={SHARED_HEADER ? headerOptions : undefined}
         name="StartFirstSurvey"
         component={StartFirstSurvey}
       />
       <Stack.Screen
-        options={SHARED_HEADER ? headerOptions : undefined}
         name="CheckInSleepCompleted"
         component={CheckInSleepCompleted}
       />
       <Stack.Screen
-        options={SHARED_HEADER ? headerOptions : undefined}
         name="OnboardingChooseIndicatorIntro"
         component={OnboardingCheckInIntroductionCompletedScreen}
       />

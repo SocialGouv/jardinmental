@@ -1,10 +1,10 @@
-import React, { useRef, useEffect, useState, useContext, createContext, useCallback } from "react";
-import { View, StyleSheet, Animated, Easing, Text, Platform } from "react-native";
+import React, { useRef, useEffect, useState, useContext, createContext, useCallback, ReactNode } from "react";
+import { View, StyleSheet, Animated, Easing, Text, Platform, ViewStyle } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { BlurView } from "@react-native-community/blur";
 import BackButton from "../../components/BackButton";
-import { TransitionPresets } from "@react-navigation/stack";
+import { StackNavigationOptions, TransitionPresets } from "@react-navigation/stack";
 import { colors } from "../../utils/colors";
 import BannerHeader from "../onboarding-v2/BannerHeader";
 import { useAnimatedStyle } from "react-native-reanimated";
@@ -81,7 +81,7 @@ export const OnboardingProgressHeaderProvider = ({ children }) => {
   return <ProgressHeaderContext.Provider value={value}>{children}</ProgressHeaderContext.Provider>;
 };
 
-export const progressHeaderOptions = ({ insets, slidesCount }) => {
+export const progressHeaderOptions = ({ insets, slidesCount, navigation }): StackNavigationOptions => {
   return {
     headerShown: true,
     headerStyle: {
@@ -89,7 +89,7 @@ export const progressHeaderOptions = ({ insets, slidesCount }) => {
     },
     headerMode: "float",
     headerTransparent: true,
-    header: ProgressHeader({ insets, slidesCount }),
+    header: ProgressHeader({ insets, slidesCount, navigation }),
     ...TransitionPresets.SlideFromRightIOS,
   };
 };
@@ -113,7 +113,11 @@ export const ProgressScreen =
       return <Component {...props} />;
     };
 
-export const SafeAreaViewWithOptionalHeader = ({ children, style, ...props }) => {
+export const SafeAreaViewWithOptionalHeader = ({ children, style, ...props }: {
+  style?: ViewStyle,
+  children: ReactNode,
+  className?: string,
+}) => {
   const insets = useSafeAreaInsets();
   const { isVisible } = useOnboardingProgressHeader();
 

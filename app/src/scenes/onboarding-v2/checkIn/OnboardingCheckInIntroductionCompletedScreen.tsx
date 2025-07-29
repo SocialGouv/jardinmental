@@ -1,9 +1,6 @@
 import React from 'react';
-import { View, Text, SafeAreaView } from 'react-native';
+import { Text } from 'react-native';
 import { OnboardingV2ScreenProps } from '../types';
-import CheckInHeader from '@/components/onboarding/CheckInHeader';
-import NavigationButtons from '@/components/onboarding/NavigationButtons';
-import { TW_COLORS } from '@/utils/constants';
 import BeigeWrapperScreen from '../BeigeWrapperScreen';
 import BeigeCard from '../BeigeCard';
 import { typography } from '@/utils/typography';
