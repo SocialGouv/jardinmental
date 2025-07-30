@@ -1,3 +1,15 @@
+# [1.52.0-alpha.4](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.3...v1.52.0-alpha.4) (2025-07-30)
+
+
+### Bug Fixes
+
+* misc fix, text alignment, label content, ... ([#306](https://github.com/SocialGouv/jardinmental/issues/306)) ([bd132c8](https://github.com/SocialGouv/jardinmental/commit/bd132c8b0e5e389588a56361ce602d47cc2cbeba))
+
+
+### Features
+
+* update checklist screen when goals, indicators are done ([#304](https://github.com/SocialGouv/jardinmental/issues/304)) ([7ed1e9b](https://github.com/SocialGouv/jardinmental/commit/7ed1e9bea03fd91dfbcf0dcd2c93f8751d7000d9))
+
 # [1.52.0-alpha.3](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.2...v1.52.0-alpha.3) (2025-07-30)
 
 
