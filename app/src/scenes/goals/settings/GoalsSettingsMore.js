@@ -145,7 +145,7 @@ const itemStyles = StyleSheet.create({
     alignItems: "center",
   },
   label: {
-    fontFamily: "Karla",
+    fontFamily: "SourceSans3",
     fontWeight: "700",
     fontSize: 16,
     color: colors.BLUE,

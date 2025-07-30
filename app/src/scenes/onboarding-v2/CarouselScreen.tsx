@@ -127,7 +127,7 @@ export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
       <NavigationButtons
         withArrow={true}
         nextText={
-          currentIndex === slides.length - 1 ? 'Démarrer sur jardin' : 'Suivant'
+          currentIndex === slides.length - 1 ? 'Démarrer sur Jardin Mental' : 'Suivant'
         }
         onNext={goToNextSlide} />
     </View>

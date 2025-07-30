@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 15,
-    fontFamily: "Karla",
+    fontFamily: "SourceSans3",
     fontWeight: "400",
     textAlign: "left",
     color: "#000000",

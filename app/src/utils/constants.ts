@@ -15,25 +15,31 @@ export const icons = {
 
 export const EMOTION_COLORS = {
   // bg
-  veryBad: "#F4A6A6",//"#F16B6B",
-  bad: "#FDD6A5",//"#FEAA5B",
-  middle: "#FFF4B2",//"#F2F478",
-  good: "#D0F0C0",//"#ACF352",
-  veryGood: "#A8E6CF",//"#5DEE5A",
+  // veryBad: "#F4A6A6",//"#F16B6B",
+  // bad: "#FDD6A5",//"#FEAA5B",
+  // middle: "#FFF4B2",//"#F2F478",
+  // good: "#D0F0C0",//"#ACF352",
+  // veryGood: "#A8E6CF",//"#5DEE5A",
   //
   veryBadTrans: "#fdcccc",
   badTrans: "#fbd8b8",
   middleTrans: "#fbe79c",
   goodTrans: "#f1f491",
   veryGoodTrans: "#edfaca",
+
+  veryBad: "#F3A3CD", // "#822F2F", //"#840707",
+  bad: '#F3B9B0',//"#91501A", //"#744519",
+  middle: '#F9E1A7',//"#91501A",//"#6C630C",
+  good: '#BBE7C6',//'#317535',//"#496300",
+  veryGood: '#99DDDD'//'#21896B',//"#1A6300",
 };
 
 export const iconBorderColors = {
-  veryBad: "#D13E3E",
-  bad: "#E7770F",
-  middle: "#F0DF49",
-  good: "#7CCF12",
-  veryGood: "#0FC321",
+  veryBad: '#822F2F', //"#D13E3E",
+  bad: '#862F22',//"#E7770F",
+  middle: '#862F22',//"#F0DF49",
+  good: '#224E2D',//"#7CCF12",
+  veryGood: '#004439'//"#0FC321",
 };
 
 export const iconColors = {
@@ -42,6 +48,12 @@ export const iconColors = {
   middle: "#91501A",//"#6C630C",
   good: '#317535',//"#496300",
   veryGood: '#21896B',//"#1A6300",
+
+  // veryBad: "#F3A3CD", // "#822F2F", //"#840707",
+  // bad: '#F3B9B0',//"#91501A", //"#744519",
+  // middle: '#F9E1A7',//"#91501A",//"#6C630C",
+  // good: '#BBE7C6',//'#317535',//"#496300",
+  // veryGood: '#99DDDD'//'#21896B',//"#1A6300",
 };
 
 export const scoresMapIcon = {

@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 16,
-    fontFamily: "Karla",
+    fontFamily: "SourceSans3",
     fontWeight: "400",
     textAlign: "left",
     color: colors.BLUE,

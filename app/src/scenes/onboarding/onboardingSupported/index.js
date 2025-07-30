@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
   },
   hintText: {
     flex: 1,
-    fontFamily: "Karla",
+    fontFamily: "SourceSans3",
     fontWeight: "700",
     fontSize: 13,
     lineHeight: 15,

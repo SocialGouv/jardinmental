@@ -134,7 +134,7 @@ const itemStyles = StyleSheet.create({
     flex: 1,
   },
   label: {
-    fontFamily: "Karla",
+    fontFamily: "SourceSans3",
     fontWeight: "700",
     fontSize: 16,
     color: colors.BLUE,
@@ -151,7 +151,7 @@ const itemStyles = StyleSheet.create({
     marginRight: 6,
   },
   daysOfWeekText: {
-    fontFamily: "Karla",
+    fontFamily: "SourceSans3",
     fontWeight: "400",
     fontSize: 14,
     color: "#2D2D2D",

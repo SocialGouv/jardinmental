@@ -200,7 +200,7 @@ const DaySurvey = ({ navigation, route }: {
               onPress={() => navigation.goBack()}
             />
           )}
-          <Text className="flex-1 text-lg font-bold font-karla text-center px-1">Mon questionnaire</Text>
+          <Text className="flex-1 text-lg font-bold text-center px-1">Mon questionnaire</Text>
           <View className="w-[45px]" />
         </View>
         <ScrollView

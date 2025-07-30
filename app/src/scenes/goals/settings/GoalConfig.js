@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
   },
   daysOfWeekValue: {
     fontSize: 14,
-    fontFamily: "Karla",
+    fontFamily: "SourceSans3",
     fontWeight: "700",
     color: colors.BLUE,
   },

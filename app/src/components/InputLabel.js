@@ -8,7 +8,7 @@ export const InputLabel = ({ children, style, sublabel }) => {
 const styles = StyleSheet.create({
   label: {
     width: "100%",
-    fontFamily: "Karla",
+    fontFamily: "SourceSans3",
     fontWeight: "500",
     fontSize: 16,
     color: "#000",

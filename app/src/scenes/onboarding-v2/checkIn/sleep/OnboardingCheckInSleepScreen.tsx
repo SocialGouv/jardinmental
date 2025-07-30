@@ -103,7 +103,7 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
       <BannerHeader
         animatedStatusBarColor={animatedStatusBarColor}
         animatedTextColor={animatedTextColor}
-        header={<View className='rounded-full bg-white/30 p-2 self-start w-auto'>
+        header={<View className='rounded-full bg-white/30 p-2 self-start w-auto border border-white'>
           <MoonIcon />
         </View>}
         headerTitle='Observation du jour'

@@ -58,7 +58,7 @@ export const onboardingStyles = StyleSheet.create({
     color: colors.LIGHT_BLUE,
   },
   h1: {
-    fontFamily: "Karla",
+    fontFamily: "SourceSans3",
     fontStyle: "normal",
     fontWeight: "700",
     fontSize: 28,
@@ -67,7 +67,7 @@ export const onboardingStyles = StyleSheet.create({
     color: colors.BLUE,
   },
   h2: {
-    fontFamily: "Karla",
+    fontFamily: "SourceSans3",
     fontStyle: "normal",
     fontWeight: "700",
     fontSize: 20,
@@ -76,7 +76,7 @@ export const onboardingStyles = StyleSheet.create({
     color: colors.BLUE,
   },
   h3: {
-    fontFamily: "Karla",
+    fontFamily: "SourceSans3",
     fontStyle: "normal",
     fontWeight: "700",
     fontSize: 15,
