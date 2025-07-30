@@ -1,3 +1,10 @@
+# [1.52.0-alpha.5](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.4...v1.52.0-alpha.5) (2025-07-30)
+
+
+### Bug Fixes
+
+* fix status bar height ([#313](https://github.com/SocialGouv/jardinmental/issues/313)) ([cd206d8](https://github.com/SocialGouv/jardinmental/commit/cd206d8807c88b768e5d96fd94e7182bff63cc28))
+
 # [1.52.0-alpha.4](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.3...v1.52.0-alpha.4) (2025-07-30)
 
 
