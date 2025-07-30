@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
     ScrollView, View, Text, Platform,
     // KeyboardAvoidingView
@@ -9,9 +9,11 @@ import Animated, {
     useAnimatedScrollHandler,
     useAnimatedStyle,
     interpolate,
-    Extrapolate
+    Extrapolate,
+    useDerivedValue,
+    runOnJS
 } from 'react-native-reanimated';
-import { Indicator, INDICATORS_CATEGORIES } from '@/entities/Indicator';
+import { Indicator } from '@/entities/Indicator';
 import { DiaryDataNewEntryInput } from '@/entities/DiaryData';
 import { IndicatorSurveyItem } from '@/components/survey/IndicatorSurveyItem';
 import NavigationButtons from '@/components/onboarding/NavigationButtons';
@@ -29,6 +31,8 @@ import { HELP_FOR_CATEGORY, INDICATOR_CATEGORIES_DATA } from '../onboarding-v2/d
 import { firstLetterUppercase } from '@/utils/string-util';
 import { KeyboardAvoidingView } from "react-native-keyboard-controller";
 import { NEW_INDICATORS_CATEGORIES } from '@/utils/liste_indicateurs.1';
+import { useOnboardingProgressHeader } from '../onboarding/ProgressHeader';
+import { useFocusEffect } from '@react-navigation/native';
 
 interface IndicatorScreenProps {
     navigation: any;
@@ -82,7 +86,18 @@ export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
     handlePrevious
 }) => {
     const { showBottomSheet } = useBottomSheet();
+    const { setShowProgressbar, showProgressbar, setHideOnScrollProgressValue } = useOnboardingProgressHeader()
     const insets = useSafeAreaInsets();
+    const scrollRef = useRef<Animated.ScrollView>(null);
+
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('blur', () => {
+            scrollRef.current?.scrollTo({ y: 0, animated: false });
+            setHideOnScrollProgressValue.value = 1;
+        });
+
+        return unsubscribe; // Clean up listener on unmount
+    }, [navigation]);
 
     const onClickHelp = () => {
         if (category && HELP_FOR_CATEGORY[category]) {
@@ -102,6 +117,13 @@ export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
     const scrollHandler = useAnimatedScrollHandler({
         onScroll: (event) => {
             scrollY.value = event.contentOffset.y;
+            const opacity = interpolate(
+                scrollY.value,
+                [0, 10],
+                [1, 0], //hasProgressBar ? 40 : 10], // From measured height to 0
+                Extrapolate.CLAMP
+            );
+            setHideOnScrollProgressValue.value = opacity;
         },
     });
 
@@ -134,7 +156,7 @@ export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
         const height = interpolate(
             scrollY.value,
             [0, SCROLL_THRESHOLD],
-            [measuredHeight.value, hasProgressBar ? 40 : 10], // From measured height to 0
+            [measuredHeight.value, 10], //hasProgressBar ? 40 : 10], // From measured height to 0
             Extrapolate.CLAMP
         );
 
@@ -264,13 +286,14 @@ export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
             keyboardVerticalOffset={Platform.OS === 'android' ? 40 : 0}
             style={{ flex: 1 }}
         >
-            {!!dynamicPaddingTop && <Animated.ScrollView
+            <Animated.ScrollView
+                ref={scrollRef}
                 className={'flex-1'}
                 contentContainerStyle={scrollViewContentStyle}
                 onScroll={scrollHandler}
                 scrollEventThrottle={16}>
                 {children}
-            </Animated.ScrollView>}
+            </Animated.ScrollView>
         </KeyboardAvoidingView >
         {!bottomComponent && <NavigationButtons
             absolute={true}

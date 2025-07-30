@@ -124,9 +124,11 @@ export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
       <View className="flex-row justify-center items-center mb-6">
         {slides.map((_, index) => renderPaginationDot(index))}
       </View>
-      <NavigationButtons nextText={
-        currentIndex === slides.length - 1 ? 'Démarrer sur Jardin Mental' : 'Suivant'
-      }
+      <NavigationButtons
+        withArrow={true}
+        nextText={
+          currentIndex === slides.length - 1 ? 'Démarrer sur Jardin Mental' : 'Suivant'
+        }
         onNext={goToNextSlide} />
     </View>
   </BeigeWrapperScreen>
