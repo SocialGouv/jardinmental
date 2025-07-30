@@ -1,7 +1,6 @@
 import React, { useCallback, useContext, useRef, useState } from 'react';
-import { View, Text, SafeAreaView, TouchableOpacity, Alert, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, Alert, ScrollView } from 'react-native';
 import NavigationButtons from '@/components/onboarding/NavigationButtons';
-import CheckInHeader from '@/components/onboarding/CheckInHeader';
 import { OnboardingV2ScreenProps } from '../../types';
 import { beforeToday, formatDay } from '@/utils/date/helpers';
 import { DiaryDataContext } from '@/context/diaryData';
@@ -20,12 +19,12 @@ import { BottomSheetBackdrop, BottomSheetModal, BottomSheetView } from '@gorhom/
 import HelpText from '@/components/HelpText';
 import HelpView from '@/components/HelpView';
 import { HELP_FOR_CATEGORY } from '@/scenes/onboarding-v2/data/helperData';
-import { INDICATORS_CATEGORIES } from '@/entities/Indicator';
 import { useBottomSheet } from '@/context/BottomSheetContext';
 import { mergeClassNames } from '@/utils/className';
 import { typography } from '@/utils/typography';
 import { useFocusEffect } from '@react-navigation/native';
 import { useStatusBar } from '@/context/StatusBarContext';
+import { INDICATORS_CATEGORIES } from '@/entities/IndicatorCategories';
 
 
 type Props = OnboardingV2ScreenProps<'OnboardingCheckInHowDoYouFeelDetails'>;
@@ -216,22 +215,6 @@ export const OnboardingCheckInLastMoods: React.FC<Props> = ({ navigation, route 
     };
   })
 
-  const bottomSheetRef = useRef<BottomSheetModal>(null);
-
-  const handleSheetChanges = useCallback((index: number) => {
-    console.log('handleSheetChanges', index);
-  }, []);
-
-  const renderBackdrop = useCallback(
-    props => (<BottomSheetBackdrop {...props}
-      opacity={0.5}
-      enableTouchThrough={false}
-      appearsOnIndex={0}
-      disappearsOnIndex={-1}
-      style={[{ backgroundColor: 'rgba(0, 0, 0, 1)' }]} />),
-    []
-  );
-
   return (
     <SafeAreaViewWithOptionalHeader className="flex-1 bg-white">
       <BannerHeader
@@ -239,10 +222,7 @@ export const OnboardingCheckInLastMoods: React.FC<Props> = ({ navigation, route 
         animatedTextColor={animatedTextColor}
         headerTitle='Observation du jour'
         title={`Y-a-t-il une émotion, un état ou un comportement qui a pris un peu de place aujourd'hui ?`}
-        // leftAction={showHelpModal}
-        // leftComponent={<HelpText />}
         handlePrevious={handlePrevious}
-      // handleSkip={handleSkip}
       >
         {route.params?.mood !== null && <View className='justify-center items-center mt-4'>
           {moodEmojis[route.params?.mood]?.icon}
@@ -257,9 +237,7 @@ export const OnboardingCheckInLastMoods: React.FC<Props> = ({ navigation, route 
       <NavigationButtons
         onNext={handleComplete}
         absolute={true}
-        // showPrevious={false}
         onLeftAction={showHelpModal}
-        // onPrevious={handlePrevious}
         loading={loading}
         nextText="Renseigner mes émotions"
       />

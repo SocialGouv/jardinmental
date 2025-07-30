@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
-    ScrollView, View, Text, Platform,
-    // KeyboardAvoidingView
+    View, Platform,
 } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import Animated, {
@@ -19,12 +18,6 @@ import { IndicatorSurveyItem } from '@/components/survey/IndicatorSurveyItem';
 import NavigationButtons from '@/components/onboarding/NavigationButtons';
 import { TW_COLORS } from '@/utils/constants';
 import BannerHeader from '../onboarding-v2/BannerHeader';
-import MoonIcon from '@assets/svg/icon/moon';
-import ThoughtIcon from '@assets/svg/icon/thought';
-import BehaviourIcon from '@assets/svg/icon/behaviour';
-import InstructionText from '../onboarding-v2/InstructionText';
-import HelpText from '@/components/HelpText';
-import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
 import { useBottomSheet } from '@/context/BottomSheetContext';
 import HelpView from '@/components/HelpView';
 import { HELP_FOR_CATEGORY, INDICATOR_CATEGORIES_DATA } from '../onboarding-v2/data/helperData';
@@ -35,17 +28,11 @@ import { useOnboardingProgressHeader } from '../onboarding/ProgressHeader';
 import { useFocusEffect } from '@react-navigation/native';
 
 interface IndicatorScreenProps {
-    navigation: any;
     title: string;
-    indicators: Indicator[];
-    currentStep: number;
-    totalSteps: number;
-    answers: DiaryDataNewEntryInput['answers'];
-    onValueChanged: ({ key, value }: { key: string; value: any }) => void;
-    onCommentChanged: ({ key, userComment }: { key: string; userComment: string }) => void;
-    onNext: () => void;
+    currentStep?: number;
+    totalSteps?: number;
+    onNext?: () => void;
     category?: NEW_INDICATORS_CATEGORIES;
-    showComment?: boolean;
     handlePrevious?: () => void;
     children?: React.ReactNode;
     dynamicTitle?: string;
@@ -53,38 +40,17 @@ interface IndicatorScreenProps {
     bottomComponent?: React.ReactNode;
 }
 
-const ICON_FOR_CATEGORY: Record<NEW_INDICATORS_CATEGORIES, React.ReactNode> = {
-    [NEW_INDICATORS_CATEGORIES.SLEEP]: undefined,
-    [NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR]: undefined,
-    [NEW_INDICATORS_CATEGORIES.WORK]: undefined,
-    [NEW_INDICATORS_CATEGORIES.PHYSICAL_SIGNS]: undefined,
-    [NEW_INDICATORS_CATEGORIES.EMOTIONS]: undefined,
-    [NEW_INDICATORS_CATEGORIES.ENERGY]: undefined,
-    [NEW_INDICATORS_CATEGORIES.INTRUSIVE_THOUGHTS]: undefined,
-    [NEW_INDICATORS_CATEGORIES.FOOD]: undefined,
-    [NEW_INDICATORS_CATEGORIES.SUBSTANCE]: undefined,
-    [NEW_INDICATORS_CATEGORIES.SOCIAL_RELATIONS]: undefined,
-    [NEW_INDICATORS_CATEGORIES.LIFE_EVENT]: undefined,
-    [NEW_INDICATORS_CATEGORIES.COGNITIVE]: undefined
-}
-
 
 export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
-    navigation,
     title,
-    indicators,
-    answers,
-    onValueChanged,
-    onCommentChanged,
     onNext,
     category,
-    showComment = true,
     children,
     dynamicTitle,
     hasProgressBar,
     bottomComponent,
     handlePrevious
-}) => {
+}: IndicatorScreenProps) => {
     const { showBottomSheet } = useBottomSheet();
     const { setShowProgressbar, showProgressbar, setHideOnScrollProgressValue } = useOnboardingProgressHeader()
     const insets = useSafeAreaInsets();
@@ -174,13 +140,6 @@ export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
             Extrapolate.CLAMP
         );
 
-        const paddingHorizontal = interpolate(
-            scrollY.value,
-            [0, SCROLL_THRESHOLD],
-            [24, 0], // From px-6 (24px) to 0
-            Extrapolate.CLAMP
-        );
-
         return {
             height,
             paddingTop: paddingVertical,
@@ -266,12 +225,7 @@ export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
                     })}
                 </View> : null}
                 title={title}
-                // leftAction={category && HELP_FOR_CATEGORY[category] ? onClickHelp : null}
-                // leftComponent={category && HELP_FOR_CATEGORY[category] ? <HelpText /> : null}
-                // handleSkip={onNext}
                 handlePrevious={handlePrevious}
-                // animation on scroll
-                // handlePrevious={() => navigation.goBack()}
                 headerTitleStyle={headerTitleStyle}
                 dynamicTitleStyle={dynamicTitleStyle}
                 bannerContentStyle={bannerContentStyle}
@@ -282,7 +236,6 @@ export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
         </View>
         <KeyboardAvoidingView
             behavior={"padding"}
-            // keyboardVerticalOffset={0}
             keyboardVerticalOffset={Platform.OS === 'android' ? 40 : 0}
             style={{ flex: 1 }}
         >
@@ -300,9 +253,7 @@ export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
             onNext={onNext}
             withArrow={true}
             onLeftAction={category && HELP_FOR_CATEGORY[category] ? onClickHelp : undefined}
-            // onPrevious={() => navigation.goBack()}
             showPrevious={false}
-            // loading={loading}
             nextText="Suivant"
         />}
         {bottomComponent}

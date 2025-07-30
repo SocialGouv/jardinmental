@@ -1,11 +1,10 @@
 import React, { useCallback, useRef, useState } from 'react';
-import { View, Text, SafeAreaView, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { OnboardingV2ScreenProps, UserProfile } from './types';
 import { NavigationButtons } from '@/components/onboarding/NavigationButtons';
 import { useUserProfile } from '@/context/userProfile';
 import CheckInHeader from '@/components/onboarding/CheckInHeader';
 import QuestionMark from '../../../assets/svg/QuestionMark';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { BottomSheetBackdrop, BottomSheetModal, BottomSheetModalProvider, BottomSheetView } from '@gorhom/bottom-sheet';
 import { TW_COLORS } from '@/utils/constants';
 import { SafeAreaViewWithOptionalHeader } from '../onboarding/ProgressHeader';
@@ -17,17 +16,20 @@ const profiles: UserProfile[] = [
   {
     id: 'suivi',
     name: 'Oui, je suis suivi(e)',
+    selectedDifficulties: [],
+    objectives: []
   },
   {
     id: 'non-suivi',
-    name: 'Non, je ne suis pas suivi(e)'
+    name: 'Non, je ne suis pas suivi(e)',
+    selectedDifficulties: [],
+    objectives: []
   },
 ];
 
 export const ProfileScreen: React.FC<Props> = ({ navigation }) => {
   const { setProfile } = useUserProfile();
   const [selectedProfile, setSelectedProfile] = useState<UserProfile | null>(null);
-  const [showHelpPopup, setShowHelpPopup] = useState(false);
 
   const handleNext = () => {
     if (selectedProfile) {
@@ -90,12 +92,11 @@ export const ProfileScreen: React.FC<Props> = ({ navigation }) => {
   return (
     // <GestureHandlerRootView className='flex-1'>
     <BottomSheetModalProvider>
-      <SafeAreaViewWithOptionalHeader className="flex-1 bg-white" children={undefined} style={undefined}>
+      <SafeAreaViewWithOptionalHeader className="flex-1 bg-white">
         <CheckInHeader
           title=""
           onPrevious={handlePrevious}
           onSkip={handleNext}
-          showPrevious={true}
           showSkip={false}
         />
         <View className="flex-1 justify-center px-6">
@@ -153,8 +154,6 @@ export const ProfileScreen: React.FC<Props> = ({ navigation }) => {
         </BottomSheetModal>
       </SafeAreaViewWithOptionalHeader>
     </BottomSheetModalProvider>
-    // </GestureHandlerRootView>
-
   );
 };
 

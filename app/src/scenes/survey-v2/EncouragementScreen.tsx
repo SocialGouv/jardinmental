@@ -16,8 +16,8 @@ interface EncouragementScreenProps {
   totalSteps: number;
   title: string;
   description: string;
-  headingTitle: string;
-  extraInfo: string;
+  headingTitle?: string;
+  extraInfo?: string;
   onNext: () => void;
 }
 
@@ -68,11 +68,6 @@ export const EncouragementScreen: React.FC<EncouragementScreenProps> = ({
           </Text>
         </View>}
       </BeigeCard>
-      {/* <NavigationButtons
-        onNext={onNext}
-        showPrevious={false}
-        nextText="Suivant"
-        /> */}
     </BeigeWrapperScreen>
   );
 };

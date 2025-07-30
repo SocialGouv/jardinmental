@@ -1,13 +1,11 @@
 import React, { useCallback, useEffect } from 'react';
-import { View, Text, SafeAreaView } from 'react-native';
+import { View, Text } from 'react-native';
 import NavigationButtons from '@/components/onboarding/NavigationButtons';
 import ProgressIndicator from '@/components/onboarding/ProgressIndicator';
 import { OnboardingV2ScreenProps } from '../types';
-import CheckInHeader from '@/components/onboarding/CheckInHeader';
 import { HEADER_WITH_BANNER, PROGRESS_BAR, PROGRESS_BAR_AND_HEADER, SHARED_HEADER, TW_COLORS } from '@/utils/constants';
 import { SafeAreaViewWithOptionalHeader, useOnboardingProgressHeader } from '@/scenes/onboarding/ProgressHeader';
 import BannerHeader from '../BannerHeader';
-import { useAnimatedStyle } from 'react-native-reanimated';
 import { mergeClassNames } from '@/utils/className';
 import { typography } from '@/utils/typography';
 
@@ -17,10 +15,10 @@ const NextScreen = 'PersonalizationDifficulties'
 
 export const OnboardingPersonalizationStartScreen: React.FC<Props> = ({ navigation }) => {
 
-  const { setSlideIndex, setNextPath } = useOnboardingProgressHeader();
+  const { setNextPath } = useOnboardingProgressHeader();
 
   const handleNext = useCallback(() => {
-    navigation.navigate('PersonalizationDifficulties');
+    navigation.navigate(NextScreen);
   }, [navigation]);
 
   useEffect(() => {
@@ -60,7 +58,6 @@ export const OnboardingPersonalizationStartScreen: React.FC<Props> = ({ navigati
         </Text>
       </View>
       <NavigationButtons
-        // onPrevious={handlePrevious}
         onNext={handleNext}
         showPrevious={false}
         withArrow={true}

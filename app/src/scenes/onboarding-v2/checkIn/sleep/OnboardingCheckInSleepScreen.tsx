@@ -1,8 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { View, Text, SafeAreaView, TouchableOpacity, TextInput, Alert } from 'react-native';
+import React, { useContext, useState } from 'react';
+import { View, Text } from 'react-native';
 
-import CheckInHeader from '@/components/onboarding/CheckInHeader';
-import { OnboardingV2ScreenProps, CheckInData } from '../../types';
+import { OnboardingV2ScreenProps } from '../../types';
 import { DiaryDataContext } from '@/context/diaryData';
 import { beforeToday, formatDay } from '@/utils/date/helpers';
 import { INDICATEURS_SOMMEIL } from '@/utils/liste_indicateurs.1';
@@ -20,7 +19,6 @@ import { mergeClassNames } from '@/utils/className';
 
 type Props = OnboardingV2ScreenProps<'OnboardingCheckInHowDoYouFeel'>;
 
-const moodEmojis = ['😢', '😕', '😐', '🙂', '😊'];
 const moodLabels = [`J'ai très mal dormi`, `J'ai mal dormi`, 'J’ai passé une nuit normale', `J'ai bien dormi`, `J'ai très bien dormi`];
 
 const NextScreen = 'CheckInSleepCompleted'
@@ -30,15 +28,8 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
   const [loading, setLoading] = useState(false);
   const [diaryData, addNewEntryToDiaryData] = useContext(DiaryDataContext);
 
-  // useEffect(() => {
-  //   if (checkInData !== null) {  // or another condition
-  //     handleComplete();
-  //   }
-  // }, [checkInData])
-
   const handleComplete = async () => {
     setLoading(true);
-    // Sauvegarder les données du check-in
     const date = formatDay(beforeToday(0))
     const prev = diaryData[date] || {}
 
@@ -109,7 +100,6 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
         headerTitle='Observation du jour'
         title={`Cette nuit, avez-vous bien dormi ?`}
         handlePrevious={handlePrevious}
-      // handleSkip={handleSkip}
       >
       </BannerHeader>
 
@@ -121,8 +111,8 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
         {renderSleepSelector()}
       </View>
       <NavigationButtons
+        loading={loading}
         onNext={handleComplete}
-        // onPrevious={handlePrevious}
         onSkip={handleSkip}
       />
     </SafeAreaViewWithOptionalHeader>

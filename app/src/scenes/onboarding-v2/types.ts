@@ -96,12 +96,24 @@ export type OnboardingV2StackParamList = {
   OnboardingCheckInHowDoYouFeel: undefined
   OnboardingCheckInHowDoYouFeelDetails: { mood: number };
   OnboardingCheckInSleep: undefined
-  OnboardingCheckInMoodSummary: undefined
+  OnboardingCheckInMoodSummary: {
+    mood: number,
+    selectedMoods: string[],
+  }
   OnboardingCheckInIntroductionCompleted: undefined
   OnboardingLoadingScreen: undefined;
   OnboardingChooseIndicator: undefined
   OnboardingReminder: undefined
+  StartFirstSurvey: undefined,
+  CheckInSleepCompleted: undefined,
+  OnboardingChooseIndicatorIntro: undefined,
+  SubCategoriesScreen: undefined,
   'day-survey': {
+    currentSurvey: {},
+    editingSurvey: boolean,
+    isOnboarding: boolean
+  },
+  'day-survey-v2': {
     currentSurvey: {},
     editingSurvey: boolean,
     isOnboarding: boolean

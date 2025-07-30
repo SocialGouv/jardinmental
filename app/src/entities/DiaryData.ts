@@ -67,20 +67,20 @@ export type DiaryDataAnswerList = z.infer<typeof DiaryDataAnswerListSchema>;
 export const DiaryEntrySchema = DiaryDataAnswerListSchema.and(
   z.object({
     // use beck.js
-    becks: z.record(z.string(), BeckSchema).optional(),
+    becks: z.record(z.string(), BeckSchema).optional().nullable(),
     // use in drugs.tsx
-    POSOLOGY: z.array(PosologySchema).optional(),
+    POSOLOGY: z.array(PosologySchema).optional().nullable(),
     // use in notes-screen.tsx
-    NOTES: NotesSchema.optional(),
+    NOTES: NotesSchema.optional().nullable(),
     // 
     CONTEXT: z.object({
       userComment: z.string().optional(),
-    }).describe(`Ajoutez une note générale sur votre journée`).optional(),
+    }).describe(`Ajoutez une note générale sur votre journée`).optional().nullable(),
     TOXIC: z.object({
-      value: z.boolean().optional(),
-      userComment: z.string().optional(),
-    }).describe(`Avez-vous consommé des substances aujourd'hui ?`).optional(),
-}))
+      value: z.boolean().optional().nullable(),
+      userComment: z.string().optional().nullable(),
+    }).describe(`Avez-vous consommé des substances aujourd'hui ?`).optional().nullable(),
+  }))
 export type DiaryEntry = z.infer<typeof DiaryEntrySchema>;
 
 
