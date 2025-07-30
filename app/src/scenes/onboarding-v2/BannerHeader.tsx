@@ -1,20 +1,13 @@
 import React, { ReactNode } from "react";
-
+import { Platform, ViewStyle } from "react-native";
 import Animated from "react-native-reanimated";
-import DeviceInfo from 'react-native-device-info';
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import CheckInHeader from "@/components/onboarding/CheckInHeader";
-import { Platform, ViewStyle } from "react-native";
 import { HEADER_WITH_BANNER, SHARED_HEADER, TW_COLORS } from "@/utils/constants";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
 import { firstLetterUppercase } from "@/utils/string-util";
-
-const deviceId = DeviceInfo.getDeviceId(); // e.g., "iPhone10,1"
-const isSmallDevice = ['iPhone8,4', 'iPhone5,x', 'iPhone7,2', 'iPhone9,1/3', 'iPhone10,1/4', 'iPhone12,8', 'iPhone14,6'].includes(deviceId);
-
-const statusBarHeight = isSmallDevice ? 20 : 47;
-
 
 export default function BannerHeader({
     animatedStatusBarColor,
@@ -60,11 +53,14 @@ export default function BannerHeader({
     onBannerLayout?: (event: any) => void; // callback to measure banner height
     inAbsoluteView?: boolean,
 }) {
+
+    const insets = useSafeAreaInsets();
+
     return <>
         {Platform.OS === 'ios' && (
             <Animated.View style={[{
                 backgroundColor: TW_COLORS.PRIMARY
-            }, animatedStatusBarColor, { position: !inAbsoluteView ? 'absolute' : 'relative', top: 0, left: 0, right: 0, height: statusBarHeight, zIndex: 1000 }, hidden ? { opacity: 0 } : undefined]} />
+            }, animatedStatusBarColor, { position: !inAbsoluteView ? 'absolute' : 'relative', top: 0, left: 0, right: 0, height: insets.top, zIndex: 1000 }, hidden ? { opacity: 0 } : undefined]} />
         )}
         <Animated.View
             style={[{
