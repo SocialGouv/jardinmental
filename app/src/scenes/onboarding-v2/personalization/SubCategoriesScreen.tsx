@@ -109,7 +109,14 @@ export const SubcategoriesScreen: React.FC<Props> = ({ navigation, route }) => {
                 .filter(item => item.subCat && item.subCat.length > 0)
                 .map((cat, index) => {
                     return <View key={cat.id}>
-                        <View className={`flex-row p-4 px-0 pb-6 ${index === 0 ? 'pt-2' : 'pt-6'}`}>{React.createElement(cat.icon, { color: TW_COLORS.BRAND_900 })}<Text className={mergeClassNames(typography.textSmBold, 'text-left text-brand-900 ml-2')}>{cat.name}</Text></View>
+                        <View className={`flex-row items-center p-4 px-0 pb-6 ${index === 0 ? 'pt-2' : 'pt-6'}`}>
+                            <View className='rounded-full border-[1.5px] border-brand-900 bg-white w-10 h-10 items-center justify-center'>
+                                {React.createElement(cat.icon, { color: TW_COLORS.BRAND_900 })}
+                            </View>
+                            <Text className={mergeClassNames(typography.textLgBold, 'text-left text-brand-900 ml-2')}>
+                                {cat.name}
+                            </Text>
+                        </View>
                         {cat.subCat.map(item => renderSubCategoryItem({ item }))}
                     </View>
                 })}

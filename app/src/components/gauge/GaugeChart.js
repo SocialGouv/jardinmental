@@ -17,8 +17,8 @@ export const GaugeChart = ({ value, reverse, containerStyle }) => {
   const horizontalSpacing = (width / NUMBER_OF_BARS - widthBar) / 2;
 
   const colors = reverse
-    ? [TW_COLORS.POSITIVE, EMOTION_COLORS.good, EMOTION_COLORS.middle, EMOTION_COLORS.bad, TW_COLORS.NEGATIVE]
-    : [TW_COLORS.NEGATIVE, EMOTION_COLORS.bad, EMOTION_COLORS.middle,EMOTION_COLORS.good, TW_COLORS.POSITIVE];
+    ? [EMOTION_COLORS.veryGood, EMOTION_COLORS.good, EMOTION_COLORS.middle, EMOTION_COLORS.bad, EMOTION_COLORS.veryBad]
+    : [EMOTION_COLORS.veryBad, EMOTION_COLORS.bad, EMOTION_COLORS.middle, EMOTION_COLORS.good, EMOTION_COLORS.veryGood];
 
   return (
     <View style={[styles.container, containerStyle]} onLayout={onLayout}>
@@ -41,8 +41,8 @@ export const GaugeChart = ({ value, reverse, containerStyle }) => {
                     y={height - barHeight}
                     width={widthBar}
                     height={barHeight}
-                    rx="3"
-                    ry="3"
+                    rx="6"
+                    ry="6"
                     fill="white"
                   />
                 );

@@ -12,7 +12,7 @@ export const Title = ({ children, style, fill = true, align }) => {
 
 const styles = StyleSheet.create({
   text: {
-    fontFamily: "Karla",
+    fontFamily: "SourceSans3",
     fontWeight: "700",
     fontSize: 16,
     color: colors.BLUE,

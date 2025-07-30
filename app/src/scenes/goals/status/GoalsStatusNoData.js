@@ -36,7 +36,7 @@ export const GoalsStatusNoData = ({ goalsData, date, onPress }) => {
 const styles = StyleSheet.create({
   label: {
     fontSize: 14,
-    fontFamily: "Karla",
+    fontFamily: "SourceSans3",
     fontWeight: "400",
     textAlign: "left",
     color: "#000000",

@@ -221,7 +221,7 @@ export const IndicatorScreen: React.FC<IndicatorScreenProps> = ({
         inAbsoluteView={true}
         headerTitle='Observation du jour'
         dynamicTitle={firstLetterUppercase(title)}
-        header={category ? <View className='rounded-full bg-white/30 p-2 self-start w-auto'>
+        header={category ? <View className='rounded-full bg-white/30 p-2 self-start w-auto border border-white'>
           {React.createElement(INDICATOR_CATEGORIES_DATA[category].icon, {
             color: TW_COLORS.WHITE
           })}

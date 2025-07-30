@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 19,
-    fontFamily: 'Karla',
+    fontFamily: 'SourceSans3',
     color: mainColors.BLUE,
     fontWeight: '600',
     marginRight: 5,
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
   },
   legendTitle: {
     fontSize: 14,
-    fontFamily: 'Karla',
+    fontFamily: 'SourceSans3',
     fontWeight: '400',
     color: mainColors.BLUE,
     marginTop: 5,
@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
   },
   percentageSmall: {
     fontSize: 12,
-    fontFamily: 'Karla',
+    fontFamily: 'SourceSans3',
     fontWeight: '400',
     color: mainColors.BLUE,
     marginVertical: 5,
@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
   },
   percentageBig: {
     fontSize: 14,
-    fontFamily: 'Karla',
+    fontFamily: 'SourceSans3',
     fontWeight: '400',
     color: mainColors.BLUE,
     marginBottom: 5,

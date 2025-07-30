@@ -47,6 +47,8 @@
         "expo-font",
         {
           "fonts": [
+            "./assets/fonts/SourceSans3-VariableFont_wght.ttf",
+            "./assets/fonts/SourceSans3-Italic-VariableFont_wght.ttf",
             "./assets/fonts/Karla-Bold.ttf",
             "./assets/fonts/Karla-BoldItalic.ttf",
             "./assets/fonts/Karla-ExtraBold.ttf",
@@ -60,7 +62,21 @@
             "./assets/fonts/Karla-MediumItalic.ttf",
             "./assets/fonts/Karla-Regular.ttf",
             "./assets/fonts/Karla-SemiBold.ttf",
-            "./assets/fonts/Karla-SemiBoldItalic.ttf"
+            "./assets/fonts/Karla-SemiBoldItalic.ttf",
+            "./assets/fonts/SourceSans3-Bold.ttf",
+            "./assets/fonts/SourceSans3-BoldItalic.ttf",
+            "./assets/fonts/SourceSans3-ExtraBold.ttf",
+            "./assets/fonts/SourceSans3-ExtraBoldItalic.ttf",
+            "./assets/fonts/SourceSans3-ExtraLight.ttf",
+            "./assets/fonts/SourceSans3-ExtraLightItalic.ttf",
+            "./assets/fonts/SourceSans3-Italic.ttf",
+            "./assets/fonts/SourceSans3-Light.ttf",
+            "./assets/fonts/SourceSans3-LightItalic.ttf",
+            "./assets/fonts/SourceSans3-Medium.ttf",
+            "./assets/fonts/SourceSans3-MediumItalic.ttf",
+            "./assets/fonts/SourceSans3-Regular.ttf",
+            "./assets/fonts/SourceSans3-SemiBold.ttf",
+            "./assets/fonts/SourceSans3-SemiBoldItalic.ttf"
           ]
         }
       ]

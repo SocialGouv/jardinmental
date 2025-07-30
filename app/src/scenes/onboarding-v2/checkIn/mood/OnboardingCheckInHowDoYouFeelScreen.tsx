@@ -372,7 +372,7 @@ const MoodItem = ({
     <Animated.View style={animatedItemStyle}>
       <TouchableOpacity
         onPress={onSelect}
-        className="items-center p-2 rounded-3xl justify-center"
+        className="items-center p-2 rounded-2xl justify-center"
         style={{
           backgroundColor: item.backgroundColor,
           width: 64,

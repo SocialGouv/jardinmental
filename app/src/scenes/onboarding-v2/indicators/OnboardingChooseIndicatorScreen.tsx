@@ -150,13 +150,6 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
     prev[curr.mainCategory].push(curr);
     return prev;
   }, {} as Record<NEW_INDICATORS_CATEGORIES, PredefineIndicatorV2SchemaType[]>)
-  const recommendedIndicatorsUuidList = recommendedIndicators.map(r => r.uuid)
-
-  const popularIndicatorsByCategory: PredefineIndicatorV2SchemaType[] = []
-
-  // INDICATEURS_LES_PLUS_COURANTS
-  //   .filter(indicator => !recommendedIndicatorsUuidList.includes(indicator.uuid))
-  //   .filter(indicator => !BASE_INDICATORS.includes(indicator.uuid))
 
   const toggleIndicator = useCallback((id: string) => {
     setSelectedIndicators(prev => prev.includes(id) ? prev.filter(selectedId => selectedId !== id) : [...prev, id])
@@ -249,9 +242,10 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
   const indicatorsWithCustomCount = [NEW_INDICATORS_CATEGORIES.SUBSTANCE, NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR, NEW_INDICATORS_CATEGORIES.LIFE_EVENT].filter(cat => profile?.selectedDifficulties.includes(cat)).length
   const indicatorsCount = Object.values(recommendedIndicatorsByCategory).reduce((acc, indicators) => indicators.length + acc, 0) + indicatorsWithCustomCount
   const recommendedIndicatorsUuid = recommendedIndicators.map(reco => reco.uuid)
+  const indicatorsTotalCount = selectedIndicators.length
 
   return <AnimatedHeaderScrollScreen
-    title={`Je vous propose de suivre ${indicatorsCount} élément${indicatorsCount > 1 ? 's' : ''} importants`}
+    title={`Je vous propose de suivre ${indicatorsCount} élément${indicatorsCount > 1 ? 's' : ''} important${indicatorsCount > 1 ? 's' : ''}`}
     dynamicTitle={'Indicateurs'}
     navigation={navigation}
     hasProgressBar={false}
@@ -269,7 +263,7 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
       onSkip={handleNext}
       showSkip={true}
       nextDisabled={selectedIndicators.length === 0}
-      nextText={`Valider ${indicatorsCount} élément${indicatorsCount > 1 ? 's' : ''} à suivre`}
+      nextText={`Valider ${indicatorsTotalCount} élément${indicatorsTotalCount > 1 ? 's':''} à suivre`}
       skipText="Passer cette étape"
     />}
   >
@@ -339,103 +333,6 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
   </AnimatedHeaderScrollScreen>
 }
 
-// return (
-//   <SafeAreaViewWithOptionalHeader className="flex-1 bg-white">
-//     <BannerHeader
-//       title={`Je vous propose de suivre ${recommendedIndicators.length} éléments importants`}
-//       handlePrevious={() => navigation.goBack()}
-//       handleSkip={handleNext}
-//     />
-//     <ScrollView
-//       className="flex-1 pt-4"
-//       showsVerticalScrollIndicator={false}
-//       contentContainerStyle={{ flexGrow: 1, paddingBottom: 200 }}
-//       style={{ flex: 1 }}
-//     >
-//       <View className='px-6'>
-//         <InstructionText>Voici les éléments que je vous propose de suivre au quotidien. Vous pouvez en enlever ou en ajouter.</InstructionText>
-//       </View>
-//       {/* indicators grouped by categories */}
-//       <View className="px-2 flex-1">
-//         {Object.entries(recommendedIndicatorsByCategory)
-//           .filter(([cat]) => {
-//             return ![NEW_INDICATORS_CATEGORIES.SUBSTANCE, NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR].includes(cat as NEW_INDICATORS_CATEGORIES)
-//           }).map(([category, indicators]) =>
-//             <CategoryCard
-//               type='select'
-//               key={category}
-//               indicators={indicators}
-//               selectedIndicators={selectedIndicators}
-//               categoryName={category as NEW_INDICATORS_CATEGORIES}
-//               renderIndicatorItem={renderIndicatorItem}
-//             />
-//           )}
-//         {[NEW_INDICATORS_CATEGORIES.SUBSTANCE, NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR, NEW_INDICATORS_CATEGORIES.LIFE_EVENT].filter(cat => profile?.selectedDifficulties.includes(cat)).map(cat => {
-//           return <CategoryCard
-//             key={cat}
-//             type={'select-and-input'}
-//             selectedIndicators={selectedIndicators}
-//             indicators={addedIndicators[cat] && addedIndicators[cat].length ? addedIndicators[cat] : BASE_INDICATORS_FOR_CUSTOM_CATEGORIES[cat]}
-//             renderIndicatorItem={renderIndicatorItem}
-//             addIndicatorForCategory={addIndicatorForCategory}
-//             categoryName={cat} />
-//         })}
-//       </View>
-//       <View className="px-4 mb-4">
-//         <TouchableOpacity
-//           onPress={() => setShowMoreIndicators(!showMoreIndicators)}
-//           className="py-3 px-4"
-//         >
-//           <Text
-//             className="text-center font-medium"
-//             style={{
-//               textDecorationLine: 'underline'
-//             }}
-//           >
-//             {showMoreIndicators ? 'Masquer' : 'Voir plus d\'indicateurs'}
-//           </Text>
-//         </TouchableOpacity>
-//       </View>
-
-//       {/* popular indicators */}
-//       {showMoreIndicators && (
-//         <View className="mb-6">
-//           <Text
-//             className="text-xl font-bold mb-4 mx-4"
-//             style={{ color: TW_COLORS.TEXT_PRIMARY }}
-//           >
-//             Les plus suivis
-//           </Text>
-//           {popularIndicatorsByCategory.map((indicator, index) => (
-//             <React.Fragment key={`popular-${indicator.uuid}-${index}`}>
-//               {renderIndicatorItem(indicator)}
-//             </React.Fragment>
-//           ))}
-//         </View>
-//       )}
-//       <View className="h-20" />
-//     </ScrollView>
-//     <NavigationButtons
-//       absolute={true}
-//       // showPrevious={true}
-//       // onPrevious={() => (
-//       //   navigation.goBack()
-//       // )}
-//       headerContent={
-//         <View>
-//           <View className='my-2'>
-//             <Text className={mergeClassNames(typography.textSmMedium, 'text-gray-700 text-center')}>Vous pourrez modifier cette sélection plus tard</Text>
-//           </View>
-//         </View>
-//       }
-//       onNext={handleNext}
-//       nextDisabled={selectedIndicators.length === 0}
-//       nextText="Continuer"
-//     />
-//   </SafeAreaViewWithOptionalHeader>
-// );
-
-
 const MultiInput = ({
   categoryName,
   renderIndicatorItem,
@@ -483,7 +380,6 @@ const MultiInput = ({
   </View>
 }
 
-
 const CategoryCard = ({
   categoryName,
   renderIndicatorItem,
@@ -514,17 +410,6 @@ const CategoryCard = ({
             backSquareColor={TW_COLORS.BRAND_600}
           />
         </View>
-        {/* {indicators && <View className='ml-auto rounded py-1 px-2 border border-brand-800 bg-white flex-row justify-content items-center'>
-          <Text
-            className={mergeClassNames(
-              typography.textSmBold,
-              'text-brand-900 mr-2'
-            )}
-          >
-            {indicators.length} indicateur{indicators.length > 1 ? 's' : ''}
-          </Text>
-          <CircleCheckMark />
-        </View>} */}
         {!indicators && <View className='ml-auto rounded py-1 px-2 border border-brand-800 bg-gray-200 flex-row justify-content items-center'>
           <Text
             className={mergeClassNames(
@@ -544,16 +429,6 @@ const CategoryCard = ({
       >
         {INDICATOR_CATEGORIES_DATA[categoryName].name || categoryName}
       </Text>
-      {/* <Text className={mergeClassNames(typography.textMdRegular, 'text-gray-800 text-left')}>
-        {INDICATOR_CATEGORIES_DATA[categoryName].indicatorText}
-      </Text> */}
-      {/* {indicators && <TouchableOpacity
-        onPress={() => setShowMoreIndicators(!showIndicators)}
-        className='flex-row items-center justify-center'>
-        <Text className={mergeClassNames(typography.textMdSemibold, 'text-brand-950 mr-2')}>Afficher les indicateurs</Text>
-        <ChevronDown color={TW_COLORS.BRAND_700} />
-      </TouchableOpacity>
-      } */}
       {indicators && <View className='flex-col h-auto'>
         {indicators.map((indicator, index) => (renderIndicatorItem(indicator)))}
       </View>

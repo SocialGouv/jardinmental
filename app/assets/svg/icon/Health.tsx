@@ -3,7 +3,7 @@ import Svg, { Path } from "react-native-svg";
 export default function HealthIcon({
     color
 }: {
-    color: string
+    color?: string
 }) {
     return <Svg
         width="24"

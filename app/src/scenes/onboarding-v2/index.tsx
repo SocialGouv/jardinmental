@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useContext } from 'react';
+import React, { useEffect, useState, useCallback, useContext, useMemo } from 'react';
 import { CardStyleInterpolators, createStackNavigator, TransitionSpecs } from '@react-navigation/stack';
 import { OnboardingV2StackParamList } from './types';
 import localStorage from '../../utils/localStorage';
@@ -98,6 +98,27 @@ const OnboardingV2Navigator: React.FC = () => {
       }} />
   }
 
+  const WrappedOnboardingPersonalizationStartScreen = useMemo(() => ProgressScreen({
+    slideIndex: 0,
+    showProgressbar: true,
+    title: 'Créons ensemble un suivi qui vous ressemble.',
+    Component: OnboardingPersonalizationStartScreen
+  }), []);
+
+  const WrappedDifficultiesScreen = useMemo(() => ProgressScreen({
+    slideIndex: 1,
+    showProgressbar: true,
+    Component: DifficultiesScreen,
+    title: "Sur quoi avez-vous ressenti une difficulté ou une gêne ces deux dernières semaines?"
+  }), []);
+
+  const WrappedSubcategoriesScreen = useMemo(() => ProgressScreen({
+    slideIndex: 2,
+    showProgressbar: true,
+    Component: SubcategoriesScreen,
+    title: ""
+  }), []);
+
   return (
     <Stack.Navigator
       initialRouteName={initialRouteName}
@@ -132,32 +153,17 @@ const OnboardingV2Navigator: React.FC = () => {
       <Stack.Screen
         name="PersonalizationStart"
         options={headerOptions}
-        component={ProgressScreen({
-          slideIndex: 0,
-          showProgressbar: true,
-          title: 'Créons ensemble un suivi qui vous ressemble.',
-          Component: OnboardingPersonalizationStartScreen
-        })}
+        component={WrappedOnboardingPersonalizationStartScreen}
       />
       <Stack.Screen
         name="PersonalizationDifficulties"
         options={headerOptions}
-        component={ProgressScreen({
-          slideIndex: 1,
-          showProgressbar: true,
-          Component: DifficultiesScreen,
-          title: "Sur quoi avez-vous ressenti une difficulté ou une gêne ces deux dernières semaines?"
-        })}
+        component={WrappedDifficultiesScreen}
       />
       <Stack.Screen
         name="SubCategoriesScreen"
         options={headerOptions}
-        component={ProgressScreen({
-          slideIndex: 2,
-          showProgressbar: true,
-          Component: SubcategoriesScreen,
-          title: ""
-        })}
+        component={WrappedSubcategoriesScreen}
       />
       <Stack.Screen
         name="OnboardingCheckInStart"

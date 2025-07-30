@@ -346,7 +346,7 @@ const formatHtmlTable = async (diaryData, diaryNotes) => {
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0 " />
         <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Karla&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=SourceSans3&display=swap" rel="stylesheet">
         <style type="text/css">
           * { print-color-adjust:exact !important; }
           * { font-size: 12px; }

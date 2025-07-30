@@ -193,7 +193,7 @@ const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, 
 
 const pickerSelectStyles = StyleSheet.create({
   inputIOS: {
-    fontFamily: "Karla",
+    fontFamily: "SourceSans3",
     paddingVertical: 8,
     backgroundColor: "transparent",
     borderColor: colors.DARK_BLUE,
@@ -212,7 +212,7 @@ const pickerSelectStyles = StyleSheet.create({
     // padding: 30, // to ensure the text is never behind the icon
   },
   inputAndroid: {
-    fontFamily: "Karla",
+    fontFamily: "SourceSans3",
     paddingVertical: 8,
     borderColor: colors.DARK_BLUE,
     borderWidth: 1,

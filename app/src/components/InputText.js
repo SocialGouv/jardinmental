@@ -83,7 +83,7 @@ const _styles = {
     },
     input: {
       width: '100%',
-      fontFamily: 'Karla',
+      fontFamily: 'SourceSans3',
       paddingVertical: 0,
       fontSize: 16,
       color: '#000',

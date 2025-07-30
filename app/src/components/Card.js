@@ -99,7 +99,7 @@ const _styles = {
     title: {
       fontSize: 16,
       marginBottom: 2,
-      fontFamily: 'Karla',
+      fontFamily: 'SourceSans3',
       fontWeight: '700',
       textAlign: 'left',
       color: colors.BLUE,
@@ -107,7 +107,7 @@ const _styles = {
     text: {
       fontSize: 14,
       marginVertical: 2,
-      fontFamily: 'Karla',
+      fontFamily: 'SourceSans3',
       fontWeight: '400',
       textAlign: 'left',
       color: colors.BLUE,

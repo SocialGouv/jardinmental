@@ -8,7 +8,7 @@ import IllustrationOnboarding21Svg from '../../../assets/svg/IllustrationOnboard
 import IllustrationOnboarding22Svg from '../../../assets/svg/IllustrationOnboarding2.2.svg';
 import { colors } from '@/utils/colors';
 
-import {StyleSheet, View, Dimensions} from 'react-native';
+import { StyleSheet, View, Dimensions } from 'react-native';
 export const buttonHeight = 43;
 export const buttonSmallHeight = 30;
 export const defaultPadding = Math.min(Dimensions.get('window').width * 0.7, 30);
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
     color: colors.LIGHT_BLUE,
   },
   h1: {
-    fontFamily: 'Karla',
+    fontFamily: 'SourceSans3',
     fontStyle: 'normal',
     fontWeight: '700',
     fontSize: 28,

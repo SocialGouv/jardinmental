@@ -24,7 +24,7 @@ export default function BannerHeaderIntro({
 }) {
     return <>
         <Animated.View
-            className={"rounded-b-3xl items-center"}
+            className={"items-center"}
             onLayout={onBannerLayout}
             style={[animatedStatusBarColor, { position: 'absolute', top: 0, left: 0, right: 0, height: 260, zIndex: 1, overflow: 'hidden' }]}>
             <MonochromeLogo
@@ -42,7 +42,7 @@ export default function BannerHeaderIntro({
                     overflow: 'hidden',
                     backgroundColor: 'transparent',
                 }]}
-                className="rounded-b-3xl py-4 pb-8 px-10 items-center h-full justify-center mt-8"
+                className="py-4 pb-8 px-10 items-center h-full justify-center mt-8"
             >
                 <Animated.Text
                     className={typography.displayXsMedium}

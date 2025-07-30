@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
     height: 110,
   },
   headerTitle: {
-    fontFamily: 'Karla',
+    fontFamily: 'SourceSans3',
     fontSize: 16,
     fontWeight: '700',
     marginTop: 24,
@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   title: {
-    fontFamily: 'Karla',
+    fontFamily: 'SourceSans3',
     color: 'black',
     fontSize: 16,
     fontWeight: '700',
@@ -201,7 +201,7 @@ const styles = StyleSheet.create({
     textAlign: 'left',
   },
   paragraph: {
-    fontFamily: 'Karla',
+    fontFamily: 'SourceSans3',
     color: 'black',
     fontSize: 15,
     fontWeight: '400',
