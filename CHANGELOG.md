@@ -1,3 +1,10 @@
+# [1.52.0-alpha.3](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.2...v1.52.0-alpha.3) (2025-07-30)
+
+
+### Bug Fixes
+
+* displaying invalid date when reminder ignored/not set ([#305](https://github.com/SocialGouv/jardinmental/issues/305)) ([d6984f8](https://github.com/SocialGouv/jardinmental/commit/d6984f810383bab89a562724057e028d80af0e46))
+
 # [1.52.0-alpha.2](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.1...v1.52.0-alpha.2) (2025-07-28)
 
 
