@@ -9,12 +9,6 @@ import TimePicker from '../../components/timePicker';
 import NotificationService from '../../services/notifications';
 import { colors } from '../../utils/colors';
 import logEvents from '../../services/logEvents';
-import Rappel from '../onboarding/assets/Rappel';
-import Button from '../../components/Button';
-import { onboardingStyles } from '../onboarding/styles';
-import { StickyButtonContainer } from '../onboarding/StickyButton';
-import { SafeAreaViewWithOptionalHeader } from '../onboarding/ProgressHeader';
-import { OnboardingBackButton } from '../onboarding/BackButton';
 import API from '../../services/api';
 import * as RNLocalize from 'react-native-localize';
 import BeigeWrapperScreen from '../onboarding-v2/BeigeWrapperScreen';
@@ -27,6 +21,18 @@ const ReminderStorageKey = '@Reminder';
 const Reminder = ({ navigation, route, notifReminderTitle = "Comment ça va aujourd'hui ?", notifReminderMessage = "N'oubliez pas de remplir votre application Jardin Mental" }) => {
   const [reminder, setReminder] = useState<dayjs.Dayjs | null>(null);
   const [reminderSetupVisible, setReminderSetupVisible] = useState(false);
+
+  // Default reminder time constant
+  const DEFAULT_REMINDER_TIME = '20:00';
+
+  // Helper function to safely format reminder time with fallback
+  const formatReminderTime = (reminderDate: dayjs.Dayjs | null): string => {
+    if (!reminderDate || !dayjs(reminderDate).isValid()) {
+      // Return default time when reminder is null or invalid
+      return DEFAULT_REMINDER_TIME;
+    }
+    return dayjs(reminderDate).format('HH:mm');
+  };
 
   const getReminder = async (showAlert = true) => {
     const isRegistered = await NotificationService.checkPermission();
@@ -63,7 +69,7 @@ const Reminder = ({ navigation, route, notifReminderTitle = "Comment ça va aujo
   useEffect(() => {
     getReminder(false);
     notificationListener.current = NotificationService.listen(handleNotification, 'reminder');
-    localStorage.setOnboardingStep(ONBOARDING_STEPS.STEP_REMINDER);
+    void localStorage.setOnboardingStep(ONBOARDING_STEPS.STEP_REMINDER);
     // return () => NotificationService.remove(notificationListener.current);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -191,7 +197,7 @@ const Reminder = ({ navigation, route, notifReminderTitle = "Comment ça va aujo
         className='border border-gray-300 rounded-3xl px-10 py-6 items-center justify-center mb-6 bg-white w-auto self-center'>
         <Text className={mergeClassNames(typography.textSmMedium, 'mb-2')}> Recevez un rappel à:</Text>
         <View className='py-3 pt-5 px-8 border-2 border-secondary rounded-3xl flew-column'>
-          <Text className="font-bold text-5xl text-brand-600 leading-[56px]">{`${dayjs(reminder).format('HH:mm')}`}</Text>
+          <Text className="font-bold text-5xl text-brand-600 leading-[56px]">{formatReminderTime(reminder)}</Text>
         </View>
         <View className="flex-row items-center justify-center mt-4">
           <Text className='text-base mr-2 items-center justify-center'>Éditer</Text>
@@ -233,7 +239,15 @@ const Reminder = ({ navigation, route, notifReminderTitle = "Comment ça va aujo
         <Text style={stylesButton.text}>Désactiver le rappel</Text>
       </TouchableOpacity>
     </StickyButtonContainer> */}
-    <TimePicker visible={reminderSetupVisible} selectDate={setReminderRequest} />
+    <TimePicker 
+      visible={reminderSetupVisible} 
+      selectDate={setReminderRequest} 
+      value={reminder ? reminder.toDate() : (() => {
+        const defaultDate = new Date();
+        defaultDate.setHours(20, 0, 0, 0);
+        return defaultDate;
+      })()} 
+    />
   </BeigeWrapperScreen >
 };
 
