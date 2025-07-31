@@ -15,14 +15,6 @@ export const Boolean = ({ indicator, value, onChange }) => {
       left: TW_COLORS.ERROR,
       right: TW_COLORS.SUCCESS
     }
-    // ASC: {
-    //   false: { text: "text-white", bg: "border-red-400 bg-red-400" },
-    //   true: { text: "text-white", bg: "border-green-400 bg-green-400" },
-    // },
-    // DESC: {
-    //   true: { text: "text-white", bg: "border-red-400 bg-red-400" },
-    //   false: { text: "text-white", bg: "border-green-400 bg-green-400" },
-    // },
   };
 
   return <ToggleButtons
