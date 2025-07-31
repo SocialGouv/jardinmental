@@ -100,7 +100,7 @@ fileignoreconfig:
 - filename: app/src/scenes/survey/QuestionYesNo.js
   checksum: 5f60226dc61678da5e266fe1c3317ca498389cf407639a79ba11a4f8c4e1083c
 - filename: app/src/scenes/survey/daySurvey.tsx
-  checksum: 662ec66228249f3480fe2b425eec54260614e64fa6b3124a9a6b0447512a4d0c
+  checksum: 579b76fbe284ce77f8d103415093b52dfbcc9613bc4c190ca69b856dfb6a7b7e
 - filename: app/src/scenes/survey/survey-data.js
   checksum: 1ac3021625ed8fb4ed188c80035b12789aa03989dc7276893900ed96dc2a2509
 - filename: app/src/services/notifications.js

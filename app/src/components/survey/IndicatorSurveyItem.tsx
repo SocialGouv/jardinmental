@@ -26,6 +26,7 @@ export const IndicatorSurveyItem = ({
   comment,
   onCommentChanged,
   showComment,
+  onIndicatorChange
 }: {
   indicator: PredefineIndicatorV2SchemaType,
   index: number,
@@ -33,7 +34,8 @@ export const IndicatorSurveyItem = ({
   comment?: string,
   onValueChanged: () => {},
   onCommentChanged: () => {}
-  showComment: boolean
+  showComment: boolean,
+  onIndicatorChange?: () => void
 }) => {
   // console.log("✍️  i. ndicator", indicator);
   const { showBottomSheet, closeBottomSheet } = useBottomSheet();
@@ -54,7 +56,9 @@ export const IndicatorSurveyItem = ({
         uuid: indicator.uuid // we keep the same uuid for tracking purpose in the stats
       });
     }
-    closeBottomSheet()
+    if (typeof onIndicatorChange === 'function') {
+      onIndicatorChange()
+    }
     // setLoading(false);
     // navigation.navigate("symptoms");
     // setSelectedIndicators(prev => {
