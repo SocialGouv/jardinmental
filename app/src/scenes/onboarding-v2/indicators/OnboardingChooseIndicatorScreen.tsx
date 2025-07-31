@@ -25,6 +25,7 @@ import PlusIcon from '@assets/svg/icon/plus';
 import { v4 as uuidv4 } from "uuid";
 import { AnimatedHeaderScrollScreen } from '@/scenes/survey-v2/AnimatedHeaderScrollScreen';
 import { useFocusEffect } from '@react-navigation/native';
+import AlertBanner from '../AlertBanner';
 
 const BASE_INDICATORS_FOR_CUSTOM_CATEGORIES = {
   [NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR]: [INDICATORS.find(ind => ind.uuid === "1d4c3f59-dc3e-4b45-ae82-2ea77a62e6c6")],
@@ -244,9 +245,13 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
   const indicatorsCount = Object.values(recommendedIndicatorsByCategory).reduce((acc, indicators) => indicators.length + acc, 0) + indicatorsWithCustomCount
   const recommendedIndicatorsUuid = recommendedIndicators.map(reco => reco.uuid)
   const indicatorsTotalCount = selectedIndicators.length
+  const hasSelectedDifficulties = !!(profile?.selectedDifficulties && profile.selectedDifficulties.length)
+  const title = hasSelectedDifficulties ?
+    `Je vous propose de suivre ${indicatorsCount} élément${indicatorsCount > 1 ? 's' : ''} important${indicatorsCount > 1 ? 's' : ''}` :
+    `Choisissez ce que vous souhaitez suivre`
 
   return <AnimatedHeaderScrollScreen
-    title={`Je vous propose de suivre ${indicatorsCount} élément${indicatorsCount > 1 ? 's' : ''} important${indicatorsCount > 1 ? 's' : ''}`}
+    title={title}
     dynamicTitle={'Indicateurs'}
     navigation={navigation}
     hasProgressBar={false}
@@ -256,6 +261,9 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
       onNext={handleNext}
       headerContent={
         <View>
+          {selectedIndicators.length >= 9 && <AlertBanner text={
+            `Nous vous recommandons de ne pas choisir plus de 8 éléments pour commencer`
+          } />}
           <View className='my-2'>
             <Text className={mergeClassNames(typography.textSmMedium, 'text-gray-700 text-center')}>Vous pourrez modifier cette sélection plus tard</Text>
           </View>
@@ -268,52 +276,61 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
       skipText="Passer cette étape"
     />}
   >
-    <View className='px-6 py-4 pb-0'>
-      <InstructionText>Voici les éléments que je vous propose de suivre au quotidien. Vous pouvez en enlever ou en ajouter.</InstructionText>
-    </View>
-    {/* indicators grouped by categories */}
-    <View className="px-4 flex-1">
-      {Object.entries(recommendedIndicatorsByCategory)
-        .filter(([cat]) => {
-          return ![NEW_INDICATORS_CATEGORIES.SUBSTANCE, NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR, NEW_INDICATORS_CATEGORIES.LIFE_EVENT].includes(cat as NEW_INDICATORS_CATEGORIES)
-        }).map(([category, indicators]) =>
-          <CategoryCard
-            type='select'
-            key={category}
-            indicators={indicators}
-            selectedIndicators={selectedIndicators}
-            categoryName={category as NEW_INDICATORS_CATEGORIES}
-            renderIndicatorItem={renderIndicatorItem}
-          />
-        )}
-      {[NEW_INDICATORS_CATEGORIES.SUBSTANCE, NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR, NEW_INDICATORS_CATEGORIES.LIFE_EVENT].filter(cat => profile?.selectedDifficulties.includes(cat)).map(cat => {
-        return <CategoryCard
-          key={cat}
-          type={'select-and-input'}
-          selectedIndicators={selectedIndicators}
-          indicators={addedIndicators[cat] && addedIndicators[cat].length ? addedIndicators[cat] : BASE_INDICATORS_FOR_CUSTOM_CATEGORIES[cat]}
-          renderIndicatorItem={renderIndicatorItem}
-          addIndicatorForCategory={addIndicatorForCategory}
-          categoryName={cat} />
-      })}
-    </View>
-    <View className="px-4 mb-4">
-      <TouchableOpacity
-        onPress={() => setShowMoreIndicators(!showMoreIndicators)}
-        className="py-3 px-4"
-      >
-        <Text
-          className="text-center font-medium"
-          style={{
-            textDecorationLine: 'underline'
-          }}
-        >
-          {showMoreIndicators ? 'Masquer' : 'Voir plus d\'indicateurs'}
-        </Text>
-      </TouchableOpacity>
-    </View>
 
-    {showMoreIndicators && (
+    {hasSelectedDifficulties && <>
+      <View className='px-6 py-4 pb-0'>
+        <InstructionText>Voici les éléments que je vous propose de suivre au quotidien. Vous pouvez en enlever ou en ajouter.</InstructionText>
+      </View>
+      {/* indicators grouped by categories */}
+      <View className="px-4 flex-1">
+        {Object.entries(recommendedIndicatorsByCategory)
+          .filter(([cat]) => {
+            return ![NEW_INDICATORS_CATEGORIES.SUBSTANCE, NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR, NEW_INDICATORS_CATEGORIES.LIFE_EVENT].includes(cat as NEW_INDICATORS_CATEGORIES)
+          }).map(([category, indicators]) =>
+            <CategoryCard
+              type='select'
+              key={category}
+              indicators={indicators}
+              selectedIndicators={selectedIndicators}
+              categoryName={category as NEW_INDICATORS_CATEGORIES}
+              renderIndicatorItem={renderIndicatorItem}
+            />
+          )}
+        {[NEW_INDICATORS_CATEGORIES.SUBSTANCE, NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR, NEW_INDICATORS_CATEGORIES.LIFE_EVENT].filter(cat => profile?.selectedDifficulties.includes(cat)).map(cat => {
+          return <CategoryCard
+            key={cat}
+            type={'select-and-input'}
+            selectedIndicators={selectedIndicators}
+            indicators={addedIndicators[cat] && addedIndicators[cat].length ? addedIndicators[cat] : BASE_INDICATORS_FOR_CUSTOM_CATEGORIES[cat]}
+            renderIndicatorItem={renderIndicatorItem}
+            addIndicatorForCategory={addIndicatorForCategory}
+            categoryName={cat} />
+        })}
+      </View>
+      <View className="px-4 mb-4">
+        <TouchableOpacity
+          onPress={() => setShowMoreIndicators(!showMoreIndicators)}
+          className="py-3 px-4"
+        >
+          <Text
+            className="text-center font-medium"
+            style={{
+              textDecorationLine: 'underline'
+            }}
+          >
+            {showMoreIndicators ? 'Masquer' : 'Voir plus d\'indicateurs'}
+          </Text>
+        </TouchableOpacity>
+      </View>
+    </>}
+    {!profile?.selectedDifficulties || !profile.selectedDifficulties.length && <>
+      <View className='px-6 py-4 pb-0'>
+        <InstructionText>Voici les éléments les plus suivi sur Jardin Mental. Séléctionnez au moins un élément pour démarrer (vous pourrez modifier vos choix  et en ajouter d’autres plus tard)</InstructionText>
+      </View>
+    </>}
+
+
+    {(showMoreIndicators || !hasSelectedDifficulties) && (
       <View className="mb-6 px-4 flex-1">
         <Text
           className="text-xl font-bold mb-4 mx-0"
@@ -330,6 +347,7 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
           ))}
       </View>
     )}
+
     <View className="h-20" />
   </AnimatedHeaderScrollScreen>
 }

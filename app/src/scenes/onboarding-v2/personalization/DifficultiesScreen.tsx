@@ -10,6 +10,7 @@ import SelectionnableItem from '@/components/SelectionnableItem';
 import { INDICATOR_CATEGORIES_DATA } from '../data/helperData';
 import { NEW_INDICATORS_CATEGORIES } from '@/utils/liste_indicateurs.1';
 import { AnimatedHeaderScrollScreen } from '@/scenes/survey-v2/AnimatedHeaderScrollScreen';
+import AlertBanner from '../AlertBanner';
 
 type Props = OnboardingV2ScreenProps<'PersonalizationDifficulties'>;
 
@@ -24,7 +25,7 @@ export const DifficultiesScreen: React.FC<Props> = ({ navigation }) => {
   const { setSlideIndex, setNextPath, setIsVisible } = useOnboardingProgressHeader();
 
   const handleSkip = useCallback(() => {
-    navigation.navigate(NextScreen);
+    navigation.navigate('OnboardingChooseIndicator');
   }, [navigation]);
 
   useEffect(() => {
@@ -68,11 +69,9 @@ export const DifficultiesScreen: React.FC<Props> = ({ navigation }) => {
       withArrow={true}
       onNext={handleNext}
       headerContent={<View>
-        {selectedCount >= 3 && <View className={'bg-[#FDF2E7] py-3 px-2 mb-1'}>
-          <Text className={mergeClassNames(typography.textSmMedium, 'text-mood-1')}>
-            Nous vous recommandons de ne pas choisir plus de 2 domaines pour commencer
-          </Text>
-        </View>}
+        {selectedCount >= 3 && <AlertBanner text={
+          `Nous vous recommandons de ne pas choisir plus de 2 domaines pour commencer`
+        } />}
         <View className='my-2'>
           <Text className={mergeClassNames(typography.textSmMedium, 'text-gray-700 text-center')}>Vous pourrez modifier cette sélection plus tard</Text>
         </View>
