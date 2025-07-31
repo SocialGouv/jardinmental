@@ -137,11 +137,11 @@ export const CATEGORIES = [
 
 
 export const SUBCATEGORIES: Record<NEW_INDICATORS_SUBCATEGORIES, { id: string, label: string, category: NEW_INDICATORS_CATEGORIES }> = {
-  [NEW_INDICATORS_SUBCATEGORIES.UNRESTORATIVE_SLEEP]: {
-    id: "e601f450-0c10-4c7d-b1b0-b1b7405b6010",
-    label: "Mon sommeil n'est pas réparateur ou régulier",
-    category: NEW_INDICATORS_CATEGORIES.SLEEP
-  },
+  // [NEW_INDICATORS_SUBCATEGORIES.SLEEP_DIFFICULTY]: {
+  //   id: "e601f450-0c10-4c7d-b1b0-b1b7405b6010",
+  //   label: "Mon sommeil n'est pas réparateur ou régulier",
+  //   category: NEW_INDICATORS_CATEGORIES.SLEEP
+  // },
   [NEW_INDICATORS_SUBCATEGORIES.SLEEP_DIFFICULTY]: {
     id: "b2b92bb0-ff2a-4c9b-bae9-340089efde78",
     label: "J’ai des difficultés à dormir ou je dors mal",
@@ -211,7 +211,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
   //   name: "Qualité sommeil",
   //   priority: 0,
   //   categories: [NEW_INDICATORS_CATEGORIES.SLEEP],
-  //   subcategories: [NEW_INDICATORS_SUBCATEGORIES.UNRESTORATIVE_SLEEP],
+  //   subcategories: [NEW_INDICATORS_SUBCATEGORIES.SLEEP_DIFFICULTY],
   //   uuid: "d21db60d-ffa7-4063-a011-d7faef93bed2",
   //   order: "ASC",
   //   type: INDICATOR_TYPE.gauge,
@@ -222,7 +222,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     name: "Durée du sommeil",
     priority: 0,
     categories: [NEW_INDICATORS_CATEGORIES.SLEEP],
-    subcategories: [NEW_INDICATORS_SUBCATEGORIES.UNRESTORATIVE_SLEEP],
+    subcategories: [NEW_INDICATORS_SUBCATEGORIES.SLEEP_DIFFICULTY],
     order: "ASC",
     type: INDICATOR_TYPE.gauge,
     uuid: "6fb2564a-c2ab-44ca-80d7-88473fe0e414",
@@ -277,7 +277,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     name: "Fatigue",
     priority: 0,
     categories: [NEW_INDICATORS_CATEGORIES.SLEEP, NEW_INDICATORS_CATEGORIES.ENERGY],
-    subcategories: [NEW_INDICATORS_SUBCATEGORIES.UNRESTORATIVE_SLEEP],
+    subcategories: [NEW_INDICATORS_SUBCATEGORIES.SLEEP_DIFFICULTY],
     uuid: "1c7d836a-2174-49a0-9b98-888b577dc212",
     order: "DESC",
     type: INDICATOR_TYPE.gauge,
