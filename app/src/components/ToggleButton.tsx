@@ -2,6 +2,15 @@ import { TW_COLORS } from "@/utils/constants";
 import { useState } from "react";
 import { TouchableOpacity, View, Text } from "react-native";
 
+interface ToggleButtonsProps {
+  leftColor?: string;
+  rightColor?: string;
+  rightText?: string;
+  leftText?: string;
+  onPressLeft: (value: boolean) => void;
+  onPressRight: (value: boolean) => void;
+}
+
 export default function ToggleButtons({
   leftColor,
   rightColor,
@@ -9,7 +18,7 @@ export default function ToggleButtons({
   leftText,
   onPressLeft,
   onPressRight
-}) {
+}: ToggleButtonsProps) {
   const [selected, setSelected] = useState<boolean | undefined>(undefined);
   if (leftColor && rightColor) {
     return (
