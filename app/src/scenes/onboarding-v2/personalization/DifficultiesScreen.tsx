@@ -48,7 +48,7 @@ export const DifficultiesScreen: React.FC<Props> = ({ navigation }) => {
   useEffect(() => {
     setSkipCallback(handleSkip)
     setNextCallback(handleNext);
-  }, [handleSkip, handleNext])
+  }, [handleSkip, handleNext, setSkipCallback, setNextCallback])
 
   const toggleDifficulty = (id: string) => {
     setSelectedDifficulties(prev =>
