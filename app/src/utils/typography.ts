@@ -9,6 +9,7 @@ export const typography = {
     textXlSemibold: 'text-xl font-semibold font-body',
     textXlMedium: 'text-xl font-bold font-body text-center leading-[24px]',
     textLgBold: "text-lg font-bold font-body",
+    textLgSemibold: "text-lg font-semibold font-body",
     textLgMedium: "text-lg font-medium font-body",
     textMdRegular: 'text-md font-normal font-body text-center',
     textMdSemibold: 'text-md font-semibold font-body text-center leading-6',

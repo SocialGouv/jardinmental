@@ -69,7 +69,7 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
 
   const renderSleepSelector = () => {
     return <View className='p-4 py-6 rounded-xl bg-blue'>
-      <Text className={mergeClassNames(typography.textMdMedium, 'text-brand-950 mb-2')}>Qualité du sommeil</Text>
+      <Text className={mergeClassNames(typography.textLgSemibold, 'text-brand-950 mb-2')}>Qualité du sommeil</Text>
       <Gauge onChange={onSelectValue} reverse={undefined} />
       <Text className={mergeClassNames(typography.textMdMedium, 'text-gray-700')}>{computeMoodLabel()}</Text>
     </View>
