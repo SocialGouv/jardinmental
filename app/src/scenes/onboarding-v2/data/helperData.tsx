@@ -44,13 +44,14 @@ export const INDICATOR_CATEGORIES_DATA: Record<NEW_INDICATORS_CATEGORIES, Diffic
     [NEW_INDICATORS_CATEGORIES.SLEEP]: {
         id: 'sleep',
         name: 'Mon sommeil',
+        labelWithSecondPersonPrefix: 'votre sommeil',
         category: NEW_INDICATORS_CATEGORIES.SLEEP,
         selected: false,
         indicatorText: "Votre sommeil a un impact sur votre vie. Suivez ce qui compte pour vous",
         icon: MoonStar,
         label: 'Sommeil',
         subCat: [
-            NEW_INDICATORS_SUBCATEGORIES.UNRESTORATIVE_SLEEP,
+            // NEW_INDICATORS_SUBCATEGORIES.UNRESTORATIVE_SLEEP,
             NEW_INDICATORS_SUBCATEGORIES.SLEEP_DIFFICULTY,
             NEW_INDICATORS_SUBCATEGORIES.BAD_SLEEP_HABITS
         ]
@@ -59,6 +60,7 @@ export const INDICATOR_CATEGORIES_DATA: Record<NEW_INDICATORS_CATEGORIES, Diffic
         id: 'mood',
         category: NEW_INDICATORS_CATEGORIES.EMOTIONS,
         name: 'Mes émotions / Mon humeur',
+        labelWithSecondPersonPrefix: 'vos émotions et humeurs',
         selected: false,
         label: 'Emotions/humeurs',
         icon: Heart,
@@ -71,6 +73,7 @@ export const INDICATOR_CATEGORIES_DATA: Record<NEW_INDICATORS_CATEGORIES, Diffic
     [NEW_INDICATORS_CATEGORIES.FOOD]: {
         id: 'food',
         category: NEW_INDICATORS_CATEGORIES.FOOD,
+        labelWithSecondPersonPrefix: 'votre alimentation',
         name: `Mon alimentation`,
         label: 'Alimentation',
         selected: false,
@@ -79,6 +82,7 @@ export const INDICATOR_CATEGORIES_DATA: Record<NEW_INDICATORS_CATEGORIES, Diffic
     [NEW_INDICATORS_CATEGORIES.ENERGY]: {
         id: 'energy',
         category: NEW_INDICATORS_CATEGORIES.ENERGY,
+        labelWithSecondPersonPrefix: 'votre énergie',
         name: 'Mon énergie',
         selected: false,
         label: 'Énergie',
@@ -87,6 +91,7 @@ export const INDICATOR_CATEGORIES_DATA: Record<NEW_INDICATORS_CATEGORIES, Diffic
     [NEW_INDICATORS_CATEGORIES.INTRUSIVE_THOUGHTS]: {
         id: 'thought',
         category: NEW_INDICATORS_CATEGORIES.INTRUSIVE_THOUGHTS,
+        labelWithSecondPersonPrefix: 'vos pensées envahissantes',
         name: `Des pensées envahissantes`,
         label: 'Pensées Envahissantes',
         selected: false,
@@ -95,6 +100,7 @@ export const INDICATOR_CATEGORIES_DATA: Record<NEW_INDICATORS_CATEGORIES, Diffic
     [NEW_INDICATORS_CATEGORIES.SUBSTANCE]: {
         id: 'toxic',
         name: `Consommations de produits & addictions`,
+        labelWithSecondPersonPrefix: 'vos consommations de produits et addictions',
         label: `Consommations de produits & addictions`,
         category: NEW_INDICATORS_CATEGORIES.SUBSTANCE,
         indicatorText: 'Précisez quelle consommation de produits ou addictions vous souhaitez observer.',
@@ -108,6 +114,7 @@ export const INDICATOR_CATEGORIES_DATA: Record<NEW_INDICATORS_CATEGORIES, Diffic
     [NEW_INDICATORS_CATEGORIES.PHYSICAL_SIGNS]: {
         id: 'physical_signs',
         category: NEW_INDICATORS_CATEGORIES.PHYSICAL_SIGNS,
+        labelWithSecondPersonPrefix: 'vos manifestations physiques', 
         name: 'Manifestation physique',
         selected: false,
         label: 'Manifestation physique',
@@ -116,6 +123,7 @@ export const INDICATOR_CATEGORIES_DATA: Record<NEW_INDICATORS_CATEGORIES, Diffic
     [NEW_INDICATORS_CATEGORIES.SOCIAL_RELATIONS]: {
         id: 'social_relations',
         name: `Mes relations sociales`,
+        labelWithSecondPersonPrefix: 'vos relations sociales', 
         label: 'Relations sociales',
         category: NEW_INDICATORS_CATEGORIES.SOCIAL_RELATIONS,
         selected: false,
@@ -123,6 +131,7 @@ export const INDICATOR_CATEGORIES_DATA: Record<NEW_INDICATORS_CATEGORIES, Diffic
     },
     [NEW_INDICATORS_CATEGORIES.WORK]: {
         id: 'work_stress',
+        labelWithSecondPersonPrefix: 'votre travail', 
         name: `Mon travail`,
         label: 'Travail',
         category: NEW_INDICATORS_CATEGORIES.WORK,
@@ -132,6 +141,7 @@ export const INDICATOR_CATEGORIES_DATA: Record<NEW_INDICATORS_CATEGORIES, Diffic
     [NEW_INDICATORS_CATEGORIES.LIFE_EVENT]: {
         id: 'family_issues',
         name: 'Un événement de vie difficile',
+        labelWithSecondPersonPrefix: 'vos évènements de vie difficile', 
         label: 'Un évènement de vie difficile',
         category: NEW_INDICATORS_CATEGORIES.LIFE_EVENT,
         indicatorText: 'Un moment dur ? Notez-le pour prendre du recul plus tard.',
@@ -142,6 +152,7 @@ export const INDICATOR_CATEGORIES_DATA: Record<NEW_INDICATORS_CATEGORIES, Diffic
     [NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR]: {
         id: 'behaviour',
         label: 'Comportements à risque',
+        labelWithSecondPersonPrefix: 'vos comportements à risque', 
         name: `Des comportements à risque`,
         selected: false,
         category: NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR,
@@ -151,7 +162,8 @@ export const INDICATOR_CATEGORIES_DATA: Record<NEW_INDICATORS_CATEGORIES, Diffic
     [NEW_INDICATORS_CATEGORIES.COGNITIVE]: {
         id: 'cognitive',
         name: `Cognitif`,
-        label: 'Cognitif',
+        label: 'Le cognitif',
+        labelWithSecondPersonPrefix: 'vos cognitif', 
         selected: false,
         icon: PuzzlePiece,
         category: NEW_INDICATORS_CATEGORIES.COGNITIVE,

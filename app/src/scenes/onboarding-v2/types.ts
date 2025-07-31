@@ -39,6 +39,7 @@ export interface Difficulty {
   description?: string,
   category: NEW_INDICATORS_CATEGORIES;
   subCat: NEW_INDICATORS_SUBCATEGORIES[]
+  labelWithSecondPersonPrefix: string
 }
 
 export interface Objective {

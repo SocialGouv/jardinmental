@@ -258,7 +258,7 @@ export const IndicatorScreen: React.FC<IndicatorScreenProps> = ({
         onScroll={scrollHandler}
         scrollEventThrottle={16}>
         <View className="flex-1 justify-center items-center px-6 py-6">
-          <InstructionText>Prenons un instant pour faire le point sur {title}</InstructionText>
+          <InstructionText>Prenons un instant pour faire le point sur {INDICATOR_CATEGORIES_DATA[category].labelWithSecondPersonPrefix}</InstructionText>
           {indicators.map((indicator, index) => (
             <IndicatorSurveyItem
               key={indicator.uuid}

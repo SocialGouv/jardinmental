@@ -87,7 +87,7 @@ export const NavigationButtons: React.FC<NavigationButtonsProps> = ({
           left: 0,
           right: 0,
         }}
-        className={`p-6 px-6 pb-10`}>
+        className={`p-6 px-4 pb-10`}>
         {content}
       </LinearGradient>
     );
