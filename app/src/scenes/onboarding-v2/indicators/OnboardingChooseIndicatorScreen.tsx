@@ -325,7 +325,7 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
     </>}
     {!profile?.selectedDifficulties || !profile.selectedDifficulties.length && <>
       <View className='px-6 py-4 pb-0'>
-        <InstructionText>Voici les éléments les plus suivi sur Jardin Mental. Séléctionnez au moins un élément pour démarrer (vous pourrez modifier vos choix  et en ajouter d’autres plus tard)</InstructionText>
+        <InstructionText>Voici les éléments les plus suivis sur Jardin Mental. Séléctionnez au moins un élément pour démarrer (vous pourrez modifier vos choix  et en ajouter d’autres plus tard)</InstructionText>
       </View>
     </>}
 
