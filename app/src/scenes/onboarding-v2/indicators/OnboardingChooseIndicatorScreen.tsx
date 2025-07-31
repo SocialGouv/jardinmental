@@ -1,28 +1,23 @@
-import React, { useContext, useState, useCallback, useMemo } from 'react';
-import { View, Text, SafeAreaView, TouchableOpacity, ScrollView, TextInput } from 'react-native';
+import React, { useState, useCallback } from 'react';
+import { View, Text, TouchableOpacity, TextInput } from 'react-native';
 import { NavigationButtons } from '@/components/onboarding/NavigationButtons';
 import { OnboardingV2ScreenProps } from '@/scenes/onboarding-v2/types';
 import { useUserProfile } from '@/context/userProfile';
 import { BASE_INDICATORS, INDICATEURS_HUMEUR, INDICATEURS_SOMMEIL, INDICATORS, NEW_INDICATORS_CATEGORIES, NEW_INDICATORS_SUBCATEGORIES } from '@/utils/liste_indicateurs.1';
-import { generateIndicatorFromPredefinedIndicator, PredefineIndicatorV2SchemaType, INDICATOR_TYPE, INDICATORS_CATEGORIES, Indicator } from '@/entities/Indicator';
+import { generateIndicatorFromPredefinedIndicator, PredefineIndicatorV2SchemaType, Indicator } from '@/entities/Indicator';
 import localStorage from '@/utils/localStorage';
-import { categories, TW_COLORS } from '@/utils/constants';
-import BannerHeader from '../BannerHeader';
-import { SafeAreaViewWithOptionalHeader, useOnboardingProgressHeader } from '@/scenes/onboarding/ProgressHeader';
+import { TW_COLORS } from '@/utils/constants';
+import { useOnboardingProgressHeader } from '@/scenes/onboarding/ProgressHeader';
 import { mergeClassNames } from '@/utils/className';
 import { typography } from '@/utils/typography';
 import SelectionnableItem from '@/components/SelectionnableItem';
 import { INDICATOR_CATEGORIES_DATA } from '../data/helperData';
 import InstructionText from '../InstructionText';
 import IconBg from '@assets/svg/icon/IconBg'
-import ChevronUp from '@assets/svg/icon/ChevronUp'
-import ChevronDown from '@assets/svg/icon/ChevronDown'
-import CircleCheckMark from '@assets/svg/icon/CircleCheckMark'
 import ArrowIcon from '@assets/svg/icon/Arrow';
 import { useBottomSheet } from '@/context/BottomSheetContext';
 import IndicatorModal from './IndicatorModal';
 import PlusIcon from '@assets/svg/icon/plus';
-import { v4 as uuidv4 } from "uuid";
 import { AnimatedHeaderScrollScreen } from '@/scenes/survey-v2/AnimatedHeaderScrollScreen';
 import { useFocusEffect } from '@react-navigation/native';
 import AlertBanner from '../AlertBanner';
@@ -33,6 +28,7 @@ const BASE_INDICATORS_FOR_CUSTOM_CATEGORIES = {
   [NEW_INDICATORS_CATEGORIES.SUBSTANCE]: [INDICATORS.find(ind => ind.uuid === 'ac7c85b6-e015-4b46-bd14-13e01f7d7a85')],
 }
 
+const INDICATORS_WITH_CUSTOM_OPTIONS = [NEW_INDICATORS_CATEGORIES.SUBSTANCE, NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR, NEW_INDICATORS_CATEGORIES.LIFE_EVENT]
 
 export function suggestIndicatorsForDifficulties(
   selectedDifficulties: NEW_INDICATORS_CATEGORIES[],
@@ -136,12 +132,6 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation, r
   ).filter(indicator => !BASE_INDICATORS.includes(indicator.uuid))
     : []
   const [selectedIndicators, setSelectedIndicators] = useState<string[]>([]
-    // [...recommendedIndicators.map(indicator => indicator.uuid), ...[profile.selectedDifficulties.filter(difficulty => [
-    //   // ignore this as it is the user that will select specific indicators
-    //   NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR,
-    //   NEW_INDICATORS_CATEGORIES.SUBSTANCE,
-    //   NEW_INDICATORS_CATEGORIES.LIFE_EVENT,
-    // ].includes(difficulty)).map(difficulty => BASE_INDICATORS_FOR_CUSTOM_CATEGORIES[difficulty])].flat(10).map(item => item.uuid)]
   );
 
   const recommendedIndicatorsByCategory: Record<NEW_INDICATORS_CATEGORIES, PredefineIndicatorV2SchemaType[]> = recommendedIndicators.reduce((prev, curr) => {
@@ -243,7 +233,7 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation, r
       navigation.navigate('PersonalizationDifficulties')
     }
   }
-  const indicatorsWithCustomCount = [NEW_INDICATORS_CATEGORIES.SUBSTANCE, NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR, NEW_INDICATORS_CATEGORIES.LIFE_EVENT].filter(cat => profile?.selectedDifficulties.includes(cat)).length
+  const indicatorsWithCustomCount = INDICATORS_WITH_CUSTOM_OPTIONS.filter(cat => profile?.selectedDifficulties.includes(cat)).length
   const indicatorsCount = Object.values(recommendedIndicatorsByCategory).reduce((acc, indicators) => indicators.length + acc, 0) + indicatorsWithCustomCount
   const recommendedIndicatorsUuid = recommendedIndicators.map(reco => reco.uuid)
   const indicatorsTotalCount = selectedIndicators.length
@@ -286,7 +276,7 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation, r
       <View className="px-4 flex-1">
         {Object.entries(recommendedIndicatorsByCategory)
           .filter(([cat]) => {
-            return ![NEW_INDICATORS_CATEGORIES.SUBSTANCE, NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR, NEW_INDICATORS_CATEGORIES.LIFE_EVENT].includes(cat as NEW_INDICATORS_CATEGORIES)
+            return !INDICATORS_WITH_CUSTOM_OPTIONS.includes(cat as NEW_INDICATORS_CATEGORIES)
           }).map(([category, indicators]) =>
             <CategoryCard
               type='select'
@@ -297,7 +287,7 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation, r
               renderIndicatorItem={renderIndicatorItem}
             />
           )}
-        {[NEW_INDICATORS_CATEGORIES.SUBSTANCE, NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR, NEW_INDICATORS_CATEGORIES.LIFE_EVENT].filter(cat => profile?.selectedDifficulties.includes(cat)).map(cat => {
+        {INDICATORS_WITH_CUSTOM_OPTIONS.filter(cat => profile?.selectedDifficulties.includes(cat)).map(cat => {
           return <CategoryCard
             key={cat}
             type={'select-and-input'}
@@ -355,16 +345,8 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation, r
 
 const MultiInput = ({
   categoryName,
-  renderIndicatorItem,
-  addIndicatorForCategory,
-  indicators,
-  type
 }: {
-  type: 'select' | 'select-and-input' | 'input'
   categoryName: NEW_INDICATORS_CATEGORIES,
-  indicators?: PredefineIndicatorV2SchemaType[],
-  addIndicatorForCategory?: (category: NEW_INDICATORS_CATEGORIES, indicators: PredefineIndicatorV2SchemaType[]) => void,
-  renderIndicatorItem?: (item: PredefineIndicatorV2SchemaType) => JSX.Element
 }) => {
 
   const [addedInputs, setAddedInputs] = useState([''])
@@ -385,7 +367,6 @@ const MultiInput = ({
           bottom: 5
         }
       } onPress={() => {
-        //onPress(value)
         setAddedInputs((prev) => [...prev.slice(0, index), ...prev.slice(index + 1)])
       }}>
         <Text className={mergeClassNames(typography.textMdSemibold, 'text-brand-800')}>Supprimer</Text>
@@ -416,7 +397,6 @@ const CategoryCard = ({
   renderIndicatorItem?: (item: PredefineIndicatorV2SchemaType) => JSX.Element
 }) => {
 
-  const [showIndicators, setShowMoreIndicators] = useState<boolean>(false)
   const { showBottomSheet, closeBottomSheet } = useBottomSheet()
 
   return <View key={categoryName}
