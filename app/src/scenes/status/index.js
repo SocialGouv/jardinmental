@@ -131,11 +131,7 @@ const Status = ({ navigation, startSurvey }) => {
         // Check if checklist banner should be shown using new logic
         const shouldShow = await shouldShowChecklistBanner();
         setChecklistBannerVisible(shouldShow);
-        if (!shouldShow) {
-          checklistBannerOpacity.setValue(0);
-        } else {
-          checklistBannerOpacity.setValue(1);
-        }
+        checklistBannerOpacity.setValue(shouldShow ? 1 : 0);
 
         showLatestChangesModal();
       })();
