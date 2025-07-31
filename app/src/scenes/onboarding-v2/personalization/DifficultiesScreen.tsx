@@ -22,27 +22,13 @@ export const DifficultiesScreen: React.FC<Props> = ({ navigation }) => {
     ...d,
     selected: !!profile?.selectedDifficulties.includes(d.category)
   })).filter(cat => cat.category !== NEW_INDICATORS_CATEGORIES.PHYSICAL_SIGNS))
-  const { setSlideIndex, setNextPath, setIsVisible } = useOnboardingProgressHeader();
+  const { setSlideIndex, setNextCallback, setIsVisible, setSkipCallback } = useOnboardingProgressHeader();
 
   const handleSkip = useCallback(() => {
-    navigation.navigate('OnboardingChooseIndicator',  {
+    navigation.navigate('OnboardingChooseIndicator', {
       skippedScreen: 'PersonalizationDifficulties'
     })
   }, [navigation]);
-
-  useEffect(() => {
-    setNextPath(handleSkip);
-  }, [handleSkip])
-
-  const toggleDifficulty = (id: string) => {
-    setSelectedDifficulties(prev =>
-      prev.map(difficulty =>
-        difficulty.id === id
-          ? { ...difficulty, selected: !difficulty.selected }
-          : difficulty
-      )
-    );
-  };
 
   const handleNext = async () => {
     const selected = selectedDifficulties.filter(d => d.selected);
@@ -57,6 +43,21 @@ export const DifficultiesScreen: React.FC<Props> = ({ navigation }) => {
         setIsVisible(false)
       })
     }
+  };
+
+  useEffect(() => {
+    setSkipCallback(handleSkip)
+    setNextCallback(handleNext);
+  }, [handleSkip, handleNext, setSkipCallback, setNextCallback])
+
+  const toggleDifficulty = (id: string) => {
+    setSelectedDifficulties(prev =>
+      prev.map(difficulty =>
+        difficulty.id === id
+          ? { ...difficulty, selected: !difficulty.selected }
+          : difficulty
+      )
+    );
   };
 
   const selectedCount = selectedDifficulties.filter(d => d.selected).length;

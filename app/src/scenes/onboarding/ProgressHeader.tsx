@@ -27,8 +27,10 @@ interface ProgressHeaderContextType {
   title: string;
   showProgressbar: boolean;
   setShowProgressbar: (show: boolean) => void;
-  setNextPath: (func: () => void) => void;
-  nextPath: React.MutableRefObject<(() => void) | null>;
+  setNextCallback: (func: () => void) => void;
+  nextCallback: React.MutableRefObject<(() => void) | null>;
+  setSkipCallback: (func: () => void) => void;
+  skipCallback: React.MutableRefObject<(() => void) | null>;
   hideOnScrollProgressValue: SharedValue<number>;
   setHideOnScrollProgressValue: SharedValue<number>;
 }
@@ -49,10 +51,16 @@ export const OnboardingProgressHeaderProvider = ({ children }) => {
   const [title, setTitle] = useState<string>('')
   const [showProgressbar, setShowProgressbar] = useState<boolean>(false);
   const hideOnScrollProgressValue = useSharedValue(1);
-  const nextPathRef = useRef<(() => void) | null>(null);
+  const nextCallbackRef = useRef<(() => void) | null>(null);
+  const skipCallbackRef = useRef<(() => void) | null>(null);
+
 
   const setNextCallback = useCallback((func: () => void) => {
-    nextPathRef.current = func;
+    nextCallbackRef.current = func;
+  }, [])
+
+  const setSkipCallback = useCallback((func: () => void) => {
+    skipCallbackRef.current = func;
   }, [])
 
   const value = {
@@ -64,8 +72,10 @@ export const OnboardingProgressHeaderProvider = ({ children }) => {
     title,
     showProgressbar,
     setShowProgressbar,
-    setNextPath: setNextCallback,
-    nextPath: nextPathRef,
+    setNextCallback,
+    nextCallback: nextCallbackRef,
+    setSkipCallback,
+    skipCallback: skipCallbackRef,
     hideOnScrollProgressValue,
     setHideOnScrollProgressValue: hideOnScrollProgressValue
     // animatedStatusBarColor,
@@ -134,7 +144,7 @@ export const SafeAreaViewWithOptionalHeader = ({ children, style, ...props }: {
 
 
 const ProgressHeader = ({ insets, slidesCount, navigation }) => {
-  const { slideIndex, showProgressbar, nextPath, hideOnScrollProgressValue } = useOnboardingProgressHeader();
+  const { slideIndex, showProgressbar, nextCallback, skipCallback, hideOnScrollProgressValue } = useOnboardingProgressHeader();
   const [hideHeader, setHideHeader] = useState(false)
   const animatedProgressValue = useRef(new RNAnimated.Value(0)).current;
   const animatedProgressWidth = animatedProgressValue.interpolate({
@@ -268,8 +278,11 @@ const ProgressHeader = ({ insets, slidesCount, navigation }) => {
           {!HEADER_WITH_BANNER && !hideHeader && (SHARED_HEADER || PROGRESS_BAR_AND_HEADER) && <CheckInHeader
             withMargin={false}
             onSkip={() => {
-              if (nextPath && nextPath.current) {
-                nextPath.current();
+              if (skipCallback && skipCallback.current) {
+                skipCallback.current();
+              }
+              else if (nextCallback && nextCallback.current) {
+                nextCallback.current();
               }
             }}
             onPrevious={() => {
