@@ -39,6 +39,7 @@ interface IndicatorScreenProps {
     dynamicTitle?: string;
     hasProgressBar?: boolean;
     bottomComponent?: React.ReactNode;
+    hideBottomComponentInitially?: boolean;
     navigation: StackNavigationProp<any>
 }
 
@@ -51,6 +52,7 @@ export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
     dynamicTitle,
     hasProgressBar,
     bottomComponent,
+    hideBottomComponentInitially = false,
     handlePrevious,
     navigation
 }: IndicatorScreenProps) => {
@@ -82,6 +84,7 @@ export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
     const scrollY = useSharedValue(0);
     const measuredHeight = useSharedValue(0); // Store the measured natural height
     const SCROLL_THRESHOLD = 100; // Distance to scroll before full transition (reduced for more responsive animation)
+    const BOTTOM_COMPONENT_SCROLL_THRESHOLD = 50; // Distance to scroll before bottom component appears
 
     const scrollHandler = useAnimatedScrollHandler({
         onScroll: (event) => {
@@ -208,6 +211,28 @@ export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
         };
     });
 
+    // Animated style for bottom component slide-up effect
+    const bottomComponentStyle = useAnimatedStyle(() => {
+        // If hideBottomComponentInitially is false, always show the component
+        if (!hideBottomComponentInitially) {
+            return {
+                transform: [{ translateY: 0 }],
+            };
+        }
+
+        // Otherwise, apply the slide-up animation
+        const translateY = interpolate(
+            scrollY.value,
+            [0, BOTTOM_COMPONENT_SCROLL_THRESHOLD],
+            [100, 0], // Start 100px below screen, slide to normal position
+            Extrapolate.CLAMP
+        );
+
+        return {
+            transform: [{ translateY }],
+        };
+    });
+
     // Dynamic content container style for ScrollView (regular style object)
     const scrollViewContentStyle = {
         paddingTop: dynamicPaddingTop,
@@ -259,6 +284,10 @@ export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
             showPrevious={false}
             nextText="Suivant"
         />}
-        {bottomComponent}
+        {bottomComponent && (
+            <Animated.View style={bottomComponentStyle}>
+                {bottomComponent}
+            </Animated.View>
+        )}
     </SafeAreaView >
 };
