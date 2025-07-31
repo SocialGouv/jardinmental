@@ -44,7 +44,7 @@ export function suggestIndicatorsForDifficulties(
       indicator.subcategories?.includes(subcat as any)
     );
 
-    const requiresSubcategoryMatch = !!indicator.subcategories?.length
+    const requiresSubcategoryMatch = selectedSubcategories.length && !!indicator.subcategories?.length
 
     const matchesSubcategory = relevantSubcategories.length > 0;
 

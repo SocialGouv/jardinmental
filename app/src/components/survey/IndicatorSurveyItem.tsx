@@ -76,7 +76,7 @@ export const IndicatorSurveyItem = ({
   };
   return <BasicCard>
     <View>
-      <Text className={mergeClassNames(typography.textMdMedium, 'text-brand-950', 'mb-6')}>{indicator.name}</Text>
+      <Text className={mergeClassNames(typography.textLgSemibold, 'text-brand-950', 'mb-6')}>{indicator.name}</Text>
     </View>
     {renderInput()}
     {indicator.type === INDICATOR_TYPE.gauge &&
