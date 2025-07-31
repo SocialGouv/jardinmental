@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-  ScrollView, View, Text, Platform,
+  ScrollView, View, Text, Platform, Dimensions,
   // KeyboardAvoidingView
 } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -41,7 +41,8 @@ interface IndicatorScreenProps {
   onCommentChanged: ({ key, userComment }: { key: string; userComment: string }) => void;
   onNext: () => void;
   category?: NEW_INDICATORS_CATEGORIES;
-  showComment?: boolean
+  showComment?: boolean;
+  hideNavigationButtonsInitially?: boolean;
 }
 
 const ICON_FOR_CATEGORY: Record<NEW_INDICATORS_CATEGORIES, React.ReactNode> = {
@@ -69,12 +70,17 @@ export const IndicatorScreen: React.FC<IndicatorScreenProps> = ({
   onCommentChanged,
   onNext,
   category,
-  showComment = true
+  showComment = true,
+  hideNavigationButtonsInitially = true
 }) => {
 
   const { showBottomSheet } = useBottomSheet();
   const insets = useSafeAreaInsets();
   const [dynamicPaddingTop, setDynamicPaddingTop] = useState(0); // Default fallback
+  
+  // Check if screen is large (like iPhone 16 Plus)
+  const { height: screenHeight } = Dimensions.get('window');
+  const isLargeScreen = screenHeight >= 900; // Threshold for large screens
 
   const onClickHelp = () => {
     if (category && HELP_FOR_CATEGORY[category]) {
@@ -87,6 +93,8 @@ export const IndicatorScreen: React.FC<IndicatorScreenProps> = ({
   const scrollY = useSharedValue(0);
   const measuredHeight = useSharedValue(0); // Store the measured natural height
   const SCROLL_THRESHOLD = 100; // Distance to scroll before full transition (reduced for more responsive animation)
+  const NAVIGATION_BUTTONS_SCROLL_THRESHOLD = 50; // Distance to scroll before navigation buttons appear
+  const buttonHasAppeared = useSharedValue(false); // Track if button has appeared
 
   const scrollHandler = useAnimatedScrollHandler({
     onScroll: (event) => {
@@ -213,6 +221,55 @@ export const IndicatorScreen: React.FC<IndicatorScreenProps> = ({
     };
   });
 
+  // Animated style for navigation buttons slide-up effect
+  const navigationButtonsStyle = useAnimatedStyle(() => {
+    // If hideNavigationButtonsInitially is false, always show the buttons
+    if (!hideNavigationButtonsInitially) {
+      return {
+        transform: [{ translateY: 0 }],
+      };
+    }
+
+    // Always show buttons on large screens (like iPhone 16 Plus)
+    if (isLargeScreen) {
+      return {
+        transform: [{ translateY: 0 }],
+      };
+    }
+
+    // Always show buttons if there's only one indicator
+    if (indicators.length === 1) {
+      buttonHasAppeared.value = true;
+      return {
+        transform: [{ translateY: 0 }],
+      };
+    }
+
+    // Check if we've reached the threshold
+    if (scrollY.value >= NAVIGATION_BUTTONS_SCROLL_THRESHOLD) {
+      buttonHasAppeared.value = true;
+    }
+
+    // If button has appeared, keep it visible
+    if (buttonHasAppeared.value) {
+      return {
+        transform: [{ translateY: 0 }],
+      };
+    }
+
+    // Otherwise, animate based on scroll position
+    const translateY = interpolate(
+      scrollY.value,
+      [0, NAVIGATION_BUTTONS_SCROLL_THRESHOLD],
+      [100, 0], // Start 100px below screen, slide to normal position
+      Extrapolate.CLAMP
+    );
+
+    return {
+      transform: [{ translateY }],
+    };
+  });
+
   return <SafeAreaView className="flex-1 bg-white">
     <View style={{
       position: 'absolute', top: Platform.OS === 'android' ? insets.top : 0, left: 0, right: 0, zIndex: 10
@@ -278,14 +335,16 @@ export const IndicatorScreen: React.FC<IndicatorScreenProps> = ({
         </View>
       </Animated.ScrollView>
     </KeyboardAvoidingView >
-    <NavigationButtons
-      absolute={true}
-      onNext={onNext}
-      onLeftAction={category && HELP_FOR_CATEGORY[category] ? onClickHelp : undefined}
-      // onPrevious={() => navigation.goBack()}
-      showPrevious={false}
-      // loading={loading}
-      nextText="Suivant"
-    />
+    <Animated.View style={navigationButtonsStyle}>
+      <NavigationButtons
+        absolute={true}
+        onNext={onNext}
+        onLeftAction={category && HELP_FOR_CATEGORY[category] ? onClickHelp : undefined}
+        // onPrevious={() => navigation.goBack()}
+        showPrevious={false}
+        // loading={loading}
+        nextText="Suivant"
+      />
+    </Animated.View>
   </SafeAreaView >
 };
