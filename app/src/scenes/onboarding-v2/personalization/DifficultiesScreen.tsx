@@ -62,6 +62,7 @@ export const DifficultiesScreen: React.FC<Props> = ({ navigation }) => {
     title={'Sur quoi avez-vous ressenti une difficulté ou une gêne ces deux dernières semaines?'}
     dynamicTitle={'Difficultés'}
     hasProgressBar={true}
+    navigation={navigation}
     bottomComponent={<NavigationButtons
       absolute={true}
       withArrow={true}
