@@ -13,6 +13,8 @@ import {
   STORAGE_KEY_ONBOARDING_DONE,
   STORAGE_KEY_NPS_PRO_CONTACT,
   STORAGE_KEY_CHECKLIST_BANNER_DISMISSED,
+  STORAGE_KEY_CHECKLIST_BANNER_STATE,
+  CHECKLIST_BANNER_CONFIG,
 } from "../constants";
 import { updateSymptomsFormatIfNeeded } from "./utils";
 import localStorageBeck from "./beck";
@@ -191,7 +193,7 @@ const clearUserProfile = async (): Promise<void> => {
   }
 };
 
-// Checklist banner functions
+// Checklist banner functions (legacy)
 const getChecklistBannerDismissed = async () => {
   const dismissed = await AsyncStorage.getItem(STORAGE_KEY_CHECKLIST_BANNER_DISMISSED);
   return dismissed ? JSON.parse(dismissed) : false;
@@ -199,6 +201,54 @@ const getChecklistBannerDismissed = async () => {
 
 const setChecklistBannerDismissed = async (dismissed: boolean) => {
   await AsyncStorage.setItem(STORAGE_KEY_CHECKLIST_BANNER_DISMISSED, JSON.stringify(dismissed));
+};
+
+// Enhanced checklist banner state functions
+interface ChecklistBannerState {
+  dismissCount: number;
+  lastDismissedAt: number | null;
+  permanentlyDismissed: boolean;
+}
+
+const getChecklistBannerState = async (): Promise<ChecklistBannerState> => {
+  const state = await AsyncStorage.getItem(STORAGE_KEY_CHECKLIST_BANNER_STATE);
+  if (state) {
+    return JSON.parse(state);
+  }
+
+  // Check if we have legacy dismissed state and migrate
+  const legacyDismissed = await getChecklistBannerDismissed();
+  if (legacyDismissed) {
+    return {
+      dismissCount: CHECKLIST_BANNER_CONFIG.MAX_DISMISSALS,
+      lastDismissedAt: Date.now(),
+      permanentlyDismissed: true,
+    };
+  }
+
+  // Default state
+  return {
+    dismissCount: 0,
+    lastDismissedAt: null,
+    permanentlyDismissed: false,
+  };
+};
+
+const setChecklistBannerState = async (state: ChecklistBannerState) => {
+  await AsyncStorage.setItem(STORAGE_KEY_CHECKLIST_BANNER_STATE, JSON.stringify(state));
+};
+
+const incrementChecklistBannerDismissCount = async (): Promise<ChecklistBannerState> => {
+  const currentState = await getChecklistBannerState();
+  const newDismissCount = currentState.dismissCount + 1;
+  const newState: ChecklistBannerState = {
+    dismissCount: newDismissCount,
+    lastDismissedAt: Date.now(),
+    permanentlyDismissed: newDismissCount >= CHECKLIST_BANNER_CONFIG.MAX_DISMISSALS,
+  };
+
+  await setChecklistBannerState(newState);
+  return newState;
 };
 
 export default {
@@ -234,5 +284,11 @@ export default {
   clearUserProfile,
   getChecklistBannerDismissed,
   setChecklistBannerDismissed,
+  getChecklistBannerState,
+  setChecklistBannerState,
+  incrementChecklistBannerDismissCount,
   ...localStorageBeck,
 };
+
+// Export the interface for use in other files
+export type { ChecklistBannerState };

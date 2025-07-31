@@ -24,6 +24,7 @@ import { VALID_SCREEN_NAMES } from '@/scenes/onboarding-v2/index'
 import { typography } from '@/utils/typography';
 import { mergeClassNames } from '@/utils/className';
 import JMButton from '@/components/JMButton';
+import { shouldShowChecklistBanner, handlePlusTardClick as handleBannerDismiss } from '../../utils/checklistBanner';
 const LIMIT_PER_PAGE = __DEV__ ? 3 : 30;
 
 const Status = ({ navigation, startSurvey }) => {
@@ -31,8 +32,8 @@ const Status = ({ navigation, startSurvey }) => {
   const [NPSvisible, setNPSvisible] = useState(false);
   const [bannerProNPSVisible, setBannerProNPSVisible] = useState(true);
   const [ongletActif, setOngletActif] = useState('all');
-  const [checklistBannerVisible, setChecklistBannerVisible] = useState(true);
-  const checklistBannerOpacity = React.useRef(new Animated.Value(1)).current;
+  const [checklistBannerVisible, setChecklistBannerVisible] = useState(false);
+  const checklistBannerOpacity = React.useRef(new Animated.Value(0)).current;
   const scrollRef = React.useRef();
   const { showLatestChangesModal } = useLatestChangesModal();
 
@@ -40,15 +41,6 @@ const Status = ({ navigation, startSurvey }) => {
     updateInactivityReminder();
     checkOldReminderBefore154(); // can be deleted in few months
     checkOldReminderBefore193(); // can be deleted in few months
-
-    // Check if checklist banner was dismissed
-    (async () => {
-      const checklistBannerDismissed = await localStorage.getChecklistBannerDismissed();
-      if (checklistBannerDismissed) {
-        setChecklistBannerVisible(false);
-        checklistBannerOpacity.setValue(0);
-      }
-    })();
   }, []);
 
   React.useEffect(() => {
@@ -135,6 +127,16 @@ const Status = ({ navigation, startSurvey }) => {
         const bannerProNPSDone = await localStorage.getNpsProContact();
         const supported = await localStorage.getSupported();
         setBannerProNPSVisible(supported === 'PRO' && !bannerProNPSDone);
+
+        // Check if checklist banner should be shown using new logic
+        const shouldShow = await shouldShowChecklistBanner();
+        setChecklistBannerVisible(shouldShow);
+        if (!shouldShow) {
+          checklistBannerOpacity.setValue(0);
+        } else {
+          checklistBannerOpacity.setValue(1);
+        }
+
         showLatestChangesModal();
       })();
     }, []),
@@ -153,8 +155,8 @@ const Status = ({ navigation, startSurvey }) => {
       setChecklistBannerVisible(false);
     });
 
-    // Set localStorage to remember the user's choice
-    await localStorage.setChecklistBannerDismissed(true);
+    // Use the new enhanced banner dismiss logic
+    await handleBannerDismiss();
   };
 
   const renderScrollContent = onglet => {

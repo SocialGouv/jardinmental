@@ -104,9 +104,9 @@ fileignoreconfig:
 - filename: app/src/services/notifications.js
   checksum: 00046388d0509346e97a4d365477dd2b85f4eaefb4f67f4d7351bc198db4b725
 - filename: app/src/utils/constants.ts
-  checksum: d253777852f0048c98254519893885803849b2392dde9853e4973600d5034721
+  checksum: 6add83fac911247dae8018dc09c8225263df59cdd48a1f293245c7a087e93320
 - filename: app/src/utils/localStorage/index.ts
-  checksum: 7c183b28ca55d187e414c4dc68705a5dda13fd2d1e0286ef5b8e48b8a0c2b98e
+  checksum: 3f635e9292b5597aad97348cb39d456878fba2e66cf18108b14e1bc927bfc845
 scopeconfig:
 - scope: node
 version: "1.0"
