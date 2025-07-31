@@ -26,6 +26,7 @@ import { KeyboardAvoidingView } from "react-native-keyboard-controller";
 import { NEW_INDICATORS_CATEGORIES } from '@/utils/liste_indicateurs.1';
 import { useOnboardingProgressHeader } from '../onboarding/ProgressHeader';
 import { useFocusEffect } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 interface IndicatorScreenProps {
     title: string;
@@ -38,6 +39,7 @@ interface IndicatorScreenProps {
     dynamicTitle?: string;
     hasProgressBar?: boolean;
     bottomComponent?: React.ReactNode;
+    navigation: StackNavigationProp<any>
 }
 
 
@@ -49,7 +51,8 @@ export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
     dynamicTitle,
     hasProgressBar,
     bottomComponent,
-    handlePrevious
+    handlePrevious,
+    navigation
 }: IndicatorScreenProps) => {
     const { showBottomSheet } = useBottomSheet();
     const { setShowProgressbar, showProgressbar, setHideOnScrollProgressValue } = useOnboardingProgressHeader()

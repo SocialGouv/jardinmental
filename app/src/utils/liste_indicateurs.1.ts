@@ -330,25 +330,25 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     mainCategory: NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR
   },
   {
-    name: "Temps d'écran",
-    categories: [NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR],
+    name: "Écrans / réseaux sociaux",
+    categories: [NEW_INDICATORS_CATEGORIES.SUBSTANCE],
     priority: 2,
     order: "DESC",
     type: INDICATOR_TYPE.gauge,
     uuid: '3b3f1d10-fc45-4b12-a476-508531ce127c',
     category: INDICATORS_CATEGORIES["Emotions/sentiments"],
-    mainCategory: NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR
+    mainCategory: NEW_INDICATORS_CATEGORIES.SUBSTANCE
   },
-  {
-    name: "Temps réseaux sociaux",
-    categories: [NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR],
-    priority: 0,
-    order: "DESC",
-    type: INDICATOR_TYPE.gauge,
-    uuid: '64bcb067-8a64-4b67-a3d7-e45c5b9e1c95',
-    category: INDICATORS_CATEGORIES["Emotions/sentiments"],
-    mainCategory: NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR
-  },
+  // {
+  //   name: "Temps réseaux sociaux",
+  //   categories: [NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR],
+  //   priority: 0,
+  //   order: "DESC",
+  //   type: INDICATOR_TYPE.gauge,
+  //   uuid: '64bcb067-8a64-4b67-a3d7-e45c5b9e1c95',
+  //   category: INDICATORS_CATEGORIES["Emotions/sentiments"],
+  //   mainCategory: NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR
+  // },
   {
     name: "Auto-mutilation",
     categories: [NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR],
@@ -955,7 +955,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     mainCategory: NEW_INDICATORS_CATEGORIES.SOCIAL_RELATIONS,
   },
   {
-    name: "Evènements de vie difficile",
+    name: "Événements de vie difficile",
     categories: [NEW_INDICATORS_CATEGORIES.LIFE_EVENT],
     priority: 1,
     order: "DESC",
@@ -1674,7 +1674,7 @@ export const INDICATEURS_LES_PLUS_COURANTS = INDICATORS.filter((indicateur) =>
   ].includes(indicateur.uuid)
 );
 
-export const BASE_INDICATORS = [INDICATEURS_HUMEUR.uuid]
+export const BASE_INDICATORS = [INDICATEURS_HUMEUR.uuid, INDICATEURS_SOMMEIL.uuid]
 
 export const INDICATEURS_LISTE_ONBOARDING_CUSTOM_SIMPLE = [
   INDICATEURS.filter((indicateur) =>
