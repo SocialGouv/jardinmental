@@ -1,3 +1,10 @@
+# [1.52.0-alpha.8](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.7...v1.52.0-alpha.8) (2025-07-31)
+
+
+### Features
+
+* hide navigation button on small screen before first scroll ([#323](https://github.com/SocialGouv/jardinmental/issues/323)) ([6ba7ce7](https://github.com/SocialGouv/jardinmental/commit/6ba7ce7a5fd9cd8810b9dbf77b3dc02e5f3024aa))
+
 # [1.52.0-alpha.7](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.6...v1.52.0-alpha.7) (2025-07-31)
 
 
