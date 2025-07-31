@@ -9,7 +9,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "org.reactjs.native.example.monsuivipsy",
-      "buildNumber": "241",
+      "buildNumber": "244",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }

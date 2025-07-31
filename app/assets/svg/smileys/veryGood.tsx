@@ -1,8 +1,8 @@
 import { iconColors } from "@/utils/constants";
 import Svg, { Path } from "react-native-svg";
 
-export default function SmileyVeryGood() {
-    return <Svg width="27" height="28" viewBox="0 0 27 28" fill="none">
+export default function SmileyVeryGood({ width = 27, height = 28 }: { width?: number; height?: number }) {
+    return <Svg width={width} height={height} viewBox="0 0 27 28" fill="none">
         <Path
             stroke={iconColors.veryGood}
             strokeWidth={2.1}
