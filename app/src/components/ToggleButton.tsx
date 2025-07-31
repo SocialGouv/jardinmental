@@ -9,9 +9,11 @@ interface ToggleButtonsProps {
   leftText?: string;
   onPressLeft: (value: boolean) => void;
   onPressRight: (value: boolean) => void;
+  initialSelected?: boolean
 }
 
 export default function ToggleButtons({
+  initialSelected,
   leftColor,
   rightColor,
   rightText,
@@ -19,7 +21,7 @@ export default function ToggleButtons({
   onPressLeft,
   onPressRight
 }: ToggleButtonsProps) {
-  const [selected, setSelected] = useState<boolean | undefined>(undefined);
+  const [selected, setSelected] = useState<boolean | undefined>(initialSelected);
   if (leftColor && rightColor) {
     return (
       <View className="flex-row rounded-lg border border-gray-300 self-start">
@@ -54,13 +56,19 @@ export default function ToggleButtons({
     <View className="flex-row rounded-lg border border-gray-300 self-start">
       <TouchableOpacity
         className={`p-3 items-center ${selected === true ? 'bg-brand-800' : 'bg-white'} rounded-l-lg`}
-        onPress={() => setSelected(true)}
+        onPress={() => {
+          onPressLeft?.(true)
+          setSelected(true)
+        }}
       >
         <Text className={`${selected === true ? 'text-white' : 'text-gray-800'} font-medium`}>{leftText || 'Oui'}</Text>
       </TouchableOpacity>
       <TouchableOpacity
         className={`p-3 items-center ${selected === false ? 'bg-brand-800' : 'bg-white'} rounded-r-lg border-l border-gray-300`}
-        onPress={() => setSelected(false)}
+        onPress={() => {
+          onPressRight?.(false)
+          setSelected(false)
+        }}
       >
         <Text className={`${selected === false ? 'text-white' : 'text-gray-800'} font-medium`}>{rightText || 'Non'}</Text>
       </TouchableOpacity>

@@ -66,6 +66,7 @@ const QuestionYesNo = ({
       <View style={styles.answerContainer}>
         <View style={styles.answersContainer}>
           <ToggleButtons
+            initialSelected={selected}
             onPressLeft={() => {
               onPress({ key: question.id, value: true });
             }}

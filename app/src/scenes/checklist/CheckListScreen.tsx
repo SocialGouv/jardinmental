@@ -76,13 +76,15 @@ export default function CheckListScreen({ navigation, route }) {
                 reminder,
                 indicators: !!userIndicators.filter(ind => ![INDICATEURS_HUMEUR.uuid, INDICATEURS_SOMMEIL.uuid].includes(ind.uuid) && ind.active).length,
                 goals: !!goals.length,
-                drugs: !!(drugs && drugs.length)
+                drugs: drugs
             })))
         })();
     }, []))
 
     const handleItemPress = (item) => {
-        navigation.navigate(item.path)
+        navigation.navigate(item.path, {
+            previous: 'checklist'
+        })
     };
 
 
