@@ -28,7 +28,7 @@ export const isChecklistCompleted = async (): Promise<boolean> => {
         const surveyDone = true;
 
         // All items must be completed
-        return reminder && !!goals.length && !!(!drugs || drugs.length) && hasCustomIndicators && surveyDone;
+        return reminder && !!goals.length && !!drugs && hasCustomIndicators && surveyDone;
     } catch (error) {
         console.error('Error checking checklist completion:', error);
         return false;
