@@ -21,11 +21,13 @@ export default function IndicatorModal({
     category = NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR,
     addedIndicators,
     initialSelectedIndicators,
+    multiSelect = true,
     onClose
 }: {
     category: NEW_INDICATORS_CATEGORIES,
     addedIndicators: PredefineIndicatorV2SchemaType[],
     initialSelectedIndicators: string[],
+    multiSelect?: boolean,
     onClose: (categoryName: NEW_INDICATORS_CATEGORIES, indicators: PredefineIndicatorV2SchemaType[]) => void
 }) {
     const allIndicators = [...INDICATORS.filter(ind => ind.categories.includes(category)), ...addedIndicators].filter(ind => !ind.isGeneric)
@@ -39,7 +41,13 @@ export default function IndicatorModal({
     const [selectedIndicators, setSelectedIndicators] = useState<string[]>(initialSelectedIndicators);
 
     const toggleIndicator = (id: string) => {
-        setSelectedIndicators(prev => prev.includes(id) ? prev.filter(selectedId => selectedId !== id) : [...prev, id])
+        if (multiSelect) {
+            // Multi-select mode: toggle behavior
+            setSelectedIndicators(prev => prev.includes(id) ? prev.filter(selectedId => selectedId !== id) : [...prev, id])
+        } else {
+            // Single-select mode: if already selected, deselect it; otherwise select only this one
+            setSelectedIndicators(prev => prev.includes(id) ? [] : [id])
+        }
     };
 
 
@@ -63,7 +71,11 @@ export default function IndicatorModal({
             if (typeof index === 'number') {
                 setEditingIndicators((prev) => [...prev.slice(0, index), ...prev.slice(index + 1)])
             }
-            setSelectedIndicators((prev) => [...prev, newIndicator.uuid])
+            if (multiSelect) {
+                setSelectedIndicators((prev) => [...prev, newIndicator.uuid])
+            } else {
+                setSelectedIndicators([newIndicator.uuid])
+            }
         }
     }
 
@@ -90,7 +102,7 @@ export default function IndicatorModal({
                 </Text>
             </View>
             <Text className={mergeClassNames(typography.displayXsBold, 'text-left text-brand-950')}>
-                Sélectionnez un ou plusieurs éléments
+                {multiSelect ? 'Sélectionnez un ou plusieurs éléments' : 'Sélectionnez un élément'}
             </Text>
             <TextInput
                 onChangeText={(text) => {
@@ -107,6 +119,7 @@ export default function IndicatorModal({
                         className="flex-row"
                         id={ind.uuid}
                         label={ind.name}
+                        shape={multiSelect ? 'square' : 'circle'}
                         selected={selected}
                         onPress={() => toggleIndicator(ind.uuid)} />
                 })}
@@ -126,10 +139,15 @@ export default function IndicatorModal({
                         </Text>
                         <PlusIcon />
                     </View></TouchableOpacity>}
-                {editingIndicators.map((text, index) => <InputSelectionnableItem
-                    label={'Nommez le produit ou l’addiction :'}
-                    onPress={(text: string) => createNewIndicator(text, index)}
-                />)}
+                {editingIndicators.map((text, index) => (
+                    <InputSelectionnableItem
+                        key={index}
+                        id={index}
+                        label="Nommez le produit ou l'addiction:"
+                        selected={false}
+                        onPress={(text: string) => createNewIndicator(text, index)}
+                    />
+                ))}
                 {!searchedText && <View className="flex-row items-center mt-2 ml-auto">
                     <TouchableOpacity
                         onPress={() => {
@@ -161,7 +179,7 @@ export default function IndicatorModal({
                 onPress={() => {
                     onClose(category, [...uniqueIndicators, ...newIndicators].filter(indicator => selectedIndicators.includes(indicator.uuid)))
                 }}
-                title={'Valider la sélection'}
+                title={multiSelect ? 'Valider la sélection' : 'Valider le choix'}
             />
         </View>
     </View>
