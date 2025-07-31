@@ -58,10 +58,24 @@ const getIndicateurs = async (): Promise<Indicator[]> => {
 const setIndicateurs = async (v: Indicator[]) => {
   await AsyncStorage.setItem(STORAGE_KEY_INDICATEURS, JSON.stringify(v));
 };
-const addIndicateur = async (indicateur) => {
+const addIndicateur = async (indicateur: Indicator) => {
   let _indicateurs = await AsyncStorage.getItem(STORAGE_KEY_INDICATEURS);
   _indicateurs = JSON.parse(_indicateurs);
   _indicateurs.push(indicateur);
+  await AsyncStorage.setItem(STORAGE_KEY_INDICATEURS, JSON.stringify(_indicateurs));
+};
+
+const replaceOrAddIndicateur = async (indicateur: Indicator) => {
+  let _indicateurs = await AsyncStorage.getItem(STORAGE_KEY_INDICATEURS);
+  _indicateurs = _indicateurs ? JSON.parse(_indicateurs) : [];
+
+  const index = _indicateurs.findIndex((ind: Indicator) => ind.uuid === indicateur.uuid);
+  if (index !== -1) {
+    _indicateurs[index] = indicateur;
+  } else {
+    _indicateurs.push(indicateur);
+  }
+
   await AsyncStorage.setItem(STORAGE_KEY_INDICATEURS, JSON.stringify(_indicateurs));
 };
 
@@ -256,6 +270,7 @@ export default {
   setNpsProContact,
   getNpsProContact,
   getIndicateurs,
+  replaceOrAddIndicateur,
   setIndicateurs,
   addIndicateur,
   getUserProfile,

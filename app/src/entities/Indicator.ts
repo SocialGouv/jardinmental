@@ -35,7 +35,8 @@ export const IndicatorSchema = z.object({
   active: z.boolean(),
   position: z.number().int().min(0).describe(`Indicators are shown in a defined order. The position allow to sort them`),
   created_at: z.date(),
-});
+  isGeneric: z.boolean().optional()
+})
 
 export const PredefineIndicatorSchema = z.object({
   uuid: z.string().uuid(), // Vérifie un UUID valide
@@ -74,6 +75,7 @@ export const generateIndicatorFromPredefinedIndicator = (predefinedIndicator: Pr
   // predefinedIndicator
   return {
     uuid: predefinedIndicator.isGeneric ? uuidv4() : predefinedIndicator.uuid,
+    isGeneric: predefinedIndicator.isGeneric,
     name: predefinedIndicator.name,
     category: predefinedIndicator.category,
     newCategories: predefinedIndicator.categories,

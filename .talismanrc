@@ -25,6 +25,8 @@ fileignoreconfig:
   checksum: 68279ddbf41bdc3fdbe9ec5073122f73b74c992dad22768d69bf6b0c6d7f5f6f
 - filename: app/src/scenes/diary/index.js
   checksum: 3ce2456ab1ef9b4d523326b4e6e796eeab6a3588e8ac9b6c8fb3abd37b70c9d6
+- filename: app/src/scenes/indicateurs/CreateIndicator/index.js
+  checksum: f10d695b938ea8615543d31781df8aeafa4916eab9bcd9c809d34614298422b4
 - filename: app/src/scenes/indicateurs/editIndicateurs/index.tsx
   checksum: da39a551c3cf5760751f04c9083a2e720d10874a38f8ae39861a127d59288487
 - filename: app/src/scenes/onboarding-v2/CarouselScreen.tsx
@@ -106,7 +108,7 @@ fileignoreconfig:
 - filename: app/src/utils/constants.ts
   checksum: 6add83fac911247dae8018dc09c8225263df59cdd48a1f293245c7a087e93320
 - filename: app/src/utils/localStorage/index.ts
-  checksum: 3f635e9292b5597aad97348cb39d456878fba2e66cf18108b14e1bc927bfc845
+  checksum: 4b722ae20cc84bdb7add9f19468fdc68e560b2377e3caeb371d087dd90c27c59
 scopeconfig:
 - scope: node
 version: "1.0"
