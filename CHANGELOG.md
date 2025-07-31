@@ -1,3 +1,10 @@
+# [1.52.0-alpha.6](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.5...v1.52.0-alpha.6) (2025-07-31)
+
+
+### Bug Fixes
+
+* fix navigation, add sommeil to base indicators, selectIndicators default is empty array ([#319](https://github.com/SocialGouv/jardinmental/issues/319)) ([a1cb64f](https://github.com/SocialGouv/jardinmental/commit/a1cb64f94185338a6bf97eaf2897fd4df73bcea5))
+
 # [1.52.0-alpha.5](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.4...v1.52.0-alpha.5) (2025-07-30)
 
 
