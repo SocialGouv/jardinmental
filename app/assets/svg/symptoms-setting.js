@@ -35,6 +35,4 @@ function SvgComponent(props) {
   );
 }
 
-//#1FC6D5
-
 export default SvgComponent;

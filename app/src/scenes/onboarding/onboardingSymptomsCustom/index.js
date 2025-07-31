@@ -14,6 +14,7 @@ import {
 import Button from "../../../components/Button";
 import Text from "../../../components/MyText";
 import HeartBubble from "../../../../assets/svg/HeartBubble";
+import { Button2 } from "@/components/Button2";
 
 const CustomSymptomScreen = ({ navigation, route, settings = false }) => {
   const [chosenCategories, setChosenCategories] = useState();
@@ -130,16 +131,16 @@ const CustomSymptomScreen = ({ navigation, route, settings = false }) => {
 
       {/* TODO: add navigation */}
       <View style={styles.bottomButtonsContainer}>
-        <Button
-          buttonStyle={{ backgroundColor: "#1FC6D5", marginBottom: 20 }}
-          textStyle={{ color: "white", textAlign: "center" }}
+        <Button2
+          // buttonStyle={{ backgroundColor: colors.LIGHT_BLUE, marginBottom: 20 }}
+          // textStyle={{ color: "white", textAlign: "center" }}
           onPress={() => navigation.navigate("EDIT_INDICATOR")}
           title="Ajouter un indicateur"
         />
-        <Button
-          buttonStyle={{ backgroundColor: "white", borderColor: "#26387C", borderWidth: 1 }}
-          textStyle={{ color: "#26387C", textAlign: "center" }}
-          onPress={() => {}}
+        <Button2
+          // buttonStyle={{ backgroundColor: "white", borderColor: colors.BLUE, borderWidth: 1 }}
+          // textStyle={{ color: colors.BLUE, textAlign: "center" }}
+          onPress={() => { }}
           title="Modifier mon questionnaire"
         />
       </View>
@@ -213,7 +214,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   circleNumber: {
-    backgroundColor: "#1FC6D5",
+    backgroundColor: colors.LIGHT_BLUE,
     borderRadius: 999,
     width: 35,
     height: 35,

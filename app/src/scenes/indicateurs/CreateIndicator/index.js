@@ -4,14 +4,14 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 
 import BackButton from '../../../components/BackButton';
 import {colors} from '../../../utils/colors';
-import {INDICATEURS} from '../../../utils/liste_indicateurs.1.js';
+import {INDICATEURS} from '../../../utils/liste_indicateurs.1';
 import Button from '../../../components/Button';
 import Text from '../../../components/MyText';
 import localStorage from '../../../utils/localStorage';
 import logEvents from '../../../services/logEvents';
 import {useFocusEffect} from '@react-navigation/native';
 
-const CreateIndicator = ({navigation, route}) => {
+const CreateIndicator = ({ navigation, route }) => {
   const [nameNewIndicator, setNameNewIndicator] = useState('');
   const [userIndicateurs, setUserIndicateurs] = useState();
   const [error, setError] = useState();
@@ -76,7 +76,7 @@ const CreateIndicator = ({navigation, route}) => {
 
         {nameNewIndicator.length > 0 && (
           <Button
-            buttonStyle={{backgroundColor: '#1FC6D5', marginBottom: 20}}
+            buttonStyle={{backgroundColor: colors.LIGHT_BLUE, marginBottom: 20}}
             textStyle={{color: 'white', textAlign: 'center'}}
             onPress={() => {
               handleAddNewIndicator();
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
   },
   textInput: {
     borderWidth: 1,
-    borderColor: '#26387C',
+    borderColor: colors.BLUE,
     borderRadius: 8,
     padding: 16,
     marginVertical: 25,
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   circleNumber: {
-    backgroundColor: '#1FC6D5',
+    backgroundColor: colors.LIGHT_BLUE,
     borderRadius: 999,
     width: 35,
     height: 35,

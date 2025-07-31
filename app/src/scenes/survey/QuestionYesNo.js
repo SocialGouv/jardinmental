@@ -4,7 +4,11 @@ import Text from "../../components/MyText";
 import { colors } from "../../utils/colors";
 import Icon from "../../components/Icon";
 import { classNames } from "../../utils";
-import { answersYesNo } from "./utils";
+import { answersYesNo } from "../survey-v2/utils";
+import BasicCard from "@/components/BasicCard";
+import { typography } from "@/utils/typography";
+import { mergeClassNames } from "@/utils/className";
+import ToggleButtons from "@/components/ToggleButton";
 
 const QuestionYesNo = ({
   question,
@@ -26,7 +30,8 @@ const QuestionYesNo = ({
   }, [userComment]);
 
   return (
-    <View
+    <BasicCard>
+      {/* <View
       style={[
         styles.questionContainer,
         {
@@ -34,7 +39,7 @@ const QuestionYesNo = ({
           borderColor: typeof selected === "boolean" ? "#D0E8D0" : "#E7EAF1",
         },
       ]}
-    >
+    > */}
       <TouchableOpacity onPress={toggleShowExplanation}>
         <View style={styles.questionHeader}>
           {explanation ? (
@@ -48,7 +53,7 @@ const QuestionYesNo = ({
           ) : (
             <View />
           )}
-          <Text style={styles.questionTitle}>{question.label}</Text>
+          <Text className={mergeClassNames(typography.textMdMedium, 'text-brand-950')}>{question.label}</Text>
           {/* we put a view here because we'll add a item here later */}
           <View />
         </View>
@@ -60,39 +65,20 @@ const QuestionYesNo = ({
       </TouchableOpacity>
       <View style={styles.answerContainer}>
         <View style={styles.answersContainer}>
-          {answersYesNo.map((answer, i) => {
-            const active = selected === answer.score;
-            return (
-              <TouchableOpacity
-                key={i}
-                onPress={() => {
-                  onPress({ key: question.id, value: answer.score });
-                  if (!answer.score) {
-                    // if the user choose no, we clean the text input
-                    setText("");
-                    onChangeUserComment?.({ key: question.id, userComment: "" });
-                  }
-                }}
-              >
-                <View style={styles.itemContainer}>
-                  <View
-                    className={classNames(
-                      active ? "border border-primary" : "border border-gray-400",
-                      "flex justify-center items-center w-5 h-5 rounded-full mr-1"
-                    )}
-                  >
-                    <View
-                      className={classNames(
-                        active ? "border border-primary bg-primary" : "",
-                        "w-3 h-3 rounded-full"
-                      )}
-                    />
-                  </View>
-                  <Text style={active && styles.activeLabel}>{answer.label}</Text>
-                </View>
-              </TouchableOpacity>
-            );
-          })}
+          <ToggleButtons
+            initialSelected={selected}
+            onPressLeft={() => {
+              onPress({ key: question.id, value: true });
+            }}
+            leftText={'Oui'}
+            rightText={'Non'}
+            onPressRight={() => {
+              onPress({ key: question.id, value: false });
+              // if the user choose no, we clean the text input
+              setText("");
+              onChangeUserComment?.({ key: question.id, userComment: "" });
+            }}
+          />
         </View>
         {showUserCommentInput ? (
           <TextInput
@@ -107,12 +93,13 @@ const QuestionYesNo = ({
             placeholder="Exemple: alcool, cannabis, tabac..."
             style={styles.textArea}
             textAlignVertical={"top"}
-            // onFocus={() => setInputFocused(true)}
-            // onBlur={() => setInputFocused(false)}
+          // onFocus={() => setInputFocused(true)}
+          // onBlur={() => setInputFocused(false)}
           />
         ) : null}
       </View>
-    </View>
+      {/* </View> */}
+    </BasicCard>
   );
 };
 
@@ -205,7 +192,7 @@ const styles = StyleSheet.create({
   answersContainer: {
     display: "flex",
     flexDirection: "row",
-    justifyContent: "space-around",
+    justifyContent: "left",
     paddingTop: 10,
     paddingBottom: 25,
   },

@@ -1,5 +1,6 @@
 import React, {useRef} from 'react';
 import {Pressable, StyleSheet, TextInput, View} from 'react-native';
+import { colors } from '@/utils/colors';
 
 const PressableIfNeeded = ({onPress, children}) =>
   onPress ? (
@@ -74,7 +75,7 @@ const _styles = {
       alignItems: 'stretch',
       borderRadius: 12,
       backgroundColor: '#FFFFFF',
-      borderColor: '#26387C',
+      borderColor: colors.BLUE,
       borderWidth: 1,
     },
     contentContainer: {
@@ -82,7 +83,7 @@ const _styles = {
     },
     input: {
       width: '100%',
-      fontFamily: 'Karla',
+      fontFamily: 'SourceSans3',
       paddingVertical: 0,
       fontSize: 16,
       color: '#000',
@@ -93,8 +94,8 @@ const _styles = {
   }),
   groupItem: StyleSheet.create({
     container: {
-      backgroundColor: '#FFFFFF',
-      borderColor: '#1FC6D5',
+      backgroundColor: colors.WHITE,
+      borderColor: colors.LIGHT_BLUE,
       borderRadius: 4,
     },
     contentContainer: {

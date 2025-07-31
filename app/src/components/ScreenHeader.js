@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 18,
-    fontFamily: "Karla",
+    fontFamily: "SourceSans3",
     fontWeight: "700",
     textAlign: "center",
     paddingHorizontal: 4,

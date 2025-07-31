@@ -96,7 +96,7 @@ const CheckBoxList = ({list, userIndicateurs, setToggleIndicateur}) => {
           <TouchableOpacity key={index} style={[stylesA.choixContainer, isActive ? stylesA.choixContainerSelected : null]} onPress={() => setToggleIndicateur(_indicateur)}>
             {isActive ? (
               <View>
-                <RoundButtonIcon backgroundColor="#5DEE5A" iconColor="#fff" borderWidth={0.5} borderColor="#5DEE5A" icon="validate" visible={true} medium />
+                <RoundButtonIcon backgroundColor={TW_COLORS.SUCCESS} iconColor="#fff" borderWidth={0.5} borderColor={TW_COLORS.SUCCESS} icon="validate" visible={true} medium />
               </View>
             ) : (
               <View>

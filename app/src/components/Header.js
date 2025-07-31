@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
   title: {
     textAlign: 'center',
     fontSize: Dimensions.get('window').width > 380 ? 15 : 14,
-    fontFamily: 'Karla-Bold',
+    fontFamily: 'SourceSans3-Bold',
     fontWeight: '500',
     color: '#fff',
     marginRight: 'auto',

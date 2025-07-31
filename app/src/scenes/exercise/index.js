@@ -1,24 +1,25 @@
-import React, {useContext, useState, useEffect} from 'react';
-import {StyleSheet, View, SafeAreaView, TouchableOpacity, ScrollView, Dimensions, Linking} from 'react-native';
+import React, { useContext, useState, useEffect } from 'react';
+import { StyleSheet, View, SafeAreaView, TouchableOpacity, ScrollView, Dimensions, Linking } from 'react-native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CheckBox from '@react-native-community/checkbox';
 
 import Text from '../../components/MyText';
-import {colors} from '../../utils/colors';
+import { colors } from '../../utils/colors';
 import NPS from '../../services/NPS/NPS';
 import Header from '../../components/Header';
 import ExerciseItem from './exercise-item';
-import {DiaryDataContext} from '../../context/diaryData';
-import {formatDateThread} from '../../utils/date/helpers';
+import { DiaryDataContext } from '../../context/diaryData';
+import { formatDateThread } from '../../utils/date/helpers';
 import ContributeCard from '../contribute/contributeCard';
-import {STORAGE_KEY_BECK_SHOW_WELCOME} from '../../utils/constants';
+import { STORAGE_KEY_BECK_SHOW_WELCOME } from '../../utils/constants';
 import ArrowUpSvg from '../../../assets/svg/arrow-up.svg';
 import FloatingPlusButton from '../../components/FloatingPlusButton';
+import JMButton from '@/components/JMButton';
 
 const LIMIT_PER_PAGE = __DEV__ ? 3 : 30;
 
-export default ({navigation, startSurvey}) => {
+export default ({ navigation, startSurvey }) => {
   const [NPSvisible, setNPSvisible] = useState(false);
   const [diaryData] = useContext(DiaryDataContext);
   const [page, setPage] = useState(1);
@@ -68,7 +69,7 @@ export default ({navigation, startSurvey}) => {
                   value={!showWelcomeDefault}
                   onValueChange={value => setShowWelcomeDefault(!value)}
                   // for android
-                  tintColors={{true: colors.LIGHT_BLUE, false: '#aaa'}}
+                  tintColors={{ true: colors.LIGHT_BLUE, false: '#aaa' }}
                   // for ios
                   tintColor="#aaa"
                   onCheckColor={colors.LIGHT_BLUE}
@@ -80,15 +81,15 @@ export default ({navigation, startSurvey}) => {
                   <Text>Ne plus afficher ce message</Text>
                 </TouchableOpacity>
               </View>
-              <TouchableOpacity onPress={validateWelcomeMessage} style={styles.button}>
-                <Text style={styles.buttonText}>Valider</Text>
-              </TouchableOpacity>
+              <JMButton onPress={validateWelcomeMessage} title={'Valider'}>
+              </JMButton>
             </View>
           ) : (
             <>
-              <TouchableOpacity onPress={() => navigation.navigate('beck')} style={styles.button}>
-                <Text style={styles.buttonText}>Faire le point sur un évènement</Text>
-              </TouchableOpacity>
+              <JMButton
+                title='Faire le point sur un évènement'
+                onPress={() => navigation.navigate('beck')}>
+              </JMButton>
               <View style={styles.divider} />
               {Object.keys(diaryData)
                 .sort((a, b) => {
@@ -113,11 +114,11 @@ export default ({navigation, startSurvey}) => {
                 })
                 ?.filter(el => diaryData[el]?.becks && Object.keys(diaryData[el].becks).length > 0)?.length >
                 LIMIT_PER_PAGE * page && (
-                <TouchableOpacity onPress={() => setPage(page + 1)} style={styles.versionContainer}>
-                  <Text style={styles.arrowDownLabel}>Voir plus</Text>
-                  <ArrowUpSvg style={styles.arrowDown} color={colors.BLUE} />
-                </TouchableOpacity>
-              )}
+                  <TouchableOpacity onPress={() => setPage(page + 1)} style={styles.versionContainer}>
+                    <Text style={styles.arrowDownLabel}>Voir plus</Text>
+                    <ArrowUpSvg style={styles.arrowDown} color={colors.BLUE} />
+                  </TouchableOpacity>
+                )}
             </>
           )}
         </ScrollView>
@@ -131,11 +132,11 @@ const styles = StyleSheet.create({
   headerContainer: {
     padding: 5,
     paddingBottom: 0,
-    backgroundColor: '#1FC6D5',
+    backgroundColor: colors.LIGHT_BLUE,
   },
   safe: {
     flex: 1,
-    backgroundColor: '#1FC6D5',
+    backgroundColor: colors.LIGHT_BLUE,
   },
   welcomeContainer: {
     padding: 20,
@@ -145,8 +146,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: 10,
   },
-  welcomeText: {marginBottom: 30},
-  boldText: {fontWeight: 'bold'},
+  welcomeText: { marginBottom: 30 },
+  boldText: { fontWeight: 'bold' },
   showWelcomeView: {
     display: 'flex',
     flexDirection: 'row',
@@ -210,7 +211,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   arrowDown: {
-    transform: [{rotate: '180deg'}],
+    transform: [{ rotate: '180deg' }],
   },
   arrowDownLabel: {
     color: colors.BLUE,

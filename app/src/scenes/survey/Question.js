@@ -4,7 +4,7 @@ import Text from "../../components/MyText";
 import { colors } from "../../utils/colors";
 import CircledIcon from "../../components/CircledIcon";
 import Icon from "../../components/Icon";
-import { answers } from "./utils";
+import { answers } from "../survey-v2/utils";
 
 const Question = ({
   indicateur,

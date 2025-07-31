@@ -13,6 +13,7 @@ import logEvents from "../../../services/logEvents";
 import Button from "../../../components/Button";
 import Card from "./Card";
 import { EventFilterHeader } from "./EventFilterHeader";
+import JMButton from "@/components/JMButton";
 
 const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, toDate, setToDate }) => {
   const [diaryData] = React.useContext(DiaryDataContext);
@@ -139,7 +140,7 @@ const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, 
             quotidiennes.
           </Text>
         </View>
-        <Button title="Commencer à saisir" onPress={startSurvey} />
+        <JMButton title="Commencer à saisir" onPress={startSurvey} />
       </View>
     );
   }
@@ -192,7 +193,7 @@ const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, 
 
 const pickerSelectStyles = StyleSheet.create({
   inputIOS: {
-    fontFamily: "Karla",
+    fontFamily: "SourceSans3",
     paddingVertical: 8,
     backgroundColor: "transparent",
     borderColor: colors.DARK_BLUE,
@@ -211,7 +212,7 @@ const pickerSelectStyles = StyleSheet.create({
     // padding: 30, // to ensure the text is never behind the icon
   },
   inputAndroid: {
-    fontFamily: "Karla",
+    fontFamily: "SourceSans3",
     paddingVertical: 8,
     borderColor: colors.DARK_BLUE,
     borderWidth: 1,

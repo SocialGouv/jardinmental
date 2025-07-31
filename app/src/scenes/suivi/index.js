@@ -1,8 +1,8 @@
 import React from 'react';
-import {SafeAreaView, StyleSheet, View} from 'react-native';
-import {useFocusEffect} from '@react-navigation/native';
+import { SafeAreaView, StyleSheet, View } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 
-import {beforeToday} from '../../utils/date/helpers';
+import { beforeToday } from '../../utils/date/helpers';
 import Header from '../../components/Header';
 // import ChartPicker from "./chartPicker";
 import ChartPicker from './chartPicker2';
@@ -13,9 +13,10 @@ import Courbes from '../calendar/calendar';
 import logEvents from '../../services/logEvents';
 import localStorage from '../../utils/localStorage';
 import FloatingPlusButton from '../../components/FloatingPlusButton';
-import {FriseScreen} from './frise';
+import { FriseScreen } from './frise';
+import { colors } from '@/utils/colors';
 
-const Suivi = ({navigation, startSurvey}) => {
+const Suivi = ({ navigation, startSurvey }) => {
   const [chartType, setChartType] = React.useState('Frises');
   const [presetDate, setPresetDate] = React.useState('lastDays7');
   const [fromDate, setFromDate] = React.useState(beforeToday(30));
@@ -116,7 +117,7 @@ export const styles = StyleSheet.create({
   headerContainerNavigation: {
     padding: 5,
     paddingBottom: 0,
-    backgroundColor: '#1FC6D5',
+    backgroundColor: colors.LIGHT_BLUE,
   },
   tabContainer: {
     backgroundColor: '#FFFFFF',
@@ -134,7 +135,7 @@ export const styles = StyleSheet.create({
   },
   safe: {
     flex: 1,
-    backgroundColor: '#1FC6D5',
+    backgroundColor: colors.LIGHT_BLUE,
   },
 });
 

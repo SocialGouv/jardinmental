@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   text: {
-    fontFamily: "Karla",
+    fontFamily: "SourceSans3",
     fontStyle: "normal",
     fontWeight: "700",
     fontSize: 18,

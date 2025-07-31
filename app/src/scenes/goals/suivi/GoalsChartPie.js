@@ -7,6 +7,7 @@ import {scoresMapIcon} from '../../../utils/constants';
 import {getGoalsAndRecords} from '../../../utils/localStorage/goals';
 import {DAYS_OF_WEEK} from '../../../utils/date/daysOfWeek';
 import {parseISO, getDay} from 'date-fns';
+import { colors as mainColors } from '@/utils/colors';
 
 export const GoalsChartPie = ({chartDates, onIsEmptyChanged}) => {
   const [goals, setGoals] = useState([]);
@@ -160,8 +161,8 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 19,
-    fontFamily: 'Karla',
-    color: '#26387C',
+    fontFamily: 'SourceSans3',
+    color: mainColors.BLUE,
     fontWeight: '600',
     marginRight: 5,
     flexShrink: 1,
@@ -172,25 +173,25 @@ const styles = StyleSheet.create({
   },
   legendTitle: {
     fontSize: 14,
-    fontFamily: 'Karla',
+    fontFamily: 'SourceSans3',
     fontWeight: '400',
-    color: '#26387C',
+    color: mainColors.BLUE,
     marginTop: 5,
     marginBottom: 2,
   },
   percentageSmall: {
     fontSize: 12,
-    fontFamily: 'Karla',
+    fontFamily: 'SourceSans3',
     fontWeight: '400',
-    color: '#26387C',
+    color: mainColors.BLUE,
     marginVertical: 5,
     fontStyle: 'italic',
   },
   percentageBig: {
     fontSize: 14,
-    fontFamily: 'Karla',
+    fontFamily: 'SourceSans3',
     fontWeight: '400',
-    color: '#26387C',
+    color: mainColors.BLUE,
     marginBottom: 5,
   },
 });

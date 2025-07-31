@@ -6,7 +6,7 @@ import { colors } from "../../../utils/colors";
 import Text from "../../../components/MyText";
 import ArrowRightSvg from "../../../../assets/svg/arrow-right";
 import CircledIcon from "../../../components/CircledIcon";
-import { answers } from "../../survey/utils";
+import { answers } from "../../survey-v2/utils";
 import YesNoIndicator from "../../../components/YesNoIndicator";
 import Gauge from "../../../components/gauge";
 import { Screen } from "../../../components/Screen";
@@ -56,7 +56,7 @@ const ChooseIndicatorType = ({ navigation, route }) => {
               ))}
             </View>
           </View>
-          <ArrowRightSvg color="#26387C" style={{ marginLeft: 20 }} />
+          <ArrowRightSvg color={colors.BLUE} style={{ marginLeft: 20 }} />
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -72,7 +72,7 @@ const ChooseIndicatorType = ({ navigation, route }) => {
             <Text style={styles.typeTitle}>Avec une jauge</Text>
             <Gauge hideSlider defaultValue={1} />
           </View>
-          <ArrowRightSvg color="#26387C" style={{ marginLeft: 20 }} />
+          <ArrowRightSvg color={colors.BLUE} style={{ marginLeft: 20 }} />
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -88,7 +88,7 @@ const ChooseIndicatorType = ({ navigation, route }) => {
             <Text style={styles.typeTitle}>En répondant par Oui ou Non</Text>
             <YesNoIndicator no={"green"} yes={"red"} />
           </View>
-          <ArrowRightSvg color="#26387C" style={{ marginLeft: 20 }} />
+          <ArrowRightSvg color={colors.BLUE} style={{ marginLeft: 20 }} />
         </TouchableOpacity>
       </View>
     </Screen>
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
   typeTitle: {
     fontSize: 15,
     fontWeight: "700",
-    color: "#26387C",
+    color: colors.BLUE,
     marginBottom: 15,
   },
   smileysContainer: {

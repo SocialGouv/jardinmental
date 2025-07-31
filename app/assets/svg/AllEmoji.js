@@ -1,12 +1,13 @@
 import * as React from "react";
 import Svg, { G, Path, Defs, ClipPath } from "react-native-svg";
+import { EMOTION_COLORS, TW_COLORS } from "@/utils/constants";
 
 const SvgComponent = (props) => (
   <Svg viewBox="0 0 112 21" width={224} height={42} fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
     <G opacity={0.8}>
       <Path
         d="M18.694 10.481c0 4.404-3.67 7.996-8.224 7.996-4.555 0-8.225-3.592-8.225-7.996 0-4.403 3.67-7.996 8.224-7.996 4.556 0 8.225 3.593 8.225 7.996Z"
-        fill="#F16B6B"
+        fill={TW_COLORS.NEGATIVE}
         stroke="#D13E3E"
       />
       <Path
@@ -45,7 +46,7 @@ const SvgComponent = (props) => (
       />
       <Path
         d="M86.95 10.481c0 4.426-3.511 7.996-7.82 7.996-4.308 0-7.818-3.57-7.818-7.996s3.51-7.996 7.819-7.996c4.308 0 7.819 3.57 7.819 7.996Z"
-        fill="#ACF352"
+        fill={EMOTION_COLORS.good}
         stroke="#DDD"
       />
       <G clipPath="url(#a)" fill="#496300">
@@ -58,7 +59,7 @@ const SvgComponent = (props) => (
       </G>
       <Path
         d="M109.796 10.481c0 4.415-3.59 7.996-8.022 7.996s-8.022-3.581-8.022-7.996c0-4.414 3.59-7.996 8.022-7.996s8.022 3.582 8.022 7.996Z"
-        fill="#5DEE5A"
+        fill={TW_COLORS.POSITIVE}
         stroke="#0FC421"
       />
       <Path

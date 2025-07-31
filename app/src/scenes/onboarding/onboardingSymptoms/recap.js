@@ -8,10 +8,10 @@ import BackButton from "../../../components/BackButton";
 import Button from "../../../components/Button";
 import { ONBOARDING_STEPS } from "../../../utils/constants";
 import {
-  INDICATEURS,
+  INDICATEURS_LIST,
   INDICATEURS_LISTE_PAR_CATEGORIE,
   INDICATEURS_LISTE,
-} from "../../../utils/liste_indicateurs";
+} from "../../../utils/liste_indicateurs.1";
 import TextTag from "../../../components/TextTag";
 
 const SymptomScreen = ({ navigation, route }) => {
@@ -91,7 +91,7 @@ const SymptomScreen = ({ navigation, route }) => {
                       .map((indicateur) => (
                         <TextTag
                           key={indicateur}
-                          value={INDICATEURS[indicateur] || displayedCategories[indicateur] || indicateur}
+                          value={INDICATEURS_LIST[indicateur] || displayedCategories[indicateur] || indicateur}
                           selected={false}
                           color="#D4F0F2"
                           onPress={() => {}}

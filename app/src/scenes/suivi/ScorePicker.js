@@ -1,7 +1,7 @@
 import React from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { colors } from "../../utils/colors";
-import { answers } from "../../scenes/survey/utils";
+import { answers } from "../survey-v2/utils";
 import CircledIcon from "../../components/CircledIcon";
 
 const ScorePicker = ({

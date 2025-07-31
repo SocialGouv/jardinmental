@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from "react";
 import { StyleSheet, View, TouchableOpacity } from "react-native";
 import PatientStateItem from "./patient-state-item";
 import { displayedCategories } from "../../utils/constants";
-import NoDataDiaryItem from "./no-data-status-item";
 import Notes from "./notes";
 import localStorage from "../../utils/localStorage";
 import Posology from "./posology";
@@ -11,7 +10,7 @@ import Button from "../../components/RoundButtonIcon";
 import Toxic from "./toxic";
 import Context from "./context";
 import logEvents from "../../services/logEvents";
-import { INDICATEURS_LISTE, INDICATEURS } from "../../utils/liste_indicateurs";
+import { INDICATEURS_LIST } from "../../utils/liste_indicateurs.1";
 import { GoalsStatus } from "../goals/status/GoalsStatus";
 import { Card } from "../../components/Card";
 import { GoalsStatusNoData } from "../goals/status/GoalsStatusNoData";
@@ -99,7 +98,7 @@ export default ({ navigation, indicateurs, patientState, goalsData, date }) => {
                   patientState={patientState}
                   label={
                     patientState?._indicateur?.name ||
-                    INDICATEURS[key] ||
+                    INDICATEURS_LIST[key] ||
                     displayedCategories[key] ||
                     categoryName
                   }

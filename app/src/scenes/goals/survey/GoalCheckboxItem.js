@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Pressable, StyleSheet, Text, View} from 'react-native';
 import {InputText} from '../../../components/InputText';
 import {InputCheckbox} from '../../../components/InputCheckbox';
+import { colors } from '@/utils/colors';
 
 export const GoalCheckboxItem = ({goal, index, checked, comment, onCheckedChanged, onCommentChanged}) => {
   const [_checked, _setChecked] = useState(checked);
@@ -78,10 +79,10 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 16,
-    fontFamily: 'Karla',
+    fontFamily: 'SourceSans3',
     fontWeight: '400',
     textAlign: 'left',
-    color: '#26387C',
+    color: colors.BLUE,
     flexShrink: 1,
     marginLeft: 0,
     paddingTop: 3,

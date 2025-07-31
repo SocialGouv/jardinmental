@@ -9,10 +9,9 @@ import Button from "../../../components/Button";
 import SurveyMenu from "../../../../assets/svg/SurveyMenu";
 import { ONBOARDING_STEPS } from "../../../utils/constants";
 import {
-  INDICATEURS_LISTE_ONBOARDING,
-  INDICATEURS,
+  INDICATEURS_LIST,
   INDICATEURS_LISTE_PAR_CATEGORIE,
-} from "../../../utils/liste_indicateurs";
+} from "../../../utils/liste_indicateurs.1";
 import TextTag from "../../../components/TextTag";
 import CategorieElements from "./CategorieElements";
 import OnboardingElements from "./OnboardingElements";
@@ -120,7 +119,7 @@ const SymptomScreen = ({ navigation, route }) => {
                 <CategorieElements
                   key={categorie}
                   title={categorie}
-                  options={indicateurs.map((e) => ({ id: e, label: INDICATEURS[e] }))}
+                  options={indicateurs.map((e) => ({ id: e, label: INDICATEURS_LIST[e] }))}
                   onClick={({ id, value }) => setToggleIndicateur({ indicateur: id, valeur: value })}
                   indicateursSelection={indicateursSelection}
                   handleAddNewSymptom={(e) => {
