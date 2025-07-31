@@ -16,61 +16,6 @@ const SlideFinal: CarouselSlide = {
   id: 'slide-made-by-professional',
   title: "Conçu par des professionnels de la santé mentale, pour vous.",
   type: 'special',
-  // children: <View className="w-full flex-1 justify-center items-center my-4"><AvatarGroup
-  //   avatars={[
-  //     {
-  //       uri: require('@assets/imgs/people/men1.jpg'),
-  //       //uri: 'https://randomuser.me/api/portraits/men/1.jpg',
-  //       alt: 'Remy Sharp'
-  //     },
-  //     { //uri: 'https://randomuser.me/api/portraits/men/2.jpg', 
-  //       uri: require('@assets/imgs/people/men2.jpg'),
-  //       // uri: 'https://i.pravatar.cc/150?img=54',
-  //       alt: 'Travis Howard'
-  //     },
-  //     {
-  //       // uri: 'https://i.pravatar.cc/150?img=10',
-  //       uri: require('@assets/imgs/people/women1.jpg'),
-  //       //uri: 'https://randomuser.me/api/portraits/women/3.jpg',
-  //       alt: 'Cindy Baker'
-  //     },
-  //     {
-  //       // uri: 'https://i.pravatar.cc/150?img=15',
-  //       uri: require('@assets/imgs/people/women2.jpg'),
-
-  //       //uri: 'https://randomuser.me/api/portraits/women/4.jpg',
-  //       alt: 'Agnes Walker'
-  //     },
-  //     {
-  //       // uri: 'https://i.pravatar.cc/150?img=34',
-  //       uri: require('@assets/imgs/people/men3.jpg'),
-
-  //       //uri: 'https://randomuser.me/api/portraits/men/5.jpg',
-  //       alt: 'Trevor Henderson'
-  //     },
-  //     {
-  //       // uri: 'https://i.pravatar.cc/150?img=65',
-  //       uri: require('@assets/imgs/people/women3.jpg'),
-  //       //uri: 'https://randomuser.me/api/portraits/women/6.jpg',
-  //       alt: 'Agnes Walker'
-  //     },
-  //     {
-  //       // uri: 'https://i.pravatar.cc/150?img=22',
-  //       uri: require('@assets/imgs/people/men5.jpg'),
-  //       //uri: 'https://randomuser.me/api/portraits/men/6.jpg',
-  //       alt: 'Trevor Henderson'
-  //     },
-  //     {
-  //       // uri: 'https://i.pravatar.cc/150?img=19',
-  //       uri: require('@assets/imgs/people/women4.jpg'),
-  //       //uri: 'https://randomuser.me/api/portraits/women/8.jpg',
-  //       alt: 'Agnes Walker'
-  //     },
-
-  //   ]}
-  //   max={8}
-  //   size={40}
-  // /></View>,
   backgroundColor: colors.WHITE,
   variant: 'green'
 }
