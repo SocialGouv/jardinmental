@@ -77,6 +77,7 @@ export const SubcategoriesScreen: React.FC<Props> = ({ navigation, route }) => {
         title={`Précisez ce que souhaitez vous suivre en priorité`}
         dynamicTitle={'Priorités'}
         hasProgressBar={true}
+        navigation={navigation}
         bottomComponent={<NavigationButtons
             absolute={true}
             withArrow={true}

@@ -134,13 +134,13 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
     profile.selectedSubcategories || []
   ).filter(indicator => !BASE_INDICATORS.includes(indicator.uuid))
     : []
-  const [selectedIndicators, setSelectedIndicators] = useState<string[]>(
-    [...recommendedIndicators.map(indicator => indicator.uuid), ...[profile.selectedDifficulties.filter(difficulty => [
-      // ignore this as it is the user that will select specific indicators
-      NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR,
-      NEW_INDICATORS_CATEGORIES.SUBSTANCE,
-      NEW_INDICATORS_CATEGORIES.LIFE_EVENT,
-    ].includes(difficulty)).map(difficulty => BASE_INDICATORS_FOR_CUSTOM_CATEGORIES[difficulty])].flat(10).map(item => item.uuid)]
+  const [selectedIndicators, setSelectedIndicators] = useState<string[]>([]
+    // [...recommendedIndicators.map(indicator => indicator.uuid), ...[profile.selectedDifficulties.filter(difficulty => [
+    //   // ignore this as it is the user that will select specific indicators
+    //   NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR,
+    //   NEW_INDICATORS_CATEGORIES.SUBSTANCE,
+    //   NEW_INDICATORS_CATEGORIES.LIFE_EVENT,
+    // ].includes(difficulty)).map(difficulty => BASE_INDICATORS_FOR_CUSTOM_CATEGORIES[difficulty])].flat(10).map(item => item.uuid)]
   );
 
   const recommendedIndicatorsByCategory: Record<NEW_INDICATORS_CATEGORIES, PredefineIndicatorV2SchemaType[]> = recommendedIndicators.reduce((prev, curr) => {
@@ -170,7 +170,8 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
 
     // Deduplicate based on uuid
     const predefinedIndicatorsToSave = Array.from(
-      new Map([INDICATEURS_HUMEUR,
+      new Map([
+        INDICATEURS_HUMEUR,
         INDICATEURS_SOMMEIL,
         ...filteredIndicators].map(indicator => [indicator.uuid, indicator])).values()
     );
@@ -263,7 +264,7 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
       onSkip={handleNext}
       showSkip={true}
       nextDisabled={selectedIndicators.length === 0}
-      nextText={`Valider ${indicatorsTotalCount} élément${indicatorsTotalCount > 1 ? 's':''} à suivre`}
+      nextText={`Valider ${indicatorsTotalCount} élément${indicatorsTotalCount > 1 ? 's' : ''} à suivre`}
       skipText="Passer cette étape"
     />}
   >
