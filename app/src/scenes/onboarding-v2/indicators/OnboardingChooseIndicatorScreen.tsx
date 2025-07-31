@@ -235,7 +235,6 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation, r
   }, [selectedIndicators, toggleIndicator]);
 
   const handlePrevious = () => {
-    console.log('LCS HANDLE PREVIOUS', route.params.skippedScreen)
     if (route.params.skippedScreen) {
       navigation.navigate(route.params.skippedScreen)
     } else if (profile?.selectedDifficulties.find(cat => INDICATOR_CATEGORIES_DATA[cat].subCat)) {
