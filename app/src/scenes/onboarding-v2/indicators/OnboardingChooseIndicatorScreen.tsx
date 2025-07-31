@@ -108,7 +108,7 @@ type Props = OnboardingV2ScreenProps<'OnboardingChooseIndicator'>;
 
 const NextRoute = 'StartFirstSurvey'
 
-export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation }) => {
+export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation, route }) => {
   const [showMoreIndicators, setShowMoreIndicators] = useState(false);
   const [customIndicators, setCustomIndicators] = useState<PredefineIndicatorV2SchemaType[]>([]);
 
@@ -235,7 +235,10 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
   }, [selectedIndicators, toggleIndicator]);
 
   const handlePrevious = () => {
-    if (profile?.selectedDifficulties.find(cat => INDICATOR_CATEGORIES_DATA[cat].subCat)) {
+    console.log('LCS HANDLE PREVIOUS', route.params.skippedScreen)
+    if (route.params.skippedScreen) {
+      navigation.navigate(route.params.skippedScreen)
+    } else if (profile?.selectedDifficulties.find(cat => INDICATOR_CATEGORIES_DATA[cat].subCat)) {
       navigation.navigate('SubCategoriesScreen')
     } else {
       navigation.navigate('PersonalizationDifficulties')
@@ -276,10 +279,9 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
       skipText="Passer cette étape"
     />}
   >
-
     {hasSelectedDifficulties && <>
       <View className='px-6 py-4 pb-0'>
-        <InstructionText>Voici les éléments que je vous propose de suivre au quotidien. Vous pouvez en enlever ou en ajouter.</InstructionText>
+        <InstructionText>Choisissez au moins un élément que vous souhaitez suivre au quotidien. Vous pourrez modifier vos choix et en ajouter d’autres plus tard.</InstructionText>
       </View>
       {/* indicators grouped by categories */}
       <View className="px-4 flex-1">

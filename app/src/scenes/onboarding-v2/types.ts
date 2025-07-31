@@ -102,7 +102,9 @@ export type OnboardingV2StackParamList = {
   }
   OnboardingCheckInIntroductionCompleted: undefined
   OnboardingLoadingScreen: undefined;
-  OnboardingChooseIndicator: undefined
+  OnboardingChooseIndicator: {
+    skippedScreen?: 'PersonalizationStart' | 'PersonalizationDifficulties'
+  }
   OnboardingReminder: undefined
   StartFirstSurvey: undefined,
   CheckInSleepCompleted: undefined,

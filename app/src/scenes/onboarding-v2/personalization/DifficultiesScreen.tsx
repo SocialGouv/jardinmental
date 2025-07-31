@@ -25,7 +25,9 @@ export const DifficultiesScreen: React.FC<Props> = ({ navigation }) => {
   const { setSlideIndex, setNextPath, setIsVisible } = useOnboardingProgressHeader();
 
   const handleSkip = useCallback(() => {
-    navigation.navigate('OnboardingChooseIndicator');
+    navigation.navigate('OnboardingChooseIndicator',  {
+      skippedScreen: 'PersonalizationDifficulties'
+    })
   }, [navigation]);
 
   useEffect(() => {
@@ -70,7 +72,7 @@ export const DifficultiesScreen: React.FC<Props> = ({ navigation }) => {
       onNext={handleNext}
       headerContent={<View>
         {selectedCount >= 3 && <AlertBanner text={
-          `Nous vous recommandons de ne pas choisir plus de 2 domaines pour commencer`
+          `Chaque domaine sera précisé ensuite : limitez-vous à 1 ou 2 pour démarrer.`
         } />}
         <View className='my-2'>
           <Text className={mergeClassNames(typography.textSmMedium, 'text-gray-700 text-center')}>Vous pourrez modifier cette sélection plus tard</Text>

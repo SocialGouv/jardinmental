@@ -30,7 +30,9 @@ export const OnboardingPersonalizationStartScreen: React.FC<Props> = ({ navigati
   }
   
   const handleSkip = useCallback(() => {
-    navigation.navigate('OnboardingChooseIndicator');
+    navigation.navigate('OnboardingChooseIndicator',  {
+      skippedScreen: 'PersonalizationStart'
+    });
   }, [navigation]);
 
   return (
