@@ -19,9 +19,22 @@ type Props = {
 
 const VARIANT_COLORS = {
     beige: 'bg-[#FDF2E7]',
+    red: 'bg-[#FAEEEF]',
+    pink: 'bg-[#FEF8FB]',
     white: TW_COLORS.WHITE,
-    green: `bg-[#FAFBEA]`,
-    blue: `bg-[#FAFFFF]`,
+    green: `bg-[#EEF9F1]`,
+    blue: `bg-[#E8F7F4]`,
+}
+
+const VARIANT_BORDER_COLORS = {
+    beige: 'bg-[#FDF2E7]',
+    red: 'bg-[#FAEEEF]',
+    pink: 'bg-[#FEF8FB]',
+    white: TW_COLORS.WHITE,
+    green: `bg-[#EEF9F1]`,
+    blue: `#CCEEE8`,
+    yellow: '#FCF0D3'
+
 }
 
 const VARIANT_LEAF_COLORS = {

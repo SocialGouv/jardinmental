@@ -65,39 +65,19 @@ const QuestionYesNo = ({
       </TouchableOpacity>
       <View style={styles.answerContainer}>
         <View style={styles.answersContainer}>
-          {answersYesNo.map((answer, i) => {
-            const active = selected === answer.score;
-            return (
-              <TouchableOpacity
-                key={i}
-                onPress={() => {
-                  onPress({ key: question.id, value: answer.score });
-                  if (!answer.score) {
-                    // if the user choose no, we clean the text input
-                    setText("");
-                    onChangeUserComment?.({ key: question.id, userComment: "" });
-                  }
-                }}
-              >
-                <View style={styles.itemContainer}>
-                  <View
-                    className={classNames(
-                      active ? "border border-primary" : "border border-gray-400",
-                      "flex justify-center items-center w-5 h-5 rounded-full mr-1"
-                    )}
-                  >
-                    <View
-                      className={classNames(
-                        active ? "border border-primary bg-primary" : "",
-                        "w-3 h-3 rounded-full"
-                      )}
-                    />
-                  </View>
-                  <Text style={active && styles.activeLabel}>{answer.label}</Text>
-                </View>
-              </TouchableOpacity>
-            );
-          })}
+          <ToggleButtons
+            onPressLeft={() => {
+              onPress({ key: question.id, value: true });
+            }}
+            leftText={'Oui'}
+            rightText={'Non'}
+            onPressRight={() => {
+              onPress({ key: question.id, value: false });
+              // if the user choose no, we clean the text input
+              setText("");
+              onChangeUserComment?.({ key: question.id, userComment: "" });
+            }}
+          />
         </View>
         {showUserCommentInput ? (
           <TextInput

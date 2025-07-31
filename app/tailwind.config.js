@@ -79,6 +79,9 @@ module.exports = {
           2: '#F3B9B0',
           1: '#F3A3CD', //'#822F2F'
         },
+        'mood-text': {
+          4: '#224E2D'
+        }
       },
       fontFamily: {
         title: ['SourceSans3', 'sans-serif'],

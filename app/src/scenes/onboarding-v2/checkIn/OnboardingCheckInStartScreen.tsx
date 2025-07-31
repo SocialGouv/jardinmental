@@ -24,7 +24,7 @@ export const OnboardingCheckInStartScreen: React.FC<Props> = ({ navigation }) =>
   };
 
   return <BeigeWrapperScreen
-    handleSkip={handleSkip}
+    // handleSkip={handleSkip}
     nextText='Commencer ma première observation'
     handlePrevious={handlePrevious}
     handleNext={handleNext}>
