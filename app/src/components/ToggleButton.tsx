@@ -9,7 +9,7 @@ interface ToggleButtonsProps {
   leftText?: string;
   onPressLeft: (value: boolean) => void;
   onPressRight: (value: boolean) => void;
-  initialSelected?: boolean
+  initialSelected?: boolean;
 }
 
 export default function ToggleButtons({
