@@ -25,6 +25,8 @@ fileignoreconfig:
   checksum: 68279ddbf41bdc3fdbe9ec5073122f73b74c992dad22768d69bf6b0c6d7f5f6f
 - filename: app/src/scenes/diary/index.js
   checksum: 3ce2456ab1ef9b4d523326b4e6e796eeab6a3588e8ac9b6c8fb3abd37b70c9d6
+- filename: app/src/scenes/indicateurs/CreateIndicator/index.js
+  checksum: f10d695b938ea8615543d31781df8aeafa4916eab9bcd9c809d34614298422b4
 - filename: app/src/scenes/indicateurs/editIndicateurs/index.tsx
   checksum: da39a551c3cf5760751f04c9083a2e720d10874a38f8ae39861a127d59288487
 - filename: app/src/scenes/onboarding-v2/CarouselScreen.tsx
@@ -98,7 +100,7 @@ fileignoreconfig:
 - filename: app/src/scenes/survey/QuestionYesNo.js
   checksum: 875b5da90b88e67d3fb94b760306cb7f7c12b2e35458152db49cdaf988f59d12
 - filename: app/src/scenes/survey/daySurvey.tsx
-  checksum: 662ec66228249f3480fe2b425eec54260614e64fa6b3124a9a6b0447512a4d0c
+  checksum: 579b76fbe284ce77f8d103415093b52dfbcc9613bc4c190ca69b856dfb6a7b7e
 - filename: app/src/scenes/survey/survey-data.js
   checksum: 1ac3021625ed8fb4ed188c80035b12789aa03989dc7276893900ed96dc2a2509
 - filename: app/src/services/notifications.js
@@ -106,7 +108,7 @@ fileignoreconfig:
 - filename: app/src/utils/constants.ts
   checksum: d253777852f0048c98254519893885803849b2392dde9853e4973600d5034721
 - filename: app/src/utils/localStorage/index.ts
-  checksum: 7c183b28ca55d187e414c4dc68705a5dda13fd2d1e0286ef5b8e48b8a0c2b98e
+  checksum: 4b722ae20cc84bdb7add9f19468fdc68e560b2377e3caeb371d087dd90c27c59
 scopeconfig:
 - scope: node
 version: "1.0"

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { InputText } from "../InputText";
 import { mergeClassNames } from '@/utils/className';
 
@@ -9,9 +9,14 @@ import Gauge from "../gauge";
 import { colors } from "@/utils/colors";
 import { typography } from "@/utils/typography";
 import { IndicatorItem } from "@/scenes/onboarding-v2/types";
-import { INDICATOR_TYPE, PredefineIndicatorSchemaType } from "@/entities/Indicator";
-import { DEFAULT_INDICATOR_LABELS, INDICATOR_LABELS } from "@/utils/liste_indicateurs.1";
+import { generateIndicatorFromPredefinedIndicator, INDICATOR_TYPE, PredefineIndicatorV2SchemaType } from "@/entities/Indicator";
+import { DEFAULT_INDICATOR_LABELS, INDICATOR_LABELS, INDICATORS, NEW_INDICATORS_CATEGORIES } from "@/utils/liste_indicateurs.1";
 import BasicCard from "../BasicCard";
+import IndicatorModal from "@/scenes/onboarding-v2/indicators/IndicatorModal";
+import { useBottomSheet } from "@/context/BottomSheetContext";
+import ArrowIcon from "@assets/svg/icon/Arrow";
+import { TW_COLORS } from "@/utils/constants";
+import localStorage from '@/utils/localStorage/index';
 
 export const IndicatorSurveyItem = ({
   indicator,
@@ -20,17 +25,50 @@ export const IndicatorSurveyItem = ({
   onValueChanged,
   comment,
   onCommentChanged,
-  showComment
+  showComment,
+  onIndicatorChange
 }: {
-  indicator: PredefineIndicatorSchemaType,
+  indicator: PredefineIndicatorV2SchemaType,
   index: number,
   value: number,
   comment?: string,
   onValueChanged: () => {},
   onCommentChanged: () => {}
-  showComment: boolean
+  showComment: boolean,
+  onIndicatorChange?: () => void
 }) => {
   // console.log("✍️  i. ndicator", indicator);
+  const { showBottomSheet, closeBottomSheet } = useBottomSheet();
+  const [addedIndicators, setAddedIndicators] = useState<Partial<Record<NEW_INDICATORS_CATEGORIES, PredefineIndicatorV2SchemaType[]>>>({})
+  const [selectedIndicators, setSelectedIndicators] = useState<string[]>([])
+
+  const addIndicatorForCategory = async (category: NEW_INDICATORS_CATEGORIES, indicators: PredefineIndicatorV2SchemaType[]) => {
+    // setAddedIndicators(prev => ({
+    //   ...prev,
+    //   [category]: indicators
+    // }))
+    // if (loading) return;
+    // setLoading(true);
+    for (const indicatorItem of indicators) {
+      console.log(indicators)
+      await localStorage.replaceOrAddIndicateur({
+        ...generateIndicatorFromPredefinedIndicator(indicatorItem),
+        uuid: indicator.uuid // we keep the same uuid for tracking purpose in the stats
+      });
+    }
+    if (typeof onIndicatorChange === 'function') {
+      onIndicatorChange()
+    }
+    // setLoading(false);
+    // navigation.navigate("symptoms");
+    // setSelectedIndicators(prev => {
+    //   return ([
+    //     // filter base indicator if we define indicators
+    //     ...prev.filter(indicator => !BASE_INDICATORS_FOR_CUSTOM_CATEGORIES[category].map(cat => cat.uuid).includes(indicator)),
+    //     ...indicators.map(indicator => indicator.uuid)
+    //   ])
+    // })
+  }
 
   const computeIndicatorLabel = (): string => {
     if (value === null) return '';
@@ -95,6 +133,26 @@ export const IndicatorSurveyItem = ({
       textAlignVertical="top"
       containerStyle={{ marginTop: 20 }}
     />}
+    {indicator.isGeneric &&
+      <View className='flex-row'>
+        <TouchableOpacity onPress={() => {
+          showBottomSheet(<IndicatorModal
+            category={indicator.mainCategory}
+            addedIndicators={[]}
+            initialSelectedIndicators={[]}
+            multiSelect={false}
+            onClose={(categoryName: NEW_INDICATORS_CATEGORIES, indicators: PredefineIndicatorV2SchemaType[]) => {
+              if (typeof addIndicatorForCategory === 'function') {
+                addIndicatorForCategory(categoryName, indicators)
+                closeBottomSheet()
+              }
+            }}
+          />)
+        }} className='flex-row ml-auto items-center justify-center'>
+          <Text className={mergeClassNames(typography.textMdSemibold, 'text-brand-950 mr-1')}>Préciser</Text>
+          <ArrowIcon color={TW_COLORS.BRAND_700} />
+        </TouchableOpacity>
+      </View>}
   </BasicCard>
   // return (
   //   <View
