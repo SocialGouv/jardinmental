@@ -20,7 +20,7 @@ export default function ToggleButtons({
             backgroundColor: selected === true ? leftColor : TW_COLORS.WHITE
           }}
           onPress={() => {
-            onPressLeft(true)
+            onPressLeft?.(true)
             setSelected(true)
           }}
         >
@@ -32,10 +32,9 @@ export default function ToggleButtons({
             backgroundColor: selected === false ? rightColor : TW_COLORS.WHITE
           }}
           onPress={() => {
-            onPressRight(false)
+            onPressRight?.(false)
             setSelected(false)
-          }
-          }
+          }}
         >
           <Text className={`${selected === false ? 'text-white' : 'text-gray-800'} font-medium`}>{rightText || 'Non'}</Text>
         </TouchableOpacity>
