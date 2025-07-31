@@ -33,7 +33,6 @@ import { NEW_INDICATORS_CATEGORIES } from '@/utils/liste_indicateurs.1';
 interface IndicatorScreenProps {
   navigation: any;
   title: string;
-  labelWithPrefix: string;
   indicators: Indicator[];
   currentStep: number;
   totalSteps: number;
@@ -64,7 +63,6 @@ const ICON_FOR_CATEGORY: Record<NEW_INDICATORS_CATEGORIES, React.ReactNode> = {
 export const IndicatorScreen: React.FC<IndicatorScreenProps> = ({
   navigation,
   title,
-  labelWithPrefix,
   indicators,
   answers,
   onValueChanged,
