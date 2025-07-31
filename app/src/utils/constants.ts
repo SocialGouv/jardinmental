@@ -38,7 +38,7 @@ export const iconBorderColors = {
   veryBad: '#822F2F', //"#D13E3E",
   bad: '#862F22',//"#E7770F",
   middle: '#862F22',//"#F0DF49",
-  good: '#224E2D',//"#7CCF12",
+  good: '#224E2D', //"#7CCF12",
   veryGood: '#004439'//"#0FC321",
 };
 
@@ -356,6 +356,7 @@ export const TW_COLORS = {
   BRAND_600: "#1CB2BF",
   BRAND_500: "#1FC6D5",
   BEIGE: '#FCEBD9',
+  GRAY_800: '#4A5D5F',
   GRAY_700: '#617778',
   GRAY_200: '#E3F6F8',
   BRAND_25: '#FAFFFF',

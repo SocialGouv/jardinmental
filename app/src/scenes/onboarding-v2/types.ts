@@ -27,6 +27,7 @@ export interface CarouselSlide {
   backgroundColor?: string;
   illustration?: React.ReactNode;
   children?: React.ReactNode;
+  variant?: 'blue' | 'green' | 'beige' | 'pink' | 'red' | 'yellow'
 }
 
 export interface Difficulty {

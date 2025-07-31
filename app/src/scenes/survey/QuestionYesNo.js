@@ -65,7 +65,20 @@ const QuestionYesNo = ({
       </TouchableOpacity>
       <View style={styles.answerContainer}>
         <View style={styles.answersContainer}>
-          {answersYesNo.map((answer, i) => {
+          <ToggleButtons
+            onPressLeft={() => {
+              onPress({ key: question.id, value: true });
+            }}
+            leftText={'Oui'}
+            rightText={'Non'}
+            onPressRight={() => {
+              onPress({ key: question.id, value: false });
+              // if the user choose no, we clean the text input
+              setText("");
+              onChangeUserComment?.({ key: question.id, userComment: "" });
+            }}
+          />
+          {/* {answersYesNo.map((answer, i) => {
             const active = selected === answer.score;
             return (
               <TouchableOpacity
@@ -97,7 +110,7 @@ const QuestionYesNo = ({
                 </View>
               </TouchableOpacity>
             );
-          })}
+          })} */}
         </View>
         {showUserCommentInput ? (
           <TextInput

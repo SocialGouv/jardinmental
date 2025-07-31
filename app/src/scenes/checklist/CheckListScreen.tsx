@@ -1,6 +1,6 @@
 import { Screen } from '@/components/Screen';
 import { mergeClassNames } from '@/utils/className';
-import { iconColors } from '@/utils/constants';
+import { iconBorderColors, iconColors, TW_COLORS } from '@/utils/constants';
 import { getGoalsTracked } from '@/utils/localStorage/goals';
 import { isReminderActive } from '@/utils/reminder';
 import { typography } from '@/utils/typography';
@@ -19,69 +19,68 @@ import localStorage from '@/utils/localStorage/index';
 import { INDICATEURS_HUMEUR, INDICATEURS_SOMMEIL } from '@/utils/liste_indicateurs.1';
 
 
-type checkListPath = "reminder" | "symptoms" | "profile" | "goals-settings" | "drugs" | "survey"
-type checkListIds = "reminder" | "indicators" | "profile" | "goals" | "drugs" | "survey"
+type checkListPath = "reminder" | "symptoms" | "profile" | "goals-settings" | "drugs" | "survey"
+type checkListIds = "reminder" | "indicators" | "profile" | "goals" | "drugs" | "survey"
 
-const checklistItems : {
+const checklistItems: {
     label: string,
     icon: JSX.Element,
     path: checkListPath,
     id: checkListIds,
     isDone?: boolean
 }[] = [
-    {
-        label: 'Programmer un rappel',
-        icon: <Bell />,
-        path: "reminder",
-        id: "reminder"
-    },
-    {
-        label: 'Personnaliser mes indicateurs',
-        icon: <Analytics />,
-        path: "symptoms",
-        id: "indicators"
-    },
-    {
-        label: 'Personnaliser mes objectifs',
-        icon: <Goal />,
-        path: 'goals-settings',
-        id: "goals"
-    },
-    {
-        label: 'Ajouter un traitement',
-        icon: <Health />,
-        path: "drugs",
-        id: "drugs"
-    },
-    {
-        label: 'Ma première observation',
-        icon: <WinkSmiley />,
-        isDone: true,
-        path: "survey",
-        id: "survey"
-    }
-];
+        {
+            label: 'Programmer un rappel',
+            icon: <Bell />,
+            path: "reminder",
+            id: "reminder"
+        },
+        {
+            label: 'Personnaliser mon suivi',
+            icon: <Analytics />,
+            path: "symptoms",
+            id: "indicators"
+        },
+        {
+            label: 'Personnaliser mes objectifs',
+            icon: <Goal />,
+            path: 'goals-settings',
+            id: "goals"
+        },
+        {
+            label: 'Ajouter un traitement',
+            icon: <Health />,
+            path: "drugs",
+            id: "drugs"
+        },
+        {
+            label: 'Ma première observation',
+            icon: <WinkSmiley />,
+            isDone: true,
+            path: "survey",
+            id: "survey"
+        }
+    ];
 
 export default function CheckListScreen({ navigation, route }) {
     const [checklistItemValues, setChecklistItemValues] = useState<Partial<Record<checkListIds, boolean>>>({})
 
     useFocusEffect(useCallback(() => {
-            (async () => {
-                const reminder = await isReminderActive()
-                const goals = await getGoalsTracked();
-                const drugs = await localStorage.getMedicalTreatment()
-                const userIndicators = await localStorage.getIndicateurs();
-                
-                setChecklistItemValues((prev => ({
-                    ...prev,
-                    reminder,
-                    indicators: !!userIndicators.filter(ind => ![INDICATEURS_HUMEUR.uuid, INDICATEURS_SOMMEIL.uuid].includes(ind.uuid) && ind.active).length,
-                    goals: !!goals.length,
-                    drugs: !!drugs.length
-                })))
-            })();
-        }, []))        
-    
+        (async () => {
+            const reminder = await isReminderActive()
+            const goals = await getGoalsTracked();
+            const drugs = await localStorage.getMedicalTreatment()
+            const userIndicators = await localStorage.getIndicateurs();
+            setChecklistItemValues((prev => ({
+                ...prev,
+                reminder,
+                indicators: !!userIndicators.filter(ind => ![INDICATEURS_HUMEUR.uuid, INDICATEURS_SOMMEIL.uuid].includes(ind.uuid) && ind.active).length,
+                goals: !!goals.length,
+                drugs: !!(drugs && drugs.length)
+            })))
+        })();
+    }, []))
+
     const handleItemPress = (item) => {
         navigation.navigate(item.path)
     };
@@ -98,24 +97,26 @@ export default function CheckListScreen({ navigation, route }) {
                     <Text className={mergeClassNames(typography.displayXsBold, 'text-brand-950 text-left mb-8')}>Bien démarrer sur Jardin Mental</Text>
                     <Text className={mergeClassNames(typography.textMdRegular, 'text-brand-950 text-left mb-8')}>Pour profiter un maximum de Jardin Mental, vous pouvez complétez quelques étapes de personnalisation</Text>
                     {checklistItems.map((item, index) => {
-                        const isDone = item.isDone || checklistItemValues[item.id]
+                        const isDone = item.isDone || checklistItemValues[item.id]
                         return <TouchableOpacity
                             key={index}
                             disabled={isDone}
                             onPress={() => handleItemPress(item)}
-                            className={mergeClassNames('flex-row items-center p-4 mb-3 bg-white rounded-xl border border-gray-200', isDone ? 'bg-[#EBF9F4]' : '')}
+                            className={mergeClassNames('flex-row items-center p-4 mb-3 bg-white rounded-xl border border-gray-200', isDone ? 'bg-mood-4' : '')}
                         >
                             {/* Left Icon */}
-                            {item.icon}
+                            {React.cloneElement(item.icon, {
+                                color: isDone ? iconBorderColors.good : TW_COLORS.GRAY_800
+                            })}
 
                             {/* Text */}
-                            <Text className={mergeClassNames(`flex-1 ml-4 ${typography.textMdMedium} text-brand-950`, isDone ? 'line-through text-mood-5' : '')}>
+                            <Text className={mergeClassNames(`flex-1 ml-4 ${typography.textMdMedium} text-brand-950`, isDone ? 'line-through text-mood-text-4' : '')}>
                                 {item.label}
                             </Text>
 
                             {/* Right Arrow */}
                             <View className="text-gray-400">
-                                {isDone ? <CheckMarkIcon color={iconColors.veryGood} /> : <ArrowIcon />}
+                                {isDone ? <CheckMarkIcon color={iconBorderColors.good} /> : <ArrowIcon />}
                             </View>
                         </TouchableOpacity>
                     })}
