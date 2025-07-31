@@ -1,30 +1,26 @@
-import React, { useContext, useState, useCallback, useMemo } from 'react';
-import { View, Text, SafeAreaView, TouchableOpacity, ScrollView, TextInput } from 'react-native';
+import React, { useState, useCallback } from 'react';
+import { View, Text, TouchableOpacity, TextInput } from 'react-native';
 import { NavigationButtons } from '@/components/onboarding/NavigationButtons';
 import { OnboardingV2ScreenProps } from '@/scenes/onboarding-v2/types';
 import { useUserProfile } from '@/context/userProfile';
 import { BASE_INDICATORS, INDICATEURS_HUMEUR, INDICATEURS_SOMMEIL, INDICATORS, NEW_INDICATORS_CATEGORIES, NEW_INDICATORS_SUBCATEGORIES } from '@/utils/liste_indicateurs.1';
-import { generateIndicatorFromPredefinedIndicator, PredefineIndicatorV2SchemaType, INDICATOR_TYPE, INDICATORS_CATEGORIES, Indicator } from '@/entities/Indicator';
+import { generateIndicatorFromPredefinedIndicator, PredefineIndicatorV2SchemaType, Indicator } from '@/entities/Indicator';
 import localStorage from '@/utils/localStorage';
-import { categories, TW_COLORS } from '@/utils/constants';
-import BannerHeader from '../BannerHeader';
-import { SafeAreaViewWithOptionalHeader, useOnboardingProgressHeader } from '@/scenes/onboarding/ProgressHeader';
+import { TW_COLORS } from '@/utils/constants';
+import { useOnboardingProgressHeader } from '@/scenes/onboarding/ProgressHeader';
 import { mergeClassNames } from '@/utils/className';
 import { typography } from '@/utils/typography';
 import SelectionnableItem from '@/components/SelectionnableItem';
 import { INDICATOR_CATEGORIES_DATA } from '../data/helperData';
 import InstructionText from '../InstructionText';
 import IconBg from '@assets/svg/icon/IconBg'
-import ChevronUp from '@assets/svg/icon/ChevronUp'
-import ChevronDown from '@assets/svg/icon/ChevronDown'
-import CircleCheckMark from '@assets/svg/icon/CircleCheckMark'
 import ArrowIcon from '@assets/svg/icon/Arrow';
 import { useBottomSheet } from '@/context/BottomSheetContext';
 import IndicatorModal from './IndicatorModal';
 import PlusIcon from '@assets/svg/icon/plus';
-import { v4 as uuidv4 } from "uuid";
 import { AnimatedHeaderScrollScreen } from '@/scenes/survey-v2/AnimatedHeaderScrollScreen';
 import { useFocusEffect } from '@react-navigation/native';
+import AlertBanner from '../AlertBanner';
 
 const BASE_INDICATORS_FOR_CUSTOM_CATEGORIES = {
   [NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR]: [INDICATORS.find(ind => ind.uuid === "1d4c3f59-dc3e-4b45-ae82-2ea77a62e6c6")],
@@ -32,6 +28,7 @@ const BASE_INDICATORS_FOR_CUSTOM_CATEGORIES = {
   [NEW_INDICATORS_CATEGORIES.SUBSTANCE]: [INDICATORS.find(ind => ind.uuid === 'ac7c85b6-e015-4b46-bd14-13e01f7d7a85')],
 }
 
+const INDICATORS_WITH_CUSTOM_OPTIONS = [NEW_INDICATORS_CATEGORIES.SUBSTANCE, NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR, NEW_INDICATORS_CATEGORIES.LIFE_EVENT]
 
 export function suggestIndicatorsForDifficulties(
   selectedDifficulties: NEW_INDICATORS_CATEGORIES[],
@@ -107,7 +104,7 @@ type Props = OnboardingV2ScreenProps<'OnboardingChooseIndicator'>;
 
 const NextRoute = 'StartFirstSurvey'
 
-export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation }) => {
+export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation, route }) => {
   const [showMoreIndicators, setShowMoreIndicators] = useState(false);
   const [customIndicators, setCustomIndicators] = useState<PredefineIndicatorV2SchemaType[]>([]);
 
@@ -135,12 +132,6 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
   ).filter(indicator => !BASE_INDICATORS.includes(indicator.uuid))
     : []
   const [selectedIndicators, setSelectedIndicators] = useState<string[]>([]
-    // [...recommendedIndicators.map(indicator => indicator.uuid), ...[profile.selectedDifficulties.filter(difficulty => [
-    //   // ignore this as it is the user that will select specific indicators
-    //   NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR,
-    //   NEW_INDICATORS_CATEGORIES.SUBSTANCE,
-    //   NEW_INDICATORS_CATEGORIES.LIFE_EVENT,
-    // ].includes(difficulty)).map(difficulty => BASE_INDICATORS_FOR_CUSTOM_CATEGORIES[difficulty])].flat(10).map(item => item.uuid)]
   );
 
   const recommendedIndicatorsByCategory: Record<NEW_INDICATORS_CATEGORIES, PredefineIndicatorV2SchemaType[]> = recommendedIndicators.reduce((prev, curr) => {
@@ -234,19 +225,25 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
   }, [selectedIndicators, toggleIndicator]);
 
   const handlePrevious = () => {
-    if (profile?.selectedDifficulties.find(cat => INDICATOR_CATEGORIES_DATA[cat].subCat)) {
+    if (route.params.skippedScreen) {
+      navigation.navigate(route.params.skippedScreen)
+    } else if (profile?.selectedDifficulties.find(cat => INDICATOR_CATEGORIES_DATA[cat].subCat)) {
       navigation.navigate('SubCategoriesScreen')
     } else {
       navigation.navigate('PersonalizationDifficulties')
     }
   }
-  const indicatorsWithCustomCount = [NEW_INDICATORS_CATEGORIES.SUBSTANCE, NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR, NEW_INDICATORS_CATEGORIES.LIFE_EVENT].filter(cat => profile?.selectedDifficulties.includes(cat)).length
+  const indicatorsWithCustomCount = INDICATORS_WITH_CUSTOM_OPTIONS.filter(cat => profile?.selectedDifficulties.includes(cat)).length
   const indicatorsCount = Object.values(recommendedIndicatorsByCategory).reduce((acc, indicators) => indicators.length + acc, 0) + indicatorsWithCustomCount
   const recommendedIndicatorsUuid = recommendedIndicators.map(reco => reco.uuid)
   const indicatorsTotalCount = selectedIndicators.length
+  const hasSelectedDifficulties = !!(profile?.selectedDifficulties && profile.selectedDifficulties.length)
+  const title = hasSelectedDifficulties ?
+    `Je vous propose de suivre ${indicatorsCount} élément${indicatorsCount > 1 ? 's' : ''} important${indicatorsCount > 1 ? 's' : ''}` :
+    `Choisissez ce que vous souhaitez suivre`
 
   return <AnimatedHeaderScrollScreen
-    title={`Je vous propose de suivre ${indicatorsCount} élément${indicatorsCount > 1 ? 's' : ''} important${indicatorsCount > 1 ? 's' : ''}`}
+    title={title}
     dynamicTitle={'Indicateurs'}
     navigation={navigation}
     hasProgressBar={false}
@@ -256,6 +253,9 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
       onNext={handleNext}
       headerContent={
         <View>
+          {selectedIndicators.length >= 9 && <AlertBanner text={
+            `Nous vous recommandons de ne pas choisir plus de 8 éléments pour commencer`
+          } />}
           <View className='my-2'>
             <Text className={mergeClassNames(typography.textSmMedium, 'text-gray-700 text-center')}>Vous pourrez modifier cette sélection plus tard</Text>
           </View>
@@ -268,52 +268,60 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
       skipText="Passer cette étape"
     />}
   >
-    <View className='px-6 py-4 pb-0'>
-      <InstructionText>Voici les éléments que je vous propose de suivre au quotidien. Vous pouvez en enlever ou en ajouter.</InstructionText>
-    </View>
-    {/* indicators grouped by categories */}
-    <View className="px-4 flex-1">
-      {Object.entries(recommendedIndicatorsByCategory)
-        .filter(([cat]) => {
-          return ![NEW_INDICATORS_CATEGORIES.SUBSTANCE, NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR, NEW_INDICATORS_CATEGORIES.LIFE_EVENT].includes(cat as NEW_INDICATORS_CATEGORIES)
-        }).map(([category, indicators]) =>
-          <CategoryCard
-            type='select'
-            key={category}
-            indicators={indicators}
+    {hasSelectedDifficulties && <>
+      <View className='px-6 py-4 pb-0'>
+        <InstructionText>Choisissez au moins un élément que vous souhaitez suivre au quotidien. Vous pourrez modifier vos choix et en ajouter d’autres plus tard.</InstructionText>
+      </View>
+      {/* indicators grouped by categories */}
+      <View className="px-4 flex-1">
+        {Object.entries(recommendedIndicatorsByCategory)
+          .filter(([cat]) => {
+            return !INDICATORS_WITH_CUSTOM_OPTIONS.includes(cat as NEW_INDICATORS_CATEGORIES)
+          }).map(([category, indicators]) =>
+            <CategoryCard
+              type='select'
+              key={category}
+              indicators={indicators}
+              selectedIndicators={selectedIndicators}
+              categoryName={category as NEW_INDICATORS_CATEGORIES}
+              renderIndicatorItem={renderIndicatorItem}
+            />
+          )}
+        {INDICATORS_WITH_CUSTOM_OPTIONS.filter(cat => profile?.selectedDifficulties.includes(cat)).map(cat => {
+          return <CategoryCard
+            key={cat}
+            type={'select-and-input'}
             selectedIndicators={selectedIndicators}
-            categoryName={category as NEW_INDICATORS_CATEGORIES}
+            indicators={addedIndicators[cat] && addedIndicators[cat].length ? addedIndicators[cat] : BASE_INDICATORS_FOR_CUSTOM_CATEGORIES[cat]}
             renderIndicatorItem={renderIndicatorItem}
-          />
-        )}
-      {[NEW_INDICATORS_CATEGORIES.SUBSTANCE, NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR, NEW_INDICATORS_CATEGORIES.LIFE_EVENT].filter(cat => profile?.selectedDifficulties.includes(cat)).map(cat => {
-        return <CategoryCard
-          key={cat}
-          type={'select-and-input'}
-          selectedIndicators={selectedIndicators}
-          indicators={addedIndicators[cat] && addedIndicators[cat].length ? addedIndicators[cat] : BASE_INDICATORS_FOR_CUSTOM_CATEGORIES[cat]}
-          renderIndicatorItem={renderIndicatorItem}
-          addIndicatorForCategory={addIndicatorForCategory}
-          categoryName={cat} />
-      })}
-    </View>
-    <View className="px-4 mb-4">
-      <TouchableOpacity
-        onPress={() => setShowMoreIndicators(!showMoreIndicators)}
-        className="py-3 px-4"
-      >
-        <Text
-          className="text-center font-medium"
-          style={{
-            textDecorationLine: 'underline'
-          }}
+            addIndicatorForCategory={addIndicatorForCategory}
+            categoryName={cat} />
+        })}
+      </View>
+      <View className="px-4 mb-4">
+        <TouchableOpacity
+          onPress={() => setShowMoreIndicators(!showMoreIndicators)}
+          className="py-3 px-4"
         >
-          {showMoreIndicators ? 'Masquer' : 'Voir plus d\'indicateurs'}
-        </Text>
-      </TouchableOpacity>
-    </View>
+          <Text
+            className="text-center font-medium"
+            style={{
+              textDecorationLine: 'underline'
+            }}
+          >
+            {showMoreIndicators ? 'Masquer' : 'Voir plus d\'indicateurs'}
+          </Text>
+        </TouchableOpacity>
+      </View>
+    </>}
+    {!profile?.selectedDifficulties || !profile.selectedDifficulties.length && <>
+      <View className='px-6 py-4 pb-0'>
+        <InstructionText>Voici les éléments les plus suivis sur Jardin Mental. Séléctionnez au moins un élément pour démarrer (vous pourrez modifier vos choix  et en ajouter d’autres plus tard)</InstructionText>
+      </View>
+    </>}
 
-    {showMoreIndicators && (
+
+    {(showMoreIndicators || !hasSelectedDifficulties) && (
       <View className="mb-6 px-4 flex-1">
         <Text
           className="text-xl font-bold mb-4 mx-0"
@@ -330,22 +338,15 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation })
           ))}
       </View>
     )}
+
     <View className="h-20" />
   </AnimatedHeaderScrollScreen>
 }
 
 const MultiInput = ({
   categoryName,
-  renderIndicatorItem,
-  addIndicatorForCategory,
-  indicators,
-  type
 }: {
-  type: 'select' | 'select-and-input' | 'input'
   categoryName: NEW_INDICATORS_CATEGORIES,
-  indicators?: PredefineIndicatorV2SchemaType[],
-  addIndicatorForCategory?: (category: NEW_INDICATORS_CATEGORIES, indicators: PredefineIndicatorV2SchemaType[]) => void,
-  renderIndicatorItem?: (item: PredefineIndicatorV2SchemaType) => JSX.Element
 }) => {
 
   const [addedInputs, setAddedInputs] = useState([''])
@@ -366,7 +367,6 @@ const MultiInput = ({
           bottom: 5
         }
       } onPress={() => {
-        //onPress(value)
         setAddedInputs((prev) => [...prev.slice(0, index), ...prev.slice(index + 1)])
       }}>
         <Text className={mergeClassNames(typography.textMdSemibold, 'text-brand-800')}>Supprimer</Text>
@@ -397,7 +397,6 @@ const CategoryCard = ({
   renderIndicatorItem?: (item: PredefineIndicatorV2SchemaType) => JSX.Element
 }) => {
 
-  const [showIndicators, setShowMoreIndicators] = useState<boolean>(false)
   const { showBottomSheet, closeBottomSheet } = useBottomSheet()
 
   return <View key={categoryName}
