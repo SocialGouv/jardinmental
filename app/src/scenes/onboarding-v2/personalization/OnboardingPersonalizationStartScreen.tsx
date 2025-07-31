@@ -28,9 +28,10 @@ export const OnboardingPersonalizationStartScreen: React.FC<Props> = ({ navigati
   const handlePrevious = () => {
     navigation.goBack();
   }
-  const handleSkip = () => {
-    handleNext()
-  }
+  
+  const handleSkip = useCallback(() => {
+    navigation.navigate('OnboardingChooseIndicator');
+  }, [navigation]);
 
   return (
     <SafeAreaViewWithOptionalHeader className="flex-1 bg-white" style={{}}>
