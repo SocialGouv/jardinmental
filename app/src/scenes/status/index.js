@@ -32,7 +32,7 @@ const Status = ({ navigation, startSurvey }) => {
   const [NPSvisible, setNPSvisible] = useState(false);
   const [bannerProNPSVisible, setBannerProNPSVisible] = useState(true);
   const [ongletActif, setOngletActif] = useState('all');
-  const [checklistBannerVisible, setChecklistBannerVisible] = useState(false);
+  const [checklistBannerVisible, setChecklistBannerVisible] = useState(null); // null = loading, boolean = determined
   const checklistBannerOpacity = React.useRef(new Animated.Value(0)).current;
   const scrollRef = React.useRef();
   const { showLatestChangesModal } = useLatestChangesModal();
