@@ -1,3 +1,10 @@
+# [1.52.0-alpha.9](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.8...v1.52.0-alpha.9) (2025-07-31)
+
+
+### Bug Fixes
+
+* fix setting skip callback when using progress header ([#325](https://github.com/SocialGouv/jardinmental/issues/325)) ([7ceb749](https://github.com/SocialGouv/jardinmental/commit/7ceb749dc8d054cc0dea744c236262a3028a5da7))
+
 # [1.52.0-alpha.8](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.7...v1.52.0-alpha.8) (2025-07-31)
 
 
