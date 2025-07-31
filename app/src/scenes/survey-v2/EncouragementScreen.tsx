@@ -14,11 +14,12 @@ interface EncouragementScreenProps {
   navigation: any;
   currentStep: number;
   totalSteps: number;
-  title: string;
+  title?: string;
   description: string;
   headingTitle?: string;
   extraInfo?: string;
   onNext: () => void;
+  onSkip?: () => void;
 }
 
 export const EncouragementScreen: React.FC<EncouragementScreenProps> = ({
@@ -28,6 +29,7 @@ export const EncouragementScreen: React.FC<EncouragementScreenProps> = ({
   description,
   extraInfo,
   onNext,
+  onSkip
 }) => {
 
   const { setSlideIndex } = useOnboardingProgressHeader();
@@ -42,7 +44,7 @@ export const EncouragementScreen: React.FC<EncouragementScreenProps> = ({
   return (
     <BeigeWrapperScreen
       handlePrevious={() => navigation.goBack()}
-      handleSkip={onNext}
+      handleSkip={onSkip}
       handleNext={onNext}>
       <BeigeCard>
         <View className="justify-center items-center w-full">
@@ -51,11 +53,11 @@ export const EncouragementScreen: React.FC<EncouragementScreenProps> = ({
           >
             {headingTitle || `C'est noté 🌱`}
           </Text>
-          <Text
+          {title && <Text
             className={mergeClassNames(typography.textMdSemibold, 'text-brand-900 mb-8 text-left w-full')}
           >
             {title}
-          </Text>
+          </Text>}
         </View>
         {description && <View className="pb-4 w-full">
           <Text className={mergeClassNames(typography.textMdRegular, 'text-center text-brand-900 text-left')}>

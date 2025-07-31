@@ -84,7 +84,7 @@ const OnboardingV2Navigator: React.FC = () => {
       navigation={navigation}
       currentStep={0}
       totalSteps={0}
-      title={'Vous êtes prêts à faire vos observations quotidiennes, bravo !'}
+      headingTitle={'Vous êtes prêts à faire vos observations quotidiennes, bravo !'}
       description={'Complétez maintenant votre première observation'}
       onNext={() => {
         const date = formatDay(beforeToday(0));

@@ -74,7 +74,7 @@ export const SubcategoriesScreen: React.FC<Props> = ({ navigation, route }) => {
         };
     })
     return (<AnimatedHeaderScrollScreen
-        title={`Précisez ce que souhaitez vous suivre en priorité`}
+        title={`Précisez ce que vous souhaitez suivre en priorité`}
         dynamicTitle={'Priorités'}
         hasProgressBar={true}
         navigation={navigation}
