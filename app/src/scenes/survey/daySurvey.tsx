@@ -56,16 +56,20 @@ const DaySurvey = ({
     label: "Ajoutez une note générale sur votre journée",
   };
 
+  const updateIndicators = async () => {
+    const user_indicateurs = await localStorage.getIndicateurs();
+    if (user_indicateurs) {
+      setUserIndicateurs(user_indicateurs);
+    }
+  }
+
   useFocusEffect(
     React.useCallback(() => {
-      (async () => {
-        const user_indicateurs = await localStorage.getIndicateurs();
-        if (user_indicateurs) {
-          setUserIndicateurs(user_indicateurs);
-        }
-      })();
-    }, [])
+      updateIndicators();
+    }, []),
   );
+
+
 
   useEffect(() => {
     //init the survey if there is already answers
@@ -228,19 +232,22 @@ const DaySurvey = ({
                 containerStyle={{ marginBottom: 16 }}
               />
               {userIndicateurs
-                .filter((ind) => ind.active)
-                .map((ind, index) => (
-                  <IndicatorSurveyItem
-                    key={ind?.uuid}
+                .filter(ind => ind.active)
+                .map((ind, index) => {
+                  return <IndicatorSurveyItem
+                    key={ind.uuid}
                     showComment={true}
                     indicator={ind}
                     index={index}
                     value={answers?.[ind?.name]?.value}
+                    onIndicatorChange={() => {
+                      updateIndicators()
+                    }}
                     onValueChanged={({ indicator, value }) => toggleAnswer({ key: indicator?.name, value })}
                     onCommentChanged={({ indicator, comment }) => handleChangeUserComment({ key: indicator?.name, userComment: comment })}
                     comment={answers?.[ind?.name]?.userComment}
                   />
-                ))}
+                })}
               <Card
                 title="Personnaliser mes indicateurs"
                 icon={{ icon: "ImportantSvg" }}
