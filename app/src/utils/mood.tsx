@@ -17,31 +17,31 @@ export const moodEmojis: MoodEmoji[] = [
         backgroundColor: EMOTION_COLORS.veryBad,
         text: iconColors.veryBad,
         label: 'Très mauvais',
-        icon: <SmileyVeryBad />
+        icon: <SmileyVeryBad width={62.5} height={62.5} />
     },
     {
         backgroundColor: EMOTION_COLORS.bad,
         text: iconColors.bad,
         label: 'Mauvais',
-        icon: <SmileyBad />
+        icon: <SmileyBad width={62.5} height={62.5} />
     },
     {
         backgroundColor: EMOTION_COLORS.middle,
         text: iconColors.middle,
         label: 'Rien de spécial',
-        icon: <SmileyMiddle />
+        icon: <SmileyMiddle width={62.5} height={62.5} />
     },
     {
         backgroundColor: EMOTION_COLORS.good,
         text: iconColors.good,
         label: 'Bon',
-        icon: <SmileyGood />
+        icon: <SmileyGood width={62.5} height={62.5} />
     },
     {
         backgroundColor: EMOTION_COLORS.veryGood,
         text: iconColors.veryGood,
         label: 'Très bon',
-        icon: <SmileyVeryGood />
+        icon: <SmileyVeryGood width={62.5} height={62.5} />
     },
 ];
 

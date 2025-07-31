@@ -22,7 +22,6 @@ import { typography } from '@/utils/typography';
 import { mergeClassNames } from '@/utils/className';
 import { useStatusBar } from '@/context/StatusBarContext';
 import { useFocusEffect } from '@react-navigation/native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -51,8 +50,6 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
   const statusBarColorProgress = useSharedValue(0);
   const textOpacity = useSharedValue(0);
   const rotateSelectorProgress = useSharedValue(0);
-
-  const insets = useSafeAreaInsets();
 
   // FlatList configuration
   const itemWidth = screenWidth / 5; // Show all 5 items at once
@@ -301,13 +298,6 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
     if (measuredHeight.value === 0) { // Only measure once
       const bannerHeight = event.nativeEvent.layout.height;
       measuredHeight.value = bannerHeight;
-
-      // Calculate total header height including safe area insets
-      const totalHeaderHeight = bannerHeight + (Platform.OS === 'android' ? insets.top : -50);
-      setDynamicPaddingTop(totalHeaderHeight);
-
-      console.log('Banner height measured:', bannerHeight);
-      console.log('Total header height (with insets):', totalHeaderHeight);
     }
   };
 
@@ -386,8 +376,8 @@ const MoodItem = ({
           className="items-center p-2 rounded-[14px] justify-center"
           style={{
             backgroundColor: item.backgroundColor,
-            width: 64,
-            height: 80,
+            width: 60,
+            height: 76,
           }}
         >
           <View className="flex-1 justify-center items-center">
