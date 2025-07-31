@@ -76,7 +76,7 @@ export default function CheckListScreen({ navigation, route }) {
                 reminder,
                 indicators: !!userIndicators.filter(ind => ![INDICATEURS_HUMEUR.uuid, INDICATEURS_SOMMEIL.uuid].includes(ind.uuid) && ind.active).length,
                 goals: !!goals.length,
-                drugs: drugs
+                drugs: !!drugs
             })))
         })();
     }, []))
