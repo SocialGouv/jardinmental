@@ -193,16 +193,6 @@ const clearUserProfile = async (): Promise<void> => {
   }
 };
 
-// Checklist banner functions (legacy)
-const getChecklistBannerDismissed = async () => {
-  const dismissed = await AsyncStorage.getItem(STORAGE_KEY_CHECKLIST_BANNER_DISMISSED);
-  return dismissed ? JSON.parse(dismissed) : false;
-};
-
-const setChecklistBannerDismissed = async (dismissed: boolean) => {
-  await AsyncStorage.setItem(STORAGE_KEY_CHECKLIST_BANNER_DISMISSED, JSON.stringify(dismissed));
-};
-
 // Enhanced checklist banner state functions
 interface ChecklistBannerState {
   dismissCount: number;
@@ -214,16 +204,6 @@ const getChecklistBannerState = async (): Promise<ChecklistBannerState> => {
   const state = await AsyncStorage.getItem(STORAGE_KEY_CHECKLIST_BANNER_STATE);
   if (state) {
     return JSON.parse(state);
-  }
-
-  // Check if we have legacy dismissed state and migrate
-  const legacyDismissed = await getChecklistBannerDismissed();
-  if (legacyDismissed) {
-    return {
-      dismissCount: CHECKLIST_BANNER_CONFIG.MAX_DISMISSALS,
-      lastDismissedAt: Date.now(),
-      permanentlyDismissed: true,
-    };
   }
 
   // Default state
@@ -282,8 +262,6 @@ export default {
   getUserProfile,
   setUserProfile,
   clearUserProfile,
-  getChecklistBannerDismissed,
-  setChecklistBannerDismissed,
   getChecklistBannerState,
   setChecklistBannerState,
   incrementChecklistBannerDismissCount,
