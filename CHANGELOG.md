@@ -1,3 +1,15 @@
+# [1.52.0-alpha.7](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.6...v1.52.0-alpha.7) (2025-07-31)
+
+
+### Bug Fixes
+
+* fix blur border and icon in emotion slider animation ([#316](https://github.com/SocialGouv/jardinmental/issues/316)) ([d10e0d3](https://github.com/SocialGouv/jardinmental/commit/d10e0d360f16128aea8e0466eaea16523756c205))
+
+
+### Features
+
+* when no difficulties selected show popular indicators ([#321](https://github.com/SocialGouv/jardinmental/issues/321)) ([c46fddc](https://github.com/SocialGouv/jardinmental/commit/c46fddc5452116da0bede065cd932a0fcdb604c5))
+
 # [1.52.0-alpha.6](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.5...v1.52.0-alpha.6) (2025-07-31)
 
 
