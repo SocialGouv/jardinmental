@@ -33,13 +33,17 @@ const EditIndicateurs = ({ navigation, route }) => {
       prev[category].push(curr);
       return prev;
     }
-    // }
-    // if (!prev[curr.category]) {
-    //   prev[curr.category] = [];
-    // }
-    // prev[curr.category].push(curr);
-    // return prev;
   }, {});
+
+  // Sort each category group
+  for (const category in indicateursByCategory) {
+    indicateursByCategory[category].sort((a, b) => {
+      if (a.isGeneric !== b.isGeneric) {
+        return a.isGeneric ? -1 : 1;
+      }
+      return a.priority - b.priority;
+    });
+  }
 
   useFocusEffect(
     React.useCallback(() => {
