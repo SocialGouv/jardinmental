@@ -19,7 +19,11 @@ export default ({ navigation, route }) => {
       diaryData,
       navigation,
     });
-    navigation.navigate("tabs");
+    if (route.params?.previous === 'checklist') {
+      navigation.goBack();
+    } else {
+      navigation.navigate('tabs')
+    }
   };
   const handleDrugInformation = async () => {
     navigation.navigate("onboarding-drugs-information", { onboarding: true });
