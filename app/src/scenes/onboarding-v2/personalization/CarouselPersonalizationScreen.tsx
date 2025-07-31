@@ -13,10 +13,10 @@ const { width: screenWidth } = Dimensions.get('window');
 export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
   const { slides } = route.params;
   const [currentIndex, setCurrentIndex] = useState(0);
-  const { setSlideIndex, setNextPath } = useOnboardingProgressHeader();
+  const { setSlideIndex, setNextCallback } = useOnboardingProgressHeader();
 
   useEffect(() => {
-    setNextPath('Onboarding')
+    setNextCallback('Onboarding')
   }, [])
   const flatListRef = useRef<FlatList>(null);
 

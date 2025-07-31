@@ -15,22 +15,23 @@ const NextScreen = 'PersonalizationDifficulties'
 
 export const OnboardingPersonalizationStartScreen: React.FC<Props> = ({ navigation }) => {
 
-  const { setNextPath } = useOnboardingProgressHeader();
+  const { setNextCallback, setSkipCallback } = useOnboardingProgressHeader();
 
   const handleNext = useCallback(() => {
     navigation.navigate(NextScreen);
   }, [navigation]);
 
   useEffect(() => {
-    setNextPath(handleNext);
+    setSkipCallback(handleSkip)
+    setNextCallback(handleNext);
   }, [handleNext])
 
   const handlePrevious = () => {
     navigation.goBack();
   }
-  
+
   const handleSkip = useCallback(() => {
-    navigation.navigate('OnboardingChooseIndicator',  {
+    navigation.navigate('OnboardingChooseIndicator', {
       skippedScreen: 'PersonalizationStart'
     });
   }, [navigation]);
