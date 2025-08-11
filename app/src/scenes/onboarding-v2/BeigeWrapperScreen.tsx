@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions } from 'react-native';
+import { Dimensions, StatusBar } from 'react-native';
 import NavigationButtons from '@/components/onboarding/NavigationButtons';
 import CheckInHeader from '@/components/onboarding/CheckInHeader';
 import { TW_COLORS } from '@/utils/constants';
@@ -25,6 +25,15 @@ const VARIANT_COLORS = {
     green: `bg-[#EEF9F1]`,
     blue: `bg-[#E8F7F4]`,
 }
+
+const VARIANT_RAW_COLORS = {
+    beige: '#FDF2E7',
+    red: '#FAEEEF',
+    pink: '#FEF8FB',
+    white: TW_COLORS.WHITE,
+    green: '#EEF9F1',
+    blue: '#E8F7F4',
+};
 
 const VARIANT_BORDER_COLORS = {
     beige: 'bg-[#FDF2E7]',
@@ -74,6 +83,7 @@ export const BeigeWrapperScreen: React.FC<Props> = ({
 
     return (
         <SafeAreaViewWithOptionalHeader className={`flex-1 ${VARIANT_COLORS[variant]}`}>
+            <StatusBar backgroundColor={VARIANT_RAW_COLORS[variant]} />
             <CheckInHeader
                 title=""
                 onPrevious={handlePrevious}
