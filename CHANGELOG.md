@@ -1,3 +1,10 @@
+# [1.52.0-alpha.10](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.9...v1.52.0-alpha.10) (2025-08-11)
+
+
+### Features
+
+* add statusBarContext file ([#328](https://github.com/SocialGouv/jardinmental/issues/328)) ([e32c3cd](https://github.com/SocialGouv/jardinmental/commit/e32c3cdf14084ee1fa20ec821719fcd5c63bd59b))
+
 # [1.52.0-alpha.9](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.8...v1.52.0-alpha.9) (2025-07-31)
 
 
