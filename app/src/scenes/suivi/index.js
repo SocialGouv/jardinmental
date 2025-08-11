@@ -1,24 +1,24 @@
-import React from 'react';
-import { SafeAreaView, StyleSheet, View } from 'react-native';
-import { useFocusEffect } from '@react-navigation/native';
+import React from "react";
+import { SafeAreaView, StyleSheet, View } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
 
-import { beforeToday } from '../../utils/date/helpers';
-import Header from '../../components/Header';
+import { beforeToday } from "../../utils/date/helpers";
+import Header from "../../components/Header";
 // import ChartPicker from "./chartPicker";
-import ChartPicker from './chartPicker2';
-import RangeDate from './RangeDate';
-import ChartPie from './chartPie';
-import Evenements from './events';
-import Courbes from '../calendar/calendar';
-import logEvents from '../../services/logEvents';
-import localStorage from '../../utils/localStorage';
-import FloatingPlusButton from '../../components/FloatingPlusButton';
-import { FriseScreen } from './frise';
-import { colors } from '@/utils/colors';
+import ChartPicker from "./chartPicker2";
+import RangeDate from "./RangeDate";
+import ChartPie from "./chartPie";
+import Evenements from "./events";
+import Courbes from "../calendar/calendar";
+import logEvents from "../../services/logEvents";
+import localStorage from "../../utils/localStorage";
+import FloatingPlusButton from "../../components/FloatingPlusButton";
+import { FriseScreen } from "./frise";
+import { colors } from "@/utils/colors";
 
 const Suivi = ({ navigation, startSurvey }) => {
-  const [chartType, setChartType] = React.useState('Frises');
-  const [presetDate, setPresetDate] = React.useState('lastDays7');
+  const [chartType, setChartType] = React.useState("Frises");
+  const [presetDate, setPresetDate] = React.useState("lastDays7");
   const [fromDate, setFromDate] = React.useState(beforeToday(30));
   const [toDate, setToDate] = React.useState(beforeToday(0));
   const [aUnTraiement, setAUnTraitement] = React.useState(false);
@@ -26,7 +26,7 @@ const Suivi = ({ navigation, startSurvey }) => {
   useFocusEffect(
     React.useCallback(() => {
       logEvents.logOpenPageSuivi(chartType);
-    }, [chartType]),
+    }, [chartType])
   );
   useFocusEffect(
     React.useCallback(() => {
@@ -38,18 +38,18 @@ const Suivi = ({ navigation, startSurvey }) => {
           setAUnTraitement(true);
         }
       })();
-    }, []),
+    }, [])
   );
 
   if (!toDate || !fromDate) return null;
 
-  const renderChart = chart => {
+  const renderChart = (chart) => {
     switch (chart) {
-      case 'Statistiques':
+      case "Statistiques":
         return <ChartPie fromDate={fromDate} toDate={toDate} navigation={navigation} />;
-      case 'Courbes':
+      case "Courbes":
         return <Courbes navigation={navigation} />;
-      case 'Déclencheurs':
+      case "Déclencheurs":
         return (
           <Evenements
             navigation={navigation}
@@ -61,7 +61,7 @@ const Suivi = ({ navigation, startSurvey }) => {
             setToDate={setToDate}
           />
         );
-      case 'Frises':
+      case "Frises":
       default:
         return (
           <FriseScreen
@@ -89,11 +89,11 @@ const Suivi = ({ navigation, startSurvey }) => {
             // onAfterPress={() => setChartType(nextChartType(chartType))}
             // onBeforePress={() => setChartType(prevChartType(chartType))}
             // title={chartType}
-            onChange={e => setChartType(e)}
+            onChange={(e) => setChartType(e)}
             ongletActif={chartType}
           />
         </View>
-        {chartType === 'Statistiques' && (
+        {chartType === "Statistiques" && (
           <View style={styles.headerContainer}>
             <RangeDate
               presetValue={presetDate}
@@ -120,18 +120,18 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.LIGHT_BLUE,
   },
   tabContainer: {
-    backgroundColor: '#FFFFFF',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "#FFFFFF",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
   },
   headerContainer: {
     paddingTop: 15,
     paddingBottom: 15,
-    backgroundColor: '#FFFFFF',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "#FFFFFF",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
   },
   safe: {
     flex: 1,

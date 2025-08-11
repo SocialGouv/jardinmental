@@ -1,10 +1,10 @@
-import React from 'react';
-import { View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import QuestionYesNo from '../survey/QuestionYesNo';
-import NavigationButtons from '../../components/onboarding/NavigationButtons';
-import CheckInHeader from '../../components/onboarding/CheckInHeader';
-import BannerHeader from '../onboarding-v2/BannerHeader';
+import React from "react";
+import { View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import QuestionYesNo from "../survey/QuestionYesNo";
+import NavigationButtons from "../../components/onboarding/NavigationButtons";
+import CheckInHeader from "../../components/onboarding/CheckInHeader";
+import BannerHeader from "../onboarding-v2/BannerHeader";
 
 interface ToxicScreenProps {
   navigation: any;
@@ -26,7 +26,7 @@ export const ToxicScreen: React.FC<ToxicScreenProps> = ({
   onNext,
 }) => {
   const questionToxic = {
-    id: 'TOXIC',
+    id: "TOXIC",
     label: "Avez-vous consommé des substances aujourd'hui ?",
     explanation: undefined,
   };
@@ -41,9 +41,9 @@ export const ToxicScreen: React.FC<ToxicScreenProps> = ({
         showSkip={true}
       /> */}
       <BannerHeader
-        headerTitle='Observation du jour'
+        headerTitle="Observation du jour"
         header={undefined}
-        title={'Substances'}
+        title={"Substances"}
         handlePrevious={() => navigation.goBack()}
         handleSkip={onNext}
       ></BannerHeader>

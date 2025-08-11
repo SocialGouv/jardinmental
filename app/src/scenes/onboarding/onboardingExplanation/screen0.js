@@ -26,9 +26,7 @@ const Explanation = ({ navigation }) => {
       </View>
       <ScrollView style={styles.container} contentContainerStyle={styles.scrollContainer}>
         <View style={styles.header}>
-          <Text style={styles.title}>
-            Vous allez évaluer quotidiennement des indicateurs de votre état de santé mentale
-          </Text>
+          <Text style={styles.title}>Vous allez évaluer quotidiennement des indicateurs de votre état de santé mentale</Text>
           <View style={styles.preview}>
             <Text style={styles.text}>Humeur</Text>
             <AllEmoji width="100%" height="30" />
@@ -38,9 +36,8 @@ const Explanation = ({ navigation }) => {
             <AllEmoji width="100%" height="30" />
           </View>
           <Text style={styles.subtitle}>
-            Ces indicateurs peuvent être des <Text style={styles.bold}>émotions</Text>, des{" "}
-            <Text style={styles.bold}>ressentis</Text>, des <Text style={styles.bold}>comportements</Text> ou
-            même des <Text style={styles.bold}>activités</Text>
+            Ces indicateurs peuvent être des <Text style={styles.bold}>émotions</Text>, des <Text style={styles.bold}>ressentis</Text>, des{" "}
+            <Text style={styles.bold}>comportements</Text> ou même des <Text style={styles.bold}>activités</Text>
           </Text>
         </View>
       </ScrollView>

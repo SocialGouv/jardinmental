@@ -8,8 +8,7 @@ import { canEdit } from "./utils/index.js";
 const Posology = ({ patientState, posology, date, onPress }) => {
   const hasPosology = posology && posology.length > 0 && posology.some((e) => e.value);
   const hasPriseDeTraitement =
-    Object.keys(patientState?.PRISE_DE_TRAITEMENT || {})?.length ||
-    Object.keys(patientState?.PRISE_DE_TRAITEMENT_SI_BESOIN || {})?.length;
+    Object.keys(patientState?.PRISE_DE_TRAITEMENT || {})?.length || Object.keys(patientState?.PRISE_DE_TRAITEMENT_SI_BESOIN || {})?.length;
 
   if (!hasPosology && !hasPriseDeTraitement) return null;
 
@@ -37,11 +36,7 @@ const Posology = ({ patientState, posology, date, onPress }) => {
         {patientState?.PRISE_DE_TRAITEMENT?.value !== undefined ? (
           <View style={styles.containerQuestionReponse}>
             <Text>Avez-vous pris correctement votre traitement quotidien&nbsp;?</Text>
-            {patientState?.PRISE_DE_TRAITEMENT?.value ? (
-              <Text style={styles.reponseOui}>Oui</Text>
-            ) : (
-              <Text style={styles.reponseNon}>Non</Text>
-            )}
+            {patientState?.PRISE_DE_TRAITEMENT?.value ? <Text style={styles.reponseOui}>Oui</Text> : <Text style={styles.reponseNon}>Non</Text>}
           </View>
         ) : null}
         {patientState?.PRISE_DE_TRAITEMENT_SI_BESOIN?.value !== undefined ? (

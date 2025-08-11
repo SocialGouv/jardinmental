@@ -1,15 +1,12 @@
-import React from 'react';
-import { View, Text } from 'react-native';
+import React from "react";
+import { View, Text } from "react-native";
 
 interface SurveyProgressBarProps {
   currentStep: number;
   totalSteps: number;
 }
 
-export const SurveyProgressBar: React.FC<SurveyProgressBarProps> = ({
-  currentStep,
-  totalSteps,
-}) => {
+export const SurveyProgressBar: React.FC<SurveyProgressBarProps> = ({ currentStep, totalSteps }) => {
   const progress = (currentStep / totalSteps) * 100;
 
   return (
@@ -18,10 +15,7 @@ export const SurveyProgressBar: React.FC<SurveyProgressBarProps> = ({
         Étape {currentStep} sur {totalSteps}
       </Text>
       <View className="w-full h-2 bg-gray-200 rounded-full">
-        <View
-          className="h-2 bg-blue-500 rounded-full transition-all duration-300"
-          style={{ width: `${progress}%` }}
-        />
+        <View className="h-2 bg-blue-500 rounded-full transition-all duration-300" style={{ width: `${progress}%` }} />
       </View>
     </View>
   );

@@ -1,5 +1,5 @@
-import { z } from 'zod';
-import { IndicatorSchema } from './Indicator';
+import { z } from "zod";
+import { IndicatorSchema } from "./Indicator";
 
 // Schema pour les médicaments (POSOLOGY)
 export const PosologySchema = z.object({
@@ -55,12 +55,10 @@ export const DiaryDataAnswerSchema = z.object({
 });
 export type DiaryDataAnswer = z.infer<typeof DiaryDataAnswerSchema>;
 
-
 // Schema for all DiaryData answers - combines dynamic indicator answers with fixed questions
-export const DiaryDataAnswerListSchema = z.record(
-  z.string().describe('The indicator name'),
-  DiaryDataAnswerSchema,
-).describe('User custom indicators');
+export const DiaryDataAnswerListSchema = z
+  .record(z.string().describe("The indicator name"), DiaryDataAnswerSchema)
+  .describe("User custom indicators");
 export type DiaryDataAnswerList = z.infer<typeof DiaryDataAnswerListSchema>;
 
 // Main DiaryData schema
@@ -72,24 +70,31 @@ export const DiaryEntrySchema = DiaryDataAnswerListSchema.and(
     POSOLOGY: z.array(PosologySchema).optional().nullable(),
     // use in notes-screen.tsx
     NOTES: NotesSchema.optional().nullable(),
-    // 
-    CONTEXT: z.object({
-      userComment: z.string().optional(),
-    }).describe(`Ajoutez une note générale sur votre journée`).optional().nullable(),
-    TOXIC: z.object({
-      value: z.boolean().optional().nullable(),
-      userComment: z.string().optional().nullable(),
-    }).describe(`Avez-vous consommé des substances aujourd'hui ?`).optional().nullable(),
-  }))
+    //
+    CONTEXT: z
+      .object({
+        userComment: z.string().optional(),
+      })
+      .describe(`Ajoutez une note générale sur votre journée`)
+      .optional()
+      .nullable(),
+    TOXIC: z
+      .object({
+        value: z.boolean().optional().nullable(),
+        userComment: z.string().optional().nullable(),
+      })
+      .describe(`Avez-vous consommé des substances aujourd'hui ?`)
+      .optional()
+      .nullable(),
+  })
+);
 export type DiaryEntry = z.infer<typeof DiaryEntrySchema>;
 
-
-export const DiaryDataSchema = z.record(z.string().describe('The date of the entry'), DiaryEntrySchema);
+export const DiaryDataSchema = z.record(z.string().describe("The date of the entry"), DiaryEntrySchema);
 export type DiaryData = z.infer<typeof DiaryDataSchema>;
 
 export const DiaryDataNewEntryInputSchema = z.object({
-  date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Date must be in YYYY-MM-DD format'),
-  answers: DiaryEntrySchema
-})
-export type DiaryDataNewEntryInput = z.infer<typeof DiaryDataNewEntryInputSchema>
-
+  date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be in YYYY-MM-DD format"),
+  answers: DiaryEntrySchema,
+});
+export type DiaryDataNewEntryInput = z.infer<typeof DiaryDataNewEntryInputSchema>;

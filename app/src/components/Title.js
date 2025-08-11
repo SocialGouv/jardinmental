@@ -3,11 +3,7 @@ import { StyleSheet, Text } from "react-native";
 import { colors } from "@/utils/colors";
 
 export const Title = ({ children, style, fill = true, align }) => {
-  return (
-    <Text style={[styles.text, fill && { width: "100%" }, align && { textAlign: align }, style]}>
-      {children}
-    </Text>
-  );
+  return <Text style={[styles.text, fill && { width: "100%" }, align && { textAlign: align }, style]}>{children}</Text>;
 };
 
 const styles = StyleSheet.create({

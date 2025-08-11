@@ -47,9 +47,7 @@ const RecapCompletion = () => {
 
   return (
     <View style={styles.safe}>
-      <Text style={[styles.title, styles.separatorBottom]}>
-        Complétez les 7 derniers jours pour un meilleur suivi
-      </Text>
+      <Text style={[styles.title, styles.separatorBottom]}>Complétez les 7 derniers jours pour un meilleur suivi</Text>
       <View style={styles.fil} />
       <View style={styles.buttonsContainer}>
         {[...Array(7)].map((_, i) => {

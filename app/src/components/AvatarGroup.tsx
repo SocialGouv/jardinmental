@@ -1,6 +1,6 @@
-import React from 'react';
-import { View, Image, Text } from 'react-native';
-import { styled } from 'nativewind';
+import React from "react";
+import { View, Image, Text } from "react-native";
+import { styled } from "nativewind";
 
 const StyledImage = styled(Image);
 
@@ -18,13 +18,13 @@ interface AvatarGroupProps {
 export const AvatarGroup: React.FC<AvatarGroupProps> = ({ avatars, max = 4, size = 40 }) => {
   const displayed = avatars.slice(0, max);
   const extra = avatars.length > max ? avatars.length - max : 0;
-  console.log('AvatarGroup', displayed);
+  console.log("AvatarGroup", displayed);
   return (
     <View className="flex-row items-center">
       {displayed.map((avatar, index) => (
         <StyledImage
           key={index}
-          source={typeof avatar.uri === 'string' ? { uri: avatar.uri } : avatar.uri}
+          source={typeof avatar.uri === "string" ? { uri: avatar.uri } : avatar.uri}
           accessibilityLabel={avatar.alt}
           className="rounded-full border-2 border-white"
           style={{

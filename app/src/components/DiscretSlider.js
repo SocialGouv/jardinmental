@@ -1,17 +1,10 @@
-import React from 'react';
-import {StyleSheet, View, TouchableOpacity, Dimensions} from 'react-native';
-import {colors} from '../utils/colors';
-import Text from '../components/MyText';
+import React from "react";
+import { StyleSheet, View, TouchableOpacity, Dimensions } from "react-native";
+import { colors } from "../utils/colors";
+import Text from "../components/MyText";
 
-export default ({
-  numberOfSteps = 10,
-  step = 0,
-  activeColor = colors.LIGHT_BLUE,
-  inactiveColor = '#F4FCFD',
-  borderColor = '#D4F0F2',
-  onChange,
-}) => {
-  const size = Dimensions.get('window').width / (1.5 * numberOfSteps);
+export default ({ numberOfSteps = 10, step = 0, activeColor = colors.LIGHT_BLUE, inactiveColor = "#F4FCFD", borderColor = "#D4F0F2", onChange }) => {
+  const size = Dimensions.get("window").width / (1.5 * numberOfSteps);
   return (
     <View style={styles.container}>
       {[...Array(numberOfSteps)].map((_, i) => {
@@ -32,14 +25,7 @@ export default ({
   );
 };
 
-const Item = ({
-  backgroundColor,
-  borderColor,
-  onPress,
-  showText,
-  text,
-  size,
-}) => {
+const Item = ({ backgroundColor, borderColor, onPress, showText, text, size }) => {
   return (
     <View style={styles.itemContainer}>
       <TouchableOpacity
@@ -67,18 +53,18 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   itemContainer: {
-    display: 'flex',
-    alignItems: 'center',
+    display: "flex",
+    alignItems: "center",
   },
   text: {
     color: colors.DARK_BLUE,
     fontSize: 11,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   container: {
-    display: 'flex',
-    width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
+    display: "flex",
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-evenly",
   },
 });

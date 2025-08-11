@@ -1,10 +1,10 @@
-import React from 'react';
-import { View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import InputQuestion from '../survey/InputQuestion';
-import NavigationButtons from '../../components/onboarding/NavigationButtons';
-import CheckInHeader from '../../components/onboarding/CheckInHeader';
-import BannerHeader from '../onboarding-v2/BannerHeader';
+import React from "react";
+import { View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import InputQuestion from "../survey/InputQuestion";
+import NavigationButtons from "../../components/onboarding/NavigationButtons";
+import CheckInHeader from "../../components/onboarding/CheckInHeader";
+import BannerHeader from "../onboarding-v2/BannerHeader";
 
 interface ContextScreenProps {
   navigation: any;
@@ -16,15 +16,10 @@ interface ContextScreenProps {
   onNext: () => void;
 }
 
-export const ContextScreen: React.FC<ContextScreenProps> = ({
-  navigation,
-  answers,
-  onCommentChanged,
-  onNext,
-}) => {
+export const ContextScreen: React.FC<ContextScreenProps> = ({ navigation, answers, onCommentChanged, onNext }) => {
   const questionContext = {
-    id: 'CONTEXT',
-    label: 'Ajoutez une note générale sur votre journée',
+    id: "CONTEXT",
+    label: "Ajoutez une note générale sur votre journée",
     explanation: undefined,
   };
 
@@ -38,9 +33,9 @@ export const ContextScreen: React.FC<ContextScreenProps> = ({
             showSkip={true}
           />  */}
       <BannerHeader
-        headerTitle='Observation du jour'
+        headerTitle="Observation du jour"
         header={undefined}
-        title={'Note générale'}
+        title={"Note générale"}
         handlePrevious={() => navigation.goBack()}
         handleSkip={onNext}
       ></BannerHeader>

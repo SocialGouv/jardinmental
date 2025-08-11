@@ -14,155 +14,154 @@ import { v4 as uuidv4 } from "uuid";
 import JMButton from "@/components/JMButton";
 import { INDICATORS_CATEGORIES } from "@/entities/IndicatorCategories";
 
-const screenHeight = Dimensions.get('window').height;
+const screenHeight = Dimensions.get("window").height;
 const height90vh = screenHeight * 0.9;
 
 export default function IndicatorModal({
-    category = NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR,
-    addedIndicators,
-    initialSelectedIndicators,
-    onClose
+  category = NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR,
+  addedIndicators,
+  initialSelectedIndicators,
+  onClose,
 }: {
-    category: NEW_INDICATORS_CATEGORIES,
-    addedIndicators: PredefineIndicatorV2SchemaType[],
-    initialSelectedIndicators: string[],
-    onClose: (categoryName: NEW_INDICATORS_CATEGORIES, indicators: PredefineIndicatorV2SchemaType[]) => void
+  category: NEW_INDICATORS_CATEGORIES;
+  addedIndicators: PredefineIndicatorV2SchemaType[];
+  initialSelectedIndicators: string[];
+  onClose: (categoryName: NEW_INDICATORS_CATEGORIES, indicators: PredefineIndicatorV2SchemaType[]) => void;
 }) {
-    const allIndicators = [...INDICATORS.filter(ind => ind.categories.includes(category)), ...addedIndicators].filter(ind => !ind.isGeneric)
-    const uniqueIndicators = Array.from(
-        new Map(allIndicators.map(ind => [ind.uuid, ind])).values()
-    );
-    const [newIndicators, setNewIndicators] = useState<PredefineIndicatorV2SchemaType[]>([])
-    const [filteredIndicators, setFilteredIndicators] = useState<PredefineIndicatorV2SchemaType[]>([...uniqueIndicators, ...newIndicators])
-    const [searchedText, setSearchText] = useState<string>('')
-    const [editingIndicators, setEditingIndicators] = useState<string[]>([])
-    const [selectedIndicators, setSelectedIndicators] = useState<string[]>(initialSelectedIndicators);
+  const allIndicators = [...INDICATORS.filter((ind) => ind.categories.includes(category)), ...addedIndicators].filter((ind) => !ind.isGeneric);
+  const uniqueIndicators = Array.from(new Map(allIndicators.map((ind) => [ind.uuid, ind])).values());
+  const [newIndicators, setNewIndicators] = useState<PredefineIndicatorV2SchemaType[]>([]);
+  const [filteredIndicators, setFilteredIndicators] = useState<PredefineIndicatorV2SchemaType[]>([...uniqueIndicators, ...newIndicators]);
+  const [searchedText, setSearchText] = useState<string>("");
+  const [editingIndicators, setEditingIndicators] = useState<string[]>([]);
+  const [selectedIndicators, setSelectedIndicators] = useState<string[]>(initialSelectedIndicators);
 
-    const toggleIndicator = (id: string) => {
-        setSelectedIndicators(prev => prev.includes(id) ? prev.filter(selectedId => selectedId !== id) : [...prev, id])
+  const toggleIndicator = (id: string) => {
+    setSelectedIndicators((prev) => (prev.includes(id) ? prev.filter((selectedId) => selectedId !== id) : [...prev, id]));
+  };
+
+  const createCustomIndicator = (name: string, category: NEW_INDICATORS_CATEGORIES): PredefineIndicatorV2SchemaType => {
+    return {
+      uuid: uuidv4(),
+      name: name,
+      category: INDICATORS_CATEGORIES.Comportements,
+      type: INDICATOR_TYPE.boolean,
+      order: "ASC",
+      categories: [category],
+      mainCategory: category,
+      priority: 0,
     };
+  };
 
-
-    const createCustomIndicator = (name: string, category: NEW_INDICATORS_CATEGORIES): PredefineIndicatorV2SchemaType => {
-        return {
-            uuid: uuidv4(),
-            name: name,
-            category: INDICATORS_CATEGORIES.Comportements,
-            type: INDICATOR_TYPE.boolean,
-            order: "ASC",
-            categories: [category],
-            mainCategory: category,
-            priority: 0
-        };
-    };
-
-    const createNewIndicator = (text: string, index?: number) => {
-        if (text) {
-            const newIndicator = createCustomIndicator(text, category)
-            setNewIndicators((prev) => [...prev, newIndicator])
-            if (typeof index === 'number') {
-                setEditingIndicators((prev) => [...prev.slice(0, index), ...prev.slice(index + 1)])
-            }
-            setSelectedIndicators((prev) => [...prev, newIndicator.uuid])
-        }
+  const createNewIndicator = (text: string, index?: number) => {
+    if (text) {
+      const newIndicator = createCustomIndicator(text, category);
+      setNewIndicators((prev) => [...prev, newIndicator]);
+      if (typeof index === "number") {
+        setEditingIndicators((prev) => [...prev.slice(0, index), ...prev.slice(index + 1)]);
+      }
+      setSelectedIndicators((prev) => [...prev, newIndicator.uuid]);
     }
+  };
 
-    useEffect(() => {
-        if (searchedText) {
-            setFilteredIndicators([...uniqueIndicators, ...newIndicators].filter(ind => ind.name.toLowerCase().includes(searchedText.toLowerCase())))
-        } else {
-            setFilteredIndicators([...uniqueIndicators, ...newIndicators])
-        }
-    }, [searchedText, newIndicators])
+  useEffect(() => {
+    if (searchedText) {
+      setFilteredIndicators([...uniqueIndicators, ...newIndicators].filter((ind) => ind.name.toLowerCase().includes(searchedText.toLowerCase())));
+    } else {
+      setFilteredIndicators([...uniqueIndicators, ...newIndicators]);
+    }
+  }, [searchedText, newIndicators]);
 
-    return <View className="flex-1">
-        <ScrollView className='gap-6'
-            contentContainerStyle={{ paddingBottom: 200 }}
-            showsVerticalScrollIndicator={false}
-            style={{ paddingVertical: 20, height: height90vh }}
-        >
-            <View className="flex-row">
-                {React.createElement(INDICATOR_CATEGORIES_DATA[category].icon, {
-                    color: TW_COLORS.BRAND_600
-                })}
-                <Text className={mergeClassNames(typography.textSmBold, 'ml-2 text-brand-600 text-left')}>
-                    {INDICATOR_CATEGORIES_DATA[category].label}
-                </Text>
-            </View>
-            <Text className={mergeClassNames(typography.displayXsBold, 'text-left text-brand-950')}>
-                Sélectionnez un ou plusieurs éléments
-            </Text>
-            <TextInput
-                onChangeText={(text) => {
-                    setSearchText(text)
-                }}
-                className={mergeClassNames(typography.textMdRegular, 'text-left border border-gray-300 p-2 rounded rounded-lg')}
-                placeholder="Rechercher ou ajouter un élément" />
-            <View className="flex-colum flex-1">
-                {filteredIndicators.map(ind => {
-                    const selected = selectedIndicators.includes(ind.uuid)
-
-                    return <LightSelectionnableItem
-                        key={ind.uuid}
-                        className="flex-row"
-                        id={ind.uuid}
-                        label={ind.name}
-                        selected={selected}
-                        onPress={() => toggleIndicator(ind.uuid)} />
-                })}
-                {!filteredIndicators.length && <Text className={
-                    mergeClassNames(typography.textSmMedium,
-                        'text-gray-700'
-                    )}>
-                    Pas de résultat
-                </Text>}
-                {!!searchedText && !filteredIndicators.length && <TouchableOpacity onPress={() => {
-                    createNewIndicator(searchedText)
-                    setSearchText('')
-                }}>
-                    <View className="flex-row items-center mr-auto mt-2">
-                        <Text className={mergeClassNames(typography.textLgMedium, "mr-2 text-brand-900")}>
-                            Ajouter "{searchedText}"
-                        </Text>
-                        <PlusIcon />
-                    </View></TouchableOpacity>}
-                {editingIndicators.map((text, index) => <InputSelectionnableItem
-                    label={'Nommez le produit ou l’addiction :'}
-                    onPress={(text: string) => createNewIndicator(text, index)}
-                />)}
-                {!searchedText && <View className="flex-row items-center mt-2 ml-auto">
-                    <TouchableOpacity
-                        onPress={() => {
-                            setEditingIndicators((editingIndicators) => [...editingIndicators, ''])
-                        }}
-                    >
-                        <View className="flex-row items-center">
-                            <Text className={mergeClassNames(typography.textMdMedium, "mr-2 text-brand-900")}>
-                                ajouter un élément
-                            </Text>
-                            <PlusIcon />
-                        </View>
-                    </TouchableOpacity>
-                </View>}
-            </View>
-        </ScrollView>
-        <View
-            style={{
-                position: 'absolute',
-                bottom: 0,
-                left: 0,
-                right: 0,
-            }}
-            className={`flex-column justify-between items-center p-6 px-6 bg-white/90 pb-10 w-full`}>
-            <Text className={mergeClassNames(typography.textSmMedium, 'text-gray-700 mb-2')}>
-                Vous pourrez modifier cette sélection plus tard
-            </Text>
-            <JMButton
-                onPress={() => {
-                    onClose(category, [...uniqueIndicators, ...newIndicators].filter(indicator => selectedIndicators.includes(indicator.uuid)))
-                }}
-                title={'Valider la sélection'}
-            />
+  return (
+    <View className="flex-1">
+      <ScrollView
+        className="gap-6"
+        contentContainerStyle={{ paddingBottom: 200 }}
+        showsVerticalScrollIndicator={false}
+        style={{ paddingVertical: 20, height: height90vh }}
+      >
+        <View className="flex-row">
+          {React.createElement(INDICATOR_CATEGORIES_DATA[category].icon, {
+            color: TW_COLORS.BRAND_600,
+          })}
+          <Text className={mergeClassNames(typography.textSmBold, "ml-2 text-brand-600 text-left")}>{INDICATOR_CATEGORIES_DATA[category].label}</Text>
         </View>
+        <Text className={mergeClassNames(typography.displayXsBold, "text-left text-brand-950")}>Sélectionnez un ou plusieurs éléments</Text>
+        <TextInput
+          onChangeText={(text) => {
+            setSearchText(text);
+          }}
+          className={mergeClassNames(typography.textMdRegular, "text-left border border-gray-300 p-2 rounded rounded-lg")}
+          placeholder="Rechercher ou ajouter un élément"
+        />
+        <View className="flex-colum flex-1">
+          {filteredIndicators.map((ind) => {
+            const selected = selectedIndicators.includes(ind.uuid);
+
+            return (
+              <LightSelectionnableItem
+                key={ind.uuid}
+                className="flex-row"
+                id={ind.uuid}
+                label={ind.name}
+                selected={selected}
+                onPress={() => toggleIndicator(ind.uuid)}
+              />
+            );
+          })}
+          {!filteredIndicators.length && <Text className={mergeClassNames(typography.textSmMedium, "text-gray-700")}>Pas de résultat</Text>}
+          {!!searchedText && !filteredIndicators.length && (
+            <TouchableOpacity
+              onPress={() => {
+                createNewIndicator(searchedText);
+                setSearchText("");
+              }}
+            >
+              <View className="flex-row items-center mr-auto mt-2">
+                <Text className={mergeClassNames(typography.textLgMedium, "mr-2 text-brand-900")}>Ajouter "{searchedText}"</Text>
+                <PlusIcon />
+              </View>
+            </TouchableOpacity>
+          )}
+          {editingIndicators.map((text, index) => (
+            <InputSelectionnableItem label={"Nommez le produit ou l’addiction :"} onPress={(text: string) => createNewIndicator(text, index)} />
+          ))}
+          {!searchedText && (
+            <View className="flex-row items-center mt-2 ml-auto">
+              <TouchableOpacity
+                onPress={() => {
+                  setEditingIndicators((editingIndicators) => [...editingIndicators, ""]);
+                }}
+              >
+                <View className="flex-row items-center">
+                  <Text className={mergeClassNames(typography.textMdMedium, "mr-2 text-brand-900")}>ajouter un élément</Text>
+                  <PlusIcon />
+                </View>
+              </TouchableOpacity>
+            </View>
+          )}
+        </View>
+      </ScrollView>
+      <View
+        style={{
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          right: 0,
+        }}
+        className={`flex-column justify-between items-center p-6 px-6 bg-white/90 pb-10 w-full`}
+      >
+        <Text className={mergeClassNames(typography.textSmMedium, "text-gray-700 mb-2")}>Vous pourrez modifier cette sélection plus tard</Text>
+        <JMButton
+          onPress={() => {
+            onClose(
+              category,
+              [...uniqueIndicators, ...newIndicators].filter((indicator) => selectedIndicators.includes(indicator.uuid))
+            );
+          }}
+          title={"Valider la sélection"}
+        />
+      </View>
     </View>
+  );
 }

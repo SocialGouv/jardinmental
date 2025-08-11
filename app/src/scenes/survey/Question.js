@@ -6,15 +6,7 @@ import CircledIcon from "../../components/CircledIcon";
 import Icon from "../../components/Icon";
 import { answers } from "../survey-v2/utils";
 
-const Question = ({
-  indicateur,
-  explanation,
-  onPress,
-  selected,
-  isLast,
-  onChangeUserComment,
-  userComment,
-}) => {
+const Question = ({ indicateur, explanation, onPress, selected, isLast, onChangeUserComment, userComment }) => {
   const [showExplanation, setShowExplanation] = useState(false);
   const toggleShowExplanation = async () => {
     setShowExplanation((prev) => !prev);
@@ -30,13 +22,7 @@ const Question = ({
         <View style={styles.questionHeaderContainer}>
           <View style={styles.questionHeader}>
             {explanation ? (
-              <Icon
-                icon="InfoSvg"
-                width={25}
-                height={25}
-                color={colors.LIGHT_BLUE}
-                styleContainer={{ width: 25, height: 25 }}
-              />
+              <Icon icon="InfoSvg" width={25} height={25} color={colors.LIGHT_BLUE} styleContainer={{ width: 25, height: 25 }} />
             ) : (
               <View />
             )}

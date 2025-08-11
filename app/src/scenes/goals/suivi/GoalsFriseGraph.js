@@ -5,14 +5,7 @@ import { FriseGraph } from "../../suivi/frise/FriseGraph";
 import { parseISO, getDay } from "date-fns";
 import { DAYS_OF_WEEK } from "../../../utils/date/daysOfWeek";
 
-export const GoalsFriseGraph = ({
-  chartDates,
-  focusedScores,
-  showTraitement,
-  priseDeTraitement,
-  priseDeTraitementSiBesoin,
-  onIsEmptyChanged,
-}) => {
+export const GoalsFriseGraph = ({ chartDates, focusedScores, showTraitement, priseDeTraitement, priseDeTraitementSiBesoin, onIsEmptyChanged }) => {
   const [goals, setGoals] = useState([]);
 
   const updateGoals = async () => {

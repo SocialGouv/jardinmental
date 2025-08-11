@@ -1,5 +1,5 @@
-import React from 'react';
-import Svg, {Path} from 'react-native-svg';
+import React from "react";
+import Svg, { Path } from "react-native-svg";
 
 export default (props) => (
   <Svg width={128} viewBox="0 0 22 22" {...props}>

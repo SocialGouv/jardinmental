@@ -5,12 +5,7 @@ import BackButton from "../../../components/BackButton";
 import { colors } from "../../../utils/colors";
 import localStorage from "../../../utils/localStorage";
 import logEvents from "../../../services/logEvents";
-import {
-  ONBOARDING_STEPS,
-  categories,
-  displayedCategories,
-  reliquatCategories,
-} from "../../../utils/constants";
+import { ONBOARDING_STEPS, categories, displayedCategories, reliquatCategories } from "../../../utils/constants";
 import Button from "../../../components/Button";
 import Text from "../../../components/MyText";
 import HeartBubble from "../../../../assets/svg/HeartBubble";
@@ -37,10 +32,7 @@ const CustomSymptomScreen = ({ navigation, route, settings = false }) => {
           // select it if we add it to the list (old and new version)
           // cat is the full name (SYMPTOM_FREQUENCE)
           // categoryName is the new format (SYMPTOM)
-          if (
-            Object.keys(preselectedCategories).includes(cat) ||
-            Object.keys(preselectedCategories).includes(categoryName)
-          ) {
+          if (Object.keys(preselectedCategories).includes(cat) || Object.keys(preselectedCategories).includes(categoryName)) {
             selected[categoryName] = preselectedCategories[cat] || preselectedCategories[categoryName];
           }
         });
@@ -96,12 +88,7 @@ const CustomSymptomScreen = ({ navigation, route, settings = false }) => {
           <Text style={styles.headerText}>Mon questionnaire</Text>
         </View>
       </View>
-      <ScrollView
-        keyboardShouldPersistTaps="handled"
-        style={styles.container}
-        keyboardDismissMode="on-drag"
-        onScrollBeginDrag={Keyboard.dismiss}
-      >
+      <ScrollView keyboardShouldPersistTaps="handled" style={styles.container} keyboardDismissMode="on-drag" onScrollBeginDrag={Keyboard.dismiss}>
         <View style={styles.personnalizeContainer}>
           <HeartBubble size={40} />
           <View style={styles.personnalizeTextContainer}>
@@ -140,7 +127,7 @@ const CustomSymptomScreen = ({ navigation, route, settings = false }) => {
         <Button2
           // buttonStyle={{ backgroundColor: "white", borderColor: colors.BLUE, borderWidth: 1 }}
           // textStyle={{ color: colors.BLUE, textAlign: "center" }}
-          onPress={() => { }}
+          onPress={() => {}}
           title="Modifier mon questionnaire"
         />
       </View>

@@ -64,12 +64,7 @@ const Onboarding = ({ navigation }) => {
           firstTime ? (
             <>
               <View style={styles.buttonWrapper}>
-                <Button
-                  buttonStyle={styles.buttonStyle}
-                  onPress={validateOnboarding}
-                  title="C'est parti !"
-                  disabled={!isCguChecked && firstTime}
-                />
+                <Button buttonStyle={styles.buttonStyle} onPress={validateOnboarding} title="C'est parti !" disabled={!isCguChecked && firstTime} />
               </View>
             </>
           ) : (

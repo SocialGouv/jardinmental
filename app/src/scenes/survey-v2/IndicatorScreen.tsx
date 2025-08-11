@@ -1,34 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
-  ScrollView, View, Text, Platform, Dimensions,
+  ScrollView,
+  View,
+  Text,
+  Platform,
+  Dimensions,
   // KeyboardAvoidingView
-} from 'react-native';
-import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
-import Animated, {
-  useSharedValue,
-  useAnimatedScrollHandler,
-  useAnimatedStyle,
-  interpolate,
-  Extrapolate
-} from 'react-native-reanimated';
-import { Indicator, INDICATORS_CATEGORIES } from '@/entities/Indicator';
-import { DiaryDataNewEntryInput } from '@/entities/DiaryData';
-import { IndicatorSurveyItem } from '@/components/survey/IndicatorSurveyItem';
-import NavigationButtons from '@/components/onboarding/NavigationButtons';
-import { TW_COLORS } from '@/utils/constants';
-import BannerHeader from '../onboarding-v2/BannerHeader';
-import MoonIcon from '@assets/svg/icon/moon';
-import ThoughtIcon from '@assets/svg/icon/thought';
-import BehaviourIcon from '@assets/svg/icon/behaviour';
-import InstructionText from '../onboarding-v2/InstructionText';
-import HelpText from '@/components/HelpText';
-import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
-import { useBottomSheet } from '@/context/BottomSheetContext';
-import HelpView from '@/components/HelpView';
-import { HELP_FOR_CATEGORY, INDICATOR_CATEGORIES_DATA } from '../onboarding-v2/data/helperData';
-import { firstLetterUppercase } from '@/utils/string-util';
+} from "react-native";
+import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
+import Animated, { useSharedValue, useAnimatedScrollHandler, useAnimatedStyle, interpolate, Extrapolate } from "react-native-reanimated";
+import { Indicator, INDICATORS_CATEGORIES } from "@/entities/Indicator";
+import { DiaryDataNewEntryInput } from "@/entities/DiaryData";
+import { IndicatorSurveyItem } from "@/components/survey/IndicatorSurveyItem";
+import NavigationButtons from "@/components/onboarding/NavigationButtons";
+import { TW_COLORS } from "@/utils/constants";
+import BannerHeader from "../onboarding-v2/BannerHeader";
+import MoonIcon from "@assets/svg/icon/moon";
+import ThoughtIcon from "@assets/svg/icon/thought";
+import BehaviourIcon from "@assets/svg/icon/behaviour";
+import InstructionText from "../onboarding-v2/InstructionText";
+import HelpText from "@/components/HelpText";
+import { BottomSheetModal, BottomSheetView } from "@gorhom/bottom-sheet";
+import { useBottomSheet } from "@/context/BottomSheetContext";
+import HelpView from "@/components/HelpView";
+import { HELP_FOR_CATEGORY, INDICATOR_CATEGORIES_DATA } from "../onboarding-v2/data/helperData";
+import { firstLetterUppercase } from "@/utils/string-util";
 import { KeyboardAvoidingView } from "react-native-keyboard-controller";
-import { NEW_INDICATORS_CATEGORIES } from '@/utils/liste_indicateurs.1';
+import { NEW_INDICATORS_CATEGORIES } from "@/utils/liste_indicateurs.1";
 
 interface IndicatorScreenProps {
   navigation: any;
@@ -36,7 +34,7 @@ interface IndicatorScreenProps {
   indicators: Indicator[];
   currentStep: number;
   totalSteps: number;
-  answers: DiaryDataNewEntryInput['answers'];
+  answers: DiaryDataNewEntryInput["answers"];
   onValueChanged: ({ key, value }: { key: string; value: any }) => void;
   onCommentChanged: ({ key, userComment }: { key: string; userComment: string }) => void;
   onNext: () => void;
@@ -57,9 +55,8 @@ const ICON_FOR_CATEGORY: Record<NEW_INDICATORS_CATEGORIES, React.ReactNode> = {
   [NEW_INDICATORS_CATEGORIES.SUBSTANCE]: undefined,
   [NEW_INDICATORS_CATEGORIES.SOCIAL_RELATIONS]: undefined,
   [NEW_INDICATORS_CATEGORIES.LIFE_EVENT]: undefined,
-  [NEW_INDICATORS_CATEGORIES.COGNITIVE]: undefined
-}
-
+  [NEW_INDICATORS_CATEGORIES.COGNITIVE]: undefined,
+};
 
 export const IndicatorScreen: React.FC<IndicatorScreenProps> = ({
   navigation,
@@ -71,24 +68,21 @@ export const IndicatorScreen: React.FC<IndicatorScreenProps> = ({
   onNext,
   category,
   showComment = true,
-  hideNavigationButtonsInitially = true
+  hideNavigationButtonsInitially = true,
 }) => {
-
   const { showBottomSheet } = useBottomSheet();
   const insets = useSafeAreaInsets();
   const [dynamicPaddingTop, setDynamicPaddingTop] = useState(0); // Default fallback
-  
+
   // Check if screen is large (like iPhone 16 Plus)
-  const { height: screenHeight } = Dimensions.get('window');
+  const { height: screenHeight } = Dimensions.get("window");
   const isLargeScreen = screenHeight >= 900; // Threshold for large screens
 
   const onClickHelp = () => {
     if (category && HELP_FOR_CATEGORY[category]) {
-      showBottomSheet(<HelpView
-        description={HELP_FOR_CATEGORY[category].description}
-        title={HELP_FOR_CATEGORY[category].title} />)
+      showBottomSheet(<HelpView description={HELP_FOR_CATEGORY[category].description} title={HELP_FOR_CATEGORY[category].title} />);
     }
-  }
+  };
   // Scroll tracking
   const scrollY = useSharedValue(0);
   const measuredHeight = useSharedValue(0); // Store the measured natural height
@@ -104,16 +98,17 @@ export const IndicatorScreen: React.FC<IndicatorScreenProps> = ({
 
   // Handle layout measurement to capture natural height
   const handleBannerLayout = (event) => {
-    if (measuredHeight.value === 0) { // Only measure once
+    if (measuredHeight.value === 0) {
+      // Only measure once
       measuredHeight.value = event.nativeEvent.layout.height;
       const bannerHeight = event.nativeEvent.layout.height;
       measuredHeight.value = bannerHeight;
       // Calculate total header height including safe area insets
-      const totalHeaderHeight = bannerHeight + (Platform.OS === 'android' ? insets.top : 50);
+      const totalHeaderHeight = bannerHeight + (Platform.OS === "android" ? insets.top : 50);
       setDynamicPaddingTop(totalHeaderHeight);
 
-      console.log('Banner height measured:', bannerHeight);
-      console.log('Total header height (with insets):', totalHeaderHeight);
+      console.log("Banner height measured:", bannerHeight);
+      console.log("Total header height (with insets):", totalHeaderHeight);
     }
   };
 
@@ -162,18 +157,13 @@ export const IndicatorScreen: React.FC<IndicatorScreenProps> = ({
       paddingBottom,
       paddingHorizontal,
       minHeight: 0,
-      overflow: 'hidden', // Ensure content doesn't overflow during height animation
+      overflow: "hidden", // Ensure content doesn't overflow during height animation
     };
   });
 
   // Animated styles for banner content (opacity only)
   const bannerContentStyle = useAnimatedStyle(() => {
-    const opacity = interpolate(
-      scrollY.value,
-      [0, SCROLL_THRESHOLD],
-      [1, 0],
-      Extrapolate.CLAMP
-    );
+    const opacity = interpolate(scrollY.value, [0, SCROLL_THRESHOLD], [1, 0], Extrapolate.CLAMP);
 
     return {
       opacity,
@@ -196,12 +186,7 @@ export const IndicatorScreen: React.FC<IndicatorScreenProps> = ({
 
   // Animated styles for header title transition
   const headerTitleStyle = useAnimatedStyle(() => {
-    const originalOpacity = interpolate(
-      scrollY.value,
-      [0, SCROLL_THRESHOLD],
-      [1, 0],
-      Extrapolate.CLAMP
-    );
+    const originalOpacity = interpolate(scrollY.value, [0, SCROLL_THRESHOLD], [1, 0], Extrapolate.CLAMP);
 
     return {
       opacity: originalOpacity,
@@ -209,12 +194,7 @@ export const IndicatorScreen: React.FC<IndicatorScreenProps> = ({
   });
 
   const dynamicTitleStyle = useAnimatedStyle(() => {
-    const dynamicOpacity = interpolate(
-      scrollY.value,
-      [0, SCROLL_THRESHOLD],
-      [0, 1],
-      Extrapolate.CLAMP
-    );
+    const dynamicOpacity = interpolate(scrollY.value, [0, SCROLL_THRESHOLD], [0, 1], Extrapolate.CLAMP);
 
     return {
       opacity: dynamicOpacity,
@@ -270,81 +250,94 @@ export const IndicatorScreen: React.FC<IndicatorScreenProps> = ({
     };
   });
 
-  return <SafeAreaView className="flex-1 bg-white">
-    <View style={{
-      position: 'absolute', top: Platform.OS === 'android' ? insets.top : 0, left: 0, right: 0, zIndex: 10
-    }}>
-      <BannerHeader
-        inAbsoluteView={true}
-        headerTitle='Observation du jour'
-        dynamicTitle={firstLetterUppercase(title)}
-        header={category ? <View className='rounded-full bg-white/30 p-2 self-start w-auto border border-white'>
-          {React.createElement(INDICATOR_CATEGORIES_DATA[category].icon, {
-            color: TW_COLORS.WHITE
-          })}
-        </View> : null}
-        title={title}
-        // leftAction={category && HELP_FOR_CATEGORY[category] ? onClickHelp : null}
-        // leftComponent={category && HELP_FOR_CATEGORY[category] ? <HelpText /> : null}
-        handleSkip={onNext}
-        // handlePrevious={() => navigation.goBack()}
-        // animation on scroll
-        handlePrevious={() => navigation.goBack()}
-        headerTitleStyle={headerTitleStyle}
-        dynamicTitleStyle={dynamicTitleStyle}
-        bannerContentStyle={bannerContentStyle}
-        bannerContainerStyle={bannerContainerStyle}
-        titleMarginStyle={titleMarginStyle}
-        onBannerLayout={handleBannerLayout}
-      ></BannerHeader>
-    </View>
-    <KeyboardAvoidingView
-      behavior={"padding"}
-      // keyboardVerticalOffset={0}
-      keyboardVerticalOffset={Platform.OS === 'android' ? 40 : 0}
-      style={{
-        flex: 1,
-      }}
-    >
-      <Animated.ScrollView
-        className={'flex-1'}
-        contentContainerStyle={{ 
-          paddingTop: dynamicPaddingTop,
-          paddingBottom: 250
+  return (
+    <SafeAreaView className="flex-1 bg-white">
+      <View
+        style={{
+          position: "absolute",
+          top: Platform.OS === "android" ? insets.top : 0,
+          left: 0,
+          right: 0,
+          zIndex: 10,
         }}
-        onScroll={scrollHandler}
-        scrollEventThrottle={16}>
-        <View className="flex-1 justify-center items-center px-6 py-6">
-          <InstructionText>Prenons un instant pour observer vos ressentis liés {INDICATOR_CATEGORIES_DATA[category].labelWithSecondPersonPrefix}</InstructionText>
-          {indicators.map((indicator, index) => (
-            <IndicatorSurveyItem
-              key={indicator.uuid}
-              indicator={indicator}
-              index={index}
-              showComment={showComment}
-              value={answers?.[indicator.name]?.value}
-              onValueChanged={({ indicator, value }) => {
-                onValueChanged({ key: indicator.name, value })
-              }}
-              onCommentChanged={({ indicator, comment }) =>
-                onCommentChanged({ key: indicator.name, userComment: comment })
-              }
-              comment={answers?.[indicator.name]?.userComment}
-            />
-          ))}
-        </View>
-      </Animated.ScrollView>
-    </KeyboardAvoidingView >
-    <Animated.View style={navigationButtonsStyle}>
-      <NavigationButtons
-        absolute={true}
-        onNext={onNext}
-        onLeftAction={category && HELP_FOR_CATEGORY[category] ? onClickHelp : undefined}
-        // onPrevious={() => navigation.goBack()}
-        showPrevious={false}
-        // loading={loading}
-        nextText="Suivant"
-      />
-    </Animated.View>
-  </SafeAreaView >
+      >
+        <BannerHeader
+          inAbsoluteView={true}
+          headerTitle="Observation du jour"
+          dynamicTitle={firstLetterUppercase(title)}
+          header={
+            category ? (
+              <View className="rounded-full bg-white/30 p-2 self-start w-auto border border-white">
+                {React.createElement(INDICATOR_CATEGORIES_DATA[category].icon, {
+                  color: TW_COLORS.WHITE,
+                })}
+              </View>
+            ) : null
+          }
+          title={title}
+          // leftAction={category && HELP_FOR_CATEGORY[category] ? onClickHelp : null}
+          // leftComponent={category && HELP_FOR_CATEGORY[category] ? <HelpText /> : null}
+          handleSkip={onNext}
+          // handlePrevious={() => navigation.goBack()}
+          // animation on scroll
+          handlePrevious={() => navigation.goBack()}
+          headerTitleStyle={headerTitleStyle}
+          dynamicTitleStyle={dynamicTitleStyle}
+          bannerContentStyle={bannerContentStyle}
+          bannerContainerStyle={bannerContainerStyle}
+          titleMarginStyle={titleMarginStyle}
+          onBannerLayout={handleBannerLayout}
+        ></BannerHeader>
+      </View>
+      <KeyboardAvoidingView
+        behavior={"padding"}
+        // keyboardVerticalOffset={0}
+        keyboardVerticalOffset={Platform.OS === "android" ? 40 : 0}
+        style={{
+          flex: 1,
+        }}
+      >
+        <Animated.ScrollView
+          className={"flex-1"}
+          contentContainerStyle={{
+            paddingTop: dynamicPaddingTop,
+            paddingBottom: 250,
+          }}
+          onScroll={scrollHandler}
+          scrollEventThrottle={16}
+        >
+          <View className="flex-1 justify-center items-center px-6 py-6">
+            <InstructionText>
+              Prenons un instant pour observer vos ressentis liés {INDICATOR_CATEGORIES_DATA[category].labelWithSecondPersonPrefix}
+            </InstructionText>
+            {indicators.map((indicator, index) => (
+              <IndicatorSurveyItem
+                key={indicator.uuid}
+                indicator={indicator}
+                index={index}
+                showComment={showComment}
+                value={answers?.[indicator.name]?.value}
+                onValueChanged={({ indicator, value }) => {
+                  onValueChanged({ key: indicator.name, value });
+                }}
+                onCommentChanged={({ indicator, comment }) => onCommentChanged({ key: indicator.name, userComment: comment })}
+                comment={answers?.[indicator.name]?.userComment}
+              />
+            ))}
+          </View>
+        </Animated.ScrollView>
+      </KeyboardAvoidingView>
+      <Animated.View style={navigationButtonsStyle}>
+        <NavigationButtons
+          absolute={true}
+          onNext={onNext}
+          onLeftAction={category && HELP_FOR_CATEGORY[category] ? onClickHelp : undefined}
+          // onPrevious={() => navigation.goBack()}
+          showPrevious={false}
+          // loading={loading}
+          nextText="Suivant"
+        />
+      </Animated.View>
+    </SafeAreaView>
+  );
 };

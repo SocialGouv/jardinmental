@@ -68,46 +68,29 @@ export const OnboardingGoals = ({ navigation }) => {
       <View style={onboardingStyles.topContainer}>
         <OnboardingBackButton onPress={navigation.goBack} />
       </View>
-      <ScrollView
-        keyboardShouldPersistTaps="handled"
-        style={onboardingStyles.scroll}
-        contentContainerStyle={onboardingStyles.scrollContentContainer}
-      >
+      <ScrollView keyboardShouldPersistTaps="handled" style={onboardingStyles.scroll} contentContainerStyle={onboardingStyles.scrollContentContainer}>
         <View style={onboardingStyles.container}>
           <View style={onboardingStyles.containerTopTitle} key="title">
             <Text style={onboardingStyles.h1}>Suivre un objectif ?</Text>
           </View>
           <View style={onboardingStyles.containerBottomText}>
             <Text style={onboardingStyles.presentationText}>
-              Réaliser certaines activités peut vous faire du bien. Sélectionnez-en parmi les exemples ou
-              créez les vôtres plus tard
+              Réaliser certaines activités peut vous faire du bien. Sélectionnez-en parmi les exemples ou créez les vôtres plus tard
             </Text>
           </View>
           <View style={onboardingStyles.imageContainer} key="image">
-            <Image
-              source={require("../../../../assets/imgs/onboarding/goals.png")}
-              style={onboardingStyles.imageSize}
-            />
+            <Image source={require("../../../../assets/imgs/onboarding/goals.png")} style={onboardingStyles.imageSize} />
           </View>
-          <CheckBoxList
-            list={GOALS_ONBOARDING}
-            symptomSelection={goalSelection}
-            setSymptomSelection={setGoalSelection}
-          />
+          <CheckBoxList list={GOALS_ONBOARDING} symptomSelection={goalSelection} setSymptomSelection={setGoalSelection} />
         </View>
         <View style={onboardingStyles.alertContainer}>
           <Text style={onboardingStyles.alertText}>
-            Se fixer <Text style={onboardingStyles.bold}>3</Text> objectifs{" "}
-            <Text style={onboardingStyles.bold}>maximum</Text> est un bon départ
+            Se fixer <Text style={onboardingStyles.bold}>3</Text> objectifs <Text style={onboardingStyles.bold}>maximum</Text> est un bon départ
           </Text>
         </View>
       </ScrollView>
       <StickyButtonContainer>
-        <Button2
-          fill
-          title={`Continuer avec ${count} objectif${count > 1 ? "s" : ""}`}
-          onPress={handleNext({ goToGoalsSettings: false })}
-        />
+        <Button2 fill title={`Continuer avec ${count} objectif${count > 1 ? "s" : ""}`} onPress={handleNext({ goToGoalsSettings: false })} />
         <Button2
           fill
           preset="onboarding2"

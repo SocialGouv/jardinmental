@@ -67,20 +67,15 @@ const SymptomScreen = ({ navigation, route }) => {
       <View style={styles.buttonsContainer}>
         <BackButton onPress={navigation.goBack} />
       </View>
-      <ScrollView
-        keyboardShouldPersistTaps="handled"
-        style={styles.container}
-        contentContainerStyle={styles.scrollContainer}
-      >
+      <ScrollView keyboardShouldPersistTaps="handled" style={styles.container} contentContainerStyle={styles.scrollContainer}>
         <View style={styles.titleContainer}>
           <SurveyMenu style={styles.image} width={30} height={30} />
           <Text style={styles.title}>Que voulez-vous suivre dans votre questionnaire quotidien ?</Text>
         </View>
         <View style={styles.titleContainer}>
           <Text style={styles.sousTitre}>
-            Choisissez ou <Text style={[styles.sousTitre, styles.bold]}>créez vous-même</Text> les indicateurs
-            qui vous semblent <Text style={[styles.sousTitre, styles.bold]}>pertinents</Text> pour évaluer
-            votre état de santé mentale et ce qui influe dessus
+            Choisissez ou <Text style={[styles.sousTitre, styles.bold]}>créez vous-même</Text> les indicateurs qui vous semblent{" "}
+            <Text style={[styles.sousTitre, styles.bold]}>pertinents</Text> pour évaluer votre état de santé mentale et ce qui influe dessus
           </Text>
         </View>
         <OnboardingElements
@@ -115,26 +110,17 @@ const SymptomScreen = ({ navigation, route }) => {
         ) : null}
         {getSelectionVide() ? (
           <View style={styles.buttonWrapperError}>
-            <Text style={[styles.alert, styles.spaceabove, styles.spacebottom]}>
-              Ajouter ou sélectionner au moins 1 indicateur
-            </Text>
+            <Text style={[styles.alert, styles.spaceabove, styles.spacebottom]}>Ajouter ou sélectionner au moins 1 indicateur</Text>
           </View>
         ) : (
           <Text style={[styles.h3, styles.spaceabove, styles.spacebottom]}>
-            Sélectionnez{" "}
-            <Text style={[styles.h3, styles.spaceabove, styles.medium]}>moins de 10 indicateurs</Text> pour
-            conserver un questionnaire rapide à remplir. Vous pourrez le faire évoluer à tout moment dans les{" "}
-            <Text style={[styles.h3, styles.spaceabove, styles.medium]}>paramètres</Text> de l’application, où
-            vous trouverez encore plus d’exemples !
+            Sélectionnez <Text style={[styles.h3, styles.spaceabove, styles.medium]}>moins de 10 indicateurs</Text> pour conserver un questionnaire
+            rapide à remplir. Vous pourrez le faire évoluer à tout moment dans les{" "}
+            <Text style={[styles.h3, styles.spaceabove, styles.medium]}>paramètres</Text> de l’application, où vous trouverez encore plus d’exemples !
           </Text>
         )}
         <View style={styles.buttonWrapper}>
-          <Button
-            title="Suivant"
-            onPress={nextOnboardingScreen}
-            disabled={getSelectionVide()}
-            buttonStyle={{ minWidth: 0 }}
-          />
+          <Button title="Suivant" onPress={nextOnboardingScreen} disabled={getSelectionVide()} buttonStyle={{ minWidth: 0 }} />
         </View>
       </ScrollView>
     </SafeAreaView>

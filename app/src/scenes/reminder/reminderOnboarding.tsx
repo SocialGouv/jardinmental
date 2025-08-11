@@ -1,29 +1,34 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Alert, View, TouchableOpacity, StyleSheet, ScrollView, Linking, Text } from 'react-native';
+import React, { useEffect, useRef, useState } from "react";
+import { Alert, View, TouchableOpacity, StyleSheet, ScrollView, Linking, Text } from "react-native";
 // import { openSettings } from "react-native-permissions";
-import dayjs from 'dayjs';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import localStorage from '../../utils/localStorage';
-import { ONBOARDING_STEPS, TW_COLORS } from '../../utils/constants';
-import TimePicker from '../../components/timePicker';
-import NotificationService from '../../services/notifications';
-import { colors } from '../../utils/colors';
-import logEvents from '../../services/logEvents';
-import API from '../../services/api';
-import * as RNLocalize from 'react-native-localize';
-import BeigeWrapperScreen from '../onboarding-v2/BeigeWrapperScreen';
-import { mergeClassNames } from '@/utils/className';
-import { typography } from '@/utils/typography';
-import Pencil from '@assets/svg/Pencil';
+import dayjs from "dayjs";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import localStorage from "../../utils/localStorage";
+import { ONBOARDING_STEPS, TW_COLORS } from "../../utils/constants";
+import TimePicker from "../../components/timePicker";
+import NotificationService from "../../services/notifications";
+import { colors } from "../../utils/colors";
+import logEvents from "../../services/logEvents";
+import API from "../../services/api";
+import * as RNLocalize from "react-native-localize";
+import BeigeWrapperScreen from "../onboarding-v2/BeigeWrapperScreen";
+import { mergeClassNames } from "@/utils/className";
+import { typography } from "@/utils/typography";
+import Pencil from "@assets/svg/Pencil";
 
-const ReminderStorageKey = '@Reminder';
+const ReminderStorageKey = "@Reminder";
 
-const Reminder = ({ navigation, route, notifReminderTitle = "Comment ça va aujourd'hui ?", notifReminderMessage = "N'oubliez pas de remplir votre application Jardin Mental" }) => {
+const Reminder = ({
+  navigation,
+  route,
+  notifReminderTitle = "Comment ça va aujourd'hui ?",
+  notifReminderMessage = "N'oubliez pas de remplir votre application Jardin Mental",
+}) => {
   const [reminder, setReminder] = useState<dayjs.Dayjs | null>(null);
   const [reminderSetupVisible, setReminderSetupVisible] = useState(false);
 
   // Default reminder time constant
-  const DEFAULT_REMINDER_TIME = '20:00';
+  const DEFAULT_REMINDER_TIME = "20:00";
 
   // Helper function to safely format reminder time with fallback
   const formatReminderTime = (reminderDate: dayjs.Dayjs | null): string => {
@@ -31,7 +36,7 @@ const Reminder = ({ navigation, route, notifReminderTitle = "Comment ça va aujo
       // Return default time when reminder is null or invalid
       return DEFAULT_REMINDER_TIME;
     }
-    return dayjs(reminderDate).format('HH:mm');
+    return dayjs(reminderDate).format("HH:mm");
   };
 
   const getReminder = async (showAlert = true) => {
@@ -41,7 +46,7 @@ const Reminder = ({ navigation, route, notifReminderTitle = "Comment ça va aujo
       if (!dayjs(storedReminder).isValid()) {
         try {
           storedReminder = JSON.parse(storedReminder);
-        } catch (e) { }
+        } catch (e) {}
       }
     }
     if (Boolean(storedReminder) && !dayjs(storedReminder).isValid()) {
@@ -59,31 +64,31 @@ const Reminder = ({ navigation, route, notifReminderTitle = "Comment ça va aujo
     setReminder(dayjs(storedReminder));
   };
 
-  const handleNotification = notification => {
+  const handleNotification = (notification) => {
     if (notification.title === notifReminderTitle) {
-      navigation.navigate('tabs');
+      navigation.navigate("tabs");
     }
   };
 
   const notificationListener = useRef();
   useEffect(() => {
     getReminder(false);
-    notificationListener.current = NotificationService.listen(handleNotification, 'reminder');
+    notificationListener.current = NotificationService.listen(handleNotification, "reminder");
     void localStorage.setOnboardingStep(ONBOARDING_STEPS.STEP_REMINDER);
     // return () => NotificationService.remove(notificationListener.current);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const scheduleNotification = async (newReminder = new Date(Date.now() + 10 * 1000)) => {
-    const fireDate = dayjs().set('hours', newReminder.getHours()).set('minutes', newReminder.getMinutes()).set('seconds', 0).toDate();
+    const fireDate = dayjs().set("hours", newReminder.getHours()).set("minutes", newReminder.getMinutes()).set("seconds", 0).toDate();
 
     if (!(await NotificationService.hasToken())) return;
 
     await API.put({
-      path: '/reminder',
+      path: "/reminder",
       body: {
         pushNotifToken: await NotificationService.getToken(),
-        type: 'Main',
+        type: "Main",
         timezone: RNLocalize.getTimeZone(),
         timeHours: newReminder.getHours(),
         timeMinutes: newReminder.getMinutes(),
@@ -104,24 +109,24 @@ const Reminder = ({ navigation, route, notifReminderTitle = "Comment ça va aujo
 
   const showPermissionsAlert = () => {
     Alert.alert(
-      'Vous devez autoriser les notifications pour accéder à ce service',
-      'Veuillez cliquer sur Réglages puis Notifications pour activer les notifications',
+      "Vous devez autoriser les notifications pour accéder à ce service",
+      "Veuillez cliquer sur Réglages puis Notifications pour activer les notifications",
       [
         {
-          text: 'Réglages',
+          text: "Réglages",
           onPress: () => Linking.openSettings(),
         },
         {
-          text: 'Annuler',
+          text: "Annuler",
           onPress: deleteReminder,
-          style: 'cancel',
+          style: "cancel",
         },
       ],
-      { cancelable: true },
+      { cancelable: true }
     );
   };
 
-  const setReminderRequest = async newReminder => {
+  const setReminderRequest = async (newReminder) => {
     setReminderSetupVisible(false);
     if (!dayjs(newReminder).isValid()) return;
     await scheduleNotification(newReminder);
@@ -149,10 +154,10 @@ const Reminder = ({ navigation, route, notifReminderTitle = "Comment ça va aujo
     if (route?.params?.onboarding) {
       navigation.reset({
         index: 0,
-        routes: [{ name: 'tabs' }],
+        routes: [{ name: "tabs" }],
       });
     } else {
-      navigation.navigate('tabs')
+      navigation.navigate("tabs");
     }
   };
 
@@ -162,10 +167,10 @@ const Reminder = ({ navigation, route, notifReminderTitle = "Comment ça va aujo
     if (!(await NotificationService.hasToken())) return;
 
     await API.put({
-      path: '/reminder',
+      path: "/reminder",
       body: {
         pushNotifToken: await NotificationService.getToken(),
-        type: 'Main',
+        type: "Main",
         disabled: true,
       },
     });
@@ -173,43 +178,49 @@ const Reminder = ({ navigation, route, notifReminderTitle = "Comment ça va aujo
     // await localStorage.setOnboardingStep(null);
     navigation.reset({
       index: 0,
-      routes: [{
-        name: 'tabs', params: {
-          onboarding: true
-        }
-      }],
+      routes: [
+        {
+          name: "tabs",
+          params: {
+            onboarding: true,
+          },
+        },
+      ],
     });
   };
 
-  return <BeigeWrapperScreen
-    variant="blue"
-    handlePrevious={navigation.goBack}
-    nextText='Programmer mon rappel quotidien'
-    handleSkip={() => navigation.navigate('tabs')}
-    handleNext={validateOnboarding}
-  >
-    <View className='flex-1 p-6 z-10 flex justify-center'>
-      <Text className={mergeClassNames(typography.displayXsBold, 'text-gray-950 mb-6 text-left')}>Trouvez votre rythme</Text>
-      <Text className={mergeClassNames(typography.textMdMedium, 'text-gray-800 text-left mb-6')}>Programmer un rappel quotidien peut vous aider à installer une routine bienveillante.</Text>
-      <Text className={mergeClassNames(typography.textMdMedium, 'text-gray-800 text-left mb-6')} > Consigner chaque jour votre état permet de découvrir progressivement ce qui vous fait du bien, et ce qui vous freine.</Text>
-      <TouchableOpacity
-        onPress={showReminderSetup}
-        className='border border-gray-300 rounded-3xl px-10 py-6 items-center justify-center mb-6 bg-white w-auto self-center'>
-        <Text className={mergeClassNames(typography.textSmMedium, 'mb-2')}> Recevez un rappel à:</Text>
-        <View className='py-3 pt-5 px-8 border-2 border-secondary rounded-3xl flew-column'>
-          <Text className="font-bold text-5xl text-brand-600 leading-[56px]">{formatReminderTime(reminder)}</Text>
-        </View>
-        <View className="flex-row items-center justify-center mt-4">
-          <Text className='text-base mr-2 items-center justify-center'>Éditer</Text>
-          <Pencil
-            color={TW_COLORS.BRAND_700}
-            width={16}
-            height={16}
-          />
-        </View>
-      </TouchableOpacity>
-    </View>
-    {/* <ScrollView style={onboardingStyles.scroll} contentContainerStyle={onboardingStyles.scrollContentContainer}>
+  return (
+    <BeigeWrapperScreen
+      variant="blue"
+      handlePrevious={navigation.goBack}
+      nextText="Programmer mon rappel quotidien"
+      handleSkip={() => navigation.navigate("tabs")}
+      handleNext={validateOnboarding}
+    >
+      <View className="flex-1 p-6 z-10 flex justify-center">
+        <Text className={mergeClassNames(typography.displayXsBold, "text-gray-950 mb-6 text-left")}>Trouvez votre rythme</Text>
+        <Text className={mergeClassNames(typography.textMdMedium, "text-gray-800 text-left mb-6")}>
+          Programmer un rappel quotidien peut vous aider à installer une routine bienveillante.
+        </Text>
+        <Text className={mergeClassNames(typography.textMdMedium, "text-gray-800 text-left mb-6")}>
+          {" "}
+          Consigner chaque jour votre état permet de découvrir progressivement ce qui vous fait du bien, et ce qui vous freine.
+        </Text>
+        <TouchableOpacity
+          onPress={showReminderSetup}
+          className="border border-gray-300 rounded-3xl px-10 py-6 items-center justify-center mb-6 bg-white w-auto self-center"
+        >
+          <Text className={mergeClassNames(typography.textSmMedium, "mb-2")}> Recevez un rappel à:</Text>
+          <View className="py-3 pt-5 px-8 border-2 border-secondary rounded-3xl flew-column">
+            <Text className="font-bold text-5xl text-brand-600 leading-[56px]">{formatReminderTime(reminder)}</Text>
+          </View>
+          <View className="flex-row items-center justify-center mt-4">
+            <Text className="text-base mr-2 items-center justify-center">Éditer</Text>
+            <Pencil color={TW_COLORS.BRAND_700} width={16} height={16} />
+          </View>
+        </TouchableOpacity>
+      </View>
+      {/* <ScrollView style={onboardingStyles.scroll} contentContainerStyle={onboardingStyles.scrollContentContainer}>
       <View style={onboardingStyles.container}>
         <View style={onboardingStyles.imageContainer}>
           <Rappel width={100} height={100} />
@@ -233,22 +244,27 @@ const Reminder = ({ navigation, route, notifReminderTitle = "Comment ça va aujo
         )}
       </View>
     </ScrollView> */}
-    {/* <StickyButtonContainer>
+      {/* <StickyButtonContainer>
       <Button onPress={validateOnboarding} title="Suivant" />
       <TouchableOpacity style={stylesButton.button} onPress={desactivateReminder}>
         <Text style={stylesButton.text}>Désactiver le rappel</Text>
       </TouchableOpacity>
     </StickyButtonContainer> */}
-    <TimePicker 
-      visible={reminderSetupVisible} 
-      selectDate={setReminderRequest} 
-      value={reminder ? reminder.toDate() : (() => {
-        const defaultDate = new Date();
-        defaultDate.setHours(20, 0, 0, 0);
-        return defaultDate;
-      })()} 
-    />
-  </BeigeWrapperScreen >
+      <TimePicker
+        visible={reminderSetupVisible}
+        selectDate={setReminderRequest}
+        value={
+          reminder
+            ? reminder.toDate()
+            : (() => {
+                const defaultDate = new Date();
+                defaultDate.setHours(20, 0, 0, 0);
+                return defaultDate;
+              })()
+        }
+      />
+    </BeigeWrapperScreen>
+  );
 };
 
 // return (
@@ -296,43 +312,43 @@ const stylesButton = StyleSheet.create({
     paddingBottom: 10,
   },
   button: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#FFF',
-    minWidth: '70%',
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#FFF",
+    minWidth: "70%",
     minHeight: 45,
     borderRadius: 45,
     borderWidth: 1,
-    borderColor: '#d1d5db',
+    borderColor: "#d1d5db",
     paddingHorizontal: 15,
     paddingVertical: 10,
   },
   text: {
-    fontWeight: 'bold',
+    fontWeight: "bold",
     fontSize: 15,
-    color: '#1f2937',
+    color: "#1f2937",
   },
 });
 
 const styles = StyleSheet.create({
   buttonWrapper: {
-    width: '100%',
-    display: 'flex',
-    alignItems: 'stretch',
-    position: 'absolute',
+    width: "100%",
+    display: "flex",
+    alignItems: "stretch",
+    position: "absolute",
     bottom: 0,
     padding: 20,
   },
   containerSvg: {
-    alignItems: 'center',
+    alignItems: "center",
     marginVertical: 20,
   },
   ctaContainer: {
-    display: 'flex',
-    alignItems: 'center',
-    position: 'absolute',
+    display: "flex",
+    alignItems: "center",
+    position: "absolute",
     bottom: 0,
     margin: 30,
   },
@@ -347,45 +363,45 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   bigImage: {
-    color: '#C3C7D5',
+    color: "#C3C7D5",
     marginVertical: 0,
   },
   header: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     marginVertical: 10,
   },
   safe: {
     flexGrow: 1,
-    backgroundColor: '#f9f9f9',
-    display: 'flex',
+    backgroundColor: "#f9f9f9",
+    display: "flex",
   },
   container: {
     flex: 1,
     paddingHorizontal: 20,
-    justifyContent: 'flex-start',
+    justifyContent: "flex-start",
   },
   bigTitle: {
-    width: '80%',
+    width: "80%",
     flexShrink: 0,
-    textAlign: 'center',
+    textAlign: "center",
     fontSize: 22,
     color: colors.BLUE,
-    fontWeight: '700',
-    marginTop: '10%',
+    fontWeight: "700",
+    marginTop: "10%",
   },
   smallTitle: {
-    width: '80%',
+    width: "80%",
     flexShrink: 0,
-    textAlign: 'center',
+    textAlign: "center",
     fontSize: 22,
     color: colors.BLUE,
-    fontWeight: '700',
+    fontWeight: "700",
   },
   description: {
-    display: 'flex',
+    display: "flex",
     flex: 1,
   },
   titleContainer: {
@@ -394,37 +410,37 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     color: colors.BLUE,
-    fontWeight: '700',
+    fontWeight: "700",
   },
   time: {
     borderColor: colors.DARK_BLUE,
     borderRadius: 20,
     borderWidth: 1,
     color: colors.DARK_BLUE,
-    fontWeight: '500',
+    fontWeight: "500",
     fontSize: 35,
-    textAlign: 'center',
+    textAlign: "center",
     paddingVertical: 10,
   },
   buttons: {
-    justifyContent: 'space-around',
+    justifyContent: "space-around",
     marginVertical: 15,
-    marginBottom: '20%',
+    marginBottom: "20%",
   },
   backButtonContainer: {
-    alignSelf: 'flex-start',
+    alignSelf: "flex-start",
     paddingLeft: 20,
-    marginBottom: '20%',
+    marginBottom: "20%",
     marginTop: 20,
   },
   backButton: {
-    fontWeight: '700',
-    textDecorationLine: 'underline',
+    fontWeight: "700",
+    textDecorationLine: "underline",
     color: colors.BLUE,
   },
   later: {
-    fontWeight: '700',
-    textDecorationLine: 'underline',
+    fontWeight: "700",
+    textDecorationLine: "underline",
     color: colors.BLUE,
   },
   setupButton: {
@@ -432,13 +448,13 @@ const styles = StyleSheet.create({
     height: 45,
     borderRadius: 45,
     paddingHorizontal: 30,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     marginBottom: 25,
   },
   setupButtonText: {
-    color: '#fff',
-    fontWeight: '700',
+    color: "#fff",
+    fontWeight: "700",
     fontSize: 16,
   },
   bodyContainer: { flex: 2 },
@@ -446,16 +462,16 @@ const styles = StyleSheet.create({
     color: colors.DARK_BLUE,
     fontSize: 15,
     marginVertical: 10,
-    fontWeight: '400',
-    textAlign: 'left',
+    fontWeight: "400",
+    textAlign: "left",
   },
   link: {
-    color: '#181818',
-    textDecorationLine: 'underline',
+    color: "#181818",
+    textDecorationLine: "underline",
     fontSize: 14,
     marginBottom: 10,
-    fontWeight: '300',
-    textAlign: 'center',
+    fontWeight: "300",
+    textAlign: "center",
   },
   lightblue: {
     color: colors.LIGHT_BLUE,

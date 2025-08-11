@@ -108,19 +108,14 @@ const Drugs = ({ navigation, route }) => {
     }
     return (
       <>
-        <ScrollView
-          style={onboardingStyles.scroll}
-          contentContainerStyle={onboardingStyles.scrollContentContainer}
-        >
+        <ScrollView style={onboardingStyles.scroll} contentContainerStyle={onboardingStyles.scrollContentContainer}>
           <View style={onboardingStyles.container}>
             <View style={onboardingStyles.imageContainer}>
               <Logo style={styles.image} width={100} height={100} />
             </View>
             <View style={onboardingStyles.containerBottom}>
               <View style={onboardingStyles.containerBottomTitle}>
-                <Text style={onboardingStyles.h1}>
-                  Voici la liste des traitements que vous allez suivre :
-                </Text>
+                <Text style={onboardingStyles.h1}>Voici la liste des traitements que vous allez suivre :</Text>
               </View>
               <View style={{ flex: 1 }}>
                 <TouchableOpacity
@@ -150,10 +145,7 @@ const Drugs = ({ navigation, route }) => {
           </View>
         </ScrollView>
         <StickyButtonContainer>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("onboarding-custom-more")}
-            style={styles.setupButton}
-          >
+          <TouchableOpacity onPress={() => navigation.navigate("onboarding-custom-more")} style={styles.setupButton}>
             <Text style={styles.setupButtonText}>Suivant</Text>
           </TouchableOpacity>
         </StickyButtonContainer>

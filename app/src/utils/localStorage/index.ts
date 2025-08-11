@@ -51,7 +51,7 @@ const getIndicateurs = async (): Promise<Indicator[]> => {
     let parsedIndicateurs = updateSymptomsFormatIfNeeded(JSON.parse(_indicateurs));
     return parsedIndicateurs;
   } else {
-    return []
+    return [];
   }
 };
 
@@ -93,8 +93,7 @@ const getSupported = async () => {
   }
 };
 
-const setSupported = async (supported) =>
-  await AsyncStorage.setItem(STORAGE_KEY_SUPPORTED, JSON.stringify(supported));
+const setSupported = async (supported) => await AsyncStorage.setItem(STORAGE_KEY_SUPPORTED, JSON.stringify(supported));
 
 const getCustomSymptoms = async () => {
   const customSymptoms = await AsyncStorage.getItem(STORAGE_KEY_CUSTOM_SYMPTOMS);
@@ -169,27 +168,27 @@ const addCustomDrug = async (drug) => {
 // User Profile functions
 const getUserProfile = async (): Promise<UserProfile | null> => {
   try {
-    const profile = await AsyncStorage.getItem('@USER_PROFILE');
+    const profile = await AsyncStorage.getItem("@USER_PROFILE");
     return profile ? JSON.parse(profile) : null;
   } catch (error) {
-    console.error('Error getting user profile:', error);
+    console.error("Error getting user profile:", error);
     return null;
   }
 };
 
 const setUserProfile = async (profile: UserProfile): Promise<void> => {
   try {
-    await AsyncStorage.setItem('@USER_PROFILE', JSON.stringify(profile));
+    await AsyncStorage.setItem("@USER_PROFILE", JSON.stringify(profile));
   } catch (error) {
-    console.error('Error setting user profile:', error);
+    console.error("Error setting user profile:", error);
   }
 };
 
 const clearUserProfile = async (): Promise<void> => {
   try {
-    await AsyncStorage.removeItem('@USER_PROFILE');
+    await AsyncStorage.removeItem("@USER_PROFILE");
   } catch (error) {
-    console.error('Error clearing user profile:', error);
+    console.error("Error clearing user profile:", error);
   }
 };
 

@@ -1,17 +1,17 @@
-import React from 'react';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import Status from '../scenes/status';
-import Exercise from '../scenes/exercise';
-import Suivi from '../scenes/suivi';
-import SurveyMenu from '../../assets/svg/SurveyMenu';
-import ExerciseMenu from '../../assets/svg/ExerciseMenu';
-import GraphMenu from '../../assets/svg/GraphMenu';
-import { View, Text, SafeAreaView, Platform } from 'react-native';
-import { colors } from '../utils/colors';
-import localStorage from '../utils/localStorage';
-import logEvents from '../services/logEvents';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import IosStatusBarColor from '@/components/IosStatusBar';
+import React from "react";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import Status from "../scenes/status";
+import Exercise from "../scenes/exercise";
+import Suivi from "../scenes/suivi";
+import SurveyMenu from "../../assets/svg/SurveyMenu";
+import ExerciseMenu from "../../assets/svg/ExerciseMenu";
+import GraphMenu from "../../assets/svg/GraphMenu";
+import { View, Text, SafeAreaView, Platform } from "react-native";
+import { colors } from "../utils/colors";
+import localStorage from "../utils/localStorage";
+import logEvents from "../services/logEvents";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import IosStatusBarColor from "@/components/IosStatusBar";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -21,12 +21,12 @@ const Tabs = ({ navigation, route }) => {
     const user_indicateurs = await localStorage.getIndicateurs();
     logEvents.logFeelingStart();
     if (!user_indicateurs) {
-      navigation.navigate('symptoms', {
+      navigation.navigate("symptoms", {
         showExplanation: true,
-        redirect: 'select-day',
+        redirect: "select-day",
       });
     } else {
-      navigation.navigate('select-day');
+      navigation.navigate("select-day");
     }
   };
 
@@ -38,10 +38,10 @@ const Tabs = ({ navigation, route }) => {
         swipeEnabled: true,
         tabBarShowIcon: true,
         tabBarShowLabel: true,
-        tabBarIndicatorStyle: { display: 'none' }, // Hide the indicator
+        tabBarIndicatorStyle: { display: "none" }, // Hide the indicator
         tabBarStyle: {
           maxHeight: 80,
-          shadowColor: '#000',
+          shadowColor: "#000",
           shadowOffset: {
             width: 0,
             height: 3,
@@ -52,32 +52,34 @@ const Tabs = ({ navigation, route }) => {
           elevation: 6,
         },
         tabBarIconStyle: {
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
         },
         tabBarLabelStyle: {
-          textTransform: 'capitalize',
+          textTransform: "capitalize",
           fontSize: 10,
           marginHorizontal: 0,
           padding: 0,
         },
         tabBarActiveTintColor: colors.BLUE,
-        tabBarInactiveTintColor: '#a1a1a1',
-      }}>
+        tabBarInactiveTintColor: "#a1a1a1",
+      }}
+    >
       <Tab.Screen
         name="Status"
         options={{
-          tabBarLabel: 'Mes entrées',
+          tabBarLabel: "Mes entrées",
           tabBarIcon: ({ focused, color }) => (
-            <View style={{ alignItems: 'center' }}>
+            <View style={{ alignItems: "center" }}>
               <SurveyMenu height={24} width={24} color={color} />
             </View>
           ),
-        }}>
-        {p => (
+        }}
+      >
+        {(p) => (
           <View style={{ paddingTop: insets.top, flex: 1 }}>
-            {Platform.OS === 'ios' && <IosStatusBarColor />}
+            {Platform.OS === "ios" && <IosStatusBarColor />}
             <Status {...p} startSurvey={startSurvey} />
           </View>
         )}
@@ -85,16 +87,17 @@ const Tabs = ({ navigation, route }) => {
       <Tab.Screen
         name="Calendar"
         options={{
-          tabBarLabel: 'Mes analyses',
+          tabBarLabel: "Mes analyses",
           tabBarIcon: ({ focused, color }) => (
-            <View style={{ alignItems: 'center' }}>
+            <View style={{ alignItems: "center" }}>
               <GraphMenu height={24} width={24} color={color} />
             </View>
           ),
-        }}>
-        {p => (
+        }}
+      >
+        {(p) => (
           <View style={{ paddingTop: insets.top, flex: 1 }}>
-            {Platform.OS === 'ios' && <IosStatusBarColor />}
+            {Platform.OS === "ios" && <IosStatusBarColor />}
             <Suivi {...p} startSurvey={startSurvey} />
           </View>
         )}
@@ -102,16 +105,17 @@ const Tabs = ({ navigation, route }) => {
       <Tab.Screen
         name="Exercise"
         options={{
-          tabBarLabel: 'Beck',
+          tabBarLabel: "Beck",
           tabBarIcon: ({ focused, color }) => (
-            <View style={{ alignItems: 'center' }}>
+            <View style={{ alignItems: "center" }}>
               <ExerciseMenu height={24} width={24} color={color} />
             </View>
           ),
-        }}>
-        {p => (
+        }}
+      >
+        {(p) => (
           <View style={{ paddingTop: insets.top, flex: 1 }}>
-            {Platform.OS === 'ios' && <IosStatusBarColor />}
+            {Platform.OS === "ios" && <IosStatusBarColor />}
             <Exercise {...p} startSurvey={startSurvey} />
           </View>
         )}

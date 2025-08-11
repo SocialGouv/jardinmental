@@ -1,14 +1,14 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, SafeAreaView, FlatList, TouchableOpacity, Dimensions } from 'react-native';
-import { OnboardingV2ScreenProps, CarouselSlide } from '../types';
-import { CarouselSlide as CarouselSlideComponent } from '../../../components/onboarding/CarouselSlide';
-import ProgressIndicator from '../../../components/onboarding/ProgressIndicator';
-import { TW_COLORS } from '@/utils/constants';
-import { useOnboardingProgressHeader } from '@/scenes/onboarding/ProgressHeader';
+import React, { useState, useRef, useEffect } from "react";
+import { View, Text, SafeAreaView, FlatList, TouchableOpacity, Dimensions } from "react-native";
+import { OnboardingV2ScreenProps, CarouselSlide } from "../types";
+import { CarouselSlide as CarouselSlideComponent } from "../../../components/onboarding/CarouselSlide";
+import ProgressIndicator from "../../../components/onboarding/ProgressIndicator";
+import { TW_COLORS } from "@/utils/constants";
+import { useOnboardingProgressHeader } from "@/scenes/onboarding/ProgressHeader";
 
-type Props = OnboardingV2ScreenProps<'Carousel'>;
+type Props = OnboardingV2ScreenProps<"Carousel">;
 
-const { width: screenWidth } = Dimensions.get('window');
+const { width: screenWidth } = Dimensions.get("window");
 
 export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
   const { slides } = route.params;
@@ -16,12 +16,12 @@ export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
   const { setSlideIndex, setNextCallback } = useOnboardingProgressHeader();
 
   useEffect(() => {
-    setNextCallback('Onboarding')
-  }, [])
+    setNextCallback("Onboarding");
+  }, []);
   const flatListRef = useRef<FlatList>(null);
 
   const handleNext = () => {
-    navigation.navigate('Difficulties');
+    navigation.navigate("Difficulties");
   };
 
   const handlePrevious = () => {
@@ -57,10 +57,7 @@ export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
   };
 
   const renderSlide = ({ item, index }: { item: CarouselSlide; index: number }) => (
-    <CarouselSlideComponent
-      slide={item}
-      isActive={index === currentIndex}
-    />
+    <CarouselSlideComponent slide={item} isActive={index === currentIndex} />
   );
 
   const renderPaginationDot = (index: number) => (
@@ -78,15 +75,8 @@ export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
     <SafeAreaView className="flex-1">
       {/* Bouton Passer en haut à droite */}
       <View className="absolute top-12 right-4 z-10">
-        <TouchableOpacity
-          onPress={handleNext}
-          className="px-4 py-2 rounded-full"
-          style={{ backgroundColor: TW_COLORS.WHITE + 'CC' }}
-        >
-          <Text
-            className="text-base font-medium"
-            style={{ color: TW_COLORS.PRIMARY }}
-          >
+        <TouchableOpacity onPress={handleNext} className="px-4 py-2 rounded-full" style={{ backgroundColor: TW_COLORS.WHITE + "CC" }}>
+          <Text className="text-base font-medium" style={{ color: TW_COLORS.PRIMARY }}>
             Passer
           </Text>
         </TouchableOpacity>
@@ -94,21 +84,13 @@ export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
 
       {/* Bouton Précédent en haut à gauche */}
       <View className="absolute top-12 left-4 z-10">
-        <TouchableOpacity
-          onPress={handlePrevious}
-          className="px-4 py-2 rounded-full"
-          style={{ backgroundColor: TW_COLORS.WHITE + 'CC' }}
-        >
-          <Text
-            className="text-base font-medium"
-            style={{ color: TW_COLORS.GRAY_DARK }}
-          >
+        <TouchableOpacity onPress={handlePrevious} className="px-4 py-2 rounded-full" style={{ backgroundColor: TW_COLORS.WHITE + "CC" }}>
+          <Text className="text-base font-medium" style={{ color: TW_COLORS.GRAY_DARK }}>
             ← Retour
           </Text>
         </TouchableOpacity>
       </View>
-      <ProgressIndicator currentStep={0}
-        totalSteps={4} />
+      <ProgressIndicator currentStep={0} totalSteps={4} />
       {/* Carrousel */}
       <FlatList
         ref={flatListRef}
@@ -126,7 +108,6 @@ export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
           index,
         })}
       />
-
     </SafeAreaView>
   );
 };

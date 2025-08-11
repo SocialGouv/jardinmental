@@ -8,15 +8,6 @@
       "@assets/*": ["./assets/*"]
     }
   },
-  "include": [
-    "src/**/*",
-    "__tests__/**/*",
-    "*.ts",
-    "*.tsx"
-  ],
-  "exclude": [
-    "node_modules",
-    "android",
-    "ios"
-  ]
+  "include": ["src/**/*", "__tests__/**/*", "*.ts", "*.tsx"],
+  "exclude": ["node_modules", "android", "ios"]
 }

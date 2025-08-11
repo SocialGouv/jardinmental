@@ -1,7 +1,6 @@
 import { INDICATOR_ORDER, INDICATOR_TYPE, PredefineIndicatorSchemaType, PredefineIndicatorV2SchemaType } from "@/entities/Indicator";
 import { INDICATORS_CATEGORIES } from "@/entities/IndicatorCategories";
 
-
 export const INDICATEURS_LISTE_ONBOARDING_HUMEUR = [
   {
     uuid: "60f6eb32-698c-47c0-b99e-fb03a576b7c1",
@@ -69,74 +68,72 @@ export enum NEW_INDICATORS_SUBCATEGORIES {
 }
 
 export enum NEW_INDICATORS_CATEGORIES {
-  SLEEP = 'SLEEP',
-  RISK_BEHAVIOR = 'RISK_BEHAVIOR',
-  WORK = 'WORK',
-  PHYSICAL_SIGNS = 'PHYSICAL_SIGNS',
-  EMOTIONS = 'EMOTIONS',
-  ENERGY = 'ENERGY',
-  INTRUSIVE_THOUGHTS = 'INTRUSIVE_THOUGHTS',
-  FOOD = 'FOOD',
-  SUBSTANCE = 'SUBSTANCE',
-  SOCIAL_RELATIONS = 'SOCIAL_RELATIONS',
-  LIFE_EVENT = 'LIFE_EVENT',
-  COGNITIVE = 'COGNITIVE'
+  SLEEP = "SLEEP",
+  RISK_BEHAVIOR = "RISK_BEHAVIOR",
+  WORK = "WORK",
+  PHYSICAL_SIGNS = "PHYSICAL_SIGNS",
+  EMOTIONS = "EMOTIONS",
+  ENERGY = "ENERGY",
+  INTRUSIVE_THOUGHTS = "INTRUSIVE_THOUGHTS",
+  FOOD = "FOOD",
+  SUBSTANCE = "SUBSTANCE",
+  SOCIAL_RELATIONS = "SOCIAL_RELATIONS",
+  LIFE_EVENT = "LIFE_EVENT",
+  COGNITIVE = "COGNITIVE",
 }
 
 export const CATEGORIES = [
   {
     id: "SLEEP",
-    label: "Sommeil"
+    label: "Sommeil",
   },
   {
     id: "RISK_BEHAVIOR",
-    label: "Comportements à risque"
+    label: "Comportements à risque",
   },
   {
     id: "WORK",
-    label: "Travail"
+    label: "Travail",
   },
   {
     id: "PHYSICAL_SIGNS",
-    label: "Manifestations physiques"
+    label: "Manifestations physiques",
   },
   {
     id: "EMOTIONS",
-    label: "Émotions - humeur"
+    label: "Émotions - humeur",
   },
   {
     id: "ENERGY",
-    label: "Énergie"
+    label: "Énergie",
   },
   {
     id: "INTRUSIVE_THOUGHTS",
-    label: "Pensées envahissantes"
+    label: "Pensées envahissantes",
   },
   {
     id: "FOOD",
-    label: "Alimentation"
+    label: "Alimentation",
   },
   {
     id: "SUBSTANCE",
-    label: "Consommation de produits"
+    label: "Consommation de produits",
   },
   {
     id: "SOCIAL_RELATIONS",
-    label: "Relations sociales"
+    label: "Relations sociales",
   },
   {
     id: "LIFE_EVENT",
-    label: "Évènements de vie difficile"
+    label: "Évènements de vie difficile",
   },
   {
     id: "COGNITIVE",
-    label: "Cognitif"
-  }
+    label: "Cognitif",
+  },
 ];
 
-
-
-export const SUBCATEGORIES: Record<NEW_INDICATORS_SUBCATEGORIES, { id: string, label: string, category: NEW_INDICATORS_CATEGORIES }> = {
+export const SUBCATEGORIES: Record<NEW_INDICATORS_SUBCATEGORIES, { id: string; label: string; category: NEW_INDICATORS_CATEGORIES }> = {
   // [NEW_INDICATORS_SUBCATEGORIES.SLEEP_DIFFICULTY]: {
   //   id: "e601f450-0c10-4c7d-b1b0-b1b7405b6010",
   //   label: "Mon sommeil n'est pas réparateur ou régulier",
@@ -145,42 +142,39 @@ export const SUBCATEGORIES: Record<NEW_INDICATORS_SUBCATEGORIES, { id: string, l
   [NEW_INDICATORS_SUBCATEGORIES.SLEEP_DIFFICULTY]: {
     id: "b2b92bb0-ff2a-4c9b-bae9-340089efde78",
     label: "J’ai des difficultés à dormir ou je dors mal",
-    category: NEW_INDICATORS_CATEGORIES.SLEEP
+    category: NEW_INDICATORS_CATEGORIES.SLEEP,
   },
   [NEW_INDICATORS_SUBCATEGORIES.NEGATIVE_EMOTIONS]: {
     id: "ed5f6b2e-6a32-420f-9b71-4c3d42222cd6",
     label: "Emotions négatives",
-    category: NEW_INDICATORS_CATEGORIES.EMOTIONS
+    category: NEW_INDICATORS_CATEGORIES.EMOTIONS,
   },
-  [NEW_INDICATORS_SUBCATEGORIES.EMOTIONAL_STABILITY]:
-  {
+  [NEW_INDICATORS_SUBCATEGORIES.EMOTIONAL_STABILITY]: {
     id: "fcfdb222-b19c-4f00-bcc9-8d75092e2203",
     label: "Stabilité émotionnelle",
-    category: NEW_INDICATORS_CATEGORIES.EMOTIONS
+    category: NEW_INDICATORS_CATEGORIES.EMOTIONS,
   },
   [NEW_INDICATORS_SUBCATEGORIES.POSITIVE_EMOTIONS]: {
     id: "cfb3c6a0-b511-495e-b39e-8a8c35bb4d6f",
     label: "Emotions positives",
-    category: NEW_INDICATORS_CATEGORIES.EMOTIONS
+    category: NEW_INDICATORS_CATEGORIES.EMOTIONS,
   },
   [NEW_INDICATORS_SUBCATEGORIES.BAD_SLEEP_HABITS]: {
     id: "f27c7aaf-0a3e-468b-b3b4-3b799626f9c6",
     label: "Certaines habitudes gênent mon sommeil",
-    category: NEW_INDICATORS_CATEGORIES.SLEEP
+    category: NEW_INDICATORS_CATEGORIES.SLEEP,
   },
-  [NEW_INDICATORS_SUBCATEGORIES.SUBSTANCE_USE]:
-  {
+  [NEW_INDICATORS_SUBCATEGORIES.SUBSTANCE_USE]: {
     id: "25f3465f-2c7b-4193-a693-dabfdbb72fa2",
     label: "Consommation de produit",
-    category: NEW_INDICATORS_CATEGORIES.SUBSTANCE
+    category: NEW_INDICATORS_CATEGORIES.SUBSTANCE,
   },
-  [NEW_INDICATORS_SUBCATEGORIES.BEHAVIORAL_ADDICTION]:
-  {
+  [NEW_INDICATORS_SUBCATEGORIES.BEHAVIORAL_ADDICTION]: {
     id: "e1e7e015-d5f2-4529-92c4-e679ff3aa3d4",
     label: "Addictions sans substance",
-    category: NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR
-  }
-}
+    category: NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR,
+  },
+};
 
 export const INDICATEURS_HUMEUR: PredefineIndicatorV2SchemaType = {
   uuid: "3e15ed99-f2f9-4716-b6a2-5348c35266da",
@@ -190,7 +184,7 @@ export const INDICATEURS_HUMEUR: PredefineIndicatorV2SchemaType = {
   mainCategory: NEW_INDICATORS_CATEGORIES.EMOTIONS,
   order: INDICATOR_ORDER.ASC,
   type: INDICATOR_TYPE.smiley,
-  priority: 0
+  priority: 0,
 };
 
 export const INDICATEURS_SOMMEIL: PredefineIndicatorV2SchemaType = {
@@ -201,7 +195,7 @@ export const INDICATEURS_SOMMEIL: PredefineIndicatorV2SchemaType = {
   mainCategory: NEW_INDICATORS_CATEGORIES.SLEEP,
   order: INDICATOR_ORDER.ASC,
   type: INDICATOR_TYPE.gauge,
-  priority: 0
+  priority: 0,
 };
 
 export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
@@ -227,7 +221,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     type: INDICATOR_TYPE.gauge,
     uuid: "6fb2564a-c2ab-44ca-80d7-88473fe0e414",
     category: INDICATORS_CATEGORIES["Emotions/sentiments"],
-    mainCategory: NEW_INDICATORS_CATEGORIES.SLEEP
+    mainCategory: NEW_INDICATORS_CATEGORIES.SLEEP,
   },
   {
     name: "Difficultés d'endormissement",
@@ -238,7 +232,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     type: INDICATOR_TYPE.gauge,
     uuid: "b36556bb-5f13-4214-a05b-f31619115f5b",
     category: INDICATORS_CATEGORIES["Emotions/sentiments"],
-    mainCategory: NEW_INDICATORS_CATEGORIES.SLEEP
+    mainCategory: NEW_INDICATORS_CATEGORIES.SLEEP,
   },
   {
     name: "Réveils nocturnes",
@@ -249,7 +243,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     order: "DESC",
     type: INDICATOR_TYPE.boolean,
     category: INDICATORS_CATEGORIES["Emotions/sentiments"],
-    mainCategory: NEW_INDICATORS_CATEGORIES.SLEEP
+    mainCategory: NEW_INDICATORS_CATEGORIES.SLEEP,
   },
   {
     name: "Réveils précoces",
@@ -260,7 +254,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     type: INDICATOR_TYPE.boolean,
     uuid: "",
     category: INDICATORS_CATEGORIES["Emotions/sentiments"],
-    mainCategory: NEW_INDICATORS_CATEGORIES.SLEEP
+    mainCategory: NEW_INDICATORS_CATEGORIES.SLEEP,
   },
   {
     priority: 1,
@@ -271,7 +265,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     type: INDICATOR_TYPE.boolean,
     uuid: "",
     category: INDICATORS_CATEGORIES["Emotions/sentiments"],
-    mainCategory: NEW_INDICATORS_CATEGORIES.SLEEP
+    mainCategory: NEW_INDICATORS_CATEGORIES.SLEEP,
   },
   {
     name: "Fatigue",
@@ -282,7 +276,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     order: "DESC",
     type: INDICATOR_TYPE.gauge,
     category: INDICATORS_CATEGORIES["Emotions/sentiments"],
-    mainCategory: NEW_INDICATORS_CATEGORIES.SLEEP
+    mainCategory: NEW_INDICATORS_CATEGORIES.SLEEP,
   },
   {
     name: "Anxiolytiques / hypnotiques",
@@ -293,8 +287,8 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     order: "DESC",
     type: INDICATOR_TYPE.boolean,
     new: true,
-    uuid: 'bf9014c2-8e47-4c5f-9a2a-41e48c46496a',
-    mainCategory: NEW_INDICATORS_CATEGORIES.SLEEP
+    uuid: "bf9014c2-8e47-4c5f-9a2a-41e48c46496a",
+    mainCategory: NEW_INDICATORS_CATEGORIES.SLEEP,
   },
   {
     name: "Cannabis",
@@ -304,9 +298,9 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     order: "DESC",
     type: INDICATOR_TYPE.boolean,
     new: true,
-    uuid: '7f6e5d24-3c80-4b69-b5e1-08e4a6e4c1b7',
+    uuid: "7f6e5d24-3c80-4b69-b5e1-08e4a6e4c1b7",
     category: INDICATORS_CATEGORIES.Comportements,
-    mainCategory: NEW_INDICATORS_CATEGORIES.SUBSTANCE
+    mainCategory: NEW_INDICATORS_CATEGORIES.SUBSTANCE,
   },
   {
     name: "Comportement sexuel à risques",
@@ -317,7 +311,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     order: "DESC",
     type: INDICATOR_TYPE.boolean,
     category: INDICATORS_CATEGORIES["Emotions/sentiments"],
-    mainCategory: NEW_INDICATORS_CATEGORIES.SLEEP
+    mainCategory: NEW_INDICATORS_CATEGORIES.SLEEP,
   },
   {
     name: "Achats inhabituels ou excessifs",
@@ -327,7 +321,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     category: INDICATORS_CATEGORIES["Comportements"],
     order: "DESC",
     type: INDICATOR_TYPE.boolean,
-    mainCategory: NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR
+    mainCategory: NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR,
   },
   {
     name: "Écrans / réseaux sociaux",
@@ -335,9 +329,9 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     priority: 2,
     order: "DESC",
     type: INDICATOR_TYPE.gauge,
-    uuid: '3b3f1d10-fc45-4b12-a476-508531ce127c',
+    uuid: "3b3f1d10-fc45-4b12-a476-508531ce127c",
     category: INDICATORS_CATEGORIES["Emotions/sentiments"],
-    mainCategory: NEW_INDICATORS_CATEGORIES.SUBSTANCE
+    mainCategory: NEW_INDICATORS_CATEGORIES.SUBSTANCE,
   },
   // {
   //   name: "Temps réseaux sociaux",
@@ -357,7 +351,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     category: INDICATORS_CATEGORIES["Comportements"],
     order: "DESC",
     type: INDICATOR_TYPE.boolean,
-    mainCategory: NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR
+    mainCategory: NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR,
   },
   {
     name: "Comportements à risques",
@@ -368,7 +362,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     uuid: "1d4c3f59-dc3e-4b45-ae82-2ea77a62e6c6",
     isGeneric: true,
     category: INDICATORS_CATEGORIES["Comportements"],
-    mainCategory: NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR
+    mainCategory: NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR,
   },
   {
     name: "Stress",
@@ -378,7 +372,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     category: INDICATORS_CATEGORIES["Emotions/sentiments"],
     order: "DESC",
     type: INDICATOR_TYPE.gauge,
-    mainCategory: NEW_INDICATORS_CATEGORIES.WORK
+    mainCategory: NEW_INDICATORS_CATEGORIES.WORK,
   },
   {
     name: "Implication / intérêt",
@@ -387,9 +381,9 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     order: "DESC",
     type: INDICATOR_TYPE.gauge,
     // new
-    uuid: 'e601f450-0c10-4c7d-b1b0-b1b7405b6010',
+    uuid: "e601f450-0c10-4c7d-b1b0-b1b7405b6010",
     category: INDICATORS_CATEGORIES["Emotions/sentiments"],
-    mainCategory: NEW_INDICATORS_CATEGORIES.WORK
+    mainCategory: NEW_INDICATORS_CATEGORIES.WORK,
   },
   {
     name: "Surmenage",
@@ -399,7 +393,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     category: INDICATORS_CATEGORIES["Pensées"],
     order: "DESC",
     type: INDICATOR_TYPE.gauge,
-    mainCategory: NEW_INDICATORS_CATEGORIES.WORK
+    mainCategory: NEW_INDICATORS_CATEGORIES.WORK,
   },
   {
     name: "Libido",
@@ -409,7 +403,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     category: INDICATORS_CATEGORIES["Manifestations physiques"],
     order: "ASC",
     type: INDICATOR_TYPE.gauge,
-    mainCategory: NEW_INDICATORS_CATEGORIES.PHYSICAL_SIGNS
+    mainCategory: NEW_INDICATORS_CATEGORIES.PHYSICAL_SIGNS,
   },
   {
     name: "Nausées",
@@ -419,7 +413,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     category: INDICATORS_CATEGORIES["Manifestations physiques"],
     order: "DESC",
     type: INDICATOR_TYPE.boolean,
-    mainCategory: NEW_INDICATORS_CATEGORIES.PHYSICAL_SIGNS
+    mainCategory: NEW_INDICATORS_CATEGORIES.PHYSICAL_SIGNS,
   },
   {
     name: "Respiration rapide",
@@ -429,7 +423,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     category: INDICATORS_CATEGORIES["Manifestations physiques"],
     order: "DESC",
     type: INDICATOR_TYPE.boolean,
-    mainCategory: NEW_INDICATORS_CATEGORIES.PHYSICAL_SIGNS
+    mainCategory: NEW_INDICATORS_CATEGORIES.PHYSICAL_SIGNS,
   },
   {
     name: "Tachycardie, palpitations",
@@ -439,7 +433,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     category: INDICATORS_CATEGORIES["Manifestations physiques"],
     order: "DESC",
     type: INDICATOR_TYPE.boolean,
-    mainCategory: NEW_INDICATORS_CATEGORIES.PHYSICAL_SIGNS
+    mainCategory: NEW_INDICATORS_CATEGORIES.PHYSICAL_SIGNS,
   },
   {
     name: "Vertiges",
@@ -449,7 +443,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     category: INDICATORS_CATEGORIES["Manifestations physiques"],
     order: "DESC",
     type: INDICATOR_TYPE.boolean,
-    mainCategory: NEW_INDICATORS_CATEGORIES.PHYSICAL_SIGNS
+    mainCategory: NEW_INDICATORS_CATEGORIES.PHYSICAL_SIGNS,
   },
   {
     name: "Mal au dos",
@@ -459,8 +453,8 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     type: INDICATOR_TYPE.boolean,
     category: INDICATORS_CATEGORIES["Manifestations physiques"],
     new: true,
-    uuid: 'b2b92bb0-ff2a-4c9b-bae9-340089efde78',
-    mainCategory: NEW_INDICATORS_CATEGORIES.PHYSICAL_SIGNS
+    uuid: "b2b92bb0-ff2a-4c9b-bae9-340089efde78",
+    mainCategory: NEW_INDICATORS_CATEGORIES.PHYSICAL_SIGNS,
   },
   {
     name: "Maux de tête",
@@ -470,7 +464,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     category: INDICATORS_CATEGORIES["Manifestations physiques"],
     order: "DESC",
     type: INDICATOR_TYPE.boolean,
-    mainCategory: NEW_INDICATORS_CATEGORIES.PHYSICAL_SIGNS
+    mainCategory: NEW_INDICATORS_CATEGORIES.PHYSICAL_SIGNS,
   },
   {
     name: "Mal au ventre",
@@ -480,7 +474,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     category: INDICATORS_CATEGORIES["Manifestations physiques"],
     order: "DESC",
     type: INDICATOR_TYPE.boolean,
-    mainCategory: NEW_INDICATORS_CATEGORIES.PHYSICAL_SIGNS
+    mainCategory: NEW_INDICATORS_CATEGORIES.PHYSICAL_SIGNS,
   },
   {
     name: "Trouble d'ideation\nDifficulté à organiser ses pensées, à plannifier...",
@@ -490,8 +484,8 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     type: INDICATOR_TYPE.gauge,
     category: INDICATORS_CATEGORIES["Manifestations physiques"],
     new: true,
-    uuid: 'ed5f6b2e-6a32-420f-9b71-4c3d42222cd6',
-    mainCategory: NEW_INDICATORS_CATEGORIES.COGNITIVE
+    uuid: "ed5f6b2e-6a32-420f-9b71-4c3d42222cd6",
+    mainCategory: NEW_INDICATORS_CATEGORIES.COGNITIVE,
   },
   {
     name: "Procrastination",
@@ -501,7 +495,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     category: INDICATORS_CATEGORIES["Comportements"],
     order: "DESC",
     type: INDICATOR_TYPE.boolean,
-    mainCategory: NEW_INDICATORS_CATEGORIES.PHYSICAL_SIGNS
+    mainCategory: NEW_INDICATORS_CATEGORIES.PHYSICAL_SIGNS,
   },
   {
     name: "Menstruations",
@@ -511,7 +505,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     category: INDICATORS_CATEGORIES["Manifestations physiques"],
     order: "DESC",
     type: INDICATOR_TYPE.gauge,
-    mainCategory: NEW_INDICATORS_CATEGORIES.PHYSICAL_SIGNS
+    mainCategory: NEW_INDICATORS_CATEGORIES.PHYSICAL_SIGNS,
   },
   {
     name: "Prise de poids",
@@ -521,8 +515,8 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     order: "DESC",
     type: INDICATOR_TYPE.gauge,
     new: true,
-    uuid: 'fcfdb222-b19c-4f00-bcc9-8d75092e2203',
-    mainCategory: NEW_INDICATORS_CATEGORIES.PHYSICAL_SIGNS
+    uuid: "fcfdb222-b19c-4f00-bcc9-8d75092e2203",
+    mainCategory: NEW_INDICATORS_CATEGORIES.PHYSICAL_SIGNS,
   },
   {
     name: "Perte de poids",
@@ -532,7 +526,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     category: INDICATORS_CATEGORIES["Manifestations physiques"],
     order: "DESC",
     type: INDICATOR_TYPE.gauge,
-    mainCategory: NEW_INDICATORS_CATEGORIES.PHYSICAL_SIGNS
+    mainCategory: NEW_INDICATORS_CATEGORIES.PHYSICAL_SIGNS,
   },
   {
     name: "Colère",
@@ -543,7 +537,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     category: INDICATORS_CATEGORIES["Emotions/sentiments"],
     order: "DESC",
     type: INDICATOR_TYPE.gauge,
-    mainCategory: NEW_INDICATORS_CATEGORIES.EMOTIONS
+    mainCategory: NEW_INDICATORS_CATEGORIES.EMOTIONS,
   },
   {
     name: "Confiance en soi",
@@ -554,7 +548,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     category: INDICATORS_CATEGORIES["Emotions/sentiments"],
     order: "ASC",
     type: INDICATOR_TYPE.gauge,
-    mainCategory: NEW_INDICATORS_CATEGORIES.EMOTIONS
+    mainCategory: NEW_INDICATORS_CATEGORIES.EMOTIONS,
   },
   {
     name: "Joie / Euphorie",
@@ -565,7 +559,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     category: INDICATORS_CATEGORIES["Emotions/sentiments"],
     order: "DESC",
     type: INDICATOR_TYPE.boolean,
-    mainCategory: NEW_INDICATORS_CATEGORIES.EMOTIONS
+    mainCategory: NEW_INDICATORS_CATEGORIES.EMOTIONS,
   },
   {
     name: "Irritabilité",
@@ -576,7 +570,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     category: INDICATORS_CATEGORIES["Emotions/sentiments"],
     order: "DESC",
     type: INDICATOR_TYPE.gauge,
-    mainCategory: NEW_INDICATORS_CATEGORIES.EMOTIONS
+    mainCategory: NEW_INDICATORS_CATEGORIES.EMOTIONS,
   },
   {
     name: "Tristesse",
@@ -587,7 +581,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     category: INDICATORS_CATEGORIES["Emotions/sentiments"],
     order: "DESC",
     type: INDICATOR_TYPE.gauge,
-    mainCategory: NEW_INDICATORS_CATEGORIES.EMOTIONS
+    mainCategory: NEW_INDICATORS_CATEGORIES.EMOTIONS,
   },
   {
     name: "Culpabilité",
@@ -598,7 +592,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     category: INDICATORS_CATEGORIES["Emotions/sentiments"],
     order: "DESC",
     type: INDICATOR_TYPE.gauge,
-    mainCategory: NEW_INDICATORS_CATEGORIES.EMOTIONS
+    mainCategory: NEW_INDICATORS_CATEGORIES.EMOTIONS,
   },
   {
     name: "Humeur matinale",
@@ -609,7 +603,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     category: INDICATORS_CATEGORIES["Emotions/sentiments"],
     order: "ASC",
     type: INDICATOR_TYPE.smiley,
-    mainCategory: NEW_INDICATORS_CATEGORIES.EMOTIONS
+    mainCategory: NEW_INDICATORS_CATEGORIES.EMOTIONS,
   },
   {
     name: "Humeur à la mi-journée",
@@ -620,7 +614,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     category: INDICATORS_CATEGORIES["Emotions/sentiments"],
     order: "ASC",
     type: INDICATOR_TYPE.smiley,
-    mainCategory: NEW_INDICATORS_CATEGORIES.EMOTIONS
+    mainCategory: NEW_INDICATORS_CATEGORIES.EMOTIONS,
   },
   {
     name: "Humeur au coucher",
@@ -631,7 +625,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     category: INDICATORS_CATEGORIES["Emotions/sentiments"],
     order: "ASC",
     type: INDICATOR_TYPE.smiley,
-    mainCategory: NEW_INDICATORS_CATEGORIES.EMOTIONS
+    mainCategory: NEW_INDICATORS_CATEGORIES.EMOTIONS,
   },
   {
     name: "Stabilité de l'humeur",
@@ -642,8 +636,8 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     order: "ASC",
     type: INDICATOR_TYPE.gauge,
     new: true,
-    uuid: 'cfb3c6a0-b511-495e-b39e-8a8c35bb4d6f',
-    mainCategory: NEW_INDICATORS_CATEGORIES.EMOTIONS
+    uuid: "cfb3c6a0-b511-495e-b39e-8a8c35bb4d6f",
+    mainCategory: NEW_INDICATORS_CATEGORIES.EMOTIONS,
   },
   {
     name: "Estime de soi",
@@ -654,7 +648,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     category: INDICATORS_CATEGORIES["Emotions/sentiments"],
     order: "ASC",
     type: INDICATOR_TYPE.gauge,
-    mainCategory: NEW_INDICATORS_CATEGORIES.EMOTIONS
+    mainCategory: NEW_INDICATORS_CATEGORIES.EMOTIONS,
   },
   {
     name: "Anxiété",
@@ -665,7 +659,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     category: INDICATORS_CATEGORIES["Emotions/sentiments"],
     order: "DESC",
     type: INDICATOR_TYPE.gauge,
-    mainCategory: NEW_INDICATORS_CATEGORIES.EMOTIONS
+    mainCategory: NEW_INDICATORS_CATEGORIES.EMOTIONS,
   },
   {
     name: "Motivation",
@@ -675,7 +669,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     category: INDICATORS_CATEGORIES["Emotions/sentiments"],
     order: "ASC",
     type: INDICATOR_TYPE.gauge,
-    mainCategory: NEW_INDICATORS_CATEGORIES.ENERGY
+    mainCategory: NEW_INDICATORS_CATEGORIES.ENERGY,
   },
   {
     name: "Ruminations",
@@ -685,7 +679,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     category: INDICATORS_CATEGORIES["Pensées"],
     order: "DESC",
     type: INDICATOR_TYPE.gauge,
-    mainCategory: NEW_INDICATORS_CATEGORIES.INTRUSIVE_THOUGHTS
+    mainCategory: NEW_INDICATORS_CATEGORIES.INTRUSIVE_THOUGHTS,
   },
   {
     name: "Idées suicidaires",
@@ -695,7 +689,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     category: INDICATORS_CATEGORIES["Pensées"],
     order: "DESC",
     type: INDICATOR_TYPE.gauge,
-    mainCategory: NEW_INDICATORS_CATEGORIES.INTRUSIVE_THOUGHTS
+    mainCategory: NEW_INDICATORS_CATEGORIES.INTRUSIVE_THOUGHTS,
   },
   {
     name: "Hallucinations/idées délirantes",
@@ -705,8 +699,8 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     order: "DESC",
     type: INDICATOR_TYPE.gauge,
     new: true,
-    uuid: 'f27c7aaf-0a3e-468b-b3b4-3b799626f9c6',
-    mainCategory: NEW_INDICATORS_CATEGORIES.INTRUSIVE_THOUGHTS
+    uuid: "f27c7aaf-0a3e-468b-b3b4-3b799626f9c6",
+    mainCategory: NEW_INDICATORS_CATEGORIES.INTRUSIVE_THOUGHTS,
   },
   {
     name: "Phobies",
@@ -716,8 +710,8 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     order: "DESC",
     type: INDICATOR_TYPE.gauge,
     new: true,
-    uuid: '25f3465f-2c7b-4193-a693-dabfdbb72fa2',
-    mainCategory: NEW_INDICATORS_CATEGORIES.INTRUSIVE_THOUGHTS
+    uuid: "25f3465f-2c7b-4193-a693-dabfdbb72fa2",
+    mainCategory: NEW_INDICATORS_CATEGORIES.INTRUSIVE_THOUGHTS,
   },
   {
     name: "Autour de l'alimentation et du corps",
@@ -727,8 +721,8 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     order: "DESC",
     type: INDICATOR_TYPE.gauge,
     new: true,
-    uuid: 'e1e7e015-d5f2-4529-92c4-e679ff3aa3d4',
-    mainCategory: NEW_INDICATORS_CATEGORIES.INTRUSIVE_THOUGHTS
+    uuid: "e1e7e015-d5f2-4529-92c4-e679ff3aa3d4",
+    mainCategory: NEW_INDICATORS_CATEGORIES.INTRUSIVE_THOUGHTS,
   },
   // {
   //   name: "Tout le monde est contre moi",
@@ -744,7 +738,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     category: INDICATORS_CATEGORIES["Pensées"],
     order: "DESC",
     type: INDICATOR_TYPE.gauge,
-    mainCategory: NEW_INDICATORS_CATEGORIES.INTRUSIVE_THOUGHTS
+    mainCategory: NEW_INDICATORS_CATEGORIES.INTRUSIVE_THOUGHTS,
   },
   {
     name: "Sentiment de harcèlement",
@@ -755,7 +749,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     category: INDICATORS_CATEGORIES["Pensées"],
     order: "DESC",
     type: INDICATOR_TYPE.gauge,
-    mainCategory: NEW_INDICATORS_CATEGORIES.INTRUSIVE_THOUGHTS
+    mainCategory: NEW_INDICATORS_CATEGORIES.INTRUSIVE_THOUGHTS,
   },
   {
     name: "Crise de boulimie / hyperphagie",
@@ -765,7 +759,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     category: INDICATORS_CATEGORIES["Comportements"],
     order: "DESC",
     type: INDICATOR_TYPE.boolean,
-    mainCategory: NEW_INDICATORS_CATEGORIES.FOOD
+    mainCategory: NEW_INDICATORS_CATEGORIES.FOOD,
   },
   {
     categories: [NEW_INDICATORS_CATEGORIES.FOOD],
@@ -775,7 +769,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     category: INDICATORS_CATEGORIES["Manifestations physiques"],
     order: "ASC",
     type: INDICATOR_TYPE.gauge,
-    mainCategory: NEW_INDICATORS_CATEGORIES.FOOD
+    mainCategory: NEW_INDICATORS_CATEGORIES.FOOD,
   },
   // {
   //   name: "Augmentation de l'appétit",
@@ -790,19 +784,19 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     type: INDICATOR_TYPE.gauge,
     category: INDICATORS_CATEGORIES["Manifestations physiques"],
     new: true,
-    uuid: 'f90c7b60-09a3-4c66-a2ab-4c54dd3b9a8d',
-    mainCategory: NEW_INDICATORS_CATEGORIES.FOOD
+    uuid: "f90c7b60-09a3-4c66-a2ab-4c54dd3b9a8d",
+    mainCategory: NEW_INDICATORS_CATEGORIES.FOOD,
   },
   {
     name: "Tabac",
     categories: [NEW_INDICATORS_CATEGORIES.SUBSTANCE],
     subcategories: [NEW_INDICATORS_SUBCATEGORIES.SUBSTANCE_USE],
-    category: INDICATORS_CATEGORIES['Comportements'],
+    category: INDICATORS_CATEGORIES["Comportements"],
     priority: 2,
     order: "ASC",
     type: INDICATOR_TYPE.gauge,
     new: true,
-    uuid: 'e4a2cb84-548f-474a-b93a-6c4423cfa7a2',
+    uuid: "e4a2cb84-548f-474a-b93a-6c4423cfa7a2",
     mainCategory: NEW_INDICATORS_CATEGORIES.SUBSTANCE,
   },
   {
@@ -813,13 +807,14 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     priority: 2,
     order: "ASC",
     type: INDICATOR_TYPE.gauge,
-    category: INDICATORS_CATEGORIES['Comportements'],
+    category: INDICATORS_CATEGORIES["Comportements"],
     new: true,
-    uuid: 'ac7c85b6-e015-4b46-bd14-13e01f7d7a85',
+    uuid: "ac7c85b6-e015-4b46-bd14-13e01f7d7a85",
     mainCategory: NEW_INDICATORS_CATEGORIES.SUBSTANCE,
   },
   {
-    name: "Ma consommation d'alcool", categories: [NEW_INDICATORS_CATEGORIES.SUBSTANCE, NEW_INDICATORS_CATEGORIES.SLEEP],
+    name: "Ma consommation d'alcool",
+    categories: [NEW_INDICATORS_CATEGORIES.SUBSTANCE, NEW_INDICATORS_CATEGORIES.SLEEP],
     subcategories: [NEW_INDICATORS_SUBCATEGORIES.SUBSTANCE_USE, NEW_INDICATORS_SUBCATEGORIES.BAD_SLEEP_HABITS],
     priority: 1,
     uuid: "6abafbf9-6467-42e0-a4f1-61be13fd9166",
@@ -835,9 +830,9 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     priority: 1,
     order: "DESC",
     type: INDICATOR_TYPE.gauge,
-    category: INDICATORS_CATEGORIES['Comportements'],
+    category: INDICATORS_CATEGORIES["Comportements"],
     new: true,
-    uuid: 'aa4a31c4-b3d5-426f-8735-cad6157d6a67',
+    uuid: "aa4a31c4-b3d5-426f-8735-cad6157d6a67",
     mainCategory: NEW_INDICATORS_CATEGORIES.SUBSTANCE,
   },
   {
@@ -847,9 +842,9 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     priority: 1,
     order: "DESC",
     type: INDICATOR_TYPE.gauge,
-    category: INDICATORS_CATEGORIES['Comportements'],
+    category: INDICATORS_CATEGORIES["Comportements"],
     new: true,
-    uuid: 'df1c85d4-2a3e-4a3c-8129-9e09e77e77a6',
+    uuid: "df1c85d4-2a3e-4a3c-8129-9e09e77e77a6",
     mainCategory: NEW_INDICATORS_CATEGORIES.SUBSTANCE,
   },
   {
@@ -859,20 +854,21 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     priority: 1,
     order: "DESC",
     type: INDICATOR_TYPE.gauge,
-    category: INDICATORS_CATEGORIES['Comportements'],
+    category: INDICATORS_CATEGORIES["Comportements"],
     new: true,
-    uuid: 'bc58c4de-8612-48e2-b2cf-42ff20cf1e79',
+    uuid: "bc58c4de-8612-48e2-b2cf-42ff20cf1e79",
     mainCategory: NEW_INDICATORS_CATEGORIES.SUBSTANCE,
   },
   {
-    name: "Addiction sexuelle", categories: [NEW_INDICATORS_CATEGORIES.SUBSTANCE],
+    name: "Addiction sexuelle",
+    categories: [NEW_INDICATORS_CATEGORIES.SUBSTANCE],
     subcategories: [NEW_INDICATORS_SUBCATEGORIES.BEHAVIORAL_ADDICTION],
     priority: 2,
     order: "DESC",
     type: INDICATOR_TYPE.gauge,
-    category: INDICATORS_CATEGORIES['Comportements'],
+    category: INDICATORS_CATEGORIES["Comportements"],
     new: true,
-    uuid: '33a8e53e-3d63-4f1c-98d8-1782b1b4628d',
+    uuid: "33a8e53e-3d63-4f1c-98d8-1782b1b4628d",
     mainCategory: NEW_INDICATORS_CATEGORIES.SUBSTANCE,
   },
   {
@@ -882,20 +878,21 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     priority: 2,
     order: "DESC",
     type: INDICATOR_TYPE.gauge,
-    category: INDICATORS_CATEGORIES['Comportements'],
+    category: INDICATORS_CATEGORIES["Comportements"],
     new: true,
-    uuid: '7d4d8ef9-40d6-4199-9759-24412e750d40',
+    uuid: "7d4d8ef9-40d6-4199-9759-24412e750d40",
     mainCategory: NEW_INDICATORS_CATEGORIES.SUBSTANCE,
   },
   {
-    name: "Ecrans", categories: [NEW_INDICATORS_CATEGORIES.SUBSTANCE],
+    name: "Ecrans",
+    categories: [NEW_INDICATORS_CATEGORIES.SUBSTANCE],
     subcategories: [NEW_INDICATORS_SUBCATEGORIES.BEHAVIORAL_ADDICTION],
     priority: 1,
     order: "DESC",
     type: INDICATOR_TYPE.gauge,
-    category: INDICATORS_CATEGORIES['Comportements'],
+    category: INDICATORS_CATEGORIES["Comportements"],
     new: true,
-    uuid: '23dbf31e-f92f-4a3e-90e2-0d0b6940f4a2',
+    uuid: "23dbf31e-f92f-4a3e-90e2-0d0b6940f4a2",
     mainCategory: NEW_INDICATORS_CATEGORIES.SUBSTANCE,
   },
   {
@@ -905,9 +902,9 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     priority: 2,
     order: "DESC",
     type: INDICATOR_TYPE.gauge,
-    category: INDICATORS_CATEGORIES['Comportements'],
+    category: INDICATORS_CATEGORIES["Comportements"],
     new: true,
-    uuid: 'ce73f5cd-97f6-4a83-854e-229f1c6cb00b',
+    uuid: "ce73f5cd-97f6-4a83-854e-229f1c6cb00b",
     mainCategory: NEW_INDICATORS_CATEGORIES.SUBSTANCE,
   },
   {
@@ -916,9 +913,9 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     priority: 2,
     order: "DESC",
     type: INDICATOR_TYPE.gauge,
-    category: INDICATORS_CATEGORIES['Comportements'],
+    category: INDICATORS_CATEGORIES["Comportements"],
     new: true,
-    uuid: '10f35dfb-d0ef-4a59-8c2f-8d4e66e31496',
+    uuid: "10f35dfb-d0ef-4a59-8c2f-8d4e66e31496",
     mainCategory: NEW_INDICATORS_CATEGORIES.SOCIAL_RELATIONS,
   },
   {
@@ -940,7 +937,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     type: INDICATOR_TYPE.gauge,
     category: INDICATORS_CATEGORIES["Comportements"],
     new: true,
-    uuid: '9d7c1f03-d9ea-4053-bf33-04d32798bc56',
+    uuid: "9d7c1f03-d9ea-4053-bf33-04d32798bc56",
     mainCategory: NEW_INDICATORS_CATEGORIES.SOCIAL_RELATIONS,
   },
   {
@@ -959,7 +956,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     categories: [NEW_INDICATORS_CATEGORIES.LIFE_EVENT],
     priority: 1,
     order: "DESC",
-    uuid: '9f8cfd7a-bf90-4b45-8f84-4f5f1a0e8f88',
+    uuid: "9f8cfd7a-bf90-4b45-8f84-4f5f1a0e8f88",
     type: INDICATOR_TYPE.gauge,
     category: INDICATORS_CATEGORIES["Emotions/sentiments"],
     new: true,
@@ -970,7 +967,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     name: "Divorce",
     categories: [NEW_INDICATORS_CATEGORIES.LIFE_EVENT],
     priority: 1,
-    uuid: '3e6f3123-d45b-4a26-b5dc-1df02e9169b4',
+    uuid: "3e6f3123-d45b-4a26-b5dc-1df02e9169b4",
     category: INDICATORS_CATEGORIES["Emotions/sentiments"],
     order: "DESC",
     type: INDICATOR_TYPE.gauge,
@@ -982,7 +979,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     categories: [NEW_INDICATORS_CATEGORIES.LIFE_EVENT],
     category: INDICATORS_CATEGORIES["Emotions/sentiments"],
     priority: 1,
-    uuid: 'e5db3f68-14b1-42df-aad4-4eeb251e93d0',
+    uuid: "e5db3f68-14b1-42df-aad4-4eeb251e93d0",
     order: "DESC",
     type: INDICATOR_TYPE.gauge,
     new: true,
@@ -993,7 +990,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     categories: [NEW_INDICATORS_CATEGORIES.LIFE_EVENT],
     category: INDICATORS_CATEGORIES["Emotions/sentiments"],
     priority: 1,
-    uuid: 'bcbcc6df-92aa-4dc1-924a-58d08d9d4b1c',
+    uuid: "bcbcc6df-92aa-4dc1-924a-58d08d9d4b1c",
     order: "DESC",
     type: INDICATOR_TYPE.gauge,
     new: true,
@@ -1018,7 +1015,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     type: INDICATOR_TYPE.gauge,
     category: INDICATORS_CATEGORIES["Manifestations physiques"],
     new: true,
-    uuid: 'bfcfe140-295f-4f03-a2c3-453542e6c902',
+    uuid: "bfcfe140-295f-4f03-a2c3-453542e6c902",
     mainCategory: NEW_INDICATORS_CATEGORIES.COGNITIVE,
   },
   {
@@ -1029,9 +1026,9 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     order: "ASC",
     type: INDICATOR_TYPE.gauge,
     new: true,
-    uuid: '62cf1e68-ecb9-4cc5-b0db-d376f8f53ba2',
+    uuid: "62cf1e68-ecb9-4cc5-b0db-d376f8f53ba2",
     mainCategory: NEW_INDICATORS_CATEGORIES.COGNITIVE,
-  }
+  },
 ];
 
 export const INDICATEURS: PredefineIndicatorSchemaType[] = [
@@ -1674,7 +1671,7 @@ export const INDICATEURS_LES_PLUS_COURANTS = INDICATORS.filter((indicateur) =>
   ].includes(indicateur.uuid)
 );
 
-export const BASE_INDICATORS = [INDICATEURS_HUMEUR.uuid, INDICATEURS_SOMMEIL.uuid]
+export const BASE_INDICATORS = [INDICATEURS_HUMEUR.uuid, INDICATEURS_SOMMEIL.uuid];
 
 export const INDICATEURS_LISTE_ONBOARDING_CUSTOM_SIMPLE = [
   INDICATEURS.filter((indicateur) =>
@@ -1693,9 +1690,7 @@ export const INDICATEURS_LISTE_ONBOARDING_CUSTOM_SIMPLE = [
       "0d277137-afb5-4926-a81c-3d278139f764",
     ].includes(indicateur.uuid)
   ),
-  INDICATEURS.filter((indicateur) =>
-    ["eac70ab8-ee01-4ffd-8627-7903c3a861c0", "6058c367-e5c6-4f08-ae8b-e6032b4c94af"].includes(indicateur.uuid)
-  ),
+  INDICATEURS.filter((indicateur) => ["eac70ab8-ee01-4ffd-8627-7903c3a861c0", "6058c367-e5c6-4f08-ae8b-e6032b4c94af"].includes(indicateur.uuid)),
 ];
 
 export const INDICATEURS_LISTE_PAR_CATEGORIE = {
@@ -1811,19 +1806,12 @@ export const INDICATEURS_LISTE_ONBOARDING = [
   "Faire mes tâches ménagères",
 ];
 
-export const INDICATEURS_LISTE = Object.values(INDICATEURS_LISTE_PAR_CATEGORIE).reduce(
-  (acc, curr) => [...acc, ...curr],
-  []
-);
+export const INDICATEURS_LISTE = Object.values(INDICATEURS_LISTE_PAR_CATEGORIE).reduce((acc, curr) => [...acc, ...curr], []);
 
 export const OLD_INDICATEURS_HUMEUR = "Humeur générale";
 export const OLD_INDICATEURS_SOMMEIL = "Qualité sommeil";
 
-export const OLD_INDICATEURS_LISTE_ONBOARDING_HUMEUR = [
-  "Humeur matinale",
-  "Humeur à la mi-journée",
-  "Humeur au coucher",
-];
+export const OLD_INDICATEURS_LISTE_ONBOARDING_HUMEUR = ["Humeur matinale", "Humeur à la mi-journée", "Humeur au coucher"];
 export const OLD_INDICATEURS_LISTE_ONBOARDING_SOMMEIL = [
   "Durée sommeil",
   "Facilité endormissement",
@@ -1848,7 +1836,7 @@ export const INDICATEURS_LISTE_ONBOARDING_CUSTOM_SIMPLE_LIST = [
 ];
 
 export const INDICATOR_LABELS: Record<string, string[]> = {
-  '3e15ed99-f2f9-4716-b6a2-5348c35266da': ['Très mal', 'Mal', 'OK', 'Bien', 'Très bien'],
-}
+  "3e15ed99-f2f9-4716-b6a2-5348c35266da": ["Très mal", "Mal", "OK", "Bien", "Très bien"],
+};
 
-export const DEFAULT_INDICATOR_LABELS = ['Très faible', 'Faible', 'Normal', 'Élevé', 'Trés élevé']
+export const DEFAULT_INDICATOR_LABELS = ["Très faible", "Faible", "Normal", "Élevé", "Trés élevé"];

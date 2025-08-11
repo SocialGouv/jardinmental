@@ -17,8 +17,7 @@ export const getGoalsData = getData;
 export const saveGoalsData = saveData;
 export const clearGoalsData = clearData;
 
-export const goalIdFromLabel = (label) =>
-  label ? label.toLowerCase().trim().split(" ").join("_") : undefined;
+export const goalIdFromLabel = (label) => (label ? label.toLowerCase().trim().split(" ").join("_") : undefined);
 
 export const setGoalTracked = async ({ id, label, enabled, order, daysOfWeek, reminder }) => {
   if (!id) id = goalIdFromLabel(label);
@@ -103,14 +102,10 @@ export const getGoalsTracked = async ({ date, enabled = true } = { date: undefin
   return getGoalsTrackedFromData({ data, date, enabled });
 };
 
-export const getGoalsTrackedFromData = (
-  { data, date, enabled = true } = { data: {}, date: undefined, enabled: true }
-) => {
+export const getGoalsTrackedFromData = ({ data, date, enabled = true } = { data: {}, date: undefined, enabled: true }) => {
   if (!data?.goals?.byOrder?.length) return [];
 
-  const goalsTracked = data.goals.byOrder
-    .map((id) => data.goals.data[id])
-    .filter((goal) => goal.enabled === enabled);
+  const goalsTracked = data.goals.byOrder.map((id) => data.goals.data[id]).filter((goal) => goal.enabled === enabled);
 
   if (!date) return goalsTracked;
 
@@ -124,9 +119,7 @@ export const setGoalDailyRecord = async ({ goalId, value, comment, date }) => {
 
   let data = await getData();
 
-  const existingRecordId = data.records?.byDate?.[date]?.find?.(
-    (recordId) => data.records.data[recordId]?.goalId === goalId
-  );
+  const existingRecordId = data.records?.byDate?.[date]?.find?.((recordId) => data.records.data[recordId]?.goalId === goalId);
   const existingRecord = existingRecordId ? data.records.data[existingRecordId] : undefined;
 
   const id = existingRecordId ?? uuid.v4();
@@ -170,17 +163,13 @@ export const getGoalsDailyRecords = async ({ date, goalId } = { date: undefined,
 
     if (!data.records?.byDate?.[date]?.length) return [];
 
-    return data.records.byDate[date]
-      .map((recordId) => data.records.data[recordId])
-      .filter((record) => !!record);
+    return data.records.byDate[date].map((recordId) => data.records.data[recordId]).filter((record) => !!record);
   }
 
   if (goalId) {
     if (!data.records?.byGoalId?.[goalId]?.length) return [];
 
-    return data.records.byGoalId[goalId]
-      .map((recordId) => data.records.data[recordId])
-      .filter((record) => !!record);
+    return data.records.byGoalId[goalId].map((recordId) => data.records.data[recordId]).filter((record) => !!record);
   }
 
   return [];

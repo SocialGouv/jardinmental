@@ -1,7 +1,7 @@
 module.exports = {
   process() {
     return {
-      code: 'module.exports = () => null;'
+      code: "module.exports = () => null;",
     };
   },
 };

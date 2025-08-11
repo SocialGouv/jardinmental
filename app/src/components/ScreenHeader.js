@@ -31,14 +31,7 @@ export const ScreenHeader = ({
   }
 
   return (
-    <View
-      style={[
-        styles.container,
-        { paddingHorizontal: marginHorizontal },
-        !withoutInsets && { paddingTop: insets.top },
-        containerStyle,
-      ]}
-    >
+    <View style={[styles.container, { paddingHorizontal: marginHorizontal }, !withoutInsets && { paddingTop: insets.top }, containerStyle]}>
       <View style={[styles.contentContainer, contentContainerStyle]}>
         {leftButton && <HeaderButton {...leftButton} />}
         {!leftButton && rightButton && <HeaderButtonGhost />}

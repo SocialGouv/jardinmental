@@ -40,7 +40,7 @@ const ProgressHeaderContext = createContext<ProgressHeaderContextType | undefine
 export const useOnboardingProgressHeader = () => {
   const context = useContext(ProgressHeaderContext);
   if (!context) {
-    throw new Error('useOnboardingProgressHeader must be used within OnboardingProgressHeaderProvider');
+    throw new Error("useOnboardingProgressHeader must be used within OnboardingProgressHeaderProvider");
   }
   return context;
 };
@@ -48,20 +48,19 @@ export const useOnboardingProgressHeader = () => {
 export const OnboardingProgressHeaderProvider = ({ children }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [slideIndex, setSlideIndex] = useState(-1);
-  const [title, setTitle] = useState<string>('')
+  const [title, setTitle] = useState<string>("");
   const [showProgressbar, setShowProgressbar] = useState<boolean>(false);
   const hideOnScrollProgressValue = useSharedValue(1);
   const nextCallbackRef = useRef<(() => void) | null>(null);
   const skipCallbackRef = useRef<(() => void) | null>(null);
 
-
   const setNextCallback = useCallback((func: () => void) => {
     nextCallbackRef.current = func;
-  }, [])
+  }, []);
 
   const setSkipCallback = useCallback((func: () => void) => {
     skipCallbackRef.current = func;
-  }, [])
+  }, []);
 
   const value = {
     slideIndex,
@@ -77,7 +76,7 @@ export const OnboardingProgressHeaderProvider = ({ children }) => {
     setSkipCallback,
     skipCallback: skipCallbackRef,
     hideOnScrollProgressValue,
-    setHideOnScrollProgressValue: hideOnScrollProgressValue
+    setHideOnScrollProgressValue: hideOnScrollProgressValue,
     // animatedStatusBarColor,
     // animatedTextColor
   };
@@ -100,27 +99,23 @@ export const progressHeaderOptions = ({ insets, slidesCount, navigation }): Stac
 
 export const ProgressScreen =
   ({ slideIndex: _slideIndex, Component, title, showProgressbar }) =>
-    ({ ...props }) => {
-      const { setSlideIndex, setTitle, setShowProgressbar, setHideOnScrollProgressValue } = useOnboardingProgressHeader();
+  ({ ...props }) => {
+    const { setSlideIndex, setTitle, setShowProgressbar, setHideOnScrollProgressValue } = useOnboardingProgressHeader();
 
-      useFocusEffect(
-        useCallback(() => {
-          setSlideIndex(_slideIndex);
-          setTimeout(() => {
-            setTitle(title)
-            setShowProgressbar(showProgressbar)
-          })
-        }, [])
-      );
+    useFocusEffect(
+      useCallback(() => {
+        setSlideIndex(_slideIndex);
+        setTimeout(() => {
+          setTitle(title);
+          setShowProgressbar(showProgressbar);
+        });
+      }, [])
+    );
 
-      return <Component {...props} />;
-    };
+    return <Component {...props} />;
+  };
 
-export const SafeAreaViewWithOptionalHeader = ({ children, style, ...props }: {
-  style?: ViewStyle,
-  children: ReactNode,
-  className?: string,
-}) => {
+export const SafeAreaViewWithOptionalHeader = ({ children, style, ...props }: { style?: ViewStyle; children: ReactNode; className?: string }) => {
   const insets = useSafeAreaInsets();
   const { isVisible } = useOnboardingProgressHeader();
 
@@ -141,11 +136,9 @@ export const SafeAreaViewWithOptionalHeader = ({ children, style, ...props }: {
   );
 };
 
-
-
 const ProgressHeader = ({ insets, slidesCount, navigation }) => {
   const { slideIndex, showProgressbar, nextCallback, skipCallback, hideOnScrollProgressValue } = useOnboardingProgressHeader();
-  const [hideHeader, setHideHeader] = useState(false)
+  const [hideHeader, setHideHeader] = useState(false);
   const animatedProgressValue = useRef(new RNAnimated.Value(0)).current;
   const animatedProgressWidth = animatedProgressValue.interpolate({
     inputRange: [0, 1],
@@ -155,19 +148,19 @@ const ProgressHeader = ({ insets, slidesCount, navigation }) => {
     return {
       backgroundColor: TW_COLORS.PRIMARY,
     };
-  })
+  });
 
   const animatedTextColor = useAnimatedStyle(() => {
     return {
-      backgroundColor: 'transparent',
-      color: TW_COLORS.WHITE
+      backgroundColor: "transparent",
+      color: TW_COLORS.WHITE,
     };
-  })
+  });
 
   useEffect(() => {
     if (slideIndex >= 0) {
       RNAnimated.timing(animatedProgressValue, {
-        toValue: Math.max(0, Math.min(1, (slideIndex) / (slidesCount))),
+        toValue: Math.max(0, Math.min(1, slideIndex / slidesCount)),
         duration: 300,
         easing: Easing.out(Easing.quad),
         useNativeDriver: false,
@@ -188,7 +181,7 @@ const ProgressHeader = ({ insets, slidesCount, navigation }) => {
         useNativeDriver: true,
       }).start();
     } else if ((slideIndex === slidesCount || slideIndex === -1) && visible) {
-      setVisible(false)
+      setVisible(false);
       RNAnimated.timing(animatedVisibleValue, {
         toValue: 0,
         delay: 0,
@@ -208,38 +201,33 @@ const ProgressHeader = ({ insets, slidesCount, navigation }) => {
 
   return ({ navigation }) => {
     if (!visible) return null;
-    const content = (<View style={styles.container}>
-      <View style={{ opacity: 0 }}>
-        <BackButton onPress={navigation.goBack} />
-      </View>
-      {showProgressbar &&
-        <Animated.View className="flex-row items-center px-6"
-          style={progressBarAnimatedStyle}
-        >
-          <View
-            className="h-2 rounded-full overflow-hidden flex-1"
-            style={{ backgroundColor: TW_COLORS.GRAY_LIGHT }}
-          >
-            <RNAnimated.View
-              className="h-full rounded-full transition-all duration-300"
-              style={{
-                backgroundColor: TW_COLORS.BRAND_500,
-                width: animatedProgressWidth
-              }}
-            />
-          </View>
-          <Text
-            className="text-sm font-medium ml-2"
-            style={{ color: TW_COLORS.WHITE }}
-          >
-            {slideIndex}/{slidesCount}
-          </Text>
-        </Animated.View>}
+    const content = (
+      <View style={styles.container}>
+        <View style={{ opacity: 0 }}>
+          <BackButton onPress={navigation.goBack} />
+        </View>
+        {showProgressbar && (
+          <Animated.View className="flex-row items-center px-6" style={progressBarAnimatedStyle}>
+            <View className="h-2 rounded-full overflow-hidden flex-1" style={{ backgroundColor: TW_COLORS.GRAY_LIGHT }}>
+              <RNAnimated.View
+                className="h-full rounded-full transition-all duration-300"
+                style={{
+                  backgroundColor: TW_COLORS.BRAND_500,
+                  width: animatedProgressWidth,
+                }}
+              />
+            </View>
+            <Text className="text-sm font-medium ml-2" style={{ color: TW_COLORS.WHITE }}>
+              {slideIndex}/{slidesCount}
+            </Text>
+          </Animated.View>
+        )}
 
-      <View style={{ opacity: 0 }} pointerEvents="none">
-        <BackButton onPress={() => { }} />
+        <View style={{ opacity: 0 }} pointerEvents="none">
+          <BackButton onPress={() => {}} />
+        </View>
       </View>
-    </View>)
+    );
 
     return (
       <View
@@ -254,44 +242,47 @@ const ProgressHeader = ({ insets, slidesCount, navigation }) => {
       >
         <RNAnimated.View
           style={[
-            (PROGRESS_BAR && !PROGRESS_BAR_AND_HEADER) ? { top: insets.top + PROGRESS_HEADER_HEIGHT - 20 } : { paddingTop: insets.top },
+            PROGRESS_BAR && !PROGRESS_BAR_AND_HEADER ? { top: insets.top + PROGRESS_HEADER_HEIGHT - 20 } : { paddingTop: insets.top },
             { opacity: animatedVisibleValue },
           ]}
         >
-          {HEADER_WITH_BANNER && !hideHeader && <BannerAnimatedHeader
-            animatedStatusBarColor={animatedStatusBarColor}
-            animatedTextColor={animatedTextColor}
-            header={content}
-            title={title || ''}
-            handlePrevious={() => {
-              if (slideIndex === 0) {
-                setHideHeader(true)
-              }
-              setTimeout(() => {
-                navigation.goBack()
-                setHideHeader(false)
-              }, 0)
-            }}
-            handleSkip={() => { }}
-          >
-          </BannerAnimatedHeader>}
-          {!HEADER_WITH_BANNER && !hideHeader && (SHARED_HEADER || PROGRESS_BAR_AND_HEADER) && <CheckInHeader
-            withMargin={false}
-            onSkip={() => {
-              if (skipCallback && skipCallback.current) {
-                skipCallback.current();
-              }
-              else if (nextCallback && nextCallback.current) {
-                nextCallback.current();
-              }
-            }}
-            onPrevious={() => {
-              navigation.goBack();
-            }}
-            showPrevious={true}
-            animatedTextColor={animatedTextColor}
-            showSkip={true}
-            title={""} />}
+          {HEADER_WITH_BANNER && !hideHeader && (
+            <BannerAnimatedHeader
+              animatedStatusBarColor={animatedStatusBarColor}
+              animatedTextColor={animatedTextColor}
+              header={content}
+              title={title || ""}
+              handlePrevious={() => {
+                if (slideIndex === 0) {
+                  setHideHeader(true);
+                }
+                setTimeout(() => {
+                  navigation.goBack();
+                  setHideHeader(false);
+                }, 0);
+              }}
+              handleSkip={() => {}}
+            ></BannerAnimatedHeader>
+          )}
+          {!HEADER_WITH_BANNER && !hideHeader && (SHARED_HEADER || PROGRESS_BAR_AND_HEADER) && (
+            <CheckInHeader
+              withMargin={false}
+              onSkip={() => {
+                if (skipCallback && skipCallback.current) {
+                  skipCallback.current();
+                } else if (nextCallback && nextCallback.current) {
+                  nextCallback.current();
+                }
+              }}
+              onPrevious={() => {
+                navigation.goBack();
+              }}
+              showPrevious={true}
+              animatedTextColor={animatedTextColor}
+              showSkip={true}
+              title={""}
+            />
+          )}
 
           {!HEADER_WITH_BANNER && !hideHeader && content}
         </RNAnimated.View>

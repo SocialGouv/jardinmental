@@ -87,10 +87,7 @@ export const GoalsSettingsMore = ({ navigation, route }) => {
         },
       }}
     >
-      <Card
-        title="Modifier mes objectifs"
-        text="Vous pouvez changer l’ordre d’apparition de vos objectifs et/ou les supprimer"
-      />
+      <Card title="Modifier mes objectifs" text="Vous pouvez changer l’ordre d’apparition de vos objectifs et/ou les supprimer" />
       <View style={titleStyles.container}>
         <Title align="left" fill={false}>
           Mes objectifs
@@ -108,13 +105,7 @@ const GoalItem = ({ goal, drag, isActive, index, onRemove }) => {
     <ScaleDecorator>
       <TouchableOpacity onLongPress={drag} disabled={isActive} delayLongPress={100}>
         <View style={[itemStyles.container, isActive && { backgroundColor: "#D4F0F2" }]}>
-          <Icon
-            icon="ReorderSvg"
-            color={colors.BLUE}
-            width="16"
-            height="16"
-            styleContainer={{ width: 16, height: 16 }}
-          />
+          <Icon icon="ReorderSvg" color={colors.BLUE} width="16" height="16" styleContainer={{ width: 16, height: 16 }} />
           <Text style={[itemStyles.label]}>{goal?.label}</Text>
           <Button2
             square

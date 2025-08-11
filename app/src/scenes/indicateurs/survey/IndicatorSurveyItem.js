@@ -5,14 +5,7 @@ import { InputText } from "../../../components/InputText";
 import { answers as emojis } from "../../survey-v2/utils";
 import { colors } from "@/utils/colors";
 
-export const IndicatorSurveyItem = ({
-  indicator,
-  index,
-  value,
-  onValueChanged,
-  comment,
-  onCommentChanged,
-}) => {
+export const IndicatorSurveyItem = ({ indicator, index, value, onValueChanged, comment, onCommentChanged }) => {
   const [_value, _setValue] = useState(value);
   useEffect(() => {
     _setValue(value);

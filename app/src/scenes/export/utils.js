@@ -1,21 +1,21 @@
-import {colors} from '../../utils/colors';
-import {displayedCategories, categories, translateCategories, scoresMapIcon} from '../../utils/constants';
-import {getArrayOfDates, formatDate} from '../../utils/date/helpers';
-import localStorage from '../../utils/localStorage';
-import {getDrugListWithLocalStorage} from '../../utils/drugs-list';
-import {parseISO, format} from 'date-fns';
-import {fr} from 'date-fns/locale';
-import { INDICATEURS_LIST } from '../../utils/liste_indicateurs.1';
+import { colors } from "../../utils/colors";
+import { displayedCategories, categories, translateCategories, scoresMapIcon } from "../../utils/constants";
+import { getArrayOfDates, formatDate } from "../../utils/date/helpers";
+import localStorage from "../../utils/localStorage";
+import { getDrugListWithLocalStorage } from "../../utils/drugs-list";
+import { parseISO, format } from "date-fns";
+import { fr } from "date-fns/locale";
+import { INDICATEURS_LIST } from "../../utils/liste_indicateurs.1";
 
 // methods
-const hasNotes = notes =>
+const hasNotes = (notes) =>
   !!notes &&
-  ((typeof notes === 'string' && notes) || //retro compatibility
-    (typeof notes === 'object' && Object.keys(notes)?.length > 0));
+  ((typeof notes === "string" && notes) || //retro compatibility
+    (typeof notes === "object" && Object.keys(notes)?.length > 0));
 
-const hasBeck = becks => !!becks && Object.keys(becks)?.length > 0;
-const hasDiaryNotes = diary => !!diary && diary?.values?.some(e => e.value);
-const hasContext = survey => !!survey && Object.keys(survey)?.some(k => survey[k]?.userComment?.length);
+const hasBeck = (becks) => !!becks && Object.keys(becks)?.length > 0;
+const hasDiaryNotes = (diary) => !!diary && diary?.values?.some((e) => e.value);
+const hasContext = (survey) => !!survey && Object.keys(survey)?.some((k) => survey[k]?.userComment?.length);
 
 // GENERATORS
 const generateTime = (firstDay, today) => {
@@ -31,9 +31,9 @@ const generateTime = (firstDay, today) => {
     >
       <tbody>
         <tr>
-          <td>${format(firstDay, 'EEEE d MMMM', {locale: fr})}</td>
+          <td>${format(firstDay, "EEEE d MMMM", { locale: fr })}</td>
           <td align="right" style="text-align: right;">
-              ${format(today, 'EEEE d MMMM', {locale: fr})}
+              ${format(today, "EEEE d MMMM", { locale: fr })}
           </td>
         </tr>
       </tbody>
@@ -41,7 +41,7 @@ const generateTime = (firstDay, today) => {
   `;
 };
 
-const generateBar = (value, height, backgroundColor = 'grey', textColor = 'white') => {
+const generateBar = (value, height, backgroundColor = "grey", textColor = "white") => {
   return `<td style="vertical-align: bottom">
     <table
       cellpadding="0"
@@ -85,7 +85,7 @@ const generateBar = (value, height, backgroundColor = 'grey', textColor = 'white
                       word-wrap: break-word; 
                     "
                   >
-                    ${value || ' '}
+                    ${value || " "}
                   </td>
                 </tr>
               </tbody>
@@ -96,13 +96,13 @@ const generateBar = (value, height, backgroundColor = 'grey', textColor = 'white
   </td>`;
 };
 
-const generateNote = notes => {
+const generateNote = (notes) => {
   if (!hasNotes(notes)) {
-    return '';
+    return "";
   }
 
   const renderNote = (n, i) => {
-    if (!n) return '';
+    if (!n) return "";
     return `<p
       style="
           margin: 0;
@@ -111,11 +111,11 @@ const generateNote = notes => {
           padding-top: 2px;
           padding-bottom: 2px;
         ">
-      ${i ? `<b>${i} :</b> ` : ''}${n}
+      ${i ? `<b>${i} :</b> ` : ""}${n}
     </p>`;
   };
 
-  if (typeof notes === 'string') {
+  if (typeof notes === "string") {
     //retro compatibility
     return `
     <tr class="journal__item-symptom-wrapper" >
@@ -128,19 +128,19 @@ const generateNote = notes => {
     return `
     <tr class="journal__item-symptom-wrapper">  
       <td style="padding:10px;">
-        ${renderNote(notes.notesEvents, 'Évènement')}
-        ${renderNote(notes.notesSymptoms, 'Symptôme')}
-        ${renderNote(notes.notesToxic, 'Toxique')}
+        ${renderNote(notes.notesEvents, "Évènement")}
+        ${renderNote(notes.notesSymptoms, "Symptôme")}
+        ${renderNote(notes.notesToxic, "Toxique")}
       </td>
     </tr>`;
   }
 };
 
-const generateDiaryNote = notes => {
+const generateDiaryNote = (notes) => {
   return notes
-    ?.filter(e => e.value)
+    ?.filter((e) => e.value)
     ?.map(
-      e => `<tr class="journal__item-symptom-wrapper">  <td style="padding:10px;">
+      (e) => `<tr class="journal__item-symptom-wrapper">  <td style="padding:10px;">
         <p
       style="
           margin: 0;
@@ -149,17 +149,17 @@ const generateDiaryNote = notes => {
           padding-top: 2px;
           padding-bottom: 2px;
         ">${e.value}</p>
-      </td></tr>`,
+      </td></tr>`
     )
-    ?.join('');
+    ?.join("");
 };
 
-const generateBeck = beck => {
+const generateBeck = (beck) => {
   if (!beck) {
-    return '';
+    return "";
   }
 
-  const renderTitle = e => `<p
+  const renderTitle = (e) => `<p
       style="
           margin: 0;
           margin-left: 20px;
@@ -167,74 +167,74 @@ const generateBeck = beck => {
           color:${colors.DARK_BLUE};
           font-size: large;
         ">
-      ${e ? `<b>${e}</b> ` : ''}
+      ${e ? `<b>${e}</b> ` : ""}
     </p>`;
 
   const renderItem = (e, t) => {
-    if (!e || e.length === 0) return '';
+    if (!e || e.length === 0) return "";
     return `<p
       style="
           margin: 0;
           margin-left: 20px;
           padding-right: 50px;
         ">
-       ${t ? `<b>${t} :</b> ` : ''}${e}
+       ${t ? `<b>${t} :</b> ` : ""}${e}
     </p>`;
   };
   const renderItemWithPercentage = (e, p, t) => {
-    if (!e) return '';
+    if (!e) return "";
     return `<p
       style="
           margin: 0;
           margin-left: 20px;
           padding-right: 50px;
         ">
-       ${t ? `<b>${t} :</b> ` : ''}${e} ${p ? `(${p * 10}%)` : ''}
+       ${t ? `<b>${t} :</b> ` : ""}${e} ${p ? `(${p * 10}%)` : ""}
     </p>`;
   };
 
   const renderListItem = (list, t) => {
-    if (!list || list.length === 0) return '';
+    if (!list || list.length === 0) return "";
     return `<p
       style="
           margin: 0;
           margin-left: 20px;
           padding-right: 50px;
         ">
-       ${t ? `<b>${t} :</b> ` : ''}${list.join(', ')}
+       ${t ? `<b>${t} :</b> ` : ""}${list.join(", ")}
     </p>`;
   };
 
   const renderSeparator = () => '<div style="height:20px;width:1px;"></div>';
 
-  const renderBeck = b => {
+  const renderBeck = (b) => {
     return `
-    ${renderTitle('La situation')}
-    ${renderItem(b?.date, 'Le')}
-    ${renderItem(b?.time, 'À')}
-    ${renderListItem(b?.who, 'Avec')}
+    ${renderTitle("La situation")}
+    ${renderItem(b?.date, "Le")}
+    ${renderItem(b?.time, "À")}
+    ${renderListItem(b?.who, "Avec")}
     ${renderItem(b?.where)}
-    ${renderItem(b?.what, 'Description factuelle')}
+    ${renderItem(b?.what, "Description factuelle")}
     ${renderSeparator()}
-    ${renderTitle('Vos émotions')}
-    ${renderItemWithPercentage(b?.mainEmotion, b?.mainEmotionIntensity, 'Émotion principale')}
-    ${renderListItem(b?.otherEmotions, 'Autres émotions')}
-    ${renderListItem(b?.physicalSensations, 'Sensations')}
+    ${renderTitle("Vos émotions")}
+    ${renderItemWithPercentage(b?.mainEmotion, b?.mainEmotionIntensity, "Émotion principale")}
+    ${renderListItem(b?.otherEmotions, "Autres émotions")}
+    ${renderListItem(b?.physicalSensations, "Sensations")}
     ${renderSeparator()}
-    ${renderTitle('Vos pensées')}
-    ${renderItemWithPercentage(b?.thoughtsBeforeMainEmotion, b?.trustInThoughsThen, 'Pensée immédiate')}
-    ${renderItem(b?.memories, 'Images et souvenirs')}
+    ${renderTitle("Vos pensées")}
+    ${renderItemWithPercentage(b?.thoughtsBeforeMainEmotion, b?.trustInThoughsThen, "Pensée immédiate")}
+    ${renderItem(b?.memories, "Images et souvenirs")}
     ${renderSeparator()}
-    ${renderTitle('Comportement et Résultats')}
+    ${renderTitle("Comportement et Résultats")}
     ${renderItem(b?.actions, "Qu'avez-vous fait ?")}
-    ${renderItem(b?.consequencesForYou, 'Conséquences pour vous')}
-    ${renderItem(b?.consequencesForRelatives, 'Conséquences pour votre entourage')}
+    ${renderItem(b?.consequencesForYou, "Conséquences pour vous")}
+    ${renderItem(b?.consequencesForRelatives, "Conséquences pour votre entourage")}
     ${renderSeparator()}
-    ${renderTitle('Restructuration')}
-    ${renderItem(b?.argumentPros, 'Arguments en faveur')}
-    ${renderItem(b?.argumentCons, 'Arguments en défaveur')}
-    ${renderItemWithPercentage(b?.nuancedThoughts, b?.trustInThoughsNow, 'Pensée nuancée')}
-    ${renderItemWithPercentage(b?.mainEmotion, b?.mainEmotionIntensityNuanced, 'Émotions après coup')}
+    ${renderTitle("Restructuration")}
+    ${renderItem(b?.argumentPros, "Arguments en faveur")}
+    ${renderItem(b?.argumentCons, "Arguments en défaveur")}
+    ${renderItemWithPercentage(b?.nuancedThoughts, b?.trustInThoughsNow, "Pensée nuancée")}
+    ${renderItemWithPercentage(b?.mainEmotion, b?.mainEmotionIntensityNuanced, "Émotions après coup")}
     `;
   };
 
@@ -256,8 +256,8 @@ const formatHtmlTable = async (diaryData, diaryNotes) => {
     numberOfDays: 30,
   });
 
-  const computeChartData = indicateur => {
-    return chartDates.map(date => {
+  const computeChartData = (indicateur) => {
+    return chartDates.map((date) => {
       const dayData = diaryData[date];
       if (!dayData) {
         return null;
@@ -267,8 +267,8 @@ const formatHtmlTable = async (diaryData, diaryNotes) => {
         return null;
       }
 
-      if (indicateur?.type === 'boolean') return categoryState?.value === true ? 5 : 1;
-      if (indicateur?.type === 'gauge') return Math.min(Math.ceil(categoryState?.value * 5), 5);
+      if (indicateur?.type === "boolean") return categoryState?.value === true ? 5 : 1;
+      if (indicateur?.type === "gauge") return Math.min(Math.ceil(categoryState?.value * 5), 5);
       if (categoryState?.value) return categoryState?.value;
 
       // -------
@@ -276,9 +276,9 @@ const formatHtmlTable = async (diaryData, diaryNotes) => {
       // -------
 
       // get the name and the suffix of the category
-      const [categoryName, suffix] = indicateur.name.split('_');
+      const [categoryName, suffix] = indicateur.name.split("_");
       let categoryStateIntensity = null;
-      if (suffix && suffix === 'FREQUENCE') {
+      if (suffix && suffix === "FREQUENCE") {
         // if it's one category with the suffix 'FREQUENCE' :
         // add the intensity (default level is 3 - for the frequence 'never')
         categoryStateIntensity = dayData[`${categoryName}_INTENSITY`] || {
@@ -290,9 +290,9 @@ const formatHtmlTable = async (diaryData, diaryNotes) => {
     });
   };
 
-  const isChartVisible = categoryId => {
+  const isChartVisible = (categoryId) => {
     let visible = false;
-    chartDates.forEach(date => {
+    chartDates.forEach((date) => {
       if (!diaryData[date]) return;
       if (!diaryData[date][categoryId]) return;
       visible = true;
@@ -300,23 +300,23 @@ const formatHtmlTable = async (diaryData, diaryNotes) => {
     return visible;
   };
 
-  const isDrugVisible = drug => {
+  const isDrugVisible = (drug) => {
     let visible = false;
-    chartDates.forEach(date => {
+    chartDates.forEach((date) => {
       if (!diaryData[date]) return;
-      if (!diaryData[date]?.POSOLOGY?.find(e => e.id === drug.id)) return;
+      if (!diaryData[date]?.POSOLOGY?.find((e) => e.id === drug.id)) return;
       visible = true;
     });
     return visible;
   };
 
-  const computeChartDrug = drug => {
-    return chartDates.map(date => {
+  const computeChartDrug = (drug) => {
+    return chartDates.map((date) => {
       const dayData = diaryData[date];
       if (!dayData) {
         return null;
       }
-      const drugToday = diaryData[date]?.POSOLOGY?.find(e => e.id === drug.id);
+      const drugToday = diaryData[date]?.POSOLOGY?.find((e) => e.id === drug.id);
       if (!drugToday) {
         return null;
       }
@@ -324,10 +324,10 @@ const formatHtmlTable = async (diaryData, diaryNotes) => {
     });
   };
 
-  const getTitle = cat => {
+  const getTitle = (cat) => {
     const category = INDICATEURS_LIST[cat] || displayedCategories[cat] || cat;
-    const [categoryName, suffix] = category.split('_');
-    if (suffix && suffix === 'FREQUENCE') {
+    const [categoryName, suffix] = category.split("_");
+    if (suffix && suffix === "FREQUENCE") {
       return categoryName;
     }
     return category;
@@ -366,11 +366,11 @@ const formatHtmlTable = async (diaryData, diaryNotes) => {
         <h2 style="color: ${colors.BLUE}">Mon état et mon traitement</h2>
         <h3 style="color: ${colors.BLUE}">Mes ressentis</h3>
         ${user_indicateurs
-          ?.filter(ind => isChartVisible(ind.name) && ind.active)
-          .map(indicateur => {
+          ?.filter((ind) => isChartVisible(ind.name) && ind.active)
+          .map((indicateur) => {
             const res = computeChartData(indicateur);
             const categoryId = indicateur.name;
-            const isReverse = indicateur?.order === 'DESC';
+            const isReverse = indicateur?.order === "DESC";
 
             const scores = isReverse ? [5, 4, 3, 2, 1] : [1, 2, 3, 4, 5];
 
@@ -394,11 +394,16 @@ const formatHtmlTable = async (diaryData, diaryNotes) => {
                         <tbody>
                           <tr>
                             ${res
-                              .map(value => {
+                              .map((value) => {
                                 const height = 15 * value + 2;
-                                return generateBar(value, height, scoresMapIcon[scores[value - 1]]?.color, scoresMapIcon[scores[value - 1]]?.iconColor);
+                                return generateBar(
+                                  value,
+                                  height,
+                                  scoresMapIcon[scores[value - 1]]?.color,
+                                  scoresMapIcon[scores[value - 1]]?.iconColor
+                                );
                               })
-                              .join('')}
+                              .join("")}
                           </tr>
                         </tbody>
                       </table>
@@ -409,12 +414,12 @@ const formatHtmlTable = async (diaryData, diaryNotes) => {
               </table>
             `;
           })
-          .join('')}
+          .join("")}
         <h3 style="margin-top:15px;color: ${colors.BLUE}">Mon traitement</h3>
           ${drugListWithLocalStorage
-            .map(drug => {
+            .map((drug) => {
               if (!isDrugVisible(drug)) {
-                return '';
+                return "";
               }
               const res = computeChartDrug(drug);
 
@@ -438,12 +443,12 @@ const formatHtmlTable = async (diaryData, diaryNotes) => {
                           <tbody>
                             <tr>
                               ${res
-                                .map(value => {
+                                .map((value) => {
                                   const height = 15 * value + 2;
 
                                   return generateBar(value, height, colors.BLUE);
                                 })
-                                .join('')}
+                                .join("")}
                             </tr>
                           </tbody>
                         </table>
@@ -454,18 +459,18 @@ const formatHtmlTable = async (diaryData, diaryNotes) => {
                 </table>
               `;
             })
-            .join('')}
+            .join("")}
           <hr style="margin: 4rem 2rem;"/>
           <h2 style="margin-top:15px;color: ${colors.BLUE};">Mon suivi d'évènements</h2>
           <table cellpadding="0" cellspacing="0" border="0">
             <tr>
               <td>
-                ${Object.keys({...diaryData, ...diaryNotes})
-                  .map(strDate => ({strDate, date: new Date(strDate)}))
+                ${Object.keys({ ...diaryData, ...diaryNotes })
+                  .map((strDate) => ({ strDate, date: new Date(strDate) }))
                   .sort((item1, item2) => item2.date - item1.date)
-                  .map(({strDate}) => {
+                  .map(({ strDate }) => {
                     if (!diaryData[strDate] && !diaryNotes[strDate]) {
-                      return '';
+                      return "";
                     }
                     let NOTES = diaryData[strDate]?.NOTES || null;
                     let becks = diaryData[strDate]?.becks || null;
@@ -473,17 +478,17 @@ const formatHtmlTable = async (diaryData, diaryNotes) => {
                     const diaryDataDate = diaryData[strDate];
 
                     if (!hasNotes(NOTES) && !hasBeck(becks) && !hasDiaryNotes(diaryNoteDate) && !hasContext(diaryDataDate)) {
-                      return '';
+                      return "";
                     }
                     return `
-                      <h3 style="margin-top: 35px;">${formatDate(strDate).split('-').reverse().join('/')}</>
-                      ${hasNotes(NOTES) ? renderSurveyNotes(NOTES) : '<div/>'}
-                      ${hasContext(diaryDataDate) ? renderSurvey(diaryData, strDate) : '<div/>'}
-                      ${hasDiaryNotes(diaryNoteDate) ? renderDiaryNotes(diaryNoteDate.values) : '<div/>'}
-                      ${hasBeck(becks) ? renderBecks(becks) : '<div/>'}
+                      <h3 style="margin-top: 35px;">${formatDate(strDate).split("-").reverse().join("/")}</>
+                      ${hasNotes(NOTES) ? renderSurveyNotes(NOTES) : "<div/>"}
+                      ${hasContext(diaryDataDate) ? renderSurvey(diaryData, strDate) : "<div/>"}
+                      ${hasDiaryNotes(diaryNoteDate) ? renderDiaryNotes(diaryNoteDate.values) : "<div/>"}
+                      ${hasBeck(becks) ? renderBecks(becks) : "<div/>"}
                     `;
                   })
-                  .join('')}
+                  .join("")}
                 </td>
               </tr>
             </table>
@@ -495,14 +500,14 @@ const formatHtmlTable = async (diaryData, diaryNotes) => {
 const renderSurvey = (data, date) => {
   const getUserComments = (obj, key) => {
     const userComments = Object.keys(obj[key] || [])
-      ?.filter(s => obj[key][s]?.userComment?.trim())
-      .map(e => ({id: e, value: obj[key][e].userComment?.trim()}));
+      ?.filter((s) => obj[key][s]?.userComment?.trim())
+      .map((e) => ({ id: e, value: obj[key][e].userComment?.trim() }));
     return userComments;
   };
 
   const renderUserComment = (key, value) => {
-    if (key === 'TOXIC' && !data[date][key]?.value) return '';
-    if (key === 'TOXIC') {
+    if (key === "TOXIC" && !data[date][key]?.value) return "";
+    if (key === "TOXIC") {
       return `<p
       style="
           margin: 0;
@@ -511,7 +516,7 @@ const renderSurvey = (data, date) => {
           padding-top: 2px;
           padding-bottom: 2px;
         ">
-      <b>Consommation de substance : </b>${value || 'oui'}
+      <b>Consommation de substance : </b>${value || "oui"}
     </p>`;
     } else {
       return `<p
@@ -540,15 +545,15 @@ const renderSurvey = (data, date) => {
                           <tr class="journal__item-symptom-wrapper">
                             <td style="padding:10px;">
                               ${getUserComments(data, date)
-                                ?.map(userComment => userComment && renderUserComment(userComment.id, userComment.value))
-                                .join('')}            
+                                ?.map((userComment) => userComment && renderUserComment(userComment.id, userComment.value))
+                                .join("")}            
                             </td>
                           </tr>
                         </tbody>
                       </table>`;
 };
 
-const renderSurveyNotes = value => {
+const renderSurveyNotes = (value) => {
   return `<h4 style="color: ${colors.BLUE};">Mes notes</h4>
                       <table style="
                         border-collapse: collapse;
@@ -564,7 +569,7 @@ const renderSurveyNotes = value => {
                       </table>`;
 };
 
-const renderBecks = value => {
+const renderBecks = (value) => {
   return `<h4 style="color: ${colors.BLUE};">Mes fiches de pensées automatiques</h4>
                       <table style="
                         border-collapse: collapse;
@@ -578,15 +583,15 @@ const renderBecks = value => {
                           ${
                             value
                               ? Object.keys(value)
-                                  ?.map(id => generateBeck(value[id]))
-                                  .join('<hr/>')
-                              : ''
+                                  ?.map((id) => generateBeck(value[id]))
+                                  .join("<hr/>")
+                              : ""
                           }
                         </tbody>
                       </table>`;
 };
 
-const renderDiaryNotes = value => {
+const renderDiaryNotes = (value) => {
   return `<h4 style="color: ${colors.BLUE};">Mon journal</h4>
                       <table style="
                         border-collapse: collapse;

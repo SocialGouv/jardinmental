@@ -9,10 +9,7 @@ import BackButton from "../../../components/BackButton";
 import Button from "../../../components/Button";
 import SurveyMenu from "../../../../assets/svg/SurveyMenu";
 import { ONBOARDING_STEPS } from "../../../utils/constants";
-import {
-  INDICATEURS_LIST,
-  INDICATEURS_LISTE_PAR_CATEGORIE,
-} from "../../../utils/liste_indicateurs.1";
+import { INDICATEURS_LIST, INDICATEURS_LISTE_PAR_CATEGORIE } from "../../../utils/liste_indicateurs.1";
 import TextTag from "../../../components/TextTag";
 import CategorieElements from "./CategorieElements";
 import OnboardingElements from "./OnboardingElements";
@@ -90,36 +87,24 @@ const SymptomScreen = ({ navigation, route }) => {
       <View style={styles.buttonsContainer}>
         <BackButton onPress={navigation.goBack} />
       </View>
-      <ScrollView
-        keyboardShouldPersistTaps="handled"
-        style={styles.container}
-        contentContainerStyle={styles.scrollContainer}
-      >
+      <ScrollView keyboardShouldPersistTaps="handled" style={styles.container} contentContainerStyle={styles.scrollContainer}>
         <View style={styles.titleContainer}>
-          <Text style={styles.title}>
-            Sélectionnons les autres indicateurs qui vous correspondent le mieux
-          </Text>
+          <Text style={styles.title}>Sélectionnons les autres indicateurs qui vous correspondent le mieux</Text>
         </View>
         <View style={styles.sousTitreContainer}>
           <Text style={styles.sousTitre}>
-            Voici des exemples et vous pouvez aussi en{" "}
-            <Text style={[styles.sousTitre, styles.bold]}>créer vous-même</Text>.
+            Voici des exemples et vous pouvez aussi en <Text style={[styles.sousTitre, styles.bold]}>créer vous-même</Text>.
           </Text>
         </View>
         <View style={styles.dividerS} />
         <View style={styles.alertContainer}>
           <Text style={styles.alertText}>
-            Essayez de ne pas sélectionner plus de <Text style={styles.bold}>10</Text> indicateurs{" "}
-            <Text style={styles.bold}>au total</Text>
+            Essayez de ne pas sélectionner plus de <Text style={styles.bold}>10</Text> indicateurs <Text style={styles.bold}>au total</Text>
           </Text>
         </View>
         <>
           {Object.keys(INDICATEURS_LISTE_PAR_CATEGORIE)
-            .filter((categorie) =>
-              ["Emotions/sentiments", "Manifestations physiques", "Pensées", "Comportements"].includes(
-                categorie
-              )
-            )
+            .filter((categorie) => ["Emotions/sentiments", "Manifestations physiques", "Pensées", "Comportements"].includes(categorie))
             .map((categorie) => {
               const indicateurs = INDICATEURS_LISTE_PAR_CATEGORIE[categorie];
               return (
@@ -141,9 +126,7 @@ const SymptomScreen = ({ navigation, route }) => {
         </>
         {getSelectionVide() ? (
           <View style={styles.buttonWrapperError}>
-            <Text style={[styles.alert, styles.spaceabove, styles.spacebottom]}>
-              Ajouter ou sélectionner au moins 1 indicateur
-            </Text>
+            <Text style={[styles.alert, styles.spaceabove, styles.spacebottom]}>Ajouter ou sélectionner au moins 1 indicateur</Text>
           </View>
         ) : null}
       </ScrollView>

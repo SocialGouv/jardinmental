@@ -22,11 +22,7 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.monsuivipsy",
-      "permissions": [
-        "NOTIFICATIONS",
-        "SCHEDULE_EXACT_ALARM",
-        "POST_NOTIFICATIONS"
-      ]
+      "permissions": ["NOTIFICATIONS", "SCHEDULE_EXACT_ALARM", "POST_NOTIFICATIONS"]
     },
     "plugins": [
       [

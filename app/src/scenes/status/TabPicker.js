@@ -12,27 +12,13 @@ const TabPicker = ({ onChange, ongletActif = "all" }) => {
   return (
     <View style={tabStyles.currentDateContainer}>
       <TouchableOpacity onPress={() => handlePress("all")} style={[tabStyles.tabButtonContainer]}>
-        <View
-          style={[
-            tabStyles.tabButtonContainer,
-            ongletActif === "all" ? tabStyles.tabActif : tabStyles.tabInactif,
-          ]}
-        >
-          <Text style={[tabStyles.button, ongletActif === "all" ? tabStyles.actif : tabStyles.inactif]}>
-            Tout voir
-          </Text>
+        <View style={[tabStyles.tabButtonContainer, ongletActif === "all" ? tabStyles.tabActif : tabStyles.tabInactif]}>
+          <Text style={[tabStyles.button, ongletActif === "all" ? tabStyles.actif : tabStyles.inactif]}>Tout voir</Text>
         </View>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => handlePress("NOTES")} style={[tabStyles.tabButtonContainer]}>
-        <View
-          style={[
-            tabStyles.tabButtonContainer,
-            ongletActif === "NOTES" ? tabStyles.tabActif : tabStyles.tabInactif,
-          ]}
-        >
-          <Text style={[tabStyles.button, ongletActif === "NOTES" ? tabStyles.actif : tabStyles.inactif]}>
-            Notes
-          </Text>
+        <View style={[tabStyles.tabButtonContainer, ongletActif === "NOTES" ? tabStyles.tabActif : tabStyles.tabInactif]}>
+          <Text style={[tabStyles.button, ongletActif === "NOTES" ? tabStyles.actif : tabStyles.inactif]}>Notes</Text>
         </View>
       </TouchableOpacity>
     </View>

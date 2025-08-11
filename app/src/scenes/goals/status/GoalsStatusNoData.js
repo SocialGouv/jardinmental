@@ -15,9 +15,7 @@ export const GoalsStatusNoData = ({ goalsData, date, onPress }) => {
   return (
     <Card
       preset="grey"
-      title={`Vous avez ${goals.length} objectif${goals.length > 1 ? "s" : ""} ${
-        dateIsToday ? "aujourd’hui" : "ce jour-là"
-      }`}
+      title={`Vous avez ${goals.length} objectif${goals.length > 1 ? "s" : ""} ${dateIsToday ? "aujourd’hui" : "ce jour-là"}`}
       image={{ source: require("./../../../../assets/imgs/goal.png") }}
       containerStyle={{ marginTop: 8 }}
       onPress={() => onPress?.({ toGoals: true })}

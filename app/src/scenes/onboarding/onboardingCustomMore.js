@@ -13,16 +13,10 @@ export const OnboardingCustomMore = ({ navigation }) => {
       <View style={onboardingStyles.topContainer}>
         <OnboardingBackButton onPress={navigation.goBack} />
       </View>
-      <ScrollView
-        style={onboardingStyles.scroll}
-        contentContainerStyle={onboardingStyles.scrollContentContainer}
-      >
+      <ScrollView style={onboardingStyles.scroll} contentContainerStyle={onboardingStyles.scrollContentContainer}>
         <View style={onboardingStyles.containerCentered}>
           <View style={onboardingStyles.imageContainer} key="image">
-            <Image
-              source={require("../../../assets/imgs/onboarding/custom-more.png")}
-              style={onboardingStyles.imageSize}
-            />
+            <Image source={require("../../../assets/imgs/onboarding/custom-more.png")} style={onboardingStyles.imageSize} />
           </View>
           <View style={onboardingStyles.containerBottom}>
             <View style={onboardingStyles.containerBottomTitle}>
@@ -30,8 +24,7 @@ export const OnboardingCustomMore = ({ navigation }) => {
             </View>
             <View style={onboardingStyles.containerBottomText}>
               <Text style={onboardingStyles.presentationText}>
-                Vous trouverez d’autres exemples et vous pourrez créer les vôtres dans les paramètres de
-                l’application
+                Vous trouverez d’autres exemples et vous pourrez créer les vôtres dans les paramètres de l’application
               </Text>
             </View>
           </View>

@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
+import { StackNavigationProp } from "@react-navigation/stack";
+import { RouteProp } from "@react-navigation/native";
 import { ContextScreen } from "./ContextScreen";
 import { GoalsScreen } from "./GoalsScreen";
 import { IndicatorScreen } from "./IndicatorScreen";
@@ -9,7 +9,7 @@ import { EncouragementScreen } from "./EncouragementScreen";
 import SurveyContext from "./SurveyContext";
 import { SurveyStackParamList, SurveyScreenInterface } from "@/entities/SurveyScreen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import NotificationService from '@/services/notifications';
+import NotificationService from "@/services/notifications";
 
 interface SurveyScreenWrapperProps {
   navigation: StackNavigationProp<SurveyStackParamList>;
@@ -22,11 +22,7 @@ const SurveyScreenWrapper: React.FC<SurveyScreenWrapperProps> = ({ navigation, r
 
   if (!context) return null;
 
-  const {
-    screens,
-    parentRoute,
-    answers
-  } = context;
+  const { screens, parentRoute, answers } = context;
 
   const { screenData, screenIndex, isOnboarding } = route.params;
   const currentStep = screenIndex + 1;
@@ -38,18 +34,18 @@ const SurveyScreenWrapper: React.FC<SurveyScreenWrapperProps> = ({ navigation, r
       navigation.navigate(`screen-survey-${nextScreen.id}`, {
         screenData: nextScreen,
         screenIndex: screenIndex + 1,
-        isOnboarding
+        isOnboarding,
       });
     } else {
       // Final submission
       const isRegistered = await NotificationService.checkPermission();
-      let storedReminder = await AsyncStorage.getItem('@Reminder');
+      let storedReminder = await AsyncStorage.getItem("@Reminder");
       if (!storedReminder || !isRegistered) {
-        navigation.navigate('reminder', { onboarding: true })
+        navigation.navigate("reminder", { onboarding: true });
       } else {
         navigation.reset({
           index: 0,
-          routes: [{ name: 'tabs' }],
+          routes: [{ name: "tabs" }],
         });
       }
     }
@@ -63,7 +59,7 @@ const SurveyScreenWrapper: React.FC<SurveyScreenWrapperProps> = ({ navigation, r
   };
 
   switch (screenData.type) {
-    case 'category':
+    case "category":
       return (
         <IndicatorScreen
           answers={answers}
@@ -76,7 +72,7 @@ const SurveyScreenWrapper: React.FC<SurveyScreenWrapperProps> = ({ navigation, r
           showComment={!isOnboarding}
         />
       );
-    case 'individual':
+    case "individual":
       return (
         <IndicatorScreen
           answers={answers}
@@ -88,15 +84,9 @@ const SurveyScreenWrapper: React.FC<SurveyScreenWrapperProps> = ({ navigation, r
           showComment={!isOnboarding}
         />
       );
-    case 'goals':
-      return (
-        <GoalsScreen
-          date={""}
-          {...screenProps}
-          route={parentRoute}
-        />
-      );
-    case 'context':
+    case "goals":
+      return <GoalsScreen date={""} {...screenProps} route={parentRoute} />;
+    case "context":
       return (
         <ContextScreen
           answers={answers}
@@ -105,7 +95,7 @@ const SurveyScreenWrapper: React.FC<SurveyScreenWrapperProps> = ({ navigation, r
           {...screenProps}
         />
       );
-    case 'toxic':
+    case "toxic":
       return (
         <ToxicScreen
           answers={answers}
@@ -114,18 +104,19 @@ const SurveyScreenWrapper: React.FC<SurveyScreenWrapperProps> = ({ navigation, r
           {...screenProps}
         />
       );
-    case 'encouragement':
+    case "encouragement":
       return (
         <EncouragementScreen
           headingTitle={"👏 Un pas de plus vers une meilleure connaissance de vous."}
           title={screenData.title}
-          description={'Vous pourrez revenir chaque jour pour observer votre état et suivre ces éléments.'}
+          description={"Vous pourrez revenir chaque jour pour observer votre état et suivre ces éléments."}
           extraInfo={screenData.extraInfo || ""}
-          {...screenProps} />
+          {...screenProps}
+        />
       );
     default:
       return null;
   }
 };
 
-export default SurveyScreenWrapper
+export default SurveyScreenWrapper;

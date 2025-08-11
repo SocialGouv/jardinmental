@@ -59,13 +59,7 @@ const fillUpEmptyDates = (startDate, data) => {
   return diary;
 };
 
-const DiaryDataContext = React.createContext<[
-  DiaryData,
-  ({ date , answers }: {
-    date: string;
-    answers: DiaryData;
-}) => void
-]>([{}, () => {}]);
+const DiaryDataContext = React.createContext<[DiaryData, ({ date, answers }: { date: string; answers: DiaryData }) => void]>([{}, () => {}]);
 
 const DiaryDataProvider = ({ children }) => {
   const [diaryData, setDiaryData] = useState<DiaryData>({});
@@ -115,9 +109,7 @@ const DiaryDataProvider = ({ children }) => {
     getDiaryDataFromStorage();
   }, [setDiaryData]);
 
-  return (
-    <DiaryDataContext.Provider value={[diaryData, addNewEntryToDiaryData]}>{children}</DiaryDataContext.Provider>
-  );
+  return <DiaryDataContext.Provider value={[diaryData, addNewEntryToDiaryData]}>{children}</DiaryDataContext.Provider>;
 };
 
 export { DiaryDataContext, DiaryDataProvider };
