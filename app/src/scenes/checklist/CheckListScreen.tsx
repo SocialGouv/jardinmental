@@ -107,9 +107,15 @@ export default function CheckListScreen({ navigation, route }) {
                             className={mergeClassNames('flex-row items-center p-4 mb-3 bg-white rounded-xl border border-gray-200', isDone ? 'bg-mood-4' : '')}
                         >
                             {/* Left Icon */}
-                            {React.cloneElement(item.icon, {
-                                color: isDone ? iconBorderColors.good : TW_COLORS.GRAY_800
-                            })}
+                            <View className={`rounded-full p-2 border w-8 h-8 items-center justify-center`} style={{
+                                borderColor: isDone ? iconBorderColors.good : TW_COLORS.GRAY_800
+                            }}>
+                                {React.cloneElement(item.icon, {
+                                    color: isDone ? iconBorderColors.good : TW_COLORS.GRAY_800,
+                                    width: 16,
+                                    height: 16
+                                })}
+                            </View>
 
                             {/* Text */}
                             <Text className={mergeClassNames(`flex-1 ml-4 ${typography.textMdMedium} text-brand-950`, isDone ? 'line-through text-mood-text-4' : '')}>
