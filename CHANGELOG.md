@@ -1,3 +1,10 @@
+# [1.52.0-alpha.11](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.10...v1.52.0-alpha.11) (2025-08-12)
+
+
+### Bug Fixes
+
+* **onboarding:** nouvelle phrase d’intro sur chaque écran catégorie ([#334](https://github.com/SocialGouv/jardinmental/issues/334)) ([c68dc95](https://github.com/SocialGouv/jardinmental/commit/c68dc958b0c91113b8fd13740a26a2a11ab33f30))
+
 # [1.52.0-alpha.10](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.9...v1.52.0-alpha.10) (2025-08-11)
 
 
