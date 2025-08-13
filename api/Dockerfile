@@ -4,7 +4,7 @@
 # ================================
 # Stage 1: Builder (Compilation)
 # ================================
-FROM node:20-bullseye-slim@sha256:f959c0047e2cc2dc01459067d9e898b7780862e52f4e7e80bb674f6040298f32 AS builder
+FROM node:20-bullseye-slim@sha256:f25986842968667c16e5ae7408817cb9b23ee9b3d5cf46ed2be3b171110fa294 AS builder
 
 ARG PRODUCTION
 
@@ -41,7 +41,7 @@ RUN echo "Build completed. Contents of dist/:" && ls -la dist/ || (echo "Build f
 # ================================
 # Stage 2: Production (Runtime)
 # ================================
-FROM node:20-bullseye-slim@sha256:f959c0047e2cc2dc01459067d9e898b7780862e52f4e7e80bb674f6040298f32 AS production
+FROM node:20-bullseye-slim@sha256:f25986842968667c16e5ae7408817cb9b23ee9b3d5cf46ed2be3b171110fa294 AS production
 
 ARG PRODUCTION
 
