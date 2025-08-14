@@ -193,7 +193,7 @@ const renderResponse = ({ indicateur, value, isSmall, translateX }) => {
       );
     return (
       <CircledIcon
-        key={indicateur.name + value}
+        key={`${indicateur.name}-${value}`}
         color={_icon.color}
         borderColor={_icon.borderColor}
         iconColor={_icon.iconColor}
