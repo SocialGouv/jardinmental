@@ -179,9 +179,11 @@ const Status = ({ navigation, startSurvey }) => {
             }}
             className="p-8 bg-beige mb-4 rounded-xl"
           >
-            <Text className={mergeClassNames(typography.displayXsBold, "text-left text-brand-950 mb-6")}>Vos premiers pas sur Jardin Mental</Text>
+            <Text className={mergeClassNames(typography.displayXsBold, "text-left text-brand-950 mb-6")}>
+              Il vous reste quelques étapes pour bien démarrer
+            </Text>
             <Text className={mergeClassNames(typography.textMdRegular, "text-left text-brand-950")}>
-              Pour profiter au mieux de Jardin Mental, personnalisez davantage votre suivi
+              Faites de Jardin Mental un espace qui vous ressemble, pour un suivi plus juste et plus utile.
             </Text>
             <View className="flex-row mt-6">
               <JMButton onPress={handlePlusTardClick} width="adapt" variant="text" title="Plus tard" />
@@ -190,7 +192,7 @@ const Status = ({ navigation, startSurvey }) => {
                   navigation.navigate("checklist");
                 }}
                 width="adapt"
-                title="Compléter"
+                title="C'est parti"
               />
             </View>
           </Animated.View>
