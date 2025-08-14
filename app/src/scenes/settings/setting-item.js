@@ -27,7 +27,7 @@ export const SettingItem = ({ title, navigation, path = "tabs", icon, color = co
               })}
             </View>
           )}
-          <Text style={styles.label} className="ml-4">
+          <Text style={styles.label} className="ml-2">
             {title}
           </Text>
           <View style={styles.button}>
