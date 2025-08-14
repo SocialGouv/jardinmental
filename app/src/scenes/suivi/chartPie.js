@@ -176,7 +176,7 @@ const renderResponse = ({ indicateur, value, isSmall, translateX }) => {
     if (!_icon || (!_icon.color && !_icon.faceIcon))
       return (
         <CircledIcon
-          key={indicateur.name + value}
+          key={`${indicateur.name}-${value}`}
           color="#cccccc"
           borderColor="#999999"
           iconColor="#888888"
