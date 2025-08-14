@@ -16,13 +16,19 @@
     },
     "android": {
       "googleServicesFile": "./google-services.json",
-      "versionCode": 228,
+      "versionCode": 229,
       "adaptiveIcon": {
         "foregroundImage": "./assets/imgs/logo2.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.monsuivipsy",
-      "permissions": ["NOTIFICATIONS", "SCHEDULE_EXACT_ALARM", "POST_NOTIFICATIONS"]
+      "permissions": [
+        "NOTIFICATIONS",
+        "SCHEDULE_EXACT_ALARM",
+        "POST_NOTIFICATIONS"
+      ],
+      "compileSdkVersion": 35,
+      "targetSdkVersion": 35
     },
     "plugins": [
       [
