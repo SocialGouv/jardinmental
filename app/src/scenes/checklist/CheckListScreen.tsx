@@ -97,7 +97,7 @@ export default function CheckListScreen({ navigation, route }) {
       >
         <View>
           <Text className={mergeClassNames(typography.textMdRegular, "text-brand-950 text-left mb-8")}>
-            Pour profiter un maximum de Jardin Mental, vous pouvez complétez quelques étapes de personnalisation.
+            Pour profiter un maximum de Jardin Mental, vous pouvez compléter quelques étapes de personnalisation.
           </Text>
           {checklistItems.map((item, index) => {
             const isDone = item.isDone || checklistItemValues[item.id];
