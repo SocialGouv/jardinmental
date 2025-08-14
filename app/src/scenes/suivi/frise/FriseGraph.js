@@ -4,14 +4,7 @@ import Text from "../../../components/MyText";
 import { scoresMapIcon } from "../../../utils/constants";
 import { colors } from "../../../utils/colors";
 
-export const FriseGraph = ({
-  title,
-  data,
-  focusedScores,
-  showTraitement,
-  priseDeTraitement,
-  priseDeTraitementSiBesoin,
-}) => {
+export const FriseGraph = ({ title, data, focusedScores, showTraitement, priseDeTraitement, priseDeTraitementSiBesoin }) => {
   return (
     <View style={styles.friseContainer}>
       {title ? <Text style={styles.friseTitle}>{title}</Text> : null}
@@ -50,8 +43,7 @@ export const FriseGraph = ({
             _value &&
             focusedScores.length > 0 &&
             focusedScores.length <= 5 &&
-            ((!isReverse && focusedScores.includes(_value)) ||
-              (isReverse && focusedScores.includes(6 - _value)));
+            ((!isReverse && focusedScores.includes(_value)) || (isReverse && focusedScores.includes(6 - _value)));
 
           if (focusedScores.length && !isFocused) {
             // cet élément n'est pas focused

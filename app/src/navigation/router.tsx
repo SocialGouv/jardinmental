@@ -1,82 +1,82 @@
-import React from 'react';
-import Tabs from './tabs';
-import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer } from '@react-navigation/native';
-import EnvironmentIndicator from '../services/EnvironmentIndicator';
-import SurveyNavigator from '../scenes/survey-v2/SurveyNavigator';
-import SelectDayScreen from '../scenes/survey/selectDay';
-import Reminder from '../scenes/reminder';
-import Export from '../scenes/export/export';
-import DailyChart from '../scenes/calendar/daily-chart';
-import { AppState, Platform, Linking } from 'react-native';
-import { StatusBar } from 'expo-status-bar';
-import Notes from '../scenes/survey/notes-screen';
-import Onboarding from '../scenes/onboarding';
-import Supported from '../scenes/onboarding/onboardingSupported';
-import OnboardingSymptoms1 from '../scenes/onboarding/onboardingSymptoms';
-import OnboardingSymptoms2 from '../scenes/onboarding/onboardingSymptoms/objectifs.js';
-import OnboardingSymptomsRecap from '../scenes/onboarding/onboardingSymptoms/recap.js';
-import OnboardingExplanationScreen0 from '../scenes/onboarding/onboardingExplanation/screen0';
-import OnboardingExplanationScreen1 from '../scenes/onboarding/onboardingExplanation/screen1';
-import onboardingSymptomsStart from '../scenes/onboarding/onboardingSymptomsStart';
-import OnboardingSymptomsCustom from '../scenes/onboarding/onboardingSymptomsCustom';
-import OnboardingDrugs from '../scenes/onboarding/onboardingDrugs';
-import OnboardingDrugsInformation from '../scenes/onboarding/onboardingDrugs/drugs-information';
-import OnboardingDrugsList from '../scenes/onboarding/onboardingDrugs/list';
-import OnboardingExplanation from '../scenes/onboarding/onboardingExplanation';
-import OnboardingHint from '../scenes/onboarding/onboardingHint';
-import OnboardingFelicitation from '../scenes/onboarding/onboardingFelicitation';
-import CGU from '../scenes/legal/cgu-screen';
-import Privacy from '../scenes/legal/privacy-screen';
-import LegalMentions from '../scenes/legal/legal-mentions-screen';
-import logEvents from '../services/logEvents';
-import ContributePro from '../scenes/contribute/contributePro';
-import Drugs from '../scenes/drugs/drugs';
-import DrugsList from '../scenes/drugs/list';
-import TooLate from '../scenes/status/too-late';
-import News from '../scenes/news';
-import ActivateBeck from '../scenes/beck/activate';
-import ViewBeck from '../scenes/beck/view';
-import Beck from '../scenes/beck';
-import Infos from '../scenes/infos';
-import Contact from '../scenes/contact';
-import PrivacyLight from '../scenes/privacy-light';
-import RNBootsplash from 'react-native-bootsplash';
-import NotificationService from '../services/notifications';
-import Indicateurs from '../scenes/indicateurs';
-import Presentation from '../scenes/presentation';
-import { OnboardingMood } from '../scenes/onboarding/onboardingSymptomsStart/MoodScreen';
-import { OnboardingSleep } from '../scenes/onboarding/onboardingSymptomsStart/SleepScreen';
-import { OnboardingSimpleCustomSymptoms } from '../scenes/onboarding/onboardingSymptomsCustom/SimpleCustomScreen';
-import { OnboardingGoals } from '../scenes/onboarding/onboardingGoals/goals';
-import { GoalsSettings } from '../scenes/goals/settings/GoalsSettings';
-import { GoalsAddOptions } from '../scenes/goals/settings/GoalsAddOptions';
-import { GoalsCreateForm } from '../scenes/goals/settings/GoalsCreateForm';
-import { GoalDaySelector } from '../scenes/goals/settings/GoalDaySelector';
-import { GoalConfig } from '../scenes/goals/settings/GoalConfig';
-import IndicatorsSettingsMore from '../scenes/indicateurs/settings/IndicatorsSettingsMore';
-import { GoalsSettingsMore } from '../scenes/goals/settings/GoalsSettingsMore';
-import EditIndicateurs from '../scenes/indicateurs/editIndicateurs';
-import CreateIndicator from '../scenes/indicateurs/CreateIndicator';
-import ChooseIndicatorType from '../scenes/indicateurs/CreateIndicator/ChooseIndicatorType';
-import ChooseIndicatorOrder from '../scenes/indicateurs/CreateIndicator/ChooseIndicatorOrder';
-import * as Notifications from 'expo-notifications';
-import { registerForPushNotificationsAsync } from '../services/notifications-expo';
-import * as Device from 'expo-device';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import uuid from 'react-native-uuid';
-import DevMode from '../scenes/dev-mode';
-import { colors } from '../utils/colors';
-import OnboardingV2 from '../scenes/onboarding-v2';
-import CheckListScreen from '@/scenes/checklist/CheckListScreen';
-import { StatusBarProvider, useStatusBarInternal } from '../context/StatusBarContext';
-import { TW_COLORS } from '@/utils/constants';
-import SurveyV1 from '../scenes/survey/daySurvey';
+import React from "react";
+import Tabs from "./tabs";
+import { createStackNavigator } from "@react-navigation/stack";
+import { NavigationContainer } from "@react-navigation/native";
+import EnvironmentIndicator from "../services/EnvironmentIndicator";
+import SurveyNavigator from "../scenes/survey-v2/SurveyNavigator";
+import SelectDayScreen from "../scenes/survey/selectDay";
+import Reminder from "../scenes/reminder";
+import Export from "../scenes/export/export";
+import DailyChart from "../scenes/calendar/daily-chart";
+import { AppState, Platform, Linking } from "react-native";
+import { StatusBar } from "expo-status-bar";
+import Notes from "../scenes/survey/notes-screen";
+import Onboarding from "../scenes/onboarding";
+import Supported from "../scenes/onboarding/onboardingSupported";
+import OnboardingSymptoms1 from "../scenes/onboarding/onboardingSymptoms";
+import OnboardingSymptoms2 from "../scenes/onboarding/onboardingSymptoms/objectifs.js";
+import OnboardingSymptomsRecap from "../scenes/onboarding/onboardingSymptoms/recap.js";
+import OnboardingExplanationScreen0 from "../scenes/onboarding/onboardingExplanation/screen0";
+import OnboardingExplanationScreen1 from "../scenes/onboarding/onboardingExplanation/screen1";
+import onboardingSymptomsStart from "../scenes/onboarding/onboardingSymptomsStart";
+import OnboardingSymptomsCustom from "../scenes/onboarding/onboardingSymptomsCustom";
+import OnboardingDrugs from "../scenes/onboarding/onboardingDrugs";
+import OnboardingDrugsInformation from "../scenes/onboarding/onboardingDrugs/drugs-information";
+import OnboardingDrugsList from "../scenes/onboarding/onboardingDrugs/list";
+import OnboardingExplanation from "../scenes/onboarding/onboardingExplanation";
+import OnboardingHint from "../scenes/onboarding/onboardingHint";
+import OnboardingFelicitation from "../scenes/onboarding/onboardingFelicitation";
+import CGU from "../scenes/legal/cgu-screen";
+import Privacy from "../scenes/legal/privacy-screen";
+import LegalMentions from "../scenes/legal/legal-mentions-screen";
+import logEvents from "../services/logEvents";
+import ContributePro from "../scenes/contribute/contributePro";
+import Drugs from "../scenes/drugs/drugs";
+import DrugsList from "../scenes/drugs/list";
+import TooLate from "../scenes/status/too-late";
+import News from "../scenes/news";
+import ActivateBeck from "../scenes/beck/activate";
+import ViewBeck from "../scenes/beck/view";
+import Beck from "../scenes/beck";
+import Infos from "../scenes/infos";
+import Contact from "../scenes/contact";
+import PrivacyLight from "../scenes/privacy-light";
+import RNBootsplash from "react-native-bootsplash";
+import NotificationService from "../services/notifications";
+import Indicateurs from "../scenes/indicateurs";
+import Presentation from "../scenes/presentation";
+import { OnboardingMood } from "../scenes/onboarding/onboardingSymptomsStart/MoodScreen";
+import { OnboardingSleep } from "../scenes/onboarding/onboardingSymptomsStart/SleepScreen";
+import { OnboardingSimpleCustomSymptoms } from "../scenes/onboarding/onboardingSymptomsCustom/SimpleCustomScreen";
+import { OnboardingGoals } from "../scenes/onboarding/onboardingGoals/goals";
+import { GoalsSettings } from "../scenes/goals/settings/GoalsSettings";
+import { GoalsAddOptions } from "../scenes/goals/settings/GoalsAddOptions";
+import { GoalsCreateForm } from "../scenes/goals/settings/GoalsCreateForm";
+import { GoalDaySelector } from "../scenes/goals/settings/GoalDaySelector";
+import { GoalConfig } from "../scenes/goals/settings/GoalConfig";
+import IndicatorsSettingsMore from "../scenes/indicateurs/settings/IndicatorsSettingsMore";
+import { GoalsSettingsMore } from "../scenes/goals/settings/GoalsSettingsMore";
+import EditIndicateurs from "../scenes/indicateurs/editIndicateurs";
+import CreateIndicator from "../scenes/indicateurs/CreateIndicator";
+import ChooseIndicatorType from "../scenes/indicateurs/CreateIndicator/ChooseIndicatorType";
+import ChooseIndicatorOrder from "../scenes/indicateurs/CreateIndicator/ChooseIndicatorOrder";
+import * as Notifications from "expo-notifications";
+import { registerForPushNotificationsAsync } from "../services/notifications-expo";
+import * as Device from "expo-device";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import uuid from "react-native-uuid";
+import DevMode from "../scenes/dev-mode";
+import { colors } from "../utils/colors";
+import OnboardingV2 from "../scenes/onboarding-v2";
+import CheckListScreen from "@/scenes/checklist/CheckListScreen";
+import { StatusBarProvider, useStatusBarInternal } from "../context/StatusBarContext";
+import { TW_COLORS } from "@/utils/constants";
+import SurveyV1 from "../scenes/survey/daySurvey";
 
 const Stack = createStackNavigator();
 
 const linking = {
-  prefixes: ['jardinmental://'],
+  prefixes: ["jardinmental://"],
   async getInitialURL() {
     // Check if app was opened from a deep link
     const url = await Linking.getInitialURL();
@@ -94,11 +94,11 @@ const linking = {
   },
   subscribe(listener) {
     /// Listen to incoming links from deep linking
-    const linkingSubscription = Linking.addEventListener('url', ({ url }) => {
+    const linkingSubscription = Linking.addEventListener("url", ({ url }) => {
       listener(url);
     });
 
-    const unsubscribeNotificationService = NotificationService.subscribe(notification => {
+    const unsubscribeNotificationService = NotificationService.subscribe((notification) => {
       if (notification?.data?.link) listener(notification.data.link);
     });
 
@@ -123,12 +123,7 @@ Notifications.setNotificationHandler({
 const StatusBarWrapper = () => {
   const { backgroundColor } = useStatusBarInternal();
 
-  return (
-    <StatusBar
-      animated={true}
-      backgroundColor={backgroundColor}
-    />
-  );
+  return <StatusBar animated={true} backgroundColor={backgroundColor} />;
 };
 
 interface RouterProps {
@@ -148,7 +143,7 @@ class Router extends React.Component<RouterProps> {
   }
 
   state = {
-    backgroundColor: colors.LIGHT_BLUE
+    backgroundColor: colors.LIGHT_BLUE,
   };
 
   async componentDidMount() {
@@ -157,18 +152,18 @@ class Router extends React.Component<RouterProps> {
     RNBootsplash.hide({ fade: true });
     try {
       // Get or generate device ID
-      let deviceId = await AsyncStorage.getItem('deviceId');
+      let deviceId = await AsyncStorage.getItem("deviceId");
       if (!deviceId) {
         deviceId = uuid.v4();
-        await AsyncStorage.setItem('deviceId', deviceId);
+        await AsyncStorage.setItem("deviceId", deviceId);
       }
 
       // Setup notification handler
-      const notificationListener = Notifications.addNotificationReceivedListener(notification => {
-        console.log('Notification received:', notification);
+      const notificationListener = Notifications.addNotificationReceivedListener((notification) => {
+        console.log("Notification received:", notification);
       });
 
-      const responseListener = Notifications.addNotificationResponseReceivedListener(response => {
+      const responseListener = Notifications.addNotificationResponseReceivedListener((response) => {
         const data = response.notification.request.content.data;
         if (data?.link) {
           this.navigationRef?.navigate(data.link);
@@ -185,10 +180,10 @@ class Router extends React.Component<RouterProps> {
         responseListener.remove();
       };
     } catch (error) {
-      console.log('Error setting up notifications:', error);
+      console.log("Error setting up notifications:", error);
     }
 
-    this.appListener = AppState.addEventListener('change', this.onAppChange);
+    this.appListener = AppState.addEventListener("change", this.onAppChange);
   }
 
   componentWillUnmount() {
@@ -200,32 +195,37 @@ class Router extends React.Component<RouterProps> {
 
   updateStatusBarColor() {
     const route = this.navigationRef.getCurrentRoute();
-    console.log('route name', route.name)
+    console.log("route name", route.name);
 
     let newColor;
-    if (['Calendar', 'Status', 'Exercise',
-      'OnboardingChooseIndicator',
-      'OnboardingPersonalizationStartScreen',
-      'Intro',
-      'PersonalizationStart',
-      'PersonalizationDifficulties',
-      'PersonalizationObjective',
-      'OnboardingCheckInStart',
-      'OnboardingCheckInHowDoYouFeel',
-      // 'OnboardingCheckInHowDoYouFeelDetails',
-      // 'OnboardingCheckInMoodSummary',
-      'OnboardingCheckInSleep',
-      'OnboardingChooseIndicator',
-      'OnboardingReminder',
-
-    ].includes(route.name) || route.name.startsWith('screen-survey-')) {
+    if (
+      [
+        "Calendar",
+        "Status",
+        "Exercise",
+        "OnboardingChooseIndicator",
+        "OnboardingPersonalizationStartScreen",
+        "Intro",
+        "PersonalizationStart",
+        "PersonalizationDifficulties",
+        "PersonalizationObjective",
+        "OnboardingCheckInStart",
+        "OnboardingCheckInHowDoYouFeel",
+        // 'OnboardingCheckInHowDoYouFeelDetails',
+        // 'OnboardingCheckInMoodSummary',
+        "OnboardingCheckInSleep",
+        "OnboardingChooseIndicator",
+        "OnboardingReminder",
+      ].includes(route.name) ||
+      route.name.startsWith("screen-survey-")
+    ) {
       newColor = colors.LIGHT_BLUE;
-    } else if (['Carousel', 'OnboardingCheckInIntroductionCompleted'].includes(route.name)) {
+    } else if (["Carousel", "OnboardingCheckInIntroductionCompleted"].includes(route.name)) {
       newColor = TW_COLORS.BEIGE;
     }
     // if (newColor) {
     // Update both local state (for backward compatibility) and context
-    this.setState(prevState => ({ backgroundColor: newColor }));
+    this.setState((prevState) => ({ backgroundColor: newColor }));
     if (this.statusBarContext?.setDefaultColor) {
       this.statusBarContext.setDefaultColor(newColor);
     }
@@ -233,8 +233,8 @@ class Router extends React.Component<RouterProps> {
   }
 
   appState = AppState.currentState;
-  onAppChange = nextAppState => {
-    if (this.appState.match(/inactive|background/) && nextAppState === 'active') {
+  onAppChange = (nextAppState) => {
+    if (this.appState.match(/inactive|background/) && nextAppState === "active") {
       logEvents.logAppVisit();
     } else {
       logEvents.logAppClose();
@@ -245,7 +245,7 @@ class Router extends React.Component<RouterProps> {
   onStateChange = async () => {
     if (!this.navigationRef) return;
     const route = this.navigationRef.getCurrentRoute();
-    this.updateStatusBarColor()
+    this.updateStatusBarColor();
     if (route.name === this.prevCurrentRouteName) return;
     this.prevCurrentRouteName = route.name;
     logEvents.logOpenPage(route.name);
@@ -254,7 +254,7 @@ class Router extends React.Component<RouterProps> {
   render() {
     return (
       <>
-        <NavigationContainer ref={r => (this.navigationRef = r)} onStateChange={this.onStateChange} linking={linking}>
+        <NavigationContainer ref={(r) => (this.navigationRef = r)} onStateChange={this.onStateChange} linking={linking}>
           <Stack.Navigator initialRouteName="tabs" screenOptions={{ headerShown: false }}>
             <Stack.Screen name="presentation" component={Presentation} />
             <Stack.Screen name="day-survey" component={SurveyV1} />
@@ -265,7 +265,7 @@ class Router extends React.Component<RouterProps> {
             <Stack.Screen name="reminder" component={Reminder} />
             <Stack.Screen name="export" component={Export} />
             <Stack.Screen name="chart-day" component={DailyChart} />
-            <Stack.Screen name="notes" options={{ animationEnabled: Platform.OS === 'ios' }}>
+            <Stack.Screen name="notes" options={{ animationEnabled: Platform.OS === "ios" }}>
               {({ navigation, route }) => <Notes navigation={navigation} route={route} />}
             </Stack.Screen>
             {/* <Stack.Screen name="onboarding" component={Onboarding} /> */}

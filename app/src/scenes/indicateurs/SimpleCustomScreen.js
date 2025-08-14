@@ -42,20 +42,13 @@ export const OnboardingSimpleCustomSymptoms = ({ navigation }) => {
       <View style={onboardingStyles.topContainer}>
         <OnboardingBackButton onPress={navigation.goBack} />
       </View>
-      <ScrollView
-        keyboardShouldPersistTaps="handled"
-        style={onboardingStyles.scroll}
-        contentContainerStyle={onboardingStyles.scrollContentContainer}
-      >
+      <ScrollView keyboardShouldPersistTaps="handled" style={onboardingStyles.scroll} contentContainerStyle={onboardingStyles.scrollContentContainer}>
         <View style={onboardingStyles.container}>
           <View style={onboardingStyles.containerTopTitle} key="title">
             <Text style={onboardingStyles.h1}>Que souhaitez-vous suivre ?</Text>
           </View>
           <View style={onboardingStyles.imageContainer} key="image">
-            <Image
-              source={require("../../../../assets/imgs/onboarding/custom-symptoms.png")}
-              style={onboardingStyles.imageSize}
-            />
+            <Image source={require("../../../../assets/imgs/onboarding/custom-symptoms.png")} style={onboardingStyles.imageSize} />
           </View>
           <View style={{ marginBottom: 20 }}>
             <Text style={onboardingStyles.h3}>Vous sentez-vous concerné(e) par :</Text>

@@ -1,9 +1,9 @@
-import React, { createContext, useContext, useReducer, useEffect, ReactNode } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { UserProfile, Difficulty, Objective } from '../scenes/onboarding-v2/types';
-import { NEW_INDICATORS_CATEGORIES, NEW_INDICATORS_SUBCATEGORIES } from '@/utils/liste_indicateurs.1';
+import React, { createContext, useContext, useReducer, useEffect, ReactNode } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { UserProfile, Difficulty, Objective } from "../scenes/onboarding-v2/types";
+import { NEW_INDICATORS_CATEGORIES, NEW_INDICATORS_SUBCATEGORIES } from "@/utils/liste_indicateurs.1";
 
-const STORAGE_KEY_USER_PROFILE = '@USER_PROFILE';
+const STORAGE_KEY_USER_PROFILE = "@USER_PROFILE";
 
 interface UserProfileState {
   profile: UserProfile | null;
@@ -22,10 +22,7 @@ interface UserProfileContextType {
   loadProfile: () => Promise<void>;
 }
 
-type UserProfileAction =
-  | { type: 'SET_LOADING'; payload: boolean }
-  | { type: 'SET_PROFILE'; payload: UserProfile | null }
-  | { type: 'CLEAR_PROFILE' };
+type UserProfileAction = { type: "SET_LOADING"; payload: boolean } | { type: "SET_PROFILE"; payload: UserProfile | null } | { type: "CLEAR_PROFILE" };
 
 const initialState: UserProfileState = {
   profile: null,
@@ -34,13 +31,13 @@ const initialState: UserProfileState = {
 
 const userProfileReducer = (state: UserProfileState, action: UserProfileAction): UserProfileState => {
   switch (action.type) {
-    case 'SET_LOADING':
+    case "SET_LOADING":
       return { ...state, isLoading: action.payload };
 
-    case 'SET_PROFILE':
+    case "SET_PROFILE":
       return { ...state, profile: action.payload, isLoading: false };
 
-    case 'CLEAR_PROFILE':
+    case "CLEAR_PROFILE":
       return { ...state, profile: null, isLoading: false };
 
     default:
@@ -60,18 +57,18 @@ export const UserProfileProvider: React.FC<UserProfileProviderProps> = ({ childr
   const setProfile = async (profile: UserProfile) => {
     try {
       await AsyncStorage.setItem(STORAGE_KEY_USER_PROFILE, JSON.stringify(profile));
-      dispatch({ type: 'SET_PROFILE', payload: profile });
+      dispatch({ type: "SET_PROFILE", payload: profile });
     } catch (error) {
-      console.error('Error saving user profile:', error);
+      console.error("Error saving user profile:", error);
     }
   };
 
   const clearProfile = async () => {
     try {
       await AsyncStorage.removeItem(STORAGE_KEY_USER_PROFILE);
-      dispatch({ type: 'CLEAR_PROFILE' });
+      dispatch({ type: "CLEAR_PROFILE" });
     } catch (error) {
-      console.error('Error clearing user profile:', error);
+      console.error("Error clearing user profile:", error);
     }
   };
 
@@ -84,7 +81,7 @@ export const UserProfileProvider: React.FC<UserProfileProviderProps> = ({ childr
         };
         await setProfile(updatedProfile);
       } catch (error) {
-        console.error('Error updating user difficulties:', error);
+        console.error("Error updating user difficulties:", error);
       }
     }
   };
@@ -94,11 +91,11 @@ export const UserProfileProvider: React.FC<UserProfileProviderProps> = ({ childr
       try {
         const updatedProfile = {
           ...state.profile,
-          objectives: objectives
+          objectives: objectives,
         };
         await setProfile(updatedProfile);
       } catch (error) {
-        console.error('Error updating user objectives:', error);
+        console.error("Error updating user objectives:", error);
       }
     }
   };
@@ -108,36 +105,37 @@ export const UserProfileProvider: React.FC<UserProfileProviderProps> = ({ childr
       try {
         const updatedProfile = {
           ...state.profile,
-          selectedSubcategories: subcategories
+          selectedSubcategories: subcategories,
         };
         await setProfile(updatedProfile);
       } catch (error) {
-        console.error('Error updating user subcategories:', error);
+        console.error("Error updating user subcategories:", error);
       }
     }
   };
 
   const loadProfile = async () => {
     try {
-      dispatch({ type: 'SET_LOADING', payload: true });
+      dispatch({ type: "SET_LOADING", payload: true });
       const savedProfile = await AsyncStorage.getItem(STORAGE_KEY_USER_PROFILE);
       if (savedProfile) {
         const parsedProfile = JSON.parse(savedProfile);
-        dispatch({ type: 'SET_PROFILE', payload: parsedProfile });
+        dispatch({ type: "SET_PROFILE", payload: parsedProfile });
       } else {
         // default profile
         dispatch({
-          type: 'SET_PROFILE', payload: {
-            id: 'non-suivi',
-            name: 'Non, je ne suis pas suivi(e)',
+          type: "SET_PROFILE",
+          payload: {
+            id: "non-suivi",
+            name: "Non, je ne suis pas suivi(e)",
             selectedDifficulties: [],
-            objectives: []
-          }
+            objectives: [],
+          },
         });
       }
     } catch (error) {
-      console.error('Error loading user profile:', error);
-      dispatch({ type: 'SET_PROFILE', payload: null });
+      console.error("Error loading user profile:", error);
+      dispatch({ type: "SET_PROFILE", payload: null });
     }
   };
 
@@ -158,17 +156,13 @@ export const UserProfileProvider: React.FC<UserProfileProviderProps> = ({ childr
     loadProfile,
   };
 
-  return (
-    <UserProfileContext.Provider value={contextValue}>
-      {children}
-    </UserProfileContext.Provider>
-  );
+  return <UserProfileContext.Provider value={contextValue}>{children}</UserProfileContext.Provider>;
 };
 
 export const useUserProfile = (): UserProfileContextType => {
   const context = useContext(UserProfileContext);
   if (!context) {
-    throw new Error('useUserProfile must be used within UserProfileProvider');
+    throw new Error("useUserProfile must be used within UserProfileProvider");
   }
   return context;
 };

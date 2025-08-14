@@ -26,11 +26,7 @@ export default ({ patientState, date, navigation }) => {
         const isDraft = !beck?.mainEmotion || !beck?.mainEmotionIntensity;
 
         return (
-          <TouchableOpacity
-            key={j}
-            style={[styles.item, isDraft && styles.containerEditable]}
-            onPress={() => handleViewBeck(beck, beckId)}
-          >
+          <TouchableOpacity key={j} style={[styles.item, isDraft && styles.containerEditable]} onPress={() => handleViewBeck(beck, beckId)}>
             <Icon icon="ThoughtsSvg" color="#58C8D2" width={25} height={25} styleContainer={styles.icon} />
 
             <View style={styles.containerContent}>
@@ -40,9 +36,7 @@ export default ({ patientState, date, navigation }) => {
                     <Text>
                       {beck?.mainEmotion} - {`${beck?.mainEmotionIntensity * 10}%`}&nbsp;
                       {beck?.mainEmotionIntensityNuanced ? (
-                        <Text style={styles.mainEmotionIntensityNuancedStyle}>
-                          &gt;&nbsp;{beck?.mainEmotionIntensityNuanced * 10}%
-                        </Text>
+                        <Text style={styles.mainEmotionIntensityNuancedStyle}>&gt;&nbsp;{beck?.mainEmotionIntensityNuanced * 10}%</Text>
                       ) : null}
                     </Text>
                   </View>

@@ -10,7 +10,7 @@ import { Badge } from "../../../components/Badge";
 import Icon from "../../../components/Icon";
 import { ONBOARDING_STEPS } from "../../../utils/constants";
 import { colors } from "@/utils/colors";
-import JMButton from '@/components/JMButton'
+import JMButton from "@/components/JMButton";
 
 export const GoalsSettings = ({ navigation, route }) => {
   const onboarding = route.params?.onboarding;
@@ -40,16 +40,8 @@ export const GoalsSettings = ({ navigation, route }) => {
       bottomChildren={
         !onboarding ? (
           <>
-            <JMButton
-              title="Ajouter un objectif"
-              onPress={() => navigation.navigate("goals-add-options")}
-            />
-            <JMButton
-              variant="outline"
-              title="Modifier mes objectifs"
-              onPress={() => navigation.navigate("goals-settings-more")}
-              className="mt-2"
-            />
+            <JMButton title="Ajouter un objectif" onPress={() => navigation.navigate("goals-add-options")} />
+            <JMButton variant="outline" title="Modifier mes objectifs" onPress={() => navigation.navigate("goals-settings-more")} className="mt-2" />
           </>
         ) : (
           <Button2 fill title="Valider" onPress={() => navigation.navigate(ONBOARDING_STEPS.STEP_REMINDER)} />
@@ -63,11 +55,7 @@ export const GoalsSettings = ({ navigation, route }) => {
       }}
     >
       <Card
-        title={
-          !onboarding
-            ? "Personnaliser mes objectifs"
-            : "Choisissez les jours de vos objectifs et programmez un rappel"
-        }
+        title={!onboarding ? "Personnaliser mes objectifs" : "Choisissez les jours de vos objectifs et programmez un rappel"}
         text={!onboarding && "Gérez vos objectifs et créez-en de nouveaux"}
         image={{ source: require("./../../../../assets/imgs/goal.png") }}
       />

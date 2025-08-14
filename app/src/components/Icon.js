@@ -101,16 +101,7 @@ const mapIconToSvg = (icon) => {
   return iconMap[icon];
 };
 
-const Icon = ({
-  icon,
-  color,
-  styleContainer,
-  spin,
-  badge = false,
-  onPress,
-  activeOpacity = 0.4,
-  ...props
-}) => {
+const Icon = ({ icon, color, styleContainer, spin, badge = false, onPress, activeOpacity = 0.4, ...props }) => {
   const [spinFn, setSpinFn] = useState(null);
 
   useEffect(() => {
@@ -136,9 +127,7 @@ const Icon = ({
   const Icon = mapIconToSvg(icon);
 
   const render = () => (
-    <Animated.View
-      style={[styles.iconContainer, styleContainer, spinFn && { transform: [{ rotate: spinFn }] }]}
-    >
+    <Animated.View style={[styles.iconContainer, styleContainer, spinFn && { transform: [{ rotate: spinFn }] }]}>
       {badge ? <View style={styles.badge}>{/* <Text style={styles.badgeText}></Text> */}</View> : null}
       <Icon width={20} height={20} color={color || "black"} {...props} />
     </Animated.View>

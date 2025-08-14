@@ -87,7 +87,7 @@ export const onboardingStyles = StyleSheet.create({
   },
   bold: {
     fontWeight: "bold",
-    color:colors.BLUE,
+    color: colors.BLUE,
   },
   presentationText: {
     textAlign: "left",

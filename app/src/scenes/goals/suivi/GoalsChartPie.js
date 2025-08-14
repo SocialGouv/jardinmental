@@ -1,24 +1,24 @@
-import React, {useCallback, useState, useEffect} from 'react';
-import {StyleSheet, View, Text} from 'react-native';
-import {useFocusEffect} from '@react-navigation/native';
-import PieChart from 'react-native-pie-chart';
+import React, { useCallback, useState, useEffect } from "react";
+import { StyleSheet, View, Text } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
+import PieChart from "react-native-pie-chart";
 // import PieChart from "react-native-pie";
-import {scoresMapIcon} from '../../../utils/constants';
-import {getGoalsAndRecords} from '../../../utils/localStorage/goals';
-import {DAYS_OF_WEEK} from '../../../utils/date/daysOfWeek';
-import {parseISO, getDay} from 'date-fns';
-import { colors as mainColors } from '@/utils/colors';
+import { scoresMapIcon } from "../../../utils/constants";
+import { getGoalsAndRecords } from "../../../utils/localStorage/goals";
+import { DAYS_OF_WEEK } from "../../../utils/date/daysOfWeek";
+import { parseISO, getDay } from "date-fns";
+import { colors as mainColors } from "@/utils/colors";
 
-export const GoalsChartPie = ({chartDates, onIsEmptyChanged}) => {
+export const GoalsChartPie = ({ chartDates, onIsEmptyChanged }) => {
   const [goals, setGoals] = useState([]);
 
   const updateGoals = useCallback(async () => {
     let _goals = await getGoalsAndRecords();
     let isEmpty = true;
-    _goals = _goals.map(({goal, records}) => {
+    _goals = _goals.map(({ goal, records }) => {
       const _records = records
-        .filter(record => chartDates.includes(record.date))
-        .map(record => ({
+        .filter((record) => chartDates.includes(record.date))
+        .map((record) => ({
           ...record,
           value: record.value === true ? 5 : 1,
         }));
@@ -28,15 +28,15 @@ export const GoalsChartPie = ({chartDates, onIsEmptyChanged}) => {
       return {
         goal,
         records: chartDates
-          .map(date => {
-            const existingRecord = _records.find(record => record.date === date);
+          .map((date) => {
+            const existingRecord = _records.find((record) => record.date === date);
             if (existingRecord) return existingRecord;
             else {
-              if (goal?.daysOfWeek?.[DAYS_OF_WEEK[getDay(parseISO(date))]]) return {value: 0};
+              if (goal?.daysOfWeek?.[DAYS_OF_WEEK[getDay(parseISO(date))]]) return { value: 0 };
               else return null;
             }
           })
-          .filter(record => !!record),
+          .filter((record) => !!record),
       };
     });
     setGoals(_goals);
@@ -46,7 +46,7 @@ export const GoalsChartPie = ({chartDates, onIsEmptyChanged}) => {
   useFocusEffect(
     useCallback(() => {
       updateGoals();
-    }, [chartDates]),
+    }, [chartDates])
   );
 
   useEffect(() => {
@@ -55,7 +55,7 @@ export const GoalsChartPie = ({chartDates, onIsEmptyChanged}) => {
 
   return (
     <View style={styles.categoryContainer}>
-      {goals.map(({goal, records}) => (
+      {goals.map(({ goal, records }) => (
         <GoalPie key={goal.id} title={goal.label} records={records} />
       ))}
     </View>
@@ -63,12 +63,12 @@ export const GoalsChartPie = ({chartDates, onIsEmptyChanged}) => {
 };
 
 const colors = {
-  0: '#f3f3f3',
+  0: "#f3f3f3",
   1: scoresMapIcon[1].color,
   5: scoresMapIcon[5].color,
 };
 
-const GoalPie = ({title, records}) => {
+const GoalPie = ({ title, records }) => {
   const [sections, setSections] = useState({});
   const [sectionValues, setSectionValues] = useState([]);
 
@@ -87,7 +87,7 @@ const GoalPie = ({title, records}) => {
       return acc;
     }, {});
     setSections(_sections);
-    setSectionValues(Object.values(_sections).map(({percentage, color}) => ({percentage, color})));
+    setSectionValues(Object.values(_sections).map(({ percentage, color }) => ({ percentage, color })));
   }, [records]);
 
   useEffect(() => {
@@ -108,10 +108,10 @@ const GoalPie = ({title, records}) => {
             {sectionValues?.reduce((sum, section) => sum + section.percentage, 0) > 0 ? (
               <PieChart
                 widthAndHeight={100}
-                series={sectionValues.map(section => section.percentage)}
-                sliceColor={sectionValues.map(section => section.color)}
+                series={sectionValues.map((section) => section.percentage)}
+                sliceColor={sectionValues.map((section) => section.color)}
                 coverRadius={0.45}
-                coverFill={'#FFF'}
+                coverFill={"#FFF"}
               />
             ) : (
               // Show empty state or placeholder when all values are 0
@@ -136,61 +136,61 @@ const GoalPie = ({title, records}) => {
 const styles = StyleSheet.create({
   categoryContainer: {
     flex: 1,
-    alignItems: 'stretch',
-    display: 'flex',
+    alignItems: "stretch",
+    display: "flex",
     marginBottom: 15,
     paddingHorizontal: 10,
   },
   pieContainer: {
     flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-around',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-around",
   },
   contentCategoryContainer: {
     flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-around',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-around",
     paddingVertical: 10,
   },
   titleContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
   },
   title: {
     fontSize: 19,
-    fontFamily: 'SourceSans3',
+    fontFamily: "SourceSans3",
     color: mainColors.BLUE,
-    fontWeight: '600',
+    fontWeight: "600",
     marginRight: 5,
     flexShrink: 1,
   },
   numbersContainer: {
-    display: 'flex',
-    alignItems: 'center',
+    display: "flex",
+    alignItems: "center",
   },
   legendTitle: {
     fontSize: 14,
-    fontFamily: 'SourceSans3',
-    fontWeight: '400',
+    fontFamily: "SourceSans3",
+    fontWeight: "400",
     color: mainColors.BLUE,
     marginTop: 5,
     marginBottom: 2,
   },
   percentageSmall: {
     fontSize: 12,
-    fontFamily: 'SourceSans3',
-    fontWeight: '400',
+    fontFamily: "SourceSans3",
+    fontWeight: "400",
     color: mainColors.BLUE,
     marginVertical: 5,
-    fontStyle: 'italic',
+    fontStyle: "italic",
   },
   percentageBig: {
     fontSize: 14,
-    fontFamily: 'SourceSans3',
-    fontWeight: '400',
+    fontFamily: "SourceSans3",
+    fontWeight: "400",
     color: mainColors.BLUE,
     marginBottom: 5,
   },

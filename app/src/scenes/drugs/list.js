@@ -1,18 +1,18 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { StyleSheet, ScrollView, View, TextInput, Keyboard } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import Text from '../../components/MyText';
-import { colors } from '../../utils/colors';
-import Button from '../../components/Button';
-import localStorage from '../../utils/localStorage';
-import { getDrugListWithLocalStorage } from '../../utils/drugs-list';
-import CheckBox from '@react-native-community/checkbox';
-import NPS from '../../services/NPS/NPS';
-import BackButton from '../../components/BackButton';
-import AddElemToList from '../../components/AddElemToList';
-import { confirm } from '../../utils';
-import logEvents from '../../services/logEvents';
-import JMButton from '@/components/JMButton';
+import React, { useState, useEffect, useRef } from "react";
+import { StyleSheet, ScrollView, View, TextInput, Keyboard } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import Text from "../../components/MyText";
+import { colors } from "../../utils/colors";
+import Button from "../../components/Button";
+import localStorage from "../../utils/localStorage";
+import { getDrugListWithLocalStorage } from "../../utils/drugs-list";
+import CheckBox from "@react-native-community/checkbox";
+import NPS from "../../services/NPS/NPS";
+import BackButton from "../../components/BackButton";
+import AddElemToList from "../../components/AddElemToList";
+import { confirm } from "../../utils";
+import logEvents from "../../services/logEvents";
+import JMButton from "@/components/JMButton";
 const ELEMENT_HEIGHT = 55;
 
 const Drugs = ({ navigation, route }) => {
@@ -42,12 +42,12 @@ const Drugs = ({ navigation, route }) => {
     });
   }, [viewElementIndex]);
 
-  const cleanString = s => {
+  const cleanString = (s) => {
     let r = s
-      ?.replace(/\s*/g, '')
-      .replace(/é/g, 'e')
-      .replace(/è/g, 'e')
-      .replace(/(\(|\)|\||\^|\$)/g, '\\$1')
+      ?.replace(/\s*/g, "")
+      .replace(/é/g, "e")
+      .replace(/è/g, "e")
+      .replace(/(\(|\)|\||\^|\$)/g, "\\$1")
       .toLowerCase();
     return r;
   };
@@ -62,7 +62,7 @@ const Drugs = ({ navigation, route }) => {
   useEffect(() => {
     const newDrug = route?.params?.newDrug;
     if (newDrug) {
-      setList(l => [newDrug, ...l]);
+      setList((l) => [newDrug, ...l]);
     }
   }, [route]);
 
@@ -70,18 +70,18 @@ const Drugs = ({ navigation, route }) => {
     setFilteredList(filterAndSortList(list));
   }, [filter, list]);
 
-  const filterAndSortList = list =>
+  const filterAndSortList = (list) =>
     list
       ?.sort((a, b) => cleanString(a.name1) > cleanString(b.name1))
-      .filter(e => {
-        const r = new RegExp(cleanString(filter), 'gi');
+      .filter((e) => {
+        const r = new RegExp(cleanString(filter), "gi");
         return r.test(cleanString(e.id));
       });
 
   const setToogleCheckbox = (d, value) => {
     let t = [...treatment];
     if (!value) {
-      const elem = treatment.find(elem => elem.id === d.id);
+      const elem = treatment.find((elem) => elem.id === d.id);
       const i = treatment.indexOf(elem);
       t.splice(i, 1);
     } else {
@@ -94,7 +94,7 @@ const Drugs = ({ navigation, route }) => {
     //if there is something in the buffer, alert the user ...
     if (bufferCustomDrugs)
       return confirm({
-        title: 'Êtes-vous sûr de vouloir valider cette sélection ?',
+        title: "Êtes-vous sûr de vouloir valider cette sélection ?",
         message: `Il semblerait que vous n'avez pas correctement ajouter votre traitement personnalisé "${bufferCustomDrugs}"`,
         onConfirm: submit,
         onCancel: () => {
@@ -103,8 +103,8 @@ const Drugs = ({ navigation, route }) => {
             animated: true,
           });
         },
-        cancelText: 'Retourner à la liste',
-        confirmText: 'Oui, valider quand même',
+        cancelText: "Retourner à la liste",
+        confirmText: "Oui, valider quand même",
       });
     //... else, submit the treatment
     else submit();
@@ -112,11 +112,11 @@ const Drugs = ({ navigation, route }) => {
 
   const submit = async () => {
     await localStorage.setMedicalTreatment(treatment);
-    navigation.navigate('drugs', { treatment });
+    navigation.navigate("drugs", { treatment });
   };
 
-  const handleAdd = async value => {
-    console.log('add drug', value);
+  const handleAdd = async (value) => {
+    console.log("add drug", value);
     if (!value) return;
     const drug = { id: value, name1: value, values: [] };
     await localStorage.addCustomDrug(drug);
@@ -124,11 +124,11 @@ const Drugs = ({ navigation, route }) => {
     const filteredListAfterAddition = filterAndSortList(drugsAfterAddition);
     setFilteredList(filteredListAfterAddition);
     setToogleCheckbox(drug, true);
-    setViewElementIndex(filteredListAfterAddition.map(e => e.id).indexOf(value));
+    setViewElementIndex(filteredListAfterAddition.map((e) => e.id).indexOf(value));
     logEvents.logDrugAdd(value);
   };
 
-  const handleFilter = f => setFilter(f);
+  const handleFilter = (f) => setFilter(f);
   const closeNPS = () => setNPSvisible(false);
 
   return (
@@ -136,13 +136,21 @@ const Drugs = ({ navigation, route }) => {
       <NPS forceView={NPSvisible} close={closeNPS} page={3} />
       <View
         style={{
-          display: 'flex',
-          flexDirection: 'row',
+          display: "flex",
+          flexDirection: "row",
           marginBottom: 10,
-          alignItems: 'center',
-        }}>
+          alignItems: "center",
+        }}
+      >
         <BackButton onPress={navigation.goBack} />
-        <TextInput autoCapitalize="none" onChangeText={handleFilter} value={filter} placeholder="Rechercher un traitement" placeholderTextColor="#a3a3a3" style={styles.filter} />
+        <TextInput
+          autoCapitalize="none"
+          onChangeText={handleFilter}
+          value={filter}
+          placeholder="Rechercher un traitement"
+          placeholderTextColor="#a3a3a3"
+          style={styles.filter}
+        />
       </View>
       <ScrollView
         ref={scrollRef}
@@ -150,7 +158,8 @@ const Drugs = ({ navigation, route }) => {
         contentContainerStyle={styles.scrollContainer}
         keyboardShouldPersistTaps="handled"
         keyboardDismissMode="on-drag"
-        onScrollBeginDrag={Keyboard.dismiss}>
+        onScrollBeginDrag={Keyboard.dismiss}
+      >
         {!filteredList ? (
           <Text>Chargement</Text>
         ) : (
@@ -163,9 +172,10 @@ const Drugs = ({ navigation, route }) => {
                 style={[
                   styles.drug,
                   {
-                    backgroundColor: treatment.find(x => x.id === e.id) ? 'white' : '#26387c12',
+                    backgroundColor: treatment.find((x) => x.id === e.id) ? "white" : "#26387c12",
                   },
-                ]}>
+                ]}
+              >
                 <View style={styles.item}>
                   <Text style={styles.text1}>{e.name1}</Text>
                   {e.name2 ? <Text style={styles.text2}>({e.name2})</Text> : null}
@@ -174,8 +184,8 @@ const Drugs = ({ navigation, route }) => {
                   animationDuration={0.2}
                   boxType="square"
                   style={styles.checkbox}
-                  value={!!treatment.find(x => x.id === e.id)}
-                  onValueChange={newValue => setToogleCheckbox(e, newValue)}
+                  value={!!treatment.find((x) => x.id === e.id)}
+                  onValueChange={(newValue) => setToogleCheckbox(e, newValue)}
                 />
               </View>
             ))}
@@ -192,27 +202,27 @@ const Drugs = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   labelAddDrug: {
     flex: 1,
-    color: '#fff',
+    color: "#fff",
     fontSize: 20,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   plusIcon: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 30,
-    fontWeight: '300',
+    fontWeight: "300",
     margin: -10,
     marginRight: 10,
   },
   addDrug: {
     backgroundColor: colors.LIGHT_BLUE,
-    color: '#fff',
+    color: "#fff",
     margin: 10,
     borderRadius: 10,
     padding: 10,
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    shadowColor: '#0A215C',
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    shadowColor: "#0A215C",
     shadowOffset: {
       width: 0,
       height: 1,
@@ -226,68 +236,68 @@ const styles = StyleSheet.create({
     fontSize: 16,
     paddingVertical: 12,
     paddingHorizontal: 10,
-    borderColor: '#EDEDED',
-    backgroundColor: '#fff',
-    color: 'black',
+    borderColor: "#EDEDED",
+    backgroundColor: "#fff",
+    color: "black",
   },
   safe: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: "white",
   },
   container: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
   },
   scrollContainer: {
     paddingBottom: 80,
   },
   backButton: {
-    fontWeight: '700',
-    textDecorationLine: 'underline',
+    fontWeight: "700",
+    textDecorationLine: "underline",
     color: colors.BLUE,
-    width: '20%',
+    width: "20%",
   },
   buttonWrapper: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 20,
     left: 10,
   },
   drug: {
-    backgroundColor: '#26387c12',
+    backgroundColor: "#26387c12",
     paddingVertical: 10,
     paddingHorizontal: 20,
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
     flex: 1,
     height: 55,
   },
   item: {
-    display: 'flex',
-    flexDirection: 'column',
+    display: "flex",
+    flexDirection: "column",
     flex: 1,
-    alignItems: 'flex-start',
-    justifyContent: 'center',
+    alignItems: "flex-start",
+    justifyContent: "center",
   },
   text1: {
-    color: '#000',
+    color: "#000",
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   text2: {
     color: colors.BLUE,
     fontSize: 13,
-    fontWeight: '400',
-    fontStyle: 'italic',
+    fontWeight: "400",
+    fontStyle: "italic",
   },
   checkbox: {
     marginHorizontal: 10,
   },
   noResult: {
-    color: '#a3a3a3',
+    color: "#a3a3a3",
     fontSize: 16,
-    fontWeight: '400',
-    fontStyle: 'italic',
-    textAlign: 'center',
+    fontWeight: "400",
+    fontStyle: "italic",
+    textAlign: "center",
   },
 });
 

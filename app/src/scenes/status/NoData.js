@@ -1,19 +1,19 @@
-import React from 'react';
-import {StyleSheet, View, TouchableOpacity} from 'react-native';
-import Text from '../../components/MyText';
-import {colors} from '../../utils/colors';
-import CircledIcon from '../../components/CircledIcon';
-import {icons, EMOTION_COLORS as colorsFromConstant, iconBorderColors, iconColors} from '../../utils/constants';
-import RoundButtonIcon from '../../components/RoundButtonIcon';
-import {beforeToday, formatDay} from '../../utils/date/helpers';
-import SurveyMenu from '../../../assets/svg/SurveyMenu';
+import React from "react";
+import { StyleSheet, View, TouchableOpacity } from "react-native";
+import Text from "../../components/MyText";
+import { colors } from "../../utils/colors";
+import CircledIcon from "../../components/CircledIcon";
+import { icons, EMOTION_COLORS as colorsFromConstant, iconBorderColors, iconColors } from "../../utils/constants";
+import RoundButtonIcon from "../../components/RoundButtonIcon";
+import { beforeToday, formatDay } from "../../utils/date/helpers";
+import SurveyMenu from "../../../assets/svg/SurveyMenu";
 
-const NoData = ({navigation}) => {
+const NoData = ({ navigation }) => {
   const startSurvey = () => {
     const date = formatDay(beforeToday(0));
     const answers = {};
-    const currentSurvey = {date, answers};
-    return navigation.navigate('day-survey', {
+    const currentSurvey = { date, answers };
+    return navigation.navigate("day-survey", {
       currentSurvey,
       editingSurvey: false,
     });
@@ -28,7 +28,7 @@ const NoData = ({navigation}) => {
           borderColor={iconBorderColors.veryGood}
           iconColor={iconColors.veryGood}
           icon={icons.veryGood}
-          iconContainerStyle={{marginRight: 0}}
+          iconContainerStyle={{ marginRight: 0 }}
           iconWidth={32}
           iconHeight={32}
         />
@@ -40,12 +40,12 @@ const NoData = ({navigation}) => {
             <View style={styles.buttonContainer}>
               <RoundButtonIcon
                 backgroundColor={colors.LIGHT_BLUE}
-                iconColor={'#FFFFFF'}
+                iconColor={"#FFFFFF"}
                 borderWidth={0.5}
                 borderColor={colors.LIGHT_BLUE}
                 icon="plus"
                 visible={true}
-                styleContainer={{marginHorizontal: 0}}
+                styleContainer={{ marginHorizontal: 0 }}
               />
             </View>
           </View>
@@ -58,13 +58,13 @@ const NoData = ({navigation}) => {
 const styles = StyleSheet.create({
   bienvenue: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     color: colors.BLUE,
-    textAlign: 'center',
+    textAlign: "center",
   },
   buttonContainer: {
     margin: 10,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,
@@ -76,35 +76,35 @@ const styles = StyleSheet.create({
   },
   mainContainer: {
     flex: 1,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
     padding: 30,
-    backgroundColor: '#f9f9f9',
+    backgroundColor: "#f9f9f9",
   },
   smileyContainer: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
     margin: 10,
   },
   text: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
     fontSize: 18,
-    fontWeight: 'normal',
+    fontWeight: "normal",
     color: colors.BLUE,
-    textAlign: 'center',
+    textAlign: "center",
     marginBottom: 10,
   },
   textContainer: {
     margin: 10,
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexWrap: 'wrap',
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    flexWrap: "wrap",
   },
 });
 

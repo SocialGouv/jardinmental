@@ -1,24 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
-import Text from '../../components/MyText';
-import { colors } from '../../utils/colors';
-import TextTag from '../../components/TextTag';
-import SelectDateComponent from './SelectDateComponent';
-import SelectTimeComponent from './SelectTimeComponent';
-import styleBeck from '../../styles/beck';
-import Separator from '../../components/Separator';
-import Button from '../../components/Button';
-import { toggleSelectedInArray, toggleState } from '../../utils';
-import localStorage from '../../utils/localStorage';
-import AddElemToList from '../../components/AddElemToList';
-import {
-  DEFAULT_BECK_WHERE_LIST,
-  DEFAULT_BECK_WHO_LIST,
-} from '../../utils/constants';
-import { formatDate, formatDay, getTime } from '../../utils/date/helpers';
-import { subDays, isToday, isYesterday, parseISO } from 'date-fns';
-import logEvents from '../../services/logEvents';
-import JMButton from '@/components/JMButton';
+import React, { useState, useEffect } from "react";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
+import Text from "../../components/MyText";
+import { colors } from "../../utils/colors";
+import TextTag from "../../components/TextTag";
+import SelectDateComponent from "./SelectDateComponent";
+import SelectTimeComponent from "./SelectTimeComponent";
+import styleBeck from "../../styles/beck";
+import Separator from "../../components/Separator";
+import Button from "../../components/Button";
+import { toggleSelectedInArray, toggleState } from "../../utils";
+import localStorage from "../../utils/localStorage";
+import AddElemToList from "../../components/AddElemToList";
+import { DEFAULT_BECK_WHERE_LIST, DEFAULT_BECK_WHO_LIST } from "../../utils/constants";
+import { formatDate, formatDay, getTime } from "../../utils/date/helpers";
+import { subDays, isToday, isYesterday, parseISO } from "date-fns";
+import logEvents from "../../services/logEvents";
+import JMButton from "@/components/JMButton";
 
 export default ({ onChange, onSubmit, data, id }) => {
   // lists that will be displayed
@@ -50,8 +47,7 @@ export default ({ onChange, onSubmit, data, id }) => {
   };
   const handleCloseWho = (whoClicked) => {
     let who = [...whosSelected];
-    if (whosSelected.indexOf(whoClicked) !== -1)
-      who = whosSelected.filter((w) => w !== whoClicked);
+    if (whosSelected.indexOf(whoClicked) !== -1) who = whosSelected.filter((w) => w !== whoClicked);
     setWhosSelected(who);
     onChange({ who });
   };
@@ -127,7 +123,7 @@ export default ({ onChange, onSubmit, data, id }) => {
       const value = formatDay(subDays(now, i));
       let label = formatDate(value);
       if (isToday(parseISO(value))) label = "Aujourd'hui";
-      if (isYesterday(parseISO(value))) label = 'Hier';
+      if (isYesterday(parseISO(value))) label = "Hier";
       return { label, value };
     });
     setListWhen(options);
@@ -167,30 +163,16 @@ export default ({ onChange, onSubmit, data, id }) => {
           value={dateSelected}
           items={listWhen}
         />
-        <SelectTimeComponent
-          placeholder="Choisir l'heure"
-          iconName="ClockSvg"
-          onChange={(time) => onChange({ time })}
-          value={timeSelected}
-        />
+        <SelectTimeComponent placeholder="Choisir l'heure" iconName="ClockSvg" onChange={(time) => onChange({ time })} value={timeSelected} />
       </View>
       <Separator style={styleBeck.separator} />
       <Text style={styleBeck.title}>Où étiez-vous ?</Text>
       <View style={styleBeck.listContainer}>
         {listWhere?.map((e, i) => (
-          <TextTag
-            key={i}
-            value={e}
-            selected={e === whereSelected}
-            color="#D4F0F2"
-            onPress={handleClickWhere}
-            enableClosed
-            onClose={removeWhere}
-          />
+          <TextTag key={i} value={e} selected={e === whereSelected} color="#D4F0F2" onPress={handleClickWhere} enableClosed onClose={removeWhere} />
         ))}
       </View>
-      <TouchableOpacity
-        onPress={() => toggleState(addWhereVisible, setAddWhereVisible)}>
+      <TouchableOpacity onPress={() => toggleState(addWhereVisible, setAddWhereVisible)}>
         <Text style={styleBeck.underlinedBlueText}>Ajouter un autre lieu</Text>
       </TouchableOpacity>
       {addWhereVisible ? <AddElemToList onChange={addNewWhere} /> : null}
@@ -209,17 +191,11 @@ export default ({ onChange, onSubmit, data, id }) => {
           />
         ))}
       </View>
-      <TouchableOpacity
-        onPress={() => toggleState(addWhoVisible, setAddWhoVisible)}>
-        <Text style={styleBeck.underlinedBlueText}>
-          Ajouter une connaissance
-        </Text>
+      <TouchableOpacity onPress={() => toggleState(addWhoVisible, setAddWhoVisible)}>
+        <Text style={styleBeck.underlinedBlueText}>Ajouter une connaissance</Text>
       </TouchableOpacity>
       {addWhoVisible ? <AddElemToList onChange={addNewWho} /> : null}
-      <JMButton
-        title="Continuer"
-        onPress={onSubmit}
-      />
+      <JMButton title="Continuer" onPress={onSubmit} />
     </View>
   );
 };
@@ -227,32 +203,32 @@ export default ({ onChange, onSubmit, data, id }) => {
 const styles = StyleSheet.create({
   safe: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: "white",
   },
   buttonsContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   container: {
     padding: 20,
-    backgroundColor: 'white',
+    backgroundColor: "white",
   },
   scrollContainer: {
     paddingBottom: 80,
-    display: 'flex',
-    alignItems: 'flex-start',
+    display: "flex",
+    alignItems: "flex-start",
   },
   stepIndicatorContainer: { marginVertical: 15 },
   mainTitle: {
-    width: '80%',
+    width: "80%",
     fontSize: 22,
     color: colors.BLUE,
-    fontWeight: '600',
+    fontWeight: "600",
     marginTop: 15,
   },
   mainDescription: {
-    width: '80%',
+    width: "80%",
     marginTop: 15,
   },
   selectDateComponentContainer: { marginBottom: 15 },

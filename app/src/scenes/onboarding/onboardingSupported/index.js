@@ -35,41 +35,21 @@ const Supported = ({ navigation }) => {
       <View style={onboardingStyles.topContainer}>
         <OnboardingBackButton onPress={navigation.goBack} />
       </View>
-      <ScrollView
-        style={onboardingStyles.scroll}
-        contentContainerStyle={onboardingStyles.scrollContentContainer}
-      >
+      <ScrollView style={onboardingStyles.scroll} contentContainerStyle={onboardingStyles.scrollContentContainer}>
         <View style={onboardingStyles.container}>
           <View style={styles.header}>
             <Text style={styles.title}>Faisons connaissance</Text>
             <Text style={styles.subtitle}>Vous êtes actuellement :</Text>
           </View>
-          <Card
-            title="Suivi et le professionnel qui me suit m’a recommandé l’application"
-            color="#F4FCFD"
-            handleClick={() => handleClick("YES")}
-          />
-          <Card
-            title="Suivi et j’ai téléchargé moi-même l’application"
-            color="#F4FCFD"
-            handleClick={() => handleClick("YES_SOLO")}
-          />
-          <Card
-            title="Sans suivi mais je le souhaite"
-            color="#F4FCFD"
-            handleClick={() => handleClick("NOT_YET")}
-          />
+          <Card title="Suivi et le professionnel qui me suit m’a recommandé l’application" color="#F4FCFD" handleClick={() => handleClick("YES")} />
+          <Card title="Suivi et j’ai téléchargé moi-même l’application" color="#F4FCFD" handleClick={() => handleClick("YES_SOLO")} />
+          <Card title="Sans suivi mais je le souhaite" color="#F4FCFD" handleClick={() => handleClick("NOT_YET")} />
           <Card title="Sans suivi" color="#F4FCFD" handleClick={() => handleClick("NO")} />
           <DarkCard title="Professionnel de santé" color="#F4FCFD" handleClick={() => handleClick("PRO")} />
 
           <View style={styles.hintContainer}>
-            <Image
-              source={require("../../../../assets/imgs/onboarding/professionnel-sante.png")}
-              style={styles.hintImage}
-            />
-            <Text style={styles.hintText}>
-              N’hésitez pas à montrer l’application à un professionnel de santé pour vous aider
-            </Text>
+            <Image source={require("../../../../assets/imgs/onboarding/professionnel-sante.png")} style={styles.hintImage} />
+            <Text style={styles.hintText}>N’hésitez pas à montrer l’application à un professionnel de santé pour vous aider</Text>
           </View>
         </View>
       </ScrollView>

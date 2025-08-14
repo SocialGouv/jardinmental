@@ -1,13 +1,13 @@
 // Copy paste of the old notifications.js service with react-native-push-notification, the new one is with expo-notifications
 
-import PushNotification from 'react-native-push-notification';
-import PushNotificationIOS from '@react-native-community/push-notification-ios';
-import {Platform} from 'react-native';
-import {checkNotifications, RESULTS} from 'react-native-permissions';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {STORAGE_KEY_PUSH_NOTIFICATION_TOKEN, STORAGE_KEY_PUSH_NOTIFICATION_TOKEN_ERROR} from '../utils/constants';
-import logEvents from './logEvents';
-import API from './api';
+import PushNotification from "react-native-push-notification";
+import PushNotificationIOS from "@react-native-community/push-notification-ios";
+import { Platform } from "react-native";
+import { checkNotifications, RESULTS } from "react-native-permissions";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { STORAGE_KEY_PUSH_NOTIFICATION_TOKEN, STORAGE_KEY_PUSH_NOTIFICATION_TOKEN_ERROR } from "../utils/constants";
+import logEvents from "./logEvents";
+import API from "./api";
 
 class NotificationService {
   listeners = {};
@@ -18,24 +18,24 @@ class NotificationService {
   };
 
   delete = () => {
-    PushNotificationIOS.removeEventListener('registrationError', this.failIOSToken);
+    PushNotificationIOS.removeEventListener("registrationError", this.failIOSToken);
   };
 
   async configure() {
     this.initChannels();
-    if (Platform.OS === 'ios') {
-      PushNotificationIOS.addEventListener('registrationError', this.onIOSRegistrationError);
+    if (Platform.OS === "ios") {
+      PushNotificationIOS.addEventListener("registrationError", this.onIOSRegistrationError);
     }
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
   }
 
-  onRegister = tokenPayload => {
+  onRegister = (tokenPayload) => {
     (async () => {
       const oldToken = await AsyncStorage.getItem(STORAGE_KEY_PUSH_NOTIFICATION_TOKEN);
-      console.log('PushNotification onRegister newToken:', tokenPayload.token, 'oldToken:', oldToken);
+      console.log("PushNotification onRegister newToken:", tokenPayload.token, "oldToken:", oldToken);
       if (oldToken) {
         await API.put({
-          path: '/reminder/refreshPushNotifToken',
+          path: "/reminder/refreshPushNotifToken",
           body: {
             oldPushNotifToken: oldToken,
             newPushNotifToken: tokenPayload.token,
@@ -47,15 +47,15 @@ class NotificationService {
       logEvents.logPushNotifTokenRegisterSuccess();
     })();
   };
-  onRegistrationError = err => {
-    console.error('PushNotification onRegistrationError:', err.message, err);
+  onRegistrationError = (err) => {
+    console.error("PushNotification onRegistrationError:", err.message, err);
     AsyncStorage.setItem(STORAGE_KEY_PUSH_NOTIFICATION_TOKEN_ERROR, err.message);
     logEvents.logPushNotifTokenRegisterError();
   };
 
-  onIOSRegistrationError = err => {
-    if (Platform.OS === 'android') return;
-    console.error('PushNotification onRegistrationError:', err.message, err);
+  onIOSRegistrationError = (err) => {
+    if (Platform.OS === "android") return;
+    console.error("PushNotification onRegistrationError:", err.message, err);
     AsyncStorage.setItem(STORAGE_KEY_PUSH_NOTIFICATION_TOKEN_ERROR, err.message);
     logEvents.logPushNotifTokenRegisterError();
   };
@@ -65,92 +65,92 @@ class NotificationService {
   }
 
   checkPermission = async () => {
-    const authStatus = await checkNotifications().then(({status}) => status);
+    const authStatus = await checkNotifications().then(({ status }) => status);
     // …'unavailable' | 'denied' | 'limited' | 'granted' | 'blocked'
-    let permission = {granted: false, canAsk: false};
+    let permission = { granted: false, canAsk: false };
     switch (authStatus) {
       case RESULTS.UNAVAILABLE:
-        permission = {granted: false, canAsk: false};
+        permission = { granted: false, canAsk: false };
         break;
       case RESULTS.DENIED:
-        permission = {granted: false, canAsk: true};
+        permission = { granted: false, canAsk: true };
         break;
       case RESULTS.LIMITED:
-        permission = {granted: true};
+        permission = { granted: true };
         break;
       case RESULTS.GRANTED:
-        permission = {granted: true};
+        permission = { granted: true };
         break;
       case RESULTS.BLOCKED:
-        permission = {granted: false, canAsk: false};
+        permission = { granted: false, canAsk: false };
         break;
     }
     return permission;
   };
 
   checkAndAskForPermission = async () => {
-    const {granted, canAsk} = await this.checkPermission();
+    const { granted, canAsk } = await this.checkPermission();
     if (granted) return true;
     if (!canAsk) return false;
     const permission = await PushNotification.requestPermissions();
     return permission;
   };
 
-  checkAndGetPermissionIfAlreadyGiven = async from => {
-    const {granted} = await this.checkPermission();
+  checkAndGetPermissionIfAlreadyGiven = async (from) => {
+    const { granted } = await this.checkPermission();
     if (!granted) return true;
     const permission = await PushNotification.requestPermissions();
     return permission;
   };
   // LOCAL NOTIFICATIONS
 
-  channelId = 'REMINDER-CHANNEL-ID'; // same as in strings.xml, for Android
+  channelId = "REMINDER-CHANNEL-ID"; // same as in strings.xml, for Android
 
   initDefaultChannels = () => {
     PushNotification.createChannel(
       {
-        channelId: 'reminder_main', // (required)
-        channelName: 'Rappel questionnaire', // (required)
-        soundName: 'default', // (optional) See `soundName` parameter of `localNotification` function
+        channelId: "reminder_main", // (required)
+        channelName: "Rappel questionnaire", // (required)
+        soundName: "default", // (optional) See `soundName` parameter of `localNotification` function
         importance: 4, // (optional) default: 4. Int value of the Android notification importance
         vibrate: true, // (optional) default: true. Creates the default vibration patten if true.
       },
-      created => console.log(`createChannel returned '${created}'`),
+      (created) => console.log(`createChannel returned '${created}'`)
     );
     PushNotification.createChannel(
       {
-        channelId: 'reminder_goal', // (required)
+        channelId: "reminder_goal", // (required)
         channelName: "Rappel d'objectif", // (required)
-        soundName: 'default', // (optional) See `soundName` parameter of `localNotification` function
+        soundName: "default", // (optional) See `soundName` parameter of `localNotification` function
         importance: 4, // (optional) default: 4. Int value of the Android notification importance
         vibrate: true, // (optional) default: true. Creates the default vibration patten if true.
       },
-      created => console.log(`createChannel returned '${created}'`),
+      (created) => console.log(`createChannel returned '${created}'`)
     );
     PushNotification.createChannel(
       {
-        channelId: 'reminder_inactivity', // (required)
+        channelId: "reminder_inactivity", // (required)
         channelName: "Rappel d'inactivité", // (required)
-        soundName: 'default', // (optional) See `soundName` parameter of `localNotification` function
+        soundName: "default", // (optional) See `soundName` parameter of `localNotification` function
         importance: 4, // (optional) default: 4. Int value of the Android notification importance
         vibrate: true, // (optional) default: true. Creates the default vibration patten if true.
       },
-      created => console.log(`createChannel returned '${created}'`),
+      (created) => console.log(`createChannel returned '${created}'`)
     );
     PushNotification.createChannel(
       {
         channelId: this.channelId, // (required)
-        channelName: 'Autres', // (required)
-        soundName: 'default', // (optional) See `soundName` parameter of `localNotification` function
+        channelName: "Autres", // (required)
+        soundName: "default", // (optional) See `soundName` parameter of `localNotification` function
         importance: 4, // (optional) default: 4. Int value of the Android notification importance
         vibrate: true, // (optional) default: true. Creates the default vibration patten if true.
       },
-      created => console.log(`createChannel returned '${created}'`),
+      (created) => console.log(`createChannel returned '${created}'`)
     );
   };
 
   //Appears after a specified time. App does not have to be open.
-  scheduleNotification({date, title, message, playSound = true, soundName = 'default', repeatType = 'day'} = {}) {
+  scheduleNotification({ date, title, message, playSound = true, soundName = "default", repeatType = "day" } = {}) {
     PushNotification.localNotificationSchedule({
       date,
       title,
@@ -161,8 +161,8 @@ class NotificationService {
       repeatType,
     });
   }
-  getScheduledLocalNotifications = () => new Promise(resolve => PushNotification.getScheduledLocalNotifications(resolve));
-  localNotification({title, message, playSound = true, soundName = 'default'} = {}) {
+  getScheduledLocalNotifications = () => new Promise((resolve) => PushNotification.getScheduledLocalNotifications(resolve));
+  localNotification({ title, message, playSound = true, soundName = "default" } = {}) {
     PushNotification.localNotification({
       title,
       message,
@@ -178,20 +178,20 @@ class NotificationService {
 
   // PUSH NOTIFICATIONS
   getInitNotification() {
-    PushNotification.popInitialNotification(notification => {
-      console.log('Initial Notification', notification);
+    PushNotification.popInitialNotification((notification) => {
+      console.log("Initial Notification", notification);
       this.handleNotification(notification);
     });
   }
 
-  handleNotification = notification => {
-    console.log('handle Notification', JSON.stringify(notification, null, 2));
+  handleNotification = (notification) => {
+    console.log("handle Notification", JSON.stringify(notification, null, 2));
 
     logEvents.logPushNotifReceiveClicked();
 
     /* ANDROID FOREGROUND */
 
-    if (Platform.OS === 'android') {
+    if (Platform.OS === "android") {
       // if not the line below, the notification is launched without notifying
       // with the line below, there is a local notification triggered
       if (notification.foreground && !notification.userInteraction) return;
@@ -222,7 +222,7 @@ class NotificationService {
     return initialNotification;
   };
 
-  subscribe = callback => {
+  subscribe = (callback) => {
     let listenerKey = null;
     while (!listenerKey) {
       listenerKey = parseInt(Math.random() * 9999).toString();
@@ -243,7 +243,7 @@ class NotificationService {
     // return listenerKey;
   };
 
-  remove = listenerKey => {
+  remove = (listenerKey) => {
     delete this.listeners[listenerKey];
   };
 

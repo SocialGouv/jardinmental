@@ -28,26 +28,26 @@ export const EMOTION_COLORS = {
   veryGoodTrans: "#edfaca",
 
   veryBad: "#F3A3CD", // "#822F2F", //"#840707",
-  bad: '#F3B9B0',//"#91501A", //"#744519",
-  middle: '#F9E1A7',//"#91501A",//"#6C630C",
-  good: '#BBE7C6',//'#317535',//"#496300",
-  veryGood: '#99DDDD'//'#21896B',//"#1A6300",
+  bad: "#F3B9B0", //"#91501A", //"#744519",
+  middle: "#F9E1A7", //"#91501A",//"#6C630C",
+  good: "#BBE7C6", //'#317535',//"#496300",
+  veryGood: "#99DDDD", //'#21896B',//"#1A6300",
 };
 
 export const iconBorderColors = {
-  veryBad: '#822F2F', //"#D13E3E",
-  bad: '#862F22',//"#E7770F",
-  middle: '#862F22',//"#F0DF49",
-  good: '#224E2D', //"#7CCF12",
-  veryGood: '#004439'//"#0FC321",
+  veryBad: "#822F2F", //"#D13E3E",
+  bad: "#862F22", //"#E7770F",
+  middle: "#862F22", //"#F0DF49",
+  good: "#224E2D", //"#7CCF12",
+  veryGood: "#004439", //"#0FC321",
 };
 
 export const iconColors = {
   veryBad: "#822F2F", //"#840707",
   bad: "#91501A", //"#744519",
-  middle: "#91501A",//"#6C630C",
-  good: '#317535',//"#496300",
-  veryGood: '#21896B',//"#1A6300",
+  middle: "#91501A", //"#6C630C",
+  good: "#317535", //"#496300",
+  veryGood: "#21896B", //"#1A6300",
 
   // veryBad: "#F3A3CD", // "#822F2F", //"#840707",
   // bad: '#F3B9B0',//"#91501A", //"#744519",
@@ -267,14 +267,7 @@ export const DEFAULT_BECK_SENSATION_LIST = [
   "Souffle court",
 ];
 
-export const BeckStepTitles = [
-  "La situation",
-  "La situation",
-  "Vos émotions",
-  "Vos pensées",
-  "Comportement et Résultats",
-  "Restructuration",
-];
+export const BeckStepTitles = ["La situation", "La situation", "Vos émotions", "Vos pensées", "Comportement et Résultats", "Restructuration"];
 
 export const STORAGE_KEY_SURVEY_RESULTS = "@SURVEY_RESULTS";
 export const STORAGE_KEY_START_DATE = "@SURVEY_DATE";
@@ -328,49 +321,42 @@ export const MATOMO_DIMENSION = {
   SUPPORTED: 3,
 };
 
-export const STEP_ORDER: OnboardingStep[] = [
-  'INTRO',
-  'PROFILE',
-  'CAROUSEL',
-  'DIFFICULTIES',
-  'OBJECTIVE',
-  'CHECKIN',
-];
+export const STEP_ORDER: OnboardingStep[] = ["INTRO", "PROFILE", "CAROUSEL", "DIFFICULTIES", "OBJECTIVE", "CHECKIN"];
 
 export const TOTAL_STEPS = STEP_ORDER.length;
 
 // Colors
 export const TW_COLORS = {
   PRIMARY: mainColors.LIGHT_BLUE,
-  SECONDARY: '#12747D', //'#00CEF7',
-  POSITIVE: '#5DEE5A', // positive for action relative to mental health !== 'success action in app'
-  NEGATIVE: '#F16B6B', // negative feeling for action relative to mental health
-  SUCCESS: '#5DEE5A', //#4CAF50',
-  WARNING: '#FF9800',
-  ERROR: '#F44336',
-  BACKGROUND: '#F5F5F5',
-  WHITE: '#FFFFFF',
-  BLACK: '#000000',
-  GRAY_LIGHT: '#E0E0E0',
-  GRAY_MEDIUM: '#9E9E9E',
-  GRAY_DARK: '#424242',
-  TEXT_PRIMARY: '#134449',//'#212121',
-  TEXT_SECONDARY: '#757575',
+  SECONDARY: "#12747D", //'#00CEF7',
+  POSITIVE: "#5DEE5A", // positive for action relative to mental health !== 'success action in app'
+  NEGATIVE: "#F16B6B", // negative feeling for action relative to mental health
+  SUCCESS: "#5DEE5A", //#4CAF50',
+  WARNING: "#FF9800",
+  ERROR: "#F44336",
+  BACKGROUND: "#F5F5F5",
+  WHITE: "#FFFFFF",
+  BLACK: "#000000",
+  GRAY_LIGHT: "#E0E0E0",
+  GRAY_MEDIUM: "#9E9E9E",
+  GRAY_DARK: "#424242",
+  TEXT_PRIMARY: "#134449", //'#212121',
+  TEXT_SECONDARY: "#757575",
   LIGHT_COLORS: "#134449",
   LIGHT_BLUE: "#EBFDFF",
-  BRAND_800: '#12747D',
+  BRAND_800: "#12747D",
   BRAND_700: "#158993",
   BRAND_600: "#1CB2BF",
   BRAND_500: "#1FC6D5",
-  BEIGE: '#FCEBD9',
-  GRAY_800: '#4A5D5F',
-  GRAY_700: '#617778',
-  GRAY_200: '#E3F6F8',
-  BRAND_25: '#FAFFFF',
-  BRAND_900: '#134449'
+  BEIGE: "#FCEBD9",
+  GRAY_800: "#4A5D5F",
+  GRAY_700: "#617778",
+  GRAY_200: "#E3F6F8",
+  BRAND_25: "#FAFFFF",
+  BRAND_900: "#134449",
 };
 
-export const SHARED_HEADER = false
-export const HEADER_WITH_BANNER = false
-export const PROGRESS_BAR = true
-export const PROGRESS_BAR_AND_HEADER = true
+export const SHARED_HEADER = false;
+export const HEADER_WITH_BANNER = false;
+export const PROGRESS_BAR = true;
+export const PROGRESS_BAR_AND_HEADER = true;

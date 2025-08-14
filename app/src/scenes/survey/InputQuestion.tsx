@@ -5,14 +5,7 @@ import { colors } from "../../utils/colors";
 import Icon from "../../components/Icon";
 import BasicCard from "@/components/BasicCard";
 
-const Question = ({
-  question,
-  explanation,
-  isLast,
-  onChangeUserComment,
-  userComment,
-  placeholder = "Message...",
-}) => {
+const Question = ({ question, explanation, isLast, onChangeUserComment, userComment, placeholder = "Message..." }) => {
   const [showExplanation, setShowExplanation] = useState(false);
   const toggleShowExplanation = async () => {
     setShowExplanation((prev) => !prev);
@@ -27,13 +20,7 @@ const Question = ({
       <TouchableOpacity onPress={toggleShowExplanation}>
         <View style={styles.questionHeader}>
           {explanation ? (
-            <Icon
-              icon="InfoSvg"
-              width={25}
-              height={25}
-              color={colors.LIGHT_BLUE}
-              styleContainer={{ width: 25, height: 25 }}
-            />
+            <Icon icon="InfoSvg" width={25} height={25} color={colors.LIGHT_BLUE} styleContainer={{ width: 25, height: 25 }} />
           ) : (
             <View />
           )}

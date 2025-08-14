@@ -1,20 +1,20 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { View, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import React, { useEffect, useState, useContext } from "react";
+import { View, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-import styleBeck from '../../styles/beck';
-import Text from '../../components/MyText';
-import Button from '../../components/Button';
-import Icon from '../../components/Icon';
-import BackButton from '../../components/BackButton';
-import { colors } from '../../utils/colors';
-import { formatDate, displayOnlyHourAndMinute } from '../../utils/date/helpers';
-import TextTag from '../../components/TextTag';
-import { BeckStepTitles } from '../../utils/constants';
-import { DiaryDataContext } from '../../context/diaryData';
-import { confirm, deleteBeckfromDiaryData } from '../../utils';
-import logEvents from '../../services/logEvents';
-import { parseISO, differenceInDays } from 'date-fns';
+import styleBeck from "../../styles/beck";
+import Text from "../../components/MyText";
+import Button from "../../components/Button";
+import Icon from "../../components/Icon";
+import BackButton from "../../components/BackButton";
+import { colors } from "../../utils/colors";
+import { formatDate, displayOnlyHourAndMinute } from "../../utils/date/helpers";
+import TextTag from "../../components/TextTag";
+import { BeckStepTitles } from "../../utils/constants";
+import { DiaryDataContext } from "../../context/diaryData";
+import { confirm, deleteBeckfromDiaryData } from "../../utils";
+import logEvents from "../../services/logEvents";
+import { parseISO, differenceInDays } from "date-fns";
 
 export default ({ navigation, route }) => {
   const [beck, setBeck] = useState({});
@@ -57,7 +57,7 @@ export default ({ navigation, route }) => {
 
   const handleEdit = () => {
     logEvents.logBeckEditClick();
-    navigation.navigate('beck', {
+    navigation.navigate("beck", {
       beckId,
       beck,
       redirect: true,
@@ -66,18 +66,18 @@ export default ({ navigation, route }) => {
 
   const handleDelete = () => {
     confirm({
-      title: 'Êtes-vous sûr de vouloir supprimer cet élément ?',
+      title: "Êtes-vous sûr de vouloir supprimer cet élément ?",
       onConfirm: () => {
         deleteBeckfromDiaryData({ date, beckId, diaryData, setDiaryData });
         logEvents.logDeleteBeck();
         navigation.goBack();
       },
-      cancelText: 'Annuler',
-      confirmText: 'Oui, supprimer',
+      cancelText: "Annuler",
+      confirmText: "Oui, supprimer",
     });
   };
 
-  const percentage = x => x && `${x * 10}%`;
+  const percentage = (x) => x && `${x * 10}%`;
 
   return (
     <SafeAreaView style={styles.safe}>
@@ -109,7 +109,7 @@ export default ({ navigation, route }) => {
           ) : null}
           {who?.length ? (
             <Text>
-              Avec <Text style={styles.bold}>{who?.join(', ')}</Text>
+              Avec <Text style={styles.bold}>{who?.join(", ")}</Text>
             </Text>
           ) : null}
           {where ? <Text>{where}</Text> : null}
@@ -135,10 +135,7 @@ export default ({ navigation, route }) => {
           <ItemText title="Pensée plus nuancée/adaptée" value={nuancedThoughts} />
           <ItemText title="Croyance dans la pensée principale" value={thoughtsBeforeMainEmotion} intensity={percentage(trustInThoughsNow)} />
           <ItemTag title="Émotions après coup" values={mainEmotion} intensity={percentage(mainEmotionIntensityNuanced)} />
-          <JMButton
-            title="Terminer"
-            onPress={navigation.goBack}
-          />
+          <JMButton title="Terminer" onPress={navigation.goBack} />
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -183,61 +180,61 @@ const ItemTag = ({ title, values, intensity }) => {
 
 const styles = StyleSheet.create({
   contentItem: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    flexWrap: 'wrap',
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    flexWrap: "wrap",
   },
   contentTag: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    flexWrap: 'wrap',
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    flexWrap: "wrap",
   },
   citation: {
     borderLeftWidth: 2,
-    borderLeftColor: '#ADB4CD7F',
+    borderLeftColor: "#ADB4CD7F",
     paddingLeft: 15,
   },
-  bold: { fontWeight: 'bold' },
+  bold: { fontWeight: "bold" },
   safe: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: "white",
   },
-  stepContainer: { width: '100%' },
+  stepContainer: { width: "100%" },
   buttonsContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   buttonsRightContainer: {
     padding: 10,
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   container: {
     padding: 20,
     paddingTop: 0,
-    backgroundColor: 'white',
+    backgroundColor: "white",
   },
   scrollContainer: {
     paddingBottom: 80,
-    display: 'flex',
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
+    display: "flex",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
   },
   stepIndicatorContainer: { marginTop: 15, marginBottom: 35 },
   mainDescription: {
-    width: '80%',
+    width: "80%",
     marginTop: 15,
   },
   editButtonText: {
     marginTop: 20,
     marginRight: 20,
-    fontWeight: 'bold',
-    textDecorationLine: 'underline',
+    fontWeight: "bold",
+    textDecorationLine: "underline",
     color: colors.BLUE,
   },
 });

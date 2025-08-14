@@ -8,10 +8,7 @@ import BackButton from "../../../components/BackButton";
 import Button from "../../../components/Button";
 import SurveyMenu from "../../../../assets/svg/SurveyMenu";
 import { ONBOARDING_STEPS } from "../../../utils/constants";
-import {
-  INDICATEURS_LIST,
-  INDICATEURS_LISTE_PAR_CATEGORIE,
-} from "../../../utils/liste_indicateurs.1";
+import { INDICATEURS_LIST, INDICATEURS_LISTE_PAR_CATEGORIE } from "../../../utils/liste_indicateurs.1";
 import TextTag from "../../../components/TextTag";
 import CategorieElements from "./CategorieElements";
 import OnboardingElements from "./OnboardingElements";
@@ -87,32 +84,24 @@ const SymptomScreen = ({ navigation, route }) => {
       <View style={styles.buttonsContainer}>
         <BackButton onPress={navigation.goBack} />
       </View>
-      <ScrollView
-        keyboardShouldPersistTaps="handled"
-        style={styles.container}
-        contentContainerStyle={styles.scrollContainer}
-      >
+      <ScrollView keyboardShouldPersistTaps="handled" style={styles.container} contentContainerStyle={styles.scrollContainer}>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>On se fixe des objectifs quotidiens ?</Text>
         </View>
         <View style={styles.sousTitreContainer}>
           <Text style={styles.sousTitre}>
-            Réaliser certaines activités peut vous faire du bien. Voici quelques exemples, et pouvez aussi
-            créer vos propres objectifs.
+            Réaliser certaines activités peut vous faire du bien. Voici quelques exemples, et pouvez aussi créer vos propres objectifs.
           </Text>
         </View>
         <View style={styles.dividerS} />
         <View style={styles.alertContainer}>
           <Text style={styles.alertText}>
-            Se fixer <Text style={styles.bold}>5</Text> objectifs <Text style={styles.bold}>maximum</Text> est
-            un bon départ
+            Se fixer <Text style={styles.bold}>5</Text> objectifs <Text style={styles.bold}>maximum</Text> est un bon départ
           </Text>
         </View>
         <>
           {Object.keys(INDICATEURS_LISTE_PAR_CATEGORIE)
-            .filter((categorie) =>
-              ["Se faire plaisir", "Prendre soin de sa santé", "Au quotidien"].includes(categorie)
-            )
+            .filter((categorie) => ["Se faire plaisir", "Prendre soin de sa santé", "Au quotidien"].includes(categorie))
             .map((categorie) => {
               const indicateurs = INDICATEURS_LISTE_PAR_CATEGORIE[categorie];
               return (
@@ -134,9 +123,7 @@ const SymptomScreen = ({ navigation, route }) => {
         </>
         {getSelectionVide() ? (
           <View style={styles.buttonWrapperError}>
-            <Text style={[styles.alert, styles.spaceabove, styles.spacebottom]}>
-              Ajouter ou sélectionner au moins 1 indicateur
-            </Text>
+            <Text style={[styles.alert, styles.spaceabove, styles.spacebottom]}>Ajouter ou sélectionner au moins 1 indicateur</Text>
           </View>
         ) : null}
       </ScrollView>

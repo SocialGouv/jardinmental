@@ -1,13 +1,13 @@
-import React from 'react';
-import {View, Platform, Text, Pressable} from 'react-native';
-import {WebView} from 'react-native-webview';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import React from "react";
+import { View, Platform, Text, Pressable } from "react-native";
+import { WebView } from "react-native-webview";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-const PdfViewer = ({navigation}) => {
+const PdfViewer = ({ navigation }) => {
   const uri =
-    Platform.OS === 'android'
-      ? 'https://docs.google.com/gview?embedded=true&url=https://jardinmental.fabrique.social.gouv.fr/Notice%20Jardin%20Mental.pdf'
-      : 'https://jardinmental.fabrique.social.gouv.fr/Notice%20Jardin%20Mental.pdf';
+    Platform.OS === "android"
+      ? "https://docs.google.com/gview?embedded=true&url=https://jardinmental.fabrique.social.gouv.fr/Notice%20Jardin%20Mental.pdf"
+      : "https://jardinmental.fabrique.social.gouv.fr/Notice%20Jardin%20Mental.pdf";
 
   return (
     <SafeAreaView className="flex-1 flex-col w-full h-full">
@@ -17,7 +17,13 @@ const PdfViewer = ({navigation}) => {
         </Pressable>
       </View>
       <View className="flex-1">
-        <WebView style={{width: '100%', height: '100%'}} source={{uri}} originWhitelist={['*']} javaScriptEnabled={true} domStorageEnabled={true} />
+        <WebView
+          style={{ width: "100%", height: "100%" }}
+          source={{ uri }}
+          originWhitelist={["*"]}
+          javaScriptEnabled={true}
+          domStorageEnabled={true}
+        />
       </View>
     </SafeAreaView>
   );

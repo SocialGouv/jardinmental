@@ -2,15 +2,7 @@ import * as React from "react";
 import Svg, { Path, Defs, Pattern, Use, Image } from "react-native-svg";
 
 const Temps = (props) => (
-  <Svg
-    width={72}
-    height={72}
-    viewBox="0 0 72 72"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    xmlnsXlink="http://www.w3.org/1999/xlink"
-    {...props}
-  >
+  <Svg width={72} height={72} viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" {...props}>
     <Path fill="url(#a)" d="M0 0h72v72H0z" />
     <Defs>
       <Pattern id="a" patternContentUnits="objectBoundingBox" width={1} height={1}>

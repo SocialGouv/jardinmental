@@ -1,24 +1,25 @@
-import { colors } from '@/utils/colors';
-import { CarouselSlide } from '../types';
-import { AvatarGroup } from '@/components/AvatarGroup';
-import { View } from 'react-native';
+import { colors } from "@/utils/colors";
+import { CarouselSlide } from "../types";
+import { AvatarGroup } from "@/components/AvatarGroup";
+import { View } from "react-native";
 
 const SlideWelcome: CarouselSlide = {
-  id: 'slide-jm-help-you',
+  id: "slide-jm-help-you",
   title: "Jardin Mental vous aide à y voir plus clair.",
-  description: "Vous traversez peut-être une période floue ou pesante.\n\nIci, vous pourrez poser des mots sur ce que vous ressentez, et mieux comprendre ce que vous vivez.",
-  type: 'generic',
+  description:
+    "Vous traversez peut-être une période floue ou pesante.\n\nIci, vous pourrez poser des mots sur ce que vous ressentez, et mieux comprendre ce que vous vivez.",
+  type: "generic",
   backgroundColor: colors.WHITE,
-  variant: 'blue'
-}
+  variant: "blue",
+};
 
 const SlideFinal: CarouselSlide = {
-  id: 'slide-made-by-professional',
+  id: "slide-made-by-professional",
   title: "Conçu par des professionnels de la santé mentale, pour vous.",
-  type: 'special',
+  type: "special",
   backgroundColor: colors.WHITE,
-  variant: 'green'
-}
+  variant: "green",
+};
 
 export const carouselSlides: CarouselSlide[] = [
   SlideWelcome,
@@ -31,20 +32,21 @@ export const carouselSlides: CarouselSlide[] = [
   //   variant: 'green'
   // },
   {
-    id: 'slide-non-suivi-jm-give-tools',
+    id: "slide-non-suivi-jm-give-tools",
     title: "Des outils pour comprendre vos émotions, au quotidien",
     description: "Un espace pour faire le point, sans jugement. Pour observer, nommer, et avancer.",
-    type: 'generic',
+    type: "generic",
     backgroundColor: colors.WHITE,
-    variant: 'pink'
+    variant: "pink",
   },
   {
-    id: 'slide-suivi-share-with-you-psy',
+    id: "slide-suivi-share-with-you-psy",
     title: "Suivi par un thérapeute?",
-    description: "Vous pouvez choisir de partager ce que vous notez avec votre thérapeute, pour appuyer vos échanges.\n\nTout est sous votre contrôle.",
-    type: 'generic',
+    description:
+      "Vous pouvez choisir de partager ce que vous notez avec votre thérapeute, pour appuyer vos échanges.\n\nTout est sous votre contrôle.",
+    type: "generic",
     backgroundColor: colors.WHITE,
-    variant: 'red'
+    variant: "red",
   },
   SlideFinal,
 ];
@@ -52,17 +54,19 @@ export const carouselSlides: CarouselSlide[] = [
 export const carouselSlidesSuivi: CarouselSlide[] = [
   SlideWelcome,
   {
-    id: 'slide-suivi-between-two-sessions',
+    id: "slide-suivi-between-two-sessions",
     title: "Entre deux séances de suivi",
-    description: "Entre deux séances, on oublie parfois ce qui compte.\nNoter ce que vous traversez au quotidien vous aide à avancer plus sereinement.",
-    type: 'generic',
+    description:
+      "Entre deux séances, on oublie parfois ce qui compte.\nNoter ce que vous traversez au quotidien vous aide à avancer plus sereinement.",
+    type: "generic",
     backgroundColor: colors.WHITE,
   },
   {
-    id: 'slide-suivi-share-with-you-psy',
+    id: "slide-suivi-share-with-you-psy",
     title: "Partager avec votre thérapeute.",
-    description: "Vous pouvez choisir de partager ce que vous notez avec votre thérapeute,pour appuyer vos échanges.\n\nTout est sous votre contrôle.",
-    type: 'generic',
+    description:
+      "Vous pouvez choisir de partager ce que vous notez avec votre thérapeute,pour appuyer vos échanges.\n\nTout est sous votre contrôle.",
+    type: "generic",
     backgroundColor: colors.WHITE,
   },
   // {
@@ -72,8 +76,7 @@ export const carouselSlidesSuivi: CarouselSlide[] = [
   //   type: 'generic',
   //   backgroundColor: colors.WHITE,
   // },
-  SlideFinal
+  SlideFinal,
 ];
-
 
 export default carouselSlides;

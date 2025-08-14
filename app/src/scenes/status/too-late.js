@@ -1,15 +1,15 @@
-import React, {useState, useEffect} from 'react';
-import {View, TouchableOpacity, StyleSheet, ScrollView} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import React, { useState, useEffect } from "react";
+import { View, TouchableOpacity, StyleSheet, ScrollView } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-import Text from '../../components/MyText';
-import ReminderSvg from '../../../assets/svg/reminder.svg';
-import {colors} from '../../utils/colors';
-import BackButton from '../../components/BackButton';
-import {formatDate} from '../../utils/date/helpers';
-import Icon from '../../components/Icon';
+import Text from "../../components/MyText";
+import ReminderSvg from "../../../assets/svg/reminder.svg";
+import { colors } from "../../utils/colors";
+import BackButton from "../../components/BackButton";
+import { formatDate } from "../../utils/date/helpers";
+import Icon from "../../components/Icon";
 
-export default ({navigation, route}) => {
+export default ({ navigation, route }) => {
   const [date, setDate] = useState(null);
 
   useEffect(() => {
@@ -26,8 +26,8 @@ export default ({navigation, route}) => {
           icon="ClockSvg"
           color={colors.LIGHT_BLUE}
           styleContainer={{
-            marginTop: '20%',
-            marginBottom: '20%',
+            marginTop: "20%",
+            marginBottom: "20%",
           }}
           width={100}
           height={100}
@@ -36,7 +36,8 @@ export default ({navigation, route}) => {
         <Text style={styles.title}>Il est trop tard pour modifier les informations du {formatDate(date)}.</Text>
         <View style={styles.description}>
           <Text style={styles.subTitle}>
-            Pour que les informations saisies soient les plus fiables possibles, il n'est possible de saisir que les données des <Text style={styles.bold}>7 derniers jours</Text>.
+            Pour que les informations saisies soient les plus fiables possibles, il n'est possible de saisir que les données des{" "}
+            <Text style={styles.bold}>7 derniers jours</Text>.
           </Text>
         </View>
         <TouchableOpacity onPress={navigation.goBack} style={styles.setupButton}>
@@ -50,27 +51,27 @@ export default ({navigation, route}) => {
 const styles = StyleSheet.create({
   safe: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: "white",
   },
   scrollContainer: {
     paddingBottom: 80,
-    display: 'flex',
-    alignItems: 'center',
+    display: "flex",
+    alignItems: "center",
   },
   bold: {
-    fontWeight: '700',
+    fontWeight: "700",
   },
   title: {
-    width: '80%',
+    width: "80%",
     fontSize: 22,
     color: colors.BLUE,
-    fontWeight: '700',
-    marginTop: '10%',
+    fontWeight: "700",
+    marginTop: "10%",
   },
   description: {
-    width: '80%',
-    marginTop: '10%',
-    marginBottom: '20%',
+    width: "80%",
+    marginTop: "10%",
+    marginBottom: "20%",
   },
   subTitle: {
     flexShrink: 0,
@@ -80,13 +81,13 @@ const styles = StyleSheet.create({
     height: 45,
     borderRadius: 45,
     paddingHorizontal: 30,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     marginBottom: 15,
   },
   setupButtonText: {
-    color: '#fff',
-    fontWeight: '700',
+    color: "#fff",
+    fontWeight: "700",
     fontSize: 19,
   },
 });

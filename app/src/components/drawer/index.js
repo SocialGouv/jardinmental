@@ -1,19 +1,19 @@
-import React, {useState, useEffect, useContext} from 'react';
-import {StyleSheet, Platform, SafeAreaView, Dimensions, View, ScrollView, Linking, TouchableWithoutFeedback, Alert} from 'react-native';
-import Modal from 'react-native-modal';
-import DrawerItem from './drawer-item';
-import LegalItem from './legal-item';
-import localStorage from '../../utils/localStorage';
-import {getBadgeNotesVersion} from '../../scenes/news';
-import Text from '../../components/MyText';
-import {colors} from '../../utils/colors';
-import NeedUpdateContext from '../../context/needUpdate';
-import {HOST, HMAC_SECRET} from '../../config';
-import {recommendApp} from '../../utils/share';
-import app from '../../../app.json';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { useState, useEffect, useContext } from "react";
+import { StyleSheet, Platform, SafeAreaView, Dimensions, View, ScrollView, Linking, TouchableWithoutFeedback, Alert } from "react-native";
+import Modal from "react-native-modal";
+import DrawerItem from "./drawer-item";
+import LegalItem from "./legal-item";
+import localStorage from "../../utils/localStorage";
+import { getBadgeNotesVersion } from "../../scenes/news";
+import Text from "../../components/MyText";
+import { colors } from "../../utils/colors";
+import NeedUpdateContext from "../../context/needUpdate";
+import { HOST, HMAC_SECRET } from "../../config";
+import { recommendApp } from "../../utils/share";
+import app from "../../../app.json";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default ({navigation, visible, onClick}) => {
+export default ({ navigation, visible, onClick }) => {
   const [isVisible, setIsVisible] = useState();
   const updateVisible = useContext(NeedUpdateContext);
 
@@ -29,11 +29,11 @@ export default ({navigation, visible, onClick}) => {
       const n = await getBadgeNotesVersion();
       setBadgeNotesVersionVisible(n);
       const proNPS = await localStorage.getSupported();
-      setNpsProIsVisible(proNPS === 'PRO');
+      setNpsProIsVisible(proNPS === "PRO");
       const badgeProNPS = await localStorage.getVisitProNPS();
       setBadgeNpsProIsVisible(!badgeProNPS);
-      const devMode = await AsyncStorage.getItem('devMode');
-      setIsDevMode(devMode === 'true');
+      const devMode = await AsyncStorage.getItem("devMode");
+      setIsDevMode(devMode === "true");
     })();
   }, [visible]);
 
@@ -41,13 +41,13 @@ export default ({navigation, visible, onClick}) => {
     const newCount = devModeCount + 1;
     setDevModeCount(newCount);
     if (newCount % 5 === 0) {
-      await AsyncStorage.setItem('devMode', 'true');
-      setIsDevMode('true');
-      Alert.alert('Dev Mode', 'Dev mode activated!');
+      await AsyncStorage.setItem("devMode", "true");
+      setIsDevMode("true");
+      Alert.alert("Dev Mode", "Dev mode activated!");
     }
   };
 
-  const deviceHeight = Dimensions.get('window').height;
+  const deviceHeight = Dimensions.get("window").height;
   return (
     <Modal
       style={styles.modal}
@@ -56,7 +56,8 @@ export default ({navigation, visible, onClick}) => {
       onSwipeComplete={onClick}
       animationIn="slideInLeft"
       animationOut="slideOutLeft"
-      deviceHeight={deviceHeight}>
+      deviceHeight={deviceHeight}
+    >
       <View style={styles.card}>
         <SafeAreaView>
           <ScrollView contentContainerStyle={styles.scrollContainer}>
@@ -75,9 +76,9 @@ export default ({navigation, visible, onClick}) => {
                 icon="NewsSvg"
                 onClick={() =>
                   Linking.openURL(
-                    Platform.OS === 'ios'
-                      ? 'itms-apps://apps.apple.com/FR/app/id1540061393'
-                      : 'https://play.app.goo.gl/?link=https://play.google.com/store/apps/details?id=com.monsuivipsy',
+                    Platform.OS === "ios"
+                      ? "itms-apps://apps.apple.com/FR/app/id1540061393"
+                      : "https://play.app.goo.gl/?link=https://play.google.com/store/apps/details?id=com.monsuivipsy"
                   )
                 }
               />
@@ -101,7 +102,9 @@ export default ({navigation, visible, onClick}) => {
             <TouchableWithoutFeedback onPress={handleDevModePress}>
               <View style={styles.versionContainer}>
                 <Text style={styles.versionLabel}>
-                  {Platform.OS === 'ios' ? `${app.expo.version} (${app.expo.ios.buildNumber})` : `${app.expo.version} (${app.expo.android.versionCode})`}
+                  {Platform.OS === "ios"
+                    ? `${app.expo.version} (${app.expo.ios.buildNumber})`
+                    : `${app.expo.version} (${app.expo.android.versionCode})`}
                 </Text>
               </View>
             </TouchableWithoutFeedback>
@@ -120,7 +123,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   separator: {
-    borderColor: '#eee',
+    borderColor: "#eee",
     borderTopWidth: 1,
     marginHorizontal: 30,
     marginVertical: 15,
@@ -131,18 +134,18 @@ const styles = StyleSheet.create({
   versionContainer: {
     marginTop: 47,
     flex: 1,
-    alignItems: 'center',
+    alignItems: "center",
   },
   versionLabel: {
-    color: '#ddd',
+    color: "#ddd",
   },
   buildNumberLabel: {
-    color: '#eee',
+    color: "#eee",
   },
   card: {
-    width: '80%',
-    height: '100%',
-    backgroundColor: '#fff',
+    width: "80%",
+    height: "100%",
+    backgroundColor: "#fff",
     borderRadius: 10,
     borderTopLeftRadius: 0,
     borderBottomLeftRadius: 0,
@@ -150,7 +153,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     padding: 30,
     paddingTop: 15,
     color: colors.DARK_BLUE,

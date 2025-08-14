@@ -73,8 +73,7 @@ export const GoalDaySelector = ({ navigation, route }) => {
     >
       <InputLabel style={styles.spacing}>Planifier votre objectif</InputLabel>
       <InputLabel style={styles.spacingBottom} sublabel>
-        Sélectionnez les jours de la semaine où vous souhaitez réaliser l'objectif "
-        {!editing ? goalLabel : editingGoal?.label}"
+        Sélectionnez les jours de la semaine où vous souhaitez réaliser l'objectif "{!editing ? goalLabel : editingGoal?.label}"
       </InputLabel>
       <View style={styles.daysContainer}>
         {DAYS_OF_WEEK.map((day, index) => ({ day, index }))

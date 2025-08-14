@@ -19,7 +19,7 @@ export default function ToggleButtons({
   rightText,
   leftText,
   onPressLeft,
-  onPressRight
+  onPressRight,
 }: ToggleButtonsProps) {
   const [selected, setSelected] = useState<boolean | undefined>(initialSelected);
   if (leftColor && rightColor) {
@@ -28,49 +28,50 @@ export default function ToggleButtons({
         <TouchableOpacity
           className={`p-3 items-center rounded-l-lg`}
           style={{
-            backgroundColor: selected === true ? leftColor : TW_COLORS.WHITE
+            backgroundColor: selected === true ? leftColor : TW_COLORS.WHITE,
           }}
           onPress={() => {
-            onPressLeft?.(true)
-            setSelected(true)
+            onPressLeft?.(true);
+            setSelected(true);
           }}
         >
-          <Text className={`${selected === true ? 'text-white' : 'text-gray-800'} font-medium`}>{leftText || 'Oui'}</Text>
+          <Text className={`${selected === true ? "text-white" : "text-gray-800"} font-medium`}>{leftText || "Oui"}</Text>
         </TouchableOpacity>
         <TouchableOpacity
           className={`p-3 items-center rounded-r-lg border-l border-gray-300`}
           style={{
-            backgroundColor: selected === false ? rightColor : TW_COLORS.WHITE
+            backgroundColor: selected === false ? rightColor : TW_COLORS.WHITE,
           }}
           onPress={() => {
-            onPressRight?.(false)
-            setSelected(false)
+            onPressRight?.(false);
+            setSelected(false);
           }}
         >
-          <Text className={`${selected === false ? 'text-white' : 'text-gray-800'} font-medium`}>{rightText || 'Non'}</Text>
+          <Text className={`${selected === false ? "text-white" : "text-gray-800"} font-medium`}>{rightText || "Non"}</Text>
         </TouchableOpacity>
-      </View>)
+      </View>
+    );
   }
 
   return (
     <View className="flex-row rounded-lg border border-gray-300 self-start">
       <TouchableOpacity
-        className={`p-3 items-center ${selected === true ? 'bg-brand-800' : 'bg-white'} rounded-l-lg`}
+        className={`p-3 items-center ${selected === true ? "bg-brand-800" : "bg-white"} rounded-l-lg`}
         onPress={() => {
-          onPressLeft?.(true)
-          setSelected(true)
+          onPressLeft?.(true);
+          setSelected(true);
         }}
       >
-        <Text className={`${selected === true ? 'text-white' : 'text-gray-800'} font-medium`}>{leftText || 'Oui'}</Text>
+        <Text className={`${selected === true ? "text-white" : "text-gray-800"} font-medium`}>{leftText || "Oui"}</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        className={`p-3 items-center ${selected === false ? 'bg-brand-800' : 'bg-white'} rounded-r-lg border-l border-gray-300`}
+        className={`p-3 items-center ${selected === false ? "bg-brand-800" : "bg-white"} rounded-r-lg border-l border-gray-300`}
         onPress={() => {
-          onPressRight?.(false)
-          setSelected(false)
+          onPressRight?.(false);
+          setSelected(false);
         }}
       >
-        <Text className={`${selected === false ? 'text-white' : 'text-gray-800'} font-medium`}>{rightText || 'Non'}</Text>
+        <Text className={`${selected === false ? "text-white" : "text-gray-800"} font-medium`}>{rightText || "Non"}</Text>
       </TouchableOpacity>
     </View>
   );

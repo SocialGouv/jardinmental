@@ -30,13 +30,7 @@ export const GoalsCreateForm = ({ navigation }) => {
         value={goalName}
         onChangeText={setGoalName}
       />
-      <JMButton
-        title="Valider"
-        className="my-2"
-        onPress={onValidate}
-        disabled={!(goalName?.length > 0)}
-        loading={loading}
-      />
+      <JMButton title="Valider" className="my-2" onPress={onValidate} disabled={!(goalName?.length > 0)} loading={loading} />
     </Screen>
   );
 };

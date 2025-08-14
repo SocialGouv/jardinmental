@@ -112,8 +112,7 @@ export const FriseGraphList = ({ navigation, fromDate, toDate, focusedScores, sh
         <View style={styles.subtitleContainer}>
           <Icon icon="InfoSvg" width={25} height={25} color={colors.LIGHT_BLUE} />
           <Text style={styles.subtitle}>
-            Des <Text style={styles.bold}>frises</Text> apparaîtront au fur et à mesure de vos saisies
-            quotidiennes.
+            Des <Text style={styles.bold}>frises</Text> apparaîtront au fur et à mesure de vos saisies quotidiennes.
           </Text>
         </View>
         <JMButton title="Commencer à saisir" onPress={startSurvey} />

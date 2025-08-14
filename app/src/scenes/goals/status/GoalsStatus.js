@@ -10,10 +10,7 @@ export const GoalsStatus = ({ goalsData, date, withSeparator }) => {
   const recordIds = goalsData?.records?.byDate?.[date] || [];
   const records = recordIds
     .map((id) => goalsData?.records?.data?.[id])
-    .sort(
-      (a, b) =>
-        goalsData?.goals?.byOrder?.indexOf?.(a?.goalId) - goalsData?.goals?.byOrder?.indexOf?.(b?.goalId)
-    );
+    .sort((a, b) => goalsData?.goals?.byOrder?.indexOf?.(a?.goalId) - goalsData?.goals?.byOrder?.indexOf?.(b?.goalId));
   return (
     <>
       {withSeparator && <Separator style={{ paddingHorizontal: 40 }} />}
@@ -64,12 +61,7 @@ const GoalStatusItem = ({ goalsData, record }) => {
                     },
               ]}
             >
-              <Icon
-                icon="CheckSvg"
-                color={record.value === true ? "#1A6300" : "#5E0000"}
-                width={20}
-                height={20}
-              />
+              <Icon icon="CheckSvg" color={record.value === true ? "#1A6300" : "#5E0000"} width={20} height={20} />
             </View>
             <Text style={[styles.label]}>{goal?.label}</Text>
             {record.comment?.length ? (

@@ -49,9 +49,7 @@ export default ({ navigation, searchedValue }) => {
         <Text style={styles.topSubTitle}>Merci, nous avons bien pris en compte votre retour !</Text>
       ) : (
         <>
-          <Text style={styles.topSubTitle}>
-            Indiquez nous, si vous le souhaitez, le traitement que vous souhaiteriez suivre.
-          </Text>
+          <Text style={styles.topSubTitle}>Indiquez nous, si vous le souhaitez, le traitement que vous souhaiteriez suivre.</Text>
           <TextInput
             style={styles.feedback}
             onChangeText={setDrugNotFound}

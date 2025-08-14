@@ -30,16 +30,7 @@ const PatientStateItem = ({ patientState, category, label }) => {
         _icon = scoresMapIcon[patientState[category]?.value];
       }
       if (!_icon || (!_icon.color && !_icon.faceIcon))
-        return (
-          <CircledIcon
-            color="#cccccc"
-            borderColor="#999999"
-            iconColor="#888888"
-            icon="QuestionMarkSvg"
-            iconWidth={32}
-            iconHeight={32}
-          />
-        );
+        return <CircledIcon color="#cccccc" borderColor="#999999" iconColor="#888888" icon="QuestionMarkSvg" iconWidth={32} iconHeight={32} />;
       return (
         <CircledIcon
           color={_icon.color}
@@ -133,8 +124,7 @@ const PatientStateItem = ({ patientState, category, label }) => {
     </View>
   );
 
-  if (isTouchable())
-    return <TouchableLayout onPress={() => setUserCommentVisible((e) => !e)}>{content}</TouchableLayout>;
+  if (isTouchable()) return <TouchableLayout onPress={() => setUserCommentVisible((e) => !e)}>{content}</TouchableLayout>;
   else return content;
 };
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { InputText } from "../InputText";
-import { mergeClassNames } from '@/utils/className';
+import { mergeClassNames } from "@/utils/className";
 
 import { Smiley } from "@/components/survey/Smiley";
 import { Boolean } from "./Boolean";
@@ -20,22 +20,22 @@ export const IndicatorSurveyItem = ({
   onValueChanged,
   comment,
   onCommentChanged,
-  showComment
+  showComment,
 }: {
-  indicator: PredefineIndicatorSchemaType,
-  index: number,
-  value: number,
-  comment?: string,
-  onValueChanged: () => {},
-  onCommentChanged: () => {}
-  showComment: boolean
+  indicator: PredefineIndicatorSchemaType;
+  index: number;
+  value: number;
+  comment?: string;
+  onValueChanged: () => {};
+  onCommentChanged: () => {};
+  showComment: boolean;
 }) => {
   // console.log("✍️  i. ndicator", indicator);
 
   const computeIndicatorLabel = (): string => {
-    if (value === null) return '';
+    if (value === null) return "";
     const index = Math.min(Math.floor(value * 5), 4);
-    return (INDICATOR_LABELS[indicator.uuid] || DEFAULT_INDICATOR_LABELS)[index] ?? '';
+    return (INDICATOR_LABELS[indicator.uuid] || DEFAULT_INDICATOR_LABELS)[index] ?? "";
   };
 
   const [_comment, _setComment] = useState(comment);
@@ -48,21 +48,9 @@ export const IndicatorSurveyItem = ({
       case "smiley":
         return <Smiley indicator={indicator} value={value} onValueChanged={onValueChanged} />;
       case "boolean":
-        return (
-          <Boolean
-            indicator={indicator}
-            value={value}
-            onChange={(v) => onValueChanged({ indicator, value: v })}
-          />
-        );
+        return <Boolean indicator={indicator} value={value} onChange={(v) => onValueChanged({ indicator, value: v })} />;
       case "gauge":
-        return (
-          <Gauge
-            defaultValue={value}
-            onChange={(v) => onValueChanged({ indicator, value: v })}
-            reverse={indicator?.order === "DESC"}
-          />
-        );
+        return <Gauge defaultValue={value} onChange={(v) => onValueChanged({ indicator, value: v })} reverse={indicator?.order === "DESC"} />;
       default:
         <View>
           <Text>pas encore geré</Text>
@@ -74,28 +62,32 @@ export const IndicatorSurveyItem = ({
       </View>
     );
   };
-  return <BasicCard>
-    <View>
-      <Text className={mergeClassNames(typography.textLgSemibold, 'text-brand-950', 'mb-6')}>{indicator.name}</Text>
-    </View>
-    {renderInput()}
-    {indicator.type === INDICATOR_TYPE.gauge &&
-      <Text className={mergeClassNames(typography.textMdMedium, 'text-gray-700 h-5')}>{computeIndicatorLabel() || ''}</Text>
-    }
-    {showComment && <InputText
-      fill
-      preset="lighten"
-      placeholder="Ajoutez une note sur cet élément"
-      value={_comment}
-      onChangeText={(nextComment) => {
-        _setComment(nextComment);
-        onCommentChanged?.({ comment: nextComment, indicator });
-      }}
-      multiline={true}
-      textAlignVertical="top"
-      containerStyle={{ marginTop: 20 }}
-    />}
-  </BasicCard>
+  return (
+    <BasicCard>
+      <View>
+        <Text className={mergeClassNames(typography.textLgSemibold, "text-brand-950", "mb-6")}>{indicator.name}</Text>
+      </View>
+      {renderInput()}
+      {indicator.type === INDICATOR_TYPE.gauge && (
+        <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700 h-5")}>{computeIndicatorLabel() || ""}</Text>
+      )}
+      {showComment && (
+        <InputText
+          fill
+          preset="lighten"
+          placeholder="Ajoutez une note sur cet élément"
+          value={_comment}
+          onChangeText={(nextComment) => {
+            _setComment(nextComment);
+            onCommentChanged?.({ comment: nextComment, indicator });
+          }}
+          multiline={true}
+          textAlignVertical="top"
+          containerStyle={{ marginTop: 20 }}
+        />
+      )}
+    </BasicCard>
+  );
   // return (
   //   <View
   //     style={[

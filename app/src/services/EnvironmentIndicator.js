@@ -1,9 +1,9 @@
-import React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
-import { APP_ENV } from '../config';
+import React from "react";
+import { Text, View, StyleSheet } from "react-native";
+import { APP_ENV } from "../config";
 
 const EnvironmentIndicator = () => {
-  if (APP_ENV === 'production') return null;
+  if (APP_ENV === "production") return null;
 
   return (
     <View style={styles.container}>
@@ -18,14 +18,14 @@ export default EnvironmentIndicator;
 
 const styles = StyleSheet.create({
   container: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 5,
     right: 20,
     zIndex: 9999,
-    color: 'red',
+    color: "red",
     fontSize: 16,
   },
   text: {
-    color: 'red',
+    color: "red",
   },
 });

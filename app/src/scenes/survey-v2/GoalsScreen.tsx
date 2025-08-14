@@ -1,8 +1,8 @@
-import React, { useRef } from 'react';
-import { ScrollView, View, KeyboardAvoidingView, Platform, TouchableOpacity, Text } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { SurveyProgressBar } from '../../components/survey/SurveyProgressBar';
-import { GoalsDaySurvey } from '../goals/survey/GoalsDaySurvey';
+import React, { useRef } from "react";
+import { ScrollView, View, KeyboardAvoidingView, Platform, TouchableOpacity, Text } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { SurveyProgressBar } from "../../components/survey/SurveyProgressBar";
+import { GoalsDaySurvey } from "../goals/survey/GoalsDaySurvey";
 
 interface GoalsScreenProps {
   navigation: any;
@@ -13,19 +13,12 @@ interface GoalsScreenProps {
   onNext: () => void;
 }
 
-export const GoalsScreen: React.FC<GoalsScreenProps> = ({
-  navigation,
-  currentStep,
-  totalSteps,
-  date,
-  route,
-  onNext,
-}) => {
+export const GoalsScreen: React.FC<GoalsScreenProps> = ({ navigation, currentStep, totalSteps, date, route, onNext }) => {
   const scrollRef = useRef<ScrollView | null>(null);
   const goalsRef = useRef<{ onSubmit?: () => Promise<void> }>(null);
 
   const handleNext = async () => {
-    if (goalsRef.current && typeof goalsRef.current.onSubmit === 'function') {
+    if (goalsRef.current && typeof goalsRef.current.onSubmit === "function") {
       await goalsRef.current.onSubmit();
     }
     onNext();
@@ -33,10 +26,10 @@ export const GoalsScreen: React.FC<GoalsScreenProps> = ({
 
   return (
     <SafeAreaView className="flex-1 bg-white">
-      <KeyboardAvoidingView 
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'} 
-        className="flex-1" 
-        keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 25}
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        className="flex-1"
+        keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 25}
       >
         <View className="absolute top-0 left-0 right-0 flex-row items-center justify-between px-4 pt-5 bg-white/90 z-50">
           {navigation.canGoBack() && (
@@ -47,24 +40,26 @@ export const GoalsScreen: React.FC<GoalsScreenProps> = ({
                 height: 45,
                 borderRadius: 22.5,
                 borderWidth: 1,
-                borderColor: '#E5E7EB',
-                backgroundColor: 'white',
-                justifyContent: 'center',
-                alignItems: 'center',
+                borderColor: "#E5E7EB",
+                backgroundColor: "white",
+                justifyContent: "center",
+                alignItems: "center",
               }}
             >
-              <Text style={{ fontSize: 18, transform: [{ rotate: '270deg' }] }}>↑</Text>
+              <Text style={{ fontSize: 18, transform: [{ rotate: "270deg" }] }}>↑</Text>
             </TouchableOpacity>
           )}
-          <Text style={{
-            flex: 1,
-            fontSize: 18,
-            fontWeight: 'bold',
-            fontFamily: 'SourceSans3',
-            textAlign: 'center',
-            paddingHorizontal: 4,
-            color: '#111'
-          }}>
+          <Text
+            style={{
+              flex: 1,
+              fontSize: 18,
+              fontWeight: "bold",
+              fontFamily: "SourceSans3",
+              textAlign: "center",
+              paddingHorizontal: 4,
+              color: "#111",
+            }}
+          >
             Mes objectifs
           </Text>
           <View style={{ width: 45 }} />
@@ -83,12 +78,7 @@ export const GoalsScreen: React.FC<GoalsScreenProps> = ({
             paddingBottom: 80,
           }}
         >
-          <GoalsDaySurvey
-            date={date}
-            ref={goalsRef}
-            scrollRef={scrollRef}
-            route={route}
-          />
+          <GoalsDaySurvey date={date} ref={goalsRef} scrollRef={scrollRef} route={route} />
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>

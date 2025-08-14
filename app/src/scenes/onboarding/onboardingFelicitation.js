@@ -16,10 +16,7 @@ const Onboarding = ({ navigation }) => {
       <View style={onboardingStyles.topContainer}>
         <OnboardingBackButton onPress={navigation.goBack} />
       </View>
-      <ScrollView
-        style={onboardingStyles.scroll}
-        contentContainerStyle={onboardingStyles.scrollContentContainer}
-      >
+      <ScrollView style={onboardingStyles.scroll} contentContainerStyle={onboardingStyles.scrollContentContainer}>
         <View style={onboardingStyles.containerCentered}>
           <View style={onboardingStyles.imageContainer}>
             <Felicitation width={100} height={100} />
@@ -31,8 +28,7 @@ const Onboarding = ({ navigation }) => {
             </View>
             <View style={onboardingStyles.containerBottomText}>
               <Text style={onboardingStyles.presentationText}>
-                Si vous le souhaitez, je peux vous expliquer les outils de suivi que vous trouverez dans
-                l’application
+                Si vous le souhaitez, je peux vous expliquer les outils de suivi que vous trouverez dans l’application
               </Text>
             </View>
           </View>

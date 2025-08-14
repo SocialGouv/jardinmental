@@ -24,10 +24,7 @@ const styles = StyleSheet.create({
 const Button = ({ title, textColor, onPress = () => null, disabled = false, buttonStyle, textStyle }) => {
   return (
     <TouchableOpacity
-      style={[
-        { ...styles.button, backgroundColor: "#ffffff", borderColor: colors.LIGHT_BLUE, borderWidth: 1 },
-        buttonStyle,
-      ]}
+      style={[{ ...styles.button, backgroundColor: "#ffffff", borderColor: colors.LIGHT_BLUE, borderWidth: 1 }, buttonStyle]}
       onPress={onPress}
       disabled={disabled}
     >

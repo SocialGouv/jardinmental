@@ -27,9 +27,7 @@ export const EventFilterHeader = ({
     <View style={styles.container}>
       <View style={styles.contentContainer}>
         <View style={[styles.lineContainer]}>
-          <Text style={[styles.text, { lineHeight: 22 }]}>
-            Retrouvez toutes les notes que vous avez écrites les jours où :
-          </Text>
+          <Text style={[styles.text, { lineHeight: 22 }]}>Retrouvez toutes les notes que vous avez écrites les jours où :</Text>
         </View>
         <View style={[styles.lineContainer, styles.withSpace]}>
           <SelectSymptom
@@ -93,14 +91,7 @@ export const EventFilterHeader = ({
   );
 };
 
-const SelectSymptom = ({
-  value,
-  placeholder,
-  options = [],
-  onChange = () => {},
-  onOpen = () => {},
-  ...props
-}) => {
+const SelectSymptom = ({ value, placeholder, options = [], onChange = () => {}, onOpen = () => {}, ...props }) => {
   const getTitle = (cat) => {
     const category = displayedCategories[cat] || cat;
     const [categoryName, suffix] = category.split("_");

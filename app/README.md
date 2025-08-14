@@ -102,5 +102,3 @@ The file defines several special collections of indicators:
 - **smiley**: Mood selection using emoji-style interface
 - **gauge**: Sliding scale for intensity measurement
 - **boolean**: Yes/No toggle for binary states
-
-

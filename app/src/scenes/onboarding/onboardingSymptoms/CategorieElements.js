@@ -5,15 +5,7 @@ import RoundButtonIcon from "../../../components/RoundButtonIcon";
 import AjoutIndicateurPerso from "./AjoutIndicateurPerso";
 import { TW_COLORS } from "@/utils/constants";
 
-const CategorieElements = ({
-  title,
-  options,
-  onClick,
-  indicateursSelection,
-  handleAddNewSymptom,
-  enableAddNewElement,
-  labelAddSymptom,
-}) => {
+const CategorieElements = ({ title, options, onClick, indicateursSelection, handleAddNewSymptom, enableAddNewElement, labelAddSymptom }) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [listeComplementaire, setListeComplementaire] = React.useState([]);
   return (
@@ -21,13 +13,7 @@ const CategorieElements = ({
       <TouchableOpacity style={stylesA.categorieContainer} onPress={() => setIsOpen((e) => !e)}>
         <Text style={stylesA.categorieTitre}>{title}</Text>
         <View>
-          <RoundButtonIcon
-            icon="toggle"
-            visible
-            onPress={() => setIsOpen((e) => !e)}
-            isToggled={isOpen}
-            medium
-          />
+          <RoundButtonIcon icon="toggle" visible onPress={() => setIsOpen((e) => !e)} isToggled={isOpen} medium />
         </View>
       </TouchableOpacity>
       {isOpen ? (
@@ -37,10 +23,7 @@ const CategorieElements = ({
             return (
               <TouchableOpacity
                 key={`${title}_${option.id}`}
-                style={[
-                  stylesA.choixContainer,
-                  indicateurSelectionne ? stylesA.choixContainerSelected : null,
-                ]}
+                style={[stylesA.choixContainer, indicateurSelectionne ? stylesA.choixContainerSelected : null]}
                 onPress={() => onClick({ id: option.id, value: !indicateurSelectionne })}
               >
                 {indicateurSelectionne ? (

@@ -1,24 +1,24 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, ScrollView, TouchableOpacity, Keyboard } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import React, { useEffect, useState } from "react";
+import { StyleSheet, View, ScrollView, TouchableOpacity, Keyboard } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-import BackButton from '../../../components/BackButton';
-import { colors } from '../../../utils/colors';
-import localStorage from '../../../utils/localStorage';
-import { displayedCategories } from '../../../utils/constants';
-import Button from '../../../components/Button';
-import Text from '../../../components/MyText';
-import Plus from '../../../../assets/svg/Plus';
-import ArrowUpSvg from '../../../../assets/svg/arrow-up.svg';
-import { INDICATORS, INDICATEURS_LES_PLUS_COURANTS } from '../../../utils/liste_indicateurs.1';
-import { toggleState } from '../../../utils';
-import DangerIcon from '../../../../assets/svg/DangerIcon';
-import CategorieElements from '../CategorieElements';
-import { useFocusEffect } from '@react-navigation/native';
-import logEvents from '../../../services/logEvents';
-import TextTag from '../../../components/TextTag';
-import JMButton from '@/components/JMButton';
-import { HELP_FOR_CATEGORY, INDICATOR_CATEGORIES_DATA } from '@/scenes/onboarding-v2/data/helperData';
+import BackButton from "../../../components/BackButton";
+import { colors } from "../../../utils/colors";
+import localStorage from "../../../utils/localStorage";
+import { displayedCategories } from "../../../utils/constants";
+import Button from "../../../components/Button";
+import Text from "../../../components/MyText";
+import Plus from "../../../../assets/svg/Plus";
+import ArrowUpSvg from "../../../../assets/svg/arrow-up.svg";
+import { INDICATORS, INDICATEURS_LES_PLUS_COURANTS } from "../../../utils/liste_indicateurs.1";
+import { toggleState } from "../../../utils";
+import DangerIcon from "../../../../assets/svg/DangerIcon";
+import CategorieElements from "../CategorieElements";
+import { useFocusEffect } from "@react-navigation/native";
+import logEvents from "../../../services/logEvents";
+import TextTag from "../../../components/TextTag";
+import JMButton from "@/components/JMButton";
+import { HELP_FOR_CATEGORY, INDICATOR_CATEGORIES_DATA } from "@/scenes/onboarding-v2/data/helperData";
 
 const EditIndicateurs = ({ navigation, route }) => {
   const [exemplesVisible, setExemplesVisible] = useState(false);
@@ -50,11 +50,11 @@ const EditIndicateurs = ({ navigation, route }) => {
           setUserIndicateurs(user_indicateurs);
         }
       })();
-    }, []),
+    }, [])
   );
 
-  const reactivateIndicateur = async _indicateur => {
-    const _userIndicateurs = userIndicateurs.map(indicateur => {
+  const reactivateIndicateur = async (_indicateur) => {
+    const _userIndicateurs = userIndicateurs.map((indicateur) => {
       if (indicateur.uuid === _indicateur.uuid) {
         indicateur.active = true;
       }
@@ -64,7 +64,7 @@ const EditIndicateurs = ({ navigation, route }) => {
     await localStorage.setIndicateurs(_userIndicateurs);
   };
 
-  const handleAddNewIndicateur = async _indicateur => {
+  const handleAddNewIndicateur = async (_indicateur) => {
     if (!_indicateur) return;
     const _userIndicateurs = [...userIndicateurs, _indicateur];
     setUserIndicateurs(_userIndicateurs);
@@ -72,9 +72,9 @@ const EditIndicateurs = ({ navigation, route }) => {
     logEvents.logCustomSymptomAdd();
   };
 
-  const setToggleIndicateur = async _indicateur => {
-    if (userIndicateurs.find(e => e.uuid === _indicateur.uuid)) {
-      const _userIndicateurs = userIndicateurs.map(indicateur => {
+  const setToggleIndicateur = async (_indicateur) => {
+    if (userIndicateurs.find((e) => e.uuid === _indicateur.uuid)) {
+      const _userIndicateurs = userIndicateurs.map((indicateur) => {
         if (indicateur.uuid === _indicateur.uuid) {
           indicateur.active = !indicateur.active;
         }
@@ -101,13 +101,13 @@ const EditIndicateurs = ({ navigation, route }) => {
             <Text style={styles.personnalizeTitle}>Créez votre indicateur personnalisé</Text>
             <Text style={styles.personnalizeText}>Vous pouvez choisir la manière dont vous souhaitez l’évaluer</Text>
             <JMButton
-              variant='outline'
+              variant="outline"
               onPress={() => {
-                navigation.push('CREATE_INDICATOR');
+                navigation.push("CREATE_INDICATOR");
               }}
-              className='mt-10'
+              className="mt-10"
               title="Créer un indicateur"
-              icon={<Plus style={styles.plusButton} opacity={1} color={'#000'} width={19} height={19} />}
+              icon={<Plus style={styles.plusButton} opacity={1} color={"#000"} width={19} height={19} />}
             />
           </View>
         </View>
@@ -116,7 +116,7 @@ const EditIndicateurs = ({ navigation, route }) => {
           <View style={styles.warningContainer}>
             <DangerIcon />
             <Text style={styles.warningText}>
-              Essayez de ne pas sélectionner plus de <Text style={[styles.bold, styles.warningText]}>8</Text> indicateurs{' '}
+              Essayez de ne pas sélectionner plus de <Text style={[styles.bold, styles.warningText]}>8</Text> indicateurs{" "}
               <Text style={[styles.bold, styles.warningText]}>au total</Text>
             </Text>
           </View>
@@ -136,7 +136,7 @@ const EditIndicateurs = ({ navigation, route }) => {
           ) : (
             <ArrowUpSvg
               style={{
-                transform: [{ rotateX: '180deg' }],
+                transform: [{ rotateX: "180deg" }],
               }}
               color={colors.BLUE}
             />
@@ -144,11 +144,24 @@ const EditIndicateurs = ({ navigation, route }) => {
         </TouchableOpacity>
         {exemplesVisible && (
           <>
-            <CategorieElements title="Les plus courants" options={INDICATEURS_LES_PLUS_COURANTS} onClick={value => setToggleIndicateur(value)} userIndicateurs={userIndicateurs} />
-            {Object.keys(indicateursByCategory).map(_category => {
+            <CategorieElements
+              title="Les plus courants"
+              options={INDICATEURS_LES_PLUS_COURANTS}
+              onClick={(value) => setToggleIndicateur(value)}
+              userIndicateurs={userIndicateurs}
+            />
+            {Object.keys(indicateursByCategory).map((_category) => {
               const _indicateurs = indicateursByCategory[_category];
-              console.log(_category)
-              return <CategorieElements key={_category} title={INDICATOR_CATEGORIES_DATA[_category].name} options={_indicateurs} onClick={value => setToggleIndicateur(value)} userIndicateurs={userIndicateurs} />;
+              console.log(_category);
+              return (
+                <CategorieElements
+                  key={_category}
+                  title={INDICATOR_CATEGORIES_DATA[_category].name}
+                  options={_indicateurs}
+                  onClick={(value) => setToggleIndicateur(value)}
+                  userIndicateurs={userIndicateurs}
+                />
+              );
             })}
           </>
         )}
@@ -167,7 +180,7 @@ const EditIndicateurs = ({ navigation, route }) => {
           ) : (
             <ArrowUpSvg
               style={{
-                transform: [{ rotateX: '180deg' }],
+                transform: [{ rotateX: "180deg" }],
               }}
               color={colors.BLUE}
             />
@@ -182,7 +195,7 @@ const EditIndicateurs = ({ navigation, route }) => {
             />
             <View style={styles.listContainer}>
               {userIndicateurs
-                .filter(_indicateur => !_indicateur.active)
+                .filter((_indicateur) => !_indicateur.active)
                 .map((_indicateur, i) => {
                   return (
                     <TextTag
@@ -218,49 +231,49 @@ const EditIndicateurs = ({ navigation, route }) => {
 
 const styles = StyleSheet.create({
   bold: {
-    fontWeight: '700',
+    fontWeight: "700",
   },
   safe: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: "white",
   },
   container: {
     paddingHorizontal: 20,
-    backgroundColor: 'white',
+    backgroundColor: "white",
   },
 
   headerText: {
     color: colors.BLUE,
     fontSize: 19,
-    fontWeight: '700',
+    fontWeight: "700",
   },
   header: {
     height: 60,
   },
   headerBackButton: {
-    position: 'absolute',
+    position: "absolute",
     zIndex: 1,
   },
   headerTextContainer: {
-    height: '100%',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+    height: "100%",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
   },
   listContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap",
   },
   personnalizeContainer: {
-    backgroundColor: 'rgba(31,198,213,0.2)',
+    backgroundColor: "rgba(31,198,213,0.2)",
     borderColor: colors.LIGHT_BLUE,
     borderWidth: 0.5,
     borderRadius: 10,
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     padding: 15,
     paddingRight: 20,
   },
@@ -271,7 +284,7 @@ const styles = StyleSheet.create({
   personnalizeTitle: {
     color: colors.BLUE,
     fontSize: 14,
-    fontWeight: '700',
+    fontWeight: "700",
     flex: 1,
     marginBottom: 5,
   },
@@ -285,14 +298,14 @@ const styles = StyleSheet.create({
   },
 
   warningContainer: {
-    backgroundColor: 'rgba(254,170,90,0.1)',
-    borderColor: '#FEAA5B',
+    backgroundColor: "rgba(254,170,90,0.1)",
+    borderColor: "#FEAA5B",
     borderWidth: 1,
     borderRadius: 10,
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     padding: 15,
     paddingRight: 20,
     marginTop: 20,
@@ -306,22 +319,22 @@ const styles = StyleSheet.create({
 
   divider: {
     height: 1,
-    backgroundColor: '#E0E0E0',
+    backgroundColor: "#E0E0E0",
     marginBottom: 15,
-    width: '100%',
-    alignSelf: 'center',
+    width: "100%",
+    alignSelf: "center",
   },
 
   toggleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     paddingEnd: 5,
     paddingBottom: 15,
     paddingTop: 15,
   },
   bottomButtonsContainer: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     padding: 20,
   },
 });

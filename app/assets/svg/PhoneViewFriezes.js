@@ -1,30 +1,11 @@
-import * as React from "react"
-import Svg, { Rect, Defs, Pattern, Use, Image } from "react-native-svg"
+import * as React from "react";
+import Svg, { Rect, Defs, Pattern, Use, Image } from "react-native-svg";
 
 const PhoneViewFriezes = (props) => (
-  <Svg
-    width={125}
-    height={259}
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    xmlnsXlink="http://www.w3.org/1999/xlink"
-    {...props}
-  >
-    <Rect
-      x={0.476}
-      y={0.229}
-      width={123.907}
-      height={258.139}
-      rx={10}
-      fill="url(#a)"
-    />
+  <Svg width={125} height={259} fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" {...props}>
+    <Rect x={0.476} y={0.229} width={123.907} height={258.139} rx={10} fill="url(#a)" />
     <Defs>
-      <Pattern
-        id="a"
-        patternContentUnits="objectBoundingBox"
-        width={1}
-        height={1}
-      >
+      <Pattern id="a" patternContentUnits="objectBoundingBox" width={1} height={1}>
         <Use xlinkHref="#b" transform="matrix(.00193 0 0 .00093 -.024 0)" />
       </Pattern>
       <Image
@@ -35,6 +16,6 @@ const PhoneViewFriezes = (props) => (
       />
     </Defs>
   </Svg>
-)
+);
 
 export default PhoneViewFriezes;

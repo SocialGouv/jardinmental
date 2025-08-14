@@ -10,7 +10,7 @@ import { getGoalsTracked, setGoalTracked } from "../../../utils/localStorage/goa
 import { GoalAddCheckable } from "./GoalAddCheckable";
 import { DAYS_OF_WEEK } from "../../../utils/date/daysOfWeek";
 import JMButton from "@/components/JMButton";
-import Plus from '../../../../assets/svg/Plus';
+import Plus from "../../../../assets/svg/Plus";
 
 const GOALS_EXAMPLE_FLAT = Object.values(GOALS_EXAMPLE).reduce((acc, subGoalCategory) => {
   return [...acc, ...subGoalCategory];
@@ -31,8 +31,7 @@ export const GoalsAddOptions = ({ navigation }) => {
         const enabledGoals = await getGoalsTracked({ enabled: true });
         let _enabledExampleGoals = {};
         for (const goal of enabledGoals) {
-          const isEnabled =
-            GOALS_EXAMPLE_FLAT.find((exampleGoalLabel) => goal.label === exampleGoalLabel) !== null;
+          const isEnabled = GOALS_EXAMPLE_FLAT.find((exampleGoalLabel) => goal.label === exampleGoalLabel) !== null;
           if (isEnabled)
             _enabledExampleGoals = {
               ..._enabledExampleGoals,
@@ -82,31 +81,17 @@ export const GoalsAddOptions = ({ navigation }) => {
       header={{
         title: "Ajouter un objectif",
       }}
-      bottomChildren={
-        <JMButton
-          variant="primary"
-          title="Enregistrer"
-          onPress={onValidate}
-          loading={loading}
-          disabled={!isChanged} />
-      }
+      bottomChildren={<JMButton variant="primary" title="Enregistrer" onPress={onValidate} loading={loading} disabled={!isChanged} />}
     >
-      <Card
-        title="Créez votre objectif personnalisé"
-        text="Définissez votre objectif et planifiez le sur les jours de la semaine que vous souhaitez"
-      >
+      <Card title="Créez votre objectif personnalisé" text="Définissez votre objectif et planifiez le sur les jours de la semaine que vous souhaitez">
         <JMButton
           variant="outline"
           title="Créer un objectif"
-          icon={<Plus opacity={1} color={'#000'} width={19} height={19} />}
+          icon={<Plus opacity={1} color={"#000"} width={19} height={19} />}
           onPress={() => navigation.navigate("goals-create-form")}
         />
       </Card>
-      <Collapsable
-        preset="primary"
-        title="Choisir un objectif parmi des exemples"
-        containerStyle={{ marginTop: 24 }}
-      >
+      <Collapsable preset="primary" title="Choisir un objectif parmi des exemples" containerStyle={{ marginTop: 24 }}>
         {Object.keys(GOALS_EXAMPLE).map((goalCategory) => {
           return (
             <Collapsable preset="secondary" title={goalCategory} key={goalCategory}>

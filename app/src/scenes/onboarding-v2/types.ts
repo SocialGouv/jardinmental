@@ -1,15 +1,9 @@
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
-import { ReactNode } from 'react';
-import { NEW_INDICATORS_SUBCATEGORIES, NEW_INDICATORS_CATEGORIES } from '@/utils/liste_indicateurs.1';
+import { StackNavigationProp } from "@react-navigation/stack";
+import { RouteProp } from "@react-navigation/native";
+import { ReactNode } from "react";
+import { NEW_INDICATORS_SUBCATEGORIES, NEW_INDICATORS_CATEGORIES } from "@/utils/liste_indicateurs.1";
 
-export type OnboardingStep =
-  | 'INTRO'
-  | 'PROFILE'
-  | 'CAROUSEL'
-  | 'DIFFICULTIES'
-  | 'OBJECTIVE'
-  | 'CHECKIN';
+export type OnboardingStep = "INTRO" | "PROFILE" | "CAROUSEL" | "DIFFICULTIES" | "OBJECTIVE" | "CHECKIN";
 
 export interface UserProfile {
   id: string;
@@ -23,11 +17,11 @@ export interface CarouselSlide {
   id: string;
   title: string;
   description?: string;
-  type: 'generic' | 'special';
+  type: "generic" | "special";
   backgroundColor?: string;
   illustration?: React.ReactNode;
   children?: React.ReactNode;
-  variant?: 'blue' | 'green' | 'beige' | 'pink' | 'red' | 'yellow'
+  variant?: "blue" | "green" | "beige" | "pink" | "red" | "yellow";
 }
 
 export interface Difficulty {
@@ -35,11 +29,11 @@ export interface Difficulty {
   name: string;
   label: string;
   selected: boolean;
-  icon: () => React.JSX.Element,
-  description?: string,
+  icon: () => React.JSX.Element;
+  description?: string;
   category: NEW_INDICATORS_CATEGORIES;
-  subCat: NEW_INDICATORS_SUBCATEGORIES[]
-  labelWithSecondPersonPrefix: string
+  subCat: NEW_INDICATORS_SUBCATEGORIES[];
+  labelWithSecondPersonPrefix: string;
 }
 
 export interface Objective {
@@ -91,37 +85,37 @@ export type OnboardingV2StackParamList = {
   Profile: undefined;
   Carousel: undefined;
   PersonalizationStart: undefined;
-  PersonalizationDifficulties: undefined,
+  PersonalizationDifficulties: undefined;
   PersonalizationObjective: undefined;
-  PersonalizationOtherObjective: undefined,
-  OnboardingCheckInStart: undefined
-  OnboardingCheckInHowDoYouFeel: undefined
+  PersonalizationOtherObjective: undefined;
+  OnboardingCheckInStart: undefined;
+  OnboardingCheckInHowDoYouFeel: undefined;
   OnboardingCheckInHowDoYouFeelDetails: { mood: number };
-  OnboardingCheckInSleep: undefined
+  OnboardingCheckInSleep: undefined;
   OnboardingCheckInMoodSummary: {
-    mood: number,
-    selectedMoods: string[],
-  }
-  OnboardingCheckInIntroductionCompleted: undefined
+    mood: number;
+    selectedMoods: string[];
+  };
+  OnboardingCheckInIntroductionCompleted: undefined;
   OnboardingLoadingScreen: undefined;
   OnboardingChooseIndicator: {
-    skippedScreen?: 'PersonalizationStart' | 'PersonalizationDifficulties'
-  }
-  OnboardingReminder: undefined
-  StartFirstSurvey: undefined,
-  CheckInSleepCompleted: undefined,
-  OnboardingChooseIndicatorIntro: undefined,
-  SubCategoriesScreen: undefined,
-  'day-survey': {
-    currentSurvey: {},
-    editingSurvey: boolean,
-    isOnboarding: boolean
-  },
-  'day-survey-v2': {
-    currentSurvey: {},
-    editingSurvey: boolean,
-    isOnboarding: boolean
-  }
+    skippedScreen?: "PersonalizationStart" | "PersonalizationDifficulties";
+  };
+  OnboardingReminder: undefined;
+  StartFirstSurvey: undefined;
+  CheckInSleepCompleted: undefined;
+  OnboardingChooseIndicatorIntro: undefined;
+  SubCategoriesScreen: undefined;
+  "day-survey": {
+    currentSurvey: {};
+    editingSurvey: boolean;
+    isOnboarding: boolean;
+  };
+  "day-survey-v2": {
+    currentSurvey: {};
+    editingSurvey: boolean;
+    isOnboarding: boolean;
+  };
 };
 
 export type OnboardingV2ScreenProps<T extends keyof OnboardingV2StackParamList> = {

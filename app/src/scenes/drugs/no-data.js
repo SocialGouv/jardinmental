@@ -19,10 +19,10 @@ export default ({ navigation, route }) => {
       diaryData,
       navigation,
     });
-    if (route.params?.previous === 'checklist') {
+    if (route.params?.previous === "checklist") {
       navigation.goBack();
     } else {
-      navigation.navigate('tabs')
+      navigation.navigate("tabs");
     }
   };
   const handleDrugInformation = async () => {
@@ -32,25 +32,15 @@ export default ({ navigation, route }) => {
   return (
     <View>
       <Text style={styles.subtitle}>
-        Je suis chaque jour mes <Text style={styles.lightblue}>prises</Text> de{" "}
-        <Text style={styles.lightblue}>traitement</Text>, cela me permet de{" "}
-        <Text style={styles.lightblue}>comprendre</Text> comment il influe mon{" "}
-        <Text style={styles.lightblue}>état</Text>
+        Je suis chaque jour mes <Text style={styles.lightblue}>prises</Text> de <Text style={styles.lightblue}>traitement</Text>, cela me permet de{" "}
+        <Text style={styles.lightblue}>comprendre</Text> comment il influe mon <Text style={styles.lightblue}>état</Text>
       </Text>
-      <JMButton
-        onPress={() => navigation.navigate("drugs-list")}
-        title="Ajouter un traitement"
-        className={'mt-6 mb-2'}
-      />
+      <JMButton onPress={() => navigation.navigate("drugs-list")} title="Ajouter un traitement" className={"mt-6 mb-2"} />
       <TouchableOpacity onPress={handleDrugInformation}>
         <Text style={styles.link}>Informations sur les traitements</Text>
       </TouchableOpacity>
 
-      <JMButton
-        variant="outline"
-        onPress={handleNoTreatment}
-        title="Je ne prends pas de traitement"
-      />
+      <JMButton variant="outline" onPress={handleNoTreatment} title="Je ne prends pas de traitement" />
     </View>
   );
 };

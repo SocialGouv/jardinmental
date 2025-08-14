@@ -1,18 +1,18 @@
-import React, {useEffect, useState} from 'react';
-import {StyleSheet, View, ScrollView, TouchableOpacity, Keyboard, TextInput} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import React, { useEffect, useState } from "react";
+import { StyleSheet, View, ScrollView, TouchableOpacity, Keyboard, TextInput } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-import BackButton from '../../../components/BackButton';
-import {colors} from '../../../utils/colors';
-import {INDICATEURS} from '../../../utils/liste_indicateurs.1';
-import Button from '../../../components/Button';
-import Text from '../../../components/MyText';
-import localStorage from '../../../utils/localStorage';
-import logEvents from '../../../services/logEvents';
-import {useFocusEffect} from '@react-navigation/native';
+import BackButton from "../../../components/BackButton";
+import { colors } from "../../../utils/colors";
+import { INDICATEURS } from "../../../utils/liste_indicateurs.1";
+import Button from "../../../components/Button";
+import Text from "../../../components/MyText";
+import localStorage from "../../../utils/localStorage";
+import logEvents from "../../../services/logEvents";
+import { useFocusEffect } from "@react-navigation/native";
 
 const CreateIndicator = ({ navigation, route }) => {
-  const [nameNewIndicator, setNameNewIndicator] = useState('');
+  const [nameNewIndicator, setNameNewIndicator] = useState("");
   const [userIndicateurs, setUserIndicateurs] = useState();
   const [error, setError] = useState();
 
@@ -23,13 +23,13 @@ const CreateIndicator = ({ navigation, route }) => {
       return;
     }
 
-    if (userIndicateurs && userIndicateurs.some(indicateur => indicateur.name?.toLowerCase() === _value?.toLowerCase())) return setError(true);
+    if (userIndicateurs && userIndicateurs.some((indicateur) => indicateur.name?.toLowerCase() === _value?.toLowerCase())) return setError(true);
 
-    if (INDICATEURS.some(indicateur => indicateur.name?.toLowerCase() === _value?.toLowerCase())) return setError(true);
+    if (INDICATEURS.some((indicateur) => indicateur.name?.toLowerCase() === _value?.toLowerCase())) return setError(true);
 
     // await localStorage.addCustomSymptoms(value);
     logEvents.logCustomSymptomAdd();
-    navigation.push('CHOOSE_INDICATOR_TYPE', {nameNewIndicator: _value});
+    navigation.push("CHOOSE_INDICATOR_TYPE", { nameNewIndicator: _value });
   };
 
   useFocusEffect(
@@ -40,7 +40,7 @@ const CreateIndicator = ({ navigation, route }) => {
           setUserIndicateurs(user_indicateurs);
         }
       })();
-    }, []),
+    }, [])
   );
 
   return (
@@ -56,13 +56,13 @@ const CreateIndicator = ({ navigation, route }) => {
         <Text style={styles.label}>Comment souhaitez-vous appeler votre nouvel indicateur ?</Text>
 
         <TextInput
-          onChangeText={e => {
+          onChangeText={(e) => {
             setNameNewIndicator(e);
             setError(false);
           }}
           autoFocus={true}
           value={nameNewIndicator}
-          placeholder={'Entrez le nom de votre indicateur'}
+          placeholder={"Entrez le nom de votre indicateur"}
           placeholderTextColor="lightgrey"
           style={styles.textInput}
         />
@@ -70,14 +70,16 @@ const CreateIndicator = ({ navigation, route }) => {
         {error ? (
           <View className="border border-red-400 bg-red-50 rounded-lg px-3 py-2 mb-5">
             <Text className="text-gray-900">Il existe déjà un indicateur qui porte le nom "{nameNewIndicator?.trim()}".</Text>
-            <Text className="text-gray-900">S'il est inactif, vous pouvez le réactiver dans la liste des "anciens indicateurs" ou depuis la liste d&apos;exemples.</Text>
+            <Text className="text-gray-900">
+              S'il est inactif, vous pouvez le réactiver dans la liste des "anciens indicateurs" ou depuis la liste d&apos;exemples.
+            </Text>
           </View>
         ) : null}
 
         {nameNewIndicator.length > 0 && (
           <Button
-            buttonStyle={{backgroundColor: colors.LIGHT_BLUE, marginBottom: 20}}
-            textStyle={{color: 'white', textAlign: 'center'}}
+            buttonStyle={{ backgroundColor: colors.LIGHT_BLUE, marginBottom: 20 }}
+            textStyle={{ color: "white", textAlign: "center" }}
             onPress={() => {
               handleAddNewIndicator();
             }}
@@ -104,40 +106,40 @@ const styles = StyleSheet.create({
 
   safe: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: "white",
   },
   container: {
     paddingHorizontal: 20,
-    backgroundColor: 'white',
+    backgroundColor: "white",
   },
 
   headerText: {
     color: colors.BLUE,
     fontSize: 19,
-    fontWeight: '700',
+    fontWeight: "700",
   },
   header: {
     height: 60,
   },
   headerBackButton: {
-    position: 'absolute',
+    position: "absolute",
     zIndex: 1,
   },
   headerTextContainer: {
-    height: '100%',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+    height: "100%",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
   },
   personnalizeContainer: {
-    backgroundColor: 'rgba(31,198,213,0.2)',
+    backgroundColor: "rgba(31,198,213,0.2)",
     borderColor: colors.LIGHT_BLUE,
     borderWidth: 0.5,
     borderRadius: 10,
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     padding: 15,
     paddingRight: 20,
   },
@@ -148,7 +150,7 @@ const styles = StyleSheet.create({
   personnalizeTitle: {
     color: colors.BLUE,
     fontSize: 14,
-    fontWeight: '700',
+    fontWeight: "700",
     flex: 1,
     marginBottom: 5,
   },
@@ -159,10 +161,10 @@ const styles = StyleSheet.create({
   },
 
   sectionRowContainer: {
-    width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "center",
     paddingVertical: 10,
     marginTop: 30,
   },
@@ -172,28 +174,28 @@ const styles = StyleSheet.create({
     width: 35,
     height: 35,
     marginLeft: 15,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   circleText: {
-    color: '#fff',
-    fontWeight: '700',
+    color: "#fff",
+    fontWeight: "700",
     fontSize: 18,
   },
 
   indicatorItem: {
-    width: '100%',
-    backgroundColor: '#F8F9FB',
+    width: "100%",
+    backgroundColor: "#F8F9FB",
     borderColor: colors.LIGHT_BLUE,
     borderWidth: 1,
     borderRadius: 10,
-    borderColor: '#E7EAF1',
+    borderColor: "#E7EAF1",
     padding: 20,
     marginBottom: 12,
   },
 
   bottomButtonsContainer: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     padding: 20,
   },
 });

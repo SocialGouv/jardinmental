@@ -1,39 +1,39 @@
-import React, {createContext, useCallback, useContext, useState} from 'react';
-import Animated, {Easing, interpolate, runOnJS, useAnimatedStyle, useSharedValue, withTiming} from 'react-native-reanimated';
-import {Pressable, ScrollView, StyleSheet, View} from 'react-native';
-import {BlurView} from '@react-native-community/blur';
-import {useLayout} from '@react-native-community/hooks';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {Button2} from '../../components/Button2';
-import Svg, {Path} from 'react-native-svg';
-import Lottie from 'lottie-react-native';
-import localStorage from '../../utils/localStorage';
-import Text from '../../components/MyText';
+import React, { createContext, useCallback, useContext, useState } from "react";
+import Animated, { Easing, interpolate, runOnJS, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
+import { Pressable, ScrollView, StyleSheet, View } from "react-native";
+import { BlurView } from "@react-native-community/blur";
+import { useLayout } from "@react-native-community/hooks";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Button2 } from "../../components/Button2";
+import Svg, { Path } from "react-native-svg";
+import Lottie from "lottie-react-native";
+import localStorage from "../../utils/localStorage";
+import Text from "../../components/MyText";
 
 const latestChanges = {
   appversion: 214,
   content: [
-    {title: '🔔 Notifications améliorées !'},
+    { title: "🔔 Notifications améliorées !" },
     {
       paragraph: `Bonne nouvelle ! Le système des notifications de rappel a été corrigé ! Pensez à les reprogrammer via le menu "Paramètres"`,
     },
   ],
   button: {
-    title: 'Génial !',
+    title: "Génial !",
   },
 };
 
-const STORAGE_LATEST_CHANGES_DISPLAYED = 'LATEST_CHANGES_DISPLAYED';
+const STORAGE_LATEST_CHANGES_DISPLAYED = "LATEST_CHANGES_DISPLAYED";
 
 const LatestChangesModalContext = createContext();
 
 export const useLatestChangesModal = () => useContext(LatestChangesModalContext);
 
-export const LatestChangesModalProvider = ({children}) => {
+export const LatestChangesModalProvider = ({ children }) => {
   const [visible, setVisible] = useState(false);
 
-  const {onLayout: onAreaLayout, ...areaLayout} = useLayout();
-  const {onLayout: onContentLayout, ...contentLayout} = useLayout();
+  const { onLayout: onAreaLayout, ...areaLayout } = useLayout();
+  const { onLayout: onContentLayout, ...contentLayout } = useLayout();
 
   const visibleAnim = useSharedValue(0);
   const opacityAnimStyle = useAnimatedStyle(() => {
@@ -44,7 +44,7 @@ export const LatestChangesModalProvider = ({children}) => {
   const translateAnimStyle = useAnimatedStyle(() => {
     const translateY = interpolate(visibleAnim.value, [0, 1], [-1000, 0]);
     return {
-      transform: [{translateY}],
+      transform: [{ translateY }],
     };
   });
 
@@ -60,13 +60,13 @@ export const LatestChangesModalProvider = ({children}) => {
 
     if (shouldDisplay) {
       setVisible(true);
-      visibleAnim.value = withTiming(1, {duration: 300, easing: Easing.out(Easing.quad)});
+      visibleAnim.value = withTiming(1, { duration: 300, easing: Easing.out(Easing.quad) });
     }
     await AsyncStorage.setItem(STORAGE_LATEST_CHANGES_DISPLAYED, latestChanges.appversion.toString());
   }, []);
 
   const hide = useCallback(() => {
-    visibleAnim.value = withTiming(0, {duration: 300, easing: Easing.in(Easing.quad)}, () => {
+    visibleAnim.value = withTiming(0, { duration: 300, easing: Easing.in(Easing.quad) }, () => {
       runOnJS(setVisible)(false);
     });
   }, []);
@@ -83,19 +83,20 @@ export const LatestChangesModalProvider = ({children}) => {
       {visible && (
         <Animated.View style={[styles.container, opacityAnimStyle]}>
           <BlurView style={styles.blur} blurType="dark" blurAmount={6} reducedTransparencyFallbackColor="black" />
-          <Pressable onPress={hide} style={{flex: 1}} />
+          <Pressable onPress={hide} style={{ flex: 1 }} />
           <Animated.View style={[styles.frameArea, translateAnimStyle]} pointerEvents="box-none" onLayout={onAreaLayout}>
-            <View style={[styles.frameContainer, {height: contentLayout?.height + 110 + 80}]}>
+            <View style={[styles.frameContainer, { height: contentLayout?.height + 110 + 80 }]}>
               <View style={[styles.headerContainer]}>
                 <Svg
                   style={{
-                    position: 'absolute',
+                    position: "absolute",
                     top: 0,
                     left: 0,
                     right: 0,
                     bottom: 0,
                   }}
-                  viewBox={`0 0 ${areaLayout?.width || 320} 110`}>
+                  viewBox={`0 0 ${areaLayout?.width || 320} 110`}
+                >
                   <Path
                     style="stroke-linecap:round;stroke-linejoin:round"
                     fill="#5D71BD"
@@ -103,11 +104,11 @@ export const LatestChangesModalProvider = ({children}) => {
                   />
                 </Svg>
                 <Text style={[styles.headerTitle]}>Nouveautés !</Text>
-                <Lottie source={require('../../../assets/lottiefiles/54953-confetti.json')} style={styles.lottieAnim} autoPlay loop />
+                <Lottie source={require("../../../assets/lottiefiles/54953-confetti.json")} style={styles.lottieAnim} autoPlay loop />
               </View>
               <ScrollView bounces={contentLayout.height > areaLayout.height}>
                 <View style={[styles.contentContainer]} onLayout={onContentLayout}>
-                  {latestChanges?.content?.map(item => (
+                  {latestChanges?.content?.map((item) => (
                     <>
                       {item?.title ? <Text className="text-black text-base font-bold mt-5">{item?.title}</Text> : null}
                       {item?.paragraph ? (
@@ -130,81 +131,81 @@ export const LatestChangesModalProvider = ({children}) => {
 
 const styles = StyleSheet.create({
   container: {
-    position: 'absolute',
+    position: "absolute",
     top: 0,
     bottom: 0,
     left: 0,
     right: 0,
   },
   blur: {
-    position: 'absolute',
+    position: "absolute",
     top: 0,
     bottom: 0,
     left: 0,
     right: 0,
   },
   frameArea: {
-    position: 'absolute',
+    position: "absolute",
     top: 35,
     bottom: 35,
     left: 35,
     right: 35,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   frameContainer: {
-    backgroundColor: '#FFF',
+    backgroundColor: "#FFF",
     borderRadius: 10,
-    overflow: 'hidden',
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-    maxHeight: '100%',
-    width: '100%',
+    overflow: "hidden",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    maxHeight: "100%",
+    width: "100%",
   },
   headerContainer: {
-    width: '100%',
+    width: "100%",
     height: 110,
   },
   headerTitle: {
-    fontFamily: 'SourceSans3',
+    fontFamily: "SourceSans3",
     fontSize: 16,
-    fontWeight: '700',
+    fontWeight: "700",
     marginTop: 24,
-    color: 'white',
-    textAlign: 'center',
-    alignSelf: 'center',
+    color: "white",
+    textAlign: "center",
+    alignSelf: "center",
   },
   lottieAnim: {
-    position: 'absolute',
+    position: "absolute",
     width: 124,
     height: 150,
     bottom: -10,
-    alignSelf: 'center',
+    alignSelf: "center",
   },
   contentContainer: {
     paddingHorizontal: 19,
   },
   buttonContainer: {
-    width: '100%',
+    width: "100%",
     paddingHorizontal: 19,
     height: 80,
-    alignItems: 'flex-end',
-    justifyContent: 'center',
+    alignItems: "flex-end",
+    justifyContent: "center",
   },
   title: {
-    fontFamily: 'SourceSans3',
-    color: 'black',
+    fontFamily: "SourceSans3",
+    color: "black",
     fontSize: 16,
-    fontWeight: '700',
+    fontWeight: "700",
     marginTop: 19,
     paddingLeft: 16,
-    textAlign: 'left',
+    textAlign: "left",
   },
   paragraph: {
-    fontFamily: 'SourceSans3',
-    color: 'black',
+    fontFamily: "SourceSans3",
+    color: "black",
     fontSize: 15,
-    fontWeight: '400',
+    fontWeight: "400",
     marginTop: 17,
   },
 });

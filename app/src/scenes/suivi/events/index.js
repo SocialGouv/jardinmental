@@ -136,8 +136,7 @@ const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, 
         <View style={styles.subtitleContainer}>
           <Icon icon="InfoSvg" width={25} height={25} color={colors.LIGHT_BLUE} />
           <Text style={styles.subtitle}>
-            Des <Text style={styles.bold}>Évènements</Text> apparaîtront au fur et à mesure de vos saisies
-            quotidiennes.
+            Des <Text style={styles.bold}>Évènements</Text> apparaîtront au fur et à mesure de vos saisies quotidiennes.
           </Text>
         </View>
         <JMButton title="Commencer à saisir" onPress={startSurvey} />
@@ -163,8 +162,7 @@ const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, 
         <View style={styles.dataContainer}>
           {memoizedCallback()?.filter((x) => x.date)?.length === 0 && (
             <Text style={styles.noDataMessage}>
-              Aucun évènement à afficher entre {renderDate(formatDay(fromDate))} et{" "}
-              {renderDate(formatDay(toDate))}.
+              Aucun évènement à afficher entre {renderDate(formatDay(fromDate))} et {renderDate(formatDay(toDate))}.
             </Text>
           )}
           {memoizedCallback()
@@ -175,15 +173,7 @@ const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, 
               return bd.localeCompare(ad);
             })
             ?.map((d) => {
-              return (
-                <Card
-                  key={d.date}
-                  event={event}
-                  date={d.date}
-                  context={d.CONTEXT}
-                  userComment={d.USER_COMMENT}
-                />
-              );
+              return <Card key={d.date} event={event} date={d.date} context={d.CONTEXT} userComment={d.USER_COMMENT} />;
             })}
         </View>
       </ScrollView>

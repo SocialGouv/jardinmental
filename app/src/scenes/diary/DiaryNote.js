@@ -104,22 +104,10 @@ const DiaryNote = ({ note, date }) => {
             logEvents.logEditNoteDiary();
           }}
         />
-        <Button
-          icon="toggle"
-          visible={textIsLong && !editMode}
-          onPress={() => setToggled((e) => !e)}
-          isToggled={toggled}
-        />
+        <Button icon="toggle" visible={textIsLong && !editMode} onPress={() => setToggled((e) => !e)} isToggled={toggled} />
       </View>
       <View style={styles.bottomButtonsContainer}>
-        <Button
-          icon="bin"
-          iconColor="#D9605C"
-          borderColor="#D9605C"
-          backgroundColor="#ffe1e0"
-          visible={editMode}
-          onPress={pressDelete}
-        />
+        <Button icon="bin" iconColor="#D9605C" borderColor="#D9605C" backgroundColor="#ffe1e0" visible={editMode} onPress={pressDelete} />
         <Button
           icon="validate"
           visible={editMode}

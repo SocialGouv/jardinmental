@@ -10,16 +10,7 @@ import { typography } from "@/utils/typography";
 import { mergeClassNames } from "@/utils/className";
 import ToggleButtons from "@/components/ToggleButton";
 
-const QuestionYesNo = ({
-  question,
-  explanation,
-  onPress,
-  selected,
-  isLast,
-  showUserCommentInput = true,
-  onChangeUserComment,
-  userComment,
-}) => {
+const QuestionYesNo = ({ question, explanation, onPress, selected, isLast, showUserCommentInput = true, onChangeUserComment, userComment }) => {
   const [showExplanation, setShowExplanation] = useState(false);
   const toggleShowExplanation = async () => {
     setShowExplanation((prev) => !prev);
@@ -43,17 +34,11 @@ const QuestionYesNo = ({
       <TouchableOpacity onPress={toggleShowExplanation}>
         <View style={styles.questionHeader}>
           {explanation ? (
-            <Icon
-              icon="InfoSvg"
-              width={25}
-              height={25}
-              color={colors.LIGHT_BLUE}
-              styleContainer={{ width: 25, height: 25 }}
-            />
+            <Icon icon="InfoSvg" width={25} height={25} color={colors.LIGHT_BLUE} styleContainer={{ width: 25, height: 25 }} />
           ) : (
             <View />
           )}
-          <Text className={mergeClassNames(typography.textMdMedium, 'text-brand-950')}>{question.label}</Text>
+          <Text className={mergeClassNames(typography.textMdMedium, "text-brand-950")}>{question.label}</Text>
           {/* we put a view here because we'll add a item here later */}
           <View />
         </View>
@@ -70,8 +55,8 @@ const QuestionYesNo = ({
             onPressLeft={() => {
               onPress({ key: question.id, value: true });
             }}
-            leftText={'Oui'}
-            rightText={'Non'}
+            leftText={"Oui"}
+            rightText={"Non"}
             onPressRight={() => {
               onPress({ key: question.id, value: false });
               // if the user choose no, we clean the text input
@@ -93,8 +78,8 @@ const QuestionYesNo = ({
             placeholder="Exemple: alcool, cannabis, tabac..."
             style={styles.textArea}
             textAlignVertical={"top"}
-          // onFocus={() => setInputFocused(true)}
-          // onBlur={() => setInputFocused(false)}
+            // onFocus={() => setInputFocused(true)}
+            // onBlur={() => setInputFocused(false)}
           />
         ) : null}
       </View>

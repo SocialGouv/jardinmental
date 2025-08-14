@@ -5,14 +5,7 @@ import RoundButtonIcon from "../../../components/RoundButtonIcon";
 import AjoutIndicateurPerso from "./AjoutIndicateurPerso";
 import { TW_COLORS } from "@/utils/constants";
 
-const CategorieElements = ({
-  title,
-  options,
-  onClick,
-  indicateursSelection,
-  handleAddNewSymptom,
-  enableAddNewElement,
-}) => {
+const CategorieElements = ({ title, options, onClick, indicateursSelection, handleAddNewSymptom, enableAddNewElement }) => {
   const [listeComplementaire, setListeComplementaire] = React.useState([]);
   return (
     <>

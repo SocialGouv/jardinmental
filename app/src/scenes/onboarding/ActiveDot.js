@@ -1,6 +1,6 @@
-import React from 'react';
-import {View, StyleSheet} from 'react-native';
-import { colors } from '@/utils/colors';
+import React from "react";
+import { View, StyleSheet } from "react-native";
+import { colors } from "@/utils/colors";
 
 const ActiveDot = () => <View style={styles.activeDot} />;
 

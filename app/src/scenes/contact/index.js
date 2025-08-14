@@ -1,12 +1,12 @@
-import React, {useState} from 'react';
-import {View, TouchableOpacity, StyleSheet, ScrollView, Image, Linking} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import Text from '../../components/MyText';
-import {colors} from '../../utils/colors';
-import BackButton from '../../components/BackButton';
-import NPS from '../../services/NPS/NPS';
+import React, { useState } from "react";
+import { View, TouchableOpacity, StyleSheet, ScrollView, Image, Linking } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import Text from "../../components/MyText";
+import { colors } from "../../utils/colors";
+import BackButton from "../../components/BackButton";
+import NPS from "../../services/NPS/NPS";
 
-export default ({navigation}) => {
+export default ({ navigation }) => {
   const [NPSvisible, setNPSvisible] = useState(false);
 
   return (
@@ -14,19 +14,19 @@ export default ({navigation}) => {
       <NPS forceView={NPSvisible} close={() => setNPSvisible(false)} />
       <View style={styles.headerContainer}>
         <BackButton onPress={navigation.goBack} />
-        <Image style={styles.image} source={require('../../../assets/imgs/logo2.png')} />
+        <Image style={styles.image} source={require("../../../assets/imgs/logo2.png")} />
       </View>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.paragraph}>
           <Text style={styles.standardText}>Pour plus d'informations rendez-vous sur notre site :</Text>
-          <TouchableOpacity onPress={() => Linking.openURL('https://jardinmental.fabrique.social.gouv.fr/')}>
+          <TouchableOpacity onPress={() => Linking.openURL("https://jardinmental.fabrique.social.gouv.fr/")}>
             <Text style={styles.link}>jardinmental.fr</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.paragraph}>
           <Text style={styles.standardText}>Afin d'améliorer Jardin Mental, nous serions ravis d'échanger avec vous :</Text>
           {/* // todo mailto */}
-          <TouchableOpacity onPress={() => Linking.openURL('mailto:monsuivipsy@fabrique.social.gouv.fr')}>
+          <TouchableOpacity onPress={() => Linking.openURL("mailto:monsuivipsy@fabrique.social.gouv.fr")}>
             <Text style={styles.link}>monsuivipsy@fabrique.social.gouv.fr</Text>
           </TouchableOpacity>
         </View>
@@ -38,8 +38,8 @@ export default ({navigation}) => {
         </View>
         <View style={styles.paragraph}>
           <Text style={styles.bottomNote}>
-            Jardin Mental est une application développée avec des professionnels de santé. Néanmoins, les entretiens proposés ont uniquement pour objectif d'améliorer
-            l'application. Ils ne sauraient se substituer à une consultation.{'\n\n'}En cas d'urgence contactez le 15.
+            Jardin Mental est une application développée avec des professionnels de santé. Néanmoins, les entretiens proposés ont uniquement pour
+            objectif d'améliorer l'application. Ils ne sauraient se substituer à une consultation.{"\n\n"}En cas d'urgence contactez le 15.
           </Text>
         </View>
       </ScrollView>
@@ -54,10 +54,10 @@ const styles = StyleSheet.create({
     marginVertical: 15,
   },
   headerContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     paddingRight: 20,
   },
   image: {
@@ -66,26 +66,26 @@ const styles = StyleSheet.create({
   },
   safe: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: "white",
   },
   scrollContainer: {
     paddingBottom: 80,
-    display: 'flex',
-    alignItems: 'center',
+    display: "flex",
+    alignItems: "center",
   },
   standardText: {
     fontSize: 18,
     color: colors.DARK_BLUE,
-    textAlign: 'center',
+    textAlign: "center",
   },
   link: {
     color: colors.LIGHT_BLUE,
-    textDecorationLine: 'underline',
+    textDecorationLine: "underline",
     fontSize: 18,
-    textAlign: 'center',
+    textAlign: "center",
   },
   bottomNote: {
-    color: '#878797',
-    textAlign: 'center',
+    color: "#878797",
+    textAlign: "center",
   },
 });

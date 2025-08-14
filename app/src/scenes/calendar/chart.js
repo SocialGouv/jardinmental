@@ -72,15 +72,7 @@ const Chart = ({ indicateur, onPress, title, data = [], lines = 5, withFocus = f
               if (data[index - 1] === null) {
                 return null;
               }
-              return (
-                <Line
-                  key={`${value}${index}`}
-                  x1={dotsX[index - 1]}
-                  y1={dotsY[data[index - 1]]}
-                  x2={dotsX[index]}
-                  y2={dotsY[data[index]]}
-                />
-              );
+              return <Line key={`${value}${index}`} x1={dotsX[index - 1]} y1={dotsY[data[index - 1]]} x2={dotsX[index]} y2={dotsY[data[index]]} />;
             })}
             {data.map((value, index) => {
               if (value === null) {

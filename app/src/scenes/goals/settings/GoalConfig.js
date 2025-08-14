@@ -83,14 +83,7 @@ export const GoalConfig = ({ navigation, route }) => {
         header={{
           title: !editing ? "Créer un objectif" : "Mon objectif",
         }}
-        bottomChildren={
-          <JMButton
-            fill
-            title={!editing ? "Créer mon objectif" : "Valider"}
-            onPress={onValidate}
-            loading={loading}
-          />
-        }
+        bottomChildren={<JMButton fill title={!editing ? "Créer mon objectif" : "Valider"} onPress={onValidate} loading={loading} />}
       >
         {!editing ? (
           <>

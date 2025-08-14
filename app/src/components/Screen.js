@@ -31,9 +31,7 @@ export const Screen = ({
 
   return (
     <ContainerComponent style={[styles.container, _containerStyle, containerStyle]}>
-      {header && (
-        <ScreenHeader marginHorizontal={marginHorizontal} withoutInsets={withoutInsets} {...header} />
-      )}
+      {header && <ScreenHeader marginHorizontal={marginHorizontal} withoutInsets={withoutInsets} {...header} />}
 
       <ScreenKeyboardAvoidingView>
         <ScrollComponent
@@ -44,18 +42,12 @@ export const Screen = ({
           bounces={true}
           keyboardDismissMode="on-drag"
           {...((ScrollComponent === FlatList || scrollAsFlatList) && {
-            ListHeaderComponent: (
-              <ScreenContent
-                {...{ children, marginHorizontal, centerContentVertically, contentContainerStyle }}
-              />
-            ),
+            ListHeaderComponent: <ScreenContent {...{ children, marginHorizontal, centerContentVertically, contentContainerStyle }} />,
           })}
           {...scrollProps}
         >
           {ScrollComponent !== FlatList && !scrollAsFlatList && (
-            <ScreenContent
-              {...{ children, marginHorizontal, centerContentVertically, contentContainerStyle }}
-            />
+            <ScreenContent {...{ children, marginHorizontal, centerContentVertically, contentContainerStyle }} />
           )}
         </ScrollComponent>
       </ScreenKeyboardAvoidingView>

@@ -1,20 +1,9 @@
-import React, {useState} from 'react';
-import {
-  StyleSheet,
-  View,
-  TouchableOpacity,
-  TextInput,
-  Keyboard,
-} from 'react-native';
-import {colors} from '../utils/colors';
-import CircledIcon from './CircledIcon';
+import React, { useState } from "react";
+import { StyleSheet, View, TouchableOpacity, TextInput, Keyboard } from "react-native";
+import { colors } from "../utils/colors";
+import CircledIcon from "./CircledIcon";
 
-export default ({
-  onChange = console.log,
-  placeholder = 'Ajouter...',
-  styleContainer,
-  onChangeText = console.log,
-}) => {
+export default ({ onChange = console.log, placeholder = "Ajouter...", styleContainer, onChangeText = console.log }) => {
   const [value, setValue] = useState();
 
   return (
@@ -37,9 +26,10 @@ export default ({
           onPress={() => {
             Keyboard.dismiss();
             onChange(value);
-            setValue('');
-            onChangeText('');
-          }}>
+            setValue("");
+            onChangeText("");
+          }}
+        >
           <CircledIcon
             icon="PlusSvg"
             color={colors.LIGHT_BLUE}
@@ -57,33 +47,33 @@ export default ({
 
 const styles = StyleSheet.create({
   iconContainer: {
-    display: 'flex',
-    justifyContent: 'center',
+    display: "flex",
+    justifyContent: "center",
     marginRight: 8,
-    transform: [{rotate: '180deg'}],
+    transform: [{ rotate: "180deg" }],
   },
   inputContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    height: '100%',
+    display: "flex",
+    flexDirection: "row",
+    height: "100%",
     flex: 1,
     borderWidth: 0.5,
-    borderColor: '#D4F0F2',
-    backgroundColor: '#F4FCFD',
+    borderColor: "#D4F0F2",
+    backgroundColor: "#F4FCFD",
     borderRadius: 8,
     color: colors.DARK_BLUE,
   },
   container: {
     marginBottom: 10,
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   text: {
     fontSize: 16,
     paddingVertical: 12,
     paddingHorizontal: 10,
-    textAlign: 'left',
+    textAlign: "left",
     color: colors.DARK_BLUE,
     flex: 1,
   },

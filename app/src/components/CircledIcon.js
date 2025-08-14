@@ -78,8 +78,7 @@ export const BasicIcon = ({
       <Icon width={iconWidth} height={iconHeight} color={iconColor} />
     </View>
   );
-}
-
+};
 
 const CircledIcon = ({
   icon,

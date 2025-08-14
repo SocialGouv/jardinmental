@@ -7,12 +7,12 @@ export interface SurveyContextType {
   userIndicateurs: Indicator[];
   initEditingSurvey: boolean;
   screens: SurveyScreenInterface[];
-  saveAnswerForIndicator: ({ key, value }: { key:string, value: boolean | number}) => void,
-  saveCommentForIndicator: ({ key, userComment }: { key:string, userComment: string}) => void,
-  answers: DiaryDataNewEntryInput['answers'],
+  saveAnswerForIndicator: ({ key, value }: { key: string; value: boolean | number }) => void;
+  saveCommentForIndicator: ({ key, userComment }: { key: string; userComment: string }) => void;
+  answers: DiaryDataNewEntryInput["answers"];
   parentNavigation: any;
   parentRoute: any;
 }
 
 const SurveyContext = React.createContext<SurveyContextType | null>(null);
-export default SurveyContext
+export default SurveyContext;

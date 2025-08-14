@@ -1,14 +1,14 @@
-import React from 'react';
-import {StyleSheet, View, TouchableOpacity} from 'react-native';
-import Text from '../MyText';
-import Button from '../Button';
-import {colors} from '../../utils/colors';
-import {formatDay} from '../../utils/date/helpers';
-import logEvents from '../../services/logEvents';
+import React from "react";
+import { StyleSheet, View, TouchableOpacity } from "react-native";
+import Text from "../MyText";
+import Button from "../Button";
+import { colors } from "../../utils/colors";
+import { formatDay } from "../../utils/date/helpers";
+import logEvents from "../../services/logEvents";
 
-export default ({startAtFirstQuestion, navigation}) => {
+export default ({ startAtFirstQuestion, navigation }) => {
   const onStartPress = () => {
-    logEvents.logFeelingDateChoose('today');
+    logEvents.logFeelingDateChoose("today");
     startAtFirstQuestion(formatDay(new Date()), navigation);
   };
 
@@ -22,8 +22,8 @@ export default ({startAtFirstQuestion, navigation}) => {
           buttonColor="white"
           textColor={colors.BLUE}
           onPress={onStartPress}
-          buttonStyle={{width: '50%', height: 30}}
-          textStyle={{fontSize: 15, fontWeight: 'normal'}}
+          buttonStyle={{ width: "50%", height: 30 }}
+          textStyle={{ fontSize: 15, fontWeight: "normal" }}
         />
       </View>
     </TouchableOpacity>
@@ -35,12 +35,12 @@ const styles = StyleSheet.create({
     backgroundColor: colors.LIGHT_BLUE_TRANS_02,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: '#F4FCFD',
+    borderColor: "#F4FCFD",
     marginBottom: 20,
     padding: 15,
   },
   noDataTitle: {
-    fontWeight: 'bold',
+    fontWeight: "bold",
     color: colors.BLUE,
   },
   noDataText: {

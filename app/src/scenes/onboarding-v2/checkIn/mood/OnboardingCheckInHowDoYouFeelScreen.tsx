@@ -1,43 +1,36 @@
-import React, { useState, useRef, useEffect, useContext, useCallback } from 'react';
-import { View, Text, TouchableOpacity, Platform, Dimensions, FlatList } from 'react-native';
-import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  withSpring,
-  interpolateColor,
-} from 'react-native-reanimated';
+import React, { useState, useRef, useEffect, useContext, useCallback } from "react";
+import { View, Text, TouchableOpacity, Platform, Dimensions, FlatList } from "react-native";
+import Animated, { useSharedValue, useAnimatedStyle, withSpring, interpolateColor } from "react-native-reanimated";
 
-import { OnboardingV2ScreenProps } from '../../types';
-import { TW_COLORS } from '@/utils/constants';
-import NavigationButtons from '@/components/onboarding/NavigationButtons';
-import { beforeToday, formatDay } from '@/utils/date/helpers';
-import { INDICATEURS_HUMEUR } from '@/utils/liste_indicateurs.1';
-import { DiaryDataContext } from '@/context/diaryData';
-import { generateIndicatorFromPredefinedIndicator } from '@/entities/Indicator';
-import BannerHeader from '../../BannerHeader';
-import { moodBackgroundColors, MoodEmoji, moodEmojis } from '@/utils/mood'
-import InstructionText from '../../InstructionText';
-import { SafeAreaViewWithOptionalHeader } from '@/scenes/onboarding/ProgressHeader';
-import { typography } from '@/utils/typography';
-import { mergeClassNames } from '@/utils/className';
-import { useStatusBar } from '@/context/StatusBarContext';
-import { useFocusEffect } from '@react-navigation/native';
+import { OnboardingV2ScreenProps } from "../../types";
+import { TW_COLORS } from "@/utils/constants";
+import NavigationButtons from "@/components/onboarding/NavigationButtons";
+import { beforeToday, formatDay } from "@/utils/date/helpers";
+import { INDICATEURS_HUMEUR } from "@/utils/liste_indicateurs.1";
+import { DiaryDataContext } from "@/context/diaryData";
+import { generateIndicatorFromPredefinedIndicator } from "@/entities/Indicator";
+import BannerHeader from "../../BannerHeader";
+import { moodBackgroundColors, MoodEmoji, moodEmojis } from "@/utils/mood";
+import InstructionText from "../../InstructionText";
+import { SafeAreaViewWithOptionalHeader } from "@/scenes/onboarding/ProgressHeader";
+import { typography } from "@/utils/typography";
+import { mergeClassNames } from "@/utils/className";
+import { useStatusBar } from "@/context/StatusBarContext";
+import { useFocusEffect } from "@react-navigation/native";
 
-const { width: screenWidth } = Dimensions.get('window');
+const { width: screenWidth } = Dimensions.get("window");
 
-
-type Props = OnboardingV2ScreenProps<'OnboardingCheckInHowDoYouFeel'>;
-
+type Props = OnboardingV2ScreenProps<"OnboardingCheckInHowDoYouFeel">;
 
 const springConfig = { damping: 20, stiffness: 80 };
 
-const NextRoute = "OnboardingCheckInSleep"
+const NextRoute = "OnboardingCheckInSleep";
 
 export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
   const [selectedMoodIndex, setSelectedMoodIndex] = useState<number | null>(null);
   const [hasSelectedOnce, setHasSelectedOnce] = useState<boolean>(false);
   const flatListRef = useRef<FlatList>(null);
-  const [loading, setLoading] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(false);
   const [diaryData, addNewEntryToDiaryData] = useContext(DiaryDataContext);
   const { setCustomColor } = useStatusBar();
   const measuredHeight = useSharedValue(0); // Store the measured natural height
@@ -73,7 +66,7 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
       if (selectedMoodIndex !== null) {
         setTimeout(() => {
           setCustomColor(moodBackgroundColors[selectedMoodIndex - 1]);
-        }, 0)
+        }, 0);
       }
 
       return () => {
@@ -84,30 +77,31 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
 
   useEffect(() => {
     if (selectedMoodIndex !== null) {
-      setCustomColor(moodBackgroundColors[selectedMoodIndex - 1])
+      setCustomColor(moodBackgroundColors[selectedMoodIndex - 1]);
     }
-  }, [selectedMoodIndex])
+  }, [selectedMoodIndex]);
 
   const handleComplete = async () => {
     setLoading(true);
     // Sauvegarder les données du check-in
-    const date = formatDay(beforeToday(0))
-    const prev = diaryData[date] || {}
-    const mood = selectedMoodIndex !== null ? selectedMoodIndex - 1 : 2 // default is 2, the midde
-    const key = INDICATEURS_HUMEUR.name
+    const date = formatDay(beforeToday(0));
+    const prev = diaryData[date] || {};
+    const mood = selectedMoodIndex !== null ? selectedMoodIndex - 1 : 2; // default is 2, the midde
+    const key = INDICATEURS_HUMEUR.name;
     const updatedAnswers = {
       ...prev,
       [key]: {
-        ...prev[key], value: mood, _indicateur: generateIndicatorFromPredefinedIndicator(INDICATEURS_HUMEUR)
-      }
-    }
+        ...prev[key],
+        value: mood,
+        _indicateur: generateIndicatorFromPredefinedIndicator(INDICATEURS_HUMEUR),
+      },
+    };
     addNewEntryToDiaryData({
       date,
-      answers: updatedAnswers
+      answers: updatedAnswers,
     });
-    navigation.navigate(NextRoute)
+    navigation.navigate(NextRoute);
     setLoading(false);
-
   };
 
   const scrollToSelectedItem = (moodIndex: number, willHaveSelection: boolean = true) => {
@@ -140,7 +134,7 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
     marginScale.value = withSpring(dynamicPaddingTop, springConfig);
     statusBarColorProgress.value = withSpring(moodIndex / (moodEmojis.length - 1), springConfig);
     textOpacity.value = withSpring(1, springConfig);
-    rotateSelectorProgress.value = withSpring(20, springConfig)
+    rotateSelectorProgress.value = withSpring(20, springConfig);
     // Scroll to center the selected item with improved timing
     if (flatListRef.current) {
       // Use requestAnimationFrame for better timing coordination
@@ -150,8 +144,7 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
           if (wasFirstSelection) {
             setTimeout(() => scrollToSelectedItem(moodIndex + 2, true), 150);
           } else {
-            setTimeout(() =>
-              scrollToSelectedItem(moodIndex + 2, true), 0)
+            setTimeout(() => scrollToSelectedItem(moodIndex + 2, true), 0);
           }
         });
       };
@@ -193,11 +186,7 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
       };
     }
 
-    const color = interpolateColor(
-      statusBarColorProgress.value,
-      [0, 0.25, 0.5, 0.75, 1],
-      moodBackgroundColors
-    );
+    const color = interpolateColor(statusBarColorProgress.value, [0, 0.25, 0.5, 0.75, 1], moodBackgroundColors);
 
     return {
       backgroundColor: color,
@@ -208,34 +197,24 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
     if (selectedMoodIndex === null) {
       return {
         color: TW_COLORS.WHITE,
-        backgroundColor: 'transparent'
+        backgroundColor: "transparent",
       };
     }
 
-    const colors = [
-      TW_COLORS.PRIMARY,
-      TW_COLORS.PRIMARY,
-      TW_COLORS.PRIMARY,
-      TW_COLORS.PRIMARY,
-      TW_COLORS.PRIMARY,
-    ];
+    const colors = [TW_COLORS.PRIMARY, TW_COLORS.PRIMARY, TW_COLORS.PRIMARY, TW_COLORS.PRIMARY, TW_COLORS.PRIMARY];
 
-    const color = interpolateColor(
-      statusBarColorProgress.value,
-      [0, 0.25, 0.5, 0.75, 1],
-      colors
-    );
+    const color = interpolateColor(statusBarColorProgress.value, [0, 0.25, 0.5, 0.75, 1], colors);
 
     return {
       color: color,
-      backgroundColor: 'transparent'
+      backgroundColor: "transparent",
     };
-  })
+  });
 
   const animatedTextStyle = useAnimatedStyle(() => {
     return {
       opacity: textOpacity.value,
-      position: 'absolute',
+      position: "absolute",
       bottom: -100,
       left: 0,
       right: 0,
@@ -255,47 +234,44 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
     );
   };
 
-  const renderMoodSelector = () => (<View>
-    <Animated.View style={animatedScrollViewStyle} className="mb-6">
-      <FlatList
-        ref={flatListRef}
-        data={moodEmojis}
-        renderItem={renderMoodItem}
-        keyExtractor={(item, index) => index.toString()}
-        horizontal={true}
-        scrollEnabled={hasSelectedOnce}
-        showsHorizontalScrollIndicator={false}
-        snapToInterval={screenWidth / 5}
-        snapToAlignment="start" // on ios "center" works
-        decelerationRate="fast"
-        getItemLayout={getItemLayout}
-        onMomentumScrollEnd={onMomentumScrollEnd}
-        contentContainerStyle={{
-          paddingHorizontal: (screenWidth - itemWidth) / 2,
-          paddingVertical: 5,
-          alignItems: 'center',
-        }}
-        style={{
-          width: screenWidth,
-          flexGrow: 0,
-        }}
-      />
-    </Animated.View >
-    {
-      selectedMoodIndex !== null && (
+  const renderMoodSelector = () => (
+    <View>
+      <Animated.View style={animatedScrollViewStyle} className="mb-6">
+        <FlatList
+          ref={flatListRef}
+          data={moodEmojis}
+          renderItem={renderMoodItem}
+          keyExtractor={(item, index) => index.toString()}
+          horizontal={true}
+          scrollEnabled={hasSelectedOnce}
+          showsHorizontalScrollIndicator={false}
+          snapToInterval={screenWidth / 5}
+          snapToAlignment="start" // on ios "center" works
+          decelerationRate="fast"
+          getItemLayout={getItemLayout}
+          onMomentumScrollEnd={onMomentumScrollEnd}
+          contentContainerStyle={{
+            paddingHorizontal: (screenWidth - itemWidth) / 2,
+            paddingVertical: 5,
+            alignItems: "center",
+          }}
+          style={{
+            width: screenWidth,
+            flexGrow: 0,
+          }}
+        />
+      </Animated.View>
+      {selectedMoodIndex !== null && (
         <Animated.View style={animatedTextStyle} className="items-center">
-          <Text
-            className={mergeClassNames(typography.displayMdBold, 'text-brand-900')}
-          >
-            {moodEmojis[selectedMoodIndex - 1]?.label}
-          </Text>
+          <Text className={mergeClassNames(typography.displayMdBold, "text-brand-900")}>{moodEmojis[selectedMoodIndex - 1]?.label}</Text>
         </Animated.View>
       )}
-  </View>
+    </View>
   );
 
   const handleBannerLayout = (event) => {
-    if (measuredHeight.value === 0) { // Only measure once
+    if (measuredHeight.value === 0) {
+      // Only measure once
       const bannerHeight = event.nativeEvent.layout.height;
       measuredHeight.value = bannerHeight;
     }
@@ -306,27 +282,15 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
       <BannerHeader
         animatedStatusBarColor={animatedStatusBarColor}
         animatedTextColor={animatedTextColor}
-        headerTitle='Observation du jour'
-        title={'Comment vous sentez-vous actuellement ?'}
+        headerTitle="Observation du jour"
+        title={"Comment vous sentez-vous actuellement ?"}
         onBannerLayout={handleBannerLayout}
       />
       <View className="flex-1 p-8">
-        <InstructionText>
-          Sélectionnez votre ressenti du moment
-        </InstructionText>
-        <View
-          className="flex-1 p-8 justify-center items-center"
-        >
-          {renderMoodSelector()}
-        </View>
+        <InstructionText>Sélectionnez votre ressenti du moment</InstructionText>
+        <View className="flex-1 p-8 justify-center items-center">{renderMoodSelector()}</View>
       </View>
-      <NavigationButtons
-        onNext={handleComplete}
-        showPrevious={false}
-        loading={loading}
-        nextDisabled={!selectedMoodIndex}
-        nextText="Continuer"
-      />
+      <NavigationButtons onNext={handleComplete} showPrevious={false} loading={loading} nextDisabled={!selectedMoodIndex} nextText="Continuer" />
     </SafeAreaViewWithOptionalHeader>
   );
 };
@@ -367,7 +331,7 @@ const MoodItem = ({
         className="rounded-[16px]"
         style={{
           padding: 2, // this creates space between the border and TouchableOpacity
-          backgroundColor: selected ? TW_COLORS.PRIMARY : 'transparent',
+          backgroundColor: selected ? TW_COLORS.PRIMARY : "transparent",
           marginHorizontal: (screenWidth / 5 - 64) / 2,
         }}
       >
