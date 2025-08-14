@@ -6,17 +6,7 @@ import RNPickerSelect from "react-native-picker-select";
 import Icon from "./Icon";
 import { autoLayoutAnimation } from "../utils/autoLayoutAnimation";
 
-export const SelectInput = ({
-  items,
-  value,
-  onValueChange,
-  placeholder,
-  containerStyle,
-  style,
-  textValueStyle,
-  iconContainerStyle,
-  ...props
-}) => {
+export const SelectInput = ({ items, value, onValueChange, placeholder, containerStyle, style, textValueStyle, iconContainerStyle, ...props }) => {
   const pickerRef = useRef();
   const innerPickerRef = useRef();
 
@@ -34,13 +24,7 @@ export const SelectInput = ({
           <Text style={[styles.textValue, textValueStyle]}>
             {visibleValue ? items.find((item) => item.value === visibleValue)?.label : placeholder}
           </Text>
-          <Icon
-            styleContainer={[styles.iconContainer, iconContainerStyle]}
-            icon="ChevronDownSvg"
-            color={colors.DARK_BLUE}
-            width={15}
-            height={15}
-          />
+          <Icon styleContainer={[styles.iconContainer, iconContainerStyle]} icon="ChevronDownSvg" color={colors.DARK_BLUE} width={15} height={15} />
         </View>
       </TouchableOpacity>
 

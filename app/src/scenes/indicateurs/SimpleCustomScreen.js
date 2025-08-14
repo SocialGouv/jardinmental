@@ -4,7 +4,7 @@ import Button from "../../../components/Button";
 import { onboardingStyles } from "../styles";
 import localStorage from "../../../utils/localStorage";
 import { useFocusEffect } from "@react-navigation/native";
-import { INDICATEURS_LISTE_ONBOARDING_CUSTOM_SIMPLE } from "../../../utils/liste_indicateurs";
+import { INDICATEURS_LISTE_ONBOARDING_CUSTOM_SIMPLE_LIST } from "../../../utils/liste_indicateurs.1";
 import { StickyButtonContainer } from "../StickyButton";
 import { CheckBoxList } from "../CheckBoxList";
 import { OnboardingBackButton } from "../BackButton";
@@ -42,26 +42,19 @@ export const OnboardingSimpleCustomSymptoms = ({ navigation }) => {
       <View style={onboardingStyles.topContainer}>
         <OnboardingBackButton onPress={navigation.goBack} />
       </View>
-      <ScrollView
-        keyboardShouldPersistTaps="handled"
-        style={onboardingStyles.scroll}
-        contentContainerStyle={onboardingStyles.scrollContentContainer}
-      >
+      <ScrollView keyboardShouldPersistTaps="handled" style={onboardingStyles.scroll} contentContainerStyle={onboardingStyles.scrollContentContainer}>
         <View style={onboardingStyles.container}>
           <View style={onboardingStyles.containerTopTitle} key="title">
             <Text style={onboardingStyles.h1}>Que souhaitez-vous suivre ?</Text>
           </View>
           <View style={onboardingStyles.imageContainer} key="image">
-            <Image
-              source={require("../../../../assets/imgs/onboarding/custom-symptoms.png")}
-              style={onboardingStyles.imageSize}
-            />
+            <Image source={require("../../../../assets/imgs/onboarding/custom-symptoms.png")} style={onboardingStyles.imageSize} />
           </View>
           <View style={{ marginBottom: 20 }}>
             <Text style={onboardingStyles.h3}>Vous sentez-vous concerné(e) par :</Text>
           </View>
           <CheckBoxList
-            list={INDICATEURS_LISTE_ONBOARDING_CUSTOM_SIMPLE}
+            list={INDICATEURS_LISTE_ONBOARDING_CUSTOM_SIMPLE_LIST}
             symptomSelection={symptomSelection}
             setSymptomSelection={setSymptomSelection}
           />

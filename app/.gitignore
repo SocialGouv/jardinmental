@@ -95,6 +95,7 @@ buck-out/
 # google services
 **/android/app/google-services.json
 dist
+android
 
 google-services.json
 jardin-mental-firebase-adminsdk-fbsvc-7972c97f2c.json

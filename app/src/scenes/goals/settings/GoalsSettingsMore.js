@@ -11,6 +11,8 @@ import Icon from "../../../components/Icon";
 import DraggableFlatList, { ScaleDecorator } from "react-native-draggable-flatlist";
 import { autoLayoutAnimation } from "../../../utils/autoLayoutAnimation";
 import { confirm } from "../../../utils";
+import { colors } from "@/utils/colors";
+import JMButton from "@/components/JMButton";
 
 export const GoalsSettingsMore = ({ navigation, route }) => {
   const [goals, setGoals] = useState([]);
@@ -72,7 +74,7 @@ export const GoalsSettingsMore = ({ navigation, route }) => {
       header={{
         title: "Mes objectifs",
       }}
-      bottomChildren={<Button2 fill title="Enregistrer" onPress={onValidate} />}
+      bottomChildren={<JMButton variant="primary" title="Enregistrer" onPress={onValidate} />}
       ScrollComponent={DraggableFlatList}
       scrollAsFlatList={true}
       scrollProps={{
@@ -85,10 +87,7 @@ export const GoalsSettingsMore = ({ navigation, route }) => {
         },
       }}
     >
-      <Card
-        title="Modifier mes objectifs"
-        text="Vous pouvez changer l’ordre d’apparition de vos objectifs et/ou les supprimer"
-      />
+      <Card title="Modifier mes objectifs" text="Vous pouvez changer l’ordre d’apparition de vos objectifs et/ou les supprimer" />
       <View style={titleStyles.container}>
         <Title align="left" fill={false}>
           Mes objectifs
@@ -106,20 +105,14 @@ const GoalItem = ({ goal, drag, isActive, index, onRemove }) => {
     <ScaleDecorator>
       <TouchableOpacity onLongPress={drag} disabled={isActive} delayLongPress={100}>
         <View style={[itemStyles.container, isActive && { backgroundColor: "#D4F0F2" }]}>
-          <Icon
-            icon="ReorderSvg"
-            color="#26387C"
-            width="16"
-            height="16"
-            styleContainer={{ width: 16, height: 16 }}
-          />
+          <Icon icon="ReorderSvg" color={colors.BLUE} width="16" height="16" styleContainer={{ width: 16, height: 16 }} />
           <Text style={[itemStyles.label]}>{goal?.label}</Text>
           <Button2
             square
             preset=""
             type="clear"
             icon="DeleteSvg"
-            textStyle={{ color: "#26387C" }}
+            textStyle={{ color: colors.BLUE }}
             style={{ backgroundColor: "#F8F9FB" }}
             iconSize={16}
             onPress={() => onRemove({ goal })}
@@ -143,10 +136,10 @@ const itemStyles = StyleSheet.create({
     alignItems: "center",
   },
   label: {
-    fontFamily: "Karla",
+    fontFamily: "SourceSans3",
     fontWeight: "700",
     fontSize: 16,
-    color: "#26387C",
+    color: colors.BLUE,
     textAlign: "left",
     marginLeft: 16,
     flex: 1,

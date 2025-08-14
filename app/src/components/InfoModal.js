@@ -1,12 +1,4 @@
-import React, {
-  useState,
-  useRef,
-  useCallback,
-  createContext,
-  useContext,
-  forwardRef,
-  useImperativeHandle,
-} from "react";
+import React, { useState, useRef, useCallback, createContext, useContext, forwardRef, useImperativeHandle } from "react";
 import { View, StyleSheet, TouchableOpacity, ScrollView, Pressable } from "react-native";
 import Text from "./MyText";
 import Icon from "./Icon";
@@ -58,13 +50,7 @@ export const InfoButton = forwardRef(({ onPress, containerStyle }, ref) => {
       }}
       style={[containerStyle]}
     >
-      <Icon
-        icon="Info2Svg"
-        width={30}
-        height={30}
-        color={colors.LIGHT_BLUE}
-        styleContainer={{ width: 30, height: 30 }}
-      />
+      <Icon icon="Info2Svg" width={30} height={30} color={colors.LIGHT_BLUE} styleContainer={{ width: 30, height: 30 }} />
     </TouchableOpacity>
   );
 });
@@ -116,12 +102,7 @@ export const InfoModalProvider = ({ children }) => {
 
       {payload && (
         <Animated.View style={[styles.container, opacityAnimStyle]}>
-          <BlurView
-            style={styles.blur}
-            blurType="light"
-            blurAmount={6}
-            reducedTransparencyFallbackColor="white"
-          />
+          <BlurView style={styles.blur} blurType="light" blurAmount={6} reducedTransparencyFallbackColor="white" />
           <Pressable onPress={hide} style={{ flex: 1 }} />
           <View
             style={[
@@ -139,9 +120,7 @@ export const InfoModalProvider = ({ children }) => {
                     ? payload.content
                     : payload.content?.map((item, index) => (
                         <View key={"content_" + index}>
-                          {React.isValidElement(item)
-                            ? item
-                            : typeof item === "string" && <InfoText style={item.style}>{item.text}</InfoText>}
+                          {React.isValidElement(item) ? item : typeof item === "string" && <InfoText style={item.style}>{item.text}</InfoText>}
                         </View>
                       ))}
                 </View>
@@ -154,10 +133,7 @@ export const InfoModalProvider = ({ children }) => {
           </View>
           {payload.position && (
             <>
-              <InfoButton
-                onPress={hide}
-                containerStyle={{ position: "absolute", left: payload.position.x, top: payload.position.y }}
-              />
+              <InfoButton onPress={hide} containerStyle={{ position: "absolute", left: payload.position.x, top: payload.position.y }} />
               <Svg
                 style={{
                   position: "absolute",

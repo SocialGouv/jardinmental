@@ -31,14 +31,7 @@ export const ScreenHeader = ({
   }
 
   return (
-    <View
-      style={[
-        styles.container,
-        { paddingHorizontal: marginHorizontal },
-        !withoutInsets && { paddingTop: insets.top },
-        containerStyle,
-      ]}
-    >
+    <View style={[styles.container, { paddingHorizontal: marginHorizontal }, !withoutInsets && { paddingTop: insets.top }, containerStyle]}>
       <View style={[styles.contentContainer, contentContainerStyle]}>
         {leftButton && <HeaderButton {...leftButton} />}
         {!leftButton && rightButton && <HeaderButtonGhost />}
@@ -86,7 +79,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 18,
-    fontFamily: "Karla",
+    fontFamily: "SourceSans3",
     fontWeight: "700",
     textAlign: "center",
     paddingHorizontal: 4,

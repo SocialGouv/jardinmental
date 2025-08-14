@@ -31,34 +31,8 @@ export const dateWithoutTime = (inputDate, offset = 0) => {
 };
 
 export const days = ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"];
-export const months = [
-  "Janvier",
-  "Février",
-  "Mars",
-  "Avril",
-  "Mai",
-  "Juin",
-  "Juillet",
-  "Août",
-  "Septembre",
-  "Octobre",
-  "Novembre",
-  "Décembre",
-];
-export const shortMonths = [
-  "Jan.",
-  "Fév.",
-  "Mars",
-  "Avr.",
-  "Mai",
-  "Juin",
-  "Juil.",
-  "Août",
-  "Sep.",
-  "Oct.",
-  "Nov.",
-  "Déc.",
-];
+export const months = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
+export const shortMonths = ["Jan.", "Fév.", "Mars", "Avr.", "Mai", "Juin", "Juil.", "Août", "Sep.", "Oct.", "Nov.", "Déc."];
 
 export const getTodaySWeek = (date = new Date()) => {
   const weekDay = date.getDay() === 0 ? 6 : date.getDay() - 1;
@@ -70,9 +44,7 @@ export const getTodaySWeek = (date = new Date()) => {
 export const getArrayOfDates = ({ startDate, numberOfDays = null, reverse = false }) => {
   const parsedStartDate = Date.parse(new Date(startDate));
   const dates = [parsedStartDate];
-  const lastDay = numberOfDays
-    ? parsedStartDate + numberOfDays * oneDay
-    : Date.parse(new Date(formatDay(new Date())));
+  const lastDay = numberOfDays ? parsedStartDate + numberOfDays * oneDay : Date.parse(new Date(formatDay(new Date())));
   let dateAdded = parsedStartDate;
   while (dateAdded < lastDay) {
     dateAdded = dateAdded + oneDay;

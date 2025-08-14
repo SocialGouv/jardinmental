@@ -48,17 +48,8 @@ const TabPicker = ({ onChange, ongletActif = "Frises" }) => {
           }}
           style={[tabStyles.tabButtonContainer]}
         >
-          <View
-            style={[
-              tabStyles.tabButtonContainer,
-              ongletActif === item.label ? tabStyles.tabActif : tabStyles.tabInactif,
-            ]}
-          >
-            <Text
-              style={[tabStyles.button, ongletActif === item.label ? tabStyles.actif : tabStyles.inactif]}
-            >
-              {item.label}
-            </Text>
+          <View style={[tabStyles.tabButtonContainer, ongletActif === item.label ? tabStyles.tabActif : tabStyles.tabInactif]}>
+            <Text style={[tabStyles.button, ongletActif === item.label ? tabStyles.actif : tabStyles.inactif]}>{item.label}</Text>
           </View>
         </TouchableOpacity>
       )}

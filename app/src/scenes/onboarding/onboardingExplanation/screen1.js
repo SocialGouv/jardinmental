@@ -26,10 +26,7 @@ const Explanation = ({ navigation }) => {
       <View style={onboardingStyles.topContainer}>
         <OnboardingBackButton onPress={navigation.goBack} />
       </View>
-      <ScrollView
-        style={onboardingStyles.scroll}
-        contentContainerStyle={onboardingStyles.scrollContentContainer}
-      >
+      <ScrollView style={onboardingStyles.scroll} contentContainerStyle={onboardingStyles.scrollContentContainer}>
         <View style={onboardingStyles.containerCentered}>
           <View style={onboardingStyles.imageContainer}>
             <CheckBoard />
@@ -40,8 +37,7 @@ const Explanation = ({ navigation }) => {
             </View>
             <View style={onboardingStyles.containerBottomText}>
               <Text style={onboardingStyles.presentationText}>
-                Ce sont des ressentis, des pensées ou des manifestations physiques qui vous permettent de
-                comprendre votre état de santé mentale
+                Ce sont des ressentis, des pensées ou des manifestations physiques qui vous permettent de comprendre votre état de santé mentale
               </Text>
             </View>
           </View>

@@ -1,18 +1,18 @@
-import URI from 'urijs';
-import {Alert, Linking, Platform} from 'react-native';
-import NetInfo from '@react-native-community/netinfo';
-import fetchRetry from 'fetch-retry';
+import URI from "urijs";
+import { Alert, Linking, Platform } from "react-native";
+import NetInfo from "@react-native-community/netinfo";
+import fetchRetry from "fetch-retry";
 
-import {SCHEME, HOST, BUILD_NUMBER} from '../config';
-import matomo from './matomo';
-import {generateHMAC} from '../utils/generateHmac';
-import app from '../../app.json';
+import { SCHEME, HOST, BUILD_NUMBER } from "../config";
+import matomo from "./matomo";
+import { generateHMAC } from "../utils/generateHmac";
+import app from "../../app.json";
 
 export const checkNetwork = async (test = false) => {
-  const isConnected = await NetInfo.fetch().then(state => state.isConnected);
+  const isConnected = await NetInfo.fetch().then((state) => state.isConnected);
   if (!isConnected || test) {
-    await new Promise(res => setTimeout(res, 1500));
-    Alert.alert('Pas de réseau', 'Veuillez vérifier votre connexion');
+    await new Promise((res) => setTimeout(res, 1500));
+    Alert.alert("Pas de réseau", "Veuillez vérifier votre connexion");
     return false;
   }
   return true;
@@ -25,22 +25,22 @@ class ApiService {
   getUrl = (path, query) => {
     return new URI().host(this.host).scheme(this.scheme).path(path).setSearch(query).toString();
   };
-  execute = async ({method = 'GET', path = '', query = {}, headers = {}, body = null}) => {
+  execute = async ({ method = "GET", path = "", query = {}, headers = {}, body = null }) => {
     try {
       if (body) {
-        const {signature, timestamp} = generateHMAC(body);
+        const { signature, timestamp } = generateHMAC(body);
         headers = {
           ...headers,
-          'x-signature': signature,
-          'x-timestamp': timestamp,
+          "x-signature": signature,
+          "x-timestamp": timestamp,
         };
       }
       const config = {
         method,
         headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-          appversion: Platform.OS === 'ios' ? app.expo.ios.buildNumber : app.expo.android.versionCode,
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          appversion: Platform.OS === "ios" ? app.expo.ios.buildNumber : app.expo.android.versionCode,
           appdevice: Platform.OS,
           currentroute: this.navigation?.getCurrentRoute?.()?.name,
           ...headers,
@@ -75,15 +75,15 @@ class ApiService {
 
   needUpdate = false;
 
-  get = async args => this.execute({method: 'GET', ...args});
-  post = async args => this.execute({method: 'POST', ...args});
-  put = async args => this.execute({method: 'PUT', ...args});
-  delete = async args => this.execute({method: 'DELETE', ...args});
+  get = async (args) => this.execute({ method: "GET", ...args });
+  post = async (args) => this.execute({ method: "POST", ...args });
+  put = async (args) => this.execute({ method: "PUT", ...args });
+  delete = async (args) => this.execute({ method: "DELETE", ...args });
 
-  handleInAppMessage = inAppMessage => {
+  handleInAppMessage = (inAppMessage) => {
     const [title, subTitle, actions = [], options = {}] = inAppMessage;
     if (!actions || !actions.length) return Alert.alert(title, subTitle);
-    const actionsWithNavigation = actions.map(action => {
+    const actionsWithNavigation = actions.map((action) => {
       if (action.navigate) {
         action.onPress = () => {
           API.navigation.navigate(...action.navigate);

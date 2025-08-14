@@ -1,12 +1,12 @@
-import React, {useState, useEffect} from 'react';
-import {View, StyleSheet, ScrollView, TouchableOpacity, Platform} from 'react-native';
-import Text from '../../components/MyText';
-import {colors} from '../../utils/colors';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {HOST, HMAC_SECRET} from '../../config';
-import app from '../../../app.json';
+import React, { useState, useEffect } from "react";
+import { View, StyleSheet, ScrollView, TouchableOpacity, Platform } from "react-native";
+import Text from "../../components/MyText";
+import { colors } from "../../utils/colors";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { HOST, HMAC_SECRET } from "../../config";
+import app from "../../../app.json";
 
-const CollapsibleSection = ({title, children}) => {
+const CollapsibleSection = ({ title, children }) => {
   const [isExpanded, setIsExpanded] = useState(true);
 
   return (
@@ -20,16 +20,16 @@ const CollapsibleSection = ({title, children}) => {
   );
 };
 
-const DevMode = ({navigation}) => {
+const DevMode = ({ navigation }) => {
   const disableDevMode = async () => {
-    await AsyncStorage.setItem('devMode', 'false');
-    navigation.navigate('tabs');
+    await AsyncStorage.setItem("devMode", "false");
+    navigation.navigate("tabs");
   };
 
   const [deviceId, setDeviceId] = useState(null);
 
   const fetchDeviceId = async () => {
-    const id = await AsyncStorage.getItem('deviceId');
+    const id = await AsyncStorage.getItem("deviceId");
     setDeviceId(id);
   };
   useEffect(() => {
@@ -40,12 +40,12 @@ const DevMode = ({navigation}) => {
     <ScrollView style={styles.container}>
       <CollapsibleSection title="Environment">
         <Text>Host: {HOST}</Text>
-        <Text>HMAC: {HMAC_SECRET ? `...${HMAC_SECRET.slice(-5)}` : 'empty'}</Text>
+        <Text>HMAC: {HMAC_SECRET ? `...${HMAC_SECRET.slice(-5)}` : "empty"}</Text>
       </CollapsibleSection>
 
       <CollapsibleSection title="App Version">
         <Text>Version: {app.expo.version}</Text>
-        <Text>Build: {Platform.OS === 'ios' ? app.expo.ios.buildNumber : app.expo.android.versionCode}</Text>
+        <Text>Build: {Platform.OS === "ios" ? app.expo.ios.buildNumber : app.expo.android.versionCode}</Text>
       </CollapsibleSection>
 
       <CollapsibleSection title="Local Storage">
@@ -62,12 +62,12 @@ const DevMode = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     padding: 20,
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     color: colors.DARK_BLUE,
     marginBottom: 20,
   },
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 10,
     color: colors.DARK_BLUE,
   },
@@ -84,27 +84,27 @@ const styles = StyleSheet.create({
     backgroundColor: colors.DARK_BLUE,
     padding: 15,
     borderRadius: 8,
-    alignItems: 'center',
+    alignItems: "center",
     marginTop: 20,
   },
   buttonText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   sectionHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     marginBottom: 10,
   },
   arrow: {
     fontSize: 24,
     color: colors.DARK_BLUE,
-    transform: [{rotate: '-90deg'}],
+    transform: [{ rotate: "-90deg" }],
   },
   arrowDown: {
-    transform: [{rotate: '90deg'}],
+    transform: [{ rotate: "90deg" }],
   },
 });
 

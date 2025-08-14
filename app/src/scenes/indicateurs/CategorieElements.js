@@ -11,13 +11,7 @@ const CategorieElements = ({ title, options, onClick, userIndicateurs }) => {
       <TouchableOpacity style={styles.categorieContainer} onPress={() => setIsOpen((e) => !e)}>
         <Text style={styles.categorieTitre}>{title}</Text>
         <View>
-          <RoundButtonIcon
-            icon="toggle"
-            visible
-            onPress={() => setIsOpen((e) => !e)}
-            isToggled={isOpen}
-            medium
-          />
+          <RoundButtonIcon icon="toggle" visible onPress={() => setIsOpen((e) => !e)} isToggled={isOpen} medium />
         </View>
       </TouchableOpacity>
       {isOpen ? (
@@ -25,9 +19,7 @@ const CategorieElements = ({ title, options, onClick, userIndicateurs }) => {
           {(options || [])
             .filter((e) => !e.active)
             .map((option) => {
-              const indicateurSelectionne = userIndicateurs.find(
-                (_ind) => _ind.uuid === option.uuid && _ind.active
-              );
+              const indicateurSelectionne = userIndicateurs.find((_ind) => _ind.uuid === option.uuid && _ind.active);
               return (
                 <View
                   key={`${option.uuid}`}

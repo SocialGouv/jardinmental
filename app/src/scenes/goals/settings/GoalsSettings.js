@@ -9,6 +9,8 @@ import { Title } from "../../../components/Title";
 import { Badge } from "../../../components/Badge";
 import Icon from "../../../components/Icon";
 import { ONBOARDING_STEPS } from "../../../utils/constants";
+import { colors } from "@/utils/colors";
+import JMButton from "@/components/JMButton";
 
 export const GoalsSettings = ({ navigation, route }) => {
   const onboarding = route.params?.onboarding;
@@ -38,18 +40,8 @@ export const GoalsSettings = ({ navigation, route }) => {
       bottomChildren={
         !onboarding ? (
           <>
-            <Button2
-              fill
-              title="Ajouter un objectif"
-              onPress={() => navigation.navigate("goals-add-options")}
-            />
-            <Button2
-              fill
-              preset="secondary"
-              title="Modifier mes objectifs"
-              onPress={() => navigation.navigate("goals-settings-more")}
-              containerStyle={{ marginTop: 12 }}
-            />
+            <JMButton title="Ajouter un objectif" onPress={() => navigation.navigate("goals-add-options")} />
+            <JMButton variant="outline" title="Modifier mes objectifs" onPress={() => navigation.navigate("goals-settings-more")} className="mt-2" />
           </>
         ) : (
           <Button2 fill title="Valider" onPress={() => navigation.navigate(ONBOARDING_STEPS.STEP_REMINDER)} />
@@ -63,11 +55,7 @@ export const GoalsSettings = ({ navigation, route }) => {
       }}
     >
       <Card
-        title={
-          !onboarding
-            ? "Personnaliser mes objectifs"
-            : "Choisissez les jours de vos objectifs et programmez un rappel"
-        }
+        title={!onboarding ? "Personnaliser mes objectifs" : "Choisissez les jours de vos objectifs et programmez un rappel"}
         text={!onboarding && "Gérez vos objectifs et créez-en de nouveaux"}
         image={{ source: require("./../../../../assets/imgs/goal.png") }}
       />
@@ -107,7 +95,7 @@ const GoalItem = ({ goal, index }) => {
         preset=""
         type="clear"
         icon="EditSvg"
-        textStyle={{ color: "#26387C" }}
+        textStyle={{ color: colors.BLUE }}
         style={{ backgroundColor: "#F8F9FB" }}
         iconSize={16}
         onPress={() => {
@@ -134,10 +122,10 @@ const itemStyles = StyleSheet.create({
     flex: 1,
   },
   label: {
-    fontFamily: "Karla",
+    fontFamily: "SourceSans3",
     fontWeight: "700",
     fontSize: 16,
-    color: "#26387C",
+    color: colors.BLUE,
     textAlign: "left",
   },
   daysOfWeekContainer: {
@@ -151,7 +139,7 @@ const itemStyles = StyleSheet.create({
     marginRight: 6,
   },
   daysOfWeekText: {
-    fontFamily: "Karla",
+    fontFamily: "SourceSans3",
     fontWeight: "400",
     fontSize: 14,
     color: "#2D2D2D",

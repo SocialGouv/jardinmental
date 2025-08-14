@@ -21,10 +21,7 @@ export default ({ navigation, route }) => {
 
   return (
     <>
-      <ScrollView
-        style={onboardingStyles.scroll}
-        contentContainerStyle={onboardingStyles.scrollContentContainer}
-      >
+      <ScrollView style={onboardingStyles.scroll} contentContainerStyle={onboardingStyles.scrollContentContainer}>
         <View style={onboardingStyles.container}>
           <View style={onboardingStyles.imageContainer}>
             <Logo style={styles.image} width={100} height={100} />

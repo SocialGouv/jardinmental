@@ -3,15 +3,9 @@ import { TouchableOpacity, StyleSheet, View } from "react-native";
 import Text from "../../../components/MyText";
 import RoundButtonIcon from "../../../components/RoundButtonIcon";
 import AjoutIndicateurPerso from "./AjoutIndicateurPerso";
+import { TW_COLORS } from "@/utils/constants";
 
-const CategorieElements = ({
-  title,
-  options,
-  onClick,
-  indicateursSelection,
-  handleAddNewSymptom,
-  enableAddNewElement,
-}) => {
+const CategorieElements = ({ title, options, onClick, indicateursSelection, handleAddNewSymptom, enableAddNewElement }) => {
   const [listeComplementaire, setListeComplementaire] = React.useState([]);
   return (
     <>
@@ -28,10 +22,10 @@ const CategorieElements = ({
               {indicateurSelectionne ? (
                 <View>
                   <RoundButtonIcon
-                    backgroundColor="#5DEE5A"
+                    backgroundColor={TW_COLORS.SUCCESS}
                     iconColor="#fff"
                     borderWidth={0.5}
-                    borderColor="#5DEE5A"
+                    borderColor={TW_COLORS.SUCCESS}
                     icon="validate"
                     visible={true}
                     medium

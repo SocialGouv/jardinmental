@@ -3,14 +3,7 @@ import Svg, { Path, Defs, Pattern, Use, Image } from "react-native-svg";
 
 function SvgComponent({ size = 24 }) {
   return (
-    <Svg
-      width={size}
-      height={size}
-      viewBox="0 0 40 40"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      xmlnsXlink="http://www.w3.org/1999/xlink"
-    >
+    <Svg width={size} height={size} viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
       <Path fill="url(#pattern0)" d="M0 0H40V40H0z" />
       <Defs>
         <Pattern id="pattern0" patternContentUnits="objectBoundingBox" width={1} height={1}>

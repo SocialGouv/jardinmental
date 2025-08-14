@@ -5,7 +5,7 @@ import { colors } from "../../../utils/colors";
 
 import Text from "../../../components/MyText";
 import CircledIcon from "../../../components/CircledIcon";
-import { answers } from "../../survey/utils";
+import { answers } from "../../survey-v2/utils";
 import YesNoIndicator from "../../../components/YesNoIndicator";
 import Gauge from "../../../components/gauge";
 const screenWidth = Dimensions.get("window").width;
@@ -51,23 +51,13 @@ const ChooseIndicatorOrder = ({ navigation, route }) => {
       <View className="w-full">
         <View style={styles.topContainer}>
           <Text style={styles.topTitle}>{route.params.nameNewIndicator}</Text>
-          <RenderCurrentIndicator
-            indicatorType={route.params.indicatorType}
-            itensity
-            direction={indicatorDirection}
-            size={screenWidth * 0.1}
-          />
+          <RenderCurrentIndicator indicatorType={route.params.indicatorType} itensity direction={indicatorDirection} size={screenWidth * 0.1} />
         </View>
 
-        <Text style={styles.subtitle}>
-          Vous pouvez choisir le sens d’évaluation qui correspond à votre indicateur
-        </Text>
+        <Text style={styles.subtitle}>Vous pouvez choisir le sens d’évaluation qui correspond à votre indicateur</Text>
 
         <TouchableOpacity
-          style={[
-            styles.setDirectionContainer,
-            indicatorDirection === "ASC" && styles.activeSetDirectionContainer,
-          ]}
+          style={[styles.setDirectionContainer, indicatorDirection === "ASC" && styles.activeSetDirectionContainer]}
           onPress={() => setIndicatorDirection("ASC")}
         >
           {indicatorDirection === "ASC" ? (
@@ -80,17 +70,12 @@ const ChooseIndicatorOrder = ({ navigation, route }) => {
 
           <View style={styles.setDirectionInside}>
             <RenderCurrentIndicator indicatorType={route.params.indicatorType} direction={"ASC"} />
-            <Text style={styles.setDirectionTitle}>
-              {renderSetDirectionTitle(route.params.indicatorType).ASC}
-            </Text>
+            <Text style={styles.setDirectionTitle}>{renderSetDirectionTitle(route.params.indicatorType).ASC}</Text>
           </View>
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={[
-            styles.setDirectionContainer,
-            indicatorDirection === "DESC" && styles.activeSetDirectionContainer,
-          ]}
+          style={[styles.setDirectionContainer, indicatorDirection === "DESC" && styles.activeSetDirectionContainer]}
           onPress={() => setIndicatorDirection("DESC")}
         >
           {indicatorDirection === "DESC" ? (
@@ -103,9 +88,7 @@ const ChooseIndicatorOrder = ({ navigation, route }) => {
 
           <View style={styles.setDirectionInside}>
             <RenderCurrentIndicator indicatorType={route.params.indicatorType} direction={"DESC"} />
-            <Text style={styles.setDirectionTitle}>
-              {renderSetDirectionTitle(route.params.indicatorType).DESC}
-            </Text>
+            <Text style={styles.setDirectionTitle}>{renderSetDirectionTitle(route.params.indicatorType).DESC}</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -167,15 +150,7 @@ const RenderCurrentIndicator = ({ indicatorType, itensity, direction = "ASC", si
       );
 
     case "boolean":
-      return (
-        <>
-          {direction === "ASC" ? (
-            <YesNoIndicator no={"red"} yes={"green"} />
-          ) : (
-            <YesNoIndicator no={"green"} yes={"red"} />
-          )}
-        </>
-      );
+      return <>{direction === "ASC" ? <YesNoIndicator no={"red"} yes={"green"} /> : <YesNoIndicator no={"green"} yes={"red"} />}</>;
 
     default:
       return <></>;
@@ -215,7 +190,7 @@ const styles = StyleSheet.create({
   topTitle: {
     fontSize: 17,
     fontWeight: "700",
-    color: "#26387C",
+    color: colors.BLUE,
     marginBottom: 15,
   },
   intensityContainer: {
@@ -233,11 +208,11 @@ const styles = StyleSheet.create({
   intensityText: {
     marginHorizontal: 7,
     fontSize: 15,
-    color: "#26387C",
+    color: colors.BLUE,
   },
   intenstiyDiamond: {
     transform: [{ rotate: "45deg" }],
-    backgroundColor: "#26387C",
+    backgroundColor: colors.BLUE,
     height: 8,
     width: 8,
   },
@@ -262,7 +237,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   activeSetDirectionContainer: {
-    borderColor: "#1FC6D5",
+    borderColor: colors.LIGHT_BLUE,
     backgroundColor: "#F4FCFD",
   },
   setDirectionInside: {
@@ -272,7 +247,7 @@ const styles = StyleSheet.create({
   setDirectionTitle: {
     fontSize: 15,
     fontWeight: "700",
-    color: "#26387C",
+    color: colors.BLUE,
     marginTop: 15,
   },
   smileysContainer: {

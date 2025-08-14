@@ -1,5 +1,5 @@
-import React from 'react';
-import Svg, {Path} from 'react-native-svg';
+import React from "react";
+import Svg, { Path } from "react-native-svg";
 
 const Screen3 = (props) => (
   <Svg width={128} height={128} viewBox="0 0 128 128" {...props}>
