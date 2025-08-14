@@ -15,11 +15,24 @@ export default ({ title, navigation, path = "tabs", icon, color = colors.LIGHT_B
       <View style={styles.container}>
         <View style={styles.answer}>
           {icon ? (
-            <Icon badge={badge} icon={icon} color={color} width={30} height={30} styleContainer={{ marginRight: 20 }} />
+            <View
+              className={`ml-2  rounded-full p-2 border w-8 h-8 items-center justify-center`}
+              style={{
+                borderColor: color,
+              }}
+            >
+              {React.cloneElement(icon, {
+                color: color,
+                width: 16,
+                height: 16,
+              })}
+            </View>
           ) : (
             <View style={{ marginHorizontal: 30 }} />
           )}
-          <Text style={styles.label}>{title}</Text>
+          <Text style={styles.label} className="ml-4">
+            {title}
+          </Text>
           <View style={styles.button}>
             <ArrowRightSvg color={colors.LIGHT_BLUE} />
           </View>

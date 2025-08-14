@@ -8,10 +8,17 @@ import { getBadgeNotesVersion } from "../../scenes/news";
 import Text from "../../components/MyText";
 import { colors } from "../../utils/colors";
 import NeedUpdateContext from "../../context/needUpdate";
-import { HOST, HMAC_SECRET } from "../../config";
 import { recommendApp } from "../../utils/share";
 import app from "../../../app.json";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Bell from "@assets/svg/icon/Bell";
+import Star from "@assets/svg/icon/Star";
+import StickerSquare from "@assets/svg/icon/StickerSquare";
+import Share from "@assets/svg/icon/Share";
+import Phone from "@assets/svg/icon/Phone";
+import MessageTextCircle from "@assets/svg/icon/MessageTextCircle";
+import Lock from "@assets/svg/icon/Lock";
+import LightBulb from "@assets/svg/icon/LightBulb";
 
 export default ({ navigation, visible, onClick }) => {
   const [isVisible, setIsVisible] = useState();
@@ -62,18 +69,18 @@ export default ({ navigation, visible, onClick }) => {
         <SafeAreaView>
           <ScrollView contentContainerStyle={styles.scrollContainer}>
             <Text style={styles.title}>Jardin Mental</Text>
-            <DrawerItem badge={badgeNotesVersionVisible} title="Nouveautés" path="news" navigation={navigation} onClick={onClick} icon="NewsSvg" />
+            <DrawerItem badge={badgeNotesVersionVisible} title="Nouveautés" path="news" navigation={navigation} onClick={onClick} icon={<Star />} />
             <Separator />
-            <DrawerItem title="Présentation" path="presentation" navigation={navigation} onClick={onClick} icon="PresentationSvg" />
-            <DrawerItem title="Recommander Jardin&nbsp;Mental" onClick={recommendApp} icon="ShareSvg" />
-            <DrawerItem title="Parler à quelqu'un et s'informer" path="infos" navigation={navigation} onClick={onClick} icon="PhoneSvg" />
-            <DrawerItem title="Nous contacter" path="contact" navigation={navigation} onClick={onClick} icon="PeopleSvg" />
-            <DrawerItem title="Qui peut voir mes données ?" path="privacy-light" navigation={navigation} onClick={onClick} icon="LockSvg" />
+            <DrawerItem title="Présentation" path="presentation" navigation={navigation} onClick={onClick} icon={<StickerSquare />} />
+            <DrawerItem title="Recommander Jardin&nbsp;Mental" onClick={recommendApp} icon={<Share />} />
+            <DrawerItem title="Parler à quelqu'un et s'informer" path="infos" navigation={navigation} onClick={onClick} icon={<Phone />} />
+            <DrawerItem title="Nous contacter" path="contact" navigation={navigation} onClick={onClick} icon={<MessageTextCircle />} />
+            <DrawerItem title="Qui peut voir mes données ?" path="privacy-light" navigation={navigation} onClick={onClick} icon={<Lock />} />
             {updateVisible ? (
               <DrawerItem
                 badge
                 title="Mettre à jour"
-                icon="NewsSvg"
+                icon={<Bell />}
                 onClick={() =>
                   Linking.openURL(
                     Platform.OS === "ios"
@@ -86,7 +93,7 @@ export default ({ navigation, visible, onClick }) => {
             <DrawerItem
               badge={badgeNpsProIsVisible}
               title="Donner mon avis"
-              icon="LightBulbSvg"
+              icon={<LightBulb />}
               path="contribute-pro"
               navigation={navigation}
               onClick={async () => {
