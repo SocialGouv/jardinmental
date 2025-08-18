@@ -61,27 +61,31 @@ const DaySurvey = ({
     if (user_indicateurs) {
       setUserIndicateurs(user_indicateurs);
     }
-  }
+  };
 
   useFocusEffect(
     React.useCallback(() => {
       updateIndicators();
-    }, []),
+    }, [])
   );
 
-
-
   useEffect(() => {
-    //init the survey if there is already answers
+    // this hook inits the survey if there is already answers
+    if (Object.keys(answers).length > 0) {
+      // if answers as key it is already initialized
+      return;
+    }
     const initialAnswers = {};
     const surveyAnswers = initSurvey?.answers || {};
     if (!surveyAnswers || userIndicateurs.length === 0) {
       return;
     }
+
     Object.keys(surveyAnswers).forEach((key) => {
       const answer = surveyAnswers[key];
       if (!answer) return;
       // Handle special questions (TOXIC, CONTEXT)
+
       if (key === questionToxic.id || key === questionContext.id) {
         initialAnswers[key] = {
           ...answer,
@@ -92,7 +96,7 @@ const DaySurvey = ({
       }
       const cleanedQuestionId = key.split("_")[0];
       // previous indicators where using '_', we cleaned it when editing it apparently
-      const _indicateur = userIndicateurs.find((i) => i.name === cleanedQuestionId);
+      const _indicateur = userIndicateurs.find((i) => i[i.diaryDataKey || "name"] === cleanedQuestionId);
       if (_indicateur) {
         let value = answer.value;
         if (!["gauge", "boolean"].includes(_indicateur.type)) {
@@ -116,7 +120,11 @@ const DaySurvey = ({
     setAnswers((prev) => {
       return {
         ...prev,
-        [key]: { ...prev[key], value, _indicateur: userIndicateurs.find((i) => i.name === key) },
+        [key]: {
+          ...prev[key],
+          value,
+          _indicateur: userIndicateurs.find((i) => i[i["diaryDataKey"] || "name"] === key),
+        },
       };
     });
   };
@@ -232,21 +240,26 @@ const DaySurvey = ({
                 containerStyle={{ marginBottom: 16 }}
               />
               {userIndicateurs
-                .filter(ind => ind.active)
+                .filter((ind) => ind.active)
                 .map((ind, index) => {
-                  return <IndicatorSurveyItem
-                    key={ind.uuid}
-                    showComment={true}
-                    indicator={ind}
-                    index={index}
-                    value={answers?.[ind?.name]?.value}
-                    onIndicatorChange={() => {
-                      updateIndicators()
-                    }}
-                    onValueChanged={({ indicator, value }) => toggleAnswer({ key: indicator?.name, value })}
-                    onCommentChanged={({ indicator, comment }) => handleChangeUserComment({ key: indicator?.name, userComment: comment })}
-                    comment={answers?.[ind?.name]?.userComment}
-                  />
+                  return (
+                    <IndicatorSurveyItem
+                      key={ind.uuid}
+                      showComment={true}
+                      allIndicators={userIndicateurs}
+                      indicator={ind}
+                      index={index}
+                      value={answers?.[ind[ind.diaryDataKey || "name"]]?.value}
+                      onIndicatorChange={() => {
+                        updateIndicators();
+                      }}
+                      onValueChanged={({ indicator, value }) => toggleAnswer({ key: indicator[indicator.diaryDataKey || "name"], value })}
+                      onCommentChanged={({ indicator, comment }) =>
+                        handleChangeUserComment({ key: indicator[indicator.diaryDataKey || "name"], userComment: comment })
+                      }
+                      comment={answers?.[ind[ind?.diaryDataKey || "name"]]?.userComment}
+                    />
+                  );
                 })}
               <Card
                 title="Personnaliser mes indicateurs"

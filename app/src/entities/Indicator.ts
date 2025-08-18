@@ -23,6 +23,21 @@ export type IndicatorPredefinedDomaine = z.infer<typeof IndicatorPredefinedDomai
 export const IndicatorSchema = z.object({
   version: z.number().int().positive(),
   uuid: z.string().uuid().describe("A generated id"),
+  genericUuid: z.string().uuid().describe("Uuid of the generic indicator").optional(),
+  diaryDataKey: z.enum(["uuid", "name"]).describe("The key used to identify the indicator in the diary data"),
+  baseIndicatorUuid: z
+    .string()
+    .uuid()
+    .describe(
+      `
+    When a generic indicator is refined (or “precised”) by the user:
+	•	We keep two values in the history:
+	•	uuid → a randomly generated ID when the indicator is first added.
+	•	genericUuid → the ID of the original generic indicator.
+
+If, during refinement, the user selects one of the preexisting specific indicators, we must track that relationship using baseIndicatorUuid.`
+    )
+    .optional(),
   description: z.string().optional().describe("A description for this indicator when it is given."),
   predefinedIndicatorDomaine: IndicatorPredefinedDomaineSchema.optional(),
   category: z.nativeEnum(INDICATORS_CATEGORIES),
@@ -35,8 +50,8 @@ export const IndicatorSchema = z.object({
   active: z.boolean(),
   position: z.number().int().min(0).describe(`Indicators are shown in a defined order. The position allow to sort them`),
   created_at: z.date(),
-  isGeneric: z.boolean().optional()
-})
+  isGeneric: z.boolean().optional(),
+});
 
 export const PredefineIndicatorSchema = z.object({
   uuid: z.string().uuid(), // Vérifie un UUID valide
@@ -73,10 +88,14 @@ export const generateIndicatorFromPredefinedIndicator = (predefinedIndicator: Pr
   // when predefinedIndicator is generic, we create a unique indicator from it.
   // the user can then edit the name of this indicator and eventually add the same
   // predefinedIndicator
+  const uuid = predefinedIndicator.isGeneric ? uuidv4() : predefinedIndicator.uuid;
   return {
-    uuid: predefinedIndicator.isGeneric ? uuidv4() : predefinedIndicator.uuid,
+    uuid,
+    genericUuid: predefinedIndicator.isGeneric ? predefinedIndicator.uuid : undefined,
+    description: "",
     isGeneric: predefinedIndicator.isGeneric,
-    name: predefinedIndicator.name,
+    name: predefinedIndicator.name, // the name is the key value saved in diaryData, when indicator is refined it does not changed
+    diaryDataKey: "uuid",
     category: predefinedIndicator.category,
     newCategories: predefinedIndicator.categories,
     mainCategory: predefinedIndicator.mainCategory || predefinedIndicator.categories[0],
