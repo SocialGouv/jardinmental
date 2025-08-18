@@ -1,3 +1,10 @@
+# [1.52.0-alpha.13](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.12...v1.52.0-alpha.13) (2025-08-18)
+
+
+### Bug Fixes
+
+* indicateurs inversés (rouge/vert) ([#340](https://github.com/SocialGouv/jardinmental/issues/340)) ([991de65](https://github.com/SocialGouv/jardinmental/commit/991de6561fef453c9c25027f6c68a5158fef6b07))
+
 # [1.52.0-alpha.12](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.11...v1.52.0-alpha.12) (2025-08-18)
 
 
