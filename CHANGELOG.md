@@ -1,3 +1,10 @@
+# [1.52.0-alpha.14](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.13...v1.52.0-alpha.14) (2025-08-18)
+
+
+### Features
+
+* cercle autour des icones ([#336](https://github.com/SocialGouv/jardinmental/issues/336)) ([9d3972a](https://github.com/SocialGouv/jardinmental/commit/9d3972ad9d41ae2b0673407683301f497f799710))
+
 # [1.52.0-alpha.13](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.12...v1.52.0-alpha.13) (2025-08-18)
 
 
