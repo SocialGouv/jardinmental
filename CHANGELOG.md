@@ -1,3 +1,10 @@
+# [1.52.0-alpha.15](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.14...v1.52.0-alpha.15) (2025-08-18)
+
+
+### Features
+
+* upgrade to SDK 35 and upgrade expo from SDK 51 to 52 ([#338](https://github.com/SocialGouv/jardinmental/issues/338)) ([d03e00f](https://github.com/SocialGouv/jardinmental/commit/d03e00f273ab751fc7e95555c442272d66080bb6))
+
 # [1.52.0-alpha.14](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.13...v1.52.0-alpha.14) (2025-08-18)
 
 
