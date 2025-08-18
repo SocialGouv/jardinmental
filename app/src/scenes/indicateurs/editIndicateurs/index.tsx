@@ -19,11 +19,12 @@ import logEvents from "../../../services/logEvents";
 import TextTag from "../../../components/TextTag";
 import JMButton from "@/components/JMButton";
 import { HELP_FOR_CATEGORY, INDICATOR_CATEGORIES_DATA } from "@/scenes/onboarding-v2/data/helperData";
+import { generateIndicatorFromPredefinedIndicator, Indicator, PredefineIndicatorV2SchemaType } from "@/entities/Indicator";
 
 const EditIndicateurs = ({ navigation, route }) => {
   const [exemplesVisible, setExemplesVisible] = useState(false);
   const [existingIndicatorsVisible, setExistingIndicatorsVisible] = useState(false);
-  const [userIndicateurs, setUserIndicateurs] = useState([]);
+  const [userIndicateurs, setUserIndicateurs] = useState<Indicator[]>([]);
 
   const indicateursByCategory = INDICATORS.reduce((prev, curr) => {
     for (const category of curr.categories) {
@@ -68,7 +69,7 @@ const EditIndicateurs = ({ navigation, route }) => {
     await localStorage.setIndicateurs(_userIndicateurs);
   };
 
-  const handleAddNewIndicateur = async (_indicateur) => {
+  const handleAddNewIndicateur = async (_indicateur: Indicator) => {
     if (!_indicateur) return;
     const _userIndicateurs = [...userIndicateurs, _indicateur];
     setUserIndicateurs(_userIndicateurs);
@@ -76,7 +77,7 @@ const EditIndicateurs = ({ navigation, route }) => {
     logEvents.logCustomSymptomAdd();
   };
 
-  const setToggleIndicateur = async (_indicateur) => {
+  const setToggleIndicateur = async (_indicateur: PredefineIndicatorV2SchemaType) => {
     if (userIndicateurs.find((e) => e.uuid === _indicateur.uuid)) {
       const _userIndicateurs = userIndicateurs.map((indicateur) => {
         if (indicateur.uuid === _indicateur.uuid) {
@@ -87,7 +88,7 @@ const EditIndicateurs = ({ navigation, route }) => {
       setUserIndicateurs(_userIndicateurs);
       await localStorage.setIndicateurs(_userIndicateurs);
     } else {
-      handleAddNewIndicateur({ ..._indicateur, version: 1, active: true });
+      handleAddNewIndicateur(generateIndicatorFromPredefinedIndicator(_indicateur));
     }
   };
 
@@ -342,4 +343,5 @@ const styles = StyleSheet.create({
     padding: 20,
   },
 });
+
 export default EditIndicateurs;

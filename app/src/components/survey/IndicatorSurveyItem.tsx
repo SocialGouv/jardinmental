@@ -9,14 +9,14 @@ import Gauge from "../gauge";
 import { colors } from "@/utils/colors";
 import { typography } from "@/utils/typography";
 import { IndicatorItem } from "@/scenes/onboarding-v2/types";
-import { generateIndicatorFromPredefinedIndicator, INDICATOR_TYPE, PredefineIndicatorV2SchemaType } from "@/entities/Indicator";
+import { generateIndicatorFromPredefinedIndicator, Indicator, INDICATOR_TYPE, PredefineIndicatorV2SchemaType } from "@/entities/Indicator";
 import { DEFAULT_INDICATOR_LABELS, INDICATOR_LABELS, INDICATORS, NEW_INDICATORS_CATEGORIES } from "@/utils/liste_indicateurs.1";
 import BasicCard from "../BasicCard";
 import IndicatorModal from "@/scenes/onboarding-v2/indicators/IndicatorModal";
 import { useBottomSheet } from "@/context/BottomSheetContext";
 import ArrowIcon from "@assets/svg/icon/Arrow";
 import { TW_COLORS } from "@/utils/constants";
-import localStorage from '@/utils/localStorage/index';
+import localStorage from "@/utils/localStorage/index";
 
 export const IndicatorSurveyItem = ({
   indicator,
@@ -26,21 +26,23 @@ export const IndicatorSurveyItem = ({
   comment,
   onCommentChanged,
   showComment,
-  onIndicatorChange
+  onIndicatorChange,
+  allIndicators = [],
 }: {
-  indicator: PredefineIndicatorV2SchemaType,
-  index: number,
-  value: number,
-  comment?: string,
-  onValueChanged: () => {},
-  onCommentChanged: () => {}
-  showComment: boolean,
-  onIndicatorChange?: () => void
+  indicator: Indicator;
+  index: number;
+  value: number;
+  comment?: string;
+  onValueChanged: () => {};
+  onCommentChanged: () => {};
+  showComment: boolean;
+  onIndicatorChange?: () => void;
+  allIndicators?: Indicator[];
 }) => {
   // console.log("✍️  i. ndicator", indicator);
   const { showBottomSheet, closeBottomSheet } = useBottomSheet();
-  const [addedIndicators, setAddedIndicators] = useState<Partial<Record<NEW_INDICATORS_CATEGORIES, PredefineIndicatorV2SchemaType[]>>>({})
-  const [selectedIndicators, setSelectedIndicators] = useState<string[]>([])
+  const [addedIndicators, setAddedIndicators] = useState<Partial<Record<NEW_INDICATORS_CATEGORIES, PredefineIndicatorV2SchemaType[]>>>({});
+  const [selectedIndicators, setSelectedIndicators] = useState<string[]>([]);
 
   const addIndicatorForCategory = async (category: NEW_INDICATORS_CATEGORIES, indicators: PredefineIndicatorV2SchemaType[]) => {
     // setAddedIndicators(prev => ({
@@ -50,14 +52,14 @@ export const IndicatorSurveyItem = ({
     // if (loading) return;
     // setLoading(true);
     for (const indicatorItem of indicators) {
-      console.log(indicators)
       await localStorage.replaceOrAddIndicateur({
         ...generateIndicatorFromPredefinedIndicator(indicatorItem),
-        uuid: indicator.uuid // we keep the same uuid for tracking purpose in the stats
+        baseIndicatorUuid: indicatorItem.uuid,
+        uuid: indicator.uuid, // we keep the same uuid for tracking purpose in the stats
       });
     }
-    if (typeof onIndicatorChange === 'function') {
-      onIndicatorChange()
+    if (typeof onIndicatorChange === "function") {
+      onIndicatorChange();
     }
     // setLoading(false);
     // navigation.navigate("symptoms");
@@ -68,7 +70,7 @@ export const IndicatorSurveyItem = ({
     //     ...indicators.map(indicator => indicator.uuid)
     //   ])
     // })
-  }
+  };
 
   const computeIndicatorLabel = (): string => {
     if (value === null) return "";
@@ -100,48 +102,59 @@ export const IndicatorSurveyItem = ({
       </View>
     );
   };
-  return <BasicCard>
-    <View>
-      <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-900", "mb-6")}>{indicator.name}</Text>
-    </View>
-    {renderInput()}
-    {indicator.type === INDICATOR_TYPE.gauge &&
-      <Text className={mergeClassNames(typography.textMdMedium, "text-gray-800 h-5")}>{computeIndicatorLabel() || ''}</Text>
-    }
-    {showComment && <InputText
-      fill
-      preset="lighten"
-      placeholder="Ajoutez une note sur cet élément"
-      value={_comment}
-      onChangeText={(nextComment) => {
-        _setComment(nextComment);
-        onCommentChanged?.({ comment: nextComment, indicator });
-      }}
-      multiline={true}
-      textAlignVertical="top"
-      containerStyle={{ marginTop: 20 }}
-    />}
-    {indicator.isGeneric &&
-      <View className='flex-row'>
-        <TouchableOpacity onPress={() => {
-          showBottomSheet(<IndicatorModal
-            category={indicator.mainCategory}
-            addedIndicators={[]}
-            initialSelectedIndicators={[]}
-            multiSelect={false}
-            onClose={(categoryName: NEW_INDICATORS_CATEGORIES, indicators: PredefineIndicatorV2SchemaType[]) => {
-              if (typeof addIndicatorForCategory === 'function') {
-                addIndicatorForCategory(categoryName, indicators)
-                closeBottomSheet()
-              }
+  return (
+    <BasicCard>
+      <View>
+        <Text className={mergeClassNames(typography.textMdMedium, "text-brand-950", "mb-6")}>{indicator.name}</Text>
+      </View>
+      {renderInput()}
+      {indicator.type === INDICATOR_TYPE.gauge && (
+        <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700 h-5")}>{computeIndicatorLabel() || ""}</Text>
+      )}
+      {showComment && (
+        <InputText
+          fill
+          preset="lighten"
+          placeholder="Ajoutez une note sur cet élément"
+          value={_comment}
+          onChangeText={(nextComment) => {
+            _setComment(nextComment);
+            onCommentChanged?.({ comment: nextComment, indicator });
+          }}
+          multiline={true}
+          textAlignVertical="top"
+          containerStyle={{ marginTop: 20 }}
+        />
+      )}
+      {indicator.isGeneric && (
+        <View className="flex-row">
+          <TouchableOpacity
+            onPress={() => {
+              showBottomSheet(
+                <IndicatorModal
+                  disabledIndicators={allIndicators}
+                  category={indicator.mainCategory}
+                  addedIndicators={[]}
+                  initialSelectedIndicators={[]}
+                  multiSelect={false}
+                  onClose={(categoryName: NEW_INDICATORS_CATEGORIES, indicators: PredefineIndicatorV2SchemaType[]) => {
+                    if (typeof addIndicatorForCategory === "function") {
+                      addIndicatorForCategory(categoryName, indicators);
+                      closeBottomSheet();
+                    }
+                  }}
+                />
+              );
             }}
-          />)
-        }} className='flex-row ml-auto items-center justify-center'>
-          <Text className={mergeClassNames(typography.textMdSemibold, 'text-brand-950 mr-1')}>Préciser</Text>
-          <ArrowIcon color={TW_COLORS.BRAND_700} />
-        </TouchableOpacity>
-      </View>}
-  </BasicCard>
+            className="flex-row ml-auto items-center justify-center"
+          >
+            <Text className={mergeClassNames(typography.textMdSemibold, "text-brand-950 mr-1")}>Préciser</Text>
+            <ArrowIcon color={TW_COLORS.BRAND_700} />
+          </TouchableOpacity>
+        </View>
+      )}
+    </BasicCard>
+  );
   // return (
   //   <View
   //     style={[

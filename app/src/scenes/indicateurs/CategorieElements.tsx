@@ -3,8 +3,19 @@ import { TouchableOpacity, StyleSheet, View, Pressable } from "react-native";
 import Text from "../../components/MyText";
 import RoundButtonIcon from "../../components/RoundButtonIcon";
 import { InputCheckbox } from "../../components/InputCheckbox";
+import { Indicator } from "@/entities/Indicator";
 
-const CategorieElements = ({ title, options, onClick, userIndicateurs }) => {
+const CategorieElements = ({
+  title,
+  options,
+  onClick,
+  userIndicateurs,
+}: {
+  title: string;
+  options: any[];
+  onClick: (option: any) => void;
+  userIndicateurs: Indicator[];
+}) => {
   const [isOpen, setIsOpen] = React.useState(false);
   return (
     <>
@@ -19,7 +30,9 @@ const CategorieElements = ({ title, options, onClick, userIndicateurs }) => {
           {(options || [])
             .filter((e) => !e.active)
             .map((option) => {
-              const indicateurSelectionne = userIndicateurs.find((_ind) => _ind.uuid === option.uuid && _ind.active);
+              const indicateurSelectionne = userIndicateurs.find(
+                (_ind) => (_ind.uuid === option.uuid || _ind.genericUuid === option.uuid || _ind.baseIndicatorUuid === option.uuid) && _ind.active
+              );
               return (
                 <View
                   key={`${option.uuid}`}

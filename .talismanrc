@@ -21,6 +21,8 @@ fileignoreconfig:
   checksum: 7ebf59b94ce815a22fb60424e74ae5a17a74eb07e941c5c72c8e71bce1a1c4ed
 - filename: app/src/context/userProfile.tsx
   checksum: fa700b84c6ced31f07459c3d54b35226c4239f902494750fb42a86e841044ed8
+- filename: app/src/entities/Indicator.ts
+  checksum: 9ca78c354e49af8a76fee4dcd175e55506d5fd5a186c6428933f65ea37a416eb
 - filename: app/src/entities/SurveyScreen.ts
   checksum: 68279ddbf41bdc3fdbe9ec5073122f73b74c992dad22768d69bf6b0c6d7f5f6f
 - filename: app/src/scenes/diary/index.js
@@ -46,7 +48,7 @@ fileignoreconfig:
 - filename: app/src/scenes/onboarding-v2/index.tsx
   checksum: 397a9d500493e7778dd039fb94b8c28b962c34d4e6115588a9cd345e98ad6b41
 - filename: app/src/scenes/onboarding-v2/indicators/IndicatorModal.tsx
-  checksum: 358dd3693226d27f8f0786f17ef35721743e9331657dd5fc2c410f22e7ba8c74
+  checksum: 3cae33009486039e7cab063070b98b4de9b209997c4b0e371115c2cc0e9df879
 - filename: app/src/scenes/onboarding-v2/indicators/OnboardingChooseIndicatorScreen.tsx
   checksum: ff6d21a848c2eb7c5a1fb3f41d97a8f7dcd6d8010459f47fd247f95208b0c9b9
 - filename: app/src/scenes/onboarding-v2/personalization/DifficultiesScreen.tsx
@@ -77,6 +79,8 @@ fileignoreconfig:
   checksum: bdb40467b60296ef959cac383488b52e879619d362093020f547896ddf9921bf
 - filename: app/src/scenes/status/index.js
   checksum: 5f9e42e3b0cf566b702885826b9b417fd0b0b58be969354716386d909b4e3651
+- filename: app/src/scenes/status/status-item.js
+  checksum: 300366984764d5a79c9d7ce14c1b6815143126ccde873c53fd1533aa79521503
 - filename: app/src/scenes/survey-v2/AnimatedHeaderScrollScreen.tsx
   checksum: 53643c652f22b9b65dc01c34ac35cfd9763f1720d4d2d0ff8f4e956d698647fb
 - filename: app/src/scenes/survey-v2/ContextScreen.tsx
@@ -100,7 +104,7 @@ fileignoreconfig:
 - filename: app/src/scenes/survey/QuestionYesNo.js
   checksum: 5f60226dc61678da5e266fe1c3317ca498389cf407639a79ba11a4f8c4e1083c
 - filename: app/src/scenes/survey/daySurvey.tsx
-  checksum: 579b76fbe284ce77f8d103415093b52dfbcc9613bc4c190ca69b856dfb6a7b7e
+  checksum: 741b095bd07b3f104a1ab048b64ab0d6b128604adc9903ad9634ffaa064416d1
 - filename: app/src/scenes/survey/survey-data.js
   checksum: 1ac3021625ed8fb4ed188c80035b12789aa03989dc7276893900ed96dc2a2509
 - filename: app/src/services/notifications.js

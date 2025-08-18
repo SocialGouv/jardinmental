@@ -422,6 +422,7 @@ const CategoryCard = ({
               onPress={() => {
                 showBottomSheet(
                   <IndicatorModal
+                    disabledIndicators={[]}
                     category={categoryName}
                     addedIndicators={indicators}
                     initialSelectedIndicators={selectedIndicators}
