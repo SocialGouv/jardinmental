@@ -1,3 +1,12 @@
+# [1.52.0-alpha.12](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.11...v1.52.0-alpha.12) (2025-08-18)
+
+
+### Bug Fixes
+
+* changement de texte pour "bien démarrer" ([#339](https://github.com/SocialGouv/jardinmental/issues/339)) ([2b193be](https://github.com/SocialGouv/jardinmental/commit/2b193bee68fb0e42c30e5d48bfaba4d60e910c9b))
+* navigation quand on clique sur supprimer toutes les données ([#341](https://github.com/SocialGouv/jardinmental/issues/341)) ([481dfa4](https://github.com/SocialGouv/jardinmental/commit/481dfa4f9e96ce9a2bdc2e015cef5d41955781dc))
+* Warning: Each child in a list should have a unique "key" prop ([#342](https://github.com/SocialGouv/jardinmental/issues/342)) ([1d096b9](https://github.com/SocialGouv/jardinmental/commit/1d096b98bc1aaee5df026fd566d861472170b43a))
+
 # [1.52.0-alpha.11](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.10...v1.52.0-alpha.11) (2025-08-12)
 
 
