@@ -23,7 +23,7 @@ const SettingsModal = ({ navigation, visible, onClick }) => {
           />
           <SettingItem
             title="Supprimer toutes mes données"
-            path=""
+            path="onboarding"
             navigation={navigation}
             onClick={async () => {
               await wipeData();
