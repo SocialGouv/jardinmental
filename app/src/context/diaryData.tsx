@@ -19,10 +19,15 @@ import {
   STORAGE_KEY_BECK_EMOTION_LIST,
   STORAGE_KEY_ONBOARDING_STEP,
   STORAGE_KEY_ONBOARDING_DONE,
+  STORAGE_KEY_REMOVING_TOXIC_QUESTION_FROM_SURVEY_MIGRATION_DONE,
 } from "../utils/constants";
 import { fakeDiaryData, fakeDiaryData2, startDate as fakeStartDate } from "../scenes/status/fake-diary-data";
 import { beforeToday, formatDay, getArrayOfDates } from "../utils/date/helpers";
 import { DiaryData, DiaryDataNewEntryInput } from "../entities/DiaryData";
+import { parse } from "date-fns";
+import { generateIndicatorFromPredefinedIndicator } from "@/entities/Indicator";
+import { GENERIC_INDICATOR_SUBSTANCE } from "@/utils/liste_indicateurs.1";
+import localStorage from "@/utils/localStorage/index";
 
 export const wipeData = async () => {
   await AsyncStorage.removeItem(STORAGE_KEY_START_DATE);
@@ -87,7 +92,6 @@ const DiaryDataProvider = ({ children }) => {
       // start date is needed to populate empty dates
       let startDate = await AsyncStorage.getItem(STORAGE_KEY_START_DATE);
       let data = (await AsyncStorage.getItem(STORAGE_KEY_SURVEY_RESULTS)) || "{}";
-
       // if no start date, it's the first time the user opens the app
       // so we initialize it
       if (!startDate) {
@@ -101,6 +105,17 @@ const DiaryDataProvider = ({ children }) => {
       // we set data first for a better UX
       let parsedData: DiaryData = JSON.parse(data) as DiaryData;
       setDiaryData(parsedData);
+      if (parsedData) {
+        const migrationAlreadyDone = await AsyncStorage.getItem(STORAGE_KEY_REMOVING_TOXIC_QUESTION_FROM_SURVEY_MIGRATION_DONE);
+        if (Object.values(parsedData).find((data) => Object.keys(data).includes("TOXIC")) && !migrationAlreadyDone) {
+          localStorage.replaceOrAddIndicateur({
+            ...generateIndicatorFromPredefinedIndicator(GENERIC_INDICATOR_SUBSTANCE),
+            // we keep the same uuid "A" for continutiry in history key=="TOXIC" and "A" uuid are considered the same,
+            uuid: STATIC_UUID_FOR_INSTANCE_OF_GENERIC_INDICATOR_SUBSTANCE,
+          });
+          await AsyncStorage.setItem(STORAGE_KEY_REMOVING_TOXIC_QUESTION_FROM_SURVEY_MIGRATION_DONE, true.toString());
+        }
+      }
       let startDateMinus7 = beforeToday(7, new Date(startDate));
       const diary = fillUpEmptyDates(startDateMinus7, parsedData);
       setDiaryData(diary);

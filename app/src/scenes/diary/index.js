@@ -26,6 +26,16 @@ const Diary = ({ navigation, hideDeader = false }) => {
   const [page, setPage] = useState(1);
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [timestamp, setTimestamp] = useState(Date.now());
+  const [userIndicators, setUserIndicators] = React.useState([]);
+
+  useEffect(() => {
+    (async () => {
+      const _userIndicators = await localStorage.getIndicateurs();
+      if (_userIndicators) {
+        setUserIndicators(_userIndicators);
+      }
+    })();
+  }, []);
 
   useEffect(() => {
     const handleOnboarding = async () => {
@@ -70,7 +80,7 @@ const Diary = ({ navigation, hideDeader = false }) => {
   const getUserComments = (obj, key) => {
     const userComments = Object.keys(obj[key] || [])
       ?.filter((s) => obj[key][s]?.userComment?.trim())
-      .map((e) => ({ id: e, value: obj[key][e].userComment?.trim() }));
+      .map((e) => ({ id: e, value: obj[key][e].userComment?.trim(), _indicateur: obj[key][e]._indicateur }));
     return userComments;
   };
 
@@ -91,7 +101,7 @@ const Diary = ({ navigation, hideDeader = false }) => {
               <View key={date}>
                 <Text style={styles.subtitle}>{formatDateThread(date)}</Text>
                 <DiaryNotes date={date} diaryNote={diaryNotes[date]} navigation={navigation} />
-                <DiarySymptoms date={date} values={getUserComments(diaryData, date)} navigation={navigation} />
+                <DiarySymptoms userIndicators={userIndicators} date={date} values={getUserComments(diaryData, date)} navigation={navigation} />
               </View>
             );
           })}
