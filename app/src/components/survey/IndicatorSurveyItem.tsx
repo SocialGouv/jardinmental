@@ -39,18 +39,9 @@ export const IndicatorSurveyItem = ({
   onIndicatorChange?: () => void;
   allIndicators?: Indicator[];
 }) => {
-  // console.log("✍️  i. ndicator", indicator);
   const { showBottomSheet, closeBottomSheet } = useBottomSheet();
-  const [addedIndicators, setAddedIndicators] = useState<Partial<Record<NEW_INDICATORS_CATEGORIES, PredefineIndicatorV2SchemaType[]>>>({});
-  const [selectedIndicators, setSelectedIndicators] = useState<string[]>([]);
 
   const addIndicatorForCategory = async (category: NEW_INDICATORS_CATEGORIES, indicators: PredefineIndicatorV2SchemaType[]) => {
-    // setAddedIndicators(prev => ({
-    //   ...prev,
-    //   [category]: indicators
-    // }))
-    // if (loading) return;
-    // setLoading(true);
     for (const indicatorItem of indicators) {
       await localStorage.replaceOrAddIndicateur({
         ...generateIndicatorFromPredefinedIndicator(indicatorItem),
@@ -61,15 +52,6 @@ export const IndicatorSurveyItem = ({
     if (typeof onIndicatorChange === "function") {
       onIndicatorChange();
     }
-    // setLoading(false);
-    // navigation.navigate("symptoms");
-    // setSelectedIndicators(prev => {
-    //   return ([
-    //     // filter base indicator if we define indicators
-    //     ...prev.filter(indicator => !BASE_INDICATORS_FOR_CUSTOM_CATEGORIES[category].map(cat => cat.uuid).includes(indicator)),
-    //     ...indicators.map(indicator => indicator.uuid)
-    //   ])
-    // })
   };
 
   const computeIndicatorLabel = (): string => {
@@ -155,37 +137,6 @@ export const IndicatorSurveyItem = ({
       )}
     </BasicCard>
   );
-  // return (
-  //   <View
-  //     style={[
-  //       styles.container,
-  //       {
-  //         backgroundColor: value !== undefined ? "#F0FFF0" : "#F8F9FB",
-  //         borderColor: value !== undefined ? "#D0E8D0" : "#E7EAF1",
-  //       },
-  //     ]}
-  //   >
-  //     <View style={[styles.contentContainer]}>
-  //       <View style={[styles.topContainer]}>
-  //         <Text style={[styles.label]}>{indicator.name}</Text>
-  //       </View>
-  //       {renderInput()}
-  //       <InputText
-  //         fill
-  //         preset="lighten"
-  //         placeholder="Ajoutez une note sur cet élément"
-  //         value={_comment}
-  //         onChangeText={(nextComment) => {
-  //           _setComment(nextComment);
-  //           onCommentChanged?.({ comment: nextComment, indicator });
-  //         }}
-  //         multiline={true}
-  //         textAlignVertical="top"
-  //         className="p-0" // remove space that multiline adds
-  //       />
-  //     </View>
-  //   </View>
-  //);
 };
 
 const styles = StyleSheet.create({
