@@ -1,4 +1,4 @@
-import { INDICATOR_ORDER, INDICATOR_TYPE, PredefineIndicatorSchemaType, PredefineIndicatorV2SchemaType } from "@/entities/Indicator";
+import { INDICATOR_ORDER, INDICATOR_TYPE, LegacyPredefineIndicatorSchemaType, PredefineIndicatorV2SchemaType } from "@/entities/Indicator";
 import { INDICATORS_CATEGORIES } from "@/entities/IndicatorCategories";
 
 export const INDICATEURS_LISTE_ONBOARDING_HUMEUR = [
@@ -1031,7 +1031,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
   },
 ];
 
-export const INDICATEURS: PredefineIndicatorSchemaType[] = [
+export const INDICATEURS: LegacyPredefineIndicatorSchemaType[] = [
   // Emotions/sentiments
   {
     uuid: "3e15ed99-f2f9-4716-b6a2-5348c35266da",
