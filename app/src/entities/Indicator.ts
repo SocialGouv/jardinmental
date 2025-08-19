@@ -24,7 +24,7 @@ export const IndicatorSchema = z.object({
   version: z.number().int().positive(),
   uuid: z.string().uuid().describe("A generated id"),
   genericUuid: z.string().uuid().describe("Uuid of the generic indicator").optional(),
-  diaryDataKey: z.enum(["uuid", "name"]).describe("The key used to identify the indicator in the diary data"),
+  diaryDataKey: z.enum(["uuid", "name"]).describe("The key used to identify the indicator in the diary data").optional(),
   baseIndicatorUuid: z
     .string()
     .uuid()
