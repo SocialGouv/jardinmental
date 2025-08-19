@@ -22,7 +22,7 @@ fileignoreconfig:
 - filename: app/src/context/userProfile.tsx
   checksum: fa700b84c6ced31f07459c3d54b35226c4239f902494750fb42a86e841044ed8
 - filename: app/src/entities/Indicator.ts
-  checksum: 9ca78c354e49af8a76fee4dcd175e55506d5fd5a186c6428933f65ea37a416eb
+  checksum: 37eb73a6c4158b450e460c1245ac1355e07ef06966724449034b9c534a6c0b28
 - filename: app/src/entities/SurveyScreen.ts
   checksum: 68279ddbf41bdc3fdbe9ec5073122f73b74c992dad22768d69bf6b0c6d7f5f6f
 - filename: app/src/scenes/diary/index.js
