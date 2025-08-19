@@ -62,7 +62,7 @@ export const PredefineIndicatorSchema = z.object({
     Define in which order to display the indicator, from positive to negative or the other way around.`),
 });
 
-export type PredefineIndicatorSchemaType = z.infer<typeof PredefineIndicatorSchema>;
+export type LegacyPredefineIndicatorSchemaType = z.infer<typeof PredefineIndicatorSchema>;
 
 export const PredefineIndicatorV2Schema = z.object({
   uuid: PredefineIndicatorSchema.shape.uuid,
