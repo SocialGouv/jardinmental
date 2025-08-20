@@ -242,7 +242,7 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation, r
             <View>
               {selectedIndicators.length >= 9 && <AlertBanner text={`Nous vous recommandons de ne pas choisir plus de 8 éléments pour commencer`} />}
               <View className="my-2">
-                <Text className={mergeClassNames(typography.textSmMedium, "text-gray-700 text-center")}>
+                <Text className={mergeClassNames(typography.textSmMedium, "text-gray-800 text-center")}>
                   Vous pourrez modifier cette sélection plus tard
                 </Text>
               </View>
@@ -375,7 +375,7 @@ const MultiInput = ({ categoryName }: { categoryName: NEW_INDICATORS_CATEGORIES 
         }}
         className="flex-row ml-auto items-center justify-center mt-2"
       >
-        <Text className={mergeClassNames(typography.textMdSemibold, "text-brand-950 mr-1")}>Ajouter un autre événement</Text>
+        <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-900 mr-1")}>Ajouter un autre événement</Text>
         <PlusIcon color={TW_COLORS.BRAND_700} />
       </TouchableOpacity>
     </View>
@@ -403,18 +403,18 @@ const CategoryCard = ({
     <View key={categoryName} className="mb-6 w-full rounded rounded-3xl border border-1 border-gray-300 bg-gray-50 py-4 flex-1">
       <View className="px-4 gap-6 flex-col mb-6">
         <View className="flex-row items-center mb-2">
-          <View className="items-center justify-center">
-            <IconBg type={categoryName} frontSquareColor={TW_COLORS.GRAY_200} backSquareColor={TW_COLORS.BRAND_600} />
+          <View className="items-center justify-center mr-4">
+            <IconBg type={categoryName} frontSquareColor={TW_COLORS.CNAM_CYAN_50_LIGHTEN_90} backSquareColor={TW_COLORS.CNAM_CYAN_200_LIGHTEN_60} />
           </View>
+          <Text className={mergeClassNames(typography.textLgBold, "text-cnam-primary-900 ")}>
+            {INDICATOR_CATEGORIES_DATA[categoryName].name || categoryName}
+          </Text>
           {!indicators && (
             <View className="ml-auto rounded py-1 px-2 border border-brand-800 bg-gray-200 flex-row justify-content items-center">
-              <Text className={mergeClassNames(typography.textSmBold, "text-brand-900")}>à préciser</Text>
+              <Text className={mergeClassNames(typography.textSmBold, "text-cnam-primary-900")}>à préciser</Text>
             </View>
           )}
         </View>
-        <Text className={mergeClassNames(typography.textLgBold, "text-brand-900")}>
-          {INDICATOR_CATEGORIES_DATA[categoryName].name || categoryName}
-        </Text>
         {indicators && <View className="flex-col h-auto">{indicators.map((indicator, index) => renderIndicatorItem(indicator))}</View>}
         {type === "select-and-input" && (
           <View className="flex-row">
@@ -436,7 +436,7 @@ const CategoryCard = ({
               }}
               className="flex-row ml-auto items-center justify-center"
             >
-              <Text className={mergeClassNames(typography.textMdSemibold, "text-brand-950 mr-1")}>Préciser</Text>
+              <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-900 mr-1")}>Préciser</Text>
               <ArrowIcon color={TW_COLORS.BRAND_700} />
             </TouchableOpacity>
           </View>

@@ -66,7 +66,7 @@ export const OnboardingCheckInMoodSummaryScreen: React.FC<Props> = ({ navigation
       >
         <View className="px-4 py-6 rounded-3xl bg-white w-full">
           <Text
-            className={mergeClassNames(typography.displayXsRegular, "text-center mb-4 text-brand-950 font-bold")}
+            className={mergeClassNames(typography.displayXsRegular, "text-center mb-4 text-cnam-primary-900 font-bold")}
             style={{ color: TW_COLORS.TEXT_PRIMARY }}
           >
             Votre bilan d'aujourd'hui
@@ -94,7 +94,7 @@ export const OnboardingCheckInMoodSummaryScreen: React.FC<Props> = ({ navigation
       </BannerHeader>
       <View className="flex-1 p-6">
         <View className="w-full">
-          <Text className={mergeClassNames(typography.textXlSemibold, "text-brand-900 mb-6")}>Merci, c'est une première étape précieuse.</Text>
+          <Text className={mergeClassNames(typography.textXlSemibold, "text-cnam-primary-900 mb-6")}>Merci, c'est une première étape précieuse.</Text>
           <Text className={mergeClassNames(typography.textMdRegular, "text-gray-800 text-left")}>
             Observer votre humeur au fil du temps peut aider à mieux comprendre ce qui vous influence.
           </Text>

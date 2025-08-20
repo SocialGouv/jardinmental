@@ -24,7 +24,7 @@ export const IntroScreen: React.FC<Props> = ({ navigation }) => {
 
   const animatedStatusBarColor = useAnimatedStyle(() => {
     return {
-      backgroundColor: TW_COLORS.SECONDARY,
+      backgroundColor: TW_COLORS.PRIMARY,
     };
   });
 

@@ -51,7 +51,7 @@ export const GaugeChart = ({ value, reverse, containerStyle }) => {
 
             <G id="gradientRect">
               <Rect x="0" y="0" width={width} height={height} fill="url(#gradient)" />
-              <Rect x={width * value} y="0" width={width - width * value} height={height} fill="#D9DBE0" />
+              <Rect x={width * value} y="0" width={width - width * value} height={height} fill={TW_COLORS.GRAY_600} />
             </G>
           </Defs>
 

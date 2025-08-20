@@ -62,7 +62,7 @@ const ChooseIndicatorOrder = ({ navigation, route }) => {
         >
           {indicatorDirection === "ASC" ? (
             <View className="flex justify-center items-center w-4 h-4 border border-primary rounded-full">
-              <View className="w-2 h-2 border border-primary bg-primary rounded-full" />
+              <View className="w-2 h-2 border border-primary bg-cnam-primary-800 rounded-full" />
             </View>
           ) : (
             <View className="flex justify-center items-center w-4 h-4 border border-blue-800 rounded-full" />
@@ -80,7 +80,7 @@ const ChooseIndicatorOrder = ({ navigation, route }) => {
         >
           {indicatorDirection === "DESC" ? (
             <View className="flex justify-center items-center w-4 h-4 border border-primary rounded-full">
-              <View className="w-2 h-2 border border-primary bg-primary rounded-full" />
+              <View className="w-2 h-2 border border-primary bg-cnam-primary-800 rounded-full" />
             </View>
           ) : (
             <View className="flex justify-center items-center w-4 h-4 border border-blue-800 rounded-full" />

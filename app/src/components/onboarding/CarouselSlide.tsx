@@ -6,6 +6,7 @@ import BeigeCard from "@/scenes/onboarding-v2/BeigeCard";
 import { AvatarGroup } from "../AvatarGroup";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
+import { VARIANT_BORDER_COLORS } from "@/scenes/onboarding-v2/data/carouselData";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
@@ -15,20 +16,14 @@ export const CarouselSlide: React.FC<CarouselSlideProps> = ({ slide, isActive, o
       style={{
         width: screenWidth,
       }}
+      color={VARIANT_BORDER_COLORS[slide.variant || "beige"]}
     >
-      <Text
-        className={mergeClassNames(typography.displayXsBold, "text-brand-950 mb-10 text-left")}
-        style={{
-          color: TW_COLORS.TEXT_PRIMARY,
-        }}
-      >
-        {slide.title}
-      </Text>
+      <Text className={mergeClassNames(typography.displayXsBold, "text-cnam-primary-900 mb-10 text-left")}>{slide.title}</Text>
 
       {/* Description */}
       {slide.description && (
         <Text
-          className={mergeClassNames(typography.textMdRegular, "text-brand-900 text-left")}
+          className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-900 text-left")}
           style={{
             maxWidth: screenWidth - 64,
           }}

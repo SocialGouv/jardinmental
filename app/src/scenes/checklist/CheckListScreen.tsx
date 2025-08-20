@@ -96,7 +96,7 @@ export default function CheckListScreen({ navigation, route }) {
         }}
       >
         <View>
-          <Text className={mergeClassNames(typography.textMdRegular, "text-brand-950 text-left mb-8")}>
+          <Text className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-900 text-left mb-8")}>
             Pour profiter un maximum de Jardin Mental, vous pouvez compléter quelques étapes de personnalisation.
           </Text>
           {checklistItems.map((item, index) => {
@@ -124,7 +124,10 @@ export default function CheckListScreen({ navigation, route }) {
 
                 {/* Text */}
                 <Text
-                  className={mergeClassNames(`flex-1 ml-4 ${typography.textMdMedium} text-brand-950`, isDone ? "line-through text-mood-text-4" : "")}
+                  className={mergeClassNames(
+                    `flex-1 ml-4 ${typography.textMdMedium} text-cnam-primary-900`,
+                    isDone ? "line-through text-mood-text-4" : ""
+                  )}
                 >
                   {item.label}
                 </Text>

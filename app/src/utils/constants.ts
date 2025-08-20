@@ -327,7 +327,7 @@ export const TOTAL_STEPS = STEP_ORDER.length;
 
 // Colors
 export const TW_COLORS = {
-  PRIMARY: mainColors.LIGHT_BLUE,
+  PRIMARY: "#3D6874", //mainColors.LIGHT_BLUE,
   SECONDARY: "#12747D", //'#00CEF7',
   POSITIVE: "#5DEE5A", // positive for action relative to mental health !== 'success action in app'
   NEGATIVE: "#F16B6B", // negative feeling for action relative to mental health
@@ -340,20 +340,28 @@ export const TW_COLORS = {
   GRAY_LIGHT: "#E0E0E0",
   GRAY_MEDIUM: "#9E9E9E",
   GRAY_DARK: "#424242",
-  TEXT_PRIMARY: "#134449", //'#212121',
+  TEXT_PRIMARY: "#3D6874", //'#212121',
   TEXT_SECONDARY: "#757575",
-  LIGHT_COLORS: "#134449",
+  LIGHT_COLORS: "#3D6874",
   LIGHT_BLUE: "#EBFDFF",
   BRAND_800: "#12747D",
   BRAND_700: "#158993",
   BRAND_600: "#1CB2BF",
   BRAND_500: "#1FC6D5",
+  CNAM_CYAN_DARKEN_20: "#0084B2",
+  CNAM_CYAN_LIGHTEN_80: "#CCEDF9",
+  CNAM_CYAN_200_LIGHTEN_60: "#99DBF2",
+  CNAM_CYAN_50_LIGHTEN_90: "#E5F6FC",
+  CNAM_CYAN_0: "#00A5DF",
+  CNAM_PRIMARY_900: "#134449",
   BEIGE: "#FCEBD9",
   GRAY_800: "#4A5D5F",
   GRAY_700: "#617778",
-  GRAY_200: "#E3F6F8",
+  GRAY_200: "#627577ff",
+  GRAY_600: "#799092",
+  GRAY_950: "#093F43",
   BRAND_25: "#FAFFFF",
-  BRAND_900: "#134449",
+  BRAND_900: "#3D6874",
 };
 
 export const SHARED_HEADER = false;

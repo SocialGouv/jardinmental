@@ -115,7 +115,7 @@ export const ObjectiveScreen: React.FC<Props> = ({ navigation, route }) => {
         {/* En-tête */}
         <View className="px-6 py-4">
           <Text className="text-2xl font-bold text-center mb-2" style={{ color: TW_COLORS.TEXT_PRIMARY }}></Text>
-          <Text className={mergeClassNames(typography.textSmMedium, "text-brand-900 text-left")}>
+          <Text className={mergeClassNames(typography.textSmMedium, "text-cnam-primary-900 text-left")}>
             Votre réponse nous aide à vous orienter vers un suivi plus utile.
           </Text>
         </View>

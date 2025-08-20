@@ -62,7 +62,7 @@ const Tabs = ({ navigation, route }) => {
           marginHorizontal: 0,
           padding: 0,
         },
-        tabBarActiveTintColor: colors.BLUE,
+        tabBarActiveTintColor: colors.PRIMARY,
         tabBarInactiveTintColor: "#a1a1a1",
       }}
     >

@@ -8,8 +8,8 @@ interface AlertBannerProps {
 
 export default ({ text }: AlertBannerProps) => {
   return (
-    <View className={"bg-[#FDF2E7] py-3 px-2 mb-1"} role="alert" accessibilityRole="text">
-      <Text className={mergeClassNames(typography.textSmMedium, "text-[#822F2F]")} accessibilityLabel={text}>
+    <View className={"bg-cnam-jaune-100 py-3 px-2 mb-1"} role="alert" accessibilityRole="text">
+      <Text className={mergeClassNames(typography.textSmMedium, "text-cnam-jaune-900")} accessibilityLabel={text}>
         {text}
       </Text>
     </View>
