@@ -26,7 +26,7 @@ import { beforeToday, formatDay, getArrayOfDates } from "../utils/date/helpers";
 import { DiaryData, DiaryDataNewEntryInput } from "../entities/DiaryData";
 import { parse } from "date-fns";
 import { generateIndicatorFromPredefinedIndicator } from "@/entities/Indicator";
-import { GENERIC_INDICATOR_SUBSTANCE } from "@/utils/liste_indicateurs.1";
+import { GENERIC_INDICATOR_SUBSTANCE, STATIC_UUID_FOR_INSTANCE_OF_GENERIC_INDICATOR_SUBSTANCE } from "@/utils/liste_indicateurs.1";
 import localStorage from "@/utils/localStorage/index";
 
 export const wipeData = async () => {
