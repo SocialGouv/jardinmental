@@ -4,18 +4,25 @@ import Text from "../../components/MyText";
 import RoundButtonIcon from "../../components/RoundButtonIcon";
 import { InputCheckbox } from "../../components/InputCheckbox";
 import { Indicator } from "@/entities/Indicator";
+import { ca } from "date-fns/locale";
+import { NEW_INDICATORS_CATEGORIES } from "@/utils/liste_indicateurs.1";
 
 const CategorieElements = ({
   title,
   options,
   onClick,
   userIndicateurs,
+  category,
 }: {
   title: string;
   options: any[];
   onClick: (option: any) => void;
   userIndicateurs: Indicator[];
+  category?: NEW_INDICATORS_CATEGORIES;
 }) => {
+  const existingCustomIndicatorsForGenericUuid = userIndicateurs.filter(
+    (ind) => ind.mainCategory === category && !ind.isGeneric && ind.baseIndicatorUuid
+  );
   const [isOpen, setIsOpen] = React.useState(false);
   return (
     <>
@@ -27,11 +34,15 @@ const CategorieElements = ({
       </TouchableOpacity>
       {isOpen ? (
         <View style={styles.listeContainer}>
-          {(options || [])
-            .filter((e) => !e.active)
+          {([...options, ...existingCustomIndicatorsForGenericUuid] || [])
+            // .filter((e) => !e.active)
             .map((option) => {
               const indicateurSelectionne = userIndicateurs.find(
-                (_ind) => (_ind.uuid === option.uuid || _ind.genericUuid === option.uuid || _ind.baseIndicatorUuid === option.uuid) && _ind.active
+                (_ind) =>
+                  (_ind.uuid === option.uuid ||
+                    (!_ind.baseIndicatorUuid && _ind.genericUuid === option.uuid) ||
+                    _ind.baseIndicatorUuid === option.uuid) &&
+                  _ind.active
               );
               return (
                 <View

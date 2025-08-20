@@ -78,9 +78,9 @@ const EditIndicateurs = ({ navigation, route }) => {
   };
 
   const setToggleIndicateur = async (_indicateur: PredefineIndicatorV2SchemaType) => {
-    if (userIndicateurs.find((e) => e.uuid === _indicateur.uuid)) {
+    if (userIndicateurs.find((e) => e.uuid === _indicateur.uuid || e.baseIndicatorUuid === _indicateur.uuid)) {
       const _userIndicateurs = userIndicateurs.map((indicateur) => {
-        if (indicateur.uuid === _indicateur.uuid) {
+        if (indicateur.uuid === _indicateur.uuid || indicateur.baseIndicatorUuid === _indicateur.uuid) {
           indicateur.active = !indicateur.active;
         }
         return indicateur;
@@ -161,6 +161,7 @@ const EditIndicateurs = ({ navigation, route }) => {
               return (
                 <CategorieElements
                   key={_category}
+                  category={indicateursByCategory[_category][0].mainCategory}
                   title={INDICATOR_CATEGORIES_DATA[_category].name}
                   options={_indicateurs}
                   onClick={(value) => setToggleIndicateur(value)}

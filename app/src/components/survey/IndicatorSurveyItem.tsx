@@ -115,6 +115,7 @@ export const IndicatorSurveyItem = ({
               showBottomSheet(
                 <IndicatorModal
                   userIndicators={allIndicators}
+                  genericIndicator={indicator}
                   category={indicator.mainCategory}
                   addedIndicators={[]}
                   initialSelectedIndicators={[]}
