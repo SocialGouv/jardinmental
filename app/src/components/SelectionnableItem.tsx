@@ -94,8 +94,28 @@ export function LightSelectionnableItem({ id, label, description, selected, onPr
   );
 }
 
-export function InputSelectionnableItem({ id, label, selected, onPress, className, icon }: DifficultyOptionProps) {
+export function InputSelectionnableItem({
+  id,
+  label,
+  selected,
+  onPress,
+  className,
+  icon,
+  validationError,
+  onTextChange,
+}: DifficultyOptionProps & {
+  validationError?: string;
+  onTextChange?: (text: string) => void;
+}) {
   const [value, setValue] = useState<string>("");
+
+  const handleTextChange = (text: string) => {
+    setValue(text);
+    if (onTextChange) {
+      onTextChange(text);
+    }
+  };
+
   return (
     <TouchableOpacity
       key={id}
@@ -121,7 +141,7 @@ export function InputSelectionnableItem({ id, label, selected, onPress, classNam
           <Text className={mergeClassNames(typography.textSmMedium, "text-gray-800 mb-2")}>{label}</Text>
           <View className="rounded rounded-lg flex-1">
             <TextInput
-              onChangeText={(text) => setValue(text)}
+              onChangeText={handleTextChange}
               className={mergeClassNames(typography.textMdRegular, "text-left border border-gray-300 p-2 rounded rounded-lg flex-1")}
             />
             <TouchableOpacity
@@ -135,6 +155,7 @@ export function InputSelectionnableItem({ id, label, selected, onPress, classNam
               <Text className={mergeClassNames(typography.textMdSemibold, "text-brand-800")}>Valider</Text>
             </TouchableOpacity>
           </View>
+          {validationError && <Text className={mergeClassNames(typography.textSmMedium, "text-red-600 mt-2")}>{validationError}</Text>}
         </View>
       </View>
     </TouchableOpacity>

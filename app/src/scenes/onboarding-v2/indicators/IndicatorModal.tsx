@@ -9,7 +9,7 @@ import { INDICATOR_CATEGORIES_DATA } from "../data/helperData";
 import React, { useEffect, useState } from "react";
 import { TW_COLORS } from "@/utils/constants";
 import { TouchableOpacity } from "@gorhom/bottom-sheet";
-import { INDICATOR_TYPE, PredefineIndicatorV2SchemaType, Indicator } from "@/entities/Indicator";
+import { INDICATOR_TYPE, PredefineIndicatorV2SchemaType, Indicator, generateIndicatorFromPredefinedIndicator } from "@/entities/Indicator";
 import { v4 as uuidv4 } from "uuid";
 import JMButton from "@/components/JMButton";
 import { INDICATORS_CATEGORIES } from "@/entities/IndicatorCategories";
@@ -19,6 +19,7 @@ const height90vh = screenHeight * 0.9;
 
 export default function IndicatorModal({
   category = NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR,
+  genericIndicator,
   addedIndicators,
   initialSelectedIndicators,
   userIndicators = [],
@@ -26,12 +27,14 @@ export default function IndicatorModal({
   onClose,
 }: {
   category: NEW_INDICATORS_CATEGORIES;
+  genericIndicator?: Indicator;
   addedIndicators: PredefineIndicatorV2SchemaType[];
   initialSelectedIndicators: string[];
   userIndicators: Indicator[];
   multiSelect?: boolean;
   onClose: (categoryName: NEW_INDICATORS_CATEGORIES, indicators: PredefineIndicatorV2SchemaType[]) => void;
 }) {
+  const existingCustomIndicatorsForGenericUuid = userIndicators.filter((ind) => !ind.isGeneric && ind.genericUuid === genericIndicator?.genericUuid);
   const allIndicators = [...INDICATORS.filter((ind) => ind.categories.includes(category)), ...addedIndicators].filter((ind) => !ind.isGeneric);
   const uniqueIndicators = Array.from(new Map(allIndicators.map((ind) => [ind.uuid, ind])).values());
   const [newIndicators, setNewIndicators] = useState<PredefineIndicatorV2SchemaType[]>([]);
@@ -39,6 +42,20 @@ export default function IndicatorModal({
   const [searchedText, setSearchText] = useState<string>("");
   const [editingIndicators, setEditingIndicators] = useState<string[]>([]);
   const [selectedIndicators, setSelectedIndicators] = useState<string[]>(initialSelectedIndicators);
+  const [duplicateError, setDuplicateError] = useState<string | null>(null);
+
+  const checkDuplicateName = (name: string): boolean => {
+    const lowerName = name?.toLowerCase().trim();
+    if (!lowerName) return false;
+
+    // Check against INDICATORS
+    const existsInIndicators = INDICATORS.some((indicateur) => indicateur.name?.toLowerCase() === lowerName);
+
+    // Check against userIndicators
+    const existsInDisabled = userIndicators.some((indicateur) => indicateur.name?.toLowerCase() === lowerName);
+
+    return existsInIndicators || existsInDisabled;
+  };
 
   const toggleIndicator = (id: string) => {
     if (multiSelect) {
@@ -51,20 +68,33 @@ export default function IndicatorModal({
   };
 
   const createCustomIndicator = (name: string, category: NEW_INDICATORS_CATEGORIES): PredefineIndicatorV2SchemaType => {
+    // this PredefineIndicatorV2SchemaType will be refined afterwards and treated as a generic indicator
     return {
       uuid: uuidv4(),
       name: name,
       category: INDICATORS_CATEGORIES.Comportements,
-      type: INDICATOR_TYPE.boolean,
-      order: "ASC",
+      type: genericIndicator?.type || INDICATOR_TYPE.boolean,
+      order: genericIndicator?.order || "ASC",
+      isGeneric: false,
+      isCustom: true,
+      genericUuid: genericIndicator?.genericUuid || "", // this must be defined
       categories: [category],
       mainCategory: category,
       priority: 0,
     };
   };
 
-  const createNewIndicator = (text: string, index?: number) => {
+  const createNewIndicator = (text: string, index?: number): boolean => {
     if (text) {
+      // Clear any previous error
+      setDuplicateError(null);
+
+      // Check for duplicates
+      if (checkDuplicateName(text)) {
+        setDuplicateError("Un indicateur avec ce nom existe déjà");
+        return false; // Prevent creation
+      }
+
       const newIndicator = createCustomIndicator(text, category);
       setNewIndicators((prev) => [...prev, newIndicator]);
       if (typeof index === "number") {
@@ -76,6 +106,7 @@ export default function IndicatorModal({
         setSelectedIndicators([newIndicator.uuid]);
       }
     }
+    return true;
   };
 
   useEffect(() => {
@@ -106,12 +137,14 @@ export default function IndicatorModal({
         <TextInput
           onChangeText={(text) => {
             setSearchText(text);
+            if (duplicateError) setDuplicateError(null); // Clear error when typing
           }}
           className={mergeClassNames(typography.textMdRegular, "text-left border border-gray-300 p-2 rounded rounded-lg")}
           placeholder="Rechercher ou ajouter un élément"
         />
+        {duplicateError && <Text className={mergeClassNames(typography.textSmMedium, "text-red-600 mt-2")}>{duplicateError}</Text>}
         <View className="flex-colum flex-1">
-          {filteredIndicators.map((ind) => {
+          {[...filteredIndicators, ...existingCustomIndicatorsForGenericUuid].map((ind) => {
             const selected = selectedIndicators.includes(ind.uuid);
 
             return (
@@ -131,8 +164,10 @@ export default function IndicatorModal({
           {!!searchedText && !filteredIndicators.length && (
             <TouchableOpacity
               onPress={() => {
-                createNewIndicator(searchedText);
-                setSearchText("");
+                const isCreated = createNewIndicator(searchedText);
+                if (isCreated) {
+                  setSearchText("");
+                }
               }}
             >
               <View className="flex-row items-center mr-auto mt-2">
@@ -148,6 +183,10 @@ export default function IndicatorModal({
               label="Nommez le produit ou l'addiction:"
               selected={false}
               onPress={(text: string) => createNewIndicator(text, index)}
+              validationError={duplicateError || undefined}
+              onTextChange={(text: string) => {
+                if (duplicateError) setDuplicateError(null); // Clear error when typing
+              }}
             />
           ))}
           {!searchedText && (

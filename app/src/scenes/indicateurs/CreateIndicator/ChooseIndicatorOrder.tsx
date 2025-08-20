@@ -17,15 +17,18 @@ import { CATEGORIES, NEW_INDICATORS_CATEGORIES } from "@/utils/liste_indicateurs
 import { INDICATOR_ORDER, INDICATOR_TYPE } from "@/entities/Indicator";
 import { INDICATORS_CATEGORIES } from "@/entities/IndicatorCategories";
 
-const ChooseIndicatorOrder = ({ navigation, route }: {
-  navigation: any,
+const ChooseIndicatorOrder = ({
+  navigation,
+  route,
+}: {
+  navigation: any;
   route: {
     params: {
-      indicatorCategory: NEW_INDICATORS_CATEGORIES,
-      indicatorType: INDICATOR_TYPE,
-      nameNewIndicator: string
-    }
-  }
+      indicatorCategory: NEW_INDICATORS_CATEGORIES;
+      indicatorType: INDICATOR_TYPE;
+      nameNewIndicator: string;
+    };
+  };
 }) => {
   const [indicatorDirection, setIndicatorDirection] = useState<INDICATOR_ORDER>(INDICATOR_ORDER.ASC); // ASC : first direction (red to green) ; DESC : second direction (green to red)
   const [loading, setLoading] = useState(false);
@@ -43,6 +46,7 @@ const ChooseIndicatorOrder = ({ navigation, route }: {
       category: INDICATORS_CATEGORIES.Uncategorized, // no category from the previous existing category
       created_at: new Date(),
       isGeneric: false,
+      isCustom: true,
       newCategories: [route.params.indicatorCategory],
       mainCategory: route.params.indicatorCategory,
       version: 3,
@@ -73,10 +77,7 @@ const ChooseIndicatorOrder = ({ navigation, route }: {
         <Text style={styles.subtitle}>Vous pouvez choisir le sens d’évaluation qui correspond à votre indicateur</Text>
 
         <TouchableOpacity
-          style={[
-            styles.setDirectionContainer,
-            indicatorDirection === INDICATOR_ORDER.ASC && styles.activeSetDirectionContainer,
-          ]}
+          style={[styles.setDirectionContainer, indicatorDirection === INDICATOR_ORDER.ASC && styles.activeSetDirectionContainer]}
           onPress={() => setIndicatorDirection(INDICATOR_ORDER.ASC)}
         >
           {indicatorDirection === INDICATOR_ORDER.ASC ? (
@@ -89,17 +90,12 @@ const ChooseIndicatorOrder = ({ navigation, route }: {
 
           <View style={styles.setDirectionInside}>
             <RenderCurrentIndicator indicatorType={route.params.indicatorType} direction={INDICATOR_ORDER.ASC} />
-            <Text style={styles.setDirectionTitle}>
-              {renderSetDirectionTitle(route.params.indicatorType)?.ASC}
-            </Text>
+            <Text style={styles.setDirectionTitle}>{renderSetDirectionTitle(route.params.indicatorType)?.ASC}</Text>
           </View>
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={[
-            styles.setDirectionContainer,
-            indicatorDirection === "DESC" && styles.activeSetDirectionContainer,
-          ]}
+          style={[styles.setDirectionContainer, indicatorDirection === "DESC" && styles.activeSetDirectionContainer]}
           onPress={() => setIndicatorDirection(INDICATOR_ORDER.DESC)}
         >
           {indicatorDirection === "DESC" ? (
@@ -112,9 +108,7 @@ const ChooseIndicatorOrder = ({ navigation, route }: {
 
           <View style={styles.setDirectionInside}>
             <RenderCurrentIndicator indicatorType={route.params.indicatorType} direction={INDICATOR_ORDER.DESC} />
-            <Text style={styles.setDirectionTitle}>
-              {renderSetDirectionTitle(route.params.indicatorType).DESC}
-            </Text>
+            <Text style={styles.setDirectionTitle}>{renderSetDirectionTitle(route.params.indicatorType).DESC}</Text>
           </View>
         </TouchableOpacity>
       </View>
