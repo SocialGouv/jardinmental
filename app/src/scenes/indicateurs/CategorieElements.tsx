@@ -4,7 +4,6 @@ import Text from "../../components/MyText";
 import RoundButtonIcon from "../../components/RoundButtonIcon";
 import { InputCheckbox } from "../../components/InputCheckbox";
 import { Indicator } from "@/entities/Indicator";
-import { ca } from "date-fns/locale";
 import { NEW_INDICATORS_CATEGORIES } from "@/utils/liste_indicateurs.1";
 
 const CategorieElements = ({
