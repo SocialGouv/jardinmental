@@ -114,7 +114,7 @@ export const IndicatorSurveyItem = ({
             onPress={() => {
               showBottomSheet(
                 <IndicatorModal
-                  disabledIndicators={allIndicators}
+                  userIndicators={allIndicators}
                   category={indicator.mainCategory}
                   addedIndicators={[]}
                   initialSelectedIndicators={[]}
