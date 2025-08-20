@@ -18,6 +18,7 @@ import { Card } from "../../components/Card";
 import { DiaryDataNewEntryInput } from "../../entities/DiaryData";
 import { Indicator } from "../../entities/Indicator";
 import { IndicatorSurveyItem } from "@/components/survey/IndicatorSurveyItem";
+import { GENERIC_INDICATOR_SUBSTANCE, STATIC_UUID_FOR_INSTANCE_OF_GENERIC_INDICATOR_SUBSTANCE } from "@/utils/liste_indicateurs.1";
 
 const DaySurvey = ({
   navigation,
@@ -80,13 +81,11 @@ const DaySurvey = ({
     if (!surveyAnswers || userIndicateurs.length === 0) {
       return;
     }
-
     Object.keys(surveyAnswers).forEach((key) => {
       const answer = surveyAnswers[key];
       if (!answer) return;
-      // Handle special questions (TOXIC, CONTEXT)
-
-      if (key === questionToxic.id || key === questionContext.id) {
+      // Handle special questions (CONTEXT)
+      if (key === questionContext.id) {
         initialAnswers[key] = {
           ...answer,
           value: answer.value,
@@ -94,9 +93,22 @@ const DaySurvey = ({
         };
         return;
       }
-      const cleanedQuestionId = key.split("_")[0];
+
+      if (key === questionToxic.id) {
+        initialAnswers[key] = {
+          ...answer,
+          value: answer.value,
+          userComment: answer.userComment,
+        };
+      }
+
+      let cleanedQuestionId = key.split("_")[0];
       // previous indicators where using '_', we cleaned it when editing it apparently
-      const _indicateur = userIndicateurs.find((i) => i[i.diaryDataKey || "name"] === cleanedQuestionId);
+      const _indicateur = userIndicateurs.find(
+        (i) =>
+          i[i.diaryDataKey || "name"] === cleanedQuestionId ||
+          (cleanedQuestionId === questionToxic.id && i.genericUuid === GENERIC_INDICATOR_SUBSTANCE.uuid)
+      );
       if (_indicateur) {
         let value = answer.value;
         if (!["gauge", "boolean"].includes(_indicateur.type)) {
@@ -105,6 +117,13 @@ const DaySurvey = ({
             patientState: initSurvey?.answers,
             category: key,
           });
+        }
+        if (cleanedQuestionId === questionToxic.id) {
+          // in case where cleanedQuestionId is TOXIC,
+          // this happens only in edge case where value where registered as TOXIC and still editable
+          // and the user do the upgrade and edit a survey
+          // so in the overall data it can happen for only 7 days (the 7 days before the upgrade)
+          cleanedQuestionId = _indicateur.uuid;
         }
         initialAnswers[cleanedQuestionId] = {
           value: answer.value,
@@ -142,8 +161,14 @@ const DaySurvey = ({
     const prevCurrentSurvey = initSurvey;
     const currentSurvey: DiaryDataNewEntryInput = {
       date: prevCurrentSurvey.date,
-      answers: { ...prevCurrentSurvey.answers, ...answers },
+      answers: {
+        ...prevCurrentSurvey.answers,
+        ...answers,
+      },
     };
+    if (currentSurvey.answers[STATIC_UUID_FOR_INSTANCE_OF_GENERIC_INDICATOR_SUBSTANCE]) {
+      delete currentSurvey.answers[questionToxic.id];
+    }
     addNewEntryToDiaryData(currentSurvey);
     if (goalsRef.current && typeof goalsRef.current.onSubmit === "function") {
       await goalsRef.current.onSubmit();
@@ -282,7 +307,7 @@ const DaySurvey = ({
             userComment={answers[questionContext.id]?.userComment}
             placeholder="Contexte, évènements, comportement de l'entourage..."
           />
-          <QuestionYesNo
+          {/* <QuestionYesNo
             question={questionToxic}
             onPress={toggleAnswer}
             selected={answers[questionToxic.id]?.value}
@@ -290,7 +315,7 @@ const DaySurvey = ({
             isLast
             onChangeUserComment={handleChangeUserComment}
             userComment={answers[questionToxic.id]?.userComment}
-          />
+          /> */}
           <View className="h-[1px] bg-neutral-200 mx-5 my-2.5 w-full self-center" />
           <Text className="flex-1 text-black text-sm font-normal text-center">Retrouvez toutes vos notes dans l'onglet "Mon&nbsp;journal"</Text>
         </ScrollView>
