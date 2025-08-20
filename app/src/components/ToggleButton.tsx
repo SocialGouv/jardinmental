@@ -1,5 +1,5 @@
 import { TW_COLORS } from "@/utils/constants";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { TouchableOpacity, View, Text } from "react-native";
 
 interface ToggleButtonsProps {
@@ -22,6 +22,13 @@ export default function ToggleButtons({
   onPressRight,
 }: ToggleButtonsProps) {
   const [selected, setSelected] = useState<boolean | undefined>(initialSelected);
+
+  useEffect(() => {
+    if (initialSelected !== undefined && selected === undefined) {
+      setSelected(initialSelected);
+    }
+  }, [initialSelected, selected]);
+
   if (leftColor && rightColor) {
     return (
       <View className="flex-row rounded-lg border border-gray-300 self-start">
