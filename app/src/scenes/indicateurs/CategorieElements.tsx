@@ -20,8 +20,11 @@ const CategorieElements = ({
   category?: NEW_INDICATORS_CATEGORIES;
 }) => {
   const existingCustomIndicatorsForGenericUuid = userIndicateurs.filter(
-    (ind) => ind.mainCategory === category && !ind.isGeneric && ind.baseIndicatorUuid
+    (ind) => ind.mainCategory === category && ((!ind.isGeneric && ind.baseIndicatorUuid) || ind.isGeneric)
   );
+  const allBaseIndicatorUuids = userIndicateurs
+    .filter((ind) => ind.baseIndicatorUuid && ind.mainCategory === category)
+    .map((ind) => ind.baseIndicatorUuid);
   const [isOpen, setIsOpen] = React.useState(false);
   return (
     <>
@@ -33,7 +36,9 @@ const CategorieElements = ({
       </TouchableOpacity>
       {isOpen ? (
         <View style={styles.listeContainer}>
-          {([...options, ...existingCustomIndicatorsForGenericUuid] || [])
+          {(
+            [...options.filter((ind) => !ind.isGeneric && !allBaseIndicatorUuids.includes(ind.uuid)), ...existingCustomIndicatorsForGenericUuid] || []
+          )
             // .filter((e) => !e.active)
             .map((option) => {
               const indicateurSelectionne = userIndicateurs.find(
