@@ -21,14 +21,14 @@ export default function IndicatorModal({
   category = NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR,
   addedIndicators,
   initialSelectedIndicators,
-  disabledIndicators = [],
+  userIndicators = [],
   multiSelect = true,
   onClose,
 }: {
   category: NEW_INDICATORS_CATEGORIES;
   addedIndicators: PredefineIndicatorV2SchemaType[];
   initialSelectedIndicators: string[];
-  disabledIndicators: Indicator[];
+  userIndicators: Indicator[];
   multiSelect?: boolean;
   onClose: (categoryName: NEW_INDICATORS_CATEGORIES, indicators: PredefineIndicatorV2SchemaType[]) => void;
 }) {
@@ -120,7 +120,7 @@ export default function IndicatorModal({
                 className="flex-row"
                 id={ind.uuid}
                 label={ind.name}
-                disabled={disabledIndicators.some((disabledInd) => disabledInd.uuid === ind.uuid || disabledInd.baseIndicatorUuid === ind.uuid)}
+                disabled={userIndicators.some((disabledInd) => disabledInd.uuid === ind.uuid || disabledInd.baseIndicatorUuid === ind.uuid)}
                 shape={multiSelect ? "square" : "circle"}
                 selected={selected}
                 onPress={() => toggleIndicator(ind.uuid)}
