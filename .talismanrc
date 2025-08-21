@@ -25,6 +25,8 @@ fileignoreconfig:
   checksum: 68279ddbf41bdc3fdbe9ec5073122f73b74c992dad22768d69bf6b0c6d7f5f6f
 - filename: app/src/scenes/diary/index.js
   checksum: 3ce2456ab1ef9b4d523326b4e6e796eeab6a3588e8ac9b6c8fb3abd37b70c9d6
+- filename: app/src/scenes/goals/settings/GoalDaySelector.tsx
+  checksum: 9a29d23cd5cd03d8b6b0b3788070a0808b5c813417bb8b11f3ed8b5081ca37f0
 - filename: app/src/scenes/indicateurs/editIndicateurs/index.tsx
   checksum: da39a551c3cf5760751f04c9083a2e720d10874a38f8ae39861a127d59288487
 - filename: app/src/scenes/onboarding-v2/CarouselScreen.tsx
