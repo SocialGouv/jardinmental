@@ -8,6 +8,7 @@ import { StyleSheet, View, Platform } from "react-native";
 import { screenWidth } from "../../scenes/onboarding/screens";
 import { GaugeChart } from "./GaugeChart";
 import { colors } from "@/utils/colors";
+import { TW_COLORS } from "@/utils/constants";
 const HEIGHT_RATIO_GAUGE = 48 / 256;
 
 const styles = StyleSheet.create({
@@ -51,9 +52,11 @@ const Gauge = ({ hideSlider = false, defaultValue = 0, onChange, reverse }) => {
           onSlidingComplete={(v) => {
             onChange?.(v[0]); // called only once at the end
           }}
-          maximumTrackTintColor={"#D9DBE0"}
-          minimumTrackTintColor={colors.BLUE}
-          thumbTintColor={colors.BLUE}
+          maximumTrackTintColor={TW_COLORS.GRAY_600}
+          minimumTrackTintColor={TW_COLORS.CNAM_PRIMARY_900}
+          thumbTintColor={TW_COLORS.CNAM_PRIMARY_900}
+          trackStyle={{ height: 7, borderRadius: 5 }} // thicker track
+          thumbStyle={{ height: 21, width: 21, borderRadius: 20 }}
           // trackStyle={{ marginHorizontal: 10 }}
         />
       )}

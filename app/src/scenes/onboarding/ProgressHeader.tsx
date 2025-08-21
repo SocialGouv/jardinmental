@@ -208,11 +208,15 @@ const ProgressHeader = ({ insets, slidesCount, navigation }) => {
         </View>
         {showProgressbar && (
           <Animated.View className="flex-row items-center px-6" style={progressBarAnimatedStyle}>
-            <View className="h-2 rounded-full overflow-hidden flex-1" style={{ backgroundColor: TW_COLORS.GRAY_LIGHT }}>
+            <View
+              className="h-2 rounded-full overflow-hidden flex-1"
+              style={{ backgroundColor: TW_COLORS.GRAY_LIGHT, borderColor: TW_COLORS.GRAY_LIGHT, borderWidth: 1 }}
+            >
               <RNAnimated.View
                 className="h-full rounded-full transition-all duration-300"
                 style={{
-                  backgroundColor: TW_COLORS.BRAND_500,
+                  backgroundColor: TW_COLORS.CNAM_CYAN_DARKEN_20,
+                  // borderColor: TW_COLORS.GRAY_LIGHT,
                   width: animatedProgressWidth,
                 }}
               />

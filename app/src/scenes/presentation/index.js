@@ -13,7 +13,7 @@ const PdfViewer = ({ navigation }) => {
     <SafeAreaView className="flex-1 flex-col w-full h-full">
       <View className="flex-row items-center p-4">
         <Pressable onPress={() => navigation.goBack()} className="mr-4">
-          <Text className="text-gray-700 text-sm">Retour</Text>
+          <Text className="text-gray-800 text-sm">Retour</Text>
         </Pressable>
       </View>
       <View className="flex-1">

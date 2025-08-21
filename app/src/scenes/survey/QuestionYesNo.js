@@ -38,7 +38,7 @@ const QuestionYesNo = ({ question, explanation, onPress, selected, isLast, showU
           ) : (
             <View />
           )}
-          <Text className={mergeClassNames(typography.textMdMedium, "text-brand-950")}>{question.label}</Text>
+          <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900")}>{question.label}</Text>
           {/* we put a view here because we'll add a item here later */}
           <View />
         </View>

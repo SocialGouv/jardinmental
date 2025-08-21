@@ -92,6 +92,7 @@ const OnboardingV2Navigator: React.FC = () => {
         totalSteps={0}
         headingTitle={"Vous êtes prêts à faire vos observations quotidiennes, bravo !"}
         description={"Complétez maintenant votre première observation"}
+        nextText={"Compléter mon observation"}
         onNext={() => {
           const date = formatDay(beforeToday(0));
           const answers = diaryData[date] || {};

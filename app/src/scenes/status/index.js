@@ -177,12 +177,12 @@ const Status = ({ navigation, startSurvey }) => {
             style={{
               opacity: 1, //checklistBannerOpacity
             }}
-            className="p-8 bg-beige mb-4 rounded-xl"
+            className="p-8 bg-cnam-cyan-lighten-80 mb-4 rounded-xl"
           >
-            <Text className={mergeClassNames(typography.displayXsBold, "text-left text-brand-950 mb-6")}>
+            <Text className={mergeClassNames(typography.displayXsBold, "text-left text-cnam-primary-900 mb-6")}>
               Il vous reste quelques étapes pour bien démarrer
             </Text>
-            <Text className={mergeClassNames(typography.textMdRegular, "text-left text-brand-950")}>
+            <Text className={mergeClassNames(typography.textMdRegular, "text-left text-cnam-primary-900")}>
               Faites de Jardin Mental un espace qui vous ressemble, pour un suivi plus juste et plus utile.
             </Text>
             <View className="flex-row mt-6">

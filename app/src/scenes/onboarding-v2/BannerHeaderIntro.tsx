@@ -29,7 +29,7 @@ export default function BannerHeaderIntro({
         onLayout={onBannerLayout}
         style={[animatedStatusBarColor, { position: "absolute", top: 0, left: 0, right: 0, height: 260, zIndex: 1, overflow: "hidden" }]}
       >
-        <MonochromeLogo
+        {/* <MonochromeLogo
           width={"130%"}
           height={undefined}
           style={{
@@ -37,7 +37,7 @@ export default function BannerHeaderIntro({
             left: -30,
             top: "-30%",
           }}
-        />
+        /> */}
         <Animated.View
           style={[
             animatedStatusBarColor,

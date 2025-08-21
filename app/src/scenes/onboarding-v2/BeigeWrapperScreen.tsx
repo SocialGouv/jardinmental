@@ -7,40 +7,15 @@ import Leaf from "@assets/svg/illustrations/Leaf";
 import TwoLeaf from "@assets/svg/illustrations/TwoLeaf";
 import { SafeAreaViewWithOptionalHeader } from "../onboarding/ProgressHeader";
 import ChevronIcon from "@assets/svg/icon/chevron";
+import { VARIANT_COLORS } from "./data/carouselData";
 
 type Props = {
   variant?: "beige" | "white" | "green" | "blue";
   handlePrevious?: () => void;
   handleSkip?: () => void;
   handleNext?: () => void;
-  children: React.ReactNode;
+  children: React.ReactElement;
   nextText?: string;
-};
-
-const VARIANT_COLORS = {
-  beige: "bg-[#FDF2E7]",
-  red: "bg-[#FAEEEF]",
-  pink: "bg-[#FEF8FB]",
-  white: TW_COLORS.WHITE,
-  green: `bg-[#EEF9F1]`,
-  blue: `bg-[#E8F7F4]`,
-};
-
-const VARIANT_BORDER_COLORS = {
-  beige: "bg-[#FDF2E7]",
-  red: "bg-[#FAEEEF]",
-  pink: "bg-[#FEF8FB]",
-  white: TW_COLORS.WHITE,
-  green: `bg-[#EEF9F1]`,
-  blue: `#CCEEE8`,
-  yellow: "#FCF0D3",
-};
-
-const VARIANT_LEAF_COLORS = {
-  beige: "#FCEBD9",
-  white: TW_COLORS.WHITE,
-  blue: TW_COLORS.LIGHT_BLUE,
-  green: "#EBEEAC",
 };
 
 export const BeigeWrapperScreen: React.FC<Props> = ({ handlePrevious, handleSkip, handleNext, nextText, variant = "beige", children }: Props) => {
@@ -75,8 +50,8 @@ export const BeigeWrapperScreen: React.FC<Props> = ({ handlePrevious, handleSkip
         leftComponent={<ChevronIcon color={TW_COLORS.PRIMARY} />}
         animatedTextColor={{ color: TW_COLORS.PRIMARY }}
       />
-
       {children}
+      {/* {children && React.cloneElement(children, { color: VARIANT_BORDER_COLORS[variant] })} */}
       {/* <Leaf
                 style={{
                     position: 'absolute',

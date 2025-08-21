@@ -51,6 +51,22 @@ module.exports = {
         blue: {
           DEFAULT: "#EBFDFF",
         },
+        "cnam-primary": {
+          800: "#3D6874",
+          950: "#28464D",
+          900: "#134449",
+          500: "#65AEC1",
+          50: "#F0F7F9",
+        },
+        "cnam-cyan": {
+          "lighten-90": "#E5F6FC",
+          "lighten-80": "#CCEDF9",
+          "darken-20": "#0084B2",
+        },
+        "cnam-jaune": {
+          100: "#FCF0D3",
+          900: "#302407",
+        },
         brand: {
           DEFAULT: "#134449",
           900: "#134449",
@@ -58,7 +74,7 @@ module.exports = {
           800: "#12747D",
           600: "#1CB2BF",
           25: "#FAFFFF",
-          accent: "#FDF2E7",
+          accent: "#E5F6FC",
         },
         gray: {
           950: "#093F43",
@@ -82,6 +98,24 @@ module.exports = {
         "mood-text": {
           4: "#224E2D",
         },
+        "cnam-vert": {
+          "100-lighten-80": "#DDF3E3",
+          "200-lighten-60": "#BBE7C6",
+          "800-darken-60": "#224E2D"
+        },
+        "cnam-rouge": {
+          "100-lighten-80": "#F9DCD7",
+          "800-lighten-60":"#5A2017"
+        },
+        success: {
+          bg: "#DDF3E3",
+          "bg-darken": "#BBE7C6",
+          text: "#224E2D"
+        },
+        error: {
+          bg: "#F9DCD7",
+          text: "#5A2017"
+        }
       },
       fontFamily: {
         title: ["SourceSans3", "sans-serif"],

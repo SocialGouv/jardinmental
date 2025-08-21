@@ -80,13 +80,13 @@ export default function IndicatorModal({
         showsVerticalScrollIndicator={false}
         style={{ paddingVertical: 20, height: height90vh }}
       >
-        <View className="flex-row">
+        <View className="flex-row bg-[#E5F6FC] self-start p-2">
           {React.createElement(INDICATOR_CATEGORIES_DATA[category].icon, {
-            color: TW_COLORS.BRAND_600,
+            color: "#006386",
           })}
-          <Text className={mergeClassNames(typography.textSmBold, "ml-2 text-brand-600 text-left")}>{INDICATOR_CATEGORIES_DATA[category].label}</Text>
+          <Text className={mergeClassNames(typography.textSmBold, "ml-2 text-[#006386] text-left")}>{INDICATOR_CATEGORIES_DATA[category].label}</Text>
         </View>
-        <Text className={mergeClassNames(typography.displayXsBold, "text-left text-brand-950")}>Sélectionnez un ou plusieurs éléments</Text>
+        <Text className={mergeClassNames(typography.displayXsBold, "text-left text-cnam-primary-900")}>Sélectionnez un ou plusieurs éléments</Text>
         <TextInput
           onChangeText={(text) => {
             setSearchText(text);
@@ -109,7 +109,7 @@ export default function IndicatorModal({
               />
             );
           })}
-          {!filteredIndicators.length && <Text className={mergeClassNames(typography.textSmMedium, "text-gray-700")}>Pas de résultat</Text>}
+          {!filteredIndicators.length && <Text className={mergeClassNames(typography.textSmMedium, "text-gray-800")}>Pas de résultat</Text>}
           {!!searchedText && !filteredIndicators.length && (
             <TouchableOpacity
               onPress={() => {
@@ -118,7 +118,7 @@ export default function IndicatorModal({
               }}
             >
               <View className="flex-row items-center mr-auto mt-2">
-                <Text className={mergeClassNames(typography.textLgMedium, "mr-2 text-brand-900")}>Ajouter "{searchedText}"</Text>
+                <Text className={mergeClassNames(typography.textLgMedium, "mr-2 text-cnam-primary-900")}>Ajouter "{searchedText}"</Text>
                 <PlusIcon />
               </View>
             </TouchableOpacity>
@@ -134,7 +134,7 @@ export default function IndicatorModal({
                 }}
               >
                 <View className="flex-row items-center">
-                  <Text className={mergeClassNames(typography.textMdMedium, "mr-2 text-brand-900")}>ajouter un élément</Text>
+                  <Text className={mergeClassNames(typography.textMdMedium, "mr-2 text-cnam-primary-900")}>ajouter un élément</Text>
                   <PlusIcon />
                 </View>
               </TouchableOpacity>
@@ -151,7 +151,7 @@ export default function IndicatorModal({
         }}
         className={`flex-column justify-between items-center p-6 px-6 bg-white/90 pb-10 w-full`}
       >
-        <Text className={mergeClassNames(typography.textSmMedium, "text-gray-700 mb-2")}>Vous pourrez modifier cette sélection plus tard</Text>
+        <Text className={mergeClassNames(typography.textSmMedium, "text-gray-800 mb-2")}>Vous pourrez modifier cette sélection plus tard</Text>
         <JMButton
           onPress={() => {
             onClose(

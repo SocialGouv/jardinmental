@@ -48,7 +48,7 @@ export const OnboardingPersonalizationStartScreen: React.FC<Props> = ({ navigati
         />
       }
       <View className="flex-1 justify-center items-center px-8">
-        <Text className={mergeClassNames(typography.textXlMedium, "mb-8 text-brand-900 text-left")}>
+        <Text className={mergeClassNames(typography.textXlMedium, "mb-8 text-cnam-primary-900 text-left")}>
           Commençons avec quelques questions simples, pour que le suivi vous ressemble vraiment.
         </Text>
         <Text className={mergeClassNames(typography.textMdMedium, "text-left")} style={{ color: TW_COLORS.TEXT_SECONDARY }}>

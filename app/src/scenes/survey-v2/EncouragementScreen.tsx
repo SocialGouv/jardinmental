@@ -18,6 +18,7 @@ interface EncouragementScreenProps {
   description: string;
   headingTitle?: string;
   extraInfo?: string;
+  nextText?: string;
   onNext: () => void;
   onSkip?: () => void;
 }
@@ -30,6 +31,7 @@ export const EncouragementScreen: React.FC<EncouragementScreenProps> = ({
   extraInfo,
   onNext,
   onSkip,
+  nextText,
 }) => {
   const { setSlideIndex } = useOnboardingProgressHeader();
 
@@ -41,15 +43,17 @@ export const EncouragementScreen: React.FC<EncouragementScreenProps> = ({
   );
 
   return (
-    <BeigeWrapperScreen handlePrevious={() => navigation.goBack()} handleSkip={onSkip} handleNext={onNext}>
-      <BeigeCard>
+    <BeigeWrapperScreen handlePrevious={() => navigation.goBack()} handleSkip={onSkip} handleNext={onNext} nextText={nextText}>
+      <BeigeCard color={TW_COLORS.CNAM_CYAN_LIGHTEN_80}>
         <View className="justify-center items-center w-full">
-          <Text className={mergeClassNames(typography.displayXsBold, "text-brand-950 mb-8 text-left w-full")}>{headingTitle || `C'est noté 🌱`}</Text>
-          {title && <Text className={mergeClassNames(typography.textMdSemibold, "text-brand-900 mb-8 text-left w-full")}>{title}</Text>}
+          <Text className={mergeClassNames(typography.displayXsBold, "text-cnam-primary-900 mb-8 text-left w-full")}>
+            {headingTitle || `C'est noté 🌱`}
+          </Text>
+          {title && <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-900 mb-8 text-left w-full")}>{title}</Text>}
         </View>
         {description && (
           <View className="pb-4 w-full">
-            <Text className={mergeClassNames(typography.textMdRegular, "text-center text-brand-900 text-left")}>{description}</Text>
+            <Text className={mergeClassNames(typography.textMdRegular, "text-center text-cnam-primary-900 text-left")}>{description}</Text>
           </View>
         )}
         {extraInfo && (

@@ -85,7 +85,7 @@ export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
     <TouchableOpacity
       key={index}
       onPress={() => goToSlide(index)}
-      className={mergeClassNames("rounded-full mx-1", index === currentIndex ? "w-5 h-5 bg-gray-950" : "w-3 h-3 bg-gray-500 border border-gray-600")}
+      className={mergeClassNames("rounded-full mx-1", index === currentIndex ? "w-6 h-6 bg-gray-950" : "w-4 h-4 bg-[#65AEC1] border border-gray-600")}
     />
   );
 

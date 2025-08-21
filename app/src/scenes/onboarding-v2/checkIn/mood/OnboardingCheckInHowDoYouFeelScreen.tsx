@@ -201,7 +201,13 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
       };
     }
 
-    const colors = [TW_COLORS.PRIMARY, TW_COLORS.PRIMARY, TW_COLORS.PRIMARY, TW_COLORS.PRIMARY, TW_COLORS.PRIMARY];
+    const colors = [
+      TW_COLORS.CNAM_PRIMARY_900,
+      TW_COLORS.CNAM_PRIMARY_900,
+      TW_COLORS.CNAM_PRIMARY_900,
+      TW_COLORS.CNAM_PRIMARY_900,
+      TW_COLORS.CNAM_PRIMARY_900,
+    ];
 
     const color = interpolateColor(statusBarColorProgress.value, [0, 0.25, 0.5, 0.75, 1], colors);
 
@@ -263,7 +269,7 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
       </Animated.View>
       {selectedMoodIndex !== null && (
         <Animated.View style={animatedTextStyle} className="items-center">
-          <Text className={mergeClassNames(typography.displayMdBold, "text-brand-900")}>{moodEmojis[selectedMoodIndex - 1]?.label}</Text>
+          <Text className={mergeClassNames(typography.displayMdBold, "text-cnam-primary-900")}>{moodEmojis[selectedMoodIndex - 1]?.label}</Text>
         </Animated.View>
       )}
     </View>
@@ -287,7 +293,11 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
         onBannerLayout={handleBannerLayout}
       />
       <View className="flex-1 p-8">
-        <InstructionText>Sélectionnez votre ressenti du moment</InstructionText>
+        <View className="w-full">
+          <Text className={mergeClassNames(typography.textMdBold, "text-left text-cnam-primary-900 mb-6")}>
+            Sélectionnez votre ressenti du moment.
+          </Text>
+        </View>
         <View className="flex-1 p-8 justify-center items-center">{renderMoodSelector()}</View>
       </View>
       <NavigationButtons onNext={handleComplete} showPrevious={false} loading={loading} nextDisabled={!selectedMoodIndex} nextText="Continuer" />

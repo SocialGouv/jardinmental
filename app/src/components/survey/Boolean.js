@@ -8,12 +8,24 @@ import { TW_COLORS } from "@/utils/constants";
 export const Boolean = ({ indicator, value, onChange }) => {
   const color = {
     ASC: {
-      left: TW_COLORS.SUCCESS,
-      right: TW_COLORS.ERROR,
+      left: {
+        bg: TW_COLORS.SUCCESS.BG_DARKEN,
+        text: TW_COLORS.SUCCESS.TEXT
+      },
+      right: {
+        bg: TW_COLORS.ERROR.BG,
+        text: TW_COLORS.ERROR.TEXT
+      },
     },
     DESC: {
-      left: TW_COLORS.ERROR,
-      right: TW_COLORS.SUCCESS,
+      left: {
+        bg: TW_COLORS.ERROR.BG,
+        text: TW_COLORS.ERROR.TEXT
+      },
+      right: {
+        bg: TW_COLORS.SUCCESS.BG_DARKEN,
+        text: TW_COLORS.SUCCESS.TEXT
+      }
     },
   };
 
@@ -22,8 +34,10 @@ export const Boolean = ({ indicator, value, onChange }) => {
       onPressLeft={() => {
         onChange(false);
       }}
-      leftColor={color[indicator?.order].left}
-      rightColor={color[indicator?.order].right}
+      leftColor={color[indicator?.order].left.bg}
+      rightColor={color[indicator?.order].right.bg}
+      leftTextColor={color[indicator?.order].left.text}
+      rightTextColor={color[indicator?.order].right.text}
       leftText={"Oui"}
       rightText={"Non"}
       onPressRight={() => {

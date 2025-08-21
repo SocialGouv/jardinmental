@@ -5,6 +5,8 @@ import { TouchableOpacity, View, Text } from "react-native";
 interface ToggleButtonsProps {
   leftColor?: string;
   rightColor?: string;
+  leftTextColor?: string;
+  rightTextColor?: string;
   rightText?: string;
   leftText?: string;
   onPressLeft: (value: boolean) => void;
@@ -16,6 +18,8 @@ export default function ToggleButtons({
   initialSelected,
   leftColor,
   rightColor,
+  leftTextColor,
+  rightTextColor,
   rightText,
   leftText,
   onPressLeft,
@@ -35,7 +39,12 @@ export default function ToggleButtons({
             setSelected(true);
           }}
         >
-          <Text className={`${selected === true ? "text-white" : "text-gray-800"} font-medium`}>{leftText || "Oui"}</Text>
+          <Text 
+            style={{
+              color: selected === true ? (leftTextColor ? leftTextColor : 'white') : TW_COLORS.GRAY_800
+            }}
+            className={`font-medium`}
+          >{leftText || "Oui"}</Text>
         </TouchableOpacity>
         <TouchableOpacity
           className={`p-3 items-center rounded-r-lg border-l border-gray-300`}
@@ -47,7 +56,11 @@ export default function ToggleButtons({
             setSelected(false);
           }}
         >
-          <Text className={`${selected === false ? "text-white" : "text-gray-800"} font-medium`}>{rightText || "Non"}</Text>
+          <Text
+            style={{
+              color: selected === false ? (rightTextColor ? rightTextColor : 'white') : TW_COLORS.GRAY_800
+            }}
+            className={`font-medium`}>{rightText || "Non"}</Text>
         </TouchableOpacity>
       </View>
     );

@@ -187,7 +187,7 @@ export const OnboardingCheckInLastMoods: React.FC<Props> = ({ navigation, route 
               }}
             >
               <View className="flex-row items-center justify-center">
-                <Text className={mergeClassNames(typography.textSmSemibold, "text-brand-900 mr-1")}>{firstLetterUppercase(mood)}</Text>
+                <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-900 mr-1")}>{firstLetterUppercase(mood)}</Text>
                 {isSelected ? <CheckMarkIcon /> : <PlusIcon />}
               </View>
               <View
@@ -236,7 +236,11 @@ export const OnboardingCheckInLastMoods: React.FC<Props> = ({ navigation, route 
         {route.params?.mood !== null && <View className="justify-center items-center mt-4">{moodEmojis[route.params?.mood]?.icon}</View>}
       </BannerHeader>
       <ScrollView className="flex-1 p-6" contentContainerStyle={{ paddingBottom: 100 }}>
-        <InstructionText>Sélectionnez votre ressenti du moment</InstructionText>
+        <View className="w-full">
+          <Text className={mergeClassNames(typography.textMdBold, "text-left text-cnam-primary-900 mb-6")}>
+            Sélectionnez votre ressenti du moment.
+          </Text>
+        </View>
         {renderMoodSelector()}
       </ScrollView>
       <NavigationButtons onNext={handleComplete} absolute={true} onLeftAction={showHelpModal} loading={loading} nextText="Renseigner mes émotions" />

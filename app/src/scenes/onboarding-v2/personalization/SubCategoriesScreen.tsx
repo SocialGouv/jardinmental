@@ -87,7 +87,7 @@ export const SubcategoriesScreen: React.FC<Props> = ({ navigation, route }) => {
           headerContent={
             <View>
               <View className="my-2">
-                <Text className={mergeClassNames(typography.textSmMedium, "text-gray-700 text-center")}>
+                <Text className={mergeClassNames(typography.textSmMedium, "text-gray-800 text-center")}>
                   Vous pourrez modifier cette sélection plus tard
                 </Text>
               </View>
@@ -119,10 +119,10 @@ export const SubcategoriesScreen: React.FC<Props> = ({ navigation, route }) => {
             return (
               <View key={cat.id}>
                 <View className={`flex-row items-center p-4 px-0 pb-6 ${index === 0 ? "pt-2" : "pt-6"}`}>
-                  <View className="rounded-full border-[1.5px] border-brand-900 bg-white w-10 h-10 items-center justify-center">
+                  <View className="rounded-full border-[1.5px] border-cnam-primary-800 bg-white w-10 h-10 items-center justify-center">
                     {React.createElement(cat.icon, { color: TW_COLORS.BRAND_900 })}
                   </View>
-                  <Text className={mergeClassNames(typography.textLgBold, "text-left text-brand-900 ml-2")}>{cat.name}</Text>
+                  <Text className={mergeClassNames(typography.textLgBold, "text-left text-cnam-primary-900 ml-2")}>{cat.name}</Text>
                 </View>
                 {cat.subCat.map((item) => renderSubCategoryItem({ item }))}
               </View>

@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
+import { StyleSheet, View, TouchableOpacity, Text, Pressable } from "react-native";
 import { BasicIcon } from "../CircledIcon";
 import { answers as emojis } from "../../scenes/survey-v2/utils";
 import { colors } from "@/utils/colors";
@@ -22,7 +22,7 @@ export const Smiley = ({ indicator, value, onValueChanged }) => {
         .map((emoji, i) => {
           const active = value === emoji.score;
           return (
-            <TouchableOpacity
+            <Pressable
               key={i}
               onPress={() => {
                 const nextValue = emoji?.score;
@@ -30,9 +30,10 @@ export const Smiley = ({ indicator, value, onValueChanged }) => {
                 onValueChanged?.({ indicator, value: nextValue });
               }}
             >
+              {({ pressed }) => (
               <View>
                 <BasicIcon
-                  color={emoji.backgroundColor}
+                  color={pressed ? emoji.pressedBackgroundColor : emoji.backgroundColor}
                   borderColor={TW_COLORS.PRIMARY}
                   iconColor={emoji.iconColor}
                   icon={emoji.icon}
@@ -42,7 +43,8 @@ export const Smiley = ({ indicator, value, onValueChanged }) => {
                   iconHeight={32}
                 />
               </View>
-            </TouchableOpacity>
+              )}
+            </Pressable>
           );
         })}
     </View>

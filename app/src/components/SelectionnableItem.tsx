@@ -19,13 +19,13 @@ export default function SelectionnableItem({ id, label, description, selected, o
       onPress={() => onPress(id)}
       className={mergeClassNames(
         "mb-3 p-4 rounded-xl border-2 flex-1",
-        selected ? "border-brand-800 bg-brand-25" : "border-gray-300 bg-transparent",
+        selected ? "border-brand-800 bg-brand-25" : "border-gray-300 bg-[#FCFCFD]",
         className
       )}
     >
       <View className="flex-row flex-1 items-center">
         {selected ? (
-          <View className="mr-3 w-6 h-6 rounded-md items-center justify-center bg-primary">
+          <View className="mr-3 w-6 h-6 rounded-md items-center justify-center bg-cnam-primary-800">
             <Text className="text-white text-base font-bold">✓</Text>
           </View>
         ) : (
@@ -34,8 +34,15 @@ export default function SelectionnableItem({ id, label, description, selected, o
           </View>
         )}
         <View className="flex-1">
-          <Text className={mergeClassNames(typography.textMdMedium, "text-brand-950")}>{label}</Text>
-          {description && <Text className={mergeClassNames(typography.textSmMedium, "text-gray-700 mt-1")}>{description}</Text>}
+          <Text
+            className={mergeClassNames(
+              selected ? typography.textMdSemibold : typography.textMdMedium,
+              selected ? "text-cnam-primary-950" : "text-cnam-primary-900"
+            )}
+          >
+            {label}
+          </Text>
+          {description && <Text className={mergeClassNames(typography.textSmMedium, "text-gray-800 mt-1")}>{description}</Text>}
         </View>
         {icon && (
           <View className="rounded-full border border-1 border-gray-700 bg-white w-10 h-10 items-center justify-center">
@@ -52,7 +59,7 @@ export function LightSelectionnableItem({ id, label, description, selected, onPr
     <TouchableOpacity onPress={() => onPress(id)} className={mergeClassNames("mb-3 py-3 border-b", "border-gray-300 bg-transparent", className)}>
       <View className="flex-row items-center">
         {selected ? (
-          <View className="w-6 h-6 rounded-md items-center justify-center bg-primary mr-4">
+          <View className="w-6 h-6 rounded-md items-center justify-center bg-cnam-primary-800 mr-4">
             <Text className="text-white text-base font-bold">✓</Text>
           </View>
         ) : (
@@ -66,7 +73,7 @@ export function LightSelectionnableItem({ id, label, description, selected, onPr
           </View>
         )}
         <View className="flex-1">
-          <Text className={mergeClassNames(typography.textMdMedium, "text-brand-950")}>{label}</Text>
+          <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900")}>{label}</Text>
           {description && <Text className={mergeClassNames(typography.textSmMedium, "text-gray-600 mt-1")}>{description}</Text>}
         </View>
       </View>
@@ -84,7 +91,7 @@ export function InputSelectionnableItem({ id, label, selected, onPress, classNam
     >
       <View className="flex-row items-center">
         {selected ? (
-          <View className="w-6 h-6 rounded-md items-center justify-center bg-primary mr-2">
+          <View className="w-6 h-6 rounded-md items-center justify-center bg-cnam-primary-800 mr-2">
             <Text className="text-white text-base font-bold">✓</Text>
           </View>
         ) : (
@@ -98,7 +105,7 @@ export function InputSelectionnableItem({ id, label, selected, onPress, classNam
           </View>
         )}
         <View className="flex-1 flex-col">
-          <Text className={mergeClassNames(typography.textSmMedium, "text-gray-700 mb-2")}>{label}</Text>
+          <Text className={mergeClassNames(typography.textSmMedium, "text-gray-800 mb-2")}>{label}</Text>
           <View className="rounded rounded-lg flex-1">
             <TextInput
               onChangeText={(text) => setValue(text)}

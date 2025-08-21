@@ -62,7 +62,7 @@ export default function JMButton({
 
   switch (variant) {
     case "primary":
-      variantClasses = "bg-primary";
+      variantClasses = "bg-cnam-primary-800";
       break;
     case "secondary":
       variantClasses = "bg-gray-500";
@@ -81,7 +81,7 @@ export default function JMButton({
   let textColor = "text-white";
   if (variant === "outline") textColor = "text-primary";
   if (variant === "secondary") textColor = "text-black";
-  if (variant === "text") textColor = "text-primary";
+  if (variant === "text") textColor = "text-cnam-primary-800";
   if (disabled || loading) textColor = "text-gray-800";
 
   const styledIcon = icon
@@ -97,7 +97,7 @@ export default function JMButton({
     : null;
   return (
     <TouchableOpacity className={finalClassName} style={[{ height: heightMap[size] }, style]} disabled={disabled || loading} {...props}>
-      {loading && <ActivityIndicator size="small" color={variant === "outline" || variant === "text" ? "#134449" : "#fff"} className="mr-2" />}
+      {loading && <ActivityIndicator size="small" color={variant === "outline" || variant === "text" ? "#3D6874" : "#fff"} className="mr-2" />}
       {!loading && styledIcon && iconPosition === "left" && <View className={!!(children ?? title) ? `mr-2` : ""}>{styledIcon}</View>}
       {!!(children || title) && <Text className={mergeClassNames("font-semibold", textSizeMap[size], textColor, textClassName)}>{title}</Text>}
       {!loading && icon && iconPosition === "right" && <View className={!!(children ?? title) ? `ml-2` : ""}>{icon}</View>}

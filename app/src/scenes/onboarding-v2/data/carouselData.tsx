@@ -2,6 +2,7 @@ import { colors } from "@/utils/colors";
 import { CarouselSlide } from "../types";
 import { AvatarGroup } from "@/components/AvatarGroup";
 import { View } from "react-native";
+import { TW_COLORS } from "@/utils/constants";
 
 const SlideWelcome: CarouselSlide = {
   id: "slide-jm-help-you",
@@ -78,5 +79,31 @@ export const carouselSlidesSuivi: CarouselSlide[] = [
   // },
   SlideFinal,
 ];
+
+export const VARIANT_COLORS = {
+  beige: "bg-[#E5F6FC]",
+  red: "bg-[#FAEEEF]",
+  pink: "bg-[#FEF8FB]",
+  white: TW_COLORS.WHITE,
+  green: `bg-[#EEF9F1]`,
+  blue: `bg-[#E5F6FC]`,
+};
+
+export const VARIANT_BORDER_COLORS = {
+  beige: "#E5F6FC",
+  red: "#F5DDDE",
+  pink: "#FCE8F2",
+  white: TW_COLORS.WHITE,
+  green: `#DDF3E3`,
+  blue: `#CCEDF9`,
+  yellow: "#FCF0D3",
+};
+
+const VARIANT_LEAF_COLORS = {
+  beige: "#FCEBD9",
+  white: TW_COLORS.WHITE,
+  blue: TW_COLORS.LIGHT_BLUE,
+  green: "#EBEEAC",
+};
 
 export default carouselSlides;

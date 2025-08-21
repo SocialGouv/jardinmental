@@ -65,11 +65,11 @@ export const IndicatorSurveyItem = ({
   return (
     <BasicCard>
       <View>
-        <Text className={mergeClassNames(typography.textLgSemibold, "text-brand-950", "mb-6")}>{indicator.name}</Text>
+        <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-900", "mb-6")}>{indicator.name}</Text>
       </View>
       {renderInput()}
       {indicator.type === INDICATOR_TYPE.gauge && (
-        <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700 h-5")}>{computeIndicatorLabel() || ""}</Text>
+        <Text className={mergeClassNames(typography.textMdMedium, "text-gray-800 h-5")}>{computeIndicatorLabel() || ""}</Text>
       )}
       {showComment && (
         <InputText
