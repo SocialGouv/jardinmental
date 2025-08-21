@@ -21,6 +21,8 @@ export default function BannerHeader({
   headerTitle,
   leftComponent,
   leftAction,
+  rightComponent,
+  rightAction,
   hideHeader = false, // temporary variable to hide headers
   dynamicTitle,
   headerTitleStyle,
@@ -43,6 +45,8 @@ export default function BannerHeader({
   headerTitle?: string; // title for the header, used in shared header
   leftComponent?: ReactNode; // custom left component, used in shared header
   leftAction?: () => void; // custom left action, used in shared header
+  rightComponent?: ReactNode; // custom left component, used in shared header
+  rightAction?: () => void; // custom left action, used in shared header
   hideHeader?: boolean; // temporary variable to hide headers
   dynamicTitle?: string; // dynamic title that replaces header title on scroll
   headerTitleStyle?: Animated.AnimateStyle<ViewStyle>; // animated style for original header title
@@ -88,6 +92,8 @@ export default function BannerHeader({
             onPrevious={handlePrevious}
             leftAction={leftAction}
             leftComponent={leftComponent}
+            rightComponent={rightComponent}
+            rightAction={rightAction}
             onSkip={handleSkip}
             showPrevious={true}
             animatedTextColor={animatedTextColor}

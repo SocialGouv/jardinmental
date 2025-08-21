@@ -30,6 +30,8 @@ export const CheckInHeader: React.FC<CheckInHeaderProps> = ({
   animatedTextColor,
   leftAction,
   leftComponent,
+  rightAction,
+  rightComponent,
   dynamicTitle,
   headerTitleStyle,
   dynamicTitleStyle,
@@ -99,22 +101,38 @@ export const CheckInHeader: React.FC<CheckInHeaderProps> = ({
       </View>
 
       {/* Bouton Passer */}
-      {showSkip && onSkip ? (
-        <TouchableOpacity
-          onPress={onSkip}
-          className="px-3 py-2 rounded-lg"
-          style={{
-            position: "absolute",
-            right: 0,
-            top: 0,
-            bottom: 0,
-            justifyContent: "center",
-          }}
-        >
-          <Animated.Text className="text-base" style={[{ color: TW_COLORS.WHITE }, animatedTextColor]}>
-            {skipText}
-          </Animated.Text>
-        </TouchableOpacity>
+      {(showSkip && onSkip) || rightComponent ? (
+        rightComponent ? (
+          <TouchableOpacity
+            onPress={rightAction}
+            className="px-3 py-2 rounded-lg"
+            style={{
+              position: "absolute",
+              right: 0,
+              top: 0,
+              bottom: 0,
+              justifyContent: "center",
+            }}
+          >
+            {rightComponent}
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity
+            onPress={onSkip}
+            className="px-3 py-2 rounded-lg"
+            style={{
+              position: "absolute",
+              right: 0,
+              top: 0,
+              bottom: 0,
+              justifyContent: "center",
+            }}
+          >
+            <Animated.Text className="text-base" style={[{ color: TW_COLORS.WHITE }, animatedTextColor]}>
+              {skipText}
+            </Animated.Text>
+          </TouchableOpacity>
+        )
       ) : (
         <View
           style={{

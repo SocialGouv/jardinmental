@@ -76,11 +76,10 @@ export const GoalsDaySurvey = forwardRef(({ date, scrollRef, route }, ref) => {
       scrollRef?.current?.scrollTo?.({ y: layout.y, animated: false });
     }
   }, [layout]);
-
   if (goals.length === 0) return null;
 
   return (
-    <View style={styles.container} onLayout={onLayout}>
+    <View style={styles.container} onLayout={onLayout} className="mb-2 border-b-2 border-gray-400 px-4 my-4">
       <Separator />
       <View style={styles.contentContainer}>
         <Title style={styles.spacing}>Mes objectifs</Title>

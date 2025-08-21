@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext, useRef, useMemo } from "react";
 import { ScrollView, View, KeyboardAvoidingView, Platform, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { beforeToday, formatDay, formatRelativeDate } from "../../utils/date/helpers";
+import { beforeToday, formatDate, formatDay, formatRelativeDate } from "../../utils/date/helpers";
 import { isToday, isYesterday, parseISO } from "date-fns";
 import { getScoreWithState } from "../../utils";
 import InputQuestion from "./InputQuestion";
@@ -28,6 +28,8 @@ import { useBottomSheet } from "@/context/BottomSheetContext";
 import HelpView from "@/components/HelpView";
 import { INDICATORS_CATEGORIES } from "@/entities/IndicatorCategories";
 import { AnimatedHeaderScrollScreen } from "../survey-v2/AnimatedHeaderScrollScreen";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import Pencil from "@assets/svg/Pencil";
 
 const DaySurvey = ({
   navigation,
@@ -209,8 +211,21 @@ const DaySurvey = ({
     console.log(category, HELP_FOR_CATEGORY);
     return showBottomSheet(<HelpView title={HELP_FOR_CATEGORY[category].title} description={HELP_FOR_CATEGORY[category]?.description} />);
   };
+  const editIndicators = () => {
+    navigation.navigate("symptoms");
+    logEvents.logSettingsSymptomsFromSurvey();
+  };
   return (
-    <AnimatedHeaderScrollScreen title={"Mon observation du jour"} navigation={navigation}>
+    <AnimatedHeaderScrollScreen
+      headerRightComponent={<Pencil color={TW_COLORS.WHITE} width={16} height={16} />}
+      headerRightAction={editIndicators}
+      headerTitle={formatDate(initSurvey?.date)}
+      handlePrevious={() => {
+        navigation.goBack();
+      }}
+      title={"Mon observation du jour"}
+      navigation={navigation}
+    >
       <View>
         {userIndicateurs
           .filter((ind) => ind.active === true && ind.uuid === INDICATEURS_HUMEUR.uuid)
@@ -275,7 +290,7 @@ const DaySurvey = ({
             </View>
           );
         })}
-        <Card
+        {/* <Card
           title="Personnaliser mes indicateurs"
           icon={{ icon: "ImportantSvg" }}
           onPress={() => {
@@ -283,27 +298,32 @@ const DaySurvey = ({
             logEvents.logSettingsSymptomsFromSurvey();
           }}
           className="my-2"
-        />
+        /> */}
       </View>
       <GoalsDaySurvey date={initSurvey?.date} ref={goalsRef} scrollRef={scrollRef} route={route} />
-      <InputQuestion
-        question={questionContext}
-        onPress={toggleAnswer}
-        selected={answers[questionContext.id]?.value}
-        explanation={questionContext.explanation}
-        onChangeUserComment={handleChangeUserComment}
-        userComment={answers[questionContext.id]?.userComment}
-        placeholder="Contexte, évènements, comportement de l'entourage..."
-      />
-      <QuestionYesNo
-        question={questionToxic}
-        onPress={toggleAnswer}
-        selected={answers[questionToxic.id]?.value}
-        explanation={questionToxic.explanation}
-        isLast
-        onChangeUserComment={handleChangeUserComment}
-        userComment={answers[questionToxic.id]?.userComment}
-      />
+      <View className="mb-2 border-b-2 border-gray-400 px-4 my-4">
+        <Text className={mergeClassNames(typography.displayXsBold, "text-left text-cnam-primary-900 ml-2 flex-1 mb-4")}>Note générale</Text>
+        <InputQuestion
+          question={questionContext}
+          onPress={toggleAnswer}
+          selected={answers[questionContext.id]?.value}
+          explanation={questionContext.explanation}
+          onChangeUserComment={handleChangeUserComment}
+          userComment={answers[questionContext.id]?.userComment}
+          placeholder="Contexte, évènements, comportement de l'entourage..."
+        />
+      </View>
+      <View className="mb-2 border-b-2 border-gray-400 px-4 my-4">
+        <QuestionYesNo
+          question={questionToxic}
+          onPress={toggleAnswer}
+          selected={answers[questionToxic.id]?.value}
+          explanation={questionToxic.explanation}
+          isLast
+          onChangeUserComment={handleChangeUserComment}
+          userComment={answers[questionToxic.id]?.userComment}
+        />
+      </View>
       <View className="h-[1px] bg-neutral-200 mx-5 my-2.5 w-full self-center" />
       <Text className="flex-1 text-black text-sm font-normal text-center">Retrouvez toutes vos notes dans l'onglet "Mon&nbsp;journal"</Text>
     </AnimatedHeaderScrollScreen>
