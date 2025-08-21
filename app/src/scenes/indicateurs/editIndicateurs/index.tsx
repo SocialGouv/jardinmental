@@ -32,10 +32,9 @@ const EditIndicateurs = ({ navigation, route }) => {
         prev[category] = [];
       }
       prev[category].push(curr);
-      return prev;
     }
+    return prev;
   }, {});
-
   // Sort each category group
   for (const category in indicateursByCategory) {
     indicateursByCategory[category].sort((a, b) => {
@@ -157,7 +156,6 @@ const EditIndicateurs = ({ navigation, route }) => {
             />
             {Object.keys(indicateursByCategory).map((_category) => {
               const _indicateurs = indicateursByCategory[_category];
-              console.log(_category);
               return (
                 <CategorieElements
                   key={_category}
