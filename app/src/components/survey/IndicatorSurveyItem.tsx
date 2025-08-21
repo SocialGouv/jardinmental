@@ -12,6 +12,8 @@ import { IndicatorItem } from "@/scenes/onboarding-v2/types";
 import { INDICATOR_TYPE, PredefineIndicatorSchemaType } from "@/entities/Indicator";
 import { DEFAULT_INDICATOR_LABELS, INDICATOR_LABELS } from "@/utils/liste_indicateurs.1";
 import BasicCard from "../BasicCard";
+import CheckMarkIcon from "@assets/svg/icon/check";
+import { TW_COLORS } from "@/utils/constants";
 
 export const IndicatorSurveyItem = ({
   indicator,
@@ -63,9 +65,10 @@ export const IndicatorSurveyItem = ({
     );
   };
   return (
-    <BasicCard>
-      <View>
-        <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-900", "mb-6")}>{indicator.name}</Text>
+    <BasicCard completed={value !== undefined}>
+      <View className="flex-row justify-between items-center mb-6">
+        <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-900")}>{indicator.name}</Text>
+        {value !== undefined && <CheckMarkIcon color={TW_COLORS.CNAM_PRIMARY_700} />}
       </View>
       {renderInput()}
       {indicator.type === INDICATOR_TYPE.gauge && (

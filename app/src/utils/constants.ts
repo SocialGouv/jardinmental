@@ -354,6 +354,7 @@ export const TW_COLORS = {
   CNAM_CYAN_50_LIGHTEN_90: "#E5F6FC",
   CNAM_CYAN_0: "#00A5DF",
   CNAM_PRIMARY_900: "#134449",
+  CNAM_PRIMARY_700: "#518B9A",
   BEIGE: "#FCEBD9",
   GRAY_800: "#4A5D5F",
   GRAY_700: "#617778",
@@ -366,12 +367,12 @@ export const TW_COLORS = {
   SUCCESS: {
     TEXT: "#224E2D",
     BG: "#DDF3E3",
-    BG_DARKEN: "#BBE7C6"
+    BG_DARKEN: "#BBE7C6",
   },
   ERROR: {
     BG: "#F9DCD7",
-    TEXT: "#5A2017"
-  }
+    TEXT: "#5A2017",
+  },
 };
 
 export const SHARED_HEADER = false;
