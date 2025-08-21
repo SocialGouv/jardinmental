@@ -18,6 +18,9 @@ import { Card } from "../../components/Card";
 import { DiaryDataNewEntryInput } from "../../entities/DiaryData";
 import { Indicator } from "../../entities/Indicator";
 import { IndicatorSurveyItem } from "@/components/survey/IndicatorSurveyItem";
+import { useBottomSheet } from "@/context/BottomSheetContext";
+import Drugs from "../drugs/drugs";
+import { DrugsBottomSheet } from "@/components/DrugsBottomSheet";
 
 const DaySurvey = ({
   navigation,
@@ -36,11 +39,14 @@ const DaySurvey = ({
     date: formatDay(beforeToday(0)),
     answers: {},
   };
+  const { showBottomSheet, closeBottomSheet } = useBottomSheet();
   const initEditiingSurvey = route?.params?.editingSurvey ?? false;
 
   const [diaryData, addNewEntryToDiaryData] = useContext(DiaryDataContext);
 
   const [userIndicateurs, setUserIndicateurs] = useState<Indicator[]>([]);
+  const [treatment, setTreatment] = useState<any[] | undefined>();
+
   const [answers, setAnswers] = useState<DiaryDataNewEntryInput["answers"]>({});
 
   const scrollRef = useRef<ScrollView | null>(null);
@@ -62,6 +68,10 @@ const DaySurvey = ({
         const user_indicateurs = await localStorage.getIndicateurs();
         if (user_indicateurs) {
           setUserIndicateurs(user_indicateurs);
+        }
+        const _treatment = await localStorage.getMedicalTreatment();
+        if (_treatment) {
+          setTreatment(_treatment);
         }
       })();
     }, [])
@@ -158,20 +168,28 @@ const DaySurvey = ({
       else navigation.navigate("tabs");
     }
 
-    const medicalTreatmentStorage = await localStorage.getMedicalTreatment();
-    if (medicalTreatmentStorage?.length === 0) {
+    if (treatment?.length === 0) {
       alertNoDataYesterday({
         date: prevCurrentSurvey?.date,
         diaryData,
         navigation,
       });
       return navigation.navigate("tabs");
+    } else if (treatment?.length) {
+      navigation.navigate("drugs", { treatment, currentSurvey: true });
+    } else {
+      showBottomSheet(
+        <DrugsBottomSheet
+          onClose={(treatment) => {
+            closeBottomSheet();
+            navigation.navigate("drugs", { treatment, currentSurvey: true });
+          }}
+          title={undefined}
+          description={undefined}
+        />
+      );
     }
-
-    navigation.navigate("drugs", {
-      currentSurvey,
-      editingSurvey: initEditiingSurvey,
-    });
+    //
   };
 
   const renderQuestion = () => {
@@ -283,3 +301,16 @@ const DaySurvey = ({
 };
 
 export default DaySurvey;
+
+const HelpView = ({ title, description }) => {
+  return (
+    <View className="flex-1 bg-white p-4">
+      <Text className="text-lg font-semibold mb-4" style={{ color: TW_COLORS.TEXT_PRIMARY }}>
+        {title}
+      </Text>
+      <Text className="text-base mb-4 leading-6" style={{ color: TW_COLORS.TEXT_SECONDARY }}>
+        {description}
+      </Text>
+    </View>
+  );
+};

@@ -14,12 +14,14 @@ import { onboardingStyles } from "../styles";
 import { StickyButtonContainer } from "../StickyButton";
 import { SafeAreaViewWithOptionalHeader } from "../ProgressHeader";
 import { OnboardingBackButton } from "../BackButton";
+import { useBottomSheet } from "@/context/BottomSheetContext";
 
 const Drugs = ({ navigation, route }) => {
   const [diaryData, setDiaryData] = useContext(DiaryDataContext);
   const [medicalTreatment, setMedicalTreatment] = useState();
   const [posology, setPosology] = useState([]);
   const [listDrugs, setListDrugs] = useState();
+  const { showBottomSheet, closeBottomSheet } = useBottomSheet();
 
   useEffect(() => {
     (async () => {
@@ -66,7 +68,17 @@ const Drugs = ({ navigation, route }) => {
   };
 
   const handleAdd = () => {
-    navigation.navigate("onboarding-drugs-list", { onboarding: route?.params?.onboarding });
+    showBottomSheet(
+      <DrugsBottomSheet
+        onClose={(treatment) => {
+          closeBottomSheet();
+          navigation.navigate("drugs", { treatment });
+        }}
+        title={undefined}
+        description={undefined}
+      />
+    );
+    // navigation.navigate("onboarding-drugs-list", { onboarding: route?.params?.onboarding });
   };
 
   const defaultValue = () => {

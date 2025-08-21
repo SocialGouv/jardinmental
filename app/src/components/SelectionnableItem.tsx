@@ -11,9 +11,10 @@ type DifficultyOptionProps = {
   onPress: (id: string | number) => void;
   className?: string;
   icon?: React.ComponentType<any>;
+  boxPosition?: string;
 };
 
-export default function SelectionnableItem({ id, label, description, selected, onPress, className, icon }: DifficultyOptionProps) {
+export default function SelectionnableItem({ id, label, description, selected, onPress, className, icon, boxPosition }: DifficultyOptionProps) {
   return (
     <TouchableOpacity
       onPress={() => onPress(id)}
@@ -23,7 +24,7 @@ export default function SelectionnableItem({ id, label, description, selected, o
         className
       )}
     >
-      <View className="flex-row flex-1 items-center">
+      <View className={"flex-row flex-1 item-centers"}>
         {selected ? (
           <View className="mr-3 w-6 h-6 rounded-md items-center justify-center bg-cnam-primary-800">
             <Text className="text-white text-base font-bold">✓</Text>
@@ -54,10 +55,10 @@ export default function SelectionnableItem({ id, label, description, selected, o
   );
 }
 
-export function LightSelectionnableItem({ id, label, description, selected, onPress, className, icon }: DifficultyOptionProps) {
+export function LightSelectionnableItem({ id, label, description, selected, onPress, className, icon, boxPosition }: DifficultyOptionProps) {
   return (
     <TouchableOpacity onPress={() => onPress(id)} className={mergeClassNames("mb-3 py-3 border-b", "border-gray-300 bg-transparent", className)}>
-      <View className="flex-row items-center">
+      <View className={mergeClassNames("flex-row items-center", boxPosition === "top" ? "items-start" : "items-center")}>
         {selected ? (
           <View className="w-6 h-6 rounded-md items-center justify-center bg-cnam-primary-800 mr-4">
             <Text className="text-white text-base font-bold">✓</Text>

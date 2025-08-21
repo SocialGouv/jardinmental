@@ -22,15 +22,17 @@ export default ({ drug, onChange, showPosology, onClose }) => {
 
   const render = () => {
     return (
-      <View style={styles.posologyItem}>
-        <View style={styles.left}>
-          <TouchableOpacity style={styles.delete} onPress={onClose}>
+      <View className="flex-column mb-8">
+        <View className="flex-row mb-2">
+          {/* <TouchableOpacity style={styles.delete} onPress={onClose}>
             <Icon icon="CrossSvg" width={8} height={8} color={colors.BLUE} />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           <Icon icon="DrugsSvg" styleContainer={{ marginRight: 10 }} />
           <View style={styles.posologyName}>
-            <Text style={styles.text1}>{drug?.name1}</Text>
-            {drug?.name2 ? <Text style={styles.text2}>{drug?.name2}</Text> : null}
+            <Text style={styles.text1}>
+              {drug?.name1}
+              {drug?.name2 ? <Text> ({drug?.name2})</Text> : null}
+            </Text>
           </View>
         </View>
         {showPosology ? (
@@ -59,7 +61,7 @@ export default ({ drug, onChange, showPosology, onClose }) => {
                   label: "choisir une dose dans la liste",
                   value: null,
                   color: "grey",
-                  inputLabel: "Choisir",
+                  inputLabel: "Indiquer la dose",
                 }}
                 items={[{ label: "0", value: "0", color: colors.BLUE }]
                   .concat(
@@ -173,6 +175,7 @@ const styles = StyleSheet.create({
   },
   text2: {
     fontSize: 13,
+    marginLeft: 10,
     color: colors.DARK_BLUE,
     fontStyle: "italic",
   },

@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
-import { StyleSheet, ScrollView, View, TextInput, Keyboard } from "react-native";
+import { StyleSheet, ScrollView, View, TextInput, Keyboard, Text, TouchableOpacity, Dimensions } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Text from "../../components/MyText";
 import { colors } from "../../utils/colors";
 import Button from "../../components/Button";
 import localStorage from "../../utils/localStorage";
@@ -13,14 +12,22 @@ import AddElemToList from "../../components/AddElemToList";
 import { confirm } from "../../utils";
 import logEvents from "../../services/logEvents";
 import JMButton from "@/components/JMButton";
+import { LightSelectionnableItem } from "@/components/SelectionnableItem";
+import { mergeClassNames } from "@/utils/className";
+import { typography } from "@/utils/typography";
+import PlusIcon from "@assets/svg/icon/plus";
+import NavigationButtons from "@/components/onboarding/NavigationButtons";
 const ELEMENT_HEIGHT = 55;
 
-const Drugs = ({ navigation, route }) => {
+const screenHeight = Dimensions.get("window").height;
+const height90vh = screenHeight * 0.9;
+
+const Drugs = ({ navigation, route, onClose }) => {
   const scrollRef = useRef();
   const [treatment, setTreatment] = useState([]);
   const [filter, setFilter] = useState();
   const [list, setList] = useState();
-  const [filteredList, setFilteredList] = useState();
+  const [filteredList, setFilteredList] = useState([]);
   const [NPSvisible, setNPSvisible] = useState(false);
   const [bufferCustomDrugs, setBufferCustomDrugs] = useState();
   const [viewElementIndex, setViewElementIndex] = useState();
@@ -67,7 +74,7 @@ const Drugs = ({ navigation, route }) => {
   }, [route]);
 
   useEffect(() => {
-    setFilteredList(filterAndSortList(list));
+    setFilteredList(filterAndSortList(list) || []);
   }, [filter, list]);
 
   const filterAndSortList = (list) =>
@@ -116,6 +123,7 @@ const Drugs = ({ navigation, route }) => {
   };
 
   const handleAdd = async (value) => {
+    ta;
     console.log("add drug", value);
     if (!value) return;
     const drug = { id: value, name1: value, values: [] };
@@ -130,72 +138,89 @@ const Drugs = ({ navigation, route }) => {
 
   const handleFilter = (f) => setFilter(f);
   const closeNPS = () => setNPSvisible(false);
-
   return (
-    <SafeAreaView style={styles.safe}>
-      <NPS forceView={NPSvisible} close={closeNPS} page={3} />
+    <View className="flex-1">
+      <ScrollView
+        className="gap-6"
+        contentContainerStyle={{ paddingBottom: 200 }}
+        showsVerticalScrollIndicator={false}
+        style={{ paddingVertical: 20, height: height90vh }}
+      >
+        <Text className={mergeClassNames(typography.displayXsBold, "text-left text-cnam-primary-900")}>Sélectionnez un ou plusieurs éléments</Text>
+        <TextInput
+          onChangeText={(text) => {
+            setFilter(text);
+          }}
+          className={mergeClassNames(typography.textMdRegular, "text-left border border-gray-300 p-2 rounded rounded-lg")}
+          placeholder="Rechercher ou ajouter un élément"
+        />
+        <View className="flex-colum flex-1">
+          {filteredList.map((e) => {
+            return (
+              <LightSelectionnableItem
+                key={e.id}
+                className="flex-row"
+                id={e.id}
+                label={e.name1}
+                boxPosition="top"
+                description={e.name2 ? `(${e.name2})` : undefined}
+                selected={!!treatment.find((x) => x.id === e.id)}
+                onPress={(newValue) => setToogleCheckbox(e, newValue)}
+              />
+            );
+          })}
+          {!filteredList.length && <Text className={mergeClassNames(typography.textSmMedium, "text-gray-800")}>Pas de résultat</Text>}
+          {!!filter && !filteredList.length && (
+            <TouchableOpacity
+              onPress={async () => {
+                // await handleAdd(filter);
+                // setFilter("");
+              }}
+            >
+              <View className="flex-row items-center mr-auto mt-2">
+                <Text className={mergeClassNames(typography.textLgMedium, "mr-2 text-cnam-primary-900")}>Ajouter "{filter}"</Text>
+                <PlusIcon />
+              </View>
+            </TouchableOpacity>
+          )}
+          {/* {editingIndicators.map((text, index) => (
+            <InputSelectionnableItem label={"Nommez le produit ou l’addiction :"} onPress={(text: string) => createNewIndicator(text, index)} />
+          ))}
+          {!filter && (
+            <View className="flex-row items-center mt-2 ml-auto">
+              <TouchableOpacity
+                onPress={() => {
+                  setEditingIndicators((editingIndicators) => [...editingIndicators, ""]);
+                }}
+              >
+                <View className="flex-row items-center">
+                  <Text className={mergeClassNames(typography.textMdMedium, "mr-2 text-cnam-primary-900")}>ajouter un élément</Text>
+                  <PlusIcon />
+                </View>
+              </TouchableOpacity>
+            </View>
+          )} */}
+        </View>
+      </ScrollView>
       <View
         style={{
-          display: "flex",
-          flexDirection: "row",
-          marginBottom: 10,
-          alignItems: "center",
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          right: 0,
         }}
+        className={`flex-column justify-between items-center p-6 px-6 bg-white/90 pb-10 w-full`}
       >
-        <BackButton onPress={navigation.goBack} />
-        <TextInput
-          autoCapitalize="none"
-          onChangeText={handleFilter}
-          value={filter}
-          placeholder="Rechercher un traitement"
-          placeholderTextColor="#a3a3a3"
-          style={styles.filter}
+        <Text className={mergeClassNames(typography.textSmMedium, "text-gray-800 mb-2")}>Vous pourrez modifier cette sélection plus tard</Text>
+        <JMButton
+          onPress={async () => {
+            await localStorage.setMedicalTreatment(treatment);
+            onClose(treatment);
+          }}
+          title={"Valider la sélection"}
         />
       </View>
-      <ScrollView
-        ref={scrollRef}
-        style={styles.container}
-        contentContainerStyle={styles.scrollContainer}
-        keyboardShouldPersistTaps="handled"
-        keyboardDismissMode="on-drag"
-        onScrollBeginDrag={Keyboard.dismiss}
-      >
-        {!filteredList ? (
-          <Text>Chargement</Text>
-        ) : (
-          <>
-            <AddElemToList onChange={handleAdd} onChangeText={setBufferCustomDrugs} styleContainer={{ marginHorizontal: 10 }} />
-            {filteredList?.length === 0 ? <Text style={styles.noResult}>Aucun résultat pour la recherche "{filter}"</Text> : null}
-            {filteredList?.map((e, index) => (
-              <View
-                key={index}
-                style={[
-                  styles.drug,
-                  {
-                    backgroundColor: treatment.find((x) => x.id === e.id) ? "white" : "#26387c12",
-                  },
-                ]}
-              >
-                <View style={styles.item}>
-                  <Text style={styles.text1}>{e.name1}</Text>
-                  {e.name2 ? <Text style={styles.text2}>({e.name2})</Text> : null}
-                </View>
-                <CheckBox
-                  animationDuration={0.2}
-                  boxType="square"
-                  style={styles.checkbox}
-                  value={!!treatment.find((x) => x.id === e.id)}
-                  onValueChange={(newValue) => setToogleCheckbox(e, newValue)}
-                />
-              </View>
-            ))}
-          </>
-        )}
-      </ScrollView>
-      <View style={styles.buttonWrapper}>
-        <JMButton onPress={handleSubmit} title="Valider" />
-      </View>
-    </SafeAreaView>
+    </View>
   );
 };
 

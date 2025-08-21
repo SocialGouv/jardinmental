@@ -14,14 +14,17 @@ import logEvents from "../../services/logEvents";
 import { alertNoDataYesterday } from "../survey/survey-data";
 import Logo from "../../../assets/svg/drugs";
 import QuestionYesNo from "../survey/QuestionYesNo";
+import { DrugsBottomSheet } from "@/components/DrugsBottomSheet";
+import { useBottomSheet } from "@/context/BottomSheetContext";
 
 const Drugs = ({ navigation, route }) => {
   const [diaryData, addNewEntryToDiaryData] = useContext(DiaryDataContext);
-  const [medicalTreatment, setMedicalTreatment] = useState();
+  const [medicalTreatment, setMedicalTreatment] = useState([]);
   const [posology, setPosology] = useState([]);
   const [inSurvey, setInSurvey] = useState(false);
   const [listDrugs, setListDrugs] = useState();
   const [answers, setAnswers] = useState({});
+  const { showBottomSheet, closeBottomSheet } = useBottomSheet();
 
   const priseDeTraitement = {
     id: "PRISE_DE_TRAITEMENT",
@@ -87,7 +90,16 @@ const Drugs = ({ navigation, route }) => {
   };
 
   const handleAdd = () => {
-    navigation.navigate("drugs-list");
+    showBottomSheet(
+      <DrugsBottomSheet
+        onClose={(treatment) => {
+          closeBottomSheet();
+          navigation.navigate("drugs", { treatment });
+        }}
+        title={undefined}
+        description={undefined}
+      />
+    );
   };
 
   const getLatestValue = () => {
@@ -185,17 +197,11 @@ const Drugs = ({ navigation, route }) => {
           </View>
         ) : null}
         {medicalTreatment.map((e, i) => (
-          <DrugItem
-            key={i}
-            drug={(posology && posology.find((i) => i.id === e.id)) || e}
-            onChange={handleDrugChange}
-            showPosology={inSurvey}
-            onClose={() => handleDelete(e)}
-          />
+          <DrugItem key={i} drug={(posology && posology.find((i) => i.id === e.id)) || e} onChange={handleDrugChange} showPosology={inSurvey} />
         ))}
-        <Text style={styles.addButton} onPress={handleAdd}>
+        {/* <Text style={styles.addButton} onPress={handleAdd}>
           + Ajouter / Modifier mes médicaments suivis
-        </Text>
+        </Text> */}
         {/* // if its onboarding, show button 'commencer' */}
         {route?.params?.onboarding ? (
           <View style={styles.buttonWrapper}>

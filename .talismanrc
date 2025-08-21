@@ -25,6 +25,8 @@ fileignoreconfig:
   checksum: 68279ddbf41bdc3fdbe9ec5073122f73b74c992dad22768d69bf6b0c6d7f5f6f
 - filename: app/src/scenes/diary/index.js
   checksum: 3ce2456ab1ef9b4d523326b4e6e796eeab6a3588e8ac9b6c8fb3abd37b70c9d6
+- filename: app/src/scenes/drugs/drugs.tsx
+  checksum: 76a0be3b893a853c29c90a7d0c3c761ae39762d9004921a9d1457854188920f8
 - filename: app/src/scenes/indicateurs/editIndicateurs/index.tsx
   checksum: da39a551c3cf5760751f04c9083a2e720d10874a38f8ae39861a127d59288487
 - filename: app/src/scenes/onboarding-v2/CarouselScreen.tsx

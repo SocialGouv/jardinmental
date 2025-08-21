@@ -8,9 +8,12 @@ import Button from "../../components/Button";
 import localStorage from "../../utils/localStorage";
 import { alertNoDataYesterday } from "../survey/survey-data";
 import JMButton from "@/components/JMButton";
+import { DrugsBottomSheet } from "@/components/DrugsBottomSheet";
+import { useBottomSheet } from "@/context/BottomSheetContext";
 
 export default ({ navigation, route }) => {
   const [diaryData] = useContext(DiaryDataContext);
+  const { showBottomSheet } = useBottomSheet();
 
   const handleNoTreatment = async () => {
     await localStorage.setMedicalTreatment([]);
@@ -35,7 +38,11 @@ export default ({ navigation, route }) => {
         Je suis chaque jour mes <Text style={styles.lightblue}>prises</Text> de <Text style={styles.lightblue}>traitement</Text>, cela me permet de{" "}
         <Text style={styles.lightblue}>comprendre</Text> comment il influe mon <Text style={styles.lightblue}>état</Text>
       </Text>
-      <JMButton onPress={() => navigation.navigate("drugs-list")} title="Ajouter un traitement" className={"mt-6 mb-2"} />
+      <JMButton
+        onPress={() => showBottomSheet(<DrugsBottomSheet title={undefined} description={undefined} />)}
+        title="Ajouter un traitement"
+        className={"mt-6 mb-2"}
+      />
       <TouchableOpacity onPress={handleDrugInformation}>
         <Text style={styles.link}>Informations sur les traitements</Text>
       </TouchableOpacity>
