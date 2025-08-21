@@ -183,6 +183,7 @@ export default function IndicatorModal({
             <InputSelectionnableItem
               key={index}
               id={index}
+              shape={multiSelect ? "square" : "circle"}
               label="Nommez le produit ou l'addiction:"
               selected={false}
               onPress={(text: string) => createNewIndicator(text, index)}

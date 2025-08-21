@@ -103,6 +103,7 @@ export function InputSelectionnableItem({
   onPress,
   className,
   icon,
+  shape,
   validationError,
   onTextChange,
 }: DifficultyOptionProps & {
@@ -126,11 +127,20 @@ export function InputSelectionnableItem({
     >
       <View className="flex-row items-center">
         {selected ? (
-          <View className="w-6 h-6 rounded-md items-center justify-center bg-cnam-primary-800 mr-2">
-            <Text className="text-white text-base font-bold">✓</Text>
+          <View
+            className={mergeClassNames("w-6 h-6 items-center justify-center bg-primary mr-4", shape === "circle" ? "rounded-full" : "rounded-md")}
+          >
+            { shape == "circle" ?
+            <View className="bg-white w-2 h-2 rounded-xl"/>
+            :<Text className="text-white text-base font-bold">✓</Text>}
           </View>
         ) : (
-          <View className="w-6 h-6 rounded-md items-center justify-center border-2 border-gray-300 mr-4">
+          <View
+            className={mergeClassNames(
+              "w-6 h-6 items-center justify-center border-2 border-gray-300 mr-4",
+              shape === "circle" ? "rounded-full" : "rounded-md"
+            )}
+          >
             <Text className="text-white text-xs" />
           </View>
         )}
