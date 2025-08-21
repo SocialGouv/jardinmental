@@ -30,6 +30,8 @@ import { INDICATORS_CATEGORIES } from "@/entities/IndicatorCategories";
 import { AnimatedHeaderScrollScreen } from "../survey-v2/AnimatedHeaderScrollScreen";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Pencil from "@assets/svg/Pencil";
+import ArrowIcon from "@assets/svg/icon/Arrow";
+import NavigationButtons from "@/components/onboarding/NavigationButtons";
 
 const DaySurvey = ({
   navigation,
@@ -208,13 +210,14 @@ const DaySurvey = ({
   };
 
   const showHelpModal = (category: NEW_INDICATORS_CATEGORIES) => {
-    console.log(category, HELP_FOR_CATEGORY);
     return showBottomSheet(<HelpView title={HELP_FOR_CATEGORY[category].title} description={HELP_FOR_CATEGORY[category]?.description} />);
   };
+
   const editIndicators = () => {
     navigation.navigate("symptoms");
     logEvents.logSettingsSymptomsFromSurvey();
   };
+  const answeredElementCount = Object.keys(answers).map((key) => answers[key].value !== undefined).length;
   return (
     <AnimatedHeaderScrollScreen
       headerRightComponent={<Pencil color={TW_COLORS.WHITE} width={16} height={16} />}
@@ -223,6 +226,25 @@ const DaySurvey = ({
       handlePrevious={() => {
         navigation.goBack();
       }}
+      bottomComponent={
+        <NavigationButtons
+          absolute={true}
+          withArrow={false}
+          headerContent={
+            <View>
+              <View className="my-2">
+                <Text className={mergeClassNames(typography.textSmMedium, "text-gray-700 text-center")}>
+                  {answeredElementCount} élément{answeredElementCount ? "s" : ""} observé{answeredElementCount ? "s" : ""}.
+                </Text>
+                <Text className={mergeClassNames(typography.textSmMedium, "text-gray-700 text-center")}>
+                  Vous pourrez compléter votre observation plus tard
+                </Text>
+              </View>
+            </View>
+          }
+          nextText="Valider mon observation"
+        />
+      }
       title={"Mon observation du jour"}
       navigation={navigation}
     >
@@ -313,7 +335,7 @@ const DaySurvey = ({
           placeholder="Contexte, évènements, comportement de l'entourage..."
         />
       </View>
-      <View className="mb-2 border-b-2 border-gray-400 px-4 my-4">
+      <View className="mb-2 px-4 my-4">
         <QuestionYesNo
           question={questionToxic}
           onPress={toggleAnswer}
@@ -324,8 +346,16 @@ const DaySurvey = ({
           userComment={answers[questionToxic.id]?.userComment}
         />
       </View>
-      <View className="h-[1px] bg-neutral-200 mx-5 my-2.5 w-full self-center" />
-      <Text className="flex-1 text-black text-sm font-normal text-center">Retrouvez toutes vos notes dans l'onglet "Mon&nbsp;journal"</Text>
+      <View className="flex-row justify-center">
+        <JMButton
+          icon={<ArrowIcon color={TW_COLORS.GRAY_700} />}
+          onPress={() => navigation.navigate("goals-settings")}
+          iconPosition="right"
+          width="fixed"
+          variant="outline"
+          title="Personnaliser mes objectifs"
+        />
+      </View>
     </AnimatedHeaderScrollScreen>
   );
 };
