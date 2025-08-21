@@ -17,6 +17,7 @@ import React, { useCallback, useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import localStorage from "@/utils/localStorage/index";
 import { INDICATEURS_HUMEUR, INDICATEURS_SOMMEIL } from "@/utils/liste_indicateurs.1";
+import { AnimatedHeaderScrollScreen } from "../survey-v2/AnimatedHeaderScrollScreen";
 
 type checkListPath = "reminder" | "symptoms" | "profile" | "goals-settings" | "drugs" | "survey";
 type checkListIds = "reminder" | "indicators" | "profile" | "goals" | "drugs" | "survey";
@@ -89,56 +90,57 @@ export default function CheckListScreen({ navigation, route }) {
   };
 
   return (
-    <View className="bg-gray-50 flex-1">
-      <Screen
-        header={{
-          title: "Premier pas",
-        }}
-      >
-        <View>
-          <Text className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-900 text-left mb-8")}>
-            Pour profiter un maximum de Jardin Mental, vous pouvez compléter quelques étapes de personnalisation.
-          </Text>
-          {checklistItems.map((item, index) => {
-            const isDone = item.isDone || checklistItemValues[item.id];
-            return (
-              <TouchableOpacity
-                key={index}
-                disabled={isDone}
-                onPress={() => handleItemPress(item)}
-                className={mergeClassNames("flex-row items-center p-4 mb-3 bg-white rounded-xl border border-gray-200", isDone ? "bg-mood-4" : "")}
-              >
-                {/* Left Icon */}
-                <View
-                  className={`rounded-full p-2 border w-8 h-8 items-center justify-center`}
-                  style={{
-                    borderColor: isDone ? iconBorderColors.good : TW_COLORS.GRAY_800,
-                  }}
+      <AnimatedHeaderScrollScreen
+      title={"Bien démarrer"}
+      scrollViewBackground={TW_COLORS.GRAY_50}
+      handlePrevious={() => {
+        navigation.goBack()
+      }}
+      showBottomButton={false}
+      navigation={navigation}>
+        <View className="bg-gray-50 flex-1 p-4">
+            <Text className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-900 text-left mb-8")}>
+              Pour profiter un maximum de Jardin Mental, vous pouvez compléter quelques étapes de personnalisation.
+            </Text>
+            {checklistItems.map((item, index) => {
+              const isDone = item.isDone || checklistItemValues[item.id];
+              return (
+                <TouchableOpacity
+                  key={index}
+                  disabled={isDone}
+                  onPress={() => handleItemPress(item)}
+                  className={mergeClassNames("flex-row items-center p-4 mb-3 bg-white rounded-xl border border-gray-300", isDone ? "bg-success-bg" : "")}
                 >
-                  {React.cloneElement(item.icon, {
-                    color: isDone ? iconBorderColors.good : TW_COLORS.GRAY_800,
-                    width: 16,
-                    height: 16,
-                  })}
-                </View>
+                  {/* Left Icon */}
+                  <View
+                    className={`rounded-full p-2 border w-8 h-8 items-center justify-center`}
+                    style={{
+                      borderColor: isDone ? TW_COLORS.SUCCESS.TEXT : TW_COLORS.GRAY_800,
+                    }}
+                  >
+                    {React.cloneElement(item.icon, {
+                      color: isDone ? TW_COLORS.SUCCESS.TEXT : TW_COLORS.GRAY_800,
+                      width: 16,
+                      height: 16,
+                    })}
+                  </View>
 
-                {/* Text */}
-                <Text
-                  className={mergeClassNames(
-                    `flex-1 ml-4 ${typography.textMdMedium} text-cnam-primary-900`,
-                    isDone ? "line-through text-mood-text-4" : ""
-                  )}
-                >
-                  {item.label}
-                </Text>
+                  {/* Text */}
+                  <Text
+                    className={mergeClassNames(
+                      `flex-1 ml-4 ${typography.textMdMedium} text-cnam-primary-900`,
+                      isDone ? "line-through text-mood-text-4" : ""
+                    )}
+                  >
+                    {item.label}
+                  </Text>
 
-                {/* Right Arrow */}
-                <View className="text-gray-400">{isDone ? <CheckMarkIcon color={iconBorderColors.good} /> : <ArrowIcon />}</View>
-              </TouchableOpacity>
-            );
-          })}
-        </View>
-      </Screen>
-    </View>
+                  {/* Right Arrow */}
+                  <View className="text-gray-400">{isDone ? <CheckMarkIcon color={TW_COLORS.SUCCESS.TEXT} /> : <ArrowIcon />}</View>
+                </TouchableOpacity>
+              );
+            })}
+          </View>
+      </AnimatedHeaderScrollScreen>
   );
 }

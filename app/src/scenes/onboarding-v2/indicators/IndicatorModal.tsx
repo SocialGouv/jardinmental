@@ -80,11 +80,11 @@ export default function IndicatorModal({
         showsVerticalScrollIndicator={false}
         style={{ paddingVertical: 20, height: height90vh }}
       >
-        <View className="flex-row">
+        <View className="flex-row bg-[#E5F6FC] self-start p-2">
           {React.createElement(INDICATOR_CATEGORIES_DATA[category].icon, {
-            color: TW_COLORS.BRAND_600,
+            color: "#006386",
           })}
-          <Text className={mergeClassNames(typography.textSmBold, "ml-2 text-brand-600 text-left")}>{INDICATOR_CATEGORIES_DATA[category].label}</Text>
+          <Text className={mergeClassNames(typography.textSmBold, "ml-2 text-[#006386] text-left")}>{INDICATOR_CATEGORIES_DATA[category].label}</Text>
         </View>
         <Text className={mergeClassNames(typography.displayXsBold, "text-left text-cnam-primary-900")}>Sélectionnez un ou plusieurs éléments</Text>
         <TextInput

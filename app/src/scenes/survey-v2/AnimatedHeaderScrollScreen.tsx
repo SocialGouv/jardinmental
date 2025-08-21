@@ -39,6 +39,8 @@ interface IndicatorScreenProps {
   bottomComponent?: React.ReactNode;
   hideBottomComponentInitially?: boolean;
   navigation: StackNavigationProp<any>;
+  scrollViewBackground?: string;
+  showBottomButton?: boolean;
 }
 
 export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
@@ -49,9 +51,11 @@ export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
   dynamicTitle,
   hasProgressBar,
   bottomComponent,
+  showBottomButton=true,
   hideBottomComponentInitially = false,
   handlePrevious,
   navigation,
+  scrollViewBackground
 }: IndicatorScreenProps) => {
   const { showBottomSheet } = useBottomSheet();
   const { setShowProgressbar, showProgressbar, setHideOnScrollProgressValue } = useOnboardingProgressHeader();
@@ -218,6 +222,7 @@ export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
   const scrollViewContentStyle = {
     paddingTop: dynamicPaddingTop,
     paddingBottom: 250,
+    flexGrow: 1
   };
 
   return (
@@ -258,6 +263,9 @@ export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
         <Animated.ScrollView
           ref={scrollRef}
           className={"flex-1"}
+          style={{
+            backgroundColor: scrollViewBackground
+          }}
           contentContainerStyle={scrollViewContentStyle}
           onScroll={scrollHandler}
           scrollEventThrottle={16}
@@ -265,7 +273,7 @@ export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
           {children}
         </Animated.ScrollView>
       </KeyboardAvoidingView>
-      {!bottomComponent && (
+      {!bottomComponent && showBottomButton && (
         <NavigationButtons
           absolute={true}
           onNext={onNext}

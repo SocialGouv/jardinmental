@@ -81,7 +81,7 @@ export default function JMButton({
   let textColor = "text-white";
   if (variant === "outline") textColor = "text-primary";
   if (variant === "secondary") textColor = "text-black";
-  if (variant === "text") textColor = "text-primary";
+  if (variant === "text") textColor = "text-cnam-primary-800";
   if (disabled || loading) textColor = "text-gray-800";
 
   const styledIcon = icon

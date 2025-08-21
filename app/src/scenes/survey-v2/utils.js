@@ -8,6 +8,7 @@ export const answers = [
     iconColor: iconColors.veryBad,
     inactiveIconColor: "#666666",
     borderColor: iconBorderColors.veryBad,
+    pressedBackgroundColor: "#ED76B3",
     icon: icons.veryBad,
   },
   {
@@ -18,6 +19,7 @@ export const answers = [
     inactiveIconColor: "#666666",
     borderColor: iconBorderColors.bad,
     icon: icons.bad,
+    pressedBackgroundColor: "#EC9588",
   },
   {
     score: 3,
@@ -27,6 +29,7 @@ export const answers = [
     inactiveIconColor: "#666666",
     borderColor: iconBorderColors.middle,
     icon: icons.middle,
+    pressedBackgroundColor: "#F6D17B"
   },
   {
     score: 4,
@@ -36,6 +39,7 @@ export const answers = [
     inactiveIconColor: "#666666",
     borderColor: iconBorderColors.good,
     icon: icons.good,
+    pressedBackgroundColor: "#9ADAAA"
   },
   {
     score: 5,
@@ -45,6 +49,7 @@ export const answers = [
     inactiveIconColor: "#666666",
     borderColor: iconBorderColors.veryGood,
     icon: icons.veryGood,
+    pressedBackgroundColor: "#66CDBB"
   },
 ];
 

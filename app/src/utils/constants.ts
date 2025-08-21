@@ -331,9 +331,9 @@ export const TW_COLORS = {
   SECONDARY: "#12747D", //'#00CEF7',
   POSITIVE: "#5DEE5A", // positive for action relative to mental health !== 'success action in app'
   NEGATIVE: "#F16B6B", // negative feeling for action relative to mental health
-  SUCCESS: "#5DEE5A", //#4CAF50',
+  // SUCCESS: "#5DEE5A", //#4CAF50',
   WARNING: "#FF9800",
-  ERROR: "#F44336",
+  // ERROR: "#F44336",
   BACKGROUND: "#F5F5F5",
   WHITE: "#FFFFFF",
   BLACK: "#000000",
@@ -360,8 +360,18 @@ export const TW_COLORS = {
   GRAY_200: "#627577ff",
   GRAY_600: "#799092",
   GRAY_950: "#093F43",
+  GRAY_50: "#F7FCFD",
   BRAND_25: "#FAFFFF",
   BRAND_900: "#3D6874",
+  SUCCESS: {
+    TEXT: "#224E2D",
+    BG: "#DDF3E3",
+    BG_DARKEN: "#BBE7C6"
+  },
+  ERROR: {
+    BG: "#F9DCD7",
+    TEXT: "#5A2017"
+  }
 };
 
 export const SHARED_HEADER = false;
