@@ -54,7 +54,10 @@ export default function IndicatorModal({
     // Check against userIndicators
     const existsInDisabled = userIndicators.some((indicateur) => indicateur.name?.toLowerCase() === lowerName);
 
-    return existsInIndicators || existsInDisabled;
+    // Check against newIndicators added
+    const existsInNewIndicators = newIndicators.some((indicateur) => indicateur.name?.toLowerCase() === lowerName);
+
+    return existsInIndicators || existsInDisabled || existsInNewIndicators;
   };
 
   const toggleIndicator = (id: string) => {
