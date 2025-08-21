@@ -19,12 +19,22 @@ const CategorieElements = ({
   userIndicateurs: Indicator[];
   category?: NEW_INDICATORS_CATEGORIES;
 }) => {
-  const existingCustomIndicatorsForGenericUuid = userIndicateurs.filter(
-    (ind) => ind.mainCategory === category && ((!ind.isGeneric && ind.baseIndicatorUuid) || ind.isGeneric)
+  //  Gathered refined generic indicators with custom value (isCustom === true) or with preexisting indicators (baseIndicatorUuid exists)
+  const existingRefinedIndicators = userIndicateurs.filter(
+    (ind) => ind.mainCategory === category && (ind.isCustom || ind.baseIndicatorUuid)
   );
+
+  // Gathered non refined generic indicators
+  const genericIndicators = userIndicateurs.filter(
+    (ind) => ind.mainCategory === category && ind.isGeneric);
+
+  // Gathered all baseIndicatorUuids of refined generic indicators with preexisting indicators
   const allBaseIndicatorUuids = userIndicateurs
     .filter((ind) => ind.baseIndicatorUuid && ind.mainCategory === category)
     .map((ind) => ind.baseIndicatorUuid);
+
+  // we filter out genericIndicators, and indicators that will already be in existingRefinedIndicators
+  const preExistingIndicators = options.filter((ind) => !ind.isGeneric && !allBaseIndicatorUuids.includes(ind.uuid))
   const [isOpen, setIsOpen] = React.useState(false);
   return (
     <>
@@ -37,9 +47,8 @@ const CategorieElements = ({
       {isOpen ? (
         <View style={styles.listeContainer}>
           {(
-            [...options.filter((ind) => !ind.isGeneric && !allBaseIndicatorUuids.includes(ind.uuid)), ...existingCustomIndicatorsForGenericUuid] || []
+            [...preExistingIndicators, ...existingRefinedIndicators, ...genericIndicators]
           )
-            // .filter((e) => !e.active)
             .map((option) => {
               const indicateurSelectionne = userIndicateurs.find(
                 (_ind) =>
