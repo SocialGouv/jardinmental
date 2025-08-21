@@ -68,7 +68,9 @@ export function LightSelectionnableItem({ id, label, description, selected, onPr
           <View
             className={mergeClassNames("w-6 h-6 items-center justify-center bg-primary mr-4", shape === "circle" ? "rounded-full" : "rounded-md")}
           >
-            <Text className="text-white text-base font-bold">✓</Text>
+            { shape == "circle" ?
+            <View className="bg-white w-2 h-2 rounded-xl"/>
+            :<Text className="text-white text-base font-bold">✓</Text>}
           </View>
         ) : (
           <View
