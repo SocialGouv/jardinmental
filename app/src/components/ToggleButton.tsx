@@ -12,6 +12,7 @@ interface ToggleButtonsProps {
   onPressLeft: (value: boolean) => void;
   onPressRight: (value: boolean) => void;
   initialSelected?: boolean;
+  disabled?: Boolean
 }
 
 export default function ToggleButtons({
@@ -24,6 +25,7 @@ export default function ToggleButtons({
   leftText,
   onPressLeft,
   onPressRight,
+  disabled
 }: ToggleButtonsProps) {
   const [selected, setSelected] = useState<boolean | undefined>(initialSelected);
 
@@ -37,9 +39,10 @@ export default function ToggleButtons({
     return (
       <View className="flex-row rounded-lg border border-gray-300 self-start">
         <TouchableOpacity
+          disabled={!!disabled}
           className={`p-3 items-center rounded-l-lg`}
           style={{
-            backgroundColor: selected === true ? leftColor : TW_COLORS.WHITE,
+            backgroundColor: selected === true || disabled ? leftColor : TW_COLORS.WHITE,
           }}
           onPress={() => {
             onPressLeft?.(true);
@@ -54,9 +57,10 @@ export default function ToggleButtons({
           >{leftText || "Oui"}</Text>
         </TouchableOpacity>
         <TouchableOpacity
+          disabled={!!disabled}
           className={`p-3 items-center rounded-r-lg border-l border-gray-300`}
           style={{
-            backgroundColor: selected === false ? rightColor : TW_COLORS.WHITE,
+            backgroundColor: selected === false || disabled ? rightColor : TW_COLORS.WHITE,
           }}
           onPress={() => {
             onPressRight?.(false);

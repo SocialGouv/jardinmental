@@ -168,4 +168,14 @@ export const INDICATOR_CATEGORIES_DATA: Record<NEW_INDICATORS_CATEGORIES, Diffic
     category: NEW_INDICATORS_CATEGORIES.COGNITIVE,
     description: "Mémorisation, attention, projection...",
   },
+  [NEW_INDICATORS_CATEGORIES.OTHER]: {
+    id: "cognitive",
+    name: `Autre`,
+    label: "Autre",
+    labelWithSecondPersonPrefix: "à votre concentration ou vos facultés mentales",
+    selected: false,
+    icon: PuzzlePiece,
+    category: NEW_INDICATORS_CATEGORIES.COGNITIVE,
+    description: "Mémorisation, attention, projection...",
+  },
 };

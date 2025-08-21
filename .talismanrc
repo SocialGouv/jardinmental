@@ -29,6 +29,8 @@ fileignoreconfig:
   checksum: 68279ddbf41bdc3fdbe9ec5073122f73b74c992dad22768d69bf6b0c6d7f5f6f
 - filename: app/src/scenes/diary/index.js
   checksum: 989214cbaa302dbd4811f936d5ef87fccc9645e49beb1cc96fb4b0d74bded646
+- filename: app/src/scenes/indicateurs/CreateIndicator/ChooseIndicatorType.tsx
+  checksum: 13ed5791d9f46dc9f7d302134dd4330366aeed1f3f542cdabf41749ff12d869f
 - filename: app/src/scenes/indicateurs/CreateIndicator/index.js
   checksum: f10d695b938ea8615543d31781df8aeafa4916eab9bcd9c809d34614298422b4
 - filename: app/src/scenes/indicateurs/editIndicateurs/index.tsx

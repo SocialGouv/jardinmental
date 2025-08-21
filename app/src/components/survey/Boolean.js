@@ -5,7 +5,7 @@ import { colors } from "@/utils/colors";
 import ToggleButtons from "../ToggleButton";
 import { TW_COLORS } from "@/utils/constants";
 
-export const Boolean = ({ indicator, value, onChange }) => {
+export const Boolean = ({ indicator, value, onChange, disabled }) => {
   const color = {
     ASC: {
       left: {
@@ -34,6 +34,7 @@ export const Boolean = ({ indicator, value, onChange }) => {
       onPressLeft={() => {
         onChange(false);
       }}
+      disabled={disabled}
       initialSelected={value}
       leftColor={color[indicator?.order].left.bg}
       rightColor={color[indicator?.order].right.bg}

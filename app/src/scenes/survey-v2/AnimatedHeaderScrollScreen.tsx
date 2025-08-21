@@ -226,7 +226,9 @@ export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-white">
+    <SafeAreaView className="flex-1" style={{
+      backgroundColor: scrollViewBackground || TW_COLORS.WHITE
+    }}>
       <View
         style={{
           position: "absolute",
