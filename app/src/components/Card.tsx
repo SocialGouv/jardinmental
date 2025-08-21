@@ -29,7 +29,6 @@ export const Card = ({
     ) : (
       <>{children}</>
     );
-  console.log("LCS CARD CLASSNA%E", className);
   return (
     <View className={mergeClassNames("m-4 bg-blue bg-cyan-50-lighten-90 p-4 rounded-xl")}>
       <PressableIfNeeded>
