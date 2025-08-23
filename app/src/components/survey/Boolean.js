@@ -10,22 +10,22 @@ export const Boolean = ({ indicator, value, onChange, disabled }) => {
     ASC: {
       left: {
         bg: TW_COLORS.SUCCESS.BG_DARKEN,
-        text: TW_COLORS.SUCCESS.TEXT
+        text: TW_COLORS.SUCCESS.TEXT,
       },
       right: {
         bg: TW_COLORS.ERROR.BG,
-        text: TW_COLORS.ERROR.TEXT
+        text: TW_COLORS.ERROR.TEXT,
       },
     },
     DESC: {
       left: {
         bg: TW_COLORS.ERROR.BG,
-        text: TW_COLORS.ERROR.TEXT
+        text: TW_COLORS.ERROR.TEXT,
       },
       right: {
         bg: TW_COLORS.SUCCESS.BG_DARKEN,
-        text: TW_COLORS.SUCCESS.TEXT
-      }
+        text: TW_COLORS.SUCCESS.TEXT,
+      },
     },
   };
 

@@ -85,9 +85,13 @@ export const IndicatorSurveyItem = ({
     );
   };
   return (
-    <BasicCard>
-      <View>
-        <Text className={mergeClassNames(typography.textMdMedium, "text-brand-950", "mb-6")}>{indicator.name}</Text>
+    <BasicCard completed={value !== undefined}>
+      <View className="flex-row justify-between items-center mb-6">
+        <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-900")}>{indicator.name}</Text>
+        {indicator.type === INDICATOR_TYPE.smiley && (
+          <Text className={mergeClassNames(typography.textMdMedium, "text-gray-800 h-5")}>{computeIndicatorLabel() || ""}</Text>
+        )}
+        {value !== undefined && <CheckMarkIcon color={TW_COLORS.CNAM_PRIMARY_700} />}
       </View>
       {renderInput()}
       {indicator.type === INDICATOR_TYPE.gauge && (
@@ -97,7 +101,7 @@ export const IndicatorSurveyItem = ({
         <InputText
           fill
           preset="lighten"
-          placeholder="Ajoutez une note sur cet élément"
+          placeholder="Ajoutez une note"
           value={_comment}
           onChangeText={(nextComment) => {
             _setComment(nextComment);

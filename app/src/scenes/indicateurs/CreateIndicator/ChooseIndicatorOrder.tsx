@@ -62,30 +62,33 @@ const ChooseIndicatorOrder = ({
   };
 
   return (
-        <AnimatedHeaderScrollScreen
-        title={"Créer un indicateur"}
-        scrollViewBackground={TW_COLORS.GRAY_50}
-        handlePrevious={() => {
-          navigation.goBack()
-        }}
-        bottomComponent={<View
-          className='mx-4'>
+    <AnimatedHeaderScrollScreen
+      title={"Créer un indicateur"}
+      scrollViewBackground={TW_COLORS.GRAY_50}
+      handlePrevious={() => {
+        navigation.goBack();
+      }}
+      bottomComponent={
+        <View className="mx-4">
           <JMButton
             disabled={!indicatorDirection}
             // textStyle={{ color: 'white', textAlign: 'center' }}
             onPress={onValidate}
             title="Valider"
-          /></View>}
-            navigation={navigation}
-        >
+          />
+        </View>
+      }
+      navigation={navigation}
+    >
       <View className="flex-1 mx-4">
-        <View className={mergeClassNames("border rounded-xl bg-white p-4 w-full mb-4 mt-4 border-cnam-primary-800")}
-        >
+        <View className={mergeClassNames("border rounded-xl bg-white p-4 w-full mb-4 mt-4 border-cnam-primary-800")}>
           <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700 h-5 mb-4")}>{route.params.nameNewIndicator}</Text>
           <RenderCurrentIndicator indicatorType={route.params.indicatorType} itensity direction={indicatorDirection} size={screenWidth * 0.1} />
         </View>
 
-        <Text className={mergeClassNames(typography.textMdSemibold, 'text-cnam-primary-900 my-8')}>Vous pouvez choisir le sens d’évaluation qui correspond à votre indicateur</Text>
+        <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-900 my-8")}>
+          Vous pouvez choisir le sens d’évaluation qui correspond à votre indicateur
+        </Text>
 
         <SelectionnableRadioItem
           text={renderSetDirectionTitle(route.params.indicatorType)?.ASC}
@@ -107,7 +110,7 @@ const ChooseIndicatorOrder = ({
           </View>
         </SelectionnableRadioItem>
       </View>
-      </AnimatedHeaderScrollScreen>
+    </AnimatedHeaderScrollScreen>
   );
 };
 
@@ -165,7 +168,11 @@ const RenderCurrentIndicator = ({ indicatorType, itensity, direction = "ASC", si
       );
 
     case "boolean":
-      return <><Boolean indicator={{ order: direction }} value={undefined} onChange={undefined} disabled={true}  /></>;
+      return (
+        <>
+          <Boolean indicator={{ order: direction }} value={undefined} onChange={undefined} disabled={true} />
+        </>
+      );
 
     default:
       return <></>;

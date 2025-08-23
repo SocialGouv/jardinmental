@@ -1,4 +1,3 @@
-import { INDICATORS_CATEGORIES } from "@/entities/Indicator";
 import MoonStar from "@assets/svg/icon/MoonStar";
 import Heart from "@assets/svg/icon/Heart";
 import Cart from "@assets/svg/icon/Cart";
@@ -15,28 +14,71 @@ import Substance from "@assets/svg/icon/Substance";
 import { Difficulty } from "../types";
 import { NEW_INDICATORS_CATEGORIES, NEW_INDICATORS_SUBCATEGORIES } from "@/utils/liste_indicateurs.1";
 
-export const HELP_FOR_CATEGORY: Record<NEW_INDICATORS_CATEGORIES, { title: string; description: string } | null> = {
+export const HELP_FOR_CATEGORY: Record<
+  Exclude<NEW_INDICATORS_CATEGORIES, NEW_INDICATORS_CATEGORIES.OTHER>,
+  { title: string; description: string } | null
+> = {
   [NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR]: {
     title: "Comment observer un comportement?",
-    description: `Appuyez-vous sur ce que vous avez vécu aujourd’hui : sa fréquence, son intensité ou l’effet qu’il a eu sur vous.\n
-Pas besoin d’être précis·e : c’est l’observation régulière qui compte.\n
-Il ne s’agit pas de bien ou mal faire, mais de mieux comprendre ce que vous vivez.`,
+    description: `Notez quotidiennement votre consommation de tabac, alcoool, médicaments hors prescription ou autres substances.\nC'est un repère, uniquement pour vous et sans jugement.`,
   },
-  [NEW_INDICATORS_CATEGORIES.PHYSICAL_SIGNS]: null,
-  [NEW_INDICATORS_CATEGORIES.INTRUSIVE_THOUGHTS]: null,
+  [NEW_INDICATORS_CATEGORIES.PHYSICAL_SIGNS]: {
+    title: "Qu’est-ce qu’une manifestation physique ?",
+    description: `Ce sont des sensations corporelles liées au stress ou à l’état émotionnel : douleurs, tensions, maux de tête, troubles digestifs, etc.\n
+Observez ce que votre corps vous a signalé aujourd’hui. Ce suivi peut vous aider à faire des liens entre corps et mental.`,
+  },
+  [NEW_INDICATORS_CATEGORIES.INTRUSIVE_THOUGHTS]: {
+    title: "Comment observer des pensées envahissantes ?",
+    description: `Ce sont les pensées qui tournent en boucle, qui prennent beaucoup de place, parfois négatives ou angoissantes.\n
+Demandez-vous : est-ce que je me suis laissé submerger par ces pensées aujourd’hui ? Est-ce que cela a eu un impact sur mes émotions ou mon comportement ?\n
+Noter leur présence peut aider à les apprivoiser.`,
+  },
   [NEW_INDICATORS_CATEGORIES.EMOTIONS]: {
     title: "Comment observer une émotion?",
     description: `Pensez à son intensité aujourd’hui, sa durée ou son impact sur vous.\n
 Il n’y a pas de bonne réponse — l’essentiel, c’est d’en prendre conscience au fil du temps.`,
   },
-  [NEW_INDICATORS_CATEGORIES.SLEEP]: null,
-  [NEW_INDICATORS_CATEGORIES.WORK]: null,
-  [NEW_INDICATORS_CATEGORIES.ENERGY]: null,
-  [NEW_INDICATORS_CATEGORIES.FOOD]: null,
-  [NEW_INDICATORS_CATEGORIES.SUBSTANCE]: null,
-  [NEW_INDICATORS_CATEGORIES.SOCIAL_RELATIONS]: null,
-  [NEW_INDICATORS_CATEGORIES.LIFE_EVENT]: null,
-  [NEW_INDICATORS_CATEGORIES.COGNITIVE]: null,
+  [NEW_INDICATORS_CATEGORIES.SLEEP]: {
+    title: "Comment observer votre sommeil ?",
+    description: `Pour observer votre sommeil, posez-vous quelques questions simples : Ai-je mis du temps à m’endormir ? Me suis-je réveillé dans la nuit ? Suis-je reposé ce matin ?\n
+Notez la qualité, la durée et les difficultés éventuelles (endormissement, réveils, fatigue au réveil). Vous n’avez pas besoin d’avoir un sommeil "parfait", l’idée est de remarquer ce qui change d’un jour à l’autre.`,
+  },
+  [NEW_INDICATORS_CATEGORIES.WORK]: {
+    title: "Comment observer votre rapport au travail ?",
+    description: `Pensez à votre journée de travail ou à votre activité habituelle (études…).\n
+Était-ce fluide, difficile, source de stress ou de satisfaction ?\n
+Ce suivi permet de prendre conscience des éventuelles tensions ou améliorations possibles.`,
+  },
+  [NEW_INDICATORS_CATEGORIES.ENERGY]: {
+    title: "Comment observer votre niveau d’énergie ?",
+    description: `Votre énergie peut varier selon votre sommeil, votre humeur ou ce que vous avez vécu dans la journée.\n
+Vous pouvez vous demander : Est-ce que je me sens en forme ou plutôt épuisé ? Ai-je eu envie de faire des choses aujourd’hui ?\n
+Il ne s’agit pas de performance, mais de sensations physiques et mentales.`,
+  },
+  [NEW_INDICATORS_CATEGORIES.FOOD]: {
+    title: "Comment observer votre alimentation ?",
+    description: `Observez votre rapport à l’alimentation aujourd’hui : Avez-vous eu faim ? Mangé avec plaisir ? Ressenti des compulsions, ou au contraire une perte d’appétit ?\n
+Être attentif à votre rapport à la nourriture vous permet de mieux identifier les émotions qui y sont liées.`,
+  },
+  [NEW_INDICATORS_CATEGORIES.SUBSTANCE]: {
+    title: "Comment observer une consommation ou une addiction ?",
+    description: `Les émotions influencent la consommation de produits ; et celle-ci influence ensuite les émotions et comportements.\n 
+Notez quotidiennement votre consommation de tabac, alcoool, médicaments hors prescription ou autres substances. C'est un repère, uniquement pour vous et sans jugement.`,
+  },
+  [NEW_INDICATORS_CATEGORIES.SOCIAL_RELATIONS]: {
+    title: "Comment observer vos relations sociales ?",
+    description: `Pensez à vos échanges du jour : Ai-je vu du monde ? Ai-je eu envie d’être seul·e ou au contraire, de parler à quelqu’un ? Me suis-je senti soutenu, compris ?`,
+  },
+  [NEW_INDICATORS_CATEGORIES.LIFE_EVENT]: {
+    title: "Comment observer un événement difficile ?",
+    description: `Un évènement de vie difficile (deuil, rupture, chômage, conflit, maladie ...) peut avoir un impact sur votre état mental ou émotionnel.\n
+Prendre un moment pour le noter peut vous aider à reconnaître son effet sur vos difficultés.`,
+  },
+  [NEW_INDICATORS_CATEGORIES.COGNITIVE]: {
+    title: "Comment observer vos capacités cognitives ?",
+    description: `Il s’agit de vos facultés mentales du jour : concentration, mémoire, clarté d’esprit. Vous pouvez vous demander : Ai-je eu du mal à me concentrer ? À retenir des choses ? À penser clairement ?\n 
+Observer ces variations peut aider à mieux comprendre vos ressources ou limites du moment.`,
+  },
 };
 
 export const INDICATOR_CATEGORIES_DATA: Record<NEW_INDICATORS_CATEGORIES, Difficulty> = {
@@ -169,7 +211,7 @@ export const INDICATOR_CATEGORIES_DATA: Record<NEW_INDICATORS_CATEGORIES, Diffic
     description: "Mémorisation, attention, projection...",
   },
   [NEW_INDICATORS_CATEGORIES.OTHER]: {
-    id: "cognitive",
+    id: "other",
     name: `Autre`,
     label: "Autre",
     labelWithSecondPersonPrefix: "à votre concentration ou vos facultés mentales",

@@ -3,6 +3,8 @@ fileignoreconfig:
   checksum: aab0afdd1cef8c0236417f8c3573492a5da0dd64491f06237a98ad9d2aff0b67
 - filename: .kontinuous/env/prod/templates/api.sealed-secret.yaml
   checksum: f1dfe60bbe8a6604443fe3629b2239fa969304beeca8eff2b7528cf9b5728e3d
+- filename: CHANGELOG.md
+  checksum: a2353c1d084f0ca753dbe8b1c2340cbff360c953924ffe3f8657f11bbfaa6194
 - filename: README.md
   checksum: 979473d3e8ad091d57424dc057cf0b40a884f0fbf6821554ea0121e63a173d6b
 - filename: api/src/config.ts
@@ -32,7 +34,7 @@ fileignoreconfig:
 - filename: app/src/scenes/indicateurs/CreateIndicator/ChooseIndicatorType.tsx
   checksum: 13ed5791d9f46dc9f7d302134dd4330366aeed1f3f542cdabf41749ff12d869f
 - filename: app/src/scenes/indicateurs/CreateIndicator/index.js
-  checksum: f10d695b938ea8615543d31781df8aeafa4916eab9bcd9c809d34614298422b4
+  checksum: 3000d4c2cf781995b7b00499ececb6d7adf075b5aa40014382e0313c8af83e9f
 - filename: app/src/scenes/indicateurs/editIndicateurs/index.tsx
   checksum: da39a551c3cf5760751f04c9083a2e720d10874a38f8ae39861a127d59288487
 - filename: app/src/scenes/onboarding-v2/CarouselScreen.tsx
@@ -108,7 +110,7 @@ fileignoreconfig:
 - filename: app/src/scenes/survey/QuestionYesNo.js
   checksum: 5f60226dc61678da5e266fe1c3317ca498389cf407639a79ba11a4f8c4e1083c
 - filename: app/src/scenes/survey/daySurvey.tsx
-  checksum: 549fb54b922355db4f1385fd062edbcfd9672df525317e0b16ec8a6e99e2ec36
+  checksum: 1cc44acc0db03edf9ded4eba1e6110354397e2e75038978ac45b4b7513d7a676
 - filename: app/src/scenes/survey/survey-data.js
   checksum: 1ac3021625ed8fb4ed188c80035b12789aa03989dc7276893900ed96dc2a2509
 - filename: app/src/services/notifications.js
