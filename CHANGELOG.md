@@ -1,3 +1,10 @@
+# [1.52.0-alpha.18](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.17...v1.52.0-alpha.18) (2025-08-23)
+
+
+### Features
+
+* day survey update, display indicators by category ([#352](https://github.com/SocialGouv/jardinmental/issues/352)) ([e33e413](https://github.com/SocialGouv/jardinmental/commit/e33e413ba9baf18c541d8da96028c2c79c698882))
+
 # [1.52.0-alpha.17](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.16...v1.52.0-alpha.17) (2025-08-23)
 
 
