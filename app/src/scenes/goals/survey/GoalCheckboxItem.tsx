@@ -3,6 +3,11 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import { InputText } from "../../../components/InputText";
 import { InputCheckbox } from "../../../components/InputCheckbox";
 import { colors } from "@/utils/colors";
+import BasicCard from "@/components/BasicCard";
+import CheckMarkIcon from "@assets/svg/icon/check";
+import { TW_COLORS } from "@/utils/constants";
+import { mergeClassNames } from "@/utils/className";
+import { typography } from "@/utils/typography";
 
 export const GoalCheckboxItem = ({ goal, index, checked, comment, onCheckedChanged, onCommentChanged }) => {
   const [_checked, _setChecked] = useState(checked);
@@ -15,15 +20,7 @@ export const GoalCheckboxItem = ({ goal, index, checked, comment, onCheckedChang
   }, [comment]);
 
   return (
-    <View
-      style={[
-        styles.container,
-        {
-          backgroundColor: _checked ? "#F0FFF0" : "#F8F9FB",
-          borderColor: _checked ? "#D0E8D0" : "#E7EAF1",
-        },
-      ]}
-    >
+    <BasicCard completed={_checked}>
       <Pressable
         onPress={() => {
           const nextChecked = !_checked;
@@ -33,9 +30,9 @@ export const GoalCheckboxItem = ({ goal, index, checked, comment, onCheckedChang
         hitSlop={{ bottom: 8, left: 8, right: 8, top: 8 }}
       >
         <View style={[styles.contentContainer]}>
-          <View style={[styles.topContainer]}>
+          <View className="flex-row items-start flex-1">
             <InputCheckbox
-              containerStyle={{ marginVertical: 0, marginRight: 0 }}
+              containerStyle={{ marginVertical: 0, marginRight: 0, marginTop: 5 }}
               contentContainerStyle={{ paddingRight: 0 }}
               checked={_checked}
               onCheckedChanged={({ checked }) => {
@@ -43,7 +40,12 @@ export const GoalCheckboxItem = ({ goal, index, checked, comment, onCheckedChang
                 onCheckedChanged?.({ checked, goal });
               }}
             />
-            <Text style={[styles.label]}>{goal.label}</Text>
+            <View className="flex-row justify-between flex-1 items-start">
+              <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-900")}>{goal.label}</Text>
+              <View className="pt-1">
+                <CheckMarkIcon color={_checked ? TW_COLORS.CNAM_PRIMARY_700 : "transparent"} />
+              </View>
+            </View>
           </View>
           <InputText
             fill
@@ -61,7 +63,7 @@ export const GoalCheckboxItem = ({ goal, index, checked, comment, onCheckedChang
           />
         </View>
       </Pressable>
-    </View>
+    </BasicCard>
   );
 };
 
@@ -74,10 +76,6 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     padding: 16,
-  },
-  topContainer: {
-    flexDirection: "row",
-    alignItems: "flex-start",
   },
   label: {
     fontSize: 16,

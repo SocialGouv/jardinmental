@@ -12,6 +12,7 @@ import { IndicatorItem } from "@/scenes/onboarding-v2/types";
 import { generateIndicatorFromPredefinedIndicator, Indicator, INDICATOR_TYPE, PredefineIndicatorV2SchemaType } from "@/entities/Indicator";
 import { DEFAULT_INDICATOR_LABELS, INDICATOR_LABELS, INDICATORS, NEW_INDICATORS_CATEGORIES } from "@/utils/liste_indicateurs.1";
 import BasicCard from "../BasicCard";
+import CheckMarkIcon from "@assets/svg/icon/check";
 import IndicatorModal from "@/scenes/onboarding-v2/indicators/IndicatorModal";
 import { useBottomSheet } from "@/context/BottomSheetContext";
 import ArrowIcon from "@assets/svg/icon/Arrow";
@@ -85,9 +86,13 @@ export const IndicatorSurveyItem = ({
     );
   };
   return (
-    <BasicCard>
-      <View>
-        <Text className={mergeClassNames(typography.textMdMedium, "text-brand-950", "mb-6")}>{indicator.name}</Text>
+    <BasicCard completed={value !== undefined}>
+      <View className="flex-row justify-between items-center mb-6">
+        <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-900")}>{indicator.name}</Text>
+        {indicator.type === INDICATOR_TYPE.smiley && (
+          <Text className={mergeClassNames(typography.textMdMedium, "text-gray-800 h-5")}>{computeIndicatorLabel() || ""}</Text>
+        )}
+        {value !== undefined && <CheckMarkIcon color={TW_COLORS.CNAM_PRIMARY_700} />}
       </View>
       {renderInput()}
       {indicator.type === INDICATOR_TYPE.gauge && (
@@ -97,7 +102,7 @@ export const IndicatorSurveyItem = ({
         <InputText
           fill
           preset="lighten"
-          placeholder="Ajoutez une note sur cet élément"
+          placeholder="Ajoutez une note"
           value={_comment}
           onChangeText={(nextComment) => {
             _setComment(nextComment);
