@@ -17,6 +17,8 @@ fileignoreconfig:
   checksum: c542c7135b521f9ba1e0489383dd8f1d383ca51252f7ffd8bc8fc6b3f46c6037
 - filename: app/src/components/Collapsable.js
   checksum: 280e7a5a76d8804045a5a07dbf8062e4cca77a937c969f1ee89cf45ff3d855b2
+- filename: app/src/components/DrugDoseBottomSheet.tsx
+  checksum: 319917ef3952d266c7a79aed7596096ced860adb0ded4a66bc1e1f6b360b3747
 - filename: app/src/context/diaryData.tsx
   checksum: 7ebf59b94ce815a22fb60424e74ae5a17a74eb07e941c5c72c8e71bce1a1c4ed
 - filename: app/src/context/userProfile.tsx
@@ -26,7 +28,7 @@ fileignoreconfig:
 - filename: app/src/scenes/diary/index.js
   checksum: 3ce2456ab1ef9b4d523326b4e6e796eeab6a3588e8ac9b6c8fb3abd37b70c9d6
 - filename: app/src/scenes/drugs/drugs.tsx
-  checksum: 76a0be3b893a853c29c90a7d0c3c761ae39762d9004921a9d1457854188920f8
+  checksum: aee06a5419616198ba07f25f4450a4d3dfd62e1f2a713faa6290a831ca68a804
 - filename: app/src/scenes/indicateurs/editIndicateurs/index.tsx
   checksum: da39a551c3cf5760751f04c9083a2e720d10874a38f8ae39861a127d59288487
 - filename: app/src/scenes/onboarding-v2/CarouselScreen.tsx

@@ -4,6 +4,7 @@ import Text from "../../components/MyText";
 import { colors } from "../../utils/colors";
 import RNPickerSelect from "react-native-picker-select";
 import Icon from "../../components/Icon";
+import { ListItem } from "@/components/SelectionnableItem";
 
 export default ({ drug, onChange, showPosology, onClose }) => {
   const [showFreeText, setShowFreeText] = useState(false);
@@ -21,70 +22,65 @@ export default ({ drug, onChange, showPosology, onClose }) => {
   };
 
   const render = () => {
+    //  {showPosology ? (
+    //       <View style={styles.right}>
+    //         {showFreeText ? (
+    //           <View style={styles.freeTextContainer}>
+    //             <TextInput
+    //               autoCapitalize="none"
+    //               onChangeText={handleChangeFreeText}
+    //               value={freeText}
+    //               placeholder="5 ml, 3 gouttes, ..."
+    //               style={styles.freeText}
+    //             />
+    //             <Text style={styles.close} onPress={() => setShowFreeText(false)}>
+    //               X
+    //             </Text>
+    //           </View>
+    //         ) : (
+    //           <RNPickerSelect
+    //             useNativeAndroidPickerStyle={false}
+    //             onValueChange={(value) => {
+    //               if (value === "FREE_TEXT") return setShowFreeText(true);
+    //               onChange(drug, value);
+    //             }}
+    //             placeholder={{
+    //               label: "choisir une dose dans la liste",
+    //               value: null,
+    //               color: "grey",
+    //               inputLabel: "Indiquer la dose",
+    //             }}
+    //             items={[{ label: "0", value: "0", color: colors.BLUE }]
+    //               .concat(
+    //                 drug?.values.map((v) => ({
+    //                   label: v,
+    //                   value: v,
+    //                   color: colors.BLUE,
+    //                 }))
+    //               )
+    //               .concat([
+    //                 {
+    //                   label: "Saisir manuellement une dose",
+    //                   value: "FREE_TEXT",
+    //                   color: colors.LIGHT_BLUE,
+    //                 },
+    //               ])}
+    //             style={pickerSelectStyles}
+    //             value={drug?.value}
+    //           />
+    //         )}
+    //       </View>
+    //     ) : null}
     return (
-      <View className="flex-column mb-8">
-        <View className="flex-row mb-2">
-          {/* <TouchableOpacity style={styles.delete} onPress={onClose}>
-            <Icon icon="CrossSvg" width={8} height={8} color={colors.BLUE} />
-          </TouchableOpacity> */}
-          <Icon icon="DrugsSvg" styleContainer={{ marginRight: 10 }} />
-          <View style={styles.posologyName}>
-            <Text style={styles.text1}>
-              {drug?.name1}
-              {drug?.name2 ? <Text> ({drug?.name2})</Text> : null}
-            </Text>
-          </View>
-        </View>
-        {showPosology ? (
-          <View style={styles.right}>
-            {showFreeText ? (
-              <View style={styles.freeTextContainer}>
-                <TextInput
-                  autoCapitalize="none"
-                  onChangeText={handleChangeFreeText}
-                  value={freeText}
-                  placeholder="5 ml, 3 gouttes, ..."
-                  style={styles.freeText}
-                />
-                <Text style={styles.close} onPress={() => setShowFreeText(false)}>
-                  X
-                </Text>
-              </View>
-            ) : (
-              <RNPickerSelect
-                useNativeAndroidPickerStyle={false}
-                onValueChange={(value) => {
-                  if (value === "FREE_TEXT") return setShowFreeText(true);
-                  onChange(drug, value);
-                }}
-                placeholder={{
-                  label: "choisir une dose dans la liste",
-                  value: null,
-                  color: "grey",
-                  inputLabel: "Indiquer la dose",
-                }}
-                items={[{ label: "0", value: "0", color: colors.BLUE }]
-                  .concat(
-                    drug?.values.map((v) => ({
-                      label: v,
-                      value: v,
-                      color: colors.BLUE,
-                    }))
-                  )
-                  .concat([
-                    {
-                      label: "Saisir manuellement une dose",
-                      value: "FREE_TEXT",
-                      color: colors.LIGHT_BLUE,
-                    },
-                  ])}
-                style={pickerSelectStyles}
-                value={drug?.value}
-              />
-            )}
-          </View>
-        ) : null}
-      </View>
+      <ListItem
+        id={""}
+        label={drug?.name1}
+        description={drug?.name2 ? `(${drug?.name2})` : null}
+        selected={false}
+        onPress={function (id: string | number): void {
+          throw new Error("Function not implemented.");
+        }}
+      />
     );
   };
 

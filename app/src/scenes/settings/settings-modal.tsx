@@ -9,8 +9,12 @@ import Health from "@assets/svg/icon/Health";
 import Analytics from "@assets/svg/icon/Analytics";
 import Download from "@assets/svg/icon/Download";
 import Trash from "@assets/svg/icon/Trash";
+import { useBottomSheet } from "@/context/BottomSheetContext";
+import { DrugsBottomSheet } from "@/components/DrugsBottomSheet";
+import localStorage from "@/utils/localStorage";
 
 const SettingsModal = ({ navigation, visible, onClick }) => {
+  const { showBottomSheet, closeBottomSheet } = useBottomSheet();
   return (
     <Modal animationType="slide" visible={visible} transparent={true}>
       <TouchableOpacity activeOpacity={1} style={styles.container} onPressOut={onClick}>
@@ -18,11 +22,29 @@ const SettingsModal = ({ navigation, visible, onClick }) => {
           <SettingItem title="Définir un rappel" path="reminder" navigation={navigation} onClick={onClick} icon={<Bell />} />
           <SettingItem title="Personnaliser mes indicateurs" path="symptoms" navigation={navigation} onClick={onClick} icon={<Analytics />} />
           <SettingItem title="Personnaliser mes objectifs" path="goals-settings" navigation={navigation} onClick={onClick} icon={<Goal />} />
-          <SettingItem title="Saisir mon traitement" path="drugs" navigation={navigation} onClick={onClick} icon={<Health />} />
+          <SettingItem
+            title="Saisir mon traitement"
+            navigation={navigation}
+            onClick={async () => {
+              onClick();
+              const treatment = await localStorage.getMedicalTreatment();
+              if (treatment) {
+                navigation.navigate("drugs", { treatment });
+              } else {
+                showBottomSheet(
+                  <DrugsBottomSheet
+                    onClose={() => {
+                      closeBottomSheet();
+                    }}
+                  />
+                );
+              }
+            }}
+            icon={<Health />}
+          />
           <SettingItem title="Générer un récapitulatif de mes données" path="export" navigation={navigation} onClick={onClick} icon={<Download />} />
           <SettingItem
             title="Supprimer toutes mes données"
-            path="onboarding"
             navigation={navigation}
             onClick={async () => {
               await wipeData();

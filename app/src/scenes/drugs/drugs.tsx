@@ -1,7 +1,6 @@
-import React, { useContext, useState, useEffect } from "react";
-import { StyleSheet, ScrollView, View, TouchableOpacity } from "react-native";
+import React, { useContext, useState, useEffect, useRef } from "react";
+import { StyleSheet, ScrollView, View, TouchableOpacity, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Text from "../../components/MyText";
 import { colors } from "../../utils/colors";
 import { DiaryDataContext } from "../../context/diaryData";
 import Button from "../../components/Button";
@@ -16,6 +15,17 @@ import Logo from "../../../assets/svg/drugs";
 import QuestionYesNo from "../survey/QuestionYesNo";
 import { DrugsBottomSheet } from "@/components/DrugsBottomSheet";
 import { useBottomSheet } from "@/context/BottomSheetContext";
+import { AnimatedHeaderScrollScreen } from "../survey-v2/AnimatedHeaderScrollScreen";
+import HelpView from "@/components/HelpView";
+import CircleQuestionMark from "@assets/svg/icon/CircleQuestionMark";
+import { TW_COLORS } from "@/utils/constants";
+import { mergeClassNames } from "@/utils/className";
+import { typography } from "@/utils/typography";
+import { InputGroupItem } from "@/components/InputGroup";
+import { InputToggle } from "@/components/InputToggle";
+import NavigationButtons from "@/components/onboarding/NavigationButtons";
+import HealthIcon from "@assets/svg/icon/Health";
+import DrugDoseBottomSheet from "@/components/DrugDoseBottomSheet";
 
 const Drugs = ({ navigation, route }) => {
   const [diaryData, addNewEntryToDiaryData] = useContext(DiaryDataContext);
@@ -25,6 +35,8 @@ const Drugs = ({ navigation, route }) => {
   const [listDrugs, setListDrugs] = useState();
   const [answers, setAnswers] = useState({});
   const { showBottomSheet, closeBottomSheet } = useBottomSheet();
+  const reminderToggleRef = useRef();
+  const [hasTreatment, setHasTreatment] = useState(true);
 
   const priseDeTraitement = {
     id: "PRISE_DE_TRAITEMENT",
@@ -149,21 +161,16 @@ const Drugs = ({ navigation, route }) => {
     });
   };
 
+  const addDose = (drug) => {
+    showBottomSheet(<DrugDoseBottomSheet />);
+  };
+
   const render = () => {
     if (!medicalTreatment || !medicalTreatment?.length) {
       return <NoData navigation={navigation} route={route} />;
     }
     return (
-      <View>
-        <TouchableOpacity
-          onPress={() =>
-            navigation.navigate("onboarding-drugs-information", {
-              onboarding: true,
-            })
-          }
-        >
-          <Text style={styles.link}>Informations sur les traitements</Text>
-        </TouchableOpacity>
+      <View className="pt-8 mx-4">
         {inSurvey ? (
           <>
             <QuestionYesNo
@@ -186,19 +193,67 @@ const Drugs = ({ navigation, route }) => {
               showUserCommentInput={false}
               isLast
             />
+            <View style={styles.titleContainer}>
+              <Text style={styles.titlePosology}>
+                Détail de vos traitements de la journée <Text style={styles.titlePosologyOptionnel}>(Optionnel)</Text>
+              </Text>
+            </View>
+            {medicalTreatment.map((e, i) => (
+              <View className="mb-4">
+                <Text className={mergeClassNames("mb-2 text-gray-800", typography.textLgMedium)}>
+                  {e.name1} ({e.name2})
+                </Text>
+                <TouchableOpacity onPress={() => addDose(e)} className="border border-gray-700 bg-white rounded-xl flex-row p-4">
+                  <HealthIcon color={TW_COLORS.GRAY_700} width={17} height={17} />
+                  <Text className={mergeClassNames(typography.textMdRegular, "ml-2 text-gray-700")}>Indiquez la dose</Text>
+                </TouchableOpacity>
+              </View>
+            ))}
           </>
         ) : null}
-        <View style={styles.divider} />
-        {inSurvey ? (
-          <View style={styles.titleContainer}>
-            <Text style={styles.titlePosology}>
-              Détail de vos traitements de la journée <Text style={styles.titlePosologyOptionnel}>(Optionnel)</Text>
+        {!inSurvey && (
+          <>
+            <TouchableOpacity
+              onPress={() => {
+                showBottomSheet(
+                  <HelpView
+                    title={"Information sur les traitements"}
+                    description={`Les noms des médicaments et les posologies ne sont donnés qu'à titre indicatif pour vous aider dans le suivi de votre traitement médicamenteux.\n 
+Il convient néanmoins de toujours se référer à la prescription médicale vous concernant et à votre médecin référent pour tout ce qui a trait à votre traitement médicamenteux en particulier et à votre suivi en général.\n
+Voir plus d'informations sur les traitements médicamenteux :\n`}
+                    link={"médicaments.gouv.fr"}
+                  />
+                );
+              }}
+              className="flex-row items-center"
+            >
+              <CircleQuestionMark color={TW_COLORS.GRAY_400} />
+              <Text className={mergeClassNames(typography.textSmSemibold, "ml-2 text-gray-600")}>Information sur les traitements</Text>
+            </TouchableOpacity>
+            <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 mt-4")}>
+              La prise d’un traitement peut avoir un effet sur votre quotidien. Suivre la prise de traitement permet de mieux comprendre son effet sur
+              votre état de santé mentale
             </Text>
-          </View>
-        ) : null}
-        {medicalTreatment.map((e, i) => (
-          <DrugItem key={i} drug={(posology && posology.find((i) => i.id === e.id)) || e} onChange={handleDrugChange} showPosology={inSurvey} />
-        ))}
+            <View className="my-2">
+              <InputGroupItem
+                label={hasTreatment ? "Oui, je prends un traitement" : "Non, je n’ai pas de traitement"}
+                onPress={() => reminderToggleRef?.current?.toggle?.()}
+              >
+                <InputToggle
+                  ref={reminderToggleRef}
+                  checked={hasTreatment}
+                  onCheckedChanged={({ checked }) => {
+                    setHasTreatment(checked);
+                  }}
+                />
+              </InputGroupItem>
+            </View>
+            {medicalTreatment.map((e, i) => (
+              <DrugItem key={i} drug={(posology && posology.find((i) => i.id === e.id)) || e} onChange={handleDrugChange} showPosology={inSurvey} />
+            ))}
+          </>
+        )}
+
         {/* <Text style={styles.addButton} onPress={handleAdd}>
           + Ajouter / Modifier mes médicaments suivis
         </Text> */}
@@ -234,23 +289,30 @@ const Drugs = ({ navigation, route }) => {
   };
 
   return (
-    <SafeAreaView style={styles.safe}>
-      <BackButton onPress={previousQuestion} />
-      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContainer}>
-        <View style={styles.header}>
-          <View style={styles.titleContainer}>
-            <Logo style={styles.image} width={30} height={30} />
-            <Text style={styles.title}>{inSurvey ? "Quel traitement avez-vous pris aujourd'hui ?" : "Suivi de votre traitement"}</Text>
-          </View>
-        </View>
-        {render()}
-      </ScrollView>
-      {inSurvey ? (
+    <AnimatedHeaderScrollScreen
+      handlePrevious={() => {
+        navigation.goBack();
+      }}
+      category="SLEEP"
+      title={inSurvey ? "Avez-vous pris votre traitement aujourd'hui" : "Traitement"}
+      navigation={navigation}
+      bottomComponent={
+        <NavigationButtons
+          onNext={() => {
+            showBottomSheet(<DrugsBottomSheet onClose={undefined} />);
+          }}
+          nextDisabled={!hasTreatment}
+          nextText={medicalTreatment ? "Modifier mon traitement" : "Renseigner mon traitement"}
+        />
+      }
+    >
+      {render()}
+      {/* {inSurvey ? (
         <View style={styles.buttonWrapper}>
           <Button onPress={submit} title="Valider" />
         </View>
-      ) : null}
-    </SafeAreaView>
+      ) : null} */}
+    </AnimatedHeaderScrollScreen>
   );
 };
 

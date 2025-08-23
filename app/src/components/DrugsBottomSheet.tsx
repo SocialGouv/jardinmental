@@ -12,8 +12,9 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import HelpText from "./HelpText";
 import HelpView from "./HelpView";
 import { useBottomSheet } from "@/context/BottomSheetContext";
+import localStorage from "@/utils/localStorage";
 
-export const DrugsBottomSheet = ({ title, description, onClose }) => {
+export const DrugsBottomSheet = ({ onClose }) => {
   const [index, setIndex] = useState<number>(0);
   const { showBottomSheet } = useBottomSheet();
   const [treatment, setTreatment] = useState<any[] | undefined>();

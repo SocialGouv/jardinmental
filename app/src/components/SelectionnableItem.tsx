@@ -1,5 +1,8 @@
 import { mergeClassNames } from "@/utils/className";
+import { TW_COLORS } from "@/utils/constants";
 import { typography } from "@/utils/typography";
+import Bin from "@assets/svg/Bin";
+import Health from "@assets/svg/icon/Health";
 import React, { useState } from "react";
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
 
@@ -126,5 +129,40 @@ export function InputSelectionnableItem({ id, label, selected, onPress, classNam
         </View>
       </View>
     </TouchableOpacity>
+  );
+}
+
+export function ListItem({ id, label, description, selected, onPress, className, icon, boxPosition }: DifficultyOptionProps) {
+  return (
+    <View className={mergeClassNames("bg-white border-2 border-cnam-primary-800 p-4 rounded-xl mt-2", className)}>
+      <View className={mergeClassNames("flex-row items-start")}>
+        {/* {selected ? (
+          <View className="w-6 h-6 rounded-md items-center justify-center bg-cnam-primary-800 mr-4">
+            <Text className="text-white text-base font-bold">✓</Text>
+          </View>
+        ) : (
+          <View className="w-6 h-6 rounded-md items-center justify-center border-2 border-gray-300 mr-4">
+            <Text className="text-white text-xs" />
+          </View>
+        )} */}
+        {
+          <View className="mr-4">
+            <Health />
+          </View>
+        }
+        {icon && (
+          <View className="mr-3 rounded-lg border border-1 border-gray-300 bg-white w-10 h-10 items-center justify-center">
+            {React.createElement(icon)}
+          </View>
+        )}
+        <View className="flex-1">
+          <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900")}>{label}</Text>
+          {description && <Text className={mergeClassNames(typography.textSmMedium, "text-gray-600 mt-1")}>{description}</Text>}
+        </View>
+        <View className="ml-auto items-center justify-center self-stretch">
+          <Bin color={TW_COLORS.CNAM_CYAN_600_DARKEN_20} width={20} height={20} />
+        </View>
+      </View>
+    </View>
   );
 }
