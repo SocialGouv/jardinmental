@@ -13,23 +13,43 @@ import localStorage from "../../../utils/localStorage";
 import { v4 as uuidv4 } from "uuid";
 import { Screen } from "../../../components/Screen";
 import { Button2 } from "../../../components/Button2";
+import { CATEGORIES, NEW_INDICATORS_CATEGORIES } from "@/utils/liste_indicateurs.1";
+import { INDICATOR_ORDER, INDICATOR_TYPE } from "@/entities/Indicator";
+import { INDICATORS_CATEGORIES } from "@/entities/IndicatorCategories";
 
-const ChooseIndicatorOrder = ({ navigation, route }) => {
-  const [indicatorDirection, setIndicatorDirection] = useState("ASC"); // ASC : first direction (red to green) ; DESC : second direction (green to red)
+const ChooseIndicatorOrder = ({
+  navigation,
+  route,
+}: {
+  navigation: any;
+  route: {
+    params: {
+      indicatorCategory: NEW_INDICATORS_CATEGORIES;
+      indicatorType: INDICATOR_TYPE;
+      nameNewIndicator: string;
+    };
+  };
+}) => {
+  const [indicatorDirection, setIndicatorDirection] = useState<INDICATOR_ORDER>(INDICATOR_ORDER.ASC); // ASC : first direction (red to green) ; DESC : second direction (green to red)
   const [loading, setLoading] = useState(false);
 
   const onValidate = async () => {
     if (loading) return;
     setLoading(true);
     await localStorage.addIndicateur({
-      version: 1,
       uuid: uuidv4(),
       name: route.params?.nameNewIndicator,
       order: indicatorDirection,
       type: route.params?.indicatorType,
       active: true,
       position: 0,
+      category: INDICATORS_CATEGORIES.Uncategorized, // no category from the previous existing category
       created_at: new Date(),
+      isGeneric: false,
+      isCustom: true,
+      newCategories: [route.params.indicatorCategory],
+      mainCategory: route.params.indicatorCategory,
+      version: 3,
     });
 
     setLoading(false);
@@ -57,10 +77,10 @@ const ChooseIndicatorOrder = ({ navigation, route }) => {
         <Text style={styles.subtitle}>Vous pouvez choisir le sens d’évaluation qui correspond à votre indicateur</Text>
 
         <TouchableOpacity
-          style={[styles.setDirectionContainer, indicatorDirection === "ASC" && styles.activeSetDirectionContainer]}
-          onPress={() => setIndicatorDirection("ASC")}
+          style={[styles.setDirectionContainer, indicatorDirection === INDICATOR_ORDER.ASC && styles.activeSetDirectionContainer]}
+          onPress={() => setIndicatorDirection(INDICATOR_ORDER.ASC)}
         >
-          {indicatorDirection === "ASC" ? (
+          {indicatorDirection === INDICATOR_ORDER.ASC ? (
             <View className="flex justify-center items-center w-4 h-4 border border-primary rounded-full">
               <View className="w-2 h-2 border border-primary bg-cnam-primary-800 rounded-full" />
             </View>
@@ -69,14 +89,14 @@ const ChooseIndicatorOrder = ({ navigation, route }) => {
           )}
 
           <View style={styles.setDirectionInside}>
-            <RenderCurrentIndicator indicatorType={route.params.indicatorType} direction={"ASC"} />
-            <Text style={styles.setDirectionTitle}>{renderSetDirectionTitle(route.params.indicatorType).ASC}</Text>
+            <RenderCurrentIndicator indicatorType={route.params.indicatorType} direction={INDICATOR_ORDER.ASC} />
+            <Text style={styles.setDirectionTitle}>{renderSetDirectionTitle(route.params.indicatorType)?.ASC}</Text>
           </View>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={[styles.setDirectionContainer, indicatorDirection === "DESC" && styles.activeSetDirectionContainer]}
-          onPress={() => setIndicatorDirection("DESC")}
+          onPress={() => setIndicatorDirection(INDICATOR_ORDER.DESC)}
         >
           {indicatorDirection === "DESC" ? (
             <View className="flex justify-center items-center w-4 h-4 border border-primary rounded-full">
@@ -87,7 +107,7 @@ const ChooseIndicatorOrder = ({ navigation, route }) => {
           )}
 
           <View style={styles.setDirectionInside}>
-            <RenderCurrentIndicator indicatorType={route.params.indicatorType} direction={"DESC"} />
+            <RenderCurrentIndicator indicatorType={route.params.indicatorType} direction={INDICATOR_ORDER.DESC} />
             <Text style={styles.setDirectionTitle}>{renderSetDirectionTitle(route.params.indicatorType).DESC}</Text>
           </View>
         </TouchableOpacity>

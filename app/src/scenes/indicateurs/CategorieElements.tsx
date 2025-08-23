@@ -3,8 +3,38 @@ import { TouchableOpacity, StyleSheet, View, Pressable } from "react-native";
 import Text from "../../components/MyText";
 import RoundButtonIcon from "../../components/RoundButtonIcon";
 import { InputCheckbox } from "../../components/InputCheckbox";
+import { Indicator } from "@/entities/Indicator";
+import { NEW_INDICATORS_CATEGORIES } from "@/utils/liste_indicateurs.1";
 
-const CategorieElements = ({ title, options, onClick, userIndicateurs }) => {
+const CategorieElements = ({
+  title,
+  options,
+  onClick,
+  userIndicateurs,
+  category,
+}: {
+  title: string;
+  options: any[];
+  onClick: (option: any) => void;
+  userIndicateurs: Indicator[];
+  category?: NEW_INDICATORS_CATEGORIES;
+}) => {
+  //  Gathered refined generic indicators with custom value (isCustom === true) or with preexisting indicators (baseIndicatorUuid exists)
+  const existingRefinedIndicators = userIndicateurs.filter(
+    (ind) => ind.mainCategory === category && (ind.isCustom || ind.baseIndicatorUuid)
+  );
+
+  // Gathered non refined generic indicators
+  const genericIndicators = userIndicateurs.filter(
+    (ind) => ind.mainCategory === category && ind.isGeneric);
+
+  // Gathered all baseIndicatorUuids of refined generic indicators with preexisting indicators
+  const allBaseIndicatorUuids = userIndicateurs
+    .filter((ind) => ind.baseIndicatorUuid && ind.mainCategory === category)
+    .map((ind) => ind.baseIndicatorUuid);
+
+  // we filter out genericIndicators, and indicators that will already be in existingRefinedIndicators
+  const preExistingIndicators = options.filter((ind) => !ind.isGeneric && !allBaseIndicatorUuids.includes(ind.uuid))
   const [isOpen, setIsOpen] = React.useState(false);
   return (
     <>
@@ -16,10 +46,17 @@ const CategorieElements = ({ title, options, onClick, userIndicateurs }) => {
       </TouchableOpacity>
       {isOpen ? (
         <View style={styles.listeContainer}>
-          {(options || [])
-            .filter((e) => !e.active)
+          {(
+            [...preExistingIndicators, ...existingRefinedIndicators, ...genericIndicators]
+          )
             .map((option) => {
-              const indicateurSelectionne = userIndicateurs.find((_ind) => _ind.uuid === option.uuid && _ind.active);
+              const indicateurSelectionne = userIndicateurs.find(
+                (_ind) =>
+                  (_ind.uuid === option.uuid ||
+                    (!_ind.baseIndicatorUuid && _ind.genericUuid === option.uuid) ||
+                    _ind.baseIndicatorUuid === option.uuid) &&
+                  _ind.active
+              );
               return (
                 <View
                   key={`${option.uuid}`}

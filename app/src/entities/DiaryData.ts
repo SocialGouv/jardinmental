@@ -86,6 +86,7 @@ export const DiaryEntrySchema = DiaryDataAnswerListSchema.and(
       .describe(`Avez-vous consommé des substances aujourd'hui ?`)
       .optional()
       .nullable(),
+    _indicateur: IndicatorSchema.optional(),
   })
 );
 export type DiaryEntry = z.infer<typeof DiaryEntrySchema>;

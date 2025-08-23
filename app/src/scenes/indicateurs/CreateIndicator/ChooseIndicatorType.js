@@ -35,6 +35,7 @@ const ChooseIndicatorType = ({ navigation, route }) => {
             navigation.push("CHOOSE_INDICATOR_ORDER", {
               nameNewIndicator: route.params.nameNewIndicator,
               indicatorType: "smiley",
+              indicatorCategory: route.params.indicatorCategory,
             });
           }}
         >
@@ -65,6 +66,7 @@ const ChooseIndicatorType = ({ navigation, route }) => {
             navigation.push("CHOOSE_INDICATOR_ORDER", {
               nameNewIndicator: route.params.nameNewIndicator,
               indicatorType: "gauge",
+              indicatorCategory: route.params.indicatorCategory,
             });
           }}
         >
@@ -81,6 +83,7 @@ const ChooseIndicatorType = ({ navigation, route }) => {
             navigation.push("CHOOSE_INDICATOR_ORDER", {
               nameNewIndicator: route.params.nameNewIndicator,
               indicatorType: "boolean",
+              indicatorCategory: route.params.indicatorCategory,
             });
           }}
         >
