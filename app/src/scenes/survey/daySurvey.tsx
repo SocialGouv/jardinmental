@@ -17,7 +17,12 @@ import { Card } from "../../components/Card";
 import { DiaryDataNewEntryInput } from "../../entities/DiaryData";
 import { Indicator } from "../../entities/Indicator";
 import { IndicatorSurveyItem } from "@/components/survey/IndicatorSurveyItem";
-import { INDICATEURS_HUMEUR, NEW_INDICATORS_CATEGORIES, GENERIC_INDICATOR_SUBSTANCE, STATIC_UUID_FOR_INSTANCE_OF_GENERIC_INDICATOR_SUBSTANCE } from "@/utils/liste_indicateurs.1";
+import {
+  INDICATEURS_HUMEUR,
+  NEW_INDICATORS_CATEGORIES,
+  GENERIC_INDICATOR_SUBSTANCE,
+  STATIC_UUID_FOR_INSTANCE_OF_GENERIC_INDICATOR_SUBSTANCE,
+} from "@/utils/liste_indicateurs.1";
 import { TW_COLORS } from "@/utils/constants";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
@@ -63,8 +68,9 @@ const DaySurvey = ({
       if (!acc[category]) {
         acc[category] = [];
       }
-
-      acc[category].push(indicator);
+      if (indicator.active && indicator.uuid !== INDICATEURS_HUMEUR.uuid) {
+        acc[category].push(indicator);
+      }
       return acc;
     }, {});
   }, [userIndicateurs]);
@@ -308,8 +314,9 @@ const DaySurvey = ({
         </Text>
         {Object.keys(groupedIndicators).map((cat, index) => {
           const indicators = groupedIndicators[cat];
-          console.log(indicators);
-
+          if (!indicators.length) {
+            return;
+          }
           return (
             <View key={cat} className="mb-2 border-b-2 border-gray-400 px-4">
               <View className={`flex-row  p-4 px-0 pb-6 ${index === 0 ? "pt-4" : "pt-10"}`}>
@@ -329,22 +336,20 @@ const DaySurvey = ({
                   className="ml-auto"
                 />
               </View>
-              {indicators
-                .filter((ind) => ind.active && ind.uuid !== INDICATEURS_HUMEUR.uuid)
-                .map((ind) => {
-                  return (
-                    <IndicatorSurveyItem
-                      key={ind?.uuid}
-                      showComment={true}
-                      indicator={ind}
-                      index={index}
-                      value={answers?.[ind?.name]?.value}
-                      onValueChanged={({ indicator, value }) => toggleAnswer({ key: indicator?.name, value })}
-                      onCommentChanged={({ indicator, comment }) => handleChangeUserComment({ key: indicator?.name, userComment: comment })}
-                      comment={answers?.[ind?.name]?.userComment}
-                    />
-                  );
-                })}
+              {indicators.map((ind) => {
+                return (
+                  <IndicatorSurveyItem
+                    key={ind?.uuid}
+                    showComment={true}
+                    indicator={ind}
+                    index={index}
+                    value={answers?.[ind?.name]?.value}
+                    onValueChanged={({ indicator, value }) => toggleAnswer({ key: indicator?.name, value })}
+                    onCommentChanged={({ indicator, comment }) => handleChangeUserComment({ key: indicator?.name, userComment: comment })}
+                    comment={answers?.[ind?.name]?.userComment}
+                  />
+                );
+              })}
             </View>
           );
         })}
