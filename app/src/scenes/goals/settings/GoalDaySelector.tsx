@@ -90,10 +90,10 @@ export const GoalDaySelector = ({ navigation, route }) => {
         <View style={styles.daysContainer} className="w-full">
           {DAYS_OF_WEEK.map((day, index) => ({ day, index }))
             .sort((a, b) => (b.index === 0 ? -1 : 0))
-            .map(({ day, index }) => {
+            .map(({ day, index }, idx) => {
               const label = format(setDay(new Date(), index), "eeee", { locale: fr });
               return (
-                <View className={mergeClassNames("w-full mb-2", index === 0 ? "" : "border-t border-gray-300")}>
+                <View className={mergeClassNames("w-full mb-2", idx === 0 ? "" : "border-t border-gray-300")}>
                   <InputCheckbox
                     key={day}
                     label={`Chaque ${label?.toLowerCase?.()}`}
