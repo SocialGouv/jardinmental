@@ -314,6 +314,7 @@ export const IndicatorScreen: React.FC<IndicatorScreenProps> = ({
               <IndicatorSurveyItem
                 key={indicator.uuid}
                 indicator={indicator}
+                allIndicators={indicators}
                 index={index}
                 showComment={showComment}
                 value={answers?.[indicator.name]?.value}

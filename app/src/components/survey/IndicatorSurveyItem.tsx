@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { InputText } from "../InputText";
 import { mergeClassNames } from "@/utils/className";
 
@@ -9,11 +9,15 @@ import Gauge from "../gauge";
 import { colors } from "@/utils/colors";
 import { typography } from "@/utils/typography";
 import { IndicatorItem } from "@/scenes/onboarding-v2/types";
-import { INDICATOR_TYPE, PredefineIndicatorSchemaType } from "@/entities/Indicator";
-import { DEFAULT_INDICATOR_LABELS, INDICATOR_LABELS } from "@/utils/liste_indicateurs.1";
+import { generateIndicatorFromPredefinedIndicator, Indicator, INDICATOR_TYPE, PredefineIndicatorV2SchemaType } from "@/entities/Indicator";
+import { DEFAULT_INDICATOR_LABELS, INDICATOR_LABELS, INDICATORS, NEW_INDICATORS_CATEGORIES } from "@/utils/liste_indicateurs.1";
 import BasicCard from "../BasicCard";
 import CheckMarkIcon from "@assets/svg/icon/check";
+import IndicatorModal from "@/scenes/onboarding-v2/indicators/IndicatorModal";
+import { useBottomSheet } from "@/context/BottomSheetContext";
+import ArrowIcon from "@assets/svg/icon/Arrow";
 import { TW_COLORS } from "@/utils/constants";
+import localStorage from "@/utils/localStorage/index";
 
 export const IndicatorSurveyItem = ({
   indicator,
@@ -23,16 +27,33 @@ export const IndicatorSurveyItem = ({
   comment,
   onCommentChanged,
   showComment,
+  onIndicatorChange,
+  allIndicators = [],
 }: {
-  indicator: PredefineIndicatorSchemaType;
+  indicator: Indicator;
   index: number;
   value: number;
   comment?: string;
   onValueChanged: () => {};
   onCommentChanged: () => {};
   showComment: boolean;
+  onIndicatorChange?: () => void;
+  allIndicators?: Indicator[];
 }) => {
-  // console.log("✍️  i. ndicator", indicator);
+  const { showBottomSheet, closeBottomSheet } = useBottomSheet();
+
+  const addIndicatorForCategory = async (category: NEW_INDICATORS_CATEGORIES, indicators: PredefineIndicatorV2SchemaType[]) => {
+    for (const indicatorItem of indicators) {
+      await localStorage.replaceOrAddIndicateur({
+        ...generateIndicatorFromPredefinedIndicator(indicatorItem),
+        baseIndicatorUuid: indicatorItem.uuid,
+        uuid: indicator.uuid, // we keep the same uuid for tracking purpose in the stats
+      });
+    }
+    if (typeof onIndicatorChange === "function") {
+      onIndicatorChange();
+    }
+  };
 
   const computeIndicatorLabel = (): string => {
     if (value === null) return "";
@@ -75,7 +96,7 @@ export const IndicatorSurveyItem = ({
       </View>
       {renderInput()}
       {indicator.type === INDICATOR_TYPE.gauge && (
-        <Text className={mergeClassNames(typography.textMdMedium, "text-gray-800 h-5")}>{computeIndicatorLabel() || ""}</Text>
+        <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700 h-5")}>{computeIndicatorLabel() || ""}</Text>
       )}
       {showComment && (
         <InputText
@@ -92,39 +113,36 @@ export const IndicatorSurveyItem = ({
           containerStyle={{ marginTop: 20 }}
         />
       )}
+      {indicator.isGeneric && (
+        <View className="flex-row">
+          <TouchableOpacity
+            onPress={() => {
+              showBottomSheet(
+                <IndicatorModal
+                  userIndicators={allIndicators}
+                  genericIndicator={indicator}
+                  category={indicator.mainCategory}
+                  addedIndicators={[]}
+                  initialSelectedIndicators={[]}
+                  multiSelect={false}
+                  onClose={(categoryName: NEW_INDICATORS_CATEGORIES, indicators: PredefineIndicatorV2SchemaType[]) => {
+                    if (typeof addIndicatorForCategory === "function") {
+                      addIndicatorForCategory(categoryName, indicators);
+                      closeBottomSheet();
+                    }
+                  }}
+                />
+              );
+            }}
+            className="flex-row ml-auto items-center justify-center"
+          >
+            <Text className={mergeClassNames(typography.textMdSemibold, "text-brand-950 mr-1")}>Préciser</Text>
+            <ArrowIcon color={TW_COLORS.BRAND_700} />
+          </TouchableOpacity>
+        </View>
+      )}
     </BasicCard>
   );
-  // return (
-  //   <View
-  //     style={[
-  //       styles.container,
-  //       {
-  //         backgroundColor: value !== undefined ? "#F0FFF0" : "#F8F9FB",
-  //         borderColor: value !== undefined ? "#D0E8D0" : "#E7EAF1",
-  //       },
-  //     ]}
-  //   >
-  //     <View style={[styles.contentContainer]}>
-  //       <View style={[styles.topContainer]}>
-  //         <Text style={[styles.label]}>{indicator.name}</Text>
-  //       </View>
-  //       {renderInput()}
-  //       <InputText
-  //         fill
-  //         preset="lighten"
-  //         placeholder="Ajoutez une note sur cet élément"
-  //         value={_comment}
-  //         onChangeText={(nextComment) => {
-  //           _setComment(nextComment);
-  //           onCommentChanged?.({ comment: nextComment, indicator });
-  //         }}
-  //         multiline={true}
-  //         textAlignVertical="top"
-  //         className="p-0" // remove space that multiline adds
-  //       />
-  //     </View>
-  //   </View>
-  //);
 };
 
 const styles = StyleSheet.create({

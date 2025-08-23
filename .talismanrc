@@ -18,13 +18,19 @@ fileignoreconfig:
 - filename: app/src/components/Collapsable.js
   checksum: 280e7a5a76d8804045a5a07dbf8062e4cca77a937c969f1ee89cf45ff3d855b2
 - filename: app/src/context/diaryData.tsx
-  checksum: 7ebf59b94ce815a22fb60424e74ae5a17a74eb07e941c5c72c8e71bce1a1c4ed
+  checksum: 1747d0325714e8e433b131689745dbe26ad21f214215b2642b1e2fca4388e28f
 - filename: app/src/context/userProfile.tsx
   checksum: fa700b84c6ced31f07459c3d54b35226c4239f902494750fb42a86e841044ed8
+- filename: app/src/entities/DiaryData.ts
+  checksum: 75fe8aac9d5e946b9e056c46494caaee4c95314ecf2ba9263c25f196d82ffa15
+- filename: app/src/entities/Indicator.ts
+  checksum: 37eb73a6c4158b450e460c1245ac1355e07ef06966724449034b9c534a6c0b28
 - filename: app/src/entities/SurveyScreen.ts
   checksum: 68279ddbf41bdc3fdbe9ec5073122f73b74c992dad22768d69bf6b0c6d7f5f6f
 - filename: app/src/scenes/diary/index.js
-  checksum: 3ce2456ab1ef9b4d523326b4e6e796eeab6a3588e8ac9b6c8fb3abd37b70c9d6
+  checksum: 989214cbaa302dbd4811f936d5ef87fccc9645e49beb1cc96fb4b0d74bded646
+- filename: app/src/scenes/indicateurs/CreateIndicator/index.js
+  checksum: f10d695b938ea8615543d31781df8aeafa4916eab9bcd9c809d34614298422b4
 - filename: app/src/scenes/indicateurs/editIndicateurs/index.tsx
   checksum: da39a551c3cf5760751f04c9083a2e720d10874a38f8ae39861a127d59288487
 - filename: app/src/scenes/onboarding-v2/CarouselScreen.tsx
@@ -44,7 +50,7 @@ fileignoreconfig:
 - filename: app/src/scenes/onboarding-v2/index.tsx
   checksum: 397a9d500493e7778dd039fb94b8c28b962c34d4e6115588a9cd345e98ad6b41
 - filename: app/src/scenes/onboarding-v2/indicators/IndicatorModal.tsx
-  checksum: 358dd3693226d27f8f0786f17ef35721743e9331657dd5fc2c410f22e7ba8c74
+  checksum: 3cae33009486039e7cab063070b98b4de9b209997c4b0e371115c2cc0e9df879
 - filename: app/src/scenes/onboarding-v2/indicators/OnboardingChooseIndicatorScreen.tsx
   checksum: ff6d21a848c2eb7c5a1fb3f41d97a8f7dcd6d8010459f47fd247f95208b0c9b9
 - filename: app/src/scenes/onboarding-v2/personalization/DifficultiesScreen.tsx
@@ -75,6 +81,8 @@ fileignoreconfig:
   checksum: bdb40467b60296ef959cac383488b52e879619d362093020f547896ddf9921bf
 - filename: app/src/scenes/status/index.js
   checksum: 5f9e42e3b0cf566b702885826b9b417fd0b0b58be969354716386d909b4e3651
+- filename: app/src/scenes/status/status-item.js
+  checksum: 300366984764d5a79c9d7ce14c1b6815143126ccde873c53fd1533aa79521503
 - filename: app/src/scenes/survey-v2/AnimatedHeaderScrollScreen.tsx
   checksum: 53643c652f22b9b65dc01c34ac35cfd9763f1720d4d2d0ff8f4e956d698647fb
 - filename: app/src/scenes/survey-v2/ContextScreen.tsx
@@ -104,9 +112,9 @@ fileignoreconfig:
 - filename: app/src/services/notifications.js
   checksum: 00046388d0509346e97a4d365477dd2b85f4eaefb4f67f4d7351bc198db4b725
 - filename: app/src/utils/constants.ts
-  checksum: 6add83fac911247dae8018dc09c8225263df59cdd48a1f293245c7a087e93320
+  checksum: bf088b314a88d20514806f550641fd61a46b00e3f1336d1fd1d6dd56cf06589b
 - filename: app/src/utils/localStorage/index.ts
-  checksum: 3f635e9292b5597aad97348cb39d456878fba2e66cf18108b14e1bc927bfc845
+  checksum: 4b722ae20cc84bdb7add9f19468fdc68e560b2377e3caeb371d087dd90c27c59
 scopeconfig:
 - scope: node
 version: "1.0"

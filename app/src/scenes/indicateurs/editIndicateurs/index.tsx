@@ -19,11 +19,12 @@ import logEvents from "../../../services/logEvents";
 import TextTag from "../../../components/TextTag";
 import JMButton from "@/components/JMButton";
 import { HELP_FOR_CATEGORY, INDICATOR_CATEGORIES_DATA } from "@/scenes/onboarding-v2/data/helperData";
+import { generateIndicatorFromPredefinedIndicator, Indicator, PredefineIndicatorV2SchemaType } from "@/entities/Indicator";
 
 const EditIndicateurs = ({ navigation, route }) => {
   const [exemplesVisible, setExemplesVisible] = useState(false);
   const [existingIndicatorsVisible, setExistingIndicatorsVisible] = useState(false);
-  const [userIndicateurs, setUserIndicateurs] = useState([]);
+  const [userIndicateurs, setUserIndicateurs] = useState<Indicator[]>([]);
 
   const indicateursByCategory = INDICATORS.reduce((prev, curr) => {
     for (const category of curr.categories) {
@@ -31,15 +32,18 @@ const EditIndicateurs = ({ navigation, route }) => {
         prev[category] = [];
       }
       prev[category].push(curr);
-      return prev;
     }
-    // }
-    // if (!prev[curr.category]) {
-    //   prev[curr.category] = [];
-    // }
-    // prev[curr.category].push(curr);
-    // return prev;
+    return prev;
   }, {});
+  // Sort each category group
+  for (const category in indicateursByCategory) {
+    indicateursByCategory[category].sort((a, b) => {
+      if (a.isGeneric !== b.isGeneric) {
+        return a.isGeneric ? -1 : 1;
+      }
+      return a.priority - b.priority;
+    });
+  }
 
   useFocusEffect(
     React.useCallback(() => {
@@ -64,7 +68,7 @@ const EditIndicateurs = ({ navigation, route }) => {
     await localStorage.setIndicateurs(_userIndicateurs);
   };
 
-  const handleAddNewIndicateur = async (_indicateur) => {
+  const handleAddNewIndicateur = async (_indicateur: Indicator) => {
     if (!_indicateur) return;
     const _userIndicateurs = [...userIndicateurs, _indicateur];
     setUserIndicateurs(_userIndicateurs);
@@ -72,10 +76,10 @@ const EditIndicateurs = ({ navigation, route }) => {
     logEvents.logCustomSymptomAdd();
   };
 
-  const setToggleIndicateur = async (_indicateur) => {
-    if (userIndicateurs.find((e) => e.uuid === _indicateur.uuid)) {
+  const setToggleIndicateur = async (_indicateur: PredefineIndicatorV2SchemaType) => {
+    if (userIndicateurs.find((e) => e.uuid === _indicateur.uuid || e.baseIndicatorUuid === _indicateur.uuid)) {
       const _userIndicateurs = userIndicateurs.map((indicateur) => {
-        if (indicateur.uuid === _indicateur.uuid) {
+        if (indicateur.uuid === _indicateur.uuid || indicateur.baseIndicatorUuid === _indicateur.uuid) {
           indicateur.active = !indicateur.active;
         }
         return indicateur;
@@ -83,7 +87,7 @@ const EditIndicateurs = ({ navigation, route }) => {
       setUserIndicateurs(_userIndicateurs);
       await localStorage.setIndicateurs(_userIndicateurs);
     } else {
-      handleAddNewIndicateur({ ..._indicateur, version: 1, active: true });
+      handleAddNewIndicateur(generateIndicatorFromPredefinedIndicator(_indicateur));
     }
   };
 
@@ -152,10 +156,10 @@ const EditIndicateurs = ({ navigation, route }) => {
             />
             {Object.keys(indicateursByCategory).map((_category) => {
               const _indicateurs = indicateursByCategory[_category];
-              console.log(_category);
               return (
                 <CategorieElements
                   key={_category}
+                  category={indicateursByCategory[_category][0].mainCategory}
                   title={INDICATOR_CATEGORIES_DATA[_category].name}
                   options={_indicateurs}
                   onClick={(value) => setToggleIndicateur(value)}
@@ -338,4 +342,5 @@ const styles = StyleSheet.create({
     padding: 20,
   },
 });
+
 export default EditIndicateurs;

@@ -1,13 +1,16 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import DiarySymptom from "./DiarySymptom";
+import { Indicator } from "@/entities/Indicator";
 
-const DiarySymptoms = ({ values, date }) => {
+const DiarySymptoms = ({ values, date, userIndicators }: { values: { id: string; value: string }[]; date: Date; userIndicators: Indicator[] }) => {
   if (!values || !values?.length) return null;
 
   return (
     <View style={styles.container}>
-      {values?.map((userComment) => userComment && <DiarySymptom key={userComment.id} userComment={userComment} date={date} />)}
+      {values?.map(
+        (userComment) => userComment && <DiarySymptom userIndicators={userIndicators} key={userComment.id} userComment={userComment} date={date} />
+      )}
     </View>
   );
 };

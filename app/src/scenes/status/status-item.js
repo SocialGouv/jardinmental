@@ -15,7 +15,7 @@ import { GoalsStatus } from "../goals/status/GoalsStatus";
 import { Card } from "../../components/Card";
 import { GoalsStatusNoData } from "../goals/status/GoalsStatusNoData";
 
-export default ({ navigation, indicateurs, patientState, goalsData, date }) => {
+export default ({ navigation, indicateurs = [], patientState, goalsData, date }) => {
   const [customs, setCustoms] = useState([]);
   const [oldCustoms, setOldCustoms] = useState([]);
   let mounted = useRef(true);
@@ -80,12 +80,20 @@ export default ({ navigation, indicateurs, patientState, goalsData, date }) => {
                 return;
               }
               const [categoryName] = key.split("_");
+              const indicator = indicateurs.find((i) => i.genericUuid === key) || indicateurs.find((i) => i.uuid === key);
               return (
                 <PatientStateItem
                   key={key}
                   category={key}
                   patientState={patientState}
-                  label={patientState?._indicateur?.name || INDICATEURS_LIST[key] || displayedCategories[key] || categoryName}
+                  label={
+                    indicator?.name || 
+                    value?._indicateur?.name || 
+                    INDICATEURS_LIST[key] || 
+                    displayedCategories[key] || 
+                    categoryName || 
+                    'Unknown Indicator'
+                  }
                 />
               );
             })}

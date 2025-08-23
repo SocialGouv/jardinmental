@@ -1,14 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, View, TextInput } from "react-native";
 import { colors } from "../../utils/colors";
 import Button from "../../components/RoundButtonIcon";
 import Text from "../../components/MyText";
 import { displayedCategories, translateCategories } from "../../utils/constants";
 import SurveyMenu from "../../../assets/svg/SurveyMenu";
+import { Indicator } from "@/entities/Indicator";
 
 const MAX_SIZE = 80;
 
-const DiarySymptom = ({ userComment }) => {
+const DiarySymptom = ({
+  userComment,
+  userIndicators,
+}: {
+  userComment: { id: string; value: string; _indicateur?: Indicator };
+  userIndicators: Indicator[];
+}) => {
   const [toggled, setToggled] = useState(false);
   if (!userComment || !userComment?.value) return null;
 
@@ -27,7 +34,18 @@ const DiarySymptom = ({ userComment }) => {
   };
 
   const [categoryName] = userComment.id.split("_");
-
+  const getLabel = () => {
+    if (translateCategories[userComment.id]) {
+      return translateCategories[userComment.id];
+    } else if (userIndicators.find((indicator) => indicator.uuid === userComment.id)) {
+      const indicator = userIndicators.find((indicator) => indicator.uuid === userComment.id);
+      return indicator?.name;
+    } else if (userComment._indicateur) {
+      return userComment._indicateur.name;
+    }
+    return categoryName;
+  };
+  console.log("DIARY SYMPTOM", userComment);
   return (
     <>
       <View key={userComment.id} style={styles.item}>
@@ -37,7 +55,7 @@ const DiarySymptom = ({ userComment }) => {
               <SurveyMenu height={20} width={20} style={[styles.image, styles.tiltUp]} />
             </View>
             <Text style={styles.label}>
-              <Text style={styles.id}>{translateCategories[userComment.id] || categoryName}</Text>
+              <Text style={styles.id}>{getLabel()}</Text>
               &nbsp;:&nbsp;{getValue()}
             </Text>
           </View>

@@ -17,7 +17,7 @@ import { Card } from "../../components/Card";
 import { DiaryDataNewEntryInput } from "../../entities/DiaryData";
 import { Indicator } from "../../entities/Indicator";
 import { IndicatorSurveyItem } from "@/components/survey/IndicatorSurveyItem";
-import { INDICATEURS_HUMEUR, NEW_INDICATORS_CATEGORIES } from "@/utils/liste_indicateurs.1";
+import { INDICATEURS_HUMEUR, NEW_INDICATORS_CATEGORIES, GENERIC_INDICATOR_SUBSTANCE, STATIC_UUID_FOR_INSTANCE_OF_GENERIC_INDICATOR_SUBSTANCE } from "@/utils/liste_indicateurs.1";
 import { TW_COLORS } from "@/utils/constants";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
@@ -83,19 +83,25 @@ const DaySurvey = ({
     label: "Ajoutez une note générale sur votre journée",
   };
 
+  const updateIndicators = async () => {
+    const user_indicateurs = await localStorage.getIndicateurs();
+    if (user_indicateurs) {
+      setUserIndicateurs(user_indicateurs);
+    }
+  };
+
   useFocusEffect(
     React.useCallback(() => {
-      (async () => {
-        const user_indicateurs = await localStorage.getIndicateurs();
-        if (user_indicateurs) {
-          setUserIndicateurs(user_indicateurs);
-        }
-      })();
+      updateIndicators();
     }, [])
   );
 
   useEffect(() => {
-    //init the survey if there is already answers
+    // this hook inits the survey if there is already answers
+    if (Object.keys(answers).length > 0) {
+      // if answers as key it is already initialized
+      return;
+    }
     const initialAnswers = {};
     const surveyAnswers = initSurvey?.answers || {};
     if (!surveyAnswers || userIndicateurs.length === 0) {
@@ -104,8 +110,8 @@ const DaySurvey = ({
     Object.keys(surveyAnswers).forEach((key) => {
       const answer = surveyAnswers[key];
       if (!answer) return;
-      // Handle special questions (TOXIC, CONTEXT)
-      if (key === questionToxic.id || key === questionContext.id) {
+      // Handle special questions (CONTEXT)
+      if (key === questionContext.id) {
         initialAnswers[key] = {
           ...answer,
           value: answer.value,
@@ -113,9 +119,22 @@ const DaySurvey = ({
         };
         return;
       }
-      const cleanedQuestionId = key.split("_")[0];
+
+      if (key === questionToxic.id) {
+        initialAnswers[key] = {
+          ...answer,
+          value: answer.value,
+          userComment: answer.userComment,
+        };
+      }
+
+      let cleanedQuestionId = key.split("_")[0];
       // previous indicators where using '_', we cleaned it when editing it apparently
-      const _indicateur = userIndicateurs.find((i) => i.name === cleanedQuestionId);
+      const _indicateur = userIndicateurs.find(
+        (i) =>
+          i[i.diaryDataKey || "name"] === cleanedQuestionId ||
+          (cleanedQuestionId === questionToxic.id && i.genericUuid === GENERIC_INDICATOR_SUBSTANCE.uuid)
+      );
       if (_indicateur) {
         let value = answer.value;
         if (!["gauge", "boolean"].includes(_indicateur.type)) {
@@ -124,6 +143,13 @@ const DaySurvey = ({
             patientState: initSurvey?.answers,
             category: key,
           });
+        }
+        if (cleanedQuestionId === questionToxic.id) {
+          // in case where cleanedQuestionId is TOXIC,
+          // this happens only in edge case where value where registered as TOXIC and still editable
+          // and the user do the upgrade and edit a survey
+          // so in the overall data it can happen for only 7 days (the 7 days before the upgrade)
+          cleanedQuestionId = _indicateur.uuid;
         }
         initialAnswers[cleanedQuestionId] = {
           value: answer.value,
@@ -139,7 +165,11 @@ const DaySurvey = ({
     setAnswers((prev) => {
       return {
         ...prev,
-        [key]: { ...prev[key], value, _indicateur: userIndicateurs.find((i) => i.name === key) },
+        [key]: {
+          ...prev[key],
+          value,
+          _indicateur: userIndicateurs.find((i) => i[i["diaryDataKey"] || "name"] === key),
+        },
       };
     });
   };
@@ -157,8 +187,14 @@ const DaySurvey = ({
     const prevCurrentSurvey = initSurvey;
     const currentSurvey: DiaryDataNewEntryInput = {
       date: prevCurrentSurvey.date,
-      answers: { ...prevCurrentSurvey.answers, ...answers },
+      answers: {
+        ...prevCurrentSurvey.answers,
+        ...answers,
+      },
     };
+    if (currentSurvey.answers[STATIC_UUID_FOR_INSTANCE_OF_GENERIC_INDICATOR_SUBSTANCE]) {
+      delete currentSurvey.answers[questionToxic.id];
+    }
     addNewEntryToDiaryData(currentSurvey);
     if (goalsRef.current && typeof goalsRef.current.onSubmit === "function") {
       await goalsRef.current.onSubmit();
