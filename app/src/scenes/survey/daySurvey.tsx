@@ -1,8 +1,7 @@
-import React, { useEffect, useState, useContext, useRef } from "react";
-import { ScrollView, View, KeyboardAvoidingView, Platform } from "react-native";
+import React, { useEffect, useState, useContext, useRef, useMemo } from "react";
+import { ScrollView, View, KeyboardAvoidingView, Platform, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Text from "../../components/MyText";
-import { beforeToday, formatDay, formatRelativeDate } from "../../utils/date/helpers";
+import { beforeToday, formatDate, formatDay, formatRelativeDate } from "../../utils/date/helpers";
 import { isToday, isYesterday, parseISO } from "date-fns";
 import { getScoreWithState } from "../../utils";
 import InputQuestion from "./InputQuestion";
@@ -18,9 +17,28 @@ import { Card } from "../../components/Card";
 import { DiaryDataNewEntryInput } from "../../entities/DiaryData";
 import { Indicator } from "../../entities/Indicator";
 import { IndicatorSurveyItem } from "@/components/survey/IndicatorSurveyItem";
-import { useBottomSheet } from "@/context/BottomSheetContext";
 import Drugs from "../drugs/drugs";
 import { DrugsBottomSheet } from "@/components/DrugsBottomSheet";
+import {
+  INDICATEURS_HUMEUR,
+  NEW_INDICATORS_CATEGORIES,
+  GENERIC_INDICATOR_SUBSTANCE,
+  STATIC_UUID_FOR_INSTANCE_OF_GENERIC_INDICATOR_SUBSTANCE,
+} from "@/utils/liste_indicateurs.1";
+import { TW_COLORS } from "@/utils/constants";
+import { mergeClassNames } from "@/utils/className";
+import { typography } from "@/utils/typography";
+import { HELP_FOR_CATEGORY, INDICATOR_CATEGORIES_DATA } from "../onboarding-v2/data/helperData";
+import CircleQuestionMark from "@assets/svg/icon/CircleQuestionMark";
+import JMButton from "@/components/JMButton";
+import { useBottomSheet } from "@/context/BottomSheetContext";
+import HelpView from "@/components/HelpView";
+import { INDICATORS_CATEGORIES } from "@/entities/IndicatorCategories";
+import { AnimatedHeaderScrollScreen } from "../survey-v2/AnimatedHeaderScrollScreen";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import Pencil from "@assets/svg/Pencil";
+import ArrowIcon from "@assets/svg/icon/Arrow";
+import NavigationButtons from "@/components/onboarding/NavigationButtons";
 
 const DaySurvey = ({
   navigation,
@@ -43,9 +61,24 @@ const DaySurvey = ({
   const initEditiingSurvey = route?.params?.editingSurvey ?? false;
 
   const [diaryData, addNewEntryToDiaryData] = useContext(DiaryDataContext);
+  const { showBottomSheet } = useBottomSheet();
 
   const [userIndicateurs, setUserIndicateurs] = useState<Indicator[]>([]);
   const [treatment, setTreatment] = useState<any[] | undefined>();
+
+  const groupedIndicators = useMemo(() => {
+    return userIndicateurs.reduce<Record<NEW_INDICATORS_CATEGORIES, Indicator[]>>((acc, indicator) => {
+      const category = indicator.mainCategory || NEW_INDICATORS_CATEGORIES.OTHER;
+
+      if (!acc[category]) {
+        acc[category] = [];
+      }
+      if (indicator.active && indicator.uuid !== INDICATEURS_HUMEUR.uuid) {
+        acc[category].push(indicator);
+      }
+      return acc;
+    }, {});
+  }, [userIndicateurs]);
 
   const [answers, setAnswers] = useState<DiaryDataNewEntryInput["answers"]>({});
 
@@ -62,6 +95,13 @@ const DaySurvey = ({
     label: "Ajoutez une note générale sur votre journée",
   };
 
+  const updateIndicators = async () => {
+    const user_indicateurs = await localStorage.getIndicateurs();
+    if (user_indicateurs) {
+      setUserIndicateurs(user_indicateurs);
+    }
+  };
+
   useFocusEffect(
     React.useCallback(() => {
       (async () => {
@@ -74,11 +114,16 @@ const DaySurvey = ({
           setTreatment(_treatment);
         }
       })();
+      updateIndicators();
     }, [])
   );
 
   useEffect(() => {
-    //init the survey if there is already answers
+    // this hook inits the survey if there is already answers
+    if (Object.keys(answers).length > 0) {
+      // if answers as key it is already initialized
+      return;
+    }
     const initialAnswers = {};
     const surveyAnswers = initSurvey?.answers || {};
     if (!surveyAnswers || userIndicateurs.length === 0) {
@@ -87,8 +132,8 @@ const DaySurvey = ({
     Object.keys(surveyAnswers).forEach((key) => {
       const answer = surveyAnswers[key];
       if (!answer) return;
-      // Handle special questions (TOXIC, CONTEXT)
-      if (key === questionToxic.id || key === questionContext.id) {
+      // Handle special questions (CONTEXT)
+      if (key === questionContext.id) {
         initialAnswers[key] = {
           ...answer,
           value: answer.value,
@@ -96,9 +141,22 @@ const DaySurvey = ({
         };
         return;
       }
-      const cleanedQuestionId = key.split("_")[0];
+
+      if (key === questionToxic.id) {
+        initialAnswers[key] = {
+          ...answer,
+          value: answer.value,
+          userComment: answer.userComment,
+        };
+      }
+
+      let cleanedQuestionId = key.split("_")[0];
       // previous indicators where using '_', we cleaned it when editing it apparently
-      const _indicateur = userIndicateurs.find((i) => i.name === cleanedQuestionId);
+      const _indicateur = userIndicateurs.find(
+        (i) =>
+          i[i.diaryDataKey || "name"] === cleanedQuestionId ||
+          (cleanedQuestionId === questionToxic.id && i.genericUuid === GENERIC_INDICATOR_SUBSTANCE.uuid)
+      );
       if (_indicateur) {
         let value = answer.value;
         if (!["gauge", "boolean"].includes(_indicateur.type)) {
@@ -107,6 +165,13 @@ const DaySurvey = ({
             patientState: initSurvey?.answers,
             category: key,
           });
+        }
+        if (cleanedQuestionId === questionToxic.id) {
+          // in case where cleanedQuestionId is TOXIC,
+          // this happens only in edge case where value where registered as TOXIC and still editable
+          // and the user do the upgrade and edit a survey
+          // so in the overall data it can happen for only 7 days (the 7 days before the upgrade)
+          cleanedQuestionId = _indicateur.uuid;
         }
         initialAnswers[cleanedQuestionId] = {
           value: answer.value,
@@ -122,7 +187,11 @@ const DaySurvey = ({
     setAnswers((prev) => {
       return {
         ...prev,
-        [key]: { ...prev[key], value, _indicateur: userIndicateurs.find((i) => i.name === key) },
+        [key]: {
+          ...prev[key],
+          value,
+          _indicateur: userIndicateurs.find((i) => i[i["diaryDataKey"] || "name"] === key),
+        },
       };
     });
   };
@@ -140,8 +209,14 @@ const DaySurvey = ({
     const prevCurrentSurvey = initSurvey;
     const currentSurvey: DiaryDataNewEntryInput = {
       date: prevCurrentSurvey.date,
-      answers: { ...prevCurrentSurvey.answers, ...answers },
+      answers: {
+        ...prevCurrentSurvey.answers,
+        ...answers,
+      },
     };
+    if (currentSurvey.answers[STATIC_UUID_FOR_INSTANCE_OF_GENERIC_INDICATOR_SUBSTANCE]) {
+      delete currentSurvey.answers[questionToxic.id];
+    }
     addNewEntryToDiaryData(currentSurvey);
     if (goalsRef.current && typeof goalsRef.current.onSubmit === "function") {
       await goalsRef.current.onSubmit();
@@ -200,54 +275,93 @@ const DaySurvey = ({
     return `Comment s'est passé ${relativeDate} ?`;
   };
 
+  const showHelpModal = (category: NEW_INDICATORS_CATEGORIES) => {
+    return showBottomSheet(<HelpView title={HELP_FOR_CATEGORY[category].title} description={HELP_FOR_CATEGORY[category]?.description} />);
+  };
+
+  const editIndicators = () => {
+    navigation.navigate("symptoms");
+    logEvents.logSettingsSymptomsFromSurvey();
+  };
+  const answeredElementCount = Object.keys(answers).map((key) => answers[key].value !== undefined).length;
   return (
-    <SafeAreaView className="flex-1 bg-white">
-      <KeyboardAvoidingView
-        style={{ flex: 1 }}
-        behavior={Platform.OS === "ios" ? "padding" : undefined}
-        keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0} // adjust to your header height
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-        className="flex-1"
-        keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 25}
-      >
-        <View className="absolute top-0 left-0 right-0 flex-row items-center justify-between px-4 pt-5 bg-white/90 z-50">
-          {navigation.canGoBack() && (
-            <Button2
-              preset=""
-              type="outline"
-              circle
-              size="normal"
-              icon="ArrowUpSvg"
-              iconStyle={{ transform: [{ rotate: "270deg" }] }}
-              onPress={() => navigation.goBack()}
-            />
-          )}
-          <Text className="flex-1 text-lg font-bold text-center px-1">Mon questionnaire</Text>
-          <View className="w-[45px]" />
-        </View>
-        <ScrollView
-          ref={scrollRef}
-          keyboardShouldPersistTaps="handled"
-          contentInsetAdjustmentBehavior="automatic"
-          keyboardDismissMode="interactive"
-          className="grow"
-          contentContainerStyle={{
-            paddingTop: 80,
-            paddingHorizontal: 16,
-            paddingBottom: 80,
-          }}
-        >
-          <View>
-            <View className="mb-2">
-              <Card
-                preset="lighten"
-                title={renderQuestion()}
-                image={{ source: require("./../../../assets/imgs/indicateur.png") }}
-                containerStyle={{ marginBottom: 16 }}
-              />
-              {userIndicateurs
-                .filter((ind) => ind.active)
-                .map((ind, index) => (
+    <AnimatedHeaderScrollScreen
+      headerRightComponent={<Pencil color={TW_COLORS.WHITE} width={16} height={16} />}
+      headerRightAction={editIndicators}
+      headerTitle={formatDate(initSurvey?.date)}
+      handlePrevious={() => {
+        navigation.goBack();
+      }}
+      bottomComponent={
+        <NavigationButtons
+          absolute={true}
+          withArrow={false}
+          headerContent={
+            <View>
+              <View className="my-2">
+                <Text className={mergeClassNames(typography.textSmMedium, "text-gray-700 text-center")}>
+                  {answeredElementCount} élément{answeredElementCount ? "s" : ""} observé{answeredElementCount ? "s" : ""}.
+                </Text>
+                <Text className={mergeClassNames(typography.textSmMedium, "text-gray-700 text-center")}>
+                  Vous pourrez compléter votre observation plus tard
+                </Text>
+              </View>
+            </View>
+          }
+          nextText="Valider mon observation"
+        />
+      }
+      title={"Mon observation du jour"}
+      navigation={navigation}
+    >
+      <View>
+        {userIndicateurs
+          .filter((ind) => ind.active === true && ind.uuid === INDICATEURS_HUMEUR.uuid)
+          .map((ind) => {
+            return (
+              <View className="mb-2 border-b-2 border-gray-400 px-4 my-4">
+                <IndicatorSurveyItem
+                  key={ind?.uuid}
+                  showComment={true}
+                  indicator={ind}
+                  index={0}
+                  value={answers?.[ind?.name]?.value}
+                  onValueChanged={({ indicator, value }) => toggleAnswer({ key: indicator?.name, value })}
+                  onCommentChanged={({ indicator, comment }) => handleChangeUserComment({ key: indicator?.name, userComment: comment })}
+                  comment={answers?.[ind?.name]?.userComment}
+                />
+              </View>
+            );
+          })}
+        <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700 text-center my-6 px-8")}>
+          Observez ce qui a été présent ou plus marqué aujourd’hui, un élément à la fois.
+        </Text>
+        {Object.keys(groupedIndicators).map((cat, index) => {
+          const indicators = groupedIndicators[cat];
+          if (!indicators.length) {
+            return;
+          }
+          return (
+            <View key={cat} className="mb-2 border-b-2 border-gray-400 px-4">
+              <View className={`flex-row  p-4 px-0 pb-6 ${index === 0 ? "pt-4" : "pt-10"}`}>
+                <View className="rounded-full border-[1.5px] border-cnam-primary-800 bg-white w-10 h-10 items-center justify-center">
+                  {React.createElement(INDICATOR_CATEGORIES_DATA[cat].icon, { color: TW_COLORS.BRAND_900 })}
+                </View>
+                <Text className={mergeClassNames(typography.displayXsBold, "text-left text-cnam-primary-900 ml-2 flex-1")}>
+                  {INDICATOR_CATEGORIES_DATA[cat].name}
+                </Text>
+                <JMButton
+                  onPress={() => {
+                    showHelpModal(cat);
+                  }}
+                  variant="text"
+                  width="fixed"
+                  icon={<CircleQuestionMark />}
+                  className="ml-auto"
+                />
+              </View>
+              {indicators.map((ind) => {
+                return (
                   <IndicatorSurveyItem
                     key={ind?.uuid}
                     showComment={true}
@@ -258,45 +372,56 @@ const DaySurvey = ({
                     onCommentChanged={({ indicator, comment }) => handleChangeUserComment({ key: indicator?.name, userComment: comment })}
                     comment={answers?.[ind?.name]?.userComment}
                   />
-                ))}
-              <Card
-                title="Personnaliser mes indicateurs"
-                icon={{ icon: "ImportantSvg" }}
-                onPress={() => {
-                  navigation.navigate("symptoms");
-                  logEvents.logSettingsSymptomsFromSurvey();
-                }}
-                className="my-2"
-              />
+                );
+              })}
             </View>
-          </View>
-          <GoalsDaySurvey date={initSurvey?.date} ref={goalsRef} scrollRef={scrollRef} route={route} />
-          <InputQuestion
-            question={questionContext}
-            onPress={toggleAnswer}
-            selected={answers[questionContext.id]?.value}
-            explanation={questionContext.explanation}
-            onChangeUserComment={handleChangeUserComment}
-            userComment={answers[questionContext.id]?.userComment}
-            placeholder="Contexte, évènements, comportement de l'entourage..."
-          />
-          <QuestionYesNo
-            question={questionToxic}
-            onPress={toggleAnswer}
-            selected={answers[questionToxic.id]?.value}
-            explanation={questionToxic.explanation}
-            isLast
-            onChangeUserComment={handleChangeUserComment}
-            userComment={answers[questionToxic.id]?.userComment}
-          />
-          <View className="h-[1px] bg-neutral-200 mx-5 my-2.5 w-full self-center" />
-          <Text className="flex-1 text-black text-sm font-normal text-center">Retrouvez toutes vos notes dans l'onglet "Mon&nbsp;journal"</Text>
-        </ScrollView>
-        <View className={`absolute bottom-0 left-0 right-0 p-4 bg-white z-50 ${Platform.OS === "android" ? "pb-4" : "pb-0"}`}>
-          <Button2 fill title="Valider" onPress={submitDay} />
-        </View>
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+          );
+        })}
+        {/* <Card
+          title="Personnaliser mes indicateurs"
+          icon={{ icon: "ImportantSvg" }}
+          onPress={() => {
+            navigation.navigate("symptoms");
+            logEvents.logSettingsSymptomsFromSurvey();
+          }}
+          className="my-2"
+        /> */}
+      </View>
+      <GoalsDaySurvey date={initSurvey?.date} ref={goalsRef} scrollRef={scrollRef} route={route} />
+      <View className="mb-2 border-b-2 border-gray-400 px-4 my-4">
+        <Text className={mergeClassNames(typography.displayXsBold, "text-left text-cnam-primary-900 ml-2 flex-1 mb-4")}>Note générale</Text>
+        <InputQuestion
+          question={questionContext}
+          onPress={toggleAnswer}
+          selected={answers[questionContext.id]?.value}
+          explanation={questionContext.explanation}
+          onChangeUserComment={handleChangeUserComment}
+          userComment={answers[questionContext.id]?.userComment}
+          placeholder="Contexte, évènements, comportement de l'entourage..."
+        />
+      </View>
+      <View className="mb-2 px-4 my-4">
+        <QuestionYesNo
+          question={questionToxic}
+          onPress={toggleAnswer}
+          selected={answers[questionToxic.id]?.value}
+          explanation={questionToxic.explanation}
+          isLast
+          onChangeUserComment={handleChangeUserComment}
+          userComment={answers[questionToxic.id]?.userComment}
+        />
+      </View>
+      <View className="flex-row justify-center">
+        <JMButton
+          icon={<ArrowIcon color={TW_COLORS.GRAY_700} />}
+          onPress={() => navigation.navigate("goals-settings")}
+          iconPosition="right"
+          width="fixed"
+          variant="outline"
+          title="Personnaliser mes objectifs"
+        />
+      </View>
+    </AnimatedHeaderScrollScreen>
   );
 };
 

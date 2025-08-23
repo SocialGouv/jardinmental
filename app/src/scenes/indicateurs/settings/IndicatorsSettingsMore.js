@@ -57,7 +57,7 @@ const IndicatorsSettingsMore = ({ navigation, route }) => {
         },
       }}
     >
-      <Card title="Modifier mon questionnaire" text="Vous pouvez changer l’ordre d’apparition de vos indicateurs" />
+      <Card title="Modifier mon questionnaire" text="Vous pouvez supprimer vos indicateurs" />
       <View style={titleStyles.container}>
         <Title align="left" fill={false}>
           Vos indicateurs
@@ -73,15 +73,14 @@ const IndicatorsSettingsMore = ({ navigation, route }) => {
 const IndicatorItem = ({ indicator, drag, isActive, index, setIndicators }) => {
   return (
     <ScaleDecorator>
-      <TouchableOpacity onLongPress={drag} disabled={isActive} delayLongPress={100}>
+      <View>
         <View style={[itemStyles.container, isActive && { backgroundColor: "#D4F0F2" }]}>
-          <Icon icon="ReorderSvg" color={colors.BLUE} width="16" height="16" styleContainer={{ width: 16, height: 16 }} />
           <Text style={[itemStyles.label]}>{indicator?.name}</Text>
           <TouchableOpacity onPress={() => setIndicators((prev) => prev.map((i) => (i.uuid === indicator.uuid ? { ...i, active: false } : i)))}>
             <Icon icon="Bin2Svg" color={colors.BLUE} width="16" height="16" styleContainer={{ width: 16, height: 16 }} />
           </TouchableOpacity>
         </View>
-      </TouchableOpacity>
+      </View>
     </ScaleDecorator>
   );
 };

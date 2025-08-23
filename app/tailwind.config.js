@@ -52,16 +52,18 @@ module.exports = {
           DEFAULT: "#EBFDFF",
         },
         "cnam-primary": {
-          800: "#3D6874",
           950: "#28464D",
           900: "#134449",
+          800: "#3D6874",
           500: "#65AEC1",
           50: "#F0F7F9",
+          25: "#FAFDFD",
         },
         "cnam-cyan": {
           "lighten-90": "#E5F6FC",
           "lighten-80": "#CCEDF9",
           "darken-20": "#0084B2",
+          "600-darken-20": "#0084B2",
         },
         "cnam-jaune": {
           100: "#FCF0D3",
@@ -81,6 +83,7 @@ module.exports = {
           800: "#4A5D5F",
           700: "#617778",
           600: "#799092",
+          400: "#ACC3C5",
           300: "#C7DDDE",
           200: "#E3F6F8",
           100: "#EEF9FA",

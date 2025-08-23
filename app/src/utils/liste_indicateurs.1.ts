@@ -1,5 +1,9 @@
-import { INDICATOR_ORDER, INDICATOR_TYPE, PredefineIndicatorSchemaType, PredefineIndicatorV2SchemaType } from "@/entities/Indicator";
+import { INDICATOR_ORDER, INDICATOR_TYPE, LegacyPredefineIndicatorSchemaType, PredefineIndicatorV2SchemaType } from "@/entities/Indicator";
 import { INDICATORS_CATEGORIES } from "@/entities/IndicatorCategories";
+
+// TOXIC used in diaryData for old users, is registered as STATIC_UUID_FOR_INSTANCE_OF_GENERIC_INDICATOR_SUBSTANCE in
+// futur entries
+export const STATIC_UUID_FOR_INSTANCE_OF_GENERIC_INDICATOR_SUBSTANCE = "b6c16368-4df5-478e-9d2c-f5cc72930388";
 
 export const INDICATEURS_LISTE_ONBOARDING_HUMEUR = [
   {
@@ -80,6 +84,7 @@ export enum NEW_INDICATORS_CATEGORIES {
   SOCIAL_RELATIONS = "SOCIAL_RELATIONS",
   LIFE_EVENT = "LIFE_EVENT",
   COGNITIVE = "COGNITIVE",
+  OTHER = "OTHER"
 }
 
 export const CATEGORIES = [
@@ -196,6 +201,20 @@ export const INDICATEURS_SOMMEIL: PredefineIndicatorV2SchemaType = {
   order: INDICATOR_ORDER.ASC,
   type: INDICATOR_TYPE.gauge,
   priority: 0,
+};
+
+export const GENERIC_INDICATOR_SUBSTANCE: PredefineIndicatorV2SchemaType = {
+  name: "Consommation de produits & addictions",
+  categories: [NEW_INDICATORS_CATEGORIES.SUBSTANCE],
+  subcategories: [NEW_INDICATORS_SUBCATEGORIES.SUBSTANCE_USE],
+  isGeneric: true,
+  priority: 2,
+  order: "ASC",
+  type: INDICATOR_TYPE.boolean,
+  category: INDICATORS_CATEGORIES["Comportements"],
+  new: true,
+  uuid: "ac7c85b6-e015-4b46-bd14-13e01f7d7a85",
+  mainCategory: NEW_INDICATORS_CATEGORIES.SUBSTANCE,
 };
 
 export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
@@ -799,19 +818,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     uuid: "e4a2cb84-548f-474a-b93a-6c4423cfa7a2",
     mainCategory: NEW_INDICATORS_CATEGORIES.SUBSTANCE,
   },
-  {
-    name: "Consommation de produits & addictions",
-    categories: [NEW_INDICATORS_CATEGORIES.SUBSTANCE],
-    subcategories: [NEW_INDICATORS_SUBCATEGORIES.SUBSTANCE_USE],
-    isGeneric: true,
-    priority: 2,
-    order: "ASC",
-    type: INDICATOR_TYPE.gauge,
-    category: INDICATORS_CATEGORIES["Comportements"],
-    new: true,
-    uuid: "ac7c85b6-e015-4b46-bd14-13e01f7d7a85",
-    mainCategory: NEW_INDICATORS_CATEGORIES.SUBSTANCE,
-  },
+  GENERIC_INDICATOR_SUBSTANCE,
   {
     name: "Ma consommation d'alcool",
     categories: [NEW_INDICATORS_CATEGORIES.SUBSTANCE, NEW_INDICATORS_CATEGORIES.SLEEP],
@@ -1031,7 +1038,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
   },
 ];
 
-export const INDICATEURS: PredefineIndicatorSchemaType[] = [
+export const INDICATEURS: LegacyPredefineIndicatorSchemaType[] = [
   // Emotions/sentiments
   {
     uuid: "3e15ed99-f2f9-4716-b6a2-5348c35266da",
