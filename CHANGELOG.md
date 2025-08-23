@@ -1,3 +1,10 @@
+# [1.52.0-alpha.17](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.16...v1.52.0-alpha.17) (2025-08-23)
+
+
+### Features
+
+* add indicator edition from within survey ([#317](https://github.com/SocialGouv/jardinmental/issues/317)) ([00ea8e9](https://github.com/SocialGouv/jardinmental/commit/00ea8e9fad6539fb4e18fc2adf5bbbc027a50cce)), closes [#345](https://github.com/SocialGouv/jardinmental/issues/345) [#346](https://github.com/SocialGouv/jardinmental/issues/346) [#348](https://github.com/SocialGouv/jardinmental/issues/348) [#349](https://github.com/SocialGouv/jardinmental/issues/349)
+
 # [1.52.0-alpha.16](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.15...v1.52.0-alpha.16) (2025-08-21)
 
 
