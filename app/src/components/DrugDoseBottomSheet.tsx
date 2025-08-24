@@ -59,7 +59,7 @@ export default function DrugDoseBottomSheet({ onClose }: { onClose: (categoryNam
         <View className="flex-row bg-[#E5F6FC] self-start p-2">
           <Text className={mergeClassNames(typography.textSmBold, "ml-2 text-[#006386] text-left")}></Text>
         </View>
-        <Text className={mergeClassNames(typography.displayXsBold, "text-left text-cnam-primary-900")}>Sélectionnez un ou plusieurs éléments</Text>
+        <Text className={mergeClassNames(typography.displayXsBold, "text-left text-cnam-primary-900")}>Sélectionnez une dose</Text>
         <TextInput
           onChangeText={(text) => {
             setSearchText(text);
@@ -72,7 +72,15 @@ export default function DrugDoseBottomSheet({ onClose }: { onClose: (categoryNam
             const selected = selectedDoses.includes(ind);
 
             return (
-              <LightSelectionnableItem key={ind} className="flex-row" id={ind} label={ind} selected={selected} onPress={() => toggleDose(ind)} />
+              <LightSelectionnableItem
+                shape="circle"
+                key={ind}
+                className="flex-row"
+                id={ind}
+                label={ind}
+                selected={selected}
+                onPress={() => toggleDose(ind)}
+              />
             );
           })}
           {!filteredDoses.length && <Text className={mergeClassNames(typography.textSmMedium, "text-gray-800")}>Pas de résultat</Text>}
@@ -90,7 +98,12 @@ export default function DrugDoseBottomSheet({ onClose }: { onClose: (categoryNam
             </TouchableOpacity>
           )}
           {editingDoses.map((text, index) => (
-            <InputSelectionnableItem label={"Nommez le produit ou l’addiction :"} onPress={(text: string) => createNewDose(text, index)} />
+            <InputSelectionnableItem
+              placeholder="Exemple: 5ml, 3 gouttes..."
+              shape="circle"
+              label={"Saisissez la dose* :"}
+              onPress={(text: string) => createNewDose(text, index)}
+            />
           ))}
           {!searchedText && (
             <View className="flex-row items-center mt-2 ml-auto">
@@ -100,7 +113,7 @@ export default function DrugDoseBottomSheet({ onClose }: { onClose: (categoryNam
                 }}
               >
                 <View className="flex-row items-center">
-                  <Text className={mergeClassNames(typography.textMdMedium, "mr-2 text-cnam-primary-900")}>ajouter un élément</Text>
+                  <Text className={mergeClassNames(typography.textMdMedium, "mr-2 text-cnam-primary-900")}>Saisir manuellement</Text>
                   <PlusIcon />
                 </View>
               </TouchableOpacity>

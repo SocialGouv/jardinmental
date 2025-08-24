@@ -17,6 +17,7 @@ type DifficultyOptionProps = {
   icon?: React.ComponentType<any>;
   boxPosition?: string;
   shape?: "square" | "circle";
+  placeholder?: string;
 };
 
 export default function SelectionnableItem({ id, label, description, selected, onPress, className, icon, boxPosition }: DifficultyOptionProps) {
@@ -60,7 +61,18 @@ export default function SelectionnableItem({ id, label, description, selected, o
   );
 }
 
-export function LightSelectionnableItem({ id, label, description, selected, onPress, className, disabled, icon, shape }: DifficultyOptionProps) {
+export function LightSelectionnableItem({
+  id,
+  label,
+  description,
+  selected,
+  onPress,
+  className,
+  disabled,
+  icon,
+  shape,
+  boxPosition,
+}: DifficultyOptionProps) {
   return (
     <TouchableOpacity
       disabled={disabled}
@@ -130,6 +142,7 @@ export function InputSelectionnableItem({
   icon,
   shape,
   validationError,
+  placeholder,
   onTextChange,
 }: DifficultyOptionProps & {
   validationError?: string;
@@ -176,6 +189,7 @@ export function InputSelectionnableItem({
           <Text className={mergeClassNames(typography.textSmMedium, "text-gray-800 mb-2")}>{label}</Text>
           <View className="rounded rounded-lg flex-1">
             <TextInput
+              placeholder={placeholder}
               onChangeText={handleTextChange}
               className={mergeClassNames(typography.textMdRegular, "text-left border border-gray-300 p-2 rounded rounded-lg flex-1")}
             />
