@@ -12,7 +12,6 @@ import { IndicatorItem } from "@/scenes/onboarding-v2/types";
 import { generateIndicatorFromPredefinedIndicator, Indicator, INDICATOR_TYPE, PredefineIndicatorV2SchemaType } from "@/entities/Indicator";
 import { DEFAULT_INDICATOR_LABELS, INDICATOR_LABELS, INDICATORS, NEW_INDICATORS_CATEGORIES } from "@/utils/liste_indicateurs.1";
 import BasicCard from "../BasicCard";
-import CheckMarkIcon from "@assets/svg/icon/check";
 import IndicatorModal from "@/scenes/onboarding-v2/indicators/IndicatorModal";
 import { useBottomSheet } from "@/context/BottomSheetContext";
 import ArrowIcon from "@assets/svg/icon/Arrow";
