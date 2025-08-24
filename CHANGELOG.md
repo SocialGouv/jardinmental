@@ -1,3 +1,10 @@
+# [1.52.0-alpha.19](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.18...v1.52.0-alpha.19) (2025-08-24)
+
+
+### Features
+
+* goal pages with cnam charts ([#354](https://github.com/SocialGouv/jardinmental/issues/354)) ([dd0c557](https://github.com/SocialGouv/jardinmental/commit/dd0c5574859b4802f43ab75e67e7bd744b19fe67))
+
 # [1.52.0-alpha.18](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.17...v1.52.0-alpha.18) (2025-08-23)
 
 

@@ -68,26 +68,20 @@ export const GoalsSettingsMore = ({ navigation, route }) => {
   );
 
   const keyExtractor = useCallback((goal) => goal.id);
-
   return (
-    <Screen
-      header={{
-        title: "Mes objectifs",
+    <AnimatedHeaderScrollScreen
+      title="Mes objectifs"
+      handlePrevious={() => {
+        navigation.goBack();
       }}
-      bottomChildren={<JMButton variant="primary" title="Enregistrer" onPress={onValidate} />}
-      ScrollComponent={DraggableFlatList}
-      scrollAsFlatList={true}
-      scrollProps={{
-        data: goals,
-        renderItem,
-        keyExtractor,
-        onDragEnd: (data) => setGoals(data?.data),
-        containerStyle: {
-          flex: 1,
-        },
-      }}
+      bottomComponent={
+        <>
+          <JMButton title="Ajouter un objectif" onPress={() => navigation.navigate("goals-add-options")} />
+          <JMButton variant="outline" title="Modifier mes objectifs" onPress={() => navigation.navigate("goals-settings-more")} className="mt-2" />
+        </>
+      }
     >
-      <Card title="Modifier mes objectifs" text="Vous pouvez changer l’ordre d’apparition de vos objectifs et/ou les supprimer" />
+      {goals.map(renderItem)}
       <View style={titleStyles.container}>
         <Title align="left" fill={false}>
           Mes objectifs
@@ -96,7 +90,7 @@ export const GoalsSettingsMore = ({ navigation, route }) => {
           {goals?.length || 0}
         </Badge>
       </View>
-    </Screen>
+    </AnimatedHeaderScrollScreen>
   );
 };
 

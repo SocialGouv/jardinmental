@@ -2,11 +2,14 @@ import React from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import Icon from "./Icon";
 import { colors } from "@/utils/colors";
+import { mergeClassNames } from "@/utils/className";
+import { typography } from "@/utils/typography";
 
 export const Card = ({
   preset, // 'lighten'
   title,
   text,
+  className,
   containerStyle,
   contentContainerStyle,
   innerContentContainerStyle,
@@ -26,16 +29,15 @@ export const Card = ({
     ) : (
       <>{children}</>
     );
-
   return (
-    <View style={[styles.container, containerStyle]}>
+    <View className={mergeClassNames("m-4 bg-blue bg-cyan-50-lighten-90 p-4 rounded-xl")}>
       <PressableIfNeeded>
         <View style={[styles.contentContainer, contentContainerStyle]}>
           {icon && <Icon width="26" height="26" color="#000091" {...icon} style={styles.image} />}
           {image && <Image {...image} style={styles.image} />}
           <View style={[styles.innerContentContainer, innerContentContainerStyle]}>
-            {title && <Text style={styles.title}>{title}</Text>}
-            {text && <Text style={styles.text}>{text}</Text>}
+            {title && <Text className={mergeClassNames(typography.textMdBold, "text-cnam-primary-900")}>{title}</Text>}
+            {text && <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900 mt-4")}>{text}</Text>}
             {children && mergeChildren && <View style={styles.childrenContainer}>{children}</View>}
           </View>
           {onPress && <Icon icon="ChevronRightSvg" color="#000091" height="16" width="16" />}

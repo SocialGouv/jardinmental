@@ -11,6 +11,8 @@ import { GoalAddCheckable } from "./GoalAddCheckable";
 import { DAYS_OF_WEEK } from "../../../utils/date/daysOfWeek";
 import JMButton from "@/components/JMButton";
 import Plus from "../../../../assets/svg/Plus";
+import { AnimatedHeaderScrollScreen } from "@/scenes/survey-v2/AnimatedHeaderScrollScreen";
+import { View } from "react-native";
 
 const GOALS_EXAMPLE_FLAT = Object.values(GOALS_EXAMPLE).reduce((acc, subGoalCategory) => {
   return [...acc, ...subGoalCategory];
@@ -77,13 +79,24 @@ export const GoalsAddOptions = ({ navigation }) => {
   };
 
   return (
-    <Screen
-      header={{
-        title: "Ajouter un objectif",
+    <AnimatedHeaderScrollScreen
+      title="Ajouter un objectif"
+      handlePrevious={() => {
+        navigation.goBack();
       }}
-      bottomChildren={<JMButton variant="primary" title="Enregistrer" onPress={onValidate} loading={loading} disabled={!isChanged} />}
+      bottomComponent={
+        <View className="mx-4">
+          <JMButton variant="outline" title="Ajouter un objectif" onPress={() => navigation.navigate("goals-add-options")} />
+          <JMButton title="Modifier mes objectifs" onPress={() => navigation.navigate("goals-settings-more")} className="mt-2" />
+        </View>
+      }
+      navigation={navigation}
     >
-      <Card title="Créez votre objectif personnalisé" text="Définissez votre objectif et planifiez le sur les jours de la semaine que vous souhaitez">
+      <Card
+        className={"m-4"}
+        title="Créez votre objectif personnalisé"
+        text="Définissez votre objectif et planifiez le sur les jours de la semaine que vous souhaitez"
+      >
         <JMButton
           variant="outline"
           title="Créer un objectif"
@@ -91,39 +104,41 @@ export const GoalsAddOptions = ({ navigation }) => {
           onPress={() => navigation.navigate("goals-create-form")}
         />
       </Card>
-      <Collapsable preset="primary" title="Choisir un objectif parmi des exemples" containerStyle={{ marginTop: 24 }}>
-        {Object.keys(GOALS_EXAMPLE).map((goalCategory) => {
-          return (
-            <Collapsable preset="secondary" title={goalCategory} key={goalCategory}>
-              {GOALS_EXAMPLE[goalCategory].map((goalExample) => {
-                return (
-                  <InputCheckbox
-                    key={goalExample}
-                    label={goalExample}
-                    checked={goalsToChange?.[goalExample]?.enabled ?? enabledExampleGoals?.[goalExample]}
-                    onCheckedChanged={({ checked }) => {
-                      changeGoal({ label: goalExample, enabled: checked, type: "example" });
-                    }}
-                  />
-                );
-              })}
-            </Collapsable>
-          );
-        })}
-      </Collapsable>
-      <Collapsable preset="primary" title="Réactiver un ancien objectif">
-        {disabledGoals.map((goal) => {
-          return (
-            <GoalAddCheckable
-              goal={goal}
-              checked={goalsToChange?.[goal?.label]?.enabled}
-              onCheckedChanged={({ checked }) => {
-                changeGoal({ label: goal?.label, enabled: checked, type: "disabled" });
-              }}
-            />
-          );
-        })}
-      </Collapsable>
-    </Screen>
+      <View className="px-4">
+        <Collapsable preset="primary" title="Choisir un objectif parmi des exemples" containerStyle={{ marginTop: 24 }}>
+          {Object.keys(GOALS_EXAMPLE).map((goalCategory) => {
+            return (
+              <Collapsable preset="secondary" title={goalCategory} key={goalCategory}>
+                {GOALS_EXAMPLE[goalCategory].map((goalExample) => {
+                  return (
+                    <InputCheckbox
+                      key={goalExample}
+                      label={goalExample}
+                      checked={goalsToChange?.[goalExample]?.enabled ?? enabledExampleGoals?.[goalExample]}
+                      onCheckedChanged={({ checked }) => {
+                        changeGoal({ label: goalExample, enabled: checked, type: "example" });
+                      }}
+                    />
+                  );
+                })}
+              </Collapsable>
+            );
+          })}
+        </Collapsable>
+        <Collapsable preset="primary" title="Réactiver un ancien objectif">
+          {disabledGoals.map((goal) => {
+            return (
+              <GoalAddCheckable
+                goal={goal}
+                checked={goalsToChange?.[goal?.label]?.enabled}
+                onCheckedChanged={({ checked }) => {
+                  changeGoal({ label: goal?.label, enabled: checked, type: "disabled" });
+                }}
+              />
+            );
+          })}
+        </Collapsable>
+      </View>
+    </AnimatedHeaderScrollScreen>
   );
 };

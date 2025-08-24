@@ -72,9 +72,7 @@ export function LightSelectionnableItem({ id, label, description, selected, onPr
           <View
             className={mergeClassNames("w-6 h-6 items-center justify-center bg-primary mr-4", shape === "circle" ? "rounded-full" : "rounded-md")}
           >
-            { shape == "circle" ?
-            <View className="bg-white w-2 h-2 rounded-xl"/>
-            :<Text className="text-white text-base font-bold">✓</Text>}
+            {shape == "circle" ? <View className="bg-white w-2 h-2 rounded-xl" /> : <Text className="text-white text-base font-bold">✓</Text>}
           </View>
         ) : (
           <View
@@ -99,6 +97,29 @@ export function LightSelectionnableItem({ id, label, description, selected, onPr
     </TouchableOpacity>
   );
 }
+
+export const SelectionnableRadioItem = ({ onPress, selected, children, text }) => {
+  return (
+    <TouchableOpacity
+      className={mergeClassNames("border rounded-xl bg-white p-4 w-full mb-4", selected ? "border-cnam-primary-900" : "border-cnam-primary-800")}
+      onPress={onPress}
+    >
+      <View className="flex-row items-center mb-4">
+        {selected ? (
+          <View className={mergeClassNames("w-6 h-6 items-center justify-center bg-primary mr-2", "rounded-full")}>
+            <View className="bg-white w-2 h-2 rounded-xl" />
+          </View>
+        ) : (
+          <View className={mergeClassNames("w-6 h-6 items-center justify-center border-2 border-gray-300 mr-2", "rounded-full")}>
+            <Text className="text-white text-xs" />
+          </View>
+        )}
+        <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-900")}>{text}</Text>
+      </View>
+      <View className="mx-8">{children}</View>
+    </TouchableOpacity>
+  );
+};
 
 export function InputSelectionnableItem({
   id,
@@ -134,9 +155,7 @@ export function InputSelectionnableItem({
           <View
             className={mergeClassNames("w-6 h-6 items-center justify-center bg-primary mr-4", shape === "circle" ? "rounded-full" : "rounded-md")}
           >
-            { shape == "circle" ?
-            <View className="bg-white w-2 h-2 rounded-xl"/>
-            :<Text className="text-white text-base font-bold">✓</Text>}
+            {shape == "circle" ? <View className="bg-white w-2 h-2 rounded-xl" /> : <Text className="text-white text-base font-bold">✓</Text>}
           </View>
         ) : (
           <View
