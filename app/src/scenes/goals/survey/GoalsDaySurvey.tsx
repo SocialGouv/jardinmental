@@ -1,5 +1,5 @@
 import React, { useCallback, useState, forwardRef, useImperativeHandle, useEffect } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Text } from "react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { Card } from "../../../components/Card";
 import Separator from "../../../components/Separator";
@@ -7,6 +7,14 @@ import { Title } from "../../../components/Title";
 import { getGoalsDailyRecords, getGoalsTracked, setGoalDailyRecord } from "../../../utils/localStorage/goals";
 import { GoalCheckboxItem } from "./GoalCheckboxItem";
 import { useLayout } from "@react-native-community/hooks";
+import { mergeClassNames } from "@/utils/className";
+import { typography } from "@/utils/typography";
+import JMButton from "@/components/JMButton";
+import CircleQuestionMark from "@assets/svg/icon/CircleQuestionMark";
+import { NEW_INDICATORS_CATEGORIES } from "@/utils/liste_indicateurs.1";
+import HelpView from "@/components/HelpView";
+import { useBottomSheet } from "@/context/BottomSheetContext";
+import Target from "@assets/svg/icon/Target";
 
 export const GoalsDaySurvey = forwardRef(({ date, scrollRef, route }, ref) => {
   useImperativeHandle(ref, () => {
@@ -14,6 +22,7 @@ export const GoalsDaySurvey = forwardRef(({ date, scrollRef, route }, ref) => {
       onSubmit,
     };
   });
+  const { showBottomSheet } = useBottomSheet();
 
   const navigation = useNavigation();
 
@@ -76,20 +85,31 @@ export const GoalsDaySurvey = forwardRef(({ date, scrollRef, route }, ref) => {
       scrollRef?.current?.scrollTo?.({ y: layout.y, animated: false });
     }
   }, [layout]);
-
   if (goals.length === 0) return null;
 
+  const showHelpModal = () => {
+    return showBottomSheet(<HelpView title={""} description={""} />);
+  };
+
   return (
-    <View style={styles.container} onLayout={onLayout}>
-      <Separator />
+    <View style={styles.container} onLayout={onLayout} className="mb-2 border-b-2 border-gray-400 px-4 my-4">
+      <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700 text-center my-6 px-8")}>Qu’avez-vous réalisé aujourd’hui ?</Text>
       <View style={styles.contentContainer}>
-        <Title style={styles.spacing}>Mes objectifs</Title>
-        <Card
-          preset="lighten"
-          title="Qu’avez-vous réalisé aujourd’hui ?"
-          image={{ source: require("./../../../../assets/imgs/goal.png") }}
-          containerStyle={styles.spacing}
-        />
+        <View className={`flex-row  p-4 px-0 pb-6 pt-6`}>
+          <View className="rounded-full border-[1.5px] border-cnam-primary-800 bg-white w-10 h-10 items-center justify-center">
+            <Target />
+          </View>
+          <Text className={mergeClassNames(typography.displayXsBold, "text-left text-cnam-primary-900 ml-2 flex-1")}>Mes objectifs</Text>
+          <JMButton
+            onPress={() => {
+              showHelpModal();
+            }}
+            variant="text"
+            width="fixed"
+            icon={<CircleQuestionMark />}
+            className="ml-auto"
+          />
+        </View>
         {goals.map((goal, index) => {
           return (
             <GoalCheckboxItem
@@ -103,7 +123,6 @@ export const GoalsDaySurvey = forwardRef(({ date, scrollRef, route }, ref) => {
           );
         })}
       </View>
-      <Separator />
     </View>
   );
 });

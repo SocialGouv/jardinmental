@@ -1,35 +1,60 @@
 import React, { useState } from "react";
-import { StyleSheet, View, TouchableOpacity, Dimensions } from "react-native";
+import { StyleSheet, View, TouchableOpacity, Dimensions, Text } from "react-native";
 
 import { colors } from "../../../utils/colors";
 
-import Text from "../../../components/MyText";
-import CircledIcon from "../../../components/CircledIcon";
+import CircledIcon, { BasicIcon } from "../../../components/CircledIcon";
 import { answers } from "../../survey-v2/utils";
-import YesNoIndicator from "../../../components/YesNoIndicator";
 import Gauge from "../../../components/gauge";
 const screenWidth = Dimensions.get("window").width;
 import localStorage from "../../../utils/localStorage";
 import { v4 as uuidv4 } from "uuid";
 import { Screen } from "../../../components/Screen";
 import { Button2 } from "../../../components/Button2";
+import { CATEGORIES, NEW_INDICATORS_CATEGORIES } from "@/utils/liste_indicateurs.1";
+import { INDICATOR_ORDER, INDICATOR_TYPE } from "@/entities/Indicator";
+import { INDICATORS_CATEGORIES } from "@/entities/IndicatorCategories";
+import { AnimatedHeaderScrollScreen } from "@/scenes/survey-v2/AnimatedHeaderScrollScreen";
+import { TW_COLORS } from "@/utils/constants";
+import { Boolean } from "@/components/survey/Boolean";
+import { mergeClassNames } from "@/utils/className";
+import { typography } from "@/utils/typography";
+import { SelectionnableRadioItem } from "@/components/SelectionnableItem";
+import JMButton from "@/components/JMButton";
 
-const ChooseIndicatorOrder = ({ navigation, route }) => {
-  const [indicatorDirection, setIndicatorDirection] = useState("ASC"); // ASC : first direction (red to green) ; DESC : second direction (green to red)
+const ChooseIndicatorOrder = ({
+  navigation,
+  route,
+}: {
+  navigation: any;
+  route: {
+    params: {
+      indicatorCategory: NEW_INDICATORS_CATEGORIES;
+      indicatorType: INDICATOR_TYPE;
+      nameNewIndicator: string;
+    };
+  };
+}) => {
+  const [indicatorDirection, setIndicatorDirection] = useState<INDICATOR_ORDER>(); // ASC : first direction (red to green) ; DESC : second direction (green to red)
   const [loading, setLoading] = useState(false);
 
   const onValidate = async () => {
     if (loading) return;
     setLoading(true);
     await localStorage.addIndicateur({
-      version: 1,
       uuid: uuidv4(),
       name: route.params?.nameNewIndicator,
       order: indicatorDirection,
       type: route.params?.indicatorType,
       active: true,
       position: 0,
+      category: INDICATORS_CATEGORIES.Uncategorized, // no category from the previous existing category
       created_at: new Date(),
+      isGeneric: false,
+      isCustom: true,
+      newCategories: [route.params.indicatorCategory],
+      mainCategory: route.params.indicatorCategory,
+      version: 3,
     });
 
     setLoading(false);
@@ -37,62 +62,55 @@ const ChooseIndicatorOrder = ({ navigation, route }) => {
   };
 
   return (
-    <Screen
-      header={{
-        title: "Créer un indicateur",
-        leftButton: {
-          icon: "ArrowUpSvg",
-          iconStyle: { transform: [{ rotate: "270deg" }] },
-          onPress: navigation.goBack,
-        },
+    <AnimatedHeaderScrollScreen
+      title={"Créer un indicateur"}
+      scrollViewBackground={TW_COLORS.GRAY_50}
+      handlePrevious={() => {
+        navigation.goBack();
       }}
-      bottomChildren={<Button2 fill title="Créer mon indicateur" onPress={onValidate} loading={loading} />}
+      bottomComponent={
+        <View className="mx-4">
+          <JMButton
+            disabled={!indicatorDirection}
+            // textStyle={{ color: 'white', textAlign: 'center' }}
+            onPress={onValidate}
+            title="Valider"
+          />
+        </View>
+      }
+      navigation={navigation}
     >
-      <View className="w-full">
-        <View style={styles.topContainer}>
-          <Text style={styles.topTitle}>{route.params.nameNewIndicator}</Text>
+      <View className="flex-1 mx-4">
+        <View className={mergeClassNames("border rounded-xl bg-white p-4 w-full mb-4 mt-4 border-cnam-primary-800")}>
+          <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700 h-5 mb-4")}>{route.params.nameNewIndicator}</Text>
           <RenderCurrentIndicator indicatorType={route.params.indicatorType} itensity direction={indicatorDirection} size={screenWidth * 0.1} />
         </View>
 
-        <Text style={styles.subtitle}>Vous pouvez choisir le sens d’évaluation qui correspond à votre indicateur</Text>
+        <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-900 my-8")}>
+          Vous pouvez choisir le sens d’évaluation qui correspond à votre indicateur
+        </Text>
 
-        <TouchableOpacity
-          style={[styles.setDirectionContainer, indicatorDirection === "ASC" && styles.activeSetDirectionContainer]}
-          onPress={() => setIndicatorDirection("ASC")}
+        <SelectionnableRadioItem
+          text={renderSetDirectionTitle(route.params.indicatorType)?.ASC}
+          selected={indicatorDirection === INDICATOR_ORDER.ASC}
+          onPress={() => setIndicatorDirection(INDICATOR_ORDER.ASC)}
         >
-          {indicatorDirection === "ASC" ? (
-            <View className="flex justify-center items-center w-4 h-4 border border-primary rounded-full">
-              <View className="w-2 h-2 border border-primary bg-cnam-primary-800 rounded-full" />
-            </View>
-          ) : (
-            <View className="flex justify-center items-center w-4 h-4 border border-blue-800 rounded-full" />
-          )}
-
           <View style={styles.setDirectionInside}>
-            <RenderCurrentIndicator indicatorType={route.params.indicatorType} direction={"ASC"} />
-            <Text style={styles.setDirectionTitle}>{renderSetDirectionTitle(route.params.indicatorType).ASC}</Text>
+            <RenderCurrentIndicator indicatorType={route.params.indicatorType} direction={INDICATOR_ORDER.ASC} />
           </View>
-        </TouchableOpacity>
+        </SelectionnableRadioItem>
 
-        <TouchableOpacity
-          style={[styles.setDirectionContainer, indicatorDirection === "DESC" && styles.activeSetDirectionContainer]}
-          onPress={() => setIndicatorDirection("DESC")}
+        <SelectionnableRadioItem
+          selected={indicatorDirection === INDICATOR_ORDER.DESC}
+          text={renderSetDirectionTitle(route.params.indicatorType).DESC}
+          onPress={() => setIndicatorDirection(INDICATOR_ORDER.DESC)}
         >
-          {indicatorDirection === "DESC" ? (
-            <View className="flex justify-center items-center w-4 h-4 border border-primary rounded-full">
-              <View className="w-2 h-2 border border-primary bg-cnam-primary-800 rounded-full" />
-            </View>
-          ) : (
-            <View className="flex justify-center items-center w-4 h-4 border border-blue-800 rounded-full" />
-          )}
-
           <View style={styles.setDirectionInside}>
-            <RenderCurrentIndicator indicatorType={route.params.indicatorType} direction={"DESC"} />
-            <Text style={styles.setDirectionTitle}>{renderSetDirectionTitle(route.params.indicatorType).DESC}</Text>
+            <RenderCurrentIndicator indicatorType={route.params.indicatorType} direction={INDICATOR_ORDER.DESC} />
           </View>
-        </TouchableOpacity>
+        </SelectionnableRadioItem>
       </View>
-    </Screen>
+    </AnimatedHeaderScrollScreen>
   );
 };
 
@@ -124,14 +142,14 @@ const RenderCurrentIndicator = ({ indicatorType, itensity, direction = "ASC", si
           <View className="w-full" style={styles.smileysContainer}>
             {answerDirection.map((answer) => (
               <View key={answer.score} style={{}}>
-                <CircledIcon
+                <BasicIcon
                   color={answer.backgroundColor}
                   borderColor={answer.borderColor}
                   iconColor={answer.iconColor}
                   icon={answer.icon}
                   iconContainerStyle={{ marginRight: 0 }}
-                  iconWidth={size === "small" ? 32 : size}
-                  iconHeight={size === "small" ? 32 : size}
+                  iconWidth={32}
+                  iconHeight={32}
                 />
               </View>
             ))}
@@ -150,7 +168,11 @@ const RenderCurrentIndicator = ({ indicatorType, itensity, direction = "ASC", si
       );
 
     case "boolean":
-      return <>{direction === "ASC" ? <YesNoIndicator no={"red"} yes={"green"} /> : <YesNoIndicator no={"green"} yes={"red"} />}</>;
+      return (
+        <>
+          <Boolean indicator={{ order: direction }} value={undefined} onChange={undefined} disabled={true} />
+        </>
+      );
 
     default:
       return <></>;

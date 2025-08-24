@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, ScrollView, TouchableOpacity, Keyboard, TextInput } from 'react-native';
+import { StyleSheet, View, ScrollView, TouchableOpacity, Keyboard, TextInput, Text } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Picker } from '@react-native-picker/picker';
 import RNPickerSelect from 'react-native-picker-select';
@@ -9,12 +9,15 @@ import BackButton from '../../../components/BackButton';
 import { colors } from '../../../utils/colors';
 import { INDICATEURS } from '../../../utils/liste_indicateurs.1';
 import Button from '../../../components/Button';
-import Text from '../../../components/MyText';
 import localStorage from '../../../utils/localStorage';
 import logEvents from '../../../services/logEvents';
 import { useFocusEffect } from '@react-navigation/native';
 import { INDICATOR_CATEGORIES_DATA } from '@/scenes/onboarding-v2/data/helperData';
 import JMButton from '@/components/JMButton';
+import { AnimatedHeaderScrollScreen } from '@/scenes/survey-v2/AnimatedHeaderScrollScreen';
+import { TW_COLORS } from '@/utils/constants';
+import { mergeClassNames } from '@/utils/className';
+import { typography } from '@/utils/typography';
 
 const CATEGORY_OPTIONS = Object.values(NEW_INDICATORS_CATEGORIES);
 // Convert enum to picker items
@@ -27,7 +30,7 @@ const CreateIndicator = ({ navigation, route }) => {
   const [nameNewIndicator, setNameNewIndicator] = useState("");
   const [userIndicateurs, setUserIndicateurs] = useState();
   const [error, setError] = useState();
-  const [selectedCategory, setSelectedCategory] = useState(NEW_INDICATORS_CATEGORIES.SLEEP);
+  const [selectedCategory, setSelectedCategory] = useState();
 
   const handleAddNewIndicator = async () => {
     const _value = nameNewIndicator?.trim();
@@ -60,23 +63,37 @@ const CreateIndicator = ({ navigation, route }) => {
   );
 
   return (
-    <SafeAreaView style={styles.safe}>
-      <View style={styles.header}>
-        <BackButton style={styles.headerBackButton} onPress={navigation.goBack} />
-        <View style={styles.headerTextContainer}>
-          <Text style={styles.headerText}>Créer un indicateur</Text>
-        </View>
-      </View>
-
-      <View className="flex-1" style={styles.container}>
-        <View className="flex-1">
-          <Text style={styles.label}>Comment souhaitez-vous appeler votre nouvel indicateur ?</Text>
-
+    <AnimatedHeaderScrollScreen
+    title={"Créer un indicateur"}
+    scrollViewBackground={TW_COLORS.GRAY_50}
+    handlePrevious={() => {
+      navigation.goBack()
+    }}
+    bottomComponent={<View
+      className='px-4 bg-gray-50'>
+      <JMButton
+        disabled={!nameNewIndicator || !selectedCategory}
+        // textStyle={{ color: 'white', textAlign: 'center' }}
+        onPress={() => {
+          handleAddNewIndicator();
+        }}
+        title="Valider"
+      /></View>}
+  onNext={() => {
+        handleAddNewIndicator();
+    }}
+    navigation={navigation}>
+        <View className="flex-1 mx-4">
+          <Text className={mergeClassNames(typography.textMdSemibold,'text-cnam-primary-900 my-8')}>
+            Comment souhaitez vous appeler votre indicateur?
+          </Text>
+          <Text className={mergeClassNames(typography.textMdMedium,'text-gray-700')}>Nom de votre indicateur*</Text>
           <TextInput
             onChangeText={e => {
               setNameNewIndicator(e);
               setError(false);
             }}
+            className='mt-1 bg-white p-4 mb-2'
             autoFocus={true}
             value={nameNewIndicator}
             placeholder={'Entrez le nom de votre indicateur'}
@@ -91,8 +108,8 @@ const CreateIndicator = ({ navigation, route }) => {
             </View>
           ) : null}
 
-          <View>
-            <Text style={styles.label}>Selectionnez une catégorie </Text>
+          <View className='mt-2'>
+            <Text className={mergeClassNames(typography.textMdMedium,'text-gray-700')}>Catégorie*</Text>
             <RNPickerSelect
               onValueChange={(value) => setSelectedCategory(value)}
               items={categoryOptions}
@@ -103,19 +120,7 @@ const CreateIndicator = ({ navigation, route }) => {
             />
           </View>
         </View>
-        <JMButton
-          disabled={!nameNewIndicator || !selectedCategory}
-          buttonStyle={{ backgroundColor: colors.LIGHT_BLUE, marginBottom: 20 }}
-          textStyle={{ color: 'white', textAlign: 'center' }}
-          onPress={() => {
-            handleAddNewIndicator();
-          }}
-          title="Valider"
-          className='mb-5'
-        />
-      </View>
-
-    </SafeAreaView >
+    </AnimatedHeaderScrollScreen>
   );
 };
 
@@ -128,8 +133,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.BLUE,
     borderRadius: 8,
-    padding: 16,
-    marginVertical: 25,
+    // padding: 16,
   },
 
   safe: {
@@ -231,25 +235,25 @@ const styles = StyleSheet.create({
 const pickerSelectStyles = StyleSheet.create({
   inputIOS: {
     fontSize: 16,
-    marginTop: 20,
+    marginTop: 6,
     paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingVertical: 16,
     borderWidth: 1,
     borderColor: 'gray',
     borderRadius: 8,
-    color: 'black',
-    backgroundColor: 'white',
+    color: TW_COLORS.CNAM_PRIMARY_900,
+    backgroundColor: TW_COLORS.WHITE,
   },
   inputAndroid: {
     fontSize: 16,
-    marginTop: 20,
+    marginTop: 6,
     paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingVertical: 16,
     borderWidth: 1,
     borderColor: 'gray',
     borderRadius: 8,
-    color: 'black',
-    backgroundColor: 'white',
+    color: TW_COLORS.CNAM_PRIMARY_900,
+    backgroundColor: TW_COLORS.WHITE,
   },
 });
 export default CreateIndicator;

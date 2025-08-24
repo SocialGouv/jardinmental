@@ -37,7 +37,7 @@ export const InputCheckbox = ({ label, checked, fill, onCheckedChanged, containe
             {_checked && (
               <Lottie
                 source={checkmarkAnimation}
-                style={[{ width: 20, height: 20 }]}
+                style={[{ width: 10, height: 20 }]}
                 loop={false}
                 autoPlay
                 colorFilters={[
@@ -76,8 +76,8 @@ const styles = StyleSheet.create({
     paddingTop: 2,
   },
   checkboxContainer: {
-    width: 24,
-    height: 24,
+    width: 20,
+    height: 20,
     borderRadius: 4,
     borderWidth: 1,
     justifyContent: "center",

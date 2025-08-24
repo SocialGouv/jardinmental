@@ -28,6 +28,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 
 interface IndicatorScreenProps {
   title: string;
+  headerTitle?: string;
   currentStep?: number;
   totalSteps?: number;
   onNext?: () => void;
@@ -37,6 +38,8 @@ interface IndicatorScreenProps {
   dynamicTitle?: string;
   hasProgressBar?: boolean;
   bottomComponent?: React.ReactNode;
+  headerRightComponent?: React.ReactNode;
+  headerRightAction?: () => void;
   hideBottomComponentInitially?: boolean;
   navigation: StackNavigationProp<any>;
   scrollViewBackground?: string;
@@ -50,12 +53,15 @@ export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
   children,
   dynamicTitle,
   hasProgressBar,
+  headerTitle,
   bottomComponent,
-  showBottomButton=true,
+  headerRightComponent,
+  headerRightAction,
+  showBottomButton = true,
   hideBottomComponentInitially = false,
   handlePrevious,
   navigation,
-  scrollViewBackground
+  scrollViewBackground,
 }: IndicatorScreenProps) => {
   const { showBottomSheet } = useBottomSheet();
   const { setShowProgressbar, showProgressbar, setHideOnScrollProgressValue } = useOnboardingProgressHeader();
@@ -222,11 +228,13 @@ export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
   const scrollViewContentStyle = {
     paddingTop: dynamicPaddingTop,
     paddingBottom: 250,
-    flexGrow: 1
+    flexGrow: 1,
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-white">
+    <SafeAreaView className="flex-1" style={{
+      backgroundColor: scrollViewBackground || TW_COLORS.WHITE
+    }}>
       <View
         style={{
           position: "absolute",
@@ -238,7 +246,7 @@ export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
       >
         <BannerHeader
           inAbsoluteView={true}
-          headerTitle=""
+          headerTitle={headerTitle}
           dynamicTitle={dynamicTitle || firstLetterUppercase(title)}
           header={
             category ? (
@@ -250,6 +258,8 @@ export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
             ) : null
           }
           title={title}
+          rightComponent={headerRightComponent}
+          rightAction={headerRightAction}
           handlePrevious={handlePrevious}
           headerTitleStyle={headerTitleStyle}
           dynamicTitleStyle={dynamicTitleStyle}
@@ -264,7 +274,7 @@ export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
           ref={scrollRef}
           className={"flex-1"}
           style={{
-            backgroundColor: scrollViewBackground
+            backgroundColor: scrollViewBackground,
           }}
           contentContainerStyle={scrollViewContentStyle}
           onScroll={scrollHandler}

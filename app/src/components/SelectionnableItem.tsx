@@ -10,7 +10,9 @@ type DifficultyOptionProps = {
   selected: boolean;
   onPress: (id: string | number) => void;
   className?: string;
+  disabled?: boolean;
   icon?: React.ComponentType<any>;
+  shape?: "square" | "circle";
 };
 
 export default function SelectionnableItem({ id, label, description, selected, onPress, className, icon }: DifficultyOptionProps) {
@@ -54,16 +56,27 @@ export default function SelectionnableItem({ id, label, description, selected, o
   );
 }
 
-export function LightSelectionnableItem({ id, label, description, selected, onPress, className, icon }: DifficultyOptionProps) {
+export function LightSelectionnableItem({ id, label, description, selected, onPress, className, disabled, icon, shape }: DifficultyOptionProps) {
   return (
-    <TouchableOpacity onPress={() => onPress(id)} className={mergeClassNames("mb-3 py-3 border-b", "border-gray-300 bg-transparent", className)}>
+    <TouchableOpacity
+      disabled={disabled}
+      onPress={() => onPress(id)}
+      className={mergeClassNames("mb-3 py-3 border-b", "border-gray-300 bg-transparent", className, disabled ? "opacity-50" : "")}
+    >
       <View className="flex-row items-center">
         {selected ? (
-          <View className="w-6 h-6 rounded-md items-center justify-center bg-cnam-primary-800 mr-4">
-            <Text className="text-white text-base font-bold">✓</Text>
+          <View
+            className={mergeClassNames("w-6 h-6 items-center justify-center bg-primary mr-4", shape === "circle" ? "rounded-full" : "rounded-md")}
+          >
+            {shape == "circle" ? <View className="bg-white w-2 h-2 rounded-xl" /> : <Text className="text-white text-base font-bold">✓</Text>}
           </View>
         ) : (
-          <View className="w-6 h-6 rounded-md items-center justify-center border-2 border-gray-300 mr-4">
+          <View
+            className={mergeClassNames(
+              "w-6 h-6 items-center justify-center border-2 border-gray-300 mr-4",
+              shape === "circle" ? "rounded-full" : "rounded-md"
+            )}
+          >
             <Text className="text-white text-xs" />
           </View>
         )}
@@ -73,7 +86,7 @@ export function LightSelectionnableItem({ id, label, description, selected, onPr
           </View>
         )}
         <View className="flex-1">
-          <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900")}>{label}</Text>
+          <Text className={mergeClassNames(typography.textMdMedium, "text-brand-950", disabled ? "line-through" : "")}>{label}</Text>
           {description && <Text className={mergeClassNames(typography.textSmMedium, "text-gray-600 mt-1")}>{description}</Text>}
         </View>
       </View>
@@ -81,8 +94,52 @@ export function LightSelectionnableItem({ id, label, description, selected, onPr
   );
 }
 
-export function InputSelectionnableItem({ id, label, selected, onPress, className, icon }: DifficultyOptionProps) {
+export const SelectionnableRadioItem = ({ onPress, selected, children, text }) => {
+  return (
+    <TouchableOpacity
+      className={mergeClassNames("border rounded-xl bg-white p-4 w-full mb-4", selected ? "border-cnam-primary-900" : "border-cnam-primary-800")}
+      onPress={onPress}
+    >
+      <View className="flex-row items-center mb-4">
+        {selected ? (
+          <View className={mergeClassNames("w-6 h-6 items-center justify-center bg-primary mr-2", "rounded-full")}>
+            <View className="bg-white w-2 h-2 rounded-xl" />
+          </View>
+        ) : (
+          <View className={mergeClassNames("w-6 h-6 items-center justify-center border-2 border-gray-300 mr-2", "rounded-full")}>
+            <Text className="text-white text-xs" />
+          </View>
+        )}
+        <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-900")}>{text}</Text>
+      </View>
+      <View className="mx-8">{children}</View>
+    </TouchableOpacity>
+  );
+};
+
+export function InputSelectionnableItem({
+  id,
+  label,
+  selected,
+  onPress,
+  className,
+  icon,
+  shape,
+  validationError,
+  onTextChange,
+}: DifficultyOptionProps & {
+  validationError?: string;
+  onTextChange?: (text: string) => void;
+}) {
   const [value, setValue] = useState<string>("");
+
+  const handleTextChange = (text: string) => {
+    setValue(text);
+    if (onTextChange) {
+      onTextChange(text);
+    }
+  };
+
   return (
     <TouchableOpacity
       key={id}
@@ -91,11 +148,18 @@ export function InputSelectionnableItem({ id, label, selected, onPress, classNam
     >
       <View className="flex-row items-center">
         {selected ? (
-          <View className="w-6 h-6 rounded-md items-center justify-center bg-cnam-primary-800 mr-2">
-            <Text className="text-white text-base font-bold">✓</Text>
+          <View
+            className={mergeClassNames("w-6 h-6 items-center justify-center bg-primary mr-4", shape === "circle" ? "rounded-full" : "rounded-md")}
+          >
+            {shape == "circle" ? <View className="bg-white w-2 h-2 rounded-xl" /> : <Text className="text-white text-base font-bold">✓</Text>}
           </View>
         ) : (
-          <View className="w-6 h-6 rounded-md items-center justify-center border-2 border-gray-300 mr-4">
+          <View
+            className={mergeClassNames(
+              "w-6 h-6 items-center justify-center border-2 border-gray-300 mr-4",
+              shape === "circle" ? "rounded-full" : "rounded-md"
+            )}
+          >
             <Text className="text-white text-xs" />
           </View>
         )}
@@ -108,7 +172,7 @@ export function InputSelectionnableItem({ id, label, selected, onPress, classNam
           <Text className={mergeClassNames(typography.textSmMedium, "text-gray-800 mb-2")}>{label}</Text>
           <View className="rounded rounded-lg flex-1">
             <TextInput
-              onChangeText={(text) => setValue(text)}
+              onChangeText={handleTextChange}
               className={mergeClassNames(typography.textMdRegular, "text-left border border-gray-300 p-2 rounded rounded-lg flex-1")}
             />
             <TouchableOpacity
@@ -122,6 +186,7 @@ export function InputSelectionnableItem({ id, label, selected, onPress, classNam
               <Text className={mergeClassNames(typography.textMdSemibold, "text-brand-800")}>Valider</Text>
             </TouchableOpacity>
           </View>
+          {validationError && <Text className={mergeClassNames(typography.textSmMedium, "text-red-600 mt-2")}>{validationError}</Text>}
         </View>
       </View>
     </TouchableOpacity>

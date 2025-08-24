@@ -9,7 +9,6 @@ import { colors } from "../../utils/colors";
 import Icon from "../../components/Icon";
 
 const PatientStateItem = ({ patientState, category, label }) => {
-  // console.log("✍️  patientState", JSON.stringify(patientState, null, 2));
   const [{ color, borderColor, faceIcon, iconColor }, setIcon] = useState({});
   const [userCommentVisible, setUserCommentVisible] = useState(false);
 

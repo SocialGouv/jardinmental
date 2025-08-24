@@ -31,18 +31,18 @@ export const Smiley = ({ indicator, value, onValueChanged }) => {
               }}
             >
               {({ pressed }) => (
-              <View>
-                <BasicIcon
-                  color={pressed ? emoji.pressedBackgroundColor : emoji.backgroundColor}
-                  borderColor={TW_COLORS.PRIMARY}
-                  iconColor={emoji.iconColor}
-                  icon={emoji.icon}
-                  borderWidth={active ? 1 : 0}
-                  iconContainerStyle={{ marginRight: 0 }}
-                  iconWidth={32}
-                  iconHeight={32}
-                />
-              </View>
+                <View>
+                  <BasicIcon
+                    color={pressed ? emoji.pressedBackgroundColor : emoji.backgroundColor}
+                    borderColor={TW_COLORS.PRIMARY}
+                    iconColor={emoji.iconColor}
+                    icon={emoji.icon}
+                    borderWidth={active ? 2 : 0}
+                    iconContainerStyle={{ marginRight: 0 }}
+                    iconWidth={32}
+                    iconHeight={32}
+                  />
+                </View>
               )}
             </Pressable>
           );

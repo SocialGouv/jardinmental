@@ -3,4 +3,5 @@ export enum INDICATORS_CATEGORIES {
   "Manifestations physiques" = "Manifestations physiques",
   "Pensées" = "Pensées",
   "Comportements" = "Comportements",
+  "Uncategorized" = "Uncategorized"
 }
