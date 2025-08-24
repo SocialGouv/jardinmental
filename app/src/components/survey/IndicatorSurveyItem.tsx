@@ -17,6 +17,7 @@ import { useBottomSheet } from "@/context/BottomSheetContext";
 import ArrowIcon from "@assets/svg/icon/Arrow";
 import { TW_COLORS } from "@/utils/constants";
 import localStorage from "@/utils/localStorage/index";
+import CheckMarkIcon from "@assets/svg/icon/check";
 
 export const IndicatorSurveyItem = ({
   indicator,

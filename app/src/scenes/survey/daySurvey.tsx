@@ -272,6 +272,11 @@ const DaySurvey = ({
         <NavigationButtons
           absolute={true}
           withArrow={false}
+          onNext={() =>
+            submitDay({
+              redirectBack: false,
+            })
+          }
           headerContent={
             <View>
               <View className="my-2">
@@ -364,7 +369,7 @@ const DaySurvey = ({
         /> */}
       </View>
       <GoalsDaySurvey date={initSurvey?.date} ref={goalsRef} scrollRef={scrollRef} route={route} />
-      <View className="mb-2 border-b-2 border-gray-400 px-4 my-4">
+      <View className="mb-2 px-4 my-4">
         <Text className={mergeClassNames(typography.displayXsBold, "text-left text-cnam-primary-900 ml-2 flex-1 mb-4")}>Note générale</Text>
         <InputQuestion
           question={questionContext}
@@ -376,7 +381,7 @@ const DaySurvey = ({
           placeholder="Contexte, évènements, comportement de l'entourage..."
         />
       </View>
-      <View className="mb-2 px-4 my-4">
+      {/* <View className="mb-2 px-4 my-4">
         <QuestionYesNo
           question={questionToxic}
           onPress={toggleAnswer}
@@ -386,17 +391,7 @@ const DaySurvey = ({
           onChangeUserComment={handleChangeUserComment}
           userComment={answers[questionToxic.id]?.userComment}
         />
-      </View>
-      <View className="flex-row justify-center">
-        <JMButton
-          icon={<ArrowIcon color={TW_COLORS.GRAY_700} />}
-          onPress={() => navigation.navigate("goals-settings")}
-          iconPosition="right"
-          width="fixed"
-          variant="outline"
-          title="Personnaliser mes objectifs"
-        />
-      </View>
+      </View> */}
     </AnimatedHeaderScrollScreen>
   );
 };

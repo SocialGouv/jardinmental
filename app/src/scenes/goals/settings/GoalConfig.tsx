@@ -15,6 +15,9 @@ import { useFocusEffect } from "@react-navigation/native";
 import Icon from "../../../components/Icon";
 import { colors } from "@/utils/colors";
 import JMButton from "@/components/JMButton";
+import { AnimatedHeaderScrollScreen } from "@/scenes/survey-v2/AnimatedHeaderScrollScreen";
+import { mergeClassNames } from "@/utils/className";
+import { typography } from "@/utils/typography";
 
 export const GoalConfig = ({ navigation, route }) => {
   const goalId = route.params?.goalId;
@@ -79,65 +82,73 @@ export const GoalConfig = ({ navigation, route }) => {
 
   return (
     <>
-      <Screen
-        header={{
-          title: !editing ? "Créer un objectif" : "Mon objectif",
+      <AnimatedHeaderScrollScreen
+        title={!editing ? "Créer un objectif" : "Mon objectif"}
+        handlePrevious={() => {
+          navigation.goBack();
         }}
-        bottomChildren={<JMButton fill title={!editing ? "Créer mon objectif" : "Valider"} onPress={onValidate} loading={loading} />}
+        bottomComponent={
+          <View className="mx-4">
+            <JMButton fill title={!editing ? "Créer mon objectif" : "Valider"} onPress={onValidate} loading={loading} />
+          </View>
+        }
+        navigation={navigation}
       >
-        {!editing ? (
-          <>
-            <InputLabel style={styles.spacing}>Programmer un rappel</InputLabel>
-            <InputLabel style={styles.spacingBottom} sublabel>
-              Souhaitez-vous recevoir une notification pour l'objectif "{goalLabel}" ?
-            </InputLabel>
-          </>
-        ) : (
-          <Card preset="lighten" title={editingGoal?.label} containerStyle={styles.spacing} />
-        )}
-        <InputGroup containerStyle={styles.spacing} highlight={reminderEnabled}>
-          {editing && (
-            <InputGroupItem
-              label="Récurrence"
-              onPress={() => {
-                navigation.navigate("goal-day-selector", {
-                  editing: true,
-                  goalId,
-                  goalDaysOfWeek: goalDaysOfWeek || editingGoal?.daysOfWeek,
-                });
-              }}
-            >
-              <Text style={styles.daysOfWeekValue}>{daysOfWeekLabel}</Text>
-              <Icon
-                icon="ArrowUpSvg"
-                color={colors.BLUE}
-                width={12}
-                height={12}
-                styleContainer={{ width: 12, height: 12, marginLeft: 8, transform: [{ rotate: "90deg" }] }}
+        <View className="mx-4">
+          {!editing ? (
+            <>
+              <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-900 mt-8 mb-2")}>Programmer un rappel</Text>
+              <Text className={mergeClassNames(typography.textMdMedium, "text-primary-800 mb-8 ")}>
+                Souhaitez-vous recevoir une notification pour l'objectif "{goalLabel}" ?
+              </Text>
+            </>
+          ) : (
+            <Card preset="lighten" title={editingGoal?.label} containerStyle={styles.spacing} />
+          )}
+          <InputGroup containerStyle={styles.spacing} highlight={reminderEnabled}>
+            {editing && (
+              <InputGroupItem
+                label="Récurrence"
+                onPress={() => {
+                  navigation.navigate("goal-day-selector", {
+                    editing: true,
+                    goalId,
+                    goalDaysOfWeek: goalDaysOfWeek || editingGoal?.daysOfWeek,
+                  });
+                }}
+              >
+                <Text style={styles.daysOfWeekValue}>{daysOfWeekLabel}</Text>
+                <Icon
+                  icon="ArrowUpSvg"
+                  color={colors.BLUE}
+                  width={12}
+                  height={12}
+                  styleContainer={{ width: 12, height: 12, marginLeft: 8, transform: [{ rotate: "90deg" }] }}
+                />
+              </InputGroupItem>
+            )}
+            <InputGroupItem label="Programmer un rappel" onPress={() => reminderToggleRef?.current?.toggle?.()}>
+              <InputToggle
+                ref={reminderToggleRef}
+                checked={reminderEnabled}
+                onCheckedChanged={({ checked }) => {
+                  setReminderEnabled(checked);
+                }}
               />
             </InputGroupItem>
-          )}
-          <InputGroupItem label="Programmer un rappel" onPress={() => reminderToggleRef?.current?.toggle?.()}>
-            <InputToggle
-              ref={reminderToggleRef}
-              checked={reminderEnabled}
-              onCheckedChanged={({ checked }) => {
-                setReminderEnabled(checked);
-              }}
-            />
-          </InputGroupItem>
-          {reminderEnabled && (
-            <InputGroupItem label="Heure du rappel" onPress={() => setReminderTimePickerVisible(true)}>
-              <InputText
-                preset="groupItem"
-                editable={false}
-                onPress={() => setReminderTimePickerVisible(true)}
-                value={format(reminderTime, "H:mm")}
-              />
-            </InputGroupItem>
-          )}
-        </InputGroup>
-      </Screen>
+            {reminderEnabled && (
+              <InputGroupItem label="Heure du rappel" onPress={() => setReminderTimePickerVisible(true)}>
+                <InputText
+                  preset="groupItem"
+                  editable={false}
+                  onPress={() => setReminderTimePickerVisible(true)}
+                  value={format(reminderTime, "H:mm")}
+                />
+              </InputGroupItem>
+            )}
+          </InputGroup>
+        </View>
+      </AnimatedHeaderScrollScreen>
       <TimePicker
         visible={reminderTimePickerVisible}
         selectDate={(date) => {
