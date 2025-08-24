@@ -15,6 +15,8 @@ import { NEW_INDICATORS_CATEGORIES } from "@/utils/liste_indicateurs.1";
 import HelpView from "@/components/HelpView";
 import { useBottomSheet } from "@/context/BottomSheetContext";
 import Target from "@assets/svg/icon/Target";
+import ArrowIcon from "@assets/svg/icon/Arrow";
+import { TW_COLORS } from "@/utils/constants";
 
 export const GoalsDaySurvey = forwardRef(({ date, scrollRef, route }, ref) => {
   useImperativeHandle(ref, () => {
@@ -122,6 +124,16 @@ export const GoalsDaySurvey = forwardRef(({ date, scrollRef, route }, ref) => {
             />
           );
         })}
+      </View>
+      <View className="flex-row justify-center mb-9">
+        <JMButton
+          icon={<ArrowIcon color={TW_COLORS.GRAY_700} />}
+          onPress={() => navigation.navigate("goals-settings")}
+          iconPosition="right"
+          width="fixed"
+          variant="outline"
+          title="Personnaliser mes objectifs"
+        />
       </View>
     </View>
   );
