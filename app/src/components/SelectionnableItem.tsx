@@ -30,7 +30,7 @@ export default function SelectionnableItem({ id, label, description, selected, o
         className
       )}
     >
-      <View className={"flex-row flex-1 item-centers"}>
+      <View className={mergeClassNames("flex-row flex-1", boxPosition === "top" ? "items-start" : "items-center")}>
         {selected ? (
           <View className="mr-3 w-6 h-6 rounded-md items-center justify-center bg-cnam-primary-800">
             <Text className="text-white text-base font-bold">✓</Text>

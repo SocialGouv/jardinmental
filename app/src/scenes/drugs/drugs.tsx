@@ -27,10 +27,21 @@ import NavigationButtons from "@/components/onboarding/NavigationButtons";
 import HealthIcon from "@assets/svg/icon/Health";
 import DrugDoseBottomSheet from "@/components/DrugDoseBottomSheet";
 
+interface Drug {
+  id: string;
+  name1: string;
+  name2?: string;
+}
+
+interface Posology extends Drug {
+  freeText?: string;
+  value: string;
+}
+
 const Drugs = ({ navigation, route }) => {
   const [diaryData, addNewEntryToDiaryData] = useContext(DiaryDataContext);
-  const [medicalTreatment, setMedicalTreatment] = useState([]);
-  const [posology, setPosology] = useState([]);
+  const [medicalTreatment, setMedicalTreatment] = useState<Drug[]>([]);
+  const [posology, setPosology] = useState<Posology[]>([]);
   const [inSurvey, setInSurvey] = useState(false);
   const [listDrugs, setListDrugs] = useState();
   const [answers, setAnswers] = useState({});
@@ -198,17 +209,20 @@ const Drugs = ({ navigation, route }) => {
                 Détail de vos traitements de la journée <Text style={styles.titlePosologyOptionnel}>(Optionnel)</Text>
               </Text>
             </View>
-            {medicalTreatment.map((e, i) => (
-              <View className="mb-4">
-                <Text className={mergeClassNames("mb-2 text-gray-800", typography.textLgMedium)}>
-                  {e.name1} ({e.name2})
-                </Text>
-                <TouchableOpacity onPress={() => addDose(e)} className="border border-gray-700 bg-white rounded-xl flex-row p-4">
-                  <HealthIcon color={TW_COLORS.GRAY_700} width={17} height={17} />
-                  <Text className={mergeClassNames(typography.textMdRegular, "ml-2 text-gray-700")}>Indiquez la dose</Text>
-                </TouchableOpacity>
-              </View>
-            ))}
+            {medicalTreatment.map((e, i) => {
+              const res = posology.find((i) => i.id === e.id);
+              return (
+                <View className="mb-4">
+                  <Text className={mergeClassNames("mb-2 text-gray-800", typography.textLgMedium)}>
+                    {e.name1} ({e.name2})
+                  </Text>
+                  <TouchableOpacity onPress={() => addDose(e)} className="border border-gray-700 bg-white rounded-xl flex-row p-4">
+                    <HealthIcon color={TW_COLORS.GRAY_700} width={17} height={17} />
+                    <Text className={mergeClassNames(typography.textMdRegular, "ml-2 text-gray-700")}>{res ? res.value : "Indiquez la dose"}</Text>
+                  </TouchableOpacity>
+                </View>
+              );
+            })}
           </>
         ) : null}
         {!inSurvey && (
@@ -288,6 +302,16 @@ Voir plus d'informations sur les traitements médicamenteux :\n`}
     navigation.navigate("tabs");
   };
 
+  const getNextText = () => {
+    let nextText = "Renseigner mon traitement";
+    if (inSurvey) {
+      nextText = "Valider";
+    } else if (medicalTreatment) {
+      nextText = "Modifier mon traitement";
+    }
+    return nextText;
+  };
+
   return (
     <AnimatedHeaderScrollScreen
       handlePrevious={() => {
@@ -299,10 +323,14 @@ Voir plus d'informations sur les traitements médicamenteux :\n`}
       bottomComponent={
         <NavigationButtons
           onNext={() => {
-            showBottomSheet(<DrugsBottomSheet onClose={undefined} />);
+            if (inSurvey) {
+              submit();
+            } else {
+              showBottomSheet(<DrugsBottomSheet onClose={undefined} />);
+            }
           }}
           nextDisabled={!hasTreatment}
-          nextText={medicalTreatment ? "Modifier mon traitement" : "Renseigner mon traitement"}
+          nextText={getNextText()}
         />
       }
     >

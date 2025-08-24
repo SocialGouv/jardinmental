@@ -250,13 +250,13 @@ const DaySurvey = ({
       });
       return navigation.navigate("tabs");
     } else if (treatment?.length) {
-      navigation.navigate("drugs", { treatment, currentSurvey: true });
+      navigation.navigate("drugs", { treatment, currentSurvey });
     } else {
       showBottomSheet(
         <DrugsBottomSheet
           onClose={(treatment) => {
             closeBottomSheet();
-            navigation.navigate("drugs", { treatment, currentSurvey: true });
+            navigation.navigate("drugs", { treatment, currentSurvey });
           }}
           title={undefined}
           description={undefined}

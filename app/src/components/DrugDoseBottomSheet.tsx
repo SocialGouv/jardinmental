@@ -13,7 +13,7 @@ import JMButton from "@/components/JMButton";
 const screenHeight = Dimensions.get("window").height;
 const height90vh = screenHeight * 0.9;
 
-export default function DrugDoseBottomSheet({ onClose }: { onClose: (categoryName: NEW_INDICATORS_CATEGORIES, doses: string[]) => void }) {
+export default function DrugDoseBottomSheet({ onClose }: { onClose: (doses: string[]) => void }) {
   const uniqueDoses = ["1,5 mg", "3 mg", "4,5 mg", "6 mg", "7,5 mg", "9 mg", "10,5 mg"];
   const [newDoses, setNewDoses] = useState<string[]>([]);
   const [filteredDoses, setFilteredDoses] = useState<string[]>(uniqueDoses);
@@ -22,7 +22,7 @@ export default function DrugDoseBottomSheet({ onClose }: { onClose: (categoryNam
   const [selectedDoses, setSelectedDoses] = useState<string[]>([]);
 
   const toggleDose = (id: string) => {
-    setSelectedDoses((prev) => (prev.includes(id) ? prev.filter((selectedId) => selectedId !== id) : [...prev, id]));
+    setSelectedDoses((prev) => (prev.includes(id) ? [] : [id]));
   };
 
   const createCustomDose = (name: string): string => {
@@ -33,10 +33,11 @@ export default function DrugDoseBottomSheet({ onClose }: { onClose: (categoryNam
     if (text) {
       const newDose = createCustomDose(text);
       setNewDoses((prev) => [...prev, newDose]);
+
       if (typeof index === "number") {
         setEditingDoses((prev) => [...prev.slice(0, index), ...prev.slice(index + 1)]);
       }
-      setSelectedDoses((prev) => [...prev, newDose]);
+      setSelectedDoses([newDose]);
     }
   };
 
