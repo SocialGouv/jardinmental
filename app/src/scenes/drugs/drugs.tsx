@@ -173,7 +173,14 @@ const Drugs = ({ navigation, route }) => {
   };
 
   const addDose = (drug) => {
-    showBottomSheet(<DrugDoseBottomSheet />);
+    showBottomSheet(
+      <DrugDoseBottomSheet
+        onClose={(dose) => {
+          handleDrugChange(drug, dose, false);
+          closeBottomSheet();
+        }}
+      />
+    );
   };
 
   const render = () => {
