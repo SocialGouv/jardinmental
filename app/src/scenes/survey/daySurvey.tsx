@@ -61,7 +61,6 @@ const DaySurvey = ({
   const initEditiingSurvey = route?.params?.editingSurvey ?? false;
 
   const [diaryData, addNewEntryToDiaryData] = useContext(DiaryDataContext);
-  const { showBottomSheet } = useBottomSheet();
 
   const [userIndicateurs, setUserIndicateurs] = useState<Indicator[]>([]);
   const [treatment, setTreatment] = useState<any[] | undefined>();
@@ -421,16 +420,3 @@ const DaySurvey = ({
 };
 
 export default DaySurvey;
-
-const HelpView = ({ title, description }) => {
-  return (
-    <View className="flex-1 bg-white p-4">
-      <Text className="text-lg font-semibold mb-4" style={{ color: TW_COLORS.TEXT_PRIMARY }}>
-        {title}
-      </Text>
-      <Text className="text-base mb-4 leading-6" style={{ color: TW_COLORS.TEXT_SECONDARY }}>
-        {description}
-      </Text>
-    </View>
-  );
-};
