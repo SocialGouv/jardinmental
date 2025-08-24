@@ -283,6 +283,11 @@ const DaySurvey = ({
     logEvents.logSettingsSymptomsFromSurvey();
   };
   const answeredElementCount = Object.keys(answers).map((key) => answers[key].value !== undefined).length;
+  const onValueChanged = ({ indicator, value }: { indicator: Indicator; value: string }) =>
+    toggleAnswer({ key: indicator[indicator.diaryDataKey || "name"], value });
+  const onCommentChanged = ({ indicator, comment }: { indicator: Indicator; comment?: string }) =>
+    handleChangeUserComment({ key: indicator[indicator.diaryDataKey || "name"], userComment: comment });
+
   return (
     <AnimatedHeaderScrollScreen
       headerRightComponent={<Pencil color={TW_COLORS.WHITE} width={16} height={16} />}
@@ -329,10 +334,10 @@ const DaySurvey = ({
                   showComment={true}
                   indicator={ind}
                   index={0}
-                  value={answers?.[ind?.name]?.value}
-                  onValueChanged={({ indicator, value }) => toggleAnswer({ key: indicator?.name, value })}
-                  onCommentChanged={({ indicator, comment }) => handleChangeUserComment({ key: indicator?.name, userComment: comment })}
-                  comment={answers?.[ind?.name]?.userComment}
+                  value={answers?.[ind[ind.diaryDataKey || "name"]]?.value}
+                  onValueChanged={onValueChanged}
+                  onCommentChanged={onCommentChanged}
+                  comment={answers?.[ind[ind.diaryDataKey || "name"]]?.userComment}
                 />
               </View>
             );
@@ -364,17 +369,18 @@ const DaySurvey = ({
                   className="ml-auto"
                 />
               </View>
-              {indicators.map((ind) => {
+              {indicators.map((ind: Indicator) => {
+
                 return (
                   <IndicatorSurveyItem
                     key={ind?.uuid}
                     showComment={true}
                     indicator={ind}
                     index={index}
-                    value={answers?.[ind?.name]?.value}
-                    onValueChanged={({ indicator, value }) => toggleAnswer({ key: indicator?.name, value })}
-                    onCommentChanged={({ indicator, comment }) => handleChangeUserComment({ key: indicator?.name, userComment: comment })}
-                    comment={answers?.[ind?.name]?.userComment}
+                    value={answers?.[ind[ind.diaryDataKey || "name"]]?.value}
+                    onValueChanged={onValueChanged}
+                    onCommentChanged={onCommentChanged}
+                    comment={answers?.[ind[ind.diaryDataKey || "name"]]?.userComment}
                   />
                 );
               })}
