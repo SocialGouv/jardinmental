@@ -1,10 +1,12 @@
 import React from "react";
-import { TouchableOpacity, StyleSheet, View, Pressable } from "react-native";
-import Text from "../../components/MyText";
+import { TouchableOpacity, StyleSheet, View, Pressable, Text } from "react-native";
 import RoundButtonIcon from "../../components/RoundButtonIcon";
 import { InputCheckbox } from "../../components/InputCheckbox";
 import { Indicator } from "@/entities/Indicator";
 import { NEW_INDICATORS_CATEGORIES } from "@/utils/liste_indicateurs.1";
+import { mergeClassNames } from "@/utils/className";
+import { typography } from "@/utils/typography";
+import { TW_COLORS } from "@/utils/constants";
 
 const CategorieElements = ({
   title,
@@ -20,13 +22,10 @@ const CategorieElements = ({
   category?: NEW_INDICATORS_CATEGORIES;
 }) => {
   //  Gathered refined generic indicators with custom value (isCustom === true) or with preexisting indicators (baseIndicatorUuid exists)
-  const existingRefinedIndicators = userIndicateurs.filter(
-    (ind) => ind.mainCategory === category && (ind.isCustom || ind.baseIndicatorUuid)
-  );
+  const existingRefinedIndicators = userIndicateurs.filter((ind) => ind.mainCategory === category && (ind.isCustom || ind.baseIndicatorUuid));
 
   // Gathered non refined generic indicators
-  const genericIndicators = userIndicateurs.filter(
-    (ind) => ind.mainCategory === category && ind.isGeneric);
+  const genericIndicators = userIndicateurs.filter((ind) => ind.mainCategory === category && ind.isGeneric);
 
   // Gathered all baseIndicatorUuids of refined generic indicators with preexisting indicators
   const allBaseIndicatorUuids = userIndicateurs
@@ -34,54 +33,58 @@ const CategorieElements = ({
     .map((ind) => ind.baseIndicatorUuid);
 
   // we filter out genericIndicators, and indicators that will already be in existingRefinedIndicators
-  const preExistingIndicators = options.filter((ind) => !ind.isGeneric && !allBaseIndicatorUuids.includes(ind.uuid))
+  const preExistingIndicators = options.filter((ind) => !ind.isGeneric && !allBaseIndicatorUuids.includes(ind.uuid));
   const [isOpen, setIsOpen] = React.useState(false);
   return (
     <>
-      <TouchableOpacity style={styles.categorieContainer} onPress={() => setIsOpen((e) => !e)}>
-        <Text style={styles.categorieTitre}>{title}</Text>
+      <TouchableOpacity
+        className={mergeClassNames("bg-cnam-primary-100 flex-row p-4 justify-between items-center rounded-xl bg-[#E0EFF3] mb-4")}
+        onPress={() => setIsOpen((e) => !e)}
+      >
+        <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-900")}>{title}</Text>
         <View>
-          <RoundButtonIcon icon="toggle" visible onPress={() => setIsOpen((e) => !e)} isToggled={isOpen} medium />
+          <RoundButtonIcon
+            backgroundColor={"#FCFCFD"}
+            iconColor={TW_COLORS.GRAY_700}
+            borderColor={TW_COLORS.GRAY_700}
+            icon="toggle"
+            visible
+            onPress={() => setIsOpen((e) => !e)}
+            isToggled={isOpen}
+            medium
+          />
         </View>
       </TouchableOpacity>
       {isOpen ? (
-        <View style={styles.listeContainer}>
-          {(
-            [...preExistingIndicators, ...existingRefinedIndicators, ...genericIndicators]
-          )
-            .map((option) => {
-              const indicateurSelectionne = userIndicateurs.find(
-                (_ind) =>
-                  (_ind.uuid === option.uuid ||
-                    (!_ind.baseIndicatorUuid && _ind.genericUuid === option.uuid) ||
-                    _ind.baseIndicatorUuid === option.uuid) &&
-                  _ind.active
-              );
-              return (
-                <View
-                  key={`${option.uuid}`}
-                  style={[
-                    styles.container,
-                    {
-                      backgroundColor: indicateurSelectionne ? "#F4FCFD" : "#F8F9FB",
-                      borderColor: indicateurSelectionne ? "#DEF4F5" : "#E7EAF1",
-                    },
-                  ]}
+        <View className="mb-4">
+          {[...preExistingIndicators, ...existingRefinedIndicators, ...genericIndicators].map((option, index) => {
+            const indicateurSelectionne = userIndicateurs.find(
+              (_ind) =>
+                (_ind.uuid === option.uuid ||
+                  (!_ind.baseIndicatorUuid && _ind.genericUuid === option.uuid) ||
+                  _ind.baseIndicatorUuid === option.uuid) &&
+                _ind.active
+            );
+            return (
+              <View key={`${option.uuid}`} style={[styles.container]} className="mx-4">
+                <Pressable
+                  onPress={() => {
+                    console.log("✍️  option", option);
+                    onClick(option);
+                  }}
+                  hitSlop={{ bottom: 8, left: 8, right: 8, top: 8 }}
                 >
-                  <Pressable
-                    onPress={() => {
-                      console.log("✍️  option", option);
-                      onClick(option);
-                    }}
-                    hitSlop={{ bottom: 8, left: 8, right: 8, top: 8 }}
+                  <View
+                    style={[styles.contentContainer]}
+                    className={mergeClassNames(index !== 0 ? "border-t border-gray-300" : "", "pb-2 pt-1")}
+                    pointerEvents="none"
                   >
-                    <View style={[styles.contentContainer]} pointerEvents="none">
-                      <InputCheckbox label={option.name} checked={indicateurSelectionne} />
-                    </View>
-                  </Pressable>
-                </View>
-              );
-            })}
+                    <InputCheckbox label={option.name} checked={indicateurSelectionne} />
+                  </View>
+                </Pressable>
+              </View>
+            );
+          })}
         </View>
       ) : null}
     </>
@@ -120,9 +123,6 @@ const styles = StyleSheet.create({
   },
   choixContainerSelected: {
     backgroundColor: "#EFFDEF",
-  },
-  listeContainer: {
-    marginBottom: 44,
   },
   choixLabel: {
     fontSize: 15,

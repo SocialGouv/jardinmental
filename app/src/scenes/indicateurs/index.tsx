@@ -1,58 +1,27 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View, ScrollView, Keyboard } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { StyleSheet, View, Text } from "react-native";
 
-import BackButton from "../../components/BackButton";
 import { colors } from "../../utils/colors";
 import localStorage from "../../utils/localStorage";
 import logEvents from "../../services/logEvents";
 import { ONBOARDING_STEPS, categories, displayedCategories, reliquatCategories } from "../../utils/constants";
-import Button from "../../components/Button";
-import Text from "../../components/MyText";
-import HeartBubble from "../../../assets/svg/HeartBubble";
 import { useFocusEffect } from "@react-navigation/native";
-import { Button2 } from "../../components/Button2";
-import { Card } from "../../components/Card";
 import JMButton from "@/components/JMButton";
+import { AnimatedHeaderScrollScreen } from "../survey-v2/AnimatedHeaderScrollScreen";
+import NavigationButtons from "@/components/onboarding/NavigationButtons";
+import { mergeClassNames } from "@/utils/className";
+import { typography } from "@/utils/typography";
+import { Indicator } from "@/entities/Indicator";
+import { INDICATEURS } from "@/utils/liste_indicateurs.1";
 
 const CustomSymptomScreen = ({ navigation, route, settings = false }) => {
   const [chosenCategories, setChosenCategories] = useState();
-  const [userIndicateurs, setUserIndicateurs] = useState([]);
-
-  // useEffect(() => {
-  //   (async () => {
-  //     const preselectedCategories = await localStorage.getSymptoms();
-  //     if (!preselectedCategories || !Object.keys(preselectedCategories).length) {
-  //       return;
-  //     }
-
-  //     const customSymptoms = await localStorage.getCustomSymptoms();
-  //     let selected = {};
-  //     Object.keys(categories)
-  //       .concat(...Object.keys(reliquatCategories))
-  //       .concat(customSymptoms)
-  //       .concat(...Object.keys(INDICATEURS))
-  //       .forEach((cat) => {
-  //         const [categoryName] = cat.split("_");
-  //         // select it if we add it to the list (old and new version)
-  //         // cat is the full name (SYMPTOM_FREQUENCE)
-  //         // categoryName is the new format (SYMPTOM)
-  //         if (
-  //           Object.keys(preselectedCategories).includes(cat) ||
-  //           Object.keys(preselectedCategories).includes(categoryName)
-  //         ) {
-  //           selected[categoryName] = preselectedCategories[cat] || preselectedCategories[categoryName];
-  //         }
-  //       });
-  //     setChosenCategories(selected);
-  //   })();
-  // }, []);
+  const [userIndicateurs, setUserIndicateurs] = useState<Indicator[]>([]);
 
   useFocusEffect(
     React.useCallback(() => {
       (async () => {
         const user_indicateurs = await localStorage.getIndicateurs();
-        // console.log("✍️ ~ user_indicateurs", JSON.stringify(user_indicateurs, null, 2));
         if (user_indicateurs) {
           setUserIndicateurs(user_indicateurs);
         }
@@ -101,25 +70,40 @@ const CustomSymptomScreen = ({ navigation, route, settings = false }) => {
   const indicators = Object.keys(chosenCategories || {}).filter((e) => chosenCategories[e]);
 
   return (
-    <SafeAreaView style={styles.safe}>
-      <View style={styles.header}>
-        <BackButton style={styles.headerBackButton} onPress={navigation.goBack} />
-        <View style={styles.headerTextContainer}>
-          <Text style={styles.headerText}>Mon questionnaire</Text>
-        </View>
-      </View>
-      <ScrollView keyboardShouldPersistTaps="handled" style={styles.container} keyboardDismissMode="on-drag" onScrollBeginDrag={Keyboard.dismiss}>
-        <Card
-          title="Personnaliser mon questionnaire"
-          text="Gérez vos indicateurs, ajoutez-en de nouveaux et choisissez la manière dont vous les évaluez !"
-          image={{ source: require("./../../../assets/imgs/indicateur.png") }}
-        />
-        <View style={styles.sectionRowContainer}>
-          <View>
-            <Text style={styles.headerText}>Mes indicateurs</Text>
-          </View>
-          <View style={styles.circleNumber}>
-            <Text style={styles.circleText}>{userIndicateurs.filter((_indicateur) => _indicateur.active).length}</Text>
+    <AnimatedHeaderScrollScreen
+      handlePrevious={() => {
+        navigation.goBack();
+      }}
+      title="Traitement"
+      navigation={navigation}
+      headerRightComponent={null}
+      headerRightAction={() => {}}
+      bottomComponent={
+        <NavigationButtons absolute={true}>
+          <>
+            <JMButton
+              variant="outline"
+              className="mb-2"
+              size="medium"
+              onPress={() => navigation.navigate("EDIT_INDICATOR")}
+              title="Ajouter un indicateur"
+            />
+            <JMButton variant="primary" onPress={() => navigation.navigate("indicators-settings-more")} title="Modifier mon questionnaire" />
+          </>
+        </NavigationButtons>
+      }
+    >
+      <View className="px-4 mt-6">
+        <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-900")}>Personnaliser mon suivi</Text>
+        <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900 mt-3")}>
+          Gérez vos éléments de suivi, ajoutez-en de nouveaux et choisissez la manière dont vous les évaluez
+        </Text>
+        <View className="my-6 mt-8 flex-row items-center">
+          <Text className={mergeClassNames(typography.textXlSemibold, "text-cnam-primary-900")}>Mes indicateurs</Text>
+          <View className="bg-cnam-cyan-500-0 h-7 w-7 rounded-full items-center justify-center ml-2">
+            <Text className={mergeClassNames("text-white", typography.textMdSemibold)}>
+              {userIndicateurs.filter((_indicateur) => _indicateur.active).length}
+            </Text>
           </View>
         </View>
         <View>
@@ -127,24 +111,14 @@ const CustomSymptomScreen = ({ navigation, route, settings = false }) => {
             .filter((_indicateur) => _indicateur.active)
             .map((_indicateur) => {
               return (
-                <View key={_indicateur.uuid} style={styles.indicatorItem}>
-                  <Text>{_indicateur.name}</Text>
+                <View key={_indicateur.uuid} className="p-4 bg-gray-100 mb-2 rounded-xl">
+                  <Text className={mergeClassNames(typography.textLgRegular, "text-cnam-primary-950")}>{_indicateur.name}</Text>
                 </View>
               );
             })}
         </View>
-      </ScrollView>
-      <View style={styles.bottomButtonsContainer}>
-        <JMButton
-          variant="primary"
-          className="mb-2"
-          size="medium"
-          onPress={() => navigation.navigate("EDIT_INDICATOR")}
-          title="Ajouter un indicateur"
-        />
-        <JMButton variant="outline" onPress={() => navigation.navigate("indicators-settings-more")} title="Modifier mon questionnaire" />
       </View>
-    </SafeAreaView>
+    </AnimatedHeaderScrollScreen>
   );
 };
 

@@ -52,7 +52,7 @@ export const GoalsSettings = ({ navigation, route }) => {
       }
       navigation={navigation}
     >
-      <View className="bg-cnam-cyan-50-ligten-90 p-4 m-4 rounded-2xl">
+      <View className="bg-cnam-cyan-50-lighten-90 p-4 m-4 rounded-2xl">
         <View className="flex-row items-center mb-4">
           <View className="rounded-full border-[1.5px] border-cnam-primary-800 bg-white w-8 h-8 items-center justify-center">
             <Target color={TW_COLORS.CNAM_PRIMARY_900} width={18} height={18} />
