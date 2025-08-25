@@ -1,3 +1,10 @@
+# [1.52.0-alpha.20](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.19...v1.52.0-alpha.20) (2025-08-24)
+
+
+### Bug Fixes
+
+* **merge errors:** add the use of diaryDataKey and fallback to name as indicator id ([1bc16e7](https://github.com/SocialGouv/jardinmental/commit/1bc16e7e7737ebaf87b3ad1e982eb11336bad5a9))
+
 # [1.52.0-alpha.19](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.18...v1.52.0-alpha.19) (2025-08-24)
 
 
