@@ -173,23 +173,6 @@ const Drugs = ({ navigation, route, onClose }) => {
                 </View>
               </TouchableOpacity>
             )}
-            {/* {editingIndicators.map((text, index) => (
-            <InputSelectionnableItem label={"Nommez le produit ou l’addiction :"} onPress={(text: string) => createNewIndicator(text, index)} />
-          ))}
-          {!filter && (
-            <View className="flex-row items-center mt-2 ml-auto">
-              <TouchableOpacity
-                onPress={() => {
-                  setEditingIndicators((editingIndicators) => [...editingIndicators, ""]);
-                }}
-              >
-                <View className="flex-row items-center">
-                  <Text className={mergeClassNames(typography.textMdMedium, "mr-2 text-cnam-primary-900")}>ajouter un élément</Text>
-                  <PlusIcon />
-                </View>
-              </TouchableOpacity>
-            </View>
-          )} */}
           </View>
         </View>
       </ScrollView>
@@ -206,7 +189,6 @@ const Drugs = ({ navigation, route, onClose }) => {
         <JMButton
           onPress={async () => {
             await localStorage.setMedicalTreatment(treatment);
-            console.log("LCS SET MED TREATMENT");
             onClose(treatment);
           }}
           title={"Valider la sélection"}
@@ -215,107 +197,5 @@ const Drugs = ({ navigation, route, onClose }) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  labelAddDrug: {
-    flex: 1,
-    color: "#fff",
-    fontSize: 20,
-    fontWeight: "600",
-  },
-  plusIcon: {
-    color: "#fff",
-    fontSize: 30,
-    fontWeight: "300",
-    margin: -10,
-    marginRight: 10,
-  },
-  addDrug: {
-    backgroundColor: colors.LIGHT_BLUE,
-    color: "#fff",
-    margin: 10,
-    borderRadius: 10,
-    padding: 10,
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    shadowColor: "#0A215C",
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.18,
-    shadowRadius: 1.0,
-
-    elevation: 1,
-  },
-  filter: {
-    fontSize: 16,
-    paddingVertical: 12,
-    paddingHorizontal: 10,
-    borderColor: "#EDEDED",
-    backgroundColor: "#fff",
-    color: "black",
-  },
-  safe: {
-    flex: 1,
-    backgroundColor: "white",
-  },
-  container: {
-    backgroundColor: "white",
-  },
-  scrollContainer: {
-    paddingBottom: 80,
-  },
-  backButton: {
-    fontWeight: "700",
-    textDecorationLine: "underline",
-    color: colors.BLUE,
-    width: "20%",
-  },
-  buttonWrapper: {
-    position: "absolute",
-    bottom: 20,
-    left: 10,
-  },
-  drug: {
-    backgroundColor: "#26387c12",
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    flex: 1,
-    height: 55,
-  },
-  item: {
-    display: "flex",
-    flexDirection: "column",
-    flex: 1,
-    alignItems: "flex-start",
-    justifyContent: "center",
-  },
-  text1: {
-    color: "#000",
-    fontSize: 16,
-    fontWeight: "600",
-  },
-  text2: {
-    color: colors.BLUE,
-    fontSize: 13,
-    fontWeight: "400",
-    fontStyle: "italic",
-  },
-  checkbox: {
-    marginHorizontal: 10,
-  },
-  noResult: {
-    color: "#a3a3a3",
-    fontSize: 16,
-    fontWeight: "400",
-    fontStyle: "italic",
-    textAlign: "center",
-  },
-});
 
 export default Drugs;
