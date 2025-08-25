@@ -330,6 +330,7 @@ const Drugs = ({ navigation, route }) => {
       }}
       bottomComponent={
         <NavigationButtons
+          absolute={true}
           onNext={() => {
             if (inSurvey) {
               submit();
