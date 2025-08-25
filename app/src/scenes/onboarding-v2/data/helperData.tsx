@@ -221,3 +221,10 @@ export const INDICATOR_CATEGORIES_DATA: Record<NEW_INDICATORS_CATEGORIES, Diffic
     description: "Mémorisation, attention, projection...",
   },
 };
+
+export const HELP_POSOLOGY = {
+  title: "Information sur les traitements",
+  description: `Les noms des médicaments et les posologies ne sont donnés qu'à titre indicatif pour vous aider dans le suivi de votre traitement médicamenteux.\n
+Il convient néanmoins de toujours se référer à la prescription médicale vous concernant et à votre médecin référent pour tout ce qui a trait à votre traitement médicamenteux en particulier et à votre suivi en général.\n
+Voir plus d'informations sur les traitements médicamenteux :\n`,
+};

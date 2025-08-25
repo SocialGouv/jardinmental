@@ -13,6 +13,7 @@ import HelpText from "./HelpText";
 import HelpView from "./HelpView";
 import { useBottomSheet } from "@/context/BottomSheetContext";
 import localStorage from "@/utils/localStorage";
+import { HELP_POSOLOGY } from "@/scenes/onboarding-v2/data/helperData";
 
 export const DrugsBottomSheet = ({ onClose }) => {
   const [index, setIndex] = useState<number>(0);
@@ -49,15 +50,7 @@ export const DrugsBottomSheet = ({ onClose }) => {
           <Text className={mergeClassNames(typography.textLgBold, "text-xl mb-4 text-cnam-primary-950")}>Prenez-vous un traitement ?</Text>
           <TouchableOpacity
             onPress={() => {
-              showBottomSheet(
-                <HelpView
-                  title={"Information sur les traitements"}
-                  description={`Les noms des médicaments et les posologies ne sont donnés qu'à titre indicatif pour vous aider dans le suivi de votre traitement médicamenteux.\n 
-Il convient néanmoins de toujours se référer à la prescription médicale vous concernant et à votre médecin référent pour tout ce qui a trait à votre traitement médicamenteux en particulier et à votre suivi en général.\n
-Voir plus d'informations sur les traitements médicamenteux :\n`}
-                  link={"médicaments.gouv.fr"}
-                />
-              );
+              showBottomSheet(<HelpView title={HELP_POSOLOGY["title"]} description={HELP_POSOLOGY["description"]} link={"médicaments.gouv.fr"} />);
             }}
             className="flex-row items-center"
           >

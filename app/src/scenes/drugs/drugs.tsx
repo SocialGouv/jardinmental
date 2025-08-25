@@ -26,6 +26,7 @@ import { InputToggle } from "@/components/InputToggle";
 import NavigationButtons from "@/components/onboarding/NavigationButtons";
 import HealthIcon from "@assets/svg/icon/Health";
 import DrugDoseBottomSheet from "@/components/DrugDoseBottomSheet";
+import { HELP_POSOLOGY } from "../onboarding-v2/data/helperData";
 
 interface Drug {
   id: string;
@@ -236,15 +237,7 @@ const Drugs = ({ navigation, route }) => {
           <>
             <TouchableOpacity
               onPress={() => {
-                showBottomSheet(
-                  <HelpView
-                    title={"Information sur les traitements"}
-                    description={`Les noms des médicaments et les posologies ne sont donnés qu'à titre indicatif pour vous aider dans le suivi de votre traitement médicamenteux.\n 
-Il convient néanmoins de toujours se référer à la prescription médicale vous concernant et à votre médecin référent pour tout ce qui a trait à votre traitement médicamenteux en particulier et à votre suivi en général.\n
-Voir plus d'informations sur les traitements médicamenteux :\n`}
-                    link={"médicaments.gouv.fr"}
-                  />
-                );
+                showBottomSheet(<HelpView title={HELP_POSOLOGY["title"]} description={HELP_POSOLOGY["description"]} link={"médicaments.gouv.fr"} />);
               }}
               className="flex-row items-center"
             >
