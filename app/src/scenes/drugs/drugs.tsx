@@ -29,17 +29,18 @@ import DrugDoseBottomSheet from "@/components/DrugDoseBottomSheet";
 import { HELP_POSOLOGY } from "../onboarding-v2/data/helperData";
 import Pencil from "@assets/svg/Pencil";
 import { Drug, Posology } from "@/entities/Drug";
+import { ListItem } from "@/components/SelectionnableItem";
 
 const Drugs = ({ navigation, route }) => {
   const [diaryData, addNewEntryToDiaryData] = useContext(DiaryDataContext);
   const [medicalTreatment, setMedicalTreatment] = useState<Drug[]>([]);
   const [posology, setPosology] = useState<Posology[]>([]);
   const [inSurvey, setInSurvey] = useState(false);
-  const [listDrugs, setListDrugs] = useState();
+  const [listDrugs, setListDrugs] = useState<Drug[]>();
   const [answers, setAnswers] = useState({});
   const { showBottomSheet, closeBottomSheet } = useBottomSheet();
   const reminderToggleRef = useRef();
-  const [hasTreatment, setHasTreatment] = useState(true);
+  const [hasTreatment, setHasTreatment] = useState(!medicalTreatment || !medicalTreatment?.length);
 
   const priseDeTraitement = {
     id: "PRISE_DE_TRAITEMENT",
@@ -49,6 +50,10 @@ const Drugs = ({ navigation, route }) => {
     id: "PRISE_DE_TRAITEMENT_SI_BESOIN",
     label: "Avez-vous pris un “si besoin” ?",
   };
+
+  useEffect(() => {
+    setHasTreatment(!!medicalTreatment?.length);
+  }, [medicalTreatment]);
 
   useEffect(() => {
     setInSurvey(!!route?.params?.currentSurvey);
@@ -84,7 +89,7 @@ const Drugs = ({ navigation, route }) => {
   useEffect(() => {
     if (!listDrugs || listDrugs?.length <= 0) return;
     (async () => {
-      const medicalTreatmentStorage = route?.params?.treatment || (await localStorage.getMedicalTreatment());
+      const medicalTreatmentStorage = await localStorage.getMedicalTreatment();
       setMedicalTreatment(enrichTreatmentWithData(medicalTreatmentStorage, listDrugs));
     })();
   }, [navigation, route, listDrugs]);
@@ -137,7 +142,7 @@ const Drugs = ({ navigation, route }) => {
     setPosology(p);
   };
 
-  const handleDelete = async (drug) => {
+  const handleDelete = async (drug: Drug) => {
     const treatmentAfterDeletion = await localStorage.removeDrugFromTreatment(drug?.id);
     setMedicalTreatment(enrichTreatmentWithData(treatmentAfterDeletion, listDrugs));
   };
@@ -165,9 +170,9 @@ const Drugs = ({ navigation, route }) => {
   };
 
   const render = () => {
-    if (!medicalTreatment || !medicalTreatment?.length) {
-      return <NoData navigation={navigation} route={route} />;
-    }
+    // if (!medicalTreatment || !medicalTreatment?.length) {
+    //   return <NoData navigation={navigation} route={route} />;
+    // }
     return (
       <View className="pt-8 mx-4">
         {inSurvey ? (
@@ -244,9 +249,18 @@ const Drugs = ({ navigation, route }) => {
                 />
               </InputGroupItem>
             </View>
-            {medicalTreatment.map((e, i) => (
-              <DrugItem key={i} drug={(posology && posology.find((i) => i.id === e.id)) || e} onChange={handleDrugChange} showPosology={inSurvey} />
-            ))}
+            {medicalTreatment.map((e, i) => {
+              const drug = (posology && posology.find((i) => i.id === e.id)) || e;
+              return (
+                <ListItem
+                  id={e.id}
+                  label={drug?.name1}
+                  description={drug?.name2 ? `(${drug?.name2})` : undefined}
+                  selected={false}
+                  onPress={() => handleDelete(e)}
+                />
+              );
+            })}
           </>
         )}
 
@@ -294,6 +308,14 @@ const Drugs = ({ navigation, route }) => {
     return nextText;
   };
 
+  const onTreatmentUpdate = async () => {
+    const medicalTreatmentStorage = await localStorage.getMedicalTreatment();
+    const updatedDrugList = await getDrugListWithLocalStorage();
+    setListDrugs(updatedDrugList);
+    setMedicalTreatment(enrichTreatmentWithData(medicalTreatmentStorage, updatedDrugList));
+    closeBottomSheet();
+  };
+
   return (
     <AnimatedHeaderScrollScreen
       handlePrevious={() => {
@@ -304,20 +326,7 @@ const Drugs = ({ navigation, route }) => {
       navigation={navigation}
       headerRightComponent={inSurvey ? <Pencil color={TW_COLORS.WHITE} width={16} height={16} /> : null}
       headerRightAction={() => {
-        showBottomSheet(
-          <DrugsBottomSheet
-            navigation={navigation}
-            onClose={async () => {
-              const medicalTreatmentStorage = await localStorage.getMedicalTreatment();
-              const list = await getDrugListWithLocalStorage();
-              setListDrugs(list);
-              setTimeout(() => {
-                setMedicalTreatment(enrichTreatmentWithData(medicalTreatmentStorage, list));
-                closeBottomSheet();
-              });
-            }}
-          />
-        );
+        showBottomSheet(<DrugsBottomSheet navigation={navigation} onClose={onTreatmentUpdate} />);
       }}
       bottomComponent={
         <NavigationButtons
@@ -325,7 +334,7 @@ const Drugs = ({ navigation, route }) => {
             if (inSurvey) {
               submit();
             } else {
-              showBottomSheet(<DrugsBottomSheet navigation={navigation} onClose={undefined} />);
+              showBottomSheet(<DrugsBottomSheet navigation={navigation} onClose={onTreatmentUpdate} />);
             }
           }}
           nextDisabled={!hasTreatment}

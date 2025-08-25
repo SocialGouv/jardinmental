@@ -18,6 +18,8 @@ import { typography } from "@/utils/typography";
 import PlusIcon from "@assets/svg/icon/plus";
 import NavigationButtons from "@/components/onboarding/NavigationButtons";
 import { Drug } from "@/entities/Drug";
+import HealthIcon from "@assets/svg/icon/Health";
+import { TW_COLORS } from "@/utils/constants";
 const ELEMENT_HEIGHT = 55;
 
 const screenHeight = Dimensions.get("window").height;
@@ -141,49 +143,62 @@ const Drugs = ({ navigation, route, onClose }) => {
   return (
     <View className="flex-1">
       <ScrollView
-        className="gap-6"
         contentContainerStyle={{ paddingBottom: 200 }}
         showsVerticalScrollIndicator={false}
         style={{ paddingVertical: 20, height: height90vh }}
       >
-        <Text className={mergeClassNames(typography.displayXsBold, "text-left text-cnam-primary-900")}>Sélectionnez un ou plusieurs éléments</Text>
-        <TextInput
-          onChangeText={(text) => {
-            setFilter(text);
-          }}
-          className={mergeClassNames(typography.textMdRegular, "text-left border border-gray-300 p-2 rounded rounded-lg")}
-          placeholder="Rechercher ou ajouter un élément"
-        />
-        <View className="flex-colum flex-1">
-          {filteredList.map((e) => {
-            return (
-              <LightSelectionnableItem
-                key={e.id}
-                className="flex-row"
-                id={e.id}
-                label={e.name1}
-                boxPosition="top"
-                description={e.name2 ? `(${e.name2})` : undefined}
-                selected={!!treatment.find((x) => x.id === e.id)}
-                onPress={(newValue) => setToogleCheckbox(e)}
-              />
-            );
-          })}
-          {!filteredList.length && <Text className={mergeClassNames(typography.textSmMedium, "text-gray-800")}>Pas de résultat</Text>}
-          {!!filter && !filteredList.length && (
-            <TouchableOpacity
-              onPress={async () => {
-                await handleAdd(filter);
-                setFilter("");
-              }}
-            >
-              <View className="flex-row items-center mr-auto mt-2">
-                <Text className={mergeClassNames(typography.textLgMedium, "mr-2 text-cnam-primary-900")}>Ajouter "{filter}"</Text>
-                <PlusIcon />
-              </View>
-            </TouchableOpacity>
-          )}
-          {/* {editingIndicators.map((text, index) => (
+        <View className="self-end mr-4">
+          <TouchableOpacity
+            onPress={() => {
+              setTreatment([]);
+            }}
+          >
+            <Text className={mergeClassNames(typography.textLgMedium, "text-cnam-primary-800")}>Effacer</Text>
+          </TouchableOpacity>
+        </View>
+        <View className="flex-row bg-[#E5F6FC] self-start items-center p-2">
+          <HealthIcon color={TW_COLORS.CNAM_CYAN_700_DARKEN_40} />
+          <Text className={mergeClassNames(typography.textSmBold, "ml-2 text-cnam-cyan-700-darken-40 text-left")}>Traitement</Text>
+        </View>
+        <View className="p-4 flex-column flex-1 gap-6">
+          <Text className={mergeClassNames(typography.displayXsBold, "text-left text-cnam-primary-900")}>Sélectionnez un ou plusieurs éléments</Text>
+          <TextInput
+            onChangeText={(text) => {
+              setFilter(text);
+            }}
+            className={mergeClassNames(typography.textMdRegular, "text-left border border-gray-300 p-2 rounded rounded-lg")}
+            placeholder="Rechercher ou ajouter un élément"
+          />
+          <View className="flex-colum flex-1">
+            {filteredList.map((e) => {
+              return (
+                <LightSelectionnableItem
+                  key={e.id}
+                  className="flex-row"
+                  id={e.id}
+                  label={e.name1}
+                  boxPosition="top"
+                  description={e.name2 ? `(${e.name2})` : undefined}
+                  selected={!!treatment.find((x) => x.id === e.id)}
+                  onPress={(newValue) => setToogleCheckbox(e)}
+                />
+              );
+            })}
+            {!filteredList.length && <Text className={mergeClassNames(typography.textSmMedium, "text-gray-800")}>Pas de résultat</Text>}
+            {!!filter && !filteredList.length && (
+              <TouchableOpacity
+                onPress={async () => {
+                  await handleAdd(filter);
+                  setFilter("");
+                }}
+              >
+                <View className="flex-row items-center mr-auto mt-2">
+                  <Text className={mergeClassNames(typography.textLgMedium, "mr-2 text-cnam-primary-900")}>Ajouter "{filter}"</Text>
+                  <PlusIcon />
+                </View>
+              </TouchableOpacity>
+            )}
+            {/* {editingIndicators.map((text, index) => (
             <InputSelectionnableItem label={"Nommez le produit ou l’addiction :"} onPress={(text: string) => createNewIndicator(text, index)} />
           ))}
           {!filter && (
@@ -200,6 +215,7 @@ const Drugs = ({ navigation, route, onClose }) => {
               </TouchableOpacity>
             </View>
           )} */}
+          </View>
         </View>
       </ScrollView>
       <View

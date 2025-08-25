@@ -77,7 +77,7 @@ export default function DrugDoseBottomSheet({
         </View>
         <View className="flex-row bg-[#E5F6FC] self-start items-center p-2">
           <Potion />
-          <Text className={mergeClassNames(typography.textSmBold, "ml-2 text-[#006386] text-left")}>
+          <Text className={mergeClassNames(typography.textSmBold, "ml-2 text-cnam-cyan-700-darken-40 text-left")}>
             {drug.name1} {drug.name2 ? `(${drug.name2})` : ""}
           </Text>
         </View>

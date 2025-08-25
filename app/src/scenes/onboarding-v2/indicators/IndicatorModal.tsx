@@ -130,9 +130,11 @@ export default function IndicatorModal({
       >
         <View className="flex-row bg-[#E5F6FC] self-start p-2">
           {React.createElement(SECTION_ICONS[category].icon, {
-            color: "#006386",
+            color: TW_COLORS.CNAM_CYAN_700_DARKEN_40,
           })}
-          <Text className={mergeClassNames(typography.textSmBold, "ml-2 text-[#006386] text-left")}>{INDICATOR_CATEGORIES_DATA[category].label}</Text>
+          <Text className={mergeClassNames(typography.textSmBold, "ml-2 text-cnam-cyan-700-darken-40 text-left")}>
+            {INDICATOR_CATEGORIES_DATA[category].label}
+          </Text>
         </View>
         <Text className={mergeClassNames(typography.displayXsBold, "text-left text-cnam-primary-900")}>
           {multiSelect ? "Sélectionnez un ou plusieurs éléments" : "Sélectionnez un élément"}

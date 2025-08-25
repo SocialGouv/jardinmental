@@ -4,14 +4,14 @@ import { typography } from "@/utils/typography";
 import Bin from "@assets/svg/Bin";
 import Health from "@assets/svg/icon/Health";
 import React, { useState } from "react";
-import { Text, TextInput, TouchableOpacity, View } from "react-native";
+import { GestureResponderEvent, Text, TextInput, TouchableOpacity, View } from "react-native";
 
 type DifficultyOptionProps = {
   id: string | number;
   label: string;
   description?: string;
   selected: boolean;
-  onPress: (id: string | number) => void;
+  onPress: (event: GestureResponderEvent) => void;
   className?: string;
   disabled?: boolean;
   icon?: React.ComponentType<any>;
@@ -238,9 +238,9 @@ export function ListItem({ id, label, description, selected, onPress, className,
           <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900")}>{label}</Text>
           {description && <Text className={mergeClassNames(typography.textSmMedium, "text-gray-600 mt-1")}>{description}</Text>}
         </View>
-        <View className="ml-auto items-center justify-center self-stretch">
+        <TouchableOpacity onPress={onPress} className="ml-auto items-center justify-center self-stretch">
           <Bin color={TW_COLORS.CNAM_CYAN_600_DARKEN_20} width={20} height={20} />
-        </View>
+        </TouchableOpacity>
       </View>
     </View>
   );

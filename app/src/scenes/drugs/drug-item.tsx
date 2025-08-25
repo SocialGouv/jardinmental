@@ -6,7 +6,7 @@ import RNPickerSelect from "react-native-picker-select";
 import Icon from "../../components/Icon";
 import { ListItem } from "@/components/SelectionnableItem";
 
-export default ({ drug, onChange, showPosology, onClose }) => {
+export default ({ drug, onDelete }) => {
   const [showFreeText, setShowFreeText] = useState(false);
   const [freeText, setFreeText] = useState("");
 
@@ -15,11 +15,6 @@ export default ({ drug, onChange, showPosology, onClose }) => {
     setShowFreeText(drug?.isFreeText);
     setFreeText(drug?.value);
   }, [drug]);
-
-  const handleChangeFreeText = (value) => {
-    setFreeText(value);
-    onChange(drug, value, showFreeText);
-  };
 
   const render = () => {
     //  {showPosology ? (
@@ -71,17 +66,7 @@ export default ({ drug, onChange, showPosology, onClose }) => {
     //         )}
     //       </View>
     //     ) : null}
-    return (
-      <ListItem
-        id={""}
-        label={drug?.name1}
-        description={drug?.name2 ? `(${drug?.name2})` : null}
-        selected={false}
-        onPress={function (id: string | number): void {
-          throw new Error("Function not implemented.");
-        }}
-      />
-    );
+    return <ListItem id={""} label={drug?.name1} description={drug?.name2 ? `(${drug?.name2})` : undefined} selected={false} onPress={onDelete} />;
   };
 
   return render();
