@@ -29,10 +29,11 @@ export interface Difficulty {
   name: string;
   label: string;
   selected: boolean;
-  icon: () => React.JSX.Element;
+  indicatorText?: string;
+  icon: ({ color }: { color: string }) => React.JSX.Element;
   description?: string;
   category: NEW_INDICATORS_CATEGORIES;
-  subCat: NEW_INDICATORS_SUBCATEGORIES[];
+  subCat?: NEW_INDICATORS_SUBCATEGORIES[];
   labelWithSecondPersonPrefix: string;
 }
 
