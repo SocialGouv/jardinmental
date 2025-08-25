@@ -39,9 +39,9 @@ export const DifficultiesScreen: React.FC<Props> = ({ navigation }) => {
   const handleNext = async () => {
     const selected = selectedDifficulties.filter((d) => d.selected);
     const selectedCategories = selected.map((d) => d.category);
+    const selectedCategoriesMatomoIds = selected.map((d) => d.matomoId);
 
-    // TODO: (tracking onboarding) en attente de retour de Pierre
-    // logEvents.logIndicatorObdLvl1(selectedCategories.join(","), selectedCategories.length);
+    logEvents.logIndicatorObdLvl1(selectedCategoriesMatomoIds, selectedCategories.length);
 
     await updateUserDifficulties(selectedCategories);
     if (selectedCategories.find((cat) => INDICATOR_CATEGORIES_DATA[cat].subCat)) {

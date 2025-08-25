@@ -91,6 +91,7 @@ export const INDICATOR_CATEGORIES_DATA: Record<NEW_INDICATORS_CATEGORIES, Diffic
     indicatorText: "Votre sommeil a un impact sur votre vie. Suivez ce qui compte pour vous",
     icon: MoonStar,
     label: "Sommeil",
+    matomoId: 1,
     subCat: [
       // NEW_INDICATORS_SUBCATEGORIES.UNRESTORATIVE_SLEEP,
       NEW_INDICATORS_SUBCATEGORIES.SLEEP_DIFFICULTY,
@@ -105,6 +106,7 @@ export const INDICATOR_CATEGORIES_DATA: Record<NEW_INDICATORS_CATEGORIES, Diffic
     selected: false,
     label: "Emotions/humeurs",
     icon: Heart,
+    matomoId: 2,
     subCat: [
       NEW_INDICATORS_SUBCATEGORIES.POSITIVE_EMOTIONS,
       NEW_INDICATORS_SUBCATEGORIES.NEGATIVE_EMOTIONS,
@@ -119,6 +121,7 @@ export const INDICATOR_CATEGORIES_DATA: Record<NEW_INDICATORS_CATEGORIES, Diffic
     label: "Alimentation",
     selected: false,
     icon: Cart,
+    matomoId: 5,
   },
   [NEW_INDICATORS_CATEGORIES.ENERGY]: {
     id: "energy",
@@ -128,6 +131,7 @@ export const INDICATOR_CATEGORIES_DATA: Record<NEW_INDICATORS_CATEGORIES, Diffic
     selected: false,
     label: "Énergie",
     icon: Zap,
+    matomoId: 3,
   },
   [NEW_INDICATORS_CATEGORIES.INTRUSIVE_THOUGHTS]: {
     id: "thought",
@@ -137,6 +141,7 @@ export const INDICATOR_CATEGORIES_DATA: Record<NEW_INDICATORS_CATEGORIES, Diffic
     label: "Pensées Envahissantes",
     selected: false,
     icon: Huricane,
+    matomoId: 4,
   },
   [NEW_INDICATORS_CATEGORIES.SUBSTANCE]: {
     id: "toxic",
@@ -147,6 +152,7 @@ export const INDICATOR_CATEGORIES_DATA: Record<NEW_INDICATORS_CATEGORIES, Diffic
     indicatorText: "Précisez quelle consommation de produits ou addictions vous souhaitez observer.",
     selected: false,
     icon: Substance,
+    matomoId: 6,
     // subCat: [
     //     NEW_INDICATORS_SUBCATEGORIES.BEHAVIORAL_ADDICTION,
     //     NEW_INDICATORS_SUBCATEGORIES.SUBSTANCE_USE
@@ -160,6 +166,7 @@ export const INDICATOR_CATEGORIES_DATA: Record<NEW_INDICATORS_CATEGORIES, Diffic
     selected: false,
     label: "Manifestation physique",
     icon: Heart,
+    matomoId: 12,
   },
   [NEW_INDICATORS_CATEGORIES.SOCIAL_RELATIONS]: {
     id: "social_relations",
@@ -169,6 +176,7 @@ export const INDICATOR_CATEGORIES_DATA: Record<NEW_INDICATORS_CATEGORIES, Diffic
     category: NEW_INDICATORS_CATEGORIES.SOCIAL_RELATIONS,
     selected: false,
     icon: HeartHand,
+    matomoId: 7,
   },
   [NEW_INDICATORS_CATEGORIES.WORK]: {
     id: "work_stress",
@@ -178,6 +186,7 @@ export const INDICATOR_CATEGORIES_DATA: Record<NEW_INDICATORS_CATEGORIES, Diffic
     category: NEW_INDICATORS_CATEGORIES.WORK,
     selected: false,
     icon: Work,
+    matomoId: 11,
   },
   [NEW_INDICATORS_CATEGORIES.LIFE_EVENT]: {
     id: "family_issues",
@@ -189,6 +198,7 @@ export const INDICATOR_CATEGORIES_DATA: Record<NEW_INDICATORS_CATEGORIES, Diffic
     description: `Divorce, deuil, perte d'emploi...`,
     selected: false,
     icon: LifeEvent,
+    matomoId: 8,
   },
   [NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR]: {
     id: "behaviour",
@@ -199,6 +209,7 @@ export const INDICATOR_CATEGORIES_DATA: Record<NEW_INDICATORS_CATEGORIES, Diffic
     category: NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR,
     indicatorText: "Dites-moi ce qui vous concerne le plus",
     icon: AlertTriangle,
+    matomoId: 10,
   },
   [NEW_INDICATORS_CATEGORIES.COGNITIVE]: {
     id: "cognitive",
@@ -209,6 +220,7 @@ export const INDICATOR_CATEGORIES_DATA: Record<NEW_INDICATORS_CATEGORIES, Diffic
     icon: PuzzlePiece,
     category: NEW_INDICATORS_CATEGORIES.COGNITIVE,
     description: "Mémorisation, attention, projection...",
+    matomoId: 9,
   },
   [NEW_INDICATORS_CATEGORIES.OTHER]: {
     id: "other",
@@ -219,5 +231,6 @@ export const INDICATOR_CATEGORIES_DATA: Record<NEW_INDICATORS_CATEGORIES, Diffic
     icon: PuzzlePiece,
     category: NEW_INDICATORS_CATEGORIES.COGNITIVE,
     description: "Mémorisation, attention, projection...",
+    matomoId: 13,
   },
 };

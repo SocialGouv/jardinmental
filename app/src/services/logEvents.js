@@ -706,12 +706,14 @@ const logIndicatorObdStart = async () => {
 };
 
 const logIndicatorObdLvl1 = async (themes, count) => {
-  await logEvent({
-    category: ONBOARDING,
-    action: INDICATOR_OBD_LVL1,
-    name: "themes",
-    value: themes,
-  });
+  for (let i = 0; i < themes.length; i++) {
+    await logEvent({
+      category: ONBOARDING,
+      action: INDICATOR_OBD_LVL1,
+      name: "themes",
+      value: themes[i],
+    });
+  }
   // Also log the count
   await logEvent({
     category: ONBOARDING,
