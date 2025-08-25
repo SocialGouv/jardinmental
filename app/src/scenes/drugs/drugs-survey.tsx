@@ -64,7 +64,6 @@ const DrugsSurvey = ({ navigation, route }) => {
   }, [route?.params?.currentSurvey?.answers, priseDeTraitement.id, priseDeTraitementSiBesoin.id]);
 
   const enrichTreatmentWithData = (list, existingDrugs) => {
-    console.log("ENRICH", list);
     if (list) {
       const t = existingDrugs.filter((e) => !!list.find((local) => local.id === e.id));
       return t;

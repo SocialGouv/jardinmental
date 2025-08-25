@@ -40,7 +40,6 @@ const DrugsManagement = ({ navigation, route }) => {
   }, [route]);
 
   const enrichTreatmentWithData = (list, existingDrugs) => {
-    console.log("ENRICH", list);
     if (list) {
       const t = existingDrugs.filter((e) => !!list.find((local) => local.id === e.id));
       return t;
