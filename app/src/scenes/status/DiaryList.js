@@ -1,21 +1,21 @@
-import React, {useContext, useCallback, useState, forwardRef} from 'react';
-import {StyleSheet, View, TouchableOpacity, Animated} from 'react-native';
-import Text from '../../components/MyText';
-import {DiaryDataContext} from '../../context/diaryData';
-import {colors} from '../../utils/colors';
-import {formatDateThread} from '../../utils/date/helpers';
-import StatusItem from './status-item';
-import {canEdit} from './utils/index';
-import {useFocusEffect, useNavigation} from '@react-navigation/native';
-import {getGoalsData} from '../../utils/localStorage/goals';
-import localStorage from '../../utils/localStorage';
+import React, { useContext, useCallback, useState, forwardRef } from "react";
+import { StyleSheet, View, TouchableOpacity, Animated } from "react-native";
+import Text from "../../components/MyText";
+import { DiaryDataContext } from "../../context/diaryData";
+import { colors } from "../../utils/colors";
+import { formatDateThread } from "../../utils/date/helpers";
+import StatusItem from "./status-item";
+import { canEdit } from "./utils/index";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { getGoalsData } from "../../utils/localStorage/goals";
+import localStorage from "../../utils/localStorage";
 
-export const DiaryList = forwardRef(({...props}, ref) => {
+export const DiaryList = forwardRef(({ ...props }, ref) => {
   const navigation = useNavigation();
   const [diaryData] = useContext(DiaryDataContext);
   const sortedData = Object.keys(diaryData).sort((a, b) => {
-    a = a.split('/').reverse().join('');
-    b = b.split('/').reverse().join('');
+    a = a.split("/").reverse().join("");
+    b = b.split("/").reverse().join("");
     return b.localeCompare(a);
   });
 
@@ -27,11 +27,11 @@ export const DiaryList = forwardRef(({...props}, ref) => {
         setIndicateurs(await localStorage.getIndicateurs());
         setGoalsData(await getGoalsData());
       })();
-    }, []),
+    }, [])
   );
 
   const renderItem = useCallback(
-    ({item: date}) => {
+    ({ item: date }) => {
       return (
         <View>
           <View style={styles.dateContainer}>
@@ -39,7 +39,7 @@ export const DiaryList = forwardRef(({...props}, ref) => {
             {canEdit(date) ? (
               <Text style={styles.dateLabel}>{formatDateThread(date)}</Text>
             ) : (
-              <TouchableOpacity style={styles.item} onPress={() => navigation.navigate('too-late', {date})}>
+              <TouchableOpacity style={styles.item} onPress={() => navigation.navigate("too-late", { date })}>
                 <Text style={styles.dateLabel}>{formatDateThread(date)}</Text>
               </TouchableOpacity>
             )}
@@ -48,18 +48,18 @@ export const DiaryList = forwardRef(({...props}, ref) => {
         </View>
       );
     },
-    [diaryData, goalsData, indicateurs],
+    [diaryData, goalsData, indicateurs]
   );
 
-  const keyExtractor = useCallback(date => date);
+  const keyExtractor = useCallback((date) => date);
 
   return <Animated.FlatList ref={ref} data={sortedData} renderItem={renderItem} keyExtractor={keyExtractor} {...props} />;
 });
 
 const styles = StyleSheet.create({
   dateContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   dateDot: {
     width: 8,
@@ -68,10 +68,10 @@ const styles = StyleSheet.create({
     backgroundColor: colors.LIGHT_BLUE,
   },
   dateLabel: {
-    color: '#000',
+    color: "#000",
     fontSize: 13,
-    textAlign: 'left',
+    textAlign: "left",
     paddingLeft: 10,
-    fontWeight: '600',
+    fontWeight: "600",
   },
 });

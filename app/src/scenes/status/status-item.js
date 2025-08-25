@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from "react";
 import { StyleSheet, View, TouchableOpacity } from "react-native";
 import PatientStateItem from "./patient-state-item";
 import { displayedCategories } from "../../utils/constants";
-import NoDataDiaryItem from "./no-data-status-item";
 import Notes from "./notes";
 import localStorage from "../../utils/localStorage";
 import Posology from "./posology";
@@ -11,12 +10,12 @@ import Button from "../../components/RoundButtonIcon";
 import Toxic from "./toxic";
 import Context from "./context";
 import logEvents from "../../services/logEvents";
-import { INDICATEURS_LISTE, INDICATEURS } from "../../utils/liste_indicateurs";
+import { INDICATEURS_LIST } from "../../utils/liste_indicateurs.1";
 import { GoalsStatus } from "../goals/status/GoalsStatus";
 import { Card } from "../../components/Card";
 import { GoalsStatusNoData } from "../goals/status/GoalsStatusNoData";
 
-export default ({ navigation, indicateurs, patientState, goalsData, date }) => {
+export default ({ navigation, indicateurs = [], patientState, goalsData, date }) => {
   const [customs, setCustoms] = useState([]);
   const [oldCustoms, setOldCustoms] = useState([]);
   let mounted = useRef(true);
@@ -48,8 +47,7 @@ export default ({ navigation, indicateurs, patientState, goalsData, date }) => {
   };
 
   const hasAnswerSurvey = () =>
-    patientStateRecords.some(([key, value]) => value?.value !== undefined) ||
-    goalsData?.records?.byDate?.[date]?.length > 0;
+    patientStateRecords.some(([key, value]) => value?.value !== undefined) || goalsData?.records?.byDate?.[date]?.length > 0;
 
   const handlePressItem = ({ editingSurvey, toGoals } = {}) => {
     if (!canEdit(date)) return navigation.navigate("too-late", { date });
@@ -60,24 +58,14 @@ export default ({ navigation, indicateurs, patientState, goalsData, date }) => {
   const patientStateRecords = patientState
     ? Object.entries(patientState)
         .filter(([key, value]) => {
-          return ![
-            "CONTEXT",
-            "POSOLOGY",
-            "TOXIC",
-            "NOTES",
-            "PRISE_DE_TRAITEMENT",
-            "PRISE_DE_TRAITEMENT_SI_BESOIN",
-            "becks",
-          ].includes(key);
+          return !["CONTEXT", "POSOLOGY", "TOXIC", "NOTES", "PRISE_DE_TRAITEMENT", "PRISE_DE_TRAITEMENT_SI_BESOIN", "becks"].includes(key);
         })
         .filter(([key, value]) => !!value)
         .sort((_a, _b) => {
           const a = _a?.[1];
           const b = _b?.[1];
-          const aIndex =
-            indicateurs?.findIndex?.((indicateur) => indicateur?.uuid === a?._indicateur?.uuid) || 0;
-          const bIndex =
-            indicateurs?.findIndex?.((indicateur) => indicateur?.uuid === b?._indicateur?.uuid) || 0;
+          const aIndex = indicateurs?.findIndex?.((indicateur) => indicateur?.uuid === a?._indicateur?.uuid) || 0;
+          const bIndex = indicateurs?.findIndex?.((indicateur) => indicateur?.uuid === b?._indicateur?.uuid) || 0;
           return aIndex - bIndex;
         })
     : [];
@@ -92,16 +80,19 @@ export default ({ navigation, indicateurs, patientState, goalsData, date }) => {
                 return;
               }
               const [categoryName] = key.split("_");
+              const indicator = indicateurs.find((i) => i.genericUuid === key) || indicateurs.find((i) => i.uuid === key);
               return (
                 <PatientStateItem
                   key={key}
                   category={key}
                   patientState={patientState}
                   label={
-                    patientState?._indicateur?.name ||
-                    INDICATEURS[key] ||
+                    indicator?.name ||
+                    value?._indicateur?.name ||
+                    INDICATEURS_LIST[key] ||
                     displayedCategories[key] ||
-                    categoryName
+                    categoryName ||
+                    "Unknown Indicator"
                   }
                 />
               );
@@ -109,12 +100,7 @@ export default ({ navigation, indicateurs, patientState, goalsData, date }) => {
 
             <GoalsStatus goalsData={goalsData} date={date} withSeparator={patientStateRecords?.length > 0} />
             <Context data={patientState?.CONTEXT} />
-            <Posology
-              posology={patientState?.POSOLOGY}
-              patientState={patientState}
-              date={date}
-              onPress={() => handleEdit("drugs")}
-            />
+            <Posology posology={patientState?.POSOLOGY} patientState={patientState} date={date} onPress={() => handleEdit("drugs")} />
             <Toxic data={patientState?.TOXIC} />
             <Notes notes={patientState?.NOTES} date={date} onPress={() => handleEdit("notes")} />
           </View>
@@ -133,11 +119,7 @@ export default ({ navigation, indicateurs, patientState, goalsData, date }) => {
           <View style={styles.noDataContainer}>
             <Card
               preset="grey"
-              title={
-                canEdit(date)
-                  ? "Renseigner mon état pour ce jour-là"
-                  : "Je ne peux plus saisir mon questionnaire pour ce jour"
-              }
+              title={canEdit(date) ? "Renseigner mon état pour ce jour-là" : "Je ne peux plus saisir mon questionnaire pour ce jour"}
               image={{ source: require("./../../../assets/imgs/indicateur.png") }}
               onPress={handlePressItem}
             />

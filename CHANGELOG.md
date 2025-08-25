@@ -1,9 +1,200 @@
+# [1.52.0-alpha.23](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.22...v1.52.0-alpha.23) (2025-08-25)
+
+
+### Bug Fixes
+
+* onboarding should save new indicator value using diaryDataKey ([#356](https://github.com/SocialGouv/jardinmental/issues/356)) ([d04b30f](https://github.com/SocialGouv/jardinmental/commit/d04b30fccb3d3d855fe467e89eed6449d0ff1230))
+
+# [1.52.0-alpha.22](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.21...v1.52.0-alpha.22) (2025-08-25)
+
+
+### Bug Fixes
+
+* onboarding v2 types ([#355](https://github.com/SocialGouv/jardinmental/issues/355)) ([e575cd3](https://github.com/SocialGouv/jardinmental/commit/e575cd3110cbbdf05c71a214ef995fc0bbf77acf))
+
+# [1.52.0-alpha.21](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.20...v1.52.0-alpha.21) (2025-08-25)
+
+
+### Bug Fixes
+
+* mise en avant du CTA feedback ([#343](https://github.com/SocialGouv/jardinmental/issues/343)) ([7b97ebc](https://github.com/SocialGouv/jardinmental/commit/7b97ebc33cefaa1d06662b0e0af3e4d9f3c034be))
+
+# [1.52.0-alpha.20](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.19...v1.52.0-alpha.20) (2025-08-24)
+
+
+### Bug Fixes
+
+* **merge errors:** add the use of diaryDataKey and fallback to name as indicator id ([1bc16e7](https://github.com/SocialGouv/jardinmental/commit/1bc16e7e7737ebaf87b3ad1e982eb11336bad5a9))
+
+# [1.52.0-alpha.19](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.18...v1.52.0-alpha.19) (2025-08-24)
+
+
+### Features
+
+* goal pages with cnam charts ([#354](https://github.com/SocialGouv/jardinmental/issues/354)) ([dd0c557](https://github.com/SocialGouv/jardinmental/commit/dd0c5574859b4802f43ab75e67e7bd744b19fe67))
+
+# [1.52.0-alpha.18](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.17...v1.52.0-alpha.18) (2025-08-23)
+
+
+### Features
+
+* day survey update, display indicators by category ([#352](https://github.com/SocialGouv/jardinmental/issues/352)) ([e33e413](https://github.com/SocialGouv/jardinmental/commit/e33e413ba9baf18c541d8da96028c2c79c698882))
+
+# [1.52.0-alpha.17](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.16...v1.52.0-alpha.17) (2025-08-23)
+
+
+### Features
+
+* add indicator edition from within survey ([#317](https://github.com/SocialGouv/jardinmental/issues/317)) ([00ea8e9](https://github.com/SocialGouv/jardinmental/commit/00ea8e9fad6539fb4e18fc2adf5bbbc027a50cce)), closes [#345](https://github.com/SocialGouv/jardinmental/issues/345) [#346](https://github.com/SocialGouv/jardinmental/issues/346) [#348](https://github.com/SocialGouv/jardinmental/issues/348) [#349](https://github.com/SocialGouv/jardinmental/issues/349)
+
+# [1.52.0-alpha.16](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.15...v1.52.0-alpha.16) (2025-08-21)
+
+
+### Features
+
+* cnam chart update ([#347](https://github.com/SocialGouv/jardinmental/issues/347)) ([4ca7fe8](https://github.com/SocialGouv/jardinmental/commit/4ca7fe87da6916728670b891ae6cd6e2d0eb78fa))
+
+# [1.52.0-alpha.15](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.14...v1.52.0-alpha.15) (2025-08-18)
+
+
+### Features
+
+* upgrade to SDK 35 and upgrade expo from SDK 51 to 52 ([#338](https://github.com/SocialGouv/jardinmental/issues/338)) ([d03e00f](https://github.com/SocialGouv/jardinmental/commit/d03e00f273ab751fc7e95555c442272d66080bb6))
+
+# [1.52.0-alpha.14](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.13...v1.52.0-alpha.14) (2025-08-18)
+
+
+### Features
+
+* cercle autour des icones ([#336](https://github.com/SocialGouv/jardinmental/issues/336)) ([9d3972a](https://github.com/SocialGouv/jardinmental/commit/9d3972ad9d41ae2b0673407683301f497f799710))
+
+# [1.52.0-alpha.13](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.12...v1.52.0-alpha.13) (2025-08-18)
+
+
+### Bug Fixes
+
+* indicateurs inversés (rouge/vert) ([#340](https://github.com/SocialGouv/jardinmental/issues/340)) ([991de65](https://github.com/SocialGouv/jardinmental/commit/991de6561fef453c9c25027f6c68a5158fef6b07))
+
+# [1.52.0-alpha.12](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.11...v1.52.0-alpha.12) (2025-08-18)
+
+
+### Bug Fixes
+
+* changement de texte pour "bien démarrer" ([#339](https://github.com/SocialGouv/jardinmental/issues/339)) ([2b193be](https://github.com/SocialGouv/jardinmental/commit/2b193bee68fb0e42c30e5d48bfaba4d60e910c9b))
+* navigation quand on clique sur supprimer toutes les données ([#341](https://github.com/SocialGouv/jardinmental/issues/341)) ([481dfa4](https://github.com/SocialGouv/jardinmental/commit/481dfa4f9e96ce9a2bdc2e015cef5d41955781dc))
+* Warning: Each child in a list should have a unique "key" prop ([#342](https://github.com/SocialGouv/jardinmental/issues/342)) ([1d096b9](https://github.com/SocialGouv/jardinmental/commit/1d096b98bc1aaee5df026fd566d861472170b43a))
+
+# [1.52.0-alpha.11](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.10...v1.52.0-alpha.11) (2025-08-12)
+
+
+### Bug Fixes
+
+* **onboarding:** nouvelle phrase d’intro sur chaque écran catégorie ([#334](https://github.com/SocialGouv/jardinmental/issues/334)) ([c68dc95](https://github.com/SocialGouv/jardinmental/commit/c68dc958b0c91113b8fd13740a26a2a11ab33f30))
+
+# [1.52.0-alpha.10](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.9...v1.52.0-alpha.10) (2025-08-11)
+
+
+### Features
+
+* add statusBarContext file ([#328](https://github.com/SocialGouv/jardinmental/issues/328)) ([e32c3cd](https://github.com/SocialGouv/jardinmental/commit/e32c3cdf14084ee1fa20ec821719fcd5c63bd59b))
+
+# [1.52.0-alpha.9](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.8...v1.52.0-alpha.9) (2025-07-31)
+
+
+### Bug Fixes
+
+* fix setting skip callback when using progress header ([#325](https://github.com/SocialGouv/jardinmental/issues/325)) ([7ceb749](https://github.com/SocialGouv/jardinmental/commit/7ceb749dc8d054cc0dea744c236262a3028a5da7))
+
+# [1.52.0-alpha.8](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.7...v1.52.0-alpha.8) (2025-07-31)
+
+
+### Features
+
+* hide navigation button on small screen before first scroll ([#323](https://github.com/SocialGouv/jardinmental/issues/323)) ([6ba7ce7](https://github.com/SocialGouv/jardinmental/commit/6ba7ce7a5fd9cd8810b9dbf77b3dc02e5f3024aa))
+
+# [1.52.0-alpha.7](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.6...v1.52.0-alpha.7) (2025-07-31)
+
+
+### Bug Fixes
+
+* fix blur border and icon in emotion slider animation ([#316](https://github.com/SocialGouv/jardinmental/issues/316)) ([d10e0d3](https://github.com/SocialGouv/jardinmental/commit/d10e0d360f16128aea8e0466eaea16523756c205))
+
+
+### Features
+
+* when no difficulties selected show popular indicators ([#321](https://github.com/SocialGouv/jardinmental/issues/321)) ([c46fddc](https://github.com/SocialGouv/jardinmental/commit/c46fddc5452116da0bede065cd932a0fcdb604c5))
+
+# [1.52.0-alpha.6](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.5...v1.52.0-alpha.6) (2025-07-31)
+
+
+### Bug Fixes
+
+* fix navigation, add sommeil to base indicators, selectIndicators default is empty array ([#319](https://github.com/SocialGouv/jardinmental/issues/319)) ([a1cb64f](https://github.com/SocialGouv/jardinmental/commit/a1cb64f94185338a6bf97eaf2897fd4df73bcea5))
+
+# [1.52.0-alpha.5](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.4...v1.52.0-alpha.5) (2025-07-30)
+
+
+### Bug Fixes
+
+* fix status bar height ([#313](https://github.com/SocialGouv/jardinmental/issues/313)) ([cd206d8](https://github.com/SocialGouv/jardinmental/commit/cd206d8807c88b768e5d96fd94e7182bff63cc28))
+
+# [1.52.0-alpha.4](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.3...v1.52.0-alpha.4) (2025-07-30)
+
+
+### Bug Fixes
+
+* misc fix, text alignment, label content, ... ([#306](https://github.com/SocialGouv/jardinmental/issues/306)) ([bd132c8](https://github.com/SocialGouv/jardinmental/commit/bd132c8b0e5e389588a56361ce602d47cc2cbeba))
+
+
+### Features
+
+* update checklist screen when goals, indicators are done ([#304](https://github.com/SocialGouv/jardinmental/issues/304)) ([7ed1e9b](https://github.com/SocialGouv/jardinmental/commit/7ed1e9bea03fd91dfbcf0dcd2c93f8751d7000d9))
+
+# [1.52.0-alpha.3](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.2...v1.52.0-alpha.3) (2025-07-30)
+
+
+### Bug Fixes
+
+* displaying invalid date when reminder ignored/not set ([#305](https://github.com/SocialGouv/jardinmental/issues/305)) ([d6984f8](https://github.com/SocialGouv/jardinmental/commit/d6984f810383bab89a562724057e028d80af0e46))
+
+# [1.52.0-alpha.2](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.1...v1.52.0-alpha.2) (2025-07-28)
+
+
+### Bug Fixes
+
+* increase prod resources ([d91edbc](https://github.com/SocialGouv/jardinmental/commit/d91edbc96fc0da96f5d84a19d52a31f72e5ef1da))
+
+# [1.52.0-alpha.1](https://github.com/SocialGouv/jardinmental/compare/v1.51.3...v1.52.0-alpha.1) (2025-07-28)
+
+### Features
+
+* add beige screen with leaf illustration ([f94f9ec](https://github.com/SocialGouv/jardinmental/commit/f94f9ec83158e3f182e5455dab2758bb5846fed8))
+* add bottomSheetProvider and bottomSheetContext ([83a85f5](https://github.com/SocialGouv/jardinmental/commit/83a85f53278435cea86da8a0ea2ad5ee5614b79a))
+* add colored carousel, add assets files ([10f79f7](https://github.com/SocialGouv/jardinmental/commit/10f79f7339689ec54ff909477376e21566290311))
+* add draggable modal ([a5857ff](https://github.com/SocialGouv/jardinmental/commit/a5857ffbfceeab0e49e387e2da8da031cef80dbb))
+* add emotion slider ([d06e9a5](https://github.com/SocialGouv/jardinmental/commit/d06e9a5a5fca33447bd3eda89d5a5425e7a5d14a))
+* add figma colors ([f365b55](https://github.com/SocialGouv/jardinmental/commit/f365b557eab5b440ab63cf30f2ca30e4872ca1ab))
+* add gradiant ([7ae28e0](https://github.com/SocialGouv/jardinmental/commit/7ae28e026de185e713b04f272200cbb92ecdd9d0))
+* add header and back button in navigation buttons ([fd56c69](https://github.com/SocialGouv/jardinmental/commit/fd56c69d15d6b954bf88964414ddf6ffeaebad07))
+* add new icon ([00b1abc](https://github.com/SocialGouv/jardinmental/commit/00b1abc3984a088a5276281f5564b2453e4c3af0))
+* add new onboarding ([ae46957](https://github.com/SocialGouv/jardinmental/commit/ae4695773f6374c079c793a03e8a69136cd7ee10))
+* add new page with subcategories ([ead619e](https://github.com/SocialGouv/jardinmental/commit/ead619e4dadf085a5fd6202859530c02d333d6c1))
+* add new svg icon ([a4d0d22](https://github.com/SocialGouv/jardinmental/commit/a4d0d22d63a89672a725e3388f9c99f835f3a14b))
+* add smiley svg ([b80fd69](https://github.com/SocialGouv/jardinmental/commit/b80fd697d8120fe6c1314288103da631e554add3))
+* add userProfileContext, and save indicators changed in diaryData ([9ed85a0](https://github.com/SocialGouv/jardinmental/commit/9ed85a038522a49b59212cd5b1e46b988b3d0e0e))
+* added scrollable view with animated reducing title ([31792f8](https://github.com/SocialGouv/jardinmental/commit/31792f89311e9eb045e3724567a2d661f0335eab))
+* authorize horizontal mode ([#299](https://github.com/SocialGouv/jardinmental/issues/299)) ([a97bc77](https://github.com/SocialGouv/jardinmental/commit/a97bc772a3a792f655e15cb9be3c5472e78b9af5))
+* change statusbar color according to displayed route ([#290](https://github.com/SocialGouv/jardinmental/issues/290)) ([5134672](https://github.com/SocialGouv/jardinmental/commit/5134672504b5f43af819066c149d1342de87dfa0))
+* replace Button/Button2 by JMButton, use colors variable in all files" ([cda0a2f](https://github.com/SocialGouv/jardinmental/commit/cda0a2fd69d82bc84b5415dbbfb050d93e57386b))
+* use typography help class to stick to figma class ([797aeac](https://github.com/SocialGouv/jardinmental/commit/797aeac3b38a55b251595a0ff8401e04aa835a2a))
+
 ## [1.51.4](https://github.com/SocialGouv/jardinmental/compare/v1.51.3...v1.51.4) (2025-07-23)
 
 
 ### Bug Fixes
 
 * increase prod resources ([d91edbc](https://github.com/SocialGouv/jardinmental/commit/d91edbc96fc0da96f5d84a19d52a31f72e5ef1da))
+
 
 ## [1.51.3](https://github.com/SocialGouv/jardinmental/compare/v1.51.2...v1.51.3) (2025-06-24)
 

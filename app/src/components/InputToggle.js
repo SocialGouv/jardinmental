@@ -1,6 +1,7 @@
 import React, { forwardRef, useEffect, useState, useImperativeHandle } from "react";
 import { StyleSheet, View, Pressable } from "react-native";
 import { autoLayoutAnimation } from "../utils/autoLayoutAnimation";
+import { colors } from "@/utils/colors";
 
 export const InputToggle = forwardRef(({ checked, onCheckedChanged, containerStyle }, ref) => {
   useImperativeHandle(ref, () => {
@@ -26,7 +27,7 @@ export const InputToggle = forwardRef(({ checked, onCheckedChanged, containerSty
       style={[
         styles.container,
         {
-          borderColor: _checked ? "#1FC6D5" : "#CCCCCC",
+          borderColor: _checked ? colors.LIGHT_BLUE : "#CCCCCC",
           backgroundColor: _checked ? "rgba(31, 198, 213, 0.1)" : "#FFFFFF",
         },
         containerStyle,
@@ -45,7 +46,7 @@ export const InputToggle = forwardRef(({ checked, onCheckedChanged, containerSty
             style={[
               styles.circle,
               {
-                backgroundColor: _checked ? "#1FC6D5" : "#CCCCCC",
+                backgroundColor: _checked ? colors.LIGHT_BLUE : "#CCCCCC",
               },
             ]}
             collapsable={false}

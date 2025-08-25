@@ -1,18 +1,10 @@
-import React from 'react';
-import {View, StyleSheet, TouchableOpacity} from 'react-native';
-import Text from '../../components/MyText';
-import {colors} from '../../utils/colors';
-import Icon from '../../components/Icon';
-import ArrowRightSvg from '../../../assets/svg/arrow-right.js';
+import React from "react";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
+import Text from "../../components/MyText";
+import { colors } from "../../utils/colors";
+import ArrowRightSvg from "../../../assets/svg/arrow-right.js";
 
-export const SettingItem = ({
-  title,
-  navigation,
-  path = 'tabs',
-  icon,
-  color = colors.LIGHT_BLUE,
-  onClick,
-}) => {
+export const SettingItem = ({ title, navigation, path = "tabs", icon, color = colors.LIGHT_BLUE, onClick }) => {
   const handleClick = () => {
     onClick();
     navigation.navigate(path);
@@ -22,15 +14,22 @@ export const SettingItem = ({
       <View style={styles.container}>
         <View style={styles.answer}>
           {icon && (
-            <Icon
-              icon={icon}
-              color={color}
-              width={30}
-              height={30}
-              styleContainer={{marginRight: 20}}
-            />
+            <View
+              className={`rounded-full p-2 border w-8 h-8 items-center justify-center`}
+              style={{
+                borderColor: color,
+              }}
+            >
+              {React.cloneElement(icon, {
+                color: color,
+                width: 16,
+                height: 16,
+              })}
+            </View>
           )}
-          <Text style={styles.label}>{title}</Text>
+          <Text style={styles.label} className="ml-2">
+            {title}
+          </Text>
           <View style={styles.button}>
             <ArrowRightSvg />
           </View>
@@ -47,19 +46,19 @@ const styles = StyleSheet.create({
   button: {
     width: 45,
     height: 45,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   label: {
     fontSize: 15,
-    fontWeight: '600',
+    fontWeight: "600",
     color: colors.BLUE,
     flex: 1,
   },
   answer: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
   },
 });
 

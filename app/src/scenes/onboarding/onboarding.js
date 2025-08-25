@@ -64,12 +64,7 @@ const Onboarding = ({ navigation }) => {
           firstTime ? (
             <>
               <View style={styles.buttonWrapper}>
-                <Button
-                  buttonStyle={styles.buttonStyle}
-                  onPress={validateOnboarding}
-                  title="C'est parti !"
-                  disabled={!isCguChecked && firstTime}
-                />
+                <Button buttonStyle={styles.buttonStyle} onPress={validateOnboarding} title="C'est parti !" disabled={!isCguChecked && firstTime} />
               </View>
             </>
           ) : (
@@ -134,7 +129,7 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   emphasis: {
-    color: "#1FC6D5",
+    color: colors.LIGHT_BLUE,
   },
   presentationText: {
     fontSize: 20,

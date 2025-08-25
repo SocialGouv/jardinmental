@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import Text from "./MyText";
+import { colors } from "@/utils/colors";
 
 const styles = StyleSheet.create({
   button: {
@@ -33,23 +34,10 @@ const styles = StyleSheet.create({
   },
 });
 
-const Button = ({
-  title,
-  buttonColor,
-  textColor,
-  onPress = () => null,
-  disabled = false,
-  buttonStyle,
-  textStyle,
-  Icon = null,
-}) => {
+const Button = ({ title, buttonColor, textColor, onPress = () => null, disabled = false, buttonStyle, textStyle, Icon = null }) => {
   const color = disabled ? "lightgrey" : buttonColor;
   return (
-    <TouchableOpacity
-      style={[{ ...styles.button, backgroundColor: color || "#1FC6D5" }, buttonStyle]}
-      onPress={onPress}
-      disabled={disabled}
-    >
+    <TouchableOpacity style={[{ ...styles.button, backgroundColor: color || colors.LIGHT_BLUE }, buttonStyle]} onPress={onPress} disabled={disabled}>
       {Icon ? (
         <View style={styles.iconContainer}>
           {Icon}
@@ -62,8 +50,6 @@ const Button = ({
   );
 };
 
-const InsideText = ({ textStyle, title, textColor }) => (
-  <Text style={[{ ...styles.text, color: textColor || "white" }, textStyle]}>{title}</Text>
-);
+const InsideText = ({ textStyle, title, textColor }) => <Text style={[{ ...styles.text, color: textColor || "white" }, textStyle]}>{title}</Text>;
 
 export default Button;

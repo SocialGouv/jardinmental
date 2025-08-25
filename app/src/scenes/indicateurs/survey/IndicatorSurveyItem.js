@@ -2,16 +2,10 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import CircledIcon from "../../../components/CircledIcon";
 import { InputText } from "../../../components/InputText";
-import { answers as emojis } from "../../survey/utils";
+import { answers as emojis } from "../../survey-v2/utils";
+import { colors } from "@/utils/colors";
 
-export const IndicatorSurveyItem = ({
-  indicator,
-  index,
-  value,
-  onValueChanged,
-  comment,
-  onCommentChanged,
-}) => {
+export const IndicatorSurveyItem = ({ indicator, index, value, onValueChanged, comment, onCommentChanged }) => {
   const [_value, _setValue] = useState(value);
   useEffect(() => {
     _setValue(value);
@@ -96,10 +90,10 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 16,
-    fontFamily: "Karla",
+    fontFamily: "SourceSans3",
     fontWeight: "400",
     textAlign: "left",
-    color: "#26387C",
+    color: colors.BLUE,
     flexShrink: 1,
     marginLeft: 8,
     paddingTop: 3,
@@ -119,6 +113,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   activeSelectionContainer: {
-    backgroundColor: "#1FC6D5",
+    backgroundColor: colors.LIGHT_BLUE,
   },
 });

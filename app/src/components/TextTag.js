@@ -14,7 +14,7 @@ export default ({
   textStyle,
   value,
   selected,
-  color = "#1FC6D5",
+  color = colors.LIGHT_BLUE,
   enableClosed = false,
   enableAdd = false,
 }) => {
@@ -31,11 +31,7 @@ export default ({
   if (disabled) myTextColor = "grey";
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        style={[{ ...styles.button, backgroundColor, borderColor }, buttonStyle]}
-        onPress={() => onPress(value)}
-        disabled={disabled}
-      >
+      <TouchableOpacity style={[{ ...styles.button, backgroundColor, borderColor }, buttonStyle]} onPress={() => onPress(value)} disabled={disabled}>
         <Text style={[{ ...styles.text, color: myTextColor }, textStyle]}>{value}</Text>
       </TouchableOpacity>
       {enableClosed && (

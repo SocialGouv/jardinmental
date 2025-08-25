@@ -14,6 +14,7 @@ import { SafeAreaViewWithOptionalHeader } from "../ProgressHeader";
 import { OnboardingBackButton } from "../BackButton";
 import { ONBOARDING_STEPS } from "../../../utils/constants";
 import { autoLayoutAnimation } from "../../../utils/autoLayoutAnimation";
+import { TW_COLORS } from "../../../utils/constants";
 
 export const OnboardingMood = ({ navigation }) => {
   const [isMoodTroubleEnable, setIsMoodTroubleEnabled] = useState();
@@ -67,15 +68,10 @@ export const OnboardingMood = ({ navigation }) => {
     useCallback(() => {
       if (!userIndicateurs) return;
       // cocher par défaut si on a jamais enregistré notre choix
-      if (!userIndicateurs?.some((_ind) => _ind.uuid === INDICATEURS_HUMEUR.uuid))
-        setToggleIndicateur(INDICATEURS_HUMEUR);
+      if (!userIndicateurs?.some((_ind) => _ind.uuid === INDICATEURS_HUMEUR.uuid)) setToggleIndicateur(INDICATEURS_HUMEUR);
 
       // deplier par defaut si au moins un des enfants est selectionné
-      if (
-        userIndicateurs?.some(
-          (_ind) => INDICATEURS_LISTE_ONBOARDING_HUMEUR.map((e) => e.uuid).includes(_ind.uuid) && _ind.active
-        )
-      ) {
+      if (userIndicateurs?.some((_ind) => INDICATEURS_LISTE_ONBOARDING_HUMEUR.map((e) => e.uuid).includes(_ind.uuid) && _ind.active)) {
         setIsMoodTroubleEnabled(true);
       }
     }, [userIndicateurs])
@@ -101,38 +97,29 @@ export const OnboardingMood = ({ navigation }) => {
       <View style={onboardingStyles.topContainer}>
         <OnboardingBackButton onPress={navigation.goBack} />
       </View>
-      <ScrollView
-        keyboardShouldPersistTaps="handled"
-        style={onboardingStyles.scroll}
-        contentContainerStyle={onboardingStyles.scrollContentContainer}
-      >
+      <ScrollView keyboardShouldPersistTaps="handled" style={onboardingStyles.scroll} contentContainerStyle={onboardingStyles.scrollContentContainer}>
         <View style={onboardingStyles.container}>
           <View style={onboardingStyles.containerTopTitle} key="title">
             <Text style={onboardingStyles.h1}>Que souhaitez-vous suivre ?</Text>
           </View>
           <View style={onboardingStyles.imageContainer} key="image">
-            <Image
-              source={require("../../../../assets/imgs/onboarding/mood.png")}
-              style={onboardingStyles.imageSize}
-            />
+            <Image source={require("../../../../assets/imgs/onboarding/mood.png")} style={onboardingStyles.imageSize} />
           </View>
           <TouchableOpacity
             key="main-checkbox"
             style={[
               stylesA.choixContainer,
-              userIndicateurs?.find((_ind) => _ind.uuid === INDICATEURS_HUMEUR.uuid && _ind.active)
-                ? stylesA.choixContainerSelected
-                : null,
+              userIndicateurs?.find((_ind) => _ind.uuid === INDICATEURS_HUMEUR.uuid && _ind.active) ? stylesA.choixContainerSelected : null,
             ]}
             onPress={() => setToggleIndicateur(INDICATEURS_HUMEUR)}
           >
             {userIndicateurs?.find((_ind) => _ind.uuid === INDICATEURS_HUMEUR.uuid && _ind.active) ? (
               <View>
                 <RoundButtonIcon
-                  backgroundColor="#5DEE5A"
+                  backgroundColor={TW_COLORS.SUCCESS}
                   iconColor="#fff"
                   borderWidth={0.5}
-                  borderColor="#5DEE5A"
+                  borderColor={TW_COLORS.SUCCESS}
                   icon="validate"
                   visible={true}
                   medium
@@ -154,9 +141,7 @@ export const OnboardingMood = ({ navigation }) => {
             <Text style={stylesA.choixLabel}>{INDICATEURS_HUMEUR.name}</Text>
           </TouchableOpacity>
           <View key="question">
-            <Text style={styles.question}>
-              Avez-vous un trouble spécifique qui fait varier votre humeur au cours de la journée ?
-            </Text>
+            <Text style={styles.question}>Avez-vous un trouble spécifique qui fait varier votre humeur au cours de la journée ?</Text>
           </View>
           <View style={styleSwitch.container} key="secondary-switch">
             <Text style={styleSwitch.label}>Non</Text>
@@ -173,14 +158,8 @@ export const OnboardingMood = ({ navigation }) => {
           </View>
           {isMoodTroubleEnable ? (
             <View key="secondary-details">
-              <Text style={styles.description}>
-                Renseignez les variations de votre humeur au cours de la journée avec :
-              </Text>
-              <CheckBoxList
-                list={INDICATEURS_LISTE_ONBOARDING_HUMEUR}
-                userIndicateurs={userIndicateurs}
-                setToggleIndicateur={setToggleIndicateur}
-              />
+              <Text style={styles.description}>Renseignez les variations de votre humeur au cours de la journée avec :</Text>
+              <CheckBoxList list={INDICATEURS_LISTE_ONBOARDING_HUMEUR} userIndicateurs={userIndicateurs} setToggleIndicateur={setToggleIndicateur} />
             </View>
           ) : null}
         </View>
@@ -207,10 +186,10 @@ const CheckBoxList = ({ list, userIndicateurs, setToggleIndicateur }) => {
             {isActive ? (
               <View>
                 <RoundButtonIcon
-                  backgroundColor="#5DEE5A"
+                  backgroundColor={TW_COLORS.SUCCESS}
                   iconColor="#fff"
                   borderWidth={0.5}
-                  borderColor="#5DEE5A"
+                  borderColor={TW_COLORS.SUCCESS}
                   icon="validate"
                   visible={true}
                   medium

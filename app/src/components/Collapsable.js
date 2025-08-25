@@ -1,8 +1,9 @@
-import React, {useState, useCallback} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import ArrowUpSvg from '../../assets/svg/arrow-up.svg';
-import {autoLayoutAnimation} from '../utils/autoLayoutAnimation';
-import Animated, {useAnimatedStyle, useSharedValue, withTiming} from 'react-native-reanimated';
+import React, { useState, useCallback } from "react";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import ArrowUpSvg from "../../assets/svg/arrow-up.svg";
+import { autoLayoutAnimation } from "../utils/autoLayoutAnimation";
+import Animated, { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
+import { colors } from "@/utils/colors";
 
 export const Collapsable = ({
   preset, // 'primary' | 'secondary'
@@ -11,7 +12,7 @@ export const Collapsable = ({
   containerStyle,
 }) => {
   const [collapsed, setCollapsed] = useState(true);
-  const styles = applyStyles({preset});
+  const styles = applyStyles({ preset });
 
   const onPress = useCallback(() => {
     setCollapsed(!collapsed);
@@ -21,7 +22,7 @@ export const Collapsable = ({
 
   const arrowAnimated = useSharedValue(180);
   const arrowAnimatedStyle = useAnimatedStyle(() => ({
-    transform: [{rotate: `${arrowAnimated.value}deg`}],
+    transform: [{ rotate: `${arrowAnimated.value}deg` }],
   }));
 
   return (
@@ -31,7 +32,7 @@ export const Collapsable = ({
           <View style={[styles.headerContainer]}>
             {title && <Text style={[styles.title]}>{title}</Text>}
             <Animated.View style={arrowAnimatedStyle}>
-              <ArrowUpSvg color="#26387C" />
+              <ArrowUpSvg color={colors.BLUE} />
             </Animated.View>
           </View>
         </TouchableOpacity>
@@ -41,18 +42,18 @@ export const Collapsable = ({
   );
 };
 
-const applyStyles = ({preset}) => {
+const applyStyles = ({ preset }) => {
   const appliedStyles = {
     ..._styles.base,
   };
 
   // // FIX-EVAL: Fix made to have the app running but the code clear need a refactoring
   const applyIfNeeded = (cumStyles, styleKey) => {
-    for (let key of Object.keys(_styles[styleKey])) cumStyles[key] = {...cumStyles[key], ..._styles[styleKey][key]};
+    for (let key of Object.keys(_styles[styleKey])) cumStyles[key] = { ...cumStyles[key], ..._styles[styleKey][key] };
   };
 
-  if (preset === 'primary') applyIfNeeded(appliedStyles, 'primary');
-  if (preset === 'secondary') applyIfNeeded(appliedStyles, 'secondary');
+  if (preset === "primary") applyIfNeeded(appliedStyles, "primary");
+  if (preset === "secondary") applyIfNeeded(appliedStyles, "secondary");
 
   // Before the fix
   // const applyIfNeeded = (cumStyles, condition, styleKey) => {
@@ -70,26 +71,26 @@ const applyStyles = ({preset}) => {
 const _styles = {
   base: StyleSheet.create({
     container: {
-      width: '100%',
+      width: "100%",
     },
     headerContainer: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'center',
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "center",
     },
     title: {
       flex: 1,
       fontSize: 14,
       marginBottom: 2,
-      fontFamily: 'Karla',
-      fontWeight: '700',
-      color: '#26387C',
+      fontFamily: "SourceSans3",
+      fontWeight: "700",
+      color: colors.BLUE,
     },
   }),
   primary: StyleSheet.create({
     container: {
       borderTopWidth: 1,
-      borderColor: 'rgba(38, 56, 124, 0.1)',
+      borderColor: "rgba(38, 56, 124, 0.1)",
     },
     headerContainer: {
       minHeight: 52,
@@ -101,10 +102,10 @@ const _styles = {
   secondary: StyleSheet.create({
     container: {
       borderWidth: 1,
-      borderColor: '#E7EAF1',
+      borderColor: "#E7EAF1",
       borderRadius: 12,
 
-      backgroundColor: '#F8F9FB',
+      backgroundColor: "#F8F9FB",
       marginVertical: 8,
     },
     headerContainer: {

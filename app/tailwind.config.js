@@ -1,3 +1,5 @@
+const { colors } = require("./src/utils/colors");
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./App.{js,jsx,ts,tsx}", "./src/**/*.{js,jsx,ts,tsx}"],
@@ -5,17 +7,20 @@ module.exports = {
     extend: {
       colors: {
         primary: {
-          DEFAULT: "#1fc6d5",
+          DEFAULT: colors.LIGHT_BLUE,
           50: "#eefdfd",
           100: "#d4f8f9",
           200: "#aef0f3",
           300: "#76e3ea",
           400: "#37cdd9",
-          500: "#1fc6d5",
+          500: colors.LIGHT_BLUE,
           600: "#1a8ea0",
           700: "#1c7282",
           800: "#1f5e6b",
           900: "#1e4e5b",
+        },
+        secondary: {
+          DEFAULT: "#12747D",
         },
         red: {
           DEFAULT: "#f16b6b",
@@ -43,6 +48,143 @@ module.exports = {
           800: "#106c0f",
           900: "#0e590f",
         },
+        blue: {
+          DEFAULT: "#EBFDFF",
+        },
+        "cnam-primary": {
+          950: "#28464D",
+          900: "#134449",
+          800: "#3D6874",
+          500: "#65AEC1",
+          50: "#F0F7F9",
+          25: "#FAFDFD",
+        },
+        "cnam-cyan": {
+          "lighten-90": "#E5F6FC",
+          "lighten-80": "#CCEDF9",
+          "darken-20": "#0084B2",
+          "50-ligten-90": "#E5F6FC",
+          "500-0": "#00A5DF",
+          "600-darken-20": "#0084B2",
+        },
+        "cnam-jaune": {
+          100: "#FCF0D3",
+          900: "#302407",
+        },
+        brand: {
+          DEFAULT: "#134449",
+          900: "#134449",
+          950: "#093F43",
+          800: "#12747D",
+          600: "#1CB2BF",
+          25: "#FAFFFF",
+          accent: "#E5F6FC",
+        },
+        gray: {
+          950: "#093F43",
+          800: "#4A5D5F",
+          700: "#617778",
+          400: "#ACC3C5",
+          300: "#C7DDDE",
+          200: "#E3F6F8",
+          100: "#EEF9FA",
+          50: "#F7FCFD",
+        },
+        beige: {
+          DEFAULT: "#FCEBD9",
+        },
+        mood: {
+          5: "#99DDDD", //'#21896B',
+          4: "#BBE7C6",
+          3: "#F9E1A7",
+          2: "#F3B9B0",
+          1: "#F3A3CD", //'#822F2F'
+        },
+        "mood-text": {
+          4: "#224E2D",
+        },
+        "cnam-vert": {
+          "100-lighten-80": "#DDF3E3",
+          "200-lighten-60": "#BBE7C6",
+          "800-darken-60": "#224E2D",
+        },
+        "cnam-rouge": {
+          "100-lighten-80": "#F9DCD7",
+          "800-lighten-60": "#5A2017",
+        },
+        success: {
+          bg: "#DDF3E3",
+          "bg-darken": "#BBE7C6",
+          text: "#224E2D",
+        },
+        error: {
+          bg: "#F9DCD7",
+          text: "#5A2017",
+        },
+      },
+      fontFamily: {
+        title: ["SourceSans3", "sans-serif"],
+        body: ["SourceSans3", "sans-serif"],
+        sans: ["SourceSans3", "sans-serif"],
+      },
+      fontSize: {
+        "display-md": [
+          "36px",
+          {
+            lineHeight: "44px",
+            // letterSpacing: '-0.02em'
+          },
+        ],
+        "display-xs": [
+          "24px",
+          {
+            lineHeight: "32px",
+            // letterSpacing: '0em'
+          },
+        ],
+        "display-xs-regular": [
+          "24px",
+          {
+            lineHeight: "32px",
+            // letterSpacing: '0em'
+          },
+        ],
+        "text-5xl": ["48px", { lineHeight: "48px" }],
+        "text-xl": [
+          "20px",
+          {
+            lineHeight: "30px",
+            // letterSpacing: '0em'
+          },
+        ],
+        "text-lg": [
+          "18px",
+          {
+            lineHeight: "26px",
+            // letterSpacing: '0em'
+          },
+        ],
+        "text-md": [
+          "16px",
+          {
+            lineHeight: "24px",
+            // letterSpacing: '0em'
+          },
+        ],
+        "text-sm": [
+          "14px",
+          {
+            lineHeight: "100%",
+            // letterSpacing: '0em'
+          },
+        ],
+        "text-xs": [
+          "12px",
+          {
+            lineHeight: "100%",
+            // letterSpacing: '0em'
+          },
+        ],
       },
     },
   },

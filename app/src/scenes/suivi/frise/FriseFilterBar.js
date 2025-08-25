@@ -5,12 +5,7 @@ import Icon from "../../../components/Icon";
 import logEvents from "../../../services/logEvents";
 import { colors } from "../../../utils/colors";
 
-export const FriseFilterBar = ({
-  hasTreatment,
-  onShowInfo,
-  onShowTreatmentChanged,
-  onFocusedScoresChanged,
-}) => {
+export const FriseFilterBar = ({ hasTreatment, onShowInfo, onShowTreatmentChanged, onFocusedScoresChanged }) => {
   const [focusedScores, setFocusedScores] = React.useState([]);
   useEffect(() => {
     onFocusedScoresChanged?.(focusedScores);

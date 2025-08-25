@@ -7,11 +7,7 @@ import localStorage from "../../../utils/localStorage";
 import BackButton from "../../../components/BackButton";
 import Button from "../../../components/Button";
 import { ONBOARDING_STEPS } from "../../../utils/constants";
-import {
-  INDICATEURS,
-  INDICATEURS_LISTE_PAR_CATEGORIE,
-  INDICATEURS_LISTE,
-} from "../../../utils/liste_indicateurs";
+import { INDICATEURS_LIST, INDICATEURS_LISTE_PAR_CATEGORIE, INDICATEURS_LISTE } from "../../../utils/liste_indicateurs.1";
 import TextTag from "../../../components/TextTag";
 
 const SymptomScreen = ({ navigation, route }) => {
@@ -62,11 +58,7 @@ const SymptomScreen = ({ navigation, route }) => {
       <View style={styles.buttonsContainer}>
         <BackButton onPress={navigation.goBack} />
       </View>
-      <ScrollView
-        keyboardShouldPersistTaps="handled"
-        style={styles.container}
-        contentContainerStyle={styles.scrollContainer}
-      >
+      <ScrollView keyboardShouldPersistTaps="handled" style={styles.container} contentContainerStyle={styles.scrollContainer}>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>Chaque jour, vous allez évaluer :</Text>
         </View>
@@ -76,8 +68,7 @@ const SymptomScreen = ({ navigation, route }) => {
             .filter((categorie) => {
               const list_indicateurs = INDICATEURS_LISTE_PAR_CATEGORIE[categorie];
               return Object.keys(indicateursSelection || {}).some(
-                (indicateur) =>
-                  indicateursSelection[indicateur] && list_indicateurs.some((e) => e === indicateur)
+                (indicateur) => indicateursSelection[indicateur] && list_indicateurs.some((e) => e === indicateur)
               );
             })
             .map((categorie) => {
@@ -91,7 +82,7 @@ const SymptomScreen = ({ navigation, route }) => {
                       .map((indicateur) => (
                         <TextTag
                           key={indicateur}
-                          value={INDICATEURS[indicateur] || displayedCategories[indicateur] || indicateur}
+                          value={INDICATEURS_LIST[indicateur] || displayedCategories[indicateur] || indicateur}
                           selected={false}
                           color="#D4F0F2"
                           onPress={() => {}}

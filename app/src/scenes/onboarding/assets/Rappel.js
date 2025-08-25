@@ -2,15 +2,7 @@ import * as React from "react";
 import Svg, { Path, Defs, Pattern, Use, Image } from "react-native-svg";
 
 const Rappel = (props) => (
-  <Svg
-    width={70}
-    height={70}
-    viewBox="0 0 70 70"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    xmlnsXlink="http://www.w3.org/1999/xlink"
-    {...props}
-  >
+  <Svg width={70} height={70} viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" {...props}>
     <Path fill="url(#a)" d="M0 0h70v70H0z" />
     <Defs>
       <Pattern id="a" patternContentUnits="objectBoundingBox" width={1} height={1}>

@@ -13,6 +13,7 @@ import logEvents from "../../../services/logEvents";
 import Button from "../../../components/Button";
 import { FriseGraph } from "./FriseGraph";
 import { GoalsFriseGraph } from "../../goals/suivi/GoalsFriseGraph";
+import JMButton from "@/components/JMButton";
 
 export const FriseGraphList = ({ navigation, fromDate, toDate, focusedScores, showTraitement }) => {
   const [diaryData] = React.useContext(DiaryDataContext);
@@ -111,11 +112,10 @@ export const FriseGraphList = ({ navigation, fromDate, toDate, focusedScores, sh
         <View style={styles.subtitleContainer}>
           <Icon icon="InfoSvg" width={25} height={25} color={colors.LIGHT_BLUE} />
           <Text style={styles.subtitle}>
-            Des <Text style={styles.bold}>frises</Text> apparaîtront au fur et à mesure de vos saisies
-            quotidiennes.
+            Des <Text style={styles.bold}>frises</Text> apparaîtront au fur et à mesure de vos saisies quotidiennes.
           </Text>
         </View>
-        <Button title="Commencer à saisir" onPress={startSurvey} />
+        <JMButton title="Commencer à saisir" onPress={startSurvey} />
       </View>
     );
   }
@@ -212,7 +212,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    backgroundColor: "#1FC6D5",
+    backgroundColor: colors.LIGHT_BLUE,
     minWidth: "70%",
     minHeight: 45,
     borderRadius: 45,

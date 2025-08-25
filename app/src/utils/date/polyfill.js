@@ -22,103 +22,34 @@ Date.prototype.toCustomLocaleString = function (locale, options) {
      */
     const months = {
       en: {
-        long: [
-          'january',
-          'february',
-          'march',
-          'april',
-          'may',
-          'june',
-          'july',
-          'august',
-          'september',
-          'october',
-          'november',
-          'december',
-        ],
-        short: [
-          'Jan',
-          'Feb',
-          'Mar',
-          'Apr',
-          'may',
-          'Jun',
-          'Jul',
-          'Aug',
-          'Sep',
-          'Oct',
-          'Nov',
-          'Dec',
-        ],
+        long: ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"],
+        short: ["Jan", "Feb", "Mar", "Apr", "may", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
       },
       fr: {
-        long: [
-          'janvier',
-          'février',
-          'mars',
-          'avril',
-          'mai',
-          'juin',
-          'juillet',
-          'août',
-          'septembre',
-          'octobre',
-          'novembre',
-          'decembre',
-        ],
-        short: [
-          'jan.',
-          'fév.',
-          'mars',
-          'avr.',
-          'mai',
-          'juin',
-          'juil.',
-          'aoû',
-          'sep.',
-          'oct.',
-          'nov.',
-          'dec.',
-        ],
+        long: ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "decembre"],
+        short: ["jan.", "fév.", "mars", "avr.", "mai", "juin", "juil.", "aoû", "sep.", "oct.", "nov.", "dec."],
       },
     };
     const weekdays = {
       en: {
-        long: [
-          'Sunday',
-          'Monday',
-          'Tuesday',
-          'Wednesday',
-          'Thursday',
-          'Friday',
-          'Saturday',
-        ],
-        short: ['Sun.', 'Mon.', 'Tue.', 'Wed.', 'Thu.', 'Fri.', 'Sat.'],
+        long: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+        short: ["Sun.", "Mon.", "Tue.", "Wed.", "Thu.", "Fri.", "Sat."],
       },
       fr: {
-        long: [
-          'dimanche',
-          'lundi',
-          'mardi',
-          'mercredi',
-          'jeudi',
-          'vendredi',
-          'samedi',
-        ],
-        short: ['dim.', 'lun.', 'mar.', 'mer.', 'jeu.', 'ven.', 'sam.'],
+        long: ["dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"],
+        short: ["dim.", "lun.", "mar.", "mer.", "jeu.", "ven.", "sam."],
       },
     };
 
-    const numeric = 'numeric';
-    const twodigits = '2-digit';
-    const short = 'short';
-    const long = 'long';
+    const numeric = "numeric";
+    const twodigits = "2-digit";
+    const short = "short";
+    const long = "long";
 
     const formattedDate = new Date(this);
-    const isValid =
-      formattedDate instanceof Date && !isNaN(formattedDate.valueOf());
+    const isValid = formattedDate instanceof Date && !isNaN(formattedDate.valueOf());
     if (!isValid) {
-      return 'Invalid Date';
+      return "Invalid Date";
     }
     let year = formattedDate.getFullYear();
     let month = formattedDate.getMonth();
@@ -128,7 +59,7 @@ Date.prototype.toCustomLocaleString = function (locale, options) {
     let minute = formattedDate.getMinutes();
 
     if (!options.year) {
-      year = '';
+      year = "";
     }
     if (options.year === numeric) {
       // year = year;
@@ -138,7 +69,7 @@ Date.prototype.toCustomLocaleString = function (locale, options) {
     }
 
     if (!options.month) {
-      month = '';
+      month = "";
     }
     if (options.month === numeric) {
       month = month + 1 < 10 ? `0${month + 1}` : `${month + 1}`;
@@ -151,7 +82,7 @@ Date.prototype.toCustomLocaleString = function (locale, options) {
     }
 
     if (!options.weekday) {
-      weekday = '';
+      weekday = "";
     }
     if (options.weekday === numeric) {
       // weekday = weekday;
@@ -164,21 +95,21 @@ Date.prototype.toCustomLocaleString = function (locale, options) {
     }
 
     if (!options.day) {
-      date = '';
+      date = "";
     }
     if (options.day === numeric) {
       // date = date;
     }
 
     if (!options.hour) {
-      hour = '';
+      hour = "";
     }
     if (options.hour === twodigits) {
       hour = hour < 10 ? `0${hour}` : `${hour}`;
     }
 
     if (!options.minute) {
-      minute = '';
+      minute = "";
     }
     if (options.minute === twodigits) {
       minute = minute < 10 ? `0${minute}` : `${minute}`;
@@ -187,36 +118,34 @@ Date.prototype.toCustomLocaleString = function (locale, options) {
     if (weekday && date && month && minute && hour) {
       switch (locale) {
         default:
-        case 'fr':
+        case "fr":
           // fr: lundi 18 mars à 22:05
           return `${weekday} ${date} ${month} à ${hour}:${minute}`;
-        case 'en':
+        case "en":
           // en: Monday, March 18, 10:00 PM
-          return `${weekday}, ${month} ${date}, ${hour % 12}:${minute} ${
-            hour > 11 ? 'PM' : 'AM'
-          }`;
+          return `${weekday}, ${month} ${date}, ${hour % 12}:${minute} ${hour > 11 ? "PM" : "AM"}`;
       }
     }
 
     if (minute && hour) {
       switch (locale) {
         default:
-        case 'fr':
+        case "fr":
           // fr: 22:05
           return `${hour}:${minute}`;
-        case 'en':
+        case "en":
           // en: 10:00 PM
-          return `${hour % 12}:${minute} ${hour > 11 ? 'PM' : 'AM'}`;
+          return `${hour % 12}:${minute} ${hour > 11 ? "PM" : "AM"}`;
       }
     }
 
     if (weekday && year && month && date) {
       switch (locale) {
         default:
-        case 'fr':
+        case "fr":
           // fr: lun. 18 mars 19
           return `${weekday} ${date} ${month} ${year}`;
-        case 'en':
+        case "en":
           // en: Sat, Jul 13, 19
           return `${weekday}, ${month} ${date}, ${year}`;
       }
@@ -225,10 +154,10 @@ Date.prototype.toCustomLocaleString = function (locale, options) {
     if (weekday && month && date) {
       switch (locale) {
         default:
-        case 'fr':
+        case "fr":
           // fr: samedi 13 juillet
           return `${weekday} ${date} ${month}`;
-        case 'en':
+        case "en":
           // en: Saturday, July 13
           return `${weekday}, ${month} ${date}`;
       }
@@ -237,10 +166,10 @@ Date.prototype.toCustomLocaleString = function (locale, options) {
     if (month && date) {
       switch (locale) {
         default:
-        case 'fr':
+        case "fr":
           // fr: 13/07
           return `${date}/${month}`;
-        case 'en':
+        case "en":
           // en: 7/13
           return `${Number(month)}/${date}`;
       }
@@ -257,31 +186,31 @@ Date.prototype.toCustomLocaleString = function (locale, options) {
       return month;
     }
   } catch (e) {
-    console.log('toCustomLocaleString error', e);
+    console.log("toCustomLocaleString error", e);
     return this;
   }
 };
 
 Date.prototype.getLocalePureTime = function (locale) {
   return new Date(this).toCustomLocaleString(locale, {
-    hour: '2-digit',
-    minute: '2-digit',
+    hour: "2-digit",
+    minute: "2-digit",
   });
 };
 
 Date.prototype.getLocaleTime = function (locale) {
   return (
-    'à ' +
+    "à " +
     new Date(this).toCustomLocaleString(locale, {
-      hour: '2-digit',
-      minute: '2-digit',
+      hour: "2-digit",
+      minute: "2-digit",
     })
   );
 };
 Date.prototype.getLocaleDate = function (locale) {
   return new Date(this).toCustomLocaleString(locale, {
-    weekday: 'long',
-    month: 'long',
-    day: 'numeric',
+    weekday: "long",
+    month: "long",
+    day: "numeric",
   });
 };

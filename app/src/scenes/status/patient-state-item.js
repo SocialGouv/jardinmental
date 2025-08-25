@@ -2,14 +2,13 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import Text from "../../components/MyText";
 import CircledIcon from "../../components/CircledIcon";
-import { scoresMapIcon } from "../../utils/constants";
+import { EMOTION_COLORS, TW_COLORS, scoresMapIcon } from "../../utils/constants";
 import { getScoreWithState } from "../../utils";
 import ArrowRightSvg from "../../../assets/svg/arrow-right.js";
 import { colors } from "../../utils/colors";
 import Icon from "../../components/Icon";
 
 const PatientStateItem = ({ patientState, category, label }) => {
-  // console.log("✍️  patientState", JSON.stringify(patientState, null, 2));
   const [{ color, borderColor, faceIcon, iconColor }, setIcon] = useState({});
   const [userCommentVisible, setUserCommentVisible] = useState(false);
 
@@ -30,16 +29,7 @@ const PatientStateItem = ({ patientState, category, label }) => {
         _icon = scoresMapIcon[patientState[category]?.value];
       }
       if (!_icon || (!_icon.color && !_icon.faceIcon))
-        return (
-          <CircledIcon
-            color="#cccccc"
-            borderColor="#999999"
-            iconColor="#888888"
-            icon="QuestionMarkSvg"
-            iconWidth={32}
-            iconHeight={32}
-          />
-        );
+        return <CircledIcon color="#cccccc" borderColor="#999999" iconColor="#888888" icon="QuestionMarkSvg" iconWidth={32} iconHeight={32} />;
       return (
         <CircledIcon
           color={_icon.color}
@@ -80,8 +70,8 @@ const PatientStateItem = ({ patientState, category, label }) => {
       const _value = patientState[category]?.value;
       const _colors =
         patientState[category]?._indicateur?.order === "DESC"
-          ? ["#5DEE5A", "#ACF352", "#F2F478", "#FEAA5B", "#F16B6B"]
-          : ["#F16B6B", "#FEAA5B", "#F2F478", "#ACF352", "#5DEE5A"];
+          ? [TW_COLORS.SUCCESS, EMOTION_COLORS.good, EMOTION_COLORS.middle, EMOTION_COLORS.bad, TW_COLORS.NEGATIVE]
+          : [TW_COLORS.NEGATIVE, EMOTION_COLORS.bad, EMOTION_COLORS.middle, EMOTION_COLORS.good, TW_COLORS.SUCCESS];
 
       let _color;
       if (_value < 0.2) _color = _colors[0];
@@ -133,8 +123,7 @@ const PatientStateItem = ({ patientState, category, label }) => {
     </View>
   );
 
-  if (isTouchable())
-    return <TouchableLayout onPress={() => setUserCommentVisible((e) => !e)}>{content}</TouchableLayout>;
+  if (isTouchable()) return <TouchableLayout onPress={() => setUserCommentVisible((e) => !e)}>{content}</TouchableLayout>;
   else return content;
 };
 

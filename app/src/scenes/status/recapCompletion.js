@@ -10,6 +10,7 @@ import { DiaryDataContext } from "../../context/diaryData";
 import RoundButtonIcon from "../../components/RoundButtonIcon";
 import Text from "../../components/MyText";
 import logEvents from "../../services/logEvents";
+import { TW_COLORS } from "@/utils/constants";
 
 const RecapCompletion = () => {
   const navigation = useNavigation();
@@ -46,9 +47,7 @@ const RecapCompletion = () => {
 
   return (
     <View style={styles.safe}>
-      <Text style={[styles.title, styles.separatorBottom]}>
-        Complétez les 7 derniers jours pour un meilleur suivi
-      </Text>
+      <Text style={[styles.title, styles.separatorBottom]}>Complétez les 7 derniers jours pour un meilleur suivi</Text>
       <View style={styles.fil} />
       <View style={styles.buttonsContainer}>
         {[...Array(7)].map((_, i) => {
@@ -71,10 +70,10 @@ const RecapCompletion = () => {
                 <View style={styles.answerLabel}>
                   {dayIsDone ? (
                     <RoundButtonIcon
-                      backgroundColor="#5DEE5A"
+                      backgroundColor={TW_COLORS.PRIMARY}
                       iconColor="#fff"
                       borderWidth={0.5}
-                      borderColor="#5DEE5A"
+                      borderColor={TW_COLORS.PRIMARY}
                       icon="validate"
                       visible={true}
                       medium

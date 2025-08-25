@@ -1,8 +1,8 @@
-import React from 'react';
-import {View, TouchableOpacity} from 'react-native';
-import Text from '../MyText';
+import React from "react";
+import { View, TouchableOpacity } from "react-native";
+import Text from "../MyText";
 
-const LegalItem = ({title, navigation, path = 'tabs', onClick}) => {
+const LegalItem = ({ title, navigation, path = "tabs", onClick }) => {
   const handleClick = () => {
     onClick();
     navigation && navigation.navigate(path);

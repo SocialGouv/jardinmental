@@ -4,15 +4,7 @@ import { makeSureDate } from "../../utils/date/helpers";
 import Text from "../../components/MyText";
 import { colors } from "../../utils/colors";
 
-const DateOrTimeDisplay = ({
-  date,
-  onPress,
-  mode,
-  disabled,
-  containerStyle,
-  touchableStyle,
-  contentContainerStyle,
-}) => {
+const DateOrTimeDisplay = ({ date, onPress, mode, disabled, containerStyle, touchableStyle, contentContainerStyle }) => {
   if (!date) return null;
 
   function padTo2Digits(num) {

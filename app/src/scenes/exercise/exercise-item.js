@@ -26,11 +26,7 @@ export default ({ patientState, date, navigation }) => {
         const isDraft = !beck?.mainEmotion || !beck?.mainEmotionIntensity;
 
         return (
-          <TouchableOpacity
-            key={j}
-            style={[styles.item, isDraft && styles.containerEditable]}
-            onPress={() => handleViewBeck(beck, beckId)}
-          >
+          <TouchableOpacity key={j} style={[styles.item, isDraft && styles.containerEditable]} onPress={() => handleViewBeck(beck, beckId)}>
             <Icon icon="ThoughtsSvg" color="#58C8D2" width={25} height={25} styleContainer={styles.icon} />
 
             <View style={styles.containerContent}>
@@ -40,9 +36,7 @@ export default ({ patientState, date, navigation }) => {
                     <Text>
                       {beck?.mainEmotion} - {`${beck?.mainEmotionIntensity * 10}%`}&nbsp;
                       {beck?.mainEmotionIntensityNuanced ? (
-                        <Text style={styles.mainEmotionIntensityNuancedStyle}>
-                          &gt;&nbsp;{beck?.mainEmotionIntensityNuanced * 10}%
-                        </Text>
+                        <Text style={styles.mainEmotionIntensityNuancedStyle}>&gt;&nbsp;{beck?.mainEmotionIntensityNuanced * 10}%</Text>
                       ) : null}
                     </Text>
                   </View>
@@ -92,11 +86,11 @@ const styles = StyleSheet.create({
     height: 10,
   },
   containerEditable: {
-    backgroundColor: "rgba(31, 198, 213, 0.2)",
+    backgroundColor: colors.LIGHT_BLUE_TRANS_02,
   },
   place: {
     fontStyle: "italic",
-    color: "#26387C",
+    color: colors.BLUE,
   },
   time: {
     marginLeft: "auto",
@@ -104,7 +98,7 @@ const styles = StyleSheet.create({
     marginBottom: "auto",
     fontSize: 12,
     fontStyle: "italic",
-    color: "#26387C",
+    color: colors.BLUE,
   },
   mainEmotionIntensityNuancedStyle: {
     color: colors.LIGHT_BLUE,

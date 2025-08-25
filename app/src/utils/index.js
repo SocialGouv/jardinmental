@@ -17,14 +17,7 @@ export const classNames = (...classes) => {
   return classes.filter(Boolean).join(" ");
 };
 
-export const confirm = ({
-  title,
-  message = "",
-  onConfirm,
-  onCancel,
-  confirmText = "Oui",
-  cancelText = "Non",
-}) => {
+export const confirm = ({ title, message = "", onConfirm, onCancel, confirmText = "Oui", cancelText = "Non" }) => {
   Alert.alert(title, message, [
     {
       text: confirmText,

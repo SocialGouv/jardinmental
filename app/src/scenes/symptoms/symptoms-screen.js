@@ -113,15 +113,11 @@ const SymptomScreen = ({ navigation, route }) => {
       <View style={styles.buttonsContainer}>
         <BackButton disabled={noneSelected()} onPress={() => navigation.navigate("tabs")} />
       </View>
-      <ScrollView
-        keyboardShouldPersistTaps="handled"
-        style={styles.container}
-        contentContainerStyle={styles.scrollContainer}
-      >
+      <ScrollView keyboardShouldPersistTaps="handled" style={styles.container} contentContainerStyle={styles.scrollContainer}>
         <Text style={styles.title}>Que souhaitez-vous suivre quotidiennement ?</Text>
         <Text style={styles.subtitle}>
-          Cela peut être un <Text style={styles.lightblue}>ressenti positif</Text> ou{" "}
-          <Text style={styles.lightblue}>négatif</Text> ou une <Text style={styles.lightblue}>activité</Text>
+          Cela peut être un <Text style={styles.lightblue}>ressenti positif</Text> ou <Text style={styles.lightblue}>négatif</Text> ou une{" "}
+          <Text style={styles.lightblue}>activité</Text>
         </Text>
         {noneSelected() ? <Text style={styles.alert}>Ajouter ou sélectionner au moins 1 élément</Text> : null}
         <AddElemToList onChange={handleAddNewSymptom} placeholder="Ajouter un ressenti ou une activité" />

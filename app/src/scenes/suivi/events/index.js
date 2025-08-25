@@ -13,6 +13,7 @@ import logEvents from "../../../services/logEvents";
 import Button from "../../../components/Button";
 import Card from "./Card";
 import { EventFilterHeader } from "./EventFilterHeader";
+import JMButton from "@/components/JMButton";
 
 const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, toDate, setToDate }) => {
   const [diaryData] = React.useContext(DiaryDataContext);
@@ -135,11 +136,10 @@ const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, 
         <View style={styles.subtitleContainer}>
           <Icon icon="InfoSvg" width={25} height={25} color={colors.LIGHT_BLUE} />
           <Text style={styles.subtitle}>
-            Des <Text style={styles.bold}>Évènements</Text> apparaîtront au fur et à mesure de vos saisies
-            quotidiennes.
+            Des <Text style={styles.bold}>Évènements</Text> apparaîtront au fur et à mesure de vos saisies quotidiennes.
           </Text>
         </View>
-        <Button title="Commencer à saisir" onPress={startSurvey} />
+        <JMButton title="Commencer à saisir" onPress={startSurvey} />
       </View>
     );
   }
@@ -162,8 +162,7 @@ const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, 
         <View style={styles.dataContainer}>
           {memoizedCallback()?.filter((x) => x.date)?.length === 0 && (
             <Text style={styles.noDataMessage}>
-              Aucun évènement à afficher entre {renderDate(formatDay(fromDate))} et{" "}
-              {renderDate(formatDay(toDate))}.
+              Aucun évènement à afficher entre {renderDate(formatDay(fromDate))} et {renderDate(formatDay(toDate))}.
             </Text>
           )}
           {memoizedCallback()
@@ -174,15 +173,7 @@ const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, 
               return bd.localeCompare(ad);
             })
             ?.map((d) => {
-              return (
-                <Card
-                  key={d.date}
-                  event={event}
-                  date={d.date}
-                  context={d.CONTEXT}
-                  userComment={d.USER_COMMENT}
-                />
-              );
+              return <Card key={d.date} event={event} date={d.date} context={d.CONTEXT} userComment={d.USER_COMMENT} />;
             })}
         </View>
       </ScrollView>
@@ -192,7 +183,7 @@ const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, 
 
 const pickerSelectStyles = StyleSheet.create({
   inputIOS: {
-    fontFamily: "Karla",
+    fontFamily: "SourceSans3",
     paddingVertical: 8,
     backgroundColor: "transparent",
     borderColor: colors.DARK_BLUE,
@@ -211,7 +202,7 @@ const pickerSelectStyles = StyleSheet.create({
     // padding: 30, // to ensure the text is never behind the icon
   },
   inputAndroid: {
-    fontFamily: "Karla",
+    fontFamily: "SourceSans3",
     paddingVertical: 8,
     borderColor: colors.DARK_BLUE,
     borderWidth: 1,

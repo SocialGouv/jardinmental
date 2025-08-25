@@ -1,15 +1,10 @@
-import * as React from 'react';
-import Svg, {Path} from 'react-native-svg';
+import * as React from "react";
+import Svg, { Path } from "react-native-svg";
+import { colors } from "@/utils/colors";
 
 function SvgComponent(props) {
   return (
-    <Svg
-      color="#1FC6D5"
-      width={8}
-      height={13}
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      {...props}>
+    <Svg color={colors.LIGHT_BLUE} width={8} height={13} fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
       <Path
         fillRule="evenodd"
         clipRule="evenodd"

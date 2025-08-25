@@ -28,14 +28,7 @@ const RoundButtonIcon = ({
   const render = () => {
     switch (icon) {
       case "plus":
-        return (
-          <Plus
-            opacity={disabled ? 0.5 : 1}
-            color={iconColor}
-            width={small ? 9 : 19}
-            height={small ? 9 : 19}
-          />
-        );
+        return <Plus opacity={disabled ? 0.5 : 1} color={iconColor} width={small ? 9 : 19} height={small ? 9 : 19} />;
       case "small-plus":
         return (
           <PlusCross
@@ -46,23 +39,9 @@ const RoundButtonIcon = ({
           />
         );
       case "pencil":
-        return (
-          <Pencil
-            opacity={disabled ? 0.5 : 1}
-            color={iconColor}
-            width={small ? 9 : 19}
-            height={small ? 9 : 19}
-          />
-        );
+        return <Pencil opacity={disabled ? 0.5 : 1} color={iconColor} width={small ? 9 : 19} height={small ? 9 : 19} />;
       case "bin":
-        return (
-          <Bin
-            opacity={disabled ? 0.5 : 1}
-            color={iconColor}
-            width={small ? 9 : 19}
-            height={small ? 9 : 19}
-          />
-        );
+        return <Bin opacity={disabled ? 0.5 : 1} color={iconColor} width={small ? 9 : 19} height={small ? 9 : 19} />;
       case "cancel":
         return (
           <Plus

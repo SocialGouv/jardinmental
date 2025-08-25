@@ -11,6 +11,8 @@ import Icon from "../../../components/Icon";
 import DraggableFlatList, { ScaleDecorator } from "react-native-draggable-flatlist";
 import { autoLayoutAnimation } from "../../../utils/autoLayoutAnimation";
 import { confirm } from "../../../utils";
+import { colors } from "@/utils/colors";
+import JMButton from "@/components/JMButton";
 
 export const GoalsSettingsMore = ({ navigation, route }) => {
   const [goals, setGoals] = useState([]);
@@ -66,29 +68,20 @@ export const GoalsSettingsMore = ({ navigation, route }) => {
   );
 
   const keyExtractor = useCallback((goal) => goal.id);
-
   return (
-    <Screen
-      header={{
-        title: "Mes objectifs",
+    <AnimatedHeaderScrollScreen
+      title="Mes objectifs"
+      handlePrevious={() => {
+        navigation.goBack();
       }}
-      bottomChildren={<Button2 fill title="Enregistrer" onPress={onValidate} />}
-      ScrollComponent={DraggableFlatList}
-      scrollAsFlatList={true}
-      scrollProps={{
-        data: goals,
-        renderItem,
-        keyExtractor,
-        onDragEnd: (data) => setGoals(data?.data),
-        containerStyle: {
-          flex: 1,
-        },
-      }}
+      bottomComponent={
+        <>
+          <JMButton title="Ajouter un objectif" onPress={() => navigation.navigate("goals-add-options")} />
+          <JMButton variant="outline" title="Modifier mes objectifs" onPress={() => navigation.navigate("goals-settings-more")} className="mt-2" />
+        </>
+      }
     >
-      <Card
-        title="Modifier mes objectifs"
-        text="Vous pouvez changer l’ordre d’apparition de vos objectifs et/ou les supprimer"
-      />
+      {goals.map(renderItem)}
       <View style={titleStyles.container}>
         <Title align="left" fill={false}>
           Mes objectifs
@@ -97,7 +90,7 @@ export const GoalsSettingsMore = ({ navigation, route }) => {
           {goals?.length || 0}
         </Badge>
       </View>
-    </Screen>
+    </AnimatedHeaderScrollScreen>
   );
 };
 
@@ -106,20 +99,14 @@ const GoalItem = ({ goal, drag, isActive, index, onRemove }) => {
     <ScaleDecorator>
       <TouchableOpacity onLongPress={drag} disabled={isActive} delayLongPress={100}>
         <View style={[itemStyles.container, isActive && { backgroundColor: "#D4F0F2" }]}>
-          <Icon
-            icon="ReorderSvg"
-            color="#26387C"
-            width="16"
-            height="16"
-            styleContainer={{ width: 16, height: 16 }}
-          />
+          <Icon icon="ReorderSvg" color={colors.BLUE} width="16" height="16" styleContainer={{ width: 16, height: 16 }} />
           <Text style={[itemStyles.label]}>{goal?.label}</Text>
           <Button2
             square
             preset=""
             type="clear"
             icon="DeleteSvg"
-            textStyle={{ color: "#26387C" }}
+            textStyle={{ color: colors.BLUE }}
             style={{ backgroundColor: "#F8F9FB" }}
             iconSize={16}
             onPress={() => onRemove({ goal })}
@@ -143,10 +130,10 @@ const itemStyles = StyleSheet.create({
     alignItems: "center",
   },
   label: {
-    fontFamily: "Karla",
+    fontFamily: "SourceSans3",
     fontWeight: "700",
     fontSize: 16,
-    color: "#26387C",
+    color: colors.BLUE,
     textAlign: "left",
     marginLeft: 16,
     flex: 1,

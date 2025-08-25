@@ -1,7 +1,7 @@
 import React from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { colors } from "../../utils/colors";
-import { answers } from "../../scenes/survey/utils";
+import { answers } from "../survey-v2/utils";
 import CircledIcon from "../../components/CircledIcon";
 
 const ScorePicker = ({
@@ -28,14 +28,7 @@ const ScorePicker = ({
         const active = focusedScores.includes(answer.score);
         return (
           <TouchableOpacity key={i} onPress={() => onPress(answer.score)}>
-            <View
-              style={[
-                styles.selectionContainer,
-                inline && { marginHorizontal: 5 },
-                itemStyle,
-                active && styles.activeSelectionContainer,
-              ]}
-            >
+            <View style={[styles.selectionContainer, inline && { marginHorizontal: 5 }, itemStyle, active && styles.activeSelectionContainer]}>
               {showIcon ? (
                 <CircledIcon
                   color={answer.backgroundColor}
@@ -51,10 +44,7 @@ const ScorePicker = ({
                   iconHeight={size === "small" ? 17 : 24}
                 />
               ) : (
-                <View
-                  className={`${size === "small" ? "w-5 h-5" : "w-7 h-7"} rounded-full`}
-                  style={{ backgroundColor: answer.backgroundColor }}
-                />
+                <View className={`${size === "small" ? "w-5 h-5" : "w-7 h-7"} rounded-full`} style={{ backgroundColor: answer.backgroundColor }} />
               )}
             </View>
           </TouchableOpacity>

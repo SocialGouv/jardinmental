@@ -1,19 +1,26 @@
-import React, {useState, useEffect, useContext} from 'react';
-import {StyleSheet, Platform, SafeAreaView, Dimensions, View, ScrollView, Linking, TouchableWithoutFeedback, Alert} from 'react-native';
-import Modal from 'react-native-modal';
-import DrawerItem from './drawer-item';
-import LegalItem from './legal-item';
-import localStorage from '../../utils/localStorage';
-import {getBadgeNotesVersion} from '../../scenes/news';
-import Text from '../../components/MyText';
-import {colors} from '../../utils/colors';
-import NeedUpdateContext from '../../context/needUpdate';
-import {HOST, HMAC_SECRET} from '../../config';
-import {recommendApp} from '../../utils/share';
-import app from '../../../app.json';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { useState, useEffect, useContext } from "react";
+import { StyleSheet, Platform, SafeAreaView, Dimensions, View, ScrollView, Linking, TouchableWithoutFeedback, Alert } from "react-native";
+import Modal from "react-native-modal";
+import DrawerItem from "./drawer-item";
+import LegalItem from "./legal-item";
+import localStorage from "../../utils/localStorage";
+import { getBadgeNotesVersion } from "../../scenes/news";
+import Text from "../../components/MyText";
+import { colors } from "../../utils/colors";
+import NeedUpdateContext from "../../context/needUpdate";
+import { recommendApp } from "../../utils/share";
+import app from "../../../app.json";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import Bell from "@assets/svg/icon/Bell";
+import Star from "@assets/svg/icon/Star";
+import StickerSquare from "@assets/svg/icon/StickerSquare";
+import Share from "@assets/svg/icon/Share";
+import Phone from "@assets/svg/icon/Phone";
+import MessageTextCircle from "@assets/svg/icon/MessageTextCircle";
+import Lock from "@assets/svg/icon/Lock";
+import LightBulb from "@assets/svg/icon/LightBulb";
 
-export default ({navigation, visible, onClick}) => {
+export default ({ navigation, visible, onClick }) => {
   const [isVisible, setIsVisible] = useState();
   const updateVisible = useContext(NeedUpdateContext);
 
@@ -29,11 +36,11 @@ export default ({navigation, visible, onClick}) => {
       const n = await getBadgeNotesVersion();
       setBadgeNotesVersionVisible(n);
       const proNPS = await localStorage.getSupported();
-      setNpsProIsVisible(proNPS === 'PRO');
+      setNpsProIsVisible(proNPS === "PRO");
       const badgeProNPS = await localStorage.getVisitProNPS();
       setBadgeNpsProIsVisible(!badgeProNPS);
-      const devMode = await AsyncStorage.getItem('devMode');
-      setIsDevMode(devMode === 'true');
+      const devMode = await AsyncStorage.getItem("devMode");
+      setIsDevMode(devMode === "true");
     })();
   }, [visible]);
 
@@ -41,13 +48,13 @@ export default ({navigation, visible, onClick}) => {
     const newCount = devModeCount + 1;
     setDevModeCount(newCount);
     if (newCount % 5 === 0) {
-      await AsyncStorage.setItem('devMode', 'true');
-      setIsDevMode('true');
-      Alert.alert('Dev Mode', 'Dev mode activated!');
+      await AsyncStorage.setItem("devMode", "true");
+      setIsDevMode("true");
+      Alert.alert("Dev Mode", "Dev mode activated!");
     }
   };
 
-  const deviceHeight = Dimensions.get('window').height;
+  const deviceHeight = Dimensions.get("window").height;
   return (
     <Modal
       style={styles.modal}
@@ -56,28 +63,29 @@ export default ({navigation, visible, onClick}) => {
       onSwipeComplete={onClick}
       animationIn="slideInLeft"
       animationOut="slideOutLeft"
-      deviceHeight={deviceHeight}>
+      deviceHeight={deviceHeight}
+    >
       <View style={styles.card}>
         <SafeAreaView>
           <ScrollView contentContainerStyle={styles.scrollContainer}>
             <Text style={styles.title}>Jardin Mental</Text>
-            <DrawerItem badge={badgeNotesVersionVisible} title="Nouveautés" path="news" navigation={navigation} onClick={onClick} icon="NewsSvg" />
+            <DrawerItem badge={badgeNotesVersionVisible} title="Nouveautés" path="news" navigation={navigation} onClick={onClick} icon={<Star />} />
             <Separator />
-            <DrawerItem title="Présentation" path="presentation" navigation={navigation} onClick={onClick} icon="PresentationSvg" />
-            <DrawerItem title="Recommander Jardin&nbsp;Mental" onClick={recommendApp} icon="ShareSvg" />
-            <DrawerItem title="Parler à quelqu'un et s'informer" path="infos" navigation={navigation} onClick={onClick} icon="PhoneSvg" />
-            <DrawerItem title="Nous contacter" path="contact" navigation={navigation} onClick={onClick} icon="PeopleSvg" />
-            <DrawerItem title="Qui peut voir mes données ?" path="privacy-light" navigation={navigation} onClick={onClick} icon="LockSvg" />
+            <DrawerItem title="Présentation" path="presentation" navigation={navigation} onClick={onClick} icon={<StickerSquare />} />
+            <DrawerItem title="Recommander Jardin&nbsp;Mental" onClick={recommendApp} icon={<Share />} />
+            <DrawerItem title="Parler à quelqu'un et s'informer" path="infos" navigation={navigation} onClick={onClick} icon={<Phone />} />
+            <DrawerItem title="Nous contacter" path="contact" navigation={navigation} onClick={onClick} icon={<MessageTextCircle />} />
+            <DrawerItem title="Qui peut voir mes données ?" path="privacy-light" navigation={navigation} onClick={onClick} icon={<Lock />} />
             {updateVisible ? (
               <DrawerItem
                 badge
                 title="Mettre à jour"
-                icon="NewsSvg"
+                icon={<Bell />}
                 onClick={() =>
                   Linking.openURL(
-                    Platform.OS === 'ios'
-                      ? 'itms-apps://apps.apple.com/FR/app/id1540061393'
-                      : 'https://play.app.goo.gl/?link=https://play.google.com/store/apps/details?id=com.monsuivipsy',
+                    Platform.OS === "ios"
+                      ? "itms-apps://apps.apple.com/FR/app/id1540061393"
+                      : "https://play.app.goo.gl/?link=https://play.google.com/store/apps/details?id=com.monsuivipsy"
                   )
                 }
               />
@@ -85,7 +93,7 @@ export default ({navigation, visible, onClick}) => {
             <DrawerItem
               badge={badgeNpsProIsVisible}
               title="Donner mon avis"
-              icon="LightBulbSvg"
+              icon={<LightBulb />}
               path="contribute-pro"
               navigation={navigation}
               onClick={async () => {
@@ -101,7 +109,9 @@ export default ({navigation, visible, onClick}) => {
             <TouchableWithoutFeedback onPress={handleDevModePress}>
               <View style={styles.versionContainer}>
                 <Text style={styles.versionLabel}>
-                  {Platform.OS === 'ios' ? `${app.expo.version} (${app.expo.ios.buildNumber})` : `${app.expo.version} (${app.expo.android.versionCode})`}
+                  {Platform.OS === "ios"
+                    ? `${app.expo.version} (${app.expo.ios.buildNumber})`
+                    : `${app.expo.version} (${app.expo.android.versionCode})`}
                 </Text>
               </View>
             </TouchableWithoutFeedback>
@@ -120,7 +130,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   separator: {
-    borderColor: '#eee',
+    borderColor: "#eee",
     borderTopWidth: 1,
     marginHorizontal: 30,
     marginVertical: 15,
@@ -131,18 +141,18 @@ const styles = StyleSheet.create({
   versionContainer: {
     marginTop: 47,
     flex: 1,
-    alignItems: 'center',
+    alignItems: "center",
   },
   versionLabel: {
-    color: '#ddd',
+    color: "#ddd",
   },
   buildNumberLabel: {
-    color: '#eee',
+    color: "#eee",
   },
   card: {
-    width: '80%',
-    height: '100%',
-    backgroundColor: '#fff',
+    width: "80%",
+    height: "100%",
+    backgroundColor: "#fff",
     borderRadius: 10,
     borderTopLeftRadius: 0,
     borderBottomLeftRadius: 0,
@@ -150,7 +160,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     padding: 30,
     paddingTop: 15,
     color: colors.DARK_BLUE,
