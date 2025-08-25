@@ -72,7 +72,7 @@ const Drugs = ({ navigation, route }) => {
       <DrugsBottomSheet
         onClose={(treatment) => {
           closeBottomSheet();
-          navigation.navigate("drugs", { treatment });
+          navigation.navigate("drugs-management", { treatment });
         }}
         navigation={navigation}
       />

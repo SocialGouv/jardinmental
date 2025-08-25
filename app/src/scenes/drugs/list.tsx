@@ -101,31 +101,6 @@ const Drugs = ({ navigation, route, onClose }) => {
     setTreatment(t);
   };
 
-  // const handleSubmit = () => {
-  //   //if there is something in the buffer, alert the user ...
-  //   if (bufferCustomDrugs)
-  //     return confirm({
-  //       title: "Êtes-vous sûr de vouloir valider cette sélection ?",
-  //       message: `Il semblerait que vous n'avez pas correctement ajouter votre traitement personnalisé "${bufferCustomDrugs}"`,
-  //       onConfirm: submit,
-  //       onCancel: () => {
-  //         scrollRef.current?.scrollTo({
-  //           y: 0,
-  //           animated: true,
-  //         });
-  //       },
-  //       cancelText: "Retourner à la liste",
-  //       confirmText: "Oui, valider quand même",
-  //     });
-  //   //... else, submit the treatment
-  //   else submit();
-  // };
-
-  const submit = async () => {
-    await localStorage.setMedicalTreatment(treatment);
-    navigation.navigate("drugs", { treatment });
-  };
-
   const handleAdd = async (value) => {
     console.log("add drug", value);
     if (!value) return;
@@ -231,6 +206,7 @@ const Drugs = ({ navigation, route, onClose }) => {
         <JMButton
           onPress={async () => {
             await localStorage.setMedicalTreatment(treatment);
+            console.log("LCS SET MED TREATMENT");
             onClose(treatment);
           }}
           title={"Valider la sélection"}

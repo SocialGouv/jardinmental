@@ -29,7 +29,7 @@ const SettingsModal = ({ navigation, visible, onClick }) => {
               onClick();
               const treatment = await localStorage.getMedicalTreatment();
               if (treatment) {
-                navigation.navigate("drugs", { treatment });
+                navigation.navigate("drugs-management", { treatment });
               } else {
                 showBottomSheet(
                   <DrugsBottomSheet

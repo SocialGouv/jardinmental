@@ -1,23 +1,18 @@
 import React, { useEffect, useState, useContext, useRef, useMemo } from "react";
 import { ScrollView, View, KeyboardAvoidingView, Platform, Text } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { beforeToday, formatDate, formatDay, formatRelativeDate } from "../../utils/date/helpers";
 import { isToday, isYesterday, parseISO } from "date-fns";
 import { getScoreWithState } from "../../utils";
 import InputQuestion from "./InputQuestion";
-import QuestionYesNo from "./QuestionYesNo";
 import logEvents from "../../services/logEvents";
 import { DiaryDataContext } from "../../context/diaryData";
 import { alertNoDataYesterday } from "./survey-data";
 import localStorage from "../../utils/localStorage";
 import { useFocusEffect } from "@react-navigation/native";
 import { GoalsDaySurvey } from "../goals/survey/GoalsDaySurvey";
-import { Button2 } from "../../components/Button2";
-import { Card } from "../../components/Card";
 import { DiaryDataNewEntryInput } from "../../entities/DiaryData";
 import { Indicator } from "../../entities/Indicator";
 import { IndicatorSurveyItem } from "@/components/survey/IndicatorSurveyItem";
-import Drugs from "../drugs/drugs";
 import { DrugsBottomSheet } from "@/components/DrugsBottomSheet";
 import {
   INDICATEURS_HUMEUR,
@@ -33,11 +28,8 @@ import CircleQuestionMark from "@assets/svg/icon/CircleQuestionMark";
 import JMButton from "@/components/JMButton";
 import { useBottomSheet } from "@/context/BottomSheetContext";
 import HelpView from "@/components/HelpView";
-import { INDICATORS_CATEGORIES } from "@/entities/IndicatorCategories";
 import { AnimatedHeaderScrollScreen } from "../survey-v2/AnimatedHeaderScrollScreen";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import Pencil from "@assets/svg/Pencil";
-import ArrowIcon from "@assets/svg/icon/Arrow";
 import NavigationButtons from "@/components/onboarding/NavigationButtons";
 
 const DaySurvey = ({
@@ -250,13 +242,13 @@ const DaySurvey = ({
       });
       return navigation.navigate("tabs");
     } else if (treatment?.length) {
-      navigation.navigate("drugs", { treatment, currentSurvey });
+      navigation.navigate("drugs-survey", { treatment, currentSurvey });
     } else {
       showBottomSheet(
         <DrugsBottomSheet
           onClose={(treatment) => {
             closeBottomSheet();
-            navigation.navigate("drugs", { treatment, currentSurvey });
+            navigation.navigate("drugs-survey", { treatment, currentSurvey });
           }}
           navigation={navigation}
         />

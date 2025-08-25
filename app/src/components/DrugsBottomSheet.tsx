@@ -81,7 +81,7 @@ export const DrugsBottomSheet = ({ onClose, navigation }) => {
               onClose();
             } else {
               closeBottomSheet();
-              navigation.navigate("drugs", { treatment });
+              navigation.navigate("drugs-management", { treatment });
             }
           }}
         />
