@@ -151,10 +151,11 @@ const Drugs = ({ navigation, route }) => {
     });
   };
 
-  const addDose = (drug) => {
+  const addDose = (drug, selectedDose) => {
     showBottomSheet(
       <DrugDoseBottomSheet
         drug={drug}
+        initialSelectedDose={selectedDose}
         onClose={(dose) => {
           handleDrugChange(drug, dose, false);
           closeBottomSheet();
@@ -203,9 +204,11 @@ const Drugs = ({ navigation, route }) => {
                   <Text className={mergeClassNames("mb-2 text-gray-800", typography.textLgMedium)}>
                     {e.name1} {e.name2 ? `(${e.name2})` : ""}
                   </Text>
-                  <TouchableOpacity onPress={() => addDose(e)} className="border border-gray-700 bg-white rounded-xl flex-row p-4">
+                  <TouchableOpacity onPress={() => addDose(e, res?.value)} className="border border-gray-700 bg-white rounded-xl flex-row p-4">
                     <HealthIcon color={TW_COLORS.GRAY_700} width={17} height={17} />
-                    <Text className={mergeClassNames(typography.textMdRegular, "ml-2 text-gray-700")}>{res ? res.value : "Indiquez la dose"}</Text>
+                    <Text className={mergeClassNames(typography.textMdRegular, "ml-2 text-gray-700")}>
+                      {res?.value ? res.value : "Indiquez la dose"}
+                    </Text>
                   </TouchableOpacity>
                 </View>
               );
