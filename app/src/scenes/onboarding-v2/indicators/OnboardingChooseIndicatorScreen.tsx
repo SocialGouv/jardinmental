@@ -246,7 +246,7 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation, r
       bottomComponent={
         <NavigationButtons
           absolute={true}
-          onNext={handleNext}
+          onNext={() => handleNext(false)}
           headerContent={
             <View>
               {selectedIndicators.length >= 9 && <AlertBanner text={`Nous vous recommandons de ne pas choisir plus de 8 éléments pour commencer`} />}
