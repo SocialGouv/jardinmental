@@ -25,7 +25,7 @@ router.post(
       replyToName = undefined;
     }
 
-    const from = "contact@jardinmental.fr";
+    const from = "jardinmental@fabrique.social.gouv.fr";
     const fromName = "Jardin Mental - Application";
 
     const apiRes = await fetch("https://api.tipimail.com/v1/messages/send", {
@@ -90,7 +90,7 @@ router.post("/subscribe", async (req, res) => {
         ],
         msg: {
           from: {
-            address: "contact@jardinmental.fr",
+            address: "jardinmental@fabrique.social.gouv.fr",
             personalName: "Jardin Mental - Application",
           },
           subject: "Nouvelle inscription à la newsletter",
