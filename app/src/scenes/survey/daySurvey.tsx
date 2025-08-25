@@ -293,6 +293,7 @@ const DaySurvey = ({
       handlePrevious={() => {
         navigation.goBack();
       }}
+      smallHeader={true}
       bottomComponent={
         <NavigationButtons
           absolute={true}
