@@ -1,3 +1,10 @@
+# [1.52.0-alpha.22](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.21...v1.52.0-alpha.22) (2025-08-25)
+
+
+### Bug Fixes
+
+* onboarding v2 types ([#355](https://github.com/SocialGouv/jardinmental/issues/355)) ([e575cd3](https://github.com/SocialGouv/jardinmental/commit/e575cd3110cbbdf05c71a214ef995fc0bbf77acf))
+
 # [1.52.0-alpha.21](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.20...v1.52.0-alpha.21) (2025-08-25)
 
 
