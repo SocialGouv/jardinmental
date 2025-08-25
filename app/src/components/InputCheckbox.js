@@ -20,10 +20,13 @@ export const InputCheckbox = ({ label, checked, fill, onCheckedChanged, containe
         }}
         hitSlop={{ bottom: 8, left: 8, right: 8, top: 8 }}
       >
-        <View style={[styles.contentContainer, contentContainerStyle]}>
+        <View style={[styles.contentContainer, contentContainerStyle]} className="flex-row items-center">
           <View
             style={[
               styles.checkboxContainer,
+              {
+                marginTop: 2,
+              },
               !_checked
                 ? {
                     borderColor: colors.BLUE,

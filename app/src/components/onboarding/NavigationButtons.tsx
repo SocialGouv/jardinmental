@@ -23,6 +23,7 @@ interface NavigationButtonsProps {
   onLeftIconAction?: JSX.Element;
   headerContent?: JSX.Element;
   withArrow?: boolean;
+  children?: JSX.Element;
 }
 
 export const NavigationButtons: React.FC<NavigationButtonsProps> = ({
@@ -40,8 +41,9 @@ export const NavigationButtons: React.FC<NavigationButtonsProps> = ({
   onLeftIconAction,
   headerContent,
   withArrow,
+  children,
 }) => {
-  const content = (
+  const content = children ?? (
     <>
       {headerContent}
       <View className="flex-row justify-between items-center">

@@ -1,13 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View, ScrollView, TouchableOpacity, Keyboard } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { StyleSheet, View, ScrollView, TouchableOpacity, Text } from "react-native";
 
-import BackButton from "../../../components/BackButton";
 import { colors } from "../../../utils/colors";
 import localStorage from "../../../utils/localStorage";
-import { displayedCategories } from "../../../utils/constants";
-import Button from "../../../components/Button";
-import Text from "../../../components/MyText";
 import Plus from "../../../../assets/svg/Plus";
 import ArrowUpSvg from "../../../../assets/svg/arrow-up.svg";
 import { INDICATORS, INDICATEURS_LES_PLUS_COURANTS } from "../../../utils/liste_indicateurs.1";
@@ -18,13 +13,21 @@ import { useFocusEffect } from "@react-navigation/native";
 import logEvents from "../../../services/logEvents";
 import TextTag from "../../../components/TextTag";
 import JMButton from "@/components/JMButton";
-import { HELP_FOR_CATEGORY, INDICATOR_CATEGORIES_DATA } from "@/scenes/onboarding-v2/data/helperData";
+import { INDICATOR_CATEGORIES_DATA } from "@/scenes/onboarding-v2/data/helperData";
 import { generateIndicatorFromPredefinedIndicator, Indicator, PredefineIndicatorV2SchemaType } from "@/entities/Indicator";
+import { AnimatedHeaderScrollScreen } from "@/scenes/survey-v2/AnimatedHeaderScrollScreen";
+import NavigationButtons from "@/components/onboarding/NavigationButtons";
+import { mergeClassNames } from "@/utils/className";
+import { typography } from "@/utils/typography";
+import { TW_COLORS } from "@/utils/constants";
+import { areStringArraysIdentical } from "@/utils/string-util";
 
 const EditIndicateurs = ({ navigation, route }) => {
   const [exemplesVisible, setExemplesVisible] = useState(false);
   const [existingIndicatorsVisible, setExistingIndicatorsVisible] = useState(false);
   const [userIndicateurs, setUserIndicateurs] = useState<Indicator[]>([]);
+  const [isChanged, setIsChanged] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const indicateursByCategory = INDICATORS.reduce((prev, curr) => {
     for (const category of curr.categories) {
@@ -57,6 +60,28 @@ const EditIndicateurs = ({ navigation, route }) => {
     }, [])
   );
 
+  useEffect(() => {
+    const handleIndicatorsChange = async () => {
+      const savedUserIndicators = await localStorage.getIndicateurs();
+      const savedActiveIndicators = savedUserIndicators.filter((i) => i.active).map((i) => i.uuid);
+      const modifiedIndicators = userIndicateurs.filter((i) => i.active).map((i) => i.uuid);
+      if (areStringArraysIdentical(savedActiveIndicators, modifiedIndicators)) {
+        setIsChanged(false);
+      } else {
+        setIsChanged(true);
+      }
+    };
+    handleIndicatorsChange();
+    return;
+  }, [userIndicateurs]);
+
+  const onValidate = async () => {
+    setIsLoading(true);
+    await localStorage.setIndicateurs(userIndicateurs);
+    setIsLoading(false);
+    navigation.goBack();
+  };
+
   const reactivateIndicateur = async (_indicateur) => {
     const _userIndicateurs = userIndicateurs.map((indicateur) => {
       if (indicateur.uuid === _indicateur.uuid) {
@@ -65,14 +90,12 @@ const EditIndicateurs = ({ navigation, route }) => {
       return indicateur;
     });
     setUserIndicateurs(_userIndicateurs);
-    await localStorage.setIndicateurs(_userIndicateurs);
   };
 
   const handleAddNewIndicateur = async (_indicateur: Indicator) => {
     if (!_indicateur) return;
     const _userIndicateurs = [...userIndicateurs, _indicateur];
     setUserIndicateurs(_userIndicateurs);
-    await localStorage.setIndicateurs(_userIndicateurs);
     logEvents.logCustomSymptomAdd();
   };
 
@@ -85,35 +108,46 @@ const EditIndicateurs = ({ navigation, route }) => {
         return indicateur;
       });
       setUserIndicateurs(_userIndicateurs);
-      await localStorage.setIndicateurs(_userIndicateurs);
     } else {
       handleAddNewIndicateur(generateIndicatorFromPredefinedIndicator(_indicateur));
     }
   };
 
   return (
-    <SafeAreaView style={styles.safe}>
-      <View style={styles.header}>
-        <BackButton style={styles.headerBackButton} onPress={navigation.goBack} />
-        <View style={styles.headerTextContainer}>
-          <Text style={styles.headerText}>Ajouter un indicateur</Text>
-        </View>
-      </View>
-      <ScrollView keyboardShouldPersistTaps="handled" style={styles.container} keyboardDismissMode="on-drag" onScrollBeginDrag={Keyboard.dismiss}>
-        <View style={styles.personnalizeContainer}>
-          <View style={styles.personnalizeTextContainer}>
-            <Text style={styles.personnalizeTitle}>Créez votre indicateur personnalisé</Text>
-            <Text style={styles.personnalizeText}>Vous pouvez choisir la manière dont vous souhaitez l’évaluer</Text>
-            <JMButton
-              variant="outline"
-              onPress={() => {
-                navigation.push("CREATE_INDICATOR");
-              }}
-              className="mt-10"
-              title="Créer un indicateur"
-              icon={<Plus style={styles.plusButton} opacity={1} color={"#000"} width={19} height={19} />}
-            />
+    <AnimatedHeaderScrollScreen
+      handlePrevious={() => {
+        navigation.goBack();
+      }}
+      title="Ajouter un indicateur"
+      navigation={navigation}
+      headerRightComponent={null}
+      headerRightAction={() => {}}
+      scrollViewBackground="#F7FCFD"
+      bottomComponent={
+        <NavigationButtons absolute={true}>
+          <>
+            <JMButton disabled={!isChanged} onPress={onValidate} loading={isLoading} title="Enregistrer" />
+          </>
+        </NavigationButtons>
+      }
+    >
+      <View className="px-4 py-4">
+        <View className="bg-cnam-cyan-50-lighten-90 bg-[#E5F6FC] p-4 rounded-2xl">
+          <View className="flex-row items-center mb-4">
+            <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-900 ml-2")}>Créer un indicateur personnalisé</Text>
           </View>
+          <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900")}>
+            Vous pouvez choisir la manière dont vous souhaitez l’évaluer
+          </Text>
+          <JMButton
+            variant="outline"
+            onPress={() => {
+              navigation.push("CREATE_INDICATOR");
+            }}
+            className="mt-10"
+            title="Créer un indicateur"
+            icon={<Plus style={styles.plusButton} opacity={1} color={"#000"} width={19} height={19} />}
+          />
         </View>
 
         {exemplesVisible && (
@@ -131,23 +165,21 @@ const EditIndicateurs = ({ navigation, route }) => {
             height: 40,
           }}
         />
-        <View style={styles.divider} />
-
-        <TouchableOpacity onPress={() => toggleState(exemplesVisible, setExemplesVisible)} style={styles.toggleContainer}>
-          <Text style={styles.bold}>Choisir parmi des exemples</Text>
+        <TouchableOpacity className="flex-row justify-between flex-1 items-center" onPress={() => toggleState(exemplesVisible, setExemplesVisible)}>
+          <Text className={mergeClassNames(typography.textLgBold, "text-cnam-primary-900")}>Choisir parmi des exemples</Text>
           {exemplesVisible ? (
-            <ArrowUpSvg color={colors.BLUE} />
+            <ArrowUpSvg color={TW_COLORS.CNAM_PRIMARY_900} />
           ) : (
             <ArrowUpSvg
               style={{
                 transform: [{ rotateX: "180deg" }],
               }}
-              color={colors.BLUE}
+              color={TW_COLORS.CNAM_PRIMARY_900}
             />
           )}
         </TouchableOpacity>
         {exemplesVisible && (
-          <>
+          <View className="mt-4">
             <CategorieElements
               title="Les plus courants"
               options={INDICATEURS_LES_PLUS_COURANTS}
@@ -167,26 +199,27 @@ const EditIndicateurs = ({ navigation, route }) => {
                 />
               );
             })}
-          </>
+          </View>
         )}
-
         <View
           style={{
             height: 15,
           }}
         />
-        <View style={styles.divider} />
-
-        <TouchableOpacity onPress={() => toggleState(existingIndicatorsVisible, setExistingIndicatorsVisible)} style={styles.toggleContainer}>
-          <Text style={styles.bold}>Réactiver un ancien indicateur</Text>
+        <View className="h-[1px] bg-cnam-primary-900 w-full mb-4 mt-2" />
+        <TouchableOpacity
+          onPress={() => toggleState(existingIndicatorsVisible, setExistingIndicatorsVisible)}
+          className="flex-row justify-between flex-1 items-center"
+        >
+          <Text className={mergeClassNames(typography.textLgBold, "text-cnam-primary-900")}>Réactiver un ancien indicateur</Text>
           {existingIndicatorsVisible ? (
-            <ArrowUpSvg color={colors.BLUE} />
+            <ArrowUpSvg color={TW_COLORS.CNAM_PRIMARY_900} />
           ) : (
             <ArrowUpSvg
               style={{
                 transform: [{ rotateX: "180deg" }],
               }}
-              color={colors.BLUE}
+              color={TW_COLORS.CNAM_PRIMARY_900}
             />
           )}
         </TouchableOpacity>
@@ -228,8 +261,8 @@ const EditIndicateurs = ({ navigation, route }) => {
             height: 50,
           }}
         />
-      </ScrollView>
-    </SafeAreaView>
+      </View>
+    </AnimatedHeaderScrollScreen>
   );
 };
 
@@ -319,14 +352,6 @@ const styles = StyleSheet.create({
     fontSize: 17,
     flex: 1,
     marginLeft: 20,
-  },
-
-  divider: {
-    height: 1,
-    backgroundColor: "#E0E0E0",
-    marginBottom: 15,
-    width: "100%",
-    alignSelf: "center",
   },
 
   toggleContainer: {
