@@ -4,7 +4,7 @@ import { mergeClassNames } from "@/utils/className";
 import ArrowIcon from "@assets/svg/icon/Arrow";
 
 type ButtonProps = TouchableOpacityProps & {
-  variant?: "primary" | "secondary" | "outline" | "text";
+  variant?: "primary" | "secondary" | "outline" | "text" | "secondary-blue";
   className?: string;
   style?: StyleProp<ViewStyle>;
   textClassName?: string;
@@ -66,6 +66,9 @@ export default function JMButton({
       break;
     case "secondary":
       variantClasses = "bg-gray-500";
+      break;
+    case "secondary-blue":
+      variantClasses = "bg-[#006386]"; // TODO: trouver où on doit mettre cette couleur
       break;
     case "outline":
       variantClasses = "border border-primary bg-white";

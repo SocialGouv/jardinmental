@@ -1,3 +1,17 @@
+# [1.52.0-alpha.22](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.21...v1.52.0-alpha.22) (2025-08-25)
+
+
+### Bug Fixes
+
+* onboarding v2 types ([#355](https://github.com/SocialGouv/jardinmental/issues/355)) ([e575cd3](https://github.com/SocialGouv/jardinmental/commit/e575cd3110cbbdf05c71a214ef995fc0bbf77acf))
+
+# [1.52.0-alpha.21](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.20...v1.52.0-alpha.21) (2025-08-25)
+
+
+### Bug Fixes
+
+* mise en avant du CTA feedback ([#343](https://github.com/SocialGouv/jardinmental/issues/343)) ([7b97ebc](https://github.com/SocialGouv/jardinmental/commit/7b97ebc33cefaa1d06662b0e0af3e4d9f3c034be))
+
 # [1.52.0-alpha.20](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.19...v1.52.0-alpha.20) (2025-08-24)
 
 

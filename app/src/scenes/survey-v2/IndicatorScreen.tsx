@@ -310,19 +310,21 @@ export const IndicatorScreen: React.FC<IndicatorScreenProps> = ({
             <InstructionText>
               Prenons un instant pour observer vos ressentis liés {INDICATOR_CATEGORIES_DATA[category].labelWithSecondPersonPrefix}
             </InstructionText>
-            {indicators.map((indicator, index) => (
+            {indicators.map((indicator: Indicator, index) => (
               <IndicatorSurveyItem
                 key={indicator.uuid}
                 indicator={indicator}
                 allIndicators={indicators}
                 index={index}
                 showComment={showComment}
-                value={answers?.[indicator.name]?.value}
+                value={answers?.[indicator[indicator.diaryDataKey || "name"]]?.value}
                 onValueChanged={({ indicator, value }) => {
-                  onValueChanged({ key: indicator.name, value });
+                  onValueChanged({ key: indicator[indicator.diaryDataKey || "name"], value });
                 }}
-                onCommentChanged={({ indicator, comment }) => onCommentChanged({ key: indicator.name, userComment: comment })}
-                comment={answers?.[indicator.name]?.userComment}
+                onCommentChanged={({ indicator, comment }) =>
+                  onCommentChanged({ key: indicator[indicator.diaryDataKey || "name"], userComment: comment })
+                }
+                comment={answers?.[indicator[indicator.diaryDataKey || "name"]]?.userComment}
               />
             ))}
           </View>
