@@ -201,7 +201,7 @@ const Drugs = ({ navigation, route }) => {
               return (
                 <View className="mb-4">
                   <Text className={mergeClassNames("mb-2 text-gray-800", typography.textLgMedium)}>
-                    {e.name1} ({e.name2})
+                    {e.name1} {e.name2 ? `(${e.name2})` : ""}
                   </Text>
                   <TouchableOpacity onPress={() => addDose(e)} className="border border-gray-700 bg-white rounded-xl flex-row p-4">
                     <HealthIcon color={TW_COLORS.GRAY_700} width={17} height={17} />
@@ -296,7 +296,7 @@ const Drugs = ({ navigation, route }) => {
       handlePrevious={() => {
         navigation.goBack();
       }}
-      category="SLEEP"
+      category="TREATMENT"
       title={inSurvey ? "Avez-vous pris votre traitement aujourd'hui" : "Traitement"}
       navigation={navigation}
       headerRightComponent={inSurvey ? <Pencil color={TW_COLORS.WHITE} width={16} height={16} /> : null}

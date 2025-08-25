@@ -5,7 +5,7 @@ import { typography } from "@/utils/typography";
 import PlusIcon from "@assets/svg/icon/plus";
 import { View, Text, TextInput, Dimensions } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { INDICATOR_CATEGORIES_DATA } from "../data/helperData";
+import { INDICATOR_CATEGORIES_DATA, SECTION_ICONS } from "../data/helperData";
 import React, { useEffect, useState } from "react";
 import { TW_COLORS } from "@/utils/constants";
 import { TouchableOpacity } from "@gorhom/bottom-sheet";
@@ -129,7 +129,7 @@ export default function IndicatorModal({
         style={{ paddingVertical: 20, height: height90vh }}
       >
         <View className="flex-row bg-[#E5F6FC] self-start p-2">
-          {React.createElement(INDICATOR_CATEGORIES_DATA[category].icon, {
+          {React.createElement(SECTION_ICONS[category].icon, {
             color: "#006386",
           })}
           <Text className={mergeClassNames(typography.textSmBold, "ml-2 text-[#006386] text-left")}>{INDICATOR_CATEGORIES_DATA[category].label}</Text>

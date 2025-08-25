@@ -130,9 +130,10 @@ const Drugs = ({ navigation, route, onClose }) => {
     const drug = { id: value, name1: value, values: [] };
     await localStorage.addCustomDrug(drug);
     const drugsAfterAddition = await getDrugListWithLocalStorage();
+    setList(drugsAfterAddition);
     const filteredListAfterAddition = filterAndSortList(drugsAfterAddition);
     setFilteredList(filteredListAfterAddition);
-    setToogleCheckbox(drug, true);
+    setToogleCheckbox(drug);
     setViewElementIndex(filteredListAfterAddition.map((e) => e.id).indexOf(value));
     logEvents.logDrugAdd(value);
   };
@@ -172,8 +173,8 @@ const Drugs = ({ navigation, route, onClose }) => {
           {!!filter && !filteredList.length && (
             <TouchableOpacity
               onPress={async () => {
-                // await handleAdd(filter);
-                // setFilter("");
+                await handleAdd(filter);
+                setFilter("");
               }}
             >
               <View className="flex-row items-center mr-auto mt-2">
