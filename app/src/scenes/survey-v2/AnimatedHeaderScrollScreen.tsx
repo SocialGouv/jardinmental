@@ -44,6 +44,7 @@ interface IndicatorScreenProps {
   navigation: StackNavigationProp<any>;
   scrollViewBackground?: string;
   showBottomButton?: boolean;
+  smallHeader?: boolean;
 }
 
 export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
@@ -62,6 +63,7 @@ export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
   handlePrevious,
   navigation,
   scrollViewBackground,
+  smallHeader,
 }: IndicatorScreenProps) => {
   const { showBottomSheet } = useBottomSheet();
   const { setShowProgressbar, showProgressbar, setHideOnScrollProgressValue } = useOnboardingProgressHeader();
@@ -269,6 +271,7 @@ export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
           bannerContentStyle={bannerContentStyle}
           bannerContainerStyle={bannerContainerStyle}
           titleMarginStyle={titleMarginStyle}
+          small={smallHeader}
           onBannerLayout={handleBannerLayout}
         ></BannerHeader>
       </View>

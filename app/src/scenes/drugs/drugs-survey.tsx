@@ -184,7 +184,7 @@ const DrugsSurvey = ({ navigation, route }) => {
       navigation={navigation}
       headerRightComponent={<Pencil color={TW_COLORS.WHITE} width={16} height={16} />}
       headerRightAction={() => {
-        showBottomSheet(<DrugsBottomSheet navigation={navigation} onClose={onTreatmentUpdate} />);
+        showBottomSheet(<DrugsBottomSheet onClose={onTreatmentUpdate} />);
       }}
       bottomComponent={<NavigationButtons absolute={true} onNext={submit} nextDisabled={!hasTreatment} nextText="Valider" />}
     >

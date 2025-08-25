@@ -11,13 +11,7 @@ interface Props {
 
 const HelpView = ({ title, description, link }: Props) => {
   return (
-    <View className="flex-1 bg-white p-4">
-      <Text className="text-lg font-semibold mb-4" style={{ color: TW_COLORS.TEXT_PRIMARY }}>
-        {title}
-      </Text>
-      <Text className="text-base mb-4 leading-6" style={{ color: TW_COLORS.TEXT_SECONDARY }}>
-        {description}
-      </Text>
+    <View className="flex-1 bg-white p-4 pb-16">
       <Text className={mergeClassNames(typography.textXlBold, "mb-4 text-cnam-primary-950")}>{title}</Text>
       <Text className={mergeClassNames(typography.textLgRegular, "text-cnam-primary-950")}>{description}</Text>
       {link && (

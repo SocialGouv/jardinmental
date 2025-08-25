@@ -13,7 +13,7 @@ import { useBottomSheet } from "@/context/BottomSheetContext";
 
 export default ({ navigation, route }) => {
   const [diaryData] = useContext(DiaryDataContext);
-  const { showBottomSheet } = useBottomSheet();
+  const { showBottomSheet, closeBottomSheet } = useBottomSheet();
 
   const handleNoTreatment = async () => {
     await localStorage.setMedicalTreatment([]);
@@ -39,7 +39,15 @@ export default ({ navigation, route }) => {
         <Text style={styles.lightblue}>comprendre</Text> comment il influe mon <Text style={styles.lightblue}>état</Text>
       </Text>
       <JMButton
-        onPress={() => showBottomSheet(<DrugsBottomSheet navigation={navigation} onClose={undefined} />)}
+        onPress={() =>
+          showBottomSheet(
+            <DrugsBottomSheet
+              onClose={() => {
+                closeBottomSheet();
+              }}
+            />
+          )
+        }
         title="Ajouter un traitement"
         className={"mt-6 mb-2"}
       />

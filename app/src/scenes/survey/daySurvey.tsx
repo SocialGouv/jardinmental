@@ -234,7 +234,8 @@ const DaySurvey = ({
       else navigation.navigate("tabs");
     }
 
-    if (treatment?.length === 0) {
+    if (treatment && treatment?.length === 0) {
+      // treatment is filled with an empty array = user a set "no treatment"
       alertNoDataYesterday({
         date: prevCurrentSurvey?.date,
         diaryData,
@@ -242,15 +243,20 @@ const DaySurvey = ({
       });
       return navigation.navigate("tabs");
     } else if (treatment?.length) {
+      // user has a treatment
       navigation.navigate("drugs-survey", { treatment, currentSurvey });
     } else {
+      // use hasn't answered yet
       showBottomSheet(
         <DrugsBottomSheet
           onClose={(treatment) => {
             closeBottomSheet();
-            navigation.navigate("drugs-survey", { treatment, currentSurvey });
+            if (treatment?.length) {
+              navigation.navigate("drugs-survey", { treatment, currentSurvey });
+            } else {
+              navigation.navigate("tabs");
+            }
           }}
-          navigation={navigation}
         />
       );
     }

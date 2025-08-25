@@ -36,7 +36,6 @@ const SettingsModal = ({ navigation, visible, onClick }) => {
                     onClose={() => {
                       closeBottomSheet();
                     }}
-                    navigation={navigation}
                   />
                 );
               }

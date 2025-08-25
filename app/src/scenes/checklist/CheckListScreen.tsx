@@ -67,7 +67,7 @@ const checklistItems: {
 
 export default function CheckListScreen({ navigation, route }) {
   const [checklistItemValues, setChecklistItemValues] = useState<Partial<Record<checkListIds, boolean>>>({});
-  const { showBottomSheet } = useBottomSheet();
+  const { showBottomSheet, closeBottomSheet } = useBottomSheet();
 
   useFocusEffect(
     useCallback(() => {
@@ -89,7 +89,13 @@ export default function CheckListScreen({ navigation, route }) {
 
   const handleItemPress = (item) => {
     if (item.path === "drugs") {
-      showBottomSheet(<DrugsBottomSheet navigation={navigation} onClose={undefined} />);
+      showBottomSheet(
+        <DrugsBottomSheet
+          onClose={() => {
+            closeBottomSheet();
+          }}
+        />
+      );
     } else {
       navigation.navigate(item.path, {
         previous: "checklist",

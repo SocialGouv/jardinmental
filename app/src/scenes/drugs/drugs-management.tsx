@@ -111,7 +111,7 @@ const DrugsManagement = ({ navigation, route }) => {
         <NavigationButtons
           absolute={true}
           onNext={() => {
-            showBottomSheet(<DrugsBottomSheet navigation={navigation} onClose={onTreatmentUpdate} />);
+            showBottomSheet(<DrugsBottomSheet onClose={onTreatmentUpdate} />);
           }}
           nextDisabled={!hasTreatment}
           nextText={getNextText()}

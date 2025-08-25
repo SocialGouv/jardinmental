@@ -14,14 +14,16 @@ import HelpView from "./HelpView";
 import { useBottomSheet } from "@/context/BottomSheetContext";
 import localStorage from "@/utils/localStorage";
 import { HELP_POSOLOGY } from "@/scenes/onboarding-v2/data/helperData";
+import { Drug } from "@/entities/Drug";
 
-export const DrugsBottomSheet = ({ onClose, navigation }) => {
+export const DrugsBottomSheet = ({ onClose }: { onClose: (treatment: Drug[]) => void }) => {
   const [index, setIndex] = useState<number>(0);
   const { showBottomSheet } = useBottomSheet();
   const [treatment, setTreatment] = useState<any[] | undefined>();
   const { closeBottomSheet } = useBottomSheet();
   const handleNoTreatment = async () => {
     await localStorage.setMedicalTreatment([]);
+    onClose([]);
   };
 
   useEffect(() => {
@@ -37,7 +39,7 @@ export const DrugsBottomSheet = ({ onClose, navigation }) => {
   }, []);
 
   return (
-    <View className="flex-1 bg-white px-0">
+    <View className="flex-1 bg-white px-4">
       {index === 0 && (
         <View>
           <View>
@@ -68,24 +70,11 @@ export const DrugsBottomSheet = ({ onClose, navigation }) => {
             iconPosition="right"
             className="mt-20"
           />
-          <JMButton onPress={handleNoTreatment} title="Non je n'ai pas de traitement" className="mt-4" />
+          <JMButton onPress={handleNoTreatment} title="Non, je n'ai pas de traitement" className="mt-4" />
           <JMButton onPress={handleNoTreatment} variant="text" title="Je le ferai plus tard" className="mt-4" />
         </View>
       )}
-      {index === 1 && (
-        <Drugs
-          navigation={{ goBack: () => {} }}
-          route={undefined}
-          onClose={() => {
-            if (onClose) {
-              onClose();
-            } else {
-              closeBottomSheet();
-              navigation.navigate("drugs-management", { treatment });
-            }
-          }}
-        />
-      )}
+      {index === 1 && <Drugs navigation={{ goBack: () => {} }} route={undefined} onClose={onClose} />}
     </View>
   );
 };
