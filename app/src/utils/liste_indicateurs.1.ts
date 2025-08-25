@@ -84,7 +84,7 @@ export enum NEW_INDICATORS_CATEGORIES {
   SOCIAL_RELATIONS = "SOCIAL_RELATIONS",
   LIFE_EVENT = "LIFE_EVENT",
   COGNITIVE = "COGNITIVE",
-  OTHER = "OTHER"
+  OTHER = "OTHER",
 }
 
 export const CATEGORIES = [
@@ -138,46 +138,57 @@ export const CATEGORIES = [
   },
 ];
 
-export const SUBCATEGORIES: Record<NEW_INDICATORS_SUBCATEGORIES, { id: string; label: string; category: NEW_INDICATORS_CATEGORIES }> = {
+export const SUBCATEGORIES: Record<
+  NEW_INDICATORS_SUBCATEGORIES,
+  { id: string; label: string; category: NEW_INDICATORS_CATEGORIES; matomoId: number }
+> = {
   // [NEW_INDICATORS_SUBCATEGORIES.SLEEP_DIFFICULTY]: {
   //   id: "e601f450-0c10-4c7d-b1b0-b1b7405b6010",
   //   label: "Mon sommeil n'est pas réparateur ou régulier",
-  //   category: NEW_INDICATORS_CATEGORIES.SLEEP
+  //   category: NEW_INDICATORS_CATEGORIES.SLEEP,
+  //   matomoId: 11,
   // },
   [NEW_INDICATORS_SUBCATEGORIES.SLEEP_DIFFICULTY]: {
     id: "b2b92bb0-ff2a-4c9b-bae9-340089efde78",
     label: "J’ai des difficultés à dormir ou je dors mal",
     category: NEW_INDICATORS_CATEGORIES.SLEEP,
+    matomoId: 11,
   },
   [NEW_INDICATORS_SUBCATEGORIES.NEGATIVE_EMOTIONS]: {
     id: "ed5f6b2e-6a32-420f-9b71-4c3d42222cd6",
     label: "Emotions négatives",
     category: NEW_INDICATORS_CATEGORIES.EMOTIONS,
+    matomoId: 22,
   },
   [NEW_INDICATORS_SUBCATEGORIES.EMOTIONAL_STABILITY]: {
     id: "fcfdb222-b19c-4f00-bcc9-8d75092e2203",
     label: "Stabilité émotionnelle",
     category: NEW_INDICATORS_CATEGORIES.EMOTIONS,
+    matomoId: 23,
   },
   [NEW_INDICATORS_SUBCATEGORIES.POSITIVE_EMOTIONS]: {
     id: "cfb3c6a0-b511-495e-b39e-8a8c35bb4d6f",
     label: "Emotions positives",
     category: NEW_INDICATORS_CATEGORIES.EMOTIONS,
+    matomoId: 21,
   },
   [NEW_INDICATORS_SUBCATEGORIES.BAD_SLEEP_HABITS]: {
     id: "f27c7aaf-0a3e-468b-b3b4-3b799626f9c6",
     label: "Certaines habitudes gênent mon sommeil",
     category: NEW_INDICATORS_CATEGORIES.SLEEP,
+    matomoId: 12,
   },
   [NEW_INDICATORS_SUBCATEGORIES.SUBSTANCE_USE]: {
     id: "25f3465f-2c7b-4193-a693-dabfdbb72fa2",
     label: "Consommation de produit",
     category: NEW_INDICATORS_CATEGORIES.SUBSTANCE,
+    matomoId: 61,
   },
   [NEW_INDICATORS_SUBCATEGORIES.BEHAVIORAL_ADDICTION]: {
     id: "e1e7e015-d5f2-4529-92c4-e679ff3aa3d4",
     label: "Addictions sans substance",
     category: NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR,
+    matomoId: 62,
   },
 };
 
@@ -190,6 +201,7 @@ export const INDICATEURS_HUMEUR: PredefineIndicatorV2SchemaType = {
   order: INDICATOR_ORDER.ASC,
   type: INDICATOR_TYPE.smiley,
   priority: 0,
+  matomoId: 42,
 };
 
 export const INDICATEURS_SOMMEIL: PredefineIndicatorV2SchemaType = {
@@ -201,6 +213,7 @@ export const INDICATEURS_SOMMEIL: PredefineIndicatorV2SchemaType = {
   order: INDICATOR_ORDER.ASC,
   type: INDICATOR_TYPE.gauge,
   priority: 0,
+  matomoId: 1,
 };
 
 export const GENERIC_INDICATOR_SUBSTANCE: PredefineIndicatorV2SchemaType = {
@@ -215,6 +228,7 @@ export const GENERIC_INDICATOR_SUBSTANCE: PredefineIndicatorV2SchemaType = {
   new: true,
   uuid: "ac7c85b6-e015-4b46-bd14-13e01f7d7a85",
   mainCategory: NEW_INDICATORS_CATEGORIES.SUBSTANCE,
+  matomoId: 58,
 };
 
 export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
@@ -241,6 +255,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     uuid: "6fb2564a-c2ab-44ca-80d7-88473fe0e414",
     category: INDICATORS_CATEGORIES["Emotions/sentiments"],
     mainCategory: NEW_INDICATORS_CATEGORIES.SLEEP,
+    matomoId: 2,
   },
   {
     name: "Difficultés d'endormissement",
@@ -252,6 +267,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     uuid: "b36556bb-5f13-4214-a05b-f31619115f5b",
     category: INDICATORS_CATEGORIES["Emotions/sentiments"],
     mainCategory: NEW_INDICATORS_CATEGORIES.SLEEP,
+    matomoId: 3,
   },
   {
     name: "Réveils nocturnes",
@@ -263,6 +279,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     type: INDICATOR_TYPE.boolean,
     category: INDICATORS_CATEGORIES["Emotions/sentiments"],
     mainCategory: NEW_INDICATORS_CATEGORIES.SLEEP,
+    matomoId: 4,
   },
   {
     name: "Réveils précoces",
@@ -274,6 +291,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     uuid: "",
     category: INDICATORS_CATEGORIES["Emotions/sentiments"],
     mainCategory: NEW_INDICATORS_CATEGORIES.SLEEP,
+    matomoId: 5,
   },
   {
     priority: 1,
@@ -285,6 +303,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     uuid: "",
     category: INDICATORS_CATEGORIES["Emotions/sentiments"],
     mainCategory: NEW_INDICATORS_CATEGORIES.SLEEP,
+    matomoId: 6,
   },
   {
     name: "Fatigue",
@@ -296,6 +315,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     type: INDICATOR_TYPE.gauge,
     category: INDICATORS_CATEGORIES["Emotions/sentiments"],
     mainCategory: NEW_INDICATORS_CATEGORIES.SLEEP,
+    matomoId: 7,
   },
   {
     name: "Anxiolytiques / hypnotiques",
@@ -308,6 +328,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     new: true,
     uuid: "bf9014c2-8e47-4c5f-9a2a-41e48c46496a",
     mainCategory: NEW_INDICATORS_CATEGORIES.SLEEP,
+    matomoId: 8,
   },
   {
     name: "Cannabis",
@@ -320,6 +341,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     uuid: "7f6e5d24-3c80-4b69-b5e1-08e4a6e4c1b7",
     category: INDICATORS_CATEGORIES.Comportements,
     mainCategory: NEW_INDICATORS_CATEGORIES.SUBSTANCE,
+    matomoId: 9,
   },
   {
     name: "Comportement sexuel à risques",
@@ -331,6 +353,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     type: INDICATOR_TYPE.boolean,
     category: INDICATORS_CATEGORIES["Emotions/sentiments"],
     mainCategory: NEW_INDICATORS_CATEGORIES.SLEEP,
+    matomoId: 11,
   },
   {
     name: "Achats inhabituels ou excessifs",
@@ -341,6 +364,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     order: "DESC",
     type: INDICATOR_TYPE.boolean,
     mainCategory: NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR,
+    matomoId: 12,
   },
   {
     name: "Écrans / réseaux sociaux",
@@ -351,6 +375,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     uuid: "3b3f1d10-fc45-4b12-a476-508531ce127c",
     category: INDICATORS_CATEGORIES["Emotions/sentiments"],
     mainCategory: NEW_INDICATORS_CATEGORIES.SUBSTANCE,
+    matomoId: 10,
   },
   // {
   //   name: "Temps réseaux sociaux",
@@ -371,6 +396,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     order: "DESC",
     type: INDICATOR_TYPE.boolean,
     mainCategory: NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR,
+    matomoId: 15,
   },
   {
     name: "Comportements à risques",
@@ -382,6 +408,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     isGeneric: true,
     category: INDICATORS_CATEGORIES["Comportements"],
     mainCategory: NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR,
+    matomoId: 16,
   },
   {
     name: "Stress",
@@ -392,6 +419,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     order: "DESC",
     type: INDICATOR_TYPE.gauge,
     mainCategory: NEW_INDICATORS_CATEGORIES.WORK,
+    matomoId: 17,
   },
   {
     name: "Implication / intérêt",
@@ -403,6 +431,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     uuid: "e601f450-0c10-4c7d-b1b0-b1b7405b6010",
     category: INDICATORS_CATEGORIES["Emotions/sentiments"],
     mainCategory: NEW_INDICATORS_CATEGORIES.WORK,
+    matomoId: 18,
   },
   {
     name: "Surmenage",
@@ -413,6 +442,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     order: "DESC",
     type: INDICATOR_TYPE.gauge,
     mainCategory: NEW_INDICATORS_CATEGORIES.WORK,
+    matomoId: 19,
   },
   {
     name: "Libido",
@@ -423,6 +453,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     order: "ASC",
     type: INDICATOR_TYPE.gauge,
     mainCategory: NEW_INDICATORS_CATEGORIES.PHYSICAL_SIGNS,
+    matomoId: 20,
   },
   {
     name: "Nausées",
@@ -433,6 +464,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     order: "DESC",
     type: INDICATOR_TYPE.boolean,
     mainCategory: NEW_INDICATORS_CATEGORIES.PHYSICAL_SIGNS,
+    matomoId: 21,
   },
   {
     name: "Respiration rapide",
@@ -443,6 +475,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     order: "DESC",
     type: INDICATOR_TYPE.boolean,
     mainCategory: NEW_INDICATORS_CATEGORIES.PHYSICAL_SIGNS,
+    matomoId: 22,
   },
   {
     name: "Tachycardie, palpitations",
@@ -453,6 +486,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     order: "DESC",
     type: INDICATOR_TYPE.boolean,
     mainCategory: NEW_INDICATORS_CATEGORIES.PHYSICAL_SIGNS,
+    matomoId: 23,
   },
   {
     name: "Vertiges",
@@ -463,6 +497,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     order: "DESC",
     type: INDICATOR_TYPE.boolean,
     mainCategory: NEW_INDICATORS_CATEGORIES.PHYSICAL_SIGNS,
+    matomoId: 24,
   },
   {
     name: "Mal au dos",
@@ -474,6 +509,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     new: true,
     uuid: "b2b92bb0-ff2a-4c9b-bae9-340089efde78",
     mainCategory: NEW_INDICATORS_CATEGORIES.PHYSICAL_SIGNS,
+    matomoId: 25,
   },
   {
     name: "Maux de tête",
@@ -484,6 +520,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     order: "DESC",
     type: INDICATOR_TYPE.boolean,
     mainCategory: NEW_INDICATORS_CATEGORIES.PHYSICAL_SIGNS,
+    matomoId: 26,
   },
   {
     name: "Mal au ventre",
@@ -494,6 +531,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     order: "DESC",
     type: INDICATOR_TYPE.boolean,
     mainCategory: NEW_INDICATORS_CATEGORIES.PHYSICAL_SIGNS,
+    matomoId: 27,
   },
   {
     name: "Trouble d'ideation\nDifficulté à organiser ses pensées, à plannifier...",
@@ -505,6 +543,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     new: true,
     uuid: "ed5f6b2e-6a32-420f-9b71-4c3d42222cd6",
     mainCategory: NEW_INDICATORS_CATEGORIES.COGNITIVE,
+    matomoId: 28,
   },
   {
     name: "Procrastination",
@@ -515,6 +554,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     order: "DESC",
     type: INDICATOR_TYPE.boolean,
     mainCategory: NEW_INDICATORS_CATEGORIES.PHYSICAL_SIGNS,
+    matomoId: 29,
   },
   {
     name: "Menstruations",
@@ -525,6 +565,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     order: "DESC",
     type: INDICATOR_TYPE.gauge,
     mainCategory: NEW_INDICATORS_CATEGORIES.PHYSICAL_SIGNS,
+    matomoId: 30,
   },
   {
     name: "Prise de poids",
@@ -536,6 +577,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     new: true,
     uuid: "fcfdb222-b19c-4f00-bcc9-8d75092e2203",
     mainCategory: NEW_INDICATORS_CATEGORIES.PHYSICAL_SIGNS,
+    matomoId: 31,
   },
   {
     name: "Perte de poids",
@@ -546,6 +588,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     order: "DESC",
     type: INDICATOR_TYPE.gauge,
     mainCategory: NEW_INDICATORS_CATEGORIES.PHYSICAL_SIGNS,
+    matomoId: 32,
   },
   {
     name: "Colère",
@@ -557,6 +600,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     order: "DESC",
     type: INDICATOR_TYPE.gauge,
     mainCategory: NEW_INDICATORS_CATEGORIES.EMOTIONS,
+    matomoId: 33,
   },
   {
     name: "Confiance en soi",
@@ -568,6 +612,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     order: "ASC",
     type: INDICATOR_TYPE.gauge,
     mainCategory: NEW_INDICATORS_CATEGORIES.EMOTIONS,
+    matomoId: 34,
   },
   {
     name: "Joie / Euphorie",
@@ -579,6 +624,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     order: "DESC",
     type: INDICATOR_TYPE.boolean,
     mainCategory: NEW_INDICATORS_CATEGORIES.EMOTIONS,
+    matomoId: 35,
   },
   {
     name: "Irritabilité",
@@ -590,6 +636,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     order: "DESC",
     type: INDICATOR_TYPE.gauge,
     mainCategory: NEW_INDICATORS_CATEGORIES.EMOTIONS,
+    matomoId: 36,
   },
   {
     name: "Tristesse",
@@ -601,6 +648,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     order: "DESC",
     type: INDICATOR_TYPE.gauge,
     mainCategory: NEW_INDICATORS_CATEGORIES.EMOTIONS,
+    matomoId: 37,
   },
   {
     name: "Culpabilité",
@@ -612,6 +660,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     order: "DESC",
     type: INDICATOR_TYPE.gauge,
     mainCategory: NEW_INDICATORS_CATEGORIES.EMOTIONS,
+    matomoId: 38,
   },
   {
     name: "Humeur matinale",
@@ -623,6 +672,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     order: "ASC",
     type: INDICATOR_TYPE.smiley,
     mainCategory: NEW_INDICATORS_CATEGORIES.EMOTIONS,
+    matomoId: 39,
   },
   {
     name: "Humeur à la mi-journée",
@@ -634,6 +684,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     order: "ASC",
     type: INDICATOR_TYPE.smiley,
     mainCategory: NEW_INDICATORS_CATEGORIES.EMOTIONS,
+    matomoId: 40,
   },
   {
     name: "Humeur au coucher",
@@ -645,6 +696,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     order: "ASC",
     type: INDICATOR_TYPE.smiley,
     mainCategory: NEW_INDICATORS_CATEGORIES.EMOTIONS,
+    matomoId: 41,
   },
   {
     name: "Stabilité de l'humeur",
@@ -657,6 +709,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     new: true,
     uuid: "cfb3c6a0-b511-495e-b39e-8a8c35bb4d6f",
     mainCategory: NEW_INDICATORS_CATEGORIES.EMOTIONS,
+    matomoId: 42,
   },
   {
     name: "Estime de soi",
@@ -668,6 +721,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     order: "ASC",
     type: INDICATOR_TYPE.gauge,
     mainCategory: NEW_INDICATORS_CATEGORIES.EMOTIONS,
+    matomoId: 43,
   },
   {
     name: "Anxiété",
@@ -679,6 +733,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     order: "DESC",
     type: INDICATOR_TYPE.gauge,
     mainCategory: NEW_INDICATORS_CATEGORIES.EMOTIONS,
+    matomoId: 44,
   },
   {
     name: "Motivation",
@@ -689,6 +744,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     order: "ASC",
     type: INDICATOR_TYPE.gauge,
     mainCategory: NEW_INDICATORS_CATEGORIES.ENERGY,
+    matomoId: 45,
   },
   {
     name: "Ruminations",
@@ -699,6 +755,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     order: "DESC",
     type: INDICATOR_TYPE.gauge,
     mainCategory: NEW_INDICATORS_CATEGORIES.INTRUSIVE_THOUGHTS,
+    matomoId: 46,
   },
   {
     name: "Idées suicidaires",
@@ -709,6 +766,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     order: "DESC",
     type: INDICATOR_TYPE.gauge,
     mainCategory: NEW_INDICATORS_CATEGORIES.INTRUSIVE_THOUGHTS,
+    matomoId: 47,
   },
   {
     name: "Hallucinations/idées délirantes",
@@ -720,6 +778,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     new: true,
     uuid: "f27c7aaf-0a3e-468b-b3b4-3b799626f9c6",
     mainCategory: NEW_INDICATORS_CATEGORIES.INTRUSIVE_THOUGHTS,
+    matomoId: 48,
   },
   {
     name: "Phobies",
@@ -731,6 +790,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     new: true,
     uuid: "25f3465f-2c7b-4193-a693-dabfdbb72fa2",
     mainCategory: NEW_INDICATORS_CATEGORIES.INTRUSIVE_THOUGHTS,
+    matomoId: 49,
   },
   {
     name: "Autour de l'alimentation et du corps",
@@ -742,6 +802,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     new: true,
     uuid: "e1e7e015-d5f2-4529-92c4-e679ff3aa3d4",
     mainCategory: NEW_INDICATORS_CATEGORIES.INTRUSIVE_THOUGHTS,
+    matomoId: 50,
   },
   // {
   //   name: "Tout le monde est contre moi",
@@ -758,6 +819,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     order: "DESC",
     type: INDICATOR_TYPE.gauge,
     mainCategory: NEW_INDICATORS_CATEGORIES.INTRUSIVE_THOUGHTS,
+    matomoId: 51,
   },
   {
     name: "Sentiment de harcèlement",
@@ -769,6 +831,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     order: "DESC",
     type: INDICATOR_TYPE.gauge,
     mainCategory: NEW_INDICATORS_CATEGORIES.INTRUSIVE_THOUGHTS,
+    matomoId: 52,
   },
   {
     name: "Crise de boulimie / hyperphagie",
@@ -779,6 +842,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     order: "DESC",
     type: INDICATOR_TYPE.boolean,
     mainCategory: NEW_INDICATORS_CATEGORIES.FOOD,
+    matomoId: 53,
   },
   {
     categories: [NEW_INDICATORS_CATEGORIES.FOOD],
@@ -789,6 +853,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     order: "ASC",
     type: INDICATOR_TYPE.gauge,
     mainCategory: NEW_INDICATORS_CATEGORIES.FOOD,
+    matomoId: 54,
   },
   // {
   //   name: "Augmentation de l'appétit",
@@ -805,6 +870,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     new: true,
     uuid: "f90c7b60-09a3-4c66-a2ab-4c54dd3b9a8d",
     mainCategory: NEW_INDICATORS_CATEGORIES.FOOD,
+    matomoId: 55,
   },
   {
     name: "Tabac",
@@ -817,6 +883,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     new: true,
     uuid: "e4a2cb84-548f-474a-b93a-6c4423cfa7a2",
     mainCategory: NEW_INDICATORS_CATEGORIES.SUBSTANCE,
+    matomoId: 56,
   },
   GENERIC_INDICATOR_SUBSTANCE,
   {
@@ -829,6 +896,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     order: "DESC",
     type: INDICATOR_TYPE.gauge,
     mainCategory: NEW_INDICATORS_CATEGORIES.SUBSTANCE,
+    matomoId: 58,
   },
   {
     name: "Café",
@@ -841,6 +909,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     new: true,
     uuid: "aa4a31c4-b3d5-426f-8735-cad6157d6a67",
     mainCategory: NEW_INDICATORS_CATEGORIES.SUBSTANCE,
+    matomoId: 59,
   },
   {
     name: "Craving",
@@ -853,6 +922,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     new: true,
     uuid: "df1c85d4-2a3e-4a3c-8129-9e09e77e77a6",
     mainCategory: NEW_INDICATORS_CATEGORIES.SUBSTANCE,
+    matomoId: 60,
   },
   {
     name: "Jeux de hasard & jeux d'argent",
@@ -865,6 +935,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     new: true,
     uuid: "bc58c4de-8612-48e2-b2cf-42ff20cf1e79",
     mainCategory: NEW_INDICATORS_CATEGORIES.SUBSTANCE,
+    matomoId: 61,
   },
   {
     name: "Addiction sexuelle",
@@ -877,6 +948,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     new: true,
     uuid: "33a8e53e-3d63-4f1c-98d8-1782b1b4628d",
     mainCategory: NEW_INDICATORS_CATEGORIES.SUBSTANCE,
+    matomoId: 62,
   },
   {
     name: "Jeux vidéos",
@@ -889,6 +961,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     new: true,
     uuid: "7d4d8ef9-40d6-4199-9759-24412e750d40",
     mainCategory: NEW_INDICATORS_CATEGORIES.SUBSTANCE,
+    matomoId: 63,
   },
   {
     name: "Ecrans",
@@ -901,6 +974,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     new: true,
     uuid: "23dbf31e-f92f-4a3e-90e2-0d0b6940f4a2",
     mainCategory: NEW_INDICATORS_CATEGORIES.SUBSTANCE,
+    matomoId: 64,
   },
   {
     name: "Autre addiction",
@@ -913,6 +987,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     new: true,
     uuid: "ce73f5cd-97f6-4a83-854e-229f1c6cb00b",
     mainCategory: NEW_INDICATORS_CATEGORIES.SUBSTANCE,
+    matomoId: 65,
   },
   {
     name: "Repli social",
@@ -924,6 +999,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     new: true,
     uuid: "10f35dfb-d0ef-4a59-8c2f-8d4e66e31496",
     mainCategory: NEW_INDICATORS_CATEGORIES.SOCIAL_RELATIONS,
+    matomoId: 66,
   },
   {
     name: "Désinhibition",
@@ -935,6 +1011,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     order: "DESC",
     type: INDICATOR_TYPE.gauge,
     mainCategory: NEW_INDICATORS_CATEGORIES.SOCIAL_RELATIONS,
+    matomoId: 67,
   },
   {
     name: "Qualité des interactions sociales",
@@ -946,6 +1023,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     new: true,
     uuid: "9d7c1f03-d9ea-4053-bf33-04d32798bc56",
     mainCategory: NEW_INDICATORS_CATEGORIES.SOCIAL_RELATIONS,
+    matomoId: 68,
   },
   {
     name: "Sentiment d'isolement",
@@ -957,6 +1035,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     order: "DESC",
     type: INDICATOR_TYPE.gauge,
     mainCategory: NEW_INDICATORS_CATEGORIES.SOCIAL_RELATIONS,
+    matomoId: 69,
   },
   {
     name: "Événements de vie difficile",
@@ -969,6 +1048,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     new: true,
     isGeneric: true,
     mainCategory: NEW_INDICATORS_CATEGORIES.LIFE_EVENT,
+    matomoId: 70,
   },
   {
     name: "Divorce",
@@ -980,6 +1060,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     type: INDICATOR_TYPE.gauge,
     new: true,
     mainCategory: NEW_INDICATORS_CATEGORIES.LIFE_EVENT,
+    matomoId: 71,
   },
   {
     name: "Perte d’emploi",
@@ -991,6 +1072,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     type: INDICATOR_TYPE.gauge,
     new: true,
     mainCategory: NEW_INDICATORS_CATEGORIES.LIFE_EVENT,
+    matomoId: 72,
   },
   {
     name: "Deuil",
@@ -1002,6 +1084,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     type: INDICATOR_TYPE.gauge,
     new: true,
     mainCategory: NEW_INDICATORS_CATEGORIES.LIFE_EVENT,
+    matomoId: 73,
   },
   {
     name: "Projection dans l'avenir",
@@ -1013,6 +1096,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     order: "ASC",
     type: INDICATOR_TYPE.gauge,
     mainCategory: NEW_INDICATORS_CATEGORIES.COGNITIVE,
+    matomoId: 74,
   },
   {
     name: "Difficultés attention / concentration",
@@ -1024,6 +1108,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     new: true,
     uuid: "bfcfe140-295f-4f03-a2c3-453542e6c902",
     mainCategory: NEW_INDICATORS_CATEGORIES.COGNITIVE,
+    matomoId: 75,
   },
   {
     name: "Difficultés de mémorisation",
@@ -1035,6 +1120,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     new: true,
     uuid: "62cf1e68-ecb9-4cc5-b0db-d376f8f53ba2",
     mainCategory: NEW_INDICATORS_CATEGORIES.COGNITIVE,
+    matomoId: 76,
   },
 ];
 

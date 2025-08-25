@@ -13,6 +13,7 @@ import { INDICATOR_CATEGORIES_DATA } from "../data/helperData";
 import { SUBCATEGORIES, NEW_INDICATORS_SUBCATEGORIES } from "@/utils/liste_indicateurs.1";
 import InstructionText from "../InstructionText";
 import { AnimatedHeaderScrollScreen } from "@/scenes/survey-v2/AnimatedHeaderScrollScreen";
+import logEvents from "@/services/logEvents";
 
 type Props = OnboardingV2ScreenProps<"PersonalizationObjective">;
 
@@ -29,6 +30,11 @@ export const SubcategoriesScreen: React.FC<Props> = ({ navigation, route }) => {
         await updateUserSubcategories(selectedSubcategories);
       }
 
+      logEvents.logIndicatorObdLvl2(
+        selectedSubcategories.map((subTheme) => SUBCATEGORIES[subTheme].matomoId),
+        selectedSubcategories.length
+      );
+
       navigation.navigate(NextScreen);
       setSlideIndex(-1);
       setIsVisible(false);
@@ -36,6 +42,7 @@ export const SubcategoriesScreen: React.FC<Props> = ({ navigation, route }) => {
   };
 
   const handleSkip = () => {
+    logEvents.logIndicatorObdPass(15);
     navigation.navigate(NextScreen);
   };
 

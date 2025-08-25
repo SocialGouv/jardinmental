@@ -24,6 +24,7 @@ import SubcategoriesScreen from "./personalization/SubCategoriesScreen";
 import { beforeToday, formatDay } from "@/utils/date/helpers";
 import { DiaryDataContext } from "@/context/diaryData";
 import { StackNavigationProp } from "@react-navigation/stack";
+import logEvents from "@/services/logEvents";
 
 const Stack = createStackNavigator<OnboardingV2StackParamList>();
 
@@ -77,7 +78,14 @@ const OnboardingV2Navigator: React.FC = () => {
       extraInfo={
         "En France, 32 % des adultes se déclarent insatisfaits de leur sommeil.\nEn faire le suivi, c’est déjà prendre soin de soi. (ifop mars 2022)"
       }
-      onNext={() => navigation.navigate("PersonalizationStart")}
+      onNext={() => {
+        logEvents.logQuestObdStart2();
+        navigation.navigate("PersonalizationStart");
+      }}
+      onPrevious={() => {
+        logEvents.logOnboardingBack(13);
+        navigation.goBack();
+      }}
       headingTitle={""}
     />
   );
@@ -94,6 +102,7 @@ const OnboardingV2Navigator: React.FC = () => {
         description={"Complétez maintenant votre première observation"}
         nextText={"Compléter mon observation"}
         onNext={() => {
+          logEvents.logQuestObdStart();
           const date = formatDay(beforeToday(0));
           const answers = diaryData[date] || {};
           const currentSurvey = { date, answers };

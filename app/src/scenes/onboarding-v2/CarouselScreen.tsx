@@ -9,6 +9,7 @@ import carouselSlides from "./data/carouselData";
 import BeigeWrapperScreen from "./BeigeWrapperScreen";
 import { useOnboardingProgressHeader } from "../onboarding/ProgressHeader";
 import { mergeClassNames } from "@/utils/className";
+import logEvents from "../../services/logEvents";
 
 type Props = OnboardingV2ScreenProps<"Carousel">;
 
@@ -36,14 +37,12 @@ export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
   }, [profile]);
 
   const handleNext = () => {
+    logEvents.logCarrouselObdNext(slides.length);
     navigation.navigate(NextRoute);
   };
 
-  const handlePrevious = () => {
-    navigation.goBack();
-  };
-
   const handleSkip = () => {
+    logEvents.logCarrouselObdPass(currentIndex + 1);
     navigation.navigate(NextRoute);
   };
 
@@ -60,6 +59,10 @@ export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
   }).current;
 
   const goToSlide = (index: number) => {
+    // Track slide change when manually navigating (1-based index)
+    if (index !== currentIndex) {
+      logEvents.logCarrouselObdNext(index + 1);
+    }
     flatListRef.current?.scrollToIndex({ index, animated: true });
   };
 
@@ -91,30 +94,32 @@ export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
 
   return (
     <BeigeWrapperScreen variant={variant} handleSkip={handleSkip}>
-      <FlatList
-        ref={flatListRef}
-        data={slides}
-        renderItem={renderSlide}
-        keyExtractor={(item) => item.id.toString()}
-        horizontal
-        pagingEnabled
-        showsHorizontalScrollIndicator={false}
-        onViewableItemsChanged={onViewableItemsChanged}
-        viewabilityConfig={viewabilityConfig}
-        getItemLayout={(data, index) => ({
-          length: screenWidth,
-          offset: screenWidth * index,
-          index,
-        })}
-      />
-      <View className="left-0 right-0">
-        <View className="flex-row justify-center items-center mb-6">{slides.map((_, index) => renderPaginationDot(index))}</View>
-        <NavigationButtons
-          withArrow={true}
-          nextText={currentIndex === slides.length - 1 ? "Démarrer sur Jardin Mental" : "Suivant"}
-          onNext={goToNextSlide}
+      <>
+        <FlatList
+          ref={flatListRef}
+          data={slides}
+          renderItem={renderSlide}
+          keyExtractor={(item) => item.id.toString()}
+          horizontal
+          pagingEnabled
+          showsHorizontalScrollIndicator={false}
+          onViewableItemsChanged={onViewableItemsChanged}
+          viewabilityConfig={viewabilityConfig}
+          getItemLayout={(data, index) => ({
+            length: screenWidth,
+            offset: screenWidth * index,
+            index,
+          })}
         />
-      </View>
+        <View className="left-0 right-0">
+          <View className="flex-row justify-center items-center mb-6">{slides.map((_, index) => renderPaginationDot(index))}</View>
+          <NavigationButtons
+            withArrow={true}
+            nextText={currentIndex === slides.length - 1 ? "Démarrer sur Jardin Mental" : "Suivant"}
+            onNext={goToNextSlide}
+          />
+        </View>
+      </>
     </BeigeWrapperScreen>
   );
 };

@@ -28,6 +28,7 @@ import PlusIcon from "@assets/svg/icon/plus";
 import { AnimatedHeaderScrollScreen } from "@/scenes/survey-v2/AnimatedHeaderScrollScreen";
 import { useFocusEffect } from "@react-navigation/native";
 import AlertBanner from "../AlertBanner";
+import logEvents from "@/services/logEvents";
 
 const BASE_INDICATORS_FOR_CUSTOM_CATEGORIES = {
   [NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR]: [INDICATORS.find((ind) => ind.uuid === "1d4c3f59-dc3e-4b45-ae82-2ea77a62e6c6")],
@@ -147,7 +148,7 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation, r
     setSelectedIndicators((prev) => (prev.includes(id) ? prev.filter((selectedId) => selectedId !== id) : [...prev, id]));
   }, []);
 
-  const handleNext = async () => {
+  const handleNext = async (isSkipped: boolean) => {
     // Get predefined indicators
     const indicators = [...INDICATORS, ...Object.values(addedIndicators).flat()];
 
@@ -177,12 +178,19 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation, r
       active: true,
       position: 0,
       created_at: new Date(),
+      matomoId: indicator.matomoId,
     }));
 
     // Combine all indicators
     const allIndicators: Indicator[] = [...predefinedConverted, ...customConverted];
     await localStorage.setIndicateurs(allIndicators);
     await localStorage.setOnboardingDone(true);
+    if (isSkipped) {
+      logEvents.logIndicatorObdPass(19);
+    } else {
+      const matomoIds = allIndicators.map((ind) => ind.matomoId).filter((id) => id !== undefined);
+      logEvents.logIndicatorObdValidate(matomoIds, matomoIds.length);
+    }
     navigation.navigate(NextRoute);
   };
 
@@ -209,6 +217,7 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation, r
   );
 
   const handlePrevious = () => {
+    logEvents.logOnboardingBack(19);
     if (route.params?.skippedScreen) {
       navigation.navigate(route.params.skippedScreen);
     } else if (profile?.selectedDifficulties.find((cat) => INDICATOR_CATEGORIES_DATA[cat].subCat)) {
@@ -237,7 +246,7 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation, r
       bottomComponent={
         <NavigationButtons
           absolute={true}
-          onNext={handleNext}
+          onNext={() => handleNext(false)}
           headerContent={
             <View>
               {selectedIndicators.length >= 9 && <AlertBanner text={`Nous vous recommandons de ne pas choisir plus de 8 éléments pour commencer`} />}
@@ -248,7 +257,7 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation, r
               </View>
             </View>
           }
-          onSkip={handleNext}
+          onSkip={() => handleNext(true)}
           showSkip={true}
           nextDisabled={selectedIndicators.length === 0}
           nextText={`Valider ${indicatorsTotalCount} élément${indicatorsTotalCount > 1 ? "s" : ""} à suivre`}

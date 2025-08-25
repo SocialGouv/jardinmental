@@ -16,6 +16,7 @@ import NavigationButtons from "@/components/onboarding/NavigationButtons";
 import MoonIcon from "@assets/svg/icon/moon";
 import { typography } from "@/utils/typography";
 import { mergeClassNames } from "@/utils/className";
+import logEvents from "@/services/logEvents";
 
 type Props = OnboardingV2ScreenProps<"OnboardingCheckInHowDoYouFeel">;
 
@@ -30,6 +31,7 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
 
   const handleComplete = async () => {
     setLoading(true);
+    logEvents.logSleepObdValidate();
     const date = formatDay(beforeToday(0));
     const prev = diaryData[date] || {};
 
@@ -50,6 +52,7 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
   };
 
   const handlePrevious = () => {
+    logEvents.logOnboardingBack(12);
     navigation.goBack();
   };
 

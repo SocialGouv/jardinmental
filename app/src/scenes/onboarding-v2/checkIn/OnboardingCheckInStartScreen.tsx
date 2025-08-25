@@ -6,16 +6,19 @@ import BeigeCard from "../BeigeCard";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
 import { VARIANT_BORDER_COLORS } from "../data/carouselData";
+import logEvents from "@/services/logEvents";
 type Props = OnboardingV2ScreenProps<"Intro">;
 
 const NextRoute = "OnboardingCheckInHowDoYouFeel";
 
 export const OnboardingCheckInStartScreen: React.FC<Props> = ({ navigation }) => {
   const handleNext = () => {
+    logEvents.logHumeurObdStart();
     navigation.navigate(NextRoute);
   };
 
   const handlePrevious = () => {
+    logEvents.logOnboardingBack(7);
     navigation.goBack();
   };
 

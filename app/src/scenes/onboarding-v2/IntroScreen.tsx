@@ -9,11 +9,13 @@ import { SafeAreaViewWithOptionalHeader } from "../onboarding/ProgressHeader";
 import { typography } from "@/utils/typography";
 import { mergeClassNames } from "@/utils/className";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import logEvents from "@/services/logEvents";
 
 type Props = OnboardingV2ScreenProps<"Intro">;
 
 export const IntroScreen: React.FC<Props> = ({ navigation }) => {
   const handleNext = () => {
+    logEvents.logIntroObdNext();
     navigation.navigate("Carousel");
   };
 

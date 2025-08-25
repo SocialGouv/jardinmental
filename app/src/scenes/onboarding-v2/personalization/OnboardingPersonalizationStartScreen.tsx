@@ -8,6 +8,7 @@ import { SafeAreaViewWithOptionalHeader, useOnboardingProgressHeader } from "@/s
 import BannerHeader from "../BannerHeader";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
+import logEvents from "@/services/logEvents";
 
 type Props = OnboardingV2ScreenProps<"Intro">;
 
@@ -17,6 +18,7 @@ export const OnboardingPersonalizationStartScreen: React.FC<Props> = ({ navigati
   const { setNextCallback, setSkipCallback } = useOnboardingProgressHeader();
 
   const handleNext = useCallback(() => {
+    logEvents.logIndicatorObdStart();
     navigation.navigate(NextScreen);
   }, [navigation]);
 
@@ -26,10 +28,12 @@ export const OnboardingPersonalizationStartScreen: React.FC<Props> = ({ navigati
   }, [handleNext]);
 
   const handlePrevious = () => {
+    logEvents.logOnboardingBack(4);
     navigation.goBack();
   };
 
   const handleSkip = useCallback(() => {
+    logEvents.logIndicatorObdPass(4);
     navigation.navigate("OnboardingChooseIndicator", {
       skippedScreen: "PersonalizationStart",
     });

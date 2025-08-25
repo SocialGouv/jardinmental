@@ -131,6 +131,7 @@ const Reminder = ({
     if (!dayjs(newReminder).isValid()) return;
     await scheduleNotification(newReminder);
     setReminder(dayjs(newReminder));
+    logEvents.logReminderObdEdit(Number(dayjs(newReminder).format("HHmm")));
     await AsyncStorage.setItem(ReminderStorageKey, JSON.stringify(dayjs(newReminder)));
     setReminderSetupVisible(false);
     const scheduled = await NotificationService.getScheduledLocalNotifications();
@@ -151,6 +152,7 @@ const Reminder = ({
     }
     await localStorage.setOnboardingDone(true);
     // await localStorage.setOnboardingStep(null);
+    logEvents.logReminderObdValidate();
     if (route?.params?.onboarding) {
       navigation.reset({
         index: 0,
@@ -192,7 +194,10 @@ const Reminder = ({
   return (
     <BeigeWrapperScreen
       variant="blue"
-      handlePrevious={navigation.goBack}
+      handlePrevious={() => {
+        logEvents.logOnboardingBack(18);
+        navigation.goBack();
+      }}
       nextText="Programmer mon rappel quotidien"
       handleSkip={() => navigation.navigate("tabs")}
       handleNext={validateOnboarding}

@@ -52,6 +52,7 @@ If, during refinement, the user selects one of the preexisting specific indicato
   created_at: z.date(),
   isGeneric: z.boolean().optional(),
   isCustom: z.boolean().optional().describe("Indicates if the indicator is a custom one created by the user"),
+  matomoId: z.number().optional().describe("Matomo ID for tracking purposes"),
 });
 
 export const PredefineIndicatorSchema = z.object({
@@ -79,6 +80,7 @@ export const PredefineIndicatorV2Schema = z.object({
   new: z.boolean().optional(),
   isGeneric: z.boolean().optional(),
   isCustom: z.boolean().optional(),
+  matomoId: z.number(),
 });
 
 export type PredefineIndicatorV2SchemaType = z.infer<typeof PredefineIndicatorV2Schema>;
@@ -110,5 +112,6 @@ export const generateIndicatorFromPredefinedIndicator = (predefinedIndicator: Pr
     active: true,
     position: 0,
     created_at: new Date(),
+    matomoId: predefinedIndicator.matomoId,
   };
 };
