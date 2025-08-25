@@ -98,7 +98,7 @@ fileignoreconfig:
 - filename: app/src/scenes/survey-v2/ContextScreen.tsx
   checksum: 6371ed197788ce03cb6c42e3151135d106c684e295b66a25ebd841ca1d3a01dd
 - filename: app/src/scenes/survey-v2/IndicatorScreen.tsx
-  checksum: 685b08d724c88e755147be9801557f30eebc6f16551bdd693d464330c08843da
+  checksum: 1e5505491542d03a5d856ef60a5413fce9040725569d5f0a9d0a043a86d61d7e
 - filename: app/src/scenes/survey-v2/ToxicScreen.tsx
   checksum: 033a3b6b40b07e8d7369d7d1abc7a0e25f4df71c5aebfd43d8253b0fe83c5a69
 - filename: app/src/scenes/survey-v2/multiScreenSurvey/ContextScreen.tsx
