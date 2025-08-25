@@ -87,12 +87,12 @@ export default ({ navigation, indicateurs = [], patientState, goalsData, date })
                   category={key}
                   patientState={patientState}
                   label={
-                    indicator?.name || 
-                    value?._indicateur?.name || 
-                    INDICATEURS_LIST[key] || 
-                    displayedCategories[key] || 
-                    categoryName || 
-                    'Unknown Indicator'
+                    indicator?.name ||
+                    value?._indicateur?.name ||
+                    INDICATEURS_LIST[key] ||
+                    displayedCategories[key] ||
+                    categoryName ||
+                    "Unknown Indicator"
                   }
                 />
               );
