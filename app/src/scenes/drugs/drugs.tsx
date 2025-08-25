@@ -73,9 +73,9 @@ const Drugs = ({ navigation, route }) => {
     }
   }, [route?.params?.currentSurvey?.answers, priseDeTraitement.id, priseDeTraitementSiBesoin.id]);
 
-  const enrichTreatmentWithData = (list) => {
+  const enrichTreatmentWithData = (list, existingDrugs) => {
     if (list) {
-      const t = listDrugs.filter((e) => !!list.find((local) => local.id === e.id));
+      const t = existingDrugs.filter((e) => !!list.find((local) => local.id === e.id));
       return t;
     }
     return null;
@@ -85,7 +85,7 @@ const Drugs = ({ navigation, route }) => {
     if (!listDrugs || listDrugs?.length <= 0) return;
     (async () => {
       const medicalTreatmentStorage = route?.params?.treatment || (await localStorage.getMedicalTreatment());
-      setMedicalTreatment(enrichTreatmentWithData(medicalTreatmentStorage));
+      setMedicalTreatment(enrichTreatmentWithData(medicalTreatmentStorage, listDrugs));
     })();
   }, [navigation, route, listDrugs]);
 
@@ -139,7 +139,7 @@ const Drugs = ({ navigation, route }) => {
 
   const handleDelete = async (drug) => {
     const treatmentAfterDeletion = await localStorage.removeDrugFromTreatment(drug?.id);
-    setMedicalTreatment(enrichTreatmentWithData(treatmentAfterDeletion));
+    setMedicalTreatment(enrichTreatmentWithData(treatmentAfterDeletion, listDrugs));
   };
 
   const toggleAnswer = async ({ key, value }) => {
@@ -306,8 +306,12 @@ const Drugs = ({ navigation, route }) => {
             navigation={navigation}
             onClose={async () => {
               const medicalTreatmentStorage = await localStorage.getMedicalTreatment();
-              setMedicalTreatment(enrichTreatmentWithData(medicalTreatmentStorage));
-              closeBottomSheet();
+              const list = await getDrugListWithLocalStorage();
+              setListDrugs(list);
+              setTimeout(() => {
+                setMedicalTreatment(enrichTreatmentWithData(medicalTreatmentStorage, list));
+                closeBottomSheet();
+              });
             }}
           />
         );
