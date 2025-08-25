@@ -17,55 +17,6 @@ export default ({ drug, onDelete }) => {
   }, [drug]);
 
   const render = () => {
-    //  {showPosology ? (
-    //       <View style={styles.right}>
-    //         {showFreeText ? (
-    //           <View style={styles.freeTextContainer}>
-    //             <TextInput
-    //               autoCapitalize="none"
-    //               onChangeText={handleChangeFreeText}
-    //               value={freeText}
-    //               placeholder="5 ml, 3 gouttes, ..."
-    //               style={styles.freeText}
-    //             />
-    //             <Text style={styles.close} onPress={() => setShowFreeText(false)}>
-    //               X
-    //             </Text>
-    //           </View>
-    //         ) : (
-    //           <RNPickerSelect
-    //             useNativeAndroidPickerStyle={false}
-    //             onValueChange={(value) => {
-    //               if (value === "FREE_TEXT") return setShowFreeText(true);
-    //               onChange(drug, value);
-    //             }}
-    //             placeholder={{
-    //               label: "choisir une dose dans la liste",
-    //               value: null,
-    //               color: "grey",
-    //               inputLabel: "Indiquer la dose",
-    //             }}
-    //             items={[{ label: "0", value: "0", color: colors.BLUE }]
-    //               .concat(
-    //                 drug?.values.map((v) => ({
-    //                   label: v,
-    //                   value: v,
-    //                   color: colors.BLUE,
-    //                 }))
-    //               )
-    //               .concat([
-    //                 {
-    //                   label: "Saisir manuellement une dose",
-    //                   value: "FREE_TEXT",
-    //                   color: colors.LIGHT_BLUE,
-    //                 },
-    //               ])}
-    //             style={pickerSelectStyles}
-    //             value={drug?.value}
-    //           />
-    //         )}
-    //       </View>
-    //     ) : null}
     return <ListItem id={""} label={drug?.name1} description={drug?.name2 ? `(${drug?.name2})` : undefined} selected={false} onPress={onDelete} />;
   };
 
