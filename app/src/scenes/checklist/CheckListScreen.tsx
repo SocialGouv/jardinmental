@@ -89,7 +89,7 @@ export default function CheckListScreen({ navigation, route }) {
 
   const handleItemPress = (item) => {
     if (item.path === "drugs") {
-      showBottomSheet(<DrugsBottomSheet onClose={undefined} />);
+      showBottomSheet(<DrugsBottomSheet navigation={navigation} onClose={undefined} />);
     } else {
       navigation.navigate(item.path, {
         previous: "checklist",

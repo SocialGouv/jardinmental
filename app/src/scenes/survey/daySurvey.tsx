@@ -258,8 +258,7 @@ const DaySurvey = ({
             closeBottomSheet();
             navigation.navigate("drugs", { treatment, currentSurvey });
           }}
-          title={undefined}
-          description={undefined}
+          navigation={navigation}
         />
       );
     }
@@ -370,7 +369,6 @@ const DaySurvey = ({
                 />
               </View>
               {indicators.map((ind: Indicator) => {
-
                 return (
                   <IndicatorSurveyItem
                     key={ind?.uuid}

@@ -74,8 +74,7 @@ const Drugs = ({ navigation, route }) => {
           closeBottomSheet();
           navigation.navigate("drugs", { treatment });
         }}
-        title={undefined}
-        description={undefined}
+        navigation={navigation}
       />
     );
     // navigation.navigate("onboarding-drugs-list", { onboarding: route?.params?.onboarding });

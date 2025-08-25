@@ -17,6 +17,7 @@ import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
 import PlusIcon from "@assets/svg/icon/plus";
 import NavigationButtons from "@/components/onboarding/NavigationButtons";
+import { Drug } from "@/entities/Drug";
 const ELEMENT_HEIGHT = 55;
 
 const screenHeight = Dimensions.get("window").height;
@@ -24,7 +25,7 @@ const height90vh = screenHeight * 0.9;
 
 const Drugs = ({ navigation, route, onClose }) => {
   const scrollRef = useRef();
-  const [treatment, setTreatment] = useState([]);
+  const [treatment, setTreatment] = useState<{ id: string }[]>([]);
   const [filter, setFilter] = useState();
   const [list, setList] = useState();
   const [filteredList, setFilteredList] = useState([]);
@@ -85,11 +86,12 @@ const Drugs = ({ navigation, route, onClose }) => {
         return r.test(cleanString(e.id));
       });
 
-  const setToogleCheckbox = (d, value) => {
+  const setToogleCheckbox = (d: Drug) => {
     let t = [...treatment];
-    if (!value) {
-      const elem = treatment.find((elem) => elem.id === d.id);
-      const i = treatment.indexOf(elem);
+    const drugInTreatment = treatment.find((elem) => elem.id === d.id);
+    if (drugInTreatment) {
+      const i = treatment.indexOf(drugInTreatment);
+      console.log("index i", i);
       t.splice(i, 1);
     } else {
       t.push({ id: d.id });
@@ -97,25 +99,25 @@ const Drugs = ({ navigation, route, onClose }) => {
     setTreatment(t);
   };
 
-  const handleSubmit = () => {
-    //if there is something in the buffer, alert the user ...
-    if (bufferCustomDrugs)
-      return confirm({
-        title: "Êtes-vous sûr de vouloir valider cette sélection ?",
-        message: `Il semblerait que vous n'avez pas correctement ajouter votre traitement personnalisé "${bufferCustomDrugs}"`,
-        onConfirm: submit,
-        onCancel: () => {
-          scrollRef.current?.scrollTo({
-            y: 0,
-            animated: true,
-          });
-        },
-        cancelText: "Retourner à la liste",
-        confirmText: "Oui, valider quand même",
-      });
-    //... else, submit the treatment
-    else submit();
-  };
+  // const handleSubmit = () => {
+  //   //if there is something in the buffer, alert the user ...
+  //   if (bufferCustomDrugs)
+  //     return confirm({
+  //       title: "Êtes-vous sûr de vouloir valider cette sélection ?",
+  //       message: `Il semblerait que vous n'avez pas correctement ajouter votre traitement personnalisé "${bufferCustomDrugs}"`,
+  //       onConfirm: submit,
+  //       onCancel: () => {
+  //         scrollRef.current?.scrollTo({
+  //           y: 0,
+  //           animated: true,
+  //         });
+  //       },
+  //       cancelText: "Retourner à la liste",
+  //       confirmText: "Oui, valider quand même",
+  //     });
+  //   //... else, submit the treatment
+  //   else submit();
+  // };
 
   const submit = async () => {
     await localStorage.setMedicalTreatment(treatment);
@@ -123,7 +125,6 @@ const Drugs = ({ navigation, route, onClose }) => {
   };
 
   const handleAdd = async (value) => {
-    ta;
     console.log("add drug", value);
     if (!value) return;
     const drug = { id: value, name1: value, values: [] };
@@ -136,8 +137,6 @@ const Drugs = ({ navigation, route, onClose }) => {
     logEvents.logDrugAdd(value);
   };
 
-  const handleFilter = (f) => setFilter(f);
-  const closeNPS = () => setNPSvisible(false);
   return (
     <View className="flex-1">
       <ScrollView
@@ -165,7 +164,7 @@ const Drugs = ({ navigation, route, onClose }) => {
                 boxPosition="top"
                 description={e.name2 ? `(${e.name2})` : undefined}
                 selected={!!treatment.find((x) => x.id === e.id)}
-                onPress={(newValue) => setToogleCheckbox(e, newValue)}
+                onPress={(newValue) => setToogleCheckbox(e)}
               />
             );
           })}

@@ -27,17 +27,8 @@ import NavigationButtons from "@/components/onboarding/NavigationButtons";
 import HealthIcon from "@assets/svg/icon/Health";
 import DrugDoseBottomSheet from "@/components/DrugDoseBottomSheet";
 import { HELP_POSOLOGY } from "../onboarding-v2/data/helperData";
-
-interface Drug {
-  id: string;
-  name1: string;
-  name2?: string;
-}
-
-interface Posology extends Drug {
-  freeText?: string;
-  value: string;
-}
+import Pencil from "@assets/svg/Pencil";
+import { Drug, Posology } from "@/entities/Drug";
 
 const Drugs = ({ navigation, route }) => {
   const [diaryData, addNewEntryToDiaryData] = useContext(DiaryDataContext);
@@ -113,19 +104,6 @@ const Drugs = ({ navigation, route }) => {
     }
   };
 
-  const handleAdd = () => {
-    showBottomSheet(
-      <DrugsBottomSheet
-        onClose={(treatment) => {
-          closeBottomSheet();
-          navigation.navigate("drugs", { treatment });
-        }}
-        title={undefined}
-        description={undefined}
-      />
-    );
-  };
-
   const getLatestValue = () => {
     const lastSurvey =
       diaryData[
@@ -176,6 +154,7 @@ const Drugs = ({ navigation, route }) => {
   const addDose = (drug) => {
     showBottomSheet(
       <DrugDoseBottomSheet
+        drug={drug}
         onClose={(dose) => {
           handleDrugChange(drug, dose, false);
           closeBottomSheet();
@@ -320,13 +299,26 @@ const Drugs = ({ navigation, route }) => {
       category="SLEEP"
       title={inSurvey ? "Avez-vous pris votre traitement aujourd'hui" : "Traitement"}
       navigation={navigation}
+      headerRightComponent={inSurvey ? <Pencil color={TW_COLORS.WHITE} width={16} height={16} /> : null}
+      headerRightAction={() => {
+        showBottomSheet(
+          <DrugsBottomSheet
+            navigation={navigation}
+            onClose={async () => {
+              const medicalTreatmentStorage = await localStorage.getMedicalTreatment();
+              setMedicalTreatment(enrichTreatmentWithData(medicalTreatmentStorage));
+              closeBottomSheet();
+            }}
+          />
+        );
+      }}
       bottomComponent={
         <NavigationButtons
           onNext={() => {
             if (inSurvey) {
               submit();
             } else {
-              showBottomSheet(<DrugsBottomSheet onClose={undefined} />);
+              showBottomSheet(<DrugsBottomSheet navigation={navigation} onClose={undefined} />);
             }
           }}
           nextDisabled={!hasTreatment}

@@ -15,11 +15,11 @@ import { useBottomSheet } from "@/context/BottomSheetContext";
 import localStorage from "@/utils/localStorage";
 import { HELP_POSOLOGY } from "@/scenes/onboarding-v2/data/helperData";
 
-export const DrugsBottomSheet = ({ onClose }) => {
+export const DrugsBottomSheet = ({ onClose, navigation }) => {
   const [index, setIndex] = useState<number>(0);
   const { showBottomSheet } = useBottomSheet();
   const [treatment, setTreatment] = useState<any[] | undefined>();
-
+  const { closeBottomSheet } = useBottomSheet();
   const handleNoTreatment = async () => {
     await localStorage.setMedicalTreatment([]);
   };
@@ -72,7 +72,20 @@ export const DrugsBottomSheet = ({ onClose }) => {
           <JMButton onPress={handleNoTreatment} variant="text" title="Je le ferai plus tard" className="mt-4" />
         </View>
       )}
-      {index === 1 && <Drugs navigation={{ goBack: () => {} }} route={undefined} onClose={onClose} />}
+      {index === 1 && (
+        <Drugs
+          navigation={{ goBack: () => {} }}
+          route={undefined}
+          onClose={() => {
+            if (onClose) {
+              onClose();
+            } else {
+              closeBottomSheet();
+              navigation.navigate("drugs", { treatment });
+            }
+          }}
+        />
+      )}
     </View>
   );
 };

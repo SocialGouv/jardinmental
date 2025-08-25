@@ -9,12 +9,13 @@ import React, { useEffect, useState } from "react";
 import { TW_COLORS } from "@/utils/constants";
 import { TouchableOpacity } from "@gorhom/bottom-sheet";
 import JMButton from "@/components/JMButton";
+import { Drug } from "@/entities/Drug";
 
 const screenHeight = Dimensions.get("window").height;
 const height90vh = screenHeight * 0.9;
 
-export default function DrugDoseBottomSheet({ onClose }: { onClose: (doses: string[]) => void }) {
-  const uniqueDoses = ["1,5 mg", "3 mg", "4,5 mg", "6 mg", "7,5 mg", "9 mg", "10,5 mg"];
+export default function DrugDoseBottomSheet({ onClose, drug }: { drug: Drug; onClose: (doses: string[]) => void }) {
+  const uniqueDoses = drug.values ?? ["1,5 mg", "3 mg", "4,5 mg", "6 mg", "7,5 mg", "9 mg", "10,5 mg"];
   const [newDoses, setNewDoses] = useState<string[]>([]);
   const [filteredDoses, setFilteredDoses] = useState<string[]>(uniqueDoses);
   const [searchedText, setSearchText] = useState<string>("");
@@ -58,7 +59,9 @@ export default function DrugDoseBottomSheet({ onClose }: { onClose: (doses: stri
         style={{ paddingVertical: 20, height: height90vh }}
       >
         <View className="flex-row bg-[#E5F6FC] self-start p-2">
-          <Text className={mergeClassNames(typography.textSmBold, "ml-2 text-[#006386] text-left")}></Text>
+          <Text className={mergeClassNames(typography.textSmBold, "ml-2 text-[#006386] text-left")}>
+            {drug.name1} {drug.name2 ? `(${drug.name2})` : ""}
+          </Text>
         </View>
         <Text className={mergeClassNames(typography.displayXsBold, "text-left text-cnam-primary-900")}>Sélectionnez une dose</Text>
         <TextInput
