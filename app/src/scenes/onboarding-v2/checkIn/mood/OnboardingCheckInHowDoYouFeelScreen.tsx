@@ -17,6 +17,7 @@ import { typography } from "@/utils/typography";
 import { mergeClassNames } from "@/utils/className";
 import { useStatusBar } from "@/context/StatusBarContext";
 import { useFocusEffect } from "@react-navigation/native";
+import logEvents from "@/services/logEvents";
 
 const { width: screenWidth } = Dimensions.get("window");
 
@@ -83,6 +84,7 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
 
   const handleComplete = async () => {
     setLoading(true);
+    logEvents.logHumeurObdConfirm(selectedMoodIndex);
     // Sauvegarder les données du check-in
     const date = formatDay(beforeToday(0));
     const prev = diaryData[date] || {};
@@ -119,6 +121,7 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
   };
 
   const onSelectEmotion = (value: number) => {
+    logEvents.logHumeurObdSelect(value);
     const moodIndex = value - 1; // Convert to 0-based index
     const wasFirstSelection = !hasSelectedOnce;
 

@@ -621,6 +621,223 @@ const logPushNotifReceiveClicked = async () => {
   });
 };
 
+// ONBOARDING EVENT FUNCTIONS
+
+// Constants for onboarding actions
+const INTRO_OBD_NEXT = "INTRO_OBD_NEXT";
+const CARROUSEL_OBD_NEXT = "CARROUSEL_OBD_NEXT";
+const CARROUSEL_OBD_PASS = "CARROUSEL_OBD_PASS";
+const HUMEUR_OBD_START = "HUMEUR_OBD_START";
+const HUMEUR_OBD_SELECT = "HUMEUR_OBD_SELECT";
+const HUMEUR_OBD_CONFIRM = "HUMEUR_OBD_CONFIRM";
+const INDICATOR_OBD_START = "INDICATOR_OBD_START";
+const INDICATOR_OBD_LVL1 = "INDICATOR_OBD_LVL1";
+const INDICATOR_OBD_PASS = "INDICATOR_OBD_PASS";
+const INDICATOR_OBD_LVL2 = "INDICATOR_OBD_LVL2";
+const INDICATOR_OBD_VALIDATE = "INDICATOR_OBD_VALIDATE";
+const QUEST_OBD_START = "QUEST_OBD_START";
+const SLEEP_OBD_VALIDATE = "SLEEP_OBD_VALIDATE";
+const QUEST_OBD_START2 = "QUEST_OBD_START2";
+const QUEST_OBD_STEP = "QUEST_OBD_STEP";
+const QUEST_OBD_CONGRATS = "QUEST_OBD_CONGRATS";
+const REMINDER_OBD_EDIT = "REMINDER_OBD_EDIT";
+const REMINDER_OBD_VALIDATE = "REMINDER_OBD_VALIDATE";
+const BACK = "BACK";
+
+// Intro onboarding functions
+const logIntroObdNext = async () => {
+  await logEvent({
+    category: ONBOARDING,
+    action: INTRO_OBD_NEXT,
+  });
+};
+
+// Carrousel onboarding functions
+const logCarrouselObdNext = async (slide) => {
+  await logEvent({
+    category: ONBOARDING,
+    action: CARROUSEL_OBD_NEXT,
+    name: "slide",
+    value: slide,
+  });
+};
+
+const logCarrouselObdPass = async (slide) => {
+  await logEvent({
+    category: ONBOARDING,
+    action: CARROUSEL_OBD_PASS,
+    name: "slide",
+    value: slide,
+  });
+};
+
+// Humeur (Mood) onboarding functions
+const logHumeurObdStart = async () => {
+  await logEvent({
+    category: ONBOARDING,
+    action: HUMEUR_OBD_START,
+  });
+};
+
+const logHumeurObdSelect = async (mood) => {
+  await logEvent({
+    category: ONBOARDING,
+    action: HUMEUR_OBD_SELECT,
+    name: "mood",
+    value: mood,
+  });
+};
+
+const logHumeurObdConfirm = async (mood) => {
+  await logEvent({
+    category: ONBOARDING,
+    action: HUMEUR_OBD_CONFIRM,
+    name: "mood",
+    value: mood,
+  });
+};
+
+// Indicator onboarding functions
+const logIndicatorObdStart = async () => {
+  await logEvent({
+    category: ONBOARDING,
+    action: INDICATOR_OBD_START,
+  });
+};
+
+const logIndicatorObdLvl1 = async (themes, count) => {
+  await logEvent({
+    category: ONBOARDING,
+    action: INDICATOR_OBD_LVL1,
+    name: "themes",
+    value: themes,
+  });
+  // Also log the count
+  await logEvent({
+    category: ONBOARDING,
+    action: INDICATOR_OBD_LVL1,
+    name: "count",
+    value: count,
+  });
+};
+
+const logIndicatorObdPass = async (screen) => {
+  await logEvent({
+    category: ONBOARDING,
+    action: INDICATOR_OBD_PASS,
+    name: "screen",
+    value: screen,
+  });
+};
+
+const logIndicatorObdLvl2 = async (subThemes, count) => {
+  await logEvent({
+    category: ONBOARDING,
+    action: INDICATOR_OBD_LVL2,
+    name: "sub_themes",
+    value: subThemes,
+  });
+  // Also log the count
+  await logEvent({
+    category: ONBOARDING,
+    action: INDICATOR_OBD_LVL2,
+    name: "count",
+    value: count,
+  });
+};
+
+// En attente de retour de Pierre pour savoir où je le place
+const logIndicatorObdValidate = async (indicators, count) => {
+  await logEvent({
+    category: ONBOARDING,
+    action: INDICATOR_OBD_VALIDATE,
+    name: "indicators",
+    value: indicators,
+  });
+  // Also log the count
+  await logEvent({
+    category: ONBOARDING,
+    action: INDICATOR_OBD_VALIDATE,
+    name: "count",
+    value: count,
+  });
+};
+
+// Questionnaire onboarding functions
+const logQuestObdStart = async () => {
+  await logEvent({
+    category: ONBOARDING,
+    action: QUEST_OBD_START,
+  });
+};
+
+const logSleepObdValidate = async () => {
+  await logEvent({
+    category: ONBOARDING,
+    action: SLEEP_OBD_VALIDATE,
+  });
+};
+
+const logQuestObdStart2 = async () => {
+  await logEvent({
+    category: ONBOARDING,
+    action: QUEST_OBD_START2,
+  });
+};
+
+// En attente de réponse de Pierre
+const logQuestObdStep = async (theme, final) => {
+  await logEvent({
+    category: ONBOARDING,
+    action: QUEST_OBD_STEP,
+    name: "theme",
+    value: theme,
+  });
+  // Also log the final parameter
+  await logEvent({
+    category: ONBOARDING,
+    action: QUEST_OBD_STEP,
+    name: "final",
+    value: final,
+  });
+};
+
+const logQuestObdCongrats = async () => {
+  await logEvent({
+    category: ONBOARDING,
+    action: QUEST_OBD_CONGRATS,
+  });
+};
+
+// Reminder onboarding functions
+const logReminderObdEdit = async (time) => {
+  await logEvent({
+    category: ONBOARDING,
+    action: REMINDER_OBD_EDIT,
+    name: "time",
+    value: time,
+  });
+};
+
+const logReminderObdValidate = async (notification) => {
+  await logEvent({
+    category: ONBOARDING,
+    action: REMINDER_OBD_VALIDATE,
+    name: "notification",
+    value: notification,
+  });
+};
+
+// Back navigation function
+const logOnboardingBack = async (page) => {
+  await logEvent({
+    category: ONBOARDING,
+    action: BACK,
+    name: "page",
+    value: page,
+  });
+};
+
 export default {
   initMatomo,
   logAppVisit,
@@ -695,4 +912,24 @@ export default {
   logPushNotifTokenRegisterSuccess,
   logPushNotifTokenRegisterError,
   logPushNotifReceiveClicked,
+  // New onboarding event functions
+  logIntroObdNext,
+  logCarrouselObdNext,
+  logCarrouselObdPass,
+  logHumeurObdStart,
+  logHumeurObdSelect,
+  logHumeurObdConfirm,
+  logIndicatorObdStart,
+  logIndicatorObdLvl1,
+  logIndicatorObdPass,
+  logIndicatorObdLvl2,
+  logIndicatorObdValidate,
+  logQuestObdStart,
+  logSleepObdValidate,
+  logQuestObdStart2,
+  logQuestObdStep,
+  logQuestObdCongrats,
+  logReminderObdEdit,
+  logReminderObdValidate,
+  logOnboardingBack,
 };

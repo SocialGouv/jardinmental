@@ -9,6 +9,7 @@ import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
 import { useOnboardingProgressHeader } from "../onboarding/ProgressHeader";
 import { useFocusEffect } from "@react-navigation/native";
+import logEvents from "@/services/logEvents";
 
 interface EncouragementScreenProps {
   navigation: any;
@@ -20,6 +21,7 @@ interface EncouragementScreenProps {
   extraInfo?: string;
   nextText?: string;
   onNext: () => void;
+  onPrevious?: () => void;
   onSkip?: () => void;
 }
 
@@ -31,6 +33,7 @@ export const EncouragementScreen: React.FC<EncouragementScreenProps> = ({
   extraInfo,
   onNext,
   onSkip,
+  onPrevious,
   nextText,
 }) => {
   const { setSlideIndex } = useOnboardingProgressHeader();
@@ -43,7 +46,7 @@ export const EncouragementScreen: React.FC<EncouragementScreenProps> = ({
   );
 
   return (
-    <BeigeWrapperScreen handlePrevious={() => navigation.goBack()} handleSkip={onSkip} handleNext={onNext} nextText={nextText}>
+    <BeigeWrapperScreen handlePrevious={onPrevious} handleSkip={onSkip} handleNext={onNext} nextText={nextText}>
       <BeigeCard color={TW_COLORS.CNAM_CYAN_LIGHTEN_80}>
         <View className="justify-center items-center w-full">
           <Text className={mergeClassNames(typography.displayXsBold, "text-cnam-primary-900 mb-8 text-left w-full")}>
