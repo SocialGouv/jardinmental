@@ -55,7 +55,7 @@ export const FriseInfoButton = forwardRef(({ navigation, hasTreatment, ...props 
               title="Ajouter votre traitement"
               className={"mt-10"}
               onPress={() => {
-                navigation.navigate("drugs");
+                navigation.navigate("drugs-management");
                 infoModal.hide();
               }}
               icon={<Icon icon={"PlusSvg"} />}

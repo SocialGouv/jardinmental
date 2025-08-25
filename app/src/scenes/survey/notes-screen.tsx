@@ -51,7 +51,7 @@ const Notes = ({ navigation, route }) => {
       alertNoDataYesterday({ date: survey?.date, diaryData, navigation });
       return navigation.navigate("tabs");
     }
-    navigation.navigate("drugs", {
+    navigation.navigate("drugs-survey", {
       currentSurvey,
       backRedirect: "notes",
     });

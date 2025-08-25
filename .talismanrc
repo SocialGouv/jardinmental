@@ -19,6 +19,8 @@ fileignoreconfig:
   checksum: c542c7135b521f9ba1e0489383dd8f1d383ca51252f7ffd8bc8fc6b3f46c6037
 - filename: app/src/components/Collapsable.js
   checksum: 280e7a5a76d8804045a5a07dbf8062e4cca77a937c969f1ee89cf45ff3d855b2
+- filename: app/src/components/DrugDoseBottomSheet.tsx
+  checksum: 319917ef3952d266c7a79aed7596096ced860adb0ded4a66bc1e1f6b360b3747
 - filename: app/src/context/diaryData.tsx
   checksum: e2e0a1faa5894cba4d04f1abe0513b92cd31d4c9a87e93d163133b7b8951e563
 - filename: app/src/context/userProfile.tsx
@@ -32,7 +34,11 @@ fileignoreconfig:
 - filename: app/src/entities/SurveyScreen.ts
   checksum: 68279ddbf41bdc3fdbe9ec5073122f73b74c992dad22768d69bf6b0c6d7f5f6f
 - filename: app/src/scenes/diary/index.js
-  checksum: 989214cbaa302dbd4811f936d5ef87fccc9645e49beb1cc96fb4b0d74bded646
+  checksum: 3ce2456ab1ef9b4d523326b4e6e796eeab6a3588e8ac9b6c8fb3abd37b70c9d6
+- filename: app/src/scenes/drugs/drugs-survey.tsx
+  checksum: 2cbc13971d7e3a792ea9a14b5e78038d6d6b352e0f44a03f5e7d2ad80b9ba514
+- filename: app/src/scenes/drugs/drugs.tsx
+  checksum: aee06a5419616198ba07f25f4450a4d3dfd62e1f2a713faa6290a831ca68a804
 - filename: app/src/scenes/goals/settings/GoalDaySelector.tsx
   checksum: 989214cbaa302dbd4811f936d5ef87fccc9645e49beb1cc96fb4b0d74bded646
 - filename: app/src/scenes/indicateurs/CreateIndicator/ChooseIndicatorType.tsx

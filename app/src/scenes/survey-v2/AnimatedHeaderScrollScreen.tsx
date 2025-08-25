@@ -18,7 +18,7 @@ import { TW_COLORS } from "@/utils/constants";
 import BannerHeader from "../onboarding-v2/BannerHeader";
 import { useBottomSheet } from "@/context/BottomSheetContext";
 import HelpView from "@/components/HelpView";
-import { HELP_FOR_CATEGORY, INDICATOR_CATEGORIES_DATA } from "../onboarding-v2/data/helperData";
+import { HELP_FOR_CATEGORY, INDICATOR_CATEGORIES_DATA, SECTION_ICONS } from "../onboarding-v2/data/helperData";
 import { firstLetterUppercase } from "@/utils/string-util";
 import { KeyboardAvoidingView } from "react-native-keyboard-controller";
 import { NEW_INDICATORS_CATEGORIES } from "@/utils/liste_indicateurs.1";
@@ -32,7 +32,7 @@ interface IndicatorScreenProps {
   currentStep?: number;
   totalSteps?: number;
   onNext?: () => void;
-  category?: NEW_INDICATORS_CATEGORIES;
+  category?: NEW_INDICATORS_CATEGORIES | "GOAL" | "TREATMENT";
   handlePrevious?: () => void;
   children?: React.ReactNode;
   dynamicTitle?: string;
@@ -44,6 +44,7 @@ interface IndicatorScreenProps {
   navigation: StackNavigationProp<any>;
   scrollViewBackground?: string;
   showBottomButton?: boolean;
+  smallHeader?: boolean;
 }
 
 export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
@@ -62,6 +63,7 @@ export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
   handlePrevious,
   navigation,
   scrollViewBackground,
+  smallHeader,
 }: IndicatorScreenProps) => {
   const { showBottomSheet } = useBottomSheet();
   const { setShowProgressbar, showProgressbar, setHideOnScrollProgressValue } = useOnboardingProgressHeader();
@@ -232,9 +234,12 @@ export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
   };
 
   return (
-    <SafeAreaView className="flex-1" style={{
-      backgroundColor: scrollViewBackground || TW_COLORS.WHITE
-    }}>
+    <SafeAreaView
+      className="flex-1"
+      style={{
+        backgroundColor: scrollViewBackground || TW_COLORS.WHITE,
+      }}
+    >
       <View
         style={{
           position: "absolute",
@@ -251,7 +256,7 @@ export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
           header={
             category ? (
               <View className="rounded-full bg-white/30 p-2 self-start w-auto">
-                {React.createElement(INDICATOR_CATEGORIES_DATA[category].icon, {
+                {React.createElement(SECTION_ICONS[category].icon, {
                   color: TW_COLORS.WHITE,
                 })}
               </View>
@@ -266,6 +271,7 @@ export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
           bannerContentStyle={bannerContentStyle}
           bannerContainerStyle={bannerContainerStyle}
           titleMarginStyle={titleMarginStyle}
+          small={smallHeader}
           onBannerLayout={handleBannerLayout}
         ></BannerHeader>
       </View>

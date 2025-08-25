@@ -7,7 +7,9 @@ import ArrowRightSvg from "../../../assets/svg/arrow-right.js";
 export const SettingItem = ({ title, navigation, path = "tabs", icon, color = colors.LIGHT_BLUE, onClick }) => {
   const handleClick = () => {
     onClick();
-    navigation.navigate(path);
+    if (path) {
+      navigation.navigate(path);
+    }
   };
   return (
     <TouchableOpacity onPress={handleClick}>
