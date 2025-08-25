@@ -178,6 +178,7 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation, r
       active: true,
       position: 0,
       created_at: new Date(),
+      matomoId: indicator.matomoId,
     }));
 
     // Combine all indicators
@@ -187,7 +188,8 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation, r
     if (isSkipped) {
       logEvents.logIndicatorObdPass(19);
     } else {
-      // TODO: (tracking onboarding) en attente de retour de Pierre
+      const matomoIds = allIndicators.map((ind) => ind.matomoId).filter((id) => id !== undefined);
+      logEvents.logIndicatorObdValidate(matomoIds, matomoIds.length);
     }
     navigation.navigate(NextRoute);
   };

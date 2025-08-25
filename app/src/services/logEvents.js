@@ -733,12 +733,14 @@ const logIndicatorObdPass = async (screen) => {
 };
 
 const logIndicatorObdLvl2 = async (subThemes, count) => {
-  await logEvent({
-    category: ONBOARDING,
-    action: INDICATOR_OBD_LVL2,
-    name: "sub_themes",
-    value: subThemes,
-  });
+  for (let i = 0; i < subThemes.length; i++) {
+    await logEvent({
+      category: ONBOARDING,
+      action: INDICATOR_OBD_LVL2,
+      name: "sub_themes",
+      value: subThemes[i],
+    });
+  }
   // Also log the count
   await logEvent({
     category: ONBOARDING,
@@ -748,14 +750,15 @@ const logIndicatorObdLvl2 = async (subThemes, count) => {
   });
 };
 
-// En attente de retour de Pierre pour savoir où je le place
 const logIndicatorObdValidate = async (indicators, count) => {
-  await logEvent({
-    category: ONBOARDING,
-    action: INDICATOR_OBD_VALIDATE,
-    name: "indicators",
-    value: indicators,
-  });
+  for (let i = 0; i < indicators.length; i++) {
+    await logEvent({
+      category: ONBOARDING,
+      action: INDICATOR_OBD_VALIDATE,
+      name: "indicators",
+      value: indicators[i],
+    });
+  }
   // Also log the count
   await logEvent({
     category: ONBOARDING,

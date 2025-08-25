@@ -30,8 +30,10 @@ export const SubcategoriesScreen: React.FC<Props> = ({ navigation, route }) => {
         await updateUserSubcategories(selectedSubcategories);
       }
 
-      // TODO: (tracking onboarding) en attente de retour de Pierre
-      logEvents.logIndicatorObdLvl2(selectedSubcategories.join(","), selectedSubcategories.length);
+      logEvents.logIndicatorObdLvl2(
+        selectedSubcategories.map((subTheme) => SUBCATEGORIES[subTheme].matomoId),
+        selectedSubcategories.length
+      );
 
       navigation.navigate(NextScreen);
       setSlideIndex(-1);
