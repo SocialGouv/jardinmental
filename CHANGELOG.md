@@ -1,3 +1,10 @@
+# [1.52.0-alpha.24](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.23...v1.52.0-alpha.24) (2025-08-26)
+
+
+### Bug Fixes
+
+* url et mail de contacts dans la scene "nous contacter" ([#358](https://github.com/SocialGouv/jardinmental/issues/358)) ([cddb434](https://github.com/SocialGouv/jardinmental/commit/cddb434e3989a044aecdfdea0529b63efdc99542))
+
 # [1.52.0-alpha.23](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.22...v1.52.0-alpha.23) (2025-08-25)
 
 
