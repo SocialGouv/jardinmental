@@ -40,7 +40,7 @@ interface IndicatorScreenProps {
   onValueChanged: ({ key, value }: { key: string; value: any }) => void;
   onCommentChanged: ({ key, userComment }: { key: string; userComment: string }) => void;
   onNext: () => void;
-  category?: NEW_INDICATORS_CATEGORIES;
+  category: NEW_INDICATORS_CATEGORIES;
   showComment?: boolean;
   hideNavigationButtonsInitially?: boolean;
 }

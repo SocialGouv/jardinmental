@@ -13,8 +13,9 @@ import { getScoreWithState } from "@/utils";
 import { beforeToday, formatDay } from "@/utils/date/helpers";
 import { SurveyStackParamList, SurveyNavigatorRouteParams } from "../../entities/SurveyScreen";
 import { DiaryDataContext } from "@/context/diaryData";
-import { INDICATEURS_HUMEUR, INDICATEURS_SOMMEIL } from "@/utils/liste_indicateurs.1";
+import { INDICATEURS_HUMEUR, INDICATEURS_SOMMEIL, NEW_INDICATORS_CATEGORIES } from "@/utils/liste_indicateurs.1";
 import { useSurveyScreens } from "./hooks/useSurveyScreens";
+import { IndicatorScreen } from "./IndicatorScreen";
 
 const Stack = createStackNavigator<SurveyStackParamList>();
 
@@ -45,9 +46,22 @@ const SurveyStackNavigator: React.FC<{ context: SurveyContextType; isLoading: bo
 
   if (isLoading || screens.length === 0) {
     return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <ActivityIndicator size="large" />
-      </View>
+      // Fake loading screen to avoid flickering
+      <IndicatorScreen
+        answers={{}}
+        onValueChanged={() => {}}
+        onCommentChanged={() => {}}
+        title={"loading"}
+        category={NEW_INDICATORS_CATEGORIES.SLEEP}
+        indicators={[]}
+        showComment={!isOnboarding}
+        navigation={undefined}
+        currentStep={0}
+        totalSteps={0}
+        onNext={function (): void {
+          throw new Error("Function not implemented.");
+        }}
+      />
     );
   }
 
