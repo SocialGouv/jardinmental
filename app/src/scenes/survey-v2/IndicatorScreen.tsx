@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import {
   ScrollView,
   View,
@@ -27,6 +27,8 @@ import { HELP_FOR_CATEGORY, INDICATOR_CATEGORIES_DATA, SECTION_ICONS } from "../
 import { firstLetterUppercase } from "@/utils/string-util";
 import { KeyboardAvoidingView } from "react-native-keyboard-controller";
 import { NEW_INDICATORS_CATEGORIES } from "@/utils/liste_indicateurs.1";
+import { useFocusEffect } from "@react-navigation/native";
+import { useStatusBar } from "@/context/StatusBarContext";
 
 interface IndicatorScreenProps {
   navigation: any;
@@ -38,7 +40,7 @@ interface IndicatorScreenProps {
   onValueChanged: ({ key, value }: { key: string; value: any }) => void;
   onCommentChanged: ({ key, userComment }: { key: string; userComment: string }) => void;
   onNext: () => void;
-  category?: NEW_INDICATORS_CATEGORIES;
+  category: NEW_INDICATORS_CATEGORIES;
   showComment?: boolean;
   hideNavigationButtonsInitially?: boolean;
 }
@@ -73,6 +75,17 @@ export const IndicatorScreen: React.FC<IndicatorScreenProps> = ({
   const { showBottomSheet } = useBottomSheet();
   const insets = useSafeAreaInsets();
   const [dynamicPaddingTop, setDynamicPaddingTop] = useState(0); // Default fallback
+
+  const { setCustomColor } = useStatusBar();
+
+  useFocusEffect(
+    useCallback(() => {
+      setCustomColor(TW_COLORS.PRIMARY);
+      return () => {
+        // Optional cleanup here
+      };
+    }, [])
+  );
 
   // Check if screen is large (like iPhone 16 Plus)
   const { height: screenHeight } = Dimensions.get("window");

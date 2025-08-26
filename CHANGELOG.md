@@ -1,3 +1,38 @@
+# [1.52.0-alpha.28](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.27...v1.52.0-alpha.28) (2025-08-26)
+
+
+### Bug Fixes
+
+* **android:** status bar color + flickering when getting to day survey stack ([#363](https://github.com/SocialGouv/jardinmental/issues/363)) ([07be549](https://github.com/SocialGouv/jardinmental/commit/07be54950187a05548696c6b8397bfc8f8687d0a))
+
+# [1.52.0-alpha.27](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.26...v1.52.0-alpha.27) (2025-08-26)
+
+
+### Bug Fixes
+
+* **android:** add padding-top to AnimatedHeaderScrollScreen ([#362](https://github.com/SocialGouv/jardinmental/issues/362)) ([79e2a1c](https://github.com/SocialGouv/jardinmental/commit/79e2a1c161fb334054bdcffbb724f6bc8701fde6))
+
+# [1.52.0-alpha.26](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.25...v1.52.0-alpha.26) (2025-08-26)
+
+
+### Features
+
+* ajout des events de l'onboarding ([#357](https://github.com/SocialGouv/jardinmental/issues/357)) ([26f7cdd](https://github.com/SocialGouv/jardinmental/commit/26f7cdd8f252eab3ac52944312a6e2dbb9b3c2f3))
+
+# [1.52.0-alpha.25](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.24...v1.52.0-alpha.25) (2025-08-26)
+
+
+### Bug Fixes
+
+* expéditeur des messages jardinmental@fabrique.social.gouv.fr ([#359](https://github.com/SocialGouv/jardinmental/issues/359)) ([d299118](https://github.com/SocialGouv/jardinmental/commit/d299118ddabf6350b8d8a82c1c47161a6bb300ea))
+
+# [1.52.0-alpha.24](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.23...v1.52.0-alpha.24) (2025-08-26)
+
+
+### Bug Fixes
+
+* url et mail de contacts dans la scene "nous contacter" ([#358](https://github.com/SocialGouv/jardinmental/issues/358)) ([cddb434](https://github.com/SocialGouv/jardinmental/commit/cddb434e3989a044aecdfdea0529b63efdc99542))
+
 # [1.52.0-alpha.23](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.22...v1.52.0-alpha.23) (2025-08-25)
 
 

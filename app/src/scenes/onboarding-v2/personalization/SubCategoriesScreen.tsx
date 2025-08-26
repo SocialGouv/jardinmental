@@ -13,6 +13,9 @@ import { INDICATOR_CATEGORIES_DATA } from "../data/helperData";
 import { SUBCATEGORIES, NEW_INDICATORS_SUBCATEGORIES } from "@/utils/liste_indicateurs.1";
 import InstructionText from "../InstructionText";
 import { AnimatedHeaderScrollScreen } from "@/scenes/survey-v2/AnimatedHeaderScrollScreen";
+import logEvents from "@/services/logEvents";
+import { useFocusEffect } from "@react-navigation/native";
+import { useStatusBar } from "@/context/StatusBarContext";
 
 type Props = OnboardingV2ScreenProps<"PersonalizationObjective">;
 
@@ -22,12 +25,25 @@ export const SubcategoriesScreen: React.FC<Props> = ({ navigation, route }) => {
   const { updateUserSubcategories, profile } = useUserProfile();
   const [selectedSubcategories, setSelectedSubcategories] = useState<NEW_INDICATORS_SUBCATEGORIES[]>(profile?.selectedSubcategories || []);
   const { setSlideIndex, setIsVisible } = useOnboardingProgressHeader();
+  const { setCustomColor } = useStatusBar();
+
+  useFocusEffect(
+    React.useCallback(() => {
+      // Reset current index when the screen is focused
+      setCustomColor(TW_COLORS.PRIMARY);
+    }, [])
+  );
 
   const handleNext = async () => {
     if (selectedSubcategories.length > 0) {
       if (profile) {
         await updateUserSubcategories(selectedSubcategories);
       }
+
+      logEvents.logIndicatorObdLvl2(
+        selectedSubcategories.map((subTheme) => SUBCATEGORIES[subTheme].matomoId),
+        selectedSubcategories.length
+      );
 
       navigation.navigate(NextScreen);
       setSlideIndex(-1);
@@ -36,6 +52,7 @@ export const SubcategoriesScreen: React.FC<Props> = ({ navigation, route }) => {
   };
 
   const handleSkip = () => {
+    logEvents.logIndicatorObdPass(15);
     navigation.navigate(NextScreen);
   };
 

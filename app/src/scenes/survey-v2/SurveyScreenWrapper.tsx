@@ -10,6 +10,7 @@ import SurveyContext from "./SurveyContext";
 import { SurveyStackParamList, SurveyScreenInterface } from "@/entities/SurveyScreen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import NotificationService from "@/services/notifications";
+import logEvents from "@/services/logEvents";
 
 interface SurveyScreenWrapperProps {
   navigation: StackNavigationProp<SurveyStackParamList>;
@@ -40,6 +41,7 @@ const SurveyScreenWrapper: React.FC<SurveyScreenWrapperProps> = ({ navigation, r
       // Final submission
       const isRegistered = await NotificationService.checkPermission();
       let storedReminder = await AsyncStorage.getItem("@Reminder");
+      logEvents.logQuestObdCongrats();
       if (!storedReminder || !isRegistered) {
         navigation.navigate("reminder", { onboarding: true });
       } else {

@@ -8,6 +8,9 @@ import { SafeAreaViewWithOptionalHeader, useOnboardingProgressHeader } from "@/s
 import BannerHeader from "../BannerHeader";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
+import logEvents from "@/services/logEvents";
+import { useFocusEffect } from "@react-navigation/native";
+import { useStatusBar } from "@/context/StatusBarContext";
 
 type Props = OnboardingV2ScreenProps<"Intro">;
 
@@ -15,8 +18,10 @@ const NextScreen = "PersonalizationDifficulties";
 
 export const OnboardingPersonalizationStartScreen: React.FC<Props> = ({ navigation }) => {
   const { setNextCallback, setSkipCallback } = useOnboardingProgressHeader();
+  const { setCustomColor } = useStatusBar();
 
   const handleNext = useCallback(() => {
+    logEvents.logIndicatorObdStart();
     navigation.navigate(NextScreen);
   }, [navigation]);
 
@@ -25,11 +30,23 @@ export const OnboardingPersonalizationStartScreen: React.FC<Props> = ({ navigati
     setNextCallback(handleNext);
   }, [handleNext]);
 
+  useFocusEffect(
+    useCallback(() => {
+      setCustomColor(TW_COLORS.PRIMARY);
+
+      return () => {
+        // Optional cleanup here
+      };
+    }, [])
+  );
+
   const handlePrevious = () => {
+    logEvents.logOnboardingBack(4);
     navigation.goBack();
   };
 
   const handleSkip = useCallback(() => {
+    logEvents.logIndicatorObdPass(4);
     navigation.navigate("OnboardingChooseIndicator", {
       skippedScreen: "PersonalizationStart",
     });

@@ -17,6 +17,8 @@ import { typography } from "@/utils/typography";
 import { mergeClassNames } from "@/utils/className";
 import { useStatusBar } from "@/context/StatusBarContext";
 import { useFocusEffect } from "@react-navigation/native";
+import logEvents from "@/services/logEvents";
+import { setStatusBarBackgroundColor } from "expo-status-bar";
 
 const { width: screenWidth } = Dimensions.get("window");
 
@@ -32,7 +34,7 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
   const flatListRef = useRef<FlatList>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [diaryData, addNewEntryToDiaryData] = useContext(DiaryDataContext);
-  const { setCustomColor } = useStatusBar();
+  const { setCustomColor, setDefaultColor } = useStatusBar();
   const measuredHeight = useSharedValue(0); // Store the measured natural height
   const [dynamicPaddingTop, setDynamicPaddingTop] = useState(0); // Default fallback
 
@@ -67,6 +69,8 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
         setTimeout(() => {
           setCustomColor(moodBackgroundColors[selectedMoodIndex - 1]);
         }, 0);
+      } else {
+        setCustomColor(TW_COLORS.PRIMARY);
       }
 
       return () => {
@@ -83,6 +87,7 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
 
   const handleComplete = async () => {
     setLoading(true);
+    logEvents.logHumeurObdConfirm(selectedMoodIndex);
     // Sauvegarder les données du check-in
     const date = formatDay(beforeToday(0));
     const prev = diaryData[date] || {};
@@ -119,6 +124,7 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
   };
 
   const onSelectEmotion = (value: number) => {
+    logEvents.logHumeurObdSelect(value);
     const moodIndex = value - 1; // Convert to 0-based index
     const wasFirstSelection = !hasSelectedOnce;
 

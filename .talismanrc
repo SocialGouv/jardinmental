@@ -4,7 +4,7 @@ fileignoreconfig:
 - filename: .kontinuous/env/prod/templates/api.sealed-secret.yaml
   checksum: f1dfe60bbe8a6604443fe3629b2239fa969304beeca8eff2b7528cf9b5728e3d
 - filename: CHANGELOG.md
-  checksum: a2353c1d084f0ca753dbe8b1c2340cbff360c953924ffe3f8657f11bbfaa6194
+  checksum: 41ee3e3fa845aa4074e2d565960d033de5115ecf00394fa167953bf132dcf2fd
 - filename: README.md
   checksum: 979473d3e8ad091d57424dc057cf0b40a884f0fbf6821554ea0121e63a173d6b
 - filename: api/src/config.ts
@@ -54,7 +54,7 @@ fileignoreconfig:
 - filename: app/src/scenes/indicateurs/settings/IndicatorsSettingsMore.tsx
   checksum: 6c8f9b5b25f33c330504d559bee35c0d57c0ddb9e7da118e85dab25ecd59f8a9
 - filename: app/src/scenes/onboarding-v2/CarouselScreen.tsx
-  checksum: 4f0aaf86c03496f7e5d81b837058253040ed186f9e2a7f5939e5a7dd95ef0867
+  checksum: a704b707252342cc2f6fa65bd65bb441a4b362c1090bbfc6929b79613ebd720a
 - filename: app/src/scenes/onboarding-v2/checkIn/mood/OnboardingCheckInHowDoYouFeelDetailsScreen.tsx
   checksum: 8a737e4021e9d7c66a54fbf4b5df8a91ad528a6af70a25d7c75f60fb3f444a2c
 - filename: app/src/scenes/onboarding-v2/checkIn/mood/OnboardingCheckInHowDoYouFeelScreen.tsx
@@ -129,6 +129,8 @@ fileignoreconfig:
   checksum: 907745c5a3fcdf10456b4f25d8a850d285a32f2cf15532024f99cb412a75bcb5
 - filename: app/src/scenes/survey/survey-data.js
   checksum: 1ac3021625ed8fb4ed188c80035b12789aa03989dc7276893900ed96dc2a2509
+- filename: app/src/services/logEvents.js
+  checksum: 87241553b4afc22b4cd82966a0aa651836aace4773239e73cb971cd874f56417
 - filename: app/src/services/notifications.js
   checksum: 00046388d0509346e97a4d365477dd2b85f4eaefb4f67f4d7351bc198db4b725
 - filename: app/src/utils/constants.ts

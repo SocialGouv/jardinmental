@@ -28,6 +28,8 @@ import PlusIcon from "@assets/svg/icon/plus";
 import { AnimatedHeaderScrollScreen } from "@/scenes/survey-v2/AnimatedHeaderScrollScreen";
 import { useFocusEffect } from "@react-navigation/native";
 import AlertBanner from "../AlertBanner";
+import logEvents from "@/services/logEvents";
+import { useStatusBar } from "@/context/StatusBarContext";
 
 const BASE_INDICATORS_FOR_CUSTOM_CATEGORIES = {
   [NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR]: [INDICATORS.find((ind) => ind.uuid === "1d4c3f59-dc3e-4b45-ae82-2ea77a62e6c6")],
@@ -46,7 +48,7 @@ export function suggestIndicatorsForDifficulties(
   selectedSubcategories: NEW_INDICATORS_SUBCATEGORIES[] = []
 ): PredefineIndicatorV2SchemaType[] {
   // Filter indicators by selected categories and subcategories
-  const filteredIndicators = INDICATORS.filter((indicator) => {
+  const filteredIndicators = INDICATORS.filter((indicator) => !BASE_INDICATORS.includes(indicator.uuid)).filter((indicator) => {
     const hasMatchingCategory = indicator.categories?.some((cat) => selectedDifficulties.includes(cat));
 
     // Trouver les sous-catégories sélectionnées qui appartiennent à une des catégories de l'indicateur
@@ -106,12 +108,14 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation, r
   const [addedIndicators, setAddedIndicators] = useState<Record<NEW_INDICATORS_CATEGORIES, PredefineIndicatorV2SchemaType[]>>({});
   const { setSlideIndex, setIsVisible } = useOnboardingProgressHeader();
   const { profile, isLoading } = useUserProfile();
+  const { setCustomColor } = useStatusBar();
 
   useFocusEffect(
     React.useCallback(() => {
       // Reset current index when the screen is focused
       setIsVisible(false);
       setSlideIndex(-1);
+      setCustomColor(TW_COLORS.PRIMARY);
     }, [])
   );
 
@@ -134,10 +138,12 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation, r
 
   const recommendedIndicatorsByCategory: Record<NEW_INDICATORS_CATEGORIES, PredefineIndicatorV2SchemaType[]> = recommendedIndicators.reduce(
     (prev, curr) => {
-      if (!prev[curr.mainCategory]) {
-        prev[curr.mainCategory] = [];
+      for (const cat of curr.categories) {
+        if (!prev[cat]) {
+          prev[cat] = [];
+        }
+        prev[cat].push(curr);
       }
-      prev[curr.mainCategory].push(curr);
       return prev;
     },
     {} as Record<NEW_INDICATORS_CATEGORIES, PredefineIndicatorV2SchemaType[]>
@@ -147,7 +153,7 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation, r
     setSelectedIndicators((prev) => (prev.includes(id) ? prev.filter((selectedId) => selectedId !== id) : [...prev, id]));
   }, []);
 
-  const handleNext = async () => {
+  const handleNext = async (isSkipped: boolean) => {
     // Get predefined indicators
     const indicators = [...INDICATORS, ...Object.values(addedIndicators).flat()];
 
@@ -177,12 +183,19 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation, r
       active: true,
       position: 0,
       created_at: new Date(),
+      matomoId: indicator.matomoId,
     }));
 
     // Combine all indicators
     const allIndicators: Indicator[] = [...predefinedConverted, ...customConverted];
     await localStorage.setIndicateurs(allIndicators);
     await localStorage.setOnboardingDone(true);
+    if (isSkipped) {
+      logEvents.logIndicatorObdPass(19);
+    } else {
+      const matomoIds = allIndicators.map((ind) => ind.matomoId).filter((id) => id !== undefined);
+      logEvents.logIndicatorObdValidate(matomoIds, matomoIds.length);
+    }
     navigation.navigate(NextRoute);
   };
 
@@ -209,6 +222,7 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation, r
   );
 
   const handlePrevious = () => {
+    logEvents.logOnboardingBack(19);
     if (route.params?.skippedScreen) {
       navigation.navigate(route.params.skippedScreen);
     } else if (profile?.selectedDifficulties.find((cat) => INDICATOR_CATEGORIES_DATA[cat].subCat)) {
@@ -237,7 +251,7 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation, r
       bottomComponent={
         <NavigationButtons
           absolute={true}
-          onNext={handleNext}
+          onNext={() => handleNext(false)}
           headerContent={
             <View>
               {selectedIndicators.length >= 9 && <AlertBanner text={`Nous vous recommandons de ne pas choisir plus de 8 éléments pour commencer`} />}
@@ -248,7 +262,7 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation, r
               </View>
             </View>
           }
-          onSkip={handleNext}
+          onSkip={() => handleNext(true)}
           showSkip={true}
           nextDisabled={selectedIndicators.length === 0}
           nextText={`Valider ${indicatorsTotalCount} élément${indicatorsTotalCount > 1 ? "s" : ""} à suivre`}

@@ -1,14 +1,16 @@
-import React, { useState, useRef, useEffect } from "react";
-import { View, FlatList, TouchableOpacity, Dimensions } from "react-native";
-import { OnboardingV2ScreenProps, CarouselSlide } from "./types";
+import { useStatusBarInternal } from "@/context/StatusBarContext";
+import { mergeClassNames } from "@/utils/className";
+import { useFocusEffect } from "@react-navigation/native";
+import React, { useEffect, useRef, useState } from "react";
+import { Dimensions, FlatList, TouchableOpacity, View } from "react-native";
 import { CarouselSlide as CarouselSlideComponent } from "../../components/onboarding/CarouselSlide";
 import NavigationButtons from "../../components/onboarding/NavigationButtons";
 import { useUserProfile } from "../../context/userProfile";
-import { useFocusEffect } from "@react-navigation/native";
-import carouselSlides from "./data/carouselData";
-import BeigeWrapperScreen from "./BeigeWrapperScreen";
 import { useOnboardingProgressHeader } from "../onboarding/ProgressHeader";
-import { mergeClassNames } from "@/utils/className";
+import logEvents from "../../services/logEvents";
+import BeigeWrapperScreen from "./BeigeWrapperScreen";
+import carouselSlides from "./data/carouselData";
+import { CarouselSlide, OnboardingV2ScreenProps } from "./types";
 
 type Props = OnboardingV2ScreenProps<"Carousel">;
 
@@ -22,7 +24,8 @@ export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const flatListRef = useRef<FlatList>(null);
   const { setSlideIndex } = useOnboardingProgressHeader();
-  const [variant, setVariant] = useState<"beige" | "white" | "green" | "blue">("beige");
+  const [variant, setVariant] = useState<"beige" | "white" | "green" | "blue" | "pink" | "yellow" | "red">("beige");
+  const { setCustomColor } = useStatusBarInternal();
 
   useFocusEffect(
     React.useCallback(() => {
@@ -36,21 +39,19 @@ export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
   }, [profile]);
 
   const handleNext = () => {
+    logEvents.logCarrouselObdNext(slides.length);
     navigation.navigate(NextRoute);
-  };
-
-  const handlePrevious = () => {
-    navigation.goBack();
   };
 
   const handleSkip = () => {
+    logEvents.logCarrouselObdPass(currentIndex + 1);
     navigation.navigate(NextRoute);
   };
 
-  const onViewableItemsChanged = useRef(({ viewableItems }: any) => {
-    console.log(viewableItems);
+  const onViewableItemsChanged = useRef(({ viewableItems }: { viewableItems: { index: number; isViewable: boolean; item: CarouselSlide }[] }) => {
     if (viewableItems.length > 0) {
       setVariant(viewableItems[0].item.variant || "beige");
+      setCustomColor("");
       setCurrentIndex(viewableItems[0].index || 0);
     }
   }).current;
@@ -60,12 +61,17 @@ export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
   }).current;
 
   const goToSlide = (index: number) => {
+    // Track slide change when manually navigating (1-based index)
+    if (index !== currentIndex) {
+      logEvents.logCarrouselObdNext(index + 1);
+    }
     flatListRef.current?.scrollToIndex({ index, animated: true });
   };
 
   const goToNextSlide = () => {
     if (currentIndex < slides.length - 1) {
-      goToSlide(currentIndex + 1);
+      const slideIndex = currentIndex + 1;
+      goToSlide(slideIndex);
     } else {
       handleNext();
     }
@@ -91,30 +97,32 @@ export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
 
   return (
     <BeigeWrapperScreen variant={variant} handleSkip={handleSkip}>
-      <FlatList
-        ref={flatListRef}
-        data={slides}
-        renderItem={renderSlide}
-        keyExtractor={(item) => item.id.toString()}
-        horizontal
-        pagingEnabled
-        showsHorizontalScrollIndicator={false}
-        onViewableItemsChanged={onViewableItemsChanged}
-        viewabilityConfig={viewabilityConfig}
-        getItemLayout={(data, index) => ({
-          length: screenWidth,
-          offset: screenWidth * index,
-          index,
-        })}
-      />
-      <View className="left-0 right-0">
-        <View className="flex-row justify-center items-center mb-6">{slides.map((_, index) => renderPaginationDot(index))}</View>
-        <NavigationButtons
-          withArrow={true}
-          nextText={currentIndex === slides.length - 1 ? "Démarrer sur Jardin Mental" : "Suivant"}
-          onNext={goToNextSlide}
+      <>
+        <FlatList
+          ref={flatListRef}
+          data={slides}
+          renderItem={renderSlide}
+          keyExtractor={(item) => item.id.toString()}
+          horizontal
+          pagingEnabled
+          showsHorizontalScrollIndicator={false}
+          onViewableItemsChanged={onViewableItemsChanged}
+          viewabilityConfig={viewabilityConfig}
+          getItemLayout={(data, index) => ({
+            length: screenWidth,
+            offset: screenWidth * index,
+            index,
+          })}
         />
-      </View>
+        <View className="left-0 right-0">
+          <View className="flex-row justify-center items-center mb-6">{slides.map((_, index) => renderPaginationDot(index))}</View>
+          <NavigationButtons
+            withArrow={true}
+            nextText={currentIndex === slides.length - 1 ? "Démarrer sur Jardin Mental" : "Suivant"}
+            onNext={goToNextSlide}
+          />
+        </View>
+      </>
     </BeigeWrapperScreen>
   );
 };

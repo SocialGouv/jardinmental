@@ -18,7 +18,7 @@ type Props = {
   nextText?: string;
 };
 
-export const BeigeWrapperScreen: React.FC<Props> = ({ handlePrevious, handleSkip, handleNext, nextText, variant = "beige", children }: Props) => {
+export const BeigeWrapperScreen: React.FC<Props> = ({ handlePrevious, handleSkip, handleNext, nextText, variant = "blue", children }: Props) => {
   // Get screen dimensions and calculate scale factor
   const { width: screenWidth } = Dimensions.get("window");
   const REFERENCE_WIDTH = 500; // iPhone 16 width where current dimensions work well
@@ -40,7 +40,7 @@ export const BeigeWrapperScreen: React.FC<Props> = ({ handlePrevious, handleSkip
   };
 
   return (
-    <SafeAreaViewWithOptionalHeader className={`flex-1 ${VARIANT_COLORS[variant]}`}>
+    <SafeAreaViewWithOptionalHeader className={`flex-1 bg-[#E5F6FC] ${VARIANT_COLORS[variant]}`}>
       <CheckInHeader
         title=""
         onPrevious={handlePrevious}
