@@ -10,6 +10,7 @@ import { typography } from "@/utils/typography";
 import { useOnboardingProgressHeader } from "../onboarding/ProgressHeader";
 import { useFocusEffect } from "@react-navigation/native";
 import logEvents from "@/services/logEvents";
+import { useStatusBar } from "@/context/StatusBarContext";
 
 interface EncouragementScreenProps {
   navigation: any;
@@ -37,11 +38,13 @@ export const EncouragementScreen: React.FC<EncouragementScreenProps> = ({
   nextText,
 }) => {
   const { setSlideIndex } = useOnboardingProgressHeader();
+  const { setCustomColor } = useStatusBar();
 
   useFocusEffect(
     React.useCallback(() => {
       // Reset current index when the screen is focused
       setSlideIndex(-1);
+      setCustomColor("#E5F6FC");
     }, [])
   );
 

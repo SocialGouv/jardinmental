@@ -1,15 +1,16 @@
-import React, { useState, useRef, useEffect } from "react";
-import { View, FlatList, TouchableOpacity, Dimensions } from "react-native";
-import { OnboardingV2ScreenProps, CarouselSlide } from "./types";
+import { useStatusBarInternal } from "@/context/StatusBarContext";
+import { mergeClassNames } from "@/utils/className";
+import { useFocusEffect } from "@react-navigation/native";
+import React, { useEffect, useRef, useState } from "react";
+import { Dimensions, FlatList, TouchableOpacity, View } from "react-native";
 import { CarouselSlide as CarouselSlideComponent } from "../../components/onboarding/CarouselSlide";
 import NavigationButtons from "../../components/onboarding/NavigationButtons";
 import { useUserProfile } from "../../context/userProfile";
-import { useFocusEffect } from "@react-navigation/native";
-import carouselSlides from "./data/carouselData";
-import BeigeWrapperScreen from "./BeigeWrapperScreen";
 import { useOnboardingProgressHeader } from "../onboarding/ProgressHeader";
-import { mergeClassNames } from "@/utils/className";
 import logEvents from "../../services/logEvents";
+import BeigeWrapperScreen from "./BeigeWrapperScreen";
+import carouselSlides from "./data/carouselData";
+import { CarouselSlide, OnboardingV2ScreenProps } from "./types";
 
 type Props = OnboardingV2ScreenProps<"Carousel">;
 
@@ -23,7 +24,8 @@ export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const flatListRef = useRef<FlatList>(null);
   const { setSlideIndex } = useOnboardingProgressHeader();
-  const [variant, setVariant] = useState<"beige" | "white" | "green" | "blue">("beige");
+  const [variant, setVariant] = useState<"beige" | "white" | "green" | "blue" | "pink" | "yellow" | "red">("beige");
+  const { setCustomColor } = useStatusBarInternal();
 
   useFocusEffect(
     React.useCallback(() => {
@@ -46,10 +48,10 @@ export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
     navigation.navigate(NextRoute);
   };
 
-  const onViewableItemsChanged = useRef(({ viewableItems }: any) => {
-    console.log(viewableItems);
+  const onViewableItemsChanged = useRef(({ viewableItems }: { viewableItems: { index: number; isViewable: boolean; item: CarouselSlide }[] }) => {
     if (viewableItems.length > 0) {
       setVariant(viewableItems[0].item.variant || "beige");
+      setCustomColor("");
       setCurrentIndex(viewableItems[0].index || 0);
     }
   }).current;
@@ -68,7 +70,8 @@ export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
 
   const goToNextSlide = () => {
     if (currentIndex < slides.length - 1) {
-      goToSlide(currentIndex + 1);
+      const slideIndex = currentIndex + 1;
+      goToSlide(slideIndex);
     } else {
       handleNext();
     }

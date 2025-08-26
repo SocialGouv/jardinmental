@@ -9,6 +9,8 @@ import BannerHeader from "../BannerHeader";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
 import logEvents from "@/services/logEvents";
+import { useFocusEffect } from "@react-navigation/native";
+import { useStatusBar } from "@/context/StatusBarContext";
 
 type Props = OnboardingV2ScreenProps<"Intro">;
 
@@ -16,6 +18,7 @@ const NextScreen = "PersonalizationDifficulties";
 
 export const OnboardingPersonalizationStartScreen: React.FC<Props> = ({ navigation }) => {
   const { setNextCallback, setSkipCallback } = useOnboardingProgressHeader();
+  const { setCustomColor } = useStatusBar();
 
   const handleNext = useCallback(() => {
     logEvents.logIndicatorObdStart();
@@ -26,6 +29,16 @@ export const OnboardingPersonalizationStartScreen: React.FC<Props> = ({ navigati
     setSkipCallback(handleSkip);
     setNextCallback(handleNext);
   }, [handleNext]);
+
+  useFocusEffect(
+    useCallback(() => {
+      setCustomColor(TW_COLORS.PRIMARY);
+
+      return () => {
+        // Optional cleanup here
+      };
+    }, [])
+  );
 
   const handlePrevious = () => {
     logEvents.logOnboardingBack(4);

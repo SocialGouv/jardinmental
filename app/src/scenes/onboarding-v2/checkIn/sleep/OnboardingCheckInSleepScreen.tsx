@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useCallback, useContext, useState } from "react";
 import { View, Text } from "react-native";
 
 import { OnboardingV2ScreenProps } from "../../types";
@@ -17,6 +17,8 @@ import MoonIcon from "@assets/svg/icon/moon";
 import { typography } from "@/utils/typography";
 import { mergeClassNames } from "@/utils/className";
 import logEvents from "@/services/logEvents";
+import { useFocusEffect } from "@react-navigation/native";
+import { useStatusBar } from "@/context/StatusBarContext";
 
 type Props = OnboardingV2ScreenProps<"OnboardingCheckInHowDoYouFeel">;
 
@@ -28,6 +30,17 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
   const [checkInData, setCheckInData] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
   const [diaryData, addNewEntryToDiaryData] = useContext(DiaryDataContext);
+  const { setCustomColor } = useStatusBar();
+
+  useFocusEffect(
+    useCallback(() => {
+      setCustomColor(TW_COLORS.PRIMARY);
+
+      return () => {
+        // Optional cleanup here
+      };
+    }, [])
+  );
 
   const handleComplete = async () => {
     setLoading(true);

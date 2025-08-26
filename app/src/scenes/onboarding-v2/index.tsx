@@ -16,7 +16,7 @@ import OnboardingCheckInMoodSummaryScreen from "./checkIn/mood/OnboardingCheckIn
 import OnboardingCheckInIntroductionCompletedScreen from "./checkIn/OnboardingCheckInIntroductionCompletedScreen";
 import OnboardingChooseIndicatorScreen from "./indicators/OnboardingChooseIndicatorScreen";
 import OnboardingLoadingScreen from "./OnboardingLoadingScreen";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { progressHeaderOptions, ProgressScreen } from "../onboarding/ProgressHeader";
 import { EncouragementScreen } from "../survey-v2/EncouragementScreen";
@@ -25,6 +25,7 @@ import { beforeToday, formatDay } from "@/utils/date/helpers";
 import { DiaryDataContext } from "@/context/diaryData";
 import { StackNavigationProp } from "@react-navigation/stack";
 import logEvents from "@/services/logEvents";
+import { useStatusBar } from "@/context/StatusBarContext";
 
 const Stack = createStackNavigator<OnboardingV2StackParamList>();
 
@@ -68,30 +69,55 @@ const OnboardingV2Navigator: React.FC = () => {
     }
   }, []);
 
-  const CheckInSleepCompleted = () => (
-    <EncouragementScreen
-      navigation={navigation}
-      currentStep={0}
-      totalSteps={0}
-      title={"Merci d’avoir pris ce moment pour observer votre sommeil."}
-      description={""}
-      extraInfo={
-        "En France, 32 % des adultes se déclarent insatisfaits de leur sommeil.\nEn faire le suivi, c’est déjà prendre soin de soi. (ifop mars 2022)"
-      }
-      onNext={() => {
-        logEvents.logQuestObdStart2();
-        navigation.navigate("PersonalizationStart");
-      }}
-      onPrevious={() => {
-        logEvents.logOnboardingBack(13);
-        navigation.goBack();
-      }}
-      headingTitle={""}
-    />
-  );
+  const CheckInSleepCompleted = () => {
+    const { setCustomColor } = useStatusBar();
+
+    useFocusEffect(
+      useCallback(() => {
+        setCustomColor("#E5F6FC");
+
+        return () => {
+          // Optional cleanup here
+        };
+      }, [])
+    );
+
+    return (
+      <EncouragementScreen
+        navigation={navigation}
+        currentStep={0}
+        totalSteps={0}
+        title={"Merci d’avoir pris ce moment pour observer votre sommeil."}
+        description={""}
+        extraInfo={
+          "En France, 32 % des adultes se déclarent insatisfaits de leur sommeil.\nEn faire le suivi, c’est déjà prendre soin de soi. (ifop mars 2022)"
+        }
+        onNext={() => {
+          logEvents.logQuestObdStart2();
+          navigation.navigate("PersonalizationStart");
+        }}
+        onPrevious={() => {
+          logEvents.logOnboardingBack(13);
+          navigation.goBack();
+        }}
+        headingTitle={""}
+      />
+    );
+  };
 
   const StartFirstSurvey = () => {
     const [diaryData] = useContext(DiaryDataContext);
+    const { setCustomColor } = useStatusBar();
+
+    useFocusEffect(
+      useCallback(() => {
+        setCustomColor("#E5F6FC");
+
+        return () => {
+          // Optional cleanup here
+        };
+      }, [])
+    );
 
     return (
       <EncouragementScreen
