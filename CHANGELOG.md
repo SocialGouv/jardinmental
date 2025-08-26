@@ -1,3 +1,10 @@
+# [1.52.0-alpha.26](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.25...v1.52.0-alpha.26) (2025-08-26)
+
+
+### Features
+
+* ajout des events de l'onboarding ([#357](https://github.com/SocialGouv/jardinmental/issues/357)) ([26f7cdd](https://github.com/SocialGouv/jardinmental/commit/26f7cdd8f252eab3ac52944312a6e2dbb9b3c2f3))
+
 # [1.52.0-alpha.25](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.24...v1.52.0-alpha.25) (2025-08-26)
 
 
