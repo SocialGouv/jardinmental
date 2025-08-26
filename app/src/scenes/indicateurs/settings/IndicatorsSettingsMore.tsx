@@ -39,7 +39,6 @@ const IndicatorsSettingsMore = ({ navigation, route }) => {
   };
 
   const renderItem = useCallback((indicator: Indicator, index: number) => {
-    console.log(indicator);
     return <IndicatorItem indicator={indicator} isActive={indicator.active} drag={undefined} index={index} setIndicators={setIndicators} />;
   }, []);
 

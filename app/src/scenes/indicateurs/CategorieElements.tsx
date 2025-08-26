@@ -69,7 +69,6 @@ const CategorieElements = ({
               <View key={`${option.uuid}`} style={[styles.container]} className="mx-4">
                 <Pressable
                   onPress={() => {
-                    console.log("✍️  option", option);
                     onClick(option);
                   }}
                   hitSlop={{ bottom: 8, left: 8, right: 8, top: 8 }}
