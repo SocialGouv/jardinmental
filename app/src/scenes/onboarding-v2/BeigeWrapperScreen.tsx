@@ -40,7 +40,7 @@ export const BeigeWrapperScreen: React.FC<Props> = ({ handlePrevious, handleSkip
   };
 
   return (
-    <SafeAreaViewWithOptionalHeader className={`flex-1 ${VARIANT_COLORS[variant]}`}>
+    <SafeAreaViewWithOptionalHeader className={`flex-1 bg-[#E5F6FC] ${VARIANT_COLORS[variant]}`}>
       <CheckInHeader
         title=""
         onPrevious={handlePrevious}

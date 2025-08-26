@@ -8,15 +8,6 @@ import { TW_COLORS } from "@/utils/constants";
 type Props = OnboardingV2ScreenProps<"Intro">;
 
 export const OnboardingCheckInIntroductionCompleted: React.FC<Props> = ({ navigation }) => {
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     setCustomColor(TW_COLORS.PRIMARY);
-  //     return () => {
-  //       // Optional cleanup here
-  //     };
-  //   }, [])
-  // );
-
   const handleNext = () => {
     navigation.navigate("OnboardingChooseIndicator");
   };

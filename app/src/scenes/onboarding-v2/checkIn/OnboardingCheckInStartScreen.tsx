@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Text } from "react-native";
 import { OnboardingV2ScreenProps } from "../types";
 import BeigeWrapperScreen from "../BeigeWrapperScreen";
@@ -10,14 +10,22 @@ import { VARIANT_BORDER_COLORS, VARIANT_COLORS } from "../data/carouselData";
 import { useFocusEffect } from "@react-navigation/native";
 import { setStatusBarBackgroundColor } from "expo-status-bar";
 import { TW_COLORS } from "@/utils/constants";
+import { useStatusBar } from "@/context/StatusBarContext";
 type Props = OnboardingV2ScreenProps<"Intro">;
 
 const NextRoute = "OnboardingCheckInHowDoYouFeel";
 
 export const OnboardingCheckInStartScreen: React.FC<Props> = ({ navigation }) => {
-  useFocusEffect(() => {
-    setStatusBarBackgroundColor("#E5F6FC", false);
-  });
+  const { setCustomColor } = useStatusBar();
+
+  useFocusEffect(
+    useCallback(() => {
+      setCustomColor("#E5F6FC");
+      return () => {
+        // Optional cleanup here
+      };
+    }, [])
+  );
 
   const handleNext = () => {
     logEvents.logHumeurObdStart();
