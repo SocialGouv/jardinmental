@@ -20,14 +20,14 @@ export default ({ navigation }) => {
         <View style={styles.paragraph}>
           <Text style={styles.standardText}>Pour plus d'informations rendez-vous sur notre site :</Text>
           <TouchableOpacity onPress={() => Linking.openURL("https://jardinmental.fabrique.social.gouv.fr/")}>
-            <Text style={styles.link}>jardinmental.fr</Text>
+            <Text style={styles.link}>https://jardinmental.fabrique.social.gouv.fr</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.paragraph}>
           <Text style={styles.standardText}>Afin d'améliorer Jardin Mental, nous serions ravis d'échanger avec vous :</Text>
           {/* // todo mailto */}
-          <TouchableOpacity onPress={() => Linking.openURL("mailto:monsuivipsy@fabrique.social.gouv.fr")}>
-            <Text style={styles.link}>monsuivipsy@fabrique.social.gouv.fr</Text>
+          <TouchableOpacity onPress={() => Linking.openURL("mailto:jardinmental@fabrique.social.gouv.fr")}>
+            <Text style={styles.link}>jardinmental@fabrique.social.gouv.fr</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.paragraph}>
