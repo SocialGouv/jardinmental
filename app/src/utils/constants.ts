@@ -383,12 +383,3 @@ export const SHARED_HEADER = false;
 export const HEADER_WITH_BANNER = false;
 export const PROGRESS_BAR = true;
 export const PROGRESS_BAR_AND_HEADER = true;
-
-export const PRISE_DE_TRAITEMENT = {
-  id: "PRISE_DE_TRAITEMENT",
-  label: "Avez-vous pris correctement votre traitement quotidien ?",
-};
-export const PRISE_DE_TRAITEMENT_SI_BESOIN = {
-  id: "PRISE_DE_TRAITEMENT_SI_BESOIN",
-  label: "Avez-vous pris un « si besoin » ?",
-};
