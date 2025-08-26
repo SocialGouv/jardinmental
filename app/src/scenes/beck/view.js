@@ -15,6 +15,7 @@ import { DiaryDataContext } from "../../context/diaryData";
 import { confirm, deleteBeckfromDiaryData } from "../../utils";
 import logEvents from "../../services/logEvents";
 import { parseISO, differenceInDays } from "date-fns";
+import JMButton from "@/components/JMButton";
 
 export default ({ navigation, route }) => {
   const [beck, setBeck] = useState({});

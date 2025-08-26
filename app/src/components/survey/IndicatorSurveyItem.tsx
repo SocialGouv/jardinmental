@@ -114,7 +114,7 @@ export const IndicatorSurveyItem = ({
         />
       )}
       {indicator.isGeneric && (
-        <View className="flex-row">
+        <View className="flex-row mt-6">
           <TouchableOpacity
             onPress={() => {
               showBottomSheet(

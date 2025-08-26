@@ -12,6 +12,7 @@ import localStorage from "../../utils/localStorage";
 import AddElemToList from "../../components/AddElemToList";
 import { DEFAULT_BECK_EMOTION_LIST, DEFAULT_BECK_SENSATION_LIST } from "../../utils/constants";
 import logEvents from "../../services/logEvents";
+import JMButton from "@/components/JMButton";
 
 export default ({ onChange, onSubmit, data }) => {
   // lists that will be displayed

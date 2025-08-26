@@ -22,6 +22,7 @@ import {
   NEW_INDICATORS_CATEGORIES,
   GENERIC_INDICATOR_SUBSTANCE,
   STATIC_UUID_FOR_INSTANCE_OF_GENERIC_INDICATOR_SUBSTANCE,
+  INDICATORS,
 } from "@/utils/liste_indicateurs.1";
 import { TW_COLORS } from "@/utils/constants";
 import { mergeClassNames } from "@/utils/className";
@@ -63,7 +64,9 @@ const DaySurvey = ({
   const [userIndicateurs, setUserIndicateurs] = useState<Indicator[]>([]);
   const groupedIndicators = useMemo(() => {
     return userIndicateurs.reduce<Record<NEW_INDICATORS_CATEGORIES, Indicator[]>>((acc, indicator) => {
-      const category = indicator.mainCategory || NEW_INDICATORS_CATEGORIES.OTHER;
+      const category =
+        INDICATORS.find((ind) => [indicator.uuid, indicator.baseIndicatorUuid, indicator.genericUuid].includes(ind.uuid))?.mainCategory ||
+        NEW_INDICATORS_CATEGORIES.OTHER;
 
       if (!acc[category]) {
         acc[category] = [];
@@ -312,6 +315,9 @@ const DaySurvey = ({
                   indicator={ind}
                   index={0}
                   value={answers?.[ind[ind.diaryDataKey || "name"]]?.value}
+                  onIndicatorChange={() => {
+                    updateIndicators();
+                  }}
                   onValueChanged={onValueChanged}
                   onCommentChanged={onCommentChanged}
                   comment={answers?.[ind[ind.diaryDataKey || "name"]]?.userComment}
@@ -347,13 +353,15 @@ const DaySurvey = ({
                 />
               </View>
               {indicators.map((ind: Indicator) => {
-
                 return (
                   <IndicatorSurveyItem
                     key={ind?.uuid}
                     showComment={true}
                     indicator={ind}
                     index={index}
+                    onIndicatorChange={() => {
+                      updateIndicators();
+                    }}
                     value={answers?.[ind[ind.diaryDataKey || "name"]]?.value}
                     onValueChanged={onValueChanged}
                     onCommentChanged={onCommentChanged}

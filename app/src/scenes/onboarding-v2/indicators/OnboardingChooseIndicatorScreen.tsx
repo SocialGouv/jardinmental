@@ -420,7 +420,7 @@ const CategoryCard = ({
           <View className="items-center justify-center mr-4">
             <IconBg type={categoryName} frontSquareColor={TW_COLORS.CNAM_CYAN_50_LIGHTEN_90} backSquareColor={TW_COLORS.CNAM_CYAN_200_LIGHTEN_60} />
           </View>
-          <Text className={mergeClassNames(typography.textLgBold, "text-cnam-primary-900 ")}>
+          <Text className={mergeClassNames(typography.textLgBold, "text-cnam-primary-900 flex-1")}>
             {INDICATOR_CATEGORIES_DATA[categoryName].name || categoryName}
           </Text>
           {!indicators && (
