@@ -35,6 +35,7 @@ export interface Difficulty {
   category: NEW_INDICATORS_CATEGORIES;
   subCat?: NEW_INDICATORS_SUBCATEGORIES[];
   labelWithSecondPersonPrefix: string;
+  matomoId: number;
 }
 
 export interface Objective {

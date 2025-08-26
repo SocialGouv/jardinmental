@@ -11,6 +11,7 @@ import { INDICATOR_CATEGORIES_DATA } from "../data/helperData";
 import { NEW_INDICATORS_CATEGORIES } from "@/utils/liste_indicateurs.1";
 import { AnimatedHeaderScrollScreen } from "@/scenes/survey-v2/AnimatedHeaderScrollScreen";
 import AlertBanner from "../AlertBanner";
+import logEvents from "@/services/logEvents";
 
 type Props = OnboardingV2ScreenProps<"PersonalizationDifficulties">;
 
@@ -29,6 +30,7 @@ export const DifficultiesScreen: React.FC<Props> = ({ navigation }) => {
   const { setSlideIndex, setNextCallback, setIsVisible, setSkipCallback } = useOnboardingProgressHeader();
 
   const handleSkip = useCallback(() => {
+    logEvents.logIndicatorObdPass(5);
     navigation.navigate("OnboardingChooseIndicator", {
       skippedScreen: "PersonalizationDifficulties",
     });
@@ -37,6 +39,10 @@ export const DifficultiesScreen: React.FC<Props> = ({ navigation }) => {
   const handleNext = async () => {
     const selected = selectedDifficulties.filter((d) => d.selected);
     const selectedCategories = selected.map((d) => d.category);
+    const selectedCategoriesMatomoIds = selected.map((d) => d.matomoId);
+
+    logEvents.logIndicatorObdLvl1(selectedCategoriesMatomoIds, selectedCategories.length);
+
     await updateUserDifficulties(selectedCategories);
     if (selectedCategories.find((cat) => INDICATOR_CATEGORIES_DATA[cat].subCat)) {
       navigation.navigate(NextScreen);
