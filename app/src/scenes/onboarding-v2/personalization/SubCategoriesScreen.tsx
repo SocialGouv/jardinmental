@@ -30,7 +30,6 @@ export const SubcategoriesScreen: React.FC<Props> = ({ navigation, route }) => {
   useFocusEffect(
     React.useCallback(() => {
       // Reset current index when the screen is focused
-      setSlideIndex(-1);
       setCustomColor(TW_COLORS.PRIMARY);
     }, [])
   );
