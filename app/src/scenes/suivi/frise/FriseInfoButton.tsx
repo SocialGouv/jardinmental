@@ -6,10 +6,13 @@ import { useFocusEffect } from "@react-navigation/native";
 import logEvents from "../../../services/logEvents";
 import JMButton from "@/components/JMButton";
 import Icon from "@/components/Icon";
+import { useBottomSheet } from "@/context/BottomSheetContext";
+import { DrugsBottomSheet } from "@/components/DrugsBottomSheet";
 
 export const FriseInfoButton = forwardRef(({ navigation, hasTreatment, ...props }, ref) => {
   const infoButtonRef = useRef();
   const infoModal = useInfoModal();
+  const { showBottomSheet, closeBottomSheet } = useBottomSheet();
 
   useImperativeHandle(ref, () => {
     return {
@@ -55,7 +58,13 @@ export const FriseInfoButton = forwardRef(({ navigation, hasTreatment, ...props 
               title="Ajouter votre traitement"
               className={"mt-10"}
               onPress={() => {
-                navigation.navigate("drugs-management");
+                showBottomSheet(
+                  <DrugsBottomSheet
+                    onClose={() => {
+                      closeBottomSheet();
+                    }}
+                  />
+                );
                 infoModal.hide();
               }}
               icon={<Icon icon={"PlusSvg"} />}

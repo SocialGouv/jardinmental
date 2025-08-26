@@ -144,7 +144,7 @@ const DrugsManagement = ({ navigation, route }) => {
             />
           </InputGroupItem>
         </View>
-        {medicalTreatment.map((e, i) => {
+        {(medicalTreatment || []).map((e, i) => {
           const drug = (posology && posology.find((i) => i.id === e.id)) || e;
           return (
             <ListItem
