@@ -1,3 +1,10 @@
+# [1.52.0-alpha.27](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.26...v1.52.0-alpha.27) (2025-08-26)
+
+
+### Bug Fixes
+
+* **android:** add padding-top to AnimatedHeaderScrollScreen ([#362](https://github.com/SocialGouv/jardinmental/issues/362)) ([79e2a1c](https://github.com/SocialGouv/jardinmental/commit/79e2a1c161fb334054bdcffbb724f6bc8701fde6))
+
 # [1.52.0-alpha.26](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.25...v1.52.0-alpha.26) (2025-08-26)
 
 
