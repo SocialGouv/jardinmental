@@ -93,7 +93,6 @@ const Drugs = ({ navigation, route, onClose }) => {
     const drugInTreatment = treatment.find((elem) => elem.id === d.id);
     if (drugInTreatment) {
       const i = treatment.indexOf(drugInTreatment);
-      console.log("index i", i);
       t.splice(i, 1);
     } else {
       t.push({ id: d.id });
@@ -102,7 +101,6 @@ const Drugs = ({ navigation, route, onClose }) => {
   };
 
   const handleAdd = async (value) => {
-    console.log("add drug", value);
     if (!value) return;
     const drug = { id: value, name1: value, values: [] };
     await localStorage.addCustomDrug(drug);

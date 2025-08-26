@@ -75,7 +75,6 @@ const DrugsManagement = ({ navigation, route }) => {
   };
 
   const handleDelete = async (drug: Drug) => {
-    console.log("LCS HANDLE DELETE");
     const treatmentAfterDeletion = await localStorage.removeDrugFromTreatment(drug?.id);
     setMedicalTreatment(enrichTreatmentWithData(treatmentAfterDeletion, listDrugs));
   };
@@ -92,7 +91,6 @@ const DrugsManagement = ({ navigation, route }) => {
     const medicalTreatmentStorage = await localStorage.getMedicalTreatment();
     const updatedDrugList = await getDrugListWithLocalStorage();
     setListDrugs(updatedDrugList);
-    console.log(medicalTreatmentStorage);
     setMedicalTreatment(enrichTreatmentWithData(medicalTreatmentStorage, updatedDrugList));
     closeBottomSheet();
   };

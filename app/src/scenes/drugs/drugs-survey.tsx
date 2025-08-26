@@ -169,7 +169,6 @@ const DrugsSurvey = ({ navigation, route }) => {
     const medicalTreatmentStorage = await localStorage.getMedicalTreatment();
     const updatedDrugList = await getDrugListWithLocalStorage();
     setListDrugs(updatedDrugList);
-    console.log(medicalTreatmentStorage);
     setMedicalTreatment(enrichTreatmentWithData(medicalTreatmentStorage, updatedDrugList));
     closeBottomSheet();
   };
