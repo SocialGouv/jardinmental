@@ -1,3 +1,10 @@
+# [1.52.0-alpha.28](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.27...v1.52.0-alpha.28) (2025-08-26)
+
+
+### Bug Fixes
+
+* **android:** status bar color + flickering when getting to day survey stack ([#363](https://github.com/SocialGouv/jardinmental/issues/363)) ([07be549](https://github.com/SocialGouv/jardinmental/commit/07be54950187a05548696c6b8397bfc8f8687d0a))
+
 # [1.52.0-alpha.27](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.26...v1.52.0-alpha.27) (2025-08-26)
 
 
