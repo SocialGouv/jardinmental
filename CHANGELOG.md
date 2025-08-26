@@ -1,3 +1,10 @@
+# [1.52.0-alpha.25](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.24...v1.52.0-alpha.25) (2025-08-26)
+
+
+### Bug Fixes
+
+* expéditeur des messages jardinmental@fabrique.social.gouv.fr ([#359](https://github.com/SocialGouv/jardinmental/issues/359)) ([d299118](https://github.com/SocialGouv/jardinmental/commit/d299118ddabf6350b8d8a82c1c47161a6bb300ea))
+
 # [1.52.0-alpha.24](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.23...v1.52.0-alpha.24) (2025-08-26)
 
 
