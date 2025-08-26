@@ -275,6 +275,7 @@ export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
           className={"flex-1"}
           style={{
             backgroundColor: scrollViewBackground,
+            paddingTop: Platform.OS === "android" ? insets.top : 0,
           }}
           contentContainerStyle={scrollViewContentStyle}
           onScroll={scrollHandler}
