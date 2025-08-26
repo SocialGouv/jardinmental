@@ -63,7 +63,7 @@ module.exports = {
           "lighten-90": "#E5F6FC",
           "lighten-80": "#CCEDF9",
           "darken-20": "#0084B2",
-          "50-ligten-90": "#E5F6FC",
+          "50-lighten-90": "#E5F6FC",
           "500-0": "#00A5DF",
           "600-darken-20": "#0084B2",
           "700-darken-40": "#006386",

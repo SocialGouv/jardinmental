@@ -1,3 +1,10 @@
+# [1.52.0-alpha.23](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.22...v1.52.0-alpha.23) (2025-08-25)
+
+
+### Bug Fixes
+
+* onboarding should save new indicator value using diaryDataKey ([#356](https://github.com/SocialGouv/jardinmental/issues/356)) ([d04b30f](https://github.com/SocialGouv/jardinmental/commit/d04b30fccb3d3d855fe467e89eed6449d0ff1230))
+
 # [1.52.0-alpha.22](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.21...v1.52.0-alpha.22) (2025-08-25)
 
 

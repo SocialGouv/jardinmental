@@ -41,6 +41,8 @@ fileignoreconfig:
   checksum: aee06a5419616198ba07f25f4450a4d3dfd62e1f2a713faa6290a831ca68a804
 - filename: app/src/scenes/goals/settings/GoalDaySelector.tsx
   checksum: 989214cbaa302dbd4811f936d5ef87fccc9645e49beb1cc96fb4b0d74bded646
+- filename: app/src/scenes/indicateurs/CategorieElements.tsx
+  checksum: 3bc6daaf4f2215540d8394876235dd71bae771b4980de83b6154643437db7f74
 - filename: app/src/scenes/indicateurs/CreateIndicator/ChooseIndicatorType.tsx
   checksum: 13ed5791d9f46dc9f7d302134dd4330366aeed1f3f542cdabf41749ff12d869f
 - filename: app/src/scenes/indicateurs/CreateIndicator/index.js
@@ -48,7 +50,9 @@ fileignoreconfig:
 - filename: app/src/scenes/indicateurs/CreateIndicator/index.tsx
   checksum: 6af8271df476164b212c040e9531ae4d44a54eb89a8b6d99a0874c258863c285
 - filename: app/src/scenes/indicateurs/editIndicateurs/index.tsx
-  checksum: da39a551c3cf5760751f04c9083a2e720d10874a38f8ae39861a127d59288487
+  checksum: e3e77173ab23626b61d785f0b881f26ed17fcb0707741c5420f6cc1d91b650e3
+- filename: app/src/scenes/indicateurs/settings/IndicatorsSettingsMore.tsx
+  checksum: 6c8f9b5b25f33c330504d559bee35c0d57c0ddb9e7da118e85dab25ecd59f8a9
 - filename: app/src/scenes/onboarding-v2/CarouselScreen.tsx
   checksum: 4f0aaf86c03496f7e5d81b837058253040ed186f9e2a7f5939e5a7dd95ef0867
 - filename: app/src/scenes/onboarding-v2/checkIn/mood/OnboardingCheckInHowDoYouFeelDetailsScreen.tsx
