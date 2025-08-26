@@ -117,7 +117,7 @@ export const IndicatorScreen: React.FC<IndicatorScreenProps> = ({
       const bannerHeight = event.nativeEvent.layout.height;
       measuredHeight.value = bannerHeight;
       // Calculate total header height including safe area insets
-      const totalHeaderHeight = bannerHeight + (Platform.OS === "android" ? insets.top : 50);
+      const totalHeaderHeight = bannerHeight + (Platform.OS === "android" ? insets.top + 20 : 50);
       setDynamicPaddingTop(totalHeaderHeight);
 
       console.log("Banner height measured:", bannerHeight);
