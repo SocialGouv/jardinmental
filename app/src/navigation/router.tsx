@@ -193,41 +193,6 @@ class Router extends React.Component<RouterProps> {
     this.cleanupNotifications?.();
   }
 
-  updateStatusBarColor() {
-    // const route = this.navigationRef.getCurrentRoute();
-    // console.log("route name", route.name);
-    // let newColor;
-    // if (
-    //   [
-    //     "Calendar",
-    //     "Status",
-    //     "Exercise",
-    //     "OnboardingChooseIndicator",
-    //     "OnboardingPersonalizationStartScreen",
-    //     "Intro",
-    //     "PersonalizationStart",
-    //     "PersonalizationDifficulties",
-    //     "PersonalizationObjective",
-    //     "OnboardingCheckInStart",
-    //     "OnboardingCheckInHowDoYouFeel",
-    //     // 'OnboardingCheckInHowDoYouFeelDetails',
-    //     // 'OnboardingCheckInMoodSummary',
-    //     "OnboardingCheckInSleep",
-    //     "OnboardingChooseIndicator",
-    //     "OnboardingReminder",
-    //   ].includes(route.name) ||
-    //   route.name.startsWith("screen-survey-")
-    // ) {
-    //   newColor = colors.LIGHT_BLUE;
-    // } else if (["Carousel", "OnboardingCheckInIntroductionCompleted"].includes(route.name)) {
-    //   newColor = TW_COLORS.BEIGE;
-    // }
-    // this.setState((prevState) => ({ backgroundColor: newColor }));
-    // if (this.statusBarContext?.setDefaultColor) {
-    //   this.statusBarContext.setDefaultColor(newColor);
-    // }
-  }
-
   appState = AppState.currentState;
   onAppChange = (nextAppState) => {
     if (this.appState.match(/inactive|background/) && nextAppState === "active") {
@@ -241,7 +206,6 @@ class Router extends React.Component<RouterProps> {
   onStateChange = async () => {
     if (!this.navigationRef) return;
     const route = this.navigationRef.getCurrentRoute();
-    this.updateStatusBarColor();
     if (route.name === this.prevCurrentRouteName) return;
     this.prevCurrentRouteName = route.name;
     logEvents.logOpenPage(route.name);
