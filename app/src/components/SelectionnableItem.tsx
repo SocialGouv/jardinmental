@@ -215,15 +215,6 @@ export function ListItem({ id, label, description, selected, onPress, className,
   return (
     <View className={mergeClassNames("bg-white border-2 border-cnam-primary-800 p-4 rounded-xl mt-2", className)}>
       <View className={mergeClassNames("flex-row items-start")}>
-        {/* {selected ? (
-          <View className="w-6 h-6 rounded-md items-center justify-center bg-cnam-primary-800 mr-4">
-            <Text className="text-white text-base font-bold">✓</Text>
-          </View>
-        ) : (
-          <View className="w-6 h-6 rounded-md items-center justify-center border-2 border-gray-300 mr-4">
-            <Text className="text-white text-xs" />
-          </View>
-        )} */}
         {
           <View className="mr-4">
             <Health />
