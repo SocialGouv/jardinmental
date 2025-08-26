@@ -14,6 +14,8 @@ import { SUBCATEGORIES, NEW_INDICATORS_SUBCATEGORIES } from "@/utils/liste_indic
 import InstructionText from "../InstructionText";
 import { AnimatedHeaderScrollScreen } from "@/scenes/survey-v2/AnimatedHeaderScrollScreen";
 import logEvents from "@/services/logEvents";
+import { useFocusEffect } from "@react-navigation/native";
+import { useStatusBar } from "@/context/StatusBarContext";
 
 type Props = OnboardingV2ScreenProps<"PersonalizationObjective">;
 
@@ -23,6 +25,15 @@ export const SubcategoriesScreen: React.FC<Props> = ({ navigation, route }) => {
   const { updateUserSubcategories, profile } = useUserProfile();
   const [selectedSubcategories, setSelectedSubcategories] = useState<NEW_INDICATORS_SUBCATEGORIES[]>(profile?.selectedSubcategories || []);
   const { setSlideIndex, setIsVisible } = useOnboardingProgressHeader();
+  const { setCustomColor } = useStatusBar();
+
+  useFocusEffect(
+    React.useCallback(() => {
+      // Reset current index when the screen is focused
+      setSlideIndex(-1);
+      setCustomColor(TW_COLORS.PRIMARY);
+    }, [])
+  );
 
   const handleNext = async () => {
     if (selectedSubcategories.length > 0) {

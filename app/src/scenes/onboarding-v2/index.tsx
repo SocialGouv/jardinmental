@@ -16,7 +16,7 @@ import OnboardingCheckInMoodSummaryScreen from "./checkIn/mood/OnboardingCheckIn
 import OnboardingCheckInIntroductionCompletedScreen from "./checkIn/OnboardingCheckInIntroductionCompletedScreen";
 import OnboardingChooseIndicatorScreen from "./indicators/OnboardingChooseIndicatorScreen";
 import OnboardingLoadingScreen from "./OnboardingLoadingScreen";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { progressHeaderOptions, ProgressScreen } from "../onboarding/ProgressHeader";
 import { EncouragementScreen } from "../survey-v2/EncouragementScreen";
@@ -25,6 +25,7 @@ import { beforeToday, formatDay } from "@/utils/date/helpers";
 import { DiaryDataContext } from "@/context/diaryData";
 import { StackNavigationProp } from "@react-navigation/stack";
 import logEvents from "@/services/logEvents";
+import { useStatusBar } from "@/context/StatusBarContext";
 
 const Stack = createStackNavigator<OnboardingV2StackParamList>();
 
@@ -68,7 +69,19 @@ const OnboardingV2Navigator: React.FC = () => {
     }
   }, []);
 
-  const CheckInSleepCompleted = () => (
+  const CheckInSleepCompleted = () => {
+    const { setCustomColor } = useStatusBar();
+
+    useFocusEffect(
+      useCallback(() => {
+        setCustomColor("#E5F6FC");
+
+        return () => {
+          // Optional cleanup here
+        };
+      }, [])
+    );
+
     <EncouragementScreen
       navigation={navigation}
       currentStep={0}
@@ -87,11 +100,22 @@ const OnboardingV2Navigator: React.FC = () => {
         navigation.goBack();
       }}
       headingTitle={""}
-    />
-  );
+    />;
+  };
 
   const StartFirstSurvey = () => {
     const [diaryData] = useContext(DiaryDataContext);
+    const { setCustomColor } = useStatusBar();
+
+    useFocusEffect(
+      useCallback(() => {
+        setCustomColor("#E5F6FC");
+
+        return () => {
+          // Optional cleanup here
+        };
+      }, [])
+    );
 
     return (
       <EncouragementScreen

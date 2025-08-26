@@ -29,6 +29,7 @@ import { AnimatedHeaderScrollScreen } from "@/scenes/survey-v2/AnimatedHeaderScr
 import { useFocusEffect } from "@react-navigation/native";
 import AlertBanner from "../AlertBanner";
 import logEvents from "@/services/logEvents";
+import { useStatusBar } from "@/context/StatusBarContext";
 
 const BASE_INDICATORS_FOR_CUSTOM_CATEGORIES = {
   [NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR]: [INDICATORS.find((ind) => ind.uuid === "1d4c3f59-dc3e-4b45-ae82-2ea77a62e6c6")],
@@ -47,7 +48,7 @@ export function suggestIndicatorsForDifficulties(
   selectedSubcategories: NEW_INDICATORS_SUBCATEGORIES[] = []
 ): PredefineIndicatorV2SchemaType[] {
   // Filter indicators by selected categories and subcategories
-  const filteredIndicators = INDICATORS.filter((indicator) => {
+  const filteredIndicators = INDICATORS.filter((indicator) => !BASE_INDICATORS.includes(indicator.uuid)).filter((indicator) => {
     const hasMatchingCategory = indicator.categories?.some((cat) => selectedDifficulties.includes(cat));
 
     // Trouver les sous-catégories sélectionnées qui appartiennent à une des catégories de l'indicateur
@@ -107,12 +108,14 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation, r
   const [addedIndicators, setAddedIndicators] = useState<Record<NEW_INDICATORS_CATEGORIES, PredefineIndicatorV2SchemaType[]>>({});
   const { setSlideIndex, setIsVisible } = useOnboardingProgressHeader();
   const { profile, isLoading } = useUserProfile();
+  const { setCustomColor } = useStatusBar();
 
   useFocusEffect(
     React.useCallback(() => {
       // Reset current index when the screen is focused
       setIsVisible(false);
       setSlideIndex(-1);
+      setCustomColor(TW_COLORS.PRIMARY);
     }, [])
   );
 
@@ -135,10 +138,12 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation, r
 
   const recommendedIndicatorsByCategory: Record<NEW_INDICATORS_CATEGORIES, PredefineIndicatorV2SchemaType[]> = recommendedIndicators.reduce(
     (prev, curr) => {
-      if (!prev[curr.mainCategory]) {
-        prev[curr.mainCategory] = [];
+      for (const cat of curr.categories) {
+        if (!prev[cat]) {
+          prev[cat] = [];
+        }
+        prev[cat].push(curr);
       }
-      prev[curr.mainCategory].push(curr);
       return prev;
     },
     {} as Record<NEW_INDICATORS_CATEGORIES, PredefineIndicatorV2SchemaType[]>

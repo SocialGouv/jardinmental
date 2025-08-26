@@ -353,6 +353,9 @@ export const TW_COLORS = {
   CNAM_CYAN_LIGHTEN_80: "#CCEDF9",
   CNAM_CYAN_200_LIGHTEN_60: "#99DBF2",
   CNAM_CYAN_50_LIGHTEN_90: "#E5F6FC",
+  CNAM_CYAN_600_DARKEN_20: "#0084B2",
+  CNAM_CYAN_700_DARKEN_40: "#006386",
+  CNAM_CYAN_100_LIGHTEN_80: "#CCEDF9",
   CNAM_CYAN_0: "#00A5DF",
   CNAM_PRIMARY_900: "#134449",
   CNAM_PRIMARY_700: "#518B9A",
@@ -380,3 +383,12 @@ export const SHARED_HEADER = false;
 export const HEADER_WITH_BANNER = false;
 export const PROGRESS_BAR = true;
 export const PROGRESS_BAR_AND_HEADER = true;
+
+export const PRISE_DE_TRAITEMENT = {
+  id: "PRISE_DE_TRAITEMENT",
+  label: "Avez-vous pris correctement votre traitement quotidien ?",
+};
+export const PRISE_DE_TRAITEMENT_SI_BESOIN = {
+  id: "PRISE_DE_TRAITEMENT_SI_BESOIN",
+  label: "Avez-vous pris un « si besoin » ?",
+};

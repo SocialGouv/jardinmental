@@ -194,41 +194,37 @@ class Router extends React.Component<RouterProps> {
   }
 
   updateStatusBarColor() {
-    const route = this.navigationRef.getCurrentRoute();
-    console.log("route name", route.name);
-
-    let newColor;
-    if (
-      [
-        "Calendar",
-        "Status",
-        "Exercise",
-        "OnboardingChooseIndicator",
-        "OnboardingPersonalizationStartScreen",
-        "Intro",
-        "PersonalizationStart",
-        "PersonalizationDifficulties",
-        "PersonalizationObjective",
-        "OnboardingCheckInStart",
-        "OnboardingCheckInHowDoYouFeel",
-        // 'OnboardingCheckInHowDoYouFeelDetails',
-        // 'OnboardingCheckInMoodSummary',
-        "OnboardingCheckInSleep",
-        "OnboardingChooseIndicator",
-        "OnboardingReminder",
-      ].includes(route.name) ||
-      route.name.startsWith("screen-survey-")
-    ) {
-      newColor = colors.LIGHT_BLUE;
-    } else if (["Carousel", "OnboardingCheckInIntroductionCompleted"].includes(route.name)) {
-      newColor = TW_COLORS.BEIGE;
-    }
-    // if (newColor) {
-    // Update both local state (for backward compatibility) and context
-    this.setState((prevState) => ({ backgroundColor: newColor }));
-    if (this.statusBarContext?.setDefaultColor) {
-      this.statusBarContext.setDefaultColor(newColor);
-    }
+    // const route = this.navigationRef.getCurrentRoute();
+    // console.log("route name", route.name);
+    // let newColor;
+    // if (
+    //   [
+    //     "Calendar",
+    //     "Status",
+    //     "Exercise",
+    //     "OnboardingChooseIndicator",
+    //     "OnboardingPersonalizationStartScreen",
+    //     "Intro",
+    //     "PersonalizationStart",
+    //     "PersonalizationDifficulties",
+    //     "PersonalizationObjective",
+    //     "OnboardingCheckInStart",
+    //     "OnboardingCheckInHowDoYouFeel",
+    //     // 'OnboardingCheckInHowDoYouFeelDetails',
+    //     // 'OnboardingCheckInMoodSummary',
+    //     "OnboardingCheckInSleep",
+    //     "OnboardingChooseIndicator",
+    //     "OnboardingReminder",
+    //   ].includes(route.name) ||
+    //   route.name.startsWith("screen-survey-")
+    // ) {
+    //   newColor = colors.LIGHT_BLUE;
+    // } else if (["Carousel", "OnboardingCheckInIntroductionCompleted"].includes(route.name)) {
+    //   newColor = TW_COLORS.BEIGE;
+    // }
+    // this.setState((prevState) => ({ backgroundColor: newColor }));
+    // if (this.statusBarContext?.setDefaultColor) {
+    //   this.statusBarContext.setDefaultColor(newColor);
     // }
   }
 

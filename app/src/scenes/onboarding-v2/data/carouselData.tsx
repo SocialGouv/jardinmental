@@ -81,7 +81,6 @@ export const carouselSlidesSuivi: CarouselSlide[] = [
 ];
 
 export const VARIANT_COLORS = {
-  beige: "bg-[#E5F6FC]",
   red: "bg-[#FAEEEF]",
   pink: "bg-[#FEF8FB]",
   white: TW_COLORS.WHITE,

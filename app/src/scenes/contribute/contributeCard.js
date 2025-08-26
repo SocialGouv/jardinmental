@@ -3,6 +3,7 @@ import { StyleSheet, View, TouchableOpacity } from "react-native";
 import Text from "../../components/MyText";
 import { colors } from "../../utils/colors";
 import JMButton from "@/components/JMButton";
+import { TW_COLORS } from "@/utils/constants";
 
 const ContributeItem = ({ onPress }) => {
   return (
@@ -20,7 +21,7 @@ const ContributeItem = ({ onPress }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#CCEDF9", // TODO: trouver où on doit mettre cette couleur
+    backgroundColor: TW_COLORS.CNAM_CYAN_100_LIGHTEN_80, // TODO: trouver où on doit mettre cette couleur
     borderRadius: 10,
     borderWidth: 1,
     borderColor: "#F4FCFD",

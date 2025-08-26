@@ -8,6 +8,15 @@ import { TW_COLORS } from "@/utils/constants";
 type Props = OnboardingV2ScreenProps<"Intro">;
 
 export const OnboardingCheckInIntroductionCompleted: React.FC<Props> = ({ navigation }) => {
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     setCustomColor(TW_COLORS.PRIMARY);
+  //     return () => {
+  //       // Optional cleanup here
+  //     };
+  //   }, [])
+  // );
+
   const handleNext = () => {
     navigation.navigate("OnboardingChooseIndicator");
   };
@@ -25,7 +34,7 @@ export const OnboardingCheckInIntroductionCompleted: React.FC<Props> = ({ naviga
       <CheckInHeader title="" onPrevious={handlePrevious} onSkip={handleSkip} showPrevious={true} showSkip={true} />
       <View className="flex-1 justify-center items-center px-8">
         <Text className="text-4xl font-bold text-center mb-6" style={{ color: TW_COLORS.TEXT_PRIMARY }}>
-          👏 Un pas de plus vers une meilleure connaissance de vous.
+          👏 Un pas de plus vers une meilleure connaissance de vous 2.
         </Text>
 
         <Text className="text-xl text-center mb-8 leading-8" style={{ color: TW_COLORS.TEXT_SECONDARY }}>
