@@ -12,7 +12,7 @@ const ContributeItem = ({ onPress }) => {
         <View className="flex flex-col gap-4">
           <Text style={styles.title}>Contribuez à Jardin Mental</Text>
           <Text style={styles.message}>Dites-nous comment améliorer l’application, nous lisons tous les messages.</Text>
-          <JMButton width="adapt" variant="secondary-blue" title="Donner mon avis" />
+          <JMButton width="fixed" variant="secondary-blue" title="Donner mon avis" />
         </View>
       </View>
     </TouchableOpacity>
