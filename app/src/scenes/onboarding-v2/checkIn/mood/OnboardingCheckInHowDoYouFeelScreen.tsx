@@ -92,7 +92,7 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
     const date = formatDay(beforeToday(0));
     const prev = diaryData[date] || {};
     const mood = selectedMoodIndex !== null ? selectedMoodIndex - 1 : 2; // default is 2, the midde
-    const key = INDICATEURS_HUMEUR.uuid;
+    const key = getIndicatorKey(INDICATEURS_HUMEUR);
     const updatedAnswers = {
       ...prev,
       [key]: {
