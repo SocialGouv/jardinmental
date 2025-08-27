@@ -19,6 +19,7 @@ import Phone from "@assets/svg/icon/Phone";
 import MessageTextCircle from "@assets/svg/icon/MessageTextCircle";
 import Lock from "@assets/svg/icon/Lock";
 import LightBulb from "@assets/svg/icon/LightBulb";
+import NPS from "../../services/NPS/NPS";
 
 export default ({ navigation, visible, onClick }) => {
   const [isVisible, setIsVisible] = useState();
@@ -29,6 +30,7 @@ export default ({ navigation, visible, onClick }) => {
   const [npsProIsVisible, setNpsProIsVisible] = useState(true);
   const [badgeNpsProIsVisible, setBadgeNpsProIsVisible] = useState(false);
   const [badgeNotesVersionVisible, setBadgeNotesVersionVisible] = useState(false);
+  const [NPSvisible, setNPSvisible] = useState(false);
 
   useEffect(() => {
     setIsVisible(visible);
@@ -56,69 +58,81 @@ export default ({ navigation, visible, onClick }) => {
 
   const deviceHeight = Dimensions.get("window").height;
   return (
-    <Modal
-      style={styles.modal}
-      isVisible={isVisible}
-      onBackdropPress={onClick}
-      onSwipeComplete={onClick}
-      animationIn="slideInLeft"
-      animationOut="slideOutLeft"
-      deviceHeight={deviceHeight}
-    >
-      <View style={styles.card}>
-        <SafeAreaView>
-          <ScrollView contentContainerStyle={styles.scrollContainer}>
-            <Text style={styles.title}>Jardin Mental</Text>
-            <DrawerItem badge={badgeNotesVersionVisible} title="Nouveautés" path="news" navigation={navigation} onClick={onClick} icon={<Star />} />
-            <Separator />
-            <DrawerItem title="Présentation" path="presentation" navigation={navigation} onClick={onClick} icon={<StickerSquare />} />
-            <DrawerItem title="Recommander Jardin&nbsp;Mental" onClick={recommendApp} icon={<Share />} />
-            <DrawerItem title="Parler à quelqu'un et s'informer" path="infos" navigation={navigation} onClick={onClick} icon={<Phone />} />
-            <DrawerItem title="Nous contacter" path="contact" navigation={navigation} onClick={onClick} icon={<MessageTextCircle />} />
-            <DrawerItem title="Qui peut voir mes données ?" path="privacy-light" navigation={navigation} onClick={onClick} icon={<Lock />} />
-            {updateVisible ? (
+    <>
+      <NPS
+        forceView={NPSvisible}
+        close={() => {
+          setNPSvisible(false);
+          onClick();
+        }}
+      />
+      <Modal
+        style={styles.modal}
+        isVisible={isVisible}
+        onBackdropPress={onClick}
+        onSwipeComplete={onClick}
+        animationIn="slideInLeft"
+        animationOut="slideOutLeft"
+        deviceHeight={deviceHeight}
+      >
+        <View style={styles.card}>
+          <SafeAreaView>
+            <ScrollView contentContainerStyle={styles.scrollContainer}>
+              <Text style={styles.title}>Jardin Mental</Text>
+              <DrawerItem badge={badgeNotesVersionVisible} title="Nouveautés" path="news" navigation={navigation} onClick={onClick} icon={<Star />} />
+              <Separator />
+              <DrawerItem title="Présentation" path="presentation" navigation={navigation} onClick={onClick} icon={<StickerSquare />} />
+              <DrawerItem title="Recommander Jardin&nbsp;Mental" onClick={recommendApp} icon={<Share />} />
+              <DrawerItem title="Parler à quelqu'un et s'informer" path="infos" navigation={navigation} onClick={onClick} icon={<Phone />} />
+              <DrawerItem title="Nous contacter" path="contact" navigation={navigation} onClick={onClick} icon={<MessageTextCircle />} />
+              <DrawerItem title="Qui peut voir mes données ?" path="privacy-light" navigation={navigation} onClick={onClick} icon={<Lock />} />
+              {updateVisible ? (
+                <DrawerItem
+                  badge
+                  title="Mettre à jour"
+                  icon={<Bell />}
+                  onClick={() =>
+                    Linking.openURL(
+                      Platform.OS === "ios"
+                        ? "itms-apps://apps.apple.com/FR/app/id1540061393"
+                        : "https://play.app.goo.gl/?link=https://play.google.com/store/apps/details?id=com.monsuivipsy"
+                    )
+                  }
+                />
+              ) : null}
               <DrawerItem
-                badge
-                title="Mettre à jour"
-                icon={<Bell />}
-                onClick={() =>
-                  Linking.openURL(
-                    Platform.OS === "ios"
-                      ? "itms-apps://apps.apple.com/FR/app/id1540061393"
-                      : "https://play.app.goo.gl/?link=https://play.google.com/store/apps/details?id=com.monsuivipsy"
-                  )
-                }
+                badge={badgeNpsProIsVisible}
+                title="Donner mon avis"
+                icon={<LightBulb />}
+                onClick={async () => {
+                  // dismiss the drawer first, IOS cannot display two modals at the same tme
+                  setIsVisible(false);
+                  await localStorage.setVisitProNPS(true);
+                  setTimeout(() => {
+                    // a bit hacky : whai for drawer to dismiss before displaying NPS
+                    setNPSvisible(true);
+                  }, 300);
+                }}
               />
-            ) : null}
-            <DrawerItem
-              badge={badgeNpsProIsVisible}
-              title="Donner mon avis"
-              icon={<LightBulb />}
-              path="contribute-pro"
-              navigation={navigation}
-              onClick={async () => {
-                await localStorage.setVisitProNPS(true);
-                onClick();
-              }}
-            />
-            {isDevMode && <DrawerItem title="Dev Mode" path="dev-mode" navigation={navigation} onClick={onClick} icon="GearSvg" />}
-            <Separator />
-            <LegalItem title="Conditions générales d'utilisation" path="cgu" navigation={navigation} onClick={onClick} />
-            <LegalItem title="Politique de confidentialité" path="privacy" navigation={navigation} onClick={onClick} />
-            <LegalItem title="Mentions légales" path="legal-mentions" navigation={navigation} onClick={onClick} />
-            <TouchableWithoutFeedback onPress={handleDevModePress}>
-              <View style={styles.versionContainer}>
-                <Text style={styles.versionLabel}>
-                  {Platform.OS === "ios"
-                    ? `${app.expo.version} (${app.expo.ios.buildNumber})`
-                    : `${app.expo.version} (${app.expo.android.versionCode})`}
-                </Text>
-              </View>
-            </TouchableWithoutFeedback>
-          </ScrollView>
-        </SafeAreaView>
-      </View>
-    </Modal>
+              {isDevMode && <DrawerItem title="Dev Mode" path="dev-mode" navigation={navigation} onClick={onClick} icon="GearSvg" />}
+              <Separator />
+              <LegalItem title="Conditions générales d'utilisation" path="cgu" navigation={navigation} onClick={onClick} />
+              <LegalItem title="Politique de confidentialité" path="privacy" navigation={navigation} onClick={onClick} />
+              <LegalItem title="Mentions légales" path="legal-mentions" navigation={navigation} onClick={onClick} />
+              <TouchableWithoutFeedback onPress={handleDevModePress}>
+                <View style={styles.versionContainer}>
+                  <Text style={styles.versionLabel}>
+                    {Platform.OS === "ios"
+                      ? `${app.expo.version} (${app.expo.ios.buildNumber})`
+                      : `${app.expo.version} (${app.expo.android.versionCode})`}
+                  </Text>
+                </View>
+              </TouchableWithoutFeedback>
+            </ScrollView>
+          </SafeAreaView>
+        </View>
+      </Modal>
+    </>
   );
 };
 

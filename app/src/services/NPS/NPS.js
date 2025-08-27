@@ -90,6 +90,10 @@ class NPS extends React.Component {
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({ visible: true });
     }
+    if (prevProps.forceView && !this.props.forceView && this.state.visible) {
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState({ visible: false });
+    }
     if (prevState.visible && !this.state.visible) {
       if (this.props.close) {
         this.props.close();
