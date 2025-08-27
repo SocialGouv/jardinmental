@@ -1,3 +1,10 @@
+# [1.52.0-alpha.31](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.30...v1.52.0-alpha.31) (2025-08-27)
+
+
+### Bug Fixes
+
+* "Donner votre avis"  now open "Évaluer jardin mental" ([#361](https://github.com/SocialGouv/jardinmental/issues/361)) ([6a381de](https://github.com/SocialGouv/jardinmental/commit/6a381dee31ad7a6e28b07ebab5d6e2097880320f))
+
 # [1.52.0-alpha.30](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.29...v1.52.0-alpha.30) (2025-08-27)
 
 
