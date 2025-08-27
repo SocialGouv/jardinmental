@@ -50,13 +50,13 @@ fileignoreconfig:
 - filename: app/src/scenes/onboarding-v2/CarouselScreen.tsx
   checksum: 4f0aaf86c03496f7e5d81b837058253040ed186f9e2a7f5939e5a7dd95ef0867
 - filename: app/src/scenes/onboarding-v2/checkIn/mood/OnboardingCheckInHowDoYouFeelDetailsScreen.tsx
-  checksum: 8a737e4021e9d7c66a54fbf4b5df8a91ad528a6af70a25d7c75f60fb3f444a2c
+  checksum: 026f25437e1dbca6d6a5b7085977847cc6af6b1efc145b168f0c86008c236b66
 - filename: app/src/scenes/onboarding-v2/checkIn/mood/OnboardingCheckInHowDoYouFeelScreen.tsx
-  checksum: 0dcfcad0f62a7b475755d15fbd1499734016e4ad1a3913bf9621d23c70f2f30f
+  checksum: e276114b4980b5a72bc79d23ddcf6494f227aafa8909cf0dd99ef760079bb0fe
 - filename: app/src/scenes/onboarding-v2/checkIn/mood/OnboardingCheckInMoodSummaryScreen.tsx
   checksum: 62b7f70e73e8f19062fdad757ffdd70063398e0014e9daa674e748ead10259a7
 - filename: app/src/scenes/onboarding-v2/checkIn/sleep/OnboardingCheckInSleepScreen.tsx
-  checksum: 14224cbec000817ce208d29c765b7401a1e0652a6e3fad6e913047279adaa7c6
+  checksum: 00812521aa27fb09c3c5bfd7849db4cb168e284be42915be3c24cd7fc8aa52c5
 - filename: app/src/scenes/onboarding-v2/components/ProgressIndicator.tsx
   checksum: dc7b2bed449fd294af610f8fd941b9dd7257aaf65ec7f51e01ac9f903d029520
 - filename: app/src/scenes/onboarding-v2/context/OnboardingContext.tsx
@@ -97,12 +97,14 @@ fileignoreconfig:
   checksum: 5f9e42e3b0cf566b702885826b9b417fd0b0b58be969354716386d909b4e3651
 - filename: app/src/scenes/status/status-item.js
   checksum: 6883b8993f12c6742b18decf374b5fcc5b3be90cfab3cf93e9065b28728cc9cd
+- filename: app/src/scenes/suivi/frise/FriseGraphList.js
+  checksum: 476a8522fdd4e53da1a36fe0c46f18294e6e97930f4040b7a126552800e238bc
 - filename: app/src/scenes/survey-v2/AnimatedHeaderScrollScreen.tsx
   checksum: 53643c652f22b9b65dc01c34ac35cfd9763f1720d4d2d0ff8f4e956d698647fb
 - filename: app/src/scenes/survey-v2/ContextScreen.tsx
   checksum: 6371ed197788ce03cb6c42e3151135d106c684e295b66a25ebd841ca1d3a01dd
 - filename: app/src/scenes/survey-v2/IndicatorScreen.tsx
-  checksum: 1e5505491542d03a5d856ef60a5413fce9040725569d5f0a9d0a043a86d61d7e
+  checksum: a3e80be5eaad90053eddae68ae9199ee28553f735a50ca7b660887aca85df57d
 - filename: app/src/scenes/survey-v2/ToxicScreen.tsx
   checksum: 033a3b6b40b07e8d7369d7d1abc7a0e25f4df71c5aebfd43d8253b0fe83c5a69
 - filename: app/src/scenes/survey-v2/multiScreenSurvey/ContextScreen.tsx
@@ -120,13 +122,15 @@ fileignoreconfig:
 - filename: app/src/scenes/survey/QuestionYesNo.js
   checksum: 5f60226dc61678da5e266fe1c3317ca498389cf407639a79ba11a4f8c4e1083c
 - filename: app/src/scenes/survey/daySurvey.tsx
-  checksum: 907745c5a3fcdf10456b4f25d8a850d285a32f2cf15532024f99cb412a75bcb5
+  checksum: d8691b20eb4452132cfc2e8a598ebdaa775f60867d7547059b8bb223a6de720a
 - filename: app/src/scenes/survey/survey-data.js
   checksum: 1ac3021625ed8fb4ed188c80035b12789aa03989dc7276893900ed96dc2a2509
 - filename: app/src/services/notifications.js
   checksum: 00046388d0509346e97a4d365477dd2b85f4eaefb4f67f4d7351bc198db4b725
 - filename: app/src/utils/constants.ts
   checksum: d29684ebe5ee90a995bb09732890fd0016a076e810a0be1e8f5c218a296d56bd
+- filename: app/src/utils/indicatorUtils.ts
+  checksum: 4642f6d8aded23d81c41e2655051fd6ecb06175b337bf9ba6c03437a26277ac0
 - filename: app/src/utils/localStorage/index.ts
   checksum: 2992b41a470e997cb013ccd01c90abddea5dd5025f77d7ac8776d910810060ad
 scopeconfig:

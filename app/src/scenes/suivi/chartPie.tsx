@@ -19,11 +19,13 @@ import Button from "../../components/Button";
 import { GoalsChartPie } from "../goals/suivi/GoalsChartPie";
 import JMButton from "@/components/JMButton";
 import { TW_COLORS } from "../../utils/constants";
+import { Indicator } from "@/entities/Indicator";
+import { getIndicatorKey } from "@/utils/indicatorUtils";
 
 const ChartPie = ({ navigation, fromDate, toDate }) => {
   const [diaryData] = React.useContext(DiaryDataContext);
   const [activeCategories, setActiveCategories] = React.useState([]);
-  const [userIndicateurs, setUserIndicateurs] = React.useState([]);
+  const [userIndicateurs, setUserIndicateurs] = React.useState<Indicator[]>([]);
   const [chartDates, setChartDates] = React.useState([]);
   const [isEmpty, setIsEmpty] = React.useState();
 
@@ -45,18 +47,21 @@ const ChartPie = ({ navigation, fromDate, toDate }) => {
 
   React.useEffect(() => {
     if (!userIndicateurs || userIndicateurs.length === 0) return;
-    const empty = userIndicateurs.every(({ name }) => !isChartVisible(name));
+    const empty = userIndicateurs.every((ind) => {
+      const isVisible = !isChartVisible(getIndicatorKey(ind));
+      return isVisible;
+    });
     setIsEmpty(empty);
   }, [userIndicateurs, isChartVisible]);
 
   const isChartVisible = React.useCallback(
-    (categoryId) => {
+    (indicatorId) => {
       let visible = false;
       chartDates.forEach((date) => {
         if (!diaryData[date]) {
           return;
         }
-        if (!diaryData[date][categoryId]) {
+        if (!diaryData[date][indicatorId]) {
           return;
         }
         visible = true;
@@ -134,7 +139,7 @@ const ChartPie = ({ navigation, fromDate, toDate }) => {
   return (
     <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContainer}>
       {userIndicateurs
-        ?.filter((ind) => isChartVisible(ind.name) && ind.active)
+        ?.filter((ind) => isChartVisible(getIndicatorKey(ind)) && ind.active)
         ?.map((_indicateur, index) => {
           const isReverse = _indicateur?.order === "DESC";
           if (_indicateur?.type === "boolean")
@@ -143,11 +148,18 @@ const ChartPie = ({ navigation, fromDate, toDate }) => {
                 key={index}
                 indicateur={_indicateur}
                 title={getTitle(_indicateur.name)}
-                data={computeChartData(_indicateur.name)}
+                data={computeChartData(getIndicatorKey(_indicateur))}
                 parialsColors={["#f3f3f3", isReverse ? TW_COLORS.NEGATIVE : TW_COLORS.POSITIVE, isReverse ? TW_COLORS.POSITIVE : TW_COLORS.NEGATIVE]}
               />
             );
-          return <Pie indicateur={_indicateur} title={getTitle(_indicateur.name)} key={_indicateur.name} data={computeChartData(_indicateur.name)} />;
+          return (
+            <Pie
+              indicateur={_indicateur}
+              title={getTitle(_indicateur.name)}
+              key={_indicateur.name}
+              data={computeChartData(getIndicatorKey(_indicateur))}
+            />
+          );
         })}
       <GoalsChartPie chartDates={chartDates} />
       <View style={styles.divider} />

@@ -6,6 +6,7 @@ import { getDrugListWithLocalStorage } from "../../utils/drugs-list";
 import { parseISO, format } from "date-fns";
 import { fr } from "date-fns/locale";
 import { INDICATEURS_LIST } from "../../utils/liste_indicateurs.1";
+import { getIndicatorKey } from "../../utils/indicatorUtils";
 
 // methods
 const hasNotes = (notes) =>
@@ -262,7 +263,7 @@ const formatHtmlTable = async (diaryData, diaryNotes) => {
       if (!dayData) {
         return null;
       }
-      const categoryState = dayData[indicateur.name] || dayData[`${indicateur.name}_FREQUENCE`];
+      const categoryState = dayData[getIndicatorKey(indicateur)] || dayData[`${getIndicatorKey(indicateur)}_FREQUENCE`];
       if (!categoryState) {
         return null;
       }
@@ -276,7 +277,7 @@ const formatHtmlTable = async (diaryData, diaryNotes) => {
       // -------
 
       // get the name and the suffix of the category
-      const [categoryName, suffix] = indicateur.name.split("_");
+      const [categoryName, suffix] = getIndicatorKey(indicateur).split("_");
       let categoryStateIntensity = null;
       if (suffix && suffix === "FREQUENCE") {
         // if it's one category with the suffix 'FREQUENCE' :
@@ -366,7 +367,7 @@ const formatHtmlTable = async (diaryData, diaryNotes) => {
         <h2 style="color: ${colors.BLUE}">Mon état et mon traitement</h2>
         <h3 style="color: ${colors.BLUE}">Mes ressentis</h3>
         ${user_indicateurs
-          ?.filter((ind) => isChartVisible(ind.name) && ind.active)
+          ?.filter((ind) => isChartVisible(getIndicatorKey(ind)) && ind.active)
           .map((indicateur) => {
             const res = computeChartData(indicateur);
             const categoryId = indicateur.name;
