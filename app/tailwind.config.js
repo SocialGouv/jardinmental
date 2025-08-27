@@ -24,6 +24,8 @@ module.exports = {
         },
         red: {
           DEFAULT: "#f16b6b",
+          text: "#5A2017",
+          bg: "#F9DCD7",
           50: "#fdf3f3",
           100: "#fde3e3",
           200: "#fccccc",
@@ -47,6 +49,9 @@ module.exports = {
           700: "#0d890c",
           800: "#106c0f",
           900: "#0e590f",
+          text: "#224E2D",
+          bg: "#DDF3E3",
+          "bg-darken": "#BBE7C6",
         },
         blue: {
           DEFAULT: "#EBFDFF",
