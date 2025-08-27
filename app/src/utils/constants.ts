@@ -330,8 +330,8 @@ export const TOTAL_STEPS = STEP_ORDER.length;
 export const TW_COLORS = {
   PRIMARY: "#3D6874", //mainColors.LIGHT_BLUE,
   SECONDARY: "#12747D", //'#00CEF7',
-  POSITIVE: "#5DEE5A", // positive for action relative to mental health !== 'success action in app'
-  NEGATIVE: "#F16B6B", // negative feeling for action relative to mental health
+  POSITIVE: "#DDF3E3", // positive for action relative to mental health !== 'success action in app'
+  NEGATIVE: "#F9DCD7", // negative feeling for action relative to mental health
   // SUCCESS: "#5DEE5A", //#4CAF50',
   WARNING: "#FF9800",
   // ERROR: "#F44336",

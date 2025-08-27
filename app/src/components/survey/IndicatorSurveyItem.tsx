@@ -57,8 +57,13 @@ export const IndicatorSurveyItem = ({
 
   const computeIndicatorLabel = (): string => {
     if (value === null) return "";
-    const index = Math.min(Math.floor(value * 5), 4);
-    return (INDICATOR_LABELS[indicator.uuid] || DEFAULT_INDICATOR_LABELS)[index] ?? "";
+    const index = indicator.type === INDICATOR_TYPE.gauge ? Math.min(Math.floor(value * 5), 4) : value;
+
+    if (Object.keys(INDICATOR_LABELS).includes(indicator.uuid)) {
+      return INDICATOR_LABELS[indicator.uuid][index - 1];
+    } else {
+      return DEFAULT_INDICATOR_LABELS[index];
+    }
   };
 
   const [_comment, _setComment] = useState(comment);
@@ -114,7 +119,7 @@ export const IndicatorSurveyItem = ({
         />
       )}
       {indicator.isGeneric && (
-        <View className="flex-row">
+        <View className="flex-row mt-6">
           <TouchableOpacity
             onPress={() => {
               showBottomSheet(

@@ -1930,6 +1930,9 @@ export const INDICATEURS_LISTE_ONBOARDING_CUSTOM_SIMPLE_LIST = [
 
 export const INDICATOR_LABELS: Record<string, string[]> = {
   "3e15ed99-f2f9-4716-b6a2-5348c35266da": ["Très mal", "Mal", "OK", "Bien", "Très bien"],
+  "e190182b-e2d3-4d09-bee6-21ba6baf0b25": ["Très mal", "Mal", "OK", "Bien", "Très bien"],
+  "51ead8a8-0f08-4527-98ce-e101cd7da50d": ["Très mal", "Mal", "OK", "Bien", "Très bien"],
+  "60f6eb32-698c-47c0-b99e-fb03a576b7c1": ["Très mal", "Mal", "OK", "Bien", "Très bien"],
 };
 
 export const DEFAULT_INDICATOR_LABELS = ["Très faible", "Faible", "Normal", "Élevé", "Trés élevé"];

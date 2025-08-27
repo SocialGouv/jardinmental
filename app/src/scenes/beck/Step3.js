@@ -7,6 +7,7 @@ import Button from "../../components/Button";
 import Separator from "../../components/Separator";
 import DiscretSlider from "../../components/DiscretSlider";
 import logEvents from "../../services/logEvents";
+import JMButton from "@/components/JMButton";
 
 export default ({ onChange, onSubmit, data }) => {
   const numberOfLines = 8;

@@ -103,7 +103,7 @@ export const GoalConfig = ({ navigation, route }) => {
               </Text>
             </>
           ) : (
-            <Card preset="lighten" title={editingGoal?.label} containerStyle={styles.spacing} />
+            <Text className={mergeClassNames("my-4 mt-6 text-cnam-primary-900", typography.textMdSemibold)}>{editingGoal?.label}</Text>
           )}
           <InputGroup containerStyle={styles.spacing} highlight={reminderEnabled}>
             {editing && (

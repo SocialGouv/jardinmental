@@ -5,6 +5,7 @@ import styleBeck from "../../styles/beck";
 import Text from "../../components/MyText";
 import Button from "../../components/Button";
 import logEvents from "../../services/logEvents";
+import JMButton from "@/components/JMButton";
 
 export default ({ onChange, onSubmit, data }) => {
   const numberOfLines = 8;

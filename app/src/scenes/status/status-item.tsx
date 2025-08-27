@@ -14,8 +14,23 @@ import { INDICATEURS_LIST } from "../../utils/liste_indicateurs.1";
 import { GoalsStatus } from "../goals/status/GoalsStatus";
 import { Card } from "../../components/Card";
 import { GoalsStatusNoData } from "../goals/status/GoalsStatusNoData";
+import { Indicator } from "@/entities/Indicator";
+import { DiaryDataAnswer, DiaryEntry } from "@/entities/DiaryData";
+import { GoalRecordsData, GoalsData } from "@/entities/Goal";
 
-export default ({ navigation, indicateurs = [], patientState, goalsData, date }) => {
+export default ({
+  navigation,
+  indicateurs = [],
+  patientState,
+  goalsData,
+  date,
+}: {
+  navigation: any;
+  indicateurs: Indicator[];
+  patientState: DiaryEntry;
+  goalsData: GoalsData;
+  date: Date;
+}) => {
   const [customs, setCustoms] = useState([]);
   const [oldCustoms, setOldCustoms] = useState([]);
   let mounted = useRef(true);
@@ -47,7 +62,7 @@ export default ({ navigation, indicateurs = [], patientState, goalsData, date })
   };
 
   const hasAnswerSurvey = () =>
-    patientStateRecords.some(([key, value]) => value?.value !== undefined) || goalsData?.records?.byDate?.[date]?.length > 0;
+    patientStateRecordKeys.some((key) => patientState[key]?.value !== undefined) || goalsData?.records?.byDate?.[date]?.length > 0;
 
   const handlePressItem = ({ editingSurvey, toGoals } = {}) => {
     if (!canEdit(date)) return navigation.navigate("too-late", { date });
@@ -55,15 +70,16 @@ export default ({ navigation, indicateurs = [], patientState, goalsData, date })
     handleEdit("day-survey", editingSurvey, toGoals);
   };
 
-  const patientStateRecords = patientState
-    ? Object.entries(patientState)
-        .filter(([key, value]) => {
+  // DiaryDataAnswer;
+  const patientStateRecordKeys = patientState
+    ? Object.keys(patientState)
+        .filter(([key]) => {
           return !["CONTEXT", "POSOLOGY", "TOXIC", "NOTES", "PRISE_DE_TRAITEMENT", "PRISE_DE_TRAITEMENT_SI_BESOIN", "becks"].includes(key);
         })
-        .filter(([key, value]) => !!value)
+        .filter((key) => !!patientState[key])
         .sort((_a, _b) => {
-          const a = _a?.[1];
-          const b = _b?.[1];
+          const a = patientState[_a];
+          const b = patientState[_b];
           const aIndex = indicateurs?.findIndex?.((indicateur) => indicateur?.uuid === a?._indicateur?.uuid) || 0;
           const bIndex = indicateurs?.findIndex?.((indicateur) => indicateur?.uuid === b?._indicateur?.uuid) || 0;
           return aIndex - bIndex;
@@ -75,8 +91,9 @@ export default ({ navigation, indicateurs = [], patientState, goalsData, date })
       <View style={styles.container}>
         <View style={[styles.item, styles.itemWithSpaceAbove]}>
           <View>
-            {patientStateRecords.map(([key, value]) => {
-              if (!value || (!value.value && typeof value.value !== "boolean")) {
+            {patientStateRecordKeys.map((key) => {
+              const value = patientState[key];
+              if (!value || value?.value === null || value.value === undefined) {
                 return;
               }
               const [categoryName] = key.split("_");
@@ -98,7 +115,7 @@ export default ({ navigation, indicateurs = [], patientState, goalsData, date })
               );
             })}
 
-            <GoalsStatus goalsData={goalsData} date={date} withSeparator={patientStateRecords?.length > 0} />
+            <GoalsStatus goalsData={goalsData} date={date} withSeparator={patientStateRecordKeys?.length > 0} />
             <Context data={patientState?.CONTEXT} />
             <Posology posology={patientState?.POSOLOGY} patientState={patientState} date={date} onPress={() => handleEdit("drugs")} />
             <Toxic data={patientState?.TOXIC} />

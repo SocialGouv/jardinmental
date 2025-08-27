@@ -12,6 +12,7 @@ import Animated, { useSharedValue, useAnimatedScrollHandler, useAnimatedStyle, i
 import { Indicator, INDICATORS_CATEGORIES } from "@/entities/Indicator";
 import { DiaryDataNewEntryInput } from "@/entities/DiaryData";
 import { IndicatorSurveyItem } from "@/components/survey/IndicatorSurveyItem";
+import { getIndicatorKey } from "@/utils/indicatorUtils";
 import NavigationButtons from "@/components/onboarding/NavigationButtons";
 import { TW_COLORS } from "@/utils/constants";
 import BannerHeader from "../onboarding-v2/BannerHeader";
@@ -117,7 +118,7 @@ export const IndicatorScreen: React.FC<IndicatorScreenProps> = ({
       const bannerHeight = event.nativeEvent.layout.height;
       measuredHeight.value = bannerHeight;
       // Calculate total header height including safe area insets
-      const totalHeaderHeight = bannerHeight + (Platform.OS === "android" ? insets.top : 50);
+      const totalHeaderHeight = bannerHeight + (Platform.OS === "android" ? insets.top + 20 : 50);
       setDynamicPaddingTop(totalHeaderHeight);
 
       console.log("Banner height measured:", bannerHeight);
@@ -330,14 +331,12 @@ export const IndicatorScreen: React.FC<IndicatorScreenProps> = ({
                 allIndicators={indicators}
                 index={index}
                 showComment={showComment}
-                value={answers?.[indicator[indicator.diaryDataKey || "name"]]?.value}
+                value={answers?.[getIndicatorKey(indicator)]?.value}
                 onValueChanged={({ indicator, value }) => {
-                  onValueChanged({ key: indicator[indicator.diaryDataKey || "name"], value });
+                  onValueChanged({ key: getIndicatorKey(indicator), value });
                 }}
-                onCommentChanged={({ indicator, comment }) =>
-                  onCommentChanged({ key: indicator[indicator.diaryDataKey || "name"], userComment: comment })
-                }
-                comment={answers?.[indicator[indicator.diaryDataKey || "name"]]?.userComment}
+                onCommentChanged={({ indicator, comment }) => onCommentChanged({ key: getIndicatorKey(indicator), userComment: comment })}
+                comment={answers?.[getIndicatorKey(indicator)]?.userComment}
               />
             ))}
           </View>

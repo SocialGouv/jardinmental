@@ -48,7 +48,7 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
     const date = formatDay(beforeToday(0));
     const prev = diaryData[date] || {};
 
-    const key = INDICATEURS_SOMMEIL.name;
+    const key = INDICATEURS_SOMMEIL.uuid;
     const updatedAnswers = {
       ...prev,
       [key]: {
