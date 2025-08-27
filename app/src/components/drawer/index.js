@@ -105,8 +105,13 @@ export default ({ navigation, visible, onClick }) => {
                 title="Donner mon avis"
                 icon={<LightBulb />}
                 onClick={async () => {
+                  // dismiss the drawer first, IOS cannot display two modals at the same tme
+                  setIsVisible(false);
                   await localStorage.setVisitProNPS(true);
-                  setNPSvisible(true);
+                  setTimeout(() => {
+                    // a bit hacky : whai for drawer to dismiss before displaying NPS
+                    setNPSvisible(true);
+                  }, 300);
                 }}
               />
               {isDevMode && <DrawerItem title="Dev Mode" path="dev-mode" navigation={navigation} onClick={onClick} icon="GearSvg" />}
