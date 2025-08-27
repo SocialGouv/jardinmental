@@ -49,7 +49,7 @@ export default function ToggleButtons({
             setSelected(true);
           }}
         >
-          <Text 
+          <Text
             style={{
               color: selected === true ? (leftTextColor ? leftTextColor : 'white') : TW_COLORS.GRAY_800
             }}
