@@ -1,3 +1,10 @@
+# [1.52.0-alpha.30](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.29...v1.52.0-alpha.30) (2025-08-27)
+
+
+### Bug Fixes
+
+* **indicator:** replace usage of name as main id among all files ([#364](https://github.com/SocialGouv/jardinmental/issues/364)) ([d451fbc](https://github.com/SocialGouv/jardinmental/commit/d451fbcc84a38620305c0d2e5ea8523e37277a31))
+
 # [1.52.0-alpha.29](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.28...v1.52.0-alpha.29) (2025-08-27)
 
 
