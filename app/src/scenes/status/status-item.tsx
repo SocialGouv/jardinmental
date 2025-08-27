@@ -73,10 +73,11 @@ export default ({
   // DiaryDataAnswer;
   const patientStateRecordKeys = patientState
     ? Object.keys(patientState)
-        .filter(([key]) => {
+        .filter((key) => {
           return !["CONTEXT", "POSOLOGY", "TOXIC", "NOTES", "PRISE_DE_TRAITEMENT", "PRISE_DE_TRAITEMENT_SI_BESOIN", "becks"].includes(key);
         })
         .filter((key) => !!patientState[key])
+        .filter((key) => key)
         .sort((_a, _b) => {
           const a = patientState[_a];
           const b = patientState[_b];
