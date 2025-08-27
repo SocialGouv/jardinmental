@@ -12,7 +12,6 @@ import { DiaryEntry } from "@/entities/DiaryData";
 const PatientStateItem = ({ patientState, category, label }: { patientState: DiaryEntry; category: string; label: string }) => {
   const [{ color, borderColor, faceIcon, iconColor }, setIcon] = useState({});
   const [userCommentVisible, setUserCommentVisible] = useState(false);
-  console.log("LCS PATIENT STATE !", label);
   useEffect(() => {
     const score = getScoreWithState({ patientState, category });
     const icon = scoresMapIcon[score] || {};
@@ -68,7 +67,6 @@ const PatientStateItem = ({ patientState, category, label }: { patientState: Dia
       );
     }
     if (patientState[category]?._indicateur?.type === "gauge") {
-      console.log("LCS PATIENT STATE ", patientState[category]._indicateur.order);
       const _value = patientState[category]?.value;
       const _colors =
         patientState[category]?._indicateur?.order === "DESC"
@@ -81,7 +79,6 @@ const PatientStateItem = ({ patientState, category, label }: { patientState: Dia
       if (_value >= 0.4 && _value < 0.6) _color = _colors[2];
       if (_value >= 0.6 && _value < 0.8) _color = _colors[3];
       if (_value >= 0.8) _color = _colors[4];
-      console.log(colors, _color);
       return (
         <View className="flex flex-row justify-center w-10 space-x-2 items-end mr-5">
           <View className="h-2 rounded-full w-1" style={{ backgroundColor: _color }} />

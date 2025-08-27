@@ -98,7 +98,6 @@ export default ({
               }
               const [categoryName] = key.split("_");
               const indicator = indicateurs.find((i) => i.genericUuid === key) || indicateurs.find((i) => i.uuid === key);
-              console.log(categoryName, indicator, key, patientState);
               return (
                 <PatientStateItem
                   key={key}

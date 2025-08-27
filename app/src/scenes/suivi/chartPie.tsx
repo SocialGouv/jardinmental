@@ -49,7 +49,6 @@ const ChartPie = ({ navigation, fromDate, toDate }) => {
     if (!userIndicateurs || userIndicateurs.length === 0) return;
     const empty = userIndicateurs.every((ind) => {
       const isVisible = !isChartVisible(getIndicatorKey(ind));
-      console.log("LCS TOTO", ind, getIndicatorKey(ind), isVisible);
       return isVisible;
     });
     setIsEmpty(empty);
@@ -62,7 +61,6 @@ const ChartPie = ({ navigation, fromDate, toDate }) => {
         if (!diaryData[date]) {
           return;
         }
-        console.log(indicatorId, diaryData[date][indicatorId]);
         if (!diaryData[date][indicatorId]) {
           return;
         }
