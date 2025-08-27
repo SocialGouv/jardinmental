@@ -5,17 +5,15 @@ import { colors } from "../../utils/colors";
 import JMButton from "@/components/JMButton";
 import { TW_COLORS } from "@/utils/constants";
 
-const ContributeItem = ({ onPress }) => {
+const ContributeCard = ({ onPress }) => {
   return (
-    <TouchableOpacity onPress={onPress}>
-      <View style={styles.container}>
-        <View className="flex flex-col gap-4">
-          <Text style={styles.title}>Contribuez à Jardin Mental</Text>
-          <Text style={styles.message}>Dites-nous comment améliorer l’application, nous lisons tous les messages.</Text>
-          <JMButton width="fixed" variant="secondary-blue" title="Donner mon avis" />
-        </View>
+    <View style={styles.container}>
+      <View className="flex flex-col gap-4">
+        <Text style={styles.title}>Contribuez à Jardin Mental</Text>
+        <Text style={styles.message}>Dites-nous comment améliorer l’application, nous lisons tous les messages.</Text>
+        <JMButton width="fixed" variant="secondary-blue" title="Donner mon avis" onPress={onPress} />
       </View>
-    </TouchableOpacity>
+    </View>
   );
 };
 
@@ -47,4 +45,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ContributeItem;
+export default ContributeCard;
