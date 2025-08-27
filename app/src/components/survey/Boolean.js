@@ -32,7 +32,7 @@ export const Boolean = ({ indicator, value, onChange, disabled }) => {
   return (
     <ToggleButtons
       onPressLeft={() => {
-        onChange(false);
+        onChange(true);
       }}
       disabled={disabled}
       initialSelected={value}
@@ -43,7 +43,7 @@ export const Boolean = ({ indicator, value, onChange, disabled }) => {
       leftText={"Oui"}
       rightText={"Non"}
       onPressRight={() => {
-        onChange(true);
+        onChange(false);
         // if the user choose no, we clean the text input
       }}
     />
