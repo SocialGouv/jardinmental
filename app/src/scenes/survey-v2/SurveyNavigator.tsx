@@ -16,6 +16,7 @@ import { DiaryDataContext } from "@/context/diaryData";
 import { INDICATEURS_HUMEUR, INDICATEURS_SOMMEIL, NEW_INDICATORS_CATEGORIES } from "@/utils/liste_indicateurs.1";
 import { useSurveyScreens } from "./hooks/useSurveyScreens";
 import { IndicatorScreen } from "./IndicatorScreen";
+import { getIndicatorKey } from "@/utils/indicatorUtils";
 
 const Stack = createStackNavigator<SurveyStackParamList>();
 
@@ -51,7 +52,7 @@ const SurveyStackNavigator: React.FC<{ context: SurveyContextType; isLoading: bo
         answers={{}}
         onValueChanged={() => {}}
         onCommentChanged={() => {}}
-        title={"loading"}
+        title={"Chargement..."}
         category={NEW_INDICATORS_CATEGORIES.SLEEP}
         indicators={[]}
         showComment={!isOnboarding}
@@ -139,7 +140,7 @@ export const SurveyNavigator: React.FC<SurveyNavigatorProps> = ({ navigation, ro
       const answer = surveyAnswers[key];
       if (!answer) return;
 
-      if (key === QUESTION_TOXIC.id || key === QUESTION_CONTEXT.id || key === INDICATEURS_HUMEUR.name || key === INDICATEURS_SOMMEIL.name) {
+      if (key === QUESTION_TOXIC.id || key === QUESTION_CONTEXT.id || key === INDICATEURS_HUMEUR.uuid || key === INDICATEURS_SOMMEIL.uuid) {
         initialAnswers[key] = {
           ...answer,
           value: answer.value,
@@ -172,7 +173,7 @@ export const SurveyNavigator: React.FC<SurveyNavigatorProps> = ({ navigation, ro
     setAnswers((prev) => {
       const updatedAnswers = {
         ...prev,
-        [key]: { ...prev[key], value, _indicateur: userIndicateurs.find((i) => i.name === key) },
+        [key]: { ...prev[key], value, _indicateur: userIndicateurs.find((i) => getIndicatorKey(i) === key) },
       };
       setTimeout(() => {
         // add timeout to fix warning :
