@@ -16,6 +16,7 @@ import Icon from "../../components/Icon";
 import { colors } from "../../utils/colors";
 const screenHeight = Dimensions.get("window").height;
 import { INDICATEURS } from "../../utils/liste_indicateurs.1";
+import { getIndicatorKey } from "../../utils/indicatorUtils";
 
 const Calendar = ({ navigation }) => {
   const [day, setDay] = useState(new Date());
@@ -51,8 +52,8 @@ const Calendar = ({ navigation }) => {
     const emptyCalendar = !userIndicateurs
       .concat(INDICATEURS)
       .reduce((acc, curr) => {
-        if (!acc.find((a) => a === curr.name)) {
-          acc.push(curr.name);
+        if (!acc.find((a) => a === getIndicatorKey(curr))) {
+          acc.push(getIndicatorKey(curr));
         }
         return acc;
       }, [])
@@ -81,7 +82,7 @@ const Calendar = ({ navigation }) => {
       if (!dayData) {
         return null;
       }
-      const categoryState = diaryData[date][indicateur.name];
+      const categoryState = diaryData[date][getIndicatorKey(indicateur)];
       if (!categoryState) {
         return null;
       }
@@ -94,7 +95,7 @@ const Calendar = ({ navigation }) => {
       // -------
 
       // get the name and the suffix of the category
-      const [categoryName, suffix] = indicateur.name.split("_");
+      const [categoryName, suffix] = getIndicatorKey(indicateur).split("_");
       let categoryStateIntensity = null;
       if (suffix && suffix === "FREQUENCE") {
         // if it's one category with the suffix 'FREQUENCE' :
@@ -158,7 +159,7 @@ const Calendar = ({ navigation }) => {
               .filter((ind) => ind.active)
               .map(
                 (indicateur) =>
-                  isChartVisible(indicateur.name) && (
+                  isChartVisible(getIndicatorKey(indicateur)) && (
                     <Chart
                       indicateur={indicateur}
                       title={getTitle(indicateur.name)}

@@ -24,6 +24,7 @@ import {
   STATIC_UUID_FOR_INSTANCE_OF_GENERIC_INDICATOR_SUBSTANCE,
   INDICATORS,
 } from "@/utils/liste_indicateurs.1";
+import { getIndicatorKey } from "@/utils/indicatorUtils";
 import { TW_COLORS } from "@/utils/constants";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
@@ -141,8 +142,7 @@ const DaySurvey = ({
       // previous indicators where using '_', we cleaned it when editing it apparently
       const _indicateur = userIndicateurs.find(
         (i) =>
-          i[i.diaryDataKey || "name"] === cleanedQuestionId ||
-          (cleanedQuestionId === questionToxic.id && i.genericUuid === GENERIC_INDICATOR_SUBSTANCE.uuid)
+          getIndicatorKey(i) === cleanedQuestionId || (cleanedQuestionId === questionToxic.id && i.genericUuid === GENERIC_INDICATOR_SUBSTANCE.uuid)
       );
       if (_indicateur) {
         let value = answer.value;
@@ -177,7 +177,7 @@ const DaySurvey = ({
         [key]: {
           ...prev[key],
           value,
-          _indicateur: userIndicateurs.find((i) => i[i["diaryDataKey"] || "name"] === key),
+          _indicateur: userIndicateurs.find((i) => getIndicatorKey(i) === key),
         },
       };
     });
@@ -263,10 +263,9 @@ const DaySurvey = ({
     logEvents.logSettingsSymptomsFromSurvey();
   };
   const answeredElementCount = Object.keys(answers).map((key) => answers[key].value !== undefined).length;
-  const onValueChanged = ({ indicator, value }: { indicator: Indicator; value: string }) =>
-    toggleAnswer({ key: indicator[indicator.diaryDataKey || "name"], value });
+  const onValueChanged = ({ indicator, value }: { indicator: Indicator; value: string }) => toggleAnswer({ key: getIndicatorKey(indicator), value });
   const onCommentChanged = ({ indicator, comment }: { indicator: Indicator; comment?: string }) =>
-    handleChangeUserComment({ key: indicator[indicator.diaryDataKey || "name"], userComment: comment });
+    handleChangeUserComment({ key: getIndicatorKey(indicator), userComment: comment });
 
   return (
     <AnimatedHeaderScrollScreen
@@ -314,13 +313,13 @@ const DaySurvey = ({
                   showComment={true}
                   indicator={ind}
                   index={0}
-                  value={answers?.[ind[ind.diaryDataKey || "name"]]?.value}
+                  value={answers?.[getIndicatorKey(ind)]?.value}
                   onIndicatorChange={() => {
                     updateIndicators();
                   }}
                   onValueChanged={onValueChanged}
                   onCommentChanged={onCommentChanged}
-                  comment={answers?.[ind[ind.diaryDataKey || "name"]]?.userComment}
+                  comment={answers?.[getIndicatorKey(ind)]?.userComment}
                 />
               </View>
             );
@@ -362,10 +361,10 @@ const DaySurvey = ({
                     onIndicatorChange={() => {
                       updateIndicators();
                     }}
-                    value={answers?.[ind[ind.diaryDataKey || "name"]]?.value}
+                    value={answers?.[getIndicatorKey(ind)]?.value}
                     onValueChanged={onValueChanged}
                     onCommentChanged={onCommentChanged}
-                    comment={answers?.[ind[ind.diaryDataKey || "name"]]?.userComment}
+                    comment={answers?.[getIndicatorKey(ind)]?.userComment}
                   />
                 );
               })}

@@ -14,6 +14,7 @@ import Button from "../../../components/Button";
 import { FriseGraph } from "./FriseGraph";
 import { GoalsFriseGraph } from "../../goals/suivi/GoalsFriseGraph";
 import JMButton from "@/components/JMButton";
+import { getIndicatorKey } from "../../../utils/indicatorUtils";
 
 export const FriseGraphList = ({ navigation, fromDate, toDate, focusedScores, showTraitement }) => {
   const [diaryData] = React.useContext(DiaryDataContext);
@@ -35,7 +36,7 @@ export const FriseGraphList = ({ navigation, fromDate, toDate, focusedScores, sh
 
   React.useEffect(() => {
     if (!userIndicateurs) return;
-    const empty = userIndicateurs.every(({ name }) => !isChartVisible(name));
+    const empty = userIndicateurs.every((ind) => !isChartVisible(getIndicatorKey(ind)));
     setIsEmpty(empty);
   }, [userIndicateurs, isChartVisible]);
 
@@ -124,13 +125,13 @@ export const FriseGraphList = ({ navigation, fromDate, toDate, focusedScores, sh
     <>
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContainer}>
         {userIndicateurs
-          ?.filter((ind) => isChartVisible(ind.name) && ind.active)
-          ?.map(({ name }) => (
+          ?.filter((ind) => isChartVisible(getIndicatorKey(ind)) && ind.active)
+          ?.map((ind) => (
             <FriseGraph
               focusedScores={focusedScores}
-              title={getTitle(name)}
-              key={name}
-              data={computeChartData(name)}
+              title={getTitle(ind.name)}
+              key={ind.name}
+              data={computeChartData(getIndicatorKey(ind))}
               showTraitement={showTraitement}
               priseDeTraitement={computeChartData("PRISE_DE_TRAITEMENT")}
               priseDeTraitementSiBesoin={computeChartData("PRISE_DE_TRAITEMENT_SI_BESOIN")}

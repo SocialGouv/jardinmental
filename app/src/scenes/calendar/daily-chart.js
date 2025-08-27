@@ -8,6 +8,7 @@ import { DiaryDataContext } from "../../context/diaryData";
 import { useContext } from "react";
 import DayTitle from "./day-title";
 import DiaryItem from "../status/status-item";
+import { getIndicatorKey } from "../../utils/indicatorUtils";
 
 const DailyChart = ({
   route: {
@@ -33,7 +34,7 @@ const DailyChart = ({
       if (!dayData) {
         return null;
       }
-      const categoryState = diaryData[date][_indicateur.name];
+      const categoryState = diaryData[date][getIndicatorKey(_indicateur)];
       if (!categoryState) {
         return null;
       }
@@ -46,7 +47,7 @@ const DailyChart = ({
       // -------
 
       // get the name and the suffix of the category
-      const [categoryName, suffix] = _indicateur.name.split("_");
+      const [categoryName, suffix] = getIndicatorKey(_indicateur).split("_");
       let categoryStateIntensity = null;
       if (suffix && suffix === "FREQUENCE") {
         // if it's one category with the suffix 'FREQUENCE' :

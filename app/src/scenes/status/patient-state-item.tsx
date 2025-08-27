@@ -7,11 +7,12 @@ import { getScoreWithState } from "../../utils";
 import ArrowRightSvg from "../../../assets/svg/arrow-right.js";
 import { colors } from "../../utils/colors";
 import Icon from "../../components/Icon";
+import { DiaryEntry } from "@/entities/DiaryData";
 
-const PatientStateItem = ({ patientState, category, label }) => {
+const PatientStateItem = ({ patientState, category, label }: { patientState: DiaryEntry; category: string; label: string }) => {
   const [{ color, borderColor, faceIcon, iconColor }, setIcon] = useState({});
   const [userCommentVisible, setUserCommentVisible] = useState(false);
-
+  console.log("LCS PATIENT STATE !", label);
   useEffect(() => {
     const score = getScoreWithState({ patientState, category });
     const icon = scoresMapIcon[score] || {};
@@ -44,12 +45,12 @@ const PatientStateItem = ({ patientState, category, label }) => {
     if (patientState[category]?._indicateur?.type === "boolean") {
       const _color = {
         ASC: {
-          false: { text: "text-white", bg: "border-red-400 bg-red-400" },
-          true: { text: "text-white", bg: "border-green-400 bg-green-400" },
+          false: { text: "text-red-border", bg: "border-red-border bg-red-bg" },
+          true: { text: "text-green-border", bg: "border-green-border bg-green-bg" },
         },
         DESC: {
-          true: { text: "text-white", bg: "border-red-400 bg-red-400" },
-          false: { text: "text-white", bg: "border-green-400 bg-green-400" },
+          true: { text: "text-red-border", bg: "border-red-border bg-red-bg" },
+          false: { text: "text-green-border", bg: "border-green-border bg-green-bg" },
         },
       };
 
@@ -67,11 +68,12 @@ const PatientStateItem = ({ patientState, category, label }) => {
       );
     }
     if (patientState[category]?._indicateur?.type === "gauge") {
+      console.log("LCS PATIENT STATE ", patientState[category]._indicateur.order);
       const _value = patientState[category]?.value;
       const _colors =
         patientState[category]?._indicateur?.order === "DESC"
           ? [TW_COLORS.SUCCESS, EMOTION_COLORS.good, EMOTION_COLORS.middle, EMOTION_COLORS.bad, TW_COLORS.NEGATIVE]
-          : [TW_COLORS.NEGATIVE, EMOTION_COLORS.bad, EMOTION_COLORS.middle, EMOTION_COLORS.good, TW_COLORS.SUCCESS];
+          : [EMOTION_COLORS.veryBad, EMOTION_COLORS.bad, EMOTION_COLORS.middle, EMOTION_COLORS.good, EMOTION_COLORS.veryGood];
 
       let _color;
       if (_value < 0.2) _color = _colors[0];
@@ -79,7 +81,7 @@ const PatientStateItem = ({ patientState, category, label }) => {
       if (_value >= 0.4 && _value < 0.6) _color = _colors[2];
       if (_value >= 0.6 && _value < 0.8) _color = _colors[3];
       if (_value >= 0.8) _color = _colors[4];
-
+      console.log(colors, _color);
       return (
         <View className="flex flex-row justify-center w-10 space-x-2 items-end mr-5">
           <View className="h-2 rounded-full w-1" style={{ backgroundColor: _color }} />
