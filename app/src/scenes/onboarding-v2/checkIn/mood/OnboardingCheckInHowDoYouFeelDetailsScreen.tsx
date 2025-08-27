@@ -139,7 +139,7 @@ export const OnboardingCheckInLastMoods: React.FC<Props> = ({ navigation, route 
     try {
       const date = formatDay(beforeToday(0));
       const prev = diaryData[date] || {};
-      const key = INDICATEURS_HUMEUR.uuid;
+      const key = getIndicatorKey(INDICATEURS_HUMEUR);
       const updatedAnswers = {
         ...prev,
         [key]: {
