@@ -17,6 +17,7 @@ export default ({ navigation, route }) => {
 
   const handleNoTreatment = async () => {
     await localStorage.setMedicalTreatment([]);
+    await localStorage.setHasTreatment(false);
     alertNoDataYesterday({
       date: route?.params?.currentSurvey?.date,
       diaryData,

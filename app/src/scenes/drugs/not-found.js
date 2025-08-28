@@ -18,6 +18,7 @@ export default ({ navigation, searchedValue }) => {
 
   const handleNoTreatment = async () => {
     await localStorage.setMedicalTreatment([]);
+    await localStorage.setHasTreatment(false);
     navigation.navigate("tabs");
   };
 

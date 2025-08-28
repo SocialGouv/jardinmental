@@ -6,6 +6,7 @@ import {
   STORAGE_KEY_SUPPORTED,
   STORAGE_KEY_CUSTOM_SYMPTOMS,
   STORAGE_KEY_MEDICAL_TREATMENT,
+  STORAGE_KEY_HAS_TREATMENT,
   STORAGE_KEY_NOTES_VERSION,
   STORAGE_KEY_VISIT_PRO_NPS,
   STORAGE_KEY_CUSTOM_DRUGS,
@@ -127,6 +128,15 @@ const addCustomSymptoms = async (sym) => {
 const getMedicalTreatment = async () => {
   const a = await AsyncStorage.getItem(STORAGE_KEY_MEDICAL_TREATMENT);
   return JSON.parse(a);
+};
+
+const getHasTreatment = async () => {
+  const hasTreatment = await AsyncStorage.getItem(STORAGE_KEY_HAS_TREATMENT);
+  return hasTreatment ? JSON.parse(hasTreatment) : false;
+};
+
+const setHasTreatment = async (value) => {
+  await AsyncStorage.setItem(STORAGE_KEY_HAS_TREATMENT, JSON.stringify(value));
 };
 
 const setMedicalTreatment = async (v) => {
@@ -260,6 +270,8 @@ export default {
   setCustomSymptoms,
   getMedicalTreatment,
   setMedicalTreatment,
+  getHasTreatment,
+  setHasTreatment,
   removeDrugFromTreatment,
   getNotesVersion,
   setNotesVersion,

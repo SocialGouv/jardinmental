@@ -58,6 +58,7 @@ const DaySurvey = ({
 
   const [userIndicateurs, setUserIndicateurs] = useState<Indicator[]>([]);
   const [treatment, setTreatment] = useState<any[] | undefined>();
+  const [hasTreatment, setHasTreatment] = useState<boolean | undefined>();
 
   const groupedIndicators = useMemo(() => {
     return userIndicateurs.reduce<Record<NEW_INDICATORS_CATEGORIES, Indicator[]>>((acc, indicator) => {
@@ -108,6 +109,8 @@ const DaySurvey = ({
         if (_treatment) {
           setTreatment(_treatment);
         }
+        const _hasTreatment = await localStorage.getHasTreatment();
+        setHasTreatment(_hasTreatment);
       })();
       updateIndicators();
     }, [])
@@ -237,7 +240,7 @@ const DaySurvey = ({
       else navigation.navigate("tabs");
     }
 
-    if (treatment && treatment?.length === 0) {
+    if (hasTreatment === false) {
       // treatment is filled with an empty array = user a set "no treatment"
       alertNoDataYesterday({
         date: prevCurrentSurvey?.date,
@@ -245,7 +248,7 @@ const DaySurvey = ({
         navigation,
       });
       return navigation.navigate("tabs");
-    } else if (treatment?.length) {
+    } else if (hasTreatment === true) {
       // user has a treatment
       navigation.navigate("drugs-survey", { treatment, currentSurvey });
     } else {
