@@ -13,6 +13,7 @@ import { autoLayoutAnimation } from "../../../utils/autoLayoutAnimation";
 import { confirm } from "../../../utils";
 import { colors } from "@/utils/colors";
 import JMButton from "@/components/JMButton";
+import { AnimatedHeaderScrollScreen } from "@/scenes/survey-v2/AnimatedHeaderScrollScreen";
 
 export const GoalsSettingsMore = ({ navigation, route }) => {
   const [goals, setGoals] = useState([]);
@@ -67,10 +68,11 @@ export const GoalsSettingsMore = ({ navigation, route }) => {
     [onRemove]
   );
 
-  const keyExtractor = useCallback((goal) => goal.id);
+  const keyExtractor = useCallback((goal) => goal.id, []);
   return (
     <AnimatedHeaderScrollScreen
       title="Mes objectifs"
+      navigation={navigation}
       handlePrevious={() => {
         navigation.goBack();
       }}
