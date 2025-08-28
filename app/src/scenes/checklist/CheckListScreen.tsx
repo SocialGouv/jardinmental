@@ -91,7 +91,12 @@ export default function CheckListScreen({ navigation, route }) {
     if (item.path === "drugs") {
       showBottomSheet(
         <DrugsBottomSheet
-          onClose={() => {
+          onClose={async () => {
+            const drugs = await localStorage.getMedicalTreatment();
+            setChecklistItemValues((prev) => ({
+              ...prev,
+              drugs: !!drugs,
+            }));
             closeBottomSheet();
           }}
         />
