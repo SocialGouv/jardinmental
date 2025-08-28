@@ -71,7 +71,7 @@ export const IndicatorScreen: React.FC<IndicatorScreenProps> = ({
   onNext,
   category,
   showComment = true,
-  hideNavigationButtonsInitially = true,
+  hideNavigationButtonsInitially = false,
 }) => {
   const { showBottomSheet } = useBottomSheet();
   const insets = useSafeAreaInsets();
@@ -315,7 +315,7 @@ export const IndicatorScreen: React.FC<IndicatorScreenProps> = ({
           className={"flex-1"}
           contentContainerStyle={{
             paddingTop: dynamicPaddingTop,
-            paddingBottom: 250,
+            paddingBottom: 100,
           }}
           onScroll={scrollHandler}
           scrollEventThrottle={16}
