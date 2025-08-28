@@ -1,3 +1,10 @@
+# [1.52.0-alpha.34](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.33...v1.52.0-alpha.34) (2025-08-28)
+
+
+### Features
+
+* checkbox des cgu sur l'écran d'accueil ([#371](https://github.com/SocialGouv/jardinmental/issues/371)) ([0b72ac2](https://github.com/SocialGouv/jardinmental/commit/0b72ac27702e345e6898057f9de7f97a325b5391))
+
 # [1.52.0-alpha.33](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.32...v1.52.0-alpha.33) (2025-08-28)
 
 
