@@ -1,3 +1,10 @@
+# [1.52.0-alpha.33](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.32...v1.52.0-alpha.33) (2025-08-28)
+
+
+### Bug Fixes
+
+* crash au click sur "modifier mes objectifs" ([#373](https://github.com/SocialGouv/jardinmental/issues/373)) ([cc44af1](https://github.com/SocialGouv/jardinmental/commit/cc44af1cd8d109103901ccd67b23b1b2fc0d2f60))
+
 # [1.52.0-alpha.32](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.31...v1.52.0-alpha.32) (2025-08-28)
 
 
