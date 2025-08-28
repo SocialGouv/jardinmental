@@ -7,26 +7,20 @@ import { getScoreWithState } from "../../utils";
 import ArrowRightSvg from "../../../assets/svg/arrow-right.js";
 import { colors } from "../../utils/colors";
 import Icon from "../../components/Icon";
-import { DiaryEntry } from "@/entities/DiaryData";
+import { DiaryDataAnswer, DiaryDataNewEntryInput, DiaryEntry } from "@/entities/DiaryData";
 
-const PatientStateItem = ({ patientState, category, label }: { patientState: DiaryEntry; category: string; label: string }) => {
-  const [{ color, borderColor, faceIcon, iconColor }, setIcon] = useState({});
+const PatientStateItem = ({ patientStateRecord, category, label }: { patientStateRecord: DiaryDataAnswer; category: string; label: string }) => {
   const [userCommentVisible, setUserCommentVisible] = useState(false);
-  useEffect(() => {
-    const score = getScoreWithState({ patientState, category });
-    const icon = scoresMapIcon[score] || {};
-    setIcon(icon);
-  }, [patientState, category]);
 
-  const isTouchable = () => !!patientState[category]?.userComment?.trim();
+  const isTouchable = () => !!patientStateRecord?.userComment?.trim();
 
   const renderResponse = () => {
-    if (patientState[category]?._indicateur?.type === "smiley") {
+    if (patientStateRecord?._indicateur?.type === "smiley") {
       let _icon;
-      if (patientState[category]?._indicateur?.order === "DESC") {
-        _icon = scoresMapIcon[5 + 1 - patientState[category]?.value];
+      if (patientStateRecord?._indicateur?.order === "DESC") {
+        _icon = scoresMapIcon[5 + 1 - patientStateRecord?.value];
       } else {
-        _icon = scoresMapIcon[patientState[category]?.value];
+        _icon = scoresMapIcon[patientStateRecord?.value];
       }
       if (!_icon || (!_icon.color && !_icon.faceIcon))
         return <CircledIcon color="#cccccc" borderColor="#999999" iconColor="#888888" icon="QuestionMarkSvg" iconWidth={32} iconHeight={32} />;
@@ -41,7 +35,7 @@ const PatientStateItem = ({ patientState, category, label }: { patientState: Dia
         />
       );
     }
-    if (patientState[category]?._indicateur?.type === "boolean") {
+    if (patientStateRecord?._indicateur?.type === "boolean") {
       const _color = {
         ASC: {
           false: { text: "text-red-border", bg: "border-red-border bg-red-bg" },
@@ -53,23 +47,21 @@ const PatientStateItem = ({ patientState, category, label }: { patientState: Dia
         },
       };
 
-      const _value = patientState[category]?.value;
+      const _value = patientStateRecord?.value;
       const _label = typeof _value === "boolean" && !_value ? "Non" : "Oui";
 
       return (
         <View
-          className={`flex justify-center items-center h-10 w-10 mr-5 rounded-full ${
-            _color[patientState[category]?._indicateur?.order]?.[_value]?.bg
-          }`}
+          className={`flex justify-center items-center h-10 w-10 mr-5 rounded-full ${_color[patientStateRecord?._indicateur?.order]?.[_value]?.bg}`}
         >
-          <Text className={_color[patientState[category]?._indicateur?.order]?.[_value]?.text}>{_label}</Text>
+          <Text className={_color[patientStateRecord?._indicateur?.order]?.[_value]?.text}>{_label}</Text>
         </View>
       );
     }
-    if (patientState[category]?._indicateur?.type === "gauge") {
-      const _value = patientState[category]?.value;
+    if (patientStateRecord?._indicateur?.type === "gauge") {
+      const _value = patientStateRecord?.value;
       const _colors =
-        patientState[category]?._indicateur?.order === "DESC"
+        patientStateRecord?._indicateur?.order === "DESC"
           ? [TW_COLORS.SUCCESS, EMOTION_COLORS.good, EMOTION_COLORS.middle, EMOTION_COLORS.bad, TW_COLORS.NEGATIVE]
           : [EMOTION_COLORS.veryBad, EMOTION_COLORS.bad, EMOTION_COLORS.middle, EMOTION_COLORS.good, EMOTION_COLORS.veryGood];
 
@@ -97,7 +89,7 @@ const PatientStateItem = ({ patientState, category, label }: { patientState: Dia
         <View style={styles.labelContainer}>
           <Text style={styles.label}>
             {label}
-            {/* -{patientState[category]?.value} */}
+            {/* -{patientStateRecord?.value} */}
           </Text>
         </View>
         {isTouchable() ? (
@@ -116,7 +108,7 @@ const PatientStateItem = ({ patientState, category, label }: { patientState: Dia
       </View>
       {userCommentVisible && isTouchable() ? (
         <View style={[styles.container, styles.tilt]}>
-          <Text style={styles.userComment}>{patientState[category]?.userComment?.trim()}</Text>
+          <Text style={styles.userComment}>{patientStateRecord?.userComment?.trim()}</Text>
         </View>
       ) : null}
     </View>

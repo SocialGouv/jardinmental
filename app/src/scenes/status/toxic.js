@@ -3,15 +3,15 @@ import { StyleSheet, View } from "react-native";
 import Text from "../../components/MyText";
 
 const Toxic = ({ data }) => {
-  if (!data || !data.value) return null;
-
+  if (!data) return null;
   return (
     <>
       <View style={styles.divider} />
       <View style={styles.container}>
         <View style={styles.textContainer}>
           <Text style={styles.title}>Substances</Text>
-          <Text>{data.userComment || "Oui"}</Text>
+          <Text>{data.value ? "Oui" : "Non"}</Text>
+          {!!data.userComment && <Text>{data.userComment}</Text>}
         </View>
       </View>
     </>

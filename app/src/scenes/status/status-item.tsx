@@ -10,11 +10,15 @@ import Button from "../../components/RoundButtonIcon";
 import Toxic from "./toxic";
 import Context from "./context";
 import logEvents from "../../services/logEvents";
-import { INDICATEURS_LIST } from "../../utils/liste_indicateurs.1";
+import {
+  GENERIC_INDICATOR_SUBSTANCE,
+  INDICATEURS_LIST,
+  STATIC_UUID_FOR_INSTANCE_OF_GENERIC_INDICATOR_SUBSTANCE,
+} from "../../utils/liste_indicateurs.1";
 import { GoalsStatus } from "../goals/status/GoalsStatus";
 import { Card } from "../../components/Card";
 import { GoalsStatusNoData } from "../goals/status/GoalsStatusNoData";
-import { Indicator } from "@/entities/Indicator";
+import { generateIndicatorFromPredefinedIndicator, Indicator } from "@/entities/Indicator";
 import { DiaryDataAnswer, DiaryEntry } from "@/entities/DiaryData";
 import { GoalRecordsData, GoalsData } from "@/entities/Goal";
 
@@ -74,7 +78,7 @@ export default ({
   const patientStateRecordKeys = patientState
     ? Object.keys(patientState)
         .filter((key) => {
-          return !["CONTEXT", "POSOLOGY", "TOXIC", "NOTES", "PRISE_DE_TRAITEMENT", "PRISE_DE_TRAITEMENT_SI_BESOIN", "becks"].includes(key);
+          return !["CONTEXT", "POSOLOGY", "NOTES", "PRISE_DE_TRAITEMENT", "PRISE_DE_TRAITEMENT_SI_BESOIN", "becks"].includes(key);
         })
         .filter((key) => !!patientState[key])
         .filter((key) => key)
@@ -93,20 +97,32 @@ export default ({
         <View style={[styles.item, styles.itemWithSpaceAbove]}>
           <View>
             {patientStateRecordKeys.map((key) => {
-              const value = patientState[key];
-              if (!value || value?.value === null || value.value === undefined) {
+              let patientStateRecord = patientState[key];
+              if (!patientStateRecord || patientStateRecord?.value === null || patientStateRecord.value === undefined) {
                 return;
               }
-              const [categoryName] = key.split("_");
+              let [categoryName] = key.split("_");
+              if (categoryName === "TOXIC") {
+                // for user with historic value in 'TOXIC', we replace category name by uuid for indicator substance
+                key = STATIC_UUID_FOR_INSTANCE_OF_GENERIC_INDICATOR_SUBSTANCE;
+                patientStateRecord = {
+                  ...patientStateRecord,
+                  _indicateur: {
+                    ...generateIndicatorFromPredefinedIndicator(GENERIC_INDICATOR_SUBSTANCE),
+                    uuid: key,
+                  },
+                };
+                console.log("LCS TOTO", patientStateRecord);
+              }
               const indicator = indicateurs.find((i) => i.genericUuid === key) || indicateurs.find((i) => i.uuid === key);
               return (
                 <PatientStateItem
                   key={key}
                   category={key}
-                  patientState={patientState}
+                  patientStateRecord={patientStateRecord}
                   label={
                     indicator?.name ||
-                    value?._indicateur?.name ||
+                    patientStateRecord?._indicateur?.name ||
                     INDICATEURS_LIST[key] ||
                     displayedCategories[key] ||
                     categoryName ||
@@ -119,7 +135,6 @@ export default ({
             <GoalsStatus goalsData={goalsData} date={date} withSeparator={patientStateRecordKeys?.length > 0} />
             <Context data={patientState?.CONTEXT} />
             <Posology posology={patientState?.POSOLOGY} patientState={patientState} date={date} onPress={() => handleEdit("drugs")} />
-            <Toxic data={patientState?.TOXIC} />
             <Notes notes={patientState?.NOTES} date={date} onPress={() => handleEdit("notes")} />
           </View>
         </View>
