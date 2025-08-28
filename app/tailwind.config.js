@@ -171,7 +171,7 @@ module.exports = {
             // letterSpacing: '0em'
           },
         ],
-        "text-md": [
+        "text-base": [
           "16px",
           {
             lineHeight: "24px",
