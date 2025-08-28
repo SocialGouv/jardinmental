@@ -240,11 +240,7 @@ const DaySurvey = ({
       else navigation.navigate("tabs");
     }
 
-<<<<<<< HEAD
     if (hasTreatment === false) {
-=======
-    if (treatment && treatment?.length === 0) {
->>>>>>> origin/alpha
       // treatment is filled with an empty array = user a set "no treatment"
       alertNoDataYesterday({
         date: prevCurrentSurvey?.date,
@@ -252,11 +248,7 @@ const DaySurvey = ({
         navigation,
       });
       return navigation.navigate("tabs");
-<<<<<<< HEAD
     } else if (hasTreatment === true) {
-=======
-    } else if (treatment?.length) {
->>>>>>> origin/alpha
       // user has a treatment
       navigation.navigate("drugs-survey", { treatment, currentSurvey });
     } else {
