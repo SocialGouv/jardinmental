@@ -30,7 +30,6 @@ const DrugsManagement = ({ navigation, route }) => {
 
   useEffect(() => {
     (async () => {
-      setHasTreatment(!!medicalTreatment?.length);
       const value = await localStorage.getHasTreatment();
       setHasTreatment(value);
     })();
