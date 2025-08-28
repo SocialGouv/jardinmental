@@ -328,9 +328,8 @@ const DaySurvey = ({
           .filter((ind) => ind.active === true && ind.uuid === INDICATEURS_HUMEUR.uuid)
           .map((ind) => {
             return (
-              <View className="mb-2 border-b-2 border-gray-400 px-4 my-4">
+              <View className="mb-2 border-b-2 border-gray-400 px-4 my-4" key={ind?.uuid}>
                 <IndicatorSurveyItem
-                  key={ind?.uuid}
                   showComment={true}
                   indicator={ind}
                   index={0}
