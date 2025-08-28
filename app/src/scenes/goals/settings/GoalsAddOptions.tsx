@@ -86,7 +86,7 @@ export const GoalsAddOptions = ({ navigation }) => {
       }}
       bottomComponent={
         <View className="mx-4 mb-4">
-          <JMButton title="Valider" onPress={() => onValidate()} className="mt-2" />
+          <JMButton disabled={!isChanged} title="Valider" onPress={() => onValidate()} className="mt-2" />
         </View>
       }
       navigation={navigation}
