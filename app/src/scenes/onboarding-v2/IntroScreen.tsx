@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, SafeAreaView, Platform } from "react-native";
+import { View, Text, SafeAreaView, Platform, TouchableOpacity } from "react-native";
 import { OnboardingV2ScreenProps } from "./types";
 import { NavigationButtons } from "../../components/onboarding/NavigationButtons";
 import { TW_COLORS } from "@/utils/constants";
@@ -10,13 +10,24 @@ import { typography } from "@/utils/typography";
 import { mergeClassNames } from "@/utils/className";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import logEvents from "@/services/logEvents";
+import CheckBox from "@react-native-community/checkbox";
 
 type Props = OnboardingV2ScreenProps<"Intro">;
 
 export const IntroScreen: React.FC<Props> = ({ navigation }) => {
+  const [isCguChecked, setIsCguChecked] = useState(false);
+
   const handleNext = () => {
     logEvents.logIntroObdNext();
     navigation.navigate("Carousel");
+  };
+
+  const onCguClick = () => {
+    // Access the parent navigation to reach screens outside onboarding-v2
+    const parentNavigation = navigation.getParent();
+    if (parentNavigation) {
+      parentNavigation.navigate("cgu");
+    }
   };
 
   const insets = useSafeAreaInsets();
@@ -70,18 +81,48 @@ export const IntroScreen: React.FC<Props> = ({ navigation }) => {
           marginTop: dynamicMarginTop,
         }}
       >
-        <Text className={mergeClassNames(typography.textXlMedium, "text-primary")}>
-          Gratuit à vie.{"\n"}
-          Totalement anonyme.{"\n"}
-          Sans inscription.
-        </Text>
+        <View>
+          <Text className={mergeClassNames(typography.textXlMedium, "text-primary")}>
+            Gratuit à vie.{"\n"}
+            Totalement anonyme.{"\n"}
+            Sans inscription.
+          </Text>
+        </View>
+        <View className="px-10 mt-12">
+          <Text className={mergeClassNames(typography.textSmSemibold, "text-center")} style={{ color: TW_COLORS.SECONDARY }}>
+            Créer avec des professionels et{"\n"}soutenu par la CNAM
+          </Text>
+        </View>
       </View>
-      <View className="px-10">
-        <Text className={mergeClassNames(typography.textSmSemibold, "text-center")} style={{ color: TW_COLORS.SECONDARY }}>
-          Créer avec des professionels et{"\n"}soutenu par la CNAM
-        </Text>
+
+      <View className="px-6 pt-12">
+        <View className="flex-row items-center">
+          <CheckBox
+            animationDuration={0.2}
+            tintColor={TW_COLORS.PRIMARY}
+            tintColors={{ true: TW_COLORS.PRIMARY, false: "grey" }}
+            boxType="square"
+            style={{
+              marginRight: 12,
+              transform: Platform.OS === "android" ? [{ scaleX: 1.2 }, { scaleY: 1.2 }] : [],
+            }}
+            value={isCguChecked}
+            onValueChange={(newValue) => setIsCguChecked(newValue)}
+          />
+          <View className="flex-1">
+            <Text className={mergeClassNames(typography.textMdRegular, "text-left")} style={{ color: TW_COLORS.PRIMARY }}>
+              En cochant cette case, vous acceptez les{" "}
+              <TouchableOpacity onPress={onCguClick} style={{ alignSelf: "flex-start" }}>
+                <Text className={mergeClassNames(typography.textMdRegular, "text-left underline")} style={{ color: TW_COLORS.PRIMARY }}>
+                  conditions d'utilisation
+                </Text>
+              </TouchableOpacity>
+              .
+            </Text>
+          </View>
+        </View>
       </View>
-      <NavigationButtons onNext={handleNext} showPrevious={false} nextText="Découvrir Jardin Mental" />
+      <NavigationButtons onNext={handleNext} showPrevious={false} nextText="Découvrir Jardin Mental" nextDisabled={!isCguChecked} />
     </SafeAreaViewWithOptionalHeader>
   );
 };
