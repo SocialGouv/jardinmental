@@ -1,3 +1,10 @@
+# [1.52.0-alpha.32](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.31...v1.52.0-alpha.32) (2025-08-28)
+
+
+### Bug Fixes
+
+* react key bug ([#372](https://github.com/SocialGouv/jardinmental/issues/372)) ([bf08f82](https://github.com/SocialGouv/jardinmental/commit/bf08f824c910203d7411ffc9c0e3df407817394a))
+
 # [1.52.0-alpha.31](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.30...v1.52.0-alpha.31) (2025-08-27)
 
 
