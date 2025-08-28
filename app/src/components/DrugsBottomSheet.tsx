@@ -7,7 +7,7 @@ import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
 import CircleQuestionMark from "@assets/svg/icon/CircleQuestionMark";
 import { useEffect, useState } from "react";
-import Drugs from "@/scenes/drugs/list";
+import Drugs from "@/scenes/drugs/drugs-list";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import HelpText from "./HelpText";
 import HelpView from "./HelpView";

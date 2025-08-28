@@ -138,8 +138,11 @@ const DrugsManagement = ({ navigation, route }) => {
             <InputToggle
               ref={reminderToggleRef}
               checked={hasTreatment}
-              onCheckedChanged={({ checked }) => {
+              onCheckedChanged={async ({ checked }) => {
                 setHasTreatment(checked);
+                if (!checked) {
+                  await localStorage.setMedicalTreatment([]);
+                }
               }}
             />
           </InputGroupItem>

@@ -33,7 +33,7 @@ import logEvents from "../services/logEvents";
 import ContributePro from "../scenes/contribute/contributePro";
 import DrugsSurvey from "../scenes/drugs/drugs-survey";
 import DrugsManagement from "../scenes/drugs/drugs-management";
-import DrugsList from "../scenes/drugs/list";
+import DrugsList from "../scenes/drugs/drugs-list";
 import TooLate from "../scenes/status/too-late";
 import News from "../scenes/news";
 import ActivateBeck from "../scenes/beck/activate";
