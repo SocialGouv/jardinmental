@@ -33,6 +33,7 @@ export default function BannerHeader({
   onBannerLayout,
   inAbsoluteView,
   backgroundColor,
+  small,
 }: {
   animatedStatusBarColor?: Animated.AnimateStyle<ViewStyle>;
   animatedTextColor?: Animated.AnimateStyle<ViewStyle>;
@@ -56,6 +57,7 @@ export default function BannerHeader({
   titleMarginStyle?: Animated.AnimateStyle<ViewStyle>; // animated style for title margin
   onBannerLayout?: (event: any) => void; // callback to measure banner height
   inAbsoluteView?: boolean;
+  small?: boolean;
 }) {
   const insets = useSafeAreaInsets();
 
@@ -121,14 +123,14 @@ export default function BannerHeader({
           {header && <Animated.View style={bannerContentStyle}>{header}</Animated.View>}
           {title && (
             <Animated.Text
-              className={mergeClassNames(typography.displayXsBold, "mt-8 text-left")}
+              className={mergeClassNames(typography.displayXsBold, "text-left", small ? "" : "mt-8")}
               style={[
                 {
                   color: TW_COLORS.WHITE,
                 },
                 animatedTextColor,
                 bannerContentStyle,
-                titleMarginStyle,
+                small ? {} : titleMarginStyle,
               ]}
             >
               {firstLetterUppercase(title)}

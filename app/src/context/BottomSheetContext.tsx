@@ -1,7 +1,10 @@
 import React, { createContext, useContext, useRef, useState, ReactNode } from "react";
-import { BottomSheetModal, BottomSheetModalProvider, BottomSheetBackdrop, BottomSheetView } from "@gorhom/bottom-sheet";
-import { View } from "react-native";
+import BottomSheet, { BottomSheetModal, BottomSheetModalProvider, BottomSheetBackdrop, BottomSheetView } from "@gorhom/bottom-sheet";
+import { View, StyleSheet, Dimensions } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+
+const screenHeight = Dimensions.get("window").height;
+const height90vh = screenHeight * 0.9;
 
 type BottomSheetContextType = {
   showBottomSheet: (content: ReactNode) => void;
@@ -35,10 +38,16 @@ export const BottomSheetProvider = ({ children }: { children: ReactNode }) => {
       <BottomSheetContext.Provider value={{ showBottomSheet, closeBottomSheet }}>
         <BottomSheetModalProvider>
           {children}
-          <BottomSheetModal ref={bottomSheetRef} backdropComponent={renderBackdrop} onDismiss={() => setContent(null)} snapPoints={["100%"]}>
-            <BottomSheetView>
-              <View className="flex-1 bg-white p-4">{content}</View>
-            </BottomSheetView>
+          <BottomSheetModal
+            // Necessary to work on android with scrollview inside bottomsheetview
+            enableContentPanningGesture={false}
+            maxDynamicContentSize={height90vh}
+            ref={bottomSheetRef}
+            backdropComponent={renderBackdrop}
+            onDismiss={() => setContent(null)}
+            snapPoints={["90%"]}
+          >
+            <BottomSheetView>{content}</BottomSheetView>
           </BottomSheetModal>
         </BottomSheetModalProvider>
       </BottomSheetContext.Provider>

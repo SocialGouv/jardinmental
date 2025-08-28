@@ -13,6 +13,8 @@ import Substance from "@assets/svg/icon/Substance";
 
 import { Difficulty } from "../types";
 import { NEW_INDICATORS_CATEGORIES, NEW_INDICATORS_SUBCATEGORIES } from "@/utils/liste_indicateurs.1";
+import HealthIcon from "@assets/svg/icon/Health";
+import Target from "@assets/svg/icon/Target";
 
 export const HELP_FOR_CATEGORY: Record<
   Exclude<NEW_INDICATORS_CATEGORIES, NEW_INDICATORS_CATEGORIES.OTHER>,
@@ -233,4 +235,64 @@ export const INDICATOR_CATEGORIES_DATA: Record<NEW_INDICATORS_CATEGORIES, Diffic
     description: "Mémorisation, attention, projection...",
     matomoId: 13,
   },
+};
+
+export const SECTION_ICONS: Record<
+  NEW_INDICATORS_CATEGORIES | "GOAL" | "TREATMENT",
+  {
+    icon: ({ color }) => JSX.Element;
+  }
+> = {
+  [NEW_INDICATORS_CATEGORIES.SLEEP]: {
+    icon: MoonStar,
+  },
+  [NEW_INDICATORS_CATEGORIES.EMOTIONS]: {
+    icon: Heart,
+  },
+  [NEW_INDICATORS_CATEGORIES.FOOD]: {
+    icon: Cart,
+  },
+  [NEW_INDICATORS_CATEGORIES.ENERGY]: {
+    icon: Zap,
+  },
+  [NEW_INDICATORS_CATEGORIES.INTRUSIVE_THOUGHTS]: {
+    icon: Huricane,
+  },
+  [NEW_INDICATORS_CATEGORIES.SUBSTANCE]: {
+    icon: Substance,
+  },
+  [NEW_INDICATORS_CATEGORIES.PHYSICAL_SIGNS]: {
+    icon: Heart,
+  },
+  [NEW_INDICATORS_CATEGORIES.SOCIAL_RELATIONS]: {
+    icon: HeartHand,
+  },
+  [NEW_INDICATORS_CATEGORIES.WORK]: {
+    icon: Work,
+  },
+  [NEW_INDICATORS_CATEGORIES.LIFE_EVENT]: {
+    icon: LifeEvent,
+  },
+  [NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR]: {
+    icon: AlertTriangle,
+  },
+  [NEW_INDICATORS_CATEGORIES.COGNITIVE]: {
+    icon: PuzzlePiece,
+  },
+  [NEW_INDICATORS_CATEGORIES.OTHER]: {
+    icon: PuzzlePiece,
+  },
+  GOAL: {
+    icon: Target,
+  },
+  TREATMENT: {
+    icon: HealthIcon,
+  },
+};
+
+export const HELP_POSOLOGY = {
+  title: "Information sur les traitements",
+  description: `Les noms des médicaments et les posologies ne sont donnés qu'à titre indicatif pour vous aider dans le suivi de votre traitement médicamenteux.\n
+Il convient néanmoins de toujours se référer à la prescription médicale vous concernant et à votre médecin référent pour tout ce qui a trait à votre traitement médicamenteux en particulier et à votre suivi en général.\n
+Voir plus d'informations sur les traitements médicamenteux :\n`,
 };

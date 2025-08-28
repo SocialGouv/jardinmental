@@ -24,7 +24,7 @@ import HelpText from "@/components/HelpText";
 import { BottomSheetModal, BottomSheetView } from "@gorhom/bottom-sheet";
 import { useBottomSheet } from "@/context/BottomSheetContext";
 import HelpView from "@/components/HelpView";
-import { HELP_FOR_CATEGORY, INDICATOR_CATEGORIES_DATA } from "../onboarding-v2/data/helperData";
+import { HELP_FOR_CATEGORY, INDICATOR_CATEGORIES_DATA, SECTION_ICONS } from "../onboarding-v2/data/helperData";
 import { firstLetterUppercase } from "@/utils/string-util";
 import { KeyboardAvoidingView } from "react-native-keyboard-controller";
 import { NEW_INDICATORS_CATEGORIES } from "@/utils/liste_indicateurs.1";
@@ -282,7 +282,7 @@ export const IndicatorScreen: React.FC<IndicatorScreenProps> = ({
           header={
             category ? (
               <View className="rounded-full bg-white/30 p-2 self-start w-auto border border-white">
-                {React.createElement(INDICATOR_CATEGORIES_DATA[category].icon, {
+                {React.createElement(SECTION_ICONS[category].icon, {
                   color: TW_COLORS.WHITE,
                 })}
               </View>

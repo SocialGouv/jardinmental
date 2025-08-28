@@ -1,21 +1,26 @@
 import { mergeClassNames } from "@/utils/className";
+import { TW_COLORS } from "@/utils/constants";
 import { typography } from "@/utils/typography";
+import Bin from "@assets/svg/Bin";
+import Health from "@assets/svg/icon/Health";
 import React, { useState } from "react";
-import { Text, TextInput, TouchableOpacity, View } from "react-native";
+import { GestureResponderEvent, Text, TextInput, TouchableOpacity, View } from "react-native";
 
 type DifficultyOptionProps = {
   id: string | number;
   label: string;
   description?: string;
   selected: boolean;
-  onPress: (id: string | number) => void;
+  onPress: (event: GestureResponderEvent) => void;
   className?: string;
   disabled?: boolean;
   icon?: React.ComponentType<any>;
+  boxPosition?: string;
   shape?: "square" | "circle";
+  placeholder?: string;
 };
 
-export default function SelectionnableItem({ id, label, description, selected, onPress, className, icon }: DifficultyOptionProps) {
+export default function SelectionnableItem({ id, label, description, selected, onPress, className, icon, boxPosition }: DifficultyOptionProps) {
   return (
     <TouchableOpacity
       onPress={() => onPress(id)}
@@ -25,7 +30,7 @@ export default function SelectionnableItem({ id, label, description, selected, o
         className
       )}
     >
-      <View className="flex-row flex-1 items-center">
+      <View className={mergeClassNames("flex-row flex-1", boxPosition === "top" ? "items-start" : "items-center")}>
         {selected ? (
           <View className="mr-3 w-6 h-6 rounded-md items-center justify-center bg-cnam-primary-800">
             <Text className="text-white text-base font-bold">✓</Text>
@@ -56,14 +61,25 @@ export default function SelectionnableItem({ id, label, description, selected, o
   );
 }
 
-export function LightSelectionnableItem({ id, label, description, selected, onPress, className, disabled, icon, shape }: DifficultyOptionProps) {
+export function LightSelectionnableItem({
+  id,
+  label,
+  description,
+  selected,
+  onPress,
+  className,
+  disabled,
+  icon,
+  shape,
+  boxPosition,
+}: DifficultyOptionProps) {
   return (
     <TouchableOpacity
       disabled={disabled}
       onPress={() => onPress(id)}
       className={mergeClassNames("mb-3 py-3 border-b", "border-gray-300 bg-transparent", className, disabled ? "opacity-50" : "")}
     >
-      <View className="flex-row items-center">
+      <View className={mergeClassNames("flex-row items-center", boxPosition === "top" ? "items-start" : "items-center")}>
         {selected ? (
           <View
             className={mergeClassNames("w-6 h-6 items-center justify-center bg-primary mr-4", shape === "circle" ? "rounded-full" : "rounded-md")}
@@ -126,6 +142,7 @@ export function InputSelectionnableItem({
   icon,
   shape,
   validationError,
+  placeholder,
   onTextChange,
 }: DifficultyOptionProps & {
   validationError?: string;
@@ -172,6 +189,7 @@ export function InputSelectionnableItem({
           <Text className={mergeClassNames(typography.textSmMedium, "text-gray-800 mb-2")}>{label}</Text>
           <View className="rounded rounded-lg flex-1">
             <TextInput
+              placeholder={placeholder}
               onChangeText={handleTextChange}
               className={mergeClassNames(typography.textMdRegular, "text-left border border-gray-300 p-2 rounded rounded-lg flex-1")}
             />
@@ -190,5 +208,31 @@ export function InputSelectionnableItem({
         </View>
       </View>
     </TouchableOpacity>
+  );
+}
+
+export function ListItem({ id, label, description, selected, onPress, className, icon, boxPosition }: DifficultyOptionProps) {
+  return (
+    <View className={mergeClassNames("bg-white border-2 border-cnam-primary-800 p-4 rounded-xl mt-2", className)}>
+      <View className={mergeClassNames("flex-row items-start")}>
+        {
+          <View className="mr-4">
+            <Health />
+          </View>
+        }
+        {icon && (
+          <View className="mr-3 rounded-lg border border-1 border-gray-300 bg-white w-10 h-10 items-center justify-center">
+            {React.createElement(icon)}
+          </View>
+        )}
+        <View className="flex-1">
+          <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900")}>{label}</Text>
+          {description && <Text className={mergeClassNames(typography.textSmMedium, "text-gray-600 mt-1")}>{description}</Text>}
+        </View>
+        <TouchableOpacity onPress={onPress} className="ml-auto items-center justify-center self-stretch">
+          <Bin color={TW_COLORS.CNAM_CYAN_600_DARKEN_20} width={20} height={20} />
+        </TouchableOpacity>
+      </View>
+    </View>
   );
 }
