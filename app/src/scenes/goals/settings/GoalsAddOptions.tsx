@@ -85,9 +85,8 @@ export const GoalsAddOptions = ({ navigation }) => {
         navigation.goBack();
       }}
       bottomComponent={
-        <View className="mx-4">
-          <JMButton variant="outline" title="Ajouter un objectif" onPress={() => navigation.navigate("goals-add-options")} />
-          <JMButton title="Modifier mes objectifs" onPress={() => navigation.navigate("goals-settings-more")} className="mt-2" />
+        <View className="mx-4 mb-4">
+          <JMButton title="Valider" onPress={() => onValidate()} className="mt-2" />
         </View>
       }
       navigation={navigation}
