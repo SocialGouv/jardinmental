@@ -3,6 +3,9 @@ import { StyleSheet, TouchableOpacity } from "react-native";
 import { colors } from "../utils/colors";
 import ArrowUpSvg from "../../assets/svg/arrow-up.svg";
 
+/**
+ * @param {{ onPress: () => void, disabled?: boolean, style?: StyleProp<ViewStyle> }} props
+ */
 export default ({ onPress, disabled, style }) => (
   <TouchableOpacity disabled={disabled} onPress={onPress} style={[styles.backButtonContainer, style]}>
     <ArrowUpSvg color={disabled ? colors.DARK_BLUE_TRANS : colors.BLUE} />
