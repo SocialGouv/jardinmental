@@ -12,9 +12,11 @@ import Trash from "@assets/svg/icon/Trash";
 import { useBottomSheet } from "@/context/BottomSheetContext";
 import { DrugsBottomSheet } from "@/components/DrugsBottomSheet";
 import localStorage from "@/utils/localStorage";
+import { useUserProfile } from "@/context/userProfile";
 
 const SettingsModal = ({ navigation, visible, onClick }) => {
   const { showBottomSheet, closeBottomSheet } = useBottomSheet();
+  const { clearProfile, loadProfile } = useUserProfile();
   return (
     <Modal animationType="slide" visible={visible} transparent={true}>
       <TouchableOpacity activeOpacity={1} style={styles.container} onPressOut={onClick}>
@@ -49,6 +51,12 @@ const SettingsModal = ({ navigation, visible, onClick }) => {
             onClick={async () => {
               await wipeData();
               await AsyncStorage.clear();
+              await clearProfile();
+              await loadProfile();
+              navigation.reset({
+                index: 0,
+                routes: [{ name: "onboarding" }],
+              });
             }}
             icon={<Trash />}
           />
