@@ -46,6 +46,44 @@ export const deleteBeckfromDiaryData = ({ date, beckId, diaryData, setDiaryData 
   });
 };
 
+export const getScoreWithStatRecord = ({ patientStateRecord, category, intensity }) => {
+  if (
+    patientStateRecord?.value !== undefined &&
+    patientStateRecord?.value !== null &&
+    !(typeof patientStateRecord?.value === "number" && isFinite(patientStateRecord?.value))
+  )
+    return;
+
+  if (patientStateRecord?.value) return patientStateRecord?.value;
+
+  // -------
+  // the following code is for the retrocompatibility
+  // -------
+
+  // if the patient state doesnt have any info on question 1, return
+  if (!patientStateRecord) {
+    return;
+  }
+  const [categoryName, suffix] = category.split("_");
+
+  // if it is a 1 question category, return the level of the question
+  if (!suffix) {
+    return patientStateRecord.level;
+  } else {
+    // else if there is 2 question...
+
+    // if it is never, the score is max, we dont look at the intensity,
+    // i.e. 5
+    if (patientStateRecord.id === "NEVER") {
+      return 5;
+    }
+
+    // else we compute both frequence & intensity
+    const frequence = patientStateRecord;
+    return frequence.level + intensity.level - 1;
+  }
+};
+
 export const getScoreWithState = ({ patientState, category }) => {
   if (
     patientState[category]?.value !== undefined &&
