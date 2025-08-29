@@ -18,14 +18,14 @@ import Step2 from "./Step2";
 import Step3 from "./Step3";
 import Step4 from "./Step4";
 import Step5 from "./Step5";
-import { DiaryData } from "../../entities/DiaryData";
+import { Beck, DiaryData } from "../../entities/DiaryData";
 
 export default ({ navigation, route }) => {
-  const scrollRef = useRef();
+  const scrollRef = useRef<ScrollView>(null);
   const [step, setStep] = useState(0);
-  const [beck, setBeck] = useState({});
+  const [beck, setBeck] = useState<Beck>({} as Beck);
   const [originalBeckDate, setOriginalBeckDate] = useState(null);
-  const [id, setId] = useState();
+  const [id, setId] = useState<number | undefined>(undefined);
   const [diaryData, addNewEntryToDiaryData] = useContext(DiaryDataContext);
 
   useEffect(() => {
@@ -46,13 +46,14 @@ export default ({ navigation, route }) => {
     if (!beck?.date) return;
 
     // delete from the orignal date if there is one
-    if (originalBeckDate && originalBeckDate !== beck?.date)
+    if (originalBeckDate && originalBeckDate !== beck?.date) {
       deleteBeckfromDiaryData({
         date: originalBeckDate,
         beckId: id,
         diaryData,
-        addNewEntryToDiaryData,
+        setDiaryData: addNewEntryToDiaryData,
       });
+    }
 
     // save progression
     const survey = diaryData[beck?.date] || {};
@@ -71,7 +72,7 @@ export default ({ navigation, route }) => {
       answers: {
         ...survey?.answers,
         becks,
-      },
+      } as DiaryData["answers"],
     };
     addNewEntryToDiaryData(currentSurvey);
   };
