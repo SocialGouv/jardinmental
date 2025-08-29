@@ -286,6 +286,7 @@ export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
           contentContainerStyle={scrollViewContentStyle}
           onScroll={scrollHandler}
           scrollEventThrottle={16}
+          automaticallyAdjustKeyboardInsets={true}
         >
           {children}
         </Animated.ScrollView>
