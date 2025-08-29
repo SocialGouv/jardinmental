@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useEffect } from "react";
-import { FlatList, StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { FlatList, StyleSheet, Text, View, TouchableOpacity, Platform } from "react-native";
 import { Button2 } from "../../../components/Button2";
 import { Screen } from "../../../components/Screen";
 import { Card } from "../../../components/Card";
@@ -14,6 +14,8 @@ import { confirm } from "../../../utils";
 import { colors } from "@/utils/colors";
 import JMButton from "@/components/JMButton";
 import { AnimatedHeaderScrollScreen } from "@/scenes/survey-v2/AnimatedHeaderScrollScreen";
+import { mergeClassNames } from "@/utils/className";
+import NavigationButtons from "@/components/onboarding/NavigationButtons";
 
 export const GoalsSettingsMore = ({ navigation, route }) => {
   const [goals, setGoals] = useState([]);
@@ -77,10 +79,10 @@ export const GoalsSettingsMore = ({ navigation, route }) => {
         navigation.goBack();
       }}
       bottomComponent={
-        <>
+        <NavigationButtons absolute={true}>
           <JMButton title="Ajouter un objectif" onPress={() => navigation.navigate("goals-add-options")} />
           <JMButton variant="outline" title="Modifier mes objectifs" onPress={() => navigation.navigate("goals-settings-more")} className="mt-2" />
-        </>
+        </NavigationButtons>
       }
     >
       {goals.map(renderItem)}

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, Platform } from "react-native";
 import { Button2 } from "../../../components/Button2";
 import { InputLabel } from "../../../components/InputLabel";
 import { InputText } from "../../../components/InputText";
@@ -8,6 +8,7 @@ import JMButton from "@/components/JMButton";
 import { AnimatedHeaderScrollScreen } from "@/scenes/survey-v2/AnimatedHeaderScrollScreen";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
+import NavigationButtons from "@/components/onboarding/NavigationButtons";
 
 export const GoalsCreateForm = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
@@ -25,9 +26,9 @@ export const GoalsCreateForm = ({ navigation }) => {
         navigation.goBack();
       }}
       bottomComponent={
-        <View className="mx-4">
+        <NavigationButtons absolute={true}>
           <JMButton title="Valider" className="my-2" onPress={onValidate} disabled={!(goalName?.length > 0)} loading={loading} />
-        </View>
+        </NavigationButtons>
       }
       navigation={navigation}
     >

@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, Platform } from "react-native";
 import { Button2 } from "../../../components/Button2";
 import { InputLabel } from "../../../components/InputLabel";
 import { Screen } from "../../../components/Screen";
@@ -18,6 +18,7 @@ import JMButton from "@/components/JMButton";
 import { AnimatedHeaderScrollScreen } from "@/scenes/survey-v2/AnimatedHeaderScrollScreen";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
+import NavigationButtons from "@/components/onboarding/NavigationButtons";
 
 export const GoalConfig = ({ navigation, route }) => {
   const goalId = route.params?.goalId;
@@ -88,9 +89,9 @@ export const GoalConfig = ({ navigation, route }) => {
           navigation.goBack();
         }}
         bottomComponent={
-          <View className="mx-4">
-            <JMButton fill title={!editing ? "Créer mon objectif" : "Valider"} onPress={onValidate} loading={loading} />
-          </View>
+          <NavigationButtons absolute={true}>
+            <JMButton title={!editing ? "Créer mon objectif" : "Valider"} onPress={onValidate} loading={loading} />
+          </NavigationButtons>
         }
         navigation={navigation}
       >
