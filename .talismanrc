@@ -72,7 +72,7 @@ fileignoreconfig:
 - filename: app/src/scenes/onboarding-v2/index.tsx
   checksum: 397a9d500493e7778dd039fb94b8c28b962c34d4e6115588a9cd345e98ad6b41
 - filename: app/src/scenes/onboarding-v2/indicators/IndicatorModal.tsx
-  checksum: 3cae33009486039e7cab063070b98b4de9b209997c4b0e371115c2cc0e9df879
+  checksum: 957eb5606e5a7a052776a9c106a73f8629126ade0023ca891e66a4a9c31505a7
 - filename: app/src/scenes/onboarding-v2/indicators/OnboardingChooseIndicatorScreen.tsx
   checksum: ff6d21a848c2eb7c5a1fb3f41d97a8f7dcd6d8010459f47fd247f95208b0c9b9
 - filename: app/src/scenes/onboarding-v2/personalization/DifficultiesScreen.tsx
