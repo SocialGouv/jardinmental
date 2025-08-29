@@ -42,9 +42,11 @@ export const GoalDaySelector = ({ navigation, route }) => {
 
   const onValidate = async () => {
     if (loading) return;
-    // setLoading(true);
-    // if (goalId) await setGoalTracked({ id: goalId, daysOfWeek });
-    // setLoading(false);
+    setLoading(true);
+    if (editing && editingGoal?.id) {
+      await setGoalTracked({ id: editingGoal.id, daysOfWeek });
+    }
+    setLoading(false);
     if (!editing) {
       navigation.navigate("goal-config", { editing: false, goalDaysOfWeek: daysOfWeek, goalLabel });
     } else {
@@ -79,7 +81,11 @@ export const GoalDaySelector = ({ navigation, route }) => {
       handlePrevious={() => {
         navigation.goBack();
       }}
-      bottomComponent={<View className="mx-4">{!editing && <Button2 fill title="Suivant" onPress={onValidate} loading={loading} />}</View>}
+      bottomComponent={
+        <View className="mx-4">
+          <Button2 fill title={editing ? "Valider" : "Suivant"} onPress={onValidate} loading={loading} />
+        </View>
+      }
       navigation={navigation}
     >
       <View className="mx-4">
@@ -93,9 +99,8 @@ export const GoalDaySelector = ({ navigation, route }) => {
             .map(({ day, index }, idx) => {
               const label = format(setDay(new Date(), index), "eeee", { locale: fr });
               return (
-                <View className={mergeClassNames("w-full mb-2", idx === 0 ? "" : "border-t border-gray-300")}>
+                <View className={mergeClassNames("w-full mb-2", idx === 0 ? "" : "border-t border-gray-300")} key={day}>
                   <InputCheckbox
-                    key={day}
                     label={`Chaque ${label?.toLowerCase?.()}`}
                     checked={daysOfWeek?.[day]}
                     onCheckedChanged={({ checked }) => {
