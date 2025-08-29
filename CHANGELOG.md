@@ -1,3 +1,11 @@
+# [1.52.0-alpha.38](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.37...v1.52.0-alpha.38) (2025-08-29)
+
+
+### Bug Fixes
+
+* beck save when changing date does not crash ([#379](https://github.com/SocialGouv/jardinmental/issues/379)) ([46fcc53](https://github.com/SocialGouv/jardinmental/commit/46fcc5321112d1ef141718ee1d01b0f7c19ef785))
+* possibilité de sauvegarder la récurrence des objectifs ([#378](https://github.com/SocialGouv/jardinmental/issues/378)) ([53fea41](https://github.com/SocialGouv/jardinmental/commit/53fea416b7ce9510fdb534df35d9ef6565832644))
+
 # [1.52.0-alpha.37](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.36...v1.52.0-alpha.37) (2025-08-29)
 
 
