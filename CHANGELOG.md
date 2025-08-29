@@ -1,3 +1,10 @@
+# [1.52.0-alpha.40](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.39...v1.52.0-alpha.40) (2025-08-29)
+
+
+### Bug Fixes
+
+* change splash screen ([#377](https://github.com/SocialGouv/jardinmental/issues/377)) ([34f9183](https://github.com/SocialGouv/jardinmental/commit/34f9183d6e48a487075f05027df432f997174fc9))
+
 # [1.52.0-alpha.39](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.38...v1.52.0-alpha.39) (2025-08-29)
 
 
