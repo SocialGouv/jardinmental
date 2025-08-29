@@ -1,3 +1,10 @@
+# [1.52.0-alpha.42](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.41...v1.52.0-alpha.42) (2025-08-29)
+
+
+### Bug Fixes
+
+* keyboard mac ([#368](https://github.com/SocialGouv/jardinmental/issues/368)) ([1b9b5cc](https://github.com/SocialGouv/jardinmental/commit/1b9b5ccf7da39d19d25937922e553c501008a0bc))
+
 # [1.52.0-alpha.41](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.40...v1.52.0-alpha.41) (2025-08-29)
 
 
