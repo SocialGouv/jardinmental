@@ -1,3 +1,10 @@
+# [1.52.0-alpha.37](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.36...v1.52.0-alpha.37) (2025-08-29)
+
+
+### Bug Fixes
+
+* text-md n'existe pas avec tailwind (c'est text-base) ([#370](https://github.com/SocialGouv/jardinmental/issues/370)) ([14b17bf](https://github.com/SocialGouv/jardinmental/commit/14b17bfcf2f15920a958a82f7ddc220b23bd32bf))
+
 # [1.52.0-alpha.36](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.35...v1.52.0-alpha.36) (2025-08-29)
 
 
