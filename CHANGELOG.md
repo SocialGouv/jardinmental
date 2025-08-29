@@ -1,3 +1,10 @@
+# [1.52.0-alpha.39](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.38...v1.52.0-alpha.39) (2025-08-29)
+
+
+### Bug Fixes
+
+* navigation à la suppression des données ([#381](https://github.com/SocialGouv/jardinmental/issues/381)) ([8e888fd](https://github.com/SocialGouv/jardinmental/commit/8e888fd0e2fddbe186ea727168ee7240d6c894aa))
+
 # [1.52.0-alpha.38](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.37...v1.52.0-alpha.38) (2025-08-29)
 
 
