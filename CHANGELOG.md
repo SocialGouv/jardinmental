@@ -1,3 +1,10 @@
+# [1.52.0-alpha.41](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.40...v1.52.0-alpha.41) (2025-08-29)
+
+
+### Bug Fixes
+
+* replacement de tous les boutons objectifs sur android ([#380](https://github.com/SocialGouv/jardinmental/issues/380)) ([197f0cf](https://github.com/SocialGouv/jardinmental/commit/197f0cf03d5407e33159375d602d36b2e151ec4b))
+
 # [1.52.0-alpha.40](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.39...v1.52.0-alpha.40) (2025-08-29)
 
 
