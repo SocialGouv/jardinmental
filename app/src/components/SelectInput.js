@@ -14,20 +14,6 @@ export const SelectInput = ({ items, value, onValueChange, placeholder, containe
 
   return (
     <View style={[styles.container, containerStyle]}>
-      <TouchableOpacity
-        onPress={() => {
-          if (Platform.OS === "android") innerPickerRef?.current?.focus?.();
-          else if (Platform.OS === "ios") pickerRef?.current?.togglePicker?.(true);
-        }}
-      >
-        <View style={[styles.button, style]} pointerEvents="none">
-          <Text style={[styles.textValue, textValueStyle]}>
-            {visibleValue ? items.find((item) => item.value === visibleValue)?.label : placeholder}
-          </Text>
-          <Icon styleContainer={[styles.iconContainer, iconContainerStyle]} icon="ChevronDownSvg" color={colors.DARK_BLUE} width={15} height={15} />
-        </View>
-      </TouchableOpacity>
-
       <RNPickerSelect
         ref={pickerRef}
         useNativeAndroidPickerStyle={false}
@@ -46,7 +32,14 @@ export const SelectInput = ({ items, value, onValueChange, placeholder, containe
           ref: innerPickerRef,
         }}
         {...props}
-      />
+      >
+        <View style={[styles.button, style]} pointerEvents="none">
+          <Text style={[styles.textValue, textValueStyle]}>
+            {visibleValue ? items.find((item) => item.value === visibleValue)?.label : placeholder}
+          </Text>
+          <Icon styleContainer={[styles.iconContainer, iconContainerStyle]} icon="ChevronDownSvg" color={colors.DARK_BLUE} width={15} height={15} />
+        </View>
+      </RNPickerSelect>
     </View>
   );
 };
@@ -72,9 +65,6 @@ const styles = StyleSheet.create({
     width: null,
     height: null,
     marginLeft: 6,
-  },
-  pickerContainer: {
-    display: "none",
   },
 });
 
