@@ -33,10 +33,10 @@ export const GoalsSettings = ({ navigation, route }) => {
   );
 
   const renderItem = useCallback((goal, index) => {
-    return <GoalItem {...{ goal, index }} />;
+    return <GoalItem key={goal.id} {...{ goal, index }} />;
   }, []);
 
-  const keyExtractor = useCallback((goal) => goal.id);
+  const keyExtractor = useCallback((goal) => goal.id, []);
 
   return (
     <AnimatedHeaderScrollScreen
