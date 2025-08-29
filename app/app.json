@@ -40,7 +40,7 @@
         "expo-splash-screen",
         {
           "backgroundColor": "#ffffff",
-          "image": "./assets/imgs/ic_launcher_foreground.png"
+          "image": "./assets/imgs/am.png"
         }
       ],
       [
