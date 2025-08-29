@@ -1,3 +1,10 @@
+# [1.52.0-alpha.36](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.35...v1.52.0-alpha.36) (2025-08-29)
+
+
+### Bug Fixes
+
+* add id on goal (fix react key error) ([#376](https://github.com/SocialGouv/jardinmental/issues/376)) ([8c0c103](https://github.com/SocialGouv/jardinmental/commit/8c0c103e83bb9fd1922be486f77b1cd8e94cc7a1))
+
 # [1.52.0-alpha.35](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.34...v1.52.0-alpha.35) (2025-08-29)
 
 
