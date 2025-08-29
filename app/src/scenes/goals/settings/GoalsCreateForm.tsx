@@ -8,6 +8,7 @@ import JMButton from "@/components/JMButton";
 import { AnimatedHeaderScrollScreen } from "@/scenes/survey-v2/AnimatedHeaderScrollScreen";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
+import NavigationButtons from "@/components/onboarding/NavigationButtons";
 
 export const GoalsCreateForm = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
@@ -25,9 +26,9 @@ export const GoalsCreateForm = ({ navigation }) => {
         navigation.goBack();
       }}
       bottomComponent={
-        <View className={mergeClassNames("mx-4", Platform.OS === "android" ? "mb-4" : "")}>
+        <NavigationButtons absolute={true}>
           <JMButton title="Valider" className="my-2" onPress={onValidate} disabled={!(goalName?.length > 0)} loading={loading} />
-        </View>
+        </NavigationButtons>
       }
       navigation={navigation}
     >

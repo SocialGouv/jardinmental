@@ -15,6 +15,7 @@ import { colors } from "@/utils/colors";
 import JMButton from "@/components/JMButton";
 import { AnimatedHeaderScrollScreen } from "@/scenes/survey-v2/AnimatedHeaderScrollScreen";
 import { mergeClassNames } from "@/utils/className";
+import NavigationButtons from "@/components/onboarding/NavigationButtons";
 
 export const GoalsSettingsMore = ({ navigation, route }) => {
   const [goals, setGoals] = useState([]);
@@ -78,10 +79,10 @@ export const GoalsSettingsMore = ({ navigation, route }) => {
         navigation.goBack();
       }}
       bottomComponent={
-        <View className={mergeClassNames("mx-4", Platform.OS === "android" ? "mb-4" : "")}>
+        <NavigationButtons absolute={true}>
           <JMButton title="Ajouter un objectif" onPress={() => navigation.navigate("goals-add-options")} />
           <JMButton variant="outline" title="Modifier mes objectifs" onPress={() => navigation.navigate("goals-settings-more")} className="mt-2" />
-        </View>
+        </NavigationButtons>
       }
     >
       {goals.map(renderItem)}

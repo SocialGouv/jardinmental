@@ -18,6 +18,7 @@ import JMButton from "@/components/JMButton";
 import { AnimatedHeaderScrollScreen } from "@/scenes/survey-v2/AnimatedHeaderScrollScreen";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
+import NavigationButtons from "@/components/onboarding/NavigationButtons";
 
 export const GoalConfig = ({ navigation, route }) => {
   const goalId = route.params?.goalId;
@@ -88,9 +89,9 @@ export const GoalConfig = ({ navigation, route }) => {
           navigation.goBack();
         }}
         bottomComponent={
-          <View className={mergeClassNames("mx-4", Platform.OS === "android" ? "mb-4" : "")}>
-            <JMButton fill title={!editing ? "Créer mon objectif" : "Valider"} onPress={onValidate} loading={loading} />
-          </View>
+          <NavigationButtons absolute={true}>
+            <JMButton title={!editing ? "Créer mon objectif" : "Valider"} onPress={onValidate} loading={loading} />
+          </NavigationButtons>
         }
         navigation={navigation}
       >

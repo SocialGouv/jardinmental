@@ -11,6 +11,7 @@ import { fr } from "date-fns/locale";
 import { AnimatedHeaderScrollScreen } from "@/scenes/survey-v2/AnimatedHeaderScrollScreen";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
+import NavigationButtons from "@/components/onboarding/NavigationButtons";
 
 export const GoalDaySelector = ({ navigation, route }) => {
   const goalId = route.params?.goalId;
@@ -82,9 +83,9 @@ export const GoalDaySelector = ({ navigation, route }) => {
         navigation.goBack();
       }}
       bottomComponent={
-        <View className={mergeClassNames("mx-4", Platform.OS === "android" ? "mb-4" : "")}>
+        <NavigationButtons absolute={true}>
           <Button2 fill title={editing ? "Valider" : "Suivant"} onPress={onValidate} loading={loading} />
-        </View>
+        </NavigationButtons>
       }
       navigation={navigation}
     >

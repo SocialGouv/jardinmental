@@ -14,6 +14,7 @@ import Plus from "../../../../assets/svg/Plus";
 import { AnimatedHeaderScrollScreen } from "@/scenes/survey-v2/AnimatedHeaderScrollScreen";
 import { Platform, View } from "react-native";
 import { mergeClassNames } from "@/utils/className";
+import NavigationButtons from "@/components/onboarding/NavigationButtons";
 
 const GOALS_EXAMPLE_FLAT = Object.values(GOALS_EXAMPLE).reduce((acc, subGoalCategory) => {
   return [...acc, ...subGoalCategory];
@@ -86,9 +87,9 @@ export const GoalsAddOptions = ({ navigation }) => {
         navigation.goBack();
       }}
       bottomComponent={
-        <View className={mergeClassNames("mx-4", Platform.OS === "android" ? "mb-4" : "")}>
+        <NavigationButtons absolute={true}>
           <JMButton disabled={!isChanged} title="Valider" onPress={() => onValidate()} className="mt-2" />
-        </View>
+        </NavigationButtons>
       }
       navigation={navigation}
     >

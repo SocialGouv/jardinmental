@@ -17,6 +17,7 @@ import { typography } from "@/utils/typography";
 import Target from "@assets/svg/icon/Target";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Pencil from "@assets/svg/Pencil";
+import NavigationButtons from "@/components/onboarding/NavigationButtons";
 
 export const GoalsSettings = ({ navigation, route }) => {
   const onboarding = route.params?.onboarding;
@@ -45,10 +46,12 @@ export const GoalsSettings = ({ navigation, route }) => {
         navigation.goBack();
       }}
       bottomComponent={
-        <View className={mergeClassNames("mx-4", Platform.OS === "android" ? "mb-4" : "")}>
-          <JMButton variant="outline" title="Ajouter un objectif" onPress={() => navigation.navigate("goals-add-options")} />
-          <JMButton title="Modifier mes objectifs" onPress={() => navigation.navigate("goals-add-options")} className="mt-2" />
-        </View>
+        <NavigationButtons absolute={true}>
+          <>
+            <JMButton variant="outline" title="Ajouter un objectif" onPress={() => navigation.navigate("goals-add-options")} />
+            <JMButton title="Modifier mes objectifs" onPress={() => navigation.navigate("goals-add-options")} className="mt-2" />
+          </>
+        </NavigationButtons>
       }
       navigation={navigation}
     >
