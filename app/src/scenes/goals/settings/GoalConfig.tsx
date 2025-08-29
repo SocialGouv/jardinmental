@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, Platform } from "react-native";
 import { Button2 } from "../../../components/Button2";
 import { InputLabel } from "../../../components/InputLabel";
 import { Screen } from "../../../components/Screen";
@@ -88,7 +88,7 @@ export const GoalConfig = ({ navigation, route }) => {
           navigation.goBack();
         }}
         bottomComponent={
-          <View className="mx-4">
+          <View className={mergeClassNames("mx-4", Platform.OS === "android" ? "mb-4" : "")}>
             <JMButton fill title={!editing ? "Créer mon objectif" : "Valider"} onPress={onValidate} loading={loading} />
           </View>
         }

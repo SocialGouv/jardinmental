@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, Platform } from "react-native";
 import { Button2 } from "../../../components/Button2";
 import { InputCheckbox } from "../../../components/InputCheckbox";
 import { InputLabel } from "../../../components/InputLabel";
@@ -82,7 +82,7 @@ export const GoalDaySelector = ({ navigation, route }) => {
         navigation.goBack();
       }}
       bottomComponent={
-        <View className="mx-4">
+        <View className={mergeClassNames("mx-4", Platform.OS === "android" ? "mb-4" : "")}>
           <Button2 fill title={editing ? "Valider" : "Suivant"} onPress={onValidate} loading={loading} />
         </View>
       }

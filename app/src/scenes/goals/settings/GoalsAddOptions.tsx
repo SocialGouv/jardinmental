@@ -12,7 +12,8 @@ import { DAYS_OF_WEEK } from "../../../utils/date/daysOfWeek";
 import JMButton from "@/components/JMButton";
 import Plus from "../../../../assets/svg/Plus";
 import { AnimatedHeaderScrollScreen } from "@/scenes/survey-v2/AnimatedHeaderScrollScreen";
-import { View } from "react-native";
+import { Platform, View } from "react-native";
+import { mergeClassNames } from "@/utils/className";
 
 const GOALS_EXAMPLE_FLAT = Object.values(GOALS_EXAMPLE).reduce((acc, subGoalCategory) => {
   return [...acc, ...subGoalCategory];
@@ -85,7 +86,7 @@ export const GoalsAddOptions = ({ navigation }) => {
         navigation.goBack();
       }}
       bottomComponent={
-        <View className="mx-4 mb-4">
+        <View className={mergeClassNames("mx-4", Platform.OS === "android" ? "mb-4" : "")}>
           <JMButton disabled={!isChanged} title="Valider" onPress={() => onValidate()} className="mt-2" />
         </View>
       }

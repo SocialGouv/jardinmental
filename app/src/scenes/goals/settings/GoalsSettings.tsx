@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useEffect } from "react";
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import { FlatList, Platform, StyleSheet, Text, View } from "react-native";
 import { Button2 } from "../../../components/Button2";
 import { Screen } from "../../../components/Screen";
 import { Card } from "../../../components/Card";
@@ -45,7 +45,7 @@ export const GoalsSettings = ({ navigation, route }) => {
         navigation.goBack();
       }}
       bottomComponent={
-        <View className="mx-4">
+        <View className={mergeClassNames("mx-4", Platform.OS === "android" ? "mb-4" : "")}>
           <JMButton variant="outline" title="Ajouter un objectif" onPress={() => navigation.navigate("goals-add-options")} />
           <JMButton title="Modifier mes objectifs" onPress={() => navigation.navigate("goals-add-options")} className="mt-2" />
         </View>

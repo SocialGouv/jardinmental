@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, Platform } from "react-native";
 import { Button2 } from "../../../components/Button2";
 import { InputLabel } from "../../../components/InputLabel";
 import { InputText } from "../../../components/InputText";
@@ -25,7 +25,7 @@ export const GoalsCreateForm = ({ navigation }) => {
         navigation.goBack();
       }}
       bottomComponent={
-        <View className="mx-4">
+        <View className={mergeClassNames("mx-4", Platform.OS === "android" ? "mb-4" : "")}>
           <JMButton title="Valider" className="my-2" onPress={onValidate} disabled={!(goalName?.length > 0)} loading={loading} />
         </View>
       }
