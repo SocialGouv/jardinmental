@@ -1,3 +1,10 @@
+# [1.52.0-alpha.35](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.34...v1.52.0-alpha.35) (2025-08-29)
+
+
+### Bug Fixes
+
+* select picker does not display on android ([#369](https://github.com/SocialGouv/jardinmental/issues/369)) ([9ea51a5](https://github.com/SocialGouv/jardinmental/commit/9ea51a5e13c3f37a55b330bba7039cae773864ec))
+
 # [1.52.0-alpha.34](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.33...v1.52.0-alpha.34) (2025-08-28)
 
 
