@@ -19,7 +19,7 @@ jobs:
     name: Build and release Ios app
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v5
       - uses: actions/setup-node@v3
         with:
           node-version: "16.x"
