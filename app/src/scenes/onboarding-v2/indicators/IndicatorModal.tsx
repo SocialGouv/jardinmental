@@ -18,7 +18,7 @@ const screenHeight = Dimensions.get("window").height;
 const height90vh = screenHeight * 0.9;
 
 export default function IndicatorModal({
-  category = NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR,
+  category = NEW_INDICATORS_CATEGORIES.OTHER,
   genericIndicator,
   addedIndicators,
   initialSelectedIndicators,
@@ -26,7 +26,7 @@ export default function IndicatorModal({
   multiSelect = true,
   onClose,
 }: {
-  category: NEW_INDICATORS_CATEGORIES;
+  category?: NEW_INDICATORS_CATEGORIES;
   genericIndicator?: Indicator;
   addedIndicators: PredefineIndicatorV2SchemaType[];
   initialSelectedIndicators: string[];

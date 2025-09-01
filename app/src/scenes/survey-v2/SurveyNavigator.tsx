@@ -52,7 +52,7 @@ const SurveyStackNavigator: React.FC<{ context: SurveyContextType; isLoading: bo
         answers={{}}
         onValueChanged={() => {}}
         onCommentChanged={() => {}}
-        title={"Chargement..."}
+        title={""}
         category={NEW_INDICATORS_CATEGORIES.SLEEP}
         indicators={[]}
         showComment={!isOnboarding}
