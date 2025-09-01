@@ -237,9 +237,7 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation, r
   const recommendedIndicatorsUuid = recommendedIndicators.map((reco) => reco.uuid);
   const indicatorsTotalCount = selectedIndicators.length;
   const hasSelectedDifficulties = !!(profile?.selectedDifficulties && profile.selectedDifficulties.length);
-  const title = hasSelectedDifficulties
-    ? `Je vous propose de suivre ${indicatorsCount} élément${indicatorsCount > 1 ? "s" : ""} important${indicatorsCount > 1 ? "s" : ""}`
-    : `Choisissez ce que vous souhaitez suivre`;
+  const title = hasSelectedDifficulties ? `Je vous recommande ces premiers éléments à suivre` : `Choisissez ce que vous souhaitez suivre`;
 
   return (
     <AnimatedHeaderScrollScreen
