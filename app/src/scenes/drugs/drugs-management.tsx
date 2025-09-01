@@ -29,7 +29,10 @@ const DrugsManagement = ({ navigation, route }) => {
   const [hasTreatment, setHasTreatment] = useState(!medicalTreatment || !medicalTreatment?.length);
 
   useEffect(() => {
-    setHasTreatment(!!medicalTreatment?.length);
+    (async () => {
+      const value = await localStorage.getHasTreatment();
+      setHasTreatment(value);
+    })();
   }, [medicalTreatment]);
 
   useEffect(() => {
@@ -140,9 +143,7 @@ const DrugsManagement = ({ navigation, route }) => {
               checked={hasTreatment}
               onCheckedChanged={async ({ checked }) => {
                 setHasTreatment(checked);
-                if (!checked) {
-                  await localStorage.setMedicalTreatment([]);
-                }
+                localStorage.setHasTreatment(checked);
               }}
             />
           </InputGroupItem>

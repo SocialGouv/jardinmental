@@ -16,7 +16,7 @@ export const isChecklistCompleted = async (): Promise<boolean> => {
     const goals = await getGoalsTracked();
 
     // Check drugs/medical treatment
-    const drugs = await localStorage.getMedicalTreatment();
+    const drugs = await localStorage.getHasTreatment();
 
     // Check custom indicators (excluding default mood and sleep indicators)
     const userIndicators = await localStorage.getIndicateurs();
@@ -28,7 +28,7 @@ export const isChecklistCompleted = async (): Promise<boolean> => {
     const surveyDone = true;
 
     // All items must be completed
-    return reminder && !!goals.length && !!drugs && hasCustomIndicators && surveyDone;
+    return reminder && goals !== undefined && !!drugs && hasCustomIndicators && surveyDone;
   } catch (error) {
     console.error("Error checking checklist completion:", error);
     return false;

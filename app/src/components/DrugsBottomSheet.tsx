@@ -24,6 +24,7 @@ export const DrugsBottomSheet = ({ onClose }: { onClose: (treatment?: Drug[]) =>
 
   const handleNoTreatment = async () => {
     await localStorage.setMedicalTreatment([]);
+    await localStorage.setHasTreatment(false);
     onClose([]);
   };
 
