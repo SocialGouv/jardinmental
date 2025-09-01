@@ -1,3 +1,10 @@
+# [1.52.0-alpha.43](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.42...v1.52.0-alpha.43) (2025-09-01)
+
+
+### Bug Fixes
+
+* change mainCategory ([#390](https://github.com/SocialGouv/jardinmental/issues/390)) ([e3f113f](https://github.com/SocialGouv/jardinmental/commit/e3f113f6f723f8154c3cdab48d5c0f50960f96fd))
+
 # [1.52.0-alpha.42](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.41...v1.52.0-alpha.42) (2025-08-29)
 
 
