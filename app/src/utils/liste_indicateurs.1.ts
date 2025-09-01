@@ -222,7 +222,7 @@ export const GENERIC_INDICATOR_SUBSTANCE: PredefineIndicatorV2SchemaType = {
   subcategories: [NEW_INDICATORS_SUBCATEGORIES.SUBSTANCE_USE],
   isGeneric: true,
   priority: 2,
-  order: "ASC",
+  order: "DESC",
   type: INDICATOR_TYPE.boolean,
   category: INDICATORS_CATEGORIES["Comportements"],
   new: true,
