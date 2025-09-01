@@ -352,7 +352,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     order: "DESC",
     type: INDICATOR_TYPE.boolean,
     category: INDICATORS_CATEGORIES["Emotions/sentiments"],
-    mainCategory: NEW_INDICATORS_CATEGORIES.SLEEP,
+    mainCategory: NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR,
     matomoId: 11,
   },
   {
