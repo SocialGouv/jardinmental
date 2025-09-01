@@ -51,17 +51,9 @@ export const IndicatorSurveyItem = ({
         baseIndicatorUuid: indicatorItem.uuid,
         uuid: indicator.uuid, // we keep the same uuid for tracking purpose in the stats
       });
-      setAddedIndicators(indicators);
-      // in this case indicators maximum one element, that is the one to display
-  const addIndicatorForCategory = async (category: NEW_INDICATORS_CATEGORIES, indicators: PredefineIndicatorV2SchemaType[]) => {
-    for (const indicatorItem of indicators) {
-      await localStorage.replaceOrAddIndicateur({
-        ...generateIndicatorFromPredefinedIndicator(indicatorItem),
-        baseIndicatorUuid: indicatorItem.uuid,
-        uuid: indicator.uuid, // we keep the same uuid for tracking purpose in the stats
-      });
     }
     setAddedIndicators(indicators);
+    // in this case indicators maximum one element, that is the one to display
     if (indicators.length > 0) {
       setDisplayedName(indicators[0].name);
     } else {
