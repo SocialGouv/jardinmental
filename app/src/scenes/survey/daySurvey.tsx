@@ -62,7 +62,7 @@ const DaySurvey = ({
   const groupedIndicators = useMemo(() => {
     return userIndicateurs.reduce<Record<NEW_INDICATORS_CATEGORIES, Indicator[]>>((acc, indicator) => {
       const category =
-        // for indicators existing in previous version (but uuid has not changed) we search for cagegory in hardcorded predefinedIndicators
+        // for indicators existing in previous version (but uuid has not changed) we search for category in hardcoded predefinedIndicators
         INDICATORS.find((ind) => [indicator.uuid, indicator.baseIndicatorUuid, indicator.genericUuid].includes(ind.uuid))?.mainCategory ||
         // otherwise we default to mainCategory
         indicator.mainCategory ||
