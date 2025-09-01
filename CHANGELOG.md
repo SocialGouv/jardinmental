@@ -1,3 +1,10 @@
+## [1.52.1](https://github.com/SocialGouv/jardinmental/compare/v1.52.0...v1.52.1) (2025-09-01)
+
+
+### Bug Fixes
+
+* pg cpu limits ([89c65de](https://github.com/SocialGouv/jardinmental/commit/89c65de11148c98e68d7d4f5b57084c2c5da9d44))
+
 # [1.52.0](https://github.com/SocialGouv/jardinmental/compare/v1.51.4...v1.52.0) (2025-09-01)
 
 
