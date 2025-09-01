@@ -41,25 +41,10 @@ interface IndicatorScreenProps {
   onValueChanged: ({ key, value }: { key: string; value: any }) => void;
   onCommentChanged: ({ key, userComment }: { key: string; userComment: string }) => void;
   onNext: () => void;
-  category: NEW_INDICATORS_CATEGORIES;
+  category?: NEW_INDICATORS_CATEGORIES;
   showComment?: boolean;
   hideNavigationButtonsInitially?: boolean;
 }
-
-const ICON_FOR_CATEGORY: Record<NEW_INDICATORS_CATEGORIES, React.ReactNode> = {
-  [NEW_INDICATORS_CATEGORIES.SLEEP]: undefined,
-  [NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR]: undefined,
-  [NEW_INDICATORS_CATEGORIES.WORK]: undefined,
-  [NEW_INDICATORS_CATEGORIES.PHYSICAL_SIGNS]: undefined,
-  [NEW_INDICATORS_CATEGORIES.EMOTIONS]: undefined,
-  [NEW_INDICATORS_CATEGORIES.ENERGY]: undefined,
-  [NEW_INDICATORS_CATEGORIES.INTRUSIVE_THOUGHTS]: undefined,
-  [NEW_INDICATORS_CATEGORIES.FOOD]: undefined,
-  [NEW_INDICATORS_CATEGORIES.SUBSTANCE]: undefined,
-  [NEW_INDICATORS_CATEGORIES.SOCIAL_RELATIONS]: undefined,
-  [NEW_INDICATORS_CATEGORIES.LIFE_EVENT]: undefined,
-  [NEW_INDICATORS_CATEGORIES.COGNITIVE]: undefined,
-};
 
 export const IndicatorScreen: React.FC<IndicatorScreenProps> = ({
   navigation,
