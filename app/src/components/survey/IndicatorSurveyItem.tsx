@@ -41,6 +41,8 @@ export const IndicatorSurveyItem = ({
   allIndicators?: Indicator[];
 }) => {
   const { showBottomSheet, closeBottomSheet } = useBottomSheet();
+  const [displayedName, setDisplayedName] = useState(indicator.name);
+  const [addedIndicators, setAddedIndicators] = useState<PredefineIndicatorV2SchemaType[]>([]);
 
   const addIndicatorForCategory = async (category: NEW_INDICATORS_CATEGORIES, indicators: PredefineIndicatorV2SchemaType[]) => {
     for (const indicatorItem of indicators) {
@@ -49,6 +51,13 @@ export const IndicatorSurveyItem = ({
         baseIndicatorUuid: indicatorItem.uuid,
         uuid: indicator.uuid, // we keep the same uuid for tracking purpose in the stats
       });
+    }
+    setAddedIndicators(indicators);
+    // in this case indicators maximum one element, that is the one to display
+    if (indicators.length > 0) {
+      setDisplayedName(indicators[0].name);
+    } else {
+      setDisplayedName(indicator.name);
     }
     if (typeof onIndicatorChange === "function") {
       onIndicatorChange();
@@ -93,7 +102,7 @@ export const IndicatorSurveyItem = ({
   return (
     <BasicCard completed={value !== undefined}>
       <View className="flex-row justify-between items-center mb-6">
-        <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-900")}>{indicator.name}</Text>
+        <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-900")}>{displayedName || indicator.name}</Text>
         {indicator.type === INDICATOR_TYPE.smiley && (
           <Text className={mergeClassNames(typography.textMdMedium, "text-gray-800 h-5")}>{computeIndicatorLabel() || ""}</Text>
         )}
@@ -127,8 +136,8 @@ export const IndicatorSurveyItem = ({
                   userIndicators={allIndicators}
                   genericIndicator={indicator}
                   category={indicator.mainCategory}
-                  addedIndicators={[]}
-                  initialSelectedIndicators={[]}
+                  addedIndicators={addedIndicators}
+                  initialSelectedIndicators={addedIndicators.map((i) => i.uuid)}
                   multiSelect={false}
                   onClose={(categoryName: NEW_INDICATORS_CATEGORIES, indicators: PredefineIndicatorV2SchemaType[]) => {
                     if (typeof addIndicatorForCategory === "function") {
