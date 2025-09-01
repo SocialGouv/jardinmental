@@ -134,7 +134,9 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation, r
         profile.selectedSubcategories || []
       ).filter((indicator) => !BASE_INDICATORS.includes(indicator.uuid))
     : [];
-  const [selectedIndicators, setSelectedIndicators] = useState<string[]>([]);
+  const [selectedIndicators, setSelectedIndicators] = useState<Record<NEW_INDICATORS_CATEGORIES, string[]>>(
+    {} as Record<NEW_INDICATORS_CATEGORIES, string[]>
+  );
 
   const recommendedIndicatorsByCategory: Record<NEW_INDICATORS_CATEGORIES, PredefineIndicatorV2SchemaType[]> = recommendedIndicators.reduce(
     (prev, curr) => {
@@ -149,23 +151,77 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation, r
     {} as Record<NEW_INDICATORS_CATEGORIES, PredefineIndicatorV2SchemaType[]>
   );
 
-  const toggleIndicator = useCallback((id: string) => {
-    setSelectedIndicators((prev) => (prev.includes(id) ? prev.filter((selectedId) => selectedId !== id) : [...prev, id]));
-  }, []);
+  const toggleIndicator = useCallback(
+    (id: string, category?: NEW_INDICATORS_CATEGORIES) => {
+      // Find which category this indicator belongs to
+      let indicatorCategory = category;
+      if (!indicatorCategory) {
+        // Find the category by looking through recommendedIndicatorsByCategory
+        for (const [cat, indicators] of Object.entries(recommendedIndicatorsByCategory)) {
+          if (indicators.some((ind) => ind.uuid === id)) {
+            indicatorCategory = cat as NEW_INDICATORS_CATEGORIES;
+            break;
+          }
+        }
+
+        // If not found in recommended, check in addedIndicators
+        if (!indicatorCategory) {
+          for (const [cat, indicators] of Object.entries(addedIndicators)) {
+            if (indicators.some((ind) => ind.uuid === id)) {
+              indicatorCategory = cat as NEW_INDICATORS_CATEGORIES;
+              break;
+            }
+          }
+        }
+
+        // If not found in added, check in customIndicators
+        if (!indicatorCategory) {
+          const customIndicator = customIndicators.find((ind) => ind.uuid === id);
+          if (customIndicator && customIndicator.categories && customIndicator.categories.length > 0) {
+            indicatorCategory = customIndicator.categories[0];
+          }
+        }
+
+        // If still not found, check in popular indicators
+        if (!indicatorCategory) {
+          const popularIndicator = INDICATORS.find((ind) => ind.uuid === id);
+          if (popularIndicator && popularIndicator.categories && popularIndicator.categories.length > 0) {
+            indicatorCategory = popularIndicator.categories[0];
+          }
+        }
+      }
+
+      if (indicatorCategory) {
+        setSelectedIndicators((prev) => {
+          const categorySelections = prev[indicatorCategory] || [];
+          const isSelected = categorySelections.includes(id);
+
+          return {
+            ...prev,
+            [indicatorCategory]: isSelected ? categorySelections.filter((selectedId) => selectedId !== id) : [...categorySelections, id],
+          };
+        });
+      }
+    },
+    [recommendedIndicatorsByCategory, addedIndicators, customIndicators]
+  );
 
   const handleNext = async (isSkipped: boolean) => {
     // Get predefined indicators
     const indicators = [...INDICATORS, ...Object.values(addedIndicators).flat()];
 
+    // Flatten selectedIndicators from category-based structure to array
+    const allSelectedIndicators = Object.values(selectedIndicators).flat();
+
     // Filter only the ones whose uuid is in BASE_INDICATORS or selectedIndicators
-    const filteredIndicators = indicators.filter((indicator) => [...BASE_INDICATORS, ...selectedIndicators].includes(indicator.uuid));
+    const filteredIndicators = indicators.filter((indicator) => [...BASE_INDICATORS, ...allSelectedIndicators].includes(indicator.uuid));
 
     // Deduplicate based on uuid
     const predefinedIndicatorsToSave = Array.from(
       new Map([INDICATEURS_HUMEUR, INDICATEURS_SOMMEIL, ...filteredIndicators].map((indicator) => [indicator.uuid, indicator])).values()
     );
     // Get custom indicators that are selected
-    const customIndicatorsToSave = customIndicators.filter((indicator) => selectedIndicators.includes(indicator.uuid));
+    const customIndicatorsToSave = customIndicators.filter((indicator) => allSelectedIndicators.includes(indicator.uuid));
 
     // Convert predefined indicators
     const predefinedConverted: Indicator[] = predefinedIndicatorsToSave.map(generateIndicatorFromPredefinedIndicator);
@@ -205,17 +261,20 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation, r
       [category]: indicators,
     }));
     setSelectedIndicators((prev) => {
-      return [
-        // filter base indicator if we define indicators
-        ...prev.filter((indicator) => !BASE_INDICATORS_FOR_CUSTOM_CATEGORIES[category].map((cat) => cat.uuid).includes(indicator)),
-        ...indicators.map((indicator) => indicator.uuid),
-      ];
+      // Filter out base indicators and add new ones
+      const newSelections = [...indicators.map((indicator) => indicator.uuid)];
+
+      return {
+        ...prev,
+        [category]: newSelections,
+      };
     });
   };
 
   const renderIndicatorItem = useCallback(
     (item: PredefineIndicatorV2SchemaType) => {
-      const selected = selectedIndicators.includes(item.uuid);
+      // Check if this indicator is selected in any category
+      const selected = Object.values(selectedIndicators).some((categorySelections) => categorySelections.includes(item.uuid));
       return <SelectionnableItem key={item.uuid} id={item.uuid} label={item.name} selected={selected} onPress={() => toggleIndicator(item.uuid)} />;
     },
     [selectedIndicators, toggleIndicator]
@@ -235,7 +294,7 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation, r
   const indicatorsCount =
     Object.values(recommendedIndicatorsByCategory).reduce((acc, indicators) => indicators.length + acc, 0) + indicatorsWithCustomCount;
   const recommendedIndicatorsUuid = recommendedIndicators.map((reco) => reco.uuid);
-  const indicatorsTotalCount = selectedIndicators.length;
+  const indicatorsTotalCount = Object.values(selectedIndicators).flat().length;
   const hasSelectedDifficulties = !!(profile?.selectedDifficulties && profile.selectedDifficulties.length);
   const title = hasSelectedDifficulties
     ? `Je vous propose de suivre ${indicatorsCount} élément${indicatorsCount > 1 ? "s" : ""} important${indicatorsCount > 1 ? "s" : ""}`
@@ -254,7 +313,7 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation, r
           onNext={() => handleNext(false)}
           headerContent={
             <View>
-              {selectedIndicators.length >= 9 && <AlertBanner text={`Nous vous recommandons de ne pas choisir plus de 8 éléments pour commencer`} />}
+              {indicatorsTotalCount >= 9 && <AlertBanner text={`Nous vous recommandons de ne pas choisir plus de 8 éléments pour commencer`} />}
               <View className="my-2">
                 <Text className={mergeClassNames(typography.textSmMedium, "text-gray-800 text-center")}>
                   Vous pourrez modifier cette sélection plus tard
@@ -264,7 +323,7 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation, r
           }
           onSkip={() => handleNext(true)}
           showSkip={true}
-          nextDisabled={selectedIndicators.length === 0}
+          nextDisabled={indicatorsTotalCount === 0}
           nextText={`Valider ${indicatorsTotalCount} élément${indicatorsTotalCount > 1 ? "s" : ""} à suivre`}
           skipText="Passer cette étape"
         />
@@ -407,7 +466,7 @@ const CategoryCard = ({
   type: "select" | "select-and-input" | "input";
   categoryName: NEW_INDICATORS_CATEGORIES;
   indicators: PredefineIndicatorV2SchemaType[];
-  selectedIndicators: string[];
+  selectedIndicators: Record<NEW_INDICATORS_CATEGORIES, string[]>;
   addIndicatorForCategory?: (category: NEW_INDICATORS_CATEGORIES, indicators: PredefineIndicatorV2SchemaType[]) => void;
   renderIndicatorItem?: (item: PredefineIndicatorV2SchemaType) => JSX.Element;
 }) => {
@@ -439,9 +498,9 @@ const CategoryCard = ({
                     userIndicators={[]}
                     category={categoryName}
                     addedIndicators={indicators}
-                    initialSelectedIndicators={selectedIndicators}
+                    initialSelectedIndicators={Object.values(selectedIndicators).flat()}
                     onClose={(categoryName: NEW_INDICATORS_CATEGORIES, indicators: PredefineIndicatorV2SchemaType[]) => {
-                      if (typeof addIndicatorForCategory === "function") {
+                      if (addIndicatorForCategory) {
                         addIndicatorForCategory(categoryName, indicators);
                         closeBottomSheet();
                       }
