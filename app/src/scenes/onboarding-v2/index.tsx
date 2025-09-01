@@ -124,8 +124,8 @@ const OnboardingV2Navigator: React.FC = () => {
         navigation={navigation}
         currentStep={0}
         totalSteps={0}
-        headingTitle={"Vous êtes prêts à faire vos observations quotidiennes, bravo !"}
-        description={"Complétez maintenant votre première observation"}
+        headingTitle={"Vous êtes prêt à faire vos observations quotidiennes, bravo !"}
+        description={"Complétez maintenant votre première observation."}
         nextText={"Compléter mon observation"}
         onNext={() => {
           logEvents.logQuestObdStart();

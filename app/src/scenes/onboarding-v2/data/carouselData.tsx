@@ -34,7 +34,7 @@ export const carouselSlides: CarouselSlide[] = [
   // },
   {
     id: "slide-non-suivi-jm-give-tools",
-    title: "Des outils pour comprendre vos émotions, au quotidien",
+    title: "Des outils pour comprendre vos émotions, au quotidien.",
     description: "Un espace pour faire le point, sans jugement. Pour observer, nommer, et avancer.",
     type: "generic",
     backgroundColor: colors.WHITE,
@@ -42,7 +42,7 @@ export const carouselSlides: CarouselSlide[] = [
   },
   {
     id: "slide-suivi-share-with-you-psy",
-    title: "Suivi par un thérapeute?",
+    title: "Suivi par un thérapeute ?",
     description:
       "Vous pouvez choisir de partager ce que vous notez avec votre thérapeute, pour appuyer vos échanges.\n\nTout est sous votre contrôle.",
     type: "generic",
