@@ -1,3 +1,11 @@
+# [1.52.0-alpha.45](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.44...v1.52.0-alpha.45) (2025-09-01)
+
+
+### Bug Fixes
+
+* add category-based indicator selection to fix inconsistent behaviors ([#387](https://github.com/SocialGouv/jardinmental/issues/387)) ([6e02c40](https://github.com/SocialGouv/jardinmental/commit/6e02c40b787a94890f5ffa8f210139416775096c))
+* **onboarding:** update indicator name when refined, show selection i… ([#388](https://github.com/SocialGouv/jardinmental/issues/388)) ([186a489](https://github.com/SocialGouv/jardinmental/commit/186a4895529d4b8f9dcc64706136a159a16a4221))
+
 # [1.52.0-alpha.44](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.43...v1.52.0-alpha.44) (2025-09-01)
 
 
