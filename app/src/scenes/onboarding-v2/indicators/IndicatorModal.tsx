@@ -13,6 +13,7 @@ import { INDICATOR_TYPE, PredefineIndicatorV2SchemaType, Indicator, generateIndi
 import { v4 as uuidv4 } from "uuid";
 import JMButton from "@/components/JMButton";
 import { INDICATORS_CATEGORIES } from "@/entities/IndicatorCategories";
+import LinearGradient from "react-native-linear-gradient";
 
 const screenHeight = Dimensions.get("window").height;
 const height90vh = screenHeight * 0.9;
@@ -123,9 +124,9 @@ export default function IndicatorModal({
   return (
     <View className="flex-1">
       <ScrollView
-        className="gap-6"
         contentContainerStyle={{ paddingBottom: 200 }}
         showsVerticalScrollIndicator={false}
+        automaticallyAdjustKeyboardInsets={true}
         style={{ paddingVertical: 20, height: height90vh }}
       >
         <View className="flex-row bg-[#E5F6FC] self-start p-2">
@@ -136,89 +137,93 @@ export default function IndicatorModal({
             {INDICATOR_CATEGORIES_DATA[category].label}
           </Text>
         </View>
-        <Text className={mergeClassNames(typography.displayXsBold, "text-left text-cnam-primary-900")}>
-          {multiSelect ? "Sélectionnez un ou plusieurs éléments" : "Sélectionnez un élément"}
-        </Text>
-        <TextInput
-          onChangeText={(text) => {
-            setSearchText(text);
-            if (duplicateError) setDuplicateError(null); // Clear error when typing
-          }}
-          className={mergeClassNames(typography.textMdRegular, "text-left border border-gray-300 p-2 rounded rounded-lg")}
-          placeholder="Rechercher ou ajouter un élément"
-        />
-        {duplicateError && <Text className={mergeClassNames(typography.textSmMedium, "text-red-600 mt-2")}>{duplicateError}</Text>}
-        <View className="flex-colum flex-1">
-          {[...filteredIndicators, ...existingCustomIndicatorsForGenericUuid].map((ind) => {
-            const selected = selectedIndicators.includes(ind.uuid);
+        <View className="px-4 gap-6 mt-4">
+          <Text className={mergeClassNames(typography.displayXsBold, "text-left text-cnam-primary-900")}>
+            {multiSelect ? "Sélectionnez un ou plusieurs éléments" : "Sélectionnez un élément"}
+          </Text>
+          <TextInput
+            onChangeText={(text) => {
+              setSearchText(text);
+              if (duplicateError) setDuplicateError(null); // Clear error when typing
+            }}
+            className={mergeClassNames(typography.textMdRegular, "text-left border border-gray-300 p-2 rounded rounded-lg")}
+            placeholder="Rechercher ou ajouter un élément"
+          />
+          {duplicateError && <Text className={mergeClassNames(typography.textSmMedium, "text-red-600 mt-2")}>{duplicateError}</Text>}
+          <View className="flex-colum flex-1">
+            {[...filteredIndicators, ...existingCustomIndicatorsForGenericUuid].map((ind) => {
+              const selected = selectedIndicators.includes(ind.uuid);
 
-            return (
-              <LightSelectionnableItem
-                key={ind.uuid}
-                className="flex-row"
-                id={ind.uuid}
-                label={ind.name}
-                disabled={userIndicators.some((disabledInd) => disabledInd.uuid === ind.uuid || disabledInd.baseIndicatorUuid === ind.uuid)}
-                shape={multiSelect ? "square" : "circle"}
-                selected={selected}
-                onPress={() => toggleIndicator(ind.uuid)}
-              />
-            );
-          })}
-          {!filteredIndicators.length && <Text className={mergeClassNames(typography.textSmMedium, "text-gray-800")}>Pas de résultat</Text>}
-          {!!searchedText && !filteredIndicators.length && (
-            <TouchableOpacity
-              onPress={() => {
-                const isCreated = createNewIndicator(searchedText);
-                if (isCreated) {
-                  setSearchText("");
-                }
-              }}
-            >
-              <View className="flex-row items-center mr-auto mt-2">
-                <Text className={mergeClassNames(typography.textLgMedium, "mr-2 text-cnam-primary-900")}>Ajouter "{searchedText}"</Text>
-                <PlusIcon />
-              </View>
-            </TouchableOpacity>
-          )}
-          {editingIndicators.map((text, index) => (
-            <InputSelectionnableItem
-              key={index}
-              id={index}
-              shape={multiSelect ? "square" : "circle"}
-              label="Nommez le produit ou l'addiction:"
-              selected={false}
-              onPress={(text: string) => createNewIndicator(text, index)}
-              validationError={duplicateError || undefined}
-              onTextChange={(text: string) => {
-                if (duplicateError) setDuplicateError(null); // Clear error when typing
-              }}
-            />
-          ))}
-          {!searchedText && (
-            <View className="flex-row items-center mt-2 ml-auto">
+              return (
+                <LightSelectionnableItem
+                  key={ind.uuid}
+                  className="flex-row"
+                  id={ind.uuid}
+                  label={ind.name}
+                  disabled={userIndicators.some((disabledInd) => disabledInd.uuid === ind.uuid || disabledInd.baseIndicatorUuid === ind.uuid)}
+                  shape={multiSelect ? "square" : "circle"}
+                  selected={selected}
+                  onPress={() => toggleIndicator(ind.uuid)}
+                />
+              );
+            })}
+            {!filteredIndicators.length && <Text className={mergeClassNames(typography.textSmMedium, "text-gray-800")}>Pas de résultat</Text>}
+            {!!searchedText && !filteredIndicators.length && (
               <TouchableOpacity
                 onPress={() => {
-                  setEditingIndicators((editingIndicators) => [...editingIndicators, ""]);
+                  const isCreated = createNewIndicator(searchedText);
+                  if (isCreated) {
+                    setSearchText("");
+                  }
                 }}
               >
-                <View className="flex-row items-center">
-                  <Text className={mergeClassNames(typography.textMdMedium, "mr-2 text-cnam-primary-900")}>ajouter un élément</Text>
+                <View className="flex-row items-center mr-auto mt-2">
+                  <Text className={mergeClassNames(typography.textLgMedium, "mr-2 text-cnam-primary-900")}>Ajouter "{searchedText}"</Text>
                   <PlusIcon />
                 </View>
               </TouchableOpacity>
-            </View>
-          )}
+            )}
+            {editingIndicators.map((text, index) => (
+              <InputSelectionnableItem
+                key={index}
+                id={index}
+                shape={multiSelect ? "square" : "circle"}
+                label={INDICATOR_CATEGORIES_DATA[category].addIndicatorText || "Nommez votre indicateur"}
+                selected={false}
+                onPress={(text: string) => createNewIndicator(text, index)}
+                validationError={duplicateError || undefined}
+                onTextChange={(text: string) => {
+                  if (duplicateError) setDuplicateError(null); // Clear error when typing
+                }}
+              />
+            ))}
+            {!searchedText && (
+              <View className="flex-row items-center mt-2 ml-auto">
+                <TouchableOpacity
+                  onPress={() => {
+                    setEditingIndicators((editingIndicators) => [...editingIndicators, ""]);
+                  }}
+                >
+                  <View className="flex-row items-center">
+                    <Text className={mergeClassNames(typography.textMdMedium, "mr-2 text-cnam-primary-900")}>ajouter un élément</Text>
+                    <PlusIcon />
+                  </View>
+                </TouchableOpacity>
+              </View>
+            )}
+          </View>
         </View>
       </ScrollView>
-      <View
+      <LinearGradient
+        colors={["rgba(255,255,255,0)", "rgba(255,255,255,1)"]}
+        locations={[0, 0.3]} // transition très rapide
         style={{
           position: "absolute",
           bottom: 0,
           left: 0,
           right: 0,
         }}
-        className={`flex-column justify-between items-center p-6 px-6 bg-white/90 pb-10 w-full`}
+        className={`p-6 px-4 pb-20`}
       >
         <Text className={mergeClassNames(typography.textSmMedium, "text-gray-800 mb-2")}>Vous pourrez modifier cette sélection plus tard</Text>
         <JMButton
@@ -230,7 +235,7 @@ export default function IndicatorModal({
           }}
           title={multiSelect ? "Valider la sélection" : "Valider le choix"}
         />
-      </View>
+      </LinearGradient>
     </View>
   );
 }
