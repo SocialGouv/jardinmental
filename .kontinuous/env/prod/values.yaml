@@ -17,7 +17,7 @@ pg:
         cpu: "1"
         memory: 2Gi
       limits:
-        cpu: "1.5"
+        cpu: 1500m
         memory: 2Gi
     recovery:
       enabled: true
