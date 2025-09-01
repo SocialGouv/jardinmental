@@ -1,3 +1,10 @@
+# [1.52.0-alpha.44](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.43...v1.52.0-alpha.44) (2025-09-01)
+
+
+### Bug Fixes
+
+* change order for SUBSTANCE_USE indicator : "oui" in red, "non" in green ([#393](https://github.com/SocialGouv/jardinmental/issues/393)) ([36f5ef5](https://github.com/SocialGouv/jardinmental/commit/36f5ef53d6f3cd1f47638340078dabfcafd029a6))
+
 # [1.52.0-alpha.43](https://github.com/SocialGouv/jardinmental/compare/v1.52.0-alpha.42...v1.52.0-alpha.43) (2025-09-01)
 
 
