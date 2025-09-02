@@ -137,6 +137,8 @@ fileignoreconfig:
   checksum: d8691b20eb4452132cfc2e8a598ebdaa775f60867d7547059b8bb223a6de720a
 - filename: app/src/scenes/survey/survey-data.js
   checksum: 1ac3021625ed8fb4ed188c80035b12789aa03989dc7276893900ed96dc2a2509
+- filename: app/src/services/NPS/NPSManager.js
+  checksum: 18ff21bd7e8e03f513766f316a3ab104720bb7b44fad796b97e0212fae7afed0
 - filename: app/src/services/logEvents.js
   checksum: 87241553b4afc22b4cd82966a0aa651836aace4773239e73cb971cd874f56417
 - filename: app/src/services/notifications.js

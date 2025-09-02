@@ -17,6 +17,7 @@ import { BottomSheetProvider } from "@/context/BottomSheetContext";
 
 import { UserProfileProvider } from "./src/context/userProfile";
 import NPS from "./src/services/NPS/NPS";
+import NPSManager from "./src/services/NPS/NPSManager";
 // import { Sentry } from "react-native-sentry";
 import { NeedUpdateContextProvider } from "./src/context/needUpdate";
 import { InfoModalProvider } from "./src/components/InfoModal";
@@ -68,6 +69,9 @@ const App = () => {
         "SourceSans3-ExtraBold": require("./assets/fonts/SourceSans3-ExtraBold.ttf"),
         "SourceSans3-ExtraBoldItalic": require("./assets/fonts/SourceSans3-ExtraBoldItalic.ttf"),
       });
+
+      // Initialize NPSManager once when the app starts
+      await NPSManager.initialize();
 
       setFontsLoaded(true);
       await SplashScreen.hideAsync();
