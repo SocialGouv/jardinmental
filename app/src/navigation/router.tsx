@@ -1,6 +1,6 @@
 import React from "react";
 import Tabs from "./tabs";
-import { createStackNavigator } from "@react-navigation/stack";
+import { CardStyleInterpolators, createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import EnvironmentIndicator from "../services/EnvironmentIndicator";
 import SurveyNavigator from "../scenes/survey-v2/SurveyNavigator";
@@ -216,7 +216,13 @@ class Router extends React.Component<RouterProps> {
     return (
       <>
         <NavigationContainer ref={(r) => (this.navigationRef = r)} onStateChange={this.onStateChange} linking={linking}>
-          <Stack.Navigator initialRouteName="tabs" screenOptions={{ headerShown: false }}>
+          <Stack.Navigator
+            initialRouteName="tabs"
+            screenOptions={{
+              headerShown: false,
+              cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+            }}
+          >
             <Stack.Screen name="presentation" component={Presentation} />
             <Stack.Screen name="day-survey" component={SurveyV1} />
             <Stack.Screen name="day-survey-v2" component={SurveyNavigator} />

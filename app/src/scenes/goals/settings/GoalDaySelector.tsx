@@ -82,6 +82,7 @@ export const GoalDaySelector = ({ navigation, route }) => {
       handlePrevious={() => {
         navigation.goBack();
       }}
+      smallHeader={true}
       bottomComponent={
         <NavigationButtons absolute={true}>
           <Button2 fill title={editing ? "Valider" : "Suivant"} onPress={onValidate} loading={loading} />

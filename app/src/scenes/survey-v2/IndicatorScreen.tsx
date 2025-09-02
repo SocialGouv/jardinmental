@@ -56,7 +56,7 @@ export const IndicatorScreen: React.FC<IndicatorScreenProps> = ({
   onNext,
   category,
   showComment = true,
-  hideNavigationButtonsInitially = false,
+  hideNavigationButtonsInitially = true,
 }) => {
   const { showBottomSheet } = useBottomSheet();
   const insets = useSafeAreaInsets();
@@ -75,7 +75,7 @@ export const IndicatorScreen: React.FC<IndicatorScreenProps> = ({
 
   // Check if screen is large (like iPhone 16 Plus)
   const { height: screenHeight } = Dimensions.get("window");
-  const isLargeScreen = screenHeight >= 900; // Threshold for large screens
+  const isLargeScreen = screenHeight >= 700; // Threshold for large screens
 
   const onClickHelp = () => {
     if (category && HELP_FOR_CATEGORY[category]) {

@@ -64,62 +64,68 @@ const CreateIndicator = ({ navigation, route }) => {
 
   return (
     <AnimatedHeaderScrollScreen
-    title={"Créer un indicateur"}
-    scrollViewBackground={TW_COLORS.GRAY_50}
-    handlePrevious={() => {
-      navigation.goBack()
-    }}
-    bottomComponent={<View
-      className='px-4 bg-gray-50'>
-      <JMButton
-        disabled={!nameNewIndicator || !selectedCategory}
-        // textStyle={{ color: 'white', textAlign: 'center' }}
-        onPress={() => {
-          handleAddNewIndicator();
-        }}
-        title="Valider"
-      /></View>}
-  onNext={() => {
-        handleAddNewIndicator();
-    }}
-    navigation={navigation}>
-        <View className="flex-1 mx-4">
-          <Text className={mergeClassNames(typography.textMdSemibold,'text-cnam-primary-900 my-8')}>
-            Comment souhaitez vous appeler votre indicateur?
-          </Text>
-          <Text className={mergeClassNames(typography.textMdMedium,'text-gray-700')}>Nom de votre indicateur*</Text>
-          <TextInput
-            onChangeText={e => {
-              setNameNewIndicator(e);
-              setError(false);
+      title={"Créer un indicateur"}
+      scrollViewBackground={TW_COLORS.GRAY_50}
+      handlePrevious={() => {
+        navigation.goBack();
+      }}
+      smallHeader={true}
+      bottomComponent={
+        <View className="px-4 bg-gray-50">
+          <JMButton
+            disabled={!nameNewIndicator || !selectedCategory}
+            // textStyle={{ color: 'white', textAlign: 'center' }}
+            onPress={() => {
+              handleAddNewIndicator();
             }}
-            className='mt-1 bg-white p-4 mb-2'
-            autoFocus={true}
-            value={nameNewIndicator}
-            placeholder={'Entrez le nom de votre indicateur'}
-            placeholderTextColor="lightgrey"
-            style={styles.textInput}
+            title="Valider"
           />
-
-          {error ? (
-            <View className="border border-red-400 bg-red-50 rounded-lg px-3 py-2 mb-5">
-              <Text className="text-gray-900">Il existe déjà un indicateur qui porte le nom "{nameNewIndicator?.trim()}".</Text>
-              <Text className="text-gray-900">S'il est inactif, vous pouvez le réactiver dans la liste des "anciens indicateurs" ou depuis la liste d&apos;exemples.</Text>
-            </View>
-          ) : null}
-
-          <View className='mt-2'>
-            <Text className={mergeClassNames(typography.textMdMedium,'text-gray-700')}>Catégorie*</Text>
-            <RNPickerSelect
-              onValueChange={(value) => setSelectedCategory(value)}
-              items={categoryOptions}
-              placeholder={{ label: 'Choisir une categorie', value: null }}
-              value={selectedCategory}
-              style={pickerSelectStyles}
-              useNativeAndroidPickerStyle={false}
-            />
-          </View>
         </View>
+      }
+      onNext={() => {
+        handleAddNewIndicator();
+      }}
+      navigation={navigation}
+    >
+      <View className="flex-1 mx-4">
+        <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-900 my-8")}>
+          Comment souhaitez vous appeler votre indicateur?
+        </Text>
+        <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700")}>Nom de votre indicateur*</Text>
+        <TextInput
+          onChangeText={(e) => {
+            setNameNewIndicator(e);
+            setError(false);
+          }}
+          className="mt-1 bg-white p-4 mb-2"
+          autoFocus={true}
+          value={nameNewIndicator}
+          placeholder={"Entrez le nom de votre indicateur"}
+          placeholderTextColor="lightgrey"
+          style={styles.textInput}
+        />
+
+        {error ? (
+          <View className="border border-red-400 bg-red-50 rounded-lg px-3 py-2 mb-5">
+            <Text className="text-gray-900">Il existe déjà un indicateur qui porte le nom "{nameNewIndicator?.trim()}".</Text>
+            <Text className="text-gray-900">
+              S'il est inactif, vous pouvez le réactiver dans la liste des "anciens indicateurs" ou depuis la liste d&apos;exemples.
+            </Text>
+          </View>
+        ) : null}
+
+        <View className="mt-2">
+          <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700")}>Catégorie*</Text>
+          <RNPickerSelect
+            onValueChange={(value) => setSelectedCategory(value)}
+            items={categoryOptions}
+            placeholder={{ label: "Choisir une categorie", value: null }}
+            value={selectedCategory}
+            style={pickerSelectStyles}
+            useNativeAndroidPickerStyle={false}
+          />
+        </View>
+      </View>
     </AnimatedHeaderScrollScreen>
   );
 };

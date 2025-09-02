@@ -304,6 +304,7 @@ export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation, r
       dynamicTitle={"Indicateurs"}
       navigation={navigation}
       hasProgressBar={false}
+      smallHeader={true}
       handlePrevious={handlePrevious}
       bottomComponent={
         <NavigationButtons

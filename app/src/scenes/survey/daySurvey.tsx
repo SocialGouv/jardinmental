@@ -331,7 +331,7 @@ const DaySurvey = ({
           .filter((ind) => ind.active === true && ind.uuid === INDICATEURS_HUMEUR.uuid)
           .map((ind) => {
             return (
-              <View className="mb-2 border-b-2 border-gray-400 px-4 my-4" key={ind?.uuid}>
+              <View className="mb-2 border-b border-gray-400 px-4 my-4 pb-4" key={ind?.uuid}>
                 <IndicatorSurveyItem
                   showComment={true}
                   indicator={ind}
@@ -356,7 +356,7 @@ const DaySurvey = ({
             return;
           }
           return (
-            <View key={cat} className="mb-2 border-b-2 border-gray-400 px-4">
+            <View key={cat} className="mb-4 pb-6 border-b border-gray-400 px-4">
               <View className={`flex-row  p-4 px-0 pb-6 ${index === 0 ? "pt-4" : "pt-10"}`}>
                 <View className="rounded-full border-[1.5px] border-cnam-primary-800 bg-white w-10 h-10 items-center justify-center">
                   {React.createElement(INDICATOR_CATEGORIES_DATA[cat].icon, { color: TW_COLORS.BRAND_900 })}
@@ -405,7 +405,7 @@ const DaySurvey = ({
         /> */}
       </View>
       <GoalsDaySurvey date={initSurvey?.date} ref={goalsRef} scrollRef={scrollRef} route={route} />
-      <View className="mb-2 px-4 my-4">
+      <View className="mb-2 px-4 pt-6 my-4">
         <Text className={mergeClassNames(typography.displayXsBold, "text-left text-cnam-primary-900 ml-2 flex-1 mb-4")}>Note générale</Text>
         <InputQuestion
           question={questionContext}
