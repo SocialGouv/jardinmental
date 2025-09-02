@@ -1,3 +1,10 @@
+# [1.54.0](https://github.com/SocialGouv/jardinmental/compare/v1.53.0...v1.54.0) (2025-09-02)
+
+
+### Features
+
+* **icon:** add icon for category other ([#403](https://github.com/SocialGouv/jardinmental/issues/403)) ([3636e69](https://github.com/SocialGouv/jardinmental/commit/3636e69c15c9a319a10d28edeb53161c5cdc7237))
+
 # [1.53.0](https://github.com/SocialGouv/jardinmental/compare/v1.52.5...v1.53.0) (2025-09-02)
 
 
