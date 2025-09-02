@@ -4,7 +4,7 @@
     "slug": "monsuivipsy",
     "version": "1.43.3",
     "orientation": "default",
-    "icon": "./assets/imgs/playstore-icon.png",
+    "icon": "./assets/imgs/icon.png",
     "scheme": "monsuivipsy",
     "ios": {
       "supportsTablet": true,
@@ -18,7 +18,7 @@
       "googleServicesFile": "./google-services.json",
       "versionCode": 243,
       "adaptiveIcon": {
-        "foregroundImage": "./assets/imgs/logo2.png",
+        "foregroundImage": "./assets/imgs/icon.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.monsuivipsy",
