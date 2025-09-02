@@ -22,6 +22,7 @@ import { colors } from "../../utils/colors";
 import Matomo from "../matomo";
 import logEvents from "../logEvents";
 import localStorage from "../../utils/localStorage";
+import NPSManager from "./NPSManager";
 import pck from "../../../package.json";
 
 // just to make sure nothing goes the bad way in production, debug is always false
@@ -46,13 +47,7 @@ contact: ${contact}
 profil: ${lookUpSupported[supported]}
 `;
 
-const NPSTimeoutMS = __DEV__ ? 1000 * 3 : 1000 * 60 * 60 * 24 * 10;
 const emailFormat = (email) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,6}$/i.test(email);
-
-const STORE_KEYS = {
-  NPS_DONE: "@NPSDone",
-  INITIAL_OPENING: "@NPSInitialOpening",
-};
 
 class NPS extends React.Component {
   state = {
@@ -68,24 +63,31 @@ class NPS extends React.Component {
 
   async componentDidMount() {
     if (__DEV__) {
-      this.reset();
+      await NPSManager.reset();
     }
     this.NPSListener = AppState.addEventListener("change", this.handleAppStateChange);
     if (!__DEV__) {
       this.notificationsListener = Notifications.listen(this.handleNotification, "NPS");
     }
-    this.checkNeedNPS();
+
+    // Listen to NPSManager state changes
+    this.unsubscribeFromNPSManager = NPSManager.addListener(this.handleNPSStateChange);
+
+    // Check initial state
+    if (NPSManager.getShouldShowNPS()) {
+      this.setState({ visible: true });
+    }
   }
 
   componentWillUnmount() {
     this.NPSListener?.remove();
     Notifications.remove(this.notificationsListener);
+    if (this.unsubscribeFromNPSManager) {
+      this.unsubscribeFromNPSManager();
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (!prevState.NPSKey && this.state.NPSKey) {
-      this.checkNeedNPS();
-    }
     if (!prevProps.forceView && this.props.forceView && !this.state.visible) {
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({ visible: true });
@@ -103,41 +105,13 @@ class NPS extends React.Component {
   }
 
   handleNotification = (notification) => {
-    if (notification.title === getCaption("notifTitle") && notification.userInteraction === true) {
+    if (NPSManager.handleNotification(notification)) {
       this.setState({ visible: true });
     }
   };
 
-  reset = async () => {
-    await AsyncStorage.removeItem(STORE_KEYS.NPS_DONE);
-    await AsyncStorage.removeItem(STORE_KEYS.INITIAL_OPENING);
-  };
-
-  checkNeedNPS = async () => {
-    const NPSDone = await AsyncStorage.getItem(STORE_KEYS.NPS_DONE);
-    if (NPSDone) {
-      return;
-    }
-
-    const appFirstOpening = await AsyncStorage.getItem(STORE_KEYS.INITIAL_OPENING);
-    if (__DEV__) return;
-    if (!appFirstOpening && !__DEV__) {
-      await AsyncStorage.setItem(STORE_KEYS.INITIAL_OPENING, new Date().toISOString());
-      Notifications.scheduleNotification({
-        date: new Date(Date.now() + NPSTimeoutMS),
-        title: getCaption("notifTitle"),
-        message: getCaption("notifMessage"),
-      });
-      return;
-    }
-    const opening = await AsyncStorage.getItem(STORE_KEYS.INITIAL_OPENING);
-    const timeForNPS = Date.now() - Date.parse(new Date(opening)) > NPSTimeoutMS;
-    if (!timeForNPS) {
-      return;
-    }
-    logEvents.logNPSOpen();
-    await AsyncStorage.setItem(STORE_KEYS.NPS_DONE, "true");
-    this.setState({ visible: true });
+  handleNPSStateChange = (shouldShow) => {
+    this.setState({ visible: shouldShow });
   };
 
   handleAppStateChange = (newState) => {
