@@ -1,3 +1,10 @@
+## [1.52.2](https://github.com/SocialGouv/jardinmental/compare/v1.52.1...v1.52.2) (2025-09-02)
+
+
+### Bug Fixes
+
+* typo "éléments observés" au singulier ([#398](https://github.com/SocialGouv/jardinmental/issues/398)) ([1dd70e2](https://github.com/SocialGouv/jardinmental/commit/1dd70e2a359dca0d954c4e8c69e5660858d343b3))
+
 ## [1.52.1](https://github.com/SocialGouv/jardinmental/compare/v1.52.0...v1.52.1) (2025-09-01)
 
 
