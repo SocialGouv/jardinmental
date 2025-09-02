@@ -1050,7 +1050,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     matomoId: 70,
   },
   {
-    name: "Divorce",
+    name: "Charge émotionnelle : Divorce",
     categories: [NEW_INDICATORS_CATEGORIES.LIFE_EVENT],
     priority: 1,
     uuid: "3e6f3123-d45b-4a26-b5dc-1df02e9169b4",
@@ -1062,7 +1062,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     matomoId: 71,
   },
   {
-    name: "Perte d’emploi",
+    name: "Charge émotionnelle : Perte d’emploi",
     categories: [NEW_INDICATORS_CATEGORIES.LIFE_EVENT],
     category: INDICATORS_CATEGORIES["Emotions/sentiments"],
     priority: 1,
@@ -1074,7 +1074,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     matomoId: 72,
   },
   {
-    name: "Deuil",
+    name: "Charge émotionnelle : Deuil",
     categories: [NEW_INDICATORS_CATEGORIES.LIFE_EVENT],
     category: INDICATORS_CATEGORIES["Emotions/sentiments"],
     priority: 1,
