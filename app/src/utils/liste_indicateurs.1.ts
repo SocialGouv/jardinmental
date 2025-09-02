@@ -874,7 +874,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     matomoId: 55,
   },
   {
-    name: "Tabac",
+    name: "Consommation de Tabac",
     categories: [NEW_INDICATORS_CATEGORIES.SUBSTANCE],
     subcategories: [NEW_INDICATORS_SUBCATEGORIES.SUBSTANCE_USE],
     category: INDICATORS_CATEGORIES["Comportements"],
@@ -888,7 +888,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
   },
   GENERIC_INDICATOR_SUBSTANCE,
   {
-    name: "Ma consommation d'alcool",
+    name: "Consommation d'alcool",
     categories: [NEW_INDICATORS_CATEGORIES.SUBSTANCE, NEW_INDICATORS_CATEGORIES.SLEEP],
     subcategories: [NEW_INDICATORS_SUBCATEGORIES.SUBSTANCE_USE, NEW_INDICATORS_SUBCATEGORIES.BAD_SLEEP_HABITS],
     priority: 1,
@@ -900,7 +900,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     matomoId: 58,
   },
   {
-    name: "Café",
+    name: "Consommation de café",
     categories: [NEW_INDICATORS_CATEGORIES.SUBSTANCE, NEW_INDICATORS_CATEGORIES.SLEEP],
     subcategories: [NEW_INDICATORS_SUBCATEGORIES.SUBSTANCE_USE],
     priority: 1,
@@ -926,7 +926,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     matomoId: 60,
   },
   {
-    name: "Jeux de hasard & jeux d'argent",
+    name: "Consommation de jeux de hasard & jeux d'argent",
     categories: [NEW_INDICATORS_CATEGORIES.SUBSTANCE],
     subcategories: [NEW_INDICATORS_SUBCATEGORIES.BEHAVIORAL_ADDICTION],
     priority: 1,
@@ -952,7 +952,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     matomoId: 62,
   },
   {
-    name: "Jeux vidéos",
+    name: "Consommation de jeux vidéos",
     categories: [NEW_INDICATORS_CATEGORIES.SUBSTANCE],
     subcategories: [NEW_INDICATORS_SUBCATEGORIES.BEHAVIORAL_ADDICTION],
     priority: 2,
