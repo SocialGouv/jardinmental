@@ -1,3 +1,11 @@
+## [1.54.1](https://github.com/SocialGouv/jardinmental/compare/v1.54.0...v1.54.1) (2025-09-02)
+
+
+### Bug Fixes
+
+* cannabis should use a gauge indicator ([#405](https://github.com/SocialGouv/jardinmental/issues/405)) ([bf0f6ce](https://github.com/SocialGouv/jardinmental/commit/bf0f6ce8042cd346936f5b346d2069b949866b7f))
+* change icon ([#404](https://github.com/SocialGouv/jardinmental/issues/404)) ([ffab646](https://github.com/SocialGouv/jardinmental/commit/ffab6461360bb326c9a9aba7a210003eba2d9b57))
+
 # [1.54.0](https://github.com/SocialGouv/jardinmental/compare/v1.53.0...v1.54.0) (2025-09-02)
 
 
