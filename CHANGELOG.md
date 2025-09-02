@@ -1,3 +1,10 @@
+## [1.52.4](https://github.com/SocialGouv/jardinmental/compare/v1.52.3...v1.52.4) (2025-09-02)
+
+
+### Bug Fixes
+
+* typo "créé avec" ([0412211](https://github.com/SocialGouv/jardinmental/commit/0412211ceca418fb0e039055f39b3ed6236ae1df))
+
 ## [1.52.3](https://github.com/SocialGouv/jardinmental/compare/v1.52.2...v1.52.3) (2025-09-02)
 
 
