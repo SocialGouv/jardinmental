@@ -10,6 +10,7 @@ import LifeEvent from "@assets/svg/icon/LifeEvent";
 import Zap from "@assets/svg/icon/Zap";
 import PuzzlePiece from "@assets/svg/icon/PuzzlePiece";
 import Substance from "@assets/svg/icon/Substance";
+import Other from "@assets/svg/icon/Other";
 
 import { Difficulty } from "../types";
 import { NEW_INDICATORS_CATEGORIES, NEW_INDICATORS_SUBCATEGORIES } from "@/utils/liste_indicateurs.1";
@@ -233,7 +234,7 @@ export const INDICATOR_CATEGORIES_DATA: Record<NEW_INDICATORS_CATEGORIES, Diffic
     label: "Autre",
     labelWithSecondPersonPrefix: "à votre concentration ou vos facultés mentales",
     selected: false,
-    icon: PuzzlePiece,
+    icon: Other,
     category: NEW_INDICATORS_CATEGORIES.COGNITIVE,
     description: "Mémorisation, attention, projection...",
     matomoId: 13,
@@ -283,7 +284,7 @@ export const SECTION_ICONS: Record<
     icon: PuzzlePiece,
   },
   [NEW_INDICATORS_CATEGORIES.OTHER]: {
-    icon: PuzzlePiece,
+    icon: Other,
   },
   GOAL: {
     icon: Target,
