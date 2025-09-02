@@ -57,7 +57,9 @@ export const DrugsBottomSheet = ({ onClose }: { onClose: (treatment?: Drug[]) =>
           <Text className={mergeClassNames(typography.textLgBold, "text-xl mb-4 text-cnam-primary-950")}>Prenez-vous un traitement ?</Text>
           <TouchableOpacity
             onPress={() => {
-              showBottomSheet(<HelpView title={HELP_POSOLOGY["title"]} description={HELP_POSOLOGY["description"]} link={"médicaments.gouv.fr"} />);
+              showBottomSheet(
+                <HelpView title={HELP_POSOLOGY["title"]} description={HELP_POSOLOGY["description"]} link={"https://medicaments.gouv.fr"} />
+              );
             }}
             className="flex-row items-center"
           >

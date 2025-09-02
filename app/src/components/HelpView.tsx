@@ -1,7 +1,8 @@
+import logEvents from "@/services/logEvents";
 import { mergeClassNames } from "@/utils/className";
 import { TW_COLORS } from "@/utils/constants";
 import { typography } from "@/utils/typography";
-import { View, Text } from "react-native";
+import { View, Text, Touchable, TouchableOpacity, Linking } from "react-native";
 
 interface Props {
   title: string;
@@ -15,9 +16,16 @@ const HelpView = ({ title, description, link }: Props) => {
       <Text className={mergeClassNames(typography.textXlBold, "mb-4 text-cnam-primary-950")}>{title}</Text>
       <Text className={mergeClassNames(typography.textLgRegular, "text-cnam-primary-950")}>{description}</Text>
       {link && (
-        <Text className="text-base text-center mb-4 leading-6" style={{ color: TW_COLORS.TEXT_SECONDARY }}>
-          {link}
-        </Text>
+        <TouchableOpacity
+          onPress={() => {
+            logEvents.logInfoClick(link);
+            Linking.openURL(link);
+          }}
+        >
+          <Text className="text-base text-center mb-4 leading-6" style={{ color: TW_COLORS.TEXT_SECONDARY }}>
+            {link}
+          </Text>
+        </TouchableOpacity>
       )}
     </View>
   );
