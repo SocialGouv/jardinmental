@@ -51,6 +51,7 @@ const IndicatorsSettingsMore = ({ navigation, route }) => {
       }}
       title="Mon questionnaire"
       navigation={navigation}
+      smallHeader={true}
       headerRightComponent={null}
       headerRightAction={() => {}}
       bottomComponent={

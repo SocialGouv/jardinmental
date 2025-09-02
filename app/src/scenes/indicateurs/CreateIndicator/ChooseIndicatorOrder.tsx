@@ -68,6 +68,7 @@ const ChooseIndicatorOrder = ({
       handlePrevious={() => {
         navigation.goBack();
       }}
+      smallHeader={true}
       bottomComponent={
         <View className="mx-4">
           <JMButton

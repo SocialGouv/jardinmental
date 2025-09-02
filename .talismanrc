@@ -46,7 +46,7 @@ fileignoreconfig:
 - filename: app/src/scenes/indicateurs/CategorieElements.tsx
   checksum: 3bc6daaf4f2215540d8394876235dd71bae771b4980de83b6154643437db7f74
 - filename: app/src/scenes/indicateurs/CreateIndicator/ChooseIndicatorType.tsx
-  checksum: 13ed5791d9f46dc9f7d302134dd4330366aeed1f3f542cdabf41749ff12d869f
+  checksum: 6cd22ff27fb0b7dd1ed9c164c5c985621c31190d46b9f8c2756ed18e3baa7797
 - filename: app/src/scenes/indicateurs/CreateIndicator/index.js
   checksum: 3000d4c2cf781995b7b00499ececb6d7adf075b5aa40014382e0313c8af83e9f
 - filename: app/src/scenes/indicateurs/CreateIndicator/index.tsx
@@ -134,7 +134,7 @@ fileignoreconfig:
 - filename: app/src/scenes/survey/QuestionYesNo.js
   checksum: 5f60226dc61678da5e266fe1c3317ca498389cf407639a79ba11a4f8c4e1083c
 - filename: app/src/scenes/survey/daySurvey.tsx
-  checksum: d8691b20eb4452132cfc2e8a598ebdaa775f60867d7547059b8bb223a6de720a
+  checksum: 861deb5818cd6e28c1ec4e8ce9bdd29aba7aafa57055b5f66f2cf47c3dfe65c2
 - filename: app/src/scenes/survey/survey-data.js
   checksum: 1ac3021625ed8fb4ed188c80035b12789aa03989dc7276893900ed96dc2a2509
 - filename: app/src/services/NPS/NPSManager.js

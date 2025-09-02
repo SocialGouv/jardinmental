@@ -75,6 +75,7 @@ const CustomSymptomScreen = ({ navigation, route, settings = false }) => {
         navigation.goBack();
       }}
       title="Mon suivi"
+      smallHeader={true}
       navigation={navigation}
       headerRightComponent={null}
       headerRightAction={() => {}}

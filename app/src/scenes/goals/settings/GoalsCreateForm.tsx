@@ -25,6 +25,7 @@ export const GoalsCreateForm = ({ navigation }) => {
       handlePrevious={() => {
         navigation.goBack();
       }}
+      smallHeader={true}
       bottomComponent={
         <NavigationButtons absolute={true}>
           <JMButton title="Valider" className="my-2" onPress={onValidate} disabled={!(goalName?.length > 0)} loading={loading} />

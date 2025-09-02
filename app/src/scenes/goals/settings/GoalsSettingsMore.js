@@ -78,6 +78,7 @@ export const GoalsSettingsMore = ({ navigation, route }) => {
       handlePrevious={() => {
         navigation.goBack();
       }}
+      smallHeader={true}
       bottomComponent={
         <NavigationButtons absolute={true}>
           <JMButton title="Ajouter un objectif" onPress={() => navigation.navigate("goals-add-options")} />

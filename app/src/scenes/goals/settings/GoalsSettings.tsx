@@ -45,6 +45,7 @@ export const GoalsSettings = ({ navigation, route }) => {
       handlePrevious={() => {
         navigation.goBack();
       }}
+      smallHeader={true}
       bottomComponent={
         <NavigationButtons absolute={true}>
           <>

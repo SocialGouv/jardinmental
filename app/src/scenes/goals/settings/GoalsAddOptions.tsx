@@ -86,6 +86,7 @@ export const GoalsAddOptions = ({ navigation }) => {
       handlePrevious={() => {
         navigation.goBack();
       }}
+      smallHeader={true}
       bottomComponent={
         <NavigationButtons absolute={true}>
           <JMButton disabled={!isChanged} title="Valider" onPress={() => onValidate()} className="mt-2" />

@@ -111,6 +111,7 @@ export default function CheckListScreen({ navigation, route }) {
   return (
     <AnimatedHeaderScrollScreen
       title={"Bien démarrer"}
+      smallHeader={true}
       scrollViewBackground={TW_COLORS.GRAY_50}
       handlePrevious={() => {
         navigation.goBack();

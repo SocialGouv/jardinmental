@@ -122,6 +122,7 @@ const EditIndicateurs = ({ navigation, route }) => {
       navigation={navigation}
       headerRightComponent={null}
       headerRightAction={() => {}}
+      smallHeader={true}
       scrollViewBackground="#F7FCFD"
       bottomComponent={
         <NavigationButtons absolute={true}>
