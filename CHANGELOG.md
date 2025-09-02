@@ -1,3 +1,15 @@
+# [1.53.0](https://github.com/SocialGouv/jardinmental/compare/v1.52.5...v1.53.0) (2025-09-02)
+
+
+### Bug Fixes
+
+* remove indicator from list when deleted ([#402](https://github.com/SocialGouv/jardinmental/issues/402)) ([f3bfedf](https://github.com/SocialGouv/jardinmental/commit/f3bfedfd7c06a1e58c1102ba5c1b1116841360db))
+
+
+### Features
+
+* add nps manager to prevent duplicate nps notification ([#399](https://github.com/SocialGouv/jardinmental/issues/399)) ([ca2808f](https://github.com/SocialGouv/jardinmental/commit/ca2808f32e867bd12364d3c2e20d4cb68afeb0b8))
+
 ## [1.52.5](https://github.com/SocialGouv/jardinmental/compare/v1.52.4...v1.52.5) (2025-09-02)
 
 
