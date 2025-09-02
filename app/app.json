@@ -4,7 +4,7 @@
     "slug": "monsuivipsy",
     "version": "1.43.3",
     "orientation": "default",
-    "icon": "./assets/imgs/playstore-icon.png",
+    "icon": "./assets/imgs/icon.png",
     "scheme": "monsuivipsy",
     "ios": {
       "supportsTablet": true,
