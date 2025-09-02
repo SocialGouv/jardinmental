@@ -223,7 +223,7 @@ export const GENERIC_INDICATOR_SUBSTANCE: PredefineIndicatorV2SchemaType = {
   isGeneric: true,
   priority: 2,
   order: "DESC",
-  type: INDICATOR_TYPE.boolean,
+  type: INDICATOR_TYPE.gauge,
   category: INDICATORS_CATEGORIES["Comportements"],
   new: true,
   uuid: "ac7c85b6-e015-4b46-bd14-13e01f7d7a85",
