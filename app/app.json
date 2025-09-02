@@ -17,10 +17,6 @@
     "android": {
       "googleServicesFile": "./google-services.json",
       "versionCode": 241,
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/imgs/logo2.png",
-        "backgroundColor": "#ffffff"
-      },
       "package": "com.monsuivipsy",
       "permissions": [
         "NOTIFICATIONS",
