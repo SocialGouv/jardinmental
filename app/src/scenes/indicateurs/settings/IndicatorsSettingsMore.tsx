@@ -71,7 +71,7 @@ const IndicatorsSettingsMore = ({ navigation, route }) => {
           </Text>
         </View>
       </View>
-      <View className="flex-column flex-1 px-4">{indicators.map(renderItem)}</View>
+      <View className="flex-column flex-1 px-4">{indicators.filter((indicator) => indicator.active).map(renderItem)}</View>
     </AnimatedHeaderScrollScreen>
   );
 };
