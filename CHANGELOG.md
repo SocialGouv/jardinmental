@@ -1,3 +1,10 @@
+## [1.52.5](https://github.com/SocialGouv/jardinmental/compare/v1.52.4...v1.52.5) (2025-09-02)
+
+
+### Bug Fixes
+
+* l'humeur du moment était rabaissée d'un cran dans l'onboarding ([#400](https://github.com/SocialGouv/jardinmental/issues/400)) ([6dc3995](https://github.com/SocialGouv/jardinmental/commit/6dc39957cba806361c946be74f28a6b0ffe97f1e))
+
 ## [1.52.4](https://github.com/SocialGouv/jardinmental/compare/v1.52.3...v1.52.4) (2025-09-02)
 
 
