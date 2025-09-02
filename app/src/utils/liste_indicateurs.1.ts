@@ -318,7 +318,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     matomoId: 7,
   },
   {
-    name: "Anxiolytiques / hypnotiques",
+    name: "Consommation d'anxiolytiques / hypnotiques",
     priority: 2,
     categories: [NEW_INDICATORS_CATEGORIES.SLEEP, NEW_INDICATORS_CATEGORIES.SUBSTANCE],
     subcategories: [NEW_INDICATORS_SUBCATEGORIES.BAD_SLEEP_HABITS],
@@ -331,7 +331,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     matomoId: 8,
   },
   {
-    name: "Cannabis",
+    name: "Consommation de cannabis",
     priority: 1,
     categories: [NEW_INDICATORS_CATEGORIES.SLEEP, NEW_INDICATORS_CATEGORIES.SUBSTANCE],
     subcategories: [NEW_INDICATORS_SUBCATEGORIES.BAD_SLEEP_HABITS],
