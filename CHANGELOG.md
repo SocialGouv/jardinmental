@@ -1,3 +1,10 @@
+## [1.52.3](https://github.com/SocialGouv/jardinmental/compare/v1.52.2...v1.52.3) (2025-09-02)
+
+
+### Bug Fixes
+
+* remove duplicated indicator and add a missing indicator ([#396](https://github.com/SocialGouv/jardinmental/issues/396)) ([7cac4a9](https://github.com/SocialGouv/jardinmental/commit/7cac4a96c7492ff0d7ef89812a5dbb67cf2a9830))
+
 ## [1.52.2](https://github.com/SocialGouv/jardinmental/compare/v1.52.1...v1.52.2) (2025-09-02)
 
 
