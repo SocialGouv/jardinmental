@@ -312,7 +312,7 @@ const DaySurvey = ({
             <View>
               <View className="my-2">
                 <Text className={mergeClassNames(typography.textSmMedium, "text-gray-700 text-center")}>
-                  {answeredElementCount} élément{answeredElementCount ? "s" : ""} observé{answeredElementCount ? "s" : ""}.
+                  {answeredElementCount} élément{answeredElementCount > 1 ? "s" : ""} observé{answeredElementCount > 1 ? "s" : ""}.
                 </Text>
                 <Text className={mergeClassNames(typography.textSmMedium, "text-gray-700 text-center")}>
                   Vous pourrez compléter votre observation plus tard
