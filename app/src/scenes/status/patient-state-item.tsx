@@ -35,7 +35,7 @@ const PatientStateItem = ({ patientStateRecord, category, label }: { patientStat
         />
       );
     }
-    if (patientStateRecord?._indicateur?.type === "boolean") {
+    if (patientStateRecord?._indicateur?.type === "boolean" || patientStateRecord?.value === true || patientStateRecord?.value === false) {
       const _color = {
         ASC: {
           false: { text: "text-red-border", bg: "border-red-border bg-red-bg" },
