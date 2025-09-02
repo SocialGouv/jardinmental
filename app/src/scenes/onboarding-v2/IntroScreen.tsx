@@ -90,7 +90,7 @@ export const IntroScreen: React.FC<Props> = ({ navigation }) => {
         </View>
         <View className="px-10 mt-12">
           <Text className={mergeClassNames(typography.textSmSemibold, "text-center")} style={{ color: TW_COLORS.SECONDARY }}>
-            Créer avec des professionels et{"\n"}soutenu par la CNAM
+            Créé avec des professionels et{"\n"}soutenu par la CNAM
           </Text>
         </View>
       </View>
