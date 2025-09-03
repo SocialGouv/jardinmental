@@ -12,6 +12,16 @@ export const SelectInput = ({ items, value, onValueChange, placeholder, containe
 
   const [visibleValue, setVisibleValue] = useState(value);
 
+  // For iOS, we need to handle placeholder differently to prevent it from being selectable
+  const placeholderConfig =
+    Platform.OS === "ios"
+      ? placeholder && !value
+        ? { label: placeholder, value: "", color: "#9CA3AF" }
+        : {}
+      : placeholder
+      ? { label: placeholder, value: null }
+      : {};
+
   return (
     <View style={[styles.container, containerStyle]}>
       <RNPickerSelect
@@ -20,13 +30,14 @@ export const SelectInput = ({ items, value, onValueChange, placeholder, containe
         items={items || []}
         value={value}
         onValueChange={(_value) => {
-          if (_value) {
+          // Prevent selection of placeholder on iOS (empty string) and null values
+          if (_value && _value !== null && _value !== "") {
             setVisibleValue(_value);
             onValueChange?.(_value);
             if (value !== _value) autoLayoutAnimation();
           }
         }}
-        placeholder={placeholder && { label: placeholder, value: null }}
+        placeholder={placeholderConfig}
         style={pickerStyles}
         pickerProps={{
           ref: innerPickerRef,

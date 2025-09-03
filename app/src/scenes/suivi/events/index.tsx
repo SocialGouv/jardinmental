@@ -14,6 +14,7 @@ import Button from "../../../components/Button";
 import Card from "./Card";
 import { EventFilterHeader } from "./EventFilterHeader";
 import JMButton from "@/components/JMButton";
+import Legend from "../Legend";
 
 const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, toDate, setToDate }) => {
   const [diaryData] = React.useContext(DiaryDataContext);

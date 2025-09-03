@@ -11,6 +11,7 @@ import { TouchableOpacity } from "@gorhom/bottom-sheet";
 import JMButton from "@/components/JMButton";
 import { Drug } from "@/entities/Drug";
 import Potion from "@assets/svg/icon/Potion";
+import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 
 const screenHeight = Dimensions.get("window").height;
 const height90vh = screenHeight * 0.9;
@@ -61,9 +62,10 @@ export default function DrugDoseBottomSheet({
 
   return (
     <View className="flex-1 bg-white">
-      <ScrollView
+      <KeyboardAwareScrollView
         contentContainerStyle={{ paddingBottom: 200, paddingHorizontal: 0 }}
         showsVerticalScrollIndicator={false}
+        automaticallyAdjustKeyboardInsets={true}
         style={{ paddingVertical: 20, height: height90vh, paddingHorizontal: 0 }}
       >
         <View className="self-end mr-4">
@@ -144,7 +146,7 @@ export default function DrugDoseBottomSheet({
             )}
           </View>
         </View>
-      </ScrollView>
+      </KeyboardAwareScrollView>
       <View
         style={{
           position: "absolute",

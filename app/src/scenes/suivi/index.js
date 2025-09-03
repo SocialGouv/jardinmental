@@ -15,6 +15,7 @@ import localStorage from "../../utils/localStorage";
 import FloatingPlusButton from "../../components/FloatingPlusButton";
 import { FriseScreen } from "./frise";
 import { colors } from "@/utils/colors";
+import Legend from "./Legend";
 
 const Suivi = ({ navigation, startSurvey }) => {
   const [chartType, setChartType] = React.useState("Frises");
@@ -104,6 +105,7 @@ const Suivi = ({ navigation, startSurvey }) => {
               onChangeToDate={setToDate}
               withPreset={true}
             />
+            <Legend />
           </View>
         )}
         {renderChart(chartType)}
