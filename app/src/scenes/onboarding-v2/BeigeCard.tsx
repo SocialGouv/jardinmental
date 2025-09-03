@@ -9,7 +9,7 @@ export default function BeigeCard({ children, style, color = "#FCEBD9" }: { chil
         style={{
           borderColor: color, // the pastel color of our chart didn't work with nativewind
         }}
-        className={mergeClassNames("bg-white p-8 px-6 w-full border")}
+        className={mergeClassNames("bg-white p-8 px-6 w-full border rounded-xl")}
       >
         {children}
       </View>
