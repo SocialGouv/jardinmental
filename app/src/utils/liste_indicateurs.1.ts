@@ -874,7 +874,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     matomoId: 55,
   },
   {
-    name: "Consommation de Tabac",
+    name: "Consommation de tabac",
     categories: [NEW_INDICATORS_CATEGORIES.SUBSTANCE],
     subcategories: [NEW_INDICATORS_SUBCATEGORIES.SUBSTANCE_USE],
     category: INDICATORS_CATEGORIES["Comportements"],
