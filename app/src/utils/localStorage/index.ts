@@ -15,6 +15,8 @@ import {
   STORAGE_KEY_CHECKLIST_BANNER_DISMISSED,
   STORAGE_KEY_CHECKLIST_BANNER_STATE,
   CHECKLIST_BANNER_CONFIG,
+  STORAGE_KEY_NEW_USER,
+  STORAGE_INFO_MODAL_DISMISSED,
 } from "../constants";
 import { updateSymptomsFormatIfNeeded } from "./utils";
 import localStorageBeck from "./beck";
@@ -244,6 +246,29 @@ const incrementChecklistBannerDismissCount = async (): Promise<ChecklistBannerSt
   return newState;
 };
 
+
+const getIsNewUser = async () => {
+  const isNewUser = await AsyncStorage.getItem(STORAGE_KEY_NEW_USER);
+  if (isNewUser) {
+    return JSON.parse(isNewUser);
+  }
+};
+
+const setIsNewUser = async (value) => {
+  await AsyncStorage.setItem(STORAGE_KEY_NEW_USER, JSON.stringify(value));
+};
+
+const getIsInfoModalDismissed = async () => {
+  const isInfoModalDismissed = await AsyncStorage.getItem(STORAGE_INFO_MODAL_DISMISSED);
+  if (isInfoModalDismissed) {
+    return JSON.parse(isInfoModalDismissed);
+  }
+};
+
+const setIsInfoModalDismissed = async (value) => {
+  await AsyncStorage.setItem(STORAGE_INFO_MODAL_DISMISSED, JSON.stringify(value));
+};
+
 export default {
   getSymptoms,
   setSymptoms,
@@ -279,6 +304,10 @@ export default {
   getChecklistBannerState,
   setChecklistBannerState,
   incrementChecklistBannerDismissCount,
+  getIsNewUser,
+  setIsNewUser,
+  setIsInfoModalDismissed,
+  getIsInfoModalDismissed,
   ...localStorageBeck,
 };
 

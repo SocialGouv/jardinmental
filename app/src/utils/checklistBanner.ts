@@ -48,7 +48,13 @@ export const calculateDelayMs = (dismissCount: number): number => {
  */
 export const shouldShowChecklistBanner = async (): Promise<boolean> => {
   try {
-    // First check if checklist is completed
+    // First check if user is a new user
+    const isNewUser = await localStorage.getIsNewUser();
+    if (!isNewUser) {
+      return false;
+    }
+
+    // Check if checklist is completed
     const isCompleted = await isChecklistCompleted();
     if (isCompleted) {
       return false;

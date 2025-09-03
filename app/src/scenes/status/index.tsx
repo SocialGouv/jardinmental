@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { StyleSheet, View, SafeAreaView, Dimensions, Animated, Text } from "react-native";
+import { StyleSheet, View, SafeAreaView, Dimensions, Animated, Text, TouchableOpacity } from "react-native";
 
 import { useFocusEffect } from "@react-navigation/native";
 import Header from "../../components/Header";
@@ -13,7 +13,7 @@ import BannerProNPS from "./bannerProNPS";
 import TabPicker from "./TabPicker";
 import RecapCompletion from "./recapCompletion";
 import NoData from "./NoData";
-import Diary from "../../scenes/diary";
+import Diary from "../diary";
 import ContributeCard from "../contribute/contributeCard";
 import FloatingPlusButton from "../../components/FloatingPlusButton";
 import { DiaryList } from "./DiaryList";
@@ -25,6 +25,8 @@ import { typography } from "@/utils/typography";
 import { mergeClassNames } from "@/utils/className";
 import JMButton from "@/components/JMButton";
 import { shouldShowChecklistBanner, handlePlusTardClick as handleBannerDismiss } from "../../utils/checklistBanner";
+import { set } from "date-fns";
+import { TW_COLORS } from "@/utils/constants";
 const LIMIT_PER_PAGE = __DEV__ ? 3 : 30;
 
 const Status = ({ navigation, startSurvey }) => {
@@ -32,8 +34,10 @@ const Status = ({ navigation, startSurvey }) => {
   const [NPSvisible, setNPSvisible] = useState(false);
   const [bannerProNPSVisible, setBannerProNPSVisible] = useState(true);
   const [ongletActif, setOngletActif] = useState("all");
-  const [checklistBannerVisible, setChecklistBannerVisible] = useState(null); // null = loading, boolean = determined
+  const [checklistBannerVisible, setChecklistBannerVisible] = useState<boolean | null>(null); // null = loading, boolean = determined
+  const [infoModalVisible, setInfoModalVisible] = useState<boolean | null>(null); // null = loading, boolean = determined
   const checklistBannerOpacity = React.useRef(new Animated.Value(0)).current;
+  const infoModalOpacity = React.useRef(new Animated.Value(0)).current;
   const scrollRef = React.useRef();
   const { showLatestChangesModal } = useLatestChangesModal();
 
@@ -98,6 +102,7 @@ const Status = ({ navigation, startSurvey }) => {
         return;
       } else {
         const isFirstAppLaunch = await localStorage.getIsFirstAppLaunch();
+        await localStorage.setIsNewUser(true);
         if (isFirstAppLaunch !== "false") {
           const onboardingStep = await localStorage.getOnboardingStep();
           let state;
@@ -134,7 +139,10 @@ const Status = ({ navigation, startSurvey }) => {
         const shouldShow = await shouldShowChecklistBanner();
         setChecklistBannerVisible(shouldShow);
         checklistBannerOpacity.setValue(shouldShow ? 1 : 0);
-
+        const userIsNew = await localStorage.getIsNewUser();
+        const newModalDismissed = await localStorage.getIsInfoModalDismissed();
+        console.log("show user modal", userIsNew, newModalDismissed, shouldShow);
+        setInfoModalVisible(!userIsNew && !newModalDismissed && !shouldShow);
         showLatestChangesModal();
       })();
     }, [])
@@ -157,6 +165,19 @@ const Status = ({ navigation, startSurvey }) => {
     await handleBannerDismiss();
   };
 
+  const handleDismissInfoModal = async () => {
+    // Animate the banner to fade out smoothly
+    Animated.timing(infoModalOpacity, {
+      toValue: 0,
+      duration: 300,
+      useNativeDriver: true,
+    }).start(() => {
+      localStorage.setIsInfoModalDismissed(true);
+      // After animation completes, hide the banner
+      setInfoModalVisible(false);
+    });
+  };
+
   const renderScrollContent = (onglet) => {
     if (onglet === "all") {
       // display only LIMIT_PER_PAGE days
@@ -168,6 +189,8 @@ const Status = ({ navigation, startSurvey }) => {
     }
     return null;
   };
+
+  const displayInfoModal = true;
 
   const renderHeader = useCallback(() => {
     return (
@@ -193,6 +216,30 @@ const Status = ({ navigation, startSurvey }) => {
                 }}
                 width="adapt"
                 title="C'est parti"
+              />
+            </View>
+          </Animated.View>
+        )}
+        {infoModalVisible && (
+          <Animated.View
+            style={{
+              opacity: 1, //checklistBannerOpacity
+            }}
+            className="p-8 bg-cnam-cyan-lighten-80 mb-4 rounded-xl"
+          >
+            <TouchableOpacity onPress={handleDismissInfoModal} style={{ position: "absolute", top: 0, right: 5, padding: 10 }}>
+              <Text style={{ fontSize: 22, color: TW_COLORS.CNAM_PRIMARY_900, fontWeight: 700 }}>×</Text>
+            </TouchableOpacity>
+            <Text className={mergeClassNames(typography.displayXsBold, "text-left text-cnam-primary-900 mb-6")}>
+              Jardin Mental fait peau neuve, mais rien ne change pour vous !
+            </Text>
+            <View className="flex-row mt-2">
+              <JMButton
+                onPress={() => {
+                  navigation.navigate("news");
+                }}
+                width="full"
+                title="Voir le détail"
               />
             </View>
           </Animated.View>
