@@ -1,3 +1,10 @@
+## [1.54.2](https://github.com/SocialGouv/jardinmental/compare/v1.54.1...v1.54.2) (2025-09-03)
+
+
+### Bug Fixes
+
+* pass genericIndicator to IndicatorModal ([#414](https://github.com/SocialGouv/jardinmental/issues/414)) ([5833ea3](https://github.com/SocialGouv/jardinmental/commit/5833ea3f641d69b150aa1d6311b70bd9f44b164e))
+
 ## [1.54.1](https://github.com/SocialGouv/jardinmental/compare/v1.54.0...v1.54.1) (2025-09-02)
 
 
