@@ -306,9 +306,7 @@ export const IndicatorScreen: React.FC<IndicatorScreenProps> = ({
           scrollEventThrottle={16}
         >
           <View className="flex-1 justify-center items-center px-6 py-6">
-            <InstructionText>
-              Prenons un instant pour observer vos ressentis liés {INDICATOR_CATEGORIES_DATA[category].labelWithSecondPersonPrefix}
-            </InstructionText>
+            <InstructionText>{INDICATOR_CATEGORIES_DATA[category].labelIndicatorScreen}</InstructionText>
             {indicators.map((indicator: Indicator, index) => (
               <IndicatorSurveyItem
                 key={indicator.uuid}

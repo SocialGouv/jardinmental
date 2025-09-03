@@ -30,6 +30,7 @@ export interface Difficulty {
   label: string;
   selected: boolean;
   indicatorText?: string;
+  labelIndicatorScreen: string;
   icon: ({ color }: { color: string }) => React.JSX.Element;
   description?: string;
   category: NEW_INDICATORS_CATEGORIES;
