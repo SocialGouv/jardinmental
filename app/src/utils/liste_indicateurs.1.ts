@@ -201,7 +201,7 @@ export const INDICATEURS_HUMEUR: PredefineIndicatorV2SchemaType = {
   order: INDICATOR_ORDER.ASC,
   type: INDICATOR_TYPE.smiley,
   priority: 0,
-  matomoId: 42,
+  matomoId: 0,
 };
 
 export const INDICATEURS_SOMMEIL: PredefineIndicatorV2SchemaType = {
