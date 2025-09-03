@@ -51,7 +51,7 @@ const SurveySuccessScreen: React.FC<SurveySuccessScreenProps> = ({ navigation, r
         </View>
         <View className="pb-4 w-full">
           <Text className={mergeClassNames(typography.textMdRegular, "text-center text-cnam-primary-900 text-left")}>
-            Revenez chaque jour pour observer votre état et suivre ces éléments."
+            Revenez chaque jour pour observer votre état et suivre ces éléments.
           </Text>
         </View>
       </BeigeCard>
