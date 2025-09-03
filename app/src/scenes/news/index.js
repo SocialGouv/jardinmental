@@ -29,6 +29,38 @@ export default ({ navigation }) => {
         <Image style={styles.image} source={require("../../../assets/imgs/logo2.png")} />
       </View>
       <ScrollView style={styles.cgu} contentContainerStyle={styles.scrollContainer}>
+        <Card title="Jardin Mental fait peau neuve" version="v1.43.3" date="09/2025">
+          <Item>
+            <Text style={styles.bold}>Une nouvelle identité visuelle</Text>
+            <Text style={styles.text}>
+              Jardin Mental adopte la charte graphique officielle de l’Assurance Maladie. Le logo change, mais l’application reste gratuite, anonyme
+              et respectueuse de votre vie privée.
+            </Text>
+          </Item>
+          <Item>
+            <Text style={styles.bold}>Reprise par la CNAM</Text>
+            <Text style={styles.text}>
+              L’application fait désormais partie des services portés par la <Text style={styles.bold}>Caisse nationale de l’Assurance Maladie</Text>.
+              {"\n"}
+              Cela garantit sa continuité, son développement public et sa validation par des professionnels de santé.{"\n"}
+              <Text style={styles.bold}>Aucun changement sur vos données</Text> : elles restent stockées localement, sans compte ni transmission.
+            </Text>
+          </Item>
+          <Item>
+            <Text style={styles.bold}>Un parcours d'accueil plus accessible</Text>
+            <Text style={styles.text}>
+              L'inscription et le démarrage ont été repensés pour mieux convenir aux personnes <Text style={styles.bold}>sans suivi médical</Text>,
+              avec un accompagnement adapté dès les premiers pas.
+            </Text>
+          </Item>
+          <Item>
+            <Text style={styles.bold}>Un suivi plus clair, plus riche</Text>
+            <Text style={styles.text}>
+              •&nbsp;<Text style={styles.bold}>Indicateurs mieux classés par catégories</Text>
+              {"\n"}•&nbsp;<Text style={styles.bold}>Nouveaux indicateurs disponibles</Text> pour suivre ce qui compte vraiment pour vous
+            </Text>
+          </Item>
+        </Card>
         <Card title="Export PDF de votre historique" version="v1.43" date="06/2025">
           <Item>
             <Text style={styles.bold}>Gardez une trace claire de votre suivi</Text>
