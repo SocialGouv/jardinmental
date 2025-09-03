@@ -161,8 +161,12 @@ const DrugsSurvey = ({ navigation, route }) => {
     };
     addNewEntryToDiaryData(currentSurvey);
     logEvents.logInputDrugSurvey(posology?.filter((e) => e?.value)?.length);
-    alertNoDataYesterday({ date: survey?.date, diaryData, navigation });
-    navigation.navigate("tabs");
+    navigation.navigate("survey-success", {
+      onComplete: () => {
+        navigation.navigate("tabs");
+        alertNoDataYesterday({ date: survey?.date, diaryData, navigation });
+      },
+    });
   };
 
   const onTreatmentUpdate = async () => {
