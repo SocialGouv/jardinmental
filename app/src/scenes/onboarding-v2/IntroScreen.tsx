@@ -97,18 +97,17 @@ export const IntroScreen: React.FC<Props> = ({ navigation }) => {
 
       <View className="px-6 pt-12">
         <View className="flex-row items-center">
-          <CheckBox
-            animationDuration={0.2}
-            tintColor={TW_COLORS.PRIMARY}
-            tintColors={{ true: TW_COLORS.PRIMARY, false: "grey" }}
-            boxType="square"
-            style={{
-              marginRight: 12,
-              transform: Platform.OS === "android" ? [{ scaleX: 1.2 }, { scaleY: 1.2 }] : [],
-            }}
-            value={isCguChecked}
-            onValueChange={(newValue) => setIsCguChecked(newValue)}
-          />
+          <TouchableOpacity onPress={(newValue) => setIsCguChecked(!isCguChecked)}>
+            {isCguChecked ? (
+              <View className="mr-3 w-6 h-6 rounded-md items-center justify-center bg-cnam-primary-800">
+                <Text className="text-white text-base font-bold">✓</Text>
+              </View>
+            ) : (
+              <View className="mr-3 w-6 h-6 rounded-md items-center justify-center border-2 border-gray-300">
+                <Text className="text-white text-xs" />
+              </View>
+            )}
+          </TouchableOpacity>
           <View className="flex-1">
             <Text className={mergeClassNames(typography.textMdRegular, "text-left")} style={{ color: TW_COLORS.PRIMARY }}>
               En cochant cette case, vous acceptez les{" "}
