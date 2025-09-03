@@ -1,6 +1,6 @@
-import { useContext, useState } from "react";
+import { useCallback, useContext, useState } from "react";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { RouteProp } from "@react-navigation/native";
+import { RouteProp, useFocusEffect } from "@react-navigation/native";
 import { ContextScreen } from "./ContextScreen";
 import { GoalsScreen } from "./GoalsScreen";
 import { IndicatorScreen } from "./IndicatorScreen";
@@ -11,6 +11,7 @@ import { SurveyStackParamList, SurveyScreenInterface } from "@/entities/SurveySc
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import NotificationService from "@/services/notifications";
 import logEvents from "@/services/logEvents";
+import { INDICATOR_CATEGORIES_DATA } from "../onboarding-v2/data/helperData";
 
 interface SurveyScreenWrapperProps {
   navigation: StackNavigationProp<SurveyStackParamList>;
@@ -28,6 +29,18 @@ const SurveyScreenWrapper: React.FC<SurveyScreenWrapperProps> = ({ navigation, r
   const { screenData, screenIndex, isOnboarding } = route.params;
   const currentStep = screenIndex + 1;
   const totalSteps = screens.length;
+
+  useFocusEffect(
+    useCallback(() => {
+      if (screenData.type === "category" && screenData.category) {
+        let final = "No";
+        if (screenIndex === screens.length - 2) {
+          final = "Yes";
+        }
+        logEvents.logQuestObdStep(INDICATOR_CATEGORIES_DATA[screenData.category].matomoId, final);
+      }
+    }, [screenData, screenIndex, screens.length])
+  );
 
   const handleNext = async () => {
     if (screenIndex < screens.length - 1) {
