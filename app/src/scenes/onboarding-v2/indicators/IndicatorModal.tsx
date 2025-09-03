@@ -85,6 +85,7 @@ export default function IndicatorModal({
       categories: [category],
       mainCategory: category,
       priority: 0,
+      matomoId: -1, // no matomo id for custom indicators
     };
   };
 
