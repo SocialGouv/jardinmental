@@ -46,6 +46,7 @@ const Diary = ({ navigation, hideDeader = false }) => {
       if (onboardingIsDone) return;
       else {
         const isFirstAppLaunch = await localStorage.getIsFirstAppLaunch();
+        await localStorage.setIsNewUser(true);
         if (isFirstAppLaunch !== "false") {
           const onboardingStep = await localStorage.getOnboardingStep();
           let state;

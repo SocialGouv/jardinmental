@@ -15,6 +15,7 @@ import {
   STORAGE_KEY_CHECKLIST_BANNER_DISMISSED,
   STORAGE_KEY_CHECKLIST_BANNER_STATE,
   CHECKLIST_BANNER_CONFIG,
+  STORAGE_KEY_NEW_USER,
 } from "../constants";
 import { updateSymptomsFormatIfNeeded } from "./utils";
 import localStorageBeck from "./beck";
@@ -244,6 +245,18 @@ const incrementChecklistBannerDismissCount = async (): Promise<ChecklistBannerSt
   return newState;
 };
 
+
+const getIsNewUser = async () => {
+  const isNewUser = await AsyncStorage.getItem(STORAGE_KEY_NEW_USER);
+  if (isNewUser) {
+    return JSON.parse(isNewUser);
+  }
+};
+
+const setIsNewUser = async (value) => {
+  await AsyncStorage.setItem(STORAGE_KEY_NEW_USER, JSON.stringify(value));
+};
+
 export default {
   getSymptoms,
   setSymptoms,
@@ -279,6 +292,8 @@ export default {
   getChecklistBannerState,
   setChecklistBannerState,
   incrementChecklistBannerDismissCount,
+  getIsNewUser,
+  setIsNewUser,
   ...localStorageBeck,
 };
 

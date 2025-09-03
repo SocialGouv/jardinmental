@@ -144,11 +144,11 @@ fileignoreconfig:
 - filename: app/src/services/notifications.js
   checksum: 00046388d0509346e97a4d365477dd2b85f4eaefb4f67f4d7351bc198db4b725
 - filename: app/src/utils/constants.ts
-  checksum: d29684ebe5ee90a995bb09732890fd0016a076e810a0be1e8f5c218a296d56bd
+  checksum: 2be819d0e404f8ec0769bd65d7112aee70467b58dec99905ffef46d7b69fa25a
 - filename: app/src/utils/indicatorUtils.ts
   checksum: 4642f6d8aded23d81c41e2655051fd6ecb06175b337bf9ba6c03437a26277ac0
 - filename: app/src/utils/localStorage/index.ts
-  checksum: 2992b41a470e997cb013ccd01c90abddea5dd5025f77d7ac8776d910810060ad
+  checksum: 4bdbae61c17ac5503134773799695ce35e571d53ed038a0fa5520f5d05a0df8e
 scopeconfig:
 - scope: node
 version: "1.0"

@@ -98,6 +98,7 @@ const Status = ({ navigation, startSurvey }) => {
         return;
       } else {
         const isFirstAppLaunch = await localStorage.getIsFirstAppLaunch();
+        await localStorage.setIsNewUser(true);
         if (isFirstAppLaunch !== "false") {
           const onboardingStep = await localStorage.getOnboardingStep();
           let state;
