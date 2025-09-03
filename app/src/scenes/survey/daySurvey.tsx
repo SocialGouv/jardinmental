@@ -227,12 +227,16 @@ const DaySurvey = ({
     logEvents.logFeelingResponseToxic(answers[questionToxic.id]?.value ? 1 : 0);
 
     if (route.params?.redirect) {
-      alertNoDataYesterday({
-        date: prevCurrentSurvey?.date,
-        diaryData,
-        navigation,
+      return navigation.navigate("survey-success", {
+        onComplete: () => {
+          navigation.navigate("tabs");
+          alertNoDataYesterday({
+            date: prevCurrentSurvey?.date,
+            diaryData,
+            navigation,
+          });
+        },
       });
-      return navigation.navigate("tabs");
     }
 
     if (redirectBack) {
@@ -242,12 +246,17 @@ const DaySurvey = ({
 
     if (treatment && treatment?.length === 0) {
       // treatment is filled with an empty array = user a set "no treatment"
-      alertNoDataYesterday({
-        date: prevCurrentSurvey?.date,
-        diaryData,
-        navigation,
+
+      return navigation.navigate("survey-success", {
+        onComplete: () => {
+          navigation.navigate("tabs");
+          alertNoDataYesterday({
+            date: prevCurrentSurvey?.date,
+            diaryData,
+            navigation,
+          });
+        },
       });
-      return navigation.navigate("tabs");
     } else if (treatment?.length) {
       // user has a treatment
       navigation.navigate("drugs-survey", { treatment, currentSurvey });
@@ -260,7 +269,16 @@ const DaySurvey = ({
             if (treatment?.length) {
               navigation.navigate("drugs-survey", { treatment, currentSurvey });
             } else {
-              navigation.navigate("tabs");
+              navigation.navigate("survey-success", {
+                onComplete: () => {
+                  navigation.navigate("tabs");
+                  alertNoDataYesterday({
+                    date: prevCurrentSurvey?.date,
+                    diaryData,
+                    navigation,
+                  });
+                },
+              });
             }
           }}
         />
