@@ -169,9 +169,6 @@ class Router extends React.Component<RouterProps> {
         }
       });
 
-      // Note: Push notification registration is now handled when user configures reminders
-      // This prevents automatic permission requests at app launch
-
       this.cleanupNotifications = () => {
         notificationListener.remove();
         responseListener.remove();
