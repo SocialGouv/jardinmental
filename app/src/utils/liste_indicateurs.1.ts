@@ -324,7 +324,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     subcategories: [NEW_INDICATORS_SUBCATEGORIES.BAD_SLEEP_HABITS],
     category: INDICATORS_CATEGORIES.Comportements,
     order: "DESC",
-    type: INDICATOR_TYPE.boolean,
+    type: INDICATOR_TYPE.gauge,
     new: true,
     uuid: "bf9014c2-8e47-4c5f-9a2a-41e48c46496a",
     mainCategory: NEW_INDICATORS_CATEGORIES.SLEEP,
