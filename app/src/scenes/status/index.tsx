@@ -239,7 +239,7 @@ const Status = ({ navigation, startSurvey }) => {
                   navigation.navigate("news");
                 }}
                 width="full"
-                title="Voir le détail"
+                title="En savoir plus"
               />
             </View>
           </Animated.View>
