@@ -21,6 +21,7 @@ export const DifficultiesScreen: React.FC<Props> = ({ navigation }) => {
   const { updateUserDifficulties, profile } = useUserProfile();
   const [selectedDifficulties, setSelectedDifficulties] = useState<Difficulty[]>(
     Object.values(INDICATOR_CATEGORIES_DATA)
+      .filter((d) => d.category !== NEW_INDICATORS_CATEGORIES.OTHER)
       .map((d) => ({
         ...d,
         selected: !!profile?.selectedDifficulties.includes(d.category),
