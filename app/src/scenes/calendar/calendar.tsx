@@ -17,6 +17,7 @@ import { colors } from "../../utils/colors";
 const screenHeight = Dimensions.get("window").height;
 import { INDICATEURS } from "../../utils/liste_indicateurs.1";
 import { getIndicatorKey } from "../../utils/indicatorUtils";
+import Legend from "../suivi/Legend";
 
 const Calendar = ({ navigation }) => {
   const [day, setDay] = useState(new Date());
@@ -144,6 +145,7 @@ const Calendar = ({ navigation }) => {
           onBeforePress={() => setDay(beforeToday(7, day))}
           setDay={setDay}
         />
+        <Legend />
       </View>
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContainer}>
         {!calendarIsEmpty ? (

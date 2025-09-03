@@ -107,6 +107,8 @@ fileignoreconfig:
   checksum: 6883b8993f12c6742b18decf374b5fcc5b3be90cfab3cf93e9065b28728cc9cd
 - filename: app/src/scenes/status/status-item.tsx
   checksum: aed0c055aab8b0d6a72d304ec44a2837e0387a89ecf0ffa512cff704d9da9057
+- filename: app/src/scenes/suivi/Legend.tsx
+  checksum: f8a7e01f9f45cc810e714c899adf19c20304a8bfd8d1d76610287b3ca9d75cf9
 - filename: app/src/scenes/suivi/frise/FriseGraphList.js
   checksum: 476a8522fdd4e53da1a36fe0c46f18294e6e97930f4040b7a126552800e238bc
 - filename: app/src/scenes/survey-v2/AnimatedHeaderScrollScreen.tsx

@@ -21,6 +21,7 @@ import JMButton from "@/components/JMButton";
 import { TW_COLORS } from "../../utils/constants";
 import { Indicator } from "@/entities/Indicator";
 import { getIndicatorKey } from "@/utils/indicatorUtils";
+import Legend from "./Legend";
 
 const ChartPie = ({ navigation, fromDate, toDate }) => {
   const [diaryData] = React.useContext(DiaryDataContext);

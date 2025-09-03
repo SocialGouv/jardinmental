@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { View } from "react-native";
+import { View, Text } from "react-native";
 import RangeDate from "../RangeDate";
 import FriseGraphList from "./FriseGraphList";
 import { FriseInfoButton } from "./FriseInfoButton";
@@ -7,6 +7,7 @@ import { Button2 } from "../../../components/Button2";
 import { FriseFilterBar } from "./FriseFilterBar";
 import { styles as commonStyles } from "..";
 import { autoLayoutAnimation } from "../../../utils/autoLayoutAnimation";
+import ColorLegendRow from "../Legend";
 
 export const FriseScreen = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, toDate, setToDate, hasTreatment }) => {
   const [focusedScores, setFocusedScores] = React.useState([]);
@@ -63,6 +64,7 @@ export const FriseScreen = ({ navigation, presetDate, setPresetDate, fromDate, s
             onFocusedScoresChanged={setFocusedScores}
           />
         )}
+        <ColorLegendRow className={"mt-8"} />
       </View>
       <FriseGraphList
         navigation={navigation}

@@ -9,6 +9,7 @@ import RangeDate from "../RangeDate";
 import { SelectInput } from "../../../components/SelectInput";
 import { EventInfoButton } from "./EventInfoButton";
 import { answers } from "../../survey-v2/utils";
+import Legend from "../Legend";
 
 export const EventFilterHeader = ({
   presetDate,
@@ -87,6 +88,7 @@ export const EventFilterHeader = ({
           <Text style={[styles.text, { marginRight: 8 }]}>sur la période des</Text>
         </RangeDate>
       </View>
+      <Legend />
     </View>
   );
 };

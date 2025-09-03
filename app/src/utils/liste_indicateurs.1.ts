@@ -1016,7 +1016,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     name: "Qualité des interactions sociales",
     categories: [NEW_INDICATORS_CATEGORIES.SOCIAL_RELATIONS],
     priority: 0,
-    order: "DESC",
+    order: "ASC",
     type: INDICATOR_TYPE.gauge,
     category: INDICATORS_CATEGORIES["Comportements"],
     new: true,
