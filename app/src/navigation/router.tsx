@@ -62,8 +62,6 @@ import CreateIndicator from "../scenes/indicateurs/CreateIndicator";
 import ChooseIndicatorType from "../scenes/indicateurs/CreateIndicator/ChooseIndicatorType";
 import ChooseIndicatorOrder from "../scenes/indicateurs/CreateIndicator/ChooseIndicatorOrder";
 import * as Notifications from "expo-notifications";
-import { registerForPushNotificationsAsync } from "../services/notifications-expo";
-import * as Device from "expo-device";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import uuid from "react-native-uuid";
 import DevMode from "../scenes/dev-mode";
@@ -169,11 +167,6 @@ class Router extends React.Component<RouterProps> {
         if (data?.link) {
           this.navigationRef?.navigate(data.link);
         }
-      });
-
-      // Register for push notifications using device ID
-      await registerForPushNotificationsAsync({
-        userId: deviceId,
       });
 
       this.cleanupNotifications = () => {
