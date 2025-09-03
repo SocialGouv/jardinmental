@@ -208,7 +208,6 @@ const Reminder = ({
           Programmer un rappel quotidien peut vous aider à installer une routine bienveillante.
         </Text>
         <Text className={mergeClassNames(typography.textMdMedium, "text-gray-800 text-left mb-6")}>
-          {" "}
           Consigner chaque jour votre état permet de découvrir progressivement ce qui vous fait du bien, et ce qui vous freine.
         </Text>
         <TouchableOpacity
