@@ -496,7 +496,7 @@ const CategoryCard = ({
                   <IndicatorModal
                     userIndicators={[]}
                     category={categoryName}
-                    genericIndicator={BASE_INDICATORS_FOR_CUSTOM_CATEGORIES[categoryName][0]}
+                    genericIndicator={BASE_INDICATORS_FOR_CUSTOM_CATEGORIES[categoryName]?.[0]}
                     addedIndicators={indicators}
                     initialSelectedIndicators={Object.values(selectedIndicators).flat()}
                     onClose={(categoryName: NEW_INDICATORS_CATEGORIES, indicators: PredefineIndicatorV2SchemaType[]) => {
