@@ -32,7 +32,6 @@ export default function BannerHeader({
   titleMarginStyle,
   onBannerLayout,
   inAbsoluteView,
-  backgroundColor,
   small,
 }: {
   animatedStatusBarColor?: Animated.AnimateStyle<ViewStyle>;
@@ -90,19 +89,16 @@ export default function BannerHeader({
           <CheckInHeader
             title={headerTitle || ""}
             dynamicTitle={dynamicTitle}
-            withMargin={false}
             onPrevious={handlePrevious}
             leftAction={leftAction}
             leftComponent={leftComponent}
             rightComponent={rightComponent}
             rightAction={rightAction}
             onSkip={handleSkip}
-            showPrevious={true}
             animatedTextColor={animatedTextColor}
             showSkip={true}
             headerTitleStyle={headerTitleStyle}
             dynamicTitleStyle={dynamicTitleStyle}
-            backgroundColor={backgroundColor}
           />
         )}
         <Animated.View
