@@ -1,22 +1,17 @@
 import React from "react";
 import { View, StyleSheet, Modal, TouchableOpacity } from "react-native";
 import SettingItem from "./setting-item";
-import { wipeData } from "@/context/diaryData";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import Bell from "@assets/svg/icon/Bell";
 import Goal from "@assets/svg/icon/Goal";
 import Health from "@assets/svg/icon/Health";
 import Analytics from "@assets/svg/icon/Analytics";
 import Download from "@assets/svg/icon/Download";
-import Trash from "@assets/svg/icon/Trash";
 import { useBottomSheet } from "@/context/BottomSheetContext";
 import { DrugsBottomSheet } from "@/components/DrugsBottomSheet";
 import localStorage from "@/utils/localStorage";
-import { useUserProfile } from "@/context/userProfile";
 
 const SettingsModal = ({ navigation, visible, onClick }) => {
   const { showBottomSheet, closeBottomSheet } = useBottomSheet();
-  const { clearProfile, loadProfile } = useUserProfile();
   return (
     <Modal animationType="slide" visible={visible} transparent={true}>
       <TouchableOpacity activeOpacity={1} style={styles.container} onPressOut={onClick}>
@@ -45,21 +40,6 @@ const SettingsModal = ({ navigation, visible, onClick }) => {
             icon={<Health />}
           />
           <SettingItem title="Générer un récapitulatif de mes données" path="export" navigation={navigation} onClick={onClick} icon={<Download />} />
-          {/* <SettingItem
-            title="Supprimer toutes mes données"
-            navigation={navigation}
-            onClick={async () => {
-              await wipeData();
-              await AsyncStorage.clear();
-              await clearProfile();
-              await loadProfile();
-              navigation.reset({
-                index: 0,
-                routes: [{ name: "onboarding" }],
-              });
-            }}
-            icon={<Trash />}
-          /> */}
         </View>
       </TouchableOpacity>
     </Modal>

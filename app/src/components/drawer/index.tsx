@@ -20,6 +20,7 @@ import MessageTextCircle from "@assets/svg/icon/MessageTextCircle";
 import Lock from "@assets/svg/icon/Lock";
 import LightBulb from "@assets/svg/icon/LightBulb";
 import NPS from "../../services/NPS/NPS";
+import Gear from "@assets/svg/Gear";
 
 export default ({ navigation, visible, onClick }) => {
   const [isVisible, setIsVisible] = useState();
@@ -51,7 +52,7 @@ export default ({ navigation, visible, onClick }) => {
     setDevModeCount(newCount);
     if (newCount % 5 === 0) {
       await AsyncStorage.setItem("devMode", "true");
-      setIsDevMode("true");
+      setIsDevMode(true);
       Alert.alert("Dev Mode", "Dev mode activated!");
     }
   };
@@ -114,7 +115,7 @@ export default ({ navigation, visible, onClick }) => {
                   }, 300);
                 }}
               />
-              {isDevMode && <DrawerItem title="Dev Mode" path="dev-mode" navigation={navigation} onClick={onClick} icon="GearSvg" />}
+              {isDevMode && <DrawerItem title="Dev Mode" path="dev-mode" navigation={navigation} onClick={onClick} icon={<Gear />} />}
               <Separator />
               <LegalItem title="Conditions générales d'utilisation" path="cgu" navigation={navigation} onClick={onClick} />
               <LegalItem title="Politique de confidentialité" path="privacy" navigation={navigation} onClick={onClick} />
