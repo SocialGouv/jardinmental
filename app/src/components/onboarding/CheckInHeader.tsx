@@ -92,7 +92,10 @@ export const CheckInHeader: React.FC<CheckInHeaderProps> = ({
         {dynamicTitle && (
           <Animated.Text
             numberOfLines={2}
-            className="text-base text-center"
+            // Dans le cas un peu particulier où le texte dynamique est long et qu'il y a un bouton "passer"
+            // il faut laisser des marges sur le côté pour ne pas repasser le bouton.
+            // On en le fait pas tout le temps car c'est un peu moins centré dans ce cas.
+            className={`text-base text-center ${dynamicTitle.length > 28 && showSkip && onSkip ? "pl-12 pr-14" : ""}`}
             style={[{ color: TW_COLORS.WHITE, position: "absolute" }, animatedTextColor, dynamicTitleStyle]}
           >
             {dynamicTitle}
