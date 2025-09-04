@@ -18,17 +18,31 @@ import { BottomSheetProvider } from "@/context/BottomSheetContext";
 import { UserProfileProvider } from "./src/context/userProfile";
 import NPS from "./src/services/NPS/NPS";
 import NPSManager from "./src/services/NPS/NPSManager";
-// import { Sentry } from "react-native-sentry";
 import { NeedUpdateContextProvider } from "./src/context/needUpdate";
 import { InfoModalProvider } from "./src/components/InfoModal";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { OnboardingProgressHeaderProvider } from "./src/scenes/onboarding/ProgressHeader";
 import { LatestChangesModalProvider } from "./src/scenes/news/latestChangesModal";
 import { KeyboardProvider } from "react-native-keyboard-controller";
+import * as Sentry from "@sentry/react-native";
 
-// if (!__DEV__) {
-//   Sentry.config("https://9f0bd8f8af8444eea9f470d00a1bb411@sentry.fabrique.social.gouv.fr/54").install();
-// }
+// Initialize Sentry
+if (!__DEV__ && process.env.EXPO_PUBLIC_SENTRY_DSN) {
+  Sentry.init({
+    dsn: process.env.EXPO_PUBLIC_SENTRY_DSN,
+    debug: false,
+    environment: process.env.APP_ENV || "production",
+    enableAutoSessionTracking: true,
+    sessionTrackingIntervalMillis: 10000,
+    beforeSend(event) {
+      // Filter out events in development
+      if (__DEV__) {
+        return null;
+      }
+      return event;
+    },
+  });
+}
 
 SplashScreen.preventAutoHideAsync();
 
@@ -106,4 +120,5 @@ const App = () => {
   );
 };
 
-export default App;
+// Wrap the App component with Sentry's error boundary
+export default Sentry.wrap(App);

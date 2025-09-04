@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, ScrollView, TouchableOpacity, Platform } from "react-native";
+import { View, StyleSheet, ScrollView, TouchableOpacity, Platform, Alert } from "react-native";
 import Text from "../../components/MyText";
 import { colors } from "../../utils/colors";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -9,6 +9,7 @@ import { useUserProfile } from "@/context/userProfile";
 import { wipeData } from "@/context/diaryData";
 import JMButton from "@/components/JMButton";
 import { confirm } from "../../utils";
+import * as Sentry from "@sentry/react-native";
 
 const CollapsibleSection = ({ title, children }) => {
   const [isExpanded, setIsExpanded] = useState(true);
@@ -38,6 +39,33 @@ const DevMode = ({ navigation }) => {
     const id = await AsyncStorage.getItem("deviceId");
     setDeviceId(id);
   };
+
+  const sendSentryTest = () => {
+    try {
+      // Add context information
+      Sentry.setContext("dev_test", {
+        timestamp: new Date().toISOString(),
+        deviceId: deviceId,
+        appVersion: app.expo.version,
+        buildNumber: Platform.OS === "ios" ? app.expo.ios.buildNumber : app.expo.android.versionCode,
+        platform: Platform.OS,
+        testType: "dev_mode_manual_test",
+      });
+
+      // Send a test error
+      Sentry.captureException(new Error("Dev Mode Test Error - This is a test error sent from dev mode"));
+
+      // Also send a test message
+      Sentry.captureMessage("Dev Mode Test Message - Sentry integration test", "info");
+
+      Alert.alert("Test Sent", "Test error and message have been sent to Sentry. Check your Sentry dashboard to verify the integration is working.", [
+        { text: "OK" },
+      ]);
+    } catch (error) {
+      Alert.alert("Test Failed", `Failed to send test to Sentry: ${error.message}`, [{ text: "OK" }]);
+    }
+  };
+
   useEffect(() => {
     fetchDeviceId();
   }, []);
@@ -56,6 +84,11 @@ const DevMode = ({ navigation }) => {
 
       <CollapsibleSection title="Local Storage">
         <Text>Device ID: {deviceId}</Text>
+      </CollapsibleSection>
+
+      <CollapsibleSection title="Sentry Testing">
+        <Text style={styles.sectionDescription}>Test Sentry error reporting integration</Text>
+        <JMButton className="mt-2" title="Send Test to Sentry" variant="outline" onPress={sendSentryTest} />
       </CollapsibleSection>
 
       <JMButton
@@ -112,6 +145,12 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 10,
     color: colors.DARK_BLUE,
+  },
+  sectionDescription: {
+    fontSize: 14,
+    color: colors.DARK_BLUE,
+    marginBottom: 10,
+    opacity: 0.7,
   },
   button: {
     backgroundColor: colors.DARK_BLUE,
