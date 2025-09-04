@@ -92,7 +92,9 @@ export const CheckInHeader: React.FC<CheckInHeaderProps> = ({
         {dynamicTitle && (
           <Animated.Text
             numberOfLines={2}
-            className="text-base text-center"
+// Apply padding when text is long and skip button is present to prevent overlap
+            // Constants should be extracted and made responsive to actual button dimensions
+            className={`text-base text-center ${dynamicTitle.length > 28 && showSkip && onSkip ? "pl-12 pr-14" : ""}`}
             style={[{ color: TW_COLORS.WHITE, position: "absolute" }, animatedTextColor, dynamicTitleStyle]}
           >
             {dynamicTitle}
