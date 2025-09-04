@@ -21,7 +21,7 @@ export default ({ title, navigation, path = "tabs", icon, color = colors.LIGHT_B
                 borderColor: color,
               }}
             >
-              {badge ? <View style={styles.badge}>{/* <Text style={styles.badgeText}></Text> */}</View> : null}
+              {badge ? <View style={styles.badge} /> : null}
               {React.cloneElement(icon, {
                 color: color,
                 width: 16,
