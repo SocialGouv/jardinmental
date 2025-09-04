@@ -21,6 +21,7 @@ export default ({ title, navigation, path = "tabs", icon, color = colors.LIGHT_B
                 borderColor: color,
               }}
             >
+              {badge ? <View style={styles.badge}>{/* <Text style={styles.badgeText}></Text> */}</View> : null}
               {React.cloneElement(icon, {
                 color: color,
                 width: 16,
@@ -43,6 +44,18 @@ export default ({ title, navigation, path = "tabs", icon, color = colors.LIGHT_B
 };
 
 const styles = StyleSheet.create({
+  badge: {
+    position: "absolute",
+    top: 0,
+    right: -5,
+    backgroundColor: "#E46C76",
+    borderRadius: 16,
+    // paddingHorizontal: 6,
+    // paddingVertical: 2,
+    zIndex: 2,
+    width: 12,
+    height: 12,
+  },
   container: {
     padding: 10,
   },
