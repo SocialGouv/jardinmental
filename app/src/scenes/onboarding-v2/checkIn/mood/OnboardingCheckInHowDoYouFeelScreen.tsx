@@ -22,6 +22,7 @@ import { setStatusBarBackgroundColor } from "expo-status-bar";
 import ArrowIcon from "@assets/svg/icon/Arrow";
 
 const { width: screenWidth } = Dimensions.get("window");
+const THRESHOLD_MINIMAL_SCREEN_WIDTH = 370; // iPhone SE 2nd gen and similar
 
 type Props = OnboardingV2ScreenProps<"OnboardingCheckInHowDoYouFeel">;
 
@@ -279,10 +280,55 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
           <Animated.View style={animatedTextStyle} className="items-center">
             <Text className={mergeClassNames(typography.displayMdBold, "text-cnam-primary-900")}>{moodEmojis[selectedMoodIndex - 1]?.label}</Text>
           </Animated.View>
-          <Animated.View style={[animatedTextStyle]} className="items-center justify-between flex-row">
-            <ArrowIcon />
-            <ArrowIcon />
-          </Animated.View>
+          {screenWidth < THRESHOLD_MINIMAL_SCREEN_WIDTH && (
+            <Animated.View
+              style={[
+                animatedTextStyle,
+                {
+                  bottom: -95,
+                },
+              ]}
+              className="items-center justify-between flex-row"
+            >
+              <TouchableOpacity
+                onPress={() => {
+                  if (selectedMoodIndex && selectedMoodIndex > 1) {
+                    onSelectEmotion(selectedMoodIndex - 1);
+                  }
+                }}
+              >
+                <ArrowIcon
+                  width={30}
+                  height={30}
+                  style={{
+                    marginLeft: 20,
+                    opacity: selectedMoodIndex === 1 ? 0 : 1,
+                    transform: [
+                      {
+                        rotate: "180deg",
+                      },
+                    ],
+                  }}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  if (selectedMoodIndex && selectedMoodIndex < 5) {
+                    onSelectEmotion(selectedMoodIndex + 1);
+                  }
+                }}
+              >
+                <ArrowIcon
+                  width={30}
+                  height={30}
+                  style={{
+                    opacity: selectedMoodIndex === 5 ? 0 : 1,
+                    marginRight: 20,
+                  }}
+                />
+              </TouchableOpacity>
+            </Animated.View>
+          )}
         </>
       )}
       {}
