@@ -45,7 +45,7 @@ const SettingsModal = ({ navigation, visible, onClick }) => {
             icon={<Health />}
           />
           <SettingItem title="Générer un récapitulatif de mes données" path="export" navigation={navigation} onClick={onClick} icon={<Download />} />
-          <SettingItem
+          {/* <SettingItem
             title="Supprimer toutes mes données"
             navigation={navigation}
             onClick={async () => {
@@ -59,7 +59,7 @@ const SettingsModal = ({ navigation, visible, onClick }) => {
               });
             }}
             icon={<Trash />}
-          />
+          /> */}
         </View>
       </TouchableOpacity>
     </Modal>
