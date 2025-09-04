@@ -16,7 +16,7 @@
     },
     "android": {
       "googleServicesFile": "./google-services.json",
-      "versionCode": 253,
+      "versionCode": 255,
       "adaptiveIcon": {
         "foregroundImage": "./assets/imgs/icon.png",
         "backgroundColor": "#ffffff"

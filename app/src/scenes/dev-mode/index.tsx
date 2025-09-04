@@ -5,6 +5,10 @@ import { colors } from "../../utils/colors";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { HOST, HMAC_SECRET } from "../../config";
 import app from "../../../app.json";
+import { useUserProfile } from "@/context/userProfile";
+import { wipeData } from "@/context/diaryData";
+import JMButton from "@/components/JMButton";
+import { confirm } from "../../utils";
 
 const CollapsibleSection = ({ title, children }) => {
   const [isExpanded, setIsExpanded] = useState(true);
@@ -21,12 +25,14 @@ const CollapsibleSection = ({ title, children }) => {
 };
 
 const DevMode = ({ navigation }) => {
+  const { clearProfile, loadProfile } = useUserProfile();
+
   const disableDevMode = async () => {
     await AsyncStorage.setItem("devMode", "false");
     navigation.navigate("tabs");
   };
 
-  const [deviceId, setDeviceId] = useState(null);
+  const [deviceId, setDeviceId] = useState<string | null>(null);
 
   const fetchDeviceId = async () => {
     const id = await AsyncStorage.getItem("deviceId");
@@ -52,6 +58,33 @@ const DevMode = ({ navigation }) => {
         <Text>Device ID: {deviceId}</Text>
       </CollapsibleSection>
 
+      <JMButton
+        className="mb-4"
+        title="Supprimer toutes mes données"
+        variant="outline"
+        onPress={() => {
+          confirm({
+            title: "Supprimer toutes les données",
+            message:
+              "Cette action supprimera définitivement toutes vos données et vous ramènera à l'écran d'accueil. Cette action est irréversible.\n\nÊtes-vous sûr de vouloir continuer ?",
+            confirmText: "Confirmer",
+            cancelText: "Annuler",
+            onConfirm: async () => {
+              await wipeData();
+              await AsyncStorage.clear();
+              await clearProfile();
+              await loadProfile();
+              navigation.reset({
+                index: 0,
+                routes: [{ name: "onboarding" }],
+              });
+            },
+            onCancel: () => {
+              // No action needed, dialog will close automatically
+            },
+          });
+        }}
+      ></JMButton>
       <TouchableOpacity style={styles.button} onPress={disableDevMode}>
         <Text style={styles.buttonText}>Disable Dev Mode</Text>
       </TouchableOpacity>
