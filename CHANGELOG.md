@@ -1,3 +1,10 @@
+## [1.55.1](https://github.com/SocialGouv/jardinmental/compare/v1.55.0...v1.55.1) (2025-09-04)
+
+
+### Bug Fixes
+
+* text margin when CheckInHeader dynamicTitle is too long ([#427](https://github.com/SocialGouv/jardinmental/issues/427)) ([9db47f3](https://github.com/SocialGouv/jardinmental/commit/9db47f37af9d901aba4f178465f92696c8ddcbfb))
+
 # [1.55.0](https://github.com/SocialGouv/jardinmental/compare/v1.54.6...v1.55.0) (2025-09-04)
 
 
