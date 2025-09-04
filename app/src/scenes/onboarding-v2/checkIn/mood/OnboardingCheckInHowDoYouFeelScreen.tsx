@@ -19,6 +19,7 @@ import { useStatusBar } from "@/context/StatusBarContext";
 import { useFocusEffect } from "@react-navigation/native";
 import logEvents from "@/services/logEvents";
 import { setStatusBarBackgroundColor } from "expo-status-bar";
+import ArrowIcon from "@assets/svg/icon/Arrow";
 
 const { width: screenWidth } = Dimensions.get("window");
 
@@ -274,10 +275,17 @@ export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
         />
       </Animated.View>
       {selectedMoodIndex !== null && (
-        <Animated.View style={animatedTextStyle} className="items-center">
-          <Text className={mergeClassNames(typography.displayMdBold, "text-cnam-primary-900")}>{moodEmojis[selectedMoodIndex - 1]?.label}</Text>
-        </Animated.View>
+        <>
+          <Animated.View style={animatedTextStyle} className="items-center">
+            <Text className={mergeClassNames(typography.displayMdBold, "text-cnam-primary-900")}>{moodEmojis[selectedMoodIndex - 1]?.label}</Text>
+          </Animated.View>
+          <Animated.View style={[animatedTextStyle]} className="items-center justify-between flex-row">
+            <ArrowIcon />
+            <ArrowIcon />
+          </Animated.View>
+        </>
       )}
+      {}
     </View>
   );
 
