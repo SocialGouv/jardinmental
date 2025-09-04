@@ -1,3 +1,10 @@
+## [1.54.6](https://github.com/SocialGouv/jardinmental/compare/v1.54.5...v1.54.6) (2025-09-04)
+
+
+### Bug Fixes
+
+* add badge on burger menu ([#425](https://github.com/SocialGouv/jardinmental/issues/425)) ([43e7e78](https://github.com/SocialGouv/jardinmental/commit/43e7e78342296199596c01a8f9291ddd4acb93ee))
+
 ## [1.54.5](https://github.com/SocialGouv/jardinmental/compare/v1.54.4...v1.54.5) (2025-09-04)
 
 
