@@ -18,7 +18,7 @@ const { width: screenWidth } = Dimensions.get("window");
 
 const NextRoute = "OnboardingCheckInStart";
 
-export const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
+const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
   const { profile, isLoading } = useUserProfile();
   const [slides, setSlides] = useState<CarouselSlide[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);

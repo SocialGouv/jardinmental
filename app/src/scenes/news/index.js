@@ -14,7 +14,7 @@ export const getBadgeNotesVersion = async () => {
   return lastNotesVersion !== LAST_NOTES_VERSION;
 };
 
-export const LAST_NOTES_VERSION = "1.42.3";
+const LAST_NOTES_VERSION = "1.42.3";
 
 export default ({ navigation }) => {
   useEffect(() => {

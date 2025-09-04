@@ -16,7 +16,7 @@ import { GoalsFriseGraph } from "../../goals/suivi/GoalsFriseGraph";
 import JMButton from "@/components/JMButton";
 import { getIndicatorKey } from "../../../utils/indicatorUtils";
 
-export const FriseGraphList = ({ navigation, fromDate, toDate, focusedScores, showTraitement }) => {
+const FriseGraphList = ({ navigation, fromDate, toDate, focusedScores, showTraitement }) => {
   const [diaryData] = React.useContext(DiaryDataContext);
   const [userIndicateurs, setUserIndicateurs] = React.useState([]);
   const [isEmpty, setIsEmpty] = React.useState();

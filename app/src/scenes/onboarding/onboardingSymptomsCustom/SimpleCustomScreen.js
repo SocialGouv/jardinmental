@@ -131,7 +131,7 @@ const CheckBoxList = ({ list, userIndicateurs, setToggleIndicateur }) => {
   );
 };
 
-export const stylesA = StyleSheet.create({
+const stylesA = StyleSheet.create({
   categorieContainer: {
     backgroundColor: "#F4FCFD",
     borderColor: "#D4F0F2",

@@ -1885,7 +1885,7 @@ export const INDICATEURS_LISTE_PAR_CATEGORIE = {
   ],
 };
 
-export const INDICATEURS_LISTE_ONBOARDING = [
+const INDICATEURS_LISTE_ONBOARDING = [
   "Humeur générale",
   "Anxiété",
   "Colère",
@@ -1912,7 +1912,7 @@ export const OLD_INDICATEURS_LISTE_ONBOARDING_SOMMEIL = [
   "Réveils nocturnes",
 ];
 
-export const INDICATEURS_LISTE_ONBOARDING_CUSTOM_SIMPLE_LIST = [
+const INDICATEURS_LISTE_ONBOARDING_CUSTOM_SIMPLE_LIST = [
   "Anxiété",
   "Confiance",
   "Colère",

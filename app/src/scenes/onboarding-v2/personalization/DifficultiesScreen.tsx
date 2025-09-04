@@ -17,7 +17,7 @@ type Props = OnboardingV2ScreenProps<"PersonalizationDifficulties">;
 
 const NextScreen = "SubCategoriesScreen";
 
-export const DifficultiesScreen: React.FC<Props> = ({ navigation }) => {
+const DifficultiesScreen: React.FC<Props> = ({ navigation }) => {
   const { updateUserDifficulties, profile } = useUserProfile();
   const [selectedDifficulties, setSelectedDifficulties] = useState<Difficulty[]>(
     Object.values(INDICATOR_CATEGORIES_DATA)

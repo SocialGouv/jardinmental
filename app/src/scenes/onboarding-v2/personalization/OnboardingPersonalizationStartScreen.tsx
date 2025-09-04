@@ -16,7 +16,7 @@ type Props = OnboardingV2ScreenProps<"Intro">;
 
 const NextScreen = "PersonalizationDifficulties";
 
-export const OnboardingPersonalizationStartScreen: React.FC<Props> = ({ navigation }) => {
+const OnboardingPersonalizationStartScreen: React.FC<Props> = ({ navigation }) => {
   const { setNextCallback, setSkipCallback } = useOnboardingProgressHeader();
   const { setCustomColor } = useStatusBar();
 

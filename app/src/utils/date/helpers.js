@@ -25,7 +25,7 @@ export const today = (offset = 0, withTime = false) => {
   }
   return dateWithoutTime(new Date(), offset);
 };
-export const dateWithoutTime = (inputDate, offset = 0) => {
+const dateWithoutTime = (inputDate, offset = 0) => {
   const date = makeSureDate(inputDate);
   return new Date(date.getFullYear(), date.getMonth(), date.getDate() + offset, 0, 0, 0);
 };
@@ -116,7 +116,7 @@ export const displayOnlyHourAndMinute = (timeString) => {
   return `${hours}:${minutes}`;
 };
 
-export const changeTimezone = (date, ianatz) => {
+const changeTimezone = (date, ianatz) => {
   // suppose the date is 12:00 UTC
   var invdate = new Date(
     date.toLocaleString("fr-FR", {

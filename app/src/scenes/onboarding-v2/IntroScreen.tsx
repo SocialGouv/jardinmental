@@ -14,7 +14,7 @@ import CheckBox from "@react-native-community/checkbox";
 
 type Props = OnboardingV2ScreenProps<"Intro">;
 
-export const IntroScreen: React.FC<Props> = ({ navigation }) => {
+const IntroScreen: React.FC<Props> = ({ navigation }) => {
   const [isCguChecked, setIsCguChecked] = useState(false);
 
   const handleNext = () => {

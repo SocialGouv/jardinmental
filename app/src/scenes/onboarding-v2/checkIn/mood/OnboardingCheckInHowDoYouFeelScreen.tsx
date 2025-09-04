@@ -28,7 +28,7 @@ const springConfig = { damping: 20, stiffness: 80 };
 
 const NextRoute = "OnboardingCheckInSleep";
 
-export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
+const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
   const [selectedMoodIndex, setSelectedMoodIndex] = useState<number | null>(null);
   const [hasSelectedOnce, setHasSelectedOnce] = useState<boolean>(false);
   const flatListRef = useRef<FlatList>(null);

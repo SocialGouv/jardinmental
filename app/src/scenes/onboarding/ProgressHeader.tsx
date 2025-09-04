@@ -15,8 +15,8 @@ import { set } from "date-fns";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 
-export const PROGRESS_HEADER_HEIGHT = 60;
-export const PROGRESS_HEADER_PADDING_HORIZONTAL = 0;
+const PROGRESS_HEADER_HEIGHT = 60;
+const PROGRESS_HEADER_PADDING_HORIZONTAL = 0;
 
 interface ProgressHeaderContextType {
   slideIndex: number;

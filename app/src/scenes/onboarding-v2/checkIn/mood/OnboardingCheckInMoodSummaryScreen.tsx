@@ -15,7 +15,7 @@ import { useFocusEffect } from "@react-navigation/native";
 
 type Props = OnboardingV2ScreenProps<"OnboardingCheckInMoodSummary">;
 
-export const OnboardingCheckInMoodSummaryScreen: React.FC<Props> = ({ navigation, route }) => {
+const OnboardingCheckInMoodSummaryScreen: React.FC<Props> = ({ navigation, route }) => {
   const { setCustomColor } = useStatusBar();
 
   useFocusEffect(
@@ -111,7 +111,7 @@ export const OnboardingCheckInMoodSummaryScreen: React.FC<Props> = ({ navigation
   );
 };
 
-export const Tag = ({ text, bgcolor }: { text: string; bgcolor: string }) => {
+const Tag = ({ text, bgcolor }: { text: string; bgcolor: string }) => {
   return (
     <View
       className="p-2 px-4 rounded-full"

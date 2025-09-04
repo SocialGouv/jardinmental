@@ -93,7 +93,7 @@ const getMoodOptions = (mood: number): string[] => {
   }
 };
 
-export const OnboardingCheckInLastMoods: React.FC<Props> = ({ navigation, route }) => {
+const OnboardingCheckInLastMoods: React.FC<Props> = ({ navigation, route }) => {
   const [selectedMoods, setSelectedMoods] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const moodOptions = React.useMemo(() => getMoodOptions(route.params?.mood), [route.params?.mood]);

@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 // Schema for days of the week mapping
-export const DaysOfWeekSchema = z
+const DaysOfWeekSchema = z
   .object({
     sunday: z.boolean().optional(),
     monday: z.boolean().optional(),
@@ -14,7 +14,7 @@ export const DaysOfWeekSchema = z
   .describe("Days of the week when the goal is active");
 
 // Schema for individual goal
-export const GoalSchema = z.object({
+const GoalSchema = z.object({
   id: z.string().describe("Unique identifier for the goal, usually derived from label"),
   label: z.string().min(1).describe("Display name for the goal"),
   enabled: z.boolean().default(true).describe("Whether the goal is currently active"),
@@ -24,7 +24,7 @@ export const GoalSchema = z.object({
 });
 
 // Schema for goal daily record
-export const GoalRecordSchema = z.object({
+const GoalRecordSchema = z.object({
   id: z.string().describe("Unique identifier for the record"),
   goalId: z.string().describe("Reference to the goal this record belongs to"),
   value: z.union([z.number(), z.boolean(), z.string()]).optional().describe("The recorded value for the goal"),
@@ -36,30 +36,30 @@ export const GoalRecordSchema = z.object({
 });
 
 // Schema for goals data structure (matching localStorage structure)
-export const GoalsDataSchema = z.object({
+const GoalsDataSchema = z.object({
   data: z.record(z.string(), GoalSchema).describe("Goals indexed by their ID"),
   byOrder: z.array(z.string()).describe("Array of goal IDs sorted by order"),
 });
 
 // Schema for records data structure
-export const GoalRecordsDataSchema = z.object({
+const GoalRecordsDataSchema = z.object({
   data: z.record(z.string(), GoalRecordSchema).describe("Records indexed by their ID"),
   byDate: z.record(z.string(), z.array(z.string())).describe("Record IDs grouped by date"),
   byGoalId: z.record(z.string(), z.array(z.string())).describe("Record IDs grouped by goal ID"),
 });
 
 // Complete goals storage schema
-export const GoalStorageSchema = z.object({
+const GoalStorageSchema = z.object({
   goals: GoalsDataSchema.optional(),
   records: GoalRecordsDataSchema.optional(),
 });
 
 // Array schemas for collections
-export const GoalsArraySchema = z.array(GoalSchema);
-export const GoalRecordsArraySchema = z.array(GoalRecordSchema);
+const GoalsArraySchema = z.array(GoalSchema);
+const GoalRecordsArraySchema = z.array(GoalRecordSchema);
 
 // Input schemas for API/form operations
-export const CreateGoalInputSchema = z.object({
+const CreateGoalInputSchema = z.object({
   id: z.string().optional(),
   label: z.string().min(1),
   enabled: z.boolean().optional().default(true),
@@ -68,11 +68,11 @@ export const CreateGoalInputSchema = z.object({
   reminder: z.date().nullable().optional(),
 });
 
-export const UpdateGoalInputSchema = CreateGoalInputSchema.partial().extend({
+const UpdateGoalInputSchema = CreateGoalInputSchema.partial().extend({
   id: z.string(),
 });
 
-export const CreateGoalRecordInputSchema = z.object({
+const CreateGoalRecordInputSchema = z.object({
   goalId: z.string(),
   value: z.union([z.number(), z.boolean(), z.string()]).optional(),
   comment: z.string().optional(),
@@ -80,7 +80,7 @@ export const CreateGoalRecordInputSchema = z.object({
 });
 
 // Goal with records combined schema
-export const GoalWithRecordsSchema = z.object({
+const GoalWithRecordsSchema = z.object({
   goal: GoalSchema,
   records: GoalRecordsArraySchema,
 });

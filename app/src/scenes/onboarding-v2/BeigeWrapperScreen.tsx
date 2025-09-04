@@ -18,7 +18,7 @@ type Props = {
   nextText?: string;
 };
 
-export const BeigeWrapperScreen: React.FC<Props> = ({ handlePrevious, handleSkip, handleNext, nextText, variant = "blue", children }: Props) => {
+const BeigeWrapperScreen: React.FC<Props> = ({ handlePrevious, handleSkip, handleNext, nextText, variant = "blue", children }: Props) => {
   // Get screen dimensions and calculate scale factor
   const { width: screenWidth } = Dimensions.get("window");
   const REFERENCE_WIDTH = 500; // iPhone 16 width where current dimensions work well

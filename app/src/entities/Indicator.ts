@@ -15,9 +15,9 @@ export enum INDICATOR_ORDER {
   "DESC" = "DESC",
 }
 
-export const IndicatorTypeSchema = z.nativeEnum(INDICATOR_TYPE);
-export const IndicatorOrderSchema = z.enum(["ASC", "DESC"]);
-export const IndicatorPredefinedDomaineSchema = z.nativeEnum(categories);
+const IndicatorTypeSchema = z.nativeEnum(INDICATOR_TYPE);
+const IndicatorOrderSchema = z.enum(["ASC", "DESC"]);
+const IndicatorPredefinedDomaineSchema = z.nativeEnum(categories);
 export type IndicatorPredefinedDomaine = z.infer<typeof IndicatorPredefinedDomaineSchema>;
 
 export const IndicatorSchema = z.object({
@@ -55,7 +55,7 @@ If, during refinement, the user selects one of the preexisting specific indicato
   matomoId: z.number().optional().describe("Matomo ID for tracking purposes"),
 });
 
-export const PredefineIndicatorSchema = z.object({
+const PredefineIndicatorSchema = z.object({
   uuid: z.string().uuid(), // Vérifie un UUID valide
   name: z.string().min(1), // Non vide
   category: z.nativeEnum(INDICATORS_CATEGORIES),
@@ -66,7 +66,7 @@ export const PredefineIndicatorSchema = z.object({
 
 export type LegacyPredefineIndicatorSchemaType = z.infer<typeof PredefineIndicatorSchema>;
 
-export const PredefineIndicatorV2Schema = z.object({
+const PredefineIndicatorV2Schema = z.object({
   uuid: PredefineIndicatorSchema.shape.uuid,
   genericUuid: z.string().uuid().optional().describe("Custom indicator created from a generic indicator will have a genericUuid defined"),
   name: PredefineIndicatorSchema.shape.name,
@@ -85,7 +85,7 @@ export const PredefineIndicatorV2Schema = z.object({
 
 export type PredefineIndicatorV2SchemaType = z.infer<typeof PredefineIndicatorV2Schema>;
 
-export const IndicatorsArraySchema = z.array(IndicatorSchema);
+const IndicatorsArraySchema = z.array(IndicatorSchema);
 
 export type Indicator = z.infer<typeof IndicatorSchema>;
 

@@ -9,7 +9,7 @@ interface ProgressIndicatorProps {
   showText?: boolean;
 }
 
-export const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({ currentStep, totalSteps = TOTAL_STEPS, showText = true }) => {
+const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({ currentStep, totalSteps = TOTAL_STEPS, showText = true }) => {
   const progress = (currentStep / (totalSteps + 1)) * 100;
 
   return (

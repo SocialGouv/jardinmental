@@ -8,7 +8,7 @@ export const getDrugListWithLocalStorage = async () => {
   return tempList;
 };
 
-export const DRUG_LIST = [
+const DRUG_LIST = [
   {
     id: "Elavil (Amytriptyline)",
     name1: "Elavil",
