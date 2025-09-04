@@ -40,7 +40,7 @@ fileignoreconfig:
 - filename: app/src/scenes/drugs/drugs.tsx
   checksum: aee06a5419616198ba07f25f4450a4d3dfd62e1f2a713faa6290a831ca68a804
 - filename: app/src/scenes/goals/settings/GoalDaySelector.tsx
-  checksum: 989214cbaa302dbd4811f936d5ef87fccc9645e49beb1cc96fb4b0d74bded646
+  checksum: 55253cc11482b1df0cb301f09c3dbc55e28b781316db88013cc3023586a47153
 - filename: app/src/scenes/goals/settings/GoalsSettings.tsx
   checksum: 7d5e05dcaa91ce95302c341c5a40917fb5c59b162e1045d64bc965de28d181b6
 - filename: app/src/scenes/indicateurs/CategorieElements.tsx

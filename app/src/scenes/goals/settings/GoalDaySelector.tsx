@@ -4,7 +4,7 @@ import { Button2 } from "../../../components/Button2";
 import { InputCheckbox } from "../../../components/InputCheckbox";
 import { InputLabel } from "../../../components/InputLabel";
 import { Screen } from "../../../components/Screen";
-import { DAYS_OF_WEEK } from "../../../utils/date/daysOfWeek";
+import { DAY_OF_THE_WEEK_EN_FR, DAYS_OF_WEEK } from "../../../utils/date/daysOfWeek";
 import { getGoalsData, setGoalTracked } from "../../../utils/localStorage/goals";
 import { setDay, format } from "date-fns";
 import { fr } from "date-fns/locale";
@@ -96,22 +96,19 @@ export const GoalDaySelector = ({ navigation, route }) => {
           Sélectionnez les jours de la semaine où vous souhaitez réaliser l'objectif "{!editing ? goalLabel : editingGoal?.label}"
         </Text>
         <View style={styles.daysContainer} className="w-full">
-          {DAYS_OF_WEEK.map((day, index) => ({ day, index }))
-            .sort((a, b) => (b.index === 0 ? -1 : 0))
-            .map(({ day, index }, idx) => {
-              const label = format(setDay(new Date(), index), "eeee", { locale: fr });
-              return (
-                <View className={mergeClassNames("w-full mb-2", idx === 0 ? "" : "border-t border-gray-300")} key={day}>
-                  <InputCheckbox
-                    label={`Chaque ${label?.toLowerCase?.()}`}
-                    checked={daysOfWeek?.[day]}
-                    onCheckedChanged={({ checked }) => {
-                      setDaysOfWeek({ ...daysOfWeek, [day]: checked });
-                    }}
-                  />
-                </View>
-              );
-            })}
+          {DAY_OF_THE_WEEK_EN_FR.map((day, index) => {
+            return (
+              <View className={mergeClassNames("w-full mb-2", index === 0 ? "" : "border-t border-gray-300")} key={day.en}>
+                <InputCheckbox
+                  label={`Chaque ${day.fr}`}
+                  checked={daysOfWeek?.[day.en]}
+                  onCheckedChanged={({ checked }) => {
+                    setDaysOfWeek({ ...daysOfWeek, [day.en]: checked });
+                  }}
+                />
+              </View>
+            );
+          })}
         </View>
       </View>
     </AnimatedHeaderScrollScreen>
