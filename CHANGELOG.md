@@ -1,3 +1,10 @@
+# [1.55.0](https://github.com/SocialGouv/jardinmental/compare/v1.54.6...v1.55.0) (2025-09-04)
+
+
+### Features
+
+* **dev-mode:** allow the user to delete their data completely ([#428](https://github.com/SocialGouv/jardinmental/issues/428)) ([58b3f1c](https://github.com/SocialGouv/jardinmental/commit/58b3f1ccfc9fda8c9ed23864e3101ec71739c7a8))
+
 ## [1.54.6](https://github.com/SocialGouv/jardinmental/compare/v1.54.5...v1.54.6) (2025-09-04)
 
 
