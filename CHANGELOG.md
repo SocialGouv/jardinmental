@@ -1,3 +1,10 @@
+## [1.55.2](https://github.com/SocialGouv/jardinmental/compare/v1.55.1...v1.55.2) (2025-09-04)
+
+
+### Bug Fixes
+
+* suppression du lien "modifier mes objectifs" ([#426](https://github.com/SocialGouv/jardinmental/issues/426)) ([8cefcd8](https://github.com/SocialGouv/jardinmental/commit/8cefcd8789e76893b234984644a1ac54d209eaa2))
+
 ## [1.55.1](https://github.com/SocialGouv/jardinmental/compare/v1.55.0...v1.55.1) (2025-09-04)
 
 
