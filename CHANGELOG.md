@@ -1,3 +1,10 @@
+## [1.54.5](https://github.com/SocialGouv/jardinmental/compare/v1.54.4...v1.54.5) (2025-09-04)
+
+
+### Bug Fixes
+
+* sélection du jour dans les objectifs ([#423](https://github.com/SocialGouv/jardinmental/issues/423)) ([5b83c14](https://github.com/SocialGouv/jardinmental/commit/5b83c145ca807628569cca8842516c33b94c14e7))
+
 ## [1.54.4](https://github.com/SocialGouv/jardinmental/compare/v1.54.3...v1.54.4) (2025-09-04)
 
 
