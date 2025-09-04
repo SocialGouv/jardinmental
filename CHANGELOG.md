@@ -1,3 +1,10 @@
+## [1.54.3](https://github.com/SocialGouv/jardinmental/compare/v1.54.2...v1.54.3) (2025-09-04)
+
+
+### Bug Fixes
+
+* targetSdkVersion 35 ([#421](https://github.com/SocialGouv/jardinmental/issues/421)) ([a9b7fef](https://github.com/SocialGouv/jardinmental/commit/a9b7fef6f79f63cccbef26d8a1f04b4c41d7beb9))
+
 ## [1.54.2](https://github.com/SocialGouv/jardinmental/compare/v1.54.1...v1.54.2) (2025-09-03)
 
 
