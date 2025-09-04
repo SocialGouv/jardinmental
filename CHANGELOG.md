@@ -1,3 +1,10 @@
+# [1.56.0](https://github.com/SocialGouv/jardinmental/compare/v1.55.2...v1.56.0) (2025-09-04)
+
+
+### Features
+
+* **sentry:** add sentry ([#431](https://github.com/SocialGouv/jardinmental/issues/431)) ([382ab25](https://github.com/SocialGouv/jardinmental/commit/382ab25ee28a5072c3257315a5800c42ce436687))
+
 ## [1.55.2](https://github.com/SocialGouv/jardinmental/compare/v1.55.1...v1.55.2) (2025-09-04)
 
 
