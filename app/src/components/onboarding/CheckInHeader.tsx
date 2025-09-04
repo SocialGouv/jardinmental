@@ -21,7 +21,7 @@ interface CheckInHeaderProps {
   dynamicTitleStyle?: Animated.AnimateStyle<ViewStyle>; // animated style for dynamic title
 }
 
-export const CheckInHeader: React.FC<CheckInHeaderProps> = ({
+const CheckInHeader: React.FC<CheckInHeaderProps> = ({
   title,
   onPrevious,
   onSkip,

@@ -2,9 +2,9 @@ import { v4 as uuidv4 } from "uuid";
 import { INDICATEURS } from "../liste_indicateurs.1";
 import { translateCategories } from "../constants";
 
-export const latestVersion = 2;
+const latestVersion = 2;
 
-export const versionsTransformation = {
+const versionsTransformation = {
   /*
   {
     ind1:true

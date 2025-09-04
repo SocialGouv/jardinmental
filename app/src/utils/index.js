@@ -46,7 +46,7 @@ export const deleteBeckfromDiaryData = ({ date, beckId, diaryData, setDiaryData 
   });
 };
 
-export const getScoreWithStatRecord = ({ patientStateRecord, category, intensity }) => {
+const getScoreWithStatRecord = ({ patientStateRecord, category, intensity }) => {
   if (
     patientStateRecord?.value !== undefined &&
     patientStateRecord?.value !== null &&

@@ -26,7 +26,7 @@ const moodLabels = [`J'ai très mal dormi`, `J'ai mal dormi`, "J’ai passé une
 
 const NextScreen = "CheckInSleepCompleted";
 
-export const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
+const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
   const [checkInData, setCheckInData] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
   const [diaryData, addNewEntryToDiaryData] = useContext(DiaryDataContext);

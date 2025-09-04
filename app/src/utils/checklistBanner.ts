@@ -7,7 +7,7 @@ import { CHECKLIST_BANNER_CONFIG } from "./constants";
 /**
  * Check if all checklist items are completed
  */
-export const isChecklistCompleted = async (): Promise<boolean> => {
+const isChecklistCompleted = async (): Promise<boolean> => {
   try {
     // Check reminder
     const reminder = await isReminderActive();
@@ -38,7 +38,7 @@ export const isChecklistCompleted = async (): Promise<boolean> => {
 /**
  * Calculate the delay in milliseconds for the given dismiss count
  */
-export const calculateDelayMs = (dismissCount: number): number => {
+const calculateDelayMs = (dismissCount: number): number => {
   const delayDays = CHECKLIST_BANNER_CONFIG.BASE_DELAY_DAYS * Math.pow(2, dismissCount - 1);
   return delayDays * 24 * 60 * 60 * 1000; // Convert days to milliseconds
 };
@@ -95,7 +95,7 @@ export const handlePlusTardClick = async (): Promise<ChecklistBannerState> => {
 /**
  * Get the next show time for the banner (for debugging/info purposes)
  */
-export const getNextShowTime = async (): Promise<Date | null> => {
+const getNextShowTime = async (): Promise<Date | null> => {
   try {
     const bannerState = await localStorage.getChecklistBannerState();
 

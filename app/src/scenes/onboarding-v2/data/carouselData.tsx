@@ -22,7 +22,7 @@ const SlideFinal: CarouselSlide = {
   variant: "green",
 };
 
-export const carouselSlides: CarouselSlide[] = [
+const carouselSlides: CarouselSlide[] = [
   SlideWelcome,
   // {
   //   id: 'slide-non-suivi-jm-give-ressources',
@@ -52,7 +52,7 @@ export const carouselSlides: CarouselSlide[] = [
   SlideFinal,
 ];
 
-export const carouselSlidesSuivi: CarouselSlide[] = [
+const carouselSlidesSuivi: CarouselSlide[] = [
   SlideWelcome,
   {
     id: "slide-suivi-between-two-sessions",

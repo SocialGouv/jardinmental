@@ -26,7 +26,7 @@ const profiles: UserProfile[] = [
   },
 ];
 
-export const ProfileScreen: React.FC<Props> = ({ navigation }) => {
+const ProfileScreen: React.FC<Props> = ({ navigation }) => {
   const { setProfile } = useUserProfile();
   const [selectedProfile, setSelectedProfile] = useState<UserProfile | null>(null);
 

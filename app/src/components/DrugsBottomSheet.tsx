@@ -85,5 +85,3 @@ export const DrugsBottomSheet = ({ onClose }: { onClose: (treatment?: Drug[]) =>
     </View>
   );
 };
-
-export const DrugItemSelecion = ({}) => {};
