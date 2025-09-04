@@ -1,14 +1,9 @@
 import React, { useCallback, useState, useEffect } from "react";
-import { FlatList, Platform, StyleSheet, Text, View } from "react-native";
-import { Button2 } from "../../../components/Button2";
-import { Screen } from "../../../components/Screen";
-import { Card } from "../../../components/Card";
+import { StyleSheet, Text, View } from "react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { getDaysOfWeekLabel, getGoalsTracked } from "../../../utils/localStorage/goals";
 import { Title } from "../../../components/Title";
-import { Badge } from "../../../components/Badge";
-import Icon from "../../../components/Icon";
-import { ONBOARDING_STEPS, TW_COLORS } from "../../../utils/constants";
+import { TW_COLORS } from "../../../utils/constants";
 import { colors } from "@/utils/colors";
 import JMButton from "@/components/JMButton";
 import { AnimatedHeaderScrollScreen } from "@/scenes/survey-v2/AnimatedHeaderScrollScreen";
@@ -20,8 +15,6 @@ import Pencil from "@assets/svg/Pencil";
 import NavigationButtons from "@/components/onboarding/NavigationButtons";
 
 export const GoalsSettings = ({ navigation, route }) => {
-  const onboarding = route.params?.onboarding;
-
   const [goals, setGoals] = useState([]);
 
   useFocusEffect(
@@ -37,8 +30,6 @@ export const GoalsSettings = ({ navigation, route }) => {
     return <GoalItem key={goal.id} {...{ goal, index }} />;
   }, []);
 
-  const keyExtractor = useCallback((goal) => goal.id, []);
-
   return (
     <AnimatedHeaderScrollScreen
       title="Mes objectifs"
@@ -49,8 +40,7 @@ export const GoalsSettings = ({ navigation, route }) => {
       bottomComponent={
         <NavigationButtons absolute={true}>
           <>
-            <JMButton variant="outline" title="Ajouter un objectif" onPress={() => navigation.navigate("goals-add-options")} />
-            <JMButton title="Modifier mes objectifs" onPress={() => navigation.navigate("goals-add-options")} className="mt-2" />
+            <JMButton title="Ajouter un objectif" onPress={() => navigation.navigate("goals-add-options")} className="mt-2" />
           </>
         </NavigationButtons>
       }
@@ -79,7 +69,7 @@ export const GoalsSettings = ({ navigation, route }) => {
 };
 
 const GoalItem = ({ goal, index }) => {
-  const [daysOfWeekLabel, setDaysOfWeekLabel] = useState();
+  const [daysOfWeekLabel, setDaysOfWeekLabel] = useState<string>();
   const navigation = useNavigation();
 
   useEffect(() => {
