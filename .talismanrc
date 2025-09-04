@@ -152,6 +152,6 @@ fileignoreconfig:
 - filename: app/src/utils/localStorage/index.ts
   checksum: 4bdbae61c17ac5503134773799695ce35e571d53ed038a0fa5520f5d05a0df8e
 scopeconfig:
-  - scope: node
+- scope: node
 version: "1.0"
 threshold: medium
