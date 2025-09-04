@@ -1,3 +1,10 @@
+## [1.54.4](https://github.com/SocialGouv/jardinmental/compare/v1.54.3...v1.54.4) (2025-09-04)
+
+
+### Bug Fixes
+
+* talisman threshold ([#424](https://github.com/SocialGouv/jardinmental/issues/424)) ([198dfe5](https://github.com/SocialGouv/jardinmental/commit/198dfe54e5ba032db4591a02390afa016988761a))
+
 ## [1.54.3](https://github.com/SocialGouv/jardinmental/compare/v1.54.2...v1.54.3) (2025-09-04)
 
 
