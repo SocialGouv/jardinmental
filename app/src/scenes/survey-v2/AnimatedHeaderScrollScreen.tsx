@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import { View, Platform } from "react-native";
+import { View, Platform, ViewStyle } from "react-native";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import Animated, {
   useSharedValue,
@@ -40,11 +40,14 @@ interface IndicatorScreenProps {
   bottomComponent?: React.ReactNode;
   headerRightComponent?: React.ReactNode;
   headerRightAction?: () => void;
+  headerLeftComponent?: React.ReactNode;
   hideBottomComponentInitially?: boolean;
   navigation: StackNavigationProp<any>;
   scrollViewBackground?: string;
   showBottomButton?: boolean;
   smallHeader?: boolean;
+  animatedStatusBarColor?: Animated.AnimateStyle<ViewStyle>;
+  animatedTextColor?: Animated.AnimateStyle<ViewStyle>;
 }
 
 export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
@@ -57,6 +60,7 @@ export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
   headerTitle,
   bottomComponent,
   headerRightComponent,
+  headerLeftComponent,
   headerRightAction,
   showBottomButton = true,
   hideBottomComponentInitially = false,
@@ -64,6 +68,8 @@ export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
   navigation,
   scrollViewBackground,
   smallHeader,
+  animatedStatusBarColor,
+  animatedTextColor,
 }: IndicatorScreenProps) => {
   const { showBottomSheet } = useBottomSheet();
   const { setShowProgressbar, showProgressbar, setHideOnScrollProgressValue } = useOnboardingProgressHeader();
@@ -263,6 +269,7 @@ export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
             ) : null
           }
           title={title}
+          leftComponent={headerLeftComponent}
           rightComponent={headerRightComponent}
           rightAction={headerRightAction}
           handlePrevious={handlePrevious}
@@ -272,6 +279,8 @@ export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
           bannerContainerStyle={bannerContainerStyle}
           titleMarginStyle={titleMarginStyle}
           small={smallHeader}
+          animatedStatusBarColor={animatedStatusBarColor}
+          animatedTextColor={animatedTextColor}
           onBannerLayout={handleBannerLayout}
         ></BannerHeader>
       </View>
