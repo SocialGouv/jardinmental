@@ -157,6 +157,12 @@ class NPS extends React.Component {
       text: formatText({ useful, feedback, userId, contact, supported, startDate }),
     });
     this.npsSent = true;
+
+    // Show thank you message
+    setTimeout(() => {
+      Alert.alert("Merci pour votre retour !");
+    }, 300);
+
     this.setState({ visible: false, useful: null, reco: null });
   };
 
