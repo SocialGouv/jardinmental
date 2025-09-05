@@ -49,6 +49,6 @@ const markdownStyles = {
     marginBottom: 16,
   },
   strong: {
-    fontWeight: "600" as "600",
+    fontWeight: "bold" as "bold",
   },
 };
