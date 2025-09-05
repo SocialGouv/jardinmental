@@ -226,6 +226,24 @@ const DaySurvey = ({
     logEvents.logFeelingAddContext(answers[questionContext.id]?.userComment ? 1 : 0);
     logEvents.logFeelingResponseToxic(answers[questionToxic.id]?.value ? 1 : 0);
 
+    // Log each indicator in the questionnaire (FEELING_ADD_LIST)
+    for (const indicator of userIndicateurs.filter((i) => i.active)) {
+      if (indicator.matomoId) {
+        logEvents.logFeelingAddList(indicator.matomoId);
+      }
+    }
+
+    // Log each indicator that has been answered (FEELING_ADD_LIST_COMPLETED)
+    for (const key of Object.keys(answers)) {
+      // Skip special questions (TOXIC and CONTEXT)
+      if ([questionToxic.id, questionContext.id].includes(key)) continue;
+
+      const answer = answers[key];
+      if (answer?.value !== undefined && answer._indicateur?.matomoId) {
+        logEvents.logFeelingAddListCompleted(answer._indicateur.matomoId);
+      }
+    }
+
     if (route.params?.redirect) {
       return navigation.navigate("survey-success", {
         onComplete: () => {
