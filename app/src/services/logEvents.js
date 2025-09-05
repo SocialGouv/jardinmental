@@ -111,6 +111,8 @@ const FEELING_ADD_SURVEY = "FEELING_ADD_SURVEY";
 const FEELING_START_YESTERDAY = "FEELING_START_YESTERDAY";
 const FEELING_START_FLOATING_PlUS = "FEELING_START_FLOATING_PLUS";
 const FEELING_START_FROM_RECAP = "FEELING_START_FROM_RECAP";
+const FEELING_ADD_LIST = "FEELING_ADD_LIST";
+const FEELING_ADD_LIST_COMPLETED = "FEELING_ADD_LIST_COMPLETED";
 
 const logFeelingStart = async () => {
   await logEvent({
@@ -196,6 +198,24 @@ const logFeelingEditButtonClick = async () => {
   await logEvent({
     category: FEELING,
     action: "FEELING_EDIT_BUTTON_CLICK",
+  });
+};
+
+const logFeelingAddList = async (value) => {
+  await logEvent({
+    category: FEELING,
+    action: FEELING_ADD_LIST,
+    name: "indicateur",
+    value,
+  });
+};
+
+const logFeelingAddListCompleted = async (value) => {
+  await logEvent({
+    category: FEELING,
+    action: FEELING_ADD_LIST_COMPLETED,
+    name: "indicateur",
+    value,
   });
 };
 
@@ -852,6 +872,8 @@ export default {
   logFeelingDateChoose,
   logFeelingAdd,
   logFeelingSubmitSurvey,
+  logFeelingAddList,
+  logFeelingAddListCompleted,
   logReminderAdd,
   logReminderCancel,
   logSymptomAdd,
