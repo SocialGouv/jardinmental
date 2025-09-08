@@ -15,7 +15,7 @@ interface CheckInHeaderProps {
   skipText?: string;
   animatedTextColor?: Animated.AnimateStyle<ViewStyle> | ViewStyle;
   leftComponent?: ReactNode; // custom left component, used in shared header
-  rightComponent?: ReactNode; // custom left component, used in shared header
+  rightComponent?: ReactNode; // custom right component, used in shared header
   rightAction?: () => void;
   leftAction?: () => void;
   dynamicTitle?: string; // dynamic title that replaces original title on scroll
