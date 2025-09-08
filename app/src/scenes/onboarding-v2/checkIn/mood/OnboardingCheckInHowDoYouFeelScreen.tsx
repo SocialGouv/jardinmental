@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect, useContext, useCallback } from "react";
-import { View, Text, TouchableOpacity, Platform, Dimensions, FlatList } from "react-native";
+import React, { useState, useRef, useEffect, useContext, useCallback, useMemo } from "react";
+import { View, Text, TouchableOpacity, Platform, Dimensions, FlatList, useWindowDimensions } from "react-native";
 import Animated, { useSharedValue, useAnimatedStyle, withSpring, interpolateColor } from "react-native-reanimated";
 
 import { OnboardingV2ScreenProps } from "../../types";
@@ -20,8 +20,6 @@ import { useFocusEffect } from "@react-navigation/native";
 import logEvents from "@/services/logEvents";
 import { setStatusBarBackgroundColor } from "expo-status-bar";
 
-const { width: screenWidth } = Dimensions.get("window");
-
 type Props = OnboardingV2ScreenProps<"OnboardingCheckInHowDoYouFeel">;
 
 const springConfig = { damping: 20, stiffness: 80 };
@@ -37,6 +35,7 @@ const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
   const { setCustomColor, setDefaultColor } = useStatusBar();
   const measuredHeight = useSharedValue(0); // Store the measured natural height
   const [dynamicPaddingTop, setDynamicPaddingTop] = useState(0); // Default fallback
+  const { width: screenWidth } = useWindowDimensions();
 
   // Animated values
   const scrollViewScale = useSharedValue(1);
@@ -47,12 +46,15 @@ const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
   const rotateSelectorProgress = useSharedValue(0);
 
   // FlatList configuration
-  const itemWidth = screenWidth / 5; // Show all 5 items at once
-  const getItemLayout = (data: any, index: number) => ({
-    length: itemWidth,
-    offset: itemWidth * index,
-    index,
-  });
+  const itemWidth = useMemo(() => screenWidth / 5, [screenWidth]); // Show all 5 items at once
+  const getItemLayout = useMemo(
+    () => (data: any, index: number) => ({
+      length: itemWidth,
+      offset: itemWidth * index,
+      index,
+    }),
+    [itemWidth]
+  );
 
   useEffect(() => {
     // Give it a small delay to ensure FlatList has finished initial rendering
@@ -61,7 +63,7 @@ const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
     }, 0); // you can also try 50ms if it's flaky
 
     return () => clearTimeout(timeout);
-  }, []);
+  }, [screenWidth]);
 
   useFocusEffect(
     useCallback(() => {
@@ -246,6 +248,15 @@ const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
     );
   };
 
+  const flatListContentContainerStyle = useMemo(
+    () => ({
+      paddingHorizontal: (screenWidth - itemWidth) / 2,
+      paddingVertical: 5,
+      alignItems: "center" as const,
+    }),
+    [screenWidth, itemWidth]
+  );
+
   const renderMoodSelector = () => (
     <View>
       <Animated.View style={animatedScrollViewStyle} className="mb-6">
@@ -262,11 +273,7 @@ const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
           decelerationRate="fast"
           getItemLayout={getItemLayout}
           onMomentumScrollEnd={onMomentumScrollEnd}
-          contentContainerStyle={{
-            paddingHorizontal: (screenWidth - itemWidth) / 2,
-            paddingVertical: 5,
-            alignItems: "center",
-          }}
+          contentContainerStyle={flatListContentContainerStyle}
           style={{
             width: screenWidth,
             flexGrow: 0,
@@ -325,7 +332,10 @@ const MoodItem = ({
   onSelect: () => void;
 }) => {
   const rotateSelectorProgress = useSharedValue(0);
-
+  const { width: screenWidth } = useWindowDimensions();
+  const marginHorizontal = useMemo(() => {
+    return (screenWidth / 5 - 64) / 2;
+  }, [screenWidth]);
   useEffect(() => {
     rotateSelectorProgress.value = withSpring(scrollViewScaled ? 10 : 0, springConfig);
   }, [scrollViewScaled]);
@@ -348,7 +358,7 @@ const MoodItem = ({
         style={{
           padding: 2, // this creates space between the border and TouchableOpacity
           backgroundColor: selected ? TW_COLORS.PRIMARY : "transparent",
-          marginHorizontal: (screenWidth / 5 - 64) / 2,
+          marginHorizontal,
         }}
       >
         <TouchableOpacity

@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState, useContext, createContext, useCallback, ReactNode } from "react";
-import { View, StyleSheet, Animated as RNAnimated, Easing, Text, Platform, ViewStyle } from "react-native";
+import { View, StyleSheet, Animated as RNAnimated, Easing, Text, Platform, ViewStyle, useWindowDimensions } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { BlurView } from "@react-native-community/blur";
@@ -12,7 +12,7 @@ import { HEADER_WITH_BANNER, PROGRESS_BAR, PROGRESS_BAR_AND_HEADER, SHARED_HEADE
 import CheckInHeader from "@/components/onboarding/CheckInHeader";
 import BannerAnimatedHeader from "../onboarding-v2/BannerAnimatedHeader";
 import { set } from "date-fns";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { GestureHandlerRootView, ScrollView } from "react-native-gesture-handler";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 
 const PROGRESS_HEADER_HEIGHT = 60;
@@ -118,9 +118,13 @@ export const ProgressScreen =
 export const SafeAreaViewWithOptionalHeader = ({ children, style, ...props }: { style?: ViewStyle; children: ReactNode; className?: string }) => {
   const insets = useSafeAreaInsets();
   const { isVisible } = useOnboardingProgressHeader();
+  const { width, height } = useWindowDimensions();
+  const isLandscape = width > height;
+
+  const ContentWrapper = isLandscape ? ScrollView : View;
 
   return (
-    <View
+    <ContentWrapper
       style={[
         {
           flex: 1,
@@ -132,7 +136,7 @@ export const SafeAreaViewWithOptionalHeader = ({ children, style, ...props }: { 
       {...props}
     >
       {children}
-    </View>
+    </ContentWrapper>
   );
 };
 
