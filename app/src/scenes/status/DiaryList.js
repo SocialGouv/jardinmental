@@ -9,6 +9,7 @@ import { canEdit } from "./utils/index";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { getGoalsData } from "../../utils/localStorage/goals";
 import localStorage from "../../utils/localStorage";
+import NewStatusItem from "./NewStatusItem";
 
 export const DiaryList = forwardRef(({ ...props }, ref) => {
   const navigation = useNavigation();
@@ -33,19 +34,19 @@ export const DiaryList = forwardRef(({ ...props }, ref) => {
   const renderItem = useCallback(
     ({ item: date }) => {
       return (
-        <View>
-          <View style={styles.dateContainer}>
-            <View style={styles.dateDot} />
-            {canEdit(date) ? (
-              <Text style={styles.dateLabel}>{formatDateThread(date)}</Text>
-            ) : (
-              <TouchableOpacity style={styles.item} onPress={() => navigation.navigate("too-late", { date })}>
-                <Text style={styles.dateLabel}>{formatDateThread(date)}</Text>
-              </TouchableOpacity>
-            )}
-          </View>
-          <StatusItem date={date} indicateurs={indicateurs} patientState={diaryData[date]} goalsData={goalsData} navigation={navigation} />
-        </View>
+        // <View>
+        //   <View style={styles.dateContainer}>
+        //     <View style={styles.dateDot} />
+        //     {canEdit(date) ? (
+        //       <Text style={styles.dateLabel}>{formatDateThread(date)}</Text>
+        //     ) : (
+        //       <TouchableOpacity style={styles.item} onPress={() => navigation.navigate("too-late", { date })}>
+        //         <Text style={styles.dateLabel}>{formatDateThread(date)}</Text>
+        //       </TouchableOpacity>
+        //     )}
+        //   </View>
+        <NewStatusItem date={date} indicateurs={indicateurs} patientState={diaryData[date]} goalsData={goalsData} navigation={navigation} />
+        // </View>
       );
     },
     [diaryData, goalsData, indicateurs]
