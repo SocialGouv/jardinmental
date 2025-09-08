@@ -1,3 +1,10 @@
+## [1.58.1](https://github.com/SocialGouv/jardinmental/compare/v1.58.0...v1.58.1) (2025-09-08)
+
+
+### Bug Fixes
+
+* delete unused svg ([#438](https://github.com/SocialGouv/jardinmental/issues/438)) ([c6ca9cc](https://github.com/SocialGouv/jardinmental/commit/c6ca9ccc1083720d357b5f0dce21ea5fb2553ad8))
+
 # [1.58.0](https://github.com/SocialGouv/jardinmental/compare/v1.57.0...v1.58.0) (2025-09-08)
 
 
