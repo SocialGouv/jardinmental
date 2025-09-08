@@ -9,11 +9,12 @@ import { INDICATOR_CATEGORIES_DATA, SECTION_ICONS } from "../data/helperData";
 import React, { useEffect, useState } from "react";
 import { TW_COLORS } from "@/utils/constants";
 import { TouchableOpacity } from "@gorhom/bottom-sheet";
-import { INDICATOR_TYPE, PredefineIndicatorV2SchemaType, Indicator, generateIndicatorFromPredefinedIndicator } from "@/entities/Indicator";
+import { PredefineIndicatorV2SchemaType, Indicator, generateIndicatorFromPredefinedIndicator } from "@/entities/Indicator";
 import { v4 as uuidv4 } from "uuid";
 import JMButton from "@/components/JMButton";
 import { INDICATORS_CATEGORIES } from "@/entities/IndicatorCategories";
 import LinearGradient from "react-native-linear-gradient";
+import { INDICATOR_TYPE } from "@/entities/IndicatorType";
 
 const screenHeight = Dimensions.get("window").height;
 const height90vh = screenHeight * 0.9;

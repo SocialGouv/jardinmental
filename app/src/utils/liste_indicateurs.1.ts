@@ -1,5 +1,7 @@
-import { INDICATOR_ORDER, INDICATOR_TYPE, LegacyPredefineIndicatorSchemaType, PredefineIndicatorV2SchemaType } from "@/entities/Indicator";
+import { LegacyPredefineIndicatorSchemaType, PredefineIndicatorV2SchemaType } from "@/entities/Indicator";
 import { INDICATORS_CATEGORIES } from "@/entities/IndicatorCategories";
+import { INDICATOR_TYPE } from "@/entities/IndicatorType";
+import { INDICATOR_ORDER } from "@/entities/IndicatorOrder";
 
 // TOXIC used in diaryData for old users, is registered as STATIC_UUID_FOR_INSTANCE_OF_GENERIC_INDICATOR_SUBSTANCE in
 // futur entries
