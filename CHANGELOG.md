@@ -1,3 +1,10 @@
+## [1.58.3](https://github.com/SocialGouv/jardinmental/compare/v1.58.2...v1.58.3) (2025-09-08)
+
+
+### Bug Fixes
+
+* add short message after NPS ([#435](https://github.com/SocialGouv/jardinmental/issues/435)) ([e4f2cee](https://github.com/SocialGouv/jardinmental/commit/e4f2ceee807c579087e451b24b78424168ee9a19))
+
 ## [1.58.2](https://github.com/SocialGouv/jardinmental/compare/v1.58.1...v1.58.2) (2025-09-08)
 
 
