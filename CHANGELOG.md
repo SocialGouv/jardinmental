@@ -1,3 +1,10 @@
+# [1.58.0](https://github.com/SocialGouv/jardinmental/compare/v1.57.0...v1.58.0) (2025-09-08)
+
+
+### Features
+
+* add FEELING_ADD_LIST and FEELING_ADD_LIST_COMPLETED matomo indicators ([#434](https://github.com/SocialGouv/jardinmental/issues/434)) ([b33d4c8](https://github.com/SocialGouv/jardinmental/commit/b33d4c8fc219099818c06dc50f0cf69d3c4786b6))
+
 # [1.57.0](https://github.com/SocialGouv/jardinmental/compare/v1.56.1...v1.57.0) (2025-09-08)
 
 
