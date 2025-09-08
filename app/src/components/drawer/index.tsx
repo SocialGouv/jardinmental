@@ -112,7 +112,7 @@ export default ({ navigation, visible, onClick }) => {
                   setTimeout(() => {
                     // a bit hacky : whai for drawer to dismiss before displaying NPS
                     setNPSvisible(true);
-                  }, 300);
+                  }, 500);
                 }}
               />
               {isDevMode && <DrawerItem title="Dev Mode" path="dev-mode" navigation={navigation} onClick={onClick} icon={<Gear />} />}
