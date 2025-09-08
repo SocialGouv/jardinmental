@@ -328,25 +328,8 @@ const DaySurvey = ({
   }, [selectedMoodIndex]);
 
   const animatedTextColor = useAnimatedStyle(() => {
-    if (selectedMoodIndex === null) {
-      return {
-        color: TW_COLORS.WHITE,
-        backgroundColor: "transparent",
-      };
-    }
-
-    const colors = [
-      TW_COLORS.CNAM_PRIMARY_900,
-      TW_COLORS.CNAM_PRIMARY_900,
-      TW_COLORS.CNAM_PRIMARY_900,
-      TW_COLORS.CNAM_PRIMARY_900,
-      TW_COLORS.CNAM_PRIMARY_900,
-    ];
-
-    const color = interpolateColor(statusBarColorProgress.value, [0, 0.25, 0.5, 0.75, 1], colors);
-
     return {
-      color: color,
+      color: selectedMoodIndex !== null ? TW_COLORS.CNAM_PRIMARY_900 : TW_COLORS.WHITE,
       backgroundColor: "transparent",
     };
   });
