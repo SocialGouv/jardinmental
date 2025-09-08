@@ -1,3 +1,10 @@
+## [1.58.2](https://github.com/SocialGouv/jardinmental/compare/v1.58.1...v1.58.2) (2025-09-08)
+
+
+### Bug Fixes
+
+* remove unused files ([#437](https://github.com/SocialGouv/jardinmental/issues/437)) ([2294e96](https://github.com/SocialGouv/jardinmental/commit/2294e96420efb2397ab41f2e015a75258b0ecc2e))
+
 ## [1.58.1](https://github.com/SocialGouv/jardinmental/compare/v1.58.0...v1.58.1) (2025-09-08)
 
 
