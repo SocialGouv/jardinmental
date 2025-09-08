@@ -1,3 +1,10 @@
+## [1.56.1](https://github.com/SocialGouv/jardinmental/compare/v1.56.0...v1.56.1) (2025-09-08)
+
+
+### Bug Fixes
+
+* change text for cnam ([#436](https://github.com/SocialGouv/jardinmental/issues/436)) ([ed5e52c](https://github.com/SocialGouv/jardinmental/commit/ed5e52cc0a226d256e1e4a132cdd3876b7b81f89))
+
 # [1.56.0](https://github.com/SocialGouv/jardinmental/compare/v1.55.2...v1.56.0) (2025-09-04)
 
 
