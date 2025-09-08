@@ -89,7 +89,19 @@ export default ({ navigation, visible, onClick }) => {
           deviceWidth={width}
           deviceHeight={height} // <--- met à jour automatiquement
         >
-          <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContainer} style={[styles.card, { height: 100 }]}>
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={styles.scrollContainer}
+            style={[
+              styles.card,
+              {
+                // on android the scrollview is being desactived when you open several time the drawer
+                // apparently it is a bug when having scrollview inside modal
+                // this weird workaround fixes it https://github.com/facebook/react-native/issues/48822#issuecomment-2667011212
+                height: 100,
+              },
+            ]}
+          >
             <Text style={styles.title}>Jardin Mental</Text>
             <DrawerItem badge={badgeNotesVersionVisible} title="Nouveautés" path="news" navigation={navigation} onClick={onClick} icon={<Star />} />
             <Separator />
