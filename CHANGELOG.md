@@ -1,3 +1,10 @@
+# [1.57.0](https://github.com/SocialGouv/jardinmental/compare/v1.56.1...v1.57.0) (2025-09-08)
+
+
+### Features
+
+* **daysurvey:** make header take selected mood color ([#433](https://github.com/SocialGouv/jardinmental/issues/433)) ([91c6b30](https://github.com/SocialGouv/jardinmental/commit/91c6b303c1b674ad56090fc3e955a3e727d50a00))
+
 ## [1.56.1](https://github.com/SocialGouv/jardinmental/compare/v1.56.0...v1.56.1) (2025-09-08)
 
 
