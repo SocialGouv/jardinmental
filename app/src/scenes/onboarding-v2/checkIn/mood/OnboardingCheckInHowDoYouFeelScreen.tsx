@@ -45,7 +45,7 @@ const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
   const scrollViewScale = useSharedValue(1);
   const heightScale = useSharedValue(100);
   const marginScale = useSharedValue(0);
-  const statusBarColorProgress = useSharedValue(0);
+  const animatedBackgroundColor = useSharedValue(TW_COLORS.PRIMARY);
   const textOpacity = useSharedValue(0);
   const rotateSelectorProgress = useSharedValue(0);
 
@@ -140,11 +140,13 @@ const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
       setHasSelectedOnce(true);
     }
 
+    // Animate background color directly to the target color
+    animatedBackgroundColor.value = withSpring(moodBackgroundColors[moodIndex], springConfig);
+
     // Animate all elements with synchronized timing
     scrollViewScale.value = withSpring(2.5, springConfig);
     heightScale.value = withSpring(200, springConfig);
     marginScale.value = withSpring(dynamicPaddingTop, springConfig);
-    statusBarColorProgress.value = withSpring(moodIndex / (moodEmojis.length - 1), springConfig);
     textOpacity.value = withSpring(1, springConfig);
     rotateSelectorProgress.value = withSpring(20, springConfig);
     // Scroll to center the selected item with improved timing
@@ -177,9 +179,10 @@ const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
       const newValue = clampedIndex + 1;
       setSelectedMoodIndex(newValue);
 
+      // Animate background color directly to the target color
+      animatedBackgroundColor.value = withSpring(moodBackgroundColors[clampedIndex], springConfig);
+
       // Trigger animations for the newly selected item
-      const springConfig = { damping: 20, stiffness: 80 };
-      statusBarColorProgress.value = withSpring(clampedIndex / (moodEmojis.length - 1), springConfig);
       textOpacity.value = withSpring(1, springConfig);
     }
   };
@@ -192,16 +195,8 @@ const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
   });
 
   const animatedStatusBarColor = useAnimatedStyle(() => {
-    if (selectedMoodIndex === null) {
-      return {
-        backgroundColor: TW_COLORS.PRIMARY,
-      };
-    }
-
-    const color = interpolateColor(statusBarColorProgress.value, [0, 0.25, 0.5, 0.75, 1], moodBackgroundColors);
-
     return {
-      backgroundColor: color,
+      backgroundColor: animatedBackgroundColor.value,
     };
   });
 
@@ -213,18 +208,8 @@ const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
       };
     }
 
-    const colors = [
-      TW_COLORS.CNAM_PRIMARY_900,
-      TW_COLORS.CNAM_PRIMARY_900,
-      TW_COLORS.CNAM_PRIMARY_900,
-      TW_COLORS.CNAM_PRIMARY_900,
-      TW_COLORS.CNAM_PRIMARY_900,
-    ];
-
-    const color = interpolateColor(statusBarColorProgress.value, [0, 0.25, 0.5, 0.75, 1], colors);
-
     return {
-      color: color,
+      color: TW_COLORS.CNAM_PRIMARY_900,
       backgroundColor: "transparent",
     };
   });
