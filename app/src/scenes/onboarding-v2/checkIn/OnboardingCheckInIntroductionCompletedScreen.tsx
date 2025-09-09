@@ -8,7 +8,7 @@ import { mergeClassNames } from "@/utils/className";
 
 type Props = OnboardingV2ScreenProps<"Intro">;
 
-export const OnboardingCheckInIntroductionCompleted: React.FC<Props> = ({ navigation }) => {
+const OnboardingCheckInIntroductionCompleted: React.FC<Props> = ({ navigation }) => {
   const handleNext = () => {
     navigation.navigate("OnboardingChooseIndicator");
   };

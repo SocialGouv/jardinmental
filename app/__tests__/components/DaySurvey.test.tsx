@@ -7,6 +7,8 @@ import { DiaryDataProvider } from "../../src/context/diaryData";
 import { STORAGE_KEY_INDICATEURS, STORAGE_KEY_GOALS } from "../../src/utils/constants";
 import { DiaryDataNewEntryInput } from "../../src/entities/DiaryData";
 import { saveGoalsData } from "../../src/utils/localStorage/goals";
+import { OnboardingProgressHeaderProvider } from "@/scenes/onboarding/ProgressHeader";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 // Only mock what absolutely cannot run in test environment
 jest.mock("@react-navigation/native", () => ({
@@ -80,11 +82,15 @@ jest.mock("react-native-localize", () => ({
   removeEventListener: jest.fn(),
 }));
 
+// Mock keyboard controller
+jest.mock("react-native-keyboard-controller", () => require("react-native-keyboard-controller/jest"));
+
 describe("DaySurvey Component", () => {
   const mockNavigation = {
     goBack: jest.fn(),
     canGoBack: jest.fn(() => true),
     navigate: jest.fn(),
+    addListener: jest.fn(),
   };
 
   const mockRoute = {
@@ -93,9 +99,13 @@ describe("DaySurvey Component", () => {
 
   const renderWithProvider = (component) => {
     return render(
-      <NavigationContainer>
-        <DiaryDataProvider>{component}</DiaryDataProvider>
-      </NavigationContainer>
+      <SafeAreaProvider>
+        <OnboardingProgressHeaderProvider>
+          <NavigationContainer>
+            <DiaryDataProvider>{component}</DiaryDataProvider>
+          </NavigationContainer>
+        </OnboardingProgressHeaderProvider>
+      </SafeAreaProvider>
     );
   };
 
@@ -289,9 +299,8 @@ describe("DaySurvey Component", () => {
 
   test("should render correctly without crashing", () => {
     renderWithProvider(<DaySurvey navigation={mockNavigation} route={mockRoute} />);
-
     // Verify the main title is present
-    expect(screen.getByText("Mon questionnaire")).toBeTruthy();
+    expect(screen.getAllByText("Mon observation du jour")).toBeTruthy();
   });
 
   test("should render with user indicators from AsyncStorage", async () => {
@@ -300,9 +309,6 @@ describe("DaySurvey Component", () => {
     await AsyncStorage.setItem(STORAGE_KEY_INDICATEURS, JSON.stringify(fakeIndicators));
 
     renderWithProvider(<DaySurvey navigation={mockNavigation} route={mockRoute} />);
-
-    // Verify the main title is present
-    expect(screen.getByText("Mon questionnaire")).toBeTruthy();
 
     // Wait for indicators to load and verify they are rendered
     await waitFor(() => {
@@ -313,9 +319,6 @@ describe("DaySurvey Component", () => {
 
     // Verify that inactive indicators are not rendered
     expect(screen.queryByText("INACTIVE_INDICATOR")).toBeNull();
-
-    // Verify that the "Personnaliser mes indicateurs" card is present
-    expect(screen.getByText("Personnaliser mes indicateurs")).toBeTruthy();
   });
 
   test("should render in editing mode with existing survey data", async () => {
@@ -359,7 +362,7 @@ describe("DaySurvey Component", () => {
     renderWithProvider(<DaySurvey navigation={mockNavigation} route={editingRoute} />);
 
     // Verify the main title is present
-    expect(screen.getByText("Mon questionnaire")).toBeTruthy();
+    expect(screen.getAllByText("Mon observation du jour")).toBeTruthy();
   });
 
   test("should render with goals data", async () => {
@@ -373,7 +376,7 @@ describe("DaySurvey Component", () => {
     renderWithProvider(<DaySurvey navigation={mockNavigation} route={mockRoute} />);
 
     // Verify the main title is present
-    expect(screen.getByText("Mon questionnaire")).toBeTruthy();
+    expect(screen.getAllByText("Mon observation du jour")).toBeTruthy();
 
     // Wait for goals to load and verify they are displayed
     await waitFor(() => {
@@ -407,7 +410,7 @@ describe("DaySurvey Component", () => {
     renderWithProvider(<DaySurvey navigation={mockNavigation} route={routeWithDate} />);
 
     // Verify the main title is present
-    expect(screen.getByText("Mon questionnaire")).toBeTruthy();
+    expect(screen.getAllByText("Mon observation du jour")).toBeTruthy();
 
     // Wait for goals to load and verify they are displayed
     await waitFor(() => {
@@ -432,7 +435,7 @@ describe("DaySurvey Component", () => {
     renderWithProvider(<DaySurvey navigation={mockNavigation} route={mockRoute} />);
 
     // Verify the main title is present
-    expect(screen.getByText("Mon questionnaire")).toBeTruthy();
+    expect(screen.getAllByText("Mon observation du jour")).toBeTruthy();
 
     // Wait for indicators to load
     await waitFor(() => {
@@ -491,7 +494,7 @@ describe("DaySurvey Component", () => {
     renderWithProvider(<DaySurvey navigation={mockNavigation} route={routeWithNotes} />);
 
     // Verify the main title is present
-    expect(screen.getByText("Mon questionnaire")).toBeTruthy();
+    expect(screen.getAllByText("Mon observation du jour")).toBeTruthy();
 
     // Wait for indicators to load
     await waitFor(() => {
@@ -501,14 +504,6 @@ describe("DaySurvey Component", () => {
     // Verify that the context note is properly pre-filled
     await waitFor(() => {
       expect(screen.getByDisplayValue("This is a general note about my day. I had meetings and felt productive.")).toBeTruthy();
-    });
-
-    // Verify that the toxic substance question is displayed
-    expect(screen.getByText("Avez-vous consommé des substances aujourd'hui ?")).toBeTruthy();
-
-    // Verify that the toxic substance comment is properly pre-filled
-    await waitFor(() => {
-      expect(screen.getByDisplayValue("Did not consume any substances today.")).toBeTruthy();
     });
 
     // Verify that indicator comments are properly pre-filled
@@ -558,7 +553,7 @@ describe("DaySurvey Component", () => {
     renderWithProvider(<DaySurvey navigation={mockNavigation} route={mockRoute} />);
 
     // Verify the main title is present
-    expect(screen.getByText("Mon questionnaire")).toBeTruthy();
+    expect(screen.getAllByText("Mon observation du jour")).toBeTruthy();
 
     // Wait for indicators to load and verify all three types are rendered
     await waitFor(() => {
@@ -576,7 +571,7 @@ describe("DaySurvey Component", () => {
     renderWithProvider(<DaySurvey navigation={mockNavigation} route={mockRoute} />);
 
     // Verify the main title is present
-    expect(screen.getByText("Mon questionnaire")).toBeTruthy();
+    expect(screen.getAllByText("Mon observation du jour")).toBeTruthy();
 
     // Wait for indicators to load and verify only active ones are rendered
     await waitFor(() => {

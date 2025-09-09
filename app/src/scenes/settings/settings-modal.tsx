@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, Modal, TouchableOpacity } from "react-native";
+import { View, StyleSheet, Modal, TouchableOpacity, ScrollView, useWindowDimensions } from "react-native";
 import SettingItem from "./setting-item";
 import Bell from "@assets/svg/icon/Bell";
 import Goal from "@assets/svg/icon/Goal";
@@ -12,10 +12,15 @@ import localStorage from "@/utils/localStorage";
 
 const SettingsModal = ({ navigation, visible, onClick }) => {
   const { showBottomSheet, closeBottomSheet } = useBottomSheet();
+  const { width, height } = useWindowDimensions();
+  const isLandscape = width > height;
+
+  const ContentWrapper = isLandscape ? ScrollView : View;
+
   return (
-    <Modal animationType="slide" visible={visible} transparent={true}>
+    <Modal animationType="slide" visible={visible} transparent={true} supportedOrientations={["portrait", "landscape"]}>
       <TouchableOpacity activeOpacity={1} style={styles.container} onPressOut={onClick}>
-        <View style={styles.card}>
+        <ContentWrapper style={styles.card}>
           <SettingItem title="Définir un rappel" path="reminder" navigation={navigation} onClick={onClick} icon={<Bell />} />
           <SettingItem title="Personnaliser mes indicateurs" path="symptoms" navigation={navigation} onClick={onClick} icon={<Analytics />} />
           <SettingItem title="Personnaliser mes objectifs" path="goals-settings" navigation={navigation} onClick={onClick} icon={<Goal />} />
@@ -40,7 +45,7 @@ const SettingsModal = ({ navigation, visible, onClick }) => {
             icon={<Health />}
           />
           <SettingItem title="Générer un récapitulatif de mes données" path="export" navigation={navigation} onClick={onClick} icon={<Download />} />
-        </View>
+        </ContentWrapper>
       </TouchableOpacity>
     </Modal>
   );
@@ -56,6 +61,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderRadius: 10,
     paddingBottom: 30,
+    maxHeight: "80%", // prevents overflow in landscape
   },
 });
 

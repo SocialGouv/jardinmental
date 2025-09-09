@@ -21,7 +21,7 @@ type Props = OnboardingV2ScreenProps<"PersonalizationObjective">;
 
 const NextScreen = "OnboardingLoadingScreen";
 
-export const SubcategoriesScreen: React.FC<Props> = ({ navigation, route }) => {
+const SubcategoriesScreen: React.FC<Props> = ({ navigation, route }) => {
   const { updateUserSubcategories, profile } = useUserProfile();
   const [selectedSubcategories, setSelectedSubcategories] = useState<NEW_INDICATORS_SUBCATEGORIES[]>(profile?.selectedSubcategories || []);
   const { setSlideIndex, setIsVisible } = useOnboardingProgressHeader();

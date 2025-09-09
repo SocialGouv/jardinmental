@@ -43,7 +43,7 @@ const INDICATORS_WITH_CUSTOM_OPTIONS = [
   NEW_INDICATORS_CATEGORIES.LIFE_EVENT,
 ];
 
-export function suggestIndicatorsForDifficulties(
+function suggestIndicatorsForDifficulties(
   selectedDifficulties: NEW_INDICATORS_CATEGORIES[],
   selectedSubcategories: NEW_INDICATORS_SUBCATEGORIES[] = []
 ): PredefineIndicatorV2SchemaType[] {
@@ -101,7 +101,7 @@ type Props = OnboardingV2ScreenProps<"OnboardingChooseIndicator">;
 
 const NextRoute = "StartFirstSurvey";
 
-export const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation, route }) => {
+const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation, route }) => {
   const [showMoreIndicators, setShowMoreIndicators] = useState(false);
   const [customIndicators, setCustomIndicators] = useState<PredefineIndicatorV2SchemaType[]>([]);
 

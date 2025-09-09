@@ -167,4 +167,3 @@ export const useUserProfile = (): UserProfileContextType => {
   return context;
 };
 
-export default UserProfileContext;

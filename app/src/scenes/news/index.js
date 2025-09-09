@@ -14,7 +14,7 @@ export const getBadgeNotesVersion = async () => {
   return lastNotesVersion !== LAST_NOTES_VERSION;
 };
 
-export const LAST_NOTES_VERSION = "1.42.3";
+const LAST_NOTES_VERSION = "1.42.3";
 
 export default ({ navigation }) => {
   useEffect(() => {
@@ -26,7 +26,7 @@ export default ({ navigation }) => {
     <SafeAreaView style={styles.safe}>
       <View style={styles.headerContainer}>
         <BackButton onPress={navigation.goBack} />
-        <Image style={styles.image} source={require("../../../assets/imgs/logo2.png")} />
+        <Image style={styles.image} className="rounded-lg" source={require("../../../assets/imgs/icon.png")} />
       </View>
       <ScrollView style={styles.cgu} contentContainerStyle={styles.scrollContainer}>
         <Card title="Jardin Mental fait peau neuve" version="v1.43.3" date="09/2025">
@@ -43,14 +43,15 @@ export default ({ navigation }) => {
               L’application fait désormais partie des services portés par la <Text style={styles.bold}>Caisse nationale de l’Assurance Maladie</Text>.
               {"\n"}
               Cela garantit sa continuité, son développement public et sa validation par des professionnels de santé.{"\n"}
-              <Text style={styles.bold}>Aucun changement sur vos données</Text> : elles restent stockées localement, sans compte ni transmission.
+              <Text style={styles.bold}>Aucun changement sur vos données</Text> : elles restent stockées sur votre téléphone, sans compte ni
+              transmission.
             </Text>
           </Item>
           <Item>
             <Text style={styles.bold}>Un parcours d'accueil plus accessible</Text>
             <Text style={styles.text}>
-              L'inscription et le démarrage ont été repensés pour mieux convenir aux personnes <Text style={styles.bold}>sans suivi médical</Text>,
-              avec un accompagnement adapté dès les premiers pas.
+              L’inscription et le démarrage ont été repensés dès les premiers pas pour un accompagnement axé sur la prévention en santé mentale pour
+              les personnes avec ou sans suivi médical.
             </Text>
           </Item>
           <Item>

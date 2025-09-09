@@ -176,7 +176,7 @@ export const translateCategories = {
   [INDICATORS_CATEGORIES["Comportements"]]: "vos comportements",
 };
 
-export const surveyDate = {
+const surveyDate = {
   YESTERDAY: {
     id: "YESTERDAY",
     icon: icons.yesterday,
@@ -215,7 +215,7 @@ export const frequence = {
   },
 };
 
-export const intensity = {
+const intensity = {
   LIGHT: {
     id: "LIGHT",
     level: 3,
@@ -324,7 +324,7 @@ export const MATOMO_DIMENSION = {
   SUPPORTED: 3,
 };
 
-export const STEP_ORDER: OnboardingStep[] = ["INTRO", "PROFILE", "CAROUSEL", "DIFFICULTIES", "OBJECTIVE", "CHECKIN"];
+const STEP_ORDER: OnboardingStep[] = ["INTRO", "PROFILE", "CAROUSEL", "DIFFICULTIES", "OBJECTIVE", "CHECKIN"];
 
 export const TOTAL_STEPS = STEP_ORDER.length;
 

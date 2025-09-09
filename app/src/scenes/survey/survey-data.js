@@ -25,7 +25,7 @@ export const buildSurveyData = async () => {
   return res;
 };
 
-export const getAvailableData = async () => {
+const getAvailableData = async () => {
   const customAvailableData = await getCustomAvailableData();
   const listExempleData = getListExemplesData();
   return availableData
@@ -39,7 +39,7 @@ export const getAvailableData = async () => {
     }, []);
 };
 
-export const getCustomAvailableData = async () => {
+const getCustomAvailableData = async () => {
   const userCustomSymptoms = await localStorage.getCustomSymptoms();
   const res = [];
   userCustomSymptoms.forEach((custom) => {
@@ -51,7 +51,7 @@ export const getCustomAvailableData = async () => {
   });
   return res;
 };
-export const getListExemplesData = () => {
+const getListExemplesData = () => {
   return INDICATEURS_LISTE.reduce((prev, current) => {
     return [
       ...prev,
@@ -136,7 +136,7 @@ export const availableData = [
   },
 ];
 
-export const startAtFirstQuestion = async (date, navigation) => {
+const startAtFirstQuestion = async (date, navigation) => {
   const user_indicateurs = await localStorage.getIndicateurs();
   if (!user_indicateurs) {
     navigation.navigate("symptoms", {

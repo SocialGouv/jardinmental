@@ -12,7 +12,6 @@ import { v4 as uuidv4 } from "uuid";
 import { Screen } from "../../../components/Screen";
 import { Button2 } from "../../../components/Button2";
 import { CATEGORIES, NEW_INDICATORS_CATEGORIES } from "@/utils/liste_indicateurs.1";
-import { INDICATOR_ORDER, INDICATOR_TYPE } from "@/entities/Indicator";
 import { INDICATORS_CATEGORIES } from "@/entities/IndicatorCategories";
 import { AnimatedHeaderScrollScreen } from "@/scenes/survey-v2/AnimatedHeaderScrollScreen";
 import { TW_COLORS } from "@/utils/constants";
@@ -21,6 +20,8 @@ import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
 import { SelectionnableRadioItem } from "@/components/SelectionnableItem";
 import JMButton from "@/components/JMButton";
+import { INDICATOR_ORDER } from "@/entities/IndicatorOrder";
+import type { INDICATOR_TYPE } from "@/entities/IndicatorType";
 
 const ChooseIndicatorOrder = ({
   navigation,

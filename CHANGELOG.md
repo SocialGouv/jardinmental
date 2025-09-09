@@ -1,3 +1,80 @@
+## [1.59.2](https://github.com/SocialGouv/jardinmental/compare/v1.59.1...v1.59.2) (2025-09-09)
+
+
+### Bug Fixes
+
+* **drawer:** can be closed in landscape mode, fix scroll on android ([#441](https://github.com/SocialGouv/jardinmental/issues/441)) ([29f2149](https://github.com/SocialGouv/jardinmental/commit/29f2149893462a159790b6fa83bd81d89b7a740f))
+
+## [1.59.1](https://github.com/SocialGouv/jardinmental/compare/v1.59.0...v1.59.1) (2025-09-09)
+
+
+### Bug Fixes
+
+* change icon for "nouveautés" screen ([#445](https://github.com/SocialGouv/jardinmental/issues/445)) ([6cca06c](https://github.com/SocialGouv/jardinmental/commit/6cca06c78ed99ddca7040764c67de7570f869f6b))
+
+# [1.59.0](https://github.com/SocialGouv/jardinmental/compare/v1.58.4...v1.59.0) (2025-09-09)
+
+
+### Features
+
+* **settings-modal:** orientation should stay in landspace and view should be scrollable ([#440](https://github.com/SocialGouv/jardinmental/issues/440)) ([d845ed1](https://github.com/SocialGouv/jardinmental/commit/d845ed1a64b28d1f7986448a0e2019e1be7b1736))
+
+## [1.58.4](https://github.com/SocialGouv/jardinmental/compare/v1.58.3...v1.58.4) (2025-09-09)
+
+
+### Bug Fixes
+
+* fix unit tests ([#443](https://github.com/SocialGouv/jardinmental/issues/443)) ([87211a2](https://github.com/SocialGouv/jardinmental/commit/87211a222d06c51860cd58e4b10f07a114cf91d3))
+
+## [1.58.3](https://github.com/SocialGouv/jardinmental/compare/v1.58.2...v1.58.3) (2025-09-08)
+
+
+### Bug Fixes
+
+* add short message after NPS ([#435](https://github.com/SocialGouv/jardinmental/issues/435)) ([e4f2cee](https://github.com/SocialGouv/jardinmental/commit/e4f2ceee807c579087e451b24b78424168ee9a19))
+
+## [1.58.2](https://github.com/SocialGouv/jardinmental/compare/v1.58.1...v1.58.2) (2025-09-08)
+
+
+### Bug Fixes
+
+* remove unused files ([#437](https://github.com/SocialGouv/jardinmental/issues/437)) ([2294e96](https://github.com/SocialGouv/jardinmental/commit/2294e96420efb2397ab41f2e015a75258b0ecc2e))
+
+## [1.58.1](https://github.com/SocialGouv/jardinmental/compare/v1.58.0...v1.58.1) (2025-09-08)
+
+
+### Bug Fixes
+
+* delete unused svg ([#438](https://github.com/SocialGouv/jardinmental/issues/438)) ([c6ca9cc](https://github.com/SocialGouv/jardinmental/commit/c6ca9ccc1083720d357b5f0dce21ea5fb2553ad8))
+
+# [1.58.0](https://github.com/SocialGouv/jardinmental/compare/v1.57.0...v1.58.0) (2025-09-08)
+
+
+### Features
+
+* add FEELING_ADD_LIST and FEELING_ADD_LIST_COMPLETED matomo indicators ([#434](https://github.com/SocialGouv/jardinmental/issues/434)) ([b33d4c8](https://github.com/SocialGouv/jardinmental/commit/b33d4c8fc219099818c06dc50f0cf69d3c4786b6))
+
+# [1.57.0](https://github.com/SocialGouv/jardinmental/compare/v1.56.1...v1.57.0) (2025-09-08)
+
+
+### Features
+
+* **daysurvey:** make header take selected mood color ([#433](https://github.com/SocialGouv/jardinmental/issues/433)) ([91c6b30](https://github.com/SocialGouv/jardinmental/commit/91c6b303c1b674ad56090fc3e955a3e727d50a00))
+
+## [1.56.1](https://github.com/SocialGouv/jardinmental/compare/v1.56.0...v1.56.1) (2025-09-08)
+
+
+### Bug Fixes
+
+* change text for cnam ([#436](https://github.com/SocialGouv/jardinmental/issues/436)) ([ed5e52c](https://github.com/SocialGouv/jardinmental/commit/ed5e52cc0a226d256e1e4a132cdd3876b7b81f89))
+
+# [1.56.0](https://github.com/SocialGouv/jardinmental/compare/v1.55.2...v1.56.0) (2025-09-04)
+
+
+### Features
+
+* **sentry:** add sentry ([#431](https://github.com/SocialGouv/jardinmental/issues/431)) ([382ab25](https://github.com/SocialGouv/jardinmental/commit/382ab25ee28a5072c3257315a5800c42ce436687))
+
 ## [1.55.2](https://github.com/SocialGouv/jardinmental/compare/v1.55.1...v1.55.2) (2025-09-04)
 
 

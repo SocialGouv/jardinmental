@@ -15,7 +15,7 @@ type Props = OnboardingV2ScreenProps<"Intro">;
 
 const NextRoute = "OnboardingCheckInHowDoYouFeel";
 
-export const OnboardingCheckInStartScreen: React.FC<Props> = ({ navigation }) => {
+const OnboardingCheckInStartScreen: React.FC<Props> = ({ navigation }) => {
   const { setCustomColor } = useStatusBar();
 
   useFocusEffect(

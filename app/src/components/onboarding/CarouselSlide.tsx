@@ -36,4 +36,3 @@ export const CarouselSlide: React.FC<CarouselSlideProps> = ({ slide, isActive, o
   );
 };
 
-export default CarouselSlide;

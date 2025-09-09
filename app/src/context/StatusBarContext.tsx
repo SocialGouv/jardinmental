@@ -104,4 +104,3 @@ export const useStatusBarInternal = () => {
   return context as StatusBarContextType & { setDefaultColor: (color: string) => void };
 };
 
-export default StatusBarContext;

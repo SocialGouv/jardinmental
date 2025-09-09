@@ -94,7 +94,7 @@ const SurveyStackNavigator: React.FC<{ context: SurveyContextType; isLoading: bo
   );
 };
 
-export const SurveyNavigator: React.FC<SurveyNavigatorProps> = ({ navigation, route }) => {
+const SurveyNavigator: React.FC<SurveyNavigatorProps> = ({ navigation, route }) => {
   const initEditingSurvey = route?.params?.editingSurvey ?? false;
   const [userIndicateurs, setUserIndicateurs] = useState<Indicator[]>([]);
   const [isLoading, setIsLoading] = useState(true);

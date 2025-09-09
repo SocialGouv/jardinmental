@@ -14,6 +14,11 @@ import { DiaryDataNewEntryInput } from "../../entities/DiaryData";
 import { Indicator } from "../../entities/Indicator";
 import { IndicatorSurveyItem } from "@/components/survey/IndicatorSurveyItem";
 import { DrugsBottomSheet } from "@/components/DrugsBottomSheet";
+import { moodBackgroundColors, MoodEmoji, moodEmojis } from "@/utils/mood";
+import { getIndicatorKey } from "@/utils/indicatorUtils";
+import { TW_COLORS } from "@/utils/constants";
+import { mergeClassNames } from "@/utils/className";
+import { typography } from "@/utils/typography";
 import {
   INDICATEURS_HUMEUR,
   NEW_INDICATORS_CATEGORIES,
@@ -21,10 +26,6 @@ import {
   STATIC_UUID_FOR_INSTANCE_OF_GENERIC_INDICATOR_SUBSTANCE,
   INDICATORS,
 } from "@/utils/liste_indicateurs.1";
-import { getIndicatorKey } from "@/utils/indicatorUtils";
-import { TW_COLORS } from "@/utils/constants";
-import { mergeClassNames } from "@/utils/className";
-import { typography } from "@/utils/typography";
 import { HELP_FOR_CATEGORY, INDICATOR_CATEGORIES_DATA } from "../onboarding-v2/data/helperData";
 import CircleQuestionMark from "@assets/svg/icon/CircleQuestionMark";
 import JMButton from "@/components/JMButton";
@@ -33,6 +34,8 @@ import HelpView from "@/components/HelpView";
 import { AnimatedHeaderScrollScreen } from "../survey-v2/AnimatedHeaderScrollScreen";
 import Pencil from "@assets/svg/Pencil";
 import NavigationButtons from "@/components/onboarding/NavigationButtons";
+import { interpolateColor, useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated";
+import ChevronIcon from "@assets/svg/icon/chevron";
 
 const DaySurvey = ({
   navigation,
@@ -52,7 +55,8 @@ const DaySurvey = ({
     answers: {},
   };
   const { showBottomSheet, closeBottomSheet } = useBottomSheet();
-  const initEditiingSurvey = route?.params?.editingSurvey ?? false;
+  const statusBarColorProgress = useSharedValue(0);
+  const [selectedMoodIndex, setSelectedMoodIndex] = useState<number | null>(null);
 
   const [diaryData, addNewEntryToDiaryData] = useContext(DiaryDataContext);
 
@@ -178,6 +182,7 @@ const DaySurvey = ({
       }
     });
     setAnswers(initialAnswers);
+    setSelectedMoodIndex(initialAnswers?.[INDICATEURS_HUMEUR.uuid]?.value || null);
   }, [initSurvey?.answers, questionToxic.id, questionContext?.id, userIndicateurs]);
 
   const toggleAnswer = async ({ key, value }) => {
@@ -225,6 +230,24 @@ const DaySurvey = ({
     );
     logEvents.logFeelingAddContext(answers[questionContext.id]?.userComment ? 1 : 0);
     logEvents.logFeelingResponseToxic(answers[questionToxic.id]?.value ? 1 : 0);
+
+    // Log each indicator in the questionnaire (FEELING_ADD_LIST)
+    for (const indicator of userIndicateurs.filter((i) => i.active)) {
+      if (indicator.matomoId) {
+        logEvents.logFeelingAddList(indicator.matomoId);
+      }
+    }
+
+    // Log each indicator that has been answered (FEELING_ADD_LIST_COMPLETED)
+    for (const key of Object.keys(answers)) {
+      // Skip special questions (TOXIC and CONTEXT)
+      if ([questionToxic.id, questionContext.id].includes(key)) continue;
+
+      const answer = answers[key];
+      if (answer?.value !== undefined && answer._indicateur?.matomoId) {
+        logEvents.logFeelingAddListCompleted(answer._indicateur.matomoId);
+      }
+    }
 
     if (route.params?.redirect) {
       return navigation.navigate("survey-success", {
@@ -287,14 +310,6 @@ const DaySurvey = ({
     //
   };
 
-  const renderQuestion = () => {
-    if (isYesterday(parseISO(initSurvey?.date))) return "Comment s'est passée la journée d'hier ?";
-    if (isToday(parseISO(initSurvey?.date))) return "Comment s'est passée votre journée ?";
-    let relativeDate = formatRelativeDate(initSurvey?.date);
-    relativeDate = `le ${relativeDate}`;
-    return `Comment s'est passé ${relativeDate} ?`;
-  };
-
   const showHelpModal = (category: NEW_INDICATORS_CATEGORIES) => {
     return showBottomSheet(<HelpView title={HELP_FOR_CATEGORY[category].title} description={HELP_FOR_CATEGORY[category]?.description} />);
   };
@@ -308,14 +323,46 @@ const DaySurvey = ({
   const onCommentChanged = ({ indicator, comment }: { indicator: Indicator; comment?: string }) =>
     handleChangeUserComment({ key: getIndicatorKey(indicator), userComment: comment });
 
+  const animatedStatusBarColor = useAnimatedStyle(() => {
+    if (selectedMoodIndex === null) {
+      return {
+        backgroundColor: TW_COLORS.PRIMARY,
+      };
+    }
+
+    const color = interpolateColor(statusBarColorProgress.value, [0, 0.25, 0.5, 0.75, 1], moodBackgroundColors);
+
+    return {
+      backgroundColor: color,
+    };
+  });
+
+  // Update statusBarColorProgress when selectedMoodIndex changes
+  React.useEffect(() => {
+    if (selectedMoodIndex !== null) {
+      const normalizedIndex = (selectedMoodIndex - 1) / (moodEmojis.length - 1);
+      statusBarColorProgress.value = withSpring(normalizedIndex);
+    }
+  }, [selectedMoodIndex]);
+
+  const animatedTextColor = useAnimatedStyle(() => {
+    return {
+      color: selectedMoodIndex !== null ? TW_COLORS.CNAM_PRIMARY_900 : TW_COLORS.WHITE,
+      backgroundColor: "transparent",
+    };
+  });
+
   return (
     <AnimatedHeaderScrollScreen
-      headerRightComponent={<Pencil color={TW_COLORS.WHITE} width={16} height={16} />}
+      headerRightComponent={<Pencil color={selectedMoodIndex === null ? TW_COLORS.WHITE : TW_COLORS.CNAM_PRIMARY_900} width={16} height={16} />}
       headerRightAction={editIndicators}
       headerTitle={formatDate(initSurvey?.date)}
       handlePrevious={() => {
         navigation.goBack();
       }}
+      headerLeftComponent={<ChevronIcon color={selectedMoodIndex === null ? TW_COLORS.WHITE : TW_COLORS.CNAM_PRIMARY_900} />}
+      animatedStatusBarColor={animatedStatusBarColor}
+      animatedTextColor={animatedTextColor}
       smallHeader={true}
       bottomComponent={
         <NavigationButtons
@@ -358,7 +405,10 @@ const DaySurvey = ({
                   onIndicatorChange={() => {
                     updateIndicators();
                   }}
-                  onValueChanged={onValueChanged}
+                  onValueChanged={(value) => {
+                    onValueChanged(value);
+                    setSelectedMoodIndex(value.value);
+                  }}
                   onCommentChanged={onCommentChanged}
                   comment={answers?.[getIndicatorKey(ind)]?.userComment}
                 />
