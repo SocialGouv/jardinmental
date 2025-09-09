@@ -7,6 +7,7 @@ import SurveyNavigator from "../scenes/survey-v2/SurveyNavigator";
 import SelectDayScreen from "../scenes/survey/selectDay";
 import Reminder from "../scenes/reminder";
 import Export from "../scenes/export/export";
+import DataExportImport from "../scenes/data-export-import";
 import DailyChart from "../scenes/calendar/daily-chart";
 import { AppState, Platform, Linking } from "react-native";
 import { StatusBar } from "expo-status-bar";
@@ -226,6 +227,7 @@ class Router extends React.Component<RouterProps> {
             <Stack.Screen name="symptoms" component={Indicateurs} />
             <Stack.Screen name="reminder" component={Reminder} />
             <Stack.Screen name="export" component={Export} />
+            <Stack.Screen name="data-export-import" component={DataExportImport} />
             <Stack.Screen name="chart-day" component={DailyChart} />
             <Stack.Screen name="notes" options={{ animationEnabled: Platform.OS === "ios" }}>
               {({ navigation, route }) => <Notes navigation={navigation} route={route} />}
