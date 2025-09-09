@@ -276,9 +276,7 @@ const Status = ({ navigation, startSurvey }) => {
             </Animated.View>
             <TabPicker ongletActif={ongletActif} onChange={setOngletActif} />
           </Animated.View>
-          {noData() ? (
-            <NoData navigation={navigation} />
-          ) : ongletActif === "all" && !bannerProNPSVisible ? (
+          {ongletActif === "all" && !bannerProNPSVisible ? (
             <DiaryList
               ListHeaderComponent={renderHeader}
               ListFooterComponent={renderFooter}

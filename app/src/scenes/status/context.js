@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "space-between",
     alignItems: "flex-start",
-    paddingHorizontal: 20,
+    // paddingHorizontal: 20,
     paddingVertical: 10,
   },
   divider: {

@@ -11,6 +11,9 @@ export const GoalsStatus = ({ goalsData, date, withSeparator }) => {
   const records = recordIds
     .map((id) => goalsData?.records?.data?.[id])
     .sort((a, b) => goalsData?.goals?.byOrder?.indexOf?.(a?.goalId) - goalsData?.goals?.byOrder?.indexOf?.(b?.goalId));
+  if (!records.length) {
+    return null;
+  }
   return (
     <>
       {withSeparator && <Separator style={{ paddingHorizontal: 40 }} />}

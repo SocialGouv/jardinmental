@@ -34,19 +34,21 @@ export const DiaryList = forwardRef(({ ...props }, ref) => {
   const renderItem = useCallback(
     ({ item: date }) => {
       return (
-        // <View>
-        //   <View style={styles.dateContainer}>
-        //     <View style={styles.dateDot} />
-        //     {canEdit(date) ? (
-        //       <Text style={styles.dateLabel}>{formatDateThread(date)}</Text>
-        //     ) : (
-        //       <TouchableOpacity style={styles.item} onPress={() => navigation.navigate("too-late", { date })}>
-        //         <Text style={styles.dateLabel}>{formatDateThread(date)}</Text>
-        //       </TouchableOpacity>
-        //     )}
-        //   </View>
-        <NewStatusItem date={date} indicateurs={indicateurs} patientState={diaryData[date]} goalsData={goalsData} navigation={navigation} />
-        // </View>
+        <View className="bg-red">
+          {!canEdit(date) && (
+            <View style={styles.dateContainer}>
+              <View style={styles.dateDot} />
+              {canEdit(date) ? (
+                <Text style={styles.dateLabel}>{formatDateThread(date)}</Text>
+              ) : (
+                <TouchableOpacity style={styles.item} onPress={() => navigation.navigate("too-late", { date })}>
+                  <Text style={styles.dateLabel}>{formatDateThread(date)}</Text>
+                </TouchableOpacity>
+              )}
+            </View>
+          )}
+          <NewStatusItem date={date} indicateurs={indicateurs} patientState={diaryData[date]} goalsData={goalsData} navigation={navigation} />
+        </View>
       );
     },
     [diaryData, goalsData, indicateurs]
