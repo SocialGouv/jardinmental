@@ -1,3 +1,10 @@
+# [1.59.0](https://github.com/SocialGouv/jardinmental/compare/v1.58.4...v1.59.0) (2025-09-09)
+
+
+### Features
+
+* **settings-modal:** orientation should stay in landspace and view should be scrollable ([#440](https://github.com/SocialGouv/jardinmental/issues/440)) ([d845ed1](https://github.com/SocialGouv/jardinmental/commit/d845ed1a64b28d1f7986448a0e2019e1be7b1736))
+
 ## [1.58.4](https://github.com/SocialGouv/jardinmental/compare/v1.58.3...v1.58.4) (2025-09-09)
 
 
