@@ -1,3 +1,10 @@
+## [1.59.1](https://github.com/SocialGouv/jardinmental/compare/v1.59.0...v1.59.1) (2025-09-09)
+
+
+### Bug Fixes
+
+* change icon for "nouveautés" screen ([#445](https://github.com/SocialGouv/jardinmental/issues/445)) ([6cca06c](https://github.com/SocialGouv/jardinmental/commit/6cca06c78ed99ddca7040764c67de7570f869f6b))
+
 # [1.59.0](https://github.com/SocialGouv/jardinmental/compare/v1.58.4...v1.59.0) (2025-09-09)
 
 
