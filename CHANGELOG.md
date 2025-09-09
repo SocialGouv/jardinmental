@@ -1,3 +1,10 @@
+## [1.59.2](https://github.com/SocialGouv/jardinmental/compare/v1.59.1...v1.59.2) (2025-09-09)
+
+
+### Bug Fixes
+
+* **drawer:** can be closed in landscape mode, fix scroll on android ([#441](https://github.com/SocialGouv/jardinmental/issues/441)) ([29f2149](https://github.com/SocialGouv/jardinmental/commit/29f2149893462a159790b6fa83bd81d89b7a740f))
+
 ## [1.59.1](https://github.com/SocialGouv/jardinmental/compare/v1.59.0...v1.59.1) (2025-09-09)
 
 
