@@ -1,3 +1,10 @@
+# [1.60.0](https://github.com/SocialGouv/jardinmental/compare/v1.59.2...v1.60.0) (2025-09-09)
+
+
+### Features
+
+* **accessibility:** add arrow for very small screen where you cannot see other emotions on the corners ([#432](https://github.com/SocialGouv/jardinmental/issues/432)) ([62a0dc1](https://github.com/SocialGouv/jardinmental/commit/62a0dc1444b6f49072c86d9e9d56416d2ae4249f))
+
 ## [1.59.2](https://github.com/SocialGouv/jardinmental/compare/v1.59.1...v1.59.2) (2025-09-09)
 
 
