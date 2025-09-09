@@ -3,17 +3,7 @@ import { categories } from "../utils/constants";
 import { NEW_INDICATORS_CATEGORIES, NEW_INDICATORS_SUBCATEGORIES } from "@/utils/liste_indicateurs.1";
 import { v4 as uuidv4 } from "uuid";
 import { INDICATORS_CATEGORIES } from "./IndicatorCategories";
-
-export enum INDICATOR_TYPE {
-  "smiley" = "smiley",
-  "gauge" = "gauge",
-  "boolean" = "boolean",
-}
-
-export enum INDICATOR_ORDER {
-  "ASC" = "ASC",
-  "DESC" = "DESC",
-}
+import { INDICATOR_TYPE } from "./IndicatorType";
 
 const IndicatorTypeSchema = z.nativeEnum(INDICATOR_TYPE);
 const IndicatorOrderSchema = z.enum(["ASC", "DESC"]);
