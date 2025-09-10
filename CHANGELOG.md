@@ -1,3 +1,10 @@
+# [1.61.0](https://github.com/SocialGouv/jardinmental/compare/v1.60.3...v1.61.0) (2025-09-10)
+
+
+### Features
+
+* bump version ([6078ffe](https://github.com/SocialGouv/jardinmental/commit/6078ffe1d4bf6401fb2b74a2a900af3faac4968d))
+
 ## [1.60.3](https://github.com/SocialGouv/jardinmental/compare/v1.60.2...v1.60.3) (2025-09-10)
 
 
