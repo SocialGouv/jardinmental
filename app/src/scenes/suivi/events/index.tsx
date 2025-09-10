@@ -35,7 +35,7 @@ const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, 
         if (user_indicateurs) {
           setUserIndicateurs(user_indicateurs);
           setIndicateur(user_indicateurs[0].name);
-          setIndicateurId(getIndicatorKey(userIndicateurs[0]));
+          setIndicateurId(getIndicatorKey(user_indicateurs[0]));
         }
       })();
     }, [])
