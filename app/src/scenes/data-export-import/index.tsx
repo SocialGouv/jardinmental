@@ -24,7 +24,7 @@ const DataExportImport = ({ navigation }) => {
   const exportData = async () => {
     try {
       setIsExporting(true);
-      logEvents.logDataExport();
+      logEvents.logDataExportAsBackUp();
 
       // Créer le contenu du fichier avec toutes les données
       const exportData = {
@@ -32,7 +32,6 @@ const DataExportImport = ({ navigation }) => {
         appVersion: "jardin-mental",
         data: diaryData,
       };
-
       const jsonString = JSON.stringify(exportData, null, 2);
 
       // Créer le fichier temporaire
@@ -62,6 +61,7 @@ const DataExportImport = ({ navigation }) => {
   const importData = async () => {
     try {
       setIsImporting(true);
+      logEvents.logDataImport();
 
       // Sélectionner le fichier
       const result = await DocumentPicker.getDocumentAsync({
@@ -78,7 +78,6 @@ const DataExportImport = ({ navigation }) => {
       const fileContent = await FileSystem.readAsStringAsync(result.assets[0].uri, {
         encoding: FileSystem.EncodingType.UTF8,
       });
-
       // Parser le JSON
       let importedData;
       try {

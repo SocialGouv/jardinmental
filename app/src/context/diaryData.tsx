@@ -149,7 +149,12 @@ const DiaryDataProvider = ({ children }) => {
     setDiaryData(parsedData);
     if (parsedData) {
       const migrationAlreadyDone = await AsyncStorage.getItem(STORAGE_KEY_REMOVING_TOXIC_QUESTION_FROM_SURVEY_MIGRATION_DONE);
-      if (Object.values(parsedData).find((data) => Object.keys(data).includes("TOXIC")) && !migrationAlreadyDone) {
+      if (
+        Object.values(parsedData)
+          .filter((data) => data) // prevent possible null value
+          .find((data) => Object.keys(data).includes("TOXIC")) &&
+        !migrationAlreadyDone
+      ) {
         localStorage.replaceOrAddIndicateur({
           ...generateIndicatorFromPredefinedIndicator(GENERIC_INDICATOR_SUBSTANCE),
           // we keep the same uuid "A" for continutiry in history key=="TOXIC" and "A" uuid are considered the same,
