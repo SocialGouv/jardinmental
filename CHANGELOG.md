@@ -1,3 +1,10 @@
+## [1.60.3](https://github.com/SocialGouv/jardinmental/compare/v1.60.2...v1.60.3) (2025-09-10)
+
+
+### Bug Fixes
+
+* coquille ([#453](https://github.com/SocialGouv/jardinmental/issues/453)) ([58edb59](https://github.com/SocialGouv/jardinmental/commit/58edb5969ab9fad16e64fbc674a0bc80cd3d222d))
+
 ## [1.60.2](https://github.com/SocialGouv/jardinmental/compare/v1.60.1...v1.60.2) (2025-09-10)
 
 
