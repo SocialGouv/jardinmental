@@ -15,6 +15,7 @@ import Card from "./Card";
 import { EventFilterHeader } from "./EventFilterHeader";
 import JMButton from "@/components/JMButton";
 import Legend from "../Legend";
+import { getIndicatorKey } from "@/utils/indicatorUtils";
 
 const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, toDate, setToDate }) => {
   const [diaryData] = React.useContext(DiaryDataContext);
@@ -23,6 +24,7 @@ const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, 
   const [isEmpty, setIsEmpty] = React.useState();
   const chartDates = getArrayOfDatesFromTo({ fromDate, toDate });
   const [indicateur, setIndicateur] = React.useState();
+  const [indicateurId, setIndicateurId] = React.useState();
   const [event, setEvent] = React.useState("ALL");
   const [level, setLevel] = React.useState([5]);
 
@@ -33,6 +35,7 @@ const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, 
         if (user_indicateurs) {
           setUserIndicateurs(user_indicateurs);
           setIndicateur(user_indicateurs[0].name);
+          setIndicateurId(getIndicatorKey(userIndicateurs[0]));
         }
       })();
     }, [])
@@ -40,10 +43,11 @@ const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, 
 
   // React.useEffect(() => {
   //   console.log("✍️ ~ indicateur", indicateur);
-  // }, [indicateur]);
+  // }, getIndicatorKey);
 
   const memoizedCallback = React.useCallback(() => {
     if (!indicateur) return [];
+    if (!indicateurId) return [];
     // console.log("SYMPTOME", indicateur);
     if (!level || !level.length) return [];
     let _targetLevel = level[0];
@@ -58,21 +62,23 @@ const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, 
         // console.log("no dayData");
         return {};
       }
-      const categoryState = diaryData[date][indicateur];
+      const categoryState = diaryData[date][indicateurId];
+
       // console.log("✍️ ~ categoryState", categoryState);
       if (!categoryState) {
         // console.log("categoryState");
         return {};
       }
+
       let targetLevel = _targetLevel;
-      if (diaryData[date][indicateur]?._indicateur?.order === "DESC") targetLevel = 6 - _targetLevel;
+      if (diaryData[date][indicateurId]?._indicateur?.order === "DESC") targetLevel = 6 - _targetLevel;
       let _value;
-      if (diaryData[date][indicateur]?._indicateur?.type === "smiley") {
-        _value = diaryData[date][indicateur]?.value;
-      } else if (diaryData[date][indicateur]?._indicateur?.type === "boolean") {
-        _value = diaryData[date][indicateur]?.value === true ? 5 : 1;
-      } else if (diaryData[date][indicateur]?._indicateur?.type === "gauge") {
-        _value = Math.ceil(diaryData[date][indicateur]?.value * 5);
+      if (diaryData[date][indicateurId]?._indicateur?.type === "smiley") {
+        _value = diaryData[date][indicateurId]?.value;
+      } else if (diaryData[date][indicateurId]?._indicateur?.type === "boolean") {
+        _value = diaryData[date][indicateurId]?.value === true ? 5 : 1;
+      } else if (diaryData[date][indicateurId]?._indicateur?.type === "gauge") {
+        _value = Math.ceil(diaryData[date][indicateurId]?.value * 5);
       } else {
         _value = 0;
       }
@@ -109,7 +115,7 @@ const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, 
       // }
       // return { value: categoryState.level - 1 };
     });
-  }, [indicateur, level, event, chartDates, diaryData]);
+  }, [indicateur, indicateurId, level, event, chartDates, diaryData]);
 
   const startSurvey = async () => {
     const symptoms = await localStorage.getSymptoms();
