@@ -78,22 +78,22 @@ export default ({ navigation, visible, onClick }) => {
           onClick();
         }}
       />
-      <SafeAreaView>
-        <Modal
-          style={styles.modal}
-          isVisible={isVisible}
-          onBackdropPress={onClick}
-          onSwipeComplete={onClick}
-          animationIn="slideInLeft"
-          animationOut="slideOutLeft"
-          deviceWidth={width}
-          deviceHeight={height} // <--- met à jour automatiquement
-        >
+      <Modal
+        style={styles.modal}
+        isVisible={isVisible}
+        onBackdropPress={onClick}
+        onSwipeComplete={onClick}
+        animationIn="slideInLeft"
+        animationOut="slideOutLeft"
+        deviceWidth={width}
+        deviceHeight={height} // <--- met à jour automatiquement
+      >
+        <SafeAreaView style={[styles.card]}>
           <ScrollView
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.scrollContainer}
             style={[
-              styles.card,
+              // styles.card,
               {
                 // on android the scrollview is being desactived when you open several time the drawer
                 // apparently it is a bug when having scrollview inside modal
@@ -153,8 +153,8 @@ export default ({ navigation, visible, onClick }) => {
               </View>
             </TouchableWithoutFeedback>
           </ScrollView>
-        </Modal>
-      </SafeAreaView>
+        </SafeAreaView>
+      </Modal>
     </>
   );
 };
