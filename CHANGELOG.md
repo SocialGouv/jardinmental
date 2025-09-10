@@ -1,3 +1,10 @@
+## [1.60.1](https://github.com/SocialGouv/jardinmental/compare/v1.60.0...v1.60.1) (2025-09-10)
+
+
+### Bug Fixes
+
+* "declencheurs" not showing : use the right indicator id ([#451](https://github.com/SocialGouv/jardinmental/issues/451)) ([e409ec7](https://github.com/SocialGouv/jardinmental/commit/e409ec7cc58b3bbc2b1d2364b93c6bb70df8c72a))
+
 # [1.60.0](https://github.com/SocialGouv/jardinmental/compare/v1.59.2...v1.60.0) (2025-09-09)
 
 
