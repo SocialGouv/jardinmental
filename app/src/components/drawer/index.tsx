@@ -105,7 +105,7 @@ export default ({ navigation, visible, onClick }) => {
             <Text style={styles.title}>Jardin Mental</Text>
             <DrawerItem badge={badgeNotesVersionVisible} title="Nouveautés" path="news" navigation={navigation} onClick={onClick} icon={<Star />} />
             <Separator />
-            <DrawerItem title="Présentation" path="presentation" navigation={navigation} onClick={onClick} icon={<StickerSquare />} />
+            <DrawerItem title="Comment ça marche ?" path="faq" navigation={navigation} onClick={onClick} icon={<StickerSquare />} />
             <DrawerItem title="Recommander Jardin&nbsp;Mental" onClick={recommendApp} icon={<Share />} />
             <DrawerItem title="Parler à quelqu'un et s'informer" path="infos" navigation={navigation} onClick={onClick} icon={<Phone />} />
             <DrawerItem title="Nous contacter" path="contact" navigation={navigation} onClick={onClick} icon={<MessageTextCircle />} />
