@@ -1,3 +1,10 @@
+## [1.60.2](https://github.com/SocialGouv/jardinmental/compare/v1.60.1...v1.60.2) (2025-09-10)
+
+
+### Bug Fixes
+
+* fix drawer overlapping IOS notch ([#452](https://github.com/SocialGouv/jardinmental/issues/452)) ([30214a5](https://github.com/SocialGouv/jardinmental/commit/30214a5ab576da42cfc52c3a926b7b4b34de385b))
+
 ## [1.60.1](https://github.com/SocialGouv/jardinmental/compare/v1.60.0...v1.60.1) (2025-09-10)
 
 
