@@ -2,6 +2,7 @@ export const typography = {
   // Display
   displayMdBold: "text-display-md font-bold font-title",
   displayXsBold: "text-display-xs font-bold font-title text-center",
+  displayXsSemibold: "text-display-xs font-semibold font-title text-center",
   displayXsMedium: "text-display-xs font-medium font-title text-center",
   displayXsRegular: "text-display-xs-regular font-normal font-title text-center",
 
