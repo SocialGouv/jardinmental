@@ -9,6 +9,40 @@ import CircleCheckMark from "@assets/svg/icon/CircleCheckMark";
 import Animated, { useSharedValue, useAnimatedStyle, withTiming, withDelay, Easing } from "react-native-reanimated";
 import JMButton from "@/components/JMButton";
 
+// Motivational messages list
+const MOTIVATIONAL_MESSAGES = [
+  { emoji: "👏", text: "Prendre le temps de remplir ton suivi, c'est déjà prendre soin de toi." },
+  { emoji: "🧩", text: "Chaque saisie est une petite pièce du puzzle de ta santé mentale." },
+  { emoji: "🌱", text: "Revenir régulièrement, c'est construire pas à pas une meilleure connaissance de toi-même." },
+  { emoji: "✨", text: "L'auto-observation permet de mettre en lumière ce qui reste invisible au quotidien." },
+  { emoji: "📈", text: "Observer tes indicateurs, c'est comprendre ce qui influence ton équilibre." },
+  { emoji: "💡", text: "En notant tes ressentis, tu crées un journal de ton bien-être." },
+  { emoji: "🙌", text: "Faire le point sur ta journée, c'est déjà un acte positif envers toi-même." },
+  { emoji: "🕰️", text: "Deux minutes pour remplir ton suivi = un temps précieux que tu t'accordes." },
+  { emoji: "🌙", text: "Même une petite observation aujourd'hui peut t'apporter des clés demain." },
+  { emoji: "💪", text: "Tu fais de ton bien-être une priorité, un pas après l'autre." },
+  { emoji: "🔍", text: "Chaque saisie est une observation qui compte." },
+  { emoji: "🎯", text: "Ton engagement à noter régulièrement renforce ton parcours personnel." },
+  { emoji: "🗝️", text: "L'auto-observation est une clé pour mieux comprendre ce qui agit sur toi." },
+  { emoji: "📊", text: "Chaque indicateur noté enrichit ta compréhension de toi-même." },
+  { emoji: "🤝", text: "Remplir ton suivi, c'est engager un dialogue bienveillant avec toi-même." },
+  { emoji: "🌞", text: "Observer aujourd'hui, c'est préparer un demain plus serein." },
+  { emoji: "🌍", text: "Tu contribues à ton équilibre rien qu'en prenant ce moment." },
+  { emoji: "📝", text: "Noter tes ressentis, c'est prendre un temps pour les reconnaître." },
+  { emoji: "🔄", text: "La régularité fait toute la différence dans l'auto-observation." },
+  { emoji: "🌟", text: "Faire ton suivi, c'est déjà progresser." },
+  { emoji: "⚖️", text: "Connaître tes variations, c'est apprendre à équilibrer ton quotidien." },
+  { emoji: "📌", text: "Chaque point noté est une trace utile pour mieux avancer." },
+  { emoji: "🚀", text: "Tu construis une base solide en revenant jour après jour." },
+  { emoji: "💭", text: "L'auto-observation, c'est un espace pour écouter tes pensées." },
+  { emoji: "🧘", text: "Ce petit rituel quotidien nourrit ton équilibre intérieur." },
+  { emoji: "🎉", text: "Bravo pour ton engagement : chaque suivi est une victoire." },
+  { emoji: "📖", text: "Ton suivi est ton histoire, jour après jour." },
+  { emoji: "💬", text: "Noter tes ressentis, c'est apprendre à mieux dialoguer avec toi-même." },
+  { emoji: "🌈", text: "Faire ton suivi, c'est un geste simple mais puissant." },
+  { emoji: "🕊️", text: "Observer régulièrement, c'est semer des graines de sérénité." },
+];
+
 interface SurveySuccessScreenProps {
   navigation: any;
   route?: {
@@ -21,6 +55,12 @@ interface SurveySuccessScreenProps {
 const SurveySuccessScreen: React.FC<SurveySuccessScreenProps> = ({ navigation, route }) => {
   const { setCustomColor } = useStatusBar();
   const [showPanel, setShowPanel] = useState(false);
+
+  // Select random motivational message
+  const [randomMessage] = useState(() => {
+    const randomIndex = Math.floor(Math.random() * MOTIVATIONAL_MESSAGES.length);
+    return MOTIVATIONAL_MESSAGES[randomIndex];
+  });
 
   // Animation values
   const panelTranslateY = useSharedValue(300); // Start below screen
@@ -112,7 +152,7 @@ const SurveySuccessScreen: React.FC<SurveySuccessScreenProps> = ({ navigation, r
             <View className="ml-14 rounded-full w-16 h-16 bg-cnam-cyan-500-0 p-2"></View>
           </View>
           <View className="absolute top-[-30px] self-center rounded-full w-16 h-16 border border-white bg-cnam-cyan-lighten-80 p-2 flex items-center justify-center">
-            <Text className="text-3xl">👏</Text>
+            <Text className="text-3xl">{randomMessage.emoji}</Text>
           </View>
           {/* Top Content Area */}
           <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
@@ -121,12 +161,10 @@ const SurveySuccessScreen: React.FC<SurveySuccessScreenProps> = ({ navigation, r
             {/* Content centered in the panel */}
             <View style={{ alignItems: "center" }}>
               {/* Bravo Title */}
-              <Text className={mergeClassNames("text-lg font-bold text-cnam-primary-900 text-center mb-6")}>Bravo !</Text>
+              <Text className={mergeClassNames("text-lg font-bold text-cnam-primary-900 text-center mb-6")}>Bravo !</Text>
 
-              {/* Congratulations Text */}
-              <Text className={mergeClassNames("text-lg font-normal text-cnam-primary-900 text-center leading-6")}>
-                Prendre le temps de remplir votre suivi, c'est déjà prendre soin de vous.
-              </Text>
+              {/* Random Motivational Text */}
+              <Text className={mergeClassNames("text-lg font-normal text-cnam-primary-900 text-center leading-6")}>{randomMessage.text}</Text>
             </View>
           </View>
 
