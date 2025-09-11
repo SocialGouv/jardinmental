@@ -1,5 +1,16 @@
 import React, { useState, useEffect, useContext } from "react";
-import { StyleSheet, Platform, SafeAreaView, Dimensions, View, ScrollView, Linking, TouchableWithoutFeedback, Alert } from "react-native";
+import {
+  StyleSheet,
+  Platform,
+  SafeAreaView,
+  Dimensions,
+  View,
+  ScrollView,
+  Linking,
+  TouchableWithoutFeedback,
+  Alert,
+  useWindowDimensions,
+} from "react-native";
 import Modal from "react-native-modal";
 import DrawerItem from "./drawer-item";
 import LegalItem from "./legal-item";
@@ -25,6 +36,7 @@ import Gear from "@assets/svg/Gear";
 export default ({ navigation, visible, onClick }) => {
   const [isVisible, setIsVisible] = useState();
   const updateVisible = useContext(NeedUpdateContext);
+  const { height, width } = useWindowDimensions();
 
   const [devModeCount, setDevModeCount] = useState(1);
   const [isDevMode, setIsDevMode] = useState(false);
@@ -57,7 +69,6 @@ export default ({ navigation, visible, onClick }) => {
     }
   };
 
-  const deviceHeight = Dimensions.get("window").height;
   return (
     <>
       <NPS
@@ -74,64 +85,75 @@ export default ({ navigation, visible, onClick }) => {
         onSwipeComplete={onClick}
         animationIn="slideInLeft"
         animationOut="slideOutLeft"
-        deviceHeight={deviceHeight}
+        deviceWidth={width}
+        deviceHeight={height} // <--- met à jour automatiquement
       >
-        <View style={styles.card}>
-          <SafeAreaView>
-            <ScrollView contentContainerStyle={styles.scrollContainer}>
-              <Text style={styles.title}>Jardin Mental</Text>
-              <DrawerItem badge={badgeNotesVersionVisible} title="Nouveautés" path="news" navigation={navigation} onClick={onClick} icon={<Star />} />
-              <Separator />
-              <DrawerItem title="Présentation" path="presentation" navigation={navigation} onClick={onClick} icon={<StickerSquare />} />
-              <DrawerItem title="Recommander Jardin&nbsp;Mental" onClick={recommendApp} icon={<Share />} />
-              <DrawerItem title="Parler à quelqu'un et s'informer" path="infos" navigation={navigation} onClick={onClick} icon={<Phone />} />
-              <DrawerItem title="Nous contacter" path="contact" navigation={navigation} onClick={onClick} icon={<MessageTextCircle />} />
-              <DrawerItem title="Qui peut voir mes données ?" path="privacy-light" navigation={navigation} onClick={onClick} icon={<Lock />} />
-              {updateVisible ? (
-                <DrawerItem
-                  badge
-                  title="Mettre à jour"
-                  icon={<Bell />}
-                  onClick={() =>
-                    Linking.openURL(
-                      Platform.OS === "ios"
-                        ? "itms-apps://apps.apple.com/FR/app/id1540061393"
-                        : "https://play.app.goo.gl/?link=https://play.google.com/store/apps/details?id=com.monsuivipsy"
-                    )
-                  }
-                />
-              ) : null}
+        <SafeAreaView style={[styles.card]}>
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={styles.scrollContainer}
+            style={[
+              // styles.card,
+              {
+                // on android the scrollview is being desactived when you open several time the drawer
+                // apparently it is a bug when having scrollview inside modal
+                // this weird workaround fixes it https://github.com/facebook/react-native/issues/48822#issuecomment-2667011212
+                height: 100,
+              },
+            ]}
+          >
+            <Text style={styles.title}>Jardin Mental</Text>
+            <DrawerItem badge={badgeNotesVersionVisible} title="Nouveautés" path="news" navigation={navigation} onClick={onClick} icon={<Star />} />
+            <Separator />
+            <DrawerItem title="Présentation" path="presentation" navigation={navigation} onClick={onClick} icon={<StickerSquare />} />
+            <DrawerItem title="Recommander Jardin&nbsp;Mental" onClick={recommendApp} icon={<Share />} />
+            <DrawerItem title="Parler à quelqu'un et s'informer" path="infos" navigation={navigation} onClick={onClick} icon={<Phone />} />
+            <DrawerItem title="Nous contacter" path="contact" navigation={navigation} onClick={onClick} icon={<MessageTextCircle />} />
+            <DrawerItem title="Qui peut voir mes données ?" path="privacy-light" navigation={navigation} onClick={onClick} icon={<Lock />} />
+            {updateVisible ? (
               <DrawerItem
-                badge={badgeNpsProIsVisible}
-                title="Donner mon avis"
-                icon={<LightBulb />}
-                onClick={async () => {
-                  // dismiss the drawer first, IOS cannot display two modals at the same tme
-                  setIsVisible(false);
-                  await localStorage.setVisitProNPS(true);
-                  setTimeout(() => {
-                    // a bit hacky : whai for drawer to dismiss before displaying NPS
-                    setNPSvisible(true);
-                  }, 500);
-                }}
+                badge
+                title="Mettre à jour"
+                icon={<Bell />}
+                onClick={() =>
+                  Linking.openURL(
+                    Platform.OS === "ios"
+                      ? "itms-apps://apps.apple.com/FR/app/id1540061393"
+                      : "https://play.app.goo.gl/?link=https://play.google.com/store/apps/details?id=com.monsuivipsy"
+                  )
+                }
               />
-              {isDevMode && <DrawerItem title="Dev Mode" path="dev-mode" navigation={navigation} onClick={onClick} icon={<Gear />} />}
-              <Separator />
-              <LegalItem title="Conditions générales d'utilisation" path="cgu" navigation={navigation} onClick={onClick} />
-              <LegalItem title="Politique de confidentialité" path="privacy" navigation={navigation} onClick={onClick} />
-              <LegalItem title="Mentions légales" path="legal-mentions" navigation={navigation} onClick={onClick} />
-              <TouchableWithoutFeedback onPress={handleDevModePress}>
-                <View style={styles.versionContainer}>
-                  <Text style={styles.versionLabel}>
-                    {Platform.OS === "ios"
-                      ? `${app.expo.version} (${app.expo.ios.buildNumber})`
-                      : `${app.expo.version} (${app.expo.android.versionCode})`}
-                  </Text>
-                </View>
-              </TouchableWithoutFeedback>
-            </ScrollView>
-          </SafeAreaView>
-        </View>
+            ) : null}
+            <DrawerItem
+              badge={badgeNpsProIsVisible}
+              title="Donner mon avis"
+              icon={<LightBulb />}
+              onClick={async () => {
+                // dismiss the drawer first, IOS cannot display two modals at the same tme
+                setIsVisible(false);
+                await localStorage.setVisitProNPS(true);
+                setTimeout(() => {
+                  // a bit hacky : whai for drawer to dismiss before displaying NPS
+                  setNPSvisible(true);
+                }, 500);
+              }}
+            />
+            {isDevMode && <DrawerItem title="Dev Mode" path="dev-mode" navigation={navigation} onClick={onClick} icon={<Gear />} />}
+            <Separator />
+            <LegalItem title="Conditions générales d'utilisation" path="cgu" navigation={navigation} onClick={onClick} />
+            <LegalItem title="Politique de confidentialité" path="privacy" navigation={navigation} onClick={onClick} />
+            <LegalItem title="Mentions légales" path="legal-mentions" navigation={navigation} onClick={onClick} />
+            <TouchableWithoutFeedback onPress={handleDevModePress}>
+              <View style={styles.versionContainer}>
+                <Text style={styles.versionLabel}>
+                  {Platform.OS === "ios"
+                    ? `${app.expo.version} (${app.expo.ios.buildNumber})`
+                    : `${app.expo.version} (${app.expo.android.versionCode})`}
+                </Text>
+              </View>
+            </TouchableWithoutFeedback>
+          </ScrollView>
+        </SafeAreaView>
       </Modal>
     </>
   );

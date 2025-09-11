@@ -1,3 +1,80 @@
+# [1.63.0](https://github.com/SocialGouv/jardinmental/compare/v1.62.0...v1.63.0) (2025-09-11)
+
+
+### Features
+
+* **dev-mode:** add button to delete today's data ([#447](https://github.com/SocialGouv/jardinmental/issues/447)) ([6c735d9](https://github.com/SocialGouv/jardinmental/commit/6c735d9bfb5f032b93cd1dbda572d5dbdcab19fa))
+
+# [1.62.0](https://github.com/SocialGouv/jardinmental/compare/v1.61.0...v1.62.0) (2025-09-11)
+
+
+### Features
+
+* replace rounded view with SquircleView ([#448](https://github.com/SocialGouv/jardinmental/issues/448)) ([b7deca8](https://github.com/SocialGouv/jardinmental/commit/b7deca86b927526824ece0dd09bac5796ba265b5))
+
+# [1.61.0](https://github.com/SocialGouv/jardinmental/compare/v1.60.3...v1.61.0) (2025-09-10)
+
+
+### Features
+
+* bump version ([6078ffe](https://github.com/SocialGouv/jardinmental/commit/6078ffe1d4bf6401fb2b74a2a900af3faac4968d))
+
+## [1.60.3](https://github.com/SocialGouv/jardinmental/compare/v1.60.2...v1.60.3) (2025-09-10)
+
+
+### Bug Fixes
+
+* coquille ([#453](https://github.com/SocialGouv/jardinmental/issues/453)) ([58edb59](https://github.com/SocialGouv/jardinmental/commit/58edb5969ab9fad16e64fbc674a0bc80cd3d222d))
+
+## [1.60.2](https://github.com/SocialGouv/jardinmental/compare/v1.60.1...v1.60.2) (2025-09-10)
+
+
+### Bug Fixes
+
+* fix drawer overlapping IOS notch ([#452](https://github.com/SocialGouv/jardinmental/issues/452)) ([30214a5](https://github.com/SocialGouv/jardinmental/commit/30214a5ab576da42cfc52c3a926b7b4b34de385b))
+
+## [1.60.1](https://github.com/SocialGouv/jardinmental/compare/v1.60.0...v1.60.1) (2025-09-10)
+
+
+### Bug Fixes
+
+* "declencheurs" not showing : use the right indicator id ([#451](https://github.com/SocialGouv/jardinmental/issues/451)) ([e409ec7](https://github.com/SocialGouv/jardinmental/commit/e409ec7cc58b3bbc2b1d2364b93c6bb70df8c72a))
+
+# [1.60.0](https://github.com/SocialGouv/jardinmental/compare/v1.59.2...v1.60.0) (2025-09-09)
+
+
+### Features
+
+* **accessibility:** add arrow for very small screen where you cannot see other emotions on the corners ([#432](https://github.com/SocialGouv/jardinmental/issues/432)) ([62a0dc1](https://github.com/SocialGouv/jardinmental/commit/62a0dc1444b6f49072c86d9e9d56416d2ae4249f))
+
+## [1.59.2](https://github.com/SocialGouv/jardinmental/compare/v1.59.1...v1.59.2) (2025-09-09)
+
+
+### Bug Fixes
+
+* **drawer:** can be closed in landscape mode, fix scroll on android ([#441](https://github.com/SocialGouv/jardinmental/issues/441)) ([29f2149](https://github.com/SocialGouv/jardinmental/commit/29f2149893462a159790b6fa83bd81d89b7a740f))
+
+## [1.59.1](https://github.com/SocialGouv/jardinmental/compare/v1.59.0...v1.59.1) (2025-09-09)
+
+
+### Bug Fixes
+
+* change icon for "nouveautés" screen ([#445](https://github.com/SocialGouv/jardinmental/issues/445)) ([6cca06c](https://github.com/SocialGouv/jardinmental/commit/6cca06c78ed99ddca7040764c67de7570f869f6b))
+
+# [1.59.0](https://github.com/SocialGouv/jardinmental/compare/v1.58.4...v1.59.0) (2025-09-09)
+
+
+### Features
+
+* **settings-modal:** orientation should stay in landspace and view should be scrollable ([#440](https://github.com/SocialGouv/jardinmental/issues/440)) ([d845ed1](https://github.com/SocialGouv/jardinmental/commit/d845ed1a64b28d1f7986448a0e2019e1be7b1736))
+
+## [1.58.4](https://github.com/SocialGouv/jardinmental/compare/v1.58.3...v1.58.4) (2025-09-09)
+
+
+### Bug Fixes
+
+* fix unit tests ([#443](https://github.com/SocialGouv/jardinmental/issues/443)) ([87211a2](https://github.com/SocialGouv/jardinmental/commit/87211a222d06c51860cd58e4b10f07a114cf91d3))
+
 ## [1.58.3](https://github.com/SocialGouv/jardinmental/compare/v1.58.2...v1.58.3) (2025-09-08)
 
 

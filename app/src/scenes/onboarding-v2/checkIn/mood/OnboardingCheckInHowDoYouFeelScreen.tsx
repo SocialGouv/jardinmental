@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect, useContext, useCallback } from "react";
-import { View, Text, TouchableOpacity, Platform, Dimensions, FlatList } from "react-native";
+import React, { useState, useRef, useEffect, useContext, useCallback, useMemo } from "react";
+import { View, Text, TouchableOpacity, Platform, Dimensions, FlatList, useWindowDimensions } from "react-native";
 import Animated, { useSharedValue, useAnimatedStyle, withSpring, interpolateColor } from "react-native-reanimated";
 
 import { OnboardingV2ScreenProps } from "../../types";
@@ -19,8 +19,10 @@ import { useStatusBar } from "@/context/StatusBarContext";
 import { useFocusEffect } from "@react-navigation/native";
 import logEvents from "@/services/logEvents";
 import { setStatusBarBackgroundColor } from "expo-status-bar";
+import ArrowIcon from "@assets/svg/icon/Arrow";
 
 const { width: screenWidth } = Dimensions.get("window");
+const THRESHOLD_MINIMAL_SCREEN_WIDTH = 370; // iPhone SE 2nd gen and similar
 
 type Props = OnboardingV2ScreenProps<"OnboardingCheckInHowDoYouFeel">;
 
@@ -37,22 +39,26 @@ const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
   const { setCustomColor, setDefaultColor } = useStatusBar();
   const measuredHeight = useSharedValue(0); // Store the measured natural height
   const [dynamicPaddingTop, setDynamicPaddingTop] = useState(0); // Default fallback
+  const { width: screenWidth } = useWindowDimensions();
 
   // Animated values
   const scrollViewScale = useSharedValue(1);
   const heightScale = useSharedValue(100);
   const marginScale = useSharedValue(0);
-  const statusBarColorProgress = useSharedValue(0);
+  const animatedBackgroundColor = useSharedValue(TW_COLORS.PRIMARY);
   const textOpacity = useSharedValue(0);
   const rotateSelectorProgress = useSharedValue(0);
 
   // FlatList configuration
-  const itemWidth = screenWidth / 5; // Show all 5 items at once
-  const getItemLayout = (data: any, index: number) => ({
-    length: itemWidth,
-    offset: itemWidth * index,
-    index,
-  });
+  const itemWidth = useMemo(() => screenWidth / 5, [screenWidth]); // Show all 5 items at once
+  const getItemLayout = useMemo(
+    () => (data: any, index: number) => ({
+      length: itemWidth,
+      offset: itemWidth * index,
+      index,
+    }),
+    [itemWidth]
+  );
 
   useEffect(() => {
     // Give it a small delay to ensure FlatList has finished initial rendering
@@ -61,7 +67,7 @@ const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
     }, 0); // you can also try 50ms if it's flaky
 
     return () => clearTimeout(timeout);
-  }, []);
+  }, [screenWidth]);
 
   useFocusEffect(
     useCallback(() => {
@@ -134,11 +140,13 @@ const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
       setHasSelectedOnce(true);
     }
 
+    // Animate background color directly to the target color
+    animatedBackgroundColor.value = withSpring(moodBackgroundColors[moodIndex], springConfig);
+
     // Animate all elements with synchronized timing
     scrollViewScale.value = withSpring(2.5, springConfig);
     heightScale.value = withSpring(200, springConfig);
     marginScale.value = withSpring(dynamicPaddingTop, springConfig);
-    statusBarColorProgress.value = withSpring(moodIndex / (moodEmojis.length - 1), springConfig);
     textOpacity.value = withSpring(1, springConfig);
     rotateSelectorProgress.value = withSpring(20, springConfig);
     // Scroll to center the selected item with improved timing
@@ -171,9 +179,10 @@ const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
       const newValue = clampedIndex + 1;
       setSelectedMoodIndex(newValue);
 
+      // Animate background color directly to the target color
+      animatedBackgroundColor.value = withSpring(moodBackgroundColors[clampedIndex], springConfig);
+
       // Trigger animations for the newly selected item
-      const springConfig = { damping: 20, stiffness: 80 };
-      statusBarColorProgress.value = withSpring(clampedIndex / (moodEmojis.length - 1), springConfig);
       textOpacity.value = withSpring(1, springConfig);
     }
   };
@@ -186,16 +195,8 @@ const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
   });
 
   const animatedStatusBarColor = useAnimatedStyle(() => {
-    if (selectedMoodIndex === null) {
-      return {
-        backgroundColor: TW_COLORS.PRIMARY,
-      };
-    }
-
-    const color = interpolateColor(statusBarColorProgress.value, [0, 0.25, 0.5, 0.75, 1], moodBackgroundColors);
-
     return {
-      backgroundColor: color,
+      backgroundColor: animatedBackgroundColor.value,
     };
   });
 
@@ -207,18 +208,8 @@ const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
       };
     }
 
-    const colors = [
-      TW_COLORS.CNAM_PRIMARY_900,
-      TW_COLORS.CNAM_PRIMARY_900,
-      TW_COLORS.CNAM_PRIMARY_900,
-      TW_COLORS.CNAM_PRIMARY_900,
-      TW_COLORS.CNAM_PRIMARY_900,
-    ];
-
-    const color = interpolateColor(statusBarColorProgress.value, [0, 0.25, 0.5, 0.75, 1], colors);
-
     return {
-      color: color,
+      color: TW_COLORS.CNAM_PRIMARY_900,
       backgroundColor: "transparent",
     };
   });
@@ -246,6 +237,15 @@ const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
     );
   };
 
+  const flatListContentContainerStyle = useMemo(
+    () => ({
+      paddingHorizontal: (screenWidth - itemWidth) / 2,
+      paddingVertical: 5,
+      alignItems: "center" as const,
+    }),
+    [screenWidth, itemWidth]
+  );
+
   const renderMoodSelector = () => (
     <View>
       <Animated.View style={animatedScrollViewStyle} className="mb-6">
@@ -262,11 +262,7 @@ const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
           decelerationRate="fast"
           getItemLayout={getItemLayout}
           onMomentumScrollEnd={onMomentumScrollEnd}
-          contentContainerStyle={{
-            paddingHorizontal: (screenWidth - itemWidth) / 2,
-            paddingVertical: 5,
-            alignItems: "center",
-          }}
+          contentContainerStyle={flatListContentContainerStyle}
           style={{
             width: screenWidth,
             flexGrow: 0,
@@ -274,10 +270,62 @@ const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
         />
       </Animated.View>
       {selectedMoodIndex !== null && (
-        <Animated.View style={animatedTextStyle} className="items-center">
-          <Text className={mergeClassNames(typography.displayMdBold, "text-cnam-primary-900")}>{moodEmojis[selectedMoodIndex - 1]?.label}</Text>
-        </Animated.View>
+        <>
+          <Animated.View style={animatedTextStyle} className="items-center">
+            <Text className={mergeClassNames(typography.displayMdBold, "text-cnam-primary-900")}>{moodEmojis[selectedMoodIndex - 1]?.label}</Text>
+          </Animated.View>
+          {screenWidth < THRESHOLD_MINIMAL_SCREEN_WIDTH && (
+            <Animated.View
+              style={[
+                animatedTextStyle,
+                {
+                  bottom: -95,
+                },
+              ]}
+              className="items-center justify-between flex-row"
+            >
+              <TouchableOpacity
+                onPress={() => {
+                  if (selectedMoodIndex && selectedMoodIndex > 1) {
+                    onSelectEmotion(selectedMoodIndex - 1);
+                  }
+                }}
+              >
+                <ArrowIcon
+                  width={30}
+                  height={30}
+                  style={{
+                    marginLeft: 20,
+                    opacity: selectedMoodIndex === 1 ? 0 : 1,
+                    transform: [
+                      {
+                        rotate: "180deg",
+                      },
+                    ],
+                  }}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  if (selectedMoodIndex && selectedMoodIndex < 5) {
+                    onSelectEmotion(selectedMoodIndex + 1);
+                  }
+                }}
+              >
+                <ArrowIcon
+                  width={30}
+                  height={30}
+                  style={{
+                    opacity: selectedMoodIndex === 5 ? 0 : 1,
+                    marginRight: 20,
+                  }}
+                />
+              </TouchableOpacity>
+            </Animated.View>
+          )}
+        </>
       )}
+      {}
     </View>
   );
 
@@ -325,7 +373,10 @@ const MoodItem = ({
   onSelect: () => void;
 }) => {
   const rotateSelectorProgress = useSharedValue(0);
-
+  const { width: screenWidth } = useWindowDimensions();
+  const marginHorizontal = useMemo(() => {
+    return (screenWidth / 5 - 64) / 2;
+  }, [screenWidth]);
   useEffect(() => {
     rotateSelectorProgress.value = withSpring(scrollViewScaled ? 10 : 0, springConfig);
   }, [scrollViewScaled]);
@@ -348,7 +399,7 @@ const MoodItem = ({
         style={{
           padding: 2, // this creates space between the border and TouchableOpacity
           backgroundColor: selected ? TW_COLORS.PRIMARY : "transparent",
-          marginHorizontal: (screenWidth / 5 - 64) / 2,
+          marginHorizontal,
         }}
       >
         <TouchableOpacity

@@ -9,14 +9,14 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "org.reactjs.native.example.monsuivipsy",
-      "buildNumber": "269",
+      "buildNumber": "271",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
     },
     "android": {
       "googleServicesFile": "./google-services.json",
-      "versionCode": 257,
+      "versionCode": 261,
       "adaptiveIcon": {
         "foregroundImage": "./assets/imgs/icon.png",
         "backgroundColor": "#ffffff"

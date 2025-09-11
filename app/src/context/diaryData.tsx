@@ -64,7 +64,9 @@ const fillUpEmptyDates = (startDate, data) => {
   return diary;
 };
 
-const DiaryDataContext = React.createContext<[DiaryData, ({ date, answers }: { date: string; answers: DiaryData }) => void]>([{}, () => {}]);
+const DiaryDataContext = React.createContext<
+  [DiaryData, ({ date, answers }: { date: string; answers: DiaryData }) => void, ((date: string) => void)?]
+>([{}, () => {}, () => {}]);
 
 const DiaryDataProvider = ({ children }) => {
   const [diaryData, setDiaryData] = useState<DiaryData>({});
@@ -79,6 +81,14 @@ const DiaryDataProvider = ({ children }) => {
       ...diaryData,
       [isoDate]: resData,
     };
+    setDiaryData(newDiaryData);
+    AsyncStorage.setItem(STORAGE_KEY_SURVEY_RESULTS, JSON.stringify(newDiaryData));
+  };
+
+  const internal__deleteDiaryData = (isoDate: string) => {
+    // function to be used in dev mode for test purpose
+    const newDiaryData = { ...diaryData };
+    newDiaryData[isoDate] = null;
     setDiaryData(newDiaryData);
     AsyncStorage.setItem(STORAGE_KEY_SURVEY_RESULTS, JSON.stringify(newDiaryData));
   };
@@ -124,7 +134,7 @@ const DiaryDataProvider = ({ children }) => {
     getDiaryDataFromStorage();
   }, [setDiaryData]);
 
-  return <DiaryDataContext.Provider value={[diaryData, addNewEntryToDiaryData]}>{children}</DiaryDataContext.Provider>;
+  return <DiaryDataContext.Provider value={[diaryData, addNewEntryToDiaryData, internal__deleteDiaryData]}>{children}</DiaryDataContext.Provider>;
 };
 
 export { DiaryDataContext, DiaryDataProvider };

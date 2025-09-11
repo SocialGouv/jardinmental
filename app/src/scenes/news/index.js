@@ -26,7 +26,7 @@ export default ({ navigation }) => {
     <SafeAreaView style={styles.safe}>
       <View style={styles.headerContainer}>
         <BackButton onPress={navigation.goBack} />
-        <Image style={styles.image} source={require("../../../assets/imgs/logo2.png")} />
+        <Image style={styles.image} className="rounded-lg" source={require("../../../assets/imgs/icon.png")} />
       </View>
       <ScrollView style={styles.cgu} contentContainerStyle={styles.scrollContainer}>
         <Card title="Jardin Mental fait peau neuve" version="v1.43.3" date="09/2025">

@@ -27,6 +27,7 @@ import JMButton from "@/components/JMButton";
 import { shouldShowChecklistBanner, handlePlusTardClick as handleBannerDismiss } from "../../utils/checklistBanner";
 import { set } from "date-fns";
 import { TW_COLORS } from "@/utils/constants";
+import { SquircleView } from "expo-squircle-view";
 const LIMIT_PER_PAGE = __DEV__ ? 3 : 30;
 
 const Status = ({ navigation, startSurvey }) => {
@@ -36,8 +37,8 @@ const Status = ({ navigation, startSurvey }) => {
   const [ongletActif, setOngletActif] = useState("all");
   const [checklistBannerVisible, setChecklistBannerVisible] = useState<boolean | null>(null); // null = loading, boolean = determined
   const [infoModalVisible, setInfoModalVisible] = useState<boolean | null>(null); // null = loading, boolean = determined
-  const checklistBannerOpacity = React.useRef(new Animated.Value(0)).current;
-  const infoModalOpacity = React.useRef(new Animated.Value(0)).current;
+  const checklistBannerOpacity = React.useRef(new Animated.Value(1)).current;
+  const infoModalOpacity = React.useRef(new Animated.Value(1)).current;
   const scrollRef = React.useRef();
   const { showLatestChangesModal } = useLatestChangesModal();
 
@@ -198,50 +199,66 @@ const Status = ({ navigation, startSurvey }) => {
         {checklistBannerVisible && (
           <Animated.View
             style={{
-              opacity: 1, //checklistBannerOpacity
+              opacity: checklistBannerOpacity,
             }}
-            className="p-8 bg-cnam-cyan-lighten-80 mb-4 rounded-xl"
           >
-            <Text className={mergeClassNames(typography.displayXsBold, "text-left text-cnam-primary-900 mb-6")}>
-              Il vous reste quelques étapes pour bien démarrer
-            </Text>
-            <Text className={mergeClassNames(typography.textMdRegular, "text-left text-cnam-primary-900")}>
-              Faites de Jardin Mental un espace qui vous ressemble, pour un suivi plus juste et plus utile.
-            </Text>
-            <View className="flex-row mt-6">
-              <JMButton onPress={handlePlusTardClick} width="adapt" variant="text" title="Plus tard" />
-              <JMButton
-                onPress={() => {
-                  navigation.navigate("checklist");
-                }}
-                width="adapt"
-                title="C'est parti"
-              />
-            </View>
+            <SquircleView
+              className="p-8 bg-cnam-cyan-lighten-80 mb-4 rounded-xl"
+              cornerSmoothing={100} // 0-100
+              preserveSmoothing={true} // false matches figma, true has more rounding
+              style={{
+                borderRadius: 20,
+              }}
+            >
+              <Text className={mergeClassNames(typography.displayXsBold, "text-left text-cnam-primary-900 mb-6")}>
+                Il vous reste quelques étapes pour bien démarrer
+              </Text>
+              <Text className={mergeClassNames(typography.textMdRegular, "text-left text-cnam-primary-900")}>
+                Faites de Jardin Mental un espace qui vous ressemble, pour un suivi plus juste et plus utile.
+              </Text>
+              <View className="flex-row mt-6">
+                <JMButton onPress={handlePlusTardClick} width="adapt" variant="text" title="Plus tard" />
+                <JMButton
+                  onPress={() => {
+                    navigation.navigate("checklist");
+                  }}
+                  width="adapt"
+                  title="C'est parti"
+                />
+              </View>
+            </SquircleView>
           </Animated.View>
         )}
         {infoModalVisible && (
           <Animated.View
             style={{
-              opacity: 1, //checklistBannerOpacity
+              opacity: infoModalOpacity,
             }}
-            className="p-8 bg-cnam-cyan-lighten-80 mb-4 rounded-xl"
           >
-            <TouchableOpacity onPress={handleDismissInfoModal} style={{ position: "absolute", top: 0, right: 5, padding: 10 }}>
-              <Text style={{ fontSize: 22, color: TW_COLORS.CNAM_PRIMARY_900, fontWeight: 700 }}>×</Text>
-            </TouchableOpacity>
-            <Text className={mergeClassNames(typography.displayXsBold, "text-left text-cnam-primary-900 mb-6")}>
-              Jardin Mental fait peau neuve, mais rien ne change pour vous !
-            </Text>
-            <View className="flex-row mt-2">
-              <JMButton
-                onPress={() => {
-                  navigation.navigate("news");
-                }}
-                width="full"
-                title="En savoir plus"
-              />
-            </View>
+            <SquircleView
+              className="p-8 bg-cnam-cyan-lighten-80 mb-4 rounded-xl"
+              cornerSmoothing={100} // 0-100
+              preserveSmoothing={true} // false matches figma, true has more rounding
+              style={{
+                borderRadius: 20,
+              }}
+            >
+              <TouchableOpacity onPress={handleDismissInfoModal} style={{ position: "absolute", top: 0, right: 5, padding: 10 }}>
+                <Text style={{ fontSize: 22, color: TW_COLORS.CNAM_PRIMARY_900, fontWeight: 700 }}>×</Text>
+              </TouchableOpacity>
+              <Text className={mergeClassNames(typography.displayXsBold, "text-left text-cnam-primary-900 mb-6")}>
+                Jardin Mental fait peau neuve, mais rien ne change pour vous !
+              </Text>
+              <View className="flex-row mt-2">
+                <JMButton
+                  onPress={() => {
+                    navigation.navigate("news");
+                  }}
+                  width="full"
+                  title="En savoir plus"
+                />
+              </View>
+            </SquircleView>
           </Animated.View>
         )}
         <RecapCompletion />

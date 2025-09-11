@@ -55,7 +55,7 @@ const DaySurvey = ({
     answers: {},
   };
   const { showBottomSheet, closeBottomSheet } = useBottomSheet();
-  const statusBarColorProgress = useSharedValue(0);
+  const animatedBackgroundColor = useSharedValue(TW_COLORS.PRIMARY);
   const [selectedMoodIndex, setSelectedMoodIndex] = useState<number | null>(null);
 
   const [diaryData, addNewEntryToDiaryData] = useContext(DiaryDataContext);
@@ -324,24 +324,15 @@ const DaySurvey = ({
     handleChangeUserComment({ key: getIndicatorKey(indicator), userComment: comment });
 
   const animatedStatusBarColor = useAnimatedStyle(() => {
-    if (selectedMoodIndex === null) {
-      return {
-        backgroundColor: TW_COLORS.PRIMARY,
-      };
-    }
-
-    const color = interpolateColor(statusBarColorProgress.value, [0, 0.25, 0.5, 0.75, 1], moodBackgroundColors);
-
     return {
-      backgroundColor: color,
+      backgroundColor: animatedBackgroundColor.value,
     };
   });
 
-  // Update statusBarColorProgress when selectedMoodIndex changes
+  // Update animatedBackgroundColor when selectedMoodIndex changes
   React.useEffect(() => {
     if (selectedMoodIndex !== null) {
-      const normalizedIndex = (selectedMoodIndex - 1) / (moodEmojis.length - 1);
-      statusBarColorProgress.value = withSpring(normalizedIndex);
+      animatedBackgroundColor.value = withSpring(moodBackgroundColors[selectedMoodIndex - 1]);
     }
   }, [selectedMoodIndex]);
 
