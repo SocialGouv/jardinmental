@@ -6,8 +6,6 @@ import Notes from "./notes";
 import localStorage from "../../utils/localStorage";
 import Posology from "./posology";
 import { canEdit } from "./utils/index.js";
-import Button from "../../components/RoundButtonIcon";
-import Toxic from "./toxic";
 import Context from "./context";
 import logEvents from "../../services/logEvents";
 import {
@@ -26,8 +24,9 @@ import { BasicIcon } from "@/components/CircledIcon";
 import { answers as emojis } from "../survey-v2/utils";
 import { typography } from "@/utils/typography";
 import { mergeClassNames } from "@/utils/className";
-import { formatRelativeDate } from "@/utils/date/helpers";
+import { formatDateThread, formatRelativeDate } from "@/utils/date/helpers";
 import ArrowIcon from "@assets/svg/icon/Arrow";
+import { colors } from "@/utils/colors";
 
 export default ({
   navigation,
@@ -107,7 +106,7 @@ export default ({
       emotionValue = patientState[emotion].value;
     }
     return (
-      <View className="rounded-2xl border border-gray-500 flex-col my-4 p-6">
+      <TouchableOpacity className="rounded-2xl border border-gray-500 flex-col my-4 p-6" onPress={() => handlePressItem({ editingSurvey: true })}>
         <View className="mb-4 flex-row justify-between">
           <Text className={mergeClassNames(typography.textMdBold, "text-cnam-primary-950 capitalize")}>{formatRelativeDate(date)}</Text>
           {canEdit(date) && <ArrowIcon />}
@@ -160,11 +159,11 @@ export default ({
             <Button icon="pencil" visible={true} onPress={() => handlePressItem({ editingSurvey: true })} />
           </View>
         ) : null} */}
-      </View>
+      </TouchableOpacity>
     );
   } else {
     return (
-      <View style={!canEdit(date) ? styles.container : {}}>
+      <>
         {/* {canEdit(date) ? (
           <View>
             <Card
@@ -201,8 +200,20 @@ export default ({
             </View>
           </TouchableOpacity>
         )}
-        {!canEdit(date) && <View style={styles.emptyItem} />}
-      </View>
+        {!canEdit(date) && (
+          <View>
+            <View style={styles.dateContainer}>
+              <View style={styles.dateDot} />
+              <TouchableOpacity style={styles.item} onPress={() => navigation.navigate("too-late", { date })}>
+                <Text style={styles.dateLabel}>{formatDateThread(date)}</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.container}>
+              <View style={styles.emptyItem} />
+            </View>
+          </View>
+        )}
+      </>
     );
   }
 };
@@ -288,23 +299,13 @@ const newItemCard = ({ emotionValue, handlePressItem }: { emotionValue: number; 
 };
 
 const styles = StyleSheet.create({
-  buttonsContainer: {
-    width: "100%",
-    display: "flex",
-    position: "absolute",
-    top: -20,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    marginLeft: 15,
-  },
   item: {
-    marginVertical: 20,
-    backgroundColor: "rgba(38, 56, 124, 0.03)",
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: "rgba(38, 56, 124, 0.08)",
-    paddingVertical: 15,
+    // marginVertical: 20,
+    // backgroundColor: "rgba(38, 56, 124, 0.03)",
+    // borderRadius: 10,
+    // borderWidth: 1,
+    // borderColor: "rgba(38, 56, 124, 0.08)",
+    // paddingVertical: 15,
   },
   emptyItem: {
     marginVertical: 15,
@@ -316,7 +317,7 @@ const styles = StyleSheet.create({
   container: {
     paddingLeft: 15,
     marginLeft: 4,
-    marginVertical: -5,
+    // marginVertical: -5,
     borderLeftWidth: 0.4,
     borderColor: "#00CEF7",
   },
@@ -324,5 +325,22 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     paddingTop: 12,
     paddingBottom: 39,
+  },
+  dateLabel: {
+    color: "#000",
+    fontSize: 13,
+    textAlign: "left",
+    paddingLeft: 10,
+    fontWeight: "600",
+  },
+  dateContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  dateDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: colors.LIGHT_BLUE,
   },
 });

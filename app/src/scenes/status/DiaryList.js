@@ -34,19 +34,7 @@ export const DiaryList = forwardRef(({ ...props }, ref) => {
   const renderItem = useCallback(
     ({ item: date }) => {
       return (
-        <View className="bg-red">
-          {!canEdit(date) && (
-            <View style={styles.dateContainer}>
-              <View style={styles.dateDot} />
-              {canEdit(date) ? (
-                <Text style={styles.dateLabel}>{formatDateThread(date)}</Text>
-              ) : (
-                <TouchableOpacity style={styles.item} onPress={() => navigation.navigate("too-late", { date })}>
-                  <Text style={styles.dateLabel}>{formatDateThread(date)}</Text>
-                </TouchableOpacity>
-              )}
-            </View>
-          )}
+        <View>
           <NewStatusItem date={date} indicateurs={indicateurs} patientState={diaryData[date]} goalsData={goalsData} navigation={navigation} />
         </View>
       );
@@ -57,24 +45,4 @@ export const DiaryList = forwardRef(({ ...props }, ref) => {
   const keyExtractor = useCallback((date) => date);
 
   return <Animated.FlatList ref={ref} data={sortedData} renderItem={renderItem} keyExtractor={keyExtractor} {...props} />;
-});
-
-const styles = StyleSheet.create({
-  dateContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  dateDot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: colors.LIGHT_BLUE,
-  },
-  dateLabel: {
-    color: "#000",
-    fontSize: 13,
-    textAlign: "left",
-    paddingLeft: 10,
-    fontWeight: "600",
-  },
 });
