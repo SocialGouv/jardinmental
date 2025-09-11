@@ -38,7 +38,7 @@ export const DiaryList = forwardRef(({ ...props }, ref) => {
     }, [])
   );
 
-  const handlePressMood = ({ value, indicator }: { value: number; indicator: Indicator[] }) => {
+  const handlePressMood = ({ value, indicator }: { value: number; indicator: Indicator }) => {
     return navigation.navigate("day-survey", {
       currentSurvey: {
         date: formatDay(beforeToday(0)),
