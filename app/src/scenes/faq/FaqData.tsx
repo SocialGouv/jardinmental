@@ -47,7 +47,6 @@ export const FAQ_DATA: Record<FaqSlug, FaqDataEntry> = {
     title: "Définir mes objectifs",
     subtitle: `Qu'est-ce qu'un objectif ?`,
     description: `Un objectif est un petit défi que vous souhaitez réaliser régulièrement pour améliorer ou stabiliser votre bien-être. Cela peut être une activité comme marcher 30 minutes par jour, faire un exercice de respiration ou encore une habitude de soin comme prendre son traitement.`,
-    // exemple: `_**_Par exemple_** : si vous dormez mal, vous pourriez suivre la « qualité de votre sommeil » et le « nombre de réveils nocturnes »._`,
     accordion: [
       {
         title: "Comment les choisir ?",
@@ -69,7 +68,6 @@ export const FAQ_DATA: Record<FaqSlug, FaqDataEntry> = {
     icon: <CalendarIcon />,
     title: "Faire mon suivi quotidien",
     description: `Chaque jour, prenez quelques minutes pour faire le point sur votre santé mentale.`,
-    // exemple: `_**_Par exemple_** : si vous dormez mal, vous pourriez suivre la « qualité de votre sommeil » et le « nombre de réveils nocturnes »._`,
     accordion: [
       {
         title: "Comment remplir mon questionnaire ?",
@@ -99,9 +97,7 @@ export const FAQ_DATA: Record<FaqSlug, FaqDataEntry> = {
   analyse: {
     title: "Comprendre mes analyses",
     icon: <TrendUpIcon />,
-    // subtitle: `Qu'est-ce qu'un objectif`,
     description: `Découvrez comment vos observations sont transformées en analyses pour mieux suivre votre état au fil du temps.`,
-    // exemple: `_**_Par exemple_** : si vous dormez mal, vous pourriez suivre la « qualité de votre sommeil » et le « nombre de réveils nocturnes »._`,
     accordion: [
       {
         title: "À quoi servent mes analyses ?",
@@ -131,9 +127,7 @@ export const FAQ_DATA: Record<FaqSlug, FaqDataEntry> = {
   traitement: {
     icon: <HealthIcon />,
     title: "Renseigner mon traitement",
-    // subtitle: `Qu'est-ce qu'un objectif`,
     description: `Jardin Mental vous permet de suivre la prise de votre traitement si votre professionnel de santé vous en a prescrit un.`,
-    // exemple: `_**_Par exemple_** : si vous dormez mal, vous pourriez suivre la « qualité de votre sommeil » et le « nombre de réveils nocturnes »._`,
     accordion: [
       {
         title: "Comment ajouter mon traitement ?",
@@ -152,9 +146,7 @@ Nous vous rappellerons de le prendre dans votre questionnaire quotidien.`,
   },
   données: {
     title: "Partager mes données",
-    // subtitle: `Qu'est-ce qu'un objectif`,
     description: `Cette section répond à vos questions sur le récapitulatif de vos données et son utilisation.`,
-    // exemple: `_**_Par exemple_** : si vous dormez mal, vous pourriez suivre la « qualité de votre sommeil » et le « nombre de réveils nocturnes »._`,
     accordion: [
       {
         title: "À quoi sert la génération de récapitulatif de mes données ?",
