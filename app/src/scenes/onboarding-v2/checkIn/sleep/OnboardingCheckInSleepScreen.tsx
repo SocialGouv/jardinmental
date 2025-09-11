@@ -19,6 +19,7 @@ import { mergeClassNames } from "@/utils/className";
 import logEvents from "@/services/logEvents";
 import { useFocusEffect } from "@react-navigation/native";
 import { useStatusBar } from "@/context/StatusBarContext";
+import { SquircleView } from "expo-squircle-view";
 
 type Props = OnboardingV2ScreenProps<"OnboardingCheckInHowDoYouFeel">;
 
@@ -86,11 +87,20 @@ const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
 
   const renderSleepSelector = () => {
     return (
-      <View className="p-4 py-6 rounded-xl bg-cnam-primary-50 border border-gray-400">
+      <SquircleView
+        cornerSmoothing={100} // 0-100
+        preserveSmoothing={true} // false matches figma, true has more rounding
+        style={{
+          borderRadius: 20,
+          borderColor: TW_COLORS.GRAY_400,
+          borderWidth: 1,
+        }}
+        className="p-4 py-6 rounded-xl bg-cnam-primary-50"
+      >
         <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-900 mb-2")}>Qualité du sommeil</Text>
         <Gauge onChange={onSelectValue} reverse={undefined} />
         <Text className={mergeClassNames(typography.textMdMedium, "text-gray-800")}>{computeMoodLabel()}</Text>
-      </View>
+      </SquircleView>
     );
   };
 

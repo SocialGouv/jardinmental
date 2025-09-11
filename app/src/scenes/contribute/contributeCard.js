@@ -4,16 +4,17 @@ import Text from "../../components/MyText";
 import { colors } from "../../utils/colors";
 import JMButton from "@/components/JMButton";
 import { TW_COLORS } from "@/utils/constants";
+import { SquircleView } from "expo-squircle-view";
 
 const ContributeCard = ({ onPress }) => {
   return (
-    <View style={styles.container}>
+    <SquircleView cornerSmoothing={100} preserveSmoothing={true} style={styles.container}>
       <View className="flex flex-col gap-4">
         <Text style={styles.title}>Contribuez à Jardin Mental</Text>
         <Text style={styles.message}>Dites-nous comment améliorer l’application, nous lisons tous les messages.</Text>
         <JMButton width="fixed" variant="secondary-blue" title="Donner mon avis" onPress={onPress} />
       </View>
-    </View>
+    </SquircleView>
   );
 };
 

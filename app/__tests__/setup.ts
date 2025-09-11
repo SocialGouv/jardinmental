@@ -16,3 +16,39 @@ global.console = {
 
 // Mock safe area context
 jest.mock("react-native-safe-area-context", () => mockSafeAreaContext);
+
+// Mock expo-squircle-view
+jest.mock("expo-squircle-view", () => {
+  const React = require("react");
+  const { View } = require("react-native");
+
+  const SquircleView = React.forwardRef((props, ref) => {
+    return React.createElement(View, { ...props, ref });
+  });
+  SquircleView.displayName = "SquircleView";
+
+  const SquircleButton = React.forwardRef((props, ref) => {
+    return React.createElement(View, { ...props, ref });
+  });
+
+  SquircleButton.displayName = "SquircleButton";
+  SquircleView.displayName = "SquircleView";
+
+  return {
+    SquircleView,
+    SquircleButton,
+  };
+});
+
+// jest.mock("expo-squircle-view", () => {
+//   const React = require("react");
+//   const { View } = require("react-native");
+
+//   const SquircleView = React.forwardRef((props, ref) => {
+//     return <View {...props} ref={ref} />;
+//   });
+
+//   SquircleView.displayName = "SquircleView"; // 👈 Explicitly set displayName
+
+//   return { SquircleView };
+// });
