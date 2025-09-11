@@ -98,7 +98,7 @@ export default function FaqDetailScreen({
       navigation={navigation}
     >
       <View>
-        <View className="bg-gray-50 p-4 flex-col space-y-10 pt-12">
+        <View className="bg-gray-50 p-4 flex-col space-y-6 pt-8">
           <View className="flex-col space-y-4">
             {item.subtitle && (
               <Text className={mergeClassNames(typography.displayXsBold, "text-cnam-primary-950 text-left mb-4")}>{item.subtitle}</Text>

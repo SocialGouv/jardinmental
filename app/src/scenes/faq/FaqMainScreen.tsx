@@ -29,7 +29,7 @@ export default function FaqMainScreen({ navigation, route }) {
       <View className="bg-gray-50 flex-1 p-4 flex-col space-y-12 pt-10">
         <View className="flex-col space-y-6">
           <Text className={mergeClassNames(typography.displayXsSemibold, "text-cnam-primary-950 text-left")}>
-            Jardin mental, qu’est-ce que c’est?
+            Jardin mental, qu’est-ce que c’est ?
           </Text>
           <View className="flex-col space-y-4">
             <Text className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-900 text-left")}>
