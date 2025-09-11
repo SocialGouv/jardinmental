@@ -1,3 +1,10 @@
+# [1.62.0](https://github.com/SocialGouv/jardinmental/compare/v1.61.0...v1.62.0) (2025-09-11)
+
+
+### Features
+
+* replace rounded view with SquircleView ([#448](https://github.com/SocialGouv/jardinmental/issues/448)) ([b7deca8](https://github.com/SocialGouv/jardinmental/commit/b7deca86b927526824ece0dd09bac5796ba265b5))
+
 # [1.61.0](https://github.com/SocialGouv/jardinmental/compare/v1.60.3...v1.61.0) (2025-09-10)
 
 
