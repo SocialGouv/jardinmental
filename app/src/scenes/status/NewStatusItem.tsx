@@ -27,6 +27,7 @@ import { mergeClassNames } from "@/utils/className";
 import { formatDateThread, formatRelativeDate } from "@/utils/date/helpers";
 import ArrowIcon from "@assets/svg/icon/Arrow";
 import { colors } from "@/utils/colors";
+import { SquircleButton } from "expo-squircle-view";
 
 export default ({
   navigation,
@@ -106,7 +107,17 @@ export default ({
       emotionValue = patientState[emotion].value;
     }
     return (
-      <TouchableOpacity className="rounded-2xl border border-gray-500 flex-col my-4 p-6" onPress={() => handlePressItem({ editingSurvey: true })}>
+      <SquircleButton
+        preserveSmoothing={true}
+        cornerSmoothing={100}
+        className="flex-col my-4 p-6"
+        style={{
+          borderColor: TW_COLORS.GRAY_500,
+          borderRadius: 20,
+          borderWidth: 1,
+        }}
+        onPress={() => handlePressItem({ editingSurvey: true })}
+      >
         <View className="mb-4 flex-row justify-between">
           <Text className={mergeClassNames(typography.textMdBold, "text-cnam-primary-950 capitalize")}>{formatRelativeDate(date)}</Text>
           {canEdit(date) && <ArrowIcon />}
@@ -159,7 +170,7 @@ export default ({
             <Button icon="pencil" visible={true} onPress={() => handlePressItem({ editingSurvey: true })} />
           </View>
         ) : null} */}
-      </TouchableOpacity>
+      </SquircleButton>
     );
   } else {
     return (
@@ -178,7 +189,17 @@ export default ({
           <View />
         )} */}
         {canEdit(date) && (
-          <TouchableOpacity className="rounded-2xl border border-gray-500 flex-col my-4 p-6" onPress={() => handlePressItem({ editingSurvey: true })}>
+          <SquircleButton
+            preserveSmoothing={true}
+            cornerSmoothing={100}
+            style={{
+              borderColor: TW_COLORS.GRAY_500,
+              borderRadius: 20,
+              borderWidth: 1,
+            }}
+            className="flex-col my-4 p-6"
+            onPress={() => handlePressItem({ editingSurvey: true })}
+          >
             <View className="mb-4 flex-row justify-between">
               <Text className={mergeClassNames(typography.textMdBold, "text-cnam-primary-950 capitalize")}>{formatRelativeDate(date)}</Text>
               <ArrowIcon />
@@ -198,7 +219,7 @@ export default ({
                 <Text className={mergeClassNames(typography.textSmMedium, "text-cnam-primary-950")}>Complétez l'observation</Text>
               </View>
             </View>
-          </TouchableOpacity>
+          </SquircleButton>
         )}
         {!canEdit(date) && (
           <View>
