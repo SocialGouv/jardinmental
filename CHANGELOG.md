@@ -1,3 +1,10 @@
+# [1.63.0](https://github.com/SocialGouv/jardinmental/compare/v1.62.0...v1.63.0) (2025-09-11)
+
+
+### Features
+
+* **dev-mode:** add button to delete today's data ([#447](https://github.com/SocialGouv/jardinmental/issues/447)) ([6c735d9](https://github.com/SocialGouv/jardinmental/commit/6c735d9bfb5f032b93cd1dbda572d5dbdcab19fa))
+
 # [1.62.0](https://github.com/SocialGouv/jardinmental/compare/v1.61.0...v1.62.0) (2025-09-11)
 
 
