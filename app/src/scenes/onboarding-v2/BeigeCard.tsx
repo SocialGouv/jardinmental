@@ -1,18 +1,23 @@
 import { mergeClassNames } from "@/utils/className";
 import { ReactNode } from "react";
 import { View, ViewStyle } from "react-native";
+import { SquircleView } from "expo-squircle-view";
 
 export default function BeigeCard({ children, style, color = "#FCEBD9" }: { children: ReactNode; style?: ViewStyle; color?: string }) {
   return (
     <View className="flex-1 justify-center items-center p-4" style={style}>
-      <View
+      <SquircleView
+        className={mergeClassNames("bg-white py-10 px-6 w-full rounded-xl")}
+        cornerSmoothing={100}
+        preserveSmoothing={true}
         style={{
-          borderColor: color, // the pastel color of our chart didn't work with nativewind
+          borderRadius: 20,
+          borderColor: color,
+          borderWidth: 1,
         }}
-        className={mergeClassNames("bg-white p-8 px-6 w-full border rounded-xl")}
       >
         {children}
-      </View>
+      </SquircleView>
     </View>
   );
 }
