@@ -8,7 +8,6 @@ import { canEdit } from "./utils/index";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { getGoalsData } from "../../utils/localStorage/goals";
 import localStorage from "../../utils/localStorage";
-import dayjs from "dayjs";
 import { isToday, parseISO } from "date-fns";
 import { Smiley } from "@/components/survey/Smiley";
 import { Indicator } from "@/entities/Indicator";
