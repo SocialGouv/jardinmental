@@ -12,6 +12,7 @@ import CalendarIcon from "@assets/svg/icon/Calendar";
 import TrendUpIcon from "@assets/svg/icon/TrendUp";
 import HealthIcon from "@assets/svg/icon/Health";
 import ShareIcon from "@assets/svg/icon/Share";
+import { FAQ_DATA } from "./FaqData";
 
 export default function FaqMainScreen({ navigation, route }) {
   return (
@@ -45,44 +46,16 @@ export default function FaqMainScreen({ navigation, route }) {
         <View className="flex-col space-y-6">
           <Text className={mergeClassNames(typography.displayXsSemibold, "text-cnam-primary-950 text-left")}>Guide Pratique</Text>
           <View className="flex-col space-y-1">
-            {[
-              {
-                icon: <Pencil />,
-                label: "Définir mes indicateurs",
-                path: "faq-detail",
-              },
-              {
-                icon: <Goal />,
-                label: "Définir mes objectifs",
-                path: "faq-detail",
-              },
-              {
-                icon: <CalendarIcon />,
-                label: "Faire mon suivi quotidien",
-                path: "faq-detail",
-              },
-              {
-                icon: <TrendUpIcon />,
-                label: "Comprendre mes analyses",
-                path: "faq-detail",
-              },
-              {
-                icon: <HealthIcon />,
-                label: "Renseigner mon traitement",
-                path: "faq-detail",
-              },
-              {
-                icon: <ShareIcon />,
-                label: "Partager mes données",
-                path: "faq-detail",
-              },
-            ].map((item, index) => (
+            {Object.keys(FAQ_DATA).map((slug, index) => (
               <NavigationListItem
-                label={item.label}
+                key={slug}
+                label={FAQ_DATA[slug].title}
                 onPress={() => {
-                  navigation.navigate(item.path);
+                  navigation.navigate("faq-detail", {
+                    slug: slug,
+                  });
                 }}
-                icon={item.icon}
+                icon={FAQ_DATA[slug].icon}
               />
             ))}
           </View>

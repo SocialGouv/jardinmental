@@ -74,9 +74,18 @@ const markdownStyles = {
   },
 };
 
-export default function FaqDetailScreen({ navigation, route }) {
-  const item = FAQ_DATA["indicateurs"];
-
+export default function FaqDetailScreen({
+  navigation,
+  route,
+}: {
+  navigation: any;
+  route: {
+    params: {
+      slug: string;
+    };
+  };
+}) {
+  const item = FAQ_DATA[route.params.slug];
   return (
     <AnimatedHeaderScrollScreen
       title={item.title}
@@ -88,32 +97,44 @@ export default function FaqDetailScreen({ navigation, route }) {
       showBottomButton={false}
       navigation={navigation}
     >
-      <View className="bg-gray-50 flex-1 p-4 flex-col space-y-10 pt-12">
-        <View className="flex-col space-y-4">
-          <Text className={mergeClassNames(typography.displayXsBold, "text-cnam-primary-950 text-left mb-4")}>{item.subtitle}</Text>
-          {/* 
+      <View>
+        <View className="bg-gray-50 p-4 flex-col space-y-10 pt-12">
+          <View className="flex-col space-y-4">
+            {item.subtitle && (
+              <Text className={mergeClassNames(typography.displayXsBold, "text-cnam-primary-950 text-left mb-4")}>{item.subtitle}</Text>
+            )}
+            {/*
             we encapsulate the Markdown tag in <> otherwise when <Text> and <Markdown> are next to each others,
             markdownStyles is not applied (haven’t found out why yet)
           */}
-          <>
-            <Markdown style={markdownStyles}>{item.description}</Markdown>
-          </>
-          {item.exemple && (
-            <View className="bg-cnam-primary-100 px-2 rounded-xl py-1">
-              <Markdown style={markdownStyles}>{item.exemple}</Markdown>
-            </View>
-          )}
+            <>
+              <Markdown style={markdownStyles}>{item.description}</Markdown>
+            </>
+            {item.exemple && (
+              <View className="bg-cnam-primary-100 px-2 rounded-xl py-1">
+                <Markdown style={markdownStyles}>{item.exemple}</Markdown>
+              </View>
+            )}
+          </View>
+          <View>
+            <Accordion items={item.accordion} />
+          </View>
         </View>
-        <View>
-          <Accordion items={item.accordion} />
-        </View>
+        {item.next && (
+          <View className={mergeClassNames("bg-cnam-primary-100 bg-cyan-50-lighten-90 p-4 space-y-6 p-6 mt-8")}>
+            <Text className={mergeClassNames(typography.displayXsBold, "text-cnam-primary-900 text-left mb-4")}>A découvrir ensuite</Text>
+            <NavigationListItem
+              icon={FAQ_DATA[item.next].icon}
+              label={FAQ_DATA[item.next].title}
+              onPress={() => {
+                navigation.navigate("faq-detail", {
+                  slug: item.next,
+                });
+              }}
+            />
+          </View>
+        )}
       </View>
-      {item.next && (
-        <View className={mergeClassNames("bg-cnam-primary-100 bg-cyan-50-lighten-90 p-4 space-y-6 p-6 mt-8")}>
-          <Text className={mergeClassNames(typography.displayXsBold, "text-cnam-primary-900 text-left mb-4")}>A découvrir ensuite</Text>
-          <NavigationListItem icon={item.next.icon} label={item.next.label} onPress={navigation.navigate(item.next.path)} />
-        </View>
-      )}
     </AnimatedHeaderScrollScreen>
   );
 }

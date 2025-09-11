@@ -1,7 +1,27 @@
+import CalendarIcon from "@assets/svg/icon/Calendar";
+import Goal from "@assets/svg/icon/Goal";
+import HealthIcon from "@assets/svg/icon/Health";
+import ShareIcon from "@assets/svg/icon/Share";
+import TrendUpIcon from "@assets/svg/icon/TrendUp";
 import Pencil from "@assets/svg/Pencil";
 
-export const FAQ_DATA = {
+type FaqSlug = "indicateurs" | "objectifs" | "questionnaire" | "analyse" | "traitement" | "données";
+interface FaqDataEntry {
+  icon: JSX.Element;
+  title: string;
+  subtitle?: string;
+  description: string;
+  exemple?: string;
+  accordion: {
+    title: string;
+    description: string;
+  }[];
+  next: FaqSlug;
+}
+
+export const FAQ_DATA: Record<FaqSlug, FaqDataEntry> = {
   indicateurs: {
+    icon: <Pencil />,
     title: "Définir mes indicateurs",
     subtitle: `Qu'est-ce qu'un indicateur ?`,
     description: `Un indicateur est un repère sur l’état de votre santé mentale. Cela peut être une émotion, un symptôme ou un comportement.
@@ -20,13 +40,10 @@ export const FAQ_DATA = {
 - Pour **créer un nouvel indicateur** : cliquez sur le bouton « Ajouter un nouvel indicateur ». Vous pourrez alors définir le nom de votre indicateur et choisir son échelle d’évaluation. Vous pouvez vous inspirer des exemples proposés ou réactiver un indicateur archivé.`,
       },
     ],
-    next: {
-      icon: <Pencil />,
-      label: "Définir mes indicateurs",
-      path: "faq-detail",
-    },
+    next: "objectifs",
   },
   objectifs: {
+    icon: <Goal />,
     title: "Définir mes objectifs",
     subtitle: `Qu'est-ce qu'un objectif`,
     description: `Un objectif est une petit défi que vous souhaitez réaliser régulièrement pour améliorer ou stabiliser votre bien-être. Cela peut être une activité comme marcher 30 minutes par jour, faire un exercice de respiration ou encore une habitude de soin comme prendre son traitement.`,
@@ -46,15 +63,11 @@ export const FAQ_DATA = {
     - Si vous souhaitez supprimer un objectif existant, cliquez sur le bouton « Modifier mes objectifs » puis cliquez sur la corbeille 🗑️ à côté de l’objectif en question.`,
       },
     ],
-    next: {
-      icon: <Pencil />,
-      label: "Définir mes indicateurs",
-      path: "faq-detail",
-    },
+    next: "questionnaire",
   },
   questionnaire: {
+    icon: <CalendarIcon />,
     title: "Faire mon suivi quotidien",
-    subtitle: `Qu'est-ce qu'un objectif`,
     description: `Chaque jour, prenez quelques minutes pour faire le point sur votre santé mentale.`,
     // exemple: `_**_Par exemple_** : si vous dormez mal, vous pourriez suivre la « qualité de votre sommeil » et le « nombre de réveils nocturnes »._`,
     accordion: [
@@ -81,14 +94,11 @@ export const FAQ_DATA = {
 👉 **La régularité est essentielle** : plus vous prenez l’habitude de remplir votre questionnaire chaque jour, plus vous aurez une vision claire de ce qui influence votre état — que ce soit positivement ou négativement.`,
       },
     ],
-    next: {
-      icon: <Pencil />,
-      label: "Définir mes indicateurs",
-      path: "faq-detail",
-    },
+    next: "analyse",
   },
   analyse: {
     title: "Comprendre mes analyses",
+    icon: <TrendUpIcon />,
     // subtitle: `Qu'est-ce qu'un objectif`,
     description: `Découvrez comment vos observations sont transformées en analyses pour mieux suivre votre état au fil du temps.`,
     // exemple: `_**_Par exemple_** : si vous dormez mal, vous pourriez suivre la « qualité de votre sommeil » et le « nombre de réveils nocturnes »._`,
@@ -116,14 +126,11 @@ export const FAQ_DATA = {
 👉 **La régularité est essentielle** : plus vous prenez l’habitude de remplir votre questionnaire chaque jour, plus vous aurez une vision claire de ce qui influence votre état — que ce soit positivement ou négativement.`,
       },
     ],
-    next: {
-      icon: <Pencil />,
-      label: "Définir mes indicateurs",
-      path: "faq-detail",
-    },
+    next: "traitement",
   },
   traitement: {
-    title: "Comprendre mes analyses",
+    icon: <HealthIcon />,
+    title: "Renseigner mon traitement",
     // subtitle: `Qu'est-ce qu'un objectif`,
     description: `Jardin Mental vous permet de suivre la prise de votre traitement si votre professionnel de santé vous en a prescrit un.`,
     // exemple: `_**_Par exemple_** : si vous dormez mal, vous pourriez suivre la « qualité de votre sommeil » et le « nombre de réveils nocturnes »._`,
@@ -141,11 +148,7 @@ Nous vous rappellerons de le prendre dans votre questionnaire quotidien.`,
         description: `Si vous ne trouvez pas votre traitement dans la liste, vous pouvez créer une nouvelle entrée en cliquant sur le symbôle ➕. `,
       },
     ],
-    next: {
-      icon: <Pencil />,
-      label: "Définir mes indicateurs",
-      path: "faq-detail",
-    },
+    next: "données",
   },
   données: {
     title: "Partager mes données",
@@ -164,10 +167,7 @@ Nous vous rappellerons de le prendre dans votre questionnaire quotidien.`,
 Vous pourrez alors télécharger le fichier au format PDF.`,
       },
     ],
-    next: {
-      icon: <Pencil />,
-      label: "Définir mes indicateurs",
-      path: "faq-detail",
-    },
+    icon: <ShareIcon />,
+    next: "indicateurs",
   },
 };
