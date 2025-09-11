@@ -9,7 +9,7 @@ import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { getGoalsData } from "../../utils/localStorage/goals";
 import localStorage from "../../utils/localStorage";
 import dayjs from "dayjs";
-import { isToday, isYesterday, parseISO } from "date-fns";
+import { isToday, parseISO } from "date-fns";
 import { Smiley } from "@/components/survey/Smiley";
 import { Indicator } from "@/entities/Indicator";
 import { INDICATEURS_HUMEUR } from "@/utils/liste_indicateurs.1";
