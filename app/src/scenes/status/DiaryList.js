@@ -9,6 +9,7 @@ import { canEdit } from "./utils/index";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { getGoalsData } from "../../utils/localStorage/goals";
 import localStorage from "../../utils/localStorage";
+import NewStatusItem from "./NewStatusItem";
 
 export const DiaryList = forwardRef(({ ...props }, ref) => {
   const navigation = useNavigation();
@@ -34,17 +35,7 @@ export const DiaryList = forwardRef(({ ...props }, ref) => {
     ({ item: date }) => {
       return (
         <View>
-          <View style={styles.dateContainer}>
-            <View style={styles.dateDot} />
-            {canEdit(date) ? (
-              <Text style={styles.dateLabel}>{formatDateThread(date)}</Text>
-            ) : (
-              <TouchableOpacity style={styles.item} onPress={() => navigation.navigate("too-late", { date })}>
-                <Text style={styles.dateLabel}>{formatDateThread(date)}</Text>
-              </TouchableOpacity>
-            )}
-          </View>
-          <StatusItem date={date} indicateurs={indicateurs} patientState={diaryData[date]} goalsData={goalsData} navigation={navigation} />
+          <NewStatusItem date={date} indicateurs={indicateurs} patientState={diaryData[date]} goalsData={goalsData} navigation={navigation} />
         </View>
       );
     },
@@ -54,24 +45,4 @@ export const DiaryList = forwardRef(({ ...props }, ref) => {
   const keyExtractor = useCallback((date) => date);
 
   return <Animated.FlatList ref={ref} data={sortedData} renderItem={renderItem} keyExtractor={keyExtractor} {...props} />;
-});
-
-const styles = StyleSheet.create({
-  dateContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  dateDot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: colors.LIGHT_BLUE,
-  },
-  dateLabel: {
-    color: "#000",
-    fontSize: 13,
-    textAlign: "left",
-    paddingLeft: 10,
-    fontWeight: "600",
-  },
 });
