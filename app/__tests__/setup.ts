@@ -43,3 +43,53 @@ jest.mock(
   },
   { virtual: true }
 );
+
+// Mock Sentry to prevent it from interfering with tests
+jest.mock("@sentry/react-native", () => ({
+  init: jest.fn(),
+  wrap: jest.fn((component) => component), // Return component unchanged
+  captureException: jest.fn(),
+  captureMessage: jest.fn(),
+  addBreadcrumb: jest.fn(),
+  setUser: jest.fn(),
+  setTag: jest.fn(),
+  setContext: jest.fn(),
+  setExtra: jest.fn(),
+  configureScope: jest.fn((callback) => {
+    // Call callback with mock scope
+    callback({
+      setUser: jest.fn(),
+      setTag: jest.fn(),
+      setContext: jest.fn(),
+      setExtra: jest.fn(),
+      clear: jest.fn(),
+    });
+  }),
+  withScope: jest.fn((callback) => {
+    // Call callback with mock scope
+    callback({
+      setUser: jest.fn(),
+      setTag: jest.fn(),
+      setContext: jest.fn(),
+      setExtra: jest.fn(),
+      clear: jest.fn(),
+    });
+  }),
+  getCurrentHub: jest.fn(() => ({
+    getClient: jest.fn(),
+    isOlderThan: jest.fn(),
+    bindClient: jest.fn(),
+  })),
+  startTransaction: jest.fn(() => ({
+    finish: jest.fn(),
+    setTag: jest.fn(),
+    setData: jest.fn(),
+  })),
+  Severity: {
+    Fatal: "fatal",
+    Error: "error",
+    Warning: "warning",
+    Info: "info",
+    Debug: "debug",
+  },
+}));
