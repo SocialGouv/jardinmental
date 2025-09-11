@@ -56,7 +56,6 @@ export const DiaryList = forwardRef(({ ...props }, ref) => {
   const renderItem = useCallback(
     ({ item: date }) => {
       const moodIndicator = indicateurs?.find((ind) => ind.uuid === INDICATEURS_HUMEUR.uuid);
-      console.log(isToday(parseISO(date)), !diaryData[date], moodIndicator);
       if (isToday(parseISO(date)) && !diaryData[date] && moodIndicator) {
         return (
           <View className="rounded-2xl border border-gray-500 flex-col my-4 p-6">
