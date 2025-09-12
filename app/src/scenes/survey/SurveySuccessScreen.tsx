@@ -8,6 +8,11 @@ import { TW_COLORS } from "@/utils/constants";
 import CircleCheckMark from "@assets/svg/icon/CircleCheckMark";
 import Animated, { useSharedValue, useAnimatedStyle, withTiming, withDelay, Easing } from "react-native-reanimated";
 import JMButton from "@/components/JMButton";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+// Storage keys for motivational messages
+const STORAGE_KEY_MOTIVATIONAL_MESSAGE_INDEX = "@MOTIVATIONAL_MESSAGE_INDEX";
+const STORAGE_KEY_MOTIVATIONAL_MESSAGE_SHUFFLED_ORDER = "@MOTIVATIONAL_MESSAGE_SHUFFLED_ORDER";
 
 // Motivational messages list
 const MOTIVATIONAL_MESSAGES = [
@@ -43,6 +48,56 @@ const MOTIVATIONAL_MESSAGES = [
   { emoji: "🕊️", text: "Observer régulièrement, c'est semer des graines de sérénité." },
 ];
 
+// Helper function to shuffle array (Fisher-Yates shuffle)
+const shuffleArray = (array: any[]) => {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+};
+
+// Helper functions for sequential message management
+const getNextMotivationalMessage = async () => {
+  try {
+    // Get current index and shuffled order from storage
+    const storedIndex = await AsyncStorage.getItem(STORAGE_KEY_MOTIVATIONAL_MESSAGE_INDEX);
+    const storedOrder = await AsyncStorage.getItem(STORAGE_KEY_MOTIVATIONAL_MESSAGE_SHUFFLED_ORDER);
+
+    let currentIndex = storedIndex ? parseInt(storedIndex, 10) : 0;
+    let messageOrder: number[];
+
+    // If we don't have a shuffled order or we've reached the end, create a new shuffled order
+    if (!storedOrder || currentIndex >= MOTIVATIONAL_MESSAGES.length || currentIndex < 0) {
+      // Create shuffled indices
+      const indices = Array.from({ length: MOTIVATIONAL_MESSAGES.length }, (_, i) => i);
+      const shuffledIndices = shuffleArray(indices);
+      messageOrder = shuffledIndices;
+
+      // Save new shuffled order and reset index
+      await AsyncStorage.setItem(STORAGE_KEY_MOTIVATIONAL_MESSAGE_SHUFFLED_ORDER, JSON.stringify(shuffledIndices));
+      currentIndex = 0;
+    } else {
+      messageOrder = JSON.parse(storedOrder);
+    }
+
+    // Get the message at the current position in the shuffled order
+    const messageIndex = messageOrder[currentIndex];
+    const message = MOTIVATIONAL_MESSAGES[messageIndex];
+
+    // Increment index for next time
+    const nextIndex = currentIndex + 1;
+    await AsyncStorage.setItem(STORAGE_KEY_MOTIVATIONAL_MESSAGE_INDEX, nextIndex.toString());
+
+    return message;
+  } catch (error) {
+    console.warn("Error getting motivational message:", error);
+    // Fallback to first message
+    return MOTIVATIONAL_MESSAGES[0];
+  }
+};
+
 interface SurveySuccessScreenProps {
   navigation: any;
   route?: {
@@ -55,12 +110,16 @@ interface SurveySuccessScreenProps {
 const SurveySuccessScreen: React.FC<SurveySuccessScreenProps> = ({ navigation, route }) => {
   const { setCustomColor } = useStatusBar();
   const [showPanel, setShowPanel] = useState(false);
+  const [currentMessage, setCurrentMessage] = useState(MOTIVATIONAL_MESSAGES[0]); // Default fallback
 
-  // Select random motivational message
-  const [randomMessage] = useState(() => {
-    const randomIndex = Math.floor(Math.random() * MOTIVATIONAL_MESSAGES.length);
-    return MOTIVATIONAL_MESSAGES[randomIndex];
-  });
+  // Load sequential motivational message
+  useEffect(() => {
+    const loadMessage = async () => {
+      const message = await getNextMotivationalMessage();
+      setCurrentMessage(message);
+    };
+    loadMessage();
+  }, []);
 
   // Animation values
   const panelTranslateY = useSharedValue(300); // Start below screen
@@ -152,7 +211,7 @@ const SurveySuccessScreen: React.FC<SurveySuccessScreenProps> = ({ navigation, r
             <View className="ml-14 rounded-full w-16 h-16 bg-cnam-cyan-500-0 p-2"></View>
           </View>
           <View className="absolute top-[-30px] self-center rounded-full w-16 h-16 border border-white bg-cnam-cyan-lighten-80 p-2 flex items-center justify-center">
-            <Text className="text-3xl">{randomMessage.emoji}</Text>
+            <Text className="text-3xl">{currentMessage.emoji}</Text>
           </View>
           {/* Top Content Area */}
           <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
@@ -163,8 +222,8 @@ const SurveySuccessScreen: React.FC<SurveySuccessScreenProps> = ({ navigation, r
               {/* Bravo Title */}
               <Text className={mergeClassNames("text-lg font-bold text-cnam-primary-900 text-center mb-6")}>Bravo !</Text>
 
-              {/* Random Motivational Text */}
-              <Text className={mergeClassNames("text-lg font-normal text-cnam-primary-900 text-center leading-6")}>{randomMessage.text}</Text>
+              {/* Sequential Motivational Text */}
+              <Text className={mergeClassNames("text-lg font-normal text-cnam-primary-900 text-center leading-6")}>{currentMessage.text}</Text>
             </View>
           </View>
 
