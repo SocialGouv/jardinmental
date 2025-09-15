@@ -12,11 +12,9 @@ import { DiaryDataContext } from "../../context/diaryData";
 import Icon from "../../components/Icon";
 import BackButton from "../../components/BackButton";
 import JMButton from "../../components/JMButton";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { STORAGE_KEY_SURVEY_RESULTS } from "../../utils/constants";
 
 const DataExportImport = ({ navigation }) => {
-  const [diaryData, addNewEntryToDiaryData, importDiaryData] = useContext(DiaryDataContext);
+  const [diaryData, _addNewEntryToDiaryData, _deleteDiaryData, importDiaryData] = useContext(DiaryDataContext);
   const [isExporting, setIsExporting] = useState(false);
   const [isImporting, setIsImporting] = useState(false);
   const [importMode, setImportMode] = useState<"replace" | "merge">("replace");

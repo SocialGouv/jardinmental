@@ -132,6 +132,7 @@ describe("DataExportImport", () => {
     mockContextValue = [
       sampleDiaryData,
       jest.fn(), // addNewEntryToDiaryData
+      jest.fn(), // deleteDiaryData
       jest.fn(), // importDiaryData
     ];
 

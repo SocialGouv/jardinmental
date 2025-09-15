@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useEffect, useState } from "react";
+import * as Sentry from "@sentry/react-native";
 import {
   STORAGE_KEY_SURVEY_RESULTS,
   STORAGE_KEY_START_DATE,
@@ -67,8 +68,13 @@ const fillUpEmptyDates = (startDate, data) => {
 type ImportMode = "replace" | "merge";
 
 const DiaryDataContext = React.createContext<
-  [DiaryData, ({ date, answers }: DiaryDataNewEntryInput) => void, (importedData: DiaryData, mode: ImportMode) => Promise<void>]
->([{}, () => {}, async () => {}]);
+  [
+    DiaryData,
+    ({ date, answers }: { date: string; answers: DiaryData }) => void,
+    (date: string) => void,
+    (importedData: DiaryData, mode: ImportMode) => Promise<void>
+  ]
+>([{}, () => {}, () => {}, async (_A, _B) => {}]);
 
 const DiaryDataProvider = ({ children }) => {
   const [diaryData, setDiaryData] = useState<DiaryData>({});
@@ -126,6 +132,14 @@ const DiaryDataProvider = ({ children }) => {
     await getDiaryDataFromStorage();
   };
 
+  const internal__deleteDiaryData = (isoDate: string) => {
+    // function to be used in dev mode for test purpose
+    const newDiaryData = { ...diaryData };
+    newDiaryData[isoDate] = null;
+    setDiaryData(newDiaryData);
+    AsyncStorage.setItem(STORAGE_KEY_SURVEY_RESULTS, JSON.stringify(newDiaryData));
+  };
+
   const getDiaryDataFromStorage = async () => {
     // await wipeData();
     // await setupFakeData();
@@ -143,36 +157,39 @@ const DiaryDataProvider = ({ children }) => {
       const tempDiary = fillUpEmptyDates(tempStartDateMinus7, JSON.parse(data));
       return setDiaryData(tempDiary);
     }
-
     // we set data first for a better UX
     let parsedData: DiaryData = JSON.parse(data) as DiaryData;
     setDiaryData(parsedData);
-    if (parsedData) {
-      const migrationAlreadyDone = await AsyncStorage.getItem(STORAGE_KEY_REMOVING_TOXIC_QUESTION_FROM_SURVEY_MIGRATION_DONE);
-      if (
-        Object.values(parsedData)
-          .filter((data) => data) // prevent possible null value
-          .find((data) => Object.keys(data).includes("TOXIC")) &&
-        !migrationAlreadyDone
-      ) {
-        localStorage.replaceOrAddIndicateur({
-          ...generateIndicatorFromPredefinedIndicator(GENERIC_INDICATOR_SUBSTANCE),
-          // we keep the same uuid "A" for continutiry in history key=="TOXIC" and "A" uuid are considered the same,
-          uuid: STATIC_UUID_FOR_INSTANCE_OF_GENERIC_INDICATOR_SUBSTANCE,
-        });
-        await AsyncStorage.setItem(STORAGE_KEY_REMOVING_TOXIC_QUESTION_FROM_SURVEY_MIGRATION_DONE, true.toString());
-      }
-    }
     let startDateMinus7 = beforeToday(7, new Date(startDate));
     const diary = fillUpEmptyDates(startDateMinus7, parsedData);
     setDiaryData(diary);
+    if (parsedData) {
+      const migrationAlreadyDone = await AsyncStorage.getItem(STORAGE_KEY_REMOVING_TOXIC_QUESTION_FROM_SURVEY_MIGRATION_DONE);
+      try {
+        if (Object.values(parsedData).find((dayEntry) => dayEntry && Object.keys(dayEntry).includes("TOXIC")) && !migrationAlreadyDone) {
+          localStorage.replaceOrAddIndicateur({
+            ...generateIndicatorFromPredefinedIndicator(GENERIC_INDICATOR_SUBSTANCE),
+            // we keep the same uuid "A" for continutiry in history key=="TOXIC" and "A" uuid are considered the same,
+            uuid: STATIC_UUID_FOR_INSTANCE_OF_GENERIC_INDICATOR_SUBSTANCE,
+          });
+          await AsyncStorage.setItem(STORAGE_KEY_REMOVING_TOXIC_QUESTION_FROM_SURVEY_MIGRATION_DONE, true.toString());
+        }
+      } catch (e) {
+        console.error("Error during TOXIC question migration:", e);
+        Sentry.captureException(e);
+      }
+    }
   };
 
   useEffect(() => {
     getDiaryDataFromStorage();
   }, []);
 
-  return <DiaryDataContext.Provider value={[diaryData, addNewEntryToDiaryData, importDiaryData]}>{children}</DiaryDataContext.Provider>;
+  return (
+    <DiaryDataContext.Provider value={[diaryData, addNewEntryToDiaryData, internal__deleteDiaryData, importDiaryData]}>
+      {children}
+    </DiaryDataContext.Provider>
+  );
 };
 
 export { DiaryDataContext, DiaryDataProvider };

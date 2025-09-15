@@ -4770,6 +4770,11 @@ expo-splash-screen@~0.29.24:
   dependencies:
     "@expo/prebuild-config" "~8.2.0"
 
+expo-squircle-view@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/expo-squircle-view/-/expo-squircle-view-1.1.0.tgz#5026be33bfefacd0bf877718570dcb5445729b29"
+  integrity sha512-paLpUKfAlFHbgrkfcTxmzTEbF0wbiLF0arTE4kLq2VWRWWmZxqLTzNDZM9JRmdEIrDeF3natRaxWJyYvwzx3Lg==
+
 expo-status-bar@~2.0.1:
   version "2.0.1"
   resolved "https://registry.npmjs.org/expo-status-bar/-/expo-status-bar-2.0.1.tgz"

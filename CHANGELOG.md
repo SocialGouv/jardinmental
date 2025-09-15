@@ -1,3 +1,66 @@
+# [1.65.0](https://github.com/SocialGouv/jardinmental/compare/v1.64.0...v1.65.0) (2025-09-15)
+
+
+### Features
+
+* bump version ([11f030c](https://github.com/SocialGouv/jardinmental/commit/11f030c7f17792046a3f9246ca1b990c57c3bc97))
+
+# [1.64.0](https://github.com/SocialGouv/jardinmental/compare/v1.63.1...v1.64.0) (2025-09-15)
+
+
+### Features
+
+* bump ios version ([b33f72a](https://github.com/SocialGouv/jardinmental/commit/b33f72a3b6f0b9b037f812e4ebc100e1795a526b))
+
+## [1.63.1](https://github.com/SocialGouv/jardinmental/compare/v1.63.0...v1.63.1) (2025-09-15)
+
+
+### Bug Fixes
+
+* **diaryData:** fix diaryData handling data null case and side effecfs by moving the code, and catch error ([#455](https://github.com/SocialGouv/jardinmental/issues/455)) ([0e28ff5](https://github.com/SocialGouv/jardinmental/commit/0e28ff5cf2e5ff1c37eaeae70cf753e253e40c34))
+
+# [1.63.0](https://github.com/SocialGouv/jardinmental/compare/v1.62.0...v1.63.0) (2025-09-11)
+
+
+### Features
+
+* **dev-mode:** add button to delete today's data ([#447](https://github.com/SocialGouv/jardinmental/issues/447)) ([6c735d9](https://github.com/SocialGouv/jardinmental/commit/6c735d9bfb5f032b93cd1dbda572d5dbdcab19fa))
+
+# [1.62.0](https://github.com/SocialGouv/jardinmental/compare/v1.61.0...v1.62.0) (2025-09-11)
+
+
+### Features
+
+* replace rounded view with SquircleView ([#448](https://github.com/SocialGouv/jardinmental/issues/448)) ([b7deca8](https://github.com/SocialGouv/jardinmental/commit/b7deca86b927526824ece0dd09bac5796ba265b5))
+
+# [1.61.0](https://github.com/SocialGouv/jardinmental/compare/v1.60.3...v1.61.0) (2025-09-10)
+
+
+### Features
+
+* bump version ([6078ffe](https://github.com/SocialGouv/jardinmental/commit/6078ffe1d4bf6401fb2b74a2a900af3faac4968d))
+
+## [1.60.3](https://github.com/SocialGouv/jardinmental/compare/v1.60.2...v1.60.3) (2025-09-10)
+
+
+### Bug Fixes
+
+* coquille ([#453](https://github.com/SocialGouv/jardinmental/issues/453)) ([58edb59](https://github.com/SocialGouv/jardinmental/commit/58edb5969ab9fad16e64fbc674a0bc80cd3d222d))
+
+## [1.60.2](https://github.com/SocialGouv/jardinmental/compare/v1.60.1...v1.60.2) (2025-09-10)
+
+
+### Bug Fixes
+
+* fix drawer overlapping IOS notch ([#452](https://github.com/SocialGouv/jardinmental/issues/452)) ([30214a5](https://github.com/SocialGouv/jardinmental/commit/30214a5ab576da42cfc52c3a926b7b4b34de385b))
+
+## [1.60.1](https://github.com/SocialGouv/jardinmental/compare/v1.60.0...v1.60.1) (2025-09-10)
+
+
+### Bug Fixes
+
+* "declencheurs" not showing : use the right indicator id ([#451](https://github.com/SocialGouv/jardinmental/issues/451)) ([e409ec7](https://github.com/SocialGouv/jardinmental/commit/e409ec7cc58b3bbc2b1d2364b93c6bb70df8c72a))
+
 # [1.60.0](https://github.com/SocialGouv/jardinmental/compare/v1.59.2...v1.60.0) (2025-09-09)
 
 
