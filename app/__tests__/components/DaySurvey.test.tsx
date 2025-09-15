@@ -9,6 +9,7 @@ import { DiaryDataNewEntryInput } from "../../src/entities/DiaryData";
 import { saveGoalsData } from "../../src/utils/localStorage/goals";
 import { OnboardingProgressHeaderProvider } from "@/scenes/onboarding/ProgressHeader";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { StatusBarProvider } from "../../src/context/StatusBarContext";
 
 // Only mock what absolutely cannot run in test environment
 jest.mock("@react-navigation/native", () => ({
@@ -100,11 +101,13 @@ describe("DaySurvey Component", () => {
   const renderWithProvider = (component) => {
     return render(
       <SafeAreaProvider>
-        <OnboardingProgressHeaderProvider>
-          <NavigationContainer>
-            <DiaryDataProvider>{component}</DiaryDataProvider>
-          </NavigationContainer>
-        </OnboardingProgressHeaderProvider>
+        <StatusBarProvider>
+          <OnboardingProgressHeaderProvider>
+            <NavigationContainer>
+              <DiaryDataProvider>{component}</DiaryDataProvider>
+            </NavigationContainer>
+          </OnboardingProgressHeaderProvider>
+        </StatusBarProvider>
       </SafeAreaProvider>
     );
   };
