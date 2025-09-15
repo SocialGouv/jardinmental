@@ -1,3 +1,10 @@
+## [1.63.1](https://github.com/SocialGouv/jardinmental/compare/v1.63.0...v1.63.1) (2025-09-15)
+
+
+### Bug Fixes
+
+* **diaryData:** fix diaryData handling data null case and side effecfs by moving the code, and catch error ([#455](https://github.com/SocialGouv/jardinmental/issues/455)) ([0e28ff5](https://github.com/SocialGouv/jardinmental/commit/0e28ff5cf2e5ff1c37eaeae70cf753e253e40c34))
+
 # [1.63.0](https://github.com/SocialGouv/jardinmental/compare/v1.62.0...v1.63.0) (2025-09-11)
 
 
