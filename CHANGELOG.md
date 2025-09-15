@@ -1,3 +1,10 @@
+# [1.64.0](https://github.com/SocialGouv/jardinmental/compare/v1.63.1...v1.64.0) (2025-09-15)
+
+
+### Features
+
+* bump ios version ([b33f72a](https://github.com/SocialGouv/jardinmental/commit/b33f72a3b6f0b9b037f812e4ebc100e1795a526b))
+
 ## [1.63.1](https://github.com/SocialGouv/jardinmental/compare/v1.63.0...v1.63.1) (2025-09-15)
 
 
