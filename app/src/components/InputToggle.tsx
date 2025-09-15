@@ -6,60 +6,6 @@ import { TW_COLORS } from "@/utils/constants";
 import CheckMarkIcon from "@assets/svg/icon/check";
 import CrossIcon from "@assets/svg/icon/Cross";
 
-export const InputToggleStandart = forwardRef(({ checked, onCheckedChanged, containerStyle }, ref) => {
-  useImperativeHandle(ref, () => {
-    return {
-      toggle,
-    };
-  });
-
-  const [_checked, _setChecked] = useState(checked);
-  useEffect(() => {
-    _setChecked(checked);
-  }, [checked]);
-
-  const toggle = () => {
-    const nextChecked = !_checked;
-    _setChecked(nextChecked);
-    autoLayoutAnimation();
-    onCheckedChanged?.({ checked: nextChecked });
-  };
-
-  return (
-    <View
-      style={[
-        styles.container,
-        {
-          borderColor: _checked ? colors.LIGHT_BLUE : "#CCCCCC",
-          backgroundColor: _checked ? "rgba(31, 198, 213, 0.1)" : "#FFFFFF",
-        },
-        containerStyle,
-      ]}
-    >
-      <Pressable style={{ flex: 1 }} onPress={toggle} hitSlop={{ bottom: 8, left: 8, right: 8, top: 8 }}>
-        <View
-          style={[
-            styles.contentContainer,
-            {
-              alignItems: !_checked ? "flex-start" : "flex-end",
-            },
-          ]}
-        >
-          <View
-            style={[
-              styles.circle,
-              {
-                backgroundColor: _checked ? colors.LIGHT_BLUE : "#CCCCCC",
-              },
-            ]}
-            collapsable={false}
-          />
-        </View>
-      </Pressable>
-    </View>
-  );
-});
-
 export const InputToggle = forwardRef(({ checked, onCheckedChanged, containerStyle }, ref) => {
   useImperativeHandle(ref, () => {
     return {
