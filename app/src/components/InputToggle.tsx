@@ -30,7 +30,6 @@ export const InputToggle = forwardRef(({ checked, onCheckedChanged, containerSty
       style={[
         styles.container,
         {
-          // borderColor: _checked ? colors.LIGHT_BLUE : "#CCCCCC",
           backgroundColor: _checked ? TW_COLORS.CNAM_CYAN_700_DARKEN_40 : TW_COLORS.GRAY_700,
         },
         containerStyle,
@@ -54,9 +53,6 @@ export const InputToggle = forwardRef(({ checked, onCheckedChanged, containerSty
             className="bg-white"
             style={[
               styles.circle,
-              // {
-              //   backgroundColor: _checked ? colors.LIGHT_BLUE : "#CCCCCC",
-              // },
             ]}
             collapsable={false}
           />
@@ -76,7 +72,6 @@ const styles = StyleSheet.create({
     width: 57,
     height: 28,
     borderRadius: 24,
-    // borderWidth: 1,
   },
   contentContainer: {
     flex: 1,
