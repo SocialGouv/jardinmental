@@ -53,11 +53,32 @@ const executeReminderCronJob = async () => {
     },
   });
   if (goalReminders.length > 0) {
-    await sendNotifications({
-      pushTokens: goalReminders.map((r) => r.reminder?.user?.pushNotifToken).filter(Boolean),
-      title: "Vous avez un objectif aujourd'hui 🎯",
-      body: "N'oubliez de préciser si vous l'avez réalisé dans Jardin Mental",
-    });
+    // Group reminders by custom message to send batch notifications
+    const remindersByMessage = goalReminders.reduce((acc, r) => {
+      const customMessage = r.reminder?.customMessage;
+      const key = customMessage || "default";
+      if (!acc[key]) {
+        acc[key] = {
+          pushTokens: [],
+          customMessage: customMessage,
+        };
+      }
+      if (r.reminder?.user?.pushNotifToken) {
+        acc[key].pushTokens.push(r.reminder.user.pushNotifToken);
+      }
+      return acc;
+    }, {});
+
+    // Send notifications for each message group
+    for (const [key, group] of Object.entries(remindersByMessage)) {
+      if (group.pushTokens.length > 0) {
+        await sendNotifications({
+          pushTokens: group.pushTokens,
+          title: "Vous avez un objectif aujourd'hui 🎯",
+          body: group.customMessage || "N'oubliez de préciser si vous l'avez réalisé dans Jardin Mental",
+        });
+      }
+    }
   }
 
   const inactivityReminders = await prisma.reminderUtcDaysOfWeek.findMany({

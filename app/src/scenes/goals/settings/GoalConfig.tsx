@@ -34,6 +34,7 @@ export const GoalConfig = ({ navigation, route }) => {
   const [reminderEnabled, setReminderEnabled] = useState(!editing ? true : false);
   const [reminderTime, setReminderTime] = useState(set(new Date(), { hours: 10, minutes: 30 }));
   const [reminderTimePickerVisible, setReminderTimePickerVisible] = useState(false);
+  const [customMessage, setCustomMessage] = useState("");
 
   useFocusEffect(
     useCallback(() => {
@@ -47,6 +48,9 @@ export const GoalConfig = ({ navigation, route }) => {
               setReminderEnabled(true);
               setReminderTime(new Date(goal.reminder));
             }
+            if (goal.customMessage) {
+              setCustomMessage(goal.customMessage);
+            }
             setReady(true);
           }
         }
@@ -58,10 +62,11 @@ export const GoalConfig = ({ navigation, route }) => {
     if (loading) return;
     setLoading(true);
     const reminder = reminderEnabled ? reminderTime : null;
+    const finalCustomMessage = customMessage.trim() || null;
     if (!editing) {
-      await setGoalTracked({ id: goalId, daysOfWeek: goalDaysOfWeek, label: goalLabel, reminder });
+      await setGoalTracked({ id: goalId, daysOfWeek: goalDaysOfWeek, label: goalLabel, reminder, customMessage: finalCustomMessage });
     } else {
-      await setGoalTracked({ id: goalId, daysOfWeek: goalDaysOfWeek, reminder });
+      await setGoalTracked({ id: goalId, daysOfWeek: goalDaysOfWeek, reminder, customMessage: finalCustomMessage });
     }
     setLoading(false);
     navigation.navigate("goals-settings");
@@ -138,14 +143,30 @@ export const GoalConfig = ({ navigation, route }) => {
               />
             </InputGroupItem>
             {reminderEnabled && (
-              <InputGroupItem label="Heure du rappel" onPress={() => setReminderTimePickerVisible(true)}>
-                <InputText
-                  preset="groupItem"
-                  editable={false}
-                  onPress={() => setReminderTimePickerVisible(true)}
-                  value={format(reminderTime, "H:mm")}
-                />
-              </InputGroupItem>
+              <>
+                <InputGroupItem label="Heure du rappel" onPress={() => setReminderTimePickerVisible(true)}>
+                  <InputText
+                    preset="groupItem"
+                    editable={false}
+                    onPress={() => setReminderTimePickerVisible(true)}
+                    value={format(reminderTime, "H:mm")}
+                  />
+                </InputGroupItem>
+                <InputGroupItem label="Message personnalisé (optionnel)">
+                  <InputText
+                    preset="groupItem"
+                    placeholder="Ex: N'oublie pas ton objectif du jour !"
+                    value={customMessage}
+                    onChangeText={setCustomMessage}
+                    maxLength={200}
+                    multiline={true}
+                    numberOfLines={2}
+                  />
+                </InputGroupItem>
+                {customMessage.length > 0 && (
+                  <Text className={mergeClassNames(typography.textSmRegular, "text-gray-500 px-4 pb-2")}>{customMessage.length}/200 caractères</Text>
+                )}
+              </>
             )}
           </InputGroup>
         </View>
