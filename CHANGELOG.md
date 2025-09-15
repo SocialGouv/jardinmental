@@ -1,3 +1,10 @@
+# [1.66.0](https://github.com/SocialGouv/jardinmental/compare/v1.65.0...v1.66.0) (2025-09-15)
+
+
+### Features
+
+* add import/export ([#450](https://github.com/SocialGouv/jardinmental/issues/450)) ([ce4175d](https://github.com/SocialGouv/jardinmental/commit/ce4175d2a1a8c38d5a5e1ceae3e39ce65fdfcc98))
+
 # [1.65.0](https://github.com/SocialGouv/jardinmental/compare/v1.64.0...v1.65.0) (2025-09-15)
 
 
