@@ -1,15 +1,4 @@
 import React from "react";
-import VeryGoodSvg from "../../assets/svg/veryGood.svg";
-import GoodSvg from "../../assets/svg/good.svg";
-import MiddleSvg from "../../assets/svg/middle.svg";
-import BadSvg from "../../assets/svg/bad.svg";
-import VeryBadSvg from "../../assets/svg/veryBad.svg";
-import TodaySvg from "../../assets/svg/today.svg";
-import YesterdaySvg from "../../assets/svg/yesterday.svg";
-import NotesSvg from "../../assets/svg/notes.svg";
-import DrugsSvg from "../../assets/svg/drugs.svg";
-import HeartsSvg from "../../assets/svg/hearts.svg";
-import PlusSvg from "../../assets/svg/plus-1.svg";
 import QuestionMarkSvg from "../../assets/svg/QuestionMark.js";
 
 import { StyleSheet, View } from "react-native";
@@ -18,6 +7,7 @@ import SmileyGood from "@assets/svg/smileys/good";
 import SmileyMiddle from "@assets/svg/smileys/middle";
 import SmileyBad from "@assets/svg/smileys/bad";
 import SmileyVeryBad from "@assets/svg/smileys/veryBad";
+import PlusIcon from "@assets/svg/icon/plus";
 
 const styles = StyleSheet.create({
   iconContainer: {
@@ -40,13 +30,8 @@ const mapIconToSvg = (icon) => {
     MiddleSvg: SmileyMiddle,
     BadSvg: SmileyBad,
     VeryBadSvg: SmileyVeryBad,
-    TodaySvg,
-    YesterdaySvg,
-    NotesSvg,
-    DrugsSvg,
-    HeartsSvg,
-    PlusSvg,
     QuestionMarkSvg,
+    Plus: PlusIcon,
   };
   return iconMap[icon];
 };
