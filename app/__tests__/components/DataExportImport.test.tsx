@@ -326,7 +326,7 @@ describe("DataExportImport", () => {
       );
 
       expect(mockFileSystem.readAsStringAsync).not.toHaveBeenCalled();
-      expect(mockContextValue[2]).not.toHaveBeenCalled();
+      expect(mockContextValue[3]).not.toHaveBeenCalled();
     });
 
     it("should handle document picker errors", async () => {
@@ -369,7 +369,7 @@ describe("DataExportImport", () => {
         expect(alertSpy).toHaveBeenCalledWith("Erreur", "Le fichier sélectionné n'est pas un fichier d'export valide.");
       });
 
-      expect(mockContextValue[2]).not.toHaveBeenCalled();
+      expect(mockContextValue[3]).not.toHaveBeenCalled();
     });
 
     it("should handle missing data structure", async () => {
@@ -457,7 +457,7 @@ describe("DataExportImport", () => {
       });
 
       await waitFor(() => {
-        expect(mockContextValue[2]).toHaveBeenCalledWith(additionalDiaryData, "replace");
+        expect(mockContextValue[3]).toHaveBeenCalledWith(additionalDiaryData, "replace");
       });
     });
 
@@ -514,7 +514,7 @@ describe("DataExportImport", () => {
       fireEvent.press(importButton);
 
       await waitFor(() => {
-        expect(mockContextValue[2]).toHaveBeenCalledWith(additionalDiaryData, "merge");
+        expect(mockContextValue[3]).toHaveBeenCalledWith(additionalDiaryData, "merge");
       });
     });
 
@@ -600,7 +600,7 @@ describe("DataExportImport", () => {
     });
 
     it("should show loading state during import", async () => {
-      mockContextValue[2].mockImplementation(() => new Promise((resolve) => setTimeout(resolve, 100)));
+      mockContextValue[3].mockImplementation(() => new Promise((resolve) => setTimeout(resolve, 100)));
 
       // Mock Alert to simulate user confirming
       alertSpy.mockImplementation((title, message, buttons) => {
