@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useContext, useRef, useMemo } from "react";
-import { ScrollView, View, KeyboardAvoidingView, Platform, Text } from "react-native";
-import { beforeToday, formatDate, formatDay, formatRelativeDate } from "../../utils/date/helpers";
-import { isToday, isYesterday, parseISO } from "date-fns";
+import { ScrollView, View, Text } from "react-native";
+import { beforeToday, formatDate, formatDay } from "../../utils/date/helpers";
 import { getScoreWithState } from "../../utils";
 import InputQuestion from "./InputQuestion";
 import logEvents from "../../services/logEvents";
@@ -32,10 +31,10 @@ import JMButton from "@/components/JMButton";
 import { useBottomSheet } from "@/context/BottomSheetContext";
 import HelpView from "@/components/HelpView";
 import { AnimatedHeaderScrollScreen } from "../survey-v2/AnimatedHeaderScrollScreen";
-import Pencil from "@assets/svg/Pencil";
 import NavigationButtons from "@/components/onboarding/NavigationButtons";
-import { interpolateColor, useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated";
+import { useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated";
 import ChevronIcon from "@assets/svg/icon/chevron";
+import PencilIcon from "@assets/svg/icon/Pencil";
 
 const DaySurvey = ({
   navigation,
@@ -345,7 +344,7 @@ const DaySurvey = ({
 
   return (
     <AnimatedHeaderScrollScreen
-      headerRightComponent={<Pencil color={selectedMoodIndex === null ? TW_COLORS.WHITE : TW_COLORS.CNAM_PRIMARY_900} width={16} height={16} />}
+      headerRightComponent={<PencilIcon color={selectedMoodIndex === null ? TW_COLORS.WHITE : TW_COLORS.CNAM_PRIMARY_900} width={16} height={16} />}
       headerRightAction={editIndicators}
       headerTitle={formatDate(initSurvey?.date)}
       handlePrevious={() => {
