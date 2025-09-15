@@ -19,7 +19,7 @@ import { AnimatedHeaderScrollScreen } from "@/scenes/survey-v2/AnimatedHeaderScr
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
 import NavigationButtons from "@/components/onboarding/NavigationButtons";
-import { confirm } from "../../../utils";
+import { confirm } from "@/utils";
 
 export const GoalConfig = ({ navigation, route }) => {
   const goalId = route.params?.goalId;
