@@ -4,7 +4,7 @@ fileignoreconfig:
 - filename: .kontinuous/env/prod/templates/api.sealed-secret.yaml
   checksum: f1dfe60bbe8a6604443fe3629b2239fa969304beeca8eff2b7528cf9b5728e3d
 - filename: CHANGELOG.md
-  checksum: 41ee3e3fa845aa4074e2d565960d033de5115ecf00394fa167953bf132dcf2fd
+  checksum: 441705e556a107db776bf6cbbf07db3cdd8a6048973824058e9917111d15cc80
 - filename: README.md
   checksum: 979473d3e8ad091d57424dc057cf0b40a884f0fbf6821554ea0121e63a173d6b
 - filename: api/src/config.ts
@@ -153,5 +153,5 @@ fileignoreconfig:
   checksum: 4bdbae61c17ac5503134773799695ce35e571d53ed038a0fa5520f5d05a0df8e
 scopeconfig:
 - scope: node
-version: "1.0"
 threshold: medium
+version: "1.0"
