@@ -183,7 +183,7 @@ const DiaryDataProvider = ({ children }) => {
 
   useEffect(() => {
     getDiaryDataFromStorage();
-  }, []);
+  }, [setDiaryData]);
 
   return (
     <DiaryDataContext.Provider value={[diaryData, addNewEntryToDiaryData, internal__deleteDiaryData, importDiaryData]}>
