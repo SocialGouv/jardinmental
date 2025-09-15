@@ -107,7 +107,6 @@ export default ({ navigation, visible, onClick }) => {
             <DrawerItem badge={badgeNotesVersionVisible} title="Nouveautés" path="news" navigation={navigation} onClick={onClick} icon={<Star />} />
             <Separator />
             <DrawerItem title="Présentation" path="presentation" navigation={navigation} onClick={onClick} icon={<StickerSquare />} />
-            <DrawerItem title="Export / Import mes données" path="data-export-import" navigation={navigation} onClick={onClick} icon={<Download />} />
             <DrawerItem title="Recommander Jardin&nbsp;Mental" onClick={recommendApp} navigation={navigation} icon={<Share />} />
             <DrawerItem title="Parler à quelqu'un et s'informer" path="infos" navigation={navigation} onClick={onClick} icon={<Phone />} />
             <DrawerItem title="Nous contacter" path="contact" navigation={navigation} onClick={onClick} icon={<MessageTextCircle />} />
@@ -143,6 +142,15 @@ export default ({ navigation, visible, onClick }) => {
               }}
             />
             {isDevMode && <DrawerItem title="Dev Mode" path="dev-mode" navigation={navigation} onClick={onClick} icon={<Gear />} />}
+            {isDevMode && (
+              <DrawerItem
+                title="Export / Import mes données"
+                path="data-export-import"
+                navigation={navigation}
+                onClick={onClick}
+                icon={<Download />}
+              />
+            )}
             <Separator />
             <LegalItem title="Conditions générales d'utilisation" path="cgu" navigation={navigation} onClick={onClick} />
             <LegalItem title="Politique de confidentialité" path="privacy" navigation={navigation} onClick={onClick} />
