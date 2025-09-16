@@ -1,3 +1,10 @@
+# [1.70.0](https://github.com/SocialGouv/jardinmental/compare/v1.69.0...v1.70.0) (2025-09-16)
+
+
+### Features
+
+* **DiaryList:** add mood selector for current day at top of DiaryList ([#446](https://github.com/SocialGouv/jardinmental/issues/446)) ([5f926ee](https://github.com/SocialGouv/jardinmental/commit/5f926ee4f9668c990e5ee7741be3e91ef1e175fa))
+
 # [1.69.0](https://github.com/SocialGouv/jardinmental/compare/v1.68.1...v1.69.0) (2025-09-16)
 
 
