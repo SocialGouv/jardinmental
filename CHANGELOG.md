@@ -1,3 +1,10 @@
+# [1.69.0](https://github.com/SocialGouv/jardinmental/compare/v1.68.1...v1.69.0) (2025-09-16)
+
+
+### Features
+
+* add goal deactivation ([#457](https://github.com/SocialGouv/jardinmental/issues/457)) ([7d6c77b](https://github.com/SocialGouv/jardinmental/commit/7d6c77b631eb2431d9748bc6c4dce8e3abd78522))
+
 ## [1.68.1](https://github.com/SocialGouv/jardinmental/compare/v1.68.0...v1.68.1) (2025-09-16)
 
 
