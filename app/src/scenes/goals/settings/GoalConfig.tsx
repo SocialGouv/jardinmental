@@ -171,17 +171,6 @@ export const GoalConfig = ({ navigation, route }) => {
               </InputGroupItem>
             )}
           </InputGroup>
-          {/* <View className="my-2">
-            <InputGroupItem label={"Activer mon objectif"} onPress={() => reminderToggleRef?.current?.toggle?.()}>
-              <InputToggle
-                ref={reminderToggleRef}
-                checked={goalEnabled}
-                onCheckedChanged={async ({ checked }) => {
-                  setGoalEnabled(checked);
-                }}
-              />
-            </InputGroupItem>
-          </View> */}
         </View>
       </AnimatedHeaderScrollScreen>
       <TimePicker
