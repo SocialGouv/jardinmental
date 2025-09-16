@@ -354,21 +354,27 @@ const SurveySuccessScreen: React.FC<SurveySuccessScreenProps> = ({ navigation, r
   // Animation values
   const panelTranslateY = useSharedValue(300); // Start below screen
   const buttonOpacity = useSharedValue(0);
+  const contentOpacity = useSharedValue(1); // Start visible, fade out when panel opens
 
   useEffect(() => {
     // Show panel after 1.5 seconds
     const timer = setTimeout(() => {
       setShowPanel(true);
+      // Fade out content at the same time panel starts
+      contentOpacity.value = withTiming(0, {
+        duration: 750,
+        easing: Easing.out(Easing.cubic),
+      });
       // Animate panel sliding up
       panelTranslateY.value = withTiming(0, {
-        duration: 400,
+        duration: 750,
         easing: Easing.out(Easing.cubic),
       });
       // Show button with delay and opacity animation
       buttonOpacity.value = withDelay(
-        200,
+        1000,
         withTiming(1, {
-          duration: 300,
+          duration: 750,
           easing: Easing.out(Easing.cubic),
         })
       );
@@ -402,18 +408,24 @@ const SurveySuccessScreen: React.FC<SurveySuccessScreenProps> = ({ navigation, r
     };
   });
 
+  const contentAnimatedStyle = useAnimatedStyle(() => {
+    return {
+      opacity: contentOpacity.value,
+    };
+  });
+
   return (
     <View style={{ flex: 1 }}>
       {/* White Background First Screen */}
       <View style={{ flex: 1, backgroundColor: "white", justifyContent: "center", alignItems: "center", paddingHorizontal: 20 }}>
-        <View style={{ alignItems: "center" }}>
+        <Animated.View style={[{ alignItems: "center" }, contentAnimatedStyle]}>
           <View style={{ marginBottom: 32 }}>
             <CircleCheckMark color={"#0084B2"} width={40} height={41} />
           </View>
           <Text className={mergeClassNames(typography.displayXsRegular, "text-cnam-primary-900 text-center")}>
             L'observation du jour est terminée
           </Text>
-        </View>
+        </Animated.View>
       </View>
 
       {/* Animated Bottom Panel */}
@@ -425,10 +437,10 @@ const SurveySuccessScreen: React.FC<SurveySuccessScreenProps> = ({ navigation, r
               bottom: 0,
               left: 0,
               right: 0,
-              height: "60%", // Take 60% of screen height
+              height: currentMessage.type === "encouragement" ? "50%" : "60%", // Take 60% of screen height
               backgroundColor: TW_COLORS.CNAM_CYAN_50_LIGHTEN_90,
-              borderTopLeftRadius: 20,
-              borderTopRightRadius: 20,
+              borderTopLeftRadius: 80,
+              borderTopRightRadius: 80,
               paddingHorizontal: 20,
               paddingTop: 60,
               paddingBottom: 40,
@@ -438,7 +450,7 @@ const SurveySuccessScreen: React.FC<SurveySuccessScreenProps> = ({ navigation, r
           ]}
         >
           <View className="absolute top-[-38px] flex items-center justify-center w-full">
-            <View className="ml-14 rounded-full w-16 h-16 bg-cnam-cyan-500-0 p-2"></View>
+            <View className="ml-14 rounded-full w-16 h-16 p-2" style={{ backgroundColor: TW_COLORS.CNAM_CYAN_200_LIGHTEN_60 }}></View>
           </View>
           <View className="absolute top-[-30px] self-center rounded-full w-16 h-16 border border-white bg-cnam-cyan-lighten-80 p-2 flex items-center justify-center">
             <Text
@@ -457,9 +469,7 @@ const SurveySuccessScreen: React.FC<SurveySuccessScreenProps> = ({ navigation, r
               {/* Applause Hands Icon positioned at the top like in mockup */}
               {/* Content centered in the panel */}
               <View style={{ alignItems: "center", paddingHorizontal: 10 }}>
-                {/* Bravo Title */}
-                <Text className={mergeClassNames("text-lg font-bold text-cnam-primary-900 text-center mb-6")}>Bravo !</Text>
-                <Text className={mergeClassNames("text-lg font-normal text-cnam-primary-900 text-center leading-6")}>{currentMessage.text}</Text>
+                <Text className={mergeClassNames("text-2xl font-normal font-body text-cnam-primary-900 text-center")}>{currentMessage.text}</Text>
               </View>
             </View>
           )}
@@ -470,7 +480,7 @@ const SurveySuccessScreen: React.FC<SurveySuccessScreenProps> = ({ navigation, r
 
               {/* Content centered in the panel */}
               <View style={{ alignItems: "center" }} className="w-full">
-                <View className="bg-cnam-cyan-lighten-80 rounded-lg p-4 mb-4 w-full">
+                <View className="bg-cnam-cyan-lighten-80 rounded-[32px] pt-[22px] pb-4 px-5 mb-4 w-full">
                   {/* Le saviez-vous? header */}
                   <View className="flex flex-row mb-3">
                     <View className="bg-cnam-cyan-700-darken-40 flex flex-row justify-center items-center rounded-lg px-1.5 py-0.5">
@@ -480,10 +490,10 @@ const SurveySuccessScreen: React.FC<SurveySuccessScreenProps> = ({ navigation, r
                   </View>
 
                   {/* Health tip text */}
-                  <Text className={mergeClassNames("text-lg font-bold text-cnam-primary-900 mb-3")}>{currentMessage.text}</Text>
+                  <Text className={mergeClassNames("text-2xl text-body font-semibold text-cnam-primary-900 mb-3")}>{currentMessage.text}</Text>
 
                   {/* Source */}
-                  {currentMessage.source && <Text className={mergeClassNames("text-sm text-gray-600 italic")}>Source : {currentMessage.source}</Text>}
+                  {currentMessage.source && <Text className={mergeClassNames("text-sm text-gray-800 italic")}>Source : {currentMessage.source}</Text>}
                 </View>
 
                 {/* Feedback section for health tips */}
