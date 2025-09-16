@@ -51,7 +51,6 @@ const executeReminderCronJob = async () => {
       },
     },
   });
-  console.log("LCS TOTO GOAL", goalReminders, mainReminders);
   if (goalReminders.length > 0) {
     // Group reminders by custom message to send batch notifications
     const remindersByMessage = goalReminders.reduce((acc, r) => {
