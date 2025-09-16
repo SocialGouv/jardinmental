@@ -1,3 +1,10 @@
+# [1.68.0](https://github.com/SocialGouv/jardinmental/compare/v1.67.0...v1.68.0) (2025-09-16)
+
+
+### Features
+
+* **daysurvey:** on android change status bar according to selected mood ([#459](https://github.com/SocialGouv/jardinmental/issues/459)) ([fef9628](https://github.com/SocialGouv/jardinmental/commit/fef96281bc41b62133b2b465f00ecd9dc074f1ac))
+
 # [1.67.0](https://github.com/SocialGouv/jardinmental/compare/v1.66.0...v1.67.0) (2025-09-16)
 
 
