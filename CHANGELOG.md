@@ -1,3 +1,10 @@
+# [1.67.0](https://github.com/SocialGouv/jardinmental/compare/v1.66.0...v1.67.0) (2025-09-16)
+
+
+### Features
+
+* improve UI with icon updates and styling fixes ([#458](https://github.com/SocialGouv/jardinmental/issues/458)) ([ad7ab87](https://github.com/SocialGouv/jardinmental/commit/ad7ab870829bd3ea69a95826c590037b4a0e3675))
+
 # [1.66.0](https://github.com/SocialGouv/jardinmental/compare/v1.65.0...v1.66.0) (2025-09-15)
 
 
