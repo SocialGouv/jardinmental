@@ -7,12 +7,12 @@ import localStorage from "../../utils/localStorage";
 
 const ReminderItem = ({ onPress }) => {
   const [message, setMessage] = useState("");
-  let mounted = useRef(true);
+  let mounted = useRef<boolean>(true);
 
   useEffect(() => {
     (async () => {
       const supported = await localStorage.getSupported();
-      if (mounted) {
+      if (mounted.current) {
         if (supported === "YES") {
           return setMessage("Saisir au moins 4 ou 5 fois par semaine aidera le professionnel qui vous suit à mieux vous soigner");
         } else {
@@ -20,7 +20,9 @@ const ReminderItem = ({ onPress }) => {
         }
       }
     })();
-    return () => (mounted = false);
+    return () => {
+      mounted.current = false;
+    };
   }, []);
 
   return (
