@@ -14,7 +14,8 @@ import * as RNLocalize from "react-native-localize";
 import BeigeWrapperScreen from "../onboarding-v2/BeigeWrapperScreen";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
-import Pencil from "@assets/svg/Pencil";
+import Pencil from "@assets/svg/icon/Pencil";
+import { SquircleButton, SquircleView } from "expo-squircle-view";
 
 const ReminderStorageKey = "@Reminder";
 
@@ -210,19 +211,35 @@ const Reminder = ({
         <Text className={mergeClassNames(typography.textMdMedium, "text-gray-800 text-left mb-6")}>
           Consigner chaque jour votre état permet de découvrir progressivement ce qui vous fait du bien, et ce qui vous freine.
         </Text>
-        <TouchableOpacity
+        <SquircleButton
           onPress={showReminderSetup}
-          className="border border-gray-300 rounded-3xl px-10 py-6 items-center justify-center mb-6 bg-white w-auto self-center"
+          preserveSmoothing={true}
+          cornerSmoothing={100}
+          style={{
+            borderWidth: 1,
+            borderColor: TW_COLORS.GRAY_500,
+            borderRadius: 32,
+          }}
+          className="px-10 py-6 items-center justify-center mb-6 bg-white w-auto self-center"
         >
           <Text className={mergeClassNames(typography.textSmMedium, "mb-2")}> Recevez un rappel à:</Text>
-          <View className="py-3 pt-5 px-8 border-2 border-secondary rounded-3xl flew-column">
+          <SquircleView
+            preserveSmoothing={true}
+            cornerSmoothing={100}
+            style={{
+              borderWidth: 2,
+              borderColor: TW_COLORS.CNAM_PRIMARY_700,
+              borderRadius: 16,
+            }}
+            className="py-3 pt-5 px-8 flew-column"
+          >
             <Text className="font-bold text-5xl text-brand-600 leading-[56px]">{formatReminderTime(reminder)}</Text>
-          </View>
+          </SquircleView>
           <View className="flex-row items-center justify-center mt-4">
             <Text className="text-base mr-2 items-center justify-center">Éditer</Text>
             <Pencil color={TW_COLORS.BRAND_700} width={16} height={16} />
           </View>
-        </TouchableOpacity>
+        </SquircleButton>
       </View>
       {/* <ScrollView style={onboardingStyles.scroll} contentContainerStyle={onboardingStyles.scrollContentContainer}>
       <View style={onboardingStyles.container}>

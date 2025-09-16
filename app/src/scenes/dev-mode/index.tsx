@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { View, StyleSheet, ScrollView, TouchableOpacity, Platform, Alert } from "react-native";
 import Text from "../../components/MyText";
 import { colors } from "../../utils/colors";
@@ -6,10 +6,11 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { HOST, HMAC_SECRET } from "../../config";
 import app from "../../../app.json";
 import { useUserProfile } from "@/context/userProfile";
-import { wipeData } from "@/context/diaryData";
+import { DiaryDataContext, wipeData } from "@/context/diaryData";
 import JMButton from "@/components/JMButton";
 import { confirm } from "../../utils";
 import * as Sentry from "@sentry/react-native";
+import { beforeToday, formatDay } from "../../utils/date/helpers";
 
 const CollapsibleSection = ({ title, children }) => {
   const [isExpanded, setIsExpanded] = useState(true);
@@ -27,7 +28,7 @@ const CollapsibleSection = ({ title, children }) => {
 
 const DevMode = ({ navigation }) => {
   const { clearProfile, loadProfile } = useUserProfile();
-
+  const [_diaryData, _addEntryToDiaryData, internal__deleteDiaryData] = useContext(DiaryDataContext);
   const disableDevMode = async () => {
     await AsyncStorage.setItem("devMode", "false");
     navigation.navigate("tabs");
@@ -115,6 +116,24 @@ const DevMode = ({ navigation }) => {
             onCancel: () => {
               // No action needed, dialog will close automatically
             },
+          });
+        }}
+      ></JMButton>
+      <JMButton
+        className="mb-4"
+        title="Supprimer mes données d'aujourd'hui"
+        variant="outline"
+        onPress={() => {
+          confirm({
+            title: "Supprimer toutes les données",
+            message: "Cette action supprimera définitivement toutes vos données enregistré pour le jour d'aujourd'hui",
+            confirmText: "Confirmer",
+            cancelText: "Annuler",
+            onConfirm: async () => {
+              // No action needed, dialog will close automatically
+              if (internal__deleteDiaryData) internal__deleteDiaryData(formatDay(beforeToday(0)));
+            },
+            onCancel: () => {},
           });
         }}
       ></JMButton>

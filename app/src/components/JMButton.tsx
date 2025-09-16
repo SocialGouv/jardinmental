@@ -2,6 +2,8 @@ import React from "react";
 import { TouchableOpacity, TouchableOpacityProps, StyleProp, ViewStyle, Text, ActivityIndicator, View } from "react-native";
 import { mergeClassNames } from "@/utils/className";
 import ArrowIcon from "@assets/svg/icon/Arrow";
+import { SquircleButton } from "expo-squircle-view";
+import { TW_COLORS } from "@/utils/constants";
 
 type ButtonProps = TouchableOpacityProps & {
   variant?: "primary" | "secondary" | "outline" | "text" | "secondary-blue";
@@ -59,6 +61,7 @@ export default function JMButton({
 
   const baseClasses = `${classMap[width]} ${paddingMap[size]} rounded-3xl items-center justify-center flex-row`;
   let variantClasses = "";
+  let borderStyle: ViewStyle | null = null;
 
   switch (variant) {
     case "primary":
@@ -71,7 +74,11 @@ export default function JMButton({
       variantClasses = "bg-[#006386]"; // TODO: trouver où on doit mettre cette couleur
       break;
     case "outline":
-      variantClasses = "border border-primary bg-white";
+      variantClasses = "bg-white";
+      borderStyle = {
+        borderColor: TW_COLORS.PRIMARY,
+        borderWidth: 1,
+      };
       break;
     case "text":
       variantClasses = "bg-transparent";
@@ -99,11 +106,18 @@ export default function JMButton({
       })
     : null;
   return (
-    <TouchableOpacity className={finalClassName} style={[{ height: heightMap[size] }, style]} disabled={disabled || loading} {...props}>
+    <SquircleButton
+      cornerSmoothing={100}
+      preserveSmoothing={true}
+      className={finalClassName}
+      style={[{ height: heightMap[size], borderRadius: 20 }, style, borderStyle]}
+      disabled={disabled || loading}
+      {...props}
+    >
       {loading && <ActivityIndicator size="small" color={variant === "outline" || variant === "text" ? "#3D6874" : "#fff"} className="mr-2" />}
       {!loading && styledIcon && iconPosition === "left" && <View className={!!(children ?? title) ? `mr-2` : ""}>{styledIcon}</View>}
       {!!(children || title) && <Text className={mergeClassNames("font-semibold", textSizeMap[size], textColor, textClassName)}>{title}</Text>}
       {!loading && icon && iconPosition === "right" && <View className={!!(children ?? title) ? `ml-2` : ""}>{icon}</View>}
-    </TouchableOpacity>
+    </SquircleButton>
   );
 }

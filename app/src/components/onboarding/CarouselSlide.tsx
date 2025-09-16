@@ -18,12 +18,12 @@ export const CarouselSlide: React.FC<CarouselSlideProps> = ({ slide, isActive, o
       }}
       color={VARIANT_BORDER_COLORS[slide.variant || "beige"]}
     >
-      <Text className={mergeClassNames(typography.displayXsBold, "text-cnam-primary-900 mb-10 text-left")}>{slide.title}</Text>
+      <Text className={mergeClassNames(typography.displayXsBold, "text-cnam-primary-900 text-left")}>{slide.title}</Text>
 
       {/* Description */}
       {slide.description && (
         <Text
-          className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-900 text-left")}
+          className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-900 text-left mt-10")}
           style={{
             maxWidth: screenWidth - 64,
           }}
@@ -35,4 +35,3 @@ export const CarouselSlide: React.FC<CarouselSlideProps> = ({ slide, isActive, o
     </BeigeCard>
   );
 };
-

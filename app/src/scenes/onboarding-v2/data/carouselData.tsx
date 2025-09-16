@@ -8,7 +8,7 @@ const SlideWelcome: CarouselSlide = {
   id: "slide-jm-help-you",
   title: "Jardin Mental vous aide à y voir plus clair.",
   description:
-    "Vous traversez peut-être une période floue ou vous vous intéressez à votre santé mentale.\n\nIci, vous pourrez poser des mots sur ce que vous ressentez, et mieux comprendre ce que vous vivez.",
+    "Vous traversez peut-être une période floue où vous vous intéressez à votre santé mentale.\n\nIci, vous pourrez poser des mots sur ce que vous ressentez, et mieux comprendre ce que vous vivez.",
   type: "generic",
   backgroundColor: colors.WHITE,
   variant: "blue",

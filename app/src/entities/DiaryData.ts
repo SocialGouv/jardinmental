@@ -56,9 +56,7 @@ const DiaryDataAnswerSchema = z.object({
 export type DiaryDataAnswer = z.infer<typeof DiaryDataAnswerSchema>;
 
 // Schema for all DiaryData answers - combines dynamic indicator answers with fixed questions
-const DiaryDataAnswerListSchema = z
-  .record(z.string().describe("The indicator name"), DiaryDataAnswerSchema)
-  .describe("User custom indicators");
+const DiaryDataAnswerListSchema = z.record(z.string().describe("The indicator name"), DiaryDataAnswerSchema).describe("User custom indicators");
 export type DiaryDataAnswerList = z.infer<typeof DiaryDataAnswerListSchema>;
 
 // Main DiaryData schema
@@ -91,7 +89,7 @@ const DiaryEntrySchema = DiaryDataAnswerListSchema.and(
 );
 export type DiaryEntry = z.infer<typeof DiaryEntrySchema>;
 
-const DiaryDataSchema = z.record(z.string().describe("The date of the entry"), DiaryEntrySchema);
+const DiaryDataSchema = z.record(z.string().describe("The date of the entry"), DiaryEntrySchema.nullable());
 export type DiaryData = z.infer<typeof DiaryDataSchema>;
 
 const DiaryDataNewEntryInputSchema = z.object({
