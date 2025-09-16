@@ -28,7 +28,7 @@ const CollapsibleSection = ({ title, children }) => {
 
 const DevMode = ({ navigation }) => {
   const { clearProfile, loadProfile } = useUserProfile();
-  const [_diaryData, _addEntryToDiaryData, internal__deleteDiaryData] = useContext(DiaryDataContext);
+  const [_diaryData, _addEntryToDiaryData, internal__deleteDiaryData, _import, internal__deleteAllDiaryData] = useContext(DiaryDataContext);
   const disableDevMode = async () => {
     await AsyncStorage.setItem("devMode", "false");
     navigation.navigate("tabs");
@@ -104,16 +104,22 @@ const DevMode = ({ navigation }) => {
             confirmText: "Confirmer",
             cancelText: "Annuler",
             onConfirm: async () => {
-              await wipeData();
-              await AsyncStorage.clear();
-              await clearProfile();
-              await loadProfile();
-              navigation.reset({
-                index: 0,
-                routes: [{ name: "onboarding" }],
-              });
+              try {
+                await internal__deleteAllDiaryData();
+                await wipeData();
+                await AsyncStorage.clear();
+                await clearProfile();
+                await loadProfile();
+                navigation.reset({
+                  index: 0,
+                  routes: [{ name: "onboarding" }],
+                });
+              } catch (e) {
+                console.error(e);
+              }
             },
-            onCancel: () => {
+            onCancel: (e) => {
+              console.log(e);
               // No action needed, dialog will close automatically
             },
           });
