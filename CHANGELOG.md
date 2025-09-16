@@ -1,3 +1,10 @@
+## [1.68.1](https://github.com/SocialGouv/jardinmental/compare/v1.68.0...v1.68.1) (2025-09-16)
+
+
+### Bug Fixes
+
+* **daysurvey:** fix padding flickering when daysurvey load ([#460](https://github.com/SocialGouv/jardinmental/issues/460)) ([bd671fc](https://github.com/SocialGouv/jardinmental/commit/bd671fcd35c8bae54de7637268e8aceca8713c16))
+
 # [1.68.0](https://github.com/SocialGouv/jardinmental/compare/v1.67.0...v1.68.0) (2025-09-16)
 
 
