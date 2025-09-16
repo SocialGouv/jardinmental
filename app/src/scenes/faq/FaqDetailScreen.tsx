@@ -127,7 +127,7 @@ export default function FaqDetailScreen({
               icon={FAQ_DATA[item.next].icon}
               label={FAQ_DATA[item.next].title}
               onPress={() => {
-                navigation.navigate("faq-detail", {
+                navigation.push("faq-detail", {
                   slug: item.next,
                 });
               }}
