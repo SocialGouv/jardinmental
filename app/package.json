@@ -83,6 +83,7 @@
     "react-native-keyboard-controller": "^1.17.5",
     "react-native-linear-gradient": "^2.6.2",
     "react-native-localize": "^2.2.4",
+    "react-native-markdown-display": "^7.0.2",
     "react-native-modal": "^13.0.1",
     "react-native-modal-datetime-picker": "^18.0.0",
     "react-native-multiple-select": "^0.5.12",

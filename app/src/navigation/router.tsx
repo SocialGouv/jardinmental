@@ -73,6 +73,8 @@ import { StatusBarProvider, useStatusBarInternal } from "../context/StatusBarCon
 import { TW_COLORS } from "@/utils/constants";
 import SurveyV1 from "../scenes/survey/daySurvey";
 import SurveySuccessScreen from "../scenes/survey/SurveySuccessScreen";
+import FaqMainScreen from "@/scenes/faq/FaqMainScreen";
+import FaqDetailScreen from "@/scenes/faq/FaqDetailScreen";
 
 const Stack = createStackNavigator();
 
@@ -219,6 +221,8 @@ class Router extends React.Component<RouterProps> {
             }}
           >
             <Stack.Screen name="presentation" component={Presentation} />
+            <Stack.Screen name="faq" component={FaqMainScreen} />
+            <Stack.Screen name="faq-detail" component={FaqDetailScreen} />
             <Stack.Screen name="day-survey" component={SurveyV1} />
             <Stack.Screen name="day-survey-v2" component={SurveyNavigator} />
             <Stack.Screen name="survey-success" component={SurveySuccessScreen} />
