@@ -31,7 +31,6 @@ export const GoalConfig = ({ navigation, route }) => {
   const [ready, setReady] = useState(!editing ? true : false);
   const [loading, setLoading] = useState(false);
   const [deactivateLoading, setDeactivateLoading] = useState<boolean>(false);
-  const [goalEnabled, setGoalEnabled] = useState<boolean>(false);
   const reminderToggleRef = useRef();
   const [reminderEnabled, setReminderEnabled] = useState(!editing ? true : false);
   const [reminderTime, setReminderTime] = useState(set(new Date(), { hours: 10, minutes: 30 }));
@@ -49,7 +48,6 @@ export const GoalConfig = ({ navigation, route }) => {
               setReminderEnabled(true);
               setReminderTime(new Date(goal.reminder));
             }
-            setGoalEnabled(goal.enabled);
             setReady(true);
           }
         }
@@ -129,7 +127,7 @@ export const GoalConfig = ({ navigation, route }) => {
           ) : (
             <Text className={mergeClassNames("my-4 mt-6 text-cnam-primary-900", typography.textMdSemibold)}>{editingGoal?.label}</Text>
           )}
-          <InputGroup containerStyle={styles.spacing} highlight={reminderEnabled && goalEnabled}>
+          <InputGroup containerStyle={styles.spacing} highlight={reminderEnabled}>
             {editing && (
               <InputGroupItem
                 label="Récurrence"
