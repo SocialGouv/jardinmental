@@ -91,7 +91,7 @@ export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
     }
   };
   // State for dynamic padding
-  const [dynamicPaddingTop, setDynamicPaddingTop] = useState(0); // Default fallback
+  const [dynamicPaddingTop, setDynamicPaddingTop] = useState(null); // Default fallback
 
   // Scroll tracking
   const scrollY = useSharedValue(0);
@@ -122,9 +122,6 @@ export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
       // Calculate total header height including safe area insets
       const totalHeaderHeight = bannerHeight + (Platform.OS === "android" ? insets.top : 50);
       setDynamicPaddingTop(totalHeaderHeight);
-
-      console.log("Banner height measured:", bannerHeight);
-      console.log("Total header height (with insets):", totalHeaderHeight);
     }
   };
 
@@ -284,22 +281,24 @@ export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
           onBannerLayout={handleBannerLayout}
         ></BannerHeader>
       </View>
-      <KeyboardAvoidingView behavior={"padding"} keyboardVerticalOffset={Platform.OS === "android" ? 40 : 0} style={{ flex: 1 }}>
-        <Animated.ScrollView
-          ref={scrollRef}
-          className={"flex-1"}
-          style={{
-            backgroundColor: scrollViewBackground,
-            paddingTop: Platform.OS === "android" ? insets.top : 0,
-          }}
-          contentContainerStyle={scrollViewContentStyle}
-          onScroll={scrollHandler}
-          scrollEventThrottle={16}
-          automaticallyAdjustKeyboardInsets={true}
-        >
-          {children}
-        </Animated.ScrollView>
-      </KeyboardAvoidingView>
+      {dynamicPaddingTop !== null && (
+        <KeyboardAvoidingView behavior={"padding"} keyboardVerticalOffset={Platform.OS === "android" ? 40 : 0} style={{ flex: 1 }}>
+          <Animated.ScrollView
+            ref={scrollRef}
+            className={"flex-1"}
+            style={{
+              backgroundColor: scrollViewBackground,
+              paddingTop: Platform.OS === "android" ? insets.top : 0,
+            }}
+            contentContainerStyle={scrollViewContentStyle}
+            onScroll={scrollHandler}
+            scrollEventThrottle={16}
+            automaticallyAdjustKeyboardInsets={true}
+          >
+            {children}
+          </Animated.ScrollView>
+        </KeyboardAvoidingView>
+      )}
       {!bottomComponent && showBottomButton && (
         <NavigationButtons
           absolute={true}

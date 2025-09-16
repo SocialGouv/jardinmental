@@ -303,6 +303,20 @@ const logDataExport = async () => {
   });
 };
 
+const logDataExportAsBackUp = async () => {
+  await logEvent({
+    category: "DATA_EXPORT_AS_BACKUP",
+    action: "DATA_EXPORT_AS_BACKUP",
+  });
+};
+
+const logDataImport = async () => {
+  await logEvent({
+    category: "DATA_IMPORT_BACKUP",
+    action: "DATA_IMPORT_BACKUP",
+  });
+};
+
 const logNPSOpen = async () => {
   await logEvent({
     category: "NPS",
@@ -959,4 +973,6 @@ export default {
   logReminderObdEdit,
   logReminderObdValidate,
   logOnboardingBack,
+  logDataImport,
+  logDataExportAsBackUp,
 };

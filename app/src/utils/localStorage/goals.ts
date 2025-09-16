@@ -19,7 +19,23 @@ export const clearGoalsData = clearData;
 
 export const goalIdFromLabel = (label) => (label ? label.toLowerCase().trim().split(" ").join("_") : undefined);
 
-export const setGoalTracked = async ({ id, label, enabled, order, daysOfWeek, reminder, customMessage }) => {
+export const setGoalTracked = async ({
+  id,
+  label,
+  enabled,
+  order,
+  daysOfWeek,
+  reminder,
+  customMessage
+}: {
+  id: string;
+  label?: string;
+  enabled?: boolean;
+  order?: number;
+  daysOfWeek?: string[];
+  reminder?: boolean;
+  customMessage?: string 
+}) => {
   if (!id) id = goalIdFromLabel(label);
 
   let data = await getData();

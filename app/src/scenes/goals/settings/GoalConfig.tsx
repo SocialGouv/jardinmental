@@ -19,6 +19,7 @@ import { AnimatedHeaderScrollScreen } from "@/scenes/survey-v2/AnimatedHeaderScr
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
 import NavigationButtons from "@/components/onboarding/NavigationButtons";
+import { confirm } from "@/utils";
 
 export const GoalConfig = ({ navigation, route }) => {
   const goalId = route.params?.goalId;
@@ -29,7 +30,7 @@ export const GoalConfig = ({ navigation, route }) => {
 
   const [ready, setReady] = useState(!editing ? true : false);
   const [loading, setLoading] = useState(false);
-
+  const [deactivateLoading, setDeactivateLoading] = useState<boolean>(false);
   const reminderToggleRef = useRef();
   const [reminderEnabled, setReminderEnabled] = useState(!editing ? true : false);
   const [reminderTime, setReminderTime] = useState(set(new Date(), { hours: 10, minutes: 30 }));
@@ -72,9 +73,26 @@ export const GoalConfig = ({ navigation, route }) => {
     navigation.navigate("goals-settings");
   };
 
-  // useEffect(() => {
-  //   if (editing && ready) onValidate();
-  // }, [reminderEnabled, reminderTime]);
+  const onDeactivate = async () => {
+    if (loading) return;
+    setDeactivateLoading(true);
+    confirm({
+      title: "Êtes-vous sûr de vouloir désactiver votre objectif ?",
+      onConfirm: async () => {
+        await setGoalTracked({
+          id: goalId,
+          enabled: false,
+        });
+        setDeactivateLoading(false);
+        navigation.goBack();
+      },
+      onCancel: () => {
+        setDeactivateLoading(false);
+      },
+      cancelText: "Non",
+      confirmText: "Oui",
+    });
+  };
 
   const [daysOfWeekLabel, setDaysOfWeekLabel] = useState();
   useEffect(() => {
@@ -95,7 +113,10 @@ export const GoalConfig = ({ navigation, route }) => {
         }}
         bottomComponent={
           <NavigationButtons absolute={true}>
-            <JMButton title={!editing ? "Créer mon objectif" : "Valider"} onPress={onValidate} loading={loading} />
+            <>
+              {editing && <JMButton className="mb-2" variant="outline" title={"Désactiver"} onPress={onDeactivate} loading={deactivateLoading} />}
+              <JMButton title={!editing ? "Créer mon objectif" : "Valider"} onPress={onValidate} loading={loading} />
+            </>
           </NavigationButtons>
         }
         navigation={navigation}

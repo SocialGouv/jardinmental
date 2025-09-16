@@ -14,7 +14,7 @@ import * as RNLocalize from "react-native-localize";
 import BeigeWrapperScreen from "../onboarding-v2/BeigeWrapperScreen";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
-import Pencil from "@assets/svg/Pencil";
+import Pencil from "@assets/svg/icon/Pencil";
 import { SquircleButton, SquircleView } from "expo-squircle-view";
 
 const ReminderStorageKey = "@Reminder";

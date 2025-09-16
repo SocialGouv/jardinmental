@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen, waitFor } from "@testing-library/react-native";
+import { act, render, screen, waitFor } from "@testing-library/react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import DaySurvey from "../../src/scenes/survey/daySurvey";
@@ -9,6 +9,7 @@ import { DiaryDataNewEntryInput } from "../../src/entities/DiaryData";
 import { saveGoalsData } from "../../src/utils/localStorage/goals";
 import { OnboardingProgressHeaderProvider } from "@/scenes/onboarding/ProgressHeader";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { StatusBarProvider } from "../../src/context/StatusBarContext";
 
 // Only mock what absolutely cannot run in test environment
 jest.mock("@react-navigation/native", () => ({
@@ -98,15 +99,28 @@ describe("DaySurvey Component", () => {
   };
 
   const renderWithProvider = (component) => {
-    return render(
+    render(
       <SafeAreaProvider>
-        <OnboardingProgressHeaderProvider>
-          <NavigationContainer>
-            <DiaryDataProvider>{component}</DiaryDataProvider>
-          </NavigationContainer>
-        </OnboardingProgressHeaderProvider>
+        <StatusBarProvider>
+          <OnboardingProgressHeaderProvider>
+            <NavigationContainer>
+              <DiaryDataProvider>{component}</DiaryDataProvider>
+            </NavigationContainer>
+          </OnboardingProgressHeaderProvider>
+        </StatusBarProvider>
       </SafeAreaProvider>
     );
+    const bannerContainer = screen.getByTestId("banner-container");
+
+    // Simuler onLayout
+    act(() => {
+      bannerContainer.props.onLayout({
+        nativeEvent: {
+          layout: { x: 0, y: 0, width: 300, height: 200 },
+        },
+      });
+    });
+    return;
   };
 
   beforeEach(async () => {
