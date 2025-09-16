@@ -34,6 +34,7 @@ import { AnimatedHeaderScrollScreen } from "../survey-v2/AnimatedHeaderScrollScr
 import NavigationButtons from "@/components/onboarding/NavigationButtons";
 import { useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated";
 import ChevronIcon from "@assets/svg/icon/chevron";
+import { useStatusBar } from "@/context/StatusBarContext";
 import PencilIcon from "@assets/svg/icon/Pencil";
 
 const DaySurvey = ({
@@ -54,6 +55,7 @@ const DaySurvey = ({
     answers: {},
   };
   const { showBottomSheet, closeBottomSheet } = useBottomSheet();
+  const { setCustomColor } = useStatusBar();
   const animatedBackgroundColor = useSharedValue(TW_COLORS.PRIMARY);
   const [selectedMoodIndex, setSelectedMoodIndex] = useState<number | null>(null);
 
@@ -332,6 +334,7 @@ const DaySurvey = ({
   React.useEffect(() => {
     if (selectedMoodIndex !== null) {
       animatedBackgroundColor.value = withSpring(moodBackgroundColors[selectedMoodIndex - 1]);
+      setCustomColor(moodBackgroundColors[selectedMoodIndex - 1]);
     }
   }, [selectedMoodIndex]);
 
