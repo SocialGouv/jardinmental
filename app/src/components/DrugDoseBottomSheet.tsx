@@ -10,8 +10,8 @@ import { TW_COLORS } from "@/utils/constants";
 import { TouchableOpacity } from "@gorhom/bottom-sheet";
 import JMButton from "@/components/JMButton";
 import { Drug } from "@/entities/Drug";
-import Potion from "@assets/svg/icon/Potion";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
+import HealthIcon from "@assets/svg/icon/Health";
 
 const screenHeight = Dimensions.get("window").height;
 const height90vh = screenHeight * 0.9;
@@ -78,7 +78,7 @@ export default function DrugDoseBottomSheet({
           </TouchableOpacity>
         </View>
         <View className="flex-row bg-[#E5F6FC] self-start items-center p-2">
-          <Potion />
+          <HealthIcon color={TW_COLORS.CNAM_CYAN_700_DARKEN_40} />
           <Text className={mergeClassNames(typography.textSmBold, "ml-2 text-cnam-cyan-700-darken-40 text-left")}>
             {drug.name1} {drug.name2 ? `(${drug.name2})` : ""}
           </Text>
@@ -108,7 +108,9 @@ export default function DrugDoseBottomSheet({
                 />
               );
             })}
-            {!filteredDoses.length && <Text className={mergeClassNames(typography.textSmMedium, "text-gray-800")}>Pas de résultat</Text>}
+            {!!uniqueDoses.length && !filteredDoses.length && (
+              <Text className={mergeClassNames(typography.textSmMedium, "text-gray-800")}>Pas de résultat</Text>
+            )}
             {!!searchedText && !filteredDoses.length && (
               <TouchableOpacity
                 onPress={() => {

@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect, useRef } from "react";
-import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
+import { StyleSheet, View, TouchableOpacity, Text, Pressable } from "react-native";
 import { colors } from "../../utils/colors";
 import { DiaryDataContext } from "../../context/diaryData";
 import localStorage from "../../utils/localStorage";
@@ -100,8 +100,8 @@ const DrugsManagement = ({ navigation, route }) => {
       handlePrevious={() => {
         navigation.goBack();
       }}
-      category="TREATMENT"
       title="Traitement"
+      smallHeader={true}
       navigation={navigation}
       headerRightComponent={null}
       headerRightAction={() => {}}
@@ -130,22 +130,24 @@ const DrugsManagement = ({ navigation, route }) => {
           La prise d'un traitement peut avoir un effet sur votre quotidien. Suivre la prise de traitement permet de mieux comprendre son effet sur
           votre état de santé mentale
         </Text>
-        <View className="my-2">
-          <InputGroupItem
-            label={hasTreatment ? "Oui, je prends un traitement" : "Non, je n'ai pas de traitement"}
-            onPress={() => reminderToggleRef?.current?.toggle?.()}
-          >
-            <InputToggle
-              ref={reminderToggleRef}
-              checked={hasTreatment}
-              onCheckedChanged={async ({ checked }) => {
-                setHasTreatment(checked);
-                if (!checked) {
-                  await localStorage.setMedicalTreatment([]);
-                }
-              }}
-            />
-          </InputGroupItem>
+        <View className="mb-6 mt-10">
+          <Pressable onPress={() => reminderToggleRef?.current?.toggle?.()} hitSlop={{ bottom: 8, left: 8, right: 8, top: 8 }}>
+            <View className="flex-row items-center justify-between">
+              <Text className={mergeClassNames(typography.textLgMedium, "text-cnam-primary-900")}>
+                {hasTreatment ? "Oui, je prends un traitement" : "Non, je n'ai pas de traitement"}
+              </Text>
+              <InputToggle
+                ref={reminderToggleRef}
+                checked={hasTreatment}
+                onCheckedChanged={async ({ checked }) => {
+                  setHasTreatment(checked);
+                  if (!checked) {
+                    await localStorage.setMedicalTreatment([]);
+                  }
+                }}
+              />
+            </View>
+          </Pressable>
         </View>
         {(medicalTreatment || []).map((e, i) => {
           const drug = (posology && posology.find((i) => i.id === e.id)) || e;

@@ -51,11 +51,12 @@ export const DrugsBottomSheet = ({ onClose }: { onClose: (treatment?: Drug[]) =>
   }, []);
 
   return (
-    <View className="flex-1 bg-white px-4">
+    <View className="flex-1 bg-white">
       {index === 0 && (
         <ContentWrapper
           contentContainerStyle={isLandscape ? { paddingBottom: 100 } : null}
           showsVerticalScrollIndicator={false}
+          className="px-4"
           style={isLandscape ? { paddingVertical: 20, height: height90vh } : null}
         >
           <View className="flex-row items-center p-4 px-0 pb-6">

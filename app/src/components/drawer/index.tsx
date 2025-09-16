@@ -30,6 +30,7 @@ import Phone from "@assets/svg/icon/Phone";
 import MessageTextCircle from "@assets/svg/icon/MessageTextCircle";
 import Lock from "@assets/svg/icon/Lock";
 import LightBulb from "@assets/svg/icon/LightBulb";
+import Download from "@assets/svg/icon/Download";
 import NPS from "../../services/NPS/NPS";
 import Gear from "@assets/svg/Gear";
 
@@ -106,7 +107,7 @@ export default ({ navigation, visible, onClick }) => {
             <DrawerItem badge={badgeNotesVersionVisible} title="Nouveautés" path="news" navigation={navigation} onClick={onClick} icon={<Star />} />
             <Separator />
             <DrawerItem title="Présentation" path="presentation" navigation={navigation} onClick={onClick} icon={<StickerSquare />} />
-            <DrawerItem title="Recommander Jardin&nbsp;Mental" onClick={recommendApp} icon={<Share />} />
+            <DrawerItem title="Recommander Jardin&nbsp;Mental" onClick={recommendApp} navigation={navigation} icon={<Share />} />
             <DrawerItem title="Parler à quelqu'un et s'informer" path="infos" navigation={navigation} onClick={onClick} icon={<Phone />} />
             <DrawerItem title="Nous contacter" path="contact" navigation={navigation} onClick={onClick} icon={<MessageTextCircle />} />
             <DrawerItem title="Qui peut voir mes données ?" path="privacy-light" navigation={navigation} onClick={onClick} icon={<Lock />} />
@@ -115,6 +116,7 @@ export default ({ navigation, visible, onClick }) => {
                 badge
                 title="Mettre à jour"
                 icon={<Bell />}
+                navigation={navigation}
                 onClick={() =>
                   Linking.openURL(
                     Platform.OS === "ios"
@@ -128,6 +130,7 @@ export default ({ navigation, visible, onClick }) => {
               badge={badgeNpsProIsVisible}
               title="Donner mon avis"
               icon={<LightBulb />}
+              navigation={navigation}
               onClick={async () => {
                 // dismiss the drawer first, IOS cannot display two modals at the same tme
                 setIsVisible(false);
@@ -139,6 +142,15 @@ export default ({ navigation, visible, onClick }) => {
               }}
             />
             {isDevMode && <DrawerItem title="Dev Mode" path="dev-mode" navigation={navigation} onClick={onClick} icon={<Gear />} />}
+            {isDevMode && (
+              <DrawerItem
+                title="Export / Import mes données"
+                path="data-export-import"
+                navigation={navigation}
+                onClick={onClick}
+                icon={<Download />}
+              />
+            )}
             <Separator />
             <LegalItem title="Conditions générales d'utilisation" path="cgu" navigation={navigation} onClick={onClick} />
             <LegalItem title="Politique de confidentialité" path="privacy" navigation={navigation} onClick={onClick} />
