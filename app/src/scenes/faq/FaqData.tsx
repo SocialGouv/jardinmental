@@ -36,7 +36,7 @@ export const FAQ_DATA: Record<FaqSlug, FaqDataEntry> = {
       {
         title: `Comment les paramétrer ?`,
         description: `Vous pouvez accéder aux paramètres de vos indicateurs soit lorsque vous remplissez votre questionnaire quotidien, soit depuis les *Paramètres généraux* (⚙️ en haut à droite) en cliquant sur « *Personnaliser mes indicateurs* » : 
-- Pour **modifier vos indicateurs existants** : cliquez sur « *Modifier mon questionnaire* ». Vous pourrez alors changer l'ordre d'apparition de vos indicateurs ou en supprimer en cliquant sur la corbeille 🗑️ .
+- Pour **modifier vos indicateurs existants** : cliquez sur « *Modifier mon questionnaire* ». Vous pourrez alors supprimer vos indicateurs en cliquant sur la corbeille 🗑️ .
 - Pour **créer un nouvel indicateur** : cliquez sur le bouton « Ajouter un nouvel indicateur ». Vous pourrez alors définir le nom de votre indicateur et choisir son échelle d'évaluation. Vous pouvez vous inspirer des exemples proposés ou réactiver un indicateur archivé.`,
       },
     ],
@@ -59,7 +59,7 @@ export const FAQ_DATA: Record<FaqSlug, FaqDataEntry> = {
 - Pour **créer un nouvel objectif** : cliquez sur le bouton « Ajouter un objectif ». Vous pourrez alors définir le nom de votre objectif. Vous pouvez vous inspirer des exemples proposés ou réactiver un objectif archivé.
 - Pour **modifier vos objectifs existants** :
     - Si vous souhaitez modifier la récurrence d'un objectif existant ou activer / éteindre les rappels, cliquez sur l'icône du stylo 🖊️ à côté de l'objectif en question.
-    - Si vous souhaitez supprimer un objectif existant, cliquez sur le bouton « Modifier mes objectifs » puis cliquez sur la corbeille 🗑️ à côté de l'objectif en question.`,
+    - Si vous souhaitez supprimer un objectif existant, cliquez sur l'icône du stylo 🖊️ à côté de l'objectif en question puis sur le bouton "Désactiver mon objectif"`,
       },
     ],
     next: "questionnaire",
@@ -97,29 +97,27 @@ export const FAQ_DATA: Record<FaqSlug, FaqDataEntry> = {
   analyse: {
     title: "Comprendre mes analyses",
     icon: <TrendUpIcon />,
-    description: `Découvrez comment vos observations sont transformées en analyses pour mieux suivre votre état au fil du temps.`,
+    description: `Cette section rassemble les données que vous saisissez chaque jour et les met  en perspective. Cela vous permet de suivre l’évolution de votre état et d’identifier les facteurs qui influencent votre bien-être.`,
     accordion: [
       {
-        title: "À quoi servent mes analyses ?",
-        description: `C'est le cœur de l'application : vos analyses vous permettent d'observer vos données, de mieux comprendre ce qui influence votre état et de repérer ce qui vous aide (ou au contraire vous fragilise).`,
+        title: "Comment lire mes frises ?",
+        description: `Les frises montrent l’évolution de vos indicateurs sur une période donnée. Elles permettent de repérer les variations dans le temps.`,
       },
       {
-        title: `Comment interpréter mes données ?`,
-        description: `Vous pourrez :
-
-- évaluer vos indicateurs ;
-- cocher les objectifs atteints ;
-- ajouter une note pour préciser un événement marquant ;
-- indiquer si vous avez consommé des substances ;
-- confirmer la prise de votre traitement (si vous en avez renseigné un) ;
-- noter une prise de médicament "si besoin".
-`,
+        title: `Comment lire mes statistiques ?`,
+        description: `Les statistiques donnent un bilan global de vos indicateurs sur une période donnée.
+Elles ne suivent pas l’évolution de vos indicateur sjour après jour mais offrent une vue d’ensemble de votre état.
+Vous y trouverez aussi le taux de réussite de vos objectifs.`,
       },
       {
-        title: `Jusqu'à combien de jours en arrière puis-je compléter ?`,
-        description: `Vous pouvez remplir ou compléter votre questionnaire jusqu'à **7 jours en arrière**. Passé ce délai, il ne sera plus possible de le faire car les souvenirs deviennent moins fiables et risquent de fausser vos données.
-
-👉 **La régularité est essentielle** : plus vous prenez l'habitude de remplir votre questionnaire chaque jour, plus vous aurez une vision claire de ce qui influence votre état — que ce soit positivement ou négativement.`,
+        title: `Comment lire mes courbes ?`,
+        description: `Les courbes affichent l’évolution de vos indicateurs, jour après jour, semaine par semaine.
+En cliquant sur un point, vous pouvez retrouver le contexte d’une journée précise.`,
+      },
+      {
+        title: `Comment lire mes déclencheurs ?`,
+        description: `Les déclencheurs affichent, pour l’indicateur et l’intensité choisis, les notes que vous avez écrites dans vos questionnaires quotidiens.
+Ils vous aident à repérer les situations ou facteurs qui influencent vos indicateurs.`,
       },
     ],
     next: "traitement",
@@ -131,11 +129,8 @@ export const FAQ_DATA: Record<FaqSlug, FaqDataEntry> = {
     accordion: [
       {
         title: "Comment ajouter mon traitement ?",
-        description: `Pour renseigner votre traitement, allez dans les *Paramètres généraux* (⚙️ en haut à droite) puis cliquez sur *« Saisir mon traitement ».* 
-
-Vous pourrez alors ajouter votre traitement en sélectionnant dans la liste le nom de votre médicament, ou en ajouter un.
-
-Nous vous rappellerons de le prendre dans votre questionnaire quotidien.`,
+        description: `Pour renseigner votre traitement, allez dans les *Paramètres généraux* (⚙️ en haut à droite) puis cliquez sur *« Saisir mon traitement »*. Vous pourrez alors ajouter votre traitement en sélectionnant dans la liste le nom de votre médicament, ou en ajouter un.
+Un rappel apparaîtra dans votre questionnaire quotidien.`,
       },
       {
         title: `Puis-je créer un traitement qui n'est pas dans la liste ?`,
@@ -145,18 +140,24 @@ Nous vous rappellerons de le prendre dans votre questionnaire quotidien.`,
     next: "données",
   },
   données: {
-    title: "Partager mes données",
+    title: "Gérer mes données",
     description: `Cette section répond à vos questions sur le récapitulatif de vos données et son utilisation.`,
     accordion: [
       {
+        title: "Qui peut voir mes données ?",
+        description: `Les informations personnelles que vous saisissez dans Jardin Mental restent enregistrées uniquement sur votre appareil. Elles ne sont ni partagées ni accessibles à des tiers.
+Seules des données anonymisées sur la fréquence d’utilisation de l’application sont recueillies par notre équipe afin d’améliorer continuellement Jardin Mental.`,
+      },
+      {
         title: "À quoi sert la génération de récapitulatif de mes données ?",
-        description: `Si vous êtes suivi·e par un·e professionnel·le de santé, vous pouvez si vous le souhaitez lui partager vos données. Ces informations lui permettront d'avoir une vue d'ensemble de votre état entre vos consultations et l'aideront à adapter son accompagnement et / ou votre traitement en conséquence.`,
+        description: `Si vous êtes suivi·e par un·e professionnel·le de santé, vous pouvez si vous le souhaitez lui partager vos données.
+        Ces informations lui permettront d'avoir une vue d'ensemble de votre état entre vos consultations et l'aideront à adapter son accompagnement et / ou votre traitement en conséquence.`,
       },
       {
         title: `Comment générer un récapitulatif de mes données ?`,
-        description: `Pour générer un récapitulatif de vos données, rendez-vous dans les *Paramètres généraux* (⚙️ en haut à droite) et cliquez sur « *Générer un récapitulatif de mes données* » sur les **30 derniers jours**. 
-
-Vous pourrez alors télécharger le fichier au format PDF.`,
+        description: `- Rendez-vous dans les *Paramètres généraux* (⚙️ en haut à droite) ;
+- Cliquez sur « *Générer un récapitulatif de mes données* » ;
+- Vous pourrez alors télécharger le fichier au format PDF.`,
       },
     ],
     icon: <ShareIcon />,
