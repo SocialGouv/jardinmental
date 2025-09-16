@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
 import { useFocusEffect } from "@react-navigation/native";
@@ -20,6 +20,7 @@ const STORAGE_KEY_MOTIVATIONAL_MESSAGE_SHUFFLED_ORDER = "@MOTIVATIONAL_MESSAGE_S
 type MessageType = "encouragement" | "health_tip";
 
 type MotivationalMessage = {
+  id: number;
   type: MessageType;
   emoji: string;
   text: string;
@@ -29,41 +30,42 @@ type MotivationalMessage = {
 
 // Engagement & auto-observation messages
 const ENCOURAGEMENT_MESSAGES: MotivationalMessage[] = [
-  { type: "encouragement", emoji: "👏", text: "Prendre le temps de remplir ton suivi, c'est déjà prendre soin de toi." },
-  { type: "encouragement", emoji: "🧩", text: "Chaque saisie est une petite pièce du puzzle de ta santé mentale." },
-  { type: "encouragement", emoji: "🌱", text: "Revenir régulièrement, c'est construire pas à pas une meilleure connaissance de toi-même." },
-  { type: "encouragement", emoji: "✨", text: "L'auto-observation permet de mettre en lumière ce qui reste invisible au quotidien." },
-  { type: "encouragement", emoji: "📈", text: "Observer tes indicateurs, c'est comprendre ce qui influence ton équilibre." },
-  { type: "encouragement", emoji: "💡", text: "En notant tes ressentis, tu crées un journal de ton bien-être." },
-  { type: "encouragement", emoji: "🙌", text: "Faire le point sur ta journée, c'est déjà un acte positif envers toi-même." },
-  { type: "encouragement", emoji: "🕰️", text: "Deux minutes pour remplir ton suivi = un temps précieux que tu t'accordes." },
-  { type: "encouragement", emoji: "🌙", text: "Même une petite observation aujourd'hui peut t'apporter des clés demain." },
-  { type: "encouragement", emoji: "💪", text: "Tu fais de ton bien-être une priorité, un pas après l'autre." },
-  { type: "encouragement", emoji: "🔍", text: "Chaque saisie est une observation qui compte." },
-  { type: "encouragement", emoji: "🎯", text: "Ton engagement à noter régulièrement renforce ton parcours personnel." },
-  { type: "encouragement", emoji: "🗝️", text: "L'auto-observation est une clé pour mieux comprendre ce qui agit sur toi." },
-  { type: "encouragement", emoji: "📊", text: "Chaque indicateur noté enrichit ta compréhension de toi-même." },
-  { type: "encouragement", emoji: "🤝", text: "Remplir ton suivi, c'est engager un dialogue bienveillant avec toi-même." },
-  { type: "encouragement", emoji: "🌞", text: "Observer aujourd'hui, c'est préparer un demain plus serein." },
-  { type: "encouragement", emoji: "🌍", text: "Tu contribues à ton équilibre rien qu'en prenant ce moment." },
-  { type: "encouragement", emoji: "📝", text: "Noter tes ressentis, c'est prendre un temps pour les reconnaître." },
-  { type: "encouragement", emoji: "🔄", text: "La régularité fait toute la différence dans l'auto-observation." },
-  { type: "encouragement", emoji: "🌟", text: "Faire ton suivi, c'est déjà progresser." },
-  { type: "encouragement", emoji: "⚖️", text: "Connaître tes variations, c'est apprendre à équilibrer ton quotidien." },
-  { type: "encouragement", emoji: "📌", text: "Chaque point noté est une trace utile pour mieux avancer." },
-  { type: "encouragement", emoji: "🚀", text: "Tu construis une base solide en revenant jour après jour." },
-  { type: "encouragement", emoji: "💭", text: "L'auto-observation, c'est un espace pour écouter tes pensées." },
-  { type: "encouragement", emoji: "🧘", text: "Ce petit rituel quotidien nourrit ton équilibre intérieur." },
-  { type: "encouragement", emoji: "🎉", text: "Bravo pour ton engagement : chaque suivi est une victoire." },
-  { type: "encouragement", emoji: "📖", text: "Ton suivi est ton histoire, jour après jour." },
-  { type: "encouragement", emoji: "💬", text: "Noter tes ressentis, c'est apprendre à mieux dialoguer avec toi-même." },
-  { type: "encouragement", emoji: "🌈", text: "Faire ton suivi, c'est un geste simple mais puissant." },
-  { type: "encouragement", emoji: "🕊️", text: "Observer régulièrement, c'est semer des graines de sérénité." },
+  { id: 1, type: "encouragement", emoji: "👏", text: "Prendre le temps de remplir ton suivi, c'est déjà prendre soin de toi." },
+  { id: 2, type: "encouragement", emoji: "🧩", text: "Chaque saisie est une petite pièce du puzzle de ta santé mentale." },
+  { id: 3, type: "encouragement", emoji: "🌱", text: "Revenir régulièrement, c'est construire pas à pas une meilleure connaissance de toi-même." },
+  { id: 4, type: "encouragement", emoji: "✨", text: "L'auto-observation permet de mettre en lumière ce qui reste invisible au quotidien." },
+  { id: 5, type: "encouragement", emoji: "📈", text: "Observer tes indicateurs, c'est comprendre ce qui influence ton équilibre." },
+  { id: 6, type: "encouragement", emoji: "💡", text: "En notant tes ressentis, tu crées un journal de ton bien-être." },
+  { id: 7, type: "encouragement", emoji: "🙌", text: "Faire le point sur ta journée, c'est déjà un acte positif envers toi-même." },
+  { id: 8, type: "encouragement", emoji: "🕰️", text: "Deux minutes pour remplir ton suivi = un temps précieux que tu t'accordes." },
+  { id: 9, type: "encouragement", emoji: "🌙", text: "Même une petite observation aujourd'hui peut t'apporter des clés demain." },
+  { id: 10, type: "encouragement", emoji: "💪", text: "Tu fais de ton bien-être une priorité, un pas après l'autre." },
+  { id: 11, type: "encouragement", emoji: "🔍", text: "Chaque saisie est une observation qui compte." },
+  { id: 12, type: "encouragement", emoji: "🎯", text: "Ton engagement à noter régulièrement renforce ton parcours personnel." },
+  { id: 13, type: "encouragement", emoji: "🗝️", text: "L'auto-observation est une clé pour mieux comprendre ce qui agit sur toi." },
+  { id: 14, type: "encouragement", emoji: "📊", text: "Chaque indicateur noté enrichit ta compréhension de toi-même." },
+  { id: 15, type: "encouragement", emoji: "🤝", text: "Remplir ton suivi, c'est engager un dialogue bienveillant avec toi-même." },
+  { id: 16, type: "encouragement", emoji: "🌞", text: "Observer aujourd'hui, c'est préparer un demain plus serein." },
+  { id: 17, type: "encouragement", emoji: "🌍", text: "Tu contribues à ton équilibre rien qu'en prenant ce moment." },
+  { id: 18, type: "encouragement", emoji: "📝", text: "Noter tes ressentis, c'est prendre un temps pour les reconnaître." },
+  { id: 19, type: "encouragement", emoji: "🔄", text: "La régularité fait toute la différence dans l'auto-observation." },
+  { id: 20, type: "encouragement", emoji: "🌟", text: "Faire ton suivi, c'est déjà progresser." },
+  { id: 21, type: "encouragement", emoji: "⚖️", text: "Connaître tes variations, c'est apprendre à équilibrer ton quotidien." },
+  { id: 22, type: "encouragement", emoji: "📌", text: "Chaque point noté est une trace utile pour mieux avancer." },
+  { id: 23, type: "encouragement", emoji: "🚀", text: "Tu construis une base solide en revenant jour après jour." },
+  { id: 24, type: "encouragement", emoji: "💭", text: "L'auto-observation, c'est un espace pour écouter tes pensées." },
+  { id: 25, type: "encouragement", emoji: "🧘", text: "Ce petit rituel quotidien nourrit ton équilibre intérieur." },
+  { id: 26, type: "encouragement", emoji: "🎉", text: "Bravo pour ton engagement : chaque suivi est une victoire." },
+  { id: 27, type: "encouragement", emoji: "📖", text: "Ton suivi est ton histoire, jour après jour." },
+  { id: 28, type: "encouragement", emoji: "💬", text: "Noter tes ressentis, c'est apprendre à mieux dialoguer avec toi-même." },
+  { id: 29, type: "encouragement", emoji: "🌈", text: "Faire ton suivi, c'est un geste simple mais puissant." },
+  { id: 30, type: "encouragement", emoji: "🕊️", text: "Observer régulièrement, c'est semer des graines de sérénité." },
 ];
 
 // Conseils & repères santé mentale messages
 const HEALTH_TIP_MESSAGES: MotivationalMessage[] = [
   {
+    id: 31,
     type: "health_tip",
     emoji: "🚶",
     text: "Marcher 30 minutes par jour aide à réduire le stress et améliore l'humeur.",
@@ -71,6 +73,7 @@ const HEALTH_TIP_MESSAGES: MotivationalMessage[] = [
     sourceUrl: "https://www.who.int/fr",
   },
   {
+    id: 32,
     type: "health_tip",
     emoji: "😴",
     text: "Avoir un rythme de sommeil régulier favorise un meilleur équilibre psychique.",
@@ -78,6 +81,7 @@ const HEALTH_TIP_MESSAGES: MotivationalMessage[] = [
     sourceUrl: "https://www.inserm.fr",
   },
   {
+    id: 33,
     type: "health_tip",
     emoji: "🧘",
     text: "La méditation de pleine conscience peut réduire de 20 à 30 % les symptômes d'anxiété.",
@@ -85,6 +89,7 @@ const HEALTH_TIP_MESSAGES: MotivationalMessage[] = [
     sourceUrl: "https://www.inserm.fr/actualite/la-pleine-conscience-un-outil-pour-mieux-gerer-son-anxiete",
   },
   {
+    id: 34,
     type: "health_tip",
     emoji: "📓",
     text: "Noter ses ressentis contribue à mieux réguler ses émotions.",
@@ -92,6 +97,7 @@ const HEALTH_TIP_MESSAGES: MotivationalMessage[] = [
     sourceUrl: "https://www.psycom.org/",
   },
   {
+    id: 35,
     type: "health_tip",
     emoji: "🎶",
     text: "Écouter de la musique qui te plaît peut améliorer ton humeur rapidement.",
@@ -99,6 +105,7 @@ const HEALTH_TIP_MESSAGES: MotivationalMessage[] = [
     sourceUrl: "https://www.health.harvard.edu",
   },
   {
+    id: 36,
     type: "health_tip",
     emoji: "🌿",
     text: "Passer du temps dans la nature aide à diminuer l'anxiété et à se ressourcer.",
@@ -106,6 +113,7 @@ const HEALTH_TIP_MESSAGES: MotivationalMessage[] = [
     sourceUrl: "https://www.santepubliquefrance.fr",
   },
   {
+    id: 37,
     type: "health_tip",
     emoji: "👥",
     text: "Entretenir des liens sociaux réguliers protège la santé mentale.",
@@ -113,6 +121,7 @@ const HEALTH_TIP_MESSAGES: MotivationalMessage[] = [
     sourceUrl: "https://www.who.int/fr",
   },
   {
+    id: 38,
     type: "health_tip",
     emoji: "💧",
     text: "Boire suffisamment d'eau contribue à la concentration et à l'énergie mentale.",
@@ -120,6 +129,7 @@ const HEALTH_TIP_MESSAGES: MotivationalMessage[] = [
     sourceUrl: "https://www.efsa.europa.eu",
   },
   {
+    id: 39,
     type: "health_tip",
     emoji: "📱",
     text: "Limiter son temps d'écran le soir améliore la qualité du sommeil.",
@@ -127,6 +137,7 @@ const HEALTH_TIP_MESSAGES: MotivationalMessage[] = [
     sourceUrl: "https://www.santepubliquefrance.fr",
   },
   {
+    id: 40,
     type: "health_tip",
     emoji: "🥦",
     text: "Une alimentation équilibrée joue un rôle dans la régulation de l'humeur.",
@@ -134,6 +145,7 @@ const HEALTH_TIP_MESSAGES: MotivationalMessage[] = [
     sourceUrl: "https://www.inserm.fr",
   },
   {
+    id: 41,
     type: "health_tip",
     emoji: "🛑",
     text: "Faire une pause régulière au travail améliore l'attention et réduit le stress.",
@@ -141,6 +153,7 @@ const HEALTH_TIP_MESSAGES: MotivationalMessage[] = [
     sourceUrl: "https://www.santepubliquefrance.fr",
   },
   {
+    id: 42,
     type: "health_tip",
     emoji: "🌞",
     text: "S'exposer à la lumière naturelle en journée soutient ton horloge biologique.",
@@ -148,6 +161,7 @@ const HEALTH_TIP_MESSAGES: MotivationalMessage[] = [
     sourceUrl: "https://www.inserm.fr",
   },
   {
+    id: 43,
     type: "health_tip",
     emoji: "✍️",
     text: "Tenir un journal de gratitude favorise un état d'esprit positif.",
@@ -155,6 +169,7 @@ const HEALTH_TIP_MESSAGES: MotivationalMessage[] = [
     sourceUrl: "https://www.psycom.org/",
   },
   {
+    id: 44,
     type: "health_tip",
     emoji: "🛌",
     text: "Une courte sieste (20 minutes max) peut améliorer l'énergie et l'humeur.",
@@ -162,6 +177,7 @@ const HEALTH_TIP_MESSAGES: MotivationalMessage[] = [
     sourceUrl: "https://www.inserm.fr",
   },
   {
+    id: 45,
     type: "health_tip",
     emoji: "🧃",
     text: "Prendre un petit-déjeuner équilibré contribue à une meilleure stabilité émotionnelle.",
@@ -169,6 +185,7 @@ const HEALTH_TIP_MESSAGES: MotivationalMessage[] = [
     sourceUrl: "https://www.santepubliquefrance.fr",
   },
   {
+    id: 46,
     type: "health_tip",
     emoji: "📚",
     text: "Lire quelques pages d'un livre peut favoriser la détente avant de dormir.",
@@ -176,6 +193,7 @@ const HEALTH_TIP_MESSAGES: MotivationalMessage[] = [
     sourceUrl: "https://www.nhs.uk",
   },
   {
+    id: 47,
     type: "health_tip",
     emoji: "🎨",
     text: "S'accorder un temps créatif (dessin, musique, écriture) aide à exprimer ses émotions.",
@@ -183,6 +201,7 @@ const HEALTH_TIP_MESSAGES: MotivationalMessage[] = [
     sourceUrl: "https://www.psycom.org/",
   },
   {
+    id: 48,
     type: "health_tip",
     emoji: "🧘",
     text: "Pratiquer la respiration profonde aide à calmer le corps et l'esprit.",
@@ -190,6 +209,7 @@ const HEALTH_TIP_MESSAGES: MotivationalMessage[] = [
     sourceUrl: "https://www.inserm.fr",
   },
   {
+    id: 49,
     type: "health_tip",
     emoji: "🥗",
     text: "Consommer des fruits et légumes variés soutient le bien-être global.",
@@ -197,6 +217,7 @@ const HEALTH_TIP_MESSAGES: MotivationalMessage[] = [
     sourceUrl: "https://www.who.int/fr",
   },
   {
+    id: 50,
     type: "health_tip",
     emoji: "🏃",
     text: "Faire du sport régulièrement diminue le risque de dépression.",
@@ -204,6 +225,7 @@ const HEALTH_TIP_MESSAGES: MotivationalMessage[] = [
     sourceUrl: "https://www.inserm.fr",
   },
   {
+    id: 51,
     type: "health_tip",
     emoji: "🎧",
     text: "Écouter un podcast ou une histoire apaisante peut aider à se relaxer.",
@@ -211,6 +233,7 @@ const HEALTH_TIP_MESSAGES: MotivationalMessage[] = [
     sourceUrl: "https://www.nhs.uk",
   },
   {
+    id: 52,
     type: "health_tip",
     emoji: "🕑",
     text: "Garder des horaires réguliers dans sa journée soutient la stabilité mentale.",
@@ -218,6 +241,7 @@ const HEALTH_TIP_MESSAGES: MotivationalMessage[] = [
     sourceUrl: "https://www.santepubliquefrance.fr",
   },
   {
+    id: 53,
     type: "health_tip",
     emoji: "☕",
     text: "Limiter la caféine en fin de journée améliore le sommeil.",
@@ -225,6 +249,7 @@ const HEALTH_TIP_MESSAGES: MotivationalMessage[] = [
     sourceUrl: "https://www.inserm.fr",
   },
   {
+    id: 54,
     type: "health_tip",
     emoji: "🛋️",
     text: "Aménager un espace calme pour se détendre aide à réduire le stress.",
@@ -232,6 +257,7 @@ const HEALTH_TIP_MESSAGES: MotivationalMessage[] = [
     sourceUrl: "https://www.psycom.org/",
   },
   {
+    id: 55,
     type: "health_tip",
     emoji: "🎯",
     text: "Se fixer de petits objectifs atteignables nourrit la motivation.",
@@ -239,6 +265,7 @@ const HEALTH_TIP_MESSAGES: MotivationalMessage[] = [
     sourceUrl: "https://www.who.int/fr",
   },
   {
+    id: 56,
     type: "health_tip",
     emoji: "🧂",
     text: "Réduire le sel dans son alimentation participe à une meilleure santé globale.",
@@ -246,6 +273,7 @@ const HEALTH_TIP_MESSAGES: MotivationalMessage[] = [
     sourceUrl: "https://www.santepubliquefrance.fr",
   },
   {
+    id: 57,
     type: "health_tip",
     emoji: "📞",
     text: "Parler de ses émotions avec un proche favorise le soutien social.",
@@ -253,6 +281,7 @@ const HEALTH_TIP_MESSAGES: MotivationalMessage[] = [
     sourceUrl: "https://www.psycom.org/",
   },
   {
+    id: 58,
     type: "health_tip",
     emoji: "🕺",
     text: "Danser sur une musique entraînante stimule l'énergie et la bonne humeur.",
@@ -260,6 +289,7 @@ const HEALTH_TIP_MESSAGES: MotivationalMessage[] = [
     sourceUrl: "https://www.health.harvard.edu",
   },
   {
+    id: 59,
     type: "health_tip",
     emoji: "🌸",
     text: "Prendre le temps de respirer profondément dans la journée réduit la tension corporelle.",
@@ -267,6 +297,7 @@ const HEALTH_TIP_MESSAGES: MotivationalMessage[] = [
     sourceUrl: "https://www.inserm.fr",
   },
   {
+    id: 60,
     type: "health_tip",
     emoji: "🛀",
     text: "Prendre une douche chaude avant de dormir favorise la détente.",
@@ -341,6 +372,7 @@ const SurveySuccessScreen: React.FC<SurveySuccessScreenProps> = ({ navigation, r
   const { setCustomColor } = useStatusBar();
   const [showPanel, setShowPanel] = useState(false);
   const [currentMessage, setCurrentMessage] = useState(ALL_MESSAGES[0]); // Default fallback
+  const [thumbSelection, setThumbSelection] = useState<"up" | "down" | null>(null);
 
   // Load sequential motivational message
   useEffect(() => {
@@ -384,10 +416,23 @@ const SurveySuccessScreen: React.FC<SurveySuccessScreenProps> = ({ navigation, r
   }, []);
 
   const handleFinish = () => {
+    // Log Matomo event based on thumb selection
+    if (thumbSelection) {
+      console.log(`Matomo event: health_tip_feedback_${thumbSelection}`, {
+        messageId: currentMessage.id,
+        messageType: currentMessage.type,
+        feedback: thumbSelection,
+      });
+    }
+
     // Call the callback if provided
     if (route?.params?.onComplete) {
       route.params.onComplete();
     }
+  };
+
+  const handleThumbPress = (thumbType: "up" | "down") => {
+    setThumbSelection(thumbSelection === thumbType ? null : thumbType);
   };
 
   useFocusEffect(
@@ -501,12 +546,13 @@ const SurveySuccessScreen: React.FC<SurveySuccessScreenProps> = ({ navigation, r
                   <Text className={mergeClassNames("text-base text-gray-700")}>Cette info est-elle utile ?</Text>
                   <View style={{ flexDirection: "row", justifyContent: "center" }}>
                     {/* Thumbs up */}
-                    <View
+                    <TouchableOpacity
+                      onPress={() => handleThumbPress("up")}
                       style={{
                         width: 40,
                         height: 40,
                         borderRadius: 22,
-                        backgroundColor: "white",
+                        backgroundColor: thumbSelection === "up" ? "#799092" : "white",
                         borderWidth: 1,
                         borderColor: "#799092",
                         justifyContent: "center",
@@ -514,24 +560,25 @@ const SurveySuccessScreen: React.FC<SurveySuccessScreenProps> = ({ navigation, r
                         marginRight: 16,
                       }}
                     >
-                      <ThumbsUpIcon color="#799092" width={20} height={20} />
-                    </View>
+                      <ThumbsUpIcon color={thumbSelection === "up" ? "white" : "#799092"} width={20} height={20} />
+                    </TouchableOpacity>
 
                     {/* Thumbs down */}
-                    <View
+                    <TouchableOpacity
+                      onPress={() => handleThumbPress("down")}
                       style={{
                         width: 40,
                         height: 40,
                         borderRadius: 22,
-                        backgroundColor: "white",
+                        backgroundColor: thumbSelection === "down" ? "#799092" : "white",
                         borderWidth: 1,
                         borderColor: "#799092",
                         justifyContent: "center",
                         alignItems: "center",
                       }}
                     >
-                      <ThumbsDownIcon color="#799092" width={20} height={20} />
-                    </View>
+                      <ThumbsDownIcon color={thumbSelection === "down" ? "white" : "#799092"} width={20} height={20} />
+                    </TouchableOpacity>
                   </View>
                 </View>
               </View>
