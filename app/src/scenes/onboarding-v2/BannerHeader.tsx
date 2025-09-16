@@ -102,6 +102,7 @@ export default function BannerHeader({
           />
         )}
         <Animated.View
+          testID="banner-container"
           className={bannerContainerStyle ? "" : "py-4 pb-8 px-6"}
           style={[
             bannerContainerStyle,

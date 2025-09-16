@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen, waitFor } from "@testing-library/react-native";
+import { act, render, screen, waitFor } from "@testing-library/react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import DaySurvey from "../../src/scenes/survey/daySurvey";
@@ -99,7 +99,7 @@ describe("DaySurvey Component", () => {
   };
 
   const renderWithProvider = (component) => {
-    return render(
+    render(
       <SafeAreaProvider>
         <StatusBarProvider>
           <OnboardingProgressHeaderProvider>
@@ -110,6 +110,17 @@ describe("DaySurvey Component", () => {
         </StatusBarProvider>
       </SafeAreaProvider>
     );
+    const bannerContainer = screen.getByTestId("banner-container");
+
+    // Simuler onLayout
+    act(() => {
+      bannerContainer.props.onLayout({
+        nativeEvent: {
+          layout: { x: 0, y: 0, width: 300, height: 200 },
+        },
+      });
+    });
+    return;
   };
 
   beforeEach(async () => {
