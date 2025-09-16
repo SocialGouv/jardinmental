@@ -20,6 +20,7 @@ import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
 import NavigationButtons from "@/components/onboarding/NavigationButtons";
 import { confirm } from "@/utils";
+import Separator from "@/components/Separator";
 
 export const GoalConfig = ({ navigation, route }) => {
   const goalId = route.params?.goalId;
@@ -173,7 +174,8 @@ export const GoalConfig = ({ navigation, route }) => {
                     value={format(reminderTime, "H:mm")}
                   />
                 </InputGroupItem>
-                <InputGroupItem label="Message personnalisé (optionnel)">
+                <Separator />
+                <InputGroupItem columnLayout={true} label="Message personnalisé (optionnel)">
                   <InputText
                     preset="groupItem"
                     placeholder="Ex: N'oublie pas ton objectif du jour !"

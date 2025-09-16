@@ -31,12 +31,45 @@ export const InputGroup = ({ children, containerStyle, highlight }) => {
   );
 };
 
-export const InputGroupItem = ({ label, children, onPress }) => {
+export const InputGroupItem = ({
+  label,
+  children,
+  onPress,
+  columnLayout = false,
+}: {
+  label: string;
+  children: JSX.Element;
+  onPress?: () => void;
+  columnLayout?: boolean;
+}) => {
   return (
     <View style={styles.itemContainer}>
       <Pressable onPress={onPress} hitSlop={{ bottom: 8, left: 8, right: 8, top: 8 }}>
-        <View style={styles.itemContentContainer}>
-          {label && <Text style={styles.itemLabel}>{label}</Text>}
+        <View
+          style={[
+            styles.itemContentContainer,
+            columnLayout
+              ? {
+                  flexDirection: "column",
+                  alignItems: "stretch",
+                }
+              : {},
+          ]}
+        >
+          {label && (
+            <Text
+              style={[
+                styles.itemLabel,
+                columnLayout
+                  ? {
+                      marginBottom: 8,
+                    }
+                  : {},
+              ]}
+            >
+              {label}
+            </Text>
+          )}
           {children}
         </View>
       </Pressable>
