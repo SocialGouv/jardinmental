@@ -3,9 +3,10 @@ import Goal from "@assets/svg/icon/Goal";
 import HealthIcon from "@assets/svg/icon/Health";
 import ShareIcon from "@assets/svg/icon/Share";
 import TrendUpIcon from "@assets/svg/icon/TrendUp";
-import Pencil from "@assets/svg/Pencil";
+import Pencil from "@assets/svg/icon/Pencil";
+import LockerIcon from "@assets/svg/icon/Locker";
 
-type FaqSlug = "indicateurs" | "objectifs" | "questionnaire" | "analyse" | "traitement" | "données";
+type FaqSlug = "indicateurs" | "objectifs" | "questionnaire" | "analyse" | "traitement" | "données" | "confidentialité";
 interface FaqDataEntry {
   icon: JSX.Element;
   title: string;
@@ -161,6 +162,30 @@ Seules des données anonymisées sur la fréquence d’utilisation de l’applic
       },
     ],
     icon: <ShareIcon />,
+    next: "indicateurs",
+  },
+  confidentialité: {
+    title: "",
+    description: `Cette section répond à vos questions sur le récapitulatif de vos données et son utilisation.`,
+    accordion: [
+      {
+        title: "Qui peut voir mes données ?",
+        description: `Les informations personnelles que vous saisissez dans Jardin Mental restent enregistrées uniquement sur votre appareil. Elles ne sont ni partagées ni accessibles à des tiers.
+Seules des données anonymisées sur la fréquence d’utilisation de l’application sont recueillies par notre équipe afin d’améliorer continuellement Jardin Mental.`,
+      },
+      {
+        title: "À quoi sert la génération de récapitulatif de mes données ?",
+        description: `Si vous êtes suivi·e par un·e professionnel·le de santé, vous pouvez si vous le souhaitez lui partager vos données.
+        Ces informations lui permettront d'avoir une vue d'ensemble de votre état entre vos consultations et l'aideront à adapter son accompagnement et / ou votre traitement en conséquence.`,
+      },
+      {
+        title: `Comment générer un récapitulatif de mes données ?`,
+        description: `- Rendez-vous dans les *Paramètres généraux* (⚙️ en haut à droite) ;
+- Cliquez sur « *Générer un récapitulatif de mes données* » ;
+- Vous pourrez alors télécharger le fichier au format PDF.`,
+      },
+    ],
+    icon: <LockerIcon />,
     next: "indicateurs",
   },
 };
