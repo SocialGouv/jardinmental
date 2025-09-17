@@ -35,9 +35,6 @@ export default ({ title, navigation, path = "tabs", icon = null, color = colors.
           <Text style={styles.label} className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-800")}>
             {title}
           </Text>
-          {/* <View style={styles.button}>
-            <ArrowRightSvg color={colors.LIGHT_BLUE} />
-          </View> */}
         </View>
       </View>
     </TouchableOpacity>
