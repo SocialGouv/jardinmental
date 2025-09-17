@@ -264,8 +264,6 @@ const styles = StyleSheet.create({
   separator: {
     borderColor: TW_COLORS.CNAM_PRIMARY_500,
     borderTopWidth: 1,
-    // marginHorizontal: 30,
-    // marginVertical: 15,
   },
   scrollContainer: {
     paddingBottom: 80,
@@ -285,11 +283,9 @@ const styles = StyleSheet.create({
   card: {
     width: "80%",
     height: "100%",
-    // backgroundColor: TW_COLORS.CNAM_PRIMARY_800,
     borderRadius: 16,
     borderTopLeftRadius: 0,
     borderBottomLeftRadius: 0,
-    // paddingBottom: 30,
     overflow: "hidden",
   },
   title: {
