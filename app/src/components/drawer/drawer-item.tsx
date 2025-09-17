@@ -1,18 +1,19 @@
 import React from "react";
-import { View, StyleSheet, TouchableOpacity } from "react-native";
-import Text from "../../components/MyText";
+import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
 import { colors } from "../../utils/colors";
-import Icon from "../../components/Icon";
+import Icon from "../Icon";
 import ArrowRightSvg from "../../../assets/svg/arrow-right.js";
+import { mergeClassNames } from "@/utils/className";
+import { typography } from "@/utils/typography";
 
-export default ({ title, navigation, path = "tabs", icon, color = colors.LIGHT_BLUE, onClick, badge = false }) => {
+export default ({ title, navigation, path = "tabs", icon = null, color = colors.LIGHT_BLUE, onClick, badge = false, style }) => {
   const handleClick = () => {
     onClick();
     navigation && navigation.navigate(path);
   };
   return (
     <TouchableOpacity onPress={handleClick}>
-      <View style={styles.container}>
+      <View style={[styles.container, style]} className="px-4 py-6">
         <View style={styles.answer}>
           {icon ? (
             <View
@@ -31,12 +32,12 @@ export default ({ title, navigation, path = "tabs", icon, color = colors.LIGHT_B
           ) : (
             <View style={{ marginHorizontal: 30 }} />
           )}
-          <Text style={styles.label} className="ml-4">
+          <Text style={styles.label} className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-800")}>
             {title}
           </Text>
-          <View style={styles.button}>
+          {/* <View style={styles.button}>
             <ArrowRightSvg color={colors.LIGHT_BLUE} />
-          </View>
+          </View> */}
         </View>
       </View>
     </TouchableOpacity>
@@ -57,23 +58,24 @@ const styles = StyleSheet.create({
     height: 12,
   },
   container: {
-    padding: 10,
+    // padding: 10,
   },
   button: {
     width: 45,
     height: 45,
-    alignItems: "center",
-    justifyContent: "center",
+    // alignItems: "center",
+    // justifyContent: "center",
   },
   label: {
     fontSize: 15,
     fontWeight: "600",
     color: colors.BLUE,
+    textAlign: "left",
     flex: 1,
   },
-  answer: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-  },
+  // answer: {
+  //   display: "flex",
+  //   flexDirection: "row",
+  //   alignItems: "center",
+  // },
 });
