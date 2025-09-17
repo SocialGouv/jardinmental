@@ -1,5 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { StyleSheet, View, Dimensions, Text, TouchableOpacity } from "react-native";
+import Animated, { useAnimatedStyle, interpolate, Extrapolate } from "react-native-reanimated";
 import Icon from "./Icon";
 import Settings from "../scenes/settings/settings-modal";
 import Drawer from "./drawer";
@@ -14,10 +15,17 @@ import MessageHeartCircleIcon from "@assets/svg/icon/MessageHeartCircle";
 import { SquircleButton } from "expo-squircle-view";
 import { TW_COLORS } from "@/utils/constants";
 
-const Header = ({ title, navigation }) => {
+interface HeaderProps {
+  title: string;
+  navigation: any;
+  scrollY?: Animated.SharedValue<number>;
+  scrollThreshold?: number;
+}
+
+const Header = ({ title, navigation, scrollY, scrollThreshold = 100 }: HeaderProps) => {
   const needUpdate = useContext(NeedUpdateContext);
   const [settingsVisible, setSettingsVisible] = useState(false);
-  const [drawerVisible, setDrawerVisible] = useState();
+  const [drawerVisible, setDrawerVisible] = useState<boolean>(false);
   const [badge, setBadge] = useState(false);
 
   const updateBadge = useCallback(async () => {
@@ -32,8 +40,55 @@ const Header = ({ title, navigation }) => {
     if (isFocused) updateBadge();
   }, [isFocused, updateBadge]);
 
+  // Animated styles for scroll-based fade out and slide up
+  const titleAnimatedStyle = useAnimatedStyle(() => {
+    if (!scrollY) {
+      return { opacity: 1, transform: [{ translateY: 0 }] };
+    }
+
+    const opacity = interpolate(scrollY.value, [0, scrollThreshold], [1, 0], Extrapolate.CLAMP);
+    const translateY = interpolate(scrollY.value, [0, scrollThreshold], [0, -20], Extrapolate.CLAMP);
+
+    return { opacity, transform: [{ translateY }] };
+  });
+
+  const supportButtonAnimatedStyle = useAnimatedStyle(() => {
+    if (!scrollY) {
+      return { opacity: 1, marginLeft: 4 };
+    }
+
+    const opacity = interpolate(scrollY.value, [0, scrollThreshold], [1, 0], Extrapolate.CLAMP);
+    const width = interpolate(scrollY.value, [0, scrollThreshold], [90, 0], Extrapolate.CLAMP);
+    const marginLeft = interpolate(scrollY.value, [0, scrollThreshold], [4, 0], Extrapolate.CLAMP);
+
+    return { opacity, width, marginLeft };
+  });
+
+  // Animated style for header container to reduce size
+  const headerContainerStyle = useAnimatedStyle(() => {
+    if (!scrollY) {
+      return { paddingVertical: 8 };
+    }
+
+    const paddingVertical = interpolate(scrollY.value, [0, scrollThreshold], [8, 4], Extrapolate.CLAMP);
+
+    return { paddingVertical };
+  });
+
+  // Animated style for title container to reduce padding
+  const titleContainerStyle = useAnimatedStyle(() => {
+    if (!scrollY) {
+      return { paddingVertical: 16 };
+    }
+
+    const paddingVertical = interpolate(scrollY.value, [0, scrollThreshold], [16, 0], Extrapolate.CLAMP);
+    const height = interpolate(scrollY.value, [0, scrollThreshold], [56, 0], Extrapolate.CLAMP);
+
+    return { paddingVertical, height, overflow: "hidden" };
+  });
+
   return (
-    <View style={styles.container} className="px-4 flex-col py-2">
+    <Animated.View style={[headerContainerStyle]} className="px-4 flex-col pb-4">
       <Settings visible={settingsVisible} navigation={navigation} onClick={() => setSettingsVisible(false)} />
       <Drawer
         visible={drawerVisible}
@@ -59,40 +114,33 @@ const Header = ({ title, navigation }) => {
             cornerSmoothing={100}
             preserveSmoothing={true}
             borderRadius={16}
-            className="bg-cnam-primary-900 px-3 py-2 flex-row space-x-1 items-center"
+            className="bg-cnam-primary-900 px-3 py-2 flex-row items-center"
           >
             <MessageHeartCircleIcon />
-            <Text className={mergeClassNames(typography.textSmMedium, "text-white")}>Soutient 24/7</Text>
+            <Animated.View style={supportButtonAnimatedStyle}>
+              <Text numberOfLines={1} ellipsizeMode="tail" className={mergeClassNames(typography.textSmMedium, "text-white overflow-hidden")}>
+                Soutient 24/7
+              </Text>
+            </Animated.View>
           </SquircleButton>
-          <Icon color="#fff" spin={settingsVisible} icon="GearSvg" width={16} height={16} onPress={() => setSettingsVisible(true)} />
+          <Icon
+            color="#fff"
+            spin={settingsVisible}
+            icon="GearSvg"
+            width={16}
+            height={16}
+            styleContainer={{}}
+            onPress={() => setSettingsVisible(true)}
+          />
         </View>
       </View>
-      {/* <View className="py-4">
-        <Text className={mergeClassNames(typography.textLgRegular, "text-white")}>Mes obervations</Text>
-      </View> */}
-    </View>
+      <Animated.View style={titleContainerStyle}>
+        <Animated.Text style={titleAnimatedStyle} className={mergeClassNames(typography.textLgRegular, "text-white")}>
+          {title}
+        </Animated.Text>
+      </Animated.View>
+    </Animated.View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    // flex: 0,
-    // backgroundColor: "transparent",
-    // marginRight: "auto",
-    // display: "flex",
-    // flexDirection: "row",
-    // alignItems: "center",
-    // paddingBottom: 5,
-  },
-  title: {
-    textAlign: "center",
-    fontSize: Dimensions.get("window").width > 380 ? 15 : 14,
-    fontFamily: "SourceSans3-Bold",
-    fontWeight: "500",
-    color: "#fff",
-    marginRight: "auto",
-    flex: 1,
-  },
-});
 
 export default Header;

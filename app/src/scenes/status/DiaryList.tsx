@@ -86,7 +86,6 @@ export const DiaryList = forwardRef(({ ...props }, ref) => {
   );
 
   const keyExtractor = useCallback((date) => date);
-
   return <Animated.FlatList ref={ref} data={sortedData} renderItem={renderItem} keyExtractor={keyExtractor} {...props} />;
 });
 

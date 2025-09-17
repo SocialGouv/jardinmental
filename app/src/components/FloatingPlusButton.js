@@ -1,14 +1,24 @@
 import React from "react";
-import { StyleSheet, Animated } from "react-native";
+import { StyleSheet } from "react-native";
+import Animated, { useAnimatedStyle } from "react-native-reanimated";
 import { colors } from "../utils/colors";
 import Button from "./RoundButtonIcon";
 import logEvents from "../services/logEvents";
 
 const FloatingPlusButton = ({ onPress, shadow, plusPosition }) => {
+  // Handle both regular numbers and SharedValues
+  const animatedStyle = useAnimatedStyle(() => {
+    const translateX = typeof plusPosition === "object" && plusPosition?.value !== undefined ? plusPosition.value : plusPosition || 0;
+
+    return {
+      transform: [{ translateX }],
+    };
+  });
+
   if (!plusPosition && plusPosition !== 0) return null;
 
   return (
-    <Animated.View style={[styles.buttonWrapper, { transform: [{ translateX: plusPosition }] }]}>
+    <Animated.View style={[styles.buttonWrapper, animatedStyle]}>
       <Button
         backgroundColor={colors.LIGHT_BLUE}
         iconColor={colors.WHITE}

@@ -16,6 +16,7 @@ import FloatingPlusButton from "../../components/FloatingPlusButton";
 import { FriseScreen } from "./frise";
 import { colors } from "@/utils/colors";
 import Legend from "./Legend";
+import { useSharedValue } from "react-native-reanimated";
 
 const Suivi = ({ navigation, startSurvey }) => {
   const [chartType, setChartType] = React.useState("Frises");
@@ -42,17 +43,24 @@ const Suivi = ({ navigation, startSurvey }) => {
     }, [])
   );
 
+  const scrollY = useSharedValue(0);
+  const scrollHandler = (event) => {
+    "worklet";
+    scrollY.value = event.nativeEvent.contentOffset.y;
+  };
+
   if (!toDate || !fromDate) return null;
 
   const renderChart = (chart) => {
     switch (chart) {
       case "Statistiques":
-        return <ChartPie fromDate={fromDate} toDate={toDate} navigation={navigation} />;
+        return <ChartPie onScroll={scrollHandler} fromDate={fromDate} toDate={toDate} navigation={navigation} />;
       case "Courbes":
-        return <Courbes navigation={navigation} />;
+        return <Courbes onScroll={scrollHandler} navigation={navigation} />;
       case "Déclencheurs":
         return (
           <Evenements
+            onScroll={scrollHandler}
             navigation={navigation}
             presetDate={presetDate}
             setPresetDate={setPresetDate}
@@ -66,6 +74,7 @@ const Suivi = ({ navigation, startSurvey }) => {
       default:
         return (
           <FriseScreen
+            onScroll={scrollHandler}
             navigation={navigation}
             presetDate={presetDate}
             setPresetDate={setPresetDate}
@@ -83,7 +92,7 @@ const Suivi = ({ navigation, startSurvey }) => {
     <>
       <SafeAreaView style={styles.safe}>
         <View style={styles.headerContainerNavigation}>
-          <Header title="Mes analyses" navigation={navigation} />
+          <Header title="Mes analyses" navigation={navigation} scrollY={scrollY} />
         </View>
         <View style={styles.tabContainer}>
           <ChartPicker
