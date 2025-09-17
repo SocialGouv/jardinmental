@@ -114,6 +114,9 @@ const Header = ({ title, navigation, scrollY, scrollThreshold = 100 }: HeaderPro
             cornerSmoothing={100}
             preserveSmoothing={true}
             borderRadius={16}
+            onPress={() => {
+              navigation.push("infos");
+            }}
             className="bg-cnam-primary-900 px-3 py-2 flex-row items-center"
           >
             <MessageHeartCircleIcon />
