@@ -51,20 +51,15 @@ const styles = StyleSheet.create({
     right: -5,
     backgroundColor: "#E46C76",
     borderRadius: 16,
-    // paddingHorizontal: 6,
-    // paddingVertical: 2,
     zIndex: 2,
     width: 12,
     height: 12,
   },
   container: {
-    // padding: 10,
   },
   button: {
     width: 45,
     height: 45,
-    // alignItems: "center",
-    // justifyContent: "center",
   },
   label: {
     fontSize: 15,
@@ -73,9 +68,4 @@ const styles = StyleSheet.create({
     textAlign: "left",
     flex: 1,
   },
-  // answer: {
-  //   display: "flex",
-  //   flexDirection: "row",
-  //   alignItems: "center",
-  // },
 });
