@@ -1,7 +1,7 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, ViewStyle } from "react-native";
 
-export default ({ style }) => (
+export default ({ style }: { style?: ViewStyle }) => (
   <View style={[styles.separator, style]} collapsable={false}>
     <View style={[styles.separatorContent]} collapsable={false} />
   </View>

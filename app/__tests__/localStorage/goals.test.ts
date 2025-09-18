@@ -92,7 +92,10 @@ describe("goals.ts", () => {
 
       const result = await setGoalTracked(goalData);
 
-      expect(result).toEqual(goalData);
+      expect(result).toEqual({
+        ...goalData,
+        customMessage: null,
+      });
       expect(API.put).toHaveBeenCalledWith({
         path: "/reminder",
         body: expect.objectContaining({

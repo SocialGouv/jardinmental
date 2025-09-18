@@ -31,6 +31,7 @@ model Reminder {
   utcTimeHours   Int                    @default(0)
   utcTimeMinutes Int                    @default(0)
   disabled       Boolean                @default(false)
+  customMessage  String?
   createdAt      DateTime               @default(now())
   updatedAt      DateTime               @updatedAt
 

@@ -4,6 +4,11 @@ import "react-native-gesture-handler/jestSetup";
 // Mock AsyncStorage
 jest.mock("@react-native-async-storage/async-storage", () => require("@react-native-async-storage/async-storage/jest/async-storage-mock"));
 
+// Mock React Native Alert
+jest.mock("react-native/Libraries/Alert/Alert", () => ({
+  alert: jest.fn(),
+}));
+
 // Global test setup
 (global as any).__DEV__ = true;
 
