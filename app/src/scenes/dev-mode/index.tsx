@@ -11,6 +11,8 @@ import JMButton from "@/components/JMButton";
 import { confirm } from "../../utils";
 import * as Sentry from "@sentry/react-native";
 import { beforeToday, formatDay } from "../../utils/date/helpers";
+import { fakeDiaryData2, startDate as fakeStartDate, fakeDiaryData } from "../status/fake-diary-data";
+import { STORAGE_KEY_START_DATE } from "@/utils/constants";
 
 const CollapsibleSection = ({ title, children }) => {
   const [isExpanded, setIsExpanded] = useState(true);
@@ -28,7 +30,7 @@ const CollapsibleSection = ({ title, children }) => {
 
 const DevMode = ({ navigation }) => {
   const { clearProfile, loadProfile } = useUserProfile();
-  const [_diaryData, _addEntryToDiaryData, internal__deleteDiaryData, _import, internal__deleteAllDiaryData] = useContext(DiaryDataContext);
+  const [_diaryData, _addEntryToDiaryData, internal__deleteDiaryData, importDiaryData, internal__deleteAllDiaryData] = useContext(DiaryDataContext);
   const disableDevMode = async () => {
     await AsyncStorage.setItem("devMode", "false");
     navigation.navigate("tabs");
@@ -95,7 +97,7 @@ const DevMode = ({ navigation }) => {
       <JMButton
         className="mb-4"
         title="Supprimer toutes mes données"
-        variant="outline"
+        variant="text"
         onPress={() => {
           confirm({
             title: "Supprimer toutes les données",
@@ -128,7 +130,7 @@ const DevMode = ({ navigation }) => {
       <JMButton
         className="mb-4"
         title="Supprimer mes données d'aujourd'hui"
-        variant="outline"
+        variant="text"
         onPress={() => {
           confirm({
             title: "Supprimer toutes les données",
@@ -143,9 +145,34 @@ const DevMode = ({ navigation }) => {
           });
         }}
       ></JMButton>
-      <TouchableOpacity style={styles.button} onPress={disableDevMode}>
-        <Text style={styles.buttonText}>Disable Dev Mode</Text>
-      </TouchableOpacity>
+      <JMButton
+        variant="text"
+        className="mb-4"
+        title="Complétez avec des fausses données"
+        onPress={() => {
+          confirm({
+            title: "Complétez avec des fausses données",
+            message:
+              "Cette action rajoutera définitivement des fausses données. Cette action est irréversible.\n\nÊtes-vous sûr de vouloir continuer ?",
+            confirmText: "Confirmer",
+            cancelText: "Annuler",
+            onConfirm: async () => {
+              await AsyncStorage.setItem(STORAGE_KEY_START_DATE, formatDay(fakeStartDate));
+              await importDiaryData(
+                {
+                  ...fakeDiaryData2,
+                  ...fakeDiaryData,
+                },
+                "merge"
+              );
+            },
+            onCancel: () => {
+              // No action needed, dialog will close automatically
+            },
+          });
+        }}
+      ></JMButton>
+      <JMButton onPress={disableDevMode} title="Disable Dev Mode"></JMButton>
     </ScrollView>
   );
 };
