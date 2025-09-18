@@ -1,3 +1,10 @@
+## [1.74.1](https://github.com/SocialGouv/jardinmental/compare/v1.74.0...v1.74.1) (2025-09-18)
+
+
+### Bug Fixes
+
+* **sleepScreen:** fix going back to sleep screen, set loading to false before navigation ([#467](https://github.com/SocialGouv/jardinmental/issues/467)) ([1eafab4](https://github.com/SocialGouv/jardinmental/commit/1eafab4d0807e4a355bbbcd17a65d5caf7a8eaef))
+
 # [1.74.0](https://github.com/SocialGouv/jardinmental/compare/v1.73.0...v1.74.0) (2025-09-18)
 
 
