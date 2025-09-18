@@ -1,3 +1,10 @@
+# [1.74.0](https://github.com/SocialGouv/jardinmental/compare/v1.73.0...v1.74.0) (2025-09-18)
+
+
+### Features
+
+* integrate new header ([#465](https://github.com/SocialGouv/jardinmental/issues/465)) ([a195c8a](https://github.com/SocialGouv/jardinmental/commit/a195c8a7b8121986bb4b8935ee4e025620598d18))
+
 # [1.73.0](https://github.com/SocialGouv/jardinmental/compare/v1.72.0...v1.73.0) (2025-09-18)
 
 
