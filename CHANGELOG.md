@@ -1,3 +1,10 @@
+# [1.75.0](https://github.com/SocialGouv/jardinmental/compare/v1.74.1...v1.75.0) (2025-09-18)
+
+
+### Features
+
+* integrate new drawer menu ([#466](https://github.com/SocialGouv/jardinmental/issues/466)) ([c2ae752](https://github.com/SocialGouv/jardinmental/commit/c2ae75209a5c8bf1702a5164f494569f82691041))
+
 ## [1.74.1](https://github.com/SocialGouv/jardinmental/compare/v1.74.0...v1.74.1) (2025-09-18)
 
 
