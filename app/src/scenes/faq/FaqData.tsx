@@ -3,9 +3,10 @@ import Goal from "@assets/svg/icon/Goal";
 import HealthIcon from "@assets/svg/icon/Health";
 import ShareIcon from "@assets/svg/icon/Share";
 import TrendUpIcon from "@assets/svg/icon/TrendUp";
-import Pencil from "@assets/svg/Pencil";
+import Pencil from "@assets/svg/icon/Pencil";
+import LockerIcon from "@assets/svg/icon/Locker";
 
-type FaqSlug = "indicateurs" | "objectifs" | "questionnaire" | "analyse" | "traitement" | "données";
+type FaqSlug = "indicateurs" | "objectifs" | "questionnaire" | "analyse" | "traitement" | "données" | "confidentialité";
 interface FaqDataEntry {
   icon: JSX.Element;
   title: string;
@@ -161,6 +162,15 @@ Seules des données anonymisées sur la fréquence d’utilisation de l’applic
       },
     ],
     icon: <ShareIcon />,
+    next: "confidentialité",
+  },
+  confidentialité: {
+    title: "Confidentialité de mes données",
+    subtitle: "Qui peut voir mes données ?",
+    description: `Les informations personnelles que vous saisissez dans Jardin Mental restent enregistrées uniquement sur votre appareil. Elles ne sont ni partagées ni accessibles à des tiers.\n
+Seules des données anonymisées sur la fréquence d’utilisation de l’application sont recueillies par notre équipe afin d’améliorer continuellement Jardin Mental.`,
+    accordion: [],
+    icon: <LockerIcon />,
     next: "indicateurs",
   },
 };

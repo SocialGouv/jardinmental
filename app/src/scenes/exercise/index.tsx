@@ -16,6 +16,7 @@ import { STORAGE_KEY_BECK_SHOW_WELCOME } from "../../utils/constants";
 import ArrowUpSvg from "../../../assets/svg/arrow-up.svg";
 import FloatingPlusButton from "../../components/FloatingPlusButton";
 import JMButton from "@/components/JMButton";
+import { useSharedValue } from "react-native-reanimated";
 
 const LIMIT_PER_PAGE = __DEV__ ? 3 : 30;
 
@@ -37,14 +38,20 @@ export default ({ navigation, startSurvey }) => {
     await AsyncStorage.setItem(STORAGE_KEY_BECK_SHOW_WELCOME, `${showWelcomeDefault}`);
   };
 
+  const scrollY = useSharedValue(0);
+  const scrollHandler = (event) => {
+    "worklet";
+    scrollY.value = event.nativeEvent.contentOffset.y;
+  };
+
   return (
     <>
       <SafeAreaView style={styles.safe}>
         <NPS forceView={NPSvisible} close={() => setNPSvisible(false)} />
         <View style={styles.headerContainer}>
-          <Header title="Beck" navigation={navigation} />
+          <Header title="Beck" navigation={navigation} scrollY={scrollY} />
         </View>
-        <ScrollView style={styles.container} contentContainerStyle={styles.scrollContainer}>
+        <ScrollView style={styles.container} contentContainerStyle={styles.scrollContainer} onScroll={scrollHandler}>
           {showWelcome === "true" || !showWelcome ? (
             <View style={styles.welcomeContainer}>
               <Text style={[styles.welcomeText, styles.boldText]}>

@@ -16,6 +16,8 @@ import { typography } from "@/utils/typography";
 import { mergeClassNames } from "@/utils/className";
 import { DiaryDataAnswer } from "@/entities/DiaryData";
 import { answers } from "../survey-v2/utils";
+import { SquircleView } from "expo-squircle-view";
+import { TW_COLORS } from "@/utils/constants";
 
 export const DiaryList = forwardRef(({ ...props }, ref) => {
   const navigation = useNavigation();
@@ -57,12 +59,21 @@ export const DiaryList = forwardRef(({ ...props }, ref) => {
       const moodIndicator = indicateurs?.find((ind) => ind.uuid === INDICATEURS_HUMEUR.uuid);
       if (isToday(parseISO(date)) && !diaryData[date] && moodIndicator) {
         return (
-          <View className="rounded-2xl border border-gray-500 flex-col my-4 p-6">
+          <SquircleView
+            preserveSmoothing={true}
+            cornerSmoothing={100}
+            style={{
+              borderRadius: 20,
+              borderWidth: 1,
+              borderColor: TW_COLORS.GRAY_500,
+            }}
+            className="flex-col my-4 p-6"
+          >
             <View className="mb-4 flex-row justify-between">
               <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-950")}>Comment vous sentez-vous aujourd'hui ?</Text>
             </View>
             <Smiley indicator={moodIndicator} value={undefined} onValueChanged={handlePressMood} />
-          </View>
+          </SquircleView>
         );
       } else {
         return (
@@ -86,7 +97,6 @@ export const DiaryList = forwardRef(({ ...props }, ref) => {
   );
 
   const keyExtractor = useCallback((date) => date);
-
   return <Animated.FlatList ref={ref} data={sortedData} renderItem={renderItem} keyExtractor={keyExtractor} {...props} />;
 });
 

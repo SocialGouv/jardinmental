@@ -116,9 +116,11 @@ export default function FaqDetailScreen({
               </View>
             )}
           </View>
-          <View>
-            <Accordion items={item.accordion} />
-          </View>
+          {item.accordion.length && (
+            <View>
+              <Accordion items={item.accordion} />
+            </View>
+          )}
         </View>
         {item.next && (
           <View className={mergeClassNames("bg-cnam-primary-100 bg-cyan-50-lighten-90 p-4 space-y-6 p-6 mt-8")}>

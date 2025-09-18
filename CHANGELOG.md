@@ -1,3 +1,31 @@
+# [1.74.0](https://github.com/SocialGouv/jardinmental/compare/v1.73.0...v1.74.0) (2025-09-18)
+
+
+### Features
+
+* integrate new header ([#465](https://github.com/SocialGouv/jardinmental/issues/465)) ([a195c8a](https://github.com/SocialGouv/jardinmental/commit/a195c8a7b8121986bb4b8935ee4e025620598d18))
+
+# [1.73.0](https://github.com/SocialGouv/jardinmental/compare/v1.72.0...v1.73.0) (2025-09-18)
+
+
+### Features
+
+* add delete all function ([#463](https://github.com/SocialGouv/jardinmental/issues/463)) ([20c4781](https://github.com/SocialGouv/jardinmental/commit/20c4781f48c60a370489f01e3af47410d7ecb201))
+
+# [1.72.0](https://github.com/SocialGouv/jardinmental/compare/v1.71.0...v1.72.0) (2025-09-18)
+
+
+### Features
+
+* bump version ([9c39385](https://github.com/SocialGouv/jardinmental/commit/9c393851c7590e6a9c73f9f40e4ed25c9cc19539))
+
+# [1.71.0](https://github.com/SocialGouv/jardinmental/compare/v1.70.0...v1.71.0) (2025-09-18)
+
+
+### Features
+
+* feedback cnam step 1 ([#456](https://github.com/SocialGouv/jardinmental/issues/456)) ([286be31](https://github.com/SocialGouv/jardinmental/commit/286be3185acbb1fd34f345305731df16d802fc21))
+
 # [1.70.0](https://github.com/SocialGouv/jardinmental/compare/v1.69.0...v1.70.0) (2025-09-16)
 
 

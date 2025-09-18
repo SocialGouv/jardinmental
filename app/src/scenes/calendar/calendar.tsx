@@ -19,7 +19,7 @@ import { INDICATEURS } from "../../utils/liste_indicateurs.1";
 import { getIndicatorKey } from "../../utils/indicatorUtils";
 import Legend from "../suivi/Legend";
 
-const Calendar = ({ navigation }) => {
+const Calendar = ({ navigation, onScroll }) => {
   const [day, setDay] = useState(new Date());
   const [diaryData] = useContext(DiaryDataContext);
   const [customs, setCustoms] = useState([]);
@@ -147,7 +147,7 @@ const Calendar = ({ navigation }) => {
         />
         <Legend />
       </View>
-      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContainer}>
+      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContainer} onScroll={onScroll}>
         {!calendarIsEmpty ? (
           <>
             <View style={styles.subtitleContainer}>
