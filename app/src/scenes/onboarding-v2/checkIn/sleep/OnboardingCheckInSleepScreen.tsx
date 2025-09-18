@@ -63,6 +63,7 @@ const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
       answers: updatedAnswers,
     });
     navigation.navigate(NextScreen);
+    setLoading(false);
   };
 
   const handlePrevious = () => {
@@ -137,7 +138,7 @@ const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
         <InstructionText>Évaluez la qualité de votre sommeil</InstructionText>
         {renderSleepSelector()}
       </View>
-      <NavigationButtons loading={loading} onNext={handleComplete} onSkip={handleSkip} />
+      <NavigationButtons nextDisabled={checkInData === null} loading={loading} onNext={handleComplete} onSkip={handleSkip} />
     </SafeAreaViewWithOptionalHeader>
   );
 };

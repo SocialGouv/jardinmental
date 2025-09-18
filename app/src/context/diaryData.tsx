@@ -65,7 +65,8 @@ type DiaryContextValue = [
   diaryData: DiaryData,
   addEntry: (params: { date: string; answers: DiaryData }) => void,
   deleteEntry: (date: string) => void,
-  importData: (importedData: DiaryData, mode: ImportMode) => Promise<void>
+  importData: (importedData: DiaryData, mode: ImportMode) => Promise<void>,
+  deleteAllDiaryData: () => void
 ];
 
 const DiaryDataContext = React.createContext<DiaryContextValue>([
@@ -73,6 +74,7 @@ const DiaryDataContext = React.createContext<DiaryContextValue>([
   function addEntry() {},
   function deleteEntry(date: string) {},
   async function importData(importedData, mode) {},
+  async function deleteAllDiaryData() => {}
 ]);
 
 const DiaryDataProvider = ({ children }) => {
@@ -131,12 +133,18 @@ const DiaryDataProvider = ({ children }) => {
     await getDiaryDataFromStorage();
   };
 
-  const internal__deleteDiaryData = (isoDate: string) => {
+  const internal__deleteDiaryData = async (isoDate: string) => {
     // function to be used in dev mode for test purpose
     const newDiaryData = { ...diaryData };
     newDiaryData[isoDate] = null;
     setDiaryData(newDiaryData);
-    AsyncStorage.setItem(STORAGE_KEY_SURVEY_RESULTS, JSON.stringify(newDiaryData));
+    await AsyncStorage.setItem(STORAGE_KEY_SURVEY_RESULTS, JSON.stringify(newDiaryData));
+  };
+
+  const internal__deleteAllDiaryData = async () => {
+    // function to be used in dev mode for test purpose
+    setDiaryData({});
+    await AsyncStorage.removeItem(STORAGE_KEY_SURVEY_RESULTS);
   };
 
   const getDiaryDataFromStorage = async () => {
@@ -185,7 +193,7 @@ const DiaryDataProvider = ({ children }) => {
   }, [setDiaryData]);
 
   return (
-    <DiaryDataContext.Provider value={[diaryData, addNewEntryToDiaryData, internal__deleteDiaryData, importDiaryData]}>
+    <DiaryDataContext.Provider value={[diaryData, addNewEntryToDiaryData, internal__deleteDiaryData, importDiaryData, internal__deleteAllDiaryData]}>
       {children}
     </DiaryDataContext.Provider>
   );

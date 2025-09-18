@@ -25,10 +25,9 @@ import { typography } from "@/utils/typography";
 import { mergeClassNames } from "@/utils/className";
 import JMButton from "@/components/JMButton";
 import { shouldShowChecklistBanner, handlePlusTardClick as handleBannerDismiss } from "../../utils/checklistBanner";
-import { set } from "date-fns";
 import { TW_COLORS } from "@/utils/constants";
 import { SquircleView } from "expo-squircle-view";
-const LIMIT_PER_PAGE = __DEV__ ? 3 : 30;
+import { interpolate, useAnimatedScrollHandler, useDerivedValue, useSharedValue, useAnimatedStyle } from "react-native-reanimated";
 
 const Status = ({ navigation, startSurvey }) => {
   const [diaryData] = useContext(DiaryDataContext);
@@ -55,43 +54,16 @@ const Status = ({ navigation, startSurvey }) => {
     });
   }, [ongletActif]);
 
-  // ****************
-  // BEGIN - MASQUAGE DU HEADER AU SCROLL
-  const headerHeight = 50;
-  const scrollY = React.useRef(new Animated.Value(0));
-  const handleScroll = Animated.event(
-    [
-      {
-        nativeEvent: {
-          contentOffset: { y: scrollY.current },
-        },
-      },
-    ],
-    {
-      useNativeDriver: true,
-    }
-  );
+  const scrollY = useSharedValue(0);
+  const scrollHandler = (event) => {
+    "worklet";
+    scrollY.value = event.nativeEvent.contentOffset.y;
+  };
 
-  const scrollYClampedForHeader = Animated.diffClamp(scrollY.current, 0, headerHeight);
-
-  let translateX = scrollY.current.interpolate({
-    inputRange: [0, 100],
-    outputRange: [80, 0],
-    extrapolateRight: "clamp",
+  // Animated value for floating button translateX
+  const plusPosition = useDerivedValue(() => {
+    return interpolate(scrollY.value, [0, 100], [80, 0], "clamp");
   });
-
-  const translateY = scrollYClampedForHeader.interpolate({
-    inputRange: [0, headerHeight],
-    outputRange: [0, -headerHeight],
-  });
-
-  const opacity = translateY.interpolate({
-    inputRange: [-headerHeight, 0],
-    outputRange: [0, 1],
-  });
-
-  // FIN - MASQUAGE DU HEADER AU SCROLL
-  // ****************
 
   useEffect(() => {
     (async () => {
@@ -191,8 +163,6 @@ const Status = ({ navigation, startSurvey }) => {
     return null;
   };
 
-  const displayInfoModal = true;
-
   const renderHeader = useCallback(() => {
     return (
       <>
@@ -281,18 +251,8 @@ const Status = ({ navigation, startSurvey }) => {
       <SafeAreaView style={[styles.safe]}>
         <Animated.View style={{ flex: 1 }}>
           <NPS forceView={NPSvisible} close={() => setNPSvisible(false)} />
-          {/* todo : add this 👇 to make this component scrollable
-            { transform: [{ translateY }] }
-          */}
-          <Animated.View style={[styles.headerContainer]}>
-            {/* todo : add this 👇 to make this component scrollable
-            style={{ opacity }}
-          */}
-            <Animated.View>
-              <Header title="Mes entrées" navigation={navigation} />
-            </Animated.View>
-            <TabPicker ongletActif={ongletActif} onChange={setOngletActif} />
-          </Animated.View>
+          <Header title={"Mes observations 🌱"} navigation={navigation} scrollY={scrollY} scrollThreshold={75} />
+          <TabPicker ongletActif={ongletActif} onChange={setOngletActif} />
           {noData() ? (
             <NoData navigation={navigation} />
           ) : ongletActif === "all" && !bannerProNPSVisible ? (
@@ -300,9 +260,9 @@ const Status = ({ navigation, startSurvey }) => {
               ListHeaderComponent={renderHeader}
               ListFooterComponent={renderFooter}
               style={[styles.scrollView]}
-              contentContainerStyle={[styles.scrollContainer, styles.container]}
+              contentContainerStyle={[styles.container]}
               ref={scrollRef}
-              onScroll={handleScroll}
+              onScroll={scrollHandler}
             />
           ) : (
             <Animated.ScrollView
@@ -311,8 +271,7 @@ const Status = ({ navigation, startSurvey }) => {
               ref={scrollRef}
               bounces={false}
               style={styles.scrollView}
-              contentContainerStyle={styles.scrollContainer}
-              onScroll={handleScroll}
+              onScroll={scrollHandler}
               showsVerticalScrollIndicator={false}
             >
               {renderScrollContent(ongletActif)}
@@ -320,23 +279,12 @@ const Status = ({ navigation, startSurvey }) => {
           )}
         </Animated.View>
       </SafeAreaView>
-      <FloatingPlusButton shadow onPress={startSurvey} plusPosition={translateX} />
+      <FloatingPlusButton shadow onPress={startSurvey} plusPosition={plusPosition} />
     </>
   );
 };
 
 const styles = StyleSheet.create({
-  headerContainer: {
-    position: "absolute",
-    left: 0,
-    right: 0,
-    width: "100%",
-    zIndex: 1,
-
-    paddingTop: 5,
-    paddingBottom: 0,
-    backgroundColor: colors.LIGHT_BLUE,
-  },
   arrowDown: {
     transform: [{ rotate: "180deg" }],
   },
@@ -356,13 +304,9 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     backgroundColor: "white",
-    marginTop: 90,
   },
   container: {
     padding: 20,
-  },
-  scrollContainer: {
-    paddingBottom: 80,
   },
   title: {
     fontSize: 19,
@@ -396,10 +340,7 @@ const styles = StyleSheet.create({
   },
   divider: {
     height: 1,
-    backgroundColor: "#E0E0E0",
-    marginVertical: 40,
-    width: "50%",
-    alignSelf: "center",
+    marginVertical: 10,
   },
 });
 

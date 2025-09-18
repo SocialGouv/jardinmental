@@ -1,3 +1,38 @@
+# [1.75.0](https://github.com/SocialGouv/jardinmental/compare/v1.74.1...v1.75.0) (2025-09-18)
+
+
+### Features
+
+* integrate new drawer menu ([#466](https://github.com/SocialGouv/jardinmental/issues/466)) ([c2ae752](https://github.com/SocialGouv/jardinmental/commit/c2ae75209a5c8bf1702a5164f494569f82691041))
+
+## [1.74.1](https://github.com/SocialGouv/jardinmental/compare/v1.74.0...v1.74.1) (2025-09-18)
+
+
+### Bug Fixes
+
+* **sleepScreen:** fix going back to sleep screen, set loading to false before navigation ([#467](https://github.com/SocialGouv/jardinmental/issues/467)) ([1eafab4](https://github.com/SocialGouv/jardinmental/commit/1eafab4d0807e4a355bbbcd17a65d5caf7a8eaef))
+
+# [1.74.0](https://github.com/SocialGouv/jardinmental/compare/v1.73.0...v1.74.0) (2025-09-18)
+
+
+### Features
+
+* integrate new header ([#465](https://github.com/SocialGouv/jardinmental/issues/465)) ([a195c8a](https://github.com/SocialGouv/jardinmental/commit/a195c8a7b8121986bb4b8935ee4e025620598d18))
+
+# [1.73.0](https://github.com/SocialGouv/jardinmental/compare/v1.72.0...v1.73.0) (2025-09-18)
+
+
+### Features
+
+* add delete all function ([#463](https://github.com/SocialGouv/jardinmental/issues/463)) ([20c4781](https://github.com/SocialGouv/jardinmental/commit/20c4781f48c60a370489f01e3af47410d7ecb201))
+
+# [1.72.0](https://github.com/SocialGouv/jardinmental/compare/v1.71.0...v1.72.0) (2025-09-18)
+
+
+### Features
+
+* bump version ([9c39385](https://github.com/SocialGouv/jardinmental/commit/9c393851c7590e6a9c73f9f40e4ed25c9cc19539))
+
 # [1.71.0](https://github.com/SocialGouv/jardinmental/compare/v1.70.0...v1.71.0) (2025-09-18)
 
 

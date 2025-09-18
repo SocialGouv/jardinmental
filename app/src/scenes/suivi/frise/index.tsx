@@ -9,7 +9,7 @@ import { styles as commonStyles } from "..";
 import { autoLayoutAnimation } from "../../../utils/autoLayoutAnimation";
 import ColorLegendRow from "../Legend";
 
-export const FriseScreen = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, toDate, setToDate, hasTreatment }) => {
+export const FriseScreen = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, toDate, setToDate, hasTreatment, onScroll }) => {
   const [focusedScores, setFocusedScores] = React.useState([]);
   const [showTraitement, setShowTraitement] = React.useState(true);
   const [filterEnabled, setFilterEnabled] = React.useState(false);
@@ -73,6 +73,7 @@ export const FriseScreen = ({ navigation, presetDate, setPresetDate, fromDate, s
         focusedScores={focusedScores}
         showTraitement={showTraitement}
         hasTreatment={hasTreatment}
+        onScroll={onScroll}
       />
     </>
   );
