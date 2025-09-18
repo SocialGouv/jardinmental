@@ -498,15 +498,7 @@ const SurveySuccessScreen: React.FC<SurveySuccessScreenProps> = ({ navigation, r
             <View className="ml-14 rounded-full w-16 h-16 p-2" style={{ backgroundColor: TW_COLORS.CNAM_CYAN_200_LIGHTEN_60 }}></View>
           </View>
           <View className="absolute top-[-30px] self-center rounded-full w-16 h-16 border border-white bg-cnam-cyan-lighten-80 p-2 flex items-center justify-center">
-            <Text
-              className="text-3xl"
-              onPress={async () => {
-                const message = await getNextMotivationalMessage();
-                setCurrentMessage(message);
-              }}
-            >
-              {currentMessage.emoji}
-            </Text>
+            <Text className="text-3xl">{currentMessage.emoji}</Text>
           </View>
           {/* Encouragement */}
           {currentMessage.type === "encouragement" && (
