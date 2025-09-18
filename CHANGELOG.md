@@ -1,3 +1,10 @@
+# [1.71.0](https://github.com/SocialGouv/jardinmental/compare/v1.70.0...v1.71.0) (2025-09-18)
+
+
+### Features
+
+* feedback cnam step 1 ([#456](https://github.com/SocialGouv/jardinmental/issues/456)) ([286be31](https://github.com/SocialGouv/jardinmental/commit/286be3185acbb1fd34f345305731df16d802fc21))
+
 # [1.70.0](https://github.com/SocialGouv/jardinmental/compare/v1.69.0...v1.70.0) (2025-09-16)
 
 
