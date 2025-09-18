@@ -86,7 +86,7 @@ const Diary = ({ navigation, hideDeader = false }) => {
   };
 
   return (
-    <SafeAreaView style={styles.safe}>
+    <View style={styles.safe}>
       <NPS forceView={NPSvisible} close={() => setNPSvisible(false)} />
       <ScrollView style={styles.container} contentContainerStyle={styles.scrollContainer} keyboardShouldPersistTaps="handled">
         {Object.keys({ ...diaryNotes, ...diaryDataWithUserComments })
@@ -136,7 +136,7 @@ const Diary = ({ navigation, hideDeader = false }) => {
           }
         }}
       />
-    </SafeAreaView>
+    </View>
   );
 };
 
