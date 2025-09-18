@@ -1,3 +1,10 @@
+# [1.73.0](https://github.com/SocialGouv/jardinmental/compare/v1.72.0...v1.73.0) (2025-09-18)
+
+
+### Features
+
+* add delete all function ([#463](https://github.com/SocialGouv/jardinmental/issues/463)) ([20c4781](https://github.com/SocialGouv/jardinmental/commit/20c4781f48c60a370489f01e3af47410d7ecb201))
+
 # [1.72.0](https://github.com/SocialGouv/jardinmental/compare/v1.71.0...v1.72.0) (2025-09-18)
 
 
