@@ -304,7 +304,6 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     backgroundColor: "white",
-    // marginTop: 90,
   },
   container: {
     padding: 20,
