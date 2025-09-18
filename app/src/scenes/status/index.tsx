@@ -396,10 +396,7 @@ const styles = StyleSheet.create({
   },
   divider: {
     height: 1,
-    backgroundColor: "#E0E0E0",
-    marginVertical: 40,
-    width: "50%",
-    alignSelf: "center",
+    marginVertical: 10,
   },
 });
 
