@@ -72,7 +72,7 @@ const DiaryDataContext = React.createContext<DiaryContextValue>([
   {} as DiaryData,
   function addEntry() {},
   function deleteEntry(date: string) {},
-  async function importData(_A, _B) {},
+  async function importData(importedData, mode) {},
 ]);
 
 const DiaryDataProvider = ({ children }) => {
