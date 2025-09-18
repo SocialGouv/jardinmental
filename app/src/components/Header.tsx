@@ -58,7 +58,7 @@ const Header = ({ title, navigation, scrollY, scrollThreshold = 100 }: HeaderPro
     }
 
     const opacity = interpolate(scrollY.value, [0, scrollThreshold], [1, 0], Extrapolate.CLAMP);
-    const width = interpolate(scrollY.value, [0, scrollThreshold], [90, 0], Extrapolate.CLAMP);
+    const width = scrollY.value > 10 ? interpolate(scrollY.value, [0, scrollThreshold], [90, 0], Extrapolate.CLAMP) : "auto";
     const marginLeft = interpolate(scrollY.value, [0, scrollThreshold], [4, 0], Extrapolate.CLAMP);
 
     return { opacity, width, marginLeft };
