@@ -74,7 +74,6 @@ const tabStyles = StyleSheet.create({
     minHeight: 40,
   },
   actif: {
-    color: colors.BLUE,
     fontWeight: "bold",
     color: TW_COLORS.CNAM_PRIMARY_900,
   },
