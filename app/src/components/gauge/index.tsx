@@ -1,13 +1,10 @@
-/* eslint-disable react-native/no-inline-styles */
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Slider } from "@miblanchard/react-native-slider";
-import debounce from "lodash.debounce";
 
-import { StyleSheet, View, Platform } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { screenWidth } from "../../scenes/onboarding/screens";
 import { GaugeChart } from "./GaugeChart";
-import { colors } from "@/utils/colors";
 import { TW_COLORS } from "@/utils/constants";
 const HEIGHT_RATIO_GAUGE = 48 / 256;
 
@@ -20,14 +17,7 @@ const styles = StyleSheet.create({
 
 const Gauge = ({ hideSlider = false, defaultValue = 0, onChange, reverse }) => {
   const [value, setValue] = useState(defaultValue);
-  const [width, setWidth] = useState(0);
-
-  const handleChange = useMemo(() => {
-    return debounce((v) => {
-      setValue(v[0]);
-      onChange?.(v[0]);
-    }, 300); // 300ms debounce
-  }, [onChange]);
+  const [, setWidth] = useState(0);
 
   useEffect(() => {
     setValue(defaultValue);
@@ -43,7 +33,6 @@ const Gauge = ({ hideSlider = false, defaultValue = 0, onChange, reverse }) => {
       <View style={styles.gaugeContainer}>
         <GaugeChart value={value} reverse={reverse} />
       </View>
-      {/* <Text>{defaultValue}</Text> */}
       {hideSlider ? null : (
         <Slider
           trackClickable={false}

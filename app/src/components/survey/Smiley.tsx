@@ -1,16 +1,24 @@
 import React from "react";
-import { StyleSheet, View, TouchableOpacity, Text, Pressable } from "react-native";
+import { StyleSheet, View, Pressable } from "react-native";
 import { BasicIcon } from "../CircledIcon";
 import { answers as emojis } from "../../scenes/survey-v2/utils";
 import { colors } from "@/utils/colors";
 import { TW_COLORS } from "@/utils/constants";
+
+type Emoji = {
+  score?: number;
+  backgroundColor?: string;
+  iconColor?: string;
+  icon?: string;
+  pressedBackgroundColor?: string;
+};
 
 export const Smiley = ({ indicator, value, onValueChanged }) => {
   return (
     <View style={[styles.emojisContainer]}>
       {emojis
         .map((emoji, i) => {
-          let _emoji = {};
+          let _emoji: Emoji = {};
           if (indicator.order === "DESC") {
             _emoji = emojis[emojis.length - 1 - i];
           } else {

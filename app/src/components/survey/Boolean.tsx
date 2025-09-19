@@ -1,7 +1,4 @@
 import React from "react";
-import { View, TouchableOpacity } from "react-native";
-import Text from "../MyText";
-import { colors } from "@/utils/colors";
 import ToggleButtons from "../ToggleButton";
 import { TW_COLORS } from "@/utils/constants";
 
