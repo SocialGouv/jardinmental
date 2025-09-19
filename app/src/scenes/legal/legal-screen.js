@@ -10,7 +10,7 @@ const LegalScreen = ({ navigation, title, content }) => {
     <SafeAreaView style={styles.safe}>
       <View style={styles.headerContainer}>
         <BackButton onPress={navigation.goBack} />
-        <Image style={styles.image} source={require("../../../assets/imgs/logo2.png")} />
+        <Image style={styles.image} className="rounded-lg" source={require("../../../assets/imgs/icon.png")} />
       </View>
       <Text style={styles.content}>
         <Text style={styles.title}>{title}</Text>
