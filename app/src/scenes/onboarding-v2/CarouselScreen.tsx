@@ -23,8 +23,9 @@ const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
   const [slides, setSlides] = useState<CarouselSlide[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const flatListRef = useRef<FlatList>(null);
+  const previousIndexRef = useRef<number | null>(null);
   const { setSlideIndex } = useOnboardingProgressHeader();
-  const [variant, setVariant] = useState<"beige" | "white" | "green" | "blue" | "pink" | "yellow" | "red">("beige");
+  const [variant, setVariant] = useState<"beige" | "white" | "green" | "blue">("beige");
   const { setCustomColor } = useStatusBarInternal();
 
   useFocusEffect(
@@ -39,32 +40,37 @@ const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
   }, [profile]);
 
   const handleNext = () => {
-    logEvents.logCarrouselObdNext(slides.length);
     navigation.navigate(NextRoute);
   };
 
   const handleSkip = () => {
-    logEvents.logCarrouselObdPass(currentIndex + 1);
+    logEvents.logCarrouselObdPass(currentIndex);
     navigation.navigate(NextRoute);
   };
 
-  const onViewableItemsChanged = useRef(({ viewableItems }: { viewableItems: { index: number; isViewable: boolean; item: CarouselSlide }[] }) => {
+  const onViewableItemsChanged = React.useCallback(({ viewableItems }: any) => {
     if (viewableItems.length > 0) {
-      setVariant(viewableItems[0].item.variant || "beige");
+      const newIndex = viewableItems[0].index ?? 0;
+
+      // Log event when sliding to a new slide (but not on initial load)
+      if (newIndex !== previousIndexRef.current && previousIndexRef.current !== null) {
+        logEvents.logCarrouselObdNext(newIndex + 1);
+      }
+
+      previousIndexRef.current = newIndex;
+      const itemVariant = viewableItems[0].item?.variant;
+      setVariant(itemVariant && ["beige", "white", "green", "blue"].includes(itemVariant) ? itemVariant : "beige");
       setCustomColor("");
-      setCurrentIndex(viewableItems[0].index || 0);
+      setCurrentIndex(newIndex);
     }
-  }).current;
+  }, []);
 
   const viewabilityConfig = useRef({
     itemVisiblePercentThreshold: 50,
+    minimumViewTime: 0,
   }).current;
 
   const goToSlide = (index: number) => {
-    // Track slide change when manually navigating (1-based index)
-    if (index !== currentIndex) {
-      logEvents.logCarrouselObdNext(index + 1);
-    }
     flatListRef.current?.scrollToIndex({ index, animated: true });
   };
 
