@@ -122,7 +122,7 @@ const Header = ({ title, navigation, scrollY, scrollThreshold = 100 }: HeaderPro
             <MessageHeartCircleIcon />
             <Animated.View style={supportButtonAnimatedStyle}>
               <Text numberOfLines={1} ellipsizeMode="tail" className={mergeClassNames(typography.textSmMedium, "text-white overflow-hidden")}>
-                Soutient 24/7
+                Soutien 24/7
               </Text>
             </Animated.View>
           </SquircleButton>

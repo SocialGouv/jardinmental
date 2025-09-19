@@ -45,7 +45,7 @@ const HeaderUsageExample = ({ navigation }) => {
           >
             <Text style={{ fontSize: 16, fontWeight: "bold" }}>Content Item {index + 1}</Text>
             <Text style={{ marginTop: 8, color: "#666" }}>
-              Scroll down to see the "Mes observations" title slide up and fade out, the "Soutient 24/7" button fade out, and the header size reduce
+              Scroll down to see the "Mes observations" title slide up and fade out, the "Soutien 24/7" button fade out, and the header size reduce
               smoothly.
             </Text>
           </View>
