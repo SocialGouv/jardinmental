@@ -11,6 +11,7 @@ import JMButton from "@/components/JMButton";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import ThumbsUpIcon from "@assets/svg/icon/ThumbsUp";
 import ThumbsDownIcon from "@assets/svg/icon/ThumbsDown";
+import logEvents from "@/services/logEvents";
 
 // Storage keys for motivational messages
 const STORAGE_KEY_MOTIVATIONAL_MESSAGE_INDEX = "@MOTIVATIONAL_MESSAGE_INDEX";
@@ -418,11 +419,11 @@ const SurveySuccessScreen: React.FC<SurveySuccessScreenProps> = ({ navigation, r
   const handleFinish = () => {
     // Log Matomo event based on thumb selection
     if (thumbSelection) {
-      console.log(`Matomo event: health_tip_feedback_${thumbSelection}`, {
-        messageId: currentMessage.id,
-        messageType: currentMessage.type,
-        feedback: thumbSelection,
-      });
+      if (thumbSelection === "up") {
+        logEvents.logHealthTipFeedbackUp(currentMessage.id);
+      } else {
+        logEvents.logHealthTipFeedbackDown(currentMessage.id);
+      }
     }
 
     // Call the callback if provided
