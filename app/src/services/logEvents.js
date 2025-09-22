@@ -903,7 +903,7 @@ const logOpenFaq = async () => {
   });
 };
 
-const logNeedAssistanceFaq = async (id) => {
+const logNeedAssistanceFaq = async () => {
   await logEvent({
     category: "FAQ",
     action: "NEED_ASSISTANCE_FAQ",
