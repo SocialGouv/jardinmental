@@ -9,6 +9,7 @@ import Markdown, { MarkdownIt, stringToTokens, tokensToAST } from "react-native-
 import Accordion from "@/components/Accordion";
 import NavigationListItem from "@/components/ListItem/NavigationListItem";
 import { FAQ_DATA } from "./FaqData";
+import logEvents from "@/services/logEvents";
 
 const markdownStyles = {
   body: {
@@ -132,6 +133,7 @@ export default function FaqDetailScreen({
                 navigation.push("faq-detail", {
                   slug: item.next,
                 });
+                logEvents.logOpenFaqSection(FAQ_DATA[item.next].matomoId);
               }}
             />
           </View>

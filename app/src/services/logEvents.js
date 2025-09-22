@@ -896,6 +896,29 @@ const logHealthTipFeedbackDown = async (id) => {
   });
 };
 
+const logOpenFaq = async (id) => {
+  await logEvent({
+    category: "FAQ",
+    action: "OPEN_FAQ",
+  });
+};
+
+const logNeedAssistanceFaq = async (id) => {
+  await logEvent({
+    category: "FAQ",
+    action: "NEED_ASSISTANCE_FAQ",
+  });
+};
+
+const logOpenFaqSection = async (id) => {
+  await logEvent({
+    category: "FAQ",
+    action: "OPEN_FAQ_SECTION",
+    name: "section_number",
+    value: id,
+  });
+};
+
 export default {
   initMatomo,
   logAppVisit,
@@ -996,4 +1019,7 @@ export default {
   logDataExportAsBackUp,
   logHealthTipFeedbackUp,
   logHealthTipFeedbackDown,
+  logOpenFaq,
+  logNeedAssistanceFaq,
+  logOpenFaqSection,
 };
