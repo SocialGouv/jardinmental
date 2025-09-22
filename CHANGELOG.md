@@ -1,3 +1,10 @@
+# [1.79.0](https://github.com/SocialGouv/jardinmental/compare/v1.78.0...v1.79.0) (2025-09-22)
+
+
+### Features
+
+* resources articles ([#395](https://github.com/SocialGouv/jardinmental/issues/395)) ([4e76d01](https://github.com/SocialGouv/jardinmental/commit/4e76d016041ca2fdc6df84fe69da474b40e829e2)), closes [#486](https://github.com/SocialGouv/jardinmental/issues/486)
+
 # [1.78.0](https://github.com/SocialGouv/jardinmental/compare/v1.77.3...v1.78.0) (2025-09-22)
 
 
