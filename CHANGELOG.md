@@ -1,3 +1,10 @@
+## [1.77.3](https://github.com/SocialGouv/jardinmental/compare/v1.77.2...v1.77.3) (2025-09-22)
+
+
+### Bug Fixes
+
+* slide change event on onbarding ([#471](https://github.com/SocialGouv/jardinmental/issues/471)) ([d96a1ca](https://github.com/SocialGouv/jardinmental/commit/d96a1ca76d8ce00f6ee74a2fdd5ad0920b370418))
+
 ## [1.77.2](https://github.com/SocialGouv/jardinmental/compare/v1.77.1...v1.77.2) (2025-09-22)
 
 
