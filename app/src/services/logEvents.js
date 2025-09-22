@@ -896,7 +896,7 @@ const logHealthTipFeedbackDown = async (id) => {
   });
 };
 
-const logOpenFaq = async (id) => {
+const logOpenFaq = async () => {
   await logEvent({
     category: "FAQ",
     action: "OPEN_FAQ",
