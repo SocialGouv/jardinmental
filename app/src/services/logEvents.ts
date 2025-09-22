@@ -729,7 +729,7 @@ const logIndicatorObdStart = async () => {
   });
 };
 
-const logIndicatorObdLvl1 = async (themes, count) => {
+const logIndicatorObdLvl1 = async (themes: number[]) => {
   for (let i = 0; i < themes.length; i++) {
     await logEvent({
       category: ONBOARDING,
@@ -738,13 +738,6 @@ const logIndicatorObdLvl1 = async (themes, count) => {
       value: themes[i],
     });
   }
-  // Also log the count
-  await logEvent({
-    category: ONBOARDING,
-    action: INDICATOR_OBD_LVL1,
-    name: "count",
-    value: count,
-  });
 };
 
 const logIndicatorObdPass = async (screen) => {
@@ -774,7 +767,7 @@ const logIndicatorObdLvl2 = async (subThemes, count) => {
   });
 };
 
-const logIndicatorObdValidate = async (indicators, count) => {
+const logIndicatorObdValidate = async (indicators: number[]) => {
   for (let i = 0; i < indicators.length; i++) {
     await logEvent({
       category: ONBOARDING,
@@ -783,13 +776,6 @@ const logIndicatorObdValidate = async (indicators, count) => {
       value: indicators[i],
     });
   }
-  // Also log the count
-  await logEvent({
-    category: ONBOARDING,
-    action: INDICATOR_OBD_VALIDATE,
-    name: "count",
-    value: count,
-  });
 };
 
 // Questionnaire onboarding functions
