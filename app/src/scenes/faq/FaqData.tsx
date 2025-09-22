@@ -17,6 +17,7 @@ interface FaqDataEntry {
     title: string;
     description: string;
   }[];
+  matomoId: number;
   next: FaqSlug;
 }
 
@@ -47,6 +48,7 @@ export const FAQ_DATA: Record<FaqSlug, FaqDataEntry> = {
       },
     ],
     next: "objectifs",
+    matomoId: 1,
   },
   objectifs: {
     icon: <Goal />,
@@ -77,6 +79,7 @@ export const FAQ_DATA: Record<FaqSlug, FaqDataEntry> = {
       },
     ],
     next: "questionnaire",
+    matomoId: 2,
   },
   questionnaire: {
     icon: <CalendarIcon />,
@@ -105,6 +108,7 @@ export const FAQ_DATA: Record<FaqSlug, FaqDataEntry> = {
       },
     ],
     next: "analyse",
+    matomoId: 3,
   },
   analyse: {
     title: "Comprendre mes analyses",
@@ -133,6 +137,7 @@ Ils vous aident à repérer les situations ou facteurs qui influencent vos indic
       },
     ],
     next: "traitement",
+    matomoId: 4,
   },
   traitement: {
     icon: <HealthIcon />,
@@ -150,6 +155,7 @@ Un rappel apparaîtra dans votre questionnaire quotidien.`,
       },
     ],
     next: "données",
+    matomoId: 5,
   },
   données: {
     title: "Gérer mes données",
@@ -169,6 +175,7 @@ Un rappel apparaîtra dans votre questionnaire quotidien.`,
     ],
     icon: <ShareIcon />,
     next: "confidentialité",
+    matomoId: 6,
   },
   confidentialité: {
     title: "Confidentialité de mes données",
@@ -178,5 +185,6 @@ Seules des données anonymisées sur la fréquence d’utilisation de l’applic
     accordion: [],
     icon: <LockerIcon />,
     next: "indicateurs",
+    matomoId: 7,
   },
 };

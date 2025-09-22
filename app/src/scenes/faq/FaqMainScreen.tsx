@@ -13,6 +13,7 @@ import TrendUpIcon from "@assets/svg/icon/TrendUp";
 import HealthIcon from "@assets/svg/icon/Health";
 import ShareIcon from "@assets/svg/icon/Share";
 import { FAQ_DATA } from "./FaqData";
+import logEvents from "@/services/logEvents";
 
 export default function FaqMainScreen({ navigation, route }) {
   return (
@@ -54,6 +55,7 @@ export default function FaqMainScreen({ navigation, route }) {
                   navigation.navigate("faq-detail", {
                     slug: slug,
                   });
+                  logEvents.logOpenFaqSection(FAQ_DATA[slug].matomoId);
                 }}
                 icon={FAQ_DATA[slug].icon}
               />
@@ -71,6 +73,7 @@ export default function FaqMainScreen({ navigation, route }) {
           <JMButton
             onPress={() => {
               navigation.navigate("contact");
+              logEvents.logNeedAssistanceFaq();
             }}
             title="Contactez l’équipe de Jardin mental"
             variant="outline"
