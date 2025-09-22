@@ -67,18 +67,13 @@ export default function FaqMainScreen({ navigation, route }) {
           <Text className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-900 text-left")}>
             Si vous ne trouvez pas la réponse à votre question, contactez-nous sur
           </Text>
-<<<<<<< HEAD
-          <JMButton
-            onPress={() => {
-              logEvents.logNeedAssistanceFaq();
-=======
           <TouchableOpacity onPress={() => Linking.openURL("mailto:jardinmental@fabrique.social.gouv.fr")}>
             <Text className={mergeClassNames(typography.textMdRegular, "text-gray-700 text-left")}>jardinmental@fabrique.social.gouv.fr</Text>
           </TouchableOpacity>
           <JMButton
             onPress={() => {
               navigation.navigate("contact");
->>>>>>> cfefd260 (chore(faq): change content, fix accordeon flickering (#477))
+              logEvents.logNeedAssistanceFaq();
             }}
             title="Contactez l’équipe de Jardin mental"
             variant="outline"
