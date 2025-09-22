@@ -1,11 +1,23 @@
 const { Expo } = require("expo-server-sdk");
+const NotificationEncryption = require("../utils/encryption");
 
 let expo = new Expo({
   accessToken: process.env.EXPO_ACCESS_TOKEN,
   useFcmV1: true,
 });
 
-const sendNotifications = async ({ pushTokens, title, body }) => {
+const sendNotifications = async ({
+  pushTokens,
+  title,
+  body,
+  type = "general",
+  enableEncryption = true,
+  silent = false,
+  priority = "normal",
+  backgroundProcessingHint = false,
+  decryptionTimeout = 3000,
+  data = {},
+}) => {
   const uniqueTokens = [...new Set(pushTokens)];
   let messages = [];
   for (let pushToken of uniqueTokens) {
@@ -15,13 +27,76 @@ const sendNotifications = async ({ pushTokens, title, body }) => {
       continue;
     }
 
-    // Construct a message (see https://docs.expo.io/push-notifications/sending-notifications/)
-    messages.push({
+    let notificationPayload = { title, body };
+    let notificationData = { ...data };
+
+    // Handle silent notifications
+    if (silent) {
+      notificationPayload.title = null;
+      notificationPayload.body = null;
+    }
+
+    // Encrypt notification if enabled
+    if (enableEncryption && !silent) {
+      try {
+        const encryptedNotification = NotificationEncryption.encryptNotification({ title, body }, pushToken, type);
+
+        // Use encrypted content for the notification
+        notificationPayload = {
+          title: encryptedNotification.encrypted ? encryptedNotification.titleFallback : title,
+          body: encryptedNotification.encrypted ? encryptedNotification.bodyFallback : body,
+        };
+
+        // Add encrypted data to custom payload for client-side decryption
+        notificationData = {
+          ...notificationData,
+          encrypted: encryptedNotification.encrypted,
+          encryptedTitle: encryptedNotification.title,
+          encryptedBody: encryptedNotification.body,
+          type: type,
+          version: "1.0",
+          backgroundProcessingHint,
+          decryptionTimeout,
+        };
+      } catch (error) {
+        console.error("Failed to encrypt notification, sending plain text:", error);
+        notificationData = {
+          ...notificationData,
+          encrypted: false,
+          type: type,
+          backgroundProcessingHint,
+        };
+      }
+    } else {
+      notificationData = {
+        ...notificationData,
+        encrypted: false,
+        type: type,
+        backgroundProcessingHint,
+      };
+    }
+
+    // Build message object
+    const message = {
       to: pushToken,
-      sound: "default",
-      title: title,
-      body: body,
-    });
+      data: notificationData,
+    };
+
+    // Add title and body for non-silent notifications
+    if (!silent) {
+      message.title = notificationPayload.title;
+      message.body = notificationPayload.body;
+      message.sound = "default";
+    }
+
+    // Add priority if specified
+    if (priority === "high") {
+      message.priority = "high";
+      message.channelId = type; // Use type as channel ID for high priority
+    }
+
+    // Construct a message (see https://docs.expo.io/push-notifications/sending-notifications/)
+    messages.push(message);
   }
 
   // The Expo push notification service accepts batches of notifications so

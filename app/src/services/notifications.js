@@ -6,12 +6,16 @@ import logEvents from "./logEvents";
 import API from "./api";
 import { registerForPushNotificationsAsync } from "./notifications-expo";
 import uuid from "react-native-uuid";
+import NotificationEncryption from "../utils/notificationEncryption";
+import hybridNotificationHandler from "./hybridNotificationHandler";
 
 class NotificationService {
   listeners = {};
 
-  init = () => {
-    this.configure();
+  init = async () => {
+    await this.configure();
+    // Initialize hybrid notification handler
+    await hybridNotificationHandler.initialize();
   };
 
   delete = () => {
@@ -154,20 +158,42 @@ class NotificationService {
     // unused
   }
 
-  handleNotification = (notification) => {
+  handleNotification = async (notification) => {
     console.log("handle Notification", JSON.stringify(notification, null, 2));
     logEvents.logPushNotifReceiveClicked();
 
+    // Process notification for decryption if needed
+    const processedNotification = await NotificationEncryption.processNotificationForDisplay(notification);
+
+    // Log decryption status
+    if (processedNotification.wasEncrypted) {
+      console.log("Notification was encrypted, decryption status:", processedNotification.decrypted);
+      if (processedNotification.decrypted) {
+        console.log("Decrypted notification:", {
+          title: processedNotification.title,
+          body: processedNotification.body,
+        });
+      } else {
+        console.warn("Failed to decrypt notification:", processedNotification.error);
+      }
+    }
+
+    // Use processed notification for listeners
+    const notificationToPass = {
+      ...notification,
+      decryptedContent: processedNotification,
+    };
+
     const listenerKeys = Object.keys(this.listeners);
     if (!listenerKeys.length) {
-      this.initNotification = notification;
+      this.initNotification = notificationToPass;
       return;
     }
     this.initNotification = null;
 
     for (let i = listenerKeys.length - 1; i >= 0; i--) {
       const notificationHandler = this.listeners[listenerKeys[i]];
-      notificationHandler(notification);
+      notificationHandler(notificationToPass);
     }
   };
 
