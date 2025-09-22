@@ -53,7 +53,7 @@ const ResourceArticle: React.FC<ResourceArticleProps> = ({ navigation, route }) 
     >
       <View className="flex-1">
         <View className="px-5">
-          <View className="mb-6">
+          <View className="mb-6 mt-9">
             <Image source={resource.image} className="w-full h-[200px] rounded-2xl mb-2" resizeMode="cover" />
           </View>
           <Text className="text-2xl font-bold text-cnam-primary-950 mb-5 font-source-sans leading-7 text-left">{resource.title}</Text>
