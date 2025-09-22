@@ -913,7 +913,7 @@ const logHealthTipFeedbackDown = async (id) => {
 
 const logOpenAnalysisMain = async (id) => {
   await logEvent({
-    category: "ANALYSIS",
+    category: "ANALYSES",
     action: "OPEN_ANALYSIS_MAIN",
   });
 };
