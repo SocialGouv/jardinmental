@@ -19,7 +19,7 @@ const ResourceCard: React.FC<ResourceCardProps> = ({ resource, onPress }) => {
       <View className="w-20 h-full relative">
         <Image source={resource.image} className="absolute rounded-lg inset-0 w-full h-full" resizeMode="cover" />
       </View>
-      <View className="flex-1 px-3 ml-1">
+      <View className="flex-1 px-2 ml-1">
         <Text
           numberOfLines={4} // change to how many lines you want
           ellipsizeMode="tail"
