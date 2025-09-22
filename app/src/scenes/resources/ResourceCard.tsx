@@ -14,14 +14,14 @@ const ResourceCard: React.FC<ResourceCardProps> = ({ resource, onPress }) => {
     <TouchableOpacity
       onPress={onPress}
       activeOpacity={0.7}
-      className="text-cnam-primary-950 bg-white border p-2 border-cnam-primary-400 rounded-lg flex flex-row mb-2 h-28 items-center"
+      className="text-cnam-primary-950 bg-white border p-2 border-cnam-primary-400 rounded-lg flex flex-row mb-2 h-32 items-center"
     >
       <View className="w-20 h-full relative">
         <Image source={resource.image} className="absolute rounded-lg inset-0 w-full h-full" resizeMode="cover" />
       </View>
       <View className="flex-1 px-3 ml-1">
         <Text
-          numberOfLines={3} // change to how many lines you want
+          numberOfLines={4} // change to how many lines you want
           ellipsizeMode="tail"
           className="text-base font-semibold mb-2 text-cnam-primary-950"
         >
