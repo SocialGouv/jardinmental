@@ -48,9 +48,9 @@ const ResourceArticle: React.FC<ResourceArticleProps> = ({ navigation, route }) 
           <View className="mb-6">
             <Image source={resource.image} className="w-full h-[200px] rounded-2xl mb-2" resizeMode="cover" />
           </View>
-          <Text className="text-2xl font-bold text-cnam-primary-950 mb-5 font-source-sans leading-7 text-left">{resource.content.title}</Text>
+          <Text className="text-2xl font-bold text-cnam-primary-950 mb-5 font-source-sans leading-7 text-left">{resource.title}</Text>
 
-          <MarkdownStyled markdown={resource.content.markdown} />
+          <MarkdownStyled markdown={resource.content} />
 
           {resource.nextContent ? (
             <View className="mt-8 pt-4">
