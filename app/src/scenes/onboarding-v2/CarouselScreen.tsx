@@ -44,7 +44,7 @@ const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
   };
 
   const handleSkip = () => {
-    logEvents.logCarrouselObdPass(currentIndex);
+    logEvents.logCarrouselObdPass(currentIndex + 1);
     navigation.navigate(NextRoute);
   };
 
