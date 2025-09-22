@@ -22,7 +22,6 @@ import {
   STORAGE_KEY_ONBOARDING_DONE,
   STORAGE_KEY_REMOVING_TOXIC_QUESTION_FROM_SURVEY_MIGRATION_DONE,
 } from "../utils/constants";
-import { fakeDiaryData, fakeDiaryData2, startDate as fakeStartDate } from "../scenes/status/fake-diary-data";
 import { beforeToday, formatDay, getArrayOfDates } from "../utils/date/helpers";
 import { DiaryData, DiaryDataNewEntryInput } from "../entities/DiaryData";
 import { parse } from "date-fns";
@@ -51,11 +50,6 @@ export const wipeData = async () => {
   await AsyncStorage.removeItem("@Reminder");
 };
 
-const setupFakeData = async () => {
-  await AsyncStorage.setItem(STORAGE_KEY_START_DATE, formatDay(fakeStartDate));
-  await AsyncStorage.setItem(STORAGE_KEY_SURVEY_RESULTS, JSON.stringify(fakeDiaryData2));
-};
-
 const fillUpEmptyDates = (startDate, data) => {
   const sortedDates = getArrayOfDates({ startDate, reverse: true });
   const diary = {};
@@ -67,15 +61,21 @@ const fillUpEmptyDates = (startDate, data) => {
 
 type ImportMode = "replace" | "merge";
 
-const DiaryDataContext = React.createContext<
-  [
-    DiaryData,
-    ({ date, answers }: { date: string; answers: DiaryData }) => void,
-    (date: string) => void,
-    (importedData: DiaryData, mode: ImportMode) => Promise<void>,
-    () => void
-  ]
->([{}, () => {}, () => {}, async (_A, _B) => {}, async () => {}]);
+type DiaryContextValue = [
+  diaryData: DiaryData,
+  addEntry: (params: { date: string; answers: DiaryData }) => void,
+  deleteEntry: (date: string) => void,
+  importData: (importedData: DiaryData, mode: ImportMode) => Promise<void>,
+  deleteAllDiaryData: () => void
+];
+
+const DiaryDataContext = React.createContext<DiaryContextValue>([
+  {} as DiaryData,
+  function addEntry() {},
+  function deleteEntry(date: string) {},
+  async function importData(importedData, mode) {},
+  async function deleteAllDiaryData() {},
+]);
 
 const DiaryDataProvider = ({ children }) => {
   const [diaryData, setDiaryData] = useState<DiaryData>({});
