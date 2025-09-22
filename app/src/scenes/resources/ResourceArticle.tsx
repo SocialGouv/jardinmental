@@ -1,7 +1,6 @@
 import React from "react";
-import { View, SafeAreaView, ScrollView, Text, Image, TouchableOpacity, Linking } from "react-native";
-import BackButton from "../../components/BackButton";
-import { Resource } from "./index";
+import { View, Text, Image, TouchableOpacity, Linking } from "react-native";
+import { Resource } from "./data/resources";
 import MarkdownStyled from "./MarkdownStyled";
 import { AnimatedHeaderScrollScreen } from "../survey-v2/AnimatedHeaderScrollScreen";
 import { TW_COLORS } from "@/utils/constants";
@@ -19,15 +18,24 @@ const ResourceArticle: React.FC<ResourceArticleProps> = ({ navigation, route }) 
   const { resource } = route.params;
 
   const handleContinueReading = async () => {
-    if (!resource.nextContent) {
+    if (!resource.source) {
       return;
     }
-    if (resource.nextContent.url) {
+    if (resource.source.url) {
       try {
-        await Linking.openURL(resource.nextContent.url);
+        await Linking.openURL(resource.source.url);
       } catch (error) {
         console.error("Failed to open URL:", error);
       }
+    }
+  };
+
+  const handleContinueReadingMore = async () => {
+    if (!resource.moreContent) {
+      return;
+    }
+    if (resource.moreContent[0].url) {
+      await Linking.openURL(resource.moreContent[0].url);
     }
   };
 
@@ -52,21 +60,41 @@ const ResourceArticle: React.FC<ResourceArticleProps> = ({ navigation, route }) 
 
           <MarkdownStyled markdown={resource.content} />
 
-          {resource.nextContent ? (
+          {resource.source ? (
             <View className="mt-8 pt-4">
               <Text className="text-lg text-cnam-primary-950 font-semibold mb-4 font-source-sans">Continuer la lecture</Text>
 
               <TouchableOpacity onPress={handleContinueReading}>
                 <View className="rounded-xl p-4 flex-row items-center border border-cnam-primary-200 bg-white">
                   <View className="flex-1 pr-2">
-                    <Text className="text-base font-semibold text-cnam-primary-950 mb-1 font-source-sans">{resource.nextContent.title}</Text>
-                    <Text className="text-sm text-gray-500 font-source-sans leading-tight">{resource.nextContent.text}</Text>
+                    <Text className="text-base font-semibold text-cnam-primary-950 mb-1 font-source-sans">{resource.source.title}</Text>
+                    <Text className="text-sm text-gray-500 font-source-sans leading-tight">{resource.source.text}</Text>
                   </View>
                   <View className="justify-center items-center">
                     <Text className="text-lg text-cnam-primary-950 font-bold">→</Text>
                   </View>
                 </View>
               </TouchableOpacity>
+            </View>
+          ) : null}
+          {resource.moreContent ? (
+            <View className="mt-8 pt-4">
+              <Text className="text-lg text-cnam-primary-950 font-semibold mb-4 font-source-sans">Aller plus loin</Text>
+              <View className="flex flex-col gap-4">
+                {resource.moreContent.map((item) => (
+                  <TouchableOpacity onPress={handleContinueReadingMore} key={item.title + item.text}>
+                    <View className="rounded-xl p-4 flex-row items-center border border-cnam-primary-200 bg-white">
+                      <View className="flex-1 pr-2">
+                        <Text className="text-base font-semibold text-cnam-primary-950 mb-1 font-source-sans">{item.title}</Text>
+                        <Text className="text-sm text-gray-500 font-source-sans leading-tight">{item.text}</Text>
+                      </View>
+                      <View className="justify-center items-center">
+                        <Text className="text-lg text-cnam-primary-950 font-bold">→</Text>
+                      </View>
+                    </View>
+                  </TouchableOpacity>
+                ))}
+              </View>
             </View>
           ) : null}
         </View>
