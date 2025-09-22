@@ -1,3 +1,10 @@
+## [1.77.1](https://github.com/SocialGouv/jardinmental/compare/v1.77.0...v1.77.1) (2025-09-22)
+
+
+### Bug Fixes
+
+* delete old logo (and replace with new) ([#472](https://github.com/SocialGouv/jardinmental/issues/472)) ([adf7968](https://github.com/SocialGouv/jardinmental/commit/adf79683a1e7815fa2eda00adbebd1f3021e38e0))
+
 # [1.77.0](https://github.com/SocialGouv/jardinmental/compare/v1.76.0...v1.77.0) (2025-09-22)
 
 
