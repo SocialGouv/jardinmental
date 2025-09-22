@@ -93,7 +93,7 @@ export default function FaqDetailScreen({
       smallHeader={true}
       scrollViewBackground={TW_COLORS.GRAY_50}
       handlePrevious={() => {
-        navigation.goBack();
+        navigation.navigate("faq");
       }}
       showBottomButton={false}
       navigation={navigation}
