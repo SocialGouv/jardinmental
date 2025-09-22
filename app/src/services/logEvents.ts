@@ -43,7 +43,7 @@ const checkNetwork = async () => {
   return networkState.isConnected;
 };
 
-const logEvent = async ({ category, action, name, value }) => {
+const logEvent = async ({ category, action, name, value }: { category: string; action: string; name?: string; value?: number | null }) => {
   if (!Matomo.initDone) await initMatomo();
   try {
     const canSend = await checkNetwork();
@@ -321,15 +321,6 @@ const logNPSOpen = async () => {
   await logEvent({
     category: "NPS",
     action: "NPS_OPEN",
-  });
-};
-
-const logNPSSend = async (useful, reco) => {
-  await logEvent({
-    category: "NPS",
-    action: "NPS_SEND",
-    name: "notes",
-    value: `${useful}-${reco}`,
   });
 };
 
@@ -616,11 +607,10 @@ const logRecommendAppShow = async () => {
     action: "SHOW_MODAL",
   });
 };
-const logRecommendAppSent = async (type) => {
+const logRecommendAppSent = async () => {
   await logEvent({
     category: "RECOMMEND",
     action: "SENT",
-    type,
   });
 };
 const logRecommendAppDismissed = async () => {
@@ -938,7 +928,6 @@ export default {
   logDataExport,
   getUserId,
   logNPSOpen,
-  logNPSSend,
   logContactOpen,
   logSupportedSelect,
   logCustomSymptomAdd,
