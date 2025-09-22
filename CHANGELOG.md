@@ -1,3 +1,15 @@
+# [1.77.0](https://github.com/SocialGouv/jardinmental/compare/v1.76.0...v1.77.0) (2025-09-22)
+
+
+### Bug Fixes
+
+* **typo:** replace soutient by soutien ([#475](https://github.com/SocialGouv/jardinmental/issues/475)) ([3a2ce56](https://github.com/SocialGouv/jardinmental/commit/3a2ce569ed97f72c157a1d7337d769a63d4da024))
+
+
+### Features
+
+* **dev-mode:** implement "add fake data" button ([#469](https://github.com/SocialGouv/jardinmental/issues/469)) ([8a59a37](https://github.com/SocialGouv/jardinmental/commit/8a59a3700d2a602f6a5ed30a7e0beb6cebee1c79))
+
 # [1.76.0](https://github.com/SocialGouv/jardinmental/compare/v1.75.0...v1.76.0) (2025-09-18)
 
 
