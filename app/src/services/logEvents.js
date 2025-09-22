@@ -877,6 +877,25 @@ const logOnboardingBack = async (page) => {
   });
 };
 
+// Survey success screen functions
+const logHealthTipFeedbackUp = async (id) => {
+  await logEvent({
+    category: "DAILY_QUESTIONNAIRE",
+    action: "ASSESSED_MOTIVATIONNAL_FEEDBACK_1",
+    name: "feedback_id",
+    value: id,
+  });
+};
+
+const logHealthTipFeedbackDown = async (id) => {
+  await logEvent({
+    category: "DAILY_QUESTIONNAIRE",
+    action: "ASSESSED_MOTIVATIONNAL_FEEDBACK_0",
+    name: "feedback_id",
+    value: id,
+  });
+};
+
 export default {
   initMatomo,
   logAppVisit,
@@ -975,4 +994,6 @@ export default {
   logOnboardingBack,
   logDataImport,
   logDataExportAsBackUp,
+  logHealthTipFeedbackUp,
+  logHealthTipFeedbackDown,
 };
