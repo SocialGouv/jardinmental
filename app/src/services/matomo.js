@@ -7,6 +7,7 @@ class Api {
     this.userId = userId;
     this._idvc = _idvc;
     this.initDone = true;
+    this.userProperties = undefined;
   }
 
   makeid(length = 16) {
@@ -55,6 +56,14 @@ class Api {
     }, "");
   }
 
+  /**
+   * Log an event
+   * @param {object} params - The event parameters
+   * @param {string} params.category - The event category
+   * @param {string} params.action - The event action
+   * @param {string | undefined} params.name - The event name
+   * @param {number | null | undefined} params.value - The event value
+   */
   async logEvent({ category, action, name = "", value = null }) {
     // e_c — The event category. Must not be empty. (eg. Videos, Music, Games...)
     // e_a — The event action. Must not be empty. (eg. Play, Pause, Duration, Add Playlist, Downloaded, Clicked...)
