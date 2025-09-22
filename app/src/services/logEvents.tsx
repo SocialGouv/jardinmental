@@ -43,7 +43,7 @@ const checkNetwork = async () => {
   return networkState.isConnected;
 };
 
-const logEvent = async ({ category, action, name, value }) => {
+const logEvent = async ({ category, action, name, value }: { category: string; action: string; name?: string; value?: number }) => {
   if (!Matomo.initDone) await initMatomo();
   try {
     const canSend = await checkNetwork();
@@ -553,24 +553,17 @@ const logStatusSubPage = async (tab) => {
 };
 
 // SUIVI
-const logOpenPageSuivi = async (tab) => {
+const logOpenPageSuivi = async (tab: "Frises" | "Statistiques" | "Courbes" | "Déclencheurs") => {
   const EVENTS_FOR_TAB = {
     Frises: "OPEN_ANALYSIS_TIMELINE",
     Statistiques: "OPEN_ANALYSIS_STATS",
     Courbes: "OPEN_ANALYSIS_GRAPHS",
     Déclencheurs: "OPEN_ANALYSIS_TRIGGERS",
   };
-  if (EVENTS_FOR_TAB[tab]) {
-    await logEvent({
-      action: EVENTS_FOR_TAB[tab],
-      category: "ANALYSES",
-    });
-  } else {
-    await logEvent({
-      category: "OPEN_SUB_TAB_SUIVI",
-      action: `${tab.toUpperCase()}_OPEN`,
-    });
-  }
+  await logEvent({
+    action: EVENTS_FOR_TAB[tab],
+    category: "ANALYSES",
+  });
 };
 
 const logSuiviEditDateFrom = async (tab) => {
