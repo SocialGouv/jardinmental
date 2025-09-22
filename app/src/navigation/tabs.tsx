@@ -31,14 +31,16 @@ const Tabs = ({ navigation, route }) => {
 
   const startSurvey = async () => {
     const user_indicateurs = await localStorage.getIndicateurs();
-    logEvents.logFeelingStart();
+    logEvents._deprecatedLogFeelingStart();
     if (!user_indicateurs) {
       navigation.navigate("symptoms", {
         showExplanation: true,
         redirect: "select-day",
       });
     } else {
-      navigation.navigate("select-day");
+      navigation.navigate("select-day", {
+        origin: "no_data_screen",
+      });
     }
   };
 

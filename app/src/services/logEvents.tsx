@@ -43,7 +43,7 @@ const checkNetwork = async () => {
   return networkState.isConnected;
 };
 
-const logEvent = async ({ category, action, name, value }) => {
+const logEvent = async ({ category, action, name, value }: { category: "DAILY_QUESTIONNAIRE"; action: string; name?: string; value?: number }) => {
   if (!Matomo.initDone) await initMatomo();
   try {
     const canSend = await checkNetwork();
@@ -114,21 +114,21 @@ const FEELING_START_FROM_RECAP = "FEELING_START_FROM_RECAP";
 const FEELING_ADD_LIST = "FEELING_ADD_LIST";
 const FEELING_ADD_LIST_COMPLETED = "FEELING_ADD_LIST_COMPLETED";
 
-const logFeelingStart = async () => {
+const _deprecatedLogFeelingStart = async () => {
   await logEvent({
     category: FEELING,
     action: FEELING_START,
   });
 };
 
-const logFeelingStartFloatingPlus = async () => {
+const _deprecatedLogFeelingStartFloatingPlus = async () => {
   await logEvent({
     category: FEELING,
     action: FEELING_START_FLOATING_PlUS,
   });
 };
 
-const logFeelingStartFromRecap = async (offset) => {
+const _deprecatedLogFeelingStartFromRecap = async (offset) => {
   await logEvent({
     category: FEELING,
     action: FEELING_START_FROM_RECAP,
@@ -153,14 +153,14 @@ const logFeelingStartYesterday = async (v) => {
   });
 };
 
-const logFeelingAdd = async () => {
+const _deprecatedLogFeelingAdd = async () => {
   await logEvent({
     category: FEELING,
     action: FEELING_ADD,
   });
 };
 
-const logFeelingSubmitSurvey = async (value) => {
+const _deprecatedLogFeelingSubmitSurvey = async (value) => {
   await logEvent({
     category: FEELING,
     action: FEELING_ADD_SURVEY,
@@ -169,7 +169,7 @@ const logFeelingSubmitSurvey = async (value) => {
   });
 };
 
-const logFeelingAddComment = async (value) => {
+const _deprecatedLogFeelingAddComment = async (value) => {
   await logEvent({
     category: FEELING,
     action: "FEELING_ADD_COMMENT",
@@ -177,7 +177,7 @@ const logFeelingAddComment = async (value) => {
     value,
   });
 };
-const logFeelingAddContext = async (value) => {
+const _deprecatedLogFeelingAddContext = async (value) => {
   await logEvent({
     category: FEELING,
     action: "FEELING_ADD_CONTEXT",
@@ -185,7 +185,7 @@ const logFeelingAddContext = async (value) => {
     value,
   });
 };
-const logFeelingResponseToxic = async (value) => {
+const _deprecatedLogFeelingResponseToxic = async (value) => {
   await logEvent({
     category: FEELING,
     action: "FEELING_RESPONSE_TOXIC",
@@ -194,14 +194,14 @@ const logFeelingResponseToxic = async (value) => {
   });
 };
 
-const logFeelingEditButtonClick = async () => {
+const _deprecatedLogFeelingEditButtonClick = async () => {
   await logEvent({
     category: FEELING,
     action: "FEELING_EDIT_BUTTON_CLICK",
   });
 };
 
-const logFeelingAddList = async (value) => {
+const _deprecatedLogFeelingAddList = async (value) => {
   await logEvent({
     category: FEELING,
     action: FEELING_ADD_LIST,
@@ -210,7 +210,7 @@ const logFeelingAddList = async (value) => {
   });
 };
 
-const logFeelingAddListCompleted = async (value) => {
+const _deprecatedLogFeelingAddListCompleted = async (value) => {
   await logEvent({
     category: FEELING,
     action: FEELING_ADD_LIST_COMPLETED,
@@ -896,17 +896,53 @@ const logHealthTipFeedbackDown = async (id) => {
   });
 };
 
+type DailyQuestionnaireOrigin =
+  | "weekly_widget"
+  | "how_do_you_feel_card"
+  | "activity_feed"
+  | "floating_button"
+  | "no_data_screen"
+  | "no_data_statistique"
+  | "no_data_beck"
+  | "no_data_frises";
+
+const logOpenDailyQuestionnaire = async (origin: DailyQuestionnaireOrigin) => {
+  const ID_FOR_ORIGIN: Record<DailyQuestionnaireOrigin, number> = {
+    weekly_widget: 1,
+    how_do_you_feel_card: 2,
+    activity_feed: 3,
+    floating_button: 4,
+    no_data_screen: 5,
+    no_data_statistique: 6,
+    no_data_beck: 7,
+    no_data_frises: 8,
+  };
+  await logEvent({
+    category: "DAILY_QUESTIONNAIRE",
+    action: "OPEN_DAILY_QUESTIONNAIRE",
+    name: "origin",
+    value: ID_FOR_ORIGIN[origin],
+  });
+};
+
+const logValidateDailyQuestionnaire = async () => {
+  await logEvent({
+    category: "DAILY_QUESTIONNAIRE",
+    action: "VALIDATE_DAILY_QUESTIONNAIRE",
+  });
+};
+
 export default {
   initMatomo,
   logAppVisit,
   logAppClose,
   logOnboardingSwipe,
-  logFeelingStart,
+  _deprecatedLogFeelingStart,
   logFeelingDateChoose,
-  logFeelingAdd,
-  logFeelingSubmitSurvey,
-  logFeelingAddList,
-  logFeelingAddListCompleted,
+  _deprecatedLogFeelingAdd,
+  _deprecatedLogFeelingSubmitSurvey,
+  _deprecatedLogFeelingAddList,
+  _deprecatedLogFeelingAddListCompleted,
   logReminderAdd,
   logReminderCancel,
   logSymptomAdd,
@@ -943,10 +979,10 @@ export default {
   logDeleteNoteDiary,
   logOpenPage,
   logInputDrugSurvey,
-  logFeelingEditButtonClick,
-  logFeelingAddComment,
-  logFeelingAddContext,
-  logFeelingResponseToxic,
+  _deprecatedLogFeelingEditButtonClick,
+  _deprecatedLogFeelingAddComment,
+  _deprecatedLogFeelingAddContext,
+  _deprecatedLogFeelingResponseToxic,
   logSettingsSymptomsFromSurvey,
   logOpenPageSuivi,
   logSuiviEditDateFrom,
@@ -955,8 +991,8 @@ export default {
   logSuiviEditScoreEvents,
   logSuiviEditSymptom,
   logSuiviShowDetailStatistics,
-  logFeelingStartFloatingPlus,
-  logFeelingStartFromRecap,
+  _deprecatedLogFeelingStartFloatingPlus,
+  _deprecatedLogFeelingStartFromRecap,
   logStatusSubPage,
   logSuiviShowLegendeInformationPriseDeTraitement,
   logSuiviShowPriseDeTraitement,
@@ -996,4 +1032,6 @@ export default {
   logDataExportAsBackUp,
   logHealthTipFeedbackUp,
   logHealthTipFeedbackDown,
+  logOpenDailyQuestionnaire,
+  logValidateDailyQuestionnaire,
 };

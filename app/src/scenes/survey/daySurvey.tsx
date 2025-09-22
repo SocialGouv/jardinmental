@@ -224,18 +224,19 @@ const DaySurvey = ({
     if (goalsRef.current && typeof goalsRef.current.onSubmit === "function") {
       await goalsRef.current.onSubmit();
     }
-    logEvents.logFeelingAdd();
-    logEvents.logFeelingSubmitSurvey(userIndicateurs.filter((i) => i.active).length);
-    logEvents.logFeelingAddComment(
+    logEvents.logValidateDailyQuestionnaire();
+    logEvents._deprecatedLogFeelingAdd();
+    logEvents._deprecatedLogFeelingSubmitSurvey(userIndicateurs.filter((i) => i.active).length);
+    logEvents._deprecatedLogFeelingAddComment(
       Object.keys(answers).filter((key) => ![questionToxic.id, questionContext.id].includes(key) && answers[key].userComment)?.length
     );
-    logEvents.logFeelingAddContext(answers[questionContext.id]?.userComment ? 1 : 0);
-    logEvents.logFeelingResponseToxic(answers[questionToxic.id]?.value ? 1 : 0);
+    logEvents._deprecatedLogFeelingAddContext(answers[questionContext.id]?.userComment ? 1 : 0);
+    logEvents._deprecatedLogFeelingResponseToxic(answers[questionToxic.id]?.value ? 1 : 0);
 
     // Log each indicator in the questionnaire (FEELING_ADD_LIST)
     for (const indicator of userIndicateurs.filter((i) => i.active)) {
       if (indicator.matomoId) {
-        logEvents.logFeelingAddList(indicator.matomoId);
+        logEvents._deprecatedLogFeelingAddList(indicator.matomoId);
       }
     }
 
@@ -246,7 +247,7 @@ const DaySurvey = ({
 
       const answer = answers[key];
       if (answer?.value !== undefined && answer._indicateur?.matomoId) {
-        logEvents.logFeelingAddListCompleted(answer._indicateur.matomoId);
+        logEvents._deprecatedLogFeelingAddListCompleted(answer._indicateur.matomoId);
       }
     }
 
