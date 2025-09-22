@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, StyleProp, ViewStyle } from "react-native";
 import Svg, { Defs, LinearGradient, Mask, Rect, Stop, Use, G } from "react-native-svg";
 import { useLayout } from "@react-native-community/hooks";
 import { EMOTION_COLORS, TW_COLORS } from "@/utils/constants";
@@ -7,7 +7,7 @@ import { EMOTION_COLORS, TW_COLORS } from "@/utils/constants";
 const HEIGHT_RATIO_GAUGE = 48 / 256;
 const NUMBER_OF_BARS = 20;
 
-export const GaugeChart = ({ value, reverse, containerStyle }) => {
+export const GaugeChart = ({ value, reverse, containerStyle }: { value: number; reverse: boolean; containerStyle?: StyleProp<ViewStyle> }) => {
   const { onLayout, ...layout } = useLayout();
   const width = layout?.width || 0;
   const height = width * HEIGHT_RATIO_GAUGE || 0;
