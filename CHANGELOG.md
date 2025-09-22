@@ -1,3 +1,10 @@
+## [1.77.2](https://github.com/SocialGouv/jardinmental/compare/v1.77.1...v1.77.2) (2025-09-22)
+
+
+### Bug Fixes
+
+* event matomo on feedback thumb up/down ([#473](https://github.com/SocialGouv/jardinmental/issues/473)) ([909fb3b](https://github.com/SocialGouv/jardinmental/commit/909fb3bdc0819e4b48a3abf5c1fe7da3529db7de))
+
 ## [1.77.1](https://github.com/SocialGouv/jardinmental/compare/v1.77.0...v1.77.1) (2025-09-22)
 
 
