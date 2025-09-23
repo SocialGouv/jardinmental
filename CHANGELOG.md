@@ -1,3 +1,10 @@
+# [1.82.0](https://github.com/SocialGouv/jardinmental/compare/v1.81.0...v1.82.0) (2025-09-23)
+
+
+### Features
+
+* **status-item:** integrate new status-item design ([#444](https://github.com/SocialGouv/jardinmental/issues/444)) ([b988f5f](https://github.com/SocialGouv/jardinmental/commit/b988f5f8392cb73f71f02ee3e96d338d99e711e2))
+
 # [1.81.0](https://github.com/SocialGouv/jardinmental/compare/v1.80.0...v1.81.0) (2025-09-23)
 
 
