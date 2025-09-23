@@ -1,3 +1,10 @@
+# [1.83.0](https://github.com/SocialGouv/jardinmental/compare/v1.82.0...v1.83.0) (2025-09-23)
+
+
+### Features
+
+* bump version ios 278, android 270 ([40c4641](https://github.com/SocialGouv/jardinmental/commit/40c46419dbf0d9f321ab549e05b654a7cf5a8913))
+
 # [1.82.0](https://github.com/SocialGouv/jardinmental/compare/v1.81.0...v1.82.0) (2025-09-23)
 
 
