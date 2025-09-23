@@ -128,6 +128,14 @@ const Tabs = ({ navigation, route }) => {
             </View>
           ),
         }}
+        listeners={({ navigation }) => ({
+          tabPress: (e) => {
+            const currentRouteName = navigation.getState().routes[navigation.getState().index].name;
+            if (currentRouteName !== "Resources") {
+              logEvents.logOpenedRessources();
+            }
+          },
+        })}
       >
         {(p) => (
           <View style={{ paddingTop: insets.top, flex: 1 }}>
