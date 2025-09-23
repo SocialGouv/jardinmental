@@ -12,6 +12,8 @@ pg:
   backup:
     name: "202404161204" # backup on a new folder
   cnpg-cluster:
+    persistence:
+      size: "16Gi"
     resources:
       requests:
         cpu: "1"
