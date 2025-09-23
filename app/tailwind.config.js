@@ -79,6 +79,7 @@ module.exports = {
         },
         "cnam-jaune": {
           100: "#FCF0D3",
+          500: "#F0B323",
           900: "#302407",
         },
         brand: {
