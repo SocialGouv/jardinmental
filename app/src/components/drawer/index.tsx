@@ -42,6 +42,7 @@ import MegaphoneIcon from "@assets/svg/icon/MegaphoneIcon";
 import { TW_COLORS } from "@/utils/constants";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import ArrowRightSvg from "../../../assets/svg/arrow-right.js";
+import logEvents from "@/services/logEvents";
 
 export default ({ navigation, visible, onClick }) => {
   const [isVisible, setIsVisible] = useState();
@@ -194,7 +195,15 @@ export default ({ navigation, visible, onClick }) => {
                   <ArrowRightSvg color={TW_COLORS.GRAY_600} />
                 </TouchableOpacity>
                 <View className="mt-6 mb-8">
-                  <DrawerItem title="Comment ça marche ?" path="faq" navigation={navigation} onClick={onClick} />
+                  <DrawerItem
+                    title="Comment ça marche ?"
+                    path="faq"
+                    navigation={navigation}
+                    onClick={() => {
+                      logEvents.logOpenFaq();
+                      onClick();
+                    }}
+                  />
                   <Separator />
                   <DrawerItem title="Qui peut voir mes données ?" path="privacy-light" navigation={navigation} onClick={onClick} />
                   <Separator />

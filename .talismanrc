@@ -4,7 +4,7 @@ fileignoreconfig:
 - filename: .kontinuous/env/prod/templates/api.sealed-secret.yaml
   checksum: f1dfe60bbe8a6604443fe3629b2239fa969304beeca8eff2b7528cf9b5728e3d
 - filename: CHANGELOG.md
-  checksum: 441705e556a107db776bf6cbbf07db3cdd8a6048973824058e9917111d15cc80
+  checksum: af668c3480c223bf8e2e6bfd6942c7cfb95d50d751e48b305a8d36f5a1d1c675
 - filename: README.md
   checksum: 979473d3e8ad091d57424dc057cf0b40a884f0fbf6821554ea0121e63a173d6b
 - filename: api/src/config.ts
@@ -101,6 +101,10 @@ fileignoreconfig:
   checksum: 767aeda61332f9c975693c427569fe1b68cc97a637e8981ccade3a15157b38ab
 - filename: app/src/scenes/onboarding/onboardingSymptomsCustom/CreateIndicator/ChooseIndicatorOrder.js
   checksum: bdb40467b60296ef959cac383488b52e879619d362093020f547896ddf9921bf
+- filename: app/src/scenes/resources/ResourceArticle.tsx
+  checksum: b55947d7511805b7a85791800cfa0f27f8a8b4bd0ddd74e52e5afc2002160c50
+- filename: app/src/scenes/resources/index.tsx
+  checksum: 29b2042d7422312ba6157d629988b7da1631fd5d0b8464cd91ee5f04d8c7c094
 - filename: app/src/scenes/status/index.js
   checksum: 5f9e42e3b0cf566b702885826b9b417fd0b0b58be969354716386d909b4e3651
 - filename: app/src/scenes/status/status-item.js

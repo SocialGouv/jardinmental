@@ -3,6 +3,7 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import Status from "../scenes/status";
 import Exercise from "../scenes/exercise";
 import Suivi from "../scenes/suivi";
+import Resources from "../scenes/resources";
 import SurveyMenu from "../../assets/svg/SurveyMenu";
 import ExerciseMenu from "../../assets/svg/ExerciseMenu";
 import GraphMenu from "../../assets/svg/GraphMenu";
@@ -15,6 +16,7 @@ import IosStatusBarColor from "@/components/IosStatusBar";
 import { useFocusEffect } from "@react-navigation/native";
 import { useStatusBar } from "@/context/StatusBarContext";
 import { TW_COLORS } from "@/utils/constants";
+import BookOpenIcon from "../../assets/svg/icon/BookOpen";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -116,6 +118,24 @@ const Tabs = ({ navigation, route }) => {
           <View style={{ paddingTop: insets.top, flex: 1 }}>
             {Platform.OS === "ios" && <IosStatusBarColor />}
             <Suivi {...p} startSurvey={startSurvey} />
+          </View>
+        )}
+      </Tab.Screen>
+      <Tab.Screen
+        name="Resources"
+        options={{
+          tabBarLabel: "Ressources",
+          tabBarIcon: ({ focused, color }) => (
+            <View style={{ alignItems: "center" }}>
+              <BookOpenIcon height={24} width={24} color={color} />
+            </View>
+          ),
+        }}
+      >
+        {(p) => (
+          <View style={{ paddingTop: insets.top, flex: 1 }}>
+            {Platform.OS === "ios" && <IosStatusBarColor />}
+            <Resources {...p} />
           </View>
         )}
       </Tab.Screen>
