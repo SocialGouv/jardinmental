@@ -19,7 +19,7 @@ import Legend from "./Legend";
 import { useSharedValue } from "react-native-reanimated";
 
 const Suivi = ({ navigation, startSurvey }) => {
-  const [chartType, setChartType] = React.useState("Frises");
+  const [chartType, setChartType] = React.useState<"Frises" | "Statistiques" | "Déclencheurs" | "Courbes">("Frises");
   const [presetDate, setPresetDate] = React.useState("lastDays7");
   const [fromDate, setFromDate] = React.useState(beforeToday(30));
   const [toDate, setToDate] = React.useState(beforeToday(0));

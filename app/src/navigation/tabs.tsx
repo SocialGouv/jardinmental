@@ -110,6 +110,11 @@ const Tabs = ({ navigation, route }) => {
             </View>
           ),
         }}
+        listeners={({ navigation, route }) => ({
+          tabPress: (e) => {
+            logEvents.logOpenAnalysisMain();
+          },
+        })}
       >
         {(p) => (
           <View style={{ paddingTop: insets.top, flex: 1 }}>

@@ -530,10 +530,19 @@ const logDeleteNoteDiary = async () => {
   });
 };
 
-const logOpenPage = async (category) => {
+const logOpenPage = async (screenName) => {
+  const EVENT_FOR_SCREEN_NAME = {
+    calendar: {
+      action: "OPEN_ANALYSIS_MAIN",
+      category: "ANALYSES",
+    },
+  };
+  if (EVENT_FOR_SCREEN_NAME[screenName]) {
+    await logEvent(EVENT_FOR_SCREEN_NAME[screenName]);
+  }
   await logEvent({
     category: "OPEN_TAB",
-    action: `${category.toUpperCase()}_OPEN`,
+    action: `${screenName.toUpperCase()}_OPEN`,
   });
 };
 
@@ -545,10 +554,16 @@ const logStatusSubPage = async (tab) => {
 };
 
 // SUIVI
-const logOpenPageSuivi = async (tab) => {
+const logOpenPageSuivi = async (tab: "Frises" | "Statistiques" | "Courbes" | "Déclencheurs") => {
+  const EVENTS_FOR_TAB = {
+    Frises: "OPEN_ANALYSIS_TIMELINE",
+    Statistiques: "OPEN_ANALYSIS_STATS",
+    Courbes: "OPEN_ANALYSIS_GRAPHS",
+    Déclencheurs: "OPEN_ANALYSIS_TRIGGERS",
+  };
   await logEvent({
-    category: "OPEN_SUB_TAB_SUIVI",
-    action: `${tab.toUpperCase()}_OPEN`,
+    action: EVENTS_FOR_TAB[tab],
+    category: "ANALYSES",
   });
 };
 
@@ -882,6 +897,13 @@ const logHealthTipFeedbackDown = async (id) => {
   });
 };
 
+const logOpenAnalysisMain = async () => {
+  await logEvent({
+    category: "ANALYSIS",
+    action: "OPEN_ANALYSIS_MAIN",
+  });
+};
+
 type DailyQuestionnaireOrigin =
   | "weekly_widget"
   | "how_do_you_feel_card"
@@ -1166,6 +1188,7 @@ export default {
   logDataExportAsBackUp,
   logHealthTipFeedbackUp,
   logHealthTipFeedbackDown,
+  logOpenAnalysisMain,
   logOpenDailyQuestionnaire,
   logValidateDailyQuestionnaire,
   logIndicatorsDailyQuestionnaire,
