@@ -61,6 +61,7 @@ export default ({
 
   const handleEdit = (tab, editingSurvey = false, toGoals) => {
     if (!canEdit(date)) return;
+    logEvents.logOpenDailyQuestionnaire("how_do_you_feel_card");
     const currentSurvey = {
       date,
       answers: patientState,
