@@ -1,3 +1,10 @@
+# [1.80.0](https://github.com/SocialGouv/jardinmental/compare/v1.79.2...v1.80.0) (2025-09-23)
+
+
+### Features
+
+* **daySurvey:** add new events and mark as deprecated old events ([#485](https://github.com/SocialGouv/jardinmental/issues/485)) ([d569f63](https://github.com/SocialGouv/jardinmental/commit/d569f6369cfc86df8e2c9de02fb3fded5c3a699a))
+
 ## [1.79.2](https://github.com/SocialGouv/jardinmental/compare/v1.79.1...v1.79.2) (2025-09-23)
 
 
