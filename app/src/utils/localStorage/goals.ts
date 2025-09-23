@@ -169,7 +169,15 @@ export const setGoalDailyRecord = async ({ goalId, value, comment, date }) => {
   return data;
 };
 
-export const getGoalsDailyRecords = async ({ date, goalId } = { date: undefined, goalId: undefined }) => {
+export const getGoalsDailyRecords = async (
+  {
+    date,
+    goalId,
+  }: {
+    date?: string;
+    goalId?: string;
+  } = { date: undefined, goalId: undefined }
+) => {
   let data = await getData();
 
   if (date) {

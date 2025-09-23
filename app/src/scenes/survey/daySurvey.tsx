@@ -36,6 +36,8 @@ import { useAnimatedStyle, useSharedValue, withSpring } from "react-native-reani
 import ChevronIcon from "@assets/svg/icon/chevron";
 import { useStatusBar } from "@/context/StatusBarContext";
 import PencilIcon from "@assets/svg/icon/Pencil";
+import { getGoalsDailyRecords, getGoalsTracked } from "@/utils/localStorage/goals";
+import { Goal } from "@/entities/Goal";
 
 const DaySurvey = ({
   navigation,
@@ -58,11 +60,13 @@ const DaySurvey = ({
   const { setCustomColor } = useStatusBar();
   const animatedBackgroundColor = useSharedValue(TW_COLORS.PRIMARY);
   const [selectedMoodIndex, setSelectedMoodIndex] = useState<number | null>(null);
+  const [surveyStartTime, setSurveyStartTime] = useState<number | null>(null);
 
   const [diaryData, addNewEntryToDiaryData] = useContext(DiaryDataContext);
 
   const [userIndicateurs, setUserIndicateurs] = useState<Indicator[]>([]);
   const [treatment, setTreatment] = useState<any[] | undefined>();
+  const [goals, setGoals] = useState<Goal[]>([]);
 
   const groupedIndicators = useMemo(() => {
     return userIndicateurs.reduce<Record<NEW_INDICATORS_CATEGORIES, Indicator[]>>((acc, indicator) => {
@@ -112,13 +116,20 @@ const DaySurvey = ({
         if (user_indicateurs) {
           setUserIndicateurs(user_indicateurs);
         }
+        const _goals = await getGoalsTracked({ date: initSurvey?.date });
+        setGoals(_goals);
         const _treatment = await localStorage.getMedicalTreatment();
         if (_treatment) {
           setTreatment(_treatment);
         }
       })();
       updateIndicators();
-    }, [])
+
+      // Initialize timer only if not already started
+      if (!surveyStartTime) {
+        setSurveyStartTime(Date.now());
+      }
+    }, [surveyStartTime])
   );
 
   useEffect(() => {
@@ -224,7 +235,30 @@ const DaySurvey = ({
     if (goalsRef.current && typeof goalsRef.current.onSubmit === "function") {
       await goalsRef.current.onSubmit();
     }
+    // Log time spent on survey
+    if (surveyStartTime) {
+      const timeSpentMs = Date.now() - surveyStartTime;
+      const timeSpentSeconds = Math.round(timeSpentMs / 1000);
+      logEvents.logTimeSpentDailyQuestionnaire(timeSpentSeconds);
+    }
+
     logEvents.logValidateDailyQuestionnaire();
+    logEvents.logIndicatorsDailyQuestionnaire(userIndicateurs.filter((i) => i.active).length);
+    logEvents.logObjectivesDailyQuestionnaire(goals.length);
+    const answeredElementCount = Object.keys(answers).filter((key) => userIndicateurs.map(getIndicatorKey).includes(key))?.length;
+    logEvents.logCompletionIndicatorsDailyQuestionnaire(answeredElementCount / userIndicateurs.length);
+
+    const records = await getGoalsDailyRecords({ date: initSurvey.date });
+    const _goalsRecords = {};
+    for (const record of records) {
+      _goalsRecords[record.goalId] = record;
+    }
+    logEvents.logCompletionObjectivesDailyQuestionnaire(records / goals.length);
+
+    // Log if notes were added
+    const hasNotes = answers[questionContext.id]?.userComment ? 1 : 0;
+    logEvents.logCompletionNotesDailyQuestionnaire(hasNotes);
+
     logEvents._deprecatedLogFeelingAdd();
     logEvents._deprecatedLogFeelingSubmitSurvey(userIndicateurs.filter((i) => i.active).length);
     logEvents._deprecatedLogFeelingAddComment(
@@ -318,7 +352,7 @@ const DaySurvey = ({
 
   const editIndicators = () => {
     navigation.navigate("symptoms");
-    logEvents.logSettingsSymptomsFromSurvey();
+    logEvents._deprecatedLogSettingsSymptomsFromSurvey();
   };
   const answeredElementCount = Object.keys(answers).map((key) => answers[key].value !== undefined).length;
   const onValueChanged = ({ indicator, value }: { indicator: Indicator; value: string }) => toggleAnswer({ key: getIndicatorKey(indicator), value });
@@ -461,7 +495,7 @@ const DaySurvey = ({
           icon={{ icon: "ImportantSvg" }}
           onPress={() => {
             navigation.navigate("symptoms");
-            logEvents.logSettingsSymptomsFromSurvey();
+            logEvents._deprecatedLogSettingsSymptomsFromSurvey();
           }}
           className="my-2"
         /> */}

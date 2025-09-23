@@ -244,7 +244,7 @@ const SYMPTOM_CANCEL = "SYMPTOM_CANCEL";
 const CUSTOM_SYMPTOM = "CUSTOM_SYMPTOM";
 const CUSTOM_SYMPTOM_ADD = "CUSTOM_SYMPTOM_ADD";
 
-const logSettingsSymptomsFromSurvey = async () => {
+const _deprecatedLogSettingsSymptomsFromSurvey = async () => {
   await logEvent({
     category: SYMPTOM,
     action: SYMPTOM_SETTING_FROM_SURVEY,
@@ -425,7 +425,7 @@ const logDrugAdd = async (drug) => {
     value: drug,
   });
 };
-const logInputDrugSurvey = async (numberOfInput) => {
+const _legacyLogInputDrugSurvey = async (numberOfInput) => {
   await logEvent({
     category: "DRUG",
     action: "DRUG_INPUT_SURVEY",
@@ -433,13 +433,13 @@ const logInputDrugSurvey = async (numberOfInput) => {
     value: numberOfInput,
   });
 };
-const logInputDrugSurveyPriseDeTraitement = async () => {
+const _legacyLogInputDrugSurveyPriseDeTraitement = async () => {
   await logEvent({
     category: "DRUG",
     action: "DRUG_INPUT_SURVEY_PRISE_DE_TRAITEMENT",
   });
 };
-const logInputDrugSurveyPriseDeTraitementSiBesoin = async () => {
+const _legacyLogInputDrugSurveyPriseDeTraitementSiBesoin = async () => {
   await logEvent({
     category: "DRUG",
     action: "DRUG_INPUT_SURVEY_PRISE_DE_TRAITEMENT_SI_BESOIN",
@@ -932,6 +932,69 @@ const logValidateDailyQuestionnaire = async () => {
   });
 };
 
+const logIndicatorsDailyQuestionnaire = async (nbIndicators: number) => {
+  await logEvent({
+    category: "DAILY_QUESTIONNAIRE",
+    action: "INDICATORS_DAILY_QUESTIONNAIRE",
+    name: "nb_indicators",
+    value: nbIndicators,
+  });
+};
+
+const logObjectivesDailyQuestionnaire = async (nbObjectives: number) => {
+  await logEvent({
+    category: "DAILY_QUESTIONNAIRE",
+    action: "OBJECTIVES_DAILY_QUESTIONNAIRE",
+    name: "nb_objectives",
+    value: nbObjectives,
+  });
+};
+
+const logCompletionIndicatorsDailyQuestionnaire = async (completionRate: number) => {
+  await logEvent({
+    category: "DAILY_QUESTIONNAIRE",
+    action: "COMPLETION_INDICATORS_DAILY_QUESTIONNAIRE",
+    name: "completion_rate",
+    value: completionRate,
+  });
+};
+
+const logCompletionObjectivesDailyQuestionnaire = async (completionRate: number) => {
+  await logEvent({
+    category: "DAILY_QUESTIONNAIRE",
+    action: "COMPLETION_OBJECTIVES_DAILY_QUESTIONNAIRE",
+    name: "completion_rate",
+    value: completionRate,
+  });
+};
+
+const logTimeSpentDailyQuestionnaire = async (timeInSeconds: number) => {
+  await logEvent({
+    category: "DAILY_QUESTIONNAIRE",
+    action: "TIME_SPENT_DAILY_QUESTIONNAIRE",
+    name: "duration_seconds",
+    value: timeInSeconds,
+  });
+};
+
+const logCompletionNotesDailyQuestionnaire = async (hasNotes: number) => {
+  await logEvent({
+    category: "DAILY_QUESTIONNAIRE",
+    action: "COMPLETION_NOTES_DAILY_QUESTIONNAIRE",
+    name: "has_notes",
+    value: hasNotes,
+  });
+};
+
+const logCompletionDrugDailyQuestionnaire = async (drugCompleted: number) => {
+  await logEvent({
+    category: "DAILY_QUESTIONNAIRE",
+    action: "COMPLETION_DRUG_DAILY_QUESTIONNAIRE",
+    name: "drug_completed",
+    value: drugCompleted,
+  });
+};
+
 export default {
   initMatomo,
   logAppVisit,
@@ -978,12 +1041,12 @@ export default {
   logEditNoteDiary,
   logDeleteNoteDiary,
   logOpenPage,
-  logInputDrugSurvey,
+  _legacyLogInputDrugSurvey,
   _deprecatedLogFeelingEditButtonClick,
   _deprecatedLogFeelingAddComment,
   _deprecatedLogFeelingAddContext,
   _deprecatedLogFeelingResponseToxic,
-  logSettingsSymptomsFromSurvey,
+  _deprecatedLogSettingsSymptomsFromSurvey,
   logOpenPageSuivi,
   logSuiviEditDateFrom,
   logSuiviEditDateTo,
@@ -996,8 +1059,8 @@ export default {
   logStatusSubPage,
   logSuiviShowLegendeInformationPriseDeTraitement,
   logSuiviShowPriseDeTraitement,
-  logInputDrugSurveyPriseDeTraitement,
-  logInputDrugSurveyPriseDeTraitementSiBesoin,
+  _legacyLogInputDrugSurveyPriseDeTraitement,
+  _legacyLogInputDrugSurveyPriseDeTraitementSiBesoin,
   logRecommendAppShow,
   logRecommendAppSent,
   logRecommendAppDismissed,
@@ -1034,4 +1097,11 @@ export default {
   logHealthTipFeedbackDown,
   logOpenDailyQuestionnaire,
   logValidateDailyQuestionnaire,
+  logIndicatorsDailyQuestionnaire,
+  logObjectivesDailyQuestionnaire,
+  logCompletionIndicatorsDailyQuestionnaire,
+  logCompletionObjectivesDailyQuestionnaire,
+  logTimeSpentDailyQuestionnaire,
+  logCompletionNotesDailyQuestionnaire,
+  logCompletionDrugDailyQuestionnaire,
 };
