@@ -17,7 +17,7 @@ import JMButton from "@/components/JMButton";
 import Legend from "../Legend";
 import { getIndicatorKey } from "@/utils/indicatorUtils";
 
-const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, toDate, setToDate }) => {
+const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, toDate, setToDate, onScroll }) => {
   const [diaryData] = React.useContext(DiaryDataContext);
   const [activeCategories, setActiveCategories] = React.useState();
   const [userIndicateurs, setUserIndicateurs] = React.useState([]);
@@ -152,7 +152,7 @@ const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, 
   }
   return (
     <>
-      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContainer}>
+      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContainer} onScroll={onScroll}>
         <EventFilterHeader
           presetDate={presetDate}
           setPresetDate={setPresetDate}

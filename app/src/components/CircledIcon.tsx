@@ -65,6 +65,9 @@ export const BasicIcon = ({
   );
 };
 
+/**
+ * @param {{ icon: string; color: string; borderColor?: string; borderWidth?: number; iconColor?: string; opacity?: number; iconContainerStyle?: object; iconWidth?: number; iconHeight?: number }} props
+ */
 const CircledIcon = ({
   icon,
   color,

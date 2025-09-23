@@ -4,7 +4,7 @@ import { colors } from "../utils/colors";
 import CircledIcon from "./CircledIcon";
 
 export default ({ onChange = console.log, placeholder = "Ajouter...", styleContainer, onChangeText = console.log }) => {
-  const [value, setValue] = useState();
+  const [value, setValue] = useState<string | undefined>();
 
   return (
     <View style={[styles.container, styleContainer]}>
@@ -30,15 +30,7 @@ export default ({ onChange = console.log, placeholder = "Ajouter...", styleConta
             onChangeText("");
           }}
         >
-          <CircledIcon
-            icon="PlusSvg"
-            color={colors.LIGHT_BLUE}
-            borderColor="#fff"
-            iconColor="#fff"
-            width={13}
-            height={13}
-            opacity={value ? 1 : 0.38}
-          />
+          <CircledIcon icon="PlusSvg" color={colors.LIGHT_BLUE} borderColor="#fff" iconColor="#fff" opacity={value ? 1 : 0.38} />
         </TouchableOpacity>
       </View>
     </View>

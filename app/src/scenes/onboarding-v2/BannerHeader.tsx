@@ -83,9 +83,9 @@ export default function BannerHeader({
           animatedStatusBarColor,
           hidden ? { opacity: 0 } : undefined,
         ]}
-        className={`${(SHARED_HEADER || hideHeader) && !HEADER_WITH_BANNER ? "pt-16" : ""}`}
+        className={`${hideHeader ? "pt-16" : ""}`}
       >
-        {(!(SHARED_HEADER || hideHeader) || HEADER_WITH_BANNER) && (
+        {!hideHeader && (
           <CheckInHeader
             title={headerTitle || ""}
             dynamicTitle={dynamicTitle}
@@ -102,6 +102,7 @@ export default function BannerHeader({
           />
         )}
         <Animated.View
+          testID="banner-container"
           className={bannerContainerStyle ? "" : "py-4 pb-8 px-6"}
           style={[
             bannerContainerStyle,

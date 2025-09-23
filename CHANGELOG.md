@@ -1,3 +1,162 @@
+# [1.79.0](https://github.com/SocialGouv/jardinmental/compare/v1.78.0...v1.79.0) (2025-09-22)
+
+
+### Features
+
+* resources articles ([#395](https://github.com/SocialGouv/jardinmental/issues/395)) ([4e76d01](https://github.com/SocialGouv/jardinmental/commit/4e76d016041ca2fdc6df84fe69da474b40e829e2)), closes [#486](https://github.com/SocialGouv/jardinmental/issues/486)
+
+# [1.78.0](https://github.com/SocialGouv/jardinmental/compare/v1.77.3...v1.78.0) (2025-09-22)
+
+
+### Features
+
+* add faq logs ([#478](https://github.com/SocialGouv/jardinmental/issues/478)) ([70a402b](https://github.com/SocialGouv/jardinmental/commit/70a402bbd27b4a9c63e209d11518a880d3ecfcf8)), closes [#471](https://github.com/SocialGouv/jardinmental/issues/471) [#471](https://github.com/SocialGouv/jardinmental/issues/471) [#480](https://github.com/SocialGouv/jardinmental/issues/480) [#481](https://github.com/SocialGouv/jardinmental/issues/481) [#483](https://github.com/SocialGouv/jardinmental/issues/483) [#477](https://github.com/SocialGouv/jardinmental/issues/477)
+
+## [1.77.3](https://github.com/SocialGouv/jardinmental/compare/v1.77.2...v1.77.3) (2025-09-22)
+
+
+### Bug Fixes
+
+* slide change event on onbarding ([#471](https://github.com/SocialGouv/jardinmental/issues/471)) ([d96a1ca](https://github.com/SocialGouv/jardinmental/commit/d96a1ca76d8ce00f6ee74a2fdd5ad0920b370418))
+
+## [1.77.2](https://github.com/SocialGouv/jardinmental/compare/v1.77.1...v1.77.2) (2025-09-22)
+
+
+### Bug Fixes
+
+* event matomo on feedback thumb up/down ([#473](https://github.com/SocialGouv/jardinmental/issues/473)) ([909fb3b](https://github.com/SocialGouv/jardinmental/commit/909fb3bdc0819e4b48a3abf5c1fe7da3529db7de))
+
+## [1.77.1](https://github.com/SocialGouv/jardinmental/compare/v1.77.0...v1.77.1) (2025-09-22)
+
+
+### Bug Fixes
+
+* delete old logo (and replace with new) ([#472](https://github.com/SocialGouv/jardinmental/issues/472)) ([adf7968](https://github.com/SocialGouv/jardinmental/commit/adf79683a1e7815fa2eda00adbebd1f3021e38e0))
+
+# [1.77.0](https://github.com/SocialGouv/jardinmental/compare/v1.76.0...v1.77.0) (2025-09-22)
+
+
+### Bug Fixes
+
+* **typo:** replace soutient by soutien ([#475](https://github.com/SocialGouv/jardinmental/issues/475)) ([3a2ce56](https://github.com/SocialGouv/jardinmental/commit/3a2ce569ed97f72c157a1d7337d769a63d4da024))
+
+
+### Features
+
+* **dev-mode:** implement "add fake data" button ([#469](https://github.com/SocialGouv/jardinmental/issues/469)) ([8a59a37](https://github.com/SocialGouv/jardinmental/commit/8a59a3700d2a602f6a5ed30a7e0beb6cebee1c79))
+
+# [1.76.0](https://github.com/SocialGouv/jardinmental/compare/v1.75.0...v1.76.0) (2025-09-18)
+
+
+### Features
+
+* bump version ios 277, android 267 ([b42bece](https://github.com/SocialGouv/jardinmental/commit/b42becec17b8dc6c64a047e1981c4b2c38faefc0))
+
+# [1.75.0](https://github.com/SocialGouv/jardinmental/compare/v1.74.1...v1.75.0) (2025-09-18)
+
+
+### Features
+
+* integrate new drawer menu ([#466](https://github.com/SocialGouv/jardinmental/issues/466)) ([c2ae752](https://github.com/SocialGouv/jardinmental/commit/c2ae75209a5c8bf1702a5164f494569f82691041))
+
+## [1.74.1](https://github.com/SocialGouv/jardinmental/compare/v1.74.0...v1.74.1) (2025-09-18)
+
+
+### Bug Fixes
+
+* **sleepScreen:** fix going back to sleep screen, set loading to false before navigation ([#467](https://github.com/SocialGouv/jardinmental/issues/467)) ([1eafab4](https://github.com/SocialGouv/jardinmental/commit/1eafab4d0807e4a355bbbcd17a65d5caf7a8eaef))
+
+# [1.74.0](https://github.com/SocialGouv/jardinmental/compare/v1.73.0...v1.74.0) (2025-09-18)
+
+
+### Features
+
+* integrate new header ([#465](https://github.com/SocialGouv/jardinmental/issues/465)) ([a195c8a](https://github.com/SocialGouv/jardinmental/commit/a195c8a7b8121986bb4b8935ee4e025620598d18))
+
+# [1.73.0](https://github.com/SocialGouv/jardinmental/compare/v1.72.0...v1.73.0) (2025-09-18)
+
+
+### Features
+
+* add delete all function ([#463](https://github.com/SocialGouv/jardinmental/issues/463)) ([20c4781](https://github.com/SocialGouv/jardinmental/commit/20c4781f48c60a370489f01e3af47410d7ecb201))
+
+# [1.72.0](https://github.com/SocialGouv/jardinmental/compare/v1.71.0...v1.72.0) (2025-09-18)
+
+
+### Features
+
+* bump version ([9c39385](https://github.com/SocialGouv/jardinmental/commit/9c393851c7590e6a9c73f9f40e4ed25c9cc19539))
+
+# [1.71.0](https://github.com/SocialGouv/jardinmental/compare/v1.70.0...v1.71.0) (2025-09-18)
+
+
+### Features
+
+* feedback cnam step 1 ([#456](https://github.com/SocialGouv/jardinmental/issues/456)) ([286be31](https://github.com/SocialGouv/jardinmental/commit/286be3185acbb1fd34f345305731df16d802fc21))
+
+# [1.70.0](https://github.com/SocialGouv/jardinmental/compare/v1.69.0...v1.70.0) (2025-09-16)
+
+
+### Features
+
+* **DiaryList:** add mood selector for current day at top of DiaryList ([#446](https://github.com/SocialGouv/jardinmental/issues/446)) ([5f926ee](https://github.com/SocialGouv/jardinmental/commit/5f926ee4f9668c990e5ee7741be3e91ef1e175fa))
+
+# [1.69.0](https://github.com/SocialGouv/jardinmental/compare/v1.68.1...v1.69.0) (2025-09-16)
+
+
+### Features
+
+* add goal deactivation ([#457](https://github.com/SocialGouv/jardinmental/issues/457)) ([7d6c77b](https://github.com/SocialGouv/jardinmental/commit/7d6c77b631eb2431d9748bc6c4dce8e3abd78522))
+
+## [1.68.1](https://github.com/SocialGouv/jardinmental/compare/v1.68.0...v1.68.1) (2025-09-16)
+
+
+### Bug Fixes
+
+* **daysurvey:** fix padding flickering when daysurvey load ([#460](https://github.com/SocialGouv/jardinmental/issues/460)) ([bd671fc](https://github.com/SocialGouv/jardinmental/commit/bd671fcd35c8bae54de7637268e8aceca8713c16))
+
+# [1.68.0](https://github.com/SocialGouv/jardinmental/compare/v1.67.0...v1.68.0) (2025-09-16)
+
+
+### Features
+
+* **daysurvey:** on android change status bar according to selected mood ([#459](https://github.com/SocialGouv/jardinmental/issues/459)) ([fef9628](https://github.com/SocialGouv/jardinmental/commit/fef96281bc41b62133b2b465f00ecd9dc074f1ac))
+
+# [1.67.0](https://github.com/SocialGouv/jardinmental/compare/v1.66.0...v1.67.0) (2025-09-16)
+
+
+### Features
+
+* improve UI with icon updates and styling fixes ([#458](https://github.com/SocialGouv/jardinmental/issues/458)) ([ad7ab87](https://github.com/SocialGouv/jardinmental/commit/ad7ab870829bd3ea69a95826c590037b4a0e3675))
+
+# [1.66.0](https://github.com/SocialGouv/jardinmental/compare/v1.65.0...v1.66.0) (2025-09-15)
+
+
+### Features
+
+* add import/export ([#450](https://github.com/SocialGouv/jardinmental/issues/450)) ([ce4175d](https://github.com/SocialGouv/jardinmental/commit/ce4175d2a1a8c38d5a5e1ceae3e39ce65fdfcc98))
+
+# [1.65.0](https://github.com/SocialGouv/jardinmental/compare/v1.64.0...v1.65.0) (2025-09-15)
+
+
+### Features
+
+* bump version ([11f030c](https://github.com/SocialGouv/jardinmental/commit/11f030c7f17792046a3f9246ca1b990c57c3bc97))
+
+# [1.64.0](https://github.com/SocialGouv/jardinmental/compare/v1.63.1...v1.64.0) (2025-09-15)
+
+
+### Features
+
+* bump ios version ([b33f72a](https://github.com/SocialGouv/jardinmental/commit/b33f72a3b6f0b9b037f812e4ebc100e1795a526b))
+
+## [1.63.1](https://github.com/SocialGouv/jardinmental/compare/v1.63.0...v1.63.1) (2025-09-15)
+
+
+### Bug Fixes
+
+* **diaryData:** fix diaryData handling data null case and side effecfs by moving the code, and catch error ([#455](https://github.com/SocialGouv/jardinmental/issues/455)) ([0e28ff5](https://github.com/SocialGouv/jardinmental/commit/0e28ff5cf2e5ff1c37eaeae70cf753e253e40c34))
+
 # [1.63.0](https://github.com/SocialGouv/jardinmental/compare/v1.62.0...v1.63.0) (2025-09-11)
 
 

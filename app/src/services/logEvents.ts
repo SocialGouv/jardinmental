@@ -43,7 +43,7 @@ const checkNetwork = async () => {
   return networkState.isConnected;
 };
 
-const logEvent = async ({ category, action, name, value }) => {
+const logEvent = async ({ category, action, name, value }: { category: string; action: string; name?: string; value?: number | null }) => {
   if (!Matomo.initDone) await initMatomo();
   try {
     const canSend = await checkNetwork();
@@ -303,19 +303,24 @@ const logDataExport = async () => {
   });
 };
 
+const logDataExportAsBackUp = async () => {
+  await logEvent({
+    category: "DATA_EXPORT_AS_BACKUP",
+    action: "DATA_EXPORT_AS_BACKUP",
+  });
+};
+
+const logDataImport = async () => {
+  await logEvent({
+    category: "DATA_IMPORT_BACKUP",
+    action: "DATA_IMPORT_BACKUP",
+  });
+};
+
 const logNPSOpen = async () => {
   await logEvent({
     category: "NPS",
     action: "NPS_OPEN",
-  });
-};
-
-const logNPSSend = async (useful, reco) => {
-  await logEvent({
-    category: "NPS",
-    action: "NPS_SEND",
-    name: "notes",
-    value: `${useful}-${reco}`,
   });
 };
 
@@ -602,11 +607,10 @@ const logRecommendAppShow = async () => {
     action: "SHOW_MODAL",
   });
 };
-const logRecommendAppSent = async (type) => {
+const logRecommendAppSent = async () => {
   await logEvent({
     category: "RECOMMEND",
     action: "SENT",
-    type,
   });
 };
 const logRecommendAppDismissed = async () => {
@@ -863,6 +867,48 @@ const logOnboardingBack = async (page) => {
   });
 };
 
+// Survey success screen functions
+const logHealthTipFeedbackUp = async (id) => {
+  await logEvent({
+    category: "DAILY_QUESTIONNAIRE",
+    action: "ASSESSED_MOTIVATIONNAL_FEEDBACK_1",
+    name: "feedback_id",
+    value: id,
+  });
+};
+
+const logHealthTipFeedbackDown = async (id) => {
+  await logEvent({
+    category: "DAILY_QUESTIONNAIRE",
+    action: "ASSESSED_MOTIVATIONNAL_FEEDBACK_0",
+    name: "feedback_id",
+    value: id,
+  });
+};
+
+const logOpenFaq = async () => {
+  await logEvent({
+    category: "FAQ",
+    action: "OPEN_FAQ",
+  });
+};
+
+const logNeedAssistanceFaq = async () => {
+  await logEvent({
+    category: "FAQ",
+    action: "NEED_ASSISTANCE_FAQ",
+  });
+};
+
+const logOpenFaqSection = async (id) => {
+  await logEvent({
+    category: "FAQ",
+    action: "OPEN_FAQ_SECTION",
+    name: "section_number",
+    value: id,
+  });
+};
+
 export default {
   initMatomo,
   logAppVisit,
@@ -882,7 +928,6 @@ export default {
   logDataExport,
   getUserId,
   logNPSOpen,
-  logNPSSend,
   logContactOpen,
   logSupportedSelect,
   logCustomSymptomAdd,
@@ -959,4 +1004,11 @@ export default {
   logReminderObdEdit,
   logReminderObdValidate,
   logOnboardingBack,
+  logDataImport,
+  logDataExportAsBackUp,
+  logHealthTipFeedbackUp,
+  logHealthTipFeedbackDown,
+  logOpenFaq,
+  logNeedAssistanceFaq,
+  logOpenFaqSection,
 };

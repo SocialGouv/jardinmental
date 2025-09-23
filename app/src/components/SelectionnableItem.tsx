@@ -1,8 +1,9 @@
 import { mergeClassNames } from "@/utils/className";
 import { TW_COLORS } from "@/utils/constants";
 import { typography } from "@/utils/typography";
-import Bin from "@assets/svg/Bin";
 import Health from "@assets/svg/icon/Health";
+import TrashIcon from "@assets/svg/icon/Trash";
+
 import React, { useState } from "react";
 import { GestureResponderEvent, Text, TextInput, TouchableOpacity, View } from "react-native";
 
@@ -230,7 +231,7 @@ export function ListItem({ id, label, description, selected, onPress, className,
           {description && <Text className={mergeClassNames(typography.textSmMedium, "text-gray-600 mt-1")}>{description}</Text>}
         </View>
         <TouchableOpacity onPress={onPress} className="ml-auto items-center justify-center self-stretch">
-          <Bin color={TW_COLORS.CNAM_CYAN_600_DARKEN_20} width={20} height={20} />
+          <TrashIcon color={TW_COLORS.CNAM_CYAN_600_DARKEN_20} width={24} height={24} />
         </TouchableOpacity>
       </View>
     </View>

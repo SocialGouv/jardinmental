@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useEffect, useState } from "react";
+import * as Sentry from "@sentry/react-native";
 import {
   STORAGE_KEY_SURVEY_RESULTS,
   STORAGE_KEY_START_DATE,
@@ -21,7 +22,6 @@ import {
   STORAGE_KEY_ONBOARDING_DONE,
   STORAGE_KEY_REMOVING_TOXIC_QUESTION_FROM_SURVEY_MIGRATION_DONE,
 } from "../utils/constants";
-import { fakeDiaryData, fakeDiaryData2, startDate as fakeStartDate } from "../scenes/status/fake-diary-data";
 import { beforeToday, formatDay, getArrayOfDates } from "../utils/date/helpers";
 import { DiaryData, DiaryDataNewEntryInput } from "../entities/DiaryData";
 import { parse } from "date-fns";
@@ -50,11 +50,6 @@ export const wipeData = async () => {
   await AsyncStorage.removeItem("@Reminder");
 };
 
-const setupFakeData = async () => {
-  await AsyncStorage.setItem(STORAGE_KEY_START_DATE, formatDay(fakeStartDate));
-  await AsyncStorage.setItem(STORAGE_KEY_SURVEY_RESULTS, JSON.stringify(fakeDiaryData2));
-};
-
 const fillUpEmptyDates = (startDate, data) => {
   const sortedDates = getArrayOfDates({ startDate, reverse: true });
   const diary = {};
@@ -64,9 +59,23 @@ const fillUpEmptyDates = (startDate, data) => {
   return diary;
 };
 
-const DiaryDataContext = React.createContext<
-  [DiaryData, ({ date, answers }: { date: string; answers: DiaryData }) => void, ((date: string) => void)?]
->([{}, () => {}, () => {}]);
+type ImportMode = "replace" | "merge";
+
+type DiaryContextValue = [
+  diaryData: DiaryData,
+  addEntry: (params: { date: string; answers: DiaryData }) => void,
+  deleteEntry: (date: string) => void,
+  importData: (importedData: DiaryData, mode: ImportMode) => Promise<void>,
+  deleteAllDiaryData: () => void
+];
+
+const DiaryDataContext = React.createContext<DiaryContextValue>([
+  {} as DiaryData,
+  function addEntry() {},
+  function deleteEntry(date: string) {},
+  async function importData(importedData, mode) {},
+  async function deleteAllDiaryData() {},
+]);
 
 const DiaryDataProvider = ({ children }) => {
   const [diaryData, setDiaryData] = useState<DiaryData>({});
@@ -85,39 +94,86 @@ const DiaryDataProvider = ({ children }) => {
     AsyncStorage.setItem(STORAGE_KEY_SURVEY_RESULTS, JSON.stringify(newDiaryData));
   };
 
-  const internal__deleteDiaryData = (isoDate: string) => {
+  const importDiaryData = async (importedData: DiaryData, mode: ImportMode) => {
+    let finalData: DiaryData;
+
+    if (mode === "replace") {
+      // Remplacer toutes les données
+      finalData = importedData;
+    } else {
+      // Fusionner avec les données existantes
+      finalData = { ...diaryData };
+
+      // Pour chaque date dans les données importées
+      Object.keys(importedData).forEach((date) => {
+        if (importedData[date]) {
+          if (finalData[date]) {
+            // Si la date existe déjà, fusionner les données
+            finalData[date] = {
+              ...finalData[date],
+              ...importedData[date],
+              // Gérer spécialement les becks pour éviter d'écraser
+              becks: {
+                ...finalData[date]?.becks,
+                ...importedData[date]?.becks,
+              },
+            };
+          } else {
+            // Si la date n'existe pas, l'ajouter
+            finalData[date] = importedData[date];
+          }
+        }
+      });
+    }
+
+    // Sauvegarder dans AsyncStorage
+    await AsyncStorage.setItem(STORAGE_KEY_SURVEY_RESULTS, JSON.stringify(finalData));
+
+    // Recharger les données depuis le storage pour appliquer la logique de fillUpEmptyDates
+    await getDiaryDataFromStorage();
+  };
+
+  const internal__deleteDiaryData = async (isoDate: string) => {
     // function to be used in dev mode for test purpose
     const newDiaryData = { ...diaryData };
     newDiaryData[isoDate] = null;
     setDiaryData(newDiaryData);
-    AsyncStorage.setItem(STORAGE_KEY_SURVEY_RESULTS, JSON.stringify(newDiaryData));
+    await AsyncStorage.setItem(STORAGE_KEY_SURVEY_RESULTS, JSON.stringify(newDiaryData));
   };
 
-  useEffect(() => {
-    const getDiaryDataFromStorage = async () => {
-      // await wipeData();
-      // await setupFakeData();
-      // await AsyncStorage.clear();
+  const internal__deleteAllDiaryData = async () => {
+    // function to be used in dev mode for test purpose
+    setDiaryData({});
+    await AsyncStorage.removeItem(STORAGE_KEY_SURVEY_RESULTS);
+  };
 
-      // start date is needed to populate empty dates
-      let startDate = await AsyncStorage.getItem(STORAGE_KEY_START_DATE);
-      let data = (await AsyncStorage.getItem(STORAGE_KEY_SURVEY_RESULTS)) || "{}";
-      // if no start date, it's the first time the user opens the app
-      // so we initialize it
-      if (!startDate) {
-        const tempStartDate = formatDay(new Date());
-        await AsyncStorage.setItem(STORAGE_KEY_START_DATE, tempStartDate);
-        let tempStartDateMinus7 = beforeToday(7, tempStartDate);
-        const tempDiary = fillUpEmptyDates(tempStartDateMinus7, data);
-        return setDiaryData(tempDiary);
-      }
+  const getDiaryDataFromStorage = async () => {
+    // await wipeData();
+    // await setupFakeData();
+    // await AsyncStorage.clear();
 
-      // we set data first for a better UX
-      let parsedData: DiaryData = JSON.parse(data) as DiaryData;
-      setDiaryData(parsedData);
-      if (parsedData) {
-        const migrationAlreadyDone = await AsyncStorage.getItem(STORAGE_KEY_REMOVING_TOXIC_QUESTION_FROM_SURVEY_MIGRATION_DONE);
-        if (Object.values(parsedData).find((data) => Object.keys(data).includes("TOXIC")) && !migrationAlreadyDone) {
+    // start date is needed to populate empty dates
+    let startDate = await AsyncStorage.getItem(STORAGE_KEY_START_DATE);
+    let data = (await AsyncStorage.getItem(STORAGE_KEY_SURVEY_RESULTS)) || "{}";
+    // if no start date, it's the first time the user opens the app
+    // so we initialize it
+    if (!startDate) {
+      const tempStartDate = formatDay(new Date());
+      await AsyncStorage.setItem(STORAGE_KEY_START_DATE, tempStartDate);
+      let tempStartDateMinus7 = beforeToday(7, tempStartDate);
+      const tempDiary = fillUpEmptyDates(tempStartDateMinus7, JSON.parse(data));
+      return setDiaryData(tempDiary);
+    }
+    // we set data first for a better UX
+    let parsedData: DiaryData = JSON.parse(data) as DiaryData;
+    setDiaryData(parsedData);
+    let startDateMinus7 = beforeToday(7, new Date(startDate));
+    const diary = fillUpEmptyDates(startDateMinus7, parsedData);
+    setDiaryData(diary);
+    if (parsedData) {
+      const migrationAlreadyDone = await AsyncStorage.getItem(STORAGE_KEY_REMOVING_TOXIC_QUESTION_FROM_SURVEY_MIGRATION_DONE);
+      try {
+        if (Object.values(parsedData).find((dayEntry) => dayEntry && Object.keys(dayEntry).includes("TOXIC")) && !migrationAlreadyDone) {
           localStorage.replaceOrAddIndicateur({
             ...generateIndicatorFromPredefinedIndicator(GENERIC_INDICATOR_SUBSTANCE),
             // we keep the same uuid "A" for continutiry in history key=="TOXIC" and "A" uuid are considered the same,
@@ -125,16 +181,22 @@ const DiaryDataProvider = ({ children }) => {
           });
           await AsyncStorage.setItem(STORAGE_KEY_REMOVING_TOXIC_QUESTION_FROM_SURVEY_MIGRATION_DONE, true.toString());
         }
+      } catch (e) {
+        console.error("Error during TOXIC question migration:", e);
+        Sentry.captureException(e);
       }
-      let startDateMinus7 = beforeToday(7, new Date(startDate));
-      const diary = fillUpEmptyDates(startDateMinus7, parsedData);
-      setDiaryData(diary);
-    };
+    }
+  };
 
+  useEffect(() => {
     getDiaryDataFromStorage();
   }, [setDiaryData]);
 
-  return <DiaryDataContext.Provider value={[diaryData, addNewEntryToDiaryData, internal__deleteDiaryData]}>{children}</DiaryDataContext.Provider>;
+  return (
+    <DiaryDataContext.Provider value={[diaryData, addNewEntryToDiaryData, internal__deleteDiaryData, importDiaryData, internal__deleteAllDiaryData]}>
+      {children}
+    </DiaryDataContext.Provider>
+  );
 };
 
 export { DiaryDataContext, DiaryDataProvider };

@@ -16,7 +16,7 @@ import { GoalsFriseGraph } from "../../goals/suivi/GoalsFriseGraph";
 import JMButton from "@/components/JMButton";
 import { getIndicatorKey } from "../../../utils/indicatorUtils";
 
-const FriseGraphList = ({ navigation, fromDate, toDate, focusedScores, showTraitement }) => {
+const FriseGraphList = ({ navigation, fromDate, toDate, focusedScores, showTraitement, onScroll }) => {
   const [diaryData] = React.useContext(DiaryDataContext);
   const [userIndicateurs, setUserIndicateurs] = React.useState([]);
   const [isEmpty, setIsEmpty] = React.useState();
@@ -123,7 +123,7 @@ const FriseGraphList = ({ navigation, fromDate, toDate, focusedScores, showTrait
 
   return (
     <>
-      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContainer}>
+      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContainer} onScroll={onScroll}>
         {userIndicateurs
           ?.filter((ind) => isChartVisible(getIndicatorKey(ind)) && ind.active)
           ?.map((ind) => (

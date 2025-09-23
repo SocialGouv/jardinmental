@@ -23,7 +23,7 @@ import { Indicator } from "@/entities/Indicator";
 import { getIndicatorKey } from "@/utils/indicatorUtils";
 import Legend from "./Legend";
 
-const ChartPie = ({ navigation, fromDate, toDate }) => {
+const ChartPie = ({ navigation, fromDate, toDate, onScroll }) => {
   const [diaryData] = React.useContext(DiaryDataContext);
   const [activeCategories, setActiveCategories] = React.useState([]);
   const [userIndicateurs, setUserIndicateurs] = React.useState<Indicator[]>([]);
@@ -138,7 +138,7 @@ const ChartPie = ({ navigation, fromDate, toDate }) => {
   }
 
   return (
-    <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContainer}>
+    <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContainer} onScroll={onScroll}>
       {userIndicateurs
         ?.filter((ind) => isChartVisible(getIndicatorKey(ind)) && ind.active)
         ?.map((_indicateur, index) => {
