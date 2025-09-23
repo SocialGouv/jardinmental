@@ -1,15 +1,10 @@
-import React, { useState } from "react";
-import { View, Text, TouchableOpacity, LayoutAnimation, Platform, UIManager } from "react-native";
+import React, { useState, useRef, useEffect } from "react";
+import { View, Text, TouchableOpacity, Animated } from "react-native";
 import Markdown from "react-native-markdown-display";
 import ArrowUpSvg from "../../assets/svg/icon/ArrowUp";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
 import { TW_COLORS } from "@/utils/constants";
-
-// Enable LayoutAnimation on Android
-if (Platform.OS === "android" && UIManager.setLayoutAnimationEnabledExperimental) {
-  UIManager.setLayoutAnimationEnabledExperimental(true);
-}
 
 export interface AccordionItem {
   title: string;
@@ -28,9 +23,32 @@ interface AccordionItemComponentProps {
 }
 
 const AccordionItemComponent: React.FC<AccordionItemComponentProps> = ({ item, isExpanded, onToggle, showDivider }) => {
+  const animatedHeight = useRef(new Animated.Value(isExpanded ? 1 : 0)).current;
+  const [contentHeight, setContentHeight] = useState(0);
+  const [isInitialized, setIsInitialized] = useState(false);
+
+  useEffect(() => {
+    if (isInitialized && contentHeight > 0) {
+      Animated.timing(animatedHeight, {
+        toValue: isExpanded ? contentHeight : 0,
+        duration: 300,
+        useNativeDriver: false,
+      }).start();
+    }
+  }, [isExpanded, contentHeight, isInitialized]);
+
   const handleToggle = () => {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     onToggle();
+  };
+
+  const handleContentLayout = (event: any) => {
+    const { height } = event.nativeEvent.layout;
+    if (height > 0 && !isInitialized) {
+      setContentHeight(height);
+      setIsInitialized(true);
+      // Set initial height based on expanded state
+      animatedHeight.setValue(isExpanded ? height : 0);
+    }
   };
 
   const markdownStyles = {
@@ -94,23 +112,43 @@ const AccordionItemComponent: React.FC<AccordionItemComponentProps> = ({ item, i
     <View>
       <TouchableOpacity onPress={handleToggle} className="flex-row items-center justify-between p-4 py-4">
         <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-950 flex-1 mr-3")}>{item.title}</Text>
-        <View
-          className="transition-transform duration-200"
+        <Animated.View
           style={{
             transform: [{ rotate: isExpanded ? "0deg" : "180deg" }],
           }}
         >
           <ArrowUpSvg width={20} height={20} color={TW_COLORS.CNAM_PRIMARY_900} />
-        </View>
+        </Animated.View>
       </TouchableOpacity>
 
-      {isExpanded && (
+      <Animated.View
+        style={{
+          height: animatedHeight,
+          overflow: "hidden",
+        }}
+      >
         <View className={mergeClassNames("px-4 pb-4")}>
           <View>
             <Markdown style={markdownStyles}>{item.description}</Markdown>
           </View>
         </View>
-      )}
+      </Animated.View>
+
+      {/* Hidden view to measure content height */}
+      <View
+        style={{
+          position: "absolute",
+          opacity: 0,
+          zIndex: -1,
+        }}
+        onLayout={handleContentLayout}
+      >
+        <View className={mergeClassNames("px-4 pb-4")}>
+          <View>
+            <Markdown style={markdownStyles}>{item.description}</Markdown>
+          </View>
+        </View>
+      </View>
       {showDivider && <View className="h-[1] bg-cnam-primary-300 mx-4 mt-2"></View>}
     </View>
   );

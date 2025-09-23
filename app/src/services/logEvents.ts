@@ -43,7 +43,17 @@ const checkNetwork = async () => {
   return networkState.isConnected;
 };
 
-const logEvent = async ({ category, action, name, value }: { category: "DAILY_QUESTIONNAIRE"; action: string; name?: string; value?: number }) => {
+const logEvent = async ({
+  category,
+  action,
+  name,
+  value,
+}: {
+  category: "DAILY_QUESTIONNAIRE" | "FAQ" | "ONBOARDING";
+  action: string;
+  name?: string;
+  value?: number;
+}) => {
   if (!Matomo.initDone) await initMatomo();
   try {
     const canSend = await checkNetwork();
@@ -321,15 +331,6 @@ const logNPSOpen = async () => {
   await logEvent({
     category: "NPS",
     action: "NPS_OPEN",
-  });
-};
-
-const logNPSSend = async (useful, reco) => {
-  await logEvent({
-    category: "NPS",
-    action: "NPS_SEND",
-    name: "notes",
-    value: `${useful}-${reco}`,
   });
 };
 
@@ -616,11 +617,10 @@ const logRecommendAppShow = async () => {
     action: "SHOW_MODAL",
   });
 };
-const logRecommendAppSent = async (type) => {
+const logRecommendAppSent = async () => {
   await logEvent({
     category: "RECOMMEND",
     action: "SENT",
-    type,
   });
 };
 const logRecommendAppDismissed = async () => {
@@ -1006,6 +1006,29 @@ const logDayDailyQuestionnaire = async (day: number) => {
   });
 };
 
+const logNeedAssistanceFaq = async () => {
+  await logEvent({
+    category: "FAQ",
+    action: "NEED_ASSISTANCE_FAQ",
+  });
+};
+
+const logOpenFaqSection = async (id) => {
+  await logEvent({
+    category: "FAQ",
+    action: "OPEN_FAQ_SECTION",
+    name: "section_number",
+    value: id,
+  });
+};
+
+const logOpenFaq = async () => {
+  await logEvent({
+    category: "FAQ",
+    action: "OPEN_FAQ",
+  });
+};
+
 export default {
   initMatomo,
   logAppVisit,
@@ -1025,7 +1048,6 @@ export default {
   logDataExport,
   getUserId,
   logNPSOpen,
-  logNPSSend,
   logContactOpen,
   logSupportedSelect,
   logCustomSymptomAdd,
@@ -1116,4 +1138,7 @@ export default {
   logCompletionNotesDailyQuestionnaire,
   logCompletionDrugDailyQuestionnaire,
   logDayDailyQuestionnaire,
+  logOpenFaq,
+  logNeedAssistanceFaq,
+  logOpenFaqSection,
 };

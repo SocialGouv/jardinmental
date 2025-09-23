@@ -1,7 +1,7 @@
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
 import React from "react";
-import { Text, View } from "react-native";
+import { Linking, Text, TouchableOpacity, View } from "react-native";
 import { AnimatedHeaderScrollScreen } from "../survey-v2/AnimatedHeaderScrollScreen";
 import { TW_COLORS } from "@/utils/constants";
 import JMButton from "@/components/JMButton";
@@ -13,6 +13,7 @@ import TrendUpIcon from "@assets/svg/icon/TrendUp";
 import HealthIcon from "@assets/svg/icon/Health";
 import ShareIcon from "@assets/svg/icon/Share";
 import { FAQ_DATA } from "./FaqData";
+import logEvents from "@/services/logEvents";
 
 export default function FaqMainScreen({ navigation, route }) {
   return (
@@ -54,6 +55,7 @@ export default function FaqMainScreen({ navigation, route }) {
                   navigation.navigate("faq-detail", {
                     slug: slug,
                   });
+                  logEvents.logOpenFaqSection(FAQ_DATA[slug].matomoId);
                 }}
                 icon={FAQ_DATA[slug].icon}
               />
@@ -65,7 +67,17 @@ export default function FaqMainScreen({ navigation, route }) {
           <Text className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-900 text-left")}>
             Si vous ne trouvez pas la réponse à votre question, contactez-nous sur
           </Text>
-          <JMButton title="Contactez l’équipe de Jardin mental" variant="outline" />
+          <TouchableOpacity onPress={() => Linking.openURL("mailto:jardinmental@fabrique.social.gouv.fr")}>
+            <Text className={mergeClassNames(typography.textMdRegular, "text-gray-700 text-left")}>jardinmental@fabrique.social.gouv.fr</Text>
+          </TouchableOpacity>
+          <JMButton
+            onPress={() => {
+              navigation.navigate("contact");
+              logEvents.logNeedAssistanceFaq();
+            }}
+            title="Contactez l’équipe de Jardin mental"
+            variant="outline"
+          />
         </View>
       </View>
     </AnimatedHeaderScrollScreen>

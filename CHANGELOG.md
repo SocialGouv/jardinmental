@@ -1,3 +1,17 @@
+# [1.79.0](https://github.com/SocialGouv/jardinmental/compare/v1.78.0...v1.79.0) (2025-09-22)
+
+
+### Features
+
+* resources articles ([#395](https://github.com/SocialGouv/jardinmental/issues/395)) ([4e76d01](https://github.com/SocialGouv/jardinmental/commit/4e76d016041ca2fdc6df84fe69da474b40e829e2)), closes [#486](https://github.com/SocialGouv/jardinmental/issues/486)
+
+# [1.78.0](https://github.com/SocialGouv/jardinmental/compare/v1.77.3...v1.78.0) (2025-09-22)
+
+
+### Features
+
+* add faq logs ([#478](https://github.com/SocialGouv/jardinmental/issues/478)) ([70a402b](https://github.com/SocialGouv/jardinmental/commit/70a402bbd27b4a9c63e209d11518a880d3ecfcf8)), closes [#471](https://github.com/SocialGouv/jardinmental/issues/471) [#471](https://github.com/SocialGouv/jardinmental/issues/471) [#480](https://github.com/SocialGouv/jardinmental/issues/480) [#481](https://github.com/SocialGouv/jardinmental/issues/481) [#483](https://github.com/SocialGouv/jardinmental/issues/483) [#477](https://github.com/SocialGouv/jardinmental/issues/477)
+
 ## [1.77.3](https://github.com/SocialGouv/jardinmental/compare/v1.77.2...v1.77.3) (2025-09-22)
 
 
