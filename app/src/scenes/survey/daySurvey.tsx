@@ -109,6 +109,20 @@ const DaySurvey = ({
     }
   };
 
+  const calculateDayOffset = (surveyDate: string) => {
+    const today = new Date();
+    const survey = new Date(surveyDate);
+
+    // Reset time to midnight for accurate day calculation
+    today.setHours(0, 0, 0, 0);
+    survey.setHours(0, 0, 0, 0);
+
+    const diffTime = survey.getTime() - today.getTime();
+    const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
+
+    return diffDays;
+  };
+
   useFocusEffect(
     React.useCallback(() => {
       (async () => {
@@ -129,7 +143,11 @@ const DaySurvey = ({
       if (!surveyStartTime) {
         setSurveyStartTime(Date.now());
       }
-    }, [surveyStartTime])
+
+      // Log DAY_DAILY_QUESTIONNAIRE when opening the screen
+      const dayOffset = calculateDayOffset(initSurvey?.date);
+      logEvents.logDayDailyQuestionnaire(dayOffset);
+    }, [surveyStartTime, initSurvey?.date])
   );
 
   useEffect(() => {
@@ -253,37 +271,40 @@ const DaySurvey = ({
     for (const record of records) {
       _goalsRecords[record.goalId] = record;
     }
-    logEvents.logCompletionObjectivesDailyQuestionnaire(records / goals.length);
+    if (goals.length) {
+      const goalsWithValueTrueOrComment = records.filter((g) => g.value || g.comment);
+      logEvents.logCompletionObjectivesDailyQuestionnaire(goalsWithValueTrueOrComment.length / goals.length);
+    }
 
     // Log if notes were added
     const hasNotes = answers[questionContext.id]?.userComment ? 1 : 0;
     logEvents.logCompletionNotesDailyQuestionnaire(hasNotes);
 
-    logEvents._deprecatedLogFeelingAdd();
-    logEvents._deprecatedLogFeelingSubmitSurvey(userIndicateurs.filter((i) => i.active).length);
-    logEvents._deprecatedLogFeelingAddComment(
-      Object.keys(answers).filter((key) => ![questionToxic.id, questionContext.id].includes(key) && answers[key].userComment)?.length
-    );
-    logEvents._deprecatedLogFeelingAddContext(answers[questionContext.id]?.userComment ? 1 : 0);
-    logEvents._deprecatedLogFeelingResponseToxic(answers[questionToxic.id]?.value ? 1 : 0);
+    // logEvents._deprecatedLogFeelingAdd();
+    // logEvents._deprecatedLogFeelingSubmitSurvey(userIndicateurs.filter((i) => i.active).length);
+    // logEvents._deprecatedLogFeelingAddComment(
+    //   Object.keys(answers).filter((key) => ![questionToxic.id, questionContext.id].includes(key) && answers[key].userComment)?.length
+    // );
+    // logEvents._deprecatedLogFeelingAddContext(answers[questionContext.id]?.userComment ? 1 : 0);
+    // logEvents._deprecatedLogFeelingResponseToxic(answers[questionToxic.id]?.value ? 1 : 0);
 
-    // Log each indicator in the questionnaire (FEELING_ADD_LIST)
-    for (const indicator of userIndicateurs.filter((i) => i.active)) {
-      if (indicator.matomoId) {
-        logEvents._deprecatedLogFeelingAddList(indicator.matomoId);
-      }
-    }
+    // // Log each indicator in the questionnaire (FEELING_ADD_LIST)
+    // for (const indicator of userIndicateurs.filter((i) => i.active)) {
+    //   if (indicator.matomoId) {
+    //     logEvents._deprecatedLogFeelingAddList(indicator.matomoId);
+    //   }
+    // }
 
-    // Log each indicator that has been answered (FEELING_ADD_LIST_COMPLETED)
-    for (const key of Object.keys(answers)) {
-      // Skip special questions (TOXIC and CONTEXT)
-      if ([questionToxic.id, questionContext.id].includes(key)) continue;
+    // // Log each indicator that has been answered (FEELING_ADD_LIST_COMPLETED)
+    // for (const key of Object.keys(answers)) {
+    //   // Skip special questions (TOXIC and CONTEXT)
+    //   if ([questionToxic.id, questionContext.id].includes(key)) continue;
 
-      const answer = answers[key];
-      if (answer?.value !== undefined && answer._indicateur?.matomoId) {
-        logEvents._deprecatedLogFeelingAddListCompleted(answer._indicateur.matomoId);
-      }
-    }
+    //   const answer = answers[key];
+    //   if (answer?.value !== undefined && answer._indicateur?.matomoId) {
+    //     logEvents._deprecatedLogFeelingAddListCompleted(answer._indicateur.matomoId);
+    //   }
+    // }
 
     if (route.params?.redirect) {
       return navigation.navigate("survey-success", {

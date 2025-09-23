@@ -8,6 +8,7 @@ import { fr } from "date-fns/locale";
 import NotificationService from "../../services/notifications";
 import * as RNLocalize from "react-native-localize";
 import API from "../../services/api";
+import { Goal, GoalRecord } from "@/entities/Goal";
 
 const { getData, saveData, clearData } = createStorage({
   storageKey: STORAGE_KEY_GOALS,
@@ -177,7 +178,7 @@ export const getGoalsDailyRecords = async (
     date?: string;
     goalId?: string;
   } = { date: undefined, goalId: undefined }
-) => {
+): Promise<GoalRecord[]> => {
   let data = await getData();
 
   if (date) {

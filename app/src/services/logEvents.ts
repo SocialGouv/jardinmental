@@ -904,6 +904,7 @@ type DailyQuestionnaireOrigin =
   | "no_data_screen"
   | "no_data_statistique"
   | "no_data_beck"
+  | "how_do_you_feel_today_widget"
   | "no_data_frises";
 
 const logOpenDailyQuestionnaire = async (origin: DailyQuestionnaireOrigin) => {
@@ -916,6 +917,7 @@ const logOpenDailyQuestionnaire = async (origin: DailyQuestionnaireOrigin) => {
     no_data_statistique: 6,
     no_data_beck: 7,
     no_data_frises: 8,
+    how_do_you_feel_today_widget: 9,
   };
   await logEvent({
     category: "DAILY_QUESTIONNAIRE",
@@ -981,7 +983,7 @@ const logCompletionNotesDailyQuestionnaire = async (hasNotes: number) => {
   await logEvent({
     category: "DAILY_QUESTIONNAIRE",
     action: "COMPLETION_NOTES_DAILY_QUESTIONNAIRE",
-    name: "has_notes",
+    name: "note_completed",
     value: hasNotes,
   });
 };
@@ -992,6 +994,15 @@ const logCompletionDrugDailyQuestionnaire = async (drugCompleted: number) => {
     action: "COMPLETION_DRUG_DAILY_QUESTIONNAIRE",
     name: "drug_completed",
     value: drugCompleted,
+  });
+};
+
+const logDayDailyQuestionnaire = async (day: number) => {
+  await logEvent({
+    category: "DAILY_QUESTIONNAIRE",
+    action: "DAY_DAILY_QUESTIONNAIRE",
+    name: "day",
+    value: day,
   });
 };
 
@@ -1104,4 +1115,5 @@ export default {
   logTimeSpentDailyQuestionnaire,
   logCompletionNotesDailyQuestionnaire,
   logCompletionDrugDailyQuestionnaire,
+  logDayDailyQuestionnaire,
 };

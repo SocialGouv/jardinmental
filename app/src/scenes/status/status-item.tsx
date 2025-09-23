@@ -113,7 +113,6 @@ export default ({
                     uuid: key,
                   },
                 };
-                console.log("LCS TOTO", patientStateRecord);
               }
               const indicator = indicateurs.find((i) => i.genericUuid === key) || indicateurs.find((i) => i.uuid === key);
               return (
