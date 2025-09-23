@@ -10,11 +10,13 @@ export interface Resource {
     title: string;
     text: string;
     url: string;
+    matomoId: number;
   };
   moreContent?: Array<{
     title: string;
     text: string;
     url: string;
+    matomoId: number;
   }>;
 }
 
@@ -43,6 +45,7 @@ Oui, notre corps peut envoyer des signaux d'alerte. **Mais notre cerveau aussi.*
       title: "Psycom",
       text: "On a toutes et tous une santé mentale",
       url: "https://www.psycom.org/sinformer/la-sante-mentale/on-a-toutes-et-tous-une-sante-mentale/ ",
+      matomoId: 1,
     },
   },
   {
@@ -70,11 +73,13 @@ Un équilibre qui lui fait du bien.`,
         title: "Psycom",
         text: "On a toutes et tous une santé mentale",
         url: "https://www.psycom.org/sinformer/la-sante-mentale/on-a-toutes-et-tous-une-sante-mentale/ ",
+        matomoId: 2,
       },
       {
         title: "Santé Mentale Info Service",
-        text: "Être en bonne santé mentale, c’est être dans un état d’équilibre",
+        text: "Être en bonne santé mentale, c'est être dans un état d'équilibre",
         url: "https://www.santementale-info-service.fr/ils-parlent-sante-mentale/arnaud-carre-etre-en-bonne-sante-mentale-c-est-etre-dans-un-etat-d",
+        matomoId: 3,
       },
     ],
   },
@@ -125,11 +130,13 @@ Une chose est sûre : tous ces éléments internes et externes s'influencent les
         title: "Psycom",
         text: "La boussole de la santé mentale",
         url: "https://youtu.be/xA4FcPdVYy8?si=OXfHTU4wEfJGcVsd",
+        matomoId: 4,
       },
       {
         title: "Psycom",
         text: "Le cosmos Mental",
         url: "https://www.youtube.com/watch?v=Ne_KHiLdvZo",
+        matomoId: 5,
       },
     ],
   },
@@ -147,6 +154,7 @@ Et quand ça ne va pas ? **Ces habitudes peuvent soutenir, oui, mais elles ne s
       title: "Santé Mentale Info Service",
       text: "10 conseils pour prendre soin de sa santé mentale",
       url: "https://www.santementale-info-service.fr/en-prendre-soin/tous-les-conseils",
+      matomoId: 6,
     },
   },
 ];

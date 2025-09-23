@@ -17,8 +17,8 @@ const RecapCompletion = () => {
   const [diaryData] = React.useContext(DiaryDataContext);
   const [startDay, setStartDay] = React.useState(new Date(Date.now()));
 
-  const startSurvey = (offset) => {
-    logEvents.logFeelingStartFromRecap(offset);
+  const startSurvey = async (offset) => {
+    logEvents._deprecatedLogFeelingStartFromRecap(offset);
     const date = formatDay(beforeToday(offset));
 
     const blackListKeys = ["becks", "NOTES"];
@@ -33,10 +33,11 @@ const RecapCompletion = () => {
 
     const answers = diaryData[date] || {};
     const currentSurvey = { date, answers };
-    return navigation.navigate("day-survey", {
+    navigation.navigate("day-survey", {
       currentSurvey,
       editingSurvey: dayIsDone,
     });
+    await logEvents.logOpenDailyQuestionnaire("weekly_widget");
   };
 
   useFocusEffect(

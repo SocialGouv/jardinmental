@@ -7,16 +7,18 @@ import { icons, EMOTION_COLORS as colorsFromConstant, iconBorderColors, iconColo
 import RoundButtonIcon from "../../components/RoundButtonIcon";
 import { beforeToday, formatDay } from "../../utils/date/helpers";
 import SurveyMenu from "../../../assets/svg/SurveyMenu";
+import logEvents from "@/services/logEvents";
 
 const NoData = ({ navigation }) => {
-  const startSurvey = () => {
+  const startSurvey = async () => {
     const date = formatDay(beforeToday(0));
     const answers = {};
     const currentSurvey = { date, answers };
-    return navigation.navigate("day-survey", {
+    navigation.navigate("day-survey", {
       currentSurvey,
       editingSurvey: false,
     });
+    await logEvents.logOpenDailyQuestionnaire("no_data_screen");
   };
 
   return (

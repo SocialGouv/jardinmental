@@ -484,6 +484,7 @@ const SurveySuccessScreen: React.FC<SurveySuccessScreenProps> = ({ navigation, r
               left: 0,
               right: 0,
               height: currentMessage.type === "encouragement" ? "50%" : "60%", // Take 60% of screen height
+              minHeight: currentMessage.type === "encouragement" ? 420 : 500, // Minimum height for small screens
               backgroundColor: TW_COLORS.CNAM_CYAN_50_LIGHTEN_90,
               borderTopLeftRadius: 80,
               borderTopRightRadius: 80,

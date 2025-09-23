@@ -58,14 +58,16 @@ const FriseGraphList = ({ navigation, fromDate, toDate, focusedScores, showTrait
   );
 
   const startSurvey = async () => {
-    logEvents.logFeelingStart();
+    logEvents._deprecatedLogFeelingStart();
     if (!userIndicateurs) {
       navigation.navigate("symptoms", {
         showExplanation: true,
         redirect: "select-day",
       });
     } else {
-      navigation.navigate("select-day");
+      navigation.navigate("select-day", {
+        origin: "no_data_frises",
+      });
     }
   };
 
