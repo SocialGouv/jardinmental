@@ -3,12 +3,15 @@ import { StyleSheet, View, SafeAreaView, ScrollView } from "react-native";
 import Header from "../../components/Header";
 import ResourceCard from "./ResourceCard";
 import { Resource, RESOURCES_DATA } from "./data/resources";
+import logEvents from "../../services/logEvents";
 interface ResourcesProps {
   navigation: any;
 }
 
 const Resources: React.FC<ResourcesProps> = ({ navigation }) => {
-  const handleResourcePress = (resource: Resource) => {
+  const handleResourcePress = (resource: Resource, position: number) => {
+    logEvents.logResourceArticleSelected(resource.matomoId);
+    logEvents.logResourceArticleSelectedPosition(position);
     navigation.navigate("resource-article", { resource });
   };
 
@@ -24,8 +27,8 @@ const Resources: React.FC<ResourcesProps> = ({ navigation }) => {
         className="bg-cnam-primary-50 flex-1"
       >
         <View className="p-4">
-          {RESOURCES_DATA.map((resource) => (
-            <ResourceCard key={resource.id} resource={resource} onPress={() => handleResourcePress(resource)} />
+          {RESOURCES_DATA.map((resource, index) => (
+            <ResourceCard key={resource.id} resource={resource} onPress={() => handleResourcePress(resource, index + 1)} />
           ))}
         </View>
       </ScrollView>
