@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
-import Text from "../../components/MyText";
+import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
 import CircledIcon from "../../components/CircledIcon";
 import { EMOTION_COLORS, TW_COLORS, scoresMapIcon } from "../../utils/constants";
 import { getScoreWithState } from "../../utils";
@@ -8,6 +7,8 @@ import ArrowRightSvg from "../../../assets/svg/arrow-right.js";
 import { colors } from "../../utils/colors";
 import Icon from "../../components/Icon";
 import { DiaryDataAnswer, DiaryDataNewEntryInput, DiaryEntry } from "@/entities/DiaryData";
+import { typography } from "@/utils/typography";
+import { mergeClassNames } from "@/utils/className";
 
 const PatientStateItem = ({ patientStateRecord, category, label }: { patientStateRecord: DiaryDataAnswer; category: string; label: string }) => {
   const [userCommentVisible, setUserCommentVisible] = useState(false);
@@ -54,7 +55,7 @@ const PatientStateItem = ({ patientStateRecord, category, label }: { patientStat
         <View
           className={`flex justify-center items-center h-10 w-10 mr-5 rounded-full ${_color[patientStateRecord?._indicateur?.order]?.[_value]?.bg}`}
         >
-          <Text className={_color[patientStateRecord?._indicateur?.order]?.[_value]?.text}>{_label}</Text>
+          <Text className={mergeClassNames(typography.textSmMedium, "text-gray-700")}>{_label}</Text>
         </View>
       );
     }
@@ -87,7 +88,7 @@ const PatientStateItem = ({ patientStateRecord, category, label }: { patientStat
       <View style={styles.container}>
         {renderResponse()}
         <View style={styles.labelContainer}>
-          <Text style={styles.label}>
+          <Text className={mergeClassNames(typography.textSmMedium, "text-gray-700")}>
             {label}
             {/* -{patientStateRecord?.value} */}
           </Text>
@@ -134,9 +135,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     paddingVertical: 5,
-    paddingHorizontal: 20,
-    // width: 32,
-    // height: 32,
   },
   tilt: {
     // small negative marginTop for narrowing the texts

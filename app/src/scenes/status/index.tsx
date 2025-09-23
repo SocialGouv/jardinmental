@@ -253,9 +253,7 @@ const Status = ({ navigation, startSurvey }) => {
           <NPS forceView={NPSvisible} close={() => setNPSvisible(false)} />
           <Header title={"Mes observations 🌱"} navigation={navigation} scrollY={scrollY} scrollThreshold={75} />
           <TabPicker ongletActif={ongletActif} onChange={setOngletActif} />
-          {noData() ? (
-            <NoData navigation={navigation} />
-          ) : ongletActif === "all" && !bannerProNPSVisible ? (
+          {ongletActif === "all" && !bannerProNPSVisible ? (
             <DiaryList
               ListHeaderComponent={renderHeader}
               ListFooterComponent={renderFooter}
