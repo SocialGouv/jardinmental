@@ -165,29 +165,11 @@ export default ({
             <Notes notes={patientState?.NOTES} date={date} onPress={() => handleEdit("notes")} />
           </View>
         </View>
-        {/* {canEdit(date) ? (
-          <View style={styles.buttonsContainer}>
-            <Button icon="pencil" visible={true} onPress={() => handlePressItem({ editingSurvey: true })} />
-          </View>
-        ) : null} */}
       </SquircleButton>
     );
   } else {
     return (
       <>
-        {/* {canEdit(date) ? (
-          <View>
-            <Card
-              preset="grey"
-              title={canEdit(date) ? "Renseigner mon état pour ce jour-là" : "Je ne peux plus saisir mon questionnaire pour ce jour"}
-              image={{ source: require("./../../../assets/imgs/indicateur.png") }}
-              onPress={handlePressItem}
-            />
-            <GoalsStatusNoData goalsData={goalsData} date={date} onPress={handlePressItem} />
-          </View>
-        ) : (
-          <View />
-        )} */}
         {canEdit(date) && (
           <SquircleButton
             preserveSmoothing={true}
@@ -225,7 +207,7 @@ export default ({
           <View>
             <View style={styles.dateContainer}>
               <View style={styles.dateDot} />
-              <TouchableOpacity style={styles.item} onPress={() => navigation.navigate("too-late", { date })}>
+              <TouchableOpacity onPress={() => navigation.navigate("too-late", { date })}>
                 <Text style={styles.dateLabel}>{formatDateThread(date)}</Text>
               </TouchableOpacity>
             </View>
@@ -239,95 +221,7 @@ export default ({
   }
 };
 
-const newItemCard = ({ emotionValue, handlePressItem }: { emotionValue: number; handlePressItem: any }) => {
-  <TouchableOpacity className="rounded-2xl border border-gray-500 flex-col my-4 p-6" onPress={() => handlePressItem({ editingSurvey: true })}>
-    <View className="mb-4 flex-row justify-between">
-      <Text className={mergeClassNames(typography.textMdBold, "text-cnam-primary-950 capitalize")}>{formatRelativeDate(date)}</Text>
-      <ArrowIcon />
-    </View>
-    <View className="flex-1 flex-row items-center mb-6">
-      {emotionValue && (
-        <BasicIcon
-          color={emojis[emotionValue].backgroundColor}
-          borderColor={TW_COLORS.PRIMARY}
-          iconColor={emojis[emotionValue].iconColor}
-          icon={emojis[emotionValue].icon}
-          borderWidth={0}
-          iconContainerStyle={{ marginRight: 0 }}
-          iconWidth={32}
-          iconHeight={32}
-        />
-      )}
-      <View className="ml-2 p-2 flex-1">
-        <Text className={mergeClassNames(typography.textSmMedium, "text-cnam-primary-950")}>Anxiété, Accablement, Contrariété, Jalousie,</Text>
-      </View>
-    </View>
-    {[0, 1, 2, 3].map((item) => (
-      <View className="flex-1 flex-row items-center mb-2">
-        <View className="h-3 w-3 rounded-full mr-2"></View>
-        <View>
-          <Text>Anxiété, Irritabilité</Text>
-        </View>
-        {/* <View>
-            {patientStateRecordKeys.map((key) => {
-              let patientStateRecord = patientState[key];
-              if (!patientStateRecord || patientStateRecord?.value === null || patientStateRecord.value === undefined) {
-                return;
-              }
-              let [categoryName] = key.split("_");
-              if (categoryName === "TOXIC") {
-                // for user with historic value in 'TOXIC', we replace category name by uuid for indicator substance
-                key = STATIC_UUID_FOR_INSTANCE_OF_GENERIC_INDICATOR_SUBSTANCE;
-                patientStateRecord = {
-                  ...patientStateRecord,
-                  _indicateur: {
-                    ...generateIndicatorFromPredefinedIndicator(GENERIC_INDICATOR_SUBSTANCE),
-                    uuid: key,
-                  },
-                };
-              }
-              const indicator = indicateurs.find((i) => i.genericUuid === key) || indicateurs.find((i) => i.uuid === key);
-              return (
-                <PatientStateItem
-                  key={key}
-                  category={key}
-                  patientStateRecord={patientStateRecord}
-                  label={
-                    indicator?.name ||
-                    patientStateRecord?._indicateur?.name ||
-                    INDICATEURS_LIST[key] ||
-                    displayedCategories[key] ||
-                    categoryName ||
-                    "Unknown Indicator"
-                  }
-                />
-              );
-            })}
-
-            <GoalsStatus goalsData={goalsData} date={date} withSeparator={patientStateRecordKeys?.length > 0} />
-            <Context data={patientState?.CONTEXT} />
-            <Posology posology={patientState?.POSOLOGY} patientState={patientState} date={date} onPress={() => handleEdit("drugs")} />
-            <Notes notes={patientState?.NOTES} date={date} onPress={() => handleEdit("notes")} />
-          </View> */}
-      </View>
-    ))}
-    {/* {canEdit(date) ? (
-          <View>
-            <Button icon="pencil" visible={true} onPress={() => handlePressItem({ editingSurvey: true })} />
-          </View>
-        ) : null} */}
-  </TouchableOpacity>;
-};
-
 const styles = StyleSheet.create({
-  item: {
-    // marginVertical: 20,
-    // backgroundColor: "rgba(38, 56, 124, 0.03)",
-    // borderRadius: 10,
-    // borderWidth: 1,
-    // borderColor: "rgba(38, 56, 124, 0.08)",
-    // paddingVertical: 15,
-  },
   emptyItem: {
     marginVertical: 15,
   },
@@ -338,7 +232,6 @@ const styles = StyleSheet.create({
   container: {
     paddingLeft: 15,
     marginLeft: 4,
-    // marginVertical: -5,
     borderLeftWidth: 0.4,
     borderColor: "#00CEF7",
   },

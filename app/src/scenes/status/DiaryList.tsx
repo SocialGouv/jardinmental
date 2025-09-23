@@ -18,6 +18,7 @@ import { DiaryDataAnswer } from "@/entities/DiaryData";
 import { answers } from "../survey-v2/utils";
 import { SquircleView } from "expo-squircle-view";
 import { TW_COLORS } from "@/utils/constants";
+import NewStatusItem from "./NewStatusItem";
 
 export const DiaryList = forwardRef(({ ...props }, ref) => {
   const navigation = useNavigation();
@@ -56,7 +57,7 @@ export const DiaryList = forwardRef(({ ...props }, ref) => {
 
   const renderItem = useCallback(
     ({ item: date }) => {
-      const moodIndicator = indicateurs?.find((ind) => ind.uuid === INDICATEURS_HUMEUR.uuid);
+      const moodIndicator = indicateurs?.find((ind) => ind.active && ind.uuid === INDICATEURS_HUMEUR.uuid);
       if (isToday(parseISO(date)) && !diaryData[date] && moodIndicator) {
         return (
           <SquircleView
@@ -76,21 +77,7 @@ export const DiaryList = forwardRef(({ ...props }, ref) => {
           </SquircleView>
         );
       } else {
-        return (
-          <View>
-            <View style={styles.dateContainer}>
-              <View style={styles.dateDot} />
-              {canEdit(date) ? (
-                <Text style={styles.dateLabel}>{formatDateThread(date)}</Text>
-              ) : (
-                <TouchableOpacity style={styles.item} onPress={() => navigation.navigate("too-late", { date })}>
-                  <Text style={styles.dateLabel}>{formatDateThread(date)}</Text>
-                </TouchableOpacity>
-              )}
-            </View>
-            <StatusItem date={date} indicateurs={indicateurs} patientState={diaryData[date]} goalsData={goalsData} navigation={navigation} />
-          </View>
-        );
+        return <NewStatusItem date={date} indicateurs={indicateurs} patientState={diaryData[date]} goalsData={goalsData} navigation={navigation} />;
       }
     },
     [diaryData, goalsData, indicateurs]
