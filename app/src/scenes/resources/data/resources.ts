@@ -1,5 +1,6 @@
 export interface Resource {
   id: string;
+  matomoId: number;
   title: string;
   duration: string;
   image: any;
@@ -26,6 +27,7 @@ export const CATEGORIES = {
 export const RESOURCES_DATA: Resource[] = [
   {
     id: "9b46cd0d-39e0-4d69-b768-b4ecaea9f0c9",
+    matomoId: 1,
     title: "Pas de santé sans santé mentale",
     duration: "2 min",
     image: require("../../../../assets/imgs/resources/Article1.png"),
@@ -45,6 +47,7 @@ Oui, notre corps peut envoyer des signaux d'alerte. **Mais notre cerveau aussi.*
   },
   {
     id: "8cf3f880-e90d-40a9-abbb-e1a077c4bdb0",
+    matomoId: 2,
     title: "Mais au fait, avoir une bonne santé mentale : qu’est-ce que ça veut dire ?",
     duration: "2 min",
     image: require("../../../../assets/imgs/resources/Article2.png"),
@@ -77,6 +80,7 @@ Un équilibre qui lui fait du bien.`,
   },
   {
     id: "cf9fb599-9165-41c2-8aaf-bcccc975b353",
+    matomoId: 3,
     title: "Pourquoi et comment observer sa propre santé mentale ?",
     duration: "2 min",
     image: require("../../../../assets/imgs/resources/Article3.png"),
@@ -100,6 +104,7 @@ En apprendre un peu plus sur le sujet, c’est déjà prendre soin de soi :)`,
   },
   {
     id: "ae2b7aaa-93e9-40aa-8969-d68d083a709e",
+    matomoId: 4,
     title: "La santé mentale, ce n'est pas qu’une affaire personnelle",
     duration: "2 min",
     image: require("../../../../assets/imgs/resources/Article4.png"),
@@ -130,6 +135,7 @@ Une chose est sûre : tous ces éléments internes et externes s'influencent les
   },
   {
     id: "5b9eb88b-1825-44b9-8df1-eb174a3c1315",
+    matomoId: 5,
     title: "Prendre soin de sa santé mentale, oui… mais comment ?",
     duration: "2 min",
     image: require("../../../../assets/imgs/resources/Article5.png"),
