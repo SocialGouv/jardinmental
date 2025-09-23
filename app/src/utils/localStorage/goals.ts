@@ -27,6 +27,7 @@ export const setGoalTracked = async ({
   order,
   daysOfWeek,
   reminder,
+  customMessage
 }: {
   id: string;
   label?: string;
@@ -34,6 +35,7 @@ export const setGoalTracked = async ({
   order?: number;
   daysOfWeek?: string[];
   reminder?: boolean;
+  customMessage?: string 
 }) => {
   if (!id) id = goalIdFromLabel(label);
 
@@ -48,6 +50,7 @@ export const setGoalTracked = async ({
     order: order ?? existingGoal?.order ?? 0,
     daysOfWeek: daysOfWeek ?? existingGoal?.daysOfWeek ?? undefined,
     reminder: reminder !== undefined ? reminder : existingGoal?.reminder ?? null,
+    customMessage: customMessage !== undefined ? customMessage : existingGoal?.customMessage ?? null,
   };
 
   data = {
@@ -78,7 +81,7 @@ export const setGoalTracked = async ({
   return goal;
 };
 
-export const updateApiReminer = async ({ id, daysOfWeek, enabled, reminder }) => {
+export const updateApiReminer = async ({ id, daysOfWeek, enabled, reminder, customMessage }) => {
   if (!(await NotificationService.hasToken())) return;
 
   const body = {
@@ -90,6 +93,7 @@ export const updateApiReminer = async ({ id, daysOfWeek, enabled, reminder }) =>
     timeHours: undefined,
     timeMinutes: undefined,
     daysOfWeek: null,
+    customMessage: customMessage || null,
   };
 
   if (reminder && enabled) {
