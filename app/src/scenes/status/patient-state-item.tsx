@@ -135,9 +135,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     paddingVertical: 5,
-    // paddingHorizontal: 20,
-    // width: 32,
-    // height: 32,
   },
   tilt: {
     // small negative marginTop for narrowing the texts
