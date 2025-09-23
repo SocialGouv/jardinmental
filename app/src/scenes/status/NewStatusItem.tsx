@@ -77,7 +77,7 @@ export default ({
 
   const handlePressItem = ({ editingSurvey, toGoals } = {}) => {
     if (!canEdit(date)) return navigation.navigate("too-late", { date });
-    logEvents.logFeelingEditButtonClick();
+    logEvents._deprecatedLogFeelingEditButtonClick();
     handleEdit("day-survey", editingSurvey, toGoals);
   };
 
