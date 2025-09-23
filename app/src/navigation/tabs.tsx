@@ -33,14 +33,16 @@ const Tabs = ({ navigation, route }) => {
 
   const startSurvey = async () => {
     const user_indicateurs = await localStorage.getIndicateurs();
-    logEvents.logFeelingStart();
+    logEvents._deprecatedLogFeelingStart();
     if (!user_indicateurs) {
       navigation.navigate("symptoms", {
         showExplanation: true,
         redirect: "select-day",
       });
     } else {
-      navigation.navigate("select-day");
+      navigation.navigate("select-day", {
+        origin: "no_data_screen",
+      });
     }
   };
 
@@ -131,6 +133,14 @@ const Tabs = ({ navigation, route }) => {
             </View>
           ),
         }}
+        listeners={({ navigation }) => ({
+          tabPress: (e) => {
+            const currentRouteName = navigation.getState().routes[navigation.getState().index].name;
+            if (currentRouteName !== "Resources") {
+              logEvents.logOpenedRessources();
+            }
+          },
+        })}
       >
         {(p) => (
           <View style={{ paddingTop: insets.top, flex: 1 }}>
