@@ -1,3 +1,10 @@
+## [1.79.2](https://github.com/SocialGouv/jardinmental/compare/v1.79.1...v1.79.2) (2025-09-23)
+
+
+### Bug Fixes
+
+* better feedback display on small screens (like iphone se) ([#490](https://github.com/SocialGouv/jardinmental/issues/490)) ([1e1791d](https://github.com/SocialGouv/jardinmental/commit/1e1791d068b9e8138b9108595e32e9d9d5cbbb3b))
+
 ## [1.79.1](https://github.com/SocialGouv/jardinmental/compare/v1.79.0...v1.79.1) (2025-09-23)
 
 
