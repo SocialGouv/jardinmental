@@ -45,7 +45,7 @@ logEvents.logAppClose(); // App close
 ```javascript
 // Feelings
 logEvents.logFeelingStart();
-logEvents.logFeelingAdd();
+logEvents._deprecatedLogFeelingAdd();
 
 // Medications
 logEvents.logDrugsOpen();

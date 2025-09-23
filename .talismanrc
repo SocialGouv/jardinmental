@@ -4,7 +4,7 @@ fileignoreconfig:
 - filename: .kontinuous/env/prod/templates/api.sealed-secret.yaml
   checksum: f1dfe60bbe8a6604443fe3629b2239fa969304beeca8eff2b7528cf9b5728e3d
 - filename: CHANGELOG.md
-  checksum: 441705e556a107db776bf6cbbf07db3cdd8a6048973824058e9917111d15cc80
+  checksum: af668c3480c223bf8e2e6bfd6942c7cfb95d50d751e48b305a8d36f5a1d1c675
 - filename: README.md
   checksum: 979473d3e8ad091d57424dc057cf0b40a884f0fbf6821554ea0121e63a173d6b
 - filename: api/src/config.ts

@@ -39,7 +39,7 @@ const Notes = ({ navigation, route }) => {
       },
     };
     addNewEntryToDiaryData(currentSurvey);
-    logEvents.logFeelingAdd();
+    logEvents._deprecatedLogFeelingAdd();
 
     if (route.params?.redirect) {
       alertNoDataYesterday({ date: survey?.date, diaryData, navigation });

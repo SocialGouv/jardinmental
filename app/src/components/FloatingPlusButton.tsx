@@ -26,7 +26,7 @@ const FloatingPlusButton = ({ onPress, shadow, plusPosition }) => {
         icon="small-plus"
         visible={true}
         onPress={() => {
-          logEvents.logFeelingStartFloatingPlus();
+          logEvents._deprecatedLogFeelingStartFloatingPlus();
           onPress();
         }}
         shadow={shadow}

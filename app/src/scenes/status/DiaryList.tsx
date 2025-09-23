@@ -18,6 +18,7 @@ import { DiaryDataAnswer } from "@/entities/DiaryData";
 import { answers } from "../survey-v2/utils";
 import { SquircleView } from "expo-squircle-view";
 import { TW_COLORS } from "@/utils/constants";
+import logEvents from "@/services/logEvents";
 
 export const DiaryList = forwardRef(({ ...props }, ref) => {
   const navigation = useNavigation();
@@ -40,6 +41,7 @@ export const DiaryList = forwardRef(({ ...props }, ref) => {
   );
 
   const handlePressMood = ({ value, indicator }: { value: number; indicator: Indicator }) => {
+    logEvents.logOpenDailyQuestionnaire("how_do_you_feel_today_widget");
     return navigation.navigate("day-survey", {
       currentSurvey: {
         date: formatDay(beforeToday(0)),

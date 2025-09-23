@@ -149,6 +149,33 @@ const DrugsSurvey = ({ navigation, route }) => {
     );
   };
 
+  const calculateDrugCompletionLevel = () => {
+    // Si aucun traitement n'existe, on ne log pas
+    if (!medicalTreatment || medicalTreatment.length === 0) {
+      return null;
+    }
+
+    // Vérifier si les questions "prise de traitement" ou "si besoin" sont renseignées
+    const priseDeTraitementAnswered = answers[priseDeTraitement.id]?.value !== undefined;
+    const priseDeTraitementSiBesoinAnswered = answers[priseDeTraitementSiBesoin.id]?.value !== undefined;
+
+    // Vérifier si au moins une dose est renseignée
+    const hasDoseInfo = posology && posology.some((p) => p.value && p.value.trim() !== "");
+
+    if (!priseDeTraitementAnswered && !priseDeTraitementSiBesoinAnswered) {
+      // 0 → 0 treatment exist but nothing answered
+      return 0;
+    } else if ((priseDeTraitementAnswered || priseDeTraitementSiBesoinAnswered) && !hasDoseInfo) {
+      // 1 → treatment or "si besoin" answered
+      return 1;
+    } else if ((priseDeTraitementAnswered || priseDeTraitementSiBesoinAnswered) && hasDoseInfo) {
+      // 2 → treatment or "si besoin" answered and at least one dose added
+      return 2;
+    }
+
+    return 0;
+  };
+
   const submit = () => {
     const survey = route.params?.currentSurvey;
     const currentSurvey = {
@@ -160,7 +187,13 @@ const DrugsSurvey = ({ navigation, route }) => {
       },
     };
     addNewEntryToDiaryData(currentSurvey);
-    logEvents.logInputDrugSurvey(posology?.filter((e) => e?.value)?.length);
+    logEvents._legacyLogInputDrugSurvey(posology?.filter((e) => e?.value)?.length);
+
+    const completionLevel = calculateDrugCompletionLevel();
+    if (completionLevel !== null) {
+      logEvents.logCompletionDrugDailyQuestionnaire(completionLevel);
+    }
+
     navigation.navigate("survey-success", {
       onComplete: () => {
         navigation.navigate("tabs");
@@ -197,7 +230,7 @@ const DrugsSurvey = ({ navigation, route }) => {
           explanation=""
           onPress={(e) => {
             toggleAnswer(e);
-            logEvents.logInputDrugSurveyPriseDeTraitement();
+            logEvents._legacyLogInputDrugSurveyPriseDeTraitement();
           }}
           selected={answers[priseDeTraitement.id]?.value}
           showUserCommentInput={false}
@@ -210,7 +243,7 @@ const DrugsSurvey = ({ navigation, route }) => {
           explanation=""
           onPress={(e) => {
             toggleAnswer(e);
-            logEvents.logInputDrugSurveyPriseDeTraitementSiBesoin();
+            logEvents._legacyLogInputDrugSurveyPriseDeTraitementSiBesoin();
           }}
           selected={answers[priseDeTraitementSiBesoin.id]?.value}
           showUserCommentInput={false}

@@ -70,7 +70,8 @@ export default ({
 
   const handlePressItem = ({ editingSurvey, toGoals } = {}) => {
     if (!canEdit(date)) return navigation.navigate("too-late", { date });
-    logEvents.logFeelingEditButtonClick();
+    logEvents._deprecatedLogFeelingEditButtonClick();
+    logEvents.logOpenDailyQuestionnaire("how_do_you_feel_card");
     handleEdit("day-survey", editingSurvey, toGoals);
   };
 
@@ -112,7 +113,6 @@ export default ({
                     uuid: key,
                   },
                 };
-                console.log("LCS TOTO", patientStateRecord);
               }
               const indicator = indicateurs.find((i) => i.genericUuid === key) || indicateurs.find((i) => i.uuid === key);
               return (

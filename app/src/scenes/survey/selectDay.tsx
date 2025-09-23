@@ -12,8 +12,19 @@ import ArrowUpSvg from "../../../assets/svg/arrow-up.svg";
 import { DiaryDataContext } from "../../context/diaryData";
 import Done from "../../../assets/svg/Done";
 import ScreenTitle from "@/components/survey/ScreenTitle";
+import logEvents from "@/services/logEvents";
 
-const SurveyScreen = ({ navigation }) => {
+const SurveyScreen = ({
+  navigation,
+  route,
+}: {
+  navigation: any;
+  route: {
+    params: {
+      origin: "no_data_beck" | "floating_button" | "no_data_statistique" | "no_data_frises";
+    };
+  };
+}) => {
   const [diaryData] = useContext(DiaryDataContext);
   const startSurvey = (offset) => {
     const date = formatDay(beforeToday(offset));
@@ -30,6 +41,7 @@ const SurveyScreen = ({ navigation }) => {
 
     const answers = diaryData[date] || {};
     const currentSurvey = { date, answers };
+    logEvents.logOpenDailyQuestionnaire(route.params.origin);
     return navigation.navigate("day-survey", {
       currentSurvey,
       editingSurvey: dayIsDone,

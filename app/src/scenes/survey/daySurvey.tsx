@@ -36,6 +36,8 @@ import { useAnimatedStyle, useSharedValue, withSpring } from "react-native-reani
 import ChevronIcon from "@assets/svg/icon/chevron";
 import { useStatusBar } from "@/context/StatusBarContext";
 import PencilIcon from "@assets/svg/icon/Pencil";
+import { getGoalsDailyRecords, getGoalsTracked } from "@/utils/localStorage/goals";
+import { Goal } from "@/entities/Goal";
 
 const DaySurvey = ({
   navigation,
@@ -58,11 +60,13 @@ const DaySurvey = ({
   const { setCustomColor } = useStatusBar();
   const animatedBackgroundColor = useSharedValue(TW_COLORS.PRIMARY);
   const [selectedMoodIndex, setSelectedMoodIndex] = useState<number | null>(null);
+  const [surveyStartTime, setSurveyStartTime] = useState<number | null>(null);
 
   const [diaryData, addNewEntryToDiaryData] = useContext(DiaryDataContext);
 
   const [userIndicateurs, setUserIndicateurs] = useState<Indicator[]>([]);
   const [treatment, setTreatment] = useState<any[] | undefined>();
+  const [goals, setGoals] = useState<Goal[]>([]);
 
   const groupedIndicators = useMemo(() => {
     return userIndicateurs.reduce<Record<NEW_INDICATORS_CATEGORIES, Indicator[]>>((acc, indicator) => {
@@ -105,6 +109,20 @@ const DaySurvey = ({
     }
   };
 
+  const calculateDayOffset = (surveyDate: string) => {
+    const today = new Date();
+    const survey = new Date(surveyDate);
+
+    // Reset time to midnight for accurate day calculation
+    today.setHours(0, 0, 0, 0);
+    survey.setHours(0, 0, 0, 0);
+
+    const diffTime = survey.getTime() - today.getTime();
+    const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
+
+    return diffDays;
+  };
+
   useFocusEffect(
     React.useCallback(() => {
       (async () => {
@@ -112,13 +130,24 @@ const DaySurvey = ({
         if (user_indicateurs) {
           setUserIndicateurs(user_indicateurs);
         }
+        const _goals = await getGoalsTracked({ date: initSurvey?.date });
+        setGoals(_goals);
         const _treatment = await localStorage.getMedicalTreatment();
         if (_treatment) {
           setTreatment(_treatment);
         }
       })();
       updateIndicators();
-    }, [])
+
+      // Initialize timer only if not already started
+      if (!surveyStartTime) {
+        setSurveyStartTime(Date.now());
+      }
+
+      // Log DAY_DAILY_QUESTIONNAIRE when opening the screen
+      const dayOffset = calculateDayOffset(initSurvey?.date);
+      logEvents.logDayDailyQuestionnaire(dayOffset);
+    }, [surveyStartTime, initSurvey?.date])
   );
 
   useEffect(() => {
@@ -224,31 +253,58 @@ const DaySurvey = ({
     if (goalsRef.current && typeof goalsRef.current.onSubmit === "function") {
       await goalsRef.current.onSubmit();
     }
-    logEvents.logFeelingAdd();
-    logEvents.logFeelingSubmitSurvey(userIndicateurs.filter((i) => i.active).length);
-    logEvents.logFeelingAddComment(
-      Object.keys(answers).filter((key) => ![questionToxic.id, questionContext.id].includes(key) && answers[key].userComment)?.length
-    );
-    logEvents.logFeelingAddContext(answers[questionContext.id]?.userComment ? 1 : 0);
-    logEvents.logFeelingResponseToxic(answers[questionToxic.id]?.value ? 1 : 0);
-
-    // Log each indicator in the questionnaire (FEELING_ADD_LIST)
-    for (const indicator of userIndicateurs.filter((i) => i.active)) {
-      if (indicator.matomoId) {
-        logEvents.logFeelingAddList(indicator.matomoId);
-      }
+    // Log time spent on survey
+    if (surveyStartTime) {
+      const timeSpentMs = Date.now() - surveyStartTime;
+      const timeSpentSeconds = Math.round(timeSpentMs / 1000);
+      logEvents.logTimeSpentDailyQuestionnaire(timeSpentSeconds);
     }
 
-    // Log each indicator that has been answered (FEELING_ADD_LIST_COMPLETED)
-    for (const key of Object.keys(answers)) {
-      // Skip special questions (TOXIC and CONTEXT)
-      if ([questionToxic.id, questionContext.id].includes(key)) continue;
+    logEvents.logValidateDailyQuestionnaire();
+    logEvents.logIndicatorsDailyQuestionnaire(userIndicateurs.filter((i) => i.active).length);
+    logEvents.logObjectivesDailyQuestionnaire(goals.length);
+    const answeredElementCount = Object.keys(answers).filter((key) => userIndicateurs.map(getIndicatorKey).includes(key))?.length;
+    logEvents.logCompletionIndicatorsDailyQuestionnaire(answeredElementCount / userIndicateurs.length);
 
-      const answer = answers[key];
-      if (answer?.value !== undefined && answer._indicateur?.matomoId) {
-        logEvents.logFeelingAddListCompleted(answer._indicateur.matomoId);
-      }
+    const records = await getGoalsDailyRecords({ date: initSurvey.date });
+    const _goalsRecords = {};
+    for (const record of records) {
+      _goalsRecords[record.goalId] = record;
     }
+    if (goals.length) {
+      const goalsWithValueTrueOrComment = records.filter((g) => g.value || g.comment);
+      logEvents.logCompletionObjectivesDailyQuestionnaire(goalsWithValueTrueOrComment.length / goals.length);
+    }
+
+    // Log if notes were added
+    const hasNotes = answers[questionContext.id]?.userComment ? 1 : 0;
+    logEvents.logCompletionNotesDailyQuestionnaire(hasNotes);
+
+    // logEvents._deprecatedLogFeelingAdd();
+    // logEvents._deprecatedLogFeelingSubmitSurvey(userIndicateurs.filter((i) => i.active).length);
+    // logEvents._deprecatedLogFeelingAddComment(
+    //   Object.keys(answers).filter((key) => ![questionToxic.id, questionContext.id].includes(key) && answers[key].userComment)?.length
+    // );
+    // logEvents._deprecatedLogFeelingAddContext(answers[questionContext.id]?.userComment ? 1 : 0);
+    // logEvents._deprecatedLogFeelingResponseToxic(answers[questionToxic.id]?.value ? 1 : 0);
+
+    // // Log each indicator in the questionnaire (FEELING_ADD_LIST)
+    // for (const indicator of userIndicateurs.filter((i) => i.active)) {
+    //   if (indicator.matomoId) {
+    //     logEvents._deprecatedLogFeelingAddList(indicator.matomoId);
+    //   }
+    // }
+
+    // // Log each indicator that has been answered (FEELING_ADD_LIST_COMPLETED)
+    // for (const key of Object.keys(answers)) {
+    //   // Skip special questions (TOXIC and CONTEXT)
+    //   if ([questionToxic.id, questionContext.id].includes(key)) continue;
+
+    //   const answer = answers[key];
+    //   if (answer?.value !== undefined && answer._indicateur?.matomoId) {
+    //     logEvents._deprecatedLogFeelingAddListCompleted(answer._indicateur.matomoId);
+    //   }
+    // }
 
     if (route.params?.redirect) {
       return navigation.navigate("survey-success", {
@@ -317,7 +373,7 @@ const DaySurvey = ({
 
   const editIndicators = () => {
     navigation.navigate("symptoms");
-    logEvents.logSettingsSymptomsFromSurvey();
+    logEvents._deprecatedLogSettingsSymptomsFromSurvey();
   };
   const answeredElementCount = Object.keys(answers).map((key) => answers[key].value !== undefined).length;
   const onValueChanged = ({ indicator, value }: { indicator: Indicator; value: string }) => toggleAnswer({ key: getIndicatorKey(indicator), value });
@@ -460,7 +516,7 @@ const DaySurvey = ({
           icon={{ icon: "ImportantSvg" }}
           onPress={() => {
             navigation.navigate("symptoms");
-            logEvents.logSettingsSymptomsFromSurvey();
+            logEvents._deprecatedLogSettingsSymptomsFromSurvey();
           }}
           className="my-2"
         /> */}

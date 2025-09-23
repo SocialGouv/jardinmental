@@ -119,14 +119,17 @@ const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, 
 
   const startSurvey = async () => {
     const symptoms = await localStorage.getSymptoms();
-    logEvents.logFeelingStart();
+    logEvents._deprecatedLogFeelingStart();
+
     if (!symptoms) {
       navigation.navigate("symptoms", {
         showExplanation: true,
         redirect: "select-day",
       });
     } else {
-      navigation.navigate("select-day");
+      navigation.navigate("select-day", {
+        origin: "no_data_beck",
+      });
     }
   };
 
