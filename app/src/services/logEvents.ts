@@ -1030,6 +1030,20 @@ const logOpenFaqSection = async (id) => {
   });
 };
 
+const logEditSurvey = async () => {
+  await logEvent({
+    category: "DAILY_QUESTIONNAIRE",
+    action: "EDIT_SURVEY",
+  });
+};
+
+const logDeleteIndicator = async () => {
+  await logEvent({
+    category: "DAILY_QUESTIONNAIRE",
+    action: "DELETE_INDICATOR",
+  });
+};
+
 const logResourceArticleSelected = async (matomoId: number) => {
   await logEvent({
     category: "RESOURCES",
@@ -1086,8 +1100,8 @@ const logOpenFaq = async () => {
   await logEvent({
     category: "FAQ",
     action: "OPEN_FAQ",
-  })
-}
+  });
+};
 
 export default {
   initMatomo,
@@ -1208,4 +1222,6 @@ export default {
   logResourceArticleTimeSpentSeconds,
   logResourceOpenedExternalLink,
   logOpenedRessources,
+  logEditSurvey,
+  logDeleteIndicator,
 };
