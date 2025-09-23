@@ -53,7 +53,7 @@ const toUtcData = ({ timeHours, timeMinutes, daysOfWeek, timezone }) => {
 router.put(
   "/",
   catchErrors(async (req, res) => {
-    const { pushNotifToken, type, timeHours, timeMinutes, localId, daysOfWeek, timezone, disabled } = req.body || {};
+    const { pushNotifToken, type, timeHours, timeMinutes, localId, daysOfWeek, timezone, disabled, customMessage } = req.body || {};
 
     if (
       !pushNotifToken ||
@@ -66,6 +66,11 @@ router.put(
           (type === "Inactivity" && !daysOfWeek)))
     )
       return res.status(400).json({ ok: false, error: "wrong parameters" });
+
+    // Validate customMessage if provided
+    if (customMessage && (typeof customMessage !== "string" || customMessage.length > 200)) {
+      return res.status(400).json({ ok: false, error: "customMessage must be a string with max 200 characters" });
+    }
 
     const { utcTimeHours, utcTimeMinutes, utcDaysOfWeek } = toUtcData({ timeHours, timeMinutes, daysOfWeek, timezone });
 
@@ -89,6 +94,7 @@ router.put(
       type,
       localId,
       disabled,
+      customMessage: customMessage || null,
     });
     let reminder = await prisma.reminder.findFirst({
       where: {
