@@ -113,7 +113,6 @@ const styles = StyleSheet.create({
   container: {
     display: "flex",
     justifyContent: "space-between",
-    // paddingHorizontal: 20,
     paddingVertical: 10,
   },
   posologyContainer: {
