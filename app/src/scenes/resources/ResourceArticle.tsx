@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, Text, Image, TouchableOpacity, Linking } from "react-native";
 import { Resource } from "./data/resources";
 import MarkdownStyled from "./MarkdownStyled";
 import { AnimatedHeaderScrollScreen } from "../survey-v2/AnimatedHeaderScrollScreen";
 import { TW_COLORS } from "@/utils/constants";
+import logEvents from "../../services/logEvents";
 
 interface ResourceArticleProps {
   navigation: any;
@@ -17,12 +18,24 @@ interface ResourceArticleProps {
 const ResourceArticle: React.FC<ResourceArticleProps> = ({ navigation, route }) => {
   const { resource } = route.params;
 
+  useEffect(() => {
+    const componentStartTime = Date.now();
+    return () => {
+      const endTime = Date.now();
+      const timeSpentSeconds = Math.round((endTime - componentStartTime) / 1000);
+      logEvents.logResourceArticleTimeSpentId(resource.matomoId);
+      logEvents.logResourceArticleTimeSpentSeconds(timeSpentSeconds);
+    };
+  }, [resource.matomoId]);
+
   const handleContinueReading = async () => {
     if (!resource.source) {
       return;
     }
     if (resource.source.url) {
       try {
+        // Log external link click before opening
+        logEvents.logResourceOpenedExternalLink(resource.source.matomoId);
         await Linking.openURL(resource.source.url);
       } catch (error) {
         console.error("Failed to open URL:", error);
@@ -30,12 +43,15 @@ const ResourceArticle: React.FC<ResourceArticleProps> = ({ navigation, route }) 
     }
   };
 
-  const handleContinueReadingMore = async () => {
-    if (!resource.moreContent) {
-      return;
-    }
-    if (resource.moreContent[0].url) {
-      await Linking.openURL(resource.moreContent[0].url);
+  const handleContinueReadingMore = async (item: { title: string; text: string; url: string; matomoId: number }) => {
+    if (item.url) {
+      try {
+        // Log external link click before opening
+        logEvents.logResourceOpenedExternalLink(item.matomoId);
+        await Linking.openURL(item.url);
+      } catch (error) {
+        console.error("Failed to open URL:", error);
+      }
     }
   };
 
@@ -82,7 +98,7 @@ const ResourceArticle: React.FC<ResourceArticleProps> = ({ navigation, route }) 
               <Text className="text-lg text-cnam-primary-950 font-semibold mb-4 font-source-sans">Aller plus loin</Text>
               <View className="flex flex-col gap-4">
                 {resource.moreContent.map((item) => (
-                  <TouchableOpacity onPress={handleContinueReadingMore} key={item.title + item.text}>
+                  <TouchableOpacity onPress={() => handleContinueReadingMore(item)} key={item.title + item.text}>
                     <View className="rounded-xl p-4 flex-row items-center border border-cnam-primary-200 bg-white">
                       <View className="flex-1 pr-2">
                         <Text className="text-base font-semibold text-cnam-primary-950 mb-1 font-source-sans">{item.title}</Text>

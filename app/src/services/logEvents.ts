@@ -909,6 +909,58 @@ const logOpenFaqSection = async (id) => {
   });
 };
 
+const logResourceArticleSelected = async (matomoId: number) => {
+  await logEvent({
+    category: "RESOURCES",
+    action: `SELECTED_ARTICLE_1/2`,
+    name: "article_id",
+    value: matomoId,
+  });
+};
+
+const logResourceArticleSelectedPosition = async (article_position_list: number) => {
+  await logEvent({
+    category: "RESOURCES",
+    action: `SELECTED_ARTICLE_2/2`,
+    name: "article_position_list",
+    value: article_position_list,
+  });
+};
+
+const logResourceArticleTimeSpentId = async (matomoId: number) => {
+  await logEvent({
+    category: "RESOURCES",
+    action: `TIME_SPENT_ARTICLE_1/2`,
+    name: "article_id",
+    value: matomoId,
+  });
+};
+
+const logResourceArticleTimeSpentSeconds = async (timeSeconds: number) => {
+  await logEvent({
+    category: "RESOURCES",
+    action: `TIME_SPENT_ARTICLE_2/2`,
+    name: "time_seconds",
+    value: timeSeconds,
+  });
+};
+
+const logResourceOpenedExternalLink = async (externalUrlId: number) => {
+  await logEvent({
+    category: "RESOURCES",
+    action: "OPENED_EXTERNAL_LINK",
+    name: "external_url_id",
+    value: externalUrlId,
+  });
+};
+
+const logOpenedRessources = async () => {
+  await logEvent({
+    category: "RESOURCES",
+    action: "OPENED_RESSOURCES",
+  });
+};
+
 export default {
   initMatomo,
   logAppVisit,
@@ -1011,4 +1063,10 @@ export default {
   logOpenFaq,
   logNeedAssistanceFaq,
   logOpenFaqSection,
+  logResourceArticleSelected,
+  logResourceArticleSelectedPosition,
+  logResourceArticleTimeSpentId,
+  logResourceArticleTimeSpentSeconds,
+  logResourceOpenedExternalLink,
+  logOpenedRessources,
 };
