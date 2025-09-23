@@ -1,3 +1,10 @@
+# [1.81.0](https://github.com/SocialGouv/jardinmental/compare/v1.80.0...v1.81.0) (2025-09-23)
+
+
+### Features
+
+* add log analyses event ([#479](https://github.com/SocialGouv/jardinmental/issues/479)) ([4de93bc](https://github.com/SocialGouv/jardinmental/commit/4de93bc3279c19d270a5fb215bbd2ec1703b2a42)), closes [#482](https://github.com/SocialGouv/jardinmental/issues/482)
+
 # [1.80.0](https://github.com/SocialGouv/jardinmental/compare/v1.79.2...v1.80.0) (2025-09-23)
 
 
