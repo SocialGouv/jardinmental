@@ -1,3 +1,11 @@
+## [1.79.1](https://github.com/SocialGouv/jardinmental/compare/v1.79.0...v1.79.1) (2025-09-23)
+
+
+### Bug Fixes
+
+* **matomo:** events for resources ([#489](https://github.com/SocialGouv/jardinmental/issues/489)) ([9d20df0](https://github.com/SocialGouv/jardinmental/commit/9d20df0be03e39254d6a987475005d5aa43cd7f4))
+* **matomo:** remove useless matomo indicators ([#484](https://github.com/SocialGouv/jardinmental/issues/484)) ([96f21af](https://github.com/SocialGouv/jardinmental/commit/96f21af5a2110b7d033000f3bb12b15d56f7dda5))
+
 # [1.79.0](https://github.com/SocialGouv/jardinmental/compare/v1.78.0...v1.79.0) (2025-09-22)
 
 
