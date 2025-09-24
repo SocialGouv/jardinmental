@@ -2,7 +2,17 @@ import React from "react";
 import { StyleSheet, Text } from "react-native";
 import { colors } from "@/utils/colors";
 
-export const Title = ({ children, style, fill = true, align }) => {
+export const Title = ({
+  children,
+  style,
+  fill = true,
+  align,
+}: {
+  children: React.ReactNode;
+  style?: any;
+  fill?: boolean;
+  align?: "center" | "left" | "right";
+}) => {
   return <Text style={[styles.text, fill && { width: "100%" }, align && { textAlign: align }, style]}>{children}</Text>;
 };
 

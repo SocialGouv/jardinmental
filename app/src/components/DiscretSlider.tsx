@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, View, TouchableOpacity, Dimensions } from "react-native";
 import { colors } from "../utils/colors";
-import Text from "../components/MyText";
+import Text from "./MyText";
 
 export default ({ numberOfSteps = 10, step = 0, activeColor = colors.LIGHT_BLUE, inactiveColor = "#F4FCFD", borderColor = "#D4F0F2", onChange }) => {
   const size = Dimensions.get("window").width / (1.5 * numberOfSteps);
