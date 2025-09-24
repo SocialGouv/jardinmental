@@ -22,6 +22,8 @@ import { SelectionnableRadioItem } from "@/components/SelectionnableItem";
 import JMButton from "@/components/JMButton";
 import { INDICATOR_ORDER } from "@/entities/IndicatorOrder";
 import type { INDICATOR_TYPE } from "@/entities/IndicatorType";
+import logEvents from "@/services/logEvents";
+import { INDICATOR_CATEGORIES_DATA } from "@/scenes/onboarding-v2/data/helperData";
 
 const ChooseIndicatorOrder = ({
   navigation,
@@ -57,6 +59,7 @@ const ChooseIndicatorOrder = ({
       mainCategory: route.params.indicatorCategory,
       version: 3,
     });
+    logEvents.logCreatePersonnalizedIndicator(INDICATOR_CATEGORIES_DATA[route.params.indicatorCategory].matomoId);
 
     setLoading(false);
     navigation.navigate("symptoms");

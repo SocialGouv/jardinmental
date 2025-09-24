@@ -1086,8 +1086,50 @@ const logOpenFaq = async () => {
   await logEvent({
     category: "FAQ",
     action: "OPEN_FAQ",
-  })
-}
+  });
+};
+
+// INDICATORS EVENT FUNCTIONS
+const logStartAddIndicator = async () => {
+  await logEvent({
+    category: "INDICATORS",
+    action: "START_ADD_INDICATOR",
+  });
+};
+
+const logAddIndicator = async (indicatorId: number) => {
+  await logEvent({
+    category: "INDICATORS",
+    action: "ADD_INDICATOR",
+    value: indicatorId,
+    name: "indicator",
+  });
+};
+
+const logAddIndicatorCategory = async (categoryId: number) => {
+  await logEvent({
+    category: "INDICATORS",
+    action: "ADD_INDICATOR_CATEGORY",
+    name: "category",
+    value: categoryId,
+  });
+};
+
+const logCreatePersonnalizedIndicator = async (categoryId) => {
+  await logEvent({
+    category: "INDICATORS",
+    action: "CREATE_PERSONNALIZED_INDICATOR",
+    name: "category",
+    value: categoryId,
+  });
+};
+
+const logOpenIndicatorsSettings = async () => {
+  await logEvent({
+    category: "INDICATORS",
+    action: "OPEN_INDICATORS_SETTINGS",
+  });
+};
 
 export default {
   initMatomo,
@@ -1208,4 +1250,9 @@ export default {
   logResourceArticleTimeSpentSeconds,
   logResourceOpenedExternalLink,
   logOpenedRessources,
+  logStartAddIndicator,
+  logAddIndicator,
+  logAddIndicatorCategory,
+  logCreatePersonnalizedIndicator,
+  logOpenIndicatorsSettings,
 };

@@ -5,7 +5,7 @@ import { colors } from "../../../utils/colors";
 import localStorage from "../../../utils/localStorage";
 import Plus from "../../../../assets/svg/Plus";
 import ArrowUpSvg from "../../../../assets/svg/arrow-up.svg";
-import { INDICATORS, INDICATEURS_LES_PLUS_COURANTS } from "../../../utils/liste_indicateurs.1";
+import { INDICATORS, INDICATEURS_LES_PLUS_COURANTS, NEW_INDICATORS_CATEGORIES } from "../../../utils/liste_indicateurs.1";
 import { toggleState } from "../../../utils";
 import DangerIcon from "../../../../assets/svg/DangerIcon";
 import CategorieElements from "../CategorieElements";
@@ -77,6 +77,30 @@ const EditIndicateurs = ({ navigation, route }) => {
 
   const onValidate = async () => {
     setIsLoading(true);
+
+    // Log events for added indicators
+    const savedUserIndicators = await localStorage.getIndicateurs();
+    const savedActiveIndicators = savedUserIndicators.filter((i) => i.active).map((i) => i.uuid);
+    const modifiedActiveIndicators = userIndicateurs.filter((i) => i.active).map((i) => i.uuid);
+
+    // Check if new indicators were added
+    const newlyAddedIndicators = modifiedActiveIndicators.filter((uuid) => !savedActiveIndicators.includes(uuid));
+
+    if (newlyAddedIndicators.length > 0) {
+      // Log general ADD_INDICATOR event
+
+      // Log ADD_INDICATOR_CATEGORY for each new indicator with its category
+      newlyAddedIndicators.forEach((uuid) => {
+        const indicator = userIndicateurs.find((i) => i.uuid === uuid);
+        if (indicator?.matomoId) {
+          logEvents.logAddIndicator(indicator.matomoId);
+        }
+        if (indicator && indicator.mainCategory) {
+          logEvents.logAddIndicatorCategory(INDICATOR_CATEGORIES_DATA[indicator.mainCategory].matomoId);
+        }
+      });
+    }
+
     await localStorage.setIndicateurs(userIndicateurs);
     setIsLoading(false);
     navigation.goBack();

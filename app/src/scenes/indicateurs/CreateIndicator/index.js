@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, ScrollView, TouchableOpacity, Keyboard, TextInput } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { Picker } from '@react-native-picker/picker';
-import RNPickerSelect from 'react-native-picker-select';
+import React, { useEffect, useState } from "react";
+import { StyleSheet, View, ScrollView, TouchableOpacity, Keyboard, TextInput } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { Picker } from "@react-native-picker/picker";
+import RNPickerSelect from "react-native-picker-select";
 
-import { INDICATORS, NEW_INDICATORS_CATEGORIES } from '../../../utils/liste_indicateurs.1';
-import BackButton from '../../../components/BackButton';
-import { colors } from '../../../utils/colors';
-import { INDICATEURS } from '../../../utils/liste_indicateurs.1';
-import Button from '../../../components/Button';
-import Text from '../../../components/MyText';
-import localStorage from '../../../utils/localStorage';
-import logEvents from '../../../services/logEvents';
-import { useFocusEffect } from '@react-navigation/native';
-import { INDICATOR_CATEGORIES_DATA } from '@/scenes/onboarding-v2/data/helperData';
-import JMButton from '@/components/JMButton';
+import { INDICATORS, NEW_INDICATORS_CATEGORIES } from "../../../utils/liste_indicateurs.1";
+import BackButton from "../../../components/BackButton";
+import { colors } from "../../../utils/colors";
+import { INDICATEURS } from "../../../utils/liste_indicateurs.1";
+import Button from "../../../components/Button";
+import Text from "../../../components/MyText";
+import localStorage from "../../../utils/localStorage";
+import logEvents from "../../../services/logEvents";
+import { useFocusEffect } from "@react-navigation/native";
+import { INDICATOR_CATEGORIES_DATA } from "@/scenes/onboarding-v2/data/helperData";
+import JMButton from "@/components/JMButton";
 
 const CATEGORY_OPTIONS = Object.values(NEW_INDICATORS_CATEGORIES);
 // Convert enum to picker items
@@ -38,13 +38,12 @@ const CreateIndicator = ({ navigation, route }) => {
 
     if (userIndicateurs && userIndicateurs.some((indicateur) => indicateur.name?.toLowerCase() === _value?.toLowerCase())) return setError(true);
 
-    if (INDICATORS.some(indicateur => indicateur.name?.toLowerCase() === _value?.toLowerCase())) return setError(true);
+    if (INDICATORS.some((indicateur) => indicateur.name?.toLowerCase() === _value?.toLowerCase())) return setError(true);
 
     // await localStorage.addCustomSymptoms(value);
-    logEvents.logCustomSymptomAdd();
-    navigation.push('CHOOSE_INDICATOR_TYPE', {
+    navigation.push("CHOOSE_INDICATOR_TYPE", {
       nameNewIndicator: _value,
-      indicatorCategory: selectedCategory
+      indicatorCategory: selectedCategory,
     });
   };
 
@@ -73,13 +72,13 @@ const CreateIndicator = ({ navigation, route }) => {
           <Text style={styles.label}>Comment souhaitez-vous appeler votre nouvel indicateur ?</Text>
 
           <TextInput
-            onChangeText={e => {
+            onChangeText={(e) => {
               setNameNewIndicator(e);
               setError(false);
             }}
             autoFocus={true}
             value={nameNewIndicator}
-            placeholder={'Entrez le nom de votre indicateur'}
+            placeholder={"Entrez le nom de votre indicateur"}
             placeholderTextColor="lightgrey"
             style={styles.textInput}
           />
@@ -87,7 +86,9 @@ const CreateIndicator = ({ navigation, route }) => {
           {error ? (
             <View className="border border-red-400 bg-red-50 rounded-lg px-3 py-2 mb-5">
               <Text className="text-gray-900">Il existe déjà un indicateur qui porte le nom "{nameNewIndicator?.trim()}".</Text>
-              <Text className="text-gray-900">S'il est inactif, vous pouvez le réactiver dans la liste des "anciens indicateurs" ou depuis la liste d&apos;exemples.</Text>
+              <Text className="text-gray-900">
+                S'il est inactif, vous pouvez le réactiver dans la liste des "anciens indicateurs" ou depuis la liste d&apos;exemples.
+              </Text>
             </View>
           ) : null}
 
@@ -96,7 +97,7 @@ const CreateIndicator = ({ navigation, route }) => {
             <RNPickerSelect
               onValueChange={(value) => setSelectedCategory(value)}
               items={categoryOptions}
-              placeholder={{ label: 'Choisir une categorie', value: null }}
+              placeholder={{ label: "Choisir une categorie", value: null }}
               value={selectedCategory}
               style={pickerSelectStyles}
               useNativeAndroidPickerStyle={false}
@@ -106,16 +107,15 @@ const CreateIndicator = ({ navigation, route }) => {
         <JMButton
           disabled={!nameNewIndicator || !selectedCategory}
           buttonStyle={{ backgroundColor: colors.LIGHT_BLUE, marginBottom: 20 }}
-          textStyle={{ color: 'white', textAlign: 'center' }}
+          textStyle={{ color: "white", textAlign: "center" }}
           onPress={() => {
             handleAddNewIndicator();
           }}
           title="Valider"
-          className='mb-5'
+          className="mb-5"
         />
       </View>
-
-    </SafeAreaView >
+    </SafeAreaView>
   );
 };
 
@@ -235,10 +235,10 @@ const pickerSelectStyles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 12,
     borderWidth: 1,
-    borderColor: 'gray',
+    borderColor: "gray",
     borderRadius: 8,
-    color: 'black',
-    backgroundColor: 'white',
+    color: "black",
+    backgroundColor: "white",
   },
   inputAndroid: {
     fontSize: 16,
@@ -246,10 +246,10 @@ const pickerSelectStyles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 12,
     borderWidth: 1,
-    borderColor: 'gray',
+    borderColor: "gray",
     borderRadius: 8,
-    color: 'black',
-    backgroundColor: 'white',
+    color: "black",
+    backgroundColor: "white",
   },
 });
 export default CreateIndicator;
