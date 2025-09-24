@@ -71,6 +71,7 @@ module.exports = {
         "cnam-cyan": {
           "lighten-90": "#E5F6FC",
           "lighten-80": "#CCEDF9",
+          "25-lighten-97": "#F7FCFE",
           "darken-20": "#0084B2",
           "50-lighten-90": "#E5F6FC",
           "500-0": "#00A5DF",
