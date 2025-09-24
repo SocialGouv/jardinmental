@@ -1260,5 +1260,4 @@ export default {
   logOpenHelplinesSection,
   logCallHelpline,
   logOpenEmergencyContact,
-  logOpenSupportPage,
 };
