@@ -1,6 +1,6 @@
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Alert, Linking, Text, TouchableOpacity, View } from "react-native";
 import { AnimatedHeaderScrollScreen } from "../survey-v2/AnimatedHeaderScrollScreen";
 import { TW_COLORS } from "@/utils/constants";
@@ -13,10 +13,16 @@ import HeartHand from "@assets/svg/icon/HeartHand";
 import ArrowUpSvg from "@assets/svg/icon/ArrowUp";
 import LinkIcon from "@assets/svg/icon/Link";
 import Markdown from "react-native-markdown-display";
+import logEvents from "@/services/logEvents";
 
 export default function SupportScreen({ navigation, route }) {
   const [sectionListenVisible, setSectionListenVisible] = useState(false);
   const [sectionStartFollowUpVisible, setSectionListenStartFollowUpVisible] = useState(false);
+
+  // Log page opening
+  useEffect(() => {
+    logEvents.logOpenEmergencyContact();
+  }, []);
   const numbers = [
     {
       name: "SOS Amitié",
@@ -36,6 +42,10 @@ export default function SupportScreen({ navigation, route }) {
   ];
 
   const handleCall = async (number: string) => {
+    // Log emergency contact events for 3114 and 114
+
+    logEvents.logCallHelpline(number);
+
     const phoneNumber = number;
     const url = `tel:${phoneNumber}`;
     try {
@@ -52,6 +62,13 @@ export default function SupportScreen({ navigation, route }) {
   };
 
   const handleOpenLink = async (link: string) => {
+    // Log specific link clicks
+    if (link.includes("monsoutienpsy.ameli.fr")) {
+      logEvents.logClickMonSoutienPsy();
+    } else if (link.includes("santepsy.etudiant.gouv.fr")) {
+      logEvents.logClickSantePsyEtudiant();
+    }
+
     const url = link;
 
     const supported = await Linking.canOpenURL(url);
@@ -63,6 +80,9 @@ export default function SupportScreen({ navigation, route }) {
   };
 
   const handleSms = async (number: string) => {
+    // Log emergency contact for SMS to 114
+    logEvents.logCallHelpline(number);
+
     const phoneNumber = number;
     const message = ""; // optional
 
@@ -73,7 +93,7 @@ export default function SupportScreen({ navigation, route }) {
     if (supported) {
       await Linking.openURL(url);
     } else {
-      Alert.alert("Erreur", "L’envoi de SMS n’est pas supporté sur cet appareil");
+      Alert.alert("Erreur", "L'envoi de SMS n'est pas supporté sur cet appareil");
     }
   };
 
@@ -134,7 +154,12 @@ export default function SupportScreen({ navigation, route }) {
         <View className="w-full border border-cnam-primary-300 border-b-0">
           <TouchableOpacity
             className="h-[110] items-center justify-between flex-row w-full px-4"
-            onPress={() => setSectionListenVisible(!sectionListenVisible)}
+            onPress={() => {
+              if (!sectionListenVisible) {
+                logEvents.logOpenHelplinesSection();
+              }
+              setSectionListenVisible(!sectionListenVisible);
+            }}
           >
             <View className="flex-row items-center">
               <HeartHand width={24} height={24} color={TW_COLORS.CNAM_PRIMARY_800} />
@@ -165,7 +190,7 @@ export default function SupportScreen({ navigation, route }) {
                   return (
                     <SquircleButton
                       key={index}
-                      onPress={() => handleCall(item.number)}
+                      onPress={() => handleCall(item.number, item.name)}
                       cornerSmoothing={100}
                       style={{ borderRadius: 12 }}
                       preserveSmoothing={true}
@@ -201,7 +226,12 @@ export default function SupportScreen({ navigation, route }) {
         </View>
         <View className="border border-cnam-primary-300 w-full">
           <TouchableOpacity
-            onPress={() => setSectionListenStartFollowUpVisible(!sectionStartFollowUpVisible)}
+            onPress={() => {
+              if (!sectionStartFollowUpVisible) {
+                logEvents.logOpenCounsellingSection();
+              }
+              setSectionListenStartFollowUpVisible(!sectionStartFollowUpVisible);
+            }}
             className="h-[110] items-center justify-between flex-row w-full px-4"
           >
             <View className="flex-row items-center">

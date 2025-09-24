@@ -49,7 +49,7 @@ const logEvent = async ({
   name,
   value,
 }: {
-  category: "DAILY_QUESTIONNAIRE" | "FAQ" | "ONBOARDING";
+  category: "DAILY_QUESTIONNAIRE" | "FAQ" | "ONBOARDING" | "EMERGENCY" | string;
   action: string;
   name?: string;
   value?: number;
@@ -1086,8 +1086,53 @@ const logOpenFaq = async () => {
   await logEvent({
     category: "FAQ",
     action: "OPEN_FAQ",
-  })
-}
+  });
+};
+
+// EMERGENCY PAGE EVENTS
+const logClickMonSoutienPsy = async () => {
+  await logEvent({
+    category: "EMERGENCY",
+    action: "CLICK_MON_SOUTIEN_PSY",
+  });
+};
+
+const logClickSantePsyEtudiant = async () => {
+  await logEvent({
+    category: "EMERGENCY",
+    action: "CLICK_SANTE_PSY_ETUDIANT",
+  });
+};
+
+const logOpenCounsellingSection = async () => {
+  await logEvent({
+    category: "EMERGENCY",
+    action: "OPEN_COUNSELLING_SECTION",
+  });
+};
+
+const logOpenHelplinesSection = async () => {
+  await logEvent({
+    category: "EMERGENCY",
+    action: "OPEN_HELPLINES_SECTION",
+  });
+};
+
+const logCallHelpline = async (number: string) => {
+  await logEvent({
+    category: "EMERGENCY",
+    action: "CALL_HELPLINE",
+    name: "phone_number",
+    value: parseInt(number, 10),
+  });
+};
+
+const logOpenEmergencyContact = async () => {
+  await logEvent({
+    category: "EMERGENCY",
+    action: "OPEN_EMERGENCY_CONTACT",
+  });
+};
 
 export default {
   initMatomo,
@@ -1208,4 +1253,12 @@ export default {
   logResourceArticleTimeSpentSeconds,
   logResourceOpenedExternalLink,
   logOpenedRessources,
+  // Support page events
+  logClickMonSoutienPsy,
+  logClickSantePsyEtudiant,
+  logOpenCounsellingSection,
+  logOpenHelplinesSection,
+  logCallHelpline,
+  logOpenEmergencyContact,
+  logOpenSupportPage,
 };
