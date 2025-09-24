@@ -1,7 +1,7 @@
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
 import React, { useState } from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { Alert, Linking, Text, TouchableOpacity, View } from "react-native";
 import { AnimatedHeaderScrollScreen } from "../survey-v2/AnimatedHeaderScrollScreen";
 import { TW_COLORS } from "@/utils/constants";
 import { SquircleButton, SquircleView } from "expo-squircle-view";
@@ -12,6 +12,7 @@ import colors from "tailwindcss/colors";
 import HeartHand from "@assets/svg/icon/HeartHand";
 import ArrowUpSvg from "@assets/svg/icon/ArrowUp";
 import LinkIcon from "@assets/svg/icon/Link";
+import Markdown from "react-native-markdown-display";
 
 export default function SupportScreen({ navigation, route }) {
   const [sectionListenVisible, setSectionListenVisible] = useState(false);
@@ -20,16 +21,61 @@ export default function SupportScreen({ navigation, route }) {
     {
       name: "SOS Amitié",
       description: "24h/24, 7j/7",
+      number: "+33972394050",
     },
     {
       name: "Fil Santé Jeunes",
       description: "7j/7, de 9h à 23h",
+      number: "+33800235236",
     },
     {
       name: "Femmes victimes de violences",
       description: "Numéro national 7j/7",
+      number: "3919",
     },
   ];
+
+  const handleCall = async (number: string) => {
+    const phoneNumber = number;
+    const url = `tel:${phoneNumber}`;
+    try {
+      const supported = await Linking.canOpenURL(url);
+      if (supported) {
+        await Linking.openURL(url);
+      } else {
+        Alert.alert("Erreur", "Les appels ne sont pas supportés sur le simulateur.");
+      }
+    } catch (e) {
+      console.log(e);
+      Alert.alert("Erreur", "Les appels ne sont pas supportés sur cet appareil vérifié les permissions de l'application.");
+    }
+  };
+
+  const handleOpenLink = async (link: string) => {
+    const url = link;
+
+    const supported = await Linking.canOpenURL(url);
+    if (supported) {
+      await Linking.openURL(url);
+    } else {
+      Alert.alert("Erreur", `Impossible d'ouvrir ce lien : ${url}`);
+    }
+  };
+
+  const handleSms = async (number: string) => {
+    const phoneNumber = number;
+    const message = ""; // optional
+
+    // iOS accepts body param, Android support varie
+    const url = `sms:${phoneNumber}${message ? `?body=${encodeURIComponent(message)}` : ""}`;
+
+    const supported = await Linking.canOpenURL(url);
+    if (supported) {
+      await Linking.openURL(url);
+    } else {
+      Alert.alert("Erreur", "L’envoi de SMS n’est pas supporté sur cet appareil");
+    }
+  };
 
   return (
     <AnimatedHeaderScrollScreen
@@ -53,8 +99,14 @@ export default function SupportScreen({ navigation, route }) {
               Si vous êtes en détresse, appelez le 3114 (24h/24, 7j/7, appel gratuit).
             </Text>
             <SquircleButton
+              onPress={() => handleCall("3114")}
               style={{
                 borderRadius: 20,
+                shadowColor: "#F0B323",
+                shadowOffset: { width: 0, height: 4 },
+                shadowOpacity: 0.4,
+                shadowRadius: 8, // smoother shadow
+                elevation: 6, // Android
               }}
               preserveSmoothing={true}
               cornerSmoothing={100}
@@ -64,6 +116,7 @@ export default function SupportScreen({ navigation, route }) {
               <Text className={mergeClassNames(typography.textLgSemibold, "ml-3 text-cnam-primary-900 text-left")}>Appeler le 3114</Text>
             </SquircleButton>
             <SquircleButton
+              onPress={() => handleSms("114")}
               preserveSmoothing={true}
               cornerSmoothing={100}
               style={{
@@ -108,9 +161,11 @@ export default function SupportScreen({ navigation, route }) {
                 </Text>
               </View>
               <View className="flex-col space-y-4 mb-8">
-                {numbers.map((item) => {
+                {numbers.map((item, index) => {
                   return (
-                    <SquircleView
+                    <SquircleButton
+                      key={index}
+                      onPress={() => handleCall(item.number)}
                       cornerSmoothing={100}
                       style={{ borderRadius: 12 }}
                       preserveSmoothing={true}
@@ -121,14 +176,15 @@ export default function SupportScreen({ navigation, route }) {
                         <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-900")}>{item.name}</Text>
                         <Text className={mergeClassNames(typography.textSmMedium, "text-gray-800")}>{item.description}</Text>
                       </View>
-                    </SquircleView>
+                    </SquircleButton>
                   );
                 })}
               </View>
               <Text className={mergeClassNames(typography.textMdMedium, "text-gray-800 mb-4")}>
                 👉 Retrouvez un guide complet sur les lignes d’écoute sur le site de Psycom :
               </Text>
-              <SquircleView
+              <SquircleButton
+                onPress={() => handleOpenLink("https://psycom.org")}
                 cornerSmoothing={100}
                 style={{ borderRadius: 12 }}
                 preserveSmoothing={true}
@@ -139,7 +195,7 @@ export default function SupportScreen({ navigation, route }) {
                   <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-900")}>Psycom.org</Text>
                   <Text className={mergeClassNames(typography.textSmMedium, "text-gray-800")}>Le site d'informations sur la santé mentale</Text>
                 </View>
-              </SquircleView>
+              </SquircleButton>
             </View>
           )}
         </View>
@@ -175,39 +231,42 @@ export default function SupportScreen({ navigation, route }) {
                   {
                     title: "Séances psy remboursées",
                     description:
-                      "Mon soutien psy permet aux personnes en mal-être de bénéficier de 12 séances avec un psychologue, prises en charge à 100 % par l’Assurance Maladie et les complémentaires santé.",
+                      "**Mon soutien psy** permet aux personnes en mal-être de bénéficier de 12 séances avec un psychologue, prises en charge à 100 % par l’Assurance Maladie et les complémentaires santé.",
                     text: "👉 Trouver un psychologue affilié :",
                     link: {
-                      label: "Monsoutienpsy.org",
-                      url: "https://monsoutienpsy.org",
+                      label: "Monsoutienpsy.ameli.fr",
+                      url: "https://monsoutienpsy.ameli.fr",
                     },
                   },
                   {
                     title: "Santé psy étudiant",
                     description:
-                      "Santé psy étudiant permet aux étudiants de bénéficier de 12 séances gratuites avec un psychologue, sans avance de frais (le psychologue est rémunéré par l’université).",
+                      "**Santé psy étudiant** permet aux étudiants de bénéficier de 12 séances gratuites avec un psychologue, sans avance de frais (le psychologue est rémunéré par l’université).",
                     text: "👉 Vérifier son éligibilité et prendre rdv :",
                     link: {
                       label: "Santepsy.etudiant.gouv.fr",
-                      url: "Santepsy.etudiant.gouv.fr/eligibilite",
+                      url: "https://santepsy.etudiant.gouv.fr/eligibilite",
                     },
                   },
-                ].map((item) => (
-                  <View className="rounded-xl p-4 bg-white border border-gray-300">
+                ].map((item, index) => (
+                  <View className="rounded-xl p-4 bg-white border border-gray-300" key={index}>
                     <Text className={mergeClassNames(typography.textXlSemibold, "text-cnam-primary-800 mb-6")}>{item.title}</Text>
-                    <Text className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-800 mb-4 text-left")}>{item.description}</Text>
+                    <View className={"mb-4 text-left"}>
+                      <Markdown style={markdownStyles}>{item.description}</Markdown>
+                    </View>
                     <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 mb-4")}>{item.text}</Text>
-                    <SquircleView
+                    <SquircleButton
                       cornerSmoothing={100}
                       style={{ borderRadius: 12, minHeight: 60 }}
                       preserveSmoothing={true}
+                      onPress={() => handleOpenLink(item.link.url)}
                       className="flex-row px-4 py-2 items-center bg-cnam-cyan-50-lighten-90"
                     >
                       <LinkIcon color={TW_COLORS.CNAM_PRIMARY_800} width={24} height={24} />
                       <View className="flex-col ml-4">
                         <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-900")}>{item.link.label}</Text>
                       </View>
-                    </SquircleView>
+                    </SquircleButton>
                   </View>
                 ))}
               </View>
@@ -218,3 +277,17 @@ export default function SupportScreen({ navigation, route }) {
     </AnimatedHeaderScrollScreen>
   );
 }
+
+const markdownStyles = {
+  body: {
+    fontFamily: "SourceSans3",
+    fontSize: 16,
+    color: TW_COLORS.CNAM_PRIMARY_800,
+    lineHeight: 24,
+    marginBottom: 20,
+  },
+  strong: {
+    fontWeight: "bold" as "bold",
+    color: TW_COLORS.CNAM_PRIMARY_800,
+  },
+};
