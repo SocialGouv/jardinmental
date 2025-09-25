@@ -28,6 +28,7 @@ import { shouldShowChecklistBanner, handlePlusTardClick as handleBannerDismiss }
 import { TW_COLORS } from "@/utils/constants";
 import { SquircleView } from "expo-squircle-view";
 import { interpolate, useAnimatedScrollHandler, useDerivedValue, useSharedValue, useAnimatedStyle } from "react-native-reanimated";
+import logEvents from "@/services/logEvents";
 
 const Status = ({ navigation, startSurvey }) => {
   const [diaryData] = useContext(DiaryDataContext);
@@ -136,6 +137,7 @@ const Status = ({ navigation, startSurvey }) => {
 
     // Use the new enhanced banner dismiss logic
     await handleBannerDismiss();
+    logEvents.logPassChecklist();
   };
 
   const handleDismissInfoModal = async () => {
@@ -191,6 +193,7 @@ const Status = ({ navigation, startSurvey }) => {
                 <JMButton
                   onPress={() => {
                     navigation.navigate("checklist");
+                    logEvents.logOpenChecklist();
                   }}
                   width="adapt"
                   title="C'est parti"

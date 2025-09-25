@@ -9,6 +9,7 @@ import Download from "@assets/svg/icon/Download";
 import { useBottomSheet } from "@/context/BottomSheetContext";
 import { DrugsBottomSheet } from "@/components/DrugsBottomSheet";
 import localStorage from "@/utils/localStorage";
+import logEvents from "@/services/logEvents";
 
 const SettingsModal = ({ navigation, visible, onClick }) => {
   const { showBottomSheet, closeBottomSheet } = useBottomSheet();
@@ -22,12 +23,31 @@ const SettingsModal = ({ navigation, visible, onClick }) => {
       <TouchableOpacity activeOpacity={1} style={styles.container} onPressOut={onClick}>
         <ContentWrapper style={styles.card}>
           <SettingItem title="Définir un rappel" path="reminder" navigation={navigation} onClick={onClick} icon={<Bell />} />
-          <SettingItem title="Personnaliser mes indicateurs" path="symptoms" navigation={navigation} onClick={onClick} icon={<Analytics />} />
-          <SettingItem title="Personnaliser mes objectifs" path="goals-settings" navigation={navigation} onClick={onClick} icon={<Goal />} />
+          <SettingItem
+            title="Personnaliser mes indicateurs"
+            path="symptoms"
+            navigation={navigation}
+            onClick={(path) => {
+              logEvents.logOpenIndicatorsSettings();
+              onClick(path);
+            }}
+            icon={<Analytics />}
+          />
+          <SettingItem
+            title="Personnaliser mes objectifs"
+            path="goals-settings"
+            navigation={navigation}
+            onClick={() => {
+              onClick();
+              logEvents.logOpenObjectivesSettings();
+            }}
+            icon={<Goal />}
+          />
           <SettingItem
             title="Saisir mon traitement"
             navigation={navigation}
             onClick={async () => {
+              logEvents.logOpenDrugSettings();
               onClick();
               const treatment = await localStorage.getMedicalTreatment();
               if (treatment) {
