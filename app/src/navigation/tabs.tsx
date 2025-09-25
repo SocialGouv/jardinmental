@@ -12,7 +12,7 @@ import { colors } from "../utils/colors";
 import localStorage from "../utils/localStorage";
 import logEvents from "../services/logEvents";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import IosStatusBarColor from "@/components/IosStatusBar";
+import StatusBarColor from "@/components/StatusBar";
 import { useFocusEffect } from "@react-navigation/native";
 import { useStatusBar } from "@/context/StatusBarContext";
 import { TW_COLORS } from "@/utils/constants";
@@ -95,7 +95,7 @@ const Tabs = ({ navigation, route }) => {
       >
         {(p) => (
           <View style={{ paddingTop: insets.top, flex: 1 }}>
-            <IosStatusBarColor />
+            <StatusBarColor />
             <Status {...p} startSurvey={startSurvey} />
           </View>
         )}
@@ -118,7 +118,7 @@ const Tabs = ({ navigation, route }) => {
       >
         {(p) => (
           <View style={{ paddingTop: insets.top, flex: 1 }}>
-            <IosStatusBarColor />
+            <StatusBarColor />
             <Suivi {...p} startSurvey={startSurvey} />
           </View>
         )}
@@ -144,7 +144,7 @@ const Tabs = ({ navigation, route }) => {
       >
         {(p) => (
           <View style={{ paddingTop: insets.top, flex: 1 }}>
-            <IosStatusBarColor />
+            <StatusBarColor />
             <Resources {...p} />
           </View>
         )}
@@ -162,7 +162,7 @@ const Tabs = ({ navigation, route }) => {
       >
         {(p) => (
           <View style={{ paddingTop: insets.top, flex: 1 }}>
-            <IosStatusBarColor />
+            <StatusBarColor />
             <Exercise {...p} startSurvey={startSurvey} />
           </View>
         )}
