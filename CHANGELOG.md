@@ -1,3 +1,10 @@
+# [1.87.0](https://github.com/SocialGouv/jardinmental/compare/v1.86.0...v1.87.0) (2025-09-25)
+
+
+### Features
+
+* add checklist logs ([#496](https://github.com/SocialGouv/jardinmental/issues/496)) ([ca355ab](https://github.com/SocialGouv/jardinmental/commit/ca355ab1ae15b76c7771b7aa143d9c018e7ca420))
+
 # [1.86.0](https://github.com/SocialGouv/jardinmental/compare/v1.85.0...v1.86.0) (2025-09-25)
 
 
