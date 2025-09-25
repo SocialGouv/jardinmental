@@ -8,8 +8,8 @@ import SmileyMiddle from "@assets/svg/smileys/middle";
 import SmileyBad from "@assets/svg/smileys/bad";
 import SmileyVeryBad from "@assets/svg/smileys/veryBad";
 import PlusIcon from "@assets/svg/icon/plus";
-import TodaySvg from "../../assets/svg/today.svg";
-import YesterdaySvg from "../../assets/svg/yesterday.svg";
+import TodaySvg from "@assets/svg/today.svg";
+import YesterdaySvg from "@assets/svg/yesterday.svg";
 
 const styles = StyleSheet.create({
   iconContainer: {
