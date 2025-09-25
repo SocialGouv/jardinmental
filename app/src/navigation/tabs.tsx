@@ -158,7 +158,7 @@ const Tabs = ({ navigation, route }) => {
           tabBarLabel: "Beck",
           tabBarIcon: ({ focused, color }) => (
             <View style={{ alignItems: "center" }}>
-              <CloudIcon height={24} width={24} color={color || "#28464D"} />
+              <CloudIcon height={24} width={24} color={color} />
             </View>
           ),
         }}
