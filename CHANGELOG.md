@@ -1,3 +1,10 @@
+# [1.84.0](https://github.com/SocialGouv/jardinmental/compare/v1.83.0...v1.84.0) (2025-09-25)
+
+
+### Features
+
+* add drug loading function ([#498](https://github.com/SocialGouv/jardinmental/issues/498)) ([b4bd218](https://github.com/SocialGouv/jardinmental/commit/b4bd218f47f8fc5ed0fdc297f2b5965515e56d4d))
+
 # [1.83.0](https://github.com/SocialGouv/jardinmental/compare/v1.82.0...v1.83.0) (2025-09-23)
 
 
