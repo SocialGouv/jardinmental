@@ -70,7 +70,6 @@ const logEvent = async ({
     | "DRUG"
     | "BECK"
     | "DIARY"
-    | "OPEN_TAB"
     | "OPEN_SUB_TAB_STATUS"
     | "ANALYSES"
     | "SUIVI"
@@ -609,10 +608,6 @@ const logOpenPage = async (screenName) => {
   if (EVENT_FOR_SCREEN_NAME[screenName]) {
     await logEvent(EVENT_FOR_SCREEN_NAME[screenName]);
   }
-  await logEvent({
-    category: "OPEN_TAB",
-    action: `${screenName.toUpperCase()}_OPEN`,
-  });
 };
 
 const logStatusSubPage = async (tab) => {
