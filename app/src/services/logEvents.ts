@@ -306,13 +306,6 @@ const logContactOpen = async () => {
   });
 };
 
-const logDataExport = async () => {
-  await logEvent({
-    category: "DATA_EXPORT",
-    action: "DATA_EXPORT",
-  });
-};
-
 const logDataExportAsBackUp = async () => {
   await logEvent({
     category: "DATA_EXPORT_AS_BACKUP",
@@ -1086,8 +1079,46 @@ const logOpenFaq = async () => {
   await logEvent({
     category: "FAQ",
     action: "OPEN_FAQ",
-  })
-}
+  });
+};
+
+// EXPORT SUMMARY EVENTS
+const logExportSummary = async () => {
+  await logEvent({
+    category: "SUMMARY",
+    action: "EXPORT_SUMMARY",
+  });
+};
+
+const logOpenExportSummary = async () => {
+  await logEvent({
+    category: "SUMMARY",
+    action: "OPEN_EXPORT_SUMMARY",
+  });
+};
+
+// REMINDER SETTINGS EVENTS
+const logEditReminder = async () => {
+  await logEvent({
+    category: "REMINDER",
+    action: "EDIT_REMINDER",
+  });
+};
+
+const logOpenReminderSettings = async () => {
+  await logEvent({
+    category: "REMINDER",
+    action: "OPEN_REMINDER_SETTINGS",
+  });
+};
+
+// SETTINGS EVENTS
+const logOpenSettings = async () => {
+  await logEvent({
+    category: "PARAMETERS",
+    action: "OPEN_SETTINGS",
+  });
+};
 
 export default {
   initMatomo,
@@ -1105,7 +1136,6 @@ export default {
   logSymptomAdd,
   logSymptomCancel,
   logCalendarOpen,
-  logDataExport,
   getUserId,
   logNPSOpen,
   logContactOpen,
@@ -1208,4 +1238,9 @@ export default {
   logResourceArticleTimeSpentSeconds,
   logResourceOpenedExternalLink,
   logOpenedRessources,
+  logExportSummary,
+  logOpenExportSummary,
+  logEditReminder,
+  logOpenReminderSettings,
+  logOpenSettings,
 };

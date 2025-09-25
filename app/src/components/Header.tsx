@@ -133,7 +133,10 @@ const Header = ({ title, navigation, scrollY, scrollThreshold = 100 }: HeaderPro
             width={16}
             height={16}
             styleContainer={{}}
-            onPress={() => setSettingsVisible(true)}
+            onPress={() => {
+              setSettingsVisible(true);
+              logEvents.logOpenSettings();
+            }}
           />
         </View>
       </View>

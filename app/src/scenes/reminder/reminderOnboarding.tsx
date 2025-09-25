@@ -100,6 +100,7 @@ const Reminder = ({
   };
 
   const showReminderSetup = async () => {
+    logEvents.logEditReminder();
     const isRegistered = await NotificationService.checkAndAskForPermission();
     if (!isRegistered) {
       showPermissionsAlert();
