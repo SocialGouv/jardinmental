@@ -22,7 +22,16 @@ const SettingsModal = ({ navigation, visible, onClick }) => {
     <Modal animationType="slide" visible={visible} transparent={true} supportedOrientations={["portrait", "landscape"]}>
       <TouchableOpacity activeOpacity={1} style={styles.container} onPressOut={onClick}>
         <ContentWrapper style={styles.card}>
-          <SettingItem title="Définir un rappel" path="reminder" navigation={navigation} onClick={onClick} icon={<Bell />} />
+          <SettingItem
+            title="Définir un rappel"
+            path="reminder"
+            navigation={navigation}
+            onClick={() => {
+              onClick();
+              logEvents.logOpenReminderSettings();
+            }}
+            icon={<Bell />}
+          />
           <SettingItem
             title="Personnaliser mes indicateurs"
             path="symptoms"
@@ -64,7 +73,16 @@ const SettingsModal = ({ navigation, visible, onClick }) => {
             }}
             icon={<Health />}
           />
-          <SettingItem title="Générer un récapitulatif de mes données" path="export" navigation={navigation} onClick={onClick} icon={<Download />} />
+          <SettingItem
+            title="Générer un récapitulatif de mes données"
+            path="export"
+            navigation={navigation}
+            onClick={() => {
+              onClick();
+              logEvents.logOpenExportSummary();
+            }}
+            icon={<Download />}
+          />
         </ContentWrapper>
       </TouchableOpacity>
     </Modal>
