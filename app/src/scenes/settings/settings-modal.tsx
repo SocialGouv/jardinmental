@@ -23,7 +23,16 @@ const SettingsModal = ({ navigation, visible, onClick }) => {
       <TouchableOpacity activeOpacity={1} style={styles.container} onPressOut={onClick}>
         <ContentWrapper style={styles.card}>
           <SettingItem title="Définir un rappel" path="reminder" navigation={navigation} onClick={onClick} icon={<Bell />} />
-          <SettingItem title="Personnaliser mes indicateurs" path="symptoms" navigation={navigation} onClick={onClick} icon={<Analytics />} />
+          <SettingItem
+            title="Personnaliser mes indicateurs"
+            path="symptoms"
+            navigation={navigation}
+            onClick={(path) => {
+              logEvents.logOpenIndicatorsSettings();
+              onClick(path);
+            }}
+            icon={<Analytics />}
+          />
           <SettingItem title="Personnaliser mes objectifs" path="goals-settings" navigation={navigation} onClick={onClick} icon={<Goal />} />
           <SettingItem
             title="Saisir mon traitement"
