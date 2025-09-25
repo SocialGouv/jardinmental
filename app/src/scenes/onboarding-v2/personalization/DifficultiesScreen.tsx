@@ -12,6 +12,9 @@ import { NEW_INDICATORS_CATEGORIES } from "@/utils/liste_indicateurs.1";
 import { AnimatedHeaderScrollScreen } from "@/scenes/survey-v2/AnimatedHeaderScrollScreen";
 import AlertBanner from "../AlertBanner";
 import logEvents from "@/services/logEvents";
+import { useFocusEffect } from "@react-navigation/native";
+import { useStatusBar } from "@/context/StatusBarContext";
+import { TW_COLORS } from "@/utils/constants";
 
 type Props = OnboardingV2ScreenProps<"PersonalizationDifficulties">;
 
@@ -19,6 +22,7 @@ const NextScreen = "SubCategoriesScreen";
 
 const DifficultiesScreen: React.FC<Props> = ({ navigation }) => {
   const { updateUserDifficulties, profile } = useUserProfile();
+  const { setCustomColor } = useStatusBar();
   const [selectedDifficulties, setSelectedDifficulties] = useState<Difficulty[]>(
     Object.values(INDICATOR_CATEGORIES_DATA)
       .filter((d) => d.category !== NEW_INDICATORS_CATEGORIES.OTHER)
@@ -29,6 +33,16 @@ const DifficultiesScreen: React.FC<Props> = ({ navigation }) => {
       .filter((cat) => cat.category !== NEW_INDICATORS_CATEGORIES.PHYSICAL_SIGNS)
   );
   const { setSlideIndex, setNextCallback, setIsVisible, setSkipCallback } = useOnboardingProgressHeader();
+
+  useFocusEffect(
+    useCallback(() => {
+      setCustomColor(TW_COLORS.PRIMARY);
+
+      return () => {
+        // Optional cleanup here
+      };
+    }, [])
+  );
 
   const handleSkip = useCallback(() => {
     logEvents.logIndicatorObdPass(5);

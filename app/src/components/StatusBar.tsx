@@ -1,7 +1,7 @@
 import { colors } from "@/utils/colors";
 import { View } from "react-native";
 
-const IosStatusBarColor = ({ color }: { color?: string }) => (
+const StatusBarColor = ({ color }: { color?: string }) => (
   <View
     style={{
       position: "absolute",
@@ -14,4 +14,4 @@ const IosStatusBarColor = ({ color }: { color?: string }) => (
     }}
   />
 );
-export default IosStatusBarColor;
+export default StatusBarColor;
