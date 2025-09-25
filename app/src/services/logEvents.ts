@@ -1115,7 +1115,7 @@ const logAddIndicatorCategory = async (categoryId: number) => {
   });
 };
 
-const logCreatePersonnalizedIndicator = async (categoryId) => {
+const logCreatePersonalizedIndicator = async (categoryId) => {
   await logEvent({
     category: "INDICATORS",
     action: "CREATE_PERSONNALIZED_INDICATOR",
@@ -1253,6 +1253,6 @@ export default {
   logStartAddIndicator,
   logAddIndicator,
   logAddIndicatorCategory,
-  logCreatePersonnalizedIndicator,
+  logCreatePersonalizedIndicator,
   logOpenIndicatorsSettings,
 };

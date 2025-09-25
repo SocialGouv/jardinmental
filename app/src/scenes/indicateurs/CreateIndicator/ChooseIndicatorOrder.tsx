@@ -59,7 +59,7 @@ const ChooseIndicatorOrder = ({
       mainCategory: route.params.indicatorCategory,
       version: 3,
     });
-    logEvents.logCreatePersonnalizedIndicator(INDICATOR_CATEGORIES_DATA[route.params.indicatorCategory].matomoId);
+    logEvents.logCreatePersonalizedIndicator(INDICATOR_CATEGORIES_DATA[route.params.indicatorCategory].matomoId);
 
     setLoading(false);
     navigation.navigate("symptoms");
