@@ -330,11 +330,11 @@ const logDataImport = async () => {
 const logNPSOpen = async () => {
   await logEvent({
     category: "NPS",
-    action: "NPS_OPEN",
+    action: "OPEN_NPS",
   });
 };
 
-const logNPSUsefulSend = async (value) => {
+const _deprecatedLogNPSUsefulSend = async (value) => {
   await logEvent({
     category: "NPS",
     action: "NPS_SEND",
@@ -343,12 +343,19 @@ const logNPSUsefulSend = async (value) => {
   });
 };
 
-const logNPSRecoSend = async (value) => {
+const _deprecatedLogNPSRecoSend = async (value) => {
   await logEvent({
     category: "NPS",
     action: "NPS_SEND",
     name: "notes-reco",
     value,
+  });
+};
+
+const logNPSFormSent = async () => {
+  await logEvent({
+    category: "NPS",
+    action: "SEND_NPS",
   });
 };
 
@@ -1165,8 +1172,9 @@ export default {
   logBeckAddCustomWho,
   logBeckAddCustomEmotion,
   logBeckAddCustomSensation,
-  logNPSUsefulSend,
-  logNPSRecoSend,
+  _deprecatedLogNPSUsefulSend,
+  _deprecatedLogNPSRecoSend,
+  logNPSFormSent,
   logAddNoteDiary,
   logEditNoteDiary,
   logDeleteNoteDiary,
