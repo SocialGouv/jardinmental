@@ -1163,6 +1163,51 @@ const logOpenFaq = async () => {
   });
 };
 
+// EMERGENCY PAGE EVENTS
+const logClickMonSoutienPsy = async () => {
+  await logEvent({
+    category: "EMERGENCY",
+    action: "CLICK_MON_SOUTIEN_PSY",
+  });
+};
+
+const logClickSantePsyEtudiant = async () => {
+  await logEvent({
+    category: "EMERGENCY",
+    action: "CLICK_SANTE_PSY_ETUDIANT",
+  });
+};
+
+const logOpenCounsellingSection = async () => {
+  await logEvent({
+    category: "EMERGENCY",
+    action: "OPEN_COUNSELLING_SECTION",
+  });
+};
+
+const logOpenHelplinesSection = async () => {
+  await logEvent({
+    category: "EMERGENCY",
+    action: "OPEN_HELPLINES_SECTION",
+  });
+};
+
+const logCallHelpline = async (number: string) => {
+  await logEvent({
+    category: "EMERGENCY",
+    action: "CALL_HELPLINE",
+    name: "phone_number",
+    value: parseInt(number, 10),
+  });
+};
+
+const logOpenEmergencyContact = async () => {
+  await logEvent({
+    category: "EMERGENCY",
+    action: "OPEN_EMERGENCY_CONTACT",
+  });
+};
+
 // OBJECTIVES MANAGEMENT
 
 const logAddObjectiveNative = async () => {
@@ -1394,6 +1439,13 @@ export default {
   logResourceArticleTimeSpentSeconds,
   logResourceOpenedExternalLink,
   logOpenedRessources,
+  // Support page events
+  logClickMonSoutienPsy,
+  logClickSantePsyEtudiant,
+  logOpenCounsellingSection,
+  logOpenHelplinesSection,
+  logCallHelpline,
+  logOpenEmergencyContact,
   // Objectives management functions
   logAddObjectiveNative,
   logAddObjectivePersonalized,
