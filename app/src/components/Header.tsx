@@ -14,6 +14,7 @@ import HorizontalDots from "@assets/svg/icon/HorizontalDots";
 import MessageHeartCircleIcon from "@assets/svg/icon/MessageHeartCircle";
 import { SquircleButton } from "expo-squircle-view";
 import { TW_COLORS } from "@/utils/constants";
+import logEvents from "@/services/logEvents";
 
 interface HeaderProps {
   title: string;
