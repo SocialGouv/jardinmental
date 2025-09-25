@@ -110,7 +110,8 @@ const Tabs = ({ navigation, route }) => {
       <View
         style={{
           position: "absolute",
-          bottom: insets.bottom,
+          // when there is no insets bottom (ie: iOS SE) we add a little padding to avoid tabbar to stick to bottom edge
+          bottom: insets.bottom === 0 ? 5 : insets.bottom,
           left: 10,
           right: 10,
           zIndex: 1000,
