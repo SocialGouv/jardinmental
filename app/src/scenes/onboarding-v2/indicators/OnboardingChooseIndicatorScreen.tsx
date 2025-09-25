@@ -248,9 +248,6 @@ const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation, route })
     await localStorage.setOnboardingDone(true);
     if (isSkipped) {
       logEvents.logIndicatorObdPass(19);
-    } else {
-      const matomoIds = allIndicators.map((ind) => ind.matomoId).filter((id) => id !== undefined);
-      logEvents.logIndicatorObdValidate(matomoIds);
     }
     navigation.navigate(NextRoute);
   };

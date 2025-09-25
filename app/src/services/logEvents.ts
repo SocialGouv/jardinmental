@@ -516,7 +516,7 @@ const _legacyLogInputDrugSurveyPriseDeTraitementSiBesoin = async () => {
 };
 
 // beck
-const logActivateBeck = async (v) => {
+const _deprecatedLogActivateBeck = async (v) => {
   await logEvent({
     category: "BECK",
     action: "BECK_ACTIVATE",
@@ -818,7 +818,7 @@ const logIndicatorObdStart = async () => {
   });
 };
 
-const logIndicatorObdLvl1 = async (themes: number[]) => {
+const _deprecatedLogIndicatorObdLvl1 = async (themes: number[]) => {
   for (let i = 0; i < themes.length; i++) {
     await logEvent({
       category: ONBOARDING,
@@ -838,7 +838,7 @@ const logIndicatorObdPass = async (screen) => {
   });
 };
 
-const logIndicatorObdLvl2 = async (subThemes, count) => {
+const _deprecatedLogIndicatorObdLvl2 = async (subThemes, count) => {
   for (let i = 0; i < subThemes.length; i++) {
     await logEvent({
       category: ONBOARDING,
@@ -856,7 +856,7 @@ const logIndicatorObdLvl2 = async (subThemes, count) => {
   });
 };
 
-const logIndicatorObdValidate = async (indicators: number[]) => {
+const _deprecatedLogIndicatorObdValidate = async (indicators: number[]) => {
   for (let i = 0; i < indicators.length; i++) {
     await logEvent({
       category: ONBOARDING,
@@ -1202,9 +1202,9 @@ const logOpenSettings = async () => {
   await logEvent({
     category: "PARAMETERS",
     action: "OPEN_SETTINGS",
-  })
-}
-    
+  });
+};
+
 // EMERGENCY PAGE EVENTS
 const logClickMonSoutienPsy = async () => {
   await logEvent({
@@ -1390,7 +1390,7 @@ export default {
   logProNPSSend,
   logProNPSContactSend,
   logDrugAdd,
-  logActivateBeck,
+  _deprecatedLogActivateBeck,
   logBeckStepOpen,
   logBeckViewOpen,
   logDeleteBeck,
@@ -1444,10 +1444,10 @@ export default {
   logHumeurObdSelect,
   logHumeurObdConfirm,
   logIndicatorObdStart,
-  logIndicatorObdLvl1,
+  _deprecatedLogIndicatorObdLvl1,
   logIndicatorObdPass,
-  logIndicatorObdLvl2,
-  logIndicatorObdValidate,
+  _deprecatedLogIndicatorObdLvl2,
+  _deprecatedLogIndicatorObdValidate,
   logQuestObdStart,
   logSleepObdValidate,
   logQuestObdStart2,
