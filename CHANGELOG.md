@@ -1,3 +1,10 @@
+## [1.88.1](https://github.com/SocialGouv/jardinmental/compare/v1.88.0...v1.88.1) (2025-09-25)
+
+
+### Bug Fixes
+
+* add back today.svg and yesterday.svg import as there are still used ([#499](https://github.com/SocialGouv/jardinmental/issues/499)) ([9504422](https://github.com/SocialGouv/jardinmental/commit/950442238c64fdc242de058b9745d104fc0a295e))
+
 # [1.88.0](https://github.com/SocialGouv/jardinmental/compare/v1.87.0...v1.88.0) (2025-09-25)
 
 
