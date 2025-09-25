@@ -76,6 +76,7 @@ import SurveySuccessScreen from "../scenes/survey/SurveySuccessScreen";
 import FaqMainScreen from "@/scenes/faq/FaqMainScreen";
 import FaqDetailScreen from "@/scenes/faq/FaqDetailScreen";
 import ResourceArticle from "../scenes/resources/ResourceArticle";
+import SupportScreen from "@/scenes/support/SupportScreen";
 
 const Stack = createStackNavigator();
 
@@ -261,6 +262,7 @@ class Router extends React.Component<RouterProps> {
             <Stack.Screen name="onboarding-hint" component={OnboardingHint} />
             <Stack.Screen name="onboarding-felicitation" component={OnboardingFelicitation} />
             <Stack.Screen name="supported" component={Supported} />
+            <Stack.Screen name="support" component={SupportScreen} />
             <Stack.Screen name="cgu" component={CGU} />
             <Stack.Screen name="privacy" component={Privacy} />
             <Stack.Screen name="legal-mentions" component={LegalMentions} />

@@ -86,7 +86,10 @@ const CustomSymptomScreen = ({ navigation, route, settings = false }) => {
               variant="outline"
               className="mb-2"
               size="medium"
-              onPress={() => navigation.navigate("EDIT_INDICATOR")}
+              onPress={() => {
+                logEvents.logStartAddIndicator();
+                navigation.navigate("EDIT_INDICATOR");
+              }}
               title="Ajouter un indicateur"
             />
             <JMButton

@@ -1,3 +1,52 @@
+# [1.88.0](https://github.com/SocialGouv/jardinmental/compare/v1.87.0...v1.88.0) (2025-09-25)
+
+
+### Features
+
+* add new support page ([#494](https://github.com/SocialGouv/jardinmental/issues/494)) ([99979cb](https://github.com/SocialGouv/jardinmental/commit/99979cb90899a818a2ab33532c4ddfc852a2e961))
+
+# [1.87.0](https://github.com/SocialGouv/jardinmental/compare/v1.86.0...v1.87.0) (2025-09-25)
+
+
+### Features
+
+* add checklist logs ([#496](https://github.com/SocialGouv/jardinmental/issues/496)) ([ca355ab](https://github.com/SocialGouv/jardinmental/commit/ca355ab1ae15b76c7771b7aa143d9c018e7ca420))
+
+# [1.86.0](https://github.com/SocialGouv/jardinmental/compare/v1.85.0...v1.86.0) (2025-09-25)
+
+
+### Features
+
+* add indicator logs ([#497](https://github.com/SocialGouv/jardinmental/issues/497)) ([a188f17](https://github.com/SocialGouv/jardinmental/commit/a188f179ed014315176fb7f4f676afcfeb6e4a92))
+
+# [1.85.0](https://github.com/SocialGouv/jardinmental/compare/v1.84.0...v1.85.0) (2025-09-25)
+
+
+### Features
+
+* add log NPS ([#495](https://github.com/SocialGouv/jardinmental/issues/495)) ([cd8fc8c](https://github.com/SocialGouv/jardinmental/commit/cd8fc8c63d65c92f6ae33cf00189f290a1461eaa))
+
+# [1.84.0](https://github.com/SocialGouv/jardinmental/compare/v1.83.0...v1.84.0) (2025-09-25)
+
+
+### Features
+
+* add drug loading function ([#498](https://github.com/SocialGouv/jardinmental/issues/498)) ([b4bd218](https://github.com/SocialGouv/jardinmental/commit/b4bd218f47f8fc5ed0fdc297f2b5965515e56d4d))
+
+# [1.83.0](https://github.com/SocialGouv/jardinmental/compare/v1.82.0...v1.83.0) (2025-09-23)
+
+
+### Features
+
+* bump version ios 278, android 270 ([40c4641](https://github.com/SocialGouv/jardinmental/commit/40c46419dbf0d9f321ab549e05b654a7cf5a8913))
+
+# [1.82.0](https://github.com/SocialGouv/jardinmental/compare/v1.81.0...v1.82.0) (2025-09-23)
+
+
+### Features
+
+* **status-item:** integrate new status-item design ([#444](https://github.com/SocialGouv/jardinmental/issues/444)) ([b988f5f](https://github.com/SocialGouv/jardinmental/commit/b988f5f8392cb73f71f02ee3e96d338d99e711e2))
+
 # [1.81.0](https://github.com/SocialGouv/jardinmental/compare/v1.80.0...v1.81.0) (2025-09-23)
 
 

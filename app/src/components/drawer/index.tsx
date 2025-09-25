@@ -214,7 +214,7 @@ export default ({ navigation, visible, onClick }) => {
                       backgroundColor: TW_COLORS.CNAM_CYAN_100_LIGHTEN_80,
                     }}
                     title="Contacts utiles 24h/24 - 7J/7"
-                    path="infos"
+                    path="support"
                     navigation={navigation}
                     onClick={onClick}
                   />
