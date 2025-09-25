@@ -1,3 +1,10 @@
+## [1.89.3](https://github.com/SocialGouv/jardinmental/compare/v1.89.2...v1.89.3) (2025-09-25)
+
+
+### Bug Fixes
+
+* fix status bar color for android ([#502](https://github.com/SocialGouv/jardinmental/issues/502)) ([f69b5f2](https://github.com/SocialGouv/jardinmental/commit/f69b5f26edbc67d09cf69425688e1339274f4370))
+
 ## [1.89.2](https://github.com/SocialGouv/jardinmental/compare/v1.89.1...v1.89.2) (2025-09-25)
 
 
