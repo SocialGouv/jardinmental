@@ -38,6 +38,7 @@ const SettingsModal = ({ navigation, visible, onClick }) => {
             title="Saisir mon traitement"
             navigation={navigation}
             onClick={async () => {
+              logEvents.logOpenDrugSettings();
               onClick();
               const treatment = await localStorage.getMedicalTreatment();
               if (treatment) {
