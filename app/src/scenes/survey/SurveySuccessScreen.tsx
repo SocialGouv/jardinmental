@@ -374,14 +374,21 @@ const SurveySuccessScreen: React.FC<SurveySuccessScreenProps> = ({ navigation, r
   const [showPanel, setShowPanel] = useState(false);
   const [currentMessage, setCurrentMessage] = useState(ALL_MESSAGES[0]); // Default fallback
   const [thumbSelection, setThumbSelection] = useState<"up" | "down" | null>(null);
+  const [isDevMode, setIsDevMode] = useState(false);
 
-  // Load sequential motivational message
+  // Check dev mode and load sequential motivational message
   useEffect(() => {
-    const loadMessage = async () => {
-      const message = await getNextMotivationalMessage();
-      setCurrentMessage(message);
+    const initializeScreen = async () => {
+      const devMode = await AsyncStorage.getItem("devMode");
+      const isInDevMode = devMode === "true";
+      setIsDevMode(isInDevMode);
+
+      if (isInDevMode) {
+        const message = await getNextMotivationalMessage();
+        setCurrentMessage(message);
+      }
     };
-    loadMessage();
+    initializeScreen();
   }, []);
 
   // Animation values
@@ -389,36 +396,9 @@ const SurveySuccessScreen: React.FC<SurveySuccessScreenProps> = ({ navigation, r
   const buttonOpacity = useSharedValue(0);
   const contentOpacity = useSharedValue(1); // Start visible, fade out when panel opens
 
-  useEffect(() => {
-    // Show panel after 1.5 seconds
-    const timer = setTimeout(() => {
-      setShowPanel(true);
-      // Fade out content at the same time panel starts
-      contentOpacity.value = withTiming(0, {
-        duration: 750,
-        easing: Easing.out(Easing.cubic),
-      });
-      // Animate panel sliding up
-      panelTranslateY.value = withTiming(0, {
-        duration: 750,
-        easing: Easing.out(Easing.cubic),
-      });
-      // Show button with delay and opacity animation
-      buttonOpacity.value = withDelay(
-        1000,
-        withTiming(1, {
-          duration: 750,
-          easing: Easing.out(Easing.cubic),
-        })
-      );
-    }, 1500);
-
-    return () => clearTimeout(timer);
-  }, []);
-
   const handleFinish = () => {
-    // Log Matomo event based on thumb selection
-    if (thumbSelection) {
+    // Log Matomo event based on thumb selection (only in dev mode)
+    if (isDevMode && thumbSelection) {
       if (thumbSelection === "up") {
         logEvents.logHealthTipFeedbackUp(currentMessage.id);
       } else {
@@ -435,6 +415,42 @@ const SurveySuccessScreen: React.FC<SurveySuccessScreenProps> = ({ navigation, r
   const handleThumbPress = (thumbType: "up" | "down") => {
     setThumbSelection(thumbSelection === thumbType ? null : thumbType);
   };
+
+  useEffect(() => {
+    if (isDevMode) {
+      // Dev mode: Show panel after 1.5 seconds
+      const timer = setTimeout(() => {
+        setShowPanel(true);
+        // Fade out content at the same time panel starts
+        contentOpacity.value = withTiming(0, {
+          duration: 750,
+          easing: Easing.out(Easing.cubic),
+        });
+        // Animate panel sliding up
+        panelTranslateY.value = withTiming(0, {
+          duration: 750,
+          easing: Easing.out(Easing.cubic),
+        });
+        // Show button with delay and opacity animation
+        buttonOpacity.value = withDelay(
+          1000,
+          withTiming(1, {
+            duration: 750,
+            easing: Easing.out(Easing.cubic),
+          })
+        );
+      }, 1500);
+
+      return () => clearTimeout(timer);
+    } else {
+      // Production mode: Show message for 2 seconds then finish
+      const timer = setTimeout(() => {
+        handleFinish();
+      }, 2000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [isDevMode]);
 
   useFocusEffect(
     useCallback(() => {
@@ -474,8 +490,8 @@ const SurveySuccessScreen: React.FC<SurveySuccessScreenProps> = ({ navigation, r
         </Animated.View>
       </View>
 
-      {/* Animated Bottom Panel */}
-      {showPanel && (
+      {/* Animated Bottom Panel - Only show in dev mode */}
+      {isDevMode && showPanel && (
         <Animated.View
           style={[
             {
