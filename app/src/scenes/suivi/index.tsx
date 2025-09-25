@@ -90,7 +90,7 @@ const Suivi = ({ navigation, startSurvey }) => {
 
   return (
     <>
-      <SafeAreaView style={styles.safe}>
+      <View style={[styles.safe]}>
         <View style={styles.headerContainerNavigation}>
           <Header title="Mes analyses" navigation={navigation} scrollY={scrollY} />
         </View>
@@ -118,7 +118,7 @@ const Suivi = ({ navigation, startSurvey }) => {
           </View>
         )}
         {renderChart(chartType)}
-      </SafeAreaView>
+      </View>
       <FloatingPlusButton shadow onPress={startSurvey} plusPosition={0} />
     </>
   );
@@ -146,7 +146,7 @@ export const styles = StyleSheet.create({
   },
   safe: {
     flex: 1,
-    backgroundColor: colors.LIGHT_BLUE,
+    // backgroundColor: colors.LIGHT_BLUE,
   },
 });
 

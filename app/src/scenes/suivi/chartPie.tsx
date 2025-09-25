@@ -5,7 +5,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { getArrayOfDatesFromTo } from "../../utils/date/helpers";
 import { DiaryDataContext } from "../../context/diaryData";
 import Text from "../../components/MyText";
-import { displayedCategories, EMOTION_COLORS, scoresMapIcon } from "../../utils/constants";
+import { displayedCategories, EMOTION_COLORS, scoresMapIcon, TAB_BAR_HEIGHT } from "../../utils/constants";
 import { colors } from "../../utils/colors";
 import { buildSurveyData } from "../survey/survey-data";
 import PieChart from "react-native-pie-chart";
@@ -22,6 +22,7 @@ import { TW_COLORS } from "../../utils/constants";
 import { Indicator } from "@/entities/Indicator";
 import { getIndicatorKey } from "@/utils/indicatorUtils";
 import Legend from "./Legend";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const ChartPie = ({ navigation, fromDate, toDate, onScroll }) => {
   const [diaryData] = React.useContext(DiaryDataContext);
@@ -29,6 +30,7 @@ const ChartPie = ({ navigation, fromDate, toDate, onScroll }) => {
   const [userIndicateurs, setUserIndicateurs] = React.useState<Indicator[]>([]);
   const [chartDates, setChartDates] = React.useState([]);
   const [isEmpty, setIsEmpty] = React.useState();
+  const insets = useSafeAreaInsets();
 
   useFocusEffect(
     React.useCallback(() => {
@@ -140,7 +142,16 @@ const ChartPie = ({ navigation, fromDate, toDate, onScroll }) => {
   }
 
   return (
-    <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContainer} onScroll={onScroll}>
+    <ScrollView
+      style={styles.scrollView}
+      contentContainerStyle={[
+        styles.scrollContainer,
+        {
+          paddingBottom: insets.bottom + TAB_BAR_HEIGHT,
+        },
+      ]}
+      onScroll={onScroll}
+    >
       {userIndicateurs
         ?.filter((ind) => isChartVisible(getIndicatorKey(ind)) && ind.active)
         ?.map((_indicateur, index) => {

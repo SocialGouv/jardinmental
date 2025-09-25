@@ -2,19 +2,19 @@ import React from "react";
 import { StyleSheet, View, ScrollView } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 
-import { getArrayOfDatesFromTo } from "../../../utils/date/helpers";
-import { DiaryDataContext } from "../../../context/diaryData";
-import Text from "../../../components/MyText";
-import { displayedCategories } from "../../../utils/constants";
-import { colors } from "../../../utils/colors";
-import Icon from "../../../components/Icon";
-import localStorage from "../../../utils/localStorage";
-import logEvents from "../../../services/logEvents";
-import Button from "../../../components/Button";
+import { getArrayOfDatesFromTo } from "@/utils/date/helpers";
+import { DiaryDataContext } from "@/context/diaryData";
+import Text from "@/components/MyText";
+import { displayedCategories, TAB_BAR_HEIGHT } from "@/utils/constants";
+import { colors } from "@/utils/colors";
+import Icon from "@/components/Icon";
+import localStorage from "@/utils/localStorage";
+import logEvents from "@/services/logEvents";
 import { FriseGraph } from "./FriseGraph";
-import { GoalsFriseGraph } from "../../goals/suivi/GoalsFriseGraph";
 import JMButton from "@/components/JMButton";
-import { getIndicatorKey } from "../../../utils/indicatorUtils";
+import { getIndicatorKey } from "@/utils/indicatorUtils";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { GoalsFriseGraph } from "@/scenes/goals/suivi/GoalsFriseGraph";
 
 const FriseGraphList = ({ navigation, fromDate, toDate, focusedScores, showTraitement, onScroll }) => {
   const [diaryData] = React.useContext(DiaryDataContext);
@@ -22,6 +22,7 @@ const FriseGraphList = ({ navigation, fromDate, toDate, focusedScores, showTrait
   const [isEmpty, setIsEmpty] = React.useState();
   const [goalsIsEmpty, setGoalsIsEmpty] = React.useState();
   const chartDates = getArrayOfDatesFromTo({ fromDate, toDate });
+  const insets = useSafeAreaInsets();
 
   useFocusEffect(
     React.useCallback(() => {
@@ -111,7 +112,14 @@ const FriseGraphList = ({ navigation, fromDate, toDate, focusedScores, showTrait
 
   if (isEmpty && goalsIsEmpty) {
     return (
-      <View style={styles.emptyContainer}>
+      <View
+        style={[
+          styles.emptyContainer,
+          {
+            paddingBottom: insets.bottom + TAB_BAR_HEIGHT,
+          },
+        ]}
+      >
         <View style={styles.subtitleContainer}>
           <Icon icon="InfoSvg" width={25} height={25} color={colors.LIGHT_BLUE} />
           <Text style={styles.subtitle}>
@@ -125,7 +133,16 @@ const FriseGraphList = ({ navigation, fromDate, toDate, focusedScores, showTrait
 
   return (
     <>
-      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContainer} onScroll={onScroll}>
+      <ScrollView
+        style={styles.scrollView}
+        contentContainerStyle={[
+          styles.scrollContainer,
+          {
+            paddingBottom: insets.bottom + TAB_BAR_HEIGHT,
+          },
+        ]}
+        onScroll={onScroll}
+      >
         {userIndicateurs
           ?.filter((ind) => isChartVisible(getIndicatorKey(ind)) && ind.active)
           ?.map((ind) => (

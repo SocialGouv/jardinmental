@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { StyleSheet, View, SafeAreaView, Dimensions, Animated, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Dimensions, Animated, Text, TouchableOpacity } from "react-native";
 
 import { useFocusEffect } from "@react-navigation/native";
 import Header from "../../components/Header";
@@ -25,11 +25,12 @@ import { typography } from "@/utils/typography";
 import { mergeClassNames } from "@/utils/className";
 import JMButton from "@/components/JMButton";
 import { shouldShowChecklistBanner, handlePlusTardClick as handleBannerDismiss } from "../../utils/checklistBanner";
-import { TW_COLORS } from "@/utils/constants";
+import { TAB_BAR_HEIGHT, TW_COLORS } from "@/utils/constants";
 import { SquircleView } from "expo-squircle-view";
 import { interpolate, useAnimatedScrollHandler, useDerivedValue, useSharedValue, useAnimatedStyle } from "react-native-reanimated";
 import { useStatusBar } from "@/context/StatusBarContext";
 import logEvents from "@/services/logEvents";
+import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 
 const Status = ({ navigation, startSurvey }) => {
   const [diaryData] = useContext(DiaryDataContext);
@@ -42,6 +43,7 @@ const Status = ({ navigation, startSurvey }) => {
   const infoModalOpacity = React.useRef(new Animated.Value(1)).current;
   const scrollRef = React.useRef();
   const { showLatestChangesModal } = useLatestChangesModal();
+  const insets = useSafeAreaInsets();
 
   const { setCustomColor } = useStatusBar();
 
@@ -261,7 +263,7 @@ const Status = ({ navigation, startSurvey }) => {
 
   return (
     <>
-      <SafeAreaView style={[styles.safe]}>
+      <SafeAreaView edges={["left", "right"]} style={[styles.safe]}>
         <Animated.View style={{ flex: 1 }}>
           <NPS forceView={NPSvisible} close={() => setNPSvisible(false)} />
           <Header title={"Mes observations 🌱"} navigation={navigation} scrollY={scrollY} scrollThreshold={75} />
@@ -271,7 +273,12 @@ const Status = ({ navigation, startSurvey }) => {
               ListHeaderComponent={renderHeader}
               ListFooterComponent={renderFooter}
               style={[styles.scrollView]}
-              contentContainerStyle={[styles.container]}
+              contentContainerStyle={[
+                styles.container,
+                {
+                  paddingBottom: insets.bottom + TAB_BAR_HEIGHT,
+                },
+              ]}
               ref={scrollRef}
               onScroll={scrollHandler}
             />
@@ -281,7 +288,10 @@ const Status = ({ navigation, startSurvey }) => {
               alwaysBounceVertical={false}
               ref={scrollRef}
               bounces={false}
-              style={styles.scrollView}
+              style={[styles.scrollView]}
+              contentContainerStyle={{
+                paddingBottom: insets.bottom + TAB_BAR_HEIGHT,
+              }}
               onScroll={scrollHandler}
               showsVerticalScrollIndicator={false}
             >
