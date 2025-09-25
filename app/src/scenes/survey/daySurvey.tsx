@@ -478,7 +478,7 @@ const DaySurvey = ({
                 <View className="rounded-full border-[1.5px] border-cnam-primary-800 bg-white w-10 h-10 items-center justify-center">
                   {React.createElement(INDICATOR_CATEGORIES_DATA[cat].icon, { color: TW_COLORS.BRAND_900 })}
                 </View>
-                <Text className={mergeClassNames(typography.displayXsBold, "text-left text-cnam-primary-900 ml-2 flex-1")}>
+                <Text className={mergeClassNames(typography.displayXsBold, "text-left text-cnam-primary-900 ml-2")}>
                   {INDICATOR_CATEGORIES_DATA[cat].name}
                 </Text>
                 <JMButton
@@ -523,7 +523,7 @@ const DaySurvey = ({
       </View>
       <GoalsDaySurvey date={initSurvey?.date} ref={goalsRef} scrollRef={scrollRef} route={route} />
       <View className="mb-2 px-4 pt-6 my-4">
-        <Text className={mergeClassNames(typography.displayXsBold, "text-left text-cnam-primary-900 ml-2 flex-1 mb-4")}>Note générale</Text>
+        <Text className={mergeClassNames(typography.displayXsBold, "text-left text-cnam-primary-900 ml-2 mb-4")}>Note générale</Text>
         <InputQuestion
           question={questionContext}
           onPress={toggleAnswer}
