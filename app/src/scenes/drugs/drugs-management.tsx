@@ -3,6 +3,7 @@ import { StyleSheet, View, TouchableOpacity, Text, Pressable } from "react-nativ
 import { colors } from "../../utils/colors";
 import { DiaryDataContext } from "../../context/diaryData";
 import localStorage from "../../utils/localStorage";
+import logEvents from "../../services/logEvents";
 import { getDrugListWithLocalStorage } from "../../utils/drugs-list";
 import { DrugsBottomSheet } from "@/components/DrugsBottomSheet";
 import { useBottomSheet } from "@/context/BottomSheetContext";
@@ -75,6 +76,7 @@ const DrugsManagement = ({ navigation, route }) => {
   };
 
   const handleDelete = async (drug: Drug) => {
+    logEvents.logDeleteDrug();
     const treatmentAfterDeletion = await localStorage.removeDrugFromTreatment(drug?.id);
     setMedicalTreatment(enrichTreatmentWithData(treatmentAfterDeletion, listDrugs));
   };
@@ -109,6 +111,9 @@ const DrugsManagement = ({ navigation, route }) => {
         <NavigationButtons
           absolute={true}
           onNext={() => {
+            if (medicalTreatment && medicalTreatment.length > 0) {
+              logEvents.logStartEditDrug();
+            }
             showBottomSheet(<DrugsBottomSheet onClose={onTreatmentUpdate} />);
           }}
           nextDisabled={!hasTreatment}
@@ -140,6 +145,7 @@ const DrugsManagement = ({ navigation, route }) => {
                 ref={reminderToggleRef}
                 checked={hasTreatment}
                 onCheckedChanged={async ({ checked }) => {
+                  logEvents.logToggleDrug(checked);
                   setHasTreatment(checked);
                   if (!checked) {
                     await localStorage.setMedicalTreatment([]);

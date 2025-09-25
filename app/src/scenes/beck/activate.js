@@ -29,7 +29,7 @@ export default ({ navigation }) => {
       },
     ]);
     await localStorage.setIsBeckActivated(v);
-    logEvents.logActivateBeck(v);
+    // logEvents._deprecatedLogActivateBeck(v);
     setIsBeckActivated(v);
   };
   useEffect(() => {

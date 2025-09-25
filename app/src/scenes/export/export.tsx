@@ -24,7 +24,7 @@ const Export = ({ navigation }) => {
 
   const printToFile = async () => {
     try {
-      logEvents.logDataExport();
+      logEvents.logExportSummary();
       setIsLoading(true);
       const html = await formatHtmlTable(diaryData, diaryNotes);
       const { uri } = await Print.printToFileAsync({

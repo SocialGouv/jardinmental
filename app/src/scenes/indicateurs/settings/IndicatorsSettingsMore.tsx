@@ -16,6 +16,7 @@ import { AnimatedHeaderScrollScreen } from "@/scenes/survey-v2/AnimatedHeaderScr
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
 import { Indicator } from "@/entities/Indicator";
+import logEvents from "@/services/logEvents";
 
 const IndicatorsSettingsMore = ({ navigation, route }) => {
   const [indicators, setIndicators] = useState([]);
@@ -77,13 +78,17 @@ const IndicatorsSettingsMore = ({ navigation, route }) => {
 };
 
 const IndicatorItem = ({ indicator, setIndicators }: { indicator: Indicator; setIndicators: (param: Indicator[]) => void }) => {
+  const deleteIndicator = () => {
+    logEvents.logDeleteIndicator();
+    setIndicators((prev) => prev.map((i) => (i.uuid === indicator.uuid ? { ...i, active: false } : i)));
+  };
   return (
     <View
       key={indicator.uuid}
       className={mergeClassNames("p-4 bg-gray-100 mb-2 rounded-xl flex-row items-center justify-between", !indicator.active ? "bg-gray-50" : "")}
     >
       <Text className={mergeClassNames(typography.textLgRegular, "text-cnam-primary-950")}>{indicator.name}</Text>
-      <TouchableOpacity onPress={() => setIndicators((prev) => prev.map((i) => (i.uuid === indicator.uuid ? { ...i, active: false } : i)))}>
+      <TouchableOpacity onPress={deleteIndicator}>
         <Icon icon="Bin2Svg" color={colors.BLUE} width="16" height="16" styleContainer={{ width: 16, height: 16 }} />
       </TouchableOpacity>
     </View>

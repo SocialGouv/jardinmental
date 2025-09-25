@@ -172,7 +172,7 @@ const DevMode = ({ navigation }) => {
           });
         }}
       ></JMButton>
-      <JMButton onPress={disableDevMode} title="Disable Dev Mode"></JMButton>
+      <JMButton className="mb-16" onPress={disableDevMode} title="Disable Dev Mode"></JMButton>
     </ScrollView>
   );
 };

@@ -23,7 +23,7 @@ jest.mock("expo-file-system", () => ({
 
 // Mock matomo logging
 jest.mock("../../src/services/logEvents", () => ({
-  logDataExport: jest.fn(),
+  logExportSummary: jest.fn(),
 }));
 
 describe("Export Component", () => {
@@ -236,7 +236,7 @@ describe("Export Component", () => {
 
       fireEvent.press(generateButton);
 
-      expect(logEvents.logDataExport).toHaveBeenCalledTimes(1);
+      expect(logEvents.logExportSummary).toHaveBeenCalledTimes(1);
       await waitFor(() => {
         expect(Print.printToFileAsync).toHaveBeenCalledTimes(1);
       });
@@ -382,7 +382,7 @@ describe("Export Component", () => {
 
       // 3. Verify that everything is executed
       await waitFor(() => {
-        expect(logEvents.logDataExport).toHaveBeenCalledTimes(1);
+        expect(logEvents.logExportSummary).toHaveBeenCalledTimes(1);
         expect(Print.printToFileAsync).toHaveBeenCalledTimes(1);
         expect(FileSystem.moveAsync).toHaveBeenCalledWith({
           from: "/path/to/generated/file.pdf",
@@ -392,14 +392,14 @@ describe("Export Component", () => {
       });
     });
 
-    test("should call logDataExport when generating file", async () => {
+    test("should call logExportSummary when generating file", async () => {
       renderWithContext(<Export navigation={mockNavigation} />);
 
       const generateButton = screen.getByText("Générer un fichier");
 
       fireEvent.press(generateButton);
 
-      expect(logEvents.logDataExport).toHaveBeenCalledTimes(1);
+      expect(logEvents.logExportSummary).toHaveBeenCalledTimes(1);
 
       await waitFor(() => {
         expect(Print.printToFileAsync).toHaveBeenCalledTimes(1);

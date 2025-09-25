@@ -1,22 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
-import { StyleSheet, ScrollView, View, TextInput, Keyboard, Text, TouchableOpacity, Dimensions } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { colors } from "../../utils/colors";
-import Button from "../../components/Button";
+import { ScrollView, View, TextInput, Text, TouchableOpacity, Dimensions } from "react-native";
 import localStorage from "../../utils/localStorage";
 import { getDrugListWithLocalStorage } from "../../utils/drugs-list";
-import CheckBox from "@react-native-community/checkbox";
-import NPS from "../../services/NPS/NPS";
-import BackButton from "../../components/BackButton";
-import AddElemToList from "../../components/AddElemToList";
-import { confirm } from "../../utils";
 import logEvents from "../../services/logEvents";
 import JMButton from "@/components/JMButton";
 import { LightSelectionnableItem } from "@/components/SelectionnableItem";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
 import PlusIcon from "@assets/svg/icon/plus";
-import NavigationButtons from "@/components/onboarding/NavigationButtons";
 import { Drug } from "@/entities/Drug";
 import HealthIcon from "@assets/svg/icon/Health";
 import { TW_COLORS } from "@/utils/constants";
@@ -25,14 +16,12 @@ const ELEMENT_HEIGHT = 55;
 const screenHeight = Dimensions.get("window").height;
 const height90vh = screenHeight * 0.9;
 
-const Drugs = ({ navigation, route, onClose }) => {
+const Drugs = ({ route, onClose }) => {
   const scrollRef = useRef();
   const [treatment, setTreatment] = useState<{ id: string }[]>([]);
   const [filter, setFilter] = useState();
   const [list, setList] = useState();
   const [filteredList, setFilteredList] = useState([]);
-  const [NPSvisible, setNPSvisible] = useState(false);
-  const [bufferCustomDrugs, setBufferCustomDrugs] = useState();
   const [viewElementIndex, setViewElementIndex] = useState();
 
   useEffect(() => {
@@ -186,6 +175,7 @@ const Drugs = ({ navigation, route, onClose }) => {
         <Text className={mergeClassNames(typography.textSmMedium, "text-gray-800 mb-2")}>Vous pourrez modifier cette sélection plus tard</Text>
         <JMButton
           onPress={async () => {
+            logEvents.logAddDrug();
             await localStorage.setMedicalTreatment(treatment);
             onClose(treatment);
           }}

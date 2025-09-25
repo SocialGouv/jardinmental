@@ -14,6 +14,7 @@ import HorizontalDots from "@assets/svg/icon/HorizontalDots";
 import MessageHeartCircleIcon from "@assets/svg/icon/MessageHeartCircle";
 import { SquircleButton } from "expo-squircle-view";
 import { TW_COLORS } from "@/utils/constants";
+import logEvents from "@/services/logEvents";
 
 interface HeaderProps {
   title: string;
@@ -115,9 +116,9 @@ const Header = ({ title, navigation, scrollY, scrollThreshold = 100 }: HeaderPro
             preserveSmoothing={true}
             borderRadius={16}
             onPress={() => {
-              navigation.push("infos");
+              navigation.push("support");
             }}
-            className="bg-cnam-primary-900 px-3 py-2 flex-row items-center"
+            className="bg-cnam-primary-900 px-3 py-2 flex-row items-center mr-4"
           >
             <MessageHeartCircleIcon />
             <Animated.View style={supportButtonAnimatedStyle}>
@@ -133,7 +134,10 @@ const Header = ({ title, navigation, scrollY, scrollThreshold = 100 }: HeaderPro
             width={16}
             height={16}
             styleContainer={{}}
-            onPress={() => setSettingsVisible(true)}
+            onPress={() => {
+              setSettingsVisible(true);
+              logEvents.logOpenSettings();
+            }}
           />
         </View>
       </View>
