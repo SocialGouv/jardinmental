@@ -360,11 +360,11 @@ const logDataImport = async () => {
 const logNPSOpen = async () => {
   await logEvent({
     category: "NPS",
-    action: "NPS_OPEN",
+    action: "OPEN_NPS",
   });
 };
 
-const logNPSUsefulSend = async (value) => {
+const _deprecatedLogNPSUsefulSend = async (value) => {
   await logEvent({
     category: "NPS",
     action: "NPS_SEND",
@@ -373,12 +373,19 @@ const logNPSUsefulSend = async (value) => {
   });
 };
 
-const logNPSRecoSend = async (value) => {
+const _deprecatedLogNPSRecoSend = async (value) => {
   await logEvent({
     category: "NPS",
     action: "NPS_SEND",
     name: "notes-reco",
     value,
+  });
+};
+
+const logNPSFormSent = async () => {
+  await logEvent({
+    category: "NPS",
+    action: "SEND_NPS",
   });
 };
 
@@ -454,6 +461,43 @@ const logDrugAdd = async (drug) => {
     action: "DRUG_ADD",
     name: "drug",
     value: drug,
+  });
+};
+
+const logAddDrug = async () => {
+  await logEvent({
+    category: "DRUG",
+    action: "ADD_DRUG",
+  });
+};
+
+const logStartEditDrug = async () => {
+  await logEvent({
+    category: "DRUG",
+    action: "START_EDIT_DRUG",
+  });
+};
+
+const logDeleteDrug = async () => {
+  await logEvent({
+    category: "DRUG",
+    action: "DELETE_DRUG",
+  });
+};
+
+const logToggleDrug = async (enabled: boolean) => {
+  await logEvent({
+    category: "DRUG",
+    action: "TOGGLE_DRUG",
+    name: "yes/no",
+    value: enabled ? 1 : 0,
+  });
+};
+
+const logOpenDrugSettings = async () => {
+  await logEvent({
+    category: "DRUG",
+    action: "OPEN_DRUG_SETTINGS",
   });
 };
 const _legacyLogInputDrugSurvey = async (numberOfInput) => {
@@ -1184,7 +1228,49 @@ const logOpenChecklist = async () => {
 const logPassChecklist = async () => {
   await logEvent({
     category: "ONBOARDING",
-    action: "PASS_CHECKLIST",
+    action: "PASS_CHECKLIST"
+  })
+};
+
+// INDICATORS EVENT FUNCTIONS
+const logStartAddIndicator = async () => {
+  await logEvent({
+    category: "INDICATORS",
+    action: "START_ADD_INDICATOR",
+  });
+};
+
+const logAddIndicator = async (indicatorId: number) => {
+  await logEvent({
+    category: "INDICATORS",
+    action: "ADD_INDICATOR",
+    value: indicatorId,
+    name: "indicator",
+  });
+};
+
+const logAddIndicatorCategory = async (categoryId: number) => {
+  await logEvent({
+    category: "INDICATORS",
+    action: "ADD_INDICATOR_CATEGORY",
+    name: "category",
+    value: categoryId,
+  });
+};
+
+const logCreatePersonalizedIndicator = async (categoryId) => {
+  await logEvent({
+    category: "INDICATORS",
+    action: "CREATE_PERSONNALIZED_INDICATOR",
+    name: "category",
+    value: categoryId,
+  });
+};
+
+const logOpenIndicatorsSettings = async () => {
+  await logEvent({
+    category: "INDICATORS",
+    action: "OPEN_INDICATORS_SETTINGS",
   });
 };
 
@@ -1227,8 +1313,9 @@ export default {
   logBeckAddCustomWho,
   logBeckAddCustomEmotion,
   logBeckAddCustomSensation,
-  logNPSUsefulSend,
-  logNPSRecoSend,
+  _deprecatedLogNPSUsefulSend,
+  _deprecatedLogNPSRecoSend,
+  logNPSFormSent,
   logAddNoteDiary,
   logEditNoteDiary,
   logDeleteNoteDiary,
@@ -1317,4 +1404,16 @@ export default {
   logOpenChecklist,
   logPassChecklist,
   logClickCheckList,
+  // indicator
+  logStartAddIndicator,
+  logAddIndicator,
+  logAddIndicatorCategory,
+  logCreatePersonalizedIndicator,
+  logOpenIndicatorsSettings,
+  // Drug logging functions
+  logAddDrug,
+  logStartEditDrug,
+  logDeleteDrug,
+  logToggleDrug,
+  logOpenDrugSettings,
 };

@@ -1,3 +1,24 @@
+# [1.86.0](https://github.com/SocialGouv/jardinmental/compare/v1.85.0...v1.86.0) (2025-09-25)
+
+
+### Features
+
+* add indicator logs ([#497](https://github.com/SocialGouv/jardinmental/issues/497)) ([a188f17](https://github.com/SocialGouv/jardinmental/commit/a188f179ed014315176fb7f4f676afcfeb6e4a92))
+
+# [1.85.0](https://github.com/SocialGouv/jardinmental/compare/v1.84.0...v1.85.0) (2025-09-25)
+
+
+### Features
+
+* add log NPS ([#495](https://github.com/SocialGouv/jardinmental/issues/495)) ([cd8fc8c](https://github.com/SocialGouv/jardinmental/commit/cd8fc8c63d65c92f6ae33cf00189f290a1461eaa))
+
+# [1.84.0](https://github.com/SocialGouv/jardinmental/compare/v1.83.0...v1.84.0) (2025-09-25)
+
+
+### Features
+
+* add drug loading function ([#498](https://github.com/SocialGouv/jardinmental/issues/498)) ([b4bd218](https://github.com/SocialGouv/jardinmental/commit/b4bd218f47f8fc5ed0fdc297f2b5965515e56d4d))
+
 # [1.83.0](https://github.com/SocialGouv/jardinmental/compare/v1.82.0...v1.83.0) (2025-09-23)
 
 
