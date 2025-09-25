@@ -151,6 +151,10 @@ const Tabs = ({ navigation, route }) => {
                   onPress={() => handleTabPress(tab.name)}
                   preserveSmoothing={true}
                   cornerSmoothing={100}
+                  accessible={true}
+                  accessibilityRole="tab"
+                  accessibilityLabel={`${tab.label} tab`}
+                  accessibilityState={{ selected: isActive }}
                   style={{
                     flex: 1,
                     alignItems: "center",
