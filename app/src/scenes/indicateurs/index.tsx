@@ -86,10 +86,20 @@ const CustomSymptomScreen = ({ navigation, route, settings = false }) => {
               variant="outline"
               className="mb-2"
               size="medium"
-              onPress={() => navigation.navigate("EDIT_INDICATOR")}
+              onPress={() => {
+                logEvents.logStartAddIndicator();
+                navigation.navigate("EDIT_INDICATOR");
+              }}
               title="Ajouter un indicateur"
             />
-            <JMButton variant="primary" onPress={() => navigation.navigate("indicators-settings-more")} title="Modifier mon questionnaire" />
+            <JMButton
+              variant="primary"
+              onPress={() => {
+                logEvents.logEditSurvey();
+                navigation.navigate("indicators-settings-more");
+              }}
+              title="Modifier mon questionnaire"
+            />
           </>
         </NavigationButtons>
       }

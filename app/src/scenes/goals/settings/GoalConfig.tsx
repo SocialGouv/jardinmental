@@ -20,6 +20,7 @@ import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
 import NavigationButtons from "@/components/onboarding/NavigationButtons";
 import { confirm } from "@/utils";
+import logEvents from "@/services/logEvents";
 
 export const GoalConfig = ({ navigation, route }) => {
   const goalId = route.params?.goalId;
@@ -27,7 +28,7 @@ export const GoalConfig = ({ navigation, route }) => {
   const goalDaysOfWeek = route.params?.goalDaysOfWeek;
   const editing = route.params?.editing;
   const [editingGoal, setEditingGoal] = useState();
-
+  const [reminderHasChanged, setReminderHasChanged] = useState<boolean>(false);
   const [ready, setReady] = useState(!editing ? true : false);
   const [loading, setLoading] = useState(false);
   const [deactivateLoading, setDeactivateLoading] = useState<boolean>(false);
@@ -61,8 +62,12 @@ export const GoalConfig = ({ navigation, route }) => {
     const reminder = reminderEnabled ? reminderTime : null;
     if (!editing) {
       await setGoalTracked({ id: goalId, daysOfWeek: goalDaysOfWeek, label: goalLabel, reminder });
+      logEvents.logAddObjectivePersonalized();
     } else {
       await setGoalTracked({ id: goalId, daysOfWeek: goalDaysOfWeek, reminder });
+      if (reminderHasChanged) {
+        logEvents.logEditObjectiveReminder();
+      }
     }
     setLoading(false);
     navigation.navigate("goals-settings");
@@ -149,7 +154,13 @@ export const GoalConfig = ({ navigation, route }) => {
                 />
               </InputGroupItem>
             )}
-            <InputGroupItem label="Programmer un rappel" onPress={() => reminderToggleRef?.current?.toggle?.()}>
+            <InputGroupItem
+              label="Programmer un rappel"
+              onPress={() => {
+                reminderToggleRef?.current?.toggle?.();
+                setReminderHasChanged(true);
+              }}
+            >
               <InputToggle
                 ref={reminderToggleRef}
                 checked={reminderEnabled}
@@ -179,6 +190,7 @@ export const GoalConfig = ({ navigation, route }) => {
             const dateTime = dayjs(date);
             if (!dateTime.isValid()) return;
             setReminderTime(set(new Date(), { hours: dateTime.hour(), minutes: dateTime.minute() }));
+            setReminderHasChanged(true);
           }
         }}
       />

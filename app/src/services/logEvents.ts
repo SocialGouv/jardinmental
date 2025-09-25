@@ -49,7 +49,37 @@ const logEvent = async ({
   name,
   value,
 }: {
-  category: "DAILY_QUESTIONNAIRE" | "FAQ" | "ONBOARDING";
+  category:
+    | "DAILY_QUESTIONNAIRE"
+    | "FAQ"
+    | "ONBOARDING"
+    | "APP"
+    | "FEELING"
+    | "PARAMETERS"
+    | "SYMPTOM"
+    | "CUSTOM_SYMPTOM"
+    | "CALENDAR"
+    | "INFOS"
+    | "CONTACT"
+    | "DATA_EXPORT"
+    | "DATA_EXPORT_AS_BACKUP"
+    | "DATA_IMPORT_BACKUP"
+    | "NPS"
+    | "SUPPORTED"
+    | "EXPLANATION"
+    | "DRUG"
+    | "BECK"
+    | "DIARY"
+    | "OPEN_TAB"
+    | "OPEN_SUB_TAB_STATUS"
+    | "ANALYSES"
+    | "SUIVI"
+    | "RECOMMEND"
+    | "PUSH_NOTIFICATION_TOKEN_REGISTER"
+    | "PUSH_NOTIFICATION_RECEIVE"
+    | "ANALYSIS"
+    | "RESOURCES"
+    | "OBJECTIVES";
   action: string;
   name?: string;
   value?: number;
@@ -323,11 +353,11 @@ const logDataImport = async () => {
 const logNPSOpen = async () => {
   await logEvent({
     category: "NPS",
-    action: "NPS_OPEN",
+    action: "OPEN_NPS",
   });
 };
 
-const logNPSUsefulSend = async (value) => {
+const _deprecatedLogNPSUsefulSend = async (value) => {
   await logEvent({
     category: "NPS",
     action: "NPS_SEND",
@@ -336,12 +366,19 @@ const logNPSUsefulSend = async (value) => {
   });
 };
 
-const logNPSRecoSend = async (value) => {
+const _deprecatedLogNPSRecoSend = async (value) => {
   await logEvent({
     category: "NPS",
     action: "NPS_SEND",
     name: "notes-reco",
     value,
+  });
+};
+
+const logNPSFormSent = async () => {
+  await logEvent({
+    category: "NPS",
+    action: "SEND_NPS",
   });
 };
 
@@ -417,6 +454,43 @@ const logDrugAdd = async (drug) => {
     action: "DRUG_ADD",
     name: "drug",
     value: drug,
+  });
+};
+
+const logAddDrug = async () => {
+  await logEvent({
+    category: "DRUG",
+    action: "ADD_DRUG",
+  });
+};
+
+const logStartEditDrug = async () => {
+  await logEvent({
+    category: "DRUG",
+    action: "START_EDIT_DRUG",
+  });
+};
+
+const logDeleteDrug = async () => {
+  await logEvent({
+    category: "DRUG",
+    action: "DELETE_DRUG",
+  });
+};
+
+const logToggleDrug = async (enabled: boolean) => {
+  await logEvent({
+    category: "DRUG",
+    action: "TOGGLE_DRUG",
+    name: "yes/no",
+    value: enabled ? 1 : 0,
+  });
+};
+
+const logOpenDrugSettings = async () => {
+  await logEvent({
+    category: "DRUG",
+    action: "OPEN_DRUG_SETTINGS",
   });
 };
 const _legacyLogInputDrugSurvey = async (numberOfInput) => {
@@ -1023,6 +1097,20 @@ const logOpenFaqSection = async (id) => {
   });
 };
 
+const logEditSurvey = async () => {
+  await logEvent({
+    category: "DAILY_QUESTIONNAIRE",
+    action: "EDIT_SURVEY",
+  });
+};
+
+const logDeleteIndicator = async () => {
+  await logEvent({
+    category: "DAILY_QUESTIONNAIRE",
+    action: "DELETE_INDICATOR",
+  });
+};
+
 const logResourceArticleSelected = async (matomoId: number) => {
   await logEvent({
     category: "RESOURCES",
@@ -1117,6 +1205,162 @@ const logOpenSettings = async () => {
   await logEvent({
     category: "PARAMETERS",
     action: "OPEN_SETTINGS",
+  })
+}
+    
+// EMERGENCY PAGE EVENTS
+const logClickMonSoutienPsy = async () => {
+  await logEvent({
+    category: "EMERGENCY",
+    action: "CLICK_MON_SOUTIEN_PSY",
+  });
+};
+
+const logClickSantePsyEtudiant = async () => {
+  await logEvent({
+    category: "EMERGENCY",
+    action: "CLICK_SANTE_PSY_ETUDIANT",
+  });
+};
+
+const logOpenCounsellingSection = async () => {
+  await logEvent({
+    category: "EMERGENCY",
+    action: "OPEN_COUNSELLING_SECTION",
+  });
+};
+
+const logOpenHelplinesSection = async () => {
+  await logEvent({
+    category: "EMERGENCY",
+    action: "OPEN_HELPLINES_SECTION",
+  });
+};
+
+const logCallHelpline = async (number: string) => {
+  await logEvent({
+    category: "EMERGENCY",
+    action: "CALL_HELPLINE",
+    name: "phone_number",
+    value: parseInt(number, 10),
+  });
+};
+
+const logOpenEmergencyContact = async () => {
+  await logEvent({
+    category: "EMERGENCY",
+    action: "OPEN_EMERGENCY_CONTACT",
+  });
+};
+
+// OBJECTIVES MANAGEMENT
+
+const logAddObjectiveNative = async () => {
+  await logEvent({
+    category: "OBJECTIVES",
+    action: "ADD_OBJECTIVE_NATIVE",
+  });
+};
+
+const logAddObjectivePersonalized = async () => {
+  await logEvent({
+    category: "OBJECTIVES",
+    action: "ADD_OBJECTIVE_PERSONALIZED",
+  });
+};
+
+const logStartAddObjective = async () => {
+  await logEvent({
+    category: "OBJECTIVES",
+    action: "START_ADD_OBJECTIVE",
+  });
+};
+
+const logEditObjectiveReminder = async () => {
+  await logEvent({
+    category: "OBJECTIVES",
+    action: "EDIT_OBJECTIVE_REMINDER",
+  });
+};
+
+const logOpenObjectivesSettings = async () => {
+  await logEvent({
+    category: "OBJECTIVES",
+    action: "OPEN_OBJECTIVES_SETTINGS",
+  });
+};
+
+type CheckListItemType = "reminder" | "follow-up" | "goals" | "treatment";
+
+const logClickCheckList = async (item: CheckListItemType) => {
+  const CHECKLIST_ITEM_TYPE_TO_ID: Record<CheckListItemType, number> = {
+    reminder: 1,
+    "follow-up": 2,
+    goals: 3,
+    treatment: 4,
+  };
+
+  await logEvent({
+    category: "ONBOARDING",
+    action: "CLICK_CHECKLIST",
+    name: "item",
+    value: CHECKLIST_ITEM_TYPE_TO_ID[item],
+  });
+};
+
+const logOpenChecklist = async () => {
+  await logEvent({
+    category: "ONBOARDING",
+    action: "OPEN_CHECKLIST",
+  });
+};
+
+const logPassChecklist = async () => {
+  await logEvent({
+    category: "ONBOARDING",
+    action: "PASS_CHECKLIST"
+  })
+};
+
+// INDICATORS EVENT FUNCTIONS
+const logStartAddIndicator = async () => {
+  await logEvent({
+    category: "INDICATORS",
+    action: "START_ADD_INDICATOR",
+  });
+};
+
+const logAddIndicator = async (indicatorId: number) => {
+  await logEvent({
+    category: "INDICATORS",
+    action: "ADD_INDICATOR",
+    value: indicatorId,
+    name: "indicator",
+  });
+};
+
+const logAddIndicatorCategory = async (categoryId: number) => {
+  await logEvent({
+    category: "INDICATORS",
+    action: "ADD_INDICATOR_CATEGORY",
+    name: "category",
+    value: categoryId,
+  });
+};
+
+const logCreatePersonalizedIndicator = async (categoryId) => {
+  await logEvent({
+    category: "INDICATORS",
+    action: "CREATE_PERSONNALIZED_INDICATOR",
+    name: "category",
+    value: categoryId,
+  });
+};
+
+const logOpenIndicatorsSettings = async () => {
+  await logEvent({
+    category: "INDICATORS",
+    action: "OPEN_INDICATORS_SETTINGS",
   });
 };
 
@@ -1158,8 +1402,9 @@ export default {
   logBeckAddCustomWho,
   logBeckAddCustomEmotion,
   logBeckAddCustomSensation,
-  logNPSUsefulSend,
-  logNPSRecoSend,
+  _deprecatedLogNPSUsefulSend,
+  _deprecatedLogNPSRecoSend,
+  logNPSFormSent,
   logAddNoteDiary,
   logEditNoteDiary,
   logDeleteNoteDiary,
@@ -1243,4 +1488,35 @@ export default {
   logEditReminder,
   logOpenReminderSettings,
   logOpenSettings,
+  logEditSurvey,
+  logDeleteIndicator,
+  // Support page events
+  logClickMonSoutienPsy,
+  logClickSantePsyEtudiant,
+  logOpenCounsellingSection,
+  logOpenHelplinesSection,
+  logCallHelpline,
+  logOpenEmergencyContact,
+  // Objectives management functions
+  logAddObjectiveNative,
+  logAddObjectivePersonalized,
+  logStartAddObjective,
+  logEditObjectiveReminder,
+  logOpenObjectivesSettings,
+  // checklist
+  logOpenChecklist,
+  logPassChecklist,
+  logClickCheckList,
+  // indicator
+  logStartAddIndicator,
+  logAddIndicator,
+  logAddIndicatorCategory,
+  logCreatePersonalizedIndicator,
+  logOpenIndicatorsSettings,
+  // Drug logging functions
+  logAddDrug,
+  logStartEditDrug,
+  logDeleteDrug,
+  logToggleDrug,
+  logOpenDrugSettings,
 };

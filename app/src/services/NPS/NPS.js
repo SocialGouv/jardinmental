@@ -96,6 +96,10 @@ class NPS extends React.Component {
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({ visible: false });
     }
+    if (!prevState.visible && this.state.visible) {
+      // Log when NPS modal opens
+      logEvents.logNPSOpen();
+    }
     if (prevState.visible && !this.state.visible) {
       if (this.props.close) {
         this.props.close();
@@ -146,9 +150,12 @@ class NPS extends React.Component {
     if (this.npsSent) {
       return;
     }
+    // Log when NPS form is sent
+    logEvents.logNPSFormSent();
+
     const { useful, feedback, contact } = this.state;
     this.setSendButton("Merci !");
-    logEvents.logNPSUsefulSend(useful);
+    // logEvents._deprecatedLogNPSUsefulSend(useful);
     const userId = Matomo.userId;
     const supported = await localStorage.getSupported();
     const startDate = await AsyncStorage.getItem("@SURVEY_DATE");

@@ -154,8 +154,9 @@ const Reminder = ({
     }
     await localStorage.setOnboardingDone(true);
     // await localStorage.setOnboardingStep(null);
-    logEvents.logReminderObdValidate();
     if (route?.params?.onboarding) {
+      // only in onboarding
+      logEvents.logReminderObdValidate();
       navigation.reset({
         index: 0,
         routes: [{ name: "tabs" }],

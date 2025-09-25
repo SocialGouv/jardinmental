@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
   iconContainer: {
     // borderColor: 'red',
     // borderWidth: 1,
-    width: 40,
+    width: 20,
     height: 40,
     display: "flex",
     alignItems: "center",

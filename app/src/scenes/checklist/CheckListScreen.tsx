@@ -20,6 +20,7 @@ import { INDICATEURS_HUMEUR, INDICATEURS_SOMMEIL } from "@/utils/liste_indicateu
 import { AnimatedHeaderScrollScreen } from "../survey-v2/AnimatedHeaderScrollScreen";
 import { DrugsBottomSheet } from "@/components/DrugsBottomSheet";
 import { useBottomSheet } from "@/context/BottomSheetContext";
+import logEvents from "@/services/logEvents";
 
 type checkListPath = "reminder" | "symptoms" | "profile" | "goals-settings" | "drugs" | "survey";
 type checkListIds = "reminder" | "indicators" | "profile" | "goals" | "drugs" | "survey";
@@ -37,24 +38,36 @@ const checklistItems: {
     icon: <Bell />,
     path: "reminder",
     id: "reminder",
+    onClick: () => {
+      logEvents.logClickCheckList("reminder");
+    },
   },
   {
     label: "Personnaliser mon suivi",
     icon: <Analytics />,
     path: "symptoms",
     id: "indicators",
+    onClick: () => {
+      logEvents.logClickCheckList("follow-up");
+    },
   },
   {
     label: "Personnaliser mes objectifs",
     icon: <Goal />,
     path: "goals-settings",
     id: "goals",
+    onClick: () => {
+      logEvents.logClickCheckList("goals");
+    },
   },
   {
     label: "Ajouter un traitement",
     icon: <Health />,
     path: "drugs",
     id: "drugs",
+    onClick: () => {
+      logEvents.logClickCheckList("treatment");
+    },
   },
   {
     label: "Ma première observation",
@@ -101,10 +114,16 @@ export default function CheckListScreen({ navigation, route }) {
           }}
         />
       );
+      if (item.onClick) {
+        item.onClick();
+      }
     } else {
       navigation.navigate(item.path, {
         previous: "checklist",
       });
+      if (item.onClick) {
+        item.onClick();
+      }
     }
   };
 
