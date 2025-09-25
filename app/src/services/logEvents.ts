@@ -426,6 +426,43 @@ const logDrugAdd = async (drug) => {
     value: drug,
   });
 };
+
+const logAddDrug = async () => {
+  await logEvent({
+    category: "DRUG",
+    action: "ADD_DRUG",
+  });
+};
+
+const logStartEditDrug = async () => {
+  await logEvent({
+    category: "DRUG",
+    action: "START_EDIT_DRUG",
+  });
+};
+
+const logDeleteDrug = async () => {
+  await logEvent({
+    category: "DRUG",
+    action: "DELETE_DRUG",
+  });
+};
+
+const logToggleDrug = async (enabled: boolean) => {
+  await logEvent({
+    category: "DRUG",
+    action: "TOGGLE_DRUG",
+    name: "yes/no",
+    value: enabled ? 1 : 0,
+  });
+};
+
+const logOpenDrugSettings = async () => {
+  await logEvent({
+    category: "DRUG",
+    action: "OPEN_DRUG_SETTINGS",
+  });
+};
 const _legacyLogInputDrugSurvey = async (numberOfInput) => {
   await logEvent({
     category: "DRUG",
@@ -1086,8 +1123,8 @@ const logOpenFaq = async () => {
   await logEvent({
     category: "FAQ",
     action: "OPEN_FAQ",
-  })
-}
+  });
+};
 
 export default {
   initMatomo,
@@ -1208,4 +1245,10 @@ export default {
   logResourceArticleTimeSpentSeconds,
   logResourceOpenedExternalLink,
   logOpenedRessources,
+  // Drug logging functions
+  logAddDrug,
+  logStartEditDrug,
+  logDeleteDrug,
+  logToggleDrug,
+  logOpenDrugSettings,
 };

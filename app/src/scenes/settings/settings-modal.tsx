@@ -9,6 +9,7 @@ import Download from "@assets/svg/icon/Download";
 import { useBottomSheet } from "@/context/BottomSheetContext";
 import { DrugsBottomSheet } from "@/components/DrugsBottomSheet";
 import localStorage from "@/utils/localStorage";
+import logEvents from "@/services/logEvents";
 
 const SettingsModal = ({ navigation, visible, onClick }) => {
   const { showBottomSheet, closeBottomSheet } = useBottomSheet();
@@ -28,6 +29,7 @@ const SettingsModal = ({ navigation, visible, onClick }) => {
             title="Saisir mon traitement"
             navigation={navigation}
             onClick={async () => {
+              logEvents.logOpenDrugSettings();
               onClick();
               const treatment = await localStorage.getMedicalTreatment();
               if (treatment) {
