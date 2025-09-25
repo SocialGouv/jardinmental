@@ -15,6 +15,7 @@ import { AnimatedHeaderScrollScreen } from "@/scenes/survey-v2/AnimatedHeaderScr
 import { Platform, View } from "react-native";
 import { mergeClassNames } from "@/utils/className";
 import NavigationButtons from "@/components/onboarding/NavigationButtons";
+import logEvents from "@/services/logEvents";
 
 const GOALS_EXAMPLE_FLAT = Object.values(GOALS_EXAMPLE).reduce((acc, subGoalCategory) => {
   return [...acc, ...subGoalCategory];
@@ -43,6 +44,7 @@ export const GoalsAddOptions = ({ navigation }) => {
             };
         }
         setEnabledExampleGoals(_enabledExampleGoals);
+        logEvents.logStartAddObjective();
       })();
     }, [])
   );
@@ -74,6 +76,7 @@ export const GoalsAddOptions = ({ navigation }) => {
             return acc;
           }, {}),
         });
+        logEvents.logAddObjectiveNative();
       }
     }
     setLoading(false);

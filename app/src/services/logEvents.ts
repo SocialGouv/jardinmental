@@ -49,7 +49,37 @@ const logEvent = async ({
   name,
   value,
 }: {
-  category: "DAILY_QUESTIONNAIRE" | "FAQ" | "ONBOARDING";
+  category:
+    | "DAILY_QUESTIONNAIRE"
+    | "FAQ"
+    | "ONBOARDING"
+    | "APP"
+    | "FEELING"
+    | "PARAMETERS"
+    | "SYMPTOM"
+    | "CUSTOM_SYMPTOM"
+    | "CALENDAR"
+    | "INFOS"
+    | "CONTACT"
+    | "DATA_EXPORT"
+    | "DATA_EXPORT_AS_BACKUP"
+    | "DATA_IMPORT_BACKUP"
+    | "NPS"
+    | "SUPPORTED"
+    | "EXPLANATION"
+    | "DRUG"
+    | "BECK"
+    | "DIARY"
+    | "OPEN_TAB"
+    | "OPEN_SUB_TAB_STATUS"
+    | "ANALYSES"
+    | "SUIVI"
+    | "RECOMMEND"
+    | "PUSH_NOTIFICATION_TOKEN_REGISTER"
+    | "PUSH_NOTIFICATION_RECEIVE"
+    | "ANALYSIS"
+    | "RESOURCES"
+    | "OBJECTIVES";
   action: string;
   name?: string;
   value?: number;
@@ -1133,6 +1163,75 @@ const logOpenFaq = async () => {
   });
 };
 
+// OBJECTIVES MANAGEMENT
+
+const logAddObjectiveNative = async () => {
+  await logEvent({
+    category: "OBJECTIVES",
+    action: "ADD_OBJECTIVE_NATIVE",
+  });
+};
+
+const logAddObjectivePersonalized = async () => {
+  await logEvent({
+    category: "OBJECTIVES",
+    action: "ADD_OBJECTIVE_PERSONALIZED",
+  });
+};
+
+const logStartAddObjective = async () => {
+  await logEvent({
+    category: "OBJECTIVES",
+    action: "START_ADD_OBJECTIVE",
+  });
+};
+
+const logEditObjectiveReminder = async () => {
+  await logEvent({
+    category: "OBJECTIVES",
+    action: "EDIT_OBJECTIVE_REMINDER",
+  });
+};
+
+const logOpenObjectivesSettings = async () => {
+  await logEvent({
+    category: "OBJECTIVES",
+    action: "OPEN_OBJECTIVES_SETTINGS",
+  });
+};
+
+type CheckListItemType = "reminder" | "follow-up" | "goals" | "treatment";
+
+const logClickCheckList = async (item: CheckListItemType) => {
+  const CHECKLIST_ITEM_TYPE_TO_ID: Record<CheckListItemType, number> = {
+    reminder: 1,
+    "follow-up": 2,
+    goals: 3,
+    treatment: 4,
+  };
+
+  await logEvent({
+    category: "ONBOARDING",
+    action: "CLICK_CHECKLIST",
+    name: "item",
+    value: CHECKLIST_ITEM_TYPE_TO_ID[item],
+  });
+};
+
+const logOpenChecklist = async () => {
+  await logEvent({
+    category: "ONBOARDING",
+    action: "OPEN_CHECKLIST",
+  });
+};
+
+const logPassChecklist = async () => {
+  await logEvent({
+    category: "ONBOARDING",
+    action: "PASS_CHECKLIST"
+  })
+};
+
 // INDICATORS EVENT FUNCTIONS
 const logStartAddIndicator = async () => {
   await logEvent({
@@ -1295,6 +1394,17 @@ export default {
   logResourceArticleTimeSpentSeconds,
   logResourceOpenedExternalLink,
   logOpenedRessources,
+  // Objectives management functions
+  logAddObjectiveNative,
+  logAddObjectivePersonalized,
+  logStartAddObjective,
+  logEditObjectiveReminder,
+  logOpenObjectivesSettings,
+  // checklist
+  logOpenChecklist,
+  logPassChecklist,
+  logClickCheckList,
+  // indicator
   logStartAddIndicator,
   logAddIndicator,
   logAddIndicatorCategory,

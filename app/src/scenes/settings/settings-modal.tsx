@@ -33,7 +33,16 @@ const SettingsModal = ({ navigation, visible, onClick }) => {
             }}
             icon={<Analytics />}
           />
-          <SettingItem title="Personnaliser mes objectifs" path="goals-settings" navigation={navigation} onClick={onClick} icon={<Goal />} />
+          <SettingItem
+            title="Personnaliser mes objectifs"
+            path="goals-settings"
+            navigation={navigation}
+            onClick={() => {
+              onClick();
+              logEvents.logOpenObjectivesSettings();
+            }}
+            icon={<Goal />}
+          />
           <SettingItem
             title="Saisir mon traitement"
             navigation={navigation}
