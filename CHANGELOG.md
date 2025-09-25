@@ -1,3 +1,10 @@
+# [1.88.0](https://github.com/SocialGouv/jardinmental/compare/v1.87.0...v1.88.0) (2025-09-25)
+
+
+### Features
+
+* add new support page ([#494](https://github.com/SocialGouv/jardinmental/issues/494)) ([99979cb](https://github.com/SocialGouv/jardinmental/commit/99979cb90899a818a2ab33532c4ddfc852a2e961))
+
 # [1.87.0](https://github.com/SocialGouv/jardinmental/compare/v1.86.0...v1.87.0) (2025-09-25)
 
 
