@@ -79,7 +79,9 @@ const logEvent = async ({
     | "PUSH_NOTIFICATION_RECEIVE"
     | "ANALYSIS"
     | "RESOURCES"
-    | "OBJECTIVES";
+    | "OBJECTIVES"
+    | "EMERGENCY"
+    | "INDICATORS";
   action: string;
   name?: string;
   value?: number;
@@ -1273,8 +1275,8 @@ const logOpenChecklist = async () => {
 const logPassChecklist = async () => {
   await logEvent({
     category: "ONBOARDING",
-    action: "PASS_CHECKLIST"
-  })
+    action: "PASS_CHECKLIST",
+  });
 };
 
 // INDICATORS EVENT FUNCTIONS
