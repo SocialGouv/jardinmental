@@ -4,7 +4,7 @@ import Animated, { useAnimatedStyle, interpolate, Extrapolate } from "react-nati
 import Icon from "./Icon";
 import Settings from "../scenes/settings/settings-modal";
 import Drawer from "./drawer";
-import { useIsFocused } from "@react-navigation/native";
+import { useFocusEffect, useIsFocused } from "@react-navigation/native";
 import { getBadgeNotesVersion } from "../scenes/news";
 import localStorage from "../utils/localStorage";
 import NeedUpdateContext from "../context/needUpdate";

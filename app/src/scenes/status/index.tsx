@@ -28,6 +28,7 @@ import { shouldShowChecklistBanner, handlePlusTardClick as handleBannerDismiss }
 import { TW_COLORS } from "@/utils/constants";
 import { SquircleView } from "expo-squircle-view";
 import { interpolate, useAnimatedScrollHandler, useDerivedValue, useSharedValue, useAnimatedStyle } from "react-native-reanimated";
+import { useStatusBar } from "@/context/StatusBarContext";
 
 const Status = ({ navigation, startSurvey }) => {
   const [diaryData] = useContext(DiaryDataContext);
@@ -40,6 +41,15 @@ const Status = ({ navigation, startSurvey }) => {
   const infoModalOpacity = React.useRef(new Animated.Value(1)).current;
   const scrollRef = React.useRef();
   const { showLatestChangesModal } = useLatestChangesModal();
+
+  const { setCustomColor } = useStatusBar();
+
+  useFocusEffect(
+    React.useCallback(() => {
+      // Reset current index when the screen is focused
+      setCustomColor(TW_COLORS.PRIMARY);
+    }, [])
+  );
 
   React.useEffect(() => {
     updateInactivityReminder();

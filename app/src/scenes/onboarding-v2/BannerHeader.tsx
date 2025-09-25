@@ -62,7 +62,7 @@ export default function BannerHeader({
 
   return (
     <>
-      {Platform.OS === "ios" && (
+      {
         <Animated.View
           style={[
             {
@@ -73,7 +73,7 @@ export default function BannerHeader({
             hidden ? { opacity: 0 } : undefined,
           ]}
         />
-      )}
+      }
       <Animated.View
         style={[
           {

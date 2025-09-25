@@ -95,7 +95,7 @@ const Tabs = ({ navigation, route }) => {
       >
         {(p) => (
           <View style={{ paddingTop: insets.top, flex: 1 }}>
-            {Platform.OS === "ios" && <IosStatusBarColor />}
+            <IosStatusBarColor />
             <Status {...p} startSurvey={startSurvey} />
           </View>
         )}
@@ -118,7 +118,7 @@ const Tabs = ({ navigation, route }) => {
       >
         {(p) => (
           <View style={{ paddingTop: insets.top, flex: 1 }}>
-            {Platform.OS === "ios" && <IosStatusBarColor />}
+            <IosStatusBarColor />
             <Suivi {...p} startSurvey={startSurvey} />
           </View>
         )}
@@ -144,7 +144,7 @@ const Tabs = ({ navigation, route }) => {
       >
         {(p) => (
           <View style={{ paddingTop: insets.top, flex: 1 }}>
-            {Platform.OS === "ios" && <IosStatusBarColor />}
+            <IosStatusBarColor />
             <Resources {...p} />
           </View>
         )}
@@ -162,7 +162,7 @@ const Tabs = ({ navigation, route }) => {
       >
         {(p) => (
           <View style={{ paddingTop: insets.top, flex: 1 }}>
-            {Platform.OS === "ios" && <IosStatusBarColor />}
+            <IosStatusBarColor />
             <Exercise {...p} startSurvey={startSurvey} />
           </View>
         )}
