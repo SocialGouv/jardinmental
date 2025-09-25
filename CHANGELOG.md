@@ -1,3 +1,10 @@
+# [1.85.0](https://github.com/SocialGouv/jardinmental/compare/v1.84.0...v1.85.0) (2025-09-25)
+
+
+### Features
+
+* add log NPS ([#495](https://github.com/SocialGouv/jardinmental/issues/495)) ([cd8fc8c](https://github.com/SocialGouv/jardinmental/commit/cd8fc8c63d65c92f6ae33cf00189f290a1461eaa))
+
 # [1.84.0](https://github.com/SocialGouv/jardinmental/compare/v1.83.0...v1.84.0) (2025-09-25)
 
 
