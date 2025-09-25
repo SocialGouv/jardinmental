@@ -1,3 +1,11 @@
+## [1.89.2](https://github.com/SocialGouv/jardinmental/compare/v1.89.1...v1.89.2) (2025-09-25)
+
+
+### Bug Fixes
+
+* **daySurvey:** remove flex-1 that's break item positionning on ios when editing ([#505](https://github.com/SocialGouv/jardinmental/issues/505)) ([df17aae](https://github.com/SocialGouv/jardinmental/commit/df17aaebf0e546fdd4b837b09996de754ac1d617))
+* remove flex-1 when not neccessary as it makes element disapear on ios ([#506](https://github.com/SocialGouv/jardinmental/issues/506)) ([e9bde05](https://github.com/SocialGouv/jardinmental/commit/e9bde05beac6f72da9c0792f26f393ace132d2b7))
+
 ## [1.89.1](https://github.com/SocialGouv/jardinmental/compare/v1.89.0...v1.89.1) (2025-09-25)
 
 
