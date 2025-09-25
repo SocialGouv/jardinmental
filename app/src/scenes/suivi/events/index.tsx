@@ -1,21 +1,19 @@
 import React from "react";
-import { StyleSheet, View, ScrollView } from "react-native";
+import { StyleSheet, View, ScrollView, Text } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { isToday, isYesterday, parseISO } from "date-fns";
-import { getArrayOfDatesFromTo, formatDay, formatRelativeDate } from "../../../utils/date/helpers";
-import { DiaryDataContext } from "../../../context/diaryData";
-import Text from "../../../components/MyText";
-import { colors } from "../../../utils/colors";
-import { buildSurveyData } from "../../survey/survey-data";
-import Icon from "../../../components/Icon";
-import localStorage from "../../../utils/localStorage";
-import logEvents from "../../../services/logEvents";
-import Button from "../../../components/Button";
+import { getArrayOfDatesFromTo, formatDay, formatRelativeDate } from "@/utils/date/helpers";
+import { DiaryDataContext } from "@/context/diaryData";
+import { colors } from "@/utils/colors";
+import Icon from "@/components/Icon";
+import localStorage from "@/utils/localStorage";
+import logEvents from "@/services/logEvents";
 import Card from "./Card";
 import { EventFilterHeader } from "./EventFilterHeader";
 import JMButton from "@/components/JMButton";
-import Legend from "../Legend";
 import { getIndicatorKey } from "@/utils/indicatorUtils";
+import { TAB_BAR_HEIGHT } from "@/utils/constants";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, toDate, setToDate, onScroll }) => {
   const [diaryData] = React.useContext(DiaryDataContext);
@@ -27,6 +25,7 @@ const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, 
   const [indicateurId, setIndicateurId] = React.useState();
   const [event, setEvent] = React.useState("ALL");
   const [level, setLevel] = React.useState([5]);
+  const insets = useSafeAreaInsets();
 
   useFocusEffect(
     React.useCallback(() => {
@@ -155,7 +154,16 @@ const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, 
   }
   return (
     <>
-      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContainer} onScroll={onScroll}>
+      <ScrollView
+        style={styles.scrollView}
+        contentContainerStyle={[
+          styles.scrollContainer,
+          {
+            paddingBottom: insets.bottom + TAB_BAR_HEIGHT,
+          },
+        ]}
+        onScroll={onScroll}
+      >
         <EventFilterHeader
           presetDate={presetDate}
           setPresetDate={setPresetDate}

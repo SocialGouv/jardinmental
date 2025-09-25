@@ -1,9 +1,13 @@
 import React from "react";
-import { StyleSheet, View, SafeAreaView, ScrollView } from "react-native";
-import Header from "../../components/Header";
+import { View, ScrollView } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+
+import Header from "@/components/Header";
 import ResourceCard from "./ResourceCard";
 import { Resource, RESOURCES_DATA } from "./data/resources";
-import logEvents from "../../services/logEvents";
+import logEvents from "@/services/logEvents";
+import { TAB_BAR_HEIGHT } from "@/utils/constants";
+
 interface ResourcesProps {
   navigation: any;
 }
@@ -14,15 +18,16 @@ const Resources: React.FC<ResourcesProps> = ({ navigation }) => {
     logEvents.logResourceArticleSelectedPosition(position);
     navigation.navigate("resource-article", { resource });
   };
+  const insets = useSafeAreaInsets();
 
   return (
-    <SafeAreaView className="flex-1">
+    <View className="flex-1">
       <View className="bg-cnam-primary-800 flex flew-row justify-between p-[5px] pb-0">
         <Header title="Ressources" navigation={navigation} />
       </View>
       <ScrollView
         contentContainerStyle={{
-          paddingBottom: 80,
+          paddingBottom: insets.bottom + TAB_BAR_HEIGHT,
         }}
         className="bg-cnam-primary-50 flex-1"
       >
@@ -32,7 +37,7 @@ const Resources: React.FC<ResourcesProps> = ({ navigation }) => {
           ))}
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 
