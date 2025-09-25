@@ -1,3 +1,10 @@
+# [1.86.0](https://github.com/SocialGouv/jardinmental/compare/v1.85.0...v1.86.0) (2025-09-25)
+
+
+### Features
+
+* add indicator logs ([#497](https://github.com/SocialGouv/jardinmental/issues/497)) ([a188f17](https://github.com/SocialGouv/jardinmental/commit/a188f179ed014315176fb7f4f676afcfeb6e4a92))
+
 # [1.85.0](https://github.com/SocialGouv/jardinmental/compare/v1.84.0...v1.85.0) (2025-09-25)
 
 
