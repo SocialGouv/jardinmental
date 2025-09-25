@@ -91,7 +91,7 @@ const Tabs = ({ navigation, route }) => {
           tabBarLabel: "Mes entrées",
           tabBarIcon: ({ focused, color }) => (
             <View style={{ alignItems: "center" }}>
-              <WaveIcon height={24} width={24} color={color || "#28464D"} />
+              <WaveIcon height={24} width={24} color={color} />
             </View>
           ),
         }}
