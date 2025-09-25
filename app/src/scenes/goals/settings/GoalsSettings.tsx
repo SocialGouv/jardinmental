@@ -80,7 +80,7 @@ const GoalItem = ({ goal, index }) => {
 
   return (
     <View className="bg-white border-2 border-cnam-primary-800 mx-4 rounded-2xl p-4 flex-row mb-2">
-      <View className="flex-1">
+      <View>
         <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-950")}>{goal.label}</Text>
         <View style={[itemStyles.daysOfWeekContainer]}>
           <Text className={mergeClassNames(typography.textMdRegular, "text-gray-700")}>{daysOfWeekLabel}</Text>
@@ -90,7 +90,7 @@ const GoalItem = ({ goal, index }) => {
         onPress={() => {
           navigation.navigate("goal-config", { editing: true, goalId: goal.id });
         }}
-        className="flex-1 h-5 w-5"
+        className="h-5 w-5"
       >
         <Pencil color={TW_COLORS.CNAM_CYAN_DARKEN_20} />
       </TouchableOpacity>
