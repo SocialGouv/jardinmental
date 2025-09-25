@@ -120,6 +120,9 @@ const Tabs = ({ navigation, route }) => {
         <SquircleView
           cornerSmoothing={100}
           preserveSmoothing={true}
+          accessible={true}
+          accessibilityRole="tablist"
+          accessibilityLabel="Main navigation tabs"
           style={{
             backgroundColor: TW_COLORS.CNAM_PRIMARY_800,
             shadowColor: "#000",
