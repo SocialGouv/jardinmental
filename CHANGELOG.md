@@ -1,3 +1,10 @@
+# [1.89.0](https://github.com/SocialGouv/jardinmental/compare/v1.88.1...v1.89.0) (2025-09-25)
+
+
+### Features
+
+* add EDIT_SURVEY and DELETE_INDICATOR event ([#493](https://github.com/SocialGouv/jardinmental/issues/493)) ([3fd570f](https://github.com/SocialGouv/jardinmental/commit/3fd570f1beb3c24129f63b0374aa8920bee78ddc))
+
 ## [1.88.1](https://github.com/SocialGouv/jardinmental/compare/v1.88.0...v1.88.1) (2025-09-25)
 
 
