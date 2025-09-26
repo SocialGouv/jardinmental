@@ -95,6 +95,7 @@ export default function FaqDetailScreen({
       handlePrevious={() => {
         navigation.navigate("faq");
       }}
+      noPadding={true}
       showBottomButton={false}
       navigation={navigation}
     >
@@ -124,7 +125,7 @@ export default function FaqDetailScreen({
           )}
         </View>
         {item.next && (
-          <View className={mergeClassNames("bg-cnam-primary-100 bg-cyan-50-lighten-90 p-4 space-y-6 p-6 mt-8")}>
+          <View className={mergeClassNames("bg-cnam-primary-100 bg-cyan-50-lighten-90 p-4 space-y-6 p-6 mt-8 h-full")}>
             <Text className={mergeClassNames(typography.displayXsBold, "text-cnam-primary-900 text-left mb-4")}>A découvrir ensuite</Text>
             <NavigationListItem
               icon={FAQ_DATA[item.next].icon}
