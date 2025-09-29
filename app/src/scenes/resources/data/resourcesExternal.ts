@@ -201,7 +201,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440024",
     matomoId: 24,
-    title: "https://www.pssmfrance.fr/ressources/uides, trouble par trouble mieux comprendre les troubles",
+    title: "Guides, trouble par trouble mieux comprendre les troubles",
     url: "https://www.pssmfrance.fr/carnets-du-secouriste/",
     type: "Guide",
     category: "P1 - A lire dans ce dossier",
