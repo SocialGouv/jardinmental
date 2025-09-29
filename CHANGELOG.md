@@ -1,3 +1,10 @@
+# [1.91.0](https://github.com/SocialGouv/jardinmental/compare/v1.90.0...v1.91.0) (2025-09-29)
+
+
+### Features
+
+* remove padding on faq's screens ([#513](https://github.com/SocialGouv/jardinmental/issues/513)) ([3cf7033](https://github.com/SocialGouv/jardinmental/commit/3cf7033c5a7791a6b3cbf9e6abeaccdd16d28904))
+
 # [1.90.0](https://github.com/SocialGouv/jardinmental/compare/v1.89.3...v1.90.0) (2025-09-26)
 
 
