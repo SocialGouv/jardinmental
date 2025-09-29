@@ -260,8 +260,6 @@ const Pie = ({ title, data, indicateur }) => {
   const [nombreDeValeurParScore, setNombreDeValeurParScore] = React.useState([]);
   const [nombreDeJoursConsecutifs, setNombreDeJoursConsecutifs] = React.useState({});
 
-  console.log("sections", sections);
-
   React.useEffect(() => {
     // un object
     // key est le score (0 signifie que c'set non renseigné)
