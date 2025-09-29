@@ -1,3 +1,10 @@
+# [1.90.0](https://github.com/SocialGouv/jardinmental/compare/v1.89.3...v1.90.0) (2025-09-26)
+
+
+### Features
+
+* red pill when resources not clicked yet ([#509](https://github.com/SocialGouv/jardinmental/issues/509)) ([50a6909](https://github.com/SocialGouv/jardinmental/commit/50a6909fb906a9b3a4bbdfd14879adb5ec014b77))
+
 ## [1.89.3](https://github.com/SocialGouv/jardinmental/compare/v1.89.2...v1.89.3) (2025-09-25)
 
 

@@ -20,12 +20,26 @@ import BookOpenIcon from "../../assets/svg/icon/BookOpen";
 import TrendUpIcon from "@assets/svg/icon/TrendUp";
 import WaveIcon from "@assets/svg/icon/Wave";
 import CloudIcon from "@assets/svg/icon/Cloud";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Tab = createMaterialTopTabNavigator();
 
 const Tabs = ({ navigation, route }) => {
   const insets = useSafeAreaInsets();
   const { setCustomColor } = useStatusBar();
+  const [hasVisitedResources, setHasVisitedResources] = React.useState(true); // Default to true to avoid flash
+
+  React.useEffect(() => {
+    const checkResourcesVisited = async () => {
+      try {
+        const visited = await AsyncStorage.getItem("hasVisitedResources");
+        setHasVisitedResources(visited === "true");
+      } catch (_error) {
+        setHasVisitedResources(true);
+      }
+    };
+    checkResourcesVisited();
+  }, []);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -131,16 +145,24 @@ const Tabs = ({ navigation, route }) => {
         options={{
           tabBarLabel: "Ressources",
           tabBarIcon: ({ focused, color }) => (
-            <View style={{ alignItems: "center" }}>
+            <View style={{ alignItems: "center", position: "relative" }}>
               <BookOpenIcon height={24} width={24} color={color} />
+              {!hasVisitedResources && <View className="bg-red-500 rounded-full w-2 h-2 absolute -top-1 -right-1" />}
             </View>
           ),
         }}
         listeners={({ navigation }) => ({
-          tabPress: (e) => {
+          tabPress: async (e) => {
             const currentRouteName = navigation.getState().routes[navigation.getState().index].name;
             if (currentRouteName !== "Resources") {
               logEvents.logOpenedRessources();
+            }
+
+            if (!hasVisitedResources) {
+              try {
+                await AsyncStorage.setItem("hasVisitedResources", "true");
+                setHasVisitedResources(true);
+              } catch (_error) {}
             }
           },
         })}

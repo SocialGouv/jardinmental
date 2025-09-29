@@ -58,8 +58,7 @@ const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
       }
 
       previousIndexRef.current = newIndex;
-      const itemVariant = viewableItems[0].item?.variant;
-      setVariant(itemVariant && ["beige", "white", "green", "blue"].includes(itemVariant) ? itemVariant : "beige");
+      setVariant(viewableItems[0].item.variant || "beige");
       setCustomColor("");
       setCurrentIndex(newIndex);
     }
