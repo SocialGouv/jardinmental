@@ -1,23 +1,21 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
-import { ScrollView, StyleSheet, View, Image, Dimensions } from "react-native";
+import { ScrollView, StyleSheet, View, Image, Dimensions, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import { displayedCategories } from "../../utils/constants";
-import { beforeToday, getArrayOfDates, getTodaySWeek, formatDate } from "../../utils/date/helpers";
-import Header from "../../components/Header";
+import { displayedCategories } from "@/utils/constants";
+import { beforeToday, getArrayOfDates, getTodaySWeek, formatDate } from "@/utils/date/helpers";
 import Chart from "./chart";
 import WeekPicker from "./week-picker";
-import { DiaryDataContext } from "../../context/diaryData";
+import { DiaryDataContext } from "@/context/diaryData";
 import { useContext } from "react";
-import logEvents from "../../services/logEvents";
-import localStorage from "../../utils/localStorage";
-import Text from "../../components/MyText";
-import Icon from "../../components/Icon";
-import { colors } from "../../utils/colors";
-const screenHeight = Dimensions.get("window").height;
-import { INDICATEURS } from "../../utils/liste_indicateurs.1";
-import { getIndicatorKey } from "../../utils/indicatorUtils";
+import localStorage from "@/utils/localStorage";
+import Icon from "@/components/Icon";
+import { colors } from "@/utils/colors";
+import { INDICATEURS } from "@/utils/liste_indicateurs.1";
+import { getIndicatorKey } from "@/utils/indicatorUtils";
 import Legend from "../suivi/Legend";
+
+const screenHeight = Dimensions.get("window").height;
 
 const Calendar = ({ navigation, onScroll }) => {
   const [day, setDay] = useState(new Date());
@@ -135,7 +133,7 @@ const Calendar = ({ navigation, onScroll }) => {
   };
 
   return (
-    <SafeAreaView style={styles.safe}>
+    <View style={styles.safe}>
       <View style={styles.headerContainer}>
         {/* <Header title="Mon suivi" navigation={navigation} /> */}
         <WeekPicker
@@ -147,7 +145,13 @@ const Calendar = ({ navigation, onScroll }) => {
         />
         <Legend />
       </View>
-      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContainer} onScroll={onScroll}>
+      <ScrollView
+        style={styles.scrollView}
+        scrollEventThrottle={16}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContainer}
+        onScroll={onScroll}
+      >
         {!calendarIsEmpty ? (
           <>
             <View style={styles.subtitleContainer}>
@@ -186,7 +190,7 @@ const Calendar = ({ navigation, onScroll }) => {
           </>
         )}
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -226,7 +230,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     backgroundColor: "white",
   },
-  scrollContainer: {},
+  scrollContainer: {
+    minHeight: screenHeight,
+  },
   title: {
     fontWeight: "700",
     fontSize: 22,

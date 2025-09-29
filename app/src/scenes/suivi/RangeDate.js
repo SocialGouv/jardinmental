@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { View, StyleSheet } from "react-native";
 import DatePicker from "react-native-date-picker";
 import logEvents from "../../services/logEvents";
@@ -38,10 +38,22 @@ const DateRange = ({
   }, [props.toDate]);
   const [openToDate, setOpenToDate] = useState(false);
 
+  // Modal state management to prevent conflicts
+  const [isSelectModalActive, setIsSelectModalActive] = useState(false);
+  const presetTimeoutRef = useRef(null);
+
   useEffect(() => {
-    (async () => {
+    // Clear any existing timeout
+    if (presetTimeoutRef.current) {
+      clearTimeout(presetTimeoutRef.current);
+    }
+
+    const handlePresetChange = async () => {
       props.onChangePresetValue?.(presetValue);
       if (withPreset && presetValue !== "custom") {
+        // Set modal as active during preset change
+        setIsSelectModalActive(true);
+
         let _fromDate;
         let _toDate = beforeToday(0);
         switch (presetValue) {
@@ -59,12 +71,32 @@ const DateRange = ({
             _fromDate = new Date(beginningDate);
             break;
         }
-        setFromDate(_fromDate);
-        setToDate(_toDate);
-        props.onChangeFromDate?.(_fromDate);
-        props.onChangeToDate?.(_toDate);
+
+        // Add delay to ensure SelectInput modal is fully dismissed
+        presetTimeoutRef.current = setTimeout(() => {
+          setFromDate(_fromDate);
+          setToDate(_toDate);
+          setIsSelectModalActive(false);
+
+          // Additional delay for parent component updates
+          setTimeout(() => {
+            props.onChangeFromDate?.(_fromDate);
+            props.onChangeToDate?.(_toDate);
+          }, 50);
+        }, 300); // 300ms delay to ensure modal dismissal
+      } else {
+        setIsSelectModalActive(false);
       }
-    })();
+    };
+
+    handlePresetChange();
+
+    // Cleanup function
+    return () => {
+      if (presetTimeoutRef.current) {
+        clearTimeout(presetTimeoutRef.current);
+      }
+    };
   }, [presetValue]);
 
   return (
@@ -96,8 +128,11 @@ const DateRange = ({
             mode="date"
             date={fromDate}
             onPress={() => {
-              setOpenFromDate(true);
-              logEvents.logSuiviEditDateFrom();
+              // Prevent DatePicker from opening if SelectInput modal is still active
+              if (!isSelectModalActive) {
+                setOpenFromDate(true);
+                logEvents.logSuiviEditDateFrom();
+              }
             }}
             disabled={withPreset && presetValue !== "custom"}
             containerStyle={styles.dateItemContainer}
@@ -108,8 +143,11 @@ const DateRange = ({
             mode="date"
             date={toDate}
             onPress={() => {
-              setOpenToDate(true);
-              logEvents.logSuiviEditDateTo();
+              // Prevent DatePicker from opening if SelectInput modal is still active
+              if (!isSelectModalActive) {
+                setOpenToDate(true);
+                logEvents.logSuiviEditDateTo();
+              }
             }}
             disabled={withPreset && presetValue !== "custom"}
             containerStyle={styles.dateItemContainer}

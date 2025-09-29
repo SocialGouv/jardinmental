@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { View, Text } from "react-native";
 import RangeDate from "../RangeDate";
 import FriseGraphList from "./FriseGraphList";
