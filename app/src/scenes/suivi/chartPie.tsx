@@ -108,7 +108,12 @@ const ChartPie = ({ navigation, fromDate, toDate, onScroll }) => {
       // -------
       // the following code is for the retrocompatibility
       // -------
-
+      if (!categoryState.value && !categoryState.level) {
+        // fix black portion in chartpie
+        // if level does not exist don't try to compute anything with
+        // it results in Nan
+        return 0;
+      }
       // get the name and the suffix of the category
       const [categoryName, suffix] = categoryId.split("_");
       let categoryStateIntensity = null;
@@ -262,8 +267,6 @@ const Pie = ({ title, data, indicateur }) => {
   const [detailsVisible, setDetailsVisible] = React.useState(false);
   const [nombreDeValeurParScore, setNombreDeValeurParScore] = React.useState([]);
   const [nombreDeJoursConsecutifs, setNombreDeJoursConsecutifs] = React.useState({});
-
-  console.log("sections", sections);
 
   React.useEffect(() => {
     // un object
