@@ -48,6 +48,7 @@ interface IndicatorScreenProps {
   smallHeader?: boolean;
   animatedStatusBarColor?: Animated.AnimateStyle<ViewStyle>;
   animatedTextColor?: Animated.AnimateStyle<ViewStyle>;
+  noPadding?: boolean;
 }
 
 export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
@@ -70,6 +71,7 @@ export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
   smallHeader,
   animatedStatusBarColor,
   animatedTextColor,
+  noPadding,
 }: IndicatorScreenProps) => {
   const { showBottomSheet } = useBottomSheet();
   const { setShowProgressbar, showProgressbar, setHideOnScrollProgressValue } = useOnboardingProgressHeader();
@@ -232,13 +234,14 @@ export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
   // Dynamic content container style for ScrollView (regular style object)
   const scrollViewContentStyle = {
     paddingTop: dynamicPaddingTop,
-    paddingBottom: 250,
+    paddingBottom: noPadding ? 0 : 200,
     flexGrow: 1,
   };
 
   return (
     <SafeAreaView
       className="flex-1"
+      edges={noPadding ? ["top", "left", "right"] : ["top", "left", "right", "bottom"]}
       style={{
         backgroundColor: scrollViewBackground || TW_COLORS.WHITE,
       }}

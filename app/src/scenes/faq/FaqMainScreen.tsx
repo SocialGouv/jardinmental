@@ -24,10 +24,11 @@ export default function FaqMainScreen({ navigation, route }) {
       handlePrevious={() => {
         navigation.goBack();
       }}
+      noPadding={true}
       showBottomButton={false}
       navigation={navigation}
     >
-      <View className="bg-gray-50 flex-1 p-4 flex-col space-y-12 pt-10">
+      <View className="bg-gray-50 flex-1 p-4 flex-col space-y-12 pt-10 pb-12">
         <View className="flex-col space-y-6">
           <Text className={mergeClassNames(typography.displayXsSemibold, "text-cnam-primary-950 text-left")}>
             Jardin mental, qu’est-ce que c’est ?
