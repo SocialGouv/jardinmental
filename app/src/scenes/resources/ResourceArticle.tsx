@@ -5,6 +5,7 @@ import MarkdownStyled from "./MarkdownStyled";
 import { AnimatedHeaderScrollScreen } from "../survey-v2/AnimatedHeaderScrollScreen";
 import { TW_COLORS } from "@/utils/constants";
 import logEvents from "../../services/logEvents";
+import { EXTERNAL_RESOURCES_DATA, ExternalResource } from "./data/resourcesExternal";
 
 interface ResourceArticleProps {
   navigation: any;
@@ -28,22 +29,7 @@ const ResourceArticle: React.FC<ResourceArticleProps> = ({ navigation, route }) 
     };
   }, [resource.matomoId]);
 
-  const handleContinueReading = async () => {
-    if (!resource.source) {
-      return;
-    }
-    if (resource.source.url) {
-      try {
-        // Log external link click before opening
-        logEvents.logResourceOpenedExternalLink(resource.source.matomoId);
-        await Linking.openURL(resource.source.url);
-      } catch (error) {
-        console.error("Failed to open URL:", error);
-      }
-    }
-  };
-
-  const handleContinueReadingMore = async (item: { title: string; text: string; url: string; matomoId: number }) => {
+  const handleContinueReadingMore = async (item: ExternalResource) => {
     if (item.url) {
       try {
         // Log external link click before opening
@@ -53,6 +39,10 @@ const ResourceArticle: React.FC<ResourceArticleProps> = ({ navigation, route }) 
         console.error("Failed to open URL:", error);
       }
     }
+  };
+
+  const getExternalResource = (id: string) => {
+    return EXTERNAL_RESOURCES_DATA.find((item) => item.id === id);
   };
 
   return (
@@ -76,40 +66,29 @@ const ResourceArticle: React.FC<ResourceArticleProps> = ({ navigation, route }) 
 
           <MarkdownStyled markdown={resource.content} />
 
-          {resource.source ? (
+          {resource.externalResources ? (
             <View className="mt-8 pt-4">
-              <Text className="text-lg text-cnam-primary-950 font-semibold mb-4 font-source-sans">Continuer la lecture</Text>
-
-              <TouchableOpacity onPress={handleContinueReading}>
-                <View className="rounded-xl p-4 flex-row items-center border border-cnam-primary-200 bg-white">
-                  <View className="flex-1 pr-2">
-                    <Text className="text-base font-semibold text-cnam-primary-950 mb-1 font-source-sans">{resource.source.title}</Text>
-                    <Text className="text-sm text-gray-500 font-source-sans leading-tight">{resource.source.text}</Text>
-                  </View>
-                  <View className="justify-center items-center">
-                    <Text className="text-lg text-cnam-primary-950 font-bold">→</Text>
-                  </View>
-                </View>
-              </TouchableOpacity>
-            </View>
-          ) : null}
-          {resource.moreContent ? (
-            <View className="mt-8 pt-4">
-              <Text className="text-lg text-cnam-primary-950 font-semibold mb-4 font-source-sans">Aller plus loin</Text>
+              <Text className="text-lg text-cnam-primary-950 font-semibold mb-4 font-source-sans">À lire aussi dans ce dossier</Text>
               <View className="flex flex-col gap-4">
-                {resource.moreContent.map((item) => (
-                  <TouchableOpacity onPress={() => handleContinueReadingMore(item)} key={item.title + item.text}>
-                    <View className="rounded-xl p-4 flex-row items-center border border-cnam-primary-200 bg-white">
-                      <View className="flex-1 pr-2">
-                        <Text className="text-base font-semibold text-cnam-primary-950 mb-1 font-source-sans">{item.title}</Text>
-                        <Text className="text-sm text-gray-500 font-source-sans leading-tight">{item.text}</Text>
+                {resource.externalResources?.map((item) => {
+                  const externalResource = getExternalResource(item);
+                  if (!externalResource) {
+                    return null;
+                  }
+                  return (
+                    <TouchableOpacity onPress={() => handleContinueReadingMore(externalResource)} key={externalResource.id}>
+                      <View className="rounded-xl p-4 flex-row items-center border border-cnam-primary-200 bg-white">
+                        <View className="flex-1 pr-2">
+                          <Text className="text-base font-semibold text-cnam-primary-950 mb-1 font-source-sans">{externalResource.title}</Text>
+                          <Text className="text-sm text-gray-500 font-source-sans leading-tight">{externalResource.author}</Text>
+                        </View>
+                        <View className="justify-center items-center">
+                          <Text className="text-lg text-cnam-primary-950 font-bold">→</Text>
+                        </View>
                       </View>
-                      <View className="justify-center items-center">
-                        <Text className="text-lg text-cnam-primary-950 font-bold">→</Text>
-                      </View>
-                    </View>
-                  </TouchableOpacity>
-                ))}
+                    </TouchableOpacity>
+                  );
+                })}
               </View>
             </View>
           ) : null}
