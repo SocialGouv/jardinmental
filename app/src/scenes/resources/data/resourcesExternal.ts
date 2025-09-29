@@ -1,5 +1,3 @@
-import { v4 as uuidv4 } from "uuid";
-
 export interface ExternalResource {
   id: string; // uuid
   matomoId: number;
@@ -105,7 +103,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
     id: "550e8400-e29b-41d4-a716-446655440012",
     matomoId: 12,
     title: "Comprendre & lutter contre stigmatisation & troubles psychiques",
-    url: "chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://mpnext.cdn.prismic.io/mpnext/4f582434-826f-438c-a11e-743858372e96_Stigmatisation.pdf",
+    url: "https://mpnext.cdn.prismic.io/mpnext/4f582434-826f-438c-a11e-743858372e96_Stigmatisation.pdf",
     type: "Guide",
     category: "P1 - A lire dans ce dossier",
     author: "La Maison Perchée",
@@ -186,7 +184,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
     id: "550e8400-e29b-41d4-a716-446655440021",
     matomoId: 21,
     title: "Mieux comprendre l'annonce du diagnostique",
-    url: "chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://mpnext.cdn.prismic.io/mpnext/Zw5vfoF3NbkBXdxY_Annonce_Diagnostique.pdf",
+    url: "https://mpnext.cdn.prismic.io/mpnext/Zw5vfoF3NbkBXdxY_Annonce_Diagnostique.pdf",
     type: "Guide",
     category: "P1 - A lire dans ce dossier",
     author: "La Maison Perchée",
@@ -474,7 +472,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
     id: "550e8400-e29b-41d4-a716-446655440054",
     matomoId: 54,
     title: "Mieux vivre avec la dépression",
-    url: "chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://mpnext.cdn.prismic.io/mpnext/e7a23b94-b719-4e29-acb6-735068766342_Depression.pdf",
+    url: "https://mpnext.cdn.prismic.io/mpnext/e7a23b94-b719-4e29-acb6-735068766342_Depression.pdf",
     type: "Guide",
     category: "P1 - A lire dans ce dossier",
     author: "Collectif, La Maison Perchée",
@@ -555,7 +553,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
     id: "550e8400-e29b-41d4-a716-446655440064",
     matomoId: 64,
     title: "Le chien noir de la dépression",
-    url: "youtube.com/watch?feature=shared&v=a8IGqdFyypY",
+    url: "https://youtube.com/watch?feature=shared&v=a8IGqdFyypY",
     type: "Vidéo",
     category: "P2 - Explorer d'autres ressources",
     author: "Matthiew Johnstone",
@@ -609,7 +607,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
     id: "550e8400-e29b-41d4-a716-446655440071",
     matomoId: 71,
     title: "Mieux vivre avec un trouble anxieux",
-    url: "chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://mpnext.cdn.prismic.io/mpnext/1d7a4b18-823a-449c-a9a5-c3e12a57ca89_Trouble+Anxieux.pdf",
+    url: "https://mpnext.cdn.prismic.io/mpnext/1d7a4b18-823a-449c-a9a5-c3e12a57ca89_Trouble+Anxieux.pdf",
     type: "Guide",
     category: "P1 - A lire dans ce dossier",
     author: "Collectif, La Maison Perchée",
