@@ -272,6 +272,7 @@ const Status = ({ navigation, startSurvey }) => {
             <DiaryList
               ListHeaderComponent={renderHeader}
               ListFooterComponent={renderFooter}
+              showsVerticalScrollIndicator={false}
               style={[styles.scrollView]}
               contentContainerStyle={[
                 styles.container,

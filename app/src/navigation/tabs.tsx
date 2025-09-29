@@ -19,6 +19,10 @@ import { useStatusBar } from "@/context/StatusBarContext";
 import { TW_COLORS } from "@/utils/constants";
 import BookOpenIcon from "@assets/svg/icon/BookOpen";
 import { typography } from "@/utils/typography";
+import TrendUpIcon from "@assets/svg/icon/TrendUp";
+import WaveIcon from "@assets/svg/icon/Wave";
+import CloudIcon from "@assets/svg/icon/Cloud";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -26,6 +30,19 @@ const Tabs = ({ navigation, route }) => {
   const insets = useSafeAreaInsets();
   const { setCustomColor } = useStatusBar();
   const [activeTab, setActiveTab] = useState("Status");
+  const [hasVisitedResources, setHasVisitedResources] = React.useState(true); // Default to true to avoid flash
+
+  React.useEffect(() => {
+    const checkResourcesVisited = async () => {
+      try {
+        const visited = await AsyncStorage.getItem("hasVisitedResources");
+        setHasVisitedResources(visited === "true");
+      } catch (_error) {
+        setHasVisitedResources(true);
+      }
+    };
+    checkResourcesVisited();
+  }, []);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -53,13 +70,13 @@ const Tabs = ({ navigation, route }) => {
     {
       name: "Status",
       label: "Observations",
-      icon: SurveyMenu,
+      icon: WaveIcon,
       component: Status,
     },
     {
       name: "Calendar",
       label: "Analyses",
-      icon: GraphMenu,
+      icon: TrendUpIcon,
       component: Suivi,
       onPress: () => logEvents.logOpenAnalysisMain(),
     },
@@ -68,12 +85,13 @@ const Tabs = ({ navigation, route }) => {
       label: "Ressources",
       icon: BookOpenIcon,
       component: Resources,
+      badge: hasVisitedResources,
       onPress: () => logEvents.logOpenedRessources(),
     },
     {
       name: "Exercise",
       label: "Beck",
-      icon: ExerciseMenu,
+      icon: CloudIcon,
       component: Exercise,
     },
   ];
@@ -105,7 +123,6 @@ const Tabs = ({ navigation, route }) => {
     <View style={{ flex: 1 }}>
       {/* Content area with padding bottom to avoid overlap with floating navbar */}
       <View style={{ flex: 1 }}>{renderTabContent()}</View>
-
       {/* Floating Tab Bar */}
       <View
         style={{
@@ -177,6 +194,7 @@ const Tabs = ({ navigation, route }) => {
                   >
                     {tab.label}
                   </Text>
+                  {tab.badge && <View className="bg-red-500 rounded-full w-2 h-2 absolute -top-1 -right-1" />}
                 </SquircleButton>
               );
             })}
