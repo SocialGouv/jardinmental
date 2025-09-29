@@ -292,6 +292,8 @@ export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
               backgroundColor: scrollViewBackground,
               paddingTop: Platform.OS === "android" ? insets.top : 0,
             }}
+            showsVerticalScrollIndicator={false}
+            showsHorizontalScrollIndicator={false}
             contentContainerStyle={scrollViewContentStyle}
             onScroll={scrollHandler}
             scrollEventThrottle={16}
