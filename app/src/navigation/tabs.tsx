@@ -86,7 +86,17 @@ const Tabs = ({ navigation, route }) => {
       icon: BookOpenIcon,
       component: Resources,
       badge: hasVisitedResources,
-      onPress: () => logEvents.logOpenedRessources(),
+      onPress: async () => {
+        logEvents.logOpenedRessources();
+        if (!hasVisitedResources) {
+          try {
+            await AsyncStorage.setItem("hasVisitedResources", "true");
+            setHasVisitedResources(true);
+          } catch (_error) {
+            console.error(_error);
+          }
+        }
+      },
     },
     {
       name: "Exercise",
@@ -118,7 +128,6 @@ const Tabs = ({ navigation, route }) => {
     }
     setActiveTab(tabName);
   };
-
   return (
     <View style={{ flex: 1 }}>
       {/* Content area with padding bottom to avoid overlap with floating navbar */}
@@ -182,6 +191,7 @@ const Tabs = ({ navigation, route }) => {
                 >
                   <View style={{ alignItems: "center" }}>
                     <IconComponent height={24} width={24} color={color} />
+                    {tab.badge === false && <View className="bg-red-500 rounded-full w-2 h-2 absolute -top-2 -right-2" />}
                   </View>
                   <Text
                     className={isActive ? typography.textXsBold : typography.textXsRegular}
@@ -194,7 +204,6 @@ const Tabs = ({ navigation, route }) => {
                   >
                     {tab.label}
                   </Text>
-                  {tab.badge && <View className="bg-red-500 rounded-full w-2 h-2 absolute -top-1 -right-1" />}
                 </SquircleButton>
               );
             })}
