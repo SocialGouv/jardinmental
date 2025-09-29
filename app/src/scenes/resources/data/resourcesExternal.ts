@@ -3,7 +3,7 @@ export interface ExternalResource {
   matomoId: number;
   title: string;
   url: string;
-  type: string;
+  type: "Article" | "Vidéo" | "Podcast" | "Guide" | "Instagram" | "Site" | "Fiche pratique" | "Série" | "BD" | "Livre" | "Questionnaire" | "Outils";
   category: string;
   author: string;
 }

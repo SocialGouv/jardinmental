@@ -6,6 +6,8 @@ import { AnimatedHeaderScrollScreen } from "../survey-v2/AnimatedHeaderScrollScr
 import { TW_COLORS } from "@/utils/constants";
 import logEvents from "../../services/logEvents";
 import { EXTERNAL_RESOURCES_DATA, ExternalResource } from "./data/resourcesExternal";
+import BookOpenIcon from "../../../assets/svg/icon/BookOpen";
+import LinkExternalIcon from "../../../assets/svg/icon/LinkExternal";
 
 interface ResourceArticleProps {
   navigation: any;
@@ -59,9 +61,13 @@ const ResourceArticle: React.FC<ResourceArticleProps> = ({ navigation, route }) 
     >
       <View className="flex-1">
         <View className="px-5">
-          <View className="mb-6 mt-9">
-            <Image source={resource.image} className="w-full h-[200px] rounded-2xl mb-2" resizeMode="cover" />
-          </View>
+          {resource.image ? (
+            <View className="mb-6 mt-9">
+              <Image source={resource.image} className="w-full h-[200px] rounded-2xl mb-2" resizeMode="cover" />
+            </View>
+          ) : (
+            <View className="mb-12" />
+          )}
           <Text className="text-2xl font-bold text-cnam-primary-950 mb-5 font-source-sans leading-7 text-left">{resource.title}</Text>
 
           <MarkdownStyled markdown={resource.content} />
@@ -77,13 +83,28 @@ const ResourceArticle: React.FC<ResourceArticleProps> = ({ navigation, route }) 
                   }
                   return (
                     <TouchableOpacity onPress={() => handleContinueReadingMore(externalResource)} key={externalResource.id}>
-                      <View className="rounded-xl p-4 flex-row items-center border border-cnam-primary-200 bg-white">
-                        <View className="flex-1 pr-2">
-                          <Text className="text-base font-semibold text-cnam-primary-950 mb-1 font-source-sans">{externalResource.title}</Text>
-                          <Text className="text-sm text-gray-500 font-source-sans leading-tight">{externalResource.author}</Text>
+                      <View className="rounded-xl flex flex-row border border-cnam-primary-200 bg-white shadow-sm">
+                        <View className="bg-cnam-cyan-lighten-90 rounded-l-xl flex items-center justify-center w-20">
+                          <BookOpenIcon color="#3D6874" width={20} height={20} />
+                          <Text className="text-xs text-cnam-primary-900 font-medium py-1 rounded font-source-sans">{externalResource.type}</Text>
                         </View>
-                        <View className="justify-center items-center">
-                          <Text className="text-lg text-cnam-primary-950 font-bold">→</Text>
+                        <View className="flex-1">
+                          <View className="p-4">
+                            <Text className="text-base font-semibold text-cnam-primary-950 mb-1 font-source-sans leading-tight">
+                              {externalResource.title}
+                            </Text>
+                          </View>
+                          <View className="flex flex-row px-2 pb-4 items-center">
+                            <View className="flex-1">
+                              <Text numberOfLines={1} ellipsizeMode="tail" className="text-sm text-gray-500">
+                                {externalResource.author}
+                              </Text>
+                            </View>
+                            <View className="flex flex-row items-center text-cnam-primary-950">
+                              <Text className="mr-2">Lire l'article</Text>
+                              <LinkExternalIcon color="#518B9A" width={18} height={18} />
+                            </View>
+                          </View>
                         </View>
                       </View>
                     </TouchableOpacity>
