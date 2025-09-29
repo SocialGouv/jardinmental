@@ -17,6 +17,9 @@ import { useFocusEffect } from "@react-navigation/native";
 import { useStatusBar } from "@/context/StatusBarContext";
 import { TW_COLORS } from "@/utils/constants";
 import BookOpenIcon from "../../assets/svg/icon/BookOpen";
+import TrendUpIcon from "@assets/svg/icon/TrendUp";
+import WaveIcon from "@assets/svg/icon/Wave";
+import CloudIcon from "@assets/svg/icon/Cloud";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Tab = createMaterialTopTabNavigator();
@@ -102,7 +105,7 @@ const Tabs = ({ navigation, route }) => {
           tabBarLabel: "Mes entrées",
           tabBarIcon: ({ focused, color }) => (
             <View style={{ alignItems: "center" }}>
-              <SurveyMenu height={24} width={24} color={color} />
+              <WaveIcon height={24} width={24} color={color} />
             </View>
           ),
         }}
@@ -120,7 +123,7 @@ const Tabs = ({ navigation, route }) => {
           tabBarLabel: "Mes analyses",
           tabBarIcon: ({ focused, color }) => (
             <View style={{ alignItems: "center" }}>
-              <GraphMenu height={24} width={24} color={color} />
+              <TrendUpIcon height={24} width={24} color={color} />
             </View>
           ),
         }}
@@ -177,7 +180,7 @@ const Tabs = ({ navigation, route }) => {
           tabBarLabel: "Beck",
           tabBarIcon: ({ focused, color }) => (
             <View style={{ alignItems: "center" }}>
-              <ExerciseMenu height={24} width={24} color={color} />
+              <CloudIcon height={24} width={24} color={color} />
             </View>
           ),
         }}
