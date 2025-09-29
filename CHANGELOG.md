@@ -1,3 +1,10 @@
+# [1.92.0](https://github.com/SocialGouv/jardinmental/compare/v1.91.0...v1.92.0) (2025-09-29)
+
+
+### Features
+
+* **tabbar:** change icon ([#512](https://github.com/SocialGouv/jardinmental/issues/512)) ([0464c56](https://github.com/SocialGouv/jardinmental/commit/0464c56654b4ef813a66327707ce653fe6c4474f))
+
 # [1.91.0](https://github.com/SocialGouv/jardinmental/compare/v1.90.0...v1.91.0) (2025-09-29)
 
 
