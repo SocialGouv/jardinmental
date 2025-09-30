@@ -1,9 +1,23 @@
+export type ExternalResourceType =
+  | "Article"
+  | "Vidéo"
+  | "Podcast"
+  | "Guide"
+  | "Instagram"
+  | "Site"
+  | "Fiche pratique"
+  | "Série"
+  | "BD"
+  | "Livre"
+  | "Questionnaire"
+  | "Outils";
+
 export interface ExternalResource {
   id: string; // uuid
   matomoId: number;
   title: string;
   url: string;
-  type: "Article" | "Vidéo" | "Podcast" | "Guide" | "Instagram" | "Site" | "Fiche pratique" | "Série" | "BD" | "Livre" | "Questionnaire" | "Outils";
+  type: ExternalResourceType;
   category: string;
   author: string;
 }

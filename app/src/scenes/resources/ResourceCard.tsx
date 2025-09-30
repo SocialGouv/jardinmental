@@ -16,11 +16,13 @@ const ResourceCard: React.FC<ResourceCardProps> = ({ resource, onPress }) => {
       activeOpacity={0.7}
       className="text-cnam-primary-950 bg-white border p-2 border-cnam-primary-400 rounded-lg flex flex-row mb-2 h-32 items-center"
     >
-      {resource.image && (
-        <View className="w-20 h-full relative">
-          <Image source={resource.image} className="absolute rounded-lg inset-0 w-full h-full" resizeMode="cover" />
-        </View>
-      )}
+      <View className="w-20 h-full relative">
+        <Image
+          source={resource.image || require("../../../assets/imgs/resources/Article2.png")}
+          className="absolute rounded-lg inset-0 w-full h-full"
+          resizeMode="cover"
+        />
+      </View>
       <View className="flex-1 px-2 ml-1">
         <Text
           numberOfLines={4} // change to how many lines you want
