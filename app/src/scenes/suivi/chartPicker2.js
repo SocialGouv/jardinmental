@@ -3,19 +3,21 @@ import { View, StyleSheet, TouchableOpacity, ScrollView, FlatList } from "react-
 import { colors } from "../../utils/colors";
 import Text from "../../components/MyText";
 import logEvents from "../../services/logEvents";
+import { typography } from "@/utils/typography";
+import { mergeClassNames } from "@/utils/className";
 
 const CHART_TYPES = [
   {
-    key: "Frises",
-    label: "Frises",
-  },
-  {
     key: "Statistiques",
-    label: "Statistiques",
+    label: "Bilan",
   },
   {
     key: "Courbes",
-    label: "Courbes",
+    label: "Variations",
+  },
+  {
+    key: "Frises",
+    label: "Corélations",
   },
   {
     key: "Déclencheurs",
@@ -35,24 +37,29 @@ const TabPicker = ({ onChange, ongletActif = "Frises" }) => {
     <FlatList
       ref={listRef}
       data={CHART_TYPES}
-      renderItem={({ item }) => (
-        <TouchableOpacity
-          key={item.key}
-          onPress={() => {
-            listRef.current?.scrollToItem({
-              item,
-              animated: true,
-              viewPosition: 0.5,
-            });
-            handlePress(item.label);
-          }}
-          style={[tabStyles.tabButtonContainer]}
-        >
-          <View style={[tabStyles.tabButtonContainer, ongletActif === item.label ? tabStyles.tabActif : tabStyles.tabInactif]}>
-            <Text style={[tabStyles.button, ongletActif === item.label ? tabStyles.actif : tabStyles.inactif]}>{item.label}</Text>
-          </View>
-        </TouchableOpacity>
-      )}
+      ItemSeparatorComponent={() => <View style={{ width: 10 }} />} // 👈 space between items
+      renderItem={({ item }) => {
+        console.log(item);
+        return (
+          <TouchableOpacity
+            // className="h-full"
+            key={item.key}
+            className={mergeClassNames("h-[44] py-2 px-6", ongletActif === item.key ? "bg-cnam-primary-800 rounded-xl" : "transparent")}
+            onPress={() => {
+              listRef.current?.scrollToItem({
+                item,
+                animated: true,
+                viewPosition: 0.5,
+              });
+              handlePress(item.key);
+            }}
+          >
+            <Text className={mergeClassNames(typography.textMdSemibold, ongletActif === item.key ? "text-white" : "text-gray-700")}>
+              {item.label}
+            </Text>
+          </TouchableOpacity>
+        );
+      }}
       horizontal
       style={tabStyles.scrollView}
       contentContainerStyle={tabStyles.scrollContainer}
@@ -69,7 +76,12 @@ const tabStyles = StyleSheet.create({
     borderColor: colors.BLUE,
     borderBottomWidth: 1,
   },
-  scrollContainer: {},
+  scrollContainer: {
+    height: 76,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: 16,
+  },
   currentDateContainer: {
     backgroundColor: "#F6FCFD",
     justifyContent: "space-around",

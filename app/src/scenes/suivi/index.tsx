@@ -17,6 +17,12 @@ import { FriseScreen } from "./frise";
 import { colors } from "@/utils/colors";
 import Legend from "./Legend";
 import { useSharedValue } from "react-native-reanimated";
+import JMButton from "@/components/JMButton";
+import CircleQuestionMark from "@assets/svg/icon/CircleQuestionMark";
+import { Button2 } from "@/components/Button2";
+import HelpView from "@/components/HelpView";
+import { HELP_ANALYSE } from "@/utils/constants";
+import { useBottomSheet } from "@/context/BottomSheetContext";
 
 const Suivi = ({ navigation, startSurvey }) => {
   const [chartType, setChartType] = React.useState<"Frises" | "Statistiques" | "Déclencheurs" | "Courbes">("Frises");
@@ -24,7 +30,7 @@ const Suivi = ({ navigation, startSurvey }) => {
   const [fromDate, setFromDate] = React.useState(beforeToday(30));
   const [toDate, setToDate] = React.useState(beforeToday(0));
   const [aUnTraiement, setAUnTraitement] = React.useState(false);
-
+  const { showBottomSheet } = useBottomSheet();
   useFocusEffect(
     React.useCallback(() => {
       logEvents.logOpenPageSuivi(chartType);
@@ -105,16 +111,45 @@ const Suivi = ({ navigation, startSurvey }) => {
         </View>
         {chartType === "Statistiques" && (
           <View style={styles.headerContainer}>
-            <RangeDate
-              presetValue={presetDate}
-              onChangePresetValue={setPresetDate}
-              fromDate={fromDate}
-              toDate={toDate}
-              onChangeFromDate={setFromDate}
-              onChangeToDate={setToDate}
-              withPreset={true}
-            />
-            <Legend />
+            <View className="w-full px-2">
+              <View className="flex-row items-center pb-6 w-full justify-between">
+                <View className="flex-row">
+                  <RangeDate
+                    presetValue={presetDate}
+                    onChangePresetValue={setPresetDate}
+                    fromDate={fromDate}
+                    toDate={toDate}
+                    onChangeFromDate={setFromDate}
+                    onChangeToDate={setToDate}
+                    withPreset={true}
+                  >
+                    {/* TODO : make it work avec les autres types d'indicateur */}
+                  </RangeDate>
+                  <Button2
+                    checkable
+                    title="Filtrer"
+                    style={{
+                      height: 40,
+                    }}
+                    icon={"TuneSvg"}
+                    preset="secondary"
+                    size="small"
+                    containerStyle={{ marginHorizontal: 8 }}
+                    onPress={() => {}}
+                  />
+                </View>
+                <JMButton
+                  onPress={() => {
+                    showBottomSheet(<HelpView title={HELP_ANALYSE["bilan"]["title"]} description={HELP_ANALYSE["bilan"]["description"]} />);
+                  }}
+                  variant="outline"
+                  width="fixed"
+                  icon={<CircleQuestionMark />}
+                  className="mr-2"
+                />
+              </View>
+              <View className="h-[1] bg-cnam-primary-400"></View>
+            </View>
           </View>
         )}
         {renderChart(chartType)}

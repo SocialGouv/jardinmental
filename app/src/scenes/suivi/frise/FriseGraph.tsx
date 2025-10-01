@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import Text from "../../../components/MyText";
-import Svg, { Rect, Circle, Text as SvgText, Path } from "react-native-svg";
+import Svg, { Rect, Circle, Text as SvgText, Path, Line } from "react-native-svg";
 import { analyzeScoresMapIcon, scoresMapIcon } from "../../../utils/constants";
 import { colors } from "../../../utils/colors";
 import { symbol } from "zod";
@@ -114,6 +114,15 @@ export const RoundedRect: React.FC<RoundedRectProps> = ({ x, y = 0, width, heigh
 };
 
 const Dot = React.memo(({ cx, cy, r, fill }) => <Circle cx={cx} cy={cy} r={r} fill={fill} />);
+
+// Grid lines component for day separations
+const GridLines = React.memo(({ count, segmentWidth, height }: { count: number; segmentWidth: number; height: number }) => {
+  const lines = [];
+  for (let i = 1; i < count; i++) {
+    lines.push(<Line key={i} x1={i * segmentWidth} y1={0} x2={i * segmentWidth} y2={height} stroke={"#fff"} strokeWidth={0.5} opacity={1} />);
+  }
+  return <>{lines}</>;
+});
 
 // Batch consecutive segments with same color and opacity
 const batchSegments = (items, segmentWidth, gap) => {
@@ -355,6 +364,8 @@ export const FriseGraph = React.memo(
                 </React.Fragment>
               );
             })}
+            {/* Grid lines for day separations */}
+            <GridLines count={dataLength} segmentWidth={segmentWidth} height={MAIN_BAR_HEIGHT} />
           </Svg>
 
           {/* Treatment Bar - Batched */}
@@ -395,6 +406,8 @@ export const FriseGraph = React.memo(
                   </React.Fragment>
                 );
               })}
+              {/* Grid lines for day separations */}
+              <GridLines count={dataLength} segmentWidth={segmentWidth} height={TREATMENT_BAR_HEIGHT} />
             </Svg>
           )}
 

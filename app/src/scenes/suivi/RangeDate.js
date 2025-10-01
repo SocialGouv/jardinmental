@@ -100,105 +100,19 @@ const DateRange = ({
   }, [presetValue]);
 
   return (
-    <View style={[styles.container, containerStyle]}>
-      <View style={[styles.contentContainer, contentContainerStyle]}>
-        <View style={[styles.topContainer, (withPreset || children) && { marginBottom: 8 }, topContainerStyle]}>
-          {withPreset && (
-            <SelectInput
-              placeholder="Sélectionnez une période..."
-              value={presetValue}
-              onValueChange={setPresetValue}
-              items={[
-                { label: "7 derniers jours", value: "lastDays7" },
-                { label: "14 derniers jours", value: "lastDays14" },
-                { label: "30 derniers jours", value: "lastDays30" },
-                { label: "Depuis le début", value: "fromBeginning" },
-                { label: "Choisir la période", value: "custom" },
-              ]}
-              {...selectInputProps}
-            />
-          )}
-
-          {children}
-        </View>
-
-        <View style={styles.dateContainer}>
-          <Text style={[styles.text, { marginRight: 8 }, textStyle]}>du</Text>
-          <DateOrTimeDisplay
-            mode="date"
-            date={fromDate}
-            onPress={() => {
-              // Prevent DatePicker from opening if SelectInput modal is still active
-              if (!isSelectModalActive) {
-                setOpenFromDate(true);
-                logEvents.logSuiviEditDateFrom();
-              }
-            }}
-            disabled={withPreset && presetValue !== "custom"}
-            containerStyle={styles.dateItemContainer}
-            {...dateOrTimeProps}
-          />
-          <Text style={[styles.text, { marginHorizontal: 8 }, textStyle]}>au</Text>
-          <DateOrTimeDisplay
-            mode="date"
-            date={toDate}
-            onPress={() => {
-              // Prevent DatePicker from opening if SelectInput modal is still active
-              if (!isSelectModalActive) {
-                setOpenToDate(true);
-                logEvents.logSuiviEditDateTo();
-              }
-            }}
-            disabled={withPreset && presetValue !== "custom"}
-            containerStyle={styles.dateItemContainer}
-            {...dateOrTimeProps}
-          />
-          <DatePicker
-            timeZoneOffsetInMinutes={0}
-            locale="fr"
-            title="Du"
-            maximumDate={toDate}
-            androidVariant="iosClone"
-            mode="date"
-            modal
-            open={openFromDate}
-            date={fromDate}
-            confirmText="Valider"
-            onConfirm={(date) => {
-              console.log("date", date);
-              setFromDate(date);
-              props.onChangeFromDate(date);
-              setOpenFromDate(false);
-            }}
-            cancelText="Annuler"
-            onCancel={() => {
-              setOpenFromDate(false);
-            }}
-          />
-          <DatePicker
-            timeZoneOffsetInMinutes={0}
-            locale="fr"
-            title="Au"
-            minimumDate={fromDate}
-            androidVariant="iosClone"
-            mode="date"
-            modal
-            open={openToDate}
-            date={toDate}
-            confirmText="Valider"
-            onConfirm={(date) => {
-              setToDate(date);
-              props.onChangeToDate(date);
-              setOpenToDate(false);
-            }}
-            cancelText="Annuler"
-            onCancel={() => {
-              setOpenToDate(false);
-            }}
-          />
-        </View>
-      </View>
-    </View>
+    <SelectInput
+      placeholder="Sélectionnez une période..."
+      value={presetValue}
+      onValueChange={setPresetValue}
+      items={[
+        { label: "7 derniers jours", value: "lastDays7" },
+        { label: "14 derniers jours", value: "lastDays14" },
+        { label: "30 derniers jours", value: "lastDays30" },
+        { label: "Depuis le début", value: "fromBeginning" },
+        { label: "Choisir la période", value: "custom" },
+      ]}
+      {...selectInputProps}
+    />
   );
 };
 
