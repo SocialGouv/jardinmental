@@ -92,6 +92,37 @@ export const scoresMapIcon = {
   },
 };
 
+export const analyzeScoresMapIcon = {
+  "-1": {
+    color: "transparent",
+  },
+  1: {
+    color: "#F3B9B0",
+    symbol: "--",
+    iconColor: "#B33F2E",
+  },
+  2: {
+    color: "#F9DCD7",
+    symbol: "-",
+    iconColor: "#B33F2E",
+  },
+  3: {
+    color: "#F9E1A7",
+    symbol: "O",
+    iconColor: "#5A2017",
+  },
+  4: {
+    color: "#BBE7C6",
+    symbol: "+",
+    iconColor: "#004439",
+  },
+  5: {
+    color: "#9ADAAA",
+    symbol: "++",
+    iconColor: "#004439",
+  },
+};
+
 export const colorsMap = Object.keys(EMOTION_COLORS).map((key) => EMOTION_COLORS[key]);
 
 export const categoryStates = {
@@ -392,3 +423,37 @@ export const SHARED_HEADER = false;
 export const HEADER_WITH_BANNER = false;
 export const PROGRESS_BAR = true;
 export const PROGRESS_BAR_AND_HEADER = true;
+
+export const HELP_ANALYSE = {
+  trigger: {
+    title: "Comment lire mes déclencheurs ? ",
+    description: `Les déclencheurs vous aident à :\n
+    Identifier ce qui influence positivement ou négativement votre état
+    Faire des liens entre vos ressentis et le contexte de vos journées
+    Mieux comprendre ce qui vous aide… et ce qui peut vous fragiliser.\n\n
+    Retrouvez les notes que vous avez écrites\n
+    Séléctionnez un indicateur, un ou plusieurs niveaux et une période pour retrouver les notes associées.`,
+  },
+  variations: {
+    title: "Comment lire les variations?",
+    description: `Depuis cet onglet, vous pouvez facilement :\n
+    Suivre vos indicateurs semaine après semaine
+    Observer les variations jour par jour
+    Repérer les tendances dans le temps\n\n
+    Afficher le détail d’un jour
+    Tapez sur un jour ou un point pour retreouver une vue détaillée.`,
+  },
+  correlation: {
+    title: "Comment lire les variations?",
+    description: `Depuis cet onglet, vous pouvez facilement :\n
+    Suivre vos indicateurs semaine après semaine
+    Observer les variations jour par jour
+    Repérer les tendances dans le temps\n\n
+    Afficher le détail d’un jour
+    Tapez sur un jour ou un point pour retreouver une vue détaillée.`,
+  },
+  bilan: {
+    title: "Comment lire mon bilan?",
+    description: "Le bilan vous donne une vue d’ensemble de vos observations sur la période choisie.\n",
+  },
+};

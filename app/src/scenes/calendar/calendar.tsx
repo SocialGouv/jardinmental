@@ -1,23 +1,24 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
-import { ScrollView, StyleSheet, View, Image, Dimensions } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { ScrollView, StyleSheet, View, Image, Dimensions, Text } from "react-native";
 
-import { displayedCategories } from "../../utils/constants";
-import { beforeToday, getArrayOfDates, getTodaySWeek, formatDate } from "../../utils/date/helpers";
-import Header from "../../components/Header";
+import { displayedCategories, HELP_ANALYSE } from "@/utils/constants";
+import { getArrayOfDates, getTodaySWeek, formatDate } from "@/utils/date/helpers";
 import Chart from "./chart";
-import WeekPicker from "./week-picker";
-import { DiaryDataContext } from "../../context/diaryData";
+import { DiaryDataContext } from "@/context/diaryData";
 import { useContext } from "react";
-import logEvents from "../../services/logEvents";
-import localStorage from "../../utils/localStorage";
-import Text from "../../components/MyText";
-import Icon from "../../components/Icon";
-import { colors } from "../../utils/colors";
+import localStorage from "@/utils/localStorage";
+import Icon from "@/components/Icon";
+import { colors } from "@/utils/colors";
+import { INDICATEURS } from "@/utils/liste_indicateurs.1";
+import { getIndicatorKey } from "@/utils/indicatorUtils";
+import RangeDate from "../suivi/RangeDate";
+import { Button2 } from "@/components/Button2";
+import JMButton from "@/components/JMButton";
+import CircleQuestionMark from "@assets/svg/icon/CircleQuestionMark";
+import { useBottomSheet } from "@/context/BottomSheetContext";
+import HelpView from "@/components/HelpView";
+
 const screenHeight = Dimensions.get("window").height;
-import { INDICATEURS } from "../../utils/liste_indicateurs.1";
-import { getIndicatorKey } from "../../utils/indicatorUtils";
-import Legend from "../suivi/Legend";
 
 const Calendar = ({ navigation, onScroll }) => {
   const [day, setDay] = useState(new Date());
@@ -25,6 +26,7 @@ const Calendar = ({ navigation, onScroll }) => {
   const [customs, setCustoms] = useState([]);
   const [oldCustoms, setOldCustoms] = useState([]);
   const [calendarIsEmpty, setCalendarIsEmpty] = useState(false);
+  const { showBottomSheet } = useBottomSheet();
   let mounted = useRef(true);
   const [userIndicateurs, setUserIndicateurs] = React.useState([]);
 
@@ -135,19 +137,64 @@ const Calendar = ({ navigation, onScroll }) => {
   };
 
   return (
-    <SafeAreaView style={styles.safe}>
+    <View style={styles.safe}>
       <View style={styles.headerContainer}>
         {/* <Header title="Mon suivi" navigation={navigation} /> */}
-        <WeekPicker
+        {/* <WeekPicker
           firstDay={firstDay}
           lastDay={lastDay}
           onAfterPress={() => setDay(beforeToday(-7, day))}
           onBeforePress={() => setDay(beforeToday(7, day))}
           setDay={setDay}
         />
-        <Legend />
+        <Legend /> */}
+        <View className="w-full px-2">
+          <View className="flex-row items-center pb-6 w-full justify-between">
+            <View className="flex-row">
+              <RangeDate
+                presetValue={"lastDays7"}
+                onChangePresetValue={() => {}}
+                fromDate={new Date()}
+                toDate={new Date()}
+                onChangeFromDate={() => {}}
+                onChangeToDate={() => {}}
+                withPreset={true}
+              >
+                {/* TODO : make it work avec les autres types d'indicateur */}
+              </RangeDate>
+              <Button2
+                checkable
+                title="Filtrer"
+                style={{
+                  height: 40,
+                }}
+                icon={"TuneSvg"}
+                preset="secondary"
+                size="small"
+                containerStyle={{ marginHorizontal: 8 }}
+                onPress={() => {}}
+              />
+            </View>
+            <JMButton
+              onPress={() => {
+                showBottomSheet(<HelpView title={HELP_ANALYSE["variations"]["title"]} description={HELP_ANALYSE["variations"]["description"]} />);
+              }}
+              variant="outline"
+              width="fixed"
+              icon={<CircleQuestionMark />}
+              className="mr-2"
+            />
+          </View>
+          <View className="h-[1] bg-cnam-primary-400"></View>
+        </View>
       </View>
-      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContainer} onScroll={onScroll}>
+      <ScrollView
+        style={styles.scrollView}
+        scrollEventThrottle={16}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContainer}
+        onScroll={onScroll}
+      >
         {!calendarIsEmpty ? (
           <>
             <View style={styles.subtitleContainer}>
@@ -186,7 +233,7 @@ const Calendar = ({ navigation, onScroll }) => {
           </>
         )}
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -226,7 +273,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     backgroundColor: "white",
   },
-  scrollContainer: {},
+  scrollContainer: {
+    minHeight: screenHeight,
+  },
   title: {
     fontWeight: "700",
     fontSize: 22,

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { View, StyleSheet } from "react-native";
 import DatePicker from "react-native-date-picker";
 import logEvents from "../../services/logEvents";
@@ -38,10 +38,22 @@ const DateRange = ({
   }, [props.toDate]);
   const [openToDate, setOpenToDate] = useState(false);
 
+  // Modal state management to prevent conflicts
+  const [isSelectModalActive, setIsSelectModalActive] = useState(false);
+  const presetTimeoutRef = useRef(null);
+
   useEffect(() => {
-    (async () => {
+    // Clear any existing timeout
+    if (presetTimeoutRef.current) {
+      clearTimeout(presetTimeoutRef.current);
+    }
+
+    const handlePresetChange = async () => {
       props.onChangePresetValue?.(presetValue);
       if (withPreset && presetValue !== "custom") {
+        // Set modal as active during preset change
+        setIsSelectModalActive(true);
+
         let _fromDate;
         let _toDate = beforeToday(0);
         switch (presetValue) {
@@ -59,108 +71,48 @@ const DateRange = ({
             _fromDate = new Date(beginningDate);
             break;
         }
-        setFromDate(_fromDate);
-        setToDate(_toDate);
-        props.onChangeFromDate?.(_fromDate);
-        props.onChangeToDate?.(_toDate);
+
+        // Add delay to ensure SelectInput modal is fully dismissed
+        presetTimeoutRef.current = setTimeout(() => {
+          setFromDate(_fromDate);
+          setToDate(_toDate);
+          setIsSelectModalActive(false);
+
+          // Additional delay for parent component updates
+          setTimeout(() => {
+            props.onChangeFromDate?.(_fromDate);
+            props.onChangeToDate?.(_toDate);
+          }, 50);
+        }, 300); // 300ms delay to ensure modal dismissal
+      } else {
+        setIsSelectModalActive(false);
       }
-    })();
+    };
+
+    handlePresetChange();
+
+    // Cleanup function
+    return () => {
+      if (presetTimeoutRef.current) {
+        clearTimeout(presetTimeoutRef.current);
+      }
+    };
   }, [presetValue]);
 
   return (
-    <View style={[styles.container, containerStyle]}>
-      <View style={[styles.contentContainer, contentContainerStyle]}>
-        <View style={[styles.topContainer, (withPreset || children) && { marginBottom: 8 }, topContainerStyle]}>
-          {withPreset && (
-            <SelectInput
-              placeholder="Sélectionnez une période..."
-              value={presetValue}
-              onValueChange={setPresetValue}
-              items={[
-                { label: "7 derniers jours", value: "lastDays7" },
-                { label: "14 derniers jours", value: "lastDays14" },
-                { label: "30 derniers jours", value: "lastDays30" },
-                { label: "Depuis le début", value: "fromBeginning" },
-                { label: "Choisir la période", value: "custom" },
-              ]}
-              {...selectInputProps}
-            />
-          )}
-
-          {children}
-        </View>
-
-        <View style={styles.dateContainer}>
-          <Text style={[styles.text, { marginRight: 8 }, textStyle]}>du</Text>
-          <DateOrTimeDisplay
-            mode="date"
-            date={fromDate}
-            onPress={() => {
-              setOpenFromDate(true);
-              logEvents.logSuiviEditDateFrom();
-            }}
-            disabled={withPreset && presetValue !== "custom"}
-            containerStyle={styles.dateItemContainer}
-            {...dateOrTimeProps}
-          />
-          <Text style={[styles.text, { marginHorizontal: 8 }, textStyle]}>au</Text>
-          <DateOrTimeDisplay
-            mode="date"
-            date={toDate}
-            onPress={() => {
-              setOpenToDate(true);
-              logEvents.logSuiviEditDateTo();
-            }}
-            disabled={withPreset && presetValue !== "custom"}
-            containerStyle={styles.dateItemContainer}
-            {...dateOrTimeProps}
-          />
-          <DatePicker
-            timeZoneOffsetInMinutes={0}
-            locale="fr"
-            title="Du"
-            maximumDate={toDate}
-            androidVariant="iosClone"
-            mode="date"
-            modal
-            open={openFromDate}
-            date={fromDate}
-            confirmText="Valider"
-            onConfirm={(date) => {
-              console.log("date", date);
-              setFromDate(date);
-              props.onChangeFromDate(date);
-              setOpenFromDate(false);
-            }}
-            cancelText="Annuler"
-            onCancel={() => {
-              setOpenFromDate(false);
-            }}
-          />
-          <DatePicker
-            timeZoneOffsetInMinutes={0}
-            locale="fr"
-            title="Au"
-            minimumDate={fromDate}
-            androidVariant="iosClone"
-            mode="date"
-            modal
-            open={openToDate}
-            date={toDate}
-            confirmText="Valider"
-            onConfirm={(date) => {
-              setToDate(date);
-              props.onChangeToDate(date);
-              setOpenToDate(false);
-            }}
-            cancelText="Annuler"
-            onCancel={() => {
-              setOpenToDate(false);
-            }}
-          />
-        </View>
-      </View>
-    </View>
+    <SelectInput
+      placeholder="Sélectionnez une période..."
+      value={presetValue}
+      onValueChange={setPresetValue}
+      items={[
+        { label: "7 derniers jours", value: "lastDays7" },
+        { label: "14 derniers jours", value: "lastDays14" },
+        { label: "30 derniers jours", value: "lastDays30" },
+        { label: "Depuis le début", value: "fromBeginning" },
+        { label: "Choisir la période", value: "custom" },
+      ]}
+      {...selectInputProps}
+    />
   );
 };
 
