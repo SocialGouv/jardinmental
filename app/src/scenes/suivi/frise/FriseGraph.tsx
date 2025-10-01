@@ -1,23 +1,117 @@
 import React, { useMemo, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import Text from "../../../components/MyText";
-import Svg, { Rect, Circle } from "react-native-svg";
-import { scoresMapIcon } from "../../../utils/constants";
+import Svg, { Rect, Circle, Text as SvgText, Path } from "react-native-svg";
+import { analyzeScoresMapIcon, scoresMapIcon } from "../../../utils/constants";
 import { colors } from "../../../utils/colors";
+import { symbol } from "zod";
 
 // Constants
-const MAIN_BAR_HEIGHT = 10;
-const TREATMENT_BAR_HEIGHT = 4;
+const MAIN_BAR_HEIGHT = 30;
+const TREATMENT_BAR_HEIGHT = 20;
 const DOT_RADIUS = 2;
 const SEGMENT_GAP = 1;
 const DEFAULT_COLOR = "#D7D3D3";
-const TREATMENT_COLOR = "#5956E8";
-const NO_TREATMENT_COLOR = "#E575F8";
+const TREATMENT_COLOR = "#CCEDF9";
+const NO_TREATMENT_COLOR = "#F9D1E6";
+
+const colorToSymbol = {
+  "#F3B9B0": "-",
+  "#F3A3CD": "--", // rouge
+  "#F9E1A7": "O", // jaune
+  "#BBE7C6": "+", // bleu
+  "#99DDDD": "++", // gris par défaut
+  "#D7D3D3": "",
+  "#CCEDF9": "✓",
+  "#F9D1E6": "x",
+};
+
+const colorToTextColor = {
+  "#F3B9B0": "#B33F2E",
+  "#F3A3CD": "#B33F2E", // rouge
+  "#F9E1A7": "#5A2017", // jaune
+  "#BBE7C6": "#004439", // bleu
+  "#99DDDD": "#004439", // gris par défaut
+  "#D7D3D3": "",
+  "#F9D1E6": "#3D6874",
+  "#CCEDF9": "#3D6874",
+};
+
+type RoundedRectProps = {
+  x: number;
+  y?: number;
+  width: number;
+  height: number;
+  fill: string;
+  opacity?: number;
+  radius?: number;
+  side?: "left" | "right" | "both" | "none";
+};
 
 // Memoized components
-const BatchedSegment = React.memo(({ x, width, height, fill, opacity }) => (
-  <Rect x={x} y={0} width={width} height={height} fill={fill} opacity={opacity} />
+const BatchedSegment = React.memo(({ x, width, height, fill, opacity, side, radius }) => (
+  <RoundedRect
+    x={x}
+    y={0}
+    width={width}
+    height={height}
+    fill={fill}
+    radius={radius}
+    opacity={opacity}
+    side={side} // horizontal corner radius
+  />
 ));
+
+export const RoundedRect: React.FC<RoundedRectProps> = ({ x, y = 0, width, height, fill, opacity = 1, radius = 5, side = "none" }) => {
+  let path = "";
+
+  if (side === "left") {
+    path = `
+      M ${x + radius},${y}
+      H ${x + width}
+      V ${y + height}
+      H ${x + radius}
+      Q ${x},${y + height} ${x},${y + height - radius}
+      V ${y + radius}
+      Q ${x},${y} ${x + radius},${y}
+      Z
+    `;
+  } else if (side === "right") {
+    path = `
+      M ${x},${y}
+      H ${x + width - radius}
+      Q ${x + width},${y} ${x + width},${y + radius}
+      V ${y + height - radius}
+      Q ${x + width},${y + height} ${x + width - radius},${y + height}
+      H ${x}
+      Z
+    `;
+  } else if (side === "both") {
+    path = `
+      M ${x + radius},${y}
+      H ${x + width - radius}
+      Q ${x + width},${y} ${x + width},${y + radius}
+      V ${y + height - radius}
+      Q ${x + width},${y + height} ${x + width - radius},${y + height}
+      H ${x + radius}
+      Q ${x},${y + height} ${x},${y + height - radius}
+      V ${y + radius}
+      Q ${x},${y} ${x + radius},${y}
+      Z
+    `;
+  } else {
+    // plain rect (no rounding)
+    path = `
+      M ${x},${y}
+      H ${x + width}
+      V ${y + height}
+      H ${x}
+      Z
+    `;
+  }
+
+  return <Path d={path} fill={fill} opacity={opacity} />;
+};
 
 const Dot = React.memo(({ cx, cy, r, fill }) => <Circle cx={cx} cy={cy} r={r} fill={fill} />);
 
@@ -28,6 +122,8 @@ const batchSegments = (items, segmentWidth, gap) => {
   const batches = [];
   let currentBatch = {
     color: items[0].color,
+    textColor: items[0].textColor,
+    symbol: items[0].symbol,
     opacity: items[0].opacity,
     startIndex: 0,
     count: 1,
@@ -46,6 +142,8 @@ const batchSegments = (items, segmentWidth, gap) => {
         width: currentBatch.count * segmentWidth - gap,
         color: currentBatch.color,
         opacity: currentBatch.opacity,
+        textColor: currentBatch.textColor,
+        symbol: currentBatch.symbol,
       });
 
       currentBatch = {
@@ -53,6 +151,8 @@ const batchSegments = (items, segmentWidth, gap) => {
         opacity: item.opacity,
         startIndex: i,
         count: 1,
+        textColor: item.textColor,
+        symbol: item.symbol,
       };
     }
   }
@@ -63,6 +163,8 @@ const batchSegments = (items, segmentWidth, gap) => {
     width: currentBatch.count * segmentWidth - gap,
     color: currentBatch.color,
     opacity: currentBatch.opacity,
+    textColor: currentBatch.textColor,
+    symbol: currentBatch.symbol,
   });
 
   return batches;
@@ -150,7 +252,7 @@ export const FriseGraph = React.memo(
 
         // Get color from icon lookup
         const iconKey = isReverse ? 6 - value : value;
-        const color = scoresMapIcon[iconKey]?.color || DEFAULT_COLOR;
+        const color = analyzeScoresMapIcon[iconKey]?.color || DEFAULT_COLOR;
 
         // Calculate opacity
         let opacity = 1;
@@ -161,7 +263,7 @@ export const FriseGraph = React.memo(
           opacity = 0.5;
         }
 
-        return { color, opacity };
+        return { color, opacity, textColor: analyzeScoresMapIcon[iconKey]?.iconColor, symbol: analyzeScoresMapIcon[iconKey]?.symbol };
       });
 
       return batchSegments(items, segmentWidth, SEGMENT_GAP);
@@ -218,17 +320,81 @@ export const FriseGraph = React.memo(
         >
           {/* Main Bar - Batched */}
           <Svg width={containerWidth} height={MAIN_BAR_HEIGHT}>
-            {batchedMainData.map((batch, i) => (
-              <BatchedSegment key={i} x={batch.x} width={batch.width} height={MAIN_BAR_HEIGHT} fill={batch.color} opacity={batch.opacity} />
-            ))}
+            {batchedMainData.map((batch, i) => {
+              let side = "none";
+              if (i === 0 && i === batchedMainData.length - 1) {
+                side = "both";
+              } else if (i === 0) {
+                side = "left";
+              } else if (i === batchedMainData.length - 1) {
+                side = "right";
+              }
+              return (
+                <React.Fragment key={i}>
+                  <BatchedSegment
+                    side={side}
+                    key={i}
+                    x={batch.x}
+                    width={batch.width}
+                    height={MAIN_BAR_HEIGHT}
+                    fill={batch.color}
+                    opacity={batch.opacity}
+                    radius={MAIN_BAR_HEIGHT / 2}
+                  />
+                  <SvgText
+                    x={batch.x + batch.width / 2} // centre horizontal
+                    y={MAIN_BAR_HEIGHT / 2} // centre vertical
+                    fontSize={12}
+                    fontWeight={600}
+                    fill={batch.textColor}
+                    textAnchor="middle" // centre le texte horizontalement
+                    alignmentBaseline="middle" // centre le texte verticalement
+                  >
+                    {batch.symbol || ""}
+                  </SvgText>
+                </React.Fragment>
+              );
+            })}
           </Svg>
 
           {/* Treatment Bar - Batched */}
           {batchedTreatmentData && (
             <Svg width={containerWidth} height={TREATMENT_BAR_HEIGHT} style={styles.treatmentBar}>
-              {batchedTreatmentData.map((batch, i) => (
-                <BatchedSegment key={i} x={batch.x} width={batch.width} height={TREATMENT_BAR_HEIGHT} fill={batch.color} opacity={1} />
-              ))}
+              {batchedTreatmentData.map((batch, i) => {
+                let side = "none";
+                if (i === 0 && i === batchedTreatmentData.length - 1) {
+                  side = "both";
+                } else if (i === 0) {
+                  side = "left";
+                } else if (i === batchedTreatmentData.length - 1) {
+                  side = "right";
+                }
+                return (
+                  <React.Fragment key={i}>
+                    <BatchedSegment
+                      side={side}
+                      key={i}
+                      x={batch.x}
+                      width={batch.width}
+                      height={TREATMENT_BAR_HEIGHT}
+                      fill={batch.color}
+                      radius={TREATMENT_BAR_HEIGHT / 2}
+                      opacity={1}
+                    />
+                    <SvgText
+                      x={batch.x + batch.width / 2} // centre horizontal
+                      y={TREATMENT_BAR_HEIGHT / 2} // centre vertical
+                      fontSize={12}
+                      fill={"#3D6874"}
+                      fontWeight={600}
+                      textAnchor="middle" // centre le texte horizontalement
+                      alignmentBaseline="middle" // centre le texte verticalement
+                    >
+                      {colorToSymbol[batch.color] || ""}
+                    </SvgText>
+                  </React.Fragment>
+                );
+              })}
             </Svg>
           )}
 
@@ -236,7 +402,7 @@ export const FriseGraph = React.memo(
           {processedSiBesoinData && (
             <Svg width={containerWidth} height={DOT_RADIUS * 3} style={styles.treatmentBar}>
               {processedSiBesoinData.map((dot) => (
-                <Dot key={dot.index} cx={dot.cx} cy={DOT_RADIUS + 1} r={DOT_RADIUS} fill={TREATMENT_COLOR} />
+                <Dot key={dot.index} cx={dot.cx} cy={DOT_RADIUS + 1} r={DOT_RADIUS} fill={"#3D6874"} />
               ))}
             </Svg>
           )}

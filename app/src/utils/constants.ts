@@ -92,6 +92,37 @@ export const scoresMapIcon = {
   },
 };
 
+export const analyzeScoresMapIcon = {
+  "-1": {
+    color: "transparent",
+  },
+  1: {
+    color: "#F3B9B0",
+    symbol: "--",
+    iconColor: "#B33F2E",
+  },
+  2: {
+    color: "#F9DCD7",
+    symbol: "-",
+    iconColor: "#B33F2E",
+  },
+  3: {
+    color: "#F9E1A7",
+    symbol: "O",
+    iconColor: "#5A2017",
+  },
+  4: {
+    color: "#BBE7C6",
+    symbol: "+",
+    iconColor: "#004439",
+  },
+  5: {
+    color: "#9ADAAA",
+    symbol: "++",
+    iconColor: "#004439",
+  },
+};
+
 export const colorsMap = Object.keys(EMOTION_COLORS).map((key) => EMOTION_COLORS[key]);
 
 export const categoryStates = {
