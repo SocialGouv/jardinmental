@@ -197,15 +197,7 @@ export const FriseGraph = React.memo(
     }, [priseDeTraitementSiBesoin, showTraitement, segmentWidth]);
 
     return (
-      <View
-        style={styles.friseContainer}
-        // onLayout={(event) => {
-        //   const { width } = event.nativeEvent.layout;
-        //   if (width > 0 && width !== containerWidth) {
-        //     setContainerWidth(width);
-        //   }
-        // }}
-      >
+      <View style={styles.friseContainer}>
         {title ? <Text style={styles.friseTitle}>{title}</Text> : null}
 
         <View
