@@ -12,7 +12,7 @@ export default ({ navigation }) => {
     <SafeAreaView style={styles.safe}>
       <View style={styles.headerContainer}>
         <BackButton onPress={navigation.goBack} />
-        <Image style={styles.image} className="rounded-lg" source={require("../../../assets/imgs/icon.png")} />
+        <Image style={styles.image} source={require("../../../assets/imgs/logo2.png")} />
       </View>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <Icon styleContainer={styles.iconContainer} icon="LockSvg" color="#d3d3e8" width={70} height={70} />
