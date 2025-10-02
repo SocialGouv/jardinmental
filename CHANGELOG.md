@@ -1,3 +1,10 @@
+# [1.95.0](https://github.com/SocialGouv/jardinmental/compare/v1.94.0...v1.95.0) (2025-10-02)
+
+
+### Features
+
+* resources step 2 ([#516](https://github.com/SocialGouv/jardinmental/issues/516)) ([4f38bdc](https://github.com/SocialGouv/jardinmental/commit/4f38bdce8a5d7ff026b7aa3fabd5806d2e5e36b1))
+
 # [1.94.0](https://github.com/SocialGouv/jardinmental/compare/v1.93.0...v1.94.0) (2025-10-02)
 
 
