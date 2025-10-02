@@ -1,3 +1,10 @@
+# [1.93.0](https://github.com/SocialGouv/jardinmental/compare/v1.92.0...v1.93.0) (2025-10-02)
+
+
+### Features
+
+* bump version 182 for iOS ([5bc4768](https://github.com/SocialGouv/jardinmental/commit/5bc476880f92f341720856bc25afa873eb81d30d))
+
 # [1.92.0](https://github.com/SocialGouv/jardinmental/compare/v1.91.0...v1.92.0) (2025-09-29)
 
 

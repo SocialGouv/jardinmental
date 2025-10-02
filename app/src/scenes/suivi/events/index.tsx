@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View, ScrollView, Text } from "react-native";
+import { StyleSheet, View, ScrollView, Text, Dimensions } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { isToday, isYesterday, parseISO } from "date-fns";
 import { getArrayOfDatesFromTo, formatDay, formatRelativeDate } from "@/utils/date/helpers";
@@ -14,6 +14,8 @@ import JMButton from "@/components/JMButton";
 import { getIndicatorKey } from "@/utils/indicatorUtils";
 import { TAB_BAR_HEIGHT } from "@/utils/constants";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+
+const screenHeight = Dimensions.get("window").height;
 
 const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, toDate, setToDate, onScroll }) => {
   const [diaryData] = React.useContext(DiaryDataContext);
@@ -162,6 +164,8 @@ const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, 
             paddingBottom: insets.bottom + TAB_BAR_HEIGHT,
           },
         ]}
+        showsVerticalScrollIndicator={false}
+        scrollEventThrottle={16}
         onScroll={onScroll}
       >
         <EventFilterHeader
@@ -172,7 +176,11 @@ const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, 
           toDate={toDate}
           setToDate={setToDate}
           indicateur={indicateur}
-          setIndicateur={setIndicateur}
+          setIndicateur={(indicatorName) => {
+            setIndicateur(indicatorName);
+            const _indicator = userIndicateurs.find((ind) => ind.name === indicatorName);
+            setIndicateurId(getIndicatorKey(_indicator));
+          }}
           level={level}
           setLevel={setLevel}
           userIndicateurs={userIndicateurs.filter(({ active }) => active)}
@@ -279,7 +287,7 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     paddingTop: 20,
-    paddingBottom: 30,
+    minHeight: screenHeight * 0.7,
   },
   dataContainer: {
     marginTop: 40,
