@@ -135,18 +135,6 @@ export default function SupportScreen({ navigation, route }) {
               <PhoneIcon width={24} height={24} />
               <Text className={mergeClassNames(typography.textLgSemibold, "ml-3 text-cnam-primary-900 text-left")}>Appeler le 3114</Text>
             </SquircleButton>
-            <SquircleButton
-              onPress={() => handleSms("114")}
-              preserveSmoothing={true}
-              cornerSmoothing={100}
-              style={{
-                borderRadius: 20,
-              }}
-              className="border border-cnam-primary-800 h-[60] flex-row px-6 py-4 bg-white justify-content items-center"
-            >
-              <PhoneIcon width={24} height={24} />
-              <Text className={mergeClassNames(typography.textLgSemibold, "ml-3 text-cnam-primary-900 text-left")}>Écrire au 114 par SMS</Text>
-            </SquircleButton>
           </View>
         </View>
       </View>
