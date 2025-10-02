@@ -1,5 +1,5 @@
-import React from "react";
-import { SafeAreaView, StyleSheet, View } from "react-native";
+import React, { useState } from "react";
+import { SafeAreaView, StyleSheet, TouchableOpacity, View, Text } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 
 import { beforeToday } from "../../utils/date/helpers";
@@ -21,11 +21,14 @@ import JMButton from "@/components/JMButton";
 import CircleQuestionMark from "@assets/svg/icon/CircleQuestionMark";
 import { Button2 } from "@/components/Button2";
 import HelpView from "@/components/HelpView";
-import { HELP_ANALYSE } from "@/utils/constants";
+import { analyzeScoresMapIcon, HELP_ANALYSE } from "@/utils/constants";
 import { useBottomSheet } from "@/context/BottomSheetContext";
+import { typography } from "@/utils/typography";
+import { mergeClassNames } from "@/utils/className";
+import DrugIcon from "@assets/svg/icon/Drug";
 
 const Suivi = ({ navigation, startSurvey }) => {
-  const [chartType, setChartType] = React.useState<"Frises" | "Statistiques" | "Déclencheurs" | "Courbes">("Frises");
+  const [chartType, setChartType] = React.useState<"Frises" | "Statistiques" | "Déclencheurs" | "Courbes">("Statistiques");
   const [presetDate, setPresetDate] = React.useState("lastDays7");
   const [fromDate, setFromDate] = React.useState(beforeToday(30));
   const [toDate, setToDate] = React.useState(beforeToday(0));
@@ -110,52 +113,96 @@ const Suivi = ({ navigation, startSurvey }) => {
           />
         </View>
         {chartType === "Statistiques" && (
-          <View style={styles.headerContainer}>
-            <View className="w-full px-2">
-              <View className="flex-row items-center pb-6 w-full justify-between">
-                <View className="flex-row">
-                  <RangeDate
-                    presetValue={presetDate}
-                    onChangePresetValue={setPresetDate}
-                    fromDate={fromDate}
-                    toDate={toDate}
-                    onChangeFromDate={setFromDate}
-                    onChangeToDate={setToDate}
-                    withPreset={true}
-                  >
-                    {/* TODO : make it work avec les autres types d'indicateur */}
-                  </RangeDate>
-                  <Button2
-                    checkable
-                    title="Filtrer"
-                    style={{
-                      height: 40,
-                    }}
-                    icon={"TuneSvg"}
-                    preset="secondary"
-                    size="small"
-                    containerStyle={{ marginHorizontal: 8 }}
-                    onPress={() => {}}
-                  />
-                </View>
-                <JMButton
-                  onPress={() => {
-                    showBottomSheet(<HelpView title={HELP_ANALYSE["bilan"]["title"]} description={HELP_ANALYSE["bilan"]["description"]} />);
-                  }}
-                  variant="outline"
-                  width="fixed"
-                  icon={<CircleQuestionMark />}
-                  className="mr-2"
-                />
-              </View>
-              <View className="h-[1] bg-cnam-primary-400"></View>
-            </View>
-          </View>
+          <StatistiquePage
+            presetDate={presetDate}
+            setPresetDate={setPresetDate}
+            fromDate={fromDate}
+            toDate={toDate}
+            setFromDate={setFromDate}
+            setToDate={setToDate}
+          />
         )}
         {renderChart(chartType)}
       </SafeAreaView>
       <FloatingPlusButton shadow onPress={startSurvey} plusPosition={0} />
     </>
+  );
+};
+
+export const StatistiquePage = ({ presetDate, setPresetDate, fromDate, toDate, setFromDate, setToDate }) => {
+  const [isFilterActif, setIsFilterActif] = useState<boolean>(false);
+  return (
+    <View style={styles.headerContainer}>
+      <View className="w-full px-4">
+        <View className="flex-row items-center w-full justify-between">
+          <View className="flex-row">
+            <RangeDate
+              presetValue={presetDate}
+              onChangePresetValue={setPresetDate}
+              fromDate={fromDate}
+              toDate={toDate}
+              onChangeFromDate={setFromDate}
+              onChangeToDate={setToDate}
+              withPreset={true}
+            >
+              {/* TODO : make it work avec les autres types d'indicateur */}
+            </RangeDate>
+            <TouchableOpacity
+              className="ml-2 border border-cnam-primary-800 rounded-full h-[40] px-4 justify-center"
+              onPress={() => setIsFilterActif(!isFilterActif)}
+            >
+              <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>Filtrer</Text>
+            </TouchableOpacity>
+          </View>
+          <JMButton
+            onPress={() => {
+              showBottomSheet(<HelpView title={HELP_ANALYSE["bilan"]["title"]} description={HELP_ANALYSE["bilan"]["description"]} />);
+            }}
+            variant="outline"
+            width="fixed"
+            icon={<CircleQuestionMark />}
+            className="mr-2"
+          />
+        </View>
+        {isFilterActif && (
+          <View className="flex-row space-x-2 border border-cnam-primary-800 rounded-2xl self-start px-2 py-2 mt-2">
+            {[
+              {
+                ...analyzeScoresMapIcon[1],
+              },
+              {
+                ...analyzeScoresMapIcon[2],
+              },
+              {
+                ...analyzeScoresMapIcon[3],
+              },
+              {
+                ...analyzeScoresMapIcon[4],
+              },
+              {
+                ...analyzeScoresMapIcon[5],
+              },
+            ].map((item) => {
+              return (
+                <View
+                  className="h-[32] w-[32] rounded-full justify-center items-center"
+                  style={{
+                    backgroundColor: item.color,
+                  }}
+                >
+                  <Text style={{ color: item.iconColor }}>{item.symbol}</Text>
+                </View>
+              );
+            })}
+            <View className="h-[32] w-[32] rounded-full bg-cnam-primary-100 justify-center items-center">
+              <DrugIcon width={16} />
+            </View>
+          </View>
+        )}
+        <View className="h-[1] bg-cnam-primary-400 w-full mt-4"></View>
+        <Legend style={{ marginTop: 14 }} />
+      </View>
+    </View>
   );
 };
 

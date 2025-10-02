@@ -2,7 +2,7 @@ import React, { useMemo, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import Text from "../../../components/MyText";
 import Svg, { Rect, Circle, Text as SvgText, Path, Line } from "react-native-svg";
-import { analyzeScoresMapIcon, scoresMapIcon } from "../../../utils/constants";
+import { analyzeScoresMapIcon, scoresMapIcon, TW_COLORS } from "../../../utils/constants";
 import { colors } from "../../../utils/colors";
 import { symbol } from "zod";
 
@@ -10,7 +10,7 @@ import { symbol } from "zod";
 const MAIN_BAR_HEIGHT = 30;
 const TREATMENT_BAR_HEIGHT = 20;
 const DOT_RADIUS = 2;
-const SEGMENT_GAP = 1;
+const SEGMENT_GAP = 0;
 const DEFAULT_COLOR = "#D7D3D3";
 const TREATMENT_COLOR = "#CCEDF9";
 const NO_TREATMENT_COLOR = "#F9D1E6";
@@ -119,14 +119,37 @@ const Dot = React.memo(({ cx, cy, r, fill }) => <Circle cx={cx} cy={cy} r={r} fi
 const GridLines = React.memo(({ count, segmentWidth, height }: { count: number; segmentWidth: number; height: number }) => {
   const lines = [];
   for (let i = 1; i < count; i++) {
-    lines.push(<Line key={i} x1={i * segmentWidth} y1={0} x2={i * segmentWidth} y2={height} stroke={"#fff"} strokeWidth={0.5} opacity={1} />);
+    lines.push(
+      <Line
+        key={i}
+        x1={i * segmentWidth}
+        y1={0}
+        x2={i * segmentWidth}
+        y2={height}
+        stroke={TW_COLORS.CNAM_PRIMARY_400}
+        strokeWidth={0.5}
+        opacity={1}
+      />
+    );
   }
   return <>{lines}</>;
 });
 
 // Batch consecutive segments with same color and opacity
-const batchSegments = (items, segmentWidth, gap) => {
+const batchSegments = (items, segmentWidth, gap, shouldBatch = true) => {
   if (!items?.length) return [];
+
+  // If batching is disabled, return each segment individually
+  if (!shouldBatch) {
+    return items.map((item, index) => ({
+      x: index * segmentWidth,
+      width: segmentWidth - gap,
+      color: item.color,
+      opacity: item.opacity,
+      textColor: item.textColor,
+      symbol: item.symbol,
+    }));
+  }
 
   const batches = [];
   let currentBatch = {
@@ -180,8 +203,17 @@ const batchSegments = (items, segmentWidth, gap) => {
 };
 
 // Batch treatment segments (color only, no opacity)
-const batchTreatmentSegments = (colors, segmentWidth, gap) => {
+const batchTreatmentSegments = (colors, segmentWidth, gap, shouldBatch = true) => {
   if (!colors?.length) return [];
+
+  // If batching is disabled, return each segment individually
+  if (!shouldBatch) {
+    return colors.map((color, index) => ({
+      x: index * segmentWidth,
+      width: segmentWidth - gap,
+      color: color,
+    }));
+  }
 
   const batches = [];
   let currentBatch = {
@@ -244,8 +276,9 @@ export const FriseGraph = React.memo(
     const dataLength = data?.length || 0;
     if (dataLength === 0) return null;
 
-    // State to track container width
+    // State to track container width and batching
     const [containerWidth, setContainerWidth] = useState(300);
+    const [batchSegment, setBatchSegment] = useState(false);
 
     const segmentWidth = containerWidth / dataLength;
 
@@ -275,8 +308,8 @@ export const FriseGraph = React.memo(
         return { color, opacity, textColor: analyzeScoresMapIcon[iconKey]?.iconColor, symbol: analyzeScoresMapIcon[iconKey]?.symbol };
       });
 
-      return batchSegments(items, segmentWidth, SEGMENT_GAP);
-    }, [data, focusedScoresSet, hasFocus, segmentWidth]);
+      return batchSegments(items, segmentWidth, SEGMENT_GAP, batchSegment);
+    }, [data, focusedScoresSet, hasFocus, segmentWidth, batchSegment]);
 
     // Process and batch treatment data
     const batchedTreatmentData = useMemo(() => {
@@ -288,8 +321,8 @@ export const FriseGraph = React.memo(
         return DEFAULT_COLOR;
       });
 
-      return batchTreatmentSegments(colors, segmentWidth, SEGMENT_GAP);
-    }, [priseDeTraitement, showTraitement, segmentWidth]);
+      return batchTreatmentSegments(colors, segmentWidth, SEGMENT_GAP, batchSegment);
+    }, [priseDeTraitement, showTraitement, segmentWidth, batchSegment]);
 
     // Process "si besoin" data - filter during processing
     const processedSiBesoinData = useMemo(() => {
@@ -320,6 +353,7 @@ export const FriseGraph = React.memo(
         {title ? <Text style={styles.friseTitle}>{title}</Text> : null}
 
         <View
+          className="w-full"
           onLayout={(event) => {
             const { width } = event.nativeEvent.layout;
             if (width > 0 && width !== containerWidth) {
@@ -328,9 +362,18 @@ export const FriseGraph = React.memo(
           }}
         >
           {/* Main Bar - Batched */}
-          <Svg width={containerWidth} height={MAIN_BAR_HEIGHT}>
+          <Svg
+            width={containerWidth}
+            height={MAIN_BAR_HEIGHT}
+            style={{
+              borderWidth: 1,
+              borderRadius: 15,
+              borderColor: TW_COLORS.CNAM_PRIMARY_400,
+            }}
+          >
             {batchedMainData.map((batch, i) => {
               let side = "none";
+              // When batching is disabled, all segments should have both sides rounded
               if (i === 0 && i === batchedMainData.length - 1) {
                 side = "both";
               } else if (i === 0) {
@@ -365,14 +408,15 @@ export const FriseGraph = React.memo(
               );
             })}
             {/* Grid lines for day separations */}
-            <GridLines count={dataLength} segmentWidth={segmentWidth} height={MAIN_BAR_HEIGHT} />
+            {/* <GridLines count={dataLength} segmentWidth={segmentWidth} height={MAIN_BAR_HEIGHT} /> */}
           </Svg>
 
           {/* Treatment Bar - Batched */}
           {batchedTreatmentData && (
-            <Svg width={containerWidth} height={TREATMENT_BAR_HEIGHT} style={styles.treatmentBar}>
+            <Svg width={containerWidth} height={TREATMENT_BAR_HEIGHT} style={styles.treatmentBar} className="mt-2">
               {batchedTreatmentData.map((batch, i) => {
                 let side = "none";
+                // When batching is disabled, all segments should have both sides rounded
                 if (i === 0 && i === batchedTreatmentData.length - 1) {
                   side = "both";
                 } else if (i === 0) {
@@ -413,7 +457,7 @@ export const FriseGraph = React.memo(
 
           {/* Treatment Si Besoin Dots */}
           {processedSiBesoinData && (
-            <Svg width={containerWidth} height={DOT_RADIUS * 3} style={styles.treatmentBar}>
+            <Svg width={containerWidth} height={DOT_RADIUS * 3} className="mt-2">
               {processedSiBesoinData.map((dot) => (
                 <Dot key={dot.index} cx={dot.cx} cy={DOT_RADIUS + 1} r={DOT_RADIUS} fill={"#3D6874"} />
               ))}
@@ -458,6 +502,8 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   treatmentBar: {
-    marginTop: 5,
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: TW_COLORS.CNAM_PRIMARY_400,
   },
 });

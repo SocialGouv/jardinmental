@@ -10,7 +10,7 @@ import { beforeToday } from "../../utils/date/helpers";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { STORAGE_KEY_START_DATE } from "../../utils/constants";
 
-const DateRange = ({
+const RangeDate = ({
   withPreset = false,
   children,
   containerStyle,
@@ -100,19 +100,92 @@ const DateRange = ({
   }, [presetValue]);
 
   return (
-    <SelectInput
-      placeholder="Sélectionnez une période..."
-      value={presetValue}
-      onValueChange={setPresetValue}
-      items={[
-        { label: "7 derniers jours", value: "lastDays7" },
-        { label: "14 derniers jours", value: "lastDays14" },
-        { label: "30 derniers jours", value: "lastDays30" },
-        { label: "Depuis le début", value: "fromBeginning" },
-        { label: "Choisir la période", value: "custom" },
-      ]}
-      {...selectInputProps}
-    />
+    <View>
+      <SelectInput
+        placeholder="Sélectionnez une période..."
+        value={presetValue}
+        onValueChange={setPresetValue}
+        items={[
+          { label: "7 derniers jours", value: "lastDays7" },
+          { label: "14 derniers jours", value: "lastDays14" },
+          { label: "30 derniers jours", value: "lastDays30" },
+          { label: "Depuis le début", value: "fromBeginning" },
+          { label: "Choisir la période", value: "custom" },
+        ]}
+        {...selectInputProps}
+      />
+      {presetValue === "custom" && (
+        <View style={styles.dateContainer}>
+          <Text style={[styles.text, { marginRight: 8 }, textStyle]}>du</Text>
+          <DateOrTimeDisplay
+            mode="date"
+            date={fromDate}
+            onPress={() => {
+              setOpenFromDate(true);
+              logEvents.logSuiviEditDateFrom();
+            }}
+            disabled={withPreset && presetValue !== "custom"}
+            containerStyle={styles.dateItemContainer}
+            {...dateOrTimeProps}
+          />
+          <Text style={[styles.text, { marginHorizontal: 8 }, textStyle]}>au</Text>
+          <DateOrTimeDisplay
+            mode="date"
+            date={toDate}
+            onPress={() => {
+              setOpenToDate(true);
+              logEvents.logSuiviEditDateTo();
+            }}
+            disabled={withPreset && presetValue !== "custom"}
+            containerStyle={styles.dateItemContainer}
+            {...dateOrTimeProps}
+          />
+          <DatePicker
+            timeZoneOffsetInMinutes={0}
+            locale="fr"
+            title="Du"
+            maximumDate={toDate}
+            androidVariant="iosClone"
+            mode="date"
+            modal
+            open={openFromDate}
+            date={fromDate}
+            confirmText="Valider"
+            onConfirm={(date) => {
+              console.log("date", date);
+              setFromDate(date);
+              props.onChangeFromDate(date);
+              setOpenFromDate(false);
+            }}
+            cancelText="Annuler"
+            onCancel={() => {
+              setOpenFromDate(false);
+            }}
+          />
+          <DatePicker
+            timeZoneOffsetInMinutes={0}
+            locale="fr"
+            title="Au"
+            minimumDate={fromDate}
+            androidVariant="iosClone"
+            mode="date"
+            modal
+            open={openToDate}
+            date={toDate}
+            confirmText="Valider"
+            onConfirm={(date) => {
+              setToDate(date);
+              props.onChangeToDate(date);
+              setOpenToDate(false);
+            }}
+            cancelText="Annuler"
+            onCancel={() => {
+              setOpenToDate(false);
+            }}
+          />
+        </View>
+      )}
+    </View>
   );
 };
 
@@ -139,4 +212,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DateRange;
+export default RangeDate;

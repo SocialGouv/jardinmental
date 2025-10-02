@@ -13,6 +13,7 @@ import CircleQuestionMark from "@assets/svg/icon/CircleQuestionMark";
 import HelpView from "@/components/HelpView";
 import { HELP_ANALYSE } from "@/utils/constants";
 import { useBottomSheet } from "@/context/BottomSheetContext";
+import Legend from "../Legend";
 
 export const FriseScreen = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, toDate, setToDate, hasTreatment, onScroll }) => {
   const [focusedScores, setFocusedScores] = React.useState([]);
@@ -26,8 +27,8 @@ export const FriseScreen = ({ navigation, presetDate, setPresetDate, fromDate, s
   return (
     <>
       <View style={commonStyles.headerContainer}>
-        <View className="w-full px-2">
-          <View className="flex-row items-center pb-6 w-full justify-between">
+        <View className="w-full px-4">
+          <View className="flex-row items-center w-full justify-between">
             <View className="flex-row">
               <RangeDate
                 presetValue={presetDate}
@@ -72,17 +73,17 @@ export const FriseScreen = ({ navigation, presetDate, setPresetDate, fromDate, s
               className="mr-2"
             />
           </View>
-          <View className="h-[1] bg-cnam-primary-400"></View>
+          {filterEnabled && (
+            <FriseFilterBar
+              hasTreatment={hasTreatment}
+              onShowInfo={() => friseInfoButtonRef?.current?.press?.()}
+              onShowTreatmentChanged={setShowTraitement}
+              onFocusedScoresChanged={setFocusedScores}
+            />
+          )}
+          <View className="h-[1] bg-cnam-primary-400 mt-6"></View>
+          <Legend className="mt-6" />
         </View>
-        {filterEnabled && (
-          <FriseFilterBar
-            hasTreatment={hasTreatment}
-            onShowInfo={() => friseInfoButtonRef?.current?.press?.()}
-            onShowTreatmentChanged={setShowTraitement}
-            onFocusedScoresChanged={setFocusedScores}
-          />
-        )}
-        <ColorLegendRow className={"mt-8"} />
       </View>
       <FriseGraphList
         navigation={navigation}

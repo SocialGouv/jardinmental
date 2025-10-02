@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, ViewStyle } from "react-native";
 import { answers } from "../survey-v2/utils";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
@@ -12,12 +12,12 @@ const DEFAULT_COLOR = "#D7D3D3";
 const TREATMENT_COLOR = "#CCEDF9";
 const NO_TREATMENT_COLOR = "#F9D1E6";
 
-export default function Legend({ className }: { className?: string }) {
+export default function Legend({ style }: { style: ViewStyle }) {
   const [extended, setExtended] = React.useState(false);
 
   return (
-    <View className={mergeClassNames("items-center px-2 mt-8 w-full", className)}>
-      <View className={mergeClassNames("rounded-xl w-full px-2 py-3 flex-col space-y-4", extended ? "bg-primary-50" : "")}>
+    <View className={mergeClassNames("items-center w-full self-start")} style={style}>
+      <View className={mergeClassNames("rounded-xl w-full py-3 flex-col space-y-4", extended ? "bg-primary-50 px-2" : "")}>
         <TouchableOpacity
           onPress={() => setExtended(!extended)}
           className="bg-cnam-primary-100 rounded-full flex-row px-3 py-1 space-x-1 self-start items-center"

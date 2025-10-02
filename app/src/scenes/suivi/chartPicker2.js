@@ -25,7 +25,7 @@ const CHART_TYPES = [
   },
 ];
 
-const TabPicker = ({ onChange, ongletActif = "Frises" }) => {
+const TabPicker = ({ onChange, ongletActif = "Statistiques" }) => {
   const listRef = React.useRef();
 
   const handlePress = (tab) => {
