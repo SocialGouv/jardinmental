@@ -17,6 +17,7 @@ import JMButton from "@/components/JMButton";
 import { TW_COLORS } from "@/utils/constants";
 import { Indicator } from "@/entities/Indicator";
 import { getIndicatorKey } from "@/utils/indicatorUtils";
+import { SCROLL_THRESHOLD } from "../survey-v2/AnimatedHeaderScrollScreen";
 
 const screenHeight = Dimensions.get("window").height;
 
@@ -762,7 +763,7 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     paddingBottom: 150,
-    minHeight: screenHeight,
+    minHeight: screenHeight * 0.7,
   },
 });
 

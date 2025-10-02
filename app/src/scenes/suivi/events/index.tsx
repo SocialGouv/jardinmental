@@ -283,7 +283,7 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     paddingTop: 20,
-    minHeight: screenHeight, // no avoid bouncy effect when header shrink
+    minHeight: screenHeight * 0.7,
   },
   dataContainer: {
     marginTop: 40,

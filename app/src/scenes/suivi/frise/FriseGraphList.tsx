@@ -15,6 +15,7 @@ import { FriseGraph } from "./FriseGraph";
 import { GoalsFriseGraph } from "../../goals/suivi/GoalsFriseGraph";
 import JMButton from "@/components/JMButton";
 import { getIndicatorKey } from "../../../utils/indicatorUtils";
+import { SCROLL_THRESHOLD } from "@/scenes/survey-v2/AnimatedHeaderScrollScreen";
 
 const screenHeight = Dimensions.get("window").height;
 
@@ -358,8 +359,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   scrollContainer: {
-    paddingBottom: 150,
-    minHeight: screenHeight,
+    minHeight: screenHeight * 0.7,
   },
   button: {
     display: "flex",

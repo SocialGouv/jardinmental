@@ -14,6 +14,8 @@ import { colors } from "@/utils/colors";
 import { INDICATEURS } from "@/utils/liste_indicateurs.1";
 import { getIndicatorKey } from "@/utils/indicatorUtils";
 import Legend from "../suivi/Legend";
+import { SCROLL_THRESHOLD } from "../survey-v2/AnimatedHeaderScrollScreen";
+import { SCREEN_HEIGHT } from "@gorhom/bottom-sheet";
 
 const screenHeight = Dimensions.get("window").height;
 
@@ -231,7 +233,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   scrollContainer: {
-    minHeight: screenHeight,
+    minHeight: SCREEN_HEIGHT * 0.7,
   },
   title: {
     fontWeight: "700",
