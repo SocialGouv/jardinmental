@@ -52,11 +52,14 @@ const Status = ({ navigation, startSurvey }) => {
     }, [])
   );
 
-  React.useEffect(async () => {
-    const onboardingIsDone = await localStorage.getOnboardingDone();
-    if (onboardingIsDone) {
-      updateInactivityReminder();
-    }
+  React.useEffect(() => {
+    const initializeReminder = async () => {
+      const onboardingIsDone = await localStorage.getOnboardingDone();
+      if (onboardingIsDone) {
+        updateInactivityReminder();
+      }
+    };
+    initializeReminder();
   }, []);
 
   React.useEffect(() => {
