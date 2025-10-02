@@ -1,27 +1,25 @@
 import React from "react";
-import { StyleSheet, View, ScrollView, TouchableOpacity } from "react-native";
+import { StyleSheet, View, ScrollView, TouchableOpacity, Dimensions, Text } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 
-import { getArrayOfDatesFromTo } from "../../utils/date/helpers";
-import { DiaryDataContext } from "../../context/diaryData";
-import Text from "../../components/MyText";
-import { displayedCategories, EMOTION_COLORS, scoresMapIcon } from "../../utils/constants";
+import { getArrayOfDatesFromTo } from "@/utils/date/helpers";
+import { DiaryDataContext } from "@/context/diaryData";
+import { displayedCategories, EMOTION_COLORS, scoresMapIcon } from "@/utils/constants";
 import { colors } from "../../utils/colors";
-import { buildSurveyData } from "../survey/survey-data";
 import PieChart from "react-native-pie-chart";
-// import PieChart from "react-native-pie"; change in migration
 import CircledIcon from "../../components/CircledIcon";
-import RoundButtonIcon from "../../components/RoundButtonIcon";
-import Icon from "../../components/Icon";
-import localStorage from "../../utils/localStorage";
-import logEvents from "../../services/logEvents";
-import Button from "../../components/Button";
+import RoundButtonIcon from "@/components/RoundButtonIcon";
+import Icon from "@/components/Icon";
+import localStorage from "@/utils/localStorage";
+import logEvents from "@/services/logEvents";
 import { GoalsChartPie } from "../goals/suivi/GoalsChartPie";
 import JMButton from "@/components/JMButton";
-import { TW_COLORS } from "../../utils/constants";
+import { TW_COLORS } from "@/utils/constants";
 import { Indicator } from "@/entities/Indicator";
 import { getIndicatorKey } from "@/utils/indicatorUtils";
-import Legend from "./Legend";
+import { SCROLL_THRESHOLD } from "../survey-v2/AnimatedHeaderScrollScreen";
+
+const screenHeight = Dimensions.get("window").height;
 
 const ChartPie = ({ navigation, fromDate, toDate, onScroll }) => {
   const [diaryData] = React.useContext(DiaryDataContext);
@@ -111,7 +109,12 @@ const ChartPie = ({ navigation, fromDate, toDate, onScroll }) => {
       // -------
       // the following code is for the retrocompatibility
       // -------
-
+      if (!categoryState.value && !categoryState.level) {
+        // fix black portion in chartpie
+        // if level does not exist don't try to compute anything with
+        // it results in Nan
+        return 0;
+      }
       // get the name and the suffix of the category
       const [categoryName, suffix] = categoryId.split("_");
       let categoryStateIntensity = null;
@@ -140,7 +143,13 @@ const ChartPie = ({ navigation, fromDate, toDate, onScroll }) => {
   }
 
   return (
-    <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContainer} onScroll={onScroll}>
+    <ScrollView
+      style={styles.scrollView}
+      scrollEventThrottle={16}
+      contentContainerStyle={styles.scrollContainer}
+      onScroll={onScroll}
+      showsVerticalScrollIndicator={false}
+    >
       {userIndicateurs
         ?.filter((ind) => isChartVisible(getIndicatorKey(ind)) && ind.active)
         ?.map((_indicateur, index) => {
@@ -259,8 +268,6 @@ const Pie = ({ title, data, indicateur }) => {
   const [detailsVisible, setDetailsVisible] = React.useState(false);
   const [nombreDeValeurParScore, setNombreDeValeurParScore] = React.useState([]);
   const [nombreDeJoursConsecutifs, setNombreDeJoursConsecutifs] = React.useState({});
-
-  console.log("sections", sections);
 
   React.useEffect(() => {
     // un object
@@ -756,6 +763,7 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     paddingBottom: 150,
+    minHeight: screenHeight * 0.7,
   },
 });
 

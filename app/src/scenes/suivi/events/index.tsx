@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View, ScrollView } from "react-native";
+import { StyleSheet, View, ScrollView, Dimensions } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { isToday, isYesterday, parseISO } from "date-fns";
 import { getArrayOfDatesFromTo, formatDay, formatRelativeDate } from "../../../utils/date/helpers";
@@ -16,6 +16,8 @@ import { EventFilterHeader } from "./EventFilterHeader";
 import JMButton from "@/components/JMButton";
 import Legend from "../Legend";
 import { getIndicatorKey } from "@/utils/indicatorUtils";
+
+const screenHeight = Dimensions.get("window").height;
 
 const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, toDate, setToDate, onScroll }) => {
   const [diaryData] = React.useContext(DiaryDataContext);
@@ -155,7 +157,13 @@ const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, 
   }
   return (
     <>
-      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContainer} onScroll={onScroll}>
+      <ScrollView
+        style={styles.scrollView}
+        contentContainerStyle={styles.scrollContainer}
+        showsVerticalScrollIndicator={false}
+        scrollEventThrottle={16}
+        onScroll={onScroll}
+      >
         <EventFilterHeader
           presetDate={presetDate}
           setPresetDate={setPresetDate}
@@ -164,7 +172,11 @@ const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, 
           toDate={toDate}
           setToDate={setToDate}
           indicateur={indicateur}
-          setIndicateur={setIndicateur}
+          setIndicateur={(indicatorName) => {
+            setIndicateur(indicatorName);
+            const _indicator = userIndicateurs.find((ind) => ind.name === indicatorName);
+            setIndicateurId(getIndicatorKey(_indicator));
+          }}
           level={level}
           setLevel={setLevel}
           userIndicateurs={userIndicateurs.filter(({ active }) => active)}
@@ -271,7 +283,7 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     paddingTop: 20,
-    paddingBottom: 30,
+    minHeight: screenHeight * 0.7,
   },
   dataContainer: {
     marginTop: 40,
