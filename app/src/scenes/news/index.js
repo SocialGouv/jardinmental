@@ -29,6 +29,33 @@ export default ({ navigation }) => {
         <Image style={styles.image} className="rounded-lg" source={require("../../../assets/imgs/icon.png")} />
       </View>
       <ScrollView style={styles.cgu} contentContainerStyle={styles.scrollContainer}>
+        <Card title="Des ressources de confiance dans Jardin Mental" version="v1.43.4" date="10/2025">
+          <Item>
+            <Text style={styles.bold}>Section Ressources</Text>
+            <Text style={styles.text}>
+              •&nbsp;Nouvelle rubrique intégrée dans l’app, proposant des contenus fiables co-créés avec des experts de la santé mentale.{"\n"}
+              •&nbsp;<Text style={styles.bold}>Objectif</Text> : donner des repères, mieux comprendre la santé mentale et proposer des sources fiables
+              pour approfondir.{"\n"}
+              •&nbsp;La bibliothèque sera enrichie régulièrement dans les prochaines mises à jour.
+            </Text>
+          </Item>
+          <Item>
+            <Text style={styles.bold}>Refonte FAQ et Contacts d’urgence</Text>
+            <Text style={styles.text}>
+              •&nbsp;Nouvelle présentation plus claire et accessible.
+              {"\n"}
+              •&nbsp;Accès simplifié aux numéros d’aide et aux informations de premier recours.
+            </Text>
+          </Item>
+          <Item>
+            <Text style={styles.bold}>Améliorations & correctifs</Text>
+            <Text style={styles.text}>
+              •&nbsp;Optimisation des filtres dans la section Analyses pour un affichage plus fluide et des résultats plus fiables.
+              {"\n"}
+              •&nbsp;Divers correctifs mineurs et améliorations de stabilité.
+            </Text>
+          </Item>
+        </Card>
         <Card title="Jardin Mental fait peau neuve" version="v1.43.3" date="09/2025">
           <Item>
             <Text style={styles.bold}>Une nouvelle identité visuelle</Text>
