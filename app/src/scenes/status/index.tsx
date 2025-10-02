@@ -52,10 +52,11 @@ const Status = ({ navigation, startSurvey }) => {
     }, [])
   );
 
-  React.useEffect(() => {
-    updateInactivityReminder();
-    checkOldReminderBefore154(); // can be deleted in few months
-    checkOldReminderBefore193(); // can be deleted in few months
+  React.useEffect(async () => {
+    const onboardingIsDone = await localStorage.getOnboardingDone();
+    if (onboardingIsDone) {
+      updateInactivityReminder();
+    }
   }, []);
 
   React.useEffect(() => {
