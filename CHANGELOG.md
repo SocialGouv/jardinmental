@@ -1,3 +1,10 @@
+# [1.94.0](https://github.com/SocialGouv/jardinmental/compare/v1.93.0...v1.94.0) (2025-10-02)
+
+
+### Features
+
+* add floating tabbar ([#515](https://github.com/SocialGouv/jardinmental/issues/515)) ([9a85e99](https://github.com/SocialGouv/jardinmental/commit/9a85e9997bcbc07da0c3f9c3a2218a01f98d5cab))
+
 # [1.93.0](https://github.com/SocialGouv/jardinmental/compare/v1.92.0...v1.93.0) (2025-10-02)
 
 
