@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import { ScrollView, StyleSheet, View, Image, Dimensions, Text } from "react-native";
 
-import { displayedCategories, HELP_ANALYSE } from "@/utils/constants";
+import { analyzeScoresMapIcon, displayedCategories, HELP_ANALYSE } from "@/utils/constants";
 import { getArrayOfDates, getTodaySWeek, formatDate } from "@/utils/date/helpers";
 import Chart from "./chart";
 import { DiaryDataContext } from "@/context/diaryData";
@@ -17,6 +17,9 @@ import JMButton from "@/components/JMButton";
 import CircleQuestionMark from "@assets/svg/icon/CircleQuestionMark";
 import { useBottomSheet } from "@/context/BottomSheetContext";
 import HelpView from "@/components/HelpView";
+import EyeIcon from "@assets/svg/icon/Eye";
+import { mergeClassNames } from "@/utils/className";
+import { typography } from "@/utils/typography";
 
 const screenHeight = Dimensions.get("window").height;
 

@@ -454,6 +454,10 @@ export const HELP_ANALYSE = {
   },
   bilan: {
     title: "Comment lire mon bilan?",
-    description: "Le bilan vous donne une vue d’ensemble de vos observations sur la période choisie.\n",
+    description: `Le bilan vous donne une vue d’ensemble de vos observations sur la période choisie.\n
+    Il vous permet de : 
+Voir la moyenne de chaque indicateur sur la période choisie
+Visualiser la répartition de vos réponses
+Suivre la prise de votre traitement (quotidien ou “si besoin”)`,
   },
 };

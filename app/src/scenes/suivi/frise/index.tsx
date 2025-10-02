@@ -74,7 +74,6 @@ export const FriseScreen = ({ navigation, presetDate, setPresetDate, fromDate, s
           </View>
           <View className="h-[1] bg-cnam-primary-400"></View>
         </View>
-
         {filterEnabled && (
           <FriseFilterBar
             hasTreatment={hasTreatment}
