@@ -12,7 +12,6 @@ import localStorage from "@/utils/localStorage";
 import logEvents from "@/services/logEvents";
 import { FriseGraph } from "./FriseGraph";
 import JMButton from "@/components/JMButton";
-import { getIndicatorKey } from "@/utils/indicatorUtils";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { GoalsFriseGraph } from "@/scenes/goals/suivi/GoalsFriseGraph";
 
@@ -85,7 +84,7 @@ const FriseGraphList = ({ navigation, fromDate, toDate, focusedScores, showTrait
   const [loadingStates, setLoadingStates] = React.useState<Record<string, boolean>>({});
   const chartDates = React.useMemo(() => getArrayOfDatesFromTo({ fromDate, toDate }), [fromDate, toDate]);
   const insets = useSafeAreaInsets();
-  
+
   useFocusEffect(
     React.useCallback(() => {
       (async () => {

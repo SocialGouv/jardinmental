@@ -4,7 +4,7 @@ import { useFocusEffect } from "@react-navigation/native";
 
 import { getArrayOfDatesFromTo } from "@/utils/date/helpers";
 import { DiaryDataContext } from "@/context/diaryData";
-import { displayedCategories, EMOTION_COLORS, scoresMapIcon } from "@/utils/constants";
+import { displayedCategories, EMOTION_COLORS, scoresMapIcon, TAB_BAR_HEIGHT } from "@/utils/constants";
 import { colors } from "../../utils/colors";
 import PieChart from "react-native-pie-chart";
 import CircledIcon from "../../components/CircledIcon";

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
-import { ScrollView, StyleSheet, View, Image, Dimensions, Text  } from "react-native";
+import { ScrollView, StyleSheet, View, Image, Dimensions, Text } from "react-native";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import { displayedCategories, TAB_BAR_HEIGHT } from "@/utils/constants";
 import { beforeToday, getArrayOfDates, getTodaySWeek, formatDate } from "@/utils/date/helpers";
@@ -16,8 +16,6 @@ import { getIndicatorKey } from "@/utils/indicatorUtils";
 import Legend from "../suivi/Legend";
 import { SCROLL_THRESHOLD } from "../survey-v2/AnimatedHeaderScrollScreen";
 import { SCREEN_HEIGHT } from "@gorhom/bottom-sheet";
-
-const screenHeight = Dimensions.get("window").height;
 
 const screenHeight = Dimensions.get("window").height;
 
