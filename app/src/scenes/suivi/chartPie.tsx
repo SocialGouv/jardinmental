@@ -4,7 +4,7 @@ import { useFocusEffect } from "@react-navigation/native";
 
 import { getArrayOfDatesFromTo } from "@/utils/date/helpers";
 import { DiaryDataContext } from "@/context/diaryData";
-import { displayedCategories, EMOTION_COLORS, scoresMapIcon } from "@/utils/constants";
+import { displayedCategories, EMOTION_COLORS, scoresMapIcon, TAB_BAR_HEIGHT } from "@/utils/constants";
 import { colors } from "../../utils/colors";
 import PieChart from "react-native-pie-chart";
 import CircledIcon from "../../components/CircledIcon";
@@ -17,6 +17,8 @@ import JMButton from "@/components/JMButton";
 import { TW_COLORS } from "@/utils/constants";
 import { Indicator } from "@/entities/Indicator";
 import { getIndicatorKey } from "@/utils/indicatorUtils";
+import Legend from "./Legend";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { SCROLL_THRESHOLD } from "../survey-v2/AnimatedHeaderScrollScreen";
 
 const screenHeight = Dimensions.get("window").height;
@@ -27,6 +29,7 @@ const ChartPie = ({ navigation, fromDate, toDate, onScroll }) => {
   const [userIndicateurs, setUserIndicateurs] = React.useState<Indicator[]>([]);
   const [chartDates, setChartDates] = React.useState([]);
   const [isEmpty, setIsEmpty] = React.useState();
+  const insets = useSafeAreaInsets();
 
   useFocusEffect(
     React.useCallback(() => {
@@ -145,8 +148,14 @@ const ChartPie = ({ navigation, fromDate, toDate, onScroll }) => {
   return (
     <ScrollView
       style={styles.scrollView}
+      contentContainerStyle={[
+        styles.scrollContainer,
+        {
+          paddingBottom: insets.bottom + TAB_BAR_HEIGHT,
+        },
+      ]}
+      onScroll={onScroll}
       scrollEventThrottle={16}
-      contentContainerStyle={styles.scrollContainer}
       onScroll={onScroll}
       showsVerticalScrollIndicator={false}
     >

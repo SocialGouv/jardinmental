@@ -15,10 +15,12 @@ export const typography = {
   textLgMedium: "text-lg font-medium font-body",
   textLgRegular: "text-lg font-normal font-body",
   textMdRegular: "text-base font-normal font-body text-center",
+  textXsRegular: "text-xs font-normal font-body text-center",
   textMdSemibold: "text-base font-semibold font-body leading-6",
   textMdMedium: "text-base font-normal font-body leading-6",
   textMdBold: "text-base font-bold font-body leading-6",
   textSmMedium: "text-sm font-medium font-body",
   textSmSemibold: "text-sm font-semibold font-body leading-[30px]",
   textSmBold: "text-sm font-bold font-body leading-5",
+  textXsBold: "text-xs font-bold font-body text-center",
 };

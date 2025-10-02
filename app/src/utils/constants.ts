@@ -392,3 +392,4 @@ export const SHARED_HEADER = false;
 export const HEADER_WITH_BANNER = false;
 export const PROGRESS_BAR = true;
 export const PROGRESS_BAR_AND_HEADER = true;
+export const TAB_BAR_HEIGHT = 100;
