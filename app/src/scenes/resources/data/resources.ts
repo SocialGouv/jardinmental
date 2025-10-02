@@ -110,7 +110,7 @@ Et quand ça ne va pas ? **Ces habitudes peuvent soutenir, oui, mais elles ne su
     id: "fb2975bb-596c-441f-b3bd-34bf50dfc303",
     matomoId: 6,
     title: "Santé mentale vs clichés : ces idées reçues à retirer de sa tête",
-    image: require("../../../../assets/imgs/resources/Article_6_(1).png"),
+    image: require("../../../../assets/imgs/resources/Article6.png"),
     category: CATEGORIES.LA_SANT_MENTALE_C_EST_QUOI,
     content: `« Les personnes avec des troubles mentaux sont dangereuses », « la santé mentale, c’est juste une question de volonté», « aller voir un psy, c’est signe de faiblesse »… **Ces idées reçues sont encore trop répandues.**\n\
 \n\
@@ -128,7 +128,7 @@ Ces préjugés continuent d’alimenter la stigmatisation et peuvent entraîner 
     id: "19df5d36-e82d-457b-8354-c3f31f85875e",
     matomoId: 7,
     title: "“Je ne me sens pas bien” : ces signes qui méritent mon attention",
-    image: require("../../../../assets/imgs/resources/Group_52.png"),
+    image: require("../../../../assets/imgs/resources/Article7.png"),
     category: CATEGORIES.REP_RER_LES_SIGNES_DE_MAL_TRE,
     content: `Reconnaître que l’on ne se sent pas bien **est déjà une étape importante**. Il n’est pas toujours évident de prendre du recul sur sa santé mentale ou d’en repérer des changements.\n\
 \n\
@@ -146,8 +146,8 @@ Et même si on pense parfois qu’il s’agit de la seule solution : ignorer ou 
   {
     id: "29ebc47a-27ee-4d6e-b0fa-9d20c5c59c77",
     matomoId: 8,
-    title: "Se sentir mal, ça arrive à tout le monde : à quel moment s’inquiéter ?",
-    image: null,
+    title: "Se sentir mal, ça arrive à tout le monde : à quel moment s'inquiéter ?",
+    image: require("../../../../assets/imgs/resources/Article8.png"),
     category: CATEGORIES.REP_RER_LES_SIGNES_DE_MAL_TRE,
     content: `**Tout le monde traverse des périodes de tristesse sans que cela soit forcément inquiétant.**\n\
 \n\
@@ -162,7 +162,7 @@ Finalement, ce qui distingue vraiment une émotion passagère d’un mal-être q
     id: "ac50b156-3215-435a-b622-285533b3f9a3",
     matomoId: 9,
     title: "Baisse de moral, mal-être ou trouble : où se situer ?",
-    image: null,
+    image: require("../../../../assets/imgs/resources/Article9.png"),
     category: CATEGORIES.MIEUX_COMPRENDRE_LES_TROUBLES_PSYCHIQUES,
     content: `C’est un fait : notre santé mentale évolue constamment et peut passer par différents états. Mais elle repose avant tout sur plusieurs dimensions qui peuvent toutes et tous nous concerner :\n\
 \n\
@@ -178,8 +178,8 @@ Sans minimiser et hiérarchiser les souffrances de chacun·e, il est important d
   {
     id: "e829c45f-542d-49d3-98c7-c005930d3af9",
     matomoId: 10,
-    title: "Mettre un mot sur ce que je vis : pourquoi (et quand) c’est utile ?",
-    image: null,
+    title: "Mettre un mot sur ce que je vis : pourquoi (et quand) c'est utile ?",
+    image: require("../../../../assets/imgs/resources/Article10.png"),
     category: CATEGORIES.MIEUX_COMPRENDRE_LES_TROUBLES_PSYCHIQUES,
     content: `Réussir à mettre un mot sur ce que l’on vit peut être **un vrai soulagement** : cela aide à mieux comprendre ce qui se passe en soi, **à ne pas se sentir seul·e, nourrir un sentiment d’appartenance à une communauté** (c’est précieux !) et à accéder à des soins adaptés. Cependant un diagnostic posé par un médecin n’est pas une **étiquette**. Il ne résume pas qui vous êtes (et heureusement !).\n\
 \n\
@@ -198,7 +198,7 @@ Qu’il s’agisse d’un échange avec un·e professionnel·le, d’un dialogue
     id: "978d0d1d-e4e3-4ddd-b15a-0a128fbfde24",
     matomoId: 11,
     title: "Dépression, anxiété, bipolarité : faire le point sur les différents troubles",
-    image: null,
+    image: require("../../../../assets/imgs/resources/Article11.png"),
     category: CATEGORIES.MIEUX_COMPRENDRE_LES_TROUBLES_PSYCHIQUES,
     content: `On vous l’accorde : **pas toujours simple** de s’y retrouver entre les différents troubles.\n\
 \n\
@@ -226,7 +226,7 @@ Rien n’est figé, rien n’est définitif : la santé mentale est mouvante et 
     id: "773847cf-3509-42b2-ac1e-dbd5e3785ff2",
     matomoId: 12,
     title: "Santé mentale à tous les âges : des troubles fréquents à chaque étape de vie",
-    image: null,
+    image: require("../../../../assets/imgs/resources/Article12.png"),
     category: CATEGORIES.MIEUX_COMPRENDRE_LES_TROUBLES_PSYCHIQUES,
     content: `**À tout âge de la vie**, il est possible de traverser des périodes de fragilité. Que l’on soit enfant, adolescent·e, adulte ou senior, nos besoins évoluent, tout comme les formes que peuvent prendre les **troubles psychiques**.\n\
 \n\
@@ -254,7 +254,7 @@ Certaines difficultés sont plus fréquentes selon les étapes de vie :\n\
     id: "539b5df6-e21e-4f99-a865-d77e111dc6a1",
     matomoId: 13,
     title: "Troubles dépressifs : on fait le point",
-    image: null,
+    image: require("../../../../assets/imgs/resources/Article13.png"),
     category: CATEGORIES.MIEUX_COMPRENDRE_LES_TROUBLES_PSYCHIQUES,
     content: `**La dépression, ce n’est pas juste « être triste »**. C’est une véritable souffrance psychique qui s’installe et qui touche toutes les strates de la vie quotidienne  : l’énergie, le sommeil, l’envie, l’appétit, l’estime de soi. Des pensées envahissantes et des idées suicidaires peuvent encombrer l’esprit. La personne concernée peut se sentir vide, incapable, isolée, **même sans raison apparente.**\n\
 \n\
@@ -284,7 +284,7 @@ Et bien sûr, petit rappel essentiel : il ne s’agit en rien d'un signe de faib
     id: "38948091-ab45-42d8-8ffb-ab9bacfe8d91",
     matomoId: 14,
     title: "Troubles anxieux et TOC : on fait le point",
-    image: null,
+    image: require("../../../../assets/imgs/resources/Article14.png"),
     category: CATEGORIES.MIEUX_COMPRENDRE_LES_TROUBLES_PSYCHIQUES,
     content: `L’anxiété devient un trouble quand elle prend **trop de place** dans la vie quotidienne.\n\
 \n\
@@ -319,7 +319,7 @@ Il est tout à fait possible d’apprendre à mieux vivre avec l’anxiété. Av
     id: "01976039-c56a-4918-b3aa-236bb1847421",
     matomoId: 15,
     title: "Troubles addictifs : on fait le point",
-    image: null,
+    image: require("../../../../assets/imgs/resources/Article15.png"),
     category: CATEGORIES.MIEUX_COMPRENDRE_LES_TROUBLES_PSYCHIQUES,
     content: `L’addiction, ce n’est pas juste **un manque de contrôle**  : c’est un trouble aux causes multiples.\n\
 \n\
@@ -351,7 +351,7 @@ L’addiction est donc **une véritable affection médicale** et non un simple m
     id: "1882aee0-9ff3-4c92-aa4a-bc43475bc3c9",
     matomoId: 16,
     title: "Troubles des conduites alimentaires : on fait le point",
-    image: null,
+    image: require("../../../../assets/imgs/resources/Article16.png"),
     category: CATEGORIES.MIEUX_COMPRENDRE_LES_TROUBLES_PSYCHIQUES,
     content: `Quand l’alimentation devient source d’angoisse ou de contrôle, c’est peut-être le signe que le rapport à la nourriture est compliqué.\n\
 \n\
@@ -382,7 +382,7 @@ Ces troubles peuvent avoir de graves conséquences physiques (carences, troubles
     id: "da30d699-ca75-4f9f-ba0a-049b09272f99",
     matomoId: 17,
     title: "Troubles bipolaires : on fait le point",
-    image: null,
+    image: require("../../../../assets/imgs/resources/Article17.png"),
     category: CATEGORIES.MIEUX_COMPRENDRE_LES_TROUBLES_PSYCHIQUES,
     content: `Vivre avec des troubles bipolaires, c’est avoir **des variations extrêmes de l’humeur, de l’énergie et du comportement.**\n\
 \n\
@@ -412,7 +412,7 @@ proposent des guides complets pour mieux comprendre le trouble et trouver des so
     id: "7a925764-20e7-4bf6-af95-e606b5f8a10a",
     matomoId: 18,
     title: "Troubles de stress post-traumatique : on fait le point",
-    image: null,
+    image: require("../../../../assets/imgs/resources/Article18.png"),
     category: CATEGORIES.MIEUX_COMPRENDRE_LES_TROUBLES_PSYCHIQUES,
     content: `Après un événement violent ou menaçant - une agression, un accident, une catastrophe, une guerre, ou même des violences répétées - certaines personnes développent un **état de stress post-traumatique**. Les symptômes peuvent apparaître rapidement ou des semaines plus tard, et se manifestent par :\n\
 \n\
@@ -445,7 +445,7 @@ Il est possible d’aller mieux. Des accompagnements spécifiques existent pour 
     id: "7bb8b47f-0758-4463-a313-7441b922f461",
     matomoId: 19,
     title: "Les troubles schizophréniques : on fait le point",
-    image: null,
+    image: require("../../../../assets/imgs/resources/Article19.png"),
     category: CATEGORIES.MIEUX_COMPRENDRE_LES_TROUBLES_PSYCHIQUES,
     content: `La schizophrénie est un trouble qui **modifie la perception** de la réalité.\n\
 \n\
@@ -470,7 +470,7 @@ Avec un accompagnement adapté et un suivi médical régulier, il est tout à fa
     id: "98febe81-309d-40ba-b234-f5b9bc995fd1",
     matomoId: 20,
     title: "Troubles de la personnalité borderline : on fait le point",
-    image: null,
+    image: require("../../../../assets/imgs/resources/Article20.png"),
     category: CATEGORIES.MIEUX_COMPRENDRE_LES_TROUBLES_PSYCHIQUES,
     content: `Vivre avec un trouble de la personnalité borderline, **c’est ressentir les choses très fort, tout le temps.**\n\
 \n\
@@ -494,7 +494,7 @@ Il existe des thérapies et des accompagnements spécifiques qui aident à mieux
     id: "ecab9657-b7e8-46d2-baf6-89437332e4d9",
     matomoId: 21,
     title: "Automutilation : on fait le point",
-    image: null,
+    image: require("../../../../assets/imgs/resources/Article21.png"),
     category: CATEGORIES.MIEUX_COMPRENDRE_LES_TROUBLES_PSYCHIQUES,
     content: `Quand la douleur **devient difficile à gérer,** certaines personnes s’infligent des blessures physiques, sans chercher à mettre fin à leurs jours.\n\
 \n\
@@ -514,7 +514,7 @@ Pour autant, il est tout de même possible de s’en sortir : des accompagnement
     id: "9baa4577-5dfc-4d33-aa00-f267806f553d",
     matomoId: 22,
     title: "Témoignages : Écouter pour comprendre, récits de personnes vivant avec un trouble",
-    image: null,
+    image: require("../../../../assets/imgs/resources/Article22.png"),
     category: CATEGORIES.MIEUX_COMPRENDRE_LES_TROUBLES_PSYCHIQUES,
     content: `La santé mentale, ce n’est pas seulement des définitions médicales ou des explications théoriques : **ce sont (surtout !) des vies, des histoires, des parcours**. Chez *Jardin Mental*, nous pensons qu’entendre la voix des personnes concernées par un trouble est essentiel pour mieux apprendre de l’autre.\n\
 \n\
@@ -547,7 +547,7 @@ Votre bien-être passe avant tout :)`,
     id: "674603a6-05b6-46f9-8c54-0416a3adbe50",
     matomoId: 33,
     title: "Bien dormir, bien dans son corps (et sa tête!)",
-    image: null,
+    image: require("../../../../assets/imgs/resources/Article33.png"),
     category: CATEGORIES.DES_PETITS_PAS_POUR_SON_QUILIBRE_MENTAL,
     content: `**Quand le sommeil se dégrade, les répercussions sur l’équilibre psychique peuvent se faire sentir rapidement** : irritabilité, baisse de motivation, troubles de la concentration ou montée de l’anxiété. Ce lien fonctionne aussi dans l’autre sens. Un stress persistant, un trouble de l’humeur ou anxieux, ou un épisode dépressif peuvent perturber l’endormissement, fragmenter les nuits ou provoquer **des réveils précoces ou répétés**. Ce cercle complexe, où troubles du sommeil et mal-être ou troubles psychiques s’entretiennent, peut s’aggraver si les difficultés persistent.\n\
 \n\
@@ -573,7 +573,7 @@ Il est important de prendre en compte ces déterminants pour mieux comprendre so
     id: "0dffe681-74a2-46ed-8a3d-44506d36173d",
     matomoId: 23,
     title: "La nuit porte (vraiment) conseil",
-    image: null,
+    image: require("../../../../assets/imgs/resources/Article23.png"),
     category: CATEGORIES.DES_PETITS_PAS_POUR_SON_QUILIBRE_MENTAL,
     content: `Le sommeil n’est pas une simple pause : **c’est un moment essentiel où le corps et le cerveau se restaurent.**\n\
 \n\
@@ -603,7 +603,7 @@ r. Toutefois, chacun·e fait au mieux selon sa situation, qui peut parfois rendr
     id: "421212e0-2812-4a72-a073-cba746444c36",
     matomoId: 24,
     title: "Troubles du sommeil : de quoi parle-t-on vraiment ?",
-    image: null,
+    image: require("../../../../assets/imgs/resources/Article24.png"),
     category: CATEGORIES.DES_PETITS_PAS_POUR_SON_QUILIBRE_MENTAL,
     content: `**Il est normal de traverser, à certains moments de la vie, des périodes de sommeil difficile**.\n\
 \n\
@@ -633,7 +633,7 @@ D’autres troubles existent et nécessitent souvent une évaluation médicale :
     id: "908d5222-39dd-46c6-9ddb-3c9b8c0386e9",
     matomoId: 25,
     title: "Nous ne sommes pas tous·tes égaux face au sommeil",
-    image: null,
+    image: require("../../../../assets/imgs/resources/Article25.png"),
     category: CATEGORIES.DES_PETITS_PAS_POUR_SON_QUILIBRE_MENTAL,
     content: `Le sommeil suit toujours trois grandes phases - sommeil léger, profond et paradoxal - **qui sont universelles, quel que soit l’âge**. Cependant, l’enchaînement et la durée de ces phases varient d’une personne à l’autre, en fonction des besoins individuels. C’est pourquoi il est essentiel de ne pas se comparer ni de chercher un sommeil « idéal » au détail près. **Plus que la durée exacte, l’écoute de son corps et la prise en compte de ses signaux restent primordiales.**\n\
 \n\
@@ -659,7 +659,7 @@ Apprendre à reconnaître et respecter ses propres besoins en sommeil est un lev
     id: "b55b6bb5-4169-4e39-a4da-c8327e7b304c",
     matomoId: 26,
     title: "Bien dormir, oui mais comment ?",
-    image: null,
+    image: require("../../../../assets/imgs/resources/Article26.png"),
     category: CATEGORIES.DES_PETITS_PAS_POUR_SON_QUILIBRE_MENTAL,
     content: `**Le sommeil est un besoin fondamental, mais il n’est pas toujours simple à retrouver.**\n\
 \n\
@@ -683,8 +683,8 @@ Les montres connectées et applications de suivi du sommeil peuvent parfois gén
   {
     id: "31f13b38-51f2-4209-a764-807ae60ab670",
     matomoId: 27,
-    title: "« Prendre soin de soi » : quand l’injonction au bien-être devient source de stress",
-    image: null,
+    title: "« Prendre soin de soi » : quand l'injonction au bien-être devient source de stress",
+    image: require("../../../../assets/imgs/resources/Article27.png"),
     category: CATEGORIES.DES_PETITS_PAS_POUR_SON_QUILIBRE_MENTAL,
     content: `C’est un fait.
 
@@ -711,7 +711,7 @@ Améliorer la santé mentale, c’est aussi agir sur les conditions de vie, de t
     id: "538aef1d-00de-486b-b2fc-759e5961ddcf",
     matomoId: 28,
     title: "Se promener, courir, danser, bricoler… pour se sentir mieux",
-    image: null,
+    image: require("../../../../assets/imgs/resources/Article28.png"),
     category: CATEGORIES.DES_PETITS_PAS_POUR_SON_QUILIBRE_MENTAL,
     content: `On entend souvent dire qu’il faut « faire du sport ». Cela peut paraître contraignant, voire décourageant. Pourtant, bouger, **même un peu chaque jour**, a un réel impact sur la santé mentale. Petit **rappel : l’activité physique ne se limite pas à la pratique sportive**. Marcher, jardiner, danser, bricoler, monter les escaliers, faire ses courses à pied… Tous ces gestes du quotidien comptent, et participent à une meilleure **santé, mentale comme physique**.
 
@@ -741,8 +741,8 @@ Il n’est pas nécessaire de tout changer du jour au lendemain. L’important e
   {
     id: "66915b6d-b9ad-4a56-aa0b-26bd809cf8f7",
     matomoId: 29,
-    title: "Ce que l’assiette apporte à la tête",
-    image: null,
+    title: "Ce que l'assiette apporte à la tête",
+    image: require("../../../../assets/imgs/resources/Article29.png"),
     category: CATEGORIES.DES_PETITS_PAS_POUR_SON_QUILIBRE_MENTAL,
     content: `**L’alimentation ne nourrit pas que le corps : elle a aussi un impact sur notre mental.** Ce que l’on met dans son assiette peut jouer sur l’humeur, le stress et l’énergie quotidienne.
 
@@ -778,8 +778,8 @@ L’essentiel est de faire au mieux avec ses moyens, en gardant à l’esprit qu
   {
     id: "83050bed-2387-4551-9431-9745a8d825d1",
     matomoId: 30,
-    title: "Parler, échanger, se relier : un vrai soutien contre l’isolement",
-    image: null,
+    title: "Parler, échanger, se relier : un vrai soutien contre l'isolement",
+    image: require("../../../../assets/imgs/resources/Article30.png"),
     category: CATEGORIES.DES_PETITS_PAS_POUR_SON_QUILIBRE_MENTAL,
     content: `**De plus en plus de personnes se sentent seules, et ce, même dans une société hyperconnectée.** Il est important de distinguer deux notions souvent confondues : l’isolement social et la solitude, qui ne sont pas une seule et même réalité.
 
@@ -812,7 +812,7 @@ Quand on se sent isolé·e, il est possible d’en parler à un·e professionnel
     id: "750245f1-a615-4759-bb2d-37882341cf27",
     matomoId: 31,
     title: "Être attentif à ses consommations pour",
-    image: null,
+    image: require("../../../../assets/imgs/resources/Article31.png"),
     category: CATEGORIES.DES_PETITS_PAS_POUR_SON_QUILIBRE_MENTAL,
     content: `Certaines consommations - comme l’alcool, le tabac, les médicaments ou d’autres substances - peuvent évoluer au fil du temps, **particulièrement lors de périodes de fragilité ou de tension psychologique.** **Lorsqu’elles deviennent plus fréquentes, difficiles à contrôler, ou utilisées pour apaiser un mal-être, elles peuvent signaler une souffrance sous-jacente.** Ces usages ont des conséquences sur la santé mentale comme physique, et méritent une attention particulière lorsqu’ils s’installent ou changent de fonction.
 
@@ -844,7 +844,7 @@ Quand la consommation devient un réflexe, elle peut révéler un mal-être qui 
     id: "3063a89f-b2c6-468e-b375-a359e1c6e685",
     matomoId: 32,
     title: "Déconnecter un peu, ça libère la tête",
-    image: null,
+    image: require("../../../../assets/imgs/resources/Article32.png"),
     category: CATEGORIES.DES_PETITS_PAS_POUR_SON_QUILIBRE_MENTAL,
     content: `**L’addiction aux écrans n’est pas un diagnostic officiel et le débat reste encore ouvert aujourd’hui.** De nombreuses questions subsistent sur la limite entre un usage habituel et un usage excessif.
 
