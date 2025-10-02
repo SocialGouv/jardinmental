@@ -9,10 +9,10 @@ export interface Resource {
 }
 
 export const CATEGORIES = {
-  DES_PETITS_PAS_POUR_SON_QUILIBRE_MENTAL: "Des petits pas pour son équilibre mental",
-  LA_SANT_MENTALE_C_EST_QUOI: "La santé mentale c'est quoi ?",
+  DES_PETITS_PAS_POUR_SON_EQUILIBRE_MENTAL: "Des petits pas pour son équilibre mental",
+  LA_SANTE_MENTALE_C_EST_QUOI: "La santé mentale c'est quoi ?",
   MIEUX_COMPRENDRE_LES_TROUBLES_PSYCHIQUES: "Mieux comprendre les troubles psychiques",
-  REP_RER_LES_SIGNES_DE_MAL_TRE: "Repérer les signes de mal-être",
+  REPERER_LES_SIGNES_DE_MAL_ETRE: "Repérer les signes de mal-être",
 };
 
 export const RESOURCES_DATA: Resource[] = [
@@ -21,7 +21,7 @@ export const RESOURCES_DATA: Resource[] = [
     matomoId: 1,
     title: "Pas de santé sans santé mentale",
     image: require("../../../../assets/imgs/resources/Article1.png"),
-    category: CATEGORIES.LA_SANT_MENTALE_C_EST_QUOI,
+    category: CATEGORIES.LA_SANTE_MENTALE_C_EST_QUOI,
     content: `Prendre soin de sa santé, c’est aussi prendre soin de sa santé mentale.
 
 Selon l’Organisation mondiale de la santé (OMS), la santé mentale est un « *état de bien-être qui permet à chacun de réaliser son potentiel, de faire face aux difficultés normales de la vie, de travailler avec succès et de manière productive, et d’être en mesure d’apporter une contribution à la communauté* ». Cependant, cette définition peut donner l’impression que le bien-être mental dépend uniquement de la réussite au travail. Or, on peut tout à fait se sentir bien, épanoui·e et utile, même sans avoir d’emploi.
@@ -36,7 +36,7 @@ Oui, notre corps peut envoyer des signaux d'alerte. **Mais notre cerveau aussi.*
     matomoId: 2,
     title: "Mais au fait, avoir une bonne santé mentale : qu’est-ce que ça veut dire ?",
     image: require("../../../../assets/imgs/resources/Article2.png"),
-    category: CATEGORIES.LA_SANT_MENTALE_C_EST_QUOI,
+    category: CATEGORIES.LA_SANTE_MENTALE_C_EST_QUOI,
     content: `Nous avons toutes et tous besoin de prendre soin de notre santé mentale. **Même quand tout va bien.**\n\
 \n\
 Tout au long de notre vie, notre état mental varie du bien-être au mal-être, et vice-versa. Le monde ne se divise pas en deux catégories distinctes : les personnes en bonne santé mentale d’un côté versus celles avec un trouble de l’autre.\n\
@@ -57,7 +57,7 @@ Un équilibre qui lui fait du bien.`,
     matomoId: 3,
     title: "Pourquoi et comment observer sa propre santé mentale ?",
     image: require("../../../../assets/imgs/resources/Article3.png"),
-    category: CATEGORIES.LA_SANT_MENTALE_C_EST_QUOI,
+    category: CATEGORIES.LA_SANTE_MENTALE_C_EST_QUOI,
     content: `On parle souvent de santé mentale quand elle va mal, mais trop rarement de ce qu’on peut faire au quotidien pour la préserver. L’un des premiers réflexes utiles, c’est d’apprendre à s’observer **avec attention et bienveillance.**\n\
 \n\
 Cela ne veut pas dire **tout analyser, ni devenir obsédé·e** par son humeur ou ses pensées. Il s’agit plutôt de développer une forme **d’écoute intérieure**, pour mieux comprendre ce qui nous affecte et repérer les petits signaux qui montrent qu’on ne se sent peut-être pas bien… mais aussi identifier ce qui nous fait du bien.\n\
@@ -81,7 +81,7 @@ En apprendre un peu plus sur le sujet, c’est déjà prendre soin de soi :)`,
     matomoId: 4,
     title: "La santé mentale, ce n'est pas qu’une affaire personnelle",
     image: require("../../../../assets/imgs/resources/Article4.png"),
-    category: CATEGORIES.LA_SANT_MENTALE_C_EST_QUOI,
+    category: CATEGORIES.LA_SANTE_MENTALE_C_EST_QUOI,
     content: `Devons-nous porter, seul·es, toute la responsabilité de notre santé mentale ?\n\
 \n\
 **La réponse est non, évidemment.**\n\
@@ -100,7 +100,7 @@ Une chose est sûre : tous ces éléments internes et externes s'influencent les
     matomoId: 5,
     title: "Prendre soin de sa santé mentale, oui… mais comment ?",
     image: require("../../../../assets/imgs/resources/Article5.png"),
-    category: CATEGORIES.LA_SANT_MENTALE_C_EST_QUOI,
+    category: CATEGORIES.LA_SANTE_MENTALE_C_EST_QUOI,
     content: `**La santé mentale, comme la santé physique, se cultive au quotidien.** Même lorsque tout va bien, adopter de bonnes habitudes de vie aide à préserver son équilibre. Être au contact de la nature, bien dormir, manger varié, bouger, aider les autres, éviter les conduites addictives, parler quand ça ne va pas… Chaque petit geste compte : même les actions qui paraissent anodines peuvent avoir un vrai impact positif sur notre santé. Ne les sous-estimez pas :)\n\
 \n\
 Et quand ça ne va pas ? **Ces habitudes peuvent soutenir, oui, mais elles ne suffisent pas toujours**. En cas de mal-être ou de troubles psychiques, il est essentiel de consulter un professionnel pour un accompagnement adapté *(voir nos rubriques aide et agir)*. Voici dix conseils de *Santé Publique France* pour prendre soin de sa santé mentale, sans pression, juste à son rythme.`,
@@ -111,7 +111,7 @@ Et quand ça ne va pas ? **Ces habitudes peuvent soutenir, oui, mais elles ne su
     matomoId: 6,
     title: "Santé mentale vs clichés : ces idées reçues à retirer de sa tête",
     image: require("../../../../assets/imgs/resources/Article6.png"),
-    category: CATEGORIES.LA_SANT_MENTALE_C_EST_QUOI,
+    category: CATEGORIES.LA_SANTE_MENTALE_C_EST_QUOI,
     content: `« Les personnes avec des troubles mentaux sont dangereuses », « la santé mentale, c’est juste une question de volonté», « aller voir un psy, c’est signe de faiblesse »… **Ces idées reçues sont encore trop répandues.**\n\
 \n\
 En France, la santé mentale reste un sujet tabou pour **7 personnes sur 10** *(Odoxa, Festival Pop&Psy, 2023)*.\n\
@@ -129,7 +129,7 @@ Ces préjugés continuent d’alimenter la stigmatisation et peuvent entraîner 
     matomoId: 7,
     title: "“Je ne me sens pas bien” : ces signes qui méritent mon attention",
     image: require("../../../../assets/imgs/resources/Article7.png"),
-    category: CATEGORIES.REP_RER_LES_SIGNES_DE_MAL_TRE,
+    category: CATEGORIES.REPERER_LES_SIGNES_DE_MAL_ETRE,
     content: `Reconnaître que l’on ne se sent pas bien **est déjà une étape importante**. Il n’est pas toujours évident de prendre du recul sur sa santé mentale ou d’en repérer des changements.\n\
 \n\
 Certains signes peuvent tout de même nous alerter.\n\
@@ -148,7 +148,7 @@ Et même si on pense parfois qu’il s’agit de la seule solution : ignorer ou 
     matomoId: 8,
     title: "Se sentir mal, ça arrive à tout le monde : à quel moment s'inquiéter ?",
     image: require("../../../../assets/imgs/resources/Article8.png"),
-    category: CATEGORIES.REP_RER_LES_SIGNES_DE_MAL_TRE,
+    category: CATEGORIES.REPERER_LES_SIGNES_DE_MAL_ETRE,
     content: `**Tout le monde traverse des périodes de tristesse sans que cela soit forcément inquiétant.**\n\
 \n\
 Ces émotions peuvent être liées à des événements du quotidien : une dispute, une rupture, des difficultés professionnelles ou scolaires…Il n’est donc pas toujours nécessaire **d’associer ces états** à **des troubles psychiques**. Les variations d’humeur, par exemple, sont fréquentes et font partie de la vie. Avoir des hauts et des bas au cours d'une journée **ne relève pas**, en soi, d’un trouble comme la bipolarité.\n\
@@ -548,7 +548,7 @@ Votre bien-être passe avant tout :)`,
     matomoId: 33,
     title: "Bien dormir, bien dans son corps (et sa tête!)",
     image: require("../../../../assets/imgs/resources/Article33.png"),
-    category: CATEGORIES.DES_PETITS_PAS_POUR_SON_QUILIBRE_MENTAL,
+    category: CATEGORIES.DES_PETITS_PAS_POUR_SON_EQUILIBRE_MENTAL,
     content: `**Quand le sommeil se dégrade, les répercussions sur l’équilibre psychique peuvent se faire sentir rapidement** : irritabilité, baisse de motivation, troubles de la concentration ou montée de l’anxiété. Ce lien fonctionne aussi dans l’autre sens. Un stress persistant, un trouble de l’humeur ou anxieux, ou un épisode dépressif peuvent perturber l’endormissement, fragmenter les nuits ou provoquer **des réveils précoces ou répétés**. Ce cercle complexe, où troubles du sommeil et mal-être ou troubles psychiques s’entretiennent, peut s’aggraver si les difficultés persistent.\n\
 \n\
 **La bonne nouvelle, c’est qu’il est possible de le rompre avec un accompagnement adapté.**\n\
@@ -574,7 +574,7 @@ Il est important de prendre en compte ces déterminants pour mieux comprendre so
     matomoId: 23,
     title: "La nuit porte (vraiment) conseil",
     image: require("../../../../assets/imgs/resources/Article23.png"),
-    category: CATEGORIES.DES_PETITS_PAS_POUR_SON_QUILIBRE_MENTAL,
+    category: CATEGORIES.DES_PETITS_PAS_POUR_SON_EQUILIBRE_MENTAL,
     content: `Le sommeil n’est pas une simple pause : **c’est un moment essentiel où le corps et le cerveau se restaurent.**\n\
 \n\
 Chaque nuit, notre cerveau traverse plusieurs cycles d’environ quatre-vingt dix minutes, alternant phases de sommeil léger, profond, et paradoxal.\n\
@@ -604,7 +604,7 @@ r. Toutefois, chacun·e fait au mieux selon sa situation, qui peut parfois rendr
     matomoId: 24,
     title: "Troubles du sommeil : de quoi parle-t-on vraiment ?",
     image: require("../../../../assets/imgs/resources/Article24.png"),
-    category: CATEGORIES.DES_PETITS_PAS_POUR_SON_QUILIBRE_MENTAL,
+    category: CATEGORIES.DES_PETITS_PAS_POUR_SON_EQUILIBRE_MENTAL,
     content: `**Il est normal de traverser, à certains moments de la vie, des périodes de sommeil difficile**.\n\
 \n\
 Contraintes de logements, stress, changements de rythme, événements de vie… Ces situations peuvent entraîner des nuits agitées ou des difficultés d’endormissement.\n\
@@ -634,7 +634,7 @@ D’autres troubles existent et nécessitent souvent une évaluation médicale :
     matomoId: 25,
     title: "Nous ne sommes pas tous·tes égaux face au sommeil",
     image: require("../../../../assets/imgs/resources/Article25.png"),
-    category: CATEGORIES.DES_PETITS_PAS_POUR_SON_QUILIBRE_MENTAL,
+    category: CATEGORIES.DES_PETITS_PAS_POUR_SON_EQUILIBRE_MENTAL,
     content: `Le sommeil suit toujours trois grandes phases - sommeil léger, profond et paradoxal - **qui sont universelles, quel que soit l’âge**. Cependant, l’enchaînement et la durée de ces phases varient d’une personne à l’autre, en fonction des besoins individuels. C’est pourquoi il est essentiel de ne pas se comparer ni de chercher un sommeil « idéal » au détail près. **Plus que la durée exacte, l’écoute de son corps et la prise en compte de ses signaux restent primordiales.**\n\
 \n\
 Les besoins en sommeil évoluent au fil des âges :\n\
@@ -660,7 +660,7 @@ Apprendre à reconnaître et respecter ses propres besoins en sommeil est un lev
     matomoId: 26,
     title: "Bien dormir, oui mais comment ?",
     image: require("../../../../assets/imgs/resources/Article26.png"),
-    category: CATEGORIES.DES_PETITS_PAS_POUR_SON_QUILIBRE_MENTAL,
+    category: CATEGORIES.DES_PETITS_PAS_POUR_SON_EQUILIBRE_MENTAL,
     content: `**Le sommeil est un besoin fondamental, mais il n’est pas toujours simple à retrouver.**\n\
 \n\
 Pourtant, avant d’envisager un traitement médicamenteux, des solutions naturelles, efficaces et sans risque existent. **Se lever à heure fixe, même après une mauvaise nuit, s’exposer à la lumière naturelle dès le matin, éviter les excitants en fin de journée ou instaurer une routine calme au moment du coucher** sont autant de repères précieux. En cas d’insomnie, il est préférable de quitter le lit un moment plutôt que d’y rester en ruminant. Réserver cet espace exclusivement au sommeil et à l’intimité aide le cerveau à associer lit et endormissement. Certaines approches comme les thérapies comportementales et cognitives (TCC) peuvent aussi accompagner durablement les personnes concernées par des troubles du sommeil.\n\
@@ -685,7 +685,7 @@ Les montres connectées et applications de suivi du sommeil peuvent parfois gén
     matomoId: 27,
     title: "« Prendre soin de soi » : quand l'injonction au bien-être devient source de stress",
     image: require("../../../../assets/imgs/resources/Article27.png"),
-    category: CATEGORIES.DES_PETITS_PAS_POUR_SON_QUILIBRE_MENTAL,
+    category: CATEGORIES.DES_PETITS_PAS_POUR_SON_EQUILIBRE_MENTAL,
     content: `C’est un fait.
 
 Les messages qui encouragent à prendre soin de soi, à cultiver la confiance en soi, à s’estimer ou encore à performer sont devenus omniprésents dans l’espace public et sur les réseaux sociaux. Ils visent à promouvoir le bien-être, mais finissent parfois par créer l’effet inverse : **une pression constante à réussir, à aller bien, à tout gérer parfaitement - dans tous les aspects de sa vie**.
@@ -712,7 +712,7 @@ Améliorer la santé mentale, c’est aussi agir sur les conditions de vie, de t
     matomoId: 28,
     title: "Se promener, courir, danser, bricoler… pour se sentir mieux",
     image: require("../../../../assets/imgs/resources/Article28.png"),
-    category: CATEGORIES.DES_PETITS_PAS_POUR_SON_QUILIBRE_MENTAL,
+    category: CATEGORIES.DES_PETITS_PAS_POUR_SON_EQUILIBRE_MENTAL,
     content: `On entend souvent dire qu’il faut « faire du sport ». Cela peut paraître contraignant, voire décourageant. Pourtant, bouger, **même un peu chaque jour**, a un réel impact sur la santé mentale. Petit **rappel : l’activité physique ne se limite pas à la pratique sportive**. Marcher, jardiner, danser, bricoler, monter les escaliers, faire ses courses à pied… Tous ces gestes du quotidien comptent, et participent à une meilleure **santé, mentale comme physique**.
 
 ### **Mais alors, pourquoi bouger fait autant du bien au moral ?**
@@ -743,7 +743,7 @@ Il n’est pas nécessaire de tout changer du jour au lendemain. L’important e
     matomoId: 29,
     title: "Ce que l'assiette apporte à la tête",
     image: require("../../../../assets/imgs/resources/Article29.png"),
-    category: CATEGORIES.DES_PETITS_PAS_POUR_SON_QUILIBRE_MENTAL,
+    category: CATEGORIES.DES_PETITS_PAS_POUR_SON_EQUILIBRE_MENTAL,
     content: `**L’alimentation ne nourrit pas que le corps : elle a aussi un impact sur notre mental.** Ce que l’on met dans son assiette peut jouer sur l’humeur, le stress et l’énergie quotidienne.
 
 Certaines études *(voir nos ressources ci-dessous)* suggèrent qu’une alimentation riche en produits ultra-transformés, en sucres, en graisses saturées ou en sel **favorise l’inflammation dans le corps**.  Lorsqu’elle devient prolongée, cette inflammation pourrait être liée à un risque accru de **troubles de l’humeur.**
@@ -780,7 +780,7 @@ L’essentiel est de faire au mieux avec ses moyens, en gardant à l’esprit qu
     matomoId: 30,
     title: "Parler, échanger, se relier : un vrai soutien contre l'isolement",
     image: require("../../../../assets/imgs/resources/Article30.png"),
-    category: CATEGORIES.DES_PETITS_PAS_POUR_SON_QUILIBRE_MENTAL,
+    category: CATEGORIES.DES_PETITS_PAS_POUR_SON_EQUILIBRE_MENTAL,
     content: `**De plus en plus de personnes se sentent seules, et ce, même dans une société hyperconnectée.** Il est important de distinguer deux notions souvent confondues : l’isolement social et la solitude, qui ne sont pas une seule et même réalité.
 
 L’isolement social désigne une situation objective dans laquelle une personne a peu ou pas de contacts avec son entourage - famille, ami·es, voisin·es, collègues - et n’occupe que peu ou pas de rôles sociaux. **Il se caractérise par une absence de relations stables, de soutien, ou de participation à la vie collective. Cet isolement peut fragiliser le bien-être mental et, lorsqu’il s’installe, avoir des conséquences importantes sur la santé globale.**
@@ -811,9 +811,9 @@ Quand on se sent isolé·e, il est possible d’en parler à un·e professionnel
   {
     id: "750245f1-a615-4759-bb2d-37882341cf27",
     matomoId: 31,
-    title: "Être attentif à ses consommations pour",
+    title: "Être attentif à ses consommations pour protéger sa santé mentale",
     image: require("../../../../assets/imgs/resources/Article31.png"),
-    category: CATEGORIES.DES_PETITS_PAS_POUR_SON_QUILIBRE_MENTAL,
+    category: CATEGORIES.DES_PETITS_PAS_POUR_SON_EQUILIBRE_MENTAL,
     content: `Certaines consommations - comme l’alcool, le tabac, les médicaments ou d’autres substances - peuvent évoluer au fil du temps, **particulièrement lors de périodes de fragilité ou de tension psychologique.** **Lorsqu’elles deviennent plus fréquentes, difficiles à contrôler, ou utilisées pour apaiser un mal-être, elles peuvent signaler une souffrance sous-jacente.** Ces usages ont des conséquences sur la santé mentale comme physique, et méritent une attention particulière lorsqu’ils s’installent ou changent de fonction.
 
 Des études (voir nos ressources ci-dessous) montrent que **les personnes concernées par des troubles de santé mentale sont souvent plus exposées à des consommations à risque.** Cela ne signifie pas systématiquement une perte de contrôle, mais souligne un lien entre état psychique et recours plus fréquent à certaines substances.
@@ -845,7 +845,7 @@ Quand la consommation devient un réflexe, elle peut révéler un mal-être qui 
     matomoId: 32,
     title: "Déconnecter un peu, ça libère la tête",
     image: require("../../../../assets/imgs/resources/Article32.png"),
-    category: CATEGORIES.DES_PETITS_PAS_POUR_SON_QUILIBRE_MENTAL,
+    category: CATEGORIES.DES_PETITS_PAS_POUR_SON_EQUILIBRE_MENTAL,
     content: `**L’addiction aux écrans n’est pas un diagnostic officiel et le débat reste encore ouvert aujourd’hui.** De nombreuses questions subsistent sur la limite entre un usage habituel et un usage excessif.
 
 Les chercheurs et médecins tentent de déterminer à partir de quel nombre d’heures, quel degré de perte de contrôle, ou quelles conséquences concrètes un usage devient problématique. **Néanmoins, une utilisation excessive peut avoir des impacts réels sur la santé mentale, tels que troubles du sommeil, anxiété, voire dépression.** Certaines études *(voir nos sources)* montrent que ces comportements sont souvent associés à d’autres troubles psychiques, ce qui souligne l’importance de les prendre au sérieux.
