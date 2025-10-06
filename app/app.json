@@ -9,21 +9,30 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "org.reactjs.native.example.monsuivipsy",
-      "buildNumber": "278",
+      "buildNumber": "282",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
-        "LSApplicationQueriesSchemes": ["tel", "telprompt", "sms", "mailto"]
+        "LSApplicationQueriesSchemes": [
+          "tel",
+          "telprompt",
+          "sms",
+          "mailto"
+        ]
       }
     },
     "android": {
       "googleServicesFile": "./google-services.json",
-      "versionCode": 270,
+      "versionCode": 272,
       "adaptiveIcon": {
         "foregroundImage": "./assets/imgs/icon.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.monsuivipsy",
-      "permissions": ["NOTIFICATIONS", "SCHEDULE_EXACT_ALARM", "POST_NOTIFICATIONS"]
+      "permissions": [
+        "NOTIFICATIONS",
+        "SCHEDULE_EXACT_ALARM",
+        "POST_NOTIFICATIONS"
+      ]
     },
     "plugins": [
       [

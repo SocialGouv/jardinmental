@@ -151,8 +151,11 @@ const RangeDate = ({
             mode="date"
             date={fromDate}
             onPress={() => {
-              setOpenFromDate(true);
-              logEvents.logSuiviEditDateFrom();
+              // Prevent DatePicker from opening if SelectInput modal is still active
+              if (!isSelectModalActive) {
+                setOpenFromDate(true);
+                logEvents.logSuiviEditDateFrom();
+              }
             }}
             disabled={withPreset && presetValue !== "custom"}
             containerStyle={styles.dateItemContainer}
@@ -163,8 +166,11 @@ const RangeDate = ({
             mode="date"
             date={toDate}
             onPress={() => {
-              setOpenToDate(true);
-              logEvents.logSuiviEditDateTo();
+              // Prevent DatePicker from opening if SelectInput modal is still active
+              if (!isSelectModalActive) {
+                setOpenToDate(true);
+                logEvents.logSuiviEditDateTo();
+              }
             }}
             disabled={withPreset && presetValue !== "custom"}
             containerStyle={styles.dateItemContainer}

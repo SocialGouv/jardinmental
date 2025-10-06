@@ -461,3 +461,4 @@ Visualiser la répartition de vos réponses
 Suivre la prise de votre traitement (quotidien ou “si besoin”)`,
   },
 };
+export const TAB_BAR_HEIGHT = 100;

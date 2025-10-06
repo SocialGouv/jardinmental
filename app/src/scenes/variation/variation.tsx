@@ -2,11 +2,13 @@ import React, { useEffect, useState, useRef, useCallback } from "react";
 import { ScrollView, StyleSheet, View, Image, Dimensions, Text } from "react-native";
 
 import { analyzeScoresMapIcon, displayedCategories, HELP_ANALYSE } from "@/utils/constants";
-import { getArrayOfDates, getTodaySWeek, formatDate, beforeToday } from "@/utils/date/helpers";
 import Chart from "./chart";
+import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
+import { beforeToday, getArrayOfDates, getTodaySWeek, formatDate } from "@/utils/date/helpers";
 import { DiaryDataContext } from "@/context/diaryData";
 import { useContext } from "react";
 import localStorage from "@/utils/localStorage";
+
 import Icon from "@/components/Icon";
 import { colors } from "@/utils/colors";
 import { INDICATEURS } from "@/utils/liste_indicateurs.1";
@@ -25,6 +27,7 @@ const Variations = ({ navigation, onScroll }) => {
   const { showBottomSheet } = useBottomSheet();
   let mounted = useRef(true);
   const [userIndicateurs, setUserIndicateurs] = React.useState([]);
+  const insets = useSafeAreaInsets();
 
   useEffect(() => {
     (async () => {
@@ -163,7 +166,14 @@ const Variations = ({ navigation, onScroll }) => {
         style={styles.scrollView}
         scrollEventThrottle={16}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.scrollContainer}
+        contentContainerStyle={[
+          styles.scrollContainer,
+          {
+            paddingBottom: insets.bottom + TAB_BAR_HEIGHT,
+          },
+        ]}
+        scrollEventThrottle={16}
+        showsVerticalScrollIndicator={false}
         onScroll={onScroll}
       >
         {!calendarIsEmpty ? (
@@ -245,7 +255,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   scrollContainer: {
-    minHeight: screenHeight,
+    minHeight: screenHeight * 0.7,
   },
   title: {
     fontWeight: "700",

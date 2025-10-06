@@ -4,10 +4,8 @@ import { useFocusEffect } from "@react-navigation/native";
 
 import { getArrayOfDatesFromTo } from "@/utils/date/helpers";
 import { DiaryDataContext } from "@/context/diaryData";
-import { displayedCategories, EMOTION_COLORS, scoresMapIcon } from "@/utils/constants";
-import { colors } from "../../utils/colors";
-import PieChart from "react-native-pie-chart";
-import CircledIcon from "../../components/CircledIcon";
+import { displayedCategories, scoresMapIcon } from "@/utils/constants";
+import { colors } from "@/utils/colors";
 import Icon from "@/components/Icon";
 import localStorage from "@/utils/localStorage";
 import logEvents from "@/services/logEvents";
@@ -18,6 +16,10 @@ import { Indicator } from "@/entities/Indicator";
 import { getIndicatorKey } from "@/utils/indicatorUtils";
 import { Pie } from "./Pie";
 import { PieYesNo } from "./PieYesNo";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import CircledIcon from "@/components/CircledIcon";
+import RoundButtonIcon from "@/components/RoundButtonIcon";
+import PieChart from "react-native-pie-chart";
 
 const screenHeight = Dimensions.get("window").height;
 
@@ -27,6 +29,7 @@ const ChartPie = ({ navigation, fromDate, toDate, onScroll }) => {
   const [userIndicateurs, setUserIndicateurs] = React.useState<Indicator[]>([]);
   const [chartDates, setChartDates] = React.useState([]);
   const [isEmpty, setIsEmpty] = React.useState();
+  const insets = useSafeAreaInsets();
 
   useFocusEffect(
     React.useCallback(() => {
@@ -146,7 +149,14 @@ const ChartPie = ({ navigation, fromDate, toDate, onScroll }) => {
     <ScrollView
       style={styles.scrollView}
       scrollEventThrottle={16}
-      contentContainerStyle={styles.scrollContainer}
+      contentContainerStyle={[
+        styles.scrollContainer,
+        {
+          paddingBottom: insets.bottom + TAB_BAR_HEIGHT,
+        },
+      ]}
+      onScroll={onScroll}
+      scrollEventThrottle={16}
       onScroll={onScroll}
       showsVerticalScrollIndicator={false}
     >
@@ -179,6 +189,85 @@ const ChartPie = ({ navigation, fromDate, toDate, onScroll }) => {
       <PieYesNo title='Ai-je pris un "si besoin" ?' data={computeChartData("PRISE_DE_TRAITEMENT_SI_BESOIN")} />
     </ScrollView>
   );
+};
+
+const _colors = {
+  ASC: ["#f3f3f3", scoresMapIcon[1].color, scoresMapIcon[2].color, scoresMapIcon[3].color, scoresMapIcon[4].color, scoresMapIcon[5].color],
+  DESC: ["#f3f3f3", scoresMapIcon[5].color, scoresMapIcon[4].color, scoresMapIcon[3].color, scoresMapIcon[2].color, scoresMapIcon[1].color],
+};
+
+const renderResponse = ({ indicateur, value, isSmall, translateX }) => {
+  if (indicateur?.type === "smiley") {
+    let _icon;
+    if (indicateur?.order === "DESC") {
+      _icon = scoresMapIcon[5 + 1 - value];
+    } else {
+      _icon = scoresMapIcon[value];
+    }
+    const iconSize = isSmall ? 24 : 32;
+    const iconContainerSize = isSmall ? 30 : 40;
+
+    if (!_icon || (!_icon.color && !_icon.faceIcon))
+      return (
+        <CircledIcon
+          key={`${indicateur.name}-${value}`}
+          color="#cccccc"
+          borderColor="#999999"
+          iconColor="#888888"
+          icon="QuestionMarkSvg"
+          iconWidth={iconSize}
+          iconHeight={iconSize}
+          iconContainerStyle={{
+            marginRight: 0,
+            transform: [{ translateX: translateX ? -10 : 0 }],
+            width: iconContainerSize,
+            height: iconContainerSize,
+          }}
+        />
+      );
+    return (
+      <CircledIcon
+        key={`${indicateur.name}-${value}`}
+        color={_icon.color}
+        borderColor={_icon.borderColor}
+        iconColor={_icon.iconColor}
+        icon={_icon.faceIcon}
+        iconWidth={iconSize}
+        iconHeight={iconSize}
+        iconContainerStyle={{
+          marginRight: 0,
+          transform: [{ translateX: translateX ? -10 : 0 }],
+          width: iconContainerSize,
+          height: iconContainerSize,
+        }}
+      />
+    );
+  }
+  if (indicateur?.type === "boolean") {
+    // a voir si on veut afficher un smiley ou un cercle ou du texte
+    return null;
+  }
+  if (indicateur?.type === "gauge") {
+    const _value = value;
+    const _colors =
+      indicateur?.order === "DESC"
+        ? [TW_COLORS.POSITIVE, EMOTION_COLORS.good, EMOTION_COLORS.middle, EMOTION_COLORS.bad, TW_COLORS.NEGATIVE]
+        : [TW_COLORS.NEGATIVE, EMOTION_COLORS.bad, EMOTION_COLORS.middle, EMOTION_COLORS.good, TW_COLORS.POSITIVE];
+
+    let _color = _colors[_value - 1];
+
+    return (
+      <View
+        style={{ transform: [{ translateX: translateX ? -10 : 0 }] }}
+        className={`flex flex-row justify-center w-10 ${isSmall ? "space-x-1" : "space-x-2"} items-end`}
+      >
+        <View className={`${isSmall ? "h-1" : "h-2"} rounded-full w-1`} style={{ backgroundColor: _color }} />
+        <View className={`${isSmall ? "h-2" : "h-5"} rounded-full w-1`} style={{ backgroundColor: _color }} />
+        <View className={`${isSmall ? "h-4" : "h-8"} rounded-full w-1`} style={{ backgroundColor: _color }} />
+      </View>
+    );
+  }
+  return <View />;
 };
 
 const styles = StyleSheet.create({
@@ -285,7 +374,7 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     paddingBottom: 150,
-    minHeight: screenHeight,
+    minHeight: screenHeight * 0.7,
   },
 });
 

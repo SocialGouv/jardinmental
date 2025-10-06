@@ -1,0 +1,53 @@
+import React from "react";
+import { View } from "react-native";
+import ResourceCard from "./ResourceCard";
+import { Resource, RESOURCES_DATA } from "./data/resources";
+import { AnimatedHeaderScrollScreen } from "../survey-v2/AnimatedHeaderScrollScreen";
+import { TW_COLORS } from "@/utils/constants";
+import logEvents from "../../services/logEvents";
+
+interface ResourceCategoryListProps {
+  navigation: any;
+  route: {
+    params: {
+      category: string;
+    };
+  };
+}
+
+const ResourceCategoryList: React.FC<ResourceCategoryListProps> = ({ navigation, route }) => {
+  const { category } = route.params;
+
+  const handleResourcePress = (resource: Resource, position: number) => {
+    logEvents.logResourceArticleSelected(resource.matomoId);
+    logEvents.logResourceArticleSelectedPosition(position);
+    navigation.navigate("resource-article", { resource });
+  };
+
+  // Filter resources by category
+  const categoryResources = RESOURCES_DATA.filter((resource) => resource.category === category);
+
+  return (
+    <AnimatedHeaderScrollScreen
+      title={category}
+      headerTitle="Ressources"
+      handlePrevious={() => {
+        navigation.goBack();
+      }}
+      smallHeader={true}
+      navigation={navigation}
+      showBottomButton={false}
+      scrollViewBackground={TW_COLORS.GRAY_50}
+    >
+      <View className="flex-1">
+        <View className="px-4 mt-4">
+          {categoryResources.map((resource, index) => (
+            <ResourceCard key={resource.id} resource={resource} onPress={() => handleResourcePress(resource, index + 1)} />
+          ))}
+        </View>
+      </View>
+    </AnimatedHeaderScrollScreen>
+  );
+};
+
+export default ResourceCategoryList;

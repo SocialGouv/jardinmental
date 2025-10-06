@@ -5,6 +5,15 @@ import MarkdownStyled from "./MarkdownStyled";
 import { AnimatedHeaderScrollScreen } from "../survey-v2/AnimatedHeaderScrollScreen";
 import { TW_COLORS } from "@/utils/constants";
 import logEvents from "../../services/logEvents";
+import { EXTERNAL_RESOURCES_DATA, ExternalResource, ExternalResourceType } from "./data/resourcesExternal";
+import BookOpenIcon from "../../../assets/svg/icon/BookOpen";
+import LinkExternalIcon from "../../../assets/svg/icon/LinkExternal";
+import PlayCircleIcon from "../../../assets/svg/icon/PlayCircle";
+import HeadphonesIcon from "../../../assets/svg/icon/Headphones";
+import InstagramIcon from "../../../assets/svg/icon/Instagram";
+import FilmIcon from "../../../assets/svg/icon/Film";
+import LinkIcon from "../../../assets/svg/icon/Link";
+import BriefcaseIcon from "../../../assets/svg/icon/Briefcase";
 
 interface ResourceArticleProps {
   navigation: any;
@@ -13,6 +22,64 @@ interface ResourceArticleProps {
       resource: Resource;
     };
   };
+}
+
+function textByType(type: ExternalResourceType) {
+  switch (type) {
+    case "Article":
+      return "Lire l'article";
+    case "Vidéo":
+      return "Regarder la vidéo";
+    case "Podcast":
+      return "Écouter le podcast";
+    case "Guide":
+      return "Découvrir le guide";
+    case "Instagram":
+      return "Voir sur Instagram";
+    case "Site":
+      return "Visiter le site";
+    case "Fiche pratique":
+      return "Voir la fiche pratique";
+    case "Série":
+      return "Voir le documentaire";
+    case "BD":
+      return "Découvrir la BD";
+    case "Livre":
+      return "Découvrir le livre";
+    case "Questionnaire":
+      return "Voir le questionnaire";
+    case "Outils":
+      return "Découvrir";
+  }
+}
+
+function ExternalResourceIcon({ type }: { type: ExternalResourceType }) {
+  switch (type) {
+    case "Article":
+      return <BookOpenIcon color="#3D6874" width={20} height={20} />;
+    case "Vidéo":
+      return <PlayCircleIcon color="#3D6874" width={20} height={20} />;
+    case "Podcast":
+      return <HeadphonesIcon color="#3D6874" width={20} height={20} />;
+    case "Guide":
+      return <BookOpenIcon color="#3D6874" width={20} height={20} />;
+    case "Instagram":
+      return <InstagramIcon color="#3D6874" width={20} height={20} />;
+    case "Site":
+      return <LinkIcon strokeColor="#3D6874" size={20} />;
+    case "Fiche pratique":
+      return <BookOpenIcon color="#3D6874" width={20} height={20} />;
+    case "Série":
+      return <FilmIcon color="#3D6874" width={20} height={20} />;
+    case "BD":
+      return <BookOpenIcon color="#3D6874" width={20} height={20} />;
+    case "Livre":
+      return <BookOpenIcon color="#3D6874" width={20} height={20} />;
+    case "Questionnaire":
+      return <BriefcaseIcon color="#3D6874" width={20} height={20} />;
+    case "Outils":
+      return <BriefcaseIcon color="#3D6874" width={20} height={20} />;
+  }
 }
 
 const ResourceArticle: React.FC<ResourceArticleProps> = ({ navigation, route }) => {
@@ -28,22 +95,7 @@ const ResourceArticle: React.FC<ResourceArticleProps> = ({ navigation, route }) 
     };
   }, [resource.matomoId]);
 
-  const handleContinueReading = async () => {
-    if (!resource.source) {
-      return;
-    }
-    if (resource.source.url) {
-      try {
-        // Log external link click before opening
-        logEvents.logResourceOpenedExternalLink(resource.source.matomoId);
-        await Linking.openURL(resource.source.url);
-      } catch (error) {
-        console.error("Failed to open URL:", error);
-      }
-    }
-  };
-
-  const handleContinueReadingMore = async (item: { title: string; text: string; url: string; matomoId: number }) => {
+  const handleContinueReadingMore = async (item: ExternalResource) => {
     if (item.url) {
       try {
         // Log external link click before opening
@@ -53,6 +105,10 @@ const ResourceArticle: React.FC<ResourceArticleProps> = ({ navigation, route }) 
         console.error("Failed to open URL:", error);
       }
     }
+  };
+
+  const getExternalResource = (id: string) => {
+    return EXTERNAL_RESOURCES_DATA.find((item) => item.id === id);
   };
 
   return (
@@ -69,47 +125,53 @@ const ResourceArticle: React.FC<ResourceArticleProps> = ({ navigation, route }) 
     >
       <View className="flex-1">
         <View className="px-5">
-          <View className="mb-6 mt-9">
-            <Image source={resource.image} className="w-full h-[200px] rounded-2xl mb-2" resizeMode="cover" />
-          </View>
-          <Text className="text-2xl font-bold text-cnam-primary-950 mb-5 font-source-sans leading-7 text-left">{resource.title}</Text>
+          {resource.image ? (
+            <View className="mb-6 mt-9">
+              <Image source={resource.image} className="w-full h-[200px] rounded-2xl mb-2" resizeMode="cover" />
+            </View>
+          ) : (
+            <View className="mb-12" />
+          )}
+          <Text className="text-2xl font-bold text-cnam-primary-950 mb-5 leading-7 text-left">{resource.title}</Text>
 
           <MarkdownStyled markdown={resource.content} />
 
-          {resource.source ? (
+          {resource.externalResources ? (
             <View className="mt-8 pt-4">
-              <Text className="text-lg text-cnam-primary-950 font-semibold mb-4 font-source-sans">Continuer la lecture</Text>
-
-              <TouchableOpacity onPress={handleContinueReading}>
-                <View className="rounded-xl p-4 flex-row items-center border border-cnam-primary-200 bg-white">
-                  <View className="flex-1 pr-2">
-                    <Text className="text-base font-semibold text-cnam-primary-950 mb-1 font-source-sans">{resource.source.title}</Text>
-                    <Text className="text-sm text-gray-500 font-source-sans leading-tight">{resource.source.text}</Text>
-                  </View>
-                  <View className="justify-center items-center">
-                    <Text className="text-lg text-cnam-primary-950 font-bold">→</Text>
-                  </View>
-                </View>
-              </TouchableOpacity>
-            </View>
-          ) : null}
-          {resource.moreContent ? (
-            <View className="mt-8 pt-4">
-              <Text className="text-lg text-cnam-primary-950 font-semibold mb-4 font-source-sans">Aller plus loin</Text>
+              <Text className="text-lg text-cnam-primary-950 font-semibold mb-4">À lire aussi dans ce dossier</Text>
               <View className="flex flex-col gap-4">
-                {resource.moreContent.map((item) => (
-                  <TouchableOpacity onPress={() => handleContinueReadingMore(item)} key={item.title + item.text}>
-                    <View className="rounded-xl p-4 flex-row items-center border border-cnam-primary-200 bg-white">
-                      <View className="flex-1 pr-2">
-                        <Text className="text-base font-semibold text-cnam-primary-950 mb-1 font-source-sans">{item.title}</Text>
-                        <Text className="text-sm text-gray-500 font-source-sans leading-tight">{item.text}</Text>
+                {resource.externalResources?.map((item) => {
+                  const externalResource = getExternalResource(item);
+                  if (!externalResource) {
+                    return null;
+                  }
+                  return (
+                    <TouchableOpacity onPress={() => handleContinueReadingMore(externalResource)} key={externalResource.id}>
+                      <View className="rounded-2xl flex flex-row border-2 border-cnam-primary-400 bg-white min-h-[112px]">
+                        <View className="bg-cnam-cyan-lighten-90 rounded-l-2xl flex items-center justify-center w-20">
+                          <ExternalResourceIcon type={externalResource.type} />
+                          <Text className="text-xs text-cnam-primary-900 font-medium pt-1 rounded">{externalResource.type}</Text>
+                        </View>
+                        <View className="flex-1 flex">
+                          <View className="p-4 grow">
+                            <Text className="text-base font-semibold text-cnam-primary-950">{externalResource.title}</Text>
+                          </View>
+                          <View className="flex flex-row px-2 pb-4 items-center gap-1">
+                            <View className="flex-1">
+                              <Text numberOfLines={1} ellipsizeMode="tail" className="text-xs text-gray-500">
+                                {externalResource.author}
+                              </Text>
+                            </View>
+                            <View className="flex flex-row items-center">
+                              <Text className="mr-2 text-cnam-primary-950 font-semibold">{textByType(externalResource.type)}</Text>
+                              <LinkExternalIcon width={18} height={18} />
+                            </View>
+                          </View>
+                        </View>
                       </View>
-                      <View className="justify-center items-center">
-                        <Text className="text-lg text-cnam-primary-950 font-bold">→</Text>
-                      </View>
-                    </View>
-                  </TouchableOpacity>
-                ))}
+                    </TouchableOpacity>
+                  );
+                })}
               </View>
             </View>
           ) : null}

@@ -4,7 +4,7 @@ fileignoreconfig:
 - filename: .kontinuous/env/prod/templates/api.sealed-secret.yaml
   checksum: f1dfe60bbe8a6604443fe3629b2239fa969304beeca8eff2b7528cf9b5728e3d
 - filename: CHANGELOG.md
-  checksum: af668c3480c223bf8e2e6bfd6942c7cfb95d50d751e48b305a8d36f5a1d1c675
+  checksum: 78bb38a4fe0802c8551983dc9f84437611f20221f0763401a2c7106d5d8d98f9
 - filename: README.md
   checksum: 979473d3e8ad091d57424dc057cf0b40a884f0fbf6821554ea0121e63a173d6b
 - filename: api/src/config.ts
@@ -103,6 +103,8 @@ fileignoreconfig:
   checksum: bdb40467b60296ef959cac383488b52e879619d362093020f547896ddf9921bf
 - filename: app/src/scenes/resources/ResourceArticle.tsx
   checksum: b55947d7511805b7a85791800cfa0f27f8a8b4bd0ddd74e52e5afc2002160c50
+- filename: app/src/scenes/resources/data/resourcesExternal.ts
+  checksum: bbb57ba5bbc0408ea2789cbcb063bbff4c1898eb2b3b270131a4d42c347c317e
 - filename: app/src/scenes/resources/index.tsx
   checksum: 29b2042d7422312ba6157d629988b7da1631fd5d0b8464cd91ee5f04d8c7c094
 - filename: app/src/scenes/status/index.js
