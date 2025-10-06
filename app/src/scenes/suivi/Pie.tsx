@@ -208,10 +208,9 @@ export const Pie = ({ title, data, indicateur }) => {
       return {
         color: item.color,
         value: e.pourcentage,
-        label: { text: item.symbol, fontWeight: "bold" },
+        label: { text: item.symbol, fontWeight: "bold", fontSize: 16, fill: item.iconColor, offsetX: -1 },
       };
     });
-    console.log("SECTION ET COULEUR", sectionsAvecCouleurEtPourcentage);
     setSections(sectionsAvecCouleurEtPourcentage);
   }, [indicateur.order, nombreDeValeurParScore]);
 

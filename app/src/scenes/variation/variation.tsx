@@ -11,15 +11,7 @@ import Icon from "@/components/Icon";
 import { colors } from "@/utils/colors";
 import { INDICATEURS } from "@/utils/liste_indicateurs.1";
 import { getIndicatorKey } from "@/utils/indicatorUtils";
-import RangeDate from "../suivi/RangeDate";
-import { Button2 } from "@/components/Button2";
-import JMButton from "@/components/JMButton";
-import CircleQuestionMark from "@assets/svg/icon/CircleQuestionMark";
 import { useBottomSheet } from "@/context/BottomSheetContext";
-import HelpView from "@/components/HelpView";
-import EyeIcon from "@assets/svg/icon/Eye";
-import { mergeClassNames } from "@/utils/className";
-import { typography } from "@/utils/typography";
 import WeekPicker from "./week-picker";
 
 const screenHeight = Dimensions.get("window").height;
