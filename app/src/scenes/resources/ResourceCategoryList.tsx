@@ -11,13 +11,12 @@ interface ResourceCategoryListProps {
   route: {
     params: {
       category: string;
-      categoryTitle: string;
     };
   };
 }
 
 const ResourceCategoryList: React.FC<ResourceCategoryListProps> = ({ navigation, route }) => {
-  const { category, categoryTitle } = route.params;
+  const { category } = route.params;
 
   const handleResourcePress = (resource: Resource, position: number) => {
     logEvents.logResourceArticleSelected(resource.matomoId);
@@ -30,7 +29,7 @@ const ResourceCategoryList: React.FC<ResourceCategoryListProps> = ({ navigation,
 
   return (
     <AnimatedHeaderScrollScreen
-      title={categoryTitle}
+      title={category}
       headerTitle="Ressources"
       handlePrevious={() => {
         navigation.goBack();

@@ -35,7 +35,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ number, title, onPress }) =
 
 const ResourceCategories: React.FC<ResourceCategoriesProps> = ({ navigation }) => {
   const handleCategoryPress = (category: string) => {
-    navigation.navigate("resource-category-list", { category, categoryTitle: category });
+    navigation.navigate("resource-category-list", { category });
   };
 
   const categories = [
