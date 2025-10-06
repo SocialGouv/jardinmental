@@ -1,6 +1,7 @@
 import { OnboardingStep } from "@/scenes/onboarding-v2/types";
 import { colors as mainColors } from "./colors";
 import { INDICATORS_CATEGORIES } from "@/entities/IndicatorCategories";
+import { symbol } from "zod";
 
 export const icons = {
   veryGood: "VeryGoodSvg",
@@ -120,6 +121,17 @@ export const analyzeScoresMapIcon = {
     color: "#9ADAAA",
     symbol: "++",
     iconColor: "#004439",
+  },
+};
+
+export const yesNoMapIcon = {
+  true: {
+    color: "#CCEDF9",
+    symbol: "✓",
+  },
+  false: {
+    color: "#F9D1E6",
+    symbol: "x",
   },
 };
 

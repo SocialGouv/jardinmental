@@ -4,65 +4,80 @@ import { View, Text, Dimensions, StyleSheet, TouchableOpacity } from "react-nati
 import PieChart from "react-native-pie-chart";
 import RoundButtonIcon from "@/components/RoundButtonIcon";
 import { analyzeScoresMapIcon, EMOTION_COLORS, scoresMapIcon, TW_COLORS } from "@/utils/constants";
-import CircledIcon from "@/components/CircledIcon";
+import CircledIcon, { mapIconToSvg } from "@/components/CircledIcon";
 import logEvents from "@/services/logEvents";
+import { mergeClassNames } from "@/utils/className";
+import { typography } from "@/utils/typography";
+import ChevronIcon from "@assets/svg/icon/chevron";
+import ArrowIcon from "@assets/svg/icon/Arrow";
+import ArrowUpSvg from "@assets/svg/icon/ArrowUp";
 
 const SCORE_MAP_INFO = {
   ASC: [
     {
-      color: "#f3f3f3",
+      color: "#E3F6F8",
     },
     {
       ...scoresMapIcon[1],
       ...analyzeScoresMapIcon[1],
+      label: "Très bas",
     },
     {
       ...scoresMapIcon[2],
       ...analyzeScoresMapIcon[2],
+      label: "Bas",
     },
     {
       ...scoresMapIcon[3],
       ...analyzeScoresMapIcon[3],
+      label: "Neutre",
     },
     {
       ...scoresMapIcon[4],
       ...analyzeScoresMapIcon[4],
+      label: "Haut",
     },
     {
       ...scoresMapIcon[5],
       ...analyzeScoresMapIcon[5],
+      label: "Très haut",
     },
   ],
   DESC: [
     {
-      color: "#f3f3f3",
+      color: "#E3F6F8",
     },
     {
       ...scoresMapIcon[5],
       ...analyzeScoresMapIcon[5],
+      label: "Très haut",
     },
     {
       ...scoresMapIcon[4],
       ...analyzeScoresMapIcon[4],
+      label: "Haut",
     },
     {
       ...scoresMapIcon[3],
       ...analyzeScoresMapIcon[3],
+      label: "Neutre",
     },
     {
       ...scoresMapIcon[2],
       ...analyzeScoresMapIcon[2],
+      label: "Bas",
     },
     {
       ...scoresMapIcon[1],
       ...analyzeScoresMapIcon[1],
+      label: "Très bas",
     },
   ],
 };
 
 const screenHeight = Dimensions.get("window").height;
 
-const renderResponse = ({ indicateur, value, isSmall, translateX }) => {
+const renderResponse = ({ indicateur, value, isSmall, translateX, reverse }) => {
   if (indicateur?.type === "smiley") {
     let _icon;
     if (indicateur?.order === "DESC") {
@@ -91,23 +106,9 @@ const renderResponse = ({ indicateur, value, isSmall, translateX }) => {
           }}
         />
       );
-    return (
-      <CircledIcon
-        key={`${indicateur.name}-${value}`}
-        color={_icon.color}
-        borderColor={_icon.borderColor}
-        iconColor={_icon.iconColor}
-        icon={_icon.faceIcon}
-        iconWidth={iconSize}
-        iconHeight={iconSize}
-        iconContainerStyle={{
-          marginRight: 0,
-          transform: [{ translateX: translateX ? -10 : 0 }],
-          width: iconContainerSize,
-          height: iconContainerSize,
-        }}
-      />
-    );
+    const Icon = mapIconToSvg(_icon.faceIcon);
+
+    return <Icon width={iconSize} height={iconSize} color={_icon.iconColor} />;
   }
   if (indicateur?.type === "boolean") {
     // a voir si on veut afficher un smiley ou un cercle ou du texte
@@ -115,23 +116,43 @@ const renderResponse = ({ indicateur, value, isSmall, translateX }) => {
   }
   if (indicateur?.type === "gauge") {
     const _value = value;
-    const _colors =
-      indicateur?.order === "DESC"
-        ? [TW_COLORS.POSITIVE, EMOTION_COLORS.good, EMOTION_COLORS.middle, EMOTION_COLORS.bad, TW_COLORS.NEGATIVE]
-        : [TW_COLORS.NEGATIVE, EMOTION_COLORS.bad, EMOTION_COLORS.middle, EMOTION_COLORS.good, TW_COLORS.POSITIVE];
-
-    let _color = _colors[_value - 1];
-
+    const itemColors = SCORE_MAP_INFO[indicateur?.order];
+    let _color = itemColors[_value].color;
     return (
       <View
-        style={{ transform: [{ translateX: translateX ? -10 : 0 }] }}
-        className={`flex flex-row justify-center w-10 ${isSmall ? "space-x-1" : "space-x-2"} items-end`}
+        className={mergeClassNames("flex-col items-center space-y-2", reverse ? "flex-col-reverse" : "")}
+        style={{
+          height: isSmall ? 30 : 40,
+        }}
       >
-        <View className={`${isSmall ? "h-1" : "h-2"} rounded-full w-1`} style={{ backgroundColor: _color }} />
-        <View className={`${isSmall ? "h-2" : "h-5"} rounded-full w-1`} style={{ backgroundColor: _color }} />
-        <View className={`${isSmall ? "h-4" : "h-8"} rounded-full w-1`} style={{ backgroundColor: _color }} />
+        <View
+          className="px-1 w-8 items-center mx-2"
+          style={{
+            backgroundColor: itemColors[_value].color,
+            transform: [
+              {
+                scale: isSmall ? 0.7 : 1,
+              },
+            ],
+          }}
+        >
+          <Text>{itemColors[_value].symbol}</Text>
+        </View>
+        <View>
+          <Text className={mergeClassNames(typography.textXsRegular, "text-cnam-primary-800 font-normal")}>{itemColors[_value].label}</Text>
+        </View>
       </View>
     );
+    // return (
+    //   <View
+    //     style={{ transform: [{ translateX: translateX ? -10 : 0 }] }}
+    //     className={`flex flex-row justify-center w-10 ${isSmall ? "space-x-1" : "space-x-2"} items-end`}
+    //   >
+    //     <View className={`${isSmall ? "h-1" : "h-2"} rounded-full w-1`} style={{ backgroundColor: _color }} />
+    //     <View className={`${isSmall ? "h-2" : "h-5"} rounded-full w-1`} style={{ backgroundColor: _color }} />
+    //     <View className={`${isSmall ? "h-4" : "h-8"} rounded-full w-1`} style={{ backgroundColor: _color }} />
+    //   </View>
+    // );
   }
   return <View />;
 };
@@ -267,13 +288,29 @@ export const Pie = ({ title, data, indicateur }) => {
   };
 
   if (data.every((value) => value === 0)) return null;
-  console.log(sections);
   return (
     <View style={styles.categoryContainer}>
       <View style={styles.titleContainer}>
         <TouchableOpacity onPress={toggleDetails} style={styles.titleContainer}>
           <Text style={styles.title}>{title}</Text>
-          <RoundButtonIcon icon="toggle" visible onPress={toggleDetails} isToggled={detailsVisible} small />
+          {!!detailsVisible && (
+            <TouchableOpacity onPress={toggleDetails}>
+              <ArrowUpSvg />
+            </TouchableOpacity>
+          )}
+          {!detailsVisible && (
+            <TouchableOpacity onPress={toggleDetails}>
+              <ArrowUpSvg
+                style={{
+                  transform: [
+                    {
+                      scaleY: -1,
+                    },
+                  ],
+                }}
+              />
+            </TouchableOpacity>
+          )}
         </TouchableOpacity>
       </View>
       <View style={styles.contentCategoryContainer}>
@@ -284,8 +321,7 @@ export const Pie = ({ title, data, indicateur }) => {
               widthAndHeight={100}
               series={sections.map((section) => section)}
               // sliceColor={sections.map((section) => section.color)}
-              coverRadius={0.45}
-              coverFill={"#FFF"}
+              cover={0.45}
             />
           ) : (
             // Show empty state or placeholder when all values are 0
@@ -295,20 +331,20 @@ export const Pie = ({ title, data, indicateur }) => {
           )}
         </View>
         {averageIcons.length ? (
-          <View style={styles.pieContainer}>
-            <View style={styles.averageContainer}>
-              <Text style={styles.legendText}>Moyenne</Text>
-              <View style={[styles.averageIconsContainer, { transform: [{ translateX: 8 * (averageIcons.length - 1) }] }]}>
-                {averageIcons.map((e, i) => {
-                  if (!(e >= 1 && e <= 5)) return null;
-                  const isSmall = i === 0 && averageIcons.length > 1;
-                  return renderResponse({ indicateur, value: e, isSmall, translateX: isSmall });
-                })}
-              </View>
-              {joursRenseignes.pourcentage < 100 ? (
-                <Text style={styles.pourcentageStyle}>{Math.round(100 - joursRenseignes.pourcentage)}% de jours non renseignés</Text>
-              ) : null}
+          <View className="flex-col space-y-4 items-center">
+            <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-800")}>Moyenne</Text>
+            <View className="flex-row space-x-4">
+              {averageIcons.map((e, i) => {
+                if (!(e >= 1 && e <= 5)) return null;
+                const isSmall = i === 0 && averageIcons.length > 1;
+                return renderResponse({ indicateur, value: e, isSmall, translateX: isSmall });
+              })}
             </View>
+            {joursRenseignes.pourcentage < 100 ? (
+              <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>
+                {Math.round(100 - joursRenseignes.pourcentage)}% de jours non renseignés
+              </Text>
+            ) : null}
           </View>
         ) : null}
       </View>
@@ -354,14 +390,14 @@ const TableDeStatistiquesParLigne = ({ nombreDeJoursConsecutifs, nombreDeValeurP
         {[1, 2, 3, 4, 5].map((score) => {
           return (
             <View key={`colonne_stat_${title}_${score}`} className="flex-1 flex flex-row justify-center items-center p-[5] border-l border-gray-100">
-              {renderResponse({ indicateur, value: score, isSmall: true })}
+              {renderResponse({ indicateur, value: score, isSmall: true, reverse: true })}
             </View>
           );
         })}
       </View>
       <View style={stylesTableLigne.ligne}>
         <View style={[stylesTableLigne.cellule, stylesTableLigne.titre]}>
-          <Text style={stylesTableLigne.textTitre}>Pourcentage</Text>
+          <Text className={mergeClassNames(typography.textXsRegular, "text-cnam-primary-800")}>Pourcentage</Text>
         </View>
         {[1, 2, 3, 4, 5].map((score) => {
           const infoScore = nombreDeValeurParScore.find((e) => Number(e.score) === Number(scores[score - 1]));
@@ -370,14 +406,16 @@ const TableDeStatistiquesParLigne = ({ nombreDeJoursConsecutifs, nombreDeValeurP
               key={`colonne_stat_pourcentage_${title}_${score}`}
               className="flex-1 flex flex-row justify-center items-center p-[5] border-l border-gray-100"
             >
-              <Text>{Math.round(infoScore?.pourcentage) || 0}&nbsp;%</Text>
+              <Text className={mergeClassNames(typography.textXsRegular, "text-cnam-primary-800")}>
+                {Math.round(infoScore?.pourcentage) || 0}&nbsp;%
+              </Text>
             </View>
           );
         })}
       </View>
       <View style={stylesTableLigne.ligne}>
         <View style={[stylesTableLigne.cellule, stylesTableLigne.titre]}>
-          <Text style={stylesTableLigne.textTitre}>Jour(s)</Text>
+          <Text className={mergeClassNames(typography.textXsRegular, "text-cnam-primary-800")}>Jour(s)</Text>
         </View>
         {[1, 2, 3, 4, 5].map((score) => {
           const infoScore = nombreDeValeurParScore.find((e) => Number(e.score) === Number(scores[score - 1]));
@@ -386,19 +424,21 @@ const TableDeStatistiquesParLigne = ({ nombreDeJoursConsecutifs, nombreDeValeurP
               key={`colonne_stat_total_${title}_${score}`}
               className="flex-1 flex flex-row justify-center items-center p-[5] border-l border-gray-100"
             >
-              <Text>{infoScore?.count || 0}&nbsp;j</Text>
+              <Text className={mergeClassNames(typography.textXsRegular, "text-cnam-primary-800")}>{infoScore?.count || 0}&nbsp;j</Text>
             </View>
           );
         })}
       </View>
       <View style={stylesTableLigne.ligne}>
         <View style={[stylesTableLigne.cellule, stylesTableLigne.titre]}>
-          <Text style={stylesTableLigne.textTitre}>Jours consécutifs (maximum)</Text>
+          <Text className={mergeClassNames(typography.textXsRegular, "text-cnam-primary-800")}>Jours consécutifs</Text>
         </View>
         {[1, 2, 3, 4, 5].map((score) => {
           return (
             <View key={`colonne_stat_consecutif_${title}_${score}`} style={[stylesTableLigne.cellule, stylesTableLigne.celluleAvecBordureAGauche]}>
-              <Text>{nombreDeJoursConsecutifs[scores[score - 1]] || 0}&nbsp;j</Text>
+              <Text className={mergeClassNames(typography.textXsRegular, "text-cnam-primary-800")}>
+                {nombreDeJoursConsecutifs[scores[score - 1]] || 0}&nbsp;j
+              </Text>
             </View>
           );
         })}
@@ -421,11 +461,11 @@ const stylesTableLigne = StyleSheet.create({
   },
   cellule: {
     flex: 1,
-    display: "flex",
+    // display: "flex",
     flexDirection: "row",
     justifyContent: "center",
-    alignItems: "center",
-    alignSelf: "stretch",
+    // alignItems: "center",
+    // alignSelf: "stretch",
     padding: 5,
   },
   celluleAvecBordureAGauche: {
@@ -433,7 +473,9 @@ const stylesTableLigne = StyleSheet.create({
     borderLeftWidth: 1,
   },
   titre: {
-    flex: 3,
+    // flex: 1,
+    width: 85,
+    flex: 0,
     justifyContent: "flex-start",
   },
   textTitre: {

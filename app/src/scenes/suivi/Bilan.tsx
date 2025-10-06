@@ -98,7 +98,7 @@ const Bilan = ({ navigation, startSurvey }) => {
 
   return (
     <>
-      <SafeAreaView style={styles.safe}>
+      <View className="flex-1">
         <View style={styles.headerContainerNavigation}>
           <Header title="Mes analyses" navigation={navigation} scrollY={scrollY} />
         </View>
@@ -122,7 +122,7 @@ const Bilan = ({ navigation, startSurvey }) => {
           />
         )}
         {renderChart(chartType)}
-      </SafeAreaView>
+      </View>
       <FloatingPlusButton shadow onPress={startSurvey} plusPosition={0} />
     </>
   );

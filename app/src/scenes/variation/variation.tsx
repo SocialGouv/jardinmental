@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import { ScrollView, StyleSheet, View, Image, Dimensions, Text } from "react-native";
 
-import { analyzeScoresMapIcon, displayedCategories, HELP_ANALYSE } from "@/utils/constants";
+import { displayedCategories, TAB_BAR_HEIGHT } from "@/utils/constants";
 import Chart from "./chart";
-import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { beforeToday, getArrayOfDates, getTodaySWeek, formatDate } from "@/utils/date/helpers";
 import { DiaryDataContext } from "@/context/diaryData";
 import { useContext } from "react";

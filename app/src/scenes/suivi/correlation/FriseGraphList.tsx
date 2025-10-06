@@ -359,7 +359,7 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     paddingBottom: 150,
-    minHeight: screenHeight,
+    minHeight: screenHeight * 0.7,
   },
   button: {
     display: "flex",

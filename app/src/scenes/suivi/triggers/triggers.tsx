@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View, ScrollView, Dimensions } from "react-native";
+import { StyleSheet, View, ScrollView, Dimensions, Text } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { isToday, isYesterday, parseISO } from "date-fns";
 import { getArrayOfDatesFromTo, formatDay, formatRelativeDate } from "@/utils/date/helpers";

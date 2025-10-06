@@ -6,7 +6,7 @@ import { SquircleButton, SquircleView } from "expo-squircle-view";
 
 import Status from "@/scenes/status";
 import Exercise from "@/scenes/exercise";
-import Suivi from "@/scenes/suivi";
+import Suivi from "@/scenes/suivi/Bilan";
 import Resources from "@/scenes/resources";
 import localStorage from "@/utils/localStorage";
 import logEvents from "@/services/logEvents";

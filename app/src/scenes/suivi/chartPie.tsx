@@ -4,7 +4,7 @@ import { useFocusEffect } from "@react-navigation/native";
 
 import { getArrayOfDatesFromTo } from "@/utils/date/helpers";
 import { DiaryDataContext } from "@/context/diaryData";
-import { displayedCategories, scoresMapIcon } from "@/utils/constants";
+import { displayedCategories, scoresMapIcon, TAB_BAR_HEIGHT, yesNoMapIcon } from "@/utils/constants";
 import { colors } from "@/utils/colors";
 import Icon from "@/components/Icon";
 import localStorage from "@/utils/localStorage";
@@ -18,8 +18,6 @@ import { Pie } from "./Pie";
 import { PieYesNo } from "./PieYesNo";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import CircledIcon from "@/components/CircledIcon";
-import RoundButtonIcon from "@/components/RoundButtonIcon";
-import PieChart from "react-native-pie-chart";
 
 const screenHeight = Dimensions.get("window").height;
 
@@ -171,7 +169,17 @@ const ChartPie = ({ navigation, fromDate, toDate, onScroll }) => {
                 indicateur={_indicateur}
                 title={getTitle(_indicateur.name)}
                 data={computeChartData(getIndicatorKey(_indicateur))}
-                parialsColors={["#f3f3f3", isReverse ? TW_COLORS.NEGATIVE : TW_COLORS.POSITIVE, isReverse ? TW_COLORS.POSITIVE : TW_COLORS.NEGATIVE]}
+                parialsColors={[
+                  { color: "#f3f3f3" },
+                  {
+                    color: isReverse ? yesNoMapIcon["false"].color : yesNoMapIcon["true"].color,
+                    symbol: isReverse ? yesNoMapIcon["false"].symbol : yesNoMapIcon["true"].symbol,
+                  },
+                  {
+                    color: isReverse ? yesNoMapIcon["true"].color : yesNoMapIcon["false"].color,
+                    symbol: isReverse ? yesNoMapIcon["true"].symbol : yesNoMapIcon["false"].symbol,
+                  },
+                ]}
               />
             );
           return (

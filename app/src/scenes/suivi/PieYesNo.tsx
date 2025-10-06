@@ -2,10 +2,25 @@ import React from "react";
 import { StyleSheet, View, Text, Dimensions } from "react-native";
 import { colors } from "@/utils/colors";
 import PieChart from "react-native-pie-chart";
+import { TW_COLORS, yesNoMapIcon } from "@/utils/constants";
 
 const screenHeight = Dimensions.get("window").height;
 
-export const PieYesNo = ({ title, data, parialsColors = ["#f3f3f3", "#5956E8", "#E575F8"] }) => {
+export const PieYesNo = ({
+  title,
+  data,
+  parialsColors = [
+    { color: "#f3f3f3" },
+    {
+      color: yesNoMapIcon["true"].color,
+      symbol: yesNoMapIcon["true"].symbol,
+    },
+    {
+      color: yesNoMapIcon["false"].color,
+      symbol: yesNoMapIcon["false"].symbol,
+    },
+  ],
+}) => {
   const [sections, setSections] = React.useState([]);
   const [joursRenseignes, setJoursRenseignes] = React.useState({});
   const [nombreDeValeurParScore, setNombreDeValeurParScore] = React.useState([]);
@@ -42,11 +57,14 @@ export const PieYesNo = ({ title, data, parialsColors = ["#f3f3f3", "#5956E8", "
 
   React.useEffect(() => {
     if (!nombreDeValeurParScore?.length) return;
-    const sectionsAvecCouleurEtPourcentage = nombreDeValeurParScore.map((e) => ({
-      color: parialsColors[e.score],
-      value: e.pourcentage,
-    }));
-    console.log("LCS TOTO", sectionsAvecCouleurEtPourcentage);
+    const sectionsAvecCouleurEtPourcentage = nombreDeValeurParScore.map((e) => {
+      const item = parialsColors[e.score];
+      return {
+        color: item.color,
+        value: e.pourcentage,
+        label: { text: item.symbol, fontWeight: "bold", fontSize: 16, fill: TW_COLORS.BRAND_800, offsetX: -1 },
+      };
+    });
     setSections(sectionsAvecCouleurEtPourcentage);
   }, [nombreDeValeurParScore]);
 
@@ -62,13 +80,12 @@ export const PieYesNo = ({ title, data, parialsColors = ["#f3f3f3", "#5956E8", "
       <View style={styles.contentCategoryContainer}>
         <View style={styles.pieContainer}>
           {/* <PieChart radius={50} sections={sections} /> */}
-          {sections?.reduce((sum, section) => sum + section, 0) > 0 ? (
+          {sections?.reduce((sum, section) => sum + section.value, 0) > 0 ? (
             <PieChart
               widthAndHeight={100}
               series={sections.map((section) => section)}
               // sliceColor={sections.map((section) => section)}
-              coverRadius={0.45}
-              coverFill={"#FFF"}
+              cover={0.45}
             />
           ) : (
             // Show empty state or placeholder when all values are 0
@@ -81,14 +98,14 @@ export const PieYesNo = ({ title, data, parialsColors = ["#f3f3f3", "#5956E8", "
           <View>
             <View className="flex flex-row gap-3 items-center">
               <View className="flex flex-row mt-2 items-center">
-                <View style={{ backgroundColor: parialsColors[1] }} className={`flex justify-center items-center h-10 w-10 mr-1 rounded-full`}>
-                  <Text className="text-white text-sm">Oui</Text>
+                <View style={{ backgroundColor: parialsColors[1].color }} className={`flex justify-center items-center h-10 w-10 mr-1 rounded-full`}>
+                  <Text className="text-cnam-primary-800 text-sm">Oui</Text>
                 </View>
                 <Text>{Math.round(nombreDeValeurParScore?.find((e) => e.score === "1")?.pourcentage || 0)}%</Text>
               </View>
               <View className="flex flex-row mt-2 items-center">
-                <View style={{ backgroundColor: parialsColors[2] }} className={`flex justify-center items-center h-10 w-10 mr-1 rounded-full`}>
-                  <Text className="text-white text-sm">Non</Text>
+                <View style={{ backgroundColor: parialsColors[2].color }} className={`flex justify-center items-center h-10 w-10 mr-1 rounded-full`}>
+                  <Text className="text-cnam-primary-800 text-sm">Non</Text>
                 </View>
 
                 <Text>{Math.round(nombreDeValeurParScore?.find((e) => e.score === "2")?.pourcentage || 0)}%</Text>
