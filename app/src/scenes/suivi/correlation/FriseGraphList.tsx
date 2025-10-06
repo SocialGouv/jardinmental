@@ -2,19 +2,18 @@ import React from "react";
 import { StyleSheet, View, ScrollView, Dimensions, ActivityIndicator } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 
-import { getArrayOfDatesFromTo } from "../../../utils/date/helpers";
-import { DiaryDataContext } from "../../../context/diaryData";
-import Text from "../../../components/MyText";
-import { displayedCategories } from "../../../utils/constants";
-import { colors } from "../../../utils/colors";
-import Icon from "../../../components/Icon";
-import localStorage from "../../../utils/localStorage";
-import logEvents from "../../../services/logEvents";
-import Button from "../../../components/Button";
+import { getArrayOfDatesFromTo } from "@/utils/date/helpers";
+import { DiaryDataContext } from "@/context/diaryData";
+import Text from "@/components/MyText";
+import { displayedCategories } from "@/utils/constants";
+import { colors } from "@/utils/colors";
+import Icon from "@/components/Icon";
+import localStorage from "@/utils/localStorage";
+import logEvents from "@/services/logEvents";
 import { FriseGraph } from "./FriseGraph";
-import { GoalsFriseGraph } from "../../goals/suivi/GoalsFriseGraph";
 import JMButton from "@/components/JMButton";
-import { getIndicatorKey } from "../../../utils/indicatorUtils";
+import { getIndicatorKey } from "@/utils/indicatorUtils";
+import { GoalsFriseGraph } from "@/scenes/goals/suivi/GoalsFriseGraph";
 
 const screenHeight = Dimensions.get("window").height;
 

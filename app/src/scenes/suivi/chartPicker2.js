@@ -39,7 +39,6 @@ const TabPicker = ({ onChange, ongletActif = "Statistiques" }) => {
       data={CHART_TYPES}
       ItemSeparatorComponent={() => <View style={{ width: 10 }} />} // 👈 space between items
       renderItem={({ item }) => {
-        console.log(item);
         return (
           <TouchableOpacity
             // className="h-full"

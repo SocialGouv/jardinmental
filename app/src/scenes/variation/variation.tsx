@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef, useCallback } from "react";
 import { ScrollView, StyleSheet, View, Image, Dimensions, Text } from "react-native";
 
 import { analyzeScoresMapIcon, displayedCategories, HELP_ANALYSE } from "@/utils/constants";
-import { getArrayOfDates, getTodaySWeek, formatDate } from "@/utils/date/helpers";
+import { getArrayOfDates, getTodaySWeek, formatDate, beforeToday } from "@/utils/date/helpers";
 import Chart from "./chart";
 import { DiaryDataContext } from "@/context/diaryData";
 import { useContext } from "react";
@@ -20,10 +20,11 @@ import HelpView from "@/components/HelpView";
 import EyeIcon from "@assets/svg/icon/Eye";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
+import WeekPicker from "./week-picker";
 
 const screenHeight = Dimensions.get("window").height;
 
-const Calendar = ({ navigation, onScroll }) => {
+const Variations = ({ navigation, onScroll }) => {
   const [day, setDay] = useState(new Date());
   const [diaryData] = useContext(DiaryDataContext);
   const [customs, setCustoms] = useState([]);
@@ -143,53 +144,28 @@ const Calendar = ({ navigation, onScroll }) => {
     <View style={styles.safe}>
       <View style={styles.headerContainer}>
         {/* <Header title="Mon suivi" navigation={navigation} /> */}
-        {/* <WeekPicker
+        <WeekPicker
           firstDay={firstDay}
           lastDay={lastDay}
           onAfterPress={() => setDay(beforeToday(-7, day))}
           onBeforePress={() => setDay(beforeToday(7, day))}
           setDay={setDay}
         />
-        <Legend /> */}
-        <View className="w-full px-2">
+        {/* <Legend /> */}
+        {/* <View className="w-full px-2">
           <View className="flex-row items-center pb-6 w-full justify-between">
-            <View className="flex-row">
-              <RangeDate
-                presetValue={"lastDays7"}
-                onChangePresetValue={() => {}}
-                fromDate={new Date()}
-                toDate={new Date()}
-                onChangeFromDate={() => {}}
-                onChangeToDate={() => {}}
-                withPreset={true}
-              >
-                {/* TODO : make it work avec les autres types d'indicateur */}
-              </RangeDate>
-              <Button2
-                checkable
-                title="Filtrer"
-                style={{
-                  height: 40,
-                }}
-                icon={"TuneSvg"}
-                preset="secondary"
-                size="small"
-                containerStyle={{ marginHorizontal: 8 }}
-                onPress={() => {}}
-              />
-            </View>
-            <JMButton
-              onPress={() => {
-                showBottomSheet(<HelpView title={HELP_ANALYSE["variations"]["title"]} description={HELP_ANALYSE["variations"]["description"]} />);
-              }}
-              variant="outline"
-              width="fixed"
-              icon={<CircleQuestionMark />}
-              className="mr-2"
-            />
+            <RangeDate
+              presetValue={"lastDays7"}
+              onChangePresetValue={() => {}}
+              fromDate={new Date()}
+              toDate={new Date()}
+              onChangeFromDate={() => {}}
+              onChangeToDate={() => {}}
+              withPreset={true}
+            ></RangeDate>
           </View>
           <View className="h-[1] bg-cnam-primary-400"></View>
-        </View>
+        </View> */}
       </View>
       <ScrollView
         style={styles.scrollView}
@@ -285,4 +261,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Calendar;
+export default Variations;

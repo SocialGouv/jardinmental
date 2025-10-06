@@ -1,14 +1,20 @@
 import React, { useState, useEffect, useRef } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Text } from "react-native";
 import DatePicker from "react-native-date-picker";
 import logEvents from "../../services/logEvents";
 
-import Text from "../../components/MyText";
 import DateOrTimeDisplay from "./DateOrTimeDisplay";
 import { SelectInput } from "../../components/SelectInput";
 import { beforeToday } from "../../utils/date/helpers";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { STORAGE_KEY_START_DATE } from "../../utils/constants";
+import { HELP_ANALYSE, STORAGE_KEY_START_DATE } from "../../utils/constants";
+import { Button2 } from "@/components/Button2";
+import JMButton from "@/components/JMButton";
+import HelpView from "@/components/HelpView";
+import CircleQuestionMark from "@assets/svg/icon/CircleQuestionMark";
+import { useBottomSheet } from "@/context/BottomSheetContext";
+import { mergeClassNames } from "@/utils/className";
+import { typography } from "@/utils/typography";
 
 const RangeDate = ({
   withPreset = false,
@@ -18,7 +24,10 @@ const RangeDate = ({
   topContainerStyle,
   textStyle,
   selectInputProps,
+  setIsFilterActive,
   dateOrTimeProps,
+  onHelpClick,
+  introductionText,
   ...props
 }) => {
   const [presetValue, setPresetValue] = useState(props.presetValue || "lastDays7");
@@ -31,6 +40,7 @@ const RangeDate = ({
     if (fromDate !== props.fromDate) setFromDate(props.fromDate);
   }, [props.fromDate]);
   const [openFromDate, setOpenFromDate] = useState(false);
+  const { showBottomSheet } = useBottomSheet();
 
   const [toDate, setToDate] = useState(props.toDate);
   useEffect(() => {
@@ -101,22 +111,42 @@ const RangeDate = ({
 
   return (
     <View>
-      <SelectInput
-        placeholder="Sélectionnez une période..."
-        value={presetValue}
-        onValueChange={setPresetValue}
-        items={[
-          { label: "7 derniers jours", value: "lastDays7" },
-          { label: "14 derniers jours", value: "lastDays14" },
-          { label: "30 derniers jours", value: "lastDays30" },
-          { label: "Depuis le début", value: "fromBeginning" },
-          { label: "Choisir la période", value: "custom" },
-        ]}
-        {...selectInputProps}
-      />
+      <View className="flex-row items-center justify-between">
+        <View className="flex-row items-center space-x-2">
+          {introductionText && <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>{introductionText}</Text>}
+          <SelectInput
+            placeholder="Sélectionnez une période..."
+            value={presetValue}
+            onValueChange={setPresetValue}
+            items={[
+              { label: "7 derniers jours", value: "lastDays7" },
+              { label: "14 derniers jours", value: "lastDays14" },
+              { label: "30 derniers jours", value: "lastDays30" },
+              { label: "Depuis le début", value: "fromBeginning" },
+              { label: "Choisir la période", value: "custom" },
+            ]}
+            {...selectInputProps}
+          />
+          {!!setIsFilterActive && (
+            <Button2
+              checkable
+              title="Filtrer"
+              style={{
+                height: 40,
+              }}
+              icon={"TuneSvg"}
+              preset="secondary"
+              size="small"
+              containerStyle={{ marginHorizontal: 8 }}
+              onPress={setIsFilterActive}
+            />
+          )}
+        </View>
+        {onHelpClick && <JMButton onPress={onHelpClick} variant="outline" width="fixed" icon={<CircleQuestionMark />} className="mr-2" />}
+      </View>
       {presetValue === "custom" && (
-        <View style={styles.dateContainer}>
-          <Text style={[styles.text, { marginRight: 8 }, textStyle]}>du</Text>
+        <View className="flex-row items-center mt-2 space-x-2">
+          <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 mr-2")}>Du</Text>
           <DateOrTimeDisplay
             mode="date"
             date={fromDate}
@@ -128,7 +158,7 @@ const RangeDate = ({
             containerStyle={styles.dateItemContainer}
             {...dateOrTimeProps}
           />
-          <Text style={[styles.text, { marginHorizontal: 8 }, textStyle]}>au</Text>
+          <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 mr-2")}>Au</Text>
           <DateOrTimeDisplay
             mode="date"
             date={toDate}

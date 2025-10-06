@@ -2,7 +2,7 @@ import React from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import Status from "../scenes/status";
 import Exercise from "../scenes/exercise";
-import Suivi from "../scenes/suivi";
+import Suivi from "../scenes/suivi/Bilan";
 import Resources from "../scenes/resources";
 import SurveyMenu from "../../assets/svg/SurveyMenu";
 import ExerciseMenu from "../../assets/svg/ExerciseMenu";

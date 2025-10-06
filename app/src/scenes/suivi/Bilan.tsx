@@ -8,12 +8,12 @@ import Header from "../../components/Header";
 import ChartPicker from "./chartPicker2";
 import RangeDate from "./RangeDate";
 import ChartPie from "./chartPie";
-import Evenements from "./events";
-import Courbes from "../calendar/calendar";
+import Evenements from "./triggers/triggers";
+import Variations from "../variation/variation";
 import logEvents from "../../services/logEvents";
 import localStorage from "../../utils/localStorage";
 import FloatingPlusButton from "../../components/FloatingPlusButton";
-import { FriseScreen } from "./frise";
+import { FriseScreen } from "./correlation/Correlation";
 import { colors } from "@/utils/colors";
 import Legend from "./Legend";
 import { useSharedValue } from "react-native-reanimated";
@@ -27,13 +27,12 @@ import { typography } from "@/utils/typography";
 import { mergeClassNames } from "@/utils/className";
 import DrugIcon from "@assets/svg/icon/Drug";
 
-const Suivi = ({ navigation, startSurvey }) => {
+const Bilan = ({ navigation, startSurvey }) => {
   const [chartType, setChartType] = React.useState<"Frises" | "Statistiques" | "Déclencheurs" | "Courbes">("Statistiques");
   const [presetDate, setPresetDate] = React.useState("lastDays7");
   const [fromDate, setFromDate] = React.useState(beforeToday(30));
   const [toDate, setToDate] = React.useState(beforeToday(0));
   const [aUnTraiement, setAUnTraitement] = React.useState(false);
-  const { showBottomSheet } = useBottomSheet();
   useFocusEffect(
     React.useCallback(() => {
       logEvents.logOpenPageSuivi(chartType);
@@ -65,7 +64,7 @@ const Suivi = ({ navigation, startSurvey }) => {
       case "Statistiques":
         return <ChartPie onScroll={scrollHandler} fromDate={fromDate} toDate={toDate} navigation={navigation} />;
       case "Courbes":
-        return <Courbes onScroll={scrollHandler} navigation={navigation} />;
+        return <Variations onScroll={scrollHandler} navigation={navigation} />;
       case "Déclencheurs":
         return (
           <Evenements
@@ -131,30 +130,36 @@ const Suivi = ({ navigation, startSurvey }) => {
 
 export const StatistiquePage = ({ presetDate, setPresetDate, fromDate, toDate, setFromDate, setToDate }) => {
   const [isFilterActif, setIsFilterActif] = useState<boolean>(false);
+  const { showBottomSheet } = useBottomSheet();
+
   return (
     <View style={styles.headerContainer}>
       <View className="w-full px-4">
-        <View className="flex-row items-center w-full justify-between">
-          <View className="flex-row">
-            <RangeDate
-              presetValue={presetDate}
-              onChangePresetValue={setPresetDate}
-              fromDate={fromDate}
-              toDate={toDate}
-              onChangeFromDate={setFromDate}
-              onChangeToDate={setToDate}
-              withPreset={true}
-            >
-              {/* TODO : make it work avec les autres types d'indicateur */}
-            </RangeDate>
-            <TouchableOpacity
+        {/* <View className="flex-row items-center w-full justify-between"> */}
+        {/* <View className="flex-row"> */}
+        <RangeDate
+          presetValue={presetDate}
+          onChangePresetValue={setPresetDate}
+          fromDate={fromDate}
+          toDate={toDate}
+          setIsFilterActive={() => setIsFilterActif(!isFilterActif)}
+          onChangeFromDate={setFromDate}
+          onChangeToDate={setToDate}
+          withPreset={true}
+          onHelpClick={() => {
+            showBottomSheet(<HelpView title={HELP_ANALYSE["bilan"]["title"]} description={HELP_ANALYSE["bilan"]["description"]} />);
+          }}
+        >
+          {/* TODO : make it work avec les autres types d'indicateur */}
+        </RangeDate>
+        {/* <TouchableOpacity
               className="ml-2 border border-cnam-primary-800 rounded-full h-[40] px-4 justify-center"
               onPress={() => setIsFilterActif(!isFilterActif)}
             >
               <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>Filtrer</Text>
             </TouchableOpacity>
-          </View>
-          <JMButton
+          </View> */}
+        {/* <JMButton
             onPress={() => {
               showBottomSheet(<HelpView title={HELP_ANALYSE["bilan"]["title"]} description={HELP_ANALYSE["bilan"]["description"]} />);
             }}
@@ -162,8 +167,8 @@ export const StatistiquePage = ({ presetDate, setPresetDate, fromDate, toDate, s
             width="fixed"
             icon={<CircleQuestionMark />}
             className="mr-2"
-          />
-        </View>
+          /> */}
+        {/* </View> */}
         {isFilterActif && (
           <View className="flex-row space-x-2 border border-cnam-primary-800 rounded-2xl self-start px-2 py-2 mt-2">
             {[
@@ -232,4 +237,4 @@ export const styles = StyleSheet.create({
   },
 });
 
-export default Suivi;
+export default Bilan;

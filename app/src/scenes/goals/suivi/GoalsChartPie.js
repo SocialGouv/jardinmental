@@ -87,7 +87,7 @@ const GoalPie = ({ title, records }) => {
       return acc;
     }, {});
     setSections(_sections);
-    setSectionValues(Object.values(_sections).map(({ percentage, color }) => ({ percentage, color })));
+    setSectionValues(Object.values(_sections).map(({ value: percentage, color }) => ({ percentage, color })));
   }, [records]);
 
   useEffect(() => {
@@ -108,8 +108,8 @@ const GoalPie = ({ title, records }) => {
             {sectionValues?.reduce((sum, section) => sum + section.percentage, 0) > 0 ? (
               <PieChart
                 widthAndHeight={100}
-                series={sectionValues.map((section) => section.percentage)}
-                sliceColor={sectionValues.map((section) => section.color)}
+                series={sectionValues.map((section) => section)}
+                // sliceColor={sectionValues.map((section) => section.color)}
                 coverRadius={0.45}
                 coverFill={"#FFF"}
               />

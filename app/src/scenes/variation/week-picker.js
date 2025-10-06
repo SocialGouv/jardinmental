@@ -2,9 +2,9 @@ import React from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
 import ArrowLeftSvg from "../../../assets/svg/arrow-left.js";
 import ArrowRightSvg from "../../../assets/svg/arrow-right.js";
-import { colors } from "../../utils/colors";
-import { months, shortMonths, isAfterToday } from "../../utils/date/helpers";
-import Text from "../../components/MyText";
+import { colors } from "../../utils/colors.js";
+import { months, shortMonths, isAfterToday } from "../../utils/date/helpers.js";
+import Text from "../../components/MyText.js";
 
 const WeekPicker = ({ onBeforePress, onAfterPress, firstDay, lastDay, setDay }) => {
   return (
