@@ -1,3 +1,31 @@
+# [1.96.0](https://github.com/SocialGouv/jardinmental/compare/v1.95.0...v1.96.0) (2025-10-06)
+
+
+### Features
+
+* resources categories page ([#529](https://github.com/SocialGouv/jardinmental/issues/529)) ([a343ae0](https://github.com/SocialGouv/jardinmental/commit/a343ae0b2d9d5470de500d3bdb1429be630e22e1))
+
+# [1.95.0](https://github.com/SocialGouv/jardinmental/compare/v1.94.0...v1.95.0) (2025-10-02)
+
+
+### Features
+
+* resources step 2 ([#516](https://github.com/SocialGouv/jardinmental/issues/516)) ([4f38bdc](https://github.com/SocialGouv/jardinmental/commit/4f38bdce8a5d7ff026b7aa3fabd5806d2e5e36b1))
+
+# [1.94.0](https://github.com/SocialGouv/jardinmental/compare/v1.93.0...v1.94.0) (2025-10-02)
+
+
+### Features
+
+* add floating tabbar ([#515](https://github.com/SocialGouv/jardinmental/issues/515)) ([9a85e99](https://github.com/SocialGouv/jardinmental/commit/9a85e9997bcbc07da0c3f9c3a2218a01f98d5cab))
+
+# [1.93.0](https://github.com/SocialGouv/jardinmental/compare/v1.92.0...v1.93.0) (2025-10-02)
+
+
+### Features
+
+* bump version 182 for iOS ([5bc4768](https://github.com/SocialGouv/jardinmental/commit/5bc476880f92f341720856bc25afa873eb81d30d))
+
 # [1.92.0](https://github.com/SocialGouv/jardinmental/compare/v1.91.0...v1.92.0) (2025-09-29)
 
 

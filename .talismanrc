@@ -103,6 +103,8 @@ fileignoreconfig:
   checksum: bdb40467b60296ef959cac383488b52e879619d362093020f547896ddf9921bf
 - filename: app/src/scenes/resources/ResourceArticle.tsx
   checksum: b55947d7511805b7a85791800cfa0f27f8a8b4bd0ddd74e52e5afc2002160c50
+- filename: app/src/scenes/resources/data/resourcesExternal.ts
+  checksum: 228d4e63c900e0756065d041ae2ba2e4ef3a93a30f58b30e0c76efc7d00f8906
 - filename: app/src/scenes/resources/index.tsx
   checksum: 29b2042d7422312ba6157d629988b7da1631fd5d0b8464cd91ee5f04d8c7c094
 - filename: app/src/scenes/status/index.js

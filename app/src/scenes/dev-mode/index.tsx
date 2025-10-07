@@ -13,6 +13,9 @@ import * as Sentry from "@sentry/react-native";
 import { beforeToday, formatDay } from "../../utils/date/helpers";
 import { fakeDiaryData2, startDate as fakeStartDate, fakeDiaryData } from "../status/fake-diary-data";
 import { STORAGE_KEY_START_DATE } from "@/utils/constants";
+import localStorage from "@/utils/localStorage";
+import { INDICATOR_TYPE } from "@/entities/IndicatorType";
+import { INDICATORS_CATEGORIES } from "@/entities/IndicatorCategories";
 
 const CollapsibleSection = ({ title, children }) => {
   const [isExpanded, setIsExpanded] = useState(true);
@@ -158,6 +161,30 @@ const DevMode = ({ navigation }) => {
             cancelText: "Annuler",
             onConfirm: async () => {
               await AsyncStorage.setItem(STORAGE_KEY_START_DATE, formatDay(fakeStartDate));
+              await localStorage.addIndicateur({
+                name: "ANXIETY",
+                type: INDICATOR_TYPE.gauge,
+                version: 0,
+                uuid: "",
+                category: INDICATORS_CATEGORIES["Emotions/sentiments"],
+                newCategories: [],
+                order: "ASC",
+                active: true,
+                position: 0,
+                created_at: undefined,
+              });
+              await localStorage.addIndicateur({
+                name: "BADTHOUGHTS",
+                type: INDICATOR_TYPE.gauge,
+                version: 0,
+                uuid: "",
+                category: INDICATORS_CATEGORIES["Emotions/sentiments"],
+                newCategories: [],
+                order: "ASC",
+                active: true,
+                position: 0,
+                created_at: undefined,
+              });
               await importDiaryData(
                 {
                   ...fakeDiaryData2,

@@ -1,22 +1,21 @@
 import React, { useContext, useState, useEffect } from "react";
-import { StyleSheet, View, SafeAreaView, TouchableOpacity, ScrollView, Dimensions, Linking } from "react-native";
-
+import { StyleSheet, View, TouchableOpacity, ScrollView, Dimensions, Linking, Text } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import CheckBox from "@react-native-community/checkbox";
-
-import Text from "../../components/MyText";
-import { colors } from "../../utils/colors";
-import NPS from "../../services/NPS/NPS";
-import Header from "../../components/Header";
-import ExerciseItem from "./exercise-item";
-import { DiaryDataContext } from "../../context/diaryData";
-import { formatDateThread } from "../../utils/date/helpers";
-import ContributeCard from "../contribute/contributeCard";
-import { STORAGE_KEY_BECK_SHOW_WELCOME } from "../../utils/constants";
-import ArrowUpSvg from "../../../assets/svg/arrow-up.svg";
-import FloatingPlusButton from "../../components/FloatingPlusButton";
-import JMButton from "@/components/JMButton";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useSharedValue } from "react-native-reanimated";
+
+import { colors } from "@/utils/colors";
+import NPS from "@/services/NPS/NPS";
+import Header from "@/components/Header";
+import ExerciseItem from "./exercise-item";
+import { DiaryDataContext } from "@/context/diaryData";
+import { formatDateThread } from "@/utils/date/helpers";
+import ContributeCard from "../contribute/contributeCard";
+import { STORAGE_KEY_BECK_SHOW_WELCOME, TAB_BAR_HEIGHT } from "@/utils/constants";
+import ArrowUpSvg from "@assets/svg/arrow-up.svg";
+import FloatingPlusButton from "@/components/FloatingPlusButton";
+import JMButton from "@/components/JMButton";
 
 const LIMIT_PER_PAGE = __DEV__ ? 3 : 30;
 
@@ -26,6 +25,7 @@ export default ({ navigation, startSurvey }) => {
   const [page, setPage] = useState(1);
   const [showWelcome, setShowWelcome] = useState("true");
   const [showWelcomeDefault, setShowWelcomeDefault] = useState(true);
+  const insets = useSafeAreaInsets();
 
   useEffect(() => {
     (async () => {
@@ -46,12 +46,21 @@ export default ({ navigation, startSurvey }) => {
 
   return (
     <>
-      <SafeAreaView style={styles.safe}>
+      <View className="flex-1">
         <NPS forceView={NPSvisible} close={() => setNPSvisible(false)} />
         <View style={styles.headerContainer}>
           <Header title="Beck" navigation={navigation} scrollY={scrollY} />
         </View>
-        <ScrollView style={styles.container} contentContainerStyle={styles.scrollContainer} onScroll={scrollHandler}>
+        <ScrollView
+          style={styles.container}
+          contentContainerStyle={[
+            styles.scrollContainer,
+            {
+              paddingBottom: insets.bottom + TAB_BAR_HEIGHT,
+            },
+          ]}
+          onScroll={scrollHandler}
+        >
           {showWelcome === "true" || !showWelcome ? (
             <View style={styles.welcomeContainer}>
               <Text style={[styles.welcomeText, styles.boldText]}>
@@ -126,7 +135,7 @@ export default ({ navigation, startSurvey }) => {
             </>
           )}
         </ScrollView>
-      </SafeAreaView>
+      </View>
       <FloatingPlusButton shadow onPress={startSurvey} plusPosition={0} />
     </>
   );
