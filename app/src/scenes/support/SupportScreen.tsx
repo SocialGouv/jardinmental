@@ -197,7 +197,7 @@ export default function SupportScreen({ navigation, route }) {
                 👉 Retrouvez un guide complet sur les lignes d’écoute sur le site de Psycom :
               </Text>
               <SquircleButton
-                onPress={() => handleOpenLink("https://psycom.org")}
+                onPress={() => handleOpenLink("https://www.psycom.org/sorienter/les-lignes-decoute")}
                 cornerSmoothing={100}
                 style={{ borderRadius: 12 }}
                 preserveSmoothing={true}
