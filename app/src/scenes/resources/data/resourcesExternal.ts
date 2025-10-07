@@ -18,7 +18,7 @@ export interface ExternalResource {
   title: string;
   url: string;
   type: ExternalResourceType;
-  category: string;
+  category: "P1 - A lire dans ce dossier" | "P2 - Explorer d'autres ressources";
   author: string;
 }
 
@@ -272,7 +272,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
     title: "Les bonnes conditions d'écoute d'un podcast",
     url: "https://placedessciences.fr/est-ce-le-bon-moment-pour-moi-ecoute-podcast-sante-mentale/",
     type: "Article",
-    category: "",
+    category: "P2 - Explorer d'autres ressources",
     author: "Les Maux Bleus",
   },
   {
@@ -299,7 +299,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
     title: "C'est pas que dans la tête",
     url: "https://www.minds-ge.ch/ressources/cest-pas-que-dans-la-tete",
     type: "Podcast",
-    category: "",
+    category: "P2 - Explorer d'autres ressources",
     author: "Minds",
   },
   {
@@ -308,7 +308,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
     title: "La Perche",
     url: "https://podcast.ausha.co/la-perche-maison-perchee",
     type: "Podcast",
-    category: "",
+    category: "P2 - Explorer d'autres ressources",
     author: "La Maison Perchée",
   },
   {
@@ -380,7 +380,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
     title: "Toi aussi ?",
     url: "https://toiaussi.ch/les-episodes/",
     type: "Podcast",
-    category: "",
+    category: "P1 - A lire dans ce dossier",
     author: "Radar.ch",
   },
   {
@@ -389,7 +389,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
     title: "Dingue",
     url: "https://www.rts.ch/podcasts-originaux/programmes/dingue/podcast/",
     type: "Podcast",
-    category: "",
+    category: "P2 - Explorer d'autres ressources",
     author: "Radio Télévision Suisse",
   },
   {
@@ -398,7 +398,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
     title: "Le suicide… faut en parler !",
     url: "https://www.minds-ge.ch/ressources/faut-en-parler",
     type: "Podcast",
-    category: "",
+    category: "P1 - A lire dans ce dossier",
     author: "Minds",
   },
   {
@@ -416,7 +416,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
     title: "Les Maux Bleus",
     url: "https://placedessciences.fr/nos-podcasts/les-maux-bleus/",
     type: "Podcast",
-    category: "",
+    category: "P2 - Explorer d'autres ressources",
     author: "Les Maux Bleus",
   },
   {
@@ -452,7 +452,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
     title: "Psycho",
     url: "https://www.arte.tv/fr/videos/RC-020449/psycho/",
     type: "Vidéo",
-    category: "",
+    category: "P1 - A lire dans ce dossier",
     author: "Arte",
   },
   {
@@ -461,7 +461,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
     title: "La santé mentale et moi",
     url: "https://www.arteradio.com/content/la_sante_mentale_et_moi",
     type: "Podcast",
-    category: "",
+    category: "P1 - A lire dans ce dossier",
     author: "Arte Radio",
   },
   {
@@ -506,7 +506,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
     title: "Mental",
     url: "https://www.france.tv/slash/mental/",
     type: "Série",
-    category: "",
+    category: "P2 - Explorer d'autres ressources",
     author: "France Télévisions",
   },
   {
@@ -515,7 +515,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
     title: "De la survie à la vie : l'incroyable parcours de jeunes face aux troubles",
     url: "https://www.youtube.com/watch?v=Vfj0LSFBoWc",
     type: "Vidéo",
-    category: "",
+    category: "P2 - Explorer d'autres ressources",
     author: "France Télévisions",
   },
   {
