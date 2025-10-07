@@ -80,7 +80,9 @@ const logEvent = async ({
     | "RESOURCES"
     | "OBJECTIVES"
     | "EMERGENCY"
-    | "INDICATORS";
+    | "INDICATORS"
+    | "REMINDER"
+    | "SUMMARY";
   action: string;
   name?: string;
   value?: number;
