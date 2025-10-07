@@ -1,16 +1,18 @@
 import React from "react";
-import { StyleSheet, View, Text } from "react-native";
-import { displayedCategories } from "../../../utils/constants";
+import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import { displayedCategories, HELP_ANALYSE, TW_COLORS } from "@/utils/constants";
 import { colors } from "@/utils/colors";
 import logEvents from "@/services/logEvents";
 import ScorePicker from "../ScorePicker";
 import RangeDate from "../RangeDate";
-import { EventInfoButton } from "./EventInfoButton";
 import { answers } from "../../survey-v2/utils";
 import Legend from "../Legend";
 import { SelectInput } from "@/components/SelectInput";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
+import CircleQuestionMark from "@assets/svg/icon/CircleQuestionMark";
+import { useBottomSheet } from "@/context/BottomSheetContext";
+import HelpView from "@/components/HelpView";
 
 export const EventFilterHeader = ({
   presetDate,
@@ -25,11 +27,19 @@ export const EventFilterHeader = ({
   setLevel,
   userIndicateurs,
 }) => {
+  const { showBottomSheet } = useBottomSheet();
   return (
     <View className="px-4 flex-col space-y-2">
       <View className="flex-row items-center justify-between">
         <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>Voir les notes quand :</Text>
-        <EventInfoButton containerStyle={{ marginLeft: 26 }} />
+        <TouchableOpacity
+          onPress={() => {
+            showBottomSheet(<HelpView title={HELP_ANALYSE["trigger"]["title"]} isMd={true} description={HELP_ANALYSE["trigger"]["description"]} />);
+          }}
+          className="bg-cnam-primary-100 p-2 rounded-full mr-2"
+        >
+          <CircleQuestionMark color={TW_COLORS.CNAM_PRIMARY_800} />
+        </TouchableOpacity>
       </View>
       <View className="flex-row">
         <SelectSymptom
@@ -42,7 +52,7 @@ export const EventFilterHeader = ({
       </View>
       <View className="flex-row items-center space-x-2">
         <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>était</Text>
-        <View style={[styles.scorePickerBorder]}>
+        <View preserveSmoothing={true} cornerSmoothing={100} style={[styles.scorePickerBorder]}>
           <ScorePicker
             size="small"
             focusedScores={level}
@@ -125,7 +135,7 @@ const styles = StyleSheet.create({
     // flexDirection: "row",
     // alignItems: "center",
     // justifyContent: "flex-start",
-    borderRadius: 30,
+    borderRadius: 25,
     borderColor: colors.DARK_BLUE,
     borderWidth: 1,
     paddingHorizontal: 10,

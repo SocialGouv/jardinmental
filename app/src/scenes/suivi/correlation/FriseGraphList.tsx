@@ -5,44 +5,94 @@ import { useFocusEffect } from "@react-navigation/native";
 import { getArrayOfDatesFromTo } from "@/utils/date/helpers";
 import { DiaryDataContext } from "@/context/diaryData";
 import Text from "@/components/MyText";
-import { displayedCategories } from "@/utils/constants";
+import { displayedCategories, TAB_BAR_HEIGHT } from "@/utils/constants";
 import { colors } from "@/utils/colors";
 import Icon from "@/components/Icon";
 import localStorage from "@/utils/localStorage";
 import logEvents from "@/services/logEvents";
 import { FriseGraph } from "./FriseGraph";
 import JMButton from "@/components/JMButton";
-import { getIndicatorKey } from "@/utils/indicatorUtils";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { GoalsFriseGraph } from "@/scenes/goals/suivi/GoalsFriseGraph";
+
+import { getIndicatorKey } from "../../../utils/indicatorUtils";
+import { SCROLL_THRESHOLD } from "@/scenes/survey-v2/AnimatedHeaderScrollScreen";
 
 const screenHeight = Dimensions.get("window").height;
 
 // Async wrapper component for FriseGraph with loading state
 const AsyncFriseGraph = React.memo(
-  ({ title, categoryId, focusedScores, showTraitement, computeChartDataAsync, loadingStates, chartDataCache }: any) => {
-    const [data, setData] = React.useState(null);
-    const [treatmentData, setTreatmentData] = React.useState(null);
-    const [treatmentSiBesoinData, setTreatmentSiBesoinData] = React.useState(null);
+  ({ title, categoryId, focusedScores, showTraitement, computeChartDataAsync, loadingStates, chartDataCache, cacheKey }: any) => {
+    // Initialize data from cache if available to avoid showing loading on remount
+    const [data, setData] = React.useState(() => chartDataCache[categoryId] || null);
+    const [treatmentData, setTreatmentData] = React.useState(() => (showTraitement ? chartDataCache["PRISE_DE_TRAITEMENT"] || null : null));
+    const [treatmentSiBesoinData, setTreatmentSiBesoinData] = React.useState(() =>
+      showTraitement ? chartDataCache["PRISE_DE_TRAITEMENT_SI_BESOIN"] || null : null
+    );
+
+    // Track if we've loaded data for this category to prevent refetching
+    const hasLoadedRef = React.useRef(false);
+    const prevShowTraitementRef = React.useRef(showTraitement);
+    const prevFocusedScoresRef = React.useRef(focusedScores);
+    const prevCacheKeyRef = React.useRef(cacheKey);
+
+    // Reset hasLoadedRef and clear state when cache key changes (date range changed)
+    React.useEffect(() => {
+      if (prevCacheKeyRef.current !== cacheKey) {
+        hasLoadedRef.current = false;
+        prevCacheKeyRef.current = cacheKey;
+        // Clear local state so stale data isn't shown
+        setData(null);
+        setTreatmentData(null);
+        setTreatmentSiBesoinData(null);
+      }
+    }, [cacheKey]);
+
+    // Reset hasLoadedRef when filters change
+    React.useEffect(() => {
+      if (prevShowTraitementRef.current !== showTraitement || prevFocusedScoresRef.current !== focusedScores) {
+        hasLoadedRef.current = false;
+        prevShowTraitementRef.current = showTraitement;
+        prevFocusedScoresRef.current = focusedScores;
+      }
+    }, [showTraitement, focusedScores]);
 
     React.useEffect(() => {
       const loadData = async () => {
+        // Skip if we've already loaded data for this component instance
+        if (hasLoadedRef.current) {
+          return;
+        }
+
+        // Skip if data is already available from cache initialization
+        const hasMainData = chartDataCache[categoryId];
+        const hasTreatmentData = !showTraitement || chartDataCache["PRISE_DE_TRAITEMENT"];
+        const hasSiBesoinData = !showTraitement || chartDataCache["PRISE_DE_TRAITEMENT_SI_BESOIN"];
+
+        if (hasMainData && hasTreatmentData && hasSiBesoinData) {
+          // Data already loaded from cache, mark as loaded
+          hasLoadedRef.current = true;
+          return;
+        }
+
         try {
           const [mainData, priseDeTraitement, priseDeTraitementSiBesoin] = await Promise.all([
             computeChartDataAsync(categoryId),
             showTraitement ? computeChartDataAsync("PRISE_DE_TRAITEMENT") : Promise.resolve([]),
             showTraitement ? computeChartDataAsync("PRISE_DE_TRAITEMENT_SI_BESOIN") : Promise.resolve([]),
           ]);
-
+          console.log("lCS SET MAIN DATA");
           setData(mainData);
           setTreatmentData(priseDeTraitement);
           setTreatmentSiBesoinData(priseDeTraitementSiBesoin);
+          hasLoadedRef.current = true;
         } catch (error) {
           console.error("Error loading chart data:", error);
         }
       };
 
       loadData();
-    }, [categoryId, showTraitement, computeChartDataAsync]);
+    }, [categoryId, showTraitement, computeChartDataAsync, chartDataCache]);
 
     const isLoading =
       loadingStates[categoryId] || (showTraitement && (loadingStates["PRISE_DE_TRAITEMENT"] || loadingStates["PRISE_DE_TRAITEMENT_SI_BESOIN"]));
@@ -77,9 +127,20 @@ const FriseGraphList = ({ navigation, fromDate, toDate, focusedScores, showTrait
   const [userIndicateurs, setUserIndicateurs] = React.useState<any[]>([]);
   const [isEmpty, setIsEmpty] = React.useState<boolean>(false);
   const [goalsIsEmpty, setGoalsIsEmpty] = React.useState<boolean>(false);
-  const [chartDataCache, setChartDataCache] = React.useState<Record<string, any[]>>({});
-  const [loadingStates, setLoadingStates] = React.useState<Record<string, boolean>>({});
+
+  // Use refs for cache to avoid unnecessary rerenders
+  const chartDataCacheRef = React.useRef<Record<string, any[]>>({});
+  const loadingStatesRef = React.useRef<Record<string, boolean>>({});
+
+  // Keep a minimal state just to trigger UI updates when loading changes
+  const [, forceUpdate] = React.useReducer((x) => x + 1, 0);
+
   const chartDates = React.useMemo(() => getArrayOfDatesFromTo({ fromDate, toDate }), [fromDate, toDate]);
+  const insets = useSafeAreaInsets();
+
+  // Create a stable cache key based on date range
+  const cacheKey = React.useMemo(() => `${fromDate}_${toDate}`, [fromDate, toDate]);
+  const previousCacheKeyRef = React.useRef(cacheKey);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -173,12 +234,13 @@ const FriseGraphList = ({ navigation, fromDate, toDate, focusedScores, showTrait
   const computeChartDataAsync = React.useCallback(
     async (categoryId) => {
       // Return cached data if available
-      if (chartDataCache[categoryId]) {
-        return chartDataCache[categoryId];
+      if (chartDataCacheRef.current[categoryId]) {
+        return chartDataCacheRef.current[categoryId];
       }
 
       // Set loading state
-      setLoadingStates((prev) => ({ ...prev, [categoryId]: true }));
+      loadingStatesRef.current = { ...loadingStatesRef.current, [categoryId]: true };
+      forceUpdate(); // Trigger UI update for loading indicator
 
       // Add initial delay to allow UI interactions to complete (like modal closing)
       await new Promise((resolve) => setTimeout(resolve, 100));
@@ -227,33 +289,45 @@ const FriseGraphList = ({ navigation, fromDate, toDate, focusedScores, showTrait
           }
 
           // Cache the result
-          setChartDataCache((prev) => ({ ...prev, [categoryId]: data }));
+          chartDataCacheRef.current = { ...chartDataCacheRef.current, [categoryId]: data };
 
           // Clear loading state
-          setLoadingStates((prev) => ({ ...prev, [categoryId]: false }));
+          loadingStatesRef.current = { ...loadingStatesRef.current, [categoryId]: false };
+          forceUpdate(); // Trigger UI update to remove loading indicator
 
           resolve(data);
         };
 
         processInChunks().catch((error) => {
           console.error("Error processing chart data:", error);
-          setLoadingStates((prev) => ({ ...prev, [categoryId]: false }));
+          loadingStatesRef.current = { ...loadingStatesRef.current, [categoryId]: false };
+          forceUpdate();
           resolve([]);
         });
       });
     },
-    [chartDates, diaryData, chartDataCache]
+    [chartDates, diaryData]
   );
 
-  // Clear cache when date range or diary data changes
+  // Clear cache only when date range actually changes
   React.useEffect(() => {
-    setChartDataCache({});
-    setLoadingStates({});
-  }, [chartDates, diaryData]);
+    if (cacheKey !== previousCacheKeyRef.current) {
+      chartDataCacheRef.current = {};
+      loadingStatesRef.current = {};
+      previousCacheKeyRef.current = cacheKey;
+    }
+  }, [cacheKey]);
 
   if (isEmpty && goalsIsEmpty) {
     return (
-      <View style={styles.emptyContainer}>
+      <View
+        style={[
+          styles.emptyContainer,
+          {
+            paddingBottom: insets.bottom + TAB_BAR_HEIGHT,
+          },
+        ]}
+      >
         <View style={styles.subtitleContainer}>
           <Icon icon="InfoSvg" width={25} height={25} color={colors.LIGHT_BLUE} styleContainer={{}} spin={false} onPress={() => {}} />
           <Text style={styles.subtitle}>
@@ -269,9 +343,14 @@ const FriseGraphList = ({ navigation, fromDate, toDate, focusedScores, showTrait
     <>
       <ScrollView
         style={styles.scrollView}
+        contentContainerStyle={[
+          styles.scrollContainer,
+          {
+            paddingBottom: insets.bottom + TAB_BAR_HEIGHT,
+          },
+        ]}
         scrollEventThrottle={16}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.scrollContainer}
         onScroll={onScroll}
       >
         {userIndicateurs
@@ -284,8 +363,9 @@ const FriseGraphList = ({ navigation, fromDate, toDate, focusedScores, showTrait
               focusedScores={focusedScores}
               showTraitement={showTraitement}
               computeChartDataAsync={computeChartDataAsync}
-              loadingStates={loadingStates}
-              chartDataCache={chartDataCache}
+              loadingStates={loadingStatesRef.current}
+              chartDataCache={chartDataCacheRef.current}
+              cacheKey={cacheKey}
             />
           ))}
         <GoalsFriseGraph
@@ -354,11 +434,9 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     flex: 1,
-    paddingHorizontal: 10,
     backgroundColor: "white",
   },
   scrollContainer: {
-    paddingBottom: 150,
     minHeight: screenHeight * 0.7,
   },
   button: {

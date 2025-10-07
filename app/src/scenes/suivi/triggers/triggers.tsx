@@ -12,8 +12,10 @@ import Card from "./Card";
 import { EventFilterHeader } from "./EventFilterHeader";
 import JMButton from "@/components/JMButton";
 import { getIndicatorKey } from "@/utils/indicatorUtils";
-import { TAB_BAR_HEIGHT } from "@/utils/constants";
+import { analyzeScoresMapIcon, TAB_BAR_HEIGHT } from "@/utils/constants";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { mergeClassNames } from "@/utils/className";
+import { typography } from "@/utils/typography";
 
 const screenHeight = Dimensions.get("window").height;
 
@@ -185,11 +187,36 @@ const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, 
           setLevel={setLevel}
           userIndicateurs={userIndicateurs.filter(({ active }) => active)}
         />
-        <View style={styles.dataContainer}>
-          {memoizedCallback()?.filter((x) => x.date)?.length === 0 && (
-            <Text style={styles.noDataMessage}>
-              Aucun évènement à afficher entre {renderDate(formatDay(fromDate))} et {renderDate(formatDay(toDate))}.
-            </Text>
+        <View className="mx-4 border-t border-cnam-primary-300 pt-4 mt-4">
+          {level && memoizedCallback()?.filter((x) => x.date)?.length === 0 && (
+            <>
+              <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>
+                Aucun évènement à afficher entre {renderDate(formatDay(fromDate))} et {renderDate(formatDay(toDate))} pour :
+              </Text>
+              <View className="flex-row flex-wrap items-center">
+                <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>
+                  <Text className="font-bold">{indicateur}</Text> et{" "}
+                </Text>
+                <View
+                  className="w-7 h-7 rounded-full items-center justify-center"
+                  style={{
+                    backgroundColor: analyzeScoresMapIcon[level].color,
+                  }}
+                >
+                  <Text
+                    className={mergeClassNames(typography.textSmSemibold)}
+                    style={{
+                      color: analyzeScoresMapIcon[level].iconColor,
+                    }}
+                  >
+                    {analyzeScoresMapIcon[level].symbol}
+                  </Text>
+                </View>
+              </View>
+            </>
+          )}
+          {!level && (
+            <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>Sélectionnez une valeur dans le filtre "Était"</Text>
           )}
           {memoizedCallback()
             ?.filter((x) => x.date)
@@ -287,11 +314,7 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     paddingTop: 20,
-    minHeight: screenHeight * 0.7,
-  },
-  dataContainer: {
-    marginTop: 40,
-    paddingHorizontal: 20,
+    minHeight: screenHeight,
   },
   noDataMessage: {
     color: "#111",

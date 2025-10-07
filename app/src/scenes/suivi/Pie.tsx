@@ -317,12 +317,22 @@ export const Pie = ({ title, data, indicateur }) => {
         <View style={styles.pieContainer}>
           {/* <PieChart radius={50} sections={sections} /> */}
           {sections?.reduce((sum, section) => sum + section.value, 0) > 0 ? (
-            <PieChart
-              widthAndHeight={100}
-              series={sections.map((section) => section)}
-              // sliceColor={sections.map((section) => section.color)}
-              cover={0.45}
-            />
+            <View
+              style={{
+                backgroundColor: TW_COLORS.GRAY_700,
+                borderRadius: 400,
+              }}
+            >
+              <PieChart
+                widthAndHeight={100}
+                series={sections.map((section) => section)}
+                padAngle={0.01}
+                cover={{
+                  radius: 0.45,
+                  color: "white",
+                }}
+              />
+            </View>
           ) : (
             // Show empty state or placeholder when all values are 0
             <View className="w-[100px] h-[100px] border border-gray-200 rounded-full justify-center items-center">

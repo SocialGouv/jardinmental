@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, useWindowDimensions } from "react-native";
 import Text from "../../../components/MyText";
 import Svg, { Rect, Circle, Text as SvgText, Path, Line } from "react-native-svg";
 import { analyzeScoresMapIcon, scoresMapIcon, TW_COLORS } from "../../../utils/constants";
@@ -11,7 +11,7 @@ const MAIN_BAR_HEIGHT = 30;
 const TREATMENT_BAR_HEIGHT = 20;
 const DOT_RADIUS = 2;
 const SEGMENT_GAP = 0;
-const DEFAULT_COLOR = "#D7D3D3";
+const DEFAULT_COLOR = TW_COLORS.CNAM_PRIMARY_25;
 const TREATMENT_COLOR = "#CCEDF9";
 const NO_TREATMENT_COLOR = "#F9D1E6";
 
@@ -276,8 +276,13 @@ export const FriseGraph = React.memo(
     const dataLength = data?.length || 0;
     if (dataLength === 0) return null;
 
+    // Get screen dimensions and calculate initial width
+    const { width: screenWidth } = useWindowDimensions();
+    // Account for padding: friseContainer (10px * 2) + parent padding (10px * 2) = 40px total
+    const initialWidth = screenWidth - 40;
+
     // State to track container width and batching
-    const [containerWidth, setContainerWidth] = useState(300);
+    const [containerWidth, setContainerWidth] = useState(initialWidth);
     const [batchSegment, setBatchSegment] = useState(false);
 
     const segmentWidth = containerWidth / dataLength;
@@ -408,7 +413,7 @@ export const FriseGraph = React.memo(
               );
             })}
             {/* Grid lines for day separations */}
-            {/* <GridLines count={dataLength} segmentWidth={segmentWidth} height={MAIN_BAR_HEIGHT} /> */}
+            <GridLines count={dataLength} segmentWidth={segmentWidth} height={MAIN_BAR_HEIGHT} />
           </Svg>
 
           {/* Treatment Bar - Batched */}

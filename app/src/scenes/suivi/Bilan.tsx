@@ -21,7 +21,7 @@ import JMButton from "@/components/JMButton";
 import CircleQuestionMark from "@assets/svg/icon/CircleQuestionMark";
 import { Button2 } from "@/components/Button2";
 import HelpView from "@/components/HelpView";
-import { analyzeScoresMapIcon, HELP_ANALYSE } from "@/utils/constants";
+import { analyzeScoresMapIcon, HELP_ANALYSE, TW_COLORS } from "@/utils/constants";
 import { useBottomSheet } from "@/context/BottomSheetContext";
 import { typography } from "@/utils/typography";
 import { mergeClassNames } from "@/utils/className";
@@ -59,14 +59,34 @@ const Bilan = ({ navigation, startSurvey }) => {
 
   if (!toDate || !fromDate) return null;
 
-  const renderChart = (chart) => {
-    switch (chart) {
-      case "Statistiques":
-        return <ChartPie onScroll={scrollHandler} fromDate={fromDate} toDate={toDate} navigation={navigation} />;
-      case "Courbes":
-        return <Variations onScroll={scrollHandler} navigation={navigation} />;
-      case "Déclencheurs":
-        return (
+  return (
+    <>
+      <View className="flex-1">
+        <View style={styles.headerContainerNavigation}>
+          <Header title="Mes analyses" navigation={navigation} scrollY={scrollY} />
+        </View>
+        <View style={styles.tabContainer}>
+          <ChartPicker onChange={(e) => setChartType(e)} ongletActif={chartType} />
+        </View>
+
+        {/* Render all tabs but hide inactive ones to preserve state */}
+        <View style={{ display: chartType === "Statistiques" ? "flex" : "none", flex: 1 }}>
+          <StatistiquePage
+            presetDate={presetDate}
+            setPresetDate={setPresetDate}
+            fromDate={fromDate}
+            toDate={toDate}
+            setFromDate={setFromDate}
+            setToDate={setToDate}
+          />
+          <ChartPie onScroll={scrollHandler} fromDate={fromDate} toDate={toDate} navigation={navigation} />
+        </View>
+
+        <View style={{ display: chartType === "Courbes" ? "flex" : "none", flex: 1 }}>
+          <Variations onScroll={scrollHandler} navigation={navigation} />
+        </View>
+
+        <View style={{ display: chartType === "Déclencheurs" ? "flex" : "none", flex: 1 }}>
           <Evenements
             onScroll={scrollHandler}
             navigation={navigation}
@@ -77,10 +97,9 @@ const Bilan = ({ navigation, startSurvey }) => {
             toDate={toDate}
             setToDate={setToDate}
           />
-        );
-      case "Frises":
-      default:
-        return (
+        </View>
+
+        <View style={{ display: chartType === "Frises" ? "flex" : "none", flex: 1 }}>
           <FriseScreen
             onScroll={scrollHandler}
             navigation={navigation}
@@ -92,36 +111,7 @@ const Bilan = ({ navigation, startSurvey }) => {
             setToDate={setToDate}
             hasTreatment={aUnTraiement}
           />
-        );
-    }
-  };
-
-  return (
-    <>
-      <View className="flex-1">
-        <View style={styles.headerContainerNavigation}>
-          <Header title="Mes analyses" navigation={navigation} scrollY={scrollY} />
         </View>
-        <View style={styles.tabContainer}>
-          <ChartPicker
-            // onAfterPress={() => setChartType(nextChartType(chartType))}
-            // onBeforePress={() => setChartType(prevChartType(chartType))}
-            // title={chartType}
-            onChange={(e) => setChartType(e)}
-            ongletActif={chartType}
-          />
-        </View>
-        {chartType === "Statistiques" && (
-          <StatistiquePage
-            presetDate={presetDate}
-            setPresetDate={setPresetDate}
-            fromDate={fromDate}
-            toDate={toDate}
-            setFromDate={setFromDate}
-            setToDate={setToDate}
-          />
-        )}
-        {renderChart(chartType)}
       </View>
       <FloatingPlusButton shadow onPress={startSurvey} plusPosition={0} />
     </>
@@ -129,7 +119,6 @@ const Bilan = ({ navigation, startSurvey }) => {
 };
 
 export const StatistiquePage = ({ presetDate, setPresetDate, fromDate, toDate, setFromDate, setToDate }) => {
-  const [isFilterActif, setIsFilterActif] = useState<boolean>(false);
   const { showBottomSheet } = useBottomSheet();
 
   return (
@@ -142,7 +131,6 @@ export const StatistiquePage = ({ presetDate, setPresetDate, fromDate, toDate, s
           onChangePresetValue={setPresetDate}
           fromDate={fromDate}
           toDate={toDate}
-          setIsFilterActive={() => setIsFilterActif(!isFilterActif)}
           onChangeFromDate={setFromDate}
           onChangeToDate={setToDate}
           withPreset={true}
@@ -169,7 +157,7 @@ export const StatistiquePage = ({ presetDate, setPresetDate, fromDate, toDate, s
             className="mr-2"
           /> */}
         {/* </View> */}
-        {isFilterActif && (
+        {/* {isFilterActif && (
           <View className="flex-row space-x-2 border border-cnam-primary-800 rounded-2xl self-start px-2 py-2 mt-2">
             {[
               {
@@ -203,7 +191,7 @@ export const StatistiquePage = ({ presetDate, setPresetDate, fromDate, toDate, s
               <DrugIcon width={16} />
             </View>
           </View>
-        )}
+        )} */}
         <View className="h-[1] bg-cnam-primary-400 w-full mt-4"></View>
         <Legend style={{ marginTop: 14 }} />
       </View>
@@ -230,6 +218,8 @@ export const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
+    borderBottomColor: TW_COLORS.CNAM_PRIMARY_400,
+    borderBottomWidth: 1,
   },
   safe: {
     flex: 1,

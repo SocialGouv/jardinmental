@@ -164,37 +164,44 @@ const ChartPie = ({ navigation, fromDate, toDate, onScroll }) => {
           const isReverse = _indicateur?.order === "DESC";
           if (_indicateur?.type === "boolean")
             return (
-              <PieYesNo
-                key={index}
-                indicateur={_indicateur}
-                title={getTitle(_indicateur.name)}
-                data={computeChartData(getIndicatorKey(_indicateur))}
-                parialsColors={[
-                  { color: "#f3f3f3" },
-                  {
-                    color: isReverse ? yesNoMapIcon["false"].color : yesNoMapIcon["true"].color,
-                    symbol: isReverse ? yesNoMapIcon["false"].symbol : yesNoMapIcon["true"].symbol,
-                  },
-                  {
-                    color: isReverse ? yesNoMapIcon["true"].color : yesNoMapIcon["false"].color,
-                    symbol: isReverse ? yesNoMapIcon["true"].symbol : yesNoMapIcon["false"].symbol,
-                  },
-                ]}
-              />
+              <View className="border-b border-cnam-primary-400 py-4">
+                <PieYesNo
+                  key={index}
+                  indicateur={_indicateur}
+                  title={getTitle(_indicateur.name)}
+                  data={computeChartData(getIndicatorKey(_indicateur))}
+                  parialsColors={[
+                    { color: "#f3f3f3" },
+                    {
+                      color: isReverse ? yesNoMapIcon["false"].color : yesNoMapIcon["true"].color,
+                      symbol: isReverse ? yesNoMapIcon["false"].symbol : yesNoMapIcon["true"].symbol,
+                    },
+                    {
+                      color: isReverse ? yesNoMapIcon["true"].color : yesNoMapIcon["false"].color,
+                      symbol: isReverse ? yesNoMapIcon["true"].symbol : yesNoMapIcon["false"].symbol,
+                    },
+                  ]}
+                />
+              </View>
             );
           return (
-            <Pie
-              indicateur={_indicateur}
-              title={getTitle(_indicateur.name)}
-              key={_indicateur.name}
-              data={computeChartData(getIndicatorKey(_indicateur))}
-            />
+            <View className="border-b border-cnam-primary-400 py-4">
+              <Pie
+                indicateur={_indicateur}
+                title={getTitle(_indicateur.name)}
+                key={_indicateur.name}
+                data={computeChartData(getIndicatorKey(_indicateur))}
+              />
+            </View>
           );
         })}
       <GoalsChartPie chartDates={chartDates} />
-      <View style={styles.divider} />
-      <PieYesNo title="Ai-je pris correctement mon traitement quotidien ?" data={computeChartData("PRISE_DE_TRAITEMENT")} />
-      <PieYesNo title='Ai-je pris un "si besoin" ?' data={computeChartData("PRISE_DE_TRAITEMENT_SI_BESOIN")} />
+      <View className="border-b border-cnam-primary-400 py-4">
+        <PieYesNo title="Ai-je pris correctement mon traitement quotidien ?" data={computeChartData("PRISE_DE_TRAITEMENT")} />
+      </View>
+      <View className="border-b border-cnam-primary-400 py-4">
+        <PieYesNo title='Ai-je pris un "si besoin" ?' data={computeChartData("PRISE_DE_TRAITEMENT_SI_BESOIN")} />
+      </View>
     </ScrollView>
   );
 };
@@ -378,7 +385,7 @@ const styles = StyleSheet.create({
   scrollView: {
     flex: 1,
     backgroundColor: "white",
-    padding: 15,
+    paddingVertical: 15,
   },
   scrollContainer: {
     paddingBottom: 150,

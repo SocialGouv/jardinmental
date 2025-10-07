@@ -12,7 +12,7 @@ const DEFAULT_COLOR = "#D7D3D3";
 const TREATMENT_COLOR = "#CCEDF9";
 const NO_TREATMENT_COLOR = "#F9D1E6";
 
-export default function Legend({ style }: { style: ViewStyle }) {
+export default function Legend({ style }: { style?: ViewStyle }) {
   const [extended, setExtended] = React.useState(false);
 
   return (
@@ -22,14 +22,14 @@ export default function Legend({ style }: { style: ViewStyle }) {
           onPress={() => setExtended(!extended)}
           className="bg-cnam-primary-100 rounded-full flex-row px-3 py-1 space-x-1 self-start items-center"
         >
-          {extended && <EyeIcon />}
-          {!extended && <EyeOffIcon />}
+          {!extended && <EyeIcon />}
+          {extended && <EyeOffIcon />}
           <Text className={mergeClassNames("text-cnam-primary-950", typography.textSmSemibold)}>
-            {extended ? "Voir la légende" : "Masquer la légende"}
+            {!extended ? "Voir la légende" : "Masquer la légende"}
           </Text>
         </TouchableOpacity>
         {extended && (
-          <View className="flex-row space-x-3 items-center">
+          <View className="flex-row flex-wrap space-x-2 items-center">
             {[
               {
                 label: "Très bas",
@@ -40,23 +40,23 @@ export default function Legend({ style }: { style: ViewStyle }) {
                 ...analyzeScoresMapIcon[2],
               },
               {
-                label: "Normal",
+                label: "Neutre",
                 ...analyzeScoresMapIcon[3],
               },
               {
-                label: "Élevé",
+                label: "Haut",
                 ...analyzeScoresMapIcon[4],
               },
               {
-                label: "Très élevé",
+                label: "Très haut",
                 ...analyzeScoresMapIcon[5],
               },
             ].map((item) => {
               return (
-                <View className="flex-row items-center space-x-1">
+                <View className="flex-row flex-wrap items-center space-x-1">
                   <View
                     style={{
-                      backgroundColor: item.color,
+                      backgroundColor: TW_COLORS.CNAM_PRIMARY_100,
                     }}
                     className={mergeClassNames("px-[4] h-[20] rounded-md justify-center items-center text-center ")}
                   >

@@ -17,7 +17,7 @@ const CHART_TYPES = [
   },
   {
     key: "Frises",
-    label: "Corélations",
+    label: "Corrélations",
   },
   {
     key: "Déclencheurs",

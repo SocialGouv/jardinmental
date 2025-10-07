@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import DatePicker from "react-native-date-picker";
 import logEvents from "../../services/logEvents";
 
@@ -7,7 +7,7 @@ import DateOrTimeDisplay from "./DateOrTimeDisplay";
 import { SelectInput } from "../../components/SelectInput";
 import { beforeToday } from "../../utils/date/helpers";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { HELP_ANALYSE, STORAGE_KEY_START_DATE } from "../../utils/constants";
+import { HELP_ANALYSE, STORAGE_KEY_START_DATE, TW_COLORS } from "../../utils/constants";
 import { Button2 } from "@/components/Button2";
 import JMButton from "@/components/JMButton";
 import HelpView from "@/components/HelpView";
@@ -15,6 +15,7 @@ import CircleQuestionMark from "@assets/svg/icon/CircleQuestionMark";
 import { useBottomSheet } from "@/context/BottomSheetContext";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
+import Tune from "@assets/svg/icon/Tune";
 
 const RangeDate = ({
   withPreset = false,
@@ -28,6 +29,7 @@ const RangeDate = ({
   dateOrTimeProps,
   onHelpClick,
   introductionText,
+  isFilterActive,
   ...props
 }) => {
   const [presetValue, setPresetValue] = useState(props.presetValue || "lastDays7");
@@ -128,21 +130,26 @@ const RangeDate = ({
             {...selectInputProps}
           />
           {!!setIsFilterActive && (
-            <Button2
-              checkable
+            <JMButton
+              width="auto"
               title="Filtrer"
               style={{
                 height: 40,
               }}
-              icon={"TuneSvg"}
-              preset="secondary"
+              icon={<Tune color={isFilterActive ? TW_COLORS.WHITE : TW_COLORS.CNAM_PRIMARY_800} />}
+              // icon={"TuneSvg"}
+              variant={isFilterActive ? "primary" : "outline"}
               size="small"
               containerStyle={{ marginHorizontal: 8 }}
               onPress={setIsFilterActive}
             />
           )}
         </View>
-        {onHelpClick && <JMButton onPress={onHelpClick} variant="outline" width="fixed" icon={<CircleQuestionMark />} className="mr-2" />}
+        {onHelpClick && (
+          <TouchableOpacity onPress={onHelpClick} className="bg-cnam-primary-100 p-2 rounded-full mr-2">
+            <CircleQuestionMark color={TW_COLORS.CNAM_PRIMARY_800} />
+          </TouchableOpacity>
+        )}
       </View>
       {presetValue === "custom" && (
         <View className="flex-row items-center mt-2 space-x-2">

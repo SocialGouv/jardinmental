@@ -24,6 +24,7 @@ export const FriseScreen = ({ navigation, presetDate, setPresetDate, fromDate, s
       <View style={commonStyles.headerContainer}>
         <View className="w-full px-4">
           <RangeDate
+            isFilterActive={filterEnabled}
             presetValue={presetDate}
             onChangePresetValue={setPresetDate}
             fromDate={fromDate}
@@ -38,7 +39,9 @@ export const FriseScreen = ({ navigation, presetDate, setPresetDate, fromDate, s
               autoLayoutAnimation();
             }}
             onHelpClick={() => {
-              showBottomSheet(<HelpView title={HELP_ANALYSE["variations"]["title"]} description={HELP_ANALYSE["variations"]["description"]} />);
+              showBottomSheet(
+                <HelpView title={HELP_ANALYSE["correlation"]["title"]} description={HELP_ANALYSE["correlation"]["description"]} isMd={true} />
+              );
             }}
             onChangeFromDate={setFromDate}
             onChangeToDate={setToDate}

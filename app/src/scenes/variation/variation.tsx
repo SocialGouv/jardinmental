@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
-import { ScrollView, StyleSheet, View, Image, Dimensions, Text } from "react-native";
+import { ScrollView, StyleSheet, View, Image, Dimensions, Text, TouchableOpacity } from "react-native";
 
-import { displayedCategories, TAB_BAR_HEIGHT } from "@/utils/constants";
+import { displayedCategories, HELP_ANALYSE, TAB_BAR_HEIGHT, TW_COLORS } from "@/utils/constants";
 import Chart from "./chart";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { beforeToday, getArrayOfDates, getTodaySWeek, formatDate } from "@/utils/date/helpers";
@@ -15,6 +15,9 @@ import { INDICATEURS } from "@/utils/liste_indicateurs.1";
 import { getIndicatorKey } from "@/utils/indicatorUtils";
 import { useBottomSheet } from "@/context/BottomSheetContext";
 import WeekPicker from "./week-picker";
+import Legend from "../suivi/Legend";
+import CircleQuestionMark from "@assets/svg/icon/CircleQuestionMark";
+import HelpView from "@/components/HelpView";
 
 const screenHeight = Dimensions.get("window").height;
 
@@ -136,9 +139,8 @@ const Variations = ({ navigation, onScroll }) => {
   };
 
   return (
-    <View style={styles.safe}>
-      <View style={styles.headerContainer}>
-        {/* <Header title="Mon suivi" navigation={navigation} /> */}
+    <View className="flex-1 bg-white">
+      <View className="px-4">
         <WeekPicker
           firstDay={firstDay}
           lastDay={lastDay}
@@ -146,21 +148,17 @@ const Variations = ({ navigation, onScroll }) => {
           onBeforePress={() => setDay(beforeToday(7, day))}
           setDay={setDay}
         />
-        {/* <Legend /> */}
-        {/* <View className="w-full px-2">
-          <View className="flex-row items-center pb-6 w-full justify-between">
-            <RangeDate
-              presetValue={"lastDays7"}
-              onChangePresetValue={() => {}}
-              fromDate={new Date()}
-              toDate={new Date()}
-              onChangeFromDate={() => {}}
-              onChangeToDate={() => {}}
-              withPreset={true}
-            ></RangeDate>
-          </View>
-          <View className="h-[1] bg-cnam-primary-400"></View>
-        </View> */}
+        <Legend style={{ marginTop: 14 }} />
+        <TouchableOpacity
+          onPress={() => {
+            showBottomSheet(
+              <HelpView isMd={true} title={HELP_ANALYSE["variations"]["title"]} description={HELP_ANALYSE["variations"]["description"]} />
+            );
+          }}
+          className="bg-cnam-primary-100 p-2 rounded-full mr-2"
+        >
+          <CircleQuestionMark color={TW_COLORS.CNAM_PRIMARY_800} />
+        </TouchableOpacity>
       </View>
       <ScrollView
         style={styles.scrollView}
@@ -178,12 +176,6 @@ const Variations = ({ navigation, onScroll }) => {
       >
         {!calendarIsEmpty ? (
           <>
-            <View style={styles.subtitleContainer}>
-              <Icon icon="InfoSvg" width={25} height={25} color={colors.LIGHT_BLUE} />
-              <Text style={styles.subtitle}>
-                Tapez sur un jour ou un point pour retrouver une <Text style={styles.bold}>vue détaillée</Text>.
-              </Text>
-            </View>
             {userIndicateurs
               .concat(INDICATEURS)
               .filter((ind) => ind.active)
@@ -219,10 +211,6 @@ const Variations = ({ navigation, onScroll }) => {
 };
 
 const styles = StyleSheet.create({
-  headerContainer: {
-    padding: 5,
-    paddingBottom: 0,
-  },
   imageContainer: {
     display: "flex",
     alignItems: "center",
@@ -244,10 +232,6 @@ const styles = StyleSheet.create({
   },
   bold: {
     fontWeight: "bold",
-  },
-  safe: {
-    flex: 1,
-    backgroundColor: "white",
   },
   scrollView: {
     flex: 1,
