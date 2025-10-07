@@ -1363,6 +1363,24 @@ const logOpenIndicatorsSettings = async () => {
   });
 };
 
+const logViewedArticlesList = async (nbArticlesDisplayed: number) => {
+  await logEvent({
+    category: "RESOURCES",
+    action: "VIEWED_ARTICLES_LIST",
+    name: "nb_articles_displayed",
+    value: nbArticlesDisplayed,
+  });
+};
+
+const logSelectedCategory = async (categoryId: number) => {
+  await logEvent({
+    category: "RESOURCES",
+    action: "SELECTED_CATEGORY",
+    name: "category_id",
+    value: categoryId,
+  });
+};
+
 export default {
   initMatomo,
   logAppVisit,
@@ -1518,4 +1536,7 @@ export default {
   logDeleteDrug,
   logToggleDrug,
   logOpenDrugSettings,
+  // Resources events
+  logViewedArticlesList,
+  logSelectedCategory,
 };
