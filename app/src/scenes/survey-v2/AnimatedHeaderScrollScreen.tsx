@@ -51,6 +51,8 @@ interface IndicatorScreenProps {
   noPadding?: boolean;
 }
 
+export const SCROLL_THRESHOLD = 100; // Distance to scroll before full transition (reduced for more responsive animation)
+
 export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
   title,
   onNext,
@@ -98,7 +100,6 @@ export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
   // Scroll tracking
   const scrollY = useSharedValue(0);
   const measuredHeight = useSharedValue(0); // Store the measured natural height
-  const SCROLL_THRESHOLD = 100; // Distance to scroll before full transition (reduced for more responsive animation)
   const BOTTOM_COMPONENT_SCROLL_THRESHOLD = 50; // Distance to scroll before bottom component appears
 
   const scrollHandler = useAnimatedScrollHandler({

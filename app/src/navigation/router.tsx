@@ -76,6 +76,7 @@ import SurveySuccessScreen from "../scenes/survey/SurveySuccessScreen";
 import FaqMainScreen from "@/scenes/faq/FaqMainScreen";
 import FaqDetailScreen from "@/scenes/faq/FaqDetailScreen";
 import ResourceArticle from "../scenes/resources/ResourceArticle";
+import ResourceCategoryList from "../scenes/resources/ResourceCategoryList";
 import SupportScreen from "@/scenes/support/SupportScreen";
 
 const Stack = createStackNavigator();
@@ -287,6 +288,7 @@ class Router extends React.Component<RouterProps> {
             <Stack.Screen name="goals-create-form" component={GoalsCreateForm} />
             <Stack.Screen name="goal-day-selector" component={GoalDaySelector} />
             <Stack.Screen name="goal-config" component={GoalConfig} />
+            <Stack.Screen name="resource-category-list" component={ResourceCategoryList} />
             <Stack.Screen name="resource-article" component={ResourceArticle} />
             <Stack.Screen name="dev-mode" component={DevMode} options={{ headerShown: true }} />
           </Stack.Navigator>

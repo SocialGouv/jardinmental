@@ -9,8 +9,20 @@ const fakeDaySurvey = () => {
   const MOOD_hasComment = Math.random() > 0.5;
   const ANXIETY_hasComment = Math.random() > 0.5;
   return {
-    MOOD: { value: Math.ceil(Math.random() * 5), userComment: MOOD_hasComment ? "comment" : "" },
-    ANXIETY: { value: Math.ceil(Math.random() * 5), userComment: ANXIETY_hasComment ? "comment" : "" },
+    "Idées parasites": {
+      _indicateur: {
+        type: "gauge",
+      },
+      value: Math.ceil(Math.random() * 5) / 5,
+      userComment: MOOD_hasComment ? "comment" : "",
+    },
+    Anxiété: {
+      _indicateur: {
+        type: "gauge",
+      },
+      value: Math.ceil(Math.random() * 5) / 5,
+      userComment: ANXIETY_hasComment ? "comment" : "",
+    },
   };
 };
 

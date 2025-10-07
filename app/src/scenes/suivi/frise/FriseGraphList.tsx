@@ -1,27 +1,89 @@
 import React from "react";
-import { StyleSheet, View, ScrollView } from "react-native";
+import { StyleSheet, View, ScrollView, Dimensions, ActivityIndicator } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 
-import { getArrayOfDatesFromTo } from "../../../utils/date/helpers";
-import { DiaryDataContext } from "../../../context/diaryData";
-import Text from "../../../components/MyText";
-import { displayedCategories } from "../../../utils/constants";
-import { colors } from "../../../utils/colors";
-import Icon from "../../../components/Icon";
-import localStorage from "../../../utils/localStorage";
-import logEvents from "../../../services/logEvents";
-import Button from "../../../components/Button";
+import { getArrayOfDatesFromTo } from "@/utils/date/helpers";
+import { DiaryDataContext } from "@/context/diaryData";
+import Text from "@/components/MyText";
+import { displayedCategories, TAB_BAR_HEIGHT } from "@/utils/constants";
+import { colors } from "@/utils/colors";
+import Icon from "@/components/Icon";
+import localStorage from "@/utils/localStorage";
+import logEvents from "@/services/logEvents";
 import { FriseGraph } from "./FriseGraph";
-import { GoalsFriseGraph } from "../../goals/suivi/GoalsFriseGraph";
 import JMButton from "@/components/JMButton";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { GoalsFriseGraph } from "@/scenes/goals/suivi/GoalsFriseGraph";
+
 import { getIndicatorKey } from "../../../utils/indicatorUtils";
+import { SCROLL_THRESHOLD } from "@/scenes/survey-v2/AnimatedHeaderScrollScreen";
+
+const screenHeight = Dimensions.get("window").height;
+
+// Async wrapper component for FriseGraph with loading state
+const AsyncFriseGraph = React.memo(
+  ({ title, categoryId, focusedScores, showTraitement, computeChartDataAsync, loadingStates, chartDataCache }: any) => {
+    const [data, setData] = React.useState(null);
+    const [treatmentData, setTreatmentData] = React.useState(null);
+    const [treatmentSiBesoinData, setTreatmentSiBesoinData] = React.useState(null);
+
+    React.useEffect(() => {
+      const loadData = async () => {
+        try {
+          const [mainData, priseDeTraitement, priseDeTraitementSiBesoin] = await Promise.all([
+            computeChartDataAsync(categoryId),
+            showTraitement ? computeChartDataAsync("PRISE_DE_TRAITEMENT") : Promise.resolve([]),
+            showTraitement ? computeChartDataAsync("PRISE_DE_TRAITEMENT_SI_BESOIN") : Promise.resolve([]),
+          ]);
+
+          setData(mainData);
+          setTreatmentData(priseDeTraitement);
+          setTreatmentSiBesoinData(priseDeTraitementSiBesoin);
+        } catch (error) {
+          console.error("Error loading chart data:", error);
+        }
+      };
+
+      loadData();
+    }, [categoryId, showTraitement, computeChartDataAsync]);
+
+    const isLoading =
+      loadingStates[categoryId] || (showTraitement && (loadingStates["PRISE_DE_TRAITEMENT"] || loadingStates["PRISE_DE_TRAITEMENT_SI_BESOIN"]));
+
+    if (isLoading || !data) {
+      return (
+        <View style={styles.friseContainer}>
+          {title ? <Text style={styles.friseTitle}>{title}</Text> : null}
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size="small" color={colors.LIGHT_BLUE} />
+            <Text style={styles.loadingText}>Chargement...</Text>
+          </View>
+        </View>
+      );
+    }
+
+    return (
+      <FriseGraph
+        focusedScores={focusedScores}
+        title={title}
+        data={data}
+        showTraitement={showTraitement}
+        priseDeTraitement={treatmentData}
+        priseDeTraitementSiBesoin={treatmentSiBesoinData}
+      />
+    );
+  }
+);
 
 const FriseGraphList = ({ navigation, fromDate, toDate, focusedScores, showTraitement, onScroll }) => {
   const [diaryData] = React.useContext(DiaryDataContext);
-  const [userIndicateurs, setUserIndicateurs] = React.useState([]);
-  const [isEmpty, setIsEmpty] = React.useState();
-  const [goalsIsEmpty, setGoalsIsEmpty] = React.useState();
-  const chartDates = getArrayOfDatesFromTo({ fromDate, toDate });
+  const [userIndicateurs, setUserIndicateurs] = React.useState<any[]>([]);
+  const [isEmpty, setIsEmpty] = React.useState<boolean>(false);
+  const [goalsIsEmpty, setGoalsIsEmpty] = React.useState<boolean>(false);
+  const [chartDataCache, setChartDataCache] = React.useState<Record<string, any[]>>({});
+  const [loadingStates, setLoadingStates] = React.useState<Record<string, boolean>>({});
+  const chartDates = React.useMemo(() => getArrayOfDatesFromTo({ fromDate, toDate }), [fromDate, toDate]);
+  const insets = useSafeAreaInsets();
 
   useFocusEffect(
     React.useCallback(() => {
@@ -33,12 +95,6 @@ const FriseGraphList = ({ navigation, fromDate, toDate, focusedScores, showTrait
       })();
     }, [])
   );
-
-  React.useEffect(() => {
-    if (!userIndicateurs) return;
-    const empty = userIndicateurs.every((ind) => !isChartVisible(getIndicatorKey(ind)));
-    setIsEmpty(empty);
-  }, [userIndicateurs, isChartVisible]);
 
   const isChartVisible = React.useCallback(
     (categoryId) => {
@@ -56,6 +112,12 @@ const FriseGraphList = ({ navigation, fromDate, toDate, focusedScores, showTrait
     },
     [diaryData, chartDates]
   );
+
+  React.useEffect(() => {
+    if (!userIndicateurs) return;
+    const empty = userIndicateurs.every((ind) => !isChartVisible(getIndicatorKey(ind)));
+    setIsEmpty(empty);
+  }, [userIndicateurs, isChartVisible]);
 
   const startSurvey = async () => {
     logEvents._deprecatedLogFeelingStart();
@@ -80,40 +142,131 @@ const FriseGraphList = ({ navigation, fromDate, toDate, focusedScores, showTrait
     return category;
   };
 
-  const computeChartData = (categoryId) => {
-    return chartDates.map((date) => {
-      const dayData = diaryData[date];
-      if (!dayData) {
-        return {};
-      }
-      const categoryState = diaryData[date][categoryId];
-      if (!categoryState) {
-        return {};
-      }
-      if (categoryState?.value !== null || categoryState?.value !== undefined) return categoryState;
+  const computeChartData = React.useCallback(
+    (categoryId) => {
+      return chartDates.map((date) => {
+        const dayData = diaryData[date];
+        if (!dayData) {
+          return {};
+        }
+        const categoryState = diaryData[date][categoryId];
+        if (!categoryState) {
+          return {};
+        }
+        if (categoryState?.value !== null && categoryState?.value !== undefined) return categoryState;
 
-      // -------
-      // the following code is for the retrocompatibility
-      // -------
+        // -------
+        // the following code is for the retrocompatibility
+        // -------
 
-      // get the name and the suffix of the category
-      const [categoryName, suffix] = categoryId.split("_");
-      let categoryStateIntensity = null;
-      if (suffix && suffix === "FREQUENCE") {
-        // if it's one category with the suffix 'FREQUENCE' :
-        // add the intensity (default level is 3 - for the frequence 'never')
-        categoryStateIntensity = diaryData[date][`${categoryName}_INTENSITY`] || { level: 3 };
-        return { value: categoryState.level + categoryStateIntensity.level - 2 };
+        // get the name and the suffix of the category
+        const [categoryName, suffix] = categoryId.split("_");
+        let categoryStateIntensity = null;
+        if (suffix && suffix === "FREQUENCE") {
+          // if it's one category with the suffix 'FREQUENCE' :
+          // add the intensity (default level is 3 - for the frequence 'never')
+          categoryStateIntensity = diaryData[date][`${categoryName}_INTENSITY`] || { level: 3 };
+          return { value: (categoryState as any).level + ((categoryStateIntensity as any)?.level || 3) - 2 };
+        }
+        return { value: (categoryState as any).level - 1 };
+      });
+    },
+    [chartDates, diaryData]
+  );
+
+  const computeChartDataAsync = React.useCallback(
+    async (categoryId) => {
+      // Return cached data if available
+      if (chartDataCache[categoryId]) {
+        return chartDataCache[categoryId];
       }
-      return { value: categoryState.level - 1 };
-    });
-  };
+
+      // Set loading state
+      setLoadingStates((prev) => ({ ...prev, [categoryId]: true }));
+
+      // Add initial delay to allow UI interactions to complete (like modal closing)
+      await new Promise((resolve) => setTimeout(resolve, 100));
+
+      // Process data in chunks to avoid blocking the UI
+      return new Promise((resolve) => {
+        const processInChunks = async () => {
+          const data: any[] = [];
+          const chunkSize = 5; // Smaller chunks for better responsiveness
+
+          for (let i = 0; i < chartDates.length; i += chunkSize) {
+            const chunk = chartDates.slice(i, i + chunkSize);
+
+            // Process each chunk
+            const chunkData = chunk.map((date) => {
+              const dayData = diaryData[date];
+              if (!dayData) {
+                return {};
+              }
+              const categoryState = diaryData[date][categoryId];
+              if (!categoryState) {
+                return {};
+              }
+              if (categoryState?.value !== null && categoryState?.value !== undefined) return categoryState;
+
+              // -------
+              // the following code is for the retrocompatibility
+              // -------
+
+              // get the name and the suffix of the category
+              const [categoryName, suffix] = categoryId.split("_");
+              let categoryStateIntensity = null;
+              if (suffix && suffix === "FREQUENCE") {
+                // if it's one category with the suffix 'FREQUENCE' :
+                // add the intensity (default level is 3 - for the frequence 'never')
+                categoryStateIntensity = diaryData[date][`${categoryName}_INTENSITY`] || { level: 3 };
+                return { value: (categoryState as any).level + ((categoryStateIntensity as any)?.level || 3) - 2 };
+              }
+              return { value: (categoryState as any).level - 1 };
+            });
+
+            data.push(...(chunkData as any[]));
+
+            // Yield control back to the main thread after each chunk with longer delays
+            await new Promise((resolveChunk) => setTimeout(resolveChunk, 16)); // ~60fps
+          }
+
+          // Cache the result
+          setChartDataCache((prev) => ({ ...prev, [categoryId]: data }));
+
+          // Clear loading state
+          setLoadingStates((prev) => ({ ...prev, [categoryId]: false }));
+
+          resolve(data);
+        };
+
+        processInChunks().catch((error) => {
+          console.error("Error processing chart data:", error);
+          setLoadingStates((prev) => ({ ...prev, [categoryId]: false }));
+          resolve([]);
+        });
+      });
+    },
+    [chartDates, diaryData, chartDataCache]
+  );
+
+  // Clear cache when date range or diary data changes
+  React.useEffect(() => {
+    setChartDataCache({});
+    setLoadingStates({});
+  }, [chartDates, diaryData]);
 
   if (isEmpty && goalsIsEmpty) {
     return (
-      <View style={styles.emptyContainer}>
+      <View
+        style={[
+          styles.emptyContainer,
+          {
+            paddingBottom: insets.bottom + TAB_BAR_HEIGHT,
+          },
+        ]}
+      >
         <View style={styles.subtitleContainer}>
-          <Icon icon="InfoSvg" width={25} height={25} color={colors.LIGHT_BLUE} />
+          <Icon icon="InfoSvg" width={25} height={25} color={colors.LIGHT_BLUE} styleContainer={{}} spin={false} onPress={() => {}} />
           <Text style={styles.subtitle}>
             Des <Text style={styles.bold}>frises</Text> apparaîtront au fur et à mesure de vos saisies quotidiennes.
           </Text>
@@ -125,18 +278,30 @@ const FriseGraphList = ({ navigation, fromDate, toDate, focusedScores, showTrait
 
   return (
     <>
-      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContainer} onScroll={onScroll}>
+      <ScrollView
+        style={styles.scrollView}
+        contentContainerStyle={[
+          styles.scrollContainer,
+          {
+            paddingBottom: insets.bottom + TAB_BAR_HEIGHT,
+          },
+        ]}
+        scrollEventThrottle={16}
+        showsVerticalScrollIndicator={false}
+        onScroll={onScroll}
+      >
         {userIndicateurs
           ?.filter((ind) => isChartVisible(getIndicatorKey(ind)) && ind.active)
           ?.map((ind) => (
-            <FriseGraph
-              focusedScores={focusedScores}
-              title={getTitle(ind.name)}
+            <AsyncFriseGraph
               key={ind.name}
-              data={computeChartData(getIndicatorKey(ind))}
+              title={getTitle(ind.name)}
+              categoryId={getIndicatorKey(ind)}
+              focusedScores={focusedScores}
               showTraitement={showTraitement}
-              priseDeTraitement={computeChartData("PRISE_DE_TRAITEMENT")}
-              priseDeTraitementSiBesoin={computeChartData("PRISE_DE_TRAITEMENT_SI_BESOIN")}
+              computeChartDataAsync={computeChartDataAsync}
+              loadingStates={loadingStates}
+              chartDataCache={chartDataCache}
             />
           ))}
         <GoalsFriseGraph
@@ -208,7 +373,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   scrollContainer: {
-    paddingBottom: 150,
+    minHeight: screenHeight * 0.7,
   },
   button: {
     display: "flex",
@@ -231,6 +396,27 @@ const styles = StyleSheet.create({
     shadowRadius: 1.0,
 
     elevation: 1,
+  },
+  friseContainer: {
+    marginVertical: 10,
+    paddingHorizontal: 10,
+  },
+  friseTitle: {
+    fontSize: 19,
+    color: colors.BLUE,
+    fontWeight: "600",
+    marginBottom: 5,
+  },
+  loadingContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 20,
+  },
+  loadingText: {
+    marginLeft: 8,
+    fontSize: 14,
+    color: colors.BLUE,
   },
 });
 
