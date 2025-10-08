@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Redirection...</title>
+    <script src="https://cdn.jsdelivr.net/npm/qrious@4.0.2/dist/qrious.min.js"></script>
+    <script type="text/javascript">
+        function generateQRCode(url) {
+            const qr = new QRious({
+                element: document.getElementById('qrcode'),
+                value: url,
+                size: 200
+            });
+        }
+
+        function openApp() {
+            const currentUrl = window.location.href;
+            setTimeout(function() {
+                const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+                document.getElementById('message').style.display = 'none';
+                if (/android/i.test(userAgent)) {
+                    window.location.href = "https://play.google.com/store/apps/details?id=com.monsuivipsy&hl=fr";
+                } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+                    window.location.href = "https://apps.apple.com/fr/app/jardin-mental";
+                } else {
+                    document.getElementById('non-mobile-message').style.display = 'block';
+                    document.getElementById('current-url').innerHTML = `<a href="${currentUrl}">${currentUrl}</a>`;
+                    document.getElementById('current-url').style.display = 'block';
+                    generateQRCode(currentUrl);
+                }
+                document.body.removeChild(iframe);
+            }, 2000);
+        }
+
+        window.onload = openApp;
+    </script>
+</head>
+<body>
+    <p id="message">Redirection...</p>
+    <div id="non-mobile-message" style="display:none;">
+        Ce service est uniquement disponible sur mobile.
+        <br />
+        <div>
+            <div>
+                Scannez ce QR code depuis votre mobile:
+            </div>
+            <div>
+                <canvas id="qrcode"></canvas>
+            </div>
+        </div>
+        <div>
+            Ou entrez manuellement le lien suivant depuis votre mobile: <span id="current-url" style="display:none;"></span>
+        </div>
+        <br />
+    </div>
+    
+</body>
+</html>

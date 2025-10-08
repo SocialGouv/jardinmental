@@ -9,5 +9,10 @@ app:
     - secretRef:
         name: api
 
+app-redirects:
+  ~chart: app
+  containerPort: 8080
+  host: "app-{{ .Values.global.host }}"
+
 pg:
   ~chart: pg
