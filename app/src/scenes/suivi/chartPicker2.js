@@ -1,5 +1,6 @@
 import React from "react";
 import { View, StyleSheet, TouchableOpacity, ScrollView, FlatList } from "react-native";
+import Animated, { useAnimatedStyle, interpolate, Extrapolate } from "react-native-reanimated";
 import { colors } from "../../utils/colors";
 import Text from "../../components/MyText";
 import logEvents from "../../services/logEvents";
@@ -25,7 +26,7 @@ const CHART_TYPES = [
   },
 ];
 
-const TabPicker = ({ onChange, ongletActif = "Statistiques" }) => {
+const TabPicker = ({ onChange, ongletActif = "Statistiques", scrollY, scrollThreshold = 80 }) => {
   const listRef = React.useRef();
 
   const handlePress = (tab) => {
@@ -33,43 +34,66 @@ const TabPicker = ({ onChange, ongletActif = "Statistiques" }) => {
     onChange(tab);
   };
 
+  // Animated style for hiding the tab bar on scroll
+  const animatedStyle = useAnimatedStyle(() => {
+    if (!scrollY) {
+      return { height: 76, opacity: 1 };
+    }
+
+    const height = interpolate(
+      scrollY.value,
+      [0, scrollThreshold],
+      [76, 0], // from full height to 0
+      Extrapolate.CLAMP
+    );
+
+    const opacity = interpolate(scrollY.value, [0, scrollThreshold / 2, scrollThreshold], [1, 0.5, 0], Extrapolate.CLAMP);
+
+    return { height, opacity };
+  });
+
   return (
-    <FlatList
-      ref={listRef}
-      data={CHART_TYPES}
-      ItemSeparatorComponent={() => <View style={{ width: 10 }} />} // 👈 space between items
-      renderItem={({ item }) => {
-        return (
-          <TouchableOpacity
-            // className="h-full"
-            key={item.key}
-            className={mergeClassNames("h-[44] py-2 px-6", ongletActif === item.key ? "bg-cnam-primary-800 rounded-xl" : "transparent")}
-            onPress={() => {
-              listRef.current?.scrollToItem({
-                item,
-                animated: true,
-                viewPosition: 0.5,
-              });
-              handlePress(item.key);
-            }}
-          >
-            <Text className={mergeClassNames(typography.textMdSemibold, ongletActif === item.key ? "text-white" : "text-gray-700")}>
-              {item.label}
-            </Text>
-          </TouchableOpacity>
-        );
-      }}
-      horizontal
-      style={tabStyles.scrollView}
-      contentContainerStyle={tabStyles.scrollContainer}
-      fadingEdgeLength={10}
-      showsHorizontalScrollIndicator={false}
-      snapToAlignment={"end"}
-    />
+    <Animated.View style={[tabStyles.container, animatedStyle]}>
+      <FlatList
+        ref={listRef}
+        data={CHART_TYPES}
+        ItemSeparatorComponent={() => <View style={{ width: 10 }} />} // 👈 space between items
+        renderItem={({ item }) => {
+          return (
+            <TouchableOpacity
+              // className="h-full"
+              key={item.key}
+              className={mergeClassNames("h-[44] py-2 px-6", ongletActif === item.key ? "bg-cnam-primary-800 rounded-xl" : "transparent")}
+              onPress={() => {
+                listRef.current?.scrollToItem({
+                  item,
+                  animated: true,
+                  viewPosition: 0.5,
+                });
+                handlePress(item.key);
+              }}
+            >
+              <Text className={mergeClassNames(typography.textMdSemibold, ongletActif === item.key ? "text-white" : "text-gray-700")}>
+                {item.label}
+              </Text>
+            </TouchableOpacity>
+          );
+        }}
+        horizontal
+        style={tabStyles.scrollView}
+        contentContainerStyle={tabStyles.scrollContainer}
+        fadingEdgeLength={10}
+        showsHorizontalScrollIndicator={false}
+        snapToAlignment={"end"}
+      />
+    </Animated.View>
   );
 };
 
 const tabStyles = StyleSheet.create({
+  container: {
+    width: "100%",
+  },
   scrollView: {
     backgroundColor: "#F6FCFD",
     borderColor: colors.BLUE,

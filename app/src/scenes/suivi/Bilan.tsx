@@ -66,7 +66,7 @@ const Bilan = ({ navigation, startSurvey }) => {
           <Header title="Mes analyses" navigation={navigation} scrollY={scrollY} />
         </View>
         <View style={styles.tabContainer}>
-          <ChartPicker onChange={(e) => setChartType(e)} ongletActif={chartType} />
+          <ChartPicker onChange={(e) => setChartType(e)} ongletActif={chartType} scrollY={scrollY} />
         </View>
 
         {/* Render all tabs but hide inactive ones to preserve state */}
@@ -210,6 +210,7 @@ export const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
+    overflow: "hidden",
   },
   headerContainer: {
     paddingTop: 15,
