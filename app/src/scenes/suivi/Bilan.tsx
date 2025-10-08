@@ -4,7 +4,6 @@ import { useFocusEffect } from "@react-navigation/native";
 
 import { beforeToday } from "../../utils/date/helpers";
 import Header from "../../components/Header";
-// import ChartPicker from "./chartPicker";
 import ChartPicker from "./chartPicker2";
 import RangeDate from "./RangeDate";
 import ChartPie from "./chartPie";
