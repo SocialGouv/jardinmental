@@ -1,3 +1,10 @@
+## [1.96.2](https://github.com/SocialGouv/jardinmental/compare/v1.96.1...v1.96.2) (2025-10-08)
+
+
+### Bug Fixes
+
+* link to psycom in support screen ([#532](https://github.com/SocialGouv/jardinmental/issues/532)) ([e7171ac](https://github.com/SocialGouv/jardinmental/commit/e7171ac1a3e995ce9e28930b135fdcf9e8fe43cc))
+
 ## [1.96.1](https://github.com/SocialGouv/jardinmental/compare/v1.96.0...v1.96.1) (2025-10-08)
 
 
