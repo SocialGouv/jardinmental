@@ -159,9 +159,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   scorePickerBorder: {
-    // flexDirection: "row",
-    // alignItems: "center",
-    // justifyContent: "flex-start",
     borderRadius: 25,
     borderColor: colors.DARK_BLUE,
     borderWidth: 1,
