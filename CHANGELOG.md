@@ -1,3 +1,10 @@
+# [1.97.0](https://github.com/SocialGouv/jardinmental/compare/v1.96.5...v1.97.0) (2025-10-08)
+
+
+### Features
+
+* app-redirect ([#538](https://github.com/SocialGouv/jardinmental/issues/538)) ([778a142](https://github.com/SocialGouv/jardinmental/commit/778a1423ef4f2154d76063d666c2061d2c98a6bf))
+
 ## [1.96.5](https://github.com/SocialGouv/jardinmental/compare/v1.96.4...v1.96.5) (2025-10-08)
 
 
