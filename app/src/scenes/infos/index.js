@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, ScrollView, Linking, View, Image, TouchableOpacity } from "react-native";
+import { StyleSheet, ScrollView, Linking, View, Image, TouchableOpacity, Platform } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Text from "../../components/MyText";
 import { colors } from "../../utils/colors";
@@ -22,7 +22,8 @@ const Infos = ({ navigation }) => {
     <SafeAreaView style={styles.safe}>
       <View style={styles.headerContainer}>
         <BackButton onPress={navigation.goBack} />
-        <Image style={styles.image} className="rounded-lg" source={require("../../../assets/imgs/icon.png")} />
+        {Platform.OS === "android" && <Image style={styles.image} source={require("../../../assets/imgs/logo2.png")} />}
+        {Platform.OS === "ios" && <Image style={styles.image} className="rounded-lg" source={require("../../../assets/imgs/icon.png")} />}
       </View>
       <ScrollView style={styles.cgu} contentContainerStyle={styles.scrollContainer}>
         <Text style={styles.title}>Pour simplement parler à quelqu’un :</Text>
