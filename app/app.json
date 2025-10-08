@@ -12,12 +12,12 @@
       "buildNumber": "282",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
-        "LSApplicationQueriesSchemes": [
-          "tel",
-          "telprompt",
-          "sms",
-          "mailto"
-        ]
+        "LSApplicationQueriesSchemes": ["tel", "telprompt", "sms", "mailto"]
+      },
+      "splash": {
+        "image": "./assets/imgs/am.png",
+        "backgroundColor": "#ffffff",
+        "resizeMode": "contain"
       }
     },
     "android": {
@@ -28,11 +28,12 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.monsuivipsy",
-      "permissions": [
-        "NOTIFICATIONS",
-        "SCHEDULE_EXACT_ALARM",
-        "POST_NOTIFICATIONS"
-      ]
+      "permissions": ["NOTIFICATIONS", "SCHEDULE_EXACT_ALARM", "POST_NOTIFICATIONS"],
+      "splash": {
+        "image": "./assets/imgs/ic_launcher_foreground.png",
+        "backgroundColor": "#ffffff",
+        "resizeMode": "contain"
+      }
     },
     "plugins": [
       [
