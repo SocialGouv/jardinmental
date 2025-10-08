@@ -178,7 +178,7 @@ export default function SupportScreen({ navigation, route }) {
                   return (
                     <SquircleButton
                       key={index}
-                      onPress={() => handleCall(item.number, item.name)}
+                      onPress={() => handleCall(item.number)}
                       cornerSmoothing={100}
                       style={{ borderRadius: 12 }}
                       preserveSmoothing={true}
