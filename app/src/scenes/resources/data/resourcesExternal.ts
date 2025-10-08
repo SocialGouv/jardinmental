@@ -98,7 +98,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440009",
     matomoId: 9,
-    title: "Hygiène de vie : trouver son équilibre sans culpabiliser",
+    title: "Hygiène de vie : trouver son équilibre sans culpabiliser",
     url: "https://podcast.ausha.co/la-perche-maison-perchee/hygiene-de-vie-trouver-son-equilibre",
     type: "Podcast",
     category: "P1 - A lire dans ce dossier",
@@ -161,7 +161,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440017",
     matomoId: 17,
-    title: "Je me sens déprimé.e, dois-je m'inquiéter ?",
+    title: "Je me sens déprimé.e, dois-je m'inquiéter ?",
     url: "https://www.sante.fr/je-me-sens-deprimee-dois-je-minquieter#:~:text=La%20d%C3%A9prime%20est%20un%20mal,la%20d%C3%A9pression%20est%20une%20maladie.",
     type: "Guide",
     category: "P1 - A lire dans ce dossier",
@@ -179,7 +179,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440019",
     matomoId: 19,
-    title: "Santé mentale : définition et facteurs en jeu",
+    title: "Santé mentale : définition et facteurs en jeu",
     url: "https://www.ameli.fr/paris/assure/sante/themes/sante-mentale-de-l-adulte/sante-mentale-definition-et-facteurs-en-jeu",
     type: "Article",
     category: "P1 - A lire dans ce dossier",
@@ -188,7 +188,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440020",
     matomoId: 20,
-    title: "Qu'appelle-t-on bonne santé mentale et troubles psychiques ?",
+    title: "Qu'appelle-t-on bonne santé mentale et troubles psychiques ?",
     url: "https://www.ameli.fr/paris/assure/sante/jeunes-16-25-ans/souffrance-psychique/definition",
     type: "Article",
     category: "P1 - A lire dans ce dossier",
@@ -350,7 +350,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440039",
     matomoId: 39,
-    title: "Santé mentale de l'adulte : comment être aidé et à qui s'adresser ?",
+    title: "Santé mentale de l'adulte : comment être aidé et à qui s'adresser ?",
     url: "https://www.ameli.fr/paris/assure/sante/themes/sante-mentale-de-l-adulte/sante-mentale-de-l-adulte-comment-etre-aide",
     type: "Article",
     category: "P1 - A lire dans ce dossier",
@@ -377,7 +377,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440042",
     matomoId: 42,
-    title: "Toi aussi ?",
+    title: "Toi aussi ?",
     url: "https://toiaussi.ch/les-episodes/",
     type: "Podcast",
     category: "P1 - A lire dans ce dossier",
@@ -395,7 +395,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440044",
     matomoId: 44,
-    title: "Le suicide… faut en parler !",
+    title: "Le suicide… faut en parler !",
     url: "https://www.minds-ge.ch/ressources/faut-en-parler",
     type: "Podcast",
     category: "P1 - A lire dans ce dossier",
@@ -467,7 +467,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440052",
     matomoId: 52,
-    title: "La déprime et la dépression, c'est la même chose ?",
+    title: "La déprime et la dépression, c'est la même chose ?",
     url: "https://youtu.be/Uit4lwPFTOI?si=V2-oCes9P6EkocX4",
     type: "Vidéo",
     category: "P2 - Explorer d'autres ressources",
@@ -494,7 +494,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440055",
     matomoId: 55,
-    title: "Apprendre à aider : Le trouble dépressif",
+    title: "Apprendre à aider : Le trouble dépressif",
     url: "https://www.pssmfrance.fr/podcast/apprendre-a-aider-le-trouble-depressif-episode-1/",
     type: "Guide",
     category: "P1 - A lire dans ce dossier",
@@ -512,7 +512,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440057",
     matomoId: 57,
-    title: "De la survie à la vie : l'incroyable parcours de jeunes face aux troubles",
+    title: "De la survie à la vie : l'incroyable parcours de jeunes face aux troubles",
     url: "https://www.youtube.com/watch?v=Vfj0LSFBoWc",
     type: "Vidéo",
     category: "P2 - Explorer d'autres ressources",
@@ -521,7 +521,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440059",
     matomoId: 59,
-    title: "Etiquette : 6 schizophrènes vs. 10 clichés",
+    title: "Etiquette : 6 schizophrènes vs. 10 clichés",
     url: "https://www.youtube.com/watch?v=jasgcWcspDs",
     type: "Vidéo",
     category: "P2 - Explorer d'autres ressources",
@@ -530,7 +530,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440060",
     matomoId: 60,
-    title: "Etiquette : 6 bipolaires vs. 10 clichés",
+    title: "Etiquette : 6 bipolaires vs. 10 clichés",
     url: "https://www.youtube.com/watch?v=16huy-6cUBQ",
     type: "Vidéo",
     category: "P2 - Explorer d'autres ressources",
@@ -539,7 +539,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440061",
     matomoId: 61,
-    title: "Etiquette : 5 addicts vs. 10 clichés",
+    title: "Etiquette : 5 addicts vs. 10 clichés",
     url: "https://www.youtube.com/watch?v=TCv-Jla7Aas",
     type: "Vidéo",
     category: "P2 - Explorer d'autres ressources",
@@ -548,7 +548,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440062",
     matomoId: 62,
-    title: "Etiquette : Troubles de la conduite alimentaire vs. 10 clichés",
+    title: "Etiquette : Troubles de la conduite alimentaire vs. 10 clichés",
     url: "https://www.youtube.com/watch?v=_krN7xpA4jg",
     type: "Vidéo",
     category: "P2 - Explorer d'autres ressources",
@@ -593,7 +593,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440067",
     matomoId: 67,
-    title: "Dépression souriante : quand le masque du bonheur cache la détresse",
+    title: "Dépression souriante : quand le masque du bonheur cache la détresse",
     url: "https://www.rts.ch/audio-podcast/2025/audio/depression-souriante-quand-le-masque-du-bonheur-cache-la-detresse-28909397.html",
     type: "Podcast",
     category: "P2 - Explorer d'autres ressources",
@@ -611,7 +611,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440070",
     matomoId: 70,
-    title: "Apprendre à aider : les attaques de panique",
+    title: "Apprendre à aider : les attaques de panique",
     url: "https://www.pssmfrance.fr/podcast/apprendre-a-aider-attaques-de-paniques/",
     type: "Guide",
     category: "P1 - A lire dans ce dossier",
@@ -638,7 +638,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440073",
     matomoId: 73,
-    title: "Troubles anxieux : quand la peur paralyse",
+    title: "Troubles anxieux : quand la peur paralyse",
     url: "https://podcast.ausha.co/la-perche-maison-perchee/troubles-anxieux-quand-la-peur-paralyse",
     type: "Podcast",
     category: "P2 - Explorer d'autres ressources",
@@ -665,7 +665,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440076",
     matomoId: 76,
-    title: "Phobie spécifique : quand la peur prend le contrôle",
+    title: "Phobie spécifique : quand la peur prend le contrôle",
     url: "https://www.rts.ch/audio-podcast/2025/audio/phobie-specifique-quand-la-peur-prend-le-controle-28824874.html",
     type: "Podcast",
     category: "P2 - Explorer d'autres ressources",
@@ -737,7 +737,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440087",
     matomoId: 87,
-    title: "Trouble de la personnalité borderline : clichés ou réalités ?",
+    title: "Trouble de la personnalité borderline : clichés ou réalités ?",
     url: "https://www.youtube.com/watch?v=V2DzVpbuM_A",
     type: "Vidéo",
     category: "P2 - Explorer d'autres ressources",
@@ -854,7 +854,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440100",
     matomoId: 100,
-    title: "Parler du psychotraumatisme aux enfants : Trop trop peur",
+    title: "Parler du psychotraumatisme aux enfants : Trop trop peur",
     url: "https://www.youtube.com/watch?v=swVzn-zhkqw",
     type: "Vidéo",
     category: "P2 - Explorer d'autres ressources",
@@ -881,7 +881,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440103",
     matomoId: 103,
-    title: '"Ce n\'est pas si grave, sinon il en aurait parlé plus tôt" ? (Clichés ou réalités)',
+    title: '"Ce n\'est pas si grave, sinon il en aurait parlé plus tôt" ? (Clichés ou réalités)',
     url: "https://www.youtube.com/watch?v=w0rIhrKIqgc",
     type: "Vidéo",
     category: "P2 - Explorer d'autres ressources",
@@ -926,7 +926,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440108",
     matomoId: 108,
-    title: "Une personne qui change d'humeur souvent et sans raison est bipolaire\" ? (clichés et réalités)",
+    title: "Une personne qui change d'humeur souvent et sans raison est bipolaire\" ? (clichés et réalités)",
     url: "https://www.youtube.com/watch?v=2KJtbdBH0r0",
     type: "Vidéo",
     category: "P2 - Explorer d'autres ressources",
@@ -1124,7 +1124,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440130",
     matomoId: 130,
-    title: "Cannabis : Évaluer un risque d'addiction",
+    title: "Cannabis : Évaluer un risque d'addiction",
     url: "https://www.addictaide.fr/parcours/alac/",
     type: "Questionnaire",
     category: "P2 - Explorer d'autres ressources",
@@ -1223,7 +1223,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440142",
     matomoId: 142,
-    title: "Sommeil : les enjeux de santé",
+    title: "Sommeil : les enjeux de santé",
     url: "https://www.santepubliquefrance.fr/determinants-de-sante/sommeil/les-enjeux-de-sante/#tabs",
     type: "Article",
     category: "P1 - A lire dans ce dossier",
@@ -1286,7 +1286,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440149",
     matomoId: 149,
-    title: "10 recommandations de nos médecins du sommeil pour bien dormir !",
+    title: "10 recommandations de nos médecins du sommeil pour bien dormir !",
     url: "https://institut-sommeil-vigilance.org/10-recommandations-de-nos-medecins-du-sommeil-pour-bien-dormir/",
     type: "Article",
     category: "P1 - A lire dans ce dossier",
@@ -1295,7 +1295,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440150",
     matomoId: 150,
-    title: "Comment mieux dormir à l'âge adulte ?",
+    title: "Comment mieux dormir à l'âge adulte ?",
     url: "https://www.ameli.fr/assure/sante/themes/insomnie-adulte/vivre-insomnie",
     type: "Article",
     category: "P1 - A lire dans ce dossier",
@@ -1331,7 +1331,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440154",
     matomoId: 154,
-    title: "Une chambre idéale pour bien dormir : jeu des 6 erreurs",
+    title: "Une chambre idéale pour bien dormir : jeu des 6 erreurs",
     url: "https://institut-sommeil-vigilance.org/une-chambre-ideale-pour-bien-dormir-les-6-erreurs-a-eviter/",
     type: "Outils",
     category: "P2 - Explorer d'autres ressources",
@@ -1340,7 +1340,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440155",
     matomoId: 155,
-    title: "Où consulter un centre du sommeil ?",
+    title: "Où consulter un centre du sommeil ?",
     url: "https://institut-sommeil-vigilance.org/ou-consulter-reseau-sommeil-france/",
     type: "Outils",
     category: "P2 - Explorer d'autres ressources",
@@ -1367,7 +1367,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440159",
     matomoId: 159,
-    title: "L'Homme le plus flippé du monde : chroniques humoristiques sur l'anxiété quotidienne",
+    title: "L'Homme le plus flippé du monde : chroniques humoristiques sur l'anxiété quotidienne",
     url: "",
     type: "BD",
     category: "P2 - Explorer d'autres ressources",
@@ -1403,7 +1403,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440167",
     matomoId: 167,
-    title: "L'activité physique : votre meilleure alliée santé",
+    title: "L'activité physique : votre meilleure alliée santé",
     url: "https://www.has-sante.fr/jcms/p_3385126/fr/l-activite-physique-votre-meilleure-alliee-sante",
     type: "Article",
     category: "P1 - A lire dans ce dossier",
@@ -1448,7 +1448,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440172",
     matomoId: 172,
-    title: "Dépression et alimentation : où en est la recherche\naujourd'hui ?",
+    title: "Dépression et alimentation : où en est la recherche\naujourd'hui ?",
     url: "https://www.fondation-fondamental.org/system/files/inline-files/DP%20Food4Mood%20VF_2.pdf",
     type: "Article",
     category: "P1 - A lire dans ce dossier",
@@ -1457,7 +1457,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440173",
     matomoId: 173,
-    title: "La « malbouffe » une cause de dépression, vraiment ?",
+    title: "La « malbouffe » une cause de dépression, vraiment ?",
     url: "https://presse.inserm.fr/canal-detox/la-malbouffe-une-cause-de-depression-vraiment/",
     type: "Article",
     category: "P1 - A lire dans ce dossier",
@@ -1493,7 +1493,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440177",
     matomoId: 177,
-    title: "Qu'est-ce qu'un TCA ?",
+    title: "Qu'est-ce qu'un TCA ?",
     url: "https://www.ffab.fr/accueil/qu-est-ce-qu-un-tca",
     type: "Article",
     category: "P2 - Explorer d'autres ressources",
@@ -1520,7 +1520,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440180",
     matomoId: 180,
-    title: "Food4Mood : l'application nutritionnelle bonne pour la santé mentale",
+    title: "Food4Mood : l'application nutritionnelle bonne pour la santé mentale",
     url: "https://www.fondation-fondamental.org/food4mood-l-application-nutritionnelle-bonne-pour-la-sante-mentale",
     type: "Article",
     category: "P2 - Explorer d'autres ressources",
@@ -1574,7 +1574,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440186",
     matomoId: 186,
-    title: "Je me sens seul… Que faire ?",
+    title: "Je me sens seul… Que faire ?",
     url: "https://www.nosliens.fr/se-sentir-seul",
     type: "Article",
     category: "P1 - A lire dans ce dossier",
@@ -1583,7 +1583,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440187",
     matomoId: 187,
-    title: "La solitude des jeunes... Faut en parler !",
+    title: "La solitude des jeunes... Faut en parler !",
     url: "https://www.minds-ge.ch/ressources/la-solitude-des-jeunes-faut-en-parler",
     type: "Podcast",
     category: "P2 - Explorer d'autres ressources",
@@ -1646,7 +1646,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440194",
     matomoId: 194,
-    title: "Addiction aux écrans, mythe ou réalité ?",
+    title: "Addiction aux écrans, mythe ou réalité ?",
     url: "https://www.u-bordeaux.fr/actualites/Addiction-aux-écrans-mythe-ou-réalité",
     type: "Article",
     category: "P1 - A lire dans ce dossier",
@@ -1664,7 +1664,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440196",
     matomoId: 196,
-    title: "L'addiction aux écrans, un diagnostic valide ? Qui est touché ?",
+    title: "L'addiction aux écrans, un diagnostic valide ? Qui est touché ?",
     url: "https://theconversation.com/laddiction-aux-ecrans-un-diagnostic-valide-qui-est-touche-194398",
     type: "Article",
     category: "P1 - A lire dans ce dossier",
@@ -1673,7 +1673,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440197",
     matomoId: 197,
-    title: "Addictions aux écrans : fantasme ou réalité ?",
+    title: "Addictions aux écrans : fantasme ou réalité ?",
     url: "https://congresfrancaispsychiatrie.org/addictions-aux-ecrans-fantasme-ou-realite/",
     type: "Article",
     category: "P1 - A lire dans ce dossier",
@@ -1682,7 +1682,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440198",
     matomoId: 198,
-    title: "Les médias sociaux et la santé mentale - c'est quoi le lien ?",
+    title: "Les médias sociaux et la santé mentale - c'est quoi le lien ?",
     url: "https://www.youtube.com/watch?v=K8IAoPk2-Ik",
     type: "Vidéo",
     category: "P2 - Explorer d'autres ressources",
