@@ -164,7 +164,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     height: 40,
     paddingHorizontal: 10,
-    // flex: 1,
   },
   text: {
     color: colors.DARK_BLUE,
