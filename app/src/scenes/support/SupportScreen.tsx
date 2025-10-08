@@ -116,7 +116,7 @@ export default function SupportScreen({ navigation, route }) {
           </View>
           <View className="flex-col space-y-5">
             <Text className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-900 text-left")}>
-              Si vous êtes en détresse, appelez le 3114 (24h/24, 7j/7, appel gratuit).
+              Si vous êtes en détresse suicidaire, appelez le 3114 (24h/24, 7j/7, appel gratuit).
             </Text>
             <SquircleButton
               onPress={() => handleCall("3114")}
