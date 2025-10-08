@@ -109,7 +109,6 @@ const GoalPie = ({ title, records }) => {
               <PieChart
                 widthAndHeight={100}
                 series={sectionValues.map((section) => section)}
-                // sliceColor={sectionValues.map((section) => section.color)}
                 coverRadius={0.45}
                 coverFill={"#FFF"}
               />
