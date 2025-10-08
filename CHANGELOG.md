@@ -1,3 +1,10 @@
+## [1.96.4](https://github.com/SocialGouv/jardinmental/compare/v1.96.3...v1.96.4) (2025-10-08)
+
+
+### Bug Fixes
+
+* change "détresse" to "détresse suicidaire" for emergency phone number ([#531](https://github.com/SocialGouv/jardinmental/issues/531)) ([1bb0628](https://github.com/SocialGouv/jardinmental/commit/1bb06287e6230715dca51d8b8c6ebc2ec2528dc3))
+
 ## [1.96.3](https://github.com/SocialGouv/jardinmental/compare/v1.96.2...v1.96.3) (2025-10-08)
 
 
