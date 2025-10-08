@@ -12,7 +12,7 @@ const OnboardingDrugsInformation = ({ navigation }) => {
       <View style={styles.headerContainer}>
         <BackButton onPress={navigation.goBack} />
         {Platform.OS === "android" && <Image style={styles.image} source={require("../../../../assets/imgs/logo2.png")} />}
-        {Platform.OS === "ios" && <Image style={styles.image} className="rounded-lg" source={require("../../../assets/imgs/icon.png")} />}
+        {Platform.OS === "ios" && <Image style={styles.image} className="rounded-lg" source={require("../../../../assets/imgs/icon.png")} />}
       </View>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.paragraph}>
