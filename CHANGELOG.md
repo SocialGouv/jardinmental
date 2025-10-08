@@ -1,3 +1,10 @@
+## [1.96.3](https://github.com/SocialGouv/jardinmental/compare/v1.96.2...v1.96.3) (2025-10-08)
+
+
+### Bug Fixes
+
+* missing categories of external resources ([#535](https://github.com/SocialGouv/jardinmental/issues/535)) ([044c9f9](https://github.com/SocialGouv/jardinmental/commit/044c9f959e433b8a7132af09cce3763cd916f608))
+
 ## [1.96.2](https://github.com/SocialGouv/jardinmental/compare/v1.96.1...v1.96.2) (2025-10-08)
 
 
