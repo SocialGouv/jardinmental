@@ -24,7 +24,12 @@
                     window.location.href = "https://apps.apple.com/fr/app/jardin-mental";
                 } else {
                     document.getElementById('non-mobile-message').style.display = 'block';
-                    document.getElementById('current-url').innerHTML = `<a href="${currentUrl}">${currentUrl}</a>`;
+                    const link = document.createElement('a');
+                    link.href = currentUrl;
+                    link.textContent = currentUrl;
+                    const currentUrlElem = document.getElementById('current-url');
+                    currentUrlElem.innerHTML = '';
+                    currentUrlElem.appendChild(link);
                     document.getElementById('current-url').style.display = 'block';
                     generateQRCode(currentUrl);
                 }
