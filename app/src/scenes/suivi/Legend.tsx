@@ -56,7 +56,7 @@ export default function Legend({ style }: { style?: ViewStyle }) {
                 <View className="flex-row flex-wrap items-center space-x-1">
                   <View
                     style={{
-                      backgroundColor: TW_COLORS.CNAM_PRIMARY_100,
+                      backgroundColor: item.color,
                     }}
                     className={mergeClassNames("px-[4] h-[20] rounded-md justify-center items-center text-center ")}
                   >

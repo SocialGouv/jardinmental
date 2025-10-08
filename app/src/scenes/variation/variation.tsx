@@ -148,17 +148,19 @@ const Variations = ({ navigation, onScroll }) => {
           onBeforePress={() => setDay(beforeToday(7, day))}
           setDay={setDay}
         />
-        <Legend style={{ marginTop: 14 }} />
-        <TouchableOpacity
-          onPress={() => {
-            showBottomSheet(
-              <HelpView isMd={true} title={HELP_ANALYSE["variations"]["title"]} description={HELP_ANALYSE["variations"]["description"]} />
-            );
-          }}
-          className="bg-cnam-primary-100 p-2 rounded-full mr-2"
-        >
-          <CircleQuestionMark color={TW_COLORS.CNAM_PRIMARY_800} />
-        </TouchableOpacity>
+        <View>
+          <Legend style={{ marginTop: 14 }} />
+          <TouchableOpacity
+            onPress={() => {
+              showBottomSheet(
+                <HelpView isMd={true} title={HELP_ANALYSE["variations"]["title"]} description={HELP_ANALYSE["variations"]["description"]} />
+              );
+            }}
+            className="self-start bg-cnam-primary-100 p-2 rounded-full mr-2 absolute top-6 right-2"
+          >
+            <CircleQuestionMark color={TW_COLORS.CNAM_PRIMARY_800} />
+          </TouchableOpacity>
+        </View>
       </View>
       <ScrollView
         style={styles.scrollView}
