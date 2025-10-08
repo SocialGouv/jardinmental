@@ -17,54 +17,6 @@ export const FriseFilterBar = ({ hasTreatment, onShowInfo, onShowTreatmentChange
   useEffect(() => {
     onShowTreatmentChanged?.(showTreatment);
   }, [showTreatment]);
-  // return (
-  //   <View className="self-start">
-  //     <ScorePicker
-  //       showIcon={false}
-  //       focusedScores={focusedScores}
-  //       onPress={(i) => {
-  //         if (focusedScores.includes(i)) {
-  //           setFocusedScores((e) => e.filter((x) => x !== i));
-  //         } else {
-  //           setFocusedScores((e) => [...e, i]);
-  //         }
-  //         //events
-  //         logEvents.logSuiviEditScoreFrise(i);
-  //       }}
-  //       containerStyle={styles.scorePickerContainer}
-  //       itemStyle={styles.item}
-  //     >
-  //       <View style={[styles.treatmentContainer, styles.item]}>
-  //         <TouchableOpacity
-  //           onPress={() => {
-  //             if (hasTreatment) {
-  //               setShowTreatment((e) => !e);
-  //               logEvents.logSuiviShowPriseDeTraitement(showTreatment ? 0 : 1); // 0 = masquer, 1 = afficher
-  //             } else {
-  //               onShowInfo?.();
-  //             }
-  //           }}
-  //         >
-  //           <View
-  //             style={[
-  //               styles.selectionContainer,
-  //               !hasTreatment && styles.noTraitementSelectionContainer,
-  //               showTreatment && styles.activeSelectionContainer,
-  //             ]}
-  //           >
-  //             <Icon
-  //               icon="DrugsSvg"
-  //               color={!hasTreatment || showTreatment ? "#FFFFFF" : "#58C8D2"}
-  //               width={20}
-  //               height={20}
-  //               styleContainer={styles.icon}
-  //             />
-  //           </View>
-  //         </TouchableOpacity>
-  //       </View>
-  //     </ScorePicker>
-  //   </View>
-  // );
   return (
     <View className="flex-row space-x-2 border border-cnam-primary-800 rounded-2xl self-start px-2 py-2 mt-2">
       {[
