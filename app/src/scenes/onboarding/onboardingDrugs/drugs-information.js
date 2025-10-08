@@ -1,5 +1,5 @@
 import React from "react";
-import { View, TouchableOpacity, StyleSheet, ScrollView, Image, Linking } from "react-native";
+import { View, TouchableOpacity, StyleSheet, ScrollView, Image, Linking, Platform } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Text from "../../../components/MyText";
 import { colors } from "../../../utils/colors";
@@ -11,7 +11,8 @@ const OnboardingDrugsInformation = ({ navigation }) => {
     <SafeAreaView style={styles.safe}>
       <View style={styles.headerContainer}>
         <BackButton onPress={navigation.goBack} />
-        <Image style={styles.image} className="rounded-lg" source={require("../../../../assets/imgs/icon.png")} />
+        {Platform.OS === "android" && <Image style={styles.image} source={require("../../../../assets/imgs/logo2.png")} />}
+        {Platform.OS === "ios" && <Image style={styles.image} className="rounded-lg" source={require("../../../assets/imgs/icon.png")} />}
       </View>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.paragraph}>

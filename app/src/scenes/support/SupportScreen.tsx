@@ -116,7 +116,7 @@ export default function SupportScreen({ navigation, route }) {
           </View>
           <View className="flex-col space-y-5">
             <Text className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-900 text-left")}>
-              Si vous êtes en détresse, appelez le 3114 (24h/24, 7j/7, appel gratuit).
+              Si vous êtes en détresse suicidaire, appelez le 3114 (24h/24, 7j/7, appel gratuit).
             </Text>
             <SquircleButton
               onPress={() => handleCall("3114")}
@@ -178,7 +178,7 @@ export default function SupportScreen({ navigation, route }) {
                   return (
                     <SquircleButton
                       key={index}
-                      onPress={() => handleCall(item.number, item.name)}
+                      onPress={() => handleCall(item.number)}
                       cornerSmoothing={100}
                       style={{ borderRadius: 12 }}
                       preserveSmoothing={true}
@@ -197,7 +197,7 @@ export default function SupportScreen({ navigation, route }) {
                 👉 Retrouvez un guide complet sur les lignes d’écoute sur le site de Psycom :
               </Text>
               <SquircleButton
-                onPress={() => handleOpenLink("https://psycom.org")}
+                onPress={() => handleOpenLink("https://www.psycom.org/sorienter/les-lignes-decoute")}
                 cornerSmoothing={100}
                 style={{ borderRadius: 12 }}
                 preserveSmoothing={true}

@@ -1,3 +1,31 @@
+## [1.96.4](https://github.com/SocialGouv/jardinmental/compare/v1.96.3...v1.96.4) (2025-10-08)
+
+
+### Bug Fixes
+
+* change "détresse" to "détresse suicidaire" for emergency phone number ([#531](https://github.com/SocialGouv/jardinmental/issues/531)) ([1bb0628](https://github.com/SocialGouv/jardinmental/commit/1bb06287e6230715dca51d8b8c6ebc2ec2528dc3))
+
+## [1.96.3](https://github.com/SocialGouv/jardinmental/compare/v1.96.2...v1.96.3) (2025-10-08)
+
+
+### Bug Fixes
+
+* missing categories of external resources ([#535](https://github.com/SocialGouv/jardinmental/issues/535)) ([044c9f9](https://github.com/SocialGouv/jardinmental/commit/044c9f959e433b8a7132af09cce3763cd916f608))
+
+## [1.96.2](https://github.com/SocialGouv/jardinmental/compare/v1.96.1...v1.96.2) (2025-10-08)
+
+
+### Bug Fixes
+
+* link to psycom in support screen ([#532](https://github.com/SocialGouv/jardinmental/issues/532)) ([e7171ac](https://github.com/SocialGouv/jardinmental/commit/e7171ac1a3e995ce9e28930b135fdcf9e8fe43cc))
+
+## [1.96.1](https://github.com/SocialGouv/jardinmental/compare/v1.96.0...v1.96.1) (2025-10-08)
+
+
+### Reverts
+
+* Revert "fix: delete old logo (and replace with new)" (#525) ([db1f0a9](https://github.com/SocialGouv/jardinmental/commit/db1f0a90b61d4a6ea121141a178ba01b84680b74)), closes [#525](https://github.com/SocialGouv/jardinmental/issues/525) [#472](https://github.com/SocialGouv/jardinmental/issues/472)
+
 # [1.96.0](https://github.com/SocialGouv/jardinmental/compare/v1.95.0...v1.96.0) (2025-10-06)
 
 
