@@ -44,13 +44,6 @@
         }
       ],
       [
-        "expo-splash-screen",
-        {
-          "backgroundColor": "#ffffff",
-          "image": "./assets/imgs/am.png"
-        }
-      ],
-      [
         "expo-font",
         {
           "fonts": [
