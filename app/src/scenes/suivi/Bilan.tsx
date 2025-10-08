@@ -193,8 +193,6 @@ export const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    // borderBottomColor: TW_COLORS.CNAM_PRIMARY_400,
-    // borderBottomWidth: 1,
   },
   safe: {
     flex: 1,
