@@ -9,8 +9,8 @@ app:
     - secretRef:
         name: api
 
-app-redirects:
-  imagePackage: app-redirects
+app-redirect:
+  imagePackage: app-redirect
   ~chart: app
   containerPort: 8080
   host: "app-{{ .Values.global.host }}"
