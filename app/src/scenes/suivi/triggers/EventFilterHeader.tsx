@@ -1,5 +1,7 @@
 import React from "react";
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import { useAnimatedStyle, interpolate, Extrapolate } from "react-native-reanimated";
+import Animated from "react-native-reanimated";
 import { displayedCategories, HELP_ANALYSE, TW_COLORS } from "@/utils/constants";
 import { colors } from "@/utils/colors";
 import logEvents from "@/services/logEvents";
@@ -26,10 +28,35 @@ export const EventFilterHeader = ({
   level,
   setLevel,
   userIndicateurs,
+  scrollY,
 }) => {
   const { showBottomSheet } = useBottomSheet();
+
+  const animatedShadowStyle = useAnimatedStyle(() => {
+    if (!scrollY) {
+      return { shadowOpacity: 0, elevation: 0 };
+    }
+
+    const shadowOpacity = interpolate(scrollY.value, [0, 50], [0, 0.2], Extrapolate.CLAMP);
+    const elevation = interpolate(scrollY.value, [0, 50], [0, 8], Extrapolate.CLAMP);
+
+    return { shadowOpacity, elevation };
+  });
+
   return (
-    <View className="px-4 flex-col space-y-2">
+    <Animated.View
+      style={[
+        { paddingHorizontal: 16, paddingTop: 10, paddingBottom: 10, backgroundColor: "#FFF" },
+        animatedShadowStyle,
+        {
+          shadowColor: "#000",
+          shadowOffset: { width: 0, height: 4 },
+          shadowRadius: 8,
+          zIndex: 10,
+        },
+      ]}
+      className="flex-col space-y-2"
+    >
       <View className="flex-row items-center justify-between">
         <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>Voir les notes quand :</Text>
         <TouchableOpacity
@@ -52,7 +79,7 @@ export const EventFilterHeader = ({
       </View>
       <View className="flex-row items-center space-x-2">
         <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>était</Text>
-        <View preserveSmoothing={true} cornerSmoothing={100} style={[styles.scorePickerBorder]}>
+        <View style={[styles.scorePickerBorder]}>
           <ScorePicker
             size="small"
             focusedScores={level}
@@ -82,8 +109,8 @@ export const EventFilterHeader = ({
           containerStyle={[styles.lineContainer, styles.withSpace]}
         />
       </View>
-      <Legend />
-    </View>
+      {/* <Legend /> */}
+    </Animated.View>
   );
 };
 
@@ -138,6 +165,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     borderColor: colors.DARK_BLUE,
     borderWidth: 1,
+    height: 40,
     paddingHorizontal: 10,
     // flex: 1,
   },

@@ -18,10 +18,12 @@ import WeekPicker from "./week-picker";
 import Legend from "../suivi/Legend";
 import CircleQuestionMark from "@assets/svg/icon/CircleQuestionMark";
 import HelpView from "@/components/HelpView";
+import { useAnimatedStyle, interpolate, Extrapolate } from "react-native-reanimated";
+import Animated from "react-native-reanimated";
 
 const screenHeight = Dimensions.get("window").height;
 
-const Variations = ({ navigation, onScroll }) => {
+const Variations = ({ navigation, onScroll, scrollY }) => {
   const [day, setDay] = useState(new Date());
   const [diaryData] = useContext(DiaryDataContext);
   const [customs, setCustoms] = useState([]);
@@ -71,6 +73,17 @@ const Variations = ({ navigation, onScroll }) => {
   const { firstDay, lastDay } = getTodaySWeek(day);
 
   const chartDates = getArrayOfDates({ startDate: firstDay, numberOfDays: 6 });
+
+  const animatedShadowStyle = useAnimatedStyle(() => {
+    if (!scrollY) {
+      return { shadowOpacity: 0, elevation: 0 };
+    }
+
+    const shadowOpacity = interpolate(scrollY.value, [0, 50], [0, 0.2], Extrapolate.CLAMP);
+    const elevation = interpolate(scrollY.value, [0, 50], [0, 8], Extrapolate.CLAMP);
+
+    return { shadowOpacity, elevation };
+  });
 
   const displayOnlyRequest = (indicateur, dayIndex) => {
     if (Date.parse(new Date(chartDates[dayIndex])) > Date.now()) return; // if clicked day is in the future, don't display it
@@ -140,7 +153,18 @@ const Variations = ({ navigation, onScroll }) => {
 
   return (
     <View className="flex-1 bg-white">
-      <View className="px-4">
+      <Animated.View
+        style={[
+          { paddingHorizontal: 16, backgroundColor: "#FFF" },
+          animatedShadowStyle,
+          {
+            shadowColor: "#000",
+            shadowOffset: { width: 0, height: 4 },
+            shadowRadius: 8,
+            zIndex: 10,
+          },
+        ]}
+      >
         <WeekPicker
           firstDay={firstDay}
           lastDay={lastDay}
@@ -148,20 +172,25 @@ const Variations = ({ navigation, onScroll }) => {
           onBeforePress={() => setDay(beforeToday(7, day))}
           setDay={setDay}
         />
-        <View>
-          <Legend style={{ marginTop: 14 }} />
-          <TouchableOpacity
-            onPress={() => {
-              showBottomSheet(
-                <HelpView isMd={true} title={HELP_ANALYSE["variations"]["title"]} description={HELP_ANALYSE["variations"]["description"]} />
-              );
-            }}
-            className="self-start bg-cnam-primary-100 p-2 rounded-full mr-2 absolute top-6 right-2"
-          >
-            <CircleQuestionMark color={TW_COLORS.CNAM_PRIMARY_800} />
-          </TouchableOpacity>
-        </View>
-      </View>
+        {/* <Legend style={{ marginTop: 14 }} /> */}
+        <TouchableOpacity
+          onPress={() => {
+            showBottomSheet(
+              <HelpView isMd={true} title={HELP_ANALYSE["variations"]["title"]} description={HELP_ANALYSE["variations"]["description"]} />
+            );
+          }}
+          style={{
+            shadowColor: "#000",
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.15,
+            shadowRadius: 3,
+            elevation: 3, // pour Android
+          }}
+          className="self-start bg-cnam-primary-100 p-2 rounded-full mr-2 absolute top-20 right-2"
+        >
+          <CircleQuestionMark color={TW_COLORS.CNAM_PRIMARY_800} />
+        </TouchableOpacity>
+      </Animated.View>
       <ScrollView
         style={styles.scrollView}
         scrollEventThrottle={16}

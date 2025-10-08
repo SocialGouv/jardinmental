@@ -16,7 +16,8 @@ import FloatingPlusButton from "../../components/FloatingPlusButton";
 import { FriseScreen } from "./correlation/Correlation";
 import { colors } from "@/utils/colors";
 import Legend from "./Legend";
-import { useSharedValue } from "react-native-reanimated";
+import { useSharedValue, useAnimatedStyle, interpolate, Extrapolate } from "react-native-reanimated";
+import Animated from "react-native-reanimated";
 import JMButton from "@/components/JMButton";
 import CircleQuestionMark from "@assets/svg/icon/CircleQuestionMark";
 import { Button2 } from "@/components/Button2";
@@ -71,19 +72,35 @@ const Bilan = ({ navigation, startSurvey }) => {
 
         {/* Render all tabs but hide inactive ones to preserve state */}
         <View style={{ display: chartType === "Statistiques" ? "flex" : "none", flex: 1 }}>
-          <StatistiquePage
+          <StatistiqueHeader
             presetDate={presetDate}
             setPresetDate={setPresetDate}
             fromDate={fromDate}
             toDate={toDate}
             setFromDate={setFromDate}
             setToDate={setToDate}
+            scrollY={scrollY}
           />
-          <ChartPie onScroll={scrollHandler} fromDate={fromDate} toDate={toDate} navigation={navigation} />
+          <ChartPie
+            // header={
+            //   <StatistiqueHeader
+            //     presetDate={presetDate}
+            //     setPresetDate={setPresetDate}
+            //     fromDate={fromDate}
+            //     toDate={toDate}
+            //     setFromDate={setFromDate}
+            //     setToDate={setToDate}
+            //   />
+            // }
+            onScroll={scrollHandler}
+            fromDate={fromDate}
+            toDate={toDate}
+            navigation={navigation}
+          />
         </View>
 
         <View style={{ display: chartType === "Courbes" ? "flex" : "none", flex: 1 }}>
-          <Variations onScroll={scrollHandler} navigation={navigation} />
+          <Variations onScroll={scrollHandler} navigation={navigation} scrollY={scrollY} />
         </View>
 
         <View style={{ display: chartType === "Déclencheurs" ? "flex" : "none", flex: 1 }}>
@@ -96,6 +113,7 @@ const Bilan = ({ navigation, startSurvey }) => {
             setFromDate={setFromDate}
             toDate={toDate}
             setToDate={setToDate}
+            scrollY={scrollY}
           />
         </View>
 
@@ -110,6 +128,7 @@ const Bilan = ({ navigation, startSurvey }) => {
             toDate={toDate}
             setToDate={setToDate}
             hasTreatment={aUnTraiement}
+            scrollY={scrollY}
           />
         </View>
       </View>
@@ -118,14 +137,34 @@ const Bilan = ({ navigation, startSurvey }) => {
   );
 };
 
-export const StatistiquePage = ({ presetDate, setPresetDate, fromDate, toDate, setFromDate, setToDate }) => {
+export const StatistiqueHeader = ({ presetDate, setPresetDate, fromDate, toDate, setFromDate, setToDate, scrollY }) => {
   const { showBottomSheet } = useBottomSheet();
 
+  const animatedShadowStyle = useAnimatedStyle(() => {
+    if (!scrollY) {
+      return { shadowOpacity: 0, elevation: 0 };
+    }
+
+    const shadowOpacity = interpolate(scrollY.value, [0, 50], [0, 0.2], Extrapolate.CLAMP);
+    const elevation = interpolate(scrollY.value, [0, 50], [0, 8], Extrapolate.CLAMP);
+
+    return { shadowOpacity, elevation };
+  });
+
   return (
-    <View style={styles.headerContainer}>
+    <Animated.View
+      style={[
+        styles.headerContainer,
+        animatedShadowStyle,
+        {
+          shadowColor: "#000",
+          shadowOffset: { width: 0, height: 4 },
+          shadowRadius: 8,
+          zIndex: 10,
+        },
+      ]}
+    >
       <View className="w-full px-4">
-        {/* <View className="flex-row items-center w-full justify-between"> */}
-        {/* <View className="flex-row"> */}
         <RangeDate
           presetValue={presetDate}
           onChangePresetValue={setPresetDate}
@@ -137,65 +176,11 @@ export const StatistiquePage = ({ presetDate, setPresetDate, fromDate, toDate, s
           onHelpClick={() => {
             showBottomSheet(<HelpView title={HELP_ANALYSE["bilan"]["title"]} description={HELP_ANALYSE["bilan"]["description"]} />);
           }}
-        >
-          {/* TODO : make it work avec les autres types d'indicateur */}
-        </RangeDate>
-        {/* <TouchableOpacity
-              className="ml-2 border border-cnam-primary-800 rounded-full h-[40] px-4 justify-center"
-              onPress={() => setIsFilterActif(!isFilterActif)}
-            >
-              <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>Filtrer</Text>
-            </TouchableOpacity>
-          </View> */}
-        {/* <JMButton
-            onPress={() => {
-              showBottomSheet(<HelpView title={HELP_ANALYSE["bilan"]["title"]} description={HELP_ANALYSE["bilan"]["description"]} />);
-            }}
-            variant="outline"
-            width="fixed"
-            icon={<CircleQuestionMark />}
-            className="mr-2"
-          /> */}
-        {/* </View> */}
-        {/* {isFilterActif && (
-          <View className="flex-row space-x-2 border border-cnam-primary-800 rounded-2xl self-start px-2 py-2 mt-2">
-            {[
-              {
-                ...analyzeScoresMapIcon[1],
-              },
-              {
-                ...analyzeScoresMapIcon[2],
-              },
-              {
-                ...analyzeScoresMapIcon[3],
-              },
-              {
-                ...analyzeScoresMapIcon[4],
-              },
-              {
-                ...analyzeScoresMapIcon[5],
-              },
-            ].map((item) => {
-              return (
-                <View
-                  className="h-[32] w-[32] rounded-full justify-center items-center"
-                  style={{
-                    backgroundColor: item.color,
-                  }}
-                >
-                  <Text style={{ color: item.iconColor }}>{item.symbol}</Text>
-                </View>
-              );
-            })}
-            <View className="h-[32] w-[32] rounded-full bg-cnam-primary-100 justify-center items-center">
-              <DrugIcon width={16} />
-            </View>
-          </View>
-        )} */}
-        <View className="h-[1] bg-cnam-primary-400 w-full mt-4"></View>
-        <Legend style={{ marginTop: 14 }} />
+        ></RangeDate>
+        {/* <View className="h-[1] bg-cnam-primary-400 w-full mt-4"></View> */}
+        {/* <Legend style={{ marginTop: 14 }} /> */}
       </View>
-    </View>
+    </Animated.View>
   );
 };
 
@@ -219,8 +204,8 @@ export const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    borderBottomColor: TW_COLORS.CNAM_PRIMARY_400,
-    borderBottomWidth: 1,
+    // borderBottomColor: TW_COLORS.CNAM_PRIMARY_400,
+    // borderBottomWidth: 1,
   },
   safe: {
     flex: 1,

@@ -462,7 +462,6 @@ Tapez sur un jour ou un point pour retreouver une vue détaillée.`,
 Sélectionnez la période qui vous intéresse, ou définissez vous-même les dates de votre choix.\n\n
 **Faites des corrélations entre vos indicateurs**\n
 Comprenez quels indicateurs évoluent ensemble en les comparant. Utilisez les filtres d’intensité (par exemple uniquement les smileys rouges) pour mieux visualiser les corrélations.\n\n
-**Corrélez la prise de votre traitement avec vos frises grâce au filtre**
 `,
   },
   bilan: {

@@ -9,7 +9,7 @@ import { mergeClassNames } from "@/utils/className";
 
 const WeekPicker = ({ onBeforePress, onAfterPress, firstDay, lastDay, setDay }) => {
   return (
-    <View className="flex-row items-center justify-between border-b border-b-primary-300 py-4">
+    <View className="flex-row items-center justify-between py-4">
       <TouchableOpacity onPress={onBeforePress} className="w-[45] h-[45] px-4 justify-center align-left">
         <ArrowLeftSvg />
       </TouchableOpacity>

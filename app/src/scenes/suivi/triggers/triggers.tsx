@@ -19,7 +19,7 @@ import { typography } from "@/utils/typography";
 
 const screenHeight = Dimensions.get("window").height;
 
-const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, toDate, setToDate, onScroll }) => {
+const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, toDate, setToDate, onScroll, scrollY }) => {
   const [diaryData] = React.useContext(DiaryDataContext);
   const [activeCategories, setActiveCategories] = React.useState();
   const [userIndicateurs, setUserIndicateurs] = React.useState([]);
@@ -158,6 +158,24 @@ const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, 
   }
   return (
     <>
+      <EventFilterHeader
+        presetDate={presetDate}
+        setPresetDate={setPresetDate}
+        fromDate={fromDate}
+        setFromDate={setFromDate}
+        toDate={toDate}
+        setToDate={setToDate}
+        indicateur={indicateur}
+        setIndicateur={(indicatorName) => {
+          setIndicateur(indicatorName);
+          const _indicator = userIndicateurs.find((ind) => ind.name === indicatorName);
+          setIndicateurId(getIndicatorKey(_indicator));
+        }}
+        level={level}
+        setLevel={setLevel}
+        userIndicateurs={userIndicateurs.filter(({ active }) => active)}
+        scrollY={scrollY}
+      />
       <ScrollView
         style={styles.scrollView}
         contentContainerStyle={[
@@ -170,26 +188,9 @@ const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, 
         scrollEventThrottle={16}
         onScroll={onScroll}
       >
-        <EventFilterHeader
-          presetDate={presetDate}
-          setPresetDate={setPresetDate}
-          fromDate={fromDate}
-          setFromDate={setFromDate}
-          toDate={toDate}
-          setToDate={setToDate}
-          indicateur={indicateur}
-          setIndicateur={(indicatorName) => {
-            setIndicateur(indicatorName);
-            const _indicator = userIndicateurs.find((ind) => ind.name === indicatorName);
-            setIndicateurId(getIndicatorKey(_indicator));
-          }}
-          level={level}
-          setLevel={setLevel}
-          userIndicateurs={userIndicateurs.filter(({ active }) => active)}
-        />
         <View className="mx-4 border-t border-cnam-primary-300 pt-4 mt-4">
           {level && memoizedCallback()?.filter((x) => x.date)?.length === 0 && (
-            <>
+            <View className="pt-36">
               <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>
                 Aucun évènement à afficher entre {renderDate(formatDay(fromDate))} et {renderDate(formatDay(toDate))} pour :
               </Text>
@@ -213,7 +214,7 @@ const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, 
                   </Text>
                 </View>
               </View>
-            </>
+            </View>
           )}
           {!level && (
             <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>Sélectionnez une valeur dans le filtre "Était"</Text>
@@ -313,8 +314,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   scrollContainer: {
-    paddingTop: 20,
-    minHeight: screenHeight,
+    minHeight: screenHeight * 0.8,
   },
   noDataMessage: {
     color: "#111",

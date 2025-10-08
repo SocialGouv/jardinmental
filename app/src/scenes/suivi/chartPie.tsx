@@ -21,7 +21,7 @@ import CircledIcon from "@/components/CircledIcon";
 
 const screenHeight = Dimensions.get("window").height;
 
-const ChartPie = ({ navigation, fromDate, toDate, onScroll }) => {
+const ChartPie = ({ navigation, fromDate, toDate, onScroll, header }) => {
   const [diaryData] = React.useContext(DiaryDataContext);
   const [activeCategories, setActiveCategories] = React.useState([]);
   const [userIndicateurs, setUserIndicateurs] = React.useState<Indicator[]>([]);
@@ -153,11 +153,13 @@ const ChartPie = ({ navigation, fromDate, toDate, onScroll }) => {
           paddingBottom: insets.bottom + TAB_BAR_HEIGHT,
         },
       ]}
-      onScroll={onScroll}
-      scrollEventThrottle={16}
+      // stickyHeaderIndices={[0]}
+      // stickyHeaderHiddenOnScroll={true}
+      // StickyHeaderComponent={() => [header]}
       onScroll={onScroll}
       showsVerticalScrollIndicator={false}
     >
+      {/* {header} */}
       {userIndicateurs
         ?.filter((ind) => isChartVisible(getIndicatorKey(ind)) && ind.active)
         ?.map((_indicateur, index) => {
@@ -204,85 +206,6 @@ const ChartPie = ({ navigation, fromDate, toDate, onScroll }) => {
       </View>
     </ScrollView>
   );
-};
-
-const _colors = {
-  ASC: ["#f3f3f3", scoresMapIcon[1].color, scoresMapIcon[2].color, scoresMapIcon[3].color, scoresMapIcon[4].color, scoresMapIcon[5].color],
-  DESC: ["#f3f3f3", scoresMapIcon[5].color, scoresMapIcon[4].color, scoresMapIcon[3].color, scoresMapIcon[2].color, scoresMapIcon[1].color],
-};
-
-const renderResponse = ({ indicateur, value, isSmall, translateX }) => {
-  if (indicateur?.type === "smiley") {
-    let _icon;
-    if (indicateur?.order === "DESC") {
-      _icon = scoresMapIcon[5 + 1 - value];
-    } else {
-      _icon = scoresMapIcon[value];
-    }
-    const iconSize = isSmall ? 24 : 32;
-    const iconContainerSize = isSmall ? 30 : 40;
-
-    if (!_icon || (!_icon.color && !_icon.faceIcon))
-      return (
-        <CircledIcon
-          key={`${indicateur.name}-${value}`}
-          color="#cccccc"
-          borderColor="#999999"
-          iconColor="#888888"
-          icon="QuestionMarkSvg"
-          iconWidth={iconSize}
-          iconHeight={iconSize}
-          iconContainerStyle={{
-            marginRight: 0,
-            transform: [{ translateX: translateX ? -10 : 0 }],
-            width: iconContainerSize,
-            height: iconContainerSize,
-          }}
-        />
-      );
-    return (
-      <CircledIcon
-        key={`${indicateur.name}-${value}`}
-        color={_icon.color}
-        borderColor={_icon.borderColor}
-        iconColor={_icon.iconColor}
-        icon={_icon.faceIcon}
-        iconWidth={iconSize}
-        iconHeight={iconSize}
-        iconContainerStyle={{
-          marginRight: 0,
-          transform: [{ translateX: translateX ? -10 : 0 }],
-          width: iconContainerSize,
-          height: iconContainerSize,
-        }}
-      />
-    );
-  }
-  if (indicateur?.type === "boolean") {
-    // a voir si on veut afficher un smiley ou un cercle ou du texte
-    return null;
-  }
-  if (indicateur?.type === "gauge") {
-    const _value = value;
-    const _colors =
-      indicateur?.order === "DESC"
-        ? [TW_COLORS.POSITIVE, EMOTION_COLORS.good, EMOTION_COLORS.middle, EMOTION_COLORS.bad, TW_COLORS.NEGATIVE]
-        : [TW_COLORS.NEGATIVE, EMOTION_COLORS.bad, EMOTION_COLORS.middle, EMOTION_COLORS.good, TW_COLORS.POSITIVE];
-
-    let _color = _colors[_value - 1];
-
-    return (
-      <View
-        style={{ transform: [{ translateX: translateX ? -10 : 0 }] }}
-        className={`flex flex-row justify-center w-10 ${isSmall ? "space-x-1" : "space-x-2"} items-end`}
-      >
-        <View className={`${isSmall ? "h-1" : "h-2"} rounded-full w-1`} style={{ backgroundColor: _color }} />
-        <View className={`${isSmall ? "h-2" : "h-5"} rounded-full w-1`} style={{ backgroundColor: _color }} />
-        <View className={`${isSmall ? "h-4" : "h-8"} rounded-full w-1`} style={{ backgroundColor: _color }} />
-      </View>
-    );
-  }
-  return <View />;
 };
 
 const styles = StyleSheet.create({
