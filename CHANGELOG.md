@@ -1,3 +1,10 @@
+## [1.96.1](https://github.com/SocialGouv/jardinmental/compare/v1.96.0...v1.96.1) (2025-10-08)
+
+
+### Reverts
+
+* Revert "fix: delete old logo (and replace with new)" (#525) ([db1f0a9](https://github.com/SocialGouv/jardinmental/commit/db1f0a90b61d4a6ea121141a178ba01b84680b74)), closes [#525](https://github.com/SocialGouv/jardinmental/issues/525) [#472](https://github.com/SocialGouv/jardinmental/issues/472)
+
 # [1.96.0](https://github.com/SocialGouv/jardinmental/compare/v1.95.0...v1.96.0) (2025-10-06)
 
 
