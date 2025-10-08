@@ -82,16 +82,6 @@ const Bilan = ({ navigation, startSurvey }) => {
             scrollY={scrollY}
           />
           <ChartPie
-            // header={
-            //   <StatistiqueHeader
-            //     presetDate={presetDate}
-            //     setPresetDate={setPresetDate}
-            //     fromDate={fromDate}
-            //     toDate={toDate}
-            //     setFromDate={setFromDate}
-            //     setToDate={setToDate}
-            //   />
-            // }
             onScroll={scrollHandler}
             fromDate={fromDate}
             toDate={toDate}
