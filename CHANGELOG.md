@@ -1,3 +1,11 @@
+## [1.96.5](https://github.com/SocialGouv/jardinmental/compare/v1.96.4...v1.96.5) (2025-10-08)
+
+
+### Bug Fixes
+
+* insecable space between double symbol punctuation ([#530](https://github.com/SocialGouv/jardinmental/issues/530)) ([b3fff05](https://github.com/SocialGouv/jardinmental/commit/b3fff05f2514b3c16f226e6c74b8dd75481a76c3))
+* microfix thanks to revubot PR 532#discussion_r2409750317 ([#537](https://github.com/SocialGouv/jardinmental/issues/537)) ([729fa98](https://github.com/SocialGouv/jardinmental/commit/729fa9838d8524466c5ceb63c9eac107a6f1269d)), closes [532#discussion_r2409750317](https://github.com/532/issues/discussion_r2409750317)
+
 ## [1.96.4](https://github.com/SocialGouv/jardinmental/compare/v1.96.3...v1.96.4) (2025-10-08)
 
 
