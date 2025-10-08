@@ -10,6 +10,7 @@ app:
         name: api
 
 app-redirects:
+  imagePackage: app-redirects
   ~chart: app
   containerPort: 8080
   host: "app-{{ .Values.global.host }}"
