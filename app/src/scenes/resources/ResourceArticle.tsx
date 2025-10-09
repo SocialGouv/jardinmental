@@ -51,18 +51,14 @@ const ResourceArticle: React.FC<ResourceArticleProps> = ({ navigation, route }) 
     if (!resource.externalResources) return [];
     return resource.externalResources
       .map((id) => getExternalResource(id))
-      .filter((res): res is ExternalResource => 
-        res !== undefined && res.category === "P1 - A lire dans ce dossier"
-      );
+      .filter((res): res is ExternalResource => res !== undefined && res.category === "P1 - A lire dans ce dossier");
   };
 
   const getP2Resources = (): ExternalResource[] => {
     if (!resource.externalResources) return [];
     return resource.externalResources
       .map((id) => getExternalResource(id))
-      .filter((res): res is ExternalResource => 
-        res !== undefined && res.category === "P2 - Explorer d'autres ressources"
-      );
+      .filter((res): res is ExternalResource => res !== undefined && res.category === "P2 - Explorer d'autres ressources");
   };
 
   const handleExploreMoreResources = () => {
@@ -118,7 +114,7 @@ const ResourceArticle: React.FC<ResourceArticleProps> = ({ navigation, route }) 
                 onPress={handleExploreMoreResources}
                 className="bg-cnam-primary-800 rounded-[20px] px-4 py-2.5 flex flex-row items-center justify-center"
               >
-                <Text className="text-white font-semibold text-base mr-2">Explorer {getP2Resources().length} ressources</Text>
+                <Text className="text-white font-semibold text-base mr-2">Explorer {p2Resources.length} ressources</Text>
                 <ArrowIcon width={18} height={18} color="white" />
               </TouchableOpacity>
             </View>

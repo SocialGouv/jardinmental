@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Linking } from "react-native";
+import { View, Linking, Text } from "react-native";
 import { AnimatedHeaderScrollScreen } from "../survey-v2/AnimatedHeaderScrollScreen";
 import { TW_COLORS } from "@/utils/constants";
 import logEvents from "../../services/logEvents";
@@ -52,6 +52,11 @@ const ExternalResourcesScreen: React.FC<ExternalResourcesScreenProps> = ({ navig
           {p2Resources.map((externalResource) => (
             <ExternalResourceCard key={externalResource.id} externalResource={externalResource} onPress={handleOpenExternalResource} />
           ))}
+          {p2Resources.length === 0 && (
+            <View className="flex flex-col">
+              <Text className="text-cnam-primary-950 font-normal">Aucune ressource trouvée</Text>
+            </View>
+          )}
         </View>
       </View>
     </AnimatedHeaderScrollScreen>
