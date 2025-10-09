@@ -28,7 +28,7 @@ export default function Legend({ style }: { style?: ViewStyle }) {
             {!extended ? "Voir la légende" : "Masquer la légende"}
           </Text>
         </TouchableOpacity>
-        {extended && (
+        {/* {extended && (
           <View className="flex-row flex-wrap space-x-2 items-center">
             {[
               {
@@ -69,7 +69,7 @@ export default function Legend({ style }: { style?: ViewStyle }) {
               );
             })}
           </View>
-        )}
+        )} */}
         {extended && (
           <View className="flex-row space-x-3 items-center">
             {[

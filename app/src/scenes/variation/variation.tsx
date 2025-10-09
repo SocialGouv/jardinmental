@@ -23,8 +23,63 @@ import Animated from "react-native-reanimated";
 
 const screenHeight = Dimensions.get("window").height;
 
-const Variations = ({ navigation, onScroll, scrollY }) => {
-  const [day, setDay] = useState(new Date());
+export const VariationsHeader = ({ day, setDay, scrollY }) => {
+  const { showBottomSheet } = useBottomSheet();
+  const { firstDay, lastDay } = getTodaySWeek(day);
+
+  const animatedShadowStyle = useAnimatedStyle(() => {
+    if (!scrollY) {
+      return { shadowOpacity: 0, elevation: 0 };
+    }
+
+    const shadowOpacity = interpolate(scrollY.value, [0, 50], [0, 0.2], Extrapolate.CLAMP);
+    const elevation = interpolate(scrollY.value, [0, 50], [0, 8], Extrapolate.CLAMP);
+
+    return { shadowOpacity, elevation };
+  });
+
+  return (
+    <Animated.View
+      style={[
+        { paddingHorizontal: 16, backgroundColor: "#FFF" },
+        animatedShadowStyle,
+        {
+          shadowColor: "#000",
+          shadowOffset: { width: 0, height: 4 },
+          shadowRadius: 8,
+          zIndex: 10,
+        },
+      ]}
+    >
+      <WeekPicker
+        firstDay={firstDay}
+        lastDay={lastDay}
+        onAfterPress={() => setDay(beforeToday(-7, day))}
+        onBeforePress={() => setDay(beforeToday(7, day))}
+        setDay={setDay}
+      />
+      <TouchableOpacity
+        onPress={() => {
+          showBottomSheet(
+            <HelpView isMd={true} title={HELP_ANALYSE["variations"]["title"]} description={HELP_ANALYSE["variations"]["description"]} />
+          );
+        }}
+        style={{
+          shadowColor: "#000",
+          shadowOffset: { width: 0, height: 2 },
+          shadowOpacity: 0.15,
+          shadowRadius: 3,
+          elevation: 3,
+        }}
+        className="self-start bg-cnam-primary-100 p-2 rounded-full mr-2 absolute top-20 right-2"
+      >
+        <CircleQuestionMark color={TW_COLORS.CNAM_PRIMARY_800} />
+      </TouchableOpacity>
+    </Animated.View>
+  );
+};
+
+const Variations = ({ navigation, onScroll, scrollY, day, setDay, dynamicPaddingTop }) => {
   const [diaryData] = useContext(DiaryDataContext);
   const [customs, setCustoms] = useState([]);
   const [oldCustoms, setOldCustoms] = useState([]);
@@ -73,17 +128,6 @@ const Variations = ({ navigation, onScroll, scrollY }) => {
   const { firstDay, lastDay } = getTodaySWeek(day);
 
   const chartDates = getArrayOfDates({ startDate: firstDay, numberOfDays: 6 });
-
-  const animatedShadowStyle = useAnimatedStyle(() => {
-    if (!scrollY) {
-      return { shadowOpacity: 0, elevation: 0 };
-    }
-
-    const shadowOpacity = interpolate(scrollY.value, [0, 50], [0, 0.2], Extrapolate.CLAMP);
-    const elevation = interpolate(scrollY.value, [0, 50], [0, 8], Extrapolate.CLAMP);
-
-    return { shadowOpacity, elevation };
-  });
 
   const displayOnlyRequest = (indicateur, dayIndex) => {
     if (Date.parse(new Date(chartDates[dayIndex])) > Date.now()) return; // if clicked day is in the future, don't display it
@@ -153,45 +197,7 @@ const Variations = ({ navigation, onScroll, scrollY }) => {
 
   return (
     <View className="flex-1 bg-white">
-      <Animated.View
-        style={[
-          { paddingHorizontal: 16, backgroundColor: "#FFF" },
-          animatedShadowStyle,
-          {
-            shadowColor: "#000",
-            shadowOffset: { width: 0, height: 4 },
-            shadowRadius: 8,
-            zIndex: 10,
-          },
-        ]}
-      >
-        <WeekPicker
-          firstDay={firstDay}
-          lastDay={lastDay}
-          onAfterPress={() => setDay(beforeToday(-7, day))}
-          onBeforePress={() => setDay(beforeToday(7, day))}
-          setDay={setDay}
-        />
-        {/* <Legend style={{ marginTop: 14 }} /> */}
-        <TouchableOpacity
-          onPress={() => {
-            showBottomSheet(
-              <HelpView isMd={true} title={HELP_ANALYSE["variations"]["title"]} description={HELP_ANALYSE["variations"]["description"]} />
-            );
-          }}
-          style={{
-            shadowColor: "#000",
-            shadowOffset: { width: 0, height: 2 },
-            shadowOpacity: 0.15,
-            shadowRadius: 3,
-            elevation: 3, // pour Android
-          }}
-          className="self-start bg-cnam-primary-100 p-2 rounded-full mr-2 absolute top-20 right-2"
-        >
-          <CircleQuestionMark color={TW_COLORS.CNAM_PRIMARY_800} />
-        </TouchableOpacity>
-      </Animated.View>
-      <ScrollView
+      <Animated.ScrollView
         style={styles.scrollView}
         scrollEventThrottle={16}
         showsVerticalScrollIndicator={false}
@@ -199,10 +205,9 @@ const Variations = ({ navigation, onScroll, scrollY }) => {
           styles.scrollContainer,
           {
             paddingBottom: insets.bottom + TAB_BAR_HEIGHT,
+            paddingTop: 260,
           },
         ]}
-        scrollEventThrottle={16}
-        showsVerticalScrollIndicator={false}
         onScroll={onScroll}
       >
         {!calendarIsEmpty ? (
@@ -236,7 +241,7 @@ const Variations = ({ navigation, onScroll, scrollY }) => {
             </View>
           </>
         )}
-      </ScrollView>
+      </Animated.ScrollView>
     </View>
   );
 };

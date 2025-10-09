@@ -17,6 +17,7 @@ import { GoalsFriseGraph } from "@/scenes/goals/suivi/GoalsFriseGraph";
 
 import { getIndicatorKey } from "../../../utils/indicatorUtils";
 import { SCROLL_THRESHOLD } from "@/scenes/survey-v2/AnimatedHeaderScrollScreen";
+import Animated from "react-native-reanimated";
 
 const screenHeight = Dimensions.get("window").height;
 
@@ -122,7 +123,7 @@ const AsyncFriseGraph = React.memo(
   }
 );
 
-const FriseGraphList = ({ navigation, fromDate, toDate, focusedScores, showTraitement, onScroll }) => {
+const FriseGraphList = ({ navigation, fromDate, toDate, focusedScores, showTraitement, onScroll, dynamicPaddingTop }) => {
   const [diaryData] = React.useContext(DiaryDataContext);
   const [userIndicateurs, setUserIndicateurs] = React.useState<any[]>([]);
   const [isEmpty, setIsEmpty] = React.useState<boolean>(false);
@@ -325,6 +326,7 @@ const FriseGraphList = ({ navigation, fromDate, toDate, focusedScores, showTrait
           styles.emptyContainer,
           {
             paddingBottom: insets.bottom + TAB_BAR_HEIGHT,
+            paddingTop: 220,
           },
         ]}
       >
@@ -341,12 +343,13 @@ const FriseGraphList = ({ navigation, fromDate, toDate, focusedScores, showTrait
 
   return (
     <>
-      <ScrollView
+      <Animated.ScrollView
         style={styles.scrollView}
         contentContainerStyle={[
           styles.scrollContainer,
           {
-            paddingBottom: insets.bottom + TAB_BAR_HEIGHT,
+            paddingBottom: insets.bottom + TAB_BAR_HEIGHT + 150,
+            paddingTop: 200 + dynamicPaddingTop,
           },
         ]}
         scrollEventThrottle={16}
@@ -375,7 +378,7 @@ const FriseGraphList = ({ navigation, fromDate, toDate, focusedScores, showTrait
           priseDeTraitementSiBesoin={computeChartData("PRISE_DE_TRAITEMENT_SI_BESOIN")}
           onIsEmptyChanged={setGoalsIsEmpty}
         />
-      </ScrollView>
+      </Animated.ScrollView>
     </>
   );
 };

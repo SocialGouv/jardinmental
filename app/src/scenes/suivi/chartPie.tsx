@@ -18,10 +18,11 @@ import { Pie } from "./Pie";
 import { PieYesNo } from "./PieYesNo";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import CircledIcon from "@/components/CircledIcon";
+import Animated from "react-native-reanimated";
 
 const screenHeight = Dimensions.get("window").height;
 
-const ChartPie = ({ navigation, fromDate, toDate, onScroll, header }) => {
+const ChartPie = ({ navigation, fromDate, toDate, onScroll, header, dynamicPaddingTop }) => {
   const [diaryData] = React.useContext(DiaryDataContext);
   const [activeCategories, setActiveCategories] = React.useState([]);
   const [userIndicateurs, setUserIndicateurs] = React.useState<Indicator[]>([]);
@@ -144,12 +145,15 @@ const ChartPie = ({ navigation, fromDate, toDate, onScroll, header }) => {
   }
 
   return (
-    <ScrollView
+    <Animated.ScrollView
       style={styles.scrollView}
       scrollEventThrottle={16}
+      className={"flex-1"}
+      StickyHeaderComponent={header}
       contentContainerStyle={[
         styles.scrollContainer,
         {
+          paddingTop: 180 + dynamicPaddingTop,
           paddingBottom: insets.bottom + TAB_BAR_HEIGHT,
         },
       ]}
@@ -166,25 +170,23 @@ const ChartPie = ({ navigation, fromDate, toDate, onScroll, header }) => {
           const isReverse = _indicateur?.order === "DESC";
           if (_indicateur?.type === "boolean")
             return (
-              <View className="border-b border-cnam-primary-400 py-4">
-                <PieYesNo
-                  key={index}
-                  indicateur={_indicateur}
-                  title={getTitle(_indicateur.name)}
-                  data={computeChartData(getIndicatorKey(_indicateur))}
-                  parialsColors={[
-                    { color: "#f3f3f3" },
-                    {
-                      color: isReverse ? yesNoMapIcon["false"].color : yesNoMapIcon["true"].color,
-                      symbol: isReverse ? yesNoMapIcon["false"].symbol : yesNoMapIcon["true"].symbol,
-                    },
-                    {
-                      color: isReverse ? yesNoMapIcon["true"].color : yesNoMapIcon["false"].color,
-                      symbol: isReverse ? yesNoMapIcon["true"].symbol : yesNoMapIcon["false"].symbol,
-                    },
-                  ]}
-                />
-              </View>
+              <PieYesNo
+                key={index}
+                indicateur={_indicateur}
+                title={getTitle(_indicateur.name)}
+                data={computeChartData(getIndicatorKey(_indicateur))}
+                parialsColors={[
+                  { color: "#f3f3f3" },
+                  {
+                    color: isReverse ? yesNoMapIcon["false"].color : yesNoMapIcon["true"].color,
+                    symbol: isReverse ? yesNoMapIcon["false"].symbol : yesNoMapIcon["true"].symbol,
+                  },
+                  {
+                    color: isReverse ? yesNoMapIcon["true"].color : yesNoMapIcon["false"].color,
+                    symbol: isReverse ? yesNoMapIcon["true"].symbol : yesNoMapIcon["false"].symbol,
+                  },
+                ]}
+              />
             );
           return (
             <View className="border-b border-cnam-primary-400 py-4">
@@ -198,13 +200,9 @@ const ChartPie = ({ navigation, fromDate, toDate, onScroll, header }) => {
           );
         })}
       <GoalsChartPie chartDates={chartDates} />
-      <View className="border-b border-cnam-primary-400 py-4">
-        <PieYesNo title="Ai-je pris correctement mon traitement quotidien ?" data={computeChartData("PRISE_DE_TRAITEMENT")} />
-      </View>
-      <View className="border-b border-cnam-primary-400 py-4">
-        <PieYesNo title='Ai-je pris un "si besoin" ?' data={computeChartData("PRISE_DE_TRAITEMENT_SI_BESOIN")} />
-      </View>
-    </ScrollView>
+      <PieYesNo title="Ai-je pris correctement mon traitement quotidien ?" data={computeChartData("PRISE_DE_TRAITEMENT")} />
+      <PieYesNo title='Ai-je pris un "si besoin" ?' data={computeChartData("PRISE_DE_TRAITEMENT_SI_BESOIN")} />
+    </Animated.ScrollView>
   );
 };
 
@@ -311,8 +309,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
   },
   scrollContainer: {
-    paddingBottom: 150,
-    minHeight: screenHeight * 0.7,
+    minHeight: screenHeight * 1.2,
   },
 });
 

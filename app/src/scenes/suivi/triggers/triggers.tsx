@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View, ScrollView, Dimensions, Text } from "react-native";
+import { StyleSheet, View, Dimensions, Text } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { isToday, isYesterday, parseISO } from "date-fns";
 import { getArrayOfDatesFromTo, formatDay, formatRelativeDate } from "@/utils/date/helpers";
@@ -9,40 +9,42 @@ import Icon from "@/components/Icon";
 import localStorage from "@/utils/localStorage";
 import logEvents from "@/services/logEvents";
 import Card from "./Card";
-import { EventFilterHeader } from "./EventFilterHeader";
 import JMButton from "@/components/JMButton";
 import { getIndicatorKey } from "@/utils/indicatorUtils";
 import { analyzeScoresMapIcon, TAB_BAR_HEIGHT } from "@/utils/constants";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
+import Animated from "react-native-reanimated";
 
 const screenHeight = Dimensions.get("window").height;
 
-const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, toDate, setToDate, onScroll, scrollY }) => {
+const Events = ({
+  navigation,
+  presetDate,
+  setPresetDate,
+  fromDate,
+  setFromDate,
+  toDate,
+  setToDate,
+  onScroll,
+  scrollY,
+  indicateur,
+  setIndicateur,
+  indicateurId,
+  setIndicateurId,
+  level,
+  setLevel,
+  userIndicateurs,
+  setUserIndicateurs,
+  dynamicPaddingTop,
+}) => {
   const [diaryData] = React.useContext(DiaryDataContext);
   const [activeCategories, setActiveCategories] = React.useState();
-  const [userIndicateurs, setUserIndicateurs] = React.useState([]);
   const [isEmpty, setIsEmpty] = React.useState();
   const chartDates = getArrayOfDatesFromTo({ fromDate, toDate });
-  const [indicateur, setIndicateur] = React.useState();
-  const [indicateurId, setIndicateurId] = React.useState();
   const [event, setEvent] = React.useState("ALL");
-  const [level, setLevel] = React.useState([5]);
   const insets = useSafeAreaInsets();
-
-  useFocusEffect(
-    React.useCallback(() => {
-      (async () => {
-        const user_indicateurs = await localStorage.getIndicateurs();
-        if (user_indicateurs) {
-          setUserIndicateurs(user_indicateurs);
-          setIndicateur(user_indicateurs[0].name);
-          setIndicateurId(getIndicatorKey(user_indicateurs[0]));
-        }
-      })();
-    }, [])
-  );
 
   // React.useEffect(() => {
   //   console.log("✍️ ~ indicateur", indicateur);
@@ -145,7 +147,16 @@ const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, 
 
   if (isEmpty) {
     return (
-      <View style={styles.emptyContainer}>
+      <View
+        style={[
+          styles.emptyContainer,
+          {
+            paddingTop: 180 + dynamicPaddingTop,
+            flex: 1,
+            backgroundColor: "red",
+          },
+        ]}
+      >
         <View style={styles.subtitleContainer}>
           <Icon icon="InfoSvg" width={25} height={25} color={colors.LIGHT_BLUE} />
           <Text style={styles.subtitle}>
@@ -156,32 +167,19 @@ const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, 
       </View>
     );
   }
+  console.log(
+    level,
+    memoizedCallback()?.filter((x) => x.date)
+  );
   return (
     <>
-      <EventFilterHeader
-        presetDate={presetDate}
-        setPresetDate={setPresetDate}
-        fromDate={fromDate}
-        setFromDate={setFromDate}
-        toDate={toDate}
-        setToDate={setToDate}
-        indicateur={indicateur}
-        setIndicateur={(indicatorName) => {
-          setIndicateur(indicatorName);
-          const _indicator = userIndicateurs.find((ind) => ind.name === indicatorName);
-          setIndicateurId(getIndicatorKey(_indicator));
-        }}
-        level={level}
-        setLevel={setLevel}
-        userIndicateurs={userIndicateurs.filter(({ active }) => active)}
-        scrollY={scrollY}
-      />
-      <ScrollView
+      <Animated.ScrollView
         style={styles.scrollView}
         contentContainerStyle={[
           styles.scrollContainer,
           {
             paddingBottom: insets.bottom + TAB_BAR_HEIGHT,
+            paddingTop: 180 + dynamicPaddingTop,
           },
         ]}
         showsVerticalScrollIndicator={false}
@@ -230,7 +228,7 @@ const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, 
               return <Card key={d.date} event={event} date={d.date} context={d.CONTEXT} userComment={d.USER_COMMENT} />;
             })}
         </View>
-      </ScrollView>
+      </Animated.ScrollView>
     </>
   );
 };

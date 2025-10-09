@@ -367,66 +367,33 @@ export const FriseGraph = React.memo(
           }}
         >
           {/* Main Bar - Batched */}
-          <Svg
-            width={containerWidth}
-            height={MAIN_BAR_HEIGHT}
+          <View
             style={{
               borderWidth: 1,
               borderRadius: 15,
               borderColor: TW_COLORS.CNAM_PRIMARY_400,
+              width: containerWidth,
+              height: MAIN_BAR_HEIGHT,
+              overflow: "hidden",
             }}
           >
-            {batchedMainData.map((batch, i) => {
-              let side = "none";
-              // When batching is disabled, all segments should have both sides rounded
-              if (i === 0 && i === batchedMainData.length - 1) {
-                side = "both";
-              } else if (i === 0) {
-                side = "left";
-              } else if (i === batchedMainData.length - 1) {
-                side = "right";
-              }
-              return (
-                <React.Fragment key={i}>
-                  <BatchedSegment
-                    side={side}
-                    key={i}
-                    x={batch.x}
-                    width={batch.width}
-                    height={MAIN_BAR_HEIGHT}
-                    fill={batch.color}
-                    opacity={batch.opacity}
-                    radius={MAIN_BAR_HEIGHT / 2}
-                  />
-                  <SvgText
-                    x={batch.x + batch.width / 2} // centre horizontal
-                    y={MAIN_BAR_HEIGHT / 2} // centre vertical
-                    fontSize={12}
-                    fontWeight={600}
-                    fill={batch.textColor}
-                    textAnchor="middle" // centre le texte horizontalement
-                    alignmentBaseline="middle" // centre le texte verticalement
-                  >
-                    {batch.symbol || ""}
-                  </SvgText>
-                </React.Fragment>
-              );
-            })}
-            {/* Grid lines for day separations */}
-            <GridLines count={dataLength} segmentWidth={segmentWidth} height={MAIN_BAR_HEIGHT} />
-          </Svg>
-
-          {/* Treatment Bar - Batched */}
-          {batchedTreatmentData && (
-            <Svg width={containerWidth} height={TREATMENT_BAR_HEIGHT} style={styles.treatmentBar} className="mt-2">
-              {batchedTreatmentData.map((batch, i) => {
+            <Svg
+              width={containerWidth}
+              height={MAIN_BAR_HEIGHT}
+              // style={{
+              //   borderWidth: 10,
+              //   borderRadius: 15,
+              //   borderColor: TW_COLORS.CNAM_PRIMARY_400,
+              // }}
+            >
+              {batchedMainData.map((batch, i) => {
                 let side = "none";
                 // When batching is disabled, all segments should have both sides rounded
-                if (i === 0 && i === batchedTreatmentData.length - 1) {
+                if (i === 0 && i === batchedMainData.length - 1) {
                   side = "both";
                 } else if (i === 0) {
                   side = "left";
-                } else if (i === batchedTreatmentData.length - 1) {
+                } else if (i === batchedMainData.length - 1) {
                   side = "right";
                 }
                 return (
@@ -436,28 +403,84 @@ export const FriseGraph = React.memo(
                       key={i}
                       x={batch.x}
                       width={batch.width}
-                      height={TREATMENT_BAR_HEIGHT}
+                      height={MAIN_BAR_HEIGHT}
                       fill={batch.color}
-                      radius={TREATMENT_BAR_HEIGHT / 2}
-                      opacity={1}
+                      opacity={batch.opacity}
+                      radius={MAIN_BAR_HEIGHT / 2}
                     />
                     <SvgText
                       x={batch.x + batch.width / 2} // centre horizontal
-                      y={TREATMENT_BAR_HEIGHT / 2} // centre vertical
+                      y={MAIN_BAR_HEIGHT / 2} // centre vertical
                       fontSize={12}
-                      fill={"#3D6874"}
                       fontWeight={600}
+                      fill={batch.textColor}
                       textAnchor="middle" // centre le texte horizontalement
                       alignmentBaseline="middle" // centre le texte verticalement
                     >
-                      {colorToSymbol[batch.color] || ""}
+                      {batch.symbol || ""}
                     </SvgText>
                   </React.Fragment>
                 );
               })}
               {/* Grid lines for day separations */}
-              <GridLines count={dataLength} segmentWidth={segmentWidth} height={TREATMENT_BAR_HEIGHT} />
+              <GridLines count={dataLength} segmentWidth={segmentWidth} height={MAIN_BAR_HEIGHT} />
             </Svg>
+          </View>
+
+          {/* Treatment Bar - Batched */}
+          {batchedTreatmentData && (
+            <View
+              className="mt-2"
+              style={{
+                borderWidth: 1,
+                borderRadius: 15,
+                borderColor: TW_COLORS.CNAM_PRIMARY_400,
+                width: containerWidth,
+                height: TREATMENT_BAR_HEIGHT,
+                overflow: "hidden",
+              }}
+            >
+              <Svg width={containerWidth} height={TREATMENT_BAR_HEIGHT} style={styles.treatmentBar}>
+                {batchedTreatmentData.map((batch, i) => {
+                  let side = "none";
+                  // When batching is disabled, all segments should have both sides rounded
+                  if (i === 0 && i === batchedTreatmentData.length - 1) {
+                    side = "both";
+                  } else if (i === 0) {
+                    side = "left";
+                  } else if (i === batchedTreatmentData.length - 1) {
+                    side = "right";
+                  }
+                  return (
+                    <React.Fragment key={i}>
+                      <BatchedSegment
+                        side={side}
+                        key={i}
+                        x={batch.x}
+                        width={batch.width}
+                        height={TREATMENT_BAR_HEIGHT}
+                        fill={batch.color}
+                        radius={TREATMENT_BAR_HEIGHT / 2}
+                        opacity={1}
+                      />
+                      <SvgText
+                        x={batch.x + batch.width / 2} // centre horizontal
+                        y={TREATMENT_BAR_HEIGHT / 2} // centre vertical
+                        fontSize={12}
+                        fill={"#3D6874"}
+                        fontWeight={600}
+                        textAnchor="middle" // centre le texte horizontalement
+                        alignmentBaseline="middle" // centre le texte verticalement
+                      >
+                        {colorToSymbol[batch.color] || ""}
+                      </SvgText>
+                    </React.Fragment>
+                  );
+                })}
+                {/* Grid lines for day separations */}
+                <GridLines count={dataLength} segmentWidth={segmentWidth} height={TREATMENT_BAR_HEIGHT} />
+              </Svg>
+            </View>
           )}
 
           {/* Treatment Si Besoin Dots */}

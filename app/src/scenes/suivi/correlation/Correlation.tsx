@@ -12,12 +12,24 @@ import { HELP_ANALYSE } from "@/utils/constants";
 import { useBottomSheet } from "@/context/BottomSheetContext";
 import Legend from "../Legend";
 
-export const FriseScreen = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, toDate, setToDate, hasTreatment, onScroll, scrollY }) => {
-  const [focusedScores, setFocusedScores] = React.useState([]);
-  const [showTraitement, setShowTraitement] = React.useState(true);
-  const [filterEnabled, setFilterEnabled] = React.useState(false);
+export const CorrelationHeader = ({
+  presetDate,
+  setPresetDate,
+  fromDate,
+  setFromDate,
+  toDate,
+  setToDate,
+  hasTreatment,
+  scrollY,
+  focusedScores,
+  setFocusedScores,
+  showTraitement,
+  setShowTraitement,
+  filterEnabled,
+  setFilterEnabled,
+  friseInfoButtonRef,
+}) => {
   const { showBottomSheet } = useBottomSheet();
-  const friseInfoButtonRef = useRef();
 
   const animatedShadowStyle = useAnimatedStyle(() => {
     if (!scrollY) {
@@ -33,63 +45,89 @@ export const FriseScreen = ({ navigation, presetDate, setPresetDate, fromDate, s
   if (!toDate || !fromDate) return null;
 
   return (
-    <>
-      <Animated.View
-        style={[
-          commonStyles.headerContainer,
-          animatedShadowStyle,
-          {
-            shadowColor: "#000",
-            shadowOffset: { width: 0, height: 4 },
-            shadowRadius: 8,
-            zIndex: 10,
-          },
-        ]}
-      >
-        <View className="w-full px-4">
-          <RangeDate
-            isFilterActive={filterEnabled}
-            presetValue={presetDate}
-            onChangePresetValue={setPresetDate}
-            fromDate={fromDate}
-            toDate={toDate}
-            setIsFilterActive={() => {
-              const nextValue = !filterEnabled;
-              if (!nextValue) {
-                setShowTraitement(true);
-                setFocusedScores([]);
-              }
-              setFilterEnabled(nextValue);
-              autoLayoutAnimation();
-            }}
-            onHelpClick={() => {
-              showBottomSheet(
-                <HelpView title={HELP_ANALYSE["correlation"]["title"]} description={HELP_ANALYSE["correlation"]["description"]} isMd={true} />
-              );
-            }}
-            onChangeFromDate={setFromDate}
-            onChangeToDate={setToDate}
-            withPreset={true}
+    <Animated.View
+      style={[
+        commonStyles.headerContainer,
+        animatedShadowStyle,
+        {
+          shadowColor: "#000",
+          shadowOffset: { width: 0, height: 4 },
+          shadowRadius: 8,
+          zIndex: 10,
+        },
+      ]}
+    >
+      <View className="w-full px-4">
+        <RangeDate
+          isFilterActive={filterEnabled}
+          presetValue={presetDate}
+          onChangePresetValue={setPresetDate}
+          fromDate={fromDate}
+          toDate={toDate}
+          setIsFilterActive={() => {
+            const nextValue = !filterEnabled;
+            if (!nextValue) {
+              setShowTraitement(true);
+              setFocusedScores([]);
+            }
+            setFilterEnabled(nextValue);
+            autoLayoutAnimation();
+          }}
+          onHelpClick={() => {
+            showBottomSheet(
+              <HelpView title={HELP_ANALYSE["correlation"]["title"]} description={HELP_ANALYSE["correlation"]["description"]} isMd={true} />
+            );
+          }}
+          onChangeFromDate={setFromDate}
+          onChangeToDate={setToDate}
+          withPreset={true}
+        />
+        {filterEnabled && (
+          <FriseFilterBar
+            hasTreatment={hasTreatment}
+            onShowInfo={() => friseInfoButtonRef?.current?.press?.()}
+            onShowTreatmentChanged={setShowTraitement}
+            onFocusedScoresChanged={setFocusedScores}
           />
-          {filterEnabled && (
-            <FriseFilterBar
-              hasTreatment={hasTreatment}
-              onShowInfo={() => friseInfoButtonRef?.current?.press?.()}
-              onShowTreatmentChanged={setShowTraitement}
-              onFocusedScoresChanged={setFocusedScores}
-            />
-          )}
-          {/* <Legend className="mt-6" /> */}
-        </View>
-      </Animated.View>
+        )}
+        <Legend className="mt-6" />
+      </View>
+    </Animated.View>
+  );
+};
+
+export const FriseScreen = ({
+  navigation,
+  presetDate,
+  setPresetDate,
+  fromDate,
+  setFromDate,
+  toDate,
+  setToDate,
+  hasTreatment,
+  onScroll,
+  scrollY,
+  focusedScores,
+  setFocusedScores,
+  showTraitement,
+  setShowTraitement,
+  filterEnabled,
+  setFilterEnabled,
+  friseInfoButtonRef,
+  dynamicPaddingTop,
+}) => {
+  if (!toDate || !fromDate) return null;
+
+  return (
+    <>
       <FriseGraphList
         navigation={navigation}
         fromDate={fromDate}
         toDate={toDate}
         focusedScores={focusedScores}
         showTraitement={showTraitement}
-        hasTreatment={hasTreatment}
         onScroll={onScroll}
+        dynamicPaddingTop={dynamicPaddingTop}
       />
     </>
   );

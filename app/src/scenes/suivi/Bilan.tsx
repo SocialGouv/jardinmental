@@ -8,14 +8,16 @@ import ChartPicker from "./chartPicker2";
 import RangeDate from "./RangeDate";
 import ChartPie from "./chartPie";
 import Evenements from "./triggers/triggers";
-import Variations from "../variation/variation";
+import Variations, { VariationsHeader } from "../variation/variation";
+import { FriseScreen, CorrelationHeader } from "./correlation/Correlation";
+import { EventFilterHeader } from "./triggers/EventFilterHeader";
 import logEvents from "../../services/logEvents";
 import localStorage from "../../utils/localStorage";
+import { getIndicatorKey } from "../../utils/indicatorUtils";
 import FloatingPlusButton from "../../components/FloatingPlusButton";
-import { FriseScreen } from "./correlation/Correlation";
 import { colors } from "@/utils/colors";
 import Legend from "./Legend";
-import { useSharedValue, useAnimatedStyle, interpolate, Extrapolate } from "react-native-reanimated";
+import { useSharedValue, useAnimatedStyle, interpolate, Extrapolate, useAnimatedScrollHandler } from "react-native-reanimated";
 import Animated from "react-native-reanimated";
 import JMButton from "@/components/JMButton";
 import CircleQuestionMark from "@assets/svg/icon/CircleQuestionMark";
@@ -33,6 +35,30 @@ const Bilan = ({ navigation, startSurvey }) => {
   const [fromDate, setFromDate] = React.useState(beforeToday(30));
   const [toDate, setToDate] = React.useState(beforeToday(0));
   const [aUnTraiement, setAUnTraitement] = React.useState(false);
+  const [day, setDay] = React.useState(new Date());
+  const [focusedScores, setFocusedScores] = React.useState([]);
+  const [showTraitement, setShowTraitement] = React.useState(true);
+  const [filterEnabled, setFilterEnabled] = React.useState(false);
+  const friseInfoButtonRef = React.useRef();
+  const [indicateur, setIndicateur] = React.useState();
+  const [indicateurId, setIndicateurId] = React.useState();
+  const [level, setLevel] = React.useState([5]);
+  const [userIndicateurs, setUserIndicateurs] = React.useState([]);
+  const [dynamicPaddingTop, setDynamicPaddingTop] = useState(null); // Default fallback
+  const measuredHeight = useSharedValue(0); // Store the measured natural height
+
+  useFocusEffect(
+    React.useCallback(() => {
+      (async () => {
+        const user_indicateurs = await localStorage.getIndicateurs();
+        if (user_indicateurs) {
+          setUserIndicateurs(user_indicateurs);
+          setIndicateur(user_indicateurs[0]?.name);
+          setIndicateurId(getIndicatorKey(user_indicateurs[0]));
+        }
+      })();
+    }, [])
+  );
   useFocusEffect(
     React.useCallback(() => {
       logEvents.logOpenPageSuivi(chartType);
@@ -51,49 +77,116 @@ const Bilan = ({ navigation, startSurvey }) => {
     }, [])
   );
 
-  const scrollY = useSharedValue(0);
-  const scrollHandler = (event) => {
-    "worklet";
-    scrollY.value = event.nativeEvent.contentOffset.y;
+  const handleBannerLayout = (event) => {
+    // Only measure once
+    const bannerHeight = event.nativeEvent.layout.height;
+    measuredHeight.value = bannerHeight;
+
+    // Calculate total header height including safe area insets
+    const totalHeaderHeight = bannerHeight + 40;
+    setDynamicPaddingTop(totalHeaderHeight);
   };
+
+  const scrollY = useSharedValue(0);
+
+  const scrollHandler = useAnimatedScrollHandler({
+    onScroll: (event) => {
+      scrollY.value = event.contentOffset.y;
+    },
+  });
 
   if (!toDate || !fromDate) return null;
 
   return (
     <>
       <View className="flex-1">
-        <View style={styles.headerContainerNavigation}>
-          <Header title="Mes analyses" navigation={navigation} scrollY={scrollY} />
+        <View
+          style={{
+            position: "absolute",
+            left: 0,
+            right: 0,
+            zIndex: 10,
+          }}
+        >
+          <View style={styles.headerContainerNavigation}>
+            <Header title="Mes analyses" navigation={navigation} scrollY={scrollY} />
+          </View>
+          <View style={styles.tabContainer}>
+            <ChartPicker onChange={(e) => setChartType(e)} ongletActif={chartType} scrollY={scrollY} />
+          </View>
+          <View onLayout={handleBannerLayout}>
+            {chartType === "Statistiques" && (
+              <StatistiqueHeader
+                presetDate={presetDate}
+                setPresetDate={setPresetDate}
+                fromDate={fromDate}
+                toDate={toDate}
+                setFromDate={setFromDate}
+                setToDate={setToDate}
+                scrollY={scrollY}
+              />
+            )}
+            {chartType === "Courbes" && <VariationsHeader day={day} setDay={setDay} scrollY={scrollY} />}
+            {chartType === "Frises" && (
+              <CorrelationHeader
+                presetDate={presetDate}
+                setPresetDate={setPresetDate}
+                fromDate={fromDate}
+                setFromDate={setFromDate}
+                toDate={toDate}
+                setToDate={setToDate}
+                hasTreatment={aUnTraiement}
+                scrollY={scrollY}
+                focusedScores={focusedScores}
+                setFocusedScores={setFocusedScores}
+                showTraitement={showTraitement}
+                setShowTraitement={setShowTraitement}
+                filterEnabled={filterEnabled}
+                setFilterEnabled={setFilterEnabled}
+                friseInfoButtonRef={friseInfoButtonRef}
+              />
+            )}
+            {chartType === "Déclencheurs" && (
+              <EventFilterHeader
+                presetDate={presetDate}
+                setPresetDate={setPresetDate}
+                fromDate={fromDate}
+                setFromDate={setFromDate}
+                toDate={toDate}
+                setToDate={setToDate}
+                indicateur={indicateur}
+                setIndicateur={(indicatorName) => {
+                  setIndicateur(indicatorName);
+                  const _indicator = userIndicateurs.find((ind) => ind.name === indicatorName);
+                  setIndicateurId(getIndicatorKey(_indicator));
+                }}
+                level={level}
+                setLevel={setLevel}
+                userIndicateurs={userIndicateurs.filter(({ active }) => active)}
+                scrollY={scrollY}
+              />
+            )}
+          </View>
         </View>
-        <View style={styles.tabContainer}>
-          <ChartPicker onChange={(e) => setChartType(e)} ongletActif={chartType} scrollY={scrollY} />
-        </View>
-
         {/* Render all tabs but hide inactive ones to preserve state */}
-        <View style={{ display: chartType === "Statistiques" ? "flex" : "none", flex: 1 }}>
-          <StatistiqueHeader
-            presetDate={presetDate}
-            setPresetDate={setPresetDate}
-            fromDate={fromDate}
-            toDate={toDate}
-            setFromDate={setFromDate}
-            setToDate={setToDate}
-            scrollY={scrollY}
-          />
-          <ChartPie
-            onScroll={scrollHandler}
-            fromDate={fromDate}
-            toDate={toDate}
-            navigation={navigation}
-          />
+        <View style={{ display: chartType === "Statistiques" ? "flex" : "none", flex: 1, position: "relative" }}>
+          <ChartPie dynamicPaddingTop={dynamicPaddingTop} onScroll={scrollHandler} fromDate={fromDate} toDate={toDate} navigation={navigation} />
         </View>
 
         <View style={{ display: chartType === "Courbes" ? "flex" : "none", flex: 1 }}>
-          <Variations onScroll={scrollHandler} navigation={navigation} scrollY={scrollY} />
+          <Variations
+            dynamicPaddingTop={dynamicPaddingTop}
+            onScroll={scrollHandler}
+            navigation={navigation}
+            scrollY={scrollY}
+            day={day}
+            setDay={setDay}
+          />
         </View>
 
         <View style={{ display: chartType === "Déclencheurs" ? "flex" : "none", flex: 1 }}>
           <Evenements
+            dynamicPaddingTop={dynamicPaddingTop}
             onScroll={scrollHandler}
             navigation={navigation}
             presetDate={presetDate}
@@ -103,11 +196,20 @@ const Bilan = ({ navigation, startSurvey }) => {
             toDate={toDate}
             setToDate={setToDate}
             scrollY={scrollY}
+            indicateur={indicateur}
+            setIndicateur={setIndicateur}
+            indicateurId={indicateurId}
+            setIndicateurId={setIndicateurId}
+            level={level}
+            setLevel={setLevel}
+            userIndicateurs={userIndicateurs}
+            setUserIndicateurs={setUserIndicateurs}
           />
         </View>
 
         <View style={{ display: chartType === "Frises" ? "flex" : "none", flex: 1 }}>
           <FriseScreen
+            dynamicPaddingTop={dynamicPaddingTop}
             onScroll={scrollHandler}
             navigation={navigation}
             presetDate={presetDate}
@@ -118,6 +220,13 @@ const Bilan = ({ navigation, startSurvey }) => {
             setToDate={setToDate}
             hasTreatment={aUnTraiement}
             scrollY={scrollY}
+            focusedScores={focusedScores}
+            setFocusedScores={setFocusedScores}
+            showTraitement={showTraitement}
+            setShowTraitement={setShowTraitement}
+            filterEnabled={filterEnabled}
+            setFilterEnabled={setFilterEnabled}
+            friseInfoButtonRef={friseInfoButtonRef}
           />
         </View>
       </View>
@@ -149,7 +258,6 @@ export const StatistiqueHeader = ({ presetDate, setPresetDate, fromDate, toDate,
           shadowColor: "#000",
           shadowOffset: { width: 0, height: 4 },
           shadowRadius: 8,
-          zIndex: 10,
         },
       ]}
     >
