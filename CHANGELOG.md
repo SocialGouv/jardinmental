@@ -1,3 +1,10 @@
+## [1.98.2](https://github.com/SocialGouv/jardinmental/compare/v1.98.1...v1.98.2) (2025-10-09)
+
+
+### Bug Fixes
+
+* remove unexpected new lines in resources ([#542](https://github.com/SocialGouv/jardinmental/issues/542)) ([811aebd](https://github.com/SocialGouv/jardinmental/commit/811aebd41b8fe1101b2e4a3735d2b76f1dbbd071))
+
 ## [1.98.1](https://github.com/SocialGouv/jardinmental/compare/v1.98.0...v1.98.1) (2025-10-09)
 
 
