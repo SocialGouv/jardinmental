@@ -21,6 +21,7 @@
                 if (/android/i.test(userAgent)) {
                     window.location.href = "https://play.google.com/store/apps/details?id=com.monsuivipsy&hl=fr";
                 } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+                    // id is need in the url
                     window.location.href = "https://apps.apple.com/fr/app/jardin-mental/id1540061393";
                 } else {
                     document.getElementById('non-mobile-message').style.display = 'block';
