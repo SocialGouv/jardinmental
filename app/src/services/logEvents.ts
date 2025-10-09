@@ -849,13 +849,6 @@ const _deprecatedLogIndicatorObdLvl2 = async (subThemes, count) => {
       value: subThemes[i],
     });
   }
-  // Also log the count
-  await logEvent({
-    category: ONBOARDING,
-    action: INDICATOR_OBD_LVL2,
-    name: "count",
-    value: count,
-  });
 };
 
 const _deprecatedLogIndicatorObdValidate = async (indicators: number[]) => {
