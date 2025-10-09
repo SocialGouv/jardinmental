@@ -138,9 +138,7 @@ Nous connaissons toutes et tous des périodes de stress, d’anxiété et de mal
 \n\
 Perte de l’appétit ou au contraire consommation excessive de nourriture, difficultés à exécuter des tâches quotidiennes, mauvaise estime de soi, irritabilité…**Plus tôt on repère ces signes, plus il est facile de trouver des solutions adaptées** *(voir nos rubriques agir et chercher de l’aide)*.\n\
 \n\
-Et même si on pense parfois qu’il s’agit de la seule solution : ignorer ou minimiser ce que l’on ressent ne permet pas forcément d’aller mieux. Identifier un mal-être, c’est\n\
-\n\
-**se donner la chance (et le temps !)** d’agir avant qu’il ne s’aggrave. Voici des ressources pour vous aider à être plus attentif·ve à certains signaux :`,
+Et même si on pense parfois qu’il s’agit de la seule solution : ignorer ou minimiser ce que l’on ressent ne permet pas forcément d’aller mieux. Identifier un mal-être, c’est **se donner la chance (et le temps !)** d’agir avant qu’il ne s’aggrave. Voici des ressources pour vous aider à être plus attentif·ve à certains signaux :`,
     externalResources: ["550e8400-e29b-41d4-a716-446655440004", "550e8400-e29b-41d4-a716-446655440015", "550e8400-e29b-41d4-a716-446655440016"],
   },
   {
@@ -189,9 +187,7 @@ Aujourd’hui, **de nombreuses personnes** cherchent à poser elles-mêmes un di
 \n\
 **Se définir** précisément peut aider (et ce n’est pas nécessaire pour tout le monde !) mais il reste essentiel de ne pas **se réduire à un mot ou à un trouble**.\n\
 \n\
-Qu’il s’agisse d’un échange avec un·e professionnel·le, d’un dialogue avec un proche ou d’une recherche personnelle, l’important est de ne pas rester seul·e. S’entourer, parler, partager ce que l’on vit peut faire une vraie différence\n\
-\n\
-**avant, pendant, et après un diagnostic.**`,
+Qu’il s’agisse d’un échange avec un·e professionnel·le, d’un dialogue avec un proche ou d’une recherche personnelle, l’important est de ne pas rester seul·e. S’entourer, parler, partager ce que l’on vit peut faire une vraie différence **avant, pendant, et après un diagnostic.**`,
     externalResources: ["550e8400-e29b-41d4-a716-446655440021", "550e8400-e29b-41d4-a716-446655440022"],
   },
   {
@@ -394,9 +390,7 @@ Avec un accompagnement adapté et un suivi médical régulier, il est tout à fa
 \n\
 *(voir aussi nos rubriques agir et chercher de l’aide)*\n\
 \n\
-*La Maison Perchée et Psycom*\n\
-\n\
-proposent des guides complets pour mieux comprendre le trouble et trouver des solutions adaptées.`,
+*La Maison Perchée et Psycom* proposent des guides complets pour mieux comprendre le trouble et trouver des solutions adaptées.`,
     externalResources: [
       "550e8400-e29b-41d4-a716-446655440106",
       "550e8400-e29b-41d4-a716-446655440107",
@@ -587,9 +581,7 @@ Le sommeil paradoxal, quant à lui, est la phase où les rêves sont les plus no
 \n\
 Il survient lorsque le corps **en a réellement besoin**, guidé par une horloge biologique sensible à la lumière du jour et au rythme de nos journées. Lorsque la nuit tombe, la mélatonine, cette hormone du sommeil, signale **progressivement** au corps qu’il est temps de se préparer au repos.\n\
 \n\
-**Prendre soin de son sommeil, quand cela est possible, est important pour permettre au corps et à l’esprit de se réguler et de se répare**\n\
-\n\
-r. Toutefois, chacun·e fait au mieux selon sa situation, qui peut parfois rendre difficile la mise en place de conditions favorables à l’endormissement. Bruit, environnement, contraintes de logement ou horaires atypiques sont autant de réalités qui peuvent\n\
+**Prendre soin de son sommeil, quand cela est possible, est important pour permettre au corps et à l’esprit de se réguler et de se réparer**. Toutefois, chacun·e fait au mieux selon sa situation, qui peut parfois rendre difficile la mise en place de conditions favorables à l’endormissement. Bruit, environnement, contraintes de logement ou horaires atypiques sont autant de réalités qui peuvent\n\
 \n\
 **influencer la qualité du sommeil.**`,
     externalResources: [
@@ -618,9 +610,7 @@ D’autres troubles existent et nécessitent souvent une évaluation médicale 
 - **L’hypersomnie** se traduit par une somnolence excessive pendant la journée, même après une nuit complète de sommeil.\n\
 - **Les parasomnies** regroupent des comportements inhabituels pendant le sommeil, comme le somnambulisme, les terreurs nocturnes ou le bruxisme (grincement des dents).\n\
 \n\
-**Ressentir ponctuellement une mauvaise qualité de sommeil ne signifie pas automatiquement que l’on souffre d’un trouble durable**\n\
-\n\
-. Cependant, si ces difficultés deviennent récurrentes ou impactent significativement le quotidien, il est recommandé d’en parler à un professionnel de santé. Les thérapies comportementales et cognitives peuvent constituer une ressource pour traiter le trouble de l’insomnie.`,
+**Ressentir ponctuellement une mauvaise qualité de sommeil ne signifie pas automatiquement que l’on souffre d’un trouble durable**. Cependant, si ces difficultés deviennent récurrentes ou impactent significativement le quotidien, il est recommandé d’en parler à un professionnel de santé. Les thérapies comportementales et cognitives peuvent constituer une ressource pour traiter le trouble de l’insomnie.`,
     externalResources: [
       "550e8400-e29b-41d4-a716-446655440142",
       "550e8400-e29b-41d4-a716-446655440143",
@@ -700,9 +690,7 @@ Face à cette complexité, il est essentiel de **trouver un juste équilibre, m�
 
 C’est pourquoi **le développement de l’esprit critique est aussi un enjeu de santé mentale**. Il permet de prendre du recul face aux contenus qui circulent, de questionner les modèles qu’on nous propose, et de mieux identifier ce qui est réellement aidant pour soi.
 
-Enfin, il ne faut pas oublier que
-
-**le soutien individuel ne peut remplacer les réponses collectives**. 
+Enfin, il ne faut pas oublier que **le soutien individuel ne peut remplacer les réponses collectives**. 
 
 Améliorer la santé mentale, c’est aussi agir sur les conditions de vie, de travail, d’étude, et garantir un accès équitable à l’accompagnement psychologique. Ces dimensions sont indissociables.`,
     externalResources: ["550e8400-e29b-41d4-a716-446655440164"],
@@ -756,9 +744,7 @@ Quand l’attention portée à l’alimentation devient envahissante, qu’elle 
 
 Des repères simples existent pour que l’alimentation devienne un allié du mental : **manger à des heures régulières, varier les repas, privilégier des aliments peu transformés, accorder de l’importance au rythme des repas, respecter ses sensations.**
 
-Adopter une alimentation à base de produits frais, bruts et équilibrés
-
-**peut parfois représenter un coût pour le porte-monnaie.**
+Adopter une alimentation à base de produits frais, bruts et équilibrés **peut parfois représenter un coût pour le porte-monnaie.**
 
 L’essentiel est de faire au mieux avec ses moyens, en gardant à l’esprit que chaque petit pas compte, sans pression ni culpabilité`,
     externalResources: [
