@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View } from "react-native";
 import ResourceCard from "./ResourceCard";
 import { Resource, RESOURCES_DATA } from "./data/resources";
@@ -18,14 +18,19 @@ interface ResourceCategoryListProps {
 const ResourceCategoryList: React.FC<ResourceCategoryListProps> = ({ navigation, route }) => {
   const { category } = route.params;
 
+  // Filter resources by category
+  const categoryResources = RESOURCES_DATA.filter((resource) => resource.category === category);
+
+  useEffect(() => {
+    // Log when user arrives on the articles list
+    logEvents.logViewedArticlesList(categoryResources.length);
+  }, [categoryResources.length, category]);
+
   const handleResourcePress = (resource: Resource, position: number) => {
     logEvents.logResourceArticleSelected(resource.matomoId);
     logEvents.logResourceArticleSelectedPosition(position);
     navigation.navigate("resource-article", { resource });
   };
-
-  // Filter resources by category
-  const categoryResources = RESOURCES_DATA.filter((resource) => resource.category === category);
 
   return (
     <AnimatedHeaderScrollScreen
