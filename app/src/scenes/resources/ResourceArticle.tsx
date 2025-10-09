@@ -47,12 +47,13 @@ const ResourceArticle: React.FC<ResourceArticleProps> = ({ navigation, route }) 
     return EXTERNAL_RESOURCES_DATA.find((item) => item.id === id);
   };
 
-  const getP1Resources = () => {
+  const getP1Resources = (): ExternalResource[] => {
     if (!resource.externalResources) return [];
     return resource.externalResources
       .map((id) => getExternalResource(id))
-      .filter((res) => res && res.category === "P1 - A lire dans ce dossier")
-      .filter((res) => res !== undefined);
+      .filter((res): res is ExternalResource => 
+        res !== undefined && res.category === "P1 - A lire dans ce dossier"
+      );
   };
 
   const getP2Resources = () => {
