@@ -1,3 +1,10 @@
+## [1.98.1](https://github.com/SocialGouv/jardinmental/compare/v1.98.0...v1.98.1) (2025-10-09)
+
+
+### Bug Fixes
+
+* add two more events on resources ([#534](https://github.com/SocialGouv/jardinmental/issues/534)) ([44db179](https://github.com/SocialGouv/jardinmental/commit/44db1798a623ebf0c0d87260833b184618e48b7a))
+
 # [1.98.0](https://github.com/SocialGouv/jardinmental/compare/v1.97.0...v1.98.0) (2025-10-09)
 
 
