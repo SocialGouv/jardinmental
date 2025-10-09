@@ -101,7 +101,7 @@ export const GoalsDaySurvey = forwardRef(({ date, scrollRef, route }, ref) => {
           <View className="rounded-full border-[1.5px] border-cnam-primary-800 bg-white w-10 h-10 items-center justify-center">
             <Target />
           </View>
-          <Text className={mergeClassNames(typography.displayXsBold, "text-left text-cnam-primary-900 ml-2 flex-1")}>Mes objectifs</Text>
+          <Text className={mergeClassNames(typography.displayXsBold, "text-left text-cnam-primary-900 ml-2")}>Mes objectifs</Text>
           <JMButton
             onPress={() => {
               showHelpModal();
