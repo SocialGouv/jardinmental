@@ -66,7 +66,7 @@ const ResourceArticle: React.FC<ResourceArticleProps> = ({ navigation, route }) 
   };
 
   const handleExploreMoreResources = () => {
-    const p2ResourceIds = getP2Resources().map((res) => res!.id);
+    const p2ResourceIds = getP2Resources().map((res) => res.id);
     navigation.navigate("resource-external-resources", { resourceIds: p2ResourceIds });
   };
 
