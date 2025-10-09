@@ -1,3 +1,10 @@
+# [1.98.0](https://github.com/SocialGouv/jardinmental/compare/v1.97.0...v1.98.0) (2025-10-09)
+
+
+### Features
+
+* add comment ([e4c7d6d](https://github.com/SocialGouv/jardinmental/commit/e4c7d6dcb570f923d7b8cc15ed0ee979cb76da89))
+
 # [1.97.0](https://github.com/SocialGouv/jardinmental/compare/v1.96.5...v1.97.0) (2025-10-08)
 
 
