@@ -40,7 +40,7 @@ const ENCOURAGEMENT_MESSAGES: MotivationalMessage[] = [
   { id: 7, type: "encouragement", emoji: "🙌", text: "Faire le point sur votre journée, c'est vous accorder de l'attention." },
   { id: 8, type: "encouragement", emoji: "🕰️", text: "Ces quelques minutes pour remplir votre suivi sont un temps que vous vous accordez." },
   { id: 9, type: "encouragement", emoji: "🌙", text: "Même une petite observation aujourd'hui peut vous apporter des clés demain." },
-  { id: 11, type: "encouragement", emoji: "🔍", text: "Chaque saisie compte dans ma compréhension de vous-même." },
+  { id: 11, type: "encouragement", emoji: "🔍", text: "Chaque saisie compte dans votre compréhension de vous-même." },
   { id: 12, type: "encouragement", emoji: "❤️", text: "Se connaître, c'est se donner les moyens de mieux prendre soin de soi." },
   { id: 13, type: "encouragement", emoji: "🗝️", text: "L'auto-observation aide à repérer ce qui influence votre équilibre." },
   { id: 14, type: "encouragement", emoji: "📊", text: "Chaque indicateur noté enrichit votre regard sur votre quotidien." },
