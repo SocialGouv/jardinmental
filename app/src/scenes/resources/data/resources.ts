@@ -138,9 +138,7 @@ Nous connaissons toutes et tous des périodes de stress, d’anxiété et de mal
 \n\
 Perte de l’appétit ou au contraire consommation excessive de nourriture, difficultés à exécuter des tâches quotidiennes, mauvaise estime de soi, irritabilité…**Plus tôt on repère ces signes, plus il est facile de trouver des solutions adaptées** *(voir nos rubriques agir et chercher de l’aide)*.\n\
 \n\
-Et même si on pense parfois qu’il s’agit de la seule solution : ignorer ou minimiser ce que l’on ressent ne permet pas forcément d’aller mieux. Identifier un mal-être, c’est\n\
-\n\
-**se donner la chance (et le temps !)** d’agir avant qu’il ne s’aggrave. Voici des ressources pour vous aider à être plus attentif·ve à certains signaux :`,
+Et même si on pense parfois qu’il s’agit de la seule solution : ignorer ou minimiser ce que l’on ressent ne permet pas forcément d’aller mieux. Identifier un mal-être, c’est **se donner la chance (et le temps !)** d’agir avant qu’il ne s’aggrave. Voici des ressources pour vous aider à être plus attentif·ve à certains signaux :`,
     externalResources: ["550e8400-e29b-41d4-a716-446655440004", "550e8400-e29b-41d4-a716-446655440015", "550e8400-e29b-41d4-a716-446655440016"],
   },
   {
@@ -189,9 +187,7 @@ Aujourd’hui, **de nombreuses personnes** cherchent à poser elles-mêmes un di
 \n\
 **Se définir** précisément peut aider (et ce n’est pas nécessaire pour tout le monde !) mais il reste essentiel de ne pas **se réduire à un mot ou à un trouble**.\n\
 \n\
-Qu’il s’agisse d’un échange avec un·e professionnel·le, d’un dialogue avec un proche ou d’une recherche personnelle, l’important est de ne pas rester seul·e. S’entourer, parler, partager ce que l’on vit peut faire une vraie différence\n\
-\n\
-**avant, pendant, et après un diagnostic.**`,
+Qu’il s’agisse d’un échange avec un·e professionnel·le, d’un dialogue avec un proche ou d’une recherche personnelle, l’important est de ne pas rester seul·e. S’entourer, parler, partager ce que l’on vit peut faire une vraie différence **avant, pendant, et après un diagnostic.**`,
     externalResources: ["550e8400-e29b-41d4-a716-446655440021", "550e8400-e29b-41d4-a716-446655440022"],
   },
   {
@@ -394,9 +390,7 @@ Avec un accompagnement adapté et un suivi médical régulier, il est tout à fa
 \n\
 *(voir aussi nos rubriques agir et chercher de l’aide)*\n\
 \n\
-*La Maison Perchée et Psycom*\n\
-\n\
-proposent des guides complets pour mieux comprendre le trouble et trouver des solutions adaptées.`,
+*La Maison Perchée et Psycom* proposent des guides complets pour mieux comprendre le trouble et trouver des solutions adaptées.`,
     externalResources: [
       "550e8400-e29b-41d4-a716-446655440106",
       "550e8400-e29b-41d4-a716-446655440107",
@@ -545,9 +539,9 @@ Votre bien-être passe avant tout :)`,
   },
   {
     id: "674603a6-05b6-46f9-8c54-0416a3adbe50",
-    matomoId: 33,
+    matomoId: 23,
     title: "Bien dormir, bien dans son corps (et sa tête !)",
-    image: require("../../../../assets/imgs/resources/Article33.png"),
+    image: require("../../../../assets/imgs/resources/Article23.png"),
     category: CATEGORIES.DES_PETITS_PAS_POUR_SON_EQUILIBRE_MENTAL,
     content: `**Quand le sommeil se dégrade, les répercussions sur l’équilibre psychique peuvent se faire sentir rapidement** : irritabilité, baisse de motivation, troubles de la concentration ou montée de l’anxiété. Ce lien fonctionne aussi dans l’autre sens. Un stress persistant, un trouble de l’humeur ou anxieux, ou un épisode dépressif peuvent perturber l’endormissement, fragmenter les nuits ou provoquer **des réveils précoces ou répétés**. Ce cercle complexe, où troubles du sommeil et mal-être ou troubles psychiques s’entretiennent, peut s’aggraver si les difficultés persistent.\n\
 \n\
@@ -571,9 +565,9 @@ Il est important de prendre en compte ces déterminants pour mieux comprendre so
   },
   {
     id: "0dffe681-74a2-46ed-8a3d-44506d36173d",
-    matomoId: 23,
+    matomoId: 24,
     title: "La nuit porte (vraiment) conseil",
-    image: require("../../../../assets/imgs/resources/Article23.png"),
+    image: require("../../../../assets/imgs/resources/Article24.png"),
     category: CATEGORIES.DES_PETITS_PAS_POUR_SON_EQUILIBRE_MENTAL,
     content: `Le sommeil n’est pas une simple pause : **c’est un moment essentiel où le corps et le cerveau se restaurent.**\n\
 \n\
@@ -587,9 +581,7 @@ Le sommeil paradoxal, quant à lui, est la phase où les rêves sont les plus no
 \n\
 Il survient lorsque le corps **en a réellement besoin**, guidé par une horloge biologique sensible à la lumière du jour et au rythme de nos journées. Lorsque la nuit tombe, la mélatonine, cette hormone du sommeil, signale **progressivement** au corps qu’il est temps de se préparer au repos.\n\
 \n\
-**Prendre soin de son sommeil, quand cela est possible, est important pour permettre au corps et à l’esprit de se réguler et de se répare**\n\
-\n\
-r. Toutefois, chacun·e fait au mieux selon sa situation, qui peut parfois rendre difficile la mise en place de conditions favorables à l’endormissement. Bruit, environnement, contraintes de logement ou horaires atypiques sont autant de réalités qui peuvent\n\
+**Prendre soin de son sommeil, quand cela est possible, est important pour permettre au corps et à l’esprit de se réguler et de se réparer**. Toutefois, chacun·e fait au mieux selon sa situation, qui peut parfois rendre difficile la mise en place de conditions favorables à l’endormissement. Bruit, environnement, contraintes de logement ou horaires atypiques sont autant de réalités qui peuvent\n\
 \n\
 **influencer la qualité du sommeil.**`,
     externalResources: [
@@ -601,9 +593,9 @@ r. Toutefois, chacun·e fait au mieux selon sa situation, qui peut parfois rendr
   },
   {
     id: "421212e0-2812-4a72-a073-cba746444c36",
-    matomoId: 24,
+    matomoId: 25,
     title: "Troubles du sommeil : de quoi parle-t-on vraiment ?",
-    image: require("../../../../assets/imgs/resources/Article24.png"),
+    image: require("../../../../assets/imgs/resources/Article25.png"),
     category: CATEGORIES.DES_PETITS_PAS_POUR_SON_EQUILIBRE_MENTAL,
     content: `**Il est normal de traverser, à certains moments de la vie, des périodes de sommeil difficile**.\n\
 \n\
@@ -618,9 +610,7 @@ D’autres troubles existent et nécessitent souvent une évaluation médicale 
 - **L’hypersomnie** se traduit par une somnolence excessive pendant la journée, même après une nuit complète de sommeil.\n\
 - **Les parasomnies** regroupent des comportements inhabituels pendant le sommeil, comme le somnambulisme, les terreurs nocturnes ou le bruxisme (grincement des dents).\n\
 \n\
-**Ressentir ponctuellement une mauvaise qualité de sommeil ne signifie pas automatiquement que l’on souffre d’un trouble durable**\n\
-\n\
-. Cependant, si ces difficultés deviennent récurrentes ou impactent significativement le quotidien, il est recommandé d’en parler à un professionnel de santé. Les thérapies comportementales et cognitives peuvent constituer une ressource pour traiter le trouble de l’insomnie.`,
+**Ressentir ponctuellement une mauvaise qualité de sommeil ne signifie pas automatiquement que l’on souffre d’un trouble durable**. Cependant, si ces difficultés deviennent récurrentes ou impactent significativement le quotidien, il est recommandé d’en parler à un professionnel de santé. Les thérapies comportementales et cognitives peuvent constituer une ressource pour traiter le trouble de l’insomnie.`,
     externalResources: [
       "550e8400-e29b-41d4-a716-446655440142",
       "550e8400-e29b-41d4-a716-446655440143",
@@ -631,9 +621,9 @@ D’autres troubles existent et nécessitent souvent une évaluation médicale 
   },
   {
     id: "908d5222-39dd-46c6-9ddb-3c9b8c0386e9",
-    matomoId: 25,
+    matomoId: 26,
     title: "Nous ne sommes pas tous·tes égaux face au sommeil",
-    image: require("../../../../assets/imgs/resources/Article25.png"),
+    image: require("../../../../assets/imgs/resources/Article26.png"),
     category: CATEGORIES.DES_PETITS_PAS_POUR_SON_EQUILIBRE_MENTAL,
     content: `Le sommeil suit toujours trois grandes phases - sommeil léger, profond et paradoxal - **qui sont universelles, quel que soit l’âge**. Cependant, l’enchaînement et la durée de ces phases varient d’une personne à l’autre, en fonction des besoins individuels. C’est pourquoi il est essentiel de ne pas se comparer ni de chercher un sommeil « idéal » au détail près. **Plus que la durée exacte, l’écoute de son corps et la prise en compte de ses signaux restent primordiales.**\n\
 \n\
@@ -657,9 +647,9 @@ Apprendre à reconnaître et respecter ses propres besoins en sommeil est un lev
   },
   {
     id: "b55b6bb5-4169-4e39-a4da-c8327e7b304c",
-    matomoId: 26,
+    matomoId: 27,
     title: "Bien dormir, oui mais comment ?",
-    image: require("../../../../assets/imgs/resources/Article26.png"),
+    image: require("../../../../assets/imgs/resources/Article27.png"),
     category: CATEGORIES.DES_PETITS_PAS_POUR_SON_EQUILIBRE_MENTAL,
     content: `**Le sommeil est un besoin fondamental, mais il n’est pas toujours simple à retrouver.**\n\
 \n\
@@ -682,9 +672,9 @@ Les montres connectées et applications de suivi du sommeil peuvent parfois gén
   },
   {
     id: "31f13b38-51f2-4209-a764-807ae60ab670",
-    matomoId: 27,
-    title: "« Prendre soin de soi » : quand l'injonction au bien-être devient source de stress",
-    image: require("../../../../assets/imgs/resources/Article27.png"),
+    matomoId: 28,
+    title: "« Prendre soin de soi » : quand l'injonction au bien-être devient source de stress",
+    image: require("../../../../assets/imgs/resources/Article28.png"),
     category: CATEGORIES.DES_PETITS_PAS_POUR_SON_EQUILIBRE_MENTAL,
     content: `C’est un fait.
 
@@ -700,18 +690,16 @@ Face à cette complexité, il est essentiel de **trouver un juste équilibre, m�
 
 C’est pourquoi **le développement de l’esprit critique est aussi un enjeu de santé mentale**. Il permet de prendre du recul face aux contenus qui circulent, de questionner les modèles qu’on nous propose, et de mieux identifier ce qui est réellement aidant pour soi.
 
-Enfin, il ne faut pas oublier que
-
-**le soutien individuel ne peut remplacer les réponses collectives**. 
+Enfin, il ne faut pas oublier que **le soutien individuel ne peut remplacer les réponses collectives**. 
 
 Améliorer la santé mentale, c’est aussi agir sur les conditions de vie, de travail, d’étude, et garantir un accès équitable à l’accompagnement psychologique. Ces dimensions sont indissociables.`,
     externalResources: ["550e8400-e29b-41d4-a716-446655440164"],
   },
   {
     id: "538aef1d-00de-486b-b2fc-759e5961ddcf",
-    matomoId: 28,
+    matomoId: 29,
     title: "Se promener, courir, danser, bricoler… pour se sentir mieux",
-    image: require("../../../../assets/imgs/resources/Article28.png"),
+    image: require("../../../../assets/imgs/resources/Article29.png"),
     category: CATEGORIES.DES_PETITS_PAS_POUR_SON_EQUILIBRE_MENTAL,
     content: `On entend souvent dire qu’il faut « faire du sport ». Cela peut paraître contraignant, voire décourageant. Pourtant, bouger, **même un peu chaque jour**, a un réel impact sur la santé mentale. Petit **rappel : l’activité physique ne se limite pas à la pratique sportive**. Marcher, jardiner, danser, bricoler, monter les escaliers, faire ses courses à pied… Tous ces gestes du quotidien comptent, et participent à une meilleure **santé, mentale comme physique**.
 
@@ -740,9 +728,9 @@ Il n’est pas nécessaire de tout changer du jour au lendemain. L’important e
   },
   {
     id: "66915b6d-b9ad-4a56-aa0b-26bd809cf8f7",
-    matomoId: 29,
+    matomoId: 30,
     title: "Ce que l'assiette apporte à la tête",
-    image: require("../../../../assets/imgs/resources/Article29.png"),
+    image: require("../../../../assets/imgs/resources/Article30.png"),
     category: CATEGORIES.DES_PETITS_PAS_POUR_SON_EQUILIBRE_MENTAL,
     content: `**L’alimentation ne nourrit pas que le corps : elle a aussi un impact sur notre mental.** Ce que l’on met dans son assiette peut jouer sur l’humeur, le stress et l’énergie quotidienne.
 
@@ -756,9 +744,7 @@ Quand l’attention portée à l’alimentation devient envahissante, qu’elle 
 
 Des repères simples existent pour que l’alimentation devienne un allié du mental : **manger à des heures régulières, varier les repas, privilégier des aliments peu transformés, accorder de l’importance au rythme des repas, respecter ses sensations.**
 
-Adopter une alimentation à base de produits frais, bruts et équilibrés
-
-**peut parfois représenter un coût pour le porte-monnaie.**
+Adopter une alimentation à base de produits frais, bruts et équilibrés **peut parfois représenter un coût pour le porte-monnaie.**
 
 L’essentiel est de faire au mieux avec ses moyens, en gardant à l’esprit que chaque petit pas compte, sans pression ni culpabilité`,
     externalResources: [
@@ -777,9 +763,9 @@ L’essentiel est de faire au mieux avec ses moyens, en gardant à l’esprit qu
   },
   {
     id: "83050bed-2387-4551-9431-9745a8d825d1",
-    matomoId: 30,
+    matomoId: 31,
     title: "Parler, échanger, se relier : un vrai soutien contre l'isolement",
-    image: require("../../../../assets/imgs/resources/Article30.png"),
+    image: require("../../../../assets/imgs/resources/Article31.png"),
     category: CATEGORIES.DES_PETITS_PAS_POUR_SON_EQUILIBRE_MENTAL,
     content: `**De plus en plus de personnes se sentent seules, et ce, même dans une société hyperconnectée.** Il est important de distinguer deux notions souvent confondues : l’isolement social et la solitude, qui ne sont pas une seule et même réalité.
 
@@ -810,9 +796,9 @@ Quand on se sent isolé·e, il est possible d’en parler à un·e professionnel
   },
   {
     id: "750245f1-a615-4759-bb2d-37882341cf27",
-    matomoId: 31,
+    matomoId: 32,
     title: "Être attentif à ses consommations pour protéger sa santé mentale",
-    image: require("../../../../assets/imgs/resources/Article31.png"),
+    image: require("../../../../assets/imgs/resources/Article32.png"),
     category: CATEGORIES.DES_PETITS_PAS_POUR_SON_EQUILIBRE_MENTAL,
     content: `Certaines consommations - comme l’alcool, le tabac, les médicaments ou d’autres substances - peuvent évoluer au fil du temps, **particulièrement lors de périodes de fragilité ou de tension psychologique.** **Lorsqu’elles deviennent plus fréquentes, difficiles à contrôler, ou utilisées pour apaiser un mal-être, elles peuvent signaler une souffrance sous-jacente.** Ces usages ont des conséquences sur la santé mentale comme physique, et méritent une attention particulière lorsqu’ils s’installent ou changent de fonction.
 
@@ -842,9 +828,9 @@ Quand la consommation devient un réflexe, elle peut révéler un mal-être qui 
   },
   {
     id: "3063a89f-b2c6-468e-b375-a359e1c6e685",
-    matomoId: 32,
+    matomoId: 33,
     title: "Déconnecter un peu, ça libère la tête",
-    image: require("../../../../assets/imgs/resources/Article32.png"),
+    image: require("../../../../assets/imgs/resources/Article33.png"),
     category: CATEGORIES.DES_PETITS_PAS_POUR_SON_EQUILIBRE_MENTAL,
     content: `**L’addiction aux écrans n’est pas un diagnostic officiel et le débat reste encore ouvert aujourd’hui.** De nombreuses questions subsistent sur la limite entre un usage habituel et un usage excessif.
 
