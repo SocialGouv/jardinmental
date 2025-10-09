@@ -167,10 +167,6 @@ const Events = ({
       </View>
     );
   }
-  console.log(
-    level,
-    memoizedCallback()?.filter((x) => x.date)
-  );
   return (
     <>
       <Animated.ScrollView

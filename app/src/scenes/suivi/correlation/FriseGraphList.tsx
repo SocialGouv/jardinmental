@@ -82,7 +82,6 @@ const AsyncFriseGraph = React.memo(
             showTraitement ? computeChartDataAsync("PRISE_DE_TRAITEMENT") : Promise.resolve([]),
             showTraitement ? computeChartDataAsync("PRISE_DE_TRAITEMENT_SI_BESOIN") : Promise.resolve([]),
           ]);
-          console.log("lCS SET MAIN DATA");
           setData(mainData);
           setTreatmentData(priseDeTraitement);
           setTreatmentSiBesoinData(priseDeTraitementSiBesoin);
