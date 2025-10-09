@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, SafeAreaView, ScrollView, TouchableOpacity } from "react-native";
 import Header from "../../components/Header";
 import { CATEGORIES } from "./data/resources";
+import logEvents from "../../services/logEvents";
 
 interface ResourceCategoriesProps {
   navigation: any;
@@ -34,16 +35,17 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ number, title, onPress }) =
 };
 
 const ResourceCategories: React.FC<ResourceCategoriesProps> = ({ navigation }) => {
-  const handleCategoryPress = (category: string) => {
-    navigation.navigate("resource-category-list", { category });
-  };
-
   const categories = [
     { key: CATEGORIES.LA_SANTE_MENTALE_C_EST_QUOI, title: "La santé mentale, c'est quoi ?", number: 1 },
     { key: CATEGORIES.REPERER_LES_SIGNES_DE_MAL_ETRE, title: "Repérer les signes de mal-être", number: 2 },
     { key: CATEGORIES.DES_PETITS_PAS_POUR_SON_EQUILIBRE_MENTAL, title: "Des petits pas pour son équilibre mental", number: 3 },
     { key: CATEGORIES.MIEUX_COMPRENDRE_LES_TROUBLES_PSYCHIQUES, title: "Mieux comprendre les troubles psychiques", number: 4 },
   ];
+
+  const handleCategoryPress = (category: string, categoryNumber: number) => {
+    logEvents.logSelectedCategory(categoryNumber);
+    navigation.navigate("resource-category-list", { category });
+  };
 
   return (
     <SafeAreaView className="flex-1">
@@ -65,7 +67,12 @@ const ResourceCategories: React.FC<ResourceCategoriesProps> = ({ navigation }) =
           </View>
 
           {categories.map((category) => (
-            <CategoryCard key={category.key} number={category.number} title={category.title} onPress={() => handleCategoryPress(category.key)} />
+            <CategoryCard
+              key={category.key}
+              number={category.number}
+              title={category.title}
+              onPress={() => handleCategoryPress(category.key, category.number)}
+            />
           ))}
         </View>
       </ScrollView>

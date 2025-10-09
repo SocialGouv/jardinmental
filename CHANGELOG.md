@@ -1,3 +1,31 @@
+## [1.98.3](https://github.com/SocialGouv/jardinmental/compare/v1.98.2...v1.98.3) (2025-10-09)
+
+
+### Bug Fixes
+
+* update feedback texts ([#544](https://github.com/SocialGouv/jardinmental/issues/544)) ([90db10e](https://github.com/SocialGouv/jardinmental/commit/90db10e258f84a1f4b4113ffacef7a61c00865e5))
+
+## [1.98.2](https://github.com/SocialGouv/jardinmental/compare/v1.98.1...v1.98.2) (2025-10-09)
+
+
+### Bug Fixes
+
+* remove unexpected new lines in resources ([#542](https://github.com/SocialGouv/jardinmental/issues/542)) ([811aebd](https://github.com/SocialGouv/jardinmental/commit/811aebd41b8fe1101b2e4a3735d2b76f1dbbd071))
+
+## [1.98.1](https://github.com/SocialGouv/jardinmental/compare/v1.98.0...v1.98.1) (2025-10-09)
+
+
+### Bug Fixes
+
+* add two more events on resources ([#534](https://github.com/SocialGouv/jardinmental/issues/534)) ([44db179](https://github.com/SocialGouv/jardinmental/commit/44db1798a623ebf0c0d87260833b184618e48b7a))
+
+# [1.98.0](https://github.com/SocialGouv/jardinmental/compare/v1.97.0...v1.98.0) (2025-10-09)
+
+
+### Features
+
+* add comment ([e4c7d6d](https://github.com/SocialGouv/jardinmental/commit/e4c7d6dcb570f923d7b8cc15ed0ee979cb76da89))
+
 # [1.97.0](https://github.com/SocialGouv/jardinmental/compare/v1.96.5...v1.97.0) (2025-10-08)
 
 
