@@ -56,12 +56,13 @@ const ResourceArticle: React.FC<ResourceArticleProps> = ({ navigation, route }) 
       );
   };
 
-  const getP2Resources = () => {
+  const getP2Resources = (): ExternalResource[] => {
     if (!resource.externalResources) return [];
     return resource.externalResources
       .map((id) => getExternalResource(id))
-      .filter((res) => res && res.category === "P2 - Explorer d'autres ressources")
-      .filter((res) => res !== undefined);
+      .filter((res): res is ExternalResource => 
+        res !== undefined && res.category === "P2 - Explorer d'autres ressources"
+      );
   };
 
   const handleExploreMoreResources = () => {
