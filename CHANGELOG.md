@@ -1,3 +1,10 @@
+## [1.99.3](https://github.com/SocialGouv/jardinmental/compare/v1.99.2...v1.99.3) (2025-10-10)
+
+
+### Bug Fixes
+
+* resources ([5fcffa2](https://github.com/SocialGouv/jardinmental/commit/5fcffa22306ba8506cb1cd486ba022c6c677d203))
+
 ## [1.99.2](https://github.com/SocialGouv/jardinmental/compare/v1.99.1...v1.99.2) (2025-10-10)
 
 
