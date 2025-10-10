@@ -1,10 +1,9 @@
 import React, { useMemo, useState } from "react";
 import { StyleSheet, View, useWindowDimensions } from "react-native";
 import Text from "../../../components/MyText";
-import Svg, { Rect, Circle, Text as SvgText, Path, Line } from "react-native-svg";
+import Svg, { Rect, Circle, Text as SvgText, Line } from "react-native-svg";
 import { analyzeScoresMapIcon, scoresMapIcon, TW_COLORS } from "../../../utils/constants";
 import { colors } from "../../../utils/colors";
-import { symbol } from "zod";
 
 // Constants
 const MAIN_BAR_HEIGHT = 30;
@@ -37,81 +36,10 @@ const colorToTextColor = {
   "#CCEDF9": "#3D6874",
 };
 
-type RoundedRectProps = {
-  x: number;
-  y?: number;
-  width: number;
-  height: number;
-  fill: string;
-  opacity?: number;
-  radius?: number;
-  side?: "left" | "right" | "both" | "none";
-};
-
-// Memoized components
-const BatchedSegment = React.memo(({ x, width, height, fill, opacity, side, radius }) => (
-  <RoundedRect
-    x={x}
-    y={0}
-    width={width}
-    height={height}
-    fill={fill}
-    radius={radius}
-    opacity={opacity}
-    side={side} // horizontal corner radius
-  />
+// Simple segment component - no batching
+const SimpleSegment = React.memo(({ x, width, height, fill, opacity }) => (
+  <Rect x={x} y={0} width={width} height={height} fill={fill} opacity={opacity} />
 ));
-
-export const RoundedRect: React.FC<RoundedRectProps> = ({ x, y = 0, width, height, fill, opacity = 1, radius = 5, side = "none" }) => {
-  let path = "";
-
-  if (side === "left") {
-    path = `
-      M ${x + radius},${y}
-      H ${x + width}
-      V ${y + height}
-      H ${x + radius}
-      Q ${x},${y + height} ${x},${y + height - radius}
-      V ${y + radius}
-      Q ${x},${y} ${x + radius},${y}
-      Z
-    `;
-  } else if (side === "right") {
-    path = `
-      M ${x},${y}
-      H ${x + width - radius}
-      Q ${x + width},${y} ${x + width},${y + radius}
-      V ${y + height - radius}
-      Q ${x + width},${y + height} ${x + width - radius},${y + height}
-      H ${x}
-      Z
-    `;
-  } else if (side === "both") {
-    path = `
-      M ${x + radius},${y}
-      H ${x + width - radius}
-      Q ${x + width},${y} ${x + width},${y + radius}
-      V ${y + height - radius}
-      Q ${x + width},${y + height} ${x + width - radius},${y + height}
-      H ${x + radius}
-      Q ${x},${y + height} ${x},${y + height - radius}
-      V ${y + radius}
-      Q ${x},${y} ${x + radius},${y}
-      Z
-    `;
-  } else {
-    // plain rect (no rounding)
-    path = `
-      M ${x},${y}
-      H ${x + width}
-      V ${y + height}
-      H ${x}
-      Z
-    `;
-  }
-
-  return <Path d={path} fill={fill} opacity={opacity} />;
-};
 
 const Dot = React.memo(({ cx, cy, r, fill }) => <Circle cx={cx} cy={cy} r={r} fill={fill} />);
 
@@ -135,118 +63,29 @@ const GridLines = React.memo(({ count, segmentWidth, height }: { count: number; 
   return <>{lines}</>;
 });
 
-// Batch consecutive segments with same color and opacity
-const batchSegments = (items, segmentWidth, gap, shouldBatch = true) => {
+// Simple segment processing - no batching
+const processSegments = (items, segmentWidth, gap) => {
   if (!items?.length) return [];
 
-  // If batching is disabled, return each segment individually
-  if (!shouldBatch) {
-    return items.map((item, index) => ({
-      x: index * segmentWidth,
-      width: segmentWidth - gap,
-      color: item.color,
-      opacity: item.opacity,
-      textColor: item.textColor,
-      symbol: item.symbol,
-    }));
-  }
-
-  const batches = [];
-  let currentBatch = {
-    color: items[0].color,
-    textColor: items[0].textColor,
-    symbol: items[0].symbol,
-    opacity: items[0].opacity,
-    startIndex: 0,
-    count: 1,
-  };
-
-  for (let i = 1; i < items.length; i++) {
-    const item = items[i];
-
-    // Check if we can continue the current batch
-    if (item.color === currentBatch.color && item.opacity === currentBatch.opacity) {
-      currentBatch.count++;
-    } else {
-      // Save current batch and start new one
-      batches.push({
-        x: currentBatch.startIndex * segmentWidth,
-        width: currentBatch.count * segmentWidth - gap,
-        color: currentBatch.color,
-        opacity: currentBatch.opacity,
-        textColor: currentBatch.textColor,
-        symbol: currentBatch.symbol,
-      });
-
-      currentBatch = {
-        color: item.color,
-        opacity: item.opacity,
-        startIndex: i,
-        count: 1,
-        textColor: item.textColor,
-        symbol: item.symbol,
-      };
-    }
-  }
-
-  // Push final batch
-  batches.push({
-    x: currentBatch.startIndex * segmentWidth,
-    width: currentBatch.count * segmentWidth - gap,
-    color: currentBatch.color,
-    opacity: currentBatch.opacity,
-    textColor: currentBatch.textColor,
-    symbol: currentBatch.symbol,
-  });
-
-  return batches;
+  return items.map((item, index) => ({
+    x: index * segmentWidth,
+    width: segmentWidth - gap,
+    color: item.color,
+    opacity: item.opacity,
+    textColor: item.textColor,
+    symbol: item.symbol,
+  }));
 };
 
-// Batch treatment segments (color only, no opacity)
-const batchTreatmentSegments = (colors, segmentWidth, gap, shouldBatch = true) => {
+// Simple treatment segment processing
+const processTreatmentSegments = (colors, segmentWidth, gap) => {
   if (!colors?.length) return [];
 
-  // If batching is disabled, return each segment individually
-  if (!shouldBatch) {
-    return colors.map((color, index) => ({
-      x: index * segmentWidth,
-      width: segmentWidth - gap,
-      color: color,
-    }));
-  }
-
-  const batches = [];
-  let currentBatch = {
-    color: colors[0],
-    startIndex: 0,
-    count: 1,
-  };
-
-  for (let i = 1; i < colors.length; i++) {
-    if (colors[i] === currentBatch.color) {
-      currentBatch.count++;
-    } else {
-      batches.push({
-        x: currentBatch.startIndex * segmentWidth,
-        width: currentBatch.count * segmentWidth - gap,
-        color: currentBatch.color,
-      });
-
-      currentBatch = {
-        color: colors[i],
-        startIndex: i,
-        count: 1,
-      };
-    }
-  }
-
-  batches.push({
-    x: currentBatch.startIndex * segmentWidth,
-    width: currentBatch.count * segmentWidth - gap,
-    color: currentBatch.color,
-  });
-
-  return batches;
+  return colors.map((color, index) => ({
+    x: index * segmentWidth,
+    width: segmentWidth - gap,
+    color: color,
+  }));
 };
 
 // Optimized value calculation
@@ -270,30 +109,32 @@ const getProcessedValue = (item) => {
   return { value, isReverse };
 };
 
+interface FriseGraphProps {
+  title?: string;
+  data: any[];
+  focusedScores: any[];
+  showTraitement: boolean;
+  priseDeTraitement?: any[];
+  priseDeTraitementSiBesoin?: any[];
+}
+
 export const FriseGraph = React.memo(
-  ({ title, data, focusedScores, showTraitement, priseDeTraitement, priseDeTraitementSiBesoin }) => {
+  ({ title, data, focusedScores, showTraitement, priseDeTraitement, priseDeTraitementSiBesoin }: FriseGraphProps) => {
     // Early return
     const dataLength = data?.length || 0;
     if (dataLength === 0) return null;
 
-    // Get screen dimensions and calculate initial width
+    // Get screen dimensions and calculate width
     const { width: screenWidth } = useWindowDimensions();
-    // Account for padding: friseContainer (10px * 2) + parent padding (10px * 2) = 40px total
-    const initialWidth = screenWidth - 40;
-
-    // State to track container width and batching
-    const [containerWidth, setContainerWidth] = useState(initialWidth);
-    const [batchSegment, setBatchSegment] = useState(false);
-
+    const containerWidth = screenWidth - 40; // Account for padding
     const segmentWidth = containerWidth / dataLength;
 
     // Convert to Set once
     const focusedScoresSet = useMemo(() => new Set(focusedScores), [focusedScores]);
-
     const hasFocus = focusedScoresSet.size > 0 && focusedScoresSet.size <= 5;
 
-    // Process and batch main data
-    const batchedMainData = useMemo(() => {
+    // Process main data - simple, no batching
+    const mainSegments = useMemo(() => {
       const items = data.map((item) => {
         const { value, isReverse } = getProcessedValue(item);
 
@@ -310,14 +151,19 @@ export const FriseGraph = React.memo(
           opacity = 0.5;
         }
 
-        return { color, opacity, textColor: analyzeScoresMapIcon[iconKey]?.iconColor, symbol: analyzeScoresMapIcon[iconKey]?.symbol };
+        return {
+          color,
+          opacity,
+          textColor: analyzeScoresMapIcon[iconKey]?.iconColor,
+          symbol: analyzeScoresMapIcon[iconKey]?.symbol,
+        };
       });
 
-      return batchSegments(items, segmentWidth, SEGMENT_GAP, batchSegment);
-    }, [data, focusedScoresSet, hasFocus, segmentWidth, batchSegment]);
+      return processSegments(items, segmentWidth, SEGMENT_GAP);
+    }, [data, focusedScoresSet, hasFocus, segmentWidth]);
 
-    // Process and batch treatment data
-    const batchedTreatmentData = useMemo(() => {
+    // Process treatment data - simple, no batching
+    const treatmentSegments = useMemo(() => {
       if (!showTraitement || !priseDeTraitement?.length) return null;
 
       const colors = priseDeTraitement.map((item) => {
@@ -326,11 +172,11 @@ export const FriseGraph = React.memo(
         return DEFAULT_COLOR;
       });
 
-      return batchTreatmentSegments(colors, segmentWidth, SEGMENT_GAP, batchSegment);
-    }, [priseDeTraitement, showTraitement, segmentWidth, batchSegment]);
+      return processTreatmentSegments(colors, segmentWidth, SEGMENT_GAP);
+    }, [priseDeTraitement, showTraitement, segmentWidth]);
 
-    // Process "si besoin" data - filter during processing
-    const processedSiBesoinData = useMemo(() => {
+    // Process "si besoin" data - simple
+    const siBesoinDots = useMemo(() => {
       if (!showTraitement || !priseDeTraitementSiBesoin?.length) return null;
 
       const dots = [];
@@ -346,27 +192,11 @@ export const FriseGraph = React.memo(
     }, [priseDeTraitementSiBesoin, showTraitement, segmentWidth]);
 
     return (
-      <View
-        style={styles.friseContainer}
-        // onLayout={(event) => {
-        //   const { width } = event.nativeEvent.layout;
-        //   if (width > 0 && width !== containerWidth) {
-        //     setContainerWidth(width);
-        //   }
-        // }}
-      >
+      <View style={styles.friseContainer}>
         {title ? <Text style={styles.friseTitle}>{title}</Text> : null}
 
-        <View
-          className="w-full"
-          onLayout={(event) => {
-            const { width } = event.nativeEvent.layout;
-            if (width > 0 && width !== containerWidth) {
-              setContainerWidth(width);
-            }
-          }}
-        >
-          {/* Main Bar - Batched */}
+        <View className="w-full">
+          {/* Main Bar - Simple */}
           <View
             style={{
               borderWidth: 1,
@@ -377,58 +207,29 @@ export const FriseGraph = React.memo(
               overflow: "hidden",
             }}
           >
-            <Svg
-              width={containerWidth}
-              height={MAIN_BAR_HEIGHT}
-              // style={{
-              //   borderWidth: 10,
-              //   borderRadius: 15,
-              //   borderColor: TW_COLORS.CNAM_PRIMARY_400,
-              // }}
-            >
-              {batchedMainData.map((batch, i) => {
-                let side = "none";
-                // When batching is disabled, all segments should have both sides rounded
-                if (i === 0 && i === batchedMainData.length - 1) {
-                  side = "both";
-                } else if (i === 0) {
-                  side = "left";
-                } else if (i === batchedMainData.length - 1) {
-                  side = "right";
-                }
-                return (
-                  <React.Fragment key={i}>
-                    <BatchedSegment
-                      side={side}
-                      key={i}
-                      x={batch.x}
-                      width={batch.width}
-                      height={MAIN_BAR_HEIGHT}
-                      fill={batch.color}
-                      opacity={batch.opacity}
-                      radius={MAIN_BAR_HEIGHT / 2}
-                    />
-                    <SvgText
-                      x={batch.x + batch.width / 2} // centre horizontal
-                      y={MAIN_BAR_HEIGHT / 2} // centre vertical
-                      fontSize={12}
-                      fontWeight={600}
-                      fill={batch.textColor}
-                      textAnchor="middle" // centre le texte horizontalement
-                      alignmentBaseline="middle" // centre le texte verticalement
-                    >
-                      {batch.symbol || ""}
-                    </SvgText>
-                  </React.Fragment>
-                );
-              })}
-              {/* Grid lines for day separations */}
+            <Svg width={containerWidth} height={MAIN_BAR_HEIGHT}>
+              {mainSegments.map((segment, i) => (
+                <React.Fragment key={i}>
+                  <SimpleSegment x={segment.x} width={segment.width} height={MAIN_BAR_HEIGHT} fill={segment.color} opacity={segment.opacity} />
+                  <SvgText
+                    x={segment.x + segment.width / 2}
+                    y={MAIN_BAR_HEIGHT / 2}
+                    fontSize={12}
+                    fontWeight={600}
+                    fill={segment.textColor}
+                    textAnchor="middle"
+                    alignmentBaseline="middle"
+                  >
+                    {segment.symbol || ""}
+                  </SvgText>
+                </React.Fragment>
+              ))}
               <GridLines count={dataLength} segmentWidth={segmentWidth} height={MAIN_BAR_HEIGHT} />
             </Svg>
           </View>
 
-          {/* Treatment Bar - Batched */}
-          {batchedTreatmentData && (
+          {/* Treatment Bar - Simple */}
+          {treatmentSegments && (
             <View
               className="mt-2"
               style={{
@@ -440,53 +241,32 @@ export const FriseGraph = React.memo(
                 overflow: "hidden",
               }}
             >
-              <Svg width={containerWidth} height={TREATMENT_BAR_HEIGHT} style={styles.treatmentBar}>
-                {batchedTreatmentData.map((batch, i) => {
-                  let side = "none";
-                  // When batching is disabled, all segments should have both sides rounded
-                  if (i === 0 && i === batchedTreatmentData.length - 1) {
-                    side = "both";
-                  } else if (i === 0) {
-                    side = "left";
-                  } else if (i === batchedTreatmentData.length - 1) {
-                    side = "right";
-                  }
-                  return (
-                    <React.Fragment key={i}>
-                      <BatchedSegment
-                        side={side}
-                        key={i}
-                        x={batch.x}
-                        width={batch.width}
-                        height={TREATMENT_BAR_HEIGHT}
-                        fill={batch.color}
-                        radius={TREATMENT_BAR_HEIGHT / 2}
-                        opacity={1}
-                      />
-                      <SvgText
-                        x={batch.x + batch.width / 2} // centre horizontal
-                        y={TREATMENT_BAR_HEIGHT / 2} // centre vertical
-                        fontSize={12}
-                        fill={"#3D6874"}
-                        fontWeight={600}
-                        textAnchor="middle" // centre le texte horizontalement
-                        alignmentBaseline="middle" // centre le texte verticalement
-                      >
-                        {colorToSymbol[batch.color] || ""}
-                      </SvgText>
-                    </React.Fragment>
-                  );
-                })}
-                {/* Grid lines for day separations */}
+              <Svg width={containerWidth} height={TREATMENT_BAR_HEIGHT}>
+                {treatmentSegments.map((segment, i) => (
+                  <React.Fragment key={i}>
+                    <SimpleSegment x={segment.x} width={segment.width} height={TREATMENT_BAR_HEIGHT} fill={segment.color} opacity={1} />
+                    <SvgText
+                      x={segment.x + segment.width / 2}
+                      y={TREATMENT_BAR_HEIGHT / 2}
+                      fontSize={12}
+                      fill={"#3D6874"}
+                      fontWeight={600}
+                      textAnchor="middle"
+                      alignmentBaseline="middle"
+                    >
+                      {colorToSymbol[segment.color] || ""}
+                    </SvgText>
+                  </React.Fragment>
+                ))}
                 <GridLines count={dataLength} segmentWidth={segmentWidth} height={TREATMENT_BAR_HEIGHT} />
               </Svg>
             </View>
           )}
 
           {/* Treatment Si Besoin Dots */}
-          {processedSiBesoinData && (
+          {siBesoinDots && (
             <Svg width={containerWidth} height={DOT_RADIUS * 3} className="mt-2">
-              {processedSiBesoinData.map((dot) => (
+              {siBesoinDots.map((dot) => (
                 <Dot key={dot.index} cx={dot.cx} cy={DOT_RADIUS + 1} r={DOT_RADIUS} fill={"#3D6874"} />
               ))}
             </Svg>
