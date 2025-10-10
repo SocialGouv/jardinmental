@@ -154,7 +154,7 @@ Ces émotions peuvent être liées à des événements du quotidien : une dispu
 Parfois, le mal-être s'atténue progressivement avec le temps, le soutien de l’entourage ou des changements de situation. Dans d’autres cas, il persiste. Et quand il devient pesant à vivre et que nos ressources ou celles de notre entourage ne suffisent plus ou pas, **c’est le signal qu’il faut chercher du soutien** *(voir nos rubriques « Agir » et « Chercher de l’aide »).*\n\
 \n\
 Finalement, ce qui distingue vraiment une émotion passagère d’un mal-être qui mérite une attention particulière, c’est surtout la durée, l’intensité, et l’impact sur la vie quotidienne.`,
-    externalResources: ["550e8400-e29b-41d4-a716-446655440018", "550e8400-e29b-41d4-a716-446655440019"],
+    externalResources: ["550e8400-e29b-41d4-a716-446655440017", "550e8400-e29b-41d4-a716-446655440018"],
   },
   {
     id: "ac50b156-3215-435a-b622-285533b3f9a3",
@@ -329,18 +329,22 @@ L’addiction est donc **une véritable affection médicale** et non un simple m
 \n\
 *(voir aussi nos rubriques agir et chercher de l’aide)*`,
     externalResources: [
-      "550e8400-e29b-41d4-a716-446655440040",
-      "550e8400-e29b-41d4-a716-446655440055",
-      "550e8400-e29b-41d4-a716-446655440054",
-      "550e8400-e29b-41d4-a716-446655440053",
-      "550e8400-e29b-41d4-a716-446655440052",
-      "550e8400-e29b-41d4-a716-446655440067",
-      "550e8400-e29b-41d4-a716-446655440066",
-      "550e8400-e29b-41d4-a716-446655440065",
-      "550e8400-e29b-41d4-a716-446655440063",
-      "550e8400-e29b-41d4-a716-446655440064",
-      "550e8400-e29b-41d4-a716-446655440041",
-      "550e8400-e29b-41d4-a716-446655440072",
+      "550e8400-e29b-41d4-a716-446655440118",
+      "550e8400-e29b-41d4-a716-446655440119",
+      "550e8400-e29b-41d4-a716-446655440120",
+      "550e8400-e29b-41d4-a716-446655440121",
+      "550e8400-e29b-41d4-a716-446655440122",
+      "550e8400-e29b-41d4-a716-446655440123",
+      "550e8400-e29b-41d4-a716-446655440124",
+      "550e8400-e29b-41d4-a716-446655440125",
+      "550e8400-e29b-41d4-a716-446655440126",
+      "550e8400-e29b-41d4-a716-446655440127",
+      "550e8400-e29b-41d4-a716-446655440128",
+      "550e8400-e29b-41d4-a716-446655440129",
+      "550e8400-e29b-41d4-a716-446655440130",
+      "550e8400-e29b-41d4-a716-446655440132",
+      "550e8400-e29b-41d4-a716-446655440133",
+      "550e8400-e29b-41d4-a716-446655440061",
     ],
   },
   {
@@ -553,7 +557,6 @@ Le sommeil joue un rôle fondamental pour le corps et l’esprit. **Il réduit l
 \n\
 Il est important de prendre en compte ces déterminants pour mieux comprendre son sommeil.`,
     externalResources: [
-      "550e8400-e29b-41d4-a716-446655440133",
       "550e8400-e29b-41d4-a716-446655440134",
       "550e8400-e29b-41d4-a716-446655440135",
       "550e8400-e29b-41d4-a716-446655440136",
@@ -561,6 +564,7 @@ Il est important de prendre en compte ces déterminants pour mieux comprendre so
       "550e8400-e29b-41d4-a716-446655440138",
       "550e8400-e29b-41d4-a716-446655440139",
       "550e8400-e29b-41d4-a716-446655440140",
+      "550e8400-e29b-41d4-a716-446655440141",
     ],
   },
   {
@@ -585,10 +589,10 @@ Il survient lorsque le corps **en a réellement besoin**, guidé par une horloge
 \n\
 **influencer la qualité du sommeil.**`,
     externalResources: [
-      "550e8400-e29b-41d4-a716-446655440141",
       "550e8400-e29b-41d4-a716-446655440142",
       "550e8400-e29b-41d4-a716-446655440143",
       "550e8400-e29b-41d4-a716-446655440144",
+      "550e8400-e29b-41d4-a716-446655440145",
     ],
   },
   {
