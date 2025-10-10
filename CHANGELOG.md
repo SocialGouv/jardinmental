@@ -1,3 +1,10 @@
+## [1.99.1](https://github.com/SocialGouv/jardinmental/compare/v1.99.0...v1.99.1) (2025-10-10)
+
+
+### Bug Fixes
+
+* activeate feedback on survey for everybody ([#545](https://github.com/SocialGouv/jardinmental/issues/545)) ([78318c8](https://github.com/SocialGouv/jardinmental/commit/78318c80873fe7aba608757e33d8bf2a1ebea1bd))
+
 # [1.99.0](https://github.com/SocialGouv/jardinmental/compare/v1.98.3...v1.99.0) (2025-10-10)
 
 
