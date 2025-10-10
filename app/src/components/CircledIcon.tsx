@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapIconToSvg = (icon) => {
+export const mapIconToSvg = (icon) => {
   const iconMap = {
     VeryGoodSvg: SmileyVeryGood,
     GoodSvg: SmileyGood,

@@ -49,7 +49,7 @@ const dotsX = [
 /* End chart spacing */
 
 const Chart = ({ indicateur, onPress, title, data = [], lines = 5, withFocus = false, focused = null }) => (
-  <View>
+  <View className="mb-8 mt-4">
     <Text style={styles.title}>{title}</Text>
     <View style={styles.globalContainer}>
       <View style={styles.chartContainer}>
@@ -113,10 +113,8 @@ const Chart = ({ indicateur, onPress, title, data = [], lines = 5, withFocus = f
 const styles = StyleSheet.create({
   title: {
     fontSize: 20,
-    marginTop: 40,
     color: colors.DARK_BLUE,
     fontWeight: "700",
-    marginLeft: 15,
   },
   legendItem: {
     marginBottom: 14,

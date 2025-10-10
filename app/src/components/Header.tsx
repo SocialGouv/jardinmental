@@ -23,7 +23,7 @@ interface HeaderProps {
   scrollThreshold?: number;
 }
 
-const Header = ({ title, navigation, scrollY, scrollThreshold = 100 }: HeaderProps) => {
+const Header = ({ title, navigation, scrollY, scrollThreshold = 80, component }: HeaderProps) => {
   const needUpdate = useContext(NeedUpdateContext);
   const [settingsVisible, setSettingsVisible] = useState(false);
   const [drawerVisible, setDrawerVisible] = useState<boolean>(false);
@@ -145,6 +145,7 @@ const Header = ({ title, navigation, scrollY, scrollThreshold = 100 }: HeaderPro
         <Animated.Text style={titleAnimatedStyle} className={mergeClassNames(typography.textLgRegular, "text-white")}>
           {title}
         </Animated.Text>
+        {component}
       </Animated.View>
     </Animated.View>
   );

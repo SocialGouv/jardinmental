@@ -1,6 +1,7 @@
 import { OnboardingStep } from "@/scenes/onboarding-v2/types";
 import { colors as mainColors } from "./colors";
 import { INDICATORS_CATEGORIES } from "@/entities/IndicatorCategories";
+import { symbol } from "zod";
 
 export const icons = {
   veryGood: "VeryGoodSvg",
@@ -89,6 +90,48 @@ export const scoresMapIcon = {
     faceIcon: icons.veryGood,
     borderColor: iconBorderColors.veryGood,
     iconColor: iconColors.veryGood,
+  },
+};
+
+export const analyzeScoresMapIcon = {
+  "-1": {
+    color: "transparent",
+  },
+  1: {
+    color: "#F3B9B0",
+    symbol: "--",
+    iconColor: "#B33F2E",
+  },
+  2: {
+    color: "#F9DCD7",
+    symbol: "-",
+    iconColor: "#B33F2E",
+  },
+  3: {
+    color: "#F9E1A7",
+    symbol: "O",
+    iconColor: "#5A2017",
+  },
+  4: {
+    color: "#BBE7C6",
+    symbol: "+",
+    iconColor: "#004439",
+  },
+  5: {
+    color: "#9ADAAA",
+    symbol: "++",
+    iconColor: "#004439",
+  },
+};
+
+export const yesNoMapIcon = {
+  true: {
+    color: "#CCEDF9",
+    symbol: "✓",
+  },
+  false: {
+    color: "#F9D1E6",
+    symbol: "x",
   },
 };
 
@@ -364,6 +407,7 @@ export const TW_COLORS = {
   CNAM_PRIMARY_700: "#518B9A",
   CNAM_PRIMARY_500: "#65AEC1",
   CNAM_PRIMARY_400: "#84BECD",
+  CNAM_PRIMARY_100: "#E0EFF3",
   CNAM_PRIMARY_50: "#F0F7F9",
   CNAM_PRIMARY_25: "#FAFDFD",
   BEIGE: "#FCEBD9",
@@ -392,4 +436,41 @@ export const SHARED_HEADER = false;
 export const HEADER_WITH_BANNER = false;
 export const PROGRESS_BAR = true;
 export const PROGRESS_BAR_AND_HEADER = true;
+
+export const HELP_ANALYSE = {
+  trigger: {
+    title: "Comment lire mes déclencheurs ?",
+    description: `**Les déclencheurs vous aident à :**\n
+- Identifier ce qui influence positivement ou négativement votre état
+- Faire des liens entre vos ressentis et le contexte de vos journées
+- Mieux comprendre ce qui vous aide… et ce qui peut vous fragiliser.\n\n
+**Retrouvez les notes que vous avez écrites :**\n
+Séléctionnez un indicateur, un ou plusieurs niveaux et une période pour retrouver les notes associées.`,
+  },
+  variations: {
+    title: "Comment lire les variations ?",
+    description: `**Depuis cet onglet, vous pouvez facilement :**\n
+- Suivre vos indicateurs semaine après semaine
+- Observer les variations jour par jour
+- Repérer les tendances dans le temps\n\n
+**Afficher le détail d’un jour**
+Tapez sur un jour ou un point pour retreouver une vue détaillée.`,
+  },
+  correlation: {
+    title: "Comment lire les corrélations ?",
+    description: `**Suivez votre évolution grâce aux frises :**\n
+Sélectionnez la période qui vous intéresse, ou définissez vous-même les dates de votre choix.\n\n
+**Faites des corrélations entre vos indicateurs**\n
+Comprenez quels indicateurs évoluent ensemble en les comparant. Utilisez les filtres d’intensité (par exemple uniquement les smileys rouges) pour mieux visualiser les corrélations.\n\n
+`,
+  },
+  bilan: {
+    title: "Comment lire mon bilan ?",
+    description: `Le bilan vous donne une vue d’ensemble de vos observations sur la période choisie.\n
+Il vous permet de :\n
+• Voir la moyenne de chaque indicateur sur la période choisie
+• Visualiser la répartition de vos réponses
+• Suivre la prise de votre traitement (quotidien ou “si besoin”)`,
+  },
+};
 export const TAB_BAR_HEIGHT = 100;

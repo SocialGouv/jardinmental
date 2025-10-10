@@ -1,8 +1,10 @@
 import React from "react";
-import { View, StyleSheet, TouchableOpacity } from "react-native";
+import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
 import { colors } from "../../utils/colors";
 import { answers } from "../survey-v2/utils";
-import CircledIcon from "../../components/CircledIcon";
+import { analyzeScoresMapIcon, TW_COLORS } from "@/utils/constants";
+import { mergeClassNames } from "@/utils/className";
+import { typography } from "@/utils/typography";
 
 const ScorePicker = ({
   focusedScores,
@@ -17,18 +19,32 @@ const ScorePicker = ({
 }) => {
   return (
     <View
+      className="space-x-2"
       style={[
         styles.answersContainer,
-        size === "small" && { padding: 0, marginVertical: 0, height: 36 },
+        size === "small" && { padding: 0, marginVertical: 0, height: 60 },
         inline && styles.answersContainerInline,
         containerStyle,
       ]}
     >
       {options.map((answer, i) => {
         const active = focusedScores.includes(answer.score);
+        const item = analyzeScoresMapIcon[answer.score];
         return (
           <TouchableOpacity key={i} onPress={() => onPress(answer.score)}>
-            <View style={[styles.selectionContainer, inline && { marginHorizontal: 5 }, itemStyle, active && styles.activeSelectionContainer]}>
+            <View
+              className="h-[32] w-[32] rounded-full justify-center items-center"
+              style={{
+                backgroundColor: item.color,
+                borderWidth: active ? 2 : 0,
+                borderColor: TW_COLORS.CNAM_PRIMARY_800,
+              }}
+            >
+              <Text className={mergeClassNames(typography.textSmMedium)} style={{ color: item.iconColor }}>
+                {item.symbol}
+              </Text>
+            </View>
+            {/* <View style={[styles.selectionContainer, inline && { marginHorizontal: 5 }, itemStyle, active && styles.activeSelectionContainer]}>
               {showIcon ? (
                 <CircledIcon
                   color={answer.backgroundColor}
@@ -46,7 +62,7 @@ const ScorePicker = ({
               ) : (
                 <View className={`${size === "small" ? "w-5 h-5" : "w-7 h-7"} rounded-full`} style={{ backgroundColor: answer.backgroundColor }} />
               )}
-            </View>
+            </View> */}
           </TouchableOpacity>
         );
       })}
@@ -56,15 +72,6 @@ const ScorePicker = ({
 };
 
 const styles = StyleSheet.create({
-  selectionContainer: {
-    padding: 4,
-    borderColor: "#DEF4F5",
-    borderWidth: 1,
-    borderRadius: 10,
-  },
-  activeSelectionContainer: {
-    backgroundColor: colors.LIGHT_BLUE,
-  },
   answersContainer: {
     flex: 1,
     marginVertical: 10,

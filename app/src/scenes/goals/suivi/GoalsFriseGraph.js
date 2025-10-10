@@ -1,7 +1,7 @@
 import React, { useCallback, useState, useEffect } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import { getGoalsAndRecords } from "../../../utils/localStorage/goals";
-import { FriseGraph } from "../../suivi/frise/FriseGraph";
+import { FriseGraph } from "../../suivi/correlation/FriseGraph";
 import { parseISO, getDay } from "date-fns";
 import { DAYS_OF_WEEK } from "../../../utils/date/daysOfWeek";
 
