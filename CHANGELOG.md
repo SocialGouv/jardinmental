@@ -1,3 +1,10 @@
+## [1.99.2](https://github.com/SocialGouv/jardinmental/compare/v1.99.1...v1.99.2) (2025-10-10)
+
+
+### Bug Fixes
+
+* display of "questionnaire" text on small screen ([68c57fe](https://github.com/SocialGouv/jardinmental/commit/68c57feae804c2c9d2949cf612fccdfc823ed817))
+
 ## [1.99.1](https://github.com/SocialGouv/jardinmental/compare/v1.99.0...v1.99.1) (2025-10-10)
 
 
