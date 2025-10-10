@@ -370,19 +370,12 @@ const SurveySuccessScreen: React.FC<SurveySuccessScreenProps> = ({ navigation, r
   const [showPanel, setShowPanel] = useState(false);
   const [currentMessage, setCurrentMessage] = useState(ALL_MESSAGES[0]); // Default fallback
   const [thumbSelection, setThumbSelection] = useState<"up" | "down" | null>(null);
-  const [isDevMode, setIsDevMode] = useState(false);
 
-  // Check dev mode and load sequential motivational message
+  // Load sequential motivational message
   useEffect(() => {
     const initializeScreen = async () => {
-      const devMode = await AsyncStorage.getItem("devMode");
-      const isInDevMode = devMode === "true";
-      setIsDevMode(isInDevMode);
-
-      if (isInDevMode) {
-        const message = await getNextMotivationalMessage();
-        setCurrentMessage(message);
-      }
+      const message = await getNextMotivationalMessage();
+      setCurrentMessage(message);
     };
     initializeScreen();
   }, []);
@@ -393,8 +386,8 @@ const SurveySuccessScreen: React.FC<SurveySuccessScreenProps> = ({ navigation, r
   const contentOpacity = useSharedValue(1); // Start visible, fade out when panel opens
 
   const handleFinish = () => {
-    // Log Matomo event based on thumb selection (only in dev mode)
-    if (isDevMode && thumbSelection) {
+    // Log Matomo event based on thumb selection
+    if (thumbSelection) {
       if (thumbSelection === "up") {
         logEvents.logHealthTipFeedbackUp(currentMessage.id);
       } else {
@@ -413,40 +406,31 @@ const SurveySuccessScreen: React.FC<SurveySuccessScreenProps> = ({ navigation, r
   };
 
   useEffect(() => {
-    if (isDevMode) {
-      // Dev mode: Show panel after 1.5 seconds
-      const timer = setTimeout(() => {
-        setShowPanel(true);
-        // Fade out content at the same time panel starts
-        contentOpacity.value = withTiming(0, {
+    // Show panel after 1.5 seconds
+    const timer = setTimeout(() => {
+      setShowPanel(true);
+      // Fade out content at the same time panel starts
+      contentOpacity.value = withTiming(0, {
+        duration: 750,
+        easing: Easing.out(Easing.cubic),
+      });
+      // Animate panel sliding up
+      panelTranslateY.value = withTiming(0, {
+        duration: 750,
+        easing: Easing.out(Easing.cubic),
+      });
+      // Show button with delay and opacity animation
+      buttonOpacity.value = withDelay(
+        1000,
+        withTiming(1, {
           duration: 750,
           easing: Easing.out(Easing.cubic),
-        });
-        // Animate panel sliding up
-        panelTranslateY.value = withTiming(0, {
-          duration: 750,
-          easing: Easing.out(Easing.cubic),
-        });
-        // Show button with delay and opacity animation
-        buttonOpacity.value = withDelay(
-          1000,
-          withTiming(1, {
-            duration: 750,
-            easing: Easing.out(Easing.cubic),
-          })
-        );
-      }, 1500);
+        })
+      );
+    }, 1500);
 
-      return () => clearTimeout(timer);
-    } else {
-      // Production mode: Show message for 2 seconds then finish
-      const timer = setTimeout(() => {
-        handleFinish();
-      }, 2000);
-
-      return () => clearTimeout(timer);
-    }
-  }, [isDevMode]);
+    return () => clearTimeout(timer);
+  }, []);
 
   useFocusEffect(
     useCallback(() => {
@@ -486,8 +470,8 @@ const SurveySuccessScreen: React.FC<SurveySuccessScreenProps> = ({ navigation, r
         </Animated.View>
       </View>
 
-      {/* Animated Bottom Panel - Only show in dev mode */}
-      {isDevMode && showPanel && (
+      {/* Animated Bottom Panel */}
+      {showPanel && (
         <Animated.View
           style={[
             {
