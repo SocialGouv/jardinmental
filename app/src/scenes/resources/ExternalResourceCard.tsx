@@ -79,7 +79,9 @@ const ExternalResourceCard: React.FC<ExternalResourceCardProps> = ({ externalRes
       <View className="rounded-2xl flex flex-row border-2 border-cnam-primary-400 bg-white min-h-[112px]">
         <View className="bg-cnam-cyan-lighten-90 rounded-l-2xl flex items-center justify-center w-20">
           <ExternalResourceIcon type={externalResource.type} />
-          <Text className="text-xs text-cnam-primary-900 font-medium pt-1 rounded">{externalResource.type}</Text>
+          <Text className="text-xs text-cnam-primary-900 font-medium pt-1 rounded text-center">
+            {externalResource.type === "Questionnaire" ? <>Question&shy;naire</> : externalResource.type}
+          </Text>
         </View>
         <View className="flex-1 flex">
           <View className="p-4 grow">
