@@ -29,8 +29,8 @@ export const GoalCheckboxItem = ({ goal, index, checked, comment, onCheckedChang
         }}
         hitSlop={{ bottom: 8, left: 8, right: 8, top: 8 }}
       >
-        <View style={[styles.contentContainer]}>
-          <View className="flex-row items-start flex-1">
+        <View className="p-4 flex-col">
+          <View className="flex-row items-start">
             <InputCheckbox
               containerStyle={{ marginVertical: 0, marginRight: 0, marginTop: 5 }}
               contentContainerStyle={{ paddingRight: 0 }}
@@ -40,7 +40,7 @@ export const GoalCheckboxItem = ({ goal, index, checked, comment, onCheckedChang
                 onCheckedChanged?.({ checked, goal });
               }}
             />
-            <View className="flex-row justify-between flex-1 items-start">
+            <View className="flex-row justify-between flex-1">
               <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-900")}>{goal.label}</Text>
               <View className="pt-1">
                 <CheckMarkIcon color={_checked ? TW_COLORS.CNAM_PRIMARY_700 : "transparent"} />
@@ -73,9 +73,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 16,
     marginVertical: 8,
-  },
-  contentContainer: {
-    padding: 16,
   },
   label: {
     fontSize: 16,
