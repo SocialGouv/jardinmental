@@ -1,3 +1,10 @@
+# [1.99.0](https://github.com/SocialGouv/jardinmental/compare/v1.98.3...v1.99.0) (2025-10-10)
+
+
+### Features
+
+* external resources on two levels (some are in a second page) ([#546](https://github.com/SocialGouv/jardinmental/issues/546)) ([f42d725](https://github.com/SocialGouv/jardinmental/commit/f42d72589bfe2a0389eeeecc6b4608a024ae5dd3))
+
 ## [1.98.3](https://github.com/SocialGouv/jardinmental/compare/v1.98.2...v1.98.3) (2025-10-09)
 
 
