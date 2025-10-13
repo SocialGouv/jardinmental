@@ -34,6 +34,11 @@ const Bilan = ({ navigation, startSurvey }) => {
   const [presetDate, setPresetDate] = React.useState("lastDays7");
   const [fromDate, setFromDate] = React.useState(beforeToday(30));
   const [toDate, setToDate] = React.useState(beforeToday(0));
+  // bug on correlation when data is import so set up a special filter
+  const [presetDateCorrelation, setPresetDateCorrelation] = React.useState("lastDays7");
+  const [fromDateCorrelation, setFromDateCorrelation] = React.useState(beforeToday(30));
+  const [toDateCorrelation, setToDateCorrelation] = React.useState(beforeToday(0));
+
   const [aUnTraiement, setAUnTraitement] = React.useState(false);
   const [day, setDay] = React.useState(new Date());
   const [focusedScores, setFocusedScores] = React.useState([]);
@@ -129,11 +134,11 @@ const Bilan = ({ navigation, startSurvey }) => {
             {chartType === "Courbes" && <VariationsHeader day={day} setDay={setDay} scrollY={scrollY} />}
             {chartType === "Frises" && (
               <CorrelationHeader
-                presetDate={presetDate}
-                setPresetDate={setPresetDate}
-                fromDate={fromDate}
-                setFromDate={setFromDate}
-                toDate={toDate}
+                presetDate={presetDateCorrelation}
+                setPresetDate={setPresetDateCorrelation}
+                fromDate={fromDateCorrelation}
+                setFromDate={setFromDateCorrelation}
+                toDate={toDateCorrelation}
                 setToDate={setToDate}
                 hasTreatment={aUnTraiement}
                 scrollY={scrollY}
@@ -169,66 +174,74 @@ const Bilan = ({ navigation, startSurvey }) => {
           </View>
         </View>
         {/* Render all tabs but hide inactive ones to preserve state */}
-        <View style={{ display: chartType === "Statistiques" ? "flex" : "none", flex: 1, position: "relative" }}>
-          <ChartPie dynamicPaddingTop={dynamicPaddingTop} onScroll={scrollHandler} fromDate={fromDate} toDate={toDate} navigation={navigation} />
-        </View>
+        {chartType === "Statistiques" && (
+          <View style={{ display: chartType === "Statistiques" ? "flex" : "none", flex: 1, position: "relative" }}>
+            <ChartPie dynamicPaddingTop={dynamicPaddingTop} onScroll={scrollHandler} fromDate={fromDate} toDate={toDate} navigation={navigation} />
+          </View>
+        )}
 
-        <View style={{ display: chartType === "Courbes" ? "flex" : "none", flex: 1 }}>
-          <Variations
-            dynamicPaddingTop={dynamicPaddingTop}
-            onScroll={scrollHandler}
-            navigation={navigation}
-            scrollY={scrollY}
-            day={day}
-            setDay={setDay}
-          />
-        </View>
+        {chartType === "Courbes" && (
+          <View style={{ display: chartType === "Courbes" ? "flex" : "none", flex: 1 }}>
+            <Variations
+              dynamicPaddingTop={dynamicPaddingTop}
+              onScroll={scrollHandler}
+              navigation={navigation}
+              scrollY={scrollY}
+              day={day}
+              setDay={setDay}
+            />
+          </View>
+        )}
 
-        <View style={{ display: chartType === "Déclencheurs" ? "flex" : "none", flex: 1 }}>
-          <Evenements
-            dynamicPaddingTop={dynamicPaddingTop}
-            onScroll={scrollHandler}
-            navigation={navigation}
-            presetDate={presetDate}
-            setPresetDate={setPresetDate}
-            fromDate={fromDate}
-            setFromDate={setFromDate}
-            toDate={toDate}
-            setToDate={setToDate}
-            scrollY={scrollY}
-            indicateur={indicateur}
-            setIndicateur={setIndicateur}
-            indicateurId={indicateurId}
-            setIndicateurId={setIndicateurId}
-            level={level}
-            setLevel={setLevel}
-            userIndicateurs={userIndicateurs}
-            setUserIndicateurs={setUserIndicateurs}
-          />
-        </View>
+        {chartType === "Déclencheurs" && (
+          <View style={{ display: chartType === "Déclencheurs" ? "flex" : "none", flex: 1 }}>
+            <Evenements
+              dynamicPaddingTop={dynamicPaddingTop}
+              onScroll={scrollHandler}
+              navigation={navigation}
+              presetDate={presetDate}
+              setPresetDate={setPresetDate}
+              fromDate={fromDate}
+              setFromDate={setFromDate}
+              toDate={toDate}
+              setToDate={setToDate}
+              scrollY={scrollY}
+              indicateur={indicateur}
+              setIndicateur={setIndicateur}
+              indicateurId={indicateurId}
+              setIndicateurId={setIndicateurId}
+              level={level}
+              setLevel={setLevel}
+              userIndicateurs={userIndicateurs}
+              setUserIndicateurs={setUserIndicateurs}
+            />
+          </View>
+        )}
 
-        <View style={{ display: chartType === "Frises" ? "flex" : "none", flex: 1 }}>
-          <FriseScreen
-            dynamicPaddingTop={dynamicPaddingTop}
-            onScroll={scrollHandler}
-            navigation={navigation}
-            presetDate={presetDate}
-            setPresetDate={setPresetDate}
-            fromDate={fromDate}
-            setFromDate={setFromDate}
-            toDate={toDate}
-            setToDate={setToDate}
-            hasTreatment={aUnTraiement}
-            scrollY={scrollY}
-            focusedScores={focusedScores}
-            setFocusedScores={setFocusedScores}
-            showTraitement={showTraitement}
-            setShowTraitement={setShowTraitement}
-            filterEnabled={filterEnabled}
-            setFilterEnabled={setFilterEnabled}
-            friseInfoButtonRef={friseInfoButtonRef}
-          />
-        </View>
+        {chartType === "Frises" && (
+          <View style={{ display: chartType === "Frises" ? "flex" : "none", flex: 1 }}>
+            <FriseScreen
+              dynamicPaddingTop={dynamicPaddingTop}
+              onScroll={scrollHandler}
+              navigation={navigation}
+              presetDate={presetDateCorrelation}
+              setPresetDate={setPresetDateCorrelation}
+              fromDate={fromDateCorrelation}
+              setFromDate={setFromDateCorrelation}
+              toDate={toDateCorrelation}
+              setToDate={setToDateCorrelation}
+              hasTreatment={aUnTraiement}
+              scrollY={scrollY}
+              focusedScores={focusedScores}
+              setFocusedScores={setFocusedScores}
+              showTraitement={showTraitement}
+              setShowTraitement={setShowTraitement}
+              filterEnabled={filterEnabled}
+              setFilterEnabled={setFilterEnabled}
+              friseInfoButtonRef={friseInfoButtonRef}
+            />
+          </View>
+        )}
       </View>
       <FloatingPlusButton shadow onPress={startSurvey} plusPosition={0} />
     </>
