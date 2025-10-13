@@ -1,3 +1,10 @@
+# [1.100.0](https://github.com/SocialGouv/jardinmental/compare/v1.99.3...v1.100.0) (2025-10-13)
+
+
+### Features
+
+* release app 1.43.6 (upgrade build numbers) ([a8b65ad](https://github.com/SocialGouv/jardinmental/commit/a8b65ad14afe47853d95c0cc7a0f592d1c4a3a12))
+
 ## [1.99.3](https://github.com/SocialGouv/jardinmental/compare/v1.99.2...v1.99.3) (2025-10-10)
 
 
