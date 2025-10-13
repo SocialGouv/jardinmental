@@ -60,6 +60,7 @@ export const CorrelationHeader = ({
       <View className="w-full px-4">
         <RangeDate
           isFilterActive={filterEnabled}
+          hideFromBeginningButton={true}
           presetValue={presetDate}
           onChangePresetValue={setPresetDate}
           fromDate={fromDate}
@@ -96,26 +97,7 @@ export const CorrelationHeader = ({
   );
 };
 
-export const FriseScreen = ({
-  navigation,
-  presetDate,
-  setPresetDate,
-  fromDate,
-  setFromDate,
-  toDate,
-  setToDate,
-  hasTreatment,
-  onScroll,
-  scrollY,
-  focusedScores,
-  setFocusedScores,
-  showTraitement,
-  setShowTraitement,
-  filterEnabled,
-  setFilterEnabled,
-  friseInfoButtonRef,
-  dynamicPaddingTop,
-}) => {
+export const FriseScreen = ({ navigation, fromDate, toDate, onScroll, focusedScores, showTraitement, dynamicPaddingTop }) => {
   if (!toDate || !fromDate) return null;
 
   return (

@@ -30,6 +30,7 @@ const RangeDate = ({
   onHelpClick,
   introductionText,
   isFilterActive,
+  hideFromBeginningButton,
   ...props
 }) => {
   const [presetValue, setPresetValue] = useState(props.presetValue || "lastDays7");
@@ -111,6 +112,15 @@ const RangeDate = ({
     };
   }, [presetValue]);
 
+  const options = [
+    { label: "7 derniers jours", value: "lastDays7" },
+    { label: "14 derniers jours", value: "lastDays14" },
+    { label: "30 derniers jours", value: "lastDays30" },
+    { label: "Choisir la période", value: "custom" },
+  ];
+  if (!hideFromBeginningButton) {
+    options.splice(3, 0, { label: "Depuis le début", value: "fromBeginning" });
+  }
   return (
     <View>
       <View className="flex-row items-center justify-between">
@@ -120,13 +130,7 @@ const RangeDate = ({
             placeholder="Sélectionnez une période..."
             value={presetValue}
             onValueChange={setPresetValue}
-            items={[
-              { label: "7 derniers jours", value: "lastDays7" },
-              { label: "14 derniers jours", value: "lastDays14" },
-              { label: "30 derniers jours", value: "lastDays30" },
-              { label: "Depuis le début", value: "fromBeginning" },
-              { label: "Choisir la période", value: "custom" },
-            ]}
+            items={options}
             {...selectInputProps}
           />
           {!!setIsFilterActive && (

@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View, ScrollView, Dimensions, ActivityIndicator } from "react-native";
+import { StyleSheet, View, ScrollView, Dimensions } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 
 import { getArrayOfDatesFromTo } from "@/utils/date/helpers";
@@ -16,104 +16,73 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { GoalsFriseGraph } from "@/scenes/goals/suivi/GoalsFriseGraph";
 
 import { getIndicatorKey } from "../../../utils/indicatorUtils";
-import { SCROLL_THRESHOLD } from "@/scenes/survey-v2/AnimatedHeaderScrollScreen";
 import Animated from "react-native-reanimated";
 
 const screenHeight = Dimensions.get("window").height;
 
-// Async wrapper component for FriseGraph with loading state
-const AsyncFriseGraph = React.memo(
-  ({ title, categoryId, focusedScores, showTraitement, computeChartDataAsync, loadingStates, chartDataCache, cacheKey }: any) => {
-    // Initialize data from cache if available to avoid showing loading on remount
-    const [data, setData] = React.useState(() => chartDataCache[categoryId] || null);
-    const [treatmentData, setTreatmentData] = React.useState(() => (showTraitement ? chartDataCache["PRISE_DE_TRAITEMENT"] || null : null));
-    const [treatmentSiBesoinData, setTreatmentSiBesoinData] = React.useState(() =>
-      showTraitement ? chartDataCache["PRISE_DE_TRAITEMENT_SI_BESOIN"] || null : null
-    );
+// Simple wrapper for FriseGraph - no async, no caching, just direct data processing
+const SimpleFriseGraph = React.memo(
+  ({
+    title,
+    categoryId,
+    focusedScores,
+    showTraitement,
+    chartDates,
+    diaryData,
+  }: {
+    title: string;
+    categoryId: string;
+    focusedScores: any[];
+    showTraitement: boolean;
+    chartDates: string[];
+    diaryData: any;
+  }) => {
+    // Simple synchronous data processing - no chunking, no async
+    const data = React.useMemo(() => {
+      return chartDates.map((date) => {
+        const dayData = diaryData[date];
+        if (!dayData || !dayData[categoryId]) {
+          return {};
+        }
+        const categoryState = dayData[categoryId];
 
-    // Track if we've loaded data for this category to prevent refetching
-    const hasLoadedRef = React.useRef(false);
-    const prevShowTraitementRef = React.useRef(showTraitement);
-    const prevFocusedScoresRef = React.useRef(focusedScores);
-    const prevCacheKeyRef = React.useRef(cacheKey);
-
-    // Reset hasLoadedRef and clear state when cache key changes (date range changed)
-    React.useEffect(() => {
-      if (prevCacheKeyRef.current !== cacheKey) {
-        hasLoadedRef.current = false;
-        prevCacheKeyRef.current = cacheKey;
-        // Clear local state so stale data isn't shown
-        setData(null);
-        setTreatmentData(null);
-        setTreatmentSiBesoinData(null);
-      }
-    }, [cacheKey]);
-
-    // Reset hasLoadedRef when filters change
-    React.useEffect(() => {
-      if (prevShowTraitementRef.current !== showTraitement || prevFocusedScoresRef.current !== focusedScores) {
-        hasLoadedRef.current = false;
-        prevShowTraitementRef.current = showTraitement;
-        prevFocusedScoresRef.current = focusedScores;
-      }
-    }, [showTraitement, focusedScores]);
-
-    React.useEffect(() => {
-      const loadData = async () => {
-        // Skip if we've already loaded data for this component instance
-        if (hasLoadedRef.current) {
-          return;
+        // Simple value extraction
+        if (categoryState?.value !== null && categoryState?.value !== undefined) {
+          return categoryState;
         }
 
-        // Skip if data is already available from cache initialization
-        const hasMainData = chartDataCache[categoryId];
-        const hasTreatmentData = !showTraitement || chartDataCache["PRISE_DE_TRAITEMENT"];
-        const hasSiBesoinData = !showTraitement || chartDataCache["PRISE_DE_TRAITEMENT_SI_BESOIN"];
-
-        if (hasMainData && hasTreatmentData && hasSiBesoinData) {
-          // Data already loaded from cache, mark as loaded
-          hasLoadedRef.current = true;
-          return;
+        // Simplified retrocompatibility
+        const [categoryName, suffix] = categoryId.split("_");
+        if (suffix === "FREQUENCE") {
+          const intensity = dayData[`${categoryName}_INTENSITY`] || { level: 3 };
+          return { value: (categoryState as any).level + (intensity as any).level - 2 };
         }
+        return { value: (categoryState as any).level - 1 };
+      });
+    }, [chartDates, diaryData, categoryId]);
 
-        try {
-          const [mainData, priseDeTraitement, priseDeTraitementSiBesoin] = await Promise.all([
-            computeChartDataAsync(categoryId),
-            showTraitement ? computeChartDataAsync("PRISE_DE_TRAITEMENT") : Promise.resolve([]),
-            showTraitement ? computeChartDataAsync("PRISE_DE_TRAITEMENT_SI_BESOIN") : Promise.resolve([]),
-          ]);
-          setData(mainData);
-          setTreatmentData(priseDeTraitement);
-          setTreatmentSiBesoinData(priseDeTraitementSiBesoin);
-          hasLoadedRef.current = true;
-        } catch (error) {
-          console.error("Error loading chart data:", error);
-        }
-      };
+    // Simple treatment data processing
+    const treatmentData = React.useMemo(() => {
+      if (!showTraitement) return [];
+      return chartDates.map((date) => {
+        const dayData = diaryData[date];
+        return dayData?.["PRISE_DE_TRAITEMENT"] || {};
+      });
+    }, [chartDates, diaryData, showTraitement]);
 
-      loadData();
-    }, [categoryId, showTraitement, computeChartDataAsync, chartDataCache]);
-
-    const isLoading =
-      loadingStates[categoryId] || (showTraitement && (loadingStates["PRISE_DE_TRAITEMENT"] || loadingStates["PRISE_DE_TRAITEMENT_SI_BESOIN"]));
-
-    if (isLoading || !data) {
-      return (
-        <View style={styles.friseContainer}>
-          {title ? <Text style={styles.friseTitle}>{title}</Text> : null}
-          <View style={styles.loadingContainer}>
-            <ActivityIndicator size="small" color={colors.LIGHT_BLUE} />
-            <Text style={styles.loadingText}>Chargement...</Text>
-          </View>
-        </View>
-      );
-    }
+    const treatmentSiBesoinData = React.useMemo(() => {
+      if (!showTraitement) return [];
+      return chartDates.map((date) => {
+        const dayData = diaryData[date];
+        return dayData?.["PRISE_DE_TRAITEMENT_SI_BESOIN"] || {};
+      });
+    }, [chartDates, diaryData, showTraitement]);
 
     return (
       <FriseGraph
-        focusedScores={focusedScores}
         title={title}
         data={data}
+        focusedScores={focusedScores}
         showTraitement={showTraitement}
         priseDeTraitement={treatmentData}
         priseDeTraitementSiBesoin={treatmentSiBesoinData}
@@ -128,19 +97,8 @@ const FriseGraphList = ({ navigation, fromDate, toDate, focusedScores, showTrait
   const [isEmpty, setIsEmpty] = React.useState<boolean>(false);
   const [goalsIsEmpty, setGoalsIsEmpty] = React.useState<boolean>(false);
 
-  // Use refs for cache to avoid unnecessary rerenders
-  const chartDataCacheRef = React.useRef<Record<string, any[]>>({});
-  const loadingStatesRef = React.useRef<Record<string, boolean>>({});
-
-  // Keep a minimal state just to trigger UI updates when loading changes
-  const [, forceUpdate] = React.useReducer((x) => x + 1, 0);
-
   const chartDates = React.useMemo(() => getArrayOfDatesFromTo({ fromDate, toDate }), [fromDate, toDate]);
   const insets = useSafeAreaInsets();
-
-  // Create a stable cache key based on date range
-  const cacheKey = React.useMemo(() => `${fromDate}_${toDate}`, [fromDate, toDate]);
-  const previousCacheKeyRef = React.useRef(cacheKey);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -199,124 +157,31 @@ const FriseGraphList = ({ navigation, fromDate, toDate, focusedScores, showTrait
     return category;
   };
 
+  // Simple synchronous data processing for goals
   const computeChartData = React.useCallback(
     (categoryId) => {
       return chartDates.map((date) => {
         const dayData = diaryData[date];
-        if (!dayData) {
+        if (!dayData || !dayData[categoryId]) {
           return {};
         }
-        const categoryState = diaryData[date][categoryId];
-        if (!categoryState) {
-          return {};
+        const categoryState = dayData[categoryId];
+
+        if (categoryState?.value !== null && categoryState?.value !== undefined) {
+          return categoryState;
         }
-        if (categoryState?.value !== null && categoryState?.value !== undefined) return categoryState;
 
-        // -------
-        // the following code is for the retrocompatibility
-        // -------
-
-        // get the name and the suffix of the category
+        // Simplified retrocompatibility
         const [categoryName, suffix] = categoryId.split("_");
-        let categoryStateIntensity = null;
-        if (suffix && suffix === "FREQUENCE") {
-          // if it's one category with the suffix 'FREQUENCE' :
-          // add the intensity (default level is 3 - for the frequence 'never')
-          categoryStateIntensity = diaryData[date][`${categoryName}_INTENSITY`] || { level: 3 };
-          return { value: (categoryState as any).level + ((categoryStateIntensity as any)?.level || 3) - 2 };
+        if (suffix === "FREQUENCE") {
+          const intensity = dayData[`${categoryName}_INTENSITY`] || { level: 3 };
+          return { value: (categoryState as any).level + (intensity as any).level - 2 };
         }
         return { value: (categoryState as any).level - 1 };
       });
     },
     [chartDates, diaryData]
   );
-
-  const computeChartDataAsync = React.useCallback(
-    async (categoryId) => {
-      // Return cached data if available
-      if (chartDataCacheRef.current[categoryId]) {
-        return chartDataCacheRef.current[categoryId];
-      }
-
-      // Set loading state
-      loadingStatesRef.current = { ...loadingStatesRef.current, [categoryId]: true };
-      forceUpdate(); // Trigger UI update for loading indicator
-
-      // Add initial delay to allow UI interactions to complete (like modal closing)
-      await new Promise((resolve) => setTimeout(resolve, 100));
-
-      // Process data in chunks to avoid blocking the UI
-      return new Promise((resolve) => {
-        const processInChunks = async () => {
-          const data: any[] = [];
-          const chunkSize = 5; // Smaller chunks for better responsiveness
-
-          for (let i = 0; i < chartDates.length; i += chunkSize) {
-            const chunk = chartDates.slice(i, i + chunkSize);
-
-            // Process each chunk
-            const chunkData = chunk.map((date) => {
-              const dayData = diaryData[date];
-              if (!dayData) {
-                return {};
-              }
-              const categoryState = diaryData[date][categoryId];
-              if (!categoryState) {
-                return {};
-              }
-              if (categoryState?.value !== null && categoryState?.value !== undefined) return categoryState;
-
-              // -------
-              // the following code is for the retrocompatibility
-              // -------
-
-              // get the name and the suffix of the category
-              const [categoryName, suffix] = categoryId.split("_");
-              let categoryStateIntensity = null;
-              if (suffix && suffix === "FREQUENCE") {
-                // if it's one category with the suffix 'FREQUENCE' :
-                // add the intensity (default level is 3 - for the frequence 'never')
-                categoryStateIntensity = diaryData[date][`${categoryName}_INTENSITY`] || { level: 3 };
-                return { value: (categoryState as any).level + ((categoryStateIntensity as any)?.level || 3) - 2 };
-              }
-              return { value: (categoryState as any).level - 1 };
-            });
-
-            data.push(...(chunkData as any[]));
-
-            // Yield control back to the main thread after each chunk with longer delays
-            await new Promise((resolveChunk) => setTimeout(resolveChunk, 16)); // ~60fps
-          }
-
-          // Cache the result
-          chartDataCacheRef.current = { ...chartDataCacheRef.current, [categoryId]: data };
-
-          // Clear loading state
-          loadingStatesRef.current = { ...loadingStatesRef.current, [categoryId]: false };
-          forceUpdate(); // Trigger UI update to remove loading indicator
-
-          resolve(data);
-        };
-
-        processInChunks().catch((error) => {
-          console.error("Error processing chart data:", error);
-          loadingStatesRef.current = { ...loadingStatesRef.current, [categoryId]: false };
-          forceUpdate();
-          resolve([]);
-        });
-      });
-    },
-    [chartDates, diaryData]
-  );
-
-  // Clear cache only when date range actually changes
-  React.useEffect(() => {
-    if (cacheKey !== previousCacheKeyRef.current) {
-      chartDataCacheRef.current = {};
-      loadingStatesRef.current = {};
-      previousCacheKeyRef.current = cacheKey;
-    }
-  }, [cacheKey]);
 
   if (isEmpty && goalsIsEmpty) {
     return (
@@ -358,16 +223,14 @@ const FriseGraphList = ({ navigation, fromDate, toDate, focusedScores, showTrait
         {userIndicateurs
           ?.filter((ind) => isChartVisible(getIndicatorKey(ind)) && ind.active)
           ?.map((ind) => (
-            <AsyncFriseGraph
+            <SimpleFriseGraph
               key={ind.name}
               title={getTitle(ind.name)}
               categoryId={getIndicatorKey(ind)}
               focusedScores={focusedScores}
               showTraitement={showTraitement}
-              computeChartDataAsync={computeChartDataAsync}
-              loadingStates={loadingStatesRef.current}
-              chartDataCache={chartDataCacheRef.current}
-              cacheKey={cacheKey}
+              chartDates={chartDates}
+              diaryData={diaryData}
             />
           ))}
         <GoalsFriseGraph
@@ -462,27 +325,6 @@ const styles = StyleSheet.create({
     shadowRadius: 1.0,
 
     elevation: 1,
-  },
-  friseContainer: {
-    marginVertical: 10,
-    paddingHorizontal: 10,
-  },
-  friseTitle: {
-    fontSize: 19,
-    color: colors.BLUE,
-    fontWeight: "600",
-    marginBottom: 5,
-  },
-  loadingContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    paddingVertical: 20,
-  },
-  loadingText: {
-    marginLeft: 8,
-    fontSize: 14,
-    color: colors.BLUE,
   },
 });
 
