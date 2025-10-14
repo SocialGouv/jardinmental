@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View, ScrollView, Text, Dimensions } from "react-native";
+import { StyleSheet, View, Dimensions, Text } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { isToday, isYesterday, parseISO } from "date-fns";
 import { getArrayOfDatesFromTo, formatDay, formatRelativeDate } from "@/utils/date/helpers";
@@ -9,38 +9,42 @@ import Icon from "@/components/Icon";
 import localStorage from "@/utils/localStorage";
 import logEvents from "@/services/logEvents";
 import Card from "./Card";
-import { EventFilterHeader } from "./EventFilterHeader";
 import JMButton from "@/components/JMButton";
 import { getIndicatorKey } from "@/utils/indicatorUtils";
-import { TAB_BAR_HEIGHT } from "@/utils/constants";
+import { analyzeScoresMapIcon, TAB_BAR_HEIGHT } from "@/utils/constants";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { mergeClassNames } from "@/utils/className";
+import { typography } from "@/utils/typography";
+import Animated from "react-native-reanimated";
 
 const screenHeight = Dimensions.get("window").height;
 
-const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, toDate, setToDate, onScroll }) => {
+const Events = ({
+  navigation,
+  presetDate,
+  setPresetDate,
+  fromDate,
+  setFromDate,
+  toDate,
+  setToDate,
+  onScroll,
+  scrollY,
+  indicateur,
+  setIndicateur,
+  indicateurId,
+  setIndicateurId,
+  level,
+  setLevel,
+  userIndicateurs,
+  setUserIndicateurs,
+  dynamicPaddingTop,
+}) => {
   const [diaryData] = React.useContext(DiaryDataContext);
   const [activeCategories, setActiveCategories] = React.useState();
-  const [userIndicateurs, setUserIndicateurs] = React.useState([]);
   const [isEmpty, setIsEmpty] = React.useState();
   const chartDates = getArrayOfDatesFromTo({ fromDate, toDate });
-  const [indicateur, setIndicateur] = React.useState();
-  const [indicateurId, setIndicateurId] = React.useState();
   const [event, setEvent] = React.useState("ALL");
-  const [level, setLevel] = React.useState([5]);
   const insets = useSafeAreaInsets();
-
-  useFocusEffect(
-    React.useCallback(() => {
-      (async () => {
-        const user_indicateurs = await localStorage.getIndicateurs();
-        if (user_indicateurs) {
-          setUserIndicateurs(user_indicateurs);
-          setIndicateur(user_indicateurs[0].name);
-          setIndicateurId(getIndicatorKey(user_indicateurs[0]));
-        }
-      })();
-    }, [])
-  );
 
   // React.useEffect(() => {
   //   console.log("✍️ ~ indicateur", indicateur);
@@ -143,7 +147,16 @@ const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, 
 
   if (isEmpty) {
     return (
-      <View style={styles.emptyContainer}>
+      <View
+        style={[
+          styles.emptyContainer,
+          {
+            paddingTop: 180 + dynamicPaddingTop,
+            flex: 1,
+            backgroundColor: "red",
+          },
+        ]}
+      >
         <View style={styles.subtitleContainer}>
           <Icon icon="InfoSvg" width={25} height={25} color={colors.LIGHT_BLUE} />
           <Text style={styles.subtitle}>
@@ -156,40 +169,49 @@ const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, 
   }
   return (
     <>
-      <ScrollView
+      <Animated.ScrollView
         style={styles.scrollView}
         contentContainerStyle={[
           styles.scrollContainer,
           {
             paddingBottom: insets.bottom + TAB_BAR_HEIGHT,
+            paddingTop: 180 + dynamicPaddingTop,
           },
         ]}
         showsVerticalScrollIndicator={false}
         scrollEventThrottle={16}
         onScroll={onScroll}
       >
-        <EventFilterHeader
-          presetDate={presetDate}
-          setPresetDate={setPresetDate}
-          fromDate={fromDate}
-          setFromDate={setFromDate}
-          toDate={toDate}
-          setToDate={setToDate}
-          indicateur={indicateur}
-          setIndicateur={(indicatorName) => {
-            setIndicateur(indicatorName);
-            const _indicator = userIndicateurs.find((ind) => ind.name === indicatorName);
-            setIndicateurId(getIndicatorKey(_indicator));
-          }}
-          level={level}
-          setLevel={setLevel}
-          userIndicateurs={userIndicateurs.filter(({ active }) => active)}
-        />
-        <View style={styles.dataContainer}>
-          {memoizedCallback()?.filter((x) => x.date)?.length === 0 && (
-            <Text style={styles.noDataMessage}>
-              Aucun évènement à afficher entre {renderDate(formatDay(fromDate))} et {renderDate(formatDay(toDate))}.
-            </Text>
+        <View className="mx-4 border-t border-cnam-primary-300 pt-4 mt-4">
+          {level && memoizedCallback()?.filter((x) => x.date)?.length === 0 && (
+            <View className="pt-36">
+              <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>
+                Aucun évènement à afficher entre {renderDate(formatDay(fromDate))} et {renderDate(formatDay(toDate))} pour :
+              </Text>
+              <View className="flex-row flex-wrap items-center">
+                <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>
+                  <Text className="font-bold">{indicateur}</Text> et{" "}
+                </Text>
+                <View
+                  className="w-7 h-7 rounded-full items-center justify-center"
+                  style={{
+                    backgroundColor: analyzeScoresMapIcon[level].color,
+                  }}
+                >
+                  <Text
+                    className={mergeClassNames(typography.textSmSemibold)}
+                    style={{
+                      color: analyzeScoresMapIcon[level].iconColor,
+                    }}
+                  >
+                    {analyzeScoresMapIcon[level].symbol}
+                  </Text>
+                </View>
+              </View>
+            </View>
+          )}
+          {!level && (
+            <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>Sélectionnez une valeur dans le filtre "Était"</Text>
           )}
           {memoizedCallback()
             ?.filter((x) => x.date)
@@ -202,7 +224,7 @@ const Events = ({ navigation, presetDate, setPresetDate, fromDate, setFromDate, 
               return <Card key={d.date} event={event} date={d.date} context={d.CONTEXT} userComment={d.USER_COMMENT} />;
             })}
         </View>
-      </ScrollView>
+      </Animated.ScrollView>
     </>
   );
 };
@@ -286,12 +308,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   scrollContainer: {
-    paddingTop: 20,
-    minHeight: screenHeight * 0.7,
-  },
-  dataContainer: {
-    marginTop: 40,
-    paddingHorizontal: 20,
+    minHeight: screenHeight * 0.8,
   },
   noDataMessage: {
     color: "#111",
