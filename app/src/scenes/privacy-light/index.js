@@ -33,7 +33,7 @@ export default ({ navigation }) => {
         <View style={styles.paragraph}>
           <Text style={styles.standardText}>
             Dans le but d'<Text style={styles.lightblue}>améliorer</Text> l'application, seules des données{" "}
-            <Text style={styles.lightblue}>anonymées</Text> concernant la <Text style={styles.lightblue}>fréquence</Text> d'utilisation de
+            <Text style={styles.lightblue}>anonymisées</Text> concernant la <Text style={styles.lightblue}>fréquence</Text> d'utilisation de
             l'application et de ses fonctionnalités sont <Text style={styles.lightblue}>recueillies</Text> par la Fabrique du Numérique des Ministères
             Sociaux.
           </Text>
