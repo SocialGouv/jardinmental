@@ -160,7 +160,7 @@ const Tabs = ({ navigation, route }) => {
             shadowOpacity: 0.15,
             shadowRadius: 12,
             elevation: 8,
-            paddingVertical: 12,
+            paddingVertical: 8,
             paddingHorizontal: 8,
           }}
         >
@@ -184,13 +184,13 @@ const Tabs = ({ navigation, route }) => {
                   style={{
                     flex: 1,
                     alignItems: "center",
-                    paddingVertical: 8,
+                    paddingVertical: 4,
                     backgroundColor,
-                    borderRadius: 10,
+                    borderRadius: 16,
                   }}
                 >
                   <View style={{ alignItems: "center" }}>
-                    <IconComponent height={24} width={24} color={color} />
+                    <IconComponent height={20} width={20} color={color} />
                     {tab.badge === false && <View className="bg-red-500 rounded-full w-2 h-2 absolute -top-2 -right-2" />}
                   </View>
                   <Text
