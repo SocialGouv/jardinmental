@@ -190,7 +190,7 @@ const FriseGraphList = ({ navigation, fromDate, toDate, focusedScores, showTrait
           styles.emptyContainer,
           {
             paddingBottom: insets.bottom + TAB_BAR_HEIGHT,
-            paddingTop: 220,
+            paddingTop: 120,
           },
         ]}
       >
@@ -213,7 +213,7 @@ const FriseGraphList = ({ navigation, fromDate, toDate, focusedScores, showTrait
           styles.scrollContainer,
           {
             paddingBottom: insets.bottom + TAB_BAR_HEIGHT + 150,
-            paddingTop: 200 + dynamicPaddingTop,
+            paddingTop: 170 + dynamicPaddingTop,
           },
         ]}
         scrollEventThrottle={16}
