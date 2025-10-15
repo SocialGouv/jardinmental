@@ -1,5 +1,5 @@
-import React, { useCallback, useState } from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import React, { useCallback, useMemo, useState } from "react";
+import { StyleSheet, Text, View, TouchableOpacity, FlatList } from "react-native";
 import { Button2 } from "../../../components/Button2";
 import { Screen } from "../../../components/Screen";
 import { Card } from "../../../components/Card";
@@ -8,7 +8,6 @@ import { Title } from "../../../components/Title";
 import { Badge } from "../../../components/Badge";
 import Icon from "../../../components/Icon";
 import localStorage from "../../../utils/localStorage";
-import DraggableFlatList, { ScaleDecorator } from "react-native-draggable-flatlist";
 import { colors } from "@/utils/colors";
 import JMButton from "@/components/JMButton";
 import NavigationButtons from "@/components/onboarding/NavigationButtons";
@@ -17,9 +16,12 @@ import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
 import { Indicator } from "@/entities/Indicator";
 import logEvents from "@/services/logEvents";
+import { render } from "@testing-library/react-native";
+import ReorderableList, { reorderItems, useReorderableDrag } from "react-native-reorderable-list";
+import { Gesture } from "react-native-gesture-handler";
 
 const IndicatorsSettingsMore = ({ navigation, route }) => {
-  const [indicators, setIndicators] = useState([]);
+  const [indicators, setIndicators] = useState<Indicator[]>([]);
   const [loading, setLoading] = useState(false);
 
   useFocusEffect(
@@ -34,16 +36,22 @@ const IndicatorsSettingsMore = ({ navigation, route }) => {
   const onValidate = async () => {
     if (loading) return;
     setLoading(true);
+    console.log("indicators to save", indicators);
     await localStorage.setIndicateurs(indicators);
     setLoading(false);
     navigation.goBack();
   };
 
-  const renderItem = useCallback((indicator: Indicator, index: number) => {
-    return <IndicatorItem indicator={indicator} isActive={indicator.active} drag={undefined} index={index} setIndicators={setIndicators} />;
+  const renderItem = useCallback(({ item: indicator }) => {
+    return <IndicatorItem key={indicator.uuid} indicator={indicator} setIndicators={setIndicators} />;
   }, []);
 
-  const keyExtractor = useCallback((indicator) => indicator.uuid, []);
+  const keyExtractor = (indicator) => indicator.uuid || indicator.name;
+
+  // Configure pan gesture to allow scrolling while keeping drag functionality
+  // The pan gesture activates after 520ms, which is slightly longer than the long press delay (100ms)
+  // This allows normal scrolling to work while still enabling drag when holding longer
+  const panGesture = useMemo(() => Gesture.Pan().activateAfterLongPress(220), []);
 
   return (
     <AnimatedHeaderScrollScreen
@@ -72,26 +80,45 @@ const IndicatorsSettingsMore = ({ navigation, route }) => {
           </Text>
         </View>
       </View>
-      <View className="flex-column flex-1 px-4">{indicators.filter((indicator) => indicator.active).map(renderItem)}</View>
+      <ReorderableList
+        keyExtractor={keyExtractor}
+        renderItem={renderItem}
+        data={indicators.filter((indicator) => indicator.active)}
+        onReorder={({ from, to }) => {
+          const activeIndicators = indicators.filter((indicator) => indicator.active);
+          const reordered = reorderItems(activeIndicators, from, to);
+
+          // Merge back with inactive indicators
+          const inactiveIndicators = indicators.filter((indicator) => !indicator.active);
+          setIndicators([...reordered, ...inactiveIndicators]);
+        }}
+        contentContainerStyle={{ flex: 1, paddingHorizontal: 16 }}
+        panGesture={panGesture}
+      />
     </AnimatedHeaderScrollScreen>
   );
 };
 
-const IndicatorItem = ({ indicator, setIndicators }: { indicator: Indicator; setIndicators: (param: Indicator[]) => void }) => {
+const IndicatorItem = ({ indicator, setIndicators }: { indicator: Indicator; setIndicators: React.Dispatch<React.SetStateAction<Indicator[]>> }) => {
+  const drag = useReorderableDrag();
+
   const deleteIndicator = () => {
     logEvents.logDeleteIndicator();
     setIndicators((prev) => prev.map((i) => (i.uuid === indicator.uuid ? { ...i, active: false } : i)));
   };
+
   return (
-    <View
-      key={indicator.uuid}
-      className={mergeClassNames("p-4 bg-gray-100 mb-2 rounded-xl flex-row items-center justify-between", !indicator.active ? "bg-gray-50" : "")}
-    >
-      <Text className={mergeClassNames(typography.textLgRegular, "text-cnam-primary-950")}>{indicator.name}</Text>
-      <TouchableOpacity onPress={deleteIndicator}>
-        <Icon icon="Bin2Svg" color={colors.BLUE} width="16" height="16" styleContainer={{ width: 16, height: 16 }} />
-      </TouchableOpacity>
-    </View>
+    <TouchableOpacity onLongPress={drag} delayLongPress={100}>
+      <View
+        className={mergeClassNames("p-4 bg-gray-100 mb-2 rounded-xl flex-row items-center justify-between", !indicator.active ? "bg-gray-50" : "")}
+      >
+        <Icon icon="ReorderSvg" color="#26387C" width="16" height="16" styleContainer={{ width: 16, height: 16 }} />
+        <Text className={mergeClassNames(typography.textLgRegular, "text-cnam-primary-950")}>{indicator?.name}</Text>
+        <TouchableOpacity onPress={deleteIndicator}>
+          <Icon icon="Bin2Svg" color={colors.BLUE} width="16" height="16" styleContainer={{ width: 16, height: 16 }} />
+        </TouchableOpacity>
+      </View>
+    </TouchableOpacity>
   );
 };
 

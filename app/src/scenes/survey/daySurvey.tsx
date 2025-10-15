@@ -467,7 +467,28 @@ const DaySurvey = ({
         <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700 text-center my-6 px-8")}>
           Observez ce qui a été présent ou plus marqué aujourd’hui, un élément à la fois.
         </Text>
-        {Object.keys(groupedIndicators).map((cat, index) => {
+        <View className="mb-4 pb-6 border-b border-gray-400 px-4">
+          {userIndicateurs
+            .filter((ind) => ind.active === true && ind.uuid !== INDICATEURS_HUMEUR.uuid)
+            .map((ind: Indicator, index: number) => {
+              return (
+                <IndicatorSurveyItem
+                  key={ind?.uuid || ind.name}
+                  showComment={true}
+                  indicator={ind}
+                  index={index}
+                  onIndicatorChange={() => {
+                    updateIndicators();
+                  }}
+                  value={answers?.[getIndicatorKey(ind)]?.value}
+                  onValueChanged={onValueChanged}
+                  onCommentChanged={onCommentChanged}
+                  comment={answers?.[getIndicatorKey(ind)]?.userComment}
+                />
+              );
+            })}
+        </View>
+        {/* {Object.keys(groupedIndicators).map((cat, index) => {
           const indicators = groupedIndicators[cat];
           if (!indicators.length) {
             return;
@@ -510,7 +531,7 @@ const DaySurvey = ({
               })}
             </View>
           );
-        })}
+        })} */}
         {/* <Card
           title="Personnaliser mes indicateurs"
           icon={{ icon: "ImportantSvg" }}
