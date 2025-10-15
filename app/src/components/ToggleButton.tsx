@@ -12,7 +12,7 @@ interface ToggleButtonsProps {
   onPressLeft: (value: boolean) => void;
   onPressRight: (value: boolean) => void;
   initialSelected?: boolean;
-  disabled?: Boolean
+  disabled?: Boolean;
 }
 
 export default function ToggleButtons({
@@ -25,7 +25,7 @@ export default function ToggleButtons({
   leftText,
   onPressLeft,
   onPressRight,
-  disabled
+  disabled,
 }: ToggleButtonsProps) {
   const [selected, setSelected] = useState<boolean | undefined>(initialSelected);
 
@@ -40,7 +40,7 @@ export default function ToggleButtons({
       <View className="flex-row rounded-lg border border-gray-300 self-start">
         <TouchableOpacity
           disabled={!!disabled}
-          className={`p-3 items-center rounded-l-lg`}
+          className={`p-3 items-center rounded-l-lg w-14`}
           style={{
             backgroundColor: selected === true || disabled ? leftColor : TW_COLORS.WHITE,
           }}
@@ -51,14 +51,16 @@ export default function ToggleButtons({
         >
           <Text
             style={{
-              color: selected === true ? (leftTextColor ? leftTextColor : 'white') : TW_COLORS.GRAY_800
+              color: selected === true ? (leftTextColor ? leftTextColor : "white") : TW_COLORS.GRAY_800,
             }}
-            className={`font-medium`}
-          >{leftText || "Oui"}</Text>
+            className={selected === true ? `font-bold` : `font-medium`}
+          >
+            {leftText || "Oui"}
+          </Text>
         </TouchableOpacity>
         <TouchableOpacity
           disabled={!!disabled}
-          className={`p-3 items-center rounded-r-lg border-l border-gray-300`}
+          className={`p-3 items-center rounded-r-lg border-l border-gray-300  w-14`}
           style={{
             backgroundColor: selected === false || disabled ? rightColor : TW_COLORS.WHITE,
           }}
@@ -69,9 +71,12 @@ export default function ToggleButtons({
         >
           <Text
             style={{
-              color: selected === false ? (rightTextColor ? rightTextColor : 'white') : TW_COLORS.GRAY_800
+              color: selected === false ? (rightTextColor ? rightTextColor : "white") : TW_COLORS.GRAY_800,
             }}
-            className={`font-medium`}>{rightText || "Non"}</Text>
+            className={selected === false ? `font-bold` : `font-medium`}
+          >
+            {rightText || "Non"}
+          </Text>
         </TouchableOpacity>
       </View>
     );

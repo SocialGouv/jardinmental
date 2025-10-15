@@ -76,7 +76,7 @@ export const DrugsBottomSheet = ({ onClose }: { onClose: (treatment?: Drug[]) =>
             className="flex-row items-center"
           >
             <CircleQuestionMark color={TW_COLORS.GRAY_400} />
-            <Text className={mergeClassNames(typography.textSmSemibold, "ml-2 text-gray-600")}>Information sur les traitements</Text>
+            <Text className={mergeClassNames(typography.textSmSemibold, "ml-2 text-gray-700")}>Information sur les traitements</Text>
           </TouchableOpacity>
 
           <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>

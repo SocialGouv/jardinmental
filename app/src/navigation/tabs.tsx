@@ -191,7 +191,12 @@ const Tabs = ({ navigation, route }) => {
                 >
                   <View style={{ alignItems: "center" }}>
                     <IconComponent height={24} width={24} color={color} />
-                    {tab.badge === false && <View className="bg-red-500 rounded-full w-2 h-2 absolute -top-2 -right-2" />}
+                    {tab.badge === false && (
+                      <View
+                        style={{ borderWidth: 0.5 }}
+                        className="bg-red-500 rounded-full w-2 h-2 absolute -top-2 -right-2 border-cnam-rouge-100-lighten-80"
+                      />
+                    )}
                   </View>
                   <Text
                     className={isActive ? typography.textXsBold : typography.textXsRegular}

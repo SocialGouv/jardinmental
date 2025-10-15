@@ -533,7 +533,7 @@ const SurveySuccessScreen: React.FC<SurveySuccessScreenProps> = ({ navigation, r
 
                 {/* Feedback section for health tips */}
                 <View className="mt-5 items-center flex flex-row gap-4 w-full pl-2">
-                  <Text className={mergeClassNames("text-base text-gray-700")}>Cette info est-elle utile ?</Text>
+                  <Text className={mergeClassNames("text-base text-gray-800")}>Cette info est-elle utile ?</Text>
                   <View style={{ flexDirection: "row", justifyContent: "center" }}>
                     {/* Thumbs up */}
                     <TouchableOpacity

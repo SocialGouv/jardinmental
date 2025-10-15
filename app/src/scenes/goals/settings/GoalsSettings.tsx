@@ -60,7 +60,9 @@ export const GoalsSettings = ({ navigation, route }) => {
           Mes objectifs
         </Title>
         <View className="bg-cnam-cyan-500-0 h-7 w-7 rounded-full items-center justify-center ml-2">
-          <Text className={mergeClassNames("text-white", typography.textMdSemibold)}>{goals?.length || 0}</Text>
+          <Text className={mergeClassNames(typography.textMdSemibold)} style={{ color: "#19363D" }}>
+            {goals?.length || 0}
+          </Text>
         </View>
       </View>
       <View>{goals.map(renderItem)}</View>
