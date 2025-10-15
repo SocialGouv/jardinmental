@@ -36,7 +36,6 @@ const IndicatorsSettingsMore = ({ navigation, route }) => {
   const onValidate = async () => {
     if (loading) return;
     setLoading(true);
-    console.log("indicators to save", indicators);
     await localStorage.setIndicateurs(indicators);
     setLoading(false);
     navigation.goBack();
