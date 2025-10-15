@@ -488,59 +488,6 @@ const DaySurvey = ({
               );
             })}
         </View>
-        {/* {Object.keys(groupedIndicators).map((cat, index) => {
-          const indicators = groupedIndicators[cat];
-          if (!indicators.length) {
-            return;
-          }
-          return (
-            <View key={cat} className="mb-4 pb-6 border-b border-gray-400 px-4">
-              <View className={`flex-row  p-4 px-0 pb-6 ${index === 0 ? "pt-4" : "pt-10"}`}>
-                <View className="rounded-full border-[1.5px] border-cnam-primary-800 bg-white w-10 h-10 items-center justify-center">
-                  {React.createElement(INDICATOR_CATEGORIES_DATA[cat].icon, { color: TW_COLORS.BRAND_900 })}
-                </View>
-                <Text className={mergeClassNames(typography.displayXsBold, "text-left text-cnam-primary-900 ml-2")}>
-                  {INDICATOR_CATEGORIES_DATA[cat].name}
-                </Text>
-                <JMButton
-                  onPress={() => {
-                    showHelpModal(cat);
-                  }}
-                  variant="text"
-                  width="fixed"
-                  icon={<CircleQuestionMark />}
-                  className="ml-auto"
-                />
-              </View>
-              {indicators.map((ind: Indicator) => {
-                return (
-                  <IndicatorSurveyItem
-                    key={ind?.uuid || ind.name}
-                    showComment={true}
-                    indicator={ind}
-                    index={index}
-                    onIndicatorChange={() => {
-                      updateIndicators();
-                    }}
-                    value={answers?.[getIndicatorKey(ind)]?.value}
-                    onValueChanged={onValueChanged}
-                    onCommentChanged={onCommentChanged}
-                    comment={answers?.[getIndicatorKey(ind)]?.userComment}
-                  />
-                );
-              })}
-            </View>
-          );
-        })} */}
-        {/* <Card
-          title="Personnaliser mes indicateurs"
-          icon={{ icon: "ImportantSvg" }}
-          onPress={() => {
-            navigation.navigate("symptoms");
-            logEvents._deprecatedLogSettingsSymptomsFromSurvey();
-          }}
-          className="my-2"
-        /> */}
       </View>
       <GoalsDaySurvey date={initSurvey?.date} ref={goalsRef} scrollRef={scrollRef} route={route} />
       <View className="mb-2 px-4 pt-6 my-4">
