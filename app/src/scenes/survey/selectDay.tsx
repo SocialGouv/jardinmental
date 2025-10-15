@@ -54,7 +54,7 @@ const SurveyScreen = ({
     <SafeAreaView style={styles.safe}>
       <BackButton onPress={navigation.goBack} />
       <ScrollView style={styles.container}>
-        <ScreenTitle>Commençons ! Pour quel jour souhaites-tu remplir ton questionnaire ?</ScreenTitle>
+        <ScreenTitle>Commençons ! Pour quel jour souhaitez-vous remplir votre questionnaire ?</ScreenTitle>
         {[...Array(7)].map((_, i) => {
           const value = formatDay(subDays(now, i));
           let label = firstLetterUppercase(formatRelativeDate(value));
