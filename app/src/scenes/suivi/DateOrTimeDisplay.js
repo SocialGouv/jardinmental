@@ -3,6 +3,7 @@ import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { makeSureDate } from "../../utils/date/helpers";
 import Text from "../../components/MyText";
 import { colors } from "../../utils/colors";
+import { TW_COLORS } from "@/utils/constants";
 
 const DateOrTimeDisplay = ({ date, onPress, mode, disabled, containerStyle, touchableStyle, contentContainerStyle }) => {
   if (!date) return null;
@@ -43,7 +44,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   currentDate: {
-    color: colors.DARK_BLUE,
+    color: TW_COLORS.GRAY_700,
   },
 });
 
