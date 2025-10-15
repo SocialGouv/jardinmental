@@ -145,6 +145,9 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 16,
     backgroundColor: "white",
+    fontWeight: 600,
+    fontSize: 16,
+    color: TW_COLORS.GRAY_900,
   },
 
   safe: {
