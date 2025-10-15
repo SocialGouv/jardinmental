@@ -205,7 +205,15 @@ export default ({ navigation, visible, onClick }) => {
                     }}
                   />
                   <Separator />
-                  <DrawerItem title="Qui peut voir mes données ?" path="privacy-light" navigation={navigation} onClick={onClick} />
+                  <DrawerItem
+                    title="Qui peut voir mes données ?"
+                    onClick={() => {
+                      navigation.push("faq-detail", {
+                        slug: "confidentialité",
+                      });
+                      onClick();
+                    }}
+                  />
                   <Separator />
                   <DrawerItem title="Recommander l'app" onClick={recommendApp} navigation={navigation} />
                   <Separator />
