@@ -93,7 +93,21 @@ export default function FaqDetailScreen({
       smallHeader={true}
       scrollViewBackground={TW_COLORS.GRAY_50}
       handlePrevious={() => {
-        navigation.navigate("faq");
+        // in most cases we want to go back to the FAQ main screen
+        // but if the user has been redirected here from another screen
+        // that is not in faq hiearchy
+        // we want to go back to that screen
+        // ie clicking "Qui peut voir mes données ?" from the drawer menu
+        const routes = navigation.getState()?.routes;
+        const faqRoute = routes?.find((route) => route.name === "faq");
+        if (faqRoute) {
+          navigation.navigate("faq");
+        } else if (navigation.canGoBack()) {
+          navigation.goBack();
+        } else {
+          // optional: navigate to a default page
+          navigation.navigate("tabs");
+        }
       }}
       noPadding={true}
       showBottomButton={false}
