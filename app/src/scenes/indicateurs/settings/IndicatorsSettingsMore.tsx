@@ -10,7 +10,6 @@ import NavigationButtons from "@/components/onboarding/NavigationButtons";
 import { AnimatedHeaderScrollScreen } from "@/scenes/survey-v2/AnimatedHeaderScrollScreen";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
-import { Indicator } from "@/entities/Indicator";
 import logEvents from "@/services/logEvents";
 import ReorderableList, { reorderItems, useReorderableDrag } from "react-native-reorderable-list";
 import { Gesture } from "react-native-gesture-handler";
