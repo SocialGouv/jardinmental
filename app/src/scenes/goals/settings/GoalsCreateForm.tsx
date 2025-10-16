@@ -37,7 +37,7 @@ export const GoalsCreateForm = ({ navigation }) => {
         <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-900 my-8")}>
           Comment souhaitez-vous appeler votre nouvel objectif ?
         </Text>
-        <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700")}>Nom de votre objectif*</Text>
+        <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700")}>Nom de votre objectif* (obligatoire)</Text>
         <InputText
           fill
           placeholder="Entrez le nom de votre objectif"

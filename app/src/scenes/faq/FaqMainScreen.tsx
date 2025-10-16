@@ -69,7 +69,7 @@ export default function FaqMainScreen({ navigation, route }) {
             Si vous ne trouvez pas la réponse à votre question, contactez-nous sur
           </Text>
           <TouchableOpacity onPress={() => Linking.openURL("mailto:jardinmental@fabrique.social.gouv.fr")}>
-            <Text className={mergeClassNames(typography.textMdRegular, "text-gray-700 text-left")}>jardinmental@fabrique.social.gouv.fr</Text>
+            <Text className={mergeClassNames(typography.textMdRegular, "text-gray-800 text-left")}>jardinmental@fabrique.social.gouv.fr</Text>
           </TouchableOpacity>
           <JMButton
             onPress={() => {

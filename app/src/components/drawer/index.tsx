@@ -135,7 +135,9 @@ export default ({ navigation, visible, onClick }) => {
                       borderRadius: 16,
                     }}
                   >
-                    {badgeNotesVersionVisible && <View className="bg-red rounded-full w-2 h-2 mr-1"></View>}
+                    {badgeNotesVersionVisible && (
+                      <View style={{ borderWidth: 0.5 }} className="bg-red rounded-full w-3 h-3 mr-1 border-cnam-rouge-100-lighten-80"></View>
+                    )}
                     <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-25")}>Nouveautés</Text>
                     <View
                       className="ml-2"

@@ -1,6 +1,8 @@
 import React, { useRef } from "react";
-import { Pressable, StyleSheet, TextInput, View } from "react-native";
+import { Pressable, StyleSheet, TextInput, View, Text } from "react-native";
 import { colors } from "@/utils/colors";
+import { TW_COLORS } from "@/utils/constants";
+import { mergeClassNames } from "@/utils/className";
 
 const PressableIfNeeded = ({ onPress, children }) =>
   onPress ? (
@@ -32,7 +34,7 @@ export const InputText = ({ fill, preset, onPress, disabled, containerStyle, sty
           <TextInput
             ref={inputRef}
             maxFontSizeMultiplier={2}
-            placeholderTextColor="#4D4D4D"
+            placeholderTextColor={TW_COLORS.GRAY_700}
             editable={!disabled}
             pointerEvents={disabled || props.editable === false ? "none" : "auto"}
             {...props}

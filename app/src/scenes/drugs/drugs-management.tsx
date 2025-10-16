@@ -129,7 +129,7 @@ const DrugsManagement = ({ navigation, route }) => {
           className="flex-row items-center"
         >
           <CircleQuestionMark color={TW_COLORS.GRAY_400} />
-          <Text className={mergeClassNames(typography.textSmSemibold, "ml-2 text-gray-600")}>Information sur les traitements</Text>
+          <Text className={mergeClassNames(typography.textSmSemibold, "ml-2 text-gray-700")}>Information sur les traitements</Text>
         </TouchableOpacity>
         <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 mt-4")}>
           La prise d'un traitement peut avoir un effet sur votre quotidien. Suivre la prise de traitement permet de mieux comprendre son effet sur
