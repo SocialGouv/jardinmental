@@ -1,13 +1,9 @@
 import React, { useCallback, useMemo, useState } from "react";
-import { StyleSheet, Text, View, TouchableOpacity, FlatList } from "react-native";
-import { Button2 } from "../../../components/Button2";
-import { Screen } from "../../../components/Screen";
-import { Card } from "../../../components/Card";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { Card } from "@/components/Card";
 import { useFocusEffect } from "@react-navigation/native";
-import { Title } from "../../../components/Title";
-import { Badge } from "../../../components/Badge";
-import Icon from "../../../components/Icon";
-import localStorage from "../../../utils/localStorage";
+import Icon from "@/components/Icon";
+import localStorage from "@/utils/localStorage";
 import { colors } from "@/utils/colors";
 import JMButton from "@/components/JMButton";
 import NavigationButtons from "@/components/onboarding/NavigationButtons";
@@ -16,7 +12,6 @@ import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
 import { Indicator } from "@/entities/Indicator";
 import logEvents from "@/services/logEvents";
-import { render } from "@testing-library/react-native";
 import ReorderableList, { reorderItems, useReorderableDrag } from "react-native-reorderable-list";
 import { Gesture } from "react-native-gesture-handler";
 
@@ -82,6 +77,7 @@ const IndicatorsSettingsMore = ({ navigation, route }) => {
       <ReorderableList
         keyExtractor={keyExtractor}
         renderItem={renderItem}
+        scrollEnabled={false}
         data={indicators.filter((indicator) => indicator.active)}
         onReorder={({ from, to }) => {
           const activeIndicators = indicators.filter((indicator) => indicator.active);
@@ -120,38 +116,5 @@ const IndicatorItem = ({ indicator, setIndicators }: { indicator: Indicator; set
     </TouchableOpacity>
   );
 };
-
-const itemStyles = StyleSheet.create({
-  container: {
-    backgroundColor: "#F4FCFD",
-    borderColor: "#D4F0F2",
-    borderWidth: 1,
-    borderRadius: 16,
-    padding: 16,
-    marginHorizontal: 16,
-    marginVertical: 4,
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  label: {
-    flex: 1,
-    fontFamily: "SourceSans3",
-    fontWeight: "700",
-    fontSize: 16,
-    color: colors.BLUE,
-    textAlign: "left",
-    marginLeft: 16,
-  },
-});
-
-const titleStyles = StyleSheet.create({
-  container: {
-    width: "100%",
-    marginTop: 24,
-    marginBottom: 4,
-    flexDirection: "row",
-    alignItems: "center",
-  },
-});
 
 export default IndicatorsSettingsMore;
