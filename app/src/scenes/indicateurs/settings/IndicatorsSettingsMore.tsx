@@ -76,8 +76,7 @@ const IndicatorsSettingsMore = ({ navigation, route }) => {
       <ReorderableList
         keyExtractor={keyExtractor}
         renderItem={renderItem}
-        scrollEnabled={false}
-        data={indicators.filter((indicator) => indicator.active)}
+        data={useMemo(() => indicators.filter((indicator) => indicator.active), [indicators])}
         onReorder={({ from, to }) => {
           const activeIndicators = indicators.filter((indicator) => indicator.active);
           const reordered = reorderItems(activeIndicators, from, to);
