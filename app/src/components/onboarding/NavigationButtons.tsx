@@ -42,7 +42,6 @@ export const NavigationButtons: React.FC<NavigationButtonsProps> = ({
   headerContent,
   withArrow,
   children,
-  secondaryButton,
 }) => {
   const content = children ?? (
     <>
