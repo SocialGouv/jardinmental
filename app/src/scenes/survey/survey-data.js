@@ -66,7 +66,7 @@ const getListExemplesData = () => {
 export const availableData = [
   {
     id: "day",
-    question: "Commençons ! Pour quel jour souhaites-tu remplir ton questionnaire ?",
+    question: "Commençons ! Pour quel jour souhaitez-vous remplir votre questionnaire ?",
     explanation: null,
   },
   {
