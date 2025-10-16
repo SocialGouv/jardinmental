@@ -49,6 +49,9 @@ interface IndicatorScreenProps {
   animatedStatusBarColor?: Animated.AnimateStyle<ViewStyle>;
   animatedTextColor?: Animated.AnimateStyle<ViewStyle>;
   noPadding?: boolean;
+  preserveScrollOnBlur?: boolean;
+  onScrollPositionChange?: (scrollY: number) => void;
+  initialScrollPosition?: number;
 }
 
 export const SCROLL_THRESHOLD = 100; // Distance to scroll before full transition (reduced for more responsive animation)
@@ -74,20 +77,47 @@ export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
   animatedStatusBarColor,
   animatedTextColor,
   noPadding,
+  preserveScrollOnBlur = false,
+  onScrollPositionChange,
+  initialScrollPosition = 0,
 }: IndicatorScreenProps) => {
   const { showBottomSheet } = useBottomSheet();
   const { setShowProgressbar, showProgressbar, setHideOnScrollProgressValue } = useOnboardingProgressHeader();
   const insets = useSafeAreaInsets();
   const scrollRef = useRef<Animated.ScrollView>(null);
+  const hasRestoredScroll = useRef(false);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("blur", () => {
-      scrollRef.current?.scrollTo({ y: 0, animated: false });
-      setHideOnScrollProgressValue.value = 1;
+      if (!preserveScrollOnBlur) {
+        scrollRef.current?.scrollTo({ y: 0, animated: false });
+        setHideOnScrollProgressValue.value = 1;
+      }
     });
 
     return unsubscribe; // Clean up listener on unmount
-  }, [navigation]);
+  }, [navigation, preserveScrollOnBlur]);
+
+  // Restore scroll position when component gains focus
+  useFocusEffect(
+    useCallback(() => {
+      if (preserveScrollOnBlur && initialScrollPosition > 0 && !hasRestoredScroll.current) {
+        // Use a small delay to ensure the screen has fully rendered
+        setTimeout(() => {
+          scrollRef.current?.scrollTo({
+            y: initialScrollPosition,
+            animated: false,
+          });
+          hasRestoredScroll.current = true;
+        }, 100);
+      }
+
+      return () => {
+        // Reset the flag when leaving the screen
+        hasRestoredScroll.current = false;
+      };
+    }, [preserveScrollOnBlur, initialScrollPosition])
+  );
 
   const onClickHelp = () => {
     if (category && HELP_FOR_CATEGORY[category]) {
@@ -112,6 +142,11 @@ export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
         Extrapolate.CLAMP
       );
       setHideOnScrollProgressValue.value = opacity;
+
+      // Notify parent component of scroll position change if callback provided
+      if (onScrollPositionChange) {
+        runOnJS(onScrollPositionChange)(event.contentOffset.y);
+      }
     },
   });
 

@@ -1,6 +1,6 @@
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
-import React from "react";
+import React, { useRef, useState, useCallback } from "react";
 import { Linking, Text, TouchableOpacity, View } from "react-native";
 import { AnimatedHeaderScrollScreen } from "../survey-v2/AnimatedHeaderScrollScreen";
 import { TW_COLORS } from "@/utils/constants";
@@ -14,8 +14,30 @@ import HealthIcon from "@assets/svg/icon/Health";
 import ShareIcon from "@assets/svg/icon/Share";
 import { FAQ_DATA } from "./FaqData";
 import logEvents from "@/services/logEvents";
+import { useFocusEffect } from "@react-navigation/native";
 
 export default function FaqMainScreen({ navigation, route }) {
+  const scrollPositionRef = useRef(0);
+  const [initialScrollPosition, setInitialScrollPosition] = useState(0);
+
+  // Track scroll position changes
+  const handleScrollPositionChange = useCallback((scrollY: number) => {
+    scrollPositionRef.current = scrollY;
+  }, []);
+
+  // Save scroll position when leaving the screen and restore it when returning
+  useFocusEffect(
+    useCallback(() => {
+      // When screen comes into focus, set the initial scroll position
+      setInitialScrollPosition(scrollPositionRef.current);
+
+      // When screen loses focus, the scroll position is already saved in scrollPositionRef
+      return () => {
+        // No cleanup needed - scroll position is preserved in scrollPositionRef
+      };
+    }, [])
+  );
+
   return (
     <AnimatedHeaderScrollScreen
       title={"Comment ça marche ?"}
@@ -27,6 +49,9 @@ export default function FaqMainScreen({ navigation, route }) {
       noPadding={true}
       showBottomButton={false}
       navigation={navigation}
+      preserveScrollOnBlur={true}
+      onScrollPositionChange={handleScrollPositionChange}
+      initialScrollPosition={initialScrollPosition}
     >
       <View className="bg-gray-50 flex-1 p-4 flex-col space-y-12 pt-10 pb-12">
         <View className="flex-col space-y-6">
