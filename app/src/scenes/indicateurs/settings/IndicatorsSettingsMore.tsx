@@ -37,7 +37,7 @@ const IndicatorsSettingsMore = ({ navigation, route }) => {
   };
 
   const renderItem = useCallback(({ item: indicator }) => {
-    return <IndicatorItem key={indicator.uuid} indicator={indicator} setIndicators={setIndicators} />;
+    return <IndicatorItem indicator={indicator} setIndicators={setIndicators} />;
   }, []);
 
   const keyExtractor = (indicator) => indicator.uuid || indicator.name;
