@@ -1,3 +1,10 @@
+## [1.100.2](https://github.com/SocialGouv/jardinmental/compare/v1.100.1...v1.100.2) (2025-10-16)
+
+
+### Bug Fixes
+
+* **a11y:** multiple fix mostly change of colors, making selected text bolds ([#555](https://github.com/SocialGouv/jardinmental/issues/555)) ([15c1e43](https://github.com/SocialGouv/jardinmental/commit/15c1e4361710cbf21b4fe74cfe8e68d4dca5f8af))
+
 ## [1.100.1](https://github.com/SocialGouv/jardinmental/compare/v1.100.0...v1.100.1) (2025-10-16)
 
 
