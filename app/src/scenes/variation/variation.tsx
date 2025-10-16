@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
-import { ScrollView, StyleSheet, View, Image, Dimensions, Text, TouchableOpacity } from "react-native";
+import { ScrollView, StyleSheet, View, Image, Dimensions, Text, TouchableOpacity, Alert } from "react-native";
 
 import { displayedCategories, HELP_ANALYSE, TAB_BAR_HEIGHT, TW_COLORS } from "@/utils/constants";
 import Chart from "./chart";
@@ -8,7 +8,7 @@ import { beforeToday, getArrayOfDates, getTodaySWeek, formatDate } from "@/utils
 import { DiaryDataContext } from "@/context/diaryData";
 import { useContext } from "react";
 import localStorage from "@/utils/localStorage";
-
+import { LineChart } from "react-native-gifted-charts";
 import Icon from "@/components/Icon";
 import { colors } from "@/utils/colors";
 import { INDICATEURS } from "@/utils/liste_indicateurs.1";
@@ -22,6 +22,7 @@ import { useAnimatedStyle, interpolate, Extrapolate } from "react-native-reanima
 import Animated from "react-native-reanimated";
 
 const screenHeight = Dimensions.get("window").height;
+const screenWidth = Dimensions.get("window").width;
 
 export const VariationsHeader = ({ day, setDay, scrollY }) => {
   const { showBottomSheet } = useBottomSheet();
@@ -51,13 +52,13 @@ export const VariationsHeader = ({ day, setDay, scrollY }) => {
         },
       ]}
     >
-      <WeekPicker
+      {/* <WeekPicker
         firstDay={firstDay}
         lastDay={lastDay}
         onAfterPress={() => setDay(beforeToday(-7, day))}
         onBeforePress={() => setDay(beforeToday(7, day))}
         setDay={setDay}
-      />
+      /> */}
       <TouchableOpacity
         onPress={() => {
           showBottomSheet(
@@ -76,6 +77,96 @@ export const VariationsHeader = ({ day, setDay, scrollY }) => {
         <CircleQuestionMark color={TW_COLORS.CNAM_PRIMARY_800} />
       </TouchableOpacity>
     </Animated.View>
+  );
+};
+
+const TestChart = ({ data }) => {
+  const ref = useRef(null);
+  const lineData = [
+    { value: 1, label: "1 Jan" },
+    { value: 5, label: "10 Jan" },
+    { value: 5, label: "20 Jan" },
+    { value: 2, label: "30 Jan" },
+    { value: 4, label: "1 Feb" },
+    { value: 1, label: "10 Feb" },
+    { value: 3, label: "20 Feb" },
+    { value: 3, label: "28 Feb" },
+    { value: 1, label: "1 Mar" },
+    { value: 1, label: "10 Mar" },
+    { value: 1, label: "20 Mar" },
+    { value: 0, label: "30 Mar" },
+    { value: 4, label: "1 Apr" },
+    { value: 3, label: "10 Apr" },
+    { value: 2, label: "20 Apr" },
+    { value: 2, label: "30 Apr" },
+    { value: 2, label: "1 May" },
+    { value: 5, label: "10 May" },
+    { value: 5, label: "20 May" },
+    { value: 1, label: "30 May" },
+    { value: 1, label: "1 Jun" },
+    { value: 5, label: "10 Jun" },
+    { value: 5, label: "20 Jun" },
+    { value: 4, label: "30 Jun" },
+    { value: 4, label: "1 Jul" },
+    { value: 1, label: "10 Jul" },
+    { value: 4, label: "20 Jul" },
+    { value: 1, label: "30 Jul" },
+  ];
+
+  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"];
+
+  const showOrHidePointer = (ind) => {
+    ref.current?.scrollTo({
+      x: ind * 200 - 25,
+    }); // adjust as per your UI
+  };
+
+  return (
+    <View className="">
+      <View className="mb-4" style={{ flexDirection: "row", marginLeft: 8 }}>
+        {months.map((item, index) => {
+          return (
+            <TouchableOpacity
+              key={index}
+              style={{
+                padding: 6,
+                margin: 4,
+                backgroundColor: "#ebb",
+                borderRadius: 8,
+              }}
+              onPress={() => showOrHidePointer(index)}
+            >
+              <Text>{months[index]}</Text>
+            </TouchableOpacity>
+          );
+        })}
+      </View>
+      <LineChart
+        yAxisSide={1}
+        width={screenWidth - 70}
+        focusEnabled={true}
+        focusProximity={50}
+        // strokeDashArray={[4, 4]}
+        // lineSegments={[
+        //   { startIndex: 0, endIndex: 1, color: "red", strokeDashArray: [4, 1] },
+        //   // { startIndex: 1, endIndex: 2, color: "green" },
+        //   // { startIndex: 2, endIndex: 3, color: "orange" },
+        // ]}
+        onFocus={(item, index) => {
+          console.log("focused", item, index);
+          // Alert.alert("Value", `Value: ${item.value}, Index: ${index}`);
+        }}
+        noOfSections={6}
+        stepValue={1}
+        scrollRef={ref}
+        data={data}
+        data2={lineData}
+        strokeDashArray1={[4, 4]}
+        curved={false}
+        curvature={0.1}
+        initialSpacing={0}
+      />
+    </View>
   );
 };
 
@@ -127,7 +218,8 @@ const Variations = ({ navigation, onScroll, scrollY, day, setDay, dynamicPadding
 
   const { firstDay, lastDay } = getTodaySWeek(day);
 
-  const chartDates = getArrayOfDates({ startDate: firstDay, numberOfDays: 6 });
+  const twoYearsAgo = beforeToday(40 * 1); // Calculate date from 2 years ago
+  const chartDates = getArrayOfDates({ startDate: twoYearsAgo }); // Get all dates from 2 years ago to today
 
   const displayOnlyRequest = (indicateur, dayIndex) => {
     if (Date.parse(new Date(chartDates[dayIndex])) > Date.now()) return; // if clicked day is in the future, don't display it
@@ -142,15 +234,31 @@ const Variations = ({ navigation, onScroll, scrollY, day, setDay, dynamicPadding
     return chartDates.map((date) => {
       const dayData = diaryData[date];
       if (!dayData) {
-        return null;
+        return {
+          value: 0,
+          hideDataPoint: true,
+          label: date,
+        };
       }
       const categoryState = diaryData[date][getIndicatorKey(indicateur)];
       if (!categoryState) {
-        return null;
+        return {
+          value: 0,
+          hideDataPoint: true,
+          label: date,
+        };
       }
-      if (indicateur?.type === "boolean") return categoryState?.value === true ? 4 : 0;
-      if (indicateur?.type === "gauge") return Math.min(Math.floor(categoryState?.value * 5), 4);
-      if (categoryState?.value) return categoryState?.value - 1;
+      if (indicateur?.type === "boolean") return { value: categoryState?.value === true ? 4 : 0, label: date };
+      if (indicateur?.type === "gauge")
+        return {
+          label: date,
+          value: Math.min(Math.floor(categoryState?.value * 5), 4),
+        };
+      if (categoryState?.value)
+        return {
+          value: categoryState?.value - 1,
+          label: date,
+        };
 
       // -------
       // the following code is for the retrocompatibility
@@ -163,9 +271,15 @@ const Variations = ({ navigation, onScroll, scrollY, day, setDay, dynamicPadding
         // if it's one category with the suffix 'FREQUENCE' :
         // add the intensity (default level is 3 - for the frequence 'never')
         categoryStateIntensity = diaryData[date][`${categoryName}_INTENSITY`] || { level: 3 };
-        return categoryState.level + categoryStateIntensity.level - 2;
+        return {
+          value: categoryState.level + categoryStateIntensity.level - 2,
+          label: date,
+        };
       }
-      return categoryState.level ? categoryState.level - 1 : null;
+      return {
+        data: categoryState.level ? categoryState.level - 1 : null,
+        label: date,
+      };
     });
   };
 
@@ -215,18 +329,28 @@ const Variations = ({ navigation, onScroll, scrollY, day, setDay, dynamicPadding
             {userIndicateurs
               .concat(INDICATEURS)
               .filter((ind) => ind.active)
-              .map(
-                (indicateur) =>
-                  isChartVisible(getIndicatorKey(indicateur)) && (
-                    <Chart
-                      indicateur={indicateur}
-                      title={getTitle(indicateur.name)}
-                      key={indicateur.name}
-                      data={computeChartData(indicateur)}
-                      onPress={(dayIndex) => displayOnlyRequest(indicateur, dayIndex)}
-                    />
-                  )
-              )}
+              .splice(2, 1)
+              .map((indicateur) => {
+                const data = computeChartData(indicateur)
+                  .filter((d) => d)
+                  .filter((d) => {
+                    if (!Number.isFinite(d.value)) {
+                      return false;
+                    }
+                    return true;
+                  });
+                return isChartVisible(getIndicatorKey(indicateur)) && <TestChart data={data} key={indicateur.name} />;
+
+                // isChartVisible(getIndicatorKey(indicateur)) && (
+                //   <Chart
+                //     indicateur={indicateur}
+                //     title={getTitle(indicateur.name)}
+                //     key={indicateur.name}
+                //     data={computeChartData(indicateur)}
+                //     onPress={(dayIndex) => displayOnlyRequest(indicateur, dayIndex)}
+                //   />
+                // )
+              })}
           </>
         ) : (
           <>
