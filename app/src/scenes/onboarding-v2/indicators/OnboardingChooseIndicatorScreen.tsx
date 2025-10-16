@@ -381,7 +381,7 @@ const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation, route })
           <>
             <View className="px-6 py-4 pb-0">
               <InstructionText>
-                Voici les éléments les plus suivis sur Jardin Mental. Séléctionnez au moins un élément pour démarrer (vous pourrez modifier vos choix
+                Voici les éléments les plus suivis sur Jardin Mental. Sélectionnez au moins un élément pour démarrer (vous pourrez modifier vos choix
                 et en ajouter d’autres plus tard)
               </InstructionText>
             </View>

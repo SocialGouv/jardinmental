@@ -16,6 +16,7 @@ import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
 import Pencil from "@assets/svg/icon/Pencil";
 import { SquircleButton, SquircleView } from "expo-squircle-view";
+import JMButton from "@/components/JMButton";
 
 const ReminderStorageKey = "@Reminder";
 
@@ -194,6 +195,8 @@ const Reminder = ({
     });
   };
 
+  const skip = () => navigation.navigate("tabs");
+
   return (
     <BeigeWrapperScreen
       variant="blue"
@@ -202,7 +205,8 @@ const Reminder = ({
         navigation.goBack();
       }}
       nextText="Programmer mon rappel quotidien"
-      handleSkip={() => navigation.navigate("tabs")}
+      secondaryButton={route?.params?.onboarding ? <JMButton variant="outline" onPress={skip} title="Passer" className="mb-2" /> : undefined}
+      handleSkip={route?.params?.onboarding ? skip : undefined}
       handleNext={validateOnboarding}
     >
       <View className="flex-1 p-6 z-10 flex justify-center">

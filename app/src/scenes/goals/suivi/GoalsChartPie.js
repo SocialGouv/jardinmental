@@ -3,11 +3,12 @@ import { StyleSheet, View, Text } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import PieChart from "react-native-pie-chart";
 // import PieChart from "react-native-pie";
-import { scoresMapIcon } from "../../../utils/constants";
+import { scoresMapIcon, yesNoMapIcon } from "../../../utils/constants";
 import { getGoalsAndRecords } from "../../../utils/localStorage/goals";
 import { DAYS_OF_WEEK } from "../../../utils/date/daysOfWeek";
 import { parseISO, getDay } from "date-fns";
 import { colors as mainColors } from "@/utils/colors";
+import { PieYesNo } from "@/scenes/suivi/PieYesNo";
 
 export const GoalsChartPie = ({ chartDates, onIsEmptyChanged }) => {
   const [goals, setGoals] = useState([]);
@@ -62,10 +63,16 @@ export const GoalsChartPie = ({ chartDates, onIsEmptyChanged }) => {
   );
 };
 
-const colors = {
-  0: "#f3f3f3",
-  1: scoresMapIcon[1].color,
-  5: scoresMapIcon[5].color,
+const parialsColors = {
+  0: { color: "#f3f3f3" },
+  1: {
+    color: yesNoMapIcon["false"].color,
+    symbol: yesNoMapIcon["false"].symbol,
+  },
+  5: {
+    color: yesNoMapIcon["true"].color,
+    symbol: yesNoMapIcon["true"].symbol,
+  },
 };
 
 const GoalPie = ({ title, records }) => {
@@ -82,20 +89,19 @@ const GoalPie = ({ title, records }) => {
         total: records.length,
         count,
         percentage: (count / records.length) * 100,
-        color: colors[record.value],
+        color: parialsColors[record.value],
       };
       return acc;
     }, {});
     setSections(_sections);
-    setSectionValues(Object.values(_sections).map(({ percentage, color }) => ({ percentage, color })));
+    setSectionValues(Object.values(_sections).map(({ percentage, color }) => ({ value: percentage, color: color.color, label: color.symbol })));
   }, [records]);
 
   useEffect(() => {
     updateSections();
   }, [records]);
-
   return (
-    <View>
+    <View className="border-b border-cnam-primary-400 py-4">
       <View style={styles.titleContainer}>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>{title}</Text>
@@ -105,14 +111,8 @@ const GoalPie = ({ title, records }) => {
         <View style={styles.pieContainer}>
           {/* <PieChart radius={50} sections={sectionValues} /> */}
           <View style={styles.pieContainer}>
-            {sectionValues?.reduce((sum, section) => sum + section.percentage, 0) > 0 ? (
-              <PieChart
-                widthAndHeight={100}
-                series={sectionValues.map((section) => section.percentage)}
-                sliceColor={sectionValues.map((section) => section.color)}
-                coverRadius={0.45}
-                coverFill={"#FFF"}
-              />
+            {sectionValues?.reduce((sum, section) => sum + section.value, 0) > 0 ? (
+              <PieChart widthAndHeight={100} series={sectionValues.map((section) => section)} coverRadius={0.45} coverFill={"#FFF"} />
             ) : (
               // Show empty state or placeholder when all values are 0
               <View className="w-[100px] h-[100px] border border-gray-200 rounded-full justify-center items-center">

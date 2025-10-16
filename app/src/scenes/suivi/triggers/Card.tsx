@@ -1,8 +1,9 @@
 import React from "react";
-import { StyleSheet, View, TouchableOpacity } from "react-native";
-import Text from "../../../components/MyText";
-import { colors } from "../../../utils/colors";
-import { getArrayOfDatesFromTo, formatDateThread } from "../../../utils/date/helpers";
+import { StyleSheet, View, Text } from "react-native";
+import { colors } from "@/utils/colors";
+import { formatDateThread } from "@/utils/date/helpers";
+import { mergeClassNames } from "@/utils/className";
+import { typography } from "@/utils/typography";
 
 const EVENTS = [
   { label: "Contexte de la journée", value: "CONTEXT" },
@@ -31,24 +32,26 @@ const Card = ({ date, context, userComment, event }) => {
   if (event !== "ALL" && !EVENTS.some((e) => canDisplay(e.value, getVariableByEvent(e.value)))) return null;
 
   return (
-    <View>
-      <Text style={styles.title}>{formatDateThread(date)}</Text>
-      <View style={styles.container}>
+    <View className="mt-4">
+      <Text className={mergeClassNames(typography.textMdBold, "text-cnam-primary-800 mb-4")}>{formatDateThread(date)}</Text>
+      <View className="bg-cnam-cyan-25-lighten-97 px-4">
         {canDisplay("CONTEXT", context) ? (
-          <View style={styles.item}>
-            <Text style={styles.sectionTitle}>Contexte de la journée</Text>
-            <Text style={styles.message}>{context}</Text>
+          <View className="py-4">
+            <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-800")}>Contexte de la journée</Text>
+            <Text className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-800 text-left")}>{context}</Text>
           </View>
         ) : null}
         {canDisplay("USER_COMMENT", userComment) ? (
-          <View style={styles.item}>
-            <Text style={styles.sectionTitle}>Précisions sur l'élément</Text>
-            <Text style={styles.message}>{userComment}</Text>
+          <View className="py-4">
+            <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-800")}>Précisions sur l'élément</Text>
+            <Text className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-800 text-left")}>{userComment}</Text>
           </View>
         ) : null}
         {!canDisplay("CONTEXT", context) && !canDisplay("USER_COMMENT", userComment) ? (
-          <View style={styles.item}>
-            <Text style={[styles.message, styles.italic]}>Vous n'avez rien précisé pour ce jour-là</Text>
+          <View className="py-4">
+            <Text className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-800 text-left")}>
+              Vous n'avez rien précisé pour ce jour-là
+            </Text>
           </View>
         ) : null}
       </View>
@@ -57,24 +60,21 @@ const Card = ({ date, context, userComment, event }) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#F9F6F6",
-    borderRadius: 10,
-    marginBottom: 20,
-    paddingHorizontal: 15,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.23,
-    shadowRadius: 2.62,
+  // container: {
+  //   backgroundColor: "#F9F6F6",
+  //   borderRadius: 10,
+  //   marginBottom: 20,
+  //   paddingHorizontal: 15,
+  //   shadowColor: "#000",
+  //   shadowOffset: {
+  //     width: 0,
+  //     height: 2,
+  //   },
+  //   shadowOpacity: 0.23,
+  //   shadowRadius: 2.62,
 
-    elevation: 4,
-  },
-  item: {
-    marginVertical: 15,
-  },
+  //   elevation: 4,
+  // },
   title: {
     paddingHorizontal: 15,
     paddingBottom: 10,

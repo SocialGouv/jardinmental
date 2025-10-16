@@ -8,7 +8,7 @@ import SelectDayScreen from "../scenes/survey/selectDay";
 import Reminder from "../scenes/reminder";
 import Export from "../scenes/export/export";
 import DataExportImport from "../scenes/data-export-import";
-import DailyChart from "../scenes/calendar/daily-chart";
+import DailyChart from "../scenes/variation/daily-chart";
 import { AppState, Platform, Linking } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import Notes from "../scenes/survey/notes-screen";

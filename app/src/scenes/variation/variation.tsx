@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
-import { ScrollView, StyleSheet, View, Image, Dimensions, Text } from "react-native";
-import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
-import { displayedCategories, TAB_BAR_HEIGHT } from "@/utils/constants";
-import { beforeToday, getArrayOfDates, getTodaySWeek, formatDate } from "@/utils/date/helpers";
+import { ScrollView, StyleSheet, View, Image, Dimensions, Text, TouchableOpacity } from "react-native";
+
+import { displayedCategories, HELP_ANALYSE, TAB_BAR_HEIGHT, TW_COLORS } from "@/utils/constants";
 import Chart from "./chart";
-import WeekPicker from "./week-picker";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { beforeToday, getArrayOfDates, getTodaySWeek, formatDate } from "@/utils/date/helpers";
 import { DiaryDataContext } from "@/context/diaryData";
 import { useContext } from "react";
 import localStorage from "@/utils/localStorage";
@@ -13,18 +13,78 @@ import Icon from "@/components/Icon";
 import { colors } from "@/utils/colors";
 import { INDICATEURS } from "@/utils/liste_indicateurs.1";
 import { getIndicatorKey } from "@/utils/indicatorUtils";
+import { useBottomSheet } from "@/context/BottomSheetContext";
+import WeekPicker from "./week-picker";
 import Legend from "../suivi/Legend";
-import { SCROLL_THRESHOLD } from "../survey-v2/AnimatedHeaderScrollScreen";
-import { SCREEN_HEIGHT } from "@gorhom/bottom-sheet";
+import CircleQuestionMark from "@assets/svg/icon/CircleQuestionMark";
+import HelpView from "@/components/HelpView";
+import { useAnimatedStyle, interpolate, Extrapolate } from "react-native-reanimated";
+import Animated from "react-native-reanimated";
 
 const screenHeight = Dimensions.get("window").height;
 
-const Calendar = ({ navigation, onScroll }) => {
-  const [day, setDay] = useState(new Date());
+export const VariationsHeader = ({ day, setDay, scrollY }) => {
+  const { showBottomSheet } = useBottomSheet();
+  const { firstDay, lastDay } = getTodaySWeek(day);
+
+  const animatedShadowStyle = useAnimatedStyle(() => {
+    if (!scrollY) {
+      return { shadowOpacity: 0, elevation: 0 };
+    }
+
+    const shadowOpacity = interpolate(scrollY.value, [0, 50], [0, 0.2], Extrapolate.CLAMP);
+    const elevation = interpolate(scrollY.value, [0, 50], [0, 8], Extrapolate.CLAMP);
+
+    return { shadowOpacity, elevation };
+  });
+
+  return (
+    <Animated.View
+      style={[
+        { paddingHorizontal: 16, backgroundColor: "#FFF" },
+        animatedShadowStyle,
+        {
+          shadowColor: "#000",
+          shadowOffset: { width: 0, height: 4 },
+          shadowRadius: 8,
+          zIndex: 10,
+        },
+      ]}
+    >
+      <WeekPicker
+        firstDay={firstDay}
+        lastDay={lastDay}
+        onAfterPress={() => setDay(beforeToday(-7, day))}
+        onBeforePress={() => setDay(beforeToday(7, day))}
+        setDay={setDay}
+      />
+      <TouchableOpacity
+        onPress={() => {
+          showBottomSheet(
+            <HelpView isMd={true} title={HELP_ANALYSE["variations"]["title"]} description={HELP_ANALYSE["variations"]["description"]} />
+          );
+        }}
+        style={{
+          shadowColor: "#000",
+          shadowOffset: { width: 0, height: 2 },
+          shadowOpacity: 0.15,
+          shadowRadius: 3,
+          elevation: 3,
+        }}
+        className="self-start bg-cnam-primary-100 p-2 rounded-full mr-2 absolute top-20 right-2"
+      >
+        <CircleQuestionMark color={TW_COLORS.CNAM_PRIMARY_800} />
+      </TouchableOpacity>
+    </Animated.View>
+  );
+};
+
+const Variations = ({ navigation, onScroll, scrollY, day, setDay, dynamicPaddingTop }) => {
   const [diaryData] = useContext(DiaryDataContext);
   const [customs, setCustoms] = useState([]);
   const [oldCustoms, setOldCustoms] = useState([]);
   const [calendarIsEmpty, setCalendarIsEmpty] = useState(false);
+  const { showBottomSheet } = useBottomSheet();
   let mounted = useRef(true);
   const [userIndicateurs, setUserIndicateurs] = React.useState([]);
   const insets = useSafeAreaInsets();
@@ -136,38 +196,22 @@ const Calendar = ({ navigation, onScroll }) => {
   };
 
   return (
-    <View style={styles.safe}>
-      <View style={styles.headerContainer}>
-        {/* <Header title="Mon suivi" navigation={navigation} /> */}
-        <WeekPicker
-          firstDay={firstDay}
-          lastDay={lastDay}
-          onAfterPress={() => setDay(beforeToday(-7, day))}
-          onBeforePress={() => setDay(beforeToday(7, day))}
-          setDay={setDay}
-        />
-        <Legend />
-      </View>
-      <ScrollView
+    <View className="flex-1 bg-white">
+      <Animated.ScrollView
         style={styles.scrollView}
+        scrollEventThrottle={16}
+        showsVerticalScrollIndicator={false}
         contentContainerStyle={[
           styles.scrollContainer,
           {
             paddingBottom: insets.bottom + TAB_BAR_HEIGHT,
+            paddingTop: 260,
           },
         ]}
-        scrollEventThrottle={16}
-        showsVerticalScrollIndicator={false}
         onScroll={onScroll}
       >
         {!calendarIsEmpty ? (
           <>
-            <View style={styles.subtitleContainer}>
-              <Icon icon="InfoSvg" width={25} height={25} color={colors.LIGHT_BLUE} />
-              <Text style={styles.subtitle}>
-                Tapez sur un jour ou un point pour retrouver une <Text style={styles.bold}>vue détaillée</Text>.
-              </Text>
-            </View>
             {userIndicateurs
               .concat(INDICATEURS)
               .filter((ind) => ind.active)
@@ -197,16 +241,12 @@ const Calendar = ({ navigation, onScroll }) => {
             </View>
           </>
         )}
-      </ScrollView>
+      </Animated.ScrollView>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  headerContainer: {
-    padding: 5,
-    paddingBottom: 0,
-  },
   imageContainer: {
     display: "flex",
     alignItems: "center",
@@ -229,17 +269,13 @@ const styles = StyleSheet.create({
   bold: {
     fontWeight: "bold",
   },
-  safe: {
-    flex: 1,
-    backgroundColor: "white",
-  },
   scrollView: {
     flex: 1,
     paddingHorizontal: 20,
     backgroundColor: "white",
   },
   scrollContainer: {
-    minHeight: SCREEN_HEIGHT * 0.7,
+    minHeight: screenHeight * 0.7,
   },
   title: {
     fontWeight: "700",
@@ -247,4 +283,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Calendar;
+export default Variations;

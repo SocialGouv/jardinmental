@@ -6,11 +6,8 @@ import { SquircleButton, SquircleView } from "expo-squircle-view";
 
 import Status from "@/scenes/status";
 import Exercise from "@/scenes/exercise";
-import Suivi from "@/scenes/suivi";
+import Suivi from "@/scenes/suivi/Bilan";
 import Resources from "@/scenes/resources";
-import SurveyMenu from "@assets/svg/SurveyMenu";
-import ExerciseMenu from "@assets/svg/ExerciseMenu";
-import GraphMenu from "@assets/svg/GraphMenu";
 import localStorage from "@/utils/localStorage";
 import logEvents from "@/services/logEvents";
 import StatusBarColor from "@/components/StatusBar";
@@ -160,7 +157,7 @@ const Tabs = ({ navigation, route }) => {
             shadowOpacity: 0.15,
             shadowRadius: 12,
             elevation: 8,
-            paddingVertical: 12,
+            paddingVertical: 8,
             paddingHorizontal: 8,
           }}
         >
@@ -184,13 +181,13 @@ const Tabs = ({ navigation, route }) => {
                   style={{
                     flex: 1,
                     alignItems: "center",
-                    paddingVertical: 8,
+                    paddingVertical: 4,
                     backgroundColor,
-                    borderRadius: 10,
+                    borderRadius: 16,
                   }}
                 >
                   <View style={{ alignItems: "center" }}>
-                    <IconComponent height={24} width={24} color={color} />
+                    <IconComponent height={20} width={20} color={color} />
                     {tab.badge === false && (
                       <View
                         style={{ borderWidth: 0.5 }}

@@ -1,16 +1,23 @@
 import React, { useState, useEffect, useRef } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import DatePicker from "react-native-date-picker";
 import logEvents from "../../services/logEvents";
 
-import Text from "../../components/MyText";
 import DateOrTimeDisplay from "./DateOrTimeDisplay";
 import { SelectInput } from "../../components/SelectInput";
 import { beforeToday } from "../../utils/date/helpers";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { STORAGE_KEY_START_DATE } from "../../utils/constants";
+import { HELP_ANALYSE, STORAGE_KEY_START_DATE, TW_COLORS } from "../../utils/constants";
+import { Button2 } from "@/components/Button2";
+import JMButton from "@/components/JMButton";
+import HelpView from "@/components/HelpView";
+import CircleQuestionMark from "@assets/svg/icon/CircleQuestionMark";
+import { useBottomSheet } from "@/context/BottomSheetContext";
+import { mergeClassNames } from "@/utils/className";
+import { typography } from "@/utils/typography";
+import Tune from "@assets/svg/icon/Tune";
 
-const DateRange = ({
+const RangeDate = ({
   withPreset = false,
   children,
   containerStyle,
@@ -18,7 +25,12 @@ const DateRange = ({
   topContainerStyle,
   textStyle,
   selectInputProps,
+  setIsFilterActive,
   dateOrTimeProps,
+  onHelpClick,
+  introductionText,
+  isFilterActive,
+  hideFromBeginningButton,
   ...props
 }) => {
   const [presetValue, setPresetValue] = useState(props.presetValue || "lastDays7");
@@ -31,6 +43,7 @@ const DateRange = ({
     if (fromDate !== props.fromDate) setFromDate(props.fromDate);
   }, [props.fromDate]);
   const [openFromDate, setOpenFromDate] = useState(false);
+  const { showBottomSheet } = useBottomSheet();
 
   const [toDate, setToDate] = useState(props.toDate);
   useEffect(() => {
@@ -99,31 +112,52 @@ const DateRange = ({
     };
   }, [presetValue]);
 
+  const options = [
+    { label: "7 derniers jours", value: "lastDays7" },
+    { label: "14 derniers jours", value: "lastDays14" },
+    { label: "30 derniers jours", value: "lastDays30" },
+    { label: "Choisir la période", value: "custom" },
+  ];
+  if (!hideFromBeginningButton) {
+    options.splice(3, 0, { label: "Depuis le début", value: "fromBeginning" });
+  }
   return (
-    <View style={[styles.container, containerStyle]}>
-      <View style={[styles.contentContainer, contentContainerStyle]}>
-        <View style={[styles.topContainer, (withPreset || children) && { marginBottom: 8 }, topContainerStyle]}>
-          {withPreset && (
-            <SelectInput
-              placeholder="Sélectionnez une période..."
-              value={presetValue}
-              onValueChange={setPresetValue}
-              items={[
-                { label: "7 derniers jours", value: "lastDays7" },
-                { label: "14 derniers jours", value: "lastDays14" },
-                { label: "30 derniers jours", value: "lastDays30" },
-                { label: "Depuis le début", value: "fromBeginning" },
-                { label: "Choisir la période", value: "custom" },
-              ]}
-              {...selectInputProps}
+    <View>
+      <View className="flex-row items-center justify-between">
+        <View className="flex-row items-center space-x-2">
+          {introductionText && <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>{introductionText}</Text>}
+          <SelectInput
+            placeholder="Sélectionnez une période..."
+            value={presetValue}
+            onValueChange={setPresetValue}
+            items={options}
+            {...selectInputProps}
+          />
+          {!!setIsFilterActive && (
+            <JMButton
+              width="auto"
+              title="Filtrer"
+              style={{
+                height: 40,
+              }}
+              icon={<Tune color={isFilterActive ? TW_COLORS.WHITE : TW_COLORS.CNAM_PRIMARY_800} />}
+              // icon={"TuneSvg"}
+              variant={isFilterActive ? "primary" : "outline"}
+              size="small"
+              containerStyle={{ marginHorizontal: 8 }}
+              onPress={setIsFilterActive}
             />
           )}
-
-          {children}
         </View>
-
-        <View style={styles.dateContainer}>
-          <Text style={[styles.text, { marginRight: 8 }, textStyle]}>du</Text>
+        {onHelpClick && (
+          <TouchableOpacity onPress={onHelpClick} className="bg-cnam-primary-100 p-2 rounded-full mr-2">
+            <CircleQuestionMark color={TW_COLORS.CNAM_PRIMARY_800} />
+          </TouchableOpacity>
+        )}
+      </View>
+      {presetValue === "custom" && (
+        <View className="flex-row items-center mt-2 space-x-2">
+          <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 mr-2")}>Du</Text>
           <DateOrTimeDisplay
             mode="date"
             date={fromDate}
@@ -138,7 +172,7 @@ const DateRange = ({
             containerStyle={styles.dateItemContainer}
             {...dateOrTimeProps}
           />
-          <Text style={[styles.text, { marginHorizontal: 8 }, textStyle]}>au</Text>
+          <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 mr-2")}>Au</Text>
           <DateOrTimeDisplay
             mode="date"
             date={toDate}
@@ -197,7 +231,7 @@ const DateRange = ({
             }}
           />
         </View>
-      </View>
+      )}
     </View>
   );
 };
@@ -225,4 +259,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DateRange;
+export default RangeDate;
