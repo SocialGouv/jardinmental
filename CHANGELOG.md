@@ -1,3 +1,15 @@
+# [1.102.0](https://github.com/SocialGouv/jardinmental/compare/v1.101.0...v1.102.0) (2025-10-16)
+
+
+### Bug Fixes
+
+* **a11y:** change color for date input ([#557](https://github.com/SocialGouv/jardinmental/issues/557)) ([08078b8](https://github.com/SocialGouv/jardinmental/commit/08078b88fce36a753088863f6d784390c8e60178))
+
+
+### Features
+
+* show notif alert only when clicking validation button ([#560](https://github.com/SocialGouv/jardinmental/issues/560)) ([4499ca1](https://github.com/SocialGouv/jardinmental/commit/4499ca15bd91168f2ea27d193137c47aa1213b50))
+
 # [1.101.0](https://github.com/SocialGouv/jardinmental/compare/v1.100.2...v1.101.0) (2025-10-16)
 
 
