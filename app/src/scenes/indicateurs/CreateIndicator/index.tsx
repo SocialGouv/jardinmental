@@ -15,6 +15,11 @@ import logEvents from "../../../services/logEvents";
 import { useFocusEffect } from "@react-navigation/native";
 import { INDICATOR_CATEGORIES_DATA } from "@/scenes/onboarding-v2/data/helperData";
 import JMButton from "@/components/JMButton";
+import { mergeClassNames } from "@/utils/className";
+import { typography } from "@/utils/typography";
+import { AnimatedHeaderScrollScreen } from "@/scenes/survey-v2/AnimatedHeaderScrollScreen";
+import NavigationButtons from "@/components/onboarding/NavigationButtons";
+import { TW_COLORS } from "@/utils/constants";
 
 const CATEGORY_OPTIONS = Object.values(NEW_INDICATORS_CATEGORIES);
 // Convert enum to picker items
@@ -59,63 +64,73 @@ const CreateIndicator = ({ navigation, route }) => {
   );
 
   return (
-    <SafeAreaView style={styles.safe}>
-      <View style={styles.header}>
-        <BackButton style={styles.headerBackButton} onPress={navigation.goBack} />
-        <View style={styles.headerTextContainer}>
-          <Text style={styles.headerText}>Créer un indicateur</Text>
-        </View>
-      </View>
-
-      <View className="flex-1" style={styles.container}>
-        <View className="flex-1">
-          <Text style={styles.label}>Comment souhaitez-vous appeler votre nouvel indicateur ?</Text>
-
-          <TextInput
-            onChangeText={(e) => {
-              setNameNewIndicator(e);
-              setError(false);
-            }}
-            autoFocus={true}
-            value={nameNewIndicator}
-            placeholder={"Entrez le nom de votre indicateur"}
-            placeholderTextColor="lightgrey"
-            style={styles.textInput}
-          />
-
-          {error ? (
-            <View className="border border-red-400 bg-red-50 rounded-lg px-3 py-2 mb-5">
-              <Text className="text-gray-900">Il existe déjà un indicateur qui porte le nom "{nameNewIndicator?.trim()}".</Text>
-              <Text className="text-gray-900">
-                S'il est inactif, vous pouvez le réactiver dans la liste des "anciens indicateurs" ou depuis la liste d&apos;exemples.
-              </Text>
-            </View>
-          ) : null}
-
-          <View>
-            <Text style={styles.label}>Selectionnez une catégorie </Text>
-            <RNPickerSelect
-              onValueChange={(value) => setSelectedCategory(value)}
-              items={categoryOptions}
-              placeholder={{ label: "Choisir une categorie", value: null }}
-              value={selectedCategory}
-              style={pickerSelectStyles}
-              useNativeAndroidPickerStyle={false}
+    <AnimatedHeaderScrollScreen
+      handlePrevious={() => {
+        navigation.goBack();
+      }}
+      title="Créer un indicateur"
+      navigation={navigation}
+      headerRightComponent={null}
+      headerRightAction={() => {}}
+      smallHeader={true}
+      scrollViewBackground="#F7FCFD"
+      bottomComponent={
+        <NavigationButtons absolute={true}>
+          <>
+            <JMButton
+              disabled={!nameNewIndicator || !selectedCategory}
+              onPress={() => {
+                handleAddNewIndicator();
+              }}
+              title="Enregistrer"
             />
-          </View>
-        </View>
-        <JMButton
-          disabled={!nameNewIndicator || !selectedCategory}
-          buttonStyle={{ backgroundColor: colors.LIGHT_BLUE, marginBottom: 20 }}
-          textStyle={{ color: "white", textAlign: "center" }}
-          onPress={() => {
-            handleAddNewIndicator();
+          </>
+        </NavigationButtons>
+      }
+    >
+      <View className="flex-1" style={styles.container}>
+        <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-900 mt-8")}>
+          Comment souhaitez-vous appeler votre nouvel indicateur ?
+        </Text>
+        <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700 mt-10 mb-2")}>
+          Nom de votre indicateur* <Text className={mergeClassNames(typography.textSmMedium, "text-gray-700")}>(obligatoire)</Text>
+        </Text>
+        <TextInput
+          onChangeText={(e) => {
+            setNameNewIndicator(e);
+            setError(false);
           }}
-          title="Valider"
-          className="mb-5"
+          autoFocus={true}
+          value={nameNewIndicator}
+          placeholder={"Entrez le nom de votre indicateur"}
+          placeholderTextColor="lightgrey"
+          style={styles.textInput}
         />
+
+        {error ? (
+          <View className="border border-red-400 bg-red-50 rounded-lg px-3 py-2 mb-5">
+            <Text className="text-gray-900">Il existe déjà un indicateur qui porte le nom "{nameNewIndicator?.trim()}".</Text>
+            <Text className="text-gray-900">
+              S'il est inactif, vous pouvez le réactiver dans la liste des "anciens indicateurs" ou depuis la liste d&apos;exemples.
+            </Text>
+          </View>
+        ) : null}
+
+        <View>
+          <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700 mt-10 mb-2")}>
+            Catégorie* <Text className={mergeClassNames(typography.textSmMedium, "text-gray-700")}>(obligatoire)</Text>
+          </Text>
+          <RNPickerSelect
+            onValueChange={(value) => setSelectedCategory(value)}
+            items={categoryOptions}
+            placeholder={{ label: "Choisir une categorie", value: null }}
+            value={selectedCategory}
+            style={pickerSelectStyles}
+            useNativeAndroidPickerStyle={false}
+          />
+        </View>
       </View>
-    </SafeAreaView>
+    </AnimatedHeaderScrollScreen>
   );
 };
 
@@ -129,7 +144,10 @@ const styles = StyleSheet.create({
     borderColor: colors.BLUE,
     borderRadius: 8,
     padding: 16,
-    marginVertical: 25,
+    backgroundColor: "white",
+    fontWeight: 600,
+    fontSize: 16,
+    color: TW_COLORS.GRAY_900,
   },
 
   safe: {
@@ -138,7 +156,6 @@ const styles = StyleSheet.create({
   },
   container: {
     paddingHorizontal: 20,
-    backgroundColor: "white",
   },
 
   headerText: {
@@ -231,24 +248,23 @@ const styles = StyleSheet.create({
 const pickerSelectStyles = StyleSheet.create({
   inputIOS: {
     fontSize: 16,
-    marginTop: 20,
     paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingVertical: 14,
     borderWidth: 1,
-    borderColor: "gray",
+    borderColor: TW_COLORS.CNAM_PRIMARY_900,
     borderRadius: 8,
-    color: "black",
+    color: TW_COLORS.CNAM_PRIMARY_900,
     backgroundColor: "white",
   },
   inputAndroid: {
     fontSize: 16,
     marginTop: 20,
     paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingVertical: 14,
     borderWidth: 1,
-    borderColor: "gray",
+    borderColor: TW_COLORS.CNAM_PRIMARY_900,
     borderRadius: 8,
-    color: "black",
+    color: TW_COLORS.CNAM_PRIMARY_900,
     backgroundColor: "white",
   },
 });
