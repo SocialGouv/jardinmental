@@ -1,3 +1,10 @@
+# [1.101.0](https://github.com/SocialGouv/jardinmental/compare/v1.100.2...v1.101.0) (2025-10-16)
+
+
+### Features
+
+* update ui and fix a11y for indicator creation screen ([#556](https://github.com/SocialGouv/jardinmental/issues/556)) ([4ddeaae](https://github.com/SocialGouv/jardinmental/commit/4ddeaae2eb6f394db1140b118e82b218b9c486f4))
+
 ## [1.100.2](https://github.com/SocialGouv/jardinmental/compare/v1.100.1...v1.100.2) (2025-10-16)
 
 
