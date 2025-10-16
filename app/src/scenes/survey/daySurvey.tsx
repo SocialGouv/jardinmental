@@ -445,7 +445,7 @@ const DaySurvey = ({
           .filter((ind) => ind.active === true && ind.uuid === INDICATEURS_HUMEUR.uuid)
           .map((ind) => {
             return (
-              <View className="px-4 my-4" key={ind?.uuid || ind.name}>
+              <View className="px-4 mt-4" key={ind?.uuid || ind.name}>
                 <IndicatorSurveyItem
                   showComment={true}
                   indicator={ind}
@@ -464,7 +464,7 @@ const DaySurvey = ({
               </View>
             );
           })}
-        <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700 text-left my-6 mt-0 px-8")}>
+        <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700 text-left mb-6 mt-0 px-5")}>
           Observez ce qui a été présent ou plus marqué aujourd’hui, un élément à la fois.
         </Text>
         <View className="mb-0 px-4">
