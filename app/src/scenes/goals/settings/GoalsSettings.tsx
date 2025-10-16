@@ -81,7 +81,7 @@ const GoalItem = ({ goal, index }) => {
   }, [goal]);
 
   return (
-    <View className="bg-white border-2 border-cnam-primary-800 mx-4 rounded-2xl p-4 flex-row mb-2">
+    <View className="bg-white border-2 border-cnam-primary-800 mx-4 rounded-2xl p-4 flex-row mb-2 justify-between items-center">
       <View>
         <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-950")}>{goal.label}</Text>
         <View style={[itemStyles.daysOfWeekContainer]}>
