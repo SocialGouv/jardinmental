@@ -8,7 +8,7 @@ const SettingItem = ({ title, navigation, path = "tabs", icon, color = colors.LI
   const handleClick = () => {
     onClick();
     if (path) {
-      navigation.navigate(path);
+      navigation.push(path);
     }
   };
   return (
