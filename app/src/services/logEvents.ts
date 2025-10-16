@@ -756,7 +756,7 @@ const QUEST_OBD_START2 = "QUEST_OBD_START2";
 const QUEST_OBD_STEP = "QUEST_OBD_STEP";
 const QUEST_OBD_CONGRATS = "QUEST_OBD_CONGRATS";
 const REMINDER_OBD_EDIT = "REMINDER_OBD_EDIT";
-const REMINDER_OBD_VALIDATE = "REMINDER_OBD_VALIDATE";
+const REMINDER_OBD = "REMINDER_OBD";
 const BACK = "BACK";
 
 // Intro onboarding functions
@@ -918,12 +918,12 @@ const logReminderObdEdit = async (time) => {
   });
 };
 
-const logReminderObdValidate = async (notification) => {
+const logReminderObd = async (notificationActivated: 0 | 1) => {
   await logEvent({
     category: ONBOARDING,
-    action: REMINDER_OBD_VALIDATE,
+    action: REMINDER_OBD,
     name: "notification",
-    value: notification,
+    value: notificationActivated,
   });
 };
 
@@ -1467,7 +1467,7 @@ export default {
   logQuestObdStep,
   logQuestObdCongrats,
   logReminderObdEdit,
-  logReminderObdValidate,
+  logReminderObd,
   logOnboardingBack,
   logDataImport,
   logDataExportAsBackUp,

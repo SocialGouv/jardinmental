@@ -152,7 +152,7 @@ const Reminder = ({
     // await localStorage.setOnboardingStep(null);
     if (route?.params?.onboarding) {
       // only in onboarding
-      logEvents.logReminderObdValidate(1);
+      logEvents.logReminderObd(1);
       navigation.reset({
         index: 0,
         routes: [{ name: "tabs" }],
@@ -190,7 +190,10 @@ const Reminder = ({
     });
   };
 
-  const skip = () => navigation.navigate("tabs");
+  const skip = () => {
+    logEvents.logReminderObd(0);
+    navigation.navigate("tabs");
+  };
 
   return (
     <BeigeWrapperScreen
