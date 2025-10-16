@@ -39,7 +39,7 @@ const IndicatorsSettingsMore = ({ navigation, route }) => {
     return <IndicatorItem indicator={indicator} setIndicators={setIndicators} />;
   }, []);
 
-  const keyExtractor = (indicator) => indicator.uuid || indicator.name;
+  const keyExtractor = useCallback((indicator: Indicator) => indicator.uuid || indicator.name, []);
 
   // Configure pan gesture to allow scrolling while keeping drag functionality
   // The pan gesture activates after 520ms, which is slightly longer than the long press delay (100ms)
