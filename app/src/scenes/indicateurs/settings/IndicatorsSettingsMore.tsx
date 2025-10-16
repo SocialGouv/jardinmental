@@ -85,6 +85,7 @@ const IndicatorsSettingsMore = ({ navigation, route }) => {
           const inactiveIndicators = indicators.filter((indicator) => !indicator.active);
           setIndicators([...reordered, ...inactiveIndicators]);
         }}
+        scrollEnabled={false}
         contentContainerStyle={{ flex: 1, paddingHorizontal: 16 }}
         panGesture={panGesture}
       />
