@@ -1,3 +1,10 @@
+# [1.107.0](https://github.com/SocialGouv/jardinmental/compare/v1.106.1...v1.107.0) (2025-10-17)
+
+
+### Features
+
+* resources sub categories (zoom) ([#569](https://github.com/SocialGouv/jardinmental/issues/569)) ([6269215](https://github.com/SocialGouv/jardinmental/commit/6269215f16be70e6680a575b89ea7cf6e28a67d2))
+
 ## [1.106.1](https://github.com/SocialGouv/jardinmental/compare/v1.106.0...v1.106.1) (2025-10-17)
 
 
