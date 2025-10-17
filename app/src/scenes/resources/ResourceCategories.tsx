@@ -29,7 +29,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ number, title, onPress }) =
           <Text className="text-cnam-primary-950 text-base font-medium leading-6">{title}</Text>
         </View>
         <View className="justify-center items-center pr-4">
-          <ArrowIcon width={16} height={16} color={TW_COLORS.CNAM_PRIMARY_900} />
+          <ArrowIcon width={16} height={16} color={TW_COLORS.CNAM_PRIMARY_800} />
         </View>
       </View>
     </TouchableOpacity>
