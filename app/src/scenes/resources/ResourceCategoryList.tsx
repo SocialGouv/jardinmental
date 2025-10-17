@@ -95,7 +95,13 @@ const ResourceCategoryList: React.FC<ResourceCategoryListProps> = ({ navigation,
 
             return (
               <View key={subCategory} className="mb-6">
-                <Text className="text-xl font-semibold text-cnam-primary-950 mb-3">{subCategory}</Text>
+                <Text 
+                  className="text-xl font-semibold text-cnam-primary-950 mb-3"
+                  accessibilityRole="header"
+                  accessibilityLevel={2}
+                >
+                  {subCategory}
+                </Text>
                 {resources.map((resource, localIndex) => {
                   const globalPosition = sectionStartIndex + localIndex + 1;
                   return (
