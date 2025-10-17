@@ -45,8 +45,12 @@ const ResourceCategoryList: React.FC<ResourceCategoryListProps> = ({ navigation,
   const handleResourcePress = async (resource: Resource, position: number) => {
     logEvents.logResourceArticleSelected(resource.matomoId);
     logEvents.logResourceArticleSelectedPosition(position);
-    const updated = await localStorage.addViewedResource(resource.id);
-    setReadIds(updated);
+    try {
+      const updated = await localStorage.addViewedResource(resource.id);
+      setReadIds(updated);
+    } catch (error) {
+      console.error("Failed to add viewed resource:", error);
+    }
     navigation.navigate("resource-article", { resource });
   };
 
