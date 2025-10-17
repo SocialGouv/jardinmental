@@ -445,7 +445,7 @@ const DaySurvey = ({
           .filter((ind) => ind.active === true && ind.uuid === INDICATEURS_HUMEUR.uuid)
           .map((ind) => {
             return (
-              <View className="mb-2 border-b border-gray-400 px-4 my-4 pb-4" key={ind?.uuid || ind.name}>
+              <View className="px-4 mt-4" key={ind?.uuid || ind.name}>
                 <IndicatorSurveyItem
                   showComment={true}
                   indicator={ind}
@@ -464,66 +464,33 @@ const DaySurvey = ({
               </View>
             );
           })}
-        <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700 text-center my-6 px-8")}>
+        <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700 text-left mb-6 mt-0 px-5")}>
           Observez ce qui a été présent ou plus marqué aujourd’hui, un élément à la fois.
         </Text>
-        {Object.keys(groupedIndicators).map((cat, index) => {
-          const indicators = groupedIndicators[cat];
-          if (!indicators.length) {
-            return;
-          }
-          return (
-            <View key={cat} className="mb-4 pb-6 border-b border-gray-400 px-4">
-              <View className={`flex-row  p-4 px-0 pb-6 ${index === 0 ? "pt-4" : "pt-10"}`}>
-                <View className="rounded-full border-[1.5px] border-cnam-primary-800 bg-white w-10 h-10 items-center justify-center">
-                  {React.createElement(INDICATOR_CATEGORIES_DATA[cat].icon, { color: TW_COLORS.BRAND_900 })}
-                </View>
-                <Text className={mergeClassNames(typography.displayXsBold, "text-left text-cnam-primary-900 ml-2")}>
-                  {INDICATOR_CATEGORIES_DATA[cat].name}
-                </Text>
-                <JMButton
-                  onPress={() => {
-                    showHelpModal(cat);
+        <View className="mb-0 px-4">
+          {userIndicateurs
+            .filter((ind) => ind.active === true && ind.uuid !== INDICATEURS_HUMEUR.uuid)
+            .map((ind: Indicator, index: number) => {
+              return (
+                <IndicatorSurveyItem
+                  key={ind?.uuid || ind.name}
+                  showComment={true}
+                  indicator={ind}
+                  index={index}
+                  onIndicatorChange={() => {
+                    updateIndicators();
                   }}
-                  variant="text"
-                  width="fixed"
-                  icon={<CircleQuestionMark />}
-                  className="ml-auto"
+                  value={answers?.[getIndicatorKey(ind)]?.value}
+                  onValueChanged={onValueChanged}
+                  onCommentChanged={onCommentChanged}
+                  comment={answers?.[getIndicatorKey(ind)]?.userComment}
                 />
-              </View>
-              {indicators.map((ind: Indicator) => {
-                return (
-                  <IndicatorSurveyItem
-                    key={ind?.uuid || ind.name}
-                    showComment={true}
-                    indicator={ind}
-                    index={index}
-                    onIndicatorChange={() => {
-                      updateIndicators();
-                    }}
-                    value={answers?.[getIndicatorKey(ind)]?.value}
-                    onValueChanged={onValueChanged}
-                    onCommentChanged={onCommentChanged}
-                    comment={answers?.[getIndicatorKey(ind)]?.userComment}
-                  />
-                );
-              })}
-            </View>
-          );
-        })}
-        {/* <Card
-          title="Personnaliser mes indicateurs"
-          icon={{ icon: "ImportantSvg" }}
-          onPress={() => {
-            navigation.navigate("symptoms");
-            logEvents._deprecatedLogSettingsSymptomsFromSurvey();
-          }}
-          className="my-2"
-        /> */}
+              );
+            })}
+        </View>
       </View>
       <GoalsDaySurvey date={initSurvey?.date} ref={goalsRef} scrollRef={scrollRef} route={route} />
-      <View className="mb-2 px-4 pt-6 my-4">
-        <Text className={mergeClassNames(typography.displayXsBold, "text-left text-cnam-primary-900 ml-2 mb-4")}>Note générale</Text>
+      <View className="mb-2 px-4 my-4">
         <InputQuestion
           question={questionContext}
           onPress={toggleAnswer}

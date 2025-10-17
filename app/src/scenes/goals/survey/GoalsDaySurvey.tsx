@@ -94,24 +94,8 @@ export const GoalsDaySurvey = forwardRef(({ date, scrollRef, route }, ref) => {
   };
 
   return (
-    <View style={styles.container} onLayout={onLayout} className="mb-2 border-b-2 border-gray-400 px-4 my-4">
-      <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700 text-center my-6 px-8")}>Qu’avez-vous réalisé aujourd’hui ?</Text>
-      <View style={styles.contentContainer}>
-        <View className={`flex-row  p-4 px-0 pb-6 pt-6`}>
-          <View className="rounded-full border-[1.5px] border-cnam-primary-800 bg-white w-10 h-10 items-center justify-center">
-            <Target />
-          </View>
-          <Text className={mergeClassNames(typography.displayXsBold, "text-left text-cnam-primary-900 ml-2")}>Mes objectifs</Text>
-          <JMButton
-            onPress={() => {
-              showHelpModal();
-            }}
-            variant="text"
-            width="fixed"
-            icon={<CircleQuestionMark />}
-            className="ml-auto"
-          />
-        </View>
+    <View onLayout={onLayout} className="px-4 my-0">
+      <View>
         {goals.map((goal, index) => {
           return (
             <GoalCheckboxItem
@@ -141,9 +125,6 @@ export const GoalsDaySurvey = forwardRef(({ date, scrollRef, route }, ref) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginVertical: 8,
-  },
-  contentContainer: {
     marginVertical: 8,
   },
   spacing: {
