@@ -91,8 +91,13 @@ const ExternalResourceCard: React.FC<ExternalResourceCardProps> = ({ externalRes
   }, [externalResource.id]);
 
   const handlePress = async () => {
-    const updated = await localStorage.addViewedExternalResource(externalResource.id);
-    setIsConsulted(updated.includes(externalResource.id));
+    try {
+      const updated = await localStorage.addViewedExternalResource(externalResource.id);
+      setIsConsulted(updated.includes(externalResource.id));
+    } catch (error) {
+      console.error('Failed to mark resource as viewed:', error);
+      // Continue with onPress even if tracking fails
+    }
     onPress(externalResource);
   };
 
