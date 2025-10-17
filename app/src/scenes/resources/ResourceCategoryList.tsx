@@ -26,8 +26,13 @@ const ResourceCategoryList: React.FC<ResourceCategoryListProps> = ({ navigation,
 
   useEffect(() => {
     const load = async () => {
-      const ids = await localStorage.getViewedResources();
-      setReadIds(ids);
+      try {
+        const ids = await localStorage.getViewedResources();
+        setReadIds(ids);
+      } catch (error) {
+        console.error('Failed to load viewed resources:', error);
+        setReadIds([]);
+      }
     };
     load();
   }, []);
