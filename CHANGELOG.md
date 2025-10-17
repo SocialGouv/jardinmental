@@ -1,3 +1,15 @@
+# [1.105.0](https://github.com/SocialGouv/jardinmental/compare/v1.104.0...v1.105.0) (2025-10-17)
+
+
+### Bug Fixes
+
+* remove one resources (and orphan external resources) ([#565](https://github.com/SocialGouv/jardinmental/issues/565)) ([09b0c96](https://github.com/SocialGouv/jardinmental/commit/09b0c96112da8f3fb453ed9ed841c383acc542bc))
+
+
+### Features
+
+* add "consulted" status on external resources ([#566](https://github.com/SocialGouv/jardinmental/issues/566)) ([32ea97d](https://github.com/SocialGouv/jardinmental/commit/32ea97d49732eb5728791e4a4a09573f83e7cb87))
+
 # [1.104.0](https://github.com/SocialGouv/jardinmental/compare/v1.103.0...v1.104.0) (2025-10-17)
 
 
