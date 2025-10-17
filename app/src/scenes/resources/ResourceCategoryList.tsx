@@ -85,19 +85,31 @@ const ResourceCategoryList: React.FC<ResourceCategoryListProps> = ({ navigation,
     >
       <View className="flex-1">
         <View className="px-4 mt-4">
-          {sortedSections.map(([subCategory, resources]) => (
-            <View key={subCategory} className="mb-6">
-              <Text className="text-xl font-semibold text-cnam-primary-950 mb-3">{subCategory}</Text>
-              {resources.map((resource, index) => (
-                <ResourceCard
-                  key={resource.id}
-                  resource={resource}
-                  onPress={() => handleResourcePress(resource, index + 1)}
-                  read={readIds.includes(resource.id)}
-                />
-              ))}
-            </View>
-          ))}
+          {sortedSections.map(([subCategory, resources]) => {
+            const sectionStartIndex = sortedSections
+              .slice(
+                0,
+                sortedSections.findIndex(([name]) => name === subCategory)
+              )
+              .reduce((acc, [, sectionResources]) => acc + sectionResources.length, 0);
+
+            return (
+              <View key={subCategory} className="mb-6">
+                <Text className="text-xl font-semibold text-cnam-primary-950 mb-3">{subCategory}</Text>
+                {resources.map((resource, localIndex) => {
+                  const globalPosition = sectionStartIndex + localIndex + 1;
+                  return (
+                    <ResourceCard
+                      key={resource.id}
+                      resource={resource}
+                      onPress={() => handleResourcePress(resource, globalPosition)}
+                      read={readIds.includes(resource.id)}
+                    />
+                  );
+                })}
+              </View>
+            );
+          })}
         </View>
       </View>
     </AnimatedHeaderScrollScreen>
