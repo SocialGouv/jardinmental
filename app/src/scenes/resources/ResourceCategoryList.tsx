@@ -30,7 +30,7 @@ const ResourceCategoryList: React.FC<ResourceCategoryListProps> = ({ navigation,
         const ids = await localStorage.getViewedResources();
         setReadIds(ids);
       } catch (error) {
-        console.error('Failed to load viewed resources:', error);
+        console.error("Failed to load viewed resources:", error);
         setReadIds([]);
       }
     };
