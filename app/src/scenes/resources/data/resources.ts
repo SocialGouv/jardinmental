@@ -1,19 +1,29 @@
-export interface Resource {
-  id: string;
-  matomoId: number;
-  title: string;
-  image: any;
-  category: string;
-  content: string;
-  externalResources?: Array<string>;
-}
-
 export const CATEGORIES = {
   DES_PETITS_PAS_POUR_SON_EQUILIBRE_MENTAL: "Des petits pas pour son équilibre mental",
   LA_SANTE_MENTALE_C_EST_QUOI: "La santé mentale, c'est quoi ?",
   MIEUX_COMPRENDRE_LES_TROUBLES_PSYCHIQUES: "Mieux comprendre les troubles psychiques",
   REPERER_LES_SIGNES_DE_MAL_ETRE: "Repérer les signes de mal-être",
-};
+} as const;
+
+export type Category = (typeof CATEGORIES)[keyof typeof CATEGORIES];
+
+export const SUB_CATEGORIES = {
+  ZOOM_SOMMEIL: "Zoom sur le sommeil",
+  ZOOM_TROUBLES: "Zoom sur les différents troubles",
+} as const;
+
+export type SubCategory = (typeof SUB_CATEGORIES)[keyof typeof SUB_CATEGORIES];
+
+export interface Resource {
+  id: string;
+  matomoId: number;
+  title: string;
+  image: any;
+  category: Category;
+  content: string;
+  externalResources?: Array<string>;
+  subCategory?: SubCategory;
+}
 
 export const RESOURCES_DATA: Resource[] = [
   {
@@ -238,6 +248,7 @@ Certaines difficultés sont plus fréquentes selon les étapes de vie :\n\
   {
     id: "539b5df6-e21e-4f99-a865-d77e111dc6a1",
     matomoId: 13,
+    subCategory: SUB_CATEGORIES.ZOOM_SOMMEIL,
     title: "Troubles dépressifs : on fait le point",
     image: require("../../../../assets/imgs/resources/Article13.png"),
     category: CATEGORIES.MIEUX_COMPRENDRE_LES_TROUBLES_PSYCHIQUES,
@@ -268,6 +279,7 @@ Et bien sûr, petit rappel essentiel : il ne s’agit en rien d'un signe de fai
   {
     id: "38948091-ab45-42d8-8ffb-ab9bacfe8d91",
     matomoId: 14,
+    subCategory: SUB_CATEGORIES.ZOOM_SOMMEIL,
     title: "Troubles anxieux et TOC : on fait le point",
     image: require("../../../../assets/imgs/resources/Article14.png"),
     category: CATEGORIES.MIEUX_COMPRENDRE_LES_TROUBLES_PSYCHIQUES,
@@ -303,6 +315,7 @@ Il est tout à fait possible d’apprendre à mieux vivre avec l’anxiété. Av
   {
     id: "01976039-c56a-4918-b3aa-236bb1847421",
     matomoId: 15,
+    subCategory: SUB_CATEGORIES.ZOOM_SOMMEIL,
     title: "Troubles addictifs : on fait le point",
     image: require("../../../../assets/imgs/resources/Article15.png"),
     category: CATEGORIES.MIEUX_COMPRENDRE_LES_TROUBLES_PSYCHIQUES,
@@ -339,6 +352,7 @@ L’addiction est donc **une véritable affection médicale** et non un simple m
   {
     id: "1882aee0-9ff3-4c92-aa4a-bc43475bc3c9",
     matomoId: 16,
+    subCategory: SUB_CATEGORIES.ZOOM_SOMMEIL,
     title: "Troubles des conduites alimentaires : on fait le point",
     image: require("../../../../assets/imgs/resources/Article16.png"),
     category: CATEGORIES.MIEUX_COMPRENDRE_LES_TROUBLES_PSYCHIQUES,
@@ -370,6 +384,7 @@ Ces troubles peuvent avoir de graves conséquences physiques (carences, troubles
   {
     id: "da30d699-ca75-4f9f-ba0a-049b09272f99",
     matomoId: 17,
+    subCategory: SUB_CATEGORIES.ZOOM_SOMMEIL,
     title: "Troubles bipolaires : on fait le point",
     image: require("../../../../assets/imgs/resources/Article17.png"),
     category: CATEGORIES.MIEUX_COMPRENDRE_LES_TROUBLES_PSYCHIQUES,
@@ -398,6 +413,7 @@ Avec un accompagnement adapté et un suivi médical régulier, il est tout à fa
   {
     id: "7a925764-20e7-4bf6-af95-e606b5f8a10a",
     matomoId: 18,
+    subCategory: SUB_CATEGORIES.ZOOM_SOMMEIL,
     title: "Troubles de stress post-traumatique : on fait le point",
     image: require("../../../../assets/imgs/resources/Article18.png"),
     category: CATEGORIES.MIEUX_COMPRENDRE_LES_TROUBLES_PSYCHIQUES,
@@ -431,6 +447,7 @@ Il est possible d’aller mieux. Des accompagnements spécifiques existent pour 
   {
     id: "7bb8b47f-0758-4463-a313-7441b922f461",
     matomoId: 19,
+    subCategory: SUB_CATEGORIES.ZOOM_SOMMEIL,
     title: "Les troubles schizophréniques : on fait le point",
     image: require("../../../../assets/imgs/resources/Article19.png"),
     category: CATEGORIES.MIEUX_COMPRENDRE_LES_TROUBLES_PSYCHIQUES,
@@ -456,6 +473,7 @@ Avec un accompagnement adapté et un suivi médical régulier, il est tout à fa
   {
     id: "98febe81-309d-40ba-b234-f5b9bc995fd1",
     matomoId: 20,
+    subCategory: SUB_CATEGORIES.ZOOM_SOMMEIL,
     title: "Troubles de la personnalité borderline : on fait le point",
     image: require("../../../../assets/imgs/resources/Article20.png"),
     category: CATEGORIES.MIEUX_COMPRENDRE_LES_TROUBLES_PSYCHIQUES,
@@ -480,6 +498,7 @@ Il existe des thérapies et des accompagnements spécifiques qui aident à mieux
   {
     id: "ecab9657-b7e8-46d2-baf6-89437332e4d9",
     matomoId: 21,
+    subCategory: SUB_CATEGORIES.ZOOM_SOMMEIL,
     title: "Automutilation : on fait le point",
     image: require("../../../../assets/imgs/resources/Article21.png"),
     category: CATEGORIES.MIEUX_COMPRENDRE_LES_TROUBLES_PSYCHIQUES,
@@ -533,6 +552,7 @@ Votre bien-être passe avant tout :)`,
   {
     id: "674603a6-05b6-46f9-8c54-0416a3adbe50",
     matomoId: 23,
+    subCategory: SUB_CATEGORIES.ZOOM_TROUBLES,
     title: "Bien dormir, bien dans son corps (et sa tête !)",
     image: require("../../../../assets/imgs/resources/Article23.png"),
     category: CATEGORIES.DES_PETITS_PAS_POUR_SON_EQUILIBRE_MENTAL,
@@ -559,6 +579,7 @@ Il est important de prendre en compte ces déterminants pour mieux comprendre so
   {
     id: "0dffe681-74a2-46ed-8a3d-44506d36173d",
     matomoId: 24,
+    subCategory: SUB_CATEGORIES.ZOOM_TROUBLES,
     title: "La nuit porte (vraiment) conseil",
     image: require("../../../../assets/imgs/resources/Article24.png"),
     category: CATEGORIES.DES_PETITS_PAS_POUR_SON_EQUILIBRE_MENTAL,
@@ -587,6 +608,7 @@ Il survient lorsque le corps **en a réellement besoin**, guidé par une horloge
   {
     id: "421212e0-2812-4a72-a073-cba746444c36",
     matomoId: 25,
+    subCategory: SUB_CATEGORIES.ZOOM_TROUBLES,
     title: "Troubles du sommeil : de quoi parle-t-on vraiment ?",
     image: require("../../../../assets/imgs/resources/Article25.png"),
     category: CATEGORIES.DES_PETITS_PAS_POUR_SON_EQUILIBRE_MENTAL,
@@ -615,6 +637,7 @@ D’autres troubles existent et nécessitent souvent une évaluation médicale 
   {
     id: "908d5222-39dd-46c6-9ddb-3c9b8c0386e9",
     matomoId: 26,
+    subCategory: SUB_CATEGORIES.ZOOM_TROUBLES,
     title: "Nous ne sommes pas tous·tes égaux face au sommeil",
     image: require("../../../../assets/imgs/resources/Article26.png"),
     category: CATEGORIES.DES_PETITS_PAS_POUR_SON_EQUILIBRE_MENTAL,
@@ -641,6 +664,7 @@ Apprendre à reconnaître et respecter ses propres besoins en sommeil est un lev
   {
     id: "b55b6bb5-4169-4e39-a4da-c8327e7b304c",
     matomoId: 27,
+    subCategory: SUB_CATEGORIES.ZOOM_TROUBLES,
     title: "Bien dormir, oui mais comment ?",
     image: require("../../../../assets/imgs/resources/Article27.png"),
     category: CATEGORIES.DES_PETITS_PAS_POUR_SON_EQUILIBRE_MENTAL,

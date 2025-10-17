@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View } from "react-native";
+import { View, Text } from "react-native";
 import ResourceCard from "./ResourceCard";
 import { Resource, RESOURCES_DATA } from "./data/resources";
 import { AnimatedHeaderScrollScreen } from "../survey-v2/AnimatedHeaderScrollScreen";
@@ -21,6 +21,23 @@ const ResourceCategoryList: React.FC<ResourceCategoryListProps> = ({ navigation,
 
   // Filter resources by category
   const categoryResources = RESOURCES_DATA.filter((resource) => resource.category === category);
+
+  // Group resources by subcategory
+  const groupedResources = categoryResources.reduce((acc, resource) => {
+    const subCategory = resource.subCategory || "Sommaire";
+    if (!acc[subCategory]) {
+      acc[subCategory] = [];
+    }
+    acc[subCategory].push(resource);
+    return acc;
+  }, {} as Record<string, Resource[]>);
+
+  // Sort sections to ensure "Sommaire" comes first
+  const sortedSections = Object.entries(groupedResources).sort(([a], [b]) => {
+    if (a === "Sommaire") return -1;
+    if (b === "Sommaire") return 1;
+    return a.localeCompare(b);
+  });
 
   const [readIds, setReadIds] = useState<string[]>([]);
 
@@ -68,13 +85,18 @@ const ResourceCategoryList: React.FC<ResourceCategoryListProps> = ({ navigation,
     >
       <View className="flex-1">
         <View className="px-4 mt-4">
-          {categoryResources.map((resource, index) => (
-            <ResourceCard
-              key={resource.id}
-              resource={resource}
-              onPress={() => handleResourcePress(resource, index + 1)}
-              read={readIds.includes(resource.id)}
-            />
+          {sortedSections.map(([subCategory, resources]) => (
+            <View key={subCategory} className="mb-6">
+              <Text className="text-xl font-semibold text-cnam-primary-950 mb-3">{subCategory}</Text>
+              {resources.map((resource, index) => (
+                <ResourceCard
+                  key={resource.id}
+                  resource={resource}
+                  onPress={() => handleResourcePress(resource, index + 1)}
+                  read={readIds.includes(resource.id)}
+                />
+              ))}
+            </View>
           ))}
         </View>
       </View>
