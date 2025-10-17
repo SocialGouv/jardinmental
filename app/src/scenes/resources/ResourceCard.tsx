@@ -1,15 +1,17 @@
 import React from "react";
 import { View, Text, TouchableOpacity, Image } from "react-native";
 import { Resource } from "./data/resources";
+import CircleCheckMark from "@assets/svg/icon/CircleCheckMark";
 // import StopWatchIcon from "../../../assets/svg/icon/StopWatch";
 // import { colors } from "@/utils/colors";
 
 interface ResourceCardProps {
   resource: Resource;
   onPress: () => void;
+  read?: boolean;
 }
 
-const ResourceCard: React.FC<ResourceCardProps> = ({ resource, onPress }) => {
+const ResourceCard: React.FC<ResourceCardProps> = ({ resource, onPress, read = false }) => {
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -41,7 +43,7 @@ const ResourceCard: React.FC<ResourceCardProps> = ({ resource, onPress }) => {
         */}
       </View>
       <View className="justify-center items-center pr-4">
-        <Text className="text-lg text-cnam-primary-950 font-bold">→</Text>
+        {read ? <CircleCheckMark width={20} height={20} /> : <Text className="text-lg text-cnam-primary-950 font-bold">→</Text>}
       </View>
     </TouchableOpacity>
   );
