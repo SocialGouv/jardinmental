@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import { ExternalResource, ExternalResourceType } from "./data/resourcesExternal";
 import BookOpenIcon from "../../../assets/svg/icon/BookOpen";
@@ -9,6 +9,7 @@ import InstagramIcon from "../../../assets/svg/icon/Instagram";
 import FilmIcon from "../../../assets/svg/icon/Film";
 import LinkIcon from "../../../assets/svg/icon/Link";
 import BriefcaseIcon from "../../../assets/svg/icon/Briefcase";
+import localStorage from "@/utils/localStorage";
 
 interface ExternalResourceCardProps {
   externalResource: ExternalResource;
@@ -74,10 +75,34 @@ function ExternalResourceIcon({ type }: { type: ExternalResourceType }) {
 }
 
 const ExternalResourceCard: React.FC<ExternalResourceCardProps> = ({ externalResource, onPress }) => {
+  const [isConsulted, setIsConsulted] = useState<boolean>(false);
+
+  useEffect(() => {
+    const load = async () => {
+      const ids = await localStorage.getViewedExternalResources();
+      setIsConsulted(ids.includes(externalResource.id));
+    };
+    load();
+  }, [externalResource.id]);
+
+  const handlePress = async () => {
+    const updated = await localStorage.addViewedExternalResource(externalResource.id);
+    setIsConsulted(updated.includes(externalResource.id));
+    onPress(externalResource);
+  };
+
   return (
-    <TouchableOpacity className="mb-4" onPress={() => onPress(externalResource)} key={externalResource.id}>
-      <View className="rounded-2xl flex flex-row border-2 border-cnam-primary-400 bg-white min-h-[112px]">
-        <View className="bg-cnam-cyan-lighten-90 rounded-l-2xl flex items-center justify-center w-20">
+    <TouchableOpacity className="mb-4" onPress={handlePress} key={externalResource.id}>
+      <View
+        className={`rounded-2xl flex flex-row  min-h-[112px] ${
+          isConsulted ? "border border-cnam-primary-200 bg-cnam-primary-25" : "border-2 border-cnam-primary-400 bg-white"
+        }`}
+      >
+        <View
+          className={`${
+            isConsulted ? "bg-cnam-primary-25 border-r border-cnam-primary-200" : "bg-cnam-cyan-lighten-90"
+          } rounded-l-2xl flex items-center justify-center w-20`}
+        >
           <ExternalResourceIcon type={externalResource.type} />
           <Text className="text-xs text-cnam-primary-900 font-medium pt-1 rounded text-center">
             {externalResource.type === "Questionnaire" ? <>Question&shy;naire</> : externalResource.type}
@@ -85,7 +110,14 @@ const ExternalResourceCard: React.FC<ExternalResourceCardProps> = ({ externalRes
         </View>
         <View className="flex-1 flex">
           <View className="p-4 grow">
-            <Text className="text-base font-semibold text-cnam-primary-950">{externalResource.title}</Text>
+            <View className="flex flex-row items-start gap-2">
+              <Text className="flex-1 text-base font-semibold text-cnam-primary-950">{externalResource.title}</Text>
+              {isConsulted && (
+                <View className="bg-gray-200 rounded px-2 py-1 self-start">
+                  <Text className="text-cnam-primary-900 text-xs font-normal">Consulté</Text>
+                </View>
+              )}
+            </View>
           </View>
           <View className="flex flex-row px-2 pb-4 items-center gap-1">
             <View className="flex-1">
@@ -94,7 +126,9 @@ const ExternalResourceCard: React.FC<ExternalResourceCardProps> = ({ externalRes
               </Text>
             </View>
             <View className="flex flex-row items-center">
-              <Text className="mr-2 text-cnam-primary-950 font-semibold">{textByType(externalResource.type)}</Text>
+              <Text className={`mr-2 font-semibold ${isConsulted ? "text-cnam-primary-900" : "text-cnam-primary-950"}`}>
+                {textByType(externalResource.type)}
+              </Text>
               <LinkExternalIcon width={18} height={18} />
             </View>
           </View>
