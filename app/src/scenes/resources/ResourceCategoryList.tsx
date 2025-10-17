@@ -23,8 +23,9 @@ const ResourceCategoryList: React.FC<ResourceCategoryListProps> = ({ navigation,
   const categoryResources = RESOURCES_DATA.filter((resource) => resource.category === category);
 
   // Group resources by subcategory
+  const DEFAULT_SUBCATEGORY = "Sommaire";
   const groupedResources = categoryResources.reduce((acc, resource) => {
-    const subCategory = resource.subCategory || "Sommaire";
+    const subCategory = resource.subCategory || DEFAULT_SUBCATEGORY;
     if (!acc[subCategory]) {
       acc[subCategory] = [];
     }
@@ -34,8 +35,8 @@ const ResourceCategoryList: React.FC<ResourceCategoryListProps> = ({ navigation,
 
   // Sort sections to ensure "Sommaire" comes first
   const sortedSections = Object.entries(groupedResources).sort(([a], [b]) => {
-    if (a === "Sommaire") return -1;
-    if (b === "Sommaire") return 1;
+    if (a === DEFAULT_SUBCATEGORY) return -1;
+    if (b === DEFAULT_SUBCATEGORY) return 1;
     return a.localeCompare(b);
   });
 
