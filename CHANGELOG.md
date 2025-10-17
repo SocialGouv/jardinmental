@@ -1,3 +1,16 @@
+# [1.104.0](https://github.com/SocialGouv/jardinmental/compare/v1.103.0...v1.104.0) (2025-10-17)
+
+
+### Bug Fixes
+
+* replace PlusSvg by Plus, plusSvg has been deleted ([#561](https://github.com/SocialGouv/jardinmental/issues/561)) ([65ab447](https://github.com/SocialGouv/jardinmental/commit/65ab4475dc17e38bf1c7d0e0fe5658cb89dbc474))
+
+
+### Features
+
+* add 114 number to emergency support ([#553](https://github.com/SocialGouv/jardinmental/issues/553)) ([4eb0521](https://github.com/SocialGouv/jardinmental/commit/4eb0521bf6013d64cc86634212628732118115da))
+* add indicator ordering in settings and in display ([#559](https://github.com/SocialGouv/jardinmental/issues/559)) ([4d2c2ea](https://github.com/SocialGouv/jardinmental/commit/4d2c2ea0c265977a7ac511d52b23bfed936d6810))
+
 # [1.103.0](https://github.com/SocialGouv/jardinmental/compare/v1.102.0...v1.103.0) (2025-10-16)
 
 
