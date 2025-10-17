@@ -79,8 +79,13 @@ const ExternalResourceCard: React.FC<ExternalResourceCardProps> = ({ externalRes
 
   useEffect(() => {
     const load = async () => {
-      const ids = await localStorage.getViewedExternalResources();
-      setIsConsulted(ids.includes(externalResource.id));
+      try {
+        const ids = await localStorage.getViewedExternalResources();
+        setIsConsulted(ids.includes(externalResource.id));
+      } catch (error) {
+        console.error('Failed to load viewed resources:', error);
+        // Fail silently - don't show consulted status if we can't load it
+      }
     };
     load();
   }, [externalResource.id]);
