@@ -83,8 +83,7 @@ const ExternalResourceCard: React.FC<ExternalResourceCardProps> = ({ externalRes
         const ids = await localStorage.getViewedExternalResources();
         setIsConsulted(ids.includes(externalResource.id));
       } catch (error) {
-        console.error('Failed to load viewed resources:', error);
-        // Fail silently - don't show consulted status if we can't load it
+        console.error("Failed to load viewed resources:", error);
       }
     };
     load();
@@ -95,8 +94,7 @@ const ExternalResourceCard: React.FC<ExternalResourceCardProps> = ({ externalRes
       const updated = await localStorage.addViewedExternalResource(externalResource.id);
       setIsConsulted(updated.includes(externalResource.id));
     } catch (error) {
-      console.error('Failed to mark resource as viewed:', error);
-      // Continue with onPress even if tracking fails
+      console.error("Failed to mark resource as viewed:", error);
     }
     onPress(externalResource);
   };
