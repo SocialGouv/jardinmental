@@ -1,20 +1,26 @@
 import React from "react";
 import { View, Text, TouchableOpacity, Image } from "react-native";
 import { Resource } from "./data/resources";
+import CheckMarkIcon from "@assets/svg/icon/check";
+import ArrowIcon from "@assets/svg/icon/Arrow";
+import { TW_COLORS } from "@/utils/constants";
 // import StopWatchIcon from "../../../assets/svg/icon/StopWatch";
 // import { colors } from "@/utils/colors";
 
 interface ResourceCardProps {
   resource: Resource;
   onPress: () => void;
+  read?: boolean;
 }
 
-const ResourceCard: React.FC<ResourceCardProps> = ({ resource, onPress }) => {
+const ResourceCard: React.FC<ResourceCardProps> = ({ resource, onPress, read = false }) => {
   return (
     <TouchableOpacity
       onPress={onPress}
       activeOpacity={0.7}
-      className="text-cnam-primary-950 bg-white border p-2 border-cnam-primary-400 rounded-lg flex flex-row mb-2 h-32 items-center"
+      className={`text-cnam-primary-950  border p-2 ${
+        read ? "border-cnam-primary-200 bg-cnam-primary-25" : "border-cnam-primary-400 bg-white"
+      } rounded-lg flex flex-row mb-2 h-32 items-center`}
     >
       <View className="w-20 h-full relative">
         <Image
@@ -40,8 +46,12 @@ const ResourceCard: React.FC<ResourceCardProps> = ({ resource, onPress }) => {
         </View> 
         */}
       </View>
-      <View className="justify-center items-center pr-4">
-        <Text className="text-lg text-cnam-primary-950 font-bold">→</Text>
+      <View className={`flex flex-col h-full justify-center items-center pr-2`}>
+        {read ? (
+          <CheckMarkIcon width={16} height={16} color={TW_COLORS.CNAM_PRIMARY_900} />
+        ) : (
+          <ArrowIcon width={16} height={16} color={TW_COLORS.CNAM_PRIMARY_900} />
+        )}
       </View>
     </TouchableOpacity>
   );

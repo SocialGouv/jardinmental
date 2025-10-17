@@ -18,6 +18,7 @@ import {
   STORAGE_KEY_NEW_USER,
   STORAGE_INFO_MODAL_DISMISSED,
   STORAGE_KEY_VIEWED_EXTERNAL_RESOURCES,
+  STORAGE_KEY_VIEWED_RESOURCES,
 } from "../constants";
 import { updateSymptomsFormatIfNeeded } from "./utils";
 import localStorageBeck from "./beck";
@@ -261,6 +262,20 @@ const addViewedExternalResource = async (resourceId: string): Promise<string[]> 
   return updated;
 };
 
+// App resources (articles) viewed
+const getViewedResources = async (): Promise<string[]> => {
+  const value = await AsyncStorage.getItem(STORAGE_KEY_VIEWED_RESOURCES);
+  return value ? JSON.parse(value) : [];
+};
+
+const addViewedResource = async (resourceId: string): Promise<string[]> => {
+  const current = await getViewedResources();
+  if (current.includes(resourceId)) return current;
+  const updated = [...current, resourceId];
+  await AsyncStorage.setItem(STORAGE_KEY_VIEWED_RESOURCES, JSON.stringify(updated));
+  return updated;
+};
+
 const getIsNewUser = async () => {
   const isNewUser = await AsyncStorage.getItem(STORAGE_KEY_NEW_USER);
   if (isNewUser) {
@@ -324,6 +339,8 @@ export default {
   getIsInfoModalDismissed,
   getViewedExternalResources,
   addViewedExternalResource,
+  getViewedResources,
+  addViewedResource,
   ...localStorageBeck,
 };
 
