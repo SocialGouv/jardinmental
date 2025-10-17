@@ -4,11 +4,11 @@ import React, { useState, useEffect } from "react";
 import { Alert, Linking, Text, TouchableOpacity, View } from "react-native";
 import { AnimatedHeaderScrollScreen } from "../survey-v2/AnimatedHeaderScrollScreen";
 import { TW_COLORS } from "@/utils/constants";
-import { SquircleButton, SquircleView } from "expo-squircle-view";
+import { SquircleButton } from "expo-squircle-view";
 import PhoneIcon from "@assets/svg/icon/Phone";
-import Accordion from "@/components/Accordion";
+import MailIcon from "@assets/svg/icon/Mail";
+import DeafIcon from "@assets/svg/icon/Deaf";
 import MessageHeartCircleIcon from "@assets/svg/icon/MessageHeartCircle";
-import colors from "tailwindcss/colors";
 import HeartHand from "@assets/svg/icon/HeartHand";
 import ArrowUpSvg from "@assets/svg/icon/ArrowUp";
 import LinkIcon from "@assets/svg/icon/Link";
@@ -134,6 +134,26 @@ export default function SupportScreen({ navigation, route }) {
             >
               <PhoneIcon width={24} height={24} />
               <Text className={mergeClassNames(typography.textLgSemibold, "ml-3 text-cnam-primary-900 text-left")}>Appeler le 3114</Text>
+            </SquircleButton>
+            <SquircleButton
+              onPress={() => handleSms("114")}
+              style={{
+                borderRadius: 20,
+              }}
+              preserveSmoothing={true}
+              cornerSmoothing={100}
+              className="border border-cnam-primary-800 h-[80] flex-col px-6 py-4 justify-content items-center mt-0"
+            >
+              <View className="flex-row space-x-4 w-full">
+                <View>
+                  <DeafIcon width={24} height={24} />
+                </View>
+                <View>
+                  <MailIcon width={24} height={24} />
+                </View>
+                <Text className={mergeClassNames(typography.textLgSemibold, "ml-3 text-cnam-primary-900 text-left")}>Écrire au 114 par SMS</Text>
+              </View>
+              <Text className={mergeClassNames(typography.textSmMedium, "text-gray-800 text-left -ml-4")}>Numéro d’urgence sourds et malendants</Text>
             </SquircleButton>
           </View>
         </View>
