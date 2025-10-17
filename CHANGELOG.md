@@ -1,3 +1,10 @@
+# [1.106.0](https://github.com/SocialGouv/jardinmental/compare/v1.105.0...v1.106.0) (2025-10-17)
+
+
+### Features
+
+* add "read" status on resources ([#567](https://github.com/SocialGouv/jardinmental/issues/567)) ([0e7bec8](https://github.com/SocialGouv/jardinmental/commit/0e7bec8de8616c7be135b187f362d8a8a4e7d706))
+
 # [1.105.0](https://github.com/SocialGouv/jardinmental/compare/v1.104.0...v1.105.0) (2025-10-17)
 
 
