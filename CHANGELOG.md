@@ -1,3 +1,10 @@
+## [1.106.1](https://github.com/SocialGouv/jardinmental/compare/v1.106.0...v1.106.1) (2025-10-17)
+
+
+### Bug Fixes
+
+* **resources:** fix arrow on categories ([#568](https://github.com/SocialGouv/jardinmental/issues/568)) ([5cce74d](https://github.com/SocialGouv/jardinmental/commit/5cce74dfdd7366aa5dd8e0a319f2558d41c71300))
+
 # [1.106.0](https://github.com/SocialGouv/jardinmental/compare/v1.105.0...v1.106.0) (2025-10-17)
 
 
