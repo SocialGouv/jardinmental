@@ -96,17 +96,6 @@ Une chose est sûre : tous ces éléments internes et externes s'influencent le
     externalResources: ["550e8400-e29b-41d4-a716-446655440005", "550e8400-e29b-41d4-a716-446655440006", "550e8400-e29b-41d4-a716-446655440007"],
   },
   {
-    id: "6cc770d0-5f72-4a2c-8bae-8de53a372b1c",
-    matomoId: 5,
-    title: "Prendre soin de sa santé mentale, oui… mais comment ?",
-    image: require("../../../../assets/imgs/resources/Article5.png"),
-    category: CATEGORIES.LA_SANTE_MENTALE_C_EST_QUOI,
-    content: `**La santé mentale, comme la santé physique, se cultive au quotidien.** Même lorsque tout va bien, adopter de bonnes habitudes de vie aide à préserver son équilibre. Être au contact de la nature, bien dormir, manger varié, bouger, aider les autres, éviter les conduites addictives, parler quand ça ne va pas… Chaque petit geste compte : même les actions qui paraissent anodines peuvent avoir un vrai impact positif sur notre santé. Ne les sous-estimez pas :)\n\
-\n\
-Et quand ça ne va pas ? **Ces habitudes peuvent soutenir, oui, mais elles ne suffisent pas toujours**. En cas de mal-être ou de troubles psychiques, il est essentiel de consulter un professionnel pour un accompagnement adapté *(voir nos rubriques aide et agir)*. Voici dix conseils de *Santé Publique France* pour prendre soin de sa santé mentale, sans pression, juste à son rythme.`,
-    externalResources: ["550e8400-e29b-41d4-a716-446655440008", "550e8400-e29b-41d4-a716-446655440009", "550e8400-e29b-41d4-a716-446655440018"],
-  },
-  {
     id: "fb2975bb-596c-441f-b3bd-34bf50dfc303",
     matomoId: 6,
     title: "Santé mentale vs clichés : ces idées reçues à retirer de sa tête",
