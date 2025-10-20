@@ -102,6 +102,52 @@ export const VariationsHeader = ({ day, setDay, scrollY }) => {
   );
 };
 
+const generateLineSegments = (data) => {
+  if (!data || data.length === 0) return [];
+
+  const segments: Array<{
+    startIndex: number;
+    endIndex: number;
+    color: string;
+    thickness: number;
+  }> = [];
+  let startIndex = null;
+
+  data.forEach((point, index) => {
+    if (point.value === 1 && point.hideDataPoint) {
+      // Début d'un segment
+      if (startIndex === null) {
+        console.log("start index", index);
+        startIndex = index;
+      }
+    } else {
+      // Fin d'un segment
+      if (startIndex !== null) {
+        console.log("end index", index - 1);
+        segments.push({
+          startIndex,
+          endIndex: index,
+          color: "transparent", // Vert
+          thickness: 3,
+        });
+        startIndex = null;
+      }
+    }
+  });
+
+  // Gérer le cas où le segment se termine à la fin du tableau
+  if (startIndex !== null) {
+    segments.push({
+      startIndex,
+      endIndex: data.length - 1,
+      color: "#4CAF50",
+      thickness: 3,
+    });
+  }
+
+  return segments;
+};
+
 const TestChart = ({ data, dataB, treatment }) => {
   const ref = useRef(null);
   const lineData = [
@@ -142,7 +188,8 @@ const TestChart = ({ data, dataB, treatment }) => {
       x: ind * 200 - 25,
     }); // adjust as per your UI
   };
-
+  const lineSegments = generateLineSegments(data);
+  console.log(lineSegments);
   return (
     <View className="">
       <View className="mb-4" style={{ flexDirection: "row", marginLeft: 8 }}>
@@ -166,24 +213,13 @@ const TestChart = ({ data, dataB, treatment }) => {
       <LineChart
         spacing={50}
         yAxisSide={1}
-        // stepHeight={40} // height between each step of Y axis
-        // yAxisLabelWidth={30} // width of Y axis label container
-        // xAxisLabelWidth={30} // width of X axis label container
-        xAxisLabelTextStyle={{ paddingTop: 40, height: 60 }} // style for X axis label text
-        // showXAxisIndices={false}
-        // xAxisColor={"#ffffff"}
+        xAxisLabelTextStyle={{ paddingTop: 40, height: 60 }}
         xAxisThickness={0}
-        // xAxisType="solid"
-        // hideAxesAndRules={true}
         width={screenWidth - 70}
         focusEnabled={true}
         focusProximity={50}
-        // strokeDashArray={[4, 4]}
-        // lineSegments={[
-        //   { startIndex: 0, endIndex: 1, color: "red", strokeDashArray: [4, 1] },
-        //   // { startIndex: 1, endIndex: 2, color: "green" },
-        //   // { startIndex: 2, endIndex: 3, color: "orange" },
-        // ]}
+        lineSegments={lineSegments}
+        // lineSegments2={generateLineSegments(dataB)}
         onFocus={(item, index) => {
           console.log("focused", item, index);
           // Alert.alert("Value", `Value: ${item.value}, Index: ${index}`);
@@ -217,6 +253,8 @@ const TestChart = ({ data, dataB, treatment }) => {
         dataPointsHeight={20}
         dataPointsWidth={20}
         xAxisIndicesHeight={80}
+        color2={"#00A5DF"}
+        color1={"#3D6874"}
         // noOfSectionsBelowXAxis={1}
         data2={(dataB || []).map((d) => ({
           ...d,
@@ -243,7 +281,6 @@ const TestChart = ({ data, dataB, treatment }) => {
         color3="transparent"
         yAxisColor={"transparent"}
         formatYLabel={(lab) => {
-          console.log("lCS TTATA", lab);
           if (lab === "-1" || lab === "-2" || lab === "6" || lab === "0") {
             return "";
           }
