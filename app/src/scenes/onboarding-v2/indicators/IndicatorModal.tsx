@@ -13,7 +13,7 @@ import { PredefineIndicatorV2SchemaType, Indicator, generateIndicatorFromPredefi
 import { v4 as uuidv4 } from "uuid";
 import JMButton from "@/components/JMButton";
 import { INDICATORS_CATEGORIES } from "@/entities/IndicatorCategories";
-import LinearGradient from "react-native-linear-gradient";
+import { LinearGradient } from "expo-linear-gradient";
 import { INDICATOR_TYPE } from "@/entities/IndicatorType";
 
 const screenHeight = Dimensions.get("window").height;
