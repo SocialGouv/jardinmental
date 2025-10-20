@@ -18,11 +18,6 @@
           "sms",
           "mailto"
         ]
-      },
-      "splash": {
-        "image": "./assets/imgs/am.png",
-        "backgroundColor": "#ffffff",
-        "resizeMode": "contain"
       }
     },
     "android": {
@@ -37,12 +32,7 @@
         "NOTIFICATIONS",
         "SCHEDULE_EXACT_ALARM",
         "POST_NOTIFICATIONS"
-      ],
-      "splash": {
-        "image": "./assets/imgs/ic_launcher_foreground.png",
-        "backgroundColor": "#ffffff",
-        "resizeMode": "contain"
-      }
+      ]
     },
     "plugins": [
       [
@@ -99,7 +89,14 @@
           }
         }
       ],
-      "react-native-bootsplash"
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#ffffff",
+          "image": "./assets/imgs/am.png",
+          "imageWidth": 200
+        }
+      ]
     ],
     "extra": {
       "eas": {

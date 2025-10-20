@@ -75,7 +75,6 @@
     "react": "19.0.0",
     "react-native": "0.79.6",
     "react-native-blob-util": "^0.21.1",
-    "react-native-bootsplash": "^6.3.7",
     "react-native-date-picker": "git+https://github.com/burakharun/react-native-date-picker.git",
     "react-native-device-info": "^8.3.1",
     "react-native-draggable-flatlist": "^4.0.1",
