@@ -98,7 +98,8 @@
             "buildToolsVersion": "35.0.0"
           }
         }
-      ]
+      ],
+      "react-native-bootsplash"
     ],
     "extra": {
       "eas": {
