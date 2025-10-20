@@ -1,3 +1,4 @@
+import React from "react";
 import { EMOTION_COLORS, iconColors } from "./constants";
 import SmileyVeryGood from "@assets/svg/smileys/veryGood";
 import SmileyBad from "@assets/svg/smileys/bad";
@@ -9,7 +10,7 @@ export interface MoodEmoji {
   backgroundColor: string;
   text: string;
   label: string;
-  icon: JSX.Element;
+  icon: React.ReactElement;
 }
 
 export const moodEmojis: MoodEmoji[] = [
@@ -17,31 +18,31 @@ export const moodEmojis: MoodEmoji[] = [
     backgroundColor: EMOTION_COLORS.veryBad,
     text: iconColors.veryBad,
     label: "Très mauvais",
-    icon: <SmileyVeryBad width={62.5} height={62.5} />,
+    icon: <SmileyVeryBad width={25} height={25} />,
   },
   {
     backgroundColor: EMOTION_COLORS.bad,
     text: iconColors.bad,
     label: "Mauvais",
-    icon: <SmileyBad width={62.5} height={62.5} />,
+    icon: <SmileyBad width={25} height={25} />,
   },
   {
     backgroundColor: EMOTION_COLORS.middle,
     text: iconColors.middle,
     label: "Rien de spécial",
-    icon: <SmileyMiddle width={62.5} height={62.5} />,
+    icon: <SmileyMiddle width={25} height={25} />,
   },
   {
     backgroundColor: EMOTION_COLORS.good,
     text: iconColors.good,
     label: "Bon",
-    icon: <SmileyGood width={62.5} height={62.5} />,
+    icon: <SmileyGood width={25} height={25} />,
   },
   {
     backgroundColor: EMOTION_COLORS.veryGood,
     text: iconColors.veryGood,
     label: "Très bon",
-    icon: <SmileyVeryGood width={62.5} height={62.5} />,
+    icon: <SmileyVeryGood width={25} height={25} />,
   },
 ];
 
