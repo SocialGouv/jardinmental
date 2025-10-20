@@ -24,6 +24,28 @@ import Animated from "react-native-reanimated";
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
 
+const customDataPoint = () => {
+  return (
+    <View
+      style={{
+        width: 20,
+        height: 20,
+        backgroundColor: "white",
+        borderWidth: 4,
+        borderRadius: 10,
+        borderColor: "#07BAD1",
+      }}
+    />
+  );
+};
+const customLabel = (val) => {
+  return (
+    <View style={{ width: 70, marginLeft: 7 }}>
+      <Text style={{ color: "blue", fontWeight: "bold" }}>{val}</Text>
+    </View>
+  );
+};
+
 export const VariationsHeader = ({ day, setDay, scrollY }) => {
   const { showBottomSheet } = useBottomSheet();
   const { firstDay, lastDay } = getTodaySWeek(day);
@@ -80,7 +102,7 @@ export const VariationsHeader = ({ day, setDay, scrollY }) => {
   );
 };
 
-const TestChart = ({ data }) => {
+const TestChart = ({ data, dataB, treatment }) => {
   const ref = useRef(null);
   const lineData = [
     { value: 1, label: "1 Jan" },
@@ -142,7 +164,17 @@ const TestChart = ({ data }) => {
         })}
       </View>
       <LineChart
+        spacing={50}
         yAxisSide={1}
+        // stepHeight={40} // height between each step of Y axis
+        // yAxisLabelWidth={30} // width of Y axis label container
+        // xAxisLabelWidth={30} // width of X axis label container
+        xAxisLabelTextStyle={{ paddingTop: 40, height: 60 }} // style for X axis label text
+        // showXAxisIndices={false}
+        // xAxisColor={"#ffffff"}
+        xAxisThickness={0}
+        // xAxisType="solid"
+        // hideAxesAndRules={true}
         width={screenWidth - 70}
         focusEnabled={true}
         focusProximity={50}
@@ -157,12 +189,71 @@ const TestChart = ({ data }) => {
           // Alert.alert("Value", `Value: ${item.value}, Index: ${index}`);
         }}
         noOfSections={6}
+        noOfSectionsBelowXAxis={2}
         stepValue={1}
         scrollRef={ref}
-        data={data}
-        data2={lineData}
+        data={(data || []).map((d) => ({
+          ...d,
+          // labelComponent: () => customLabel(d.label),
+          // customDataPoint,
+          // showStrip: true,
+          // dataPointLabelComponent: () => {
+          //   return (
+          //     <View
+          //       style={{
+          //         backgroundColor: "black",
+          //         paddingHorizontal: 8,
+          //         paddingVertical: 5,
+          //         borderRadius: 4,
+          //       }}
+          //     >
+          //       <Text style={{ color: "white" }}>410</Text>
+          //     </View>
+          //   );
+          // },
+          // dataPointLabelShiftY: -70,
+          // dataPointLabelShiftX: -4,
+        }))}
+        dataPointsHeight={20}
+        dataPointsWidth={20}
+        xAxisIndicesHeight={80}
+        // noOfSectionsBelowXAxis={1}
+        data2={(dataB || []).map((d) => ({
+          ...d,
+          labelComponent: () => customLabel(d.label),
+          // customDataPoint,
+          // dataPointLabelComponent: () => {
+          //   return (
+          //     <View
+          //       style={{
+          //         backgroundColor: "black",
+          //         paddingHorizontal: 8,
+          //         paddingVertical: 5,
+          //         borderRadius: 4,
+          //       }}
+          //     >
+          //       <Text style={{ color: "white" }}>410</Text>
+          //     </View>
+          //   );
+          // },
+          // dataPointLabelShiftY: -70,
+          // dataPointLabelShiftX: -4,
+        }))}
+        data3={treatment}
+        color3="transparent"
+        yAxisColor={"transparent"}
+        formatYLabel={(lab) => {
+          console.log("lCS TTATA", lab);
+          if (lab === "-1" || lab === "-2" || lab === "6") {
+            return "";
+          }
+          return parseInt(lab, 10) + 1;
+        }}
+        showVerticalLines={false}
+        verticalLinesThickness={0}
+        noOfVerticalLines={0}
         strokeDashArray1={[4, 4]}
-        curved={false}
+        curved={true}
         curvature={0.1}
         initialSpacing={0}
       />
@@ -235,7 +326,7 @@ const Variations = ({ navigation, onScroll, scrollY, day, setDay, dynamicPadding
       const dayData = diaryData[date];
       if (!dayData) {
         return {
-          value: 0,
+          value: 1,
           hideDataPoint: true,
           label: date,
         };
@@ -243,7 +334,7 @@ const Variations = ({ navigation, onScroll, scrollY, day, setDay, dynamicPadding
       const categoryState = diaryData[date][getIndicatorKey(indicateur)];
       if (!categoryState) {
         return {
-          value: 0,
+          value: 1,
           hideDataPoint: true,
           label: date,
         };
@@ -252,11 +343,11 @@ const Variations = ({ navigation, onScroll, scrollY, day, setDay, dynamicPadding
       if (indicateur?.type === "gauge")
         return {
           label: date,
-          value: Math.min(Math.floor(categoryState?.value * 5), 4),
+          value: Math.min(Math.floor(categoryState?.value * 5), 4) + 2,
         };
       if (categoryState?.value)
         return {
-          value: categoryState?.value - 1,
+          value: categoryState?.value,
           label: date,
         };
 
@@ -277,7 +368,8 @@ const Variations = ({ navigation, onScroll, scrollY, day, setDay, dynamicPadding
         };
       }
       return {
-        data: categoryState.level ? categoryState.level - 1 : null,
+        data: categoryState.level ? categoryState.level : null,
+        hideDataPoint: !categoryState.level,
         label: date,
       };
     });
@@ -308,6 +400,36 @@ const Variations = ({ navigation, onScroll, scrollY, day, setDay, dynamicPadding
     }
     return category;
   };
+  let dataA, dataB, treatment;
+  if (userIndicateurs.length !== 0) {
+    const activeIndicators = userIndicateurs.concat(INDICATEURS).filter((ind) => ind.active);
+    const indicatorA = activeIndicators[0];
+    const indicatorB = activeIndicators[1];
+    dataA = computeChartData(indicatorA)
+      .filter((d) => d)
+      .filter((d) => {
+        if (!Number.isFinite(d.value)) {
+          return false;
+        }
+        return true;
+      });
+    dataB = computeChartData(indicatorB)
+      .filter((d) => d)
+      .filter((d) => {
+        if (!Number.isFinite(d.value)) {
+          return false;
+        }
+        return true;
+      });
+    treatment = dataB.map((d) => {
+      const value = Math.random() < 0.5 ? -1 : 0;
+      return {
+        ...d,
+        hideDataPoint: value === -1,
+        value,
+      };
+    });
+  }
 
   return (
     <View className="flex-1 bg-white">
@@ -326,31 +448,7 @@ const Variations = ({ navigation, onScroll, scrollY, day, setDay, dynamicPadding
       >
         {!calendarIsEmpty ? (
           <>
-            {userIndicateurs
-              .concat(INDICATEURS)
-              .filter((ind) => ind.active)
-              .splice(2, 1)
-              .map((indicateur) => {
-                const data = computeChartData(indicateur)
-                  .filter((d) => d)
-                  .filter((d) => {
-                    if (!Number.isFinite(d.value)) {
-                      return false;
-                    }
-                    return true;
-                  });
-                return isChartVisible(getIndicatorKey(indicateur)) && <TestChart data={data} key={indicateur.name} />;
-
-                // isChartVisible(getIndicatorKey(indicateur)) && (
-                //   <Chart
-                //     indicateur={indicateur}
-                //     title={getTitle(indicateur.name)}
-                //     key={indicateur.name}
-                //     data={computeChartData(indicateur)}
-                //     onPress={(dayIndex) => displayOnlyRequest(indicateur, dayIndex)}
-                //   />
-                // )
-              })}
+            <TestChart data={dataA} dataB={dataB} treatment={treatment} />
           </>
         ) : (
           <>
