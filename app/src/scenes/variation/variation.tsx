@@ -189,7 +189,7 @@ const TestChart = ({ data, dataB, treatment }) => {
           // Alert.alert("Value", `Value: ${item.value}, Index: ${index}`);
         }}
         noOfSections={6}
-        noOfSectionsBelowXAxis={2}
+        noOfSectionsBelowXAxis={0}
         stepValue={1}
         scrollRef={ref}
         data={(data || []).map((d) => ({
@@ -244,11 +244,12 @@ const TestChart = ({ data, dataB, treatment }) => {
         yAxisColor={"transparent"}
         formatYLabel={(lab) => {
           console.log("lCS TTATA", lab);
-          if (lab === "-1" || lab === "-2" || lab === "6") {
+          if (lab === "-1" || lab === "-2" || lab === "6" || lab === "0") {
             return "";
           }
-          return parseInt(lab, 10) + 1;
+          return parseInt(lab, 10);
         }}
+        // yAxisOffset={-1}
         showVerticalLines={false}
         verticalLinesThickness={0}
         noOfVerticalLines={0}
@@ -343,7 +344,7 @@ const Variations = ({ navigation, onScroll, scrollY, day, setDay, dynamicPadding
       if (indicateur?.type === "gauge")
         return {
           label: date,
-          value: Math.min(Math.floor(categoryState?.value * 5), 4) + 2,
+          value: Math.min(Math.floor(categoryState?.value * 5), 4),
         };
       if (categoryState?.value)
         return {
@@ -422,10 +423,10 @@ const Variations = ({ navigation, onScroll, scrollY, day, setDay, dynamicPadding
         return true;
       });
     treatment = dataB.map((d) => {
-      const value = Math.random() < 0.5 ? -1 : 0;
+      const value = Math.random() < 0.5 ? 1 : 0;
       return {
         ...d,
-        hideDataPoint: value === -1,
+        hideDataPoint: value === 1,
         value,
       };
     });
