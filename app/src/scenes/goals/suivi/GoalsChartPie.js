@@ -64,12 +64,16 @@ export const GoalsChartPie = ({ chartDates, onIsEmptyChanged }) => {
 const parialsColors = {
   0: { color: "#f3f3f3" },
   1: {
-    color: yesNoMapIcon.false.color,
-    symbol: yesNoMapIcon.false.symbol,
+    // eslint-disable-next-line dot-notation
+    color: yesNoMapIcon["false"].color,
+    // eslint-disable-next-line dot-notation
+    symbol: yesNoMapIcon["false"].symbol,
   },
   5: {
-    color: yesNoMapIcon.true.color,
-    symbol: yesNoMapIcon.true.symbol,
+    // eslint-disable-next-line dot-notation
+    color: yesNoMapIcon["true"].color,
+    // eslint-disable-next-line dot-notation
+    symbol: yesNoMapIcon["true"].symbol,
   },
 };
 
