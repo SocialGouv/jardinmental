@@ -296,7 +296,6 @@ export const StatistiqueHeader = ({ presetDate, setPresetDate, fromDate, toDate,
 
 export const styles = StyleSheet.create({
   headerContainerNavigation: {
-    padding: 5,
     paddingBottom: 0,
     backgroundColor: colors.LIGHT_BLUE,
   },
