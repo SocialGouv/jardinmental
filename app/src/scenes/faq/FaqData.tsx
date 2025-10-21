@@ -5,7 +5,6 @@ import ShareIcon from "@assets/svg/icon/Share";
 import TrendUpIcon from "@assets/svg/icon/TrendUp";
 import Pencil from "@assets/svg/icon/Pencil";
 import LockerIcon from "@assets/svg/icon/Locker";
-import { JSX } from "react";
 
 type FaqSlug = "indicateurs" | "objectifs" | "questionnaire" | "analyse" | "traitement" | "données" | "confidentialité";
 interface FaqDataEntry {
