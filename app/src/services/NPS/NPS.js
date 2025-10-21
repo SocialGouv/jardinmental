@@ -3,7 +3,6 @@ import {
   Dimensions,
   Modal,
   Platform,
-  AppState,
   Alert,
   StyleSheet,
   View,
@@ -16,7 +15,6 @@ import {
 import Text from "../../components/MyText";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Mark from "./Mark";
-import Notifications from "../notifications";
 import { sendMail } from "../mail";
 import { colors } from "../../utils/colors";
 import Matomo from "../matomo";
@@ -47,29 +45,16 @@ contact: ${contact}
 profil: ${lookUpSupported[supported]}
 `;
 
-const emailFormat = (email) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,6}$/i.test(email);
-
 class NPS extends React.Component {
   state = {
     visible: false,
     useful: null,
-    reco: null,
     feedback: "",
     contact: "",
     sendButton: getCaption("post"),
-    NPSKey: 0,
-    page: 2,
   };
 
   async componentDidMount() {
-    if (__DEV__) {
-      await NPSManager.reset();
-    }
-    this.NPSListener = AppState.addEventListener("change", this.handleAppStateChange);
-    if (!__DEV__) {
-      this.notificationsListener = Notifications.listen(this.handleNotification, "NPS");
-    }
-
     // Listen to NPSManager state changes
     this.unsubscribeFromNPSManager = NPSManager.addListener(this.handleNPSStateChange);
 
@@ -80,70 +65,36 @@ class NPS extends React.Component {
   }
 
   componentWillUnmount() {
-    this.NPSListener?.remove();
-    Notifications.remove(this.notificationsListener);
     if (this.unsubscribeFromNPSManager) {
       this.unsubscribeFromNPSManager();
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (!prevProps.forceView && this.props.forceView && !this.state.visible) {
-      // eslint-disable-next-line react/no-did-update-set-state
-      this.setState({ visible: true });
-    }
-    if (prevProps.forceView && !this.props.forceView && this.state.visible) {
-      // eslint-disable-next-line react/no-did-update-set-state
-      this.setState({ visible: false });
-    }
     if (!prevState.visible && this.state.visible) {
       // Log when NPS modal opens
       logEvents.logNPSOpen();
     }
     if (prevState.visible && !this.state.visible) {
-      if (this.props.close) {
-        this.props.close();
-      }
       this.npsSent = false;
     }
   }
-
-  handleNotification = (notification) => {
-    if (NPSManager.handleNotification(notification)) {
-      this.setState({ visible: true });
-    }
-  };
 
   handleNPSStateChange = (shouldShow) => {
     this.setState({ visible: shouldShow });
   };
 
-  handleAppStateChange = (newState) => {
-    const { NPSKey } = this.state;
-    if (newState === "active" && !NPSKey) {
-      this.setState({ NPSKey: 1 });
-    }
-    if (newState.match(/inactive|background/) && Boolean(NPSKey)) {
-      this.setState({ NPSKey: 0 });
-    }
-  };
-
   setUseful = (useful) => this.setState({ useful });
-  setReco = (reco) => this.setState({ reco });
   setFeedback = (feedback) => this.setState({ feedback });
   setSendButton = (sendButton) => this.setState({ sendButton });
   setContact = (contact) => this.setState({ contact });
 
   onClose = async () => {
-    const { useful, reco } = this.state;
-    if ((useful !== null || reco !== null) && !this.npsSent) {
+    const { useful } = this.state;
+    if (useful !== null && !this.npsSent) {
       await this.sendNPS();
     }
-    this.setState({ visible: false });
-  };
-
-  nextPage = () => {
-    this.setState(({ page }) => ({ page: page + 1 }));
+    NPSManager.hideNPS();
   };
 
   sendNPS = async () => {
@@ -170,37 +121,12 @@ class NPS extends React.Component {
       Alert.alert("Merci pour votre retour !");
     }, 300);
 
-    this.setState({ visible: false, useful: null, reco: null });
+    NPSManager.hideNPS();
+    this.setState({ useful: null });
   };
 
-  renderFirstPage() {
-    const { useful, reco, sendButton } = this.state;
-    return (
-      <>
-        <Text style={styles.topTitle}>{getCaption("feedback.rate-app.title")}</Text>
-        <Text style={styles.topSubTitle}>{getCaption("feedback.rate-app.useful")}</Text>
-        <Mark
-          selected={useful}
-          onPress={this.setUseful}
-          bad={getCaption("feedback.rate-app.useful.not")}
-          good={getCaption("feedback.rate-app.useful.extremely")}
-        />
-        <Text style={styles.topSubTitle}>{getCaption("feedback.rate-app.probable")}</Text>
-        <Mark
-          selected={reco}
-          onPress={this.setReco}
-          bad={getCaption("feedback.rate-app.probable.not")}
-          good={getCaption("feedback.rate-app.probable.extremely")}
-        />
-        <TouchableOpacity style={styles.buttonContainer} disabled={!useful || !reco} onPress={this.nextPage}>
-          <Text style={styles.buttonText}>{sendButton}</Text>
-        </TouchableOpacity>
-      </>
-    );
-  }
-
   renderSecondPage() {
-    const { feedback, sendButton, contact, useful, reco } = this.state;
+    const { feedback, sendButton, contact, useful } = this.state;
     return (
       <>
         <Text style={styles.topSubTitle}>{getCaption("feedback.rate-app.useful")}</Text>
@@ -246,7 +172,7 @@ class NPS extends React.Component {
   }
 
   render() {
-    const { visible, page } = this.state;
+    const { visible } = this.state;
     return (
       <Modal visible={visible} animationType="slide" presentationStyle="formSheet" onDismiss={this.onClose}>
         <View style={styles.container}>
@@ -257,8 +183,7 @@ class NPS extends React.Component {
               </TouchableOpacity>
             </View>
             <ScrollView style={styles.scrollView} keyboardDismissMode="on-drag" onScrollBeginDrag={Keyboard.dismiss}>
-              {page === 1 && this.renderFirstPage()}
-              {page === 2 && this.renderSecondPage()}
+              {this.renderSecondPage()}
             </ScrollView>
           </KeyboardAvoidingView>
         </View>

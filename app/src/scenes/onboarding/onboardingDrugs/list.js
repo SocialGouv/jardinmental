@@ -7,7 +7,7 @@ import Button from "../../../components/Button";
 import localStorage from "../../../utils/localStorage";
 import { getDrugListWithLocalStorage } from "../../../utils/drugs-list";
 import CheckBox from "@react-native-community/checkbox";
-import NPS from "../../../services/NPS/NPS";
+import NPSManager from "../../../services/NPS/NPSManager";
 import BackButton from "../../../components/BackButton";
 import AddElemToList from "../../../components/AddElemToList";
 import { confirm } from "../../../utils";
@@ -21,7 +21,6 @@ const Drugs = ({ navigation, route }) => {
   const [filter, setFilter] = useState();
   const [list, setList] = useState();
   const [filteredList, setFilteredList] = useState();
-  const [NPSvisible, setNPSvisible] = useState(false);
   const [bufferCustomDrugs, setBufferCustomDrugs] = useState();
   const [viewElementIndex, setViewElementIndex] = useState();
 
@@ -129,11 +128,9 @@ const Drugs = ({ navigation, route }) => {
   };
 
   const handleFilter = (f) => setFilter(f);
-  const closeNPS = () => setNPSvisible(false);
 
   return (
     <SafeAreaView style={styles.safe}>
-      <NPS forceView={NPSvisible} close={closeNPS} page={3} />
       <View
         style={{
           display: "flex",

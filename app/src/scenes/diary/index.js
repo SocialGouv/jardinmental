@@ -10,7 +10,7 @@ import { colors } from "../../utils/colors";
 import { DiaryNotesContext } from "../../context/diaryNotes";
 import { DiaryDataContext } from "../../context/diaryData";
 import localStorage from "../../utils/localStorage";
-import NPS from "../../services/NPS/NPS";
+import NPSManager from "../../services/NPS/NPSManager";
 import ArrowUpSvg from "../../../assets/svg/arrow-up.svg";
 import { formatDateThread, makeSureTimestamp } from "../../utils/date/helpers";
 import DatePicker from "../../components/DatePicker";
@@ -22,7 +22,6 @@ const screenHeight = Dimensions.get("window").height;
 const Diary = ({ navigation, hideDeader = false }) => {
   const [diaryNotes] = useContext(DiaryNotesContext);
   const [diaryData] = useContext(DiaryDataContext);
-  const [NPSvisible, setNPSvisible] = useState(false);
   const [page, setPage] = useState(1);
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [timestamp, setTimestamp] = useState(Date.now());
@@ -87,7 +86,6 @@ const Diary = ({ navigation, hideDeader = false }) => {
 
   return (
     <View style={styles.safe}>
-      <NPS forceView={NPSvisible} close={() => setNPSvisible(false)} />
       <ScrollView style={styles.container} contentContainerStyle={styles.scrollContainer} keyboardShouldPersistTaps="handled">
         {Object.keys({ ...diaryNotes, ...diaryDataWithUserComments })
           .sort((a, b) => {
@@ -106,7 +104,7 @@ const Diary = ({ navigation, hideDeader = false }) => {
               </View>
             );
           })}
-        <ContributeCard onPress={() => setNPSvisible(true)} />
+        <ContributeCard onPress={() => NPSManager.showNPS()} />
         {Object.keys({ ...diaryNotes, ...diaryDataWithUserComments })?.length > LIMIT_PER_PAGE * page && (
           <TouchableOpacity onPress={() => setPage(page + 1)} style={styles.versionContainer}>
             <Text style={styles.arrowDownLabel}>Voir plus</Text>

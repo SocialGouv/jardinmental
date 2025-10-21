@@ -32,7 +32,7 @@ import MessageTextCircle from "@assets/svg/icon/MessageTextCircle";
 import Lock from "@assets/svg/icon/Lock";
 import LightBulb from "@assets/svg/icon/LightBulb";
 import Download from "@assets/svg/icon/Download";
-import NPS from "../../services/NPS/NPS";
+import NPSManager from "../../services/NPS/NPSManager";
 import Gear from "@assets/svg/Gear";
 import { SquircleButton, SquircleView } from "expo-squircle-view";
 import { mergeClassNames } from "@/utils/className";
@@ -54,7 +54,6 @@ export default ({ navigation, visible, onClick }) => {
   const [npsProIsVisible, setNpsProIsVisible] = useState(true);
   const [badgeNpsProIsVisible, setBadgeNpsProIsVisible] = useState(false);
   const [badgeNotesVersionVisible, setBadgeNotesVersionVisible] = useState(false);
-  const [NPSvisible, setNPSvisible] = useState(false);
   const insets = useSafeAreaInsets();
 
   useEffect(() => {
@@ -83,13 +82,6 @@ export default ({ navigation, visible, onClick }) => {
 
   return (
     <>
-      <NPS
-        forceView={NPSvisible}
-        close={() => {
-          setNPSvisible(false);
-          onClick();
-        }}
-      />
       <Modal
         style={styles.modal}
         isVisible={isVisible}
@@ -156,8 +148,8 @@ export default ({ navigation, visible, onClick }) => {
                     onClick();
                     await localStorage.setVisitProNPS(true);
                     setTimeout(() => {
-                      // a bit hacky : whai for drawer to dismiss before displaying NPS
-                      setNPSvisible(true);
+                      // a bit hacky : wait for drawer to dismiss before displaying NPS
+                      NPSManager.showNPS();
                     }, 500);
                   }}
                   className="bg-white rounded-t-xl flex-row px-4 py-6 self-center border-gray-300 border-b-0 justify-between items-center relative"
