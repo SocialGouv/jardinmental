@@ -36,7 +36,7 @@ const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
   const flatListRef = useRef<FlatList>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [diaryData, addNewEntryToDiaryData] = useContext(DiaryDataContext);
-  const { setCustomColor, setDefaultColor } = useStatusBar();
+  const { setCustomColor } = useStatusBar();
   const measuredHeight = useSharedValue(0); // Store the measured natural height
   const [dynamicPaddingTop, setDynamicPaddingTop] = useState(0); // Default fallback
   const { width: screenWidth } = useWindowDimensions();
@@ -395,7 +395,7 @@ const MoodItem = ({
   return (
     <Animated.View style={animatedItemStyle}>
       <View
-        className="rounded-[16px]"
+        className="border border-transparent rounded-2xl"
         style={{
           padding: 2, // this creates space between the border and TouchableOpacity
           backgroundColor: selected ? TW_COLORS.PRIMARY : "transparent",
@@ -411,14 +411,8 @@ const MoodItem = ({
             height: 76,
           }}
         >
-          <View className="flex-1 justify-center items-center">
-            <View
-              style={{
-                transform: [{ scale: 0.4 }],
-              }}
-            >
-              {item.icon}
-            </View>
+          <View className="flex-1 justify-center items-center" style={{ transform: [{ scaleX: 0.4 }, { scaleY: 0.4 }] }}>
+            {item.icon}
           </View>
         </TouchableOpacity>
       </View>

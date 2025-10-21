@@ -4,7 +4,7 @@ import { TW_COLORS } from "@/utils/constants";
 import JMButton from "../JMButton";
 import ChevronIcon from "@assets/svg/icon/chevron";
 import CircleQuestionMark from "@assets/svg/icon/CircleQuestionMark";
-import LinearGradient from "react-native-linear-gradient";
+import { LinearGradient } from "expo-linear-gradient";
 import ArrowIcon from "@assets/svg/icon/Arrow";
 
 // Navigation Props
@@ -87,14 +87,14 @@ export const NavigationButtons: React.FC<NavigationButtonsProps> = ({
     return (
       <LinearGradient
         colors={["rgba(255,255,255,0)", "rgba(255,255,255,1)"]}
-        locations={[0, 0.3]} // transition très rapide
+        className={`p-6 px-4 pb-5`}
+        locations={[0, 0.3]}
         style={{
           position: "absolute",
           bottom: 0,
           left: 0,
           right: 0,
         }}
-        className={`p-6 px-4 pb-5`}
       >
         {content}
       </LinearGradient>

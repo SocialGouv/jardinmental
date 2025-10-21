@@ -1,3 +1,4 @@
+import React from "react";
 import { EMOTION_COLORS, iconColors } from "./constants";
 import SmileyVeryGood from "@assets/svg/smileys/veryGood";
 import SmileyBad from "@assets/svg/smileys/bad";
@@ -9,7 +10,7 @@ export interface MoodEmoji {
   backgroundColor: string;
   text: string;
   label: string;
-  icon: JSX.Element;
+  icon: React.ReactElement;
 }
 
 export const moodEmojis: MoodEmoji[] = [

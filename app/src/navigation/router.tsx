@@ -43,7 +43,6 @@ import Beck from "../scenes/beck";
 import Infos from "../scenes/infos";
 import Contact from "../scenes/contact";
 import PrivacyLight from "../scenes/privacy-light";
-import RNBootsplash from "react-native-bootsplash";
 import NotificationService from "../services/notifications";
 import Indicateurs from "../scenes/indicateurs";
 import Presentation from "../scenes/presentation";
@@ -156,7 +155,6 @@ class Router extends React.Component<RouterProps> {
   async componentDidMount() {
     //await logEvents.initMatomo();
     logEvents.logAppVisit();
-    RNBootsplash.hide({ fade: true });
     try {
       // Get or generate device ID
       let deviceId = await AsyncStorage.getItem("deviceId");
