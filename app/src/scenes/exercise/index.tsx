@@ -143,7 +143,6 @@ export default ({ navigation, startSurvey }) => {
 
 const styles = StyleSheet.create({
   headerContainer: {
-    padding: 5,
     paddingBottom: 0,
     backgroundColor: colors.LIGHT_BLUE,
   },
