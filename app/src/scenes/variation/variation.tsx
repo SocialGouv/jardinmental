@@ -162,9 +162,10 @@ const TestChart = ({ data, dataB, treatment }) => {
 
     const day = date.getDate();
     const month = date.getMonth() + 1;
+    const year = date.getFullYear();
 
     // Short format: DD/MM
-    return `${day.toString().padStart(2, "0")}/${month.toString().padStart(2, "0")}`;
+    return `${day.toString().padStart(2, "0")}/${month.toString().padStart(2, "0")}/${year.toString().padStart(2, "0").slice(2, 4)}`;
   };
 
   const lineData = [
@@ -231,8 +232,8 @@ const TestChart = ({ data, dataB, treatment }) => {
         spacing={50}
         yAxisSide={1}
         xAxisLabelTextStyle={{ fontSize: 10, color: "#666", width: 60, textAlign: "center" }}
-        xAxisTextNumberOfLines={2}
-        xAxisLabelsHeight={60}
+        xAxisTextNumberOfLines={1}
+        xAxisLabelsHeight={10}
         xAxisThickness={0}
         xAxisColor={"transparent"}
         width={screenWidth - 70}
@@ -242,11 +243,11 @@ const TestChart = ({ data, dataB, treatment }) => {
         onFocus={(item, index) => {
           console.log("focused", item, index);
         }}
-        xAxisLabelsVerticalShift={35}
+        xAxisLabelsVerticalShift={60}
         showXAxisIndices={true}
-        xAxisIndicesWidth={1}
+        xAxisIndicesWidth={2}
         xAxisIndicesColor={"#999"}
-        noOfSections={6}
+        noOfSections={5}
         noOfSectionsBelowXAxis={0}
         stepValue={1}
         scrollRef={ref}
@@ -285,22 +286,33 @@ const TestChart = ({ data, dataB, treatment }) => {
               <View
                 style={{
                   width: 10,
-                  height: 10,
-                  backgroundColor: "#134449",
-                  borderWidth: 4,
-                  borderRadius: 10,
-                  borderColor: "#134449",
+                  height: 30,
                 }}
-              />
+              >
+                <View
+                  style={{
+                    borderWidth: 1,
+                    borderRadius: 10,
+                    backgroundColor: "#134449",
+                    borderColor: "#134449",
+                    marginTop: 0,
+                    height: 10,
+                    width: 10,
+                  }}
+                />
+              </View>
             );
           },
         }))}
-        dataPointsHeight={15}
-        dataPointsWidth={15}
+        overflowBottom={100} // space at the bottom of graph
+        // dataPointsHeight={15}
+        // dataPointsWidth={15}
+        dataPointsWidth1={15}
+        dataPointsHeight1={15}
         dataPointsHeight2={15}
         dataPointsWidth2={15}
         dataPointsHeight3={20}
-        dataPointsWidth3={15}
+        dataPointsWidth3={10}
         showDataPointLabelOnFocus={true}
         color3="transparent"
         yAxisColor={"transparent"}
@@ -308,11 +320,12 @@ const TestChart = ({ data, dataB, treatment }) => {
           if (lab === "-1" || lab === "-2" || lab === "6" || lab === "0") {
             return "";
           }
-          return parseInt(lab, 10);
+          return parseInt(lab, 10).toString();
         }}
-        // yAxisOffset={-1}
-        showVerticalLines={false}
-        verticalLinesThickness={0}
+        yAxisOffset={1}
+        showVerticalLines={true}
+        verticalLinesColor="rgba(24, 26, 26, 0.1)"
+        // verticalLinesThickness={0}
         noOfVerticalLines={0}
         strokeDashArray1={[4, 4]}
         curved={true}
