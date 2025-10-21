@@ -150,6 +150,23 @@ const generateLineSegments = (data) => {
 
 const TestChart = ({ data, dataB, treatment }) => {
   const ref = useRef(null);
+
+  // Configurable label spacing - show 1 label every X data points
+  const labelSpacing = 3; // Change this value to adjust label density (e.g., 2 = every 2nd label, 3 = every 3rd label)
+
+  // Format date to French format (DD/MM or DD MMM)
+  const formatDateToFrench = (dateString) => {
+    if (!dateString) return "";
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return dateString;
+
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+
+    // Short format: DD/MM
+    return `${day.toString().padStart(2, "0")}/${month.toString().padStart(2, "0")}`;
+  };
+
   const lineData = [
     { value: 1, label: "1 Jan" },
     { value: 5, label: "10 Jan" },
@@ -213,52 +230,38 @@ const TestChart = ({ data, dataB, treatment }) => {
       <LineChart
         spacing={50}
         yAxisSide={1}
-        // xAxisLabelTextStyle={{ paddingTop: 40, height: 60 }}
+        xAxisLabelTextStyle={{ fontSize: 10, color: "#666", width: 60, textAlign: "center" }}
+        xAxisTextNumberOfLines={2}
+        xAxisLabelsHeight={60}
         xAxisThickness={0}
+        xAxisColor={"transparent"}
         width={screenWidth - 70}
         focusEnabled={true}
         focusProximity={50}
         lineSegments={lineSegments}
-        // lineSegments2={generateLineSegments(dataB)}
         onFocus={(item, index) => {
           console.log("focused", item, index);
-          // Alert.alert("Value", `Value: ${item.value}, Index: ${index}`);
         }}
+        xAxisLabelsVerticalShift={35}
+        showXAxisIndices={true}
+        xAxisIndicesWidth={1}
+        xAxisIndicesColor={"#999"}
         noOfSections={6}
         noOfSectionsBelowXAxis={0}
         stepValue={1}
         scrollRef={ref}
-        data={(data || []).map((d) => ({
+        data={(data || []).map((d, index) => ({
           ...d,
-          // labelComponent: () => customLabel(d.label),
+          label: index % labelSpacing === 0 ? formatDateToFrench(d.label) : "", // Show label only at intervals with French format
           customDataPoint,
-          // showStrip: true,
-          // dataPointLabelComponent: () => {
-          //   return (
-          //     <View
-          //       style={{
-          //         backgroundColor: "black",
-          //         paddingHorizontal: 8,
-          //         paddingVertical: 5,
-          //         borderRadius: 4,
-          //       }}
-          //     >
-          //       <Text style={{ color: "white" }}>410</Text>
-          //     </View>
-          //   );
-          // },
-          // dataPointLabelShiftY: -70,
-          // dataPointLabelShiftX: -4,
         }))}
-        dataPointsHeight={15}
-        dataPointsWidth={15}
-        xAxisIndicesHeight={80}
+        xAxisIndicesHeight={10}
         color2={"#00A5DF"}
         color1={"#3D6874"}
         // noOfSectionsBelowXAxis={1}
-        data2={(dataB || []).map((d) => ({
+        data2={(dataB || []).map((d, index) => ({
           ...d,
-          labelComponent: () => customLabel(d.label),
+          label: index % labelSpacing === 0 ? formatDateToFrench(d.label) : "", // Show label only at intervals with French format
           customDataPoint: ({ color }) => {
             return (
               <View
@@ -273,26 +276,10 @@ const TestChart = ({ data, dataB, treatment }) => {
               />
             );
           },
-          // dataPointLabelComponent: () => {
-          //   return (
-          //     <View
-          //       style={{
-          //         backgroundColor: "black",
-          //         paddingHorizontal: 8,
-          //         paddingVertical: 5,
-          //         borderRadius: 4,
-          //       }}
-          //     >
-          //       <Text style={{ color: "white" }}>410</Text>
-          //     </View>
-          //   );
-          // },
-          // dataPointLabelShiftY: -70,
-          // dataPointLabelShiftX: -4,
         }))}
-        rotateLabel={true}
-        data3={(treatment || []).map((t) => ({
+        data3={(treatment || []).map((t, index) => ({
           ...t,
+          label: index % labelSpacing === 0 ? formatDateToFrench(t.label) : "", // Show label only at intervals with French format
           customDataPoint: ({ color }) => {
             return (
               <View
@@ -308,8 +295,12 @@ const TestChart = ({ data, dataB, treatment }) => {
             );
           },
         }))}
+        dataPointsHeight={15}
+        dataPointsWidth={15}
+        dataPointsHeight2={15}
+        dataPointsWidth2={15}
         dataPointsHeight3={20}
-        dataPointsWidth3={10}
+        dataPointsWidth3={15}
         showDataPointLabelOnFocus={true}
         color3="transparent"
         yAxisColor={"transparent"}
