@@ -1,3 +1,10 @@
+## [1.107.2](https://github.com/SocialGouv/jardinmental/compare/v1.107.1...v1.107.2) (2025-10-21)
+
+
+### Bug Fixes
+
+* update ios version ([8e1ae7e](https://github.com/SocialGouv/jardinmental/commit/8e1ae7e472270845ff5c46b226c7ab8b32a65adc))
+
 ## [1.107.1](https://github.com/SocialGouv/jardinmental/compare/v1.107.0...v1.107.1) (2025-10-21)
 
 
