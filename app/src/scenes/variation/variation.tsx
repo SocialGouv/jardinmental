@@ -24,23 +24,23 @@ import Animated from "react-native-reanimated";
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
 
-const customDataPoint = () => {
+const customDataPoint = ({ color }) => {
   return (
     <View
       style={{
-        width: 20,
-        height: 20,
+        width: 15,
+        height: 15,
         backgroundColor: "white",
         borderWidth: 4,
         borderRadius: 10,
-        borderColor: "#07BAD1",
+        borderColor: color || "#3D6874",
       }}
     />
   );
 };
 const customLabel = (val) => {
   return (
-    <View style={{ width: 70, marginLeft: 7 }}>
+    <View style={{ marginLeft: 7, width: 200 }}>
       <Text style={{ color: "blue", fontWeight: "bold" }}>{val}</Text>
     </View>
   );
@@ -213,7 +213,7 @@ const TestChart = ({ data, dataB, treatment }) => {
       <LineChart
         spacing={50}
         yAxisSide={1}
-        xAxisLabelTextStyle={{ paddingTop: 40, height: 60 }}
+        // xAxisLabelTextStyle={{ paddingTop: 40, height: 60 }}
         xAxisThickness={0}
         width={screenWidth - 70}
         focusEnabled={true}
@@ -231,7 +231,7 @@ const TestChart = ({ data, dataB, treatment }) => {
         data={(data || []).map((d) => ({
           ...d,
           // labelComponent: () => customLabel(d.label),
-          // customDataPoint,
+          customDataPoint,
           // showStrip: true,
           // dataPointLabelComponent: () => {
           //   return (
@@ -250,8 +250,8 @@ const TestChart = ({ data, dataB, treatment }) => {
           // dataPointLabelShiftY: -70,
           // dataPointLabelShiftX: -4,
         }))}
-        dataPointsHeight={20}
-        dataPointsWidth={20}
+        dataPointsHeight={15}
+        dataPointsWidth={15}
         xAxisIndicesHeight={80}
         color2={"#00A5DF"}
         color1={"#3D6874"}
@@ -259,7 +259,20 @@ const TestChart = ({ data, dataB, treatment }) => {
         data2={(dataB || []).map((d) => ({
           ...d,
           labelComponent: () => customLabel(d.label),
-          // customDataPoint,
+          customDataPoint: ({ color }) => {
+            return (
+              <View
+                style={{
+                  width: 15,
+                  height: 15,
+                  backgroundColor: "#00A5DF",
+                  borderWidth: 4,
+                  borderRadius: 10,
+                  borderColor: "#00A5DF",
+                }}
+              />
+            );
+          },
           // dataPointLabelComponent: () => {
           //   return (
           //     <View
@@ -277,7 +290,27 @@ const TestChart = ({ data, dataB, treatment }) => {
           // dataPointLabelShiftY: -70,
           // dataPointLabelShiftX: -4,
         }))}
-        data3={treatment}
+        rotateLabel={true}
+        data3={(treatment || []).map((t) => ({
+          ...t,
+          customDataPoint: ({ color }) => {
+            return (
+              <View
+                style={{
+                  width: 10,
+                  height: 10,
+                  backgroundColor: "#134449",
+                  borderWidth: 4,
+                  borderRadius: 10,
+                  borderColor: "#134449",
+                }}
+              />
+            );
+          },
+        }))}
+        dataPointsHeight3={20}
+        dataPointsWidth3={10}
+        showDataPointLabelOnFocus={true}
         color3="transparent"
         yAxisColor={"transparent"}
         formatYLabel={(lab) => {
