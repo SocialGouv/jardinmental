@@ -98,7 +98,7 @@ export default function FaqMainScreen({ navigation, route }) {
           </TouchableOpacity>
           <JMButton
             onPress={() => {
-              navigation.navigate("contact");
+              Linking.openURL("mailto:jardinmental@fabrique.social.gouv.fr");
               logEvents.logNeedAssistanceFaq();
             }}
             title="Contactez l’équipe de Jardin mental"
