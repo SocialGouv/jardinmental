@@ -83,6 +83,16 @@ jest.mock("react-native-localize", () => ({
   removeEventListener: jest.fn(),
 }));
 
+// Mock expo-linear-gradient
+jest.mock("expo-linear-gradient", () => {
+  const React = require("react");
+  return {
+    LinearGradient: ({ children, ...props }) => {
+      return React.createElement("View", props, children);
+    },
+  };
+});
+
 // Mock keyboard controller
 jest.mock("react-native-keyboard-controller", () => require("react-native-keyboard-controller/jest"));
 
