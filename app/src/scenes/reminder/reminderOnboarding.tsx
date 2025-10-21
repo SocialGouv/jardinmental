@@ -162,34 +162,6 @@ const Reminder = ({
     }
   };
 
-  const desactivateReminder = async () => {
-    logEvents.logReminderCancel();
-    await deleteReminder();
-    if (!(await NotificationService.hasToken())) return;
-
-    await API.put({
-      path: "/reminder",
-      body: {
-        pushNotifToken: await NotificationService.getToken(),
-        type: "Main",
-        disabled: true,
-      },
-    });
-    await localStorage.setOnboardingDone(true);
-    // await localStorage.setOnboardingStep(null);
-    navigation.reset({
-      index: 0,
-      routes: [
-        {
-          name: "tabs",
-          params: {
-            onboarding: true,
-          },
-        },
-      ],
-    });
-  };
-
   const skip = () => {
     logEvents.logReminderObd(0);
     navigation.navigate("tabs");
