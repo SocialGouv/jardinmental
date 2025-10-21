@@ -7,7 +7,7 @@ import SurveyNavigator from "../scenes/survey-v2/SurveyNavigator";
 import SelectDayScreen from "../scenes/survey/selectDay";
 import Reminder from "../scenes/reminder";
 import Export from "../scenes/export/export";
-import DataExportImport from "../scenes/data-export-import";
+import DataExportImport from "../scenes/data-export-import/DataExportImport";
 import DailyChart from "../scenes/variation/daily-chart";
 import { AppState, Platform, Linking } from "react-native";
 import { StatusBar } from "expo-status-bar";

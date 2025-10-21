@@ -33,7 +33,7 @@ import * as FileSystem from "expo-file-system";
 import * as DocumentPicker from "expo-document-picker";
 import * as Sharing from "expo-sharing";
 
-import DataExportImport from "../../src/scenes/data-export-import";
+import DataExportImport from "../../src/scenes/data-export-import/DataExportImport";
 import { DiaryDataContext } from "../../src/context/diaryData";
 import { DiaryData } from "../../src/entities/DiaryData";
 import logEvents from "../../src/services/logEvents";
