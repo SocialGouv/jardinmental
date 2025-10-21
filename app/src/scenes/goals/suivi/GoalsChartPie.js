@@ -2,13 +2,11 @@ import React, { useCallback, useState, useEffect } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import PieChart from "react-native-pie-chart";
-// import PieChart from "react-native-pie";
-import { scoresMapIcon, yesNoMapIcon } from "../../../utils/constants";
+import { yesNoMapIcon } from "../../../utils/constants";
 import { getGoalsAndRecords } from "../../../utils/localStorage/goals";
 import { DAYS_OF_WEEK } from "../../../utils/date/daysOfWeek";
 import { parseISO, getDay } from "date-fns";
 import { colors as mainColors } from "@/utils/colors";
-import { PieYesNo } from "@/scenes/suivi/PieYesNo";
 
 export const GoalsChartPie = ({ chartDates, onIsEmptyChanged }) => {
   const [goals, setGoals] = useState([]);
@@ -66,12 +64,12 @@ export const GoalsChartPie = ({ chartDates, onIsEmptyChanged }) => {
 const parialsColors = {
   0: { color: "#f3f3f3" },
   1: {
-    color: yesNoMapIcon["false"].color,
-    symbol: yesNoMapIcon["false"].symbol,
+    color: yesNoMapIcon.false.color,
+    symbol: yesNoMapIcon.false.symbol,
   },
   5: {
-    color: yesNoMapIcon["true"].color,
-    symbol: yesNoMapIcon["true"].symbol,
+    color: yesNoMapIcon.true.color,
+    symbol: yesNoMapIcon.true.symbol,
   },
 };
 

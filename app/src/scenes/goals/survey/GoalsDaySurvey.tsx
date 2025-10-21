@@ -1,20 +1,12 @@
 import React, { useCallback, useState, forwardRef, useImperativeHandle, useEffect } from "react";
 import { View, StyleSheet, Text } from "react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import { Card } from "../../../components/Card";
-import Separator from "../../../components/Separator";
-import { Title } from "../../../components/Title";
 import { getGoalsDailyRecords, getGoalsTracked, setGoalDailyRecord } from "../../../utils/localStorage/goals";
 import { GoalCheckboxItem } from "./GoalCheckboxItem";
 import { useLayout } from "@react-native-community/hooks";
-import { mergeClassNames } from "@/utils/className";
-import { typography } from "@/utils/typography";
 import JMButton from "@/components/JMButton";
-import CircleQuestionMark from "@assets/svg/icon/CircleQuestionMark";
-import { NEW_INDICATORS_CATEGORIES } from "@/utils/liste_indicateurs.1";
 import HelpView from "@/components/HelpView";
 import { useBottomSheet } from "@/context/BottomSheetContext";
-import Target from "@assets/svg/icon/Target";
 import ArrowIcon from "@assets/svg/icon/Arrow";
 import { TW_COLORS } from "@/utils/constants";
 
