@@ -69,7 +69,7 @@ export const IndicatorSurveyItem = ({
     if (value === null) return "";
     let index = indicator.type === INDICATOR_TYPE.gauge ? Math.min(Math.floor(value * 5), 4) : value;
 
-    // Pour les indicateurs en ordre DESC de type smiley, inverser l'index pour les labels
+    // For smiley-type indicators sorted in DESC order, invert the label index.
     if (indicator.order === "DESC" && indicator.type === INDICATOR_TYPE.smiley) {
       index = 6 - index; // Inverse 1→5, 2→4, 3→3, 4→2, 5→1
     }
