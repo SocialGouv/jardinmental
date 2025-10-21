@@ -1,3 +1,12 @@
+## [1.107.1](https://github.com/SocialGouv/jardinmental/compare/v1.107.0...v1.107.1) (2025-10-21)
+
+
+### Bug Fixes
+
+* remove linear gradient ([#571](https://github.com/SocialGouv/jardinmental/issues/571)) ([1a36619](https://github.com/SocialGouv/jardinmental/commit/1a366195151566744ffaab667d3ab9dc34135a2b))
+* same padding for the 4 main screens ([#573](https://github.com/SocialGouv/jardinmental/issues/573)) ([70faef4](https://github.com/SocialGouv/jardinmental/commit/70faef43570aa18b4978bf0ae96691bb60c03a72))
+* treatment icon alignment ([#574](https://github.com/SocialGouv/jardinmental/issues/574)) ([58d398b](https://github.com/SocialGouv/jardinmental/commit/58d398b92d90c11341dec956ae34145e3317ac36))
+
 # [1.107.0](https://github.com/SocialGouv/jardinmental/compare/v1.106.1...v1.107.0) (2025-10-17)
 
 
