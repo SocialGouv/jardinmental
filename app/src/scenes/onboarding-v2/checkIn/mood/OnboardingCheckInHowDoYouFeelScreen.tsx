@@ -411,7 +411,9 @@ const MoodItem = ({
             height: 76,
           }}
         >
-          <View className="flex-1 justify-center items-center">{item.icon}</View>
+          <View className="flex-1 justify-center items-center" style={{ transform: [{ scaleX: 0.4 }, { scaleY: 0.4 }] }}>
+            {item.icon}
+          </View>
         </TouchableOpacity>
       </View>
     </Animated.View>
