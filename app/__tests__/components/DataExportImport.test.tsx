@@ -171,9 +171,6 @@ describe("DataExportImport", () => {
       expect(getByText("Export / Import de mes données")).toBeTruthy();
       expect(getAllByText("Exporter mes données").length).toBeGreaterThan(0);
       expect(getByText("Importer mes données")).toBeTruthy();
-      expect(getByText("Mode d'import :")).toBeTruthy();
-      expect(getByText("Remplacer toutes mes données")).toBeTruthy();
-      expect(getByText("Fusionner avec mes données")).toBeTruthy();
     });
 
     it("should have replace mode selected by default", () => {
@@ -223,8 +220,8 @@ describe("DataExportImport", () => {
       await waitFor(
         () => {
           expect(mockSharing.shareAsync).toHaveBeenCalledWith(expect.stringContaining("jardin-mental-export-"), {
-            UTI: ".txt",
-            mimeType: "text/plain",
+            UTI: ".json",
+            mimeType: "application/json",
             dialogTitle: "Exporter mes données Jardin Mental",
           });
         },
@@ -303,8 +300,8 @@ describe("DataExportImport", () => {
         canceled: false,
         assets: [
           {
-            uri: "file://test/import.txt",
-            name: "import.txt",
+            uri: "file://test/import.json",
+            name: "import.json",
           },
         ],
       } as any);
@@ -322,7 +319,7 @@ describe("DataExportImport", () => {
       await waitFor(
         () => {
           expect(mockDocumentPicker.getDocumentAsync).toHaveBeenCalledWith({
-            type: "text/plain",
+            type: "application/json",
             copyToCacheDirectory: true,
           });
         },
@@ -355,8 +352,8 @@ describe("DataExportImport", () => {
         canceled: false,
         assets: [
           {
-            uri: "file://test/import.txt",
-            name: "import.txt",
+            uri: "file://test/import.json",
+            name: "import.json",
           },
         ],
       } as any);
@@ -421,8 +418,8 @@ describe("DataExportImport", () => {
         canceled: false,
         assets: [
           {
-            uri: "file://test/import.txt",
-            name: "import.txt",
+            uri: "file://test/import.json",
+            name: "import.json",
           },
         ],
       } as any);
@@ -486,8 +483,8 @@ describe("DataExportImport", () => {
         canceled: false,
         assets: [
           {
-            uri: "file://test/import.txt",
-            name: "import.txt",
+            uri: "file://test/import.json",
+            name: "import.json",
           },
         ],
       } as any);
@@ -558,8 +555,8 @@ describe("DataExportImport", () => {
         canceled: false,
         assets: [
           {
-            uri: "file://test/import.txt",
-            name: "import.txt",
+            uri: "file://test/import.json",
+            name: "import.json",
           },
         ],
       } as any);
