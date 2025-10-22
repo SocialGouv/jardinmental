@@ -78,6 +78,7 @@ import ResourceArticle from "../scenes/resources/ResourceArticle";
 import ResourceCategoryList from "../scenes/resources/ResourceCategoryList";
 import ExternalResourcesScreen from "../scenes/resources/ExternalResourcesScreen";
 import SupportScreen from "@/scenes/support/SupportScreen";
+import DiaryDetail from "@/scenes/status/DiaryDetail";
 
 const Stack = createStackNavigator();
 
@@ -235,6 +236,7 @@ class Router extends React.Component<RouterProps> {
             <Stack.Screen name="export" component={Export} />
             <Stack.Screen name="data-export-import" component={DataExportImport} />
             <Stack.Screen name="chart-day" component={DailyChart} />
+            <Stack.Screen name="day-survey-detail" component={DiaryDetail} />
             <Stack.Screen name="notes" options={{ animationEnabled: Platform.OS === "ios" }}>
               {({ navigation, route }) => <Notes navigation={navigation} route={route} />}
             </Stack.Screen>
