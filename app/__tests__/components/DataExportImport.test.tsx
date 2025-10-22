@@ -26,6 +26,31 @@ jest.mock("../../src/services/logEvents", () => ({
   logDataImport: jest.fn(),
 }));
 
+// Mock JMButton
+jest.mock("@/components/JMButton", () => {
+  const { TouchableOpacity, Text } = require("react-native");
+  return function JMButton({ title, onPress, disabled, ...props }: any) {
+    return (
+      <TouchableOpacity onPress={onPress} disabled={disabled} {...props}>
+        <Text>{title}</Text>
+      </TouchableOpacity>
+    );
+  };
+});
+
+// Mock AnimatedHeaderScrollScreen
+jest.mock("../../src/scenes/survey-v2/AnimatedHeaderScrollScreen", () => ({
+  AnimatedHeaderScrollScreen: ({ children, title }: any) => {
+    const { View, Text } = require("react-native");
+    return (
+      <View>
+        <Text>{title}</Text>
+        {children}
+      </View>
+    );
+  },
+}));
+
 import React from "react";
 import { render, fireEvent, waitFor } from "@testing-library/react-native";
 import { Alert } from "react-native";
@@ -166,24 +191,25 @@ describe("DataExportImport", () => {
 
   describe("UI Rendering", () => {
     it("should render all main UI elements", () => {
-      const { getByText, getAllByText } = renderComponent();
-
-      expect(getByText("Export / Import de mes données")).toBeTruthy();
-      expect(getAllByText("Exporter mes données").length).toBeGreaterThan(0);
-      expect(getByText("Importer mes données")).toBeTruthy();
-    });
-
-    it("should have replace mode selected by default", () => {
       const { getByText } = renderComponent();
 
-      const replaceOption = getByText("Remplacer toutes mes données");
-      expect(replaceOption).toBeTruthy();
+      expect(getByText("Exporter et enregistrer mes données")).toBeTruthy();
+      expect(getByText("Exporter mes données")).toBeTruthy();
+      expect(getByText("Importer des données")).toBeTruthy();
     });
 
-    it("should display correct warning text for replace mode", () => {
+    it("should display information section", () => {
       const { getByText } = renderComponent();
 
-      expect(getByText(/Attention : Cette action remplacera toutes vos données actuelles/)).toBeTruthy();
+      expect(getByText("Pourquoi sauvegarder mes données ?")).toBeTruthy();
+      expect(getByText(/Afin de garantir la confidentialité de vos données/)).toBeTruthy();
+    });
+
+    it("should display import instructions", () => {
+      const { getByText } = renderComponent();
+
+      expect(getByText("Comment importer mes données sur un nouvel appareil ?")).toBeTruthy();
+      expect(getByText(/Cliquer sur le bouton/)).toBeTruthy();
     });
   });
 
@@ -192,19 +218,10 @@ describe("DataExportImport", () => {
       mockFileSystem.writeAsStringAsync.mockResolvedValue();
       mockSharing.shareAsync.mockResolvedValue();
 
-      const { getAllByText } = renderComponent();
-      // Find the button element (should be the second occurrence - first is title, second is button)
-      const exportTexts = getAllByText("Exporter mes données");
-      const exportButton = exportTexts[1].parent; // The button text element's parent
+      const { getByText } = renderComponent();
+      const exportButton = getByText("Exporter mes données");
 
       fireEvent.press(exportButton);
-
-      // await waitFor(
-      //   () => {
-      //     expect(mockLogDataExport).toHaveBeenCalledTimes(1);
-      //   },
-      //   { timeout: 3000 }
-      // );
 
       await waitFor(
         () => {
@@ -239,9 +256,8 @@ describe("DataExportImport", () => {
     it("should handle export errors gracefully", async () => {
       mockFileSystem.writeAsStringAsync.mockRejectedValue(new Error("Write failed"));
 
-      const { getAllByText } = renderComponent();
-      const exportTexts = getAllByText("Exporter mes données");
-      const exportButton = exportTexts[1].parent;
+      const { getByText } = renderComponent();
+      const exportButton = getByText("Exporter mes données");
 
       fireEvent.press(exportButton);
 
@@ -257,9 +273,8 @@ describe("DataExportImport", () => {
       mockFileSystem.writeAsStringAsync.mockImplementation(() => new Promise((resolve) => setTimeout(resolve, 100)));
       mockSharing.shareAsync.mockResolvedValue();
 
-      const { getAllByText, getByText } = renderComponent();
-      const exportTexts = getAllByText("Exporter mes données");
-      const exportButton = exportTexts[1].parent;
+      const { getByText } = renderComponent();
+      const exportButton = getByText("Exporter mes données");
 
       fireEvent.press(exportButton);
 
@@ -275,9 +290,8 @@ describe("DataExportImport", () => {
       mockFileSystem.writeAsStringAsync.mockResolvedValue();
       mockSharing.shareAsync.mockResolvedValue();
 
-      const { getAllByText } = renderComponent();
-      const exportTexts = getAllByText("Exporter mes données");
-      const exportButton = exportTexts[1].parent;
+      const { getByText } = renderComponent();
+      const exportButton = getByText("Exporter mes données");
 
       fireEvent.press(exportButton);
 
@@ -313,7 +327,7 @@ describe("DataExportImport", () => {
       } as any);
 
       const { getByText } = renderComponent();
-      const importButton = getByText("Importer des données").parent;
+      const importButton = getByText("Importer des données");
       fireEvent.press(importButton);
 
       await waitFor(
@@ -334,7 +348,7 @@ describe("DataExportImport", () => {
       mockDocumentPicker.getDocumentAsync.mockRejectedValue(new Error("Picker failed"));
 
       const { getByText } = renderComponent();
-      const importButton = getByText("Importer des données").parent;
+      const importButton = getByText("Importer des données");
       fireEvent.press(importButton);
 
       await waitFor(
@@ -412,71 +426,6 @@ describe("DataExportImport", () => {
     });
   });
 
-  describe("Import functionality - Replace Mode", () => {
-    beforeEach(() => {
-      mockDocumentPicker.getDocumentAsync.mockResolvedValue({
-        canceled: false,
-        assets: [
-          {
-            uri: "file://test/import.json",
-            name: "import.json",
-          },
-        ],
-      } as any);
-
-      const validExportData = {
-        exportDate: "2024-01-01T00:00:00.000Z",
-        appVersion: "jardin-mental",
-        data: additionalDiaryData,
-      };
-      mockFileSystem.readAsStringAsync.mockResolvedValue(JSON.stringify(validExportData));
-    });
-
-    it("should import data in replace mode successfully", async () => {
-      // Mock Alert to simulate user confirming the import
-      alertSpy.mockImplementation((title, message, buttons) => {
-        if (buttons && buttons.length > 1 && buttons[1].onPress) {
-          buttons[1].onPress(); // Press "Importer" button
-        }
-      });
-
-      const { getByText } = renderComponent();
-
-      // Ensure replace mode is selected (should be default)
-      const replaceRadio = getByText("Remplacer toutes mes données");
-      fireEvent.press(replaceRadio);
-
-      const importButton = getByText("Importer des données");
-      fireEvent.press(importButton);
-
-      await waitFor(() => {
-        expect(alertSpy).toHaveBeenCalledWith(
-          "Confirmer l'import",
-          "Cette action va remplacer toutes vos données actuelles. Êtes-vous sûr de vouloir continuer ?",
-          expect.any(Array)
-        );
-      });
-
-      await waitFor(() => {
-        expect(mockContextValue[3]).toHaveBeenCalledWith(additionalDiaryData, "replace");
-      });
-    });
-
-    it("should show confirmation dialog for replace mode", async () => {
-      const { getByText } = renderComponent();
-      const importButton = getByText("Importer des données");
-      fireEvent.press(importButton);
-
-      await waitFor(() => {
-        expect(alertSpy).toHaveBeenCalledWith(
-          "Confirmer l'import",
-          expect.stringContaining("remplacer toutes vos données actuelles"),
-          expect.arrayContaining([expect.objectContaining({ text: "Annuler" }), expect.objectContaining({ text: "Importer" })])
-        );
-      });
-    });
-  });
-
   describe("Import functionality - Merge Mode", () => {
     beforeEach(() => {
       mockDocumentPicker.getDocumentAsync.mockResolvedValue({
@@ -497,7 +446,7 @@ describe("DataExportImport", () => {
       mockFileSystem.readAsStringAsync.mockResolvedValue(JSON.stringify(validExportData));
     });
 
-    it("should import data in merge mode successfully", async () => {
+    it("should import data successfully", async () => {
       // Mock Alert to simulate user confirming the import
       alertSpy.mockImplementation((title, message, buttons) => {
         if (buttons && buttons.length > 1 && buttons[1].onPress) {
@@ -506,11 +455,6 @@ describe("DataExportImport", () => {
       });
 
       const { getByText } = renderComponent();
-
-      // Select merge mode
-      const mergeRadio = getByText("Fusionner avec mes données");
-      fireEvent.press(mergeRadio);
-
       const importButton = getByText("Importer des données");
       fireEvent.press(importButton);
 
@@ -519,33 +463,38 @@ describe("DataExportImport", () => {
       });
     });
 
-    it("should show confirmation dialog for merge mode", async () => {
+    it("should show confirmation dialog for merge", async () => {
       const { getByText } = renderComponent();
-
-      // Select merge mode
-      const mergeRadio = getByText("Fusionner avec mes données");
-      fireEvent.press(mergeRadio);
-
       const importButton = getByText("Importer des données");
       fireEvent.press(importButton);
 
       await waitFor(() => {
         expect(alertSpy).toHaveBeenCalledWith(
           "Confirmer l'import",
-          expect.stringContaining("fusionner avec vos données existantes"),
-          expect.any(Array)
+          "Cette action va fusionner avec vos données existantes. Êtes-vous sûr de vouloir continuer ?",
+          expect.arrayContaining([expect.objectContaining({ text: "Annuler" }), expect.objectContaining({ text: "Importer" })])
         );
       });
     });
 
-    it("should update warning text when switching to merge mode", () => {
+    it("should handle user canceling import confirmation", async () => {
+      // Mock Alert to simulate user canceling
+      alertSpy.mockImplementation((title, message, buttons) => {
+        if (buttons && buttons.length > 0 && buttons[0].onPress) {
+          buttons[0].onPress(); // Press "Annuler" button
+        }
+      });
+
       const { getByText } = renderComponent();
+      const importButton = getByText("Importer des données");
+      fireEvent.press(importButton);
 
-      // Select merge mode
-      const mergeRadio = getByText("Fusionner avec mes données");
-      fireEvent.press(mergeRadio);
+      await waitFor(() => {
+        expect(alertSpy).toHaveBeenCalled();
+      });
 
-      expect(getByText(/Les données existantes seront conservées et complétées par les nouvelles/)).toBeTruthy();
+      // importDiaryData should not be called if user cancels
+      expect(mockContextValue[3]).not.toHaveBeenCalled();
     });
   });
 
@@ -617,40 +566,6 @@ describe("DataExportImport", () => {
       await waitFor(() => {
         expect(getByText("Import en cours...")).toBeTruthy();
       });
-    });
-  });
-
-  describe("UI Interactions", () => {
-    it("should toggle between import modes", () => {
-      const { getByText } = renderComponent();
-
-      const replaceRadio = getByText("Remplacer toutes mes données");
-      const mergeRadio = getByText("Fusionner avec mes données");
-
-      // Test switching to merge mode
-      fireEvent.press(mergeRadio);
-
-      // Test switching back to replace mode
-      fireEvent.press(replaceRadio);
-
-      // Both options should still be present
-      expect(replaceRadio).toBeTruthy();
-      expect(mergeRadio).toBeTruthy();
-    });
-
-    it("should call navigation.goBack when back button is pressed", () => {
-      const { getByTestId } = renderComponent();
-
-      // Note: This assumes BackButton has a testID. If not, you might need to test differently
-      // or add a testID to the BackButton component
-      try {
-        const backButton = getByTestId("back-button");
-        fireEvent.press(backButton);
-        expect(mockNavigation.goBack).toHaveBeenCalled();
-      } catch (error) {
-        // If testID is not available, this test will be skipped
-        console.log("BackButton testID not available, skipping test");
-      }
     });
   });
 });
