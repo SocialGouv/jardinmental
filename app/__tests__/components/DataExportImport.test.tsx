@@ -1,4 +1,8 @@
 // Mock external dependencies first, before any imports
+jest.mock("expo-linear-gradient", () => ({
+  LinearGradient: "LinearGradient",
+}));
+
 jest.mock("expo-file-system", () => ({
   documentDirectory: "file://test/",
   writeAsStringAsync: jest.fn(),
