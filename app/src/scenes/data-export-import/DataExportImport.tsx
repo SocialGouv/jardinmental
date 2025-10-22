@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Alert, View, TouchableOpacity, Text } from "react-native";
+import { Alert, View, Text } from "react-native";
 import * as FileSystem from "expo-file-system";
 import * as DocumentPicker from "expo-document-picker";
 import { shareAsync } from "expo-sharing";
@@ -7,7 +7,7 @@ import { shareAsync } from "expo-sharing";
 import { colors } from "../../utils/colors";
 import logEvents from "../../services/logEvents";
 import { DiaryDataContext } from "../../context/diaryData";
-import JMButton from "../../components/JMButton";
+import JMButton from "@/components/JMButton";
 import { AnimatedHeaderScrollScreen } from "../survey-v2/AnimatedHeaderScrollScreen";
 import InfoIcon from "@assets/svg/icon/Info";
 import { mergeClassNames } from "@/utils/className";
@@ -17,7 +17,6 @@ const DataExportImport = ({ navigation }) => {
   const [diaryData, _addNewEntryToDiaryData, _deleteDiaryData, importDiaryData] = useContext(DiaryDataContext);
   const [isExporting, setIsExporting] = useState(false);
   const [isImporting, setIsImporting] = useState(false);
-  const [importMode, setImportMode] = useState<"replace" | "merge">("replace");
 
   const exportData = async () => {
     try {
@@ -94,7 +93,7 @@ const DataExportImport = ({ navigation }) => {
       }
 
       // Demander confirmation avant d'importer
-      const modeText = importMode === "replace" ? "remplacer toutes vos données actuelles" : "fusionner avec vos données existantes";
+      const modeText = "fusionner avec vos données existantes";
       Alert.alert(`Confirmer l'import`, `Cette action va ${modeText}. Êtes-vous sûr de vouloir continuer ?`, [
         {
           text: "Annuler",
@@ -106,7 +105,7 @@ const DataExportImport = ({ navigation }) => {
           onPress: async () => {
             try {
               // Utiliser la fonction du contexte pour importer
-              await importDiaryData(importedData.data, importMode);
+              await importDiaryData(importedData.data, "merge");
 
               Alert.alert("Import réussi", "Vos données ont été importées avec succès !", [
                 {
@@ -184,52 +183,6 @@ const DataExportImport = ({ navigation }) => {
             <JMButton title="Importer des données" onPress={importData} variant="outline" className="mb-2" />
           )}
           {isExporting ? <JMButton title="Export en cours..." disabled /> : <JMButton title="Exporter mes données" onPress={exportData} />}
-
-          {/* <Text className="text-sm text-[#1B3B5E] text-center mb-5 leading-5">
-            Sélectionnez un fichier d'export précédent pour restaurer vos données.
-          </Text> */}
-
-          {/* Options de mode d'import */}
-          {/* <          <View className="my-5">
-            <Text className="text-base font-bold text-[#1FC6D5] mb-3.5">Mode d'import :</Text>
-
-            <TouchableOpacity className="flex-row items-start mb-4 px-2.5" onPress={() => setImportMode("replace")}>
-              <View
-                className={`w-5 h-5 rounded-full border-2 border-[#1FC6D5] items-center justify-center mr-3 mt-0.5 ${
-                  importMode === "replace" ? "border-[#1FC6D5]" : ""
-                }`}
-              >
-                {importMode === "replace" && <View className="w-2.5 h-2.5 rounded-full bg-[#1FC6D5]" />}
-              </View>
-              <View className="flex-1">
-                <Text className="text-base font-semibold text-[#1FC6D5] mb-1">Remplacer toutes mes données</Text>
-                <Text className="text-[13px] text-[#1B3B5E] leading-[18px]">
-                  Efface toutes les données existantes et les remplace par celles du fichier
-                </Text>
-              </View>
-            </TouchableOpacity>
-
-            <TouchableOpacity className="flex-row items-start mb-4 px-2.5" onPress={() => setImportMode("merge")}>
-              <View
-                className={`w-5 h-5 rounded-full border-2 border-[#1FC6D5] items-center justify-center mr-3 mt-0.5 ${
-                  importMode === "merge" ? "border-[#1FC6D5]" : ""
-                }`}
-              >
-                {importMode === "merge" && <View className="w-2.5 h-2.5 rounded-full bg-[#1FC6D5]" />}
-              </View>
-              <View className="flex-1">
-                <Text className="text-base font-semibold text-[#1FC6D5] mb-1">Fusionner avec mes données</Text>
-                <Text className="text-[13px] text-[#1B3B5E] leading-[18px]">Ajoute les nouvelles données en conservant les existantes</Text>
-              </View>
-            </TouchableOpacity>
-          </View>> */}
-
-          {/* <Text className="text-xs text-[#ff6b6b] text-center mb-5 italic">
-            ⚠️{" "}
-            {importMode === "replace"
-              ? "Attention : Cette action remplacera toutes vos données actuelles."
-              : "Les données existantes seront conservées et complétées par les nouvelles."}
-          </Text> */}
         </View>
       </View>
     </AnimatedHeaderScrollScreen>
