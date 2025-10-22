@@ -71,7 +71,7 @@ const IndicatorsSettingsMore = ({ navigation, route }) => {
       <View className="my-6 mt-8 flex-row items-center px-4">
         <Text className={mergeClassNames(typography.textXlSemibold, "text-cnam-primary-900")}>Vos indicateurs</Text>
         <View className="bg-cnam-cyan-500-0 h-7 w-7 rounded-full items-center justify-center ml-2">
-          <Text className={mergeClassNames("text-white", typography.textMdSemibold)}>
+          <Text className={mergeClassNames(typography.textMdSemibold)} style={{ color: "#19363D" }}>
             {indicators?.filter((indicator) => indicator.active)?.length || 0}
           </Text>
         </View>
