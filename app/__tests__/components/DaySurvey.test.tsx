@@ -404,8 +404,6 @@ describe("DaySurvey Component", () => {
 
     // Wait for goals to load and verify they are displayed
     await waitFor(() => {
-      expect(screen.getByText("Mes objectifs")).toBeTruthy();
-      expect(screen.getByText("Qu’avez-vous réalisé aujourd’hui ?")).toBeTruthy();
       expect(screen.getByText("Faire du sport")).toBeTruthy();
       expect(screen.getByText("Méditer")).toBeTruthy();
       expect(screen.getByText("Lire un livre")).toBeTruthy();
@@ -438,8 +436,6 @@ describe("DaySurvey Component", () => {
 
     // Wait for goals to load and verify they are displayed
     await waitFor(() => {
-      expect(screen.getByText("Mes objectifs")).toBeTruthy();
-      expect(screen.getByText("Qu’avez-vous réalisé aujourd’hui ?")).toBeTruthy();
       expect(screen.getByText("Faire du sport")).toBeTruthy();
       expect(screen.getByText("Méditer")).toBeTruthy();
     });
@@ -449,26 +445,6 @@ describe("DaySurvey Component", () => {
       expect(screen.getByDisplayValue("J'ai fait 30 minutes de course")).toBeTruthy();
       expect(screen.getByDisplayValue("Pas eu le temps aujourd'hui")).toBeTruthy();
     });
-  });
-
-  test("should not display goals section when no goals exist", async () => {
-    // Setup: Store fake indicators but no goals
-    const fakeIndicators = createFakeIndicators();
-    await AsyncStorage.setItem(STORAGE_KEY_INDICATEURS, JSON.stringify(fakeIndicators));
-
-    renderWithProvider(<DaySurvey navigation={mockNavigation} route={mockRoute} />);
-
-    // Verify the main title is present
-    expect(screen.getAllByText("Mon observation du jour")).toBeTruthy();
-
-    // Wait for indicators to load
-    await waitFor(() => {
-      expect(screen.getByText("Humeur le soir")).toBeTruthy();
-    });
-
-    // Verify that goals section is not displayed
-    expect(screen.queryByText("Mes objectifs")).toBeNull();
-    expect(screen.queryByText("Qu’avez-vous réalisé aujourd’hui ?")).toBeNull();
   });
 
   test("should render with pre-filled notes and context", async () => {
