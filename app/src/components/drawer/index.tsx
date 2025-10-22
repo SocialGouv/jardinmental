@@ -247,8 +247,6 @@ export default ({ navigation, visible, onClick }) => {
                   {isDevMode && (
                     <>
                       <DrawerItem title="Dev Mode" path="dev-mode" navigation={navigation} onClick={onClick} />
-                      <Separator />
-                      <DrawerItem title="Export / Import mes données" path="data-export-import" navigation={navigation} onClick={onClick} />
                     </>
                   )}
                 </View>

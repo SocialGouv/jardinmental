@@ -33,7 +33,7 @@ const DataExportImport = ({ navigation }) => {
       const jsonString = JSON.stringify(exportData, null, 2);
 
       // Créer le fichier temporaire
-      const fileName = `jardin-mental-export-${new Date().toISOString().split("T")[0]}.txt`;
+      const fileName = `jardin-mental-export-${new Date().toISOString().split("T")[0]}.json`;
       const fileUri = `${FileSystem.documentDirectory}${fileName}`;
 
       await FileSystem.writeAsStringAsync(fileUri, jsonString, {
@@ -42,8 +42,8 @@ const DataExportImport = ({ navigation }) => {
 
       // Partager le fichier
       await shareAsync(fileUri, {
-        UTI: ".txt",
-        mimeType: "text/plain",
+        UTI: ".json",
+        mimeType: "application/json",
         dialogTitle: "Exporter mes données Jardin Mental",
       });
 
@@ -63,7 +63,7 @@ const DataExportImport = ({ navigation }) => {
 
       // Sélectionner le fichier
       const result = await DocumentPicker.getDocumentAsync({
-        type: "text/plain",
+        type: "application/json",
         copyToCacheDirectory: true,
       });
 

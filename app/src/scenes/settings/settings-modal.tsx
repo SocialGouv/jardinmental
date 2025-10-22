@@ -3,6 +3,7 @@ import { View, StyleSheet, Modal, TouchableOpacity, ScrollView, useWindowDimensi
 import SettingItem from "./setting-item";
 import Bell from "@assets/svg/icon/Bell";
 import Goal from "@assets/svg/icon/Goal";
+import Save from "@assets/svg/icon/Save";
 import Health from "@assets/svg/icon/Health";
 import Analytics from "@assets/svg/icon/Analytics";
 import Download from "@assets/svg/icon/Download";
@@ -82,6 +83,16 @@ const SettingsModal = ({ navigation, visible, onClick }) => {
               logEvents.logOpenExportSummary();
             }}
             icon={<Download />}
+          />
+          <SettingItem
+            title="Sauvegarder mes données"
+            path="data-export-import"
+            navigation={navigation}
+            onClick={() => {
+              onClick();
+              logEvents.logOpenExportSummary();
+            }}
+            icon={<Save />}
           />
         </ContentWrapper>
       </TouchableOpacity>
