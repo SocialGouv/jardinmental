@@ -71,7 +71,6 @@ const DiaryNote = ({ note, date }) => {
   return (
     <TouchableOpacity
       onPress={() => {
-        console.log("LCS TETTETETET");
         navigation.navigate("day-survey-detail", {
           day: chartDates[dayIndex],
           indicateur,
