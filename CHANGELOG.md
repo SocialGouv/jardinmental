@@ -1,3 +1,10 @@
+## [1.107.3](https://github.com/SocialGouv/jardinmental/compare/v1.107.2...v1.107.3) (2025-10-23)
+
+
+### Bug Fixes
+
+* bigger touch zone on slider ([#575](https://github.com/SocialGouv/jardinmental/issues/575)) ([baab659](https://github.com/SocialGouv/jardinmental/commit/baab6591ca93303c305c1ff66574539e887a15dc))
+
 ## [1.107.2](https://github.com/SocialGouv/jardinmental/compare/v1.107.1...v1.107.2) (2025-10-21)
 
 
