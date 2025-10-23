@@ -1,3 +1,10 @@
+## [1.107.5](https://github.com/SocialGouv/jardinmental/compare/v1.107.4...v1.107.5) (2025-10-23)
+
+
+### Bug Fixes
+
+* useless new line in a resource ([2fbd50b](https://github.com/SocialGouv/jardinmental/commit/2fbd50bc632302ad44cafcaed43edea21d3f4a7a))
+
 ## [1.107.4](https://github.com/SocialGouv/jardinmental/compare/v1.107.3...v1.107.4) (2025-10-23)
 
 
