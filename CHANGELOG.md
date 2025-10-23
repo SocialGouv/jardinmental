@@ -1,3 +1,10 @@
+# [1.109.0](https://github.com/SocialGouv/jardinmental/compare/v1.108.1...v1.109.0) (2025-10-23)
+
+
+### Features
+
+* show diary details when clicking on note ([#585](https://github.com/SocialGouv/jardinmental/issues/585)) ([3c9b4e6](https://github.com/SocialGouv/jardinmental/commit/3c9b4e6dfec14b7694ac4f92787ec1b7fe1200a7))
+
 ## [1.108.1](https://github.com/SocialGouv/jardinmental/compare/v1.108.0...v1.108.1) (2025-10-23)
 
 
