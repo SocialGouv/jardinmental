@@ -22,8 +22,7 @@ const Infos = ({ navigation }) => {
     <SafeAreaView style={styles.safe}>
       <View style={styles.headerContainer}>
         <BackButton onPress={navigation.goBack} />
-        {Platform.OS === "android" && <Image style={styles.image} source={require("../../../assets/imgs/logo2.png")} />}
-        {Platform.OS === "ios" && <Image style={styles.image} className="rounded-lg" source={require("../../../assets/imgs/icon.png")} />}
+        <Image style={styles.image} className="rounded-lg" source={require("../../../assets/imgs/icon.png")} />
       </View>
       <ScrollView style={styles.cgu} contentContainerStyle={styles.scrollContainer}>
         <Text style={styles.title}>Pour simplement parler à quelqu’un :</Text>
