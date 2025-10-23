@@ -14,7 +14,7 @@ import { firstLetterUppercase } from "@/utils/string-util";
 import { colors } from "@/utils/colors";
 import CheckMarkIcon from "@assets/svg/icon/check";
 import PlusIcon from "@assets/svg/icon/plus";
-import { SafeAreaViewWithOptionalHeader } from "@/scenes/onboarding/ProgressHeader";
+import { SafeAreaViewWithOptionalHeader } from "@/scenes/onboarding-v2/ProgressHeader";
 import { BottomSheetBackdrop, BottomSheetModal, BottomSheetView } from "@gorhom/bottom-sheet";
 import HelpText from "@/components/HelpText";
 import HelpView from "@/components/HelpView";

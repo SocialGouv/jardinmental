@@ -6,7 +6,7 @@ import { TW_COLORS } from "@/utils/constants";
 import { useAnimatedStyle } from "react-native-reanimated";
 import { moodBackgroundColors, moodEmojis } from "@/utils/mood";
 import BannerHeader from "../../BannerHeader";
-import { SafeAreaViewWithOptionalHeader } from "@/scenes/onboarding/ProgressHeader";
+import { SafeAreaViewWithOptionalHeader } from "@/scenes/onboarding-v2/ProgressHeader";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
 import { firstLetterUppercase } from "@/utils/string-util";

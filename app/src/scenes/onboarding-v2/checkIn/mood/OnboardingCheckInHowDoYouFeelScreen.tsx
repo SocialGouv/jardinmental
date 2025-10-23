@@ -12,7 +12,7 @@ import { generateIndicatorFromPredefinedIndicator } from "@/entities/Indicator";
 import BannerHeader from "../../BannerHeader";
 import { moodBackgroundColors, MoodEmoji, moodEmojis } from "@/utils/mood";
 import InstructionText from "../../InstructionText";
-import { SafeAreaViewWithOptionalHeader } from "@/scenes/onboarding/ProgressHeader";
+import { SafeAreaViewWithOptionalHeader } from "@/scenes/onboarding-v2/ProgressHeader";
 import { typography } from "@/utils/typography";
 import { mergeClassNames } from "@/utils/className";
 import { useStatusBar } from "@/context/StatusBarContext";

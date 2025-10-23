@@ -6,7 +6,7 @@ import { Dimensions, FlatList, TouchableOpacity, View } from "react-native";
 import { CarouselSlide as CarouselSlideComponent } from "../../components/onboarding/CarouselSlide";
 import NavigationButtons from "../../components/onboarding/NavigationButtons";
 import { useUserProfile } from "../../context/userProfile";
-import { useOnboardingProgressHeader } from "../onboarding/ProgressHeader";
+import { useOnboardingProgressHeader } from "./ProgressHeader";
 import logEvents from "../../services/logEvents";
 import BeigeWrapperScreen from "./BeigeWrapperScreen";
 import carouselSlides from "./data/carouselData";

@@ -5,7 +5,7 @@ import { NavigationButtons } from "../../components/onboarding/NavigationButtons
 import { TW_COLORS } from "@/utils/constants";
 import { useAnimatedStyle, useSharedValue } from "react-native-reanimated";
 import BannerHeaderIntro from "./BannerHeaderIntro";
-import { SafeAreaViewWithOptionalHeader } from "../onboarding/ProgressHeader";
+import { SafeAreaViewWithOptionalHeader } from "./ProgressHeader";
 import { typography } from "@/utils/typography";
 import { mergeClassNames } from "@/utils/className";
 import { useSafeAreaInsets } from "react-native-safe-area-context";

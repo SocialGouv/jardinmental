@@ -4,7 +4,7 @@ import NavigationButtons from "@/components/onboarding/NavigationButtons";
 import ProgressIndicator from "@/components/onboarding/ProgressIndicator";
 import { OnboardingV2ScreenProps } from "../types";
 import { HEADER_WITH_BANNER, PROGRESS_BAR, PROGRESS_BAR_AND_HEADER, SHARED_HEADER, TW_COLORS } from "@/utils/constants";
-import { SafeAreaViewWithOptionalHeader, useOnboardingProgressHeader } from "@/scenes/onboarding/ProgressHeader";
+import { SafeAreaViewWithOptionalHeader, useOnboardingProgressHeader } from "@/scenes/onboarding-v2/ProgressHeader";
 import BannerHeader from "../BannerHeader";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";

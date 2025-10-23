@@ -3,7 +3,7 @@ import { View, Text } from "react-native";
 import { OnboardingV2ScreenProps, Difficulty } from "../types";
 import { NavigationButtons } from "@/components/onboarding/NavigationButtons";
 import { useUserProfile } from "@/context/userProfile";
-import { useOnboardingProgressHeader } from "@/scenes/onboarding/ProgressHeader";
+import { useOnboardingProgressHeader } from "@/scenes/onboarding-v2/ProgressHeader";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
 import SelectionnableItem from "@/components/SelectionnableItem";

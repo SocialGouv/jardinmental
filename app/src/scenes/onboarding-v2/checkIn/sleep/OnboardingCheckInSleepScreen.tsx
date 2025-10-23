@@ -7,7 +7,7 @@ import { beforeToday, formatDay } from "@/utils/date/helpers";
 import { INDICATEURS_SOMMEIL } from "@/utils/liste_indicateurs.1";
 import { generateIndicatorFromPredefinedIndicator } from "@/entities/Indicator";
 import { TW_COLORS } from "@/utils/constants";
-import { SafeAreaViewWithOptionalHeader } from "@/scenes/onboarding/ProgressHeader";
+import { SafeAreaViewWithOptionalHeader } from "@/scenes/onboarding-v2/ProgressHeader";
 import BannerHeader from "../../BannerHeader";
 import { useAnimatedStyle } from "react-native-reanimated";
 import InstructionText from "../../InstructionText";

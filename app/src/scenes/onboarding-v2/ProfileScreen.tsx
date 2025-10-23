@@ -7,7 +7,7 @@ import CheckInHeader from "@/components/onboarding/CheckInHeader";
 import QuestionMark from "../../../assets/svg/QuestionMark";
 import { BottomSheetBackdrop, BottomSheetModal, BottomSheetModalProvider, BottomSheetView } from "@gorhom/bottom-sheet";
 import { TW_COLORS } from "@/utils/constants";
-import { SafeAreaViewWithOptionalHeader } from "../onboarding/ProgressHeader";
+import { SafeAreaViewWithOptionalHeader } from "./ProgressHeader";
 
 type Props = OnboardingV2ScreenProps<"Profile">;
 
