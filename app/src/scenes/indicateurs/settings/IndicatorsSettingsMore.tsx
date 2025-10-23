@@ -13,6 +13,9 @@ import { typography } from "@/utils/typography";
 import logEvents from "@/services/logEvents";
 import ReorderableList, { reorderItems, useReorderableDrag } from "react-native-reorderable-list";
 import { Gesture } from "react-native-gesture-handler";
+import ParagraphSpacing from "@assets/svg/icon/ParagraphSpacing";
+import TrashIcon from "@assets/svg/icon/Trash";
+import { TW_COLORS } from "@/utils/constants";
 
 const IndicatorsSettingsMore = ({ navigation, route }) => {
   const [indicators, setIndicators] = useState<Indicator[]>([]);
@@ -68,7 +71,7 @@ const IndicatorsSettingsMore = ({ navigation, route }) => {
       <View className="my-6 mt-8 flex-row items-center px-4">
         <Text className={mergeClassNames(typography.textXlSemibold, "text-cnam-primary-900")}>Vos indicateurs</Text>
         <View className="bg-cnam-cyan-500-0 h-7 w-7 rounded-full items-center justify-center ml-2">
-          <Text className={mergeClassNames("text-white", typography.textMdSemibold)}>
+          <Text className={mergeClassNames(typography.textMdSemibold)} style={{ color: "#19363D" }}>
             {indicators?.filter((indicator) => indicator.active)?.length || 0}
           </Text>
         </View>
@@ -106,10 +109,10 @@ const IndicatorItem = ({ indicator, setIndicators }: { indicator: Indicator; set
       <View
         className={mergeClassNames("p-4 bg-gray-100 mb-2 rounded-xl flex-row items-center justify-between", !indicator.active ? "bg-gray-50" : "")}
       >
-        <Icon icon="ReorderSvg" color="#26387C" width="16" height="16" styleContainer={{ width: 16, height: 16 }} />
-        <Text className={mergeClassNames(typography.textLgRegular, "text-cnam-primary-950")}>{indicator?.name}</Text>
+        <ParagraphSpacing width={24} height={24} color={TW_COLORS.CNAM_PRIMARY_700} />
+        <Text className={mergeClassNames(typography.textLgRegular, "text-cnam-primary-950 flex-1 mx-3 ml-4")}>{indicator?.name}</Text>
         <TouchableOpacity onPress={deleteIndicator}>
-          <Icon icon="Bin2Svg" color={colors.BLUE} width="16" height="16" styleContainer={{ width: 16, height: 16 }} />
+          <TrashIcon width={24} height={24} color={TW_COLORS.CNAM_PRIMARY_800} />
         </TouchableOpacity>
       </View>
     </TouchableOpacity>
