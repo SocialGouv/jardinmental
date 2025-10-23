@@ -1,3 +1,10 @@
+## [1.107.4](https://github.com/SocialGouv/jardinmental/compare/v1.107.3...v1.107.4) (2025-10-23)
+
+
+### Bug Fixes
+
+* remove contact page, directly open email ([#577](https://github.com/SocialGouv/jardinmental/issues/577)) ([dcef4b7](https://github.com/SocialGouv/jardinmental/commit/dcef4b71d5a39d3d355665cbfac5b86f60f310f0))
+
 ## [1.107.3](https://github.com/SocialGouv/jardinmental/compare/v1.107.2...v1.107.3) (2025-10-23)
 
 
