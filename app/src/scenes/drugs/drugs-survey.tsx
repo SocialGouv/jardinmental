@@ -80,8 +80,7 @@ const DrugsSurvey = ({ navigation, route }) => {
   }, [navigation, route, listDrugs]);
 
   useEffect(() => {
-    if (!route?.params?.editingSurvey) getLatestValue();
-    else getValue();
+    getValue();
   }, [medicalTreatment]);
 
   const previousQuestion = () => {
@@ -111,7 +110,13 @@ const DrugsSurvey = ({ navigation, route }) => {
 
   const getValue = () => {
     if (!route?.params?.currentSurvey || !medicalTreatment) return;
-    setPosology(route?.params?.currentSurvey?.answers?.POSOLOGY?.filter((e) => !!medicalTreatment.find((t) => t.id === e.id)) || []);
+    const savedPosology = route?.params?.currentSurvey?.answers?.POSOLOGY?.filter((e) => !!medicalTreatment.find((t) => t.id === e.id));
+    // savedPosology === undefined, it is the first time we are on this screen, we suggest the latest value
+    if (savedPosology === undefined) {
+      getLatestValue();
+    } else {
+      setPosology(route?.params?.currentSurvey?.answers?.POSOLOGY?.filter((e) => !!medicalTreatment.find((t) => t.id === e.id)) || []);
+    }
   };
 
   const handleDrugChange = (d, value, isFreeText) => {
@@ -216,7 +221,8 @@ const DrugsSurvey = ({ navigation, route }) => {
         navigation.goBack();
       }}
       category="TREATMENT"
-      title="Avez-vous pris votre traitement aujourd'hui"
+      title="Avez-vous pris votre traitement aujourd'hui ?"
+      hideBottomComponentInitially={true} // on some screen treatment details are hidden behind bottom button
       navigation={navigation}
       headerRightComponent={<Pencil color={TW_COLORS.WHITE} width={16} height={16} />}
       headerRightAction={() => {
