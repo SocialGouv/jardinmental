@@ -3,35 +3,83 @@ import { Alert, View, Text } from "react-native";
 import * as FileSystem from "expo-file-system";
 import * as DocumentPicker from "expo-document-picker";
 import { shareAsync } from "expo-sharing";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { colors } from "../../utils/colors";
 import logEvents from "../../services/logEvents";
-import { DiaryDataContext } from "../../context/diaryData";
 import JMButton from "@/components/JMButton";
 import { AnimatedHeaderScrollScreen } from "../survey-v2/AnimatedHeaderScrollScreen";
 import InfoIcon from "@assets/svg/icon/Info";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
+import { DiaryDataContext } from "@/context/diaryData";
+import { STORAGE_KEY_SURVEY_RESULTS } from "@/utils/constants";
+
+// Keys to exclude from export (device-specific and transient UI states)
+const EXPORT_BLACKLIST = [
+  "deviceId",
+  "STORAGE_KEY_PUSH_NOTIFICATION_TOKEN",
+  "STORAGE_KEY_PUSH_NOTIFICATION_TOKEN_ERROR",
+  "@Reminder",
+  "ReminderStorageKey",
+  "REMINDER_VERSION_OLDER_154",
+  "REMINDER_VERSION_OLDER_193",
+  "devMode",
+  "hasVisitedResources",
+  "@AT_LEAST_VIEW_ONE_TIME_HINT_FRISE",
+  "STORAGE_LATEST_CHANGES_DISPLAYED",
+  "STORAGE_KEY_MOTIVATIONAL_MESSAGE_INDEX",
+  "STORAGE_KEY_MOTIVATIONAL_MESSAGE_SHUFFLED_ORDER",
+  "STORE_KEY_NPS_DONE",
+  "STORE_KEY_INITIAL_OPENING",
+  "STORE_KEY_NPS_SCHEDULING_IN_PROGRESS",
+  "STORAGE_KEY_VISIT_PRO_NPS",
+  "STORAGE_KEY_NPS_PRO_CONTACT",
+  "STORAGE_KEY_USER_ID",
+  "STORAGE_KEY_NUMBER_OF_VISITS",
+  "STORAGE_KEY_CHECKLIST_BANNER_STATE",
+  "STORAGE_KEY_VIEWED_EXTERNAL_RESOURCES",
+  "STORAGE_KEY_VIEWED_RESOURCES",
+  "STORAGE_INFO_MODAL_DISMISSED",
+];
 
 const DataExportImport = ({ navigation }) => {
-  const [diaryData, _addNewEntryToDiaryData, _deleteDiaryData, importDiaryData] = useContext(DiaryDataContext);
   const [isExporting, setIsExporting] = useState(false);
   const [isImporting, setIsImporting] = useState(false);
+  const [diaryData, _addNewEntryToDiaryData, _deleteDiaryData, importDiaryData] = useContext(DiaryDataContext);
 
   const exportData = async () => {
     try {
       setIsExporting(true);
       logEvents.logDataExportAsBackUp();
 
-      // Créer le contenu du fichier avec toutes les données
-      const exportData = {
+      // Get all AsyncStorage keys
+      const allKeys = await AsyncStorage.getAllKeys();
+
+      // Filter out blacklisted keys
+      const keysToExport = allKeys.filter((key) => !EXPORT_BLACKLIST.includes(key));
+
+      // Get all values for the keys to export
+      const keyValuePairs = await AsyncStorage.multiGet(keysToExport);
+
+      // Convert to object format
+      const asyncStorageData: Record<string, string> = {};
+      keyValuePairs.forEach(([key, value]) => {
+        if (value !== null) {
+          asyncStorageData[key] = value;
+        }
+      });
+
+      // Create export data structure
+      const exportDataObj = {
         exportDate: new Date().toISOString(),
         appVersion: "jardin-mental",
-        data: diaryData,
+        dataFormat: "v1",
+        data: asyncStorageData,
       };
-      const jsonString = JSON.stringify(exportData, null, 2);
+      const jsonString = JSON.stringify(exportDataObj, null, 2);
 
-      // Créer le fichier temporaire
+      // Create temporary file
       const fileName = `jardin-mental-export-${new Date().toISOString().split("T")[0]}.json`;
       const fileUri = `${FileSystem.documentDirectory}${fileName}`;
 
@@ -39,7 +87,7 @@ const DataExportImport = ({ navigation }) => {
         encoding: FileSystem.EncodingType.UTF8,
       });
 
-      // Partager le fichier
+      // Share the file
       await shareAsync(fileUri, {
         UTI: ".json",
         mimeType: "application/json",
@@ -60,7 +108,7 @@ const DataExportImport = ({ navigation }) => {
       setIsImporting(true);
       logEvents.logDataImport();
 
-      // Sélectionner le fichier
+      // Select the file
       const result = await DocumentPicker.getDocumentAsync({
         type: "application/json",
         copyToCacheDirectory: true,
@@ -71,11 +119,12 @@ const DataExportImport = ({ navigation }) => {
         return;
       }
 
-      // Lire le contenu du fichier
+      // Read the file content
       const fileContent = await FileSystem.readAsStringAsync(result.assets[0].uri, {
         encoding: FileSystem.EncodingType.UTF8,
       });
-      // Parser le JSON
+
+      // Parse the JSON
       let importedData;
       try {
         importedData = JSON.parse(fileContent);
@@ -85,16 +134,22 @@ const DataExportImport = ({ navigation }) => {
         return;
       }
 
-      // Vérifier la structure des données
+      // Validate data format
+      if (importedData.dataFormat !== "v1") {
+        Alert.alert("Erreur", "Le fichier sélectionné n'est pas au format attendu (v1).");
+        setIsImporting(false);
+        return;
+      }
+
+      // Validate data structure
       if (!importedData.data || typeof importedData.data !== "object") {
         Alert.alert("Erreur", "Le fichier sélectionné ne contient pas de données valides.");
         setIsImporting(false);
         return;
       }
 
-      // Demander confirmation avant d'importer
-      const modeText = "fusionner avec vos données existantes";
-      Alert.alert(`Confirmer l'import`, `Cette action va ${modeText}. Êtes-vous sûr de vouloir continuer ?`, [
+      // Ask for confirmation before importing
+      Alert.alert("Confirmer l'import", "Cette action va restaurer toutes vos données depuis la sauvegarde. Êtes-vous sûr de vouloir continuer ?", [
         {
           text: "Annuler",
           style: "cancel",
@@ -104,14 +159,24 @@ const DataExportImport = ({ navigation }) => {
           style: "destructive",
           onPress: async () => {
             try {
-              // Utiliser la fonction du contexte pour importer
-              await importDiaryData(importedData.data, "merge");
-
+              // Restore all AsyncStorage keys from the imported data
+              const entries = Object.entries(importedData.data).filter((key) => ![STORAGE_KEY_SURVEY_RESULTS].includes(key[0]));
+              for (const [key, value] of entries) {
+                if (typeof value === "string") {
+                  await AsyncStorage.setItem(key, value);
+                }
+              }
+              // import diaryData separately to merge the data with potential data in the phone
+              const surveyResultsData = importedData.data[STORAGE_KEY_SURVEY_RESULTS];
+              if (surveyResultsData) {
+                const parsedSurveyResults = typeof surveyResultsData === "string" ? JSON.parse(surveyResultsData) : surveyResultsData;
+                await importDiaryData(parsedSurveyResults, "merge");
+              }
               Alert.alert("Import réussi", "Vos données ont été importées avec succès !", [
                 {
                   text: "OK",
                   onPress: () => {
-                    // Naviguer vers l'écran principal
+                    // Navigate to main screen
                     navigation.navigate("tabs");
                   },
                 },

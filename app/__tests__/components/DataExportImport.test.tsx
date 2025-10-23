@@ -20,6 +20,13 @@ jest.mock("expo-sharing", () => ({
   shareAsync: jest.fn(),
 }));
 
+// Mock AsyncStorage
+jest.mock("@react-native-async-storage/async-storage", () => ({
+  getAllKeys: jest.fn(),
+  multiGet: jest.fn(),
+  setItem: jest.fn(),
+}));
+
 // Mock matomo logging
 jest.mock("../../src/services/logEvents", () => ({
   logDataExportAsBackUp: jest.fn(),
@@ -54,6 +61,7 @@ jest.mock("../../src/scenes/survey-v2/AnimatedHeaderScrollScreen", () => ({
 import React from "react";
 import { render, fireEvent, waitFor } from "@testing-library/react-native";
 import { Alert } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // Mock Alert.alert globally
 const originalAlert = Alert.alert;
@@ -63,14 +71,13 @@ import * as DocumentPicker from "expo-document-picker";
 import * as Sharing from "expo-sharing";
 
 import DataExportImport from "../../src/scenes/data-export-import/DataExportImport";
-import { DiaryDataContext } from "../../src/context/diaryData";
-import { DiaryData } from "../../src/entities/DiaryData";
 import logEvents from "../../src/services/logEvents";
 
 const mockFileSystem = FileSystem as jest.Mocked<typeof FileSystem>;
 const mockDocumentPicker = DocumentPicker as jest.Mocked<typeof DocumentPicker>;
 const mockSharing = Sharing as jest.Mocked<typeof Sharing>;
 const mockLogEvents = logEvents as jest.Mocked<typeof logEvents>;
+const mockAsyncStorage = AsyncStorage as jest.Mocked<typeof AsyncStorage>;
 
 // Mock navigation
 const mockNavigation = {
@@ -78,92 +85,20 @@ const mockNavigation = {
   goBack: jest.fn(),
 };
 
-// Sample diary data for testing
-const sampleDiaryData: DiaryData = {
-  "2024-01-01": {
-    MOOD: {
-      value: 3,
-      userComment: "Feeling anxious today",
-    },
-    ANXIETY: {
-      value: 4,
-      userComment: "High anxiety levels",
-    },
-    NOTES: "Journée difficile",
-    POSOLOGY: [
-      {
-        id: "med1",
-        name1: "Lamictal",
-        name2: "Lamotrigine",
-        value: "25mg",
-        values: ["12.5mg", "25mg", "50mg"],
-      },
-    ],
-  },
-  "2024-01-02": {
-    MOOD: {
-      value: 4,
-      userComment: "Better mood today",
-    },
-    SLEEP: {
-      value: 3,
-    },
-    NOTES: {
-      notesEvents: "Had a good therapy session",
-    },
-  },
-};
-
-const additionalDiaryData: DiaryData = {
-  "2024-01-03": {
-    MOOD: {
-      value: 5,
-      userComment: "Excellent mood",
-    },
-    ANXIETY: {
-      value: 2,
-      userComment: "Much calmer",
-    },
-    NOTES: "Great day with family",
-    becks: {
-      beck1: {
-        date: "2024-01-03",
-        time: "14:30",
-        where: "At home",
-        who: ["Family"],
-        what: "Family gathering",
-        mainEmotion: "Joy",
-        mainEmotionIntensity: 8,
-        otherEmotions: ["Gratitude"],
-        physicalSensations: ["Warmth"],
-        thoughtsBeforeMainEmotion: "This is wonderful",
-        trustInThoughsThen: 9,
-        memories: "Previous happy moments",
-        actions: "Enjoyed the moment",
-        consequencesForYou: "Felt very happy",
-        consequencesForRelatives: "Everyone enjoyed",
-        argumentPros: "Family time is precious",
-        argumentCons: "None",
-        nuancedThoughts: "Family brings joy",
-        trustInThoughsNow: 9,
-        mainEmotionIntensityNuanced: 8,
-      },
-    },
-  },
-};
-
 describe("DataExportImport", () => {
-  let mockContextValue: any;
   let alertSpy: jest.SpyInstance;
 
   beforeEach(() => {
     jest.clearAllMocks();
-    mockContextValue = [
-      sampleDiaryData,
-      jest.fn(), // addNewEntryToDiaryData
-      jest.fn(), // deleteDiaryData
-      jest.fn(), // importDiaryData
-    ];
+
+    // Mock AsyncStorage methods
+    mockAsyncStorage.getAllKeys.mockResolvedValue(["STORAGE_KEY_SURVEY_RESULTS", "STORAGE_KEY_DIARY_NOTES", "STORAGE_KEY_INDICATEURS"]);
+    mockAsyncStorage.multiGet.mockResolvedValue([
+      ["STORAGE_KEY_SURVEY_RESULTS", '{"2024-01-01":{"MOOD":{"value":3}}}'],
+      ["STORAGE_KEY_DIARY_NOTES", '{"2024-01-01":"Test note"}'],
+      ["STORAGE_KEY_INDICATEURS", "[]"],
+    ]);
+    mockAsyncStorage.setItem.mockResolvedValue();
 
     // Setup spy for Alert.alert
     alertSpy = jest.spyOn(Alert, "alert").mockImplementation((title, message, buttons) => {
@@ -182,11 +117,7 @@ describe("DataExportImport", () => {
   });
 
   const renderComponent = () => {
-    return render(
-      <DiaryDataContext.Provider value={mockContextValue}>
-        <DataExportImport navigation={mockNavigation} />
-      </DiaryDataContext.Provider>
-    );
+    return render(<DataExportImport navigation={mockNavigation} />);
   };
 
   describe("UI Rendering", () => {
@@ -341,7 +272,7 @@ describe("DataExportImport", () => {
       );
 
       expect(mockFileSystem.readAsStringAsync).not.toHaveBeenCalled();
-      expect(mockContextValue[3]).not.toHaveBeenCalled();
+      expect(mockAsyncStorage.setItem).not.toHaveBeenCalled();
     });
 
     it("should handle document picker errors", async () => {
@@ -384,11 +315,15 @@ describe("DataExportImport", () => {
         expect(alertSpy).toHaveBeenCalledWith("Erreur", "Le fichier sélectionné n'est pas un fichier d'export valide.");
       });
 
-      expect(mockContextValue[3]).not.toHaveBeenCalled();
+      expect(mockAsyncStorage.setItem).not.toHaveBeenCalled();
     });
 
     it("should handle missing data structure", async () => {
-      const invalidData = JSON.stringify({ exportDate: "2024-01-01", appVersion: "test" });
+      const invalidData = JSON.stringify({
+        exportDate: "2024-01-01",
+        appVersion: "test",
+        dataFormat: "v1",
+      });
       mockFileSystem.readAsStringAsync.mockResolvedValue(invalidData);
 
       const { getByText } = renderComponent();
@@ -401,7 +336,10 @@ describe("DataExportImport", () => {
     });
 
     it("should handle invalid data structure", async () => {
-      const invalidData = JSON.stringify({ data: "not an object" });
+      const invalidData = JSON.stringify({
+        dataFormat: "v1",
+        data: "not an object",
+      });
       mockFileSystem.readAsStringAsync.mockResolvedValue(invalidData);
 
       const { getByText } = renderComponent();
@@ -426,7 +364,7 @@ describe("DataExportImport", () => {
     });
   });
 
-  describe("Import functionality - Merge Mode", () => {
+  describe("Import functionality - Full AsyncStorage Import", () => {
     beforeEach(() => {
       mockDocumentPicker.getDocumentAsync.mockResolvedValue({
         canceled: false,
@@ -441,7 +379,11 @@ describe("DataExportImport", () => {
       const validExportData = {
         exportDate: "2024-01-01T00:00:00.000Z",
         appVersion: "jardin-mental",
-        data: additionalDiaryData,
+        dataFormat: "v1",
+        data: {
+          STORAGE_KEY_SURVEY_RESULTS: '{"2024-01-01":{"MOOD":{"value":5}}}',
+          STORAGE_KEY_DIARY_NOTES: '{"2024-01-01":"Imported note"}',
+        },
       };
       mockFileSystem.readAsStringAsync.mockResolvedValue(JSON.stringify(validExportData));
     });
@@ -459,11 +401,12 @@ describe("DataExportImport", () => {
       fireEvent.press(importButton);
 
       await waitFor(() => {
-        expect(mockContextValue[3]).toHaveBeenCalledWith(additionalDiaryData, "merge");
+        expect(mockAsyncStorage.setItem).toHaveBeenCalledWith("STORAGE_KEY_SURVEY_RESULTS", '{"2024-01-01":{"MOOD":{"value":5}}}');
+        expect(mockAsyncStorage.setItem).toHaveBeenCalledWith("STORAGE_KEY_DIARY_NOTES", '{"2024-01-01":"Imported note"}');
       });
     });
 
-    it("should show confirmation dialog for merge", async () => {
+    it("should show confirmation dialog", async () => {
       const { getByText } = renderComponent();
       const importButton = getByText("Importer des données");
       fireEvent.press(importButton);
@@ -471,7 +414,7 @@ describe("DataExportImport", () => {
       await waitFor(() => {
         expect(alertSpy).toHaveBeenCalledWith(
           "Confirmer l'import",
-          "Cette action va fusionner avec vos données existantes. Êtes-vous sûr de vouloir continuer ?",
+          "Cette action va restaurer toutes vos données depuis la sauvegarde. Êtes-vous sûr de vouloir continuer ?",
           expect.arrayContaining([expect.objectContaining({ text: "Annuler" }), expect.objectContaining({ text: "Importer" })])
         );
       });
@@ -493,29 +436,8 @@ describe("DataExportImport", () => {
         expect(alertSpy).toHaveBeenCalled();
       });
 
-      // importDiaryData should not be called if user cancels
-      expect(mockContextValue[3]).not.toHaveBeenCalled();
-    });
-  });
-
-  describe("Import functionality - Success Flow", () => {
-    beforeEach(() => {
-      mockDocumentPicker.getDocumentAsync.mockResolvedValue({
-        canceled: false,
-        assets: [
-          {
-            uri: "file://test/import.json",
-            name: "import.json",
-          },
-        ],
-      } as any);
-
-      const validExportData = {
-        exportDate: "2024-01-01T00:00:00.000Z",
-        appVersion: "jardin-mental",
-        data: additionalDiaryData,
-      };
-      mockFileSystem.readAsStringAsync.mockResolvedValue(JSON.stringify(validExportData));
+      // setItem should not be called if user cancels
+      expect(mockAsyncStorage.setItem).not.toHaveBeenCalled();
     });
 
     it("should show success message and navigate after successful import", async () => {
@@ -550,7 +472,7 @@ describe("DataExportImport", () => {
     });
 
     it("should show loading state during import", async () => {
-      mockContextValue[3].mockImplementation(() => new Promise((resolve) => setTimeout(resolve, 100)));
+      mockAsyncStorage.setItem.mockImplementation(() => new Promise((resolve) => setTimeout(resolve, 100)));
 
       // Mock Alert to simulate user confirming
       alertSpy.mockImplementation((title, message, buttons) => {
@@ -565,6 +487,24 @@ describe("DataExportImport", () => {
 
       await waitFor(() => {
         expect(getByText("Import en cours...")).toBeTruthy();
+      });
+    });
+
+    it("should reject files with wrong format", async () => {
+      const wrongFormatData = {
+        exportDate: "2024-01-01T00:00:00.000Z",
+        appVersion: "jardin-mental",
+        dataFormat: "old-format",
+        data: {},
+      };
+      mockFileSystem.readAsStringAsync.mockResolvedValue(JSON.stringify(wrongFormatData));
+
+      const { getByText } = renderComponent();
+      const importButton = getByText("Importer des données");
+      fireEvent.press(importButton);
+
+      await waitFor(() => {
+        expect(alertSpy).toHaveBeenCalledWith("Erreur", "Le fichier sélectionné n'est pas au format attendu (v1).");
       });
     });
   });
