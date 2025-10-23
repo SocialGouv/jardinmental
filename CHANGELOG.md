@@ -1,3 +1,10 @@
+## [1.108.1](https://github.com/SocialGouv/jardinmental/compare/v1.108.0...v1.108.1) (2025-10-23)
+
+
+### Bug Fixes
+
+* **drugs-survey:** hide bottom button, show correct treatment saved values ([#586](https://github.com/SocialGouv/jardinmental/issues/586)) ([04ecf81](https://github.com/SocialGouv/jardinmental/commit/04ecf816ca6012dfe0edeb458e88c23e3de33cdd))
+
 # [1.108.0](https://github.com/SocialGouv/jardinmental/compare/v1.107.5...v1.108.0) (2025-10-23)
 
 
