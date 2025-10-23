@@ -124,6 +124,8 @@ export default function BannerHeader({
               style={[
                 {
                   color: TW_COLORS.WHITE,
+                  flexWrap: "wrap",
+                  flexShrink: 1,
                 },
                 animatedTextColor,
                 bannerContentStyle,

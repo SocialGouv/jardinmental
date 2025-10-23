@@ -1,4 +1,8 @@
 // Mock external dependencies first, before any imports
+jest.mock("expo-linear-gradient", () => ({
+  LinearGradient: "LinearGradient",
+}));
+
 jest.mock("expo-file-system", () => ({
   documentDirectory: "file://test/",
   writeAsStringAsync: jest.fn(),
@@ -16,15 +20,48 @@ jest.mock("expo-sharing", () => ({
   shareAsync: jest.fn(),
 }));
 
+// Mock AsyncStorage
+jest.mock("@react-native-async-storage/async-storage", () => ({
+  getAllKeys: jest.fn(),
+  multiGet: jest.fn(),
+  setItem: jest.fn(),
+}));
+
 // Mock matomo logging
 jest.mock("../../src/services/logEvents", () => ({
   logDataExportAsBackUp: jest.fn(),
   logDataImport: jest.fn(),
 }));
 
+// Mock JMButton
+jest.mock("@/components/JMButton", () => {
+  const { TouchableOpacity, Text } = require("react-native");
+  return function JMButton({ title, onPress, disabled, ...props }: any) {
+    return (
+      <TouchableOpacity onPress={onPress} disabled={disabled} {...props}>
+        <Text>{title}</Text>
+      </TouchableOpacity>
+    );
+  };
+});
+
+// Mock AnimatedHeaderScrollScreen
+jest.mock("../../src/scenes/survey-v2/AnimatedHeaderScrollScreen", () => ({
+  AnimatedHeaderScrollScreen: ({ children, title }: any) => {
+    const { View, Text } = require("react-native");
+    return (
+      <View>
+        <Text>{title}</Text>
+        {children}
+      </View>
+    );
+  },
+}));
+
 import React from "react";
 import { render, fireEvent, waitFor } from "@testing-library/react-native";
 import { Alert } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // Mock Alert.alert globally
 const originalAlert = Alert.alert;
@@ -33,15 +70,14 @@ import * as FileSystem from "expo-file-system";
 import * as DocumentPicker from "expo-document-picker";
 import * as Sharing from "expo-sharing";
 
-import DataExportImport from "../../src/scenes/data-export-import";
-import { DiaryDataContext } from "../../src/context/diaryData";
-import { DiaryData } from "../../src/entities/DiaryData";
+import DataExportImport from "../../src/scenes/data-export-import/DataExportImport";
 import logEvents from "../../src/services/logEvents";
 
 const mockFileSystem = FileSystem as jest.Mocked<typeof FileSystem>;
 const mockDocumentPicker = DocumentPicker as jest.Mocked<typeof DocumentPicker>;
 const mockSharing = Sharing as jest.Mocked<typeof Sharing>;
 const mockLogEvents = logEvents as jest.Mocked<typeof logEvents>;
+const mockAsyncStorage = AsyncStorage as jest.Mocked<typeof AsyncStorage>;
 
 // Mock navigation
 const mockNavigation = {
@@ -49,92 +85,20 @@ const mockNavigation = {
   goBack: jest.fn(),
 };
 
-// Sample diary data for testing
-const sampleDiaryData: DiaryData = {
-  "2024-01-01": {
-    MOOD: {
-      value: 3,
-      userComment: "Feeling anxious today",
-    },
-    ANXIETY: {
-      value: 4,
-      userComment: "High anxiety levels",
-    },
-    NOTES: "Journée difficile",
-    POSOLOGY: [
-      {
-        id: "med1",
-        name1: "Lamictal",
-        name2: "Lamotrigine",
-        value: "25mg",
-        values: ["12.5mg", "25mg", "50mg"],
-      },
-    ],
-  },
-  "2024-01-02": {
-    MOOD: {
-      value: 4,
-      userComment: "Better mood today",
-    },
-    SLEEP: {
-      value: 3,
-    },
-    NOTES: {
-      notesEvents: "Had a good therapy session",
-    },
-  },
-};
-
-const additionalDiaryData: DiaryData = {
-  "2024-01-03": {
-    MOOD: {
-      value: 5,
-      userComment: "Excellent mood",
-    },
-    ANXIETY: {
-      value: 2,
-      userComment: "Much calmer",
-    },
-    NOTES: "Great day with family",
-    becks: {
-      beck1: {
-        date: "2024-01-03",
-        time: "14:30",
-        where: "At home",
-        who: ["Family"],
-        what: "Family gathering",
-        mainEmotion: "Joy",
-        mainEmotionIntensity: 8,
-        otherEmotions: ["Gratitude"],
-        physicalSensations: ["Warmth"],
-        thoughtsBeforeMainEmotion: "This is wonderful",
-        trustInThoughsThen: 9,
-        memories: "Previous happy moments",
-        actions: "Enjoyed the moment",
-        consequencesForYou: "Felt very happy",
-        consequencesForRelatives: "Everyone enjoyed",
-        argumentPros: "Family time is precious",
-        argumentCons: "None",
-        nuancedThoughts: "Family brings joy",
-        trustInThoughsNow: 9,
-        mainEmotionIntensityNuanced: 8,
-      },
-    },
-  },
-};
-
 describe("DataExportImport", () => {
-  let mockContextValue: any;
   let alertSpy: jest.SpyInstance;
 
   beforeEach(() => {
     jest.clearAllMocks();
-    mockContextValue = [
-      sampleDiaryData,
-      jest.fn(), // addNewEntryToDiaryData
-      jest.fn(), // deleteDiaryData
-      jest.fn(), // importDiaryData
-    ];
+
+    // Mock AsyncStorage methods
+    mockAsyncStorage.getAllKeys.mockResolvedValue(["STORAGE_KEY_SURVEY_RESULTS", "STORAGE_KEY_DIARY_NOTES", "STORAGE_KEY_INDICATEURS"]);
+    mockAsyncStorage.multiGet.mockResolvedValue([
+      ["STORAGE_KEY_SURVEY_RESULTS", '{"2024-01-01":{"MOOD":{"value":3}}}'],
+      ["STORAGE_KEY_DIARY_NOTES", '{"2024-01-01":"Test note"}'],
+      ["STORAGE_KEY_INDICATEURS", "[]"],
+    ]);
+    mockAsyncStorage.setItem.mockResolvedValue();
 
     // Setup spy for Alert.alert
     alertSpy = jest.spyOn(Alert, "alert").mockImplementation((title, message, buttons) => {
@@ -153,36 +117,30 @@ describe("DataExportImport", () => {
   });
 
   const renderComponent = () => {
-    return render(
-      <DiaryDataContext.Provider value={mockContextValue}>
-        <DataExportImport navigation={mockNavigation} />
-      </DiaryDataContext.Provider>
-    );
+    return render(<DataExportImport navigation={mockNavigation} />);
   };
 
   describe("UI Rendering", () => {
     it("should render all main UI elements", () => {
-      const { getByText, getAllByText } = renderComponent();
-
-      expect(getByText("Export / Import de mes données")).toBeTruthy();
-      expect(getAllByText("Exporter mes données").length).toBeGreaterThan(0);
-      expect(getByText("Importer mes données")).toBeTruthy();
-      expect(getByText("Mode d'import :")).toBeTruthy();
-      expect(getByText("Remplacer toutes mes données")).toBeTruthy();
-      expect(getByText("Fusionner avec mes données")).toBeTruthy();
-    });
-
-    it("should have replace mode selected by default", () => {
       const { getByText } = renderComponent();
 
-      const replaceOption = getByText("Remplacer toutes mes données");
-      expect(replaceOption).toBeTruthy();
+      expect(getByText("Exporter et enregistrer mes données")).toBeTruthy();
+      expect(getByText("Exporter mes données")).toBeTruthy();
+      expect(getByText("Importer des données")).toBeTruthy();
     });
 
-    it("should display correct warning text for replace mode", () => {
+    it("should display information section", () => {
       const { getByText } = renderComponent();
 
-      expect(getByText(/Attention : Cette action remplacera toutes vos données actuelles/)).toBeTruthy();
+      expect(getByText("Pourquoi sauvegarder mes données ?")).toBeTruthy();
+      expect(getByText(/Afin de garantir la confidentialité de vos données/)).toBeTruthy();
+    });
+
+    it("should display import instructions", () => {
+      const { getByText } = renderComponent();
+
+      expect(getByText("Comment importer mes données sur un nouvel appareil ?")).toBeTruthy();
+      expect(getByText(/Cliquer sur le bouton/)).toBeTruthy();
     });
   });
 
@@ -191,19 +149,10 @@ describe("DataExportImport", () => {
       mockFileSystem.writeAsStringAsync.mockResolvedValue();
       mockSharing.shareAsync.mockResolvedValue();
 
-      const { getAllByText } = renderComponent();
-      // Find the button element (should be the second occurrence - first is title, second is button)
-      const exportTexts = getAllByText("Exporter mes données");
-      const exportButton = exportTexts[1].parent; // The button text element's parent
+      const { getByText } = renderComponent();
+      const exportButton = getByText("Exporter mes données");
 
       fireEvent.press(exportButton);
-
-      // await waitFor(
-      //   () => {
-      //     expect(mockLogDataExport).toHaveBeenCalledTimes(1);
-      //   },
-      //   { timeout: 3000 }
-      // );
 
       await waitFor(
         () => {
@@ -238,9 +187,8 @@ describe("DataExportImport", () => {
     it("should handle export errors gracefully", async () => {
       mockFileSystem.writeAsStringAsync.mockRejectedValue(new Error("Write failed"));
 
-      const { getAllByText } = renderComponent();
-      const exportTexts = getAllByText("Exporter mes données");
-      const exportButton = exportTexts[1].parent;
+      const { getByText } = renderComponent();
+      const exportButton = getByText("Exporter mes données");
 
       fireEvent.press(exportButton);
 
@@ -256,9 +204,8 @@ describe("DataExportImport", () => {
       mockFileSystem.writeAsStringAsync.mockImplementation(() => new Promise((resolve) => setTimeout(resolve, 100)));
       mockSharing.shareAsync.mockResolvedValue();
 
-      const { getAllByText, getByText } = renderComponent();
-      const exportTexts = getAllByText("Exporter mes données");
-      const exportButton = exportTexts[1].parent;
+      const { getByText } = renderComponent();
+      const exportButton = getByText("Exporter mes données");
 
       fireEvent.press(exportButton);
 
@@ -274,9 +221,8 @@ describe("DataExportImport", () => {
       mockFileSystem.writeAsStringAsync.mockResolvedValue();
       mockSharing.shareAsync.mockResolvedValue();
 
-      const { getAllByText } = renderComponent();
-      const exportTexts = getAllByText("Exporter mes données");
-      const exportButton = exportTexts[1].parent;
+      const { getByText } = renderComponent();
+      const exportButton = getByText("Exporter mes données");
 
       fireEvent.press(exportButton);
 
@@ -299,8 +245,8 @@ describe("DataExportImport", () => {
         canceled: false,
         assets: [
           {
-            uri: "file://test/import.txt",
-            name: "import.txt",
+            uri: "file://test/import.json",
+            name: "import.json",
           },
         ],
       } as any);
@@ -312,7 +258,7 @@ describe("DataExportImport", () => {
       } as any);
 
       const { getByText } = renderComponent();
-      const importButton = getByText("Importer des données").parent;
+      const importButton = getByText("Importer des données");
       fireEvent.press(importButton);
 
       await waitFor(
@@ -326,14 +272,14 @@ describe("DataExportImport", () => {
       );
 
       expect(mockFileSystem.readAsStringAsync).not.toHaveBeenCalled();
-      expect(mockContextValue[3]).not.toHaveBeenCalled();
+      expect(mockAsyncStorage.setItem).not.toHaveBeenCalled();
     });
 
     it("should handle document picker errors", async () => {
       mockDocumentPicker.getDocumentAsync.mockRejectedValue(new Error("Picker failed"));
 
       const { getByText } = renderComponent();
-      const importButton = getByText("Importer des données").parent;
+      const importButton = getByText("Importer des données");
       fireEvent.press(importButton);
 
       await waitFor(
@@ -351,8 +297,8 @@ describe("DataExportImport", () => {
         canceled: false,
         assets: [
           {
-            uri: "file://test/import.txt",
-            name: "import.txt",
+            uri: "file://test/import.json",
+            name: "import.json",
           },
         ],
       } as any);
@@ -369,11 +315,15 @@ describe("DataExportImport", () => {
         expect(alertSpy).toHaveBeenCalledWith("Erreur", "Le fichier sélectionné n'est pas un fichier d'export valide.");
       });
 
-      expect(mockContextValue[3]).not.toHaveBeenCalled();
+      expect(mockAsyncStorage.setItem).not.toHaveBeenCalled();
     });
 
     it("should handle missing data structure", async () => {
-      const invalidData = JSON.stringify({ exportDate: "2024-01-01", appVersion: "test" });
+      const invalidData = JSON.stringify({
+        exportDate: "2024-01-01",
+        appVersion: "test",
+        dataFormat: "v1",
+      });
       mockFileSystem.readAsStringAsync.mockResolvedValue(invalidData);
 
       const { getByText } = renderComponent();
@@ -386,7 +336,10 @@ describe("DataExportImport", () => {
     });
 
     it("should handle invalid data structure", async () => {
-      const invalidData = JSON.stringify({ data: "not an object" });
+      const invalidData = JSON.stringify({
+        dataFormat: "v1",
+        data: "not an object",
+      });
       mockFileSystem.readAsStringAsync.mockResolvedValue(invalidData);
 
       const { getByText } = renderComponent();
@@ -411,14 +364,14 @@ describe("DataExportImport", () => {
     });
   });
 
-  describe("Import functionality - Replace Mode", () => {
+  describe("Import functionality - Full AsyncStorage Import", () => {
     beforeEach(() => {
       mockDocumentPicker.getDocumentAsync.mockResolvedValue({
         canceled: false,
         assets: [
           {
-            uri: "file://test/import.txt",
-            name: "import.txt",
+            uri: "file://test/import.json",
+            name: "import.json",
           },
         ],
       } as any);
@@ -426,12 +379,16 @@ describe("DataExportImport", () => {
       const validExportData = {
         exportDate: "2024-01-01T00:00:00.000Z",
         appVersion: "jardin-mental",
-        data: additionalDiaryData,
+        dataFormat: "v1",
+        data: {
+          STORAGE_KEY_SURVEY_RESULTS: '{"2024-01-01":{"MOOD":{"value":5}}}',
+          STORAGE_KEY_DIARY_NOTES: '{"2024-01-01":"Imported note"}',
+        },
       };
       mockFileSystem.readAsStringAsync.mockResolvedValue(JSON.stringify(validExportData));
     });
 
-    it("should import data in replace mode successfully", async () => {
+    it("should import data successfully", async () => {
       // Mock Alert to simulate user confirming the import
       alertSpy.mockImplementation((title, message, buttons) => {
         if (buttons && buttons.length > 1 && buttons[1].onPress) {
@@ -440,28 +397,16 @@ describe("DataExportImport", () => {
       });
 
       const { getByText } = renderComponent();
-
-      // Ensure replace mode is selected (should be default)
-      const replaceRadio = getByText("Remplacer toutes mes données");
-      fireEvent.press(replaceRadio);
-
       const importButton = getByText("Importer des données");
       fireEvent.press(importButton);
 
       await waitFor(() => {
-        expect(alertSpy).toHaveBeenCalledWith(
-          "Confirmer l'import",
-          "Cette action va remplacer toutes vos données actuelles. Êtes-vous sûr de vouloir continuer ?",
-          expect.any(Array)
-        );
-      });
-
-      await waitFor(() => {
-        expect(mockContextValue[3]).toHaveBeenCalledWith(additionalDiaryData, "replace");
+        expect(mockAsyncStorage.setItem).toHaveBeenCalledWith("STORAGE_KEY_SURVEY_RESULTS", '{"2024-01-01":{"MOOD":{"value":5}}}');
+        expect(mockAsyncStorage.setItem).toHaveBeenCalledWith("STORAGE_KEY_DIARY_NOTES", '{"2024-01-01":"Imported note"}');
       });
     });
 
-    it("should show confirmation dialog for replace mode", async () => {
+    it("should show confirmation dialog", async () => {
       const { getByText } = renderComponent();
       const importButton = getByText("Importer des données");
       fireEvent.press(importButton);
@@ -469,103 +414,30 @@ describe("DataExportImport", () => {
       await waitFor(() => {
         expect(alertSpy).toHaveBeenCalledWith(
           "Confirmer l'import",
-          expect.stringContaining("remplacer toutes vos données actuelles"),
+          "Cette action va restaurer toutes vos données depuis la sauvegarde. Êtes-vous sûr de vouloir continuer ?",
           expect.arrayContaining([expect.objectContaining({ text: "Annuler" }), expect.objectContaining({ text: "Importer" })])
         );
       });
     });
-  });
 
-  describe("Import functionality - Merge Mode", () => {
-    beforeEach(() => {
-      mockDocumentPicker.getDocumentAsync.mockResolvedValue({
-        canceled: false,
-        assets: [
-          {
-            uri: "file://test/import.txt",
-            name: "import.txt",
-          },
-        ],
-      } as any);
-
-      const validExportData = {
-        exportDate: "2024-01-01T00:00:00.000Z",
-        appVersion: "jardin-mental",
-        data: additionalDiaryData,
-      };
-      mockFileSystem.readAsStringAsync.mockResolvedValue(JSON.stringify(validExportData));
-    });
-
-    it("should import data in merge mode successfully", async () => {
-      // Mock Alert to simulate user confirming the import
+    it("should handle user canceling import confirmation", async () => {
+      // Mock Alert to simulate user canceling
       alertSpy.mockImplementation((title, message, buttons) => {
-        if (buttons && buttons.length > 1 && buttons[1].onPress) {
-          buttons[1].onPress(); // Press "Importer" button
+        if (buttons && buttons.length > 0 && buttons[0].onPress) {
+          buttons[0].onPress(); // Press "Annuler" button
         }
       });
 
       const { getByText } = renderComponent();
-
-      // Select merge mode
-      const mergeRadio = getByText("Fusionner avec mes données");
-      fireEvent.press(mergeRadio);
-
       const importButton = getByText("Importer des données");
       fireEvent.press(importButton);
 
       await waitFor(() => {
-        expect(mockContextValue[3]).toHaveBeenCalledWith(additionalDiaryData, "merge");
+        expect(alertSpy).toHaveBeenCalled();
       });
-    });
 
-    it("should show confirmation dialog for merge mode", async () => {
-      const { getByText } = renderComponent();
-
-      // Select merge mode
-      const mergeRadio = getByText("Fusionner avec mes données");
-      fireEvent.press(mergeRadio);
-
-      const importButton = getByText("Importer des données");
-      fireEvent.press(importButton);
-
-      await waitFor(() => {
-        expect(alertSpy).toHaveBeenCalledWith(
-          "Confirmer l'import",
-          expect.stringContaining("fusionner avec vos données existantes"),
-          expect.any(Array)
-        );
-      });
-    });
-
-    it("should update warning text when switching to merge mode", () => {
-      const { getByText } = renderComponent();
-
-      // Select merge mode
-      const mergeRadio = getByText("Fusionner avec mes données");
-      fireEvent.press(mergeRadio);
-
-      expect(getByText(/Les données existantes seront conservées et complétées par les nouvelles/)).toBeTruthy();
-    });
-  });
-
-  describe("Import functionality - Success Flow", () => {
-    beforeEach(() => {
-      mockDocumentPicker.getDocumentAsync.mockResolvedValue({
-        canceled: false,
-        assets: [
-          {
-            uri: "file://test/import.txt",
-            name: "import.txt",
-          },
-        ],
-      } as any);
-
-      const validExportData = {
-        exportDate: "2024-01-01T00:00:00.000Z",
-        appVersion: "jardin-mental",
-        data: additionalDiaryData,
-      };
-      mockFileSystem.readAsStringAsync.mockResolvedValue(JSON.stringify(validExportData));
+      // setItem should not be called if user cancels
+      expect(mockAsyncStorage.setItem).not.toHaveBeenCalled();
     });
 
     it("should show success message and navigate after successful import", async () => {
@@ -600,7 +472,7 @@ describe("DataExportImport", () => {
     });
 
     it("should show loading state during import", async () => {
-      mockContextValue[3].mockImplementation(() => new Promise((resolve) => setTimeout(resolve, 100)));
+      mockAsyncStorage.setItem.mockImplementation(() => new Promise((resolve) => setTimeout(resolve, 100)));
 
       // Mock Alert to simulate user confirming
       alertSpy.mockImplementation((title, message, buttons) => {
@@ -617,39 +489,23 @@ describe("DataExportImport", () => {
         expect(getByText("Import en cours...")).toBeTruthy();
       });
     });
-  });
 
-  describe("UI Interactions", () => {
-    it("should toggle between import modes", () => {
+    it("should reject files with wrong format", async () => {
+      const wrongFormatData = {
+        exportDate: "2024-01-01T00:00:00.000Z",
+        appVersion: "jardin-mental",
+        dataFormat: "old-format",
+        data: {},
+      };
+      mockFileSystem.readAsStringAsync.mockResolvedValue(JSON.stringify(wrongFormatData));
+
       const { getByText } = renderComponent();
+      const importButton = getByText("Importer des données");
+      fireEvent.press(importButton);
 
-      const replaceRadio = getByText("Remplacer toutes mes données");
-      const mergeRadio = getByText("Fusionner avec mes données");
-
-      // Test switching to merge mode
-      fireEvent.press(mergeRadio);
-
-      // Test switching back to replace mode
-      fireEvent.press(replaceRadio);
-
-      // Both options should still be present
-      expect(replaceRadio).toBeTruthy();
-      expect(mergeRadio).toBeTruthy();
-    });
-
-    it("should call navigation.goBack when back button is pressed", () => {
-      const { getByTestId } = renderComponent();
-
-      // Note: This assumes BackButton has a testID. If not, you might need to test differently
-      // or add a testID to the BackButton component
-      try {
-        const backButton = getByTestId("back-button");
-        fireEvent.press(backButton);
-        expect(mockNavigation.goBack).toHaveBeenCalled();
-      } catch (error) {
-        // If testID is not available, this test will be skipped
-        console.log("BackButton testID not available, skipping test");
-      }
+      await waitFor(() => {
+        expect(alertSpy).toHaveBeenCalledWith("Erreur", "Le fichier sélectionné n'est pas au format attendu (v1).");
+      });
     });
   });
 });
