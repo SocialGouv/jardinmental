@@ -1,9 +1,6 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Text, Platform } from "react-native";
-import { Button2 } from "../../../components/Button2";
-import { InputLabel } from "../../../components/InputLabel";
+import { StyleSheet, View, Text } from "react-native";
 import { InputText } from "../../../components/InputText";
-import { Screen } from "../../../components/Screen";
 import JMButton from "@/components/JMButton";
 import { AnimatedHeaderScrollScreen } from "@/scenes/survey-v2/AnimatedHeaderScrollScreen";
 import { mergeClassNames } from "@/utils/className";

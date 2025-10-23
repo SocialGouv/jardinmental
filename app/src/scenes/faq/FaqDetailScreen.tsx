@@ -1,11 +1,10 @@
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
 import React from "react";
-import { Text, View, ViewStyle, StyleSheet } from "react-native";
+import { Text, View } from "react-native";
 import { AnimatedHeaderScrollScreen } from "../survey-v2/AnimatedHeaderScrollScreen";
 import { TW_COLORS } from "@/utils/constants";
-import JMButton from "@/components/JMButton";
-import Markdown, { MarkdownIt, stringToTokens, tokensToAST } from "react-native-markdown-display";
+import Markdown from "react-native-markdown-display";
 import Accordion from "@/components/Accordion";
 import NavigationListItem from "@/components/ListItem/NavigationListItem";
 import { FAQ_DATA } from "./FaqData";
