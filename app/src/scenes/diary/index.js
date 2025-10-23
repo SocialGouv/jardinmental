@@ -99,6 +99,7 @@ const Diary = ({ navigation, hideDeader = false }) => {
             return (
               <View key={date}>
                 <Text style={styles.subtitle}>{formatDateThread(date)}</Text>
+                {/* DiaryNotes does no seemes used anymore */}
                 <DiaryNotes date={date} diaryNote={diaryNotes[date]} navigation={navigation} />
                 <DiarySymptoms userIndicators={userIndicators} date={date} values={getUserComments(diaryData, date)} navigation={navigation} />
               </View>
