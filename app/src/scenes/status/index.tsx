@@ -7,7 +7,7 @@ import { colors } from "../../utils/colors";
 import { useContext } from "react";
 import { DiaryDataContext } from "../../context/diaryData";
 import localStorage from "../../utils/localStorage";
-import NPS from "../../services/NPS/NPS";
+import NPSManager from "../../services/NPS/NPSManager";
 import Bubble from "../../components/bubble";
 import BannerProNPS from "./bannerProNPS";
 import TabPicker from "./TabPicker";
@@ -34,7 +34,6 @@ import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context"
 
 const Status = ({ navigation, startSurvey }) => {
   const [diaryData] = useContext(DiaryDataContext);
-  const [NPSvisible, setNPSvisible] = useState(false);
   const [bannerProNPSVisible, setBannerProNPSVisible] = useState(true);
   const [ongletActif, setOngletActif] = useState("all");
   const [checklistBannerVisible, setChecklistBannerVisible] = useState<boolean | null>(null); // null = loading, boolean = determined
@@ -260,7 +259,7 @@ const Status = ({ navigation, startSurvey }) => {
     return (
       <>
         <Bubble diaryData={diaryData} />
-        <ContributeCard onPress={() => setNPSvisible(true)} />
+        <ContributeCard onPress={() => NPSManager.showNPS()} />
       </>
     );
   }, [diaryData]);
@@ -269,7 +268,6 @@ const Status = ({ navigation, startSurvey }) => {
     <>
       <SafeAreaView edges={["left", "right"]} style={[styles.safe]}>
         <Animated.View style={{ flex: 1 }}>
-          <NPS forceView={NPSvisible} close={() => setNPSvisible(false)} />
           <Header title={"Mes observations 🌱"} navigation={navigation} scrollY={scrollY} scrollThreshold={75} />
           <TabPicker ongletActif={ongletActif} onChange={setOngletActif} />
           {ongletActif === "all" && !bannerProNPSVisible ? (
