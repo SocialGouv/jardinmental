@@ -1,3 +1,10 @@
+# [1.111.0](https://github.com/SocialGouv/jardinmental/compare/v1.110.0...v1.111.0) (2025-10-23)
+
+
+### Features
+
+* new feedback ([#588](https://github.com/SocialGouv/jardinmental/issues/588)) ([ba0df50](https://github.com/SocialGouv/jardinmental/commit/ba0df50690eb4f65df6d7cfc3a04e5f821366ef1))
+
 # [1.110.0](https://github.com/SocialGouv/jardinmental/compare/v1.109.0...v1.110.0) (2025-10-23)
 
 
