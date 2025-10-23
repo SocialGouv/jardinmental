@@ -27,6 +27,8 @@ const Reminder = ({
   notifReminderMessage = "N'oubliez pas de remplir votre application Jardin Mental",
 }) => {
   const [reminder, setReminder] = useState<dayjs.Dayjs | null>(null);
+  const [hasStoredReminder, setHasStoredReminder] = useState<boolean>(false);
+
   const [reminderSetupVisible, setReminderSetupVisible] = useState(false);
 
   // Default reminder time constant
@@ -45,6 +47,7 @@ const Reminder = ({
     const isRegistered = await NotificationService.checkPermission();
     let storedReminder = await AsyncStorage.getItem(ReminderStorageKey);
     if (storedReminder) {
+      setHasStoredReminder(!!storedReminder);
       if (!dayjs(storedReminder).isValid()) {
         try {
           storedReminder = JSON.parse(storedReminder);
@@ -58,10 +61,9 @@ const Reminder = ({
     if (!storedReminder) {
       const date = new Date();
       date.setHours(20, 0, 0, 0);
-      setReminderRequest(date);
+      setReminder(dayjs(date));
       return;
     }
-    const scheduled = await NotificationService.getScheduledLocalNotifications();
     if (!storedReminder) return;
     setReminder(dayjs(storedReminder));
   };
@@ -127,12 +129,9 @@ const Reminder = ({
   const setReminderRequest = async (newReminder) => {
     setReminderSetupVisible(false);
     if (!dayjs(newReminder).isValid()) return;
-    await scheduleNotification(newReminder);
     setReminder(dayjs(newReminder));
     logEvents.logReminderObdEdit(Number(dayjs(newReminder).format("HHmm")));
-    await AsyncStorage.setItem(ReminderStorageKey, JSON.stringify(dayjs(newReminder)));
     setReminderSetupVisible(false);
-    const scheduled = await NotificationService.getScheduledLocalNotifications();
   };
 
   const deleteReminder = async () => {
@@ -141,8 +140,12 @@ const Reminder = ({
     await AsyncStorage.removeItem(ReminderStorageKey);
   };
 
-  const validateOnboarding = async () => {
+  const validateReminder = async () => {
     // navigation.navigate(ONBOARDING_STEPS.STEP_DRUGS);
+    if (!reminder) return;
+    await scheduleNotification(reminder.toDate());
+    await AsyncStorage.setItem(ReminderStorageKey, JSON.stringify(dayjs(reminder)));
+
     const isRegistered = await NotificationService.checkAndAskForPermission();
     if (!isRegistered) {
       showPermissionsAlert();
@@ -165,16 +168,17 @@ const Reminder = ({
   const desactivateReminder = async () => {
     logEvents.logReminderCancel();
     await deleteReminder();
-    if (!(await NotificationService.hasToken())) return;
-
-    await API.put({
-      path: "/reminder",
-      body: {
-        pushNotifToken: await NotificationService.getToken(),
-        type: "Main",
-        disabled: true,
-      },
-    });
+    if (await NotificationService.hasToken()) {
+      // if not a simulator device we have a token
+      await API.put({
+        path: "/reminder",
+        body: {
+          pushNotifToken: await NotificationService.getToken(),
+          type: "Main",
+          disabled: true,
+        },
+      });
+    }
     await localStorage.setOnboardingDone(true);
     // await localStorage.setOnboardingStep(null);
     navigation.reset({
@@ -183,11 +187,12 @@ const Reminder = ({
         {
           name: "tabs",
           params: {
-            onboarding: true,
+            onboarding: false,
           },
         },
       ],
     });
+    Alert.alert("Le rappel a bien été désactivé.");
   };
 
   const skip = () => {
@@ -203,9 +208,16 @@ const Reminder = ({
         navigation.goBack();
       }}
       nextText="Programmer mon rappel quotidien"
-      secondaryButton={route?.params?.onboarding ? <JMButton variant="outline" onPress={skip} title="Passer" className="mb-2" /> : undefined}
+      disabled={!reminder}
+      secondaryButton={
+        route?.params?.onboarding ? (
+          <JMButton variant="outline" onPress={skip} title="Passer" className="mb-2" />
+        ) : !!hasStoredReminder ? (
+          <JMButton variant="outline" onPress={desactivateReminder} title="Désactiver le rappel" className="mb-2"></JMButton>
+        ) : undefined
+      }
       handleSkip={route?.params?.onboarding ? skip : undefined}
-      handleNext={validateOnboarding}
+      handleNext={validateReminder}
     >
       <View className="flex-1 p-6 z-10 flex justify-center">
         <Text className={mergeClassNames(typography.displayXsBold, "text-gray-950 mb-6 text-left")}>Trouvez votre rythme</Text>

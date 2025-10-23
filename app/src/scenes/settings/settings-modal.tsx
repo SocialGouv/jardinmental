@@ -23,7 +23,7 @@ const SettingsModal = ({ navigation, visible, onClick }) => {
       <TouchableOpacity activeOpacity={1} style={styles.container} onPressOut={onClick}>
         <ContentWrapper style={styles.card}>
           <SettingItem
-            title="Définir un rappel"
+            title="Gérer un rappel"
             path="reminder"
             navigation={navigation}
             onClick={() => {
