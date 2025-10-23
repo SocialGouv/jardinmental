@@ -595,9 +595,7 @@ Le sommeil paradoxal, quant à lui, est la phase où les rêves sont les plus no
 \n\
 Il survient lorsque le corps **en a réellement besoin**, guidé par une horloge biologique sensible à la lumière du jour et au rythme de nos journées. Lorsque la nuit tombe, la mélatonine, cette hormone du sommeil, signale **progressivement** au corps qu’il est temps de se préparer au repos.\n\
 \n\
-**Prendre soin de son sommeil, quand cela est possible, est important pour permettre au corps et à l’esprit de se réguler et de se réparer**. Toutefois, chacun·e fait au mieux selon sa situation, qui peut parfois rendre difficile la mise en place de conditions favorables à l’endormissement. Bruit, environnement, contraintes de logement ou horaires atypiques sont autant de réalités qui peuvent\n\
-\n\
-**influencer la qualité du sommeil.**`,
+**Prendre soin de son sommeil, quand cela est possible, est important pour permettre au corps et à l’esprit de se réguler et de se réparer**. Toutefois, chacun·e fait au mieux selon sa situation, qui peut parfois rendre difficile la mise en place de conditions favorables à l’endormissement. Bruit, environnement, contraintes de logement ou horaires atypiques sont autant de réalités qui peuvent **influencer la qualité du sommeil.**`,
     externalResources: [
       "550e8400-e29b-41d4-a716-446655440142",
       "550e8400-e29b-41d4-a716-446655440143",

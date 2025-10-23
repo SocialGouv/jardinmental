@@ -1,7 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { Button2 } from "../../../components/Button2";
 import { Card } from "../../../components/Card";
-import { Screen } from "../../../components/Screen";
 import { Collapsable } from "../../../components/Collapsable";
 import { GOALS_EXAMPLE } from "../../../utils/goalsConstants";
 import { InputCheckbox } from "../../../components/InputCheckbox";
@@ -12,8 +10,7 @@ import { DAYS_OF_WEEK } from "../../../utils/date/daysOfWeek";
 import JMButton from "@/components/JMButton";
 import Plus from "../../../../assets/svg/Plus";
 import { AnimatedHeaderScrollScreen } from "@/scenes/survey-v2/AnimatedHeaderScrollScreen";
-import { Platform, View } from "react-native";
-import { mergeClassNames } from "@/utils/className";
+import { View } from "react-native";
 import NavigationButtons from "@/components/onboarding/NavigationButtons";
 import logEvents from "@/services/logEvents";
 

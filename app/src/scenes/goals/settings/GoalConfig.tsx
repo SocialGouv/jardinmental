@@ -1,8 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
-import { StyleSheet, View, Text, Platform } from "react-native";
-import { Button2 } from "../../../components/Button2";
-import { InputLabel } from "../../../components/InputLabel";
-import { Screen } from "../../../components/Screen";
+import { StyleSheet, View, Text } from "react-native";
 import { getDaysOfWeekLabel, getGoalsData, setGoalTracked } from "../../../utils/localStorage/goals";
 import { InputGroup, InputGroupItem } from "../../../components/InputGroup";
 import { InputToggle } from "../../../components/InputToggle";
@@ -10,7 +7,6 @@ import TimePicker from "../../../components/timePicker";
 import { InputText } from "../../../components/InputText";
 import dayjs from "dayjs";
 import { format, set } from "date-fns";
-import { Card } from "../../../components/Card";
 import { useFocusEffect } from "@react-navigation/native";
 import Icon from "../../../components/Icon";
 import { colors } from "@/utils/colors";
