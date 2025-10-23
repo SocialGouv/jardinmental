@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Dimensions,
   Modal,
@@ -45,67 +45,59 @@ contact: ${contact}
 profil: ${lookUpSupported[supported]}
 `;
 
-class NPS extends React.Component {
-  state = {
-    visible: false,
-    useful: null,
-    feedback: "",
-    contact: "",
-    sendButton: getCaption("post"),
-  };
+const NPS = () => {
+  const [visible, setVisible] = useState(false);
+  const [useful, setUseful] = useState(null);
+  const [feedback, setFeedback] = useState("");
+  const [contact, setContact] = useState("");
+  const [sendButton, setSendButton] = useState(getCaption("post"));
+  const npsSentRef = useRef(false);
+  const prevVisibleRef = useRef(false);
 
-  async componentDidMount() {
+  useEffect(() => {
     // Listen to NPSManager state changes
-    this.unsubscribeFromNPSManager = NPSManager.addListener(this.handleNPSStateChange);
+    const unsubscribeFromNPSManager = NPSManager.addListener((shouldShow) => {
+      setVisible(shouldShow);
+    });
 
     // Check initial state
     if (NPSManager.getShouldShowNPS()) {
-      this.setState({ visible: true });
+      setVisible(true);
     }
-  }
 
-  componentWillUnmount() {
-    if (this.unsubscribeFromNPSManager) {
-      this.unsubscribeFromNPSManager();
-    }
-  }
+    return () => {
+      if (unsubscribeFromNPSManager) {
+        unsubscribeFromNPSManager();
+      }
+    };
+  }, []);
 
-  componentDidUpdate(prevProps, prevState) {
-    if (!prevState.visible && this.state.visible) {
+  useEffect(() => {
+    if (!prevVisibleRef.current && visible) {
       // Log when NPS modal opens
       logEvents.logNPSOpen();
     }
-    if (prevState.visible && !this.state.visible) {
-      this.npsSent = false;
+    if (prevVisibleRef.current && !visible) {
+      npsSentRef.current = false;
     }
-  }
+    prevVisibleRef.current = visible;
+  }, [visible]);
 
-  handleNPSStateChange = (shouldShow) => {
-    this.setState({ visible: shouldShow });
-  };
-
-  setUseful = (useful) => this.setState({ useful });
-  setFeedback = (feedback) => this.setState({ feedback });
-  setSendButton = (sendButton) => this.setState({ sendButton });
-  setContact = (contact) => this.setState({ contact });
-
-  onClose = async () => {
-    const { useful } = this.state;
-    if (useful !== null && !this.npsSent) {
-      await this.sendNPS();
+  const onClose = async () => {
+    if (useful !== null && !npsSentRef.current) {
+      await sendNPS();
     }
     NPSManager.hideNPS();
   };
 
-  sendNPS = async () => {
-    if (this.npsSent) {
+  const sendNPS = async () => {
+    if (npsSentRef.current) {
       return;
     }
     // Log when NPS form is sent
     logEvents.logNPSFormSent();
 
-    const { useful, feedback, contact } = this.state;
-    this.setSendButton("Merci !");
+    setSendButton("Merci !");
     // logEvents._deprecatedLogNPSUsefulSend(useful);
     const userId = Matomo.userId;
     const supported = await localStorage.getSupported();
@@ -114,7 +106,7 @@ class NPS extends React.Component {
       subject: "Jardin Mental - NPS",
       text: formatText({ useful, feedback, userId, contact, supported, startDate }),
     });
-    this.npsSent = true;
+    npsSentRef.current = true;
 
     // Show thank you message
     setTimeout(() => {
@@ -122,75 +114,63 @@ class NPS extends React.Component {
     }, 300);
 
     NPSManager.hideNPS();
-    this.setState({ useful: null });
+    setUseful(null);
   };
 
-  renderSecondPage() {
-    const { feedback, sendButton, contact, useful } = this.state;
-    return (
-      <>
-        <Text style={styles.topSubTitle}>{getCaption("feedback.rate-app.useful")}</Text>
-        <Mark
-          selected={useful}
-          onPress={this.setUseful}
-          bad={getCaption("feedback.rate-app.useful.not")}
-          good={getCaption("feedback.rate-app.useful.extremely")}
-        />
-        <Text style={styles.topSubTitle}>{getCaption("feedback.improvements.question")}</Text>
-        <TextInput
-          style={styles.feedback}
-          onChangeText={this.setFeedback}
-          placeholder={getCaption("feedback.improvements.placeholder")}
-          value={feedback}
-          multiline
-          textAlignVertical="top"
-          returnKeyType="next"
-        />
-        {/* <Text style={styles.topSubTitle}>{getCaption("feedback.rate-app.probable")}</Text>
-        <Mark
-          selected={reco}
-          onPress={this.setReco}
-          bad={getCaption("feedback.rate-app.probable.not")}
-          good={getCaption("feedback.rate-app.probable.extremely")}
-        /> */}
-        <Text style={styles.topSubTitle}>{getCaption("feedback.contact.description")}</Text>
-        <TextInput
-          style={styles.contact}
-          value={contact}
-          placeholder={getCaption("feedback.contact")}
-          onChangeText={this.setContact}
-          autoCorrect={false}
-          autoCapitalize="none"
-          returnKeyType="go"
-          onSubmitEditing={this.sendNPS}
-        />
-        <TouchableOpacity style={styles.buttonContainer} disabled={sendButton === "Merci !"} onPress={this.sendNPS}>
-          <Text style={styles.buttonText}>{sendButton}</Text>
-        </TouchableOpacity>
-      </>
-    );
-  }
-
-  render() {
-    const { visible } = this.state;
-    return (
-      <Modal visible={visible} animationType="slide" presentationStyle="formSheet" onDismiss={this.onClose}>
-        <View style={styles.container}>
-          <KeyboardAvoidingView style={styles.keyboardAvoidingView} behavior={Platform.select({ ios: "padding", android: null })}>
-            <View style={styles.backContainer}>
-              <TouchableOpacity onPress={this.onClose}>
-                <Text style={styles.backText}>{getCaption("back")}</Text>
-              </TouchableOpacity>
-            </View>
-            <ScrollView style={styles.scrollView} keyboardDismissMode="on-drag" onScrollBeginDrag={Keyboard.dismiss}>
-              {this.renderSecondPage()}
-            </ScrollView>
-          </KeyboardAvoidingView>
-        </View>
-      </Modal>
-    );
-  }
-}
+  return (
+    <Modal visible={visible} animationType="slide" presentationStyle="formSheet" onDismiss={onClose}>
+      <View style={styles.container}>
+        <KeyboardAvoidingView style={styles.keyboardAvoidingView} behavior={Platform.select({ ios: "padding", android: null })}>
+          <View style={styles.backContainer}>
+            <TouchableOpacity onPress={onClose}>
+              <Text style={styles.backText}>{getCaption("back")}</Text>
+            </TouchableOpacity>
+          </View>
+          <ScrollView style={styles.scrollView} keyboardDismissMode="on-drag" onScrollBeginDrag={Keyboard.dismiss}>
+            <Text style={styles.topSubTitle}>{getCaption("feedback.rate-app.useful")}</Text>
+            <Mark
+              selected={useful}
+              onPress={setUseful}
+              bad={getCaption("feedback.rate-app.useful.not")}
+              good={getCaption("feedback.rate-app.useful.extremely")}
+            />
+            <Text style={styles.topSubTitle}>{getCaption("feedback.improvements.question")}</Text>
+            <TextInput
+              style={styles.feedback}
+              onChangeText={setFeedback}
+              placeholder={getCaption("feedback.improvements.placeholder")}
+              value={feedback}
+              multiline
+              textAlignVertical="top"
+              returnKeyType="next"
+            />
+            {/* <Text style={styles.topSubTitle}>{getCaption("feedback.rate-app.probable")}</Text>
+              <Mark
+                selected={reco}
+                onPress={this.setReco}
+                bad={getCaption("feedback.rate-app.probable.not")}
+                good={getCaption("feedback.rate-app.probable.extremely")}
+              /> */}
+            <Text style={styles.topSubTitle}>{getCaption("feedback.contact.description")}</Text>
+            <TextInput
+              style={styles.contact}
+              value={contact}
+              placeholder={getCaption("feedback.contact")}
+              onChangeText={setContact}
+              autoCorrect={false}
+              autoCapitalize="none"
+              returnKeyType="go"
+              onSubmitEditing={sendNPS}
+            />
+            <TouchableOpacity style={styles.buttonContainer} disabled={sendButton === "Merci !"} onPress={sendNPS}>
+              <Text style={styles.buttonText}>{sendButton}</Text>
+            </TouchableOpacity>
+          </ScrollView>
+        </KeyboardAvoidingView>
+      </View>
+    </Modal>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -281,22 +261,12 @@ const styles = StyleSheet.create({
 });
 
 const captions = {
-  notifTitle: "Vos retours sont importants pour nous",
-  notifMessage: "Avez-vous quelques secondes pour donner votre avis ?",
   post: "Envoyer",
   back: "Retour",
-  "feedback.rate-app.title": "5 secondes pour nous aider\u00A0?\u000AVos retours sont importants pour nous.",
   "feedback.rate-app.useful": "Ce service vous a-t-il été utile\u00A0?",
   "feedback.rate-app.useful.not": "Pas utile du tout",
   "feedback.rate-app.useful.extremely": "Extrêmement utile",
-  "feedback.rate-app.probable": "Quelle est la probabilité que vous recommandiez ce service à un ami ou un proche\u00A0?",
-  "feedback.rate-app.probable.not": "Pas du tout probable",
-  "feedback.rate-app.probable.extremely": "Très probable",
   "feedback.improvements.question": "Pour améliorer notre service, avez-vous quelques recommandations à nous faire\u00A0?",
-  // 'feedback.improvements.question':
-  //   'Comment pouvons-nous vous être encore plus utile\u00A0? Comment pouvons-nous améliorer ce service\u00A0?',
-  "feedback.improvements.legal-message":
-    "Merci de ne mentionner aucune information personnelle qui permettrait de vous identifier (nom, prénom, adresse mail, n° de téléphone, toute information sur votre état de santé)",
   "feedback.improvements.placeholder": "Idées d'améliorations (facultatif)",
   "feedback.contact.description":
     "Echanger avec vous serait précieux pour améliorer notre service, laissez-nous votre adresse mail si vous le souhaitez.",
