@@ -168,8 +168,8 @@ describe("DataExportImport", () => {
       await waitFor(
         () => {
           expect(mockSharing.shareAsync).toHaveBeenCalledWith(expect.stringContaining("jardin-mental-export-"), {
-            UTI: ".json",
-            mimeType: "application/json",
+            UTI: ".txt",
+            mimeType: "text/plain",
             dialogTitle: "Exporter mes données Jardin Mental",
           });
         },
@@ -264,7 +264,7 @@ describe("DataExportImport", () => {
       await waitFor(
         () => {
           expect(mockDocumentPicker.getDocumentAsync).toHaveBeenCalledWith({
-            type: "application/json",
+            type: "text/plain",
             copyToCacheDirectory: true,
           });
         },
