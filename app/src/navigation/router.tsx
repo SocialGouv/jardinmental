@@ -12,21 +12,6 @@ import DailyChart from "../scenes/variation/daily-chart";
 import { AppState, Platform, Linking } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import Notes from "../scenes/survey/notes-screen";
-import Onboarding from "../scenes/onboarding";
-import Supported from "../scenes/onboarding/onboardingSupported";
-import OnboardingSymptoms1 from "../scenes/onboarding/onboardingSymptoms";
-import OnboardingSymptoms2 from "../scenes/onboarding/onboardingSymptoms/objectifs.js";
-import OnboardingSymptomsRecap from "../scenes/onboarding/onboardingSymptoms/recap.js";
-import OnboardingExplanationScreen0 from "../scenes/onboarding/onboardingExplanation/screen0";
-import OnboardingExplanationScreen1 from "../scenes/onboarding/onboardingExplanation/screen1";
-import onboardingSymptomsStart from "../scenes/onboarding/onboardingSymptomsStart";
-import OnboardingSymptomsCustom from "../scenes/onboarding/onboardingSymptomsCustom";
-import OnboardingDrugs from "../scenes/onboarding/onboardingDrugs";
-import OnboardingDrugsInformation from "../scenes/onboarding/onboardingDrugs/drugs-information";
-import OnboardingDrugsList from "../scenes/onboarding/onboardingDrugs/list";
-import OnboardingExplanation from "../scenes/onboarding/onboardingExplanation";
-import OnboardingHint from "../scenes/onboarding/onboardingHint";
-import OnboardingFelicitation from "../scenes/onboarding/onboardingFelicitation";
 import CGU from "../scenes/legal/cgu-screen";
 import Privacy from "../scenes/legal/privacy-screen";
 import LegalMentions from "../scenes/legal/legal-mentions-screen";
@@ -45,10 +30,6 @@ import PrivacyLight from "../scenes/privacy-light";
 import NotificationService from "../services/notifications";
 import Indicateurs from "../scenes/indicateurs";
 import Presentation from "../scenes/presentation";
-import { OnboardingMood } from "../scenes/onboarding/onboardingSymptomsStart/MoodScreen";
-import { OnboardingSleep } from "../scenes/onboarding/onboardingSymptomsStart/SleepScreen";
-import { OnboardingSimpleCustomSymptoms } from "../scenes/onboarding/onboardingSymptomsCustom/SimpleCustomScreen";
-import { OnboardingGoals } from "../scenes/onboarding/onboardingGoals/goals";
 import { GoalsSettings } from "../scenes/goals/settings/GoalsSettings";
 import { GoalsAddOptions } from "../scenes/goals/settings/GoalsAddOptions";
 import { GoalsCreateForm } from "../scenes/goals/settings/GoalsCreateForm";
@@ -237,30 +218,12 @@ class Router extends React.Component<RouterProps> {
             <Stack.Screen name="notes" options={{ animationEnabled: Platform.OS === "ios" }}>
               {({ navigation, route }) => <Notes navigation={navigation} route={route} />}
             </Stack.Screen>
-            {/* <Stack.Screen name="onboarding" component={Onboarding} /> */}
             <Stack.Screen name="onboarding" component={OnboardingV2} />
-            <Stack.Screen name="onboarding-symptoms-1" component={OnboardingSymptoms1} />
-            <Stack.Screen name="onboarding-symptoms-2" component={OnboardingSymptoms2} />
-            <Stack.Screen name="onboarding-symptoms-recap" component={OnboardingSymptomsRecap} />
-            <Stack.Screen name="onboarding-explanation-indicator-1" component={OnboardingExplanationScreen1} />
-            <Stack.Screen name="onboarding-symptoms-mood" component={OnboardingMood} />
-            <Stack.Screen name="onboarding-symptoms-sleep" component={OnboardingSleep} />
-            <Stack.Screen name="onboarding-symptoms-custom-simple" component={OnboardingSimpleCustomSymptoms} />
-            <Stack.Screen name="onboarding-symptoms-start" component={onboardingSymptomsStart} />
-            <Stack.Screen name="onboarding-symptoms-custom" component={OnboardingSymptomsCustom} />
             <Stack.Screen name="checklist" component={CheckListScreen} />
             <Stack.Screen name="EDIT_INDICATOR" component={EditIndicateurs} />
             <Stack.Screen name="CREATE_INDICATOR" component={CreateIndicator} />
             <Stack.Screen name="CHOOSE_INDICATOR_TYPE" component={ChooseIndicatorType} />
             <Stack.Screen name="CHOOSE_INDICATOR_ORDER" component={ChooseIndicatorOrder} />
-            <Stack.Screen name="onboarding-goals" component={OnboardingGoals} />
-            <Stack.Screen name="onboarding-drugs" component={OnboardingDrugs} />
-            <Stack.Screen name="onboarding-drugs-information" component={OnboardingDrugsInformation} />
-            <Stack.Screen name="onboarding-drugs-list" component={OnboardingDrugsList} />
-            <Stack.Screen name="onboarding-explanation-details" component={OnboardingExplanation} />
-            <Stack.Screen name="onboarding-hint" component={OnboardingHint} />
-            <Stack.Screen name="onboarding-felicitation" component={OnboardingFelicitation} />
-            <Stack.Screen name="supported" component={Supported} />
             <Stack.Screen name="support" component={SupportScreen} />
             <Stack.Screen name="cgu" component={CGU} />
             <Stack.Screen name="privacy" component={Privacy} />

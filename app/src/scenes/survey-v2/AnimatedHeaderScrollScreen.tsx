@@ -22,7 +22,7 @@ import { HELP_FOR_CATEGORY, INDICATOR_CATEGORIES_DATA, SECTION_ICONS } from "../
 import { firstLetterUppercase } from "@/utils/string-util";
 import { KeyboardAvoidingView } from "react-native-keyboard-controller";
 import { NEW_INDICATORS_CATEGORIES } from "@/utils/liste_indicateurs.1";
-import { useOnboardingProgressHeader } from "../onboarding/ProgressHeader";
+import { useOnboardingProgressHeader } from "../onboarding-v2/ProgressHeader";
 import { useFocusEffect } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 

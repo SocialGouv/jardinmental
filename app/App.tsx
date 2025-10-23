@@ -20,7 +20,7 @@ import NPS from "./src/services/NPS/NPS";
 import { NeedUpdateContextProvider } from "./src/context/needUpdate";
 import { InfoModalProvider } from "./src/components/InfoModal";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { OnboardingProgressHeaderProvider } from "./src/scenes/onboarding/ProgressHeader";
+import { OnboardingProgressHeaderProvider } from "./src/scenes/onboarding-v2/ProgressHeader";
 import { LatestChangesModalProvider } from "./src/scenes/news/latestChangesModal";
 import { KeyboardProvider } from "react-native-keyboard-controller";
 import * as Sentry from "@sentry/react-native";

@@ -7,7 +7,7 @@ import { DiaryDataProvider } from "../../src/context/diaryData";
 import { STORAGE_KEY_INDICATEURS, STORAGE_KEY_GOALS } from "../../src/utils/constants";
 import { DiaryDataNewEntryInput } from "../../src/entities/DiaryData";
 import { saveGoalsData } from "../../src/utils/localStorage/goals";
-import { OnboardingProgressHeaderProvider } from "@/scenes/onboarding/ProgressHeader";
+import { OnboardingProgressHeaderProvider } from "@/scenes/onboarding-v2/ProgressHeader";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { StatusBarProvider } from "../../src/context/StatusBarContext";
 
