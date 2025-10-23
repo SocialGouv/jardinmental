@@ -176,7 +176,7 @@ export default ({ navigation, visible, onClick }) => {
                 <TouchableOpacity
                   onPress={async () => {
                     onClick();
-                    navigation.navigate("contact");
+                    Linking.openURL("mailto:jardinmental@fabrique.social.gouv.fr");
                   }}
                   className="bg-white rounded-b-xl flex-row px-4 py-6 self-center border border-gray-300 border-t-0 justify-between items-center"
                   style={{ width: "90%" }}
