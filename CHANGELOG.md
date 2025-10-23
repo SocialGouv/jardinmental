@@ -1,3 +1,16 @@
+# [1.108.0](https://github.com/SocialGouv/jardinmental/compare/v1.107.5...v1.108.0) (2025-10-23)
+
+
+### Bug Fixes
+
+* correct smiley label index offset, invert label for desc indicators ([#579](https://github.com/SocialGouv/jardinmental/issues/579)) ([0c6b287](https://github.com/SocialGouv/jardinmental/commit/0c6b287955e18a90b6b1be64e0d43aaf4ebc4eea))
+* **IndicatorsSettingsMore:** change icons and text overlapping on icons ([#583](https://github.com/SocialGouv/jardinmental/issues/583)) ([268d6f8](https://github.com/SocialGouv/jardinmental/commit/268d6f86f825664f4a45c1e169bc432c38cfcfd5))
+
+
+### Features
+
+* add deactivate reminder and clean reminder functions ([#582](https://github.com/SocialGouv/jardinmental/issues/582)) ([1ac6fcb](https://github.com/SocialGouv/jardinmental/commit/1ac6fcb560b6bbe12549189fcd87739de2045bcf))
+
 ## [1.107.5](https://github.com/SocialGouv/jardinmental/compare/v1.107.4...v1.107.5) (2025-10-23)
 
 
