@@ -115,7 +115,7 @@ const DrugsSurvey = ({ navigation, route }) => {
     if (savedPosology === undefined) {
       getLatestValue();
     } else {
-      setPosology(route?.params?.currentSurvey?.answers?.POSOLOGY?.filter((e) => !!medicalTreatment.find((t) => t.id === e.id)) || []);
+      setPosology(savedPosology || []);
     }
   };
 
