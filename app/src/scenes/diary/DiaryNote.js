@@ -1,5 +1,5 @@
 import React, { useState, useContext, useRef, useEffect } from "react";
-import { StyleSheet, View, TextInput, Alert, TouchableOpacity } from "react-native";
+import { StyleSheet, View, TextInput, Alert } from "react-native";
 import Text from "../../components/MyText";
 import { colors } from "../../utils/colors";
 import { makeSureDate } from "../../utils/date/helpers";
@@ -69,15 +69,7 @@ const DiaryNote = ({ note, date }) => {
   };
 
   return (
-    <TouchableOpacity
-      onPress={() => {
-        navigation.navigate("day-survey-detail", {
-          day: chartDates[dayIndex],
-          indicateur,
-          dayIndex,
-        });
-      }}
-    >
+    <View>
       <View key={note.id} style={[styles.item, editMode ? { backgroundColor: "#F4FCFD" } : {}]}>
         <View style={styles.container}>
           <TextInput
@@ -127,7 +119,7 @@ const DiaryNote = ({ note, date }) => {
           }}
         />
       </View>
-    </TouchableOpacity>
+    </View>
   );
 };
 
