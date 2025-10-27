@@ -126,6 +126,20 @@ class Router extends React.Component<RouterProps> {
     backgroundColor: colors.LIGHT_BLUE,
   };
 
+  handleNotificationNavigation = (notification: any) => {
+    const data = notification.request.content.data;
+    const title = notification.request.content.title;
+
+    // If a link exists in data, use it (for future compatibility)
+    if (data?.link) {
+      this.navigationRef?.navigate(data.link);
+    }
+    // Otherwise, detect by title for "Main" and "Goal" notifications
+    else if (title === "Comment allez-vous aujourd'hui ?" || title === "Vous avez un objectif aujourd'hui 🎯") {
+      this.navigationRef?.navigate("day-survey");
+    }
+  };
+
   async componentDidMount() {
     //await logEvents.initMatomo();
     logEvents.logAppVisit();
@@ -140,19 +154,9 @@ class Router extends React.Component<RouterProps> {
       // Check if app was opened from a notification (when app was completely closed)
       const response = await Notifications.getLastNotificationResponseAsync();
       if (response) {
-        const data = response.notification.request.content.data;
-        const title = response.notification.request.content.title;
-
         // Wait a bit for navigation to be ready
         setTimeout(() => {
-          // If a link exists in data, use it (for future compatibility)
-          if (data?.link) {
-            this.navigationRef?.navigate(data.link);
-          }
-          // Otherwise, detect by title for "Main" and "Goal" notifications
-          else if (title === "Comment allez-vous aujourd'hui ?" || title === "Vous avez un objectif aujourd'hui 🎯") {
-            this.navigationRef?.navigate("day-survey");
-          }
+          this.handleNotificationNavigation(response.notification);
         }, 100);
       }
 
@@ -162,17 +166,7 @@ class Router extends React.Component<RouterProps> {
       });
 
       const responseListener = Notifications.addNotificationResponseReceivedListener((response) => {
-        const data = response.notification.request.content.data;
-        const title = response.notification.request.content.title;
-
-        // If a link exists in data, use it (for future compatibility)
-        if (data?.link) {
-          this.navigationRef?.navigate(data.link);
-        }
-        // Otherwise, detect by title for "Main" and "Goal" notifications
-        else if (title === "Comment allez-vous aujourd'hui ?" || title === "Vous avez un objectif aujourd'hui 🎯") {
-          this.navigationRef?.navigate("day-survey");
-        }
+        this.handleNotificationNavigation(response.notification);
       });
 
       this.cleanupNotifications = () => {
