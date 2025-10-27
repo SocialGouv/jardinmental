@@ -75,9 +75,19 @@ const linking = {
     // Check if there is an initial notification
     const notification = NotificationService.popInitialNotification();
 
-    // Get deep link from data
-    // if this is undefined, the app will open the default/home page
-    return notification?.data?.link;
+    // If a link exists in data, use it (for future compatibility)
+    if (notification?.data?.link) {
+      return notification.data.link;
+    }
+
+    // Otherwise, detect by title for "Main" and "Goal" notifications
+    const title = notification?.request?.content?.title;
+    if (title === "Comment allez-vous aujourd'hui ?" || title === "Vous avez un objectif aujourd'hui 🎯") {
+      return "day-survey";
+    }
+
+    // If no match, app will open the default/home page
+    return undefined;
   },
   subscribe(listener) {
     /// Listen to incoming links from deep linking
@@ -150,10 +160,15 @@ class Router extends React.Component<RouterProps> {
       });
 
       const responseListener = Notifications.addNotificationResponseReceivedListener((response) => {
+        const data = response.notification.request.content.data;
         const title = response.notification.request.content.title;
 
-        // @todo we a could use a property in the notification data to do this
-        if (title === "Comment allez-vous aujourd'hui ?" || title === "Vous avez un objectif aujourd'hui 🎯") {
+        // If a link exists in data, use it (for future compatibility)
+        if (data?.link) {
+          this.navigationRef?.navigate(data.link);
+        }
+        // Otherwise, detect by title for "Main" and "Goal" notifications
+        else if (title === "Comment allez-vous aujourd'hui ?" || title === "Vous avez un objectif aujourd'hui 🎯") {
           this.navigationRef?.navigate("day-survey");
         }
       });
