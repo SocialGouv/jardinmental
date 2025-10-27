@@ -1,3 +1,11 @@
+# [1.113.0](https://github.com/SocialGouv/jardinmental/compare/v1.112.1...v1.113.0) (2025-10-27)
+
+
+### Features
+
+* new import/export page ([#581](https://github.com/SocialGouv/jardinmental/issues/581)) ([a2e639f](https://github.com/SocialGouv/jardinmental/commit/a2e639f92eb2b1df118345c1007878f32735aca8))
+* use REMINDER_ADD for setting reminder when not in the onboarding ([#590](https://github.com/SocialGouv/jardinmental/issues/590)) ([6fcd2c9](https://github.com/SocialGouv/jardinmental/commit/6fcd2c9a4d68868b2640617cbcf8fc07c89f905b))
+
 ## [1.112.1](https://github.com/SocialGouv/jardinmental/compare/v1.112.0...v1.112.1) (2025-10-27)
 
 
