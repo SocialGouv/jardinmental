@@ -64,20 +64,13 @@ const Stack = createStackNavigator();
 
 const linking = {
   prefixes: ["jardinmental://"],
-  async getInitialURL() {
+  async getInitialURL(): Promise<string | null | undefined> {
     // Check if app was opened from a deep link
     const url = await Linking.getInitialURL();
-
     if (url != null) {
       return url;
     }
-
-    // Check if there is an initial notification
-    const notification = NotificationService.popInitialNotification();
-
-    // Get deep link from data
-    // if this is undefined, the app will open the default/home page
-    return notification?.data?.link;
+    return null;
   },
   subscribe(listener) {
     /// Listen to incoming links from deep linking
@@ -133,6 +126,20 @@ class Router extends React.Component<RouterProps> {
     backgroundColor: colors.LIGHT_BLUE,
   };
 
+  handleNotificationNavigation = (notification: any) => {
+    const data = notification.request.content.data;
+    const title = notification.request.content.title;
+
+    // If a link exists in data, use it (for future compatibility)
+    if (data?.link) {
+      this.navigationRef?.navigate(data.link);
+    }
+    // Otherwise, detect by title for "Main" and "Goal" notifications
+    else if (title === "Comment allez-vous aujourd'hui ?" || title === "Vous avez un objectif aujourd'hui 🎯") {
+      this.navigationRef?.navigate("day-survey");
+    }
+  };
+
   async componentDidMount() {
     //await logEvents.initMatomo();
     logEvents.logAppVisit();
@@ -144,16 +151,22 @@ class Router extends React.Component<RouterProps> {
         await AsyncStorage.setItem("deviceId", deviceId);
       }
 
-      // Setup notification handler
+      // Check if app was opened from a notification (when app was completely closed)
+      const response = await Notifications.getLastNotificationResponseAsync();
+      if (response) {
+        // Wait a bit for navigation to be ready
+        setTimeout(() => {
+          this.handleNotificationNavigation(response.notification);
+        }, 100);
+      }
+
+      // Setup notification handler for when app is already open
       const notificationListener = Notifications.addNotificationReceivedListener((notification) => {
         console.log("Notification received:", notification);
       });
 
       const responseListener = Notifications.addNotificationResponseReceivedListener((response) => {
-        const data = response.notification.request.content.data;
-        if (data?.link) {
-          this.navigationRef?.navigate(data.link);
-        }
+        this.handleNotificationNavigation(response.notification);
       });
 
       this.cleanupNotifications = () => {
