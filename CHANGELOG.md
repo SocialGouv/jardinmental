@@ -1,3 +1,10 @@
+# [1.114.0](https://github.com/SocialGouv/jardinmental/compare/v1.113.0...v1.114.0) (2025-10-27)
+
+
+### Features
+
+* open day survey when user click notification ([#591](https://github.com/SocialGouv/jardinmental/issues/591)) ([1adceb4](https://github.com/SocialGouv/jardinmental/commit/1adceb48abb893d22d2fa8a6d1f1ca5b37b9c0f6))
+
 # [1.113.0](https://github.com/SocialGouv/jardinmental/compare/v1.112.1...v1.113.0) (2025-10-27)
 
 
