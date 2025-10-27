@@ -64,30 +64,13 @@ const Stack = createStackNavigator();
 
 const linking = {
   prefixes: ["jardinmental://"],
-  async getInitialURL() {
+  async getInitialURL(): Promise<string | null | undefined> {
     // Check if app was opened from a deep link
     const url = await Linking.getInitialURL();
-
     if (url != null) {
       return url;
     }
-
-    // Check if there is an initial notification
-    const notification = NotificationService.popInitialNotification();
-
-    // If a link exists in data, use it (for future compatibility)
-    if (notification?.data?.link) {
-      return notification.data.link;
-    }
-
-    // Otherwise, detect by title for "Main" and "Goal" notifications
-    const title = notification?.request?.content?.title;
-    if (title === "Comment allez-vous aujourd'hui ?" || title === "Vous avez un objectif aujourd'hui 🎯") {
-      return "day-survey";
-    }
-
-    // If no match, app will open the default/home page
-    return undefined;
+    return null;
   },
   subscribe(listener) {
     /// Listen to incoming links from deep linking
@@ -154,7 +137,26 @@ class Router extends React.Component<RouterProps> {
         await AsyncStorage.setItem("deviceId", deviceId);
       }
 
-      // Setup notification handler
+      // Check if app was opened from a notification (when app was completely closed)
+      const response = await Notifications.getLastNotificationResponseAsync();
+      if (response) {
+        const data = response.notification.request.content.data;
+        const title = response.notification.request.content.title;
+
+        // Wait a bit for navigation to be ready
+        setTimeout(() => {
+          // If a link exists in data, use it (for future compatibility)
+          if (data?.link) {
+            this.navigationRef?.navigate(data.link);
+          }
+          // Otherwise, detect by title for "Main" and "Goal" notifications
+          else if (title === "Comment allez-vous aujourd'hui ?" || title === "Vous avez un objectif aujourd'hui 🎯") {
+            this.navigationRef?.navigate("day-survey");
+          }
+        }, 100);
+      }
+
+      // Setup notification handler for when app is already open
       const notificationListener = Notifications.addNotificationReceivedListener((notification) => {
         console.log("Notification received:", notification);
       });
