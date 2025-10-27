@@ -150,9 +150,11 @@ class Router extends React.Component<RouterProps> {
       });
 
       const responseListener = Notifications.addNotificationResponseReceivedListener((response) => {
-        const data = response.notification.request.content.data;
-        if (data?.link) {
-          this.navigationRef?.navigate(data.link);
+        const title = response.notification.request.content.title;
+
+        // @todo we a could use a property in the notification data to do this
+        if (title === "Comment allez-vous aujourd'hui ?" || title === "Vous avez un objectif aujourd'hui 🎯") {
+          this.navigationRef?.navigate("day-survey");
         }
       });
 
