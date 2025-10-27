@@ -1,31 +1,29 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Alert, View, TouchableOpacity, StyleSheet, ScrollView, Linking, Text } from "react-native";
-// import { openSettings } from "react-native-permissions";
-import dayjs from "dayjs";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import localStorage from "../../utils/localStorage";
-import { ONBOARDING_STEPS, TW_COLORS } from "../../utils/constants";
-import TimePicker from "../../components/timePicker";
-import NotificationService from "../../services/notifications";
-import { colors } from "../../utils/colors";
-import logEvents from "../../services/logEvents";
-import API from "../../services/api";
+import { Alert, Linking, Text, View } from "react-native";
 import * as RNLocalize from "react-native-localize";
-import BeigeWrapperScreen from "../onboarding-v2/BeigeWrapperScreen";
-import { mergeClassNames } from "@/utils/className";
-import { typography } from "@/utils/typography";
-import Pencil from "@assets/svg/icon/Pencil";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import dayjs from "dayjs";
 import { SquircleButton, SquircleView } from "expo-squircle-view";
+
+import Pencil from "@assets/svg/icon/Pencil";
+
 import JMButton from "@/components/JMButton";
+import TimePicker from "@/components/timePicker";
+
+import API from "@/services/api";
+import logEvents from "@/services/logEvents";
+import NotificationService from "@/services/notifications";
+
+import { mergeClassNames } from "@/utils/className";
+import { ONBOARDING_STEPS, TW_COLORS } from "@/utils/constants";
+import localStorage from "@/utils/localStorage";
+import { typography } from "@/utils/typography";
+
+import BeigeWrapperScreen from "../onboarding-v2/BeigeWrapperScreen";
 
 const ReminderStorageKey = "@Reminder";
 
-const Reminder = ({
-  navigation,
-  route,
-  notifReminderTitle = "Comment ça va aujourd'hui ?",
-  notifReminderMessage = "N'oubliez pas de remplir votre application Jardin Mental",
-}) => {
+const Reminder = ({ navigation, route, notifReminderTitle = "Comment ça va aujourd'hui ?" }) => {
   const [reminder, setReminder] = useState<dayjs.Dayjs | null>(null);
   const [hasStoredReminder, setHasStoredReminder] = useState<boolean>(false);
 
@@ -99,7 +97,6 @@ const Reminder = ({
         disabled: false,
       },
     });
-    logEvents.logReminderAdd();
   };
 
   const showReminderSetup = () => {
@@ -161,6 +158,7 @@ const Reminder = ({
         routes: [{ name: "tabs" }],
       });
     } else {
+      logEvents.logReminderAdd();
       navigation.navigate("tabs");
     }
   };
@@ -180,7 +178,6 @@ const Reminder = ({
       });
     }
     await localStorage.setOnboardingDone(true);
-    // await localStorage.setOnboardingStep(null);
     navigation.reset({
       index: 0,
       routes: [
