@@ -1,3 +1,10 @@
+## [1.112.1](https://github.com/SocialGouv/jardinmental/compare/v1.112.0...v1.112.1) (2025-10-27)
+
+
+### Bug Fixes
+
+* can not click on chevron on a (real) android, fixed by claude suggestion ([#589](https://github.com/SocialGouv/jardinmental/issues/589)) ([eefc34f](https://github.com/SocialGouv/jardinmental/commit/eefc34fe5fa899ed639d0f4f5ad418834a948ff4))
+
 # [1.112.0](https://github.com/SocialGouv/jardinmental/compare/v1.111.0...v1.112.0) (2025-10-23)
 
 
