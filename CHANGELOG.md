@@ -1,3 +1,10 @@
+# [1.115.0](https://github.com/SocialGouv/jardinmental/compare/v1.114.0...v1.115.0) (2025-10-28)
+
+
+### Features
+
+* illustration onboarding ([#592](https://github.com/SocialGouv/jardinmental/issues/592)) ([0bd4e77](https://github.com/SocialGouv/jardinmental/commit/0bd4e77d9f8af3911f768fb606f562ec7d955f40))
+
 # [1.114.0](https://github.com/SocialGouv/jardinmental/compare/v1.113.0...v1.114.0) (2025-10-27)
 
 
