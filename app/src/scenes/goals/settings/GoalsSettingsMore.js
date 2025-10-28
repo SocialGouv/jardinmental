@@ -1,20 +1,16 @@
-import React, { useCallback, useState, useEffect } from "react";
-import { FlatList, StyleSheet, Text, View, TouchableOpacity, Platform } from "react-native";
+import React, { useCallback, useState } from "react";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { Button2 } from "../../../components/Button2";
-import { Screen } from "../../../components/Screen";
-import { Card } from "../../../components/Card";
 import { useFocusEffect } from "@react-navigation/native";
 import { getGoalsTracked, setGoalTracked } from "../../../utils/localStorage/goals";
 import { Title } from "../../../components/Title";
 import { Badge } from "../../../components/Badge";
 import Icon from "../../../components/Icon";
-import DraggableFlatList, { ScaleDecorator } from "react-native-draggable-flatlist";
+import { ScaleDecorator } from "react-native-draggable-flatlist";
 import { autoLayoutAnimation } from "../../../utils/autoLayoutAnimation";
-import { confirm } from "../../../utils";
 import { colors } from "@/utils/colors";
 import JMButton from "@/components/JMButton";
 import { AnimatedHeaderScrollScreen } from "@/scenes/survey-v2/AnimatedHeaderScrollScreen";
-import { mergeClassNames } from "@/utils/className";
 import NavigationButtons from "@/components/onboarding/NavigationButtons";
 
 export const GoalsSettingsMore = ({ navigation, route }) => {

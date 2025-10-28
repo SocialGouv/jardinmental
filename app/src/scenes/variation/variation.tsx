@@ -74,13 +74,13 @@ export const VariationsHeader = ({ day, setDay, scrollY }) => {
         },
       ]}
     >
-      {/* <WeekPicker
+      <WeekPicker
         firstDay={firstDay}
         lastDay={lastDay}
         onAfterPress={() => setDay(beforeToday(-7, day))}
         onBeforePress={() => setDay(beforeToday(7, day))}
         setDay={setDay}
-      /> */}
+      />
       <TouchableOpacity
         onPress={() => {
           showBottomSheet(
@@ -167,37 +167,6 @@ const TestChart = ({ data, dataB, treatment }) => {
     // Short format: DD/MM
     return `${day.toString().padStart(2, "0")}/${month.toString().padStart(2, "0")}/${year.toString().padStart(2, "0").slice(2, 4)}`;
   };
-
-  const lineData = [
-    { value: 1, label: "1 Jan" },
-    { value: 5, label: "10 Jan" },
-    { value: 5, label: "20 Jan" },
-    { value: 2, label: "30 Jan" },
-    { value: 4, label: "1 Feb" },
-    { value: 1, label: "10 Feb" },
-    { value: 3, label: "20 Feb" },
-    { value: 3, label: "28 Feb" },
-    { value: 1, label: "1 Mar" },
-    { value: 1, label: "10 Mar" },
-    { value: 1, label: "20 Mar" },
-    { value: 0, label: "30 Mar" },
-    { value: 4, label: "1 Apr" },
-    { value: 3, label: "10 Apr" },
-    { value: 2, label: "20 Apr" },
-    { value: 2, label: "30 Apr" },
-    { value: 2, label: "1 May" },
-    { value: 5, label: "10 May" },
-    { value: 5, label: "20 May" },
-    { value: 1, label: "30 May" },
-    { value: 1, label: "1 Jun" },
-    { value: 5, label: "10 Jun" },
-    { value: 5, label: "20 Jun" },
-    { value: 4, label: "30 Jun" },
-    { value: 4, label: "1 Jul" },
-    { value: 1, label: "10 Jul" },
-    { value: 4, label: "20 Jul" },
-    { value: 1, label: "30 Jul" },
-  ];
 
   const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"];
 
@@ -400,32 +369,40 @@ const Variations = ({ navigation, onScroll, scrollY, day, setDay, dynamicPadding
     return chartDates.map((date) => {
       const dayData = diaryData[date];
       if (!dayData) {
-        return {
-          value: 1,
-          hideDataPoint: true,
-          label: date,
-        };
+        return null;
+        // return {
+        //   value: 1,
+        //   hideDataPoint: true,
+        //   label: date,
+        // };
       }
       const categoryState = diaryData[date][getIndicatorKey(indicateur)];
       if (!categoryState) {
-        return {
-          value: 1,
-          hideDataPoint: true,
-          label: date,
-        };
+        return null;
+        // return {
+        //   value: 1,
+        //   hideDataPoint: true,
+        //   label: date,
+        // };
       }
-      if (indicateur?.type === "boolean") return { value: categoryState?.value === true ? 4 : 0, label: date };
-      if (indicateur?.type === "gauge")
-        return {
-          label: date,
-          value: Math.min(Math.floor(categoryState?.value * 5), 4),
-        };
-      if (categoryState?.value)
-        return {
-          value: categoryState?.value,
-          label: date,
-        };
-
+      if (indicateur?.type === "boolean") {
+        return categoryState?.value === true ? 4 : 0;
+        // return { value: categoryState?.value === true ? 4 : 0, label: date };
+      }
+      if (indicateur?.type === "gauge") {
+        return Math.min(Math.floor(categoryState?.value * 5), 4);
+        // return {
+        //   label: date,
+        //   value: Math.min(Math.floor(categoryState?.value * 5), 4),
+        // };
+      }
+      if (categoryState?.value) {
+        return categoryState?.value - 1;
+        // return {
+        //   value: categoryState?.value,
+        //   label: date,
+        // };
+      }
       // -------
       // the following code is for the retrocompatibility
       // -------
@@ -437,16 +414,18 @@ const Variations = ({ navigation, onScroll, scrollY, day, setDay, dynamicPadding
         // if it's one category with the suffix 'FREQUENCE' :
         // add the intensity (default level is 3 - for the frequence 'never')
         categoryStateIntensity = diaryData[date][`${categoryName}_INTENSITY`] || { level: 3 };
-        return {
-          value: categoryState.level + categoryStateIntensity.level - 2,
-          label: date,
-        };
+        return categoryState.level + categoryStateIntensity.level - 2;
+        // return {
+        //   value: categoryState.level + categoryStateIntensity.level - 2,
+        //   label: date,
+        // };
       }
-      return {
-        data: categoryState.level ? categoryState.level : null,
-        hideDataPoint: !categoryState.level,
-        label: date,
-      };
+      return categoryState.level ? categoryState.level - 1 : null;
+      // return {
+      //   data: categoryState.level ? categoryState.level : null,
+      //   hideDataPoint: !categoryState.level,
+      //   label: date,
+      // };
     });
   };
 
@@ -523,7 +502,21 @@ const Variations = ({ navigation, onScroll, scrollY, day, setDay, dynamicPadding
       >
         {!calendarIsEmpty ? (
           <>
-            <TestChart data={dataA} dataB={dataB} treatment={treatment} />
+            {userIndicateurs
+              .concat(INDICATEURS)
+              .filter((ind) => ind.active)
+              .map(
+                (indicateur) =>
+                  isChartVisible(getIndicatorKey(indicateur)) && (
+                    <Chart
+                      indicateur={indicateur}
+                      title={getTitle(indicateur.name)}
+                      key={indicateur.name}
+                      data={computeChartData(indicateur)}
+                      onPress={(dayIndex) => displayOnlyRequest(indicateur, dayIndex)}
+                    />
+                  )
+              )}
           </>
         ) : (
           <>

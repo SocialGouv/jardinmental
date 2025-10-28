@@ -67,12 +67,17 @@ export const IndicatorSurveyItem = ({
 
   const computeIndicatorLabel = (): string => {
     if (value === null) return "";
-    const index = indicator.type === INDICATOR_TYPE.gauge ? Math.min(Math.floor(value * 5), 4) : value;
+    let index = indicator.type === INDICATOR_TYPE.gauge ? Math.min(Math.floor(value * 5), 4) : value;
+
+    // For smiley-type indicators sorted in DESC order, invert the label index.
+    if (indicator.order === "DESC" && indicator.type === INDICATOR_TYPE.smiley) {
+      index = 6 - index; // Inverse 1→5, 2→4, 3→3, 4→2, 5→1
+    }
 
     if (Object.keys(INDICATOR_LABELS).includes(indicator.uuid)) {
       return INDICATOR_LABELS[indicator.uuid][index - 1];
     } else {
-      return DEFAULT_INDICATOR_LABELS[index];
+      return DEFAULT_INDICATOR_LABELS[index - 1];
     }
   };
 
@@ -159,46 +164,3 @@ export const IndicatorSurveyItem = ({
     </BasicCard>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    width: "100%",
-    borderWidth: 1,
-    borderRadius: 16,
-    marginVertical: 8,
-  },
-  contentContainer: {
-    padding: 16,
-  },
-  topContainer: {
-    flexDirection: "row",
-    alignItems: "flex-start",
-  },
-  label: {
-    fontSize: 16,
-    fontFamily: "SourceSans3",
-    fontWeight: "400",
-    textAlign: "left",
-    color: colors.BLUE,
-    flexShrink: 1,
-    marginLeft: 8,
-    paddingTop: 3,
-  },
-  emojisContainer: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginTop: 8,
-    marginBottom: 16,
-  },
-  selectionContainer: {
-    padding: 6,
-    backgroundColor: "white",
-    borderColor: "#DEF4F5",
-    borderWidth: 1,
-    borderRadius: 8,
-  },
-  activeSelectionContainer: {
-    backgroundColor: colors.LIGHT_BLUE,
-  },
-});

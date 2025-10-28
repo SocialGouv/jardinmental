@@ -6,7 +6,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useSharedValue } from "react-native-reanimated";
 
 import { colors } from "@/utils/colors";
-import NPS from "@/services/NPS/NPS";
+import NPSManager from "@/services/NPS/NPSManager";
 import Header from "@/components/Header";
 import ExerciseItem from "./exercise-item";
 import { DiaryDataContext } from "@/context/diaryData";
@@ -20,7 +20,6 @@ import JMButton from "@/components/JMButton";
 const LIMIT_PER_PAGE = __DEV__ ? 3 : 30;
 
 export default ({ navigation, startSurvey }) => {
-  const [NPSvisible, setNPSvisible] = useState(false);
   const [diaryData] = useContext(DiaryDataContext);
   const [page, setPage] = useState(1);
   const [showWelcome, setShowWelcome] = useState("true");
@@ -47,7 +46,6 @@ export default ({ navigation, startSurvey }) => {
   return (
     <>
       <View className="flex-1">
-        <NPS forceView={NPSvisible} close={() => setNPSvisible(false)} />
         <View style={styles.headerContainer}>
           <Header title="Beck" navigation={navigation} scrollY={scrollY} />
         </View>
@@ -118,7 +116,7 @@ export default ({ navigation, startSurvey }) => {
                     <ExerciseItem patientState={diaryData[date]} date={date} navigation={navigation} />
                   </View>
                 ))}
-              <ContributeCard onPress={() => setNPSvisible(true)} />
+              <ContributeCard onPress={() => NPSManager.showNPS()} />
               {Object.keys(diaryData)
                 ?.sort((a, b) => {
                   a = a.split("/").reverse().join("");
@@ -143,7 +141,6 @@ export default ({ navigation, startSurvey }) => {
 
 const styles = StyleSheet.create({
   headerContainer: {
-    padding: 5,
     paddingBottom: 0,
     backgroundColor: colors.LIGHT_BLUE,
   },

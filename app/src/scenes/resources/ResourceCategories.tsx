@@ -1,8 +1,11 @@
 import React from "react";
-import { View, Text, SafeAreaView, ScrollView, TouchableOpacity } from "react-native";
+import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import Header from "../../components/Header";
 import { CATEGORIES } from "./data/resources";
 import logEvents from "../../services/logEvents";
+import { TW_COLORS } from "@/utils/constants";
+import ArrowIcon from "@assets/svg/icon/Arrow";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 interface ResourceCategoriesProps {
   navigation: any;
@@ -27,7 +30,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ number, title, onPress }) =
           <Text className="text-cnam-primary-950 text-base font-medium leading-6">{title}</Text>
         </View>
         <View className="justify-center items-center pr-4">
-          <Text className="text-lg text-cnam-primary-950 font-bold">→</Text>
+          <ArrowIcon width={16} height={16} color={TW_COLORS.CNAM_PRIMARY_800} />
         </View>
       </View>
     </TouchableOpacity>
@@ -48,8 +51,8 @@ const ResourceCategories: React.FC<ResourceCategoriesProps> = ({ navigation }) =
   };
 
   return (
-    <SafeAreaView className="flex-1">
-      <View className="bg-cnam-primary-800 flex flex-row justify-between p-[5px] pb-0">
+    <SafeAreaView edges={["left", "right"]} className="flex-1">
+      <View className="bg-cnam-primary-800 flex flex-row justify-between pb-0">
         <Header title="Ressources" navigation={navigation} />
       </View>
       <ScrollView

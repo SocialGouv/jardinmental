@@ -17,11 +17,10 @@ import { BottomSheetProvider } from "@/context/BottomSheetContext";
 
 import { UserProfileProvider } from "./src/context/userProfile";
 import NPS from "./src/services/NPS/NPS";
-import NPSManager from "./src/services/NPS/NPSManager";
 import { NeedUpdateContextProvider } from "./src/context/needUpdate";
 import { InfoModalProvider } from "./src/components/InfoModal";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { OnboardingProgressHeaderProvider } from "./src/scenes/onboarding/ProgressHeader";
+import { OnboardingProgressHeaderProvider } from "./src/scenes/onboarding-v2/ProgressHeader";
 import { LatestChangesModalProvider } from "./src/scenes/news/latestChangesModal";
 import { KeyboardProvider } from "react-native-keyboard-controller";
 import * as Sentry from "@sentry/react-native";
@@ -83,9 +82,6 @@ const App = () => {
         "SourceSans3-ExtraBold": require("./assets/fonts/SourceSans3-ExtraBold.ttf"),
         "SourceSans3-ExtraBoldItalic": require("./assets/fonts/SourceSans3-ExtraBoldItalic.ttf"),
       });
-
-      // Initialize NPSManager once when the app starts
-      await NPSManager.initialize();
 
       setFontsLoaded(true);
       await SplashScreen.hideAsync();

@@ -1,6 +1,5 @@
 import React from "react";
 import ReminderOnboarding from "./reminderOnboarding";
-import Reminder from "./reminder";
 
 const ReminderIndex = (props) => {
   return <ReminderOnboarding {...props} />;

@@ -9,7 +9,7 @@ import RangeDate from "./RangeDate";
 import ChartPie from "./chartPie";
 import Evenements from "./triggers/triggers";
 import Variations, { VariationsHeader } from "../variation/variation";
-import { FriseScreen, CorrelationHeader } from "./correlation/Correlation";
+import { Correlation, CorrelationHeader } from "./correlation/Correlation";
 import { EventFilterHeader } from "./triggers/EventFilterHeader";
 import logEvents from "../../services/logEvents";
 import localStorage from "../../utils/localStorage";
@@ -220,7 +220,7 @@ const Bilan = ({ navigation, startSurvey }) => {
 
         {chartType === "Frises" && (
           <View style={{ display: chartType === "Frises" ? "flex" : "none", flex: 1 }}>
-            <FriseScreen
+            <Correlation
               dynamicPaddingTop={dynamicPaddingTop}
               onScroll={scrollHandler}
               navigation={navigation}
@@ -296,7 +296,6 @@ export const StatistiqueHeader = ({ presetDate, setPresetDate, fromDate, toDate,
 
 export const styles = StyleSheet.create({
   headerContainerNavigation: {
-    padding: 5,
     paddingBottom: 0,
     backgroundColor: colors.LIGHT_BLUE,
   },

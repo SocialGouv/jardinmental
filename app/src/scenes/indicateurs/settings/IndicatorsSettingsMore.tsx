@@ -1,25 +1,24 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import { Button2 } from "../../../components/Button2";
-import { Screen } from "../../../components/Screen";
-import { Card } from "../../../components/Card";
+import { Card } from "@/components/Card";
 import { useFocusEffect } from "@react-navigation/native";
-import { Title } from "../../../components/Title";
-import { Badge } from "../../../components/Badge";
-import Icon from "../../../components/Icon";
-import localStorage from "../../../utils/localStorage";
-import DraggableFlatList, { ScaleDecorator } from "react-native-draggable-flatlist";
+import Icon from "@/components/Icon";
+import localStorage from "@/utils/localStorage";
 import { colors } from "@/utils/colors";
 import JMButton from "@/components/JMButton";
 import NavigationButtons from "@/components/onboarding/NavigationButtons";
 import { AnimatedHeaderScrollScreen } from "@/scenes/survey-v2/AnimatedHeaderScrollScreen";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
-import { Indicator } from "@/entities/Indicator";
 import logEvents from "@/services/logEvents";
+import ReorderableList, { reorderItems, useReorderableDrag } from "react-native-reorderable-list";
+import { Gesture } from "react-native-gesture-handler";
+import ParagraphSpacing from "@assets/svg/icon/ParagraphSpacing";
+import TrashIcon from "@assets/svg/icon/Trash";
+import { TW_COLORS } from "@/utils/constants";
 
 const IndicatorsSettingsMore = ({ navigation, route }) => {
-  const [indicators, setIndicators] = useState([]);
+  const [indicators, setIndicators] = useState<Indicator[]>([]);
   const [loading, setLoading] = useState(false);
 
   useFocusEffect(
@@ -39,11 +38,16 @@ const IndicatorsSettingsMore = ({ navigation, route }) => {
     navigation.goBack();
   };
 
-  const renderItem = useCallback((indicator: Indicator, index: number) => {
-    return <IndicatorItem indicator={indicator} isActive={indicator.active} drag={undefined} index={index} setIndicators={setIndicators} />;
+  const renderItem = useCallback(({ item: indicator }) => {
+    return <IndicatorItem indicator={indicator} setIndicators={setIndicators} />;
   }, []);
 
-  const keyExtractor = useCallback((indicator) => indicator.uuid, []);
+  const keyExtractor = useCallback((indicator: Indicator) => indicator.uuid || indicator.name, []);
+
+  // Configure pan gesture to allow scrolling while keeping drag functionality
+  // The pan gesture activates after 520ms, which is slightly longer than the long press delay (100ms)
+  // This allows normal scrolling to work while still enabling drag when holding longer
+  const panGesture = useMemo(() => Gesture.Pan().activateAfterLongPress(220), []);
 
   return (
     <AnimatedHeaderScrollScreen
@@ -67,65 +71,52 @@ const IndicatorsSettingsMore = ({ navigation, route }) => {
       <View className="my-6 mt-8 flex-row items-center px-4">
         <Text className={mergeClassNames(typography.textXlSemibold, "text-cnam-primary-900")}>Vos indicateurs</Text>
         <View className="bg-cnam-cyan-500-0 h-7 w-7 rounded-full items-center justify-center ml-2">
-          <Text className={mergeClassNames("text-white", typography.textMdSemibold)}>
+          <Text className={mergeClassNames(typography.textMdSemibold)} style={{ color: "#19363D" }}>
             {indicators?.filter((indicator) => indicator.active)?.length || 0}
           </Text>
         </View>
       </View>
-      <View className="flex-column flex-1 px-4">{indicators.filter((indicator) => indicator.active).map(renderItem)}</View>
+      <ReorderableList
+        keyExtractor={keyExtractor}
+        renderItem={renderItem}
+        data={useMemo(() => indicators.filter((indicator) => indicator.active), [indicators])}
+        onReorder={({ from, to }) => {
+          const activeIndicators = indicators.filter((indicator) => indicator.active);
+          const reordered = reorderItems(activeIndicators, from, to);
+
+          // Merge back with inactive indicators
+          const inactiveIndicators = indicators.filter((indicator) => !indicator.active);
+          setIndicators([...reordered, ...inactiveIndicators]);
+        }}
+        scrollEnabled={false}
+        contentContainerStyle={{ flex: 1, paddingHorizontal: 16 }}
+        panGesture={panGesture}
+      />
     </AnimatedHeaderScrollScreen>
   );
 };
 
-const IndicatorItem = ({ indicator, setIndicators }: { indicator: Indicator; setIndicators: (param: Indicator[]) => void }) => {
+const IndicatorItem = ({ indicator, setIndicators }: { indicator: Indicator; setIndicators: React.Dispatch<React.SetStateAction<Indicator[]>> }) => {
+  const drag = useReorderableDrag();
+
   const deleteIndicator = () => {
     logEvents.logDeleteIndicator();
     setIndicators((prev) => prev.map((i) => (i.uuid === indicator.uuid ? { ...i, active: false } : i)));
   };
+
   return (
-    <View
-      key={indicator.uuid}
-      className={mergeClassNames("p-4 bg-gray-100 mb-2 rounded-xl flex-row items-center justify-between", !indicator.active ? "bg-gray-50" : "")}
-    >
-      <Text className={mergeClassNames(typography.textLgRegular, "text-cnam-primary-950")}>{indicator.name}</Text>
-      <TouchableOpacity onPress={deleteIndicator}>
-        <Icon icon="Bin2Svg" color={colors.BLUE} width="16" height="16" styleContainer={{ width: 16, height: 16 }} />
-      </TouchableOpacity>
-    </View>
+    <TouchableOpacity onLongPress={drag} delayLongPress={100}>
+      <View
+        className={mergeClassNames("p-4 bg-gray-100 mb-2 rounded-xl flex-row items-center justify-between", !indicator.active ? "bg-gray-50" : "")}
+      >
+        <ParagraphSpacing width={24} height={24} color={TW_COLORS.CNAM_PRIMARY_700} />
+        <Text className={mergeClassNames(typography.textLgRegular, "text-cnam-primary-950 flex-1 mx-3 ml-4")}>{indicator?.name}</Text>
+        <TouchableOpacity onPress={deleteIndicator}>
+          <TrashIcon width={24} height={24} color={TW_COLORS.CNAM_PRIMARY_800} />
+        </TouchableOpacity>
+      </View>
+    </TouchableOpacity>
   );
 };
-
-const itemStyles = StyleSheet.create({
-  container: {
-    backgroundColor: "#F4FCFD",
-    borderColor: "#D4F0F2",
-    borderWidth: 1,
-    borderRadius: 16,
-    padding: 16,
-    marginHorizontal: 16,
-    marginVertical: 4,
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  label: {
-    flex: 1,
-    fontFamily: "SourceSans3",
-    fontWeight: "700",
-    fontSize: 16,
-    color: colors.BLUE,
-    textAlign: "left",
-    marginLeft: 16,
-  },
-});
-
-const titleStyles = StyleSheet.create({
-  container: {
-    width: "100%",
-    marginTop: 24,
-    marginBottom: 4,
-    flexDirection: "row",
-    alignItems: "center",
-  },
-});
 
 export default IndicatorsSettingsMore;

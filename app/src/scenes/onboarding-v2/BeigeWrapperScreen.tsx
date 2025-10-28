@@ -5,7 +5,7 @@ import CheckInHeader from "@/components/onboarding/CheckInHeader";
 import { TW_COLORS } from "@/utils/constants";
 import Leaf from "@assets/svg/illustrations/Leaf";
 import TwoLeaf from "@assets/svg/illustrations/TwoLeaf";
-import { SafeAreaViewWithOptionalHeader } from "../onboarding/ProgressHeader";
+import { SafeAreaViewWithOptionalHeader } from "./ProgressHeader";
 import ChevronIcon from "@assets/svg/icon/chevron";
 import { VARIANT_COLORS } from "./data/carouselData";
 

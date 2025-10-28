@@ -1,13 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View, Text, Platform } from "react-native";
-import { Button2 } from "../../../components/Button2";
+import { StyleSheet, View, Text } from "react-native";
 import { InputCheckbox } from "../../../components/InputCheckbox";
-import { InputLabel } from "../../../components/InputLabel";
-import { Screen } from "../../../components/Screen";
-import { DAY_OF_THE_WEEK_EN_FR, DAYS_OF_WEEK } from "../../../utils/date/daysOfWeek";
+import { DAY_OF_THE_WEEK_EN_FR } from "../../../utils/date/daysOfWeek";
 import { getGoalsData, setGoalTracked } from "../../../utils/localStorage/goals";
-import { setDay, format } from "date-fns";
-import { fr } from "date-fns/locale";
 import { AnimatedHeaderScrollScreen } from "@/scenes/survey-v2/AnimatedHeaderScrollScreen";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";

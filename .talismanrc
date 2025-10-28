@@ -4,7 +4,7 @@ fileignoreconfig:
 - filename: .kontinuous/env/prod/templates/api.sealed-secret.yaml
   checksum: f1dfe60bbe8a6604443fe3629b2239fa969304beeca8eff2b7528cf9b5728e3d
 - filename: CHANGELOG.md
-  checksum: 78bb38a4fe0802c8551983dc9f84437611f20221f0763401a2c7106d5d8d98f9
+  checksum: 893ebd75b4d5640fb3e127bbab3de5268723640184e44ad087953829a0c49020
 - filename: README.md
   checksum: 979473d3e8ad091d57424dc057cf0b40a884f0fbf6821554ea0121e63a173d6b
 - filename: api/src/config.ts
@@ -17,6 +17,8 @@ fileignoreconfig:
   checksum: fada845491cbe03825f5445bf764d11cd0754ac2d6ead0db9a890f24334c5d02
 - filename: app/package.json
   checksum: c542c7135b521f9ba1e0489383dd8f1d383ca51252f7ffd8bc8fc6b3f46c6037
+- filename: app/public/index.html
+  checksum: 402fa4923b3af3be292d9019aeaca536b978a551303eaa771f3bbbd2b0c1fa6f
 - filename: app/src/components/Collapsable.js
   checksum: 280e7a5a76d8804045a5a07dbf8062e4cca77a937c969f1ee89cf45ff3d855b2
 - filename: app/src/components/DrugDoseBottomSheet.tsx

@@ -1,9 +1,8 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Dimensions,
   Modal,
   Platform,
-  AppState,
   Alert,
   StyleSheet,
   View,
@@ -16,7 +15,6 @@ import {
 import Text from "../../components/MyText";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Mark from "./Mark";
-import Notifications from "../notifications";
 import { sendMail } from "../mail";
 import { colors } from "../../utils/colors";
 import Matomo from "../matomo";
@@ -47,114 +45,59 @@ contact: ${contact}
 profil: ${lookUpSupported[supported]}
 `;
 
-const emailFormat = (email) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,6}$/i.test(email);
+const NPS = () => {
+  const [visible, setVisible] = useState(false);
+  const [useful, setUseful] = useState(null);
+  const [feedback, setFeedback] = useState("");
+  const [contact, setContact] = useState("");
+  const [sendButton, setSendButton] = useState(getCaption("post"));
+  const npsSentRef = useRef(false);
+  const prevVisibleRef = useRef(false);
 
-class NPS extends React.Component {
-  state = {
-    visible: false,
-    useful: null,
-    reco: null,
-    feedback: "",
-    contact: "",
-    sendButton: getCaption("post"),
-    NPSKey: 0,
-    page: 2,
-  };
-
-  async componentDidMount() {
-    if (__DEV__) {
-      await NPSManager.reset();
-    }
-    this.NPSListener = AppState.addEventListener("change", this.handleAppStateChange);
-    if (!__DEV__) {
-      this.notificationsListener = Notifications.listen(this.handleNotification, "NPS");
-    }
-
+  useEffect(() => {
     // Listen to NPSManager state changes
-    this.unsubscribeFromNPSManager = NPSManager.addListener(this.handleNPSStateChange);
+    const unsubscribeFromNPSManager = NPSManager.addListener((shouldShow) => {
+      setVisible(shouldShow);
+    });
 
     // Check initial state
     if (NPSManager.getShouldShowNPS()) {
-      this.setState({ visible: true });
+      setVisible(true);
     }
-  }
 
-  componentWillUnmount() {
-    this.NPSListener?.remove();
-    Notifications.remove(this.notificationsListener);
-    if (this.unsubscribeFromNPSManager) {
-      this.unsubscribeFromNPSManager();
-    }
-  }
+    return () => {
+      if (unsubscribeFromNPSManager) {
+        unsubscribeFromNPSManager();
+      }
+    };
+  }, []);
 
-  componentDidUpdate(prevProps, prevState) {
-    if (!prevProps.forceView && this.props.forceView && !this.state.visible) {
-      // eslint-disable-next-line react/no-did-update-set-state
-      this.setState({ visible: true });
-    }
-    if (prevProps.forceView && !this.props.forceView && this.state.visible) {
-      // eslint-disable-next-line react/no-did-update-set-state
-      this.setState({ visible: false });
-    }
-    if (!prevState.visible && this.state.visible) {
+  useEffect(() => {
+    if (!prevVisibleRef.current && visible) {
       // Log when NPS modal opens
       logEvents.logNPSOpen();
     }
-    if (prevState.visible && !this.state.visible) {
-      if (this.props.close) {
-        this.props.close();
-      }
-      this.npsSent = false;
+    if (prevVisibleRef.current && !visible) {
+      npsSentRef.current = false;
     }
-  }
+    prevVisibleRef.current = visible;
+  }, [visible]);
 
-  handleNotification = (notification) => {
-    if (NPSManager.handleNotification(notification)) {
-      this.setState({ visible: true });
+  const onClose = async () => {
+    if (useful !== null && !npsSentRef.current) {
+      await sendNPS();
     }
+    NPSManager.hideNPS();
   };
 
-  handleNPSStateChange = (shouldShow) => {
-    this.setState({ visible: shouldShow });
-  };
-
-  handleAppStateChange = (newState) => {
-    const { NPSKey } = this.state;
-    if (newState === "active" && !NPSKey) {
-      this.setState({ NPSKey: 1 });
-    }
-    if (newState.match(/inactive|background/) && Boolean(NPSKey)) {
-      this.setState({ NPSKey: 0 });
-    }
-  };
-
-  setUseful = (useful) => this.setState({ useful });
-  setReco = (reco) => this.setState({ reco });
-  setFeedback = (feedback) => this.setState({ feedback });
-  setSendButton = (sendButton) => this.setState({ sendButton });
-  setContact = (contact) => this.setState({ contact });
-
-  onClose = async () => {
-    const { useful, reco } = this.state;
-    if ((useful !== null || reco !== null) && !this.npsSent) {
-      await this.sendNPS();
-    }
-    this.setState({ visible: false });
-  };
-
-  nextPage = () => {
-    this.setState(({ page }) => ({ page: page + 1 }));
-  };
-
-  sendNPS = async () => {
-    if (this.npsSent) {
+  const sendNPS = async () => {
+    if (npsSentRef.current) {
       return;
     }
     // Log when NPS form is sent
     logEvents.logNPSFormSent();
 
-    const { useful, feedback, contact } = this.state;
-    this.setSendButton("Merci !");
+    setSendButton("Merci !");
     // logEvents._deprecatedLogNPSUsefulSend(useful);
     const userId = Matomo.userId;
     const supported = await localStorage.getSupported();
@@ -163,109 +106,71 @@ class NPS extends React.Component {
       subject: "Jardin Mental - NPS",
       text: formatText({ useful, feedback, userId, contact, supported, startDate }),
     });
-    this.npsSent = true;
+    npsSentRef.current = true;
 
     // Show thank you message
     setTimeout(() => {
       Alert.alert("Merci pour votre retour !");
     }, 300);
 
-    this.setState({ visible: false, useful: null, reco: null });
+    NPSManager.hideNPS();
+    setUseful(null);
   };
 
-  renderFirstPage() {
-    const { useful, reco, sendButton } = this.state;
-    return (
-      <>
-        <Text style={styles.topTitle}>{getCaption("feedback.rate-app.title")}</Text>
-        <Text style={styles.topSubTitle}>{getCaption("feedback.rate-app.useful")}</Text>
-        <Mark
-          selected={useful}
-          onPress={this.setUseful}
-          bad={getCaption("feedback.rate-app.useful.not")}
-          good={getCaption("feedback.rate-app.useful.extremely")}
-        />
-        <Text style={styles.topSubTitle}>{getCaption("feedback.rate-app.probable")}</Text>
-        <Mark
-          selected={reco}
-          onPress={this.setReco}
-          bad={getCaption("feedback.rate-app.probable.not")}
-          good={getCaption("feedback.rate-app.probable.extremely")}
-        />
-        <TouchableOpacity style={styles.buttonContainer} disabled={!useful || !reco} onPress={this.nextPage}>
-          <Text style={styles.buttonText}>{sendButton}</Text>
-        </TouchableOpacity>
-      </>
-    );
-  }
-
-  renderSecondPage() {
-    const { feedback, sendButton, contact, useful, reco } = this.state;
-    return (
-      <>
-        <Text style={styles.topSubTitle}>{getCaption("feedback.rate-app.useful")}</Text>
-        <Mark
-          selected={useful}
-          onPress={this.setUseful}
-          bad={getCaption("feedback.rate-app.useful.not")}
-          good={getCaption("feedback.rate-app.useful.extremely")}
-        />
-        <Text style={styles.topSubTitle}>{getCaption("feedback.improvements.question")}</Text>
-        <TextInput
-          style={styles.feedback}
-          onChangeText={this.setFeedback}
-          placeholder={getCaption("feedback.improvements.placeholder")}
-          value={feedback}
-          multiline
-          textAlignVertical="top"
-          returnKeyType="next"
-        />
-        {/* <Text style={styles.topSubTitle}>{getCaption("feedback.rate-app.probable")}</Text>
-        <Mark
-          selected={reco}
-          onPress={this.setReco}
-          bad={getCaption("feedback.rate-app.probable.not")}
-          good={getCaption("feedback.rate-app.probable.extremely")}
-        /> */}
-        <Text style={styles.topSubTitle}>{getCaption("feedback.contact.description")}</Text>
-        <TextInput
-          style={styles.contact}
-          value={contact}
-          placeholder={getCaption("feedback.contact")}
-          onChangeText={this.setContact}
-          autoCorrect={false}
-          autoCapitalize="none"
-          returnKeyType="go"
-          onSubmitEditing={this.sendNPS}
-        />
-        <TouchableOpacity style={styles.buttonContainer} disabled={sendButton === "Merci !"} onPress={this.sendNPS}>
-          <Text style={styles.buttonText}>{sendButton}</Text>
-        </TouchableOpacity>
-      </>
-    );
-  }
-
-  render() {
-    const { visible, page } = this.state;
-    return (
-      <Modal visible={visible} animationType="slide" presentationStyle="formSheet" onDismiss={this.onClose}>
-        <View style={styles.container}>
-          <KeyboardAvoidingView style={styles.keyboardAvoidingView} behavior={Platform.select({ ios: "padding", android: null })}>
-            <View style={styles.backContainer}>
-              <TouchableOpacity onPress={this.onClose}>
-                <Text style={styles.backText}>{getCaption("back")}</Text>
-              </TouchableOpacity>
-            </View>
-            <ScrollView style={styles.scrollView} keyboardDismissMode="on-drag" onScrollBeginDrag={Keyboard.dismiss}>
-              {page === 1 && this.renderFirstPage()}
-              {page === 2 && this.renderSecondPage()}
-            </ScrollView>
-          </KeyboardAvoidingView>
-        </View>
-      </Modal>
-    );
-  }
-}
+  return (
+    <Modal visible={visible} animationType="slide" presentationStyle="formSheet" onDismiss={onClose}>
+      <View style={styles.container}>
+        <KeyboardAvoidingView style={styles.keyboardAvoidingView} behavior={Platform.select({ ios: "padding", android: null })}>
+          <View style={styles.backContainer}>
+            <TouchableOpacity onPress={onClose}>
+              <Text style={styles.backText}>{getCaption("back")}</Text>
+            </TouchableOpacity>
+          </View>
+          <ScrollView style={styles.scrollView} keyboardDismissMode="on-drag" onScrollBeginDrag={Keyboard.dismiss}>
+            <Text style={styles.topSubTitle}>{getCaption("feedback.rate-app.useful")}</Text>
+            <Mark
+              selected={useful}
+              onPress={setUseful}
+              bad={getCaption("feedback.rate-app.useful.not")}
+              good={getCaption("feedback.rate-app.useful.extremely")}
+            />
+            <Text style={styles.topSubTitle}>{getCaption("feedback.improvements.question")}</Text>
+            <TextInput
+              style={styles.feedback}
+              onChangeText={setFeedback}
+              placeholder={getCaption("feedback.improvements.placeholder")}
+              value={feedback}
+              multiline
+              textAlignVertical="top"
+              returnKeyType="next"
+            />
+            {/* <Text style={styles.topSubTitle}>{getCaption("feedback.rate-app.probable")}</Text>
+              <Mark
+                selected={reco}
+                onPress={this.setReco}
+                bad={getCaption("feedback.rate-app.probable.not")}
+                good={getCaption("feedback.rate-app.probable.extremely")}
+              /> */}
+            <Text style={styles.topSubTitle}>{getCaption("feedback.contact.description")}</Text>
+            <TextInput
+              style={styles.contact}
+              value={contact}
+              placeholder={getCaption("feedback.contact")}
+              onChangeText={setContact}
+              autoCorrect={false}
+              autoCapitalize="none"
+              returnKeyType="go"
+              onSubmitEditing={sendNPS}
+            />
+            <TouchableOpacity style={styles.buttonContainer} disabled={sendButton === "Merci !"} onPress={sendNPS}>
+              <Text style={styles.buttonText}>{sendButton}</Text>
+            </TouchableOpacity>
+          </ScrollView>
+        </KeyboardAvoidingView>
+      </View>
+    </Modal>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -356,22 +261,12 @@ const styles = StyleSheet.create({
 });
 
 const captions = {
-  notifTitle: "Vos retours sont importants pour nous",
-  notifMessage: "Avez-vous quelques secondes pour donner votre avis ?",
   post: "Envoyer",
   back: "Retour",
-  "feedback.rate-app.title": "5 secondes pour nous aider\u00A0?\u000AVos retours sont importants pour nous.",
   "feedback.rate-app.useful": "Ce service vous a-t-il été utile\u00A0?",
   "feedback.rate-app.useful.not": "Pas utile du tout",
   "feedback.rate-app.useful.extremely": "Extrêmement utile",
-  "feedback.rate-app.probable": "Quelle est la probabilité que vous recommandiez ce service à un ami ou un proche\u00A0?",
-  "feedback.rate-app.probable.not": "Pas du tout probable",
-  "feedback.rate-app.probable.extremely": "Très probable",
   "feedback.improvements.question": "Pour améliorer notre service, avez-vous quelques recommandations à nous faire\u00A0?",
-  // 'feedback.improvements.question':
-  //   'Comment pouvons-nous vous être encore plus utile\u00A0? Comment pouvons-nous améliorer ce service\u00A0?',
-  "feedback.improvements.legal-message":
-    "Merci de ne mentionner aucune information personnelle qui permettrait de vous identifier (nom, prénom, adresse mail, n° de téléphone, toute information sur votre état de santé)",
   "feedback.improvements.placeholder": "Idées d'améliorations (facultatif)",
   "feedback.contact.description":
     "Echanger avec vous serait précieux pour améliorer notre service, laissez-nous votre adresse mail si vous le souhaitez.",

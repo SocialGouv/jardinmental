@@ -7,7 +7,7 @@ import BeigeWrapperScreen from "../onboarding-v2/BeigeWrapperScreen";
 import BeigeCard from "../onboarding-v2/BeigeCard";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
-import { useOnboardingProgressHeader } from "../onboarding/ProgressHeader";
+import { useOnboardingProgressHeader } from "../onboarding-v2/ProgressHeader";
 import { useFocusEffect } from "@react-navigation/native";
 import logEvents from "@/services/logEvents";
 import { useStatusBar } from "@/context/StatusBarContext";

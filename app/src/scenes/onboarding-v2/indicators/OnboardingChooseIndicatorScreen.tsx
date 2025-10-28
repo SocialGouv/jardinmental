@@ -14,7 +14,7 @@ import {
 import { generateIndicatorFromPredefinedIndicator, PredefineIndicatorV2SchemaType, Indicator } from "@/entities/Indicator";
 import localStorage from "@/utils/localStorage";
 import { TW_COLORS } from "@/utils/constants";
-import { useOnboardingProgressHeader } from "@/scenes/onboarding/ProgressHeader";
+import { useOnboardingProgressHeader } from "@/scenes/onboarding-v2/ProgressHeader";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
 import SelectionnableItem from "@/components/SelectionnableItem";

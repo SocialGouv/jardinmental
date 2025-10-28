@@ -1,3 +1,134 @@
+# [1.112.0](https://github.com/SocialGouv/jardinmental/compare/v1.111.0...v1.112.0) (2025-10-23)
+
+
+### Features
+
+* bump version ([b045918](https://github.com/SocialGouv/jardinmental/commit/b04591851db789bc4db27704b9752b6e35426dbe))
+
+# [1.111.0](https://github.com/SocialGouv/jardinmental/compare/v1.110.0...v1.111.0) (2025-10-23)
+
+
+### Features
+
+* new feedback ([#588](https://github.com/SocialGouv/jardinmental/issues/588)) ([ba0df50](https://github.com/SocialGouv/jardinmental/commit/ba0df50690eb4f65df6d7cfc3a04e5f821366ef1))
+
+# [1.110.0](https://github.com/SocialGouv/jardinmental/compare/v1.109.0...v1.110.0) (2025-10-23)
+
+
+### Features
+
+* bump version ([a8bfb0e](https://github.com/SocialGouv/jardinmental/commit/a8bfb0e9ff11a24fbb1cdfbd77684493de25fa1a))
+
+# [1.109.0](https://github.com/SocialGouv/jardinmental/compare/v1.108.1...v1.109.0) (2025-10-23)
+
+
+### Features
+
+* show diary details when clicking on note ([#585](https://github.com/SocialGouv/jardinmental/issues/585)) ([3c9b4e6](https://github.com/SocialGouv/jardinmental/commit/3c9b4e6dfec14b7694ac4f92787ec1b7fe1200a7))
+
+## [1.108.1](https://github.com/SocialGouv/jardinmental/compare/v1.108.0...v1.108.1) (2025-10-23)
+
+
+### Bug Fixes
+
+* **drugs-survey:** hide bottom button, show correct treatment saved values ([#586](https://github.com/SocialGouv/jardinmental/issues/586)) ([04ecf81](https://github.com/SocialGouv/jardinmental/commit/04ecf816ca6012dfe0edeb458e88c23e3de33cdd))
+
+# [1.108.0](https://github.com/SocialGouv/jardinmental/compare/v1.107.5...v1.108.0) (2025-10-23)
+
+
+### Bug Fixes
+
+* correct smiley label index offset, invert label for desc indicators ([#579](https://github.com/SocialGouv/jardinmental/issues/579)) ([0c6b287](https://github.com/SocialGouv/jardinmental/commit/0c6b287955e18a90b6b1be64e0d43aaf4ebc4eea))
+* **IndicatorsSettingsMore:** change icons and text overlapping on icons ([#583](https://github.com/SocialGouv/jardinmental/issues/583)) ([268d6f8](https://github.com/SocialGouv/jardinmental/commit/268d6f86f825664f4a45c1e169bc432c38cfcfd5))
+
+
+### Features
+
+* add deactivate reminder and clean reminder functions ([#582](https://github.com/SocialGouv/jardinmental/issues/582)) ([1ac6fcb](https://github.com/SocialGouv/jardinmental/commit/1ac6fcb560b6bbe12549189fcd87739de2045bcf))
+
+## [1.107.5](https://github.com/SocialGouv/jardinmental/compare/v1.107.4...v1.107.5) (2025-10-23)
+
+
+### Bug Fixes
+
+* useless new line in a resource ([2fbd50b](https://github.com/SocialGouv/jardinmental/commit/2fbd50bc632302ad44cafcaed43edea21d3f4a7a))
+
+## [1.107.4](https://github.com/SocialGouv/jardinmental/compare/v1.107.3...v1.107.4) (2025-10-23)
+
+
+### Bug Fixes
+
+* remove contact page, directly open email ([#577](https://github.com/SocialGouv/jardinmental/issues/577)) ([dcef4b7](https://github.com/SocialGouv/jardinmental/commit/dcef4b71d5a39d3d355665cbfac5b86f60f310f0))
+
+## [1.107.3](https://github.com/SocialGouv/jardinmental/compare/v1.107.2...v1.107.3) (2025-10-23)
+
+
+### Bug Fixes
+
+* bigger touch zone on slider ([#575](https://github.com/SocialGouv/jardinmental/issues/575)) ([baab659](https://github.com/SocialGouv/jardinmental/commit/baab6591ca93303c305c1ff66574539e887a15dc))
+
+## [1.107.2](https://github.com/SocialGouv/jardinmental/compare/v1.107.1...v1.107.2) (2025-10-21)
+
+
+### Bug Fixes
+
+* update ios version ([8e1ae7e](https://github.com/SocialGouv/jardinmental/commit/8e1ae7e472270845ff5c46b226c7ab8b32a65adc))
+
+## [1.107.1](https://github.com/SocialGouv/jardinmental/compare/v1.107.0...v1.107.1) (2025-10-21)
+
+
+### Bug Fixes
+
+* remove linear gradient ([#571](https://github.com/SocialGouv/jardinmental/issues/571)) ([1a36619](https://github.com/SocialGouv/jardinmental/commit/1a366195151566744ffaab667d3ab9dc34135a2b))
+* same padding for the 4 main screens ([#573](https://github.com/SocialGouv/jardinmental/issues/573)) ([70faef4](https://github.com/SocialGouv/jardinmental/commit/70faef43570aa18b4978bf0ae96691bb60c03a72))
+* treatment icon alignment ([#574](https://github.com/SocialGouv/jardinmental/issues/574)) ([58d398b](https://github.com/SocialGouv/jardinmental/commit/58d398b92d90c11341dec956ae34145e3317ac36))
+
+# [1.107.0](https://github.com/SocialGouv/jardinmental/compare/v1.106.1...v1.107.0) (2025-10-17)
+
+
+### Features
+
+* resources sub categories (zoom) ([#569](https://github.com/SocialGouv/jardinmental/issues/569)) ([6269215](https://github.com/SocialGouv/jardinmental/commit/6269215f16be70e6680a575b89ea7cf6e28a67d2))
+
+## [1.106.1](https://github.com/SocialGouv/jardinmental/compare/v1.106.0...v1.106.1) (2025-10-17)
+
+
+### Bug Fixes
+
+* **resources:** fix arrow on categories ([#568](https://github.com/SocialGouv/jardinmental/issues/568)) ([5cce74d](https://github.com/SocialGouv/jardinmental/commit/5cce74dfdd7366aa5dd8e0a319f2558d41c71300))
+
+# [1.106.0](https://github.com/SocialGouv/jardinmental/compare/v1.105.0...v1.106.0) (2025-10-17)
+
+
+### Features
+
+* add "read" status on resources ([#567](https://github.com/SocialGouv/jardinmental/issues/567)) ([0e7bec8](https://github.com/SocialGouv/jardinmental/commit/0e7bec8de8616c7be135b187f362d8a8a4e7d706))
+
+# [1.105.0](https://github.com/SocialGouv/jardinmental/compare/v1.104.0...v1.105.0) (2025-10-17)
+
+
+### Bug Fixes
+
+* remove one resources (and orphan external resources) ([#565](https://github.com/SocialGouv/jardinmental/issues/565)) ([09b0c96](https://github.com/SocialGouv/jardinmental/commit/09b0c96112da8f3fb453ed9ed841c383acc542bc))
+
+
+### Features
+
+* add "consulted" status on external resources ([#566](https://github.com/SocialGouv/jardinmental/issues/566)) ([32ea97d](https://github.com/SocialGouv/jardinmental/commit/32ea97d49732eb5728791e4a4a09573f83e7cb87))
+
+# [1.104.0](https://github.com/SocialGouv/jardinmental/compare/v1.103.0...v1.104.0) (2025-10-17)
+
+
+### Bug Fixes
+
+* replace PlusSvg by Plus, plusSvg has been deleted ([#561](https://github.com/SocialGouv/jardinmental/issues/561)) ([65ab447](https://github.com/SocialGouv/jardinmental/commit/65ab4475dc17e38bf1c7d0e0fe5658cb89dbc474))
+
+
+### Features
+
+* add 114 number to emergency support ([#553](https://github.com/SocialGouv/jardinmental/issues/553)) ([4eb0521](https://github.com/SocialGouv/jardinmental/commit/4eb0521bf6013d64cc86634212628732118115da))
+* add indicator ordering in settings and in display ([#559](https://github.com/SocialGouv/jardinmental/issues/559)) ([4d2c2ea](https://github.com/SocialGouv/jardinmental/commit/4d2c2ea0c265977a7ac511d52b23bfed936d6810))
+
 # [1.103.0](https://github.com/SocialGouv/jardinmental/compare/v1.102.0...v1.103.0) (2025-10-16)
 
 

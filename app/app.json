@@ -2,14 +2,14 @@
   "expo": {
     "name": "Jardin Mental",
     "slug": "monsuivipsy",
-    "version": "1.43.6",
+    "version": "1.43.7",
     "orientation": "default",
     "icon": "./assets/imgs/icon.png",
     "scheme": "monsuivipsy",
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "org.reactjs.native.example.monsuivipsy",
-      "buildNumber": "292",
+      "buildNumber": "295",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
         "LSApplicationQueriesSchemes": [
@@ -18,16 +18,11 @@
           "sms",
           "mailto"
         ]
-      },
-      "splash": {
-        "image": "./assets/imgs/am.png",
-        "backgroundColor": "#ffffff",
-        "resizeMode": "contain"
       }
     },
     "android": {
       "googleServicesFile": "./google-services.json",
-      "versionCode": 282,
+      "versionCode": 287,
       "adaptiveIcon": {
         "foregroundImage": "./assets/imgs/icon.png",
         "backgroundColor": "#ffffff"
@@ -37,12 +32,7 @@
         "NOTIFICATIONS",
         "SCHEDULE_EXACT_ALARM",
         "POST_NOTIFICATIONS"
-      ],
-      "splash": {
-        "image": "./assets/imgs/ic_launcher_foreground.png",
-        "backgroundColor": "#ffffff",
-        "resizeMode": "contain"
-      }
+      ]
     },
     "plugins": [
       [
@@ -96,6 +86,23 @@
             "compileSdkVersion": 35,
             "targetSdkVersion": 35,
             "buildToolsVersion": "35.0.0"
+          }
+        }
+      ],
+      [
+        "expo-splash-screen",
+        {
+          "android": {
+            "backgroundColor": "#ffffff",
+            "image": "./assets/imgs/am.png",
+            "imageWidth": 200,
+            "resizeMode": "contain"
+          },
+          "ios": {
+            "backgroundColor": "#ffffff",
+            "image": "./assets/imgs/am.png",
+            "imageWidth": 200,
+            "resizeMode": "contain"
           }
         }
       ]

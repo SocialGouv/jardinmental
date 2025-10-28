@@ -6,12 +6,6 @@ import { AnimatedHeaderScrollScreen } from "../survey-v2/AnimatedHeaderScrollScr
 import { TW_COLORS } from "@/utils/constants";
 import JMButton from "@/components/JMButton";
 import NavigationListItem from "@/components/ListItem/NavigationListItem";
-import Pencil from "@assets/svg/Pencil";
-import Goal from "@assets/svg/icon/Goal";
-import CalendarIcon from "@assets/svg/icon/Calendar";
-import TrendUpIcon from "@assets/svg/icon/TrendUp";
-import HealthIcon from "@assets/svg/icon/Health";
-import ShareIcon from "@assets/svg/icon/Share";
 import { FAQ_DATA } from "./FaqData";
 import logEvents from "@/services/logEvents";
 import { useFocusEffect } from "@react-navigation/native";
@@ -98,7 +92,7 @@ export default function FaqMainScreen({ navigation, route }) {
           </TouchableOpacity>
           <JMButton
             onPress={() => {
-              navigation.navigate("contact");
+              Linking.openURL("mailto:jardinmental@fabrique.social.gouv.fr");
               logEvents.logNeedAssistanceFaq();
             }}
             title="Contactez l’équipe de Jardin mental"

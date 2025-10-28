@@ -18,7 +18,7 @@ import OnboardingChooseIndicatorScreen from "./indicators/OnboardingChooseIndica
 import OnboardingLoadingScreen from "./OnboardingLoadingScreen";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { progressHeaderOptions, ProgressScreen } from "../onboarding/ProgressHeader";
+import { progressHeaderOptions, ProgressScreen } from "./ProgressHeader";
 import { EncouragementScreen } from "../survey-v2/EncouragementScreen";
 import SubcategoriesScreen from "./personalization/SubCategoriesScreen";
 import { beforeToday, formatDay } from "@/utils/date/helpers";

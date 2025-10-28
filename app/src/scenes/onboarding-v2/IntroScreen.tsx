@@ -5,7 +5,7 @@ import { NavigationButtons } from "../../components/onboarding/NavigationButtons
 import { TW_COLORS } from "@/utils/constants";
 import { useAnimatedStyle, useSharedValue } from "react-native-reanimated";
 import BannerHeaderIntro from "./BannerHeaderIntro";
-import { SafeAreaViewWithOptionalHeader } from "../onboarding/ProgressHeader";
+import { SafeAreaViewWithOptionalHeader } from "./ProgressHeader";
 import { typography } from "@/utils/typography";
 import { mergeClassNames } from "@/utils/className";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -111,11 +111,9 @@ const IntroScreen: React.FC<Props> = ({ navigation }) => {
           <View className="flex-1">
             <Text className={mergeClassNames(typography.textMdRegular, "text-left")} style={{ color: TW_COLORS.PRIMARY }}>
               En cochant cette case, vous acceptez les{" "}
-              <TouchableOpacity onPress={onCguClick} style={{ alignSelf: "flex-start" }}>
-                <Text className={mergeClassNames(typography.textMdRegular, "text-left underline")} style={{ color: TW_COLORS.PRIMARY }}>
-                  conditions d'utilisation
-                </Text>
-              </TouchableOpacity>
+              <Text onPress={onCguClick} className={mergeClassNames(typography.textMdRegular, "underline text-left")}>
+                conditions d'utilisation
+              </Text>
               .
             </Text>
           </View>

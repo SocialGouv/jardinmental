@@ -4,7 +4,7 @@ import { OnboardingV2ScreenProps } from "../types";
 import { NavigationButtons } from "@/components/onboarding/NavigationButtons";
 import { useUserProfile } from "@/context/userProfile";
 import { TW_COLORS } from "@/utils/constants";
-import { useOnboardingProgressHeader } from "@/scenes/onboarding/ProgressHeader";
+import { useOnboardingProgressHeader } from "@/scenes/onboarding-v2/ProgressHeader";
 import { useAnimatedStyle } from "react-native-reanimated";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";

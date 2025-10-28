@@ -30,7 +30,7 @@ export default ({ onChange = console.log, placeholder = "Ajouter...", styleConta
             onChangeText("");
           }}
         >
-          <CircledIcon icon="PlusSvg" color={colors.LIGHT_BLUE} borderColor="#fff" iconColor="#fff" opacity={value ? 1 : 0.38} />
+          <CircledIcon icon="Plus" color={colors.LIGHT_BLUE} borderColor="#fff" iconColor="#fff" opacity={value ? 1 : 0.38} />
         </TouchableOpacity>
       </View>
     </View>
