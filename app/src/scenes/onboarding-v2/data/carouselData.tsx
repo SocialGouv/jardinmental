@@ -1,8 +1,11 @@
 import { colors } from "@/utils/colors";
 import { CarouselSlide } from "../types";
 import { AvatarGroup } from "@/components/AvatarGroup";
-import { View } from "react-native";
+import { Dimensions, Image, View } from "react-native";
 import { TW_COLORS } from "@/utils/constants";
+
+const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
+const isLargeScreen = screenHeight >= 700;
 
 const SlideWelcome: CarouselSlide = {
   id: "slide-jm-help-you",
@@ -12,6 +15,18 @@ const SlideWelcome: CarouselSlide = {
   type: "generic",
   backgroundColor: colors.WHITE,
   variant: "blue",
+  illustration: (
+    <View className="absolute -z-10">
+      <Image
+        style={
+          isLargeScreen
+            ? { width: 200, height: 200, top: -160, resizeMode: "contain" }
+            : { width: 140, height: 140, top: -110, resizeMode: "contain" }
+        }
+        source={require("../../../../assets/imgs/onboarding/carousel/welcome.png")}
+      />
+    </View>
+  ),
 };
 
 const SlideFinal: CarouselSlide = {
@@ -39,6 +54,14 @@ const carouselSlides: CarouselSlide[] = [
     type: "generic",
     backgroundColor: colors.WHITE,
     variant: "pink",
+    illustration: (
+      <View className="absolute">
+        <Image
+          style={{ width: 200, height: 200, top: -130, resizeMode: "contain" }}
+          source={require("../../../../assets/imgs/onboarding/carousel/outils.png")}
+        />
+      </View>
+    ),
   },
   {
     id: "slide-suivi-share-with-you-psy",
@@ -48,6 +71,14 @@ const carouselSlides: CarouselSlide[] = [
     type: "generic",
     backgroundColor: colors.WHITE,
     variant: "red",
+    illustration: (
+      <View className="absolute right-0">
+        <Image
+          style={{ width: 200, height: 200, top: -150, resizeMode: "contain" }}
+          source={require("../../../../assets/imgs/onboarding/carousel/psy.png")}
+        />
+      </View>
+    ),
   },
   SlideFinal,
 ];

@@ -14,7 +14,7 @@ import { CarouselSlide, OnboardingV2ScreenProps } from "./types";
 
 type Props = OnboardingV2ScreenProps<"Carousel">;
 
-const { width: screenWidth } = Dimensions.get("window");
+const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 const NextRoute = "OnboardingCheckInStart";
 
@@ -27,6 +27,8 @@ const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
   const { setSlideIndex } = useOnboardingProgressHeader();
   const [variant, setVariant] = useState<"beige" | "white" | "green" | "blue">("beige");
   const { setCustomColor } = useStatusBarInternal();
+
+  const isLargeScreen = screenHeight >= 700;
 
   useFocusEffect(
     React.useCallback(() => {
@@ -120,7 +122,9 @@ const CarouselScreen: React.FC<Props> = ({ navigation, route }) => {
           })}
         />
         <View className="left-0 right-0">
-          <View className="flex-row justify-center items-center mb-6">{slides.map((_, index) => renderPaginationDot(index))}</View>
+          <View className={`flex-row justify-center items-center ${isLargeScreen ? "mb-6" : "mb-0"}`}>
+            {slides.map((_, index) => renderPaginationDot(index))}
+          </View>
           <NavigationButtons
             withArrow={true}
             nextText={currentIndex === slides.length - 1 ? "Démarrer sur Jardin Mental" : "Suivant"}
