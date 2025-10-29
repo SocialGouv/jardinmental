@@ -15,7 +15,7 @@ import { getIndicatorKey } from "@/utils/indicatorUtils";
 import { useBottomSheet } from "@/context/BottomSheetContext";
 import CircleQuestionMark from "@assets/svg/icon/CircleQuestionMark";
 import HelpView from "@/components/HelpView";
-import { useAnimatedStyle, interpolate, Extrapolate } from "react-native-reanimated";
+import { useAnimatedStyle, interpolate, Extrapolate, useSharedValue, withTiming } from "react-native-reanimated";
 import Animated from "react-native-reanimated";
 import RangeDate from "../RangeDate";
 import { FriseFilterBar } from "./FriseFilterBar";
@@ -130,9 +130,42 @@ const generateLineSegments = (data) => {
   return segments;
 };
 
-const TestChart = ({ data, dataB, treatment }) => {
+const TestChart = ({ data, dataB, treatment, diaryData, selectedIndicators }) => {
   const ref = useRef(null);
   const [selectedPointIndex, setSelectedPointIndex] = useState<number | null>(null);
+  const [displayItem, setDisplayItem] = useState<null>();
+  const [isVisible, setIsVisible] = useState(false);
+  const pointerItemRef = useRef(null);
+
+  // Animation values
+  const opacity = useSharedValue(0);
+  const translateY = useSharedValue(-20);
+
+  // Animated styles
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      opacity: opacity.value,
+      transform: [{ translateY: translateY.value }],
+    };
+  });
+
+  // Handle animation when displayItem changes
+  useEffect(() => {
+    if (displayItem) {
+      // Apparition
+      setIsVisible(true);
+      opacity.value = withTiming(1, { duration: 300 });
+      translateY.value = withTiming(0, { duration: 300 });
+    } else if (isVisible) {
+      // Disparition
+      opacity.value = withTiming(0, { duration: 300 });
+      translateY.value = withTiming(-20, { duration: 300 });
+      // Wait for animation to complete before hiding
+      setTimeout(() => {
+        setIsVisible(false);
+      }, 300);
+    }
+  }, [displayItem]);
 
   // Custom data point function that can access selectedPointIndex state
   const customDataPoint = ({ color, backgroundColor, isSelected }) => {
@@ -177,8 +210,8 @@ const TestChart = ({ data, dataB, treatment }) => {
   };
   const lineSegments = generateLineSegments(data);
   return (
-    <View className="">
-      <View className="mb-4" style={{ flexDirection: "row", marginLeft: 8 }}>
+    <View className="bg-cnam-primary-25">
+      {/* <View className="mb-4" style={{ flexDirection: "row", marginLeft: 8 }}>
         {months.map((item, index) => {
           return (
             <TouchableOpacity
@@ -195,7 +228,33 @@ const TestChart = ({ data, dataB, treatment }) => {
             </TouchableOpacity>
           );
         })}
-      </View>
+      </View> */}
+      {isVisible && (
+        <Animated.View style={[animatedStyle]} className="border bg-white rounded-2xl flex-col space-y-2 p-4 mb-4">
+          <View className="flex-row justify-between items-center">
+            <Text className={mergeClassNames(typography.textXsBold, "bg-cnam-primary-800 text-white rounded-lg p-2")}>{displayItem?.date}</Text>
+            <TouchableOpacity
+              onPress={() => {
+                setDisplayItem(null);
+              }}
+            >
+              <Text className={mergeClassNames(typography.textLgBold, "text-cnam-primary-800")}>✕</Text>
+            </TouchableOpacity>
+          </View>
+          {displayItem &&
+            selectedIndicators.map((indicator) => {
+              let value;
+              try {
+                value = diaryData[displayItem.date][getIndicatorKey(indicator)].value;
+              } catch (e) {}
+              return (
+                <Text key={indicator.uuid}>
+                  {indicator.name} : {value}
+                </Text>
+              );
+            })}
+        </Animated.View>
+      )}
       <LineChart
         spacing={50}
         yAxisSide={1}
@@ -208,10 +267,11 @@ const TestChart = ({ data, dataB, treatment }) => {
         focusEnabled={true}
         // focusProximity={50}
         lineSegments={lineSegments}
-        // onFocus={(item, index) => {
-        //   console.log("focused", item, index);
-        //   setSelectedPointIndex(index);
-        // }}
+        onFocus={(item, index) => {
+          console.log("focused", item, index);
+          setDisplayItem(item);
+          // setSelectedPointIndex(index);
+        }}
         unFocusOnPressOut={false}
         showStripOnFocus={true}
         stripColor={TW_COLORS.CNAM_PRIMARY_700}
@@ -294,9 +354,18 @@ const TestChart = ({ data, dataB, treatment }) => {
               }))
             : null
         }
+        getPointerProps={({ pointerIndex }) => {
+          console.log("lCS TOOT");
+          const item = data[pointerIndex] || dataB[pointerIndex];
+          setDisplayItem(item);
+        }}
         pointerConfig={{
+          onPointerEnter: (item) => {
+            console.log(item);
+          },
           activatePointersOnLongPress: true,
-          activatePointersDelay: 500,
+          persistPointer: true,
+          // activatePointersDelay: 500,
           pointerColor: "transparent",
           pointerStripWidth: 2,
           width: 20,
@@ -398,6 +467,8 @@ export const Correlation = ({ navigation, onScroll, scrollY, day, setDay, dynami
             return {
               value: 1,
               hideDataPoint: true,
+              date: date,
+              indicator,
               label: date,
             };
           }
@@ -406,19 +477,25 @@ export const Correlation = ({ navigation, onScroll, scrollY, day, setDay, dynami
             return {
               value: 1,
               hideDataPoint: true,
+              date: date,
               label: date,
+              indicator,
             };
           }
           if (indicator?.type === "boolean") return { value: categoryState?.value === true ? 4 : 0, label: date };
           if (indicator?.type === "gauge")
             return {
               label: date,
+              date: date,
+              indicator,
               value: Math.min(Math.floor(categoryState?.value * 5), 4),
             };
           if (categoryState?.value)
             return {
               value: categoryState?.value,
               label: date,
+              date: date,
+              indicator,
             };
 
           // get the name and the suffix of the category
@@ -431,12 +508,16 @@ export const Correlation = ({ navigation, onScroll, scrollY, day, setDay, dynami
             return {
               value: categoryState.level + categoryStateIntensity.level - 2,
               label: date,
+              date: date,
+              indicator,
             };
           }
           return {
             data: categoryState.level ? categoryState.level : null,
             hideDataPoint: !categoryState.level,
             label: date,
+            date: date,
+            indicator,
           };
         })
         .filter((d) => d)
@@ -569,7 +650,13 @@ export const Correlation = ({ navigation, onScroll, scrollY, day, setDay, dynami
   } else {
     return (
       <ScrollView className="px-4 flex-col space-y-4 pt-60 bg-white">
-        <TestChart data={dataToDisplay[0]} dataB={dataToDisplay[1]} treatment={undefined} />
+        <TestChart
+          data={dataToDisplay[0]}
+          dataB={dataToDisplay[1]}
+          treatment={undefined}
+          diaryData={diaryData}
+          selectedIndicators={selectedIndicators}
+        />
       </ScrollView>
     );
   }
