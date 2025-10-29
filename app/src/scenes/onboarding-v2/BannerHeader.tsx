@@ -101,7 +101,7 @@ export default function BannerHeader({
             dynamicTitleStyle={dynamicTitleStyle}
           />
         )}
-        <Animated.View
+        {/* <Animated.View
           testID="banner-container"
           className={bannerContainerStyle ? "" : "py-4 pb-8 px-6"}
           style={[
@@ -134,7 +134,7 @@ export default function BannerHeader({
             </Animated.Text>
           )}
           {children}
-        </Animated.View>
+        </Animated.View> */}
       </Animated.View>
     </>
   );

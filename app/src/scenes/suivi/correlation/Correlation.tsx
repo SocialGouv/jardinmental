@@ -96,11 +96,11 @@ const generateLineSegments = (data) => {
   let startIndex = null;
 
   data.forEach((point, index) => {
-    if (point.value === 1 && point.hideDataPoint) {
+    if (point.value === 1 && point.noValue) {
       // Début d'un segment
       if (startIndex === null) {
         // console.log("start index", index);
-        startIndex = index;
+        startIndex = index - 1;
       }
     } else {
       // Fin d'un segment
@@ -130,310 +130,6 @@ const generateLineSegments = (data) => {
   return segments;
 };
 
-const TestChart = ({ data, dataB, treatment, diaryData, selectedIndicators }) => {
-  const ref = useRef(null);
-  const [selectedPointIndex, setSelectedPointIndex] = useState<number | null>(null);
-  const [displayItem, setDisplayItem] = useState<null>();
-  const [isVisible, setIsVisible] = useState(false);
-  const pointerItemRef = useRef(null);
-
-  // Animation values
-  const opacity = useSharedValue(0);
-  const translateY = useSharedValue(-20);
-
-  // Animated styles
-  const animatedStyle = useAnimatedStyle(() => {
-    return {
-      opacity: opacity.value,
-      transform: [{ translateY: translateY.value }],
-    };
-  });
-
-  // Handle animation when displayItem changes
-  useEffect(() => {
-    if (displayItem) {
-      // Apparition
-      setIsVisible(true);
-      opacity.value = withTiming(1, { duration: 300 });
-      translateY.value = withTiming(0, { duration: 300 });
-    } else if (isVisible) {
-      // Disparition
-      opacity.value = withTiming(0, { duration: 300 });
-      translateY.value = withTiming(-20, { duration: 300 });
-      // Wait for animation to complete before hiding
-      setTimeout(() => {
-        setIsVisible(false);
-      }, 300);
-    }
-  }, [displayItem]);
-
-  // Custom data point function that can access selectedPointIndex state
-  const customDataPoint = ({ color, backgroundColor, isSelected }) => {
-    return (
-      <View
-        style={{
-          width: isSelected ? 20 : 14,
-          height: isSelected ? 20 : 14,
-          backgroundColor: backgroundColor || "white",
-          borderWidth: isSelected ? 6 : 3,
-          borderRadius: 10,
-          borderColor: color || "#3D6874",
-          alignSelf: "center",
-        }}
-      />
-    );
-  };
-
-  // Configurable label spacing - show 1 label every X data points
-  const labelSpacing = 3; // Change this value to adjust label density (e.g., 2 = every 2nd label, 3 = every 3rd label)
-
-  // Format date to French format (DD/MM or DD MMM)
-  const formatDateToFrench = (dateString) => {
-    if (!dateString) return "";
-    const date = new Date(dateString);
-    if (isNaN(date.getTime())) return dateString;
-
-    const day = date.getDate();
-    const month = date.getMonth() + 1;
-    const year = date.getFullYear();
-
-    // Short format: DD/MM
-    return `${day.toString().padStart(2, "0")}/${month.toString().padStart(2, "0")}/${year.toString().padStart(2, "0").slice(2, 4)}`;
-  };
-
-  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"];
-
-  const showOrHidePointer = (ind) => {
-    ref.current?.scrollTo({
-      x: ind * 200 - 25,
-    }); // adjust as per your UI
-  };
-  const lineSegments = generateLineSegments(data);
-  return (
-    <View className="bg-cnam-primary-25">
-      {/* <View className="mb-4" style={{ flexDirection: "row", marginLeft: 8 }}>
-        {months.map((item, index) => {
-          return (
-            <TouchableOpacity
-              key={index}
-              style={{
-                padding: 6,
-                margin: 4,
-                backgroundColor: "#ebb",
-                borderRadius: 8,
-              }}
-              onPress={() => showOrHidePointer(index)}
-            >
-              <Text>{months[index]}</Text>
-            </TouchableOpacity>
-          );
-        })}
-      </View> */}
-      {isVisible && (
-        <Animated.View style={[animatedStyle]} className="border bg-white rounded-2xl flex-col space-y-2 p-4 mb-4">
-          <View className="flex-row justify-between items-center">
-            <Text className={mergeClassNames(typography.textXsBold, "bg-cnam-primary-800 text-white rounded-lg p-2")}>{displayItem?.date}</Text>
-            <TouchableOpacity
-              onPress={() => {
-                setDisplayItem(null);
-              }}
-            >
-              <Text className={mergeClassNames(typography.textLgBold, "text-cnam-primary-800")}>✕</Text>
-            </TouchableOpacity>
-          </View>
-          {displayItem &&
-            selectedIndicators.map((indicator) => {
-              let value;
-              try {
-                value = diaryData[displayItem.date][getIndicatorKey(indicator)].value;
-              } catch (e) {}
-              return (
-                <Text key={indicator.uuid}>
-                  {indicator.name} : {value}
-                </Text>
-              );
-            })}
-        </Animated.View>
-      )}
-      <LineChart
-        spacing={50}
-        yAxisSide={1}
-        xAxisLabelTextStyle={{ fontSize: 10, color: "#666", width: 60, textAlign: "center" }}
-        xAxisTextNumberOfLines={1}
-        xAxisLabelsHeight={10}
-        xAxisThickness={0}
-        xAxisColor={"transparent"}
-        width={screenWidth - 70}
-        focusEnabled={true}
-        // focusProximity={50}
-        lineSegments={lineSegments}
-        onFocus={(item, index) => {
-          console.log("focused", item, index);
-          setDisplayItem(item);
-          // setSelectedPointIndex(index);
-        }}
-        unFocusOnPressOut={false}
-        showStripOnFocus={true}
-        stripColor={TW_COLORS.CNAM_PRIMARY_700}
-        stripHeight={200}
-        stripWidth={2}
-        showTextOnFocus={true}
-        focusTogether={true}
-        xAxisLabelsVerticalShift={60}
-        showXAxisIndices={true}
-        xAxisIndicesWidth={2}
-        xAxisIndicesColor={"#999"}
-        noOfSections={5}
-        noOfSectionsBelowXAxis={0}
-        stepValue={1}
-        scrollRef={ref}
-        data={(data || []).map((d, index) => ({
-          ...d,
-          label: index % labelSpacing === 0 ? formatDateToFrench(d.label) : "", // Show label only at intervals with French format
-          focusedCustomDataPoint: () => {
-            return customDataPoint({ color: "#3D6874", backgroundColor: "white", isSelected: true });
-          },
-          customDataPoint: () => {
-            return customDataPoint({ color: "#3D6874", backgroundColor: "white", isSelected: false });
-          },
-        }))}
-        xAxisIndicesHeight={10}
-        color2={"#00A5DF"}
-        color1={"#3D6874"}
-        // noOfSectionsBelowXAxis={1}
-        data2={
-          dataB
-            ? dataB.map((d, index) => ({
-                ...d,
-                label: index % labelSpacing === 0 ? formatDateToFrench(d.label) : "", // Show label only at intervals with French format
-                focusedCustomDataPoint: () => {
-                  return customDataPoint({ color: "#00A5DF", backgroundColor: "#00A5DF", isSelected: true });
-                },
-                customDataPoint: () => {
-                  return customDataPoint({ color: "#00A5DF", backgroundColor: "#00A5DF", isSelected: false });
-                },
-              }))
-            : null
-        }
-        data3={
-          treatment
-            ? (treatment || []).map((t, index) => ({
-                ...t,
-                label: index % labelSpacing === 0 ? formatDateToFrench(t.label) : "", // Show label only at intervals with French format
-                customDataPoint: () => {
-                  const isSelected = selectedPointIndex === index;
-
-                  return (
-                    <View
-                      style={{
-                        width: 14,
-                        height: 30,
-                        display: "flex",
-                        justifyContent: "flex-start",
-                        alignItems: "center",
-                      }}
-                    >
-                      <View
-                        style={{
-                          borderWidth: isSelected ? 2 : 1,
-                          borderRadius: 10,
-                          backgroundColor: "#134449",
-                          borderColor: "#134449",
-                          height: isSelected ? 14 : 10,
-                          width: isSelected ? 14 : 10,
-                          shadowColor: isSelected ? "#134449" : "transparent",
-                          shadowOffset: { width: 0, height: 0 },
-                          shadowOpacity: isSelected ? 0.5 : 0,
-                          shadowRadius: isSelected ? 8 : 0,
-                          elevation: isSelected ? 8 : 0,
-                        }}
-                      />
-                    </View>
-                  );
-                },
-              }))
-            : null
-        }
-        getPointerProps={({ pointerIndex }) => {
-          console.log("lCS TOOT");
-          const item = data[pointerIndex] || dataB[pointerIndex];
-          setDisplayItem(item);
-        }}
-        pointerConfig={{
-          onPointerEnter: (item) => {
-            console.log(item);
-          },
-          activatePointersOnLongPress: true,
-          persistPointer: true,
-          // activatePointersDelay: 500,
-          pointerColor: "transparent",
-          pointerStripWidth: 2,
-          width: 20,
-          height: 20,
-          pointerStripColor: TW_COLORS.CNAM_PRIMARY_700,
-          // pointer1Color: "#00A5DF",
-          // pointer2Color: "#3D6874",
-          pointerStripUptoDataPoint: false,
-          pointerLabelWidth: 40,
-          pointerLabelHeight: 100,
-          pointerComponent: (item) => {
-            return customDataPoint({ color: "red", isSelected: true });
-          },
-          pointerLabelComponent: (items) => {
-            return (
-              <View
-                style={{
-                  height: 90,
-                  width: 100,
-                  justifyContent: "center",
-                  marginTop: -30,
-                  marginLeft: -40,
-                }}
-              >
-                <Text style={{ color: "white", fontSize: 14, marginBottom: 6, textAlign: "center" }}>{items[0].date}</Text>
-
-                <View style={{ paddingHorizontal: 14, paddingVertical: 6, borderRadius: 16, backgroundColor: "white" }}>
-                  <Text style={{ fontWeight: "bold", textAlign: "center" }}>{"$" + items[0].value + ".0"}</Text>
-                </View>
-              </View>
-            );
-          },
-        }}
-        overflowBottom={100} // space at the bottom of graph
-        // dataPointsHeight={15}
-        // dataPointsWidth={15}
-        dataPointsWidth1={15}
-        dataPointsHeight1={15}
-        dataPointsHeight2={15}
-        dataPointsWidth2={15}
-        dataPointsHeight3={14}
-        dataPointsWidth3={14}
-        focusedDataPointHeight={20}
-        focusedDataPointWidth={20}
-        showDataPointLabelOnFocus={false}
-        color3="transparent"
-        yAxisColor={"transparent"}
-        formatYLabel={(lab) => {
-          if (lab === "-1" || lab === "-2" || lab === "6" || lab === "0") {
-            return "";
-          }
-          return "";
-          // return parseInt(lab, 10).toString();
-        }}
-        yAxisOffset={1}
-        showVerticalLines={false}
-        verticalLinesColor="rgba(24, 26, 26, 0.1)"
-        // verticalLinesThickness={0}
-        noOfVerticalLines={0}
-        strokeDashArray1={[4, 4]}
-        curved={true}
-        curvature={0.1}
-        initialSpacing={0}
-      />
-    </View>
-  );
-};
-
 export const Correlation = ({ navigation, onScroll, scrollY, day, setDay, dynamicPaddingTop }) => {
   const { showBottomSheet, closeBottomSheet } = useBottomSheet();
   const [diaryData] = useContext(DiaryDataContext);
@@ -441,15 +137,7 @@ export const Correlation = ({ navigation, onScroll, scrollY, day, setDay, dynami
   const [showTreatment, setShowTreatment] = useState<boolean>(false);
 
   const onPressChooseIndicator = () => {
-    showBottomSheet(
-      <IndicatorsBottomSheet
-        onClose={({ selectedIndicators: _selectedIndicators, showTreatment: _showShowTreatment }) => {
-          setSelectedIndicators(_selectedIndicators);
-          setShowTreatment(_showShowTreatment);
-          closeBottomSheet();
-        }}
-      />
-    );
+    navigation.navigate("correlation-modal" as never);
   };
 
   const dataToDisplay = useMemo(() => {
@@ -466,7 +154,8 @@ export const Correlation = ({ navigation, onScroll, scrollY, day, setDay, dynami
           if (!dayData) {
             return {
               value: 1,
-              hideDataPoint: true,
+              hideDataPoint: false,
+              noValue: true,
               date: date,
               indicator,
               label: date,
@@ -476,7 +165,8 @@ export const Correlation = ({ navigation, onScroll, scrollY, day, setDay, dynami
           if (!categoryState) {
             return {
               value: 1,
-              hideDataPoint: true,
+              hideDataPoint: false,
+              noValue: true,
               date: date,
               label: date,
               indicator,
@@ -488,7 +178,7 @@ export const Correlation = ({ navigation, onScroll, scrollY, day, setDay, dynami
               label: date,
               date: date,
               indicator,
-              value: Math.min(Math.floor(categoryState?.value * 5), 4),
+              value: Math.min(Math.floor(categoryState?.value * 5), 4) + 1,
             };
           if (categoryState?.value)
             return {
@@ -514,7 +204,8 @@ export const Correlation = ({ navigation, onScroll, scrollY, day, setDay, dynami
           }
           return {
             data: categoryState.level ? categoryState.level : null,
-            hideDataPoint: !categoryState.level,
+            hideDataPoint: false,
+            noValue: !categoryState.level,
             label: date,
             date: date,
             indicator,
@@ -594,7 +285,23 @@ export const Correlation = ({ navigation, onScroll, scrollY, day, setDay, dynami
           <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900")}>
             Sommeil & énergie, humeur & activité physique… Les liens peuvent vous aider à mieux comprendre votre équilibre mental.
           </Text>
-          <JMButton onPress={onPressChooseIndicator} variant="outline" title="Choisir mes indicateurs" icon={<PlusIcon />} />
+          <JMButton
+            onPress={() => {
+              showBottomSheet(
+                <IndicatorsBottomSheet
+                  onClose={function ({ showTreatment, selectedIndicators }: { showTreatment: boolean; selectedIndicators: string[] }): void {
+                    closeBottomSheet();
+                    navigation.navigate("correlation-modal", {
+                      selectedIndicators,
+                    });
+                  }}
+                />
+              );
+            }}
+            variant="outline"
+            title="Choisir mes indicateurs"
+            icon={<PlusIcon />}
+          />
         </View>
       </ScrollView>
     );
@@ -661,224 +368,3 @@ export const Correlation = ({ navigation, onScroll, scrollY, day, setDay, dynami
     );
   }
 };
-
-export const Correlation2 = ({ navigation, onScroll, scrollY, day, setDay, dynamicPaddingTop }) => {
-  const [diaryData] = useContext(DiaryDataContext);
-  const [customs, setCustoms] = useState([]);
-  const [oldCustoms, setOldCustoms] = useState([]);
-  const [calendarIsEmpty, setCalendarIsEmpty] = useState(false);
-  let mounted = useRef(true);
-  const [userIndicateurs, setUserIndicateurs] = React.useState([]);
-  const insets = useSafeAreaInsets();
-
-  useEffect(() => {
-    (async () => {
-      const c = await localStorage.getCustomSymptoms();
-      if (c && mounted) setCustoms(c);
-
-      //retrocompatibility
-      const t = c.map((e) => `${e}_FREQUENCE`);
-      if (t && mounted) setOldCustoms(t);
-    })();
-    return () => (mounted = false);
-  }, [diaryData]);
-
-  useEffect(() => {
-    (async () => {
-      const user_indicateurs = await localStorage.getIndicateurs();
-      if (user_indicateurs) {
-        setUserIndicateurs(user_indicateurs);
-      }
-    })();
-  }, []);
-
-  useEffect(() => {
-    const emptyCalendar = !userIndicateurs
-      .concat(INDICATEURS)
-      .reduce((acc, curr) => {
-        if (!acc.find((a) => a === getIndicatorKey(curr))) {
-          acc.push(getIndicatorKey(curr));
-        }
-        return acc;
-      }, [])
-      .reduce((showing, categoryId) => {
-        return Boolean(isChartVisible(categoryId)) || showing;
-      }, false);
-    setCalendarIsEmpty(emptyCalendar);
-  }, [day, customs, oldCustoms, isChartVisible, userIndicateurs]);
-
-  const twoYearsAgo = beforeToday(40 * 1); // Calculate date from 2 years ago
-  const chartDates = getArrayOfDates({ startDate: twoYearsAgo }); // Get all dates from 2 years ago to today
-
-  const computeChartData = (indicateur) => {
-    return chartDates.map((date) => {
-      const dayData = diaryData[date];
-      if (!dayData) {
-        return {
-          value: 1,
-          hideDataPoint: true,
-          label: date,
-        };
-      }
-      const categoryState = diaryData[date][getIndicatorKey(indicateur)];
-      if (!categoryState) {
-        return {
-          value: 1,
-          hideDataPoint: true,
-          label: date,
-        };
-      }
-      if (indicateur?.type === "boolean") return { value: categoryState?.value === true ? 4 : 0, label: date };
-      if (indicateur?.type === "gauge")
-        return {
-          label: date,
-          value: Math.min(Math.floor(categoryState?.value * 5), 4),
-        };
-      if (categoryState?.value)
-        return {
-          value: categoryState?.value,
-          label: date,
-        };
-
-      // -------
-      // the following code is for the retrocompatibility
-      // -------
-
-      // get the name and the suffix of the category
-      const [categoryName, suffix] = getIndicatorKey(indicateur).split("_");
-      let categoryStateIntensity = null;
-      if (suffix && suffix === "FREQUENCE") {
-        // if it's one category with the suffix 'FREQUENCE' :
-        // add the intensity (default level is 3 - for the frequence 'never')
-        categoryStateIntensity = diaryData[date][`${categoryName}_INTENSITY`] || { level: 3 };
-        return {
-          value: categoryState.level + categoryStateIntensity.level - 2,
-          label: date,
-        };
-      }
-      return {
-        data: categoryState.level ? categoryState.level : null,
-        hideDataPoint: !categoryState.level,
-        label: date,
-      };
-    });
-  };
-
-  const isChartVisible = useCallback(
-    (categoryId) => {
-      let visible = false;
-      chartDates.forEach((date) => {
-        if (!diaryData[date]) {
-          return;
-        }
-        if (!diaryData[date][categoryId]) {
-          return;
-        }
-        visible = true;
-      });
-      return visible;
-    },
-    [diaryData, chartDates]
-  );
-
-  let dataA, dataB, treatment;
-  if (userIndicateurs.length !== 0) {
-    const activeIndicators = userIndicateurs.concat(INDICATEURS).filter((ind) => ind.active);
-    const indicatorA = activeIndicators[0];
-    const indicatorB = activeIndicators[1];
-    dataA = computeChartData(indicatorA)
-      .filter((d) => d)
-      .filter((d) => {
-        if (!Number.isFinite(d.value)) {
-          return false;
-        }
-        return true;
-      });
-    dataB = computeChartData(indicatorB)
-      .filter((d) => d)
-      .filter((d) => {
-        if (!Number.isFinite(d.value)) {
-          return false;
-        }
-        return true;
-      });
-    treatment = dataB.map((d) => {
-      const value = Math.random() < 0.5 ? 1 : 0;
-      return {
-        ...d,
-        hideDataPoint: value === 1,
-        value,
-      };
-    });
-  }
-
-  return (
-    <View className="flex-1 bg-white">
-      <Animated.ScrollView
-        style={styles.scrollView}
-        scrollEventThrottle={16}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={[
-          styles.scrollContainer,
-          {
-            paddingBottom: insets.bottom + TAB_BAR_HEIGHT,
-            paddingTop: 260,
-          },
-        ]}
-        onScroll={onScroll}
-      >
-        {!calendarIsEmpty ? (
-          <>
-            <TestChart data={dataA} dataB={dataB} treatment={treatment} />
-          </>
-        ) : (
-          <>
-            <View style={styles.subtitleContainer}>
-              <Icon icon="InfoSvg" width={25} height={25} color={colors.LIGHT_BLUE} />
-              <Text style={styles.subtitle}>
-                Des <Text style={styles.bold}>courbes d'évolution</Text> apparaîtront au fur et à mesure de vos saisies quotidiennes.
-              </Text>
-            </View>
-          </>
-        )}
-      </Animated.ScrollView>
-    </View>
-  );
-};
-
-const styles = StyleSheet.create({
-  imageContainer: {
-    display: "flex",
-    alignItems: "center",
-  },
-  image: {
-    height: screenHeight * 0.5,
-    resizeMode: "contain",
-  },
-  subtitle: {
-    flex: 1,
-    color: "#000",
-    fontSize: 15,
-    fontWeight: "normal",
-  },
-  subtitleContainer: {
-    display: "flex",
-    flexDirection: "row",
-    marginVertical: 10,
-  },
-  bold: {
-    fontWeight: "bold",
-  },
-  scrollView: {
-    flex: 1,
-    paddingHorizontal: 20,
-    backgroundColor: "white",
-  },
-  scrollContainer: {
-    minHeight: screenHeight * 0.7,
-  },
-  title: {
-    fontWeight: "700",
-    fontSize: 22,
-  },
-});
