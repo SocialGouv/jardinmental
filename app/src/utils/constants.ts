@@ -448,7 +448,7 @@ export const HELP_ANALYSE = {
 - Faire des liens entre vos ressentis et le contexte de vos journées
 - Mieux comprendre ce qui vous aide… et ce qui peut vous fragiliser.\n\n
 **Retrouvez les notes que vous avez écrites :**\n
-Séléctionnez un indicateur, un ou plusieurs niveaux et une période pour retrouver les notes associées.`,
+Sélectionnez un indicateur, un ou plusieurs niveaux et une période pour retrouver les notes associées.`,
   },
   variations: {
     title: "Comment lire les variations ?",
