@@ -3,6 +3,7 @@ export const CATEGORIES = {
   LA_SANTE_MENTALE_C_EST_QUOI: "La santé mentale, c'est quoi ?",
   MIEUX_COMPRENDRE_LES_TROUBLES_PSYCHIQUES: "Mieux comprendre les troubles psychiques",
   REPERER_LES_SIGNES_DE_MAL_ETRE: "Repérer les signes de mal-être",
+  AGIR_ET_CHERCHER_DE_L_AIDE_SANS_HONTE: "Agir et chercher de l’aide, sans honte",
 } as const;
 
 export type Category = (typeof CATEGORIES)[keyof typeof CATEGORIES];
@@ -1055,5 +1056,269 @@ Il est essentiel de rester attentif à l'impact du travail sur notre santé ment
 
 Le travail ne doit jamais être une source de souffrance. Protéger la santé mentale est un droit fondamental qui repose principalement sur la responsabilité des employeurs et des organisations, mais qui gagne à être soutenu par la vigilance et la solidarité de tous.`,
     externalResources: ["550e8400-e29b-41d4-a716-446655440265", "550e8400-e29b-41d4-a716-446655440266", "550e8400-e29b-41d4-a716-446655440267"],
+  },
+  {
+    id: "b1c2d3e4-f5a6-4b78-c901-234567890abc",
+    matomoId: 38,
+    title: "Demander de l'aide, ce n'est pas être faible",
+    image: require("../../../../assets/imgs/resources/Article38.png"),
+    category: CATEGORIES.AGIR_ET_CHERCHER_DE_L_AIDE_SANS_HONTE,
+    content: `Tout le monde peut traverser des périodes difficiles. Se sentir dépassé·e, épuisé·e, irritable. Ne plus avoir envie de faire ce qu'on aime. Mal dormir. S'isoler. Avoir du mal à se concentrer. **Ces signes ne sont pas forcément le signe d'un trouble, mais ils méritent qu'on y prête attention** (voir notre rubrique reconnaître un mal-être).
+
+La première étape pour aller mieux, c'est souvent de reconnaître qu'on ne va pas bien. Prendre conscience qu'on a besoin d'aide, ce n'est pas un échec, ni un aveu de faiblesse. **C'est une manière de prendre soin de soi, au bon moment, avant que les choses ne s'aggravent.**
+
+Demander de l'aide ne signifie pas forcément consulter un·e professionnel·le immédiatement. **Cela peut simplement commencer par une conversation avec une personne de confiance et disponible : un·e ami·e, un·e membre de la famille, un·e collègue, un·e voisin·e.** Dire que ça ne va pas permet déjà de relâcher un peu la pression. Ces premiers échanges peuvent aussi aider à mieux comprendre ce que l'on traverse, ou à envisager des solutions qui n'avaient pas encore été identifiées jusque-là.
+
+**Comment s'y prendre ?**
+
+Il n'est pas nécessaire de trouver les bons mots ni de tout expliquer dans les moindres détails. Quelques phrases suffisent, comme  :
+
+- « En ce moment, je ne vais pas très bien. »
+- « J'ai l'impression que je perds pied. »
+- « J'aurais besoin de parler à quelqu'un. »
+
+Ce premier échange permet de sortir de l'isolement, de se sentir un peu soutenu·e, et de poser les bases d'une aide plus adaptée, si besoin. **Si la situation le demande, il est possible de s'adresser à un·e professionnel·le.** Le médecin traitant peut faire le point, orienter vers un suivi ou simplement écouter. Il s'agit souvent de la première porte d'entrée. Des ressources existent à tous les niveaux : psychologues, centres médico-psychologiques (CMP), associations, lignes d'écoute.
+
+**Il n'y a pas de seuil critique à atteindre pour demander de l'aide. Ce besoin est légitime, dès qu'il se fait sentir.**`,
+    externalResources: [
+      "550e8400-e29b-41d4-a716-446655440004",
+      "550e8400-e29b-41d4-a716-446655440039",
+      "550e8400-e29b-41d4-a716-446655440036",
+      "550e8400-e29b-41d4-a716-446655440213",
+      "550e8400-e29b-41d4-a716-446655440214",
+      "550e8400-e29b-41d4-a716-446655440215",
+      "550e8400-e29b-41d4-a716-446655440216",
+      "550e8400-e29b-41d4-a716-446655440217",
+    ],
+  },
+  {
+    id: "c2d3e4f5-a6b7-4c89-d012-3456789abcde",
+    matomoId: 39,
+    title: "Psychologue, psychiatre, CMP, ligne d'écoute… à qui s'adresser ?",
+    image: require("../../../../assets/imgs/resources/Article39.png"),
+    category: CATEGORIES.AGIR_ET_CHERCHER_DE_L_AIDE_SANS_HONTE,
+    content: `Lorsque les difficultés durent et impactent la vie quotidienne, ou que les ressources personnelles (comme parler à ses proches, pratiquer ses activités préférées ou prendre du temps pour soi) ne suffisent plus, il est important de chercher un soutien extérieur. Face à la diversité des options, il n'est pas toujours simple de savoir vers qui se tourner.
+
+- **Le médecin traitant est souvent le premier contact.** Il ou elle connaît votre parcours de santé, peut évaluer votre situation et vous orienter selon vos besoins. Si vous ressentez un mal-être général ou cherchez un avis pour savoir quelle aide envisager, c'est lui qu'il faut voir en priorité.
+- **Le psychiatre est un médecin spécialiste de la santé mentale.** Si vous avez besoin d'un diagnostic précis, d'un traitement médical, ou d'un suivi spécialisé, il ou elle est le professionnel adapté. Il peut aussi proposer une thérapie. Ses consultations sont généralement remboursées par l'Assurance Maladie, mais le reste à charge peut varier en fonction de son secteur de convention et du respect du parcours de soins coordonné.
+- **Le psychologue propose un accompagnement par la parole, un soutien ou une thérapie**. Si vous souhaitez parler de vos difficultés sans traitement médical, c'est vers lui que vous pouvez vous tourner. Les consultations sont généralement à votre charge, sauf dans certains dispositifs spécifiques comme *Mon Soutien Psy* ou selon votre mutuelle.
+- **Les centres médico-psychologiques (CMP) sont des structures publiques de proximité qui offrent un accompagnement global, souvent gratuit et sans avance de frais.** Si vous préférez un suivi pluridisciplinaire ou un soutien accessible près de chez vous, ils sont une bonne option.
+- **Le dispositif *Mon Soutien Psy* permet de bénéficier jusqu'à 12 séances d'accompagnement psychologique avec un psychologue partenaire.** Chaque séance coûte 50 euros, remboursée à 60 % par l'Assurance Maladie, le reste pouvant être pris en charge par votre complémentaire santé. Ce dispositif s'adresse à toute personne dès l'âge de 3 ans, en cas d'anxiété, de déprime ou de mal-être. Il est possible de prendre rendez-vous directement, en toute autonomie, via le site https://monsoutienpsy.ameli.fr/ ou de passer par votre médecin si vous préférez être accompagné·e dans la démarche.
+- **Des lignes d'écoute gratuites, anonymes et accessibles à distance sont aussi disponibles.** Elles peuvent être une première étape pour parler librement, poser vos questions ou simplement ne pas rester seul·e face à une difficulté.
+- **Enfin, certains choisissent les groupes de parole, associations ou communautés en ligne pour partager leurs expériences avec d'autres personnes concernées.** Ces espaces ne remplacent pas un suivi médical, mais offrent un soutien précieux par le partage et la compréhension mutuelle.
+
+Chaque ressource a son rôle, selon votre situation et vos besoins. Certaines proposent un soutien ponctuel, d'autres un accompagnement sur le long terme. Certaines relèvent du soin, d'autres du lien social. Il n'existe pas de parcours unique ni de solution universelle : l'essentiel est de pouvoir identifier, à votre rythme, ce qui vous convient le mieux.
+
+Dès que vous ressentez un mal-être, même léger, consultez sans hésiter : cela évite que les difficultés ne s'intensifient avec le temps.`,
+    externalResources: [
+      "550e8400-e29b-41d4-a716-446655440218",
+      "550e8400-e29b-41d4-a716-446655440219",
+      "550e8400-e29b-41d4-a716-446655440220",
+      "550e8400-e29b-41d4-a716-446655440221",
+      "550e8400-e29b-41d4-a716-446655440222",
+      "550e8400-e29b-41d4-a716-446655440223",
+      "550e8400-e29b-41d4-a716-446655440224",
+    ],
+  },
+  {
+    id: "d3e4f5a6-b7c8-4d90-e123-456789abcdef",
+    matomoId: 40,
+    title: "Idées et crises suicidaires : comment agir, qui contacter ?",
+    image: require("../../../../assets/imgs/resources/Article40.png"),
+    category: CATEGORIES.AGIR_ET_CHERCHER_DE_L_AIDE_SANS_HONTE,
+    content: `Les idées suicidaires font partie des manifestations possibles d'une détresse psychique. Elles ne traduisent pas nécessairement une volonté de mourir, mais plutôt le besoin d'échapper à une souffrance devenue insupportable. Ces pensées peuvent survenir lors de périodes de grande fatigue émotionnelle, de perte d'espoir ou de difficultés personnelles importantes. Elles indiquent qu'un soutien est nécessaire pour faire face à cette douleur et retrouver des repères.
+
+Il est essentiel d'en parler. Aborder le sujet du suicide ne fait pas naître d'idées suicidaires chez quelqu'un qui n'en a pas. Au contraire, cela permet souvent d'ouvrir un espace d'écoute, de compréhension et de réduire le sentiment d'isolement.
+
+La crise suicidaire est un état de souffrance psychique intense dans lequel les pensées de mort deviennent envahissantes et la personne peut envisager concrètement de mettre fin à ses jours. Elle se sent piégée, sans issue, et la mort peut sembler être la seule solution à une douleur perçue comme insupportable. Bien que cet état soit temporaire et réversible, il nécessite une aide immédiate.
+
+**Certains comportements peuvent indiquer qu'une personne est en danger immédiat :**
+
+- Elle parle de sa décision de mourir ou évoque la mort de façon insistante.
+- Elle met de l'ordre dans ses affaires, fait ses adieux ou paraît étrangement calme.
+- Elle se procure des moyens pour se suicider (médicaments, arme, corde, etc.).
+- Elle exprime le sentiment d'avoir tout essayé, sans issue possible.
+- Elle s'isole de manière inhabituelle ou manifeste une agitation soudaine.
+- Elle semble paralysée par la dépression, le désespoir ou une douleur psychique intense.
+
+**Que faire si vous avez des idées suicidaires ?**
+
+Si vous traversez une période difficile avec des pensées suicidaires, ne restez pas seul·e. Parler à un proche de confiance ou à un professionnel de santé peut permettre de prendre du recul et de trouver des solutions adaptées. Vous pouvez également contacter une ligne d'écoute spécialisée, gratuite et anonyme, comme le 3114 (numéro national de prévention du suicide, accessible 24h/24 et 7j/7). En cas d'urgence, contactez les services d'urgence (15 ou 112) ou rendez-vous à l'hôpital.
+
+**Que faire si quelqu'un dans votre entourage pense au suicide ?**
+
+Si un proche montre des signes inquiétants, il est normal de se sentir perdu·e, inquiet·ète ou dépassé·e. Ces réactions sont naturelles : il n'est pas toujours facile de savoir comment réagir face à la souffrance d'un·e proche. N'hésitez pas à demander de l'aide à un professionnel (médecin, psychologue, ligne d'écoute, etc.) ou à contacter les urgences si la situation vous paraît grave.
+
+**En attendant :**
+
+- Prenez les signes au sérieux, même s'ils vous semblent discrets.
+- Évitez les jugements, les reproches ou les moqueries.
+- Ne promettez pas de garder le silence : en parler à un professionnel peut sauver une vie.
+- Ne minimisez pas sa souffrance et ne la comparez pas à d'autres expériences.
+- Soyez à l'écoute, posez des questions ouvertes pour mieux comprendre ce que la personne vit.
+- Montrez de l'empathie, soutenez-la sans jugement et restez présent·e.
+## Si vous ou un proche avez besoin d'aide, voici des ressources d’écoute disponibles à tout moment :
+
+[**3114**](https://3114.fr/)
+
+Numéro national de prévention du suicide.
+
+Permanence d’écoute téléphonique 24h/24 et 7j/7.
+
+[**Suicide Écoute**](https://www.suicide-ecoute.fr/)
+
+Écoute anonyme des personnes confrontées au suicide. 
+
+01 45 39 40 00 – 24h/24 et 7j/7
+
+[**SOS Suicide Phénix**](https://sos-suicide-phenix.org/)
+
+Accueil et écoute anonyme de toute personne confrontée à la problématique du suicide.01 40 44 46 45 – tous les jours de 13h à 23h
+
+Messagerie disponible sur leur site
+
+[**Phare Enfants-Parents**](https://www.phare.org/)
+
+Espace d’accueil et d’écoute contre le mal-être et la prévention du suicide des jeunes, s’adressant aux parents et aux jeunes.01 43 46 00 62 – du lundi au vendredi de 10h à 17h
+
+Messagerie sur le site de l’association
+
+[**Dites Je suis Là**](https://www.ditesjesuisla.fr/)
+
+Plateforme nationale de prévention du suicide destinée au grand public.
+
+[**Fil Santé Jeunes**](https://www.filsantejeunes.com/)
+
+Service d’écoute pour les 12-25 ans sur les thèmes de la santé, de la sexualité, du mal-être, etc. 0 800 235 236 (9h à 23h) – Tchat individuel de 9h à 22h
+
+[**Nightline**](https://www.nightline.fr/)
+
+Service d’écoute nocturne par et pour les étudiant·es
+
+Numéros locaux selon les villes (disponibles sur le site)
+
+Tchat anonyme tous les soirs de 21h à 2h30.
+
+[**SOS Amitié**](https://www.sosamitie.org/)
+
+Service d’écoute bienveillant, gratuit, anonyme et confidentiel destiné à ceux qui traversent une période difficile.
+
+Écoute téléphonique 24h/24 et 7j/7 – 09 72 39 40 50
+
+Tchat de 13h à 3h du matin – Messagerie disponible sur leur site`,
+    externalResources: [
+      "550e8400-e29b-41d4-a716-446655440225",
+      "550e8400-e29b-41d4-a716-446655440226",
+      "550e8400-e29b-41d4-a716-446655440227",
+      "550e8400-e29b-41d4-a716-446655440228",
+      "550e8400-e29b-41d4-a716-446655440229",
+      "550e8400-e29b-41d4-a716-446655440230",
+      "550e8400-e29b-41d4-a716-446655440231",
+      "550e8400-e29b-41d4-a716-446655440232",
+      "550e8400-e29b-41d4-a716-446655440233",
+      "550e8400-e29b-41d4-a716-446655440234",
+      "550e8400-e29b-41d4-a716-446655440235",
+    ],
+  },
+  {
+    id: "e4f5a6b7-c8d9-4e01-f234-56789abcdef0",
+    matomoId: 41,
+    title: "Je m'inquiète pour un proche : que faire sans paniquer ?",
+    image: require("../../../../assets/imgs/resources/Article41.png"),
+    category: CATEGORIES.AGIR_ET_CHERCHER_DE_L_AIDE_SANS_HONTE,
+    content: `**Face à un proche qui semble aller mal, il est normal de se sentir démuni.** On peut avoir peur de dire quelque chose de maladroit, de mal faire, ou simplement ne pas savoir comment s'y prendre. Pourtant, la simple présence d'un·e proche, même imparfaite, peut déjà faire une réelle différence.
+
+**Il n'est pas nécessaire de trouver les mots justes.** Un simple « Je me fais du souci pour toi » ou « J'ai l'impression que tu ne vas pas très bien, tu veux en parler ? » peut suffire à ouvrir un échange. Et si les mots manquent, il est tout à fait possible de le dire. Par exemple : « Je ne sais pas trop comment t'aider, mais je suis là si tu as besoin de compagnie, d'aide ou si tu veux parler. » **Reconnaître son propre désarroi est souvent plus juste que de chercher une réponse toute faite. Cela peut même soulager l'autre, qui se sent alors accueilli·e sans pression.**
+
+**L'objectif n'est pas forcément de faire parler à tout prix, mais d'offrir un espace de soutien, aussi simple soit-il.** Il peut s'agir de discuter, mais aussi de proposer une aide concrète : faire les courses, marcher ensemble, accompagner à un rendez-vous, aller chercher les enfants à l'école, ou simplement passer du temps à deux. Ces gestes, parfois modestes, montrent que l'on est présent·e, que l'autre compte, et que son mal-être est pris au sérieux.
+
+**Lorsque la personne est disposée ou d'accord**, il peut être utile d'envisager ensemble des ressources : un médecin, un professionnel de santé mentale, ou une ligne d'écoute. Le 3114, numéro national gratuit et accessible 24h/24 et 7j/7, permet d'échanger avec des professionnels formés à ces situations, en toute confidentialité.
+
+Si la personne ne souhaite pas appeler elle-même, il est tout à fait possible, en tant que proche ou professionnel de l'entourage, de **contacter le 3114** pour obtenir des conseils personnalisés, en fonction de ce que vous observez et de ce que vous ressentez.
+
+Si l'inquiétude grandit ou si un danger immédiat est pressenti, **il est important de ne pas rester seul** face à la situation. Contacter les urgences (15 ou 112) ou consulter un professionnel de santé permet de mobiliser rapidement l'aide nécessaire.
+
+Enfin, accompagner quelqu'un en souffrance peut être éprouvant.
+
+**Prendre soin de soi, parler de ses propres émotions, demander un soutien psychologique ou simplement se faire accompagner est une démarche légitime et souvent nécessaire pour continuer à aider sans s'épuiser.**`,
+    externalResources: [
+      "550e8400-e29b-41d4-a716-446655440236",
+      "550e8400-e29b-41d4-a716-446655440237",
+      "550e8400-e29b-41d4-a716-446655440238",
+      "550e8400-e29b-41d4-a716-446655440239",
+      "550e8400-e29b-41d4-a716-446655440240",
+      "550e8400-e29b-41d4-a716-446655440241",
+      "550e8400-e29b-41d4-a716-446655440242",
+    ],
+  },
+  {
+    id: "f5a6b7c8-d9e0-4f12-a345-6789abcdef01",
+    matomoId: 42,
+    title: "Accompagner un proche qui vit avec un trouble : quelques repères pour ne pas se perdre",
+    image: require("../../../../assets/imgs/resources/Article42.png"),
+    category: CATEGORIES.AGIR_ET_CHERCHER_DE_L_AIDE_SANS_HONTE,
+    content: `**Lorsqu'un membre de la famille, un partenaire, un enfant ou un ami vit avec un trouble psychique, cela a souvent des répercussions sur tout l'entourage.** Même sans partager le même logement, la maladie peut modifier le quotidien : inquiétudes, réorganisations, responsabilités nouvelles. **La volonté d'être présent et de soutenir se confronte parfois à un sentiment d'impuissance.**
+
+Dans ces situations, il n'est pas rare de se sentir écartelé entre plusieurs rôles : aidant, parent, conjoint, ami… Parfois, tout se mêle, sans savoir quelle place tenir. **Au-delà du lien personnel, la place de proche aidant reste encore peu visible et reconnue socialement.** Ce rôle mobilise pourtant beaucoup d'énergie -  physique, psychique, émotionnelle - et peut devenir difficile à assumer sur la durée**. Beaucoup se sentent seuls face à cette responsabilité, isolés dans leur expérience.**
+
+**Être aidant, ce n'est pas être soignant, ni devoir tout assumer.** Souvent, cela signifie soutenir dans les petits gestes du quotidien, être une présence, offrir un repère. Mais ce rôle n'efface ni les doutes, ni la fatigue, ni la peur de mal faire. Reconnaître que cette charge existe, qu'elle peut durer, n'est pas un aveu de faiblesse -  c'est un premier pas pour se préserver.
+
+**Dans ce contexte, demander du soutien est non seulement légitime, mais essentiel.** Mieux comprendre le trouble dont souffre son proche, rencontrer d'autres aidants, participer à des groupes de parole, se tourner vers des associations ou des ressources spécialisées : autant de moyens de prendre du recul, de se sentir moins seul, et d'agir avec plus de repères.
+
+L'objectif n'est pas de tout résoudre ni de trouver des solutions parfaites. Être aux côtés d'un proche fragilisé demande parfois de l'endurance.
+
+**Pour ne pas s'épuiser, il est essentiel de préserver sa propre santé mentale : écouter ses besoins, poser des limites claires, et accepter que l'on ne peut pas tout porter seul. Aider ne veut pas dire s'effacer.**`,
+    externalResources: [
+      "550e8400-e29b-41d4-a716-446655440237",
+      "550e8400-e29b-41d4-a716-446655440243",
+      "550e8400-e29b-41d4-a716-446655440244",
+      "550e8400-e29b-41d4-a716-446655440245",
+      "550e8400-e29b-41d4-a716-446655440246",
+      "550e8400-e29b-41d4-a716-446655440247",
+      "550e8400-e29b-41d4-a716-446655440248",
+      "550e8400-e29b-41d4-a716-446655440249",
+      "550e8400-e29b-41d4-a716-446655440250",
+      "550e8400-e29b-41d4-a716-446655440251",
+    ],
+  },
+  {
+    id: "a6b7c8d9-e0f1-4a23-b456-789abcdef012",
+    matomoId: 43,
+    title: "Se soutenir entre personnes concernées par un trouble : découvrir la pair-aidance",
+    image: require("../../../../assets/imgs/resources/Article43.png"),
+    category: CATEGORIES.AGIR_ET_CHERCHER_DE_L_AIDE_SANS_HONTE,
+    content: `**Qui mieux que les personnes ayant elles-mêmes traversé un trouble peuvent comprendre ce que vivent celles et ceux qui en souffrent au quotidien** ? La pair-aidance repose sur ce principe : des individus partageant une expérience commune offrent leur savoir, leur écoute et leur soutien à d'autres confrontés à des difficultés similaires.
+
+**Pouvoir s'identifier, se reconnaître dans les récits d'autrui est un élément essentiel.** Cela permet de sentir que l'on n'est pas seul, que d'autres ont traversé des épreuves comparables. Cette identification facilite souvent l'acceptation des conseils et des orientations proposées, car ils viennent d'une personne qui comprend intimement ce parcours.
+
+Le rôle concret d'un pair-aidant peut varier : **animer des groupes de parole, accompagner dans les démarches, répondre à des questions pratiques ou simplement offrir un soutien moral.** Ce lien fondé sur la reconnaissance mutuelle permet de se sentir accepté tel que l'on est, avec ses difficultés, et aide à reprendre confiance en ses capacités à avancer.
+
+**Aujourd'hui, la pair-aidance est une profession reconnue.** En France, des formations spécialisées valorisent cette expertise fondée sur l'expérience, tout en développant des compétences professionnelles. **L'Organisation mondiale de la Santé (OMS) souligne l'importance de ce rôle complémentaire aux soins traditionnels, qui apporte un accompagnement humain, bienveillant et inclusif.**
+
+Pour beaucoup, ce soutien devient un élément essentiel du parcours de rétablissement, offrant une écoute adaptée et un accompagnement concret dans la vie de tous les jours.`,
+    externalResources: ["550e8400-e29b-41d4-a716-446655440254", "550e8400-e29b-41d4-a716-446655440255", "550e8400-e29b-41d4-a716-446655440256"],
+  },
+  {
+    id: "b7c8d9e0-f1a2-4b34-c567-89abcdef0123",
+    matomoId: 44,
+    title: "Et après ? Comprendre le rétablissement",
+    image: require("../../../../assets/imgs/resources/Article44.png"),
+    category: CATEGORIES.AGIR_ET_CHERCHER_DE_L_AIDE_SANS_HONTE,
+    content: `**Que signifie réellement "se rétablir" quand on vit avec un trouble psychique ?** Est-ce retrouver une forme d'équilibre au quotidien ? Apprendre à vivre avec certaines difficultés sans qu'elles prennent toute la place ? Ou simplement pouvoir se projeter à nouveau, malgré des vulnérabilités persistantes ?
+
+Le rétablissement ne signifie pas nécessairement la disparition totale des symptômes ni une guérison au sens médical. **Il s'agit plutôt de retrouver une forme de stabilité et de sens, même en présence de ces difficultés.** C'est un cheminement personnel, intime, qui appartient à chaque personne concernée. Chacun·e en donne sa propre définition : retrouver confiance, renouer avec ses envies, reprendre des liens sociaux, avoir un projet… **ou simplement sentir qu'on existe pleinement à nouveau.**
+
+Ce processus est souvent non linéaire, ponctué d'avancées, de pauses, de reculs. Il peut durer, évoluer, ou prendre différentes formes selon les périodes de vie. **Et surtout, il ne repose pas uniquement sur les efforts individuels.** De nombreux facteurs extérieurs influencent ce parcours : conditions de vie, accès aux soins, qualité du soutien, ressources disponibles… La précarité, l'isolement, les discriminations ou les violences peuvent rendre ce chemin plus complexe, même quand tout est mis en œuvre pour aller mieux.
+
+**C'est pourquoi le rétablissement est aussi un enjeu collectif.** Il suppose que l'entourage, les professionnel·les et la société créent des conditions favorables : des soins accessibles, un logement digne, un emploi adapté, une reconnaissance du vécu. Créer ces conditions, c'est permettre à chacun·e de trouver sa place - ce qui reste un défi, dans une société où les vécus psychiques sont encore largement incompris ou invisibilisés.
+
+**Enfin, il est essentiel de rappeler que vivre avec un trouble psychique ne définit pas une personne. Se rétablir, c'est aussi pouvoir exister pleinement, dans toute sa singularité.**`,
+    externalResources: [
+      "550e8400-e29b-41d4-a716-446655440257",
+      "550e8400-e29b-41d4-a716-446655440258",
+      "550e8400-e29b-41d4-a716-446655440259",
+      "550e8400-e29b-41d4-a716-446655440260",
+      "550e8400-e29b-41d4-a716-446655440261",
+    ],
   },
 ];
