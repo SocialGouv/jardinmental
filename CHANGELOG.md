@@ -1,3 +1,10 @@
+# [1.118.0](https://github.com/SocialGouv/jardinmental/compare/v1.117.1...v1.118.0) (2025-10-30)
+
+
+### Features
+
+* release app ([13adb3b](https://github.com/SocialGouv/jardinmental/commit/13adb3b674f3cc6c1bf9e8c29296f4a77e78f2f3))
+
 ## [1.117.1](https://github.com/SocialGouv/jardinmental/compare/v1.117.0...v1.117.1) (2025-10-30)
 
 
