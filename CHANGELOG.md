@@ -1,3 +1,10 @@
+## [1.115.1](https://github.com/SocialGouv/jardinmental/compare/v1.115.0...v1.115.1) (2025-10-30)
+
+
+### Bug Fixes
+
+* typo ([b9afdb0](https://github.com/SocialGouv/jardinmental/commit/b9afdb0df0c1c874fd16658ebf98e90a3e3da9e5))
+
 # [1.115.0](https://github.com/SocialGouv/jardinmental/compare/v1.114.0...v1.115.0) (2025-10-28)
 
 
