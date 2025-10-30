@@ -1,3 +1,10 @@
+## [1.117.1](https://github.com/SocialGouv/jardinmental/compare/v1.117.0...v1.117.1) (2025-10-30)
+
+
+### Bug Fixes
+
+* add push token in debug panel ([#595](https://github.com/SocialGouv/jardinmental/issues/595)) ([81c6e5d](https://github.com/SocialGouv/jardinmental/commit/81c6e5d50c645316a160bf7f7e84fa782a6a2bd3))
+
 # [1.117.0](https://github.com/SocialGouv/jardinmental/compare/v1.116.1...v1.117.0) (2025-10-30)
 
 
