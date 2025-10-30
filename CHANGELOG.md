@@ -1,3 +1,10 @@
+# [1.116.0](https://github.com/SocialGouv/jardinmental/compare/v1.115.1...v1.116.0) (2025-10-30)
+
+
+### Features
+
+* resources "Comité sur le stress et l’anxiété" ([#593](https://github.com/SocialGouv/jardinmental/issues/593)) ([d7dc7b9](https://github.com/SocialGouv/jardinmental/commit/d7dc7b9939ea0184ac79cbd174b550d8e7731c56))
+
 ## [1.115.1](https://github.com/SocialGouv/jardinmental/compare/v1.115.0...v1.115.1) (2025-10-30)
 
 
