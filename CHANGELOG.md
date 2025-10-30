@@ -1,3 +1,10 @@
+# [1.117.0](https://github.com/SocialGouv/jardinmental/compare/v1.116.1...v1.117.0) (2025-10-30)
+
+
+### Features
+
+* resources "Comité agir et chercher de l’aide" ([#594](https://github.com/SocialGouv/jardinmental/issues/594)) ([e23908b](https://github.com/SocialGouv/jardinmental/commit/e23908b36dbb211a892fe0314eb9c5478d276b39))
+
 ## [1.116.1](https://github.com/SocialGouv/jardinmental/compare/v1.116.0...v1.116.1) (2025-10-30)
 
 
