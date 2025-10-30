@@ -26,7 +26,6 @@ import ActivateBeck from "../scenes/beck/activate";
 import ViewBeck from "../scenes/beck/view";
 import Beck from "../scenes/beck";
 import Infos from "../scenes/infos";
-import PrivacyLight from "../scenes/privacy-light";
 import NotificationService from "../services/notifications";
 import Indicateurs from "../scenes/indicateurs";
 import Presentation from "../scenes/presentation";
@@ -249,7 +248,6 @@ class Router extends React.Component<RouterProps> {
             <Stack.Screen name="too-late" component={TooLate} />
             <Stack.Screen name="news" component={News} />
             <Stack.Screen name="infos" component={Infos} />
-            <Stack.Screen name="privacy-light" component={PrivacyLight} />
             <Stack.Screen name="contribute-pro" component={ContributePro} />
             <Stack.Screen name="activate-beck" component={ActivateBeck} />
             <Stack.Screen name="view-beck" component={ViewBeck} />
