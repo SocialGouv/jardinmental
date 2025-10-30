@@ -16,7 +16,6 @@ import CGU from "../scenes/legal/cgu-screen";
 import Privacy from "../scenes/legal/privacy-screen";
 import LegalMentions from "../scenes/legal/legal-mentions-screen";
 import logEvents from "../services/logEvents";
-import ContributePro from "../scenes/contribute/contributePro";
 import DrugsSurvey from "../scenes/drugs/drugs-survey";
 import DrugsManagement from "../scenes/drugs/drugs-management";
 import DrugsList from "../scenes/drugs/drugs-list";
