@@ -10,6 +10,7 @@ export type Category = (typeof CATEGORIES)[keyof typeof CATEGORIES];
 export const SUB_CATEGORIES = {
   ZOOM_SOMMEIL: "Zoom sur le sommeil",
   ZOOM_TROUBLES: "Zoom sur les différents troubles",
+  ZOOM_STRESS_AND_ANXIETY: "Zoom sur le stress et l’anxiété",
 } as const;
 
 export type SubCategory = (typeof SUB_CATEGORIES)[keyof typeof SUB_CATEGORIES];
@@ -869,5 +870,190 @@ Pour accompagner cette vigilance, il peut être utile de se poser quelques quest
       "550e8400-e29b-41d4-a716-446655440198",
       "550e8400-e29b-41d4-a716-446655440126",
     ],
+  },
+  {
+    id: "a1b2c3d4-e5f6-4789-a012-3456789abcd1",
+    matomoId: 34,
+    title: "Stress vs. anxiété : éviter la confusion",
+    image: require("../../../../assets/imgs/resources/Article34.png"),
+    category: CATEGORIES.REPERER_LES_SIGNES_DE_MAL_ETRE,
+    subCategory: SUB_CATEGORIES.ZOOM_STRESS_AND_ANXIETY,
+    content: `**Dans le langage courant, les mots *stress* et *anxiété* sont souvent confondus.** Pourtant, ils ne désignent pas la même chose, même si leurs effets peuvent parfois se ressembler.
+
+Le stress est une réaction normale face à une situation qui demande une réponse rapide : un imprévu, une surcharge de travail, une pression extérieure. Il s'agit d'un réflexe d'adaptation qui mobilise le corps et l'esprit pour faire face à ce qui se passe. Une fois la situation terminée, la tension retombe. **Lorsqu'il est ponctuel et bien géré, le stress peut même être bénéfique** : il aide à se concentrer, à agir, à faire face. Dans ce cadre-là, il fait simplement partie de la vie.
+
+**L'anxiété, de son côté, est une émotion liée à une menace perçue.** Elle peut surgir face à une situation à venir, au regard des autres, ou à des pensées qui tournent en boucle. Contrairement à une idée répandue, elle n'est pas toujours floue ou irrationnelle : elle peut avoir une cause bien identifiée. Comme toute émotion, elle a une fonction utile : nous alerter, nous pousser à nous adapter. **Elle n'est donc pas un trouble en soi.**
+
+Elle peut toutefois devenir problématique lorsqu'elle devient trop fréquente, trop intense, ou qu'elle envahit le quotidien. **On parle alors de troubles anxieux (voir notre ressource sur les troubles anxieux)**. Il peut prendre différentes formes (anxiété généralisée, phobies, anxiété sociale, crises de panique...), marquées par une peur qui prend toute la place et perturbe la vie quotidienne, même en dehors des situations redoutées.
+
+**Mais le stress chronique et l'anxiété ne sont pas la même chose.** Le stress chronique s'installe lorsque l'on vit sous pression de façon prolongée, sans possibilité de récupération. Le corps et l'esprit restent tendus en permanence, ce qui peut entraîner de la fatigue, des troubles du sommeil, de l'irritabilité, voire un épuisement. Ce n'est plus une réaction passagère, mais un état durable qui finit par user.
+
+**La différence entre les deux tient surtout à leur origine** : l'anxiété part d'une menace perçue - qu'elle soit liée à l'avenir, à une situation présente ou à un souvenir encore pesant. Le stress chronique, lui, est lié à des conditions concrètes qui durent : surcharge, manque de répit, pressions multiples. **Les deux peuvent coexister et s'amplifier mutuellement, mais ils ne se vivent pas de la même façon, et ne demandent pas les mêmes réponses.**
+
+Mieux comprendre ces différences permet de mettre des mots sur ce que l'on traverse, et de chercher le bon soutien, au bon moment.`,
+    externalResources: [
+      "550e8400-e29b-41d4-a716-446655440201",
+      "550e8400-e29b-41d4-a716-446655440202",
+      "550e8400-e29b-41d4-a716-446655440203",
+      "550e8400-e29b-41d4-a716-446655440204",
+    ],
+  },
+  {
+    id: "b2c3d4e5-f6a7-4890-b123-456789abcdef",
+    matomoId: 35,
+    title: "Stress, anxiété : ce que le corps essaie de dire",
+    image: require("../../../../assets/imgs/resources/Article35.png"),
+    category: CATEGORIES.REPERER_LES_SIGNES_DE_MAL_ETRE,
+    subCategory: SUB_CATEGORIES.ZOOM_STRESS_AND_ANXIETY,
+    content: `**Le stress et l'anxiété ne sont pas seulement des états mentaux. Ce sont aussi des expériences physiques**. Bien souvent, le corps s'exprime avant même que l'on ait conscience de ce qui se joue.
+
+Lorsqu'une personne est confrontée à une situation perçue comme menaçante - qu'elle soit réelle ou non - le cerveau active un mode "alerte" : le rythme cardiaque s'accélère, la respiration devient plus rapide ou se bloque, les muscles se tendent, les sens s'aiguisent et l'individu est en hypervigilance. Des tensions abdominales ou des douleurs diffuses peuvent apparaître. Ce mécanisme de survie est naturel et utile à court terme. Mais s'il se déclenche trop souvent ou s'installe dans la durée, il finit par épuiser l'organisme.
+
+**À force, cet état d'alerte permanent perturbe l'équilibre général. Le stress devient chronique, et le corps agit comme s'il était en danger constant.**
+
+Chez certaines personnes, cette tension monte brusquement et donne lieu à ce qu'on appelle une **crise d'angoisse, ou crise de panique.** Sans signe avant-coureur clair, le corps s'emballe : cœur qui bat très vite, sueurs, vertiges, sensation d'étouffement, peur de perdre le contrôle. **Ces crises provoquent des réactions physiques intenses** : tremblements, nausées, oppression thoracique, engourdissements mais aussi des sensations de déréalisation - comme si le monde devenait irréel - ou de dépersonnalisation, donnant l'impression d'être détaché de soi-même.
+
+Lorsqu'elles deviennent fréquentes, la peur qu'elles reviennent peut s'installer. **Certaines personnes commencent alors à éviter des lieux ou des situations, par crainte de déclencher une nouvelle crise.** Ce cercle peut conduire à un trouble panique, qui impacte profondément la vie quotidienne.
+
+Aussi impressionnantes soient-elles, ces crises sont bien identifiées par les professionnel·les de santé, et des prises en charge efficaces existent. **Elles ne sont pas dangereuses sur le plan vital, mais elles indiquent que le corps a atteint un seuil critique.**
+
+Tous ces signaux sont des messages.
+
+**Le corps n'exagère pas - il alerte**. Apprendre à les reconnaître, c'est déjà une première étape pour mieux comprendre ce que l'on traverse et savoir quand demander de l'aide.`,
+    externalResources: [
+      "550e8400-e29b-41d4-a716-446655440205",
+      "550e8400-e29b-41d4-a716-446655440206",
+      "550e8400-e29b-41d4-a716-446655440207",
+      "550e8400-e29b-41d4-a716-446655440208",
+      "550e8400-e29b-41d4-a716-446655440209",
+      "550e8400-e29b-41d4-a716-446655440210",
+    ],
+  },
+  {
+    id: "c3d4e5f6-a789-4901-c234-56789abcdef0",
+    matomoId: 36,
+    title: "Stress, anxiété… Et si ce n'était pas (que) ça ?",
+    image: require("../../../../assets/imgs/resources/Article36.png"),
+    category: CATEGORIES.REPERER_LES_SIGNES_DE_MAL_ETRE,
+    subCategory: SUB_CATEGORIES.ZOOM_STRESS_AND_ANXIETY,
+    content: `**Prendre conscience de son stress ou de son anxiété est souvent un premier pas vers une compréhension plus large de ce que l'on traverse.** Ces sensations - palpitations, tensions, pensées envahissantes - ne sont pas toujours les seules causes du mal‑être. Il arrive qu'elles en soient l'expression visible, tandis que **d'autres formes de souffrance restent en arrière-plan.**
+
+Les troubles anxieux sont rarement isolés. Ils coexistent fréquemment avec d'autres troubles psychiques, comme la dépression ou les troubles obsessionnels compulsifs (TOC). Dans de nombreux cas, **l'anxiété précède l'apparition de symptômes dépressifs.** Les deux peuvent interagir et se renforcer mutuellement, ce qui complique leur identification et leur prise en charge.
+
+Comprendre ce qui se joue en profondeur n'est pas toujours évident. D'une part, parce que le stress et l'anxiété sont souvent considérés comme des réactions "normales" dans une vie active, surtout dans un monde où les contraintes du quotidien, les exigences constantes et l'actualité rendent **le stress presque banal, voire inévitable.** D'autre part, les signes d'un trouble associé peuvent apparaître progressivement, s'installer lentement, ou r**ester discrets derrière une anxiété persistante.** Cela peut se traduire par une fatigue inhabituelle, des difficultés à s'endormir, des réveils nocturnes ou des signes de dépression : une perte d'énergie, un repli sur soi, ou encore des comportements répétitifs visant à apaiser l'angoisse. **Ces manifestations, bien que peu alarmantes prises isolément, méritent néanmoins une attention particulière lorsqu'elles s'accumulent ou s'installent dans le temps.**
+
+Cela ne veut pas dire qu'il faut chercher un diagnostic à tout prix, mais plutôt qu'on peut apprendre à **repérer quand le malaise s'enracine plus profondément.** Consulter un professionnel de santé peut alors permettre d'y voir plus clair, de mieux comprendre l'ensemble des symptômes, et de trouver un accompagnement adapté.`,
+    externalResources: ["550e8400-e29b-41d4-a716-446655440211", "550e8400-e29b-41d4-a716-446655440212"],
+  },
+  {
+    id: "d4e5f6a7-8901-4a12-d345-6789abcdef01",
+    matomoId: 37,
+    title: "Crises d'angoisse, panique et stress intense : comment mieux les gérer au quotidien",
+    image: require("../../../../assets/imgs/resources/Article37.png"),
+    category: CATEGORIES.REPERER_LES_SIGNES_DE_MAL_ETRE,
+    subCategory: SUB_CATEGORIES.ZOOM_STRESS_AND_ANXIETY,
+    content: `Le stress, l'anxiété ou les crises d'angoisse peuvent parfois prendre une place envahissante dans le quotidien. **Pour mieux les comprendre et les apaiser, il existe des outils simples, efficaces et reconnus.** Avec un peu de pratique, il est possible d'aider le corps à sortir de cet état d'alerte : en apprenant, par exemple, à mieux respirer, à relâcher les tensions et à retrouver un certain calme intérieur.
+
+**Des exercices réguliers, combinés à un accompagnement adapté, peuvent réellement contribuer à améliorer le bien-être.**
+
+Il est aussi essentiel de rappeler que certains événements restent, parfois, hors de notre contrôle - un deuil, des difficultés financières, ou encore des discriminations, par exemple. **Ces outils peuvent apporter un soutien, mais ne suffisent pas toujours à tout surmonter.** N'hésitez pas à demander de l'aide lorsque les difficultés deviennent trop lourdes à porter seul.e
+
+*(voir notre rubrique agir et chercher de l'aide).*`,
+    externalResources: [
+      "550e8400-e29b-41d4-a716-446655440018",
+      "550e8400-e29b-41d4-a716-446655440262",
+      "550e8400-e29b-41d4-a716-446655440263",
+      "550e8400-e29b-41d4-a716-446655440264",
+    ],
+  },
+  {
+    id: "e5f6a789-0123-4b23-e456-789abcdef012",
+    matomoId: 45,
+    title: "Santé mentale des enfants et adolescents : comprendre, repérer, accompagner",
+    image: require("../../../../assets/imgs/resources/Article45.png"),
+    category: CATEGORIES.REPERER_LES_SIGNES_DE_MAL_ETRE,
+    content: `L'enfance et l'adolescence sont des périodes d'apprentissage, de découverte et d'exploration de soi et du monde qui les entoure. Elles offrent de nombreuses opportunités de développement, de curiosité et d'épanouissement.
+
+Pour autant, certains enfants et adolescents peuvent traverser des périodes de vulnérabilité psychique. **Plus d'un enfant sur dix souffre d'un trouble mental *(Santé Publique France, 2024)*, et un adolescent sur sept présente un risque sérieux de dépression** *(EnCLASS, 2022)*.
+
+Les troubles psychiques chez les jeunes résultent souvent de plusieurs causes. Ils peuvent être liés à **des facteurs internes**, comme la génétique, les hormones ou le développement cérébral, et à **des facteurs externes**, comme l'environnement familial, scolaire, économique ou social, ou encore des événements d'actualité pouvant générer inquiétude et stress. Ces troubles apparaissent fréquemment pendant l'adolescence, une période de grands changements physiques, cognitifs et émotionnels.
+
+Chez les enfants, ces troubles peuvent se manifester par de l'anxiété, des troubles du sommeil, des difficultés de comportement ou des troubles de l'apprentissage. Ces derniers ne sont pas toujours le signe d'un mal-être, mais peuvent parfois en être la cause.
+
+Chez les adolescents, l'anxiété, la dépression, les troubles alimentaires ou l'automutilation peuvent apparaître. Même si un jeune n'exprime pas ses émotions, cela ne veut pas dire qu'il ne rencontre pas de difficultés. **Les adultes doivent rester attentifs et consulter dès les premiers signes d'inquiétude plutôt que d'attendre que la situation s'aggrave.**
+
+Heureusement, des dispositifs spécialisés existent pour accompagner les enfants, les adolescents et leur entourage :
+
+- Le **médecin de famille** (ou le pédiatre) est souvent le premier interlocuteur.
+- Les **services de protection maternelle et infantile (PMI)** proposent un suivi précoce pour les femmes enceintes, les nourrissons et les jeunes enfants (0-6 ans), ainsi que des conseils aux familles sur la santé, le développement et la prévention.
+- Les **centres médico-psychologiques (CMP)** accueillent **tous les âges**, enfants, adolescents et adultes, et offrent un soutien psychologique et psychiatrique adapté.
+- Pour les adolescents, les **Points accueil-écoute Jeunes (PAEJ)**, les **Maisons des adolescents (MDA)** et les **consultations jeunes consommateurs (CJC)** pour les conduites addictives proposent un accompagnement ciblé.
+- Des dispositifs d'écoute téléphonique et en ligne, comme **Fil Santé Jeunes (0800 235 236)**, complètent ces dispositifs d'aide.
+
+Il est crucial que les adultes qui vivent, travaillent ou accompagnent des enfants et adolescents soient attentifs et responsables. Leur vigilance, leur écoute et leur engagement sont indispensables pour détecter les signes de souffrance, même lorsque ceux-ci ne sont pas exprimés, et pour garantir un soutien approprié. La santé mentale des jeunes est un enjeu collectif qui appelle à une mobilisation partagée.`,
+    externalResources: [
+      "550e8400-e29b-41d4-a716-446655440275",
+      "550e8400-e29b-41d4-a716-446655440276",
+      "550e8400-e29b-41d4-a716-446655440277",
+      "550e8400-e29b-41d4-a716-446655440278",
+      "550e8400-e29b-41d4-a716-446655440279",
+      "550e8400-e29b-41d4-a716-446655440032",
+      "550e8400-e29b-41d4-a716-446655440037",
+      "550e8400-e29b-41d4-a716-446655440031",
+      "550e8400-e29b-41d4-a716-446655440036",
+      "550e8400-e29b-41d4-a716-446655440042",
+      "550e8400-e29b-41d4-a716-446655440187",
+      "550e8400-e29b-41d4-a716-446655440280",
+      "550e8400-e29b-41d4-a716-446655440281",
+      "550e8400-e29b-41d4-a716-446655440282",
+    ],
+  },
+  {
+    id: "f6a78901-2345-4c34-f567-89abcdef0123",
+    matomoId: 46,
+    title: "Santé mentale des parents : comprendre, repérer, accompagner",
+    image: require("../../../../assets/imgs/resources/Article46.png"),
+    category: CATEGORIES.REPERER_LES_SIGNES_DE_MAL_ETRE,
+    content: `**La parentalité est une période de grands changements**, souvent source de joie et d'épanouissement, elle peut aussi bousculer l'équilibre émotionnel. Il est fréquent de traverser des moments de fatigue, de doute, de solitude ou d'inquiétude face à ces transformations. Cependant, lorsque ces émotions deviennent trop envahissantes ou durent dans le temps, il peut être utile d'en parler et de chercher du soutien.
+
+Juste après l'accouchement, de nombreuses femmes connaissent un épisode de « baby blues » : une phase transitoire marquée par une sensibilité accrue, de l'irritabilité ou des pleurs. Ce phénomène, lié aux bouleversements hormonaux et à la fatigue, disparaît généralement en quelques jours. Mais lorsque ces symptômes persistent ou s'aggravent, **ils peuvent être le signe d'une dépression post-partum.** D'après l'enquête nationale périnatale menée en 2021, **16,7 % des femmes** **en présentent les signes deux mois après l'accouchement.**
+
+**Les pères peuvent eux aussi être concernés par une dépression périnatale, souvent méconnue. Elle toucherait environ un homme sur dix**, avec une fréquence plus élevée lorsque leur partenaire traverse elle-même une dépression. Ces troubles restent encore peu identifiés, bien qu'ils puissent avoir un impact important sur l'équilibre familial.
+
+Certains signes peuvent alerter : fatigue persistante, perte d'intérêt, troubles du sommeil, irritabilité, sentiment d'échec ou retrait vis-à-vis de l'enfant. Ces manifestations s'inscrivent parfois dans un **épuisement parental**, ou « burn-out parental », lié à une surcharge prolongée, sans espace de repos ni de soutien.
+
+Face à ces situations, **différentes formes d'aide existent**. Des professionnel·les de santé peuvent être sollicités : médecins, sages-femmes, psychologues, psychiatres. Les services de Protection Maternelle et Infantile (PMI), présents dans chaque département, proposent un accompagnement médico-social gratuit pour les jeunes enfants et leurs parents. D'autres dispositifs existent également : lignes d'écoute, centres de consultation en périnatalité, associations de soutien à la parentalité. **Ces ressources permettent de rompre l'isolement, de mieux comprendre ce qui se joue et de retrouver un équilibre.**
+
+Il est essentiel de rappeler qu'il n'existe **pas de modèle parental idéal**. La parentalité implique des ajustements, des doutes, parfois des moments de fragilité. Ce n'est pas la perfection qui protège l'enfant, mais la capacité à reconnaître ses limites, à demander de l'aide lorsque c'est nécessaire et à bénéficier d'un accompagnement adapté.`,
+    externalResources: [
+      "550e8400-e29b-41d4-a716-446655440268",
+      "550e8400-e29b-41d4-a716-446655440269",
+      "550e8400-e29b-41d4-a716-446655440270",
+      "550e8400-e29b-41d4-a716-446655440035",
+      "550e8400-e29b-41d4-a716-446655440148",
+      "550e8400-e29b-41d4-a716-446655440271",
+      "550e8400-e29b-41d4-a716-446655440272",
+      "550e8400-e29b-41d4-a716-446655440273",
+      "550e8400-e29b-41d4-a716-446655440274",
+    ],
+  },
+  {
+    id: "a789012b-3456-4d45-a678-9abcdef01234",
+    matomoId: 47,
+    title: "Savoir repérer le mal-être au travail, un premier pas essentiel",
+    image: require("../../../../assets/imgs/resources/Article47.png"),
+    category: CATEGORIES.REPERER_LES_SIGNES_DE_MAL_ETRE,
+    content: `Le travail peut occuper une place importante dans nos vies. Il organise souvent nos journées, crée des liens avec les autres, et peut contribuer à un sentiment d'utilité ou d'accomplissement. Lorsqu'il se déroule dans de bonnes conditions, il favorise l'estime de soi et soutient l'équilibre psychique.
+
+Cependant, le travail peut aussi générer des tensions, de la détresse, voire des situations dangereuses. Une surcharge chronique, une pression constante, des horaires instables, une précarité, ainsi que l'absence de reconnaissance et de dialogue peuvent fragiliser notre santé mentale. Par ailleurs, des situations telles que le harcèlement moral ou sexuel, les discriminations, le racisme ou les mises à l'écart aggravent ce mal-être. Ces réalités, loin d'être rares, peuvent provoquer troubles du sommeil, anxiété, épuisement, dévalorisation, et parfois conduire à un burn-out ou à un isolement profond.
+
+Il est important de ne pas  minimiser ces signes ni de les attribuer à une faiblesse individuelle. Ce sont les organisations de travail qui doivent garantir un environnement de travail respectueux, sécurisé et soutenant. En France, la loi impose aux employeurs de protéger la santé physique et mentale de leurs salarié·es, notamment en identifiant et en prévenant les risques psychosociaux.
+
+La santé mentale au travail est une question collective : la souffrance d'une personne affecte souvent l'ensemble du groupe, tandis qu'un climat respectueux, inclusif et bienveillant favorise la confiance, la coopération et le respect des différences.
+
+Il est essentiel de rester attentif à l'impact du travail sur notre santé mentale, de savoir reconnaître les signaux d'alerte, et de ne pas considérer les difficultés comme une fatalité ou une simple caractéristique du travail. Identifier ce qui soutient ou nuit à notre bien-être professionnel est une étape clé. Il est légitime de chercher du soutien : en parler à un·e collègue, un·e responsable, solliciter la médecine du travail ou consulter un·e professionnel·le de santé.
+
+Le travail ne doit jamais être une source de souffrance. Protéger la santé mentale est un droit fondamental qui repose principalement sur la responsabilité des employeurs et des organisations, mais qui gagne à être soutenu par la vigilance et la solidarité de tous.`,
+    externalResources: ["550e8400-e29b-41d4-a716-446655440265", "550e8400-e29b-41d4-a716-446655440266", "550e8400-e29b-41d4-a716-446655440267"],
   },
 ];
