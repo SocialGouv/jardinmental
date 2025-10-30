@@ -1,3 +1,10 @@
+## [1.116.1](https://github.com/SocialGouv/jardinmental/compare/v1.116.0...v1.116.1) (2025-10-30)
+
+
+### Bug Fixes
+
+* restore missing import ([0267334](https://github.com/SocialGouv/jardinmental/commit/0267334f902b8b5e90f2aadaeb50d8c344e35781))
+
 # [1.116.0](https://github.com/SocialGouv/jardinmental/compare/v1.115.1...v1.116.0) (2025-10-30)
 
 
