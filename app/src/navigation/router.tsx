@@ -250,7 +250,6 @@ class Router extends React.Component<RouterProps> {
             <Stack.Screen name="news" component={News} />
             <Stack.Screen name="infos" component={Infos} />
             <Stack.Screen name="privacy-light" component={PrivacyLight} />
-            <Stack.Screen name="contribute-pro" component={ContributePro} />
             <Stack.Screen name="activate-beck" component={ActivateBeck} />
             <Stack.Screen name="view-beck" component={ViewBeck} />
             <Stack.Screen name="beck" component={Beck} />
