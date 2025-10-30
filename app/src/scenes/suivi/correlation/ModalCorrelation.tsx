@@ -18,6 +18,8 @@ import CheckMarkIcon from "@assets/svg/icon/check";
 import CrossIcon from "@assets/svg/icon/Cross";
 import { INDICATOR_TYPE } from "@/entities/IndicatorType";
 import { DEFAULT_INDICATOR_LABELS, INDICATOR_LABELS } from "@/utils/liste_indicateurs.1";
+import EyeIcon from "@assets/svg/icon/Eye";
+import EyeOffIcon from "@assets/svg/icon/EyeOff";
 
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
@@ -28,14 +30,14 @@ interface ModalCorrelationScreenProps {
 }
 
 const computeIndicatorLabel = (indicator, value): string => {
-  if (value === null) return "";
+  if (value === null || value === undefined) return "Pas de donnée";
   let index = indicator.type === INDICATOR_TYPE.gauge ? Math.min(Math.floor(value * 5), 4) : value;
 
   // For smiley-type indicators sorted in DESC order, invert the label index.
   if (indicator.order === "DESC" && indicator.type === INDICATOR_TYPE.smiley) {
     index = 6 - index; // Inverse 1→5, 2→4, 3→3, 4→2, 5→1
   }
-
+  console.log("compute indicator label", index, value);
   if (Object.keys(INDICATOR_LABELS).includes(indicator.uuid)) {
     return INDICATOR_LABELS[indicator.uuid][index - 1];
   } else {
@@ -128,6 +130,52 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
         });
       data.push(newData);
     }
+    const treatment = true;
+    if (treatment) {
+      const newData = chartDates.map((date) => {
+        const dayData = diaryData[date];
+        if (!dayData || dayData["PRISE_DE_TRAITEMENT"] === undefined) {
+          return {
+            value: 0,
+            hideDataPoint: true,
+            noValue: true,
+            date: date,
+            label: date,
+          };
+        }
+        return {
+          value: 0,
+          hideDataPoint: false,
+          booleanValue: dayData["PRISE_DE_TRAITEMENT"].value,
+          date: date,
+          label: date,
+        };
+      });
+      data.push(newData);
+    }
+    const treatmentSiBesoin = true;
+    if (treatmentSiBesoin) {
+      const newData = chartDates.map((date) => {
+        const dayData = diaryData[date];
+        if (!dayData || dayData["PRISE_DE_TRAITEMENT_SI_BESOIN"] === undefined) {
+          return {
+            value: -1,
+            hideDataPoint: true,
+            noValue: true,
+            date: date,
+            label: date,
+          };
+        }
+        return {
+          value: -1,
+          hideDataPoint: false,
+          booleanValue: dayData["PRISE_DE_TRAITEMENT_SI_BESOIN"].value,
+          date: date,
+          label: date,
+        };
+      });
+      data.push(newData);
+    }
     return data;
   }, [diaryData, selectedIndicators]); // 👈 recalcul dès que rawData ou filters changent
 
@@ -138,7 +186,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
           <Text className={mergeClassNames(typography.displayXsBold, "text-white")}>Correlation</Text>
           <Text className={mergeClassNames(typography.displayXsBold, "text-white")}>x</Text>
         </View>
-        <ScrollView className="px-4 flex-col space-y-4 pt-4 bg-cnam-primary-25">
+        <ScrollView className="px-4 flex-col space-y-4 pt-4 bg-cnam-primary-25" showsHorizontalScrollIndicator={false}>
           <TouchableOpacity
             onPress={() => {
               showBottomSheet(
@@ -191,15 +239,24 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
       <View className="flex-1 bg-cnam-primary-25">
         <View className="flex-row justify-between top-0 w-full bg-cnam-primary-800 p-4 items-center h-[96]">
           <Text className={mergeClassNames(typography.displayXsBold, "text-white")}>Correlation</Text>
-          <Text className={mergeClassNames(typography.displayXsBold, "text-white")}>x</Text>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.goBack();
+            }}
+            className="flex-row items-center justify-end"
+          >
+            <CrossIcon color={"white"} />
+          </TouchableOpacity>
         </View>
-        <ScrollView className="flex-col space-y-4 pt-4 bg-cnam-primary-25">
-          <View className="px-4">
+        <ScrollView className="flex-col pt-4 bg-cnam-primary-25">
+          <View className="py-4 pb-6">
             <TestChart
               data={dataToDisplay[0]}
               dataB={dataToDisplay[1]}
-              treatment={undefined}
+              treatment={dataToDisplay[2]}
+              treatmentSiBesoin={dataToDisplay[3]}
               diaryData={diaryData}
+              navigation={navigation}
               selectedIndicators={selectedIndicators}
             />
           </View>
@@ -208,11 +265,12 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
               Recherchez des moments où les indicateurs évoluent ensemble ou dans des directions opposées.
             </Text>
           </View>
-          <View className="bg-cnam-primary-100 p-4">
+          <View className="bg-cnam-primary-100 pl-4 pt-4 pb-20">
             <Text className={mergeClassNames(typography.textXlBold, "text-cnam-primary-900 py-4")}>Explorez notre guide</Text>
             <FlatList
               horizontal={true}
               className="mt-4"
+              showsHorizontalScrollIndicator={false}
               renderItem={() => (
                 <View className="bg-white border border-cnam-primary-400 rounded-2xl w-[297] h-[139] p-4 mr-2 flex-row flex-1">
                   <View
@@ -242,25 +300,72 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
   }
 };
 
-const TestChart = ({ data, dataB, treatment, diaryData, selectedIndicators }) => {
+const TestChart = ({ data, dataB, treatment, treatmentSiBesoin, diaryData, selectedIndicators, navigation }) => {
   const ref = useRef(null);
   const [selectedPointIndex, setSelectedPointIndex] = useState<number | null>(null);
   const [displayItem, setDisplayItem] = useState<null>();
   const [isVisible, setIsVisible] = useState(false);
-  const [active, setActive] = useState("7days");
+  const [active, setActive] = useState("1month");
   const pointerItemRef = useRef(null);
 
-  // Animation values
+  // Animation values for popup
   const opacity = useSharedValue(0);
   const translateY = useSharedValue(-20);
 
-  // Animated styles
+  // Animation values for period buttons
+  const animScale7days = useSharedValue(active === "7days" ? 1 : 0.98);
+  const animScale1month = useSharedValue(active === "1month" ? 1 : 0.98);
+  const animScale3months = useSharedValue(active === "3months" ? 1 : 0.98);
+  const animScale6months = useSharedValue(active === "6months" ? 1 : 0.98);
+
+  // Animated styles for popup
   const animatedStyle = useAnimatedStyle(() => {
     return {
       opacity: opacity.value,
       transform: [{ translateY: translateY.value }],
     };
   });
+
+  // Animated styles for period buttons
+  const animatedStyle7days = useAnimatedStyle(() => ({
+    transform: [{ scale: animScale7days.value }],
+  }));
+  const animatedStyle1month = useAnimatedStyle(() => ({
+    transform: [{ scale: animScale1month.value }],
+  }));
+  const animatedStyle3months = useAnimatedStyle(() => ({
+    transform: [{ scale: animScale3months.value }],
+  }));
+  const animatedStyle6months = useAnimatedStyle(() => ({
+    transform: [{ scale: animScale6months.value }],
+  }));
+
+  // Handle period selection with animation
+  const handlePeriodChange = (period: string) => {
+    setActive(period);
+
+    // Animate all buttons
+    animScale7days.value = withTiming(period === "7days" ? 1 : 0.98, { duration: 200 });
+    animScale1month.value = withTiming(period === "1month" ? 1 : 0.98, { duration: 200 });
+    animScale3months.value = withTiming(period === "3months" ? 1 : 0.98, { duration: 200 });
+    animScale6months.value = withTiming(period === "6months" ? 1 : 0.98, { duration: 200 });
+  };
+
+  // Calculate spacing based on active period
+  const chartSpacing = useMemo(() => {
+    switch (active) {
+      case "7days":
+        return 70;
+      case "1month":
+        return 20;
+      case "3months":
+        return 10;
+      case "6months":
+        return 1;
+      default:
+        return 50;
+    }
+  }, [active]);
 
   // Handle animation when displayItem changes
   useEffect(() => {
@@ -301,10 +406,31 @@ const TestChart = ({ data, dataB, treatment, diaryData, selectedIndicators }) =>
     );
   };
 
-  // Configurable label spacing - show 1 label every X data points
-  const labelSpacing = 3; // Change this value to adjust label density (e.g., 2 = every 2nd label, 3 = every 3rd label)
+  // Dynamic label spacing based on active period
+  const labelSpacing = useMemo(() => {
+    if (active === "7days") {
+      return 1;
+    } else if (active === "1month") {
+      return 3;
+    } else if (active === "3months") {
+      return 10;
+    } else {
+      return 20;
+    } // Show all labels for 7 days, skip for others
+  }, [active]);
 
-  // Format date to French format (DD/MM or DD MMM)
+  // Get day initial (L, M, M, J, V, S, D)
+  const getDayInitial = (dateString) => {
+    if (!dateString) return "";
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return dateString;
+
+    const dayOfWeek = date.getDay(); // 0 = Sunday, 1 = Monday, etc.
+    const dayInitials = ["D", "L", "M", "M", "J", "V", "S"]; // Dimanche, Lundi, Mardi, Mercredi, Jeudi, Vendredi, Samedi
+    return dayInitials[dayOfWeek];
+  };
+
+  // Format date to French format (DD/MM/YY)
   const formatDateToFrench = (dateString) => {
     if (!dateString) return "";
     const date = new Date(dateString);
@@ -314,8 +440,16 @@ const TestChart = ({ data, dataB, treatment, diaryData, selectedIndicators }) =>
     const month = date.getMonth() + 1;
     const year = date.getFullYear();
 
-    // Short format: DD/MM
+    // Short format: DD/MM/YY
     return `${day.toString().padStart(2, "0")}/${month.toString().padStart(2, "0")}/${year.toString().padStart(2, "0").slice(2, 4)}`;
+  };
+
+  // Format label based on active period
+  const formatLabel = (dateString) => {
+    if (active === "7days") {
+      return getDayInitial(dateString);
+    }
+    return formatDateToFrench(dateString);
   };
 
   const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"];
@@ -328,7 +462,7 @@ const TestChart = ({ data, dataB, treatment, diaryData, selectedIndicators }) =>
   const lineSegments = null; //generateLineSegments(data);
   const lineSegments2 = null; //generateLineSegments(dataB);
   return (
-    <View className="bg-cnam-primary-25 flex-column space-y-4">
+    <View className="bg-cnam-primary-25 flex-column space-y-4 px-4">
       {/* <View className="mb-4" style={{ flexDirection: "row", marginLeft: 8 }}>
         {months.map((item, index) => {
           return (
@@ -369,23 +503,58 @@ const TestChart = ({ data, dataB, treatment, diaryData, selectedIndicators }) =>
       </TouchableOpacity>
       <View className="border border-cnam-cyan-lighten-80 p-4 rounded-2xl bg-white">
         <View className="bg-cnam-primary-100 w-full h-[36] rounded-full flex-row justify-around">
-          <View
-            className={mergeClassNames(
-              active === "7days" ? "bg-cnam-primary-300" : "",
-              "flex-1 h-full px-4 rounded-full items-center justify-center"
-            )}
-          >
-            <Text>7 jours</Text>
-          </View>
-          <View className={mergeClassNames("flex-1 h-full px-4 rounded-full items-center justify-center")}>
-            <Text>1 mois</Text>
-          </View>
-          <View className={mergeClassNames("flex-1 h-full px-4 rounded-full items-center justify-center")}>
-            <Text>3 mois</Text>
-          </View>
-          <View className={mergeClassNames("flex-1 h-full px-4 rounded-full items-center justify-center")}>
-            <Text>6 mois</Text>
-          </View>
+          <Animated.View style={[animatedStyle7days]} className="flex-1">
+            <TouchableOpacity
+              onPress={() => handlePeriodChange("7days")}
+              className={mergeClassNames(
+                active === "7days" ? "bg-cnam-primary-300" : "",
+                "flex-1 h-full px-4 rounded-full items-center justify-center"
+              )}
+            >
+              <Text className={mergeClassNames(typography.textSmMedium, active === "7days" ? "text-cnam-primary-900" : "text-cnam-primary-700")}>
+                7 jours
+              </Text>
+            </TouchableOpacity>
+          </Animated.View>
+          <Animated.View style={[animatedStyle1month]} className="flex-1">
+            <TouchableOpacity
+              onPress={() => handlePeriodChange("1month")}
+              className={mergeClassNames(
+                active === "1month" ? "bg-cnam-primary-300" : "",
+                "flex-1 h-full px-4 rounded-full items-center justify-center"
+              )}
+            >
+              <Text className={mergeClassNames(typography.textSmMedium, active === "1month" ? "text-cnam-primary-900" : "text-cnam-primary-700")}>
+                1 mois
+              </Text>
+            </TouchableOpacity>
+          </Animated.View>
+          <Animated.View style={[animatedStyle3months]} className="flex-1">
+            <TouchableOpacity
+              onPress={() => handlePeriodChange("3months")}
+              className={mergeClassNames(
+                active === "3months" ? "bg-cnam-primary-300" : "",
+                "flex-1 h-full px-4 rounded-full items-center justify-center"
+              )}
+            >
+              <Text className={mergeClassNames(typography.textSmMedium, active === "3months" ? "text-cnam-primary-900" : "text-cnam-primary-700")}>
+                3 mois
+              </Text>
+            </TouchableOpacity>
+          </Animated.View>
+          <Animated.View style={[animatedStyle6months]} className="flex-1">
+            <TouchableOpacity
+              onPress={() => handlePeriodChange("6months")}
+              className={mergeClassNames(
+                active === "6months" ? "bg-cnam-primary-300" : "",
+                "flex-1 h-full px-4 rounded-full items-center justify-center"
+              )}
+            >
+              <Text className={mergeClassNames(typography.textSmMedium, active === "6months" ? "text-cnam-primary-900" : "text-cnam-primary-700")}>
+                6 mois
+              </Text>
+            </TouchableOpacity>
+          </Animated.View>
         </View>
         {isVisible && (
           <Animated.View style={[animatedStyle]} className="border border-cnam-primary-300 bg-white rounded-2xl flex-col space-y-2 p-4 mb-4 mt-4">
@@ -427,19 +596,35 @@ const TestChart = ({ data, dataB, treatment, diaryData, selectedIndicators }) =>
                   </View>
                 );
               })}
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("detail-correlation-modal", {
+                  selectedIndicators,
+                  displayItem,
+                });
+              }}
+              className="flex-row items-center justify-end"
+            >
+              <EyeIcon />
+              <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-800 ml-2")}>Voir le détail</Text>
+            </TouchableOpacity>
           </Animated.View>
         )}
         <View style={{ paddingTop: 10, paddingBottom: 50 }}>
           <LineChart
-            spacing={50}
+            spacing={chartSpacing}
             yAxisSide={1}
             adjustToWidth={true}
-            xAxisLabelTextStyle={{ fontSize: 10, color: "#666", width: 60, textAlign: "center" }}
+            xAxisLabelTextStyle={
+              active === "7days"
+                ? { paddingLeft: 15, height: 20, marginTop: 10, fontWeight: "bold", color: TW_COLORS.CNAM_PRIMARY_700 }
+                : { fontSize: 10, color: "#666", width: 60, textAlign: "center" }
+            }
             xAxisTextNumberOfLines={1}
-            xAxisLabelsHeight={10}
+            xAxisLabelsHeight={20}
             xAxisThickness={0}
             xAxisColor={"transparent"}
-            width={screenWidth - 70}
+            width={screenWidth - 72}
             focusEnabled={true}
             // focusProximity={50}
             lineSegments={lineSegments}
@@ -457,8 +642,8 @@ const TestChart = ({ data, dataB, treatment, diaryData, selectedIndicators }) =>
             stripWidth={2}
             showTextOnFocus={true}
             focusTogether={true}
-            xAxisLabelsVerticalShift={40}
-            showXAxisIndices={true}
+            xAxisLabelsVerticalShift={90}
+            // showXAxisIndices={true}
             showYAxisIndices={false}
             yAxisLabelWidth={0}
             yAxisIndicesWidth={0}
@@ -472,12 +657,20 @@ const TestChart = ({ data, dataB, treatment, diaryData, selectedIndicators }) =>
               const needShift = dataB[index].value === d.value;
               return {
                 ...d,
-                label: index % labelSpacing === 0 ? formatDateToFrench(d.label) : "", // Show label only at intervals with French format
+                label: index % labelSpacing === 0 ? formatLabel(d.label) : "", // Show label based on active period
                 focusedCustomDataPoint: () => {
                   return customDataPoint({ color: "#3D6874", backgroundColor: "white", isSelected: true, noValue: d.noValue });
                 },
                 customDataPoint: () => {
-                  return customDataPoint({ color: "#3D6874", backgroundColor: "white", isSelected: false, noValue: d.noValue });
+                  return customDataPoint({
+                    color: "#3D6874",
+                    backgroundColor: "white",
+                    isSelected: false,
+                    noValue: d.noValue,
+                    onPress: () => {
+                      setSelectedPointIndex(index);
+                    },
+                  });
                 },
                 focusedDataPointWidth: needShift ? 35 : 20,
                 dataPointWidth: needShift ? 25 : 15,
@@ -494,7 +687,7 @@ const TestChart = ({ data, dataB, treatment, diaryData, selectedIndicators }) =>
               dataB
                 ? dataB.map((d, index) => ({
                     ...d,
-                    label: index % labelSpacing === 0 ? formatDateToFrench(d.label) : "", // Show label only at intervals with French format
+                    label: index % labelSpacing === 0 ? formatLabel(d.label) : "", // Show label based on active period
                     focusedCustomDataPoint: () => {
                       const needShift = data[index].value === d.value;
                       return customDataPoint({
@@ -505,9 +698,7 @@ const TestChart = ({ data, dataB, treatment, diaryData, selectedIndicators }) =>
                         noValue: d.noValue,
                       });
                     },
-                    onFocus: () => {
-                      console.log("LCS TOTO1");
-                    },
+                    onFocus: () => {},
                     customDataPoint: () => {
                       const needShift = data[index].value === d.value;
                       return customDataPoint({
@@ -525,37 +716,44 @@ const TestChart = ({ data, dataB, treatment, diaryData, selectedIndicators }) =>
               treatment
                 ? (treatment || []).map((t, index) => ({
                     ...t,
-                    label: index % labelSpacing === 0 ? formatDateToFrench(t.label) : "", // Show label only at intervals with French format
+                    label: index % labelSpacing === 0 ? formatLabel(t.label) : "", // Show label based on active period
                     customDataPoint: () => {
-                      const isSelected = selectedPointIndex === index;
-
-                      return (
-                        <View
-                          style={{
-                            width: 14,
-                            height: 30,
-                            display: "flex",
-                            justifyContent: "flex-start",
-                            alignItems: "center",
-                          }}
-                        >
-                          <View
-                            style={{
-                              borderWidth: isSelected ? 2 : 1,
-                              borderRadius: 10,
-                              backgroundColor: "#134449",
-                              borderColor: "#134449",
-                              height: isSelected ? 14 : 10,
-                              width: isSelected ? 14 : 10,
-                              // shadowColor: isSelected ? "#134449" : "transparent",
-                              // shadowOffset: { width: 0, height: 0 },
-                              // shadowOpacity: isSelected ? 0.5 : 0,
-                              // shadowRadius: isSelected ? 8 : 0,
-                              // elevation: isSelected ? 8 : 0,
-                            }}
-                          />
-                        </View>
-                      );
+                      return customDataPoint({
+                        color: TW_COLORS.CNAM_PRIMARY_800,
+                        backgroundColor: TW_COLORS.CNAM_PRIMARY_800,
+                        isSelected: false,
+                        needShift: false,
+                        noValue: false,
+                      });
+                    },
+                    focusedCustomDataPoint: () => {
+                      return customDataPoint({
+                        color: TW_COLORS.CNAM_PRIMARY_800,
+                        backgroundColor: TW_COLORS.CNAM_PRIMARY_800,
+                        isSelected: true,
+                        needShift: false,
+                        noValue: false,
+                      });
+                    },
+                  }))
+                : null
+            }
+            data4={
+              treatmentSiBesoin
+                ? (treatmentSiBesoin || []).map((t, index) => ({
+                    ...t,
+                    label: index % labelSpacing === 0 ? formatLabel(t.label) : "", // Show label based on active period
+                    customDataPoint: () => {
+                      return customDataPoint({ color: TW_COLORS.CNAM_PRIMARY_800, backgroundColor: TW_COLORS.CNAM_PRIMARY_800 });
+                    },
+                    focusedCustomDataPoint: () => {
+                      return customDataPoint({
+                        color: TW_COLORS.CNAM_PRIMARY_800,
+                        backgroundColor: TW_COLORS.CNAM_PRIMARY_800,
+                        isSelected: true,
+                        needShift: false,
+                        noValue: false,
+                      });
                     },
                   }))
                 : null
@@ -607,19 +805,22 @@ const TestChart = ({ data, dataB, treatment, diaryData, selectedIndicators }) =>
               //   );
               // },
             }}
-            overflowBottom={100} // space at the bottom of graph
+            overflowBottom={250} // space at the bottom of graph
             // dataPointsHeight={15}
             // dataPointsWidth={15}
             dataPointsWidth1={15}
             dataPointsHeight1={15}
             dataPointsHeight2={15}
             dataPointsWidth2={15}
-            dataPointsHeight3={14}
-            dataPointsWidth3={14}
+            dataPointsHeight3={15}
+            dataPointsWidth3={15}
+            dataPointsHeight4={15}
+            dataPointsWidth4={15}
             focusedDataPointHeight={20}
             focusedDataPointWidth={20}
             showDataPointLabelOnFocus={false}
-            color3="transparent"
+            color3="#FCF2D9"
+            color4="transparent"
             yAxisColor={"transparent"}
             formatYLabel={(lab) => {
               if (lab === "-1" || lab === "-2" || lab === "6" || lab === "0") {
@@ -629,18 +830,25 @@ const TestChart = ({ data, dataB, treatment, diaryData, selectedIndicators }) =>
               return parseInt(lab, 10).toString();
             }}
             yAxisOffset={1}
+            thickness3={20}
+            // showReferenceLine1={true}
+            // referenceLine1Position={0.05}
+            // referenceLine1Config={{
+            //   thickness: 2,
+            //   color: "red",
+            //   dashGap: -1,
+            // }}
             showVerticalLines={false}
             verticalLinesColor="rgba(24, 26, 26, 0.1)"
             // verticalLinesThickness={0}
-            noOfVerticalLines={0}
+            noOfVerticalLines={5}
             strokeDashArray1={[4, 4]}
             curved={true}
             curvature={0.1}
             initialSpacing={0}
           />
         </View>
-        CNAM - secondary/Cyan (Accent)/500 - 0
-        <View className="bg-cnam-primary-25 p-4 mt-4 rounded-2xl flex-col space-y-2">
+        <View className="bg-cnam-primary-25 p-4 mt-8 rounded-2xl flex-col space-y-2">
           <View className="flex-row items-center justify-center space-x-4">
             {selectedIndicators.map((indicator, index) => (
               <View key={getIndicatorKey(indicator)}>
