@@ -16,6 +16,7 @@ import { STORAGE_KEY_START_DATE } from "@/utils/constants";
 import localStorage from "@/utils/localStorage";
 import { INDICATOR_TYPE } from "@/entities/IndicatorType";
 import { INDICATORS_CATEGORIES } from "@/entities/IndicatorCategories";
+import NotificationService from "@/services/notifications";
 
 const CollapsibleSection = ({ title, children }) => {
   const [isExpanded, setIsExpanded] = useState(true);
@@ -40,10 +41,24 @@ const DevMode = ({ navigation }) => {
   };
 
   const [deviceId, setDeviceId] = useState<string | null>(null);
+  const [pushToken, setPushToken] = useState<string | null>(null);
 
   const fetchDeviceId = async () => {
     const id = await AsyncStorage.getItem("deviceId");
     setDeviceId(id);
+  };
+
+  const fetchPushToken = async () => {
+    try {
+      const hasTokenValue = await NotificationService.hasToken();
+      if (hasTokenValue) {
+        const token = await NotificationService.getToken();
+        setPushToken(token ?? null);
+      }
+    } catch (error) {
+      console.error("Error fetching push token:", error);
+      setPushToken(null);
+    }
   };
 
   const sendSentryTest = () => {
@@ -74,6 +89,7 @@ const DevMode = ({ navigation }) => {
 
   useEffect(() => {
     fetchDeviceId();
+    fetchPushToken();
   }, []);
 
   return (
@@ -90,6 +106,7 @@ const DevMode = ({ navigation }) => {
 
       <CollapsibleSection title="Local Storage">
         <Text>Device ID: {deviceId}</Text>
+        <Text>Push Token: {pushToken || "Non disponible"}</Text>
       </CollapsibleSection>
 
       <CollapsibleSection title="Sentry Testing">
