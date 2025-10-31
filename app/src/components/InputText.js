@@ -1,8 +1,7 @@
-import React, { useRef } from "react";
-import { Pressable, StyleSheet, TextInput, View, Text } from "react-native";
+import React, { useRef, useState, useEffect } from "react";
+import { Pressable, StyleSheet, TextInput, View, Animated } from "react-native";
 import { colors } from "@/utils/colors";
 import { TW_COLORS } from "@/utils/constants";
-import { mergeClassNames } from "@/utils/className";
 
 const PressableIfNeeded = ({ onPress, children }) =>
   onPress ? (
@@ -13,8 +12,24 @@ const PressableIfNeeded = ({ onPress, children }) =>
     <>{children}</>
   );
 
-export const InputText = ({ fill, preset, onPress, disabled, containerStyle, style, ...props }) => {
+export const InputText = ({ fill, preset, onPress, disabled, containerStyle, style, placeholder, value, ...props }) => {
   const inputRef = useRef();
+  const [isFocused, setIsFocused] = useState(false);
+  const [hasValue, setHasValue] = useState(!!value);
+  const labelAnimation = useRef(new Animated.Value(value ? 1 : 0)).current;
+
+  useEffect(() => {
+    setHasValue(!!value);
+  }, [value]);
+
+  useEffect(() => {
+    Animated.timing(labelAnimation, {
+      toValue: isFocused || hasValue ? 1 : 0,
+      duration: 200,
+      useNativeDriver: false,
+    }).start();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isFocused, hasValue]);
 
   const focus = () => {
     console.log("focus");
@@ -27,10 +42,62 @@ export const InputText = ({ fill, preset, onPress, disabled, containerStyle, sty
 
   const styles = applyStyles({ preset });
 
+  // Adjust positioning based on preset
+  const getInitialTop = () => {
+    if (preset === "groupItem") {
+      return 6; // groupItem has paddingVertical: 6
+    }
+    return 16; // base has padding: 16
+  };
+
+  const initialTop = getInitialTop();
+
+  const labelStyle = {
+    position: "absolute",
+    left: 14,
+    top: labelAnimation.interpolate({
+      inputRange: [0, 1],
+      outputRange: [initialTop, 2],
+    }),
+    fontSize: labelAnimation.interpolate({
+      inputRange: [0, 1],
+      outputRange: [16, 11],
+    }),
+    color: TW_COLORS.GRAY_700,
+    backgroundColor: "transparent",
+    paddingHorizontal: 4,
+    paddingVertical: 0,
+    fontFamily: "SourceSans3",
+    overflow: "hidden",
+    zIndex: 1,
+    pointerEvents: "none", // Critical: allows clicks to pass through to the input
+    // maxWidth: "85%",
+  };
+
+  const handleFocus = (e) => {
+    setIsFocused(true);
+    props.onFocus?.(e);
+  };
+
+  const handleBlur = (e) => {
+    setIsFocused(false);
+    props.onBlur?.(e);
+  };
+
+  const handleChangeText = (text) => {
+    setHasValue(!!text);
+    props.onChangeText?.(text);
+  };
+
   return (
     <View style={[styles.container, fill && { width: "100%" }, containerStyle]}>
       <PressableIfNeeded onPress={onPress}>
         <View style={[styles.contentContainer]}>
+          {placeholder && (
+            <Animated.Text style={labelStyle} numberOfLines={1} ellipsizeMode="clip">
+              {placeholder}
+            </Animated.Text>
+          )}
           <TextInput
             ref={inputRef}
             maxFontSizeMultiplier={2}
@@ -38,6 +105,11 @@ export const InputText = ({ fill, preset, onPress, disabled, containerStyle, sty
             editable={!disabled}
             pointerEvents={disabled || props.editable === false ? "none" : "auto"}
             {...props}
+            placeholder={""}
+            value={value}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            onChangeText={handleChangeText}
             style={[styles.input, disabled && styles.disabled, style]}
           />
         </View>
@@ -79,9 +151,13 @@ const _styles = {
       backgroundColor: "#FFFFFF",
       borderColor: colors.BLUE,
       borderWidth: 1,
+      overflow: "visible",
     },
     contentContainer: {
-      padding: 16,
+      paddingTop: 19,
+      paddingBottom: 13,
+      paddingHorizontal: 16,
+      position: "relative",
     },
     input: {
       width: "100%",
@@ -99,11 +175,13 @@ const _styles = {
       backgroundColor: colors.WHITE,
       borderColor: colors.LIGHT_BLUE,
       borderRadius: 4,
+      overflow: "visible",
     },
     contentContainer: {
       padding: 0,
       paddingHorizontal: 16,
       paddingVertical: 6,
+      position: "relative",
     },
     disabled: {
       opacity: 1,
@@ -112,6 +190,7 @@ const _styles = {
   lighten: StyleSheet.create({
     container: {
       borderColor: "#E7EAF1",
+      overflow: "visible",
     },
   }),
 };
