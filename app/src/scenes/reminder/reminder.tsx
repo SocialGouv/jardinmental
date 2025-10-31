@@ -111,11 +111,31 @@ const Reminder = ({ navigation, route, notifReminderTitle = "Comment ça va aujo
       [
         {
           text: "Réglages",
-          onPress: () => Linking.openSettings(),
+          onPress: async () => {
+            await Linking.openSettings();
+            // After opening settings, navigate to tabs if in onboarding
+            if (route?.params?.onboarding) {
+              await localStorage.setOnboardingDone(true);
+              navigation.reset({
+                index: 0,
+                routes: [{ name: "tabs" }],
+              });
+            }
+          },
         },
         {
           text: "Annuler",
-          onPress: deleteReminder,
+          onPress: async () => {
+            await deleteReminder();
+            // Navigate to tabs if in onboarding
+            if (route?.params?.onboarding) {
+              await localStorage.setOnboardingDone(true);
+              navigation.reset({
+                index: 0,
+                routes: [{ name: "tabs" }],
+              });
+            }
+          },
           style: "cancel",
         },
       ],
