@@ -1,3 +1,10 @@
+## [1.119.2](https://github.com/SocialGouv/jardinmental/compare/v1.119.1...v1.119.2) (2025-10-31)
+
+
+### Bug Fixes
+
+* fix faq display ([#606](https://github.com/SocialGouv/jardinmental/issues/606)) ([21ff1d2](https://github.com/SocialGouv/jardinmental/commit/21ff1d206c6dfdcc82d775e9d8d5b69beb39925a))
+
 ## [1.119.1](https://github.com/SocialGouv/jardinmental/compare/v1.119.0...v1.119.1) (2025-10-31)
 
 
