@@ -146,7 +146,6 @@ const Reminder = ({ navigation, route, notifReminderTitle = "Comment ça va aujo
         },
         {
           text: "Annuler",
-          onPress: deleteReminder,
           style: "cancel",
         },
       ],
