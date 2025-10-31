@@ -36,8 +36,8 @@ const Reminder = ({ navigation, route, notifReminderTitle = "Comment ça va aujo
     const subscription = AppState.addEventListener("change", async (nextAppState) => {
       if (nextAppState === "active" && route?.params?.onboarding && waitingForPermission.current) {
         const isRegistered = await NotificationService.checkPermission();
+        waitingForPermission.current = false;
         if (isRegistered) {
-          waitingForPermission.current = false;
           await localStorage.setOnboardingDone(true);
           navigation.reset({
             index: 0,
@@ -46,7 +46,10 @@ const Reminder = ({ navigation, route, notifReminderTitle = "Comment ça va aujo
         }
       }
     });
-    return () => subscription.remove();
+    return () => {
+      subscription.remove();
+      waitingForPermission.current = false;
+    };
   }, [route?.params?.onboarding, navigation]);
 
   // Default reminder time constant
@@ -138,17 +141,7 @@ const Reminder = ({ navigation, route, notifReminderTitle = "Comment ça va aujo
         },
         {
           text: "Annuler",
-          onPress: async () => {
-            await deleteReminder();
-            // Navigate to tabs if in onboarding when user cancels
-            if (route?.params?.onboarding) {
-              await localStorage.setOnboardingDone(true);
-              navigation.reset({
-                index: 0,
-                routes: [{ name: "tabs" }],
-              });
-            }
-          },
+          onPress: deleteReminder,
           style: "cancel",
         },
       ],
