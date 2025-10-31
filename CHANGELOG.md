@@ -1,3 +1,10 @@
+## [1.119.1](https://github.com/SocialGouv/jardinmental/compare/v1.119.0...v1.119.1) (2025-10-31)
+
+
+### Bug Fixes
+
+* redirect directly after setting (or not) the reminder when onboarding ([#605](https://github.com/SocialGouv/jardinmental/issues/605)) ([7f9588c](https://github.com/SocialGouv/jardinmental/commit/7f9588cf6fc8ddeecbe77b92fcac46e06e63e958))
+
 # [1.119.0](https://github.com/SocialGouv/jardinmental/compare/v1.118.0...v1.119.0) (2025-10-31)
 
 
