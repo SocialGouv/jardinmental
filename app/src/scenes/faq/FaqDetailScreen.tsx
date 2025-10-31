@@ -138,8 +138,8 @@ export default function FaqDetailScreen({
           )}
         </View>
         {item.next && (
-          <View className={mergeClassNames("bg-cnam-primary-100 bg-cyan-50-lighten-90 p-4 space-y-6 p-6 mt-8 h-full")}>
-            <Text className={mergeClassNames(typography.displayXsBold, "text-cnam-primary-900 text-left mb-4")}>A découvrir ensuite</Text>
+          <View className={mergeClassNames("bg-cnam-primary-100 bg-cyan-50-lighten-90 space-y-6 p-6 mt-8 mb-12 h-full")}>
+            <Text className={mergeClassNames(typography.displayXsBold, "text-cnam-primary-900 text-left mb-4")}>À découvrir ensuite</Text>
             <NavigationListItem
               icon={FAQ_DATA[item.next].icon}
               label={FAQ_DATA[item.next].title}
