@@ -1089,6 +1089,7 @@ Ce premier échange permet de sortir de l'isolement, de se sentir un peu soutenu
       "550e8400-e29b-41d4-a716-446655440215",
       "550e8400-e29b-41d4-a716-446655440216",
       "550e8400-e29b-41d4-a716-446655440217",
+      "550e8400-e29b-41d4-a716-446655440283",
     ],
   },
   {
@@ -1118,6 +1119,7 @@ Dès que vous ressentez un mal-être, même léger, consultez sans hésiter : ce
       "550e8400-e29b-41d4-a716-446655440222",
       "550e8400-e29b-41d4-a716-446655440223",
       "550e8400-e29b-41d4-a716-446655440224",
+      "550e8400-e29b-41d4-a716-446655440283",
     ],
   },
   {
@@ -1249,6 +1251,7 @@ Enfin, accompagner quelqu'un en souffrance peut être éprouvant.
       "550e8400-e29b-41d4-a716-446655440240",
       "550e8400-e29b-41d4-a716-446655440241",
       "550e8400-e29b-41d4-a716-446655440242",
+      "550e8400-e29b-41d4-a716-446655440283",
     ],
   },
   {
@@ -1279,6 +1282,7 @@ L'objectif n'est pas de tout résoudre ni de trouver des solutions parfaites. Ê
       "550e8400-e29b-41d4-a716-446655440249",
       "550e8400-e29b-41d4-a716-446655440250",
       "550e8400-e29b-41d4-a716-446655440251",
+      "550e8400-e29b-41d4-a716-446655440283",
     ],
   },
   {
