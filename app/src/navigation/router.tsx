@@ -16,7 +16,6 @@ import CGU from "../scenes/legal/cgu-screen";
 import Privacy from "../scenes/legal/privacy-screen";
 import LegalMentions from "../scenes/legal/legal-mentions-screen";
 import logEvents from "../services/logEvents";
-import ContributePro from "../scenes/contribute/contributePro";
 import DrugsSurvey from "../scenes/drugs/drugs-survey";
 import DrugsManagement from "../scenes/drugs/drugs-management";
 import DrugsList from "../scenes/drugs/drugs-list";
@@ -248,7 +247,6 @@ class Router extends React.Component<RouterProps> {
             <Stack.Screen name="too-late" component={TooLate} />
             <Stack.Screen name="news" component={News} />
             <Stack.Screen name="infos" component={Infos} />
-            <Stack.Screen name="contribute-pro" component={ContributePro} />
             <Stack.Screen name="activate-beck" component={ActivateBeck} />
             <Stack.Screen name="view-beck" component={ViewBeck} />
             <Stack.Screen name="beck" component={Beck} />
