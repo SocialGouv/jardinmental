@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Alert, Linking, Text, View } from "react-native";
+import { Alert, AppState, Linking, Text, View } from "react-native";
 import * as RNLocalize from "react-native-localize";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import dayjs from "dayjs";
@@ -28,6 +28,34 @@ const Reminder = ({ navigation, route, notifReminderTitle = "Comment ça va aujo
   const [hasStoredReminder, setHasStoredReminder] = useState<boolean>(false);
 
   const [reminderSetupVisible, setReminderSetupVisible] = useState(false);
+
+  // Track if we're waiting for permission result from settings
+  const waitingForPermission = useRef(false);
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener("change", async (nextAppState) => {
+      if (nextAppState === "active" && route?.params?.onboarding && waitingForPermission.current) {
+        try {
+          const isRegistered = await NotificationService.checkPermission();
+          waitingForPermission.current = false;
+          if (isRegistered) {
+            await localStorage.setOnboardingDone(true);
+            navigation.reset({
+              index: 0,
+              routes: [{ name: "tabs" }],
+            });
+          }
+        } catch (e) {
+          console.error("Failed to check permissions:", e);
+          waitingForPermission.current = false;
+        }
+      }
+    });
+    return () => {
+      waitingForPermission.current = false;
+      subscription.remove();
+    };
+  }, [route?.params?.onboarding, navigation]);
 
   // Default reminder time constant
   const DEFAULT_REMINDER_TIME = "20:00";
@@ -111,11 +139,13 @@ const Reminder = ({ navigation, route, notifReminderTitle = "Comment ça va aujo
       [
         {
           text: "Réglages",
-          onPress: () => Linking.openSettings(),
+          onPress: () => {
+            waitingForPermission.current = true;
+            Linking.openSettings();
+          },
         },
         {
           text: "Annuler",
-          onPress: deleteReminder,
           style: "cancel",
         },
       ],
