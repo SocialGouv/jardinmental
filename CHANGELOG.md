@@ -1,3 +1,10 @@
+# [1.121.0](https://github.com/SocialGouv/jardinmental/compare/v1.120.0...v1.121.0) (2025-10-31)
+
+
+### Features
+
+* add new external resources to 4 resources ([#607](https://github.com/SocialGouv/jardinmental/issues/607)) ([370df2d](https://github.com/SocialGouv/jardinmental/commit/370df2d9b4932a82ba8ee73987ef8a90f1f376d7))
+
 # [1.120.0](https://github.com/SocialGouv/jardinmental/compare/v1.119.2...v1.120.0) (2025-10-31)
 
 
