@@ -2390,4 +2390,13 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
     category: "P1 - A lire dans ce dossier",
     author: "Centre ressource de réhabilitation psychosociale",
   },
+  {
+    id: "550e8400-e29b-41d4-a716-446655440283",
+    matomoId: 283,
+    title: "Les lignes d’écoute",
+    url: "https://www.psycom.org/sorienter/les-lignes-decoute/",
+    type: "Guide",
+    category: "P1 - A lire dans ce dossier",
+    author: "Psycom",
+  },
 ];
