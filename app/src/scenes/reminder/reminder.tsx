@@ -35,20 +35,25 @@ const Reminder = ({ navigation, route, notifReminderTitle = "Comment ça va aujo
   useEffect(() => {
     const subscription = AppState.addEventListener("change", async (nextAppState) => {
       if (nextAppState === "active" && route?.params?.onboarding && waitingForPermission.current) {
-        const isRegistered = await NotificationService.checkPermission();
-        waitingForPermission.current = false;
-        if (isRegistered) {
-          await localStorage.setOnboardingDone(true);
-          navigation.reset({
-            index: 0,
-            routes: [{ name: "tabs" }],
-          });
+        try {
+          const isRegistered = await NotificationService.checkPermission();
+          waitingForPermission.current = false;
+          if (isRegistered) {
+            await localStorage.setOnboardingDone(true);
+            navigation.reset({
+              index: 0,
+              routes: [{ name: "tabs" }],
+            });
+          }
+        } catch (e) {
+          console.error("Failed to check permissions:", e);
+          waitingForPermission.current = false;
         }
       }
     });
     return () => {
-      subscription.remove();
       waitingForPermission.current = false;
+      subscription.remove();
     };
   }, [route?.params?.onboarding, navigation]);
 
