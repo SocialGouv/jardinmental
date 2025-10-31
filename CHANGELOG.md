@@ -1,3 +1,10 @@
+# [1.119.0](https://github.com/SocialGouv/jardinmental/compare/v1.118.0...v1.119.0) (2025-10-31)
+
+
+### Features
+
+* add "Cyberharcèlement entre élèves" in support ([#604](https://github.com/SocialGouv/jardinmental/issues/604)) ([3dbcb21](https://github.com/SocialGouv/jardinmental/commit/3dbcb210ddd46bdeece7b2fa32dea3ce0dd26e76))
+
 # [1.118.0](https://github.com/SocialGouv/jardinmental/compare/v1.117.1...v1.118.0) (2025-10-30)
 
 
