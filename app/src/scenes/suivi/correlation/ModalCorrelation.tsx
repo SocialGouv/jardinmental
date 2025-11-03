@@ -642,15 +642,13 @@ const TestChart = ({ data, dataB, treatment, treatmentSiBesoin, diaryData, selec
             stripWidth={2}
             showTextOnFocus={true}
             focusTogether={true}
-            xAxisLabelsVerticalShift={90}
+            xAxisLabelsVerticalShift={10}
             // showXAxisIndices={true}
             showYAxisIndices={false}
             yAxisLabelWidth={0}
             yAxisIndicesWidth={0}
             xAxisIndicesWidth={2}
             xAxisIndicesColor={"#999"}
-            noOfSections={5}
-            noOfSectionsBelowXAxis={0}
             stepValue={1}
             scrollRef={ref}
             data={(data || []).map((d, index) => {
@@ -680,8 +678,6 @@ const TestChart = ({ data, dataB, treatment, treatmentSiBesoin, diaryData, selec
               console.log("lcs on press");
             }}
             xAxisIndicesHeight={10}
-            color2={"#00A5DF"}
-            color1={"#3D6874"}
             // noOfSectionsBelowXAxis={1}
             data2={
               dataB
@@ -765,9 +761,6 @@ const TestChart = ({ data, dataB, treatment, treatmentSiBesoin, diaryData, selec
               setDisplayItem(item);
             }}
             pointerConfig={{
-              onPointerEnter: (item) => {
-                console.log(item);
-              },
               activatePointersOnLongPress: true,
               persistPointer: true,
               activatePointersDelay: 500,
@@ -777,37 +770,11 @@ const TestChart = ({ data, dataB, treatment, treatmentSiBesoin, diaryData, selec
               height: 20,
               showPointerStrip: false,
               pointerStripColor: TW_COLORS.CNAM_PRIMARY_700,
-              // pointer1Color: "#00A5DF",
-              // pointer2Color: "#3D6874",
               pointerStripUptoDataPoint: false,
               pointerLabelWidth: 40,
               pointerLabelHeight: 100,
-              // pointerComponent: (item) => {
-              //   return customDataPoint({ color: "red", isSelected: true });
-              // },
-              // pointerLabelComponent: (items) => {
-              //   return (
-              //     <View
-              //       style={{
-              //         height: 90,
-              //         width: 100,
-              //         justifyContent: "center",
-              //         marginTop: -30,
-              //         marginLeft: -40,
-              //       }}
-              //     >
-              //       <Text style={{ color: "white", fontSize: 14, marginBottom: 6, textAlign: "center" }}>{items[0].date}</Text>
-
-              //       <View style={{ paddingHorizontal: 14, paddingVertical: 6, borderRadius: 16, backgroundColor: "white" }}>
-              //         <Text style={{ fontWeight: "bold", textAlign: "center" }}>{"$" + items[0].value + ".0"}</Text>
-              //       </View>
-              //     </View>
-              //   );
-              // },
             }}
-            overflowBottom={250} // space at the bottom of graph
-            // dataPointsHeight={15}
-            // dataPointsWidth={15}
+            overflowBottom={0} // space at the bottom of graph
             dataPointsWidth1={15}
             dataPointsHeight1={15}
             dataPointsHeight2={15}
@@ -819,7 +786,11 @@ const TestChart = ({ data, dataB, treatment, treatmentSiBesoin, diaryData, selec
             focusedDataPointHeight={20}
             focusedDataPointWidth={20}
             showDataPointLabelOnFocus={false}
-            color3="#FCF2D9"
+            thickness3={20}
+            thickness4={20}
+            color2={"#00A5DF"}
+            color1={"#3D6874"}
+            color3="transparent"
             color4="transparent"
             yAxisColor={"transparent"}
             formatYLabel={(lab) => {
@@ -829,15 +800,26 @@ const TestChart = ({ data, dataB, treatment, treatmentSiBesoin, diaryData, selec
               //return "";
               return parseInt(lab, 10).toString();
             }}
-            yAxisOffset={1}
-            thickness3={20}
-            // showReferenceLine1={true}
-            // referenceLine1Position={0.05}
-            // referenceLine1Config={{
-            //   thickness: 2,
-            //   color: "red",
-            //   dashGap: -1,
-            // }}
+            yAxisOffset={-2}
+            noOfSectionsBelowXAxis={0}
+            noOfSections={7}
+            // use to hide the horizontal lines and show the yellow background
+            showReferenceLine1={true}
+            referenceLine1Position={-0.32}
+            referenceLinesOverChartContent={false}
+            referenceLine1Config={{
+              thickness: 20,
+              color: "#FCF2D9",
+              dashGap: -1,
+            }}
+            // use to hide the horizontal lines
+            showReferenceLine2={true}
+            referenceLine2Position={-1.32}
+            referenceLine2Config={{
+              thickness: 20,
+              color: "white",
+              dashGap: -1,
+            }}
             showVerticalLines={false}
             verticalLinesColor="rgba(24, 26, 26, 0.1)"
             // verticalLinesThickness={0}
