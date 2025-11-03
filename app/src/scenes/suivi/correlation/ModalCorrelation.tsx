@@ -4,7 +4,7 @@ import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
 import { DiaryDataContext } from "@/context/diaryData";
 import { Indicator } from "@/entities/Indicator";
-import { beforeToday, formatRelativeDate, getArrayOfDates } from "@/utils/date/helpers";
+import { beforeToday, formatDay, formatRelativeDate, getArrayOfDates } from "@/utils/date/helpers";
 import { getIndicatorKey } from "@/utils/indicatorUtils";
 import { IndicatorsBottomSheet } from "@/components/IndicatorsBottomSheet";
 import { TW_COLORS } from "@/utils/constants";
@@ -57,6 +57,9 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
     const data = [];
     const twoYearsAgo = beforeToday(40 * 1); // Calculate date from 2 years ago
     const chartDates = getArrayOfDates({ startDate: twoYearsAgo }); // Get all dates from 2 years ago to today
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    chartDates.push(formatDay(tomorrow));
     for (const indicator of selectedIndicators) {
       const newData = chartDates
         .map((date) => {
@@ -136,8 +139,8 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
         const dayData = diaryData[date];
         if (!dayData || dayData["PRISE_DE_TRAITEMENT"] === undefined) {
           return {
-            value: 0,
-            hideDataPoint: true,
+            value: 0, // value just to display point at axix 0 but it does no represent treatment value
+            hideDataPoint: false,
             noValue: true,
             date: date,
             label: date,
@@ -146,7 +149,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
         return {
           value: 0,
           hideDataPoint: false,
-          booleanValue: dayData["PRISE_DE_TRAITEMENT"].value,
+          treatmentValue: dayData["PRISE_DE_TRAITEMENT"].value,
           date: date,
           label: date,
         };
@@ -157,19 +160,19 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
     if (treatmentSiBesoin) {
       const newData = chartDates.map((date) => {
         const dayData = diaryData[date];
-        if (!dayData || dayData["PRISE_DE_TRAITEMENT_SI_BESOIN"] === undefined) {
+        if (!dayData || !dayData["PRISE_DE_TRAITEMENT_SI_BESOIN"] || !dayData["PRISE_DE_TRAITEMENT_SI_BESOIN"].value) {
           return {
-            value: -1,
-            hideDataPoint: true,
+            value: -1, // value just to display point at axix -1 but it does no represent treatment value
+            hideDataPoint: false,
             noValue: true,
             date: date,
             label: date,
           };
         }
         return {
-          value: -1,
+          value: -1, // value just to display point at axix -1 but it does no represent treatment value
           hideDataPoint: false,
-          booleanValue: dayData["PRISE_DE_TRAITEMENT_SI_BESOIN"].value,
+          treatmentValue: dayData["PRISE_DE_TRAITEMENT_SI_BESOIN"].value,
           date: date,
           label: date,
         };
@@ -306,6 +309,7 @@ const TestChart = ({ data, dataB, treatment, treatmentSiBesoin, diaryData, selec
   const [displayItem, setDisplayItem] = useState<null>();
   const [isVisible, setIsVisible] = useState(false);
   const [active, setActive] = useState("1month");
+  const { showBottomSheet } = useBottomSheet();
   const pointerItemRef = useRef(null);
 
   // Animation values for popup
@@ -403,6 +407,29 @@ const TestChart = ({ data, dataB, treatment, treatmentSiBesoin, diaryData, selec
           alignSelf: "center",
         }}
       />
+    );
+  };
+
+  const customDataPointTreatment = ({ color, backgroundColor, isSelected, noValue, value, needShift }) => {
+    if (noValue) return null;
+
+    return (
+      <View
+        style={{
+          width: isSelected ? 20 : 14,
+          height: isSelected ? 20 : 14,
+          top: needShift ? -10 : 0,
+          alignSelf: "center",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        {value === true ? (
+          <CheckMarkIcon width={isSelected ? 20 : 15} height={isSelected ? 20 : 15} color={"#134449"} />
+        ) : (
+          <CrossIcon width={isSelected ? 20 : 15} height={isSelected ? 20 : 15} color={"#518B9A"} />
+        )}
+      </View>
     );
   };
 
@@ -577,7 +604,7 @@ const TestChart = ({ data, dataB, treatment, treatmentSiBesoin, diaryData, selec
                   value = diaryData[displayItem.date][getIndicatorKey(indicator)].value;
                 } catch (e) {}
                 return (
-                  <View className="flex-row items-center space-x-2">
+                  <View key={indicator.uuid} className="flex-row items-center space-x-2">
                     <Svg height="2" width="30">
                       <Line
                         x1="0"
@@ -589,13 +616,44 @@ const TestChart = ({ data, dataB, treatment, treatmentSiBesoin, diaryData, selec
                         strokeDasharray={index === 0 ? [] : ["4,4"]} // pattern: 4px dash, 4px gap
                       />
                     </Svg>
-                    <Text key={indicator.uuid} className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 ")}>
+                    <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 ")}>
                       <Text className={mergeClassNames(typography.textMdSemibold, "text-primary-900")}>{indicator.name} : </Text>
                       {computeIndicatorLabel(indicator, value)}
                     </Text>
                   </View>
                 );
               })}
+            {displayItem && diaryData[displayItem.date] && (diaryData[displayItem.date]["PRISE_DE_TRAITEMENT"] || {}).value === true && (
+              <View className="flex-row items-center space-x-2">
+                <View className="w-[30] items-center justify-center">
+                  <CheckMarkIcon width={15} height={15} color={"#134449"} />
+                </View>
+                <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 ")}>
+                  <Text className={mergeClassNames(typography.textMdSemibold, "text-primary-900")}>Traitement : </Text>pris
+                </Text>
+              </View>
+            )}
+            {displayItem && diaryData[displayItem.date] && (diaryData[displayItem.date]["PRISE_DE_TRAITEMENT"] || {}).value === false && (
+              <View className="flex-row items-center space-x-2">
+                <View className="w-[30] items-center justify-center">
+                  <CrossIcon color={"#518B9A"} />
+                </View>
+                <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 ")}>
+                  <Text className={mergeClassNames(typography.textMdSemibold, "text-primary-900")}>Traitement : </Text> pas pris
+                </Text>
+              </View>
+            )}
+            {displayItem && diaryData[displayItem.date] && (diaryData[displayItem.date]["PRISE_DE_TRAITEMENT_SI_BESOIN"] || {}).value === true && (
+              <View className="flex-row items-center space-x-2">
+                <View className="w-[30] items-center justify-center">
+                  <View className="w-4 h-4 rounded-full bg-cnam-primary-800"></View>
+                </View>
+                <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 ")}>
+                  <Text className={mergeClassNames(typography.textMdSemibold, "text-primary-900")}>Si besoin : </Text> pris
+                </Text>
+              </View>
+            )}
+
             <TouchableOpacity
               onPress={() => {
                 navigation.navigate("detail-correlation-modal", {
@@ -630,7 +688,7 @@ const TestChart = ({ data, dataB, treatment, treatmentSiBesoin, diaryData, selec
             lineSegments={lineSegments}
             lineSegments2={lineSegments2}
             onFocus={(item, index) => {
-              console.log("focused", item, index);
+              // console.log("focused", item, index);
               setDisplayItem(item);
               setSelectedPointIndex(index);
             }}
@@ -642,7 +700,7 @@ const TestChart = ({ data, dataB, treatment, treatmentSiBesoin, diaryData, selec
             stripWidth={2}
             showTextOnFocus={true}
             focusTogether={true}
-            xAxisLabelsVerticalShift={10}
+            xAxisLabelsVerticalShift={0}
             // showXAxisIndices={true}
             showYAxisIndices={false}
             yAxisLabelWidth={0}
@@ -714,21 +772,23 @@ const TestChart = ({ data, dataB, treatment, treatmentSiBesoin, diaryData, selec
                     ...t,
                     label: index % labelSpacing === 0 ? formatLabel(t.label) : "", // Show label based on active period
                     customDataPoint: () => {
-                      return customDataPoint({
+                      return customDataPointTreatment({
                         color: TW_COLORS.CNAM_PRIMARY_800,
                         backgroundColor: TW_COLORS.CNAM_PRIMARY_800,
                         isSelected: false,
                         needShift: false,
-                        noValue: false,
+                        noValue: t.noValue,
+                        value: t.treatmentValue,
                       });
                     },
                     focusedCustomDataPoint: () => {
-                      return customDataPoint({
+                      return customDataPointTreatment({
                         color: TW_COLORS.CNAM_PRIMARY_800,
                         backgroundColor: TW_COLORS.CNAM_PRIMARY_800,
                         isSelected: true,
                         needShift: false,
-                        noValue: false,
+                        noValue: t.noValue,
+                        value: t.treatmentValue,
                       });
                     },
                   }))
@@ -740,22 +800,29 @@ const TestChart = ({ data, dataB, treatment, treatmentSiBesoin, diaryData, selec
                     ...t,
                     label: index % labelSpacing === 0 ? formatLabel(t.label) : "", // Show label based on active period
                     customDataPoint: () => {
-                      return customDataPoint({ color: TW_COLORS.CNAM_PRIMARY_800, backgroundColor: TW_COLORS.CNAM_PRIMARY_800 });
+                      return customDataPoint({
+                        color: TW_COLORS.CNAM_PRIMARY_800,
+                        backgroundColor: TW_COLORS.CNAM_PRIMARY_800,
+                        noValue: t.noValue,
+                        isSelected: false,
+                        needShift: false,
+                        // value: t.treatmentValue,
+                      });
                     },
                     focusedCustomDataPoint: () => {
                       return customDataPoint({
                         color: TW_COLORS.CNAM_PRIMARY_800,
                         backgroundColor: TW_COLORS.CNAM_PRIMARY_800,
                         isSelected: true,
+                        noValue: t.noValue,
                         needShift: false,
-                        noValue: false,
+                        // value: t.treatmentValue,
                       });
                     },
                   }))
                 : null
             }
             getPointerProps={({ pointerIndex }) => {
-              console.log("lCS TOOT");
               const item = data[pointerIndex] || dataB[pointerIndex];
               setSelectedPointIndex(pointerIndex);
               setDisplayItem(item);
@@ -775,6 +842,7 @@ const TestChart = ({ data, dataB, treatment, treatmentSiBesoin, diaryData, selec
               pointerLabelHeight: 100,
             }}
             overflowBottom={0} // space at the bottom of graph
+            // overflowTop={5}
             dataPointsWidth1={15}
             dataPointsHeight1={15}
             dataPointsHeight2={15}
@@ -802,7 +870,7 @@ const TestChart = ({ data, dataB, treatment, treatmentSiBesoin, diaryData, selec
             }}
             yAxisOffset={-2}
             noOfSectionsBelowXAxis={0}
-            noOfSections={7}
+            noOfSections={8}
             // use to hide the horizontal lines and show the yellow background
             showReferenceLine1={true}
             referenceLine1Position={-0.32}
@@ -820,6 +888,13 @@ const TestChart = ({ data, dataB, treatment, treatmentSiBesoin, diaryData, selec
               color: "white",
               dashGap: -1,
             }}
+            showReferenceLine3={true}
+            referenceLine3Position={5.5}
+            referenceLine3Config={{
+              thickness: 20,
+              color: "white",
+              dashGap: -1,
+            }}
             showVerticalLines={false}
             verticalLinesColor="rgba(24, 26, 26, 0.1)"
             // verticalLinesThickness={0}
@@ -830,7 +905,7 @@ const TestChart = ({ data, dataB, treatment, treatmentSiBesoin, diaryData, selec
             initialSpacing={0}
           />
         </View>
-        <View className="bg-cnam-primary-25 p-4 mt-8 rounded-2xl flex-col space-y-2">
+        <View className="bg-cnam-primary-25 p-4 -mt-2 rounded-2xl flex-col space-y-2">
           <View className="flex-row items-center justify-center space-x-4">
             {selectedIndicators.map((indicator, index) => (
               <View key={getIndicatorKey(indicator)}>
@@ -847,11 +922,6 @@ const TestChart = ({ data, dataB, treatment, treatmentSiBesoin, diaryData, selec
                   />
                 </Svg>
               </View>
-            ))}
-          </View>
-          <View className="flex-row">
-            {selectedIndicators.map((indicator) => (
-              <View key={getIndicatorKey(indicator)}>{indicator.name}</View>
             ))}
           </View>
           <View className="flex-row space-x-6 items-center justify-center">

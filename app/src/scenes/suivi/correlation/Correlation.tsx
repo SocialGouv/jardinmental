@@ -3,7 +3,7 @@ import { ScrollView, StyleSheet, View, Image, Dimensions, Text, TouchableOpacity
 
 import { displayedCategories, HELP_ANALYSE, TAB_BAR_HEIGHT, TW_COLORS } from "@/utils/constants";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { beforeToday, getArrayOfDates, getTodaySWeek, formatDate } from "@/utils/date/helpers";
+import { beforeToday, getArrayOfDates, getTodaySWeek, formatDate, formatDay } from "@/utils/date/helpers";
 import { DiaryDataContext } from "@/context/diaryData";
 import { useContext } from "react";
 import localStorage from "@/utils/localStorage";
@@ -147,6 +147,10 @@ export const Correlation = ({ navigation, onScroll, scrollY, day, setDay, dynami
     const data = [];
     const twoYearsAgo = beforeToday(40 * 1); // Calculate date from 2 years ago
     const chartDates = getArrayOfDates({ startDate: twoYearsAgo }); // Get all dates from 2 years ago to today
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    chartDates.push(formatDay(tomorrow));
+    console.log(chartDates);
     for (const indicator of selectedIndicators) {
       const newData = chartDates
         .map((date) => {
