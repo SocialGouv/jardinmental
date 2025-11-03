@@ -37,7 +37,6 @@ const computeIndicatorLabel = (indicator, value): string => {
   if (indicator.order === "DESC" && indicator.type === INDICATOR_TYPE.smiley) {
     index = 6 - index; // Inverse 1→5, 2→4, 3→3, 4→2, 5→1
   }
-  console.log("compute indicator label", index, value);
   if (Object.keys(INDICATOR_LABELS).includes(indicator.uuid)) {
     return INDICATOR_LABELS[indicator.uuid][index - 1];
   } else {
@@ -311,6 +310,9 @@ const TestChart = ({ data, dataB, treatment, treatmentSiBesoin, diaryData, selec
   const [active, setActive] = useState("1month");
   const { showBottomSheet } = useBottomSheet();
   const pointerItemRef = useRef(null);
+  const hasScrolledToEnd = useRef(false);
+  const currentScrollX = useRef(0);
+  const previousSpacing = useRef(20); // Default spacing for "1month"
 
   // Animation values for popup
   const opacity = useSharedValue(0);
@@ -388,6 +390,37 @@ const TestChart = ({ data, dataB, treatment, treatmentSiBesoin, diaryData, selec
       }, 300);
     }
   }, [displayItem]);
+
+  // Auto-scroll to the end of the chart only on first load
+  useEffect(() => {
+    if (ref.current && data && data.length > 0 && !hasScrolledToEnd.current) {
+      // Small delay to ensure the chart is rendered
+      setTimeout(() => {
+        const scrollX = (data.length - 1) * chartSpacing;
+        ref.current?.scrollTo({ x: scrollX, animated: false });
+        currentScrollX.current = scrollX;
+        previousSpacing.current = chartSpacing;
+        hasScrolledToEnd.current = true;
+      }, 100);
+    }
+  }, [data, chartSpacing]);
+
+  // Maintain relative scroll position when spacing changes (time period changes)
+  useEffect(() => {
+    if (ref.current && hasScrolledToEnd.current && previousSpacing.current !== chartSpacing) {
+      // Calculate which data point index we're currently viewing
+      const currentDataIndex = (currentScrollX.current + (screenWidth - 72) / 2) / previousSpacing.current;
+
+      // Calculate the new scroll position for the same data point with new spacing
+      const newScrollX = currentDataIndex * chartSpacing;
+
+      setTimeout(() => {
+        ref.current?.scrollTo({ x: newScrollX, animated: false });
+        currentScrollX.current = newScrollX;
+        previousSpacing.current = chartSpacing;
+      }, 200);
+    }
+  }, [chartSpacing]);
 
   // Custom data point function that can access selectedPointIndex state
   const customDataPoint = ({ color, backgroundColor, isSelected, noValue, needShift }) => {
@@ -678,6 +711,7 @@ const TestChart = ({ data, dataB, treatment, treatmentSiBesoin, diaryData, selec
                 ? { paddingLeft: 15, height: 20, marginTop: 10, fontWeight: "bold", color: TW_COLORS.CNAM_PRIMARY_700 }
                 : { fontSize: 10, color: "#666", width: 60, textAlign: "center" }
             }
+            // scrollToIndex={data.length - 1}
             xAxisTextNumberOfLines={1}
             xAxisLabelsHeight={20}
             xAxisThickness={0}
@@ -709,6 +743,11 @@ const TestChart = ({ data, dataB, treatment, treatmentSiBesoin, diaryData, selec
             xAxisIndicesColor={"#999"}
             stepValue={1}
             scrollRef={ref}
+            onScroll={(event) => {
+              if (event?.nativeEvent?.contentOffset?.x !== undefined) {
+                currentScrollX.current = event.nativeEvent.contentOffset.x;
+              }
+            }}
             data={(data || []).map((d, index) => {
               const needShift = dataB[index].value === d.value;
               return {
