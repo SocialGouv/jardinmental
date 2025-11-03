@@ -4,7 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Alert } from "react-native";
-import Reminder from "../../src/scenes/reminder/reminderOnboarding";
+import Reminder from "../../src/scenes/reminder/reminder";
 import NotificationService from "../../src/services/notifications";
 import API from "../../src/services/api";
 import logEvents from "../../src/services/logEvents";

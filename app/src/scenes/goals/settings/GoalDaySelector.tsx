@@ -7,6 +7,7 @@ import { AnimatedHeaderScrollScreen } from "@/scenes/survey-v2/AnimatedHeaderScr
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
 import NavigationButtons from "@/components/onboarding/NavigationButtons";
+import { Button2 } from "@/components/Button2";
 
 export const GoalDaySelector = ({ navigation, route }) => {
   const goalId = route.params?.goalId;

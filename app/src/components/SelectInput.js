@@ -44,7 +44,7 @@ export const SelectInput = ({ items, value, onValueChange, placeholder, containe
         }}
         {...props}
       >
-        <View style={[styles.button, style]} pointerEvents="none">
+        <View style={[styles.button, style]} pointerEvents={Platform.OS === "ios" ? "none" : "auto"}>
           <Text style={[styles.textValue, textValueStyle]}>
             {visibleValue ? items.find((item) => item.value === visibleValue)?.label : placeholder}
           </Text>

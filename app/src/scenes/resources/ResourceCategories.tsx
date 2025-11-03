@@ -43,6 +43,7 @@ const ResourceCategories: React.FC<ResourceCategoriesProps> = ({ navigation }) =
     { key: CATEGORIES.REPERER_LES_SIGNES_DE_MAL_ETRE, title: "Repérer les signes de mal-être", number: 2 },
     { key: CATEGORIES.DES_PETITS_PAS_POUR_SON_EQUILIBRE_MENTAL, title: "Des petits pas pour son équilibre mental", number: 3 },
     { key: CATEGORIES.MIEUX_COMPRENDRE_LES_TROUBLES_PSYCHIQUES, title: "Mieux comprendre les troubles psychiques", number: 4 },
+    { key: CATEGORIES.AGIR_ET_CHERCHER_DE_L_AIDE_SANS_HONTE, title: "Agir et chercher de l’aide, sans honte", number: 5 },
   ];
 
   const handleCategoryPress = (category: string, categoryNumber: number) => {

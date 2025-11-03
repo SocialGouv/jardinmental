@@ -35,6 +35,11 @@ export default function SupportScreen({ navigation, route }) {
       number: "+33800235236",
     },
     {
+      name: "Cyberharcèlement entre élèves",
+      description: "Numéro national 7j/7, de 9h à 23h",
+      number: "3018",
+    },
+    {
       name: "Femmes victimes de violences",
       description: "Numéro national 7j/7",
       number: "3919",

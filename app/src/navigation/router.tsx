@@ -7,7 +7,7 @@ import SurveyNavigator from "../scenes/survey-v2/SurveyNavigator";
 import SelectDayScreen from "../scenes/survey/selectDay";
 import Reminder from "../scenes/reminder";
 import Export from "../scenes/export/export";
-import DataExportImport from "../scenes/data-export-import";
+import DataExportImport from "../scenes/data-export-import/DataExportImport";
 import DailyChart from "../scenes/variation/daily-chart";
 import { AppState, Platform, Linking } from "react-native";
 import { StatusBar } from "expo-status-bar";
@@ -16,7 +16,6 @@ import CGU from "../scenes/legal/cgu-screen";
 import Privacy from "../scenes/legal/privacy-screen";
 import LegalMentions from "../scenes/legal/legal-mentions-screen";
 import logEvents from "../services/logEvents";
-import ContributePro from "../scenes/contribute/contributePro";
 import DrugsSurvey from "../scenes/drugs/drugs-survey";
 import DrugsManagement from "../scenes/drugs/drugs-management";
 import DrugsList from "../scenes/drugs/drugs-list";
@@ -26,7 +25,6 @@ import ActivateBeck from "../scenes/beck/activate";
 import ViewBeck from "../scenes/beck/view";
 import Beck from "../scenes/beck";
 import Infos from "../scenes/infos";
-import PrivacyLight from "../scenes/privacy-light";
 import NotificationService from "../services/notifications";
 import Indicateurs from "../scenes/indicateurs";
 import Presentation from "../scenes/presentation";
@@ -66,20 +64,13 @@ const Stack = createStackNavigator();
 
 const linking = {
   prefixes: ["jardinmental://"],
-  async getInitialURL() {
+  async getInitialURL(): Promise<string | null | undefined> {
     // Check if app was opened from a deep link
     const url = await Linking.getInitialURL();
-
     if (url != null) {
       return url;
     }
-
-    // Check if there is an initial notification
-    const notification = NotificationService.popInitialNotification();
-
-    // Get deep link from data
-    // if this is undefined, the app will open the default/home page
-    return notification?.data?.link;
+    return null;
   },
   subscribe(listener) {
     /// Listen to incoming links from deep linking
@@ -135,6 +126,20 @@ class Router extends React.Component<RouterProps> {
     backgroundColor: colors.LIGHT_BLUE,
   };
 
+  handleNotificationNavigation = (notification: any) => {
+    const data = notification.request.content.data;
+    const title = notification.request.content.title;
+
+    // If a link exists in data, use it (for future compatibility)
+    if (data?.link) {
+      this.navigationRef?.navigate(data.link);
+    }
+    // Otherwise, detect by title for "Main" and "Goal" notifications
+    else if (title === "Comment allez-vous aujourd'hui ?" || title === "Vous avez un objectif aujourd'hui 🎯") {
+      this.navigationRef?.navigate("day-survey");
+    }
+  };
+
   async componentDidMount() {
     //await logEvents.initMatomo();
     logEvents.logAppVisit();
@@ -146,16 +151,22 @@ class Router extends React.Component<RouterProps> {
         await AsyncStorage.setItem("deviceId", deviceId);
       }
 
-      // Setup notification handler
+      // Check if app was opened from a notification (when app was completely closed)
+      const response = await Notifications.getLastNotificationResponseAsync();
+      if (response) {
+        // Wait a bit for navigation to be ready
+        setTimeout(() => {
+          this.handleNotificationNavigation(response.notification);
+        }, 100);
+      }
+
+      // Setup notification handler for when app is already open
       const notificationListener = Notifications.addNotificationReceivedListener((notification) => {
         console.log("Notification received:", notification);
       });
 
       const responseListener = Notifications.addNotificationResponseReceivedListener((response) => {
-        const data = response.notification.request.content.data;
-        if (data?.link) {
-          this.navigationRef?.navigate(data.link);
-        }
+        this.handleNotificationNavigation(response.notification);
       });
 
       this.cleanupNotifications = () => {
@@ -238,8 +249,6 @@ class Router extends React.Component<RouterProps> {
             <Stack.Screen name="too-late" component={TooLate} />
             <Stack.Screen name="news" component={News} />
             <Stack.Screen name="infos" component={Infos} />
-            <Stack.Screen name="privacy-light" component={PrivacyLight} />
-            <Stack.Screen name="contribute-pro" component={ContributePro} />
             <Stack.Screen name="activate-beck" component={ActivateBeck} />
             <Stack.Screen name="view-beck" component={ViewBeck} />
             <Stack.Screen name="beck" component={Beck} />

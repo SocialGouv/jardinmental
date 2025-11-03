@@ -3,6 +3,7 @@ export const CATEGORIES = {
   LA_SANTE_MENTALE_C_EST_QUOI: "La santé mentale, c'est quoi ?",
   MIEUX_COMPRENDRE_LES_TROUBLES_PSYCHIQUES: "Mieux comprendre les troubles psychiques",
   REPERER_LES_SIGNES_DE_MAL_ETRE: "Repérer les signes de mal-être",
+  AGIR_ET_CHERCHER_DE_L_AIDE_SANS_HONTE: "Agir et chercher de l’aide, sans honte",
 } as const;
 
 export type Category = (typeof CATEGORIES)[keyof typeof CATEGORIES];
@@ -10,6 +11,7 @@ export type Category = (typeof CATEGORIES)[keyof typeof CATEGORIES];
 export const SUB_CATEGORIES = {
   ZOOM_SOMMEIL: "Zoom sur le sommeil",
   ZOOM_TROUBLES: "Zoom sur les différents troubles",
+  ZOOM_STRESS_AND_ANXIETY: "Zoom sur le stress et l’anxiété",
 } as const;
 
 export type SubCategory = (typeof SUB_CATEGORIES)[keyof typeof SUB_CATEGORIES];
@@ -868,6 +870,459 @@ Pour accompagner cette vigilance, il peut être utile de se poser quelques quest
       "550e8400-e29b-41d4-a716-446655440197",
       "550e8400-e29b-41d4-a716-446655440198",
       "550e8400-e29b-41d4-a716-446655440126",
+    ],
+  },
+  {
+    id: "a1b2c3d4-e5f6-4789-a012-3456789abcd1",
+    matomoId: 34,
+    title: "Stress vs. anxiété : éviter la confusion",
+    image: require("../../../../assets/imgs/resources/Article34.png"),
+    category: CATEGORIES.REPERER_LES_SIGNES_DE_MAL_ETRE,
+    subCategory: SUB_CATEGORIES.ZOOM_STRESS_AND_ANXIETY,
+    content: `**Dans le langage courant, les mots *stress* et *anxiété* sont souvent confondus.** Pourtant, ils ne désignent pas la même chose, même si leurs effets peuvent parfois se ressembler.
+
+Le stress est une réaction normale face à une situation qui demande une réponse rapide : un imprévu, une surcharge de travail, une pression extérieure. Il s'agit d'un réflexe d'adaptation qui mobilise le corps et l'esprit pour faire face à ce qui se passe. Une fois la situation terminée, la tension retombe. **Lorsqu'il est ponctuel et bien géré, le stress peut même être bénéfique** : il aide à se concentrer, à agir, à faire face. Dans ce cadre-là, il fait simplement partie de la vie.
+
+**L'anxiété, de son côté, est une émotion liée à une menace perçue.** Elle peut surgir face à une situation à venir, au regard des autres, ou à des pensées qui tournent en boucle. Contrairement à une idée répandue, elle n'est pas toujours floue ou irrationnelle : elle peut avoir une cause bien identifiée. Comme toute émotion, elle a une fonction utile : nous alerter, nous pousser à nous adapter. **Elle n'est donc pas un trouble en soi.**
+
+Elle peut toutefois devenir problématique lorsqu'elle devient trop fréquente, trop intense, ou qu'elle envahit le quotidien. **On parle alors de troubles anxieux (voir notre ressource sur les troubles anxieux)**. Il peut prendre différentes formes (anxiété généralisée, phobies, anxiété sociale, crises de panique...), marquées par une peur qui prend toute la place et perturbe la vie quotidienne, même en dehors des situations redoutées.
+
+**Mais le stress chronique et l'anxiété ne sont pas la même chose.** Le stress chronique s'installe lorsque l'on vit sous pression de façon prolongée, sans possibilité de récupération. Le corps et l'esprit restent tendus en permanence, ce qui peut entraîner de la fatigue, des troubles du sommeil, de l'irritabilité, voire un épuisement. Ce n'est plus une réaction passagère, mais un état durable qui finit par user.
+
+**La différence entre les deux tient surtout à leur origine** : l'anxiété part d'une menace perçue - qu'elle soit liée à l'avenir, à une situation présente ou à un souvenir encore pesant. Le stress chronique, lui, est lié à des conditions concrètes qui durent : surcharge, manque de répit, pressions multiples. **Les deux peuvent coexister et s'amplifier mutuellement, mais ils ne se vivent pas de la même façon, et ne demandent pas les mêmes réponses.**
+
+Mieux comprendre ces différences permet de mettre des mots sur ce que l'on traverse, et de chercher le bon soutien, au bon moment.`,
+    externalResources: [
+      "550e8400-e29b-41d4-a716-446655440201",
+      "550e8400-e29b-41d4-a716-446655440202",
+      "550e8400-e29b-41d4-a716-446655440203",
+      "550e8400-e29b-41d4-a716-446655440204",
+    ],
+  },
+  {
+    id: "b2c3d4e5-f6a7-4890-b123-456789abcdef",
+    matomoId: 35,
+    title: "Stress, anxiété : ce que le corps essaie de dire",
+    image: require("../../../../assets/imgs/resources/Article35.png"),
+    category: CATEGORIES.REPERER_LES_SIGNES_DE_MAL_ETRE,
+    subCategory: SUB_CATEGORIES.ZOOM_STRESS_AND_ANXIETY,
+    content: `**Le stress et l'anxiété ne sont pas seulement des états mentaux. Ce sont aussi des expériences physiques**. Bien souvent, le corps s'exprime avant même que l'on ait conscience de ce qui se joue.
+
+Lorsqu'une personne est confrontée à une situation perçue comme menaçante - qu'elle soit réelle ou non - le cerveau active un mode "alerte" : le rythme cardiaque s'accélère, la respiration devient plus rapide ou se bloque, les muscles se tendent, les sens s'aiguisent et l'individu est en hypervigilance. Des tensions abdominales ou des douleurs diffuses peuvent apparaître. Ce mécanisme de survie est naturel et utile à court terme. Mais s'il se déclenche trop souvent ou s'installe dans la durée, il finit par épuiser l'organisme.
+
+**À force, cet état d'alerte permanent perturbe l'équilibre général. Le stress devient chronique, et le corps agit comme s'il était en danger constant.**
+
+Chez certaines personnes, cette tension monte brusquement et donne lieu à ce qu'on appelle une **crise d'angoisse, ou crise de panique.** Sans signe avant-coureur clair, le corps s'emballe : cœur qui bat très vite, sueurs, vertiges, sensation d'étouffement, peur de perdre le contrôle. **Ces crises provoquent des réactions physiques intenses** : tremblements, nausées, oppression thoracique, engourdissements mais aussi des sensations de déréalisation - comme si le monde devenait irréel - ou de dépersonnalisation, donnant l'impression d'être détaché de soi-même.
+
+Lorsqu'elles deviennent fréquentes, la peur qu'elles reviennent peut s'installer. **Certaines personnes commencent alors à éviter des lieux ou des situations, par crainte de déclencher une nouvelle crise.** Ce cercle peut conduire à un trouble panique, qui impacte profondément la vie quotidienne.
+
+Aussi impressionnantes soient-elles, ces crises sont bien identifiées par les professionnel·les de santé, et des prises en charge efficaces existent. **Elles ne sont pas dangereuses sur le plan vital, mais elles indiquent que le corps a atteint un seuil critique.**
+
+Tous ces signaux sont des messages.
+
+**Le corps n'exagère pas - il alerte**. Apprendre à les reconnaître, c'est déjà une première étape pour mieux comprendre ce que l'on traverse et savoir quand demander de l'aide.`,
+    externalResources: [
+      "550e8400-e29b-41d4-a716-446655440205",
+      "550e8400-e29b-41d4-a716-446655440206",
+      "550e8400-e29b-41d4-a716-446655440207",
+      "550e8400-e29b-41d4-a716-446655440208",
+      "550e8400-e29b-41d4-a716-446655440209",
+      "550e8400-e29b-41d4-a716-446655440210",
+    ],
+  },
+  {
+    id: "c3d4e5f6-a789-4901-c234-56789abcdef0",
+    matomoId: 36,
+    title: "Stress, anxiété… Et si ce n'était pas (que) ça ?",
+    image: require("../../../../assets/imgs/resources/Article36.png"),
+    category: CATEGORIES.REPERER_LES_SIGNES_DE_MAL_ETRE,
+    subCategory: SUB_CATEGORIES.ZOOM_STRESS_AND_ANXIETY,
+    content: `**Prendre conscience de son stress ou de son anxiété est souvent un premier pas vers une compréhension plus large de ce que l'on traverse.** Ces sensations - palpitations, tensions, pensées envahissantes - ne sont pas toujours les seules causes du mal‑être. Il arrive qu'elles en soient l'expression visible, tandis que **d'autres formes de souffrance restent en arrière-plan.**
+
+Les troubles anxieux sont rarement isolés. Ils coexistent fréquemment avec d'autres troubles psychiques, comme la dépression ou les troubles obsessionnels compulsifs (TOC). Dans de nombreux cas, **l'anxiété précède l'apparition de symptômes dépressifs.** Les deux peuvent interagir et se renforcer mutuellement, ce qui complique leur identification et leur prise en charge.
+
+Comprendre ce qui se joue en profondeur n'est pas toujours évident. D'une part, parce que le stress et l'anxiété sont souvent considérés comme des réactions "normales" dans une vie active, surtout dans un monde où les contraintes du quotidien, les exigences constantes et l'actualité rendent **le stress presque banal, voire inévitable.** D'autre part, les signes d'un trouble associé peuvent apparaître progressivement, s'installer lentement, ou r**ester discrets derrière une anxiété persistante.** Cela peut se traduire par une fatigue inhabituelle, des difficultés à s'endormir, des réveils nocturnes ou des signes de dépression : une perte d'énergie, un repli sur soi, ou encore des comportements répétitifs visant à apaiser l'angoisse. **Ces manifestations, bien que peu alarmantes prises isolément, méritent néanmoins une attention particulière lorsqu'elles s'accumulent ou s'installent dans le temps.**
+
+Cela ne veut pas dire qu'il faut chercher un diagnostic à tout prix, mais plutôt qu'on peut apprendre à **repérer quand le malaise s'enracine plus profondément.** Consulter un professionnel de santé peut alors permettre d'y voir plus clair, de mieux comprendre l'ensemble des symptômes, et de trouver un accompagnement adapté.`,
+    externalResources: ["550e8400-e29b-41d4-a716-446655440211", "550e8400-e29b-41d4-a716-446655440212"],
+  },
+  {
+    id: "d4e5f6a7-8901-4a12-d345-6789abcdef01",
+    matomoId: 37,
+    title: "Crises d'angoisse, panique et stress intense : comment mieux les gérer au quotidien",
+    image: require("../../../../assets/imgs/resources/Article37.png"),
+    category: CATEGORIES.REPERER_LES_SIGNES_DE_MAL_ETRE,
+    subCategory: SUB_CATEGORIES.ZOOM_STRESS_AND_ANXIETY,
+    content: `Le stress, l'anxiété ou les crises d'angoisse peuvent parfois prendre une place envahissante dans le quotidien. **Pour mieux les comprendre et les apaiser, il existe des outils simples, efficaces et reconnus.** Avec un peu de pratique, il est possible d'aider le corps à sortir de cet état d'alerte : en apprenant, par exemple, à mieux respirer, à relâcher les tensions et à retrouver un certain calme intérieur.
+
+**Des exercices réguliers, combinés à un accompagnement adapté, peuvent réellement contribuer à améliorer le bien-être.**
+
+Il est aussi essentiel de rappeler que certains événements restent, parfois, hors de notre contrôle - un deuil, des difficultés financières, ou encore des discriminations, par exemple. **Ces outils peuvent apporter un soutien, mais ne suffisent pas toujours à tout surmonter.** N'hésitez pas à demander de l'aide lorsque les difficultés deviennent trop lourdes à porter seul.e
+
+*(voir notre rubrique agir et chercher de l'aide).*`,
+    externalResources: [
+      "550e8400-e29b-41d4-a716-446655440018",
+      "550e8400-e29b-41d4-a716-446655440262",
+      "550e8400-e29b-41d4-a716-446655440263",
+      "550e8400-e29b-41d4-a716-446655440264",
+    ],
+  },
+  {
+    id: "e5f6a789-0123-4b23-e456-789abcdef012",
+    matomoId: 45,
+    title: "Santé mentale des enfants et adolescents : comprendre, repérer, accompagner",
+    image: require("../../../../assets/imgs/resources/Article45.png"),
+    category: CATEGORIES.REPERER_LES_SIGNES_DE_MAL_ETRE,
+    content: `L'enfance et l'adolescence sont des périodes d'apprentissage, de découverte et d'exploration de soi et du monde qui les entoure. Elles offrent de nombreuses opportunités de développement, de curiosité et d'épanouissement.
+
+Pour autant, certains enfants et adolescents peuvent traverser des périodes de vulnérabilité psychique. **Plus d'un enfant sur dix souffre d'un trouble mental *(Santé Publique France, 2024)*, et un adolescent sur sept présente un risque sérieux de dépression** *(EnCLASS, 2022)*.
+
+Les troubles psychiques chez les jeunes résultent souvent de plusieurs causes. Ils peuvent être liés à **des facteurs internes**, comme la génétique, les hormones ou le développement cérébral, et à **des facteurs externes**, comme l'environnement familial, scolaire, économique ou social, ou encore des événements d'actualité pouvant générer inquiétude et stress. Ces troubles apparaissent fréquemment pendant l'adolescence, une période de grands changements physiques, cognitifs et émotionnels.
+
+Chez les enfants, ces troubles peuvent se manifester par de l'anxiété, des troubles du sommeil, des difficultés de comportement ou des troubles de l'apprentissage. Ces derniers ne sont pas toujours le signe d'un mal-être, mais peuvent parfois en être la cause.
+
+Chez les adolescents, l'anxiété, la dépression, les troubles alimentaires ou l'automutilation peuvent apparaître. Même si un jeune n'exprime pas ses émotions, cela ne veut pas dire qu'il ne rencontre pas de difficultés. **Les adultes doivent rester attentifs et consulter dès les premiers signes d'inquiétude plutôt que d'attendre que la situation s'aggrave.**
+
+Heureusement, des dispositifs spécialisés existent pour accompagner les enfants, les adolescents et leur entourage :
+
+- Le **médecin de famille** (ou le pédiatre) est souvent le premier interlocuteur.
+- Les **services de protection maternelle et infantile (PMI)** proposent un suivi précoce pour les femmes enceintes, les nourrissons et les jeunes enfants (0-6 ans), ainsi que des conseils aux familles sur la santé, le développement et la prévention.
+- Les **centres médico-psychologiques (CMP)** accueillent **tous les âges**, enfants, adolescents et adultes, et offrent un soutien psychologique et psychiatrique adapté.
+- Pour les adolescents, les **Points accueil-écoute Jeunes (PAEJ)**, les **Maisons des adolescents (MDA)** et les **consultations jeunes consommateurs (CJC)** pour les conduites addictives proposent un accompagnement ciblé.
+- Des dispositifs d'écoute téléphonique et en ligne, comme **Fil Santé Jeunes (0800 235 236)**, complètent ces dispositifs d'aide.
+
+Il est crucial que les adultes qui vivent, travaillent ou accompagnent des enfants et adolescents soient attentifs et responsables. Leur vigilance, leur écoute et leur engagement sont indispensables pour détecter les signes de souffrance, même lorsque ceux-ci ne sont pas exprimés, et pour garantir un soutien approprié. La santé mentale des jeunes est un enjeu collectif qui appelle à une mobilisation partagée.`,
+    externalResources: [
+      "550e8400-e29b-41d4-a716-446655440275",
+      "550e8400-e29b-41d4-a716-446655440276",
+      "550e8400-e29b-41d4-a716-446655440277",
+      "550e8400-e29b-41d4-a716-446655440278",
+      "550e8400-e29b-41d4-a716-446655440279",
+      "550e8400-e29b-41d4-a716-446655440032",
+      "550e8400-e29b-41d4-a716-446655440037",
+      "550e8400-e29b-41d4-a716-446655440031",
+      "550e8400-e29b-41d4-a716-446655440036",
+      "550e8400-e29b-41d4-a716-446655440042",
+      "550e8400-e29b-41d4-a716-446655440187",
+      "550e8400-e29b-41d4-a716-446655440280",
+      "550e8400-e29b-41d4-a716-446655440281",
+      "550e8400-e29b-41d4-a716-446655440282",
+    ],
+  },
+  {
+    id: "f6a78901-2345-4c34-f567-89abcdef0123",
+    matomoId: 46,
+    title: "Santé mentale des parents : comprendre, repérer, accompagner",
+    image: require("../../../../assets/imgs/resources/Article46.png"),
+    category: CATEGORIES.REPERER_LES_SIGNES_DE_MAL_ETRE,
+    content: `**La parentalité est une période de grands changements**, souvent source de joie et d'épanouissement, elle peut aussi bousculer l'équilibre émotionnel. Il est fréquent de traverser des moments de fatigue, de doute, de solitude ou d'inquiétude face à ces transformations. Cependant, lorsque ces émotions deviennent trop envahissantes ou durent dans le temps, il peut être utile d'en parler et de chercher du soutien.
+
+Juste après l'accouchement, de nombreuses femmes connaissent un épisode de « baby blues » : une phase transitoire marquée par une sensibilité accrue, de l'irritabilité ou des pleurs. Ce phénomène, lié aux bouleversements hormonaux et à la fatigue, disparaît généralement en quelques jours. Mais lorsque ces symptômes persistent ou s'aggravent, **ils peuvent être le signe d'une dépression post-partum.** D'après l'enquête nationale périnatale menée en 2021, **16,7 % des femmes** **en présentent les signes deux mois après l'accouchement.**
+
+**Les pères peuvent eux aussi être concernés par une dépression périnatale, souvent méconnue. Elle toucherait environ un homme sur dix**, avec une fréquence plus élevée lorsque leur partenaire traverse elle-même une dépression. Ces troubles restent encore peu identifiés, bien qu'ils puissent avoir un impact important sur l'équilibre familial.
+
+Certains signes peuvent alerter : fatigue persistante, perte d'intérêt, troubles du sommeil, irritabilité, sentiment d'échec ou retrait vis-à-vis de l'enfant. Ces manifestations s'inscrivent parfois dans un **épuisement parental**, ou « burn-out parental », lié à une surcharge prolongée, sans espace de repos ni de soutien.
+
+Face à ces situations, **différentes formes d'aide existent**. Des professionnel·les de santé peuvent être sollicités : médecins, sages-femmes, psychologues, psychiatres. Les services de Protection Maternelle et Infantile (PMI), présents dans chaque département, proposent un accompagnement médico-social gratuit pour les jeunes enfants et leurs parents. D'autres dispositifs existent également : lignes d'écoute, centres de consultation en périnatalité, associations de soutien à la parentalité. **Ces ressources permettent de rompre l'isolement, de mieux comprendre ce qui se joue et de retrouver un équilibre.**
+
+Il est essentiel de rappeler qu'il n'existe **pas de modèle parental idéal**. La parentalité implique des ajustements, des doutes, parfois des moments de fragilité. Ce n'est pas la perfection qui protège l'enfant, mais la capacité à reconnaître ses limites, à demander de l'aide lorsque c'est nécessaire et à bénéficier d'un accompagnement adapté.`,
+    externalResources: [
+      "550e8400-e29b-41d4-a716-446655440268",
+      "550e8400-e29b-41d4-a716-446655440269",
+      "550e8400-e29b-41d4-a716-446655440270",
+      "550e8400-e29b-41d4-a716-446655440035",
+      "550e8400-e29b-41d4-a716-446655440148",
+      "550e8400-e29b-41d4-a716-446655440271",
+      "550e8400-e29b-41d4-a716-446655440272",
+      "550e8400-e29b-41d4-a716-446655440273",
+      "550e8400-e29b-41d4-a716-446655440274",
+    ],
+  },
+  {
+    id: "a789012b-3456-4d45-a678-9abcdef01234",
+    matomoId: 47,
+    title: "Savoir repérer le mal-être au travail, un premier pas essentiel",
+    image: require("../../../../assets/imgs/resources/Article47.png"),
+    category: CATEGORIES.REPERER_LES_SIGNES_DE_MAL_ETRE,
+    content: `Le travail peut occuper une place importante dans nos vies. Il organise souvent nos journées, crée des liens avec les autres, et peut contribuer à un sentiment d'utilité ou d'accomplissement. Lorsqu'il se déroule dans de bonnes conditions, il favorise l'estime de soi et soutient l'équilibre psychique.
+
+Cependant, le travail peut aussi générer des tensions, de la détresse, voire des situations dangereuses. Une surcharge chronique, une pression constante, des horaires instables, une précarité, ainsi que l'absence de reconnaissance et de dialogue peuvent fragiliser notre santé mentale. Par ailleurs, des situations telles que le harcèlement moral ou sexuel, les discriminations, le racisme ou les mises à l'écart aggravent ce mal-être. Ces réalités, loin d'être rares, peuvent provoquer troubles du sommeil, anxiété, épuisement, dévalorisation, et parfois conduire à un burn-out ou à un isolement profond.
+
+Il est important de ne pas  minimiser ces signes ni de les attribuer à une faiblesse individuelle. Ce sont les organisations de travail qui doivent garantir un environnement de travail respectueux, sécurisé et soutenant. En France, la loi impose aux employeurs de protéger la santé physique et mentale de leurs salarié·es, notamment en identifiant et en prévenant les risques psychosociaux.
+
+La santé mentale au travail est une question collective : la souffrance d'une personne affecte souvent l'ensemble du groupe, tandis qu'un climat respectueux, inclusif et bienveillant favorise la confiance, la coopération et le respect des différences.
+
+Il est essentiel de rester attentif à l'impact du travail sur notre santé mentale, de savoir reconnaître les signaux d'alerte, et de ne pas considérer les difficultés comme une fatalité ou une simple caractéristique du travail. Identifier ce qui soutient ou nuit à notre bien-être professionnel est une étape clé. Il est légitime de chercher du soutien : en parler à un·e collègue, un·e responsable, solliciter la médecine du travail ou consulter un·e professionnel·le de santé.
+
+Le travail ne doit jamais être une source de souffrance. Protéger la santé mentale est un droit fondamental qui repose principalement sur la responsabilité des employeurs et des organisations, mais qui gagne à être soutenu par la vigilance et la solidarité de tous.`,
+    externalResources: ["550e8400-e29b-41d4-a716-446655440265", "550e8400-e29b-41d4-a716-446655440266", "550e8400-e29b-41d4-a716-446655440267"],
+  },
+  {
+    id: "b1c2d3e4-f5a6-4b78-c901-234567890abc",
+    matomoId: 38,
+    title: "Demander de l'aide, ce n'est pas être faible",
+    image: require("../../../../assets/imgs/resources/Article38.png"),
+    category: CATEGORIES.AGIR_ET_CHERCHER_DE_L_AIDE_SANS_HONTE,
+    content: `Tout le monde peut traverser des périodes difficiles. Se sentir dépassé·e, épuisé·e, irritable. Ne plus avoir envie de faire ce qu'on aime. Mal dormir. S'isoler. Avoir du mal à se concentrer. **Ces signes ne sont pas forcément le signe d'un trouble, mais ils méritent qu'on y prête attention** (voir notre rubrique reconnaître un mal-être).
+
+La première étape pour aller mieux, c'est souvent de reconnaître qu'on ne va pas bien. Prendre conscience qu'on a besoin d'aide, ce n'est pas un échec, ni un aveu de faiblesse. **C'est une manière de prendre soin de soi, au bon moment, avant que les choses ne s'aggravent.**
+
+Demander de l'aide ne signifie pas forcément consulter un·e professionnel·le immédiatement. **Cela peut simplement commencer par une conversation avec une personne de confiance et disponible : un·e ami·e, un·e membre de la famille, un·e collègue, un·e voisin·e.** Dire que ça ne va pas permet déjà de relâcher un peu la pression. Ces premiers échanges peuvent aussi aider à mieux comprendre ce que l'on traverse, ou à envisager des solutions qui n'avaient pas encore été identifiées jusque-là.
+
+**Comment s'y prendre ?**
+
+Il n'est pas nécessaire de trouver les bons mots ni de tout expliquer dans les moindres détails. Quelques phrases suffisent, comme  :
+
+- « En ce moment, je ne vais pas très bien. »
+- « J'ai l'impression que je perds pied. »
+- « J'aurais besoin de parler à quelqu'un. »
+
+Ce premier échange permet de sortir de l'isolement, de se sentir un peu soutenu·e, et de poser les bases d'une aide plus adaptée, si besoin. **Si la situation le demande, il est possible de s'adresser à un·e professionnel·le.** Le médecin traitant peut faire le point, orienter vers un suivi ou simplement écouter. Il s'agit souvent de la première porte d'entrée. Des ressources existent à tous les niveaux : psychologues, centres médico-psychologiques (CMP), associations, lignes d'écoute.
+
+**Il n'y a pas de seuil critique à atteindre pour demander de l'aide. Ce besoin est légitime, dès qu'il se fait sentir.**`,
+    externalResources: [
+      "550e8400-e29b-41d4-a716-446655440004",
+      "550e8400-e29b-41d4-a716-446655440039",
+      "550e8400-e29b-41d4-a716-446655440036",
+      "550e8400-e29b-41d4-a716-446655440213",
+      "550e8400-e29b-41d4-a716-446655440214",
+      "550e8400-e29b-41d4-a716-446655440215",
+      "550e8400-e29b-41d4-a716-446655440216",
+      "550e8400-e29b-41d4-a716-446655440217",
+      "550e8400-e29b-41d4-a716-446655440283",
+    ],
+  },
+  {
+    id: "c2d3e4f5-a6b7-4c89-d012-3456789abcde",
+    matomoId: 39,
+    title: "Psychologue, psychiatre, CMP, ligne d'écoute… à qui s'adresser ?",
+    image: require("../../../../assets/imgs/resources/Article39.png"),
+    category: CATEGORIES.AGIR_ET_CHERCHER_DE_L_AIDE_SANS_HONTE,
+    content: `Lorsque les difficultés durent et impactent la vie quotidienne, ou que les ressources personnelles (comme parler à ses proches, pratiquer ses activités préférées ou prendre du temps pour soi) ne suffisent plus, il est important de chercher un soutien extérieur. Face à la diversité des options, il n'est pas toujours simple de savoir vers qui se tourner.
+
+- **Le médecin traitant est souvent le premier contact.** Il ou elle connaît votre parcours de santé, peut évaluer votre situation et vous orienter selon vos besoins. Si vous ressentez un mal-être général ou cherchez un avis pour savoir quelle aide envisager, c'est lui qu'il faut voir en priorité.
+- **Le psychiatre est un médecin spécialiste de la santé mentale.** Si vous avez besoin d'un diagnostic précis, d'un traitement médical, ou d'un suivi spécialisé, il ou elle est le professionnel adapté. Il peut aussi proposer une thérapie. Ses consultations sont généralement remboursées par l'Assurance Maladie, mais le reste à charge peut varier en fonction de son secteur de convention et du respect du parcours de soins coordonné.
+- **Le psychologue propose un accompagnement par la parole, un soutien ou une thérapie**. Si vous souhaitez parler de vos difficultés sans traitement médical, c'est vers lui que vous pouvez vous tourner. Les consultations sont généralement à votre charge, sauf dans certains dispositifs spécifiques comme *Mon Soutien Psy* ou selon votre mutuelle.
+- **Les centres médico-psychologiques (CMP) sont des structures publiques de proximité qui offrent un accompagnement global, souvent gratuit et sans avance de frais.** Si vous préférez un suivi pluridisciplinaire ou un soutien accessible près de chez vous, ils sont une bonne option.
+- **Le dispositif *Mon Soutien Psy* permet de bénéficier jusqu'à 12 séances d'accompagnement psychologique avec un psychologue partenaire.** Chaque séance coûte 50 euros, remboursée à 60 % par l'Assurance Maladie, le reste pouvant être pris en charge par votre complémentaire santé. Ce dispositif s'adresse à toute personne dès l'âge de 3 ans, en cas d'anxiété, de déprime ou de mal-être. Il est possible de prendre rendez-vous directement, en toute autonomie, via le site [https://monsoutienpsy.ameli.fr/](https://monsoutienpsy.ameli.fr/) ou de passer par votre médecin si vous préférez être accompagné·e dans la démarche.
+- **Des lignes d'écoute gratuites, anonymes et accessibles à distance sont aussi disponibles.** Elles peuvent être une première étape pour parler librement, poser vos questions ou simplement ne pas rester seul·e face à une difficulté.
+- **Enfin, certains choisissent les groupes de parole, associations ou communautés en ligne pour partager leurs expériences avec d'autres personnes concernées.** Ces espaces ne remplacent pas un suivi médical, mais offrent un soutien précieux par le partage et la compréhension mutuelle.
+
+Chaque ressource a son rôle, selon votre situation et vos besoins. Certaines proposent un soutien ponctuel, d'autres un accompagnement sur le long terme. Certaines relèvent du soin, d'autres du lien social. Il n'existe pas de parcours unique ni de solution universelle : l'essentiel est de pouvoir identifier, à votre rythme, ce qui vous convient le mieux.
+
+Dès que vous ressentez un mal-être, même léger, consultez sans hésiter : cela évite que les difficultés ne s'intensifient avec le temps.`,
+    externalResources: [
+      "550e8400-e29b-41d4-a716-446655440218",
+      "550e8400-e29b-41d4-a716-446655440219",
+      "550e8400-e29b-41d4-a716-446655440220",
+      "550e8400-e29b-41d4-a716-446655440221",
+      "550e8400-e29b-41d4-a716-446655440222",
+      "550e8400-e29b-41d4-a716-446655440223",
+      "550e8400-e29b-41d4-a716-446655440224",
+      "550e8400-e29b-41d4-a716-446655440283",
+    ],
+  },
+  {
+    id: "d3e4f5a6-b7c8-4d90-e123-456789abcdef",
+    matomoId: 40,
+    title: "Idées et crises suicidaires : comment agir, qui contacter ?",
+    image: require("../../../../assets/imgs/resources/Article40.png"),
+    category: CATEGORIES.AGIR_ET_CHERCHER_DE_L_AIDE_SANS_HONTE,
+    content: `Les idées suicidaires font partie des manifestations possibles d'une détresse psychique. Elles ne traduisent pas nécessairement une volonté de mourir, mais plutôt le besoin d'échapper à une souffrance devenue insupportable. Ces pensées peuvent survenir lors de périodes de grande fatigue émotionnelle, de perte d'espoir ou de difficultés personnelles importantes. Elles indiquent qu'un soutien est nécessaire pour faire face à cette douleur et retrouver des repères.
+
+Il est essentiel d'en parler. Aborder le sujet du suicide ne fait pas naître d'idées suicidaires chez quelqu'un qui n'en a pas. Au contraire, cela permet souvent d'ouvrir un espace d'écoute, de compréhension et de réduire le sentiment d'isolement.
+
+La crise suicidaire est un état de souffrance psychique intense dans lequel les pensées de mort deviennent envahissantes et la personne peut envisager concrètement de mettre fin à ses jours. Elle se sent piégée, sans issue, et la mort peut sembler être la seule solution à une douleur perçue comme insupportable. Bien que cet état soit temporaire et réversible, il nécessite une aide immédiate.
+
+**Certains comportements peuvent indiquer qu'une personne est en danger immédiat :**
+
+- Elle parle de sa décision de mourir ou évoque la mort de façon insistante.
+- Elle met de l'ordre dans ses affaires, fait ses adieux ou paraît étrangement calme.
+- Elle se procure des moyens pour se suicider (médicaments, arme, corde, etc.).
+- Elle exprime le sentiment d'avoir tout essayé, sans issue possible.
+- Elle s'isole de manière inhabituelle ou manifeste une agitation soudaine.
+- Elle semble paralysée par la dépression, le désespoir ou une douleur psychique intense.
+
+**Que faire si vous avez des idées suicidaires ?**
+
+Si vous traversez une période difficile avec des pensées suicidaires, ne restez pas seul·e. Parler à un proche de confiance ou à un professionnel de santé peut permettre de prendre du recul et de trouver des solutions adaptées. Vous pouvez également contacter une ligne d'écoute spécialisée, gratuite et anonyme, comme le 3114 (numéro national de prévention du suicide, accessible 24h/24 et 7j/7). En cas d'urgence, contactez les services d'urgence (15 ou 112) ou rendez-vous à l'hôpital.
+
+**Que faire si quelqu'un dans votre entourage pense au suicide ?**
+
+Si un proche montre des signes inquiétants, il est normal de se sentir perdu·e, inquiet·ète ou dépassé·e. Ces réactions sont naturelles : il n'est pas toujours facile de savoir comment réagir face à la souffrance d'un·e proche. N'hésitez pas à demander de l'aide à un professionnel (médecin, psychologue, ligne d'écoute, etc.) ou à contacter les urgences si la situation vous paraît grave.
+
+**En attendant :**
+
+- Prenez les signes au sérieux, même s'ils vous semblent discrets.
+- Évitez les jugements, les reproches ou les moqueries.
+- Ne promettez pas de garder le silence : en parler à un professionnel peut sauver une vie.
+- Ne minimisez pas sa souffrance et ne la comparez pas à d'autres expériences.
+- Soyez à l'écoute, posez des questions ouvertes pour mieux comprendre ce que la personne vit.
+- Montrez de l'empathie, soutenez-la sans jugement et restez présent·e.
+## Si vous ou un proche avez besoin d'aide, voici des ressources d’écoute disponibles à tout moment :
+
+[**3114**](https://3114.fr/)
+
+Numéro national de prévention du suicide.
+
+Permanence d’écoute téléphonique 24h/24 et 7j/7.
+
+[**Suicide Écoute**](https://www.suicide-ecoute.fr/)
+
+Écoute anonyme des personnes confrontées au suicide. 
+
+01 45 39 40 00 – 24h/24 et 7j/7
+
+[**SOS Suicide Phénix**](https://sos-suicide-phenix.org/)
+
+Accueil et écoute anonyme de toute personne confrontée à la problématique du suicide.01 40 44 46 45 – tous les jours de 13h à 23h
+
+Messagerie disponible sur leur site
+
+[**Phare Enfants-Parents**](https://www.phare.org/)
+
+Espace d’accueil et d’écoute contre le mal-être et la prévention du suicide des jeunes, s’adressant aux parents et aux jeunes.01 43 46 00 62 – du lundi au vendredi de 10h à 17h
+
+Messagerie sur le site de l’association
+
+[**Dites Je suis Là**](https://www.ditesjesuisla.fr/)
+
+Plateforme nationale de prévention du suicide destinée au grand public.
+
+[**Fil Santé Jeunes**](https://www.filsantejeunes.com/)
+
+Service d’écoute pour les 12-25 ans sur les thèmes de la santé, de la sexualité, du mal-être, etc. 0 800 235 236 (9h à 23h) – Tchat individuel de 9h à 22h
+
+[**Nightline**](https://www.nightline.fr/)
+
+Service d’écoute nocturne par et pour les étudiant·es
+
+Numéros locaux selon les villes (disponibles sur le site)
+
+Tchat anonyme tous les soirs de 21h à 2h30.
+
+[**SOS Amitié**](https://www.sosamitie.org/)
+
+Service d’écoute bienveillant, gratuit, anonyme et confidentiel destiné à ceux qui traversent une période difficile.
+
+Écoute téléphonique 24h/24 et 7j/7 – 09 72 39 40 50
+
+Tchat de 13h à 3h du matin – Messagerie disponible sur leur site`,
+    externalResources: [
+      "550e8400-e29b-41d4-a716-446655440225",
+      "550e8400-e29b-41d4-a716-446655440226",
+      "550e8400-e29b-41d4-a716-446655440227",
+      "550e8400-e29b-41d4-a716-446655440228",
+      "550e8400-e29b-41d4-a716-446655440229",
+      "550e8400-e29b-41d4-a716-446655440230",
+      "550e8400-e29b-41d4-a716-446655440231",
+      "550e8400-e29b-41d4-a716-446655440232",
+      "550e8400-e29b-41d4-a716-446655440233",
+      "550e8400-e29b-41d4-a716-446655440234",
+      "550e8400-e29b-41d4-a716-446655440235",
+    ],
+  },
+  {
+    id: "e4f5a6b7-c8d9-4e01-f234-56789abcdef0",
+    matomoId: 41,
+    title: "Je m'inquiète pour un proche : que faire sans paniquer ?",
+    image: require("../../../../assets/imgs/resources/Article41.png"),
+    category: CATEGORIES.AGIR_ET_CHERCHER_DE_L_AIDE_SANS_HONTE,
+    content: `**Face à un proche qui semble aller mal, il est normal de se sentir démuni.** On peut avoir peur de dire quelque chose de maladroit, de mal faire, ou simplement ne pas savoir comment s'y prendre. Pourtant, la simple présence d'un·e proche, même imparfaite, peut déjà faire une réelle différence.
+
+**Il n'est pas nécessaire de trouver les mots justes.** Un simple « Je me fais du souci pour toi » ou « J'ai l'impression que tu ne vas pas très bien, tu veux en parler ? » peut suffire à ouvrir un échange. Et si les mots manquent, il est tout à fait possible de le dire. Par exemple : « Je ne sais pas trop comment t'aider, mais je suis là si tu as besoin de compagnie, d'aide ou si tu veux parler. » **Reconnaître son propre désarroi est souvent plus juste que de chercher une réponse toute faite. Cela peut même soulager l'autre, qui se sent alors accueilli·e sans pression.**
+
+**L'objectif n'est pas forcément de faire parler à tout prix, mais d'offrir un espace de soutien, aussi simple soit-il.** Il peut s'agir de discuter, mais aussi de proposer une aide concrète : faire les courses, marcher ensemble, accompagner à un rendez-vous, aller chercher les enfants à l'école, ou simplement passer du temps à deux. Ces gestes, parfois modestes, montrent que l'on est présent·e, que l'autre compte, et que son mal-être est pris au sérieux.
+
+**Lorsque la personne est disposée ou d'accord**, il peut être utile d'envisager ensemble des ressources : un médecin, un professionnel de santé mentale, ou une ligne d'écoute. Le 3114, numéro national gratuit et accessible 24h/24 et 7j/7, permet d'échanger avec des professionnels formés à ces situations, en toute confidentialité.
+
+Si la personne ne souhaite pas appeler elle-même, il est tout à fait possible, en tant que proche ou professionnel de l'entourage, de **contacter le 3114** pour obtenir des conseils personnalisés, en fonction de ce que vous observez et de ce que vous ressentez.
+
+Si l'inquiétude grandit ou si un danger immédiat est pressenti, **il est important de ne pas rester seul** face à la situation. Contacter les urgences (15 ou 112) ou consulter un professionnel de santé permet de mobiliser rapidement l'aide nécessaire.
+
+Enfin, accompagner quelqu'un en souffrance peut être éprouvant.
+
+**Prendre soin de soi, parler de ses propres émotions, demander un soutien psychologique ou simplement se faire accompagner est une démarche légitime et souvent nécessaire pour continuer à aider sans s'épuiser.**`,
+    externalResources: [
+      "550e8400-e29b-41d4-a716-446655440236",
+      "550e8400-e29b-41d4-a716-446655440237",
+      "550e8400-e29b-41d4-a716-446655440238",
+      "550e8400-e29b-41d4-a716-446655440239",
+      "550e8400-e29b-41d4-a716-446655440240",
+      "550e8400-e29b-41d4-a716-446655440241",
+      "550e8400-e29b-41d4-a716-446655440242",
+      "550e8400-e29b-41d4-a716-446655440283",
+    ],
+  },
+  {
+    id: "f5a6b7c8-d9e0-4f12-a345-6789abcdef01",
+    matomoId: 42,
+    title: "Accompagner un proche qui vit avec un trouble : quelques repères pour ne pas se perdre",
+    image: require("../../../../assets/imgs/resources/Article42.png"),
+    category: CATEGORIES.AGIR_ET_CHERCHER_DE_L_AIDE_SANS_HONTE,
+    content: `**Lorsqu'un membre de la famille, un partenaire, un enfant ou un ami vit avec un trouble psychique, cela a souvent des répercussions sur tout l'entourage.** Même sans partager le même logement, la maladie peut modifier le quotidien : inquiétudes, réorganisations, responsabilités nouvelles. **La volonté d'être présent et de soutenir se confronte parfois à un sentiment d'impuissance.**
+
+Dans ces situations, il n'est pas rare de se sentir écartelé entre plusieurs rôles : aidant, parent, conjoint, ami… Parfois, tout se mêle, sans savoir quelle place tenir. **Au-delà du lien personnel, la place de proche aidant reste encore peu visible et reconnue socialement.** Ce rôle mobilise pourtant beaucoup d'énergie -  physique, psychique, émotionnelle - et peut devenir difficile à assumer sur la durée. **Beaucoup se sentent seuls face à cette responsabilité, isolés dans leur expérience.**
+
+**Être aidant, ce n'est pas être soignant, ni devoir tout assumer.** Souvent, cela signifie soutenir dans les petits gestes du quotidien, être une présence, offrir un repère. Mais ce rôle n'efface ni les doutes, ni la fatigue, ni la peur de mal faire. Reconnaître que cette charge existe, qu'elle peut durer, n'est pas un aveu de faiblesse -  c'est un premier pas pour se préserver.
+
+**Dans ce contexte, demander du soutien est non seulement légitime, mais essentiel.** Mieux comprendre le trouble dont souffre son proche, rencontrer d'autres aidants, participer à des groupes de parole, se tourner vers des associations ou des ressources spécialisées : autant de moyens de prendre du recul, de se sentir moins seul, et d'agir avec plus de repères.
+
+L'objectif n'est pas de tout résoudre ni de trouver des solutions parfaites. Être aux côtés d'un proche fragilisé demande parfois de l'endurance.
+
+**Pour ne pas s'épuiser, il est essentiel de préserver sa propre santé mentale : écouter ses besoins, poser des limites claires, et accepter que l'on ne peut pas tout porter seul. Aider ne veut pas dire s'effacer.**`,
+    externalResources: [
+      "550e8400-e29b-41d4-a716-446655440237",
+      "550e8400-e29b-41d4-a716-446655440243",
+      "550e8400-e29b-41d4-a716-446655440244",
+      "550e8400-e29b-41d4-a716-446655440245",
+      "550e8400-e29b-41d4-a716-446655440246",
+      "550e8400-e29b-41d4-a716-446655440247",
+      "550e8400-e29b-41d4-a716-446655440248",
+      "550e8400-e29b-41d4-a716-446655440249",
+      "550e8400-e29b-41d4-a716-446655440250",
+      "550e8400-e29b-41d4-a716-446655440251",
+      "550e8400-e29b-41d4-a716-446655440283",
+    ],
+  },
+  {
+    id: "a6b7c8d9-e0f1-4a23-b456-789abcdef012",
+    matomoId: 43,
+    title: "Se soutenir entre personnes concernées par un trouble : découvrir la pair-aidance",
+    image: require("../../../../assets/imgs/resources/Article43.png"),
+    category: CATEGORIES.AGIR_ET_CHERCHER_DE_L_AIDE_SANS_HONTE,
+    content: `**Qui mieux que les personnes ayant elles-mêmes traversé un trouble peuvent comprendre ce que vivent celles et ceux qui en souffrent au quotidien** ? La pair-aidance repose sur ce principe : des individus partageant une expérience commune offrent leur savoir, leur écoute et leur soutien à d'autres confrontés à des difficultés similaires.
+
+**Pouvoir s'identifier, se reconnaître dans les récits d'autrui est un élément essentiel.** Cela permet de sentir que l'on n'est pas seul, que d'autres ont traversé des épreuves comparables. Cette identification facilite souvent l'acceptation des conseils et des orientations proposées, car ils viennent d'une personne qui comprend intimement ce parcours.
+
+Le rôle concret d'un pair-aidant peut varier : **animer des groupes de parole, accompagner dans les démarches, répondre à des questions pratiques ou simplement offrir un soutien moral.** Ce lien fondé sur la reconnaissance mutuelle permet de se sentir accepté tel que l'on est, avec ses difficultés, et aide à reprendre confiance en ses capacités à avancer.
+
+**Aujourd'hui, la pair-aidance est une profession reconnue.** En France, des formations spécialisées valorisent cette expertise fondée sur l'expérience, tout en développant des compétences professionnelles. **L'Organisation mondiale de la Santé (OMS) souligne l'importance de ce rôle complémentaire aux soins traditionnels, qui apporte un accompagnement humain, bienveillant et inclusif.**
+
+Pour beaucoup, ce soutien devient un élément essentiel du parcours de rétablissement, offrant une écoute adaptée et un accompagnement concret dans la vie de tous les jours.`,
+    externalResources: ["550e8400-e29b-41d4-a716-446655440254", "550e8400-e29b-41d4-a716-446655440255", "550e8400-e29b-41d4-a716-446655440256"],
+  },
+  {
+    id: "b7c8d9e0-f1a2-4b34-c567-89abcdef0123",
+    matomoId: 44,
+    title: "Et après ? Comprendre le rétablissement",
+    image: require("../../../../assets/imgs/resources/Article44.png"),
+    category: CATEGORIES.AGIR_ET_CHERCHER_DE_L_AIDE_SANS_HONTE,
+    content: `**Que signifie réellement "se rétablir" quand on vit avec un trouble psychique ?** Est-ce retrouver une forme d'équilibre au quotidien ? Apprendre à vivre avec certaines difficultés sans qu'elles prennent toute la place ? Ou simplement pouvoir se projeter à nouveau, malgré des vulnérabilités persistantes ?
+
+Le rétablissement ne signifie pas nécessairement la disparition totale des symptômes ni une guérison au sens médical. **Il s'agit plutôt de retrouver une forme de stabilité et de sens, même en présence de ces difficultés.** C'est un cheminement personnel, intime, qui appartient à chaque personne concernée. Chacun·e en donne sa propre définition : retrouver confiance, renouer avec ses envies, reprendre des liens sociaux, avoir un projet… **ou simplement sentir qu'on existe pleinement à nouveau.**
+
+Ce processus est souvent non linéaire, ponctué d'avancées, de pauses, de reculs. Il peut durer, évoluer, ou prendre différentes formes selon les périodes de vie. **Et surtout, il ne repose pas uniquement sur les efforts individuels.** De nombreux facteurs extérieurs influencent ce parcours : conditions de vie, accès aux soins, qualité du soutien, ressources disponibles… La précarité, l'isolement, les discriminations ou les violences peuvent rendre ce chemin plus complexe, même quand tout est mis en œuvre pour aller mieux.
+
+**C'est pourquoi le rétablissement est aussi un enjeu collectif.** Il suppose que l'entourage, les professionnel·les et la société créent des conditions favorables : des soins accessibles, un logement digne, un emploi adapté, une reconnaissance du vécu. Créer ces conditions, c'est permettre à chacun·e de trouver sa place - ce qui reste un défi, dans une société où les vécus psychiques sont encore largement incompris ou invisibilisés.
+
+**Enfin, il est essentiel de rappeler que vivre avec un trouble psychique ne définit pas une personne. Se rétablir, c'est aussi pouvoir exister pleinement, dans toute sa singularité.**`,
+    externalResources: [
+      "550e8400-e29b-41d4-a716-446655440257",
+      "550e8400-e29b-41d4-a716-446655440258",
+      "550e8400-e29b-41d4-a716-446655440259",
+      "550e8400-e29b-41d4-a716-446655440260",
+      "550e8400-e29b-41d4-a716-446655440261",
     ],
   },
 ];

@@ -1,3 +1,109 @@
+# [1.121.0](https://github.com/SocialGouv/jardinmental/compare/v1.120.0...v1.121.0) (2025-10-31)
+
+
+### Features
+
+* add new external resources to 4 resources ([#607](https://github.com/SocialGouv/jardinmental/issues/607)) ([370df2d](https://github.com/SocialGouv/jardinmental/commit/370df2d9b4932a82ba8ee73987ef8a90f1f376d7))
+
+# [1.120.0](https://github.com/SocialGouv/jardinmental/compare/v1.119.2...v1.120.0) (2025-10-31)
+
+
+### Features
+
+* update versions (ios and android) for release ([1cdcb7e](https://github.com/SocialGouv/jardinmental/commit/1cdcb7e2219e1ac339a45bdc9b70aff55966ffb6))
+
+## [1.119.2](https://github.com/SocialGouv/jardinmental/compare/v1.119.1...v1.119.2) (2025-10-31)
+
+
+### Bug Fixes
+
+* fix faq display ([#606](https://github.com/SocialGouv/jardinmental/issues/606)) ([21ff1d2](https://github.com/SocialGouv/jardinmental/commit/21ff1d206c6dfdcc82d775e9d8d5b69beb39925a))
+
+## [1.119.1](https://github.com/SocialGouv/jardinmental/compare/v1.119.0...v1.119.1) (2025-10-31)
+
+
+### Bug Fixes
+
+* redirect directly after setting (or not) the reminder when onboarding ([#605](https://github.com/SocialGouv/jardinmental/issues/605)) ([7f9588c](https://github.com/SocialGouv/jardinmental/commit/7f9588cf6fc8ddeecbe77b92fcac46e06e63e958))
+
+# [1.119.0](https://github.com/SocialGouv/jardinmental/compare/v1.118.0...v1.119.0) (2025-10-31)
+
+
+### Features
+
+* add "Cyberharcèlement entre élèves" in support ([#604](https://github.com/SocialGouv/jardinmental/issues/604)) ([3dbcb21](https://github.com/SocialGouv/jardinmental/commit/3dbcb210ddd46bdeece7b2fa32dea3ce0dd26e76))
+
+# [1.118.0](https://github.com/SocialGouv/jardinmental/compare/v1.117.1...v1.118.0) (2025-10-30)
+
+
+### Features
+
+* release app ([13adb3b](https://github.com/SocialGouv/jardinmental/commit/13adb3b674f3cc6c1bf9e8c29296f4a77e78f2f3))
+
+## [1.117.1](https://github.com/SocialGouv/jardinmental/compare/v1.117.0...v1.117.1) (2025-10-30)
+
+
+### Bug Fixes
+
+* add push token in debug panel ([#595](https://github.com/SocialGouv/jardinmental/issues/595)) ([81c6e5d](https://github.com/SocialGouv/jardinmental/commit/81c6e5d50c645316a160bf7f7e84fa782a6a2bd3))
+
+# [1.117.0](https://github.com/SocialGouv/jardinmental/compare/v1.116.1...v1.117.0) (2025-10-30)
+
+
+### Features
+
+* resources "Comité agir et chercher de l’aide" ([#594](https://github.com/SocialGouv/jardinmental/issues/594)) ([e23908b](https://github.com/SocialGouv/jardinmental/commit/e23908b36dbb211a892fe0314eb9c5478d276b39))
+
+## [1.116.1](https://github.com/SocialGouv/jardinmental/compare/v1.116.0...v1.116.1) (2025-10-30)
+
+
+### Bug Fixes
+
+* restore missing import ([0267334](https://github.com/SocialGouv/jardinmental/commit/0267334f902b8b5e90f2aadaeb50d8c344e35781))
+
+# [1.116.0](https://github.com/SocialGouv/jardinmental/compare/v1.115.1...v1.116.0) (2025-10-30)
+
+
+### Features
+
+* resources "Comité sur le stress et l’anxiété" ([#593](https://github.com/SocialGouv/jardinmental/issues/593)) ([d7dc7b9](https://github.com/SocialGouv/jardinmental/commit/d7dc7b9939ea0184ac79cbd174b550d8e7731c56))
+
+## [1.115.1](https://github.com/SocialGouv/jardinmental/compare/v1.115.0...v1.115.1) (2025-10-30)
+
+
+### Bug Fixes
+
+* typo ([b9afdb0](https://github.com/SocialGouv/jardinmental/commit/b9afdb0df0c1c874fd16658ebf98e90a3e3da9e5))
+
+# [1.115.0](https://github.com/SocialGouv/jardinmental/compare/v1.114.0...v1.115.0) (2025-10-28)
+
+
+### Features
+
+* illustration onboarding ([#592](https://github.com/SocialGouv/jardinmental/issues/592)) ([0bd4e77](https://github.com/SocialGouv/jardinmental/commit/0bd4e77d9f8af3911f768fb606f562ec7d955f40))
+
+# [1.114.0](https://github.com/SocialGouv/jardinmental/compare/v1.113.0...v1.114.0) (2025-10-27)
+
+
+### Features
+
+* open day survey when user click notification ([#591](https://github.com/SocialGouv/jardinmental/issues/591)) ([1adceb4](https://github.com/SocialGouv/jardinmental/commit/1adceb48abb893d22d2fa8a6d1f1ca5b37b9c0f6))
+
+# [1.113.0](https://github.com/SocialGouv/jardinmental/compare/v1.112.1...v1.113.0) (2025-10-27)
+
+
+### Features
+
+* new import/export page ([#581](https://github.com/SocialGouv/jardinmental/issues/581)) ([a2e639f](https://github.com/SocialGouv/jardinmental/commit/a2e639f92eb2b1df118345c1007878f32735aca8))
+* use REMINDER_ADD for setting reminder when not in the onboarding ([#590](https://github.com/SocialGouv/jardinmental/issues/590)) ([6fcd2c9](https://github.com/SocialGouv/jardinmental/commit/6fcd2c9a4d68868b2640617cbcf8fc07c89f905b))
+
+## [1.112.1](https://github.com/SocialGouv/jardinmental/compare/v1.112.0...v1.112.1) (2025-10-27)
+
+
+### Bug Fixes
+
+* can not click on chevron on a (real) android, fixed by claude suggestion ([#589](https://github.com/SocialGouv/jardinmental/issues/589)) ([eefc34f](https://github.com/SocialGouv/jardinmental/commit/eefc34fe5fa899ed639d0f4f5ad418834a948ff4))
+
 # [1.112.0](https://github.com/SocialGouv/jardinmental/compare/v1.111.0...v1.112.0) (2025-10-23)
 
 
