@@ -23,6 +23,13 @@ const mockNavigation = {
   removeListener: jest.fn(),
 };
 
+// Mock expo-notifications
+jest.mock("expo-notifications", () => ({
+  addPushTokenListener: jest.fn(() => ({
+    remove: jest.fn(),
+  })),
+}));
+
 // Mock NotificationService
 jest.mock("../../src/services/notifications", () => ({
   __esModule: true,
