@@ -1,3 +1,10 @@
+## [1.121.1](https://github.com/SocialGouv/jardinmental/compare/v1.121.0...v1.121.1) (2025-11-04)
+
+
+### Bug Fixes
+
+* hack to fix getExpoPushTokenAsync getting stucked with expo v.53.0 ([#609](https://github.com/SocialGouv/jardinmental/issues/609)) ([195e08e](https://github.com/SocialGouv/jardinmental/commit/195e08e480ca4cbc4cc25b13fb0ead4cf508c0e1))
+
 # [1.121.0](https://github.com/SocialGouv/jardinmental/compare/v1.120.0...v1.121.0) (2025-10-31)
 
 
