@@ -174,7 +174,7 @@ export const DetailModalCorrelationScreen: React.FC<ModalCorrelationScreenProps>
                 value = diaryData[route.params.displayItem.date][getIndicatorKey(indicator)].value;
               } catch (e) {}
               return (
-                <View className="flex-row items-center space-x-2">
+                <View key={index} className="flex-row items-center space-x-2">
                   <Svg height="2" width="30">
                     <Line
                       x1="0"
@@ -419,6 +419,7 @@ const TestChart = ({ data, dataB, treatment, diaryData, selectedIndicators, navi
 
                       return (
                         <View
+                          key={index}
                           style={{
                             width: 14,
                             height: 30,
@@ -546,11 +547,6 @@ const TestChart = ({ data, dataB, treatment, diaryData, selectedIndicators, navi
               </View>
             ))}
           </View>
-          <View className="flex-row">
-            {selectedIndicators.map((indicator) => (
-              <View key={getIndicatorKey(indicator)}>{indicator.name}</View>
-            ))}
-          </View>
           <View className="flex-row space-x-6 items-center justify-center">
             <View className="flex-row space-x-2">
               <View className="flex-row">
@@ -573,12 +569,12 @@ const TestChart = ({ data, dataB, treatment, diaryData, selectedIndicators, navi
           if (diaryData[displayItem.date][key]?._indicateur) {
             const colors = computeIndicatorColor(diaryData[displayItem.date][key]._indicateur, diaryData[displayItem.date][key].value);
             return (
-              <View className="flex-row items-center space-x-2">
+              <View key={key} className="flex-row items-center space-x-2">
                 <View
                   className="h-5 w-5 rounded-full"
                   style={{
-                    backgroundColor: colors.color,
-                    borderColor: colors.borderColor,
+                    backgroundColor: colors?.color,
+                    borderColor: colors?.borderColor,
                     borderWidth: 1,
                   }}
                 ></View>

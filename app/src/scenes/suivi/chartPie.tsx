@@ -189,7 +189,7 @@ const ChartPie = ({ navigation, fromDate, toDate, onScroll, header, dynamicPaddi
               />
             );
           return (
-            <View className="border-b border-cnam-primary-400 py-4">
+            <View key={index} className="border-b border-cnam-primary-400 py-4">
               <Pie
                 indicateur={_indicateur}
                 title={getTitle(_indicateur.name)}
