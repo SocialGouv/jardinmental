@@ -33,6 +33,7 @@ const Reminder = ({ navigation, route, notifReminderTitle = "Comment ça va aujo
   const waitingForPermission = useRef(false);
 
   useEffect(() => {
+    // to use if we display the Alert manually
     const subscription = AppState.addEventListener("change", async (nextAppState) => {
       if (nextAppState === "active" && route?.params?.onboarding && waitingForPermission.current) {
         try {
@@ -87,7 +88,8 @@ const Reminder = ({ navigation, route, notifReminderTitle = "Comment ça va aujo
     if (!storedReminder) {
       const date = new Date();
       date.setHours(20, 0, 0, 0);
-      setReminder(dayjs(date));
+      // setReminder(dayjs(date));
+      setReminderRequest(date);
       return;
     }
     if (!storedReminder) return;
@@ -156,6 +158,7 @@ const Reminder = ({ navigation, route, notifReminderTitle = "Comment ça va aujo
   const setReminderRequest = async (newReminder) => {
     setReminderSetupVisible(false);
     if (!dayjs(newReminder).isValid()) return;
+    await scheduleNotification(newReminder);
     setReminder(dayjs(newReminder));
     logEvents.logReminderObdEdit(Number(dayjs(newReminder).format("HHmm")));
     setReminderSetupVisible(false);
@@ -170,7 +173,7 @@ const Reminder = ({ navigation, route, notifReminderTitle = "Comment ça va aujo
   const validateReminder = async () => {
     // navigation.navigate(ONBOARDING_STEPS.STEP_DRUGS);
     if (!reminder) return;
-    await scheduleNotification(reminder.toDate());
+    // await scheduleNotification(reminder.toDate());
     await AsyncStorage.setItem(ReminderStorageKey, JSON.stringify(dayjs(reminder)));
 
     const isRegistered = await NotificationService.checkAndAskForPermission();
