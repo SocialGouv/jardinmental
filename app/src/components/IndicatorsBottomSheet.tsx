@@ -13,13 +13,17 @@ const screenHeight = Dimensions.get("window").height;
 const height90vh = screenHeight * 0.9;
 
 export const IndicatorsBottomSheet = ({
+  initialSelectedIndicators,
+  initialShowTreatment,
   onClose,
 }: {
+  initialSelectedIndicators?: Indicator[];
+  initialShowTreatment?: boolean;
   onClose: ({ showTreatment, selectedIndicators }: { showTreatment: boolean; selectedIndicators: Indicator[] }) => void;
 }) => {
   const [indicatorList, setindicatorList] = useState<Indicator[] | null>(null);
-  const [selectedIndicators, setSelectedIndicators] = useState<Indicator[]>([]);
-  const [showTreatment, setShowTreatment] = useState<boolean>(false);
+  const [selectedIndicators, setSelectedIndicators] = useState<Indicator[]>(initialSelectedIndicators || []);
+  const [showTreatment, setShowTreatment] = useState<boolean>(initialShowTreatment || false);
   const reminderToggleRef = useRef<any>();
 
   useEffect(() => {

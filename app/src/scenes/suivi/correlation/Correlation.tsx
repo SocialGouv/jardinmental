@@ -291,16 +291,16 @@ export const Correlation = ({ navigation, onScroll, scrollY, day, setDay, dynami
           </Text>
           <JMButton
             onPress={() => {
-              showBottomSheet(
-                <IndicatorsBottomSheet
-                  onClose={function ({ showTreatment, selectedIndicators }: { showTreatment: boolean; selectedIndicators: string[] }): void {
-                    closeBottomSheet();
-                    navigation.navigate("correlation-modal", {
-                      selectedIndicators,
-                    });
-                  }}
-                />
-              );
+              // showBottomSheet(
+              //   <IndicatorsBottomSheet
+              //     onClose={function ({ showTreatment, selectedIndicators }: { showTreatment: boolean; selectedIndicators: string[] }): void {
+              //       closeBottomSheet();
+              navigation.navigate("correlation-modal", {
+                // selectedIndicators,
+              });
+              //     }}
+              //   />
+              // );
             }}
             variant="outline"
             title="Choisir mes indicateurs"
