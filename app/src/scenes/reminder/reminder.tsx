@@ -4,7 +4,7 @@ import * as RNLocalize from "react-native-localize";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import dayjs from "dayjs";
 import { SquircleButton, SquircleView } from "expo-squircle-view";
-
+import { addPushTokenListener } from "expo-notifications";
 import Pencil from "@assets/svg/icon/Pencil";
 
 import JMButton from "@/components/JMButton";
@@ -31,6 +31,18 @@ const Reminder = ({ navigation, route, notifReminderTitle = "Comment ça va aujo
 
   // Track if we're waiting for permission result from settings
   const waitingForPermission = useRef(false);
+
+  useEffect(() => {
+    const tokenListener = addPushTokenListener((token) => {
+      console.log(token);
+    });
+
+    return () => {
+      if (tokenListener) {
+        tokenListener.remove();
+      }
+    };
+  }, []);
 
   useEffect(() => {
     const subscription = AppState.addEventListener("change", async (nextAppState) => {
