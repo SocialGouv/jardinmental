@@ -4,10 +4,10 @@ import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
 import { DiaryDataContext } from "@/context/diaryData";
 import { Indicator } from "@/entities/Indicator";
-import { beforeToday, formatRelativeDate, getArrayOfDates } from "@/utils/date/helpers";
+import { beforeToday, formatDate, formatRelativeDate, getArrayOfDates } from "@/utils/date/helpers";
 import { getIndicatorKey } from "@/utils/indicatorUtils";
 import { IndicatorsBottomSheet } from "@/components/IndicatorsBottomSheet";
-import { colorsMap, scoresMapIcon, TW_COLORS } from "@/utils/constants";
+import { booleanColor, ColorContextInterface, colorsMap, scoresMapIcon, TW_COLORS } from "@/utils/constants";
 import ArrowUpSvg from "@assets/svg/icon/ArrowUp";
 import InfoCircle from "@assets/svg/icon/InfoCircle";
 import { LineChart } from "react-native-gifted-charts";
@@ -22,6 +22,7 @@ import EyeIcon from "@assets/svg/icon/Eye";
 import EyeOffIcon from "@assets/svg/icon/EyeOff";
 import { DiaryEntry } from "@/entities/DiaryData";
 import TestChart from "./CorrelationChart";
+import { firstLetterUppercase } from "@/utils/string-util";
 
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
@@ -47,14 +48,11 @@ const computeIndicatorLabel = (indicator, value): string => {
   }
 };
 
-const computeIndicatorColor = (
-  indicator,
-  value
-): {
-  color: string;
-  borderColor?: string;
-} => {
-  if (value === null) return "";
+const computeIndicatorColor = (indicator, value): ColorContextInterface | undefined => {
+  if (value === null) return;
+  if (indicator.type === INDICATOR_TYPE.boolean) {
+    return booleanColor[indicator.order][value];
+  }
   let index = indicator.type === INDICATOR_TYPE.gauge ? Math.min(Math.floor(value * 5), 4) : value;
 
   // For smiley-type indicators sorted in DESC order, invert the label index.
@@ -83,7 +81,7 @@ export const DetailModalCorrelationScreen: React.FC<ModalCorrelationScreenProps>
           </TouchableOpacity>
         </View>
         <View className="flex-row h-[96] w-full justify-between items-center">
-          <Text className={mergeClassNames(typography.displayXsBold, "text-white")}>{formatRelativeDate(date)}</Text>
+          <Text className={mergeClassNames(typography.displayXsBold, "text-white")}>{firstLetterUppercase(formatDate(date))}</Text>
         </View>
         <View className="bg-white/5 rounded-2xl p-4 w-full">
           {diaryDataForDate &&
@@ -102,7 +100,7 @@ export const DetailModalCorrelationScreen: React.FC<ModalCorrelationScreenProps>
                       y2="1"
                       stroke={index === 0 ? "#00A5DF" : "#3D6874"} // your color
                       strokeWidth="2"
-                      strokeDasharray={index === 0 ? [] : ["4,4"]} // pattern: 4px dash, 4px gap
+                      // strokeDasharray={index === 0 ? [] : ["4,4"]} // pattern: 4px dash, 4px gap
                     />
                   </Svg>
                   <Text key={indicator.uuid} className={mergeClassNames(typography.textMdMedium, "text-white ")}>

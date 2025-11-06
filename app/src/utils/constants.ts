@@ -57,7 +57,14 @@ export const iconColors = {
   // veryGood: '#99DDDD'//'#21896B',//"#1A6300",
 };
 
-export const scoresMapIcon = {
+export interface ColorContextInterface {
+  color: string;
+  faceIcon?: string;
+  borderColor?: string;
+  iconColor?: string;
+}
+
+export const scoresMapIcon: Record<string | number, ColorContextInterface> = {
   "-1": {
     color: "transparent",
   },
@@ -432,6 +439,42 @@ export const TW_COLORS = {
   ERROR: {
     BG: "#F9DCD7",
     TEXT: "#5A2017",
+  },
+};
+
+export const booleanColor: {
+  ASC: {
+    true: ColorContextInterface;
+    false: ColorContextInterface;
+  };
+  DESC: {
+    true: ColorContextInterface;
+    false: ColorContextInterface;
+  };
+} = {
+  ASC: {
+    true: {
+      color: TW_COLORS.SUCCESS.BG_DARKEN,
+      iconColor: TW_COLORS.SUCCESS.TEXT,
+      borderColor: TW_COLORS.SUCCESS.TEXT,
+    },
+    false: {
+      color: TW_COLORS.ERROR.BG,
+      iconColor: TW_COLORS.ERROR.TEXT,
+      borderColor: TW_COLORS.ERROR.TEXT,
+    },
+  },
+  DESC: {
+    true: {
+      color: TW_COLORS.ERROR.BG,
+      iconColor: TW_COLORS.ERROR.TEXT,
+      borderColor: TW_COLORS.ERROR.TEXT,
+    },
+    false: {
+      color: TW_COLORS.SUCCESS.BG_DARKEN,
+      iconColor: TW_COLORS.SUCCESS.TEXT,
+      borderColor: TW_COLORS.SUCCESS.TEXT,
+    },
   },
 };
 

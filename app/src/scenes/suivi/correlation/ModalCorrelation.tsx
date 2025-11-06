@@ -4,7 +4,7 @@ import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
 import { DiaryDataContext } from "@/context/diaryData";
 import { Indicator } from "@/entities/Indicator";
-import { beforeToday, formatDay, formatRelativeDate, getArrayOfDates } from "@/utils/date/helpers";
+import { beforeToday, formatDate, formatDay, formatRelativeDate, getArrayOfDates } from "@/utils/date/helpers";
 import { computeIndicatorLabel, getIndicatorKey } from "@/utils/indicatorUtils";
 import { IndicatorsBottomSheet } from "@/components/IndicatorsBottomSheet";
 import { TW_COLORS } from "@/utils/constants";
@@ -22,6 +22,7 @@ import EyeIcon from "@assets/svg/icon/Eye";
 import EyeOffIcon from "@assets/svg/icon/EyeOff";
 import TestChart from "./CorrelationChart";
 import { da } from "date-fns/locale";
+import { firstLetterUppercase } from "@/utils/string-util";
 
 interface ModalCorrelationScreenProps {
   navigation: any;
@@ -410,7 +411,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                   >
                     <View className="flex-row justify-between items-center">
                       <Text className={mergeClassNames(typography.textXsBold, "bg-cnam-primary-800 text-white rounded-lg p-2")}>
-                        {formatRelativeDate(displayItem?.date)}
+                        {firstLetterUppercase(formatDate(displayItem?.date))}
                       </Text>
                       <TouchableOpacity
                         onPress={() => {
@@ -437,7 +438,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                                 y2="1"
                                 stroke={index === 0 ? "#00A5DF" : "#3D6874"} // your color
                                 strokeWidth="2"
-                                strokeDasharray={index === 0 ? [] : ["4,4"]} // pattern: 4px dash, 4px gap
+                                strokeDasharray={index === 0 ? "" : "4 4"} // pattern: 4px dash, 4px gap
                               />
                             </Svg>
                             <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 ")}>
@@ -530,7 +531,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                             y2="1"
                             stroke={index === 0 ? "#00A5DF" : "#3D6874"} // your color
                             strokeWidth="2"
-                            strokeDasharray={index === 0 ? [] : ["4,4"]} // pattern: 4px dash, 4px gap
+                            strokeDasharray={index === 0 ? "" : "4 4"} // pattern: 4px dash, 4px gap
                           />
                         </Svg>
                       </View>

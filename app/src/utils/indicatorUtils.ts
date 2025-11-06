@@ -1,6 +1,7 @@
 import { INDICATOR_TYPE } from "@/entities/IndicatorType";
 import { Indicator } from "../entities/Indicator";
 import { DEFAULT_INDICATOR_LABELS, INDICATOR_LABELS } from "./liste_indicateurs.1";
+import { TW_COLORS } from "./constants";
 
 /**
  * Gets the key used to identify an indicator in diary data

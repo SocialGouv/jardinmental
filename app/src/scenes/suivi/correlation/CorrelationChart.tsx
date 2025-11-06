@@ -1,20 +1,9 @@
-import { useBottomSheet } from "@/context/BottomSheetContext";
-import { INDICATOR_TYPE } from "@/entities/IndicatorType";
-import { mergeClassNames } from "@/utils/className";
 import { TW_COLORS } from "@/utils/constants";
-import { formatRelativeDate } from "@/utils/date/helpers";
-import { getIndicatorKey } from "@/utils/indicatorUtils";
-import { INDICATOR_LABELS, DEFAULT_INDICATOR_LABELS } from "@/utils/liste_indicateurs.1";
-import { typography } from "@/utils/typography";
-import ArrowUpSvg from "@assets/svg/icon/ArrowUp";
 import CheckMarkIcon from "@assets/svg/icon/check";
 import CrossIcon from "@assets/svg/icon/Cross";
-import EyeIcon from "@assets/svg/icon/Eye";
-import { useEffect, useMemo, useRef, useState } from "react";
-import { Animated, TouchableOpacity, View, Text, Dimensions } from "react-native";
+import { useEffect, useMemo, useRef } from "react";
+import { View, Dimensions } from "react-native";
 import { LineChart } from "react-native-gifted-charts";
-import { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
-import Svg, { Line } from "react-native-svg";
 
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
@@ -24,10 +13,6 @@ export default function TestChart({
   dataB,
   treatment,
   treatmentSiBesoin,
-  diaryData,
-  selectedIndicators,
-  navigation,
-  openIndicatorBottomSheet,
   showTreatment,
   initialSelectedPointIndex,
   displayfixed,
@@ -39,7 +24,6 @@ export default function TestChart({
   const hasScrolledToEnd = useRef(false);
   const currentScrollX = useRef(0);
   const previousSpacing = useRef(20); // Default spacing for "1month"
-  const pointerItemRef = useRef(null);
 
   // Auto-scroll to the end of the chart only on first load
   useEffect(() => {
