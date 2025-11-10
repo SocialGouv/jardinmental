@@ -524,6 +524,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                     setSelectedPointIndex={setSelectedPointIndex}
                     openIndicatorBottomSheet={openIndicatorBottomSheet}
                     selectedPointIndex={selectedPointIndex}
+                    enablePagination={false}
                   />
                 </View>
                 <View className="bg-cnam-primary-25 p-4 -mt-2 rounded-2xl flex-col space-y-2">

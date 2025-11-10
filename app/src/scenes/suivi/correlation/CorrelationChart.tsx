@@ -35,6 +35,7 @@ export default function TestChart({
   setDisplayItem,
   setSelectedPointIndex,
   selectedPointIndex,
+  enablePagination = true,
 }) {
   const ref = useRef<ScrollView>(null);
   const hasScrolledToEnd = useRef(false);
@@ -56,14 +57,16 @@ export default function TestChart({
     return SPACING_CONFIG[spacingFormat] || SPACING_CONFIG.default;
   }, [spacingFormat]);
 
-  // Initialize visible range to show last CHUNK_SIZE items
+  // Initialize visible range to show last CHUNK_SIZE items (only if pagination is enabled)
   useEffect(() => {
-    if (data && data.length > 0) {
+    if (data && data.length > 0 && enablePagination) {
       const initialStart = Math.max(0, data.length - CHUNK_SIZE);
       setVisibleStartIndex(initialStart);
       previousDataLength.current = data.length;
+    } else if (data && data.length > 0 && !enablePagination) {
+      setVisibleStartIndex(0);
     }
-  }, [data?.length]);
+  }, [data?.length, enablePagination]);
 
   // Cleanup timeout on unmount
   useEffect(() => {
@@ -171,26 +174,30 @@ export default function TestChart({
     return LABEL_SPACING_CONFIG[spacingFormat] || LABEL_SPACING_CONFIG.default;
   }, [spacingFormat]);
 
-  // Get visible data slice
+  // Get visible data slice (all data if pagination is disabled)
   const visibleData = useMemo(() => {
     if (!data || data.length === 0) return [];
+    if (!enablePagination) return data;
     return data.slice(visibleStartIndex);
-  }, [data, visibleStartIndex]);
+  }, [data, visibleStartIndex, enablePagination]);
 
   const visibleDataB = useMemo(() => {
     if (!dataB || dataB.length === 0) return null;
+    if (!enablePagination) return dataB;
     return dataB.slice(visibleStartIndex);
-  }, [dataB, visibleStartIndex]);
+  }, [dataB, visibleStartIndex, enablePagination]);
 
   const visibleTreatment = useMemo(() => {
     if (!treatment || !showTreatment) return null;
+    if (!enablePagination) return treatment;
     return treatment.slice(visibleStartIndex);
-  }, [treatment, showTreatment, visibleStartIndex]);
+  }, [treatment, showTreatment, visibleStartIndex, enablePagination]);
 
   const visibleTreatmentSiBesoin = useMemo(() => {
     if (!treatmentSiBesoin || !showTreatment) return null;
+    if (!enablePagination) return treatmentSiBesoin;
     return treatmentSiBesoin.slice(visibleStartIndex);
-  }, [treatmentSiBesoin, showTreatment, visibleStartIndex]);
+  }, [treatmentSiBesoin, showTreatment, visibleStartIndex, enablePagination]);
 
   // Memoized data transformations to prevent re-creating arrays on every render
   // Store rendering properties directly on data objects instead of creating function closures
@@ -243,8 +250,10 @@ export default function TestChart({
     }));
   }, [visibleTreatmentSiBesoin, labelSpacing, formatLabel]);
 
-  // Handle loading more data when scrolling to start
+  // Handle loading more data when scrolling to start (only if pagination is enabled)
   useEffect(() => {
+    if (!enablePagination) return;
+
     if (onStartReached && !isLoadingMore && visibleStartIndex > 0) {
       setIsLoadingMore(true);
 
@@ -271,7 +280,7 @@ export default function TestChart({
     } else if (onStartReached) {
       setOnStartReached(false);
     }
-  }, [onStartReached, isLoadingMore, visibleStartIndex, chartSpacing]);
+  }, [onStartReached, isLoadingMore, visibleStartIndex, chartSpacing, enablePagination]);
 
   // Auto-scroll to the end of the chart only on first load
   useEffect(() => {
@@ -494,7 +503,7 @@ export default function TestChart({
       curved={false} // set false to improve performance on android
       curvature={0.1}
       initialSpacing={0}
-      onStartReached={() => setOnStartReached(true)}
+      onStartReached={enablePagination ? () => setOnStartReached(true) : undefined}
     />
   );
 }
