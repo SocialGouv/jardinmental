@@ -1,9 +1,11 @@
 import { TW_COLORS } from "@/utils/constants";
 import CheckMarkIcon from "@assets/svg/icon/check";
 import CrossIcon from "@assets/svg/icon/Cross";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { View, Dimensions, ScrollView } from "react-native";
 import { LineChart } from "react-native-gifted-charts";
+import Svg, { Circle } from "react-native-svg";
+import { useDevCorrelationConfig } from "@/hooks/useDevCorrelationConfig";
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -37,6 +39,9 @@ export default function TestChart({
   selectedPointIndex,
   enablePagination = true,
 }) {
+  const { config } = useDevCorrelationConfig();
+  const CHUNK_SIZE = config.chunkSize;
+
   const ref = useRef<ScrollView>(null);
   const hasScrolledToEnd = useRef(false);
   const currentScrollX = useRef(0);
@@ -47,7 +52,6 @@ export default function TestChart({
   const [onStartReached, setOnStartReached] = useState(false);
 
   // Chunked data loading state
-  const CHUNK_SIZE = 40;
   const [visibleStartIndex, setVisibleStartIndex] = useState(0);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const previousDataLength = useRef(0);
@@ -296,7 +300,7 @@ export default function TestChart({
     }
   }, [transformedData?.length, chartSpacing]);
 
-  // Shared custom data point functions that read properties from the data objects
+  // Optimized custom data point functions using memoized components
   const customDataPointRenderer = useCallback(
     (item, index) => {
       if (item?.isTreatment) {
@@ -331,21 +335,15 @@ export default function TestChart({
       xAxisTextNumberOfLines={1}
       xAxisLabelsHeight={20}
       xAxisThickness={0}
-      hideDataPoints={spacingFormat === "3months" || spacingFormat === "6months"}
+      hideDataPoints={config.hideDataPoints || spacingFormat === "3months" || spacingFormat === "6months"}
       xAxisColor={"transparent"}
       width={screenWidth - 72}
       focusEnabled={!displayfixed}
       disableScroll={displayfixed}
       onFocus={(_item, index) => {
         const actualIndex = index;
-        console.log("lcs onFocus index", index, "actualIndex", actualIndex);
-        const item = transformedData[actualIndex] || (transformedDataB && transformedDataB[actualIndex]);
-        if (!item || !item.noValue) {
-          console.log("lcs display");
-
-          setDisplayItem(transformedData[actualIndex]);
-          setSelectedPointIndex(actualIndex);
-        }
+        setDisplayItem(transformedData[actualIndex]);
+        setSelectedPointIndex(actualIndex);
       }}
       focusedDataPointIndex={selectedPointIndex}
       unFocusOnPressOut={false}
@@ -370,15 +368,14 @@ export default function TestChart({
         }
       }}
       data={transformedData}
-      onPress={() => {
-        console.log("lcs on press");
-      }}
       xAxisIndicesHeight={10}
       data2={transformedDataB}
       data3={transformedTreatment}
       data4={transformedTreatmentSiBesoin}
-      customDataPoint={customDataPointRenderer}
-      focusedCustomDataPoint={focusedCustomDataPointRenderer}
+      customDataPoint={config.useCustomRenderers ? customDataPointRenderer : undefined}
+      focusedCustomDataPoint={config.useCustomRenderers ? focusedCustomDataPointRenderer : undefined}
+      // dataPointsShape1="rectangular"
+      //dataPointsColor1="#3D6874"
       getPointerProps={({ pointerIndex }) => {
         if (displayfixed) return;
         // Always store the current pointer index
@@ -413,7 +410,6 @@ export default function TestChart({
               setSelectedPointIndex(actualIndex);
               setDisplayItem(item);
             }
-            console.log("lcs onResponderMove");
           }, 150);
         },
         onResponderEnd: () => {
@@ -423,10 +419,6 @@ export default function TestChart({
             responderMoveTimeout.current = null;
           }
           setResponderMove(false);
-          console.log("lcs onResponderEnd");
-        },
-        onResponderGrant: () => {
-          console.log("lcs onResponder grant");
         },
         persistPointer: false,
         activatePointersDelay: 150,
@@ -499,7 +491,7 @@ export default function TestChart({
       verticalLinesColor="rgba(24, 26, 26, 0.1)"
       // verticalLinesThickness={0}
       noOfVerticalLines={5}
-      strokeDashArray1={[4, 4]}
+      strokeDashArray1={[4, 1]} // bug other dash array are sometimes no consistent (the space between dashes vary)
       curved={false} // set false to improve performance on android
       curvature={0.1}
       initialSpacing={0}

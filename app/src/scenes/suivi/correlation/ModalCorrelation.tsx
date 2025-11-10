@@ -24,6 +24,7 @@ import TestChart from "./CorrelationChart";
 import { da } from "date-fns/locale";
 import { firstLetterUppercase } from "@/utils/string-util";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useDevCorrelationConfig } from "@/hooks/useDevCorrelationConfig";
 
 interface ModalCorrelationScreenProps {
   navigation: any;
@@ -31,6 +32,9 @@ interface ModalCorrelationScreenProps {
 }
 
 export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ navigation, route }) => {
+  const { config } = useDevCorrelationConfig();
+  const MAX_NUNBER_OF_DAYS = config.maxDays;
+
   const [diaryData] = useContext(DiaryDataContext);
   const [selectedIndicators, setSelectedIndicators] = useState<Indicator[]>([]);
   const [showTreatment, setShowTreatment] = useState<boolean>();
@@ -133,7 +137,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
     //   return null;
     // }
     const data = [];
-    const twoYearsAgo = beforeToday(400); // Calculate date from 2 years ago
+    const twoYearsAgo = beforeToday(MAX_NUNBER_OF_DAYS); // Calculate date from 2 years ago
     const chartDates = getArrayOfDates({ startDate: twoYearsAgo }); // Get all dates from 2 years ago to today
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
@@ -524,7 +528,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                     setSelectedPointIndex={setSelectedPointIndex}
                     openIndicatorBottomSheet={openIndicatorBottomSheet}
                     selectedPointIndex={selectedPointIndex}
-                    enablePagination={false}
+                    enablePagination={config.enablePagination}
                   />
                 </View>
                 <View className="bg-cnam-primary-25 p-4 -mt-2 rounded-2xl flex-col space-y-2">

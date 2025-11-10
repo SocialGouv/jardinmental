@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { View, StyleSheet, ScrollView, TouchableOpacity, Platform, Alert } from "react-native";
+import { View, StyleSheet, ScrollView, TouchableOpacity, Platform, Alert, Switch } from "react-native";
 import Text from "../../components/MyText";
 import { colors } from "../../utils/colors";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -17,6 +17,7 @@ import localStorage from "@/utils/localStorage";
 import { INDICATOR_TYPE } from "@/entities/IndicatorType";
 import { INDICATORS_CATEGORIES } from "@/entities/IndicatorCategories";
 import NotificationService from "@/services/notifications";
+import { useDevCorrelationConfig, DEFAULT_CONFIG, VALUE_RANGES } from "@/hooks/useDevCorrelationConfig";
 
 const CollapsibleSection = ({ title, children }) => {
   const [isExpanded, setIsExpanded] = useState(true);
@@ -35,6 +36,8 @@ const CollapsibleSection = ({ title, children }) => {
 const DevMode = ({ navigation }) => {
   const { clearProfile, loadProfile } = useUserProfile();
   const [_diaryData, _addEntryToDiaryData, internal__deleteDiaryData, importDiaryData, internal__deleteAllDiaryData] = useContext(DiaryDataContext);
+  const { config, saveConfig, resetConfig } = useDevCorrelationConfig();
+
   const disableDevMode = async () => {
     await AsyncStorage.setItem("devMode", "false");
     navigation.navigate("tabs");
@@ -112,6 +115,151 @@ const DevMode = ({ navigation }) => {
       <CollapsibleSection title="Sentry Testing">
         <Text style={styles.sectionDescription}>Test Sentry error reporting integration</Text>
         <JMButton className="mt-2" title="Send Test to Sentry" variant="outline" onPress={sendSentryTest} />
+      </CollapsibleSection>
+
+      <CollapsibleSection title="Configuration Corrélation">
+        <Text style={styles.sectionDescription}>Configurer les paramètres pour CorrelationChart / ModalCorrelation</Text>
+
+        {/* Pagination Switch */}
+        <View style={styles.configRow}>
+          <Text style={styles.configLabel}>Activer la pagination</Text>
+          <Switch
+            value={config.enablePagination}
+            onValueChange={(value) => saveConfig({ enablePagination: value })}
+            trackColor={{ false: "#767577", true: colors.DARK_BLUE }}
+            thumbColor={config.enablePagination ? "#f4f3f4" : "#f4f3f4"}
+          />
+        </View>
+
+        {/* Hide Data Points Switch */}
+        <View style={styles.configRow}>
+          <Text style={styles.configLabel}>Masquer les points</Text>
+          <Switch
+            value={config.hideDataPoints}
+            onValueChange={(value) => saveConfig({ hideDataPoints: value })}
+            trackColor={{ false: "#767577", true: colors.DARK_BLUE }}
+            thumbColor={config.hideDataPoints ? "#f4f3f4" : "#f4f3f4"}
+          />
+        </View>
+
+        {/* Use Custom Renderers Switch */}
+        <View style={styles.configRow}>
+          <Text style={styles.configLabel}>Utiliser renderers personnalisés</Text>
+          <Switch
+            value={config.useCustomRenderers}
+            onValueChange={(value) => saveConfig({ useCustomRenderers: value })}
+            trackColor={{ false: "#767577", true: colors.DARK_BLUE }}
+            thumbColor={config.useCustomRenderers ? "#f4f3f4" : "#f4f3f4"}
+          />
+        </View>
+
+        {/* CHUNK_SIZE Control */}
+        <View style={styles.configRow}>
+          <Text style={styles.configLabel}>CHUNK_SIZE: {config.chunkSize}</Text>
+          <View style={styles.counterButtons}>
+            <TouchableOpacity
+              style={styles.counterButton}
+              onPress={() => {
+                const newValue = Math.max(VALUE_RANGES.chunkSize.min, config.chunkSize - 10);
+                saveConfig({ chunkSize: newValue });
+              }}
+            >
+              <Text style={styles.counterButtonText}>-10</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.counterButton}
+              onPress={() => {
+                const newValue = Math.max(VALUE_RANGES.chunkSize.min, config.chunkSize - 1);
+                saveConfig({ chunkSize: newValue });
+              }}
+            >
+              <Text style={styles.counterButtonText}>-</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.counterButton}
+              onPress={() => {
+                const newValue = Math.min(VALUE_RANGES.chunkSize.max, config.chunkSize + 1);
+                saveConfig({ chunkSize: newValue });
+              }}
+            >
+              <Text style={styles.counterButtonText}>+</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.counterButton}
+              onPress={() => {
+                const newValue = Math.min(VALUE_RANGES.chunkSize.max, config.chunkSize + 10);
+                saveConfig({ chunkSize: newValue });
+              }}
+            >
+              <Text style={styles.counterButtonText}>+10</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        {/* MAX_DAYS Control */}
+        <View style={styles.configRow}>
+          <Text style={styles.configLabel}>MAX_DAYS: {config.maxDays}</Text>
+          <View style={styles.counterButtons}>
+            <TouchableOpacity
+              style={styles.counterButton}
+              onPress={() => {
+                const newValue = Math.max(VALUE_RANGES.maxDays.min, config.maxDays - 10);
+                saveConfig({ maxDays: newValue });
+              }}
+            >
+              <Text style={styles.counterButtonText}>-10</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.counterButton}
+              onPress={() => {
+                const newValue = Math.max(VALUE_RANGES.maxDays.min, config.maxDays - 1);
+                saveConfig({ maxDays: newValue });
+              }}
+            >
+              <Text style={styles.counterButtonText}>-</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.counterButton}
+              onPress={() => {
+                const newValue = Math.min(VALUE_RANGES.maxDays.max, config.maxDays + 1);
+                saveConfig({ maxDays: newValue });
+              }}
+            >
+              <Text style={styles.counterButtonText}>+</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.counterButton}
+              onPress={() => {
+                const newValue = Math.min(VALUE_RANGES.maxDays.max, config.maxDays + 10);
+                saveConfig({ maxDays: newValue });
+              }}
+            >
+              <Text style={styles.counterButtonText}>+10</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        {/* Reset Button */}
+        <JMButton
+          className="mt-2"
+          title="Réinitialiser aux valeurs par défaut"
+          variant="outline"
+          onPress={() => {
+            Alert.alert(
+              "Réinitialiser",
+              `Remettre aux valeurs par défaut?\n\nPagination: ${DEFAULT_CONFIG.enablePagination ? "Oui" : "Non"}\nCHUNK_SIZE: ${
+                DEFAULT_CONFIG.chunkSize
+              }\nMAX_DAYS: ${DEFAULT_CONFIG.maxDays}`,
+              [
+                { text: "Annuler", style: "cancel" },
+                {
+                  text: "Réinitialiser",
+                  onPress: () => resetConfig(),
+                },
+              ]
+            );
+          }}
+        />
       </CollapsibleSection>
 
       <JMButton
@@ -273,6 +421,35 @@ const styles = StyleSheet.create({
   },
   arrowDown: {
     transform: [{ rotate: "90deg" }],
+  },
+  configRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 15,
+    paddingVertical: 5,
+  },
+  configLabel: {
+    fontSize: 16,
+    color: colors.DARK_BLUE,
+    flex: 1,
+  },
+  counterButtons: {
+    flexDirection: "row",
+    gap: 8,
+  },
+  counterButton: {
+    backgroundColor: colors.DARK_BLUE,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 6,
+    minWidth: 40,
+    alignItems: "center",
+  },
+  counterButtonText: {
+    color: "#fff",
+    fontSize: 14,
+    fontWeight: "600",
   },
 });
 
