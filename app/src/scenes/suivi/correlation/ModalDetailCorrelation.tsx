@@ -23,6 +23,7 @@ import EyeOffIcon from "@assets/svg/icon/EyeOff";
 import { DiaryEntry } from "@/entities/DiaryData";
 import TestChart from "./CorrelationChart";
 import { firstLetterUppercase } from "@/utils/string-util";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
@@ -68,7 +69,7 @@ export const DetailModalCorrelationScreen: React.FC<ModalCorrelationScreenProps>
     route.params;
 
   return (
-    <View className="flex-1 bg-cnam-primary-25">
+    <SafeAreaView className="flex-1 bg-cnam-primary-25">
       <View className="flex-col justify-between top-0 w-full bg-cnam-primary-800 p-4 items-center">
         <View className="flex-row w-full justify-end">
           <TouchableOpacity
@@ -173,7 +174,7 @@ export const DetailModalCorrelationScreen: React.FC<ModalCorrelationScreenProps>
           })}
         </View>
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 };
 

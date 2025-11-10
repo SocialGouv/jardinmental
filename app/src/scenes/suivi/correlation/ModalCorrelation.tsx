@@ -23,6 +23,7 @@ import EyeOffIcon from "@assets/svg/icon/EyeOff";
 import TestChart from "./CorrelationChart";
 import { da } from "date-fns/locale";
 import { firstLetterUppercase } from "@/utils/string-util";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 interface ModalCorrelationScreenProps {
   navigation: any;
@@ -52,7 +53,6 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
   };
 
   const openIndicatorBottomSheet = () => {
-    console.log("LCS OPEN INDICATORS");
     showBottomSheet(<IndicatorsBottomSheet onClose={onClose} initialSelectedIndicators={selectedIndicators} initialShowTreatment={showTreatment} />);
   };
 
@@ -126,14 +126,14 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
   }, [displayItem]);
 
   const dataToDisplay = useMemo(() => {
-    if (!diaryData) {
+    if (!diaryData || selectedIndicators.length === 0) {
       return null;
     }
     // if (!selectedIndicators) {
     //   return null;
     // }
     const data = [];
-    const twoYearsAgo = beforeToday(40 * 1); // Calculate date from 2 years ago
+    const twoYearsAgo = beforeToday(400); // Calculate date from 2 years ago
     const chartDates = getArrayOfDates({ startDate: twoYearsAgo }); // Get all dates from 2 years ago to today
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
@@ -270,7 +270,6 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
         <ScrollView className="px-4 flex-col space-y-4 pt-4 bg-cnam-primary-25" showsHorizontalScrollIndicator={false}>
           <TouchableOpacity
             onPress={() => {
-              console.log("LCS TOTO");
               openIndicatorBottomSheet();
             }}
             className="border border-cnam-primary-700 flex-row h-[48px] rounded-2xl items-center px-4 justify-between"
@@ -312,7 +311,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
     );
   } else {
     return (
-      <View className="flex-1 bg-cnam-primary-25">
+      <SafeAreaView className="flex-1 bg-cnam-primary-25">
         <View className="flex-row justify-between top-0 w-full bg-cnam-primary-800 p-4 items-center h-[96]">
           <Text className={mergeClassNames(typography.displayXsBold, "text-white")}>Correlation</Text>
           <TouchableOpacity
@@ -404,104 +403,112 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                     </TouchableOpacity>
                   </Animated.View>
                 </View>
-                {isVisible && displayItem && displayItem?.date && diaryData[displayItem.date] && (
-                  <Animated.View
-                    style={[animatedStyle]}
-                    className="border border-cnam-primary-300 bg-white rounded-2xl flex-col space-y-2 p-4 mb-4 mt-4"
-                  >
-                    <View className="flex-row justify-between items-center">
-                      <Text className={mergeClassNames(typography.textXsBold, "bg-cnam-primary-800 text-white rounded-lg p-2")}>
-                        {firstLetterUppercase(formatDate(displayItem?.date))}
-                      </Text>
-                      <TouchableOpacity
-                        onPress={() => {
-                          setDisplayItem(null);
-                        }}
-                      >
-                        <Text className={mergeClassNames(typography.textLgBold, "text-cnam-primary-800")}>✕</Text>
-                      </TouchableOpacity>
-                    </View>
-                    {displayItem &&
-                      selectedIndicators.map((indicator, index) => {
-                        let value;
-                        try {
-                          console.log("LCS SELECTED INDICQTORs", displayItem);
-                          value = diaryData[displayItem.date][getIndicatorKey(indicator)].value;
-                        } catch (e) {}
-                        return (
-                          <View key={indicator.uuid} className="flex-row items-center space-x-2">
-                            <Svg height="2" width="30">
-                              <Line
-                                x1="0"
-                                y1="1"
-                                x2="100%"
-                                y2="1"
-                                stroke={index === 0 ? "#00A5DF" : "#3D6874"} // your color
-                                strokeWidth="2"
-                                strokeDasharray={index === 0 ? "" : "4 4"} // pattern: 4px dash, 4px gap
-                              />
-                            </Svg>
+                <View className="h-64 w-full">
+                  {isVisible && displayItem && displayItem?.date && diaryData[displayItem.date] && (
+                    <Animated.View
+                      style={[animatedStyle]}
+                      className="border border-cnam-primary-300 bg-white rounded-2xl flex-col space-y-2 p-4 mb-4 mt-4"
+                    >
+                      <View className="flex-row justify-between items-center">
+                        <Text className={mergeClassNames(typography.textXsBold, "bg-cnam-primary-800 text-white rounded-lg p-2")}>
+                          {firstLetterUppercase(formatDate(displayItem?.date))}
+                        </Text>
+                        <TouchableOpacity
+                          onPress={() => {
+                            setDisplayItem(null);
+                          }}
+                        >
+                          <Text className={mergeClassNames(typography.textLgBold, "text-cnam-primary-800")}>✕</Text>
+                        </TouchableOpacity>
+                      </View>
+                      {displayItem &&
+                        selectedIndicators.map((indicator, index) => {
+                          let value;
+                          try {
+                            value = diaryData[displayItem.date][getIndicatorKey(indicator)].value;
+                          } catch (e) {}
+                          return (
+                            <View key={indicator.uuid} className="flex-row items-center space-x-2">
+                              <Svg height="2" width="30">
+                                <Line
+                                  x1="0"
+                                  y1="1"
+                                  x2="100%"
+                                  y2="1"
+                                  stroke={index === 0 ? "#00A5DF" : "#3D6874"} // your color
+                                  strokeWidth="2"
+                                  strokeDasharray={index === 0 ? "" : "4 4"} // pattern: 4px dash, 4px gap
+                                />
+                              </Svg>
+                              <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 ")}>
+                                <Text className={mergeClassNames(typography.textMdSemibold, "text-primary-900")}>{indicator.name} : </Text>
+                                {computeIndicatorLabel(indicator, value)}
+                              </Text>
+                            </View>
+                          );
+                        })}
+                      {showTreatment &&
+                        displayItem &&
+                        diaryData[displayItem.date] &&
+                        (diaryData[displayItem.date]["PRISE_DE_TRAITEMENT"] || {}).value === true && (
+                          <View className="flex-row items-center space-x-2">
+                            <View className="w-[30] items-center justify-center">
+                              <CheckMarkIcon width={15} height={15} color={"#134449"} />
+                            </View>
                             <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 ")}>
-                              <Text className={mergeClassNames(typography.textMdSemibold, "text-primary-900")}>{indicator.name} : </Text>
-                              {computeIndicatorLabel(indicator, value)}
+                              <Text className={mergeClassNames(typography.textMdSemibold, "text-primary-900")}>Traitement : </Text>pris
                             </Text>
                           </View>
-                        );
-                      })}
-                    {displayItem && diaryData[displayItem.date] && (diaryData[displayItem.date]["PRISE_DE_TRAITEMENT"] || {}).value === true && (
-                      <View className="flex-row items-center space-x-2">
-                        <View className="w-[30] items-center justify-center">
-                          <CheckMarkIcon width={15} height={15} color={"#134449"} />
-                        </View>
-                        <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 ")}>
-                          <Text className={mergeClassNames(typography.textMdSemibold, "text-primary-900")}>Traitement : </Text>pris
-                        </Text>
-                      </View>
-                    )}
-                    {displayItem && diaryData[displayItem.date] && (diaryData[displayItem.date]["PRISE_DE_TRAITEMENT"] || {}).value === false && (
-                      <View className="flex-row items-center space-x-2">
-                        <View className="w-[30] items-center justify-center">
-                          <CrossIcon color={"#518B9A"} />
-                        </View>
-                        <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 ")}>
-                          <Text className={mergeClassNames(typography.textMdSemibold, "text-primary-900")}>Traitement : </Text> pas pris
-                        </Text>
-                      </View>
-                    )}
-                    {displayItem &&
-                      diaryData[displayItem.date] &&
-                      (diaryData[displayItem.date]["PRISE_DE_TRAITEMENT_SI_BESOIN"] || {}).value === true && (
-                        <View className="flex-row items-center space-x-2">
-                          <View className="w-[30] items-center justify-center">
-                            <View className="w-4 h-4 rounded-full bg-cnam-primary-800"></View>
+                        )}
+                      {showTreatment &&
+                        displayItem &&
+                        diaryData[displayItem.date] &&
+                        (diaryData[displayItem.date]["PRISE_DE_TRAITEMENT"] || {}).value === false && (
+                          <View className="flex-row items-center space-x-2">
+                            <View className="w-[30] items-center justify-center">
+                              <CrossIcon color={"#518B9A"} />
+                            </View>
+                            <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 ")}>
+                              <Text className={mergeClassNames(typography.textMdSemibold, "text-primary-900")}>Traitement : </Text> pas pris
+                            </Text>
                           </View>
-                          <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 ")}>
-                            <Text className={mergeClassNames(typography.textMdSemibold, "text-primary-900")}>Si besoin : </Text> pris
-                          </Text>
-                        </View>
-                      )}
+                        )}
+                      {showTreatment &&
+                        displayItem &&
+                        diaryData[displayItem.date] &&
+                        (diaryData[displayItem.date]["PRISE_DE_TRAITEMENT_SI_BESOIN"] || {}).value === true && (
+                          <View className="flex-row items-center space-x-2">
+                            <View className="w-[30] items-center justify-center">
+                              <View className="w-4 h-4 rounded-full bg-cnam-primary-800"></View>
+                            </View>
+                            <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 ")}>
+                              <Text className={mergeClassNames(typography.textMdSemibold, "text-primary-900")}>Si besoin : </Text> pris
+                            </Text>
+                          </View>
+                        )}
 
-                    <TouchableOpacity
-                      onPress={() => {
-                        navigation.navigate("detail-correlation-modal", {
-                          selectedIndicators,
-                          diaryDataForDate: diaryData[displayItem.date],
-                          date: displayItem.date,
-                          data: dataToDisplay[0],
-                          dataB: dataToDisplay[1],
-                          treatment: dataToDisplay[2],
-                          treatmentSiBesoin: dataToDisplay[3],
-                          showTreatment,
-                          selectedPointIndex,
-                        });
-                      }}
-                      className="flex-row items-center justify-end"
-                    >
-                      <EyeIcon />
-                      <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-800 ml-2")}>Voir le détail</Text>
-                    </TouchableOpacity>
-                  </Animated.View>
-                )}
+                      <TouchableOpacity
+                        onPress={() => {
+                          navigation.navigate("detail-correlation-modal", {
+                            selectedIndicators,
+                            diaryDataForDate: diaryData[displayItem.date],
+                            date: displayItem.date,
+                            data: dataToDisplay[0],
+                            dataB: dataToDisplay[1],
+                            treatment: dataToDisplay[2],
+                            treatmentSiBesoin: dataToDisplay[3],
+                            showTreatment,
+                            selectedPointIndex,
+                          });
+                        }}
+                        className="flex-row items-center justify-end"
+                      >
+                        <EyeIcon />
+                        <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-800 ml-2")}>Voir le détail</Text>
+                      </TouchableOpacity>
+                    </Animated.View>
+                  )}
+                </View>
                 <View style={{ paddingTop: 10, paddingBottom: 50 }}>
                   <TestChart
                     setDisplayItem={setDisplayItem}
@@ -516,6 +523,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                     selectedIndicators={selectedIndicators}
                     setSelectedPointIndex={setSelectedPointIndex}
                     openIndicatorBottomSheet={openIndicatorBottomSheet}
+                    selectedPointIndex={selectedPointIndex}
                   />
                 </View>
                 <View className="bg-cnam-primary-25 p-4 -mt-2 rounded-2xl flex-col space-y-2">
@@ -537,20 +545,22 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                       </View>
                     ))}
                   </View>
-                  <View className="flex-row space-x-6 items-center justify-center">
-                    <View className="flex-row space-x-2">
-                      <View className="flex-row">
-                        <CheckMarkIcon width={15} height={15} color={"#134449"} />
-                        <Text className="text-cnam-primary-950">/</Text>
-                        <CrossIcon color={"#518B9A"} />
+                  {showTreatment && (
+                    <View className="flex-row space-x-6 items-center justify-center">
+                      <View className="flex-row space-x-2">
+                        <View className="flex-row">
+                          <CheckMarkIcon width={15} height={15} color={"#134449"} />
+                          <Text className="text-cnam-primary-950">/</Text>
+                          <CrossIcon color={"#518B9A"} />
+                        </View>
+                        <Text className="text-primary-900">Traitement</Text>
                       </View>
-                      <Text className="text-primary-900">Traitement</Text>
+                      <View className="flex-row items-center justify-center space-x-2">
+                        <View className="bg-cnam-primary-950 rounded-full h-4 w-4" />
+                        <Text className="text-primary-900">Prise d'un "si besoin"</Text>
+                      </View>
                     </View>
-                    <View className="flex-row items-center justify-center space-x-2">
-                      <View className="bg-cnam-primary-950 rounded-full h-4 w-4" />
-                      <Text className="text-primary-900">Prise d'un "si besoin"</Text>
-                    </View>
-                  </View>
+                  )}
                 </View>
               </View>
             </View>
@@ -590,7 +600,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
             />
           </View>
         </ScrollView>
-      </View>
+      </SafeAreaView>
     );
   }
 };

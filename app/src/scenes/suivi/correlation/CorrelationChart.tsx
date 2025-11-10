@@ -1,12 +1,27 @@
 import { TW_COLORS } from "@/utils/constants";
 import CheckMarkIcon from "@assets/svg/icon/check";
 import CrossIcon from "@assets/svg/icon/Cross";
-import { useEffect, useMemo, useRef } from "react";
-import { View, Dimensions } from "react-native";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { View, Dimensions, ScrollView } from "react-native";
 import { LineChart } from "react-native-gifted-charts";
 
-const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
+
+// Constants
+const DAY_INITIALS = ["D", "L", "M", "M", "J", "V", "S"];
+const SPACING_CONFIG = {
+  "7days": 70,
+  "1month": 20,
+  "3months": 10,
+  "6months": 1,
+  default: 50,
+};
+const LABEL_SPACING_CONFIG = {
+  "7days": 1,
+  "1month": 3,
+  "3months": 10,
+  default: 20,
+};
 
 export default function TestChart({
   data,
@@ -19,25 +34,45 @@ export default function TestChart({
   spacingFormat,
   setDisplayItem,
   setSelectedPointIndex,
+  selectedPointIndex,
 }) {
-  const ref = useRef(null);
+  const ref = useRef<ScrollView>(null);
   const hasScrolledToEnd = useRef(false);
   const currentScrollX = useRef(0);
   const previousSpacing = useRef(20); // Default spacing for "1month"
+  const responderMoveTimeout = useRef<NodeJS.Timeout | null>(null);
+  const currentPointerIndex = useRef<number | null>(null);
+  const [responderMove, setResponderMove] = useState(false);
+  const [onStartReached, setOnStartReached] = useState(false);
 
-  // Auto-scroll to the end of the chart only on first load
+  // Chunked data loading state
+  const CHUNK_SIZE = 40;
+  const [visibleStartIndex, setVisibleStartIndex] = useState(0);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const previousDataLength = useRef(0);
+
+  // Calculate spacing based on active period (must be before other hooks that use it)
+  const chartSpacing = useMemo(() => {
+    return SPACING_CONFIG[spacingFormat] || SPACING_CONFIG.default;
+  }, [spacingFormat]);
+
+  // Initialize visible range to show last CHUNK_SIZE items
   useEffect(() => {
-    if (ref.current && data && data.length > 0 && !hasScrolledToEnd.current) {
-      // Small delay to ensure the chart is rendered
-      setTimeout(() => {
-        const scrollX = (data.length - 1) * chartSpacing;
-        ref.current?.scrollTo({ x: scrollX, animated: false });
-        currentScrollX.current = scrollX;
-        previousSpacing.current = chartSpacing;
-        hasScrolledToEnd.current = true;
-      }, 100);
+    if (data && data.length > 0) {
+      const initialStart = Math.max(0, data.length - CHUNK_SIZE);
+      setVisibleStartIndex(initialStart);
+      previousDataLength.current = data.length;
     }
-  }, [data, chartSpacing]);
+  }, [data?.length]);
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (responderMoveTimeout.current) {
+        clearTimeout(responderMoveTimeout.current);
+      }
+    };
+  }, []);
 
   // Maintain relative scroll position when spacing changes (time period changes)
   useEffect(() => {
@@ -56,63 +91,60 @@ export default function TestChart({
     }
   }, [chartSpacing]);
 
-  // Custom data point function that can access selectedPointIndex state
-  const customDataPoint = ({ color, backgroundColor, isSelected, noValue, needShift }) => {
-    if (noValue) return null;
+  // Shared custom data point renderer - single instance for all data points
+  const renderCustomDataPoint = useCallback((item, index, isSelected) => {
+    if (item?.noValue) return null;
+
+    const needShift = item?.needShift || false;
 
     return (
       <View
         style={{
           width: isSelected ? 20 : 14,
           height: isSelected ? 20 : 14,
-          backgroundColor: backgroundColor || "white",
+          backgroundColor: item?.backgroundColor || "white",
           borderWidth: isSelected ? 6 : 3,
           borderRadius: 10,
-          borderColor: color || "#3D6874",
+          borderColor: item?.color || "#3D6874",
           top: needShift ? -10 : 0,
           opacity: 1,
           alignSelf: "center",
         }}
       />
     );
-  };
+  }, []);
 
-  const customDataPointTreatment = ({ color, backgroundColor, isSelected, noValue, value, needShift }) => {
-    if (noValue) return null;
+  const renderCustomDataPointTreatment = useCallback((item, index, isSelected) => {
+    if (item?.noValue) return null;
 
     return (
       <View
         style={{
           width: isSelected ? 20 : 14,
           height: isSelected ? 20 : 14,
-          top: needShift ? -10 : 0,
           alignSelf: "center",
           alignItems: "center",
           justifyContent: "center",
         }}
       >
-        {value === true ? (
+        {item?.treatmentValue === true ? (
           <CheckMarkIcon width={isSelected ? 20 : 15} height={isSelected ? 20 : 15} color={"#134449"} />
         ) : (
           <CrossIcon width={isSelected ? 20 : 15} height={isSelected ? 20 : 15} color={"#518B9A"} />
         )}
       </View>
     );
-  };
+  }, []);
 
-  // Get day initial (L, M, M, J, V, S, D)
-  const getDayInitial = (dateString) => {
+  // Helper functions - memoized
+  const getDayInitial = useCallback((dateString) => {
     if (!dateString) return "";
     const date = new Date(dateString);
     if (isNaN(date.getTime())) return dateString;
+    return DAY_INITIALS[date.getDay()];
+  }, []);
 
-    const dayOfWeek = date.getDay(); // 0 = Sunday, 1 = Monday, etc.
-    const dayInitials = ["D", "L", "M", "M", "J", "V", "S"]; // Dimanche, Lundi, Mardi, Mercredi, Jeudi, Vendredi, Samedi
-    return dayInitials[dayOfWeek];
-  };
-
-  // Format date to French format (DD/MM/YY)
-  const formatDateToFrench = (dateString) => {
+  const formatDateToFrench = useCallback((dateString) => {
     if (!dateString) return "";
     const date = new Date(dateString);
     if (isNaN(date.getTime())) return dateString;
@@ -121,56 +153,160 @@ export default function TestChart({
     const month = date.getMonth() + 1;
     const year = date.getFullYear();
 
-    // Short format: DD/MM/YY
-    return `${day.toString().padStart(2, "0")}/${month.toString().padStart(2, "0")}/${year.toString().padStart(2, "0").slice(2, 4)}`;
-  };
+    return `${day.toString().padStart(2, "0")}/${month.toString().padStart(2, "0")}/${year.toString().slice(-2)}`;
+  }, []);
 
-  // Format label based on active period
-  const formatLabel = (dateString) => {
-    if (spacingFormat === "7days") {
-      return getDayInitial(dateString);
-    }
-    return formatDateToFrench(dateString);
-  };
-
-  // Calculate spacing based on active period
-  const chartSpacing = useMemo(() => {
-    switch (spacingFormat) {
-      case "7days":
-        return 70;
-      case "1month":
-        return 20;
-      case "3months":
-        return 10;
-      case "6months":
-        return 1;
-      default:
-        return 50;
-    }
-  }, [spacingFormat]);
+  const formatLabel = useCallback(
+    (dateString) => {
+      if (spacingFormat === "7days") {
+        return getDayInitial(dateString);
+      }
+      return formatDateToFrench(dateString);
+    },
+    [spacingFormat, getDayInitial, formatDateToFrench]
+  );
 
   // Dynamic label spacing based on active period
   const labelSpacing = useMemo(() => {
-    if (spacingFormat === "7days") {
-      return 1;
-    } else if (spacingFormat === "1month") {
-      return 3;
-    } else if (spacingFormat === "3months") {
-      return 10;
-    } else {
-      return 20;
-    } // Show all labels for 7 days, skip for others
+    return LABEL_SPACING_CONFIG[spacingFormat] || LABEL_SPACING_CONFIG.default;
   }, [spacingFormat]);
 
-  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"];
+  // Get visible data slice
+  const visibleData = useMemo(() => {
+    if (!data || data.length === 0) return [];
+    return data.slice(visibleStartIndex);
+  }, [data, visibleStartIndex]);
 
-  const showOrHidePointer = (ind) => {
-    ref.current?.scrollTo({
-      x: ind * 200 - 25,
-    }); // adjust as per your UI
-  };
-  const lineSegments = null; //generateLineSegments(data);
-  const lineSegments2 = null; //generateLineSegments(dataB);
+  const visibleDataB = useMemo(() => {
+    if (!dataB || dataB.length === 0) return null;
+    return dataB.slice(visibleStartIndex);
+  }, [dataB, visibleStartIndex]);
+
+  const visibleTreatment = useMemo(() => {
+    if (!treatment || !showTreatment) return null;
+    return treatment.slice(visibleStartIndex);
+  }, [treatment, showTreatment, visibleStartIndex]);
+
+  const visibleTreatmentSiBesoin = useMemo(() => {
+    if (!treatmentSiBesoin || !showTreatment) return null;
+    return treatmentSiBesoin.slice(visibleStartIndex);
+  }, [treatmentSiBesoin, showTreatment, visibleStartIndex]);
+
+  // Memoized data transformations to prevent re-creating arrays on every render
+  // Store rendering properties directly on data objects instead of creating function closures
+  const transformedData = useMemo(() => {
+    return (visibleData || []).map((d, index) => {
+      const needShift = visibleDataB && visibleDataB[index]?.value === d.value;
+      return {
+        ...d,
+        label: index % labelSpacing === 0 ? formatLabel(d.label) : "",
+        color: "#3D6874",
+        backgroundColor: "white",
+        needShift: false,
+        focusedDataPointWidth: needShift ? 35 : 20,
+        dataPointWidth: needShift ? 25 : 15,
+      };
+    });
+  }, [visibleData, visibleDataB, labelSpacing, formatLabel]);
+
+  const transformedDataB = useMemo(() => {
+    if (!visibleDataB) return null;
+    return visibleDataB.map((d, index) => {
+      const needShift = visibleData[index]?.value === d.value;
+      return {
+        ...d,
+        label: index % labelSpacing === 0 ? formatLabel(d.label) : "",
+        color: "#00A5DF",
+        backgroundColor: "#00A5DF",
+        needShift: true,
+      };
+    });
+  }, [visibleDataB, visibleData, labelSpacing, formatLabel]);
+
+  const transformedTreatment = useMemo(() => {
+    if (!visibleTreatment) return null;
+    return (visibleTreatment || []).map((t, index) => ({
+      ...t,
+      label: index % labelSpacing === 0 ? formatLabel(t.label) : "",
+      isTreatment: true,
+    }));
+  }, [visibleTreatment, labelSpacing, formatLabel]);
+
+  const transformedTreatmentSiBesoin = useMemo(() => {
+    if (!visibleTreatmentSiBesoin) return null;
+    return (visibleTreatmentSiBesoin || []).map((t, index) => ({
+      ...t,
+      label: index % labelSpacing === 0 ? formatLabel(t.label) : "",
+      color: TW_COLORS.CNAM_PRIMARY_800,
+      backgroundColor: TW_COLORS.CNAM_PRIMARY_800,
+      isTreatmentSiBesoin: true,
+    }));
+  }, [visibleTreatmentSiBesoin, labelSpacing, formatLabel]);
+
+  // Handle loading more data when scrolling to start
+  useEffect(() => {
+    if (onStartReached && !isLoadingMore && visibleStartIndex > 0) {
+      setIsLoadingMore(true);
+
+      // Calculate how many items to load
+      const itemsToLoad = Math.min(CHUNK_SIZE, visibleStartIndex);
+      const newStartIndex = visibleStartIndex - itemsToLoad;
+
+      // Store current scroll position relative to data
+      const currentDataIndex = Math.floor((currentScrollX.current + (screenWidth - 72) / 2) / chartSpacing);
+
+      // Update visible start index
+      setVisibleStartIndex(newStartIndex);
+
+      // After state update, adjust scroll position to maintain view
+      setTimeout(() => {
+        // The new scroll position needs to account for the prepended items
+        const newScrollX = (currentDataIndex + itemsToLoad) * chartSpacing;
+        ref.current?.scrollTo({ x: newScrollX, animated: false });
+        currentScrollX.current = newScrollX;
+        setIsLoadingMore(false);
+      }, 50);
+
+      setOnStartReached(false);
+    } else if (onStartReached) {
+      setOnStartReached(false);
+    }
+  }, [onStartReached, isLoadingMore, visibleStartIndex, chartSpacing]);
+
+  // Auto-scroll to the end of the chart only on first load
+  useEffect(() => {
+    if (ref.current && transformedData && transformedData.length > 0) {
+      // Small delay to ensure the chart is rendered
+      setTimeout(() => {
+        const scrollX = (transformedData.length - 1) * chartSpacing;
+        ref.current?.scrollTo({ x: scrollX, animated: false });
+        currentScrollX.current = scrollX;
+        previousSpacing.current = chartSpacing;
+        // hasScrolledToEnd.current = true;
+      }, 100);
+    }
+  }, [transformedData?.length, chartSpacing]);
+
+  // Shared custom data point functions that read properties from the data objects
+  const customDataPointRenderer = useCallback(
+    (item, index) => {
+      if (item?.isTreatment) {
+        return renderCustomDataPointTreatment(item, index, false);
+      }
+      return renderCustomDataPoint(item, index, false);
+    },
+    [renderCustomDataPoint, renderCustomDataPointTreatment]
+  );
+
+  const focusedCustomDataPointRenderer = useCallback(
+    (item, index) => {
+      if (item?.isTreatment) {
+        return renderCustomDataPointTreatment(item, index, true);
+      }
+      return renderCustomDataPoint(item, index, true);
+    },
+    [renderCustomDataPoint, renderCustomDataPointTreatment]
+  );
 
   return (
     <LineChart
@@ -186,19 +322,23 @@ export default function TestChart({
       xAxisTextNumberOfLines={1}
       xAxisLabelsHeight={20}
       xAxisThickness={0}
+      hideDataPoints={spacingFormat === "3months" || spacingFormat === "6months"}
       xAxisColor={"transparent"}
       width={screenWidth - 72}
       focusEnabled={!displayfixed}
       disableScroll={displayfixed}
-      // focusProximity={50}
-      lineSegments={lineSegments}
-      lineSegments2={lineSegments2}
-      onFocus={(item, index) => {
-        console.log("focused", item, data[index], index);
-        setDisplayItem(data[index]);
-        setSelectedPointIndex(index);
+      onFocus={(_item, index) => {
+        const actualIndex = index;
+        console.log("lcs onFocus index", index, "actualIndex", actualIndex);
+        const item = transformedData[actualIndex] || (transformedDataB && transformedDataB[actualIndex]);
+        if (!item || !item.noValue) {
+          console.log("lcs display");
+
+          setDisplayItem(transformedData[actualIndex]);
+          setSelectedPointIndex(actualIndex);
+        }
       }}
-      //   focusedDataPointIndex={selectedPointIndex}
+      focusedDataPointIndex={selectedPointIndex}
       unFocusOnPressOut={false}
       showStripOnFocus={true}
       stripColor={TW_COLORS.CNAM_PRIMARY_700}
@@ -220,135 +360,72 @@ export default function TestChart({
           currentScrollX.current = event.nativeEvent.contentOffset.x;
         }
       }}
-      data={(data || []).map((d, index) => {
-        const needShift = dataB[index].value === d.value;
-        return {
-          ...d,
-          label: index % labelSpacing === 0 ? formatLabel(d.label) : "", // Show label based on active period
-          focusedCustomDataPoint: () => {
-            return customDataPoint({ color: "#3D6874", backgroundColor: "white", isSelected: true, noValue: d.noValue });
-          },
-          customDataPoint: () => {
-            return customDataPoint({
-              color: "#3D6874",
-              backgroundColor: "white",
-              isSelected: false,
-              noValue: d.noValue,
-              onPress: () => {
-                setSelectedPointIndex(index);
-              },
-            });
-          },
-          focusedDataPointWidth: needShift ? 35 : 20,
-          dataPointWidth: needShift ? 25 : 15,
-        };
-      })}
+      data={transformedData}
       onPress={() => {
         console.log("lcs on press");
       }}
       xAxisIndicesHeight={10}
-      // noOfSectionsBelowXAxis={1}
-      data2={
-        dataB
-          ? dataB.map((d, index) => ({
-              ...d,
-              label: index % labelSpacing === 0 ? formatLabel(d.label) : "", // Show label based on active period
-              focusedCustomDataPoint: () => {
-                const needShift = data[index].value === d.value;
-                return customDataPoint({
-                  needShift: true,
-                  color: "#00A5DF",
-                  backgroundColor: "#00A5DF",
-                  isSelected: true,
-                  noValue: d.noValue,
-                });
-              },
-              onFocus: () => {},
-              customDataPoint: () => {
-                const needShift = data[index].value === d.value;
-                return customDataPoint({
-                  needShift: true,
-                  color: "#00A5DF",
-                  backgroundColor: "#00A5DF",
-                  isSelected: false,
-                  noValue: d.noValue,
-                });
-              },
-            }))
-          : null
-      }
-      data3={
-        treatment && showTreatment
-          ? (treatment || []).map((t, index) => ({
-              ...t,
-              label: index % labelSpacing === 0 ? formatLabel(t.label) : "", // Show label based on active period
-              customDataPoint: () => {
-                return customDataPointTreatment({
-                  color: TW_COLORS.CNAM_PRIMARY_800,
-                  backgroundColor: TW_COLORS.CNAM_PRIMARY_800,
-                  isSelected: false,
-                  needShift: false,
-                  noValue: t.noValue,
-                  value: t.treatmentValue,
-                });
-              },
-              focusedCustomDataPoint: () => {
-                return customDataPointTreatment({
-                  color: TW_COLORS.CNAM_PRIMARY_800,
-                  backgroundColor: TW_COLORS.CNAM_PRIMARY_800,
-                  isSelected: true,
-                  needShift: false,
-                  noValue: t.noValue,
-                  value: t.treatmentValue,
-                });
-              },
-            }))
-          : null
-      }
-      data4={
-        treatmentSiBesoin && showTreatment
-          ? (treatmentSiBesoin || []).map((t, index) => ({
-              ...t,
-              label: index % labelSpacing === 0 ? formatLabel(t.label) : "", // Show label based on active period
-              customDataPoint: () => {
-                return customDataPoint({
-                  color: TW_COLORS.CNAM_PRIMARY_800,
-                  backgroundColor: TW_COLORS.CNAM_PRIMARY_800,
-                  noValue: t.noValue,
-                  isSelected: false,
-                  needShift: false,
-                  // value: t.treatmentValue,
-                });
-              },
-              focusedCustomDataPoint: () => {
-                return customDataPoint({
-                  color: TW_COLORS.CNAM_PRIMARY_800,
-                  backgroundColor: TW_COLORS.CNAM_PRIMARY_800,
-                  isSelected: true,
-                  noValue: t.noValue,
-                  needShift: false,
-                  // value: t.treatmentValue,
-                });
-              },
-            }))
-          : null
-      }
+      data2={transformedDataB}
+      data3={transformedTreatment}
+      data4={transformedTreatmentSiBesoin}
+      customDataPoint={customDataPointRenderer}
+      focusedCustomDataPoint={focusedCustomDataPointRenderer}
       getPointerProps={({ pointerIndex }) => {
         if (displayfixed) return;
-        const item = data[pointerIndex] || dataB[pointerIndex];
-        setSelectedPointIndex(pointerIndex);
-        console.log("LCS pointerIndex", pointerIndex, item);
-        setDisplayItem(item);
+        // Always store the current pointer index
+        currentPointerIndex.current = pointerIndex;
+        const actualIndex = pointerIndex;
+        // const actualIndex = visibleStartIndex + pointerIndex;
+        const item = transformedData[actualIndex] || (transformedDataB && transformedDataB[actualIndex]);
+        // if (!item || !item.noValue) {
+        if (responderMove) {
+          setSelectedPointIndex(actualIndex);
+          setDisplayItem(item);
+        }
+        // }
       }}
       pointerConfig={{
+        activatePointersInstantlyOnTouch: false,
         activatePointersOnLongPress: true,
-        persistPointer: true,
-        activatePointersDelay: 500,
+
+        onResponderMove: () => {
+          // Clear any existing timeout
+          if (responderMoveTimeout.current) {
+            clearTimeout(responderMoveTimeout.current);
+          }
+          // Set timeout to delay the state change
+          responderMoveTimeout.current = setTimeout(() => {
+            setResponderMove(true);
+            // Immediately update with the stored pointer index
+            if (currentPointerIndex.current !== null) {
+              const index = currentPointerIndex.current;
+              const actualIndex = visibleStartIndex + index;
+              const item = transformedData[actualIndex] || (transformedDataB && transformedDataB[actualIndex]);
+              setSelectedPointIndex(actualIndex);
+              setDisplayItem(item);
+            }
+            console.log("lcs onResponderMove");
+          }, 150);
+        },
+        onResponderEnd: () => {
+          // Cancel pending timeout
+          if (responderMoveTimeout.current) {
+            clearTimeout(responderMoveTimeout.current);
+            responderMoveTimeout.current = null;
+          }
+          setResponderMove(false);
+          console.log("lcs onResponderEnd");
+        },
+        onResponderGrant: () => {
+          console.log("lcs onResponder grant");
+        },
+        persistPointer: false,
+        activatePointersDelay: 150,
         pointerColor: "transparent",
         pointerStripWidth: 2,
         width: 20,
         height: 20,
-        showPointerStrip: !!displayfixed,
+        showPointerStrip: false, //!!displayfixed,
         initialPointerIndex: displayfixed ? initialSelectedPointIndex : null,
         pointerStripColor: TW_COLORS.CNAM_PRIMARY_700,
         pointerStripUptoDataPoint: false,
@@ -414,9 +491,10 @@ export default function TestChart({
       // verticalLinesThickness={0}
       noOfVerticalLines={5}
       strokeDashArray1={[4, 4]}
-      curved={true}
+      curved={false} // set false to improve performance on android
       curvature={0.1}
       initialSpacing={0}
+      onStartReached={() => setOnStartReached(true)}
     />
   );
 }

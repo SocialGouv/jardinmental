@@ -279,7 +279,11 @@ export const Correlation = ({ navigation, onScroll, scrollY, day, setDay, dynami
 
   if (selectedIndicators.length === 0) {
     return (
-      <ScrollView className="px-4 flex-col space-y-4 pt-60 bg-white">
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        className="px-4 flex-col space-y-4 pt-60 bg-white"
+        contentContainerStyle={{ paddingBottom: TAB_BAR_HEIGHT + 20 }}
+      >
         <Text className={mergeClassNames(typography.textLgBold, "text-cnam-primary-800")}>Explorez les liens entre vos indicateurs</Text>
         <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900")}>
           Observez comment vos indicateurs évoluent ensemble pour mieux comprendre ce qui influence votre état.

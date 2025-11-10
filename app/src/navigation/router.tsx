@@ -268,16 +268,18 @@ class Router extends React.Component<RouterProps> {
               name="correlation-modal"
               component={ModalCorrelationScreen}
               options={{
+                cardStyleInterpolator: CardStyleInterpolators.forRevealFromBottomAndroid,
+                // cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS,
                 presentation: "modal",
-                cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS,
               }}
             />
             <Stack.Screen
               name="detail-correlation-modal"
               component={DetailModalCorrelationScreen}
               options={{
+                cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
+                // cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS,
                 presentation: "modal",
-                cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS,
               }}
             />
             <Stack.Screen name="dev-mode" component={DevMode} options={{ headerShown: true }} />
