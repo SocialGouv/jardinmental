@@ -3,7 +3,7 @@ import CheckMarkIcon from "@assets/svg/icon/check";
 import CrossIcon from "@assets/svg/icon/Cross";
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { View, Dimensions, ScrollView } from "react-native";
-import { LineChart } from "react-native-gifted-charts";
+import { LineChart, ruleTypes } from "react-native-gifted-charts";
 import Svg, { Circle } from "react-native-svg";
 import { useDevCorrelationConfig } from "@/hooks/useDevCorrelationConfig";
 
@@ -581,22 +581,23 @@ export default function TestChart({
       referenceLine1Config={{
         thickness: 20,
         color: "#FCF2D9",
-        dashGap: -1,
+        type: ruleTypes.SOLID,
+        //dashGap: -1,
       }}
       // use to hide the horizontal lines
       showReferenceLine2={true}
       referenceLine2Position={showTreatment ? -1.32 : -0.32}
       referenceLine2Config={{
         thickness: 20,
+        type: ruleTypes.SOLID,
         color: "white",
-        dashGap: -1,
       }}
       showReferenceLine3={showTreatment}
       referenceLine3Position={showTreatment ? 5.5 : 4.5}
       referenceLine3Config={{
         thickness: 20,
         color: "white",
-        dashGap: -1,
+        type: ruleTypes.SOLID,
       }}
       showVerticalLines={false}
       verticalLinesColor="rgba(24, 26, 26, 0.1)"
