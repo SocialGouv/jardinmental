@@ -501,6 +501,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                             dataB: dataToDisplay[1],
                             treatment: dataToDisplay[2],
                             treatmentSiBesoin: dataToDisplay[3],
+                            diaryData,
                             showTreatment,
                             selectedPointIndex,
                           });

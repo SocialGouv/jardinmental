@@ -65,9 +65,20 @@ const computeIndicatorColor = (indicator, value): ColorContextInterface | undefi
 };
 
 export const DetailModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ navigation, route }) => {
-  const { selectedIndicators, displayItem, data, dataB, treatment, treatmentSiBesoin, showTreatment, selectedPointIndex, diaryDataForDate, date } =
-    route.params;
-
+  const {
+    selectedIndicators,
+    displayItem,
+    data,
+    dataB,
+    treatment,
+    treatmentSiBesoin,
+    showTreatment,
+    selectedPointIndex,
+    diaryDataForDate,
+    date,
+    diaryData,
+  } = route.params;
+  console.log(data.length, dataB.length, treatment.length, treatmentSiBesoin.length);
   return (
     <SafeAreaView className="flex-1 bg-cnam-primary-25">
       <View className="flex-col justify-between top-0 w-full bg-cnam-primary-800 p-4 items-center">
@@ -132,21 +143,22 @@ export const DetailModalCorrelationScreen: React.FC<ModalCorrelationScreenProps>
         </View>
       </View>
       <ScrollView className="flex-col pt-4 bg-cnam-primary-25 " showsHorizontalScrollIndicator={false}>
-        <View className="px-4 pb-20">
+        <View className="px-4 pb-20 w-full">
           <TestChart
             // displayItem={displayItem}
             data={data}
             dataB={dataB}
             spacingFormat={"7days"}
-            treatment={undefined}
+            treatment={treatment}
             initialSelectedPointIndex={selectedPointIndex}
             navigation={navigation}
             selectedIndicators={selectedIndicators}
-            treatmentSiBesoin={undefined}
-            diaryData={undefined}
+            treatmentSiBesoin={treatmentSiBesoin}
+            diaryData={diaryData}
             openIndicatorBottomSheet={undefined}
-            showTreatment={undefined}
+            showTreatment={true}
             displayfixed={true}
+            enablePagination={false}
           />
           <Text className={mergeClassNames(typography.textXlSemibold, "text-cnam-primary-900 pt-6 pb-4")}>Ce jours là :</Text>
           {Object.keys(diaryDataForDate).map((key) => {
