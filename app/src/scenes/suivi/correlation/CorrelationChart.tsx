@@ -296,10 +296,11 @@ export default function TestChart({
         color: "#00A5DF",
         backgroundColor: "#00A5DF",
         needShift: false,
+        dataPointColor: d.noValue ? "transparent" : "#00A5DF",
         // dataPointsColor: !config.useCustomRenderers ? undefined : "#3D6874",
         focusedDataPointWidth: !config.useCustomRenderers ? (needShift ? 35 : 20) : 20,
         focusedDataPointHeight: !config.useCustomRenderers ? undefined : 20,
-        focusedDataPointColor: !config.useCustomRenderers ? undefined : "#00A5DF",
+        focusedDataPointColor: !config.useCustomRenderers ? undefined : d.noValue ? "transparent" : "#00A5DF",
         dataPointWidth: !config.useCustomRenderers ? (needShift ? 25 : 15) : undefined,
       };
     });
@@ -315,8 +316,8 @@ export default function TestChart({
         color: "#3D6874",
         backgroundColor: "white",
         // backgroundColor: "#3D6874",
-        dataPointColor: !config.useCustomRenderers ? undefined : "#3D6874",
-        focusedDataPointColor: !config.useCustomRenderers ? undefined : "#3D6874",
+        dataPointColor: !config.useCustomRenderers ? undefined : d.noValue ? "transparent" : "#3D6874",
+        focusedDataPointColor: !config.useCustomRenderers ? undefined : d.noValue ? "transparent" : "#3D6874",
         focusedDataPointWidth: !config.useCustomRenderers ? undefined : 20,
         focusedDataPointRadius: !config.useCustomRenderers ? undefined : 7,
         focusedDataPointHeight: !config.useCustomRenderers ? undefined : 20,
@@ -331,8 +332,10 @@ export default function TestChart({
       ...t,
       label: index % labelSpacing === 0 ? formatLabel(t.label) : "",
       isTreatment: true,
-      dataPointsColor: TW_COLORS.CNAM_PRIMARY_800,
-      dataPointsShape: t.value === true ? "rectangular" : "circular",
+      dataPointColor: t.noValue ? "transparent" : TW_COLORS.CNAM_PRIMARY_800,
+      focusedDataPointColor: t.noValue ? "transparent" : TW_COLORS.CNAM_PRIMARY_800,
+
+      dataPointShape: t.treatmentValue === true ? "rectangular" : "circular",
     }));
   }, [visibleTreatment, labelSpacing, formatLabel]);
 
@@ -342,7 +345,8 @@ export default function TestChart({
       ...t,
       label: index % labelSpacing === 0 ? formatLabel(t.label) : "",
       color: TW_COLORS.CNAM_PRIMARY_800,
-      dataPointsColor: TW_COLORS.CNAM_PRIMARY_800,
+      dataPointColor: t.noValue ? "transparent" : TW_COLORS.CNAM_PRIMARY_800,
+      focusedDataPointColor: t.noValue ? "transparent" : TW_COLORS.CNAM_PRIMARY_800,
       backgroundColor: TW_COLORS.CNAM_PRIMARY_800,
       isTreatmentSiBesoin: true,
     }));
@@ -539,7 +543,7 @@ export default function TestChart({
         pointerLabelHeight: 100,
       }}
       overflowBottom={0} // space at the bottom of graph
-      overflowTop={5}
+      overflowTop={2}
       dataPointsWidth2={config.useCustomRenderers ? 15 : 10}
       dataPointsHeight2={config.useCustomRenderers ? 15 : 10}
       dataPointsHeight1={15}
@@ -555,8 +559,10 @@ export default function TestChart({
       thickness4={20}
       color2={"#3D6874"}
       color1={"#00A5DF"}
-      color3="transparent"
-      color4="transparent"
+      color3={"transparent"}
+      color4={"transparent"}
+      dataPointsColor3={config.useCustomRenderers ? "transparent" : "#3D6874"}
+      dataPointsColor4={config.useCustomRenderers ? "transparent" : "#3D6874"}
       yAxisColor={"transparent"}
       formatYLabel={(lab) => {
         if (lab === "-1" || lab === "-2" || lab === "6" || lab === "0") {
