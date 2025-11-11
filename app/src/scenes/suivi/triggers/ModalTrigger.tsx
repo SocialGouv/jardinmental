@@ -5,8 +5,7 @@ import { typography } from "@/utils/typography";
 import { DiaryDataContext } from "@/context/diaryData";
 import { Indicator } from "@/entities/Indicator";
 import { beforeToday, formatDate, formatDay, formatRelativeDate, getArrayOfDates, getArrayOfDatesFromTo } from "@/utils/date/helpers";
-import { computeIndicatorLabel, getIndicatorKey } from "@/utils/indicatorUtils";
-import { IndicatorsBottomSheet } from "@/components/IndicatorsBottomSheet";
+import { getIndicatorKey } from "@/utils/indicatorUtils";
 import { TW_COLORS } from "@/utils/constants";
 import ArrowUpSvg from "@assets/svg/icon/ArrowUp";
 import InfoCircle from "@assets/svg/icon/InfoCircle";
@@ -25,6 +24,12 @@ import { firstLetterUppercase } from "@/utils/string-util";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { colors } from "@/utils/colors";
 import JMButton from "@/components/JMButton";
+import { PeriodBottomSheet } from "./PeriodBottomSheet";
+import { IndicatorsBottomSheet } from "./IndicatorsBottomSheet";
+import { StatesBottomSheet } from "./StateBottomSheet";
+import DatePicker from "react-native-date-picker";
+import { LightDateOrTimeDisplay } from "../DateOrTimeDisplay";
+import { DiaryEntry } from "@/entities/DiaryData";
 
 interface ModalTriggerScreenProps {
   navigation: any;
@@ -33,8 +38,189 @@ interface ModalTriggerScreenProps {
 
 export const ModalTriggerScreen: React.FC<ModalTriggerScreenProps> = ({ navigation, route }) => {
   const [diaryData] = useContext(DiaryDataContext);
-  const { fromDate, toDate, selectedPeriod, selectedIndicator, selectedState } = route.params;
-  const chartDates = getArrayOfDatesFromTo({ fromDate, toDate });
+  const [fromDate, setFromDate] = React.useState(route.params.fromDate);
+  const [toDate, setToDate] = React.useState(route.params.toDate);
+  const { showBottomSheet, closeBottomSheet } = useBottomSheet();
+  const [selectedIndicator, setSelectedIndicator] = useState<Indicator | undefined>(route.params.selectedIndicator);
+  const [selectedState, setSelectedState] = useState<
+    | {
+        value: number;
+        label: string;
+      }
+    | undefined
+  >(route.params.selectedState);
+  const [selectedPeriod, setSelectedPeriod] = useState<{
+    value: number;
+    label: string;
+  }>(route.params.selectedPeriod);
+
+  const computeFilteredDiaryData = React.useCallback(() => {
+    //   if (!indicateur) return [];
+    //   if (!indicateurId) return [];
+    //   // console.log("SYMPTOME", indicateur);
+    //   if (!level || !level.length) return [];
+    //   let _targetLevel = level[0];
+    //   // console.log("level", level);
+    //   if (!event) return [];
+    //   // console.log("event", event);
+    const chartDates = getArrayOfDatesFromTo({ fromDate, toDate });
+    if (!selectedIndicator || !selectedState) {
+      return null;
+    }
+
+    return chartDates
+      .map((date) => {
+        let infoDate: { date: string; dayData?: DiaryEntry } = { date };
+        const dayData = diaryData[date];
+        if (!dayData) {
+          return null;
+        }
+        const indicatorState = dayData[selectedIndicator.uuid || selectedIndicator.name];
+        if (!indicatorState) {
+          return null;
+        }
+
+        //   if (indicatorState?._indicateur?.order === "DESC") targetLevel = 6 - _targetLevel;
+        let indicatorValue;
+        if (indicatorState?._indicateur?.type === "smiley") {
+          indicatorValue = indicatorState?.value;
+        } else if (indicatorState?._indicateur?.type === "boolean") {
+          indicatorValue = indicatorState?.value === true ? 5 : 1;
+        } else if (indicatorState?._indicateur?.type === "gauge") {
+          indicatorValue = Math.ceil(indicatorState?.value * 5);
+        } else {
+          indicatorValue = 0;
+        }
+
+        if (indicatorValue !== selectedState.value) {
+          return null;
+        }
+
+        if (Object.keys(dayData).filter((key) => dayData[key].userComment).length === 0) {
+          // if there is no user comment, we ignore this item
+          return null;
+        }
+
+        // { label: "Tous les évènement", value: "ALL" },
+        // { label: "Contexte de la journée", value: "CONTEXT" },
+        // { label: "Précisions élément", value: "USER_COMMENT" },
+        // { label: "Traitements", value: "POSOLOGY" },
+        // { label: "Substances", value: "TOXIC" },
+
+        infoDate = {
+          ...infoDate,
+          dayData,
+        };
+
+        // console.log("✍️ ~ infoDate", infoDate);
+
+        return infoDate;
+
+        // -------
+        // the following code is for the retrocompatibility
+        // -------
+
+        // get the name and the suffix of the category
+        // const [categoryName, suffix] = indicateur.split("_");
+        // let indicatorStateIntensity = null;
+        // if (suffix && suffix === "FREQUENCE") {
+        //   // if it's one category with the suffix 'FREQUENCE' :
+        //   // add the intensity (default level is 3 - for the frequence 'never')
+        //   indicatorStateIntensity = diaryData[date][`${categoryName}_INTENSITY`] || { level: 3 };
+        //   return { value: indicatorState.level + indicatorStateIntensity.level - 2 };
+        // }
+        // return { value: indicatorState.level - 1 };
+      })
+      .filter((data) => !!data); // we filter fa
+  }, [selectedIndicator, selectedState, fromDate, toDate, selectedPeriod, diaryData]);
+
+  const [openFromDate, setOpenFromDate] = useState(false);
+  const [openToDate, setOpenToDate] = useState(false);
+  const [isSelectModalActive, setIsSelectModalActive] = useState(false);
+  useEffect(() => {
+    const computeDate = async () => {
+      if (selectedPeriod.value !== "custom") {
+        let _fromDate;
+        let _toDate = beforeToday(0);
+        switch (selectedPeriod.value) {
+          case "lastDays7":
+            _fromDate = beforeToday(7 - 1);
+            break;
+          case "lastDays14":
+            _fromDate = beforeToday(14 - 1);
+            break;
+          case "lastDays30":
+            _fromDate = beforeToday(30 - 1);
+            break;
+          case "fromBeginning":
+            const beginningDate = await AsyncStorage.getItem(STORAGE_KEY_START_DATE);
+            _fromDate = new Date(beginningDate);
+            break;
+        }
+        setFromDate(_fromDate);
+        setToDate(_toDate);
+      }
+      computeDate();
+    };
+  }, [selectedPeriod]);
+
+  const onClose = ({ selectedIndicators: _selectedIndicators }: { selectedIndicators: Indicator[] }) => {
+    closeBottomSheet();
+    if (_selectedIndicators.length) {
+      setSelectedIndicator(_selectedIndicators[0]);
+    } else {
+      setSelectedIndicator(undefined);
+    }
+  };
+
+  const onCloseStateBottomSheet = ({
+    selectedStates: _selectedStates,
+  }: {
+    selectedStates: {
+      value: number;
+      label: string;
+    }[];
+  }) => {
+    closeBottomSheet();
+    if (_selectedStates.length) {
+      setSelectedState(_selectedStates[0]);
+    } else {
+      setSelectedState(undefined);
+    }
+  };
+
+  const onClosePeriodBottomSheet = ({
+    selectedPeriod: _selectedPeriod,
+  }: {
+    selectedPeriod: {
+      value: string;
+      label: string;
+    };
+  }) => {
+    closeBottomSheet();
+    setSelectedPeriod(_selectedPeriod);
+  };
+
+  const openPeriodBottomSheet = () => {
+    showBottomSheet(<PeriodBottomSheet onClose={onClosePeriodBottomSheet} initialSelectedPeriod={selectedPeriod} />);
+  };
+
+  const openIndicatorBottomSheet = () => {
+    showBottomSheet(<IndicatorsBottomSheet onClose={onClose} initialSelectedIndicators={selectedIndicator ? [selectedIndicator] : undefined} />);
+  };
+
+  const openStateBottomSheet = () => {
+    showBottomSheet(
+      <StatesBottomSheet
+        onClose={onCloseStateBottomSheet}
+        indicator={selectedIndicator}
+        initialSelectedStates={selectedState ? [selectedState] : undefined}
+      />
+    );
+  };
+
+  const filteredDiaryData = computeFilteredDiaryData();
+
   const dataToDisplay = false;
   if (!dataToDisplay) {
     return (
@@ -46,68 +232,214 @@ export const ModalTriggerScreen: React.FC<ModalTriggerScreenProps> = ({ navigati
         <View className=" bg-cnam-cyan-50-lighten-90 p-4">
           <View className="flex-row justify-between px-2 rounded-2xl">
             <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>L'indicateur</Text>
-            <View className="flex-row items-center justify-between">
-              <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>{selectedIndicator?.name}</Text>
-            </View>
+            <TouchableOpacity className="flex-row items-center justify-between" onPress={openIndicatorBottomSheet}>
+              <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>
+                {selectedIndicator?.name || "Sélectionnez un indicateur"}
+              </Text>
+              <View
+                style={{
+                  transform: [{ rotate: "180deg" }],
+                }}
+              >
+                <ArrowUpSvg color={colors.BLUE} />
+              </View>
+            </TouchableOpacity>
           </View>
           <View className="flex-row justify-between px-2 rounded-2xl">
             <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>était</Text>
-            <View className="flex-row items-center justify-between">
+            <TouchableOpacity className="flex-row items-center justify-between" onPress={openStateBottomSheet}>
               <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>
                 {selectedState ? selectedState.label : `Sélectionnez un état`}
               </Text>
-            </View>
+              <View
+                style={{
+                  transform: [{ rotate: "180deg" }],
+                }}
+              >
+                <ArrowUpSvg color={colors.BLUE} />
+              </View>
+            </TouchableOpacity>
           </View>
           <View className="flex-row justify-between px-2 rounded-2xl">
             <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>sur la période</Text>
-            <View className="flex-row items-center justify-between">
+            <TouchableOpacity className="flex-row items-center justify-between" onPress={openPeriodBottomSheet}>
               <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>
                 {selectedPeriod.value === "custom" ? "Personalisée" : selectedPeriod.label}
               </Text>
+              <View
+                style={{
+                  transform: [{ rotate: "180deg" }],
+                }}
+              >
+                <ArrowUpSvg color={colors.BLUE} />
+              </View>
+            </TouchableOpacity>
+          </View>
+          {selectedPeriod.value === "custom" && (
+            <View className="flex-col">
+              <View className="flex-row justify-between px-2 rounded-2xl mb-2">
+                <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>Période</Text>
+              </View>
+              <View className="flex-row justify-between px-2 rounded-2xl">
+                <TouchableOpacity
+                  className="flex-row items-center justify-between"
+                  onPress={() => {
+                    if (!isSelectModalActive) {
+                      setOpenFromDate(true);
+                    }
+                  }}
+                >
+                  <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>Du </Text>
+                  <LightDateOrTimeDisplay mode="date" date={fromDate} disabled={false} />
+                  <View
+                    style={{
+                      transform: [{ rotate: "180deg" }],
+                    }}
+                  >
+                    <ArrowUpSvg color={colors.BLUE} />
+                  </View>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  className="flex-row items-center justify-between"
+                  onPress={() => {
+                    if (!isSelectModalActive) {
+                      setOpenToDate(true);
+                    }
+                  }}
+                >
+                  <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>Au </Text>
+                  <LightDateOrTimeDisplay mode="date" date={toDate} disabled={false} />
+                  <View
+                    style={{
+                      transform: [{ rotate: "180deg" }],
+                    }}
+                  >
+                    <ArrowUpSvg color={colors.BLUE} />
+                  </View>
+                </TouchableOpacity>
+                <DatePicker
+                  timeZoneOffsetInMinutes={0}
+                  locale="fr"
+                  title="Du"
+                  maximumDate={toDate}
+                  androidVariant="iosClone"
+                  mode="date"
+                  modal
+                  open={openFromDate}
+                  date={fromDate}
+                  confirmText="Valider"
+                  onConfirm={(date) => {
+                    console.log("date", date);
+                    setFromDate(date);
+                    setOpenFromDate(false);
+                  }}
+                  cancelText="Annuler"
+                  onCancel={() => {
+                    setOpenFromDate(false);
+                  }}
+                />
+                <DatePicker
+                  timeZoneOffsetInMinutes={0}
+                  locale="fr"
+                  title="Du"
+                  // maximumDate={toDate}
+                  androidVariant="iosClone"
+                  mode="date"
+                  modal
+                  open={openToDate}
+                  date={fromDate}
+                  confirmText="Valider"
+                  onConfirm={(date) => {
+                    console.log("date", date);
+                    setToDate(date);
+                    setOpenToDate(false);
+                  }}
+                  cancelText="Annuler"
+                  onCancel={() => {
+                    setOpenToDate(false);
+                  }}
+                />
+              </View>
             </View>
-          </View>
+          )}
         </View>
-
-        {/* <ScrollView className="px-4 flex-col space-y-4 pt-4 bg-cnam-primary-25" showsHorizontalScrollIndicator={false}> */}
-        <View className="mt-32 px-4">
-          <View className="absolute z-10 w-full items-center">
-            <Image
-              style={{ width: 80, height: 80, left: 40, top: -65, resizeMode: "contain" }}
-              source={require("../../../../assets/imgs/illustration-no-note.png")}
-            />
-          </View>
-          <View className="absolute -z-1 w-full items-center">
-            <View className="bg-cnam-primary-50 h-[150] w-[150] rounded-full" style={{ top: -110 }}></View>
-          </View>
-          <View className="border border-cnam-primary-200 rounded-2xl p-4 py-6 bg-white" style={{ borderWidth: 0.5 }}>
-            <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 text-center px-4")}>
-              Il n'y a pas de note à afficher sur cette période pour :
-            </Text>
-            <Text className={mergeClassNames(typography.textMdBold, "text-cnam-primary-950 text-center px-4 mt-4")}>
-              {selectedIndicator.name}{" "}
-              <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-950 text-center px-4 mt-4")}>est</Text>{" "}
-              {selectedState.label}
-            </Text>
-          </View>
-        </View>
-        <View className="flex-grow"></View>
-        <View className="flex-column space-y-2 mb-6 px-4">
-          <JMButton
-            variant="outline"
-            title={"Retour aux analyses"}
-            onPress={() => {
-              navigation.goBack();
+        {!filteredDiaryData?.length && (
+          <>
+            <View className="mt-32 px-4">
+              <View className="absolute z-10 w-full items-center">
+                <Image
+                  style={{ width: 80, height: 80, left: 40, top: -65, resizeMode: "contain" }}
+                  source={require("../../../../assets/imgs/illustration-no-note.png")}
+                />
+              </View>
+              <View className="absolute -z-1 w-full items-center">
+                <View className="bg-cnam-primary-50 h-[150] w-[150] rounded-full" style={{ top: -110 }}></View>
+              </View>
+              <View className="border border-cnam-primary-200 rounded-2xl p-4 py-6 bg-white" style={{ borderWidth: 0.5 }}>
+                <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 text-center px-4")}>
+                  Il n'y a pas de note à afficher sur cette période pour :
+                </Text>
+                <Text className={mergeClassNames(typography.textMdBold, "text-cnam-primary-950 text-center px-4 mt-4")}>
+                  {selectedIndicator.name}{" "}
+                  <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-950 text-center px-4 mt-4")}>est</Text>{" "}
+                  {selectedState.label}
+                </Text>
+              </View>
+            </View>
+            <View className="flex-grow"></View>
+            <View className="flex-column space-y-2 mb-6 px-4">
+              <JMButton
+                variant="outline"
+                title={"Retour aux analyses"}
+                onPress={() => {
+                  navigation.goBack();
+                }}
+              ></JMButton>
+              <JMButton
+                variant="primary"
+                title={"Compléter mes observations"}
+                onPress={() => {
+                  navigation.navigate("tabs");
+                }}
+              ></JMButton>
+            </View>
+          </>
+        )}
+        {!!filteredDiaryData?.length && (
+          <FlatList
+            data={filteredDiaryData}
+            renderItem={({ item }) => {
+              return (
+                <View className="border border-1 bg-white border-[1px] border-primary-200 rounded-2xl mb-2 p-4">
+                  <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40 mb-4")}>
+                    {firstLetterUppercase(formatRelativeDate(item.date))}
+                  </Text>
+                  <View className="flex-col space-y-6">
+                    {Object.keys(item.dayData || {}).map((key) => {
+                      if (item.dayData[key]?.userComment) {
+                        return (
+                          <View>
+                            <Text className={mergeClassNames(typography.textSmRegular, "text-cnam-primary-800 mb-2")}>
+                              {key === "CONTEXT" ? "Contexte de ma journée" : item.dayData[key]._indicateur?.name}
+                            </Text>
+                            <View className="bg-cnam-cyan-50-lighten-90 px-4 py-2 rounded-xl">
+                              <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-800")}>
+                                {item.dayData[key]?.userComment}
+                              </Text>
+                            </View>
+                          </View>
+                        );
+                      }
+                      return null;
+                    })}
+                  </View>
+                </View>
+              );
             }}
-          ></JMButton>
-          <JMButton
-            variant="primary"
-            title={"Compléter mes observations"}
-            onPress={() => {
-              navigation.navigate("tabs");
-            }}
-          ></JMButton>
-        </View>
-        {/* </ScrollView> */}
+            className="px-4 flex-col space-y-4 pt-4 bg-cnam-primary-25"
+            showsHorizontalScrollIndicator={false}
+          ></FlatList>
+        )}
       </View>
     );
   } else {

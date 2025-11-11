@@ -34,10 +34,10 @@ const Events = ({
   navigation,
   presetDate,
   setPresetDate,
-  fromDate,
-  setFromDate,
-  toDate,
-  setToDate,
+  // fromDate,
+  // setFromDate,
+  // toDate,
+  // setToDate,
   onScroll,
   scrollY,
   indicateur,
@@ -53,6 +53,8 @@ const Events = ({
   const [diaryData] = React.useContext(DiaryDataContext);
   const [activeCategories, setActiveCategories] = React.useState();
   const [isEmpty, setIsEmpty] = React.useState();
+  const [fromDate, setFromDate] = React.useState(beforeToday(30));
+  const [toDate, setToDate] = React.useState(beforeToday(0));
   const chartDates = getArrayOfDatesFromTo({ fromDate, toDate });
   const [event, setEvent] = React.useState("ALL");
   const insets = useSafeAreaInsets();
