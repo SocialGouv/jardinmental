@@ -28,6 +28,29 @@ const DateOrTimeDisplay = ({ date, onPress, mode, disabled, containerStyle, touc
   );
 };
 
+export const LightDateOrTimeDisplay = ({ date, onPress, mode, disabled, containerStyle, touchableStyle, contentContainerStyle }) => {
+  if (!date) return null;
+
+  function padTo2Digits(num) {
+    return num.toString().padStart(2, "0");
+  }
+  function formatDate(date) {
+    return [padTo2Digits(date.getDate()), padTo2Digits(date.getMonth() + 1), date.getFullYear()].join("/");
+  }
+
+  return (
+    <View style={[styles.datesContainer, containerStyle, disabled && { opacity: 0.4 }]}>
+      {Boolean(date) && (
+        <View disabled={disabled} style={[touchableStyle]}>
+          <View style={[styles.currentDateContainer, contentContainerStyle]}>
+            <Text style={styles.currentDate}>{formatDate(makeSureDate(date))}</Text>
+          </View>
+        </View>
+      )}
+    </View>
+  );
+};
+
 const styles = StyleSheet.create({
   datesContainer: {
     flexDirection: "row",

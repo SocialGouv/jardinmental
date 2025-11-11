@@ -151,7 +151,7 @@ const Bilan = ({ navigation, startSurvey }) => {
                 friseInfoButtonRef={friseInfoButtonRef}
               />
             )}
-            {chartType === "Déclencheurs" && (
+            {/* {chartType === "Déclencheurs" && (
               <EventFilterHeader
                 presetDate={presetDate}
                 setPresetDate={setPresetDate}
@@ -170,7 +170,7 @@ const Bilan = ({ navigation, startSurvey }) => {
                 userIndicateurs={userIndicateurs.filter(({ active }) => active)}
                 scrollY={scrollY}
               />
-            )}
+            )} */}
           </View>
         </View>
         {/* Render all tabs but hide inactive ones to preserve state */}
