@@ -277,7 +277,7 @@ class Router extends React.Component<RouterProps> {
               name="detail-correlation-modal"
               component={DetailModalCorrelationScreen}
               options={{
-                cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
+                cardStyleInterpolator: CardStyleInterpolators.forRevealFromBottomAndroid,
                 // cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS,
                 presentation: "modal",
               }}
