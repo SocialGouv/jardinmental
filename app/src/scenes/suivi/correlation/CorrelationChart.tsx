@@ -25,6 +25,92 @@ const LABEL_SPACING_CONFIG = {
   default: 20,
 };
 
+// Type definitions for memoized components
+interface DataPointProps {
+  item: any;
+  isSelected: boolean;
+}
+
+interface TreatmentPointProps {
+  item: any;
+  isSelected: boolean;
+}
+
+// Memoized data point components for better performance
+const MemoizedDataPoint = React.memo(
+  ({ item, isSelected }: DataPointProps) => {
+    if (item?.noValue) return null;
+
+    const needShift = item?.needShift || false;
+    const size = isSelected ? 20 : 14;
+    const strokeWidth = isSelected ? 6 : 3;
+    const radius = (size - strokeWidth) / 2;
+
+    return (
+      <Svg
+        width={size}
+        height={size}
+        style={{
+          top: needShift ? -10 : 0,
+          alignSelf: "center",
+        }}
+      >
+        <Circle
+          cx={size / 2}
+          cy={size / 2}
+          r={radius}
+          fill={item?.backgroundColor || "white"}
+          stroke={item?.color || "#3D6874"}
+          strokeWidth={strokeWidth}
+        />
+      </Svg>
+    );
+  },
+  (prevProps, nextProps) => {
+    // Custom comparison for memoization
+    return (
+      prevProps.isSelected === nextProps.isSelected &&
+      prevProps.item?.value === nextProps.item?.value &&
+      prevProps.item?.color === nextProps.item?.color &&
+      prevProps.item?.backgroundColor === nextProps.item?.backgroundColor &&
+      prevProps.item?.needShift === nextProps.item?.needShift &&
+      prevProps.item?.noValue === nextProps.item?.noValue
+    );
+  }
+);
+
+const MemoizedTreatmentPoint = React.memo(
+  ({ item, isSelected }: TreatmentPointProps) => {
+    if (item?.noValue) return null;
+
+    return (
+      <View
+        style={{
+          width: isSelected ? 20 : 14,
+          height: isSelected ? 20 : 14,
+          alignSelf: "center",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        {item?.treatmentValue === true ? (
+          <CheckMarkIcon width={isSelected ? 20 : 15} height={isSelected ? 20 : 15} color={"#134449"} />
+        ) : (
+          <CrossIcon width={isSelected ? 20 : 15} height={isSelected ? 20 : 15} color={"#518B9A"} />
+        )}
+      </View>
+    );
+  },
+  (prevProps, nextProps) => {
+    // Custom comparison for memoization
+    return (
+      prevProps.isSelected === nextProps.isSelected &&
+      prevProps.item?.treatmentValue === nextProps.item?.treatmentValue &&
+      prevProps.item?.noValue === nextProps.item?.noValue
+    );
+  }
+);
+
 export default function TestChart({
   data,
   dataB,
@@ -55,6 +141,9 @@ export default function TestChart({
   const [visibleStartIndex, setVisibleStartIndex] = useState(0);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const previousDataLength = useRef(0);
+
+  // Track visible range for viewport
+  const visibleRangeRef = useRef({ first: 0, last: 0 });
 
   // Calculate spacing based on active period (must be before other hooks that use it)
   const chartSpacing = useMemo(() => {
@@ -98,50 +187,43 @@ export default function TestChart({
     }
   }, [chartSpacing]);
 
-  // Shared custom data point renderer - single instance for all data points
-  const renderCustomDataPoint = useCallback((item, index, isSelected) => {
-    if (item?.noValue) return null;
+  // Helper function to check if item is in viewport
+  const isItemInViewport = useCallback(
+    (index: number) => {
+      const scrollX = currentScrollX.current;
+      const viewportWidth = screenWidth - 72;
 
-    const needShift = item?.needShift || false;
+      const firstVisible = Math.floor(scrollX / chartSpacing);
+      const lastVisible = Math.ceil((scrollX + viewportWidth) / chartSpacing);
+      if (index >= firstVisible && index <= lastVisible) {
+      }
+      return index >= firstVisible && index <= lastVisible;
+    },
+    [chartSpacing, screenWidth]
+  );
 
-    return (
-      <View
-        style={{
-          width: isSelected ? 20 : 14,
-          height: isSelected ? 20 : 14,
-          backgroundColor: item?.backgroundColor || "white",
-          borderWidth: isSelected ? 6 : 3,
-          borderRadius: 10,
-          borderColor: item?.color || "#3D6874",
-          top: needShift ? -10 : 0,
-          opacity: 1,
-          alignSelf: "center",
-        }}
-      />
-    );
-  }, []);
+  // Optimized custom data point renderers using memoized components
+  // Returns null if item is NOT in viewport (when optimization is enabled), otherwise renders the component
+  const renderCustomDataPoint = useCallback(
+    (item, index, isSelected) => {
+      if (config.useViewportOptimization && !isItemInViewport(index)) {
+        return null;
+      }
+      // console.log("LCS RENDER ITEM memoized");
+      return <MemoizedDataPoint item={item} isSelected={isSelected} />;
+    },
+    [config.useViewportOptimization, isItemInViewport]
+  );
 
-  const renderCustomDataPointTreatment = useCallback((item, index, isSelected) => {
-    if (item?.noValue) return null;
-
-    return (
-      <View
-        style={{
-          width: isSelected ? 20 : 14,
-          height: isSelected ? 20 : 14,
-          alignSelf: "center",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        {item?.treatmentValue === true ? (
-          <CheckMarkIcon width={isSelected ? 20 : 15} height={isSelected ? 20 : 15} color={"#134449"} />
-        ) : (
-          <CrossIcon width={isSelected ? 20 : 15} height={isSelected ? 20 : 15} color={"#518B9A"} />
-        )}
-      </View>
-    );
-  }, []);
+  const renderCustomDataPointTreatment = useCallback(
+    (item, index, isSelected) => {
+      if (config.useViewportOptimization && !isItemInViewport(index)) {
+        return null;
+      }
+      return <MemoizedTreatmentPoint item={item} isSelected={isSelected} />;
+    },
+    [config.useViewportOptimization, isItemInViewport]
+  );
 
   // Helper functions - memoized
   const getDayInitial = useCallback((dateString) => {
@@ -211,11 +293,14 @@ export default function TestChart({
       return {
         ...d,
         label: index % labelSpacing === 0 ? formatLabel(d.label) : "",
-        color: "#3D6874",
-        backgroundColor: "white",
+        color: "#00A5DF",
+        backgroundColor: "#00A5DF",
         needShift: false,
-        focusedDataPointWidth: needShift ? 35 : 20,
-        dataPointWidth: needShift ? 25 : 15,
+        // dataPointsColor: !config.useCustomRenderers ? undefined : "#3D6874",
+        focusedDataPointWidth: !config.useCustomRenderers ? (needShift ? 35 : 20) : 20,
+        focusedDataPointHeight: !config.useCustomRenderers ? undefined : 20,
+        focusedDataPointColor: !config.useCustomRenderers ? undefined : "#00A5DF",
+        dataPointWidth: !config.useCustomRenderers ? (needShift ? 25 : 15) : undefined,
       };
     });
   }, [visibleData, visibleDataB, labelSpacing, formatLabel]);
@@ -227,8 +312,14 @@ export default function TestChart({
       return {
         ...d,
         label: index % labelSpacing === 0 ? formatLabel(d.label) : "",
-        color: "#00A5DF",
-        backgroundColor: "#00A5DF",
+        color: "#3D6874",
+        backgroundColor: "white",
+        // backgroundColor: "#3D6874",
+        dataPointColor: !config.useCustomRenderers ? undefined : "#3D6874",
+        focusedDataPointColor: !config.useCustomRenderers ? undefined : "#3D6874",
+        focusedDataPointWidth: !config.useCustomRenderers ? undefined : 20,
+        focusedDataPointRadius: !config.useCustomRenderers ? undefined : 7,
+        focusedDataPointHeight: !config.useCustomRenderers ? undefined : 20,
         needShift: true,
       };
     });
@@ -240,6 +331,8 @@ export default function TestChart({
       ...t,
       label: index % labelSpacing === 0 ? formatLabel(t.label) : "",
       isTreatment: true,
+      dataPointsColor: TW_COLORS.CNAM_PRIMARY_800,
+      dataPointsShape: t.value === true ? "rectangular" : "circular",
     }));
   }, [visibleTreatment, labelSpacing, formatLabel]);
 
@@ -249,6 +342,7 @@ export default function TestChart({
       ...t,
       label: index % labelSpacing === 0 ? formatLabel(t.label) : "",
       color: TW_COLORS.CNAM_PRIMARY_800,
+      dataPointsColor: TW_COLORS.CNAM_PRIMARY_800,
       backgroundColor: TW_COLORS.CNAM_PRIMARY_800,
       isTreatmentSiBesoin: true,
     }));
@@ -306,6 +400,7 @@ export default function TestChart({
       if (item?.isTreatment) {
         return renderCustomDataPointTreatment(item, index, false);
       }
+      // console.log("custom data point");
       return renderCustomDataPoint(item, index, false);
     },
     [renderCustomDataPoint, renderCustomDataPointTreatment]
@@ -365,6 +460,14 @@ export default function TestChart({
       onScroll={(event) => {
         if (event?.nativeEvent?.contentOffset?.x !== undefined) {
           currentScrollX.current = event.nativeEvent.contentOffset.x;
+
+          // Update visible range for viewport tracking
+          const scrollX = event.nativeEvent.contentOffset.x;
+          const viewportWidth = screenWidth - 72;
+          visibleRangeRef.current = {
+            first: Math.floor(scrollX / chartSpacing),
+            last: Math.ceil((scrollX + viewportWidth) / chartSpacing),
+          };
         }
       }}
       data={transformedData}
@@ -374,8 +477,9 @@ export default function TestChart({
       data4={transformedTreatmentSiBesoin}
       customDataPoint={config.useCustomRenderers ? customDataPointRenderer : undefined}
       focusedCustomDataPoint={config.useCustomRenderers ? focusedCustomDataPointRenderer : undefined}
-      // dataPointsShape1="rectangular"
-      //dataPointsColor1="#3D6874"
+      dataPointsColor2={config.useCustomRenderers ? undefined : "#3D6874"}
+      dataPointsShape1={config.useCustomRenderers ? undefined : "rectangular"}
+      dataPointsColor1="#00A5DF"
       getPointerProps={({ pointerIndex }) => {
         if (displayfixed) return;
         // Always store the current pointer index
@@ -420,13 +524,14 @@ export default function TestChart({
           }
           setResponderMove(false);
         },
+        onResponderGrant: () => {},
         persistPointer: false,
         activatePointersDelay: 150,
         pointerColor: "transparent",
         pointerStripWidth: 2,
         width: 20,
         height: 20,
-        showPointerStrip: false, //!!displayfixed,
+        showPointerStrip: true, //!!displayfixed,
         initialPointerIndex: displayfixed ? initialSelectedPointIndex : null,
         pointerStripColor: TW_COLORS.CNAM_PRIMARY_700,
         pointerStripUptoDataPoint: false,
@@ -434,22 +539,22 @@ export default function TestChart({
         pointerLabelHeight: 100,
       }}
       overflowBottom={0} // space at the bottom of graph
-      // overflowTop={5}
-      dataPointsWidth1={15}
+      overflowTop={5}
+      dataPointsWidth2={config.useCustomRenderers ? 15 : 10}
+      dataPointsHeight2={config.useCustomRenderers ? 15 : 10}
       dataPointsHeight1={15}
-      dataPointsHeight2={15}
-      dataPointsWidth2={15}
+      dataPointsWidth1={15}
       dataPointsHeight3={15}
       dataPointsWidth3={15}
       dataPointsHeight4={15}
       dataPointsWidth4={15}
-      focusedDataPointHeight={20}
-      focusedDataPointWidth={20}
+      focusedDataPointHeight={config.useCustomRenderers ? 20 : 15}
+      focusedDataPointWidth={config.useCustomRenderers ? 20 : 15}
       showDataPointLabelOnFocus={false}
       thickness3={20}
       thickness4={20}
-      color2={"#00A5DF"}
-      color1={"#3D6874"}
+      color2={"#3D6874"}
+      color1={"#00A5DF"}
       color3="transparent"
       color4="transparent"
       yAxisColor={"transparent"}
@@ -480,7 +585,7 @@ export default function TestChart({
         color: "white",
         dashGap: -1,
       }}
-      showReferenceLine3={true}
+      showReferenceLine3={showTreatment}
       referenceLine3Position={showTreatment ? 5.5 : 4.5}
       referenceLine3Config={{
         thickness: 20,
@@ -491,7 +596,7 @@ export default function TestChart({
       verticalLinesColor="rgba(24, 26, 26, 0.1)"
       // verticalLinesThickness={0}
       noOfVerticalLines={5}
-      strokeDashArray1={[4, 1]} // bug other dash array are sometimes no consistent (the space between dashes vary)
+      strokeDashArray2={[4, 1]} // bug other dash array are sometimes no consistent (the space between dashes vary)
       curved={false} // set false to improve performance on android
       curvature={0.1}
       initialSpacing={0}

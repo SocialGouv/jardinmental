@@ -12,9 +12,9 @@ export const getIndicatorKey = (indicator: Indicator): string => {
 };
 
 export const computeIndicatorLabel = (indicator, value): string => {
+  console.log(indicator, value);
   if (value === null || value === undefined) return "Pas de donnée";
-  let index = indicator.type === INDICATOR_TYPE.gauge ? Math.min(Math.floor(value * 5), 4) : value;
-
+  let index = indicator.type === INDICATOR_TYPE.gauge ? Math.min(Math.floor(value * 5), 4) + 1 : value;
   if (indicator.type === INDICATOR_TYPE.boolean) {
   }
 

@@ -153,6 +153,17 @@ const DevMode = ({ navigation }) => {
           />
         </View>
 
+        {/* Use Viewport Optimization Switch */}
+        <View style={styles.configRow}>
+          <Text style={styles.configLabel}>Utiliser optimisation viewport</Text>
+          <Switch
+            value={config.useViewportOptimization}
+            onValueChange={(value) => saveConfig({ useViewportOptimization: value })}
+            trackColor={{ false: "#767577", true: colors.DARK_BLUE }}
+            thumbColor={config.useViewportOptimization ? "#f4f3f4" : "#f4f3f4"}
+          />
+        </View>
+
         {/* CHUNK_SIZE Control */}
         <View style={styles.configRow}>
           <Text style={styles.configLabel}>CHUNK_SIZE: {config.chunkSize}</Text>
