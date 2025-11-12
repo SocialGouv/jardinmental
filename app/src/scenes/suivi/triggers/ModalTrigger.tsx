@@ -18,6 +18,7 @@ import { StatesBottomSheet } from "./StateBottomSheet";
 import DatePicker from "react-native-date-picker";
 import { DiaryEntry } from "@/entities/DiaryData";
 import { colorsMap, SCORE_MAP_INFO, scoresMapIcon } from "@/utils/constants";
+import { DEFAULT_INDICATOR_LABELS, INDICATOR_LABELS } from "@/utils/liste_indicateurs.1";
 
 interface ModalTriggerScreenProps {
   navigation: any;
@@ -150,6 +151,22 @@ export const ModalTriggerScreen: React.FC<ModalTriggerScreenProps> = ({ navigati
       computeDate();
     };
   }, [selectedPeriod]);
+
+  useEffect(() => {
+    if (selectedIndicator && selectedState) {
+      let label;
+
+      if (Object.keys(INDICATOR_LABELS).includes(selectedIndicator.uuid)) {
+        label = INDICATOR_LABELS[selectedIndicator.uuid][selectedState.value - 1];
+      } else {
+        label = DEFAULT_INDICATOR_LABELS[selectedState.value - 1];
+      }
+      setSelectedState({
+        value: selectedState.value,
+        label,
+      });
+    }
+  }, [selectedIndicator]);
 
   const onClose = ({ selectedIndicators: _selectedIndicators }: { selectedIndicators: Indicator[] }) => {
     closeBottomSheet();

@@ -16,6 +16,7 @@ import { PeriodBottomSheet } from "./PeriodBottomSheet";
 import DatePicker from "react-native-date-picker";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import HelpView from "@/components/HelpView";
+import { DEFAULT_INDICATOR_LABELS, INDICATOR_LABELS } from "@/utils/liste_indicateurs.1";
 
 const screenHeight = Dimensions.get("window").height;
 
@@ -79,6 +80,22 @@ const Events = ({ navigation }) => {
       computeDate();
     };
   }, [selectedPeriod]);
+
+  useEffect(() => {
+    if (selectedIndicator && selectedState) {
+      let label;
+
+      if (Object.keys(INDICATOR_LABELS).includes(selectedIndicator.uuid)) {
+        label = INDICATOR_LABELS[selectedIndicator.uuid][selectedState.value - 1];
+      } else {
+        label = DEFAULT_INDICATOR_LABELS[selectedState.value - 1];
+      }
+      setSelectedState({
+        value: selectedState.value,
+        label: label,
+      });
+    }
+  }, [selectedIndicator]);
 
   const onClose = ({ selectedIndicators: _selectedIndicators }: { selectedIndicators: Indicator[] }) => {
     closeBottomSheet();
@@ -258,7 +275,6 @@ const Events = ({ navigation }) => {
               date={fromDate}
               confirmText="Valider"
               onConfirm={(date) => {
-                console.log("date", date);
                 setFromDate(date);
                 setOpenFromDate(false);
               }}
@@ -279,7 +295,6 @@ const Events = ({ navigation }) => {
               date={fromDate}
               confirmText="Valider"
               onConfirm={(date) => {
-                console.log("date", date);
                 setToDate(date);
                 setOpenToDate(false);
               }}
