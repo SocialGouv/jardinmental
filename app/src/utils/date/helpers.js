@@ -77,14 +77,14 @@ export const formatDate = (d) => {
   return format(isoDate, "EEEE d MMMM", { locale: fr });
 };
 
-export const formatRelativeDate = (date) => {
+export const formatRelativeDate = (date, withYear) => {
   const isoDate = parseISO(date);
   if (isToday(isoDate)) {
     return "aujourd'hui";
   } else if (isYesterday(isoDate)) {
     return "hier";
   } else {
-    return format(isoDate, "EEEE d MMMM", { locale: fr });
+    return format(isoDate, withYear ? "EEEE d MMMM yyyy" : "EEEE d MMMM", { locale: fr });
   }
 };
 export const getFirst3LetterWeekDay = (date) => {
@@ -150,3 +150,11 @@ export const formatDateThread = (date) => {
     return firstLetterUppercase(formattedDate);
   }
 };
+
+export function padTo2Digits(num) {
+  return num.toString().padStart(2, "0");
+}
+
+export function formatDateToFrenchNumericFormat(date) {
+  return [padTo2Digits(date.getDate()), padTo2Digits(date.getMonth() + 1), date.getFullYear()].join("/");
+}

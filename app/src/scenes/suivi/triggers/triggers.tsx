@@ -2,7 +2,15 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet, View, Dimensions, Text, TouchableOpacity } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { isToday, isYesterday, parseISO } from "date-fns";
-import { getArrayOfDatesFromTo, formatDay, formatRelativeDate, beforeToday } from "@/utils/date/helpers";
+import {
+  getArrayOfDatesFromTo,
+  formatDay,
+  formatRelativeDate,
+  beforeToday,
+  formatDate,
+  makeSureDate,
+  formatDateToFrenchNumericFormat,
+} from "@/utils/date/helpers";
 import { DiaryDataContext } from "@/context/diaryData";
 import { colors } from "@/utils/colors";
 import Icon from "@/components/Icon";
@@ -27,37 +35,23 @@ import { PeriodBottomSheet } from "./PeriodBottomSheet";
 import DatePicker from "react-native-date-picker";
 import DateOrTimeDisplay, { LightDateOrTimeDisplay } from "../DateOrTimeDisplay";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import HelpView from "@/components/HelpView";
 
 const screenHeight = Dimensions.get("window").height;
 
-const Events = ({
-  navigation,
-  presetDate,
-  setPresetDate,
-  // fromDate,
-  // setFromDate,
-  // toDate,
-  // setToDate,
-  onScroll,
-  scrollY,
-  indicateur,
-  setIndicateur,
-  indicateurId,
-  setIndicateurId,
-  level,
-  setLevel,
-  userIndicateurs,
-  setUserIndicateurs,
-  dynamicPaddingTop,
-}) => {
-  const [diaryData] = React.useContext(DiaryDataContext);
-  const [activeCategories, setActiveCategories] = React.useState();
-  const [isEmpty, setIsEmpty] = React.useState();
+const HELP_TEXT = `### Les déclencheurs vous aident à :
+
+- Identifier ce qui influence positivement ou négativement votre état
+- Faire des liens entre vos ressentis et le contexte de vos journées
+- Mieux comprendre ce qui vous aide… et ce qui peut vous fragiliser
+
+### Retrouvez les notes que vous avez écrites : 
+Séléctionnez un indicateur, un ou plusieurs niveaux et une période pour retrouver les notes associées.
+`;
+
+const Events = ({ navigation }) => {
   const [fromDate, setFromDate] = React.useState(beforeToday(30));
   const [toDate, setToDate] = React.useState(beforeToday(0));
-  const chartDates = getArrayOfDatesFromTo({ fromDate, toDate });
-  const [event, setEvent] = React.useState("ALL");
-  const insets = useSafeAreaInsets();
   const { showBottomSheet, closeBottomSheet } = useBottomSheet();
   const [selectedIndicator, setSelectedIndicator] = useState<Indicator | undefined>(undefined);
   const [selectedState, setSelectedState] = useState<
@@ -106,10 +100,6 @@ const Events = ({
     };
   }, [selectedPeriod]);
 
-  // React.useEffect(() => {
-  //   console.log("✍️ ~ indicateur", indicateur);
-  // }, getIndicatorKey);
-
   const onClose = ({ selectedIndicators: _selectedIndicators }: { selectedIndicators: Indicator[] }) => {
     closeBottomSheet();
     if (_selectedIndicators.length) {
@@ -147,101 +137,6 @@ const Events = ({
     setSelectedPeriod(_selectedPeriod);
   };
 
-  const memoizedCallback = React.useCallback(() => {
-    if (!indicateur) return [];
-    if (!indicateurId) return [];
-    // console.log("SYMPTOME", indicateur);
-    if (!level || !level.length) return [];
-    let _targetLevel = level[0];
-    // console.log("level", level);
-    if (!event) return [];
-    // console.log("event", event);
-    return chartDates.map((date) => {
-      let infoDate = { date };
-      // console.log("✍️ ~ date", date);
-      const dayData = diaryData[date];
-      if (!dayData) {
-        // console.log("no dayData");
-        return {};
-      }
-      const categoryState = diaryData[date][indicateurId];
-
-      // console.log("✍️ ~ categoryState", categoryState);
-      if (!categoryState) {
-        // console.log("categoryState");
-        return {};
-      }
-
-      let targetLevel = _targetLevel;
-      if (diaryData[date][indicateurId]?._indicateur?.order === "DESC") targetLevel = 6 - _targetLevel;
-      let _value;
-      if (diaryData[date][indicateurId]?._indicateur?.type === "smiley") {
-        _value = diaryData[date][indicateurId]?.value;
-      } else if (diaryData[date][indicateurId]?._indicateur?.type === "boolean") {
-        _value = diaryData[date][indicateurId]?.value === true ? 5 : 1;
-      } else if (diaryData[date][indicateurId]?._indicateur?.type === "gauge") {
-        _value = Math.ceil(diaryData[date][indicateurId]?.value * 5);
-      } else {
-        _value = 0;
-      }
-
-      if (_value !== targetLevel) {
-        return {};
-      }
-
-      // { label: "Tous les évènement", value: "ALL" },
-      // { label: "Contexte de la journée", value: "CONTEXT" },
-      // { label: "Précisions élément", value: "USER_COMMENT" },
-      // { label: "Traitements", value: "POSOLOGY" },
-      // { label: "Substances", value: "TOXIC" },
-
-      if (dayData?.CONTEXT?.userComment) infoDate = { ...infoDate, CONTEXT: dayData?.CONTEXT?.userComment };
-      if (categoryState?.userComment) infoDate = { ...infoDate, USER_COMMENT: categoryState?.userComment };
-
-      // console.log("✍️ ~ infoDate", infoDate);
-
-      return infoDate;
-
-      // -------
-      // the following code is for the retrocompatibility
-      // -------
-
-      // get the name and the suffix of the category
-      // const [categoryName, suffix] = indicateur.split("_");
-      // let categoryStateIntensity = null;
-      // if (suffix && suffix === "FREQUENCE") {
-      //   // if it's one category with the suffix 'FREQUENCE' :
-      //   // add the intensity (default level is 3 - for the frequence 'never')
-      //   categoryStateIntensity = diaryData[date][`${categoryName}_INTENSITY`] || { level: 3 };
-      //   return { value: categoryState.level + categoryStateIntensity.level - 2 };
-      // }
-      // return { value: categoryState.level - 1 };
-    });
-  }, [indicateur, indicateurId, level, event, chartDates, diaryData]);
-
-  const startSurvey = async () => {
-    const symptoms = await localStorage.getSymptoms();
-    logEvents._deprecatedLogFeelingStart();
-
-    if (!symptoms) {
-      navigation.navigate("symptoms", {
-        showExplanation: true,
-        redirect: "select-day",
-      });
-    } else {
-      navigation.navigate("select-day", {
-        origin: "no_data_beck",
-      });
-    }
-  };
-
-  const renderDate = (d) => {
-    if (isYesterday(parseISO(d))) return "hier";
-    if (isToday(parseISO(d))) return "aujourd'hui";
-    let relativeDate = formatRelativeDate(d);
-    return `le ${relativeDate}`;
-  };
-
   const openPeriodBottomSheet = () => {
     showBottomSheet(<PeriodBottomSheet onClose={onClosePeriodBottomSheet} initialSelectedPeriod={selectedPeriod} />);
   };
@@ -260,93 +155,16 @@ const Events = ({
     );
   };
 
-  // if (isEmpty) {
-  //   return (
-  //     <View
-  //       style={[
-  //         styles.emptyContainer,
-  //         {
-  //           paddingTop: 180 + dynamicPaddingTop,
-  //           flex: 1,
-  //           backgroundColor: "red",
-  //         },
-  //       ]}
-  //     >
-  //       <View style={styles.subtitleContainer}>
-  //         <Icon icon="InfoSvg" width={25} height={25} color={colors.LIGHT_BLUE} />
-  //         <Text style={styles.subtitle}>
-  //           Des <Text style={styles.bold}>Évènements</Text> apparaîtront au fur et à mesure de vos saisies quotidiennes.
-  //         </Text>
-  //       </View>
-  //       <JMButton title="Commencer à saisir" onPress={startSurvey} />
-  //     </View>
-  //   );
-  // }
-  // return (
-  //   <>
-  //     <Animated.ScrollView
-  //       style={styles.scrollView}
-  //       contentContainerStyle={[
-  //         styles.scrollContainer,
-  //         {
-  //           paddingBottom: insets.bottom + TAB_BAR_HEIGHT,
-  //           paddingTop: 180 + dynamicPaddingTop,
-  //         },
-  //       ]}
-  //       showsVerticalScrollIndicator={false}
-  //       scrollEventThrottle={16}
-  //       onScroll={onScroll}
-  //     >
-  //       <View className="mx-4 border-t border-cnam-primary-300 pt-4 mt-4">
-  //         {level && memoizedCallback()?.filter((x) => x.date)?.length === 0 && (
-  //           <View className="pt-36">
-  //             <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>
-  //               Aucun évènement à afficher entre {renderDate(formatDay(fromDate))} et {renderDate(formatDay(toDate))} pour :
-  //             </Text>
-  //             <View className="flex-row flex-wrap items-center">
-  //               <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>
-  //                 <Text className="font-bold">{indicateur}</Text> et{" "}
-  //               </Text>
-  //               <View
-  //                 className="w-7 h-7 rounded-full items-center justify-center"
-  //                 style={{
-  //                   backgroundColor: analyzeScoresMapIcon[level].color,
-  //                 }}
-  //               >
-  //                 <Text
-  //                   className={mergeClassNames(typography.textSmSemibold)}
-  //                   style={{
-  //                     color: analyzeScoresMapIcon[level].iconColor,
-  //                   }}
-  //                 >
-  //                   {analyzeScoresMapIcon[level].symbol}
-  //                 </Text>
-  //               </View>
-  //             </View>
-  //           </View>
-  //         )}
-  //         {!level && (
-  //           <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>Sélectionnez une valeur dans le filtre "Était"</Text>
-  //         )}
-  //         {memoizedCallback()
-  //           ?.filter((x) => x.date)
-  //           ?.sort((a, b) => {
-  //             const ad = a.date.split("/").reverse().join("");
-  //             const bd = b.date.split("/").reverse().join("");
-  //             return bd.localeCompare(ad);
-  //           })
-  //           ?.map((d) => {
-  //             return <Card key={d.date} event={event} date={d.date} context={d.CONTEXT} userComment={d.USER_COMMENT} />;
-  //           })}
-  //       </View>
-  //     </Animated.ScrollView>
-  //   </>
-  // );
   return (
     <View className="flex-1 pt-60 px-4 bg-white">
       <View className="flex-row justify-between items-center">
         <Text className={mergeClassNames(typography.textLgBold, "text-cnam-primary-800")}>Identifiez ce qui influence votre état</Text>
-        <TouchableOpacity onPress={() => {}} className="bg-cnam-primary-100 p-2 rounded-full mr-2">
+        <TouchableOpacity
+          onPress={() => {
+            showBottomSheet(<HelpView title={"Comment lire mes déclencheurs?"} isMd={true} description={HELP_TEXT} />);
+          }}
+          className="bg-cnam-primary-100 p-2 rounded-full mr-2"
+        >
           <CircleQuestionMark color={TW_COLORS.CNAM_PRIMARY_800} />
         </TouchableOpacity>
       </View>
@@ -359,7 +177,7 @@ const Events = ({
         <View className="flex-row px-2 mb-4">
           <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-800")}>Voir mes notes quand :</Text>
         </View>
-        <View className="flex-row justify-between px-2 rounded-2xl">
+        <View className="flex-row justify-between px-2 rounded-2xl items-center">
           <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>L'indicateur</Text>
           <TouchableOpacity className="flex-row items-center justify-between" onPress={openIndicatorBottomSheet}>
             <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>
@@ -374,7 +192,7 @@ const Events = ({
             </View>
           </TouchableOpacity>
         </View>
-        <View className="flex-row justify-between px-2 rounded-2xl">
+        <View className="flex-row justify-between px-2 rounded-2xl items-center">
           <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>était</Text>
           <TouchableOpacity className="flex-row items-center justify-between" onPress={openStateBottomSheet}>
             <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>
@@ -389,7 +207,7 @@ const Events = ({
             </View>
           </TouchableOpacity>
         </View>
-        <View className="flex-row justify-between px-2 rounded-2xl">
+        <View className="flex-row justify-between px-2 rounded-2xl items-center">
           <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>sur la période</Text>
           <TouchableOpacity className="flex-row items-center justify-between" onPress={openPeriodBottomSheet}>
             <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>
@@ -405,7 +223,7 @@ const Events = ({
           </TouchableOpacity>
         </View>
         {selectedPeriod.value === "custom" && (
-          <View className="flex-row justify-between px-2 rounded-2xl">
+          <View className="flex-row justify-between px-2 rounded-2xl items-center">
             <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>Période</Text>
             <TouchableOpacity
               className="flex-row items-center justify-between"
@@ -415,16 +233,9 @@ const Events = ({
                 }
               }}
             >
-              <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>Du</Text>
-              <LightDateOrTimeDisplay
-                mode="date"
-                date={fromDate}
-                onPress={() => {
-                  // Prevent DatePicker from opening if SelectInput modal is still active
-                }}
-                disabled={false}
-                // {...dateOrTimeProps}
-              />
+              <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>Du </Text>
+              <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>{formatDateToFrenchNumericFormat(fromDate)}</Text>
+
               <View
                 style={{
                   transform: [{ rotate: "180deg" }],
@@ -441,19 +252,8 @@ const Events = ({
                 }
               }}
             >
-              <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>Au</Text>
-              <LightDateOrTimeDisplay
-                mode="date"
-                date={toDate}
-                onPress={() => {
-                  // Prevent DatePicker from opening if SelectInput modal is still active
-                  // if (!isSelectModalActive) {
-                  //   setOpenToDate(true);
-                  // }
-                }}
-                disabled={false}
-                // {...dateOrTimeProps}
-              />
+              <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>Au </Text>
+              <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>{formatDateToFrenchNumericFormat(toDate)}</Text>
               <View
                 style={{
                   transform: [{ rotate: "180deg" }],
@@ -487,7 +287,7 @@ const Events = ({
               timeZoneOffsetInMinutes={0}
               locale="fr"
               title="Du"
-              // maximumDate={toDate}
+              minimumDate={fromDate}
               androidVariant="iosClone"
               mode="date"
               modal
