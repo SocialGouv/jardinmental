@@ -1,30 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, View, Dimensions, Text, TouchableOpacity } from "react-native";
-import { useFocusEffect } from "@react-navigation/native";
-import { isToday, isYesterday, parseISO } from "date-fns";
-import {
-  getArrayOfDatesFromTo,
-  formatDay,
-  formatRelativeDate,
-  beforeToday,
-  formatDate,
-  makeSureDate,
-  formatDateToFrenchNumericFormat,
-} from "@/utils/date/helpers";
-import { DiaryDataContext } from "@/context/diaryData";
+import { beforeToday, formatDateToFrenchNumericFormat } from "@/utils/date/helpers";
 import { colors } from "@/utils/colors";
-import Icon from "@/components/Icon";
-import localStorage from "@/utils/localStorage";
-import logEvents from "@/services/logEvents";
-import Card from "./Card";
 import JMButton from "@/components/JMButton";
-import { getIndicatorKey } from "@/utils/indicatorUtils";
-import { analyzeScoresMapIcon, STORAGE_KEY_START_DATE, TAB_BAR_HEIGHT, TW_COLORS } from "@/utils/constants";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { STORAGE_KEY_START_DATE, TW_COLORS } from "@/utils/constants";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
-import Animated from "react-native-reanimated";
-import CircledIcon from "@/components/CircledIcon";
 import CircleQuestionMark from "@assets/svg/icon/CircleQuestionMark";
 import ArrowUpSvg from "@assets/svg/icon/ArrowUp";
 import { useBottomSheet } from "@/context/BottomSheetContext";
@@ -33,7 +14,6 @@ import { Indicator } from "@/entities/Indicator";
 import { StatesBottomSheet } from "./StateBottomSheet";
 import { PeriodBottomSheet } from "./PeriodBottomSheet";
 import DatePicker from "react-native-date-picker";
-import DateOrTimeDisplay, { LightDateOrTimeDisplay } from "../DateOrTimeDisplay";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import HelpView from "@/components/HelpView";
 
