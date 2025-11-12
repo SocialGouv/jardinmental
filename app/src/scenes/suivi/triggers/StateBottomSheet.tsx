@@ -87,11 +87,6 @@ export const StatesBottomSheet = ({
         showsVerticalScrollIndicator={false}
         style={{ paddingVertical: 20, height: height90vh }}
       >
-        <View className="self-end mr-4">
-          <TouchableOpacity onPress={() => {}}>
-            <Text className={mergeClassNames(typography.textLgMedium, "text-cnam-primary-800")}>Effacer</Text>
-          </TouchableOpacity>
-        </View>
         <View className="p-4 flex-column flex-1 gap-6">
           <Text className={mergeClassNames(typography.displayXsSemibold, "text-left text-cnam-primary-900")}>
             Sélectionnez un état {indicator ? `pour ${indicator.name}` : ``}

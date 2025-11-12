@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View, Dimensions, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Dimensions, Text, TouchableOpacity, Alert } from "react-native";
 import { beforeToday, formatDateToFrenchNumericFormat } from "@/utils/date/helpers";
 import { colors } from "@/utils/colors";
 import JMButton from "@/components/JMButton";
@@ -126,6 +126,10 @@ const Events = ({ navigation }) => {
   };
 
   const openStateBottomSheet = () => {
+    if (!selectedIndicator) {
+      Alert.alert(`Sélectionnez d'abord un indicateur`);
+      return;
+    }
     showBottomSheet(
       <StatesBottomSheet
         onClose={onCloseStateBottomSheet}

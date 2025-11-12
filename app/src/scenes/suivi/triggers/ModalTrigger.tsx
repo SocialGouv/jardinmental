@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, Image, FlatList } from "react-native";
+import { View, Text, TouchableOpacity, Image, FlatList, Alert } from "react-native";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
 import { DiaryDataContext } from "@/context/diaryData";
@@ -167,6 +167,10 @@ export const ModalTriggerScreen: React.FC<ModalTriggerScreenProps> = ({ navigati
   };
 
   const openStateBottomSheet = () => {
+    if (!selectedIndicator) {
+      Alert.alert(`Sélectionnez d'abord un indicateur`);
+      return;
+    }
     showBottomSheet(
       <StatesBottomSheet
         onClose={onCloseStateBottomSheet}
@@ -201,6 +205,7 @@ export const ModalTriggerScreen: React.FC<ModalTriggerScreenProps> = ({ navigati
       <FlatList
         showsVerticalScrollIndicator={false}
         data={filteredDiaryData}
+        bounces={false}
         ListHeaderComponent={
           <View className="mb-4">
             <View className=" bg-cnam-cyan-50-lighten-90 p-4">
@@ -364,23 +369,7 @@ export const ModalTriggerScreen: React.FC<ModalTriggerScreenProps> = ({ navigati
                     </Text>
                   </View>
                 </View>
-                <View className="flex-grow"></View>
-                <View className="flex-column space-y-2 mb-6 px-4">
-                  <JMButton
-                    variant="outline"
-                    title={"Retour aux analyses"}
-                    onPress={() => {
-                      navigation.goBack();
-                    }}
-                  ></JMButton>
-                  <JMButton
-                    variant="primary"
-                    title={"Compléter mes observations"}
-                    onPress={() => {
-                      navigation.navigate("tabs");
-                    }}
-                  ></JMButton>
-                </View>
+                <View style={{ height: 120 }}></View>
               </>
             )}
           </View>
@@ -423,6 +412,36 @@ export const ModalTriggerScreen: React.FC<ModalTriggerScreenProps> = ({ navigati
         className=" flex-col space-y-4 bg-cnam-primary-25"
         showsHorizontalScrollIndicator={false}
       ></FlatList>
+      {!filteredDiaryData?.length && (
+        <View
+          style={{
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            right: 0,
+            paddingBottom: insets.bottom,
+            paddingTop: 16,
+            paddingHorizontal: 16,
+          }}
+        >
+          <View style={{ gap: 8 }}>
+            <JMButton
+              variant="outline"
+              title={"Retour aux analyses"}
+              onPress={() => {
+                navigation.goBack();
+              }}
+            />
+            <JMButton
+              variant="primary"
+              title={"Compléter mes observations"}
+              onPress={() => {
+                navigation.navigate("tabs");
+              }}
+            />
+          </View>
+        </View>
+      )}
     </View>
   );
 };
