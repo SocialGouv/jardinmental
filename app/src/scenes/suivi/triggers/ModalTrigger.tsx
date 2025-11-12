@@ -17,11 +17,41 @@ import { IndicatorsBottomSheet } from "./IndicatorsBottomSheet";
 import { StatesBottomSheet } from "./StateBottomSheet";
 import DatePicker from "react-native-date-picker";
 import { DiaryEntry } from "@/entities/DiaryData";
+import { colorsMap, SCORE_MAP_INFO, scoresMapIcon } from "@/utils/constants";
 
 interface ModalTriggerScreenProps {
   navigation: any;
   route?: any;
 }
+
+const CircleStateInfo = ({
+  selectedIndicator,
+  selectedState,
+}: {
+  selectedIndicator: Indicator;
+  selectedState: {
+    value: number;
+    label: string;
+  };
+}) => {
+  const scoreVisualConfig = SCORE_MAP_INFO[selectedIndicator?.order || "ASC"][selectedState.value];
+  return (
+    <View
+      className="h-6 w-6 rounded-full mr-2 items-center justify-center"
+      style={{
+        backgroundColor: scoreVisualConfig.color,
+      }}
+    >
+      <Text
+        style={{
+          color: scoreVisualConfig.iconColor,
+        }}
+      >
+        {scoreVisualConfig.symbol}
+      </Text>
+    </View>
+  );
+};
 
 export const ModalTriggerScreen: React.FC<ModalTriggerScreenProps> = ({ navigation, route }) => {
   const insets = useSafeAreaInsets();
@@ -227,6 +257,7 @@ export const ModalTriggerScreen: React.FC<ModalTriggerScreenProps> = ({ navigati
               <View className="flex-row justify-between px-2 rounded-2xl items-center">
                 <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>était</Text>
                 <TouchableOpacity className="flex-row items-center justify-between" onPress={openStateBottomSheet}>
+                  {selectedState && <CircleStateInfo selectedIndicator={selectedIndicator} selectedState={selectedState} />}
                   <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>
                     {selectedState ? selectedState.label : `Sélectionnez un état`}
                   </Text>

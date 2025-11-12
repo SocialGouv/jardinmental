@@ -3,7 +3,7 @@ import React from "react";
 import { View, Text, Dimensions, StyleSheet, TouchableOpacity } from "react-native";
 import PieChart from "react-native-pie-chart";
 import RoundButtonIcon from "@/components/RoundButtonIcon";
-import { analyzeScoresMapIcon, EMOTION_COLORS, scoresMapIcon, TW_COLORS } from "@/utils/constants";
+import { analyzeScoresMapIcon, EMOTION_COLORS, SCORE_MAP_INFO, scoresMapIcon, TW_COLORS } from "@/utils/constants";
 import CircledIcon, { mapIconToSvg } from "@/components/CircledIcon";
 import logEvents from "@/services/logEvents";
 import { mergeClassNames } from "@/utils/className";
@@ -11,69 +11,6 @@ import { typography } from "@/utils/typography";
 import ChevronIcon from "@assets/svg/icon/chevron";
 import ArrowIcon from "@assets/svg/icon/Arrow";
 import ArrowUpSvg from "@assets/svg/icon/ArrowUp";
-
-const SCORE_MAP_INFO = {
-  ASC: [
-    {
-      color: "#E3F6F8",
-    },
-    {
-      ...scoresMapIcon[1],
-      ...analyzeScoresMapIcon[1],
-      label: "Très bas",
-    },
-    {
-      ...scoresMapIcon[2],
-      ...analyzeScoresMapIcon[2],
-      label: "Bas",
-    },
-    {
-      ...scoresMapIcon[3],
-      ...analyzeScoresMapIcon[3],
-      label: "Neutre",
-    },
-    {
-      ...scoresMapIcon[4],
-      ...analyzeScoresMapIcon[4],
-      label: "Haut",
-    },
-    {
-      ...scoresMapIcon[5],
-      ...analyzeScoresMapIcon[5],
-      label: "Très haut",
-    },
-  ],
-  DESC: [
-    {
-      color: "#E3F6F8",
-    },
-    {
-      ...scoresMapIcon[5],
-      ...analyzeScoresMapIcon[5],
-      label: "Très haut",
-    },
-    {
-      ...scoresMapIcon[4],
-      ...analyzeScoresMapIcon[4],
-      label: "Haut",
-    },
-    {
-      ...scoresMapIcon[3],
-      ...analyzeScoresMapIcon[3],
-      label: "Neutre",
-    },
-    {
-      ...scoresMapIcon[2],
-      ...analyzeScoresMapIcon[2],
-      label: "Bas",
-    },
-    {
-      ...scoresMapIcon[1],
-      ...analyzeScoresMapIcon[1],
-      label: "Très bas",
-    },
-  ],
-};
 
 const screenHeight = Dimensions.get("window").height;
 
