@@ -12,13 +12,14 @@ import { firstLetterUppercase } from "@/utils/string-util";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { colors } from "@/utils/colors";
 import JMButton from "@/components/JMButton";
-import { PeriodBottomSheet } from "./PeriodBottomSheet";
+import { PeriodBottomSheet, PeriodRangeDate } from "./PeriodBottomSheet";
 import { IndicatorsBottomSheet } from "./IndicatorsBottomSheet";
 import { StatesBottomSheet } from "./StateBottomSheet";
 import DatePicker from "react-native-date-picker";
 import { DiaryEntry } from "@/entities/DiaryData";
-import { colorsMap, SCORE_MAP_INFO, scoresMapIcon } from "@/utils/constants";
+import { colorsMap, SCORE_MAP_INFO, scoresMapIcon, STORAGE_KEY_START_DATE } from "@/utils/constants";
 import { DEFAULT_INDICATOR_LABELS, INDICATOR_LABELS } from "@/utils/liste_indicateurs.1";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface ModalTriggerScreenProps {
   navigation: any;
@@ -54,13 +55,33 @@ const CircleStateInfo = ({
   );
 };
 
-export const ModalTriggerScreen: React.FC<ModalTriggerScreenProps> = ({ navigation, route }) => {
+export const ModalTriggerScreen: React.FC<ModalTriggerScreenProps> = ({
+  navigation,
+  route,
+}: {
+  navigation: any;
+  route: {
+    params: {
+      fromDate: Date;
+      toDate: Date;
+      selectedIndicator: Indicator;
+      selectedPeriod: {
+        value: PeriodRangeDate;
+        label: string;
+      };
+      selectedState: {
+        value: number;
+        label: string;
+      };
+    };
+  };
+}) => {
   const insets = useSafeAreaInsets();
   const [diaryData] = useContext(DiaryDataContext);
   const [fromDate, setFromDate] = React.useState(route.params.fromDate);
   const [toDate, setToDate] = React.useState(route.params.toDate);
   const { showBottomSheet, closeBottomSheet } = useBottomSheet();
-  const [selectedIndicator, setSelectedIndicator] = useState<Indicator | undefined>(route.params.selectedIndicator);
+  const [selectedIndicator, setSelectedIndicator] = useState<Indicator>(route.params.selectedIndicator);
   const [selectedState, setSelectedState] = useState<
     | {
         value: number;
@@ -69,7 +90,7 @@ export const ModalTriggerScreen: React.FC<ModalTriggerScreenProps> = ({ navigati
     | undefined
   >(route.params.selectedState);
   const [selectedPeriod, setSelectedPeriod] = useState<{
-    value: number;
+    value: PeriodRangeDate;
     label: string;
   }>(route.params.selectedPeriod);
 
@@ -148,8 +169,8 @@ export const ModalTriggerScreen: React.FC<ModalTriggerScreenProps> = ({ navigati
         setFromDate(_fromDate);
         setToDate(_toDate);
       }
-      computeDate();
     };
+    computeDate();
   }, [selectedPeriod]);
 
   useEffect(() => {
@@ -172,8 +193,6 @@ export const ModalTriggerScreen: React.FC<ModalTriggerScreenProps> = ({ navigati
     closeBottomSheet();
     if (_selectedIndicators.length) {
       setSelectedIndicator(_selectedIndicators[0]);
-    } else {
-      setSelectedIndicator(undefined);
     }
   };
 
@@ -197,7 +216,7 @@ export const ModalTriggerScreen: React.FC<ModalTriggerScreenProps> = ({ navigati
     selectedPeriod: _selectedPeriod,
   }: {
     selectedPeriod: {
-      value: string;
+      value: PeriodRangeDate;
       label: string;
     };
   }) => {
@@ -252,6 +271,7 @@ export const ModalTriggerScreen: React.FC<ModalTriggerScreenProps> = ({ navigati
       <FlatList
         showsVerticalScrollIndicator={false}
         data={filteredDiaryData}
+        keyExtractor={(item) => item.date}
         bounces={false}
         ListHeaderComponent={
           <View className="mb-4">
@@ -484,7 +504,7 @@ export const ModalTriggerScreen: React.FC<ModalTriggerScreenProps> = ({ navigati
               variant="primary"
               title={"Compléter mes observations"}
               onPress={() => {
-                navigation.navigate("tabs");
+                navigation.navigate("tabs", { initialTab: "Status" });
               }}
             />
           </View>

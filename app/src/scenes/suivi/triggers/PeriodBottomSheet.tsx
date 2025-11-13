@@ -13,7 +13,7 @@ import { INDICATOR_LABELS, DEFAULT_INDICATOR_LABELS } from "@/utils/liste_indica
 const screenHeight = Dimensions.get("window").height;
 const height90vh = screenHeight * 0.9;
 
-enum RangeDate {
+export enum PeriodRangeDate {
   "lastDays7" = "lastDays7",
   "lastDays14" = "lastDays14",
   "lastDays30" = "lastDays30",
@@ -25,19 +25,19 @@ export const PeriodBottomSheet = ({
   onClose,
   initialSelectedPeriod,
 }: {
-  initialSelectedPeriod?: { value: RangeDate; label: string };
-  onClose: ({ selectedPeriod }: { selectedPeriod: { value: RangeDate; label: string } | undefined }) => void;
+  initialSelectedPeriod?: { value: PeriodRangeDate; label: string };
+  onClose: ({ selectedPeriod }: { selectedPeriod: { value: PeriodRangeDate; label: string } | undefined }) => void;
 }) => {
-  const [periodList] = useState<{ value: RangeDate; label: string }[]>([
-    { label: "7 derniers jours", value: RangeDate.lastDays7 },
-    { label: "14 derniers jours", value: RangeDate.lastDays14 },
-    { label: "30 derniers jours", value: RangeDate.lastDays30 },
-    { label: "Depuis le début", value: RangeDate.fromBeginning },
-    { label: "Choisir la période", value: RangeDate.custom },
+  const [periodList] = useState<{ value: PeriodRangeDate; label: string }[]>([
+    { label: "7 derniers jours", value: PeriodRangeDate.lastDays7 },
+    { label: "14 derniers jours", value: PeriodRangeDate.lastDays14 },
+    { label: "30 derniers jours", value: PeriodRangeDate.lastDays30 },
+    { label: "Depuis le début", value: PeriodRangeDate.fromBeginning },
+    { label: "Choisir la période", value: PeriodRangeDate.custom },
   ]);
-  const [selectedPeriod, setSelectedPeriod] = useState<{ value: RangeDate; label: string } | undefined>(initialSelectedPeriod);
+  const [selectedPeriod, setSelectedPeriod] = useState<{ value: PeriodRangeDate; label: string } | undefined>(initialSelectedPeriod);
 
-  const setToogleCheckbox = (d: { label: string; value: RangeDate }) => {
+  const setToogleCheckbox = (d: { label: string; value: PeriodRangeDate }) => {
     setSelectedPeriod(d);
   };
 

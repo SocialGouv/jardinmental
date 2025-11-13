@@ -12,7 +12,7 @@ import { useBottomSheet } from "@/context/BottomSheetContext";
 import { IndicatorsBottomSheet } from "./IndicatorsBottomSheet";
 import { Indicator } from "@/entities/Indicator";
 import { StatesBottomSheet } from "./StateBottomSheet";
-import { PeriodBottomSheet } from "./PeriodBottomSheet";
+import { PeriodBottomSheet, PeriodRangeDate } from "./PeriodBottomSheet";
 import DatePicker from "react-native-date-picker";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import HelpView from "@/components/HelpView";
@@ -43,10 +43,10 @@ const Events = ({ navigation }) => {
     | undefined
   >(undefined);
   const [selectedPeriod, setSelectedPeriod] = useState<{
-    value: number;
+    value: PeriodRangeDate;
     label: string;
   }>({
-    value: "lastDays7",
+    value: PeriodRangeDate.lastDays7,
     label: "7 derniers jours",
   });
 
@@ -77,8 +77,8 @@ const Events = ({ navigation }) => {
         setFromDate(_fromDate);
         setToDate(_toDate);
       }
-      computeDate();
     };
+    computeDate();
   }, [selectedPeriod]);
 
   useEffect(() => {
@@ -126,7 +126,7 @@ const Events = ({ navigation }) => {
     selectedPeriod: _selectedPeriod,
   }: {
     selectedPeriod: {
-      value: string;
+      value: PeriodRangeDate;
       label: string;
     };
   }) => {
