@@ -185,8 +185,9 @@ export const ModalTriggerScreen: React.FC<ModalTriggerScreenProps> = ({
     if (selectedIndicator && selectedState) {
       let label;
 
-      if (Object.keys(INDICATOR_LABELS).includes(selectedIndicator.uuid)) {
-        label = INDICATOR_LABELS[selectedIndicator.uuid][selectedState.value - 1];
+      const indicatorKey = selectedIndicator.uuid || selectedIndicator.name;
+      if (indicatorKey && Object.keys(INDICATOR_LABELS).includes(indicatorKey)) {
+        label = INDICATOR_LABELS[indicatorKey][selectedState.value - 1];
       } else {
         label = DEFAULT_INDICATOR_LABELS[selectedState.value - 1];
       }
