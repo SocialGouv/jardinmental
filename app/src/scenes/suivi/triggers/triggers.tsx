@@ -7,7 +7,6 @@ import { STORAGE_KEY_START_DATE, TW_COLORS } from "@/utils/constants";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
 import CircleQuestionMark from "@assets/svg/icon/CircleQuestionMark";
-import ArrowUpSvg from "@assets/svg/icon/ArrowUp";
 import { useBottomSheet } from "@/context/BottomSheetContext";
 import { IndicatorsBottomSheet } from "./IndicatorsBottomSheet";
 import { Indicator } from "@/entities/Indicator";
