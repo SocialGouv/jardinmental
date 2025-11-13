@@ -94,7 +94,7 @@ export const ModalTriggerScreen: React.FC<ModalTriggerScreenProps> = ({
     label: string;
   }>(route.params.selectedPeriod);
 
-  const computeFilteredDiaryData = React.useCallback(() => {
+  const filteredDiaryData = React.useMemo(() => {
     const chartDates = getArrayOfDatesFromTo({ fromDate, toDate });
     if (!selectedIndicator || !selectedState) {
       return null;
@@ -245,8 +245,6 @@ export const ModalTriggerScreen: React.FC<ModalTriggerScreenProps> = ({
       />
     );
   };
-
-  const filteredDiaryData = computeFilteredDiaryData();
 
   return (
     <View className="flex-1 bg-cnam-primary-25">
