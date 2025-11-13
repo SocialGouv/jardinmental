@@ -20,6 +20,7 @@ import { DiaryEntry } from "@/entities/DiaryData";
 import { colorsMap, SCORE_MAP_INFO, scoresMapIcon, STORAGE_KEY_START_DATE } from "@/utils/constants";
 import { DEFAULT_INDICATOR_LABELS, INDICATOR_LABELS } from "@/utils/liste_indicateurs.1";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Chevron from "./Chevron";
 
 interface ModalTriggerScreenProps {
   navigation: any;
@@ -289,13 +290,7 @@ export const ModalTriggerScreen: React.FC<ModalTriggerScreenProps> = ({
                   <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>
                     {selectedIndicator?.name || "Sélectionnez un indicateur"}
                   </Text>
-                  <View
-                    style={{
-                      transform: [{ rotate: "180deg" }],
-                    }}
-                  >
-                    <ArrowUpSvg color={colors.BLUE} />
-                  </View>
+                  <Chevron />
                 </TouchableOpacity>
               </View>
               <View className="flex-row justify-between px-2 rounded-2xl items-center">
@@ -305,13 +300,7 @@ export const ModalTriggerScreen: React.FC<ModalTriggerScreenProps> = ({
                   <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>
                     {selectedState ? selectedState.label : `Sélectionnez un état`}
                   </Text>
-                  <View
-                    style={{
-                      transform: [{ rotate: "180deg" }],
-                    }}
-                  >
-                    <ArrowUpSvg color={colors.BLUE} />
-                  </View>
+                  <Chevron />
                 </TouchableOpacity>
               </View>
               <View className="flex-row justify-between px-2 rounded-2xl items-center">
@@ -320,13 +309,7 @@ export const ModalTriggerScreen: React.FC<ModalTriggerScreenProps> = ({
                   <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>
                     {selectedPeriod.value === "custom" ? "Personalisée" : selectedPeriod.label}
                   </Text>
-                  <View
-                    style={{
-                      transform: [{ rotate: "180deg" }],
-                    }}
-                  >
-                    <ArrowUpSvg color={colors.BLUE} />
-                  </View>
+                  <Chevron />
                 </TouchableOpacity>
               </View>
               {selectedPeriod.value === "custom" && (
@@ -347,13 +330,7 @@ export const ModalTriggerScreen: React.FC<ModalTriggerScreenProps> = ({
                       <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>
                         {formatDateToFrenchNumericFormat(fromDate)}
                       </Text>
-                      <View
-                        style={{
-                          transform: [{ rotate: "180deg" }],
-                        }}
-                      >
-                        <ArrowUpSvg color={colors.BLUE} />
-                      </View>
+                      <Chevron />
                     </TouchableOpacity>
                     <TouchableOpacity
                       className="flex-row items-center justify-between"
@@ -367,13 +344,7 @@ export const ModalTriggerScreen: React.FC<ModalTriggerScreenProps> = ({
                       <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>
                         {formatDateToFrenchNumericFormat(toDate)}
                       </Text>
-                      <View
-                        style={{
-                          transform: [{ rotate: "180deg" }],
-                        }}
-                      >
-                        <ArrowUpSvg color={colors.BLUE} />
-                      </View>
+                      <Chevron />
                     </TouchableOpacity>
                     <DatePicker
                       timeZoneOffsetInMinutes={0}

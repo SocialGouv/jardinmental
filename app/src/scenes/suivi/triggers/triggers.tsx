@@ -17,6 +17,7 @@ import DatePicker from "react-native-date-picker";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import HelpView from "@/components/HelpView";
 import { DEFAULT_INDICATOR_LABELS, INDICATOR_LABELS } from "@/utils/liste_indicateurs.1";
+import Chevron from "./Chevron";
 
 const screenHeight = Dimensions.get("window").height;
 
@@ -190,13 +191,7 @@ const Events = ({ navigation }) => {
             <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>
               {selectedIndicator?.name || "Sélectionnez un indicateur"}
             </Text>
-            <View
-              style={{
-                transform: [{ rotate: "180deg" }],
-              }}
-            >
-              <ArrowUpSvg color={colors.BLUE} />
-            </View>
+            <Chevron />
           </TouchableOpacity>
         </View>
         <View className="flex-row justify-between px-2 rounded-2xl items-center">
@@ -205,13 +200,7 @@ const Events = ({ navigation }) => {
             <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>
               {selectedState ? selectedState.label : `Sélectionnez un état`}
             </Text>
-            <View
-              style={{
-                transform: [{ rotate: "180deg" }],
-              }}
-            >
-              <ArrowUpSvg color={colors.BLUE} />
-            </View>
+            <Chevron />
           </TouchableOpacity>
         </View>
         <View className="flex-row justify-between px-2 rounded-2xl items-center">
@@ -220,13 +209,7 @@ const Events = ({ navigation }) => {
             <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>
               {selectedPeriod.value === "custom" ? "Personalisée" : selectedPeriod.label}
             </Text>
-            <View
-              style={{
-                transform: [{ rotate: "180deg" }],
-              }}
-            >
-              <ArrowUpSvg color={colors.BLUE} />
-            </View>
+            <Chevron />
           </TouchableOpacity>
         </View>
         {selectedPeriod.value === "custom" && (
@@ -242,14 +225,7 @@ const Events = ({ navigation }) => {
             >
               <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>Du </Text>
               <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>{formatDateToFrenchNumericFormat(fromDate)}</Text>
-
-              <View
-                style={{
-                  transform: [{ rotate: "180deg" }],
-                }}
-              >
-                <ArrowUpSvg color={colors.BLUE} />
-              </View>
+              <Chevron />
             </TouchableOpacity>
             <TouchableOpacity
               className="flex-row items-center justify-between"
@@ -261,13 +237,7 @@ const Events = ({ navigation }) => {
             >
               <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>Au </Text>
               <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>{formatDateToFrenchNumericFormat(toDate)}</Text>
-              <View
-                style={{
-                  transform: [{ rotate: "180deg" }],
-                }}
-              >
-                <ArrowUpSvg color={colors.BLUE} />
-              </View>
+              <Chevron />
             </TouchableOpacity>
             <DatePicker
               timeZoneOffsetInMinutes={0}
