@@ -128,7 +128,7 @@ export const ModalTriggerScreen: React.FC<ModalTriggerScreenProps> = ({
           return null;
         }
 
-        if (Object.keys(dayData).filter((key) => dayData[key].userComment).length === 0) {
+        if (Object.keys(dayData).filter((key) => dayData[key]?.userComment).length === 0) {
           // if there is no user comment, we ignore this item
           return null;
         }
