@@ -31,6 +31,20 @@ interface ModalCorrelationScreenProps {
   route?: any;
 }
 
+function getSubArray<T>(array: T[], index: number, x: number): (T | undefined)[] {
+  const result: (T | undefined)[] = [];
+
+  for (let i = index - x; i <= index + x; i++) {
+    if (i < 0 || i >= array.length) {
+      result.push({}); // fill if out of bounds
+    } else {
+      result.push(array[i]);
+    }
+  }
+
+  return result;
+}
+
 export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ navigation, route }) => {
   const { config } = useDevCorrelationConfig();
   const MAX_NUNBER_OF_DAYS = config.maxDays;
@@ -292,7 +306,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
     );
   } else {
     return (
-      <SafeAreaView className="flex-1 bg-cnam-primary-25">
+      <SafeAreaView className="flex-1 bg-primary" edges={["top"]}>
         <View className="flex-row justify-between top-0 w-full bg-cnam-primary-800 p-4 items-center h-[96]">
           <Text className={mergeClassNames(typography.displayXsBold, "text-white")}>Correlation</Text>
           <TouchableOpacity
@@ -365,7 +379,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                       3 mois
                     </Text>
                   </TouchableOpacity>
-                  <TouchableOpacity
+                  {/* <TouchableOpacity
                     onPress={() => handlePeriodChange("6months")}
                     disabled={isPending}
                     className={mergeClassNames(
@@ -378,7 +392,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                     >
                       6 mois
                     </Text>
-                  </TouchableOpacity>
+                  </TouchableOpacity> */}
                 </View>
                 <View className="h-64 w-full">
                   {isVisible && displayItem && displayItem?.date && diaryData[displayItem.date] && (
@@ -388,7 +402,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                     >
                       <View className="flex-row justify-between items-center">
                         <Text className={mergeClassNames(typography.textXsBold, "bg-cnam-primary-800 text-white rounded-lg p-2")}>
-                          {firstLetterUppercase(formatDate(displayItem?.date))}
+                          {firstLetterUppercase(formatDate(displayItem?.date, true))}
                         </Text>
                         {/* <TouchableOpacity
                           onPress={() => {
@@ -470,13 +484,13 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                             selectedIndicators,
                             diaryDataForDate: diaryData[displayItem.date],
                             date: displayItem.date,
-                            data: dataToDisplay[0],
-                            dataB: dataToDisplay[1],
-                            treatment: dataToDisplay[2],
-                            treatmentSiBesoin: dataToDisplay[3],
+                            data: getSubArray(dataToDisplay[0], selectedPointIndex, 4),
+                            dataB: getSubArray(dataToDisplay[1], selectedPointIndex, 4),
+                            treatment: getSubArray(dataToDisplay[2], selectedPointIndex, 4),
+                            treatmentSiBesoin: getSubArray(dataToDisplay[3], selectedPointIndex, 4),
                             diaryData,
                             showTreatment,
-                            selectedPointIndex,
+                            selectedPointIndex: 4,
                           });
                         }}
                         className="flex-row items-center justify-end"

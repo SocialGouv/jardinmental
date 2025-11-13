@@ -94,7 +94,6 @@ export const IndicatorsBottomSheet = ({
                     ref={reminderToggleRef}
                     checked={showTreatment}
                     onCheckedChanged={async ({ checked }) => {
-                      console.log("LCS TOTO 2");
                       setShowTreatment(checked);
                     }}
                   />

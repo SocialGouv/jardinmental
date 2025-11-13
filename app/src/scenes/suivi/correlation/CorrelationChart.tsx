@@ -2,27 +2,30 @@ import { TW_COLORS } from "@/utils/constants";
 import CheckMarkIcon from "@assets/svg/icon/check";
 import CrossIcon from "@assets/svg/icon/Cross";
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { View, Dimensions, ScrollView } from "react-native";
+import { View, Dimensions, ScrollView, Text } from "react-native";
 import { LineChart, ruleTypes } from "react-native-gifted-charts";
 import Svg, { Circle } from "react-native-svg";
 import { useDevCorrelationConfig } from "@/hooks/useDevCorrelationConfig";
+import { mergeClassNames } from "@/utils/className";
+import { typography } from "@/utils/typography";
 
 const screenWidth = Dimensions.get("window").width;
 
 // Constants
 const DAY_INITIALS = ["D", "L", "M", "M", "J", "V", "S"];
+const MONTH_NAMES_FR = ["Jan", "Fév", "Mar", "Avr", "Mai", "Juin", "Juil", "Août", "Sep", "Oct", "Nov", "Déc"];
 const SPACING_CONFIG = {
-  "7days": 70,
-  "1month": 20,
-  "3months": 10,
+  "7days": 45,
+  "1month": 10,
+  "3months": 5,
   "6months": 1,
-  default: 50,
+  default: 70,
 };
 const LABEL_SPACING_CONFIG = {
   "7days": 1,
-  "1month": 3,
+  "1month": 10,
   "3months": 10,
-  default: 20,
+  default: 1,
 };
 
 // Type definitions for memoized components
@@ -209,7 +212,12 @@ export default function TestChart({
       if (config.useViewportOptimization && !isItemInViewport(index)) {
         return null;
       }
-      // console.log("LCS RENDER ITEM memoized");
+      if (
+        (config.hideDataPoints || spacingFormat === "1month" || spacingFormat === "3months" || spacingFormat === "6months") &&
+        !item.isTreatmentSiBesoin
+      ) {
+        return null;
+      }
       return <MemoizedDataPoint item={item} isSelected={isSelected} />;
     },
     [config.useViewportOptimization, isItemInViewport]
@@ -245,14 +253,56 @@ export default function TestChart({
     return `${day.toString().padStart(2, "0")}/${month.toString().padStart(2, "0")}/${year.toString().slice(-2)}`;
   }, []);
 
+  const isFirstDayOfMonth = useCallback((dateString) => {
+    if (!dateString) return false;
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return false;
+    return date.getDate() === 1;
+  }, []);
+
+  const isMonday = useCallback((dateString) => {
+    if (!dateString) return false;
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return false;
+    return date.getDay() === 1; // Monday is day 1 in JavaScript
+  }, []);
+
+  const formatShortDate = useCallback((dateString) => {
+    if (!dateString) return "";
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return dateString;
+
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+
+    return `${day.toString().padStart(2, "0")}/${month.toString().padStart(2, "0")}`;
+  }, []);
+
+  const formatMonthYear = useCallback((dateString) => {
+    if (!dateString) return "";
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return dateString;
+
+    const month = MONTH_NAMES_FR[date.getMonth()];
+    const year = date.getFullYear();
+
+    return `${month} ${year}`;
+  }, []);
+
   const formatLabel = useCallback(
     (dateString) => {
       if (spacingFormat === "7days") {
         return getDayInitial(dateString);
       }
+      if (spacingFormat === "1month") {
+        return isMonday(dateString) ? formatShortDate(dateString) : "";
+      }
+      if (spacingFormat === "3months") {
+        return isFirstDayOfMonth(dateString) ? formatMonthYear(dateString) : "";
+      }
       return formatDateToFrench(dateString);
     },
-    [spacingFormat, getDayInitial, formatDateToFrench]
+    [spacingFormat, getDayInitial, formatDateToFrench, isFirstDayOfMonth, formatMonthYear, isMonday, formatShortDate]
   );
 
   // Dynamic label spacing based on active period
@@ -285,14 +335,26 @@ export default function TestChart({
     return treatmentSiBesoin.slice(visibleStartIndex);
   }, [treatmentSiBesoin, showTreatment, visibleStartIndex, enablePagination]);
 
+  const customLabel = (val) => {
+    return (
+      <View style={{ width: 100 }}>
+        <Text className={mergeClassNames(spacingFormat === "7days" ? "ml-8" : "ml-4", typography.textSmSemibold, "text-cnam-primary-700")}>
+          | {val}
+        </Text>
+      </View>
+    );
+  };
   // Memoized data transformations to prevent re-creating arrays on every render
   // Store rendering properties directly on data objects instead of creating function closures
   const transformedData = useMemo(() => {
     return (visibleData || []).map((d, index) => {
       const needShift = visibleDataB && visibleDataB[index]?.value === d.value;
+      // For 3months and 1month spacing, always format the label (formatLabel will handle showing only first day of month)
+      const label =
+        spacingFormat === "3months" || spacingFormat === "1month" ? formatLabel(d.label) : index % labelSpacing === 0 ? formatLabel(d.label) : "";
       return {
         ...d,
-        label: index % labelSpacing === 0 ? formatLabel(d.label) : "",
+        label,
         color: "#00A5DF",
         backgroundColor: "#00A5DF",
         needShift: false,
@@ -302,18 +364,22 @@ export default function TestChart({
         focusedDataPointHeight: !config.useCustomRenderers ? undefined : 20,
         focusedDataPointColor: !config.useCustomRenderers ? undefined : d.noValue ? "transparent" : "#00A5DF",
         dataPointWidth: !config.useCustomRenderers ? (needShift ? 25 : 15) : undefined,
-        hideDataPoint: config.hideDataPoints || spacingFormat === "3months" || spacingFormat === "6months",
+        // hideDataPoint: config.hideDataPoints || spacingFormat === "1month" || spacingFormat === "3months" || spacingFormat === "6months",
+        labelComponent: label ? () => customLabel(label) : undefined,
       };
     });
-  }, [visibleData, visibleDataB, labelSpacing, formatLabel]);
+  }, [visibleData, visibleDataB, labelSpacing, formatLabel, spacingFormat]);
 
   const transformedDataB = useMemo(() => {
     if (!visibleDataB) return null;
     return visibleDataB.map((d, index) => {
       const needShift = visibleData[index]?.value === d.value;
+      // For 3months and 1month spacing, always format the label (formatLabel will handle showing only first day of month)
+      // const label =
+      //   spacingFormat === "3months" || spacingFormat === "1month" ? formatLabel(d.label) : index % labelSpacing === 0 ? formatLabel(d.label) : "";
       return {
         ...d,
-        label: index % labelSpacing === 0 ? formatLabel(d.label) : "",
+        // label,
         color: "#3D6874",
         backgroundColor: "white",
         // backgroundColor: "#3D6874",
@@ -323,36 +389,46 @@ export default function TestChart({
         focusedDataPointRadius: !config.useCustomRenderers ? undefined : 7,
         focusedDataPointHeight: !config.useCustomRenderers ? undefined : 20,
         needShift: true,
-        hideDataPoint: config.hideDataPoints || spacingFormat === "3months" || spacingFormat === "6months",
+        // hideDataPoint: config.hideDataPoints || spacingFormat === "1month" || spacingFormat === "3months" || spacingFormat === "6months",
       };
     });
-  }, [visibleDataB, visibleData, labelSpacing, formatLabel]);
+  }, [visibleDataB, visibleData, labelSpacing, formatLabel, spacingFormat]);
 
   const transformedTreatment = useMemo(() => {
     if (!visibleTreatment) return null;
-    return (visibleTreatment || []).map((t, index) => ({
-      ...t,
-      label: index % labelSpacing === 0 ? formatLabel(t.label) : "",
-      isTreatment: true,
-      dataPointColor: t.noValue ? "transparent" : TW_COLORS.CNAM_PRIMARY_800,
-      focusedDataPointColor: t.noValue ? "transparent" : TW_COLORS.CNAM_PRIMARY_800,
+    return (visibleTreatment || []).map((t, index) => {
+      // For 3months and 1month spacing, always format the label (formatLabel will handle showing only first day of month)
+      // const label =
+      //   spacingFormat === "3months" || spacingFormat === "1month" ? formatLabel(t.label) : index % labelSpacing === 0 ? formatLabel(t.label) : "";
+      return {
+        ...t,
+        // label,
+        isTreatment: true,
+        dataPointColor: t.noValue ? "transparent" : TW_COLORS.CNAM_PRIMARY_800,
+        focusedDataPointColor: t.noValue ? "transparent" : TW_COLORS.CNAM_PRIMARY_800,
 
-      dataPointShape: t.treatmentValue === true ? "rectangular" : "circular",
-    }));
-  }, [visibleTreatment, labelSpacing, formatLabel]);
+        dataPointShape: t.treatmentValue === true ? "rectangular" : "circular",
+      };
+    });
+  }, [visibleTreatment, labelSpacing, formatLabel, spacingFormat]);
 
   const transformedTreatmentSiBesoin = useMemo(() => {
     if (!visibleTreatmentSiBesoin) return null;
-    return (visibleTreatmentSiBesoin || []).map((t, index) => ({
-      ...t,
-      label: index % labelSpacing === 0 ? formatLabel(t.label) : "",
-      color: TW_COLORS.CNAM_PRIMARY_800,
-      dataPointColor: t.noValue ? "transparent" : TW_COLORS.CNAM_PRIMARY_800,
-      focusedDataPointColor: t.noValue ? "transparent" : TW_COLORS.CNAM_PRIMARY_800,
-      backgroundColor: TW_COLORS.CNAM_PRIMARY_800,
-      isTreatmentSiBesoin: true,
-    }));
-  }, [visibleTreatmentSiBesoin, labelSpacing, formatLabel]);
+    return (visibleTreatmentSiBesoin || []).map((t, index) => {
+      // For 3months and 1month spacing, always format the label (formatLabel will handle showing only first day of month)
+      // const label =
+      //   spacingFormat === "3months" || spacingFormat === "1month" ? formatLabel(t.label) : index % labelSpacing === 0 ? formatLabel(t.label) : "";
+      return {
+        ...t,
+        // label,
+        color: TW_COLORS.CNAM_PRIMARY_800,
+        dataPointColor: t.noValue ? "transparent" : TW_COLORS.CNAM_PRIMARY_800,
+        focusedDataPointColor: t.noValue ? "transparent" : TW_COLORS.CNAM_PRIMARY_800,
+        backgroundColor: TW_COLORS.CNAM_PRIMARY_800,
+        isTreatmentSiBesoin: true,
+      };
+    });
+  }, [visibleTreatmentSiBesoin, labelSpacing, formatLabel, spacingFormat]);
 
   // Handle loading more data when scrolling to start (only if pagination is enabled)
   useEffect(() => {
@@ -406,7 +482,6 @@ export default function TestChart({
       if (item?.isTreatment) {
         return renderCustomDataPointTreatment(item, index, false);
       }
-      // console.log("custom data point");
       return renderCustomDataPoint(item, index, false);
     },
     [renderCustomDataPoint, renderCustomDataPointTreatment]
@@ -427,11 +502,11 @@ export default function TestChart({
       spacing={chartSpacing}
       yAxisSide={1}
       adjustToWidth={true}
-      xAxisLabelTextStyle={
-        spacingFormat === "7days"
-          ? { paddingLeft: 15, height: 20, marginTop: 10, fontWeight: "bold", color: TW_COLORS.CNAM_PRIMARY_700 }
-          : { fontSize: 10, color: "#666", width: 60, textAlign: "center" }
-      }
+      // xAxisLabelTextStyle={
+      //   spacingFormat === "7days"
+      //     ? { paddingLeft: 15, height: 20, marginTop: 10, fontWeight: "bold", color: TW_COLORS.CNAM_PRIMARY_700 }
+      //     : { fontSize: 10, color: "red", width: 120, textAlign: "center" }
+      // }
       // scrollToIndex={data.length - 1}
       xAxisTextNumberOfLines={1}
       xAxisLabelsHeight={20}
@@ -441,11 +516,15 @@ export default function TestChart({
       width={screenWidth - 72}
       focusEnabled={!displayfixed}
       disableScroll={displayfixed}
-      onFocus={(_item, index) => {
-        const actualIndex = index;
-        setDisplayItem(transformedData[actualIndex]);
-        setSelectedPointIndex(actualIndex);
-      }}
+      onFocus={
+        displayfixed
+          ? undefined
+          : (_item, index) => {
+              const actualIndex = index;
+              setDisplayItem(transformedData[actualIndex]);
+              setSelectedPointIndex(actualIndex);
+            }
+      }
       focusedDataPointIndex={selectedPointIndex}
       unFocusOnPressOut={false}
       showStripOnFocus={true}
@@ -455,7 +534,7 @@ export default function TestChart({
       showTextOnFocus={true}
       focusTogether={true}
       xAxisLabelsVerticalShift={0}
-      // showXAxisIndices={true}
+      showXAxisIndices={false}
       showYAxisIndices={false}
       yAxisLabelWidth={0}
       yAxisIndicesWidth={0}
@@ -463,19 +542,23 @@ export default function TestChart({
       xAxisIndicesColor={"#999"}
       stepValue={1}
       scrollRef={ref}
-      onScroll={(event) => {
-        if (event?.nativeEvent?.contentOffset?.x !== undefined) {
-          currentScrollX.current = event.nativeEvent.contentOffset.x;
+      onScroll={
+        config.useViewportOptimization
+          ? (event) => {
+              if (event?.nativeEvent?.contentOffset?.x !== undefined) {
+                currentScrollX.current = event.nativeEvent.contentOffset.x;
 
-          // Update visible range for viewport tracking
-          const scrollX = event.nativeEvent.contentOffset.x;
-          const viewportWidth = screenWidth - 72;
-          visibleRangeRef.current = {
-            first: Math.floor(scrollX / chartSpacing),
-            last: Math.ceil((scrollX + viewportWidth) / chartSpacing),
-          };
-        }
-      }}
+                // Update visible range for viewport tracking
+                const scrollX = event.nativeEvent.contentOffset.x;
+                const viewportWidth = screenWidth - 72;
+                visibleRangeRef.current = {
+                  first: Math.floor(scrollX / chartSpacing),
+                  last: Math.ceil((scrollX + viewportWidth) / chartSpacing),
+                };
+              }
+            }
+          : undefined
+      }
       data={transformedData}
       xAxisIndicesHeight={10}
       data2={transformedDataB}
@@ -503,41 +586,58 @@ export default function TestChart({
       pointerConfig={{
         activatePointersInstantlyOnTouch: false,
         activatePointersOnLongPress: true,
-
-        onResponderMove: () => {
-          // Clear any existing timeout
-          if (responderMoveTimeout.current) {
-            clearTimeout(responderMoveTimeout.current);
-          }
-          // Set timeout to delay the state change
-          responderMoveTimeout.current = setTimeout(() => {
-            setResponderMove(true);
-            // Immediately update with the stored pointer index
-            if (currentPointerIndex.current !== null) {
-              const index = currentPointerIndex.current;
-              const actualIndex = visibleStartIndex + index;
-              const item = transformedData[actualIndex] || (transformedDataB && transformedDataB[actualIndex]);
-              setSelectedPointIndex(actualIndex);
-              setDisplayItem(item);
-            }
-          }, 150);
-        },
-        onResponderEnd: () => {
-          // Cancel pending timeout
-          if (responderMoveTimeout.current) {
-            clearTimeout(responderMoveTimeout.current);
-            responderMoveTimeout.current = null;
-          }
-          setResponderMove(false);
-        },
-        onResponderGrant: () => {},
+        onResponderMove: displayfixed
+          ? undefined
+          : () => {
+              // Set timeout to delay the state change
+              if (!responderMove) {
+                responderMoveTimeout.current = setTimeout(() => {
+                  setResponderMove(true);
+                  // Immediately update with the stored pointer index
+                  if (currentPointerIndex.current !== null) {
+                    const index = currentPointerIndex.current;
+                    const actualIndex = visibleStartIndex + index;
+                    const item = transformedData[actualIndex] || (transformedDataB && transformedDataB[actualIndex]);
+                    setSelectedPointIndex(actualIndex);
+                    setDisplayItem(item);
+                  }
+                }, 150);
+              } else {
+                if (currentPointerIndex.current !== null) {
+                  const index = currentPointerIndex.current;
+                  const actualIndex = visibleStartIndex + index;
+                  const item = transformedData[actualIndex] || (transformedDataB && transformedDataB[actualIndex]);
+                  setSelectedPointIndex(actualIndex);
+                  setDisplayItem(item);
+                }
+              }
+              if (responderMove) {
+                if (currentPointerIndex.current !== null) {
+                  const index = currentPointerIndex.current;
+                  const actualIndex = visibleStartIndex + index;
+                  const item = transformedData[actualIndex] || (transformedDataB && transformedDataB[actualIndex]);
+                  setSelectedPointIndex(actualIndex);
+                  setDisplayItem(item);
+                }
+              }
+            },
+        onResponderEnd: displayfixed
+          ? undefined
+          : () => {
+              // Cancel pending timeout
+              if (responderMoveTimeout.current) {
+                clearTimeout(responderMoveTimeout.current);
+                responderMoveTimeout.current = null;
+              }
+              setResponderMove(false);
+            },
         persistPointer: false,
-        activatePointersDelay: 150,
+        activatePointersDelay: displayfixed ? 50000 : 150,
         pointerColor: "transparent",
         pointerStripWidth: 2,
         width: 20,
         height: 20,
-        showPointerStrip: true, //!!displayfixed,
+        showPointerStrip: displayfixed,
         initialPointerIndex: displayfixed ? initialSelectedPointIndex : null,
         pointerStripColor: TW_COLORS.CNAM_PRIMARY_700,
         pointerStripUptoDataPoint: false,

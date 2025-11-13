@@ -150,7 +150,6 @@ export const Correlation = ({ navigation, onScroll, scrollY, day, setDay, dynami
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
     chartDates.push(formatDay(tomorrow));
-    console.log(chartDates);
     for (const indicator of selectedIndicators) {
       const newData = chartDates
         .map((date) => {
