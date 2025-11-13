@@ -399,12 +399,12 @@ export const ModalTriggerScreen: React.FC<ModalTriggerScreenProps> = ({
                       timeZoneOffsetInMinutes={0}
                       locale="fr"
                       title="Du"
-                      minimumDate={toDate}
+                      minimumDate={fromDate}
                       androidVariant="iosClone"
                       mode="date"
                       modal
                       open={openToDate}
-                      date={fromDate}
+                      date={toDate}
                       confirmText="Valider"
                       onConfirm={(date) => {
                         setToDate(date);

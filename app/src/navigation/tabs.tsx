@@ -50,8 +50,10 @@ const Tabs = ({ navigation, route }) => {
       // Check if initialTab param is provided and switch to it
       if (route.params?.initialTab) {
         setActiveTab(route.params.initialTab);
+        // Clear the param after using it to avoid affecting goBack() navigation
+        navigation.setParams({ initialTab: undefined });
       }
-    }, [route.params?.initialTab])
+    }, [route.params?.initialTab, navigation])
   );
 
   const startSurvey = async () => {
