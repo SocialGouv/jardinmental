@@ -1,11 +1,8 @@
-import { View, Text, ScrollView, useWindowDimensions, Dimensions, TextInput, Pressable, TouchableOpacity } from "react-native";
+import { View, Text, ScrollView, Dimensions } from "react-native";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
-import { useEffect, useRef, useState } from "react";
-import localStorage from "@/utils/localStorage";
-import { Drug } from "@/entities/Drug";
+import { useEffect, useState } from "react";
 import { Indicator } from "@/entities/Indicator";
-import { InputToggle } from "@/components/InputToggle";
 import JMButton from "@/components/JMButton";
 import { LightSelectionnableItem } from "@/components/SelectionnableItem";
 import { INDICATOR_LABELS, DEFAULT_INDICATOR_LABELS } from "@/utils/liste_indicateurs.1";
@@ -77,8 +74,6 @@ export const StatesBottomSheet = ({
     }
     setSelectedStates(t);
   };
-
-  const handleAdd = async (value) => {};
 
   return (
     <View className="flex-1 bg-white">

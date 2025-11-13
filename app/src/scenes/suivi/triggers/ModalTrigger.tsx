@@ -140,7 +140,9 @@ export const ModalTriggerScreen: React.FC<ModalTriggerScreenProps> = ({
 
         return infoDate;
       })
-      .filter((data) => !!data); // we filter fa
+      .filter((data) => !!data)
+      .slice()
+      .reverse(); // Display from most recent to oldest
   }, [selectedIndicator, selectedState, fromDate, toDate, selectedPeriod, diaryData]);
 
   const [openFromDate, setOpenFromDate] = useState(false);
@@ -151,6 +153,7 @@ export const ModalTriggerScreen: React.FC<ModalTriggerScreenProps> = ({
       if (selectedPeriod.value !== "custom") {
         let _fromDate;
         let _toDate = beforeToday(0);
+        setIsSelectModalActive(true);
         switch (selectedPeriod.value) {
           case "lastDays7":
             _fromDate = beforeToday(7 - 1);
@@ -168,6 +171,11 @@ export const ModalTriggerScreen: React.FC<ModalTriggerScreenProps> = ({
         }
         setFromDate(_fromDate);
         setToDate(_toDate);
+        setTimeout(() => {
+          setIsSelectModalActive(false);
+        }, 50);
+      } else {
+        setIsSelectModalActive(false);
       }
     };
     computeDate();
@@ -378,7 +386,6 @@ export const ModalTriggerScreen: React.FC<ModalTriggerScreenProps> = ({
                       date={fromDate}
                       confirmText="Valider"
                       onConfirm={(date) => {
-                        console.log("date", date);
                         setFromDate(date);
                         setOpenFromDate(false);
                       }}
@@ -399,7 +406,6 @@ export const ModalTriggerScreen: React.FC<ModalTriggerScreenProps> = ({
                       date={fromDate}
                       confirmText="Valider"
                       onConfirm={(date) => {
-                        console.log("date", date);
                         setToDate(date);
                         setOpenToDate(false);
                       }}

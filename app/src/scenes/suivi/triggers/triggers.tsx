@@ -58,6 +58,7 @@ const Events = ({ navigation }) => {
     const computeDate = async () => {
       if (selectedPeriod.value !== "custom") {
         let _fromDate;
+        setIsSelectModalActive(true);
         let _toDate = beforeToday(0);
         switch (selectedPeriod.value) {
           case "lastDays7":
@@ -76,6 +77,11 @@ const Events = ({ navigation }) => {
         }
         setFromDate(_fromDate);
         setToDate(_toDate);
+        setTimeout(() => {
+          setIsSelectModalActive(false);
+        }, 50);
+      } else {
+        setIsSelectModalActive(false);
       }
     };
     computeDate();

@@ -1,14 +1,9 @@
-import { View, Text, ScrollView, useWindowDimensions, Dimensions, TextInput, Pressable, TouchableOpacity } from "react-native";
+import { View, Text, ScrollView, Dimensions } from "react-native";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
-import { useEffect, useRef, useState } from "react";
-import localStorage from "@/utils/localStorage";
-import { Drug } from "@/entities/Drug";
-import { Indicator } from "@/entities/Indicator";
-import { InputToggle } from "@/components/InputToggle";
+import { useState } from "react";
 import JMButton from "@/components/JMButton";
 import { LightSelectionnableItem } from "@/components/SelectionnableItem";
-import { INDICATOR_LABELS, DEFAULT_INDICATOR_LABELS } from "@/utils/liste_indicateurs.1";
 
 const screenHeight = Dimensions.get("window").height;
 const height90vh = screenHeight * 0.9;
