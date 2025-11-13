@@ -1,4 +1,4 @@
-import React, { use, useContext, useEffect, useMemo, useRef, useState } from "react";
+import React, { use, useContext, useEffect, useMemo, useRef, useState, useTransition } from "react";
 import { View, Text, ScrollView, TouchableOpacity, Dimensions, Image, FlatList } from "react-native";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
@@ -41,6 +41,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
   const [displayItem, setDisplayItem] = useState<null>();
   const [isVisible, setIsVisible] = useState(false);
   const [active, setActive] = useState("1month");
+  const [isPending, startTransition] = useTransition();
   const { showBottomSheet, closeBottomSheet } = useBottomSheet();
   const [selectedPointIndex, setSelectedPointIndex] = useState<number | null>();
 
@@ -72,12 +73,6 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
   const opacity = useSharedValue(0);
   const translateY = useSharedValue(-20);
 
-  // Animation values for period buttons
-  const animScale7days = useSharedValue(active === "7days" ? 1 : 0.98);
-  const animScale1month = useSharedValue(active === "1month" ? 1 : 0.98);
-  const animScale3months = useSharedValue(active === "3months" ? 1 : 0.98);
-  const animScale6months = useSharedValue(active === "6months" ? 1 : 0.98);
-
   // Animated styles for popup
   const animatedStyle = useAnimatedStyle(() => {
     return {
@@ -86,29 +81,11 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
     };
   });
 
-  // Animated styles for period buttons
-  const animatedStyle7days = useAnimatedStyle(() => ({
-    transform: [{ scale: animScale7days.value }],
-  }));
-  const animatedStyle1month = useAnimatedStyle(() => ({
-    transform: [{ scale: animScale1month.value }],
-  }));
-  const animatedStyle3months = useAnimatedStyle(() => ({
-    transform: [{ scale: animScale3months.value }],
-  }));
-  const animatedStyle6months = useAnimatedStyle(() => ({
-    transform: [{ scale: animScale6months.value }],
-  }));
-
-  // Handle period selection with animation
+  // Handle period selection
   const handlePeriodChange = (period: string) => {
-    setActive(period);
-
-    // Animate all buttons
-    animScale7days.value = withTiming(period === "7days" ? 1 : 0.98, { duration: 200 });
-    animScale1month.value = withTiming(period === "1month" ? 1 : 0.98, { duration: 200 });
-    animScale3months.value = withTiming(period === "3months" ? 1 : 0.98, { duration: 200 });
-    animScale6months.value = withTiming(period === "6months" ? 1 : 0.98, { duration: 200 });
+    startTransition(() => {
+      setActive(period);
+    });
   };
 
   // Handle animation when displayItem changes
@@ -137,8 +114,8 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
     //   return null;
     // }
     const data = [];
-    const twoYearsAgo = beforeToday(MAX_NUNBER_OF_DAYS); // Calculate date from 2 years ago
-    const chartDates = getArrayOfDates({ startDate: twoYearsAgo }); // Get all dates from 2 years ago to today
+    const startDate = beforeToday(MAX_NUNBER_OF_DAYS); // Calculate date from 2 years ago
+    const chartDates = getArrayOfDates({ startDate }); // Get all dates from 2 years ago to today
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
     chartDates.push(formatDay(tomorrow));
@@ -346,66 +323,62 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
               </TouchableOpacity>
               <View className="border border-cnam-cyan-lighten-80 p-4 rounded-2xl bg-white">
                 <View className="bg-cnam-primary-100 w-full h-[36] rounded-full flex-row justify-around">
-                  <Animated.View style={[animatedStyle7days]} className="flex-1">
-                    <TouchableOpacity
-                      onPress={() => handlePeriodChange("7days")}
-                      className={mergeClassNames(
-                        active === "7days" ? "bg-cnam-primary-300" : "",
-                        "flex-1 h-full px-4 rounded-full items-center justify-center"
-                      )}
+                  <TouchableOpacity
+                    onPress={() => handlePeriodChange("7days")}
+                    disabled={isPending}
+                    className={mergeClassNames(
+                      active === "7days" ? "bg-cnam-primary-300" : "",
+                      "flex-1 h-full px-4 rounded-full items-center justify-center"
+                    )}
+                  >
+                    <Text
+                      className={mergeClassNames(typography.textSmMedium, active === "7days" ? "text-cnam-primary-900" : "text-cnam-primary-700")}
                     >
-                      <Text
-                        className={mergeClassNames(typography.textSmMedium, active === "7days" ? "text-cnam-primary-900" : "text-cnam-primary-700")}
-                      >
-                        7 jours
-                      </Text>
-                    </TouchableOpacity>
-                  </Animated.View>
-                  <Animated.View style={[animatedStyle1month]} className="flex-1">
-                    <TouchableOpacity
-                      onPress={() => handlePeriodChange("1month")}
-                      className={mergeClassNames(
-                        active === "1month" ? "bg-cnam-primary-300" : "",
-                        "flex-1 h-full px-4 rounded-full items-center justify-center"
-                      )}
+                      7 jours
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => handlePeriodChange("1month")}
+                    disabled={isPending}
+                    className={mergeClassNames(
+                      active === "1month" ? "bg-cnam-primary-300" : "",
+                      "flex-1 h-full px-4 rounded-full items-center justify-center"
+                    )}
+                  >
+                    <Text
+                      className={mergeClassNames(typography.textSmMedium, active === "1month" ? "text-cnam-primary-900" : "text-cnam-primary-700")}
                     >
-                      <Text
-                        className={mergeClassNames(typography.textSmMedium, active === "1month" ? "text-cnam-primary-900" : "text-cnam-primary-700")}
-                      >
-                        1 mois
-                      </Text>
-                    </TouchableOpacity>
-                  </Animated.View>
-                  <Animated.View style={[animatedStyle3months]} className="flex-1">
-                    <TouchableOpacity
-                      onPress={() => handlePeriodChange("3months")}
-                      className={mergeClassNames(
-                        active === "3months" ? "bg-cnam-primary-300" : "",
-                        "flex-1 h-full px-4 rounded-full items-center justify-center"
-                      )}
+                      1 mois
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => handlePeriodChange("3months")}
+                    disabled={isPending}
+                    className={mergeClassNames(
+                      active === "3months" ? "bg-cnam-primary-300" : "",
+                      "flex-1 h-full px-4 rounded-full items-center justify-center"
+                    )}
+                  >
+                    <Text
+                      className={mergeClassNames(typography.textSmMedium, active === "3months" ? "text-cnam-primary-900" : "text-cnam-primary-700")}
                     >
-                      <Text
-                        className={mergeClassNames(typography.textSmMedium, active === "3months" ? "text-cnam-primary-900" : "text-cnam-primary-700")}
-                      >
-                        3 mois
-                      </Text>
-                    </TouchableOpacity>
-                  </Animated.View>
-                  <Animated.View style={[animatedStyle6months]} className="flex-1">
-                    <TouchableOpacity
-                      onPress={() => handlePeriodChange("6months")}
-                      className={mergeClassNames(
-                        active === "6months" ? "bg-cnam-primary-300" : "",
-                        "flex-1 h-full px-4 rounded-full items-center justify-center"
-                      )}
+                      3 mois
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => handlePeriodChange("6months")}
+                    disabled={isPending}
+                    className={mergeClassNames(
+                      active === "6months" ? "bg-cnam-primary-300" : "",
+                      "flex-1 h-full px-4 rounded-full items-center justify-center"
+                    )}
+                  >
+                    <Text
+                      className={mergeClassNames(typography.textSmMedium, active === "6months" ? "text-cnam-primary-900" : "text-cnam-primary-700")}
                     >
-                      <Text
-                        className={mergeClassNames(typography.textSmMedium, active === "6months" ? "text-cnam-primary-900" : "text-cnam-primary-700")}
-                      >
-                        6 mois
-                      </Text>
-                    </TouchableOpacity>
-                  </Animated.View>
+                      6 mois
+                    </Text>
+                  </TouchableOpacity>
                 </View>
                 <View className="h-64 w-full">
                   {isVisible && displayItem && displayItem?.date && diaryData[displayItem.date] && (
@@ -417,13 +390,13 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                         <Text className={mergeClassNames(typography.textXsBold, "bg-cnam-primary-800 text-white rounded-lg p-2")}>
                           {firstLetterUppercase(formatDate(displayItem?.date))}
                         </Text>
-                        <TouchableOpacity
+                        {/* <TouchableOpacity
                           onPress={() => {
                             setDisplayItem(null);
                           }}
                         >
                           <Text className={mergeClassNames(typography.textLgBold, "text-cnam-primary-800")}>✕</Text>
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
                       </View>
                       {displayItem &&
                         selectedIndicators.map((indicator, index) => {
@@ -512,6 +485,23 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                         <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-800 ml-2")}>Voir le détail</Text>
                       </TouchableOpacity>
                     </Animated.View>
+                  )}
+                  {!(isVisible && displayItem && displayItem?.date && diaryData[displayItem.date]) && (
+                    <View
+                      style={[animatedStyle]}
+                      className="border border-cnam-primary-300 bg-white rounded-2xl flex-col space-y-2 p-4 mb-6 mt-4 items-center justify-center h-[80] flex-1"
+                    >
+                      <Text
+                        className="mt-6"
+                        style={{
+                          fontStyle: "italic",
+                          fontWeight: 400,
+                          color: TW_COLORS.GRAY_700,
+                        }}
+                      >
+                        Sélectionnez un point pour afficher le détail
+                      </Text>
+                    </View>
                   )}
                 </View>
                 <View style={{ paddingTop: 10, paddingBottom: 50 }}>

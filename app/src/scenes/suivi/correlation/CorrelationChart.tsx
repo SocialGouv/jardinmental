@@ -302,6 +302,7 @@ export default function TestChart({
         focusedDataPointHeight: !config.useCustomRenderers ? undefined : 20,
         focusedDataPointColor: !config.useCustomRenderers ? undefined : d.noValue ? "transparent" : "#00A5DF",
         dataPointWidth: !config.useCustomRenderers ? (needShift ? 25 : 15) : undefined,
+        hideDataPoint: config.hideDataPoints || spacingFormat === "3months" || spacingFormat === "6months",
       };
     });
   }, [visibleData, visibleDataB, labelSpacing, formatLabel]);
@@ -322,6 +323,7 @@ export default function TestChart({
         focusedDataPointRadius: !config.useCustomRenderers ? undefined : 7,
         focusedDataPointHeight: !config.useCustomRenderers ? undefined : 20,
         needShift: true,
+        hideDataPoint: config.hideDataPoints || spacingFormat === "3months" || spacingFormat === "6months",
       };
     });
   }, [visibleDataB, visibleData, labelSpacing, formatLabel]);
@@ -434,7 +436,7 @@ export default function TestChart({
       xAxisTextNumberOfLines={1}
       xAxisLabelsHeight={20}
       xAxisThickness={0}
-      hideDataPoints={config.hideDataPoints || spacingFormat === "3months" || spacingFormat === "6months"}
+      // hideDataPoints={config.hideDataPoints || spacingFormat === "3months" || spacingFormat === "6months"}
       xAxisColor={"transparent"}
       width={screenWidth - 72}
       focusEnabled={!displayfixed}
@@ -448,7 +450,7 @@ export default function TestChart({
       unFocusOnPressOut={false}
       showStripOnFocus={true}
       stripColor={TW_COLORS.CNAM_PRIMARY_700}
-      stripHeight={400}
+      stripHeight={180}
       stripWidth={2}
       showTextOnFocus={true}
       focusTogether={true}
