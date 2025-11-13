@@ -212,6 +212,7 @@ class Router extends React.Component<RouterProps> {
             initialRouteName="tabs"
             screenOptions={{
               headerShown: false,
+              gestureEnabled: false,
               cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
             }}
           >
