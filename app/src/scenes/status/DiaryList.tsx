@@ -32,11 +32,13 @@ export const DiaryList = forwardRef(({ ...props }, ref) => {
 
   const [indicateurs, setIndicateurs] = useState<Indicator[] | undefined>();
   const [goalsData, setGoalsData] = useState();
+  const [customs, setCustoms] = useState([]);
   useFocusEffect(
     useCallback(() => {
       (async () => {
         setIndicateurs(await localStorage.getIndicateurs());
         setGoalsData(await getGoalsData());
+        setCustoms(await localStorage.getCustomSymptoms());
       })();
     }, [])
   );
@@ -79,14 +81,36 @@ export const DiaryList = forwardRef(({ ...props }, ref) => {
           </SquircleView>
         );
       } else {
-        return <NewStatusItem date={date} indicateurs={indicateurs} patientState={diaryData[date]} goalsData={goalsData} navigation={navigation} />;
+        return (
+          <NewStatusItem
+            date={date}
+            indicateurs={indicateurs}
+            patientState={diaryData[date]}
+            goalsData={goalsData}
+            navigation={navigation}
+            customs={customs}
+          />
+        );
       }
     },
-    [diaryData, goalsData, indicateurs]
+    [diaryData, goalsData, indicateurs, customs]
   );
 
   const keyExtractor = useCallback((date) => date);
-  return <Animated.FlatList ref={ref} data={sortedData} renderItem={renderItem} keyExtractor={keyExtractor} {...props} />;
+  return (
+    <Animated.FlatList
+      ref={ref}
+      data={sortedData}
+      renderItem={renderItem}
+      keyExtractor={keyExtractor}
+      {...props}
+      initialNumToRender={1}
+      maxToRenderPerBatch={5}
+      windowSize={1}
+      removeClippedSubviews={true}
+      updateCellsBatchingPeriod={50}
+    />
+  );
 });
 
 const styles = StyleSheet.create({
