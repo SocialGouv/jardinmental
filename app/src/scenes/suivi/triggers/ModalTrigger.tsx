@@ -100,17 +100,16 @@ export const ModalTriggerScreen: React.FC<ModalTriggerScreenProps> = ({
     }
 
     return chartDates
-      .map((date) => {
+      .map((date, index) => {
         let infoDate: { date: string; dayData?: DiaryEntry } = { date };
         const dayData = diaryData[date];
         if (!dayData) {
           return null;
         }
-        const indicatorState = dayData[selectedIndicator.uuid || selectedIndicator.name];
+        const indicatorState = dayData[selectedIndicator.uuid] || dayData[selectedIndicator.name];
         if (!indicatorState) {
           return null;
         }
-
         //   if (indicatorState?._indicateur?.order === "DESC") targetLevel = 6 - _targetLevel;
         let indicatorValue;
         if (indicatorState?._indicateur?.type === "smiley") {
