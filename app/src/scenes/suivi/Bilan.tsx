@@ -151,26 +151,6 @@ const Bilan = ({ navigation, startSurvey }) => {
                 friseInfoButtonRef={friseInfoButtonRef}
               />
             )}
-            {chartType === "Déclencheurs" && (
-              <EventFilterHeader
-                presetDate={presetDate}
-                setPresetDate={setPresetDate}
-                fromDate={fromDate}
-                setFromDate={setFromDate}
-                toDate={toDate}
-                setToDate={setToDate}
-                indicateur={indicateur}
-                setIndicateur={(indicatorName) => {
-                  setIndicateur(indicatorName);
-                  const _indicator = userIndicateurs.find((ind) => ind.name === indicatorName);
-                  setIndicateurId(getIndicatorKey(_indicator));
-                }}
-                level={level}
-                setLevel={setLevel}
-                userIndicateurs={userIndicateurs.filter(({ active }) => active)}
-                scrollY={scrollY}
-              />
-            )}
           </View>
         </View>
         {/* Render all tabs but hide inactive ones to preserve state */}

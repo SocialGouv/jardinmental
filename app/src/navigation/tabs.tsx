@@ -26,7 +26,8 @@ const Tab = createMaterialTopTabNavigator();
 const Tabs = ({ navigation, route }) => {
   const insets = useSafeAreaInsets();
   const { setCustomColor } = useStatusBar();
-  const [activeTab, setActiveTab] = useState("Status");
+  const initialTab = route.params?.initialTab || "Status";
+  const [activeTab, setActiveTab] = useState(initialTab);
   const [hasVisitedResources, setHasVisitedResources] = React.useState(true); // Default to true to avoid flash
 
   React.useEffect(() => {
@@ -45,7 +46,14 @@ const Tabs = ({ navigation, route }) => {
     React.useCallback(() => {
       // Reset current index when the screen is focused
       setCustomColor(TW_COLORS.PRIMARY);
-    }, [])
+
+      // Check if initialTab param is provided and switch to it
+      if (route.params?.initialTab) {
+        setActiveTab(route.params.initialTab);
+        // Clear the param after using it to avoid affecting goBack() navigation
+        navigation.setParams({ initialTab: undefined });
+      }
+    }, [route.params?.initialTab, navigation])
   );
 
   const startSurvey = async () => {
