@@ -59,6 +59,7 @@ import SupportScreen from "@/scenes/support/SupportScreen";
 import DiaryDetail from "@/scenes/status/DiaryDetail";
 import { ModalCorrelationScreen } from "@/scenes/suivi/correlation/ModalCorrelation";
 import { DetailModalCorrelationScreen } from "@/scenes/suivi/correlation/ModalDetailCorrelation";
+import { ModalTriggerScreen } from "@/scenes/suivi/triggers/ModalTrigger";
 
 const Stack = createStackNavigator();
 
@@ -213,6 +214,7 @@ class Router extends React.Component<RouterProps> {
             initialRouteName="tabs"
             screenOptions={{
               headerShown: false,
+              gestureEnabled: false,
               cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
             }}
           >
@@ -253,7 +255,15 @@ class Router extends React.Component<RouterProps> {
             <Stack.Screen name="view-beck" component={ViewBeck} />
             <Stack.Screen name="beck" component={Beck} />
             {/* <Stack.Screen name="contribute" component={Contribute} /> */}
-
+            <Stack.Screen
+              name="trigger-modal"
+              component={ModalTriggerScreen}
+              options={{
+                cardStyleInterpolator: CardStyleInterpolators.forRevealFromBottomAndroid,
+                // cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS,
+                presentation: "modal",
+              }}
+            />
             <Stack.Screen name="indicators-settings-more" component={IndicatorsSettingsMore} />
             <Stack.Screen name="goals-settings" component={GoalsSettings} />
             <Stack.Screen name="goals-settings-more" component={GoalsSettingsMore} />

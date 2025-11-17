@@ -72,7 +72,7 @@ const markdownStyles = {
 const HelpView = ({ title, description, link, isMd }: Props) => {
   return (
     <View className="flex-1 bg-white p-4 pb-16">
-      <Text className={mergeClassNames(typography.textXlBold, "mb-4 text-cnam-primary-950")}>{title}</Text>
+      <Text className={mergeClassNames(typography.textXlBold, "mb-6 text-cnam-primary-950")}>{title}</Text>
       {!isMd && <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>{description}</Text>}
       {isMd && <Markdown style={markdownStyles}>{description}</Markdown>}
       {link && (

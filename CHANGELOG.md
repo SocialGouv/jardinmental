@@ -1,3 +1,17 @@
+# [1.124.0](https://github.com/SocialGouv/jardinmental/compare/v1.123.0...v1.124.0) (2025-11-14)
+
+
+### Features
+
+* add new trigger screen  ([#611](https://github.com/SocialGouv/jardinmental/issues/611)) ([15eeeb0](https://github.com/SocialGouv/jardinmental/commit/15eeeb046573c5c509f5227d543c537ba14f02ea))
+
+# [1.123.0](https://github.com/SocialGouv/jardinmental/compare/v1.122.0...v1.123.0) (2025-11-13)
+
+
+### Features
+
+* bump version ([9048076](https://github.com/SocialGouv/jardinmental/commit/90480763d3ed65b52557b006e3b5a79d19cf20ed))
+
 # [1.122.0](https://github.com/SocialGouv/jardinmental/compare/v1.121.1...v1.122.0) (2025-11-04)
 
 

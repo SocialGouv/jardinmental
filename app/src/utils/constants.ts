@@ -144,6 +144,69 @@ export const yesNoMapIcon = {
 
 export const colorsMap = Object.keys(EMOTION_COLORS).map((key) => EMOTION_COLORS[key]);
 
+export const SCORE_MAP_INFO = {
+  ASC: [
+    {
+      color: "#E3F6F8",
+    },
+    {
+      ...scoresMapIcon[1],
+      ...analyzeScoresMapIcon[1],
+      label: "Très bas",
+    },
+    {
+      ...scoresMapIcon[2],
+      ...analyzeScoresMapIcon[2],
+      label: "Bas",
+    },
+    {
+      ...scoresMapIcon[3],
+      ...analyzeScoresMapIcon[3],
+      label: "Neutre",
+    },
+    {
+      ...scoresMapIcon[4],
+      ...analyzeScoresMapIcon[4],
+      label: "Haut",
+    },
+    {
+      ...scoresMapIcon[5],
+      ...analyzeScoresMapIcon[5],
+      label: "Très haut",
+    },
+  ],
+  DESC: [
+    {
+      color: "#E3F6F8",
+    },
+    {
+      ...scoresMapIcon[5],
+      ...analyzeScoresMapIcon[5],
+      label: "Très haut",
+    },
+    {
+      ...scoresMapIcon[4],
+      ...analyzeScoresMapIcon[4],
+      label: "Haut",
+    },
+    {
+      ...scoresMapIcon[3],
+      ...analyzeScoresMapIcon[3],
+      label: "Neutre",
+    },
+    {
+      ...scoresMapIcon[2],
+      ...analyzeScoresMapIcon[2],
+      label: "Bas",
+    },
+    {
+      ...scoresMapIcon[1],
+      ...analyzeScoresMapIcon[1],
+      label: "Très bas",
+    },
+  ],
+};
+
 export const categoryStates = {
   VERY_GOOD: {
     id: "VERY_GOOD",

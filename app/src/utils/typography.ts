@@ -20,6 +20,8 @@ export const typography = {
   textMdMedium: "text-base font-normal font-body leading-6",
   textMdBold: "text-base font-bold font-body leading-6",
   textSmMedium: "text-sm font-medium font-body",
+  textSmRegular: "text-sm font-normal font-body",
+
   textSmSemibold: "text-sm font-semibold font-body leading-[30px]",
   textSmBold: "text-sm font-bold font-body leading-5",
   textXsBold: "text-xs font-bold font-body text-center",
