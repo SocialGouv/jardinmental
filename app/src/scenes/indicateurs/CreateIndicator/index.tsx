@@ -256,6 +256,8 @@ const pickerSelectStyles = StyleSheet.create({
     color: TW_COLORS.CNAM_PRIMARY_900,
     backgroundColor: "white",
   },
+  // needed otherwas nothing happen when clicking on category
+  inputIOSContainer: { pointerEvents: "none" },
   inputAndroid: {
     fontSize: 16,
     marginTop: 20,
