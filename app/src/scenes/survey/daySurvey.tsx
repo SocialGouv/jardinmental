@@ -406,12 +406,16 @@ const DaySurvey = ({
 
   return (
     <AnimatedHeaderScrollScreen
-      headerRightComponent={<PencilIcon color={selectedMoodIndex === null ? TW_COLORS.WHITE : TW_COLORS.CNAM_PRIMARY_900} width={16} height={16} />}
+      headerRightComponent={
+        <Text className={mergeClassNames(selectedMoodIndex === null ? "text-white" : "text-cnam-primary-950")}>Personnaliser mon suivi</Text>
+      }
       headerRightAction={editIndicators}
-      headerTitle={formatDate(initSurvey?.date)}
+      // headerTitle={formatDate(initSurvey?.date)}
       handlePrevious={() => {
         navigation.goBack();
       }}
+      subtitle={formatDate(initSurvey?.date)}
+      dynamicTitle=" "
       headerLeftComponent={<ChevronIcon color={selectedMoodIndex === null ? TW_COLORS.WHITE : TW_COLORS.CNAM_PRIMARY_900} />}
       animatedStatusBarColor={animatedStatusBarColor}
       animatedTextColor={animatedTextColor}

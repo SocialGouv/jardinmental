@@ -36,6 +36,7 @@ interface IndicatorScreenProps {
   handlePrevious?: () => void;
   children?: React.ReactNode;
   dynamicTitle?: string;
+  subtitle?: string;
   hasProgressBar?: boolean;
   bottomComponent?: React.ReactNode;
   headerRightComponent?: React.ReactNode;
@@ -64,6 +65,7 @@ export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
   dynamicTitle,
   hasProgressBar,
   headerTitle,
+  subtitle,
   bottomComponent,
   headerRightComponent,
   headerLeftComponent,
@@ -293,6 +295,7 @@ export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
         <BannerHeader
           inAbsoluteView={true}
           headerTitle={headerTitle}
+          subtitle={subtitle}
           dynamicTitle={dynamicTitle || firstLetterUppercase(title)}
           header={
             category ? (
