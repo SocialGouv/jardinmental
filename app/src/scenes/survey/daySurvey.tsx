@@ -38,6 +38,7 @@ import { useStatusBar } from "@/context/StatusBarContext";
 import PencilIcon from "@assets/svg/icon/Pencil";
 import { getGoalsDailyRecords, getGoalsTracked } from "@/utils/localStorage/goals";
 import { Goal } from "@/entities/Goal";
+import DaySurveyCustomBottomSheet from "./DaySurveyCustomBottomSheet";
 
 const DaySurvey = ({
   navigation,
@@ -372,9 +373,11 @@ const DaySurvey = ({
   };
 
   const editIndicators = () => {
-    navigation.navigate("symptoms");
-    logEvents._deprecatedLogSettingsSymptomsFromSurvey();
+    showBottomSheet(<DaySurveyCustomBottomSheet navigation={navigation} />);
+    // navigation.navigate("symptoms");
+    // logEvents._deprecatedLogSettingsSymptomsFromSurvey();
   };
+
   const answeredElementCount = Object.keys(answers).map((key) => answers[key].value !== undefined).length;
   const onValueChanged = ({ indicator, value }: { indicator: Indicator; value: string }) => toggleAnswer({ key: getIndicatorKey(indicator), value });
   const onCommentChanged = ({ indicator, comment }: { indicator: Indicator; comment?: string }) =>

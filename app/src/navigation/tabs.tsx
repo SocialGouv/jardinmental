@@ -3,6 +3,7 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import { View, Text } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { SquircleButton, SquircleView } from "expo-squircle-view";
+import Settings from "../scenes/settings/settings-modal";
 
 import Status from "@/scenes/status";
 import Exercise from "@/scenes/exercise";
@@ -20,6 +21,8 @@ import TrendUpIcon from "@assets/svg/icon/TrendUp";
 import WaveIcon from "@assets/svg/icon/Wave";
 import CloudIcon from "@assets/svg/icon/Cloud";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Icon from "@/components/Icon";
+import Gear from "@assets/svg/Gear";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -29,6 +32,7 @@ const Tabs = ({ navigation, route }) => {
   const initialTab = route.params?.initialTab || "Status";
   const [activeTab, setActiveTab] = useState(initialTab);
   const [hasVisitedResources, setHasVisitedResources] = React.useState(true); // Default to true to avoid flash
+  const [settingsVisible, setSettingsVisible] = useState(false);
 
   React.useEffect(() => {
     const checkResourcesVisited = async () => {
@@ -74,7 +78,7 @@ const Tabs = ({ navigation, route }) => {
   const tabs = [
     {
       name: "Status",
-      label: "Observations",
+      label: "Suivi",
       icon: WaveIcon,
       component: Status,
     },
@@ -108,6 +112,14 @@ const Tabs = ({ navigation, route }) => {
       label: "Beck",
       icon: CloudIcon,
       component: Exercise,
+    },
+    {
+      name: "Customize",
+      label: "Personnaliser",
+      icon: Gear,
+      onClick: () => {
+        setSettingsVisible(true);
+      },
     },
   ];
 
@@ -179,7 +191,13 @@ const Tabs = ({ navigation, route }) => {
               return (
                 <SquircleButton
                   key={tab.name}
-                  onPress={() => handleTabPress(tab.name)}
+                  onPress={() => {
+                    if (tab.onClick) {
+                      tab.onClick();
+                    } else {
+                      handleTabPress(tab.name);
+                    }
+                  }}
                   preserveSmoothing={true}
                   cornerSmoothing={100}
                   accessible={true}
@@ -219,6 +237,7 @@ const Tabs = ({ navigation, route }) => {
             })}
           </View>
         </SquircleView>
+        <Settings visible={settingsVisible} navigation={navigation} onClick={() => setSettingsVisible(false)} />
       </View>
     </View>
   );

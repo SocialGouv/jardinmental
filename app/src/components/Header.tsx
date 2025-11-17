@@ -127,18 +127,6 @@ const Header = ({ title, navigation, scrollY, scrollThreshold = 80, component }:
               </Text>
             </Animated.View>
           </SquircleButton>
-          <Icon
-            color="#fff"
-            spin={settingsVisible}
-            icon="GearSvg"
-            width={16}
-            height={16}
-            styleContainer={{}}
-            onPress={() => {
-              setSettingsVisible(true);
-              logEvents.logOpenSettings();
-            }}
-          />
         </View>
       </View>
       <Animated.View style={titleContainerStyle}>
