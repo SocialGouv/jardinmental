@@ -21,6 +21,7 @@ export interface CarouselSlide {
   backgroundColor?: string;
   illustration?: React.ReactNode;
   children?: React.ReactNode;
+  bottomComponent?: React.ReactNode;
   variant?: "blue" | "green" | "beige" | "pink" | "red" | "yellow";
 }
 

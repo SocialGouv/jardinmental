@@ -25,4 +25,5 @@ export const typography = {
   textSmSemibold: "text-sm font-semibold font-body leading-[30px]",
   textSmBold: "text-sm font-bold font-body leading-5",
   textXsBold: "text-xs font-bold font-body text-center",
+  textXsSemibold: "text-xs font-semibold font-body text-center",
 };
