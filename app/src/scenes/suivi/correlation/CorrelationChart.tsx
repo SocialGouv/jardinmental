@@ -566,7 +566,7 @@ export default function TestChart({
       stripWidth={2}
       showTextOnFocus={true}
       focusTogether={true}
-      xAxisLabelsVerticalShift={-30}
+      xAxisLabelsVerticalShift={showTreatment ? -10 : -25}
       showXAxisIndices={false}
       showYAxisIndices={false}
       yAxisLabelWidth={0}

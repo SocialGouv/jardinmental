@@ -395,7 +395,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                   </TouchableOpacity> */}
                 </View>
                 <View className="h-64 w-full">
-                  {isVisible && displayItem && displayItem?.date && diaryData[displayItem.date] && (
+                  {isVisible && displayItem && displayItem?.date && (
                     <Animated.View
                       style={[animatedStyle]}
                       className="border border-cnam-primary-300 bg-white rounded-2xl flex-col space-y-2 p-4 mb-4 mt-4"
@@ -500,7 +500,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                       </TouchableOpacity>
                     </Animated.View>
                   )}
-                  {!(isVisible && displayItem && displayItem?.date && diaryData[displayItem.date]) && (
+                  {!(isVisible && displayItem && displayItem?.date) && (
                     <View
                       style={[animatedStyle]}
                       className="border border-cnam-primary-300 bg-white rounded-2xl flex-col space-y-2 p-4 mb-6 mt-4 items-center justify-center h-[80] flex-1"
