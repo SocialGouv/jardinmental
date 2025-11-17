@@ -4,7 +4,7 @@ import CrossIcon from "@assets/svg/icon/Cross";
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { View, Dimensions, ScrollView, Text } from "react-native";
 import { LineChart, ruleTypes } from "react-native-gifted-charts";
-import Svg, { Circle } from "react-native-svg";
+import Svg, { Circle, Line } from "react-native-svg";
 import { useDevCorrelationConfig } from "@/hooks/useDevCorrelationConfig";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
@@ -27,6 +27,7 @@ const LABEL_SPACING_CONFIG = {
   "3months": 10,
   default: 1,
 };
+const LABEL_HEIGHT = 20;
 
 // Type definitions for memoized components
 interface DataPointProps {
@@ -113,6 +114,29 @@ const MemoizedTreatmentPoint = React.memo(
     );
   }
 );
+
+// Dashed Vertical Line Component
+interface DashedVerticalLineProps {
+  height?: number;
+  color?: string;
+  dashArray?: string;
+  strokeWidth?: number;
+  className?: string;
+}
+
+export const DashedVerticalLine: React.FC<DashedVerticalLineProps> = ({
+  height = 100,
+  color = "#3D6874",
+  dashArray = "4,4",
+  strokeWidth = 2,
+  className,
+}) => {
+  return (
+    <Svg height={height} width={strokeWidth * 2} className={className}>
+      <Line x1={strokeWidth} y1={0} x2={strokeWidth} y2={height} stroke={color} strokeWidth={strokeWidth} strokeDasharray={dashArray} />
+    </Svg>
+  );
+};
 
 export default function TestChart({
   data,
@@ -337,9 +361,18 @@ export default function TestChart({
 
   const customLabel = (val) => {
     return (
-      <View style={{ width: 100 }}>
-        <Text className={mergeClassNames(spacingFormat === "7days" ? "ml-8" : "ml-4", typography.textSmSemibold, "text-cnam-primary-700")}>
-          | {val}
+      <View
+        style={{ width: spacingFormat === "7days" ? 20 : 50 }}
+        className={mergeClassNames(
+          spacingFormat === "7days" ? "ml-8" : "ml-4",
+          "flex-row items-end overflow-visible" // 👈 ICI
+        )}
+      >
+        <DashedVerticalLine height={LABEL_HEIGHT + 10} />
+        <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-700 absolute -bottom-2 left-2")}>
+          {/* {" "} */}
+          {/* <Text className="text-black">| </Text> */}
+          {val}
         </Text>
       </View>
     );
@@ -509,7 +542,7 @@ export default function TestChart({
       // }
       // scrollToIndex={data.length - 1}
       xAxisTextNumberOfLines={1}
-      xAxisLabelsHeight={20}
+      xAxisLabelsHeight={LABEL_HEIGHT}
       xAxisThickness={0}
       // hideDataPoints={config.hideDataPoints || spacingFormat === "3months" || spacingFormat === "6months"}
       xAxisColor={"transparent"}
@@ -533,7 +566,7 @@ export default function TestChart({
       stripWidth={2}
       showTextOnFocus={true}
       focusTogether={true}
-      xAxisLabelsVerticalShift={0}
+      xAxisLabelsVerticalShift={-30}
       showXAxisIndices={false}
       showYAxisIndices={false}
       yAxisLabelWidth={0}
