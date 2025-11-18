@@ -196,6 +196,9 @@ const generateBeck = (beck) => {
 
   const renderListItem = (list, t) => {
     if (!list || list.length === 0) return "";
+    if (typeof list === "string") {
+      list = [list];
+    }
     return `<p
       style="
           margin: 0;
@@ -249,12 +252,13 @@ const generateBeck = (beck) => {
 };
 
 const formatHtmlTable = async (diaryData, diaryNotes) => {
+  const MAX_DAYS = 30;
   const today = new Date();
   const firstDay = new Date();
-  firstDay.setDate(today.getDate() - 30);
+  firstDay.setDate(today.getDate() - MAX_DAYS);
   const chartDates = getArrayOfDates({
     startDate: firstDay,
-    numberOfDays: 30,
+    numberOfDays: MAX_DAYS,
   });
 
   const computeChartData = (indicateur) => {
@@ -502,11 +506,13 @@ const renderSurvey = (data, date) => {
   const getUserComments = (obj, key) => {
     const userComments = Object.keys(obj[key] || [])
       ?.filter((s) => obj[key][s]?.userComment?.trim())
-      .map((e) => ({ id: e, value: obj[key][e].userComment?.trim() }));
+      .map((e) => {
+        return { id: e, value: obj[key][e].userComment?.trim(), indicator: obj[key][e]._indicateur };
+      });
     return userComments;
   };
 
-  const renderUserComment = (key, value) => {
+  const renderUserComment = (key, value, indicator) => {
     if (key === "TOXIC" && !data[date][key]?.value) return "";
     if (key === "TOXIC") {
       return `<p
@@ -528,7 +534,7 @@ const renderSurvey = (data, date) => {
           padding-top: 2px;
           padding-bottom: 2px;
         ">
-      <b>${translateCategories[key] || key} : </b>${value}
+      <b>${translateCategories[key] || indicator?.name || key} : </b>${value}
     </p>`;
     }
   };
@@ -546,7 +552,7 @@ const renderSurvey = (data, date) => {
                           <tr class="journal__item-symptom-wrapper">
                             <td style="padding:10px;">
                               ${getUserComments(data, date)
-                                ?.map((userComment) => userComment && renderUserComment(userComment.id, userComment.value))
+                                ?.map((userComment) => userComment && renderUserComment(userComment.id, userComment.value, userComment.indicator))
                                 .join("")}            
                             </td>
                           </tr>

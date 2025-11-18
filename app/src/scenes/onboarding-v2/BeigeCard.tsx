@@ -3,7 +3,17 @@ import { ReactNode } from "react";
 import { View, ViewStyle } from "react-native";
 import { SquircleView } from "expo-squircle-view";
 
-export default function BeigeCard({ children, style, color = "#FCEBD9" }: { children: ReactNode; style?: ViewStyle; color?: string }) {
+export default function BeigeCard({
+  children,
+  style,
+  color = "#FCEBD9",
+  bottomComponent,
+}: {
+  children: ReactNode;
+  style?: ViewStyle;
+  color?: string;
+  bottomComponent?: ReactNode;
+}) {
   return (
     <View className="flex-1 justify-center items-center p-4" style={style}>
       <SquircleView
@@ -18,6 +28,7 @@ export default function BeigeCard({ children, style, color = "#FCEBD9" }: { chil
       >
         {children}
       </SquircleView>
+      {bottomComponent}
     </View>
   );
 }

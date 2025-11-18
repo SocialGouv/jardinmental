@@ -1,3 +1,31 @@
+## [1.126.1](https://github.com/SocialGouv/jardinmental/compare/v1.126.0...v1.126.1) (2025-11-18)
+
+
+### Bug Fixes
+
+* **indicator:** fix changing category when creating indicator ([#615](https://github.com/SocialGouv/jardinmental/issues/615)) ([d6f236f](https://github.com/SocialGouv/jardinmental/commit/d6f236fd64ec6dd79cb2ad006d1d50cda2dfbcbe))
+
+# [1.126.0](https://github.com/SocialGouv/jardinmental/compare/v1.125.1...v1.126.0) (2025-11-18)
+
+
+### Features
+
+* add commity screen ([#616](https://github.com/SocialGouv/jardinmental/issues/616)) ([369c55c](https://github.com/SocialGouv/jardinmental/commit/369c55cb6b8caf274dfcf88a785ac65130ae02b0))
+
+## [1.125.1](https://github.com/SocialGouv/jardinmental/compare/v1.125.0...v1.125.1) (2025-11-18)
+
+
+### Bug Fixes
+
+* add scrollview to make trigger screen works in small screen ([#617](https://github.com/SocialGouv/jardinmental/issues/617)) ([0c5dd16](https://github.com/SocialGouv/jardinmental/commit/0c5dd16d486cd3d18370636751e0fbf53bfe1214))
+
+# [1.125.0](https://github.com/SocialGouv/jardinmental/compare/v1.124.0...v1.125.0) (2025-11-17)
+
+
+### Features
+
+* bump version for 1.43.11 ([845fae4](https://github.com/SocialGouv/jardinmental/commit/845fae401a0d6a79b95e7f32ba39f008544e6079))
+
 # [1.124.0](https://github.com/SocialGouv/jardinmental/compare/v1.123.0...v1.124.0) (2025-11-14)
 
 

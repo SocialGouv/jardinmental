@@ -209,6 +209,8 @@ export default ({ navigation, visible, onClick }) => {
                     }}
                   />
                   <Separator />
+                  <DrawerItem title="Le comité éditorial et scientifique" path="commity" navigation={navigation} onClick={onClick} />
+                  <Separator />
                   <DrawerItem title="Recommander l'app" onClick={recommendApp} navigation={navigation} />
                   <Separator />
                   <DrawerItem
