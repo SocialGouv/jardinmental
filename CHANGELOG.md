@@ -1,3 +1,10 @@
+## [1.126.1](https://github.com/SocialGouv/jardinmental/compare/v1.126.0...v1.126.1) (2025-11-18)
+
+
+### Bug Fixes
+
+* **indicator:** fix changing category when creating indicator ([#615](https://github.com/SocialGouv/jardinmental/issues/615)) ([d6f236f](https://github.com/SocialGouv/jardinmental/commit/d6f236fd64ec6dd79cb2ad006d1d50cda2dfbcbe))
+
 # [1.126.0](https://github.com/SocialGouv/jardinmental/compare/v1.125.1...v1.126.0) (2025-11-18)
 
 
