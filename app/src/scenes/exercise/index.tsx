@@ -64,18 +64,6 @@ export default ({ navigation, startSurvey }) => {
               <Text style={[styles.welcomeText, styles.boldText]}>
                 Cet exercice nécessite des explications afin de le réaliser. Nous vous recommandons d’en discuter préalablement avec un thérapeute.
               </Text>
-              <Text style={styles.welcomeText}>
-                Voici une vidéo qui vous présente brièvement comment remplir vos fiches :{" "}
-                <Text
-                  style={styles.link}
-                  onPress={() => {
-                    // todo logevent voir video
-                    Linking.openURL("https://youtu.be/3U4J-_QsTc0");
-                  }}
-                >
-                  voir la vidéo
-                </Text>
-              </Text>
               <View style={styles.showWelcomeView}>
                 <CheckBox
                   animationDuration={0.2}
