@@ -143,8 +143,14 @@ export const DetailModalCorrelationScreen: React.FC<ModalCorrelationScreenProps>
           <View style={{ paddingTop: 10, paddingBottom: 0 }}>
             <TestChart
               // displayItem={displayItem}
-              data={data}
-              dataB={dataB}
+              data={data.map((d, index) => ({
+                ...d,
+                hideDataPoint: index !== selectedPointIndex,
+              }))}
+              dataB={dataB.map((d, index) => ({
+                ...d,
+                hideDataPoint: index !== selectedPointIndex,
+              }))}
               spacingFormat={"7days"}
               treatment={treatment}
               initialSelectedPointIndex={selectedPointIndex}

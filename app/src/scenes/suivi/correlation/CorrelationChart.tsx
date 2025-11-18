@@ -148,7 +148,7 @@ export const DashedVerticalLine: React.FC<DashedVerticalLineProps> = ({
   height = 100,
   color = "#3D6874",
   dashArray = "4,4",
-  strokeWidth = 2,
+  strokeWidth = 1,
   className,
 }) => {
   return (
@@ -449,6 +449,52 @@ export default function TestChart({
     });
   }, [visibleDataB, visibleData, labelSpacing, formatLabel, spacingFormat]);
 
+  const generateLineSegments = (data) => {
+    if (!data || data.length === 0) return [];
+
+    const segments: Array<{
+      startIndex: number;
+      endIndex: number;
+      color: string;
+      thickness: number;
+    }> = [];
+    let startIndex = null;
+
+    data.forEach((point, index) => {
+      if (point.value === 1 && point.noValue) {
+        // Début d'un segment
+        if (startIndex === null) {
+          // console.log("start index", index);
+          startIndex = index - 1;
+        }
+      } else {
+        // Fin d'un segment
+        if (startIndex !== null) {
+          // console.log("end index", index - 1);
+          segments.push({
+            startIndex,
+            endIndex: index,
+            color: "transparent", // Vert
+            thickness: 3,
+          });
+          startIndex = null;
+        }
+      }
+    });
+
+    // Gérer le cas où le segment se termine à la fin du tableau
+    if (startIndex !== null) {
+      segments.push({
+        startIndex,
+        endIndex: data.length - 1,
+        color: "#4CAF50",
+        thickness: 3,
+      });
+    }
+
+    return segments;
+  };
+
   const transformedTreatment = useMemo(() => {
     if (!visibleTreatment) return null;
     return (visibleTreatment || []).map((t, index) => {
@@ -566,6 +612,8 @@ export default function TestChart({
       //     : { fontSize: 10, color: "red", width: 120, textAlign: "center" }
       // }
       // scrollToIndex={data.length - 1}
+      lineSegments={generateLineSegments(transformedData)}
+      lineSegments2={generateLineSegments(transformedDataB)}
       xAxisTextNumberOfLines={1}
       xAxisLabelsHeight={LABEL_HEIGHT}
       xAxisThickness={0}
@@ -760,11 +808,14 @@ export default function TestChart({
         type: ruleTypes.SOLID,
       }}
       showVerticalLines={false}
-      verticalLinesColor="rgba(24, 26, 26, 0.1)"
+      // verticalLinesSpacing={74}
+      // verticalLinesThickness={2}
+      // verticalLinesStrokeDashArray={[4, 4]}
+      // verticalLinesColor="rgba(24, 26, 26, 0.1)"
       // verticalLinesThickness={0}
-      noOfVerticalLines={5}
+      // noOfVerticalLines={5}
       strokeDashArray2={[4, 1]} // bug other dash array are sometimes no consistent (the space between dashes vary)
-      curved={false} // set false to improve performance on android
+      curved={true} // set false to improve performance on android
       curvature={0.1}
       initialSpacing={0}
       onStartReached={enablePagination ? () => setOnStartReached(true) : undefined}

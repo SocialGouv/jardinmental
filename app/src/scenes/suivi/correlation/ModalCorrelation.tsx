@@ -25,6 +25,8 @@ import { da } from "date-fns/locale";
 import { firstLetterUppercase } from "@/utils/string-util";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useDevCorrelationConfig } from "@/hooks/useDevCorrelationConfig";
+import HelpView from "@/components/HelpView";
+import DataMonitoringPeriodHelpView from "./DataMonitoringPeriodHelpView";
 
 interface ModalCorrelationScreenProps {
   navigation: any;
@@ -582,31 +584,56 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
               Recherchez des moments où les indicateurs évoluent ensemble ou dans des directions opposées.
             </Text>
           </View>
-          <View className="bg-cnam-primary-100 pl-4 pt-4 pb-20">
-            <Text className={mergeClassNames(typography.textXlBold, "text-cnam-primary-900 py-4")}>Explorez notre guide</Text>
+          <View className="bg-cnam-primary-100 pt-4 pb-20">
+            <Text className={mergeClassNames(typography.textXlBold, "text-cnam-primary-900 py-4 pl-4")}>Explorez notre guide</Text>
             <FlatList
               horizontal={true}
               className="mt-4"
               showsHorizontalScrollIndicator={false}
-              renderItem={() => (
-                <View className="bg-white border border-cnam-primary-400 rounded-2xl w-[297] h-[139] p-4 mr-2 flex-row flex-1">
-                  <View
+              renderItem={({ item }) => (
+                <TouchableOpacity
+                  onPress={() => {
+                    if (item.type === "dataMonitoringPeriod") {
+                      showBottomSheet(<DataMonitoringPeriodHelpView isMd={true} title={item.title} description={item.content} />);
+                    } else showBottomSheet(<HelpView isMd={true} title={item.title} description={item.content} />);
+                  }}
+                  className="bg-white border border-cnam-primary-400 rounded-2xl w-[227] h-[109] p-4 flex-row flex-1 ml-4"
+                >
+                  {/* <View
                     className="h-[107] w-[83] rounded-2xl"
                     style={{
                       backgroundColor: "#EAE8E8",
                     }}
-                  ></View>
+                  ></View> */}
                   <View className="flex-1 ml-2">
-                    <Text className={mergeClassNames("text-cnam-primary-950", typography.textMdMedium)}>Pourquoi analyser mes données ?</Text>
+                    <Text className={mergeClassNames("text-cnam-primary-950", typography.textMdMedium)}>{item.title}</Text>
                   </View>
-                </View>
+                </TouchableOpacity>
               )}
               data={[
                 {
                   title: "Pourquoi analyser mes données ?",
+                  content: `Prendre un moment chaque jour pour faire le point aide à mieux comprendre ce qui influence votre équilibre mental.
+
+**Observer vos indicateurs permet de :**
+- repérer des schémas récurrents ;
+- identifier les causes possibles de vos variations ;
+- découvrir ce qui soutient ou fragilise votre bien-être.
+
+
+L’objectif est de tirer des enseignements pour mieux vous connaître et analyser vos données à votre échelle. 
+`,
                 },
                 {
-                  title: "Pourquoi analyser mes données ?",
+                  title: "Sur quelle période regarder mes données ?",
+                  type: "dataMonitoringPeriod",
+                },
+                {
+                  title: "Conseils pour votre analyse",
+                  content: `- Notez vos observations dans l’application ou un carnet pour suivre l’évolution de vos réflexions.
+- Revenez régulièrement sur vos données : certains schémas apparaissent plus clairement avec le temps.
+
+Soyez patient·e avec vous-même. L’objectif est d’essayer de comprendre vos tendances, pas de tout expliquer immédiatement.`,
                 },
               ]}
             />
