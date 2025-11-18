@@ -1,3 +1,10 @@
+# [1.126.0](https://github.com/SocialGouv/jardinmental/compare/v1.125.1...v1.126.0) (2025-11-18)
+
+
+### Features
+
+* add commity screen ([#616](https://github.com/SocialGouv/jardinmental/issues/616)) ([369c55c](https://github.com/SocialGouv/jardinmental/commit/369c55cb6b8caf274dfcf88a785ac65130ae02b0))
+
 ## [1.125.1](https://github.com/SocialGouv/jardinmental/compare/v1.125.0...v1.125.1) (2025-11-18)
 
 
