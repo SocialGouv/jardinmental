@@ -1,3 +1,10 @@
+## [1.125.1](https://github.com/SocialGouv/jardinmental/compare/v1.125.0...v1.125.1) (2025-11-18)
+
+
+### Bug Fixes
+
+* add scrollview to make trigger screen works in small screen ([#617](https://github.com/SocialGouv/jardinmental/issues/617)) ([0c5dd16](https://github.com/SocialGouv/jardinmental/commit/0c5dd16d486cd3d18370636751e0fbf53bfe1214))
+
 # [1.125.0](https://github.com/SocialGouv/jardinmental/compare/v1.124.0...v1.125.0) (2025-11-17)
 
 
