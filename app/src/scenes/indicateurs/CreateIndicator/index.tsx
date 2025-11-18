@@ -256,7 +256,7 @@ const pickerSelectStyles = StyleSheet.create({
     color: TW_COLORS.CNAM_PRIMARY_900,
     backgroundColor: "white",
   },
-  // needed otherwas nothing happen when clicking on category
+  // needed otherwise nothing happens when clicking on category
   // Fix for iOS picker not responding to taps (react-native-picker-select#636)
   // Setting pointerEvents to 'none' on the container allows touch events to pass through
   // to the underlying picker component on iOS
