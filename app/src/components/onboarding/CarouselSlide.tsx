@@ -18,6 +18,7 @@ export const CarouselSlide: React.FC<CarouselSlideProps> = ({ slide, isActive, o
         position: "relative",
         paddingTop: slide.illustration ? 100 : 0,
       }}
+      bottomComponent={slide.bottomComponent}
       color={VARIANT_BORDER_COLORS[slide.variant || "beige"]}
     >
       {slide.illustration}

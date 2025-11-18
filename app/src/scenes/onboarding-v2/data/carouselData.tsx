@@ -1,8 +1,11 @@
 import { colors } from "@/utils/colors";
 import { CarouselSlide } from "../types";
-import { AvatarGroup } from "@/components/AvatarGroup";
-import { Dimensions, Image, View } from "react-native";
+import { Dimensions, Image, View, Text, TouchableOpacity } from "react-native";
 import { TW_COLORS } from "@/utils/constants";
+import { typography } from "@/utils/typography";
+import { mergeClassNames } from "@/utils/className";
+import { useNavigation } from "@react-navigation/native";
+import { createElement } from "react";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 const isLargeScreen = screenHeight >= 700;
@@ -34,7 +37,33 @@ const SlideFinal: CarouselSlide = {
   title: "Conçu par des professionnels de la santé mentale, pour vous.",
   type: "special",
   backgroundColor: colors.WHITE,
+  illustration: (
+    <View className="absolute right-4 -z-2">
+      <Image
+        style={{ width: 100, height: 100, top: -80, right: 0, resizeMode: "contain", zIndex: -1 }}
+        source={require("../../../../assets/imgs/onboarding/carousel/commity.png")}
+      />
+    </View>
+  ),
   variant: "green",
+  bottomComponent: createElement(() => {
+    const navigation = useNavigation();
+    return (
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate("commity");
+        }}
+        className="rounded-xl p-4 mt-4"
+        style={{
+          backgroundColor: "#BBE7C6",
+        }}
+      >
+        <Text className={mergeClassNames(typography.textMdSemibold, "text-mood-text-4")}>
+          L’application est co-construite avec un comité éditorial et scientifique composé de 14 professionnels de santé
+        </Text>
+      </TouchableOpacity>
+    );
+  }),
 };
 
 const carouselSlides: CarouselSlide[] = [
