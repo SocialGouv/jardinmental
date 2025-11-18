@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
-import { ScrollView, StyleSheet, View, Image, Dimensions, Text, TouchableOpacity, Alert } from "react-native";
+import { ScrollView, StyleSheet, View, Image, Dimensions, Text, TouchableOpacity } from "react-native";
 
 import { displayedCategories, HELP_ANALYSE, TAB_BAR_HEIGHT, TW_COLORS } from "@/utils/constants";
 import Chart from "./chart";
@@ -8,7 +8,7 @@ import { beforeToday, getArrayOfDates, getTodaySWeek, formatDate } from "@/utils
 import { DiaryDataContext } from "@/context/diaryData";
 import { useContext } from "react";
 import localStorage from "@/utils/localStorage";
-import { LineChart } from "react-native-gifted-charts";
+
 import Icon from "@/components/Icon";
 import { colors } from "@/utils/colors";
 import { INDICATEURS } from "@/utils/liste_indicateurs.1";
@@ -22,29 +22,6 @@ import { useAnimatedStyle, interpolate, Extrapolate } from "react-native-reanima
 import Animated from "react-native-reanimated";
 
 const screenHeight = Dimensions.get("window").height;
-const screenWidth = Dimensions.get("window").width;
-
-const customDataPoint = ({ color }) => {
-  return (
-    <View
-      style={{
-        width: 15,
-        height: 15,
-        backgroundColor: "white",
-        borderWidth: 4,
-        borderRadius: 10,
-        borderColor: color || "#3D6874",
-      }}
-    />
-  );
-};
-const customLabel = (val) => {
-  return (
-    <View style={{ marginLeft: 7, width: 200 }}>
-      <Text style={{ color: "blue", fontWeight: "bold" }}>{val}</Text>
-    </View>
-  );
-};
 
 export const VariationsHeader = ({ day, setDay, scrollY }) => {
   const { showBottomSheet } = useBottomSheet();
@@ -102,209 +79,6 @@ export const VariationsHeader = ({ day, setDay, scrollY }) => {
   );
 };
 
-const generateLineSegments = (data) => {
-  if (!data || data.length === 0) return [];
-
-  const segments: Array<{
-    startIndex: number;
-    endIndex: number;
-    color: string;
-    thickness: number;
-  }> = [];
-  let startIndex = null;
-
-  data.forEach((point, index) => {
-    if (point.value === 1 && point.hideDataPoint) {
-      // Début d'un segment
-      if (startIndex === null) {
-        console.log("start index", index);
-        startIndex = index;
-      }
-    } else {
-      // Fin d'un segment
-      if (startIndex !== null) {
-        console.log("end index", index - 1);
-        segments.push({
-          startIndex,
-          endIndex: index,
-          color: "transparent", // Vert
-          thickness: 3,
-        });
-        startIndex = null;
-      }
-    }
-  });
-
-  // Gérer le cas où le segment se termine à la fin du tableau
-  if (startIndex !== null) {
-    segments.push({
-      startIndex,
-      endIndex: data.length - 1,
-      color: "#4CAF50",
-      thickness: 3,
-    });
-  }
-
-  return segments;
-};
-
-const TestChart = ({ data, dataB, treatment }) => {
-  const ref = useRef(null);
-
-  // Configurable label spacing - show 1 label every X data points
-  const labelSpacing = 3; // Change this value to adjust label density (e.g., 2 = every 2nd label, 3 = every 3rd label)
-
-  // Format date to French format (DD/MM or DD MMM)
-  const formatDateToFrench = (dateString) => {
-    if (!dateString) return "";
-    const date = new Date(dateString);
-    if (isNaN(date.getTime())) return dateString;
-
-    const day = date.getDate();
-    const month = date.getMonth() + 1;
-    const year = date.getFullYear();
-
-    // Short format: DD/MM
-    return `${day.toString().padStart(2, "0")}/${month.toString().padStart(2, "0")}/${year.toString().padStart(2, "0").slice(2, 4)}`;
-  };
-
-  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"];
-
-  const showOrHidePointer = (ind) => {
-    ref.current?.scrollTo({
-      x: ind * 200 - 25,
-    }); // adjust as per your UI
-  };
-  const lineSegments = generateLineSegments(data);
-  console.log(lineSegments);
-  return (
-    <View className="">
-      <View className="mb-4" style={{ flexDirection: "row", marginLeft: 8 }}>
-        {months.map((item, index) => {
-          return (
-            <TouchableOpacity
-              key={index}
-              style={{
-                padding: 6,
-                margin: 4,
-                backgroundColor: "#ebb",
-                borderRadius: 8,
-              }}
-              onPress={() => showOrHidePointer(index)}
-            >
-              <Text>{months[index]}</Text>
-            </TouchableOpacity>
-          );
-        })}
-      </View>
-      <LineChart
-        spacing={50}
-        yAxisSide={1}
-        xAxisLabelTextStyle={{ fontSize: 10, color: "#666", width: 60, textAlign: "center" }}
-        xAxisTextNumberOfLines={1}
-        xAxisLabelsHeight={10}
-        xAxisThickness={0}
-        xAxisColor={"transparent"}
-        width={screenWidth - 70}
-        focusEnabled={true}
-        focusProximity={50}
-        lineSegments={lineSegments}
-        onFocus={(item, index) => {
-          console.log("focused", item, index);
-        }}
-        xAxisLabelsVerticalShift={60}
-        showXAxisIndices={true}
-        xAxisIndicesWidth={2}
-        xAxisIndicesColor={"#999"}
-        noOfSections={5}
-        noOfSectionsBelowXAxis={0}
-        stepValue={1}
-        scrollRef={ref}
-        data={(data || []).map((d, index) => ({
-          ...d,
-          label: index % labelSpacing === 0 ? formatDateToFrench(d.label) : "", // Show label only at intervals with French format
-          customDataPoint,
-        }))}
-        xAxisIndicesHeight={10}
-        color2={"#00A5DF"}
-        color1={"#3D6874"}
-        // noOfSectionsBelowXAxis={1}
-        data2={(dataB || []).map((d, index) => ({
-          ...d,
-          label: index % labelSpacing === 0 ? formatDateToFrench(d.label) : "", // Show label only at intervals with French format
-          customDataPoint: ({ color }) => {
-            return (
-              <View
-                style={{
-                  width: 15,
-                  height: 15,
-                  backgroundColor: "#00A5DF",
-                  borderWidth: 4,
-                  borderRadius: 10,
-                  borderColor: "#00A5DF",
-                }}
-              />
-            );
-          },
-        }))}
-        data3={(treatment || []).map((t, index) => ({
-          ...t,
-          label: index % labelSpacing === 0 ? formatDateToFrench(t.label) : "", // Show label only at intervals with French format
-          customDataPoint: ({ color }) => {
-            return (
-              <View
-                style={{
-                  width: 10,
-                  height: 30,
-                }}
-              >
-                <View
-                  style={{
-                    borderWidth: 1,
-                    borderRadius: 10,
-                    backgroundColor: "#134449",
-                    borderColor: "#134449",
-                    marginTop: 0,
-                    height: 10,
-                    width: 10,
-                  }}
-                />
-              </View>
-            );
-          },
-        }))}
-        overflowBottom={100} // space at the bottom of graph
-        // dataPointsHeight={15}
-        // dataPointsWidth={15}
-        dataPointsWidth1={15}
-        dataPointsHeight1={15}
-        dataPointsHeight2={15}
-        dataPointsWidth2={15}
-        dataPointsHeight3={20}
-        dataPointsWidth3={10}
-        showDataPointLabelOnFocus={true}
-        color3="transparent"
-        yAxisColor={"transparent"}
-        formatYLabel={(lab) => {
-          if (lab === "-1" || lab === "-2" || lab === "6" || lab === "0") {
-            return "";
-          }
-          return parseInt(lab, 10).toString();
-        }}
-        yAxisOffset={1}
-        showVerticalLines={true}
-        verticalLinesColor="rgba(24, 26, 26, 0.1)"
-        // verticalLinesThickness={0}
-        noOfVerticalLines={0}
-        strokeDashArray1={[4, 4]}
-        curved={true}
-        curvature={0.1}
-        initialSpacing={0}
-      />
-    </View>
-  );
-};
-
 const Variations = ({ navigation, onScroll, scrollY, day, setDay, dynamicPaddingTop }) => {
   const [diaryData] = useContext(DiaryDataContext);
   const [customs, setCustoms] = useState([]);
@@ -353,8 +127,7 @@ const Variations = ({ navigation, onScroll, scrollY, day, setDay, dynamicPadding
 
   const { firstDay, lastDay } = getTodaySWeek(day);
 
-  const twoYearsAgo = beforeToday(40 * 1); // Calculate date from 2 years ago
-  const chartDates = getArrayOfDates({ startDate: twoYearsAgo }); // Get all dates from 2 years ago to today
+  const chartDates = getArrayOfDates({ startDate: firstDay, numberOfDays: 6 });
 
   const displayOnlyRequest = (indicateur, dayIndex) => {
     if (Date.parse(new Date(chartDates[dayIndex])) > Date.now()) return; // if clicked day is in the future, don't display it
@@ -370,39 +143,15 @@ const Variations = ({ navigation, onScroll, scrollY, day, setDay, dynamicPadding
       const dayData = diaryData[date];
       if (!dayData) {
         return null;
-        // return {
-        //   value: 1,
-        //   hideDataPoint: true,
-        //   label: date,
-        // };
       }
       const categoryState = diaryData[date][getIndicatorKey(indicateur)];
       if (!categoryState) {
         return null;
-        // return {
-        //   value: 1,
-        //   hideDataPoint: true,
-        //   label: date,
-        // };
       }
-      if (indicateur?.type === "boolean") {
-        return categoryState?.value === true ? 4 : 0;
-        // return { value: categoryState?.value === true ? 4 : 0, label: date };
-      }
-      if (indicateur?.type === "gauge") {
-        return Math.min(Math.floor(categoryState?.value * 5), 4);
-        // return {
-        //   label: date,
-        //   value: Math.min(Math.floor(categoryState?.value * 5), 4),
-        // };
-      }
-      if (categoryState?.value) {
-        return categoryState?.value - 1;
-        // return {
-        //   value: categoryState?.value,
-        //   label: date,
-        // };
-      }
+      if (indicateur?.type === "boolean") return categoryState?.value === true ? 4 : 0;
+      if (indicateur?.type === "gauge") return Math.min(Math.floor(categoryState?.value * 5), 4);
+      if (categoryState?.value) return categoryState?.value - 1;
+
       // -------
       // the following code is for the retrocompatibility
       // -------
@@ -415,17 +164,8 @@ const Variations = ({ navigation, onScroll, scrollY, day, setDay, dynamicPadding
         // add the intensity (default level is 3 - for the frequence 'never')
         categoryStateIntensity = diaryData[date][`${categoryName}_INTENSITY`] || { level: 3 };
         return categoryState.level + categoryStateIntensity.level - 2;
-        // return {
-        //   value: categoryState.level + categoryStateIntensity.level - 2,
-        //   label: date,
-        // };
       }
       return categoryState.level ? categoryState.level - 1 : null;
-      // return {
-      //   data: categoryState.level ? categoryState.level : null,
-      //   hideDataPoint: !categoryState.level,
-      //   label: date,
-      // };
     });
   };
 
@@ -454,36 +194,6 @@ const Variations = ({ navigation, onScroll, scrollY, day, setDay, dynamicPadding
     }
     return category;
   };
-  let dataA, dataB, treatment;
-  if (userIndicateurs.length !== 0) {
-    const activeIndicators = userIndicateurs.concat(INDICATEURS).filter((ind) => ind.active);
-    const indicatorA = activeIndicators[0];
-    const indicatorB = activeIndicators[1];
-    dataA = computeChartData(indicatorA)
-      .filter((d) => d)
-      .filter((d) => {
-        if (!Number.isFinite(d.value)) {
-          return false;
-        }
-        return true;
-      });
-    dataB = computeChartData(indicatorB)
-      .filter((d) => d)
-      .filter((d) => {
-        if (!Number.isFinite(d.value)) {
-          return false;
-        }
-        return true;
-      });
-    treatment = dataB.map((d) => {
-      const value = Math.random() < 0.5 ? 1 : 0;
-      return {
-        ...d,
-        hideDataPoint: value === 1,
-        value,
-      };
-    });
-  }
 
   return (
     <View className="flex-1 bg-white">
