@@ -12,12 +12,9 @@
       "buildNumber": "325",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
-        "LSApplicationQueriesSchemes": [
-          "tel",
-          "telprompt",
-          "sms",
-          "mailto"
-        ]
+        "LSApplicationQueriesSchemes": ["tel", "telprompt", "sms", "mailto"],
+        "CFBundleDevelopmentRegion": "fr",
+        "CFBundleLocalizations": ["fr"]
       }
     },
     "android": {
@@ -28,11 +25,7 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.monsuivipsy",
-      "permissions": [
-        "NOTIFICATIONS",
-        "SCHEDULE_EXACT_ALARM",
-        "POST_NOTIFICATIONS"
-      ]
+      "permissions": ["NOTIFICATIONS", "SCHEDULE_EXACT_ALARM", "POST_NOTIFICATIONS"]
     },
     "plugins": [
       [
