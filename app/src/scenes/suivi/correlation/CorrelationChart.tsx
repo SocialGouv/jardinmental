@@ -487,7 +487,7 @@ export default function TestChart({
       segments.push({
         startIndex,
         endIndex: data.length - 1,
-        color: "#4CAF50",
+        color: "transparent",
         thickness: 3,
       });
     }
