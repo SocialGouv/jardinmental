@@ -38,6 +38,7 @@ import { useStatusBar } from "@/context/StatusBarContext";
 import PencilIcon from "@assets/svg/icon/Pencil";
 import { getGoalsDailyRecords, getGoalsTracked } from "@/utils/localStorage/goals";
 import { Goal } from "@/entities/Goal";
+import DaySurveyCustomBottomSheet from "./DaySurveyCustomBottomSheet";
 
 const DaySurvey = ({
   navigation,
@@ -372,9 +373,11 @@ const DaySurvey = ({
   };
 
   const editIndicators = () => {
-    navigation.navigate("symptoms");
-    logEvents._deprecatedLogSettingsSymptomsFromSurvey();
+    showBottomSheet(<DaySurveyCustomBottomSheet navigation={navigation} />);
+    // navigation.navigate("symptoms");
+    // logEvents._deprecatedLogSettingsSymptomsFromSurvey();
   };
+
   const answeredElementCount = Object.keys(answers).map((key) => answers[key].value !== undefined).length;
   const onValueChanged = ({ indicator, value }: { indicator: Indicator; value: string }) => toggleAnswer({ key: getIndicatorKey(indicator), value });
   const onCommentChanged = ({ indicator, comment }: { indicator: Indicator; comment?: string }) =>
@@ -403,12 +406,16 @@ const DaySurvey = ({
 
   return (
     <AnimatedHeaderScrollScreen
-      headerRightComponent={<PencilIcon color={selectedMoodIndex === null ? TW_COLORS.WHITE : TW_COLORS.CNAM_PRIMARY_900} width={16} height={16} />}
+      headerRightComponent={
+        <Text className={mergeClassNames(selectedMoodIndex === null ? "text-white" : "text-cnam-primary-950")}>Personnaliser mon suivi</Text>
+      }
       headerRightAction={editIndicators}
-      headerTitle={formatDate(initSurvey?.date)}
+      // headerTitle={formatDate(initSurvey?.date)}
       handlePrevious={() => {
         navigation.goBack();
       }}
+      subtitle={formatDate(initSurvey?.date)}
+      dynamicTitle=" "
       headerLeftComponent={<ChevronIcon color={selectedMoodIndex === null ? TW_COLORS.WHITE : TW_COLORS.CNAM_PRIMARY_900} />}
       animatedStatusBarColor={animatedStatusBarColor}
       animatedTextColor={animatedTextColor}

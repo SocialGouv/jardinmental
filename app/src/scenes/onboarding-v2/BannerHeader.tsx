@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { Platform, ViewStyle } from "react-native";
+import { Platform, ViewStyle, Text } from "react-native";
 import Animated from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -19,6 +19,7 @@ export default function BannerHeader({
   header,
   hidden,
   headerTitle,
+  subtitle,
   leftComponent,
   leftAction,
   rightComponent,
@@ -43,6 +44,7 @@ export default function BannerHeader({
   children?: ReactNode;
   hidden?: boolean; // temp variable to hide headers
   headerTitle?: string; // title for the header, used in shared header
+  subtitle?: string;
   leftComponent?: ReactNode; // custom left component, used in shared header
   leftAction?: () => void; // custom left action, used in shared header
   rightComponent?: ReactNode; // custom left component, used in shared header
@@ -89,6 +91,7 @@ export default function BannerHeader({
           <CheckInHeader
             title={headerTitle || ""}
             dynamicTitle={dynamicTitle}
+            subtitle={subtitle}
             onPrevious={handlePrevious}
             leftAction={leftAction}
             leftComponent={leftComponent}
@@ -119,21 +122,41 @@ export default function BannerHeader({
         >
           {header && <Animated.View style={bannerContentStyle}>{header}</Animated.View>}
           {title && (
-            <Animated.Text
-              className={mergeClassNames(typography.displayXsBold, "text-left", small ? "" : "mt-8")}
-              style={[
-                {
-                  color: TW_COLORS.WHITE,
-                  flexWrap: "wrap",
-                  flexShrink: 1,
-                },
-                animatedTextColor,
-                bannerContentStyle,
-                small ? {} : titleMarginStyle,
-              ]}
-            >
-              {firstLetterUppercase(title)}
-            </Animated.Text>
+            <>
+              <Animated.Text
+                className={mergeClassNames(typography.displayXsBold, "text-left", small ? "" : "mt-8")}
+                style={[
+                  {
+                    color: TW_COLORS.WHITE,
+                    flexWrap: "wrap",
+                    flexShrink: 1,
+                  },
+                  animatedTextColor,
+                  bannerContentStyle,
+                  small ? {} : titleMarginStyle,
+                ]}
+              >
+                {firstLetterUppercase(title)}
+              </Animated.Text>
+
+              {subtitle && (
+                <Animated.Text
+                  style={[
+                    {
+                      color: TW_COLORS.WHITE,
+                      flexWrap: "wrap",
+                      flexShrink: 1,
+                    },
+                    animatedTextColor,
+                    bannerContentStyle,
+                    small ? {} : titleMarginStyle,
+                  ]}
+                  className={mergeClassNames(typography.textMdRegular, "text-white text-left")}
+                >
+                  {subtitle}
+                </Animated.Text>
+              )}
+            </>
           )}
           {children}
         </Animated.View>
