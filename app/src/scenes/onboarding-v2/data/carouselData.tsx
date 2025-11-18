@@ -65,9 +65,9 @@ const carouselSlides: CarouselSlide[] = [
   },
   {
     id: "slide-suivi-share-with-you-psy",
-    title: "Suivi par un thérapeute ?",
+    title: "Suivi par un professionnel ?",
     description:
-      "Vous pouvez choisir de partager ce que vous notez avec votre thérapeute, pour appuyer vos échanges.\n\nTout est sous votre contrôle.",
+      "Vous pouvez choisir de partager ce que vous notez avec le professionnel qui vous accompagne, pour appuyer vos échanges.\n\nTout est sous votre contrôle.",
     type: "generic",
     backgroundColor: colors.WHITE,
     variant: "red",
