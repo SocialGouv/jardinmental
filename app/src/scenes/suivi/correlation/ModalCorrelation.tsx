@@ -520,7 +520,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                     </View>
                   )}
                 </View>
-                <View style={{ paddingTop: 10, paddingBottom: 50 }}>
+                <View style={{ paddingTop: 10, paddingBottom: 20 }}>
                   <TestChart
                     setDisplayItem={setDisplayItem}
                     spacingFormat={active}

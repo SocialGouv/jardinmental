@@ -135,12 +135,12 @@ export const DetailModalCorrelationScreen: React.FC<ModalCorrelationScreenProps>
       <ScrollView
         className="flex-col pt-4 bg-cnam-primary-25 px-4"
         contentContainerStyle={{
-          paddingBottom: 20,
+          paddingBottom: 40,
         }}
         showsHorizontalScrollIndicator={false}
       >
         <View className="p-4">
-          <View style={{ paddingTop: 10, paddingBottom: 50 }}>
+          <View style={{ paddingTop: 10, paddingBottom: 0 }}>
             <TestChart
               // displayItem={displayItem}
               data={data}

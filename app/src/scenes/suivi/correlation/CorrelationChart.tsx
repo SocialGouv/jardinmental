@@ -384,7 +384,9 @@ export default function TestChart({
       <View
         style={{ width: spacingFormat === "7days" ? 20 : 50 }}
         className={mergeClassNames(
-          spacingFormat === "7days" ? "ml-8" : "ml-4",
+          spacingFormat === "7days" ? "ml-[30px]" : "",
+          spacingFormat === "1month" ? "ml-[13px]" : "",
+          spacingFormat === "3months" ? "ml-[11px]" : "",
           "flex-row items-end overflow-visible" // 👈 ICI
         )}
       >
@@ -570,18 +572,18 @@ export default function TestChart({
       // hideDataPoints={config.hideDataPoints || spacingFormat === "3months" || spacingFormat === "6months"}
       xAxisColor={"transparent"}
       width={screenWidth - 72}
-      focusEnabled={!displayfixed}
+      focusEnabled={true} //!displayfixed}
       disableScroll={displayfixed}
       onFocus={
         displayfixed
-          ? undefined
+          ? () => {}
           : (_item, index) => {
               const actualIndex = index;
               setDisplayItem(transformedData[actualIndex]);
               setSelectedPointIndex(actualIndex);
             }
       }
-      focusedDataPointIndex={selectedPointIndex}
+      focusedDataPointIndex={displayfixed ? initialSelectedPointIndex : selectedPointIndex}
       unFocusOnPressOut={false}
       showStripOnFocus={true}
       stripColor={TW_COLORS.CNAM_PRIMARY_700}
@@ -693,7 +695,7 @@ export default function TestChart({
         pointerStripWidth: 2,
         width: 20,
         height: 20,
-        showPointerStrip: displayfixed,
+        showPointerStrip: false, //displayfixed,
         initialPointerIndex: displayfixed ? initialSelectedPointIndex : null,
         pointerStripColor: TW_COLORS.CNAM_PRIMARY_700,
         pointerStripUptoDataPoint: false,
