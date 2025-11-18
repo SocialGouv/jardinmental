@@ -394,7 +394,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                     </Text>
                   </TouchableOpacity> */}
                 </View>
-                <View className="h-64 w-full">
+                <View className={mergeClassNames("w-full", showTreatment ? "h-64" : "h-48")}>
                   {isVisible && displayItem && displayItem?.date && (
                     <Animated.View
                       style={[animatedStyle]}
@@ -478,26 +478,28 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                           </View>
                         )}
 
-                      <TouchableOpacity
-                        onPress={() => {
-                          navigation.navigate("detail-correlation-modal", {
-                            selectedIndicators,
-                            diaryDataForDate: diaryData[displayItem.date],
-                            date: displayItem.date,
-                            data: getSubArray(dataToDisplay[0], selectedPointIndex, 4),
-                            dataB: getSubArray(dataToDisplay[1], selectedPointIndex, 4),
-                            treatment: getSubArray(dataToDisplay[2], selectedPointIndex, 4),
-                            treatmentSiBesoin: getSubArray(dataToDisplay[3], selectedPointIndex, 4),
-                            diaryData,
-                            showTreatment,
-                            selectedPointIndex: 4,
-                          });
-                        }}
-                        className="flex-row items-center justify-end"
-                      >
-                        <EyeIcon />
-                        <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-800 ml-2")}>Voir le détail</Text>
-                      </TouchableOpacity>
+                      {diaryData[displayItem.date] && (
+                        <TouchableOpacity
+                          onPress={() => {
+                            navigation.navigate("detail-correlation-modal", {
+                              selectedIndicators,
+                              diaryDataForDate: diaryData[displayItem.date],
+                              date: displayItem.date,
+                              data: getSubArray(dataToDisplay[0], selectedPointIndex, 4),
+                              dataB: getSubArray(dataToDisplay[1], selectedPointIndex, 4),
+                              treatment: getSubArray(dataToDisplay[2], selectedPointIndex, 4),
+                              treatmentSiBesoin: getSubArray(dataToDisplay[3], selectedPointIndex, 4),
+                              diaryData,
+                              showTreatment,
+                              selectedPointIndex: 4,
+                            });
+                          }}
+                          className="flex-row items-center justify-end"
+                        >
+                          <EyeIcon />
+                          <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-800 ml-2")}>Voir le détail</Text>
+                        </TouchableOpacity>
+                      )}
                     </Animated.View>
                   )}
                   {!(isVisible && displayItem && displayItem?.date) && (

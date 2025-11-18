@@ -12,6 +12,8 @@ import { DEFAULT_INDICATOR_LABELS, INDICATOR_LABELS } from "@/utils/liste_indica
 import TestChart from "./CorrelationChart";
 import { firstLetterUppercase } from "@/utils/string-util";
 import { SafeAreaView } from "react-native-safe-area-context";
+import Icon from "@/components/Icon";
+import { mapIconToSvg } from "@/components/CircledIcon";
 
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
@@ -130,7 +132,13 @@ export const DetailModalCorrelationScreen: React.FC<ModalCorrelationScreenProps>
           </View>
         </View>
       </View>
-      <ScrollView className="flex-col pt-4 bg-cnam-primary-25 px-4" showsHorizontalScrollIndicator={false}>
+      <ScrollView
+        className="flex-col pt-4 bg-cnam-primary-25 px-4"
+        contentContainerStyle={{
+          paddingBottom: 20,
+        }}
+        showsHorizontalScrollIndicator={false}
+      >
         <View className="p-4">
           <View style={{ paddingTop: 10, paddingBottom: 50 }}>
             <TestChart
@@ -152,29 +160,46 @@ export const DetailModalCorrelationScreen: React.FC<ModalCorrelationScreenProps>
           </View>
         </View>
         <Text className={mergeClassNames(typography.textXlSemibold, "text-cnam-primary-900 pt-6 pb-4")}>Ce jours là :</Text>
-        {Object.keys(diaryDataForDate).map((key) => {
-          if (diaryDataForDate[key]?._indicateur) {
-            const colors = computeIndicatorColor(diaryDataForDate[key]._indicateur, diaryDataForDate[key].value);
-            return (
-              <View key={key} className="flex-row items-center space-x-2">
-                <View
-                  className="h-5 w-5 rounded-full"
-                  style={{
-                    backgroundColor: colors?.color,
-                    borderColor: colors?.borderColor,
-                    borderWidth: 1,
-                  }}
-                ></View>
-                <Text className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-900")}>
-                  <Text className={mergeClassNames(typography.textMdBold, "text-cnam-primary-900")}>
-                    {diaryDataForDate[key]?._indicateur?.name}:{" "}
+        <View className="flex-col space-y-2">
+          {Object.keys(diaryDataForDate).map((key) => {
+            if (diaryDataForDate[key]?._indicateur) {
+              const indicator = diaryDataForDate[key]._indicateur;
+              const colors = computeIndicatorColor(indicator, diaryDataForDate[key].value);
+              const Icon = mapIconToSvg(colors?.faceIcon);
+
+              return (
+                <View key={key} className="flex-row items-center space-x-4">
+                  {indicator.type === "smiley" ? (
+                    <View
+                      className="h-5 w-5 rounded-full"
+                      style={{
+                        backgroundColor: colors?.color,
+                        borderColor: colors?.borderColor,
+                      }}
+                    >
+                      <Icon width={23} height={23} color={colors?.iconColor} />
+                    </View>
+                  ) : (
+                    <View
+                      className="h-5 w-5 rounded-full"
+                      style={{
+                        backgroundColor: colors?.color,
+                        borderColor: colors?.borderColor,
+                        borderWidth: 1,
+                      }}
+                    />
+                  )}
+                  <Text className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-900")}>
+                    <Text className={mergeClassNames(typography.textMdBold, "text-cnam-primary-900")}>
+                      {diaryDataForDate[key]?._indicateur?.name} :{" "}
+                    </Text>
+                    {computeIndicatorLabel(diaryDataForDate[key]._indicateur, diaryDataForDate[key].value) || "Pas de donnée"}
                   </Text>
-                  {computeIndicatorLabel(diaryDataForDate[key]._indicateur, diaryDataForDate[key].value) || "Pas de donnée"}
-                </Text>
-              </View>
-            );
-          } else return;
-        })}
+                </View>
+              );
+            } else return;
+          })}
+        </View>
       </ScrollView>
     </SafeAreaView>
   );

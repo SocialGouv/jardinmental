@@ -28,6 +28,8 @@ const LABEL_SPACING_CONFIG = {
   default: 1,
 };
 const LABEL_HEIGHT = 20;
+const TREATEMENT_SI_BESOIN_SIZE = 5;
+const TREATMENT_SIZE = 12;
 
 // Type definitions for memoized components
 interface DataPointProps {
@@ -46,8 +48,14 @@ const MemoizedDataPoint = React.memo(
     if (item?.noValue) return null;
 
     const needShift = item?.needShift || false;
-    const size = isSelected ? 20 : 14;
-    const strokeWidth = isSelected ? 6 : 3;
+    let size = isSelected ? 20 : 14;
+    if (item.isTreatmentSiBesoin) {
+      size = TREATEMENT_SI_BESOIN_SIZE;
+    }
+    let strokeWidth = isSelected ? 6 : 3;
+    if (item.isTreatmentSiBesoin) {
+      strokeWidth = 1;
+    }
     const radius = (size - strokeWidth) / 2;
 
     return (
@@ -90,17 +98,29 @@ const MemoizedTreatmentPoint = React.memo(
     return (
       <View
         style={{
-          width: isSelected ? 20 : 14,
-          height: isSelected ? 20 : 14,
+          width: TREATMENT_SIZE, //isSelected ? 20 : 14,
+          height: TREATMENT_SIZE, // isSelected ? 20 : 14,
           alignSelf: "center",
           alignItems: "center",
           justifyContent: "center",
         }}
       >
         {item?.treatmentValue === true ? (
-          <CheckMarkIcon width={isSelected ? 20 : 15} height={isSelected ? 20 : 15} color={"#134449"} />
+          <CheckMarkIcon
+            //width={isSelected ? 20 : 15}
+            width={TREATMENT_SIZE}
+            height={TREATMENT_SIZE}
+            //height={isSelected ? 20 : 15}
+            color={"#134449"}
+          />
         ) : (
-          <CrossIcon width={isSelected ? 20 : 15} height={isSelected ? 20 : 15} color={"#518B9A"} />
+          <CrossIcon
+            //width={isSelected ? 20 : 15}
+            height={TREATMENT_SIZE}
+            width={TREATMENT_SIZE}
+            //height={isSelected ? 20 : 15}
+            color={"#518B9A"}
+          />
         )}
       </View>
     );
@@ -439,7 +459,8 @@ export default function TestChart({
         isTreatment: true,
         dataPointColor: t.noValue ? "transparent" : TW_COLORS.CNAM_PRIMARY_800,
         focusedDataPointColor: t.noValue ? "transparent" : TW_COLORS.CNAM_PRIMARY_800,
-
+        focusedDataPointWidth: TREATMENT_SIZE,
+        focusedDataPointHeight: TREATMENT_SIZE,
         dataPointShape: t.treatmentValue === true ? "rectangular" : "circular",
       };
     });
@@ -458,6 +479,8 @@ export default function TestChart({
         dataPointColor: t.noValue ? "transparent" : TW_COLORS.CNAM_PRIMARY_800,
         focusedDataPointColor: t.noValue ? "transparent" : TW_COLORS.CNAM_PRIMARY_800,
         backgroundColor: TW_COLORS.CNAM_PRIMARY_800,
+        focusedDataPointWidth: 5,
+        focusedDataPointHeight: 5,
         isTreatmentSiBesoin: true,
       };
     });
@@ -683,10 +706,10 @@ export default function TestChart({
       dataPointsHeight2={config.useCustomRenderers ? 15 : 10}
       dataPointsHeight1={15}
       dataPointsWidth1={15}
-      dataPointsHeight3={15}
-      dataPointsWidth3={15}
-      dataPointsHeight4={15}
-      dataPointsWidth4={15}
+      dataPointsHeight3={TREATMENT_SIZE}
+      dataPointsWidth3={TREATMENT_SIZE}
+      dataPointsHeight4={TREATEMENT_SI_BESOIN_SIZE}
+      dataPointsWidth4={TREATEMENT_SI_BESOIN_SIZE}
       focusedDataPointHeight={config.useCustomRenderers ? 20 : 15}
       focusedDataPointWidth={config.useCustomRenderers ? 20 : 15}
       showDataPointLabelOnFocus={false}
