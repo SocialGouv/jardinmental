@@ -114,12 +114,10 @@ const Tabs = ({ navigation, route }) => {
       component: Exercise,
     },
     {
-      name: "Customize",
+      name: "settings",
       label: "Personnaliser",
       icon: Gear,
-      onClick: () => {
-        setSettingsVisible(true);
-      },
+      component: Settings,
     },
   ];
 
@@ -192,11 +190,7 @@ const Tabs = ({ navigation, route }) => {
                 <SquircleButton
                   key={tab.name}
                   onPress={() => {
-                    if (tab.onClick) {
-                      tab.onClick();
-                    } else {
-                      handleTabPress(tab.name);
-                    }
+                    handleTabPress(tab.name);
                   }}
                   preserveSmoothing={true}
                   cornerSmoothing={100}
@@ -237,7 +231,6 @@ const Tabs = ({ navigation, route }) => {
             })}
           </View>
         </SquircleView>
-        <Settings visible={settingsVisible} navigation={navigation} onClick={() => setSettingsVisible(false)} />
       </View>
     </View>
   );

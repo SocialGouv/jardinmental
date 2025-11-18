@@ -58,6 +58,7 @@ import ExternalResourcesScreen from "../scenes/resources/ExternalResourcesScreen
 import SupportScreen from "@/scenes/support/SupportScreen";
 import DiaryDetail from "@/scenes/status/DiaryDetail";
 import { ModalTriggerScreen } from "@/scenes/suivi/triggers/ModalTrigger";
+import SettingsModal from "@/scenes/settings/settings-modal";
 
 const Stack = createStackNavigator();
 
@@ -262,6 +263,7 @@ class Router extends React.Component<RouterProps> {
                 presentation: "modal",
               }}
             />
+            <Stack.Screen name="settings" component={SettingsModal} />
             <Stack.Screen name="indicators-settings-more" component={IndicatorsSettingsMore} />
             <Stack.Screen name="goals-settings" component={GoalsSettings} />
             <Stack.Screen name="goals-settings-more" component={GoalsSettingsMore} />

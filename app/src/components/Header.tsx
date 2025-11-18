@@ -90,7 +90,6 @@ const Header = ({ title, navigation, scrollY, scrollThreshold = 80, component }:
 
   return (
     <Animated.View style={[headerContainerStyle]} className="px-4 flex-col pb-4">
-      <Settings visible={settingsVisible} navigation={navigation} onClick={() => setSettingsVisible(false)} />
       <Drawer
         visible={drawerVisible}
         navigation={navigation}
@@ -129,12 +128,14 @@ const Header = ({ title, navigation, scrollY, scrollThreshold = 80, component }:
           </SquircleButton>
         </View>
       </View>
-      <Animated.View style={titleContainerStyle}>
-        <Animated.Text style={titleAnimatedStyle} className={mergeClassNames(typography.textLgRegular, "text-white")}>
-          {title}
-        </Animated.Text>
-        {component}
-      </Animated.View>
+      {title && (
+        <Animated.View style={titleContainerStyle}>
+          <Animated.Text style={titleAnimatedStyle} className={mergeClassNames(typography.textLgRegular, "text-white")}>
+            {title}
+          </Animated.Text>
+          {component}
+        </Animated.View>
+      )}
     </Animated.View>
   );
 };
