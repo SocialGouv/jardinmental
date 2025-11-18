@@ -28,11 +28,11 @@ export const EMOTION_COLORS = {
   goodTrans: "#f1f491",
   veryGoodTrans: "#edfaca",
 
-  veryBad: "#F3A3CD", // "#822F2F", //"#840707",
-  bad: "#F3B9B0", //"#91501A", //"#744519",
+  veryBad: "#F3B9B0", // "#822F2F", //"#840707",
+  bad: "#F9DCD7", //"#91501A", //"#744519",
   middle: "#F9E1A7", //"#91501A",//"#6C630C",
   good: "#BBE7C6", //'#317535',//"#496300",
-  veryGood: "#99DDDD", //'#21896B',//"#1A6300",
+  veryGood: "#9ADAAA", //'#21896B',//"#1A6300",
 };
 
 export const iconBorderColors = {
@@ -44,11 +44,11 @@ export const iconBorderColors = {
 };
 
 export const iconColors = {
-  veryBad: "#822F2F", //"#840707",
-  bad: "#91501A", //"#744519",
-  middle: "#91501A", //"#6C630C",
-  good: "#317535", //"#496300",
-  veryGood: "#21896B", //"#1A6300",
+  veryBad: "#B33F2E", //"#840707",
+  bad: "#B33F2E", //"#744519",
+  middle: "#5A2017", //"#6C630C",
+  good: "#004439", //"#496300",
+  veryGood: "#004439", //"#1A6300",
 
   // veryBad: "#F3A3CD", // "#822F2F", //"#840707",
   // bad: '#F3B9B0',//"#91501A", //"#744519",
@@ -124,7 +124,7 @@ export const analyzeScoresMapIcon = {
   },
 };
 
-export const yesNoMapIcon = {
+export const yesNoMapTreatmentIcon = {
   true: {
     color: "#CCEDF9",
     symbol: "✓",
@@ -132,6 +132,17 @@ export const yesNoMapIcon = {
   false: {
     color: "#F9D1E6",
     symbol: "x",
+  },
+};
+
+export const yesNoMapIcon = {
+  false: {
+    color: "#F3B9B0",
+    symbol: "--",
+  },
+  true: {
+    color: "#9ADAAA",
+    symbol: "++",
   },
 };
 

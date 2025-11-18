@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, View, Text, Dimensions } from "react-native";
 import { colors } from "@/utils/colors";
 import PieChart from "react-native-pie-chart";
-import { TW_COLORS, yesNoMapIcon } from "@/utils/constants";
+import { TW_COLORS, yesNoMapTreatmentIcon } from "@/utils/constants";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
 
@@ -14,12 +14,12 @@ export const PieYesNo = ({
   parialsColors = [
     { color: "#f3f3f3" },
     {
-      color: yesNoMapIcon["true"].color,
-      symbol: yesNoMapIcon["true"].symbol,
+      color: yesNoMapTreatmentIcon["true"].color,
+      symbol: yesNoMapTreatmentIcon["true"].symbol,
     },
     {
-      color: yesNoMapIcon["false"].color,
-      symbol: yesNoMapIcon["false"].symbol,
+      color: yesNoMapTreatmentIcon["false"].color,
+      symbol: yesNoMapTreatmentIcon["false"].symbol,
     },
   ],
 }) => {
