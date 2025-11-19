@@ -156,7 +156,7 @@ export const SCORE_MAP_INFO = {
     {
       ...scoresMapIcon[1],
       ...analyzeScoresMapIcon[1],
-      label: "Très bas",
+      label: "Très faible",
     },
     {
       ...scoresMapIcon[2],
@@ -171,12 +171,12 @@ export const SCORE_MAP_INFO = {
     {
       ...scoresMapIcon[4],
       ...analyzeScoresMapIcon[4],
-      label: "Haut",
+      label: "Élevé(e)",
     },
     {
       ...scoresMapIcon[5],
       ...analyzeScoresMapIcon[5],
-      label: "Très haut",
+      label: "Très élevé(e)",
     },
   ],
   DESC: [
@@ -186,12 +186,12 @@ export const SCORE_MAP_INFO = {
     {
       ...scoresMapIcon[5],
       ...analyzeScoresMapIcon[5],
-      label: "Très haut",
+      label: "Très faible",
     },
     {
       ...scoresMapIcon[4],
       ...analyzeScoresMapIcon[4],
-      label: "Haut",
+      label: "Faible",
     },
     {
       ...scoresMapIcon[3],
@@ -201,12 +201,12 @@ export const SCORE_MAP_INFO = {
     {
       ...scoresMapIcon[2],
       ...analyzeScoresMapIcon[2],
-      label: "Bas",
+      label: "Élevé(e)",
     },
     {
       ...scoresMapIcon[1],
       ...analyzeScoresMapIcon[1],
-      label: "Très bas",
+      label: "Très élevé(e)",
     },
   ],
 };
