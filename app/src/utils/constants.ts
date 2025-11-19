@@ -206,7 +206,7 @@ export const SCORE_MAP_INFO = {
     {
       ...scoresMapIcon[1],
       ...analyzeScoresMapIcon[1],
-      label: "Très élévé(e)",
+      label: "Très élevé(e)",
     },
   ],
 };
