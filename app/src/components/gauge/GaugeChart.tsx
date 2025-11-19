@@ -26,9 +26,15 @@ export const GaugeChart = ({ value, reverse, containerStyle }: { value: number; 
         <Svg width={width} height={height} viewBox={`0 0 ${width} ${height}`}>
           <Defs>
             <LinearGradient id="gradient" x1="0" y1="0" x2="1" y2="0">
-              {colors.map((color, index) => (
-                <Stop key={index} offset={index / (colors.length - 1)} stopColor={color} stopOpacity={1} />
-              ))}
+              {colors.flatMap((color, index) => {
+                const startOffset = index / colors.length;
+                const endOffset = (index + 1) / colors.length;
+
+                return [
+                  <Stop key={`${index}-start`} offset={startOffset} stopColor={color} stopOpacity={1} />,
+                  <Stop key={`${index}-end`} offset={endOffset} stopColor={color} stopOpacity={1} />,
+                ];
+              })}
             </LinearGradient>
 
             <Mask id="mask" maskUnits="userSpaceOnUse" x="0" y="0" width={width} height={height}>
