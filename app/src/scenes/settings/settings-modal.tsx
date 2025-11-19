@@ -12,6 +12,7 @@ import { DrugsBottomSheet } from "@/components/DrugsBottomSheet";
 import localStorage from "@/utils/localStorage";
 import logEvents from "@/services/logEvents";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useFocusEffect } from "@react-navigation/native";
 
 const SettingsModal = ({ navigation, visible, onClick }) => {
   const { showBottomSheet, closeBottomSheet } = useBottomSheet();
@@ -21,12 +22,12 @@ const SettingsModal = ({ navigation, visible, onClick }) => {
 
   const [isDevMode, setIsDevMode] = useState(false);
 
-  useEffect(() => {
+  useFocusEffect(() => {
     (async () => {
       const devMode = await AsyncStorage.getItem("devMode");
       setIsDevMode(devMode === "true");
     })();
-  }, []);
+  });
 
   return (
     <Modal animationType="slide" visible={visible} transparent={true} supportedOrientations={["portrait", "landscape"]}>
