@@ -115,7 +115,10 @@ export const IndicatorSurveyItem = ({
       </View>
       {renderInput()}
       {indicator.type === INDICATOR_TYPE.gauge && (
-        <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700 h-5")}>{computeIndicatorLabel() || ""}</Text>
+        <View className="flex-row justify-between">
+          <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700 h-5")}>{"Très faible"}</Text>
+          <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700 h-5")}>{"Très élevé(e)"}</Text>
+        </View>
       )}
       {showComment && (
         <InputText
