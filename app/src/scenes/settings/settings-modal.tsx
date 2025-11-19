@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, StyleSheet, Modal, TouchableOpacity, ScrollView, useWindowDimensions } from "react-native";
 import SettingItem from "./setting-item";
 import Bell from "@assets/svg/icon/Bell";
@@ -11,13 +11,22 @@ import { useBottomSheet } from "@/context/BottomSheetContext";
 import { DrugsBottomSheet } from "@/components/DrugsBottomSheet";
 import localStorage from "@/utils/localStorage";
 import logEvents from "@/services/logEvents";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const SettingsModal = ({ navigation, visible, onClick }) => {
   const { showBottomSheet, closeBottomSheet } = useBottomSheet();
   const { width, height } = useWindowDimensions();
   const isLandscape = width > height;
-
   const ContentWrapper = isLandscape ? ScrollView : View;
+
+  const [isDevMode, setIsDevMode] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      const devMode = await AsyncStorage.getItem("devMode");
+      setIsDevMode(devMode === "true");
+    })();
+  }, []);
 
   return (
     <Modal animationType="slide" visible={visible} transparent={true} supportedOrientations={["portrait", "landscape"]}>
@@ -84,16 +93,18 @@ const SettingsModal = ({ navigation, visible, onClick }) => {
             }}
             icon={<Download />}
           />
-          <SettingItem
-            title="Sauvegarder mes données"
-            path="data-export-import"
-            navigation={navigation}
-            onClick={() => {
-              onClick();
-              logEvents.logOpenExportSummary();
-            }}
-            icon={<Save />}
-          />
+          {isDevMode && (
+            <SettingItem
+              title="Sauvegarder mes données"
+              path="data-export-import"
+              navigation={navigation}
+              onClick={() => {
+                onClick();
+                logEvents.logOpenExportSummary();
+              }}
+              icon={<Save />}
+            />
+          )}
         </ContentWrapper>
       </TouchableOpacity>
     </Modal>
