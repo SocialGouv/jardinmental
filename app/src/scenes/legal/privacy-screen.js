@@ -261,7 +261,7 @@ const DataTable = () => {
       </View>
       <View style={styles.tableRow}>
         <View style={styles.tableCol}>
-          <Text style={styles.default}>Données relatives aux usagers du service</Text>
+          <Text style={styles.default}>Données relatives aux utilisateurs qui contactent l’équipe de Jardin Mental</Text>
         </View>
         <View style={styles.tableCol}>
           <Text style={styles.default}>1 an à compter de la dernière proposition d'amélioration de l'application mobile</Text>
