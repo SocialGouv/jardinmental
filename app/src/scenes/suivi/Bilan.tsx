@@ -28,9 +28,10 @@ import { useBottomSheet } from "@/context/BottomSheetContext";
 import { typography } from "@/utils/typography";
 import { mergeClassNames } from "@/utils/className";
 import DrugIcon from "@assets/svg/icon/Drug";
+import { FriseHeader, FriseScreen } from "./frises/Frise";
 
 const Bilan = ({ navigation, startSurvey }) => {
-  const [chartType, setChartType] = React.useState<"Frises" | "Statistiques" | "Déclencheurs" | "Courbes">("Statistiques");
+  const [chartType, setChartType] = React.useState<"Frises" | "Statistiques" | "Déclencheurs" | "Courbes" | "Correlations">("Statistiques");
   const [presetDate, setPresetDate] = React.useState("lastDays7");
   const [fromDate, setFromDate] = React.useState(beforeToday(30));
   const [toDate, setToDate] = React.useState(beforeToday(0));
@@ -132,8 +133,27 @@ const Bilan = ({ navigation, startSurvey }) => {
               />
             )}
             {chartType === "Courbes" && <VariationsHeader day={day} setDay={setDay} scrollY={scrollY} />}
-            {chartType === "Frises" && (
+            {chartType === "Correlations" && (
               <CorrelationHeader
+                presetDate={presetDateCorrelation}
+                setPresetDate={setPresetDateCorrelation}
+                fromDate={fromDateCorrelation}
+                setFromDate={setFromDateCorrelation}
+                toDate={toDateCorrelation}
+                setToDate={setToDate}
+                hasTreatment={aUnTraiement}
+                scrollY={scrollY}
+                focusedScores={focusedScores}
+                setFocusedScores={setFocusedScores}
+                showTraitement={showTraitement}
+                setShowTraitement={setShowTraitement}
+                filterEnabled={filterEnabled}
+                setFilterEnabled={setFilterEnabled}
+                friseInfoButtonRef={friseInfoButtonRef}
+              />
+            )}
+            {chartType === "Frises" && (
+              <FriseHeader
                 presetDate={presetDateCorrelation}
                 setPresetDate={setPresetDateCorrelation}
                 fromDate={fromDateCorrelation}
@@ -198,9 +218,34 @@ const Bilan = ({ navigation, startSurvey }) => {
           </View>
         )}
 
+        {chartType === "Correlations" && (
+          <View>
+            <Correlation
+              dynamicPaddingTop={dynamicPaddingTop}
+              onScroll={scrollHandler}
+              navigation={navigation}
+              presetDate={presetDateCorrelation}
+              setPresetDate={setPresetDateCorrelation}
+              fromDate={fromDateCorrelation}
+              setFromDate={setFromDateCorrelation}
+              toDate={toDateCorrelation}
+              setToDate={setToDateCorrelation}
+              hasTreatment={aUnTraiement}
+              scrollY={scrollY}
+              focusedScores={focusedScores}
+              setFocusedScores={setFocusedScores}
+              showTraitement={showTraitement}
+              setShowTraitement={setShowTraitement}
+              filterEnabled={filterEnabled}
+              setFilterEnabled={setFilterEnabled}
+              friseInfoButtonRef={friseInfoButtonRef}
+            />
+          </View>
+        )}
+
         {chartType === "Frises" && (
           <View style={{ display: chartType === "Frises" ? "flex" : "none", flex: 1 }}>
-            <Correlation
+            <FriseScreen
               dynamicPaddingTop={dynamicPaddingTop}
               onScroll={scrollHandler}
               navigation={navigation}
