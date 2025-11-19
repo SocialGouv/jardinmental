@@ -67,6 +67,8 @@ export const IndicatorSurveyItem = ({
 
   const computeIndicatorLabel = (): string => {
     if (value === null) return "";
+    // Gauge: value [0,1] → index [1,5] for label lookup (1-based)
+    // Smiley: value is already [1,5] (1-based)
     let index = indicator.type === INDICATOR_TYPE.gauge ? Math.min(Math.floor(value * 5), 4) + 1 : value;
     // For smiley-type indicators sorted in DESC order, invert the label index.
     if (indicator.order === "DESC" && indicator.type === INDICATOR_TYPE.smiley) {
