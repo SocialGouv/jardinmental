@@ -264,7 +264,8 @@ const DaySurvey = ({
     logEvents.logIndicatorsDailyQuestionnaire(userIndicateurs.filter((i) => i.active).length);
     logEvents.logObjectivesDailyQuestionnaire(goals.length);
     const answeredElementCount = Object.keys(answers).filter((key) => userIndicateurs.map(getIndicatorKey).includes(key))?.length;
-    logEvents.logCompletionIndicatorsDailyQuestionnaire(answeredElementCount / userIndicateurs.length);
+    const activeIndicatorsCount = userIndicateurs.filter((i) => i.active).length;
+    logEvents.logCompletionIndicatorsDailyQuestionnaire(activeIndicatorsCount > 0 ? answeredElementCount / activeIndicatorsCount : 0);
 
     const records = await getGoalsDailyRecords({ date: initSurvey.date });
     const _goalsRecords = {};
@@ -279,32 +280,6 @@ const DaySurvey = ({
     // Log if notes were added
     const hasNotes = answers[questionContext.id]?.userComment ? 1 : 0;
     logEvents.logCompletionNotesDailyQuestionnaire(hasNotes);
-
-    // logEvents._deprecatedLogFeelingAdd();
-    // logEvents._deprecatedLogFeelingSubmitSurvey(userIndicateurs.filter((i) => i.active).length);
-    // logEvents._deprecatedLogFeelingAddComment(
-    //   Object.keys(answers).filter((key) => ![questionToxic.id, questionContext.id].includes(key) && answers[key].userComment)?.length
-    // );
-    // logEvents._deprecatedLogFeelingAddContext(answers[questionContext.id]?.userComment ? 1 : 0);
-    // logEvents._deprecatedLogFeelingResponseToxic(answers[questionToxic.id]?.value ? 1 : 0);
-
-    // // Log each indicator in the questionnaire (FEELING_ADD_LIST)
-    // for (const indicator of userIndicateurs.filter((i) => i.active)) {
-    //   if (indicator.matomoId) {
-    //     logEvents._deprecatedLogFeelingAddList(indicator.matomoId);
-    //   }
-    // }
-
-    // // Log each indicator that has been answered (FEELING_ADD_LIST_COMPLETED)
-    // for (const key of Object.keys(answers)) {
-    //   // Skip special questions (TOXIC and CONTEXT)
-    //   if ([questionToxic.id, questionContext.id].includes(key)) continue;
-
-    //   const answer = answers[key];
-    //   if (answer?.value !== undefined && answer._indicateur?.matomoId) {
-    //     logEvents._deprecatedLogFeelingAddListCompleted(answer._indicateur.matomoId);
-    //   }
-    // }
 
     if (route.params?.redirect) {
       return navigation.navigate("survey-success", {
@@ -375,7 +350,7 @@ const DaySurvey = ({
     navigation.navigate("symptoms");
     logEvents._deprecatedLogSettingsSymptomsFromSurvey();
   };
-  const answeredElementCount = Object.keys(answers).map((key) => answers[key].value !== undefined).length;
+  const answeredElementCount = Object.keys(answers).filter((key) => answers[key]?.value !== undefined).length;
   const onValueChanged = ({ indicator, value }: { indicator: Indicator; value: string }) => toggleAnswer({ key: getIndicatorKey(indicator), value });
   const onCommentChanged = ({ indicator, comment }: { indicator: Indicator; comment?: string }) =>
     handleChangeUserComment({ key: getIndicatorKey(indicator), userComment: comment });
