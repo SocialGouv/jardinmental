@@ -17,8 +17,12 @@ const CHART_TYPES = [
     label: "Variations",
   },
   {
-    key: "Frises",
+    key: "Correlations",
     label: "Corrélations",
+  },
+  {
+    key: "Frises",
+    label: "Frises",
   },
   {
     key: "Déclencheurs",
