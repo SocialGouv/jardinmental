@@ -158,10 +158,25 @@ const DiaryDataProvider = ({ children }) => {
     // if no start date, it's the first time the user opens the app
     // so we initialize it
     if (!startDate) {
-      const tempStartDate = formatDay(new Date());
+      let parsedData: DiaryData = JSON.parse(data) as DiaryData;
+
+      // Check if data exists and has entries
+      const dataKeys = Object.keys(parsedData).filter((key) => parsedData[key] !== null);
+
+      let tempStartDate: string;
+
+      if (dataKeys.length > 0) {
+        // Find the oldest date in the existing data
+        const oldestDate = dataKeys.sort()[0]; // Dates in ISO format sort chronologically
+        tempStartDate = oldestDate;
+      } else {
+        // No data exists, use today's date
+        tempStartDate = formatDay(new Date());
+      }
+
       await AsyncStorage.setItem(STORAGE_KEY_START_DATE, tempStartDate);
-      let tempStartDateMinus7 = beforeToday(7, tempStartDate);
-      const tempDiary = fillUpEmptyDates(tempStartDateMinus7, JSON.parse(data));
+      let tempStartDateMinus7 = beforeToday(7, new Date(tempStartDate));
+      const tempDiary = fillUpEmptyDates(tempStartDateMinus7, parsedData);
       return setDiaryData(tempDiary);
     }
     // we set data first for a better UX
