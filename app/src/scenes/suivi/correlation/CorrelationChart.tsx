@@ -814,6 +814,8 @@ export default function TestChart({
       // verticalLinesColor="rgba(24, 26, 26, 0.1)"
       // verticalLinesThickness={0}
       // noOfVerticalLines={5}
+      showScrollIndicator={false}
+      bounces={false}
       strokeDashArray2={[4, 1]} // bug other dash array are sometimes no consistent (the space between dashes vary)
       curved={true} // set false to improve performance on android
       curvature={0.1}

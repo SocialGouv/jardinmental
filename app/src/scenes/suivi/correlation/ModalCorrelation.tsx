@@ -34,6 +34,9 @@ interface ModalCorrelationScreenProps {
 }
 
 function getSubArray<T>(array: T[], index: number, x: number): (T | undefined)[] {
+  if (!array) {
+    return;
+  }
   const result: (T | undefined)[] = [];
 
   for (let i = index - x; i <= index + x; i++) {
@@ -56,7 +59,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
   const [showTreatment, setShowTreatment] = useState<boolean>();
   const [displayItem, setDisplayItem] = useState<null>();
   const [isVisible, setIsVisible] = useState(false);
-  const [active, setActive] = useState("1month");
+  const [active, setActive] = useState("7days");
   const [isPending, startTransition] = useTransition();
   const { showBottomSheet, closeBottomSheet } = useBottomSheet();
   const [selectedPointIndex, setSelectedPointIndex] = useState<number | null>();
@@ -208,6 +211,9 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
         });
       data.push(newData);
     }
+    if (selectedIndicators.length === 1) {
+      data.push(undefined);
+    }
     const treatment = true;
     if (treatment) {
       const newData = chartDates.map((date) => {
@@ -261,8 +267,15 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
     return (
       <View className="flex-1 bg-cnam-primary-25">
         <View className="flex-row justify-between top-0 w-full bg-cnam-primary-800 p-4 items-center h-[96]">
-          <Text className={mergeClassNames(typography.displayXsBold, "text-white")}>Correlation</Text>
-          <Text className={mergeClassNames(typography.displayXsBold, "text-white")}>x</Text>
+          <Text className={mergeClassNames(typography.displayXsBold, "text-white")}>Corrélations</Text>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.goBack();
+            }}
+            className="w-16 justify-end flex-row items-center"
+          >
+            <CrossIcon color={"white"} width={25} height={25} strokeWidth={1.2} />
+          </TouchableOpacity>
         </View>
         <ScrollView className="px-4 flex-col space-y-4 pt-4 bg-cnam-primary-25" showsHorizontalScrollIndicator={false}>
           <TouchableOpacity
@@ -315,9 +328,9 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
             onPress={() => {
               navigation.goBack();
             }}
-            className="flex-row items-center justify-end"
+            className="w-16 justify-end flex-row items-center"
           >
-            <CrossIcon color={"white"} />
+            <CrossIcon color={"white"} width={25} height={25} strokeWidth={1.2} />
           </TouchableOpacity>
         </View>
         <ScrollView className="flex-col pt-4 bg-cnam-primary-25">
@@ -449,7 +462,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                               <CheckMarkIcon width={15} height={15} color={"#134449"} />
                             </View>
                             <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 ")}>
-                              <Text className={mergeClassNames(typography.textMdSemibold, "text-primary-900")}>Traitement : </Text>pris
+                              <Text className={mergeClassNames(typography.textMdSemibold, "text-primary-900")}>Traitement : </Text>Oui
                             </Text>
                           </View>
                         )}
@@ -462,7 +475,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                               <CrossIcon color={"#518B9A"} />
                             </View>
                             <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 ")}>
-                              <Text className={mergeClassNames(typography.textMdSemibold, "text-primary-900")}>Traitement : </Text> pas pris
+                              <Text className={mergeClassNames(typography.textMdSemibold, "text-primary-900")}>Traitement : </Text>Non
                             </Text>
                           </View>
                         )}
@@ -475,7 +488,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                               <View className="w-4 h-4 rounded-full bg-cnam-primary-800"></View>
                             </View>
                             <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 ")}>
-                              <Text className={mergeClassNames(typography.textMdSemibold, "text-primary-900")}>Si besoin : </Text> pris
+                              <Text className={mergeClassNames(typography.textMdSemibold, "text-primary-900")}>Si besoin : </Text>Oui
                             </Text>
                           </View>
                         )}

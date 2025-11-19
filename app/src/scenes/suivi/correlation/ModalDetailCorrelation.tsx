@@ -3,7 +3,7 @@ import { View, Text, ScrollView, TouchableOpacity, Dimensions } from "react-nati
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
 import { formatDate } from "@/utils/date/helpers";
-import { getIndicatorKey } from "@/utils/indicatorUtils";
+import { computeIndicatorLabel, getIndicatorKey } from "@/utils/indicatorUtils";
 import { booleanColor, ColorContextInterface, scoresMapIcon } from "@/utils/constants";
 import Svg, { Line } from "react-native-svg";
 import CrossIcon from "@assets/svg/icon/Cross";
@@ -14,6 +14,7 @@ import { firstLetterUppercase } from "@/utils/string-util";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "@/components/Icon";
 import { mapIconToSvg } from "@/components/CircledIcon";
+import CheckMarkIcon from "@assets/svg/icon/check";
 
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
@@ -22,24 +23,6 @@ interface ModalCorrelationScreenProps {
   navigation: any;
   route?: any;
 }
-
-const computeIndicatorLabel = (indicator, value): string => {
-  if (value === null) return "";
-  let index = indicator.type === INDICATOR_TYPE.gauge ? Math.min(Math.floor(value * 5), 4) : value;
-  if (indicator.type === INDICATOR_TYPE.boolean) {
-    return { true: "Oui", false: "Non" }[value];
-  }
-  // For smiley-type indicators sorted in DESC order, invert the label index.
-  if (indicator.order === "DESC" && indicator.type === INDICATOR_TYPE.smiley) {
-    index = 6 - index; // Inverse 1→5, 2→4, 3→3, 4→2, 5→1
-  }
-
-  if (Object.keys(INDICATOR_LABELS).includes(indicator.uuid)) {
-    return INDICATOR_LABELS[indicator.uuid][index - 1];
-  } else {
-    return DEFAULT_INDICATOR_LABELS[index - 1];
-  }
-};
 
 const computeIndicatorColor = (indicator, value): ColorContextInterface | undefined => {
   if (value === null) return;
@@ -77,15 +60,15 @@ export const DetailModalCorrelationScreen: React.FC<ModalCorrelationScreenProps>
             onPress={() => {
               navigation.goBack();
             }}
-            className="flex-row items-center justify-end"
+            className="flex-row items-center justify-end w-10 h-10"
           >
-            <CrossIcon color={"white"} />
+            <CrossIcon color={"white"} width={25} height={25} strokeWidth={1.2} />
           </TouchableOpacity>
         </View>
-        <View className="flex-row h-[96] w-full justify-between items-center">
+        <View className="flex-row h-[66] w-full justify-between items-center">
           <Text className={mergeClassNames(typography.displayXsBold, "text-white")}>{firstLetterUppercase(formatDate(date, true))}</Text>
         </View>
-        <View className="bg-white/5 rounded-2xl p-4 w-full">
+        <View className="bg-white/10 rounded-2xl p-4 w-full">
           {diaryDataForDate &&
             selectedIndicators.map((indicator, index) => {
               let value;
@@ -102,7 +85,7 @@ export const DetailModalCorrelationScreen: React.FC<ModalCorrelationScreenProps>
                       y2="1"
                       stroke={index === 0 ? "#00A5DF" : "#3D6874"} // your color
                       strokeWidth="2"
-                      // strokeDasharray={index === 0 ? [] : ["4,4"]} // pattern: 4px dash, 4px gap
+                      strokeDasharray={index === 0 ? [] : ["4,4"]} // pattern: 4px dash, 4px gap
                     />
                   </Svg>
                   <Text key={indicator.uuid} className={mergeClassNames(typography.textMdMedium, "text-white ")}>
@@ -112,24 +95,32 @@ export const DetailModalCorrelationScreen: React.FC<ModalCorrelationScreenProps>
                 </View>
               );
             })}
-          <View className="flex-row items-center space-x-2">
-            <View className="w-[30] items-center justify-center">
-              <CrossIcon color={"white"} />
+          {typeof diaryDataForDate["PRISE_DE_TRAITEMENT"].value === "boolean" && (
+            <View className="flex-row items-center space-x-2">
+              <View className="w-[30] items-center justify-center">
+                {typeof diaryDataForDate["PRISE_DE_TRAITEMENT"].value ? (
+                  <CheckMarkIcon width={15} height={15} color={"white"} />
+                ) : (
+                  <CrossIcon color={"white"} />
+                )}
+              </View>
+              <Text className={mergeClassNames(typography.textMdMedium, "text-white ")}>
+                <Text className={mergeClassNames(typography.textMdSemibold, "text-white")}>Traitement : </Text>
+                {diaryDataForDate["PRISE_DE_TRAITEMENT"].value ? "Pris correctement" : "Non"}
+              </Text>
             </View>
-            <Text className={mergeClassNames(typography.textMdMedium, "text-white ")}>
-              <Text className={mergeClassNames(typography.textMdSemibold, "text-white")}>Traitement : </Text>
-              {diaryDataForDate["PRISE_DE_TRAITEMENT"] ? "Pris correctement" : "Non"}
-            </Text>
-          </View>
-          <View className="flex-row items-center space-x-2">
-            <View className="w-[30] items-center">
-              <View className="w-[15] h-[15] bg-cnam-primary-950 rounded-full"></View>
+          )}
+          {diaryDataForDate["PRISE_DE_TRAITEMENT_SI_BESOIN"].value === true && (
+            <View className="flex-row items-center space-x-2">
+              <View className="w-[30] items-center">
+                <View className="w-2 h-2 bg-cnam-primary-950 rounded-full"></View>
+              </View>
+              <Text className={mergeClassNames(typography.textMdMedium, "text-white ")}>
+                <Text className={mergeClassNames(typography.textMdSemibold, "text-white")}>Prise d'un "si besoin" : </Text>
+                {"Oui"}
+              </Text>
             </View>
-            <Text className={mergeClassNames(typography.textMdMedium, "text-white ")}>
-              <Text className={mergeClassNames(typography.textMdSemibold, "text-white")}>Prise d'un "si besoin" : </Text>
-              {diaryDataForDate["PRISE_DE_TRAITEMENT_SI_BESOIN"] ? "Pris correctement" : "Non"}
-            </Text>
-          </View>
+          )}
         </View>
       </View>
       <ScrollView
@@ -147,10 +138,13 @@ export const DetailModalCorrelationScreen: React.FC<ModalCorrelationScreenProps>
                 ...d,
                 hideDataPoint: index !== selectedPointIndex,
               }))}
-              dataB={dataB.map((d, index) => ({
-                ...d,
-                hideDataPoint: index !== selectedPointIndex,
-              }))}
+              dataB={
+                dataB &&
+                dataB.map((d, index) => ({
+                  ...d,
+                  hideDataPoint: index !== selectedPointIndex,
+                }))
+              }
               spacingFormat={"7days"}
               treatment={treatment}
               initialSelectedPointIndex={selectedPointIndex}

@@ -75,7 +75,7 @@ export const IndicatorsBottomSheet = ({
                     key={e.uuid || e.name}
                     className="flex-row"
                     id={e.uuid}
-                    label={e.name}
+                    label={`${e.name}${!e.active ? " (désactivé)" : ""}`}
                     boxPosition="top"
                     disabled={!selected && selectedIndicators.length >= 2}
                     selected={selected}
@@ -83,9 +83,6 @@ export const IndicatorsBottomSheet = ({
                   />
                 );
               })}
-            <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-950 ml-2 my-4 underline")}>
-              Ou choisissez parmis les associations fréquentes
-            </Text>
             <View className="fr-col space-y-4 mt-4">
               <Text className={mergeClassNames(typography.textLgSemibold, "text-gray-800")}>Traitement</Text>
               <View className="flex-row items-center justify-between">
@@ -113,7 +110,6 @@ export const IndicatorsBottomSheet = ({
         }}
         className={`flex-column justify-between items-center p-6 px-6 bg-white/90 pb-10 w-full`}
       >
-        <Text className={mergeClassNames(typography.textSmMedium, "text-gray-800 mb-2")}>Vous pourrez modifier cette sélection plus tard</Text>
         <JMButton
           onPress={async () => {
             onClose({
@@ -121,6 +117,7 @@ export const IndicatorsBottomSheet = ({
               showTreatment,
             });
           }}
+          disabled={selectedIndicators.length === 0}
           title={"Valider la sélection"}
         />
       </View>
