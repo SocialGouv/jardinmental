@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Card } from "../../../components/Card";
 import { Collapsable } from "../../../components/Collapsable";
 import { GOALS_EXAMPLE } from "../../../utils/goalsConstants";
@@ -14,6 +14,7 @@ import { View, Alert, Linking } from "react-native";
 import NavigationButtons from "@/components/onboarding/NavigationButtons";
 import logEvents from "@/services/logEvents";
 import NotificationService from "@/services/notifications";
+import { addPushTokenListener } from "expo-notifications";
 
 const GOALS_EXAMPLE_FLAT = Object.values(GOALS_EXAMPLE).reduce((acc, subGoalCategory) => {
   return [...acc, ...subGoalCategory];
@@ -46,6 +47,18 @@ export const GoalsAddOptions = ({ navigation }) => {
       })();
     }, [])
   );
+
+  useEffect(() => {
+    const tokenListener = addPushTokenListener((token) => {
+      console.log(token);
+    });
+
+    return () => {
+      if (tokenListener) {
+        tokenListener.remove();
+      }
+    };
+  }, []);
 
   const changeGoal = useCallback(
     ({ label, enabled, type }) => {
