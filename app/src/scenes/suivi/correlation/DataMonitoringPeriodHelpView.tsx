@@ -2,7 +2,9 @@ import logEvents from "@/services/logEvents";
 import { mergeClassNames } from "@/utils/className";
 import { TW_COLORS } from "@/utils/constants";
 import { typography } from "@/utils/typography";
+import ArrowIcon from "@assets/svg/icon/Arrow";
 import Arrow from "@assets/svg/icon/Arrow";
+import ChevronIcon from "@assets/svg/icon/chevron";
 import { useState } from "react";
 import { View, Text, Touchable, TouchableOpacity, Linking } from "react-native";
 import Markdown from "react-native-markdown-display";
@@ -72,21 +74,27 @@ const markdownStyles = {
 };
 
 const data = {
-  longTerm: `Regarder vos indicateurs sur quelques jours ou semaines permet d’identifier les déclencheurs de vos variations d’humeur.
-    Questions utiles à vous poser : Quels jours observez-vous un pic ou une chute ?
-    Ces variations sont-elles liées à un événement, une habitude ou un changement ?
-    Voyez-vous des schémas récurrents ? Certains indicateurs évoluent-ils ensemble ? (ex. : humeur en baisse quand l’anxiété monte) 
-    Gardez en tête qu’une co-variation ne signifie pas forcément une cause directe. Par exemple, si votre humeur baisse les jours de pluie, cela peut venir d’une baisse d’activité, pas de la pluie elle-même.Observez vos données sur plusieurs semaines avant de conclure.
-    Identifier ce qui influence votre bien-être
-    Quelles situations coïncident avec une amélioration de vos indicateurs ?
-    Quelles actions ou inactions semblent les détériorer ?
-    Repérer ces liens vous aidera à reproduire ce qui vous fait du bien. Vous pouvez aussi tester des petits changements et observer leur effet sur vous (par exemple, marcher 30 minutes chaque jour).
-    Conseil : Observez vos données sur plusieurs semaines avant de tirer des conclusions. Testez des hypothèses pour valider ou infirmer vos observations.`,
-  shortTerm: `Sur le long terme, vos données peuvent révéler des tendances générales ou des cycles récurrents.
+  longTerm: {
+    title: "Période longue : observer les tendances",
+    content: `Regarder vos indicateurs sur quelques jours ou semaines permet d’identifier les déclencheurs de vos variations d’humeur.
+      Questions utiles à vous poser : Quels jours observez-vous un pic ou une chute ?
+      Ces variations sont-elles liées à un événement, une habitude ou un changement ?
+      Voyez-vous des schémas récurrents ? Certains indicateurs évoluent-ils ensemble ? (ex. : humeur en baisse quand l’anxiété monte) 
+      Gardez en tête qu’une co-variation ne signifie pas forcément une cause directe. Par exemple, si votre humeur baisse les jours de pluie, cela peut venir d’une baisse d’activité, pas de la pluie elle-même.Observez vos données sur plusieurs semaines avant de conclure.
+      Identifier ce qui influence votre bien-être
+      Quelles situations coïncident avec une amélioration de vos indicateurs ?
+      Quelles actions ou inactions semblent les détériorer ?
+      Repérer ces liens vous aidera à reproduire ce qui vous fait du bien. Vous pouvez aussi tester des petits changements et observer leur effet sur vous (par exemple, marcher 30 minutes chaque jour).
+      Conseil : Observez vos données sur plusieurs semaines avant de tirer des conclusions. Testez des hypothèses pour valider ou infirmer vos observations.`,
+  },
+  shortTerm: {
+    title: "Période courte : comprendre vos variations",
+    content: `Sur le long terme, vos données peuvent révéler des tendances générales ou des cycles récurrents.
     Questions à explorer :
     Quelle est la tendance globale ? (amélioration, stagnation, baisse)
     Avez-vous vécu des changements impactants ? (travail, routine, traitement)
     Remarquez-vous des saisonnalités ? (ex. : énergie plus basse chaque hiver)`,
+  },
 };
 
 const DataMonitoringPeriodHelpView = ({ title, description, link, isMd }: Props) => {
@@ -139,40 +147,31 @@ const DataMonitoringPeriodHelpView = ({ title, description, link, isMd }: Props)
   } else if (page === "shortTerm") {
     return (
       <View className="flex-1 bg-white p-4 pb-16">
-        <Text className={mergeClassNames(typography.textXlBold, "mb-6 text-cnam-primary-950")}>{title}</Text>
-        <Markdown style={markdownStyles}>{description}</Markdown>
-        {link && (
-          <TouchableOpacity
-            onPress={() => {
-              logEvents.logInfoClick(link);
-              Linking.openURL(link);
-            }}
-          >
-            <Text className="text-base text-center mb-4 leading-6" style={{ color: TW_COLORS.TEXT_SECONDARY }}>
-              {link}
-            </Text>
-          </TouchableOpacity>
-        )}
+        <TouchableOpacity
+          className="pb-4 pl-0"
+          onPress={() => {
+            setPage("initial");
+          }}
+        >
+          <ChevronIcon />
+        </TouchableOpacity>
+        <Text className={mergeClassNames(typography.textXlBold, "mb-6 text-cnam-primary-950")}>{data["shortTerm"].title}</Text>
+        <Markdown style={markdownStyles}>{data["shortTerm"].content}</Markdown>
       </View>
     );
-  } else if (page === "longTerm") {
+  } else {
     return (
       <View className="flex-1 bg-white p-4 pb-16">
-        <Text className={mergeClassNames(typography.textXlBold, "mb-6 text-cnam-primary-950")}>{title}</Text>
-        {!isMd && <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>{description}</Text>}
-        {isMd && <Markdown style={markdownStyles}>{description}</Markdown>}
-        {link && (
-          <TouchableOpacity
-            onPress={() => {
-              logEvents.logInfoClick(link);
-              Linking.openURL(link);
-            }}
-          >
-            <Text className="text-base text-center mb-4 leading-6" style={{ color: TW_COLORS.TEXT_SECONDARY }}>
-              {link}
-            </Text>
-          </TouchableOpacity>
-        )}
+        <TouchableOpacity
+          className="pb-4 pl-0"
+          onPress={() => {
+            setPage("initial");
+          }}
+        >
+          <ChevronIcon />
+        </TouchableOpacity>
+        <Text className={mergeClassNames(typography.textXlBold, "mb-6 text-cnam-primary-950")}>{data["longTerm"].title}</Text>
+        <Markdown style={markdownStyles}>{data["longTerm"].content}</Markdown>
       </View>
     );
   }

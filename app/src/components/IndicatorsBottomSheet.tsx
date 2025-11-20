@@ -43,7 +43,6 @@ export const IndicatorsBottomSheet = ({
     } else {
       t.push(d);
     }
-    console.log(t);
     setSelectedIndicators(t);
   };
 
@@ -68,11 +67,11 @@ export const IndicatorsBottomSheet = ({
           <View className="flex-colum flex-1">
             {!indicatorList && <Text>Chargement...</Text>}
             {indicatorList &&
-              indicatorList.map((e) => {
+              indicatorList.map((e, index) => {
                 const selected = !!selectedIndicators.find((x) => (x.uuid || x.name) === (e.uuid || e.name));
                 return (
                   <LightSelectionnableItem
-                    key={e.uuid || e.name}
+                    key={index}
                     className="flex-row"
                     id={e.uuid}
                     label={`${e.name}${!e.active ? " (désactivé)" : ""}`}

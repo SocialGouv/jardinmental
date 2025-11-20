@@ -415,10 +415,10 @@ export default function TestChart({
         needShift: false,
         dataPointColor: d.noValue ? "transparent" : "#00A5DF",
         // dataPointsColor: !config.useCustomRenderers ? undefined : "#3D6874",
-        focusedDataPointWidth: !config.useCustomRenderers ? (needShift ? 35 : 20) : 20,
+        focusedDataPointWidth: !config.useCustomRenderers ? undefined : needShift ? 35 : 20,
         focusedDataPointHeight: !config.useCustomRenderers ? undefined : 20,
         focusedDataPointColor: !config.useCustomRenderers ? undefined : d.noValue ? "transparent" : "#00A5DF",
-        dataPointWidth: !config.useCustomRenderers ? (needShift ? 25 : 15) : undefined,
+        dataPointWidth: !config.useCustomRenderers ? undefined : needShift ? 25 : 15,
         // hideDataPoint: config.hideDataPoints || spacingFormat === "1month" || spacingFormat === "3months" || spacingFormat === "6months",
         labelComponent: label ? () => customLabel(label) : undefined,
       };

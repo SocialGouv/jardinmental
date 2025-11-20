@@ -56,11 +56,11 @@ export const IndicatorsBottomSheet = ({
           <View className="flex-colum flex-1">
             {!indicatorList && <Text>Chargement...</Text>}
             {indicatorList &&
-              indicatorList.map((e) => {
+              indicatorList.map((e, index) => {
                 const selected = !!selectedIndicators.find((x) => (x.uuid || x.name) === (e.uuid || e.name));
                 return (
                   <LightSelectionnableItem
-                    key={e.uuid || e.name}
+                    key={index}
                     className="flex-row"
                     shape="circle"
                     id={e.uuid}

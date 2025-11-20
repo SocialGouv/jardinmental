@@ -199,7 +199,6 @@ const generateFakeDiaryData = () => {
   const data = {};
   const now = new Date();
   const daysDiff = Math.floor((now - startDate) / oneDay);
-  console.log("LCS TOOT DAYSDIFF", daysDiff);
   for (let i = 0; i <= daysDiff; i++) {
     const currentDate = addDays(startDate, i);
     const dateKey = formatDay(currentDate);

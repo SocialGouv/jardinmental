@@ -412,8 +412,8 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                 <View className={mergeClassNames("w-full", showTreatment ? "h-64" : "h-48")}>
                   {isVisible && displayItem && displayItem?.date && (
                     <Animated.View
-                      style={[animatedStyle]}
-                      className="border border-cnam-primary-300 bg-white rounded-2xl flex-col space-y-2 p-4 mb-4 mt-4"
+                      // style={[animatedStyle]}
+                      className="flex-col border border-cnam-primary-300 bg-white rounded-2xl space-y-2 p-4 mb-4 mt-4"
                     >
                       <View className="flex-row justify-between items-center">
                         <Text className={mergeClassNames(typography.textXsBold, "bg-cnam-primary-800 text-white rounded-lg p-2")}>
