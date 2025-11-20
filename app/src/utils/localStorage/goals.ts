@@ -32,7 +32,7 @@ export const setGoalTracked = async ({
   label?: string;
   enabled?: boolean;
   order?: number;
-  daysOfWeek?: any;
+  daysOfWeek?: Record<string, boolean>;
   reminder?: Date | null;
 }) => {
   try {
