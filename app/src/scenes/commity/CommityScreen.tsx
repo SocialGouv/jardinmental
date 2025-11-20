@@ -122,7 +122,7 @@ const commityList: CommityEntity[] = [
     role: "",
     role2: "",
     isOrganization: true,
-    organization: "PSSM France",
+    organization: "Premiers Secours en Santé Mentale France",
   },
 ];
 
