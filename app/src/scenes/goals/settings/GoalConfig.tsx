@@ -18,6 +18,7 @@ import { typography } from "@/utils/typography";
 import NavigationButtons from "@/components/onboarding/NavigationButtons";
 import { confirm } from "@/utils";
 import logEvents from "@/services/logEvents";
+import { addPushTokenListener } from "expo-notifications";
 
 export const GoalConfig = ({ navigation, route }) => {
   const goalId = route.params?.goalId;
@@ -33,6 +34,18 @@ export const GoalConfig = ({ navigation, route }) => {
   const [reminderEnabled, setReminderEnabled] = useState(!editing ? true : false);
   const [reminderTime, setReminderTime] = useState(set(new Date(), { hours: 10, minutes: 30 }));
   const [reminderTimePickerVisible, setReminderTimePickerVisible] = useState(false);
+
+  useEffect(() => {
+    const tokenListener = addPushTokenListener((token) => {
+      console.log(token);
+    });
+
+    return () => {
+      if (tokenListener) {
+        tokenListener.remove();
+      }
+    };
+  }, []);
 
   useFocusEffect(
     useCallback(() => {
