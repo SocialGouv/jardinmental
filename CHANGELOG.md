@@ -1,3 +1,10 @@
+## [1.126.2](https://github.com/SocialGouv/jardinmental/compare/v1.126.1...v1.126.2) (2025-11-20)
+
+
+### Bug Fixes
+
+* hack to fix getting expo token in expo 53 is broken ([#629](https://github.com/SocialGouv/jardinmental/issues/629)) ([e825769](https://github.com/SocialGouv/jardinmental/commit/e82576923dc81c6a65d83c1b9f73d40fba6d5118))
+
 ## [1.126.1](https://github.com/SocialGouv/jardinmental/compare/v1.126.0...v1.126.1) (2025-11-18)
 
 
