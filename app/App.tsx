@@ -3,6 +3,7 @@ import "react-native-gesture-handler";
 import "react-native-get-random-values";
 import * as Font from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
+import { addPushTokenListener } from "expo-notifications";
 import React, { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import "dayjs/locale/fr";
@@ -47,6 +48,18 @@ SplashScreen.preventAutoHideAsync();
 
 const App = () => {
   const [fontsLoaded, setFontsLoaded] = useState(false);
+
+  useEffect(() => {
+    const tokenListener = addPushTokenListener((token) => {
+      console.log(token);
+    });
+
+    return () => {
+      if (tokenListener) {
+        tokenListener.remove();
+      }
+    };
+  }, []);
 
   useEffect(() => {
     (async () => {
