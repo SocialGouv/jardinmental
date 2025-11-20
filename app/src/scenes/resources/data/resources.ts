@@ -1325,4 +1325,97 @@ Ce processus est souvent non linéaire, ponctué d'avancées, de pauses, de recu
       "550e8400-e29b-41d4-a716-446655440261",
     ],
   },
+  {
+    id: "6f5c8b7e-3d23-4c0f-8c9e-aef902c6f4b1",
+    matomoId: 48,
+    title: "Médicaments et santé mentale : ce qu’il faut savoir",
+    image: require("../../../../assets/imgs/resources/Article47.png"),
+    category: CATEGORIES.MIEUX_COMPRENDRE_LES_TROUBLES_PSYCHIQUES,
+    content: `**Prendre soin de sa santé mentale peut passer par différents chemins.** **Les médicaments font partie des options possibles, mais leur prescription n’est jamais automatique.**  
+Dans les troubles anxieux ou dépressifs légers à modérés, par exemple, le soutien psychothérapeutique ou d’autres formes d’accompagnement sont souvent privilégiés en premier recours.
+
+Les médicaments psychotropes ont pour objectif de **soulager une souffrance intense, de réduire certains symptômes ou de permettre de retrouver une stabilité suffisante pour avancer dans d’autres formes de soin.**  
+Ils agissent sur le cerveau en modifiant certains mécanismes biologiques impliqués dans la régulation des émotions, des pensées et des comportements.
+
+Il existe différentes catégories de médicaments psychotropes, selon les besoins et la situation de chaque personne :
+
+- **les antidépresseurs**, utilisés pour traiter les troubles dépressifs et anxieux,
+- **les neuroleptiques (ou antipsychotiques)**, destinés à réduire certains troubles de la pensée ou de la perception,
+- **les anxiolytiques (ou tranquillisants)**, qui diminuent l’anxiété ou la tension nerveuse,
+- **les hypnotiques (ou somnifères)**, prescrits pour faciliter le sommeil,
+- **les stabilisateurs de l’humeur** (aussi appelés régulateurs de l’humeur, thymorégulateurs ou normothymiques), qui aident à prévenir les variations émotionnelles importantes.
+
+**Comme tout traitement, ces médicaments peuvent apporter des bénéfices, mais aussi entraîner des effets indésirables, parfois difficiles à vivre.**  
+Lorsqu’ils sont arrêtés, des réactions physiques ou émotionnelles peuvent également survenir. C’est pourquoi leur usage demande un accompagnement attentif et une réévaluation régulière.
+
+**Dans certains cas, avoir recours à un traitement médicamenteux est une démarche nécessaire pour atténuer une souffrance trop importante.**  
+Ce type de traitement ne remet pas en cause les autres formes de soin : il peut au contraire les rendre plus accessibles ou plus efficaces, en apportant un apaisement temporaire.
+
+**La durée d’un traitement médicamenteux varie selon les situations.**  
+Il peut être utile à un moment de la vie, puis être allégé ou arrêté progressivement, en fonction des besoins et de l’évolution de la personne.  
+Il s’agit d’un outil parmi d’autres, intégré à un accompagnement global qui associe souvent psychothérapie, soutien social ou entraide.
+
+**Il est essentiel de discuter avec son ou sa professionnel·le de santé de l’ensemble des options possibles.**  
+En tant que patient·e, vous avez le droit de savoir pourquoi un médicament vous est proposé, comment il agit et quels effets il peut entraîner.  
+Ce dialogue est primordial : il offre l’occasion de poser vos questions, d’exprimer vos doutes ou vos ressentis, et de construire, avec votre soignant·e, le parcours de soin le plus adapté à votre situation.
+
+Cet échange est d’autant plus important que les informations sur les médicaments psychotropes sont souvent difficiles à trouver ou à comprendre.
+
+**Il est donc tout à fait légitime de vouloir s’informer avant de prendre une décision.**`,
+    externalResources: ["550e8400-e29b-41d4-a716-446655440284", "550e8400-e29b-41d4-a716-446655440285"],
+  },
+  {
+    id: "6f5c8b7e-3d23-4c0f-8c9e-aef902c6f4b2",
+    matomoId: 49,
+    title: "Parler à une IA pour sa santé mentale : comprendre les enjeux",
+    image: require("../../../../assets/imgs/resources/Article47.png"),
+    category: CATEGORIES.AGIR_ET_CHERCHER_DE_L_AIDE_SANS_HONTE,
+    content: `**De plus en plus d’applications et de plateformes proposent de parler à une intelligence artificielle (IA) pour évoquer ses émotions ou ses difficultés.**  
+Ce phénomène, en forte croissance, attire notamment les personnes qui se sentent isolées ou qui recherchent une écoute immédiate, souvent gratuite.  
+Ce succès est particulièrement marqué **chez les plus jeunes**, pour qui ces outils numériques sont familiers et facilement accessibles.
+
+**Cependant, ces échanges ne sont pas sans risques. Dans certains cas, ils peuvent même s’avérer dangereux : l’IA peut renforcer un mal-être, valider des idées fausses ou répondre de manière inadaptée à une situation de détresse. Il est donc important de faire preuve d’une grande vigilance face à ces outils.**
+
+Ce type d’échange peut apporter un soulagement ponctuel, alléger une charge émotionnelle ou donner l’impression d’être compris·e.  
+**Mais ces effets restent toutefois très limités dans le temps et ne produisent pas de bénéfices durables.**  
+L’intelligence artificielle ne ressent rien, ne comprend pas les émotions humaines et ne dispose d’aucun recul clinique.  
+Elle est entraînée à générer des réponses à partir de données apprises, parfois biaisées, et tend à adopter un biais de confirmation : elle cherche à aller dans le sens de la personne, à valider ses propos et à prolonger la conversation plutôt qu’à apporter une aide nuancée.
+
+**Concernant les données, il est important de savoir que les informations partagées sont stockées par les sociétés qui développent ces outils.**  
+Les conversations peuvent être utilisées pour entraîner les IA, et les conditions d’utilisation sont souvent peu connues du grand public.  
+**Ces données ne sont pas anonymisées**, et les utilisateurs ne sont pas systématiquement informés ou sollicités pour donner leur accord à leur réutilisation.  
+Il est donc difficile de savoir comment elles seront exploitées ou conservées dans le futur.  
+**Le cadre de gestion de ces informations personnelles reste encore mal défini, ce qui soulève de réelles questions de confidentialité.**
+
+Il est compréhensible que ces outils rencontrent un certain succès, car ils offrent une écoute immédiate, à toute heure et sans coût.  
+**Pourtant, même s’ils peuvent répondre à un besoin ponctuel, ils ne remplacent pas une véritable relation d’aide humaine.**  
+Le lien avec un·e professionnel·le de santé ou avec d’autres personnes reste au cœur du soin psychique.  
+Le contact humain permet d’exprimer ses émotions, d’être compris·e et de trouver, avec l’aide de l’autre, des pistes concrètes et individualisées pour surmonter ses difficultés.
+
+**Enfin, il est important de rappeler que les intelligences artificielles ne réalisent aucun diagnostic médical fiable.**  
+Leurs réponses peuvent parfois donner l’illusion d’une évaluation clinique, mais elles reposent sur des modèles automatiques sans fondement médical.  
+Ces “diagnostics” sont donc dépourvus de valeur thérapeutique et peuvent induire en erreur, en générant des inquiétudes souvent injustifiées.
+
+**Chercher à parler à une IA pour se sentir moins seul·e peut, sans qu’on s’en rende compte, retarder le moment où l’on en parle réellement à quelqu’un.**  
+S’appuyer sur son entourage — un·e proche, un·e voisin·e, un·e collègue — peut parfois constituer une première étape rassurante, avant de se tourner vers un·e professionnel·le si nécessaire.
+
+Et si cette aide ne suffit pas, de nombreuses solutions existent :
+
+- Les **lignes d’écoute et associations**, qui offrent une écoute gratuite, anonyme et bienveillante.
+- Les **psychologues**, qui ne sont pas remboursés en général, mais pour lesquels le dispositif *Mon Soutien Psy* permet jusqu’à 12 séances d’accompagnement psychologique avec un psychologue partenaire.  
+  Chaque séance coûte 50 euros, remboursée à 60 % par l’Assurance Maladie, le reste pouvant être pris en charge par votre complémentaire santé.  
+  Certains psychologues proposent aussi des tarifs préférentiels selon la situation.
+- Les **centres médico-psychologiques (CMP)**, maisons des adolescents et PMI, qui offrent un accompagnement gratuit.
+- Les **médecins généralistes et psychiatres**, dont les consultations sont généralement remboursées par l’Assurance Maladie.  
+  Le reste à charge peut varier selon le secteur de convention et le respect du parcours de soins coordonné.
+
+***(voir notre rubrique agir et chercher de l’aide)***`,
+    externalResources: [
+      "550e8400-e29b-41d4-a716-446655440283",
+      "550e8400-e29b-41d4-a716-446655440218",
+      "550e8400-e29b-41d4-a716-446655440220",
+      "550e8400-e29b-41d4-a716-446655440222",
+      "550e8400-e29b-41d4-a716-446655440223",
+    ],
+  },
 ];

@@ -2399,4 +2399,22 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
     category: "P1 - A lire dans ce dossier",
     author: "Psycom",
   },
+  {
+    id: "550e8400-e29b-41d4-a716-446655440284",
+    matomoId: 284,
+    title: "Les médicaments",
+    url: "https://www.psycom.org/sinformer/le-retablissement/les-medicaments/#precautions-particulieres-a-prendre-avec-les-medicaments-68e7c2d557c0f",
+    type: "Article",
+    category: "P1 - A lire dans ce dossier",
+    author: "Psycom",
+  },
+  {
+    id: "550e8400-e29b-41d4-a716-446655440285",
+    matomoId: 285,
+    title: "Petit guide des médicaments psychotropes",
+    url: "https://www.psycom.org/sinformer/le-retablissement/les-medicaments/#precautions-particulieres-a-prendre-avec-les-medicaments-68e7c2d557c0f",
+    type: "Guide",
+    category: "P1 - A lire dans ce dossier",
+    author: "Mental Health Europe",
+  },
 ];
