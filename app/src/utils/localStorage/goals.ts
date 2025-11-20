@@ -28,87 +28,117 @@ export const setGoalTracked = async ({
   daysOfWeek,
   reminder,
 }: {
-  id: string;
+  id?: string;
   label?: string;
   enabled?: boolean;
   order?: number;
-  daysOfWeek?: string[];
+  daysOfWeek?: any;
   reminder?: boolean;
 }) => {
-  if (!id) id = goalIdFromLabel(label);
+  try {
+    if (!id) id = goalIdFromLabel(label);
 
-  let data = await getData();
+    // Validation de l'ID
+    if (!id) {
+      console.error("setGoalTracked: ID invalide", { id, label });
+      return { error: "ID invalide", apiError: true };
+    }
 
-  const existingGoal = data.goals?.data?.[id];
+    let data = await getData();
 
-  const goal = {
-    id,
-    label: label ?? existingGoal?.label ?? undefined,
-    enabled: enabled ?? existingGoal?.enabled ?? true,
-    order: order ?? existingGoal?.order ?? 0,
-    daysOfWeek: daysOfWeek ?? existingGoal?.daysOfWeek ?? undefined,
-    reminder: reminder !== undefined ? reminder : existingGoal?.reminder ?? null,
-  };
+    const existingGoal = data.goals?.data?.[id];
 
-  data = {
-    ...data,
-    goals: {
-      ...data.goals,
-      data: {
-        ...data.goals?.data,
-        [id]: goal,
+    const goal = {
+      id,
+      label: label ?? existingGoal?.label ?? undefined,
+      enabled: enabled ?? existingGoal?.enabled ?? true,
+      order: order ?? existingGoal?.order ?? 0,
+      daysOfWeek: daysOfWeek ?? existingGoal?.daysOfWeek ?? undefined,
+      reminder: reminder !== undefined ? reminder : existingGoal?.reminder ?? null,
+    };
+
+    data = {
+      ...data,
+      goals: {
+        ...data.goals,
+        data: {
+          ...data.goals?.data,
+          [id]: goal,
+        },
       },
-    },
-  };
+    };
 
-  data = {
-    ...data,
-    goals: {
-      ...data.goals,
-      byOrder: Object.values(data.goals.data)
-        .sort((a, b) => a.order - b.order)
-        .map((g) => g.id),
-    },
-  };
+    data = {
+      ...data,
+      goals: {
+        ...data.goals,
+        byOrder: Object.values(data.goals.data)
+          .sort((a, b) => a.order - b.order)
+          .map((g) => g.id),
+      },
+    };
 
-  await saveData(data);
+    await saveData(data);
 
-  await updateApiReminer(goal);
+    // Gestion de la synchronisation API séparément
+    let apiError = false;
+    try {
+      const apiResult = await updateApiReminer(goal);
+      apiError = !apiResult || apiResult.ok === false || apiResult.error;
+    } catch (apiErr) {
+      console.error("Erreur lors de la mise à jour des rappels:", apiErr);
+      apiError = true;
+    }
 
-  return goal;
+    return { ...goal, apiError };
+  } catch (error) {
+    console.error("Erreur dans setGoalTracked:", error);
+    throw error;
+  }
 };
 
 export const updateApiReminer = async ({ id, daysOfWeek, enabled, reminder }) => {
-  if (!(await NotificationService.hasToken())) return;
+  try {
+    // Si pas de token de notification, on considère que c'est OK (pas d'erreur)
+    if (!(await NotificationService.hasToken())) {
+      return { ok: true, message: "Pas de token de notification" };
+    }
 
-  const body = {
-    pushNotifToken: await NotificationService.getToken(),
-    type: "Goal",
-    timezone: RNLocalize.getTimeZone(),
-    localId: id,
-    disabled: true,
-    timeHours: undefined,
-    timeMinutes: undefined,
-    daysOfWeek: null,
-  };
+    const body = {
+      pushNotifToken: await NotificationService.getToken(),
+      type: "Goal",
+      timezone: RNLocalize.getTimeZone(),
+      localId: id,
+      disabled: true,
+      timeHours: undefined,
+      timeMinutes: undefined,
+      daysOfWeek: null,
+    };
 
-  if (reminder && enabled) {
-    body.disabled = false;
+    if (reminder && enabled) {
+      body.disabled = false;
 
-    const time = new Date(reminder);
-    body.timeHours = time.getHours();
-    body.timeMinutes = time.getMinutes();
+      const time = new Date(reminder);
+      body.timeHours = time.getHours();
+      body.timeMinutes = time.getMinutes();
 
-    body.daysOfWeek = DAYS_OF_WEEK.reduce((acc, day) => {
-      acc[day] = daysOfWeek[day] ?? false;
-      return acc;
-    }, {});
+      body.daysOfWeek = DAYS_OF_WEEK.reduce((acc, day) => {
+        acc[day] = daysOfWeek[day] ?? false;
+        return acc;
+      }, {});
+    }
+
+    const result = await API.put({
+      path: "/reminder",
+      body,
+    });
+
+    // Retourner le résultat de l'API pour vérification
+    return result;
+  } catch (error) {
+    console.error("Erreur dans updateApiReminer:", error);
+    return { ok: false, error: "Échec de la synchronisation des rappels" };
   }
-
-  return await API.put({
-    path: "/reminder",
-    body,
-  });
 };
 
 export const getGoalsTracked = async ({ date, enabled = true } = { date: undefined, enabled: true }) => {

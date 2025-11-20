@@ -10,7 +10,7 @@ import { DAYS_OF_WEEK } from "../../../utils/date/daysOfWeek";
 import JMButton from "@/components/JMButton";
 import Plus from "../../../../assets/svg/Plus";
 import { AnimatedHeaderScrollScreen } from "@/scenes/survey-v2/AnimatedHeaderScrollScreen";
-import { View } from "react-native";
+import { View, Alert } from "react-native";
 import NavigationButtons from "@/components/onboarding/NavigationButtons";
 import logEvents from "@/services/logEvents";
 
@@ -60,24 +60,58 @@ export const GoalsAddOptions = ({ navigation }) => {
   const onValidate = async () => {
     if (loading) return;
     setLoading(true);
-    for (const goalLabel of Object.keys(goalsToChange)) {
-      const goalToChange = goalsToChange[goalLabel];
-      if (goalToChange.type === "disabled") {
-        await setGoalTracked({ label: goalLabel, enabled: goalToChange.enabled });
-      } else if (goalToChange.type === "example") {
-        await setGoalTracked({
-          label: goalLabel,
-          enabled: goalToChange.enabled,
-          daysOfWeek: DAYS_OF_WEEK.reduce((acc, day) => {
-            acc[day] = true;
-            return acc;
-          }, {}),
-        });
-        logEvents.logAddObjectiveNative();
+
+    try {
+      let hasApiError = false;
+      const goalLabels = Object.keys(goalsToChange);
+
+      for (const goalLabel of goalLabels) {
+        const goalToChange = goalsToChange[goalLabel];
+
+        try {
+          if (goalToChange.type === "disabled") {
+            const result = await setGoalTracked({
+              label: goalLabel,
+              enabled: goalToChange.enabled,
+            });
+            if (result?.apiError) hasApiError = true;
+          } else if (goalToChange.type === "example") {
+            const result = await setGoalTracked({
+              label: goalLabel,
+              enabled: goalToChange.enabled,
+              daysOfWeek: DAYS_OF_WEEK.reduce((acc, day) => {
+                acc[day] = true;
+                return acc;
+              }, {}),
+            });
+            if (result?.apiError) hasApiError = true;
+            logEvents.logAddObjectiveNative();
+          }
+        } catch (goalError) {
+          // Log l'erreur pour ce goal spécifique, mais continue avec les autres
+          console.error(`Erreur lors de la sauvegarde de l'objectif "${goalLabel}":`, goalError);
+          hasApiError = true;
+        }
       }
+
+      // Feedback utilisateur approprié
+      if (hasApiError) {
+        Alert.alert(
+          "Objectifs sauvegardés",
+          "Vos objectifs ont été sauvegardés localement, mais les rappels n'ont pas pu être synchronisés. Ils seront synchronisés automatiquement lors de votre prochaine connexion.",
+          [{ text: "OK", onPress: () => navigation.goBack() }]
+        );
+      } else {
+        navigation.goBack();
+      }
+    } catch (error) {
+      // Erreur critique (ex: problème de stockage)
+      console.error("Erreur critique lors de la validation des objectifs:", error);
+      Alert.alert("Erreur", "Une erreur est survenue lors de la sauvegarde de vos objectifs. Veuillez réessayer.", [{ text: "OK" }]);
+    } finally {
+      // Toujours désactiver le loading, même en cas d'erreur
+      setLoading(false);
     }
-    setLoading(false);
-    navigation.goBack();
   };
 
   return (
