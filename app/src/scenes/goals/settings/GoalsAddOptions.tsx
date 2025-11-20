@@ -10,9 +10,10 @@ import { DAYS_OF_WEEK } from "../../../utils/date/daysOfWeek";
 import JMButton from "@/components/JMButton";
 import Plus from "../../../../assets/svg/Plus";
 import { AnimatedHeaderScrollScreen } from "@/scenes/survey-v2/AnimatedHeaderScrollScreen";
-import { View, Alert } from "react-native";
+import { View, Alert, Linking } from "react-native";
 import NavigationButtons from "@/components/onboarding/NavigationButtons";
 import logEvents from "@/services/logEvents";
+import NotificationService from "@/services/notifications";
 
 const GOALS_EXAMPLE_FLAT = Object.values(GOALS_EXAMPLE).reduce((acc, subGoalCategory) => {
   return [...acc, ...subGoalCategory];
@@ -57,13 +58,44 @@ export const GoalsAddOptions = ({ navigation }) => {
     [goalsToChange]
   );
 
+  const showPermissionsAlert = () => {
+    Alert.alert(
+      "Vous devez autoriser les notifications",
+      "Certain de vos objectifs on un rappel programmé. Il faut activer les notifications pour programmer un rappel. Veuillez cliquer sur Réglages puis Notifications pour activer les notifications.",
+      [
+        {
+          text: "Réglages",
+          onPress: () => {
+            Linking.openSettings();
+          },
+        },
+        {
+          text: "Annuler",
+          style: "cancel",
+        },
+      ],
+      { cancelable: true }
+    );
+  };
+
   const onValidate = async () => {
     if (loading) return;
     setLoading(true);
 
     try {
-      let hasApiError = false;
+      // Vérifier les permissions pour les notifications si des objectifs sont activés
       const goalLabels = Object.keys(goalsToChange);
+      const hasEnabledGoals = goalLabels.some((label) => goalsToChange[label].enabled);
+
+      if (hasEnabledGoals) {
+        const isRegistered = await NotificationService.checkAndAskForPermission();
+        if (!isRegistered) {
+          showPermissionsAlert();
+          // Continue quand même avec la sauvegarde, mais les rappels ne seront pas actifs
+        }
+      }
+
+      let hasApiError = false;
 
       for (const goalLabel of goalLabels) {
         const goalToChange = goalsToChange[goalLabel];
@@ -96,14 +128,11 @@ export const GoalsAddOptions = ({ navigation }) => {
 
       // Feedback utilisateur approprié
       if (hasApiError) {
-        Alert.alert(
-          "Objectifs sauvegardés",
-          "Vos objectifs ont été sauvegardés localement, mais les rappels n'ont pas pu être synchronisés. Ils seront synchronisés automatiquement lors de votre prochaine connexion.",
-          [{ text: "OK", onPress: () => navigation.goBack() }]
-        );
-      } else {
-        navigation.goBack();
+        Alert.alert("Objectifs sauvegardés", "Vos objectifs ont été sauvegardés, mais le rappel n'a pas pu être créé.", [
+          { text: "OK", onPress: () => navigation.goBack() },
+        ]);
       }
+      navigation.goBack();
     } catch (error) {
       // Erreur critique (ex: problème de stockage)
       console.error("Erreur critique lors de la validation des objectifs:", error);

@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, Alert, Linking } from "react-native";
 import { getDaysOfWeekLabel, getGoalsData, setGoalTracked } from "../../../utils/localStorage/goals";
+import NotificationService from "@/services/notifications";
 import { InputGroup, InputGroupItem } from "../../../components/InputGroup";
 import { InputToggle } from "../../../components/InputToggle";
 import TimePicker from "../../../components/timePicker";
@@ -52,21 +53,58 @@ export const GoalConfig = ({ navigation, route }) => {
     }, [])
   );
 
+  const showPermissionsAlert = () => {
+    Alert.alert(
+      "Vous devez autoriser les notifications.",
+      "Pour programmer un rappel il faut activer les notifications. Veuillez cliquer sur Réglages puis Notifications pour activer les notifications.",
+      [
+        {
+          text: "Réglages",
+          onPress: () => {
+            Linking.openSettings();
+          },
+        },
+        {
+          text: "Annuler",
+          style: "cancel",
+        },
+      ],
+      { cancelable: true }
+    );
+  };
+
   const onValidate = async () => {
     if (loading) return;
     setLoading(true);
-    const reminder = reminderEnabled ? reminderTime : null;
-    if (!editing) {
-      await setGoalTracked({ id: goalId, daysOfWeek: goalDaysOfWeek, label: goalLabel, reminder });
-      logEvents.logAddObjectivePersonalized();
-    } else {
-      await setGoalTracked({ id: goalId, daysOfWeek: goalDaysOfWeek, reminder });
-      if (reminderHasChanged) {
-        logEvents.logEditObjectiveReminder();
+
+    try {
+      // Vérifier les permissions si un rappel est activé
+      if (reminderEnabled) {
+        const isRegistered = await NotificationService.checkAndAskForPermission();
+        if (!isRegistered) {
+          showPermissionsAlert();
+          setLoading(false);
+          return;
+        }
       }
+
+      const reminder = reminderEnabled ? reminderTime : null;
+      if (!editing) {
+        await setGoalTracked({ id: goalId, daysOfWeek: goalDaysOfWeek, label: goalLabel, reminder });
+        logEvents.logAddObjectivePersonalized();
+      } else {
+        await setGoalTracked({ id: goalId, daysOfWeek: goalDaysOfWeek, reminder });
+        if (reminderHasChanged) {
+          logEvents.logEditObjectiveReminder();
+        }
+      }
+      navigation.navigate("goals-settings");
+    } catch (error) {
+      console.error("Erreur lors de la sauvegarde de l'objectif:", error);
+      alert("Une erreur est survenue lors de la sauvegarde. Veuillez réessayer.");
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
-    navigation.navigate("goals-settings");
   };
 
   const onDeactivate = async () => {
@@ -75,12 +113,18 @@ export const GoalConfig = ({ navigation, route }) => {
     confirm({
       title: "Êtes-vous sûr de vouloir désactiver votre objectif ?",
       onConfirm: async () => {
-        await setGoalTracked({
-          id: goalId,
-          enabled: false,
-        });
-        setDeactivateLoading(false);
-        navigation.goBack();
+        try {
+          await setGoalTracked({
+            id: goalId,
+            enabled: false,
+          });
+          navigation.goBack();
+        } catch (error) {
+          console.error("Erreur lors de la désactivation de l'objectif:", error);
+          alert("Une erreur est survenue lors de la désactivation. Veuillez réessayer.");
+        } finally {
+          setDeactivateLoading(false);
+        }
       },
       onCancel: () => {
         setDeactivateLoading(false);

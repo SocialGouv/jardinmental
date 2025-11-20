@@ -33,7 +33,7 @@ export const setGoalTracked = async ({
   enabled?: boolean;
   order?: number;
   daysOfWeek?: any;
-  reminder?: boolean;
+  reminder?: Date | null;
 }) => {
   try {
     if (!id) id = goalIdFromLabel(label);
@@ -93,7 +93,8 @@ export const setGoalTracked = async ({
     return { ...goal, apiError };
   } catch (error) {
     console.error("Erreur dans setGoalTracked:", error);
-    throw error;
+    // Ne pas relancer l'erreur mais retourner un objet avec l'erreur
+    return { error: "Erreur lors de la sauvegarde", apiError: true };
   }
 };
 
