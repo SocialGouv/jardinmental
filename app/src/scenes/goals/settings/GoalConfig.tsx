@@ -35,17 +35,17 @@ export const GoalConfig = ({ navigation, route }) => {
   const [reminderTime, setReminderTime] = useState(set(new Date(), { hours: 10, minutes: 30 }));
   const [reminderTimePickerVisible, setReminderTimePickerVisible] = useState(false);
 
-  useEffect(() => {
-    const tokenListener = addPushTokenListener((token) => {
-      console.log(token);
-    });
+  // useEffect(() => {
+  //   const tokenListener = addPushTokenListener((token) => {
+  //     console.log(token);
+  //   });
 
-    return () => {
-      if (tokenListener) {
-        tokenListener.remove();
-      }
-    };
-  }, []);
+  //   return () => {
+  //     if (tokenListener) {
+  //       tokenListener.remove();
+  //     }
+  //   };
+  // }, []);
 
   useFocusEffect(
     useCallback(() => {

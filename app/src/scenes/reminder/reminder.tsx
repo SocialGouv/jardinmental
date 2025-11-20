@@ -32,17 +32,17 @@ const Reminder = ({ navigation, route, notifReminderTitle = "Comment ça va aujo
   // Track if we're waiting for permission result from settings
   const waitingForPermission = useRef(false);
 
-  useEffect(() => {
-    const tokenListener = addPushTokenListener((token) => {
-      console.log(token);
-    });
+  // useEffect(() => {
+  //   const tokenListener = addPushTokenListener((token) => {
+  //     console.log(token);
+  //   });
 
-    return () => {
-      if (tokenListener) {
-        tokenListener.remove();
-      }
-    };
-  }, []);
+  //   return () => {
+  //     if (tokenListener) {
+  //       tokenListener.remove();
+  //     }
+  //   };
+  // }, []);
 
   useEffect(() => {
     const subscription = AppState.addEventListener("change", async (nextAppState) => {

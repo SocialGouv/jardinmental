@@ -48,17 +48,17 @@ export const GoalsAddOptions = ({ navigation }) => {
     }, [])
   );
 
-  useEffect(() => {
-    const tokenListener = addPushTokenListener((token) => {
-      console.log(token);
-    });
+  // useEffect(() => {
+  //   const tokenListener = addPushTokenListener((token) => {
+  //     console.log(token);
+  //   });
 
-    return () => {
-      if (tokenListener) {
-        tokenListener.remove();
-      }
-    };
-  }, []);
+  //   return () => {
+  //     if (tokenListener) {
+  //       tokenListener.remove();
+  //     }
+  //   };
+  // }, []);
 
   const changeGoal = useCallback(
     ({ label, enabled, type }) => {
