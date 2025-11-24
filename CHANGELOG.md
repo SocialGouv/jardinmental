@@ -1,3 +1,10 @@
+# [1.127.0](https://github.com/SocialGouv/jardinmental/compare/v1.126.2...v1.127.0) (2025-11-24)
+
+
+### Features
+
+* bump version ([16face9](https://github.com/SocialGouv/jardinmental/commit/16face9e2db0466d833967c2f4c42275f4b12c3d))
+
 ## [1.126.2](https://github.com/SocialGouv/jardinmental/compare/v1.126.1...v1.126.2) (2025-11-20)
 
 
