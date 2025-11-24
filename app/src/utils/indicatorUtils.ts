@@ -45,9 +45,15 @@ export const computeIndicatorColor = (
   if (value === null) return "";
   if (indicator.type === "boolean") {
     return {
-      true: analyzeScoresMapIcon[1],
-      false: analyzeScoresMapIcon[5],
-    }[value];
+      ASC: {
+        true: analyzeScoresMapIcon[5],
+        false: analyzeScoresMapIcon[1],
+      },
+      DESC: {
+        true: analyzeScoresMapIcon[1],
+        false: analyzeScoresMapIcon[5],
+      },
+    }[indicator.order][value];
   }
   // Gauge: value [0,1] → index [1,5] for label lookup (1-based)
   // Smiley: value is already [1,5] (1-based)
