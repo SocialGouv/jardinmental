@@ -1,9 +1,23 @@
 import { iconColors } from "@/utils/constants";
-import Svg, { Path } from "react-native-svg";
+import Svg, { Circle, Path } from "react-native-svg";
 
-export default function SmileyBad({ width = 27, height = 28 }: { width?: number; height?: number }) {
+export default function SmileyBad({
+  width = 27,
+  height = 28,
+  backgroundColor = "transparent",
+}: {
+  width?: number;
+  height?: number;
+  backgroundColor: string;
+}) {
   return (
     <Svg width={width} height={height} viewBox="0 0 27 28" fill="none">
+      <Circle
+        cx={13.5}
+        cy={14}
+        r={11.5} // correspond à ton Path
+        fill={backgroundColor} // 👉 ta couleur intérieure
+      />
       <Path
         d="M17.5611 18.3826C17.5611 18.3826 15.9176 16.1913 13.1784 16.1913C10.4393 16.1913 8.79584 18.3826 8.79584 18.3826M16.4654 10.713H16.4764M9.89149 10.713H9.90245M24.135 14C24.135 20.0511 19.2296 24.9565 13.1784 24.9565C7.12733 24.9565 2.22192 20.0511 2.22192 14C2.22192 7.94888 7.12733 3.04348 13.1784 3.04348C19.2296 3.04348 24.135 7.94888 24.135 14ZM17.0132 10.713C17.0132 11.0156 16.768 11.2609 16.4654 11.2609C16.1628 11.2609 15.9176 11.0156 15.9176 10.713C15.9176 10.4105 16.1628 10.1652 16.4654 10.1652C16.768 10.1652 17.0132 10.4105 17.0132 10.713ZM10.4393 10.713C10.4393 11.0156 10.194 11.2609 9.89149 11.2609C9.58893 11.2609 9.34366 11.0156 9.34366 10.713C9.34366 10.4105 9.58893 10.1652 9.89149 10.1652C10.194 10.1652 10.4393 10.4105 10.4393 10.713Z"
         stroke={iconColors.bad}
