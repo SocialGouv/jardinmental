@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, TouchableOpacity } from "react-native";
 import Text from "../../components/MyText";
 import Icon from "../../components/Icon";
@@ -9,6 +9,7 @@ import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
 
 const Posology = ({ patientState, posology, date, onPress }) => {
+  const [detailsVisible, setDetailsVisible] = useState<boolean>(false);
   const hasPosology = posology && posology.length > 0 && posology.some((e) => e.value);
   const hasPriseDeTraitement =
     Object.keys(patientState?.PRISE_DE_TRAITEMENT || {})?.length || Object.keys(patientState?.PRISE_DE_TRAITEMENT_SI_BESOIN || {})?.length;
@@ -19,8 +20,8 @@ const Posology = ({ patientState, posology, date, onPress }) => {
     return (posology || []).map((p, i) => {
       if (!p?.name1 || !p?.value) return null;
       return (
-        <View className="flex flex-row items-end flex-1 pr-2.5 py-1.5" key={i}>
-          <View className="items-start h-full">
+        <View className="flex flex-row items-end flex-1 pr-2.5 py-0" key={i}>
+          <View className="items-start h-full pt-1">
             <Icon
               icon="DrugsSvg"
               color={TW_COLORS.CNAM_PRIMARY_800}
@@ -50,7 +51,13 @@ const Posology = ({ patientState, posology, date, onPress }) => {
       <View className="flex justify-between py-2.5">
         <View className="flex flex-row justify-between mb-2">
           <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-900")}>Traitements quotidiens</Text>
-          <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>Détail</Text>
+          <TouchableOpacity
+            onPress={() => {
+              setDetailsVisible(!detailsVisible);
+            }}
+          >
+            <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>Détail</Text>
+          </TouchableOpacity>
         </View>
         {patientState?.PRISE_DE_TRAITEMENT?.value !== undefined ? (
           <View className="flex flex-row mb-6 items-center">
@@ -86,15 +93,15 @@ const Posology = ({ patientState, posology, date, onPress }) => {
             )}
           </View>
         ) : null}
-        <Text className={mergeClassNames(typography.textSmMedium, "text-cnam-primary-900")}>Détail du traitement :</Text>
+        {detailsVisible && (
+          <>
+            <Text className={mergeClassNames(typography.textSmMedium, "text-cnam-primary-900")}>Détail du traitement :</Text>
 
-        <TouchableOpacity
-          className={`flex flex-row items-center ${canEdit(date) ? "rounded-[10px]" : ""}`}
-          onPress={onPress}
-          disabled={!canEdit(date)}
-        >
-          <View className="flex flex-1 flex-col">{renderPosology()}</View>
-        </TouchableOpacity>
+            <View className={`flex flex-row items-center ${canEdit(date) ? "rounded-[10px]" : ""}`}>
+              <View className="flex flex-1 flex-col">{renderPosology()}</View>
+            </View>
+          </>
+        )}
       </View>
     </>
   );
