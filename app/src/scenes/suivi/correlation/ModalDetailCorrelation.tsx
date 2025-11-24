@@ -31,10 +31,10 @@ const computeIndicatorColor = (indicator, value): ColorContextInterface | undefi
   if (indicator.type === INDICATOR_TYPE.boolean) {
     return booleanColor[indicator.order][value];
   }
-  let index = indicator.type === INDICATOR_TYPE.gauge ? Math.min(Math.floor(value * 5), 4) : value;
+  let index = indicator.type === INDICATOR_TYPE.gauge ? Math.min(Math.floor(value * 5), 4) + 1 : value;
 
   // For smiley-type indicators sorted in DESC order, invert the label index.
-  if (indicator.order === "DESC" && indicator.type === INDICATOR_TYPE.smiley) {
+  if (indicator.order === "DESC" && (indicator.type === INDICATOR_TYPE.smiley || indicator.type === INDICATOR_TYPE.gauge)) {
     index = 6 - index; // Inverse 1→5, 2→4, 3→3, 4→2, 5→1
   }
   return scoresMapIcon[index];
@@ -161,7 +161,7 @@ export const DetailModalCorrelationScreen: React.FC<ModalCorrelationScreenProps>
             />
           </View>
         </View>
-        <Text className={mergeClassNames(typography.textXlSemibold, "text-cnam-primary-900 pt-6 pb-4")}>Ce jours là :</Text>
+        <Text className={mergeClassNames(typography.textXlSemibold, "text-cnam-primary-900 pt-6 pb-4")}>Ce jour là :</Text>
         <View className="flex-col space-y-3">
           {Object.keys(diaryDataForDate).map((key) => {
             if (diaryDataForDate[key]?._indicateur) {

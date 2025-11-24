@@ -527,28 +527,12 @@ export const booleanColor: {
   };
 } = {
   ASC: {
-    true: {
-      color: TW_COLORS.SUCCESS.BG_DARKEN,
-      iconColor: TW_COLORS.SUCCESS.TEXT,
-      borderColor: TW_COLORS.SUCCESS.TEXT,
-    },
-    false: {
-      color: TW_COLORS.ERROR.BG,
-      iconColor: TW_COLORS.ERROR.TEXT,
-      borderColor: TW_COLORS.ERROR.TEXT,
-    },
+    true: analyzeScoresMapIcon[5],
+    false: analyzeScoresMapIcon[1],
   },
   DESC: {
-    true: {
-      color: TW_COLORS.ERROR.BG,
-      iconColor: TW_COLORS.ERROR.TEXT,
-      borderColor: TW_COLORS.ERROR.TEXT,
-    },
-    false: {
-      color: TW_COLORS.SUCCESS.BG_DARKEN,
-      iconColor: TW_COLORS.SUCCESS.TEXT,
-      borderColor: TW_COLORS.SUCCESS.TEXT,
-    },
+    true: analyzeScoresMapIcon[1],
+    false: analyzeScoresMapIcon[5],
   },
 };
 
