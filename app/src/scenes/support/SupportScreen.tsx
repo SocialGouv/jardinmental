@@ -121,7 +121,7 @@ export default function SupportScreen({ navigation, route }) {
           </View>
           <View className="flex-col space-y-5">
             <Text className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-900 text-left")}>
-              Si vous êtes en détresse suicidaire, appelez le 3114 (24h/24, 7j/7, appel gratuit).
+              Si vous êtes en détresse et/ou avez des pensées suicidaires, appelez le 3114 (24h/24, 7j/7, appel gratuit).
             </Text>
             <SquircleButton
               onPress={() => handleCall("3114")}
@@ -219,7 +219,7 @@ export default function SupportScreen({ navigation, route }) {
                 })}
               </View>
               <Text className={mergeClassNames(typography.textMdMedium, "text-gray-800 mb-4")}>
-                👉 Retrouvez un guide complet sur les lignes d’écoute sur le site de Psycom :
+                👉 Consultez le guide complet des lignes d’écoute sur le site de Psycom :
               </Text>
               <SquircleButton
                 onPress={() => handleOpenLink("https://www.psycom.org/sorienter/les-lignes-decoute")}
@@ -284,7 +284,7 @@ export default function SupportScreen({ navigation, route }) {
                   {
                     title: "Santé psy étudiant",
                     description:
-                      "**Santé psy étudiant** permet aux étudiants de bénéficier de 12 séances gratuites avec un psychologue, sans avance de frais (le psychologue est rémunéré par l’université).",
+                      "**Santé psy étudiant** permet aux étudiants de bénéficier de 12 séances gratuites avec un psychologue, sans avance de frais.",
                     text: "👉 Vérifier son éligibilité et prendre rdv :",
                     link: {
                       label: "Santepsy.etudiant.gouv.fr",
