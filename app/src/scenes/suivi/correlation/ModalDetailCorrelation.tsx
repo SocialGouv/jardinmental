@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, ScrollView, TouchableOpacity, Dimensions } from "react-native";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
 import { formatDate } from "@/utils/date/helpers";
 import { computeIndicatorLabel, getIndicatorKey } from "@/utils/indicatorUtils";
-import { booleanColor, ColorContextInterface, scoresMapIcon } from "@/utils/constants";
+import { booleanColor, ColorContextInterface, scoresMapIcon, TW_COLORS } from "@/utils/constants";
 import Svg, { Line } from "react-native-svg";
 import CrossIcon from "@assets/svg/icon/Cross";
 import { INDICATOR_TYPE } from "@/entities/IndicatorType";
@@ -15,6 +15,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "@/components/Icon";
 import { mapIconToSvg } from "@/components/CircledIcon";
 import CheckMarkIcon from "@assets/svg/icon/check";
+import ChevronIcon from "@assets/svg/icon/chevron";
+import ArrowUpSvg from "@assets/svg/icon/ArrowUp";
 
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
@@ -160,47 +162,97 @@ export const DetailModalCorrelationScreen: React.FC<ModalCorrelationScreenProps>
           </View>
         </View>
         <Text className={mergeClassNames(typography.textXlSemibold, "text-cnam-primary-900 pt-6 pb-4")}>Ce jours là :</Text>
-        <View className="flex-col space-y-2">
+        <View className="flex-col space-y-3">
           {Object.keys(diaryDataForDate).map((key) => {
             if (diaryDataForDate[key]?._indicateur) {
               const indicator = diaryDataForDate[key]._indicateur;
               const colors = computeIndicatorColor(indicator, diaryDataForDate[key].value);
-              const Icon = mapIconToSvg(colors?.faceIcon);
-
-              return (
-                <View key={key} className="flex-row items-center space-x-4">
-                  {indicator.type === "smiley" ? (
-                    <View
-                      className="h-5 w-5 rounded-full"
-                      style={{
-                        backgroundColor: colors?.color,
-                        borderColor: colors?.borderColor,
-                      }}
-                    >
-                      <Icon width={23} height={23} color={colors?.iconColor} />
-                    </View>
-                  ) : (
-                    <View
-                      className="h-5 w-5 rounded-full"
-                      style={{
-                        backgroundColor: colors?.color,
-                        borderColor: colors?.borderColor,
-                        borderWidth: 1,
-                      }}
-                    />
-                  )}
-                  <Text className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-900")}>
-                    <Text className={mergeClassNames(typography.textMdBold, "text-cnam-primary-900")}>
-                      {diaryDataForDate[key]?._indicateur?.name} :{" "}
-                    </Text>
-                    {computeIndicatorLabel(diaryDataForDate[key]._indicateur, diaryDataForDate[key].value) || "Pas de donnée"}
-                  </Text>
-                </View>
-              );
+              const data = diaryDataForDate[key];
+              return <ItemStatus key={key} data={data} colors={colors} indicator={indicator} />;
             } else return;
           })}
         </View>
+        {diaryDataForDate.CONTEXT && (
+          <View className="justify-between items-start bg-cnam-primary-50 rounded-xl p-2 my-2">
+            <Text className={mergeClassNames(typography.textSmSemibold, "mb-1 text-cnam-primary-900")}>Note générale</Text>
+            <View className="w-full flex-row items-center items-start">
+              <Text
+                className={mergeClassNames("flex-1", typography.textSmRegular, "text-cnam-gray-950 italic")}
+                style={{
+                  fontSize: 14,
+                  fontFamily: "SourceSans3-Italic",
+                  fontWeight: "500",
+                  fontStyle: "italic",
+                  color: TW_COLORS.GRAY_950,
+                }}
+              >
+                {diaryDataForDate.CONTEXT.userComment || "Oui"}
+              </Text>
+            </View>
+          </View>
+        )}
       </ScrollView>
     </SafeAreaView>
+  );
+};
+
+const ItemStatus = ({ key, indicator, colors, data }) => {
+  const Icon = mapIconToSvg(colors?.faceIcon);
+  const [visible, setIsVisible] = useState<boolean>(false);
+
+  return (
+    <View className="py-2">
+      <TouchableOpacity
+        disabled={!data.userComment}
+        onPress={() => {
+          setIsVisible(!visible);
+        }}
+        key={key}
+        className="flex-row items-center space-x-4"
+      >
+        {indicator.type === "smiley" ? (
+          <View
+            className="h-5 w-5 rounded-full"
+            style={{
+              backgroundColor: colors?.color,
+              borderColor: colors?.borderColor,
+            }}
+          >
+            <Icon width={23} height={23} color={colors?.iconColor} />
+          </View>
+        ) : (
+          <View
+            className="h-5 w-5 rounded-full"
+            style={{
+              backgroundColor: colors?.color,
+              borderColor: colors?.borderColor,
+              borderWidth: 1,
+            }}
+          />
+        )}
+        <View className="flex-row flex-1">
+          <View className="flex-1 flex-row items-start">
+            <Text className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-900 text-left")}>
+              <Text className={mergeClassNames(typography.textMdBold, "text-cnam-primary-900")}>{data?._indicateur?.name} : </Text>
+              {computeIndicatorLabel(data._indicateur, data.value) || "Pas de donnée"}
+            </Text>
+          </View>
+          {data.userComment && (
+            <View
+              style={{
+                transform: [
+                  {
+                    rotate: visible ? "0deg" : "180deg",
+                  },
+                ],
+              }}
+            >
+              <ArrowUpSvg width={20} height={20} color={TW_COLORS.CNAM_PRIMARY_900} />
+            </View>
+          )}
+        </View>
+      </TouchableOpacity>
+      {visible && <Text className={mergeClassNames(typography.textXsRegular, "text-left", "text-gray-700 ml-9")}>{data.userComment}</Text>}
+    </View>
   );
 };
