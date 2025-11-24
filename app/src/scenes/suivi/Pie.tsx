@@ -27,25 +27,43 @@ const renderResponse = ({ indicateur, value, isSmall, translateX, reverse, index
 
     if (!_icon || (!_icon.color && !_icon.faceIcon))
       return (
-        <CircledIcon
+        <View
           key={`${indicateur.name}-${value}-${index}`}
-          color="#cccccc"
-          borderColor="#999999"
-          iconColor="#888888"
-          icon="QuestionMarkSvg"
-          iconWidth={iconSize}
-          iconHeight={iconSize}
-          iconContainerStyle={{
-            marginRight: 0,
-            transform: [{ translateX: translateX ? -10 : 0 }],
-            width: iconContainerSize,
-            height: iconContainerSize,
+          className={mergeClassNames("flex-col items-center space-y-2", reverse ? "flex-col-reverse" : "")}
+          style={{
+            height: isSmall ? 30 : 40,
           }}
-        />
+        >
+          <CircledIcon
+            key={`${indicateur.name}-${value}`}
+            color="#cccccc"
+            borderColor="#999999"
+            iconColor="#888888"
+            icon="QuestionMarkSvg"
+            iconWidth={iconSize}
+            iconHeight={iconSize}
+            iconContainerStyle={{
+              marginRight: 0,
+              transform: [{ translateX: translateX ? -10 : 0 }],
+              width: iconContainerSize,
+              height: iconContainerSize,
+            }}
+          />
+        </View>
       );
     const Icon = mapIconToSvg(_icon.faceIcon);
 
-    return <Icon key={index} width={iconSize} height={iconSize} color={_icon.iconColor} />;
+    return (
+      <View
+        key={index}
+        className={mergeClassNames("flex-col items-center space-y-2", reverse ? "flex-col-reverse" : "")}
+        style={{
+          height: isSmall ? 30 : 40,
+        }}
+      >
+        <Icon width={iconSize} height={iconSize} color={_icon.iconColor} />
+      </View>
+    );
   }
   if (indicateur?.type === "boolean") {
     // a voir si on veut afficher un smiley ou un cercle ou du texte
@@ -251,8 +269,8 @@ export const Pie = ({ title, data, indicateur }) => {
           )}
         </TouchableOpacity>
       </View>
-      <View style={styles.contentCategoryContainer}>
-        <View style={styles.pieContainer}>
+      <View className="flex-row py-4 mt-2 items-center">
+        <View className="flex-col basis-[40%] items-center justify-between">
           {/* <PieChart radius={50} sections={sections} /> */}
           {sections?.reduce((sum, section) => sum + section.value, 0) > 0 ? (
             <View
@@ -279,7 +297,7 @@ export const Pie = ({ title, data, indicateur }) => {
           )}
         </View>
         {averageIcons.length ? (
-          <View className="flex-col space-y-4 items-center">
+          <View className="flex-col space-y-4 items-center basis-[60%]">
             <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-800")}>Moyenne</Text>
             <View className="flex-row space-x-4">
               {averageIcons.map((e, i) => {
@@ -482,7 +500,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "stretch",
     display: "flex",
-    marginBottom: 15,
+    // marginBottom: 15,
     paddingHorizontal: 10,
   },
   contentCategoryContainer: {

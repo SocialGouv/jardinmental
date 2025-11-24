@@ -67,12 +67,13 @@ export const IndicatorSurveyItem = ({
 
   const computeIndicatorLabel = (): string => {
     if (value === null) return "";
-    let index = indicator.type === INDICATOR_TYPE.gauge ? Math.min(Math.floor(value * 5), 4) : value;
-
+    // Gauge: value [0,1] → index [1,5] for label lookup (1-based)
+    // Smiley: value is already [1,5] (1-based)
+    let index = indicator.type === INDICATOR_TYPE.gauge ? Math.min(Math.floor(value * 5), 4) + 1 : value;
     // For smiley-type indicators sorted in DESC order, invert the label index.
-    if (indicator.order === "DESC" && indicator.type === INDICATOR_TYPE.smiley) {
-      index = 6 - index; // Inverse 1→5, 2→4, 3→3, 4→2, 5→1
-    }
+    // if (indicator.order === "DESC" && indicator.type === INDICATOR_TYPE.smiley) {
+    //   index = 6 - index; // Inverse 1→5, 2→4, 3→3, 4→2, 5→1
+    // }
 
     if (Object.keys(INDICATOR_LABELS).includes(indicator.uuid)) {
       return INDICATOR_LABELS[indicator.uuid][index - 1];
@@ -116,7 +117,10 @@ export const IndicatorSurveyItem = ({
       </View>
       {renderInput()}
       {indicator.type === INDICATOR_TYPE.gauge && (
-        <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700 h-5")}>{computeIndicatorLabel() || ""}</Text>
+        <View className="flex-row justify-between">
+          <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700 h-5")}>{"Très faible"}</Text>
+          <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700 h-5")}>{"Très élevé(e)"}</Text>
+        </View>
       )}
       {showComment && (
         <InputText

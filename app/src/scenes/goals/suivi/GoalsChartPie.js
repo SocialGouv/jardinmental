@@ -109,8 +109,8 @@ const GoalPie = ({ title, records }) => {
           <Text style={styles.title}>{title}</Text>
         </View>
       </View>
-      <View style={styles.contentCategoryContainer}>
-        <View style={styles.pieContainer}>
+      <View className="flex-row py-4 mt-2 items-center">
+        <View className="flex-col basis-[40%] items-center justify-between">
           {/* <PieChart radius={50} sections={sectionValues} /> */}
           <View style={styles.pieContainer}>
             {sectionValues?.reduce((sum, section) => sum + section.value, 0) > 0 ? (
@@ -123,7 +123,7 @@ const GoalPie = ({ title, records }) => {
             )}
           </View>
         </View>
-        <View style={styles.pieContainer}>
+        <View className="flex-col space-y-4 items-center basis-[60%]">
           <View style={styles.numbersContainer}>
             <Text style={styles.legendTitle}>Taux de réussite :</Text>
             <Text style={styles.percentageBig}>{Math.round(sections?.[5]?.percentage || 0)}%</Text>
@@ -155,6 +155,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-around",
     paddingVertical: 10,
+    marginTop: 10,
   },
   titleContainer: {
     display: "flex",

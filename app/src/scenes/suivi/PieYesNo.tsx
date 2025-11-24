@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, View, Text, Dimensions } from "react-native";
 import { colors } from "@/utils/colors";
 import PieChart from "react-native-pie-chart";
-import { TW_COLORS, yesNoMapIcon } from "@/utils/constants";
+import { TW_COLORS, yesNoMapTreatmentIcon } from "@/utils/constants";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
 
@@ -14,12 +14,12 @@ export const PieYesNo = ({
   parialsColors = [
     { color: "#f3f3f3" },
     {
-      color: yesNoMapIcon["true"].color,
-      symbol: yesNoMapIcon["true"].symbol,
+      color: yesNoMapTreatmentIcon["true"].color,
+      symbol: yesNoMapTreatmentIcon["true"].symbol,
     },
     {
-      color: yesNoMapIcon["false"].color,
-      symbol: yesNoMapIcon["false"].symbol,
+      color: yesNoMapTreatmentIcon["false"].color,
+      symbol: yesNoMapTreatmentIcon["false"].symbol,
     },
   ],
 }) => {
@@ -80,8 +80,8 @@ export const PieYesNo = ({
             <Text style={styles.title}>{title}</Text>
           </View>
         </View>
-        <View style={styles.contentCategoryContainer}>
-          <View style={styles.pieContainer}>
+        <View className="flex-row py-4 mt-2 items-center">
+          <View className="flex-col basis-[40%] items-center justify-between">
             {/* <PieChart radius={50} sections={sections} /> */}
             {sections?.reduce((sum, section) => sum + section.value, 0) > 0 ? (
               <View
@@ -108,7 +108,7 @@ export const PieYesNo = ({
               </View>
             )}
           </View>
-          <View style={styles.pieContainer}>
+          <View className="flex-col space-y-4 items-center basis-[60%]">
             <View>
               <View className="flex flex-row gap-3 items-center">
                 <View className="flex flex-row mt-2 items-center">
