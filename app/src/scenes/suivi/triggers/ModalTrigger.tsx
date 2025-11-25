@@ -437,7 +437,7 @@ export const ModalTriggerScreen: React.FC<ModalTriggerScreenProps> = ({
                         >
                           {key === "CONTEXT" ? "Contexte de la journée" : `Précision sur "${item.dayData[key]._indicateur?.name}"`}
                         </Text>
-                        <View className="justify-between items-start bg-cnam-primary-50 rounded-xl p-2 my-2">
+                        <View className="justify-between items-start bg-cnam-cyan-50-lighten-90 rounded-xl p-2 my-2">
                           <View className="w-full flex-row items-center items-start">
                             <View className="mt-0.5">
                               <FileIcon />
