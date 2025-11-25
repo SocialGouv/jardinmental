@@ -19,6 +19,7 @@ import { colorsMap, SCORE_MAP_INFO, scoresMapIcon, STORAGE_KEY_START_DATE } from
 import { DEFAULT_INDICATOR_LABELS, INDICATOR_LABELS } from "@/utils/liste_indicateurs.1";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Chevron from "./Chevron";
+import FileIcon from "@assets/svg/icon/File";
 
 interface ModalTriggerScreenProps {
   navigation: any;
@@ -262,7 +263,7 @@ export const ModalTriggerScreen: React.FC<ModalTriggerScreenProps> = ({
         }}
       >
         <View className="flex-row justify-between top-0 w-full p-4 items-center h-[96]">
-          <Text className={mergeClassNames(typography.displayXsBold, "text-white")}>Déclencheur</Text>
+          <Text className={mergeClassNames(typography.displayXsBold, "text-white")}>Déclencheurs</Text>
           <TouchableOpacity
             onPress={() => {
               navigation.goBack();
@@ -280,7 +281,7 @@ export const ModalTriggerScreen: React.FC<ModalTriggerScreenProps> = ({
         bounces={false}
         ListHeaderComponent={
           <View className="mb-4">
-            <View className=" bg-cnam-cyan-50-lighten-90 p-4">
+            <View className="flex-col space-y-4 bg-cnam-cyan-50-lighten-90 p-4">
               <View className="flex-row justify-between px-2 rounded-2xl items-center">
                 <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>L'indicateur</Text>
                 <TouchableOpacity className="flex-row items-center justify-between" onPress={openIndicatorBottomSheet}>
@@ -436,10 +437,15 @@ export const ModalTriggerScreen: React.FC<ModalTriggerScreenProps> = ({
                         >
                           {key === "CONTEXT" ? "Contexte de la journée" : `Précision sur "${item.dayData[key]._indicateur?.name}"`}
                         </Text>
-                        <View className="bg-cnam-cyan-50-lighten-90 px-4 py-2 rounded-xl">
-                          <Text className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-800 text-left")}>
-                            {item.dayData[key]?.userComment}
-                          </Text>
+                        <View className="justify-between items-start bg-cnam-primary-50 rounded-xl p-2 my-2">
+                          <View className="w-full flex-row items-center items-start">
+                            <View className="mt-0.5">
+                              <FileIcon />
+                            </View>
+                            <Text className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-800 text-left ml-2")}>
+                              {item.dayData[key]?.userComment}
+                            </Text>
+                          </View>
                         </View>
                       </View>
                     );
