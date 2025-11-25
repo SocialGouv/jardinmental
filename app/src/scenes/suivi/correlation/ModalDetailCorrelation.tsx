@@ -87,7 +87,7 @@ export const DetailModalCorrelationScreen: React.FC<ModalCorrelationScreenProps>
                       y2="1"
                       stroke={index === 0 ? "#00A5DF" : "#3D6874"} // your color
                       strokeWidth="2"
-                      strokeDasharray={index === 0 ? [] : ["4,4"]} // pattern: 4px dash, 4px gap
+                      strokeDasharray={index === 0 ? "" : "4 4"} // pattern: 4px dash, 4px gap
                     />
                   </Svg>
                   <Text key={indicator.uuid} className={mergeClassNames(typography.textMdMedium, "text-white ")}>
@@ -196,7 +196,7 @@ export const DetailModalCorrelationScreen: React.FC<ModalCorrelationScreenProps>
   );
 };
 
-const ItemStatus = ({ key, indicator, colors, data }) => {
+const ItemStatus = ({ indicator, colors, data }) => {
   const Icon = mapIconToSvg(colors?.faceIcon);
   const [visible, setIsVisible] = useState<boolean>(false);
 
@@ -207,7 +207,6 @@ const ItemStatus = ({ key, indicator, colors, data }) => {
         onPress={() => {
           setIsVisible(!visible);
         }}
-        key={key}
         className="flex-row items-center space-x-4"
       >
         {indicator.type === "smiley" ? (

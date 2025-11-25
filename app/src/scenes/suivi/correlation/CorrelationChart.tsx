@@ -147,7 +147,7 @@ interface DashedVerticalLineProps {
 export const DashedVerticalLine: React.FC<DashedVerticalLineProps> = ({
   height = 100,
   color = "#3D6874",
-  dashArray = "4,4",
+  dashArray = "4 4",
   strokeWidth = 1,
   className,
 }) => {

@@ -104,10 +104,9 @@ export const DiaryList = forwardRef(({ ...props }, ref) => {
       renderItem={renderItem}
       keyExtractor={keyExtractor}
       {...props}
-      initialNumToRender={1}
+      initialNumToRender={6}
       maxToRenderPerBatch={5}
-      windowSize={1}
-      removeClippedSubviews={true}
+      windowSize={6}
       updateCellsBatchingPeriod={50}
     />
   );
