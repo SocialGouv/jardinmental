@@ -51,6 +51,7 @@ export const GoalsFriseGraph = ({ chartDates, focusedScores, showTraitement, pri
     <>
       {goals.map(({ goal, records }) => (
         <FriseGraph
+          type="goal"
           key={goal.id}
           focusedScores={focusedScores}
           title={goal.label}
