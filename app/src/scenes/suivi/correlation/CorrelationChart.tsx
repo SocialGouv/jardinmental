@@ -2,14 +2,12 @@ import { TW_COLORS } from "@/utils/constants";
 import CheckMarkIcon from "@assets/svg/icon/check";
 import CrossIcon from "@assets/svg/icon/Cross";
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { View, Dimensions, ScrollView, Text } from "react-native";
+import { View, Dimensions, ScrollView, Text, useWindowDimensions } from "react-native";
 import { LineChart, ruleTypes } from "react-native-gifted-charts";
 import Svg, { Circle, Line } from "react-native-svg";
 import { useDevCorrelationConfig } from "@/hooks/useDevCorrelationConfig";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
-
-const screenWidth = Dimensions.get("window").width;
 
 // Constants
 const DAY_INITIALS = ["D", "L", "M", "M", "J", "V", "S"];
@@ -174,6 +172,7 @@ export default function TestChart({
 }) {
   const { config } = useDevCorrelationConfig();
   const CHUNK_SIZE = config.chunkSize;
+  const { width: screenWidth } = useWindowDimensions();
 
   const ref = useRef<ScrollView>(null);
   const hasScrolledToEnd = useRef(false);
@@ -232,7 +231,7 @@ export default function TestChart({
         previousSpacing.current = chartSpacing;
       }, 200);
     }
-  }, [chartSpacing]);
+  }, [chartSpacing, screenWidth]);
 
   // Helper function to check if item is in viewport
   const isItemInViewport = useCallback(
@@ -466,6 +465,9 @@ export default function TestChart({
         if (startIndex === null) {
           // console.log("start index", index);
           startIndex = index - 1;
+          if (index - 1 < 0) {
+            startIndex = 0;
+          }
         }
       } else {
         // Fin d'un segment
@@ -564,7 +566,7 @@ export default function TestChart({
     } else if (onStartReached) {
       setOnStartReached(false);
     }
-  }, [onStartReached, isLoadingMore, visibleStartIndex, chartSpacing, enablePagination]);
+  }, [onStartReached, isLoadingMore, visibleStartIndex, chartSpacing, enablePagination, screenWidth]);
 
   // Auto-scroll to the end of the chart only on first load
   useEffect(() => {
@@ -601,6 +603,8 @@ export default function TestChart({
     [renderCustomDataPoint, renderCustomDataPointTreatment]
   );
 
+  const lineSegment = generateLineSegments(transformedData);
+  const lineSegment2 = generateLineSegments(transformedDataB);
   return (
     <LineChart
       spacing={chartSpacing}
@@ -612,8 +616,8 @@ export default function TestChart({
       //     : { fontSize: 10, color: "red", width: 120, textAlign: "center" }
       // }
       // scrollToIndex={data.length - 1}
-      lineSegments={generateLineSegments(transformedData)}
-      lineSegments2={generateLineSegments(transformedDataB)}
+      lineSegments={lineSegment}
+      lineSegments2={lineSegment2}
       xAxisTextNumberOfLines={1}
       xAxisLabelsHeight={LABEL_HEIGHT}
       xAxisThickness={0}

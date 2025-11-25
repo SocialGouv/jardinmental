@@ -138,6 +138,8 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
     chartDates.push(formatDay(tomorrow));
+    const oneBoolean = selectedIndicators.filter((ind) => ind.type === "boolean").length === 1 && selectedIndicators.length === 2;
+
     for (const indicator of selectedIndicators) {
       const newData = chartDates
         .map((date) => {
@@ -163,7 +165,14 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
               indicator,
             };
           }
-          if (indicator?.type === "boolean") return { value: categoryState?.value === true ? 2 : 1, label: date };
+          if (indicator?.type === "boolean")
+            return {
+              // value: oneBoolean ? 0 : categoryState?.value === true ? 2 : 1,
+              value: categoryState?.value === true ? 2 : 1,
+              // noValue: (oneBoolean && categoryState?.value === false) || false,
+              date: date,
+              label: date,
+            };
           if (indicator?.type === "gauge")
             return {
               label: date,
@@ -485,7 +494,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                         (diaryData[displayItem.date]["PRISE_DE_TRAITEMENT_SI_BESOIN"] || {}).value === true && (
                           <View className="flex-row items-center space-x-2">
                             <View className="w-[30] items-center justify-center">
-                              <View className="w-4 h-4 rounded-full bg-cnam-primary-800"></View>
+                              <View className="w-2 h-2 rounded-full bg-cnam-primary-800"></View>
                             </View>
                             <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 ")}>
                               <Text className={mergeClassNames(typography.textMdSemibold, "text-primary-900")}>Si besoin : </Text>Oui
@@ -583,7 +592,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                         <Text className="text-primary-900">Traitement</Text>
                       </View>
                       <View className="flex-row items-center justify-center space-x-2">
-                        <View className="bg-cnam-primary-950 rounded-full h-4 w-4" />
+                        <View className="bg-cnam-primary-950 rounded-full h-2 w-2" />
                         <Text className="text-primary-900">Prise d'un "si besoin"</Text>
                       </View>
                     </View>
