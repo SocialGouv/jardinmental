@@ -163,11 +163,11 @@ const CommityCategories: React.FC<CommityCategoriesProps> = ({ navigation }) => 
       <View className="p-4 mt-4">
         <View className="mb-6 bg-cnam-cyan-lighten-90">
           <Text className="text-cnam-primary-800 text-base leading-6 p-4">
-            Jardin Mental est accompagné d’un <Text className={mergeClassNames(typography.textMdSemibold)}>comité éditorial et scientifique</Text>,
-            qui veille à la qualité, la rigueur scientifique et la véracité médicale des contenus proposés sur l’application.
+            Jardin Mental s’appuie sur un <Text className={mergeClassNames(typography.textMdSemibold)}>comité éditorial et scientifique</Text> qui
+            garantit la qualité, la rigueur et la fiabilité des contenus proposés.
           </Text>
           <Text className="text-cnam-primary-800 text-base leading-6 p-4">
-            Il réunit des professionnels de santé, chercheurs et institutions engagés dans la prévention et la santé mentale.
+            Il réunit des professionnels de santé, des chercheurs et des institutions engagés sur les enjeux de santé mentale.
           </Text>
         </View>
         <Text className={mergeClassNames(typography.textXlBold, "text-cnam-primary-800")}>Découvrez les membres du comité</Text>
