@@ -2,11 +2,13 @@ import React, { useCallback, useState, useEffect } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import PieChart from "react-native-pie-chart";
-import { yesNoMapIcon } from "../../../utils/constants";
+import { TW_COLORS, yesNoMapIcon, yesNoMapTreatmentIcon } from "../../../utils/constants";
 import { getGoalsAndRecords } from "../../../utils/localStorage/goals";
 import { DAYS_OF_WEEK } from "../../../utils/date/daysOfWeek";
 import { parseISO, getDay } from "date-fns";
 import { colors as mainColors } from "@/utils/colors";
+import { mergeClassNames } from "@/utils/className";
+import { typography } from "@/utils/typography";
 
 export const GoalsChartPie = ({ chartDates, onIsEmptyChanged }) => {
   const [goals, setGoals] = useState([]);
@@ -65,15 +67,15 @@ const parialsColors = {
   0: { color: "#f3f3f3" },
   1: {
     // eslint-disable-next-line dot-notation
-    color: yesNoMapIcon["false"].color,
+    color: "#C1DFE6",
     // eslint-disable-next-line dot-notation
-    symbol: yesNoMapIcon["false"].symbol,
+    symbol: yesNoMapTreatmentIcon["false"].symbol,
   },
   5: {
     // eslint-disable-next-line dot-notation
-    color: yesNoMapIcon["true"].color,
+    color: "#9ADAAA",
     // eslint-disable-next-line dot-notation
-    symbol: yesNoMapIcon["true"].symbol,
+    symbol: yesNoMapTreatmentIcon["true"].symbol,
   },
 };
 
@@ -96,12 +98,21 @@ const GoalPie = ({ title, records }) => {
       return acc;
     }, {});
     setSections(_sections);
-    setSectionValues(Object.values(_sections).map(({ percentage, color }) => ({ value: percentage, color: color.color, label: color.symbol })));
+    setSectionValues(
+      Object.values(_sections).map(({ percentage, color }) => {
+        return {
+          value: percentage,
+          color: color.color,
+          label: { text: color.symbol, fontWeight: "bold", fontSize: 16, fill: TW_COLORS.BRAND_800, offsetX: -1 },
+        };
+      })
+    );
   }, [records]);
 
   useEffect(() => {
     updateSections();
   }, [records]);
+  console.log(sectionValues);
   return (
     <View className="border-b border-cnam-primary-400 py-4">
       <View style={styles.titleContainer}>
@@ -114,7 +125,22 @@ const GoalPie = ({ title, records }) => {
           {/* <PieChart radius={50} sections={sectionValues} /> */}
           <View style={styles.pieContainer}>
             {sectionValues?.reduce((sum, section) => sum + section.value, 0) > 0 ? (
-              <PieChart widthAndHeight={100} series={sectionValues.map((section) => section)} coverRadius={0.45} coverFill={"#FFF"} />
+              <View
+                style={{
+                  backgroundColor: TW_COLORS.GRAY_700,
+                  borderRadius: 400,
+                }}
+              >
+                <PieChart
+                  widthAndHeight={100}
+                  padAngle={0.01}
+                  series={sectionValues.map((section) => section)}
+                  cover={{
+                    radius: 0.45,
+                    color: "white",
+                  }}
+                />
+              </View>
             ) : (
               // Show empty state or placeholder when all values are 0
               <View className="w-[100px] h-[100px] border border-gray-200 rounded-full justify-center items-center">
@@ -125,8 +151,25 @@ const GoalPie = ({ title, records }) => {
         </View>
         <View className="flex-col space-y-4 items-center basis-[60%]">
           <View style={styles.numbersContainer}>
-            <Text style={styles.legendTitle}>Taux de réussite :</Text>
-            <Text style={styles.percentageBig}>{Math.round(sections?.[5]?.percentage || 0)}%</Text>
+            <View className="flex flex-row gap-3 items-center">
+              <View className="flex flex-row mt-2 items-center">
+                <View style={{ backgroundColor: parialsColors[5].color }} className={`flex justify-center items-center h-10 w-10 mr-1 rounded-full`}>
+                  <Text className="text-cnam-primary-800 text-sm">Oui</Text>
+                </View>
+                <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-800")}>
+                  {Math.round(sections?.[1]?.percentage || 0)}%
+                </Text>
+              </View>
+              <View className="flex flex-row mt-2 items-center">
+                <View style={{ backgroundColor: parialsColors[1].color }} className={`flex justify-center items-center h-10 w-10 mr-1 rounded-full`}>
+                  <Text className="text-cnam-primary-800 text-sm">Non</Text>
+                </View>
+
+                <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-800")}>
+                  {Math.round(sections?.[5]?.percentage || 0)}%
+                </Text>
+              </View>
+            </View>
             <Text style={styles.percentageSmall}>{Math.round(sections?.[0]?.percentage || 0)}% de jours non renseignés</Text>
           </View>
         </View>
