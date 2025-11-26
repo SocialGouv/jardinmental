@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
+import { TouchableOpacity, View, Text } from "react-native";
 import CircledIcon from "../../components/CircledIcon";
-import { EMOTION_COLORS, TW_COLORS, scoresMapIcon } from "../../utils/constants";
+import { EMOTION_COLORS, TW_COLORS, analyzeScoresMapIcon, scoresMapIcon } from "../../utils/constants";
 import { getScoreWithState } from "../../utils";
 import ArrowRightSvg from "../../../assets/svg/arrow-right.js";
 import { colors } from "../../utils/colors";
@@ -9,6 +9,7 @@ import Icon from "../../components/Icon";
 import { DiaryDataAnswer, DiaryDataNewEntryInput, DiaryEntry } from "@/entities/DiaryData";
 import { typography } from "@/utils/typography";
 import { mergeClassNames } from "@/utils/className";
+import { computeIndicatorColor, computeIndicatorLabel } from "@/utils/indicatorUtils";
 
 const PatientStateItem = ({ patientStateRecord, category, label }: { patientStateRecord: DiaryDataAnswer; category: string; label: string }) => {
   const [userCommentVisible, setUserCommentVisible] = useState(false);
@@ -31,52 +32,35 @@ const PatientStateItem = ({ patientStateRecord, category, label }: { patientStat
           borderColor={_icon.borderColor}
           iconColor={_icon.iconColor}
           icon={_icon.faceIcon}
-          iconWidth={32}
-          iconHeight={32}
+          iconWidth={20}
+          iconHeight={20}
+          iconContainerStyle={{
+            flexDirection: "row",
+            justifyContent: "start",
+            height: "auto",
+            borderRadius: 0,
+            marginRight: 0,
+            width: 32, // w-10 = 40px
+          }}
         />
       );
     }
     if (patientStateRecord?._indicateur?.type === "boolean" || patientStateRecord?.value === true || patientStateRecord?.value === false) {
-      const _color = {
-        ASC: {
-          false: { text: "text-red-border", bg: "border-red-border bg-red-bg" },
-          true: { text: "text-green-border", bg: "border-green-border bg-green-bg" },
-        },
-        DESC: {
-          true: { text: "text-red-border", bg: "border-red-border bg-red-bg" },
-          false: { text: "text-green-border", bg: "border-green-border bg-green-bg" },
-        },
-      };
-
       const _value = patientStateRecord?.value;
-      const _label = typeof _value === "boolean" && !_value ? "Non" : "Oui";
+      const color = computeIndicatorColor(patientStateRecord?._indicateur, _value);
 
       return (
-        <View
-          className={`flex justify-center items-center h-10 w-10 mr-5 rounded-full ${_color[patientStateRecord?._indicateur?.order]?.[_value]?.bg}`}
-        >
-          <Text className={mergeClassNames(typography.textSmMedium, "text-gray-700")}>{_label}</Text>
+        <View className={mergeClassNames("flex flex-row w-8")}>
+          <View className="h-4 w-4 rounded-full" style={{ backgroundColor: color.color, borderColor: color?.iconColor, borderWidth: 1 }} />
         </View>
       );
     }
     if (patientStateRecord?._indicateur?.type === "gauge") {
       const _value = patientStateRecord?.value;
-      const _colors =
-        patientStateRecord?._indicateur?.order === "DESC"
-          ? [TW_COLORS.SUCCESS, EMOTION_COLORS.good, EMOTION_COLORS.middle, EMOTION_COLORS.bad, TW_COLORS.NEGATIVE]
-          : [EMOTION_COLORS.veryBad, EMOTION_COLORS.bad, EMOTION_COLORS.middle, EMOTION_COLORS.good, EMOTION_COLORS.veryGood];
-
-      let _color;
-      if (_value < 0.2) _color = _colors[0];
-      if (_value >= 0.2 && _value < 0.4) _color = _colors[1];
-      if (_value >= 0.4 && _value < 0.6) _color = _colors[2];
-      if (_value >= 0.6 && _value < 0.8) _color = _colors[3];
-      if (_value >= 0.8) _color = _colors[4];
+      const color = computeIndicatorColor(patientStateRecord?._indicateur, _value);
       return (
-        <View className="flex flex-row justify-center w-10 space-x-2 items-end mr-5">
-          <View className="h-2 rounded-full w-1" style={{ backgroundColor: _color }} />
-          <View className="h-5 rounded-full w-1" style={{ backgroundColor: _color }} />
-          <View className="h-8 rounded-full w-1" style={{ backgroundColor: _color }} />
+        <View className={mergeClassNames("flex flex-row w-8")}>
+          <View className="h-4 w-4 rounded-full" style={{ backgroundColor: color.color, borderColor: color?.iconColor, borderWidth: 1 }} />
         </View>
       );
     }
@@ -84,19 +68,21 @@ const PatientStateItem = ({ patientStateRecord, category, label }: { patientStat
   };
 
   const content = (
-    <View>
-      <View style={styles.container}>
+    <View className="flex-col pb-1.5">
+      <View className="flex flex-row items-center pt-1.5">
         {renderResponse()}
-        <View style={styles.labelContainer}>
-          <Text className={mergeClassNames(typography.textSmMedium, "text-gray-700")}>
-            {label}
-            {/* -{patientStateRecord?.value} */}
+        <View className="flex-1 flex-col justify-between">
+          <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-900")}>
+            {label} :{" "}
+            <Text className={mergeClassNames(typography.textSmMedium, "text-gray-700")}>
+              {computeIndicatorLabel(patientStateRecord._indicateur, patientStateRecord?.value)}
+            </Text>
           </Text>
         </View>
         {isTouchable() ? (
           <Icon
             icon="ArrowUpSvg"
-            color="#C7CED5"
+            color={TW_COLORS.CNAM_PRIMARY_800}
             width={13}
             height={13}
             styleContainer={{
@@ -108,8 +94,10 @@ const PatientStateItem = ({ patientStateRecord, category, label }: { patientStat
         ) : null}
       </View>
       {userCommentVisible && isTouchable() ? (
-        <View style={[styles.container, styles.tilt]}>
-          <Text style={styles.userComment}>{patientStateRecord?.userComment?.trim()}</Text>
+        <View className="flex flex-row items-center items-start ml-[59.5]">
+          <Text numberOfLines={3} ellipsizeMode={"tail"} className={mergeClassNames("flex-1", typography.textXsRegular, "text-gray-700 text-left")}>
+            {patientStateRecord?.userComment?.trim()}
+          </Text>
         </View>
       ) : null}
     </View>
@@ -122,44 +110,5 @@ const PatientStateItem = ({ patientStateRecord, category, label }: { patientStat
 const TouchableLayout = ({ children, onPress }) => {
   return <TouchableOpacity onPress={onPress}>{children}</TouchableOpacity>;
 };
-
-const styles = StyleSheet.create({
-  arrowDown: {
-    transform: [{ rotate: "90deg" }],
-  },
-  arrowUp: {
-    transform: [{ rotate: "270deg" }],
-  },
-  container: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    paddingVertical: 5,
-  },
-  tilt: {
-    // small negative marginTop for narrowing the texts
-    marginTop: -15,
-    // align the text with the symptom label
-    // container's padding : 20
-    // icon's marginRight: 20
-    // icon's width : 40
-    paddingLeft: 80, // 20 + 20 + 40 = 80
-    alignItems: "flex-start",
-  },
-  label: {
-    fontSize: 15,
-  },
-  userComment: {
-    flex: 1,
-    fontSize: 14,
-    color: colors.BLUE,
-    fontStyle: "italic",
-  },
-  labelContainer: {
-    flex: 1,
-    display: "flex",
-    justifyContent: "space-between",
-  },
-});
 
 export default PatientStateItem;
