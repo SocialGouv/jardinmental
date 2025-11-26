@@ -22,7 +22,6 @@ export const computeIndicatorLabel = (indicator, value): string => {
     index = 6 - index; // Inverse 1→5, 2→4, 3→3, 4→2, 5→1
   }
   if (indicator.type === INDICATOR_TYPE.boolean) {
-    console.log("LCS TOTO VALUE", value);
     index = value === false ? 0 : 1;
     return ["Non", "Oui"][index];
   }
