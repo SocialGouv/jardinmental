@@ -157,7 +157,7 @@ const GoalPie = ({ title, records }) => {
                   <Text className="text-cnam-primary-800 text-sm">Oui</Text>
                 </View>
                 <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-800")}>
-                  {Math.round(sections?.[1]?.percentage || 0)}%
+                  {Math.round(sections?.[5]?.percentage || 0)}%
                 </Text>
               </View>
               <View className="flex flex-row mt-2 items-center">
@@ -166,7 +166,7 @@ const GoalPie = ({ title, records }) => {
                 </View>
 
                 <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-800")}>
-                  {Math.round(sections?.[5]?.percentage || 0)}%
+                  {Math.round(sections?.[1]?.percentage || 0)}%
                 </Text>
               </View>
             </View>
