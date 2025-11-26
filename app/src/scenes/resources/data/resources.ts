@@ -1329,7 +1329,7 @@ Ce processus est souvent non linéaire, ponctué d'avancées, de pauses, de recu
     id: "6f5c8b7e-3d23-4c0f-8c9e-aef902c6f4b1",
     matomoId: 48,
     title: "Médicaments et santé mentale : ce qu’il faut savoir",
-    image: require("../../../../assets/imgs/resources/Article47.png"),
+    image: require("../../../../assets/imgs/resources/Article48.png"),
     category: CATEGORIES.MIEUX_COMPRENDRE_LES_TROUBLES_PSYCHIQUES,
     content: `**Prendre soin de sa santé mentale peut passer par différents chemins.** **Les médicaments font partie des options possibles, mais leur prescription n’est jamais automatique.**  
 Dans les troubles anxieux ou dépressifs légers à modérés, par exemple, le soutien psychothérapeutique ou d’autres formes d’accompagnement sont souvent privilégiés en premier recours.
@@ -1368,7 +1368,7 @@ Cet échange est d’autant plus important que les informations sur les médicam
     id: "6f5c8b7e-3d23-4c0f-8c9e-aef902c6f4b2",
     matomoId: 49,
     title: "Parler à une IA pour sa santé mentale : comprendre les enjeux",
-    image: require("../../../../assets/imgs/resources/Article47.png"),
+    image: require("../../../../assets/imgs/resources/Article49.png"),
     category: CATEGORIES.AGIR_ET_CHERCHER_DE_L_AIDE_SANS_HONTE,
     content: `**De plus en plus d’applications et de plateformes proposent de parler à une intelligence artificielle (IA) pour évoquer ses émotions ou ses difficultés.**  
 Ce phénomène, en forte croissance, attire notamment les personnes qui se sentent isolées ou qui recherchent une écoute immédiate, souvent gratuite.  
