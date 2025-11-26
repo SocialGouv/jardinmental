@@ -1,3 +1,10 @@
+## [1.127.1](https://github.com/SocialGouv/jardinmental/compare/v1.127.0...v1.127.1) (2025-11-26)
+
+
+### Bug Fixes
+
+* mood should follow indicators order ([#634](https://github.com/SocialGouv/jardinmental/issues/634)) ([673b6ed](https://github.com/SocialGouv/jardinmental/commit/673b6ed284a83d9546c743b1cfc4106a06755bd9))
+
 # [1.127.0](https://github.com/SocialGouv/jardinmental/compare/v1.126.2...v1.127.0) (2025-11-24)
 
 
