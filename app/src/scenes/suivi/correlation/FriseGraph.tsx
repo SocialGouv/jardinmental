@@ -2,7 +2,7 @@ import React, { useMemo, useState } from "react";
 import { StyleSheet, View, useWindowDimensions } from "react-native";
 import Text from "../../../components/MyText";
 import Svg, { Rect, Circle, Text as SvgText, Line } from "react-native-svg";
-import { analyzeScoresMapIcon, scoresMapIcon, TW_COLORS } from "../../../utils/constants";
+import { analyzeGoalScoresMapIcon, analyzeScoresMapIcon, scoresMapIcon, TW_COLORS } from "../../../utils/constants";
 import { colors } from "../../../utils/colors";
 
 // Constants
@@ -23,17 +23,13 @@ const colorToSymbol = {
   "#D7D3D3": "",
   "#CCEDF9": "✓",
   "#F9D1E6": "x",
+  "#9ADAAA": "✓",
+  "#C1DFE6": "x",
 };
 
-const colorToTextColor = {
-  "#F3B9B0": "#B33F2E",
-  "#F3A3CD": "#B33F2E", // rouge
-  "#F9E1A7": "#5A2017", // jaune
-  "#BBE7C6": "#004439", // bleu
-  "#99DDDD": "#004439", // gris par défaut
-  "#D7D3D3": "",
-  "#F9D1E6": "#3D6874",
-  "#CCEDF9": "#3D6874",
+const ICON_MAP_TO_USE = {
+  goal: analyzeGoalScoresMapIcon,
+  indicator: analyzeScoresMapIcon,
 };
 
 // Simple segment component - no batching
@@ -116,10 +112,11 @@ interface FriseGraphProps {
   showTraitement: boolean;
   priseDeTraitement?: any[];
   priseDeTraitementSiBesoin?: any[];
+  type: "indicator" | "goal";
 }
 
 export const FriseGraph = React.memo(
-  ({ title, data, focusedScores, showTraitement, priseDeTraitement, priseDeTraitementSiBesoin }: FriseGraphProps) => {
+  ({ title, data, focusedScores, showTraitement, priseDeTraitement, priseDeTraitementSiBesoin, type = "indicator" }: FriseGraphProps) => {
     // Early return
     const dataLength = data?.length || 0;
     if (dataLength === 0) return null;
@@ -140,7 +137,7 @@ export const FriseGraph = React.memo(
 
         // Get color from icon lookup
         const iconKey = isReverse ? 6 - value : value;
-        const color = analyzeScoresMapIcon[iconKey]?.color || DEFAULT_COLOR;
+        const color = ICON_MAP_TO_USE[type][iconKey]?.color || DEFAULT_COLOR;
 
         // Calculate opacity
         let opacity = 1;
@@ -154,8 +151,8 @@ export const FriseGraph = React.memo(
         return {
           color,
           opacity,
-          textColor: analyzeScoresMapIcon[iconKey]?.iconColor,
-          symbol: analyzeScoresMapIcon[iconKey]?.symbol,
+          textColor: ICON_MAP_TO_USE[type][iconKey]?.iconColor,
+          symbol: ICON_MAP_TO_USE[type][iconKey]?.symbol,
         };
       });
 

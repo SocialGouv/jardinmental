@@ -1,5 +1,5 @@
-import React from "react";
-import { View, useWindowDimensions, Text } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, StyleSheet, Modal, TouchableOpacity, ScrollView, useWindowDimensions, Text } from "react-native";
 import SettingItem from "./setting-item";
 import Bell from "@assets/svg/icon/Bell";
 import Goal from "@assets/svg/icon/Goal";
@@ -16,6 +16,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { typography } from "@/utils/typography";
 import { mergeClassNames } from "@/utils/className";
 import Animated, { useAnimatedScrollHandler, useSharedValue } from "react-native-reanimated";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useFocusEffect } from "@react-navigation/native";
 
 const SettingsModal = ({ navigation, visible }) => {
   const { showBottomSheet, closeBottomSheet } = useBottomSheet();
@@ -28,6 +30,16 @@ const SettingsModal = ({ navigation, visible }) => {
     onScroll: (event) => {
       scrollY.value = event.contentOffset.y;
     },
+  });
+  const ContentWrapper = isLandscape ? ScrollView : View;
+
+  const [isDevMode, setIsDevMode] = useState(false);
+
+  useFocusEffect(() => {
+    (async () => {
+      const devMode = await AsyncStorage.getItem("devMode");
+      setIsDevMode(devMode === "true");
+    })();
   });
 
   return (
@@ -113,6 +125,8 @@ const SettingsModal = ({ navigation, visible }) => {
               }}
               icon={<Download />}
             />
+                      {isDevMode && (
+
             <SettingItem
               title="Sauvegarder / restaurer mes données"
               description={"Conserver mes données ou changer d’appareil"}
@@ -123,7 +137,7 @@ const SettingsModal = ({ navigation, visible }) => {
               }}
               isLast={true}
               icon={<Save />}
-            />
+            />)}
           </View>
         </View>
       </Animated.ScrollView>

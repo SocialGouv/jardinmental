@@ -13,23 +13,17 @@ import { DiaryDataNewEntryInput } from "../../entities/DiaryData";
 import { Indicator } from "../../entities/Indicator";
 import { IndicatorSurveyItem } from "@/components/survey/IndicatorSurveyItem";
 import { DrugsBottomSheet } from "@/components/DrugsBottomSheet";
-import { moodBackgroundColors, MoodEmoji, moodEmojis } from "@/utils/mood";
+import { moodBackgroundColors } from "@/utils/mood";
 import { getIndicatorKey } from "@/utils/indicatorUtils";
 import { TW_COLORS } from "@/utils/constants";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
 import {
   INDICATEURS_HUMEUR,
-  NEW_INDICATORS_CATEGORIES,
   GENERIC_INDICATOR_SUBSTANCE,
   STATIC_UUID_FOR_INSTANCE_OF_GENERIC_INDICATOR_SUBSTANCE,
-  INDICATORS,
 } from "@/utils/liste_indicateurs.1";
-import { HELP_FOR_CATEGORY, INDICATOR_CATEGORIES_DATA } from "../onboarding-v2/data/helperData";
-import CircleQuestionMark from "@assets/svg/icon/CircleQuestionMark";
-import JMButton from "@/components/JMButton";
 import { useBottomSheet } from "@/context/BottomSheetContext";
-import HelpView from "@/components/HelpView";
 import { AnimatedHeaderScrollScreen } from "../survey-v2/AnimatedHeaderScrollScreen";
 import NavigationButtons from "@/components/onboarding/NavigationButtons";
 import { useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated";
@@ -68,25 +62,6 @@ const DaySurvey = ({
   const [userIndicateurs, setUserIndicateurs] = useState<Indicator[]>([]);
   const [treatment, setTreatment] = useState<any[] | undefined>();
   const [goals, setGoals] = useState<Goal[]>([]);
-
-  const groupedIndicators = useMemo(() => {
-    return userIndicateurs.reduce<Record<NEW_INDICATORS_CATEGORIES, Indicator[]>>((acc, indicator) => {
-      const category =
-        // for indicators existing in previous version (but uuid has not changed) we search for category in hardcoded predefinedIndicators
-        INDICATORS.find((ind) => [indicator.uuid, indicator.baseIndicatorUuid, indicator.genericUuid].includes(ind.uuid))?.mainCategory ||
-        // otherwise we default to mainCategory
-        indicator.mainCategory ||
-        NEW_INDICATORS_CATEGORIES.OTHER;
-
-      if (!acc[category]) {
-        acc[category] = [];
-      }
-      if (indicator.active && indicator.uuid !== INDICATEURS_HUMEUR.uuid) {
-        acc[category].push(indicator);
-      }
-      return acc;
-    }, {});
-  }, [userIndicateurs]);
 
   const [answers, setAnswers] = useState<DiaryDataNewEntryInput["answers"]>({});
 
@@ -281,32 +256,6 @@ const DaySurvey = ({
     const hasNotes = answers[questionContext.id]?.userComment ? 1 : 0;
     logEvents.logCompletionNotesDailyQuestionnaire(hasNotes);
 
-    // logEvents._deprecatedLogFeelingAdd();
-    // logEvents._deprecatedLogFeelingSubmitSurvey(userIndicateurs.filter((i) => i.active).length);
-    // logEvents._deprecatedLogFeelingAddComment(
-    //   Object.keys(answers).filter((key) => ![questionToxic.id, questionContext.id].includes(key) && answers[key].userComment)?.length
-    // );
-    // logEvents._deprecatedLogFeelingAddContext(answers[questionContext.id]?.userComment ? 1 : 0);
-    // logEvents._deprecatedLogFeelingResponseToxic(answers[questionToxic.id]?.value ? 1 : 0);
-
-    // // Log each indicator in the questionnaire (FEELING_ADD_LIST)
-    // for (const indicator of userIndicateurs.filter((i) => i.active)) {
-    //   if (indicator.matomoId) {
-    //     logEvents._deprecatedLogFeelingAddList(indicator.matomoId);
-    //   }
-    // }
-
-    // // Log each indicator that has been answered (FEELING_ADD_LIST_COMPLETED)
-    // for (const key of Object.keys(answers)) {
-    //   // Skip special questions (TOXIC and CONTEXT)
-    //   if ([questionToxic.id, questionContext.id].includes(key)) continue;
-
-    //   const answer = answers[key];
-    //   if (answer?.value !== undefined && answer._indicateur?.matomoId) {
-    //     logEvents._deprecatedLogFeelingAddListCompleted(answer._indicateur.matomoId);
-    //   }
-    // }
-
     if (route.params?.redirect) {
       return navigation.navigate("survey-success", {
         onComplete: () => {
@@ -366,10 +315,6 @@ const DaySurvey = ({
       );
     }
     //
-  };
-
-  const showHelpModal = (category: NEW_INDICATORS_CATEGORIES) => {
-    return showBottomSheet(<HelpView title={HELP_FOR_CATEGORY[category].title} description={HELP_FOR_CATEGORY[category]?.description} />);
   };
 
   const editIndicators = () => {
@@ -448,35 +393,12 @@ const DaySurvey = ({
       navigation={navigation}
     >
       <View>
-        {userIndicateurs
-          .filter((ind) => ind.active === true && ind.uuid === INDICATEURS_HUMEUR.uuid)
-          .map((ind) => {
-            return (
-              <View className="px-4 mt-4" key={ind?.uuid || ind.name}>
-                <IndicatorSurveyItem
-                  showComment={true}
-                  indicator={ind}
-                  index={0}
-                  value={answers?.[getIndicatorKey(ind)]?.value}
-                  onIndicatorChange={() => {
-                    updateIndicators();
-                  }}
-                  onValueChanged={(value) => {
-                    onValueChanged(value);
-                    setSelectedMoodIndex(value.value);
-                  }}
-                  onCommentChanged={onCommentChanged}
-                  comment={answers?.[getIndicatorKey(ind)]?.userComment}
-                />
-              </View>
-            );
-          })}
-        <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700 text-left mb-6 mt-0 px-5")}>
+        <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700 text-left mb-6 mt-4 px-5")}>
           Observez ce qui a été présent ou plus marqué aujourd’hui, un élément à la fois.
         </Text>
         <View className="mb-0 px-4">
           {userIndicateurs
-            .filter((ind) => ind.active === true && ind.uuid !== INDICATEURS_HUMEUR.uuid)
+            .filter((ind) => ind.active === true)
             .map((ind: Indicator, index: number) => {
               return (
                 <IndicatorSurveyItem
@@ -508,17 +430,6 @@ const DaySurvey = ({
           placeholder="Contexte, évènements, comportement de l'entourage..."
         />
       </View>
-      {/* <View className="mb-2 px-4 my-4">
-        <QuestionYesNo
-          question={questionToxic}
-          onPress={toggleAnswer}
-          selected={answers[questionToxic.id]?.value}
-          explanation={questionToxic.explanation}
-          isLast
-          onChangeUserComment={handleChangeUserComment}
-          userComment={answers[questionToxic.id]?.userComment}
-        />
-      </View> */}
     </AnimatedHeaderScrollScreen>
   );
 };

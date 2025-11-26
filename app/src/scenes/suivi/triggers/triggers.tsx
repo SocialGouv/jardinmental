@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View, Dimensions, Text, TouchableOpacity, Alert } from "react-native";
+import { StyleSheet, View, Dimensions, Text, TouchableOpacity, Alert, ScrollView } from "react-native";
 import { beforeToday, formatDateToFrenchNumericFormat } from "@/utils/date/helpers";
 import { colors } from "@/utils/colors";
 import JMButton from "@/components/JMButton";
@@ -163,9 +163,9 @@ const Events = ({ navigation }) => {
   };
 
   return (
-    <View className="flex-1 pt-60 px-4 bg-white">
+    <ScrollView className="flex-1 pt-60 px-4 bg-white" showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 100 }}>
       <View className="flex-row justify-between items-center">
-        <Text className={mergeClassNames(typography.textLgBold, "text-cnam-primary-800")}>Identifiez ce qui influence votre état</Text>
+        <Text className={mergeClassNames(typography.textLgBold, "text-cnam-primary-800 pr-2")}>Identifiez ce qui influence votre état</Text>
         <TouchableOpacity
           onPress={() => {
             showBottomSheet(<HelpView title={"Comment lire mes déclencheurs?"} isMd={true} description={HELP_TEXT} />);
@@ -296,7 +296,7 @@ const Events = ({ navigation }) => {
           className="mt-6"
         />
       </View>
-    </View>
+    </ScrollView>
   );
 };
 

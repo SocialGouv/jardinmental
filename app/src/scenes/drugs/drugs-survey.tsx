@@ -30,7 +30,7 @@ const DrugsSurvey = ({ navigation, route }) => {
 
   const priseDeTraitement = {
     id: "PRISE_DE_TRAITEMENT",
-    label: "Avez-vous pris correctement votre traitement quotidien ?",
+    label: "Avez-vous pris votre traitement quotidien ?",
   };
   const priseDeTraitementSiBesoin = {
     id: "PRISE_DE_TRAITEMENT_SI_BESOIN",

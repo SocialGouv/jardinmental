@@ -6,7 +6,9 @@ import logEvents from "../../services/logEvents";
 import { TW_COLORS } from "@/utils/constants";
 import ArrowIcon from "@assets/svg/icon/Arrow";
 import { SafeAreaView } from "react-native-safe-area-context";
-
+import { mergeClassNames } from "@/utils/className";
+import { typography } from "@/utils/typography";
+import ValidatedStampIcon from "@assets/svg/icon/ValidatedStamp";
 interface ResourceCategoriesProps {
   navigation: any;
 }
@@ -63,13 +65,21 @@ const ResourceCategories: React.FC<ResourceCategoriesProps> = ({ navigation }) =
         className="bg-cnam-primary-50 flex-1"
       >
         <View className="p-4 mt-4">
-          <View className="mb-10">
+          <View className="mb-6">
             <Text className="text-cnam-primary-950 text-2xl font-semibold mb-3">La santé mentale, qu'est-ce que c'est ?</Text>
             <Text className="text-cnam-primary-800 text-base leading-6">
               Un guide simple et accessible pour mieux connaître la santé mentale, ses enjeux et les solutions disponibles
             </Text>
           </View>
-
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("commity");
+            }}
+            className="flex-row bg-cnam-cyan-lighten-80 items-center mb-8 space-x-1 rounded-full px-3 self-start"
+          >
+            <ValidatedStampIcon />
+            <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>Comment ces contenus sont-ils vérifiés ?</Text>
+          </TouchableOpacity>
           {categories.map((category) => (
             <CategoryCard
               key={category.key}
