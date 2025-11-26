@@ -62,7 +62,5 @@ export const computeIndicatorColor = (
   if (indicator.order === "DESC") {
     index = 6 - index; // Inverse 1→5, 2→4, 3→3, 4→2, 5→1
   }
-  // console.log(index, analyzeScoresMapIcon[index]);
-  if (indicator.name === "Charge émotionnelle : Divorce") console.log(indicator.name, index);
   return analyzeScoresMapIcon[index];
 };
