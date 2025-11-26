@@ -125,7 +125,7 @@ export const IndicatorSurveyItem = ({
       {showComment && (
         <InputText
           fill
-          preset="lighten"
+          preset="floatingLabel"
           placeholder="Ajoutez une note"
           value={_comment}
           onChangeText={(nextComment) => {
