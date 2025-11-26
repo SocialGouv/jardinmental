@@ -97,7 +97,7 @@ export const DetailModalCorrelationScreen: React.FC<ModalCorrelationScreenProps>
                 </View>
               );
             })}
-          {typeof diaryDataForDate["PRISE_DE_TRAITEMENT"].value === "boolean" && (
+          {typeof diaryDataForDate["PRISE_DE_TRAITEMENT"]?.value === "boolean" && (
             <View className="flex-row items-center space-x-2">
               <View className="w-[30] items-center justify-center">
                 {typeof diaryDataForDate["PRISE_DE_TRAITEMENT"].value ? (
@@ -108,11 +108,11 @@ export const DetailModalCorrelationScreen: React.FC<ModalCorrelationScreenProps>
               </View>
               <Text className={mergeClassNames(typography.textMdMedium, "text-white ")}>
                 <Text className={mergeClassNames(typography.textMdSemibold, "text-white")}>Traitement : </Text>
-                {diaryDataForDate["PRISE_DE_TRAITEMENT"].value ? "Pris correctement" : "Non"}
+                {diaryDataForDate["PRISE_DE_TRAITEMENT"]?.value ? "Pris correctement" : "Non"}
               </Text>
             </View>
           )}
-          {diaryDataForDate["PRISE_DE_TRAITEMENT_SI_BESOIN"].value === true && (
+          {diaryDataForDate["PRISE_DE_TRAITEMENT_SI_BESOIN"]?.value === true && (
             <View className="flex-row items-center space-x-2">
               <View className="w-[30] items-center">
                 <View className="w-2 h-2 bg-cnam-primary-950 rounded-full"></View>

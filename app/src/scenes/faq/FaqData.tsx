@@ -122,7 +122,7 @@ export const FAQ_DATA: Record<FaqSlug, FaqDataEntry> = {
       {
         title: `Comment lire mes statistiques ?`,
         description: `Les statistiques donnent un bilan global de vos indicateurs sur une période donnée.
-Elles ne suivent pas l’évolution de vos indicateur sjour après jour mais offrent une vue d’ensemble de votre état.
+Elles ne suivent pas l’évolution de vos indicateurs jour après jour mais offrent une vue d’ensemble de votre état.
 Vous y trouverez aussi le taux de réussite de vos objectifs.`,
       },
       {

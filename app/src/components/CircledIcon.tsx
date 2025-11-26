@@ -10,14 +10,15 @@ import SmileyVeryBad from "@assets/svg/smileys/veryBad";
 import PlusIcon from "@assets/svg/icon/plus";
 import TodaySvg from "@assets/svg/today.svg";
 import YesterdaySvg from "@assets/svg/yesterday.svg";
+import { classNames } from "@/utils/index.js";
 
 const styles = StyleSheet.create({
   iconContainer: {
     width: 40,
     height: 40,
     borderRadius: 20,
-    borderWidth: 1,
-    borderColor: "lightgrey",
+    // borderWidth: 1,
+    // borderColor: "lightgrey",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -82,24 +83,24 @@ const CircledIcon = ({
   iconContainerStyle,
   iconWidth = 20,
   iconHeight = 20,
+  className,
 }) => {
   const Icon = mapIconToSvg(icon);
   return (
     <View
       style={{
         ...styles.iconContainer,
-        backgroundColor: color,
-        borderColor,
-        borderWidth,
+        // backgroundColor: color,
+        // borderColor,
+        // borderWidth,
         opacity,
-        ...iconContainerStyle,
-
         width: iconWidth * 1.25,
         height: iconHeight * 1.25,
         borderRadius: iconWidth,
+        ...iconContainerStyle,
       }}
     >
-      <Icon width={iconWidth} height={iconHeight} color={iconColor} />
+      <Icon width={iconWidth} height={iconHeight} color={iconColor} backgroundColor={color} />
     </View>
   );
 };

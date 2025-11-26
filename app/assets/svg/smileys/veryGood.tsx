@@ -1,9 +1,23 @@
 import { iconColors } from "@/utils/constants";
-import Svg, { Path } from "react-native-svg";
+import Svg, { Circle, Path } from "react-native-svg";
 
-export default function SmileyVeryGood({ width = 27, height = 28 }: { width?: number; height?: number }) {
+export default function SmileyVeryGood({
+  width = 27,
+  height = 28,
+  backgroundColor = "transparent",
+}: {
+  width?: number;
+  height?: number;
+  backgroundColor: string;
+}) {
   return (
     <Svg width={width} height={height} viewBox="0 0 27 28" fill="none">
+      <Circle
+        cx={13.5}
+        cy={14}
+        r={11.5} // correspond à ton Path
+        fill={backgroundColor} // 👉 ta couleur intérieure
+      />
       <Path
         stroke={iconColors.veryGood}
         strokeWidth={2.1}

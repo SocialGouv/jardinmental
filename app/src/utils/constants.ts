@@ -131,6 +131,22 @@ export const analyzeScoresMapIcon = {
   },
 };
 
+export const analyzeGoalScoresMapIcon = {
+  "-1": {
+    color: "transparent",
+  },
+  1: {
+    color: "#C1DFE6",
+    symbol: "x",
+    iconColor: "#3D6874",
+  },
+  5: {
+    color: "#9ADAAA",
+    symbol: "✓",
+    iconColor: "#3D6874",
+  },
+};
+
 export const yesNoMapTreatmentIcon = {
   true: {
     color: "#CCEDF9",

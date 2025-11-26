@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { View, Text } from "react-native";
 import ResourceCard from "./ResourceCard";
 import { Resource, RESOURCES_DATA } from "./data/resources";
@@ -18,6 +18,7 @@ interface ResourceCategoryListProps {
 
 const ResourceCategoryList: React.FC<ResourceCategoryListProps> = ({ navigation, route }) => {
   const { category } = route.params;
+  const scrollPositionRef = useRef(0);
 
   // Filter resources by category
   const categoryResources = RESOURCES_DATA.filter((resource) => resource.category === category);
@@ -72,6 +73,10 @@ const ResourceCategoryList: React.FC<ResourceCategoryListProps> = ({ navigation,
     navigation.navigate("resource-article", { resource });
   };
 
+  const handleScrollPositionChange = (position: number) => {
+    scrollPositionRef.current = position;
+  };
+
   return (
     <AnimatedHeaderScrollScreen
       title={category}
@@ -83,6 +88,9 @@ const ResourceCategoryList: React.FC<ResourceCategoryListProps> = ({ navigation,
       navigation={navigation}
       showBottomButton={false}
       scrollViewBackground={TW_COLORS.GRAY_50}
+      preserveScrollOnBlur={true}
+      onScrollPositionChange={handleScrollPositionChange}
+      initialScrollPosition={scrollPositionRef.current}
     >
       <View className="flex-1">
         <View className="px-4 mt-4">
@@ -96,11 +104,7 @@ const ResourceCategoryList: React.FC<ResourceCategoryListProps> = ({ navigation,
 
             return (
               <View key={subCategory} className="mb-6">
-                <Text 
-                  className="text-xl font-semibold text-cnam-primary-950 mb-3"
-                  accessibilityRole="header"
-                  accessibilityLevel={2}
-                >
+                <Text className="text-xl font-semibold text-cnam-primary-950 mb-3" accessibilityRole="header" accessibilityLevel={2}>
                   {subCategory}
                 </Text>
                 {resources.map((resource, localIndex) => {

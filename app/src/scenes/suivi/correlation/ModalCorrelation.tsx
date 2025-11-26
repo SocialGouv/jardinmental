@@ -457,7 +457,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                               </Svg>
                               <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 ")}>
                                 <Text className={mergeClassNames(typography.textMdSemibold, "text-primary-900")}>{indicator.name} : </Text>
-                                {computeIndicatorLabel(indicator, value)}
+                                {computeIndicatorLabel(indicator, value) || "Pas de donnée"}
                               </Text>
                             </View>
                           );

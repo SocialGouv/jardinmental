@@ -1,9 +1,17 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 
-export default ({ style }: { style?: any }) => (
+export default ({ style, separatorColor }: { style?: any; separatorColor?: string }) => (
   <View style={[styles.separator, style]} collapsable={false}>
-    <View style={[styles.separatorContent]} collapsable={false} />
+    <View
+      style={[
+        styles.separatorContent,
+        {
+          backgroundColor: separatorColor,
+        },
+      ]}
+      collapsable={false}
+    />
   </View>
 );
 
