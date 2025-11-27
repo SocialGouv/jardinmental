@@ -33,6 +33,7 @@ const TREATMENT_SIZE = 12;
 interface DataPointProps {
   item: any;
   isSelected: boolean;
+  spacingFormat: string;
 }
 
 interface TreatmentPointProps {
@@ -42,19 +43,25 @@ interface TreatmentPointProps {
 
 // Memoized data point components for better performance
 const MemoizedDataPoint = React.memo(
-  ({ item, isSelected }: DataPointProps) => {
+  ({ item, isSelected, spacingFormat }: DataPointProps) => {
     if (item?.noValue) return null;
 
     const needShift = item?.needShift || false;
     let size = isSelected ? 20 : 14;
+    if (item.isBoolean && spacingFormat !== "7days") {
+      size = isSelected ? 10 : 7;
+    }
     if (item.isTreatmentSiBesoin) {
       size = TREATEMENT_SI_BESOIN_SIZE;
     }
     let strokeWidth = isSelected ? 6 : 3;
+    if (item.isBoolean && spacingFormat !== "7days") {
+      strokeWidth = isSelected ? 3 : 2;
+    }
     if (item.isTreatmentSiBesoin) {
       strokeWidth = 1;
     }
-    const radius = (size - strokeWidth) / 2;
+    let radius = (size - strokeWidth) / 2;
 
     return (
       <Svg
@@ -84,7 +91,8 @@ const MemoizedDataPoint = React.memo(
       prevProps.item?.color === nextProps.item?.color &&
       prevProps.item?.backgroundColor === nextProps.item?.backgroundColor &&
       prevProps.item?.needShift === nextProps.item?.needShift &&
-      prevProps.item?.noValue === nextProps.item?.noValue
+      prevProps.item?.noValue === nextProps.item?.noValue &&
+      prevProps.spacingFormat === nextProps.spacingFormat
     );
   }
 );
@@ -265,7 +273,7 @@ export default function TestChart({
       ) {
         return null;
       }
-      return <MemoizedDataPoint item={item} isSelected={isSelected} />;
+      return <MemoizedDataPoint item={item} isSelected={isSelected} spacingFormat={spacingFormat} />;
     },
     [config.useViewportOptimization, isItemInViewport]
   );
@@ -406,7 +414,7 @@ export default function TestChart({
   // Store rendering properties directly on data objects instead of creating function closures
   const transformedData = useMemo(() => {
     return (visibleData || []).map((d, index) => {
-      const needShift = visibleDataB && visibleDataB[index]?.value === d.value;
+      const needShift = !oneBoolean && visibleDataB && visibleDataB[index]?.value === d.value;
       // For 3months and 1month spacing, always format the label (formatLabel will handle showing only first day of month)
       const label =
         spacingFormat === "3months" || spacingFormat === "1month" ? formatLabel(d.label) : index % labelSpacing === 0 ? formatLabel(d.label) : "";
@@ -418,20 +426,26 @@ export default function TestChart({
         needShift: false,
         dataPointColor: d.noValue ? "transparent" : "#00A5DF",
         // dataPointsColor: !config.useCustomRenderers ? undefined : "#3D6874",
-        focusedDataPointWidth: !config.useCustomRenderers ? undefined : needShift ? 35 : 20,
-        focusedDataPointHeight: !config.useCustomRenderers ? undefined : 20,
+        focusedDataPointWidth: !config.useCustomRenderers
+          ? undefined
+          : needShift
+          ? 35
+          : oneBoolean && d.isBoolean && spacingFormat !== "7days"
+          ? 10
+          : 20,
+        focusedDataPointHeight: !config.useCustomRenderers ? undefined : oneBoolean && d.isBoolean && spacingFormat !== "7days" ? 10 : 20,
         focusedDataPointColor: !config.useCustomRenderers ? undefined : d.noValue ? "transparent" : "#00A5DF",
-        dataPointWidth: !config.useCustomRenderers ? undefined : needShift ? 25 : 15,
+        dataPointWidth: !config.useCustomRenderers ? undefined : needShift ? 25 : oneBoolean && d.isBoolean && spacingFormat !== "7days" ? 7 : 15,
         // hideDataPoint: config.hideDataPoints || spacingFormat === "1month" || spacingFormat === "3months" || spacingFormat === "6months",
         labelComponent: label ? () => customLabel(label) : undefined,
       };
     });
-  }, [visibleData, visibleDataB, labelSpacing, formatLabel, spacingFormat]);
+  }, [visibleData, visibleDataB, labelSpacing, formatLabel, spacingFormat, oneBoolean]);
 
   const transformedDataB = useMemo(() => {
     if (!visibleDataB) return null;
     return visibleDataB.map((d, index) => {
-      const needShift = visibleData[index]?.value === d.value;
+      const needShift = !oneBoolean && visibleData[index]?.value === d.value;
       // For 3months and 1month spacing, always format the label (formatLabel will handle showing only first day of month)
       // const label =
       //   spacingFormat === "3months" || spacingFormat === "1month" ? formatLabel(d.label) : index % labelSpacing === 0 ? formatLabel(d.label) : "";
@@ -443,14 +457,14 @@ export default function TestChart({
         // backgroundColor: "#3D6874",
         dataPointColor: !config.useCustomRenderers ? undefined : d.noValue ? "transparent" : "#3D6874",
         focusedDataPointColor: !config.useCustomRenderers ? undefined : d.noValue ? "transparent" : "#3D6874",
-        focusedDataPointWidth: !config.useCustomRenderers ? undefined : 20,
+        focusedDataPointWidth: !config.useCustomRenderers ? undefined : oneBoolean && d.isBoolean && spacingFormat !== "7days" ? 10 : 20,
         focusedDataPointRadius: !config.useCustomRenderers ? undefined : 7,
-        focusedDataPointHeight: !config.useCustomRenderers ? undefined : 20,
+        focusedDataPointHeight: !config.useCustomRenderers ? undefined : oneBoolean && d.isBoolean && spacingFormat !== "7days" ? 10 : 20,
         needShift: true,
         // hideDataPoint: config.hideDataPoints || spacingFormat === "1month" || spacingFormat === "3months" || spacingFormat === "6months",
       };
     });
-  }, [visibleDataB, visibleData, labelSpacing, formatLabel, spacingFormat]);
+  }, [visibleDataB, visibleData, labelSpacing, formatLabel, spacingFormat, oneBoolean]);
 
   const generateLineSegments = (data) => {
     if (!data || data.length === 0) return [];

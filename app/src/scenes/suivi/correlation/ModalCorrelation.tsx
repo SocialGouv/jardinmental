@@ -181,7 +181,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
               noValue: (oneBoolean && categoryState?.value === false) || false,
               date: date,
               label: date,
-              isBoolean: true,
+              isBoolean: oneBoolean, // we setup isBoolean true only when oneBoolean
             };
 
           if (indicator?.type === "gauge")
