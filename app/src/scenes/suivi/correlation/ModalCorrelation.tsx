@@ -125,6 +125,9 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
     }
   }, [displayItem]);
 
+  const oneBoolean = selectedIndicators.filter((ind) => ind.type === "boolean").length === 1 && selectedIndicators.length === 2;
+  const booleanIndicatorIndex = oneBoolean ? selectedIndicators.findIndex((ind) => ind.type === "boolean") : undefined;
+
   const dataToDisplay = useMemo(() => {
     if (!diaryData || selectedIndicators.length === 0) {
       return null;
@@ -138,7 +141,6 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
     chartDates.push(formatDay(tomorrow));
-    const oneBoolean = selectedIndicators.filter((ind) => ind.type === "boolean").length === 1 && selectedIndicators.length === 2;
 
     for (const indicator of selectedIndicators) {
       const newData = chartDates
@@ -167,12 +169,14 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
           }
           if (indicator?.type === "boolean")
             return {
-              // value: oneBoolean ? 0 : categoryState?.value === true ? 2 : 1,
-              value: categoryState?.value === true ? 2 : 1,
-              // noValue: (oneBoolean && categoryState?.value === false) || false,
+              value: oneBoolean ? 0 : categoryState?.value === true ? 2 : 1,
+              //value: categoryState?.value === true ? 2 : 1,
+              noValue: (oneBoolean && categoryState?.value === false) || false,
               date: date,
               label: date,
+              isBoolean: true,
             };
+
           if (indicator?.type === "gauge")
             return {
               label: date,
@@ -229,7 +233,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
         const dayData = diaryData[date];
         if (!dayData || dayData["PRISE_DE_TRAITEMENT"] === undefined) {
           return {
-            value: 0, // value just to display point at axix 0 but it does no represent treatment value
+            value: oneBoolean ? -1 : 0, // value just to display point at axix 0 but it does no represent treatment value
             hideDataPoint: false,
             noValue: true,
             date: date,
@@ -237,7 +241,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
           };
         }
         return {
-          value: 0,
+          value: oneBoolean ? -1 : 0,
           hideDataPoint: false,
           treatmentValue: dayData["PRISE_DE_TRAITEMENT"].value,
           date: date,
@@ -252,7 +256,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
         const dayData = diaryData[date];
         if (!dayData || !dayData["PRISE_DE_TRAITEMENT_SI_BESOIN"] || !dayData["PRISE_DE_TRAITEMENT_SI_BESOIN"].value) {
           return {
-            value: -1, // value just to display point at axix -1 but it does no represent treatment value
+            value: oneBoolean ? -2 : -1, // value just to display point at axix -1 but it does no represent treatment value
             hideDataPoint: false,
             noValue: true,
             date: date,
@@ -260,7 +264,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
           };
         }
         return {
-          value: -1, // value just to display point at axix -1 but it does no represent treatment value
+          value: oneBoolean ? -2 : -1, // value just to display point at axix -1 but it does no represent treatment value
           hideDataPoint: false,
           treatmentValue: dayData["PRISE_DE_TRAITEMENT_SI_BESOIN"].value,
           date: date,
@@ -418,7 +422,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                     </Text>
                   </TouchableOpacity> */}
                 </View>
-                <View className={mergeClassNames("w-full", showTreatment ? "h-64" : "h-48")}>
+                <View className={mergeClassNames("w-full", showTreatment || oneBoolean ? "h-64" : "h-48")}>
                   {isVisible && displayItem && displayItem?.date && (
                     <Animated.View
                       // style={[animatedStyle]}
@@ -444,17 +448,30 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                           } catch (e) {}
                           return (
                             <View key={indicator.uuid} className="flex-row items-center space-x-2">
-                              <Svg height="2" width="30">
-                                <Line
-                                  x1="0"
-                                  y1="1"
-                                  x2="100%"
-                                  y2="1"
-                                  stroke={index === 0 ? "#00A5DF" : "#3D6874"} // your color
-                                  strokeWidth="2"
-                                  strokeDasharray={index === 0 ? "" : "4 4"} // pattern: 4px dash, 4px gap
-                                />
-                              </Svg>
+                              {oneBoolean && booleanIndicatorIndex === index ? (
+                                <View className="items-center" style={{ width: 30 }}>
+                                  <View
+                                    className="w-4 h-4 bg-white rounded-full"
+                                    style={{
+                                      borderColor: index === 0 ? "#00A5DF" : "#3D6874",
+                                      borderWidth: 4,
+                                      backgroundColor: index === 0 ? "#00A5DF" : "white",
+                                    }}
+                                  ></View>
+                                </View>
+                              ) : (
+                                <Svg height="2" width="30">
+                                  <Line
+                                    x1="0"
+                                    y1="1"
+                                    x2="100%"
+                                    y2="1"
+                                    stroke={index === 0 ? "#00A5DF" : "#3D6874"} // your color
+                                    strokeWidth="2"
+                                    strokeDasharray={index === 0 ? "" : "4 4"} // pattern: 4px dash, 4px gap
+                                  />
+                                </Svg>
+                              )}
                               <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 ")}>
                                 <Text className={mergeClassNames(typography.textMdSemibold, "text-primary-900")}>{indicator.name} : </Text>
                                 {computeIndicatorLabel(indicator, value) || "Pas de donnée"}
@@ -516,6 +533,8 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                               diaryData,
                               showTreatment,
                               selectedPointIndex: 4,
+                              oneBoolean,
+                              booleanIndicatorIndex,
                             });
                           }}
                           className="flex-row items-center justify-end"
@@ -555,6 +574,8 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                     diaryData={diaryData}
                     navigation={navigation}
                     showTreatment={showTreatment}
+                    oneBoolean={oneBoolean}
+                    booleanIndicatorIndex={booleanIndicatorIndex}
                     selectedIndicators={selectedIndicators}
                     setSelectedPointIndex={setSelectedPointIndex}
                     openIndicatorBottomSheet={openIndicatorBottomSheet}

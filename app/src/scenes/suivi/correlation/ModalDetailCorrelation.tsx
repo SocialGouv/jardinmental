@@ -53,6 +53,8 @@ export const DetailModalCorrelationScreen: React.FC<ModalCorrelationScreenProps>
     diaryDataForDate,
     date,
     diaryData,
+    oneBoolean,
+    booleanIndicatorIndex,
   } = route.params;
   return (
     <SafeAreaView className="flex-1 bg-primary" edges={["top"]}>
@@ -151,6 +153,7 @@ export const DetailModalCorrelationScreen: React.FC<ModalCorrelationScreenProps>
               treatment={treatment}
               initialSelectedPointIndex={selectedPointIndex}
               navigation={navigation}
+              oneBoolean={oneBoolean}
               selectedIndicators={selectedIndicators}
               treatmentSiBesoin={treatmentSiBesoin}
               diaryData={diaryData}
@@ -158,6 +161,7 @@ export const DetailModalCorrelationScreen: React.FC<ModalCorrelationScreenProps>
               showTreatment={true}
               displayfixed={true}
               enablePagination={false}
+              booleanIndicatorIndex={booleanIndicatorIndex}
             />
           </View>
         </View>

@@ -5,6 +5,16 @@ import { formatDay, oneDay } from "../../utils/date/helpers";
 const MAX_DAY = 1460;
 export const startDate = new Date(Date.now() - MAX_DAY * oneDay);
 
+// Helper function to generate more stable random values
+// 75% of the time returns values between 0.5 and 1.0
+// 25% of the time returns values below 0.5
+const getStableRandomValue = () => {
+  if (Math.random() < 0.75) {
+    return 0.5 + Math.random() * 0.5; // Range: 0.5 to 1.0
+  }
+  return Math.random() * 0.5; // Range: 0.0 to 0.5
+};
+
 const fakeDaySurvey = () => {
   const MOOD_hasComment = Math.random() > 0.5;
   const ANXIETY_hasComment = Math.random() > 0.5;
@@ -13,14 +23,14 @@ const fakeDaySurvey = () => {
       _indicateur: {
         type: "gauge",
       },
-      value: Math.ceil(Math.random() * 5) / 5,
+      value: getStableRandomValue(),
       userComment: MOOD_hasComment ? "comment" : "",
     },
     Anxiété: {
       _indicateur: {
         type: "gauge",
       },
-      value: Math.ceil(Math.random() * 5) / 5,
+      value: getStableRandomValue(),
       userComment: ANXIETY_hasComment ? "comment" : "",
     },
   };
@@ -64,9 +74,10 @@ const generateOldFormatData = () => {
 
 // Generator for new format data (UUID-based indicators)
 const generateNewFormatData = () => {
+  const humeur = getStableRandomValue();
   const data = {
     "3e15ed99-f2f9-4716-b6a2-5348c35266da": {
-      value: Math.floor(Math.random() * 5) + 1,
+      value: Math.floor(humeur * 5) + 1,
       userComment: Math.random() > 0.7 ? ["Je vais bien", "Ça va", "Bof", "Pas terrible"][Math.floor(Math.random() * 4)] : "",
       _indicateur: {
         uuid: "3e15ed99-f2f9-4716-b6a2-5348c35266da",
@@ -86,7 +97,7 @@ const generateNewFormatData = () => {
       },
     },
     "d21db60d-ffa7-4063-a011-d7faef93bed2": {
-      value: Math.random(),
+      value: Math.random() > 0.2 ? humeur : Math.random(),
       userComment: Math.random() > 0.8 ? "Bonne nuit" : "",
       _indicateur: {
         uuid: "d21db60d-ffa7-4063-a011-d7faef93bed2",
@@ -106,7 +117,7 @@ const generateNewFormatData = () => {
       },
     },
     "6fb2564a-c2ab-44ca-80d7-88473fe0e414": {
-      value: Math.random(),
+      value: getStableRandomValue(),
       _indicateur: {
         uuid: "6fb2564a-c2ab-44ca-80d7-88473fe0e414",
         description: "",

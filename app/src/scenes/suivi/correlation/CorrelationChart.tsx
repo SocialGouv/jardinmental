@@ -169,6 +169,8 @@ export default function TestChart({
   setSelectedPointIndex,
   selectedPointIndex,
   enablePagination = true,
+  oneBoolean,
+  booleanIndicatorIndex,
 }) {
   const { config } = useDevCorrelationConfig();
   const CHUNK_SIZE = config.chunkSize;
@@ -256,7 +258,8 @@ export default function TestChart({
         return null;
       }
       if (
-        (config.hideDataPoints || spacingFormat === "1month" || spacingFormat === "3months" || spacingFormat === "6months") &&
+        (config.hideDataPoints ||
+          ((spacingFormat === "1month" || spacingFormat === "3months" || spacingFormat === "6months") && !(oneBoolean && item.isBoolean))) &&
         !item.isTreatmentSiBesoin
       ) {
         return null;
@@ -497,6 +500,62 @@ export default function TestChart({
     return segments;
   };
 
+  const computeVerticalShift = useMemo(() => {
+    if (showTreatment && oneBoolean) {
+      return -10;
+    } else if (showTreatment || oneBoolean) {
+      return -10;
+    }
+    // showTreatment ? -10 : -25;
+    return -25;
+  }, [showTreatment, oneBoolean]);
+
+  const computeNbOfSections = useMemo(() => {
+    if (showTreatment && oneBoolean) {
+      return 9;
+    } else if (showTreatment) {
+      return 8;
+    } else if (oneBoolean) {
+      return 6;
+    }
+    return 5;
+    // return showTreatment ? 8 : 5;
+  }, [showTreatment, oneBoolean]);
+
+  const computeYOffset = useMemo(() => {
+    if (showTreatment && oneBoolean) {
+      return -3;
+    } else if (showTreatment) {
+      return -2;
+    } else if (oneBoolean) {
+      return -1;
+    }
+    return 0;
+    // return showTreatment ? -2 : 0;
+  }, [showTreatment, oneBoolean]);
+
+  const computeReferenceLine2Position = useMemo(() => {
+    if (showTreatment && oneBoolean) {
+      return -2.32;
+    } else if (showTreatment) {
+      return -1.32;
+    } else if (oneBoolean) {
+      return -0.32;
+    }
+    return -0.32;
+    // return showTreatment ? -1.32 : -0.32;
+  }, [showTreatment, oneBoolean]);
+
+  const computeReferenceLine3Position = useMemo(() => {
+    if (showTreatment && oneBoolean) {
+      return 6.5;
+    } else if (showTreatment || oneBoolean) {
+      return 5.5;
+    }
+    return 4.5;
+    // return showTreatment ? 5.5 : 4.5;
+  }, [showTreatment, oneBoolean]);
+
   const transformedTreatment = useMemo(() => {
     if (!visibleTreatment) return null;
     return (visibleTreatment || []).map((t, index) => {
@@ -643,7 +702,7 @@ export default function TestChart({
       stripWidth={2}
       showTextOnFocus={true}
       focusTogether={true}
-      xAxisLabelsVerticalShift={showTreatment ? -10 : -25}
+      xAxisLabelsVerticalShift={computeVerticalShift}
       showXAxisIndices={false}
       showYAxisIndices={false}
       yAxisLabelWidth={0}
@@ -769,8 +828,8 @@ export default function TestChart({
       showDataPointLabelOnFocus={false}
       thickness3={20}
       thickness4={20}
-      color2={"#3D6874"}
-      color1={"#00A5DF"}
+      color2={booleanIndicatorIndex === 1 ? "transparent" : "#3D6874"}
+      color1={booleanIndicatorIndex === 0 ? "transparent" : "#00A5DF"}
       color3={"transparent"}
       color4={"transparent"}
       dataPointsColor3={config.useCustomRenderers ? "transparent" : "#3D6874"}
@@ -783,29 +842,30 @@ export default function TestChart({
         //return "";
         return parseInt(lab, 10).toString();
       }}
-      yAxisOffset={showTreatment ? -2 : 0}
+      yAxisOffset={computeYOffset}
       noOfSectionsBelowXAxis={0}
-      noOfSections={showTreatment ? 8 : 5}
+      noOfSections={computeNbOfSections}
       // use to hide the horizontal lines and show the yellow background
       showReferenceLine1={showTreatment}
-      referenceLine1Position={-0.32}
+      referenceLine1Position={oneBoolean ? -1.32 : -0.32}
       referenceLinesOverChartContent={false}
       referenceLine1Config={{
         thickness: 20,
         color: "#FCF2D9",
         type: ruleTypes.SOLID,
+        zIndex: 10,
         //dashGap: -1,
       }}
       // use to hide the horizontal lines
       showReferenceLine2={true}
-      referenceLine2Position={showTreatment ? -1.32 : -0.32}
+      referenceLine2Position={computeReferenceLine2Position}
       referenceLine2Config={{
-        thickness: 20,
+        thickness: oneBoolean && showTreatment ? 65 : 20,
         type: ruleTypes.SOLID,
         color: "white",
       }}
-      showReferenceLine3={showTreatment}
-      referenceLine3Position={showTreatment ? 5.5 : 4.5}
+      showReferenceLine3={showTreatment || oneBoolean}
+      referenceLine3Position={computeReferenceLine3Position}
       referenceLine3Config={{
         thickness: 20,
         color: "white",
