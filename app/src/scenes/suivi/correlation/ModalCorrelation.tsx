@@ -27,10 +27,24 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useDevCorrelationConfig } from "@/hooks/useDevCorrelationConfig";
 import HelpView from "@/components/HelpView";
 import DataMonitoringPeriodHelpView from "./DataMonitoringPeriodHelpView";
+import ChevronIcon from "@assets/svg/icon/chevron";
 
 interface ModalCorrelationScreenProps {
   navigation: any;
   route?: any;
+}
+
+function formatDateFR(dateString) {
+  const date = new Date(dateString);
+
+  const formatter = new Intl.DateTimeFormat("fr-FR", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
+
+  // Remove the trailing dot after the month (e.g. "oct." → "oct")
+  return formatter.format(date).replace(/\./g, "");
 }
 
 function getSubArray<T>(array: T[], index: number, x: number): (T | undefined)[] {
@@ -67,6 +81,9 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
   const [isPending, startTransition] = useTransition();
   const { showBottomSheet, closeBottomSheet } = useBottomSheet();
   const [selectedPointIndex, setSelectedPointIndex] = useState<number | null>();
+  const [firstVisible, setFirstVisible] = useState();
+  const [lastVisible, setLastVisible] = useState();
+  const chartRef = useRef();
 
   const onClose = ({
     showTreatment: _showTreatment,
@@ -283,6 +300,11 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
     return data;
   }, [diaryData, selectedIndicators]); // 👈 recalcul dès que rawData ou filters changent
 
+  const handleVisibleRangeChange = (first, last) => {
+    setFirstVisible(dataToDisplay[0][first + 1]?.date);
+    setLastVisible(dataToDisplay[0][last - 1]?.date);
+  };
+
   if (!dataToDisplay) {
     return (
       <View className="flex-1 bg-cnam-primary-25">
@@ -343,7 +365,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
     return (
       <SafeAreaView className="flex-1 bg-primary" edges={["top"]}>
         <View className="flex-row justify-between top-0 w-full bg-cnam-primary-800 p-4 items-center h-[96]">
-          <Text className={mergeClassNames(typography.displayXsBold, "text-white")}>Correlation</Text>
+          <Text className={mergeClassNames(typography.displayXsBold, "text-white")}>Corrélations</Text>
           <TouchableOpacity
             onPress={() => {
               navigation.goBack();
@@ -433,7 +455,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                   {isVisible && displayItem && displayItem?.date && (
                     <Animated.View
                       // style={[animatedStyle]}
-                      className="flex-col border border-cnam-primary-300 bg-white rounded-2xl space-y-2 p-4 mb-4 mt-4"
+                      className="flex-col border border-cnam-primary-300 bg-white rounded-2xl space-y-2 p-4 mb-4 mt-4 flex-1"
                     >
                       <View className="flex-row justify-between items-center">
                         <Text className={mergeClassNames(typography.textXsBold, "bg-cnam-primary-800 text-white rounded-lg p-2")}>
@@ -571,8 +593,31 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                     </View>
                   )}
                 </View>
-                <View style={{ paddingTop: 10, paddingBottom: 20 }}>
+                <View className="flex-row w-full items-center justify-end z-10 mt-4">
+                  <TouchableOpacity
+                    onPress={() => {
+                      chartRef?.current.scrollLeft();
+                    }}
+                  >
+                    <ChevronIcon direction="left" color={TW_COLORS.CNAM_PRIMARY_900} />
+                  </TouchableOpacity>
+                  {firstVisible && (
+                    <Text className={mergeClassNames(" text-cnam-primary-900", typography.textXsSemibold, "ml-2")}>{formatDateFR(firstVisible)}</Text>
+                  )}
+                  {lastVisible && (
+                    <Text className={mergeClassNames("mr-2 text-cnam-primary-900", typography.textXsSemibold)}> - {formatDateFR(lastVisible)}</Text>
+                  )}
+                  <TouchableOpacity
+                    onPress={() => {
+                      chartRef?.current.scrollRight();
+                    }}
+                  >
+                    <ChevronIcon direction="right" color={TW_COLORS.CNAM_PRIMARY_900} />
+                  </TouchableOpacity>
+                </View>
+                <View style={{ paddingTop: showTreatment ? 10 : 20, paddingBottom: 20 }}>
                   <TestChart
+                    ref={chartRef}
                     setDisplayItem={setDisplayItem}
                     spacingFormat={active}
                     data={dataToDisplay[0]}
@@ -590,6 +635,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                     openIndicatorBottomSheet={openIndicatorBottomSheet}
                     selectedPointIndex={selectedPointIndex}
                     enablePagination={config.enablePagination}
+                    onVisibleRangeChange={handleVisibleRangeChange} // 👈 tu passes ta fonction
                   />
                 </View>
                 <View className="bg-cnam-primary-25 p-4 -mt-2 rounded-2xl flex-col space-y-2">
