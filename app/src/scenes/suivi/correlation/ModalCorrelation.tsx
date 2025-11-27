@@ -41,7 +41,11 @@ function getSubArray<T>(array: T[], index: number, x: number): (T | undefined)[]
 
   for (let i = index - x; i <= index + x; i++) {
     if (i < 0 || i >= array.length) {
-      result.push({}); // fill if out of bounds
+      result.push({
+        noValue: true,
+        hideDataPoint: true,
+        value: -10, // a fake value that is outside of the graph
+      }); // fill if out of bounds
     } else {
       result.push(array[i]);
     }
@@ -126,6 +130,9 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
   }, [displayItem]);
 
   const oneBoolean = selectedIndicators.filter((ind) => ind.type === "boolean").length === 1 && selectedIndicators.length === 2;
+  const twoBoolean =
+    selectedIndicators.filter((ind) => ind.type === "boolean").length === 2 ||
+    (selectedIndicators.filter((ind) => ind.type === "boolean").length === 1 && selectedIndicators.length === 1);
   const booleanIndicatorIndex = oneBoolean ? selectedIndicators.findIndex((ind) => ind.type === "boolean") : undefined;
 
   const dataToDisplay = useMemo(() => {
@@ -535,6 +542,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                               selectedPointIndex: 4,
                               oneBoolean,
                               booleanIndicatorIndex,
+                              twoBoolean,
                             });
                           }}
                           className="flex-row items-center justify-end"
@@ -575,6 +583,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                     navigation={navigation}
                     showTreatment={showTreatment}
                     oneBoolean={oneBoolean}
+                    twoBoolean={twoBoolean}
                     booleanIndicatorIndex={booleanIndicatorIndex}
                     selectedIndicators={selectedIndicators}
                     setSelectedPointIndex={setSelectedPointIndex}

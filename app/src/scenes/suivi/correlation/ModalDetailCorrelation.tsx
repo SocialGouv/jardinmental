@@ -54,6 +54,7 @@ export const DetailModalCorrelationScreen: React.FC<ModalCorrelationScreenProps>
     date,
     diaryData,
     oneBoolean,
+    twoBoolean,
     booleanIndicatorIndex,
   } = route.params;
   return (
@@ -154,6 +155,7 @@ export const DetailModalCorrelationScreen: React.FC<ModalCorrelationScreenProps>
               initialSelectedPointIndex={selectedPointIndex}
               navigation={navigation}
               oneBoolean={oneBoolean}
+              twoBoolean={twoBoolean}
               selectedIndicators={selectedIndicators}
               treatmentSiBesoin={treatmentSiBesoin}
               diaryData={diaryData}

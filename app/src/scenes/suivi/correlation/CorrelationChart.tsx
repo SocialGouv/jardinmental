@@ -170,6 +170,7 @@ export default function TestChart({
   selectedPointIndex,
   enablePagination = true,
   oneBoolean,
+  twoBoolean,
   booleanIndicatorIndex,
 }) {
   const { config } = useDevCorrelationConfig();
@@ -513,10 +514,14 @@ export default function TestChart({
   const computeNbOfSections = useMemo(() => {
     if (showTreatment && oneBoolean) {
       return 9;
+    } else if (twoBoolean && showTreatment) {
+      return 5;
     } else if (showTreatment) {
       return 8;
     } else if (oneBoolean) {
       return 6;
+    } else if (twoBoolean) {
+      return 2;
     }
     return 5;
     // return showTreatment ? 8 : 5;
@@ -544,17 +549,29 @@ export default function TestChart({
     }
     return -0.32;
     // return showTreatment ? -1.32 : -0.32;
-  }, [showTreatment, oneBoolean]);
+  }, [showTreatment, oneBoolean, twoBoolean]);
 
   const computeReferenceLine3Position = useMemo(() => {
     if (showTreatment && oneBoolean) {
       return 6.5;
+    } else if (showTreatment && twoBoolean) {
+      return 2.5;
     } else if (showTreatment || oneBoolean) {
       return 5.5;
     }
     return 4.5;
     // return showTreatment ? 5.5 : 4.5;
-  }, [showTreatment, oneBoolean]);
+  }, [showTreatment, oneBoolean, twoBoolean]);
+
+  const computeReferenceLine1Position = useMemo(() => {
+    if (oneBoolean) {
+      return -1.32;
+    } else if (twoBoolean) {
+      return -0.22;
+    }
+
+    return -0.32;
+  }, [showTreatment, oneBoolean, twoBoolean]);
 
   const transformedTreatment = useMemo(() => {
     if (!visibleTreatment) return null;
@@ -704,8 +721,14 @@ export default function TestChart({
       focusTogether={true}
       xAxisLabelsVerticalShift={computeVerticalShift}
       showXAxisIndices={false}
-      showYAxisIndices={false}
-      yAxisLabelWidth={0}
+      showYAxisIndices={twoBoolean || false}
+      yAxisLabelWidth={twoBoolean ? 30 : 0}
+      yAxisTextStyle={{
+        color: TW_COLORS.CNAM_PRIMARY_700,
+        fontWeight: 700,
+        backgroundColor: "white",
+        paddingLeft: 0,
+      }}
       yAxisIndicesWidth={0}
       xAxisIndicesWidth={2}
       xAxisIndicesColor={"#999"}
@@ -836,18 +859,22 @@ export default function TestChart({
       dataPointsColor4={config.useCustomRenderers ? "transparent" : "#3D6874"}
       yAxisColor={"transparent"}
       formatYLabel={(lab) => {
+        if (twoBoolean) {
+          if (lab === "2.0") return "Oui";
+          if (lab === "1.0") return "Non";
+        }
         if (lab === "-1" || lab === "-2" || lab === "6" || lab === "0") {
           return "";
         }
-        //return "";
-        return parseInt(lab, 10).toString();
+        return "";
+        //return parseInt(lab, 10).toString();
       }}
       yAxisOffset={computeYOffset}
       noOfSectionsBelowXAxis={0}
       noOfSections={computeNbOfSections}
       // use to hide the horizontal lines and show the yellow background
       showReferenceLine1={showTreatment}
-      referenceLine1Position={oneBoolean ? -1.32 : -0.32}
+      referenceLine1Position={computeReferenceLine1Position}
       referenceLinesOverChartContent={false}
       referenceLine1Config={{
         thickness: 20,
