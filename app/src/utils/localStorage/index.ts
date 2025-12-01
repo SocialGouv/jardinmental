@@ -19,6 +19,7 @@ import {
   STORAGE_INFO_MODAL_DISMISSED,
   STORAGE_KEY_VIEWED_EXTERNAL_RESOURCES,
   STORAGE_KEY_VIEWED_RESOURCES,
+  STORAGE_KEY_VIEWED_TOOL_ITEMS,
 } from "../constants";
 import { updateSymptomsFormatIfNeeded } from "./utils";
 import localStorageBeck from "./beck";
@@ -276,6 +277,32 @@ const addViewedResource = async (resourceId: string): Promise<string[]> => {
   return updated;
 };
 
+// Tool items viewed
+const getBookmarkedToolItems = async (): Promise<string[]> => {
+  const value = await AsyncStorage.getItem(STORAGE_KEY_VIEWED_TOOL_ITEMS);
+  return value ? JSON.parse(value) : [];
+};
+
+const bookmarkToolItem = async (toolItemId: string): Promise<string[]> => {
+  const current = await getBookmarkedToolItems();
+  if (current.includes(toolItemId)) return current;
+  const updated = [...current, toolItemId];
+  await AsyncStorage.setItem(STORAGE_KEY_VIEWED_TOOL_ITEMS, JSON.stringify(updated));
+  return updated;
+};
+
+const removeBookmarkToolItem = async (toolItemId: string): Promise<string[]> => {
+  const current = await getBookmarkedToolItems();
+
+  // On filtre pour retirer toolItemId
+  const updated = current.filter((id) => id !== toolItemId);
+
+  // On sauvegarde la nouvelle liste
+  await AsyncStorage.setItem(STORAGE_KEY_VIEWED_TOOL_ITEMS, JSON.stringify(updated));
+
+  return updated;
+};
+
 const getIsNewUser = async () => {
   const isNewUser = await AsyncStorage.getItem(STORAGE_KEY_NEW_USER);
   if (isNewUser) {
@@ -341,6 +368,9 @@ export default {
   addViewedExternalResource,
   getViewedResources,
   addViewedResource,
+  getBookmarkedToolItems,
+  bookmarkToolItem,
+  removeBookmarkToolItem,
   ...localStorageBeck,
 };
 
