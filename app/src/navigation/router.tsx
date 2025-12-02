@@ -60,6 +60,7 @@ import DiaryDetail from "@/scenes/status/DiaryDetail";
 import { ModalCorrelationScreen } from "@/scenes/suivi/correlation/ModalCorrelation";
 import { DetailModalCorrelationScreen } from "@/scenes/suivi/correlation/ModalDetailCorrelation";
 import { ModalTriggerScreen } from "@/scenes/suivi/triggers/ModalTrigger";
+import SettingsModal from "@/scenes/settings/settings-modal";
 import CommityScreen from "@/scenes/commity/CommityScreen";
 
 const Stack = createStackNavigator();
@@ -265,6 +266,7 @@ class Router extends React.Component<RouterProps> {
                 presentation: "modal",
               }}
             />
+            <Stack.Screen name="settings" component={SettingsModal} />
             <Stack.Screen name="commity" component={CommityScreen} />
             <Stack.Screen name="indicators-settings-more" component={IndicatorsSettingsMore} />
             <Stack.Screen name="goals-settings" component={GoalsSettings} />

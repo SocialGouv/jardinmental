@@ -3,8 +3,10 @@ import { View, StyleSheet, TouchableOpacity } from "react-native";
 import Text from "../../components/MyText";
 import { colors } from "../../utils/colors";
 import ArrowRightSvg from "../../../assets/svg/arrow-right.js";
+import { mergeClassNames } from "@/utils/className";
+import { typography } from "@/utils/typography";
 
-const SettingItem = ({ title, navigation, path = "tabs", icon, color = colors.LIGHT_BLUE, onClick }) => {
+const SettingItem = ({ title, navigation, path, icon, color = colors.LIGHT_BLUE, onClick, isLast, isFirst, description }) => {
   const handleClick = () => {
     onClick();
     if (path) {
@@ -12,7 +14,10 @@ const SettingItem = ({ title, navigation, path = "tabs", icon, color = colors.LI
     }
   };
   return (
-    <TouchableOpacity onPress={handleClick}>
+    <TouchableOpacity
+      onPress={handleClick}
+      className={mergeClassNames("border border-cnam-primary-200 bg-white", isLast ? "rounded-b-2xl" : "", isFirst ? "rounded-t-2xl" : "")}
+    >
       <View style={styles.container}>
         <View style={styles.answer}>
           {icon && (
@@ -29,11 +34,11 @@ const SettingItem = ({ title, navigation, path = "tabs", icon, color = colors.LI
               })}
             </View>
           )}
-          <Text style={styles.label} className="ml-2">
-            {title}
-          </Text>
-          <View style={styles.button}>
-            <ArrowRightSvg />
+          <View className="flex-col px-2">
+            <Text style={styles.label} className="ml-2">
+              {title}
+            </Text>
+            <Text className={mergeClassNames(typography.textSmRegular, "text-cnam-primary-800 ml-2 pr-6 mt-1")}>{description}</Text>
           </View>
         </View>
       </View>
