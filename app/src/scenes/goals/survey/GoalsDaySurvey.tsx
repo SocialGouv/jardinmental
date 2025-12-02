@@ -9,6 +9,7 @@ import HelpView from "@/components/HelpView";
 import { useBottomSheet } from "@/context/BottomSheetContext";
 import ArrowIcon from "@assets/svg/icon/Arrow";
 import { TW_COLORS } from "@/utils/constants";
+import * as Sentry from "@sentry/react-native";
 
 export const GoalsDaySurvey = forwardRef(({ date, scrollRef, route }, ref) => {
   useImperativeHandle(ref, () => {
@@ -55,23 +56,41 @@ export const GoalsDaySurvey = forwardRef(({ date, scrollRef, route }, ref) => {
   );
 
   const onSubmit = useCallback(async () => {
-    for (const goal of goals) {
-      if (!goal?.id) continue;
+    try {
+      for (const goal of goals) {
+        if (!goal?.id) continue;
 
-      if (goalsRecordsToUpdate?.[goal.id]) {
-        await setGoalDailyRecord(goalsRecordsToUpdate[goal.id]);
-        continue;
+        try {
+          if (goalsRecordsToUpdate?.[goal.id]) {
+            await setGoalDailyRecord(goalsRecordsToUpdate[goal.id]);
+            continue;
+          }
+
+          if (goalsRecords?.[goal.id]) continue;
+
+          await setGoalDailyRecord({
+            goalId: goal.id,
+            value: false,
+            date,
+          });
+        } catch (goalError) {
+          console.error(`Erreur lors de la sauvegarde du goal ${goal.id}:`, goalError);
+          Sentry.captureException(goalError, {
+            tags: { context: "goals_survey_individual_goal" },
+            extra: { goalId: goal.id, date },
+          });
+          // Continue avec les autres goals même si un échoue
+        }
       }
-
-      if (goalsRecords?.[goal.id]) continue;
-
-      await setGoalDailyRecord({
-        goalId: goal.id,
-        value: false,
-        date,
+    } catch (error) {
+      console.error("Erreur globale dans onSubmit goals:", error);
+      Sentry.captureException(error, {
+        tags: { context: "goals_survey_submit" },
+        extra: { date, goalsCount: goals.length },
       });
+      // Ne pas bloquer la validation même en cas d'erreur
     }
-  }, [goals, goalsRecords, goalsRecordsToUpdate]);
+  }, [goals, goalsRecords, goalsRecordsToUpdate, date]);
 
   const { onLayout, ...layout } = useLayout();
   useEffect(() => {
