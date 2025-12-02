@@ -40,6 +40,11 @@ const SubcategoriesScreen: React.FC<Props> = ({ navigation, route }) => {
         await updateUserSubcategories(selectedSubcategories);
       }
 
+      logEvents.logIndicatorObdLvl2(
+        selectedSubcategories.map((subTheme) => SUBCATEGORIES[subTheme].matomoId),
+        selectedSubcategories.length
+      );
+
       navigation.navigate(NextScreen);
       setSlideIndex(-1);
       setIsVisible(false);
