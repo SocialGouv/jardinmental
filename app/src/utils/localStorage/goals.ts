@@ -9,6 +9,7 @@ import NotificationService from "../../services/notifications";
 import * as RNLocalize from "react-native-localize";
 import API from "../../services/api";
 import { Goal, GoalRecord } from "@/entities/Goal";
+import * as Sentry from "@sentry/react-native";
 
 const { getData, saveData, clearData } = createStorage({
   storageKey: STORAGE_KEY_GOALS,
@@ -87,12 +88,20 @@ export const setGoalTracked = async ({
       apiError = !apiResult || apiResult.ok === false || apiResult.error;
     } catch (apiErr) {
       console.error("Erreur lors de la mise à jour des rappels:", apiErr);
+      Sentry.captureException(apiErr, {
+        tags: { context: "goals_api_reminder_update" },
+        extra: { goalId: goal.id },
+      });
       apiError = true;
     }
 
     return { ...goal, apiError };
   } catch (error) {
     console.error("Erreur dans setGoalTracked:", error);
+    Sentry.captureException(error, {
+      tags: { context: "goals_set_goal_tracked" },
+      extra: { id, label },
+    });
     // Ne pas relancer l'erreur mais retourner un objet avec l'erreur
     return { error: "Erreur lors de la sauvegarde", apiError: true };
   }
@@ -138,6 +147,10 @@ export const updateApiReminer = async ({ id, daysOfWeek, enabled, reminder }) =>
     return result;
   } catch (error) {
     console.error("Erreur dans updateApiReminer:", error);
+    Sentry.captureException(error, {
+      tags: { context: "goals_update_api_reminder" },
+      extra: { goalId: id },
+    });
     return { ok: false, error: "Échec de la synchronisation des rappels" };
   }
 };

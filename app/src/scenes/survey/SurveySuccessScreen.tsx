@@ -12,6 +12,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import ThumbsUpIcon from "@assets/svg/icon/ThumbsUp";
 import ThumbsDownIcon from "@assets/svg/icon/ThumbsDown";
 import logEvents from "@/services/logEvents";
+import * as Sentry from "@sentry/react-native";
 
 // Storage keys for motivational messages
 const STORAGE_KEY_MOTIVATIONAL_MESSAGE_INDEX = "@MOTIVATIONAL_MESSAGE_INDEX";
@@ -824,7 +825,16 @@ const getNextMotivationalMessage = async () => {
     const storedIndex = await AsyncStorage.getItem(STORAGE_KEY_MOTIVATIONAL_MESSAGE_INDEX);
     const storedOrder = await AsyncStorage.getItem(STORAGE_KEY_MOTIVATIONAL_MESSAGE_SHUFFLED_ORDER);
 
-    let currentIndex = storedIndex ? parseInt(storedIndex, 10) : 0;
+    // Parse and validate currentIndex
+    let currentIndex = 0;
+    if (storedIndex) {
+      const parsed = parseInt(storedIndex, 10);
+      // Check if parseInt returned a valid number
+      if (!isNaN(parsed) && parsed >= 0) {
+        currentIndex = parsed;
+      }
+    }
+
     let messageOrder: number[];
 
     // If we don't have a shuffled order or we've reached the end, create a new shuffled order
@@ -838,12 +848,43 @@ const getNextMotivationalMessage = async () => {
       await AsyncStorage.setItem(STORAGE_KEY_MOTIVATIONAL_MESSAGE_SHUFFLED_ORDER, JSON.stringify(shuffledIndices));
       currentIndex = 0;
     } else {
-      messageOrder = JSON.parse(storedOrder);
+      // Parse JSON with validation
+      try {
+        const parsedOrder = JSON.parse(storedOrder);
+        // Validate that it's an array
+        if (Array.isArray(parsedOrder) && parsedOrder.length > 0) {
+          messageOrder = parsedOrder;
+        } else {
+          throw new Error("Invalid message order format");
+        }
+      } catch (parseError) {
+        console.warn("Failed to parse stored message order:", parseError);
+        // Reset to shuffled order if parse fails
+        const indices = Array.from({ length: ALL_MESSAGES.length }, (_, i) => i);
+        messageOrder = shuffleArray(indices);
+        await AsyncStorage.setItem(STORAGE_KEY_MOTIVATIONAL_MESSAGE_SHUFFLED_ORDER, JSON.stringify(messageOrder));
+        currentIndex = 0;
+      }
     }
 
-    // Get the message at the current position in the shuffled order
+    // Get the message at the current position in the shuffled order with bounds checking
     const messageIndex = messageOrder[currentIndex];
+
+    // Validate messageIndex is within bounds
+    if (messageIndex === undefined || messageIndex < 0 || messageIndex >= ALL_MESSAGES.length) {
+      console.warn("Invalid message index, resetting:", messageIndex);
+      // Reset and return first message
+      await AsyncStorage.setItem(STORAGE_KEY_MOTIVATIONAL_MESSAGE_INDEX, "0");
+      return ALL_MESSAGES[0];
+    }
+
     const message = ALL_MESSAGES[messageIndex];
+
+    // Additional safety check
+    if (!message) {
+      console.warn("Message not found at index:", messageIndex);
+      return ALL_MESSAGES[0];
+    }
 
     // Increment index for next time
     const nextIndex = currentIndex + 1;
@@ -852,6 +893,10 @@ const getNextMotivationalMessage = async () => {
     return message;
   } catch (error) {
     console.warn("Error getting motivational message:", error);
+    Sentry.captureException(error, {
+      tags: { context: "survey_success_motivational_message" },
+      extra: { storageKeys: [STORAGE_KEY_MOTIVATIONAL_MESSAGE_INDEX, STORAGE_KEY_MOTIVATIONAL_MESSAGE_SHUFFLED_ORDER] },
+    });
     // Fallback to first message
     return ALL_MESSAGES[0];
   }
@@ -896,9 +941,18 @@ const SurveySuccessScreen: React.FC<SurveySuccessScreenProps> = ({ navigation, r
       }
     }
 
-    // Call the callback if provided
+    // Call the callback if provided with error handling
     if (route?.params?.onComplete) {
-      route.params.onComplete();
+      try {
+        route.params.onComplete();
+      } catch (error) {
+        console.error("Error in onComplete callback:", error);
+        Sentry.captureException(error, {
+          tags: { context: "survey_success_on_complete" },
+          extra: { messageId: currentMessage.id },
+        });
+        // Don't block navigation, just log the error
+      }
     }
   };
 
