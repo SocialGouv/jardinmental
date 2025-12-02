@@ -2412,7 +2412,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
     id: "550e8400-e29b-41d4-a716-446655440285",
     matomoId: 285,
     title: "Petit guide des médicaments psychotropes",
-    url: "https://www.psycom.org/sinformer/le-retablissement/les-medicaments/#precautions-particulieres-a-prendre-avec-les-medicaments-68e7c2d557c0f",
+    url: "https://www.mentalhealtheurope.org/wp-content/uploads/2022/02/Short-Guide-on-Medication_FR_new-2.pdf",
     type: "Guide",
     category: "P1 - A lire dans ce dossier",
     author: "Mental Health Europe",
