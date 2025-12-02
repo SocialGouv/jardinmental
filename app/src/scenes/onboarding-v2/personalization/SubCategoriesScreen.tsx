@@ -40,7 +40,7 @@ const SubcategoriesScreen: React.FC<Props> = ({ navigation, route }) => {
         await updateUserSubcategories(selectedSubcategories);
       }
 
-      logEvents._deprecatedLogIndicatorObdLvl2(
+      logEvents.logIndicatorObdLvl2(
         selectedSubcategories.map((subTheme) => SUBCATEGORIES[subTheme].matomoId),
         selectedSubcategories.length
       );

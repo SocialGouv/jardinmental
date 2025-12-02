@@ -250,7 +250,7 @@ const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation, route })
       logEvents.logIndicatorObdPass(19);
     } else {
       const matomoIds = allIndicators.map((ind) => ind.matomoId).filter((id) => id !== undefined);
-      logEvents._deprecatedLogIndicatorObdValidate(matomoIds);
+      logEvents.logIndicatorObdValidate(matomoIds);
     }
     navigation.navigate(NextRoute);
   };

@@ -820,7 +820,7 @@ const logIndicatorObdStart = async () => {
   });
 };
 
-const _deprecatedLogIndicatorObdLvl1 = async (themes: number[]) => {
+const logIndicatorObdLvl1 = async (themes: number[]) => {
   for (let i = 0; i < themes.length; i++) {
     await logEvent({
       category: ONBOARDING,
@@ -840,7 +840,7 @@ const logIndicatorObdPass = async (screen) => {
   });
 };
 
-const _deprecatedLogIndicatorObdLvl2 = async (subThemes, count) => {
+const logIndicatorObdLvl2 = async (subThemes, count) => {
   for (let i = 0; i < subThemes.length; i++) {
     await logEvent({
       category: ONBOARDING,
@@ -851,7 +851,7 @@ const _deprecatedLogIndicatorObdLvl2 = async (subThemes, count) => {
   }
 };
 
-const _deprecatedLogIndicatorObdValidate = async (indicators: number[]) => {
+const logIndicatorObdValidate = async (indicators: number[]) => {
   for (let i = 0; i < indicators.length; i++) {
     await logEvent({
       category: ONBOARDING,
@@ -1457,10 +1457,10 @@ export default {
   logHumeurObdSelect,
   logHumeurObdConfirm,
   logIndicatorObdStart,
-  _deprecatedLogIndicatorObdLvl1,
+  logIndicatorObdLvl1,
   logIndicatorObdPass,
-  _deprecatedLogIndicatorObdLvl2,
-  _deprecatedLogIndicatorObdValidate,
+  logIndicatorObdLvl2,
+  logIndicatorObdValidate,
   logQuestObdStart,
   logSleepObdValidate,
   logQuestObdStart2,

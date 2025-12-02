@@ -55,7 +55,7 @@ const DifficultiesScreen: React.FC<Props> = ({ navigation }) => {
     const selected = selectedDifficulties.filter((d) => d.selected);
     const selectedCategories = selected.map((d) => d.category);
     const selectedCategoriesMatomoIds = selected.map((d) => d.matomoId);
-    logEvents._deprecatedLogIndicatorObdLvl1(selectedCategoriesMatomoIds);
+    logEvents.logIndicatorObdLvl1(selectedCategoriesMatomoIds);
     await updateUserDifficulties(selectedCategories);
     if (selectedCategories.find((cat) => INDICATOR_CATEGORIES_DATA[cat].subCat)) {
       navigation.navigate(NextScreen);
