@@ -111,7 +111,7 @@ export const DetailModalCorrelationScreen: React.FC<ModalCorrelationScreenProps>
               </View>
               <Text className={mergeClassNames(typography.textMdMedium, "text-white ")}>
                 <Text className={mergeClassNames(typography.textMdSemibold, "text-white")}>Traitement : </Text>
-                {diaryDataForDate["PRISE_DE_TRAITEMENT"]?.value ? "Pris correctement" : "Non"}
+                {diaryDataForDate["PRISE_DE_TRAITEMENT"]?.value ? "Oui" : "Non"}
               </Text>
             </View>
           )}

@@ -731,7 +731,7 @@ L’objectif est de tirer des enseignements pour mieux vous connaître et analys
                   content: `- Notez vos observations dans l’application ou un carnet pour suivre l’évolution de vos réflexions.
 - Revenez régulièrement sur vos données : certains schémas apparaissent plus clairement avec le temps.
 
-Soyez patient·e avec vous-même. L’objectif est d’essayer de comprendre vos tendances, pas de tout expliquer immédiatement.`,
+- Soyez patient·e avec vous-même. L’objectif est d’essayer de comprendre vos tendances, pas de tout expliquer immédiatement.`,
                 },
               ]}
             />

@@ -46,8 +46,6 @@ export const IndicatorsBottomSheet = ({
     setSelectedIndicators(t);
   };
 
-  const handleAdd = async (value) => {};
-
   return (
     <View className="flex-1 bg-white">
       <ScrollView
@@ -56,7 +54,11 @@ export const IndicatorsBottomSheet = ({
         style={{ paddingVertical: 20, height: height90vh }}
       >
         <View className="self-end mr-4">
-          <TouchableOpacity onPress={() => {}}>
+          <TouchableOpacity
+            onPress={() => {
+              setSelectedIndicators([]);
+            }}
+          >
             <Text className={mergeClassNames(typography.textLgMedium, "text-cnam-primary-800")}>Effacer</Text>
           </TouchableOpacity>
         </View>
