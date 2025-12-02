@@ -8,6 +8,7 @@ import { Drug } from "@/entities/Drug";
 import { Indicator } from "@/entities/Indicator";
 import { LightSelectionnableItem } from "./SelectionnableItem";
 import { InputToggle } from "./InputToggle";
+import logEvents from "@/services/logEvents";
 
 const screenHeight = Dimensions.get("window").height;
 const height90vh = screenHeight * 0.9;
@@ -113,6 +114,7 @@ export const IndicatorsBottomSheet = ({
       >
         <JMButton
           onPress={async () => {
+            logEvents.logAnalysesValidateCorrelations();
             onClose({
               selectedIndicators,
               showTreatment,

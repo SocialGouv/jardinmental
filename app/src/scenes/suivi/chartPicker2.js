@@ -35,6 +35,9 @@ const TabPicker = ({ onChange, ongletActif = "Statistiques", scrollY, scrollThre
 
   const handlePress = (tab) => {
     // logEvents.logStatusSubPage(tab);
+    if (tab === "Correlations") {
+      logEvents.logAnalysesTabCorrelations();
+    }
     onChange(tab);
   };
 

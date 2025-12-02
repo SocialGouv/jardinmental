@@ -593,9 +593,10 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                     </View>
                   )}
                 </View>
-                <View className="flex-row w-full items-center justify-end z-10 mt-4">
+                <View className="flex-row w-full items-center justify-end z-10 mt-2">
                   <TouchableOpacity
-                    className="w-6 items-center justify-center"
+                    hitSlop={20}
+                    className="w-6 items-center justify-center h-6"
                     onPress={() => {
                       chartRef?.current.scrollLeft();
                     }}
@@ -609,7 +610,8 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                     <Text className={mergeClassNames(" text-cnam-primary-900", typography.textXsSemibold)}> - {formatDateFR(lastVisible)}</Text>
                   )}
                   <TouchableOpacity
-                    className="w-6 items-center justify-center"
+                    hitSlop={20}
+                    className="w-6 items-center justify-center h-6"
                     onPress={() => {
                       chartRef?.current.scrollRight();
                     }}

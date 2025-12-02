@@ -86,14 +86,7 @@ const data = {
 
 - Quelle est la tendance globale ? (amélioration, stagnation, baisse)
 - Avez-vous vécu des changements impactants ? (travail, routine, traitement)
-- Remarquez-vous des saisonnalités ? (ex. : énergie plus basse chaque hiver)
-
-
-### **Conseils pour votre analyse**
-
-- **Notez vos observations** dans l’application ou un carnet pour suivre l’évolution de vos réflexions.
-- **Revenez régulièrement sur vos données** : certains schémas apparaissent plus clairement avec le temps.
-- **Soyez patient·e** avec vous-même. L’objectif est d’essayer de comprendre vos tendances, pas de tout expliquer immédiatement..`,
+- Remarquez-vous des saisonnalités ? (ex. : énergie plus basse chaque hiver)`,
   },
   shortTerm: {
     title: "Période courte : comprendre vos variations",
