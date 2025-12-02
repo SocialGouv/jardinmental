@@ -37,6 +37,12 @@ const commityList: CommityEntity[] = [
     organization: "Direction générale de la santé",
   },
   {
+    name: "Baudier Jean-Baptiste",
+    role: "Psychologue",
+    role2: "Directeur programmes et recherche en santé mentale",
+    organization: "Nightline France",
+  },
+  {
     name: "Boinet Ingrid",
     role: "Chargée du programme « Les déterminants de la santé mentale »",
     role2: "",
@@ -101,7 +107,21 @@ const commityList: CommityEntity[] = [
     role: "",
     role2: "",
     isOrganization: true,
+    organization: "Caisse Nationale d’Assurance maladie - Département de la prise en charge des assurés",
+  },
+  {
+    name: "",
+    role: "",
+    role2: "",
+    isOrganization: true,
     organization: "Délégation Ministérielle à la Santé Mentale et à la Psychiatrie",
+  },
+  {
+    name: "",
+    role: "",
+    role2: "",
+    isOrganization: true,
+    organization: "Institut National du Sommeil et de la Vigilance (INSV)",
   },
   {
     name: "",
