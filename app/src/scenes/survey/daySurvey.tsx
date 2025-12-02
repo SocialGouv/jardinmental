@@ -33,6 +33,7 @@ import PencilIcon from "@assets/svg/icon/Pencil";
 import { getGoalsDailyRecords, getGoalsTracked } from "@/utils/localStorage/goals";
 import { Goal } from "@/entities/Goal";
 import DaySurveyCustomBottomSheet from "./DaySurveyCustomBottomSheet";
+import * as Sentry from "@sentry/react-native";
 
 const DaySurvey = ({
   navigation,
@@ -227,7 +228,16 @@ const DaySurvey = ({
     }
     addNewEntryToDiaryData(currentSurvey);
     if (goalsRef.current && typeof goalsRef.current.onSubmit === "function") {
-      await goalsRef.current.onSubmit();
+      try {
+        await goalsRef.current.onSubmit();
+      } catch (error) {
+        console.error("Erreur lors de la sauvegarde des goals:", error);
+        Sentry.captureException(error, {
+          tags: { context: "day_survey_goals_submit" },
+          extra: { date: initSurvey.date },
+        });
+        // Continue quand même avec la validation du questionnaire
+      }
     }
     // Log time spent on survey
     if (surveyStartTime) {
