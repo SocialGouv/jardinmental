@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext, useRef, useMemo } from "react";
-import { ScrollView, View, Text } from "react-native";
+import { ScrollView, View, Text, Alert } from "react-native";
 import { beforeToday, formatDate, formatDay } from "../../utils/date/helpers";
 import { getScoreWithState } from "../../utils";
 import InputQuestion from "./InputQuestion";
@@ -236,6 +236,10 @@ const DaySurvey = ({
           tags: { context: "day_survey_goals_submit" },
           extra: { date: initSurvey.date },
         });
+        // Informer l'utilisateur de l'erreur
+        Alert.alert("Erreur de sauvegarde", "Vos objectifs n'ont pas pu être sauvegardés complètement. Vos observations ont bien été enregistrées.", [
+          { text: "OK" },
+        ]);
         // Continue quand même avec la validation du questionnaire
       }
     }
