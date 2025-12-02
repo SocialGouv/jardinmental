@@ -24,6 +24,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Icon from "@/components/Icon";
 import Gear from "@assets/svg/Gear";
 import ToolsScreen from "@/scenes/tools/ToolScreen";
+import HeartHand from "@assets/svg/icon/HeartHand";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -111,7 +112,7 @@ const Tabs = ({ navigation, route }) => {
     {
       name: "tools",
       label: "Agir",
-      icon: CloudIcon,
+      icon: HeartHand,
       component: ToolsScreen,
     },
     {
