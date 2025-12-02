@@ -549,7 +549,7 @@ const TestChart = forwardRef(
       }
       return 5;
       // return showTreatment ? 8 : 5;
-    }, [showTreatment, oneBoolean]);
+    }, [showTreatment, oneBoolean, twoBoolean]);
 
     const computeYOffset = useMemo(() => {
       if (showTreatment && oneBoolean) {

@@ -595,6 +595,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                 </View>
                 <View className="flex-row w-full items-center justify-end z-10 mt-4">
                   <TouchableOpacity
+                    className="w-6 items-center justify-center"
                     onPress={() => {
                       chartRef?.current.scrollLeft();
                     }}
@@ -602,12 +603,13 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                     <ChevronIcon direction="left" color={TW_COLORS.CNAM_PRIMARY_900} />
                   </TouchableOpacity>
                   {firstVisible && (
-                    <Text className={mergeClassNames(" text-cnam-primary-900", typography.textXsSemibold, "ml-2")}>{formatDateFR(firstVisible)}</Text>
+                    <Text className={mergeClassNames(" text-cnam-primary-900", typography.textXsSemibold, "")}>{formatDateFR(firstVisible)}</Text>
                   )}
                   {lastVisible && (
-                    <Text className={mergeClassNames("mr-2 text-cnam-primary-900", typography.textXsSemibold)}> - {formatDateFR(lastVisible)}</Text>
+                    <Text className={mergeClassNames(" text-cnam-primary-900", typography.textXsSemibold)}> - {formatDateFR(lastVisible)}</Text>
                   )}
                   <TouchableOpacity
+                    className="w-6 items-center justify-center"
                     onPress={() => {
                       chartRef?.current.scrollRight();
                     }}
