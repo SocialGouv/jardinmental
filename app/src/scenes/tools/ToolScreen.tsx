@@ -55,7 +55,7 @@ const ToolsScreen: React.FC<ToolsScreenProps> = ({ navigation }) => {
           </View>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("commity");
+              navigation.navigate("tool-selection-info");
             }}
             className="flex-row bg-cnam-cyan-lighten-80 items-center mb-8 space-x-1 rounded-full px-3 self-start"
           >
