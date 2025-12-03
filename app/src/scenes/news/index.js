@@ -29,6 +29,20 @@ export default ({ navigation }) => {
         <Image style={styles.image} className="rounded-lg" source={require("../../../assets/imgs/icon.png")} />
       </View>
       <ScrollView style={styles.cgu} contentContainerStyle={styles.scrollContainer}>
+        <Card title="Nouvelle vue analyse : Tendances & liens" version="v1.43.14" date="10/2025">
+          <Item showDot={false}>
+            <Text style={styles.text}>
+              Comparez <Text style={styles.bold}>deux indicateurs</Text> (ex. Sommeil et Anxiété) ou{" "}
+              <Text style={styles.bold}>suivez l’évolution d’un seul indicateur</Text> dans le temps. Choisissez la période (7 jours, 1 mois, 3 mois),
+              naviguez dans le temps et touchez un point pour voir le détail du jour.
+              {"\n"}
+              {"\n"}
+              Cette nouvelle vue a pour objectif de vous permettre :{"\n"}
+              •&nbsp; D’observer l’évolution d’un ou plusieurs indicateurs dans le temps ; {"\n"}
+              •&nbsp; De repérer quand ils évoluent éventuellement ensemble ou en sens opposé.
+            </Text>
+          </Item>
+        </Card>
         <Card title="Des ressources de confiance dans Jardin Mental" version="v1.43.4" date="10/2025">
           <Item>
             <Text style={styles.bold}>Section Ressources</Text>

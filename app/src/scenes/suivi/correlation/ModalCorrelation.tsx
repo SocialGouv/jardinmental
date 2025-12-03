@@ -309,7 +309,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
     return (
       <View className="flex-1 bg-cnam-primary-25">
         <View className="flex-row justify-between top-0 w-full bg-cnam-primary-800 p-4 items-center h-[96]">
-          <Text className={mergeClassNames(typography.displayXsBold, "text-white")}>Corrélations</Text>
+          <Text className={mergeClassNames(typography.displayXsBold, "text-white")}>Tendances & liens</Text>
           <TouchableOpacity
             onPress={() => {
               navigation.goBack();
@@ -365,7 +365,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
     return (
       <SafeAreaView className="flex-1 bg-primary" edges={["top"]}>
         <View className="flex-row justify-between top-0 w-full bg-cnam-primary-800 p-4 items-center h-[96]">
-          <Text className={mergeClassNames(typography.displayXsBold, "text-white")}>Corrélations</Text>
+          <Text className={mergeClassNames(typography.displayXsBold, "text-white")}>Tendances & liens</Text>
           <TouchableOpacity
             onPress={() => {
               navigation.goBack();

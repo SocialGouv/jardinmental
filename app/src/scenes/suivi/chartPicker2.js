@@ -18,7 +18,7 @@ const CHART_TYPES = [
   },
   {
     key: "Correlations",
-    label: "Corrélations",
+    label: "Tendances & liens",
   },
   {
     key: "Frises",
