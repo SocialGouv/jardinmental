@@ -25,7 +25,7 @@ const ToolSelectionInfo: React.FC<ToolSelectionInfoProps> = ({ navigation }) => 
       headerLeftComponent={
         <View className="flex-row items-center">
           <Chevron color="white" />
-          <Text className="text-white">Des outils pour agir</Text>
+          <Text className="text-white ml-2">Des outils pour agir</Text>
         </View>
       }
       smallHeader={true}

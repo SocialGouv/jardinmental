@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, ScrollView, TouchableOpacity, FlatList } from "react-native";
 import Header from "../../components/Header";
 import logEvents from "../../services/logEvents";
@@ -13,30 +13,56 @@ import Tune from "@assets/svg/icon/Tune";
 import { ToolBottomSheet } from "./ToolBottomSheet";
 import { useBottomSheet } from "@/context/BottomSheetContext";
 import { ToolFilterBottomSheet } from "./ToolFilterBottomSheet";
-import { set } from "date-fns";
+import { ToolItemThemes, ToolItemTheme } from "@/entities/ToolItem";
+import Bookmark from "@assets/svg/icon/Bookmark";
+import MenuIcon from "@assets/svg/icon/Menu";
+import { ToolFilterButton } from "./ToolFilterButton";
+import localStorage from "@/utils/localStorage";
 
 interface ToolsScreenProps {
   navigation: any;
 }
 
+type ThemeFilter = "Tout" | "Favoris" | ToolItemTheme;
+
 const ToolsScreen: React.FC<ToolsScreenProps> = ({ navigation }) => {
   const { showBottomSheet, closeBottomSheet } = useBottomSheet();
   const [formatFilters, setFormatFilters] = useState<ToolItemType[]>([]);
   const [audienceFilters, setAudienceFilters] = useState<ToolItemAudience[]>([]);
+  const [themeFilter, setThemeFilter] = useState<ThemeFilter>("Tout");
+  const [bookmarkedToolIds, setBookmarkedToolIds] = useState<string[]>([]);
+  // Load bookmarked tool items on mount
+  useEffect(() => {
+    const loadBookmarks = async () => {
+      const bookmarks = await localStorage.getBookmarkedToolItems();
+      setBookmarkedToolIds(bookmarks);
+    };
+    loadBookmarks();
+  }, []);
+
   const filters = React.useMemo(() => {
     const combinedFilters = [...formatFilters, ...audienceFilters];
     return combinedFilters;
   }, [formatFilters, audienceFilters]);
+
   const filteredTools = React.useMemo(() => {
-    if (filters.length === 0) {
-      return TOOLS_DATA;
-    }
     return TOOLS_DATA.filter((tool) => {
+      // Apply format and audience filters (existing filters)
       const matchesFormat = formatFilters.length === 0 || tool.type.some((t) => formatFilters.includes(t));
       const matchesAudience = audienceFilters.length === 0 || tool.audience.some((aud) => audienceFilters.includes(aud));
-      return matchesFormat && matchesAudience;
+
+      // Apply theme filter (new filter)
+      let matchesTheme = true;
+      if (themeFilter === "Favoris") {
+        matchesTheme = bookmarkedToolIds.includes(tool.id);
+      } else if (themeFilter !== "Tout") {
+        // If a specific theme is selected, only show tools with that theme
+        matchesTheme = tool.themes.includes(themeFilter);
+      }
+
+      return matchesFormat && matchesAudience && matchesTheme;
     });
-  }, [filters]);
+  }, [formatFilters, audienceFilters, themeFilter, bookmarkedToolIds]);
 
   return (
     <SafeAreaView edges={["left", "right"]} className="flex-1">
@@ -49,20 +75,37 @@ const ToolsScreen: React.FC<ToolsScreenProps> = ({ navigation }) => {
         }}
         className="bg-cnam-primary-50 flex-1"
       >
-        <View className="p-4 mt-4">
-          <View className="mb-6">
+        <View className="mt-4">
+          <View className="mb-6 px-4">
             <Text className="text-cnam-primary-950 text-2xl font-semibold mb-3">Explorez les outils pour agir</Text>
           </View>
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("tool-selection-info");
             }}
-            className="flex-row bg-cnam-cyan-lighten-80 items-center mb-8 space-x-1 rounded-full px-3 self-start"
+            className="flex-row bg-cnam-cyan-lighten-80 items-center mb-8 space-x-1 rounded-full px-3 self-start mx-4"
           >
             <ValidatedStampIcon />
             <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>Comment ces outils sont-ils séléctionnés ?</Text>
           </TouchableOpacity>
-          <View className="flex-row justify-between items-center mb-4">
+          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} className="mb-6 space-x-1">
+            <View className="flex-row space-x-2 items-center mx-4">
+              <View className="p-2">
+                <MenuIcon />
+              </View>
+              <ToolFilterButton label="Tout" selected={themeFilter === "Tout"} onPress={() => setThemeFilter("Tout")} />
+              <ToolFilterButton
+                label="Favoris"
+                selected={themeFilter === "Favoris"}
+                onPress={() => setThemeFilter("Favoris")}
+                icon={<Bookmark width={16} height={16} color={themeFilter === "Favoris" ? TW_COLORS.WHITE : TW_COLORS.CNAM_PRIMARY_900} />}
+              />
+              {ToolItemThemes.map((theme) => (
+                <ToolFilterButton key={theme} label={theme} selected={themeFilter === theme} onPress={() => setThemeFilter(theme)} />
+              ))}
+            </View>
+          </ScrollView>
+          <View className="flex-row justify-between items-center mb-4 px-4">
             <Text className={mergeClassNames(typography.textXlSemibold, "text-cnam-primary-800 text-base flex-1")}>
               {filteredTools.length} outils
             </Text>
@@ -101,6 +144,7 @@ const ToolsScreen: React.FC<ToolsScreenProps> = ({ navigation }) => {
             )}
           </View>
           <FlatList
+            className="px-4"
             data={filteredTools}
             renderItem={({ item }) => {
               return (
@@ -111,8 +155,11 @@ const ToolsScreen: React.FC<ToolsScreenProps> = ({ navigation }) => {
                     showBottomSheet(
                       <ToolBottomSheet
                         toolItem={toolItem}
-                        onClose={() => {
+                        onClose={async () => {
                           closeBottomSheet();
+                          // Refresh bookmarks after closing the bottom sheet
+                          const bookmarks = await localStorage.getBookmarkedToolItems();
+                          setBookmarkedToolIds(bookmarks);
                         }}
                       />
                     );

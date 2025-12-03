@@ -28,23 +28,26 @@ export type ToolItemType =
 export type ToolItemAudience = "Pour tous" | "Jeunes" | "Parents";
 
 // Tool item themes
-export type ToolItemTheme =
-  | "Améliorer son sommeil"
-  | "Apprendre à se connaître"
-  | "Reconnaître ses besoins"
-  | "Reconnaître ses émotions"
-  | "Trouver de l'aide"
-  | "Agir sur mes addictions"
-  | "Bienveillance envers soi-même"
-  | "Gérer les pensées difficiles"
-  | "Vie quotidienne"
-  | "Diminuer le stress"
-  | "Se relaxer"
-  | "Gérer une crise"
-  | "Réguler ses émotions"
-  | "Aider un proche"
-  | "Se former"
-  | "Respecter ses limites";
+export const ToolItemThemes = [
+  "Améliorer son sommeil",
+  "Apprendre à se connaître",
+  "Reconnaître ses besoins",
+  "Reconnaître ses émotions",
+  "Trouver de l'aide",
+  "Agir sur mes addictions",
+  "Bienveillance envers soi-même",
+  "Gérer les pensées difficiles",
+  "Vie quotidienne",
+  "Diminuer le stress",
+  "Se relaxer",
+  "Gérer une crise",
+  "Réguler ses émotions",
+  "Aider un proche",
+  "Se former",
+  "Respecter ses limites",
+] as const;
+
+export type ToolItemTheme = (typeof ToolItemThemes)[number];
 
 // Tool item entity interface
 export interface ToolItemEntity {
@@ -52,7 +55,8 @@ export interface ToolItemEntity {
   title: string;
   description: string;
   type: ToolItemType[];
-  themes?: ToolItemTheme[];
+  themes: ToolItemTheme[];
+  matomoId: number;
   audience: ToolItemAudience[];
   url?: string;
   source?: string;
