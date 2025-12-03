@@ -70,11 +70,11 @@ export const getArrayOfDatesFromTo = ({ fromDate, toDate }) => {
   return sortedDates;
 };
 
-export const formatDate = (d) => {
+export const formatDate = (d, withYear) => {
   if (!d) return "-";
   const isoDate = parseISO(d);
 
-  return format(isoDate, "EEEE d MMMM", { locale: fr });
+  return format(isoDate, withYear ? "EEEE d MMMM yyyy" : "EEEE d MMMM", { locale: fr });
 };
 
 export const formatRelativeDate = (date, withYear) => {

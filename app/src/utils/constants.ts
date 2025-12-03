@@ -57,7 +57,14 @@ export const iconColors = {
   // veryGood: '#99DDDD'//'#21896B',//"#1A6300",
 };
 
-export const scoresMapIcon = {
+export interface ColorContextInterface {
+  color: string;
+  faceIcon?: string;
+  borderColor?: string;
+  iconColor?: string;
+}
+
+export const scoresMapIcon: Record<string | number, ColorContextInterface> = {
   "-1": {
     color: "transparent",
   },
@@ -522,6 +529,26 @@ export const TW_COLORS = {
   ERROR: {
     BG: "#F9DCD7",
     TEXT: "#5A2017",
+  },
+};
+
+export const booleanColor: {
+  ASC: {
+    true: ColorContextInterface;
+    false: ColorContextInterface;
+  };
+  DESC: {
+    true: ColorContextInterface;
+    false: ColorContextInterface;
+  };
+} = {
+  ASC: {
+    true: analyzeScoresMapIcon[5],
+    false: analyzeScoresMapIcon[1],
+  },
+  DESC: {
+    true: analyzeScoresMapIcon[1],
+    false: analyzeScoresMapIcon[5],
   },
 };
 

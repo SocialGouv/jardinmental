@@ -29,35 +29,22 @@ import ArrowIcon from "@assets/svg/icon/Arrow";
 import { colors } from "@/utils/colors";
 import { SquircleButton } from "expo-squircle-view";
 
-export default ({
+const NewStatusItemComponent = ({
   navigation,
   indicateurs = [],
   patientState,
   goalsData,
   date,
+  customs = [],
 }: {
   navigation: any;
   indicateurs: Indicator[];
   patientState: DiaryEntry;
   goalsData: GoalsData;
   date: Date;
+  customs: any[];
 }) => {
-  const [customs, setCustoms] = useState([]);
-  const [oldCustoms, setOldCustoms] = useState([]);
-  let mounted = useRef(true);
-
-  useEffect(() => {
-    (async () => {
-      const c = await localStorage.getCustomSymptoms();
-      if (c && mounted) setCustoms(c);
-
-      //retrocompatibility
-      const t = c.map((e) => `${e}_FREQUENCE`);
-      if (t && mounted) setOldCustoms(t);
-      return;
-    })();
-    return () => (mounted = false);
-  }, [patientState]);
+  const oldCustoms = customs.map((e) => `${e}_FREQUENCE`);
 
   const handleEdit = (tab, editingSurvey = false, toGoals) => {
     if (!canEdit(date)) return;
@@ -258,4 +245,14 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     backgroundColor: colors.LIGHT_BLUE,
   },
+});
+
+export default React.memo(NewStatusItemComponent, (prevProps, nextProps) => {
+  return (
+    prevProps.date === nextProps.date &&
+    prevProps.patientState === nextProps.patientState &&
+    prevProps.goalsData === nextProps.goalsData &&
+    prevProps.indicateurs === nextProps.indicateurs &&
+    prevProps.customs === nextProps.customs
+  );
 });

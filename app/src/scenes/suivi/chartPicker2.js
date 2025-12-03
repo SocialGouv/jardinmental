@@ -17,8 +17,12 @@ const CHART_TYPES = [
     label: "Variations",
   },
   {
-    key: "Frises",
+    key: "Correlations",
     label: "Corrélations",
+  },
+  {
+    key: "Frises",
+    label: "Frises",
   },
   {
     key: "Déclencheurs",
@@ -31,6 +35,9 @@ const TabPicker = ({ onChange, ongletActif = "Statistiques", scrollY, scrollThre
 
   const handlePress = (tab) => {
     // logEvents.logStatusSubPage(tab);
+    if (tab === "Correlations") {
+      logEvents.logAnalysesTabCorrelations();
+    }
     onChange(tab);
   };
 
@@ -63,7 +70,10 @@ const TabPicker = ({ onChange, ongletActif = "Statistiques", scrollY, scrollThre
             <TouchableOpacity
               // className="h-full"
               key={item.key}
-              className={mergeClassNames("h-[44] py-2 px-6", ongletActif === item.key ? "bg-cnam-primary-800 rounded-xl" : "transparent")}
+              className={mergeClassNames(
+                "h-[44] py-2 px-6 flex-row items-center justify-center",
+                ongletActif === item.key ? "bg-cnam-primary-800 rounded-xl" : "transparent"
+              )}
               onPress={() => {
                 listRef.current?.scrollToItem({
                   item,
@@ -76,6 +86,13 @@ const TabPicker = ({ onChange, ongletActif = "Statistiques", scrollY, scrollThre
               <Text className={mergeClassNames(typography.textMdSemibold, ongletActif === item.key ? "text-white" : "text-gray-700")}>
                 {item.label}
               </Text>
+              {item.key === "Correlations" ? (
+                <View className="bg-cnam-mauve-lighten-80 border border-cnam-mauve-darken-40 rounded-full ml-2 px-2 items-center justify-center">
+                  <Text className={mergeClassNames("text-cnam-mauve-darken-40", typography.textSmMedium)}>{"Nouveau"}</Text>
+                </View>
+              ) : (
+                ""
+              )}
             </TouchableOpacity>
           );
         }}

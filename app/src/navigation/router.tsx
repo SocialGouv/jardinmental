@@ -57,6 +57,8 @@ import ResourceCategoryList from "../scenes/resources/ResourceCategoryList";
 import ExternalResourcesScreen from "../scenes/resources/ExternalResourcesScreen";
 import SupportScreen from "@/scenes/support/SupportScreen";
 import DiaryDetail from "@/scenes/status/DiaryDetail";
+import { ModalCorrelationScreen } from "@/scenes/suivi/correlation/ModalCorrelation";
+import { DetailModalCorrelationScreen } from "@/scenes/suivi/correlation/ModalDetailCorrelation";
 import { ModalTriggerScreen } from "@/scenes/suivi/triggers/ModalTrigger";
 import SettingsModal from "@/scenes/settings/settings-modal";
 import CommityScreen from "@/scenes/commity/CommityScreen";
@@ -276,6 +278,24 @@ class Router extends React.Component<RouterProps> {
             <Stack.Screen name="resource-category-list" component={ResourceCategoryList} />
             <Stack.Screen name="resource-article" component={ResourceArticle} />
             <Stack.Screen name="resource-external-resources" component={ExternalResourcesScreen} />
+            <Stack.Screen
+              name="correlation-modal"
+              component={ModalCorrelationScreen}
+              options={{
+                cardStyleInterpolator: CardStyleInterpolators.forRevealFromBottomAndroid,
+                // cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS,
+                presentation: "modal",
+              }}
+            />
+            <Stack.Screen
+              name="detail-correlation-modal"
+              component={DetailModalCorrelationScreen}
+              options={{
+                cardStyleInterpolator: CardStyleInterpolators.forRevealFromBottomAndroid,
+                // cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS,
+                presentation: "modal",
+              }}
+            />
             <Stack.Screen name="dev-mode" component={DevMode} options={{ headerShown: true }} />
           </Stack.Navigator>
         </NavigationContainer>

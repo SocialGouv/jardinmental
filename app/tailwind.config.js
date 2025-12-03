@@ -96,6 +96,7 @@ module.exports = {
         },
         gray: {
           950: "#093F43",
+          900: "#354445",
           800: "#4A5D5F",
           700: "#617778",
           600: "#799092",
@@ -127,6 +128,10 @@ module.exports = {
         "cnam-rouge": {
           "100-lighten-80": "#F9DCD7",
           "800-lighten-60": "#5A2017",
+        },
+        "cnam-mauve": {
+          "lighten-80": "#ECDEF0",
+          "darken-40": "#60376D",
         },
         success: {
           bg: "#DDF3E3",

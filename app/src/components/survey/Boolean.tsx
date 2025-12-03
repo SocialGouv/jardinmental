@@ -1,31 +1,8 @@
 import React from "react";
 import ToggleButtons from "../ToggleButton";
-import { TW_COLORS } from "@/utils/constants";
+import { booleanColor } from "@/utils/constants";
 
 export const Boolean = ({ indicator, value, onChange, disabled }) => {
-  const color = {
-    ASC: {
-      left: {
-        bg: TW_COLORS.SUCCESS.BG_DARKEN,
-        text: TW_COLORS.SUCCESS.TEXT,
-      },
-      right: {
-        bg: TW_COLORS.ERROR.BG,
-        text: TW_COLORS.ERROR.TEXT,
-      },
-    },
-    DESC: {
-      left: {
-        bg: TW_COLORS.ERROR.BG,
-        text: TW_COLORS.ERROR.TEXT,
-      },
-      right: {
-        bg: TW_COLORS.SUCCESS.BG_DARKEN,
-        text: TW_COLORS.SUCCESS.TEXT,
-      },
-    },
-  };
-
   return (
     <ToggleButtons
       onPressLeft={() => {
@@ -33,10 +10,10 @@ export const Boolean = ({ indicator, value, onChange, disabled }) => {
       }}
       disabled={disabled}
       initialSelected={value}
-      leftColor={color[indicator?.order].left.bg}
-      rightColor={color[indicator?.order].right.bg}
-      leftTextColor={color[indicator?.order].left.text}
-      rightTextColor={color[indicator?.order].right.text}
+      leftColor={booleanColor[indicator?.order].true.color}
+      rightColor={booleanColor[indicator?.order].false.color}
+      leftTextColor={booleanColor[indicator?.order].true.iconColor}
+      rightTextColor={booleanColor[indicator?.order].false.iconColor}
       leftText={"Oui"}
       rightText={"Non"}
       onPressRight={() => {

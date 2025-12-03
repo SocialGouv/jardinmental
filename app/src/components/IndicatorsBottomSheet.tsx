@@ -1,11 +1,14 @@
-import { View, Text, ScrollView, Dimensions } from "react-native";
+import { View, Text, ScrollView, useWindowDimensions, Dimensions, TextInput, Pressable, TouchableOpacity } from "react-native";
+import JMButton from "./JMButton";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
 import { useEffect, useRef, useState } from "react";
 import localStorage from "@/utils/localStorage";
+import { Drug } from "@/entities/Drug";
 import { Indicator } from "@/entities/Indicator";
-import JMButton from "@/components/JMButton";
-import { LightSelectionnableItem } from "@/components/SelectionnableItem";
+import { LightSelectionnableItem } from "./SelectionnableItem";
+import { InputToggle } from "./InputToggle";
+import logEvents from "@/services/logEvents";
 
 const screenHeight = Dimensions.get("window").height;
 const height90vh = screenHeight * 0.9;
@@ -39,7 +42,7 @@ export const IndicatorsBottomSheet = ({
       const i = selectedIndicators.indexOf(drugInTreatment);
       t.splice(i, 1);
     } else {
-      t = [d];
+      t.push(d);
     }
     setSelectedIndicators(t);
   };
@@ -51,8 +54,19 @@ export const IndicatorsBottomSheet = ({
         showsVerticalScrollIndicator={false}
         style={{ paddingVertical: 20, height: height90vh }}
       >
+        <View className="self-end mr-4">
+          <TouchableOpacity
+            onPress={() => {
+              setSelectedIndicators([]);
+            }}
+          >
+            <Text className={mergeClassNames(typography.textLgMedium, "text-cnam-primary-800")}>Effacer</Text>
+          </TouchableOpacity>
+        </View>
         <View className="p-4 flex-column flex-1 gap-6">
-          <Text className={mergeClassNames(typography.displayXsSemibold, "text-left text-cnam-primary-900")}>Sélectionnez un indicateur</Text>
+          <Text className={mergeClassNames(typography.displayXsSemibold, "text-left text-cnam-primary-900")}>
+            Sélectionnez <Text className={mergeClassNames(typography.displayXsBold)}>jusqu'à 2 indicateurs</Text> parmi ceux que vous suivez
+          </Text>
           <View className="flex-colum flex-1">
             {!indicatorList && <Text>Chargement...</Text>}
             {indicatorList &&
@@ -62,9 +76,8 @@ export const IndicatorsBottomSheet = ({
                   <LightSelectionnableItem
                     key={index}
                     className="flex-row"
-                    shape="circle"
                     id={e.uuid}
-                    label={e.name}
+                    label={`${e.name}${!e.active ? " (désactivé)" : ""}`}
                     boxPosition="top"
                     disabled={!selected && selectedIndicators.length >= 2}
                     selected={selected}
@@ -72,6 +85,21 @@ export const IndicatorsBottomSheet = ({
                   />
                 );
               })}
+            <View className="fr-col space-y-4 mt-4">
+              <Text className={mergeClassNames(typography.textLgSemibold, "text-gray-800")}>Traitement</Text>
+              <View className="flex-row items-center justify-between">
+                <Pressable onPress={() => reminderToggleRef?.current?.toggle?.()} hitSlop={{ bottom: 8, left: 8, right: 8, top: 8 }}>
+                  <InputToggle
+                    ref={reminderToggleRef}
+                    checked={showTreatment}
+                    onCheckedChanged={async ({ checked }) => {
+                      setShowTreatment(checked);
+                    }}
+                  />
+                </Pressable>
+                <Text className={mergeClassNames(typography.textLgMedium, "text-cnam-primary-900")}>Voir lorsque j’ai pris mon traitement</Text>
+              </View>
+            </View>
           </View>
         </View>
       </ScrollView>
@@ -84,14 +112,15 @@ export const IndicatorsBottomSheet = ({
         }}
         className={`flex-column justify-between items-center p-6 px-6 bg-white/90 pb-10 w-full`}
       >
-        <Text className={mergeClassNames(typography.textSmMedium, "text-gray-800 mb-2")}>Vous pourrez modifier cette sélection plus tard</Text>
         <JMButton
           onPress={async () => {
+            logEvents.logAnalysesValidateCorrelations();
             onClose({
               selectedIndicators,
               showTreatment,
             });
           }}
+          disabled={selectedIndicators.length === 0}
           title={"Valider la sélection"}
         />
       </View>

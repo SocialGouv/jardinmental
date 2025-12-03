@@ -1374,6 +1374,20 @@ const logSelectedCategory = async (categoryId: number) => {
   });
 };
 
+const logAnalysesTabCorrelations = async () => {
+  await logEvent({
+    category: "ANALYSES",
+    action: "ANALYSES_TAB_CORRELATIONS",
+  });
+};
+
+const logAnalysesValidateCorrelations = async () => {
+  await logEvent({
+    category: "ANALYSES",
+    action: "ANALYSES_VALIDATE_CORRELATIONS",
+  });
+};
+
 export default {
   initMatomo,
   logAppVisit,
@@ -1532,4 +1546,7 @@ export default {
   // Resources events
   logViewedArticlesList,
   logSelectedCategory,
+  // Correlations events
+  logAnalysesTabCorrelations,
+  logAnalysesValidateCorrelations,
 };
