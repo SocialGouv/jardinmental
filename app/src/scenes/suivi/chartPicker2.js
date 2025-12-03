@@ -18,7 +18,7 @@ const CHART_TYPES = [
   },
   {
     key: "Correlations",
-    label: "Corrélations",
+    label: "Tendances & liens",
   },
   {
     key: "Frises",
@@ -64,7 +64,6 @@ const TabPicker = ({ onChange, ongletActif = "Statistiques", scrollY, scrollThre
       <FlatList
         ref={listRef}
         data={CHART_TYPES}
-        ItemSeparatorComponent={() => <View style={{ width: 10 }} />} // 👈 space between items
         renderItem={({ item }) => {
           return (
             <TouchableOpacity
