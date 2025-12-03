@@ -29,9 +29,17 @@ const height90vh = screenHeight * 0.9;
 
 const VISIBLE_THEMES_LIMIT = 3;
 
-export const ToolBottomSheet = ({ onClose, toolItem }: { onClose: (treatment?: Drug[]) => void; toolItem: ToolItemEntity }) => {
+export const ToolBottomSheet = ({
+  onClose,
+  toolItem,
+  navigation,
+}: {
+  onClose: (treatment?: Drug[]) => void;
+  toolItem: ToolItemEntity;
+  navigation;
+}) => {
   const [isDownloading, setIsDownloading] = useState(false);
-
+  const { closeBottomSheet } = useBottomSheet();
   const [isBookmarked, setIsBookmarked] = useState<boolean>(false);
   const [showAllThemes, setShowAllThemes] = useState<boolean>(false);
 
@@ -185,7 +193,17 @@ export const ToolBottomSheet = ({ onClose, toolItem }: { onClose: (treatment?: D
             <Text className={mergeClassNames(typography.textMdRegular, "text-left text-cnam-primary-900")}>{toolItem.description}</Text>
           </View>
           <View className="w-full py-6 px-6">
-            {isFileType() && (
+            {toolItem.embed === "breath-exercice" && (
+              <JMButton
+                icon={<DownloadIcon color="white"></DownloadIcon>}
+                onPress={() => {
+                  navigation.navigate(toolItem.embed);
+                  closeBottomSheet();
+                }}
+                title={"Faire l'exerice de respiration"}
+              />
+            )}
+            {isFileType() && toolItem.embed !== "breath-exercice" && (
               <JMButton
                 icon={<DownloadIcon color="white"></DownloadIcon>}
                 onPress={handleDownloadFile}
@@ -193,7 +211,9 @@ export const ToolBottomSheet = ({ onClose, toolItem }: { onClose: (treatment?: D
                 disabled={isDownloading}
               />
             )}
-            {!isFileType() && <JMButton icon={<LinkExternal color="white" />} onPress={handleOpenUrl} title={"Voir l'outil"} />}
+            {!isFileType() && toolItem.embed !== "breath-exercice" && (
+              <JMButton icon={<LinkExternal color="white" />} onPress={handleOpenUrl} title={"Voir l'outil"} />
+            )}
           </View>
           {toolItem.source && (
             <View className="w-full bg-gray-100 p-6">

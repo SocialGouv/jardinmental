@@ -154,6 +154,7 @@ const ToolsScreen: React.FC<ToolsScreenProps> = ({ navigation }) => {
                     // TODO: Implement navigation to tool detail or open URL
                     showBottomSheet(
                       <ToolBottomSheet
+                        navigation={navigation}
                         toolItem={toolItem}
                         onClose={async () => {
                           closeBottomSheet();
