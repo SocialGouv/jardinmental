@@ -129,6 +129,10 @@ module.exports = {
           "100-lighten-80": "#F9DCD7",
           "800-lighten-60": "#5A2017",
         },
+        "cnam-mauve": {
+          "lighten-80": "#ECDEF0",
+          "darken-40": "#60376D",
+        },
         success: {
           bg: "#DDF3E3",
           "bg-darken": "#BBE7C6",

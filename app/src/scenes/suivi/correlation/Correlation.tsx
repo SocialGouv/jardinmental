@@ -283,14 +283,12 @@ export const Correlation = ({ navigation, onScroll, scrollY, day, setDay, dynami
         className="px-4 flex-col space-y-4 pt-60 bg-white"
         contentContainerStyle={{ paddingBottom: TAB_BAR_HEIGHT + 20 }}
       >
-        <Text className={mergeClassNames(typography.textLgBold, "text-cnam-primary-800")}>Explorez les liens entre vos indicateurs</Text>
-        <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900")}>
-          Observez comment vos indicateurs évoluent ensemble pour mieux comprendre ce qui influence votre état.
-        </Text>
+        <Text className={mergeClassNames(typography.textLgBold, "text-cnam-primary-800")}>Comparez vos indicateurs, comprenez vos tendances</Text>
         <View className="bg-cnam-cyan-50-lighten-90 p-4 border border-dashed border-cnam-primary-500 flex-col space-y-4">
           <EmptyCorrelationIllustration width="100%" />
           <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900")}>
-            Sommeil & énergie, humeur & activité physique… Les liens peuvent vous aider à mieux comprendre votre équilibre mental.
+            Sommeil, énergie, humeur, activité… Affichez un ou deux indicateurs pour :{"\n"}- Observer leur(s) évolution(s)
+            {"\n"}- Repérer quand ils évoluent ensemble ou en sens opposé.
           </Text>
           <JMButton
             onPress={() => {
@@ -310,6 +308,9 @@ export const Correlation = ({ navigation, onScroll, scrollY, day, setDay, dynami
             icon={<PlusIcon />}
           />
         </View>
+        <Text className={mergeClassNames(typography.textSmMedium, "text-gray-700 items-center")}>
+          Un lien apparent n’implique pas une causalité. Cette vue propose une lecture sans interprétation médicale.
+        </Text>
       </ScrollView>
     );
   } else if (!dataToDisplay) {
