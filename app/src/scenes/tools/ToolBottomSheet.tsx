@@ -21,14 +21,19 @@ import LinkIcon from "@assets/svg/icon/Link";
 import LinkExternal from "@assets/svg/icon/LinkExternal";
 import BookmarkAddIcon from "@assets/svg/icon/BookmarkAdd";
 import BookmarkMinusIcon from "@assets/svg/icon/BookmarkMinus";
+import SimplePlus from "@assets/svg/icon/SimplePlus";
+import SimpleMinus from "@assets/svg/icon/SimpleMinus";
 
 const screenHeight = Dimensions.get("window").height;
 const height90vh = screenHeight * 0.9;
+
+const VISIBLE_THEMES_LIMIT = 3;
 
 export const ToolBottomSheet = ({ onClose, toolItem }: { onClose: (treatment?: Drug[]) => void; toolItem: ToolItemEntity }) => {
   const [isDownloading, setIsDownloading] = useState(false);
 
   const [isBookmarked, setIsBookmarked] = useState<boolean>(false);
+  const [showAllThemes, setShowAllThemes] = useState<boolean>(false);
 
   const itemId = toolItem.id;
 
@@ -148,10 +153,30 @@ export const ToolBottomSheet = ({ onClose, toolItem }: { onClose: (treatment?: D
               </TouchableOpacity>
             )}
           </View>
-          <View className="flex-row bg-[#E5F6FC] self-start items-center p-2">
-            <Text className={mergeClassNames(typography.textSmBold, "ml-2 text-cnam-cyan-700-darken-40 text-left")}>
-              {toolItem.themes?.join(" | ")}
-            </Text>
+          <View className="flex-row self-start flex-wrap items-center p-2 space-x-1 space-y-1">
+            {toolItem.themes.slice(0, showAllThemes ? toolItem.themes.length : VISIBLE_THEMES_LIMIT).map((theme, index) => (
+              <Text
+                key={index}
+                className={mergeClassNames(typography.textSmSemibold, "ml-1 text-cnam-cyan-700-darken-40 text-left bg-[#E5F6FC] py-1 px-2")}
+              >
+                {theme}
+              </Text>
+            ))}
+            {toolItem.themes.length > VISIBLE_THEMES_LIMIT && !showAllThemes && (
+              <TouchableOpacity
+                onPress={() => setShowAllThemes(!showAllThemes)}
+                className="flex-row items-center ml-1 bg-[#E5F6FC] py-1 px-2 space-x-1"
+              >
+                {!showAllThemes && (
+                  <>
+                    <SimplePlus color="#3D6874" width={16} height={16} />
+                    <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-cyan-700-darken-40")}>
+                      {toolItem.themes.length - VISIBLE_THEMES_LIMIT}
+                    </Text>
+                  </>
+                )}
+              </TouchableOpacity>
+            )}
           </View>
           <View className="p-4 flex-column flex-1">
             <Text className={mergeClassNames(typography.displayXsBold, "text-left text-cnam-primary-900")}>{toolItem.title}</Text>
