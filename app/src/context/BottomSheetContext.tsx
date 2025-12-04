@@ -7,7 +7,7 @@ const screenHeight = Dimensions.get("window").height;
 const height90vh = screenHeight * 0.9;
 
 type BottomSheetContextType = {
-  showBottomSheet: (content: ReactNode) => void;
+  showBottomSheet: (content: ReactNode, onClose?: () => void) => void;
   closeBottomSheet: () => void;
 };
 
@@ -21,9 +21,11 @@ export const useBottomSheet = () => useContext(BottomSheetContext);
 export const BottomSheetProvider = ({ children }: { children: ReactNode }) => {
   const bottomSheetRef = useRef<BottomSheetModal>(null);
   const [content, setContent] = useState<ReactNode>(null);
+  const [onCloseCallback, setOnCloseCallback] = useState<(() => void) | null>(null);
 
-  const showBottomSheet = (newContent: ReactNode) => {
+  const showBottomSheet = (newContent: ReactNode, onClose?: () => void) => {
     setContent(newContent);
+    setOnCloseCallback(() => onClose || null);
     bottomSheetRef.current?.present();
   };
 
@@ -44,7 +46,13 @@ export const BottomSheetProvider = ({ children }: { children: ReactNode }) => {
             maxDynamicContentSize={height90vh}
             ref={bottomSheetRef}
             backdropComponent={renderBackdrop}
-            onDismiss={() => setContent(null)}
+            onDismiss={() => {
+              if (onCloseCallback) {
+                onCloseCallback();
+              }
+              setContent(null);
+              setOnCloseCallback(null);
+            }}
             snapPoints={["90%"]}
           >
             <BottomSheetView>{content}</BottomSheetView>
