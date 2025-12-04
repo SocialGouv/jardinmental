@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext, useRef, useMemo } from "react";
-import { ScrollView, View, Text } from "react-native";
+import { ScrollView, View, Text, Alert } from "react-native";
 import { beforeToday, formatDate, formatDay } from "../../utils/date/helpers";
 import { getScoreWithState } from "../../utils";
 import InputQuestion from "./InputQuestion";
@@ -33,6 +33,7 @@ import PencilIcon from "@assets/svg/icon/Pencil";
 import { getGoalsDailyRecords, getGoalsTracked } from "@/utils/localStorage/goals";
 import { Goal } from "@/entities/Goal";
 import DaySurveyCustomBottomSheet from "./DaySurveyCustomBottomSheet";
+import * as Sentry from "@sentry/react-native";
 
 const DaySurvey = ({
   navigation,
@@ -227,7 +228,20 @@ const DaySurvey = ({
     }
     addNewEntryToDiaryData(currentSurvey);
     if (goalsRef.current && typeof goalsRef.current.onSubmit === "function") {
-      await goalsRef.current.onSubmit();
+      try {
+        await goalsRef.current.onSubmit();
+      } catch (error) {
+        console.error("Erreur lors de la sauvegarde des goals:", error);
+        Sentry.captureException(error, {
+          tags: { context: "day_survey_goals_submit" },
+          extra: { date: initSurvey.date },
+        });
+        // Informer l'utilisateur de l'erreur
+        Alert.alert("Erreur de sauvegarde", "Vos objectifs n'ont pas pu être sauvegardés complètement. Vos observations ont bien été enregistrées.", [
+          { text: "OK" },
+        ]);
+        // Continue quand même avec la validation du questionnaire
+      }
     }
     // Log time spent on survey
     if (surveyStartTime) {

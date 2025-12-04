@@ -5,6 +5,16 @@ import { formatDay, oneDay } from "../../utils/date/helpers";
 const MAX_DAY = 1460;
 export const startDate = new Date(Date.now() - MAX_DAY * oneDay);
 
+// Helper function to generate more stable random values
+// 75% of the time returns values between 0.5 and 1.0
+// 25% of the time returns values below 0.5
+const getStableRandomValue = () => {
+  if (Math.random() < 0.75) {
+    return 0.5 + Math.random() * 0.5; // Range: 0.5 to 1.0
+  }
+  return Math.random() * 0.5; // Range: 0.0 to 0.5
+};
+
 const fakeDaySurvey = () => {
   const MOOD_hasComment = Math.random() > 0.5;
   const ANXIETY_hasComment = Math.random() > 0.5;
@@ -13,14 +23,14 @@ const fakeDaySurvey = () => {
       _indicateur: {
         type: "gauge",
       },
-      value: Math.ceil(Math.random() * 5) / 5,
+      value: getStableRandomValue(),
       userComment: MOOD_hasComment ? "comment" : "",
     },
     Anxiété: {
       _indicateur: {
         type: "gauge",
       },
-      value: Math.ceil(Math.random() * 5) / 5,
+      value: getStableRandomValue(),
       userComment: ANXIETY_hasComment ? "comment" : "",
     },
   };
@@ -32,7 +42,199 @@ for (let i of Array(30).keys()) {
 }
 export { fakeDiaryData2 };
 
-export const fakeDiaryData = {
+// Generator for old format data (MOOD, ANXIETY_FREQUENCE, etc.)
+const generateOldFormatData = () => {
+  const data = {
+    MOOD: categoryStates[Object.keys(categoryStates)[Math.floor(Math.random() * Object.keys(categoryStates).length)]],
+    ANXIETY_FREQUENCE: frequence[Object.keys(frequence)[Math.floor(Math.random() * Object.keys(frequence).length)]],
+    ANXIETY_INTENSITY: categoryStates[Object.keys(categoryStates)[Math.floor(Math.random() * Object.keys(categoryStates).length)]],
+    BADTHOUGHTS_FREQUENCE: frequence[Object.keys(frequence)[Math.floor(Math.random() * Object.keys(frequence).length)]],
+    BADTHOUGHTS_INTENSITY: categoryStates[Object.keys(categoryStates)[Math.floor(Math.random() * Object.keys(categoryStates).length)]],
+    SENSATIONS_FREQUENCE: frequence[Object.keys(frequence)[Math.floor(Math.random() * Object.keys(frequence).length)]],
+    SENSATIONS_INTENSITY: categoryStates[Object.keys(categoryStates)[Math.floor(Math.random() * Object.keys(categoryStates).length)]],
+    SLEEP: categoryStates[Object.keys(categoryStates)[Math.floor(Math.random() * Object.keys(categoryStates).length)]],
+    NOTES: Math.random() > 0.7 ? "Note générée automatiquement" : "",
+  };
+
+  // Occasionally add POSOLOGY (30% chance)
+  if (Math.random() > 0.7) {
+    data.POSOLOGY = [
+      {
+        id: "Lamictal (Lamotrigine)",
+        name1: "Lamictal",
+        name2: "Lamotrigine",
+        value: ["25 mg", "50 mg", "100 mg", "200 mg"][Math.floor(Math.random() * 4)],
+        values: ["12.5 mg", "25 mg", "50 mg", "100 mg", "200 mg", "300 mg"],
+      },
+    ];
+  }
+
+  return data;
+};
+
+// Generator for new format data (UUID-based indicators)
+const generateNewFormatData = () => {
+  const humeur = getStableRandomValue();
+  const data = {
+    "3e15ed99-f2f9-4716-b6a2-5348c35266da": {
+      value: Math.floor(humeur * 5) + 1,
+      userComment: Math.random() > 0.7 ? ["Je vais bien", "Ça va", "Bof", "Pas terrible"][Math.floor(Math.random() * 4)] : "",
+      _indicateur: {
+        uuid: "3e15ed99-f2f9-4716-b6a2-5348c35266da",
+        description: "",
+        name: "Humeur générale",
+        diaryDataKey: "uuid",
+        category: "Emotions/sentiments",
+        newCategories: ["EMOTIONS"],
+        mainCategory: "EMOTIONS",
+        type: "smiley",
+        order: "ASC",
+        version: 3,
+        active: true,
+        position: 0,
+        created_at: "2025-09-18T09:06:58.656Z",
+        matomoId: 0,
+      },
+    },
+    "d21db60d-ffa7-4063-a011-d7faef93bed2": {
+      value: Math.random() > 0.2 ? humeur : Math.random(),
+      userComment: Math.random() > 0.8 ? "Bonne nuit" : "",
+      _indicateur: {
+        uuid: "d21db60d-ffa7-4063-a011-d7faef93bed2",
+        description: "",
+        name: "Qualité sommeil",
+        diaryDataKey: "uuid",
+        category: "Manifestations physiques",
+        newCategories: ["SLEEP"],
+        mainCategory: "SLEEP",
+        type: "gauge",
+        order: "ASC",
+        version: 3,
+        active: true,
+        position: 0,
+        created_at: "2025-09-18T09:06:58.656Z",
+        matomoId: 1,
+      },
+    },
+    "6fb2564a-c2ab-44ca-80d7-88473fe0e414": {
+      value: getStableRandomValue(),
+      _indicateur: {
+        uuid: "6fb2564a-c2ab-44ca-80d7-88473fe0e414",
+        description: "",
+        name: "Durée du sommeil",
+        diaryDataKey: "uuid",
+        category: "Emotions/sentiments",
+        newCategories: ["SLEEP"],
+        mainCategory: "SLEEP",
+        type: "gauge",
+        order: "ASC",
+        version: 3,
+        active: true,
+        position: 0,
+        created_at: "2025-09-18T09:06:58.656Z",
+        matomoId: 2,
+      },
+    },
+    "0eefce3d-7955-4eff-b6cc-7da2de12bdce": {
+      value: Math.random() > 0.5,
+      _indicateur: {
+        uuid: "0eefce3d-7955-4eff-b6cc-7da2de12bdce",
+        description: "",
+        name: "Réveils nocturnes",
+        diaryDataKey: "uuid",
+        category: "Emotions/sentiments",
+        newCategories: ["SLEEP"],
+        mainCategory: "SLEEP",
+        type: "boolean",
+        order: "DESC",
+        version: 3,
+        active: true,
+        position: 0,
+        created_at: "2025-09-18T09:06:58.656Z",
+        matomoId: 4,
+      },
+    },
+    PRISE_DE_TRAITEMENT: {
+      value: Math.random() > 0.5,
+    },
+    PRISE_DE_TRAITEMENT_SI_BESOIN: {
+      value: Math.random() > 0.5,
+    },
+  };
+
+  // Occasionally add CONTEXT (40% chance)
+  if (Math.random() > 0.6) {
+    data.CONTEXT = {
+      userComment: ["Bonne journée", "Journée difficile", "Globalement bien", "Pas terrible"][Math.floor(Math.random() * 4)],
+    };
+  }
+
+  // Occasionally add POSOLOGY (40% chance)
+  if (Math.random() > 0.6) {
+    data.POSOLOGY = [
+      {
+        id: "Abilify (Aripiprazole)",
+        name1: "Abilify",
+        name2: "Aripiprazole",
+        values: ["5 mg", "10 mg", "15 mg", "20 mg", "25 mg", "30 mg"],
+        value: ["15 mg", "20 mg", "30 mg"][Math.floor(Math.random() * 3)],
+        isFreeText: false,
+      },
+    ];
+  }
+
+  // Occasionally add becks entry (10% chance)
+  if (Math.random() > 0.9) {
+    data.becks = {
+      [Date.now() + Math.floor(Math.random() * 10000)]: {
+        date: formatDay(new Date()),
+        where: ["À la maison", "Au travail", "Dehors"][Math.floor(Math.random() * 3)],
+        what: "Événement généré automatiquement",
+        mainEmotion: ["Colère", "Tristesse", "Anxiété", "Joie"][Math.floor(Math.random() * 4)],
+        mainEmotionIntensity: Math.floor(Math.random() * 10) + 1,
+        physicalSensations: ["Gorge serrée", "Cœur qui bat vite", "Mains moites"][Math.floor(Math.random() * 3)],
+        thoughtsBeforeMainEmotion: "Pensée automatique",
+        trustInThoughsThen: Math.floor(Math.random() * 10) + 1,
+        actions: "Action prise",
+        consequencesForYou: "Conséquence pour moi",
+        consequencesForRelatives: "Conséquence pour les autres",
+      },
+    };
+  }
+
+  return data;
+};
+
+// Generate data for all days from startDate to now
+const generateFakeDiaryData = () => {
+  const data = {};
+  const now = new Date();
+  const daysDiff = Math.floor((now - startDate) / oneDay);
+  for (let i = 0; i <= daysDiff; i++) {
+    const currentDate = addDays(startDate, i);
+    const dateKey = formatDay(currentDate);
+
+    // 15-20% chance of null value
+    if (Math.random() < 0.17) {
+      data[dateKey] = null;
+      continue;
+    }
+
+    // Use old format for first half, new format for second half
+    if (i < daysDiff / 2) {
+      data[dateKey] = generateOldFormatData();
+    } else {
+      data[dateKey] = generateNewFormatData();
+    }
+  }
+
+  return data;
+};
+
+export const fakeDiaryData = generateFakeDiaryData();
+
+// Keep the original static data as a backup/reference
+export const fakeDiaryDataStatic = {
   [formatDay(startDate)]: null,
   [formatDay(addDays(startDate, 1))]: null,
   [formatDay(addDays(startDate, 2))]: null,
