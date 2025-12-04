@@ -49,6 +49,8 @@ export const ToolItemThemes = [
 
 export type ToolItemTheme = (typeof ToolItemThemes)[number];
 
+export type ToolThemeFilter = "Tout" | "Favoris" | ToolItemTheme;
+
 // Tool item entity interface
 export interface ToolItemEntity {
   id: string;
