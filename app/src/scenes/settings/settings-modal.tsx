@@ -125,19 +125,19 @@ const SettingsModal = ({ navigation, visible }) => {
               }}
               icon={<Download />}
             />
-                      {isDevMode && (
-
-            <SettingItem
-              title="Sauvegarder / restaurer mes données"
-              description={"Conserver mes données ou changer d’appareil"}
-              path="data-export-import"
-              navigation={navigation}
-              onClick={() => {
-                logEvents.logOpenExportSummary();
-              }}
-              isLast={true}
-              icon={<Save />}
-            />)}
+            {isDevMode && (
+              <SettingItem
+                title="Sauvegarder / restaurer mes données"
+                description={"Conserver mes données ou changer d’appareil"}
+                path="data-export-import"
+                navigation={navigation}
+                onClick={() => {
+                  logEvents.logOpenExportSummary();
+                }}
+                isLast={true}
+                icon={<Save />}
+              />
+            )}
           </View>
         </View>
       </Animated.ScrollView>
