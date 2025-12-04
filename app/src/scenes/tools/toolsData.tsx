@@ -353,6 +353,7 @@ export const TOOLS_DATA: ToolItemEntity[] = [
     url: "https://www.santementale-info-service.fr/en-prendre-soin/tous-les-exercices/coherence-cardiaque",
     source: "Santé Mentale Info Service",
     embed: "breath-exercice",
+    video: "coherence-cardiaque-video",
   },
   {
     id: "ef432c51-14af-4d91-af85-7a7dc751dceb",

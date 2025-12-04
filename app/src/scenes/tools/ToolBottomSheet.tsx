@@ -200,10 +200,20 @@ export const ToolBottomSheet = ({
                   navigation.navigate(toolItem.embed);
                   closeBottomSheet();
                 }}
-                title={"Faire l'exerice de respiration"}
+                title={"Faire l'exercice de respiration"}
               />
             )}
-            {isFileType() && toolItem.embed !== "breath-exercice" && (
+            {toolItem.video === "coherence-cardiaque-video" && (
+              <JMButton
+                icon={<DownloadIcon color="white"></DownloadIcon>}
+                onPress={() => {
+                  navigation.navigate(toolItem.video);
+                  closeBottomSheet();
+                }}
+                title={"Faire l'exercice de respiration en video"}
+              />
+            )}
+            {isFileType() && !toolItem.embed && !toolItem.video && (
               <JMButton
                 icon={<DownloadIcon color="white"></DownloadIcon>}
                 onPress={handleDownloadFile}
@@ -211,7 +221,7 @@ export const ToolBottomSheet = ({
                 disabled={isDownloading}
               />
             )}
-            {!isFileType() && toolItem.embed !== "breath-exercice" && (
+            {!isFileType() && !toolItem.embed && !toolItem.video && (
               <JMButton icon={<LinkExternal color="white" />} onPress={handleOpenUrl} title={"Voir l'outil"} />
             )}
           </View>
