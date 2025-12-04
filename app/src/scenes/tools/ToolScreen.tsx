@@ -13,23 +13,22 @@ import Tune from "@assets/svg/icon/Tune";
 import { ToolBottomSheet } from "./ToolBottomSheet";
 import { useBottomSheet } from "@/context/BottomSheetContext";
 import { ToolFilterBottomSheet } from "./ToolFilterBottomSheet";
-import { ToolItemThemes, ToolItemTheme } from "@/entities/ToolItem";
+import { ToolItemThemes, ToolItemTheme, ToolThemeFilter } from "@/entities/ToolItem";
 import Bookmark from "@assets/svg/icon/Bookmark";
 import MenuIcon from "@assets/svg/icon/Menu";
 import { ToolFilterButton } from "./ToolFilterButton";
 import localStorage from "@/utils/localStorage";
+import { ToolThemeFilterBottomSheet } from "./ToolThemeFilterBottomSheet";
 
 interface ToolsScreenProps {
   navigation: any;
 }
 
-type ThemeFilter = "Tout" | "Favoris" | ToolItemTheme;
-
 const ToolsScreen: React.FC<ToolsScreenProps> = ({ navigation }) => {
   const { showBottomSheet, closeBottomSheet } = useBottomSheet();
   const [formatFilters, setFormatFilters] = useState<ToolItemType[]>([]);
   const [audienceFilters, setAudienceFilters] = useState<ToolItemAudience[]>([]);
-  const [themeFilter, setThemeFilter] = useState<ThemeFilter>("Tout");
+  const [themeFilter, setThemeFilter] = useState<ToolThemeFilter>("Tout");
   const [bookmarkedToolIds, setBookmarkedToolIds] = useState<string[]>([]);
   // Load bookmarked tool items on mount
   useEffect(() => {
@@ -90,9 +89,24 @@ const ToolsScreen: React.FC<ToolsScreenProps> = ({ navigation }) => {
           </TouchableOpacity>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} className="mb-6 space-x-1">
             <View className="flex-row space-x-2 items-center mx-4">
-              <View className="p-2">
+              <TouchableOpacity
+                onPress={() => {
+                  showBottomSheet(
+                    <ToolThemeFilterBottomSheet
+                      initialThemeFilter={themeFilter}
+                      onClose={({ selectedThemeFilter }) => {
+                        if (selectedThemeFilter) {
+                          setThemeFilter(selectedThemeFilter);
+                        }
+                        closeBottomSheet();
+                      }}
+                    />
+                  );
+                }}
+                className="p-2"
+              >
                 <MenuIcon />
-              </View>
+              </TouchableOpacity>
               <ToolFilterButton label="Tout" selected={themeFilter === "Tout"} onPress={() => setThemeFilter("Tout")} />
               <ToolFilterButton
                 label="Favoris"
