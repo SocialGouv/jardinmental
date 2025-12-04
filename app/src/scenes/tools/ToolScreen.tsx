@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, ScrollView, TouchableOpacity, FlatList } from "react-native";
+import { View, Text, ScrollView, TouchableOpacity, FlatList, Image } from "react-native";
 import Header from "../../components/Header";
 import logEvents from "../../services/logEvents";
 import { TW_COLORS } from "@/utils/constants";
@@ -182,6 +182,41 @@ const ToolsScreen: React.FC<ToolsScreenProps> = ({ navigation }) => {
                 />
               );
             }}
+            ListEmptyComponent={
+              <>
+                <View className="mt-28 px-4">
+                  <View className="absolute z-10 w-full items-center">
+                    <Image
+                      style={{ width: 80, height: 80, left: 40, top: -65, resizeMode: "contain" }}
+                      source={require("../../../assets/imgs/illustration-no-note.png")}
+                    />
+                  </View>
+                  <View className="absolute -z-1 w-full items-center">
+                    <View className="bg-cnam-primary-100 h-[150] w-[150] rounded-full" style={{ top: -110 }}></View>
+                  </View>
+                  <View className="border border-cnam-primary-200 rounded-2xl p-4 py-6 bg-white" style={{ borderWidth: 0.5 }}>
+                    <Text className={mergeClassNames(typography.textMdBold, "text-cnam-primary-800 text-center px-4")}>
+                      Aucun outil ne correspond à vos filtres.{" "}
+                    </Text>
+                    <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 text-center px-4 mt-4")}>
+                      Essayez d’élargir la recherche pour découvrir plus d’outils.
+                    </Text>
+                    <TouchableOpacity
+                      onPress={() => {
+                        setFormatFilters([]);
+                        setAudienceFilters([]);
+                        setThemeFilter("Tout");
+                      }}
+                    >
+                      <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-950 text-center px-4 mt-4")}>
+                        Réinitialiser les filtres
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+                <View style={{ height: 120 }}></View>
+              </>
+            }
             keyExtractor={(item) => item.id}
             scrollEnabled={false} // ← disables FlatList scrolling
             nestedScrollEnabled={false} // ← not needed, but clean
