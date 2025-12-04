@@ -165,19 +165,13 @@ const ToolsScreen: React.FC<ToolsScreenProps> = ({ navigation }) => {
                 <ToolItemCard
                   toolItem={item}
                   onPress={(toolItem) => {
-                    // TODO: Implement navigation to tool detail or open URL
-                    showBottomSheet(
-                      <ToolBottomSheet
-                        navigation={navigation}
-                        toolItem={toolItem}
-                        onClose={async () => {
-                          closeBottomSheet();
-                          // Refresh bookmarks after closing the bottom sheet
-                          const bookmarks = await localStorage.getBookmarkedToolItems();
-                          setBookmarkedToolIds(bookmarks);
-                        }}
-                      />
-                    );
+                    // Log when opening a tool
+                    logEvents.logOutilsOpen();
+                    showBottomSheet(<ToolBottomSheet navigation={navigation} toolItem={toolItem} onClose={closeBottomSheet} />, async () => {
+                      // Refresh bookmarks after closing the bottom sheet
+                      const bookmarks = await localStorage.getBookmarkedToolItems();
+                      setBookmarkedToolIds(bookmarks);
+                    });
                   }}
                 />
               );

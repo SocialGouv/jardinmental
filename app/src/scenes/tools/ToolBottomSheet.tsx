@@ -23,6 +23,7 @@ import BookmarkAddIcon from "@assets/svg/icon/BookmarkAdd";
 import BookmarkMinusIcon from "@assets/svg/icon/BookmarkMinus";
 import SimplePlus from "@assets/svg/icon/SimplePlus";
 import SimpleMinus from "@assets/svg/icon/SimpleMinus";
+import logEvents from "@/services/logEvents";
 
 const screenHeight = Dimensions.get("window").height;
 const height90vh = screenHeight * 0.9;
@@ -133,6 +134,8 @@ export const ToolBottomSheet = ({
                     const itemId = toolItem.id;
                     const updated = await localStorage.bookmarkToolItem(itemId);
                     setIsBookmarked(updated.includes(itemId));
+                    // Log bookmark event
+                    logEvents.logOutilsBookmark();
                   } catch (error) {
                     console.error("Failed to mark resource as viewed:", error);
                   }
@@ -150,6 +153,8 @@ export const ToolBottomSheet = ({
                     const itemId = toolItem.id;
                     const updated = await localStorage.removeBookmarkToolItem(itemId);
                     setIsBookmarked(updated.includes(itemId));
+                    // Log bookmark event (also logged when removing)
+                    logEvents.logOutilsBookmark();
                   } catch (error) {
                     console.error("Failed to mark resource as viewed:", error);
                   }

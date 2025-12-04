@@ -114,6 +114,7 @@ const Tabs = ({ navigation, route }) => {
       label: "Agir",
       icon: HeartHand,
       component: ToolsScreen,
+      onPress: () => logEvents.logOutilsTab(),
     },
     {
       name: "settings",
