@@ -50,6 +50,20 @@ export const shouldShowChecklistBanner = async (): Promise<boolean> => {
   try {
     // First check if user is a new user
     const isNewUser = await localStorage.getIsNewUser();
+
+    // Handle the case where isNewUser is undefined (race condition with setIsNewUser)
+    if (isNewUser === undefined) {
+      const onboardingDone = await localStorage.getOnboardingDone();
+      // If onboarding is not done, user is new and should see the banner
+      if (!onboardingDone) {
+        // Still need to check if checklist is completed
+        const isCompleted = await isChecklistCompleted();
+        return !isCompleted;
+      }
+      // Onboarding is done but isNewUser was never set - treat as existing user
+      return false;
+    }
+
     if (!isNewUser) {
       return false;
     }

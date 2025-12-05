@@ -37,9 +37,7 @@ const Status = ({ navigation, startSurvey }) => {
   const [bannerProNPSVisible, setBannerProNPSVisible] = useState(true);
   const [ongletActif, setOngletActif] = useState("all");
   const [checklistBannerVisible, setChecklistBannerVisible] = useState<boolean | null>(null); // null = loading, boolean = determined
-  const [infoModalVisible, setInfoModalVisible] = useState<boolean | null>(null); // null = loading, boolean = determined
   const checklistBannerOpacity = React.useRef(new Animated.Value(1)).current;
-  const infoModalOpacity = React.useRef(new Animated.Value(1)).current;
   const scrollRef = React.useRef();
   const { showLatestChangesModal } = useLatestChangesModal();
   const insets = useSafeAreaInsets();
@@ -131,7 +129,6 @@ const Status = ({ navigation, startSurvey }) => {
         const userIsNew = await localStorage.getIsNewUser();
         const newModalDismissed = await localStorage.getIsInfoModalDismissed();
         console.log("show user modal", userIsNew, newModalDismissed, shouldShow);
-        setInfoModalVisible(!userIsNew && !newModalDismissed && !shouldShow);
         showLatestChangesModal();
       })();
     }, [])
@@ -153,19 +150,6 @@ const Status = ({ navigation, startSurvey }) => {
     // Use the new enhanced banner dismiss logic
     await handleBannerDismiss();
     logEvents.logPassChecklist();
-  };
-
-  const handleDismissInfoModal = async () => {
-    // Animate the banner to fade out smoothly
-    Animated.timing(infoModalOpacity, {
-      toValue: 0,
-      duration: 300,
-      useNativeDriver: true,
-    }).start(() => {
-      localStorage.setIsInfoModalDismissed(true);
-      // After animation completes, hide the banner
-      setInfoModalVisible(false);
-    });
   };
 
   const renderScrollContent = (onglet) => {
@@ -212,38 +196,6 @@ const Status = ({ navigation, startSurvey }) => {
                   }}
                   width="adapt"
                   title="C'est parti"
-                />
-              </View>
-            </SquircleView>
-          </Animated.View>
-        )}
-        {infoModalVisible && (
-          <Animated.View
-            style={{
-              opacity: infoModalOpacity,
-            }}
-          >
-            <SquircleView
-              className="p-8 bg-cnam-cyan-lighten-80 mb-4 rounded-xl"
-              cornerSmoothing={100} // 0-100
-              preserveSmoothing={true} // false matches figma, true has more rounding
-              style={{
-                borderRadius: 20,
-              }}
-            >
-              <TouchableOpacity onPress={handleDismissInfoModal} style={{ position: "absolute", top: 0, right: 5, padding: 10 }}>
-                <Text style={{ fontSize: 22, color: TW_COLORS.CNAM_PRIMARY_900, fontWeight: 700 }}>×</Text>
-              </TouchableOpacity>
-              <Text className={mergeClassNames(typography.displayXsBold, "text-left text-cnam-primary-900 mb-6")}>
-                Jardin Mental fait peau neuve, mais rien ne change pour vous !
-              </Text>
-              <View className="flex-row mt-2">
-                <JMButton
-                  onPress={() => {
-                    navigation.navigate("news");
-                  }}
-                  width="full"
-                  title="En savoir plus"
                 />
               </View>
             </SquircleView>
