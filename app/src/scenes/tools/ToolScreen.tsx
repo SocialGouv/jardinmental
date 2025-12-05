@@ -32,12 +32,13 @@ const ToolsScreen: React.FC<ToolsScreenProps> = ({ navigation }) => {
   const [bookmarkedToolIds, setBookmarkedToolIds] = useState<string[]>([]);
   // Load bookmarked tool items on mount
   useEffect(() => {
-    const loadBookmarks = async () => {
-      const bookmarks = await localStorage.getBookmarkedToolItems();
-      setBookmarkedToolIds(bookmarks);
-    };
     loadBookmarks();
   }, []);
+
+  const loadBookmarks = async () => {
+    const bookmarks = await localStorage.getBookmarkedToolItems();
+    setBookmarkedToolIds(bookmarks);
+  };
 
   const filters = React.useMemo(() => {
     const combinedFilters = [...formatFilters, ...audienceFilters];
@@ -166,55 +167,81 @@ const ToolsScreen: React.FC<ToolsScreenProps> = ({ navigation }) => {
                   toolItem={item}
                   onPress={(toolItem) => {
                     // Log when opening a tool
-                    logEvents.logOutilsOpen();
-                    showBottomSheet(<ToolBottomSheet navigation={navigation} toolItem={toolItem} onClose={closeBottomSheet} />, async () => {
-                      // Refresh bookmarks after closing the bottom sheet
-                      const bookmarks = await localStorage.getBookmarkedToolItems();
-                      setBookmarkedToolIds(bookmarks);
-                    });
+                    logEvents.logOutilsOpen(toolItem.matomoId);
+                    showBottomSheet(<ToolBottomSheet navigation={navigation} toolItem={toolItem} onClose={closeBottomSheet} />, loadBookmarks);
                   }}
+                  onBookmarkChange={loadBookmarks}
                 />
               );
             }}
             ListEmptyComponent={
               <>
-                <View className="mt-28 px-4">
-                  <View className="absolute z-10 w-full items-center">
-                    <Image
-                      style={{ width: 80, height: 80, left: 40, top: -65, resizeMode: "contain" }}
-                      source={require("../../../assets/imgs/illustration-no-note.png")}
-                    />
-                  </View>
+                <View className=" z-10 w-full items-center">
                   <View className="absolute -z-1 w-full items-center">
-                    <View className="bg-cnam-primary-100 h-[150] w-[150] rounded-full" style={{ top: -110 }}></View>
-                  </View>
-                  <View className="border border-cnam-primary-200 rounded-2xl p-4 py-6 bg-white" style={{ borderWidth: 0.5 }}>
-                    <Text className={mergeClassNames(typography.textMdBold, "text-cnam-primary-800 text-center px-4")}>
-                      Aucun outil ne correspond à vos filtres.{" "}
-                    </Text>
-                    <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 text-center px-4 mt-4")}>
-                      Essayez d’élargir la recherche pour découvrir plus d’outils.
-                    </Text>
-                    <TouchableOpacity
-                      onPress={() => {
-                        setFormatFilters([]);
-                        setAudienceFilters([]);
-                        setThemeFilter("Tout");
-                      }}
+                    <View
+                      className={"bg-cnam-primary-100 h-[150] w-[150] rounded-full items-center justify-center"}
+                      style={{ top: themeFilter !== "Favoris" ? 20 : 20 }}
                     >
-                      <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-950 text-center px-4 mt-4")}>
-                        Réinitialiser les filtres
-                      </Text>
-                    </TouchableOpacity>
+                      {themeFilter === "Favoris" && <Bookmark width={31} height={31} color={"#84BECD"} />}
+                    </View>
+                  </View>
+                  {themeFilter !== "Favoris" && (
+                    <View className="px-4 z-20">
+                      <Image
+                        style={{ width: 80, height: 80, left: 40, top: 60, resizeMode: "contain" }}
+                        source={require("../../../assets/imgs/illustration-no-note.png")}
+                      />
+                    </View>
+                  )}
+                  <View
+                    className={mergeClassNames(
+                      "border border-cnam-primary-200 rounded-2xl p-4 py-6 bg-white",
+                      themeFilter === "Favoris" ? "mt-32" : "mt-12"
+                    )}
+                    style={{ borderWidth: 0.5 }}
+                  >
+                    {themeFilter !== "Favoris" && (
+                      <>
+                        <Text className={mergeClassNames(typography.textMdBold, "text-cnam-primary-800 text-center px-4")}>
+                          Aucun outil ne correspond à vos filtres.{" "}
+                        </Text>
+                        <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 text-center px-4 mt-4")}>
+                          Essayez d’élargir la recherche pour découvrir plus d’outils.
+                        </Text>
+                        <TouchableOpacity
+                          onPress={() => {
+                            setFormatFilters([]);
+                            setAudienceFilters([]);
+                            setThemeFilter("Tout");
+                          }}
+                        >
+                          <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-950 text-center px-4 mt-4")}>
+                            Réinitialiser les filtres
+                          </Text>
+                        </TouchableOpacity>
+                      </>
+                    )}
+                    {themeFilter === "Favoris" && (
+                      <>
+                        <Text className={mergeClassNames(typography.textMdBold, "text-cnam-primary-800 text-center px-4")}>
+                          Il n’y a pas de favoris pour l’instant
+                        </Text>
+                        <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 text-center px-4 mt-4")}>
+                          Explorez les outils et ajoutez vos contenus préférés en favoris pour y accéder rapidement.
+                        </Text>
+                      </>
+                    )}
                   </View>
                 </View>
-                <View style={{ height: 120 }}></View>
+                {/* <View style={{ height: themeFilter === "Favoris" ? 200 : 120 }}></View> */}
               </>
             }
             keyExtractor={(item) => item.id}
             scrollEnabled={false} // ← disables FlatList scrolling
             nestedScrollEnabled={false} // ← not needed, but clean
             removeClippedSubviews={false}
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{ paddingBottom: 100 }}
           />
         </View>
       </ScrollView>

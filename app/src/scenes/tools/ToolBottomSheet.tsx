@@ -22,7 +22,6 @@ import LinkExternal from "@assets/svg/icon/LinkExternal";
 import BookmarkAddIcon from "@assets/svg/icon/BookmarkAdd";
 import BookmarkMinusIcon from "@assets/svg/icon/BookmarkMinus";
 import SimplePlus from "@assets/svg/icon/SimplePlus";
-import SimpleMinus from "@assets/svg/icon/SimpleMinus";
 import logEvents from "@/services/logEvents";
 
 const screenHeight = Dimensions.get("window").height;
@@ -61,7 +60,7 @@ export const ToolBottomSheet = ({
   // Helper function to check if the tool type is a file/downloadable type
   const isFileType = () => {
     const types = Array.isArray(toolItem.type) ? toolItem.type : [toolItem.type];
-    return types.some((t) => t === "Fichier" || t === "PDF" || t === "Document");
+    return types.some((t) => t === "Fichier" || t === "PDF");
   };
 
   const handleDownloadFile = async () => {

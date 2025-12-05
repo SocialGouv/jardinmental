@@ -21,7 +21,6 @@ export type ToolItemType =
   | "Formation"
   | "Exercice"
   | "Observation"
-  | "PDF"
   | "Quizz";
 
 // Tool item audience types
