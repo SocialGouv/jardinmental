@@ -18,7 +18,7 @@ module.exports = (() => {
   };
   config.resolver = {
     ...resolver,
-    assetExts: [...resolver.assetExts.filter((ext) => ext !== "svg"), "mp4"],
+    assetExts: resolver.assetExts.filter((ext) => ext !== "svg"),
     sourceExts: [...resolver.sourceExts, "svg"],
     // Support pnpm symlinks
     unstable_enableSymlinks: true,
