@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
+import { Text } from "react-native";
 import { Card } from "../../../components/Card";
 import { Collapsable } from "../../../components/Collapsable";
 import { GOALS_EXAMPLE } from "../../../utils/goalsConstants";
@@ -15,6 +16,9 @@ import NavigationButtons from "@/components/onboarding/NavigationButtons";
 import logEvents from "@/services/logEvents";
 import NotificationService from "@/services/notifications";
 import { addPushTokenListener } from "expo-notifications";
+import GoalElementsSelection from "./GoalElementSelection";
+import { mergeClassNames } from "@/utils/className";
+import { typography } from "@/utils/typography";
 
 const GOALS_EXAMPLE_FLAT = Object.values(GOALS_EXAMPLE).reduce((acc, subGoalCategory) => {
   return [...acc, ...subGoalCategory];
@@ -183,30 +187,27 @@ export const GoalsAddOptions = ({ navigation }) => {
         />
       </Card>
       <View className="px-4">
-        <Collapsable preset="primary" title="Choisir un objectif parmi des exemples" containerStyle={{ marginTop: 24 }}>
-          {Object.keys(GOALS_EXAMPLE).map((goalCategory) => {
-            return (
-              <Collapsable preset="secondary" title={goalCategory} key={goalCategory}>
-                {GOALS_EXAMPLE[goalCategory].map((goalExample) => {
-                  return (
-                    <InputCheckbox
-                      key={goalExample}
-                      label={goalExample}
-                      checked={goalsToChange?.[goalExample]?.enabled ?? enabledExampleGoals?.[goalExample]}
-                      onCheckedChanged={({ checked }) => {
-                        changeGoal({ label: goalExample, enabled: checked, type: "example" });
-                      }}
-                    />
-                  );
-                })}
-              </Collapsable>
-            );
-          })}
-        </Collapsable>
+        <Text className={mergeClassNames(typography.textLgBold, "text-cnam-primary-900 mb-4 mt-10")}>Choisir parmi des exemples</Text>
+        {Object.keys(GOALS_EXAMPLE).map((goalCategory) => {
+          console.log(GOALS_EXAMPLE[goalCategory]);
+          return (
+            <GoalElementsSelection
+              goalsToChange={goalsToChange}
+              enabledExampleGoals={enabledExampleGoals}
+              onClick={(checked, goalExample) => {
+                changeGoal({ label: goalExample, enabled: checked, type: "example" });
+              }}
+              options={GOALS_EXAMPLE[goalCategory]}
+              title={goalCategory}
+              key={goalCategory}
+            />
+          );
+        })}
         <Collapsable preset="primary" title="Réactiver un ancien objectif">
-          {disabledGoals.map((goal) => {
+          {disabledGoals.map((goal, index) => {
             return (
               <GoalAddCheckable
+                index={index}
                 goal={goal}
                 checked={goalsToChange?.[goal?.label]?.enabled}
                 onCheckedChanged={({ checked }) => {

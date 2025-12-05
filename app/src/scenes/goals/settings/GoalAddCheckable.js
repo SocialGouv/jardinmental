@@ -1,23 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import { InputCheckbox } from "../../../components/InputCheckbox";
+import { mergeClassNames } from "@/utils/className";
 
-export const GoalAddCheckable = ({ goal, checked, onCheckedChanged }) => {
+export const GoalAddCheckable = ({ goal, checked, onCheckedChanged, index }) => {
   const [_checked, _setChecked] = useState(checked);
   useEffect(() => {
     _setChecked(checked);
   }, [checked]);
 
   return (
-    <View
-      style={[
-        styles.container,
-        {
-          backgroundColor: _checked ? "#F4FCFD" : "#F8F9FB",
-          borderColor: _checked ? "#DEF4F5" : "#E7EAF1",
-        },
-      ]}
-    >
+    <View className={mergeClassNames(index !== 0 ? "border-t border-gray-300" : "", "pb-2 pt-1")} pointerEvents="none">
       <Pressable
         onPress={() => {
           const nextChecked = !_checked;
@@ -37,12 +30,12 @@ export const GoalAddCheckable = ({ goal, checked, onCheckedChanged }) => {
 const styles = StyleSheet.create({
   container: {
     width: "100%",
-    borderWidth: 1,
+    // borderWidth: 1,
     borderRadius: 16,
-    marginVertical: 8,
+    marginVertical: 4,
   },
   contentContainer: {
-    paddingVertical: 8,
+    // paddingVertical: 8,
     paddingHorizontal: 16,
   },
 });

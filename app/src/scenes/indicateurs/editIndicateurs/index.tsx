@@ -190,42 +190,29 @@ const EditIndicateurs = ({ navigation, route }) => {
             height: 40,
           }}
         />
-        <TouchableOpacity className="flex-row justify-between flex-1 items-center" onPress={() => toggleState(exemplesVisible, setExemplesVisible)}>
-          <Text className={mergeClassNames(typography.textLgBold, "text-cnam-primary-900")}>Choisir parmi des exemples</Text>
-          {exemplesVisible ? (
-            <ArrowUpSvg color={TW_COLORS.CNAM_PRIMARY_900} />
-          ) : (
-            <ArrowUpSvg
-              style={{
-                transform: [{ rotateX: "180deg" }],
-              }}
-              color={TW_COLORS.CNAM_PRIMARY_900}
-            />
-          )}
-        </TouchableOpacity>
-        {exemplesVisible && (
-          <View className="mt-4">
-            <CategorieElements
-              title="Les plus courants"
-              options={INDICATEURS_LES_PLUS_COURANTS}
-              onClick={(value) => setToggleIndicateur(value)}
-              userIndicateurs={userIndicateurs}
-            />
-            {Object.keys(indicateursByCategory).map((_category) => {
-              const _indicateurs = indicateursByCategory[_category];
-              return (
-                <CategorieElements
-                  key={_category}
-                  category={indicateursByCategory[_category][0].mainCategory}
-                  title={INDICATOR_CATEGORIES_DATA[_category].name}
-                  options={_indicateurs}
-                  onClick={(value) => setToggleIndicateur(value)}
-                  userIndicateurs={userIndicateurs}
-                />
-              );
-            })}
-          </View>
-        )}
+
+        <View className="mt-4">
+          <Text className={mergeClassNames(typography.textLgBold, "text-cnam-primary-900 mb-4")}>Choisir parmi des exemples</Text>
+          <CategorieElements
+            title="Les plus courants"
+            options={INDICATEURS_LES_PLUS_COURANTS}
+            onClick={(value) => setToggleIndicateur(value)}
+            userIndicateurs={userIndicateurs}
+          />
+          {Object.keys(indicateursByCategory).map((_category) => {
+            const _indicateurs = indicateursByCategory[_category];
+            return (
+              <CategorieElements
+                key={_category}
+                category={indicateursByCategory[_category][0].mainCategory}
+                title={INDICATOR_CATEGORIES_DATA[_category].name}
+                options={_indicateurs}
+                onClick={(value) => setToggleIndicateur(value)}
+                userIndicateurs={userIndicateurs}
+              />
+            );
+          })}
+        </View>
         <View
           style={{
             height: 15,
@@ -236,7 +223,7 @@ const EditIndicateurs = ({ navigation, route }) => {
           onPress={() => toggleState(existingIndicatorsVisible, setExistingIndicatorsVisible)}
           className="flex-row justify-between flex-1 items-center"
         >
-          <Text className={mergeClassNames(typography.textLgBold, "text-cnam-primary-900")}>Réactiver un ancien indicateur</Text>
+          <Text className={mergeClassNames(typography.textLgRegular, "text-cnam-primary-900")}>Réactiver un ancien indicateur</Text>
           {existingIndicatorsVisible ? (
             <ArrowUpSvg color={TW_COLORS.CNAM_PRIMARY_900} />
           ) : (

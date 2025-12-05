@@ -36,7 +36,7 @@ export const Card = ({
           {icon && <Icon width="26" height="26" color="#000091" {...icon} style={styles.image} />}
           {image && <Image {...image} style={styles.image} />}
           <View style={[styles.innerContentContainer, innerContentContainerStyle]}>
-            {title && <Text className={mergeClassNames(typography.textMdBold, "text-cnam-primary-900")}>{title}</Text>}
+            {title && <Text className={mergeClassNames(typography.textLgBold, "text-cnam-primary-900")}>{title}</Text>}
             {text && <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900 mt-4")}>{text}</Text>}
             {children && mergeChildren && <View style={styles.childrenContainer}>{children}</View>}
           </View>

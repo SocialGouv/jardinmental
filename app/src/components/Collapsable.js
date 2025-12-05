@@ -4,6 +4,7 @@ import ArrowUpSvg from "../../assets/svg/arrow-up.svg";
 import { autoLayoutAnimation } from "../utils/autoLayoutAnimation";
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 import { colors } from "@/utils/colors";
+import { TW_COLORS } from "@/utils/constants";
 
 export const Collapsable = ({
   preset, // 'primary' | 'secondary'
@@ -75,22 +76,24 @@ const _styles = {
     },
     headerContainer: {
       flexDirection: "row",
+      marginTop: 10,
       alignItems: "center",
       justifyContent: "center",
     },
     title: {
       flex: 1,
-      fontSize: 14,
+      fontSize: 18,
       marginBottom: 2,
       fontFamily: "SourceSans3",
-      fontWeight: "700",
+      fontWeight: "400",
       color: colors.BLUE,
     },
   }),
   primary: StyleSheet.create({
     container: {
       borderTopWidth: 1,
-      borderColor: "rgba(38, 56, 124, 0.1)",
+      borderColor: TW_COLORS.CNAM_PRIMARY_800,
+      marginTop: 10,
     },
     headerContainer: {
       minHeight: 52,

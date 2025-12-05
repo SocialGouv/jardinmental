@@ -122,7 +122,7 @@ const CustomSymptomScreen = ({ navigation, route, settings = false }) => {
             .filter((_indicateur) => _indicateur.active)
             .map((_indicateur) => {
               return (
-                <View key={_indicateur.uuid} className="p-4 bg-gray-100 mb-2 rounded-xl">
+                <View key={_indicateur.uuid || _indicateur.name} className="p-4 bg-gray-100 mb-2 rounded-xl">
                   <Text className={mergeClassNames(typography.textLgRegular, "text-cnam-primary-950")}>{_indicateur.name}</Text>
                 </View>
               );
