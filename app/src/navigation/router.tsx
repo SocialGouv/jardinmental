@@ -62,6 +62,9 @@ import { DetailModalCorrelationScreen } from "@/scenes/suivi/correlation/ModalDe
 import { ModalTriggerScreen } from "@/scenes/suivi/triggers/ModalTrigger";
 import SettingsModal from "@/scenes/settings/settings-modal";
 import CommityScreen from "@/scenes/commity/CommityScreen";
+import ToolSelectionInfo from "@/scenes/tools/ToolSelectionInfoScreen";
+import BreathExercice from "@/scenes/tools/BreathExercice";
+import CoherenceCardiaqueVideoScreen from "@/scenes/videos/CoherenceCardiaqueVideoScreen";
 
 const Stack = createStackNavigator();
 
@@ -234,6 +237,10 @@ class Router extends React.Component<RouterProps> {
             <Stack.Screen name="data-export-import" component={DataExportImport} />
             <Stack.Screen name="chart-day" component={DailyChart} />
             <Stack.Screen name="day-survey-detail" component={DiaryDetail} />
+            <Stack.Screen name="tool-selection-info" component={ToolSelectionInfo} />
+            <Stack.Screen name="breath-exercice" component={BreathExercice} />
+            <Stack.Screen name="coherence-cardiaque-video" component={CoherenceCardiaqueVideoScreen} />
+
             <Stack.Screen name="notes" options={{ animationEnabled: Platform.OS === "ios" }}>
               {({ navigation, route }) => <Notes navigation={navigation} route={route} />}
             </Stack.Screen>
