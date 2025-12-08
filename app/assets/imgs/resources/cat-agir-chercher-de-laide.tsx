@@ -9,8 +9,8 @@ export default function CatAgirChercheDeLaide({ width = 75, height = 62 }: CatAg
   return (
     <Svg width="86" height="89" viewBox="0 0 86 89" fill="none" style={{ position: "absolute", bottom: -20, right: 10 }}>
       <Path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M30.7966 58.5757C29.9221 59.1913 30.0613 60.4026 30.3245 61.2827C30.7122 62.5785 31.4844 63.7782 32.3652 64.8122C33.9279 66.6466 36.5807 68.7064 39.026 67.0959C41.2037 65.6617 42.5773 62.7676 43.0514 60.3299C43.1979 59.5766 43.3931 58.4541 42.7046 57.8877C41.6867 57.0506 39.8911 57.2029 38.6623 57.3107C37.8531 57.3816 37.0722 57.6225 36.2725 57.5094C34.4144 57.2465 32.3464 57.4846 30.7966 58.5757Z"
         fill="#E11A81"
       />
