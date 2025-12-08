@@ -67,7 +67,7 @@ const ToolsScreen: React.FC<ToolsScreenProps> = ({ navigation }) => {
   return (
     <SafeAreaView edges={["left", "right"]} className="flex-1">
       <View className="bg-cnam-primary-800 flex flex-row justify-between pb-0">
-        <Header title="Ressources" navigation={navigation} />
+        <Header title="Boite à outils" navigation={navigation} />
       </View>
       <ScrollView
         contentContainerStyle={{
