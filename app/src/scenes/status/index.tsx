@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { StyleSheet, View, Dimensions, Animated, Text, TouchableOpacity } from "react-native";
-
+import { LinearGradient } from "expo-linear-gradient";
 import { useFocusEffect } from "@react-navigation/native";
 import Header from "../../components/Header";
 import { colors } from "../../utils/colors";
@@ -31,6 +31,13 @@ import { interpolate, useAnimatedScrollHandler, useDerivedValue, useSharedValue,
 import { useStatusBar } from "@/context/StatusBarContext";
 import logEvents from "@/services/logEvents";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
+import BookOpenIcon from "@assets/svg/icon/BookOpen";
+import Film from "@assets/svg/icon/Film";
+import PlayCircleIcon from "@assets/svg/icon/PlayCircle";
+import HeadphonesIcon from "@assets/svg/icon/Headphones";
+import BriefcaseIcon from "@assets/svg/icon/Briefcase";
+import CloseCross from "@assets/svg/icon/CloseCross";
+import ArrowCircleRightIcon from "@assets/svg/icon/ArrowCircleRight";
 
 const Status = ({ navigation, startSurvey }) => {
   const [diaryData] = useContext(DiaryDataContext);
@@ -78,6 +85,9 @@ const Status = ({ navigation, startSurvey }) => {
   const plusPosition = useDerivedValue(() => {
     return interpolate(scrollY.value, [0, 100], [80, 0], "clamp");
   });
+
+  const [resourceModalVisible, setResourceModalVisible] = useState<boolean | null>(null);
+  const resourceModalOpacity = React.useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
     (async () => {
@@ -127,14 +137,28 @@ const Status = ({ navigation, startSurvey }) => {
         setChecklistBannerVisible(shouldShow);
         checklistBannerOpacity.setValue(shouldShow ? 1 : 0);
         const userIsNew = await localStorage.getIsNewUser();
-        const newModalDismissed = await localStorage.getIsInfoModalDismissed();
-        console.log("show user modal", userIsNew, newModalDismissed, shouldShow);
+        const resourceModalDismissed = await localStorage.getIsInfoModalDismissed();
+        setResourceModalVisible(!resourceModalDismissed && !shouldShow);
+
         showLatestChangesModal();
       })();
     }, [])
   );
 
   const noData = () => !Object.keys(diaryData).some((key) => diaryData[key]);
+
+  const handleDismissResourceModal = async () => {
+    // Animate the banner to fade out smoothly
+    Animated.timing(resourceModalOpacity, {
+      toValue: 0,
+      duration: 300,
+      useNativeDriver: true,
+    }).start(() => {
+      localStorage.setIsInfoModalDismissed(true);
+      // After animation completes, hide the banner
+      setResourceModalVisible(false);
+    });
+  };
 
   const handlePlusTardClick = async () => {
     // Animate the banner to fade out smoothly
@@ -198,6 +222,75 @@ const Status = ({ navigation, startSurvey }) => {
                   title="C'est parti"
                 />
               </View>
+            </SquircleView>
+          </Animated.View>
+        )}
+        {resourceModalVisible && (
+          <Animated.View
+            style={{
+              opacity: resourceModalOpacity,
+            }}
+          >
+            <SquircleView
+              className="mb-4"
+              cornerSmoothing={100} // 0-100
+              preserveSmoothing={true} // false matches figma, true has more rounding
+              style={{
+                borderRadius: 20,
+                overflow: "hidden",
+              }}
+            >
+              <LinearGradient
+                colors={["#66CDBB", "#66C9EC", "#FCF0D3", "#F9D1E6", "#D9BDE2", "#9EB3D7"]}
+                locations={[0.0379, 0.168, 0.402, 0.6448, 0.7792, 0.9136]}
+                start={{ x: 0.06, y: 0.73 }}
+                end={{ x: 0.94, y: 0.27 }}
+                style={{ padding: 2 }}
+              >
+                <View className="bg-cnam-primary-50" style={{ padding: 20, borderRadius: 20 }}>
+                  <View className="flex-row justify-between items-center">
+                    <View className="flex-row space-x-2">
+                      <View style={{ transform: [{ rotate: "-10deg" }] }}>
+                        <BookOpenIcon color={TW_COLORS.CNAM_PRIMARY_300} width={15} height={15} />
+                      </View>
+                      <View style={{ transform: [{ rotate: "10deg" }] }}>
+                        <PlayCircleIcon color={TW_COLORS.CNAM_PRIMARY_300} width={15} height={15} />
+                      </View>
+                      <View style={{ transform: [{ rotate: "-10deg" }] }}>
+                        <Film color={TW_COLORS.CNAM_PRIMARY_300} width={15} height={15} />
+                      </View>
+                      <View style={{ transform: [{ rotate: "10deg" }] }}>
+                        <HeadphonesIcon color={TW_COLORS.CNAM_PRIMARY_300} width={15} height={15} />
+                      </View>
+
+                      <View style={{ transform: [{ rotate: "10deg" }] }}>
+                        <BriefcaseIcon color={TW_COLORS.CNAM_PRIMARY_300} width={15} height={15} />
+                      </View>
+                    </View>
+                    <TouchableOpacity onPress={handleDismissResourceModal}>
+                      <CloseCross color={TW_COLORS.CNAM_PRIMARY_900} />
+                    </TouchableOpacity>
+                  </View>
+                  <Text className={mergeClassNames(typography.textLgSemibold, "text-left text-cnam-primary-950 mb-2 mt-3")}>
+                    Mieux comprendre la santé mentale{" "}
+                  </Text>
+                  <Text className={mergeClassNames(typography.textSmMedium, "text-left text-cnam-primary-800")}>
+                    Découvrez le guide complet pour comprendre, repérer et agir.
+                  </Text>
+                  <View className="flex-row self-end items-center">
+                    <TouchableOpacity
+                      onPress={() => {
+                        navigation.navigate("tabs", { initialTab: "Resources" });
+                        // handleDismissResourceModal();
+                      }}
+                      className="mt-4 flex-row items-center"
+                    >
+                      <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40 mr-2")}>S'informer</Text>
+                      <ArrowCircleRightIcon />
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </LinearGradient>
             </SquircleView>
           </Animated.View>
         )}
