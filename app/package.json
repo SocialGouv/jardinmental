@@ -3,7 +3,7 @@
   "version": "1.40.3",
   "buildNumber": 199,
   "private": true,
-  "main": "node_modules/expo/AppEntry.js",
+  "main": "index.js",
   "scripts": {
     "get-ip": "./get-ip.sh",
     "android": "npm run get-ip && expo run:android --reset-cache",
@@ -69,6 +69,7 @@
     "expo-status-bar": "~2.2.3",
     "expo-updates": "~0.28.17",
     "fetch-retry": "^5.0.3",
+    "lodash": "^4.17.21",
     "lottie-react-native": "7.2.5",
     "nativewind": "^2.0.11",
     "prettier": "^2.5.1",
