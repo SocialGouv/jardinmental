@@ -134,8 +134,6 @@ const ToolsScreen: React.FC<ToolsScreenProps> = ({ navigation }) => {
                       if (filters) {
                         setFormatFilters(filters.formatFilters);
                         setAudienceFilters(filters.audienceFilters);
-                        console.log("Format filters:", filters.formatFilters);
-                        console.log("Audience filters:", filters.audienceFilters);
                       }
                       closeBottomSheet();
                     }}
