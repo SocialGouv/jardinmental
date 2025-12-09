@@ -7,6 +7,8 @@ import { Indicator } from "@/entities/Indicator";
 import JMButton from "@/components/JMButton";
 import { LightSelectionnableItem } from "@/components/SelectionnableItem";
 import { ToolItemTheme, ToolItemThemes, ToolThemeFilter } from "@/entities/ToolItem";
+import MenuIcon from "@assets/svg/icon/Menu";
+import { TW_COLORS } from "@/utils/constants";
 
 const screenHeight = Dimensions.get("window").height;
 const height90vh = screenHeight * 0.9;
@@ -40,8 +42,11 @@ export const ToolThemeFilterBottomSheet = ({
         showsVerticalScrollIndicator={false}
         style={{ paddingVertical: 20, height: height90vh }}
       >
+        <View className="flex-row bg-[#E5F6FC] self-start items-center p-2">
+          <MenuIcon color={TW_COLORS.CNAM_CYAN_700_DARKEN_40} />
+          <Text className={mergeClassNames(typography.textSmBold, "ml-2 text-cnam-cyan-700-darken-40 text-left")}>Catégories</Text>
+        </View>
         <View className="p-4 flex-column flex-1 gap-6">
-          <Text className={mergeClassNames(typography.displayXsSemibold, "text-left text-cnam-primary-900")}>Sélectionnez un indicateur</Text>
           <View className="flex-colum flex-1">
             {!indicatorList && <Text>Chargement...</Text>}
             {["Toutes les catégories", "Mes Favoris", ...ToolItemThemes].map((theme) => {
@@ -79,14 +84,13 @@ export const ToolThemeFilterBottomSheet = ({
         }}
         className={`flex-column justify-between items-center p-6 px-6 bg-white/90 pb-10 w-full`}
       >
-        <Text className={mergeClassNames(typography.textSmMedium, "text-gray-800 mb-2")}>Vous pourrez modifier cette sélection plus tard</Text>
         <JMButton
           onPress={async () => {
             onClose({
               selectedThemeFilter: selectedThemeFilter,
             });
           }}
-          title={"Valider la sélection"}
+          title={"Valider"}
         />
       </View>
     </View>

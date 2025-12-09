@@ -14,18 +14,19 @@ interface ToolItemCardProps {
   toolItem: ToolItemEntity;
   onPress: (resource: ToolItemEntity) => void;
   onBookmarkChange?: () => void;
+  isBookmarked: boolean;
 }
 
-const ToolItemCard: React.FC<ToolItemCardProps> = ({ toolItem, onPress, onBookmarkChange }) => {
-  const [isBookmarked, setIsBookmarked] = useState<boolean>(false);
+const ToolItemCard: React.FC<ToolItemCardProps> = ({ toolItem, onPress, onBookmarkChange, isBookmarked }) => {
+  // const [isBookmarked, setIsBookmarked] = useState<boolean>(initialIsBookmarked);
 
   const itemId = toolItem.id;
 
   useEffect(() => {
     const load = async () => {
       try {
-        const ids = await localStorage.getBookmarkedToolItems();
-        setIsBookmarked(ids.includes(itemId));
+        // const ids = await localStorage.getBookmarkedToolItems();
+        // setIsBookmarked(ids.includes(itemId));
       } catch (error) {
         console.error("Failed to load viewed resources:", error);
       }
@@ -44,10 +45,10 @@ const ToolItemCard: React.FC<ToolItemCardProps> = ({ toolItem, onPress, onBookma
     try {
       if (isBookmarked) {
         const updated = await localStorage.removeBookmarkToolItem(itemId);
-        setIsBookmarked(updated.includes(itemId));
+        // setIsBookmarked(updated.includes(itemId));
       } else {
         const updated = await localStorage.bookmarkToolItem(itemId);
-        setIsBookmarked(updated.includes(itemId));
+        // setIsBookmarked(updated.includes(itemId));
       }
       // Log bookmark event
       logEvents.logOutilsBookmark();

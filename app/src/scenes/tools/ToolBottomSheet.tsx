@@ -28,16 +28,16 @@ import { useInAppBrowserConfig } from "@/hooks/useInAppBrowserConfig";
 const screenHeight = Dimensions.get("window").height;
 const height90vh = screenHeight * 0.9;
 
-const VISIBLE_THEMES_LIMIT = 3;
-
 export const ToolBottomSheet = ({
   onClose,
   toolItem,
   navigation,
+  onBookmarkChange,
 }: {
   onClose: (treatment?: Drug[]) => void;
   toolItem: ToolItemEntity;
   navigation;
+  onBookmarkChange;
 }) => {
   const [isDownloading, setIsDownloading] = useState(false);
   const { closeBottomSheet } = useBottomSheet();
@@ -58,6 +58,36 @@ export const ToolBottomSheet = ({
     };
     load();
   }, [itemId]);
+
+  const [renderedThemes, setRenderedThemes] = useState([]);
+  const [maxWidth, setMaxWidth] = useState(0);
+  useEffect(() => {
+    if (!maxWidth) return;
+
+    let currentWidth = 0;
+    let lineCount = 1;
+    const maxLines = 2;
+    const spacing = 8; // ton `mr-2`
+
+    const allowed = [];
+
+    toolItem.themes.forEach((theme, index) => {
+      // Estimation de la largeur du chip
+      const chipWidth = theme.length * 7 + 30; // (texte approx + padding)
+      if (currentWidth + chipWidth > maxWidth) {
+        // nouvelle ligne
+        lineCount++;
+        if (lineCount === 2) {
+          currentWidth = toolItem.themes.length - index - 1 <= 1 ? 0 : 100;
+        }
+      }
+
+      if (lineCount > maxLines) return;
+      allowed.push(theme);
+      currentWidth += chipWidth + spacing;
+    });
+    setRenderedThemes(allowed);
+  }, [maxWidth, toolItem.themes]);
 
   // Helper function to check if the tool type is a file/downloadable type
   const isFileType = () => {
@@ -145,7 +175,17 @@ export const ToolBottomSheet = ({
   return (
     <View className="flex-1 bg-white">
       <View className="flex-1">
-        <ScrollView bounces={false} contentContainerStyle={{ paddingBottom: 0 }} showsVerticalScrollIndicator={false} style={{ paddingTop: 20 }}>
+        <ScrollView
+          bounces={false}
+          // contentContainerStyle={{ paddingBottom: 0 }}
+          contentContainerStyle={{ paddingBottom: 0, minHeight: "100%" }}
+          showsVerticalScrollIndicator={false}
+          style={{
+            paddingTop: 20,
+            height: height90vh,
+          }}
+          // style={{ paddingTop: 20 }}
+        >
           <View className="self-end mr-4">
             {!isBookmarked ? (
               <TouchableOpacity
@@ -154,6 +194,7 @@ export const ToolBottomSheet = ({
                     const itemId = toolItem.id;
                     const updated = await localStorage.bookmarkToolItem(itemId);
                     setIsBookmarked(updated.includes(itemId));
+                    onBookmarkChange?.();
                     // Log bookmark event
                     logEvents.logOutilsBookmark();
                   } catch (error) {
@@ -173,6 +214,7 @@ export const ToolBottomSheet = ({
                     const itemId = toolItem.id;
                     const updated = await localStorage.removeBookmarkToolItem(itemId);
                     setIsBookmarked(updated.includes(itemId));
+                    onBookmarkChange?.();
                     // Log bookmark event (also logged when removing)
                     logEvents.logOutilsBookmark();
                   } catch (error) {
@@ -186,32 +228,59 @@ export const ToolBottomSheet = ({
               </TouchableOpacity>
             )}
           </View>
-          <View className="flex-row self-start flex-wrap items-center p-2 space-x-1 space-y-1">
-            {toolItem.themes.slice(0, showAllThemes ? toolItem.themes.length : VISIBLE_THEMES_LIMIT).map((theme, index) => (
+          <View onLayout={(e) => setMaxWidth(e.nativeEvent.layout.width)} className="flex-row self-start flex-wrap items-center p-2 space-x-0">
+            {/* {toolItem.themes.slice(0, showAllThemes ? toolItem.themes.length : VISIBLE_THEMES_LIMIT).map((theme, index) => (
               <Text
                 key={index}
-                className={mergeClassNames(typography.textSmSemibold, "ml-1 text-cnam-cyan-700-darken-40 text-left bg-[#E5F6FC] py-1 px-2")}
+                className={mergeClassNames(
+                  typography.textSmSemibold,
+                  "text-cnam-cyan-700-darken-40 text-left bg-[#E5F6FC] py-1 px-2 leading-[20px] mr-2"
+                )}
               >
                 {theme}
               </Text>
-            ))}
-            {toolItem.themes.length > VISIBLE_THEMES_LIMIT && !showAllThemes && (
+            ))} */}
+            {!!showAllThemes &&
+              toolItem.themes.map((theme, index) => (
+                <Text
+                  key={index}
+                  className={mergeClassNames(
+                    typography.textSmSemibold,
+                    "text-cnam-cyan-700-darken-40 bg-[#E5F6FC] py-1 px-2 leading-[20px] mr-2 mb-2"
+                  )}
+                >
+                  {theme}
+                </Text>
+              ))}
+            {!showAllThemes &&
+              renderedThemes.map((theme, index) => (
+                <Text
+                  key={index}
+                  className={mergeClassNames(
+                    typography.textSmSemibold,
+                    "text-cnam-cyan-700-darken-40 bg-[#E5F6FC] py-1 px-2 leading-[20px] mr-2 mb-2"
+                  )}
+                >
+                  {theme}
+                </Text>
+              ))}
+            {toolItem.themes.length > renderedThemes.length && !showAllThemes && (
               <TouchableOpacity
                 onPress={() => setShowAllThemes(!showAllThemes)}
-                className="flex-row items-center ml-1 bg-[#E5F6FC] py-1 px-2 space-x-1"
+                className="flex-row items-center bg-[#E5F6FC] py-1 px-2 space-x-1 mb-2 "
               >
                 {!showAllThemes && (
                   <>
                     <SimplePlus color="#3D6874" width={16} height={16} />
-                    <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-cyan-700-darken-40")}>
-                      {toolItem.themes.length - VISIBLE_THEMES_LIMIT}
+                    <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-cyan-700-darken-40 leading-[20px]")}>
+                      {toolItem.themes.length - renderedThemes.length}
                     </Text>
                   </>
                 )}
               </TouchableOpacity>
             )}
           </View>
-          <View className="p-4 flex-column flex-1">
+          <View className="p-4 flex-column">
             <Text className={mergeClassNames(typography.displayXsBold, "text-left text-cnam-primary-900")}>{toolItem.title}</Text>
           </View>
           <View className="p-4 flex-column flex-1">
@@ -252,7 +321,7 @@ export const ToolBottomSheet = ({
             )}
           </View>
           {toolItem.source && (
-            <View className="w-full bg-gray-100 p-6">
+            <View className="w-full bg-gray-100 p-6 pb-20">
               <Text className={mergeClassNames(typography.textSmRegular, "text-gray-800")}>Fourni par : {toolItem.source}</Text>
             </View>
           )}
