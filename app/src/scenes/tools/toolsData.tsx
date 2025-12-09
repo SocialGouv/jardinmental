@@ -86,7 +86,7 @@ export const TOOLS_DATA: ToolItemEntity[] = [
     type: ["Vidéo"],
     themes: ["Apprendre à se connaître", "Gérer les pensées difficiles", "Reconnaître ses émotions", "Réguler ses émotions"],
     audience: ["Pour tous"],
-    url: "youtube.com/watch?v=GzPuTLhQR2I&list=PLUGg132D8DUzv2H04p0-AWB_L5aplMtbo&index=4",
+    url: "https://youtube.com/watch?v=GzPuTLhQR2I&list=PLUGg132D8DUzv2H04p0-AWB_L5aplMtbo&index=4",
     source: "Promotion Santé Normandie",
   },
   {
@@ -152,7 +152,7 @@ export const TOOLS_DATA: ToolItemEntity[] = [
   {
     id: "99d8f878-7000-4a87-808d-8d74fa4ce1f3",
     matomoId: 47,
-    title: "Les stratégie parapluie en cas de crise",
+    title: "La stratégie parapluie en cas de crise",
     description:
       "En cas de crise, cette fiche vous propose des stratégies simples pour vous aider à vous calmer, faire une pause et reprendre vos esprits.",
     type: ["Fichier"],
@@ -186,27 +186,27 @@ export const TOOLS_DATA: ToolItemEntity[] = [
     source: "Organisation Mondiale de la Santé (OMS)",
   },
   {
-    id: "226e7573-a86d-4dfe-8deb-63ae05d37b97",
-    matomoId: 44,
-    title: "S’ancrer dans le présent - 6 min",
-    description:
-      "Pendant six minutes, cet exercice vous aide à vous ancrer dans le moment présent : observer vos pensées et émotions sans vous laisser emporter, et prêter attention à ce que vous êtes en train de faire.",
-    type: ["Audio", "Exercice"],
-    themes: ["Diminuer le stress", "Gérer les pensées difficiles", "Reconnaître ses émotions", "Réguler ses émotions", "Se relaxer"],
-    audience: ["Pour tous"],
-    url: "https://terrance.who.int/mediacentre/audio/MSD/Doing_What_Matters_French/WHO-AUDIO_Stress_Management_Grounding_Exercise_1__5_minutes_FRENCH_22OCT2020.mp3",
-    source: "Organisation Mondiale de la Santé (OMS)",
-  },
-  {
     id: "909a6674-4826-45b4-bf58-f7869a258efc",
     matomoId: 43,
-    title: "S’ancrer dans le présent -  2 min",
+    title: "S’ancrer dans le présent -  6 min",
     description:
       "Pendant deux minutes, cet exercice vous aide à vous ancrer dans le moment présent : observer vos pensées et émotions sans vous laisser emporter, et prêter attention à ce que vous êtes en train de faire.",
     type: ["Audio", "Exercice"],
     themes: ["Diminuer le stress", "Gérer les pensées difficiles", "Reconnaître ses émotions", "Réguler ses émotions", "Se relaxer"],
     audience: ["Pour tous"],
     url: "https://terrance.who.int/mediacentre/audio/MSD/Doing_What_Matters_French/WHO-AUDIO_Stress_Management_Grounding_Exercise_2_2_minutes_FRENCH_22OCT2020.mp3",
+    source: "Organisation Mondiale de la Santé (OMS)",
+  },
+  {
+    id: "226e7573-a86d-4dfe-8deb-63ae05d37b97",
+    matomoId: 44,
+    title: "S’ancrer dans le présent - 2 min",
+    description:
+      "Pendant six minutes, cet exercice vous aide à vous ancrer dans le moment présent : observer vos pensées et émotions sans vous laisser emporter, et prêter attention à ce que vous êtes en train de faire.",
+    type: ["Audio", "Exercice"],
+    themes: ["Diminuer le stress", "Gérer les pensées difficiles", "Reconnaître ses émotions", "Réguler ses émotions", "Se relaxer"],
+    audience: ["Pour tous"],
+    url: "https://terrance.who.int/mediacentre/audio/MSD/Doing_What_Matters_French/WHO-AUDIO_Stress_Management_Grounding_Exercise_1__5_minutes_FRENCH_22OCT2020.mp3",
     source: "Organisation Mondiale de la Santé (OMS)",
   },
   {
@@ -260,7 +260,7 @@ export const TOOLS_DATA: ToolItemEntity[] = [
   {
     id: "fe23469f-0601-4cf0-8dca-9bde16412c68",
     matomoId: 38,
-    title: "Comprendre mes biais de pensées : prendre de la distance",
+    title: "Comprendre mes biais de pensée : prendre de la distance",
     description:
       "Cet outil vous aide à repérer les biais de pensée - ces façons de penser qui peuvent déformer la réalité et alimenter des émotions négatives. Après la présentation du concept, un exercice pratique se trouve tout à la fin de la page pour vous entraîner à les identifier et prendre du recul.",
     type: ["Article", "Jeu", "Quizz"],
@@ -434,7 +434,7 @@ export const TOOLS_DATA: ToolItemEntity[] = [
     description:
       "Ce cahier propose des activités positives co‑construits avec des personnes concernées par des troubles psychiques. Il est conçu pour favoriser l’affirmation de soi, la connaissance de soi et le bien‑être.",
     type: ["Fichier"],
-    themes: ["Apprendre à se connaître", "Bienveillance envers soi-même"],
+    themes: ["Apprendre à se connaître", "Bienveillance envers soi-même", "Vie quotidienne"],
     audience: ["Pour tous"],
     url: "https://etonnant-periple.fr/activites-individuelles/",
     source: "Etonnant Périple",
@@ -504,7 +504,7 @@ export const TOOLS_DATA: ToolItemEntity[] = [
     title: "Découvrir la méditation",
     description: "Cette méditation courte vous aide à vous poser, prendre quelques instants pour respirer et revenir au moment présent.",
     type: ["Vidéo"],
-    themes: ["Diminuer le stress", "Se relaxer"],
+    themes: ["Diminuer le stress", "Se relaxer", "Réguler ses émotions"],
     audience: ["Pour tous"],
     url: "https://www.youtube.com/watch?v=rlKe8dGsEko&embeds_referring_euri=https%3A%2F%2Fwww.nightline.fr%2F&source_ve_path=MjM4NTE",
     source: "Nightline",
@@ -516,7 +516,7 @@ export const TOOLS_DATA: ToolItemEntity[] = [
     description:
       "Si vous trouvez la méditation difficile, vous pouvez essayer la crise de calme : une vidéo courte de 3 minutes qui vous aide à retrouver rapidement calme et apaisement.",
     type: ["Vidéo"],
-    themes: ["Diminuer le stress", "Se relaxer"],
+    themes: ["Diminuer le stress", "Se relaxer", "Réguler ses émotions"],
     audience: ["Pour tous"],
     url: "https://www.youtube.com/watch?v=9VUp582KRH8",
     source: "Nightline",
@@ -528,7 +528,7 @@ export const TOOLS_DATA: ToolItemEntity[] = [
     description:
       "Cette vidéo propose un body scan, un exercice de pleine conscience consistant à porter votre attention sur différentes parties de votre corps, de la tête aux pieds. Il permet de relâcher les tensions, d’améliorer la conscience corporelle et de favoriser un état de calme et de détente.",
     type: ["Vidéo"],
-    themes: ["Diminuer le stress", "Se relaxer"],
+    themes: ["Diminuer le stress", "Se relaxer", "Réguler ses émotions"],
     audience: ["Pour tous"],
     url: "https://www.youtube.com/watch?v=D89hIkSRvnY",
     source: "Nightline",
@@ -552,7 +552,7 @@ export const TOOLS_DATA: ToolItemEntity[] = [
     description:
       "Cette page liste les centres du sommeil agréés en France pour diagnostiquer et traiter les troubles du sommeil.  Elle propose une cartographie des structures, ainsi que les coordonnées des centres spécialisés dans chaque région.",
     type: ["Carte"],
-    themes: ["Améliorer son sommeil", "Trouver de l'aide"],
+    themes: ["Améliorer son sommeil", "Trouver de l'aide", "Vie quotidienne"],
     audience: ["Pour tous"],
     url: "https://institut-sommeil-vigilance.org/ou-consulter-reseau-sommeil-france/",
     source: "INSV",

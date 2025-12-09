@@ -61,4 +61,6 @@ export interface ToolItemEntity {
   audience: ToolItemAudience[];
   url?: string;
   source?: string;
+  embed?: string;
+  video?: string;
 }

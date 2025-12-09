@@ -14,8 +14,7 @@ import JMButton from "@/components/JMButton";
 import HealthIcon from "@assets/svg/icon/Health";
 import { InputText } from "@/components/InputText";
 import { ToolItemEntity } from "./toolsData";
-import * as FileSystem from "expo-file-system";
-import * as Sharing from "expo-sharing";
+import ReactNativeBlobUtil from "react-native-blob-util";
 import DownloadIcon from "@assets/svg/icon/Download";
 import LinkIcon from "@assets/svg/icon/Link";
 import LinkExternal from "@assets/svg/icon/LinkExternal";
@@ -23,6 +22,8 @@ import BookmarkAddIcon from "@assets/svg/icon/BookmarkAdd";
 import BookmarkMinusIcon from "@assets/svg/icon/BookmarkMinus";
 import SimplePlus from "@assets/svg/icon/SimplePlus";
 import logEvents from "@/services/logEvents";
+import * as WebBrowser from "expo-web-browser";
+import { useInAppBrowserConfig } from "@/hooks/useInAppBrowserConfig";
 
 const screenHeight = Dimensions.get("window").height;
 const height90vh = screenHeight * 0.9;
@@ -42,6 +43,7 @@ export const ToolBottomSheet = ({
   const { closeBottomSheet } = useBottomSheet();
   const [isBookmarked, setIsBookmarked] = useState<boolean>(false);
   const [showAllThemes, setShowAllThemes] = useState<boolean>(false);
+  const { useInAppBrowser } = useInAppBrowserConfig();
 
   const itemId = toolItem.id;
 
@@ -60,7 +62,7 @@ export const ToolBottomSheet = ({
   // Helper function to check if the tool type is a file/downloadable type
   const isFileType = () => {
     const types = Array.isArray(toolItem.type) ? toolItem.type : [toolItem.type];
-    return types.some((t) => t === "Fichier" || t === "PDF");
+    return types.some((t) => t === "Fichier");
   };
 
   const handleDownloadFile = async () => {
@@ -75,25 +77,32 @@ export const ToolBottomSheet = ({
       // Extract filename from URL or use a default name
       const urlParts = toolItem.url.split("/");
       const fileName = urlParts[urlParts.length - 1] || `${toolItem.title}.pdf`;
-      const fileUri = FileSystem.documentDirectory + fileName;
+
+      const { dirs } = ReactNativeBlobUtil.fs;
+      // Use Downloads directory on Android, DocumentDir on iOS
+      const downloadPath = Platform.OS === "android" ? dirs.DownloadDir : dirs.DocumentDir;
+      const filePath = `${downloadPath}/${fileName}`;
 
       // Download the file
-      const downloadResumable = FileSystem.createDownloadResumable(toolItem.url, fileUri);
+      const response = await ReactNativeBlobUtil.config({
+        path: filePath,
+        fileCache: true,
+        addAndroidDownloads: {
+          useDownloadManager: true, // Use Android's download manager
+          notification: true, // Show download notification
+          title: fileName,
+          description: "Téléchargement du fichier",
+          mime: "application/pdf",
+          mediaScannable: true,
+        },
+      }).fetch("GET", toolItem.url);
 
-      const result = await downloadResumable.downloadAsync();
-
-      if (result) {
-        // Check if sharing is available
-        const isSharingAvailable = await Sharing.isAvailableAsync();
-
-        if (isSharingAvailable) {
-          // Share/open the file
-          await Sharing.shareAsync(result.uri);
-          Alert.alert("Succès", "Fichier téléchargé avec succès");
-        } else {
-          Alert.alert("Succès", "Fichier téléchargé");
-        }
+      if (Platform.OS === "ios") {
+        // On iOS, open the file preview
+        await ReactNativeBlobUtil.ios.previewDocument(response.path());
       }
+
+      Alert.alert("Succès", "Fichier téléchargé avec succès");
     } catch (error) {
       console.error("Error downloading file:", error);
       Alert.alert("Erreur", "Impossible de télécharger le fichier");
@@ -109,11 +118,23 @@ export const ToolBottomSheet = ({
     }
 
     try {
-      const canOpen = await Linking.canOpenURL(toolItem.url);
-      if (canOpen) {
-        await Linking.openURL(toolItem.url);
+      if (useInAppBrowser) {
+        // Open in in-app browser using expo-web-browser
+        await WebBrowser.openBrowserAsync(toolItem.url, {
+          toolbarColor: "#3D6874", // Color matching the app theme (CNAM cyan)
+          controlsColor: "#FFFFFF",
+          enableBarCollapsing: true,
+          showTitle: true,
+          dismissButtonStyle: "done", // iOS: Show "Done" button instead of checkmark
+        });
       } else {
-        Alert.alert("Erreur", "Impossible d'ouvrir ce lien");
+        // Open in external system browser (default behavior)
+        const canOpen = await Linking.canOpenURL(toolItem.url);
+        if (canOpen) {
+          await Linking.openURL(toolItem.url);
+        } else {
+          Alert.alert("Erreur", "Impossible d'ouvrir ce lien");
+        }
       }
     } catch (error) {
       console.error("Error opening URL:", error);
@@ -161,7 +182,7 @@ export const ToolBottomSheet = ({
                 className="flex-row items-center justify-between mb-4 space-x-1"
               >
                 <BookmarkMinusIcon width={20} height={20} />
-                <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40")}>Retirer des mes favoris</Text>
+                <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40")}>Retirer de mes favoris</Text>
               </TouchableOpacity>
             )}
           </View>
@@ -199,6 +220,7 @@ export const ToolBottomSheet = ({
           <View className="w-full py-6 px-6">
             {toolItem.embed === "breath-exercice" && (
               <JMButton
+                className="mb-2"
                 icon={<DownloadIcon color="white"></DownloadIcon>}
                 onPress={() => {
                   navigation.navigate(toolItem.embed);
