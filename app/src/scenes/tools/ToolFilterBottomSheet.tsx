@@ -191,8 +191,7 @@ export const ToolFilterBottomSheet = ({
         }}
         className={`flex-column justify-between items-center p-6 px-6 bg-white/90 pb-10 w-full`}
       >
-        <Text className={mergeClassNames(typography.textSmMedium, "text-gray-800 mb-2")}>Vous pourrez modifier cette sélection plus tard</Text>
-        <JMButton onPress={applyFilters} title={"Voir les résultats"} />
+        <JMButton onPress={applyFilters} title={"Voir les résultats"} className="mb-4" />
       </View>
     </View>
   );

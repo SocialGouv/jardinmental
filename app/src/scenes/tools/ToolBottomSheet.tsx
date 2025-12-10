@@ -24,6 +24,10 @@ import SimplePlus from "@assets/svg/icon/SimplePlus";
 import logEvents from "@/services/logEvents";
 import * as WebBrowser from "expo-web-browser";
 import { useInAppBrowserConfig } from "@/hooks/useInAppBrowserConfig";
+import { shareAsync } from "expo-sharing";
+import * as FileSystem from "expo-file-system";
+import EyeIcon from "@assets/svg/icon/Eye";
+import * as Sharing from "expo-sharing";
 
 const screenHeight = Dimensions.get("window").height;
 const height90vh = screenHeight * 0.9;
@@ -40,6 +44,7 @@ export const ToolBottomSheet = ({
   onBookmarkChange;
 }) => {
   const [isDownloading, setIsDownloading] = useState(false);
+  const [isViewing, setIsViewing] = useState(false);
   const { closeBottomSheet } = useBottomSheet();
   const [isBookmarked, setIsBookmarked] = useState<boolean>(false);
   const [showAllThemes, setShowAllThemes] = useState<boolean>(false);
@@ -95,6 +100,47 @@ export const ToolBottomSheet = ({
     return types.some((t) => t === "Fichier");
   };
 
+  const handleViewPDF = async () => {
+    if (!toolItem.url) {
+      Alert.alert("Erreur", "Aucun fichier à visualiser");
+      return;
+    }
+
+    try {
+      setIsViewing(true);
+
+      // if (Platform.OS === "ios") {
+      // On iOS, open PDF directly in Safari/browser for viewing
+      // This allows users to view the PDF without downloading it
+      await WebBrowser.openBrowserAsync(toolItem.url, {
+        toolbarColor: "#3D6874",
+        controlsColor: "#FFFFFF",
+        enableBarCollapsing: false,
+        showTitle: true,
+        dismissButtonStyle: "done",
+      });
+      // } else {
+      //   // On Android, download to cache and open with PDF viewer
+      //   const urlParts = toolItem.url.split("/");
+      //   const fileName = urlParts[urlParts.length - 1] || `${toolItem.title}.pdf`;
+      //   const { dirs } = ReactNativeBlobUtil.fs;
+      //   const cachePath = `${dirs.CacheDir}/${fileName}`;
+
+      //   const response = await ReactNativeBlobUtil.config({
+      //     path: cachePath,
+      //     fileCache: true,
+      //   }).fetch("GET", toolItem.url);
+
+      //   await ReactNativeBlobUtil.android.actionViewIntent(response.path(), "application/pdf");
+      // }
+    } catch (error) {
+      console.error("Error viewing PDF:", error);
+      Alert.alert("Erreur", "Impossible de visualiser le fichier");
+    } finally {
+      setIsViewing(false);
+    }
+  };
+
   const handleDownloadFile = async () => {
     if (!toolItem.url) {
       Alert.alert("Erreur", "Aucun fichier à télécharger");
@@ -109,30 +155,41 @@ export const ToolBottomSheet = ({
       const fileName = urlParts[urlParts.length - 1] || `${toolItem.title}.pdf`;
 
       const { dirs } = ReactNativeBlobUtil.fs;
-      // Use Downloads directory on Android, DocumentDir on iOS
-      const downloadPath = Platform.OS === "android" ? dirs.DownloadDir : dirs.DocumentDir;
-      const filePath = `${downloadPath}/${fileName}`;
 
-      // Download the file
-      const response = await ReactNativeBlobUtil.config({
-        path: filePath,
-        fileCache: true,
-        addAndroidDownloads: {
-          useDownloadManager: true, // Use Android's download manager
-          notification: true, // Show download notification
-          title: fileName,
-          description: "Téléchargement du fichier",
-          mime: "application/pdf",
-          mediaScannable: true,
-        },
-      }).fetch("GET", toolItem.url);
+      if (Platform.OS === "android") {
+        // Android: Use Download Manager to save to Downloads folder
+        const filePath = `${dirs.DocumentDir}/${fileName}`;
 
-      if (Platform.OS === "ios") {
-        // On iOS, open the file preview
+        const response = await ReactNativeBlobUtil.config({
+          fileCache: true,
+          path: filePath,
+        }).fetch("GET", toolItem.url);
+
+        // IMPORTANT : convertir en URI
+        const localUri = `file://${response.path()}`;
+
+        console.log("LOCAL URI = ", localUri);
+
+        // Partage disponible ?
+        const isAvailable = await Sharing.isAvailableAsync();
+        if (!isAvailable) {
+          alert("Le partage n'est pas supporté sur cet appareil");
+          return;
+        }
+
+        // Share
+        await Sharing.shareAsync(localUri);
+        Alert.alert("Succès", "Fichier téléchargé dans le dossier Téléchargements");
+      } else {
+        // iOS: Download to DocumentDir then use previewDocument to let user save where they want
+        const filePath = `${dirs.DocumentDir}/${fileName}`;
+        const response = await ReactNativeBlobUtil.config({
+          path: filePath,
+          fileCache: true,
+        }).fetch("GET", toolItem.url);
+
         await ReactNativeBlobUtil.ios.previewDocument(response.path());
       }
-
-      Alert.alert("Succès", "Fichier téléchargé avec succès");
     } catch (error) {
       console.error("Error downloading file:", error);
       Alert.alert("Erreur", "Impossible de télécharger le fichier");
@@ -309,12 +366,21 @@ export const ToolBottomSheet = ({
               />
             )}
             {isFileType() && !toolItem.embed && !toolItem.video && (
-              <JMButton
-                icon={<DownloadIcon color="white"></DownloadIcon>}
-                onPress={handleDownloadFile}
-                title={isDownloading ? "Téléchargement..." : "Télécharger le fichier"}
-                disabled={isDownloading}
-              />
+              <>
+                <JMButton
+                  className="mb-2"
+                  icon={<EyeIcon color="white" width={20} height={20} />}
+                  onPress={handleViewPDF}
+                  title={isViewing ? "Chargement..." : "Visualiser le fichier PDF"}
+                  disabled={isViewing || isDownloading}
+                />
+                <JMButton
+                  icon={<DownloadIcon color="white" />}
+                  onPress={handleDownloadFile}
+                  title={isDownloading ? "Téléchargement..." : "Télécharger le fichier"}
+                  disabled={isDownloading || isViewing}
+                />
+              </>
             )}
             {!isFileType() && !toolItem.embed && !toolItem.video && (
               <JMButton icon={<LinkExternal color="white" />} onPress={handleOpenUrl} title={"Voir l'outil"} />
