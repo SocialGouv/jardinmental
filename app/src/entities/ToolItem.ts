@@ -24,26 +24,17 @@ export type ToolItemType =
   | "Quizz";
 
 // Tool item audience types
-export type ToolItemAudience = "Pour tous" | "Jeunes" | "Parents";
+export type ToolItemAudience = "child" | "student" | "parent";
 
 // Tool item themes
 export const ToolItemThemes = [
-  "Améliorer son sommeil",
-  "Apprendre à se connaître",
-  "Reconnaître ses besoins",
-  "Reconnaître ses émotions",
-  "Trouver de l'aide",
-  "Agir sur mes addictions",
-  "Bienveillance envers soi-même",
-  "Gérer les pensées difficiles",
-  "Vie quotidienne",
-  "Diminuer le stress",
-  "Se relaxer",
+  "Gérer le stress",
   "Gérer une crise",
-  "Réguler ses émotions",
-  "Aider un proche",
-  "Se former",
-  "Respecter ses limites",
+  "Sommeil",
+  "Émotions & pensées",
+  "Bien-être & vie quotidienne",
+  "Addictions",
+  "Obtenir de l'aide",
 ] as const;
 
 export type ToolItemTheme = (typeof ToolItemThemes)[number];
