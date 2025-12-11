@@ -35,7 +35,7 @@ const ToolSelectionInfo: React.FC<ToolSelectionInfoProps> = ({ navigation }) => 
     >
       <View className="mt-4">
         <Text className={mergeClassNames(typography.textXlBold, "text-cnam-primary-800 text-base leading-6 p-4")}>
-          Bienvenue dans la boîte à outil de Jardin Mental.{" "}
+          Bienvenue dans la boîte à outils de Jardin Mental.{" "}
         </Text>
         <View className="bg-cnam-cyan-lighten-90 mx-4">
           <Text className="text-cnam-primary-800 text-base leading-6 p-4">
