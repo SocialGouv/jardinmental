@@ -2,13 +2,16 @@ import { View, Text, ScrollView, useWindowDimensions, Dimensions, TextInput, Pre
 import JMButton from "./JMButton";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import localStorage from "@/utils/localStorage";
 import { Drug } from "@/entities/Drug";
 import { Indicator } from "@/entities/Indicator";
 import { LightSelectionnableItem } from "./SelectionnableItem";
 import { InputToggle } from "./InputToggle";
 import logEvents from "@/services/logEvents";
+import { FlatList } from "react-native-gesture-handler";
+import { INDICATORS_COUPLES } from "@/utils/liste_indicateurs.1";
+import { INDICATORS_CATEGORIES } from "@/entities/IndicatorCategories";
 
 const screenHeight = Dimensions.get("window").height;
 const height90vh = screenHeight * 0.9;
@@ -47,26 +50,69 @@ export const IndicatorsBottomSheet = ({
     setSelectedIndicators(t);
   };
 
+  const isIndicatorOrSameCategory = (indicator: Indicator, indicatorFromCouple:Indicator |INDICATORS_CATEGORIES) {
+    return (indicator.baseIndicatorUuid === indicatorFromCouple?.baseIndicatorUuid || indicator.mainCategory === indicatorFromCouple) &&
+    (indicator.baseIndicatorUuid === indicatorFromCouple?.baseIndicatorUuid || indicator.mainCategory === indicatorFromCouple)
+  }
+
+  const computedIndicatorCouples = useMemo(() => {
+    let indicatorCouples = [];
+    if (!indicatorList) {
+      return [];
+    }
+    for (const couple of indicatorCouples) {
+        const indicatorsA = indicatorList.filter(ind => isIndicatorOrSameCategory(ind, couple[0]))
+        const indicatorsB = indicatorList.filter(ind => isIndicatorOrSameCategory(ind, couple[1]))
+      }
+    const indicatorCouplesSelection = indicatorCouples.filter((couple) => {
+      return (
+        (indicatorList?.map((indicator) => indicator.baseIndicatorUuid)?.includes(couple[0]?.baseIndicatorUuid) ||
+          indicatorList?.filter((indicator) => indicator.mainCategory === couple[0])) &&
+        (indicatorList?.map((indicator) => indicator.baseIndicatorUuid)?.includes(couple[1]?.baseIndicatorUuid) ||
+          indicatorList?.filter((indicator) => indicator.mainCategory === couple[1]))
+      );
+    });
+    if (selectedIndicators.length === 0) {
+      indicatorCouples = indicatorCouplesSelection;
+    } else {
+      indicatorCouples = indicatorCouplesSelection.filter((couple) => {
+        selectedIndicators?.map((indicator) => indicator.baseIndicatorUuid)?.includes(couple[0]?.baseIndicatorUuid) ||
+          selectedIndicators?.filter((indicator) => indicator.mainCategory === couple[0]) ||
+          selectedIndicators?.map((indicator) => indicator.baseIndicatorUuid)?.includes(couple[1]?.baseIndicatorUuid) ||
+          selectedIndicators?.filter((indicator) => indicator.mainCategory === couple[1]);
+      });
+    }
+    return indicatorCouples;
+  }, [indicatorList, selectedIndicators]);
+
   return (
     <View className="flex-1 bg-white">
       <ScrollView
         contentContainerStyle={{ paddingBottom: 200 }}
         showsVerticalScrollIndicator={false}
         style={{ paddingVertical: 20, height: height90vh }}
+        stickyHeaderIndices={[0]}
+        StickyHeaderComponent={() => (
+          <View className="flex-1">
+            <View className="self-end mr-4">
+              <TouchableOpacity
+                onPress={() => {
+                  setSelectedIndicators([]);
+                }}
+              >
+                <Text className={mergeClassNames(typography.textLgMedium, "text-cnam-primary-800")}>Effacer</Text>
+              </TouchableOpacity>
+            </View>
+            <View className="p-4 flex-column flex-1 gap-6">
+              <Text className={mergeClassNames(typography.displayXsSemibold, "text-left text-cnam-primary-900")}>
+                Sélectionnez <Text className={mergeClassNames(typography.displayXsBold)}>jusqu'à 2 indicateurs</Text> parmi ceux que vous suivez
+              </Text>
+            </View>
+          </View>
+        )}
       >
-        <View className="self-end mr-4">
-          <TouchableOpacity
-            onPress={() => {
-              setSelectedIndicators([]);
-            }}
-          >
-            <Text className={mergeClassNames(typography.textLgMedium, "text-cnam-primary-800")}>Effacer</Text>
-          </TouchableOpacity>
-        </View>
+        {" "}
         <View className="p-4 flex-column flex-1 gap-6">
-          <Text className={mergeClassNames(typography.displayXsSemibold, "text-left text-cnam-primary-900")}>
-            Sélectionnez <Text className={mergeClassNames(typography.displayXsBold)}>jusqu'à 2 indicateurs</Text> parmi ceux que vous suivez
-          </Text>
           <View className="flex-colum flex-1">
             {!indicatorList && <Text>Chargement...</Text>}
             {indicatorList &&
@@ -85,21 +131,6 @@ export const IndicatorsBottomSheet = ({
                   />
                 );
               })}
-            <View className="fr-col space-y-4 mt-4">
-              <Text className={mergeClassNames(typography.textLgSemibold, "text-gray-800")}>Traitement</Text>
-              <View className="flex-row items-center justify-between">
-                <Pressable onPress={() => reminderToggleRef?.current?.toggle?.()} hitSlop={{ bottom: 8, left: 8, right: 8, top: 8 }}>
-                  <InputToggle
-                    ref={reminderToggleRef}
-                    checked={showTreatment}
-                    onCheckedChanged={async ({ checked }) => {
-                      setShowTreatment(checked);
-                    }}
-                  />
-                </Pressable>
-                <Text className={mergeClassNames(typography.textLgMedium, "text-cnam-primary-900")}>Voir lorsque j’ai pris mon traitement</Text>
-              </View>
-            </View>
           </View>
         </View>
       </ScrollView>
@@ -112,6 +143,35 @@ export const IndicatorsBottomSheet = ({
         }}
         className={`flex-column justify-between items-center p-6 px-6 bg-white/90 pb-10 w-full`}
       >
+        <FlatList
+          data={INDICATORS_COUPLES.map}
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          renderItem={({ item }) => {
+            return (
+              <View className="bg-gray-50 rounded-2xl border border-gray-300 px-2 py-1 mr-1">
+                <Text>
+                  {item[0].name} + {item[1].name}
+                </Text>
+              </View>
+            );
+          }}
+        />
+        <View className="fr-col space-y-4 mt-4">
+          <Text className={mergeClassNames(typography.textLgSemibold, "text-gray-800")}>Traitement</Text>
+          <View className="flex-row items-center justify-between">
+            <Pressable onPress={() => reminderToggleRef?.current?.toggle?.()} hitSlop={{ bottom: 8, left: 8, right: 8, top: 8 }}>
+              <InputToggle
+                ref={reminderToggleRef}
+                checked={showTreatment}
+                onCheckedChanged={async ({ checked }) => {
+                  setShowTreatment(checked);
+                }}
+              />
+            </Pressable>
+            <Text className={mergeClassNames(typography.textLgMedium, "text-cnam-primary-900")}>Voir lorsque j’ai pris mon traitement</Text>
+          </View>
+        </View>
         <JMButton
           onPress={async () => {
             logEvents.logAnalysesValidateCorrelations();
