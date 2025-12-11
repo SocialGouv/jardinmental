@@ -37,6 +37,8 @@ const ToolsScreen: React.FC<ToolsScreenProps> = ({ navigation }) => {
   // Ref for horizontal ScrollView
   const horizontalScrollViewRef = useRef<ScrollView>(null);
 
+  const flatlistScrollRef = useRef<FlatList>(null);
+
   // Store button positions for accurate scrolling
   const buttonPositions = useRef<Map<ToolThemeFilter, number>>(new Map()).current;
 
@@ -104,6 +106,11 @@ const ToolsScreen: React.FC<ToolsScreenProps> = ({ navigation }) => {
     // Small timeout to ensure the UI has updated
     const timer = setTimeout(() => {
       scrollToSelectedTheme(themeFilter);
+      if (flatlistScrollRef.current) {
+        flatlistScrollRef.current.scrollToOffset({
+          offset: 0,
+        });
+      }
     }, 100);
 
     return () => clearTimeout(timer);
@@ -118,7 +125,11 @@ const ToolsScreen: React.FC<ToolsScreenProps> = ({ navigation }) => {
     return TOOLS_DATA.filter((tool) => {
       // Apply format and audience filters (existing filters)
       const matchesFormat = formatFilters.length === 0 || tool.type.some((t) => formatFilters.includes(t));
-      const matchesAudience = audienceFilters.length === 0 || tool.audience.some((aud) => audienceFilters.includes(aud));
+      const matchesAudience =
+        audienceFilters.length === 0 ||
+        tool.audience.some((aud) => {
+          return audienceFilters.includes(aud);
+        });
 
       // Apply theme filter (new filter)
       let matchesTheme = true;
@@ -138,6 +149,7 @@ const ToolsScreen: React.FC<ToolsScreenProps> = ({ navigation }) => {
       <FlatList
         className="px-4 z-0"
         data={filteredTools}
+        ref={flatlistScrollRef}
         onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], {
           useNativeDriver: false,
         })}
