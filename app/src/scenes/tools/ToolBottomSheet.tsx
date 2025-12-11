@@ -344,7 +344,7 @@ export const ToolBottomSheet = ({
             <Text className={mergeClassNames(typography.textMdRegular, "text-left text-cnam-primary-900")}>{toolItem.description}</Text>
           </View>
           <View className="w-full py-6 px-6">
-            {toolItem.embed === "breath-exercice" && (
+            {/* {toolItem.embed === "breath-exercice" && (
               <JMButton
                 className="mb-2"
                 icon={<DownloadIcon color="white"></DownloadIcon>}
@@ -354,7 +354,7 @@ export const ToolBottomSheet = ({
                 }}
                 title={"Faire l'exercice de respiration"}
               />
-            )}
+            )} */}
             {toolItem.video === "coherence-cardiaque-video" && (
               <JMButton
                 icon={<DownloadIcon color="white"></DownloadIcon>}
@@ -371,7 +371,7 @@ export const ToolBottomSheet = ({
                   className="mb-2"
                   icon={<EyeIcon color="white" width={20} height={20} />}
                   onPress={handleViewPDF}
-                  title={isViewing ? "Chargement..." : "Visualiser le fichier PDF"}
+                  title={isViewing ? "Chargement..." : "Voir le fichier"}
                   disabled={isViewing || isDownloading}
                 />
                 <JMButton
