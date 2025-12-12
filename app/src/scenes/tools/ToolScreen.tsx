@@ -132,7 +132,7 @@ const ToolsScreen: React.FC<ToolsScreenProps> = ({ navigation, route }) => {
       const matchesFormat = formatFilters.length === 0 || tool.type.some((t) => formatFilters.includes(t));
       const matchesAudience =
         audienceFilters.length === 0 ||
-        tool.audience.some((aud) => {
+        tool.audience.every((aud) => {
           return audienceFilters.includes(aud);
         });
 
