@@ -10,8 +10,9 @@ import { LightSelectionnableItem } from "./SelectionnableItem";
 import { InputToggle } from "./InputToggle";
 import logEvents from "@/services/logEvents";
 import { FlatList } from "react-native-gesture-handler";
-import { INDICATORS_COUPLES } from "@/utils/liste_indicateurs.1";
+import { INDICATORS_COUPLES, NEW_INDICATORS_CATEGORIES } from "@/utils/liste_indicateurs.1";
 import { INDICATORS_CATEGORIES } from "@/entities/IndicatorCategories";
+import Other from "@assets/svg/icon/Other";
 
 const screenHeight = Dimensions.get("window").height;
 const height90vh = screenHeight * 0.9;
@@ -50,37 +51,65 @@ export const IndicatorsBottomSheet = ({
     setSelectedIndicators(t);
   };
 
-  const isIndicatorOrSameCategory = (indicator: Indicator, indicatorFromCouple:Indicator |INDICATORS_CATEGORIES) {
-    return (indicator.baseIndicatorUuid === indicatorFromCouple?.baseIndicatorUuid || indicator.mainCategory === indicatorFromCouple) &&
-    (indicator.baseIndicatorUuid === indicatorFromCouple?.baseIndicatorUuid || indicator.mainCategory === indicatorFromCouple)
-  }
+  const isIndicatorOrSameCategory = (indicator: Indicator, indicatorFromCouple: Indicator | NEW_INDICATORS_CATEGORIES) => {
+    return (
+      (indicator.baseIndicatorUuid === indicatorFromCouple?.baseIndicatorUuid || indicator.mainCategory === indicatorFromCouple) &&
+      (indicator.baseIndicatorUuid === indicatorFromCouple?.baseIndicatorUuid || indicator.mainCategory === indicatorFromCouple)
+    );
+  };
+
+  const isSameCouple = (coupleA: [Indicator, Indicator], coupleB: [Indicator, Indicator]) => {
+    return (
+      (coupleA[0].uuid === coupleB[0].uuid && coupleA[1].uuid === coupleB[1].uuid) ||
+      (coupleA[0].uuid === coupleB[1].uuid && coupleA[1].uuid === coupleB[0].uuid)
+    );
+  };
 
   const computedIndicatorCouples = useMemo(() => {
-    let indicatorCouples = [];
+    let indicatorCouples: [Indicator, Indicator][] = [];
     if (!indicatorList) {
       return [];
     }
-    for (const couple of indicatorCouples) {
-        const indicatorsA = indicatorList.filter(ind => isIndicatorOrSameCategory(ind, couple[0]))
-        const indicatorsB = indicatorList.filter(ind => isIndicatorOrSameCategory(ind, couple[1]))
+    if (selectedIndicators.length === 2) {
+      return [];
+    }
+    // all possible association couple amongst user's indicators
+    const usersIndicatorsCouple: [Indicator, Indicator][] = [];
+    for (const couple of INDICATORS_COUPLES) {
+      const indicatorsA = indicatorList.filter((ind) => isIndicatorOrSameCategory(ind, couple[0]));
+      const indicatorsB = indicatorList.filter((ind) => isIndicatorOrSameCategory(ind, couple[1]));
+
+      for (const indicatorA of indicatorsA) {
+        for (const indicatorB of indicatorsB) {
+          const newCouple: [Indicator, Indicator] = [indicatorA, indicatorB];
+          const isDuplicate = usersIndicatorsCouple.filter((couple) => isSameCouple(couple, newCouple)).length;
+          if (indicatorA.uuid !== indicatorB.uuid && !isDuplicate) {
+            usersIndicatorsCouple.push(newCouple);
+          }
+        }
       }
-    const indicatorCouplesSelection = indicatorCouples.filter((couple) => {
-      return (
-        (indicatorList?.map((indicator) => indicator.baseIndicatorUuid)?.includes(couple[0]?.baseIndicatorUuid) ||
-          indicatorList?.filter((indicator) => indicator.mainCategory === couple[0])) &&
-        (indicatorList?.map((indicator) => indicator.baseIndicatorUuid)?.includes(couple[1]?.baseIndicatorUuid) ||
-          indicatorList?.filter((indicator) => indicator.mainCategory === couple[1]))
-      );
-    });
+    }
+    // const indicatorCouplesSelection = indicatorCouples.filter((couple) => {
+    //   return (
+    //     (indicatorList?.map((indicator) => indicator.baseIndicatorUuid)?.includes(couple[0]?.baseIndicatorUuid) ||
+    //       indicatorList?.filter((indicator) => indicator.mainCategory === couple[0])) &&
+    //     (indicatorList?.map((indicator) => indicator.baseIndicatorUuid)?.includes(couple[1]?.baseIndicatorUuid) ||
+    //       indicatorList?.filter((indicator) => indicator.mainCategory === couple[1]))
+    //   );
+    // });
+    console.log("User indicator couples", usersIndicatorsCouple);
     if (selectedIndicators.length === 0) {
-      indicatorCouples = indicatorCouplesSelection;
-    } else {
-      indicatorCouples = indicatorCouplesSelection.filter((couple) => {
-        selectedIndicators?.map((indicator) => indicator.baseIndicatorUuid)?.includes(couple[0]?.baseIndicatorUuid) ||
-          selectedIndicators?.filter((indicator) => indicator.mainCategory === couple[0]) ||
-          selectedIndicators?.map((indicator) => indicator.baseIndicatorUuid)?.includes(couple[1]?.baseIndicatorUuid) ||
-          selectedIndicators?.filter((indicator) => indicator.mainCategory === couple[1]);
-      });
+      indicatorCouples = usersIndicatorsCouple;
+    } else if (selectedIndicators.length === 1) {
+      indicatorCouples = usersIndicatorsCouple
+        .filter((couple) => {
+          return selectedIndicators.includes(couple[0]) || selectedIndicators.includes(couple[1]);
+        })
+        .map((couple) => {
+          // always show selectedIndicators as first indicator in couple
+          const otherIndicator = couple.find((ind) => ind.uuid !== selectedIndicators[0].uuid);
+          return [selectedIndicators[0], otherIndicator];
+        });
     }
     return indicatorCouples;
   }, [indicatorList, selectedIndicators]);
@@ -144,13 +173,13 @@ export const IndicatorsBottomSheet = ({
         className={`flex-column justify-between items-center p-6 px-6 bg-white/90 pb-10 w-full`}
       >
         <FlatList
-          data={INDICATORS_COUPLES.map}
+          data={computedIndicatorCouples}
           horizontal={true}
           showsHorizontalScrollIndicator={false}
           renderItem={({ item }) => {
             return (
-              <View className="bg-gray-50 rounded-2xl border border-gray-300 px-2 py-1 mr-1">
-                <Text>
+              <View className="bg-gray-50 rounded-lg border border-gray-300 px-2 py-1 mr-2">
+                <Text className={mergeClassNames(typography.textLgMedium, "text-cnam-primary-900")}>
                   {item[0].name} + {item[1].name}
                 </Text>
               </View>
