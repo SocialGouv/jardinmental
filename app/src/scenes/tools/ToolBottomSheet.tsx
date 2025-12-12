@@ -28,6 +28,7 @@ import { shareAsync } from "expo-sharing";
 import * as FileSystem from "expo-file-system";
 import EyeIcon from "@assets/svg/icon/Eye";
 import * as Sharing from "expo-sharing";
+import PlayCircleIcon from "@assets/svg/icon/PlayCircle";
 
 const screenHeight = Dimensions.get("window").height;
 const height90vh = screenHeight * 0.9;
@@ -348,7 +349,7 @@ export const ToolBottomSheet = ({
             )} */}
             {toolItem.video === "coherence-cardiaque-video" && (
               <JMButton
-                icon={<DownloadIcon color="white"></DownloadIcon>}
+                icon={<PlayCircleIcon />}
                 onPress={() => {
                   navigation.navigate(toolItem.video);
                   closeBottomSheet();

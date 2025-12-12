@@ -122,7 +122,6 @@ export default ({ navigation, startSurvey }) => {
           </View>
         </AnimatedHeaderScrollScreen>
       </View>
-      <FloatingPlusButton shadow onPress={startSurvey} plusPosition={0} />
     </>
   );
 };
