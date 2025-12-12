@@ -38,6 +38,9 @@ import HeadphonesIcon from "@assets/svg/icon/Headphones";
 import BriefcaseIcon from "@assets/svg/icon/Briefcase";
 import CloseCross from "@assets/svg/icon/CloseCross";
 import ArrowCircleRightIcon from "@assets/svg/icon/ArrowCircleRight";
+import { useBottomSheet } from "@/context/BottomSheetContext";
+import { BeckBottomSheet } from "../tools/BeckBottomSheet";
+import { TOOL_BECK_ID } from "../tools/toolsData";
 
 const Status = ({ navigation, startSurvey }) => {
   const [diaryData] = useContext(DiaryDataContext);
@@ -48,7 +51,7 @@ const Status = ({ navigation, startSurvey }) => {
   const scrollRef = React.useRef();
   const { showLatestChangesModal } = useLatestChangesModal();
   const insets = useSafeAreaInsets();
-
+  const { showBottomSheet } = useBottomSheet();
   const { setCustomColor } = useStatusBar();
 
   useFocusEffect(
@@ -139,8 +142,17 @@ const Status = ({ navigation, startSurvey }) => {
         const userIsNew = await localStorage.getIsNewUser();
         const resourceModalDismissed = await localStorage.getIsInfoModalDismissed();
         setResourceModalVisible(!resourceModalDismissed && !shouldShow);
-
         showLatestChangesModal();
+        // The following block can be deleted once most of the users are using 1.13.15
+        const beckAsFavorite = await localStorage.getBeckHasBeenAutomaticallySetAsFavoriteAfterAppUpdate();
+        const hasBeckHistory = !!Object.keys(diaryData).find((date) => {
+          return (diaryData[date] || {})["becks"];
+        });
+        if (hasBeckHistory && !beckAsFavorite) {
+          await localStorage.setBeckAutomaticallyAsFavorite();
+          await localStorage.bookmarkToolItem(TOOL_BECK_ID);
+          showBottomSheet(<BeckBottomSheet navigation={navigation} />);
+        }
       })();
     }, [])
   );

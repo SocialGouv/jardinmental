@@ -1,14 +1,14 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { TW_COLORS } from "@/utils/constants";
 import { useBottomSheet } from "@/context/BottomSheetContext";
 import { AnimatedHeaderScrollScreen } from "../survey-v2/AnimatedHeaderScrollScreen";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
 import { Resource, RESOURCES_DATA } from "../resources/data/resources";
-import { EXTERNAL_RESOURCES_DATA } from "../resources/data/resourcesExternal";
+import { EXTERNAL_RESOURCES_DATA, ExternalResource } from "../resources/data/resourcesExternal";
 import Chevron from "@assets/svg/icon/chevron";
-
+import * as WebBrowser from "expo-web-browser";
 interface ToolSelectionInfoProps {
   navigation: any;
 }
@@ -42,20 +42,21 @@ const ToolSelectionInfo: React.FC<ToolSelectionInfoProps> = ({ navigation }) => 
             Vous y trouverez des exercices, vidéos et questionnaires scientifiquement validés, gratuits et fiables, pour vous accompagner au
             quotidien.{" "}
           </Text>
-          <Text className="text-cnam-primary-800 text-base leading-6 p-4">
-            La plupart ont été recensés dans l’article 
-            <Text
-              className="underline"
-              onPress={() => {
-                navigation.navigate("resource-external-resources", {
-                  resource: EXTERNAL_RESOURCES_DATA.find((r) => r.id === "550e8400-e29b-41d4-a716-446655440018") as Resource,
-                });
-              }}
-            >
-              “S’aider soi‑même : des outils pour tous” de Psycom
+          <TouchableOpacity
+            onPress={async () => {
+              await WebBrowser.openBrowserAsync(EXTERNAL_RESOURCES_DATA.find((r) => r.id === "550e8400-e29b-41d4-a716-446655440018")?.url, {
+                toolbarColor: "#3D6874",
+                controlsColor: "#FFFFFF",
+                enableBarCollapsing: false,
+                showTitle: true,
+                dismissButtonStyle: "done",
+              });
+            }}
+          >
+            <Text className="text-cnam-primary-800 text-base leading-6 p-4">
+              La plupart ont été recensés dans l’article <Text className="underline">“S’aider soi-même : des outils pour tous” de Psycom</Text>.
             </Text>
-            .
-          </Text>
+          </TouchableOpacity>
         </View>
       </View>
       <View className="p-4 space-y-2">

@@ -13,7 +13,7 @@ import HelpView from "@/components/HelpView";
 import JMButton from "@/components/JMButton";
 import HealthIcon from "@assets/svg/icon/Health";
 import { InputText } from "@/components/InputText";
-import { ToolItemEntity } from "./toolsData";
+import { TOOL_BECK_ID, ToolItemEntity } from "./toolsData";
 import ReactNativeBlobUtil from "react-native-blob-util";
 import DownloadIcon from "@assets/svg/icon/Download";
 import LinkIcon from "@assets/svg/icon/Link";
@@ -108,10 +108,6 @@ export const ToolBottomSheet = ({
 
     try {
       setIsViewing(true);
-
-      // if (Platform.OS === "ios") {
-      // On iOS, open PDF directly in Safari/browser for viewing
-      // This allows users to view the PDF without downloading it
       await WebBrowser.openBrowserAsync(toolItem.url, {
         toolbarColor: "#3D6874",
         controlsColor: "#FFFFFF",
@@ -119,20 +115,6 @@ export const ToolBottomSheet = ({
         showTitle: true,
         dismissButtonStyle: "done",
       });
-      // } else {
-      //   // On Android, download to cache and open with PDF viewer
-      //   const urlParts = toolItem.url.split("/");
-      //   const fileName = urlParts[urlParts.length - 1] || `${toolItem.title}.pdf`;
-      //   const { dirs } = ReactNativeBlobUtil.fs;
-      //   const cachePath = `${dirs.CacheDir}/${fileName}`;
-
-      //   const response = await ReactNativeBlobUtil.config({
-      //     path: cachePath,
-      //     fileCache: true,
-      //   }).fetch("GET", toolItem.url);
-
-      //   await ReactNativeBlobUtil.android.actionViewIntent(response.path(), "application/pdf");
-      // }
     } catch (error) {
       console.error("Error viewing PDF:", error);
       Alert.alert("Erreur", "Impossible de visualiser le fichier");
@@ -157,29 +139,33 @@ export const ToolBottomSheet = ({
       const { dirs } = ReactNativeBlobUtil.fs;
 
       if (Platform.OS === "android") {
-        // Android: Use Download Manager to save to Downloads folder
-        const filePath = `${dirs.DocumentDir}/${fileName}`;
+        // 1. Download into sandbox
+        const tempUri = FileSystem.cacheDirectory + fileName;
 
-        const response = await ReactNativeBlobUtil.config({
-          fileCache: true,
-          path: filePath,
-        }).fetch("GET", toolItem.url);
+        const { uri: downloadedUri } = await FileSystem.downloadAsync(toolItem.url, tempUri);
 
-        // IMPORTANT : convertir en URI
-        const localUri = `file://${response.path()}`;
+        // 2. Ask user for a destination folder (SAF)
+        const permissions = await FileSystem.StorageAccessFramework.requestDirectoryPermissionsAsync();
 
-        console.log("LOCAL URI = ", localUri);
-
-        // Partage disponible ?
-        const isAvailable = await Sharing.isAvailableAsync();
-        if (!isAvailable) {
-          alert("Le partage n'est pas supporté sur cet appareil");
+        if (!permissions.granted) {
+          Alert.alert("Permission refusée");
           return;
         }
 
-        // Share
-        await Sharing.shareAsync(localUri);
-        Alert.alert("Succès", "Fichier téléchargé dans le dossier Téléchargements");
+        // 3. Create an empty file in the chosen folder
+        const destUri = await FileSystem.StorageAccessFramework.createFileAsync(permissions.directoryUri, fileName, "application/pdf");
+
+        // 4. Read sandbox file in base64
+        const base64Data = await FileSystem.readAsStringAsync(downloadedUri, {
+          encoding: FileSystem.EncodingType.Base64,
+        });
+
+        // 5. Write inside the chosen folder
+        await FileSystem.writeAsStringAsync(destUri, base64Data, {
+          encoding: FileSystem.EncodingType.Base64,
+        });
+
+        Alert.alert("Succès", "Le fichier a été enregistré sur votre appareil.");
       } else {
         // iOS: Download to DocumentDir then use previewDocument to let user save where they want
         const filePath = `${dirs.DocumentDir}/${fileName}`;
@@ -382,8 +368,17 @@ export const ToolBottomSheet = ({
                 />
               </>
             )}
-            {!isFileType() && !toolItem.embed && !toolItem.video && (
+            {!isFileType() && !toolItem.embed && !toolItem.video && toolItem.id !== TOOL_BECK_ID && (
               <JMButton icon={<LinkExternal color="white" />} onPress={handleOpenUrl} title={"Voir l'outil"} />
+            )}
+            {toolItem.id === TOOL_BECK_ID && (
+              <JMButton
+                onPress={() => {
+                  closeBottomSheet();
+                  navigation.navigate("beck-home");
+                }}
+                title={"Accéder à Beck"}
+              />
             )}
           </View>
           {toolItem.source && (

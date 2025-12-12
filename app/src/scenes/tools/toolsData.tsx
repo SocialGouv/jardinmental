@@ -3,7 +3,32 @@ import { ToolItemType, ToolItemEntity, ToolItemTheme, ToolItemAudience } from ".
 // Re-export types for backward compatibility
 export type { ToolItemType, ToolItemEntity, ToolItemTheme, ToolItemAudience };
 
+export const TOOL_BECK_ID = "b2d8c2f4-0f44-48c0-945a-6c6a0f3b9d3d";
+
 export const TOOLS_DATA: ToolItemEntity[] = [
+  {
+    id: TOOL_BECK_ID,
+    matomoId: 65,
+    title: "Colonnes de Beck",
+    description: `Beck est exercice de thérapie cognitive consistant à analyser une situation en cinq colonnes (situation, émotions, pensées automatiques, biais cognitifs, réponse/pensée alternative) afin de restructurer ses pensées.
+Cet exercice nécessite des explications afin de le réaliser. Nous vous recommandons d’en discuter préalablement avec un thérapeute.`,
+    type: ["Exercice"],
+    themes: ["Émotions & pensées"],
+    audience: ["child", "parent", "student"],
+    source: "Jardin Mental",
+  },
+  {
+    id: "3f1e8b0e-6e57-4dd1-8e71-3b4d6b902af3",
+    matomoId: 60,
+    title: "Mon GPS (version interactive)",
+    description:
+      "Ce livret vise à faciliter l’expression et le respect de vos souhaits concernant vos soins et votre accompagnement, dans l’hypothèse où vous ne seriez plus en mesure de consentir. Il permet d’anticiper une situation de crise, de clarifier ce qui est important pour vous et de soutenir le dialogue avec vos proches et les professionnels.",
+    type: ["Fichier"],
+    themes: ["Gérer une crise", "Obtenir de l'aide"],
+    audience: ["child", "parent", "student"],
+    url: "https://www.psycom.org/wp-content/uploads/2023/11/PSYCOM_GPS_VF_INTERACTIF_2023.pdf",
+    source: "Psycom",
+  },
   {
     id: "d6adb4d9-99ae-4a1d-8f1e-c0a7a044070a",
     matomoId: 58,

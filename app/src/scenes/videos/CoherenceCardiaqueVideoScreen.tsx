@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { View, Text, TouchableOpacity, ActivityIndicator, StyleSheet, StatusBar, Dimensions } from "react-native";
-import { Video, ResizeMode, AVPlaybackStatus } from "expo-av";
+import { Video, ResizeMode, AVPlaybackStatus, Audio, InterruptionModeIOS, InterruptionModeAndroid } from "expo-av";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Asset } from "expo-asset";
 import ChevronIcon from "@assets/svg/icon/chevron";
@@ -19,6 +19,16 @@ const CoherenceCardiaqueVideoScreen: React.FC<CoherenceCardiaqueVideoScreenProps
   useEffect(() => {
     async function loadVideo() {
       try {
+        await Audio.setAudioModeAsync({
+          playsInSilentModeIOS: true,
+          allowsRecordingIOS: true,
+          staysActiveInBackground: true,
+          interruptionModeIOS: InterruptionModeIOS.DuckOthers,
+          // Android
+          interruptionModeAndroid: InterruptionModeAndroid.DuckOthers,
+          shouldDuckAndroid: true,
+          playThroughEarpieceAndroid: false,
+        });
         const asset = Asset.fromModule(require("../../../assets/videos/sante-mentale-exercice-coherence-cardiaque.mp4"));
         await asset.downloadAsync();
         setVideoUri(asset.localUri || asset.uri);

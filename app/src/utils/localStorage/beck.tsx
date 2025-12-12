@@ -5,7 +5,8 @@ import {
   STORAGE_KEY_BECK_WHO_LIST,
   STORAGE_KEY_BECK_EMOTION_LIST,
   STORAGE_KEY_BECK_SENSATION_LIST,
-} from "../../utils/constants";
+  STORAGE_KEY_AUTOMATICALLY_SET_BECK_AS_FAVORITE,
+} from "../constants";
 
 const getIsBeckActivated = async () => {
   const a = await AsyncStorage.getItem(STORAGE_KEY_IS_BECK_ACTIVATED);
@@ -99,9 +100,20 @@ const removeBeckSensationList = async (sensation) => {
   return beckSensationList;
 };
 
+// The following two functions can be deleted once most of the users are using 1.13.15
+const getBeckHasBeenAutomaticallySetAsFavoriteAfterAppUpdate = async (): Promise<boolean> => {
+  // boolean to remmeber if beck has been automaticcaly set as favorite
+  // note, since then user might have remove it from favorite
+  const value = await AsyncStorage.getItem(STORAGE_KEY_AUTOMATICALLY_SET_BECK_AS_FAVORITE);
+  return !!value;
+};
+
+const setBeckAutomaticallyAsFavorite = async () => {
+  // save the fact that we automatically add back as favorite
+  await AsyncStorage.setItem(STORAGE_KEY_AUTOMATICALLY_SET_BECK_AS_FAVORITE, "true");
+};
+
 export default {
-  getIsBeckActivated,
-  setIsBeckActivated,
   getBeckWhereList,
   setBeckWhereList,
   addBeckWhereList,
@@ -118,4 +130,6 @@ export default {
   setBeckSensationList,
   addBeckSensationList,
   removeBeckSensationList,
+  getBeckHasBeenAutomaticallySetAsFavoriteAfterAppUpdate,
+  setBeckAutomaticallyAsFavorite,
 };
