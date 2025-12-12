@@ -144,26 +144,31 @@ export const ToolBottomSheet = ({
 
         const { uri: downloadedUri } = await FileSystem.downloadAsync(toolItem.url, tempUri);
 
-        // 2. Ask user for a destination folder (SAF)
-        const permissions = await FileSystem.StorageAccessFramework.requestDirectoryPermissionsAsync();
-
-        if (!permissions.granted) {
-          Alert.alert("Permission refusée");
-          return;
-        }
-
-        // 3. Create an empty file in the chosen folder
-        const destUri = await FileSystem.StorageAccessFramework.createFileAsync(permissions.directoryUri, fileName, "application/pdf");
-
-        // 4. Read sandbox file in base64
-        const base64Data = await FileSystem.readAsStringAsync(downloadedUri, {
-          encoding: FileSystem.EncodingType.Base64,
+        await shareAsync(downloadedUri, {
+          UTI: ".txt",
+          mimeType: "text/plain",
+          dialogTitle: "Exporter mes données Jardin Mental",
         });
+        // // 2. Ask user for a destination folder (SAF)
+        // const permissions = await FileSystem.StorageAccessFramework.requestDirectoryPermissionsAsync();
 
-        // 5. Write inside the chosen folder
-        await FileSystem.writeAsStringAsync(destUri, base64Data, {
-          encoding: FileSystem.EncodingType.Base64,
-        });
+        // if (!permissions.granted) {
+        //   Alert.alert("Permission refusée");
+        //   return;
+        // }
+
+        // // 3. Create an empty file in the chosen folder
+        // const destUri = await FileSystem.StorageAccessFramework.createFileAsync(permissions.directoryUri, fileName, "application/pdf");
+
+        // // 4. Read sandbox file in base64
+        // const base64Data = await FileSystem.readAsStringAsync(downloadedUri, {
+        //   encoding: FileSystem.EncodingType.Base64,
+        // });
+
+        // // 5. Write inside the chosen folder
+        // await FileSystem.writeAsStringAsync(destUri, base64Data, {
+        //   encoding: FileSystem.EncodingType.Base64,
+        // });
 
         Alert.alert("Succès", "Le fichier a été enregistré sur votre appareil.");
       } else {
