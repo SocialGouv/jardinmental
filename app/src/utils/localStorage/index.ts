@@ -294,10 +294,10 @@ const bookmarkToolItem = async (toolItemId: string): Promise<string[]> => {
 const removeBookmarkToolItem = async (toolItemId: string): Promise<string[]> => {
   const current = await getBookmarkedToolItems();
 
-  // On filtre pour retirer toolItemId
+  // Filter out the toolItemId
   const updated = current.filter((id) => id !== toolItemId);
 
-  // On sauvegarde la nouvelle liste
+  // Save the updated list
   await AsyncStorage.setItem(STORAGE_KEY_VIEWED_TOOL_ITEMS, JSON.stringify(updated));
 
   return updated;
