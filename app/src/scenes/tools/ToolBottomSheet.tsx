@@ -349,12 +349,12 @@ export const ToolBottomSheet = ({
             )} */}
             {toolItem.video === "coherence-cardiaque-video" && (
               <JMButton
-                icon={<PlayCircleIcon />}
+                icon={<PlayCircleIcon color="white" />}
                 onPress={() => {
                   navigation.navigate(toolItem.video);
                   closeBottomSheet();
                 }}
-                title={"Faire l'exercice de respiration en video"}
+                title={"Faire l'exercice de respiration"}
               />
             )}
             {isFileType() && !toolItem.embed && !toolItem.video && (
