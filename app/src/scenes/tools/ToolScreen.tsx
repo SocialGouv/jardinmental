@@ -351,7 +351,7 @@ const ToolsScreen: React.FC<ToolsScreenProps> = ({ navigation, route }) => {
 
           <View className="flex-row justify-between items-center mb-4 px-4">
             <Text className={mergeClassNames(typography.textXlSemibold, "text-cnam-primary-800 text-base flex-1")}>
-              {filteredTools.length} outils
+              {filteredTools.length} {filteredTools.length === 1 ? "outil" : "outils"}
             </Text>
             <TouchableOpacity
               onPress={() => {

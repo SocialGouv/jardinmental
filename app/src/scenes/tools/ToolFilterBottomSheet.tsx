@@ -37,10 +37,10 @@ const AUDIENCE_TYPES = [
     id: "child",
     title: "Les enfants/ado",
   },
-  {
-    id: "student",
-    title: "Les étudiants",
-  },
+  // {
+  //   id: "student",
+  //   title: "Les étudiants",
+  // },
 ];
 
 export const ToolFilterBottomSheet = ({
