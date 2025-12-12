@@ -24,6 +24,7 @@ import News from "../scenes/news";
 import ActivateBeck from "../scenes/beck/activate";
 import ViewBeck from "../scenes/beck/view";
 import Beck from "../scenes/beck";
+import BeckHomeScreen from "@/scenes/exercise";
 import Infos from "../scenes/infos";
 import NotificationService from "../services/notifications";
 import Indicateurs from "../scenes/indicateurs";
@@ -62,6 +63,9 @@ import { DetailModalCorrelationScreen } from "@/scenes/suivi/correlation/ModalDe
 import { ModalTriggerScreen } from "@/scenes/suivi/triggers/ModalTrigger";
 import SettingsModal from "@/scenes/settings/settings-modal";
 import CommityScreen from "@/scenes/commity/CommityScreen";
+import ToolSelectionInfo from "@/scenes/tools/ToolSelectionInfoScreen";
+import BreathExercice from "@/scenes/tools/BreathExercice";
+import CoherenceCardiaqueVideoScreen from "@/scenes/videos/CoherenceCardiaqueVideoScreen";
 
 const Stack = createStackNavigator();
 
@@ -234,6 +238,10 @@ class Router extends React.Component<RouterProps> {
             <Stack.Screen name="data-export-import" component={DataExportImport} />
             <Stack.Screen name="chart-day" component={DailyChart} />
             <Stack.Screen name="day-survey-detail" component={DiaryDetail} />
+            <Stack.Screen name="tool-selection-info" component={ToolSelectionInfo} />
+            <Stack.Screen name="breath-exercice" component={BreathExercice} />
+            <Stack.Screen name="coherence-cardiaque-video" component={CoherenceCardiaqueVideoScreen} />
+
             <Stack.Screen name="notes" options={{ animationEnabled: Platform.OS === "ios" }}>
               {({ navigation, route }) => <Notes navigation={navigation} route={route} />}
             </Stack.Screen>
@@ -253,6 +261,7 @@ class Router extends React.Component<RouterProps> {
             <Stack.Screen name="too-late" component={TooLate} />
             <Stack.Screen name="news" component={News} />
             <Stack.Screen name="infos" component={Infos} />
+            <Stack.Screen name="beck-home" component={BeckHomeScreen} />
             <Stack.Screen name="activate-beck" component={ActivateBeck} />
             <Stack.Screen name="view-beck" component={ViewBeck} />
             <Stack.Screen name="beck" component={Beck} />

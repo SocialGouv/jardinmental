@@ -12,10 +12,11 @@ import ExerciseItem from "./exercise-item";
 import { DiaryDataContext } from "@/context/diaryData";
 import { formatDateThread } from "@/utils/date/helpers";
 import ContributeCard from "../contribute/contributeCard";
-import { STORAGE_KEY_BECK_SHOW_WELCOME, TAB_BAR_HEIGHT } from "@/utils/constants";
+import { STORAGE_KEY_BECK_SHOW_WELCOME, TAB_BAR_HEIGHT, TW_COLORS } from "@/utils/constants";
 import ArrowUpSvg from "@assets/svg/arrow-up.svg";
 import FloatingPlusButton from "@/components/FloatingPlusButton";
 import JMButton from "@/components/JMButton";
+import { AnimatedHeaderScrollScreen } from "../survey-v2/AnimatedHeaderScrollScreen";
 
 const LIMIT_PER_PAGE = __DEV__ ? 3 : 30;
 
@@ -46,83 +47,81 @@ export default ({ navigation, startSurvey }) => {
   return (
     <>
       <View className="flex-1">
-        <View style={styles.headerContainer}>
-          <Header title="Beck" navigation={navigation} scrollY={scrollY} />
-        </View>
-        <ScrollView
-          style={styles.container}
-          contentContainerStyle={[
-            styles.scrollContainer,
-            {
-              paddingBottom: insets.bottom + TAB_BAR_HEIGHT,
-            },
-          ]}
-          onScroll={scrollHandler}
+        <AnimatedHeaderScrollScreen
+          title={"Beck"}
+          handlePrevious={() => {
+            navigation.goBack();
+          }}
+          smallHeader={true}
+          navigation={navigation}
+          showBottomButton={false}
+          scrollViewBackground={TW_COLORS.GRAY_50}
         >
-          {showWelcome === "true" || !showWelcome ? (
-            <View style={styles.welcomeContainer}>
-              <Text style={[styles.welcomeText, styles.boldText]}>
-                Cet exercice nécessite des explications afin de le réaliser. Nous vous recommandons d’en discuter préalablement avec un thérapeute.
-              </Text>
-              <View style={styles.showWelcomeView}>
-                <CheckBox
-                  animationDuration={0.2}
-                  boxType="square"
-                  style={styles.checkbox}
-                  value={!showWelcomeDefault}
-                  onValueChange={(value) => setShowWelcomeDefault(!value)}
-                  // for android
-                  tintColors={{ true: colors.LIGHT_BLUE, false: "#aaa" }}
-                  // for ios
-                  tintColor="#aaa"
-                  onCheckColor={colors.LIGHT_BLUE}
-                  onTintColor={colors.LIGHT_BLUE}
-                  onAnimationType="bounce"
-                  offAnimationType="bounce"
-                />
-                <TouchableOpacity activeOpacity={0.7} onPress={() => setShowWelcomeDefault((e) => !e)}>
-                  <Text>Ne plus afficher ce message</Text>
-                </TouchableOpacity>
+          <View className="p-4">
+            {showWelcome === "true" || !showWelcome ? (
+              <View style={styles.welcomeContainer}>
+                <Text style={[styles.welcomeText, styles.boldText]}>
+                  Cet exercice nécessite des explications afin de le réaliser. Nous vous recommandons d’en discuter préalablement avec un thérapeute.
+                </Text>
+                <View style={styles.showWelcomeView}>
+                  <CheckBox
+                    animationDuration={0.2}
+                    boxType="square"
+                    style={styles.checkbox}
+                    value={!showWelcomeDefault}
+                    onValueChange={(value) => setShowWelcomeDefault(!value)}
+                    // for android
+                    tintColors={{ true: colors.LIGHT_BLUE, false: "#aaa" }}
+                    // for ios
+                    tintColor="#aaa"
+                    onCheckColor={colors.LIGHT_BLUE}
+                    onTintColor={colors.LIGHT_BLUE}
+                    onAnimationType="bounce"
+                    offAnimationType="bounce"
+                  />
+                  <TouchableOpacity activeOpacity={0.7} onPress={() => setShowWelcomeDefault((e) => !e)}>
+                    <Text>Ne plus afficher ce message</Text>
+                  </TouchableOpacity>
+                </View>
+                <JMButton onPress={validateWelcomeMessage} title={"Valider"}></JMButton>
               </View>
-              <JMButton onPress={validateWelcomeMessage} title={"Valider"}></JMButton>
-            </View>
-          ) : (
-            <>
-              <JMButton title="Faire le point sur un évènement" onPress={() => navigation.navigate("beck")}></JMButton>
-              <View style={styles.divider} />
-              {Object.keys(diaryData)
-                .sort((a, b) => {
-                  a = a.split("/").reverse().join("");
-                  b = b.split("/").reverse().join("");
-                  return b.localeCompare(a);
-                })
-                .filter((el) => diaryData[el]?.becks && Object.keys(diaryData[el].becks).length > 0)
-                .slice(0, LIMIT_PER_PAGE * page)
-                .map((date) => (
-                  <View key={date}>
-                    <Text style={styles.subtitle}>{formatDateThread(date)}</Text>
-                    <ExerciseItem patientState={diaryData[date]} date={date} navigation={navigation} />
-                  </View>
-                ))}
-              <ContributeCard onPress={() => NPSManager.showNPS()} />
-              {Object.keys(diaryData)
-                ?.sort((a, b) => {
-                  a = a.split("/").reverse().join("");
-                  b = b.split("/").reverse().join("");
-                  return b.localeCompare(a);
-                })
-                ?.filter((el) => diaryData[el]?.becks && Object.keys(diaryData[el].becks).length > 0)?.length >
-                LIMIT_PER_PAGE * page && (
-                <TouchableOpacity onPress={() => setPage(page + 1)} style={styles.versionContainer}>
-                  <Text style={styles.arrowDownLabel}>Voir plus</Text>
-                  <ArrowUpSvg style={styles.arrowDown} color={colors.BLUE} />
-                </TouchableOpacity>
-              )}
-            </>
-          )}
-        </ScrollView>
+            ) : (
+              <>
+                <JMButton title="Faire le point sur un évènement" onPress={() => navigation.navigate("beck")}></JMButton>
+                <View style={styles.divider} />
+                {Object.keys(diaryData)
+                  .sort((a, b) => {
+                    a = a.split("/").reverse().join("");
+                    b = b.split("/").reverse().join("");
+                    return b.localeCompare(a);
+                  })
+                  .filter((el) => diaryData[el]?.becks && Object.keys(diaryData[el].becks).length > 0)
+                  .slice(0, LIMIT_PER_PAGE * page)
+                  .map((date) => (
+                    <View key={date}>
+                      <Text style={styles.subtitle}>{formatDateThread(date)}</Text>
+                      <ExerciseItem patientState={diaryData[date]} date={date} navigation={navigation} />
+                    </View>
+                  ))}
+                <ContributeCard onPress={() => NPSManager.showNPS()} />
+                {Object.keys(diaryData)
+                  ?.sort((a, b) => {
+                    a = a.split("/").reverse().join("");
+                    b = b.split("/").reverse().join("");
+                    return b.localeCompare(a);
+                  })
+                  ?.filter((el) => diaryData[el]?.becks && Object.keys(diaryData[el].becks).length > 0)?.length >
+                  LIMIT_PER_PAGE * page && (
+                  <TouchableOpacity onPress={() => setPage(page + 1)} style={styles.versionContainer}>
+                    <Text style={styles.arrowDownLabel}>Voir plus</Text>
+                    <ArrowUpSvg style={styles.arrowDown} color={colors.BLUE} />
+                  </TouchableOpacity>
+                )}
+              </>
+            )}
+          </View>
+        </AnimatedHeaderScrollScreen>
       </View>
-      <FloatingPlusButton shadow onPress={startSurvey} plusPosition={0} />
     </>
   );
 };

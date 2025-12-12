@@ -23,6 +23,8 @@ import CloudIcon from "@assets/svg/icon/Cloud";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Icon from "@/components/Icon";
 import Gear from "@assets/svg/Gear";
+import ToolsScreen from "@/scenes/tools/ToolScreen";
+import HeartHand from "@assets/svg/icon/HeartHand";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -108,10 +110,11 @@ const Tabs = ({ navigation, route }) => {
       },
     },
     {
-      name: "Exercise",
-      label: "Beck",
-      icon: CloudIcon,
-      component: Exercise,
+      name: "tools",
+      label: "Agir",
+      icon: HeartHand,
+      component: ToolsScreen,
+      onPress: () => logEvents.logOutilsTab(),
     },
     {
       name: "settings",
