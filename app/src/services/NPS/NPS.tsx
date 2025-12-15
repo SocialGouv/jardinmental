@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { RefObject } from "react";
 import {
   Dimensions,
   Modal,
@@ -22,6 +23,10 @@ import logEvents from "../logEvents";
 import localStorage from "../../utils/localStorage";
 import NPSManager from "./NPSManager";
 import pck from "../../../package.json";
+import { typography } from "@/utils/typography";
+import { mergeClassNames } from "@/utils/className";
+import LinkIcon from "@assets/svg/icon/Link";
+import { TW_COLORS } from "@/utils/constants";
 
 // just to make sure nothing goes the bad way in production, debug is always false
 
@@ -45,7 +50,11 @@ contact: ${contact}
 profil: ${lookUpSupported[supported]}
 `;
 
-const NPS = () => {
+type NPSProps = {
+  navigationRef: RefObject<any>;
+};
+
+const NPS = ({ navigationRef }: NPSProps) => {
   const [visible, setVisible] = useState(false);
   const [useful, setUseful] = useState(null);
   const [feedback, setFeedback] = useState("");
@@ -120,51 +129,72 @@ const NPS = () => {
   return (
     <Modal visible={visible} animationType="slide" presentationStyle="formSheet" onDismiss={onClose}>
       <View style={styles.container}>
-        <KeyboardAvoidingView style={styles.keyboardAvoidingView} behavior={Platform.select({ ios: "padding", android: null })}>
-          <View style={styles.backContainer}>
+        <KeyboardAvoidingView style={styles.keyboardAvoidingView} behavior={Platform.OS === "ios" ? "padding" : undefined}>
+          <View style={styles.backContainer} className="p-4 pb-2 mt-4">
             <TouchableOpacity onPress={onClose}>
-              <Text style={styles.backText}>{getCaption("back")}</Text>
+              <Text className={mergeClassNames(typography.textXlBold, "text-cnam-primary-950 border-b border-b-cnam-primary-950")}>
+                {getCaption("back")}
+              </Text>
             </TouchableOpacity>
           </View>
           <ScrollView style={styles.scrollView} keyboardDismissMode="on-drag" onScrollBeginDrag={Keyboard.dismiss}>
-            <Text style={styles.topSubTitle}>{getCaption("feedback.rate-app.useful")}</Text>
-            <Mark
-              selected={useful}
-              onPress={setUseful}
-              bad={getCaption("feedback.rate-app.useful.not")}
-              good={getCaption("feedback.rate-app.useful.extremely")}
-            />
-            <Text style={styles.topSubTitle}>{getCaption("feedback.improvements.question")}</Text>
-            <TextInput
-              style={styles.feedback}
-              onChangeText={setFeedback}
-              placeholder={getCaption("feedback.improvements.placeholder")}
-              value={feedback}
-              multiline
-              textAlignVertical="top"
-              returnKeyType="next"
-            />
-            {/* <Text style={styles.topSubTitle}>{getCaption("feedback.rate-app.probable")}</Text>
+            <View className="bg-gray-100 p-4 rounded-xl m-4">
+              <Text className={mergeClassNames(typography.textSmRegular, "text-cnam-primary-900 leading-5")}>
+                Ce formulaire sert à partager un retour sur l’app. Jardin Mental ne peut pas répondre aux urgences.
+              </Text>
+              <TouchableOpacity
+                onPress={() => {
+                  NPSManager.hideNPS();
+                  navigationRef.current?.navigate("support");
+                }}
+                className="flex-row mt-2 items-center justify-center"
+              >
+                <LinkIcon size={16} />
+                <Text className={mergeClassNames("flex-row text-cnam-cyan-700-darken-40 ml-2", typography.textMdSemibold)}>
+                  Trouver un soutien 24h/24 - 7j/7
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <View className="px-4" style={{ backgroundColor: "#f9f9f9" }}>
+              <Text style={styles.topSubTitle}>{getCaption("feedback.rate-app.useful")}</Text>
+              <Mark
+                selected={useful}
+                onPress={setUseful}
+                bad={getCaption("feedback.rate-app.useful.not")}
+                good={getCaption("feedback.rate-app.useful.extremely")}
+              />
+              <Text style={styles.topSubTitle}>{getCaption("feedback.improvements.question")}</Text>
+              <TextInput
+                style={styles.feedback}
+                onChangeText={setFeedback}
+                placeholder={getCaption("feedback.improvements.placeholder")}
+                value={feedback}
+                multiline
+                textAlignVertical="top"
+                returnKeyType="next"
+              />
+              {/* <Text style={styles.topSubTitle}>{getCaption("feedback.rate-app.probable")}</Text>
               <Mark
                 selected={reco}
                 onPress={this.setReco}
                 bad={getCaption("feedback.rate-app.probable.not")}
                 good={getCaption("feedback.rate-app.probable.extremely")}
               /> */}
-            <Text style={styles.topSubTitle}>{getCaption("feedback.contact.description")}</Text>
-            <TextInput
-              style={styles.contact}
-              value={contact}
-              placeholder={getCaption("feedback.contact")}
-              onChangeText={setContact}
-              autoCorrect={false}
-              autoCapitalize="none"
-              returnKeyType="go"
-              onSubmitEditing={sendNPS}
-            />
-            <TouchableOpacity style={styles.buttonContainer} disabled={sendButton === "Merci !"} onPress={sendNPS}>
-              <Text style={styles.buttonText}>{sendButton}</Text>
-            </TouchableOpacity>
+              <Text style={styles.topSubTitle}>{getCaption("feedback.contact.description")}</Text>
+              <TextInput
+                style={styles.contact}
+                value={contact}
+                placeholder={getCaption("feedback.contact")}
+                onChangeText={setContact}
+                autoCorrect={false}
+                autoCapitalize="none"
+                returnKeyType="go"
+                onSubmitEditing={sendNPS}
+              />
+              <TouchableOpacity style={styles.buttonContainer} disabled={sendButton === "Merci !"} onPress={sendNPS}>
+                <Text style={styles.buttonText}>{sendButton}</Text>
+              </TouchableOpacity>
+            </View>
           </ScrollView>
         </KeyboardAvoidingView>
       </View>
@@ -176,14 +206,13 @@ const styles = StyleSheet.create({
   container: {
     height: "100%",
     width: Dimensions.get("window").width,
-    backgroundColor: "#f9f9f9",
+    backgroundColor: TW_COLORS.WHITE,
   },
   scrollView: {
     flex: 1,
     flexBasis: "100%",
     minHeight: "100%",
-    paddingVertical: 20,
-    paddingHorizontal: 30,
+    paddingVertical: 0,
   },
   keyboardAvoidingView: {
     flex: 1,
@@ -241,9 +270,7 @@ const styles = StyleSheet.create({
     color: colors.BLUE,
   },
   backContainer: {
-    backgroundColor: "#f9f9f9",
-    marginVertical: 15,
-    paddingHorizontal: 30,
+    // paddingHorizontal: 30,
     alignItems: "flex-start",
   },
   backText: {

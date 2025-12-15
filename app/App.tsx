@@ -11,7 +11,7 @@ import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
 dayjs.extend(isSameOrAfter);
 dayjs.locale("fr");
 
-import Router from "./src/navigation/router";
+import Router, { navigationRef } from "./src/navigation/router";
 import { DiaryDataProvider } from "./src/context/diaryData";
 import { DiaryNotesProvider } from "./src/context/diaryNotes";
 import { BottomSheetProvider } from "@/context/BottomSheetContext";
@@ -115,7 +115,7 @@ const App = () => {
                     <LatestChangesModalProvider>
                       <InfoModalProvider>
                         <Router />
-                        <NPS />
+                        <NPS navigationRef={navigationRef} />
                       </InfoModalProvider>
                     </LatestChangesModalProvider>
                   </OnboardingProgressHeaderProvider>
