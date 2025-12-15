@@ -18,6 +18,7 @@ import { INDICATOR_TYPE } from "@/entities/IndicatorType";
 import { INDICATORS_CATEGORIES } from "@/entities/IndicatorCategories";
 import NotificationService from "@/services/notifications";
 import { useDevCorrelationConfig, DEFAULT_CONFIG, VALUE_RANGES } from "@/hooks/useDevCorrelationConfig";
+import { useInAppBrowserConfig } from "@/hooks/useInAppBrowserConfig";
 
 const CollapsibleSection = ({ title, children }) => {
   const [isExpanded, setIsExpanded] = useState(true);
@@ -37,6 +38,7 @@ const DevMode = ({ navigation }) => {
   const { clearProfile, loadProfile } = useUserProfile();
   const [_diaryData, _addEntryToDiaryData, internal__deleteDiaryData, importDiaryData, internal__deleteAllDiaryData] = useContext(DiaryDataContext);
   const { config, saveConfig, resetConfig } = useDevCorrelationConfig();
+  const { useInAppBrowser, setUseInAppBrowser } = useInAppBrowserConfig();
 
   const disableDevMode = async () => {
     await AsyncStorage.setItem("devMode", "false");
@@ -115,6 +117,28 @@ const DevMode = ({ navigation }) => {
       <CollapsibleSection title="Sentry Testing">
         <Text style={styles.sectionDescription}>Test Sentry error reporting integration</Text>
         <JMButton className="mt-2" title="Send Test to Sentry" variant="outline" onPress={sendSentryTest} />
+      </CollapsibleSection>
+
+      <CollapsibleSection title="Navigateur In-App">
+        <Text style={styles.sectionDescription}>
+          Configurer si les liens externes s'ouvrent dans un navigateur in-app ou dans le navigateur système
+        </Text>
+
+        {/* In-App Browser Switch */}
+        <View style={styles.configRow}>
+          <Text style={styles.configLabel}>Utiliser le navigateur in-app</Text>
+          <Switch
+            value={useInAppBrowser}
+            onValueChange={(value) => setUseInAppBrowser(value)}
+            trackColor={{ false: "#767577", true: colors.DARK_BLUE }}
+            thumbColor={useInAppBrowser ? "#f4f3f4" : "#f4f3f4"}
+          />
+        </View>
+        <Text style={[styles.sectionDescription, { fontSize: 12, marginTop: 5 }]}>
+          {useInAppBrowser
+            ? "Les liens s'ouvriront dans un navigateur modal in-app (expo-web-browser)"
+            : "Les liens s'ouvriront dans le navigateur système par défaut"}
+        </Text>
       </CollapsibleSection>
 
       <CollapsibleSection title="Configuration Corrélation">

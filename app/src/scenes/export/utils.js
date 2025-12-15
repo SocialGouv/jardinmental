@@ -471,6 +471,9 @@ const formatHtmlTable = async (diaryData, diaryNotes) => {
             <tr>
               <td>
                 ${Object.keys({ ...diaryData, ...diaryNotes })
+                  .filter((date) => {
+                    return chartDates.includes(date);
+                  })
                   .map((strDate) => ({ strDate, date: new Date(strDate) }))
                   .sort((item1, item2) => item2.date - item1.date)
                   .map(({ strDate }) => {

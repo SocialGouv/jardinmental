@@ -1388,6 +1388,29 @@ const logAnalysesValidateCorrelations = async () => {
   });
 };
 
+// TOOLS EVENTS
+const logOutilsTab = async () => {
+  await logEvent({
+    category: "RESOURCES",
+    action: "OUTILS_TAB",
+  });
+};
+
+const logOutilsOpen = async (toolId: number) => {
+  await logEvent({
+    category: "RESOURCES",
+    action: "OUTILS_OPEN",
+    value: toolId,
+  });
+};
+
+const logOutilsBookmark = async () => {
+  await logEvent({
+    category: "RESOURCES",
+    action: "OUTILS_BOOKMARK",
+  });
+};
+
 export default {
   initMatomo,
   logAppVisit,
@@ -1549,4 +1572,8 @@ export default {
   // Correlations events
   logAnalysesTabCorrelations,
   logAnalysesValidateCorrelations,
+  // Tools events
+  logOutilsTab,
+  logOutilsOpen,
+  logOutilsBookmark,
 };

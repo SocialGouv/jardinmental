@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { StyleSheet, View, TouchableOpacity, TextInput, Keyboard } from "react-native";
 import { colors } from "../utils/colors";
 import CircledIcon from "./CircledIcon";
+import { TW_COLORS } from "@/utils/constants";
 
 export default ({ onChange = console.log, placeholder = "Ajouter...", styleContainer, onChangeText = console.log }) => {
   const [value, setValue] = useState<string | undefined>();
@@ -30,7 +31,13 @@ export default ({ onChange = console.log, placeholder = "Ajouter...", styleConta
             onChangeText("");
           }}
         >
-          <CircledIcon icon="Plus" color={colors.LIGHT_BLUE} borderColor="#fff" iconColor="#fff" opacity={value ? 1 : 0.38} />
+          <CircledIcon
+            icon="Plus"
+            color={colors.LIGHT_BLUE}
+            borderColor={TW_COLORS.CNAM_PRIMARY_800}
+            iconColor={TW_COLORS.CNAM_PRIMARY_800}
+            opacity={value ? 1 : 0.38}
+          />
         </TouchableOpacity>
       </View>
     </View>

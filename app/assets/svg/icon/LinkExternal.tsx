@@ -1,6 +1,6 @@
 import Svg, { Path } from "react-native-svg";
 
-export default function PhoneIcon({ color, width = 20, height = 20 }: { color?: string; width?: number; height?: number }) {
+export default function LinkExternal({ color, width = 20, height = 20 }: { color?: string; width?: number; height?: number }) {
   return (
     <Svg width={width} height={height} viewBox="0 0 20 20" fill="none">
       <Path
