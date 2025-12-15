@@ -165,7 +165,6 @@ export const IndicatorsBottomSheet = ({
           backgroundColor: TW_COLORS.GRAY_50,
         }}
       >
-        {" "}
         <View className="p-4 flex-column flex-1">
           <View className="flex-colum flex-1">
             {!indicatorList && <Text>Chargement...</Text>}
