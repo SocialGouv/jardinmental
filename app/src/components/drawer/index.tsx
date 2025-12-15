@@ -159,13 +159,6 @@ export default ({ navigation, visible, onClick }) => {
                 className="bg-white flex-row px-4 py-6 self-center justify-between items-center relative"
                 style={{ width: "90%", top: -50, height: 81, borderRadius: 20, borderWidth: 1, borderColor: TW_COLORS.GRAY_300 }}
               >
-                {/* <View
-                  className="absolute -top-[1] bg-gray-400 h-[1]"
-                  style={{
-                    left: "5%",
-                    right: "5%",
-                  }}
-                ></View> */}
                 <View className="flex-row items-center space-x-4">
                   <View className="border border-[1.5] border-cnam-primary-800 rounded-full w-[32] h-[32] items-center justify-center">
                     <MessageHeartCircleIcon color={TW_COLORS.CNAM_PRIMARY_800} />
