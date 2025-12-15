@@ -18,6 +18,7 @@ type ButtonProps = TouchableOpacityProps & {
   iconPosition?: "right" | "left";
   size?: "small" | "medium" | "large";
   width?: "full" | "fixed" | "adapt";
+  iconSize?: number;
 };
 
 export default function JMButton({
@@ -32,6 +33,7 @@ export default function JMButton({
   disabled = false,
   loading = false,
   iconPosition = "left",
+  iconSize,
   icon,
   ...props
 }: ButtonProps) {
@@ -42,9 +44,9 @@ export default function JMButton({
   };
 
   const paddingMap: Record<"small" | "medium" | "large", string> = {
-    small: "px-3 py-1.5",
-    large: "px-6 py-4",
-    medium: "px-5 py-3",
+    small: "px-3 ",
+    large: "px-6 ",
+    medium: "px-5 ",
   };
 
   const textSizeMap: Record<"small" | "medium" | "large", string> = {
@@ -96,12 +98,12 @@ export default function JMButton({
 
   const styledIcon = icon
     ? React.cloneElement(icon, {
-        width: 15,
-        height: 15,
+        width: iconSize || 15,
+        height: iconSize || 15,
         styleContainer: {
           ...(icon.props?.styleContainer || {}),
-          width: 15,
-          height: 15,
+          width: iconSize || 15,
+          height: iconSize || 15,
         },
       })
     : null;
@@ -115,9 +117,11 @@ export default function JMButton({
       {...props}
     >
       {loading && <ActivityIndicator size="small" color={variant === "outline" || variant === "text" ? "#3D6874" : "#fff"} className="mr-2" />}
-      {!loading && styledIcon && iconPosition === "left" && <View className={!!(children ?? title) ? `mr-2` : ""}>{styledIcon}</View>}
+      {!loading && styledIcon && iconPosition === "left" && (
+        <View className={mergeClassNames(!!(children ?? title) ? `mr-2` : "")}>{styledIcon}</View>
+      )}
       {!!(children || title) && <Text className={mergeClassNames("font-semibold", textSizeMap[size], textColor, textClassName)}>{title}</Text>}
-      {!loading && icon && iconPosition === "right" && <View className={!!(children ?? title) ? `ml-2` : ""}>{icon}</View>}
+      {!loading && icon && iconPosition === "right" && <View className={!!(children ?? title) ? `ml-2 ` : ""}>{icon}</View>}
     </SquircleButton>
   );
 }
