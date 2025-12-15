@@ -13,6 +13,8 @@ import { FlatList } from "react-native-gesture-handler";
 import { INDICATORS_COUPLES, NEW_INDICATORS_CATEGORIES } from "@/utils/liste_indicateurs.1";
 import { INDICATORS_CATEGORIES } from "@/entities/IndicatorCategories";
 import Other from "@assets/svg/icon/Other";
+import { getIndicatorKey } from "@/utils/indicatorUtils";
+import ChevronIcon from "@assets/svg/icon/chevron";
 
 const screenHeight = Dimensions.get("window").height;
 const height90vh = screenHeight * 0.9;
@@ -30,6 +32,7 @@ export const IndicatorsBottomSheet = ({
   const [selectedIndicators, setSelectedIndicators] = useState<Indicator[]>(initialSelectedIndicators || []);
   const [showTreatment, setShowTreatment] = useState<boolean>(initialShowTreatment || false);
   const reminderToggleRef = useRef<any>();
+  const scrollRef = useRef<FlatList>(null);
 
   useEffect(() => {
     const getIndicators = async function () {
@@ -70,9 +73,9 @@ export const IndicatorsBottomSheet = ({
     if (!indicatorList) {
       return [];
     }
-    if (selectedIndicators.length === 2) {
-      return [];
-    }
+    // if (selectedIndicators.length === 2) {
+    //   return [];
+    // }
     // all possible association couple amongst user's indicators
     const usersIndicatorsCouple: [Indicator, Indicator][] = [];
     for (const couple of INDICATORS_COUPLES) {
@@ -100,10 +103,10 @@ export const IndicatorsBottomSheet = ({
     console.log("User indicator couples", usersIndicatorsCouple);
     if (selectedIndicators.length === 0) {
       indicatorCouples = usersIndicatorsCouple;
-    } else if (selectedIndicators.length === 1) {
+    } else if (selectedIndicators.length >= 1) {
       indicatorCouples = usersIndicatorsCouple
         .filter((couple) => {
-          return selectedIndicators.includes(couple[0]) || selectedIndicators.includes(couple[1]);
+          return selectedIndicators[0].uuid === couple[0].uuid || selectedIndicators[0].uuid === couple[1].uuid;
         })
         .map((couple) => {
           // always show selectedIndicators as first indicator in couple
@@ -170,23 +173,55 @@ export const IndicatorsBottomSheet = ({
           left: 0,
           right: 0,
         }}
-        className={`flex-column justify-between items-center p-6 px-6 bg-white/90 pb-10 w-full`}
+        className={`flex-column justify-between items-center py-6 bg-white/90 pb-10 w-full`}
       >
+        <View className="flex-row items-center justify-between w-full px-4 py-2">
+          <Text className={mergeClassNames(typography.textMdSemibold, "text-left")}>Associations fréquentes:</Text>
+          <View className="flex-row">
+            <TouchableOpacity className="mr-4">
+              <ChevronIcon strokeWidth={2} />
+            </TouchableOpacity>
+            <TouchableOpacity className="ml-4">
+              <ChevronIcon direction="right" strokeWidth={2} />
+            </TouchableOpacity>
+          </View>
+        </View>
         <FlatList
           data={computedIndicatorCouples}
           horizontal={true}
           showsHorizontalScrollIndicator={false}
+          ref={scrollRef}
+          className="px-4"
           renderItem={({ item }) => {
+            const selectedIndicatorsIds = selectedIndicators.map((selectedIndicator) => getIndicatorKey(selectedIndicator));
+            const selected = selectedIndicatorsIds.includes(getIndicatorKey(item[0])) && selectedIndicatorsIds.includes(getIndicatorKey(item[1]));
             return (
-              <View className="bg-gray-50 rounded-lg border border-gray-300 px-2 py-1 mr-2">
-                <Text className={mergeClassNames(typography.textLgMedium, "text-cnam-primary-900")}>
+              <TouchableOpacity
+                onPress={() => {
+                  setSelectedIndicators(item);
+                }}
+                className={mergeClassNames(
+                  "bg-gray-50 rounded-lg border border-gray-300 px-2 py-1 mr-2 flex-row items-center justify-center",
+                  selected ? "bg-cnam-cyan-lighten-80" : ""
+                )}
+              >
+                {selected ? (
+                  <View className="mr-2 w-6 h-6 rounded-md items-center justify-center bg-cnam-primary-800">
+                    <Text className="text-white text-base font-bold">✓</Text>
+                  </View>
+                ) : (
+                  <View className="mr-2 w-6 h-6 rounded-md items-center justify-center border border-gray-300">
+                    <Text className="text-white text-xs" />
+                  </View>
+                )}
+                <Text className={mergeClassNames(selected ? typography.textLgSemibold : typography.textLgMedium, "text-cnam-primary-900")}>
                   {item[0].name} + {item[1].name}
                 </Text>
-              </View>
+              </TouchableOpacity>
             );
           }}
         />
-        <View className="fr-col space-y-4 mt-4">
+        <View className="fr-col space-y-4 mt-4 px-4 w-full">
           <Text className={mergeClassNames(typography.textLgSemibold, "text-gray-800")}>Traitement</Text>
           <View className="flex-row items-center justify-between">
             <Pressable onPress={() => reminderToggleRef?.current?.toggle?.()} hitSlop={{ bottom: 8, left: 8, right: 8, top: 8 }}>
@@ -201,17 +236,19 @@ export const IndicatorsBottomSheet = ({
             <Text className={mergeClassNames(typography.textLgMedium, "text-cnam-primary-900")}>Voir lorsque j’ai pris mon traitement</Text>
           </View>
         </View>
-        <JMButton
-          onPress={async () => {
-            logEvents.logAnalysesValidateCorrelations();
-            onClose({
-              selectedIndicators,
-              showTreatment,
-            });
-          }}
-          disabled={selectedIndicators.length === 0}
-          title={"Valider la sélection"}
-        />
+        <View className="fr-col space-y-4 mt-4 p-4 w-full">
+          <JMButton
+            onPress={async () => {
+              logEvents.logAnalysesValidateCorrelations();
+              onClose({
+                selectedIndicators,
+                showTreatment,
+              });
+            }}
+            disabled={selectedIndicators.length === 0}
+            title={"Valider la sélection"}
+          />
+        </View>
       </View>
     </View>
   );
