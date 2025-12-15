@@ -178,29 +178,6 @@ export default ({ navigation, visible, onClick }) => {
                 <ArrowRightSvg color={TW_COLORS.GRAY_600} />
               </SquircleButton>
               <View className="bg-cnam-primary-50 -mt-12">
-                {/* <TouchableOpacity
-                  onPress={async () => {
-                    onClick();
-                    Linking.openURL("mailto:jardinmental@fabrique.social.gouv.fr");
-                  }}
-                  className="bg-white rounded-b-xl flex-row px-4 py-6 self-center border border-gray-300 border-t-0 justify-between items-center"
-                  style={{ width: "90%" }}
-                >
-                  <View
-                    className="absolute -top-[1] bg-gray-400 h-[1]"
-                    style={{
-                      left: "5%",
-                      right: "5%",
-                    }}
-                  ></View>
-                  <View className="flex-row items-center space-x-4">
-                    <View className="border border-[1.5] border-cnam-primary-800 rounded-full w-[32] h-[32] items-center justify-center">
-                      <MessageTextCircle color={TW_COLORS.CNAM_PRIMARY_800} />
-                    </View>
-                    <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-950")}>Nous contacter</Text>
-                  </View>
-                  <ArrowRightSvg color={TW_COLORS.GRAY_600} />
-                </TouchableOpacity> */}
                 <View className="mb-8">
                   <DrawerItem
                     title="Comment ça marche ?"
