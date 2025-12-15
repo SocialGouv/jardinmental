@@ -516,6 +516,7 @@ export const TW_COLORS = {
   GRAY_800: "#4A5D5F",
   GRAY_700: "#617778",
   GRAY_200: "#627577ff",
+  GRAY_300: "#C7DDDE",
   GRAY_500: "#92A9AB",
   GRAY_600: "#799092",
   GRAY_900: "#354445",

@@ -117,8 +117,9 @@ interface RouterProps {
   statusBarContext: any;
 }
 
+export const navigationRef = React.createRef<any>();
+
 class Router extends React.Component<RouterProps> {
-  navigationRef: any;
   appListener: any;
   cleanupNotifications: any;
   prevCurrentRouteName: string;
@@ -139,11 +140,11 @@ class Router extends React.Component<RouterProps> {
 
     // If a link exists in data, use it (for future compatibility)
     if (data?.link) {
-      this.navigationRef?.navigate(data.link);
+      navigationRef.current?.navigate(data.link);
     }
     // Otherwise, detect by title for "Main" and "Goal" notifications
     else if (title === "Comment allez-vous aujourd'hui ?" || title === "Vous avez un objectif aujourd'hui 🎯") {
-      this.navigationRef?.navigate("day-survey");
+      navigationRef.current?.navigate("day-survey");
     }
   };
 
@@ -205,8 +206,8 @@ class Router extends React.Component<RouterProps> {
   };
 
   onStateChange = async () => {
-    if (!this.navigationRef) return;
-    const route = this.navigationRef.getCurrentRoute();
+    if (!navigationRef.current) return;
+    const route = navigationRef.current.getCurrentRoute();
     if (route.name === this.prevCurrentRouteName) return;
     this.prevCurrentRouteName = route.name;
     logEvents.logOpenPage(route.name);
@@ -215,7 +216,7 @@ class Router extends React.Component<RouterProps> {
   render() {
     return (
       <>
-        <NavigationContainer ref={(r) => (this.navigationRef = r)} onStateChange={this.onStateChange} linking={linking}>
+        <NavigationContainer ref={navigationRef} onStateChange={this.onStateChange} linking={linking}>
           <Stack.Navigator
             initialRouteName="tabs"
             screenOptions={{

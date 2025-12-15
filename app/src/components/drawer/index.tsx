@@ -43,6 +43,9 @@ import { TW_COLORS } from "@/utils/constants";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import ArrowRightSvg from "../../../assets/svg/arrow-right.js";
 import logEvents from "@/services/logEvents";
+import MessageHeartCircleIcon from "@assets/svg/icon/MessageHeartCircle";
+import { ContactBottomSheet } from "./ContactBottomSheet";
+import { useBottomSheet } from "@/context/BottomSheetContext";
 
 export default ({ navigation, visible, onClick }) => {
   const [isVisible, setIsVisible] = useState();
@@ -55,6 +58,7 @@ export default ({ navigation, visible, onClick }) => {
   const [badgeNpsProIsVisible, setBadgeNpsProIsVisible] = useState(false);
   const [badgeNotesVersionVisible, setBadgeNotesVersionVisible] = useState(false);
   const insets = useSafeAreaInsets();
+  const { showBottomSheet } = useBottomSheet();
 
   useEffect(() => {
     setIsVisible(visible);
@@ -111,9 +115,10 @@ export default ({ navigation, visible, onClick }) => {
                 className="bg-cnam-primary-800"
                 style={{
                   paddingTop: insets.top,
+                  paddingBottom: 60,
                 }}
               >
-                <View className="p-4 pb-6 bg-cnam-primary-800 flex-col space-y-4">
+                <View className="p-4 pb-6 bg-cnam-primary-800 flex-col space-y-4 visible">
                   <Text className={mergeClassNames(typography.displayXsBold, "text-cnam-primary-25 text-left")}>Jardin Mental</Text>
                   <SquircleButton
                     onPress={() => {
@@ -142,53 +147,31 @@ export default ({ navigation, visible, onClick }) => {
                     </View>
                   </SquircleButton>
                 </View>
-                <TouchableOpacity
-                  onPress={async () => {
-                    // dismiss the drawer first, IOS cannot display two modals at the same tme
-                    onClick();
-                    await localStorage.setVisitProNPS(true);
-                    setTimeout(() => {
-                      // a bit hacky : wait for drawer to dismiss before displaying NPS
-                      NPSManager.showNPS();
-                    }, 500);
-                  }}
-                  className="bg-white rounded-t-xl flex-row px-4 py-6 self-center border-gray-300 border-b-0 justify-between items-center relative"
-                  style={{ width: "90%" }}
-                >
-                  <View className="flex-row items-center space-x-4">
-                    <View className="border border-[1.5] border-cnam-primary-800 rounded-full w-[32] h-[32] items-center justify-center">
-                      <MegaphoneIcon color={TW_COLORS.CNAM_PRIMARY_800} />
-                    </View>
-                    <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-950")}>Donner mon avis</Text>
-                  </View>
-                  <ArrowRightSvg color={TW_COLORS.GRAY_600} />
-                </TouchableOpacity>
               </View>
-              <View className="bg-cnam-primary-50">
-                <TouchableOpacity
-                  onPress={async () => {
-                    onClick();
-                    Linking.openURL("mailto:jardinmental@fabrique.social.gouv.fr");
-                  }}
-                  className="bg-white rounded-b-xl flex-row px-4 py-6 self-center border border-gray-300 border-t-0 justify-between items-center"
-                  style={{ width: "90%" }}
-                >
-                  <View
-                    className="absolute -top-[1] bg-gray-400 h-[1]"
-                    style={{
-                      left: "5%",
-                      right: "5%",
-                    }}
-                  ></View>
-                  <View className="flex-row items-center space-x-4">
-                    <View className="border border-[1.5] border-cnam-primary-800 rounded-full w-[32] h-[32] items-center justify-center">
-                      <MessageTextCircle color={TW_COLORS.CNAM_PRIMARY_800} />
-                    </View>
-                    <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-950")}>Nous contacter</Text>
+              <SquircleButton
+                cornerSmoothing={100}
+                preserveSmoothing={true}
+                borderRadius={16}
+                onPress={async () => {
+                  showBottomSheet(<ContactBottomSheet navigation={navigation} />);
+                  onClick();
+                }}
+                className="bg-white flex-row px-4 py-6 self-center justify-between items-center relative"
+                style={{ width: "90%", top: -50, height: 81, borderRadius: 20, borderWidth: 1, borderColor: TW_COLORS.GRAY_300 }}
+              >
+                <View className="flex-row items-center space-x-4">
+                  <View className="border border-[1.5] border-cnam-primary-800 rounded-full w-[32] h-[32] items-center justify-center">
+                    <MessageHeartCircleIcon color={TW_COLORS.CNAM_PRIMARY_800} />
                   </View>
-                  <ArrowRightSvg color={TW_COLORS.GRAY_600} />
-                </TouchableOpacity>
-                <View className="mt-6 mb-8">
+                  <View className="flex-column">
+                    <Text className={mergeClassNames(typography.textLgBold, "text-cnam-primary-950")}>Soutien 24/24 - 7j/7</Text>
+                    <Text className={mergeClassNames(typography.textSmRegular, "text-cnam-primary-800")}>Numéros d’aide immédiate</Text>
+                  </View>
+                </View>
+                <ArrowRightSvg color={TW_COLORS.GRAY_600} />
+              </SquircleButton>
+              <View className="bg-cnam-primary-50 -mt-12">
+                <View className="mb-8">
                   <DrawerItem
                     title="Comment ça marche ?"
                     path="faq"
