@@ -183,8 +183,8 @@ export default function SupportScreen({ navigation, route }) {
             >
               <PhoneIcon width={24} height={24} />
               <View className="ml-3">
-                <Text className={mergeClassNames(typography.textLgSemibold, " text-cnam-primary-900 text-left")}>Appeler le 3114</Text>
-                <Text className={mergeClassNames(typography.textMdMedium, " text-cnam-primary-900 text-left")}>Prévention suicide</Text>
+                <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-900 text-left")}>Appeler le 3114</Text>
+                <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900 text-left")}>Prévention suicide</Text>
               </View>
             </SquircleButton>
           </View>
