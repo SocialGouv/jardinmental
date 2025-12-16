@@ -158,7 +158,7 @@ export const SUBCATEGORIES: Record<
   },
   [NEW_INDICATORS_SUBCATEGORIES.NEGATIVE_EMOTIONS]: {
     id: "ed5f6b2e-6a32-420f-9b71-4c3d42222cd6",
-    label: "Emotions négatives",
+    label: "Emotions désagréables",
     category: NEW_INDICATORS_CATEGORIES.EMOTIONS,
     matomoId: 22,
   },
