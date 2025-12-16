@@ -115,7 +115,6 @@ export default function SupportScreen({ navigation, route }) {
       <View className="flex-1 p-4 flex-col space-y-12 pt-10 pb-8 bg-white">
         <View className="flex-col space-y-6">
           <View className="flex-row items-center">
-            {/* <MessageHeartCircleIcon width={"24"} height={"24"} color={TW_COLORS.CNAM_PRIMARY_800} /> */}
             <Text className={mergeClassNames(typography.textXlSemibold, "text-cnam-primary-950 text-left")}>Besoin d'aide urgente ?</Text>
           </View>
           <View className="flex-row space-x-3">
@@ -140,7 +139,7 @@ export default function SupportScreen({ navigation, route }) {
                     <PhoneIcon width={24} height={24} color={TW_COLORS.CNAM_PRIMARY_800} />
                     <Text className={mergeClassNames(typography.displayXsBold, "text-primary-900 ml-2")}>15</Text>
                   </View>
-                  <Text className={mergeClassNames(typography.textSmMedium, " text-cnam-primary-800 text-left")}>Urgence immédiate</Text>
+                  <Text className={mergeClassNames(typography.textSmMedium, "text-cnam-primary-800")}>Urgence immédiate</Text>
                 </View>
               </SquircleButton>
             </View>
@@ -173,9 +172,6 @@ export default function SupportScreen({ navigation, route }) {
           <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 text-left")}>24h/24, 7j/7, appel gratuit.</Text>
           <View className="flex-col pt-6">
             <Text className={mergeClassNames(typography.textXlMedium, "text-cnam-primary-900 text-left mb-4")}>En cas d'idées suicidaires</Text>
-            {/* <Text className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-900 text-left")}>
-              Si vous êtes en détresse et/ou avez des pensées suicidaires, appelez le 3114 (24h/24, 7j/7, appel gratuit).
-            </Text> */}
             <SquircleButton
               onPress={() => handleCall("3114")}
               style={{
@@ -191,26 +187,6 @@ export default function SupportScreen({ navigation, route }) {
                 <Text className={mergeClassNames(typography.textMdMedium, " text-cnam-primary-900 text-left")}>Prévention suicide</Text>
               </View>
             </SquircleButton>
-            {/* <SquircleButton
-              onPress={() => handleSms("114")}
-              style={{
-                borderRadius: 20,
-              }}
-              preserveSmoothing={true}
-              cornerSmoothing={100}
-              className="border border-cnam-primary-800 h-[80] flex-col px-6 py-4 justify-content items-center mt-0"
-            >
-              <View className="flex-row space-x-4 w-full">
-                <View>
-                  <DeafIcon width={24} height={24} />
-                </View>
-                <View>
-                  <MailIcon width={24} height={24} />
-                </View>
-                <Text className={mergeClassNames(typography.textLgSemibold, "ml-3 text-cnam-primary-900 text-left")}>Écrire au 114 par SMS</Text>
-              </View>
-              <Text className={mergeClassNames(typography.textSmMedium, "text-gray-800 text-left -ml-4")}>Numéro d’urgence sourds et malendants</Text>
-            </SquircleButton> */}
           </View>
         </View>
       </View>
