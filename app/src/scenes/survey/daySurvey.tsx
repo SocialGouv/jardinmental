@@ -76,7 +76,7 @@ const DaySurvey = ({
   };
   const questionContext = {
     id: "CONTEXT",
-    label: "Ajoutez une note générale sur votre journée",
+    label: "Rédigez une note générale sur votre journée",
   };
 
   const updateIndicators = async () => {
@@ -441,7 +441,7 @@ const DaySurvey = ({
           explanation={questionContext.explanation}
           onChangeUserComment={handleChangeUserComment}
           userComment={answers[questionContext.id]?.userComment}
-          placeholder="Contexte, évènements, comportement de l'entourage..."
+          placeholder="Rédiger une note générale : contexte, évènements, comportement de l'entourage..."
         />
       </View>
     </AnimatedHeaderScrollScreen>

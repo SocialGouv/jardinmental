@@ -126,7 +126,7 @@ export const IndicatorSurveyItem = ({
         <InputText
           fill
           preset="floatingLabel"
-          placeholder="Ajoutez une note"
+          placeholder="Rédiger une note sur cet élément"
           value={_comment}
           onChangeText={(nextComment) => {
             _setComment(nextComment);
