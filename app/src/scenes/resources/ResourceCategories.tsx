@@ -38,10 +38,10 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ number, title, onPress, Ima
     <TouchableOpacity
       onPress={onPress}
       activeOpacity={0.7}
-      style={{ backgroundColor: backgroundColor[number - 1], borderColor: borderColor[number - 1], height: 82 }}
+      style={{ backgroundColor: backgroundColor[number - 1], borderColor: borderColor[number - 1], minHeight: 82 }}
       className="bg-white border  rounded-xl mb-4 overflow-hidden"
     >
-      <View className="flex-row items-center">
+      <View className="flex-row items-center z-2">
         <View className="flex-1 p-4">
           <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-950")}>{title}</Text>
           <View className="flex-row items-center mt-1">
