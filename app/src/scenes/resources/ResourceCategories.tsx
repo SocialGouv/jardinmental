@@ -1,5 +1,5 @@
-import React, { JSX } from "react";
-import { View, Text, ScrollView, TouchableOpacity, Image, ImageSourcePropType } from "react-native";
+import React, { JSX, useRef } from "react";
+import { View, Text, ScrollView, TouchableOpacity, Image, ImageSourcePropType, Animated } from "react-native";
 import Header from "../../components/Header";
 import { CATEGORIES, RESOURCES_DATA } from "./data/resources";
 import logEvents from "../../services/logEvents";
@@ -65,6 +65,29 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ number, title, onPress, Ima
 };
 
 const ResourceCategories: React.FC<ResourceCategoriesProps> = ({ navigation }) => {
+  const scrollY = useRef(new Animated.Value(0)).current;
+
+  // Interpolate opacity for info button
+  const infoButtonOpacity = scrollY.interpolate({
+    inputRange: [0, 50],
+    outputRange: [1, 0],
+    extrapolate: "clamp",
+  });
+
+  // Interpolate height scale for info button
+  const infoButtonScale = scrollY.interpolate({
+    inputRange: [0, 100],
+    outputRange: [220, 0],
+    extrapolate: "clamp",
+  });
+
+  // Interpolate height scale for info button
+  const infoButtonTranslate = scrollY.interpolate({
+    inputRange: [0, 150],
+    outputRange: [0, -100],
+    extrapolate: "clamp",
+  });
+
   const categories = [
     {
       key: CATEGORIES.LA_SANTE_MENTALE_C_EST_QUOI,
@@ -105,31 +128,34 @@ const ResourceCategories: React.FC<ResourceCategoriesProps> = ({ navigation }) =
 
   return (
     <SafeAreaView edges={["left", "right"]} className="flex-1">
-      <View className="bg-cnam-primary-800 flex flex-row justify-between pb-0">
-        <Header title="Ressources" navigation={navigation} />
-      </View>
       <ScrollView
+        onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], {
+          useNativeDriver: false,
+        })}
+        bounces={false}
+        showsVerticalScrollIndicator={false}
         contentContainerStyle={{
-          paddingBottom: 80,
+          paddingBottom: 180,
+          //marginTop: 120,
+          marginTop: 280,
         }}
         className="bg-cnam-primary-50 flex-1"
       >
-        <View className="p-4 mt-4">
-          <View className="mb-6">
-            <Text className="text-cnam-primary-950 text-2xl font-semibold mb-3">La santé mentale, qu'est-ce que c'est ?</Text>
-            <Text className="text-cnam-primary-800 text-base leading-6">
-              Un guide simple et accessible pour mieux connaître la santé mentale, ses enjeux et les solutions disponibles
-            </Text>
-          </View>
+        {/* <View className="p-4 bg-cnam-primary-50">
+          <Text className="text-cnam-primary-800 text-base leading-6">
+            Un guide simple et accessible pour mieux connaître la santé mentale, ses enjeux et les solutions disponibles
+          </Text>
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("commity");
             }}
-            className="flex-row bg-cnam-cyan-lighten-80 items-center mb-8 space-x-1 rounded-full px-3 self-start"
+            className="flex-row bg-cnam-cyan-lighten-80 items-center space-x-1 rounded-full px-3 self-start mt-4"
           >
             <ValidatedStampIcon />
             <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>Comment ces contenus sont-ils vérifiés ?</Text>
           </TouchableOpacity>
+        </View> */}
+        <View className="p-4 pt-2">
           {categories.map((category) => (
             <CategoryCard
               key={category.key}
@@ -142,6 +168,42 @@ const ResourceCategories: React.FC<ResourceCategoriesProps> = ({ navigation }) =
           ))}
         </View>
       </ScrollView>
+      <View className="absolute">
+        <View className="bg-cnam-primary-800 flex flex-row justify-between pb-0">
+          <Header navigation={navigation} />
+        </View>
+        <View className="pt-6 px-4 bg-cnam-primary-50 z-1">
+          <Text className="text-cnam-primary-950 text-2xl font-semibold pb-2">S'informer</Text>
+        </View>
+        <Animated.View
+          className={"z-0"}
+          style={{
+            opacity: infoButtonOpacity,
+            height: infoButtonScale,
+            overflow: "hidden",
+            transform: [
+              {
+                translateY: infoButtonTranslate,
+              },
+            ],
+          }}
+        >
+          <View className="px-4">
+            <Text className="text-cnam-primary-800 text-base leading-6">
+              Un guide simple et accessible pour mieux connaître la santé mentale, ses enjeux et les solutions disponibles
+            </Text>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("commity");
+              }}
+              className="flex-row bg-cnam-cyan-lighten-80 items-center space-x-1 rounded-full px-3 self-start mt-4"
+            >
+              <ValidatedStampIcon />
+              <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>Comment ces contenus sont-ils vérifiés ?</Text>
+            </TouchableOpacity>
+          </View>
+        </Animated.View>
+      </View>
     </SafeAreaView>
   );
 };
