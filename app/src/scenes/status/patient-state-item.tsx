@@ -94,8 +94,12 @@ const PatientStateItem = ({ patientStateRecord, category, label }: { patientStat
         ) : null}
       </View>
       {userCommentVisible && isTouchable() ? (
-        <View className="flex flex-row items-center items-start ml-[59.5]">
-          <Text numberOfLines={3} ellipsizeMode={"tail"} className={mergeClassNames("flex-1", typography.textXsRegular, "text-gray-700 text-left")}>
+        <View className="flex flex-row items-center">
+          <Text
+            numberOfLines={3}
+            ellipsizeMode={"tail"}
+            className={mergeClassNames("flex-1", typography.textXsRegular, "text-gray-700 text-left ml-8")}
+          >
             {patientStateRecord?.userComment?.trim()}
           </Text>
         </View>
