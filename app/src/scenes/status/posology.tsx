@@ -50,7 +50,7 @@ const Posology = ({ patientState, posology, date, onPress }) => {
       <Separator separatorColor={TW_COLORS.GRAY_400} />
       <View className="flex justify-between py-2.5">
         <View className="flex flex-row justify-between mb-2">
-          <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-900")}>Traitements quotidiens</Text>
+          <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-900")}>Traitement quotidien</Text>
           <TouchableOpacity
             onPress={() => {
               setDetailsVisible(!detailsVisible);
@@ -68,7 +68,7 @@ const Posology = ({ patientState, posology, date, onPress }) => {
                 <View className={`h-4 w-4 rounded-full`} style={{ backgroundColor: "#F9D1E6", borderColor: "#E21D84", borderWidth: 0.5 }} />
               )}
             </View>
-            <Text className={mergeClassNames(typography.textSmMedium, "text-cnam-primary-900")}>Prise correcte du traitement : </Text>
+            <Text className={mergeClassNames(typography.textSmMedium, "text-cnam-primary-900")}>Prise du traitement : </Text>
             {patientState?.PRISE_DE_TRAITEMENT?.value ? (
               <Text className="text-cnam-primary-800">Oui</Text>
             ) : (
