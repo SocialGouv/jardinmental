@@ -6,7 +6,7 @@ import ArrowRightSvg from "../../../assets/svg/arrow-right.js";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
 
-export default ({ title, navigation, path = "tabs", icon = null, color = colors.LIGHT_BLUE, onClick, badge = false, style }) => {
+export default ({ title, description, navigation, path = "tabs", icon = null, color = colors.LIGHT_BLUE, onClick, badge = false, style }) => {
   const handleClick = () => {
     onClick();
     navigation && navigation.navigate(path);
@@ -35,6 +35,7 @@ export default ({ title, navigation, path = "tabs", icon = null, color = colors.
           <Text style={styles.label} className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-800")}>
             {title}
           </Text>
+          {description && <Text className={mergeClassNames(typography.textSmRegular, "text-cnam-primary-800")}>{description}</Text>}
         </View>
       </View>
     </TouchableOpacity>
@@ -52,8 +53,7 @@ const styles = StyleSheet.create({
     width: 12,
     height: 12,
   },
-  container: {
-  },
+  container: {},
   button: {
     width: 45,
     height: 45,

@@ -201,6 +201,7 @@ const CommityCategories: React.FC<CommityCategoriesProps> = ({ navigation }) => 
         <View className="flex-col mt-4">
           {commityList.map((item, index) => (
             <TouchableOpacity
+              key={index}
               onPress={() => {
                 showBottomSheet(<CommityBottomSheet entity={item} />);
               }}
