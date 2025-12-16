@@ -424,7 +424,12 @@ const DaySurvey = ({
                     updateIndicators();
                   }}
                   value={answers?.[getIndicatorKey(ind)]?.value}
-                  onValueChanged={onValueChanged}
+                  onValueChanged={(value) => {
+                    onValueChanged(value);
+                    if (ind.uuid === INDICATEURS_HUMEUR.uuid) {
+                      setSelectedMoodIndex(value.value);
+                    }
+                  }}
                   onCommentChanged={onCommentChanged}
                   comment={answers?.[getIndicatorKey(ind)]?.userComment}
                 />
