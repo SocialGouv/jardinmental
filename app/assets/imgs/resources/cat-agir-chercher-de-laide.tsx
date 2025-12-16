@@ -7,7 +7,7 @@ interface CatAgirChercheDeLaideProps {
 
 export default function CatAgirChercheDeLaide({ width = 75, height = 62 }: CatAgirChercheDeLaideProps) {
   return (
-    <Svg width="86" height="89" viewBox="0 0 86 89" fill="none" style={{ position: "absolute", bottom: -20, right: 10 }}>
+    <Svg width="86" height="89" viewBox="0 0 86 89" fill="none" style={{ position: "absolute", bottom: -20, right: 10, zIndex: -1 }}>
       <Path
         fillRule="evenodd"
         clipRule="evenodd"
