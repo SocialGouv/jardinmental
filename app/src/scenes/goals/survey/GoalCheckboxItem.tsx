@@ -50,7 +50,7 @@ export const GoalCheckboxItem = ({ goal, index, checked, comment, onCheckedChang
           <InputText
             fill
             preset="lighten"
-            placeholder="Ajoutez une note sur cet objectif"
+            placeholder="Rédigez une note sur cet objectif"
             containerStyle={{ marginTop: 16 }}
             value={_comment}
             onChangeText={(nextComment) => {

@@ -3,6 +3,7 @@ import { Pressable, StyleSheet, TextInput, View, Text, Animated } from "react-na
 import { colors } from "@/utils/colors";
 import { TW_COLORS } from "@/utils/constants";
 import { mergeClassNames } from "@/utils/className";
+import FileIcon from "@assets/svg/icon/File";
 
 const PressableIfNeeded = ({ onPress, children }) =>
   onPress ? (
@@ -93,7 +94,7 @@ export const InputText = ({ fill, preset, onPress, disabled, containerStyle, sty
         }),
         color: animatedValue.interpolate({
           inputRange: [0, 1],
-          outputRange: [TW_COLORS.GRAY_700, colors.BLUE],
+          outputRange: [TW_COLORS.GRAY_600, colors.BLUE],
         }),
         backgroundColor: "transparent",
         paddingHorizontal: animatedValue.interpolate({
@@ -111,7 +112,14 @@ export const InputText = ({ fill, preset, onPress, disabled, containerStyle, sty
           {isFloatingLabelPreset && props.placeholder && (
             <Animated.View style={viewStyle}>
               <View className="bg-white absolute -left-0 w-full h-2" style={{ bottom: -2.5 }} />
-              <Animated.Text style={labelStyle}>{props.placeholder}</Animated.Text>
+              <View className="flex-row items-center justify-center">
+                {!isFocused && (
+                  <View className="mr-1">
+                    <FileIcon color={TW_COLORS.GRAY_400} />
+                  </View>
+                )}
+                <Animated.Text style={labelStyle}>{props.placeholder}</Animated.Text>
+              </View>
             </Animated.View>
           )}
           <TextInput

@@ -19,7 +19,7 @@ interface ContextScreenProps {
 export const ContextScreen: React.FC<ContextScreenProps> = ({ navigation, answers, onCommentChanged, onNext }) => {
   const questionContext = {
     id: "CONTEXT",
-    label: "Ajoutez une note générale sur votre journée",
+    label: "Rédigez une note générale sur votre journée",
     explanation: undefined,
   };
 
@@ -46,7 +46,7 @@ export const ContextScreen: React.FC<ContextScreenProps> = ({ navigation, answer
           isLast={false}
           onChangeUserComment={onCommentChanged}
           userComment={answers[questionContext.id]?.userComment}
-          placeholder="Contexte, évènements, comportement de l'entourage..."
+          placeholder="Rédiger une note générale : contexte, évènements, comportement de l'entourage..."
         />
       </View>
       <NavigationButtons

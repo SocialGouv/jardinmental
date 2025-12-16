@@ -34,7 +34,7 @@ const QUESTION_TOXIC = {
 };
 const QUESTION_CONTEXT = {
   id: "CONTEXT",
-  label: "Ajoutez une note générale sur votre journée",
+  label: "Rédigez une note générale sur votre journée",
 };
 
 // Main navigator component

@@ -73,7 +73,7 @@ const DiaryEntrySchema = DiaryDataAnswerListSchema.and(
       .object({
         userComment: z.string().optional(),
       })
-      .describe(`Ajoutez une note générale sur votre journée`)
+      .describe(`Rédigez une note générale sur votre journée`)
       .optional()
       .nullable(),
     TOXIC: z
