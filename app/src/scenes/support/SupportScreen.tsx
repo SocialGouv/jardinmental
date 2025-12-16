@@ -7,8 +7,7 @@ import { TW_COLORS } from "@/utils/constants";
 import { SquircleButton } from "expo-squircle-view";
 import PhoneIcon from "@assets/svg/icon/Phone";
 import MailIcon from "@assets/svg/icon/Mail";
-import DeafIcon from "@assets/svg/icon/Deaf";
-import MessageHeartCircleIcon from "@assets/svg/icon/MessageHeartCircle";
+import UserIcon from "@assets/svg/icon/User";
 import HeartHand from "@assets/svg/icon/HeartHand";
 import ArrowUpSvg from "@assets/svg/icon/ArrowUp";
 import LinkIcon from "@assets/svg/icon/Link";
@@ -34,11 +33,11 @@ export default function SupportScreen({ navigation, route }) {
       description: "7j/7, de 9h à 23h",
       number: "+33800235236",
     },
-    {
-      name: "Cyberharcèlement entre élèves",
-      description: "Numéro national 7j/7, de 9h à 23h",
-      number: "3018",
-    },
+    // {
+    //   name: "Cyberharcèlement entre élèves",
+    //   description: "Numéro national 7j/7, de 9h à 23h",
+    //   number: "3018",
+    // },
     {
       name: "Femmes victimes de violences",
       description: "Numéro national 7j/7",
@@ -116,31 +115,83 @@ export default function SupportScreen({ navigation, route }) {
       <View className="flex-1 p-4 flex-col space-y-12 pt-10 pb-8 bg-white">
         <View className="flex-col space-y-6">
           <View className="flex-row items-center">
-            <MessageHeartCircleIcon width={"24"} height={"24"} color={TW_COLORS.CNAM_PRIMARY_800} />
-            <Text className={mergeClassNames(typography.textXlSemibold, "ml-2 text-cnam-primary-950 text-left")}>Urgence Immédiate</Text>
+            {/* <MessageHeartCircleIcon width={"24"} height={"24"} color={TW_COLORS.CNAM_PRIMARY_800} /> */}
+            <Text className={mergeClassNames(typography.textXlSemibold, "text-cnam-primary-950 text-left")}>Besoin d'aide urgente ?</Text>
           </View>
-          <View className="flex-col space-y-5">
-            <Text className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-900 text-left")}>
+          <View className="flex-row space-x-3">
+            <View className="flex-1">
+              <SquircleButton
+                onPress={() => handleCall("15")}
+                style={{
+                  borderRadius: 20,
+                  shadowColor: "#F0B323",
+                  flexGrow: 1,
+                  shadowOffset: { width: 0, height: 4 },
+                  shadowOpacity: 0.4,
+                  shadowRadius: 8, // smoother shadow
+                  elevation: 6, // Android
+                }}
+                preserveSmoothing={true}
+                cornerSmoothing={100}
+                className="border border-cnam-jaune-500 bg-cnam-jaune-100 flex-row justify-center items-center px-1"
+              >
+                <View className="flex-column items-center py-4">
+                  <View className="flex-row items-center justify-center">
+                    <PhoneIcon width={24} height={24} color={TW_COLORS.CNAM_PRIMARY_800} />
+                    <Text className={mergeClassNames(typography.displayXsBold, "text-primary-900 ml-2")}>15</Text>
+                  </View>
+                  <Text className={mergeClassNames(typography.textSmMedium, " text-cnam-primary-800 text-left")}>Urgence immédiate</Text>
+                </View>
+              </SquircleButton>
+            </View>
+            <View className="flex-1">
+              <SquircleButton
+                onPress={() => handleSms("114")}
+                style={{
+                  borderRadius: 20,
+                  flexGrow: 1,
+                  shadowColor: "#F0B323",
+                  shadowOffset: { width: 0, height: 4 },
+                  shadowOpacity: 0.4,
+                  shadowRadius: 8, // smoother shadow
+                  elevation: 6, // Android
+                }}
+                preserveSmoothing={true}
+                cornerSmoothing={100}
+                className="border border-cnam-jaune-500 bg-cnam-jaune-100 flex-row justify-center items-center px-1"
+              >
+                <View className="flex-column items-center py-4">
+                  <View className="flex-row items-center justify-center">
+                    <MailIcon color={TW_COLORS.CNAM_PRIMARY_800} width={24} height={24} />
+                    <Text className={mergeClassNames(typography.displayXsBold, "text-primary-900 ml-2")}>114</Text>
+                  </View>
+                  <Text className={mergeClassNames(typography.textSmMedium, " text-cnam-primary-800 text-center")}>Sourds & malentendants</Text>
+                </View>
+              </SquircleButton>
+            </View>
+          </View>
+          <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 text-left")}>24h/24, 7j/7, appel gratuit.</Text>
+          <View className="flex-col pt-6">
+            <Text className={mergeClassNames(typography.textXlMedium, "text-cnam-primary-900 text-left mb-4")}>En cas d'idées suicidaires</Text>
+            {/* <Text className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-900 text-left")}>
               Si vous êtes en détresse et/ou avez des pensées suicidaires, appelez le 3114 (24h/24, 7j/7, appel gratuit).
-            </Text>
+            </Text> */}
             <SquircleButton
               onPress={() => handleCall("3114")}
               style={{
                 borderRadius: 20,
-                shadowColor: "#F0B323",
-                shadowOffset: { width: 0, height: 4 },
-                shadowOpacity: 0.4,
-                shadowRadius: 8, // smoother shadow
-                elevation: 6, // Android
               }}
               preserveSmoothing={true}
               cornerSmoothing={100}
-              className="border border-cnam-jaune-500 bg-cnam-jaune-100 h-[60] flex-row px-6 py-4 justify-content items-center mt-0"
+              className="border border-cnam-primary-800 bg-cnam-primary-25  flex-row px-6 py-2 justify-content items-center mt-0"
             >
               <PhoneIcon width={24} height={24} />
-              <Text className={mergeClassNames(typography.textLgSemibold, "ml-3 text-cnam-primary-900 text-left")}>Appeler le 3114</Text>
+              <View className="ml-3">
+                <Text className={mergeClassNames(typography.textLgSemibold, " text-cnam-primary-900 text-left")}>Appeler le 3114</Text>
+                <Text className={mergeClassNames(typography.textMdMedium, " text-cnam-primary-900 text-left")}>Prévention suicide</Text>
+              </View>
             </SquircleButton>
-            <SquircleButton
+            {/* <SquircleButton
               onPress={() => handleSms("114")}
               style={{
                 borderRadius: 20,
@@ -159,7 +210,7 @@ export default function SupportScreen({ navigation, route }) {
                 <Text className={mergeClassNames(typography.textLgSemibold, "ml-3 text-cnam-primary-900 text-left")}>Écrire au 114 par SMS</Text>
               </View>
               <Text className={mergeClassNames(typography.textSmMedium, "text-gray-800 text-left -ml-4")}>Numéro d’urgence sourds et malendants</Text>
-            </SquircleButton>
+            </SquircleButton> */}
           </View>
         </View>
       </View>
@@ -248,7 +299,7 @@ export default function SupportScreen({ navigation, route }) {
             className="h-[110] items-center justify-between flex-row w-full px-4"
           >
             <View className="flex-row items-center">
-              <HeartHand width={24} height={24} color={TW_COLORS.CNAM_PRIMARY_800} />
+              <UserIcon width={24} height={24} color={TW_COLORS.CNAM_PRIMARY_800} />
               <Text className={mergeClassNames(typography.textXlBold, "ml-4 text-cnam-primary-900")}>Démarrer un suivi</Text>
             </View>
             <View className="flex-row">
