@@ -57,7 +57,7 @@ const ToolsScreen: React.FC<ToolsScreenProps> = ({ navigation, route }) => {
   // Interpolate height scale for info button
   const infoButtonScale = scrollY.interpolate({
     inputRange: [0, 50],
-    outputRange: [70, 0],
+    outputRange: [90, 0],
     extrapolate: "clamp",
   });
 
@@ -262,33 +262,17 @@ const ToolsScreen: React.FC<ToolsScreenProps> = ({ navigation, route }) => {
           </View>
         }
         keyExtractor={(item) => item.id}
-        scrollEnabled={true} // ← disables FlatList scrolling
-        nestedScrollEnabled={false} // ← not needed, but clean
+        scrollEnabled={true}
+        nestedScrollEnabled={false}
         removeClippedSubviews={false}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 150, paddingTop: 370 }}
+        contentContainerStyle={{ paddingBottom: 150, paddingTop: 300 }}
       />
       <View className="absolute z-2 w-full bg-cnam-primary-50">
         <View className="bg-cnam-primary-800 flex flex-row justify-between pb-0">
-          <Header title="Boite à outils" navigation={navigation} />
+          <Header navigation={navigation} />
         </View>
-        {/* <ScrollView
-        contentContainerStyle={{
-          paddingBottom: 80,
-        }}
-        className="bg-cnam-primary-50 flex-1"
-      > */}
         <View className="mt-4">
-          <View className="px-4">
-            <Animated.Text
-              className="text-cnam-primary-950 font-semibold mb-3"
-              style={{
-                fontSize: titleFontSize,
-              }}
-            >
-              Explorez les outils pour agir
-            </Animated.Text>
-          </View>
           <Animated.View
             style={{
               opacity: infoButtonOpacity,
@@ -298,15 +282,37 @@ const ToolsScreen: React.FC<ToolsScreenProps> = ({ navigation, route }) => {
               overflow: "hidden",
             }}
           >
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate("tool-selection-info");
-              }}
-              className="flex-row bg-cnam-cyan-lighten-80 items-center mb-8 space-x-1 rounded-full px-3 self-start mx-4"
+            <View className="px-4">
+              <Animated.Text
+                className="text-cnam-primary-950 font-semibold mb-3"
+                style={{
+                  fontSize: titleFontSize,
+                }}
+              >
+                Explorez les outils pour agir
+              </Animated.Text>
+            </View>
+            <Animated.View
+            // style={{
+            //   opacity: infoButtonOpacity,
+            //   height: infoButtonScale,
+            //   marginTop: infoMargin,
+            //   // transform: [{ scaleY: infoButtonScale }],
+            //   overflow: "hidden",
+            // }}
             >
-              <ValidatedStampIcon />
-              <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>Comment ces outils sont-ils séléctionnés ?</Text>
-            </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate("tool-selection-info");
+                }}
+                className="flex-row bg-cnam-cyan-lighten-80 items-center mb-8 space-x-1 rounded-full px-3 self-start mx-4"
+              >
+                <ValidatedStampIcon />
+                <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>
+                  Comment ces outils sont-ils séléctionnés ?
+                </Text>
+              </TouchableOpacity>
+            </Animated.View>
           </Animated.View>
           <View className="flex-row mb-6">
             <TouchableOpacity
@@ -387,7 +393,6 @@ const ToolsScreen: React.FC<ToolsScreenProps> = ({ navigation, route }) => {
           </View>
         </View>
       </View>
-      {/* </ScrollView> */}
     </SafeAreaView>
   );
 };

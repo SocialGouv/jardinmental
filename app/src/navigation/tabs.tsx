@@ -80,20 +80,20 @@ const Tabs = ({ navigation, route }) => {
   const tabs = [
     {
       name: "Status",
-      label: "Suivi",
+      label: "Suivre",
       icon: WaveIcon,
       component: Status,
     },
     {
       name: "Calendar",
-      label: "Analyses",
+      label: "Analyser",
       icon: TrendUpIcon,
       component: Suivi,
       onPress: () => logEvents.logOpenAnalysisMain(),
     },
     {
       name: "Resources",
-      label: "Ressources",
+      label: "S'informer",
       icon: BookOpenIcon,
       component: Resources,
       badge: hasVisitedResources,

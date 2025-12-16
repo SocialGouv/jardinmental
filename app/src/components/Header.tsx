@@ -17,7 +17,7 @@ import { TW_COLORS } from "@/utils/constants";
 import logEvents from "@/services/logEvents";
 
 interface HeaderProps {
-  title: string;
+  title?: string;
   navigation: any;
   scrollY?: Animated.SharedValue<number>;
   scrollThreshold?: number;
