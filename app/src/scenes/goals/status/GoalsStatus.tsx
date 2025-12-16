@@ -80,7 +80,7 @@ const GoalStatusItem = ({ goalsData, record }) => {
             </View>
           </View>
           {commentVisible && (
-            <Text className={mergeClassNames("flex-1", typography.textXsRegular, "text-gray-700 text-left ml-8")} style={{ color: colors.BLUE }}>
+<Text className={mergeClassNames("flex-1", typography.textXsRegular, "text-left ml-8")} style={{ color: colors.BLUE }}>
               {record?.comment}
             </Text>
           )}
