@@ -50,7 +50,7 @@ const commityList: CommityEntity[] = [
   },
   {
     name: "Caria Aude",
-    role: "Directrice",
+    role: "Psychologue et directrice",
     role2: "",
     organization: "Psycom-Santé mentale Info",
   },
@@ -143,6 +143,13 @@ const commityList: CommityEntity[] = [
     role2: "",
     isOrganization: true,
     organization: "Premiers Secours en Santé Mentale France",
+  },
+  {
+    name: "",
+    role: "",
+    role2: "",
+    isOrganization: true,
+    organization: "Psycom",
   },
 ];
 
