@@ -12,9 +12,10 @@ const isLargeScreen = screenHeight >= 700;
 
 const SlideWelcome: CarouselSlide = {
   id: "slide-jm-help-you",
-  title: "Jardin Mental vous aide à y voir plus clair.",
-  description:
-    "Vous traversez peut-être une période floue où vous vous intéressez à votre santé mentale.\n\nIci, vous pourrez poser des mots sur ce que vous ressentez, et mieux comprendre ce que vous vivez.",
+  title: "Bienvenue sur Jardin mental.",
+  description: `Que vous viviez un moment difficile ou que vous souhaitiez simplement prendre soin de votre bien-être, vous êtes au bon endroit.
+  \n\n
+  Ici, vous pouvez poser des mots sur ce que vous ressentez et mieux comprendre vos émotions, sans jugement.`,
   type: "generic",
   backgroundColor: colors.WHITE,
   variant: "blue",
@@ -68,18 +69,27 @@ const SlideFinal: CarouselSlide = {
 
 const carouselSlides: CarouselSlide[] = [
   SlideWelcome,
-  // {
-  //   id: 'slide-non-suivi-jm-give-ressources',
-  //   title: "Des ressources pour avancer, à votre rythme.",
-  //   description: "Des contenus simples et concrets pour prendre soin de votre santé mentale, à votre rythme.",
-  //   type: 'generic',
-  //   backgroundColor: colors.WHITE,
-  //   variant: 'green'
-  // },
+  {
+    id: "slide-non-suivi-jm-give-ressources",
+    title: "Des ressources fiables pour vous accompagner.",
+    description: "Une bibliothèque d’articles, podcasts, vidéos et outils, pour vous guider, vous informer et mieux comprendre votre santé mentale.",
+    type: "generic",
+    backgroundColor: colors.WHITE,
+    variant: "green",
+    illustration: (
+      <View className="absolute">
+        <Image
+          style={{ width: 200, height: 200, top: -130, resizeMode: "contain" }}
+          source={require("../../../../assets/imgs/onboarding/carousel/outils.png")}
+        />
+      </View>
+    ),
+  },
   {
     id: "slide-non-suivi-jm-give-tools",
-    title: "Des outils pour comprendre vos émotions, au quotidien.",
-    description: "Un espace pour faire le point, sans jugement. Pour observer, nommer, apprendre et avancer.",
+    title: "Des outils pour prendre soin de votre santé mentale, au quotidien.",
+    description:
+      "Observez vos ressentis, notez les moments importants, explorez des exercices validés scientifiquement et avancez, à votre rythme, toujours sans pression.",
     type: "generic",
     backgroundColor: colors.WHITE,
     variant: "pink",
@@ -96,7 +106,7 @@ const carouselSlides: CarouselSlide[] = [
     id: "slide-suivi-share-with-you-psy",
     title: "Suivi par un professionnel ?",
     description:
-      "Vous pouvez choisir de partager ce que vous notez avec le professionnel qui vous accompagne, pour appuyer vos échanges.\n\nTout est sous votre contrôle.",
+      "Vous pouvez partager vos notes avec le professionnel qui vous accompagne pour enrichir vos échanges et observer l’évolution de ce que vous vivez.\n\nLe choix vous appartient.",
     type: "generic",
     backgroundColor: colors.WHITE,
     variant: "red",
