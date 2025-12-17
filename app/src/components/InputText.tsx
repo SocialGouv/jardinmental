@@ -14,7 +14,7 @@ const PressableIfNeeded = ({ onPress, children }) =>
     <>{children}</>
   );
 
-export const InputText = ({ fill, preset, onPress, disabled, containerStyle, style, ...props }) => {
+export const InputText = ({ fill, preset, onPress, disabled, containerStyle, style, hidePlaceholder, ...props }) => {
   const inputRef = useRef<TextInput>(null);
   const [isFocused, setIsFocused] = useState(false);
   const animatedValue = useRef(new Animated.Value(props.value ? 1 : 0)).current;
@@ -75,7 +75,12 @@ export const InputText = ({ fill, preset, onPress, disabled, containerStyle, sty
         //   outputRange: [0, 4],
         // }),
       }
-    : null;
+    : {
+        position: "absolute" as const,
+        left: 16,
+        top: 16,
+        backgroundColor: "transparent",
+      };
 
   const labelStyle = isFloatingLabelPreset
     ? {
@@ -103,7 +108,13 @@ export const InputText = ({ fill, preset, onPress, disabled, containerStyle, sty
         }),
         fontFamily: "SourceSans3",
       }
-    : null;
+    : {
+        fontSize: 16,
+        color: TW_COLORS.GRAY_600,
+        backgroundColor: "transparent",
+        paddingHorizontal: 1,
+        fontFamily: "SourceSans3",
+      };
 
   return (
     <View style={[styles.container, fill && { width: "100%" }, containerStyle]}>
@@ -113,7 +124,19 @@ export const InputText = ({ fill, preset, onPress, disabled, containerStyle, sty
             <Animated.View style={viewStyle}>
               <View className="bg-white absolute -left-0 w-full h-2" style={{ bottom: -2.5 }} />
               <View className="flex-row items-center justify-center">
-                {!isFocused && (
+                {!isFocused && !props.value && (
+                  <View className="mr-1">
+                    <FileIcon color={TW_COLORS.GRAY_400} />
+                  </View>
+                )}
+                <Animated.Text style={labelStyle}>{props.placeholder}</Animated.Text>
+              </View>
+            </Animated.View>
+          )}
+          {preset === "iconWithHidePlaceholder" && props.placeholder && !isFocused && (
+            <Animated.View style={viewStyle} className={"px-3"}>
+              <View className="flex-row items-start justify-center">
+                {!isFocused && !props.value && (
                   <View className="mr-1">
                     <FileIcon color={TW_COLORS.GRAY_400} />
                   </View>
@@ -129,7 +152,7 @@ export const InputText = ({ fill, preset, onPress, disabled, containerStyle, sty
             editable={!disabled}
             pointerEvents={disabled || props.editable === false ? "none" : "auto"}
             {...props}
-            placeholder={isFloatingLabelPreset ? "" : props.placeholder}
+            placeholder={isFloatingLabelPreset || preset === "iconWithHidePlaceholder" ? "" : props.placeholder}
             onFocus={handleFocus}
             onBlur={handleBlur}
             style={[styles.input, disabled && styles.disabled, style]}
