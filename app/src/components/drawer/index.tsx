@@ -207,9 +207,6 @@ export default ({ navigation, visible, onClick }) => {
                   />
                   <Separator />
                   <DrawerItem
-                    style={{
-                      backgroundColor: TW_COLORS.CNAM_CYAN_100_LIGHTEN_80,
-                    }}
                     title="Nous contacter"
                     description={"Pour toute question sur Jardin Mental"}
                     navigation={navigation}
