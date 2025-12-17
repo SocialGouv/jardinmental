@@ -2417,4 +2417,22 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
     category: "P1 - A lire dans ce dossier",
     author: "Mental Health Europe",
   },
+  {
+    id: "550e8400-e29b-41d4-a716-446655440286",
+    matomoId: 286,
+    title: "Les psychothérapies",
+    url: "https://www.santementale-info-service.fr/trouver-de-l-aide/toutes-les-aides/les-psychotherapies",
+    type: "Article",
+    category: "P1 - A lire dans ce dossier",
+    author: "Santé Mentale Info Service",
+  },
+  {
+    id: "550e8400-e29b-41d4-a716-446655440287",
+    matomoId: 287,
+    title: "Psychothérapies",
+    url: "https://www.psycom.org/wp-content/uploads/2024/04/PSYCOM_Brochures-A5_P_Psychotherapies_2025_WEB.pdf",
+    type: "Article",
+    category: "P1 - A lire dans ce dossier",
+    author: "Psycom",
+  },
 ];

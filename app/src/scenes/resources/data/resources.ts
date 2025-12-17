@@ -1418,4 +1418,26 @@ Et si cette aide ne suffit pas, de nombreuses solutions existent :
       "550e8400-e29b-41d4-a716-446655440223",
     ],
   },
+  {
+    id: "3f2c9a6e-7d41-4b9e-9a3a-8c6b7d2e4f91",
+    matomoId: 50,
+    title: "Comment (bien) choisir sa psychothérapie ?",
+    image: require("../../../../assets/imgs/resources/Article50.png"),
+    category: CATEGORIES.AGIR_ET_CHERCHER_DE_L_AIDE_SANS_HONTE,
+    content: `Chercher de l’aide psychologique n’est pas toujours simple, surtout quand on ne connaît pas les différences entre les approches. Cette ressource s’adresse à toute personne qui se pose des questions sur les psychothérapies : pour commencer un suivi, s’informer ou aider un proche.
+
+**Avant de débuter une psychothérapie, il est important de vérifier à qui l’on s’adresse :**
+
+En France, les titres de *psychologue, psychiatre* et *psychothérapeute* sont réglementés et garantissent une formation reconnue. À l’inverse, des termes comme « thérapeute », « coach » ou « praticien » ne sont pas encadrés : n’importe qui peut les utiliser, parfois sans formation. Ces dernières années, de plus en plus de personnes se présentent sous ces appellations, notamment sur les réseaux sociaux, parfois avec un objectif principalement commercial. Cette absence de cadre peut mener à des pratiques inadaptées ou dangereuses, ce qui souligne l’importance de vérifier le statut, les modalités et la formation du professionnel avant de s’engager.
+
+**Plusieurs approches de psychothérapie existent, et aucune n’est universelle. L’important est de trouver celle qui vous correspond, en fonction de votre situation.**
+
+- Les thérapies cognitivo-comportementales (TCC), issues de la psychologie expérimentale, aident à comprendre les liens entre pensées, émotions et comportements. Elles proposent d'apprendre de nouvelles stratégies pour faire face à l’anxiété, au stress ou à certaines difficultés du quotidien. Par exemple, si vous évitez certaines situations à cause de l’anxiété, les TCC peuvent vous aider à repérer les pensées qui augmentent votre stress et à tester d’autres façons d’agir. Elles sont scientifiquement validées et recommandées pour les troubles anxieux, dépressifs, bipolaires, schizophréniques, borderline et les TOC.
+- Les psychothérapies de type analytique explorent votre histoire, vos relations et ce qui se rejoue dans votre vie aujourd’hui. Par exemple, si vous remarquez que vous vous retrouvez souvent dans les mêmes difficultés au travail ou en couple, ce type d’approche peut aider à comprendre d’où viennent ces schémas et comment s’en libérer.
+- Les thérapies familiales ou systémiques s’intéressent au fonctionnement d’un couple ou d’une famille. Elles partent du principe que les difficultés d’une personne peuvent être liées à la manière dont le groupe interagit. Par exemple, lorsqu’un adolescent va mal, toute la famille peut être concernée, et travailler ensemble peut aider à apaiser les tensions.
+- Certaines techniques peuvent compléter une psychothérapie. L’EMDR en fait partie. Ce n’est pas une psychothérapie, mais une méthode scientifiquement validée pour traiter les traumatismes. Elle utilise des stimulations bilatérales, souvent des mouvements oculaires, pour aider à diminuer l’impact émotionnel d’un souvenir difficile. Par exemple, après un accident ou un événement violent, l’EMDR peut aider certaines personnes à atténuer les images ou sensations envahissantes.
+
+Pour finir, méfiez-vous des promesses de guérison rapide, des discours culpabilisants ou d’un manque de transparence. Vous avez le droit de poser des questions, de réfléchir avant de vous engager et de changer de professionnel si vous ne vous sentez pas en confiance.`,
+    externalResources: ["550e8400-e29b-41d4-a716-446655440286", "550e8400-e29b-41d4-a716-446655440287"],
+  },
 ];
