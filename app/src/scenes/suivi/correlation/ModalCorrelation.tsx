@@ -71,6 +71,7 @@ function getSubArray<T>(array: T[], index: number, x: number): (T | undefined)[]
 export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ navigation, route }) => {
   const { config } = useDevCorrelationConfig();
   const MAX_NUNBER_OF_DAYS = config.maxDays;
+  const MIN_DAYS_FOR_CORRELATION = 21;
 
   const [diaryData] = useContext(DiaryDataContext);
   const [selectedIndicators, setSelectedIndicators] = useState<Indicator[]>([]);
@@ -305,7 +306,11 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
     setLastVisible(dataToDisplay[0][last - 1]?.date);
   };
 
-  if (!dataToDisplay) {
+  const validDataCount0 = dataToDisplay?.[0]?.filter((v) => !v["noValue"]).length ?? 0;
+  const validDataCount1 = dataToDisplay?.[1]?.filter((v) => !v["noValue"]).length ?? 0;
+
+  if (!dataToDisplay || (validDataCount0 < MIN_DAYS_FOR_CORRELATION && dataToDisplay?.[1] && validDataCount1 < MIN_DAYS_FOR_CORRELATION)) {
+    const maxDays = dataToDisplay ? Math.max(validDataCount0, validDataCount1) : 0;
     return (
       <View className="flex-1 bg-cnam-primary-25">
         <View className="flex-row justify-between top-0 w-full bg-cnam-primary-800 p-4 items-center h-[96]">
@@ -341,10 +346,22 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
               source={require("@assets/imgs/courbe.png")}
               blurRadius={20} // 👈 controls blur intensity
             />
+            <View className="absolute bottom-0 -z-2">
+              <Image
+                style={{ width: 150, height: 150, left: 5, bottom: -47, resizeMode: "contain", zIndex: 1 }}
+                source={require("../../../../assets/imgs/correlation.png")}
+              />
+            </View>
             <View className="absolute w-full">
-              <Text className={mergeClassNames(typography.textMdBold, "text-cnam-primary-800 text-center px-4 mt-4")}>
-                Continuez à renseigner vos indicateurs pendant quelques jours.
-              </Text>
+              {dataToDisplay ? (
+                <Text className={mergeClassNames(typography.textLgBold, "text-cnam-primary-800 text-center px-4 mt-4")}>
+                  Continuez à renseigner vos observations sur ces indicateurs pendant {MIN_DAYS_FOR_CORRELATION - maxDays} jours.
+                </Text>
+              ) : (
+                <Text className={mergeClassNames(typography.textLgBold, "text-cnam-primary-800 text-center px-4 mt-4")}>
+                  Sélectionnez au moins un indicateur.
+                </Text>
+              )}
             </View>
           </View>
           <View className="bg-cnam-cyan-50-lighten-90 flex-row py-4 space-x-2 px-4 rounded-2xl">
