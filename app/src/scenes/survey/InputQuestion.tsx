@@ -52,20 +52,6 @@ const Question = ({ question, explanation, isLast, onChangeUserComment, userComm
           textAlignVertical={"top"}
           containerStyle={{ marginTop: 20 }}
         />
-        {/* <TextInput
-          preset
-          multiline={true}
-          numberOfLines={Platform.OS === "ios" ? null : 3}
-          minHeight={Platform.OS === "ios" ? 30 * 3 : null}
-          onChangeText={(v) => {
-            setText(v);
-            onChangeUserComment({ key: question.id, userComment: v });
-          }}
-          value={text}
-          placeholder={placeholder}
-          style={styles.textArea}
-          textAlignVertical={"top"}
-        /> */}
       </View>
     </BasicCard>
   );
