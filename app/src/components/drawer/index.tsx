@@ -46,6 +46,7 @@ import logEvents from "@/services/logEvents";
 import MessageHeartCircleIcon from "@assets/svg/icon/MessageHeartCircle";
 import { ContactBottomSheet } from "./ContactBottomSheet";
 import { useBottomSheet } from "@/context/BottomSheetContext";
+import NPS from "@/services/NPS/NPS";
 
 export default ({ navigation, visible, onClick }) => {
   const [isVisible, setIsVisible] = useState();
@@ -153,7 +154,7 @@ export default ({ navigation, visible, onClick }) => {
                 preserveSmoothing={true}
                 borderRadius={16}
                 onPress={async () => {
-                  showBottomSheet(<ContactBottomSheet navigation={navigation} />);
+                  navigation.push("support");
                   onClick();
                 }}
                 className="bg-white flex-row px-4 py-6 self-center justify-between items-center relative"
@@ -173,6 +174,7 @@ export default ({ navigation, visible, onClick }) => {
               <View className="bg-cnam-primary-50 -mt-12">
                 <View className="mb-8">
                   <DrawerItem
+                    description={"Consultez la foire aux questions"}
                     title="Comment ça marche ?"
                     path="faq"
                     navigation={navigation}
@@ -183,28 +185,41 @@ export default ({ navigation, visible, onClick }) => {
                   />
                   <Separator />
                   <DrawerItem
-                    title="Qui peut voir mes données ?"
-                    onClick={() => {
-                      navigation.push("faq-detail", {
-                        slug: "confidentialité",
-                      });
-                      onClick();
-                    }}
+                    description={"Les contributeurs de Jardin Mental"}
+                    title="Comité éditorial et scientifique"
+                    path="commity"
+                    navigation={navigation}
+                    onClick={onClick}
                   />
                   <Separator />
-                  <DrawerItem title="Le comité éditorial et scientifique" path="commity" navigation={navigation} onClick={onClick} />
-                  <Separator />
-                  <DrawerItem title="Recommander l'app" onClick={recommendApp} navigation={navigation} />
+                  <DrawerItem
+                    description={"Partagez vos retours sur l’application."}
+                    title="Donner mon avis"
+                    onClick={async () => {
+                      onClick();
+                      await localStorage.setVisitProNPS(true);
+                      setTimeout(() => {
+                        // a bit hacky : wait for drawer to dismiss before displaying NPS
+                        NPSManager.showNPS();
+                      }, 500);
+                    }}
+                    navigation={navigation}
+                  />
                   <Separator />
                   <DrawerItem
                     style={{
                       backgroundColor: TW_COLORS.CNAM_CYAN_100_LIGHTEN_80,
                     }}
-                    title="Contacts utiles 24h/24 - 7J/7"
-                    path="support"
+                    title="Nous contacter"
+                    description={"Pour toute question sur Jardin Mental"}
                     navigation={navigation}
-                    onClick={onClick}
+                    onClick={() => {
+                      showBottomSheet(<ContactBottomSheet navigation={navigation} />);
+                      onClick();
+                    }}
                   />
+                  <Separator />
+                  <DrawerItem title="Partager l'app" onClick={recommendApp} navigation={navigation} />
                   <Separator />
                   {updateVisible ? (
                     <DrawerItem
