@@ -31,6 +31,13 @@ const LegalMentions = ({ navigation }) => {
       </Text>
 
       <Text className="text-blue-900 text-lg font-bold my-2.5">Accessibilité</Text>
+<TouchableOpacity 
+  onPress={() => Linking.openURL("https://jardinmental.fabrique.social.gouv.fr/accessibilite")}
+  accessibilityRole="link"
+  accessibilityLabel="Consulter la déclaration d'accessibilité : non-conforme"
+  accessibilityHint="Ouvre le lien dans le navigateur">
+  <Text className="text-blue-700 underline">Accessibilité : non-conforme</Text>
+</TouchableOpacity>
       <Text className="text-blue-900 text-base my-2">
         La conformité aux normes d'accessibilité numérique est un objectif ultérieur mais nous tâchons de rendre cette application accessible à toutes
         et à tous.
