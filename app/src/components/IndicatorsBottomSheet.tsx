@@ -73,10 +73,13 @@ export const IndicatorsBottomSheet = ({
   };
 
   const isIndicatorOrSameCategory = (indicator: Indicator, indicatorFromCouple: Indicator | NEW_INDICATORS_CATEGORIES) => {
-    return (
-      (indicator.baseIndicatorUuid === indicatorFromCouple?.baseIndicatorUuid || indicator.mainCategory === indicatorFromCouple) &&
-      (indicator.baseIndicatorUuid === indicatorFromCouple?.baseIndicatorUuid || indicator.mainCategory === indicatorFromCouple)
-    );
+    if (Object.values(NEW_INDICATORS_CATEGORIES).includes(indicatorFromCouple as NEW_INDICATORS_CATEGORIES)) {
+      return indicator.mainCategory === indicatorFromCouple;
+    } else {
+      const indicatorUuid = indicator.baseIndicatorUuid || indicator.uuid;
+      const indicatorCoupleUuid = indicatorFromCouple?.baseIndicatorUuid || indicatorFromCouple?.uuid;
+      return indicatorUuid === indicatorCoupleUuid;
+    }
   };
 
   const isSameCouple = (coupleA: [Indicator, Indicator], coupleB: [Indicator, Indicator]) => {
@@ -99,7 +102,6 @@ export const IndicatorsBottomSheet = ({
     for (const couple of INDICATORS_COUPLES) {
       const indicatorsA = indicatorList.filter((ind) => isIndicatorOrSameCategory(ind, couple[0]));
       const indicatorsB = indicatorList.filter((ind) => isIndicatorOrSameCategory(ind, couple[1]));
-
       for (const indicatorA of indicatorsA) {
         for (const indicatorB of indicatorsB) {
           const newCouple: [Indicator, Indicator] = [indicatorA, indicatorB];
@@ -199,74 +201,84 @@ export const IndicatorsBottomSheet = ({
         }}
       />
       <View className={`flex-column bg-white/90 pb-10 w-full`}>
-        <View className="flex-row items-center justify-between w-full px-4 py-4 bg-yellow pt-2">
-          <Text className={mergeClassNames(typography.textMdSemibold, "text-left text-cnam-primary-900")}>Associations fréquentes:</Text>
-          <View className="flex-row">
-            <TouchableOpacity
-              onPress={() => {
-                if (currentIndex.current > 0) {
-                  scrollToIndex(currentIndex.current - 1);
-                }
+        {!!computedIndicatorCouples.length && (
+          <>
+            <View className="flex-row items-center justify-between w-full px-4 py-4 bg-yellow pt-2">
+              <Text className={mergeClassNames(typography.textMdSemibold, "text-left text-cnam-primary-900")}>Associations fréquentes:</Text>
+              <View className="flex-row">
+                <TouchableOpacity
+                  onPress={() => {
+                    if (currentIndex.current > 0) {
+                      scrollToIndex(currentIndex.current - 1);
+                    }
+                  }}
+                  className="mr-4"
+                  hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
+                >
+                  <ChevronIcon strokeWidth={2} />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  className="ml-4"
+                  onPress={() => {
+                    if (currentIndex.current < computedIndicatorCouples.length - 1) {
+                      scrollToIndex(currentIndex.current + 1);
+                    }
+                  }}
+                  hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
+                >
+                  <ChevronIcon direction="right" strokeWidth={2} />
+                </TouchableOpacity>
+              </View>
+            </View>
+            <FlatList
+              style={{
+                borderBottomWidth: 1,
+                borderColor: TW_COLORS.GRAY_300,
               }}
-              className="mr-4"
-            >
-              <ChevronIcon strokeWidth={2} />
-            </TouchableOpacity>
-            <TouchableOpacity
-              className="ml-4"
-              onPress={() => {
-                if (currentIndex.current < computedIndicatorCouples.length - 1) {
-                  scrollToIndex(currentIndex.current + 1);
-                }
+              data={computedIndicatorCouples}
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+              ref={flatListRef}
+              className="px-4 pb-4"
+              keyExtractor={(item) => getIndicatorKey(item[0]) + getIndicatorKey(item[1])}
+              renderItem={({ item, index }) => {
+                const selectedIndicatorsIds = selectedIndicators.map((selectedIndicator) => getIndicatorKey(selectedIndicator));
+                const selected = selectedIndicatorsIds.includes(getIndicatorKey(item[0])) && selectedIndicatorsIds.includes(getIndicatorKey(item[1]));
+                return (
+                  <TouchableOpacity
+                    onPress={() => {
+                      if (selected) {
+                        setSelectedIndicators([item[0]]);
+                      } else {
+                        setSelectedIndicators(item);
+                      }
+                    }}
+                    onLayout={(e) => {
+                      itemWidths.current[index] = e.nativeEvent.layout.width;
+                    }}
+                    className={mergeClassNames(
+                      "bg-gray-50 rounded-lg border border-gray-300 px-2 py-1 mr-2 flex-row items-center justify-center",
+                      selected ? "bg-cnam-cyan-lighten-80" : ""
+                    )}
+                  >
+                    {selected ? (
+                      <View className="mr-2 w-6 h-6 rounded-md items-center justify-center bg-cnam-primary-800">
+                        <Text className="text-white text-base font-bold">✓</Text>
+                      </View>
+                    ) : (
+                      <View className="mr-2 w-6 h-6 rounded-md items-center justify-center border border-gray-300">
+                        <Text className="text-white text-xs" />
+                      </View>
+                    )}
+                    <Text className={mergeClassNames(selected ? typography.textLgSemibold : typography.textLgMedium, "text-cnam-primary-900")}>
+                      {item[0].name} + {item[1].name}
+                    </Text>
+                  </TouchableOpacity>
+                );
               }}
-            >
-              <ChevronIcon direction="right" strokeWidth={2} />
-            </TouchableOpacity>
-          </View>
-        </View>
-        <FlatList
-          style={{
-            borderBottomWidth: 1,
-            borderColor: TW_COLORS.GRAY_300,
-          }}
-          data={computedIndicatorCouples}
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-          ref={flatListRef}
-          className="px-4 pb-4"
-          keyExtractor={(item) => getIndicatorKey(item[0]) + getIndicatorKey(item[1])}
-          renderItem={({ item, index }) => {
-            const selectedIndicatorsIds = selectedIndicators.map((selectedIndicator) => getIndicatorKey(selectedIndicator));
-            const selected = selectedIndicatorsIds.includes(getIndicatorKey(item[0])) && selectedIndicatorsIds.includes(getIndicatorKey(item[1]));
-            return (
-              <TouchableOpacity
-                onPress={() => {
-                  setSelectedIndicators(item);
-                }}
-                onLayout={(e) => {
-                  itemWidths.current[index] = e.nativeEvent.layout.width;
-                }}
-                className={mergeClassNames(
-                  "bg-gray-50 rounded-lg border border-gray-300 px-2 py-1 mr-2 flex-row items-center justify-center",
-                  selected ? "bg-cnam-cyan-lighten-80" : ""
-                )}
-              >
-                {selected ? (
-                  <View className="mr-2 w-6 h-6 rounded-md items-center justify-center bg-cnam-primary-800">
-                    <Text className="text-white text-base font-bold">✓</Text>
-                  </View>
-                ) : (
-                  <View className="mr-2 w-6 h-6 rounded-md items-center justify-center border border-gray-300">
-                    <Text className="text-white text-xs" />
-                  </View>
-                )}
-                <Text className={mergeClassNames(selected ? typography.textLgSemibold : typography.textLgMedium, "text-cnam-primary-900")}>
-                  {item[0].name} + {item[1].name}
-                </Text>
-              </TouchableOpacity>
-            );
-          }}
-        />
+            />
+          </>
+        )}
         <View className="fr-col space-y-4 mt-4 px-4 w-full">
           <Text className={mergeClassNames(typography.textLgSemibold, "text-gray-800")}>Traitement</Text>
           <View className="flex-row items-center justify-between">
