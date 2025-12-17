@@ -13,9 +13,7 @@ const isLargeScreen = screenHeight >= 700;
 const SlideWelcome: CarouselSlide = {
   id: "slide-jm-help-you",
   title: "Bienvenue sur Jardin mental.",
-  description: `Que vous viviez un moment difficile ou que vous souhaitiez simplement prendre soin de votre bien-être, vous êtes au bon endroit.
-  \n\n
-  Ici, vous pouvez poser des mots sur ce que vous ressentez et mieux comprendre vos émotions, sans jugement.`,
+  description: `Que vous viviez un moment difficile ou que vous souhaitiez simplement prendre soin de votre bien-être, vous êtes au bon endroit.\n\nIci, vous pouvez poser des mots sur ce que vous ressentez et mieux comprendre vos émotions, sans jugement.`,
   type: "generic",
   backgroundColor: colors.WHITE,
   variant: "blue",
@@ -75,12 +73,12 @@ const carouselSlides: CarouselSlide[] = [
     description: "Une bibliothèque d’articles, podcasts, vidéos et outils, pour vous guider, vous informer et mieux comprendre votre santé mentale.",
     type: "generic",
     backgroundColor: colors.WHITE,
-    variant: "green",
+    variant: "yellow",
     illustration: (
-      <View className="absolute">
+      <View className="absolute right-4 -z-2">
         <Image
-          style={{ width: 200, height: 200, top: -130, resizeMode: "contain" }}
-          source={require("../../../../assets/imgs/onboarding/carousel/outils.png")}
+          style={{ width: 200, height: 200, top: -110, right: 0, resizeMode: "contain" }}
+          source={require("../../../../assets/imgs/onboarding/carousel/resource.png")}
         />
       </View>
     ),
@@ -154,6 +152,7 @@ export const VARIANT_COLORS = {
   red: "bg-[#FAEEEF]",
   pink: "bg-[#FEF8FB]",
   white: TW_COLORS.WHITE,
+  yellow: "bg-[#FFFDF8]",
   green: `bg-[#EEF9F1]`,
   blue: `bg-[#E5F6FC]`,
 };
