@@ -105,7 +105,6 @@ const Diary = ({ navigation, hideDeader = false }) => {
               </View>
             );
           })}
-        {/* <ContributeCard onPress={() => NPSManager.showNPS()} /> */}
         <View className="absolute -z-1 w-full items-center">
           <View className={"bg-cnam-primary-100 h-[150] w-[150] rounded-full items-center justify-center"} style={{ top: 20 }}>
             {<FileIcon width={31} height={31} color={"#84BECD"} />}
