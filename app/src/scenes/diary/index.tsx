@@ -104,22 +104,26 @@ const Diary = ({ navigation, hideDeader = false }) => {
               </View>
             );
           })}
-        <View className="absolute -z-1 w-full items-center">
-          <View className={"bg-cnam-primary-100 h-[150] w-[150] rounded-full items-center justify-center"} style={{ top: 20 }}>
-            {<FileIcon width={31} height={31} color={"#84BECD"} />}
-          </View>
-        </View>
-        <View className={mergeClassNames("border border-cnam-primary-200 rounded-2xl p-4 py-6 bg-white", "mt-32")} style={{ borderWidth: 0.5 }}>
+        {!Object.keys({ ...diaryNotes, ...diaryDataWithUserComments }).length && (
           <>
-            <Text className={mergeClassNames(typography.textMdBold, "text-cnam-primary-800 text-center px-4")}>
-              Aucune note rédigée pour le moment.
-            </Text>
-            <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 text-left px-4 mt-4")}>
-              Écrivez des notes sur vos observations pour ajouter un contexte ou une pensée : elle apparaîtra ici et dans vos Analyses (onglet
-              “Déclencheurs”)
-            </Text>
+            <View className="absolute -z-1 w-full items-center">
+              <View className={"bg-cnam-primary-100 h-[150] w-[150] rounded-full items-center justify-center"} style={{ top: 20 }}>
+                {<FileIcon width={31} height={31} color={"#84BECD"} />}
+              </View>
+            </View>
+            <View className={mergeClassNames("border border-cnam-primary-200 rounded-2xl p-4 py-6 bg-white", "mt-32")} style={{ borderWidth: 0.5 }}>
+              <>
+                <Text className={mergeClassNames(typography.textMdBold, "text-cnam-primary-800 text-center px-4")}>
+                  Aucune note rédigée pour le moment.
+                </Text>
+                <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 text-left px-4 mt-4")}>
+                  Écrivez des notes sur vos observations pour ajouter un contexte ou une pensée : elle apparaîtra ici et dans vos Analyses (onglet
+                  “Déclencheurs”).
+                </Text>
+              </>
+            </View>
           </>
-        </View>
+        )}
         {Object.keys({ ...diaryNotes, ...diaryDataWithUserComments })?.length > LIMIT_PER_PAGE * page && (
           <TouchableOpacity onPress={() => setPage(page + 1)} style={styles.versionContainer}>
             <Text style={styles.arrowDownLabel}>Voir plus</Text>
