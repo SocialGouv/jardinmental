@@ -7,7 +7,6 @@ import { colors } from "../../utils/colors";
 import { DiaryNotesContext } from "../../context/diaryNotes";
 import { DiaryDataContext } from "../../context/diaryData";
 import localStorage from "../../utils/localStorage";
-import NPSManager from "../../services/NPS/NPSManager";
 import ArrowUpSvg from "../../../assets/svg/arrow-up.svg";
 import { formatDateThread, makeSureTimestamp } from "../../utils/date/helpers";
 import DatePicker from "../../components/DatePicker";
