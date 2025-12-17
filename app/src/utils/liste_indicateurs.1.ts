@@ -442,7 +442,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
     priority: 1,
     uuid: "d6612c20-e68c-4092-918b-80a9fff3d145",
     category: INDICATORS_CATEGORIES["Pensées"],
-    order: "ASC",
+    order: "DESC",
     type: INDICATOR_TYPE.gauge,
     mainCategory: NEW_INDICATORS_CATEGORIES.WORK,
     matomoId: 19,
