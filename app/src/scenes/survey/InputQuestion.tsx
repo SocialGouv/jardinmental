@@ -4,6 +4,7 @@ import Text from "../../components/MyText";
 import { colors } from "../../utils/colors";
 import Icon from "../../components/Icon";
 import BasicCard from "@/components/BasicCard";
+import { InputText } from "@/components/InputText";
 
 const Question = ({ question, explanation, isLast, onChangeUserComment, userComment, placeholder = "Message..." }) => {
   const [showExplanation, setShowExplanation] = useState(false);
@@ -36,7 +37,23 @@ const Question = ({ question, explanation, isLast, onChangeUserComment, userComm
       </TouchableOpacity>
 
       <View style={styles.answerContainer}>
-        <TextInput
+        <InputText
+          fill
+          preset="iconWithHidePlaceholder"
+          placeholder={placeholder}
+          value={text}
+          multiline={true}
+          numberOfLines={Platform.OS === "ios" ? null : 3}
+          minHeight={Platform.OS === "ios" ? 30 * 3 : null}
+          onChangeText={(v) => {
+            setText(v);
+            onChangeUserComment({ key: question.id, userComment: v });
+          }}
+          textAlignVertical={"top"}
+          containerStyle={{ marginTop: 20 }}
+        />
+        {/* <TextInput
+          preset
           multiline={true}
           numberOfLines={Platform.OS === "ios" ? null : 3}
           minHeight={Platform.OS === "ios" ? 30 * 3 : null}
@@ -48,7 +65,7 @@ const Question = ({ question, explanation, isLast, onChangeUserComment, userComm
           placeholder={placeholder}
           style={styles.textArea}
           textAlignVertical={"top"}
-        />
+        /> */}
       </View>
     </BasicCard>
   );

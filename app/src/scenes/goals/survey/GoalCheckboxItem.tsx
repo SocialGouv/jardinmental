@@ -29,7 +29,7 @@ export const GoalCheckboxItem = ({ goal, index, checked, comment, onCheckedChang
         }}
         hitSlop={{ bottom: 8, left: 8, right: 8, top: 8 }}
       >
-        <View className="p-4 flex-col">
+        <View className=" flex-col">
           <View className="flex-row items-start">
             <InputCheckbox
               containerStyle={{ marginVertical: 0, marginRight: 0, marginTop: 5 }}
@@ -48,10 +48,9 @@ export const GoalCheckboxItem = ({ goal, index, checked, comment, onCheckedChang
             </View>
           </View>
           <InputText
-            fill
-            preset="lighten"
+            preset="floatingLabel"
             placeholder="Rédigez une note sur cet objectif"
-            containerStyle={{ marginTop: 16 }}
+            containerStyle={{ marginTop: 30 }}
             value={_comment}
             onChangeText={(nextComment) => {
               _setComment(nextComment);
