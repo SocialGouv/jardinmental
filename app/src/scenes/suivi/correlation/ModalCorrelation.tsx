@@ -71,6 +71,7 @@ function getSubArray<T>(array: T[], index: number, x: number): (T | undefined)[]
 export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ navigation, route }) => {
   const { config } = useDevCorrelationConfig();
   const MAX_NUNBER_OF_DAYS = config.maxDays;
+  const MIN_DAYS_FOR_CORRELATION = 21;
 
   const [diaryData] = useContext(DiaryDataContext);
   const [selectedIndicators, setSelectedIndicators] = useState<Indicator[]>([]);
@@ -305,16 +306,11 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
     setLastVisible(dataToDisplay[0][last - 1]?.date);
   };
 
-  if (
-    !dataToDisplay ||
-    (dataToDisplay[0] &&
-      dataToDisplay[0].filter((v) => !v["noValue"]).length < 21 &&
-      dataToDisplay[1] &&
-      dataToDisplay[1].filter((v) => !v["noValue"]).length < 21)
-  ) {
-    const maxDays = dataToDisplay
-      ? Math.max(dataToDisplay[0].filter((v) => !v["noValue"]).length, dataToDisplay[1].filter((v) => !v["noValue"]).length)
-      : 0;
+  const validDataCount0 = dataToDisplay?.[0]?.filter((v) => !v["noValue"]).length ?? 0;
+  const validDataCount1 = dataToDisplay?.[1]?.filter((v) => !v["noValue"]).length ?? 0;
+
+  if (!dataToDisplay || (validDataCount0 < MIN_DAYS_FOR_CORRELATION && dataToDisplay?.[1] && validDataCount1 < MIN_DAYS_FOR_CORRELATION)) {
+    const maxDays = dataToDisplay ? Math.max(validDataCount0, validDataCount1) : 0;
     return (
       <View className="flex-1 bg-cnam-primary-25">
         <View className="flex-row justify-between top-0 w-full bg-cnam-primary-800 p-4 items-center h-[96]">
@@ -359,7 +355,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
             <View className="absolute w-full">
               {dataToDisplay ? (
                 <Text className={mergeClassNames(typography.textLgBold, "text-cnam-primary-800 text-center px-4 mt-4")}>
-                  Continuez à renseigner vos observations sur ces indicateurs pendant {21 - maxDays} jours.
+                  Continuez à renseigner vos observations sur ces indicateurs pendant {MIN_DAYS_FOR_CORRELATION - maxDays} jours.
                 </Text>
               ) : (
                 <Text className={mergeClassNames(typography.textLgBold, "text-cnam-primary-800 text-center px-4 mt-4")}>
