@@ -167,17 +167,6 @@ const ChartPie = ({ navigation, fromDate, toDate, onScroll, header, dynamicPaddi
         </View>
       </>
     );
-    // return (
-    //   <View style={styles.emptyContainer}>
-    //     <View style={styles.subtitleContainer}>
-    //       <Icon icon="InfoSvg" width={25} height={25} color={colors.LIGHT_BLUE} />
-    //       <Text style={styles.subtitle}>
-    //         Des <Text style={styles.bold}>statistiques</Text> apparaîtront au fur et à mesure de vos saisies quotidiennes.
-    //       </Text>
-    //     </View>
-    //     <JMButton title="Commencer à saisir" onPress={startSurvey} />
-    //   </View>
-    // );
   }
 
   return (
@@ -257,14 +246,6 @@ const styles = StyleSheet.create({
     marginVertical: 30,
     width: "50%",
     alignSelf: "center",
-  },
-  emptyContainer: {
-    flex: 1,
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-    justifyContent: "space-between",
-    alignItems: "center",
-    backgroundColor: "#fff",
   },
   subtitleContainer: {
     display: "flex",
