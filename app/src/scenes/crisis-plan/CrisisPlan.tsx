@@ -5,6 +5,7 @@ import { typography } from "@/utils/typography";
 import LifeBuoy from "@assets/svg/icon/Lifebuoy";
 import CrisisHeader from "./CrisisHeader";
 import JMButton from "@/components/JMButton";
+import NavigationButtons from "@/components/onboarding/NavigationButtons";
 
 interface ModalCorrelationScreenProps {
   navigation: any;
@@ -17,8 +18,9 @@ export const CrisisPlan: React.FC<ModalCorrelationScreenProps> = ({ navigation, 
       <CrisisHeader navigation={navigation} title={"Ma liste de secours"} description={"Par Hop ma liste"} />
       <ScrollView
         className="px-4 flex-col space-y-4 pt-4 bg-cnam-primary-25 flex-1"
-        showsHorizontalScrollIndicator={false}
-        style={{
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{
+          flexGrow: 1,
           paddingBottom: 100,
         }}
       >
@@ -57,8 +59,23 @@ export const CrisisPlan: React.FC<ModalCorrelationScreenProps> = ({ navigation, 
         <View className="flex-column py-4 space-y-4 px-4 rounded-2xl">
           <Text className={mergeClassNames(typography.textMdSemibold, "text-primary-900")}>En cas d’urgence, appelez 15 ou le 3114</Text>
         </View>
-        <JMButton title={"Suivant"} onPress={() => {}} />
+        {/* <JMButton
+          title={"Suivant"}
+          className="mb-2"
+          onPress={() => {
+            navigation.navigate("crisis-plan-intro");
+          }}
+        /> */}
       </ScrollView>
+      <NavigationButtons
+        absolute={true}
+        onNext={() => {
+          navigation.navigate("crisis-plan-intro");
+        }}
+        withArrow={true}
+        showPrevious={false}
+        nextText="Suivant"
+      />
     </View>
   );
 };
