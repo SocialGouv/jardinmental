@@ -5,6 +5,8 @@ import { colors } from "../../utils/colors";
 import Icon from "../../components/Icon";
 import BasicCard from "@/components/BasicCard";
 import { InputText } from "@/components/InputText";
+import { mergeClassNames } from "@/utils/className";
+import { typography } from "@/utils/typography";
 
 const Question = ({ question, explanation, isLast, onChangeUserComment, userComment, placeholder = "Message..." }) => {
   const [showExplanation, setShowExplanation] = useState(false);
@@ -25,7 +27,7 @@ const Question = ({ question, explanation, isLast, onChangeUserComment, userComm
           ) : (
             <View />
           )}
-          <Text style={styles.questionTitle}>{question.label}</Text>
+          <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-950")}>{question.label}</Text>
           {/* we put a view here because we'll add a item here later */}
           <View />
         </View>
