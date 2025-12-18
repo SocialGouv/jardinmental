@@ -46,7 +46,7 @@ const Question = ({ question, explanation, isLast, onChangeUserComment, userComm
           value={text}
           multiline={true}
           numberOfLines={Platform.OS === "ios" ? null : 3}
-          minHeight={Platform.OS === "ios" ? 30 * 3 : null}
+          minHeight={30 * 3}
           onChangeText={(v) => {
             setText(v);
             onChangeUserComment({ key: question.id, userComment: v });
