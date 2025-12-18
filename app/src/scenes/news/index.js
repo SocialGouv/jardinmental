@@ -29,6 +29,23 @@ export default ({ navigation }) => {
         <Image style={styles.image} className="rounded-lg" source={require("../../../assets/imgs/icon.png")} />
       </View>
       <ScrollView style={styles.cgu} contentContainerStyle={styles.scrollContainer}>
+        <Card title="Nouveautés — Section « Agir » et export de vos données" version="v1.43.16" date="12/2025">
+          <Item>
+            <Text style={styles.bold}>Découvrez Agir, la boite à outils pour prendre soin de votre santé mentale.</Text>
+            <Text style={styles.text}>
+              Exercices courts (respiration, relaxation, ancrage) et guides simples pour dormir mieux, réguler ses émotions, installer des habitudes
+              utiles… {"\n"}
+              Tous les outils ont été sélectionnés et vérifiés avec nos membres du comité éditorial et scientifique.
+            </Text>
+          </Item>
+          <Item>
+            <Text style={styles.bold}>Exporter vos données pour les sauvegarder</Text>
+            <Text style={styles.text}>
+              Depuis le menu “Personnaliser”, vous pouvez désormais exporter toutes vos saisies Jardin Mental, notamment pour les importer sur un
+              nouveau téléphone.
+            </Text>
+          </Item>
+        </Card>
         <Card title="Nouvelle vue analyse : Tendances & liens" version="v1.43.14" date="10/2025">
           <Item showDot={false}>
             <Text style={styles.text}>
