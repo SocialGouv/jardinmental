@@ -133,7 +133,7 @@ export const InputText = ({ fill, preset, onPress, disabled, containerStyle, sty
               </View>
             </Animated.View>
           )}
-          {preset === "iconWithHidePlaceholder" && props.placeholder && !isFocused && (
+          {preset === "iconWithHidePlaceholder" && props.placeholder && !isFocused && !props.value && (
             <Animated.View style={viewStyle} className={"px-3"}>
               <View className="flex-row items-start justify-center">
                 {!isFocused && !props.value && (
