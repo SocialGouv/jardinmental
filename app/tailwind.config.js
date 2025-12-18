@@ -132,6 +132,8 @@ module.exports = {
         "cnam-mauve": {
           "lighten-80": "#ECDEF0",
           "darken-40": "#60376D",
+          "lighten-90": "#F5EFF8",
+          "darken-80": "#201224",
         },
         success: {
           bg: "#DDF3E3",

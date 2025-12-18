@@ -66,6 +66,7 @@ import CommityScreen from "@/scenes/commity/CommityScreen";
 import ToolSelectionInfo from "@/scenes/tools/ToolSelectionInfoScreen";
 import BreathExercice from "@/scenes/tools/BreathExercice";
 import CoherenceCardiaqueVideoScreen from "@/scenes/videos/CoherenceCardiaqueVideoScreen";
+import { CrisisPlan } from "@/scenes/crisis-plan/CrisisPlan";
 
 const Stack = createStackNavigator();
 
@@ -303,6 +304,14 @@ class Router extends React.Component<RouterProps> {
               options={{
                 cardStyleInterpolator: CardStyleInterpolators.forRevealFromBottomAndroid,
                 // cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS,
+                presentation: "modal",
+              }}
+            />
+            <Stack.Screen
+              name="crisis-plan"
+              component={CrisisPlan}
+              options={{
+                cardStyleInterpolator: CardStyleInterpolators.forRevealFromBottomAndroid,
                 presentation: "modal",
               }}
             />
