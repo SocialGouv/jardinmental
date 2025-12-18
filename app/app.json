@@ -2,14 +2,14 @@
   "expo": {
     "name": "Jardin Mental",
     "slug": "monsuivipsy",
-    "version": "1.43.15",
+    "version": "1.43.16",
     "orientation": "default",
     "icon": "./assets/imgs/icon.png",
     "scheme": "monsuivipsy",
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "org.reactjs.native.example.monsuivipsy",
-      "buildNumber": "367",
+      "buildNumber": "383",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
         "LSApplicationQueriesSchemes": ["tel", "telprompt", "sms", "mailto"],
@@ -19,7 +19,7 @@
     },
     "android": {
       "googleServicesFile": "./google-services.json",
-      "versionCode": 349,
+      "versionCode": 362,
       "adaptiveIcon": {
         "foregroundImage": "./assets/imgs/icon.png",
         "backgroundColor": "#ffffff"
