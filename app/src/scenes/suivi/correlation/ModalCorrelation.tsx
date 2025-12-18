@@ -312,7 +312,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
   if (!dataToDisplay || (validDataCount0 < MIN_DAYS_FOR_CORRELATION && dataToDisplay?.[1] && validDataCount1 < MIN_DAYS_FOR_CORRELATION)) {
     const maxDays = dataToDisplay ? Math.max(validDataCount0, validDataCount1) : 0;
     return (
-      <View className="flex-1 bg-cnam-primary-25">
+      <SafeAreaView className="flex-1 bg-primary" edges={["top"]}>
         <View className="flex-row justify-between top-0 w-full bg-cnam-primary-800 p-4 items-center h-[96]">
           <Text className={mergeClassNames(typography.displayXsBold, "text-white")}>Tendances & liens</Text>
           <TouchableOpacity
@@ -376,7 +376,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
             </View>
           </View>
         </ScrollView>
-      </View>
+      </SafeAreaView>
     );
   } else {
     return (
