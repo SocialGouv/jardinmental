@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
-import { Pressable, StyleSheet, TextInput, View, Text, Animated } from "react-native";
+import { Pressable, StyleSheet, TextInput, View, Text, Animated, Platform } from "react-native";
 import { colors } from "@/utils/colors";
 import { TW_COLORS } from "@/utils/constants";
 import { mergeClassNames } from "@/utils/className";
@@ -122,7 +122,7 @@ export const InputText = ({ fill, preset, onPress, disabled, containerStyle, sty
         <View style={[styles.contentContainer]}>
           {isFloatingLabelPreset && props.placeholder && (
             <Animated.View style={viewStyle}>
-              <View className="bg-white absolute -left-0 w-full h-2" style={{ bottom: -2.5 }} />
+              <View className="bg-white absolute -left-0 w-full h-2" style={{ bottom: Platform.OS === "android" ? -0.5 : -2.5 }} />
               <View className="flex-row items-center justify-center">
                 {!isFocused && !props.value && (
                   <View className="mr-1">
