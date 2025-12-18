@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View, ScrollView, TouchableOpacity, Dimensions, Text } from "react-native";
+import { StyleSheet, View, ScrollView, TouchableOpacity, Dimensions, Text, Image } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 
 import { getArrayOfDatesFromTo } from "@/utils/date/helpers";
@@ -19,6 +19,8 @@ import { PieYesNo } from "./PieYesNo";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import CircledIcon from "@/components/CircledIcon";
 import Animated from "react-native-reanimated";
+import { mergeClassNames } from "@/utils/className";
+import { typography } from "@/utils/typography";
 
 const screenHeight = Dimensions.get("window").height;
 
@@ -132,16 +134,50 @@ const ChartPie = ({ navigation, fromDate, toDate, onScroll, header, dynamicPaddi
 
   if (isEmpty) {
     return (
-      <View style={styles.emptyContainer}>
-        <View style={styles.subtitleContainer}>
-          <Icon icon="InfoSvg" width={25} height={25} color={colors.LIGHT_BLUE} />
-          <Text style={styles.subtitle}>
-            Des <Text style={styles.bold}>statistiques</Text> apparaîtront au fur et à mesure de vos saisies quotidiennes.
-          </Text>
+      <>
+        <View
+          className="bg-cnam-primary-25"
+          style={{
+            paddingTop: 180 + dynamicPaddingTop,
+            paddingHorizontal: 20,
+            position: "relative",
+          }}
+        >
+          <View>
+            <View className="absolute z-1 w-full items-center">
+              <View className={"bg-cnam-primary-100 h-[150] w-[150] rounded-full items-center justify-center"} style={{ top: 20 }}></View>
+            </View>
+          </View>
+          <View className="px-4 z-20">
+            <Image
+              style={{ width: 80, height: 80, right: -150, top: 60, resizeMode: "contain" }}
+              source={require("../../../assets/imgs/illustration-no-note.png")}
+            />
+          </View>
+          <View className={mergeClassNames("border border-cnam-primary-200 rounded-2xl p-4 py-6 bg-white", "mt-12")} style={{ borderWidth: 0.5 }}>
+            <>
+              <Text className={mergeClassNames(typography.textMdBold, "text-cnam-primary-800 text-center px-4")}>
+                Il n’y a pas de données à afficher pour cette période.
+              </Text>
+              <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 text-center px-4 mt-4")}>
+                Des statistiques apparaîtront au fur et à mesure de vos saisies.{" "}
+              </Text>
+            </>
+          </View>
         </View>
-        <JMButton title="Commencer à saisir" onPress={startSurvey} />
-      </View>
+      </>
     );
+    // return (
+    //   <View style={styles.emptyContainer}>
+    //     <View style={styles.subtitleContainer}>
+    //       <Icon icon="InfoSvg" width={25} height={25} color={colors.LIGHT_BLUE} />
+    //       <Text style={styles.subtitle}>
+    //         Des <Text style={styles.bold}>statistiques</Text> apparaîtront au fur et à mesure de vos saisies quotidiennes.
+    //       </Text>
+    //     </View>
+    //     <JMButton title="Commencer à saisir" onPress={startSurvey} />
+    //   </View>
+    // );
   }
 
   return (
