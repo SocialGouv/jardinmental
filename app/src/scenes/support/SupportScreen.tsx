@@ -53,12 +53,7 @@ export default function SupportScreen({ navigation, route }) {
     const phoneNumber = number;
     const url = `tel:${phoneNumber}`;
     try {
-      const supported = await Linking.canOpenURL(url);
-      if (supported) {
-        await Linking.openURL(url);
-      } else {
-        Alert.alert("Erreur", "Les appels ne sont pas supportés sur le simulateur.");
-      }
+      await Linking.openURL(url);
     } catch (e) {
       console.log(e);
       Alert.alert("Erreur", "Les appels ne sont pas supportés sur cet appareil vérifié les permissions de l'application.");
