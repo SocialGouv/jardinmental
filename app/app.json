@@ -14,7 +14,8 @@
         "ITSAppUsesNonExemptEncryption": false,
         "LSApplicationQueriesSchemes": ["tel", "telprompt", "sms", "mailto"],
         "CFBundleDevelopmentRegion": "fr",
-        "CFBundleLocalizations": ["fr"]
+        "CFBundleLocalizations": ["fr"],
+        "NSContactsUsageDescription": "Nous utilisons vos contacts pour vous permettre de sélectionner des personnes de confiance, des professionnels et des structures spécialisées en cas d’urgence."
       }
     },
     "android": {
