@@ -1,0 +1,220 @@
+import React, { useEffect, useState } from "react";
+import { View, Text, ScrollView, TouchableOpacity, ActivityIndicator, Alert } from "react-native";
+import * as Contacts from "expo-contacts";
+import { mergeClassNames } from "@/utils/className";
+import { typography } from "@/utils/typography";
+import CrisisHeader from "./CrisisHeader";
+import { TW_COLORS } from "@/utils/constants";
+import PencilIcon from "@assets/svg/icon/Pencil";
+import CrisisNavigationButtons from "./CrisisNavigationButtons";
+import { useBottomSheet } from "@/context/BottomSheetContext";
+import { CrisisBottomSheet } from "./CrisisBottomSheet";
+import CrisisListBottomSheet from "./CrisisListBottomSheet";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { CrisisPlanInputBox } from "./CrisisPlanInputBox";
+import JMButton from "@/components/JMButton";
+import PhoneIcon from "@assets/svg/icon/Phone";
+import { CrisisContactBottomSheet } from "./CrisisContactBottomSheet";
+import { InputText } from "@/components/InputText";
+import SimplePlus from "@assets/svg/icon/SimplePlus";
+
+interface ModalCorrelationScreenProps {
+  navigation: any;
+  route?: any;
+  suggestions: string[];
+  label: string;
+  placeholder: string;
+  storageKey: string;
+  title: string;
+  next: string;
+  labelBottomSheet: string;
+  headerBottomSheet: string;
+  headerEditionBottomSheet: string;
+}
+
+const suggestions = [
+  { name: "3114 (Prévention Suicide 24/7)", num: "3114" },
+  { name: "SAMU 15 (Urgences immédiates)", num: "15" },
+];
+
+const label = "Nom du contact";
+const placeholder = "Nom du contact";
+const storageKey = "@CRISIS_PLAN_CONTACT_PROFESSIONAL";
+const next = "";
+const title = "Quels professionnels, structures spécialisées, ou numéros d’urgence pouvez-vous contacter?";
+const headerEditionBottomSheet = "Liste de contact";
+export const CrisisPlanSlideContactProfessional: React.FC<ModalCorrelationScreenProps> = ({
+  navigation,
+  //   suggestions,
+  //   label,
+  //   placeholder,
+  //   storageKey,
+  //   title,
+  //   next,
+  //   labelBottomSheet,
+  //   headerBottomSheet,
+  //   headerEditionBottomSheet,
+}) => {
+  const { showBottomSheet, closeBottomSheet } = useBottomSheet();
+
+  const [selectedItems, setSelectedItems] = useState<any[]>([]);
+  const [contacts, setContacts] = useState<any[]>([]);
+  const [loadingContacts, setLoadingContacts] = useState(false);
+  const [contactsError, setContactsError] = useState<string | null>(null);
+  const [number, setNumber] = useState<string>();
+  const [contactName, setContactName] = useState<string>();
+
+  useEffect(() => {
+    const cb = async () => {
+      const _items = await AsyncStorage.getItem(storageKey);
+
+      const _parsedItems = JSON.parse(_items || "");
+      if (Array.isArray(_parsedItems)) {
+        setSelectedItems(_parsedItems);
+      }
+    };
+    cb();
+  }, []);
+
+  useEffect(() => {
+    const cb = async () => {
+      await AsyncStorage.setItem(storageKey, JSON.stringify(selectedItems));
+    };
+    cb();
+  }, [selectedItems]);
+
+  return (
+    <View className="flex-1 bg-cnam-primary-25">
+      <CrisisHeader navigation={navigation} title={"Ma liste de secours"} description={"Par Hop ma liste"} />
+      <ScrollView
+        className="px-4 flex-col space-y-4 pt-4 bg-cnam-primary-25 flex-1"
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{
+          flexGrow: 1,
+          paddingBottom: 100,
+        }}
+      >
+        <View className="flex-column py-4 space-y-4 px-4 rounded-2xl">
+          <Text className={mergeClassNames(typography.textLgSemibold, "text-primary-900")}>{title}</Text>
+        </View>
+        <View className="bg-cnam-primary-50 rounded-2xl px-6 py-8">
+          <Text className={mergeClassNames(typography.textSmMedium, "text-gray-700 mb-2")}>{label}</Text>
+          <View className="flex-row items-center space-x-2 mb-4">
+            <InputText
+              containerStyle={{
+                flexGrow: 1,
+              }}
+              placeholder={placeholder}
+              // value={text}
+              // onChangeText={(inputText) => {
+              //   setText(inputText);
+              // }}
+              multiline={true}
+              textAlignVertical="top"
+            />
+          </View>
+          <Text className={mergeClassNames(typography.textSmMedium, "text-gray-700 mb-2")}>Renseignez le numéro</Text>
+          <View className="flex-row items-center space-x-2">
+            <InputText
+              containerStyle={{
+                flexGrow: 1,
+              }}
+              placeholder={"Renseignez le numéro de téléphone"}
+              value={number}
+              onChangeText={(inputText) => {
+                setNumber(inputText);
+              }}
+              multiline={true}
+              textAlignVertical="top"
+            />
+          </View>
+          <TouchableOpacity
+            onPress={() => {
+              showBottomSheet(
+                <CrisisListBottomSheet
+                  items={suggestions}
+                  onClose={function (items: string[]): void {
+                    setSelectedItems([...selectedItems, ...items]);
+                    closeBottomSheet();
+                  }}
+                  itemIdKey="num"
+                  itemIdLabel="name"
+                  initialSelectedItems={[]}
+                  label={label}
+                  header={headerEditionBottomSheet}
+                />
+              );
+            }}
+          >
+            <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40 underline mt-4 mb-4")}>
+              Choisir parmi les suggestions
+            </Text>
+          </TouchableOpacity>
+          <JMButton
+            onPress={() => {
+              setSelectedItems([
+                ...selectedItems,
+                {
+                  name: contactName,
+                  num: number,
+                },
+              ]);
+              setNumber(undefined);
+              setContactName(undefined);
+            }}
+            title="Ajouter"
+          />
+        </View>
+        {loadingContacts && (
+          <View style={{ marginTop: 10 }}>
+            <ActivityIndicator size="small" color={TW_COLORS.CNAM_CYAN_700_DARKEN_40} />
+            <Text style={{ color: TW_COLORS.CNAM_CYAN_700_DARKEN_40 }}>Chargement des contacts...</Text>
+          </View>
+        )}
+        {contactsError && <Text style={{ color: "red", marginTop: 10 }}>{contactsError}</Text>}
+        {selectedItems.map((item, index) => {
+          return (
+            <TouchableOpacity
+              onPress={() => {
+                showBottomSheet(
+                  <CrisisContactBottomSheet
+                    variant="standart"
+                    label={label}
+                    placeholder={placeholder}
+                    navigation={navigation}
+                    header={headerEditionBottomSheet}
+                    onClose={() => {
+                      closeBottomSheet();
+                    }}
+                    onDelete={() => {
+                      setSelectedItems(selectedItems.filter((_, i) => i !== index));
+                      closeBottomSheet();
+                    }}
+                    onValidate={function (text) {
+                      setSelectedItems(selectedItems.map((selectedItem, i) => (i === index ? text : selectedItem)));
+                      closeBottomSheet();
+                    }}
+                    item={item}
+                    initialText={item.label}
+                  />
+                );
+              }}
+              className="bg-gray-200 border-gray-300 rounded-2xl flex-row items-center justify-between p-4"
+            >
+              <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-950")}>{item.label}</Text>
+              <PencilIcon color={TW_COLORS.CNAM_CYAN_700_DARKEN_40} />
+            </TouchableOpacity>
+          );
+        })}
+      </ScrollView>
+      <CrisisNavigationButtons
+        absolute={true}
+        onNext={() => {
+          navigation.navigate(next);
+        }}
+        withArrow={true}
+        showPrevious={false}
+      />
+    </View>
+  );
+};

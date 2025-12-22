@@ -135,6 +135,9 @@ module.exports = {
           "lighten-90": "#F5EFF8",
           "darken-80": "#201224",
         },
+        "cnam-bisque": {
+          "600-Lighten-20": "#A44349",
+        },
         success: {
           bg: "#DDF3E3",
           "bg-darken": "#BBE7C6",
