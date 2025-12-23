@@ -15,7 +15,8 @@
         "LSApplicationQueriesSchemes": ["tel", "telprompt", "sms", "mailto"],
         "CFBundleDevelopmentRegion": "fr",
         "CFBundleLocalizations": ["fr"],
-        "NSContactsUsageDescription": "Nous utilisons vos contacts pour vous permettre de sélectionner des personnes de confiance, des professionnels et des structures spécialisées en cas d’urgence."
+        "NSContactsUsageDescription": "Nous utilisons vos contacts pour vous permettre de sélectionner des personnes de confiance, des professionnels et des structures spécialisées en cas d’urgence.",
+        "NSPhotoLibraryUsageDescription": "Cette application accède à votre photothèque afin de vous permettre de sélectionner et d’importer des images."
       }
     },
     "android": {

@@ -15,6 +15,7 @@ import { CrisisPlanInputBox } from "./CrisisPlanInputBox";
 import JMButton from "@/components/JMButton";
 import PhoneIcon from "@assets/svg/icon/Phone";
 import { CrisisContactBottomSheet } from "./CrisisContactBottomSheet";
+import { CrisisContactListBottomSheet } from "./CrisisContactListBottomSheet";
 
 interface ModalCorrelationScreenProps {
   navigation: any;
@@ -30,7 +31,7 @@ interface ModalCorrelationScreenProps {
   headerEditionBottomSheet: string;
 }
 
-const label = "Choisissez parmi vos contacts";
+const label = "Choisissez parmi vos contacts autorisés";
 const placeholder = "Renseignez un proche";
 const storageKey = "@CRISIS_PLAN_CONTACT_HELP";
 const next = "crisis-plan-slide-contact-professional";
@@ -124,7 +125,7 @@ export const CrisisPlanSlideContactHelp: React.FC<ModalCorrelationScreenProps> =
                   setContacts(data);
                   setLoadingContacts(false);
                   showBottomSheet(
-                    <CrisisListBottomSheet
+                    <CrisisContactListBottomSheet
                       items={data}
                       itemIdKey={"id"}
                       itemIdLabel={"name"}

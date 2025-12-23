@@ -17,6 +17,7 @@ import PhoneIcon from "@assets/svg/icon/Phone";
 import { CrisisContactBottomSheet } from "./CrisisContactBottomSheet";
 import { InputText } from "@/components/InputText";
 import SimplePlus from "@assets/svg/icon/SimplePlus";
+import { CrisisContactListBottomSheet } from "./CrisisContactListBottomSheet";
 
 interface ModalCorrelationScreenProps {
   navigation: any;
@@ -40,7 +41,7 @@ const suggestions = [
 const label = "Nom du contact";
 const placeholder = "Nom du contact";
 const storageKey = "@CRISIS_PLAN_CONTACT_PROFESSIONAL";
-const next = "";
+const next = "crisis-plan-slide-reason-to-live";
 const title = "Quels professionnels, structures spécialisées, ou numéros d’urgence pouvez-vous contacter?";
 const headerEditionBottomSheet = "Liste de contact";
 export const CrisisPlanSlideContactProfessional: React.FC<ModalCorrelationScreenProps> = ({
@@ -131,7 +132,7 @@ export const CrisisPlanSlideContactProfessional: React.FC<ModalCorrelationScreen
           <TouchableOpacity
             onPress={() => {
               showBottomSheet(
-                <CrisisListBottomSheet
+                <CrisisContactListBottomSheet
                   items={suggestions}
                   onClose={function (items: string[]): void {
                     setSelectedItems([...selectedItems, ...items]);

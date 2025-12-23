@@ -9,6 +9,8 @@ import { TouchableOpacity } from "@gorhom/bottom-sheet";
 import JMButton from "@/components/JMButton";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 import HealthIcon from "@assets/svg/icon/Health";
+import { useBottomSheet } from "@/context/BottomSheetContext";
+import { CrisisAuthorizedContactBottomSheet } from "./CrisisAuthorizedContactBottomSheet";
 
 const screenHeight = Dimensions.get("window").height;
 const height90vh = screenHeight * 0.9;
@@ -33,6 +35,7 @@ export default function CrisisListBottomSheet({
   const uniqueItems = items;
   const [filteredDoses, setFilteredDoses] = useState<string[]>(uniqueItems);
   const [selectedItems, setSelectedItems] = useState<string[]>(initialSelectedItems);
+  const { showBottomSheet, closeBottomSheet } = useBottomSheet();
 
   const toggleItem = (id) => {
     if (selectedItems?.includes(id)) {
@@ -76,13 +79,6 @@ export default function CrisisListBottomSheet({
         </View>
         <View className="p-4 flex-column flex-1 gap-6">
           <Text className={mergeClassNames(typography.textXlBold, "text-left text-cnam-primary-900")}>{label}</Text>
-          {/* <TextInput
-            onChangeText={(text) => {
-              setSearchText(text);
-            }}
-            className={mergeClassNames(typography.textMdRegular, "text-left border border-gray-300 p-2 rounded rounded-lg")}
-            placeholder="Rechercher ou ajouter un élément"
-          /> */}
           <View className="flex-colum flex-1">
             {filteredDoses.map((ind) => {
               const selected = selectedItems.includes(itemIdKey ? ind[itemIdKey] : ind);
@@ -94,6 +90,7 @@ export default function CrisisListBottomSheet({
                   className="flex-row"
                   id={itemIdKey ? ind[itemIdKey] : ind}
                   label={itemIdLabel ? ind[itemIdLabel] : ind}
+                  description={ind["phoneNumbers"] ? ind["phoneNumbers"][0].number : undefined}
                   selected={selected}
                   disabled={initialSelected}
                   onPress={() => (itemIdKey ? toggleItem(ind[itemIdKey]) : toggleItem(ind))}
