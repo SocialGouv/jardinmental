@@ -16,7 +16,7 @@ import TrashIcon from "@assets/svg/icon/Trash";
 const screenHeight = Dimensions.get("window").height;
 const suggestions = ["Aller au cinéma", "Aller au restaurant", "Faire du shopping"];
 
-export const CrisisContactBottomSheet = ({
+export const CrisisContactListBottomSheet = ({
   navigation,
   label,
   placeholder,
