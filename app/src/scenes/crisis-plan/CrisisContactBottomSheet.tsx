@@ -13,8 +13,9 @@ import CrisisListBottomSheet from "./CrisisListBottomSheet";
 import PlusIcon from "@assets/svg/icon/plus";
 import TrashIcon from "@assets/svg/icon/Trash";
 
-const screenHeight = Dimensions.get("window").height;
 const suggestions = ["Aller au cinéma", "Aller au restaurant", "Faire du shopping"];
+const screenHeight = Dimensions.get("window").height;
+const height90vh = screenHeight * 0.9;
 
 export const CrisisContactBottomSheet = ({
   navigation,
@@ -69,7 +70,14 @@ export const CrisisContactBottomSheet = ({
   console.log(activities);
   return (
     <View className="flex-1 bg-white">
-      <ScrollView bounces={false} contentContainerStyle={{ paddingBottom: 20 }} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        bounces={false}
+        contentContainerStyle={{ paddingBottom: 100 }}
+        showsVerticalScrollIndicator={false}
+        style={{
+          height: height90vh,
+        }}
+      >
         <View className="self-end mr-4">
           <TouchableOpacity
             onPress={() => {

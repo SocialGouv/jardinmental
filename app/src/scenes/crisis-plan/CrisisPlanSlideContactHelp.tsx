@@ -15,7 +15,7 @@ import { CrisisPlanInputBox } from "./CrisisPlanInputBox";
 import JMButton from "@/components/JMButton";
 import PhoneIcon from "@assets/svg/icon/Phone";
 import { CrisisContactBottomSheet } from "./CrisisContactBottomSheet";
-import { CrisisContactListBottomSheet } from "./CrisisContactListBottomSheet";
+import CrisisContactListBottomSheet from "./CrisisContactListBottomSheet";
 
 interface ModalCorrelationScreenProps {
   navigation: any;
@@ -240,6 +240,9 @@ export const CrisisPlanSlideContactHelp: React.FC<ModalCorrelationScreenProps> =
       </ScrollView>
       <CrisisNavigationButtons
         absolute={true}
+        onPrevious={() => {
+          navigation.goBack();
+        }}
         onNext={() => {
           navigation.navigate(next);
         }}

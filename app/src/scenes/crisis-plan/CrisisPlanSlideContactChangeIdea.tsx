@@ -15,7 +15,7 @@ import { CrisisPlanInputBox } from "./CrisisPlanInputBox";
 import JMButton from "@/components/JMButton";
 import PhoneIcon from "@assets/svg/icon/Phone";
 import { CrisisContactBottomSheet } from "./CrisisContactBottomSheet";
-import { CrisisContactListBottomSheet } from "./CrisisContactListBottomSheet";
+import CrisisContactListBottomSheet from "./CrisisContactListBottomSheet";
 
 interface ModalCorrelationScreenProps {
   navigation: any;
@@ -191,7 +191,7 @@ export const CrisisPlanSlideContact: React.FC<ModalCorrelationScreenProps> = ({
                 showBottomSheet(
                   <CrisisContactBottomSheet
                     label={label}
-                    variant="standart"
+                    variant="activity"
                     placeholder={placeholder}
                     navigation={navigation}
                     header={"Edition du proche"}
@@ -239,6 +239,9 @@ export const CrisisPlanSlideContact: React.FC<ModalCorrelationScreenProps> = ({
       </ScrollView>
       <CrisisNavigationButtons
         absolute={true}
+        onPrevious={() => {
+          navigation.goBack();
+        }}
         onNext={() => {
           console.log("LCS TOTo");
           navigation.navigate("crisis-plan-slide-contact-help");

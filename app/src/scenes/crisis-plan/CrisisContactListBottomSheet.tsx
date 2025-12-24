@@ -1,228 +1,152 @@
-import { View, Text, ScrollView, useWindowDimensions, Dimensions, Linking, Alert, Platform, TouchableOpacity } from "react-native";
+import { InputSelectionnableItem, LightSelectionnableItem } from "@/components/SelectionnableItem";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
-import JMButton from "@/components/JMButton";
-import { useBottomSheet } from "@/context/BottomSheetContext";
-import { InputText } from "@/components/InputText";
-import SimplePlus from "@assets/svg/icon/SimplePlus";
-import { TW_COLORS } from "@/utils/constants";
-import { useState } from "react";
-import PencilIcon from "@assets/svg/icon/Pencil";
-import PhoneIcon from "@assets/svg/icon/Phone";
-import CrisisListBottomSheet from "./CrisisListBottomSheet";
 import PlusIcon from "@assets/svg/icon/plus";
-import TrashIcon from "@assets/svg/icon/Trash";
+import { View, Text, TextInput, Dimensions } from "react-native";
+import React, { useEffect, useState } from "react";
+import { TW_COLORS } from "@/utils/constants";
+import { TouchableOpacity } from "@gorhom/bottom-sheet";
+import JMButton from "@/components/JMButton";
+import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
+import HealthIcon from "@assets/svg/icon/Health";
+import { useBottomSheet } from "@/context/BottomSheetContext";
+import { CrisisAuthorizedContactBottomSheet } from "./CrisisAuthorizedContactBottomSheet";
 
 const screenHeight = Dimensions.get("window").height;
-const suggestions = ["Aller au cinéma", "Aller au restaurant", "Faire du shopping"];
+const height90vh = screenHeight * 0.9;
 
-export const CrisisContactListBottomSheet = ({
-  navigation,
-  label,
-  placeholder,
+export default function CrisisContactListBottomSheet({
   onClose,
-  item,
-  initialText,
-  onDelete,
-  onValidate,
+  initialSelectedItems,
+  items,
+  label,
   header,
-  variant,
+  itemIdKey,
+  itemIdLabel,
 }: {
-  navigation: any;
-  item: {
-    id: string;
-    name: string;
-    activities: string[];
-    phoneNumbers: {
-      digits: string;
-      number: string;
-      countryCode: string;
-      label: string;
-      id: string;
-    }[];
-  };
+  onClose: (item: string[]) => void;
+  initialSelectedItems: string[];
+  items: any[];
   label: string;
-  placeholder: string;
-  onClose: () => any;
-  initialText: string;
-  onDelete: () => void;
-  variant: "activity" | "standart";
-  onValidate: (item: {
-    id: string;
-    name: string;
-    activities: string[];
-    phoneNumbers: {
-      digits: string;
-      number: string;
-      countryCode: string;
-      label: string;
-      id: string;
-    }[];
-  }) => void;
   header: string;
-}) => {
-  const [text, setText] = useState<string>(item.name);
-  const [activities, setActivities] = useState<string[]>(item.activities || [""]);
-  const [number, setNumber] = useState<string>(item.phoneNumbers[0].digits);
-  const [selectedItems, setSelectedItems] = useState<string[]>([]);
+  itemIdKey?: string;
+  itemIdLabel?: string;
+}) {
+  const uniqueItems = items;
+  const [filteredDoses, setFilteredDoses] = useState<string[]>(uniqueItems);
+  const [selectedItems, setSelectedItems] = useState<string[]>(initialSelectedItems);
   const { showBottomSheet, closeBottomSheet } = useBottomSheet();
-  console.log(activities);
+
+  const toggleItem = (id) => {
+    if (selectedItems?.includes(id)) {
+      setSelectedItems(selectedItems.filter((itemId) => itemId !== id));
+    } else {
+      setSelectedItems([...selectedItems, id]);
+    }
+  };
+
+  const createCustomDose = (name: string): string => {
+    return name;
+  };
+
+  //   useEffect(() => {
+  //     if (searchedText) {
+  //       setFilteredDoses([...uniqueItems, ...newItems].filter((ind) => ind.toLowerCase().includes(searchedText.toLowerCase())));
+  //     } else {
+  //       setFilteredDoses([...uniqueItems, ...newItems]);
+  //     }
+  //   }, [searchedText, newItems]);
+
   return (
     <View className="flex-1 bg-white">
-      <ScrollView bounces={false} contentContainerStyle={{ paddingBottom: 20 }} showsVerticalScrollIndicator={false}>
+      <KeyboardAwareScrollView
+        contentContainerStyle={{ paddingBottom: 200, paddingHorizontal: 0 }}
+        showsVerticalScrollIndicator={false}
+        automaticallyAdjustKeyboardInsets={true}
+        style={{ paddingVertical: 20, height: height90vh, paddingHorizontal: 0 }}
+      >
         <View className="self-end mr-4">
           <TouchableOpacity
             onPress={() => {
-              onClose();
+              setSelectedItems([]);
             }}
           >
-            <Text className={mergeClassNames(typography.textLgMedium, "text-cnam-primary-800")}>Annuler</Text>
+            <Text className={mergeClassNames(typography.textLgMedium, "text-cnam-primary-800")}>Effacer</Text>
           </TouchableOpacity>
         </View>
-        <View className="flex-row bg-[#E5F6FC] self-start items-center p-2 mb-4">
+        <View className="flex-row bg-[#E5F6FC] self-start items-center p-2">
           <Text className={mergeClassNames(typography.textSmBold, "ml-2 text-cnam-cyan-700-darken-40 text-left")}>{header}</Text>
         </View>
-        <View className="bg-cnam-primary-50 rounded-2xl px-6 py-8 mx-4 flex-column">
-          <View className="flex-row items-center flex-start space-x-2 mb-2">
-            <PhoneIcon />
-            <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-950")}>{text}</Text>
-          </View>
-          <View className="flex-column flex-start space-y-1 mb-4">
-            <Text className={mergeClassNames(typography.textSmMedium, "text-gray-700 mb-2")}>Numéro de téléphone</Text>
-            <InputText
-              containerStyle={{
-                flexGrow: 1,
-              }}
-              placeholder={"06 39 98 90 60"}
-              value={number}
-              onChangeText={(inputText) => {
-                setNumber(inputText);
-              }}
-              multiline={true}
-              textAlignVertical="top"
-            />
-          </View>
-          {variant === "activity" && (
-            <>
-              <Text className={mergeClassNames(typography.textSmMedium, "text-gray-700 mb-2")}>Renseignez une activité à faire ensemble</Text>
-              <View className="flex-column space-y-1">
-                {activities.map((activity, index) => (
-                  <View className="flex-row items-center space-x-2" key={index}>
-                    <InputText
-                      containerStyle={{
-                        flexGrow: 1,
-                      }}
-                      placeholder={"Ex: Aller au restaurant"}
-                      value={activities[index]}
-                      onChangeText={(inputText) => {
-                        setActivities(activities.map((act, i) => (i === index ? inputText : act)));
-                      }}
-                      multiline={true}
-                      textAlignVertical="top"
-                    />
-                    {(index !== 0 || (index == 0 && activities.length > 1) || !!activity) && (
-                      <TouchableOpacity
-                        onPress={() => {
-                          const newActivities = activities.filter((_, i) => i !== index);
-                          setActivities(newActivities.length ? newActivities : [""]);
-                        }}
-                      >
-                        <TrashIcon color={TW_COLORS.CNAM_PRIMARY_900} />
-                        {/* <PlusIcon color={TW_COLORS.CNAM_PRIMARY_900} /> */}
-                      </TouchableOpacity>
-                    )}
+        <View className="p-4 flex-column flex-1 gap-6">
+          <Text className={mergeClassNames(typography.textXlBold, "text-left text-cnam-primary-900")}>{label}</Text>
+          <View className="flex-colum flex-1">
+            {filteredDoses.map((ind) => {
+              const selected = selectedItems.includes(itemIdKey ? ind[itemIdKey] : ind);
+              const initialSelected = initialSelectedItems.includes(itemIdKey ? ind[itemIdKey] : ind);
+              return (
+                <LightSelectionnableItem
+                  shape="square"
+                  key={itemIdKey ? ind[itemIdKey] : ind}
+                  className="flex-row"
+                  id={itemIdKey ? ind[itemIdKey] : ind}
+                  label={itemIdLabel ? ind[itemIdLabel] : ind}
+                  description={ind["phoneNumbers"] ? ind["phoneNumbers"][0].number : undefined}
+                  selected={selected}
+                  disabled={initialSelected}
+                  onPress={() => (itemIdKey ? toggleItem(ind[itemIdKey]) : toggleItem(ind))}
+                />
+              );
+            })}
+            {/* {!!uniqueItems.length && !filteredDoses.length && (
+              <Text className={mergeClassNames(typography.textSmMedium, "text-gray-800")}>Pas de résultat</Text>
+            )} */}
+            {/* {!!searchedText && !filteredDoses.length && (
+              <TouchableOpacity
+                onPress={() => {
+                  createNewDose(searchedText);
+                  setSearchText("");
+                }}
+              >
+                <View className="flex-row items-center mr-auto mt-2">
+                  <Text className={mergeClassNames(typography.textLgMedium, "mr-2 text-cnam-primary-900")}>Ajouter "{searchedText}"</Text>
+                  <PlusIcon />
+                </View>
+              </TouchableOpacity>
+            )} */}
+            {/* {!searchedText && (
+              <View className="flex-row items-center mt-2 ml-auto">
+                <TouchableOpacity
+                  onPress={() => {
+                    setEditingDoses((editingDoses) => [...editingDoses, ""]);
+                  }}
+                >
+                  <View className="flex-row items-center">
+                    <Text className={mergeClassNames(typography.textMdMedium, "mr-2 text-cnam-primary-900")}>Saisir manuellement</Text>
+                    <PlusIcon />
                   </View>
-                ))}
+                </TouchableOpacity>
               </View>
-
-              <TouchableOpacity
-                onPress={() => {
-                  const newActivities = [...activities, ""];
-                  setActivities(newActivities);
-                }}
-              >
-                <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40 underline mt-2")}>
-                  Ajouter une autre activité
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => {
-                  showBottomSheet(
-                    <CrisisListBottomSheet
-                      label={"Choisissez parmi les suggestions"}
-                      header={"Activités"}
-                      onClose={(suggestedActivities) => {
-                        showBottomSheet(
-                          <CrisisContactBottomSheet
-                            navigation={navigation}
-                            variant="activity"
-                            item={{
-                              ...item,
-                              activities: [...activities, ...suggestedActivities],
-                            }}
-                            label={label}
-                            placeholder={placeholder}
-                            onClose={onClose}
-                            initialText={""}
-                            onDelete={onDelete}
-                            onValidate={onValidate}
-                            header={header}
-                          />
-                        );
-                      }}
-                      initialSelectedItems={activities}
-                      items={suggestions}
-                    />
-                  );
-                }}
-              >
-                <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40 underline mt-8")}>
-                  Choisir parmi les suggestions
-                </Text>
-              </TouchableOpacity>
-            </>
-          )}
-        </View>
-
-        {/* <TouchableOpacity onPress={() => {}} className="bg-gray-200 border-gray-300 rounded-2xl flex-row items-center justify-between p-4 mx-4">
-          <View className="flex-row items-center justify-center space-x-2">
-            <PhoneIcon />
-            <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-950")}>{text}</Text>
+            )} */}
           </View>
-          <PencilIcon color={TW_COLORS.CNAM_CYAN_700_DARKEN_40} />
-        </TouchableOpacity> */}
-        <View className="w-full py-6 px-6">
-          <JMButton
-            onPress={() => {
-              const updatedValue = {
-                ...item,
-                phoneNumbers: [
-                  {
-                    ...item.phoneNumbers[0],
-                    digits: number,
-                    number,
-                  },
-                  ...item.phoneNumbers.filter((_, index) => index !== 0),
-                ],
-              };
-              if (variant === "activity") {
-                updatedValue["activities"] = [...activities.filter((activity) => !!activity)];
-              }
-              onValidate(updatedValue);
-            }}
-            title={"Valider"}
-            className="mb-4"
-          />
-          <JMButton
-            onPress={() => {
-              onDelete();
-            }}
-            variant="text"
-            textClassName="text-cnam-bisque-600-Lighten-20 underline"
-            title={"Supprimer ce proche"}
-          />
         </View>
-      </ScrollView>
+      </KeyboardAwareScrollView>
+      <View
+        style={{
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          right: 0,
+        }}
+        className={`flex-column justify-between items-center p-6 px-6 bg-white/90 pb-10 w-full`}
+      >
+        <JMButton
+          onPress={() => {
+            const _item = itemIdKey ? items.filter((_item) => selectedItems.includes(_item[itemIdKey])) : selectedItems;
+            onClose(_item);
+          }}
+          title={"Valider la sélection"}
+        />
+      </View>
     </View>
   );
-};
+}

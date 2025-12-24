@@ -75,6 +75,8 @@ import { CrisisPlanSlideContact } from "@/scenes/crisis-plan/CrisisPlanSlideCont
 import { CrisisPlanSlideContactProfessional } from "@/scenes/crisis-plan/CrisisPlanSlideContactProfessional";
 import { CrisisPlanSlideContactHelp } from "@/scenes/crisis-plan/CrisisPlanSlideContactHelp";
 import { CrisisPlanSlideReasonToLive } from "@/scenes/crisis-plan/CrisisPlanSlideReasonToLive";
+import { CrisisPlanSlideFinal } from "@/scenes/crisis-plan/CrisisPlanSlideFinal";
+import { CrisisPlanSumupList } from "@/scenes/crisis-plan/CrisisPlanSumupList";
 
 const Stack = createStackNavigator();
 
@@ -381,6 +383,22 @@ class Router extends React.Component<RouterProps> {
             <Stack.Screen
               name="crisis-plan-slide-reason-to-live"
               component={CrisisPlanSlideReasonToLive}
+              options={{
+                cardStyleInterpolator: CardStyleInterpolators.forRevealFromBottomAndroid,
+                presentation: "modal",
+              }}
+            />
+            <Stack.Screen
+              name="crisis-plan-slide-final"
+              component={CrisisPlanSlideFinal}
+              options={{
+                cardStyleInterpolator: CardStyleInterpolators.forRevealFromBottomAndroid,
+                presentation: "modal",
+              }}
+            />
+            <Stack.Screen
+              name="crisis-plan-slide-sumup-list"
+              component={CrisisPlanSumupList}
               options={{
                 cardStyleInterpolator: CardStyleInterpolators.forRevealFromBottomAndroid,
                 presentation: "modal",
