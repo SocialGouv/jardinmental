@@ -14,13 +14,10 @@ import { useBottomSheet } from "@/context/BottomSheetContext";
 import { CrisisBottomSheet } from "./CrisisBottomSheet";
 import CrisisListBottomSheet from "./CrisisListBottomSheet";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { CrisisPlanInputBox } from "./CrisisPlanInputBox";
-import JMButton from "@/components/JMButton";
-import PhoneIcon from "@assets/svg/icon/Phone";
-import { CrisisContactBottomSheet } from "./CrisisContactBottomSheet";
 import { InputText } from "@/components/InputText";
-import PlusIcon from "@assets/svg/icon/plus";
+import ImageIcon from "@assets/svg/icon/ImageIcon";
 import SimplePlus from "@assets/svg/icon/SimplePlus";
+import { CrisisMediaBottomSheet } from "./CrisisMediaBottomSheet";
 
 interface ModalCorrelationScreenProps {
   navigation: any;
@@ -133,6 +130,7 @@ export const CrisisPlanSlideReasonToLive: React.FC<ModalCorrelationScreenProps> 
       setLocalImagePaths((prev) => [...prev, ...copiedPaths]);
     }
   };
+  console.log("LCS CRISIS PLAN SLIDE REASON TO LIVE", selectedImages);
 
   return (
     <View className="flex-1 bg-cnam-primary-25">
@@ -226,6 +224,30 @@ export const CrisisPlanSlideReasonToLive: React.FC<ModalCorrelationScreenProps> 
             </TouchableOpacity>
           );
         })}
+        <View className="flex-row justify-between pt-6">
+          <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-800")}>Ajouter des photos</Text>
+          <TouchableOpacity
+            onPress={() => {
+              showBottomSheet(
+                <CrisisMediaBottomSheet
+                  navigation={undefined}
+                  label={"Raisons de vivre"}
+                  placeholder={""}
+                  onClose={function (_selectedImage) {
+                    setSelectedImages(_selectedImage);
+                    setLocalImagePaths(_selectedImage.map((img) => img.uri));
+                    closeBottomSheet();
+                  }}
+                  initialSelectedImages={selectedImages}
+                  initialText={""}
+                  header={"Raisons de vivre"}
+                />
+              );
+            }}
+          >
+            <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40 underline")}>Editer</Text>
+          </TouchableOpacity>
+        </View>
         <View className="flex-row justify-between flex-wrap">
           <TouchableOpacity
             onPress={handlePickImages}
@@ -256,55 +278,39 @@ export const CrisisPlanSlideReasonToLive: React.FC<ModalCorrelationScreenProps> 
               <Image source={{ uri: img.uri }} style={{ width: 94, height: 94, borderRadius: 16 }} resizeMode="cover" />
             </View>
           ))}
-          <View
-            className="bg-cnam-primary-50 rounded-2xl mb-2"
-            style={{
-              borderWidth: 1.5,
-              borderColor: TW_COLORS.CNAM_PRIMARY_50,
-              width: 98,
-              height: 98,
-            }}
-          ></View>
-          <View
-            className="bg-cnam-primary-50 rounded-2xl mb-2"
-            style={{
-              borderWidth: 1.5,
-              borderColor: TW_COLORS.CNAM_PRIMARY_50,
-              width: 98,
-              height: 98,
-            }}
-          ></View>
-          <View
-            className="bg-cnam-primary-50 rounded-2xl mb-2"
-            style={{
-              borderWidth: 1.5,
-              borderColor: TW_COLORS.CNAM_PRIMARY_50,
-              width: 98,
-              height: 98,
-            }}
-          ></View>
-          <View
-            className="bg-cnam-primary-50 rounded-2xl mb-2"
-            style={{
-              borderWidth: 1.5,
-              borderColor: TW_COLORS.CNAM_PRIMARY_50,
-              width: 98,
-              height: 98,
-            }}
-          ></View>
-          <View
-            className="bg-cnam-primary-50 rounded-2xl mb-2"
-            style={{
-              borderWidth: 1.5,
-              borderColor: TW_COLORS.CNAM_PRIMARY_50,
-              width: 98,
-              height: 98,
-            }}
-          ></View>
+          {selectedImages.length === 0 && (
+            <>
+              <View
+                className="bg-cnam-primary-50 rounded-2xl mb-2 items-center justify-center"
+                style={{
+                  borderWidth: 1.5,
+                  borderColor: TW_COLORS.CNAM_PRIMARY_50,
+                  width: 98,
+                  height: 98,
+                }}
+              >
+                <ImageIcon />
+              </View>
+              <View
+                className="bg-cnam-primary-50 rounded-2xl mb-2 items-center justify-center"
+                style={{
+                  borderWidth: 1.5,
+                  borderColor: TW_COLORS.CNAM_PRIMARY_50,
+                  width: 98,
+                  height: 98,
+                }}
+              >
+                <ImageIcon />
+              </View>
+            </>
+          )}
         </View>
       </ScrollView>
       <CrisisNavigationButtons
         absolute={true}
+        onPrevious={() => {
+          navigation.goBack();
+        }}
         onNext={async () => {
           // Enregistre les paths dans le localStorage
           try {
@@ -324,7 +330,7 @@ export const CrisisPlanSlideReasonToLive: React.FC<ModalCorrelationScreenProps> 
           } catch (e) {
             console.error("Erreur lors de la sauvegarde des paths d'images :", e);
           }
-          navigation.navigate("crisis-plan-slide-contact-help");
+          navigation.navigate("crisis-plan-slide-final");
         }}
         withArrow={true}
         showPrevious={false}

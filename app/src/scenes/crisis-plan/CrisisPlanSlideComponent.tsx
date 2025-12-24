@@ -131,6 +131,9 @@ export const CrisisPlanSlideComponent: React.FC<ModalCorrelationScreenProps> = (
       </ScrollView>
       <CrisisNavigationButtons
         absolute={true}
+        onPrevious={() => {
+          navigation.goBack();
+        }}
         onNext={() => {
           console.log("LCS NAVIGATE next", next);
           navigation.navigate(next);

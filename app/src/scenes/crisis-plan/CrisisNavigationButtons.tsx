@@ -48,10 +48,10 @@ export const CrisisNavigationButtons: React.FC<NavigationButtonsProps> = ({
   const content = children ?? (
     <>
       {headerContent}
-      <View className="flex-row justify-end items-center">
+      <View className="flex-row justify-between items-center">
         {/* <View
         className="flex-row justify-between items-center p-6 px-6 bg-white/50"> */}
-        {typeof onPrevious === "function" && (
+        {/* {typeof onPrevious === "function" && (
           <JMButton
             onPress={onPrevious}
             variant="outline"
@@ -61,7 +61,7 @@ export const CrisisNavigationButtons: React.FC<NavigationButtonsProps> = ({
             className="mr-2"
             loading={loading}
           />
-        )}
+        )} */}
         {typeof onLeftAction === "function" && (
           <JMButton
             onPress={onLeftAction}
@@ -72,6 +72,32 @@ export const CrisisNavigationButtons: React.FC<NavigationButtonsProps> = ({
             loading={loading}
           />
         )}
+        <View className="flex-row items-center justify-center space-x-2">
+          <JMButton
+            onPress={onPrevious}
+            title={""}
+            width="fixed"
+            loading={loading}
+            disabled={nextDisabled}
+            icon={
+              withArrow && !nextDisabled ? (
+                <View
+                  style={{
+                    transform: [
+                      {
+                        scaleX: -1,
+                      },
+                    ],
+                  }}
+                >
+                  <ArrowIcon color={TW_COLORS.BRAND_25} />
+                </View>
+              ) : undefined
+            }
+            iconPosition="right"
+          />
+          <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>Précédent</Text>
+        </View>
         <View className="flex-row items-center justify-center space-x-2">
           <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>Suivant</Text>
           <JMButton
