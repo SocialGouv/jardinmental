@@ -175,13 +175,13 @@ const Bilan = ({ navigation, startSurvey }) => {
         </View>
         {/* Render all tabs but hide inactive ones to preserve state */}
         {chartType === "Statistiques" && (
-          <View style={{ display: chartType === "Statistiques" ? "flex" : "none", flex: 1, position: "relative" }}>
+          <View className="bg-cnam-primary-25" style={{ display: chartType === "Statistiques" ? "flex" : "none", flex: 1, position: "relative" }}>
             <ChartPie dynamicPaddingTop={dynamicPaddingTop} onScroll={scrollHandler} fromDate={fromDate} toDate={toDate} navigation={navigation} />
           </View>
         )}
 
         {chartType === "Courbes" && (
-          <View style={{ display: chartType === "Courbes" ? "flex" : "none", flex: 1 }}>
+          <View style={{ display: chartType === "Courbes" ? "flex" : "none", flex: 1, backgroundColor: TW_COLORS.CNAM_PRIMARY_25 }}>
             <Variations
               dynamicPaddingTop={dynamicPaddingTop}
               onScroll={scrollHandler}
@@ -289,6 +289,7 @@ export const StatistiqueHeader = ({ presetDate, setPresetDate, fromDate, toDate,
 
   return (
     <Animated.View
+      className={"bg-cnam-primary-25"}
       style={[
         styles.headerContainer,
         animatedShadowStyle,
@@ -334,7 +335,6 @@ export const styles = StyleSheet.create({
   headerContainer: {
     paddingTop: 15,
     paddingBottom: 15,
-    backgroundColor: "#FFFFFF",
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
