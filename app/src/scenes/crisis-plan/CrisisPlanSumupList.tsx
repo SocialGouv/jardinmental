@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Image } from "react-native";
 import CrisisHeader from "./CrisisHeader";
 import NavigationButtons from "@/components/onboarding/NavigationButtons";
 import PencilIcon from "@assets/svg/icon/Pencil";
@@ -10,6 +10,17 @@ import { TW_COLORS } from "@/utils/constants";
 import ChevronIcon from "@assets/svg/icon/chevron";
 import ArrowIcon from "@assets/svg/icon/Arrow";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ScrollView } from "react-native-gesture-handler";
+import PhoneIcon from "@assets/svg/icon/Phone";
+import AlertCard from "./CrisisPlanSumupCards/AlertCard";
+import ActivitiesCard from "./CrisisPlanSumupCards/ActivitiesCard";
+import ChangeIdeasCard from "./CrisisPlanSumupCards/ChangeIdeasCard";
+import HelpCard from "./CrisisPlanSumupCards/HelpCard";
+import ProfessionalCard from "./CrisisPlanSumupCards/ProfessionalCard";
+import SafetyCard from "./CrisisPlanSumupCards/SafetyCard";
+import ReasonToLiveCard from "./CrisisPlanSumupCards/ReasonToLiveCard";
+import { useBottomSheet } from "@/context/BottomSheetContext";
+import CrisisSumUpBottomSheet from "./CrisisSumUpBottomSheet";
 interface ModalCorrelationScreenProps {
   navigation: any;
   route?: any;
@@ -18,35 +29,46 @@ interface ModalCorrelationScreenProps {
 export const CrisisPlanSumupList: React.FC<ModalCorrelationScreenProps> = ({ navigation, route }) => {
   //CNAM - secondary/Cyan (Accent)/50 lighten 90
   const [cardData, setCardData] = useState<{
-    alert: [];
-    activities: {};
-    contacts: {};
-    contacts_help: {};
-    contact_professional: {};
-    contact_safety: {};
-    conctact_live: {};
-    contact_live_image: {};
+    alerts: string[];
+    activities: string[];
+    contacts_change_ideas: { name: string; activities?: string[] }[];
+    contacts_help: { name: string }[];
+    contacts_professional: { name: string }[];
+    safety: string[];
+    reason_to_live: string[];
+    reason_to_live_image: string[];
   }>({
-    alert: [],
+    alerts: [],
+    activities: [],
+    contacts_change_ideas: [],
+    contacts_help: [],
+    contacts_professional: [],
+    safety: [],
+    reason_to_live: [],
+    reason_to_live_image: [],
   });
+  const { showBottomSheet } = useBottomSheet();
   useEffect(() => {
     const cb = async function () {
-      console.log("LCS TOTO 1");
-
       const data = {
-        alert: [],
+        alerts: [],
+        activities: [],
+        contacts_change_ideas: [],
+        contacts_help: [],
+        contacts_professional: [],
+        safety: [],
+        reason_to_live: [],
+        reason_to_live_image: [],
       };
-      console.log("LCS TOTO 1.5");
       try {
-        data["alert"] = JSON.parse((await AsyncStorage.getItem("@CRISIS_PLAN_ALERT")) || "[]");
-        console.log("LCS TOTO 2");
-        data["activities"] = JSON.parse((await AsyncStorage.getItem("@CRISIS_PLAN_ACTIVITIES")) || "");
-        data["contacts"] = JSON.parse((await AsyncStorage.getItem("@CRISIS_PLAN_CONTACT")) || "");
-        data["contacts_help"] = JSON.parse((await AsyncStorage.getItem("@CRISIS_PLAN_CONTACT_HELP")) || "");
-        data["contacts_professional"] = JSON.parse((await AsyncStorage.getItem("@CRISIS_PLAN_CONTACT_PROFESSIONAL")) || "");
-        data["contacts_safety"] = JSON.parse((await AsyncStorage.getItem("@CRISIS_PLAN_SAFETY")) || "");
-        data["contacts_live"] = JSON.parse((await AsyncStorage.getItem("@CRISIS_PLAN_REASON_TO_LIVE")) || "");
-        data["contacts_live_image"] = JSON.parse((await AsyncStorage.getItem("@CRISIS_PLAN_REASON_TO_LIVE_IMAGE")) || "");
+        data["alerts"] = JSON.parse((await AsyncStorage.getItem("@CRISIS_PLAN_ALERT")) || "[]");
+        data["activities"] = JSON.parse((await AsyncStorage.getItem("@CRISIS_PLAN_ACTIVITIES")) || "[]");
+        data["contacts_change_ideas"] = JSON.parse((await AsyncStorage.getItem("@CRISIS_PLAN_CONTACT")) || "[]");
+        data["contacts_help"] = JSON.parse((await AsyncStorage.getItem("@CRISIS_PLAN_CONTACT_HELP")) || "[]");
+        data["contacts_professional"] = JSON.parse((await AsyncStorage.getItem("@CRISIS_PLAN_CONTACT_PROFESSIONAL")) || "[]");
+        data["safety"] = JSON.parse((await AsyncStorage.getItem("@CRISIS_PLAN_SAFETY")) || "[]");
+        data["reason_to_live"] = JSON.parse((await AsyncStorage.getItem("@CRISIS_PLAN_REASON_TO_LIVE")) || "[]");
+        data["reason_to_live_image"] = JSON.parse((await AsyncStorage.getItem("@CRISIS_PLAN_REASON_TO_LIVE_IMAGE")) || "[]");
       } catch (e) {
         console.log(e);
       }
@@ -63,50 +85,25 @@ export const CrisisPlanSumupList: React.FC<ModalCorrelationScreenProps> = ({ nav
           <ShareIcon width={20} height={20} color={TW_COLORS.CNAM_CYAN_700_DARKEN_40} />
           <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40")}>Partager</Text>
         </View>
-        <View className="flex-row items-center justify-center space-x-2">
+        <TouchableOpacity
+          onPress={() => {
+            showBottomSheet(<CrisisSumUpBottomSheet navigation={navigation} />);
+          }}
+          className="flex-row items-center justify-center space-x-2"
+        >
           <PencilIcon width={20} height={20} color={TW_COLORS.CNAM_CYAN_700_DARKEN_40} />
           <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40")}>Editer ma liste</Text>
-        </View>
+        </TouchableOpacity>
       </View>
-      <View
-        className="rounded-2xl m-4 p-4 bg-white flex-column space-y-4"
-        style={{
-          borderWidth: 1,
-          borderColor: "#D9BDE2",
-        }}
-      >
-        <View className="flex-row items-center justify-between">
-          <View className="flex-row items-center">
-            <Text
-              className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-950 p-1 px-3 rounded mr-2")}
-              style={{
-                backgroundColor: "#ECDEF0",
-              }}
-            >
-              1
-            </Text>
-            <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-950")}>Mes signes d'alerte</Text>
-          </View>
-          <TouchableOpacity onPress={() => {}} className="mr-2">
-            <ChevronIcon width={14} height={14} direction="up" strokeWidth={2} />
-          </TouchableOpacity>
-        </View>
-        <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700")}>
-          Les signes d’alerte qui sont pour vous annonciateurs d’idées suicidaires :
-        </Text>
-        <View className="flex-colmun">
-          {cardData["alert"]?.map((itemAlert) => {
-            return (
-              <View className="flex-row justify-between bg-cnam-primary-25 rounded border border-gray-400">
-                <View className="flex-row items-center">
-                  <ArrowIcon />
-                  <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900")}>{itemAlert}</Text>
-                </View>
-              </View>
-            );
-          })}
-        </View>
-      </View>
+      <ScrollView style={{ paddingBottom: 200 }} contentContainerStyle={{ paddingBottom: 200 }}>
+        <AlertCard alerts={cardData["alerts"] || []} />
+        <ActivitiesCard activities={cardData["activities"] || []} />
+        <ChangeIdeasCard contactsChangeIdeas={cardData["contacts_change_ideas"] || []} />
+        <HelpCard contactsHelp={cardData["contacts_help"] || []} />
+        <ProfessionalCard contactsProfessional={cardData["contacts_professional"] || []} />
+        <SafetyCard safety={cardData["safety"] || []} />
+        <ReasonToLiveCard reasonToLive={cardData["reason_to_live"] || []} reasonToLiveImage={cardData["reason_to_live_image"] || []} />
+      </ScrollView>
       <NavigationButtons
         absolute={true}
         onNext={() => {

@@ -41,7 +41,7 @@ const suggestions = [
 const label = "Nom du contact";
 const placeholder = "Nom du contact";
 const storageKey = "@CRISIS_PLAN_CONTACT_PROFESSIONAL";
-const next = "crisis-plan-slide-reason-to-live";
+const next = "crisis-plan-slide-safety";
 const title = "Quels professionnels, structures spécialisées, ou numéros d’urgence pouvez-vous contacter?";
 const headerEditionBottomSheet = "Liste de contact";
 export const CrisisPlanSlideContactProfessional: React.FC<ModalCorrelationScreenProps> = ({
@@ -106,10 +106,10 @@ export const CrisisPlanSlideContactProfessional: React.FC<ModalCorrelationScreen
                 flexGrow: 1,
               }}
               placeholder={placeholder}
-              // value={text}
-              // onChangeText={(inputText) => {
-              //   setText(inputText);
-              // }}
+              value={contactName}
+              onChangeText={(inputText) => {
+                setContactName(inputText);
+              }}
               multiline={true}
               textAlignVertical="top"
             />
@@ -134,8 +134,20 @@ export const CrisisPlanSlideContactProfessional: React.FC<ModalCorrelationScreen
               showBottomSheet(
                 <CrisisContactListBottomSheet
                   items={suggestions}
-                  onClose={function (items: string[]): void {
-                    setSelectedItems([...selectedItems, ...items]);
+                  onClose={function (items: { name: string; num: string }[]): void {
+                    setSelectedItems([
+                      ...selectedItems,
+                      ...items.map((i) => ({
+                        name: i.name,
+                        phoneNumbers: [
+                          {
+                            digits: i.num,
+                            number: i.num,
+                          },
+                        ],
+                        id: i.name,
+                      })),
+                    ]);
                     closeBottomSheet();
                   }}
                   itemIdKey="num"
@@ -152,12 +164,19 @@ export const CrisisPlanSlideContactProfessional: React.FC<ModalCorrelationScreen
             </Text>
           </TouchableOpacity>
           <JMButton
+            disabled={!contactName && !number}
             onPress={() => {
               setSelectedItems([
                 ...selectedItems,
                 {
                   name: contactName,
-                  num: number,
+                  phoneNumbers: [
+                    {
+                      digits: number,
+                      number,
+                    },
+                  ],
+                  id: contactName,
                 },
               ]);
               setNumber(undefined);
@@ -176,6 +195,7 @@ export const CrisisPlanSlideContactProfessional: React.FC<ModalCorrelationScreen
         {selectedItems.map((item, index) => {
           return (
             <TouchableOpacity
+              key={index}
               onPress={() => {
                 showBottomSheet(
                   <CrisisContactBottomSheet
@@ -202,7 +222,7 @@ export const CrisisPlanSlideContactProfessional: React.FC<ModalCorrelationScreen
               }}
               className="bg-gray-200 border-gray-300 rounded-2xl flex-row items-center justify-between p-4"
             >
-              <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-950")}>{item.label}</Text>
+              <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-950")}>{item.name}</Text>
               <PencilIcon color={TW_COLORS.CNAM_CYAN_700_DARKEN_40} />
             </TouchableOpacity>
           );

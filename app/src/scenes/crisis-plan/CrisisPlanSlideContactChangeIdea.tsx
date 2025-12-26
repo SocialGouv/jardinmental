@@ -243,7 +243,6 @@ export const CrisisPlanSlideContact: React.FC<ModalCorrelationScreenProps> = ({
           navigation.goBack();
         }}
         onNext={() => {
-          console.log("LCS TOTo");
           navigation.navigate("crisis-plan-slide-contact-help");
         }}
         withArrow={true}
