@@ -21,6 +21,10 @@ import SafetyCard from "./CrisisPlanSumupCards/SafetyCard";
 import ReasonToLiveCard from "./CrisisPlanSumupCards/ReasonToLiveCard";
 import { useBottomSheet } from "@/context/BottomSheetContext";
 import CrisisSumUpBottomSheet from "./CrisisSumUpBottomSheet";
+import * as Print from "expo-print";
+import { shareAsync } from "expo-sharing";
+import * as FileSystem from "expo-file-system";
+
 interface ModalCorrelationScreenProps {
   navigation: any;
   route?: any;
@@ -77,17 +81,119 @@ export const CrisisPlanSumupList: React.FC<ModalCorrelationScreenProps> = ({ nav
     cb();
   }, []);
 
+  // Handler to generate and share PDF
+  const handleSharePdf = async () => {
+    // Build a simple HTML representation of the cardData
+
+    const convertImagesToBase64 = async () => {
+      const base64Images = await Promise.all(
+        cardData.reason_to_live_image.map(async (img) => {
+          const base64 = await FileSystem.readAsStringAsync(img, {
+            encoding: FileSystem.EncodingType.Base64,
+          });
+          return `data:image/jpeg;base64,${base64}`;
+        })
+      );
+      return base64Images;
+    };
+
+    const base64Images = await convertImagesToBase64();
+    const html = `
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Ma liste de secours</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      }
+
+      ul {
+        padding-left: 16px;
+      }
+
+      .image-grid {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 12px 0;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      .image-grid li {
+        width: 100%;
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      .image-grid img {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
+        border-radius: 12px;
+        display: block;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Ma liste de secours</h1>
+
+    <h2>Mes signes d’alerte</h2>
+    <ul>${(cardData.alerts || []).map((a) => `<li>${a}</li>`).join("")}</ul>
+
+    <h2>Activités</h2>
+    <ul>${(cardData.activities || []).map((a) => `<li>${a}</li>`).join("")}</ul>
+
+    <h2>Se changer les idées</h2>
+    <ul>
+      ${(cardData.contacts_change_ideas || [])
+        .map((c) => `<li>${c.name}${c.activities && c.activities.length ? " (" + c.activities.join(", ") + ")" : ""}</li>`)
+        .join("")}
+    </ul>
+
+    <h2>Demander de l’aide</h2>
+    <ul>${(cardData.contacts_help || []).map((c) => `<li>${c.name}</li>`).join("")}</ul>
+
+    <h2>En cas d’urgence</h2>
+    <ul>${(cardData.contacts_professional || []).map((c) => `<li>${c.name}</li>`).join("")}</ul>
+
+    <h2>Environnement sécurisé</h2>
+    <ul>${(cardData.safety || []).map((s) => `<li>${s}</li>`).join("")}</ul>
+
+    <h2>Raisons de vivre</h2>
+
+    <ul class="image-grid">
+      ${(base64Images || []).map((r) => `<li><img src="${r}" /></li>`).join("")}
+    </ul>
+
+    <ul>${(cardData.reason_to_live || []).map((r) => `<li>${r}</li>`).join("")}</ul>
+  </body>
+</html>
+`;
+    try {
+      const { uri } = await Print.printToFileAsync({ html });
+      await shareAsync(uri, { UTI: ".pdf", mimeType: "application/pdf" });
+    } catch (e) {
+      // Optionally handle error
+      console.error("Erreur lors de la génération ou du partage du PDF", e);
+    }
+  };
+
   return (
     <View className="flex-1 bg-cnam-cyan-50-lighten-90">
       <CrisisHeader navigation={navigation} title={"Ma liste de secours"} description={"Par Hop ma liste"} />
       <View className="flex-row justify-between m-4">
-        <View className="flex-row items-center justify-center space-x-2">
+        <TouchableOpacity onPress={handleSharePdf} className="flex-row items-center justify-center space-x-2">
           <ShareIcon width={20} height={20} color={TW_COLORS.CNAM_CYAN_700_DARKEN_40} />
           <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40")}>Partager</Text>
-        </View>
+        </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
-            showBottomSheet(<CrisisSumUpBottomSheet navigation={navigation} />);
+            showBottomSheet(<CrisisSumUpBottomSheet navigation={navigation} onClose={() => {}} initialSelectedItems={[]} items={[]} />);
           }}
           className="flex-row items-center justify-center space-x-2"
         >

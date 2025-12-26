@@ -1,15 +1,10 @@
-import { InputSelectionnableItem, LightSelectionnableItem } from "@/components/SelectionnableItem";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
-import PlusIcon from "@assets/svg/icon/plus";
-import { View, Text, TextInput, Dimensions, TouchableOpacity } from "react-native";
-import React, { useEffect, useState } from "react";
+import { View, Text, Dimensions, TouchableOpacity } from "react-native";
+import React, { useState } from "react";
 import { TW_COLORS } from "@/utils/constants";
-import JMButton from "@/components/JMButton";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
-import HealthIcon from "@assets/svg/icon/Health";
 import { useBottomSheet } from "@/context/BottomSheetContext";
-import { CrisisAuthorizedContactBottomSheet } from "./CrisisAuthorizedContactBottomSheet";
 import PencilIcon from "@assets/svg/icon/Pencil";
 
 const screenHeight = Dimensions.get("window").height;
@@ -65,6 +60,7 @@ export default function CrisisSumUpBottomSheet({
           <TouchableOpacity
             onPress={() => {
               setSelectedItems([]);
+              closeBottomSheet();
             }}
           >
             <Text className={mergeClassNames(typography.textLgMedium, "text-cnam-primary-800")}>Fermer</Text>
@@ -79,6 +75,7 @@ export default function CrisisSumUpBottomSheet({
             {suggestions.map((suggestion, ind) => {
               return (
                 <TouchableOpacity
+                  key={ind}
                   onPress={() => {
                     navigation.navigate(suggestion.path);
                     closeBottomSheet();
