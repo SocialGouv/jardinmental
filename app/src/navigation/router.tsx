@@ -66,6 +66,17 @@ import CommityScreen from "@/scenes/commity/CommityScreen";
 import ToolSelectionInfo from "@/scenes/tools/ToolSelectionInfoScreen";
 import BreathExercice from "@/scenes/tools/BreathExercice";
 import CoherenceCardiaqueVideoScreen from "@/scenes/videos/CoherenceCardiaqueVideoScreen";
+import { CrisisPlan } from "@/scenes/crisis-plan/CrisisPlan";
+import { CrisisPlanIntro } from "@/scenes/crisis-plan/CrisisPlanIntro";
+import { CrisisPlanSlideAlert } from "@/scenes/crisis-plan/CrisisPlanSlideAlertSignal";
+import { CrisisPlanSlideActivities } from "@/scenes/crisis-plan/CrisisPlanSlideActivities";
+import { CrisisPlanSlideSafety } from "@/scenes/crisis-plan/CrisisPlanSlideSafety";
+import { CrisisPlanSlideContact } from "@/scenes/crisis-plan/CrisisPlanSlideContactChangeIdea";
+import { CrisisPlanSlideContactProfessional } from "@/scenes/crisis-plan/CrisisPlanSlideContactProfessional";
+import { CrisisPlanSlideContactHelp } from "@/scenes/crisis-plan/CrisisPlanSlideContactHelp";
+import { CrisisPlanSlideReasonToLive } from "@/scenes/crisis-plan/CrisisPlanSlideReasonToLive";
+import { CrisisPlanSlideFinal } from "@/scenes/crisis-plan/CrisisPlanSlideFinal";
+import { CrisisPlanSumupList } from "@/scenes/crisis-plan/CrisisPlanSumupList";
 
 const Stack = createStackNavigator();
 
@@ -242,7 +253,6 @@ class Router extends React.Component<RouterProps> {
             <Stack.Screen name="tool-selection-info" component={ToolSelectionInfo} />
             <Stack.Screen name="breath-exercice" component={BreathExercice} />
             <Stack.Screen name="coherence-cardiaque-video" component={CoherenceCardiaqueVideoScreen} />
-
             <Stack.Screen name="notes" options={{ animationEnabled: Platform.OS === "ios" }}>
               {({ navigation, route }) => <Notes navigation={navigation} route={route} />}
             </Stack.Screen>
@@ -303,6 +313,94 @@ class Router extends React.Component<RouterProps> {
               options={{
                 cardStyleInterpolator: CardStyleInterpolators.forRevealFromBottomAndroid,
                 // cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS,
+                presentation: "modal",
+              }}
+            />
+            <Stack.Screen
+              name="crisis-plan"
+              component={CrisisPlan}
+              options={{
+                cardStyleInterpolator: CardStyleInterpolators.forRevealFromBottomAndroid,
+                presentation: "modal",
+              }}
+            />
+            <Stack.Screen
+              name="crisis-plan-intro"
+              component={CrisisPlanIntro}
+              options={{
+                cardStyleInterpolator: CardStyleInterpolators.forRevealFromBottomAndroid,
+                presentation: "modal",
+              }}
+            />
+            <Stack.Screen
+              name="crisis-plan-slide-alert"
+              component={CrisisPlanSlideAlert}
+              options={{
+                cardStyleInterpolator: CardStyleInterpolators.forRevealFromBottomAndroid,
+                presentation: "modal",
+              }}
+            />
+            <Stack.Screen
+              name="crisis-plan-slide-activities"
+              component={CrisisPlanSlideActivities}
+              options={{
+                cardStyleInterpolator: CardStyleInterpolators.forRevealFromBottomAndroid,
+                presentation: "modal",
+              }}
+            />
+            <Stack.Screen
+              name="crisis-plan-slide-safety"
+              component={CrisisPlanSlideSafety}
+              options={{
+                cardStyleInterpolator: CardStyleInterpolators.forRevealFromBottomAndroid,
+                presentation: "modal",
+              }}
+            />
+            <Stack.Screen
+              name="crisis-plan-slide-contact"
+              component={CrisisPlanSlideContact}
+              options={{
+                cardStyleInterpolator: CardStyleInterpolators.forRevealFromBottomAndroid,
+                presentation: "modal",
+              }}
+            />
+            <Stack.Screen
+              name="crisis-plan-slide-contact-help"
+              component={CrisisPlanSlideContactHelp}
+              options={{
+                cardStyleInterpolator: CardStyleInterpolators.forRevealFromBottomAndroid,
+                presentation: "modal",
+              }}
+            />
+            <Stack.Screen
+              name="crisis-plan-slide-contact-professional"
+              component={CrisisPlanSlideContactProfessional}
+              options={{
+                cardStyleInterpolator: CardStyleInterpolators.forRevealFromBottomAndroid,
+                presentation: "modal",
+              }}
+            />
+            <Stack.Screen
+              name="crisis-plan-slide-reason-to-live"
+              component={CrisisPlanSlideReasonToLive}
+              options={{
+                cardStyleInterpolator: CardStyleInterpolators.forRevealFromBottomAndroid,
+                presentation: "modal",
+              }}
+            />
+            <Stack.Screen
+              name="crisis-plan-slide-final"
+              component={CrisisPlanSlideFinal}
+              options={{
+                cardStyleInterpolator: CardStyleInterpolators.forRevealFromBottomAndroid,
+                presentation: "modal",
+              }}
+            />
+            <Stack.Screen
+              name="crisis-plan-slide-sumup-list"
+              component={CrisisPlanSumupList}
+              options={{
+                cardStyleInterpolator: CardStyleInterpolators.forRevealFromBottomAndroid,
                 presentation: "modal",
               }}
             />
