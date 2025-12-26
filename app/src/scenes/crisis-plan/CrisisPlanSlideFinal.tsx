@@ -19,6 +19,12 @@ export const CrisisPlanSlideFinal: React.FC<ModalCorrelationScreenProps> = ({ na
   return (
     <View className="flex-1 bg-cnam-cyan-50-lighten-90">
       <CrisisHeader navigation={navigation} title={"Ma liste de secours"} description={"Par Hop ma liste"} />
+      <View className="absolute right-4">
+        <Image
+          style={{ width: 200, height: 200, top: 250, right: 0, resizeMode: "contain", zIndex: 0 }}
+          source={require("../../../assets/imgs/CrisisPlanFinalIllu.png")}
+        />
+      </View>
       <BeigeCard
         style={{
           width: screenWidth,
@@ -28,13 +34,6 @@ export const CrisisPlanSlideFinal: React.FC<ModalCorrelationScreenProps> = ({ na
         // bottomComponent={slide.bottomComponent}
         color={VARIANT_BORDER_COLORS.blue}
       >
-        <View className="absolute right-4 -z-2 bg-red">
-          <Image
-            style={{ width: 100, height: 100, top: -80, right: 0, resizeMode: "contain", zIndex: -1 }}
-            source={require("../../../assets/imgs/onboarding/carousel/outils.png")}
-          />
-        </View>
-
         <Text className={mergeClassNames(typography.displayXsBold, "text-cnam-primary-900 text-left")}>Votre liste de secours est terminée!</Text>
 
         {/* Description */}

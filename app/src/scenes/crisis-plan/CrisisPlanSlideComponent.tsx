@@ -99,6 +99,7 @@ export const CrisisPlanSlideComponent: React.FC<ModalCorrelationScreenProps> = (
         {selectedItems.map((item, index) => {
           return (
             <TouchableOpacity
+              key={index}
               onPress={() => {
                 showBottomSheet(
                   <CrisisBottomSheet
@@ -135,7 +136,6 @@ export const CrisisPlanSlideComponent: React.FC<ModalCorrelationScreenProps> = (
           navigation.goBack();
         }}
         onNext={() => {
-          console.log("LCS NAVIGATE next", next);
           navigation.navigate(next);
         }}
         withArrow={true}

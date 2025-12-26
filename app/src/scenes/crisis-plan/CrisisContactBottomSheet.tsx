@@ -62,12 +62,11 @@ export const CrisisContactBottomSheet = ({
   }) => void;
   header: string;
 }) => {
-  const [text, setText] = useState<string>(item.name);
+  const [text, setText] = useState<string>();
   const [activities, setActivities] = useState<string[]>(item.activities || [""]);
   const [number, setNumber] = useState<string>(item.phoneNumbers[0].digits);
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const { showBottomSheet, closeBottomSheet } = useBottomSheet();
-  console.log(activities);
   return (
     <View className="flex-1 bg-white">
       <ScrollView
@@ -93,7 +92,7 @@ export const CrisisContactBottomSheet = ({
         <View className="bg-cnam-primary-50 rounded-2xl px-6 py-8 mx-4 flex-column">
           <View className="flex-row items-center flex-start space-x-2 mb-2">
             <PhoneIcon />
-            <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-950")}>{text}</Text>
+            <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-950")}>{item.name}</Text>
           </View>
           <View className="flex-column flex-start space-y-1 mb-4">
             <Text className={mergeClassNames(typography.textSmMedium, "text-gray-700 mb-2")}>Numéro de téléphone</Text>
@@ -114,6 +113,28 @@ export const CrisisContactBottomSheet = ({
             <>
               <Text className={mergeClassNames(typography.textSmMedium, "text-gray-700 mb-2")}>Renseignez une activité à faire ensemble</Text>
               <View className="flex-column space-y-1">
+                <View className="flex-row items-center space-x-2">
+                  <InputText
+                    containerStyle={{
+                      flexGrow: 1,
+                    }}
+                    placeholder={"Ex: Aller au restaurant"}
+                    value={text}
+                    onChangeText={(inputText) => {
+                      setText(inputText);
+                    }}
+                    multiline={true}
+                    textAlignVertical="top"
+                  />
+                  <TouchableOpacity
+                    onPress={() => {
+                      setActivities([...activities, text]);
+                      setText();
+                    }}
+                  >
+                    <PlusIcon color={TW_COLORS.CNAM_PRIMARY_900} />
+                  </TouchableOpacity>
+                </View>
                 {activities.map((activity, index) => (
                   <View className="flex-row items-center space-x-2" key={index}>
                     <InputText
@@ -136,7 +157,6 @@ export const CrisisContactBottomSheet = ({
                         }}
                       >
                         <TrashIcon color={TW_COLORS.CNAM_PRIMARY_900} />
-                        {/* <PlusIcon color={TW_COLORS.CNAM_PRIMARY_900} /> */}
                       </TouchableOpacity>
                     )}
                   </View>

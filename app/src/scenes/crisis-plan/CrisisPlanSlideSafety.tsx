@@ -30,7 +30,7 @@ export const CrisisPlanSlideSafety: React.FC<ModalCorrelationScreenProps> = ({ n
       headerEditionBottomSheet={"Sécurité"}
       placeholder={placeholder}
       storageKey={STORAGE_KEY}
-      next={"crisis-plan-slide-contact"}
+      next={"crisis-plan-slide-reason-to-live"}
     />
   );
 };

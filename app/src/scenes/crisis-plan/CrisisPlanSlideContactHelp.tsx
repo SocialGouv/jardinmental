@@ -87,7 +87,6 @@ export const CrisisPlanSlideContactHelp: React.FC<ModalCorrelationScreenProps> =
     };
     cb();
   }, [selectedItems]);
-  console.log(selectedItems.map((item) => item["phoneNumbers"]));
   return (
     <View className="flex-1 bg-cnam-primary-25">
       <CrisisHeader navigation={navigation} title={"Ma liste de secours"} description={"Par Hop ma liste"} />

@@ -130,7 +130,6 @@ export const CrisisPlanSlideReasonToLive: React.FC<ModalCorrelationScreenProps> 
       setLocalImagePaths((prev) => [...prev, ...copiedPaths]);
     }
   };
-  console.log("LCS CRISIS PLAN SLIDE REASON TO LIVE", selectedImages);
 
   return (
     <View className="flex-1 bg-cnam-primary-25">
@@ -167,7 +166,6 @@ export const CrisisPlanSlideReasonToLive: React.FC<ModalCorrelationScreenProps> 
                 <CrisisListBottomSheet
                   items={suggestions}
                   onClose={function (items: string[]): void {
-                    console.log("lcs toto", items);
                     setSelectedItems([...selectedItems, ...items]);
                     closeBottomSheet();
                   }}
