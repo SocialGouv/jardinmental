@@ -48,24 +48,7 @@ export const CrisisMediaBottomSheet = ({
         <View className="flex-row bg-[#E5F6FC] self-start items-center p-2 mb-4">
           <Text className={mergeClassNames(typography.textSmBold, "ml-2 text-cnam-cyan-700-darken-40 text-left")}>{header}</Text>
         </View>
-        {/* <View className="bg-cnam-primary-50 rounded-2xl px-6 py-8 mx-4">
-          {/* <Text className={mergeClassNames(typography.textSmMedium, "text-gray-700 mb-2")}>{label}</Text> */}
-        {/* <View className="flex-row items-center space-x-2">
-            <InputText
-              containerStyle={{
-                flexGrow: 1,
-              }}
-              placeholder={placeholder}
-              value={text}
-              onChangeText={(inputText) => {
-                setText(inputText);
-              }}
-              multiline={true}
-              textAlignVertical="top"
-            />
-          </View> 
-        </View> */}
-        <View className="flex-row flex-wrap space-x-2 mx-6">
+        <View className="flex-row flex-wrap mx-6 justify-between">
           {selectedImages.map((img, idx) => (
             <TouchableOpacity
               onPress={() => {
@@ -93,6 +76,18 @@ export const CrisisMediaBottomSheet = ({
               </View>
             </TouchableOpacity>
           ))}
+          {Array.from({ length: 3 - (selectedImages.length % 3) }).map((item, idx) => {
+            return (
+              <View
+                key={idx}
+                style={{
+                  width: 98,
+                  height: 98,
+                  overflow: "hidden",
+                }}
+              ></View>
+            );
+          })}
         </View>
         <View className="w-full py-6 px-6">
           <JMButton

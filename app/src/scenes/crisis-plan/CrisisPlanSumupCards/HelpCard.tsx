@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Linking, Alert } from "react-native";
 import ChevronIcon from "@assets/svg/icon/chevron";
 import PhoneIcon from "@assets/svg/icon/Phone";
 import { typography } from "@/utils/typography";
@@ -8,11 +8,31 @@ import { TW_COLORS } from "@/utils/constants";
 import User from "@assets/svg/icon/User";
 
 type HelpCardProps = {
-  contactsHelp: { name: string }[];
+  contactsHelp: {
+    name: string;
+    phoneNumbers: [
+      {
+        number: string;
+        digits: string;
+      }
+    ];
+  }[];
 };
 
 const HelpCard: React.FC<HelpCardProps> = ({ contactsHelp }) => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const handleCall = async (number: string) => {
+    const phoneNumber = number;
+    const url = `tel:${phoneNumber}`;
+
+    try {
+      await Linking.openURL(url);
+    } catch (e) {
+      console.log(e);
+      Alert.alert("Erreur", "Les appels ne sont pas supportés sur cet appareil vérifié les permissions de l'application.");
+    }
+  };
 
   return (
     <View
@@ -46,7 +66,13 @@ const HelpCard: React.FC<HelpCardProps> = ({ contactsHelp }) => {
           <View className="flex-colmun space-y-2">
             {contactsHelp?.map((item, idx) => {
               return (
-                <View key={idx} className="flex-row justify-between bg-cnam-primary-25 rounded-xl border border-gray-400 px-4 py-4 items-center">
+                <TouchableOpacity
+                  onPress={() => {
+                    handleCall(item.phoneNumbers[0].digits);
+                  }}
+                  key={idx}
+                  className="flex-row justify-between bg-cnam-primary-25 rounded-xl border border-gray-400 px-4 py-4 items-center"
+                >
                   <View className="flex-row items-start space-x-4 flex-1">
                     <View className="pt-0">
                       <User color={TW_COLORS.CNAM_PRIMARY_800} width={20} height={20} />
@@ -58,7 +84,7 @@ const HelpCard: React.FC<HelpCardProps> = ({ contactsHelp }) => {
                   <View className="items-center flex-row h-full">
                     <PhoneIcon width={24} height={24} color={TW_COLORS.CNAM_CYAN_600_DARKEN_20} />
                   </View>
-                </View>
+                </TouchableOpacity>
               );
             })}
           </View>

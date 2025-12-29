@@ -201,7 +201,7 @@ export const CrisisPlanSumupList: React.FC<ModalCorrelationScreenProps> = ({ nav
           <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40")}>Editer ma liste</Text>
         </TouchableOpacity>
       </View>
-      <ScrollView style={{ paddingBottom: 200 }} contentContainerStyle={{ paddingBottom: 200 }}>
+      <ScrollView style={{ paddingBottom: 200 }} contentContainerStyle={{ paddingBottom: 100 }} showsVerticalScrollIndicator={false}>
         <AlertCard alerts={cardData["alerts"] || []} />
         <ActivitiesCard activities={cardData["activities"] || []} />
         <ChangeIdeasCard contactsChangeIdeas={cardData["contacts_change_ideas"] || []} />
@@ -210,14 +210,6 @@ export const CrisisPlanSumupList: React.FC<ModalCorrelationScreenProps> = ({ nav
         <SafetyCard safety={cardData["safety"] || []} />
         <ReasonToLiveCard reasonToLive={cardData["reason_to_live"] || []} reasonToLiveImage={cardData["reason_to_live_image"] || []} />
       </ScrollView>
-      <NavigationButtons
-        absolute={true}
-        onNext={() => {
-          navigation.navigate("crisis-plan-slide-alert");
-        }}
-        showPrevious={false}
-        nextText="Ouvrir ma liste"
-      />
     </View>
   );
 };

@@ -11,8 +11,18 @@ type ReasonToLiveCardProps = {
   reasonToLiveImage: string[];
 };
 
+function chunk<T>(arr: T[], size: number): T[][] {
+  const res: T[][] = [];
+  for (let i = 0; i < arr.length; i += size) {
+    res.push(arr.slice(i, i + size));
+  }
+  return res;
+}
+
 const ReasonToLiveCard: React.FC<ReasonToLiveCardProps> = ({ reasonToLive, reasonToLiveImage }) => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const chunkedImages = chunk(reasonToLiveImage || [], 3);
 
   return (
     <View
@@ -43,24 +53,40 @@ const ReasonToLiveCard: React.FC<ReasonToLiveCardProps> = ({ reasonToLive, reaso
       </Text>
       {isOpen && (
         <View className="flex-col space-y-2">
-          <View className="flex-row flex-wrap justify-between">
-            {reasonToLiveImage?.map((img, idx) => {
-              return (
-                <View
-                  key={idx}
-                  className="bg-cnam-primary-50 rounded-2xl mb-2 items-center justify-center"
-                  style={{
-                    borderWidth: 1.5,
-                    borderColor: TW_COLORS.CNAM_PRIMARY_50,
-                    width: 98,
-                    height: 98,
-                    overflow: "hidden",
-                  }}
-                >
-                  <Image source={{ uri: img }} style={{ width: 94, height: 94, borderRadius: 16 }} resizeMode="cover" />
-                </View>
-              );
-            })}
+          <View>
+            {chunkedImages.map((row, rowIdx) => (
+              <View key={rowIdx} className="flex-row mb-2 justify-between">
+                {row.map((img, idx) => (
+                  <View
+                    key={idx}
+                    className="bg-cnam-primary-50 rounded-2xl mb-2 items-center justify-center mr-2"
+                    style={{
+                      borderWidth: 1.5,
+                      borderColor: TW_COLORS.CNAM_PRIMARY_50,
+                      width: 98,
+                      height: 98,
+                      overflow: "hidden",
+                    }}
+                  >
+                    <Image source={{ uri: img }} style={{ width: 94, height: 94, borderRadius: 16 }} resizeMode="cover" />
+                  </View>
+                ))}
+                {Array.from({ length: 3 - row.length }).map((_, idx) => {
+                  // empty coluumn to diplay row correclty with justify-between
+                  return (
+                    <View
+                      key={idx}
+                      className="rounded-2xl mb-2 items-center justify-center mr-2"
+                      style={{
+                        width: 98,
+                        height: 98,
+                        overflow: "hidden",
+                      }}
+                    />
+                  );
+                })}
+              </View>
+            ))}
           </View>
           {reasonToLive?.map((itemReason, idx) => {
             return (

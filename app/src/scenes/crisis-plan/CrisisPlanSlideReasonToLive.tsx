@@ -276,32 +276,31 @@ export const CrisisPlanSlideReasonToLive: React.FC<ModalCorrelationScreenProps> 
               <Image source={{ uri: img.uri }} style={{ width: 94, height: 94, borderRadius: 16 }} resizeMode="cover" />
             </View>
           ))}
-          {selectedImages.length === 0 && (
-            <>
-              <View
-                className="bg-cnam-primary-50 rounded-2xl mb-2 items-center justify-center"
-                style={{
-                  borderWidth: 1.5,
-                  borderColor: TW_COLORS.CNAM_PRIMARY_50,
-                  width: 98,
-                  height: 98,
-                }}
-              >
-                <ImageIcon />
-              </View>
-              <View
-                className="bg-cnam-primary-50 rounded-2xl mb-2 items-center justify-center"
-                style={{
-                  borderWidth: 1.5,
-                  borderColor: TW_COLORS.CNAM_PRIMARY_50,
-                  width: 98,
-                  height: 98,
-                }}
-              >
-                <ImageIcon />
-              </View>
-            </>
-          )}
+          {Array.from({ length: 2 - selectedImages.length }).map((_, idx) => (
+            <View
+              key={idx}
+              className="bg-cnam-primary-50 rounded-2xl mb-2 items-center justify-center"
+              style={{
+                borderWidth: 1.5,
+                borderColor: TW_COLORS.CNAM_PRIMARY_50,
+                width: 98,
+                height: 98,
+              }}
+            >
+              <ImageIcon />
+            </View>
+          ))}
+          {Array.from({ length: selectedImages.length > 2 ? 2 - (selectedImages.length % 3) : 0 }).map((_, idx) => (
+            <View
+              key={idx}
+              className="rounded-2xl mb-2 items-center justify-center"
+              style={{
+                width: 98,
+                height: 98,
+                overflow: "hidden",
+              }}
+            ></View>
+          ))}
         </View>
       </ScrollView>
       <CrisisNavigationButtons
