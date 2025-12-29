@@ -28,15 +28,6 @@ interface ModalCorrelationScreenProps {
       initialRouteName: string;
     };
   };
-  suggestions: string[];
-  label: string;
-  placeholder: string;
-  storageKey: string;
-  title: string;
-  next: string;
-  labelBottomSheet: string;
-  headerBottomSheet: string;
-  headerEditionBottomSheet: string;
 }
 
 const label = "Choisissez parmi vos contacts autorisés";
@@ -46,21 +37,21 @@ const storageImageKey = "@CRISIS_PLAN_REASON_TO_LIVE_IMAGE";
 const next = "crisis-plan-slide-contact";
 const title = "Quelles sont vos principales raisons de vivre ?";
 const headerEditionBottomSheet = "Liste de contact";
-const suggestions = ["Ma famille", "Mes parents", "Mon/ma conjoint.e", "Mes enfants", "Mes amis", "Ma communauté"];
+const suggestions = [
+  "Ma famille",
+  "Mes parents",
+  "Mon/ma conjoint.e",
+  "Mes enfants",
+  "Mes amis",
+  "Ma communauté",
+  "Mon animal de compagnie",
+  "Mon association",
+  "Mon travail",
+  "Ma foi",
+  "Regarder vos photos",
+];
 
-export const CrisisPlanSlideReasonToLive: React.FC<ModalCorrelationScreenProps> = ({
-  navigation,
-  route,
-  //   suggestions,
-  //   label,
-  //   placeholder,
-  //   storageKey,
-  //   title,
-  //   next,
-  //   labelBottomSheet,
-  //   headerBottomSheet,
-  //   headerEditionBottomSheet,
-}) => {
+export const CrisisPlanSlideReasonToLive: React.FC<ModalCorrelationScreenProps> = ({ navigation, route }) => {
   const { showBottomSheet, closeBottomSheet } = useBottomSheet();
 
   const [selectedItems, setSelectedItems] = useState<string[]>([]);

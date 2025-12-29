@@ -17,7 +17,16 @@ const suggestions = [
   "Regarder des photos",
   "Faire de la relaxation",
   "Faire de la méditation",
+  "Lire un livre",
+  "Faire du sport",
+  "Prendre un bain/une douche",
   "Me promener",
+  "Faire du vélo",
+  "Écrire",
+  "Dessiner/colorier",
+  "Faire une sieste",
+  "Jouer à un jeu vidéo",
+  "Faire du ménage/du rangement",
 ];
 
 const label = "Renseignez une activité";

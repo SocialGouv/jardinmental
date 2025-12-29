@@ -23,7 +23,9 @@ export default ({
       <TouchableOpacity
         onPress={() => {
           if (initialRouteName) {
-            navigation.navigate(initialRouteName);
+            navigation.navigate(initialRouteName, {
+              isClosing: true,
+            });
           } else {
             navigation.goBack();
           }

@@ -90,6 +90,7 @@ export const CrisisPlanSlideComponent: React.FC<ModalCorrelationScreenProps> = (
         <CrisisPlanInputBox
           label={label}
           placeholder={placeholder}
+          selectedItems={selectedItems}
           onPressAdd={(item) => {
             setSelectedItems([...selectedItems, item]);
           }}
@@ -99,7 +100,7 @@ export const CrisisPlanSlideComponent: React.FC<ModalCorrelationScreenProps> = (
                 label={labelBottomSheet}
                 header={headerBottomSheet}
                 onClose={(items) => {
-                  setSelectedItems(items);
+                  setSelectedItems([...new Set([...items])]);
                   closeBottomSheet();
                 }}
                 initialSelectedItems={selectedItems}

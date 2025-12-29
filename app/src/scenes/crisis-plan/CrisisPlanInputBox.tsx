@@ -4,18 +4,20 @@ import { TW_COLORS } from "@/utils/constants";
 import { typography } from "@/utils/typography";
 import SimplePlus from "@assets/svg/icon/SimplePlus";
 import { useState } from "react";
-import { View, TouchableOpacity, Text } from "react-native";
+import { View, TouchableOpacity, Text, Alert } from "react-native";
 
 export const CrisisPlanInputBox = ({
   placeholder,
   label,
   onPress,
   onPressAdd,
+  selectedItems,
 }: {
   placeholder: string;
   label: string;
   onPress: string;
   onPressAdd: (item: string) => {};
+  selectedItems: string[];
 }) => {
   const [text, setText] = useState<string>();
   return (
@@ -38,7 +40,12 @@ export const CrisisPlanInputBox = ({
           className="h-12 w-12 bg-primary-800 rounded-2xl items-center justify-center"
           onPress={() => {
             if (text) {
-              onPressAdd(text);
+              if (selectedItems.includes(text)) {
+                Alert.alert("Cet élément existe déjà");
+              } else {
+                onPressAdd(text);
+                setText("");
+              }
             }
           }}
         >

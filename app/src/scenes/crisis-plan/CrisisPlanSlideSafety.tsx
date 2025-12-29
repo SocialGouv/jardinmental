@@ -7,8 +7,8 @@ interface ModalCorrelationScreenProps {
 }
 
 const suggestions = [
-  "Aller dans un lieu public",
   "Faire venir un proche chez moi",
+  "Aller dans un lieu public",
   "M’écarter de ce qui est dangereux",
   "Mettre les objets dangereux dans un endroit fermé à clé",
   "Donner les objets dangereux à un proche",

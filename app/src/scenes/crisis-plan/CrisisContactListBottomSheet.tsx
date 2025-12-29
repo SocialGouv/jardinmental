@@ -27,15 +27,13 @@ export default function CrisisContactListBottomSheet({
   itemIdKey?: string;
   itemIdLabel?: string;
 }) {
-  const uniqueItems = items;
-  const [filteredDoses, setFilteredDoses] = useState<string[]>(uniqueItems);
-  const [selectedItems, setSelectedItems] = useState<string[]>(initialSelectedItems);
-
-  const toggleItem = (id) => {
-    if (selectedItems?.includes(id)) {
-      setSelectedItems(selectedItems.filter((itemId) => itemId !== id));
+  const [selectedItems, setSelectedItems] = useState<any[]>(initialSelectedItems);
+  const toggleItem = (ind) => {
+    const alreadySelected = selectedItems.map((item) => (itemIdKey ? item[itemIdKey] : item)).includes(itemIdKey ? ind[itemIdKey] : ind);
+    if (alreadySelected) {
+      setSelectedItems(selectedItems.filter((item) => (itemIdKey ? ind[itemIdKey] !== item[itemIdKey] : ind !== item)));
     } else {
-      setSelectedItems([...selectedItems, id]);
+      setSelectedItems([...selectedItems, ind]);
     }
   };
 
@@ -62,9 +60,8 @@ export default function CrisisContactListBottomSheet({
         <View className="p-4 flex-column flex-1 gap-6">
           <Text className={mergeClassNames(typography.textXlBold, "text-left text-cnam-primary-900")}>{label}</Text>
           <View className="flex-colum flex-1">
-            {filteredDoses.map((ind) => {
-              const selected = selectedItems.includes(itemIdKey ? ind[itemIdKey] : ind);
-              const initialSelected = initialSelectedItems.includes(itemIdKey ? ind[itemIdKey] : ind);
+            {items.map((ind) => {
+              const selected = selectedItems.map((item) => (itemIdKey ? item[itemIdKey] : item)).includes(itemIdKey ? ind[itemIdKey] : ind);
               return (
                 <LightSelectionnableItem
                   shape="square"
@@ -74,8 +71,8 @@ export default function CrisisContactListBottomSheet({
                   label={itemIdLabel ? ind[itemIdLabel] : ind}
                   description={ind["phoneNumbers"] ? ind["phoneNumbers"][0].number : undefined}
                   selected={selected}
-                  disabled={initialSelected}
-                  onPress={() => (itemIdKey ? toggleItem(ind[itemIdKey]) : toggleItem(ind))}
+                  // disabled={initialSelected}
+                  onPress={() => toggleItem(ind)}
                 />
               );
             })}
@@ -123,8 +120,7 @@ export default function CrisisContactListBottomSheet({
       >
         <JMButton
           onPress={() => {
-            const _item = itemIdKey ? items.filter((_item) => selectedItems.includes(_item[itemIdKey])) : selectedItems;
-            onClose(_item);
+            onClose(selectedItems);
           }}
           title={"Valider la sélection"}
         />

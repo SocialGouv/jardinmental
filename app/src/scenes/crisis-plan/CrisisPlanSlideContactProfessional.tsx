@@ -31,16 +31,34 @@ interface ModalCorrelationScreenProps {
 }
 
 const suggestions = [
-  { name: "3114 (Prévention Suicide 24/7)", num: "3114" },
-  { name: "SAMU 15 (Urgences immédiates)", num: "15" },
+  {
+    name: "3114 (Prévention Suicide 24/7)",
+    id: "3114",
+    phoneNumbers: [
+      {
+        digits: "3114",
+        number: "3114",
+      },
+    ],
+  },
+  {
+    name: "SAMU 15 (Urgences immédiates)",
+    id: "15",
+    phoneNumbers: [
+      {
+        digits: "15",
+        number: "15",
+      },
+    ],
+  },
 ];
 
-const label = "Nom du contact";
+const label = "Choisissez parmi les suggestions";
 const placeholder = "Nom du contact";
 const storageKey = "@CRISIS_PLAN_CONTACT_PROFESSIONAL";
 const next = "crisis-plan-slide-safety";
 const title = "Quels professionnels, structures spécialisées, ou numéros d’urgence pouvez-vous contacter?";
-const headerEditionBottomSheet = "Liste de contact";
+const headerEditionBottomSheet = "Numéros d’urgence";
 export const CrisisPlanSlideContactProfessional: React.FC<ModalCorrelationScreenProps> = ({ navigation, route }) => {
   const { showBottomSheet, closeBottomSheet } = useBottomSheet();
 
@@ -125,25 +143,13 @@ export const CrisisPlanSlideContactProfessional: React.FC<ModalCorrelationScreen
               showBottomSheet(
                 <CrisisContactListBottomSheet
                   items={suggestions}
-                  onClose={function (items: { name: string; num: string }[]): void {
-                    setSelectedItems([
-                      ...selectedItems,
-                      ...items.map((i) => ({
-                        name: i.name,
-                        phoneNumbers: [
-                          {
-                            digits: i.num,
-                            number: i.num,
-                          },
-                        ],
-                        id: i.name,
-                      })),
-                    ]);
+                  onClose={function (items): void {
+                    setSelectedItems(items);
                     closeBottomSheet();
                   }}
-                  itemIdKey="num"
+                  itemIdKey="id"
                   itemIdLabel="name"
-                  initialSelectedItems={[]}
+                  initialSelectedItems={selectedItems}
                   label={label}
                   header={headerEditionBottomSheet}
                 />

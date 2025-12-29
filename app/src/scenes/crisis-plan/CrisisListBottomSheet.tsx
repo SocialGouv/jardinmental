@@ -82,7 +82,6 @@ export default function CrisisListBottomSheet({
           <View className="flex-colum flex-1">
             {filteredDoses.map((ind) => {
               const selected = selectedItems.includes(itemIdKey ? ind[itemIdKey] : ind);
-              const initialSelected = initialSelectedItems.includes(itemIdKey ? ind[itemIdKey] : ind);
               return (
                 <LightSelectionnableItem
                   shape="square"
@@ -92,7 +91,6 @@ export default function CrisisListBottomSheet({
                   label={itemIdLabel ? ind[itemIdLabel] : ind}
                   description={ind["phoneNumbers"] ? ind["phoneNumbers"][0].number : undefined}
                   selected={selected}
-                  disabled={initialSelected}
                   onPress={() => (itemIdKey ? toggleItem(ind[itemIdKey]) : toggleItem(ind))}
                 />
               );

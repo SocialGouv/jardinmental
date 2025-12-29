@@ -119,19 +119,7 @@ export const CrisisPlanSlideContact: React.FC<ModalCorrelationScreenProps> = ({ 
                       items={data}
                       itemIdKey={"id"}
                       itemIdLabel={"name"}
-                      initialSelectedItems={selectedItems.map(
-                        (c: {
-                          id: string;
-                          name: string;
-                          phoneNumbers: {
-                            digits: string;
-                            number: string;
-                            countryCode: string;
-                            label: string;
-                            id: string;
-                          }[];
-                        }) => c.id
-                      )}
+                      initialSelectedItems={selectedItems}
                       label={label}
                       header={headerEditionBottomSheet}
                       onClose={(
@@ -147,7 +135,7 @@ export const CrisisPlanSlideContact: React.FC<ModalCorrelationScreenProps> = ({ 
                           }[];
                         }[]
                       ) => {
-                        setSelectedItems([...selectedItems, ...selected.filter((_contact) => !selectedItems.map((s) => s.id).includes(_contact.id))]);
+                        setSelectedItems([...new Set(selected)]);
                         closeBottomSheet();
                       }}
                     />

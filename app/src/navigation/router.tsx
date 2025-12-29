@@ -324,78 +324,92 @@ class Router extends React.Component<RouterProps> {
                 presentation: "modal",
               }}
             />
-            <Stack.Screen
-              name="crisis-plan-intro"
-              component={CrisisPlanIntro}
-              options={{
-                cardStyleInterpolator: CardStyleInterpolators.forRevealFromBottomAndroid,
-                presentation: "modal",
-              }}
-            />
+            <Stack.Screen name="crisis-plan-intro" component={CrisisPlanIntro} />
             <Stack.Screen
               name="crisis-plan-slide-alert"
               component={CrisisPlanSlideAlert}
-              options={{
-                cardStyleInterpolator: CardStyleInterpolators.forRevealFromBottomAndroid,
-                presentation: "modal",
-              }}
+              options={({ route }) =>
+                route.params?.isEdit || route.params?.isClosing
+                  ? {
+                      cardStyleInterpolator: CardStyleInterpolators.forRevealFromBottomAndroid,
+                      presentation: "modal",
+                    }
+                  : {}
+              }
             />
             <Stack.Screen
               name="crisis-plan-slide-activities"
               component={CrisisPlanSlideActivities}
-              options={{
-                cardStyleInterpolator: CardStyleInterpolators.forRevealFromBottomAndroid,
-                presentation: "modal",
-              }}
+              options={({ route }) =>
+                route.params?.isEdit || route.params?.isClosing
+                  ? {
+                      cardStyleInterpolator: CardStyleInterpolators.forRevealFromBottomAndroid,
+                      presentation: "modal",
+                    }
+                  : {}
+              }
             />
             <Stack.Screen
               name="crisis-plan-slide-safety"
               component={CrisisPlanSlideSafety}
-              options={{
-                cardStyleInterpolator: CardStyleInterpolators.forRevealFromBottomAndroid,
-                presentation: "modal",
-              }}
+              options={({ route }) =>
+                route.params?.isEdit || route.params?.isClosing
+                  ? {
+                      cardStyleInterpolator: CardStyleInterpolators.forRevealFromBottomAndroid,
+                      presentation: "modal",
+                    }
+                  : {}
+              }
             />
             <Stack.Screen
               name="crisis-plan-slide-contact"
               component={CrisisPlanSlideContact}
-              options={{
-                cardStyleInterpolator: CardStyleInterpolators.forRevealFromBottomAndroid,
-                presentation: "modal",
-              }}
+              options={({ route }) =>
+                route.params?.isEdit || route.params?.isClosing
+                  ? {
+                      cardStyleInterpolator: CardStyleInterpolators.forRevealFromBottomAndroid,
+                      presentation: "modal",
+                    }
+                  : {}
+              }
             />
             <Stack.Screen
               name="crisis-plan-slide-contact-help"
               component={CrisisPlanSlideContactHelp}
-              options={{
-                cardStyleInterpolator: CardStyleInterpolators.forRevealFromBottomAndroid,
-                presentation: "modal",
-              }}
+              options={({ route }) =>
+                route.params?.isEdit || route.params?.isClosing
+                  ? {
+                      cardStyleInterpolator: CardStyleInterpolators.forRevealFromBottomAndroid,
+                      presentation: "modal",
+                    }
+                  : {}
+              }
             />
             <Stack.Screen
               name="crisis-plan-slide-contact-professional"
               component={CrisisPlanSlideContactProfessional}
-              options={{
-                cardStyleInterpolator: CardStyleInterpolators.forRevealFromBottomAndroid,
-                presentation: "modal",
-              }}
+              options={({ route }) =>
+                route.params?.isEdit || route.params?.isClosing
+                  ? {
+                      cardStyleInterpolator: CardStyleInterpolators.forRevealFromBottomAndroid,
+                      presentation: "modal",
+                    }
+                  : {}
+              }
             />
             <Stack.Screen
               name="crisis-plan-slide-reason-to-live"
               component={CrisisPlanSlideReasonToLive}
-              options={{
-                cardStyleInterpolator: CardStyleInterpolators.forRevealFromBottomAndroid,
-                presentation: "modal",
-              }}
+              options={({ route }) =>
+                route.params?.isEdit || route.params?.isClosing
+                  ? {
+                      cardStyleInterpolator: CardStyleInterpolators.forRevealFromBottomAndroid,
+                      presentation: "modal",
+                    }
+                  : {}
+              }
             />
-            <Stack.Screen
-              name="crisis-plan-slide-final"
-              component={CrisisPlanSlideFinal}
-              options={{
-                cardStyleInterpolator: CardStyleInterpolators.forRevealFromBottomAndroid,
-                presentation: "modal",
-              }}
-            />
+            <Stack.Screen name="crisis-plan-slide-final" component={CrisisPlanSlideFinal} />
             <Stack.Screen
               name="crisis-plan-slide-sumup-list"
               component={CrisisPlanSumupList}

@@ -16,10 +16,17 @@ const suggestions = [
   "Je culpabilise",
   "Je pleure",
   "Je m'agite",
+  "Je me sens désespéré.e",
   "Je me sens inutile",
   "Je ressens de la colère",
   "Je me sens irritable",
   "Je ressens une tension intérieure",
+  "Je me replie sur moi",
+  "Je bois de l’alcool",
+  "Je consomme des drogues",
+  "Mon sommeil est perturbé",
+  "Mon alimentation est perturbée",
+  "Je me fais du mal",
 ];
 
 const label = "Renseignez un signe d’alerte :";

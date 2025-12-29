@@ -11,7 +11,7 @@ import CrisisListBottomSheet from "./CrisisListBottomSheet";
 import PlusIcon from "@assets/svg/icon/plus";
 import TrashIcon from "@assets/svg/icon/Trash";
 
-const suggestions = ["Aller au cinéma", "Aller au restaurant", "Faire du shopping"];
+const suggestions = ["Aller au cinéma", "Aller au restaurant", "Faire du shopping", "Faire une promenade"];
 const screenHeight = Dimensions.get("window").height;
 const height90vh = screenHeight * 0.9;
 
@@ -68,11 +68,11 @@ export const CrisisContactBottomSheet = ({
     <View className="flex-1 bg-white">
       <ScrollView
         bounces={false}
-        contentContainerStyle={{ paddingBottom: 100 }}
+        contentContainerStyle={{ paddingBottom: 0 }}
         showsVerticalScrollIndicator={false}
-        style={{
-          height: height90vh,
-        }}
+        // style={{
+        //   height: height90vh,
+        // }}
       >
         <View className="self-end mr-4">
           <TouchableOpacity
@@ -150,7 +150,7 @@ export const CrisisContactBottomSheet = ({
                       <TouchableOpacity
                         onPress={() => {
                           const newActivities = activities.filter((_, i) => i !== index);
-                          setActivities(newActivities.length ? newActivities : [""]);
+                          setActivities(newActivities);
                         }}
                       >
                         <TrashIcon color={TW_COLORS.CNAM_PRIMARY_900} />
@@ -159,17 +159,6 @@ export const CrisisContactBottomSheet = ({
                   </View>
                 ))}
               </View>
-
-              <TouchableOpacity
-                onPress={() => {
-                  const newActivities = [...activities, ""];
-                  setActivities(newActivities);
-                }}
-              >
-                <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40 underline mt-2")}>
-                  Ajouter une autre activité
-                </Text>
-              </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {
                   showBottomSheet(
@@ -177,13 +166,14 @@ export const CrisisContactBottomSheet = ({
                       label={"Choisissez parmi les suggestions"}
                       header={"Activités"}
                       onClose={(suggestedActivities) => {
+                        console.log("LCS TOTO", suggestedActivities);
                         showBottomSheet(
                           <CrisisContactBottomSheet
                             navigation={navigation}
                             variant="activity"
                             item={{
                               ...item,
-                              activities: [...activities, ...suggestedActivities],
+                              activities: [...new Set([...activities, ...suggestedActivities])],
                             }}
                             label={label}
                             placeholder={placeholder}
@@ -213,6 +203,7 @@ export const CrisisContactBottomSheet = ({
             onPress={() => {
               const updatedValue = {
                 ...item,
+                id: number,
                 phoneNumbers: [
                   {
                     ...item.phoneNumbers[0],

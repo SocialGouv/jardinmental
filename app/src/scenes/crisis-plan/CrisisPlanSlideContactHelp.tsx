@@ -8,10 +8,7 @@ import { TW_COLORS } from "@/utils/constants";
 import PencilIcon from "@assets/svg/icon/Pencil";
 import CrisisNavigationButtons from "./CrisisNavigationButtons";
 import { useBottomSheet } from "@/context/BottomSheetContext";
-import { CrisisBottomSheet } from "./CrisisBottomSheet";
-import CrisisListBottomSheet from "./CrisisListBottomSheet";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { CrisisPlanInputBox } from "./CrisisPlanInputBox";
 import JMButton from "@/components/JMButton";
 import PhoneIcon from "@assets/svg/icon/Phone";
 import { CrisisContactBottomSheet } from "./CrisisContactBottomSheet";
@@ -119,19 +116,7 @@ export const CrisisPlanSlideContactHelp: React.FC<ModalCorrelationScreenProps> =
                       items={data}
                       itemIdKey={"id"}
                       itemIdLabel={"name"}
-                      initialSelectedItems={selectedItems.map(
-                        (c: {
-                          id: string;
-                          name: string;
-                          phoneNumbers: {
-                            digits: string;
-                            number: string;
-                            countryCode: string;
-                            label: string;
-                            id: string;
-                          }[];
-                        }) => c.id
-                      )}
+                      initialSelectedItems={selectedItems}
                       label={label}
                       header={headerEditionBottomSheet}
                       onClose={(
@@ -147,7 +132,7 @@ export const CrisisPlanSlideContactHelp: React.FC<ModalCorrelationScreenProps> =
                           }[];
                         }[]
                       ) => {
-                        setSelectedItems([...selectedItems, ...selected.filter((_contact) => !selectedItems.map((s) => s.id).includes(_contact.id))]);
+                        setSelectedItems([...new Set(selected)]);
                         closeBottomSheet();
                       }}
                     />
