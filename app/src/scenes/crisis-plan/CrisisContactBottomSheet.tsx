@@ -166,7 +166,6 @@ export const CrisisContactBottomSheet = ({
                       label={"Choisissez parmi les suggestions"}
                       header={"Activités"}
                       onClose={(suggestedActivities) => {
-                        console.log("LCS TOTO", suggestedActivities);
                         showBottomSheet(
                           <CrisisContactBottomSheet
                             navigation={navigation}
