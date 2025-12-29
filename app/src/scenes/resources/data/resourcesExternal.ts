@@ -489,7 +489,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
     url: "https://www.pssmfrance.fr/carnets-du-secouriste/carnet-mieux-comprendre-le-trouble-depressif/",
     type: "Guide",
     category: "P1 - A lire dans ce dossier",
-    author: "Psycom",
+    author: "PSSM France",
   },
   {
     id: "550e8400-e29b-41d4-a716-446655440056",
