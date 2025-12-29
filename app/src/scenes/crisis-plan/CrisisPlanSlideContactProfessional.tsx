@@ -18,19 +18,15 @@ import { CrisisContactBottomSheet } from "./CrisisContactBottomSheet";
 import { InputText } from "@/components/InputText";
 import SimplePlus from "@assets/svg/icon/SimplePlus";
 import CrisisContactListBottomSheet from "./CrisisContactListBottomSheet";
+import NavigationButtons from "@/components/onboarding/NavigationButtons";
 
 interface ModalCorrelationScreenProps {
   navigation: any;
-  route?: any;
-  suggestions: string[];
-  label: string;
-  placeholder: string;
-  storageKey: string;
-  title: string;
-  next: string;
-  labelBottomSheet: string;
-  headerBottomSheet: string;
-  headerEditionBottomSheet: string;
+  route: {
+    params: {
+      isEdit: boolean;
+    };
+  };
 }
 
 const suggestions = [
@@ -44,18 +40,7 @@ const storageKey = "@CRISIS_PLAN_CONTACT_PROFESSIONAL";
 const next = "crisis-plan-slide-safety";
 const title = "Quels professionnels, structures spécialisées, ou numéros d’urgence pouvez-vous contacter?";
 const headerEditionBottomSheet = "Liste de contact";
-export const CrisisPlanSlideContactProfessional: React.FC<ModalCorrelationScreenProps> = ({
-  navigation,
-  //   suggestions,
-  //   label,
-  //   placeholder,
-  //   storageKey,
-  //   title,
-  //   next,
-  //   labelBottomSheet,
-  //   headerBottomSheet,
-  //   headerEditionBottomSheet,
-}) => {
+export const CrisisPlanSlideContactProfessional: React.FC<ModalCorrelationScreenProps> = ({ navigation, route }) => {
   const { showBottomSheet, closeBottomSheet } = useBottomSheet();
 
   const [selectedItems, setSelectedItems] = useState<any[]>([]);
@@ -86,7 +71,7 @@ export const CrisisPlanSlideContactProfessional: React.FC<ModalCorrelationScreen
 
   return (
     <View className="flex-1 bg-cnam-primary-25">
-      <CrisisHeader navigation={navigation} title={"Ma liste de secours"} description={"Par Hop ma liste"} />
+      <CrisisHeader navigation={navigation} title={"Plan de protection"} description={"Par Hop ma liste"} />
       <ScrollView
         className="px-4 flex-col space-y-4 pt-4 bg-cnam-primary-25 flex-1"
         showsVerticalScrollIndicator={false}
@@ -228,17 +213,28 @@ export const CrisisPlanSlideContactProfessional: React.FC<ModalCorrelationScreen
           );
         })}
       </ScrollView>
-      <CrisisNavigationButtons
-        absolute={true}
-        onPrevious={() => {
-          navigation.goBack();
-        }}
-        onNext={() => {
-          navigation.navigate(next);
-        }}
-        withArrow={true}
-        showPrevious={false}
-      />
+      {!route.params?.isEdit && (
+        <CrisisNavigationButtons
+          absolute={true}
+          onPrevious={() => {
+            navigation.goBack();
+          }}
+          onNext={() => {
+            navigation.navigate(next);
+          }}
+          withArrow={true}
+          showPrevious={false}
+        />
+      )}
+      {route.params?.isEdit && (
+        <NavigationButtons
+          nextText="Valider"
+          absolute={true}
+          onNext={async () => {
+            navigation.goBack();
+          }}
+        />
+      )}
     </View>
   );
 };

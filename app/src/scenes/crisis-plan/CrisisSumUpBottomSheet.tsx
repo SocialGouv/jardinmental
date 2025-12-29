@@ -67,7 +67,7 @@ export default function CrisisSumUpBottomSheet({
           </TouchableOpacity>
         </View>
         <View className="flex-row bg-[#E5F6FC] self-start items-center p-2">
-          <Text className={mergeClassNames(typography.textSmBold, "ml-2 text-cnam-cyan-700-darken-40 text-left")}>Modifier ma liste de secours</Text>
+          <Text className={mergeClassNames(typography.textSmBold, "ml-2 text-cnam-cyan-700-darken-40 text-left")}>Modifier Plan de protection</Text>
         </View>
         <View className="p-4 flex-column flex-1 gap-6">
           <Text className={mergeClassNames(typography.textXlBold, "text-left text-cnam-primary-900")}>Que souhaitez-vous modifier ?</Text>
@@ -77,7 +77,9 @@ export default function CrisisSumUpBottomSheet({
                 <TouchableOpacity
                   key={ind}
                   onPress={() => {
-                    navigation.navigate(suggestion.path);
+                    navigation.navigate(suggestion.path, {
+                      isEdit: true,
+                    });
                     closeBottomSheet();
                   }}
                   className="bg-gray-200 border-gray-300 flex-row justify-between items-center py-2 px-4 rounded-2xl"

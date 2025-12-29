@@ -1,11 +1,8 @@
-import { View, Text, ScrollView, useWindowDimensions, Dimensions, Linking, Alert, Platform, TouchableOpacity } from "react-native";
+import { View, Text, ScrollView, Dimensions, TouchableOpacity } from "react-native";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
 import JMButton from "@/components/JMButton";
-import { useBottomSheet } from "@/context/BottomSheetContext";
 import { InputText } from "@/components/InputText";
-import SimplePlus from "@assets/svg/icon/SimplePlus";
-import { TW_COLORS } from "@/utils/constants";
 import { useState } from "react";
 
 const screenHeight = Dimensions.get("window").height;

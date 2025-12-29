@@ -33,6 +33,7 @@ export const CrisisPlanSlideActivities: React.FC<ModalCorrelationScreenProps> = 
       headerEditionBottomSheet={"Édition de l'activité"}
       labelBottomSheet={"Choisissez parmi les suggestions - Activités pour écarter les idées suicidaires (exemples)"}
       headerBottomSheet={"Activités"}
+      route={route}
     />
   );
 };

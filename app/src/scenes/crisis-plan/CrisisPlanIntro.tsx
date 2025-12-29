@@ -27,7 +27,7 @@ const dataInfo = [
 export const CrisisPlanIntro: React.FC<ModalCorrelationScreenProps> = ({ navigation, route }) => {
   return (
     <View className="flex-1 bg-cnam-primary-25">
-      <CrisisHeader navigation={navigation} title={"Ma liste de secours"} description={"Par Hop ma liste"} />
+      <CrisisHeader navigation={navigation} title={"Plan de protection"} description={"Par Hop ma liste"} />
       <ScrollView
         className="px-4 flex-col space-y-4 pt-4 bg-cnam-primary-25 flex-1"
         showsVerticalScrollIndicator={false}
@@ -47,15 +47,25 @@ export const CrisisPlanIntro: React.FC<ModalCorrelationScreenProps> = ({ navigat
           ))}
         </View>
       </ScrollView>
-      <NavigationButtons
-        absolute={true}
-        onNext={() => {
-          navigation.navigate("crisis-plan-slide-alert");
-        }}
-        withArrow={true}
-        showPrevious={false}
-        nextText="Suivant"
-      />
+      {!route.params?.isEdit && (
+        <NavigationButtons
+          absolute={true}
+          onNext={() => {
+            navigation.navigate("crisis-plan-slide-alert");
+          }}
+          withArrow={true}
+          showPrevious={false}
+          nextText="Suivant"
+        />
+      )}
+      {route.params?.isEdit && (
+        <NavigationButtons
+          nextText="Valider"
+          onNext={async () => {
+            navigation.goBack();
+          }}
+        />
+      )}
     </View>
   );
 };

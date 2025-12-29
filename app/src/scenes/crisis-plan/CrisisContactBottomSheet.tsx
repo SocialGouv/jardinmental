@@ -1,13 +1,11 @@
-import { View, Text, ScrollView, useWindowDimensions, Dimensions, Linking, Alert, Platform, TouchableOpacity } from "react-native";
+import { View, Text, ScrollView, Dimensions, TouchableOpacity } from "react-native";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
 import JMButton from "@/components/JMButton";
 import { useBottomSheet } from "@/context/BottomSheetContext";
 import { InputText } from "@/components/InputText";
-import SimplePlus from "@assets/svg/icon/SimplePlus";
 import { TW_COLORS } from "@/utils/constants";
 import { useState } from "react";
-import PencilIcon from "@assets/svg/icon/Pencil";
 import PhoneIcon from "@assets/svg/icon/Phone";
 import CrisisListBottomSheet from "./CrisisListBottomSheet";
 import PlusIcon from "@assets/svg/icon/plus";
@@ -65,7 +63,6 @@ export const CrisisContactBottomSheet = ({
   const [text, setText] = useState<string>();
   const [activities, setActivities] = useState<string[]>(item.activities || [""]);
   const [number, setNumber] = useState<string>(item.phoneNumbers[0].digits);
-  const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const { showBottomSheet, closeBottomSheet } = useBottomSheet();
   return (
     <View className="flex-1 bg-white">
@@ -211,14 +208,6 @@ export const CrisisContactBottomSheet = ({
             </>
           )}
         </View>
-
-        {/* <TouchableOpacity onPress={() => {}} className="bg-gray-200 border-gray-300 rounded-2xl flex-row items-center justify-between p-4 mx-4">
-          <View className="flex-row items-center justify-center space-x-2">
-            <PhoneIcon />
-            <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-950")}>{text}</Text>
-          </View>
-          <PencilIcon color={TW_COLORS.CNAM_CYAN_700_DARKEN_40} />
-        </TouchableOpacity> */}
         <View className="w-full py-6 px-6">
           <JMButton
             onPress={() => {

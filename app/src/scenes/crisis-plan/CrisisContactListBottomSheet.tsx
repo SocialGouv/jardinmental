@@ -1,16 +1,11 @@
-import { InputSelectionnableItem, LightSelectionnableItem } from "@/components/SelectionnableItem";
+import { LightSelectionnableItem } from "@/components/SelectionnableItem";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
-import PlusIcon from "@assets/svg/icon/plus";
-import { View, Text, TextInput, Dimensions } from "react-native";
-import React, { useEffect, useState } from "react";
-import { TW_COLORS } from "@/utils/constants";
+import { View, Text, Dimensions } from "react-native";
+import React, { useState } from "react";
 import { TouchableOpacity } from "@gorhom/bottom-sheet";
 import JMButton from "@/components/JMButton";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
-import HealthIcon from "@assets/svg/icon/Health";
-import { useBottomSheet } from "@/context/BottomSheetContext";
-import { CrisisAuthorizedContactBottomSheet } from "./CrisisAuthorizedContactBottomSheet";
 
 const screenHeight = Dimensions.get("window").height;
 const height90vh = screenHeight * 0.9;
@@ -35,7 +30,6 @@ export default function CrisisContactListBottomSheet({
   const uniqueItems = items;
   const [filteredDoses, setFilteredDoses] = useState<string[]>(uniqueItems);
   const [selectedItems, setSelectedItems] = useState<string[]>(initialSelectedItems);
-  const { showBottomSheet, closeBottomSheet } = useBottomSheet();
 
   const toggleItem = (id) => {
     if (selectedItems?.includes(id)) {
@@ -44,18 +38,6 @@ export default function CrisisContactListBottomSheet({
       setSelectedItems([...selectedItems, id]);
     }
   };
-
-  const createCustomDose = (name: string): string => {
-    return name;
-  };
-
-  //   useEffect(() => {
-  //     if (searchedText) {
-  //       setFilteredDoses([...uniqueItems, ...newItems].filter((ind) => ind.toLowerCase().includes(searchedText.toLowerCase())));
-  //     } else {
-  //       setFilteredDoses([...uniqueItems, ...newItems]);
-  //     }
-  //   }, [searchedText, newItems]);
 
   return (
     <View className="flex-1 bg-white">

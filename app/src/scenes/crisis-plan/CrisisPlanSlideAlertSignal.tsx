@@ -34,6 +34,7 @@ export const CrisisPlanSlideAlert: React.FC<ModalCorrelationScreenProps> = ({ na
       headerEditionBottomSheet={"Édition du signal d'alerte"}
       labelBottomSheet={"Choisissez parmi les suggestions - Signaux d’alerte"}
       headerBottomSheet={"Alertes"}
+      route={route}
     />
   );
 };

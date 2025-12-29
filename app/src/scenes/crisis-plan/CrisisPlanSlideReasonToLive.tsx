@@ -18,10 +18,15 @@ import { InputText } from "@/components/InputText";
 import ImageIcon from "@assets/svg/icon/ImageIcon";
 import SimplePlus from "@assets/svg/icon/SimplePlus";
 import { CrisisMediaBottomSheet } from "./CrisisMediaBottomSheet";
+import NavigationButtons from "@/components/onboarding/NavigationButtons";
 
 interface ModalCorrelationScreenProps {
   navigation: any;
-  route?: any;
+  route: {
+    params?: {
+      isEdit: boolean;
+    };
+  };
   suggestions: string[];
   label: string;
   placeholder: string;
@@ -44,6 +49,7 @@ const suggestions = ["Ma famille", "Mes parents", "Mon/ma conjoint.e", "Mes enfa
 
 export const CrisisPlanSlideReasonToLive: React.FC<ModalCorrelationScreenProps> = ({
   navigation,
+  route,
   //   suggestions,
   //   label,
   //   placeholder,
@@ -59,6 +65,26 @@ export const CrisisPlanSlideReasonToLive: React.FC<ModalCorrelationScreenProps> 
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [selectedImages, setSelectedImages] = useState<{ uri: string }[]>([]);
   const [localImagePaths, setLocalImagePaths] = useState<string[]>([]);
+
+  const saveAndValidate = async () => {
+    try {
+      const storageKey = storageImageKey;
+      // Récupère l'objet existant ou crée un nouveau
+      const existing = await AsyncStorage.getItem(storageKey);
+      let data: any = {};
+      if (existing) {
+        try {
+          data = JSON.parse(existing);
+        } catch {
+          data = [];
+        }
+      }
+      data = [...localImagePaths];
+      await AsyncStorage.setItem(storageKey, JSON.stringify(data));
+    } catch (e) {
+      console.error("Erreur lors de la sauvegarde des paths d'images :", e);
+    }
+  };
 
   useEffect(() => {
     const cb = async () => {
@@ -130,10 +156,9 @@ export const CrisisPlanSlideReasonToLive: React.FC<ModalCorrelationScreenProps> 
       setLocalImagePaths((prev) => [...prev, ...copiedPaths]);
     }
   };
-
   return (
     <View className="flex-1 bg-cnam-primary-25">
-      <CrisisHeader navigation={navigation} title={"Ma liste de secours"} description={"Par Hop ma liste"} />
+      <CrisisHeader navigation={navigation} title={"Plan de protection"} description={"Par Hop ma liste"} />
       <ScrollView
         className="px-4 flex-col space-y-4 pt-4 bg-cnam-primary-25 flex-1"
         showsVerticalScrollIndicator={false}
@@ -303,35 +328,31 @@ export const CrisisPlanSlideReasonToLive: React.FC<ModalCorrelationScreenProps> 
           ))}
         </View>
       </ScrollView>
-      <CrisisNavigationButtons
-        absolute={true}
-        onPrevious={() => {
-          navigation.goBack();
-        }}
-        onNext={async () => {
-          // Enregistre les paths dans le localStorage
-          try {
-            const storageKey = storageImageKey;
-            // Récupère l'objet existant ou crée un nouveau
-            const existing = await AsyncStorage.getItem(storageKey);
-            let data: any = {};
-            if (existing) {
-              try {
-                data = JSON.parse(existing);
-              } catch {
-                data = [];
-              }
-            }
-            data = [...localImagePaths];
-            await AsyncStorage.setItem(storageKey, JSON.stringify(data));
-          } catch (e) {
-            console.error("Erreur lors de la sauvegarde des paths d'images :", e);
-          }
-          navigation.navigate("crisis-plan-slide-final");
-        }}
-        withArrow={true}
-        showPrevious={false}
-      />
+      {!route.params?.isEdit && (
+        <CrisisNavigationButtons
+          absolute={true}
+          onPrevious={() => {
+            navigation.goBack();
+          }}
+          onNext={async () => {
+            // Enregistre les paths dans le localStorage
+            await saveAndValidate();
+            navigation.navigate("crisis-plan-slide-final");
+          }}
+          withArrow={true}
+          showPrevious={false}
+        />
+      )}
+      {route.params?.isEdit && (
+        <NavigationButtons
+          nextText="Valider"
+          absolute={true}
+          onNext={async () => {
+            await saveAndValidate();
+            navigation.goBack();
+          }}
+        />
+      )}
     </View>
   );
 };

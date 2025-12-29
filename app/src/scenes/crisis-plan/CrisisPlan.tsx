@@ -15,7 +15,7 @@ interface ModalCorrelationScreenProps {
 export const CrisisPlan: React.FC<ModalCorrelationScreenProps> = ({ navigation, route }) => {
   return (
     <View className="flex-1 bg-cnam-primary-25">
-      <CrisisHeader navigation={navigation} title={"Ma liste de secours"} description={"Par Hop ma liste"} />
+      <CrisisHeader navigation={navigation} title={"Plan de protection"} description={"Par Hop ma liste"} />
       <ScrollView
         className="px-4 flex-col space-y-4 pt-4 bg-cnam-primary-25 flex-1"
         showsVerticalScrollIndicator={false}
@@ -59,13 +59,6 @@ export const CrisisPlan: React.FC<ModalCorrelationScreenProps> = ({ navigation, 
         <View className="flex-column py-4 space-y-4 px-4 rounded-2xl">
           <Text className={mergeClassNames(typography.textMdSemibold, "text-primary-900")}>En cas d’urgence, appelez 15 ou le 3114</Text>
         </View>
-        {/* <JMButton
-          title={"Suivant"}
-          className="mb-2"
-          onPress={() => {
-            navigation.navigate("crisis-plan-intro");
-          }}
-        /> */}
       </ScrollView>
       <NavigationButtons
         absolute={true}

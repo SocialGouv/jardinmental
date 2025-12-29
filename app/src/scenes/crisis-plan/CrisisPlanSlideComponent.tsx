@@ -11,10 +11,15 @@ import { CrisisBottomSheet } from "./CrisisBottomSheet";
 import CrisisListBottomSheet from "./CrisisListBottomSheet";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CrisisPlanInputBox } from "./CrisisPlanInputBox";
+import NavigationButtons from "@/components/onboarding/NavigationButtons";
 
 interface ModalCorrelationScreenProps {
   navigation: any;
-  route?: any;
+  route: {
+    params?: {
+      isEdit: boolean;
+    };
+  };
   suggestions: string[];
   label: string;
   placeholder: string;
@@ -37,6 +42,7 @@ export const CrisisPlanSlideComponent: React.FC<ModalCorrelationScreenProps> = (
   labelBottomSheet,
   headerBottomSheet,
   headerEditionBottomSheet,
+  route,
 }) => {
   const { showBottomSheet, closeBottomSheet } = useBottomSheet();
 
@@ -63,7 +69,7 @@ export const CrisisPlanSlideComponent: React.FC<ModalCorrelationScreenProps> = (
 
   return (
     <View className="flex-1 bg-cnam-primary-25">
-      <CrisisHeader navigation={navigation} title={"Ma liste de secours"} description={"Par Hop ma liste"} />
+      <CrisisHeader navigation={navigation} title={"Plan de protection"} description={"Par Hop ma liste"} />
       <ScrollView
         className="px-4 flex-col space-y-4 pt-4 bg-cnam-primary-25 flex-1"
         showsVerticalScrollIndicator={false}
@@ -130,17 +136,28 @@ export const CrisisPlanSlideComponent: React.FC<ModalCorrelationScreenProps> = (
           );
         })}
       </ScrollView>
-      <CrisisNavigationButtons
-        absolute={true}
-        onPrevious={() => {
-          navigation.goBack();
-        }}
-        onNext={() => {
-          navigation.navigate(next);
-        }}
-        withArrow={true}
-        showPrevious={false}
-      />
+      {!route.params?.isEdit && (
+        <CrisisNavigationButtons
+          absolute={true}
+          onPrevious={() => {
+            navigation.goBack();
+          }}
+          onNext={() => {
+            navigation.navigate(next);
+          }}
+          withArrow={true}
+          showPrevious={false}
+        />
+      )}
+      {route.params?.isEdit && (
+        <NavigationButtons
+          nextText="Valider"
+          absolute={true}
+          onNext={async () => {
+            navigation.goBack();
+          }}
+        />
+      )}
     </View>
   );
 };

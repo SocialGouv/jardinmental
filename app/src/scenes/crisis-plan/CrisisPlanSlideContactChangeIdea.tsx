@@ -16,19 +16,15 @@ import JMButton from "@/components/JMButton";
 import PhoneIcon from "@assets/svg/icon/Phone";
 import { CrisisContactBottomSheet } from "./CrisisContactBottomSheet";
 import CrisisContactListBottomSheet from "./CrisisContactListBottomSheet";
+import NavigationButtons from "@/components/onboarding/NavigationButtons";
 
 interface ModalCorrelationScreenProps {
   navigation: any;
-  route?: any;
-  suggestions: string[];
-  label: string;
-  placeholder: string;
-  storageKey: string;
-  title: string;
-  next: string;
-  labelBottomSheet: string;
-  headerBottomSheet: string;
-  headerEditionBottomSheet: string;
+  route: {
+    params: {
+      isEdit: boolean;
+    };
+  };
 }
 
 const label = "Choisissez parmi vos contacts autorisés";
@@ -37,18 +33,7 @@ const storageKey = "@CRISIS_PLAN_CONTACT";
 const next = "crisis-plan-slide-contact";
 const title = "Quels proches pouvez-vous contacter pour vous changer les idées ? Et quelles activités pouvez-vous faire ensemble?";
 const headerEditionBottomSheet = "Liste de contact";
-export const CrisisPlanSlideContact: React.FC<ModalCorrelationScreenProps> = ({
-  navigation,
-  //   suggestions,
-  //   label,
-  //   placeholder,
-  //   storageKey,
-  //   title,
-  //   next,
-  //   labelBottomSheet,
-  //   headerBottomSheet,
-  //   headerEditionBottomSheet,
-}) => {
+export const CrisisPlanSlideContact: React.FC<ModalCorrelationScreenProps> = ({ navigation, route }) => {
   const { showBottomSheet, closeBottomSheet } = useBottomSheet();
 
   const [selectedItems, setSelectedItems] = useState<
@@ -89,7 +74,7 @@ export const CrisisPlanSlideContact: React.FC<ModalCorrelationScreenProps> = ({
   }, [selectedItems]);
   return (
     <View className="flex-1 bg-cnam-primary-25">
-      <CrisisHeader navigation={navigation} title={"Ma liste de secours"} description={"Par Hop ma liste"} />
+      <CrisisHeader navigation={navigation} title={"Plan de protection"} description={"Par Hop ma liste"} />
       <ScrollView
         className="px-4 flex-col space-y-4 pt-4 bg-cnam-primary-25 flex-1"
         showsVerticalScrollIndicator={false}
@@ -237,17 +222,28 @@ export const CrisisPlanSlideContact: React.FC<ModalCorrelationScreenProps> = ({
           );
         })}
       </ScrollView>
-      <CrisisNavigationButtons
-        absolute={true}
-        onPrevious={() => {
-          navigation.goBack();
-        }}
-        onNext={() => {
-          navigation.navigate("crisis-plan-slide-contact-help");
-        }}
-        withArrow={true}
-        showPrevious={false}
-      />
+      {!route.params?.isEdit && (
+        <CrisisNavigationButtons
+          absolute={true}
+          onPrevious={() => {
+            navigation.goBack();
+          }}
+          onNext={() => {
+            navigation.navigate("crisis-plan-slide-contact-help");
+          }}
+          withArrow={true}
+          showPrevious={false}
+        />
+      )}
+      {route.params?.isEdit && (
+        <NavigationButtons
+          nextText="Valider"
+          absolute={true}
+          onNext={async () => {
+            navigation.goBack();
+          }}
+        />
+      )}
     </View>
   );
 };
