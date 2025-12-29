@@ -3,7 +3,17 @@ import { typography } from "@/utils/typography";
 import CrossIcon from "@assets/svg/icon/Cross";
 import { View, TouchableOpacity, Text } from "react-native";
 
-export default ({ navigation, title, description }: { navigation: any; title: string; description?: string }) => {
+export default ({
+  navigation,
+  title,
+  description,
+  initialRouteName,
+}: {
+  navigation: any;
+  title: string;
+  description?: string;
+  initialRouteName: string;
+}) => {
   return (
     <View className="flex-row justify-between w-full bg-cnam-primary-800 p-4 items-center pt-20">
       <View className="flex-column">
@@ -12,7 +22,11 @@ export default ({ navigation, title, description }: { navigation: any; title: st
       </View>
       <TouchableOpacity
         onPress={() => {
-          navigation.goBack();
+          if (initialRouteName) {
+            navigation.navigate(initialRouteName);
+          } else {
+            navigation.goBack();
+          }
         }}
         className="w-16 justify-end flex-row items-center absolute right-5 top-15"
       >

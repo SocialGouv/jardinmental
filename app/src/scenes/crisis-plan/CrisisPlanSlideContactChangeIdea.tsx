@@ -23,6 +23,7 @@ interface ModalCorrelationScreenProps {
   route: {
     params: {
       isEdit: boolean;
+      initialRouteName: string;
     };
   };
 }
@@ -74,7 +75,12 @@ export const CrisisPlanSlideContact: React.FC<ModalCorrelationScreenProps> = ({ 
   }, [selectedItems]);
   return (
     <View className="flex-1 bg-cnam-primary-25">
-      <CrisisHeader navigation={navigation} title={"Plan de protection"} description={"Par Hop ma liste"} />
+      <CrisisHeader
+        initialRouteName={route.params?.initialRouteName}
+        navigation={navigation}
+        title={"Plan de protection"}
+        description={"Par Hop ma liste"}
+      />
       <ScrollView
         className="px-4 flex-col space-y-4 pt-4 bg-cnam-primary-25 flex-1"
         showsVerticalScrollIndicator={false}
@@ -229,7 +235,9 @@ export const CrisisPlanSlideContact: React.FC<ModalCorrelationScreenProps> = ({ 
             navigation.goBack();
           }}
           onNext={() => {
-            navigation.navigate("crisis-plan-slide-contact-help");
+            navigation.navigate("crisis-plan-slide-contact-help", {
+              initialRouteName: route.params?.initialRouteName,
+            });
           }}
           withArrow={true}
           showPrevious={false}

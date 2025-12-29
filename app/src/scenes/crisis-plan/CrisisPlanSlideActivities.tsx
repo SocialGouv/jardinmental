@@ -3,7 +3,12 @@ import { CrisisPlanSlideComponent } from "./CrisisPlanSlideComponent";
 
 interface ModalCorrelationScreenProps {
   navigation: any;
-  route?: any;
+  route: {
+    params: {
+      isEdit: boolean;
+      initialRouteName: string;
+    };
+  };
 }
 
 const suggestions = [

@@ -25,6 +25,7 @@ interface ModalCorrelationScreenProps {
   route: {
     params?: {
       isEdit: boolean;
+      initialRouteName: string;
     };
   };
   suggestions: string[];
@@ -158,7 +159,12 @@ export const CrisisPlanSlideReasonToLive: React.FC<ModalCorrelationScreenProps> 
   };
   return (
     <View className="flex-1 bg-cnam-primary-25">
-      <CrisisHeader navigation={navigation} title={"Plan de protection"} description={"Par Hop ma liste"} />
+      <CrisisHeader
+        initialRouteName={route.params?.initialRouteName}
+        navigation={navigation}
+        title={"Plan de protection"}
+        description={"Par Hop ma liste"}
+      />
       <ScrollView
         className="px-4 flex-col space-y-4 pt-4 bg-cnam-primary-25 flex-1"
         showsVerticalScrollIndicator={false}
@@ -337,7 +343,9 @@ export const CrisisPlanSlideReasonToLive: React.FC<ModalCorrelationScreenProps> 
           onNext={async () => {
             // Enregistre les paths dans le localStorage
             await saveAndValidate();
-            navigation.navigate("crisis-plan-slide-final");
+            navigation.navigate("crisis-plan-slide-final", {
+              initialRouteName: route.params.initialRouteName,
+            });
           }}
           withArrow={true}
           showPrevious={false}

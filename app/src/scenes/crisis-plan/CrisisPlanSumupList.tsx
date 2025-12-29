@@ -24,6 +24,7 @@ import CrisisSumUpBottomSheet from "./CrisisSumUpBottomSheet";
 import * as Print from "expo-print";
 import { shareAsync } from "expo-sharing";
 import * as FileSystem from "expo-file-system";
+import { useFocusEffect } from "@react-navigation/native";
 
 interface ModalCorrelationScreenProps {
   navigation: any;
@@ -52,7 +53,7 @@ export const CrisisPlanSumupList: React.FC<ModalCorrelationScreenProps> = ({ nav
     reason_to_live_image: [],
   });
   const { showBottomSheet } = useBottomSheet();
-  useEffect(() => {
+  useFocusEffect(() => {
     const cb = async function () {
       const data = {
         alerts: [],
@@ -79,7 +80,7 @@ export const CrisisPlanSumupList: React.FC<ModalCorrelationScreenProps> = ({ nav
       setCardData(data);
     };
     cb();
-  }, []);
+  });
 
   // Handler to generate and share PDF
   const handleSharePdf = async () => {

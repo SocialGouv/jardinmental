@@ -1,12 +1,8 @@
 import React from "react";
-import { View, Text, ScrollView, TouchableOpacity } from "react-native";
+import { View, Text, ScrollView } from "react-native";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
-import LifeBuoy from "@assets/svg/icon/Lifebuoy";
 import CrisisHeader from "./CrisisHeader";
-import JMButton from "@/components/JMButton";
-import ArrowIcon from "@assets/svg/icon/Arrow";
-import { TW_COLORS } from "@/utils/constants";
 import NavigationButtons from "@/components/onboarding/NavigationButtons";
 
 interface ModalCorrelationScreenProps {
@@ -27,7 +23,12 @@ const dataInfo = [
 export const CrisisPlanIntro: React.FC<ModalCorrelationScreenProps> = ({ navigation, route }) => {
   return (
     <View className="flex-1 bg-cnam-primary-25">
-      <CrisisHeader navigation={navigation} title={"Plan de protection"} description={"Par Hop ma liste"} />
+      <CrisisHeader
+        initialRouteName={route.params?.initialRouteName}
+        navigation={navigation}
+        title={"Plan de protection"}
+        description={"Par Hop ma liste"}
+      />
       <ScrollView
         className="px-4 flex-col space-y-4 pt-4 bg-cnam-primary-25 flex-1"
         showsVerticalScrollIndicator={false}
@@ -47,25 +48,15 @@ export const CrisisPlanIntro: React.FC<ModalCorrelationScreenProps> = ({ navigat
           ))}
         </View>
       </ScrollView>
-      {!route.params?.isEdit && (
-        <NavigationButtons
-          absolute={true}
-          onNext={() => {
-            navigation.navigate("crisis-plan-slide-alert");
-          }}
-          withArrow={true}
-          showPrevious={false}
-          nextText="Suivant"
-        />
-      )}
-      {route.params?.isEdit && (
-        <NavigationButtons
-          nextText="Valider"
-          onNext={async () => {
-            navigation.goBack();
-          }}
-        />
-      )}
+      <NavigationButtons
+        nextText="Démarrer (3-5 min)"
+        withArrow={true}
+        onNext={async () => {
+          navigation.navigate("crisis-plan-slide-alert", {
+            initialRouteName: route.params?.initialRouteName,
+          });
+        }}
+      />
     </View>
   );
 };

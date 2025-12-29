@@ -63,7 +63,9 @@ export const CrisisPlan: React.FC<ModalCorrelationScreenProps> = ({ navigation, 
       <NavigationButtons
         absolute={true}
         onNext={() => {
-          navigation.navigate("crisis-plan-intro");
+          navigation.navigate("crisis-plan-intro", {
+            initialRouteName: "tabs",
+          });
         }}
         withArrow={true}
         showPrevious={false}

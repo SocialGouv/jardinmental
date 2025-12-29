@@ -9,7 +9,12 @@ import { VARIANT_BORDER_COLORS } from "../onboarding-v2/data/carouselData";
 
 interface ModalCorrelationScreenProps {
   navigation: any;
-  route?: any;
+  route: {
+    params: {
+      isEdit: boolean;
+      initialRouteName?: string;
+    };
+  };
 }
 
 const { width: screenWidth } = Dimensions.get("window");
@@ -18,7 +23,12 @@ export const CrisisPlanSlideFinal: React.FC<ModalCorrelationScreenProps> = ({ na
   //CNAM - secondary/Cyan (Accent)/50 lighten 90
   return (
     <View className="flex-1 bg-cnam-cyan-50-lighten-90">
-      <CrisisHeader navigation={navigation} title={"Plan de protection"} description={"Par Hop ma liste"} />
+      <CrisisHeader
+        initialRouteName={route.params?.initialRouteName}
+        navigation={navigation}
+        title={"Plan de protection"}
+        description={"Par Hop ma liste"}
+      />
       <View className="absolute right-4">
         <Image
           style={{ width: 200, height: 200, top: 250, right: 0, resizeMode: "contain", zIndex: 0 }}
@@ -50,7 +60,9 @@ export const CrisisPlanSlideFinal: React.FC<ModalCorrelationScreenProps> = ({ na
       <NavigationButtons
         absolute={true}
         onNext={() => {
-          navigation.navigate("crisis-plan-slide-sumup-list");
+          navigation.navigate("crisis-plan-slide-sumup-list", {
+            initialRouteName: route.params.initialRouteName,
+          });
         }}
         showPrevious={false}
         nextText="Ouvrir ma liste"
