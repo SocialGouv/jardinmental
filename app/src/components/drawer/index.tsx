@@ -242,6 +242,14 @@ export default ({ navigation, visible, onClick }) => {
                 <LegalItem title="Conditions générales d'utilisation" path="cgu" navigation={navigation} onClick={onClick} />
                 <LegalItem title="Politique de confidentialité" path="privacy" navigation={navigation} onClick={onClick} />
                 <LegalItem title="Mentions légales" path="legal-mentions" navigation={navigation} onClick={onClick} />
+                <LegalItem
+                  title="Accessibilité numérique : non conforme"
+                  navigation={navigation}
+                  onClick={() => {
+                    Linking.openURL("https://jardinmental.fabrique.social.gouv.fr/accessibilite");
+                  }}
+                />
+
                 <TouchableWithoutFeedback onPress={handleDevModePress}>
                   <View style={styles.versionContainer}>
                     <Text style={styles.versionLabel}>
