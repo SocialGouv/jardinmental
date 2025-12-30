@@ -35,16 +35,16 @@ export const FAQ_DATA: Record<FaqSlug, FaqDataEntry> = {
       },
       {
         title: `Comment créer un nouvel indicateur ?`,
-        description: `- Rendez-vous dans les Paramètres Généraux de l’application (⚙️ en haut à droite) ; 
-- Choisissez l’option « Personnaliser mes indicateurs » ;
-- Cliquez ensuite sur le bouton  « Ajouter un nouvel indicateur ».`,
+        description: `- Rendez-vous dans le menu « Personnaliser » de l’application ; 
+- Choisissez l’option « Mes indicateurs » ;
+- Cliquez ensuite sur le bouton « Ajouter un nouvel indicateur ».`,
       },
       {
         title: `Comment supprimer un indicateur existant ?`,
-        description: `- Rendez-vous dans les Paramètres Généraux de l’application (⚙️ en haut à droite) ; 
-- Choisissez l’option « Personnaliser mes indicateurs » ; 
-- Cliquez sur « Modifier mon questionnaire » ; 
-- Puis sur la corbeille 🗑️ à côté de l’indicateur à retirer. `,
+        description: `- Rendez-vous dans le menu « Personnaliser » de l’application ; 
+- Choisissez l’option « Mes indicateurs » ;
+- Cliquez ensuite sur le bouton « Modifier mon questionnaire » ;
+- Puis supprimez-le via la corbeille 🗑️.`,
       },
     ],
     next: "objectifs",
@@ -61,21 +61,21 @@ export const FAQ_DATA: Record<FaqSlug, FaqDataEntry> = {
       },
       {
         title: `Comment créer un nouvel objectif ?`,
-        description: `- Rendez-vous dans les Paramètres Généraux (⚙️ en haut à droite) ;
-- Choisissez l’option « Personnaliser mes objectifs » ;
-- Cliquez sur le bouton « Ajouter un objectif ». Vous pourrez alors définir le nom de votre objectif, sa fréquence et activer un rappel.`,
+        description: `- Rendez-vous dans le menu « Personnaliser » de l’application ;
+- Choisissez l’option « Mes objectifs » ; 
+- Cliquez ensuite sur le bouton « Ajouter un objectif ». Vous pourrez alors définir le nom de votre objectif, sa fréquence et activer un rappel.`,
       },
       {
         title: "Comment modifier un objectif existant ?",
-        description: `- Rendez-vous dans les Paramètres Généraux (⚙️ en haut à droite) ;
-- Choisissez l’option « Personnaliser mes objectifs » ;
-- Cliquez sur l’icône du stylo 🖊️ à côté de l’objectif en question. Vous pourrez alors modifier sa récurrence et activer / éteindre les rappels.`,
+        description: `- Rendez-vous dans le menu « Personnaliser » de l’application ;
+- Choisissez l’option « Mes objectifs » ;
+- Cliquez ensuite sur l’icône stylo 🖊️ à côté de l’objectif en question. Vous pourrez alors modifier sa récurrence et activer/supprimer les rappels.`,
       },
       {
         title: "Comment supprimer un objectif existant ? ",
-        description: `- Rendez-vous dans les Paramètres Généraux (⚙️ en haut à droite) ;
-- Choisissez l’option « Personnaliser mes objectifs » ; 
-- Cliquez sur l’icône du stylo 🖊️ à côté de l’objectif en question. Vous pourrez alors cliquer sur "Désactiver".`,
+        description: `- Rendez-vous dans le menu « Personnaliser » de l’application ;
+- Choisissez l’option « Mes objectifs » ; 
+- Cliquez ensuite sur l’icône stylo 🖊️ à côté de l’objectif en question. Vous pourrez alors le désactiver.`,
       },
     ],
     next: "questionnaire",
@@ -88,7 +88,7 @@ export const FAQ_DATA: Record<FaqSlug, FaqDataEntry> = {
     accordion: [
       {
         title: "Comment remplir mon questionnaire ?",
-        description: `Rendez-vous dans l’onglet « Mes Entrées » et cliquez sur « Renseigner mon état pour ce jour-là ».`,
+        description: `Rendez-vous dans le menu « Suivre » et cliquez sur « Complétez l’observation ».`,
       },
       {
         title: `Que puis-je renseigner chaque jour ?`,
@@ -122,8 +122,7 @@ export const FAQ_DATA: Record<FaqSlug, FaqDataEntry> = {
       {
         title: `Comment lire mes statistiques ?`,
         description: `Les statistiques donnent un bilan global de vos indicateurs sur une période donnée.
-Elles ne suivent pas l’évolution de vos indicateurs jour après jour mais offrent une vue d’ensemble de votre état.
-Vous y trouverez aussi le taux de réussite de vos objectifs.`,
+Elles ne suivent pas l’évolution de vos indicateurs jour après jour mais offrent une vue d’ensemble de votre état.`,
       },
       {
         title: `Comment lire mes courbes ?`,
@@ -146,8 +145,10 @@ Ils vous aident à repérer les situations ou facteurs qui influencent vos indic
     accordion: [
       {
         title: "Comment ajouter mon traitement ?",
-        description: `Rendez-vous dans les *Paramètre généraux* (⚙️ en haut à droite) puis choisissez *« Saisir mon traitement ».* Vous pourrez alors sélectionner votre médicament dans la liste ou en ajouter un.
-Un rappel apparaîtra dans votre questionnaire quotidien.`,
+        description: `- Rendez-vous dans le menu « Personnaliser » de l’application ;
+- Choisissez l’option « Mon traitement » ;
+- Cliquez ensuite sur « Oui, je prends un traitement » puis sur « Modifier mon traitement » ;
+- Vous pourrez alors sélectionner votre médicament dans la liste ou en ajouter un. Un rappel apparaîtra dans votre questionnaire quotidien.`,
       },
       {
         title: `Puis-je créer un traitement qui n'est pas dans la liste ?`,
@@ -168,9 +169,19 @@ Un rappel apparaîtra dans votre questionnaire quotidien.`,
       },
       {
         title: `Comment générer un récapitulatif de mes données ?`,
-        description: `- Rendez-vous dans les *Paramètres généraux* (⚙️ en haut à droite) ;
-- Cliquez sur « *Générer un récapitulatif de mes données* » ;
+        description: `- Rendez-vous dans le menu « Personnaliser » de l’application ;
+- Cliquez sur « Générer un récapitulatif » ;
 - Vous pourrez alors télécharger le fichier au format PDF.`,
+      },
+      {
+        title: `Comment sauvegarder mes données ?`,
+        description: `Pour conserver vos données en cas de désinstallation ou de changement d’appareil :
+- Rendez-vous dans le menu « Personnaliser » de l’application ;
+- Cliquez sur « Sauvegarder / restaurer mes données » ;
+- Vous pourrez exporter vos données pour les transférer sur un nouvel appareil, ou importer un fichier de sauvegarde si vous en avez déjà créé un.
+
+⚠️ Important : si vous n’effectuez pas cette sauvegarde avant de changer d’appareil ou de désinstaller l’application, vos données ne pourront malheureusement pas être récupérées. Elles sont stockées uniquement en local pour garantir votre anonymat et votre confidentialité.
+`,
       },
     ],
     icon: <ShareIcon />,
