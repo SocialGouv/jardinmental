@@ -193,7 +193,7 @@ export default ({ navigation, visible, onClick }) => {
                   />
                   <Separator />
                   <DrawerItem
-                    description={"Partagez vos retours sur l’application."}
+                    description={"Partagez vos retours sur l’application"}
                     title="Donner mon avis"
                     onClick={async () => {
                       onClick();
@@ -208,7 +208,7 @@ export default ({ navigation, visible, onClick }) => {
                   <Separator />
                   <DrawerItem
                     title="Nous contacter"
-                    description={"Pour toute question sur Jardin Mental"}
+                    description={"Pour signaler un bug ou faire une suggestion"}
                     navigation={navigation}
                     onClick={() => {
                       showBottomSheet(<ContactBottomSheet navigation={navigation} />);

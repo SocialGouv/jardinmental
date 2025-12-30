@@ -54,7 +54,7 @@ export default function FaqMainScreen({ navigation, route }) {
           </Text>
           <View className="flex-col space-y-4">
             <Text className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-900 text-left")}>
-              La santé mentale mérite d'être préservée au quotidien, pas seulement lorsqu'elle est en crise.{"\n\n"}
+              La santé mentale mérite d’être préservée au quotidien, et pas seulement en période de crise.{"\n\n"}
               <Text className={typography.textMdSemibold}>Un bon premier pas est d'apprendre à s'observer avec bienveillance</Text>, sans tomber dans
               l'analyse excessive. Cela aide à reconnaître les signaux de mal-être et à identifier ce qui nous apporte du bien-être.{"\n\n"}
               Notre application{" "}

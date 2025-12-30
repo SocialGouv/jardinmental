@@ -10,7 +10,7 @@ export const TOOLS_DATA: ToolItemEntity[] = [
     id: TOOL_BECK_ID,
     matomoId: 65,
     title: "Colonnes de Beck",
-    description: `Beck est exercice de thérapie cognitive consistant à analyser une situation en cinq colonnes (situation, émotions, pensées automatiques, biais cognitifs, réponse/pensée alternative) afin de restructurer ses pensées.
+    description: `Beck est un exercice de thérapie cognitive consistant à analyser une situation en cinq colonnes (situation, émotions, pensées automatiques, biais cognitifs, réponse/pensée alternative) afin de restructurer ses pensées.
 Cet exercice nécessite des explications afin de le réaliser. Nous vous recommandons d’en discuter préalablement avec un thérapeute.`,
     type: ["Exercice"],
     themes: ["Émotions & pensées"],
