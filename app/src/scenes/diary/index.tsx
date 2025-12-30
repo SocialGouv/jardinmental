@@ -117,8 +117,7 @@ const Diary = ({ navigation, hideDeader = false }) => {
                   Aucune note rédigée pour le moment.
                 </Text>
                 <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 text-left px-4 mt-4")}>
-                  Écrivez des notes sur vos observations pour ajouter un contexte ou une pensée : elle apparaîtra ici et dans vos Analyses (onglet
-                  “Déclencheurs”).
+                  Ajoutez des notes pour enrichir vos observations. Elles apparaîtront ici et dans vos Analyses (onglet « Déclencheurs »).
                 </Text>
               </>
             </View>

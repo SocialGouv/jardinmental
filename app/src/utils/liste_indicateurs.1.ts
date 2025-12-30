@@ -846,7 +846,7 @@ export const INDICATORS: PredefineIndicatorV2SchemaType[] = [
   },
   INDICATEUR_MAL_AU_VENTRE,
   {
-    name: "Trouble d'ideation\nDifficulté à organiser ses pensées, à plannifier...",
+    name: "Trouble d'idéation\nDifficulté à organiser ses pensées, à plannifier...",
     categories: [NEW_INDICATORS_CATEGORIES.COGNITIVE],
     priority: 1,
     order: "DESC",
