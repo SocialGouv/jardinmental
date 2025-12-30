@@ -179,6 +179,7 @@ Ils vous aident à repérer les situations ou facteurs qui influencent vos indic
 - Rendez-vous dans le menu « Personnaliser » de l’application ;
 - Cliquez sur « Sauvegarder / restaurer mes données » ;
 - Vous pourrez exporter vos données pour les transférer sur un nouvel appareil, ou importer un fichier de sauvegarde si vous en avez déjà créé un.
+
 ⚠️ Important : si vous n’effectuez pas cette sauvegarde avant de changer d’appareil ou de désinstaller l’application, vos données ne pourront malheureusement pas être récupérées. Elles sont stockées uniquement en local pour garantir votre anonymat et votre confidentialité.
 `,
       },
