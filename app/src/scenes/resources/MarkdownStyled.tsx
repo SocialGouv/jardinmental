@@ -1,8 +1,35 @@
 import { colors } from "../../utils/colors";
 import Markdown from "react-native-markdown-display";
+import { useNavigation } from "@react-navigation/native";
+import { CATEGORIES, RESOURCES_DATA } from "./data/resources";
 
 export default function MarkdownStyled({ markdown }: { markdown: string }) {
-  return <Markdown style={markdownStyles}>{markdown}</Markdown>;
+  const navigation = useNavigation();
+
+  // Replace the target string with a markdown link
+  // const processedMarkdown = markdown.replace(/Agir et chercher de l’aide sans honte/g, "[Agir et chercher de l’aide sans honte](ressource-5)");
+
+  return (
+    <Markdown
+      style={markdownStyles}
+      onLinkPress={(url) => {
+        if (url === "ressource-5") {
+          navigation.push("resource-category-list", { category: CATEGORIES.AGIR_ET_CHERCHER_DE_L_AIDE_SANS_HONTE });
+          return true;
+        } else if (url === "ressource-article-16") {
+          navigation.push("resource-article", { resource: RESOURCES_DATA.find((res) => res.matomoId === 16) });
+          return true;
+        } else if (url === "ressource-2") {
+          navigation.push("resource-category-list", { category: CATEGORIES.REPERER_LES_SIGNES_DE_MAL_ETRE });
+          return true;
+        }
+        // fallback: open external links if needed
+        return false;
+      }}
+    >
+      {markdown}
+    </Markdown>
+  );
 }
 
 const markdownStyles = {
