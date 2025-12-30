@@ -20,6 +20,7 @@ import { typography } from "@/utils/typography";
 import { AnimatedHeaderScrollScreen } from "@/scenes/survey-v2/AnimatedHeaderScrollScreen";
 import NavigationButtons from "@/components/onboarding/NavigationButtons";
 import { TW_COLORS } from "@/utils/constants";
+import ChevronIcon from "@assets/svg/icon/chevron";
 
 const CATEGORY_OPTIONS = Object.values(NEW_INDICATORS_CATEGORIES);
 // Convert enum to picker items
@@ -68,7 +69,18 @@ const CreateIndicator = ({ navigation, route }) => {
       handlePrevious={() => {
         navigation.goBack();
       }}
-      title="Créer un indicateur"
+      title=""
+      headerLeftComponent={
+        <TouchableOpacity
+          onPress={async () => {
+            navigation.goBack();
+          }}
+          className="flex-row space-x-2 items-center justify-center"
+        >
+          <ChevronIcon direction="left" color={TW_COLORS.CNAM_PRIMARY_25} />
+          <Text className="text-cnam-primary-25">Créer un indicateur personnalisé</Text>
+        </TouchableOpacity>
+      }
       navigation={navigation}
       headerRightComponent={null}
       headerRightAction={() => {}}
@@ -89,7 +101,7 @@ const CreateIndicator = ({ navigation, route }) => {
       }
     >
       <View className="flex-1" style={styles.container}>
-        <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-900 mt-8")}>
+        <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-900")}>
           Comment souhaitez-vous appeler votre nouvel indicateur ?
         </Text>
         <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700 mt-10 mb-2")}>

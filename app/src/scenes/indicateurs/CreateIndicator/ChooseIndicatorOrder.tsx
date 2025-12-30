@@ -24,6 +24,7 @@ import { INDICATOR_ORDER } from "@/entities/IndicatorOrder";
 import type { INDICATOR_TYPE } from "@/entities/IndicatorType";
 import logEvents from "@/services/logEvents";
 import { INDICATOR_CATEGORIES_DATA } from "@/scenes/onboarding-v2/data/helperData";
+import ChevronIcon from "@assets/svg/icon/chevron";
 
 const ChooseIndicatorOrder = ({
   navigation,
@@ -67,11 +68,22 @@ const ChooseIndicatorOrder = ({
 
   return (
     <AnimatedHeaderScrollScreen
-      title={"Créer un indicateur"}
+      title={""}
       scrollViewBackground={TW_COLORS.GRAY_50}
       handlePrevious={() => {
         navigation.goBack();
       }}
+      headerLeftComponent={
+        <TouchableOpacity
+          onPress={async () => {
+            navigation.goBack();
+          }}
+          className="flex-row space-x-2 items-center justify-center"
+        >
+          <ChevronIcon direction="left" color={TW_COLORS.CNAM_PRIMARY_25} />
+          <Text className="text-cnam-primary-25">Créer un indicateur personnalisé</Text>
+        </TouchableOpacity>
+      }
       smallHeader={true}
       bottomComponent={
         <View className="mx-4">
@@ -86,7 +98,7 @@ const ChooseIndicatorOrder = ({
       navigation={navigation}
     >
       <View className="flex-1 mx-4">
-        <View className={mergeClassNames("border rounded-xl bg-white p-4 w-full mb-4 mt-4 border-cnam-primary-800")}>
+        <View className={mergeClassNames("border rounded-xl bg-white p-4 w-full mb-4 border-cnam-primary-800")}>
           <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700 h-5 mb-4")}>{route.params.nameNewIndicator}</Text>
           <RenderCurrentIndicator indicatorType={route.params.indicatorType} itensity direction={indicatorDirection} size={screenWidth * 0.1} />
         </View>

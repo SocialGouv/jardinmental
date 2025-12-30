@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { StyleSheet, View, Text } from "react-native";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { StyleSheet, View, Text, TouchableOpacity, Alert } from "react-native";
 
 import { colors } from "../../utils/colors";
 import localStorage from "../../utils/localStorage";
 import logEvents from "../../services/logEvents";
-import { ONBOARDING_STEPS, categories, displayedCategories, reliquatCategories } from "../../utils/constants";
+import { ONBOARDING_STEPS, TW_COLORS, categories, displayedCategories, reliquatCategories } from "../../utils/constants";
 import { useFocusEffect } from "@react-navigation/native";
 import JMButton from "@/components/JMButton";
 import { AnimatedHeaderScrollScreen } from "../survey-v2/AnimatedHeaderScrollScreen";
@@ -13,10 +13,21 @@ import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
 import { Indicator } from "@/entities/Indicator";
 import { INDICATEURS } from "@/utils/liste_indicateurs.1";
+import ChevronIcon from "@assets/svg/icon/chevron";
+import ReorderableList, { reorderItems, useReorderableDrag } from "react-native-reorderable-list";
+import { Gesture } from "react-native-gesture-handler";
+import ParagraphSpacing from "@assets/svg/icon/ParagraphSpacing";
+import TrashIcon from "@assets/svg/icon/Trash";
+import CrossIcon from "@assets/svg/icon/Cross";
 
 const CustomSymptomScreen = ({ navigation, route, settings = false }) => {
   const [chosenCategories, setChosenCategories] = useState();
   const [userIndicateurs, setUserIndicateurs] = useState<Indicator[]>([]);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [showSuccessBanner, setShowSuccessBanner] = useState<boolean>(false);
+  const bannerTimeout = useRef();
+  // const [userIndicateurs, setUserIndicateurs] = useState<Indicator[]>([]);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -25,9 +36,21 @@ const CustomSymptomScreen = ({ navigation, route, settings = false }) => {
         if (user_indicateurs) {
           setUserIndicateurs(user_indicateurs);
         }
+        if (route.params.backFromAddingIndicator) {
+          setShowSuccessBanner(true);
+        }
       })();
     }, [])
   );
+
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     (async () => {
+  //       let _userIndicateurs = await localStorage.getIndicateurs();
+  //       setUserIndicateurs(_userIndicateurs);
+  //     })();
+  //   }, [])
+  // );
 
   useEffect(() => {
     (async () => {
@@ -54,178 +77,229 @@ const CustomSymptomScreen = ({ navigation, route, settings = false }) => {
     })();
   }, [chosenCategories]);
 
-  const handleAddNewSymptom = async (value) => {
-    if (!value) return;
-    await localStorage.addCustomSymptoms(value);
-    setChosenCategories((prev) => ({ ...prev, [value]: true }));
-    logEvents.logCustomSymptomAdd();
+  const data = useMemo(() => userIndicateurs.filter((indicator) => indicator.active), [userIndicateurs]);
+
+  const onValidate = async () => {
+    if (loading) return;
+    setLoading(true);
+    await localStorage.setIndicateurs(userIndicateurs);
+    setLoading(false);
+    setShowSuccessBanner(true);
+    if (bannerTimeout.current) clearTimeout(bannerTimeout.current);
+    bannerTimeout.current = setTimeout(() => {
+      setShowSuccessBanner(false);
+    }, 10000);
+    // navigation.goBack();
   };
 
-  const setToggleIndicateur = ({ indicateur, valeur }) => {
-    setChosenCategories((prev) => ({ ...prev, [indicateur]: valeur }));
-  };
+  const renderItem = useCallback(({ item: indicator }) => {
+    return <IndicatorItem indicator={indicator} setUserIndicateurs={setUserIndicateurs} />;
+  }, []);
 
-  const removeSymptom = async (value) => setChosenCategories({ ...chosenCategories, [value]: false });
+  const keyExtractor = useCallback((indicator: Indicator) => indicator.uuid || indicator.name, []);
 
-  const indicators = Object.keys(chosenCategories || {}).filter((e) => chosenCategories[e]);
+  const panGesture = useMemo(() => Gesture.Pan().activateAfterLongPress(220), []);
 
   return (
     <AnimatedHeaderScrollScreen
       handlePrevious={() => {
         navigation.goBack();
       }}
-      title="Mon suivi"
+      title=""
       smallHeader={true}
       navigation={navigation}
+      headerLeftComponent={
+        <TouchableOpacity
+          onPress={async () => {
+            if (isEditing) {
+              Alert.alert("Annuler les modifications ?", "Les modifications que vous avez faites ne seront pas enregistrées.", [
+                {
+                  text: "Continuer",
+                  style: "cancel",
+                  onPress: () => {
+                    navigation.goBack();
+                  },
+                },
+                {
+                  text: "Annuler",
+                  style: "destructive",
+                  onPress: () => {},
+                },
+              ]);
+            } else {
+              navigation.goBack();
+            }
+          }}
+          className="flex-row space-x-2 items-center justify-center"
+        >
+          <ChevronIcon direction="left" color={TW_COLORS.CNAM_PRIMARY_25} />
+          <Text className="text-cnam-primary-25">Mes indicateurs</Text>
+        </TouchableOpacity>
+      }
       headerRightComponent={null}
       headerRightAction={() => {}}
       bottomComponent={
-        <NavigationButtons absolute={true}>
-          <>
-            <JMButton
-              variant="outline"
-              className="mb-2"
-              size="medium"
-              onPress={() => {
-                logEvents.logStartAddIndicator();
-                navigation.navigate("EDIT_INDICATOR");
-              }}
-              title="Ajouter un indicateur"
-            />
-            <JMButton
-              variant="primary"
-              onPress={() => {
-                logEvents.logEditSurvey();
-                navigation.navigate("indicators-settings-more");
-              }}
-              title="Modifier mon questionnaire"
-            />
-          </>
-        </NavigationButtons>
+        <>
+          <NavigationButtons absolute={true}>
+            <>
+              {isEditing && (
+                <>
+                  <JMButton
+                    variant="outline"
+                    className="mb-2"
+                    size="medium"
+                    onPress={() => {
+                      logEvents.logStartAddIndicator();
+                      navigation.navigate("EDIT_INDICATOR");
+                    }}
+                    title="Ajouter un indicateur"
+                  />
+                  <JMButton
+                    variant="primary"
+                    onPress={() => {
+                      onValidate();
+                      setIsEditing(false);
+                    }}
+                    title="Enregistrer les modifications"
+                  />
+                </>
+              )}
+              {!isEditing && (
+                <JMButton
+                  variant="primary"
+                  onPress={() => {
+                    logEvents.logEditSurvey();
+                    setIsEditing(true);
+                  }}
+                  title="Modifier mon questionnaire"
+                />
+              )}
+            </>
+          </NavigationButtons>
+          {showSuccessBanner && (
+            <View className="abolute left-0 right-0 -bottom-10 px-8 bg-cnam-cyan-700-darken-40">
+              <View className="flex-row items-center justify-between w-full h-20">
+                {route.params.backFromAddingIndicator && (
+                  <Text
+                    style={{
+                      color: "#F7FCFE",
+                    }}
+                    className={typography.textMdSemibold}
+                  >
+                    L’indicateur a été ajouté avec succès
+                  </Text>
+                )}
+                {!route.params.backFromAddingIndicator && (
+                  <Text
+                    style={{
+                      color: "#F7FCFE",
+                    }}
+                    className={typography.textMdSemibold}
+                  >
+                    Votre suivi a été modifié avec succès
+                  </Text>
+                )}
+                <TouchableOpacity
+                  onPress={() => {
+                    setShowSuccessBanner(false);
+                    if (bannerTimeout.current) clearTimeout(bannerTimeout.current);
+                  }}
+                >
+                  <CrossIcon color={"#F7FCFE"} />
+                </TouchableOpacity>
+              </View>
+            </View>
+          )}
+        </>
       }
     >
-      <View className="px-4 mt-6">
-        <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-900")}>Personnaliser mon suivi</Text>
-        <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900 mt-3")}>
-          Gérez vos éléments de suivi, ajoutez-en de nouveaux et choisissez la manière dont vous les évaluez
-        </Text>
-        <View className="my-6 mt-8 flex-row items-center">
-          <Text className={mergeClassNames(typography.textXlSemibold, "text-cnam-primary-900")}>Mes indicateurs</Text>
-          <View className="bg-cnam-cyan-500-0 h-7 w-7 rounded-full items-center justify-center ml-2">
-            <Text className={mergeClassNames("text-white", typography.textMdSemibold)}>
-              {userIndicateurs.filter((_indicateur) => _indicateur.active).length}
-            </Text>
+      <View className="px-4">
+        <View className="flex-column mb-6">
+          <View className="flex-row items-center">
+            <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-900")}>Mes indicateurs</Text>
+            <View className="bg-cnam-cyan-500-0 h-7 w-7 rounded-full items-center justify-center ml-2">
+              <Text className={mergeClassNames("text-cnam-primary-900", typography.textMdSemibold)}>
+                {userIndicateurs.filter((_indicateur) => _indicateur.active).length}
+              </Text>
+            </View>
           </View>
+          {!isEditing && (
+            <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900 mt-3")}>
+              Gérez vos éléments de suivi, ajoutez-en de nouveaux et choisissez la manière dont vous les évaluez
+            </Text>
+          )}
+          {isEditing && (
+            <View className="bg-cnam-cyan-50-lighten-90 py-4 px-4 rounded-2xl mt-3">
+              <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-900")}>Modifier mon suivi quotidien </Text>
+              <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900 mt-3")}>
+                Vous pouvez changer l’ordre d’apparition de vos indicateurs, en ajouter de nouveaux et/ou les supprimer.
+              </Text>
+            </View>
+          )}
         </View>
-        <View>
-          {userIndicateurs
-            .filter((_indicateur) => _indicateur.active)
-            .map((_indicateur) => {
-              return (
-                <View key={_indicateur.uuid || _indicateur.name} className="p-4 bg-gray-100 mb-2 rounded-xl">
-                  <Text className={mergeClassNames(typography.textLgRegular, "text-cnam-primary-950")}>{_indicateur.name}</Text>
-                </View>
-              );
-            })}
-        </View>
+        {!isEditing && (
+          <View>
+            {userIndicateurs
+              .filter((_indicateur) => _indicateur.active)
+              .map((_indicateur) => {
+                return (
+                  <View key={_indicateur.uuid || _indicateur.name} className="p-4 bg-gray-100 mb-2 rounded-xl">
+                    <Text className={mergeClassNames(typography.textLgRegular, "text-cnam-primary-950")}>{_indicateur.name}</Text>
+                  </View>
+                );
+              })}
+          </View>
+        )}
+        {isEditing && (
+          <ReorderableList
+            keyExtractor={keyExtractor}
+            renderItem={renderItem}
+            data={data}
+            onReorder={({ from, to }) => {
+              const activeuserIndicateurs = userIndicateurs.filter((indicator) => indicator.active);
+              const reordered = reorderItems(activeuserIndicateurs, from, to);
+
+              // Merge back with inactive userIndicateurs
+              const inactiveuserIndicateurs = userIndicateurs.filter((indicator) => !indicator.active);
+              setUserIndicateurs([...reordered, ...inactiveuserIndicateurs]);
+            }}
+            scrollEnabled={false}
+            contentContainerStyle={{ flex: 1, paddingHorizontal: 0 }}
+            panGesture={panGesture}
+          />
+        )}
       </View>
     </AnimatedHeaderScrollScreen>
   );
 };
 
-const styles = StyleSheet.create({
-  safe: {
-    flex: 1,
-    backgroundColor: "white",
-  },
-  container: {
-    paddingHorizontal: 20,
-    backgroundColor: "white",
-  },
-  headerText: {
-    color: colors.BLUE,
-    fontSize: 19,
-    fontWeight: "700",
-  },
-  header: {
-    height: 60,
-  },
-  headerBackButton: {
-    position: "absolute",
-    zIndex: 1,
-  },
-  headerTextContainer: {
-    height: "100%",
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  personnalizeContainer: {
-    backgroundColor: "rgba(31,198,213,0.2)",
-    borderColor: colors.LIGHT_BLUE,
-    borderWidth: 0.5,
-    borderRadius: 10,
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    padding: 15,
-    paddingRight: 20,
-  },
-  personnalizeTextContainer: {
-    flex: 1,
-    marginHorizontal: 20,
-  },
-  personnalizeTitle: {
-    color: colors.BLUE,
-    fontSize: 14,
-    fontWeight: "700",
-    flex: 1,
-    marginBottom: 5,
-  },
-  personnalizeText: {
-    color: colors.BLUE,
-    fontSize: 14,
-    flex: 1,
-  },
+const IndicatorItem = ({
+  indicator,
+  setUserIndicateurs,
+}: {
+  indicator: Indicator;
+  setUserIndicateurs: React.Dispatch<React.SetStateAction<Indicator[]>>;
+}) => {
+  const drag = useReorderableDrag();
 
-  sectionRowContainer: {
-    width: "100%",
-    flexDirection: "row",
-    justifyContent: "flex-start",
-    alignItems: "center",
-    paddingVertical: 10,
-    marginTop: 30,
-  },
-  circleNumber: {
-    backgroundColor: colors.LIGHT_BLUE,
-    borderRadius: 999,
-    width: 35,
-    height: 35,
-    marginLeft: 15,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  circleText: {
-    color: "#fff",
-    fontWeight: "700",
-    fontSize: 18,
-  },
+  const deleteIndicator = () => {
+    logEvents.logDeleteIndicator();
+    setUserIndicateurs((prev) => prev.map((i) => (i.uuid === indicator.uuid ? { ...i, active: false } : i)));
+  };
 
-  indicatorItem: {
-    width: "100%",
-    backgroundColor: "#F8F9FB",
-    borderColor: colors.LIGHT_BLUE,
-    borderWidth: 1,
-    borderRadius: 10,
-    borderColor: "#E7EAF1",
-    padding: 20,
-    marginBottom: 12,
-  },
+  return (
+    <TouchableOpacity onLongPress={drag} delayLongPress={100}>
+      <View
+        className={mergeClassNames("p-4 bg-gray-100 mb-2 rounded-xl flex-row items-center justify-between", !indicator.active ? "bg-gray-50" : "")}
+      >
+        <ParagraphSpacing width={24} height={24} color={TW_COLORS.CNAM_PRIMARY_700} />
+        <Text className={mergeClassNames(typography.textLgRegular, "text-cnam-primary-950 flex-1 mx-3 ml-4")}>{indicator?.name}</Text>
+        <TouchableOpacity onPress={deleteIndicator}>
+          <TrashIcon width={24} height={24} color={TW_COLORS.CNAM_PRIMARY_800} />
+        </TouchableOpacity>
+      </View>
+    </TouchableOpacity>
+  );
+};
 
-  bottomButtonsContainer: {
-    backgroundColor: "#fff",
-    padding: 20,
-  },
-});
 export default CustomSymptomScreen;

@@ -13,17 +13,29 @@ import { typography } from "@/utils/typography";
 import { Boolean } from "@/components/survey/Boolean";
 import JMButton from "@/components/JMButton";
 import { SelectionnableRadioItem } from "@/components/SelectionnableItem";
+import ChevronIcon from "@assets/svg/icon/chevron";
 
 const ChooseIndicatorType = ({ navigation, route }) => {
   const [indicatorType, setIndicatorType] = React.useState<"boolean" | "smiley" | "gauge">();
 
   return (
     <AnimatedHeaderScrollScreen
-      title={"Créer un indicateur"}
+      title={""}
       scrollViewBackground={TW_COLORS.GRAY_50}
       handlePrevious={() => {
         navigation.goBack();
       }}
+      headerLeftComponent={
+        <TouchableOpacity
+          onPress={async () => {
+            navigation.goBack();
+          }}
+          className="flex-row space-x-2 items-center justify-center"
+        >
+          <ChevronIcon direction="left" color={TW_COLORS.CNAM_PRIMARY_25} />
+          <Text className="text-cnam-primary-25">Créer un indicateur personnalisé</Text>
+        </TouchableOpacity>
+      }
       smallHeader={true}
       bottomComponent={
         <View className="px-4 bg-gray-50">
@@ -44,9 +56,7 @@ const ChooseIndicatorType = ({ navigation, route }) => {
       navigation={navigation}
     >
       <View className="flex-1 mx-4">
-        <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-900 mt-8")}>
-          Comment souhaitez-vous évaluer votre indicateur ?
-        </Text>
+        <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-900")}>Comment souhaitez-vous évaluer votre indicateur ?</Text>
         <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 mt-2 mb-8")}>
           Choisissez parmi les 3 critères d’évaluation suivants
         </Text>
