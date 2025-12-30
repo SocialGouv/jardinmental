@@ -35,15 +35,15 @@ export const FAQ_DATA: Record<FaqSlug, FaqDataEntry> = {
       },
       {
         title: `Comment créer un nouvel indicateur ?`,
-        description: `- Rendez-vous dans le menu  « Personnaliser » de l’application ; 
-- Choisissez l’option  «  Mes indicateurs » ;
-- Cliquez ensuite sur le bouton «  Ajouter un nouvel indicateur ».`,
+        description: `- Rendez-vous dans le menu « Personnaliser » de l’application ; 
+- Choisissez l’option « Mes indicateurs » ;
+- Cliquez ensuite sur le bouton « Ajouter un nouvel indicateur ».`,
       },
       {
         title: `Comment supprimer un indicateur existant ?`,
         description: `- Rendez-vous dans le menu « Personnaliser » de l’application ; 
-- Choisissez l’option  «  Mes indicateurs » ;
-- Cliquez ensuite sur le bouton «  Modifier mon questionnaire » ;
+- Choisissez l’option « Mes indicateurs » ;
+- Cliquez ensuite sur le bouton « Modifier mon questionnaire » ;
 - Puis supprimez-le via la corbeille 🗑️.`,
       },
     ],
@@ -62,19 +62,19 @@ export const FAQ_DATA: Record<FaqSlug, FaqDataEntry> = {
       {
         title: `Comment créer un nouvel objectif ?`,
         description: `- Rendez-vous dans le menu « Personnaliser » de l’application ;
-- Choisissez l’option  «  Mes objectifs » ; 
-- Cliquez ensuite sur le bouton «  Ajouter un objectif ». Vous pourrez alors définir le nom de votre objectif, sa fréquence et activer un rappel.`,
+- Choisissez l’option « Mes objectifs » ; 
+- Cliquez ensuite sur le bouton « Ajouter un objectif ». Vous pourrez alors définir le nom de votre objectif, sa fréquence et activer un rappel.`,
       },
       {
         title: "Comment modifier un objectif existant ?",
         description: `- Rendez-vous dans le menu « Personnaliser » de l’application ;
-- Choisissez l’option  «  Mes objectifs » ;
+- Choisissez l’option « Mes objectifs » ;
 - Cliquez ensuite sur l’icône stylo 🖊️ à côté de l’objectif en question. Vous pourrez alors modifier sa récurrence et activer/supprimer les rappels.`,
       },
       {
         title: "Comment supprimer un objectif existant ? ",
         description: `- Rendez-vous dans le menu « Personnaliser » de l’application ;
-- Choisissez l’option  «  Mes objectifs » ; 
+- Choisissez l’option « Mes objectifs » ; 
 - Cliquez ensuite sur l’icône stylo 🖊️ à côté de l’objectif en question. Vous pourrez alors le désactiver.`,
       },
     ],
@@ -146,8 +146,8 @@ Ils vous aident à repérer les situations ou facteurs qui influencent vos indic
       {
         title: "Comment ajouter mon traitement ?",
         description: `- Rendez-vous dans le menu « Personnaliser » de l’application ;
-- Choisissez l’option  « Mon traitement » ;
-- Cliquez ensuite sur « Oui, je prends un traitement » puis sur «  Modifier mon traitement » ;
+- Choisissez l’option « Mon traitement » ;
+- Cliquez ensuite sur « Oui, je prends un traitement » puis sur « Modifier mon traitement » ;
 - Vous pourrez alors sélectionner votre médicament dans la liste ou en ajouter un. Un rappel apparaîtra dans votre questionnaire quotidien.`,
       },
       {
@@ -170,17 +170,17 @@ Ils vous aident à repérer les situations ou facteurs qui influencent vos indic
       {
         title: `Comment générer un récapitulatif de mes données ?`,
         description: `- Rendez-vous dans le menu « Personnaliser » de l’application ;
-- Cliquez sur «  Générer un récapitulatif » ;
+- Cliquez sur « Générer un récapitulatif » ;
 - Vous pourrez alors télécharger le fichier au format PDF.`,
       },
       {
         title: `Comment sauvegarder mes données ?`,
-        description: `Pour conserver vos données en cas de désinstallation ou de changement d’appareil :
+        description: `Pour conserver vos données en cas de désinstallation ou de changement d’appareil :
 - Rendez-vous dans le menu « Personnaliser » de l’application ;
-- Cliquez sur « Sauvegarder / restaurer mes données » ;
-- Vous pourrez exporter vos données pour les transférer sur un nouvel appareil, ou importer un fichier de sauvegarde si vous en avez déjà créé un.
+- Cliquez sur « Sauvegarder / restaurer mes données » ;
+- Vous pourrez exporter vos données pour les transférer sur un nouvel appareil, ou importer un fichier de sauvegarde si vous en avez déjà créé un.
 
-⚠️ Important : si vous n’effectuez pas cette sauvegarde avant de changer d’appareil ou de désinstaller l’application, vos données ne pourront malheureusement pas être récupérées. Elles sont stockées uniquement en local pour garantir votre anonymat et votre confidentialité.
+⚠️ Important : si vous n’effectuez pas cette sauvegarde avant de changer d’appareil ou de désinstaller l’application, vos données ne pourront malheureusement pas être récupérées. Elles sont stockées uniquement en local pour garantir votre anonymat et votre confidentialité.
 `,
       },
     ],
