@@ -311,7 +311,7 @@ Il est tout à fait possible d’apprendre à mieux vivre avec l’anxiété. Av
       "550e8400-e29b-41d4-a716-446655440157",
       "550e8400-e29b-41d4-a716-446655440158",
       "550e8400-e29b-41d4-a716-446655440159",
-      "550e8400-e29b-41d4-a716-446655440069",
+      // "550e8400-e29b-41d4-a716-446655440069", not available anymore
     ],
   },
   {
@@ -772,7 +772,7 @@ L’essentiel est de faire au mieux avec ses moyens, en gardant à l’esprit qu
       "550e8400-e29b-41d4-a716-446655440176",
       "550e8400-e29b-41d4-a716-446655440177",
       "550e8400-e29b-41d4-a716-446655440178",
-      "550e8400-e29b-41d4-a716-446655440179",
+      // "550e8400-e29b-41d4-a716-446655440179", // not used because not available anymore
       "550e8400-e29b-41d4-a716-446655440180",
       "550e8400-e29b-41d4-a716-446655440181",
       "550e8400-e29b-41d4-a716-446655440182",

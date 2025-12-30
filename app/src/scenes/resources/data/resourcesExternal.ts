@@ -476,8 +476,8 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440055",
     matomoId: 55,
-    title: "Apprendre à aider : Le trouble dépressif",
-    url: "https://www.pssmfrance.fr/podcast/apprendre-a-aider-le-trouble-depressif-episode-1/",
+    title: "Mieux comprendre le trouble dépressif",
+    url: "https://www.pssmfrance.fr/carnets-du-secouriste/carnet-mieux-comprendre-le-trouble-depressif/",
     type: "Guide",
     category: "P1 - A lire dans ce dossier",
     author: "PSSM France",
@@ -582,7 +582,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
     author: "RTS",
   },
   {
-    id: "550e8400-e29b-41d4-a716-446655440069",
+    id: "550e8400-e29b-41d4-a716-446655440069", // this resource is not used because not available anymore
     matomoId: 69,
     title: "Psycho, moi anxieux",
     url: "https://www.arte.tv/fr/videos/086949-000-A/psycho/",
@@ -593,8 +593,8 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
   {
     id: "550e8400-e29b-41d4-a716-446655440070",
     matomoId: 70,
-    title: "Apprendre à aider : les attaques de panique",
-    url: "https://www.pssmfrance.fr/podcast/apprendre-a-aider-attaques-de-paniques/",
+    title: "Mieux comprendre les attaques de panique",
+    url: "https://www.pssmfrance.fr/carnets-du-secouriste/carnet-mieux-comprendre-les-attaques-de-panique/",
     type: "Guide",
     category: "P1 - A lire dans ce dossier",
     author: "PSSM France",
@@ -900,7 +900,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
     id: "550e8400-e29b-41d4-a716-446655440107",
     matomoId: 107,
     title: "Mieux vivre avec la bipolarité",
-    url: "https://mpnext.cdn.prismic.io/mpnext/3b9de344-fcc0-4070-9b66-a30002604756_Bipolarités.pdf",
+    url: "https://www.maisonperchee.org/publications",
     type: "Guide",
     category: "P1 - A lire dans ce dossier",
     author: "La Maison Perchée",
@@ -1395,7 +1395,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
     id: "550e8400-e29b-41d4-a716-446655440168",
     matomoId: 168,
     title: "Bouger, c'est bon pour la santé",
-    url: "https://www.assurance-maladie.ameli.fr/podcasts/prevention-et-sante#text_218347",
+    url: "https://www.assurance-maladie.ameli.fr/podcasts/bouger-c-est-bon-pour-la-sante",
     type: "Podcast",
     category: "P2 - Explorer d'autres ressources",
     author: "Ameli",
@@ -1491,7 +1491,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
     author: "France Télévisions",
   },
   {
-    id: "550e8400-e29b-41d4-a716-446655440179",
+    id: "550e8400-e29b-41d4-a716-446655440179", // not used because no available anymore
     matomoId: 179,
     title: "Les pouvoirs de l'alimentation sur notre cerveau",
     url: "https://www.france.tv/france-5/enquete-de-sante/6982462-les-pouvoirs-de-l-alimentation-sur-notre-cerveau.html",
@@ -1611,7 +1611,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
     id: "550e8400-e29b-41d4-a716-446655440192",
     matomoId: 192,
     title: "Les Français atteints de troubles de la santé mentale se disent plus sujets aux addictions que le reste de la population",
-    url: "https://www.addictaide.fr/les-francais-atteints-de-troubles-de-la-sante-mentale-se-disent-plus-sujets-aux-addictions-que-le-reste-de-la-population/",
+    url: "https://www.addictaide.fr/sante-mentale-et-addictions-correlation-prevention-depistage-et-prise-en-charge/",
     type: "Article",
     category: "P1 - A lire dans ce dossier",
     author: "Addictaide",
