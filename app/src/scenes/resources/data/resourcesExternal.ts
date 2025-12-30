@@ -473,15 +473,6 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
     category: "P1 - A lire dans ce dossier",
     author: "Collectif, La Maison Perchée",
   },
-  // {
-  //   id: "550e8400-e29b-41d4-a716-446655440055",
-  //   matomoId: 55,
-  //   title: "Apprendre à aider : Le trouble dépressif",
-  //   url: "https://www.pssmfrance.fr/podcast/apprendre-a-aider-le-trouble-depressif-episode-1/",
-  //   type: "Guide",
-  //   category: "P1 - A lire dans ce dossier",
-  //   author: "PSSM France",
-  // },
   {
     id: "550e8400-e29b-41d4-a716-446655440055",
     matomoId: 55,
@@ -591,7 +582,7 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
     author: "RTS",
   },
   {
-    id: "550e8400-e29b-41d4-a716-446655440069",
+    id: "550e8400-e29b-41d4-a716-446655440069", // this resource is not used because not available anymore
     matomoId: 69,
     title: "Psycho, moi anxieux",
     url: "https://www.arte.tv/fr/videos/086949-000-A/psycho/",
@@ -599,15 +590,6 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
     category: "P2 - Explorer d'autres ressources",
     author: "Arte",
   },
-  // {
-  //   id: "550e8400-e29b-41d4-a716-446655440070",
-  //   matomoId: 70,
-  //   title: "Apprendre à aider : les attaques de panique",
-  //   url: "https://www.pssmfrance.fr/podcast/apprendre-a-aider-attaques-de-paniques/",
-  //   type: "Guide",
-  //   category: "P1 - A lire dans ce dossier",
-  //   author: "PSSM France",
-  // },
   {
     id: "550e8400-e29b-41d4-a716-446655440070",
     matomoId: 70,
@@ -1508,16 +1490,15 @@ export const EXTERNAL_RESOURCES_DATA: ExternalResource[] = [
     category: "P2 - Explorer d'autres ressources",
     author: "France Télévisions",
   },
-  // plus dispo
-  // {
-  //   id: "550e8400-e29b-41d4-a716-446655440179",
-  //   matomoId: 179,
-  //   title: "Les pouvoirs de l'alimentation sur notre cerveau",
-  //   url: "https://www.france.tv/france-5/enquete-de-sante/6982462-les-pouvoirs-de-l-alimentation-sur-notre-cerveau.html",
-  //   type: "Vidéo",
-  //   category: "P2 - Explorer d'autres ressources",
-  //   author: "France Télévisions",
-  // },
+  {
+    id: "550e8400-e29b-41d4-a716-446655440179", // not used because no available anymore
+    matomoId: 179,
+    title: "Les pouvoirs de l'alimentation sur notre cerveau",
+    url: "https://www.france.tv/france-5/enquete-de-sante/6982462-les-pouvoirs-de-l-alimentation-sur-notre-cerveau.html",
+    type: "Vidéo",
+    category: "P2 - Explorer d'autres ressources",
+    author: "France Télévisions",
+  },
   {
     id: "550e8400-e29b-41d4-a716-446655440180",
     matomoId: 180,
