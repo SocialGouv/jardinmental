@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, View, ScrollView, TouchableOpacity, Text } from "react-native";
 
 import { colors } from "../../../utils/colors";
@@ -20,15 +20,14 @@ import NavigationButtons from "@/components/onboarding/NavigationButtons";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
 import { TW_COLORS } from "@/utils/constants";
-import { areStringArraysIdentical } from "@/utils/string-util";
 import ChevronIcon from "@assets/svg/icon/chevron";
+import { IndicatorEditProvider, useIndicatorEdit } from "@/context/IndicatorEditContext";
 
-const EditIndicateurs = ({ navigation, route }) => {
-  const [exemplesVisible, setExemplesVisible] = useState(false);
-  const [existingIndicatorsVisible, setExistingIndicatorsVisible] = useState(false);
-  const [userIndicateurs, setUserIndicateurs] = useState<Indicator[]>([]);
-  const [isChanged, setIsChanged] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+const EditIndicateursContent = ({ navigation, route }) => {
+  const [exemplesVisible, setExemplesVisible] = React.useState(false);
+  const [existingIndicatorsVisible, setExistingIndicatorsVisible] = React.useState(false);
+
+  const { userIndicateurs, setUserIndicateurs, isChanged, isLoading } = useIndicatorEdit();
 
   const indicateursByCategory = INDICATORS.reduce((prev, curr) => {
     for (const category of curr.categories) {
@@ -77,8 +76,6 @@ const EditIndicateurs = ({ navigation, route }) => {
   }, [userIndicateurs]);
 
   const onValidate = async () => {
-    setIsLoading(true);
-
     // Log events for added indicators
     const savedUserIndicators = await localStorage.getIndicateurs();
     const savedActiveIndicators = savedUserIndicators.filter((i) => i.active).map((i) => i.uuid);
@@ -88,9 +85,6 @@ const EditIndicateurs = ({ navigation, route }) => {
     const newlyAddedIndicators = modifiedActiveIndicators.filter((uuid) => !savedActiveIndicators.includes(uuid));
 
     if (newlyAddedIndicators.length > 0) {
-      // Log general ADD_INDICATOR event
-
-      // Log ADD_INDICATOR_CATEGORY for each new indicator with its category
       newlyAddedIndicators.forEach((uuid) => {
         const indicator = userIndicateurs.find((i) => i.uuid === uuid);
         if (indicator?.matomoId) {
@@ -102,10 +96,13 @@ const EditIndicateurs = ({ navigation, route }) => {
       });
     }
 
-    await localStorage.setIndicateurs(userIndicateurs);
-    setIsLoading(false);
+    navigation.setParams({
+      backFromAddingIndicator: true,
+      backFromRemovingIndicator: !!newlyAddedIndicators.length,
+    });
     navigation.navigate("symptoms", {
       backFromAddingIndicator: true,
+      backFromRemovingIndicator: !!newlyAddedIndicators.length,
     });
   };
 
@@ -392,6 +389,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     padding: 20,
   },
+  divider: {
+    height: 1,
+    backgroundColor: "#E0E0E0",
+    width: "100%",
+    marginVertical: 8,
+  },
 });
+
+const EditIndicateurs = (props) => <EditIndicateursContent {...props} />;
 
 export default EditIndicateurs;

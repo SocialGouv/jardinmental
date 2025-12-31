@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef } from "react";
 import { StyleSheet, View, Text, TouchableOpacity, Alert } from "react-native";
 
 import { colors } from "../../utils/colors";
@@ -19,38 +19,25 @@ import { Gesture } from "react-native-gesture-handler";
 import ParagraphSpacing from "@assets/svg/icon/ParagraphSpacing";
 import TrashIcon from "@assets/svg/icon/Trash";
 import CrossIcon from "@assets/svg/icon/Cross";
+import { IndicatorEditProvider, useIndicatorEdit } from "@/context/IndicatorEditContext";
 
-const CustomSymptomScreen = ({ navigation, route, settings = false }) => {
-  const [chosenCategories, setChosenCategories] = useState();
-  const [userIndicateurs, setUserIndicateurs] = useState<Indicator[]>([]);
-  const [isEditing, setIsEditing] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [showSuccessBanner, setShowSuccessBanner] = useState<boolean>(false);
-  const bannerTimeout = useRef();
-  // const [userIndicateurs, setUserIndicateurs] = useState<Indicator[]>([]);
+const CustomSymptomScreenContent = ({ navigation, route, settings = false }) => {
+  const [chosenCategories, setChosenCategories] = React.useState();
+  const [isEditing, setIsEditing] = React.useState<boolean>(false);
+  const [showSuccessBanner, setShowSuccessBanner] = React.useState<boolean>(false);
+  const bannerTimeout = useRef<number | undefined>(undefined);
+
+  const { userIndicateurs, setUserIndicateurs, isLoading, setIsLoading, saveIndicators, resetIndicators } = useIndicatorEdit();
 
   useFocusEffect(
     React.useCallback(() => {
       (async () => {
-        const user_indicateurs = await localStorage.getIndicateurs();
-        if (user_indicateurs) {
-          setUserIndicateurs(user_indicateurs);
-        }
-        if (route.params.backFromAddingIndicator) {
+        if (route.params?.backFromAddingIndicator) {
           setShowSuccessBanner(true);
         }
       })();
-    }, [])
+    }, [route.params])
   );
-
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     (async () => {
-  //       let _userIndicateurs = await localStorage.getIndicateurs();
-  //       setUserIndicateurs(_userIndicateurs);
-  //     })();
-  //   }, [])
-  // );
 
   useEffect(() => {
     (async () => {
@@ -77,32 +64,35 @@ const CustomSymptomScreen = ({ navigation, route, settings = false }) => {
     })();
   }, [chosenCategories]);
 
-  const data = useMemo(() => userIndicateurs.filter((indicator) => indicator.active), [userIndicateurs]);
+  const data = React.useMemo(() => userIndicateurs.filter((indicator) => indicator.active), [userIndicateurs]);
 
   const onValidate = async () => {
-    if (loading) return;
-    setLoading(true);
-    await localStorage.setIndicateurs(userIndicateurs);
-    setLoading(false);
+    if (isLoading) return;
+    setIsLoading(true);
+    await saveIndicators();
+    setIsLoading(false);
     setShowSuccessBanner(true);
-    if (bannerTimeout.current) clearTimeout(bannerTimeout.current);
+    if (bannerTimeout.current !== undefined) clearTimeout(bannerTimeout.current);
     bannerTimeout.current = setTimeout(() => {
       setShowSuccessBanner(false);
-    }, 10000);
+    }, 10000) as unknown as number;
     // navigation.goBack();
   };
 
-  const renderItem = useCallback(({ item: indicator }) => {
-    return <IndicatorItem indicator={indicator} setUserIndicateurs={setUserIndicateurs} />;
-  }, []);
+  const renderItem = useCallback(
+    ({ item: indicator }) => {
+      return <IndicatorItem indicator={indicator} setUserIndicateurs={setUserIndicateurs} />;
+    },
+    [setUserIndicateurs]
+  );
 
   const keyExtractor = useCallback((indicator: Indicator) => indicator.uuid || indicator.name, []);
 
-  const panGesture = useMemo(() => Gesture.Pan().activateAfterLongPress(220), []);
+  const panGesture = React.useMemo(() => Gesture.Pan().activateAfterLongPress(220), []);
 
   return (
     <AnimatedHeaderScrollScreen
-      handlePrevious={() => {
+      handlePrevious={async () => {
         navigation.goBack();
       }}
       title=""
@@ -116,7 +106,8 @@ const CustomSymptomScreen = ({ navigation, route, settings = false }) => {
                 {
                   text: "Continuer",
                   style: "cancel",
-                  onPress: () => {
+                  onPress: async () => {
+                    await resetIndicators();
                     navigation.goBack();
                   },
                 },
@@ -179,7 +170,7 @@ const CustomSymptomScreen = ({ navigation, route, settings = false }) => {
           {showSuccessBanner && (
             <View className="abolute left-0 right-0 -bottom-10 px-8 bg-cnam-cyan-700-darken-40">
               <View className="flex-row items-center justify-between w-full h-20">
-                {route.params.backFromAddingIndicator && (
+                {route.params?.backFromAddingIndicator && (
                   <Text
                     style={{
                       color: "#F7FCFE",
@@ -189,7 +180,7 @@ const CustomSymptomScreen = ({ navigation, route, settings = false }) => {
                     L’indicateur a été ajouté avec succès
                   </Text>
                 )}
-                {!route.params.backFromAddingIndicator && (
+                {!route.params?.backFromAddingIndicator && (
                   <Text
                     style={{
                       color: "#F7FCFE",
@@ -202,7 +193,7 @@ const CustomSymptomScreen = ({ navigation, route, settings = false }) => {
                 <TouchableOpacity
                   onPress={() => {
                     setShowSuccessBanner(false);
-                    if (bannerTimeout.current) clearTimeout(bannerTimeout.current);
+                    if (bannerTimeout.current !== undefined) clearTimeout(bannerTimeout.current);
                   }}
                 >
                   <CrossIcon color={"#F7FCFE"} />
@@ -301,5 +292,7 @@ const IndicatorItem = ({
     </TouchableOpacity>
   );
 };
+
+const CustomSymptomScreen = (props) => <CustomSymptomScreenContent {...props} />;
 
 export default CustomSymptomScreen;

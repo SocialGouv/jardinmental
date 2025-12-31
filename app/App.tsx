@@ -25,6 +25,7 @@ import { OnboardingProgressHeaderProvider } from "./src/scenes/onboarding-v2/Pro
 import { LatestChangesModalProvider } from "./src/scenes/news/latestChangesModal";
 import { KeyboardProvider } from "react-native-keyboard-controller";
 import * as Sentry from "@sentry/react-native";
+import { IndicatorEditProvider } from "./src/context/IndicatorEditContext";
 
 // Initialize Sentry
 if (!__DEV__ && process.env.EXPO_PUBLIC_SENTRY_DSN) {
@@ -114,8 +115,10 @@ const App = () => {
                   <OnboardingProgressHeaderProvider>
                     <LatestChangesModalProvider>
                       <InfoModalProvider>
-                        <Router />
-                        <NPS navigationRef={navigationRef} />
+                        <IndicatorEditProvider>
+                          <Router />
+                          <NPS navigationRef={navigationRef} />
+                        </IndicatorEditProvider>
                       </InfoModalProvider>
                     </LatestChangesModalProvider>
                   </OnboardingProgressHeaderProvider>
