@@ -48,33 +48,6 @@ const EditIndicateursContent = ({ navigation, route }) => {
     });
   }
 
-  useFocusEffect(
-    React.useCallback(() => {
-      (async () => {
-        const user_indicateurs = await localStorage.getIndicateurs();
-        // console.log("✍️ ~ user_indicateurs", JSON.stringify(user_indicateurs, null, 2));
-        if (user_indicateurs) {
-          setUserIndicateurs(user_indicateurs);
-        }
-      })();
-    }, [])
-  );
-
-  useEffect(() => {
-    const handleIndicatorsChange = async () => {
-      const savedUserIndicators = await localStorage.getIndicateurs();
-      const savedActiveIndicators = savedUserIndicators.filter((i) => i.active).map((i) => i.uuid);
-      const modifiedIndicators = userIndicateurs.filter((i) => i.active).map((i) => i.uuid);
-      if (areStringArraysIdentical(savedActiveIndicators, modifiedIndicators)) {
-        setIsChanged(false);
-      } else {
-        setIsChanged(true);
-      }
-    };
-    handleIndicatorsChange();
-    return;
-  }, [userIndicateurs]);
-
   const onValidate = async () => {
     // Log events for added indicators
     const savedUserIndicators = await localStorage.getIndicateurs();
@@ -97,12 +70,10 @@ const EditIndicateursContent = ({ navigation, route }) => {
     }
 
     navigation.setParams({
-      backFromAddingIndicator: true,
-      backFromRemovingIndicator: !!newlyAddedIndicators.length,
+      backFromAddingIndicator: !!newlyAddedIndicators.length,
     });
     navigation.navigate("symptoms", {
-      backFromAddingIndicator: true,
-      backFromRemovingIndicator: !!newlyAddedIndicators.length,
+      backFromAddingIndicator: !!newlyAddedIndicators.length,
     });
   };
 
