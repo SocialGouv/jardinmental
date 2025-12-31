@@ -170,26 +170,14 @@ const CustomSymptomScreenContent = ({ navigation, route, settings = false }) => 
           {showSuccessBanner && (
             <View className="abolute left-0 right-0 -bottom-10 px-8 bg-cnam-cyan-700-darken-40">
               <View className="flex-row items-center justify-between w-full h-20">
-                {route.params?.backFromAddingIndicator && (
-                  <Text
-                    style={{
-                      color: "#F7FCFE",
-                    }}
-                    className={typography.textMdSemibold}
-                  >
-                    L’indicateur a été ajouté avec succès
-                  </Text>
-                )}
-                {!route.params?.backFromAddingIndicator && (
-                  <Text
-                    style={{
-                      color: "#F7FCFE",
-                    }}
-                    className={typography.textMdSemibold}
-                  >
-                    Votre suivi a été modifié avec succès
-                  </Text>
-                )}
+                <Text
+                  style={{
+                    color: "#F7FCFE",
+                  }}
+                  className={typography.textMdSemibold}
+                >
+                  Votre suivi a été modifié avec succès
+                </Text>
                 <TouchableOpacity
                   onPress={() => {
                     setShowSuccessBanner(false);

@@ -68,13 +68,7 @@ const EditIndicateursContent = ({ navigation, route }) => {
         }
       });
     }
-
-    navigation.setParams({
-      backFromAddingIndicator: !!newlyAddedIndicators.length,
-    });
-    navigation.navigate("symptoms", {
-      backFromAddingIndicator: !!newlyAddedIndicators.length,
-    });
+    navigation.navigate("symptoms");
   };
 
   const reactivateIndicateur = async (_indicateur) => {
