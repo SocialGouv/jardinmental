@@ -7,11 +7,11 @@ const CGU = ({ navigation }) => {
   const content = (
     <View className="px-2">
       <Text className="text-blue-900 text-sm my-2">
-        Les présentes conditions générales d’utilisation (ci-après « CGU ») fixent le cadre juridique de l’application Jardin Mental (ci-après
+        Les présentes conditions générales d’utilisation (ci-après « CGU ») fixent le cadre juridique de l’Application Jardin Mental (ci-après
         « Application ») et définissent les conditions d’accès et d’utilisation des Services par l’Utilisateur.
       </Text>
 
-      <Text className="text-blue-900 text-lg font-bold my-3">Article 1 - Champ d’application</Text>
+      <Text className="text-blue-900 text-lg font-bold my-3">Article 1 - Champ d’Application</Text>
       <Text className="text-blue-900 text-sm my-2">
         L’Application peut être téléchargée sans création de compte et demeure d’accès libre. L’utilisation de l’Application est subordonnée au
         respect et à l’acceptation des présentes CGU.
@@ -26,7 +26,7 @@ const CGU = ({ navigation }) => {
 
       <Text className="text-blue-900 text-lg font-bold my-3">Article 3 – Définitions</Text>
       <Text className="text-blue-900 text-sm my-2">
-        « Application » désigne l’application mobile Jardin Mental sous la responsabilité de la Caisse Nationale d’Assurance Maladie (CNAM) à
+        « Application » désigne l’Application mobile Jardin Mental sous la responsabilité de la Caisse Nationale d’Assurance Maladie (CNAM) à
         l’initiative de la Fabrique numérique des ministères sociaux.
       </Text>
       <Text className="text-blue-900 text-sm my-2">
@@ -37,7 +37,7 @@ const CGU = ({ navigation }) => {
         « Services » désigne les fonctionnalités proposées par l’Application pour répondre à ses finalités.
       </Text>
       <Text className="text-blue-900 text-sm my-2">
-        « Utilisateur » désigne toute personne physique qui télécharge l’application et l’utilise après avoir accepté les présentes CGU.
+        « Utilisateur » désigne toute personne physique qui télécharge l’Application et l’utilise après avoir accepté les présentes CGU.
       </Text>
 
       <Text className="text-blue-900 text-lg font-bold my-3">Article 4 - Fonctionnalités</Text>
@@ -73,7 +73,7 @@ const CGU = ({ navigation }) => {
       <Li>
         <Text className="text-blue-900 text-sm my-2">
           L’Utilisateur peut personnaliser le questionnaire, en fonction de son état du moment ou de ses difficultés personnelles, accessible via les
-          paramètres de l’application. Cela permet de cibler le suivi souhaité. Le suivi peut concerner tous les aspects qui sont le reflet ou ont un
+          paramètres de l’Application. Cela permet de cibler le suivi souhaité. Le suivi peut concerner tous les aspects qui sont le reflet ou ont un
           impact sur la santé mentale de l’Utilisateur : humeur, ressentis, symptômes physiques, comportements spécifiques, pensées récurrentes,
           activités quotidiennes, etc ... L’Utilisateur peut également ajouter d’autres indicateurs qui lui sont propres et qui ne figureraient pas
           dans la liste.
@@ -124,22 +124,22 @@ const CGU = ({ navigation }) => {
         4.4 - Rubrique « Agir » pour explorer et tester des outils pour agir en fonction de ses besoins
       </Text>
       <Text className="text-blue-900 text-sm my-2">
-        Cette rubrique offre à l’utilisateur des liens vers des exercices, vidéos, questionnaires, gratuits, validés par un comité éditorial et
+        Cette rubrique offre à l’Utilisateur des liens vers des exercices, vidéos, questionnaires, gratuits, validés par un comité éditorial et
         scientifique.
       </Text>
       <Text className="text-blue-900 text-sm my-2">
-        L’utilisateur peut naviguer dans une boîte de plus de 60 outils grâce à des filtres, les outils sont classés selon différentes catégories.
-        L’utilisateur peut également mettre en favoris ses outils préférés pour les retrouver plus facilement.
+        L’Utilisateur peut naviguer dans une boîte de plus de 60 outils grâce à des filtres, les outils sont classés selon différentes catégories.
+        L’Utilisateur peut également mettre en favoris ses outils préférés pour les retrouver plus facilement.
       </Text>
 
       <Text className="text-blue-900 text-lg font-bold my-2">
         4.5 - Rubrique « Personnaliser » pour adapter son questionnaire à tout moment en fonction de sa situation
       </Text>
       <Text className="text-blue-900 text-sm my-2">
-        L’utilisateur peut personnaliser à tout moment son questionnaire de suivi : modifier, ajouter ou retirer des indicateurs ; des objectifs ; des
-        traitements ; ajouter ou modifier un rappel programmé. Depuis cette rubrique l’utilisateur peut générer sous format d’un fichier PDF un
-        récapitulatif de ses données renseignées sur les 30 derniers jours dans l’application. Aucune donnée n’est transférée à l’équipe de Jardin
-        Mental. L’utilisateur peut ensuite le partager avec la personne de son choix. L’utilisateur peut également générer un fichier de sauvegarde de
+        L’Utilisateur peut personnaliser à tout moment son questionnaire de suivi : modifier, ajouter ou retirer des indicateurs ; des objectifs ; des
+        traitements ; ajouter ou modifier un rappel programmé. Depuis cette rubrique l’Utilisateur peut générer sous format d’un fichier PDF un
+        récapitulatif de ses données renseignées sur les 30 derniers jours dans l’Application. Aucune donnée n’est transférée à l’équipe de Jardin
+        Mental. L’Utilisateur peut ensuite le partager avec la personne de son choix. L’Utilisateur peut également générer un fichier de sauvegarde de
         ses données afin de pouvoir les ré-importer dans un autre appareil.
       </Text>
 
@@ -152,16 +152,16 @@ const CGU = ({ navigation }) => {
         Cette rubrique propose une foire aux questions, la liste des membres du comité éditorial et scientifique.
       </Text>
       <Text className="text-blue-900 text-sm my-2">
-        Elle permet également à l’utilisateur de donner son avis, ou de contacter l’équipe via une adresse mail de contact :
+        Elle permet également à l’Utilisateur de donner son avis, ou de contacter l’équipe via une adresse mail de contact :
         jardinmental@fabrique.social.gouv.fr
       </Text>
-      <Text className="text-blue-900 text-sm my-2">L’utilisateur peut également recommander l’application à une personne de son choix.</Text>
+      <Text className="text-blue-900 text-sm my-2">L’Utilisateur peut également recommander l’Application à une personne de son choix.</Text>
 
       <Text className="text-blue-900 text-lg font-bold my-3">Article 5 - Responsabilités</Text>
 
       <Text className="text-blue-900 text-lg font-bold my-2">5.1 – L’Éditeur de l’Application</Text>
       <Text className="text-blue-900 text-sm my-2">
-        Les sources des informations diffusées sur l’application sont réputées fiables mais l’Application ne garantit pas être exempte de défauts,
+        Les sources des informations diffusées sur l’Application sont réputées fiables mais l’Application ne garantit pas être exempte de défauts,
         d’erreurs ou d’omissions.
       </Text>
       <Text className="text-blue-900 text-sm my-2">
@@ -196,7 +196,7 @@ const CGU = ({ navigation }) => {
     </View>
   );
 
-  return <LegalScreen navigation={navigation} title="Conditions générales d'utilisation de l'application Jardin Mental" content={content} />;
+  return <LegalScreen navigation={navigation} title="Conditions générales d'utilisation de l'Application Jardin Mental" content={content} />;
 };
 
 const Li = ({ children }) => (
