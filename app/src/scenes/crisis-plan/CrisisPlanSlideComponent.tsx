@@ -12,6 +12,7 @@ import CrisisListBottomSheet from "./CrisisListBottomSheet";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CrisisPlanInputBox } from "./CrisisPlanInputBox";
 import NavigationButtons from "@/components/onboarding/NavigationButtons";
+import CrisisProgressBar from "./CrisisProgressBar";
 
 interface ModalCorrelationScreenProps {
   navigation: any;
@@ -30,6 +31,7 @@ interface ModalCorrelationScreenProps {
   labelBottomSheet: string;
   headerBottomSheet: string;
   headerEditionBottomSheet: string;
+  slideIndex: number;
 }
 
 export const CrisisPlanSlideComponent: React.FC<ModalCorrelationScreenProps> = ({
@@ -43,6 +45,7 @@ export const CrisisPlanSlideComponent: React.FC<ModalCorrelationScreenProps> = (
   labelBottomSheet,
   headerBottomSheet,
   headerEditionBottomSheet,
+  slideIndex,
   route,
 }) => {
   const { showBottomSheet, closeBottomSheet } = useBottomSheet();
@@ -84,6 +87,7 @@ export const CrisisPlanSlideComponent: React.FC<ModalCorrelationScreenProps> = (
           paddingBottom: 100,
         }}
       >
+        <CrisisProgressBar slideIndex={slideIndex} />
         <View className="flex-column py-4 space-y-4 px-4 rounded-2xl">
           <Text className={mergeClassNames(typography.textLgSemibold, "text-primary-900")}>{title}</Text>
         </View>

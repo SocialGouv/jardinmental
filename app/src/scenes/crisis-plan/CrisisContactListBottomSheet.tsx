@@ -1,14 +1,24 @@
 import { LightSelectionnableItem } from "@/components/SelectionnableItem";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
-import { View, Text, Dimensions } from "react-native";
-import React, { useState } from "react";
+import { View, Text, Dimensions, TextInput } from "react-native";
+import React, { useEffect, useState } from "react";
 import { TouchableOpacity } from "@gorhom/bottom-sheet";
 import JMButton from "@/components/JMButton";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 
 const screenHeight = Dimensions.get("window").height;
 const height90vh = screenHeight * 0.9;
+
+const cleanString = (s) => {
+  let r = s
+    ?.replace(/\s*/g, "")
+    .replace(/é/g, "e")
+    .replace(/è/g, "e")
+    .replace(/(\(|\)|\||\^|\$)/g, "\\$1")
+    .toLowerCase();
+  return r;
+};
 
 export default function CrisisContactListBottomSheet({
   onClose,
@@ -28,6 +38,20 @@ export default function CrisisContactListBottomSheet({
   itemIdLabel?: string;
 }) {
   const [selectedItems, setSelectedItems] = useState<any[]>(initialSelectedItems);
+  const [filter, setFilter] = useState();
+  const [filteredList, setFilteredList] = useState([]);
+  const filterAndSortList = (list) =>
+    list
+      ?.sort((a, b) => cleanString(a.name) > cleanString(b.name))
+      .filter((e) => {
+        const r = new RegExp(cleanString(filter), "gi");
+        return r.test(cleanString(e.name));
+      });
+
+  useEffect(() => {
+    setFilteredList(filterAndSortList(items) || []);
+  }, [filter, items]);
+
   const toggleItem = (ind) => {
     const alreadySelected = selectedItems.map((item) => (itemIdKey ? item[itemIdKey] : item)).includes(itemIdKey ? ind[itemIdKey] : ind);
     if (alreadySelected) {
@@ -59,8 +83,15 @@ export default function CrisisContactListBottomSheet({
         </View>
         <View className="p-4 flex-column flex-1 gap-6">
           <Text className={mergeClassNames(typography.textXlBold, "text-left text-cnam-primary-900")}>{label}</Text>
+          <TextInput
+            onChangeText={(text) => {
+              setFilter(text);
+            }}
+            className={mergeClassNames(typography.textMdRegular, "text-left border border-gray-300 p-2 rounded rounded-lg")}
+            placeholder="Rechercher ou ajouter un élément"
+          />
           <View className="flex-colum flex-1">
-            {items.map((ind) => {
+            {filteredList.map((ind) => {
               const selected = selectedItems.map((item) => (itemIdKey ? item[itemIdKey] : item)).includes(itemIdKey ? ind[itemIdKey] : ind);
               return (
                 <LightSelectionnableItem
@@ -76,36 +107,7 @@ export default function CrisisContactListBottomSheet({
                 />
               );
             })}
-            {/* {!!uniqueItems.length && !filteredDoses.length && (
-              <Text className={mergeClassNames(typography.textSmMedium, "text-gray-800")}>Pas de résultat</Text>
-            )} */}
-            {/* {!!searchedText && !filteredDoses.length && (
-              <TouchableOpacity
-                onPress={() => {
-                  createNewDose(searchedText);
-                  setSearchText("");
-                }}
-              >
-                <View className="flex-row items-center mr-auto mt-2">
-                  <Text className={mergeClassNames(typography.textLgMedium, "mr-2 text-cnam-primary-900")}>Ajouter "{searchedText}"</Text>
-                  <PlusIcon />
-                </View>
-              </TouchableOpacity>
-            )} */}
-            {/* {!searchedText && (
-              <View className="flex-row items-center mt-2 ml-auto">
-                <TouchableOpacity
-                  onPress={() => {
-                    setEditingDoses((editingDoses) => [...editingDoses, ""]);
-                  }}
-                >
-                  <View className="flex-row items-center">
-                    <Text className={mergeClassNames(typography.textMdMedium, "mr-2 text-cnam-primary-900")}>Saisir manuellement</Text>
-                    <PlusIcon />
-                  </View>
-                </TouchableOpacity>
-              </View>
-            )} */}
+            {!filteredList.length && <Text className={mergeClassNames(typography.textSmMedium, "text-gray-800")}>Pas de résultat</Text>}
           </View>
         </View>
       </KeyboardAwareScrollView>

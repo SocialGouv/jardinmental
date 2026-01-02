@@ -19,6 +19,7 @@ import ImageIcon from "@assets/svg/icon/ImageIcon";
 import SimplePlus from "@assets/svg/icon/SimplePlus";
 import { CrisisMediaBottomSheet } from "./CrisisMediaBottomSheet";
 import NavigationButtons from "@/components/onboarding/NavigationButtons";
+import CrisisProgressBar from "./CrisisProgressBar";
 
 interface ModalCorrelationScreenProps {
   navigation: any;
@@ -164,6 +165,7 @@ export const CrisisPlanSlideReasonToLive: React.FC<ModalCorrelationScreenProps> 
           paddingBottom: 100,
         }}
       >
+        <CrisisProgressBar slideIndex={7} />
         <View className="flex-column py-4 space-y-4 px-4 rounded-2xl">
           <Text className={mergeClassNames(typography.textLgSemibold, "text-primary-900")}>{title}</Text>
         </View>

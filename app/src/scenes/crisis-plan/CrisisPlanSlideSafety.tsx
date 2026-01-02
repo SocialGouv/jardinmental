@@ -21,6 +21,7 @@ const STORAGE_KEY = "@CRISIS_PLAN_SAFETY";
 export const CrisisPlanSlideSafety: React.FC<ModalCorrelationScreenProps> = ({ navigation, route }) => {
   return (
     <CrisisPlanSlideComponent
+      slideIndex={6}
       title={"Comment assurer votre sécurité ou sécuriser votre environnement?"}
       navigation={navigation}
       suggestions={suggestions}

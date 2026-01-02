@@ -16,6 +16,7 @@ import { Gesture } from "react-native-gesture-handler";
 import ParagraphSpacing from "@assets/svg/icon/ParagraphSpacing";
 import TrashIcon from "@assets/svg/icon/Trash";
 import { TW_COLORS } from "@/utils/constants";
+import { Indicator } from "@/entities/Indicator";
 
 const IndicatorsSettingsMore = ({ navigation, route }) => {
   const [indicators, setIndicators] = useState<Indicator[]>([]);

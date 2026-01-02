@@ -14,6 +14,7 @@ import PhoneIcon from "@assets/svg/icon/Phone";
 import { CrisisContactBottomSheet } from "./CrisisContactBottomSheet";
 import CrisisContactListBottomSheet from "./CrisisContactListBottomSheet";
 import NavigationButtons from "@/components/onboarding/NavigationButtons";
+import CrisisProgressBar from "./CrisisProgressBar";
 
 interface ModalCorrelationScreenProps {
   navigation: any;
@@ -86,6 +87,8 @@ export const CrisisPlanSlideContactHelp: React.FC<ModalCorrelationScreenProps> =
           paddingBottom: 100,
         }}
       >
+        <CrisisProgressBar slideIndex={4} />
+
         <View className="flex-column py-4 space-y-4 px-4 rounded-2xl">
           <Text className={mergeClassNames(typography.textLgSemibold, "text-primary-900")}>{title}</Text>
         </View>

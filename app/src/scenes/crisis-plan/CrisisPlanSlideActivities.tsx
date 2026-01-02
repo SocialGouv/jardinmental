@@ -37,6 +37,7 @@ const NEXT_SCREEN = "";
 export const CrisisPlanSlideActivities: React.FC<ModalCorrelationScreenProps> = ({ navigation, route }) => {
   return (
     <CrisisPlanSlideComponent
+      slideIndex={2}
       title={"Que pouvez-vous faire seul.e pour mettre à distance les idées suicidaires ?"}
       navigation={navigation}
       suggestions={suggestions}

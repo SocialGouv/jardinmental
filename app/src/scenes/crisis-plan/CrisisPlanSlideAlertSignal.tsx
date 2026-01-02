@@ -36,6 +36,7 @@ const STORAGE_KEY = "@CRISIS_PLAN_ALERT";
 export const CrisisPlanSlideAlert: React.FC<ModalCorrelationScreenProps> = ({ navigation, route }) => {
   return (
     <CrisisPlanSlideComponent
+      slideIndex={1}
       title={"Quels signes d’alertes sont annonciateurs d’idées suicidaires pour vous ?"}
       navigation={navigation}
       suggestions={suggestions}
