@@ -39,7 +39,7 @@ export default function CrisisContactListBottomSheet({
   header: string;
   itemIdKey?: string;
   itemIdLabel?: string;
-  accessPrivileges: "all" | "limited" | "none";
+  accessPrivileges: "all" | "limited" | "none" | undefined;
 }) {
   const { showBottomSheet, closeBottomSheet } = useBottomSheet();
   const [selectedItems, setSelectedItems] = useState<any[]>(initialSelectedItems);
