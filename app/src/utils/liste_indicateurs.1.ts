@@ -601,7 +601,7 @@ export const INDICATEUR_CONSOMMATION_TABAC = {
   subcategories: [NEW_INDICATORS_SUBCATEGORIES.SUBSTANCE_USE],
   category: INDICATORS_CATEGORIES["Comportements"],
   priority: 2,
-  order: "ASC",
+  order: "DESC",
   type: INDICATOR_TYPE.gauge,
   new: true,
   uuid: "e4a2cb84-548f-474a-b93a-6c4423cfa7a2",
