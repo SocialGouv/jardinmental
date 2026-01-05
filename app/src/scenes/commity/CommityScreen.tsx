@@ -159,7 +159,7 @@ const CommityBottomSheet = ({ entity }: { entity: CommityEntity }) => {
       {entity.isOrganization && <OrganisationIcon />}
       {!entity.isOrganization && <PeopleIcon />}
 
-      <Text className={mergeClassNames(typography.textXlBold, "text-cnam-cyan-600-darken-20")}>
+      <Text className={mergeClassNames(typography.textXlBold, "text-cnam-cyan-600-darken-20", entity.isOrganization ? "text-center" : "")}>
         {entity.isOrganization ? entity.organization : entity.name}
       </Text>
       {entity.role && <Text className={mergeClassNames(typography.textLgRegular, "text-cnam-primary-800 text-center")}>{entity.role}</Text>}
@@ -188,17 +188,17 @@ const CommityCategories: React.FC<CommityCategoriesProps> = ({ navigation }) => 
       scrollViewBackground={TW_COLORS.GRAY_50}
     >
       <View className="p-4 mt-4">
-        <View className="mb-6 bg-cnam-cyan-lighten-90">
-          <Text className="text-cnam-primary-800 text-base leading-6 p-4">
+        <View className="mb-6 bg-cnam-cyan-lighten-90 rounded-2xl">
+          <Text className="text-cnam-primary-900 text-base leading-6 p-4">
             Jardin Mental s’appuie sur un <Text className={mergeClassNames(typography.textMdSemibold)}>comité éditorial et scientifique</Text> qui
             garantit la qualité, la rigueur et la fiabilité des contenus proposés.
           </Text>
-          <Text className="text-cnam-primary-800 text-base leading-6 p-4">
+          <Text className="text-cnam-primary-900 text-base leading-6 p-4">
             Il réunit des professionnels de santé, des chercheurs et des institutions engagés sur les enjeux de santé mentale.
           </Text>
         </View>
         <Text className={mergeClassNames(typography.textXlBold, "text-cnam-primary-800")}>Découvrez les membres du comité</Text>
-        <View className="flex-col mt-4">
+        <View className="flex-col mt-4 border-cnam-primary-300 border-2 rounded-2xl">
           {commityList.map((item, index) => (
             <TouchableOpacity
               key={index}
@@ -215,7 +215,9 @@ const CommityCategories: React.FC<CommityCategoriesProps> = ({ navigation }) => 
               <View className="flex-col basis-[80%]">
                 <View className="flex-row">
                   {item.isOrganization && (
-                    <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40")}>{item.organization}</Text>
+                    <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40 text-center")}>
+                      {item.organization}
+                    </Text>
                   )}
                   {!item.isOrganization && (
                     <>
