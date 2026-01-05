@@ -267,13 +267,13 @@ const IndicatorItem = ({
   };
 
   return (
-    <TouchableOpacity onLongPress={drag} delayLongPress={100}>
+    <TouchableOpacity onLongPress={drag} delayLongPress={200}>
       <View
         className={mergeClassNames("p-4 bg-gray-100 mb-2 rounded-xl flex-row items-center justify-between", !indicator.active ? "bg-gray-50" : "")}
       >
         <ParagraphSpacing width={24} height={24} color={TW_COLORS.CNAM_PRIMARY_700} />
         <Text className={mergeClassNames(typography.textLgRegular, "text-cnam-primary-950 flex-1 mx-3 ml-4")}>{indicator?.name}</Text>
-        <TouchableOpacity onPress={deleteIndicator}>
+        <TouchableOpacity onPress={deleteIndicator} hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}>
           <TrashIcon width={24} height={24} color={TW_COLORS.CNAM_PRIMARY_800} />
         </TouchableOpacity>
       </View>
