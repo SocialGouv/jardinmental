@@ -20,6 +20,8 @@ import CircleQuestionMark from "@assets/svg/icon/CircleQuestionMark";
 import HelpView from "@/components/HelpView";
 import { useAnimatedStyle, interpolate, Extrapolate } from "react-native-reanimated";
 import Animated from "react-native-reanimated";
+import { mergeClassNames } from "@/utils/className";
+import { typography } from "@/utils/typography";
 
 const screenHeight = Dimensions.get("window").height;
 
@@ -41,7 +43,7 @@ export const VariationsHeader = ({ day, setDay, scrollY }) => {
   return (
     <Animated.View
       style={[
-        { paddingHorizontal: 16, backgroundColor: "#FFF" },
+        { paddingHorizontal: 16, backgroundColor: TW_COLORS.CNAM_PRIMARY_25 },
         animatedShadowStyle,
         {
           shadowColor: "#000",
@@ -196,7 +198,7 @@ const Variations = ({ navigation, onScroll, scrollY, day, setDay, dynamicPadding
   };
 
   return (
-    <View className="flex-1 bg-white">
+    <View className="flex-1 bg-cnam-primary-25">
       <Animated.ScrollView
         style={styles.scrollView}
         scrollEventThrottle={16}
@@ -206,6 +208,7 @@ const Variations = ({ navigation, onScroll, scrollY, day, setDay, dynamicPadding
           {
             paddingBottom: insets.bottom + TAB_BAR_HEIGHT,
             paddingTop: 260,
+            backgroundColor: TW_COLORS.CNAM_PRIMARY_25,
           },
         ]}
         onScroll={onScroll}
@@ -230,14 +233,35 @@ const Variations = ({ navigation, onScroll, scrollY, day, setDay, dynamicPadding
           </>
         ) : (
           <>
-            <View style={styles.subtitleContainer}>
-              <Icon icon="InfoSvg" width={25} height={25} color={colors.LIGHT_BLUE} />
-              <Text style={styles.subtitle}>
-                Des <Text style={styles.bold}>courbes d'évolution</Text> apparaîtront au fur et à mesure de vos saisies quotidiennes.
-              </Text>
-            </View>
-            <View style={styles.imageContainer}>
-              <Image style={styles.image} source={require("../../../assets/imgs/calendar.png")} />
+            <View
+              className="bg-cnam-primary-25"
+              style={{
+                position: "relative",
+                paddingTop: 35,
+                paddingBottom: 200,
+              }}
+            >
+              <View>
+                <View className="absolute z-1 w-full items-center">
+                  <View className={"bg-cnam-primary-100 h-[150] w-[150] rounded-full items-center justify-center"} style={{ top: 20 }}></View>
+                </View>
+              </View>
+              <View className="px-4 z-20">
+                <Image
+                  style={{ width: 80, height: 80, right: -150, top: 60, resizeMode: "contain" }}
+                  source={require("../../../assets/imgs/illustration-no-note.png")}
+                />
+              </View>
+              <View className={mergeClassNames("border border-cnam-primary-200 rounded-2xl p-4 py-6 bg-white", "mt-12")} style={{ borderWidth: 0.5 }}>
+                <>
+                  <Text className={mergeClassNames(typography.textMdBold, "text-cnam-primary-800 text-center px-4")}>
+                    Il n’y a pas de données à afficher pour cette période.
+                  </Text>
+                  <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 text-center px-4 mt-4")}>
+                    Des courbes d’évolutions apparaîtront au fur et à mesure de vos saisies.
+                  </Text>
+                </>
+              </View>
             </View>
           </>
         )}
