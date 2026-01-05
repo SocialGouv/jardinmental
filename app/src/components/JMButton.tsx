@@ -77,17 +77,26 @@ export default function JMButton({
       break;
     case "outline":
       variantClasses = "bg-white";
-      borderStyle = {
-        borderColor: TW_COLORS.PRIMARY,
-        borderWidth: 1,
-      };
+      if (!disabled) {
+        borderStyle = {
+          borderColor: TW_COLORS.PRIMARY,
+          borderWidth: 1,
+        };
+      } else {
+        borderStyle = {
+          borderColor: TW_COLORS.GRAY_200,
+        };
+      }
       break;
     case "text":
       variantClasses = "bg-transparent";
       break;
   }
 
-  const disabledClasses = disabled || loading ? "bg-[#EFF1F5]" : "";
+  let disabledClasses = disabled || loading ? "bg-[#EFF1F5]" : "";
+  if (variant === "outline" && disabled) {
+    disabledClasses = "bg-[#FCFCFD]";
+  }
   const finalClassName = mergeClassNames(baseClasses, variantClasses, disabledClasses, className);
 
   let textColor = "text-white";
@@ -95,6 +104,7 @@ export default function JMButton({
   if (variant === "secondary") textColor = "text-black";
   if (variant === "text") textColor = "text-cnam-primary-800";
   if (disabled || loading) textColor = "text-gray-800";
+  if (disabled && variant === "outline") textColor = "text-gray-600";
 
   const styledIcon = icon
     ? React.cloneElement(icon, {
