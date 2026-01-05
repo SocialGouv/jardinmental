@@ -15,6 +15,7 @@ import { CrisisContactBottomSheet } from "./CrisisContactBottomSheet";
 import CrisisContactListBottomSheet from "./CrisisContactListBottomSheet";
 import NavigationButtons from "@/components/onboarding/NavigationButtons";
 import CrisisProgressBar from "./CrisisProgressBar";
+import { CrisisAuthorizedContactBottomSheet } from "./CrisisAuthorizedContactBottomSheet";
 
 interface ModalCorrelationScreenProps {
   navigation: any;
@@ -101,11 +102,19 @@ export const CrisisPlanSlideContactHelp: React.FC<ModalCorrelationScreenProps> =
               setContactsError(null);
               setLoadingContacts(true);
               try {
-                const { status } = await Contacts.requestPermissionsAsync();
+                const { status, accessPrivileges } = await Contacts.requestPermissionsAsync();
                 if (status !== "granted") {
                   setContactsError("Permission refusée pour accéder aux contacts.");
                   setLoadingContacts(false);
-                  Alert.alert("Permission refusée", "L'accès aux contacts a été refusé.");
+                  showBottomSheet(
+                    <CrisisAuthorizedContactBottomSheet
+                      label={label}
+                      header={headerEditionBottomSheet}
+                      onClose={() => {
+                        closeBottomSheet();
+                      }}
+                    />
+                  );
                   return;
                 }
                 const { data } = await Contacts.getContactsAsync({
@@ -119,6 +128,7 @@ export const CrisisPlanSlideContactHelp: React.FC<ModalCorrelationScreenProps> =
                       items={data}
                       itemIdKey={"id"}
                       itemIdLabel={"name"}
+                      accessPrivileges={accessPrivileges}
                       initialSelectedItems={selectedItems}
                       label={label}
                       header={headerEditionBottomSheet}

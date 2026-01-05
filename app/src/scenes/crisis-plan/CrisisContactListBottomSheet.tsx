@@ -6,6 +6,8 @@ import React, { useEffect, useState } from "react";
 import { TouchableOpacity } from "@gorhom/bottom-sheet";
 import JMButton from "@/components/JMButton";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
+import { CrisisAuthorizedContactBottomSheet } from "./CrisisAuthorizedContactBottomSheet";
+import { useBottomSheet } from "@/context/BottomSheetContext";
 
 const screenHeight = Dimensions.get("window").height;
 const height90vh = screenHeight * 0.9;
@@ -28,6 +30,7 @@ export default function CrisisContactListBottomSheet({
   header,
   itemIdKey,
   itemIdLabel,
+  accessPrivileges,
 }: {
   onClose: (item: string[]) => void;
   initialSelectedItems: string[];
@@ -36,7 +39,9 @@ export default function CrisisContactListBottomSheet({
   header: string;
   itemIdKey?: string;
   itemIdLabel?: string;
+  accessPrivileges: "all" | "limited" | "none";
 }) {
+  const { showBottomSheet, closeBottomSheet } = useBottomSheet();
   const [selectedItems, setSelectedItems] = useState<any[]>(initialSelectedItems);
   const [filter, setFilter] = useState();
   const [filteredList, setFilteredList] = useState([]);
@@ -90,6 +95,26 @@ export default function CrisisContactListBottomSheet({
             className={mergeClassNames(typography.textMdRegular, "text-left border border-gray-300 p-2 rounded rounded-lg")}
             placeholder="Rechercher ou ajouter un élément"
           />
+          {accessPrivileges === "limited" && (
+            <View className="bg-cnam-primary-50 p-4 py-2">
+              <Text className={mergeClassNames(typography.textSmMedium, "text-cnam-primary-900")}>Seuls les contacts autorisés sont affichés.</Text>
+              <TouchableOpacity
+                onPress={() => {
+                  showBottomSheet(
+                    <CrisisAuthorizedContactBottomSheet
+                      label={"Autorisez l’accès à vos contacts"}
+                      header={header}
+                      onClose={() => {
+                        closeBottomSheet();
+                      }}
+                    />
+                  );
+                }}
+              >
+                <Text className={mergeClassNames(typography.textSmMedium, "text-cnam-cyan-700-darken-40")}>Modifier l'accès aux contacts</Text>
+              </TouchableOpacity>
+            </View>
+          )}
           <View className="flex-colum flex-1">
             {filteredList.map((ind) => {
               const selected = selectedItems.map((item) => (itemIdKey ? item[itemIdKey] : item)).includes(itemIdKey ? ind[itemIdKey] : ind);

@@ -8,16 +8,14 @@ import { TW_COLORS } from "@/utils/constants";
 import PencilIcon from "@assets/svg/icon/Pencil";
 import CrisisNavigationButtons from "./CrisisNavigationButtons";
 import { useBottomSheet } from "@/context/BottomSheetContext";
-import { CrisisBottomSheet } from "./CrisisBottomSheet";
-import CrisisListBottomSheet from "./CrisisListBottomSheet";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { CrisisPlanInputBox } from "./CrisisPlanInputBox";
 import JMButton from "@/components/JMButton";
 import PhoneIcon from "@assets/svg/icon/Phone";
 import { CrisisContactBottomSheet } from "./CrisisContactBottomSheet";
 import CrisisContactListBottomSheet from "./CrisisContactListBottomSheet";
 import NavigationButtons from "@/components/onboarding/NavigationButtons";
 import CrisisProgressBar from "./CrisisProgressBar";
+import { CrisisAuthorizedContactBottomSheet } from "./CrisisAuthorizedContactBottomSheet";
 
 interface ModalCorrelationScreenProps {
   navigation: any;
@@ -104,11 +102,20 @@ export const CrisisPlanSlideContact: React.FC<ModalCorrelationScreenProps> = ({ 
               setContactsError(null);
               setLoadingContacts(true);
               try {
-                const { status } = await Contacts.requestPermissionsAsync();
+                const { status, accessPrivileges } = await Contacts.requestPermissionsAsync();
                 if (status !== "granted") {
                   setContactsError("Permission refusée pour accéder aux contacts.");
                   setLoadingContacts(false);
-                  Alert.alert("Permission refusée", "L'accès aux contacts a été refusé.");
+                  showBottomSheet(
+                    <CrisisAuthorizedContactBottomSheet
+                      label={label}
+                      header={headerEditionBottomSheet}
+                      onClose={() => {
+                        closeBottomSheet();
+                      }}
+                    />
+                  );
+                  // Alert.alert("Permission refusée", "L'accès aux contacts a été refusé.");
                   return;
                 }
                 const { data } = await Contacts.getContactsAsync({
@@ -122,6 +129,7 @@ export const CrisisPlanSlideContact: React.FC<ModalCorrelationScreenProps> = ({ 
                       items={data}
                       itemIdKey={"id"}
                       itemIdLabel={"name"}
+                      accessPrivileges={accessPrivileges}
                       initialSelectedItems={selectedItems}
                       label={label}
                       header={headerEditionBottomSheet}
@@ -144,9 +152,17 @@ export const CrisisPlanSlideContact: React.FC<ModalCorrelationScreenProps> = ({ 
                     />
                   );
                 } else {
-                  setContactsError("Aucun contact trouvé.");
+                  setContactsError("Aucun contact sélectionné trouvé.");
                   setLoadingContacts(false);
-                  Alert.alert("Aucun contact", "Aucun contact trouvé sur cet appareil.");
+                  showBottomSheet(
+                    <CrisisAuthorizedContactBottomSheet
+                      label={label}
+                      header={headerEditionBottomSheet}
+                      onClose={() => {
+                        closeBottomSheet();
+                      }}
+                    />
+                  );
                 }
               } catch (e) {
                 setContactsError("Erreur lors de la récupération des contacts.");
