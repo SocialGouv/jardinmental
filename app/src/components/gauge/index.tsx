@@ -41,7 +41,7 @@ const Gauge = ({ hideSlider = false, defaultValue = 0, onChange, reverse }) => {
           onSlidingComplete={(v) => {
             onChange?.(v[0]); // called only once at the end
           }}
-          thumbTouchSize={{ width: 50, height: 50 }}
+          thumbTouchSize={{ width: 50, height: 80 }}
           maximumTrackTintColor={TW_COLORS.GRAY_600}
           minimumTrackTintColor={TW_COLORS.CNAM_PRIMARY_900}
           thumbTintColor={TW_COLORS.CNAM_PRIMARY_900}
