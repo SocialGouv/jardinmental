@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Dimensions } from "react-native";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
 import { useFocusEffect } from "@react-navigation/native";
@@ -1080,7 +1080,14 @@ const SurveySuccessScreen: React.FC<SurveySuccessScreenProps> = ({ navigation, r
                   </View>
 
                   {/* Health tip text */}
-                  <Text className={mergeClassNames("text-2xl text-body font-semibold text-cnam-primary-900 mb-3")}>{currentMessage.text}</Text>
+                  <Text
+                    className={mergeClassNames(
+                      "text-cnam-primary-900 mb-3",
+                      Dimensions.get("window").width > 380 ? "text-2xl text-body font-semibold" : typography.textLgSemibold
+                    )}
+                  >
+                    {currentMessage.text}
+                  </Text>
 
                   {/* Source */}
                   {currentMessage.source && <Text className={mergeClassNames("text-sm text-gray-800 italic")}>Source : {currentMessage.source}</Text>}
