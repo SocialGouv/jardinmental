@@ -28,6 +28,15 @@ const Header = ({ title, navigation, scrollY, scrollThreshold = 80, component }:
   const [settingsVisible, setSettingsVisible] = useState(false);
   const [drawerVisible, setDrawerVisible] = useState<boolean>(false);
   const [badge, setBadge] = useState(false);
+  const [badgeNotesVersionVisible, setBadgeNotesVersionVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState();
+
+  useFocusEffect(() => {
+    (async () => {
+      const n = await getBadgeNotesVersion();
+      setBadgeNotesVersionVisible(n);
+    })();
+  });
 
   const updateBadge = useCallback(async () => {
     const news = await getBadgeNotesVersion();
@@ -107,6 +116,9 @@ const Header = ({ title, navigation, scrollY, scrollThreshold = 80, component }:
         >
           <HorizontalDots color={TW_COLORS.CNAM_PRIMARY_25} />
           <Text className={mergeClassNames(typography.textSmMedium, "text-cnam-primary-25")}>Plus d'info</Text>
+          {badgeNotesVersionVisible && (
+            <View style={{ borderWidth: 0.5 }} className="bg-red rounded-full w-3 h-3 mr-1 border-cnam-rouge-100-lighten-80"></View>
+          )}
         </TouchableOpacity>
         {/* <Text style={styles.title}>{title}</Text> */}
         <View className="flex-row">
