@@ -223,7 +223,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: colors.BLUE,
     marginVertical: 5,
-    fontStyle: "italic",
   },
   /// old
   titleContainer: {

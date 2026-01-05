@@ -231,7 +231,6 @@ const styles = StyleSheet.create({
     fontWeight: "400",
     color: mainColors.BLUE,
     marginVertical: 5,
-    fontStyle: "italic",
   },
   percentageBig: {
     fontSize: 14,
