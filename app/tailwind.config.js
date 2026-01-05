@@ -16,7 +16,7 @@ module.exports = {
           500: colors.LIGHT_BLUE,
           600: "#1a8ea0",
           700: "#1c7282",
-          800: "#1f5e6b",
+          800: "#3D6874",
           900: "#1e4e5b",
         },
         secondary: {
