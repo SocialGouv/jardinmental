@@ -7,7 +7,7 @@ import CircledIcon, { BasicIcon } from "../../../components/CircledIcon";
 import { answers } from "../../survey-v2/utils";
 import Gauge from "../../../components/gauge";
 const screenWidth = Dimensions.get("window").width;
-import localStorage from "../../../utils/localStorage";
+import { useIndicatorEdit } from "@/context/IndicatorEditContext";
 import { v4 as uuidv4 } from "uuid";
 import { Screen } from "../../../components/Screen";
 import { Button2 } from "../../../components/Button2";
@@ -24,6 +24,7 @@ import { INDICATOR_ORDER } from "@/entities/IndicatorOrder";
 import type { INDICATOR_TYPE } from "@/entities/IndicatorType";
 import logEvents from "@/services/logEvents";
 import { INDICATOR_CATEGORIES_DATA } from "@/scenes/onboarding-v2/data/helperData";
+import ChevronIcon from "@assets/svg/icon/chevron";
 
 const ChooseIndicatorOrder = ({
   navigation,
@@ -41,24 +42,29 @@ const ChooseIndicatorOrder = ({
   const [indicatorDirection, setIndicatorDirection] = useState<INDICATOR_ORDER>(); // ASC : first direction (red to green) ; DESC : second direction (green to red)
   const [loading, setLoading] = useState(false);
 
+  const { userIndicateurs, setUserIndicateurs } = useIndicatorEdit();
+
   const onValidate = async () => {
-    if (loading) return;
+    if (loading || !indicatorDirection) return;
     setLoading(true);
-    await localStorage.addIndicateur({
-      uuid: uuidv4(),
-      name: route.params?.nameNewIndicator,
-      order: indicatorDirection,
-      type: route.params?.indicatorType,
-      active: true,
-      position: 0,
-      category: INDICATORS_CATEGORIES.Uncategorized, // no category from the previous existing category
-      created_at: new Date(),
-      isGeneric: false,
-      isCustom: true,
-      newCategories: [route.params.indicatorCategory],
-      mainCategory: route.params.indicatorCategory,
-      version: 3,
-    });
+    setUserIndicateurs([
+      ...userIndicateurs,
+      {
+        uuid: uuidv4(),
+        name: route.params?.nameNewIndicator,
+        order: indicatorDirection,
+        type: route.params?.indicatorType,
+        active: true,
+        position: 0,
+        category: INDICATORS_CATEGORIES.Uncategorized, // no category from the previous existing category
+        created_at: new Date(),
+        isGeneric: false,
+        isCustom: true,
+        newCategories: [route.params.indicatorCategory],
+        mainCategory: route.params.indicatorCategory,
+        version: 3,
+      },
+    ]);
     logEvents.logCreatePersonalizedIndicator(INDICATOR_CATEGORIES_DATA[route.params.indicatorCategory].matomoId);
 
     setLoading(false);
@@ -67,11 +73,22 @@ const ChooseIndicatorOrder = ({
 
   return (
     <AnimatedHeaderScrollScreen
-      title={"Créer un indicateur"}
+      title={""}
       scrollViewBackground={TW_COLORS.GRAY_50}
       handlePrevious={() => {
         navigation.goBack();
       }}
+      headerLeftComponent={
+        <TouchableOpacity
+          onPress={async () => {
+            navigation.goBack();
+          }}
+          className="flex-row space-x-2 items-center justify-center"
+        >
+          <ChevronIcon direction="left" color={TW_COLORS.CNAM_PRIMARY_25} />
+          <Text className="text-cnam-primary-25">Créer un indicateur personnalisé</Text>
+        </TouchableOpacity>
+      }
       smallHeader={true}
       bottomComponent={
         <View className="mx-4">
@@ -86,9 +103,14 @@ const ChooseIndicatorOrder = ({
       navigation={navigation}
     >
       <View className="flex-1 mx-4">
-        <View className={mergeClassNames("border rounded-xl bg-white p-4 w-full mb-4 mt-4 border-cnam-primary-800")}>
+        <View className={mergeClassNames("border rounded-xl bg-white p-4 w-full mb-4 border-cnam-primary-800")}>
           <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700 h-5 mb-4")}>{route.params.nameNewIndicator}</Text>
-          <RenderCurrentIndicator indicatorType={route.params.indicatorType} itensity direction={indicatorDirection} size={screenWidth * 0.1} />
+          <RenderCurrentIndicator
+            indicatorType={route.params.indicatorType}
+            itensity={true}
+            direction={indicatorDirection}
+            size={screenWidth * 0.1}
+          />
         </View>
 
         <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-900 my-8")}>
@@ -101,7 +123,7 @@ const ChooseIndicatorOrder = ({
           onPress={() => setIndicatorDirection(INDICATOR_ORDER.ASC)}
         >
           <View style={styles.setDirectionInside}>
-            <RenderCurrentIndicator indicatorType={route.params.indicatorType} direction={INDICATOR_ORDER.ASC} />
+            <RenderCurrentIndicator indicatorType={route.params.indicatorType} itensity={false} direction={INDICATOR_ORDER.ASC} />
           </View>
         </SelectionnableRadioItem>
 
@@ -111,7 +133,7 @@ const ChooseIndicatorOrder = ({
           onPress={() => setIndicatorDirection(INDICATOR_ORDER.DESC)}
         >
           <View style={styles.setDirectionInside}>
-            <RenderCurrentIndicator indicatorType={route.params.indicatorType} direction={INDICATOR_ORDER.DESC} />
+            <RenderCurrentIndicator indicatorType={route.params.indicatorType} itensity={false} direction={INDICATOR_ORDER.DESC} />
           </View>
         </SelectionnableRadioItem>
       </View>
@@ -167,7 +189,7 @@ const RenderCurrentIndicator = ({ indicatorType, itensity, direction = "ASC", si
       const reverse = direction === "DESC";
       return (
         <View className="w-full">
-          <Gauge hideSlider defaultValue={1} reverse={reverse} />
+          <Gauge hideSlider defaultValue={1} reverse={reverse} onChange={() => {}} />
           {itensity && <Intensity />}
         </View>
       );

@@ -179,7 +179,7 @@ export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
     const height = interpolate(
       scrollY.value,
       [0, SCROLL_THRESHOLD],
-      [measuredHeight.value, 10], //hasProgressBar ? 40 : 10], // From measured height to 0
+      [title ? measuredHeight.value : 10, 10], //hasProgressBar ? 40 : 10], // From measured height to 0
       Extrapolate.CLAMP
     );
 
@@ -193,7 +193,7 @@ export const AnimatedHeaderScrollScreen: React.FC<IndicatorScreenProps> = ({
     const paddingBottom = interpolate(
       scrollY.value,
       [0, SCROLL_THRESHOLD],
-      [32, 0], // From pb-8 (32px) to 0
+      [title ? 32 : 0, 0], // From pb-8 (32px) to 0
       Extrapolate.CLAMP
     );
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, View, ScrollView, TouchableOpacity, Text } from "react-native";
 
 import { colors } from "../../../utils/colors";
@@ -20,14 +20,14 @@ import NavigationButtons from "@/components/onboarding/NavigationButtons";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
 import { TW_COLORS } from "@/utils/constants";
-import { areStringArraysIdentical } from "@/utils/string-util";
+import ChevronIcon from "@assets/svg/icon/chevron";
+import { IndicatorEditProvider, useIndicatorEdit } from "@/context/IndicatorEditContext";
 
-const EditIndicateurs = ({ navigation, route }) => {
-  const [exemplesVisible, setExemplesVisible] = useState(false);
-  const [existingIndicatorsVisible, setExistingIndicatorsVisible] = useState(false);
-  const [userIndicateurs, setUserIndicateurs] = useState<Indicator[]>([]);
-  const [isChanged, setIsChanged] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+const EditIndicateursContent = ({ navigation, route }) => {
+  const [exemplesVisible, setExemplesVisible] = React.useState(false);
+  const [existingIndicatorsVisible, setExistingIndicatorsVisible] = React.useState(false);
+
+  const { userIndicateurs, setUserIndicateurs, isChanged, isLoading } = useIndicatorEdit();
 
   const indicateursByCategory = INDICATORS.reduce((prev, curr) => {
     for (const category of curr.categories) {
@@ -48,36 +48,7 @@ const EditIndicateurs = ({ navigation, route }) => {
     });
   }
 
-  useFocusEffect(
-    React.useCallback(() => {
-      (async () => {
-        const user_indicateurs = await localStorage.getIndicateurs();
-        // console.log("✍️ ~ user_indicateurs", JSON.stringify(user_indicateurs, null, 2));
-        if (user_indicateurs) {
-          setUserIndicateurs(user_indicateurs);
-        }
-      })();
-    }, [])
-  );
-
-  useEffect(() => {
-    const handleIndicatorsChange = async () => {
-      const savedUserIndicators = await localStorage.getIndicateurs();
-      const savedActiveIndicators = savedUserIndicators.filter((i) => i.active).map((i) => i.uuid);
-      const modifiedIndicators = userIndicateurs.filter((i) => i.active).map((i) => i.uuid);
-      if (areStringArraysIdentical(savedActiveIndicators, modifiedIndicators)) {
-        setIsChanged(false);
-      } else {
-        setIsChanged(true);
-      }
-    };
-    handleIndicatorsChange();
-    return;
-  }, [userIndicateurs]);
-
   const onValidate = async () => {
-    setIsLoading(true);
-
     // Log events for added indicators
     const savedUserIndicators = await localStorage.getIndicateurs();
     const savedActiveIndicators = savedUserIndicators.filter((i) => i.active).map((i) => i.uuid);
@@ -87,9 +58,6 @@ const EditIndicateurs = ({ navigation, route }) => {
     const newlyAddedIndicators = modifiedActiveIndicators.filter((uuid) => !savedActiveIndicators.includes(uuid));
 
     if (newlyAddedIndicators.length > 0) {
-      // Log general ADD_INDICATOR event
-
-      // Log ADD_INDICATOR_CATEGORY for each new indicator with its category
       newlyAddedIndicators.forEach((uuid) => {
         const indicator = userIndicateurs.find((i) => i.uuid === uuid);
         if (indicator?.matomoId) {
@@ -100,10 +68,7 @@ const EditIndicateurs = ({ navigation, route }) => {
         }
       });
     }
-
-    await localStorage.setIndicateurs(userIndicateurs);
-    setIsLoading(false);
-    navigation.goBack();
+    navigation.navigate("symptoms");
   };
 
   const reactivateIndicateur = async (_indicateur) => {
@@ -142,7 +107,18 @@ const EditIndicateurs = ({ navigation, route }) => {
       handlePrevious={() => {
         navigation.goBack();
       }}
-      title="Ajouter un indicateur"
+      headerLeftComponent={
+        <TouchableOpacity
+          onPress={async () => {
+            navigation.goBack();
+          }}
+          className="flex-row space-x-2 items-center justify-center"
+        >
+          <ChevronIcon direction="left" color={TW_COLORS.CNAM_PRIMARY_25} />
+          <Text className="text-cnam-primary-25">Ajouter un indicateur</Text>
+        </TouchableOpacity>
+      }
+      title=""
       navigation={navigation}
       headerRightComponent={null}
       headerRightAction={() => {}}
@@ -156,10 +132,10 @@ const EditIndicateurs = ({ navigation, route }) => {
         </NavigationButtons>
       }
     >
-      <View className="px-4 py-4">
+      <View className="px-4 py-0">
         <View className="bg-cnam-cyan-50-lighten-90 bg-[#E5F6FC] p-4 rounded-2xl">
           <View className="flex-row items-center mb-4">
-            <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-900 ml-2")}>Créer un indicateur personnalisé</Text>
+            <Text className={mergeClassNames(typography.textLgBold, "text-cnam-primary-900")}>Créer un indicateur personnalisé</Text>
           </View>
           <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900")}>
             Vous pouvez choisir la manière dont vous souhaitez l’évaluer
@@ -170,7 +146,7 @@ const EditIndicateurs = ({ navigation, route }) => {
               navigation.push("CREATE_INDICATOR");
             }}
             className="mt-10"
-            title="Créer un indicateur"
+            title="Créer un indicateur personnalisé"
             icon={<Plus style={styles.plusButton} opacity={1} color={"#000"} width={19} height={19} />}
           />
         </View>
@@ -191,7 +167,7 @@ const EditIndicateurs = ({ navigation, route }) => {
           }}
         />
 
-        <View className="mt-4">
+        <View className="mt-0">
           <Text className={mergeClassNames(typography.textLgBold, "text-cnam-primary-900 mb-4")}>Choisir parmi des exemples</Text>
           <CategorieElements
             title="Les plus courants"
@@ -378,6 +354,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     padding: 20,
   },
+  divider: {
+    height: 1,
+    backgroundColor: "#E0E0E0",
+    width: "100%",
+    marginVertical: 8,
+  },
 });
+
+const EditIndicateurs = (props) => <EditIndicateursContent {...props} />;
 
 export default EditIndicateurs;
