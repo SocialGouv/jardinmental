@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import { View, Text } from "react-native";
+import { View, Text, Dimensions } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { SquircleButton, SquircleView } from "expo-squircle-view";
 import Settings from "../scenes/settings/settings-modal";
@@ -219,7 +219,7 @@ const Tabs = ({ navigation, route }) => {
                     )}
                   </View>
                   <Text
-                    className={isActive ? typography.textXsBold : typography.textXsRegular}
+                    className={isActive && Dimensions.get("window").width >= 380 ? typography.textXsBold : typography.textXsRegular}
                     style={{
                       textTransform: "capitalize",
                       fontSize: 10,

@@ -117,7 +117,7 @@ const Header = ({ title, navigation, scrollY, scrollThreshold = 80, component }:
             onPress={() => {
               navigation.push("support");
             }}
-            className="bg-cnam-primary-900 px-3 py-2 flex-row items-center mr-4"
+            className="bg-cnam-primary-900 px-3 py-2 flex-row items-center"
           >
             <MessageHeartCircleIcon />
             <Animated.View style={supportButtonAnimatedStyle}>

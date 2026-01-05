@@ -18,7 +18,7 @@ const SettingItem = ({ title, navigation, path, icon, color = colors.LIGHT_BLUE,
       onPress={handleClick}
       className={mergeClassNames("border border-cnam-primary-200 bg-white", isLast ? "rounded-b-2xl" : "", isFirst ? "rounded-t-2xl" : "")}
     >
-      <View style={styles.container}>
+      <View className="p-3">
         <View style={styles.answer}>
           {icon && (
             <View
@@ -34,11 +34,9 @@ const SettingItem = ({ title, navigation, path, icon, color = colors.LIGHT_BLUE,
               })}
             </View>
           )}
-          <View className="flex-col px-2">
-            <Text style={styles.label} className="ml-2">
-              {title}
-            </Text>
-            <Text className={mergeClassNames(typography.textSmRegular, "text-cnam-primary-800 ml-2 pr-6 mt-1")}>{description}</Text>
+          <View className="flex-col ml-2">
+            <Text style={styles.label}>{title}</Text>
+            <Text className={mergeClassNames(typography.textSmRegular, "text-cnam-primary-800 pr-6 mt-1")}>{description}</Text>
           </View>
         </View>
       </View>
@@ -47,9 +45,6 @@ const SettingItem = ({ title, navigation, path, icon, color = colors.LIGHT_BLUE,
 };
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 20,
-  },
   button: {
     width: 45,
     height: 45,

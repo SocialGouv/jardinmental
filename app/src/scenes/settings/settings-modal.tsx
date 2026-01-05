@@ -56,7 +56,7 @@ const SettingsModal = ({ navigation, visible }) => {
         onScroll={scrollHandler}
       >
         <View className="flex-col space-y-10">
-          <View className="mx-2 mt-10">
+          <View className="mt-10">
             <Text className={mergeClassNames(typography.textXlSemibold, "text-cnam-primary-900 mb-4")}>Personnaliser mon suivi</Text>
             <SettingItem
               title="Mes indicateurs"
