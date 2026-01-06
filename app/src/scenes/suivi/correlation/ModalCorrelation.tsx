@@ -187,8 +187,6 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
       return;
     }
     const goalsByDate = goalsAndRecord.map(({ goal, records }, index) => {
-      console.log("lcs goalsAndRecord", records);
-      console.log(groupBy(records, "date"));
       return groupBy(records, "date");
     });
     return goalsByDate;
@@ -196,18 +194,17 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
 
   const oneBoolean =
     (selectedIndicators.filter((ind) => ind.type === "boolean").length === 1 && selectedIndicators.length === 2) ||
-    (selectedGoals.length === 1 && selectedIndicators.length === 1);
+    (selectedGoals.length === 1 && selectedIndicators.filter((ind) => ind.type !== "boolean").length === 1);
+
   const twoBoolean =
     selectedIndicators.filter((ind) => ind.type === "boolean").length === 2 ||
     selectedGoals.length === 2 ||
     (selectedIndicators.filter((ind) => ind.type === "boolean").length === 1 && selectedGoals.length === 1) ||
-    (selectedGoals.length === 1 && selectedIndicators.length === 0) ||
-    (selectedIndicators.filter((ind) => ind.type === "boolean").length === 1 && selectedIndicators.length === 1);
-
+    (selectedGoals.length === 1 && selectedIndicators.length === 0);
   const booleanIndicatorIndex = oneBoolean ? selectedIndicators.findIndex((ind) => ind.type === "boolean") || selectedGoals[0] : undefined;
 
   const dataToDisplay = useMemo(() => {
-    if (!diaryData || (selectedIndicators.length === 0 && selectedGoals.length) || !goalsAndRecord || !goalsByDate) {
+    if (!diaryData || (selectedIndicators.length === 0 && selectedGoals.length === 0) || !goalsAndRecord || !goalsByDate) {
       return null;
     }
     // if (!selectedIndicators) {
@@ -309,7 +306,6 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
       const newData = chartDates
         .map((date) => {
           const dayData = goalsByDate[goalIndex][date];
-          console.log(dayData);
           if (!dayData) {
             return {
               value: 1,
@@ -389,7 +385,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
       data.push(newData);
     }
     return data;
-  }, [diaryData, selectedIndicators, goalsAndRecord, goalsByDate]); // 👈 recalcul dès que rawData ou filters changent
+  }, [diaryData, selectedIndicators, selectedGoals, goalsAndRecord, goalsByDate]); // 👈 recalcul dès que rawData ou filters changent
 
   const handleVisibleRangeChange = (first, last) => {
     setFirstVisible(dataToDisplay[0][first + 1]?.date);
@@ -450,7 +446,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                 </Typography>
               ) : (
                 <Typography className={mergeClassNames(typography.textLgBold, "text-cnam-primary-800 text-center px-4 mt-4")}>
-                  Sélectionnez au moins un indicateur.
+                  Sélectionnez au moins un indicateur ou objectif
                 </Typography>
               )}
             </View>
