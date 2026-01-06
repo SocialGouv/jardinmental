@@ -418,7 +418,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
             className="border border-cnam-primary-700 flex-row h-[48px] rounded-2xl items-center px-4 justify-between"
           >
             <Typography className={mergeClassNames(typography.textLgMedium, "text-gray-900")}>
-              Modifier les indicateurs ({selectedIndicators.length})
+              Modifier les indicateurs ({selectedIndicators.length + selectedGoals.length})
             </Typography>
             <ArrowUpSvg
               style={{

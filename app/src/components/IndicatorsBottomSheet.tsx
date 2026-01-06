@@ -364,7 +364,7 @@ export const IndicatorsBottomSheet = ({
                 showTreatment,
               });
             }}
-            disabled={selectedIndicators.length === 0}
+            disabled={selectedIndicators.length + selectedGoals.length === 0}
             title={"Analyser"}
           />
         </View>
