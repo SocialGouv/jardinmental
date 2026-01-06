@@ -30,6 +30,7 @@ import DataMonitoringPeriodHelpView from "./DataMonitoringPeriodHelpView";
 import ChevronIcon from "@assets/svg/icon/chevron";
 import { Goal } from "@/entities/Goal";
 import { getGoalsAndRecords } from "@/utils/localStorage/goals";
+import { useFocusEffect } from "@react-navigation/native";
 
 interface ModalCorrelationScreenProps {
   navigation: any;
@@ -89,6 +90,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
   const [selectedIndicators, setSelectedIndicators] = useState<Indicator[]>([]);
   const [selectedGoals, setSelectedGoals] = useState<Goal[]>([]);
   const [showTreatment, setShowTreatment] = useState<boolean>();
+
   const [displayItem, setDisplayItem] = useState<null>();
   const [isVisible, setIsVisible] = useState(false);
   const [active, setActive] = useState("7days");
@@ -245,8 +247,9 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
           if (indicator?.type === "boolean")
             return {
               value: oneBoolean ? 0 : categoryState?.value === true ? 2 : 1,
+              booleanValue: categoryState?.value,
               //value: categoryState?.value === true ? 2 : 1,
-              noValue: (oneBoolean && categoryState?.value === false) || false,
+              noValue: categoryState?.value === undefined,
               date: date,
               label: date,
               isBoolean: oneBoolean, // we setup isBoolean true only when oneBoolean
