@@ -31,6 +31,7 @@ import ChevronIcon from "@assets/svg/icon/chevron";
 import ArrowUpSvg from "@assets/svg/icon/ArrowUp";
 import InfoCircle from "@assets/svg/icon/InfoCircle";
 import { Indicator } from "@/entities/Indicator";
+import { Goal } from "@/entities/Goal";
 
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
@@ -130,10 +131,12 @@ const generateLineSegments = (data) => {
   return segments;
 };
 
-export const Correlation = ({ navigation, onScroll, scrollY, day, setDay, dynamicPaddingTop }) => {
+export const Correlation = ({ navigation }) => {
   const { showBottomSheet, closeBottomSheet } = useBottomSheet();
   const [diaryData] = useContext(DiaryDataContext);
   const [selectedIndicators, setSelectedIndicators] = useState<Indicator[]>([]);
+  const [selectedGoals, setSelectedGoals] = useState<Goal[]>([]);
+
   const [showTreatment, setShowTreatment] = useState<boolean>(false);
 
   const onPressChooseIndicator = () => {
@@ -292,16 +295,7 @@ export const Correlation = ({ navigation, onScroll, scrollY, day, setDay, dynami
           </Text>
           <JMButton
             onPress={() => {
-              // showBottomSheet(
-              //   <IndicatorsBottomSheet
-              //     onClose={function ({ showTreatment, selectedIndicators }: { showTreatment: boolean; selectedIndicators: string[] }): void {
-              //       closeBottomSheet();
-              navigation.navigate("correlation-modal", {
-                // selectedIndicators,
-              });
-              //     }}
-              //   />
-              // );
+              navigation.navigate("correlation-modal", {});
             }}
             variant="outline"
             title="Choisir mes indicateurs"
@@ -328,7 +322,9 @@ export const Correlation = ({ navigation, onScroll, scrollY, day, setDay, dynami
           }}
           className="border border-cnam-primary-700 flex-row h-[48px] rounded-2xl items-center px-4 justify-between"
         >
-          <Text className={mergeClassNames(typography.textLgMedium, "text-gray-900")}>Modifier les indicateurs ({selectedIndicators.length})</Text>
+          <Text className={mergeClassNames(typography.textLgMedium, "text-gray-900")}>
+            Modifier les indicateurs ({selectedIndicators.length + selectedGoals.length})
+          </Text>
           <ArrowUpSvg
             style={{
               transform: [{ rotateX: "180deg" }],

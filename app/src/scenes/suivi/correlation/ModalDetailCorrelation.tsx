@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { View, Text, ScrollView, TouchableOpacity, Dimensions } from "react-native";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
@@ -57,6 +57,20 @@ export const DetailModalCorrelationScreen: React.FC<ModalCorrelationScreenProps>
     twoBoolean,
     booleanIndicatorIndex,
   } = route.params;
+
+  const [definedTreatment, setDefinedTreatment] = useState<any[] | undefined>();
+
+  useEffect(
+    useCallback(() => {
+      (async () => {
+        const _treatment = await localStorage.getMedicalTreatment();
+        if (_treatment) {
+          setDefinedTreatment(_treatment);
+        }
+      })();
+    }, [])
+  );
+
   return (
     <SafeAreaView className="flex-1 bg-primary" edges={["top"]}>
       <View className="flex-col justify-between w-full bg-cnam-primary-800 p-4 items-center">
@@ -160,7 +174,7 @@ export const DetailModalCorrelationScreen: React.FC<ModalCorrelationScreenProps>
               treatmentSiBesoin={treatmentSiBesoin}
               diaryData={diaryData}
               openIndicatorBottomSheet={undefined}
-              showTreatment={true}
+              showTreatment={definedTreatment}
               displayfixed={true}
               enablePagination={false}
               booleanIndicatorIndex={booleanIndicatorIndex}
