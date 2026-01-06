@@ -29,6 +29,8 @@ import HelpView from "@/components/HelpView";
 import DataMonitoringPeriodHelpView from "./DataMonitoringPeriodHelpView";
 import ChevronIcon from "@assets/svg/icon/chevron";
 import { Typography } from "@/components/Typography";
+import { Goal } from "@/entities/Goal";
+import { getGoalsAndRecords } from "@/utils/localStorage/goals";
 
 interface ModalCorrelationScreenProps {
   navigation: any;
@@ -69,6 +71,16 @@ function getSubArray<T>(array: T[], index: number, x: number): (T | undefined)[]
   return result;
 }
 
+function groupBy(array, keyOrFn) {
+  return array.reduce((acc, item) => {
+    const key = typeof keyOrFn === "function" ? keyOrFn(item) : item[keyOrFn];
+
+    if (!acc[key]) acc[key] = [];
+    acc[key].push(item);
+    return acc;
+  }, {});
+}
+
 export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ navigation, route }) => {
   const { config } = useDevCorrelationConfig();
   const MAX_NUNBER_OF_DAYS = config.maxDays;
@@ -76,6 +88,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
 
   const [diaryData] = useContext(DiaryDataContext);
   const [selectedIndicators, setSelectedIndicators] = useState<Indicator[]>([]);
+  const [selectedGoals, setSelectedGoals] = useState<Goal[]>([]);
   const [showTreatment, setShowTreatment] = useState<boolean>();
   const [displayItem, setDisplayItem] = useState<null>();
   const [isVisible, setIsVisible] = useState(false);
@@ -90,17 +103,27 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
   const onClose = ({
     showTreatment: _showTreatment,
     selectedIndicators: _selectedIndicators,
+    selectedGoals: _selectedGoals,
   }: {
     showTreatment: boolean;
     selectedIndicators: Indicator[];
+    selectedGoals: Goal[];
   }) => {
     closeBottomSheet();
     setSelectedIndicators(_selectedIndicators);
+    setSelectedGoals(_selectedGoals);
     setShowTreatment(_showTreatment);
   };
 
   const openIndicatorBottomSheet = () => {
-    showBottomSheet(<IndicatorsBottomSheet onClose={onClose} initialSelectedIndicators={selectedIndicators} initialShowTreatment={showTreatment} />);
+    showBottomSheet(
+      <IndicatorsBottomSheet
+        onClose={onClose}
+        initialSelectedGoals={selectedGoals}
+        initialSelectedIndicators={selectedIndicators}
+        initialShowTreatment={showTreatment}
+      />
+    );
   };
 
   useEffect(() => {
@@ -148,13 +171,19 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
     }
   }, [displayItem]);
 
-  const oneBoolean = selectedIndicators.filter((ind) => ind.type === "boolean").length === 1 && selectedIndicators.length === 2;
+  const oneBoolean =
+    (selectedIndicators.filter((ind) => ind.type === "boolean").length === 1 && selectedIndicators.length === 2) ||
+    (selectedGoals.length === 1 && selectedIndicators.length === 1);
   const twoBoolean =
     selectedIndicators.filter((ind) => ind.type === "boolean").length === 2 ||
+    selectedGoals.length === 2 ||
+    (selectedIndicators.filter((ind) => ind.type === "boolean").length === 1 && selectedGoals.length === 1) ||
+    (selectedGoals.length === 1 && selectedIndicators.length === 0) ||
     (selectedIndicators.filter((ind) => ind.type === "boolean").length === 1 && selectedIndicators.length === 1);
-  const booleanIndicatorIndex = oneBoolean ? selectedIndicators.findIndex((ind) => ind.type === "boolean") : undefined;
 
-  const dataToDisplay = useMemo(() => {
+  const booleanIndicatorIndex = oneBoolean ? selectedIndicators.findIndex((ind) => ind.type === "boolean") || selectedGoals[0] : undefined;
+
+  const dataToDisplay = useMemo(async () => {
     if (!diaryData || selectedIndicators.length === 0) {
       return null;
     }
@@ -183,6 +212,92 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
             };
           }
           const categoryState = diaryData[date][getIndicatorKey(indicator)];
+          if (!categoryState) {
+            return {
+              value: 1,
+              hideDataPoint: false,
+              noValue: true,
+              date: date,
+              label: date,
+              indicator,
+            };
+          }
+          if (indicator?.type === "boolean")
+            return {
+              value: oneBoolean ? 0 : categoryState?.value === true ? 2 : 1,
+              //value: categoryState?.value === true ? 2 : 1,
+              noValue: (oneBoolean && categoryState?.value === false) || false,
+              date: date,
+              label: date,
+              isBoolean: oneBoolean, // we setup isBoolean true only when oneBoolean
+            };
+
+          if (indicator?.type === "gauge")
+            return {
+              label: date,
+              date: date,
+              indicator,
+              value: Math.min(Math.floor(categoryState?.value * 5), 4) + 1,
+            };
+          if (categoryState?.value)
+            return {
+              value: categoryState?.value,
+              label: date,
+              date: date,
+              indicator,
+            };
+
+          // get the name and the suffix of the category
+          const [categoryName, suffix] = getIndicatorKey(indicator).split("_");
+          let categoryStateIntensity = null;
+          if (suffix && suffix === "FREQUENCE") {
+            // if it's one category with the suffix 'FREQUENCE' :
+            // add the intensity (default level is 3 - for the frequence 'never')
+            categoryStateIntensity = diaryData[date][`${categoryName}_INTENSITY`] || { level: 3 };
+            return {
+              value: categoryState.level + categoryStateIntensity.level - 2,
+              label: date,
+              date: date,
+              indicator,
+            };
+          }
+          return {
+            data: categoryState.level ? categoryState.level : null,
+            hideDataPoint: false,
+            noValue: !categoryState.level,
+            label: date,
+            date: date,
+            indicator,
+          };
+        })
+        .filter((d) => d)
+        .filter((d) => {
+          if (!Number.isFinite(d.value)) {
+            return false;
+          }
+          return true;
+        });
+      data.push(newData);
+    }
+    const goalsAndRecord = await getGoalsAndRecords();
+    console.log("goalsAndRecord", goalsAndRecord);
+    const goalsByDate = goalsAndRecord.map((goal, records) => groupBy(records, (gr) => gr.date));
+    for (const goal of selectedGoals) {
+      const goalIndex = goalsAndRecord.findIndex((g) => g.goal.id === goal.id);
+      const newData = chartDates
+        .map((date) => {
+          const dayData = diaryData[date];
+          if (!dayData) {
+            return {
+              value: 1,
+              hideDataPoint: false,
+              noValue: true,
+              date: date,
+              indicator: goal,
+              label: date,
+            };
+          }
+          const categoryState = getgoal;
           if (!categoryState) {
             return {
               value: 1,

@@ -17,21 +17,35 @@ import ChevronIcon from "@assets/svg/icon/chevron";
 import { TW_COLORS } from "@/utils/constants";
 import { LinearGradient } from "expo-linear-gradient";
 import { Typography } from "./Typography";
+import { Goal } from "@/entities/Goal";
+import { getGoalsData } from "@/utils/localStorage/goals";
 
 const screenHeight = Dimensions.get("window").height;
 const height90vh = screenHeight * 0.9;
 
 export const IndicatorsBottomSheet = ({
   initialSelectedIndicators,
+  initialSelectedGoals,
   initialShowTreatment,
   onClose,
 }: {
   initialSelectedIndicators?: Indicator[];
+  initialSelectedGoals?: Goal[];
   initialShowTreatment?: boolean;
-  onClose: ({ showTreatment, selectedIndicators }: { showTreatment: boolean; selectedIndicators: Indicator[] }) => void;
+  onClose: ({
+    showTreatment,
+    selectedIndicators,
+    selectedGoals,
+  }: {
+    showTreatment: boolean;
+    selectedIndicators: Indicator[];
+    selectedGoals: Goal[];
+  }) => void;
 }) => {
   const [indicatorList, setindicatorList] = useState<Indicator[] | null>(null);
+  const [goalList, setGoalList] = useState<Goal[] | null>(null);
   const [selectedIndicators, setSelectedIndicators] = useState<Indicator[]>(initialSelectedIndicators || []);
+  const [selectedGoals, setSelectedGoals] = useState<Goal[]>(initialSelectedGoals || []);
   const [showTreatment, setShowTreatment] = useState<boolean>(initialShowTreatment || false);
   const reminderToggleRef = useRef<any>();
   const itemWidths = useRef<number[]>([]);
@@ -58,14 +72,38 @@ export const IndicatorsBottomSheet = ({
       const indicators = await localStorage.getIndicateurs();
       setindicatorList(indicators);
     };
+    const getGoals = async function () {
+      const goals = await getGoalsData();
+      const keys = Object.keys(goals.goals?.data);
+      if (keys.length > 0) {
+        setGoalList(keys.map((key) => goals.goals?.data[key]));
+        console.log(
+          "goalList",
+          keys.map((key) => goals.goals?.data[key])
+        );
+      }
+    };
     getIndicators();
+    getGoals();
   }, []);
+
+  const setToogleGoalCheckbox = (d: Goal) => {
+    let t = [...selectedGoals];
+    const alreadySelectedGoals = selectedGoals.find((elem) => elem.id === d.id);
+    if (alreadySelectedGoals) {
+      const i = selectedGoals.indexOf(alreadySelectedGoals);
+      t.splice(i, 1);
+    } else {
+      t.push(d);
+    }
+    setSelectedGoals(t);
+  };
 
   const setToogleCheckbox = (d: Indicator) => {
     let t = [...selectedIndicators];
-    const drugInTreatment = selectedIndicators.find((elem) => (elem.uuid || elem.name) === (d.uuid || d.name));
-    if (drugInTreatment) {
-      const i = selectedIndicators.indexOf(drugInTreatment);
+    const alreadySelectedIndicators = selectedIndicators.find((elem) => (elem.uuid || elem.name) === (d.uuid || d.name));
+    if (alreadySelectedIndicators) {
+      const i = selectedIndicators.indexOf(alreadySelectedIndicators);
       t.splice(i, 1);
     } else {
       t.push(d);
@@ -182,9 +220,25 @@ export const IndicatorsBottomSheet = ({
                     id={e.uuid}
                     label={`${e.name}${!e.active ? " (désactivé)" : ""}`}
                     boxPosition="top"
-                    disabled={!selected && selectedIndicators.length >= 2}
+                    disabled={!selected && selectedIndicators.length + selectedGoals.length >= 2}
                     selected={selected}
                     onPress={(newValue) => setToogleCheckbox(e)}
+                  />
+                );
+              })}
+            {goalList &&
+              goalList.map((e, index) => {
+                const selected = !!selectedGoals.find((x) => x.id === e.id);
+                return (
+                  <LightSelectionnableItem
+                    key={index}
+                    className="flex-row"
+                    id={e.id}
+                    label={`${e.label}${!e.enabled ? " (désactivé)" : ""}`}
+                    boxPosition="top"
+                    disabled={!selected && selectedIndicators.length + selectedGoals.length >= 2}
+                    selected={selected}
+                    onPress={(newValue) => setToogleGoalCheckbox(e)}
                   />
                 );
               })}
@@ -306,6 +360,7 @@ export const IndicatorsBottomSheet = ({
               logEvents.logAnalysesValidateCorrelations();
               onClose({
                 selectedIndicators,
+                selectedGoals,
                 showTreatment,
               });
             }}
