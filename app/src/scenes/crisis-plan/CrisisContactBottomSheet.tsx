@@ -61,7 +61,7 @@ export const CrisisContactBottomSheet = ({
   header: string;
 }) => {
   const [text, setText] = useState<string>();
-  const [activities, setActivities] = useState<string[]>(item.activities || [""]);
+  const [activities, setActivities] = useState<string[]>(item.activities || []);
   const [number, setNumber] = useState<string>(item.phoneNumbers[0].digits);
   const { showBottomSheet, closeBottomSheet } = useBottomSheet();
   return (
