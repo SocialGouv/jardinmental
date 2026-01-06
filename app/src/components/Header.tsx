@@ -31,12 +31,14 @@ const Header = ({ title, navigation, scrollY, scrollThreshold = 80, component }:
   const [badgeNotesVersionVisible, setBadgeNotesVersionVisible] = useState(false);
   const [isVisible, setIsVisible] = useState();
 
-  useFocusEffect(() => {
-    (async () => {
-      const n = await getBadgeNotesVersion();
-      setBadgeNotesVersionVisible(n);
-    })();
-  });
+  useFocusEffect(
+    useCallback(() => {
+      (async () => {
+        const n = await getBadgeNotesVersion();
+        setBadgeNotesVersionVisible(n);
+      })();
+    }, [])
+  );
 
   const updateBadge = useCallback(async () => {
     const news = await getBadgeNotesVersion();
