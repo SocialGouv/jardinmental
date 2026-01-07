@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import { View, Text, TouchableOpacity, Image, ActivityIndicator } from "react-native";
 import CrisisHeader from "./CrisisHeader";
 import NavigationButtons from "@/components/onboarding/NavigationButtons";
 import PencilIcon from "@assets/svg/icon/Pencil";
@@ -33,12 +33,19 @@ interface ModalCorrelationScreenProps {
 
 export const CrisisPlanSumupList: React.FC<ModalCorrelationScreenProps> = ({ navigation, route }) => {
   //CNAM - secondary/Cyan (Accent)/50 lighten 90
+  const [isLoadingPdf, setIsLoadingPdf] = useState(false);
+  type Contact = {
+    name: string;
+    phoneNumbers?: { number: string; digits?: string; countryCode?: string; label?: string; id?: string }[];
+    activities?: string[];
+  };
+
   const [cardData, setCardData] = useState<{
     alerts: string[];
     activities: string[];
-    contacts_change_ideas: { name: string; activities?: string[] }[];
-    contacts_help: { name: string }[];
-    contacts_professional: { name: string }[];
+    contacts_change_ideas: Contact[];
+    contacts_help: Contact[];
+    contacts_professional: Contact[];
     safety: string[];
     reason_to_live: string[];
     reason_to_live_image: string[];
@@ -84,22 +91,24 @@ export const CrisisPlanSumupList: React.FC<ModalCorrelationScreenProps> = ({ nav
 
   // Handler to generate and share PDF
   const handleSharePdf = async () => {
-    // Build a simple HTML representation of the cardData
+    setIsLoadingPdf(true);
+    try {
+      // Build a simple HTML representation of the cardData
 
-    const convertImagesToBase64 = async () => {
-      const base64Images = await Promise.all(
-        cardData.reason_to_live_image.map(async (img) => {
-          const base64 = await FileSystem.readAsStringAsync(img, {
-            encoding: FileSystem.EncodingType.Base64,
-          });
-          return `data:image/jpeg;base64,${base64}`;
-        })
-      );
-      return base64Images;
-    };
+      const convertImagesToBase64 = async () => {
+        const base64Images = await Promise.all(
+          cardData.reason_to_live_image.map(async (img) => {
+            const base64 = await FileSystem.readAsStringAsync(img, {
+              encoding: FileSystem.EncodingType.Base64,
+            });
+            return `data:image/jpeg;base64,${base64}`;
+          })
+        );
+        return base64Images;
+      };
 
-    const base64Images = await convertImagesToBase64();
-    const html = `
+      const base64Images = await convertImagesToBase64();
+      const html = `
 <html>
   <head>
     <meta charset="utf-8" />
@@ -152,15 +161,34 @@ export const CrisisPlanSumupList: React.FC<ModalCorrelationScreenProps> = ({ nav
     <h2>Se changer les idées</h2>
     <ul>
       ${(cardData.contacts_change_ideas || [])
-        .map((c) => `<li>${c.name}${c.activities && c.activities.length ? " (" + c.activities.join(", ") + ")" : ""}</li>`)
+        .map(
+          (c) =>
+            `<li>${c.name}${c.phoneNumbers && c.phoneNumbers.length && c.phoneNumbers[0].number ? " (" + c.phoneNumbers[0].number + ")" : ""}${
+              c.activities && c.activities.length ? " (" + c.activities.join(", ") + ")" : ""
+            }</li>`
+        )
         .join("")}
     </ul>
 
     <h2>Demander de l’aide</h2>
-    <ul>${(cardData.contacts_help || []).map((c) => `<li>${c.name}</li>`).join("")}</ul>
+    <ul>
+      ${(cardData.contacts_help || [])
+        .map(
+          (c) =>
+            `<li>${c.name}${c.phoneNumbers && c.phoneNumbers.length && c.phoneNumbers[0].number ? " (" + c.phoneNumbers[0].number + ")" : ""}</li>`
+        )
+        .join("")}
+    </ul>
 
     <h2>En cas d’urgence</h2>
-    <ul>${(cardData.contacts_professional || []).map((c) => `<li>${c.name}</li>`).join("")}</ul>
+    <ul>
+      ${(cardData.contacts_professional || [])
+        .map(
+          (c) =>
+            `<li>${c.name}${c.phoneNumbers && c.phoneNumbers.length && c.phoneNumbers[0].number ? " (" + c.phoneNumbers[0].number + ")" : ""}</li>`
+        )
+        .join("")}
+    </ul>
 
     <h2>Environnement sécurisé</h2>
     <ul>${(cardData.safety || []).map((s) => `<li>${s}</li>`).join("")}</ul>
@@ -175,12 +203,13 @@ export const CrisisPlanSumupList: React.FC<ModalCorrelationScreenProps> = ({ nav
   </body>
 </html>
 `;
-    try {
       const { uri } = await Print.printToFileAsync({ html });
       await shareAsync(uri, { UTI: ".pdf", mimeType: "application/pdf" });
     } catch (e) {
       // Optionally handle error
       console.error("Erreur lors de la génération ou du partage du PDF", e);
+    } finally {
+      setIsLoadingPdf(false);
     }
   };
 
@@ -188,8 +217,9 @@ export const CrisisPlanSumupList: React.FC<ModalCorrelationScreenProps> = ({ nav
     <View className="flex-1 bg-cnam-cyan-50-lighten-90">
       <CrisisHeader initialRouteName={route.params?.initialRouteName} navigation={navigation} title={"Mon plan de crise"} />
       <View className="flex-row justify-between m-4">
-        <TouchableOpacity onPress={handleSharePdf} className="flex-row items-center justify-center space-x-2">
-          <ShareIcon width={20} height={20} color={TW_COLORS.CNAM_CYAN_700_DARKEN_40} />
+        <TouchableOpacity onPress={handleSharePdf} className="flex-row items-center justify-center space-x-2" disabled={isLoadingPdf}>
+          {isLoadingPdf && <ActivityIndicator size="small" color={TW_COLORS.CNAM_CYAN_700_DARKEN_40} style={{ marginRight: 0 }} />}
+          {!isLoadingPdf && <ShareIcon width={20} height={20} color={TW_COLORS.CNAM_CYAN_700_DARKEN_40} />}
           <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40")}>Partager</Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -205,9 +235,9 @@ export const CrisisPlanSumupList: React.FC<ModalCorrelationScreenProps> = ({ nav
       <ScrollView style={{ paddingBottom: 200 }} contentContainerStyle={{ paddingBottom: 100 }} showsVerticalScrollIndicator={false}>
         <AlertCard alerts={cardData["alerts"] || []} />
         <ActivitiesCard activities={cardData["activities"] || []} />
-        <ChangeIdeasCard contactsChangeIdeas={cardData["contacts_change_ideas"] || []} />
-        <HelpCard contactsHelp={cardData["contacts_help"] || []} />
-        <ProfessionalCard contactsProfessional={cardData["contacts_professional"] || []} />
+        <ChangeIdeasCard contactsChangeIdeas={cardData.contacts_change_ideas as any} />
+        <HelpCard contactsHelp={cardData.contacts_help as any} />
+        <ProfessionalCard contactsProfessional={cardData.contacts_professional as any} />
         <SafetyCard safety={cardData["safety"] || []} />
         <ReasonToLiveCard reasonToLive={cardData["reason_to_live"] || []} reasonToLiveImage={cardData["reason_to_live_image"] || []} />
       </ScrollView>

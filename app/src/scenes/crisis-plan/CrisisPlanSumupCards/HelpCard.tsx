@@ -22,6 +22,11 @@ type HelpCardProps = {
 const HelpCard: React.FC<HelpCardProps> = ({ contactsHelp }) => {
   const [isOpen, setIsOpen] = useState(false);
 
+  // Filter contacts to only those with a valid phone number
+  const filteredContacts = contactsHelp?.filter(
+    (item) => item.phoneNumbers && item.phoneNumbers.length > 0 && (item.phoneNumbers[0].number || item.phoneNumbers[0].digits)
+  );
+
   const handleCall = async (number: string) => {
     const phoneNumber = number;
     const url = `tel:${phoneNumber}`;
@@ -66,7 +71,7 @@ const HelpCard: React.FC<HelpCardProps> = ({ contactsHelp }) => {
       {isOpen && (
         <View className="flex-colmun">
           <View className="flex-colmun space-y-2">
-            {contactsHelp?.map((item, idx) => {
+            {filteredContacts?.map((item, idx) => {
               return (
                 <TouchableOpacity
                   onPress={() => {
@@ -89,7 +94,7 @@ const HelpCard: React.FC<HelpCardProps> = ({ contactsHelp }) => {
                 </TouchableOpacity>
               );
             })}
-            {contactsHelp.length === 0 && (
+            {filteredContacts.length === 0 && (
               <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900")}>Aucun contact renseigné.</Text>
             )}
           </View>

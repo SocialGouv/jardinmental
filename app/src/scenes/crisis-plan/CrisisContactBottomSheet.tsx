@@ -11,6 +11,7 @@ import CrisisListBottomSheet from "./CrisisListBottomSheet";
 import PlusIcon from "@assets/svg/icon/plus";
 import TrashIcon from "@assets/svg/icon/Trash";
 import { LinearGradient } from "expo-linear-gradient";
+import User from "@assets/svg/icon/User";
 
 const suggestions = ["Aller au cinéma", "Aller au restaurant", "Faire du shopping", "Faire une promenade"];
 const screenHeight = Dimensions.get("window").height;
@@ -92,7 +93,7 @@ export const CrisisContactBottomSheet = ({
         </View>
         <View className="bg-cnam-primary-50 rounded-2xl px-6 py-8 mx-4 flex-column">
           <View className="flex-row items-center flex-start space-x-2 mb-2">
-            <PhoneIcon />
+            <User width={20} height={20} color={TW_COLORS.CNAM_CYAN_600_DARKEN_20} />
             <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-950")}>{item.name}</Text>
           </View>
           <View className="flex-column flex-start space-y-1 mb-4">
