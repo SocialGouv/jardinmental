@@ -13,7 +13,7 @@ import InfoCircle from "@assets/svg/icon/InfoCircle";
 import { LineChart } from "react-native-gifted-charts";
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 import { useBottomSheet } from "@/context/BottomSheetContext";
-import Svg, { Line } from "react-native-svg";
+import Svg, { Circle, Line } from "react-native-svg";
 import CheckMarkIcon from "@assets/svg/icon/check";
 import CrossIcon from "@assets/svg/icon/Cross";
 import { INDICATOR_TYPE } from "@/entities/IndicatorType";
@@ -579,18 +579,43 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                           try {
                             value = diaryData[displayItem.date][getIndicatorKey(indicator)].value;
                           } catch (e) {}
+                          const center = 30 / 2;
+                          const lineLength = 6 * 1.4; //
                           return (
                             <View key={indicator.uuid} className="flex-row items-center space-x-2">
                               {oneBoolean && booleanIndicatorIndex === index ? (
-                                <View className="items-center" style={{ width: 30 }}>
-                                  <View
-                                    className="w-4 h-4 bg-white rounded-full"
-                                    style={{
-                                      borderColor: index === 0 ? "#00A5DF" : "#3D6874",
-                                      borderWidth: 4,
-                                      backgroundColor: index === 0 ? "#00A5DF" : "white",
-                                    }}
-                                  ></View>
+                                <View>
+                                  {(value === true || value === undefined) && (
+                                    <Svg
+                                      width={30}
+                                      height={30}
+                                      style={{
+                                        alignSelf: "center",
+                                      }}
+                                    >
+                                      <Circle cx={30 / 2} cy={30 / 2} r={6} fill={"white"} stroke={"#3D6874"} strokeWidth={4} />
+                                    </Svg>
+                                  )}
+                                  {value === false && (
+                                    <Svg
+                                      width={30}
+                                      height={30}
+                                      style={{
+                                        alignSelf: "center",
+                                      }}
+                                    >
+                                      <Circle cx={30 / 2} cy={30 / 2} r={6} fill={"white"} stroke={"#3D6874"} strokeWidth={4} />
+                                      <Line
+                                        x1={center - lineLength}
+                                        y1={center - lineLength}
+                                        x2={center + lineLength}
+                                        y2={center + lineLength}
+                                        stroke={"#3D6874"}
+                                        strokeWidth={4}
+                                        strokeLinecap="round"
+                                      />
+                                    </Svg>
+                                  )}
                                 </View>
                               ) : (
                                 <Svg height="2" width="30">
@@ -620,18 +645,43 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                           try {
                             value = goalsByDate[index][displayItem.date].value;
                           } catch (e) {}
+                          const center = 30 / 2;
+                          const lineLength = 6 * 1.4; //
                           return (
                             <View key={goal.id} className="flex-row items-center space-x-2">
-                              {oneBoolean && booleanIndicatorIndex === index ? (
-                                <View className="items-center" style={{ width: 30 }}>
-                                  <View
-                                    className="w-4 h-4 bg-white rounded-full"
-                                    style={{
-                                      borderColor: index === 0 ? "#00A5DF" : "#3D6874",
-                                      borderWidth: 4,
-                                      backgroundColor: index === 0 ? "#00A5DF" : "white",
-                                    }}
-                                  ></View>
+                              {oneBoolean ? (
+                                <View>
+                                  {(value === true || value === undefined) && (
+                                    <Svg
+                                      width={30}
+                                      height={30}
+                                      style={{
+                                        alignSelf: "center",
+                                      }}
+                                    >
+                                      <Circle cx={30 / 2} cy={30 / 2} r={6} fill={"white"} stroke={"#3D6874"} strokeWidth={4} />
+                                    </Svg>
+                                  )}
+                                  {value === false && (
+                                    <Svg
+                                      width={30}
+                                      height={30}
+                                      style={{
+                                        alignSelf: "center",
+                                      }}
+                                    >
+                                      <Circle cx={30 / 2} cy={30 / 2} r={6} fill={"white"} stroke={"#3D6874"} strokeWidth={4} />
+                                      <Line
+                                        x1={center - lineLength}
+                                        y1={center - lineLength}
+                                        x2={center + lineLength}
+                                        y2={center + lineLength}
+                                        stroke={"#3D6874"}
+                                        strokeWidth={4}
+                                        strokeLinecap="round"
+                                      />
+                                    </Svg>
+                                  )}
                                 </View>
                               ) : (
                                 <Svg height="2" width="30">
@@ -640,9 +690,9 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                                     y1="1"
                                     x2="100%"
                                     y2="1"
-                                    stroke={index === 0 ? "#00A5DF" : "#3D6874"} // your color
+                                    stroke={index + selectedIndicators.length === 0 ? "#00A5DF" : "#3D6874"} // your color
                                     strokeWidth="2"
-                                    strokeDasharray={index === 0 ? "" : "4 4"} // pattern: 4px dash, 4px gap
+                                    strokeDasharray={index + selectedIndicators.length === 0 ? "" : "4 4"} // pattern: 4px dash, 4px gap
                                   />
                                 </Svg>
                               )}
@@ -793,21 +843,117 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                   />
                 </View>
                 <View className="bg-cnam-primary-25 p-4 -mt-2 rounded-2xl flex-col space-y-2">
-                  <View className="flex-row items-center justify-center space-x-4">
+                  <View className="flex-row items-left justify-start flex-wrap ">
                     {selectedIndicators.map((indicator, index) => (
                       <View key={getIndicatorKey(indicator)}>
-                        <Typography className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>{indicator.name}</Typography>
-                        <Svg height="2" width="100%">
-                          <Line
-                            x1="0"
-                            y1="1"
-                            x2="100%"
-                            y2="1"
-                            stroke={index === 0 ? "#00A5DF" : "#3D6874"} // your color
-                            strokeWidth="2"
-                            strokeDasharray={index === 0 ? "" : "4 4"} // pattern: 4px dash, 4px gap
-                          />
-                        </Svg>
+                        {indicator.type !== INDICATOR_TYPE.boolean && (
+                          <View className="flex-col mr-2 mb-2">
+                            <Typography className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>{indicator.name}</Typography>
+
+                            <Svg height="2" width="100%">
+                              <Line
+                                x1="0"
+                                y1="1"
+                                x2="100%"
+                                y2="1"
+                                stroke={index === 0 ? "#00A5DF" : "#3D6874"} // your color
+                                strokeWidth="2"
+                                strokeDasharray={index === 0 ? "" : "4 4"} // pattern: 4px dash, 4px gap
+                              />
+                            </Svg>
+                          </View>
+                        )}
+                        {indicator.type === INDICATOR_TYPE.boolean &&
+                          (function () {
+                            const size = 20;
+                            const center = size / 2;
+                            const radius = 4;
+                            const lineLength = radius * 1.4; //
+                            return (
+                              <View className="flex-row items-center justify-center space-x-2 mr-2 mb-2">
+                                <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>{indicator.name}</Text>
+
+                                <View className="flex-row items-center justify-left">
+                                  <Text className={typography.textMdMedium}>Oui</Text>
+                                  <Svg
+                                    width={size}
+                                    height={size}
+                                    style={{
+                                      alignSelf: "center",
+                                    }}
+                                  >
+                                    <Circle cx={center} cy={center} r={radius} fill={"white"} stroke={"#0C419A"} strokeWidth={2} />
+                                    <Line
+                                      x1={center - lineLength}
+                                      y1={center - lineLength}
+                                      x2={center + lineLength}
+                                      y2={center + lineLength}
+                                      stroke={"#3D6874"}
+                                      strokeWidth={2}
+                                      strokeLinecap="round"
+                                    />
+                                  </Svg>
+                                  <Text className={typography.textMdMedium}>Non</Text>
+                                  <Svg
+                                    width={size}
+                                    height={size}
+                                    style={{
+                                      alignSelf: "center",
+                                    }}
+                                  >
+                                    <Circle cx={center} cy={center} r={radius} fill={"white"} stroke={"#3D6874"} strokeWidth={2} />
+                                  </Svg>
+                                </View>
+                              </View>
+                            );
+                          })()}
+                      </View>
+                    ))}
+                    {selectedGoals.map((goal, index) => (
+                      <View key={goal.id}>
+                        {(function () {
+                          const size = 20;
+                          const center = size / 2;
+                          const radius = 4;
+                          const lineLength = radius * 1.4; //
+                          return (
+                            <View className="flex-row items-center justify-center space-x-2">
+                              <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>{goal.label}</Text>
+
+                              <View className="flex-row items-center justify-left">
+                                <Text className={typography.textMdMedium}>Oui</Text>
+                                <Svg
+                                  width={size}
+                                  height={size}
+                                  style={{
+                                    alignSelf: "center",
+                                  }}
+                                >
+                                  <Circle cx={center} cy={center} r={radius} fill={"white"} stroke={"#3D6874"} strokeWidth={2} />
+                                  <Line
+                                    x1={center - lineLength}
+                                    y1={center - lineLength}
+                                    x2={center + lineLength}
+                                    y2={center + lineLength}
+                                    stroke={"#3D6874"}
+                                    strokeWidth={2}
+                                    strokeLinecap="round"
+                                  />
+                                </Svg>
+                                <Text className={typography.textMdMedium}>Non</Text>
+                                <Svg
+                                  width={size}
+                                  height={size}
+                                  style={{
+                                    alignSelf: "center",
+                                  }}
+                                >
+                                  <Circle cx={center} cy={center} r={radius} fill={"white"} stroke={"#3D6874"} strokeWidth={2} />
+                                </Svg>
+                              </View>
+                            </View>
+                          );
+                        })()}
                       </View>
                     ))}
                   </View>
