@@ -91,12 +91,7 @@ export const CrisisPlanSlideContactProfessional: React.FC<ModalCorrelationScreen
 
   return (
     <View className="flex-1 bg-cnam-primary-25">
-      <CrisisHeader
-        initialRouteName={route.params?.initialRouteName}
-        navigation={navigation}
-        title={"Plan de protection"}
-        description={"Par Hop ma liste"}
-      />
+      <CrisisHeader initialRouteName={route.params?.initialRouteName} navigation={navigation} title={"Plan de protection"} />
       <ScrollView
         className="px-4 flex-col space-y-4 pt-4 bg-cnam-primary-25 flex-1"
         showsVerticalScrollIndicator={false}
@@ -107,17 +102,17 @@ export const CrisisPlanSlideContactProfessional: React.FC<ModalCorrelationScreen
       >
         <CrisisProgressBar slideIndex={5} />
 
-        <View className="flex-column py-4 space-y-4 px-4 rounded-2xl">
+        <View className="flex-column py-4 space-y-4 px-2 rounded-2xl">
           <Text className={mergeClassNames(typography.textLgSemibold, "text-primary-900")}>{title}</Text>
         </View>
-        <View className="bg-cnam-primary-50 rounded-2xl px-6 py-8">
-          <Text className={mergeClassNames(typography.textSmMedium, "text-gray-700 mb-2")}>{label}</Text>
+        <View className="bg-cnam-primary-50 rounded-2xl px-6 py-6">
+          <Text className={mergeClassNames(typography.textSmMedium, "text-gray-700 mb-2")}>Nom du contact</Text>
           <View className="flex-row items-center space-x-2 mb-4">
             <InputText
               containerStyle={{
                 flexGrow: 1,
               }}
-              placeholder={placeholder}
+              placeholder={"Ex: un professionnel, une structure..."}
               value={contactName}
               onChangeText={(inputText) => {
                 setContactName(inputText);
@@ -137,6 +132,7 @@ export const CrisisPlanSlideContactProfessional: React.FC<ModalCorrelationScreen
               onChangeText={(inputText) => {
                 setNumber(inputText);
               }}
+              keyboardType="numeric"
               multiline={true}
               textAlignVertical="top"
             />
@@ -150,6 +146,7 @@ export const CrisisPlanSlideContactProfessional: React.FC<ModalCorrelationScreen
                     setSelectedItems(items);
                     closeBottomSheet();
                   }}
+                  withSearchInput={false}
                   itemIdKey="id"
                   itemIdLabel="name"
                   initialSelectedItems={selectedItems}
@@ -202,6 +199,7 @@ export const CrisisPlanSlideContactProfessional: React.FC<ModalCorrelationScreen
                     variant="standart"
                     label={label}
                     placeholder={placeholder}
+                    deleteLabel="Supprimer ce contact d'urgence"
                     navigation={navigation}
                     header={headerEditionBottomSheet}
                     onClose={() => {

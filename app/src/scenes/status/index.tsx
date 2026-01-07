@@ -362,7 +362,7 @@ const Status = ({ navigation, startSurvey }) => {
           )}
         </Animated.View>
       </SafeAreaView>
-      <View className="absolute bottom-28 w-full">
+      {/* <View className="absolute bottom-28 w-full">
         <TouchableOpacity
           className=" mx-4 bg-cnam-mauve-lighten-90 border border-cnam-mauve-lighten-60 px-2 py-3 rounded-xl"
           onPress={() => {
@@ -379,7 +379,7 @@ const Status = ({ navigation, startSurvey }) => {
             </View>
           </View>
         </TouchableOpacity>
-      </View>
+      </View> */}
       <FloatingPlusButton shadow onPress={startSurvey} plusPosition={plusPosition} />
     </>
   );

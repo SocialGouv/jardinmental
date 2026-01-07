@@ -21,7 +21,7 @@ export const CrisisPlanInputBox = ({
 }) => {
   const [text, setText] = useState<string>();
   return (
-    <View className="bg-cnam-primary-50 rounded-2xl px-6 py-8">
+    <View className="bg-cnam-primary-50 rounded-2xl px-6 py-6">
       <Text className={mergeClassNames(typography.textSmMedium, "text-gray-700 mb-2")}>{label}</Text>
       <View className="flex-row items-center space-x-2">
         <InputText
@@ -37,7 +37,11 @@ export const CrisisPlanInputBox = ({
           textAlignVertical="top"
         />
         <TouchableOpacity
-          className="h-12 w-12 bg-primary-800 rounded-2xl items-center justify-center"
+          className={mergeClassNames(
+            "h-12 w-12  rounded-2xl items-center justify-center",
+            !text || text.length === 0 ? "bg-gray-600" : "bg-primary-800"
+          )}
+          disabled={!text || text.length === 0}
           onPress={() => {
             if (text) {
               if (selectedItems.includes(text)) {
@@ -53,7 +57,7 @@ export const CrisisPlanInputBox = ({
         </TouchableOpacity>
       </View>
       <TouchableOpacity onPress={onPress}>
-        <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40 underline mt-8")}>
+        <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40 underline mt-4")}>
           Choisir parmi les suggestions
         </Text>
       </TouchableOpacity>

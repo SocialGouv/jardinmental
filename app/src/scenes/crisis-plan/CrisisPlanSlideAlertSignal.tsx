@@ -44,9 +44,9 @@ export const CrisisPlanSlideAlert: React.FC<ModalCorrelationScreenProps> = ({ na
       placeholder={placeholder}
       storageKey={STORAGE_KEY}
       next={"crisis-plan-slide-activities"}
-      headerEditionBottomSheet={"Édition du signal d'alerte"}
+      headerEditionBottomSheet={"Édition du signe d'alerte"}
       labelBottomSheet={"Choisissez parmi les suggestions - Signaux d’alerte"}
-      headerBottomSheet={"Alertes"}
+      headerBottomSheet={"Signes d'alerte"}
       route={route}
     />
   );

@@ -31,6 +31,7 @@ export default function CrisisContactListBottomSheet({
   itemIdKey,
   itemIdLabel,
   accessPrivileges,
+  withSearchInput,
 }: {
   onClose: (item: string[]) => void;
   initialSelectedItems: string[];
@@ -40,6 +41,7 @@ export default function CrisisContactListBottomSheet({
   itemIdKey?: string;
   itemIdLabel?: string;
   accessPrivileges: "all" | "limited" | "none" | undefined;
+  withSearchInput?: boolean;
 }) {
   const { showBottomSheet, closeBottomSheet } = useBottomSheet();
   const [selectedItems, setSelectedItems] = useState<any[]>(initialSelectedItems);
@@ -88,13 +90,15 @@ export default function CrisisContactListBottomSheet({
         </View>
         <View className="p-4 flex-column flex-1 gap-6">
           <Text className={mergeClassNames(typography.textXlBold, "text-left text-cnam-primary-900")}>{label}</Text>
-          <TextInput
-            onChangeText={(text) => {
-              setFilter(text);
-            }}
-            className={mergeClassNames(typography.textMdRegular, "text-left border border-gray-300 p-2 rounded rounded-lg")}
-            placeholder="Rechercher ou ajouter un élément"
-          />
+          {withSearchInput && (
+            <TextInput
+              onChangeText={(text) => {
+                setFilter(text);
+              }}
+              className={mergeClassNames(typography.textMdRegular, "text-left border border-gray-300 p-2 rounded rounded-lg")}
+              placeholder="Rechercher un contact"
+            />
+          )}
           {accessPrivileges === "limited" && (
             <View className="bg-cnam-primary-50 p-4 py-2">
               <Text className={mergeClassNames(typography.textSmMedium, "text-cnam-primary-900")}>Seuls les contacts autorisés sont affichés.</Text>

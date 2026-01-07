@@ -23,10 +23,10 @@ export default function CrisisProgressBar({ slideIndex = 1, slidesCount = 7 }) {
   }, [slideIndex]);
 
   return (
-    <Animated.View className="flex-row items-center px-6">
+    <Animated.View className="flex-row items-center px-4">
       <View
         className="h-2 rounded-full overflow-hidden flex-1"
-        style={{ backgroundColor: TW_COLORS.GRAY_LIGHT, borderColor: TW_COLORS.CNAM_PRIMARY_700, borderWidth: 1 }}
+        style={{ backgroundColor: TW_COLORS.CNAM_PRIMARY_50, borderColor: TW_COLORS.CNAM_PRIMARY_700, borderWidth: 1 }}
       >
         <RNAnimated.View
           className="h-full rounded-full transition-all duration-300"

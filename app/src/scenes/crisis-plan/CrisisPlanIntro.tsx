@@ -27,7 +27,7 @@ export const CrisisPlanIntro: React.FC<ModalCorrelationScreenProps> = ({ navigat
         initialRouteName={route.params?.initialRouteName}
         navigation={navigation}
         title={"Plan de protection"}
-        description={"Par Hop ma liste"}
+        description={"Hop ma liste"}
       />
       <ScrollView
         className="px-4 flex-col space-y-4 pt-4 bg-cnam-primary-25 flex-1"
@@ -37,12 +37,12 @@ export const CrisisPlanIntro: React.FC<ModalCorrelationScreenProps> = ({ navigat
           paddingBottom: 100,
         }}
       >
-        <View className="flex-column py-4 space-y-4 px-4 rounded-2xl">
+        <View className="flex-column py-2 space-y-4 px-2 rounded-[8px]">
           <Text className={mergeClassNames(typography.textLgSemibold, "text-primary-900")}>Ce que vous allez définir</Text>
         </View>
         <View className="flex-column space-y-4 rounded-2xl mb-6">
           {dataInfo.map((info) => (
-            <View key={info} className="bg-cnam-primary-100 flex-column py-4 space-y-4 px-4 rounded-2xl">
+            <View key={info} className="bg-cnam-primary-100 flex-column py-2 space-y-4 px-4 rounded-2xl">
               <Text className={mergeClassNames(typography.textMdMedium, "text-primary-900 text-left")}>{info}</Text>
             </View>
           ))}

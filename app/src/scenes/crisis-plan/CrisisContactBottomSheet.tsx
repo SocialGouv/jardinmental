@@ -32,6 +32,7 @@ export const CrisisContactBottomSheet = ({
     id: string;
     name: string;
     activities: string[];
+    deleteLabel?: string;
     phoneNumbers: {
       digits: string;
       number: string;
@@ -42,6 +43,7 @@ export const CrisisContactBottomSheet = ({
   };
   label: string;
   placeholder: string;
+  deleteLabel?: string;
   onClose: () => any;
   initialText: string;
   onDelete: () => void;
@@ -124,12 +126,13 @@ export const CrisisContactBottomSheet = ({
                     textAlignVertical="top"
                   />
                   <TouchableOpacity
+                    disabled={!text || text.length === 0}
                     onPress={() => {
                       setActivities([...activities, text]);
                       setText();
                     }}
                   >
-                    <PlusIcon color={TW_COLORS.CNAM_PRIMARY_900} />
+                    <PlusIcon color={!text || text.length === 0 ? TW_COLORS.GRAY_600 : TW_COLORS.CNAM_PRIMARY_900} />
                   </TouchableOpacity>
                 </View>
                 {activities.map((activity, index) => (
@@ -190,7 +193,7 @@ export const CrisisContactBottomSheet = ({
                   );
                 }}
               >
-                <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40 underline mt-8")}>
+                <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40 underline mt-4")}>
                   Choisir parmi les suggestions
                 </Text>
               </TouchableOpacity>
@@ -226,7 +229,7 @@ export const CrisisContactBottomSheet = ({
             }}
             variant="text"
             textClassName="text-cnam-bisque-600-Lighten-20 underline"
-            title={"Supprimer ce proche"}
+            title={deleteLabel || "Supprimer ce proche"}
           />
         </View>
       </ScrollView>

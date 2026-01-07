@@ -27,11 +27,13 @@ export const CrisisBottomSheet = ({
   header: string;
 }) => {
   const [text, setText] = useState<string>(initialText);
+  const screenHeight = Dimensions.get("window").height;
   return (
     <View className="flex-1 bg-white">
       <ScrollView bounces={false} contentContainerStyle={{ paddingBottom: 20 }} showsVerticalScrollIndicator={false}>
         <View className="self-end mr-4">
           <TouchableOpacity
+            className="mb-2"
             onPress={() => {
               onClose();
             }}
@@ -59,24 +61,24 @@ export const CrisisBottomSheet = ({
             />
           </View>
         </View>
-        <View className="w-full py-6 px-6">
-          <JMButton
-            onPress={() => {
-              onValidate(text);
-            }}
-            className="mb-2"
-            title={"Valider"}
-          />
-          <JMButton
-            onPress={() => {
-              onDelete();
-            }}
-            variant="text"
-            textClassName="text-cnam-bisque-600-Lighten-20 underline"
-            title={"Supprimer"}
-          />
-        </View>
       </ScrollView>
+      <View className="w-full py-6 px-6">
+        <JMButton
+          onPress={() => {
+            onValidate(text);
+          }}
+          className="mb-2"
+          title={"Valider"}
+        />
+        <JMButton
+          onPress={() => {
+            onDelete();
+          }}
+          variant="text"
+          textClassName="text-cnam-bisque-600-Lighten-20 underline"
+          title={"Supprimer"}
+        />
+      </View>
     </View>
   );
 };

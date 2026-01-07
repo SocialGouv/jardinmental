@@ -16,6 +16,7 @@ import CrisisContactListBottomSheet from "./CrisisContactListBottomSheet";
 import NavigationButtons from "@/components/onboarding/NavigationButtons";
 import CrisisProgressBar from "./CrisisProgressBar";
 import { CrisisAuthorizedContactBottomSheet } from "./CrisisAuthorizedContactBottomSheet";
+import User from "@assets/svg/icon/User";
 
 interface ModalCorrelationScreenProps {
   navigation: any;
@@ -74,12 +75,7 @@ export const CrisisPlanSlideContactHelp: React.FC<ModalCorrelationScreenProps> =
   }, [selectedItems]);
   return (
     <View className="flex-1 bg-cnam-primary-25">
-      <CrisisHeader
-        initialRouteName={route.params?.initialRouteName}
-        navigation={navigation}
-        title={"Plan de protection"}
-        description={"Par Hop ma liste"}
-      />
+      <CrisisHeader initialRouteName={route.params?.initialRouteName} navigation={navigation} title={"Plan de protection"} />
       <ScrollView
         className="px-4 flex-col space-y-4 pt-4 bg-cnam-primary-25 flex-1"
         showsVerticalScrollIndicator={false}
@@ -90,7 +86,7 @@ export const CrisisPlanSlideContactHelp: React.FC<ModalCorrelationScreenProps> =
       >
         <CrisisProgressBar slideIndex={4} />
 
-        <View className="flex-column py-4 space-y-4 px-4 rounded-2xl">
+        <View className="flex-column py-4 space-y-4 px-2 rounded-2xl">
           <Text className={mergeClassNames(typography.textLgSemibold, "text-primary-900")}>{title}</Text>
         </View>
         <View className="bg-cnam-primary-50 rounded-2xl px-6 py-8">
@@ -129,6 +125,7 @@ export const CrisisPlanSlideContactHelp: React.FC<ModalCorrelationScreenProps> =
                       itemIdKey={"id"}
                       itemIdLabel={"name"}
                       accessPrivileges={accessPrivileges}
+                      withSearchInput={true}
                       initialSelectedItems={selectedItems}
                       label={label}
                       header={headerEditionBottomSheet}
@@ -204,11 +201,11 @@ export const CrisisPlanSlideContactHelp: React.FC<ModalCorrelationScreenProps> =
             >
               <View className="flex-row space-x-2 flex-1">
                 <View className="flex-col py-1">
-                  <PhoneIcon />
+                  <User width={20} height={20} color={TW_COLORS.CNAM_CYAN_600_DARKEN_20} />
                 </View>
-                <View className="flex-col">
-                  <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-950")}>{item.name}</Text>
-                  <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-950")}>{item.phoneNumbers[0].number}</Text>
+                <View className="flex-col justify-start items-start">
+                  <Text className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-950")}>{item.name}</Text>
+                  <Text className={mergeClassNames(typography.textMdRegular, "text-gray-600")}>{item.phoneNumbers[0].number}</Text>
 
                   {/* {item.activities?.length ? (
                     <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-950")}>{item.activities?.join(", ")}</Text>

@@ -18,7 +18,12 @@ export default ({
     <View className="flex-row justify-between w-full bg-cnam-primary-800 p-4 items-center pt-20">
       <View className="flex-column">
         <Text className={mergeClassNames(typography.displayXsBold, "text-white")}>{title}</Text>
-        <Text className={mergeClassNames(typography.textMdRegular, "text-white text-left")}>{description}</Text>
+        {description && (
+          <View className="flex-row">
+            <Text className={mergeClassNames(typography.textMdRegular, "text-white text-left")}>Par </Text>
+            <Text className={mergeClassNames(typography.textMdRegular, "text-white text-left italic")}>{description}</Text>
+          </View>
+        )}
       </View>
       <TouchableOpacity
         onPress={() => {

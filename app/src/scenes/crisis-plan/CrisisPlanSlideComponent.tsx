@@ -73,12 +73,7 @@ export const CrisisPlanSlideComponent: React.FC<ModalCorrelationScreenProps> = (
 
   return (
     <View className="flex-1 bg-cnam-primary-25">
-      <CrisisHeader
-        initialRouteName={route.params?.initialRouteName}
-        navigation={navigation}
-        title={"Plan de protection"}
-        description={"Par Hop ma liste"}
-      />
+      <CrisisHeader initialRouteName={route.params?.initialRouteName} navigation={navigation} title={"Plan de protection"} />
       <ScrollView
         className="px-4 flex-col space-y-4 pt-4 bg-cnam-primary-25 flex-1"
         showsVerticalScrollIndicator={false}
@@ -88,7 +83,7 @@ export const CrisisPlanSlideComponent: React.FC<ModalCorrelationScreenProps> = (
         }}
       >
         <CrisisProgressBar slideIndex={slideIndex} />
-        <View className="flex-column py-4 space-y-4 px-4 rounded-2xl">
+        <View className="flex-column py-4 space-y-4 px-2 rounded-2xl">
           <Text className={mergeClassNames(typography.textLgSemibold, "text-primary-900")}>{title}</Text>
         </View>
         <CrisisPlanInputBox

@@ -16,6 +16,8 @@ import CrisisContactListBottomSheet from "./CrisisContactListBottomSheet";
 import NavigationButtons from "@/components/onboarding/NavigationButtons";
 import CrisisProgressBar from "./CrisisProgressBar";
 import { CrisisAuthorizedContactBottomSheet } from "./CrisisAuthorizedContactBottomSheet";
+import UsersIcon from "@assets/svg/icon/Users";
+import User from "@assets/svg/icon/User";
 
 interface ModalCorrelationScreenProps {
   navigation: any;
@@ -74,12 +76,7 @@ export const CrisisPlanSlideContact: React.FC<ModalCorrelationScreenProps> = ({ 
   }, [selectedItems]);
   return (
     <View className="flex-1 bg-cnam-primary-25">
-      <CrisisHeader
-        initialRouteName={route.params?.initialRouteName}
-        navigation={navigation}
-        title={"Plan de protection"}
-        description={"Par Hop ma liste"}
-      />
+      <CrisisHeader initialRouteName={route.params?.initialRouteName} navigation={navigation} title={"Plan de protection"} />
       <ScrollView
         className="px-4 flex-col space-y-4 pt-4 bg-cnam-primary-25 flex-1"
         showsVerticalScrollIndicator={false}
@@ -90,7 +87,7 @@ export const CrisisPlanSlideContact: React.FC<ModalCorrelationScreenProps> = ({ 
       >
         <CrisisProgressBar slideIndex={3} />
 
-        <View className="flex-column py-4 space-y-4 px-4 rounded-2xl">
+        <View className="flex-column py-4 space-y-4 px-2 rounded-2xl">
           <Text className={mergeClassNames(typography.textLgSemibold, "text-primary-900")}>{title}</Text>
         </View>
         <View className="bg-cnam-primary-50 rounded-2xl px-6 py-8">
@@ -98,6 +95,7 @@ export const CrisisPlanSlideContact: React.FC<ModalCorrelationScreenProps> = ({ 
           <JMButton
             variant="outline"
             title="Rechercher parmi mes contacts"
+            textClassName="text-cnam-cyan-700-darken-40"
             onPress={async () => {
               setContactsError(null);
               setLoadingContacts(true);
@@ -131,6 +129,7 @@ export const CrisisPlanSlideContact: React.FC<ModalCorrelationScreenProps> = ({ 
                       itemIdLabel={"name"}
                       accessPrivileges={accessPrivileges}
                       initialSelectedItems={selectedItems}
+                      withSearchInput={true}
                       label={label}
                       header={headerEditionBottomSheet}
                       onClose={(
@@ -170,7 +169,7 @@ export const CrisisPlanSlideContact: React.FC<ModalCorrelationScreenProps> = ({ 
                 Alert.alert("Erreur", "Une erreur est survenue lors de la récupération des contacts.");
               }
             }}
-            icon={<PhoneIcon width={20} height={20} color={TW_COLORS.GRAY_400} />}
+            icon={<UsersIcon width={20} height={20} color={TW_COLORS.GRAY_400} />}
             iconPosition="left"
           />
           {loadingContacts && (
@@ -213,7 +212,7 @@ export const CrisisPlanSlideContact: React.FC<ModalCorrelationScreenProps> = ({ 
             >
               <View className="flex-row space-x-2 flex-1">
                 <View className="flex-col py-1">
-                  <PhoneIcon />
+                  <User width={20} height={20} color={TW_COLORS.CNAM_PRIMARY_800} />
                 </View>
                 <View className="flex-col">
                   <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-950")}>{item.name}</Text>
