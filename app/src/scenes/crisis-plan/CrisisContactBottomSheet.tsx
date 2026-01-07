@@ -26,6 +26,7 @@ export const CrisisContactBottomSheet = ({
   onValidate,
   header,
   variant,
+  deleteLabel,
 }: {
   navigation: any;
   item: {
@@ -99,6 +100,7 @@ export const CrisisContactBottomSheet = ({
               containerStyle={{
                 flexGrow: 1,
               }}
+              keyboardType="numeric"
               placeholder={"06 39 98 90 60"}
               value={number}
               onChangeText={(inputText) => {

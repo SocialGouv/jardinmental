@@ -33,7 +33,7 @@ const ActivitiesCard: React.FC<ActivitiesCardProps> = ({ activities }) => {
           </Text>
           <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-950")}>Activités</Text>
         </View>
-        <TouchableOpacity onPress={() => setIsOpen((v) => !v)} className="mr-2">
+        <TouchableOpacity onPress={() => setIsOpen((v) => !v)} className="mr-2" hitSlop={{ top: 10, bottom: 10, left: 300, right: 10 }}>
           <ChevronIcon width={14} height={14} direction={isOpen ? "down" : "up"} strokeWidth={2} />
         </TouchableOpacity>
       </View>

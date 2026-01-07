@@ -2,6 +2,7 @@ import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
 import CrossIcon from "@assets/svg/icon/Cross";
 import { View, TouchableOpacity, Text } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default ({
   navigation,
@@ -14,8 +15,9 @@ export default ({
   description?: string;
   initialRouteName: string;
 }) => {
+  const insets = useSafeAreaInsets();
   return (
-    <View className="flex-row justify-between w-full bg-cnam-primary-800 p-4 items-center pt-20">
+    <View className="flex-row justify-between w-full bg-cnam-primary-800 p-4 items-center" style={{ paddingTop: insets.top + 20 }}>
       <View className="flex-column">
         <Text className={mergeClassNames(typography.displayXsBold, "text-white")}>{title}</Text>
         {description && (
@@ -35,7 +37,7 @@ export default ({
             navigation.goBack();
           }
         }}
-        className="w-16 justify-end flex-row items-center absolute right-5 top-15"
+        className="w-16 justify-end flex-row items-center"
       >
         <CrossIcon color={"white"} width={25} height={25} strokeWidth={1.2} />
       </TouchableOpacity>
