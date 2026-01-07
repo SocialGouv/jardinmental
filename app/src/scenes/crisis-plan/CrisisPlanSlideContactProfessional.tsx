@@ -91,7 +91,7 @@ export const CrisisPlanSlideContactProfessional: React.FC<ModalCorrelationScreen
 
   return (
     <View className="flex-1 bg-cnam-primary-25">
-      <CrisisHeader initialRouteName={route.params?.initialRouteName} navigation={navigation} title={"Plan de protection"} />
+      <CrisisHeader initialRouteName={route.params?.initialRouteName} navigation={navigation} title={"Mon plan de crise"} />
       <ScrollView
         className="px-4 flex-col space-y-4 pt-4 bg-cnam-primary-25 flex-1"
         showsVerticalScrollIndicator={false}

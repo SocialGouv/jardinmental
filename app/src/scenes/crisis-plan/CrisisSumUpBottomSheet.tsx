@@ -67,7 +67,7 @@ export default function CrisisSumUpBottomSheet({
           </TouchableOpacity>
         </View>
         <View className="flex-row bg-[#E5F6FC] self-start items-center p-2">
-          <Text className={mergeClassNames(typography.textSmBold, "ml-2 text-cnam-cyan-700-darken-40 text-left")}>Modifier Plan de protection</Text>
+          <Text className={mergeClassNames(typography.textSmBold, "ml-2 text-cnam-cyan-700-darken-40 text-left")}>Modifier Mon plan de crise</Text>
         </View>
         <View className="p-4 flex-column flex-1 gap-6">
           <Text className={mergeClassNames(typography.textXlBold, "text-left text-cnam-primary-900")}>Que souhaitez-vous modifier ?</Text>

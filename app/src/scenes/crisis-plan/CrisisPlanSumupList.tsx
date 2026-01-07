@@ -103,7 +103,7 @@ export const CrisisPlanSumupList: React.FC<ModalCorrelationScreenProps> = ({ nav
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>Plan de protection</title>
+    <title>Mon plan de crise</title>
     <style>
       body {
         font-family: -apple-system, BlinkMacSystemFont, sans-serif;
@@ -141,7 +141,7 @@ export const CrisisPlanSumupList: React.FC<ModalCorrelationScreenProps> = ({ nav
   </head>
 
   <body>
-    <h1>Plan de protection</h1>
+    <h1>Mon plan de crise</h1>
 
     <h2>Mes signes d’alerte</h2>
     <ul>${(cardData.alerts || []).map((a) => `<li>${a}</li>`).join("")}</ul>
@@ -186,7 +186,7 @@ export const CrisisPlanSumupList: React.FC<ModalCorrelationScreenProps> = ({ nav
 
   return (
     <View className="flex-1 bg-cnam-cyan-50-lighten-90">
-      <CrisisHeader initialRouteName={route.params?.initialRouteName} navigation={navigation} title={"Plan de protection"} />
+      <CrisisHeader initialRouteName={route.params?.initialRouteName} navigation={navigation} title={"Mon plan de crise"} />
       <View className="flex-row justify-between m-4">
         <TouchableOpacity onPress={handleSharePdf} className="flex-row items-center justify-center space-x-2">
           <ShareIcon width={20} height={20} color={TW_COLORS.CNAM_CYAN_700_DARKEN_40} />

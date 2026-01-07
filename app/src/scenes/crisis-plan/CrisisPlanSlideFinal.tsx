@@ -23,7 +23,7 @@ export const CrisisPlanSlideFinal: React.FC<ModalCorrelationScreenProps> = ({ na
   //CNAM - secondary/Cyan (Accent)/50 lighten 90
   return (
     <View className="flex-1 bg-cnam-cyan-50-lighten-90">
-      <CrisisHeader initialRouteName={route.params?.initialRouteName} navigation={navigation} title={"Plan de protection"} />
+      <CrisisHeader initialRouteName={route.params?.initialRouteName} navigation={navigation} title={"Mon plan de crise"} />
       <View className="absolute right-4">
         <Image
           style={{ width: 200, height: 200, top: 250, right: 0, resizeMode: "contain", zIndex: 0 }}

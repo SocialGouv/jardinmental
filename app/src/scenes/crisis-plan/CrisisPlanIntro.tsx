@@ -26,7 +26,7 @@ export const CrisisPlanIntro: React.FC<ModalCorrelationScreenProps> = ({ navigat
       <CrisisHeader
         initialRouteName={route.params?.initialRouteName}
         navigation={navigation}
-        title={"Plan de protection"}
+        title={"Mon plan de crise"}
         description={"Hop ma liste"}
       />
       <ScrollView
