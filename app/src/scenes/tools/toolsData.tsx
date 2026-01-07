@@ -474,6 +474,10 @@ Cet exercice nécessite des explications afin de le réaliser. Nous vous recomma
     audience: ["child", "parent", "student"],
     url: "https://ateliers-rehab.ch/docs/revim/REVIM_Mon-plan-de-gestion-de-crise-2025.pdf",
     source: "Centre Ressources de Réhabilitation Psychosociale",
+    innerPath: {
+      text: "Créer mon plan de crise",
+      path: "crisis-plan",
+    },
   },
   {
     id: "13547522-e7d8-477e-be64-4161f1cf5f7b",

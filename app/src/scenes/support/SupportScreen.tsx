@@ -13,6 +13,7 @@ import ArrowUpSvg from "@assets/svg/icon/ArrowUp";
 import LinkIcon from "@assets/svg/icon/Link";
 import Markdown from "react-native-markdown-display";
 import logEvents from "@/services/logEvents";
+import LifeBuoy from "@assets/svg/icon/Lifebuoy";
 
 export default function SupportScreen({ navigation, route }) {
   const [sectionListenVisible, setSectionListenVisible] = useState(false);
@@ -176,10 +177,31 @@ export default function SupportScreen({ navigation, route }) {
               cornerSmoothing={100}
               className="border border-cnam-primary-800 bg-cnam-primary-25  flex-row px-6 py-2 justify-content items-center mt-0"
             >
-              <PhoneIcon width={24} height={24} />
+              <View className="w-[30]">
+                <PhoneIcon width={24} height={24} color={TW_COLORS.CNAM_PRIMARY_800} />
+              </View>
               <View className="ml-3">
                 <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-900 text-left")}>Appeler le 3114</Text>
                 <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900 text-left")}>Prévention suicide</Text>
+              </View>
+            </SquircleButton>
+            <SquircleButton
+              onPress={() => {
+                navigation.navigate("crisis-plan-slide-sumup-list");
+              }}
+              style={{
+                borderRadius: 20,
+              }}
+              preserveSmoothing={true}
+              cornerSmoothing={100}
+              className="border border-cnam-primary-800 bg-cnam-primary-25  flex-row px-6 py-2 justify-content items-center mt-2"
+            >
+              <View className="w-[30]">
+                <LifeBuoy width={24} height={24} color={TW_COLORS.CNAM_PRIMARY_800} />
+              </View>
+              <View className="ml-3">
+                <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-900 text-left")}>Ouvrir mon plan de protection</Text>
+                <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900 text-left")}>Accéder à votre plan personnel</Text>
               </View>
             </SquircleButton>
           </View>

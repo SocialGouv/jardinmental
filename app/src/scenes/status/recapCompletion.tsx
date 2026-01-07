@@ -48,6 +48,13 @@ const RecapCompletion = () => {
 
   return (
     <View style={styles.safe}>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate("crisis-plan");
+        }}
+      >
+        <Text>Start Plan de crise</Text>
+      </TouchableOpacity>
       <Text style={[styles.title, styles.separatorBottom]}>Complétez les 7 derniers jours pour un meilleur suivi</Text>
       <View style={styles.fil} />
       <View style={styles.buttonsContainer}>

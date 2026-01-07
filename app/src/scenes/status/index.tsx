@@ -41,6 +41,8 @@ import ArrowCircleRightIcon from "@assets/svg/icon/ArrowCircleRight";
 import { useBottomSheet } from "@/context/BottomSheetContext";
 import { BeckBottomSheet } from "../tools/BeckBottomSheet";
 import { TOOL_BECK_ID } from "../tools/toolsData";
+import LifeBuoy from "@assets/svg/icon/Lifebuoy";
+import ArrowIcon from "@assets/svg/icon/Arrow";
 
 const Status = ({ navigation, startSurvey }) => {
   const [diaryData] = useContext(DiaryDataContext);
@@ -360,6 +362,24 @@ const Status = ({ navigation, startSurvey }) => {
           )}
         </Animated.View>
       </SafeAreaView>
+      {/* <View className="absolute bottom-28 w-full">
+        <TouchableOpacity
+          className=" mx-4 bg-cnam-mauve-lighten-90 border border-cnam-mauve-lighten-60 px-2 py-3 rounded-xl"
+          onPress={() => {
+            navigation.navigate("crisis-plan-slide-sumup-list");
+          }}
+        >
+          <View className="flex-row justify-between items-center">
+            <View className="flex-row items-center justify-center space-x-2">
+              <LifeBuoy width={20} height={20} color={TW_COLORS.CNAM_MAUVE_DARKEN_80} />
+              <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-mauve-darken-80")}>Ouvrir mon plan de protection</Text>
+            </View>
+            <View className="flex-row items-center">
+              <ArrowIcon width={24} height={24} color={TW_COLORS.CNAM_MAUVE_DARKEN_80} />
+            </View>
+          </View>
+        </TouchableOpacity>
+      </View> */}
       <FloatingPlusButton shadow onPress={startSurvey} plusPosition={plusPosition} />
     </>
   );

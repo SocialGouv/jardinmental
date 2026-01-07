@@ -14,7 +14,7 @@ export const typography = {
   textLgSemibold: "text-lg font-semibold font-body",
   textLgMedium: "text-lg font-medium font-body",
   textLgRegular: "text-lg font-normal font-body",
-  textMdRegular: "text-base font-normal font-body text-center",
+  textMdRegular: "text-base text-center",
   textXsRegular: "text-xs font-normal font-body text-center",
   textMdSemibold: "text-base font-semibold font-body leading-6",
   textMdMedium: "text-base font-normal font-body leading-6",

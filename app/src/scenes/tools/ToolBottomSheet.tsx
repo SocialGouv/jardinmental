@@ -357,7 +357,7 @@ export const ToolBottomSheet = ({
                 title={"Faire l'exercice de respiration"}
               />
             )}
-            {isFileType() && !toolItem.embed && !toolItem.video && (
+            {isFileType() && !toolItem.embed && !toolItem.video && !toolItem.innerPath && (
               <>
                 <JMButton
                   className="mb-2"
@@ -373,6 +373,16 @@ export const ToolBottomSheet = ({
                   disabled={isDownloading || isViewing}
                 />
               </>
+            )}
+            {toolItem.innerPath && (
+              <JMButton
+                className="mb-2"
+                onPress={() => {
+                  navigation.navigate(toolItem.innerPath.path);
+                  closeBottomSheet();
+                }}
+                title={toolItem.innerPath.text}
+              />
             )}
             {!isFileType() && !toolItem.embed && !toolItem.video && toolItem.id !== TOOL_BECK_ID && (
               <JMButton icon={<LinkExternal color="white" />} onPress={handleOpenUrl} title={"Voir l'outil"} />
