@@ -180,7 +180,7 @@ export const CrisisPlanSlideContactHelp: React.FC<ModalCorrelationScreenProps> =
                     label={label}
                     placeholder={placeholder}
                     navigation={navigation}
-                    header={"Edition du proche"}
+                    header={"Édition du proche"}
                     onClose={() => {
                       closeBottomSheet();
                     }}

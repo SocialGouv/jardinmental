@@ -43,25 +43,27 @@ const ChangeIdeasCard: React.FC<ChangeIdeasCardProps> = ({ contactsChangeIdeas }
         borderColor: "#99DBF2",
       }}
     >
-      <View className="flex-row items-center justify-between">
-        <View className="flex-row items-center">
-          <Text
-            className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-950 p-1 px-3 rounded mr-2")}
-            style={{
-              backgroundColor: "#CCEDF9",
-            }}
-          >
-            3
-          </Text>
-          <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-950")}>Se changer les idées</Text>
+      <TouchableOpacity onPress={() => setIsOpen((v) => !v)}>
+        <View className="flex-row items-center justify-between">
+          <View className="flex-row items-center">
+            <Text
+              className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-950 p-1 px-3 rounded mr-2")}
+              style={{
+                backgroundColor: "#CCEDF9",
+              }}
+            >
+              3
+            </Text>
+            <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-950")}>Se changer les idées</Text>
+          </View>
+          <TouchableOpacity onPress={() => setIsOpen((v) => !v)} className="mr-2">
+            <ChevronIcon width={14} height={14} direction={isOpen ? "down" : "up"} strokeWidth={2} />
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity onPress={() => setIsOpen((v) => !v)} className="mr-2" hitSlop={{ top: 10, bottom: 10, left: 300, right: 10 }}>
-          <ChevronIcon width={14} height={14} direction={isOpen ? "down" : "up"} strokeWidth={2} />
-        </TouchableOpacity>
-      </View>
-      <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700")}>
-        Les proches que vous pouvez contacter et les activités que vous pouvez faire ensemble pour vous changer les idées :
-      </Text>
+        <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700")}>
+          Les proches que vous pouvez contacter et les activités que vous pouvez faire ensemble pour vous changer les idées :
+        </Text>
+      </TouchableOpacity>
       {isOpen && (
         <View className="flex-colmun">
           <View className="flex-colmun space-y-2">
@@ -91,6 +93,9 @@ const ChangeIdeasCard: React.FC<ChangeIdeasCardProps> = ({ contactsChangeIdeas }
                 </TouchableOpacity>
               );
             })}
+            {contactsChangeIdeas.length === 0 && (
+              <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900")}>Aucun contact renseigné.</Text>
+            )}
           </View>
         </View>
       )}

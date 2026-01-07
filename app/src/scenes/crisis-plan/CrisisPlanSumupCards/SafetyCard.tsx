@@ -21,22 +21,24 @@ const SafetyCard: React.FC<SafetyCardProps> = ({ safety }) => {
         borderColor: "#CED9EB",
       }}
     >
-      <View className="flex-row items-center justify-between">
-        <View className="flex-row items-center">
-          <Text
-            className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-950 p-1 px-3 rounded mr-2")}
-            style={{
-              backgroundColor: "#CED9EB",
-            }}
-          >
-            6
-          </Text>
-          <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-950")}>Environnement sécurisé</Text>
+      <TouchableOpacity onPress={() => setIsOpen((v) => !v)}>
+        <View className="flex-row items-center justify-between">
+          <View className="flex-row items-center">
+            <Text
+              className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-950 p-1 px-3 rounded mr-2")}
+              style={{
+                backgroundColor: "#CED9EB",
+              }}
+            >
+              6
+            </Text>
+            <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-950")}>Environnement sécurisé</Text>
+          </View>
+          <TouchableOpacity onPress={() => setIsOpen((v) => !v)} className="mr-2">
+            <ChevronIcon width={14} height={14} direction={isOpen ? "down" : "up"} strokeWidth={2} />
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity onPress={() => setIsOpen((v) => !v)} className="mr-2" hitSlop={{ top: 10, bottom: 10, left: 300, right: 10 }}>
-          <ChevronIcon width={14} height={14} direction={isOpen ? "down" : "up"} strokeWidth={2} />
-        </TouchableOpacity>
-      </View>
+      </TouchableOpacity>
       <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700")}>
         Les façon d’assurer vote sécurité ou de sécuriser votre environnement :
       </Text>
@@ -53,6 +55,9 @@ const SafetyCard: React.FC<SafetyCardProps> = ({ safety }) => {
                 </View>
               );
             })}
+            {safety.length === 0 && (
+              <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900")}>Aucune élément renseigné.</Text>
+            )}
           </View>
         </View>
       )}

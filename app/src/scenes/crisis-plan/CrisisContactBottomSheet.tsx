@@ -10,6 +10,7 @@ import PhoneIcon from "@assets/svg/icon/Phone";
 import CrisisListBottomSheet from "./CrisisListBottomSheet";
 import PlusIcon from "@assets/svg/icon/plus";
 import TrashIcon from "@assets/svg/icon/Trash";
+import { LinearGradient } from "expo-linear-gradient";
 
 const suggestions = ["Aller au cinéma", "Aller au restaurant", "Faire du shopping", "Faire une promenade"];
 const screenHeight = Dimensions.get("window").height;
@@ -71,11 +72,11 @@ export const CrisisContactBottomSheet = ({
     <View className="flex-1 bg-white">
       <ScrollView
         bounces={false}
-        contentContainerStyle={{ paddingBottom: 0 }}
+        contentContainerStyle={{ paddingBottom: 200 }}
         showsVerticalScrollIndicator={false}
-        // style={{
-        //   height: height90vh,
-        // }}
+        style={{
+          height: height90vh,
+        }}
       >
         <View className="self-end mr-4">
           <TouchableOpacity
@@ -202,7 +203,20 @@ export const CrisisContactBottomSheet = ({
             </>
           )}
         </View>
-        <View className="w-full py-6 px-6">
+      </ScrollView>
+
+      <LinearGradient
+        colors={["rgba(255,255,255,0)", "rgba(255,255,255,1)"]}
+        className={`p-6 px-4 pb-5`}
+        locations={[0, 0.3]}
+        style={{
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          right: 0,
+        }}
+      >
+        <View className="py-6">
           <JMButton
             onPress={() => {
               const updatedValue = {
@@ -234,7 +248,7 @@ export const CrisisContactBottomSheet = ({
             title={deleteLabel || "Supprimer ce proche"}
           />
         </View>
-      </ScrollView>
+      </LinearGradient>
     </View>
   );
 };

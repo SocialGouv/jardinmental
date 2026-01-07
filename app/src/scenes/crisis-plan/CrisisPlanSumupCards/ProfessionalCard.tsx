@@ -42,22 +42,24 @@ const ProfessionalCard: React.FC<ProfessionalCardProps> = ({ contactsProfessiona
         borderColor: "#FCF0D3",
       }}
     >
-      <View className="flex-row items-center justify-between">
-        <View className="flex-row items-center">
-          <Text
-            className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-950 p-1 px-3 rounded mr-2")}
-            style={{
-              backgroundColor: "#F6D17B",
-            }}
-          >
-            5
-          </Text>
-          <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-950")}>En cas d’urgence</Text>
+      <TouchableOpacity onPress={() => setIsOpen((v) => !v)}>
+        <View className="flex-row items-center justify-between">
+          <View className="flex-row items-center">
+            <Text
+              className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-950 p-1 px-3 rounded mr-2")}
+              style={{
+                backgroundColor: "#F6D17B",
+              }}
+            >
+              5
+            </Text>
+            <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-950")}>En cas d’urgence</Text>
+          </View>
+          <TouchableOpacity onPress={() => setIsOpen((v) => !v)} className="mr-2">
+            <ChevronIcon width={14} height={14} direction={isOpen ? "down" : "up"} strokeWidth={2} />
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity onPress={() => setIsOpen((v) => !v)} className="mr-2" hitSlop={{ top: 10, bottom: 10, left: 300, right: 10 }}>
-          <ChevronIcon width={14} height={14} direction={isOpen ? "down" : "up"} strokeWidth={2} />
-        </TouchableOpacity>
-      </View>
+      </TouchableOpacity>
       <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700")}>
         Les professionnels ou structures que vous pouvez contacter en cas d’urgence :
       </Text>
@@ -87,6 +89,9 @@ const ProfessionalCard: React.FC<ProfessionalCardProps> = ({ contactsProfessiona
                 </TouchableOpacity>
               );
             })}
+            {contactsProfessional.length === 0 && (
+              <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900")}>Aucun contact renseigné.</Text>
+            )}
           </View>
         </View>
       )}

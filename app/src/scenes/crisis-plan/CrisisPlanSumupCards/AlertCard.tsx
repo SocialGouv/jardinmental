@@ -21,25 +21,27 @@ const AlertCard: React.FC<AlertCardProps> = ({ alerts }) => {
         borderColor: "#D9BDE2",
       }}
     >
-      <View className="flex-row items-center justify-between">
-        <View className="flex-row items-center">
-          <Text
-            className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-950 p-1 px-3 rounded mr-2")}
-            style={{
-              backgroundColor: "#ECDEF0",
-            }}
-          >
-            1
-          </Text>
-          <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-950")}>Mes signes d'alerte</Text>
+      <TouchableOpacity onPress={() => setIsOpen((v) => !v)}>
+        <View className="flex-row items-center justify-between">
+          <View className="flex-row items-center">
+            <Text
+              className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-950 p-1 px-3 rounded mr-2")}
+              style={{
+                backgroundColor: "#ECDEF0",
+              }}
+            >
+              1
+            </Text>
+            <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-950")}>Mes signes d'alerte</Text>
+          </View>
+          <TouchableOpacity onPress={() => setIsOpen((v) => !v)} className="mr-2">
+            <ChevronIcon width={14} height={14} direction={isOpen ? "down" : "up"} strokeWidth={2} />
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity onPress={() => setIsOpen((v) => !v)} className="mr-2" hitSlop={{ top: 10, bottom: 10, left: 300, right: 10 }}>
-          <ChevronIcon width={14} height={14} direction={isOpen ? "down" : "up"} strokeWidth={2} />
-        </TouchableOpacity>
-      </View>
-      <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700")}>
-        Les signes d’alerte qui sont pour vous annonciateurs d’idées suicidaires :
-      </Text>
+        <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700")}>
+          Les signes d’alerte qui sont pour vous annonciateurs d’idées suicidaires :
+        </Text>
+      </TouchableOpacity>
       {isOpen && (
         <View className="flex-colmun space-y-2">
           {alerts?.map((itemAlert, idx) => {
@@ -52,6 +54,9 @@ const AlertCard: React.FC<AlertCardProps> = ({ alerts }) => {
               </View>
             );
           })}
+          {alerts.length === 0 && (
+            <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900")}>Aucun signe d'alerte renseigné.</Text>
+          )}
         </View>
       )}
     </View>

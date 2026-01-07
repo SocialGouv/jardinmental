@@ -191,7 +191,7 @@ export const CrisisPlanSlideContact: React.FC<ModalCorrelationScreenProps> = ({ 
                     variant="activity"
                     placeholder={placeholder}
                     navigation={navigation}
-                    header={"Edition du proche"}
+                    header={"Édition du proche"}
                     onClose={() => {
                       closeBottomSheet();
                     }}

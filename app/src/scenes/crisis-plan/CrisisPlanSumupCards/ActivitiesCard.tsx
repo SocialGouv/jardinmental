@@ -21,25 +21,27 @@ const ActivitiesCard: React.FC<ActivitiesCardProps> = ({ activities }) => {
         borderColor: "#F9D1E6E6",
       }}
     >
-      <View className="flex-row items-center justify-between">
-        <View className="flex-row items-center">
-          <Text
-            className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-950 p-1 px-3 rounded mr-2")}
-            style={{
-              backgroundColor: "#F9D1E6",
-            }}
-          >
-            2
-          </Text>
-          <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-950")}>Activités</Text>
+      <TouchableOpacity onPress={() => setIsOpen((v) => !v)}>
+        <View className="flex-row items-center justify-between">
+          <View className="flex-row items-center">
+            <Text
+              className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-950 p-1 px-3 rounded mr-2")}
+              style={{
+                backgroundColor: "#F9D1E6",
+              }}
+            >
+              2
+            </Text>
+            <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-950")}>Activités</Text>
+          </View>
+          <TouchableOpacity onPress={() => setIsOpen((v) => !v)} className="mr-2">
+            <ChevronIcon width={14} height={14} direction={isOpen ? "down" : "up"} strokeWidth={2} />
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity onPress={() => setIsOpen((v) => !v)} className="mr-2" hitSlop={{ top: 10, bottom: 10, left: 300, right: 10 }}>
-          <ChevronIcon width={14} height={14} direction={isOpen ? "down" : "up"} strokeWidth={2} />
-        </TouchableOpacity>
-      </View>
-      <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700")}>
-        Ce que vous pouvez faire seul.e pour mettre à distance les idées suicidaires :
-      </Text>
+        <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700")}>
+          Ce que vous pouvez faire seul.e pour mettre à distance les idées suicidaires :
+        </Text>
+      </TouchableOpacity>
       {isOpen && (
         <View className="flex-colmun space-y-2">
           {activities?.map((itemActivity, idx) => {
@@ -52,6 +54,9 @@ const ActivitiesCard: React.FC<ActivitiesCardProps> = ({ activities }) => {
               </View>
             );
           })}
+          {activities.length === 0 && (
+            <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900")}>Aucune activité renseignée.</Text>
+          )}
         </View>
       )}
     </View>
