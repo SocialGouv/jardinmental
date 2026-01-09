@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef } from "react";
 import { StyleSheet, View, Text, TouchableOpacity, Alert } from "react-native";
 
-import { colors } from "../../utils/colors";
 import localStorage from "../../utils/localStorage";
 import logEvents from "../../services/logEvents";
 import { ONBOARDING_STEPS, TW_COLORS, categories, displayedCategories, reliquatCategories } from "../../utils/constants";
@@ -19,8 +18,9 @@ import { Gesture } from "react-native-gesture-handler";
 import ParagraphSpacing from "@assets/svg/icon/ParagraphSpacing";
 import TrashIcon from "@assets/svg/icon/Trash";
 import CrossIcon from "@assets/svg/icon/Cross";
-import { IndicatorEditProvider, useIndicatorEdit } from "@/context/IndicatorEditContext";
+import { useIndicatorEdit } from "@/context/IndicatorEditContext";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Typography } from "@/components/Typography";
 
 const CustomSymptomScreenContent = ({ navigation, route, settings = false }) => {
   const [chosenCategories, setChosenCategories] = React.useState();
@@ -135,7 +135,7 @@ const CustomSymptomScreenContent = ({ navigation, route, settings = false }) => 
           className="flex-row space-x-2 items-center justify-center"
         >
           <ChevronIcon direction="left" color={TW_COLORS.CNAM_PRIMARY_25} />
-          <Text className="text-cnam-primary-25">Mes indicateurs</Text>
+          <Typography className="text-cnam-primary-25">Mes indicateurs</Typography>
         </TouchableOpacity>
       }
       headerRightComponent={null}
@@ -186,14 +186,14 @@ const CustomSymptomScreenContent = ({ navigation, route, settings = false }) => 
               }}
             >
               <View className="flex-row items-center justify-between w-full h-20">
-                <Text
+                <Typography
                   style={{
                     color: "#F7FCFE",
                   }}
                   className={typography.textMdSemibold}
                 >
                   Votre suivi a été modifié avec succès
-                </Text>
+                </Typography>
                 <TouchableOpacity
                   onPress={() => {
                     setShowSuccessBanner(false);
@@ -211,24 +211,24 @@ const CustomSymptomScreenContent = ({ navigation, route, settings = false }) => 
       <View className="px-4">
         <View className="flex-column mb-6">
           <View className="flex-row items-center">
-            <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-900")}>Mes indicateurs</Text>
+            <Typography className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-900")}>Mes indicateurs</Typography>
             <View className="bg-cnam-cyan-500-0 h-7 w-7 rounded-full items-center justify-center ml-2">
-              <Text className={mergeClassNames("text-cnam-primary-900", typography.textMdSemibold)}>
+              <Typography className={mergeClassNames("text-cnam-primary-900", typography.textMdSemibold)}>
                 {userIndicateurs.filter((_indicateur) => _indicateur.active).length}
-              </Text>
+              </Typography>
             </View>
           </View>
           {!isEditing && (
-            <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900 mt-3")}>
+            <Typography className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900 mt-3")}>
               Gérez vos éléments de suivi, ajoutez-en de nouveaux et choisissez la manière dont vous les évaluez
-            </Text>
+            </Typography>
           )}
           {isEditing && (
             <View className="bg-cnam-cyan-50-lighten-90 py-4 px-4 rounded-2xl mt-3">
-              <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-900")}>Modifier mon suivi quotidien </Text>
-              <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900 mt-3")}>
+              <Typography className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-900")}>Modifier mon suivi quotidien </Typography>
+              <Typography className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900 mt-3")}>
                 Vous pouvez changer l’ordre d’apparition de vos indicateurs, en ajouter de nouveaux et/ou les supprimer.
-              </Text>
+              </Typography>
             </View>
           )}
         </View>
@@ -239,7 +239,7 @@ const CustomSymptomScreenContent = ({ navigation, route, settings = false }) => 
               .map((_indicateur) => {
                 return (
                   <View key={_indicateur.uuid || _indicateur.name} className="p-4 bg-gray-100 mb-2 rounded-xl">
-                    <Text className={mergeClassNames(typography.textLgRegular, "text-cnam-primary-950")}>{_indicateur.name}</Text>
+                    <Typography className={mergeClassNames(typography.textLgRegular, "text-cnam-primary-950")}>{_indicateur.name}</Typography>
                   </View>
                 );
               })}
@@ -288,7 +288,7 @@ const IndicatorItem = ({
         className={mergeClassNames("p-4 bg-gray-100 mb-2 rounded-xl flex-row items-center justify-between", !indicator.active ? "bg-gray-50" : "")}
       >
         <ParagraphSpacing width={24} height={24} color={TW_COLORS.CNAM_PRIMARY_700} />
-        <Text className={mergeClassNames(typography.textLgRegular, "text-cnam-primary-950 flex-1 mx-3 ml-4")}>{indicator?.name}</Text>
+        <Typography className={mergeClassNames(typography.textLgRegular, "text-cnam-primary-950 flex-1 mx-3 ml-4")}>{indicator?.name}</Typography>
         <TouchableOpacity onPress={deleteIndicator} hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}>
           <TrashIcon width={24} height={24} color={TW_COLORS.CNAM_PRIMARY_800} />
         </TouchableOpacity>

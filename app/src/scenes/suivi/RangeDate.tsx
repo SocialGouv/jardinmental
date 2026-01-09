@@ -16,6 +16,7 @@ import { useBottomSheet } from "@/context/BottomSheetContext";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
 import Tune from "@assets/svg/icon/Tune";
+import { Typography } from "@/components/Typography";
 
 const RangeDate = ({
   withPreset = false,
@@ -125,7 +126,9 @@ const RangeDate = ({
     <View>
       <View className="flex-row items-center justify-between">
         <View className="flex-row items-center space-x-2">
-          {introductionText && <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>{introductionText}</Text>}
+          {introductionText && (
+            <Typography className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>{introductionText}</Typography>
+          )}
           <SelectInput
             placeholder="Sélectionnez une période..."
             value={presetValue}
@@ -157,7 +160,7 @@ const RangeDate = ({
       </View>
       {presetValue === "custom" && (
         <View className="flex-row items-center mt-2 space-x-2">
-          <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 mr-2")}>Du</Text>
+          <Typography className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 mr-2")}>Du</Typography>
           <DateOrTimeDisplay
             mode="date"
             date={fromDate}
@@ -172,7 +175,7 @@ const RangeDate = ({
             containerStyle={styles.dateItemContainer}
             {...dateOrTimeProps}
           />
-          <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 mr-2")}>Au</Text>
+          <Typography className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 mr-2")}>Au</Typography>
           <DateOrTimeDisplay
             mode="date"
             date={toDate}

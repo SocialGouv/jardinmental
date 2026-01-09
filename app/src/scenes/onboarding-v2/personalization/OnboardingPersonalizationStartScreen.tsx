@@ -11,6 +11,7 @@ import { typography } from "@/utils/typography";
 import logEvents from "@/services/logEvents";
 import { useFocusEffect } from "@react-navigation/native";
 import { useStatusBar } from "@/context/StatusBarContext";
+import { Typography } from "@/components/Typography";
 
 type Props = OnboardingV2ScreenProps<"Intro">;
 
@@ -65,14 +66,14 @@ const OnboardingPersonalizationStartScreen: React.FC<Props> = ({ navigation }) =
         />
       }
       <View className="flex-1 justify-center items-center px-8">
-        <Text className={mergeClassNames(typography.textXlMedium, "mb-8 text-cnam-primary-900 text-left")}>
+        <Typography className={mergeClassNames(typography.textXlMedium, "mb-8 text-cnam-primary-900 text-left")}>
           Commençons avec quelques questions simples, pour que le suivi vous ressemble vraiment.
-        </Text>
-        <Text className={mergeClassNames(typography.textMdMedium, "text-left")} style={{ color: TW_COLORS.TEXT_SECONDARY }}>
+        </Typography>
+        <Typography className={mergeClassNames(typography.textMdMedium, "text-left")} style={{ color: TW_COLORS.TEXT_SECONDARY }}>
           {"\u2022"} ✅ Pas de bonne ou mauvaise réponse{"\n"}
           {"\u2022"} 🔄 Vos choix sont modifiables à tout moment{"\n"}
           {"\u2022"} 🧘 Avancez à votre rythme, sans pression{"\n"}
-        </Text>
+        </Typography>
       </View>
       <NavigationButtons onNext={handleNext} showPrevious={false} withArrow={true} nextText="Créer mon suivi personnalisé" />
     </SafeAreaViewWithOptionalHeader>

@@ -7,6 +7,7 @@ import BasicCard from "@/components/BasicCard";
 import { InputText } from "@/components/InputText";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
+import { Typography } from "@/components/Typography";
 
 const Question = ({ question, explanation, isLast, onChangeUserComment, userComment, placeholder = "Message..." }) => {
   const [showExplanation, setShowExplanation] = useState(false);
@@ -27,13 +28,13 @@ const Question = ({ question, explanation, isLast, onChangeUserComment, userComm
           ) : (
             <View />
           )}
-          <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-950")}>{question.label}</Text>
+          <Typography className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-950")}>{question.label}</Typography>
           {/* we put a view here because we'll add a item here later */}
           <View />
         </View>
         {explanation && showExplanation ? (
           <View style={styles.questionInfo}>
-            <Text>{explanation}</Text>
+            <Typography>{explanation}</Typography>
           </View>
         ) : null}
       </TouchableOpacity>

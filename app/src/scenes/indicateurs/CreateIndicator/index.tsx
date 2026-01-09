@@ -21,6 +21,7 @@ import { AnimatedHeaderScrollScreen } from "@/scenes/survey-v2/AnimatedHeaderScr
 import NavigationButtons from "@/components/onboarding/NavigationButtons";
 import { TW_COLORS } from "@/utils/constants";
 import ChevronIcon from "@assets/svg/icon/chevron";
+import { Typography } from "@/components/Typography";
 
 const CATEGORY_OPTIONS = Object.values(NEW_INDICATORS_CATEGORIES);
 // Convert enum to picker items
@@ -78,7 +79,7 @@ const CreateIndicator = ({ navigation, route }) => {
           className="flex-row space-x-2 items-center justify-center"
         >
           <ChevronIcon direction="left" color={TW_COLORS.CNAM_PRIMARY_25} />
-          <Text className="text-cnam-primary-25">Créer un indicateur personnalisé</Text>
+          <Typography className="text-cnam-primary-25">Créer un indicateur personnalisé</Typography>
         </TouchableOpacity>
       }
       navigation={navigation}
@@ -101,13 +102,13 @@ const CreateIndicator = ({ navigation, route }) => {
       }
     >
       <View className="flex-1" style={styles.container}>
-        <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-900")}>
+        <Typography className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-900")}>
           Comment souhaitez-vous appeler votre nouvel indicateur ?
-        </Text>
-        <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700 mt-10 mb-2")}>
-          Nom de votre indicateur* <Text className={mergeClassNames(typography.textSmMedium, "text-gray-700")}>(obligatoire)</Text>
-        </Text>
-        <TextInput
+        </Typography>
+        <Typography className={mergeClassNames(typography.textMdMedium, "text-gray-700 mt-10 mb-2")}>
+          Nom de votre indicateur* <Typography className={mergeClassNames(typography.textSmMedium, "text-gray-700")}>(obligatoire)</Typography>
+        </Typography>
+        <TypographyInput
           onChangeText={(e) => {
             setNameNewIndicator(e);
             setError(false);
@@ -121,17 +122,17 @@ const CreateIndicator = ({ navigation, route }) => {
 
         {error ? (
           <View className="border border-red-400 bg-red-50 rounded-lg px-3 py-2 mb-5">
-            <Text className="text-gray-900">Il existe déjà un indicateur qui porte le nom "{nameNewIndicator?.trim()}".</Text>
-            <Text className="text-gray-900">
+            <Typography className="text-gray-900">Il existe déjà un indicateur qui porte le nom "{nameNewIndicator?.trim()}".</Typography>
+            <Typography className="text-gray-900">
               S'il est inactif, vous pouvez le réactiver dans la liste des "anciens indicateurs" ou depuis la liste d&apos;exemples.
-            </Text>
+            </Typography>
           </View>
         ) : null}
 
         <View>
-          <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700 mt-10 mb-2")}>
-            Catégorie* <Text className={mergeClassNames(typography.textSmMedium, "text-gray-700")}>(obligatoire)</Text>
-          </Text>
+          <Typography className={mergeClassNames(typography.textMdMedium, "text-gray-700 mt-10 mb-2")}>
+            Catégorie* <Typography className={mergeClassNames(typography.textSmMedium, "text-gray-700")}>(obligatoire)</Typography>
+          </Typography>
           <RNPickerSelect
             onValueChange={(value) => setSelectedCategory(value)}
             items={categoryOptions}

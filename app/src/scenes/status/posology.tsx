@@ -7,6 +7,7 @@ import Separator from "@/components/Separator";
 import { TW_COLORS, yesNoMapTreatmentIcon } from "@/utils/constants";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
+import { Typography } from "@/components/Typography";
 
 const Posology = ({ patientState, posology, date, onPress }) => {
   const [detailsVisible, setDetailsVisible] = useState<boolean>(false);
@@ -34,11 +35,11 @@ const Posology = ({ patientState, posology, date, onPress }) => {
           </View>
           <View className="flex flex-col flex-1 pt-4">
             <View className="flex-row">
-              <Text className={mergeClassNames(typography.textXsSemibold, "text-cnam-primary-800 ")}>
+              <Typography className={mergeClassNames(typography.textXsSemibold, "text-cnam-primary-800 ")}>
                 {p.name1} : {p.value}
-              </Text>
+              </Typography>
             </View>
-            {p.name2 ? <Text className={mergeClassNames(typography.textXsRegular, "text-gray-800 text-left")}>({p.name2})</Text> : null}
+            {p.name2 ? <Typography className={mergeClassNames(typography.textXsRegular, "text-gray-800 text-left")}>({p.name2})</Typography> : null}
           </View>
         </View>
       );
@@ -50,13 +51,13 @@ const Posology = ({ patientState, posology, date, onPress }) => {
       <Separator separatorColor={TW_COLORS.GRAY_400} />
       <View className="flex justify-between py-2.5">
         <View className="flex flex-row justify-between mb-2">
-          <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-900")}>Traitement quotidien</Text>
+          <Typography className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-900")}>Traitement quotidien</Typography>
           <TouchableOpacity
             onPress={() => {
               setDetailsVisible(!detailsVisible);
             }}
           >
-            <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>Détail</Text>
+            <Typography className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>Détail</Typography>
           </TouchableOpacity>
         </View>
         {patientState?.PRISE_DE_TRAITEMENT?.value !== undefined ? (
@@ -68,11 +69,11 @@ const Posology = ({ patientState, posology, date, onPress }) => {
                 <View className={`h-4 w-4 rounded-full`} style={{ backgroundColor: "#F9D1E6", borderColor: "#E21D84", borderWidth: 0.5 }} />
               )}
             </View>
-            <Text className={mergeClassNames(typography.textSmMedium, "text-cnam-primary-900")}>Prise du traitement : </Text>
+            <Typography className={mergeClassNames(typography.textSmMedium, "text-cnam-primary-900")}>Prise du traitement : </Typography>
             {patientState?.PRISE_DE_TRAITEMENT?.value ? (
-              <Text className="text-cnam-primary-800">Oui</Text>
+              <Typography className="text-cnam-primary-800">Oui</Typography>
             ) : (
-              <Text className="text-cnam-primary-800">Non</Text>
+              <Typography className="text-cnam-primary-800">Non</Typography>
             )}
           </View>
         ) : null}
@@ -85,17 +86,17 @@ const Posology = ({ patientState, posology, date, onPress }) => {
                 <View className={`h-4 w-4 rounded-full`} style={{ backgroundColor: "#F9D1E6", borderColor: "#E21D84", borderWidth: 0.5 }} />
               )}
             </View>
-            <Text className={mergeClassNames(typography.textSmMedium, "text-cnam-primary-900")}>Prise d'un "si besoin" : </Text>
+            <Typography className={mergeClassNames(typography.textSmMedium, "text-cnam-primary-900")}>Prise d'un "si besoin" : </Typography>
             {patientState?.PRISE_DE_TRAITEMENT_SI_BESOIN?.value ? (
-              <Text className="text-cnam-primary-800">Oui</Text>
+              <Typography className="text-cnam-primary-800">Oui</Typography>
             ) : (
-              <Text className="text-cnam-primary-800">Non</Text>
+              <Typography className="text-cnam-primary-800">Non</Typography>
             )}
           </View>
         ) : null}
         {detailsVisible && (
           <>
-            <Text className={mergeClassNames(typography.textSmMedium, "text-cnam-primary-900")}>Détail du traitement :</Text>
+            <Typography className={mergeClassNames(typography.textSmMedium, "text-cnam-primary-900")}>Détail du traitement :</Typography>
 
             <View className={`flex flex-row items-center ${canEdit(date) ? "rounded-[10px]" : ""}`}>
               <View className="flex flex-1 flex-col">{renderPosology()}</View>

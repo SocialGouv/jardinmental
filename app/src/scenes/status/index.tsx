@@ -12,13 +12,11 @@ import Bubble from "../../components/bubble";
 import BannerProNPS from "./bannerProNPS";
 import TabPicker from "./TabPicker";
 import RecapCompletion from "./recapCompletion";
-import NoData from "./NoData";
 import Diary from "../diary";
 import ContributeCard from "../contribute/contributeCard";
 import FloatingPlusButton from "../../components/FloatingPlusButton";
 import { DiaryList } from "./DiaryList";
 import { updateInactivityReminder } from "../reminder/inactivityReminder";
-import { checkOldReminderBefore154, checkOldReminderBefore193 } from "../reminder/checkOldReminder";
 import { useLatestChangesModal } from "../news/latestChangesModal";
 import { VALID_SCREEN_NAMES } from "@/scenes/onboarding-v2/index";
 import { typography } from "@/utils/typography";
@@ -41,8 +39,7 @@ import ArrowCircleRightIcon from "@assets/svg/icon/ArrowCircleRight";
 import { useBottomSheet } from "@/context/BottomSheetContext";
 import { BeckBottomSheet } from "../tools/BeckBottomSheet";
 import { TOOL_BECK_ID } from "../tools/toolsData";
-import LifeBuoy from "@assets/svg/icon/Lifebuoy";
-import ArrowIcon from "@assets/svg/icon/Arrow";
+import { Typography } from "@/components/Typography";
 
 const Status = ({ navigation, startSurvey }) => {
   const [diaryData] = useContext(DiaryDataContext);
@@ -219,12 +216,12 @@ const Status = ({ navigation, startSurvey }) => {
                 borderRadius: 20,
               }}
             >
-              <Text className={mergeClassNames(typography.displayXsBold, "text-left text-cnam-primary-900 mb-6")}>
+              <Typography className={mergeClassNames(typography.displayXsBold, "text-left text-cnam-primary-900 mb-6")}>
                 Il vous reste quelques étapes pour bien démarrer
-              </Text>
-              <Text className={mergeClassNames(typography.textMdRegular, "text-left text-cnam-primary-900")}>
+              </Typography>
+              <Typography className={mergeClassNames(typography.textMdRegular, "text-left text-cnam-primary-900")}>
                 Faites de Jardin Mental un espace qui vous ressemble, pour un suivi plus juste et plus utile.
-              </Text>
+              </Typography>
               <View className="flex-row mt-6">
                 <JMButton onPress={handlePlusTardClick} width="adapt" variant="text" title="Plus tard" />
                 <JMButton
@@ -290,15 +287,17 @@ const Status = ({ navigation, startSurvey }) => {
                         <CloseCross color={TW_COLORS.CNAM_PRIMARY_900} />
                       </TouchableOpacity>
                     </View>
-                    <Text className={mergeClassNames(typography.textLgSemibold, "text-left text-cnam-primary-950 mb-2 mt-3")}>
+                    <Typography className={mergeClassNames(typography.textLgSemibold, "text-left text-cnam-primary-950 mb-2 mt-3")}>
                       Mieux comprendre la santé mentale{" "}
-                    </Text>
-                    <Text className={mergeClassNames(typography.textSmMedium, "text-left text-cnam-primary-800")}>
+                    </Typography>
+                    <Typography className={mergeClassNames(typography.textSmMedium, "text-left text-cnam-primary-800")}>
                       Découvrez le guide complet pour comprendre, repérer et agir.
-                    </Text>
+                    </Typography>
                     <View className="flex-row self-end items-center">
                       <View className="mt-4 flex-row items-center">
-                        <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40 mr-2")}>S'informer</Text>
+                        <Typography className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40 mr-2")}>
+                          S'informer
+                        </Typography>
                         <ArrowCircleRightIcon />
                       </View>
                     </View>
@@ -362,24 +361,6 @@ const Status = ({ navigation, startSurvey }) => {
           )}
         </Animated.View>
       </SafeAreaView>
-      {/* <View className="absolute bottom-28 w-full">
-        <TouchableOpacity
-          className=" mx-4 bg-cnam-mauve-lighten-90 border border-cnam-mauve-lighten-60 px-2 py-3 rounded-xl"
-          onPress={() => {
-            navigation.navigate("crisis-plan-slide-sumup-list");
-          }}
-        >
-          <View className="flex-row justify-between items-center">
-            <View className="flex-row items-center justify-center space-x-2">
-              <LifeBuoy width={20} height={20} color={TW_COLORS.CNAM_MAUVE_DARKEN_80} />
-              <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-mauve-darken-80")}>Ouvrir mon plan de protection</Text>
-            </View>
-            <View className="flex-row items-center">
-              <ArrowIcon width={24} height={24} color={TW_COLORS.CNAM_MAUVE_DARKEN_80} />
-            </View>
-          </View>
-        </TouchableOpacity>
-      </View> */}
       <FloatingPlusButton shadow onPress={startSurvey} plusPosition={plusPosition} />
     </>
   );

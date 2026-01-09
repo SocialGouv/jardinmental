@@ -27,6 +27,7 @@ import { typography } from "@/utils/typography";
 import { mergeClassNames } from "@/utils/className";
 import LinkIcon from "@assets/svg/icon/Link";
 import { TW_COLORS } from "@/utils/constants";
+import { Typography } from "@/components/Typography";
 
 // just to make sure nothing goes the bad way in production, debug is always false
 
@@ -132,16 +133,16 @@ const NPS = ({ navigationRef }: NPSProps) => {
         <KeyboardAvoidingView style={styles.keyboardAvoidingView} behavior={Platform.OS === "ios" ? "padding" : undefined}>
           <View style={styles.backContainer} className="p-4 pb-2 mt-4">
             <TouchableOpacity onPress={onClose}>
-              <Text className={mergeClassNames(typography.textXlBold, "text-cnam-primary-950 border-b border-b-cnam-primary-950")}>
+              <Typography className={mergeClassNames(typography.textXlBold, "text-cnam-primary-950 border-b border-b-cnam-primary-950")}>
                 {getCaption("back")}
-              </Text>
+              </Typography>
             </TouchableOpacity>
           </View>
           <ScrollView style={styles.scrollView} keyboardDismissMode="on-drag" onScrollBeginDrag={Keyboard.dismiss}>
             <View className="bg-gray-100 p-4 rounded-xl m-4">
-              <Text className={mergeClassNames(typography.textSmRegular, "text-cnam-primary-900 leading-5")}>
+              <Typography className={mergeClassNames(typography.textSmRegular, "text-cnam-primary-900 leading-5")}>
                 Ce formulaire sert à partager un retour sur l’app. Jardin Mental ne peut pas répondre aux urgences.
-              </Text>
+              </Typography>
               <TouchableOpacity
                 onPress={() => {
                   NPSManager.hideNPS();
@@ -150,20 +151,20 @@ const NPS = ({ navigationRef }: NPSProps) => {
                 className="flex-row mt-2 items-center justify-center"
               >
                 <LinkIcon size={16} />
-                <Text className={mergeClassNames("flex-row text-cnam-cyan-700-darken-40 ml-2", typography.textMdSemibold)}>
+                <Typography className={mergeClassNames("flex-row text-cnam-cyan-700-darken-40 ml-2", typography.textMdSemibold)}>
                   Trouver un soutien 24h/24 - 7j/7
-                </Text>
+                </Typography>
               </TouchableOpacity>
             </View>
             <View className="px-4" style={{ backgroundColor: "#f9f9f9" }}>
-              <Text style={styles.topSubTitle}>{getCaption("feedback.rate-app.useful")}</Text>
+              <Typography style={styles.topSubTitle}>{getCaption("feedback.rate-app.useful")}</Typography>
               <Mark
                 selected={useful}
                 onPress={setUseful}
                 bad={getCaption("feedback.rate-app.useful.not")}
                 good={getCaption("feedback.rate-app.useful.extremely")}
               />
-              <Text style={styles.topSubTitle}>{getCaption("feedback.improvements.question")}</Text>
+              <Typography style={styles.topSubTitle}>{getCaption("feedback.improvements.question")}</Typography>
               <TextInput
                 style={styles.feedback}
                 onChangeText={setFeedback}
@@ -173,14 +174,14 @@ const NPS = ({ navigationRef }: NPSProps) => {
                 textAlignVertical="top"
                 returnKeyType="next"
               />
-              {/* <Text style={styles.topSubTitle}>{getCaption("feedback.rate-app.probable")}</Text>
+              {/* <Typography style={styles.topSubTitle}>{getCaption("feedback.rate-app.probable")}</Typography>
               <Mark
                 selected={reco}
                 onPress={this.setReco}
                 bad={getCaption("feedback.rate-app.probable.not")}
                 good={getCaption("feedback.rate-app.probable.extremely")}
               /> */}
-              <Text style={styles.topSubTitle}>{getCaption("feedback.contact.description")}</Text>
+              <Typography style={styles.topSubTitle}>{getCaption("feedback.contact.description")}</Typography>
               <TextInput
                 style={styles.contact}
                 value={contact}
@@ -192,7 +193,7 @@ const NPS = ({ navigationRef }: NPSProps) => {
                 onSubmitEditing={sendNPS}
               />
               <TouchableOpacity style={styles.buttonContainer} disabled={sendButton === "Merci !"} onPress={sendNPS}>
-                <Text style={styles.buttonText}>{sendButton}</Text>
+                <Typography style={styles.buttonText}>{sendButton}</Typography>
               </TouchableOpacity>
             </View>
           </ScrollView>

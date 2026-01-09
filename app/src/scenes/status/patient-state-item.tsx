@@ -10,6 +10,7 @@ import { DiaryDataAnswer, DiaryDataNewEntryInput, DiaryEntry } from "@/entities/
 import { typography } from "@/utils/typography";
 import { mergeClassNames } from "@/utils/className";
 import { computeIndicatorColor, computeIndicatorLabel } from "@/utils/indicatorUtils";
+import { Typography } from "@/components/Typography";
 
 const PatientStateItem = ({ patientStateRecord, category, label }: { patientStateRecord: DiaryDataAnswer; category: string; label: string }) => {
   const [userCommentVisible, setUserCommentVisible] = useState(false);
@@ -72,12 +73,12 @@ const PatientStateItem = ({ patientStateRecord, category, label }: { patientStat
       <View className="flex flex-row items-center pt-1.5">
         {renderResponse()}
         <View className="flex-1 flex-col justify-between">
-          <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-900")}>
+          <Typography className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-900")}>
             {label} :{" "}
-            <Text className={mergeClassNames(typography.textSmMedium, "text-gray-700")}>
+            <Typography className={mergeClassNames(typography.textSmMedium, "text-gray-700")}>
               {computeIndicatorLabel(patientStateRecord._indicateur, patientStateRecord?.value)}
-            </Text>
-          </Text>
+            </Typography>
+          </Typography>
         </View>
         {isTouchable() ? (
           <Icon
@@ -95,13 +96,13 @@ const PatientStateItem = ({ patientStateRecord, category, label }: { patientStat
       </View>
       {userCommentVisible && isTouchable() ? (
         <View className="flex flex-row items-center">
-          <Text
+          <Typography
             numberOfLines={3}
             ellipsizeMode={"tail"}
             className={mergeClassNames("flex-1", typography.textXsRegular, "text-gray-700 text-left ml-8")}
           >
             {patientStateRecord?.userComment?.trim()}
-          </Text>
+          </Typography>
         </View>
       ) : null}
     </View>

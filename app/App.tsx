@@ -81,6 +81,7 @@ const App = () => {
         "Karla-ExtraBoldItalic": require("./assets/fonts/Karla-ExtraBoldItalic.ttf"),
         // Source Sans 3 variable fonts
         // 'SourceSans3': require('./assets/fonts/SourceSans3-VariableFont_wght.ttf'),
+        SourceSans3: require("./assets/fonts/SourceSans3-Regular.ttf"),
         "SourceSans3-Regular": require("./assets/fonts/SourceSans3-Regular.ttf"),
         "SourceSans3-Italic": require("./assets/fonts/SourceSans3-Italic.ttf"),
         "SourceSans3-Medium": require("./assets/fonts/SourceSans3-Medium.ttf"),

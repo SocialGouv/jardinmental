@@ -21,6 +21,7 @@ import CircledIcon from "@/components/CircledIcon";
 import Animated from "react-native-reanimated";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
+import { Typography } from "@/components/Typography";
 
 const screenHeight = Dimensions.get("window").height;
 
@@ -156,12 +157,12 @@ const ChartPie = ({ navigation, fromDate, toDate, onScroll, header, dynamicPaddi
           </View>
           <View className={mergeClassNames("border border-cnam-primary-200 rounded-2xl p-4 py-6 bg-white", "mt-12")} style={{ borderWidth: 0.5 }}>
             <>
-              <Text className={mergeClassNames(typography.textMdBold, "text-cnam-primary-800 text-center px-4")}>
+              <Typography className={mergeClassNames(typography.textMdBold, "text-cnam-primary-800 text-center px-4")}>
                 Il n’y a pas de données à afficher pour cette période.
-              </Text>
-              <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 text-center px-4 mt-4")}>
+              </Typography>
+              <Typography className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 text-center px-4 mt-4")}>
                 Des statistiques apparaîtront au fur et à mesure de vos saisies.{" "}
-              </Text>
+              </Typography>
             </>
           </View>
         </View>

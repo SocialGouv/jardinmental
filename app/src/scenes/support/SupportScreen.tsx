@@ -15,6 +15,7 @@ import Markdown from "react-native-markdown-display";
 import logEvents from "@/services/logEvents";
 import LifeBuoy from "@assets/svg/icon/Lifebuoy";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Typography } from "@/components/Typography";
 
 export default function SupportScreen({ navigation, route }) {
   const [sectionListenVisible, setSectionListenVisible] = useState(false);
@@ -122,7 +123,7 @@ export default function SupportScreen({ navigation, route }) {
       <View className="flex-1 p-4 flex-col space-y-12 pt-10 pb-8 bg-white">
         <View className="flex-col space-y-6">
           <View className="flex-row items-center">
-            <Text className={mergeClassNames(typography.textXlSemibold, "text-cnam-primary-950 text-left")}>Besoin d'aide urgente ?</Text>
+            <Typography className={mergeClassNames(typography.textXlSemibold, "text-cnam-primary-950 text-left")}>Besoin d'aide urgente ?</Typography>
           </View>
           <View className="flex-row space-x-3">
             <View className="flex-1">
@@ -144,9 +145,9 @@ export default function SupportScreen({ navigation, route }) {
                 <View className="flex-column items-center py-4">
                   <View className="flex-row items-center justify-center">
                     <PhoneIcon width={24} height={24} color={TW_COLORS.CNAM_PRIMARY_800} />
-                    <Text className={mergeClassNames(typography.displayXsBold, "text-primary-900 ml-2")}>15</Text>
+                    <Typography className={mergeClassNames(typography.displayXsBold, "text-primary-900 ml-2")}>15</Typography>
                   </View>
-                  <Text className={mergeClassNames(typography.textSmMedium, "text-cnam-primary-800")}>Urgence immédiate</Text>
+                  <Typography className={mergeClassNames(typography.textSmMedium, "text-cnam-primary-800")}>Urgence immédiate</Typography>
                 </View>
               </SquircleButton>
             </View>
@@ -169,16 +170,22 @@ export default function SupportScreen({ navigation, route }) {
                 <View className="flex-column items-center py-4">
                   <View className="flex-row items-center justify-center">
                     <MailIcon color={TW_COLORS.CNAM_PRIMARY_800} width={24} height={24} />
-                    <Text className={mergeClassNames(typography.displayXsBold, "text-primary-900 ml-2")}>114</Text>
+                    <Typography className={mergeClassNames(typography.displayXsBold, "text-primary-900 ml-2")}>114</Typography>
                   </View>
-                  <Text className={mergeClassNames(typography.textSmMedium, " text-cnam-primary-800 text-center")}>Sourds & malentendants</Text>
+                  <Typography className={mergeClassNames(typography.textSmMedium, " text-cnam-primary-800 text-center")}>
+                    Sourds & malentendants
+                  </Typography>
                 </View>
               </SquircleButton>
             </View>
           </View>
-          <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 text-left")}>24h/24, 7j/7, appel gratuit.</Text>
+          <Typography className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 text-left")}>
+            24h/24, 7j/7, appel gratuit.
+          </Typography>
           <View className="flex-col pt-6">
-            <Text className={mergeClassNames(typography.textXlMedium, "text-cnam-primary-900 text-left mb-4")}>En cas d'idées suicidaires</Text>
+            <Typography className={mergeClassNames(typography.textXlMedium, "text-cnam-primary-900 text-left mb-4")}>
+              En cas d'idées suicidaires
+            </Typography>
             <SquircleButton
               onPress={() => handleCall("3114")}
               style={{
@@ -192,8 +199,8 @@ export default function SupportScreen({ navigation, route }) {
                 <PhoneIcon width={24} height={24} color={TW_COLORS.CNAM_PRIMARY_800} />
               </View>
               <View className="ml-3">
-                <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-900 text-left")}>Appeler le 3114</Text>
-                <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900 text-left")}>Prévention suicide</Text>
+                <Typography className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-900 text-left")}>Appeler le 3114</Typography>
+                <Typography className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900 text-left")}>Prévention suicide</Typography>
               </View>
             </SquircleButton>
             {!!crisisPlanSet && (
@@ -256,7 +263,7 @@ export default function SupportScreen({ navigation, route }) {
           >
             <View className="flex-row items-center">
               <HeartHand width={24} height={24} color={TW_COLORS.CNAM_PRIMARY_800} />
-              <Text className={mergeClassNames(typography.textXlBold, "ml-4 text-cnam-primary-950")}>Écoute et soutien</Text>
+              <Typography className={mergeClassNames(typography.textXlBold, "ml-4 text-cnam-primary-950")}>Écoute et soutien</Typography>
             </View>
             <View className="flex-row">
               {sectionListenVisible ? (
@@ -274,9 +281,9 @@ export default function SupportScreen({ navigation, route }) {
           {sectionListenVisible && (
             <View className="px-4">
               <View className="pb-8">
-                <Text className={mergeClassNames(typography.textMdMedium, "text-gray-800 space-y-4")}>
+                <Typography className={mergeClassNames(typography.textMdMedium, "text-gray-800 space-y-4")}>
                   Vous traversez une période difficile ?{"\n\n"}Des lignes d’écoute gratuites et anonymes sont disponibles pour vous aider :
-                </Text>
+                </Typography>
               </View>
               <View className="flex-col space-y-4 mb-8">
                 {numbers.map((item, index) => {
@@ -291,16 +298,16 @@ export default function SupportScreen({ navigation, route }) {
                     >
                       <PhoneIcon color={TW_COLORS.CNAM_PRIMARY_800} width={24} height={24} />
                       <View className="flex-col ml-4">
-                        <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-900")}>{item.name}</Text>
-                        <Text className={mergeClassNames(typography.textSmMedium, "text-gray-800")}>{item.description}</Text>
+                        <Typography className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-900")}>{item.name}</Typography>
+                        <Typography className={mergeClassNames(typography.textSmMedium, "text-gray-800")}>{item.description}</Typography>
                       </View>
                     </SquircleButton>
                   );
                 })}
               </View>
-              <Text className={mergeClassNames(typography.textMdMedium, "text-gray-800 mb-4")}>
+              <Typography className={mergeClassNames(typography.textMdMedium, "text-gray-800 mb-4")}>
                 👉 Consultez le guide complet des lignes d’écoute sur le site de Psycom :
-              </Text>
+              </Typography>
               <SquircleButton
                 onPress={() => handleOpenLink("https://www.psycom.org/sorienter/les-lignes-decoute")}
                 cornerSmoothing={100}
@@ -310,8 +317,10 @@ export default function SupportScreen({ navigation, route }) {
               >
                 <LinkIcon color={TW_COLORS.CNAM_PRIMARY_800} width={24} height={24} />
                 <View className="flex-col ml-4">
-                  <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-900")}>Psycom.org</Text>
-                  <Text className={mergeClassNames(typography.textSmMedium, "text-gray-800")}>Le site d'informations sur la santé mentale</Text>
+                  <Typography className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-900")}>Psycom.org</Typography>
+                  <Typography className={mergeClassNames(typography.textSmMedium, "text-gray-800")}>
+                    Le site d'informations sur la santé mentale
+                  </Typography>
                 </View>
               </SquircleButton>
             </View>
@@ -329,7 +338,7 @@ export default function SupportScreen({ navigation, route }) {
           >
             <View className="flex-row items-center">
               <UserIcon width={24} height={24} color={TW_COLORS.CNAM_PRIMARY_800} />
-              <Text className={mergeClassNames(typography.textXlBold, "ml-4 text-cnam-primary-900")}>Démarrer un suivi</Text>
+              <Typography className={mergeClassNames(typography.textXlBold, "ml-4 text-cnam-primary-900")}>Démarrer un suivi</Typography>
             </View>
             <View className="flex-row">
               {sectionStartFollowUpVisible ? (
@@ -346,9 +355,9 @@ export default function SupportScreen({ navigation, route }) {
           </TouchableOpacity>
           {sectionStartFollowUpVisible && (
             <View className="px-4 pb-8">
-              <Text className={mergeClassNames(typography.textMdMedium, "text-gray-800 space-y-4 mb-8")}>
+              <Typography className={mergeClassNames(typography.textMdMedium, "text-gray-800 space-y-4 mb-8")}>
                 Si vous souhaitez démarrer un suivi psychologique avec un professionnel, des dispositifs nationaux peuvent vous accompagner :
-              </Text>
+              </Typography>
               <View className="flex-col space-y-4">
                 {[
                   {
@@ -373,11 +382,11 @@ export default function SupportScreen({ navigation, route }) {
                   },
                 ].map((item, index) => (
                   <View className="rounded-xl p-4 bg-white border border-gray-300" key={index}>
-                    <Text className={mergeClassNames(typography.textXlSemibold, "text-cnam-primary-800 mb-6")}>{item.title}</Text>
+                    <Typography className={mergeClassNames(typography.textXlSemibold, "text-cnam-primary-800 mb-6")}>{item.title}</Typography>
                     <View className={"mb-4 text-left"}>
                       <Markdown style={markdownStyles}>{item.description}</Markdown>
                     </View>
-                    <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 mb-4")}>{item.text}</Text>
+                    <Typography className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 mb-4")}>{item.text}</Typography>
                     <SquircleButton
                       cornerSmoothing={100}
                       style={{ borderRadius: 12, minHeight: 60 }}
@@ -387,7 +396,7 @@ export default function SupportScreen({ navigation, route }) {
                     >
                       <LinkIcon color={TW_COLORS.CNAM_PRIMARY_800} width={24} height={24} />
                       <View className="flex-col ml-4">
-                        <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-900")}>{item.link.label}</Text>
+                        <Typography className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-900")}>{item.link.label}</Typography>
                       </View>
                     </SquircleButton>
                   </View>

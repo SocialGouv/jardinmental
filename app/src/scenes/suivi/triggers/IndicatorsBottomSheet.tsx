@@ -6,6 +6,7 @@ import localStorage from "@/utils/localStorage";
 import { Indicator } from "@/entities/Indicator";
 import JMButton from "@/components/JMButton";
 import { LightSelectionnableItem } from "@/components/SelectionnableItem";
+import { Typography } from "@/components/Typography";
 
 const screenHeight = Dimensions.get("window").height;
 const height90vh = screenHeight * 0.9;
@@ -52,9 +53,11 @@ export const IndicatorsBottomSheet = ({
         style={{ paddingVertical: 20, height: height90vh }}
       >
         <View className="p-4 flex-column flex-1 gap-6">
-          <Text className={mergeClassNames(typography.displayXsSemibold, "text-left text-cnam-primary-900")}>Sélectionnez un indicateur</Text>
+          <Typography className={mergeClassNames(typography.displayXsSemibold, "text-left text-cnam-primary-900")}>
+            Sélectionnez un indicateur
+          </Typography>
           <View className="flex-colum flex-1">
-            {!indicatorList && <Text>Chargement...</Text>}
+            {!indicatorList && <Typography>Chargement...</Typography>}
             {indicatorList &&
               indicatorList.map((e, index) => {
                 const selected = !!selectedIndicators.find((x) => (x.uuid || x.name) === (e.uuid || e.name));
@@ -84,7 +87,9 @@ export const IndicatorsBottomSheet = ({
         }}
         className={`flex-column justify-between items-center p-6 px-6 bg-white/90 pb-10 w-full`}
       >
-        <Text className={mergeClassNames(typography.textSmMedium, "text-gray-800 mb-2")}>Vous pourrez modifier cette sélection plus tard</Text>
+        <Typography className={mergeClassNames(typography.textSmMedium, "text-gray-800 mb-2")}>
+          Vous pourrez modifier cette sélection plus tard
+        </Typography>
         <JMButton
           onPress={async () => {
             onClose({

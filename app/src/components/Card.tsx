@@ -4,6 +4,7 @@ import Icon from "./Icon";
 import { colors } from "@/utils/colors";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
+import { Typography } from "./Typography";
 
 export const Card = ({
   preset, // 'lighten'
@@ -36,8 +37,8 @@ export const Card = ({
           {icon && <Icon width="26" height="26" color="#000091" {...icon} style={styles.image} />}
           {image && <Image {...image} style={styles.image} />}
           <View style={[styles.innerContentContainer, innerContentContainerStyle]}>
-            {title && <Text className={mergeClassNames(typography.textLgBold, "text-cnam-primary-900")}>{title}</Text>}
-            {text && <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900 mt-4")}>{text}</Text>}
+            {title && <Typography className={mergeClassNames(typography.textLgBold, "text-cnam-primary-900")}>{title}</Typography>}
+            {text && <Typography className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900 mt-4")}>{text}</Typography>}
             {children && mergeChildren && <View style={styles.childrenContainer}>{children}</View>}
           </View>
           {onPress && <Icon icon="ChevronRightSvg" color="#000091" height="16" width="16" />}

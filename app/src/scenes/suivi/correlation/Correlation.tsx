@@ -31,6 +31,7 @@ import ChevronIcon from "@assets/svg/icon/chevron";
 import ArrowUpSvg from "@assets/svg/icon/ArrowUp";
 import InfoCircle from "@assets/svg/icon/InfoCircle";
 import { Indicator } from "@/entities/Indicator";
+import { Typography } from "@/components/Typography";
 
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
@@ -283,13 +284,15 @@ export const Correlation = ({ navigation, onScroll, scrollY, day, setDay, dynami
         className="px-4 flex-col space-y-4 pt-60 bg-white"
         contentContainerStyle={{ paddingBottom: TAB_BAR_HEIGHT + 20 }}
       >
-        <Text className={mergeClassNames(typography.textLgBold, "text-cnam-primary-800")}>Comparez vos indicateurs, comprenez vos tendances</Text>
+        <Typography className={mergeClassNames(typography.textLgBold, "text-cnam-primary-800")}>
+          Comparez vos indicateurs, comprenez vos tendances
+        </Typography>
         <View className="bg-cnam-cyan-50-lighten-90 p-4 border border-dashed border-cnam-primary-500 flex-col space-y-4">
           <EmptyCorrelationIllustration width="100%" />
-          <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900")}>
+          <Typography className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900")}>
             Sommeil, énergie, humeur, activité… Affichez un ou deux indicateurs pour :{"\n"}- Observer leur(s) évolution(s)
             {"\n"}- Repérer quand ils évoluent ensemble ou en sens opposé.
-          </Text>
+          </Typography>
           <JMButton
             onPress={() => {
               // showBottomSheet(
@@ -308,9 +311,9 @@ export const Correlation = ({ navigation, onScroll, scrollY, day, setDay, dynami
             icon={<PlusIcon />}
           />
         </View>
-        <Text className={mergeClassNames(typography.textSmMedium, "text-gray-700 items-center")}>
+        <Typography className={mergeClassNames(typography.textSmMedium, "text-gray-700 items-center")}>
           Un lien apparent n’implique pas une causalité. Cette vue propose une lecture sans interprétation médicale.
-        </Text>
+        </Typography>
       </ScrollView>
     );
   } else if (!dataToDisplay) {
@@ -328,7 +331,9 @@ export const Correlation = ({ navigation, onScroll, scrollY, day, setDay, dynami
           }}
           className="border border-cnam-primary-700 flex-row h-[48px] rounded-2xl items-center px-4 justify-between"
         >
-          <Text className={mergeClassNames(typography.textLgMedium, "text-gray-900")}>Modifier les indicateurs ({selectedIndicators.length})</Text>
+          <Typography className={mergeClassNames(typography.textLgMedium, "text-gray-900")}>
+            Modifier les indicateurs ({selectedIndicators.length})
+          </Typography>
           <ArrowUpSvg
             style={{
               transform: [{ rotateX: "180deg" }],
@@ -344,9 +349,9 @@ export const Correlation = ({ navigation, onScroll, scrollY, day, setDay, dynami
             blurRadius={20} // 👈 controls blur intensity
           />
           <View className="absolute w-full">
-            <Text className={mergeClassNames(typography.textMdBold, "text-cnam-primary-800 text-center px-4 mt-4")}>
+            <Typography className={mergeClassNames(typography.textMdBold, "text-cnam-primary-800 text-center px-4 mt-4")}>
               Continuez à renseigner vos indicateurs pendant quelques jours.
-            </Text>
+            </Typography>
           </View>
         </View>
         <View className="bg-cnam-cyan-50-lighten-90 flex-row py-4 space-x-2 px-4 rounded-2xl">
@@ -354,10 +359,10 @@ export const Correlation = ({ navigation, onScroll, scrollY, day, setDay, dynami
             <InfoCircle />
           </View>
           <View className="flex-1">
-            <Text className={mergeClassNames(typography.textMdMedium, "text-primary-900")}>
+            <Typography className={mergeClassNames(typography.textMdMedium, "text-primary-900")}>
               Les premières courbes apparaîtront dès qu’il y aura assez de données pour repérer des liens. Il faut en moyenne 3 semaines d’utilisation
               pour faire des corrélations.
-            </Text>
+            </Typography>
           </View>
         </View>
       </ScrollView>

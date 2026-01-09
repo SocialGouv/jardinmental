@@ -25,6 +25,7 @@ import type { INDICATOR_TYPE } from "@/entities/IndicatorType";
 import logEvents from "@/services/logEvents";
 import { INDICATOR_CATEGORIES_DATA } from "@/scenes/onboarding-v2/data/helperData";
 import ChevronIcon from "@assets/svg/icon/chevron";
+import { Typography } from "@/components/Typography";
 
 const ChooseIndicatorOrder = ({
   navigation,
@@ -86,7 +87,7 @@ const ChooseIndicatorOrder = ({
           className="flex-row space-x-2 items-center justify-center"
         >
           <ChevronIcon direction="left" color={TW_COLORS.CNAM_PRIMARY_25} />
-          <Text className="text-cnam-primary-25">Créer un indicateur personnalisé</Text>
+          <Typography className="text-cnam-primary-25">Créer un indicateur personnalisé</Typography>
         </TouchableOpacity>
       }
       smallHeader={true}
@@ -104,7 +105,7 @@ const ChooseIndicatorOrder = ({
     >
       <View className="flex-1 mx-4">
         <View className={mergeClassNames("border rounded-xl bg-white p-4 w-full mb-4 border-cnam-primary-800")}>
-          <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700 h-5 mb-4")}>{route.params.nameNewIndicator}</Text>
+          <Typography className={mergeClassNames(typography.textMdMedium, "text-gray-700 h-5 mb-4")}>{route.params.nameNewIndicator}</Typography>
           <RenderCurrentIndicator
             indicatorType={route.params.indicatorType}
             itensity={true}
@@ -113,9 +114,9 @@ const ChooseIndicatorOrder = ({
           />
         </View>
 
-        <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-900 my-8")}>
+        <Typography className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-900 my-8")}>
           Vous pouvez choisir le sens d’évaluation qui correspond à votre indicateur
-        </Text>
+        </Typography>
 
         <SelectionnableRadioItem
           text={renderSetDirectionTitle(route.params.indicatorType)?.ASC}
@@ -210,7 +211,7 @@ const Intensity = () => (
   <View className="flex flex-row items-center mt-5">
     <View style={styles.intenstiyDiamond} />
     <View style={styles.intensityLine} />
-    <Text style={styles.intensityText}>intensité</Text>
+    <Typography style={styles.intensityText}>intensité</Typography>
     <View style={styles.intensityLine} />
     <View style={styles.intenstiyArrow} />
   </View>

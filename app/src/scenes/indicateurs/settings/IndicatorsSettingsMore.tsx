@@ -1,10 +1,8 @@
 import React, { useCallback, useMemo, useState } from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { View, TouchableOpacity } from "react-native";
 import { Card } from "@/components/Card";
 import { useFocusEffect } from "@react-navigation/native";
-import Icon from "@/components/Icon";
 import localStorage from "@/utils/localStorage";
-import { colors } from "@/utils/colors";
 import JMButton from "@/components/JMButton";
 import NavigationButtons from "@/components/onboarding/NavigationButtons";
 import { AnimatedHeaderScrollScreen } from "@/scenes/survey-v2/AnimatedHeaderScrollScreen";
@@ -17,6 +15,7 @@ import ParagraphSpacing from "@assets/svg/icon/ParagraphSpacing";
 import TrashIcon from "@assets/svg/icon/Trash";
 import { TW_COLORS } from "@/utils/constants";
 import { Indicator } from "@/entities/Indicator";
+import { Typography } from "@/components/Typography";
 
 const IndicatorsSettingsMore = ({ navigation, route }) => {
   const [indicators, setIndicators] = useState<Indicator[]>([]);
@@ -70,11 +69,11 @@ const IndicatorsSettingsMore = ({ navigation, route }) => {
     >
       <Card title="Modifier mon questionnaire" text="Vous pouvez supprimer vos indicateurs" />
       <View className="my-6 mt-8 flex-row items-center px-4">
-        <Text className={mergeClassNames(typography.textXlSemibold, "text-cnam-primary-900")}>Vos indicateurs</Text>
+        <Typography className={mergeClassNames(typography.textXlSemibold, "text-cnam-primary-900")}>Vos indicateurs</Typography>
         <View className="bg-cnam-cyan-500-0 h-7 w-7 rounded-full items-center justify-center ml-2">
-          <Text className={mergeClassNames(typography.textMdSemibold)} style={{ color: "#19363D" }}>
+          <Typography className={mergeClassNames(typography.textMdSemibold)} style={{ color: "#19363D" }}>
             {indicators?.filter((indicator) => indicator.active)?.length || 0}
-          </Text>
+          </Typography>
         </View>
       </View>
       <ReorderableList
@@ -111,7 +110,7 @@ const IndicatorItem = ({ indicator, setIndicators }: { indicator: Indicator; set
         className={mergeClassNames("p-4 bg-gray-100 mb-2 rounded-xl flex-row items-center justify-between", !indicator.active ? "bg-gray-50" : "")}
       >
         <ParagraphSpacing width={24} height={24} color={TW_COLORS.CNAM_PRIMARY_700} />
-        <Text className={mergeClassNames(typography.textLgRegular, "text-cnam-primary-950 flex-1 mx-3 ml-4")}>{indicator?.name}</Text>
+        <Typography className={mergeClassNames(typography.textLgRegular, "text-cnam-primary-950 flex-1 mx-3 ml-4")}>{indicator?.name}</Typography>
         <TouchableOpacity onPress={deleteIndicator}>
           <TrashIcon width={24} height={24} color={TW_COLORS.CNAM_PRIMARY_800} />
         </TouchableOpacity>

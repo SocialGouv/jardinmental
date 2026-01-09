@@ -10,6 +10,7 @@ import { useBottomSheet } from "@/context/BottomSheetContext";
 import OrganisationIcon from "@assets/svg/icon/Organisation";
 import PeopleIcon from "@assets/svg/icon/People";
 import { AnimatedHeaderScrollScreen } from "../survey-v2/AnimatedHeaderScrollScreen";
+import { Typography } from "@/components/Typography";
 
 interface CommityCategoriesProps {
   navigation: any;
@@ -172,14 +173,18 @@ const CommityBottomSheet = ({ entity }: { entity: CommityEntity }) => {
       {entity.isOrganization && <OrganisationIcon />}
       {!entity.isOrganization && <PeopleIcon />}
 
-      <Text className={mergeClassNames(typography.textXlBold, "text-cnam-cyan-600-darken-20", entity.isOrganization ? "text-center" : "")}>
+      <Typography className={mergeClassNames(typography.textXlBold, "text-cnam-cyan-600-darken-20", entity.isOrganization ? "text-center" : "")}>
         {entity.isOrganization ? entity.organization : entity.name}
-      </Text>
-      {entity.role && <Text className={mergeClassNames(typography.textLgRegular, "text-cnam-primary-800 text-center")}>{entity.role}</Text>}
-      {entity.role2 && <Text className={mergeClassNames(typography.textSmRegular, "text-cnam-primary-800 text-center")}>{entity.role2}</Text>}
+      </Typography>
+      {entity.role && (
+        <Typography className={mergeClassNames(typography.textLgRegular, "text-cnam-primary-800 text-center")}>{entity.role}</Typography>
+      )}
+      {entity.role2 && (
+        <Typography className={mergeClassNames(typography.textSmRegular, "text-cnam-primary-800 text-center")}>{entity.role2}</Typography>
+      )}
       {!entity.isOrganization && (
         <View className="flex-row bg-cnam-cyan-lighten-80 items-center mb-8 space-x-1 rounded-full px-3 py-1 self-center">
-          <Text className={mergeClassNames(typography.textXsSemibold, "text-cnam-primary-950")}>{entity.organization}</Text>
+          <Typography className={mergeClassNames(typography.textXsSemibold, "text-cnam-primary-950")}>{entity.organization}</Typography>
         </View>
       )}
     </View>
@@ -202,15 +207,16 @@ const CommityCategories: React.FC<CommityCategoriesProps> = ({ navigation }) => 
     >
       <View className="p-4 mt-4">
         <View className="mb-6 bg-cnam-cyan-lighten-90 rounded-2xl">
-          <Text className="text-cnam-primary-900 text-base leading-6 p-4">
-            Jardin Mental s’appuie sur un <Text className={mergeClassNames(typography.textMdSemibold)}>comité éditorial et scientifique</Text> qui
-            garantit la qualité, la rigueur et la fiabilité des contenus proposés.
-          </Text>
-          <Text className="text-cnam-primary-900 text-base leading-6 p-4">
+          <Typography className="text-cnam-primary-900 text-base leading-6 p-4">
+            Jardin Mental s’appuie sur un{" "}
+            <Typography className={mergeClassNames(typography.textMdSemibold)}>comité éditorial et scientifique</Typography> qui garantit la qualité,
+            la rigueur et la fiabilité des contenus proposés.
+          </Typography>
+          <Typography className="text-cnam-primary-900 text-base leading-6 p-4">
             Il réunit des professionnels de santé, des chercheurs et des institutions engagés sur les enjeux de santé mentale.
-          </Text>
+          </Typography>
         </View>
-        <Text className={mergeClassNames(typography.textXlBold, "text-cnam-primary-800")}>Découvrez les membres du comité</Text>
+        <Typography className={mergeClassNames(typography.textXlBold, "text-cnam-primary-800")}>Découvrez les membres du comité</Typography>
         <View className="flex-col mt-4 border-cnam-primary-300 border-2 rounded-2xl">
           {commityList.map((item, index) => (
             <TouchableOpacity
@@ -228,20 +234,20 @@ const CommityCategories: React.FC<CommityCategoriesProps> = ({ navigation }) => 
               <View className="flex-col basis-[80%]">
                 <View className="flex-row">
                   {item.isOrganization && (
-                    <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40 text-center text-left")}>
+                    <Typography className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40 text-center text-left")}>
                       {item.organization}
-                    </Text>
+                    </Typography>
                   )}
                   {!item.isOrganization && (
                     <>
-                      <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40")}>{item.name}</Text>
+                      <Typography className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40")}>{item.name}</Typography>
                     </>
                   )}
                 </View>
                 {item.role && (
-                  <Text numberOfLines={1} ellipsizeMode="tail" className={mergeClassNames(typography.textSmMedium, "text-gray-700")}>
+                  <Typography numberOfLines={1} ellipsizeMode="tail" className={mergeClassNames(typography.textSmMedium, "text-gray-700")}>
                     {item.role}
-                  </Text>
+                  </Typography>
                 )}
               </View>
               <View className="px-2 basis-[20%] items-end px-2">

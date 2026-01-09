@@ -16,6 +16,7 @@ import { getIndicatorKey } from "@/utils/indicatorUtils";
 import ChevronIcon from "@assets/svg/icon/chevron";
 import { TW_COLORS } from "@/utils/constants";
 import { LinearGradient } from "expo-linear-gradient";
+import { Typography } from "./Typography";
 
 const screenHeight = Dimensions.get("window").height;
 const height90vh = screenHeight * 0.9;
@@ -150,13 +151,14 @@ export const IndicatorsBottomSheet = ({
               setSelectedIndicators([]);
             }}
           >
-            <Text className={mergeClassNames(typography.textLgMedium, "text-cnam-primary-800")}>Tout effacer</Text>
+            <Typography className={mergeClassNames(typography.textLgMedium, "text-cnam-primary-800")}>Tout effacer</Typography>
           </TouchableOpacity>
         </View>
         <View className="p-4 flex-column">
-          <Text className={mergeClassNames(typography.textLgSemibold, "text-left text-cnam-primary-900")}>
-            Sélectionnez <Text className={mergeClassNames(typography.textLgSemibold)}>jusqu'à 2 indicateurs</Text> parmi ceux que vous suivez :
-          </Text>
+          <Typography className={mergeClassNames(typography.textLgSemibold, "text-left text-cnam-primary-900")}>
+            Sélectionnez <Typography className={mergeClassNames(typography.textLgSemibold)}>jusqu'à 2 indicateurs</Typography> parmi ceux que vous
+            suivez :
+          </Typography>
         </View>
       </View>
       <ScrollView
@@ -169,7 +171,7 @@ export const IndicatorsBottomSheet = ({
       >
         <View className="p-4 flex-column flex-1">
           <View className="flex-colum flex-1">
-            {!indicatorList && <Text>Chargement...</Text>}
+            {!indicatorList && <Typography>Chargement...</Typography>}
             {indicatorList &&
               indicatorList.map((e, index) => {
                 const selected = !!selectedIndicators.find((x) => (x.uuid || x.name) === (e.uuid || e.name));
@@ -204,7 +206,9 @@ export const IndicatorsBottomSheet = ({
         {!!computedIndicatorCouples.length && (
           <>
             <View className="flex-row items-center justify-between w-full px-4 py-4 bg-yellow pt-2">
-              <Text className={mergeClassNames(typography.textMdSemibold, "text-left text-cnam-primary-900")}>Associations fréquentes:</Text>
+              <Typography className={mergeClassNames(typography.textMdSemibold, "text-left text-cnam-primary-900")}>
+                Associations fréquentes:
+              </Typography>
               <View className="flex-row">
                 <TouchableOpacity
                   onPress={() => {
@@ -263,16 +267,16 @@ export const IndicatorsBottomSheet = ({
                   >
                     {selected ? (
                       <View className="mr-2 w-6 h-6 rounded-md items-center justify-center bg-cnam-primary-800">
-                        <Text className="text-white text-base font-bold">✓</Text>
+                        <Typography className="text-white text-base font-bold">✓</Typography>
                       </View>
                     ) : (
                       <View className="mr-2 w-6 h-6 rounded-md items-center justify-center border border-gray-300">
-                        <Text className="text-white text-xs" />
+                        <Typography className="text-white text-xs" />
                       </View>
                     )}
-                    <Text className={mergeClassNames(selected ? typography.textLgSemibold : typography.textLgMedium, "text-cnam-primary-900")}>
+                    <Typography className={mergeClassNames(selected ? typography.textLgSemibold : typography.textLgMedium, "text-cnam-primary-900")}>
                       {item[0].name} + {item[1].name}
-                    </Text>
+                    </Typography>
                   </TouchableOpacity>
                 );
               }}
@@ -280,9 +284,11 @@ export const IndicatorsBottomSheet = ({
           </>
         )}
         <View className="fr-col space-y-4 mt-4 px-4 w-full">
-          <Text className={mergeClassNames(typography.textLgSemibold, "text-gray-800")}>Traitement</Text>
+          <Typography className={mergeClassNames(typography.textLgSemibold, "text-gray-800")}>Traitement</Typography>
           <View className="flex-row items-center justify-between">
-            <Text className={mergeClassNames(typography.textLgMedium, "text-cnam-primary-900")}>Voir lorsque j’ai pris mon traitement</Text>
+            <Typography className={mergeClassNames(typography.textLgMedium, "text-cnam-primary-900")}>
+              Voir lorsque j’ai pris mon traitement
+            </Typography>
             <Pressable onPress={() => reminderToggleRef?.current?.toggle?.()} hitSlop={{ bottom: 8, left: 8, right: 8, top: 8 }}>
               <InputToggle
                 ref={reminderToggleRef}

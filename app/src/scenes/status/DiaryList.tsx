@@ -20,6 +20,7 @@ import { SquircleView } from "expo-squircle-view";
 import { TW_COLORS } from "@/utils/constants";
 import NewStatusItem from "./NewStatusItem";
 import logEvents from "@/services/logEvents";
+import { Typography } from "@/components/Typography";
 
 export const DiaryList = forwardRef(({ ...props }, ref) => {
   const navigation = useNavigation();
@@ -75,7 +76,9 @@ export const DiaryList = forwardRef(({ ...props }, ref) => {
             className="flex-col my-4 p-6"
           >
             <View className="mb-4 flex-row justify-between">
-              <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-950")}>Comment vous sentez-vous aujourd'hui ?</Text>
+              <Typography className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-950")}>
+                Comment vous sentez-vous aujourd'hui ?
+              </Typography>
             </View>
             <Smiley indicator={moodIndicator} value={undefined} onValueChanged={handlePressMood} />
           </SquircleView>
