@@ -17,6 +17,7 @@ import CatSigneMalEtre from "@assets/imgs/resources/cat-signe-mal-etre";
 import CatPetitPas from "@assets/imgs/resources/cat-petit-pas";
 import CatMieuxComprendre from "@assets/imgs/resources/cat-mieux-comprendre";
 import CatAgirChercheDeLaide from "@assets/imgs/resources/cat-agir-chercher-de-laide";
+import { Typography } from "@/components/Typography";
 
 interface ResourceCategoriesProps {
   navigation: any;
@@ -43,7 +44,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ number, title, onPress, Ima
     >
       <View className="flex-row items-center z-2">
         <View className="flex-1 p-4">
-          <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-950")}>{title}</Text>
+          <Typography className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-950")}>{title}</Typography>
           <View className="flex-row items-center mt-1">
             <View
               style={{
@@ -51,9 +52,9 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ number, title, onPress, Ima
               }}
               className="p-1 rounded mr-1"
             >
-              <Text className={mergeClassNames(typography.textXsRegular, "text-cnam-primary-800")}>
+              <Typography className={mergeClassNames(typography.textXsRegular, "text-cnam-primary-800")}>
                 {RESOURCES_DATA.filter((r) => r.category === category).length} contenus
-              </Text>
+              </Typography>
             </View>
             <ArrowCircleRightIcon width={16} height={16} color={TW_COLORS.CNAM_PRIMARY_900} />
           </View>
@@ -142,9 +143,9 @@ const ResourceCategories: React.FC<ResourceCategoriesProps> = ({ navigation }) =
         className="bg-cnam-primary-50 flex-1"
       >
         {/* <View className="p-4 bg-cnam-primary-50">
-          <Text className="text-cnam-primary-800 text-base leading-6">
+          <Typography className="text-cnam-primary-800 text-base leading-6">
             Un guide simple et accessible pour mieux connaître la santé mentale, ses enjeux et les solutions disponibles
-          </Text>
+          </Typography>
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("commity");
@@ -152,7 +153,7 @@ const ResourceCategories: React.FC<ResourceCategoriesProps> = ({ navigation }) =
             className="flex-row bg-cnam-cyan-lighten-80 items-center space-x-1 rounded-full px-3 self-start mt-4"
           >
             <ValidatedStampIcon />
-            <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>Comment ces contenus sont-ils vérifiés ?</Text>
+            <Typography className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>Comment ces contenus sont-ils vérifiés ?</Typography>
           </TouchableOpacity>
         </View> */}
         <View className="p-4 pt-2">
@@ -173,7 +174,7 @@ const ResourceCategories: React.FC<ResourceCategoriesProps> = ({ navigation }) =
           <Header navigation={navigation} />
         </View>
         <View className="pt-6 px-4 bg-cnam-primary-50 z-1">
-          <Text className="text-cnam-primary-950 text-2xl font-semibold pb-2">S'informer</Text>
+          <Typography className="text-cnam-primary-950 text-2xl font-semibold pb-2">S'informer</Typography>
         </View>
         <Animated.View
           className={"z-0"}
@@ -189,9 +190,9 @@ const ResourceCategories: React.FC<ResourceCategoriesProps> = ({ navigation }) =
           }}
         >
           <View className="px-4">
-            <Text className="text-cnam-primary-800 text-base leading-6">
+            <Typography className="text-cnam-primary-800 text-base leading-6">
               Un guide simple et accessible pour mieux connaître la santé mentale, ses enjeux et les solutions disponibles
-            </Text>
+            </Typography>
             <TouchableOpacity
               onPress={() => {
                 navigation.navigate("commity");
@@ -199,7 +200,9 @@ const ResourceCategories: React.FC<ResourceCategoriesProps> = ({ navigation }) =
               className="flex-row bg-cnam-cyan-lighten-80 items-center space-x-1 rounded-full px-3 self-start mt-4"
             >
               <ValidatedStampIcon />
-              <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>Comment ces contenus sont-ils vérifiés ?</Text>
+              <Typography className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>
+                Comment ces contenus sont-ils vérifiés ?
+              </Typography>
             </TouchableOpacity>
           </View>
         </Animated.View>

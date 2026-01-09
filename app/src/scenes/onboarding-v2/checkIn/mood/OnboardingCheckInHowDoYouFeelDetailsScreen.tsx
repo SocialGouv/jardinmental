@@ -25,6 +25,7 @@ import { typography } from "@/utils/typography";
 import { useFocusEffect } from "@react-navigation/native";
 import { useStatusBar } from "@/context/StatusBarContext";
 import { INDICATORS_CATEGORIES } from "@/entities/IndicatorCategories";
+import { Typography } from "@/components/Typography";
 
 type Props = OnboardingV2ScreenProps<"OnboardingCheckInHowDoYouFeelDetails">;
 
@@ -187,7 +188,9 @@ const OnboardingCheckInLastMoods: React.FC<Props> = ({ navigation, route }) => {
               }}
             >
               <View className="flex-row items-center justify-center">
-                <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-900 mr-1")}>{firstLetterUppercase(mood)}</Text>
+                <Typography className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-900 mr-1")}>
+                  {firstLetterUppercase(mood)}
+                </Typography>
                 {isSelected ? <CheckMarkIcon /> : <PlusIcon />}
               </View>
               <View
@@ -237,9 +240,9 @@ const OnboardingCheckInLastMoods: React.FC<Props> = ({ navigation, route }) => {
       </BannerHeader>
       <ScrollView className="flex-1 p-6" contentContainerStyle={{ paddingBottom: 100 }}>
         <View className="w-full">
-          <Text className={mergeClassNames(typography.textMdBold, "text-left text-cnam-primary-900 mb-6")}>
+          <Typography className={mergeClassNames(typography.textMdBold, "text-left text-cnam-primary-900 mb-6")}>
             Sélectionnez votre ressenti du moment.
-          </Text>
+          </Typography>
         </View>
         {renderMoodSelector()}
       </ScrollView>

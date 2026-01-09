@@ -6,6 +6,7 @@ import { typography } from "@/utils/typography";
 import { analyzeScoresMapIcon, TW_COLORS } from "@/utils/constants";
 import EyeIcon from "@assets/svg/icon/Eye";
 import EyeOffIcon from "@assets/svg/icon/EyeOff";
+import { Typography } from "@/components/Typography";
 
 type Item = { label: string; color: string };
 const DEFAULT_COLOR = "#D7D3D3";
@@ -24,9 +25,9 @@ export default function Legend({ style }: { style?: ViewStyle }) {
         >
           {!extended && <EyeIcon />}
           {extended && <EyeOffIcon />}
-          <Text className={mergeClassNames("text-cnam-primary-950", typography.textSmSemibold)}>
+          <Typography className={mergeClassNames("text-cnam-primary-950", typography.textSmSemibold)}>
             {!extended ? "Voir la légende" : "Masquer la légende"}
-          </Text>
+          </Typography>
         </TouchableOpacity>
         {/* {extended && (
           <View className="flex-row flex-wrap space-x-2 items-center">
@@ -60,11 +61,11 @@ export default function Legend({ style }: { style?: ViewStyle }) {
                     }}
                     className={mergeClassNames("px-[4] h-[20] rounded-md justify-center items-center text-center ")}
                   >
-                    <Text style={{ textAlign: "center" }} className={mergeClassNames(typography.textSmMedium, item.iconColor, "leading-none")}>
+                    <Typography style={{ textAlign: "center" }} className={mergeClassNames(typography.textSmMedium, item.iconColor, "leading-none")}>
                       {item.symbol}
-                    </Text>
+                    </Typography>
                   </View>
-                  <Text className={mergeClassNames(typography.textSmMedium, "text-cnam-primary-800")}>{item.label}</Text>
+                  <Typography className={mergeClassNames(typography.textSmMedium, "text-cnam-primary-800")}>{item.label}</Typography>
                 </View>
               );
             })}
@@ -94,15 +95,15 @@ export default function Legend({ style }: { style?: ViewStyle }) {
                     }}
                     className={mergeClassNames("h-[20] px-2 rounded-md")}
                   >
-                    <Text className={mergeClassNames(typography.textSmMedium, item.iconColor, "leading-none")}>{item.symbol}</Text>
+                    <Typography className={mergeClassNames(typography.textSmMedium, item.iconColor, "leading-none")}>{item.symbol}</Typography>
                   </View>
-                  <Text className={mergeClassNames(typography.textSmMedium, "ml-2 text-cnam-primary-800 ")}>{item.label}</Text>
+                  <Typography className={mergeClassNames(typography.textSmMedium, "ml-2 text-cnam-primary-800 ")}>{item.label}</Typography>
                 </View>
               );
             })}
             <View className="flex-row items-center space-x-1">
               <View className="rounded-full h-2 w-2 bg-cnam-primary-800"></View>
-              <Text className={mergeClassNames(typography.textSmMedium, "text-cnam-primary-800")}>Si besoin</Text>
+              <Typography className={mergeClassNames(typography.textSmMedium, "text-cnam-primary-800")}>Si besoin</Typography>
             </View>
           </View>
         )}

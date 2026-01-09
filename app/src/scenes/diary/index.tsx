@@ -14,6 +14,7 @@ import { VALID_SCREEN_NAMES } from "@/scenes/onboarding-v2/index";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
 import FileIcon from "@assets/svg/icon/File";
+import { Typography } from "@/components/Typography";
 
 const LIMIT_PER_PAGE = __DEV__ ? 3 : 30;
 const screenHeight = Dimensions.get("window").height;
@@ -97,7 +98,7 @@ const Diary = ({ navigation, hideDeader = false }) => {
             if (!diaryNotes[date] && !getUserComments(diaryData, date)?.length) return null;
             return (
               <View key={date}>
-                <Text style={styles.subtitle}>{formatDateThread(date)}</Text>
+                <Typography style={styles.subtitle}>{formatDateThread(date)}</Typography>
                 {/* DiaryNotes does no seemes used anymore */}
                 <DiaryNotes date={date} diaryNote={diaryNotes[date]} navigation={navigation} />
                 <DiarySymptoms userIndicators={userIndicators} date={date} values={getUserComments(diaryData, date)} navigation={navigation} />
@@ -113,19 +114,19 @@ const Diary = ({ navigation, hideDeader = false }) => {
             </View>
             <View className={mergeClassNames("border border-cnam-primary-200 rounded-2xl p-4 py-6 bg-white", "mt-32")} style={{ borderWidth: 0.5 }}>
               <>
-                <Text className={mergeClassNames(typography.textMdBold, "text-cnam-primary-800 text-center px-4")}>
+                <Typography className={mergeClassNames(typography.textMdBold, "text-cnam-primary-800 text-center px-4")}>
                   Aucune note rédigée pour le moment.
-                </Text>
-                <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 text-left px-4 mt-4")}>
+                </Typography>
+                <Typography className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 text-left px-4 mt-4")}>
                   Ajoutez des notes pour enrichir vos observations. Elles apparaîtront ici et dans vos Analyses (onglet « Déclencheurs »).
-                </Text>
+                </Typography>
               </>
             </View>
           </>
         )}
         {Object.keys({ ...diaryNotes, ...diaryDataWithUserComments })?.length > LIMIT_PER_PAGE * page && (
           <TouchableOpacity onPress={() => setPage(page + 1)} style={styles.versionContainer}>
-            <Text style={styles.arrowDownLabel}>Voir plus</Text>
+            <Typography style={styles.arrowDownLabel}>Voir plus</Typography>
             <ArrowUpSvg style={styles.arrowDown} color={colors.BLUE} />
           </TouchableOpacity>
         )}

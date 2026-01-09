@@ -13,6 +13,7 @@ import ThumbsUpIcon from "@assets/svg/icon/ThumbsUp";
 import ThumbsDownIcon from "@assets/svg/icon/ThumbsDown";
 import logEvents from "@/services/logEvents";
 import * as Sentry from "@sentry/react-native";
+import { Typography } from "@/components/Typography";
 
 // Storage keys for motivational messages
 const STORAGE_KEY_MOTIVATIONAL_MESSAGE_INDEX = "@MOTIVATIONAL_MESSAGE_INDEX";
@@ -1019,9 +1020,9 @@ const SurveySuccessScreen: React.FC<SurveySuccessScreenProps> = ({ navigation, r
           <View style={{ marginBottom: 32 }}>
             <CircleCheckMark color={"#0084B2"} width={40} height={41} />
           </View>
-          <Text className={mergeClassNames(typography.displayXsRegular, "text-cnam-primary-900 text-center")}>
+          <Typography className={mergeClassNames(typography.displayXsRegular, "text-cnam-primary-900 text-center")}>
             L'observation du jour est terminée
-          </Text>
+          </Typography>
         </Animated.View>
       </View>
 
@@ -1051,7 +1052,7 @@ const SurveySuccessScreen: React.FC<SurveySuccessScreenProps> = ({ navigation, r
             <View className="ml-14 rounded-full w-16 h-16 p-2" style={{ backgroundColor: TW_COLORS.CNAM_CYAN_200_LIGHTEN_60 }}></View>
           </View>
           <View className="absolute top-[-30px] self-center rounded-full w-16 h-16 border border-white bg-cnam-cyan-lighten-80 p-2 flex items-center justify-center">
-            <Text className="text-3xl">{currentMessage.emoji}</Text>
+            <Typography className="text-3xl">{currentMessage.emoji}</Typography>
           </View>
           {/* Encouragement */}
           {currentMessage.type === "encouragement" && (
@@ -1059,7 +1060,9 @@ const SurveySuccessScreen: React.FC<SurveySuccessScreenProps> = ({ navigation, r
               {/* Applause Hands Icon positioned at the top like in mockup */}
               {/* Content centered in the panel */}
               <View style={{ alignItems: "center", paddingHorizontal: 10 }}>
-                <Text className={mergeClassNames("text-2xl font-normal font-body text-cnam-primary-900 text-center")}>{currentMessage.text}</Text>
+                <Typography className={mergeClassNames("text-2xl font-normal font-body text-cnam-primary-900 text-center")}>
+                  {currentMessage.text}
+                </Typography>
               </View>
             </View>
           )}
@@ -1074,28 +1077,30 @@ const SurveySuccessScreen: React.FC<SurveySuccessScreenProps> = ({ navigation, r
                   {/* Le saviez-vous? header */}
                   <View className="flex flex-row mb-3">
                     <View className="bg-cnam-cyan-700-darken-40 flex flex-row justify-center items-center rounded-lg px-1.5 py-0.5">
-                      <Text className="text-lg">💡</Text>
-                      <Text className="text-sm font-semibold text-white">Le saviez-vous ?</Text>
+                      <Typography className="text-lg">💡</Typography>
+                      <Typography className="text-sm font-semibold text-white">Le saviez-vous ?</Typography>
                     </View>
                   </View>
 
                   {/* Health tip text */}
-                  <Text
+                  <Typography
                     className={mergeClassNames(
                       "text-cnam-primary-900 mb-3",
                       Dimensions.get("window").width > 380 ? "text-2xl text-body font-semibold" : typography.textLgSemibold
                     )}
                   >
                     {currentMessage.text}
-                  </Text>
+                  </Typography>
 
                   {/* Source */}
-                  {currentMessage.source && <Text className={mergeClassNames("text-sm text-gray-800 italic")}>Source : {currentMessage.source}</Text>}
+                  {currentMessage.source && (
+                    <Typography className={mergeClassNames("text-sm text-gray-800 italic")}>Source : {currentMessage.source}</Typography>
+                  )}
                 </View>
 
                 {/* Feedback section for health tips */}
                 <View className="mt-5 items-center flex flex-row gap-4 w-full pl-2">
-                  <Text className={mergeClassNames("text-base text-gray-800")}>Cette info est-elle utile ?</Text>
+                  <Typography className={mergeClassNames("text-base text-gray-800")}>Cette info est-elle utile ?</Typography>
                   <View style={{ flexDirection: "row", justifyContent: "center" }}>
                     {/* Thumbs up */}
                     <TouchableOpacity

@@ -29,6 +29,7 @@ import * as FileSystem from "expo-file-system";
 import EyeIcon from "@assets/svg/icon/Eye";
 import * as Sharing from "expo-sharing";
 import PlayCircleIcon from "@assets/svg/icon/PlayCircle";
+import { Typography } from "@/components/Typography";
 
 const screenHeight = Dimensions.get("window").height;
 const height90vh = screenHeight * 0.9;
@@ -254,7 +255,7 @@ export const ToolBottomSheet = ({
               >
                 <BookmarkAddIcon width={20} height={20} />
 
-                <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40")}>Ajouter à mes favoris</Text>
+                <Typography className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40")}>Ajouter à mes favoris</Typography>
               </TouchableOpacity>
             ) : (
               <TouchableOpacity
@@ -273,7 +274,7 @@ export const ToolBottomSheet = ({
                 className="flex-row items-center justify-between mb-4 space-x-1"
               >
                 <BookmarkMinusIcon width={20} height={20} />
-                <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40")}>Retirer de mes favoris</Text>
+                <Typography className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40")}>Retirer de mes favoris</Typography>
               </TouchableOpacity>
             )}
           </View>
@@ -287,11 +288,11 @@ export const ToolBottomSheet = ({
                 )}
               >
                 {theme}
-              </Text>
+              </Typography>
             ))} */}
             {!!showAllThemes &&
               toolItem.themes.map((theme, index) => (
-                <Text
+                <Typography
                   key={index}
                   className={mergeClassNames(
                     typography.textSmSemibold,
@@ -299,11 +300,11 @@ export const ToolBottomSheet = ({
                   )}
                 >
                   {theme}
-                </Text>
+                </Typography>
               ))}
             {!showAllThemes &&
               renderedThemes.map((theme, index) => (
-                <Text
+                <Typography
                   key={index}
                   className={mergeClassNames(
                     typography.textSmSemibold,
@@ -311,7 +312,7 @@ export const ToolBottomSheet = ({
                   )}
                 >
                   {theme}
-                </Text>
+                </Typography>
               ))}
             {toolItem.themes.length > renderedThemes.length && !showAllThemes && (
               <TouchableOpacity
@@ -321,19 +322,19 @@ export const ToolBottomSheet = ({
                 {!showAllThemes && (
                   <>
                     <SimplePlus color="#3D6874" width={16} height={16} />
-                    <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-cyan-700-darken-40 leading-[20px]")}>
+                    <Typography className={mergeClassNames(typography.textSmSemibold, "text-cnam-cyan-700-darken-40 leading-[20px]")}>
                       {toolItem.themes.length - renderedThemes.length}
-                    </Text>
+                    </Typography>
                   </>
                 )}
               </TouchableOpacity>
             )}
           </View>
           <View className="p-4 flex-column">
-            <Text className={mergeClassNames(typography.displayXsBold, "text-left text-cnam-primary-900")}>{toolItem.title}</Text>
+            <Typography className={mergeClassNames(typography.displayXsBold, "text-left text-cnam-primary-900")}>{toolItem.title}</Typography>
           </View>
           <View className="p-4 flex-column flex-1">
-            <Text className={mergeClassNames(typography.textMdRegular, "text-left text-cnam-primary-900")}>{toolItem.description}</Text>
+            <Typography className={mergeClassNames(typography.textMdRegular, "text-left text-cnam-primary-900")}>{toolItem.description}</Typography>
           </View>
           <View className="w-full py-6 px-6">
             {/* {toolItem.embed === "breath-exercice" && (
@@ -389,7 +390,7 @@ export const ToolBottomSheet = ({
           </View>
           {toolItem.source && (
             <View className="w-full bg-gray-100 p-6 pb-20">
-              <Text className={mergeClassNames(typography.textSmRegular, "text-gray-800")}>Fourni par : {toolItem.source}</Text>
+              <Typography className={mergeClassNames(typography.textSmRegular, "text-gray-800")}>Fourni par : {toolItem.source}</Typography>
             </View>
           )}
         </ScrollView>
@@ -415,7 +416,7 @@ export const ToolBottomSheet = ({
           </View>
           {toolItem.source && (
             <View className="w-full bg-gray-100 p-6">
-              <Text>Fourni par : {toolItem.source}</Text>
+              <Text>Fourni par : {toolItem.source}</Typography>
             </View>
           )}
         </View> */}

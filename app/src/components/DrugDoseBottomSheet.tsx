@@ -12,6 +12,7 @@ import JMButton from "@/components/JMButton";
 import { Drug } from "@/entities/Drug";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 import HealthIcon from "@assets/svg/icon/Health";
+import { Typography } from "./Typography";
 
 const screenHeight = Dimensions.get("window").height;
 const height90vh = screenHeight * 0.9;
@@ -74,17 +75,17 @@ export default function DrugDoseBottomSheet({
               setSelectedDose(undefined);
             }}
           >
-            <Text className={mergeClassNames(typography.textLgMedium, "text-cnam-primary-800")}>Effacer</Text>
+            <Typography className={mergeClassNames(typography.textLgMedium, "text-cnam-primary-800")}>Effacer</Typography>
           </TouchableOpacity>
         </View>
         <View className="flex-row bg-[#E5F6FC] self-start items-center p-2">
           <HealthIcon color={TW_COLORS.CNAM_CYAN_700_DARKEN_40} />
-          <Text className={mergeClassNames(typography.textSmBold, "ml-2 text-cnam-cyan-700-darken-40 text-left")}>
+          <Typography className={mergeClassNames(typography.textSmBold, "ml-2 text-cnam-cyan-700-darken-40 text-left")}>
             {drug.name1} {drug.name2 ? `(${drug.name2})` : ""}
-          </Text>
+          </Typography>
         </View>
         <View className="p-4 flex-column flex-1 gap-6">
-          <Text className={mergeClassNames(typography.displayXsBold, "text-left text-cnam-primary-900")}>Sélectionnez une dose</Text>
+          <Typography className={mergeClassNames(typography.displayXsBold, "text-left text-cnam-primary-900")}>Sélectionnez une dose</Typography>
           <TextInput
             onChangeText={(text) => {
               setSearchText(text);
@@ -109,7 +110,7 @@ export default function DrugDoseBottomSheet({
               );
             })}
             {!!uniqueDoses.length && !filteredDoses.length && (
-              <Text className={mergeClassNames(typography.textSmMedium, "text-gray-800")}>Pas de résultat</Text>
+              <Typography className={mergeClassNames(typography.textSmMedium, "text-gray-800")}>Pas de résultat</Typography>
             )}
             {!!searchedText && !filteredDoses.length && (
               <TouchableOpacity
@@ -119,7 +120,7 @@ export default function DrugDoseBottomSheet({
                 }}
               >
                 <View className="flex-row items-center mr-auto mt-2">
-                  <Text className={mergeClassNames(typography.textLgMedium, "mr-2 text-cnam-primary-900")}>Ajouter "{searchedText}"</Text>
+                  <Typography className={mergeClassNames(typography.textLgMedium, "mr-2 text-cnam-primary-900")}>Ajouter "{searchedText}"</Typography>
                   <PlusIcon />
                 </View>
               </TouchableOpacity>
@@ -140,7 +141,7 @@ export default function DrugDoseBottomSheet({
                   }}
                 >
                   <View className="flex-row items-center">
-                    <Text className={mergeClassNames(typography.textMdMedium, "mr-2 text-cnam-primary-900")}>Saisir manuellement</Text>
+                    <Typography className={mergeClassNames(typography.textMdMedium, "mr-2 text-cnam-primary-900")}>Saisir manuellement</Typography>
                     <PlusIcon />
                   </View>
                 </TouchableOpacity>
@@ -158,7 +159,9 @@ export default function DrugDoseBottomSheet({
         }}
         className={`flex-column justify-between items-center p-6 px-6 bg-white/90 pb-10 w-full`}
       >
-        <Text className={mergeClassNames(typography.textSmMedium, "text-gray-800 mb-2")}>Vous pourrez modifier cette sélection plus tard</Text>
+        <Typography className={mergeClassNames(typography.textSmMedium, "text-gray-800 mb-2")}>
+          Vous pourrez modifier cette sélection plus tard
+        </Typography>
         <JMButton
           onPress={() => {
             onClose(selectedDose);

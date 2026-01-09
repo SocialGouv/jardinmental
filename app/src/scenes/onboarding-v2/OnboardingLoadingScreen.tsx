@@ -6,6 +6,7 @@ import { typography } from "@/utils/typography";
 import { useFocusEffect } from "@react-navigation/native";
 import { useStatusBar } from "@/context/StatusBarContext";
 import { TW_COLORS } from "@/utils/constants";
+import { Typography } from "@/components/Typography";
 
 type Props = OnboardingV2ScreenProps<"OnboardingLoadingScreen">;
 
@@ -29,7 +30,9 @@ const OnboardingLoadingScreen: React.FC<Props> = ({ navigation }) => {
     <SafeAreaView className="flex-1 bg-cnam-primary-800">
       <View className="flex-1 justify-center items-center px-6">
         <ActivityIndicator size="large" color="white" />
-        <Text className={mergeClassNames(typography.textLgMedium, "text-white text-center mt-6")}>Création de votre suivi personnalisé...</Text>
+        <Typography className={mergeClassNames(typography.textLgMedium, "text-white text-center mt-6")}>
+          Création de votre suivi personnalisé...
+        </Typography>
       </View>
     </SafeAreaView>
   );

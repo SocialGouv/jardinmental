@@ -3,6 +3,7 @@ import { typography } from "@/utils/typography";
 import { View, Text, TouchableOpacity } from "react-native";
 import ArrowRight from "@assets/svg/icon/Arrow";
 import { useBottomSheet } from "@/context/BottomSheetContext";
+import { Typography } from "@/components/Typography";
 
 export default function DaySurveyBottomSheet({ navigation }) {
   const { closeBottomSheet } = useBottomSheet();
@@ -15,11 +16,11 @@ export default function DaySurveyBottomSheet({ navigation }) {
         }}
         className="bg-cnam-primary-50 p-4 rounded-xl w-full"
       >
-        <Text className={mergeClassNames(typography.textLgSemibold, "text-gray-900 mb-2")}>Mes indicateurs</Text>
+        <Typography className={mergeClassNames(typography.textLgSemibold, "text-gray-900 mb-2")}>Mes indicateurs</Typography>
         <View className="flex-row items-center">
-          <Text className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-800 text-left mr-2")}>
+          <Typography className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-800 text-left mr-2")}>
             Ajouter ou supprimer des indicateurs
-          </Text>
+          </Typography>
           <ArrowRight color={"#0084B2"} />
         </View>
       </TouchableOpacity>
@@ -30,9 +31,11 @@ export default function DaySurveyBottomSheet({ navigation }) {
         }}
         className="bg-cnam-primary-50 p-4 rounded-xl w-full"
       >
-        <Text className={mergeClassNames(typography.textLgSemibold, "text-gray-900 mb-2")}>Mes objectifs</Text>
+        <Typography className={mergeClassNames(typography.textLgSemibold, "text-gray-900 mb-2")}>Mes objectifs</Typography>
         <View className="flex-row items-center">
-          <Text className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-800 text-left mr-2")}>Ajouter ou modifier mes objectifs</Text>
+          <Typography className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-800 text-left mr-2")}>
+            Ajouter ou modifier mes objectifs
+          </Typography>
           <ArrowRight color={"#0084B2"} />
         </View>
       </TouchableOpacity>

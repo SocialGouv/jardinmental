@@ -13,6 +13,7 @@ import Target from "@assets/svg/icon/Target";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Pencil from "@assets/svg/Pencil";
 import NavigationButtons from "@/components/onboarding/NavigationButtons";
+import { Typography } from "@/components/Typography";
 
 export const GoalsSettings = ({ navigation, route }) => {
   const [goals, setGoals] = useState([]);
@@ -51,18 +52,20 @@ export const GoalsSettings = ({ navigation, route }) => {
           <View className="rounded-full border-[1.5px] border-cnam-primary-800 bg-white w-8 h-8 items-center justify-center">
             <Target color={TW_COLORS.CNAM_PRIMARY_900} width={18} height={18} />
           </View>
-          <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-900 ml-2")}>Personnaliser mes objectifs</Text>
+          <Typography className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-900 ml-2")}>Personnaliser mes objectifs</Typography>
         </View>
-        <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900")}>Gérez vos objectifs et créez-en de nouveaux</Text>
+        <Typography className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900")}>
+          Gérez vos objectifs et créez-en de nouveaux
+        </Typography>
       </View>
       <View className="mx-4 my-4 flex-row items-center">
         <Title align="left" fill={false}>
           Mes objectifs
         </Title>
         <View className="bg-cnam-cyan-500-0 h-7 w-7 rounded-full items-center justify-center ml-2">
-          <Text className={mergeClassNames(typography.textMdSemibold)} style={{ color: "#19363D" }}>
+          <Typography className={mergeClassNames(typography.textMdSemibold)} style={{ color: "#19363D" }}>
             {goals?.length || 0}
-          </Text>
+          </Typography>
         </View>
       </View>
       <View>{goals.map(renderItem)}</View>
@@ -83,9 +86,9 @@ const GoalItem = ({ goal, index }) => {
   return (
     <View className="bg-white border-2 border-cnam-primary-800 mx-4 rounded-2xl p-4 flex-row mb-2 justify-between items-center">
       <View>
-        <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-950")}>{goal.label}</Text>
+        <Typography className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-950")}>{goal.label}</Typography>
         <View style={[itemStyles.daysOfWeekContainer]}>
-          <Text className={mergeClassNames(typography.textMdRegular, "text-gray-700")}>{daysOfWeekLabel}</Text>
+          <Typography className={mergeClassNames(typography.textMdRegular, "text-gray-700")}>{daysOfWeekLabel}</Typography>
         </View>
       </View>
       <TouchableOpacity

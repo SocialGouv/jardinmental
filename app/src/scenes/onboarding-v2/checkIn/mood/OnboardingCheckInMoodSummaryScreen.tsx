@@ -12,6 +12,7 @@ import { typography } from "@/utils/typography";
 import { firstLetterUppercase } from "@/utils/string-util";
 import { useStatusBar } from "@/context/StatusBarContext";
 import { useFocusEffect } from "@react-navigation/native";
+import { Typography } from "@/components/Typography";
 
 type Props = OnboardingV2ScreenProps<"OnboardingCheckInMoodSummary">;
 
@@ -65,12 +66,12 @@ const OnboardingCheckInMoodSummaryScreen: React.FC<Props> = ({ navigation, route
         // handleSkip={handleSkip}
       >
         <View className="px-4 py-6 rounded-3xl bg-white w-full">
-          <Text
+          <Typography
             className={mergeClassNames(typography.displayXsRegular, "text-center mb-4 text-cnam-primary-900 font-bold")}
             style={{ color: TW_COLORS.TEXT_PRIMARY }}
           >
             Votre bilan d'aujourd'hui
-          </Text>
+          </Typography>
           {route.params?.mood !== null && <View className="justify-center items-center mt-2">{moodEmojis[route.params?.mood]?.icon}</View>}
           <View
             style={{
@@ -94,10 +95,12 @@ const OnboardingCheckInMoodSummaryScreen: React.FC<Props> = ({ navigation, route
       </BannerHeader>
       <View className="flex-1 p-6">
         <View className="w-full">
-          <Text className={mergeClassNames(typography.textXlSemibold, "text-cnam-primary-900 mb-6")}>Merci, c'est une première étape précieuse.</Text>
-          <Text className={mergeClassNames(typography.textMdRegular, "text-gray-800 text-left")}>
+          <Typography className={mergeClassNames(typography.textXlSemibold, "text-cnam-primary-900 mb-6")}>
+            Merci, c'est une première étape précieuse.
+          </Typography>
+          <Typography className={mergeClassNames(typography.textMdRegular, "text-gray-800 text-left")}>
             Observer votre humeur au fil du temps peut aider à mieux comprendre ce qui vous influence.
-          </Text>
+          </Typography>
         </View>
       </View>
 
@@ -119,9 +122,9 @@ const Tag = ({ text, bgcolor }: { text: string; bgcolor: string }) => {
         backgroundColor: bgcolor,
       }}
     >
-      <Text className="text-xs text-center font-bold" style={{ color: TW_COLORS.TEXT_PRIMARY }}>
+      <Typography className="text-xs text-center font-bold" style={{ color: TW_COLORS.TEXT_PRIMARY }}>
         {text}
-      </Text>
+      </Typography>
     </View>
   );
 };

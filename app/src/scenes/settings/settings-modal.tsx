@@ -18,6 +18,7 @@ import { mergeClassNames } from "@/utils/className";
 import Animated, { useAnimatedScrollHandler, useSharedValue } from "react-native-reanimated";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
+import { Typography } from "@/components/Typography";
 
 const SettingsModal = ({ navigation, visible }) => {
   const { showBottomSheet, closeBottomSheet } = useBottomSheet();
@@ -57,7 +58,7 @@ const SettingsModal = ({ navigation, visible }) => {
       >
         <View className="flex-col space-y-10">
           <View className="mt-10">
-            <Text className={mergeClassNames(typography.textXlSemibold, "text-cnam-primary-900 mb-4")}>Personnaliser mon suivi</Text>
+            <Typography className={mergeClassNames(typography.textXlSemibold, "text-cnam-primary-900 mb-4")}>Personnaliser mon suivi</Typography>
             <SettingItem
               title="Mes indicateurs"
               description="Éditer et personnaliser mon suivi quotidien"
@@ -113,7 +114,7 @@ const SettingsModal = ({ navigation, visible }) => {
             />
           </View>
           <View className="mx-2">
-            <Text className={mergeClassNames(typography.textXlSemibold, "text-cnam-primary-900  mb-4")}>Gérer mes données</Text>
+            <Typography className={mergeClassNames(typography.textXlSemibold, "text-cnam-primary-900  mb-4")}>Gérer mes données</Typography>
             <SettingItem
               isFirst={true}
               title="Générer un récapitulatif"

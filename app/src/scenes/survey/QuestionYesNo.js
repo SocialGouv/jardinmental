@@ -38,13 +38,13 @@ const QuestionYesNo = ({ question, explanation, onPress, selected, isLast, showU
           ) : (
             <View />
           )}
-          <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900")}>{question.label}</Text>
+          <Typography className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900")}>{question.label}</Typography>
           {/* we put a view here because we'll add a item here later */}
           <View />
         </View>
         {explanation && showExplanation ? (
           <View style={styles.questionInfo}>
-            <Text>{explanation}</Text>
+            <Typography>{explanation}</Typography>
           </View>
         ) : null}
       </TouchableOpacity>
@@ -66,7 +66,7 @@ const QuestionYesNo = ({ question, explanation, onPress, selected, isLast, showU
           />
         </View>
         {showUserCommentInput ? (
-          <TextInput
+          <TypographyInput
             multiline={true}
             numberOfLines={Platform.OS === "ios" ? null : 1}
             minHeight={Platform.OS === "ios" ? 30 * 1 : null}

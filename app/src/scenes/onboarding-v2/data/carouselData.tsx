@@ -6,6 +6,7 @@ import { typography } from "@/utils/typography";
 import { mergeClassNames } from "@/utils/className";
 import { useNavigation } from "@react-navigation/native";
 import { createElement } from "react";
+import { Typography } from "@/components/Typography";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 const isLargeScreen = screenHeight >= 700;
@@ -57,9 +58,9 @@ const SlideFinal: CarouselSlide = {
           backgroundColor: "#BBE7C6",
         }}
       >
-        <Text className={mergeClassNames(typography.textMdSemibold, "text-mood-text-4")}>
+        <Typography className={mergeClassNames(typography.textMdSemibold, "text-mood-text-4")}>
           L’application est co-construite avec un comité éditorial et scientifique composé de 14 professionnels de santé
-        </Text>
+        </Typography>
       </TouchableOpacity>
     );
   }),

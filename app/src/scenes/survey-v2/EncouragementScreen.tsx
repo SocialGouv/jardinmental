@@ -11,6 +11,7 @@ import { useOnboardingProgressHeader } from "../onboarding-v2/ProgressHeader";
 import { useFocusEffect } from "@react-navigation/native";
 import logEvents from "@/services/logEvents";
 import { useStatusBar } from "@/context/StatusBarContext";
+import { Typography } from "@/components/Typography";
 
 interface EncouragementScreenProps {
   navigation: any;
@@ -52,19 +53,23 @@ export const EncouragementScreen: React.FC<EncouragementScreenProps> = ({
     <BeigeWrapperScreen handlePrevious={onPrevious} handleSkip={onSkip} handleNext={onNext} nextText={nextText}>
       <BeigeCard color={TW_COLORS.CNAM_CYAN_LIGHTEN_80}>
         <View className="justify-center items-center w-full">
-          <Text className={mergeClassNames(typography.displayXsBold, "text-cnam-primary-900 mb-8 text-left w-full")}>
+          <Typography className={mergeClassNames(typography.displayXsBold, "text-cnam-primary-900 mb-8 text-left w-full")}>
             {headingTitle || `C'est noté 🌱`}
-          </Text>
-          {title && <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-900 mb-8 text-left w-full")}>{title}</Text>}
+          </Typography>
+          {title && (
+            <Typography className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-900 mb-8 text-left w-full")}>{title}</Typography>
+          )}
         </View>
         {description && (
           <View className="pb-4 w-full">
-            <Text className={mergeClassNames(typography.textMdRegular, "text-center text-cnam-primary-900 text-left")}>{description}</Text>
+            <Typography className={mergeClassNames(typography.textMdRegular, "text-center text-cnam-primary-900 text-left")}>
+              {description}
+            </Typography>
           </View>
         )}
         {extraInfo && (
           <View className="px-0 pb-4">
-            <Text className={mergeClassNames(typography.textMdRegular, "text-left text-gray-800 text-left")}>{extraInfo}</Text>
+            <Typography className={mergeClassNames(typography.textMdRegular, "text-left text-gray-800 text-left")}>{extraInfo}</Typography>
           </View>
         )}
       </BeigeCard>

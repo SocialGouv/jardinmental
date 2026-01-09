@@ -5,6 +5,7 @@ import ArrowIcon from "@assets/svg/icon/Arrow";
 import CheckMarkIcon from "@assets/svg/icon/check";
 import React from "react";
 import { TouchableOpacity, View, Text } from "react-native";
+import { Typography } from "../Typography";
 
 interface NavigationListItemProps {
   disabled?: false;
@@ -37,11 +38,11 @@ export default function NavigationListItem({ disabled, onPress, icon, label }: N
       </View>
 
       {/* Text */}
-      <Text
+      <Typography
         className={mergeClassNames(`flex-1 ml-4 ${typography.textMdMedium} text-cnam-primary-950`, disabled ? "line-through text-mood-text-4" : "")}
       >
         {label}
-      </Text>
+      </Typography>
 
       {/* Right Arrow */}
       <View className="text-gray-400">{disabled ? <CheckMarkIcon color={TW_COLORS.SUCCESS.TEXT} /> : <ArrowIcon />}</View>

@@ -34,6 +34,7 @@ import { getGoalsDailyRecords, getGoalsTracked } from "@/utils/localStorage/goal
 import { Goal } from "@/entities/Goal";
 import DaySurveyCustomBottomSheet from "./DaySurveyCustomBottomSheet";
 import * as Sentry from "@sentry/react-native";
+import { Typography } from "@/components/Typography";
 
 const DaySurvey = ({
   navigation,
@@ -366,7 +367,9 @@ const DaySurvey = ({
   return (
     <AnimatedHeaderScrollScreen
       headerRightComponent={
-        <Text className={mergeClassNames(selectedMoodIndex === null ? "text-white" : "text-cnam-primary-950")}>Personnaliser mon suivi</Text>
+        <Typography className={mergeClassNames(selectedMoodIndex === null ? "text-white" : "text-cnam-primary-950")}>
+          Personnaliser mon suivi
+        </Typography>
       }
       headerRightAction={editIndicators}
       // headerTitle={formatDate(initSurvey?.date)}
@@ -391,12 +394,12 @@ const DaySurvey = ({
           headerContent={
             <View>
               <View className="my-2">
-                <Text className={mergeClassNames(typography.textSmMedium, "text-gray-700 text-center")}>
+                <Typography className={mergeClassNames(typography.textSmMedium, "text-gray-700 text-center")}>
                   {answeredElementCount} élément{answeredElementCount > 1 ? "s" : ""} observé{answeredElementCount > 1 ? "s" : ""}.
-                </Text>
-                <Text className={mergeClassNames(typography.textSmMedium, "text-gray-700 text-center")}>
+                </Typography>
+                <Typography className={mergeClassNames(typography.textSmMedium, "text-gray-700 text-center")}>
                   Vous pourrez compléter votre observation plus tard
-                </Text>
+                </Typography>
               </View>
             </View>
           }
@@ -407,9 +410,9 @@ const DaySurvey = ({
       navigation={navigation}
     >
       <View>
-        <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700 text-left mb-6 mt-4 px-5")}>
+        <Typography className={mergeClassNames(typography.textMdMedium, "text-gray-700 text-left mb-6 mt-4 px-5")}>
           Observez ce qui a été présent ou plus marqué aujourd’hui, un élément à la fois.
-        </Text>
+        </Typography>
         <View className="mb-0 px-4">
           {userIndicateurs
             .filter((ind) => ind.active === true)

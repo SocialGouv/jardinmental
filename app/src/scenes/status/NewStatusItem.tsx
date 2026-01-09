@@ -28,6 +28,7 @@ import { formatDateThread, formatRelativeDate } from "@/utils/date/helpers";
 import ArrowIcon from "@assets/svg/icon/Arrow";
 import { colors } from "@/utils/colors";
 import { SquircleButton } from "expo-squircle-view";
+import { Typography } from "@/components/Typography";
 
 const NewStatusItemComponent = ({
   navigation,
@@ -107,7 +108,7 @@ const NewStatusItemComponent = ({
         onPress={() => handlePressItem({ editingSurvey: true })}
       >
         <View className="mb-4 flex-row justify-between">
-          <Text className={mergeClassNames(typography.textMdBold, "text-cnam-primary-950 capitalize")}>{formatRelativeDate(date)}</Text>
+          <Typography className={mergeClassNames(typography.textMdBold, "text-cnam-primary-950 capitalize")}>{formatRelativeDate(date)}</Typography>
           {canEdit(date) && <ArrowIcon />}
         </View>
         <View>
@@ -171,7 +172,9 @@ const NewStatusItemComponent = ({
             onPress={() => handlePressItem({ editingSurvey: true })}
           >
             <View className="mb-4 flex-row justify-between">
-              <Text className={mergeClassNames(typography.textMdBold, "text-cnam-primary-950 capitalize")}>{formatRelativeDate(date)}</Text>
+              <Typography className={mergeClassNames(typography.textMdBold, "text-cnam-primary-950 capitalize")}>
+                {formatRelativeDate(date)}
+              </Typography>
               <ArrowIcon />
             </View>
             <View className="flex-row items-center">
@@ -186,7 +189,7 @@ const NewStatusItemComponent = ({
                 iconHeight={32}
               />
               <View className="ml-2 p-2 flex-1">
-                <Text className={mergeClassNames(typography.textSmMedium, "text-cnam-primary-950")}>Complétez l'observation</Text>
+                <Typography className={mergeClassNames(typography.textSmMedium, "text-cnam-primary-950")}>Complétez l'observation</Typography>
               </View>
             </View>
           </SquircleButton>
@@ -196,7 +199,7 @@ const NewStatusItemComponent = ({
             <View style={styles.dateContainer}>
               <View style={styles.dateDot} />
               <TouchableOpacity onPress={() => navigation.navigate("too-late", { date })}>
-                <Text style={styles.dateLabel}>{formatDateThread(date)}</Text>
+                <Typography style={styles.dateLabel}>{formatDateThread(date)}</Typography>
               </TouchableOpacity>
             </View>
             <View style={styles.container}>

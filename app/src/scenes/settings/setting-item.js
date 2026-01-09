@@ -35,8 +35,8 @@ const SettingItem = ({ title, navigation, path, icon, color = colors.LIGHT_BLUE,
             </View>
           )}
           <View className="flex-col ml-2">
-            <Text style={styles.label}>{title}</Text>
-            <Text className={mergeClassNames(typography.textSmRegular, "text-cnam-primary-800 pr-6 mt-1")}>{description}</Text>
+            <Typography style={styles.label}>{title}</Typography>
+            <Typography className={mergeClassNames(typography.textSmRegular, "text-cnam-primary-800 pr-6 mt-1")}>{description}</Typography>
           </View>
         </View>
       </View>

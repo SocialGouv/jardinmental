@@ -18,6 +18,7 @@ import HealthIcon from "@assets/svg/icon/Health";
 import DrugDoseBottomSheet from "@/components/DrugDoseBottomSheet";
 import Pencil from "@assets/svg/Pencil";
 import { Drug, Posology } from "@/entities/Drug";
+import { Typography } from "@/components/Typography";
 
 const DrugsSurvey = ({ navigation, route }) => {
   const [diaryData, addNewEntryToDiaryData] = useContext(DiaryDataContext);
@@ -258,23 +259,25 @@ const DrugsSurvey = ({ navigation, route }) => {
           isLast
         />
         <View style={styles.titleContainer}>
-          <Text style={styles.titlePosology}>
-            Détail de vos traitements de la journée <Text style={styles.titlePosologyOptionnel}>(Optionnel)</Text>
-          </Text>
+          <Typography style={styles.titlePosology}>
+            Détail de vos traitements de la journée <Typography style={styles.titlePosologyOptionnel}>(Optionnel)</Typography>
+          </Typography>
         </View>
         {medicalTreatment.map((e, i) => {
           const res = posology.find((i) => i.id === e.id);
           return (
             <View key={e.id} className="mb-4">
-              <Text className={mergeClassNames("mb-2 text-gray-800", typography.textLgMedium)}>
+              <Typography className={mergeClassNames("mb-2 text-gray-800", typography.textLgMedium)}>
                 {e.name1} {e.name2 ? `(${e.name2})` : ""}
-              </Text>
+              </Typography>
               <TouchableOpacity
                 onPress={() => addDose(e, res?.value)}
                 className="border border-gray-700 bg-white rounded-xl flex-row p-4 items-center"
               >
                 <HealthIcon color={TW_COLORS.GRAY_700} width={17} height={17} />
-                <Text className={mergeClassNames(typography.textMdRegular, "ml-2 text-gray-700")}>{res?.value ? res.value : "Indiquez la dose"}</Text>
+                <Typography className={mergeClassNames(typography.textMdRegular, "ml-2 text-gray-700")}>
+                  {res?.value ? res.value : "Indiquez la dose"}
+                </Typography>
               </TouchableOpacity>
             </View>
           );
@@ -282,7 +285,7 @@ const DrugsSurvey = ({ navigation, route }) => {
         {route?.params?.onboarding ? (
           <View style={styles.buttonWrapper}>
             <TouchableOpacity onPress={() => navigation.navigate("tabs")} style={styles.setupButton}>
-              <Text style={styles.setupButtonText}>Commencer</Text>
+              <Typography style={styles.setupButtonText}>Commencer</Typography>
             </TouchableOpacity>
           </View>
         ) : null}

@@ -5,6 +5,7 @@ import { answers } from "../survey-v2/utils";
 import { analyzeScoresMapIcon, TW_COLORS } from "@/utils/constants";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
+import { Typography } from "@/components/Typography";
 
 const ScorePicker = ({
   focusedScores,
@@ -40,9 +41,9 @@ const ScorePicker = ({
                 borderColor: TW_COLORS.CNAM_PRIMARY_800,
               }}
             >
-              <Text className={mergeClassNames(typography.textSmMedium)} style={{ color: item.iconColor }}>
+              <Typography className={mergeClassNames(typography.textSmMedium)} style={{ color: item.iconColor }}>
                 {item.symbol}
-              </Text>
+              </Typography>
             </View>
             {/* <View style={[styles.selectionContainer, inline && { marginHorizontal: 5 }, itemStyle, active && styles.activeSelectionContainer]}>
               {showIcon ? (

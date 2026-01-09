@@ -5,6 +5,7 @@ import PieChart from "react-native-pie-chart";
 import { TW_COLORS, yesNoMapTreatmentIcon } from "@/utils/constants";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
+import { Typography } from "@/components/Typography";
 
 const screenHeight = Dimensions.get("window").height;
 
@@ -77,7 +78,7 @@ export const PieYesNo = ({
       <View style={styles.categoryContainer}>
         <View style={styles.titleContainer}>
           <View style={styles.titleContainer}>
-            <Text style={styles.title}>{title}</Text>
+            <Typography style={styles.title}>{title}</Typography>
           </View>
         </View>
         <View className="flex-row py-4 mt-2 items-center">
@@ -104,7 +105,7 @@ export const PieYesNo = ({
             ) : (
               // Show empty state or placeholder when all values are 0
               <View className="w-[100px] h-[100px] border border-gray-200 rounded-full justify-center items-center">
-                <Text className="text-gray-400 text-xs">Pas de données</Text>
+                <Typography className="text-gray-400 text-xs">Pas de données</Typography>
               </View>
             )}
           </View>
@@ -116,27 +117,27 @@ export const PieYesNo = ({
                     style={{ backgroundColor: parialsColors[1].color }}
                     className={`flex justify-center items-center h-10 w-10 mr-1 rounded-full`}
                   >
-                    <Text className="text-cnam-primary-800 text-sm">Oui</Text>
+                    <Typography className="text-cnam-primary-800 text-sm">Oui</Typography>
                   </View>
-                  <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-800")}>
+                  <Typography className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-800")}>
                     {Math.round(nombreDeValeurParScore?.find((e) => e.score === "1")?.pourcentage || 0)}%
-                  </Text>
+                  </Typography>
                 </View>
                 <View className="flex flex-row mt-2 items-center">
                   <View
                     style={{ backgroundColor: parialsColors[2].color }}
                     className={`flex justify-center items-center h-10 w-10 mr-1 rounded-full`}
                   >
-                    <Text className="text-cnam-primary-800 text-sm">Non</Text>
+                    <Typography className="text-cnam-primary-800 text-sm">Non</Typography>
                   </View>
 
-                  <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-800")}>
+                  <Typography className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-800")}>
                     {Math.round(nombreDeValeurParScore?.find((e) => e.score === "2")?.pourcentage || 0)}%
-                  </Text>
+                  </Typography>
                 </View>
               </View>
               {joursRenseignes.pourcentage < 100 ? (
-                <Text style={styles.pourcentageStyle}>{Math.round(100 - joursRenseignes.pourcentage)}% de jours non renseignés</Text>
+                <Typography style={styles.pourcentageStyle}>{Math.round(100 - joursRenseignes.pourcentage)}% de jours non renseignés</Typography>
               ) : null}
             </View>
           </View>

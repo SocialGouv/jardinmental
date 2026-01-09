@@ -14,6 +14,7 @@ import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
 import { DiaryDataContext } from "@/context/diaryData";
 import { STORAGE_KEY_SURVEY_RESULTS } from "@/utils/constants";
+import { Typography } from "@/components/Typography";
 
 // Keys to exclude from export (device-specific and transient UI states)
 const EXPORT_BLACKLIST = [
@@ -210,17 +211,19 @@ const DataExportImport = ({ navigation }) => {
             <View className="bg-white border border-cnam-primary-900 w-[32] h-[32] justify-center items-center rounded-full">
               <InfoIcon width={16} height={16} />
             </View>
-            <Text className={mergeClassNames(typography.textMdSemibold, "ml-2 text-cnam-primary-900")}>Pourquoi sauvegarder mes données ?</Text>
+            <Typography className={mergeClassNames(typography.textMdSemibold, "ml-2 text-cnam-primary-900")}>
+              Pourquoi sauvegarder mes données ?
+            </Typography>
           </View>
-          <Text className={mergeClassNames(typography.textMdMedium, "ml-2 text-cnam-primary-900")}>
+          <Typography className={mergeClassNames(typography.textMdMedium, "ml-2 text-cnam-primary-900")}>
             Afin de garantir la confidentialité de vos données, celles-ci sont uniquement stockées sur votre appareil. {"\n\n"}Si vous souhaitez
             changer d’appareil et conserver votre historique Jardin Mental vous devez sauvegarder vos données puis les importer sur votre nouvel
             appareil.
-          </Text>
+          </Typography>
         </View>
-        <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-900 mt-4")}>
+        <Typography className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-900 mt-4")}>
           Comment importer mes données sur un nouvel appareil ?
-        </Text>
+        </Typography>
         <View className="flex-col space-y-4 w-full justify-start items-start mt-4 mb-8">
           {[
             `Cliquer sur le bouton “Sauvegarder” ci-dessous`,
@@ -233,10 +236,10 @@ const DataExportImport = ({ navigation }) => {
                 className="h-[32] w-[32] bg-white border-cnam-primary-900 rounded-full justify-center items-center mr-2"
                 style={{ borderWidth: 1.5 }}
               >
-                <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-900")}>{index + 1}</Text>
+                <Typography className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-900")}>{index + 1}</Typography>
               </View>
 
-              <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900 flex-1 text-left")}>{item}</Text>
+              <Typography className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900 flex-1 text-left")}>{item}</Typography>
             </View>
           ))}
         </View>

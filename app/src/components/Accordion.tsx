@@ -5,6 +5,7 @@ import ArrowUpSvg from "../../assets/svg/icon/ArrowUp";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
 import { TW_COLORS } from "@/utils/constants";
+import { Typography } from "./Typography";
 
 export interface AccordionItem {
   title: string;
@@ -111,7 +112,7 @@ const AccordionItemComponent: React.FC<AccordionItemComponentProps> = ({ item, i
   return (
     <View>
       <TouchableOpacity onPress={handleToggle} className="flex-row items-center justify-between p-4 py-4">
-        <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-950 flex-1 mr-3")}>{item.title}</Text>
+        <Typography className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-950 flex-1 mr-3")}>{item.title}</Typography>
         <Animated.View
           style={{
             transform: [{ rotate: isExpanded ? "0deg" : "180deg" }],

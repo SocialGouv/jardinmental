@@ -15,6 +15,7 @@ import logEvents from "@/services/logEvents";
 import { useFocusEffect } from "@react-navigation/native";
 import { useStatusBar } from "@/context/StatusBarContext";
 import { TW_COLORS } from "@/utils/constants";
+import { Typography } from "@/components/Typography";
 
 type Props = OnboardingV2ScreenProps<"PersonalizationDifficulties">;
 
@@ -96,9 +97,9 @@ const DifficultiesScreen: React.FC<Props> = ({ navigation }) => {
             <View>
               {selectedCount >= 3 && <AlertBanner text={`Chaque domaine sera précisé ensuite : limitez-vous à 1 ou 2 pour démarrer.`} />}
               <View className="my-2">
-                <Text className={mergeClassNames(typography.textSmMedium, "text-gray-800 text-center")}>
+                <Typography className={mergeClassNames(typography.textSmMedium, "text-gray-800 text-center")}>
                   Vous pourrez modifier cette sélection plus tard
-                </Text>
+                </Typography>
               </View>
             </View>
           }
@@ -111,7 +112,9 @@ const DifficultiesScreen: React.FC<Props> = ({ navigation }) => {
       }
     >
       <View className="px-6 py-4">
-        <Text className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-900 text-left")}>Sélectionnez un ou plusieurs domaines</Text>
+        <Typography className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-900 text-left")}>
+          Sélectionnez un ou plusieurs domaines
+        </Typography>
       </View>
 
       <View className="px-4" style={{ paddingVertical: 8 }}>

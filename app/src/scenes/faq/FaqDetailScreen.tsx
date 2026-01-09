@@ -9,6 +9,7 @@ import Accordion from "@/components/Accordion";
 import NavigationListItem from "@/components/ListItem/NavigationListItem";
 import { FAQ_DATA } from "./FaqData";
 import logEvents from "@/services/logEvents";
+import { Typography } from "@/components/Typography";
 
 const markdownStyles = {
   body: {
@@ -116,10 +117,10 @@ export default function FaqDetailScreen({
         <View className="bg-gray-50 p-4 flex-col space-y-6 pt-8">
           <View className="flex-col space-y-4">
             {item.subtitle && (
-              <Text className={mergeClassNames(typography.displayXsBold, "text-cnam-primary-950 text-left mb-4")}>{item.subtitle}</Text>
+              <Typography className={mergeClassNames(typography.displayXsBold, "text-cnam-primary-950 text-left mb-4")}>{item.subtitle}</Typography>
             )}
             {/*
-            we encapsulate the Markdown tag in <> otherwise when <Text> and <Markdown> are next to each others,
+            we encapsulate the Markdown tag in <> otherwise when <Typography> and <Markdown> are next to each others,
             markdownStyles is not applied (haven’t found out why yet)
           */}
             <>
@@ -139,7 +140,7 @@ export default function FaqDetailScreen({
         </View>
         {item.next && (
           <View className={mergeClassNames("bg-cnam-primary-100 bg-cyan-50-lighten-90 space-y-6 p-6 mt-8 mb-12 h-full")}>
-            <Text className={mergeClassNames(typography.displayXsBold, "text-cnam-primary-900 text-left mb-4")}>À découvrir ensuite</Text>
+            <Typography className={mergeClassNames(typography.displayXsBold, "text-cnam-primary-900 text-left mb-4")}>À découvrir ensuite</Typography>
             <NavigationListItem
               icon={FAQ_DATA[item.next].icon}
               label={FAQ_DATA[item.next].title}

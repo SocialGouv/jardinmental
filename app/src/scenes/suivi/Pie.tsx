@@ -11,6 +11,7 @@ import { typography } from "@/utils/typography";
 import ChevronIcon from "@assets/svg/icon/chevron";
 import ArrowIcon from "@assets/svg/icon/Arrow";
 import ArrowUpSvg from "@assets/svg/icon/ArrowUp";
+import { Typography } from "@/components/Typography";
 
 const screenHeight = Dimensions.get("window").height;
 
@@ -92,10 +93,12 @@ const renderResponse = ({ indicateur, value, isSmall, translateX, reverse, index
             ],
           }}
         >
-          <Text>{itemColors[_value].symbol}</Text>
+          <Typography>{itemColors[_value].symbol}</Typography>
         </View>
         <View>
-          <Text className={mergeClassNames(typography.textXsRegular, "text-cnam-primary-800 font-normal")}>{itemColors[_value].label}</Text>
+          <Typography className={mergeClassNames(typography.textXsRegular, "text-cnam-primary-800 font-normal")}>
+            {itemColors[_value].label}
+          </Typography>
         </View>
       </View>
     );
@@ -248,7 +251,7 @@ export const Pie = ({ title, data, indicateur }) => {
     <View style={styles.categoryContainer}>
       <View style={styles.titleContainer}>
         <TouchableOpacity onPress={toggleDetails} style={styles.titleContainer}>
-          <Text style={styles.title}>{title}</Text>
+          <Typography style={styles.title}>{title}</Typography>
           {!!detailsVisible && (
             <TouchableOpacity onPress={toggleDetails}>
               <ArrowUpSvg />
@@ -292,13 +295,13 @@ export const Pie = ({ title, data, indicateur }) => {
           ) : (
             // Show empty state or placeholder when all values are 0
             <View className="w-[100px] h-[100px] border border-gray-200 rounded-full justify-center items-center">
-              <Text className="text-gray-400 text-xs">Pas de données</Text>
+              <Typography className="text-gray-400 text-xs">Pas de données</Typography>
             </View>
           )}
         </View>
         {averageIcons.length ? (
           <View className="flex-col space-y-4 items-center basis-[60%]">
-            <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-800")}>Moyenne</Text>
+            <Typography className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-800")}>Moyenne</Typography>
             <View className="flex-row space-x-4">
               {averageIcons.map((e, i) => {
                 if (!(e >= 1 && e <= 5)) return null;
@@ -307,9 +310,9 @@ export const Pie = ({ title, data, indicateur }) => {
               })}
             </View>
             {joursRenseignes.pourcentage < 100 ? (
-              <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>
+              <Typography className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>
                 {Math.round(100 - joursRenseignes.pourcentage)}% de jours non renseignés
-              </Text>
+              </Typography>
             ) : null}
           </View>
         ) : null}
@@ -363,7 +366,7 @@ const TableDeStatistiquesParLigne = ({ nombreDeJoursConsecutifs, nombreDeValeurP
       </View>
       <View style={stylesTableLigne.ligne}>
         <View style={[stylesTableLigne.cellule, stylesTableLigne.titre]}>
-          <Text className={mergeClassNames(typography.textXsRegular, "text-cnam-primary-800")}>Pourcentage</Text>
+          <Typography className={mergeClassNames(typography.textXsRegular, "text-cnam-primary-800")}>Pourcentage</Typography>
         </View>
         {[1, 2, 3, 4, 5].map((score, index) => {
           const infoScore = nombreDeValeurParScore.find((e) => Number(e.score) === Number(scores[score - 1]));
@@ -372,16 +375,16 @@ const TableDeStatistiquesParLigne = ({ nombreDeJoursConsecutifs, nombreDeValeurP
               key={`colonne_stat_pourcentage_${title}_${score}_${index}`}
               className="flex-1 flex flex-row justify-center items-center p-[5] border-l border-gray-100"
             >
-              <Text className={mergeClassNames(typography.textXsRegular, "text-cnam-primary-800")}>
+              <Typography className={mergeClassNames(typography.textXsRegular, "text-cnam-primary-800")}>
                 {Math.round(infoScore?.pourcentage) || 0}&nbsp;%
-              </Text>
+              </Typography>
             </View>
           );
         })}
       </View>
       <View style={stylesTableLigne.ligne}>
         <View style={[stylesTableLigne.cellule, stylesTableLigne.titre]}>
-          <Text className={mergeClassNames(typography.textXsRegular, "text-cnam-primary-800")}>Jour(s)</Text>
+          <Typography className={mergeClassNames(typography.textXsRegular, "text-cnam-primary-800")}>Jour(s)</Typography>
         </View>
         {[1, 2, 3, 4, 5].map((score, index) => {
           const infoScore = nombreDeValeurParScore.find((e) => Number(e.score) === Number(scores[score - 1]));
@@ -390,14 +393,14 @@ const TableDeStatistiquesParLigne = ({ nombreDeJoursConsecutifs, nombreDeValeurP
               key={`colonne_stat_total_${title}_${score}_${index}`}
               className="flex-1 flex flex-row justify-center items-center p-[5] border-l border-gray-100"
             >
-              <Text className={mergeClassNames(typography.textXsRegular, "text-cnam-primary-800")}>{infoScore?.count || 0}&nbsp;j</Text>
+              <Typography className={mergeClassNames(typography.textXsRegular, "text-cnam-primary-800")}>{infoScore?.count || 0}&nbsp;j</Typography>
             </View>
           );
         })}
       </View>
       <View style={stylesTableLigne.ligne}>
         <View style={[stylesTableLigne.cellule, stylesTableLigne.titre]}>
-          <Text className={mergeClassNames(typography.textXsRegular, "text-cnam-primary-800")}>Jours consécutifs</Text>
+          <Typography className={mergeClassNames(typography.textXsRegular, "text-cnam-primary-800")}>Jours consécutifs</Typography>
         </View>
         {[1, 2, 3, 4, 5].map((score, index) => {
           return (
@@ -405,9 +408,9 @@ const TableDeStatistiquesParLigne = ({ nombreDeJoursConsecutifs, nombreDeValeurP
               key={`colonne_stat_consecutif_${title}_${score}_${index}`}
               style={[stylesTableLigne.cellule, stylesTableLigne.celluleAvecBordureAGauche]}
             >
-              <Text className={mergeClassNames(typography.textXsRegular, "text-cnam-primary-800")}>
+              <Typography className={mergeClassNames(typography.textXsRegular, "text-cnam-primary-800")}>
                 {nombreDeJoursConsecutifs[scores[score - 1]] || 0}&nbsp;j
-              </Text>
+              </Typography>
             </View>
           );
         })}

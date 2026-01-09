@@ -9,6 +9,7 @@ import NavigationListItem from "@/components/ListItem/NavigationListItem";
 import { FAQ_DATA } from "./FaqData";
 import logEvents from "@/services/logEvents";
 import { useFocusEffect } from "@react-navigation/native";
+import { Typography } from "@/components/Typography";
 
 export default function FaqMainScreen({ navigation, route }) {
   const scrollPositionRef = useRef(0);
@@ -49,23 +50,24 @@ export default function FaqMainScreen({ navigation, route }) {
     >
       <View className="bg-gray-50 flex-1 p-4 flex-col space-y-12 pt-10 pb-12">
         <View className="flex-col space-y-6">
-          <Text className={mergeClassNames(typography.displayXsSemibold, "text-cnam-primary-950 text-left")}>
+          <Typography className={mergeClassNames(typography.displayXsSemibold, "text-cnam-primary-950 text-left")}>
             Jardin mental, qu’est-ce que c’est ?
-          </Text>
+          </Typography>
           <View className="flex-col space-y-4">
-            <Text className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-900 text-left")}>
+            <Typography className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-900 text-left")}>
               La santé mentale mérite d’être préservée au quotidien, et pas seulement en période de crise.{"\n\n"}
-              <Text className={typography.textMdSemibold}>Un bon premier pas est d'apprendre à s'observer avec bienveillance</Text>, sans tomber dans
-              l'analyse excessive. Cela aide à reconnaître les signaux de mal-être et à identifier ce qui nous apporte du bien-être.{"\n\n"}
+              <Typography className={typography.textMdSemibold}>Un bon premier pas est d'apprendre à s'observer avec bienveillance</Typography>, sans
+              tomber dans l'analyse excessive. Cela aide à reconnaître les signaux de mal-être et à identifier ce qui nous apporte du bien-être.
+              {"\n\n"}
               Notre application{" "}
-              <Text className={typography.textMdSemibold}>
+              <Typography className={typography.textMdSemibold}>
                 Jardin Mental offre un espace pour évaluer et suivre son état mental, même dans les moments positifs.
-              </Text>
-            </Text>
+              </Typography>
+            </Typography>
           </View>
         </View>
         <View className="flex-col space-y-6">
-          <Text className={mergeClassNames(typography.displayXsSemibold, "text-cnam-primary-950 text-left")}>Guide Pratique</Text>
+          <Typography className={mergeClassNames(typography.displayXsSemibold, "text-cnam-primary-950 text-left")}>Guide Pratique</Typography>
           <View className="flex-col space-y-1">
             {Object.keys(FAQ_DATA).map((slug, index) => (
               <NavigationListItem
@@ -83,12 +85,14 @@ export default function FaqMainScreen({ navigation, route }) {
           </View>
         </View>
         <View className={mergeClassNames("bg-blue bg-cyan-50-lighten-90 p-4 rounded-xl space-y-6 p-6")}>
-          <Text className={mergeClassNames(typography.displayXsBold, "text-cnam-primary-900 text-left")}>Besoin d'assistance ?</Text>
-          <Text className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-900 text-left")}>
+          <Typography className={mergeClassNames(typography.displayXsBold, "text-cnam-primary-900 text-left")}>Besoin d'assistance ?</Typography>
+          <Typography className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-900 text-left")}>
             Si vous ne trouvez pas la réponse à votre question, contactez-nous sur
-          </Text>
+          </Typography>
           <TouchableOpacity onPress={() => Linking.openURL("mailto:jardinmental@fabrique.social.gouv.fr")}>
-            <Text className={mergeClassNames(typography.textMdRegular, "text-gray-800 text-left")}>jardinmental@fabrique.social.gouv.fr</Text>
+            <Typography className={mergeClassNames(typography.textMdRegular, "text-gray-800 text-left")}>
+              jardinmental@fabrique.social.gouv.fr
+            </Typography>
           </TouchableOpacity>
           <JMButton
             onPress={() => {

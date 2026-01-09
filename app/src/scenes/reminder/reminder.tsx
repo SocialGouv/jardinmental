@@ -20,6 +20,7 @@ import localStorage from "@/utils/localStorage";
 import { typography } from "@/utils/typography";
 
 import BeigeWrapperScreen from "../onboarding-v2/BeigeWrapperScreen";
+import { Typography } from "@/components/Typography";
 
 const ReminderStorageKey = "@Reminder";
 
@@ -259,13 +260,13 @@ const Reminder = ({ navigation, route, notifReminderTitle = "Comment ça va aujo
       handleNext={validateReminder}
     >
       <View className="flex-1 p-6 z-10 flex justify-center">
-        <Text className={mergeClassNames(typography.displayXsBold, "text-gray-950 mb-6 text-left")}>Trouvez votre rythme</Text>
-        <Text className={mergeClassNames(typography.textMdMedium, "text-gray-800 text-left mb-6")}>
+        <Typography className={mergeClassNames(typography.displayXsBold, "text-gray-950 mb-6 text-left")}>Trouvez votre rythme</Typography>
+        <Typography className={mergeClassNames(typography.textMdMedium, "text-gray-800 text-left mb-6")}>
           Programmer un rappel quotidien peut vous aider à installer une routine bienveillante.
-        </Text>
-        <Text className={mergeClassNames(typography.textMdMedium, "text-gray-800 text-left mb-6")}>
+        </Typography>
+        <Typography className={mergeClassNames(typography.textMdMedium, "text-gray-800 text-left mb-6")}>
           Consigner chaque jour votre état permet de découvrir progressivement ce qui vous fait du bien, et ce qui vous freine.
-        </Text>
+        </Typography>
         <SquircleButton
           onPress={showReminderSetup}
           preserveSmoothing={true}
@@ -277,7 +278,7 @@ const Reminder = ({ navigation, route, notifReminderTitle = "Comment ça va aujo
           }}
           className="px-10 py-6 items-center justify-center mb-6 bg-white w-auto self-center"
         >
-          <Text className={mergeClassNames(typography.textSmMedium, "mb-2")}> Recevez un rappel à:</Text>
+          <Typography className={mergeClassNames(typography.textSmMedium, "mb-2")}> Recevez un rappel à:</Typography>
           <SquircleView
             preserveSmoothing={true}
             cornerSmoothing={100}
@@ -288,10 +289,10 @@ const Reminder = ({ navigation, route, notifReminderTitle = "Comment ça va aujo
             }}
             className="py-3 pt-5 px-8 flew-column"
           >
-            <Text className="font-bold text-5xl text-brand-600 leading-[56px]">{formatReminderTime(reminder)}</Text>
+            <Typography className="font-bold text-5xl text-brand-600 leading-[56px]">{formatReminderTime(reminder)}</Typography>
           </SquircleView>
           <View className="flex-row items-center justify-center mt-4">
-            <Text className="text-base mr-2 items-center justify-center">Éditer</Text>
+            <Typography className="text-base mr-2 items-center justify-center">Éditer</Typography>
             <Pencil color={TW_COLORS.BRAND_700} width={16} height={16} />
           </View>
         </SquircleButton>

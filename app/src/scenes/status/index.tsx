@@ -41,6 +41,7 @@ import ArrowCircleRightIcon from "@assets/svg/icon/ArrowCircleRight";
 import { useBottomSheet } from "@/context/BottomSheetContext";
 import { BeckBottomSheet } from "../tools/BeckBottomSheet";
 import { TOOL_BECK_ID } from "../tools/toolsData";
+import { Typography } from "@/components/Typography";
 
 const Status = ({ navigation, startSurvey }) => {
   const [diaryData] = useContext(DiaryDataContext);
@@ -217,12 +218,12 @@ const Status = ({ navigation, startSurvey }) => {
                 borderRadius: 20,
               }}
             >
-              <Text className={mergeClassNames(typography.displayXsBold, "text-left text-cnam-primary-900 mb-6")}>
+              <Typography className={mergeClassNames(typography.displayXsBold, "text-left text-cnam-primary-900 mb-6")}>
                 Il vous reste quelques étapes pour bien démarrer
-              </Text>
-              <Text className={mergeClassNames(typography.textMdRegular, "text-left text-cnam-primary-900")}>
+              </Typography>
+              <Typography className={mergeClassNames(typography.textMdRegular, "text-left text-cnam-primary-900")}>
                 Faites de Jardin Mental un espace qui vous ressemble, pour un suivi plus juste et plus utile.
-              </Text>
+              </Typography>
               <View className="flex-row mt-6">
                 <JMButton onPress={handlePlusTardClick} width="adapt" variant="text" title="Plus tard" />
                 <JMButton
@@ -288,15 +289,17 @@ const Status = ({ navigation, startSurvey }) => {
                         <CloseCross color={TW_COLORS.CNAM_PRIMARY_900} />
                       </TouchableOpacity>
                     </View>
-                    <Text className={mergeClassNames(typography.textLgSemibold, "text-left text-cnam-primary-950 mb-2 mt-3")}>
+                    <Typography className={mergeClassNames(typography.textLgSemibold, "text-left text-cnam-primary-950 mb-2 mt-3")}>
                       Mieux comprendre la santé mentale{" "}
-                    </Text>
-                    <Text className={mergeClassNames(typography.textSmMedium, "text-left text-cnam-primary-800")}>
+                    </Typography>
+                    <Typography className={mergeClassNames(typography.textSmMedium, "text-left text-cnam-primary-800")}>
                       Découvrez le guide complet pour comprendre, repérer et agir.
-                    </Text>
+                    </Typography>
                     <View className="flex-row self-end items-center">
                       <View className="mt-4 flex-row items-center">
-                        <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40 mr-2")}>S'informer</Text>
+                        <Typography className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40 mr-2")}>
+                          S'informer
+                        </Typography>
                         <ArrowCircleRightIcon />
                       </View>
                     </View>

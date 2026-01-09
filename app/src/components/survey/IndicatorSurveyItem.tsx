@@ -19,6 +19,7 @@ import ArrowIcon from "@assets/svg/icon/Arrow";
 import { TW_COLORS } from "@/utils/constants";
 import localStorage from "@/utils/localStorage/index";
 import CheckMarkIcon from "@assets/svg/icon/check";
+import { Typography } from "../Typography";
 
 export const IndicatorSurveyItem = ({
   indicator,
@@ -97,29 +98,29 @@ export const IndicatorSurveyItem = ({
         return <Gauge defaultValue={value} onChange={(v) => onValueChanged({ indicator, value: v })} reverse={indicator?.order === "DESC"} />;
       default:
         <View>
-          <Text>pas encore geré</Text>
+          <Typography>pas encore geré</Typography>
         </View>;
     }
     return (
       <View>
-        <Text>pas encore geré</Text>
+        <Typography>pas encore geré</Typography>
       </View>
     );
   };
   return (
     <BasicCard completed={value !== undefined}>
       <View className="flex-row justify-between items-center mb-6">
-        <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-900")}>{displayedName || indicator.name}</Text>
+        <Typography className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-900")}>{displayedName || indicator.name}</Typography>
         {indicator.type === INDICATOR_TYPE.smiley && (
-          <Text className={mergeClassNames(typography.textMdMedium, "text-gray-800 h-5")}>{computeIndicatorLabel() || ""}</Text>
+          <Typography className={mergeClassNames(typography.textMdMedium, "text-gray-800 h-5")}>{computeIndicatorLabel() || ""}</Typography>
         )}
         {value !== undefined && <CheckMarkIcon color={TW_COLORS.CNAM_PRIMARY_700} />}
       </View>
       {renderInput()}
       {indicator.type === INDICATOR_TYPE.gauge && (
         <View className="flex-row justify-between">
-          <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700 h-5")}>{"Très faible"}</Text>
-          <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700 h-5")}>{"Très élevé(e)"}</Text>
+          <Typography className={mergeClassNames(typography.textMdMedium, "text-gray-700 h-5")}>{"Très faible"}</Typography>
+          <Typography className={mergeClassNames(typography.textMdMedium, "text-gray-700 h-5")}>{"Très élevé(e)"}</Typography>
         </View>
       )}
       {showComment && (
@@ -160,7 +161,7 @@ export const IndicatorSurveyItem = ({
             }}
             className="flex-row ml-auto items-center justify-center"
           >
-            <Text className={mergeClassNames(typography.textMdSemibold, "text-brand-950 mr-1")}>Préciser</Text>
+            <Typography className={mergeClassNames(typography.textMdSemibold, "text-brand-950 mr-1")}>Préciser</Typography>
             <ArrowIcon color={TW_COLORS.BRAND_700} />
           </TouchableOpacity>
         </View>

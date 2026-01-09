@@ -15,6 +15,7 @@ import JMButton from "@/components/JMButton";
 import { INDICATORS_CATEGORIES } from "@/entities/IndicatorCategories";
 import { LinearGradient } from "expo-linear-gradient";
 import { INDICATOR_TYPE } from "@/entities/IndicatorType";
+import { Typography } from "@/components/Typography";
 
 const screenHeight = Dimensions.get("window").height;
 const height90vh = screenHeight * 0.9;
@@ -135,14 +136,14 @@ export default function IndicatorModal({
           {React.createElement(SECTION_ICONS[category].icon, {
             color: TW_COLORS.CNAM_CYAN_700_DARKEN_40,
           })}
-          <Text className={mergeClassNames(typography.textSmBold, "ml-2 text-cnam-cyan-700-darken-40 text-left")}>
+          <Typography className={mergeClassNames(typography.textSmBold, "ml-2 text-cnam-cyan-700-darken-40 text-left")}>
             {INDICATOR_CATEGORIES_DATA[category].label}
-          </Text>
+          </Typography>
         </View>
         <View className="px-4 gap-6 mt-4">
-          <Text className={mergeClassNames(typography.displayXsBold, "text-left text-cnam-primary-900")}>
+          <Typography className={mergeClassNames(typography.displayXsBold, "text-left text-cnam-primary-900")}>
             {multiSelect ? "Sélectionnez un ou plusieurs éléments" : "Sélectionnez un élément"}
-          </Text>
+          </Typography>
           <TextInput
             onChangeText={(text) => {
               setSearchText(text);
@@ -151,7 +152,7 @@ export default function IndicatorModal({
             className={mergeClassNames(typography.textMdRegular, "text-left border border-gray-300 p-2 rounded rounded-lg")}
             placeholder="Rechercher ou ajouter un élément"
           />
-          {duplicateError && <Text className={mergeClassNames(typography.textSmMedium, "text-red-600 mt-2")}>{duplicateError}</Text>}
+          {duplicateError && <Typography className={mergeClassNames(typography.textSmMedium, "text-red-600 mt-2")}>{duplicateError}</Typography>}
           <View className="flex-colum flex-1">
             {[...filteredIndicators, ...existingCustomIndicatorsForGenericUuid].map((ind) => {
               const selected = selectedIndicators.includes(ind.uuid);
@@ -169,7 +170,9 @@ export default function IndicatorModal({
                 />
               );
             })}
-            {!filteredIndicators.length && <Text className={mergeClassNames(typography.textSmMedium, "text-gray-800")}>Pas de résultat</Text>}
+            {!filteredIndicators.length && (
+              <Typography className={mergeClassNames(typography.textSmMedium, "text-gray-800")}>Pas de résultat</Typography>
+            )}
             {!!searchedText && !filteredIndicators.length && (
               <TouchableOpacity
                 onPress={() => {
@@ -180,7 +183,7 @@ export default function IndicatorModal({
                 }}
               >
                 <View className="flex-row items-center mr-auto mt-2">
-                  <Text className={mergeClassNames(typography.textLgMedium, "mr-2 text-cnam-primary-900")}>Ajouter "{searchedText}"</Text>
+                  <Typography className={mergeClassNames(typography.textLgMedium, "mr-2 text-cnam-primary-900")}>Ajouter "{searchedText}"</Typography>
                   <PlusIcon />
                 </View>
               </TouchableOpacity>
@@ -207,7 +210,7 @@ export default function IndicatorModal({
                   }}
                 >
                   <View className="flex-row items-center">
-                    <Text className={mergeClassNames(typography.textMdMedium, "mr-2 text-cnam-primary-900")}>ajouter un élément</Text>
+                    <Typography className={mergeClassNames(typography.textMdMedium, "mr-2 text-cnam-primary-900")}>ajouter un élément</Typography>
                     <PlusIcon />
                   </View>
                 </TouchableOpacity>
@@ -227,7 +230,9 @@ export default function IndicatorModal({
         }}
         className={`p-6 px-4 pb-20`}
       >
-        <Text className={mergeClassNames(typography.textSmMedium, "text-gray-800 mb-2")}>Vous pourrez modifier cette sélection plus tard</Text>
+        <Typography className={mergeClassNames(typography.textSmMedium, "text-gray-800 mb-2")}>
+          Vous pourrez modifier cette sélection plus tard
+        </Typography>
         <JMButton
           onPress={() => {
             onClose(

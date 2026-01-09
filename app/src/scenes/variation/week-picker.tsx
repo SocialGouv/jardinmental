@@ -6,6 +6,7 @@ import { colors } from "@/utils/colors";
 import { months, shortMonths, isAfterToday } from "@/utils/date/helpers";
 import { typography } from "@/utils/typography";
 import { mergeClassNames } from "@/utils/className";
+import { Typography } from "@/components/Typography";
 
 const WeekPicker = ({ onBeforePress, onAfterPress, firstDay, lastDay, setDay }) => {
   return (
@@ -14,21 +15,21 @@ const WeekPicker = ({ onBeforePress, onAfterPress, firstDay, lastDay, setDay }) 
         <ArrowLeftSvg />
       </TouchableOpacity>
       <TouchableOpacity onPress={() => setDay(new Date())} style={styles.middleContainer}>
-        <Text className={mergeClassNames(typography.textXlSemibold, "text-cnam-primary-900")}>
+        <Typography className={mergeClassNames(typography.textXlSemibold, "text-cnam-primary-900")}>
           {firstDay.getMonth() === lastDay.getMonth() ? (
             <>
-              <Text style={styles.day}>{`${firstDay.getDate()} - ${lastDay.getDate()}  `}</Text>
-              <Text style={styles.month}>{months[firstDay.getMonth()]}</Text>
+              <Typography style={styles.day}>{`${firstDay.getDate()} - ${lastDay.getDate()}  `}</Typography>
+              <Typography style={styles.month}>{months[firstDay.getMonth()]}</Typography>
             </>
           ) : (
             <>
-              <Text style={styles.day}>{`${firstDay.getDate()} `}</Text>
-              <Text style={styles.month}>{`${shortMonths[firstDay.getMonth()]} - `}</Text>
-              <Text style={styles.day}>{`${lastDay.getDate()} `}</Text>
-              <Text style={styles.month}>{`${shortMonths[lastDay.getMonth()]}`}</Text>
+              <Typography style={styles.day}>{`${firstDay.getDate()} `}</Typography>
+              <Typography style={styles.month}>{`${shortMonths[firstDay.getMonth()]} - `}</Typography>
+              <Typography style={styles.day}>{`${lastDay.getDate()} `}</Typography>
+              <Typography style={styles.month}>{`${shortMonths[lastDay.getMonth()]}`}</Typography>
             </>
           )}
-        </Text>
+        </Typography>
       </TouchableOpacity>
       {/* if it is in the futur, we hide and disabled the button */}
       <TouchableOpacity className="w-[45] h-[45] justify-center px-4 align-right" onPress={(e) => !isAfterToday(lastDay) && onAfterPress(e)}>
