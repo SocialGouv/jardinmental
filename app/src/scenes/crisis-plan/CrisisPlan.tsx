@@ -34,7 +34,7 @@ export const CrisisPlan: React.FC<ModalCorrelationScreenProps> = ({ navigation, 
             Votre plan de crise pour faire face aux idées suicidaires
           </Text>
           <Text className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-900 text-left")}>
-            Préparez à froid un plan d’action personnel pour lutter contre les idées suicidaires et savoir quoi faire quand la situation monte.
+            Préparez un plan d’action personnel pour lutter contre les idées suicidaires et savoir quoi faire quand la situation monte.
           </Text>
         </View>
         <View className="flex-column py-4 space-y-4 px-2 rounded-2xl">

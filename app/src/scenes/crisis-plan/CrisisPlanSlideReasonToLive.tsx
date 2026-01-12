@@ -58,6 +58,7 @@ export const CrisisPlanSlideReasonToLive: React.FC<ModalCorrelationScreenProps> 
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [selectedImages, setSelectedImages] = useState<{ uri: string }[]>([]);
   const [localImagePaths, setLocalImagePaths] = useState<string[]>([]);
+  const [text, setText] = useState<string>();
 
   const saveAndValidate = async () => {
     try {
@@ -134,8 +135,8 @@ export const CrisisPlanSlideReasonToLive: React.FC<ModalCorrelationScreenProps> 
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsMultipleSelection: true,
-      quality: 1,
-      selectionLimit: 10,
+      quality: 0,
+      // selectionLimit: 10,
     });
 
     if (!result.canceled && result.assets && result.assets.length > 0) {
@@ -167,17 +168,40 @@ export const CrisisPlanSlideReasonToLive: React.FC<ModalCorrelationScreenProps> 
         <View className="bg-cnam-primary-50 rounded-2xl px-6 py-6">
           <View className="flex-column flex-start space-y-1">
             <Text className={mergeClassNames(typography.textSmMedium, "text-gray-700 mb-2")}>Renseignez une raison de vivre</Text>
-            <InputText
-              containerStyle={{
-                flexGrow: 1,
-              }}
-              placeholder={"Ex: Ma famille"}
-              onChangeText={(inputText) => {
-                //   setNumber(inputText);
-              }}
-              multiline={true}
-              textAlignVertical="top"
-            />
+            <View className="flex-row items-center space-x-2">
+              <InputText
+                containerStyle={{
+                  flexGrow: 1,
+                }}
+                value={text}
+                jean
+                placeholder={"Ex: Ma famille"}
+                onChangeText={(inputText) => {
+                  setText(inputText);
+                }}
+                multiline={true}
+                textAlignVertical="top"
+              />
+              <TouchableOpacity
+                className={mergeClassNames(
+                  "h-12 w-12  rounded-2xl items-center justify-center",
+                  !text || text.length === 0 ? "bg-gray-600" : "bg-primary-800"
+                )}
+                disabled={!text || text.length === 0}
+                onPress={() => {
+                  if (text) {
+                    if (selectedItems.includes(text)) {
+                      Alert.alert("Cet élément existe déjà");
+                    } else {
+                      setSelectedItems([...selectedItems, text]);
+                      setText("");
+                    }
+                  }
+                }}
+              >
+                <SimplePlus color={TW_COLORS.CNAM_PRIMARY_25} />
+              </TouchableOpacity>
+            </View>
           </View>
           <TouchableOpacity
             onPress={() => {
@@ -185,10 +209,10 @@ export const CrisisPlanSlideReasonToLive: React.FC<ModalCorrelationScreenProps> 
                 <CrisisListBottomSheet
                   items={suggestions}
                   onClose={function (items: string[]): void {
-                    setSelectedItems([...selectedItems, ...items]);
+                    setSelectedItems([...new Set([...items])]);
                     closeBottomSheet();
                   }}
-                  initialSelectedItems={[]}
+                  initialSelectedItems={selectedItems}
                   label={label}
                   header={headerEditionBottomSheet}
                 />
@@ -224,7 +248,7 @@ export const CrisisPlanSlideReasonToLive: React.FC<ModalCorrelationScreenProps> 
                       closeBottomSheet();
                     }}
                     item={item}
-                    // initialText={item.name}
+                    initialText={item}
                   />
                 );
               }}

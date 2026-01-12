@@ -14,14 +14,25 @@ import LinkIcon from "@assets/svg/icon/Link";
 import Markdown from "react-native-markdown-display";
 import logEvents from "@/services/logEvents";
 import LifeBuoy from "@assets/svg/icon/Lifebuoy";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function SupportScreen({ navigation, route }) {
   const [sectionListenVisible, setSectionListenVisible] = useState(false);
   const [sectionStartFollowUpVisible, setSectionListenStartFollowUpVisible] = useState(false);
+  const [crisisPlanSet, setCrisisPlanSet] = useState(false);
 
   // Log page opening
   useEffect(() => {
     logEvents.logOpenEmergencyContact();
+    const checkCrisisPlan = async () => {
+      const crisisPlanCompleted = await AsyncStorage.getItem("@CRISIS_PLAN_COMPLETED");
+      if (crisisPlanCompleted === "true") {
+        setCrisisPlanSet(true);
+      } else {
+        setCrisisPlanSet(false);
+      }
+    };
+    checkCrisisPlan();
   }, []);
   const numbers = [
     {
@@ -185,25 +196,50 @@ export default function SupportScreen({ navigation, route }) {
                 <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900 text-left")}>Prévention suicide</Text>
               </View>
             </SquircleButton>
-            <SquircleButton
-              onPress={() => {
-                navigation.navigate("crisis-plan-slide-sumup-list");
-              }}
-              style={{
-                borderRadius: 20,
-              }}
-              preserveSmoothing={true}
-              cornerSmoothing={100}
-              className="border border-cnam-primary-800 bg-cnam-primary-25  flex-row px-6 py-2 justify-content items-center mt-2"
-            >
-              <View className="w-[30]">
-                <LifeBuoy width={24} height={24} color={TW_COLORS.CNAM_PRIMARY_800} />
-              </View>
-              <View className="ml-3">
-                <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-900 text-left")}>Ouvrir mon plan de protection</Text>
-                <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900 text-left")}>Accéder à votre plan personnel</Text>
-              </View>
-            </SquircleButton>
+            {!!crisisPlanSet && (
+              <SquircleButton
+                onPress={() => {
+                  navigation.navigate("crisis-plan-slide-sumup-list");
+                }}
+                style={{
+                  borderRadius: 20,
+                }}
+                preserveSmoothing={true}
+                cornerSmoothing={100}
+                className="border border-cnam-primary-800 bg-cnam-primary-25  flex-row px-6 py-2 justify-content items-center mt-2"
+              >
+                <View className="w-[30]">
+                  <LifeBuoy width={24} height={24} color={TW_COLORS.CNAM_PRIMARY_800} />
+                </View>
+                <View className="ml-3">
+                  <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-900 text-left")}>Ouvrir mon plan de protection</Text>
+                  <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900 text-left")}>Accéder à votre plan personnel</Text>
+                </View>
+              </SquircleButton>
+            )}
+            {!crisisPlanSet && (
+              <SquircleButton
+                onPress={() => {
+                  navigation.navigate("crisis-plan");
+                }}
+                style={{
+                  borderRadius: 20,
+                }}
+                preserveSmoothing={true}
+                cornerSmoothing={100}
+                className="border border-cnam-primary-800 bg-cnam-primary-25  flex-row px-6 py-2 justify-content items-center mt-2"
+              >
+                <View className="w-[30]">
+                  <LifeBuoy width={24} height={24} color={TW_COLORS.CNAM_PRIMARY_800} />
+                </View>
+                <View className="ml-3">
+                  <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-900 text-left")}>Compléter mon plan de crise</Text>
+                  <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900 text-left")}>
+                    Préparez un plan d’action personnel pour lutter contre les idées suicidaires
+                  </Text>
+                </View>
+              </SquircleButton>
+            )}
           </View>
         </View>
       </View>

@@ -22,7 +22,7 @@ export const CrisisPlanSlideSafety: React.FC<ModalCorrelationScreenProps> = ({ n
   return (
     <CrisisPlanSlideComponent
       slideIndex={6}
-      title={"Comment assurer votre sécurité ou sécuriser votre environnement?"}
+      title={"Comment assurer votre sécurité ou sécuriser votre environnement ?"}
       navigation={navigation}
       suggestions={suggestions}
       label={label}

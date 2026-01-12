@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, Text, Dimensions, Image } from "react-native";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
@@ -6,6 +6,7 @@ import CrisisHeader from "./CrisisHeader";
 import NavigationButtons from "@/components/onboarding/NavigationButtons";
 import BeigeCard from "../onboarding-v2/BeigeCard";
 import { VARIANT_BORDER_COLORS } from "../onboarding-v2/data/carouselData";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface ModalCorrelationScreenProps {
   navigation: any;
@@ -20,6 +21,9 @@ interface ModalCorrelationScreenProps {
 const { width: screenWidth } = Dimensions.get("window");
 
 export const CrisisPlanSlideFinal: React.FC<ModalCorrelationScreenProps> = ({ navigation, route }) => {
+  useEffect(() => {
+    AsyncStorage.setItem("@CRISIS_PLAN_COMPLETED", "true");
+  }, []);
   //CNAM - secondary/Cyan (Accent)/50 lighten 90
   return (
     <View className="flex-1 bg-cnam-cyan-50-lighten-90">

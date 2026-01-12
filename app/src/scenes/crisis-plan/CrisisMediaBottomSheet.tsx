@@ -30,8 +30,8 @@ export const CrisisMediaBottomSheet = ({
   header: string;
   initialSelectedImages: { uri: string }[];
 }) => {
-  const [text, setText] = useState<string>(initialText);
   const [selectedImages, setSelectedImages] = useState<{ uri: string }[]>(initialSelectedImages || []);
+  const { closeBottomSheet } = useBottomSheet();
 
   return (
     <View className="flex-1 bg-white">
@@ -39,7 +39,7 @@ export const CrisisMediaBottomSheet = ({
         <View className="self-end mr-4">
           <TouchableOpacity
             onPress={() => {
-              onClose();
+              closeBottomSheet();
             }}
           >
             <Text className={mergeClassNames(typography.textLgMedium, "text-cnam-primary-800")}>Annuler</Text>

@@ -29,6 +29,7 @@ export const CrisisContactBottomSheet = ({
   header,
   variant,
   deleteLabel,
+  cannotEditNumber,
 }: {
   navigation: any;
   item: {
@@ -64,6 +65,7 @@ export const CrisisContactBottomSheet = ({
     }[];
   }) => void;
   header: string;
+  camnotEditNumber?: boolean;
 }) => {
   const [text, setText] = useState<string>();
   const [activities, setActivities] = useState<string[]>(item.activities || []);
@@ -76,7 +78,7 @@ export const CrisisContactBottomSheet = ({
         contentContainerStyle={{ paddingBottom: 200 }}
         showsVerticalScrollIndicator={false}
         style={{
-          height: height90vh,
+          height: variant === "activity" ? height90vh : undefined,
         }}
       >
         <View className="self-end mr-4">
@@ -96,22 +98,24 @@ export const CrisisContactBottomSheet = ({
             <User width={20} height={20} color={TW_COLORS.CNAM_CYAN_600_DARKEN_20} />
             <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-950")}>{item.name}</Text>
           </View>
-          <View className="flex-column flex-start space-y-1 mb-4">
-            <Text className={mergeClassNames(typography.textSmMedium, "text-gray-700 mb-2")}>Numéro de téléphone</Text>
-            <InputText
-              containerStyle={{
-                flexGrow: 1,
-              }}
-              keyboardType="numeric"
-              placeholder={"06 39 98 90 60"}
-              value={number}
-              onChangeText={(inputText) => {
-                setNumber(inputText);
-              }}
-              multiline={true}
-              textAlignVertical="top"
-            />
-          </View>
+          {cannotEditNumber && (
+            <View className="flex-column flex-start space-y-1 mb-4">
+              <Text className={mergeClassNames(typography.textSmMedium, "text-gray-700 mb-2")}>Numéro de téléphone</Text>
+              <InputText
+                containerStyle={{
+                  flexGrow: 1,
+                }}
+                keyboardType="numeric"
+                placeholder={"06 39 98 90 60"}
+                value={number}
+                onChangeText={(inputText) => {
+                  setNumber(inputText);
+                }}
+                multiline={true}
+                textAlignVertical="top"
+              />
+            </View>
+          )}
           {variant === "activity" && (
             <>
               <Text className={mergeClassNames(typography.textSmMedium, "text-gray-700 mb-2")}>Renseignez une activité à faire ensemble</Text>
@@ -131,6 +135,12 @@ export const CrisisContactBottomSheet = ({
                   />
                   <TouchableOpacity
                     disabled={!text || text.length === 0}
+                    hitSlop={{
+                      top: 20,
+                      left: 20,
+                      right: 40,
+                      bottom: 20,
+                    }}
                     onPress={() => {
                       setActivities([...activities, text]);
                       setText();
@@ -218,28 +228,30 @@ export const CrisisContactBottomSheet = ({
         }}
       >
         <View className="py-6">
-          <JMButton
-            onPress={() => {
-              const updatedValue = {
-                ...item,
-                id: number,
-                phoneNumbers: [
-                  {
-                    ...item.phoneNumbers[0],
-                    digits: number,
-                    number,
-                  },
-                  ...item.phoneNumbers.filter((_, index) => index !== 0),
-                ],
-              };
-              if (variant === "activity") {
-                updatedValue["activities"] = [...activities.filter((activity) => !!activity)];
-              }
-              onValidate(updatedValue);
-            }}
-            title={"Valider"}
-            className="mb-4"
-          />
+          {cannotEditNumber && variant !== "activity" && (
+            <JMButton
+              onPress={() => {
+                const updatedValue = {
+                  ...item,
+                  id: number,
+                  phoneNumbers: [
+                    {
+                      ...item.phoneNumbers[0],
+                      digits: number,
+                      number,
+                    },
+                    ...item.phoneNumbers.filter((_, index) => index !== 0),
+                  ],
+                };
+                if (variant === "activity") {
+                  updatedValue["activities"] = [...activities.filter((activity) => !!activity)];
+                }
+                onValidate(updatedValue);
+              }}
+              title={"Valider"}
+              className="mb-4"
+            />
+          )}
           <JMButton
             onPress={() => {
               onDelete();

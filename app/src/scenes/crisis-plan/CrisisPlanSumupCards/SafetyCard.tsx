@@ -40,7 +40,7 @@ const SafetyCard: React.FC<SafetyCardProps> = ({ safety }) => {
         </View>
       </TouchableOpacity>
       <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700")}>
-        Les façon d’assurer vote sécurité ou de sécuriser votre environnement :
+        Les façons d’assurer vote sécurité ou de sécuriser votre environnement :
       </Text>
       {isOpen && (
         <View className="flex-colmun">

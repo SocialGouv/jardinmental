@@ -1,4 +1,9 @@
 import React, { useEffect, useState } from "react";
+
+// Format phone number with a space every two digits (e.g., "066257" => "06 62 57")
+function formatPhoneNumber(number: string): string {
+  return number.replace(/(\d{2})(?=\d)/g, "$1 ").trim();
+}
 import { View, Text, ScrollView, TouchableOpacity, ActivityIndicator, Alert } from "react-native";
 import * as Contacts from "expo-contacts";
 import { mergeClassNames } from "@/utils/className";
@@ -33,7 +38,7 @@ const label = "Choisissez parmi vos contacts autorisés";
 const placeholder = "Renseignez un proche";
 const storageKey = "@CRISIS_PLAN_CONTACT";
 const next = "crisis-plan-slide-contact";
-const title = "Quels proches pouvez-vous contacter pour vous changer les idées ? Et quelles activités pouvez-vous faire ensemble?";
+const title = "Quels proches pouvez-vous contacter pour vous changer les idées ? Et quelles activités pouvez-vous faire ensemble ?";
 const headerEditionBottomSheet = "Liste de contact";
 export const CrisisPlanSlideContact: React.FC<ModalCorrelationScreenProps> = ({ navigation, route }) => {
   const { showBottomSheet, closeBottomSheet } = useBottomSheet();
@@ -216,7 +221,9 @@ export const CrisisPlanSlideContact: React.FC<ModalCorrelationScreenProps> = ({ 
                 </View>
                 <View className="flex-col">
                   <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-950")}>{item.name}</Text>
-                  <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-950")}>{item.phoneNumbers[0].number}</Text>
+                  <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-950")}>
+                    {formatPhoneNumber(item.phoneNumbers[0].number)}
+                  </Text>
 
                   {item.activities?.length ? (
                     <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-950")}>{item.activities?.join(", ")}</Text>

@@ -11,6 +11,7 @@ import ChevronIcon from "@assets/svg/icon/chevron";
 import ArrowIcon from "@assets/svg/icon/Arrow";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ScrollView } from "react-native-gesture-handler";
+import { Modal } from "react-native";
 import PhoneIcon from "@assets/svg/icon/Phone";
 import AlertCard from "./CrisisPlanSumupCards/AlertCard";
 import ActivitiesCard from "./CrisisPlanSumupCards/ActivitiesCard";
@@ -204,43 +205,88 @@ export const CrisisPlanSumupList: React.FC<ModalCorrelationScreenProps> = ({ nav
 </html>
 `;
       const { uri } = await Print.printToFileAsync({ html });
-      await shareAsync(uri, { UTI: ".pdf", mimeType: "application/pdf" });
+      // Set custom filename
+      const fileName = "mon plan de crise.pdf";
+      const destPath = FileSystem.cacheDirectory ? FileSystem.cacheDirectory + fileName : uri.replace(/[^/]+$/, fileName);
+      try {
+        await FileSystem.copyAsync({ from: uri, to: destPath });
+      } catch (e) {
+        // fallback: if file exists, overwrite
+        await FileSystem.deleteAsync(destPath, { idempotent: true });
+        await FileSystem.copyAsync({ from: uri, to: destPath });
+      }
+      setIsLoadingPdf(false);
+      setTimeout(() => {
+        shareAsync(destPath, { UTI: ".pdf", mimeType: "application/pdf" });
+      }, 100);
     } catch (e) {
       // Optionally handle error
       console.error("Erreur lors de la génération ou du partage du PDF", e);
-    } finally {
       setIsLoadingPdf(false);
     }
   };
 
   return (
-    <View className="flex-1 bg-cnam-cyan-50-lighten-90">
-      <CrisisHeader initialRouteName={route.params?.initialRouteName} navigation={navigation} title={"Mon plan de crise"} />
-      <View className="flex-row justify-between m-4">
-        <TouchableOpacity onPress={handleSharePdf} className="flex-row items-center justify-center space-x-2" disabled={isLoadingPdf}>
-          {isLoadingPdf && <ActivityIndicator size="small" color={TW_COLORS.CNAM_CYAN_700_DARKEN_40} style={{ marginRight: 0 }} />}
-          {!isLoadingPdf && <ShareIcon width={20} height={20} color={TW_COLORS.CNAM_CYAN_700_DARKEN_40} />}
-          <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40")}>Partager</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            showBottomSheet(<CrisisSumUpBottomSheet navigation={navigation} onClose={() => {}} initialSelectedItems={[]} items={[]} />);
+    <>
+      <Modal visible={isLoadingPdf} transparent animationType="fade" onRequestClose={() => {}}>
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: "rgba(0,0,0,0.3)",
+            justifyContent: "center",
+            alignItems: "center",
           }}
-          className="flex-row items-center justify-center space-x-2"
         >
-          <PencilIcon width={20} height={20} color={TW_COLORS.CNAM_CYAN_700_DARKEN_40} />
-          <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40")}>Editer ma liste</Text>
-        </TouchableOpacity>
+          <View
+            style={{
+              backgroundColor: "white",
+              borderRadius: 16,
+              padding: 32,
+              alignItems: "center",
+              maxWidth: 320,
+              marginHorizontal: 24,
+              shadowColor: "#000",
+              shadowOffset: { width: 0, height: 2 },
+              shadowOpacity: 0.2,
+              shadowRadius: 8,
+              elevation: 5,
+            }}
+          >
+            <ActivityIndicator size="large" color={TW_COLORS.CNAM_CYAN_700_DARKEN_40} style={{ marginBottom: 24 }} />
+            <Text style={{ textAlign: "center", fontSize: 16, color: "#222" }}>
+              {"Le PDF est en cours de génération,\ncela peut prendre un certain temps.\nMerci de patienter."}
+            </Text>
+          </View>
+        </View>
+      </Modal>
+      <View className="flex-1 bg-cnam-cyan-50-lighten-90">
+        <CrisisHeader initialRouteName={route.params?.initialRouteName} navigation={navigation} title={"Mon plan de crise"} />
+        <View className="flex-row justify-between m-4">
+          <TouchableOpacity onPress={handleSharePdf} className="flex-row items-center justify-center space-x-2" disabled={isLoadingPdf}>
+            {isLoadingPdf && <ActivityIndicator size="small" color={TW_COLORS.CNAM_CYAN_700_DARKEN_40} style={{ marginRight: 0 }} />}
+            {!isLoadingPdf && <ShareIcon width={20} height={20} color={TW_COLORS.CNAM_CYAN_700_DARKEN_40} />}
+            <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40")}>Partager</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              showBottomSheet(<CrisisSumUpBottomSheet navigation={navigation} onClose={() => {}} initialSelectedItems={[]} items={[]} />);
+            }}
+            className="flex-row items-center justify-center space-x-2"
+          >
+            <PencilIcon width={20} height={20} color={TW_COLORS.CNAM_CYAN_700_DARKEN_40} />
+            <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40")}>Editer ma liste</Text>
+          </TouchableOpacity>
+        </View>
+        <ScrollView style={{ paddingBottom: 200 }} contentContainerStyle={{ paddingBottom: 100 }} showsVerticalScrollIndicator={false}>
+          <AlertCard alerts={cardData["alerts"] || []} />
+          <ActivitiesCard activities={cardData["activities"] || []} />
+          <ChangeIdeasCard contactsChangeIdeas={cardData.contacts_change_ideas as any} />
+          <HelpCard contactsHelp={cardData.contacts_help as any} />
+          <ProfessionalCard contactsProfessional={cardData.contacts_professional as any} />
+          <SafetyCard safety={cardData["safety"] || []} />
+          <ReasonToLiveCard reasonToLive={cardData["reason_to_live"] || []} reasonToLiveImage={cardData["reason_to_live_image"] || []} />
+        </ScrollView>
       </View>
-      <ScrollView style={{ paddingBottom: 200 }} contentContainerStyle={{ paddingBottom: 100 }} showsVerticalScrollIndicator={false}>
-        <AlertCard alerts={cardData["alerts"] || []} />
-        <ActivitiesCard activities={cardData["activities"] || []} />
-        <ChangeIdeasCard contactsChangeIdeas={cardData.contacts_change_ideas as any} />
-        <HelpCard contactsHelp={cardData.contacts_help as any} />
-        <ProfessionalCard contactsProfessional={cardData.contacts_professional as any} />
-        <SafetyCard safety={cardData["safety"] || []} />
-        <ReasonToLiveCard reasonToLive={cardData["reason_to_live"] || []} reasonToLiveImage={cardData["reason_to_live_image"] || []} />
-      </ScrollView>
-    </View>
+    </>
   );
 };

@@ -27,6 +27,10 @@ interface ModalCorrelationScreenProps {
     };
   };
 }
+// Format phone number with a space every two digits (e.g., "066257" => "06 62 57")
+function formatPhoneNumber(number: string): string {
+  return number.replace(/(\d{2})(?=\d)/g, "$1 ").trim();
+}
 
 const label = "Choisissez parmi vos contacts autorisés";
 const placeholder = "Renseignez un proche";
@@ -205,7 +209,7 @@ export const CrisisPlanSlideContactHelp: React.FC<ModalCorrelationScreenProps> =
                 </View>
                 <View className="flex-col justify-start items-start">
                   <Text className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-950")}>{item.name}</Text>
-                  <Text className={mergeClassNames(typography.textMdRegular, "text-gray-600")}>{item.phoneNumbers[0].number}</Text>
+                  <Text className={mergeClassNames(typography.textMdRegular, "text-gray-600")}>{formatPhoneNumber(item.phoneNumbers[0].number)}</Text>
 
                   {/* {item.activities?.length ? (
                     <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-950")}>{item.activities?.join(", ")}</Text>

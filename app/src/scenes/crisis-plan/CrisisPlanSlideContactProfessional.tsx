@@ -21,12 +21,17 @@ import CrisisContactListBottomSheet from "./CrisisContactListBottomSheet";
 import NavigationButtons from "@/components/onboarding/NavigationButtons";
 import CrisisProgressBar from "./CrisisProgressBar";
 
+// Format phone number with a space every two digits (e.g., "066257" => "06 62 57")
+function formatPhoneNumber(number: string): string {
+  return number.replace(/(\d{2})(?=\d)/g, "$1 ").trim();
+}
+
 interface ModalCorrelationScreenProps {
   navigation: any;
   route: {
     params: {
       isEdit: boolean;
-      initialRouteName: boolean;
+      initialRouteName: string;
     };
   };
 }
@@ -35,6 +40,7 @@ const suggestions = [
   {
     name: "3114 (Prévention Suicide 24/7)",
     id: "3114",
+    isSuggestion: true,
     phoneNumbers: [
       {
         digits: "3114",
@@ -45,6 +51,7 @@ const suggestions = [
   {
     name: "SAMU 15 (Urgences immédiates)",
     id: "15",
+    isSuggestion: true,
     phoneNumbers: [
       {
         digits: "15",
@@ -58,7 +65,7 @@ const label = "Choisissez parmi les suggestions";
 const placeholder = "Nom du contact";
 const storageKey = "@CRISIS_PLAN_CONTACT_PROFESSIONAL";
 const next = "crisis-plan-slide-safety";
-const title = "Quels professionnels, structures spécialisées, ou numéros d’urgence pouvez-vous contacter?";
+const title = "Quels professionnels, structures spécialisées, ou numéros d’urgence pouvez-vous contacter ?";
 const headerEditionBottomSheet = "Numéros d’urgence";
 export const CrisisPlanSlideContactProfessional: React.FC<ModalCorrelationScreenProps> = ({ navigation, route }) => {
   const { showBottomSheet, closeBottomSheet } = useBottomSheet();
@@ -119,6 +126,12 @@ export const CrisisPlanSlideContactProfessional: React.FC<ModalCorrelationScreen
               }}
               multiline={true}
               textAlignVertical="top"
+              fill={undefined}
+              preset={undefined}
+              onPress={undefined}
+              disabled={false}
+              style={undefined}
+              hidePlaceholder={undefined}
             />
           </View>
           <Text className={mergeClassNames(typography.textSmMedium, "text-gray-700 mb-2")}>Renseignez le numéro</Text>
@@ -135,6 +148,12 @@ export const CrisisPlanSlideContactProfessional: React.FC<ModalCorrelationScreen
               keyboardType="numeric"
               multiline={true}
               textAlignVertical="top"
+              fill={undefined}
+              preset={undefined}
+              onPress={undefined}
+              disabled={false}
+              style={undefined}
+              hidePlaceholder={undefined}
             />
           </View>
           <TouchableOpacity
@@ -152,6 +171,7 @@ export const CrisisPlanSlideContactProfessional: React.FC<ModalCorrelationScreen
                   initialSelectedItems={selectedItems}
                   label={label}
                   header={headerEditionBottomSheet}
+                  accessPrivileges={undefined}
                 />
               );
             }}
@@ -202,6 +222,7 @@ export const CrisisPlanSlideContactProfessional: React.FC<ModalCorrelationScreen
                     deleteLabel="Supprimer ce contact d'urgence"
                     navigation={navigation}
                     header={headerEditionBottomSheet}
+                    cannotEditNumber={item.isSuggestion}
                     onClose={() => {
                       closeBottomSheet();
                     }}
@@ -220,8 +241,21 @@ export const CrisisPlanSlideContactProfessional: React.FC<ModalCorrelationScreen
               }}
               className="bg-gray-200 border-gray-300 rounded-2xl flex-row items-center justify-between p-4"
             >
-              <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-950")}>{item.name}</Text>
-              <PencilIcon color={TW_COLORS.CNAM_CYAN_700_DARKEN_40} />
+              <View className="flex-row space-x-2 flex-1">
+                <View className="flex-col justify-start items-start">
+                  <Text className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-950")}>{item.name}</Text>
+                  {item.phoneNumbers && item.phoneNumbers[0]?.number && (
+                    <Text className={mergeClassNames(typography.textMdRegular, "text-gray-600")}>
+                      {item.phoneNumbers[0].number && /^\d{10}$/.test(item.phoneNumbers[0].number)
+                        ? formatPhoneNumber(item.phoneNumbers[0].number)
+                        : item.phoneNumbers[0].number}
+                    </Text>
+                  )}
+                </View>
+              </View>
+              <View className="pl-2 flex-col items-center justify-center">
+                <PencilIcon color={TW_COLORS.CNAM_CYAN_700_DARKEN_40} />
+              </View>
             </TouchableOpacity>
           );
         })}

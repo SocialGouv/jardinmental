@@ -7,6 +7,20 @@ export const TOOL_BECK_ID = "b2d8c2f4-0f44-48c0-945a-6c6a0f3b9d3d";
 
 export const TOOLS_DATA: ToolItemEntity[] = [
   {
+    id: "e7163404-e1bd-4101-a8eb-616e58679466",
+    matomoId: 66,
+    title: "Plan de crise par Hop ma liste",
+    description: "Préparez un plan d’action personnel pour lutter contre les idées suicidaires, et enregistrez le dans Jardin Mental.",
+    type: ["Questionnaire"],
+    themes: ["Obtenir de l'aide", "Gérer une crise"],
+    audience: ["child", "parent", "student"],
+    source: "Hop ma liste",
+    innerPath: {
+      text: "Créer mon plan de crise",
+      path: "crisis-plan",
+    },
+  },
+  {
     id: TOOL_BECK_ID,
     matomoId: 65,
     title: "Colonnes de Beck",
@@ -474,10 +488,6 @@ Cet exercice nécessite des explications afin de le réaliser. Nous vous recomma
     audience: ["child", "parent", "student"],
     url: "https://ateliers-rehab.ch/docs/revim/REVIM_Mon-plan-de-gestion-de-crise-2025.pdf",
     source: "Centre Ressources de Réhabilitation Psychosociale",
-    innerPath: {
-      text: "Créer mon plan de crise",
-      path: "crisis-plan",
-    },
   },
   {
     id: "13547522-e7d8-477e-be64-4161f1cf5f7b",

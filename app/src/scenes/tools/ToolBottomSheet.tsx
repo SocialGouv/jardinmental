@@ -384,7 +384,7 @@ export const ToolBottomSheet = ({
                 title={toolItem.innerPath.text}
               />
             )}
-            {!isFileType() && !toolItem.embed && !toolItem.video && toolItem.id !== TOOL_BECK_ID && (
+            {!isFileType() && !toolItem.embed && !toolItem.video && toolItem.id !== TOOL_BECK_ID && !toolItem.innerPath && (
               <JMButton icon={<LinkExternal color="white" />} onPress={handleOpenUrl} title={"Voir l'outil"} />
             )}
             {toolItem.id === TOOL_BECK_ID && (
@@ -403,32 +403,6 @@ export const ToolBottomSheet = ({
             </View>
           )}
         </ScrollView>
-        {/* <View
-          style={{
-            position: "absolute",
-            bottom: 0,
-            left: 0,
-            right: 0,
-          }}
-          className={`flex-column justify-between items-center bg-white/90  w-full`}
-        >
-          <View className="w-full py-6 px-6">
-            {isFileType() && (
-              <JMButton
-                icon={<DownloadIcon color="white"></DownloadIcon>}
-                onPress={handleDownloadFile}
-                title={isDownloading ? "Téléchargement..." : "Télécharger le fichier"}
-                disabled={isDownloading}
-              />
-            )}
-            {!isFileType() && <JMButton icon={<LinkExternal color="white" />} onPress={handleOpenUrl} title={"Voir l'outil"} />}
-          </View>
-          {toolItem.source && (
-            <View className="w-full bg-gray-100 p-6">
-              <Text>Fourni par : {toolItem.source}</Text>
-            </View>
-          )}
-        </View> */}
       </View>
     </View>
   );
