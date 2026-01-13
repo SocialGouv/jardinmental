@@ -22,6 +22,7 @@ export const BottomSheetProvider = ({ children }: { children: ReactNode }) => {
   const bottomSheetRef = useRef<BottomSheetModal>(null);
   const [content, setContent] = useState<ReactNode>(null);
   const [onCloseCallback, setOnCloseCallback] = useState<(() => void) | null>(null);
+  const [isExtended, setIsExtended] = useState(false);
 
   const showBottomSheet = (newContent: ReactNode, onClose?: () => void) => {
     setContent(newContent);
@@ -46,6 +47,11 @@ export const BottomSheetProvider = ({ children }: { children: ReactNode }) => {
             maxDynamicContentSize={height90vh}
             ref={bottomSheetRef}
             backdropComponent={renderBackdrop}
+            onChange={(index) => {
+              setIsExtended(index === 1);
+            }}
+            keyboardBehavior="extend"
+            enableDynamicSizing={true}
             onDismiss={() => {
               if (onCloseCallback) {
                 onCloseCallback();
@@ -55,7 +61,7 @@ export const BottomSheetProvider = ({ children }: { children: ReactNode }) => {
             }}
             snapPoints={["90%"]}
           >
-            <BottomSheetView>{content}</BottomSheetView>
+            <BottomSheetView>{React.isValidElement(content) ? React.cloneElement(content, { isExtended }) : content}</BottomSheetView>
           </BottomSheetModal>
         </BottomSheetModalProvider>
       </BottomSheetContext.Provider>

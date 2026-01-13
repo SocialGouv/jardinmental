@@ -21,7 +21,7 @@ const ActivitiesCard: React.FC<ActivitiesCardProps> = ({ activities }) => {
         borderColor: "#F9D1E6E6",
       }}
     >
-      <TouchableOpacity onPress={() => setIsOpen((v) => !v)}>
+      <TouchableOpacity onPress={() => setIsOpen((v) => !v)} className=" flex-column space-y-4">
         <View className="flex-row items-center justify-between">
           <View className="flex-row items-center">
             <Text

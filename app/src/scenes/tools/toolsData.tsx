@@ -14,7 +14,7 @@ export const TOOLS_DATA: ToolItemEntity[] = [
     type: ["Questionnaire"],
     themes: ["Obtenir de l'aide", "Gérer une crise"],
     audience: ["child", "parent", "student"],
-    source: "Hop ma liste",
+    source: "CHU Angers",
     innerPath: {
       text: "Créer mon plan de crise",
       path: "crisis-plan",

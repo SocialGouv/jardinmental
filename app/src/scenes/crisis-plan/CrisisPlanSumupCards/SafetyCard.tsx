@@ -21,7 +21,7 @@ const SafetyCard: React.FC<SafetyCardProps> = ({ safety }) => {
         borderColor: "#CED9EB",
       }}
     >
-      <TouchableOpacity onPress={() => setIsOpen((v) => !v)}>
+      <TouchableOpacity onPress={() => setIsOpen((v) => !v)} className="flex-column space-y-4">
         <View className="flex-row items-center justify-between">
           <View className="flex-row items-center">
             <Text
@@ -38,10 +38,11 @@ const SafetyCard: React.FC<SafetyCardProps> = ({ safety }) => {
             <ChevronIcon width={14} height={14} direction={isOpen ? "down" : "up"} strokeWidth={2} />
           </TouchableOpacity>
         </View>
+        <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700")}>
+          Les façons d’assurer votre sécurité ou de sécuriser votre environnement :
+        </Text>
       </TouchableOpacity>
-      <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700")}>
-        Les façons d’assurer vote sécurité ou de sécuriser votre environnement :
-      </Text>
+
       {isOpen && (
         <View className="flex-colmun">
           <View className="flex-colmun space-y-2">

@@ -162,7 +162,7 @@ export const CrisisPlanSlideComponent: React.FC<ModalCorrelationScreenProps> = (
           nextText="Valider"
           absolute={true}
           onNext={async () => {
-            navigation.goBack();
+            navigation.navigate("crisis-plan-slide-sumup-list");
           }}
         />
       )}

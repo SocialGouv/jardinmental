@@ -29,6 +29,7 @@ import * as FileSystem from "expo-file-system";
 import EyeIcon from "@assets/svg/icon/Eye";
 import * as Sharing from "expo-sharing";
 import PlayCircleIcon from "@assets/svg/icon/PlayCircle";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const screenHeight = Dimensions.get("window").height;
 const height90vh = screenHeight * 0.9;
@@ -49,6 +50,7 @@ export const ToolBottomSheet = ({
   const { closeBottomSheet } = useBottomSheet();
   const [isBookmarked, setIsBookmarked] = useState<boolean>(false);
   const [showAllThemes, setShowAllThemes] = useState<boolean>(false);
+  const [crisisPlanCompleted, setCrisisPlanCompleted] = useState<boolean>(false);
   const { useInAppBrowser } = useInAppBrowserConfig();
 
   const itemId = toolItem.id;
@@ -58,6 +60,11 @@ export const ToolBottomSheet = ({
       try {
         const ids = await localStorage.getBookmarkedToolItems();
         setIsBookmarked(ids.includes(itemId));
+        console.log(toolItem);
+        if (toolItem.innerPath?.path === "crisis-plan") {
+          const _crisisPlanCompleted = await AsyncStorage.getItem("@CRISIS_PLAN_COMPLETED");
+          setCrisisPlanCompleted(_crisisPlanCompleted === "true");
+        }
       } catch (error) {
         console.error("Failed to load viewed resources:", error);
       }
@@ -378,10 +385,14 @@ export const ToolBottomSheet = ({
               <JMButton
                 className="mb-2"
                 onPress={() => {
-                  navigation.navigate(toolItem.innerPath.path);
+                  if (toolItem.innerPath?.path === "crisis-plan" && crisisPlanCompleted) {
+                    navigation.navigate("crisis-plan-slide-sumup-list");
+                  } else {
+                    navigation.navigate(toolItem.innerPath.path);
+                  }
                   closeBottomSheet();
                 }}
-                title={toolItem.innerPath.text}
+                title={toolItem.innerPath?.path === "crisis-plan" && crisisPlanCompleted ? "Voir mon plan de crise" : toolItem.innerPath.text}
               />
             )}
             {!isFileType() && !toolItem.embed && !toolItem.video && toolItem.id !== TOOL_BECK_ID && !toolItem.innerPath && (

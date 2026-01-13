@@ -44,29 +44,27 @@ const ReasonToLiveCard: React.FC<ReasonToLiveCardProps> = ({ reasonToLive, reaso
         borderColor: "#99DDD2",
       }}
     >
-      <View className="space-y-4 flex-column">
-        <TouchableOpacity onPress={() => setIsOpen((v) => !v)}>
-          <View className="flex-row items-center justify-between">
-            <View className="flex-row items-center">
-              <Text
-                className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-950 p-1 px-3 rounded mr-2")}
-                style={{
-                  backgroundColor: "#CCEEE8E6",
-                }}
-              >
-                7
-              </Text>
-              <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-950")}>Raisons de vivre</Text>
-            </View>
-            <TouchableOpacity onPress={() => setIsOpen((v) => !v)} className="mr-2">
-              <ChevronIcon width={14} height={14} direction={isOpen ? "down" : "up"} strokeWidth={2} />
-            </TouchableOpacity>
+      <TouchableOpacity onPress={() => setIsOpen((v) => !v)} className="flex-column  space-y-4">
+        <View className="flex-row items-center justify-between">
+          <View className="flex-row items-center">
+            <Text
+              className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-950 p-1 px-3 rounded mr-2")}
+              style={{
+                backgroundColor: "#CCEEE8E6",
+              }}
+            >
+              7
+            </Text>
+            <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-950")}>Raisons de vivre</Text>
           </View>
-          <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700")}>
-            Les façons d’assurer vote sécurité ou de sécuriser votre environnement :
-          </Text>
-        </TouchableOpacity>
-      </View>
+          <TouchableOpacity onPress={() => setIsOpen((v) => !v)} className="mr-2">
+            <ChevronIcon width={14} height={14} direction={isOpen ? "down" : "up"} strokeWidth={2} />
+          </TouchableOpacity>
+        </View>
+        <View>
+          <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700")}>Vos principales raisons de vivre :</Text>
+        </View>
+      </TouchableOpacity>
       {isOpen && (
         <>
           <Modal visible={modalVisible} transparent animationType="fade" onRequestClose={closeImageModal}>

@@ -20,11 +20,7 @@ import SimplePlus from "@assets/svg/icon/SimplePlus";
 import CrisisContactListBottomSheet from "./CrisisContactListBottomSheet";
 import NavigationButtons from "@/components/onboarding/NavigationButtons";
 import CrisisProgressBar from "./CrisisProgressBar";
-
-// Format phone number with a space every two digits (e.g., "066257" => "06 62 57")
-function formatPhoneNumber(number: string): string {
-  return number.replace(/(\d{2})(?=\d)/g, "$1 ").trim();
-}
+import { formatPhoneNumber } from "@/utils/string-util";
 
 interface ModalCorrelationScreenProps {
   navigation: any;
@@ -160,7 +156,7 @@ export const CrisisPlanSlideContactProfessional: React.FC<ModalCorrelationScreen
             onPress={() => {
               showBottomSheet(
                 <CrisisContactListBottomSheet
-                  items={suggestions}
+                  items={suggestions.filter((user) => user.phoneNumbers?.length)}
                   onClose={function (items): void {
                     setSelectedItems(items);
                     closeBottomSheet();
@@ -280,7 +276,7 @@ export const CrisisPlanSlideContactProfessional: React.FC<ModalCorrelationScreen
           nextText="Valider"
           absolute={true}
           onNext={async () => {
-            navigation.goBack();
+            navigation.navigate("crisis-plan-slide-sumup-list");
           }}
         />
       )}

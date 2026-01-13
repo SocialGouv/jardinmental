@@ -17,6 +17,8 @@ import NavigationButtons from "@/components/onboarding/NavigationButtons";
 import CrisisProgressBar from "./CrisisProgressBar";
 import { CrisisAuthorizedContactBottomSheet } from "./CrisisAuthorizedContactBottomSheet";
 import User from "@assets/svg/icon/User";
+import { formatPhoneNumber } from "@/utils/string-util";
+import UsersIcon from "@assets/svg/icon/Users";
 
 interface ModalCorrelationScreenProps {
   navigation: any;
@@ -26,10 +28,6 @@ interface ModalCorrelationScreenProps {
       initialRouteName: string;
     };
   };
-}
-// Format phone number with a space every two digits (e.g., "066257" => "06 62 57")
-function formatPhoneNumber(number: string): string {
-  return number.replace(/(\d{2})(?=\d)/g, "$1 ").trim();
 }
 
 const label = "Choisissez parmi vos contacts autorisés";
@@ -125,7 +123,7 @@ export const CrisisPlanSlideContactHelp: React.FC<ModalCorrelationScreenProps> =
                   setLoadingContacts(false);
                   showBottomSheet(
                     <CrisisContactListBottomSheet
-                      items={data}
+                      items={data.filter((user) => user.phoneNumbers?.length)}
                       itemIdKey={"id"}
                       itemIdLabel={"name"}
                       accessPrivileges={accessPrivileges}
@@ -162,7 +160,7 @@ export const CrisisPlanSlideContactHelp: React.FC<ModalCorrelationScreenProps> =
                 Alert.alert("Erreur", "Une erreur est survenue lors de la récupération des contacts.");
               }
             }}
-            icon={<PhoneIcon width={20} height={20} color={TW_COLORS.GRAY_400} />}
+            icon={<UsersIcon width={20} height={20} color={TW_COLORS.GRAY_400} />}
             iconPosition="left"
           />
           {loadingContacts && (
@@ -248,7 +246,7 @@ export const CrisisPlanSlideContactHelp: React.FC<ModalCorrelationScreenProps> =
           nextText="Valider"
           absolute={true}
           onNext={async () => {
-            navigation.goBack();
+            navigation.navigate("crisis-plan-slide-sumup-list");
           }}
         />
       )}

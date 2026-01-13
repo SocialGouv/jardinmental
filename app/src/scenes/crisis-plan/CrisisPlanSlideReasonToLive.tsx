@@ -144,7 +144,7 @@ export const CrisisPlanSlideReasonToLive: React.FC<ModalCorrelationScreenProps> 
       // Copie chaque image dans le dossier local et stocke le path
       const copiedPaths: string[] = [];
       for (const asset of result.assets) {
-        const localPath = await copyImageToLocalDir(asset.uri);
+        const localPath = asset.uri; //await copyImageToLocalDir(asset.uri);
         if (localPath) copiedPaths.push(localPath);
       }
       setLocalImagePaths((prev) => [...prev, ...copiedPaths]);
@@ -371,7 +371,7 @@ export const CrisisPlanSlideReasonToLive: React.FC<ModalCorrelationScreenProps> 
           absolute={true}
           onNext={async () => {
             await saveAndValidate();
-            navigation.goBack();
+            navigation.navigate("crisis-plan-slide-sumup-list");
           }}
         />
       )}

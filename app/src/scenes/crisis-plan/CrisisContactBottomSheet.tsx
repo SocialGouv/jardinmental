@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Dimensions, TouchableOpacity } from "react-native";
+import { View, Text, ScrollView, Dimensions, TouchableOpacity, Platform } from "react-native";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
 import JMButton from "@/components/JMButton";
@@ -12,11 +12,13 @@ import PlusIcon from "@assets/svg/icon/plus";
 import TrashIcon from "@assets/svg/icon/Trash";
 import { LinearGradient } from "expo-linear-gradient";
 import User from "@assets/svg/icon/User";
+import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
+import { BottomSheetTextInput } from "@gorhom/bottom-sheet";
+import { colors } from "@/utils/colors";
 
 const suggestions = ["Aller au cinéma", "Aller au restaurant", "Faire du shopping", "Faire une promenade"];
 const screenHeight = Dimensions.get("window").height;
 const height90vh = screenHeight * 0.9;
-
 export const CrisisContactBottomSheet = ({
   navigation,
   label,
@@ -65,21 +67,24 @@ export const CrisisContactBottomSheet = ({
     }[];
   }) => void;
   header: string;
-  camnotEditNumber?: boolean;
+  cannotEditNumber?: boolean;
 }) => {
   const [text, setText] = useState<string>();
   const [activities, setActivities] = useState<string[]>(item.activities || []);
-  const [number, setNumber] = useState<string>(item.phoneNumbers[0].digits);
+  const [number, setNumber] = useState<string>(item.phoneNumbers[0].digits || item.phoneNumbers[0].number);
   const { showBottomSheet, closeBottomSheet } = useBottomSheet();
+  const ScrollViewComponent = Platform.OS === "android" && variant === "activity" ? KeyboardAwareScrollView : ScrollView;
+
   return (
     <View className="flex-1 bg-white">
-      <ScrollView
+      <ScrollViewComponent
         bounces={false}
         contentContainerStyle={{ paddingBottom: 200 }}
         showsVerticalScrollIndicator={false}
         style={{
           height: variant === "activity" ? height90vh : undefined,
         }}
+        automaticallyAdjustKeyboardInsets={variant === "activity"}
       >
         <View className="self-end mr-4">
           <TouchableOpacity
@@ -98,7 +103,7 @@ export const CrisisContactBottomSheet = ({
             <User width={20} height={20} color={TW_COLORS.CNAM_CYAN_600_DARKEN_20} />
             <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-950")}>{item.name}</Text>
           </View>
-          {cannotEditNumber && (
+          {!cannotEditNumber && variant === "activity" && (
             <View className="flex-column flex-start space-y-1 mb-4">
               <Text className={mergeClassNames(typography.textSmMedium, "text-gray-700 mb-2")}>Numéro de téléphone</Text>
               <InputText
@@ -107,6 +112,40 @@ export const CrisisContactBottomSheet = ({
                 }}
                 keyboardType="numeric"
                 placeholder={"06 39 98 90 60"}
+                value={number}
+                onChangeText={(inputText) => {
+                  setNumber(inputText);
+                }}
+                multiline={true}
+                textAlignVertical="top"
+              />
+            </View>
+          )}
+          {!cannotEditNumber && variant !== "activity" && (
+            <View
+              style={{
+                alignItems: "stretch",
+                borderRadius: 12,
+                backgroundColor: "#FFFFFF",
+                borderColor: colors.BLUE,
+                flexGrow: 1,
+                padding: 16,
+                borderWidth: 1,
+              }}
+            >
+              <BottomSheetTextInput
+                style={{
+                  fontSize: 16,
+                  backgroundColor: "transparent",
+                  fontFamily: "SourceSans3",
+                  alignItems: "stretch",
+                  color: "#000",
+                  width: "100%",
+                  padding: 0,
+                }}
+                keyboardType="numeric"
+                placeholder={"06 39 98 90 60"}
+                placeholderTextColor={TW_COLORS.GRAY_700}
                 value={number}
                 onChangeText={(inputText) => {
                   setNumber(inputText);
@@ -187,6 +226,7 @@ export const CrisisContactBottomSheet = ({
                           <CrisisContactBottomSheet
                             navigation={navigation}
                             variant="activity"
+                            cannotEditNumber={false}
                             item={{
                               ...item,
                               activities: [...new Set([...activities, ...suggestedActivities])],
@@ -214,7 +254,7 @@ export const CrisisContactBottomSheet = ({
             </>
           )}
         </View>
-      </ScrollView>
+      </ScrollViewComponent>
 
       <LinearGradient
         colors={["rgba(255,255,255,0)", "rgba(255,255,255,1)"]}
@@ -228,7 +268,9 @@ export const CrisisContactBottomSheet = ({
         }}
       >
         <View className="py-6">
-          {cannotEditNumber && variant !== "activity" && (
+          {/* {!cannotEditNumber ||
+            (variant === "activity" && ( */}
+          {(variant === "activity" || !cannotEditNumber) && (
             <JMButton
               onPress={() => {
                 const updatedValue = {

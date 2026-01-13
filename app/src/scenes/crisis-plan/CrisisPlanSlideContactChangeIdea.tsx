@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from "react";
-
-// Format phone number with a space every two digits (e.g., "066257" => "06 62 57")
-function formatPhoneNumber(number: string): string {
-  return number.replace(/(\d{2})(?=\d)/g, "$1 ").trim();
-}
+import { formatPhoneNumber } from "@/utils/string-util";
 import { View, Text, ScrollView, TouchableOpacity, ActivityIndicator, Alert } from "react-native";
 import * as Contacts from "expo-contacts";
 import { mergeClassNames } from "@/utils/className";
@@ -129,7 +125,7 @@ export const CrisisPlanSlideContact: React.FC<ModalCorrelationScreenProps> = ({ 
                   setLoadingContacts(false);
                   showBottomSheet(
                     <CrisisContactListBottomSheet
-                      items={data}
+                      items={data.filter((user) => user.phoneNumbers?.length)}
                       itemIdKey={"id"}
                       itemIdLabel={"name"}
                       accessPrivileges={accessPrivileges}
@@ -194,6 +190,7 @@ export const CrisisPlanSlideContact: React.FC<ModalCorrelationScreenProps> = ({ 
                   <CrisisContactBottomSheet
                     label={label}
                     variant="activity"
+                    cannotEditNumber={false}
                     placeholder={placeholder}
                     navigation={navigation}
                     header={"Édition du proche"}
@@ -261,7 +258,7 @@ export const CrisisPlanSlideContact: React.FC<ModalCorrelationScreenProps> = ({ 
           nextText="Valider"
           absolute={true}
           onNext={async () => {
-            navigation.goBack();
+            navigation.navigate("crisis-plan-slide-sumup-list");
           }}
         />
       )}

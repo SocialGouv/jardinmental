@@ -72,7 +72,7 @@ export const CrisisNavigationButtons: React.FC<NavigationButtonsProps> = ({
             loading={loading}
           />
         )}
-        <View className="flex-row items-center justify-center space-x-2">
+        <TouchableOpacity className="flex-row items-center justify-center space-x-2" onPress={onPrevious}>
           <JMButton
             onPress={onPrevious}
             title={""}
@@ -97,8 +97,8 @@ export const CrisisNavigationButtons: React.FC<NavigationButtonsProps> = ({
             iconPosition="right"
           />
           <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>Précédent</Text>
-        </View>
-        <View className="flex-row items-center justify-center space-x-2">
+        </TouchableOpacity>
+        <TouchableOpacity onPress={onNext} className="flex-row items-center justify-center space-x-2">
           <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>Suivant</Text>
           <JMButton
             onPress={onNext}
@@ -109,7 +109,7 @@ export const CrisisNavigationButtons: React.FC<NavigationButtonsProps> = ({
             icon={withArrow && !nextDisabled ? <ArrowIcon color={TW_COLORS.BRAND_25} /> : undefined}
             iconPosition="right"
           />
-        </View>
+        </TouchableOpacity>
       </View>
     </>
   );

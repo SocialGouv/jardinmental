@@ -21,7 +21,7 @@ const AlertCard: React.FC<AlertCardProps> = ({ alerts }) => {
         borderColor: "#D9BDE2",
       }}
     >
-      <TouchableOpacity onPress={() => setIsOpen((v) => !v)}>
+      <TouchableOpacity onPress={() => setIsOpen((v) => !v)} className=" flex-column space-y-4">
         <View className="flex-row items-center justify-between">
           <View className="flex-row items-center">
             <Text

@@ -46,7 +46,6 @@ export default function CrisisContactListBottomSheet({
   const { showBottomSheet, closeBottomSheet } = useBottomSheet();
   const [selectedItems, setSelectedItems] = useState<any[]>(initialSelectedItems);
   const [filter, setFilter] = useState();
-  const [filteredList, setFilteredList] = useState([]);
   const filterAndSortList = (list) =>
     list
       ?.sort((a, b) => cleanString(a.name) > cleanString(b.name))
@@ -54,6 +53,8 @@ export default function CrisisContactListBottomSheet({
         const r = new RegExp(cleanString(filter), "gi");
         return r.test(cleanString(e.name));
       });
+
+  const [filteredList, setFilteredList] = useState(filterAndSortList(items));
 
   useEffect(() => {
     setFilteredList(filterAndSortList(items) || []);

@@ -260,7 +260,12 @@ export const CrisisPlanSumupList: React.FC<ModalCorrelationScreenProps> = ({ nav
         </View>
       </Modal>
       <View className="flex-1 bg-cnam-cyan-50-lighten-90">
-        <CrisisHeader initialRouteName={route.params?.initialRouteName} navigation={navigation} title={"Mon plan de crise"} />
+        <CrisisHeader
+          initialRouteName={route.params?.initialRouteName}
+          navigation={navigation}
+          title={"Mon plan de crise"}
+          description="Hop Ma Liste"
+        />
         <View className="flex-row justify-between m-4">
           <TouchableOpacity onPress={handleSharePdf} className="flex-row items-center justify-center space-x-2" disabled={isLoadingPdf}>
             {isLoadingPdf && <ActivityIndicator size="small" color={TW_COLORS.CNAM_CYAN_700_DARKEN_40} style={{ marginRight: 0 }} />}
