@@ -6,8 +6,10 @@ import { typography } from "@/utils/typography";
 import { mergeClassNames } from "@/utils/className";
 import { TW_COLORS } from "@/utils/constants";
 import User from "@assets/svg/icon/User";
+import PlusIcon from "@assets/svg/icon/plus";
 
 type ProfessionalCardProps = {
+  addElement: () => void;
   contactsProfessional: {
     name: string;
     phoneNumbers: [
@@ -19,7 +21,7 @@ type ProfessionalCardProps = {
   }[];
 };
 
-const ProfessionalCard: React.FC<ProfessionalCardProps> = ({ contactsProfessional }) => {
+const ProfessionalCard: React.FC<ProfessionalCardProps> = ({ contactsProfessional, addElement }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   // Filter contacts to only those with a valid phone number
@@ -47,7 +49,7 @@ const ProfessionalCard: React.FC<ProfessionalCardProps> = ({ contactsProfessiona
         borderColor: "#FCF0D3",
       }}
     >
-      <TouchableOpacity onPress={() => setIsOpen((v) => !v)} className="flex-column space-y-4">
+      <TouchableOpacity onPress={() => setIsOpen((v) => !v)} className="flex-column space-y-4" disabled={!filteredContacts.length}>
         <View className="flex-row items-center justify-between">
           <View className="flex-row items-center">
             <Text
@@ -60,14 +62,27 @@ const ProfessionalCard: React.FC<ProfessionalCardProps> = ({ contactsProfessiona
             </Text>
             <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-950")}>En cas d’urgence</Text>
           </View>
-          <TouchableOpacity onPress={() => setIsOpen((v) => !v)} className="mr-2">
-            <ChevronIcon width={14} height={14} direction={isOpen ? "down" : "up"} strokeWidth={2} />
-          </TouchableOpacity>
+          {!!filteredContacts.length && (
+            <View className="mr-2">
+              <ChevronIcon width={14} height={14} direction={isOpen ? "down" : "up"} strokeWidth={2} />
+            </View>
+          )}
         </View>
+        {!!filteredContacts.length && (
+          <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700")}>
+            Les professionnels ou structures que vous pouvez contacter en cas d’urgence :
+          </Text>
+        )}
+        {filteredContacts.length === 0 && (
+          <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700")}>Aucun élément pour le moment.</Text>
+        )}
+        {!filteredContacts.length && (
+          <TouchableOpacity className="flex-row items-center space-x-1" onPress={addElement}>
+            <PlusIcon color={TW_COLORS.CNAM_PRIMARY_700} />{" "}
+            <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40")}>Ajouter un élément</Text>
+          </TouchableOpacity>
+        )}
       </TouchableOpacity>
-      <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700")}>
-        Les professionnels ou structures que vous pouvez contacter en cas d’urgence :
-      </Text>
       {isOpen && (
         <View className="flex-colmun">
           <View className="flex-colmun space-y-2">
@@ -94,9 +109,6 @@ const ProfessionalCard: React.FC<ProfessionalCardProps> = ({ contactsProfessiona
                 </TouchableOpacity>
               );
             })}
-            {filteredContacts.length === 0 && (
-              <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900")}>Aucun contact renseigné.</Text>
-            )}
           </View>
         </View>
       )}

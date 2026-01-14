@@ -5,8 +5,10 @@ import ArrowIcon from "@assets/svg/icon/Arrow";
 import { typography } from "@/utils/typography";
 import { mergeClassNames } from "@/utils/className";
 import { TW_COLORS } from "@/utils/constants";
+import PlusIcon from "@assets/svg/icon/plus";
 
 type ReasonToLiveCardProps = {
+  addElement: () => void;
   reasonToLive: string[];
   reasonToLiveImage: string[];
 };
@@ -19,7 +21,7 @@ function chunk<T>(arr: T[], size: number): T[][] {
   return res;
 }
 
-const ReasonToLiveCard: React.FC<ReasonToLiveCardProps> = ({ reasonToLive, reasonToLiveImage }) => {
+const ReasonToLiveCard: React.FC<ReasonToLiveCardProps> = ({ reasonToLive, reasonToLiveImage, addElement }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -44,7 +46,11 @@ const ReasonToLiveCard: React.FC<ReasonToLiveCardProps> = ({ reasonToLive, reaso
         borderColor: "#99DDD2",
       }}
     >
-      <TouchableOpacity onPress={() => setIsOpen((v) => !v)} className="flex-column  space-y-4">
+      <TouchableOpacity
+        onPress={() => setIsOpen((v) => !v)}
+        className="flex-column  space-y-4"
+        disabled={!reasonToLive.length && !reasonToLiveImage.length}
+      >
         <View className="flex-row items-center justify-between">
           <View className="flex-row items-center">
             <Text
@@ -57,13 +63,28 @@ const ReasonToLiveCard: React.FC<ReasonToLiveCardProps> = ({ reasonToLive, reaso
             </Text>
             <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-950")}>Raisons de vivre</Text>
           </View>
-          <TouchableOpacity onPress={() => setIsOpen((v) => !v)} className="mr-2">
-            <ChevronIcon width={14} height={14} direction={isOpen ? "down" : "up"} strokeWidth={2} />
+          {!!reasonToLive.length ||
+            (!!reasonToLiveImage.length && (
+              <View className="mr-2">
+                <ChevronIcon width={14} height={14} direction={isOpen ? "down" : "up"} strokeWidth={2} />
+              </View>
+            ))}
+        </View>
+        {!!reasonToLive.length ||
+          (!!reasonToLiveImage.length && (
+            <View>
+              <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700")}>Vos principales raisons de vivre :</Text>
+            </View>
+          ))}
+        {!reasonToLive.length && !reasonToLiveImage.length && (
+          <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700")}>Aucun élément pour le moment.</Text>
+        )}
+        {!reasonToLive.length && !reasonToLiveImage.length && (
+          <TouchableOpacity className="flex-row items-center space-x-1" onPress={addElement}>
+            <PlusIcon color={TW_COLORS.CNAM_PRIMARY_700} />{" "}
+            <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40")}>Ajouter un élément</Text>
           </TouchableOpacity>
-        </View>
-        <View>
-          <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700")}>Vos principales raisons de vivre :</Text>
-        </View>
+        )}
       </TouchableOpacity>
       {isOpen && (
         <>
@@ -157,9 +178,6 @@ const ReasonToLiveCard: React.FC<ReasonToLiveCardProps> = ({ reasonToLive, reaso
                 </View>
               );
             })}
-            {reasonToLive.length === 0 && (
-              <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900")}>Aucune raison de vivre renseignée.</Text>
-            )}
           </View>
         </>
       )}

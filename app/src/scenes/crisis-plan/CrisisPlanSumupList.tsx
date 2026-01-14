@@ -283,13 +283,63 @@ export const CrisisPlanSumupList: React.FC<ModalCorrelationScreenProps> = ({ nav
           </TouchableOpacity>
         </View>
         <ScrollView style={{ paddingBottom: 200 }} contentContainerStyle={{ paddingBottom: 100 }} showsVerticalScrollIndicator={false}>
-          <AlertCard alerts={cardData["alerts"] || []} />
-          <ActivitiesCard activities={cardData["activities"] || []} />
-          <ChangeIdeasCard contactsChangeIdeas={cardData.contacts_change_ideas as any} />
-          <HelpCard contactsHelp={cardData.contacts_help as any} />
-          <ProfessionalCard contactsProfessional={cardData.contacts_professional as any} />
-          <SafetyCard safety={cardData["safety"] || []} />
-          <ReasonToLiveCard reasonToLive={cardData["reason_to_live"] || []} reasonToLiveImage={cardData["reason_to_live_image"] || []} />
+          <AlertCard
+            alerts={cardData["alerts"] || []}
+            addElement={() => {
+              navigation.navigate("crisis-plan-slide-alert", {
+                isEdit: true,
+              });
+            }}
+          />
+          <ActivitiesCard
+            activities={cardData["activities"] || []}
+            addElement={() => {
+              navigation.navigate("crisis-plan-slide-activities", {
+                isEdit: true,
+              });
+            }}
+          />
+          <ChangeIdeasCard
+            contactsChangeIdeas={cardData.contacts_change_ideas as any}
+            addElement={() => {
+              navigation.navigate("crisis-plan-slide-contact", {
+                isEdit: true,
+              });
+            }}
+          />
+          <HelpCard
+            contactsHelp={cardData.contacts_help as any}
+            addElement={() => {
+              navigation.navigate("crisis-plan-slide-contact-help", {
+                isEdit: true,
+              });
+            }}
+          />
+          <ProfessionalCard
+            contactsProfessional={cardData.contacts_professional as any}
+            addElement={() => {
+              navigation.navigate("crisis-plan-slide-contact-professional", {
+                isEdit: true,
+              });
+            }}
+          />
+          <SafetyCard
+            safety={cardData["safety"] || []}
+            addElement={() => {
+              navigation.navigate("crisis-plan-slide-safety", {
+                isEdit: true,
+              });
+            }}
+          />
+          <ReasonToLiveCard
+            reasonToLive={cardData["reason_to_live"] || []}
+            reasonToLiveImage={cardData["reason_to_live_image"] || []}
+            addElement={() => {
+              navigation.navigate("crisis-plan-slide-reason-to-live", {
+                isEdit: true,
+              });
+            }}
+          />
         </ScrollView>
       </View>
     </>

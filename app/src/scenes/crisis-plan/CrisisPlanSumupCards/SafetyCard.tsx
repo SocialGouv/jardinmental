@@ -5,12 +5,14 @@ import ArrowIcon from "@assets/svg/icon/Arrow";
 import { typography } from "@/utils/typography";
 import { mergeClassNames } from "@/utils/className";
 import { TW_COLORS } from "@/utils/constants";
+import PlusIcon from "@assets/svg/icon/plus";
 
 type SafetyCardProps = {
   safety: string[];
+  addElement: () => void;
 };
 
-const SafetyCard: React.FC<SafetyCardProps> = ({ safety }) => {
+const SafetyCard: React.FC<SafetyCardProps> = ({ safety, addElement }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -21,7 +23,7 @@ const SafetyCard: React.FC<SafetyCardProps> = ({ safety }) => {
         borderColor: "#CED9EB",
       }}
     >
-      <TouchableOpacity onPress={() => setIsOpen((v) => !v)} className="flex-column space-y-4">
+      <TouchableOpacity onPress={() => setIsOpen((v) => !v)} className="flex-column space-y-4" disabled={!safety.length}>
         <View className="flex-row items-center justify-between">
           <View className="flex-row items-center">
             <Text
@@ -34,15 +36,25 @@ const SafetyCard: React.FC<SafetyCardProps> = ({ safety }) => {
             </Text>
             <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-950")}>Environnement sécurisé</Text>
           </View>
-          <TouchableOpacity onPress={() => setIsOpen((v) => !v)} className="mr-2">
-            <ChevronIcon width={14} height={14} direction={isOpen ? "down" : "up"} strokeWidth={2} />
-          </TouchableOpacity>
+          {!!safety.length && (
+            <View className="mr-2">
+              <ChevronIcon width={14} height={14} direction={isOpen ? "down" : "up"} strokeWidth={2} />
+            </View>
+          )}
         </View>
-        <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700")}>
-          Les façons d’assurer votre sécurité ou de sécuriser votre environnement :
-        </Text>
+        {safety.length === 0 && <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700")}>Aucun élément pour le moment.</Text>}
+        {safety.length !== 0 && (
+          <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700")}>
+            Les façons d’assurer votre sécurité ou de sécuriser votre environnement :
+          </Text>
+        )}
+        {!safety.length && (
+          <TouchableOpacity className="flex-row items-center space-x-1" onPress={addElement}>
+            <PlusIcon color={TW_COLORS.CNAM_PRIMARY_700} />{" "}
+            <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40")}>Ajouter un élément</Text>
+          </TouchableOpacity>
+        )}
       </TouchableOpacity>
-
       {isOpen && (
         <View className="flex-colmun">
           <View className="flex-colmun space-y-2">
@@ -56,9 +68,6 @@ const SafetyCard: React.FC<SafetyCardProps> = ({ safety }) => {
                 </View>
               );
             })}
-            {safety.length === 0 && (
-              <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900")}>Aucune élément renseigné.</Text>
-            )}
           </View>
         </View>
       )}

@@ -6,8 +6,10 @@ import { typography } from "@/utils/typography";
 import { mergeClassNames } from "@/utils/className";
 import { TW_COLORS } from "@/utils/constants";
 import User from "@assets/svg/icon/User";
+import PlusIcon from "@assets/svg/icon/plus";
 
 type HelpCardProps = {
+  addElement: () => void;
   contactsHelp: {
     name: string;
     phoneNumbers: [
@@ -19,7 +21,7 @@ type HelpCardProps = {
   }[];
 };
 
-const HelpCard: React.FC<HelpCardProps> = ({ contactsHelp }) => {
+const HelpCard: React.FC<HelpCardProps> = ({ contactsHelp, addElement }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   // Filter contacts to only those with a valid phone number
@@ -47,7 +49,7 @@ const HelpCard: React.FC<HelpCardProps> = ({ contactsHelp }) => {
         borderColor: "#99DDD2",
       }}
     >
-      <TouchableOpacity onPress={() => setIsOpen((v) => !v)} className="flex-column space-y-4">
+      <TouchableOpacity onPress={() => setIsOpen((v) => !v)} className="flex-column space-y-4" disabled={!filteredContacts.length}>
         <View className="flex-row items-center justify-between">
           <View className="flex-row items-center">
             <Text
@@ -60,13 +62,26 @@ const HelpCard: React.FC<HelpCardProps> = ({ contactsHelp }) => {
             </Text>
             <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-950")}>Demander de l’aide</Text>
           </View>
-          <TouchableOpacity onPress={() => setIsOpen((v) => !v)} className="mr-2">
-            <ChevronIcon width={14} height={14} direction={isOpen ? "down" : "up"} strokeWidth={2} />
-          </TouchableOpacity>
+          {!!filteredContacts.length && (
+            <View className="mr-2">
+              <ChevronIcon width={14} height={14} direction={isOpen ? "down" : "up"} strokeWidth={2} />
+            </View>
+          )}
         </View>
-        <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700")}>
-          Les proches que vous pouvez contacter pour recevoir de l’aide :{" "}
-        </Text>
+        {!!filteredContacts.length && (
+          <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700")}>
+            Les proches que vous pouvez contacter pour recevoir de l’aide :{" "}
+          </Text>
+        )}
+        {filteredContacts.length === 0 && (
+          <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700")}>Aucun élément pour le moment.</Text>
+        )}
+        {!filteredContacts.length && (
+          <TouchableOpacity className="flex-row items-center space-x-1" onPress={addElement}>
+            <PlusIcon color={TW_COLORS.CNAM_PRIMARY_700} />{" "}
+            <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40")}>Ajouter un élément</Text>
+          </TouchableOpacity>
+        )}
       </TouchableOpacity>
       {isOpen && (
         <View className="flex-colmun">
@@ -94,9 +109,6 @@ const HelpCard: React.FC<HelpCardProps> = ({ contactsHelp }) => {
                 </TouchableOpacity>
               );
             })}
-            {filteredContacts.length === 0 && (
-              <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900")}>Aucun contact renseigné.</Text>
-            )}
           </View>
         </View>
       )}

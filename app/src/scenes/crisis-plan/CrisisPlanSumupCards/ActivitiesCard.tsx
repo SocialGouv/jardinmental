@@ -5,12 +5,14 @@ import ArrowIcon from "@assets/svg/icon/Arrow";
 import { typography } from "@/utils/typography";
 import { mergeClassNames } from "@/utils/className";
 import { TW_COLORS } from "@/utils/constants";
+import PlusIcon from "@assets/svg/icon/plus";
 
 type ActivitiesCardProps = {
   activities: string[];
+  addElement: () => void;
 };
 
-const ActivitiesCard: React.FC<ActivitiesCardProps> = ({ activities }) => {
+const ActivitiesCard: React.FC<ActivitiesCardProps> = ({ activities, addElement }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -21,7 +23,7 @@ const ActivitiesCard: React.FC<ActivitiesCardProps> = ({ activities }) => {
         borderColor: "#F9D1E6E6",
       }}
     >
-      <TouchableOpacity onPress={() => setIsOpen((v) => !v)} className=" flex-column space-y-4">
+      <TouchableOpacity onPress={() => setIsOpen((v) => !v)} className=" flex-column space-y-4" disabled={!activities.length}>
         <View className="flex-row items-center justify-between">
           <View className="flex-row items-center">
             <Text
@@ -34,13 +36,24 @@ const ActivitiesCard: React.FC<ActivitiesCardProps> = ({ activities }) => {
             </Text>
             <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-950")}>Activités</Text>
           </View>
-          <TouchableOpacity onPress={() => setIsOpen((v) => !v)} className="mr-2">
-            <ChevronIcon width={14} height={14} direction={isOpen ? "down" : "up"} strokeWidth={2} />
-          </TouchableOpacity>
+          {!!activities.length && (
+            <TouchableOpacity onPress={() => setIsOpen((v) => !v)} className="mr-2">
+              <ChevronIcon width={14} height={14} direction={isOpen ? "down" : "up"} strokeWidth={2} />
+            </TouchableOpacity>
+          )}
         </View>
-        <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700")}>
-          Ce que vous pouvez faire seul.e pour mettre à distance les idées suicidaires :
-        </Text>
+        {!!activities.length && (
+          <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700")}>
+            Ce que vous pouvez faire seul.e pour mettre à distance les idées suicidaires :
+          </Text>
+        )}
+        {!activities.length && <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700")}>Aucun élément pour le moment.</Text>}
+        {!activities.length && (
+          <TouchableOpacity className="flex-row items-center space-x-1" onPress={addElement}>
+            <PlusIcon color={TW_COLORS.CNAM_PRIMARY_700} />{" "}
+            <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40")}>Ajouter un élément</Text>
+          </TouchableOpacity>
+        )}
       </TouchableOpacity>
       {isOpen && (
         <View className="flex-colmun space-y-2">
@@ -54,9 +67,6 @@ const ActivitiesCard: React.FC<ActivitiesCardProps> = ({ activities }) => {
               </View>
             );
           })}
-          {activities.length === 0 && (
-            <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900")}>Aucune activité renseignée.</Text>
-          )}
         </View>
       )}
     </View>

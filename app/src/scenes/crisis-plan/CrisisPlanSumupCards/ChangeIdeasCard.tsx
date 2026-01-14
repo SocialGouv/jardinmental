@@ -6,8 +6,10 @@ import { typography } from "@/utils/typography";
 import { mergeClassNames } from "@/utils/className";
 import { TW_COLORS } from "@/utils/constants";
 import User from "@assets/svg/icon/User";
+import PlusIcon from "@assets/svg/icon/plus";
 
 type ChangeIdeasCardProps = {
+  addElement: () => void;
   contactsChangeIdeas: {
     name: string;
     activities?: string[];
@@ -20,7 +22,7 @@ type ChangeIdeasCardProps = {
   }[];
 };
 
-const ChangeIdeasCard: React.FC<ChangeIdeasCardProps> = ({ contactsChangeIdeas }) => {
+const ChangeIdeasCard: React.FC<ChangeIdeasCardProps> = ({ contactsChangeIdeas, addElement }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   // Filter contacts to only those with a valid phone number
@@ -48,7 +50,7 @@ const ChangeIdeasCard: React.FC<ChangeIdeasCardProps> = ({ contactsChangeIdeas }
         borderColor: "#99DBF2",
       }}
     >
-      <TouchableOpacity onPress={() => setIsOpen((v) => !v)} className=" flex-column space-y-4">
+      <TouchableOpacity onPress={() => setIsOpen((v) => !v)} className=" flex-column space-y-4" disabled={!filteredContacts.length}>
         <View className="flex-row items-center justify-between">
           <View className="flex-row items-center">
             <Text
@@ -61,13 +63,26 @@ const ChangeIdeasCard: React.FC<ChangeIdeasCardProps> = ({ contactsChangeIdeas }
             </Text>
             <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-950")}>Se changer les idées</Text>
           </View>
-          <TouchableOpacity onPress={() => setIsOpen((v) => !v)} className="mr-2">
-            <ChevronIcon width={14} height={14} direction={isOpen ? "down" : "up"} strokeWidth={2} />
-          </TouchableOpacity>
+          {!!filteredContacts.length && (
+            <View className="mr-2">
+              <ChevronIcon width={14} height={14} direction={isOpen ? "down" : "up"} strokeWidth={2} />
+            </View>
+          )}
         </View>
-        <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700")}>
-          Les proches que vous pouvez contacter et les activités que vous pouvez faire ensemble pour vous changer les idées :
-        </Text>
+        {!!filteredContacts.length && (
+          <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700")}>
+            Les proches que vous pouvez contacter et les activités que vous pouvez faire ensemble pour vous changer les idées :
+          </Text>
+        )}
+        {filteredContacts.length === 0 && (
+          <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700")}>Aucun élément pour le moment.</Text>
+        )}
+        {!filteredContacts.length && (
+          <TouchableOpacity className="flex-row items-center space-x-1" onPress={addElement}>
+            <PlusIcon color={TW_COLORS.CNAM_PRIMARY_700} />{" "}
+            <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40")}>Ajouter un élément</Text>
+          </TouchableOpacity>
+        )}
       </TouchableOpacity>
       {isOpen && (
         <View className="flex-colmun">
@@ -98,9 +113,6 @@ const ChangeIdeasCard: React.FC<ChangeIdeasCardProps> = ({ contactsChangeIdeas }
                 </TouchableOpacity>
               );
             })}
-            {filteredContacts.length === 0 && (
-              <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900")}>Aucun contact renseigné.</Text>
-            )}
           </View>
         </View>
       )}

@@ -82,7 +82,8 @@ export const CrisisPlanSlideComponent: React.FC<ModalCorrelationScreenProps> = (
           paddingBottom: 100,
         }}
       >
-        <CrisisProgressBar slideIndex={slideIndex} />
+        {!route?.params?.isEdit && <CrisisProgressBar slideIndex={slideIndex} />}
+
         <View className="flex-column py-4 space-y-4 px-2 rounded-2xl">
           <Text className={mergeClassNames(typography.textLgSemibold, "text-primary-900")}>{title}</Text>
         </View>
