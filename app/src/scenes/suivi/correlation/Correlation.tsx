@@ -19,7 +19,7 @@ import ArrowUpSvg from "@assets/svg/icon/ArrowUp";
 import InfoCircle from "@assets/svg/icon/InfoCircle";
 import { Indicator } from "@/entities/Indicator";
 
-const screenHeight = Dimensions.get("screen").height;
+const screenHeight = Dimensions.get("window").height;
 
 export const CorrelationHeader = ({ fromDate, toDate, scrollY }) => {
   const { showBottomSheet } = useBottomSheet();
