@@ -34,21 +34,12 @@ export const CrisisBottomSheet = ({
   header: string;
 }) => {
   const [text, setText] = useState<string>(initialText);
-  const screenHeight = Dimensions.get("window").height;
-  console.log("LKCS TOTO", isExtended);
   return (
-    <View
-      // className={mergeClassNames("flex-1 flex-col bg-white", isExtended ? "h-full" : "")}
-      // style={isExtended ? { flex: 1, flexDirection: "column", height: "100%" } : { flex: 1, flexDirection: "column" }}
-      className={mergeClassNames("flex-1 flex-col bg-white")}
-      style={{ flex: 1, flexDirection: "column" }}
-    >
+    <View className={mergeClassNames("flex-1 flex-col bg-white")} style={{ flex: 1, flexDirection: "column" }}>
       <ScrollView
         bounces={false}
         className={mergeClassNames("flex-1")}
         style={{ flexGrow: 1 }}
-        // className={mergeClassNames("flex-1", isExtended ? "h-full" : "")}
-        // style={isExtended ? { flex: 1, height: "100%" } : { flexGrow: 1 }}
         contentContainerStyle={{ paddingBottom: 20 }}
         showsVerticalScrollIndicator={false}
       >
@@ -99,18 +90,6 @@ export const CrisisBottomSheet = ({
                 textAlignVertical="top"
               />
             </View>
-            {/* <InputText
-              containerStyle={{
-                flexGrow: 1,
-              }}
-              placeholder={placeholder}
-              value={text}
-              onChangeText={(inputText) => {
-                setText(inputText);
-              }}
-              multiline={true}
-              textAlignVertical="top"
-            /> */}
           </View>
         </View>
       </ScrollView>
