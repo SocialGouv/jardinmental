@@ -21,6 +21,69 @@ import { CrisisMediaBottomSheet } from "./CrisisMediaBottomSheet";
 import NavigationButtons from "@/components/onboarding/NavigationButtons";
 import CrisisProgressBar from "./CrisisProgressBar";
 
+// Handles fallback logic for displaying images
+const ImageWithFallback = ({ localUri, originalUri, style }: { localUri: string; originalUri: string; style?: any }) => {
+  const [uriToShow, setUriToShow] = React.useState<string | null>(null);
+  const [checked, setChecked] = React.useState(false);
+
+  React.useEffect(() => {
+    let isMounted = true;
+    const checkUris = async () => {
+      // Check localUri first
+      if (localUri) {
+        try {
+          const info = await FileSystem.getInfoAsync(localUri);
+          if (info.exists && isMounted) {
+            setUriToShow(localUri);
+            setChecked(true);
+            return;
+          }
+        } catch {}
+      }
+      // Fallback to originalUri
+      if (originalUri) {
+        try {
+          const info = await FileSystem.getInfoAsync(originalUri);
+          if (info.exists && isMounted) {
+            setUriToShow(originalUri);
+            setChecked(true);
+            return;
+          }
+        } catch {}
+      }
+      // Neither exists
+      if (isMounted) {
+        setUriToShow(null);
+        setChecked(true);
+      }
+    };
+    checkUris();
+    return () => {
+      isMounted = false;
+    };
+  }, [localUri, originalUri]);
+
+  if (!checked) {
+    return (
+      <View style={[style, { alignItems: "center", justifyContent: "center", backgroundColor: "#f0f0f0" }]}>
+        <ActivityIndicator />
+      </View>
+    );
+  }
+
+  if (uriToShow) {
+    return <Image source={{ uri: uriToShow }} style={style} resizeMode="cover" />;
+  }
+
+  // Placeholder with message
+  return (
+    <View style={[style, { alignItems: "center", justifyContent: "center", backgroundColor: "#f0f0f0" }]}>
+      <ImageIcon />
+      <Text style={{ textAlign: "center", color: "#888", fontSize: 12, marginTop: 4 }}>la photo n'existe plus sur votre téléphone</Text>
+    </View>
+  );
+};
+
 interface ModalCorrelationScreenProps {
   navigation: any;
   route: {
@@ -56,27 +119,15 @@ export const CrisisPlanSlideReasonToLive: React.FC<ModalCorrelationScreenProps> 
   const { showBottomSheet, closeBottomSheet } = useBottomSheet();
 
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
-  const [selectedImages, setSelectedImages] = useState<{ uri: string }[]>([]);
-  const [localImagePaths, setLocalImagePaths] = useState<string[]>([]);
+  const [selectedImages, setSelectedImages] = useState<{ localUri: string; originalUri: string }[]>([]);
   const [text, setText] = useState<string>();
 
   const saveAndValidate = async () => {
     try {
-      const storageKey = storageImageKey;
-      // Récupère l'objet existant ou crée un nouveau
-      const existing = await AsyncStorage.getItem(storageKey);
-      let data: any = {};
-      if (existing) {
-        try {
-          data = JSON.parse(existing);
-        } catch {
-          data = [];
-        }
-      }
-      data = [...localImagePaths];
-      await AsyncStorage.setItem(storageKey, JSON.stringify(data));
+      // Save the array of { localUri, originalUri } objects
+      await AsyncStorage.setItem(storageImageKey, JSON.stringify(selectedImages));
     } catch (e) {
-      console.error("Erreur lors de la sauvegarde des paths d'images :", e);
+      console.error("Erreur lors de la sauvegarde des images :", e);
     }
   };
 
@@ -88,12 +139,16 @@ export const CrisisPlanSlideReasonToLive: React.FC<ModalCorrelationScreenProps> 
       if (Array.isArray(_parsedItems)) {
         setSelectedItems(_parsedItems);
       }
-      const _imagePaths = await AsyncStorage.getItem(storageImageKey);
+      const _imageObjs = await AsyncStorage.getItem(storageImageKey);
 
-      const _parsedImagePaths = JSON.parse(_imagePaths || "");
-      if (Array.isArray(_parsedImagePaths)) {
-        setLocalImagePaths(_parsedImagePaths);
-        setSelectedImages(_parsedImagePaths.map((p) => ({ uri: p })));
+      let parsedImages: { localUri: string; originalUri: string }[] = [];
+      try {
+        parsedImages = JSON.parse(_imageObjs || "[]");
+      } catch {
+        parsedImages = [];
+      }
+      if (Array.isArray(parsedImages)) {
+        setSelectedImages(parsedImages);
       }
     };
     cb();
@@ -140,14 +195,14 @@ export const CrisisPlanSlideReasonToLive: React.FC<ModalCorrelationScreenProps> 
     });
 
     if (!result.canceled && result.assets && result.assets.length > 0) {
-      setSelectedImages((prev) => [...prev, ...result.assets.map((asset) => ({ uri: asset.uri }))]);
-      // Copie chaque image dans le dossier local et stocke le path
-      const copiedPaths: string[] = [];
+      const newImages: { localUri: string; originalUri: string }[] = [];
       for (const asset of result.assets) {
         const localPath = await copyImageToLocalDir(asset.uri);
-        if (localPath) copiedPaths.push(localPath);
+        if (localPath) {
+          newImages.push({ localUri: localPath, originalUri: asset.uri });
+        }
       }
-      setLocalImagePaths((prev) => [...prev, ...copiedPaths]);
+      setSelectedImages((prev) => [...prev, ...newImages]);
     }
   };
   return (
@@ -276,9 +331,8 @@ export const CrisisPlanSlideReasonToLive: React.FC<ModalCorrelationScreenProps> 
                     navigation={undefined}
                     label={"Raisons de vivre"}
                     placeholder={""}
-                    onClose={function (_selectedImage) {
-                      setSelectedImages(_selectedImage);
-                      setLocalImagePaths(_selectedImage.map((img) => img.uri));
+                    onClose={function (_selectedImages) {
+                      setSelectedImages(_selectedImages);
                       closeBottomSheet();
                     }}
                     initialSelectedImages={selectedImages}
@@ -308,19 +362,20 @@ export const CrisisPlanSlideReasonToLive: React.FC<ModalCorrelationScreenProps> 
             </View>
           </TouchableOpacity>
           {selectedImages.map((img, idx) => (
-            <View
-              key={img.uri + idx}
-              className="bg-cnam-primary-50 rounded-2xl mb-2 items-center justify-center"
+            <ImageWithFallback
+              key={img.localUri + idx}
+              localUri={img.localUri}
+              originalUri={img.originalUri}
               style={{
                 borderWidth: 1.5,
                 borderColor: TW_COLORS.CNAM_PRIMARY_50,
                 width: 98,
                 height: 98,
+                borderRadius: 16,
+                marginBottom: 8,
                 overflow: "hidden",
               }}
-            >
-              <Image source={{ uri: img.uri }} style={{ width: 94, height: 94, borderRadius: 16 }} resizeMode="cover" />
-            </View>
+            />
           ))}
           {Array.from({ length: 2 - selectedImages.length }).map((_, idx) => (
             <View

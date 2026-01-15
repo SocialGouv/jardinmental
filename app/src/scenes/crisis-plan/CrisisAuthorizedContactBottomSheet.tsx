@@ -4,10 +4,19 @@ import { typography } from "@/utils/typography";
 import JMButton from "@/components/JMButton";
 import { TW_COLORS } from "@/utils/constants";
 import SettingsIcon from "@assets/svg/icon/Settings";
-import * as Contacts from "expo-contacts";
-import { Platform, Alert, Linking } from "react-native";
+import { Alert, Linking } from "react-native";
 
-export const CrisisAuthorizedContactBottomSheet = ({ label, onClose, header }: { label: string; onClose: () => any; header: string }) => {
+export const CrisisAuthorizedContactBottomSheet = ({
+  label,
+  onClose,
+  header,
+  description,
+}: {
+  label: string;
+  onClose: () => any;
+  header: string;
+  description: string;
+}) => {
   return (
     <View className="flex-1 bg-[#FCFCFD]">
       <ScrollView
@@ -42,7 +51,8 @@ export const CrisisAuthorizedContactBottomSheet = ({ label, onClose, header }: {
           }}
         >
           <Text className={(typography.textSmMedium, "text-primary-800 text-center")}>
-            Pour ajouter des contacts, autorisez l’application à accéder à la liste de vos contacts depuis les paramètres de votre téléphone.
+            {description ||
+              "Pour ajouter des contacts, autorisez l’application à accéder à la liste de vos contacts depuis les paramètres de votre téléphone."}
           </Text>
         </View>
         <View className="w-full py-6 px-6">
@@ -53,26 +63,6 @@ export const CrisisAuthorizedContactBottomSheet = ({ label, onClose, header }: {
               try {
                 // Check current permission status
                 Linking.openSettings();
-
-                // const { status, canAskAgain } = await Contacts.getPermissionsAsync();
-                // if (status === "granted") {
-                //   Alert.alert("Déjà autorisé", "L'accès aux contacts est déjà autorisé dans les paramètres.");
-                //   return;
-                // }
-                // if (status === "denied" && !canAskAgain) {
-                //   // User has denied and cannot ask again, open settings
-                //   Linking.openSettings();
-                //   return;
-                // }
-                // // If permission is undetermined or denied but can ask again
-                // const { status: newStatus } = await Contacts.requestPermissionsAsync();
-                // if (newStatus === "granted") {
-                //   Alert.alert("Autorisation accordée", "L'accès aux contacts a été autorisé.");
-                //   return;
-                // } else {
-                //   // Still denied, open settings
-                //   Linking.openSettings();
-                // }
               } catch (e) {
                 Alert.alert("Erreur", "Impossible d'ouvrir les paramètres. Veuillez les ouvrir manuellement.");
               }

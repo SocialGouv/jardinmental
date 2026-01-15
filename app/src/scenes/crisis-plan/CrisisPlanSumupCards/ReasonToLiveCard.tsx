@@ -1,16 +1,91 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, Image, Modal, TouchableWithoutFeedback } from "react-native";
+import { View, Text, TouchableOpacity, Image, Modal, TouchableWithoutFeedback, ActivityIndicator } from "react-native";
 import ChevronIcon from "@assets/svg/icon/chevron";
 import ArrowIcon from "@assets/svg/icon/Arrow";
 import { typography } from "@/utils/typography";
 import { mergeClassNames } from "@/utils/className";
 import { TW_COLORS } from "@/utils/constants";
 import PlusIcon from "@assets/svg/icon/plus";
+import ImageIcon from "@assets/svg/icon/ImageIcon";
+import * as FileSystem from "expo-file-system";
+
+// Handles fallback logic for displaying images
+const ImageWithFallback = ({
+  localUri,
+  originalUri,
+  style,
+  resizeMode = "cover",
+}: {
+  localUri: string;
+  originalUri: string;
+  style?: any;
+  resizeMode?: any;
+}) => {
+  const [uriToShow, setUriToShow] = React.useState<string | null>(null);
+  const [checked, setChecked] = React.useState(false);
+
+  React.useEffect(() => {
+    let isMounted = true;
+    const checkUris = async () => {
+      // Check localUri first
+      if (localUri) {
+        try {
+          const info = await FileSystem.getInfoAsync(localUri);
+          if (info.exists && isMounted) {
+            setUriToShow(localUri);
+            setChecked(true);
+            return;
+          }
+        } catch {}
+      }
+      // Fallback to originalUri
+      if (originalUri) {
+        try {
+          const info = await FileSystem.getInfoAsync(originalUri);
+          if (info.exists && isMounted) {
+            setUriToShow(originalUri);
+            setChecked(true);
+            return;
+          }
+        } catch {}
+      }
+      // Neither exists
+      if (isMounted) {
+        setUriToShow(null);
+        setChecked(true);
+      }
+    };
+    checkUris();
+    return () => {
+      isMounted = false;
+    };
+  }, [localUri, originalUri]);
+
+  if (!checked) {
+    return (
+      <View style={[style, { alignItems: "center", justifyContent: "center", backgroundColor: "#f0f0f0" }]}>
+        <ActivityIndicator />
+      </View>
+    );
+  }
+
+  if (uriToShow) {
+    return <Image source={{ uri: uriToShow }} style={style} resizeMode={resizeMode} />;
+  }
+
+  // Placeholder with message
+  return (
+    <View style={[style, { alignItems: "center", justifyContent: "center", backgroundColor: "#f0f0f0" }]}>
+      <ImageIcon />
+      <Text style={{ textAlign: "center", color: "#888", fontSize: 12, marginTop: 4 }}>la photo n'existe plus sur votre téléphone</Text>
+    </View>
+  );
+};
 
 type ReasonToLiveCardProps = {
   addElement: () => void;
   reasonToLive: string[];
-  reasonToLiveImage: string[];
+  reasonToLiveImage: { localUri: string; originalUri: string }[];
 };
 
 function chunk<T>(arr: T[], size: number): T[][] {
@@ -24,11 +99,11 @@ function chunk<T>(arr: T[], size: number): T[][] {
 const ReasonToLiveCard: React.FC<ReasonToLiveCardProps> = ({ reasonToLive, reasonToLiveImage, addElement }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [selectedImage, setSelectedImage] = useState<{ localUri: string; originalUri: string } | null>(null);
 
   const chunkedImages = chunk(reasonToLiveImage || [], 3);
 
-  const openImageModal = (img: string) => {
+  const openImageModal = (img: { localUri: string; originalUri: string }) => {
     setSelectedImage(img);
     setModalVisible(true);
   };
@@ -63,19 +138,17 @@ const ReasonToLiveCard: React.FC<ReasonToLiveCardProps> = ({ reasonToLive, reaso
             </Text>
             <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-950")}>Raisons de vivre</Text>
           </View>
-          {!!reasonToLive.length ||
-            (!!reasonToLiveImage.length && (
-              <View className="mr-2">
-                <ChevronIcon width={14} height={14} direction={isOpen ? "down" : "up"} strokeWidth={2} />
-              </View>
-            ))}
-        </View>
-        {!!reasonToLive.length ||
-          (!!reasonToLiveImage.length && (
-            <View>
-              <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700")}>Vos principales raisons de vivre :</Text>
+          {(!!reasonToLive.length || !!reasonToLiveImage.length) && (
+            <View className="mr-2">
+              <ChevronIcon width={14} height={14} direction={isOpen ? "down" : "up"} strokeWidth={2} />
             </View>
-          ))}
+          )}
+        </View>
+        {(!!reasonToLive.length || !!reasonToLiveImage.length) && (
+          <View>
+            <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700")}>Vos principales raisons de vivre :</Text>
+          </View>
+        )}
         {!reasonToLive.length && !reasonToLiveImage.length && (
           <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700")}>Aucun élément pour le moment.</Text>
         )}
@@ -110,7 +183,12 @@ const ReasonToLiveCard: React.FC<ReasonToLiveCardProps> = ({ reasonToLive, reaso
                     }}
                   >
                     {selectedImage && (
-                      <Image source={{ uri: selectedImage }} style={{ width: 300, height: 300, borderRadius: 16, resizeMode: "contain" }} />
+                      <ImageWithFallback
+                        localUri={selectedImage.localUri}
+                        originalUri={selectedImage.originalUri}
+                        style={{ width: 300, height: 300, borderRadius: 16 }}
+                        resizeMode="contain"
+                      />
                     )}
                     <TouchableOpacity
                       onPress={closeImageModal}
@@ -148,7 +226,12 @@ const ReasonToLiveCard: React.FC<ReasonToLiveCardProps> = ({ reasonToLive, reaso
                         overflow: "hidden",
                       }}
                     >
-                      <Image source={{ uri: img }} style={{ width: 94, height: 94, borderRadius: 16 }} resizeMode="cover" />
+                      <ImageWithFallback
+                        localUri={img.localUri}
+                        originalUri={img.originalUri}
+                        style={{ width: 94, height: 94, borderRadius: 16 }}
+                        resizeMode="cover"
+                      />
                     </TouchableOpacity>
                   ))}
                   {Array.from({ length: 3 - row.length }).map((_, idx) => {

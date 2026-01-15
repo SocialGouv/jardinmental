@@ -24,7 +24,7 @@ export const CrisisPlanSlideFinal: React.FC<ModalCorrelationScreenProps> = ({ na
   useEffect(() => {
     AsyncStorage.setItem("@CRISIS_PLAN_COMPLETED", "true");
   }, []);
-  //CNAM - secondary/Cyan (Accent)/50 lighten 90
+
   return (
     <View className="flex-1 bg-cnam-cyan-50-lighten-90">
       <CrisisHeader initialRouteName={route.params?.initialRouteName} navigation={navigation} title={"Mon plan de crise"} />

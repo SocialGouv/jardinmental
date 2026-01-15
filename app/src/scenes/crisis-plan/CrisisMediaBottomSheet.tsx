@@ -17,20 +17,18 @@ export const CrisisMediaBottomSheet = ({
   placeholder,
   onClose,
   initialText,
-  onDelete,
-  onValidate,
   header,
   initialSelectedImages,
 }: {
   navigation: any;
   label: string;
   placeholder: string;
-  onClose: (selectedImage: { uri: string }[]) => any;
+  onClose: (selectedImages: { localUri: string; originalUri: string }[]) => any;
   initialText: string;
   header: string;
-  initialSelectedImages: { uri: string }[];
+  initialSelectedImages: { localUri: string; originalUri: string }[];
 }) => {
-  const [selectedImages, setSelectedImages] = useState<{ uri: string }[]>(initialSelectedImages || []);
+  const [selectedImages, setSelectedImages] = useState<{ localUri: string; originalUri: string }[]>(initialSelectedImages || []);
   const { closeBottomSheet } = useBottomSheet();
 
   return (
@@ -54,7 +52,7 @@ export const CrisisMediaBottomSheet = ({
               onPress={() => {
                 setSelectedImages(selectedImages.filter((_, i) => i !== idx));
               }}
-              key={img.uri + idx}
+              key={img.localUri + idx}
               className="bg-cnam-primary-50 rounded-2xl mb-2 items-center justify-center"
               style={{
                 borderWidth: 1.5,
@@ -64,7 +62,7 @@ export const CrisisMediaBottomSheet = ({
                 overflow: "hidden",
               }}
             >
-              <Image source={{ uri: img.uri }} style={{ width: 94, height: 94, borderRadius: 16, opacity: 0.5 }} resizeMode="cover" />
+              <Image source={{ uri: img.localUri }} style={{ width: 94, height: 94, borderRadius: 16, opacity: 0.5 }} resizeMode="cover" />
               <View
                 className="bg-white rounded-2xl border-1 border-cnam-primary-800 w-10 h-10 absolute items-center justify-center"
                 style={{

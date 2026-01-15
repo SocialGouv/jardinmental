@@ -33,7 +33,6 @@ interface ModalCorrelationScreenProps {
 }
 
 export const CrisisPlanSumupList: React.FC<ModalCorrelationScreenProps> = ({ navigation, route }) => {
-  //CNAM - secondary/Cyan (Accent)/50 lighten 90
   const [isLoadingPdf, setIsLoadingPdf] = useState(false);
   type Contact = {
     name: string;
@@ -99,13 +98,39 @@ export const CrisisPlanSumupList: React.FC<ModalCorrelationScreenProps> = ({ nav
       const convertImagesToBase64 = async () => {
         const base64Images = await Promise.all(
           cardData.reason_to_live_image.map(async (img) => {
-            const base64 = await FileSystem.readAsStringAsync(img, {
-              encoding: FileSystem.EncodingType.Base64,
-            });
-            return `data:image/jpeg;base64,${base64}`;
+            let uri: string | null = null;
+            if (img && typeof img === "object" && "localUri" in img && "originalUri" in img) {
+              // Try localUri first, then originalUri
+              try {
+                const info = await FileSystem.getInfoAsync(img.localUri);
+                if (info.exists) {
+                  uri = img.localUri;
+                } else {
+                  const infoOrig = await FileSystem.getInfoAsync(img.originalUri);
+                  if (infoOrig.exists) {
+                    uri = img.originalUri;
+                  }
+                }
+              } catch {
+                uri = img.localUri || img.originalUri;
+              }
+            }
+            if (uri) {
+              try {
+                const base64 = await FileSystem.readAsStringAsync(uri, {
+                  encoding: FileSystem.EncodingType.Base64,
+                });
+                return `data:image/jpeg;base64,${base64}`;
+              } catch {
+                // If file not found or error, skip
+                return null;
+              }
+            }
+            return null;
           })
         );
-        return base64Images;
+        // Filter out nulls (missing images)
+        return base64Images.filter(Boolean);
       };
 
       const base64Images = await convertImagesToBase64();
@@ -333,7 +358,13 @@ export const CrisisPlanSumupList: React.FC<ModalCorrelationScreenProps> = ({ nav
           />
           <ReasonToLiveCard
             reasonToLive={cardData["reason_to_live"] || []}
-            reasonToLiveImage={cardData["reason_to_live_image"] || []}
+            reasonToLiveImage={
+              Array.isArray(cardData["reason_to_live_image"]) &&
+              cardData["reason_to_live_image"].length > 0 &&
+              typeof cardData["reason_to_live_image"][0] === "string"
+                ? cardData["reason_to_live_image"].map((uri: string) => ({ localUri: uri, originalUri: uri }))
+                : cardData["reason_to_live_image"] || []
+            }
             addElement={() => {
               navigation.navigate("crisis-plan-slide-reason-to-live", {
                 isEdit: true,
