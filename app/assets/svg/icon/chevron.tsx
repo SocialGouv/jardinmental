@@ -6,9 +6,11 @@ interface ChevronIconProps {
   color?: string;
   strokeWidth?: number;
   direction?: Direction;
+  width: number;
+  height: number;
 }
 
-export default function ChevronIcon({ color, strokeWidth, direction = "left" }: ChevronIconProps) {
+export default function ChevronIcon({ color, strokeWidth, direction = "left", width, height }: ChevronIconProps) {
   const getRotation = () => {
     switch (direction) {
       case "right":
@@ -26,7 +28,7 @@ export default function ChevronIcon({ color, strokeWidth, direction = "left" }: 
   const rotation = getRotation();
 
   return (
-    <Svg width="8" height="12" viewBox="0 0 8 12" fill="none">
+    <Svg width={width || "8"} height={height || "12"} viewBox="0 0 8 12" fill="none">
       <G origin="4, 6" rotation={rotation}>
         <Path
           d="M6.5 11L1.5 6L6.5 1"

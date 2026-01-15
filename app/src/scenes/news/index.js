@@ -14,7 +14,7 @@ export const getBadgeNotesVersion = async () => {
   return lastNotesVersion !== LAST_NOTES_VERSION;
 };
 
-const LAST_NOTES_VERSION = "1.43.16";
+const LAST_NOTES_VERSION = "1.43.17";
 
 export default ({ navigation }) => {
   useEffect(() => {
@@ -29,6 +29,16 @@ export default ({ navigation }) => {
         <Image style={styles.image} className="rounded-lg" source={require("../../../assets/imgs/icon.png")} />
       </View>
       <ScrollView style={styles.cgu} contentContainerStyle={styles.scrollContainer}>
+        <Card title="Plan de crise “idées suicidaires” disponible dans les outils" version="v1.43.17" date="12/2025">
+          <Item showDot={false}>
+            <Text style={styles.text}>
+              Le plan de crise par Hop ma Liste est un outil bref et concret pour <Text style={styles.bold}>faire face aux idées suicidaires</Text> :
+              il rassemble vos signes d’alerte, des actions immédiates, des contacts proches et professionnels, des mesures de sécurité et vos raisons
+              de vivre.
+            </Text>
+            <Text style={styles.text}>Vous pouvez y accéder dans la rubrique Agir, catégorie “Gérer une crise”.</Text>
+          </Item>
+        </Card>
         <Card title="Nouveautés — Section « Agir » et export de vos données" version="v1.43.16" date="12/2025">
           <Item>
             <Text style={styles.bold}>Découvrez Agir, la boite à outils pour prendre soin de votre santé mentale.</Text>

@@ -102,7 +102,6 @@ export const ToolFilterBottomSheet = ({
           <View className="flex-row flex-wrap items-center">
             {AUDIENCE_TYPES.map((filter) => {
               const isSelected = audienceFilters.includes(filter.id as ToolItemAudience);
-              // CNAM - secondary/Cyan (Accent)/700 darken 40
               if (isSelected) {
                 return (
                   <TouchableOpacity

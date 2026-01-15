@@ -20,6 +20,7 @@ import ParagraphSpacing from "@assets/svg/icon/ParagraphSpacing";
 import TrashIcon from "@assets/svg/icon/Trash";
 import CrossIcon from "@assets/svg/icon/Cross";
 import { IndicatorEditProvider, useIndicatorEdit } from "@/context/IndicatorEditContext";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const CustomSymptomScreenContent = ({ navigation, route, settings = false }) => {
   const [chosenCategories, setChosenCategories] = React.useState();
@@ -28,6 +29,16 @@ const CustomSymptomScreenContent = ({ navigation, route, settings = false }) => 
   const bannerTimeout = useRef<number | undefined>(undefined);
 
   const { userIndicateurs, setUserIndicateurs, isLoading, setIsLoading, saveIndicators, resetIndicators } = useIndicatorEdit();
+  const insets = useSafeAreaInsets();
+
+  // Refetch userIndicateurs depuis le localStorage à chaque arrivée sur l'écran si on n'est pas en édition
+  useFocusEffect(
+    React.useCallback(() => {
+      if (!isEditing) {
+        resetIndicators();
+      }
+    }, [isEditing, resetIndicators])
+  );
 
   useFocusEffect(
     React.useCallback(() => {
@@ -168,7 +179,12 @@ const CustomSymptomScreenContent = ({ navigation, route, settings = false }) => 
             </>
           </NavigationButtons>
           {showSuccessBanner && (
-            <View className="abolute left-0 right-0 -bottom-10 px-8 bg-cnam-cyan-700-darken-40">
+            <View
+              className="abolute left-0 right-0 px-8 bg-cnam-cyan-700-darken-40"
+              style={{
+                bottom: -insets.bottom,
+              }}
+            >
               <View className="flex-row items-center justify-between w-full h-20">
                 <Text
                   style={{

@@ -29,6 +29,7 @@ import * as FileSystem from "expo-file-system";
 import EyeIcon from "@assets/svg/icon/Eye";
 import * as Sharing from "expo-sharing";
 import PlayCircleIcon from "@assets/svg/icon/PlayCircle";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const screenHeight = Dimensions.get("window").height;
 const height90vh = screenHeight * 0.9;
@@ -49,6 +50,7 @@ export const ToolBottomSheet = ({
   const { closeBottomSheet } = useBottomSheet();
   const [isBookmarked, setIsBookmarked] = useState<boolean>(false);
   const [showAllThemes, setShowAllThemes] = useState<boolean>(false);
+  const [crisisPlanCompleted, setCrisisPlanCompleted] = useState<boolean>(false);
   const { useInAppBrowser } = useInAppBrowserConfig();
 
   const itemId = toolItem.id;
@@ -58,6 +60,11 @@ export const ToolBottomSheet = ({
       try {
         const ids = await localStorage.getBookmarkedToolItems();
         setIsBookmarked(ids.includes(itemId));
+        console.log(toolItem);
+        if (toolItem.innerPath?.path === "crisis-plan") {
+          const _crisisPlanCompleted = await AsyncStorage.getItem("@CRISIS_PLAN_COMPLETED");
+          setCrisisPlanCompleted(_crisisPlanCompleted === "true");
+        }
       } catch (error) {
         console.error("Failed to load viewed resources:", error);
       }
@@ -357,7 +364,7 @@ export const ToolBottomSheet = ({
                 title={"Faire l'exercice de respiration"}
               />
             )}
-            {isFileType() && !toolItem.embed && !toolItem.video && (
+            {isFileType() && !toolItem.embed && !toolItem.video && !toolItem.innerPath && (
               <>
                 <JMButton
                   className="mb-2"
@@ -374,7 +381,21 @@ export const ToolBottomSheet = ({
                 />
               </>
             )}
-            {!isFileType() && !toolItem.embed && !toolItem.video && toolItem.id !== TOOL_BECK_ID && (
+            {toolItem.innerPath && (
+              <JMButton
+                className="mb-2"
+                onPress={() => {
+                  if (toolItem.innerPath?.path === "crisis-plan" && crisisPlanCompleted) {
+                    navigation.navigate("crisis-plan-slide-sumup-list");
+                  } else {
+                    navigation.navigate(toolItem.innerPath.path);
+                  }
+                  closeBottomSheet();
+                }}
+                title={toolItem.innerPath?.path === "crisis-plan" && crisisPlanCompleted ? "Voir mon plan de crise" : toolItem.innerPath.text}
+              />
+            )}
+            {!isFileType() && !toolItem.embed && !toolItem.video && toolItem.id !== TOOL_BECK_ID && !toolItem.innerPath && (
               <JMButton icon={<LinkExternal color="white" />} onPress={handleOpenUrl} title={"Voir l'outil"} />
             )}
             {toolItem.id === TOOL_BECK_ID && (
@@ -393,32 +414,6 @@ export const ToolBottomSheet = ({
             </View>
           )}
         </ScrollView>
-        {/* <View
-          style={{
-            position: "absolute",
-            bottom: 0,
-            left: 0,
-            right: 0,
-          }}
-          className={`flex-column justify-between items-center bg-white/90  w-full`}
-        >
-          <View className="w-full py-6 px-6">
-            {isFileType() && (
-              <JMButton
-                icon={<DownloadIcon color="white"></DownloadIcon>}
-                onPress={handleDownloadFile}
-                title={isDownloading ? "Téléchargement..." : "Télécharger le fichier"}
-                disabled={isDownloading}
-              />
-            )}
-            {!isFileType() && <JMButton icon={<LinkExternal color="white" />} onPress={handleOpenUrl} title={"Voir l'outil"} />}
-          </View>
-          {toolItem.source && (
-            <View className="w-full bg-gray-100 p-6">
-              <Text>Fourni par : {toolItem.source}</Text>
-            </View>
-          )}
-        </View> */}
       </View>
     </View>
   );

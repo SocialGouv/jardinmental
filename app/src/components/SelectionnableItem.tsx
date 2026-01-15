@@ -104,7 +104,7 @@ export function LightSelectionnableItem({
         )}
         <View className="flex-1">
           <Text className={mergeClassNames(typography.textMdMedium, "text-brand-950", disabled ? "line-through" : "")}>{label}</Text>
-          {description && <Text className={mergeClassNames(typography.textSmMedium, "text-gray-600 mt-1")}>{description}</Text>}
+          {description && <Text className={mergeClassNames(typography.textSmMedium, "text-gray-700 mt-1")}>{description}</Text>}
         </View>
       </View>
     </TouchableOpacity>

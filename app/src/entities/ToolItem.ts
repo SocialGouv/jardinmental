@@ -54,4 +54,8 @@ export interface ToolItemEntity {
   source?: string;
   embed?: string;
   video?: string;
+  innerPath?: {
+    text: string;
+    path: string;
+  };
 }

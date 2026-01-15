@@ -55,6 +55,12 @@ const commityList: CommityEntity[] = [
     organization: "Psycom-Santé mentale Info",
   },
   {
+    name: "Godier Edouard",
+    role: "Psychiatre",
+    role2: "Ancien Chef de Clinique au CHU d'Angers",
+    organization: "EPSM Guadeloupe",
+  },
+  {
     name: "Javelot Hervé",
     role: "Pharmacien hospitalier",
     role2: "Responsable du Centre de Ressources et d'Expertise en Psychopharmacologie (CREPP)",
@@ -108,6 +114,13 @@ const commityList: CommityEntity[] = [
     role2: "",
     isOrganization: true,
     organization: "Caisse Nationale d’Assurance maladie - Département de la prise en charge des assurés",
+  },
+  {
+    name: "",
+    role: "",
+    role2: "",
+    isOrganization: true,
+    organization: "CHU Angers",
   },
   {
     name: "",
@@ -215,7 +228,7 @@ const CommityCategories: React.FC<CommityCategoriesProps> = ({ navigation }) => 
               <View className="flex-col basis-[80%]">
                 <View className="flex-row">
                   {item.isOrganization && (
-                    <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40 text-center")}>
+                    <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40 text-center text-left")}>
                       {item.organization}
                     </Text>
                   )}

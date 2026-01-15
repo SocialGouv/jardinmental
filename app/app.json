@@ -2,30 +2,32 @@
   "expo": {
     "name": "Jardin Mental",
     "slug": "monsuivipsy",
-    "version": "1.43.16",
+    "version": "1.43.17",
     "orientation": "default",
     "icon": "./assets/imgs/icon.png",
     "scheme": "monsuivipsy",
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "org.reactjs.native.example.monsuivipsy",
-      "buildNumber": "383",
+      "buildNumber": "400",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
         "LSApplicationQueriesSchemes": ["tel", "telprompt", "sms", "mailto"],
         "CFBundleDevelopmentRegion": "fr",
-        "CFBundleLocalizations": ["fr"]
+        "CFBundleLocalizations": ["fr"],
+        "NSContactsUsageDescription": "Nous utilisons vos contacts pour vous permettre de sélectionner des personnes de confiance, des professionnels et des structures spécialisées en cas d’urgence.",
+        "NSPhotoLibraryUsageDescription": "Cette application accède à votre photothèque afin de vous permettre de sélectionner et d’importer des images."
       }
     },
     "android": {
       "googleServicesFile": "./google-services.json",
-      "versionCode": 362,
+      "versionCode": 378,
       "adaptiveIcon": {
         "foregroundImage": "./assets/imgs/icon.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.monsuivipsy",
-      "permissions": ["NOTIFICATIONS", "SCHEDULE_EXACT_ALARM", "POST_NOTIFICATIONS"]
+      "permissions": ["NOTIFICATIONS", "SCHEDULE_EXACT_ALARM", "POST_NOTIFICATIONS", "READ_CONTACTS", "READ_MEDIA_IMAGES", "READ_EXTERNAL_STORAGE"]
     },
     "plugins": [
       [
