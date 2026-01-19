@@ -135,6 +135,7 @@ module.exports = {
           "darken-40": "#60376D",
           "lighten-90": "#F5EFF8",
           "darken-80": "#201224",
+          0: "#A05BB6",
         },
         "cnam-bisque": {
           "600-Lighten-20": "#A44349",

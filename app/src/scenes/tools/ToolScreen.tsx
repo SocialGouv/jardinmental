@@ -19,6 +19,10 @@ import MenuIcon from "@assets/svg/icon/Menu";
 import { ToolFilterButton } from "./ToolFilterButton";
 import localStorage from "@/utils/localStorage";
 import { ToolThemeFilterBottomSheet } from "./ToolThemeFilterBottomSheet";
+import { AnimatedHeaderScrollScreen } from "../survey-v2/AnimatedHeaderScrollScreen";
+import ChevronIcon from "@assets/svg/icon/chevron";
+import BannerHeader from "../onboarding-v2/BannerHeader";
+import { interpolate } from "react-native-reanimated";
 
 interface ToolsScreenProps {
   navigation: any;
@@ -46,34 +50,6 @@ const ToolsScreen: React.FC<ToolsScreenProps> = ({ navigation, route }) => {
 
   // Store button positions for accurate scrolling
   const buttonPositions = useRef<Map<ToolThemeFilter, number>>(new Map()).current;
-
-  // Interpolate opacity for info button
-  const infoButtonOpacity = scrollY.interpolate({
-    inputRange: [0, 50],
-    outputRange: [1, 0],
-    extrapolate: "clamp",
-  });
-
-  // Interpolate height scale for info button
-  const infoButtonScale = scrollY.interpolate({
-    inputRange: [0, 50],
-    outputRange: [90, 0],
-    extrapolate: "clamp",
-  });
-
-  // Interpolate height scale for info button
-  const infoMargin = scrollY.interpolate({
-    inputRange: [0, 50],
-    outputRange: [2, 0],
-    extrapolate: "clamp",
-  });
-
-  // Interpolate font size for title
-  const titleFontSize = scrollY.interpolate({
-    inputRange: [0, 50],
-    outputRange: [24, 18],
-    extrapolate: "clamp",
-  });
 
   // Load bookmarked tool items on mount
   useEffect(() => {
@@ -150,7 +126,118 @@ const ToolsScreen: React.FC<ToolsScreenProps> = ({ navigation, route }) => {
   }, [formatFilters, audienceFilters, themeFilter, bookmarkedToolIds]);
 
   return (
-    <SafeAreaView edges={["left", "right"]} className="flex-1 bg-cnam-primary-50 ">
+    <SafeAreaView
+      className="flex-1"
+      edges={["top", "left", "right"]}
+      style={{
+        backgroundColor: TW_COLORS.CNAM_PRIMARY_50,
+      }}
+    >
+      <BannerHeader
+        handlePrevious={async () => {
+          navigation.goBack();
+        }}
+        bannerContainerStyle={{
+          paddingVertical: 16,
+          paddingBottom: 0,
+          paddingHorizontal: 0,
+        }}
+        header={null}
+        leftComponent={
+          <TouchableOpacity
+            onPress={async () => {
+              navigation.goBack();
+            }}
+            className="flex-row space-x-2 items-center justify-center"
+          >
+            <ChevronIcon direction="left" color={TW_COLORS.CNAM_PRIMARY_25} />
+            <Text className="text-cnam-primary-25">Mes indicateurs</Text>
+          </TouchableOpacity>
+        }
+        small={true}
+        title={""}
+      />
+      <View className="z-2 w-full bg-cnam-primary-50 pt-4">
+        <View>
+          <View className="flex-row mb-6">
+            <TouchableOpacity
+              onPress={() => {
+                showBottomSheet(
+                  <ToolThemeFilterBottomSheet
+                    initialThemeFilter={themeFilter}
+                    onClose={({ selectedThemeFilter }) => {
+                      if (selectedThemeFilter) {
+                        setThemeFilter(selectedThemeFilter);
+                      }
+                      closeBottomSheet();
+                    }}
+                  />
+                );
+              }}
+              className="p-2 ml-2"
+            >
+              <MenuIcon />
+            </TouchableOpacity>
+            <ScrollView ref={horizontalScrollViewRef} horizontal={true} showsHorizontalScrollIndicator={false} className="space-x-1">
+              <View className="flex-row space-x-2 items-center mx-4">
+                <View onLayout={(e) => onButtonLayout("Tout", e)}>
+                  <ToolFilterButton label="Tout" selected={themeFilter === "Tout"} onPress={() => setThemeFilter("Tout")} />
+                </View>
+                <View onLayout={(e) => onButtonLayout("Favoris", e)}>
+                  <ToolFilterButton
+                    label="Favoris"
+                    selected={themeFilter === "Favoris"}
+                    onPress={() => setThemeFilter("Favoris")}
+                    icon={<Bookmark width={16} height={16} color={themeFilter === "Favoris" ? TW_COLORS.WHITE : TW_COLORS.CNAM_PRIMARY_900} />}
+                  />
+                </View>
+                {ToolItemThemes.map((theme) => (
+                  <View key={theme} onLayout={(e) => onButtonLayout(theme, e)}>
+                    <ToolFilterButton label={theme} selected={themeFilter === theme} onPress={() => setThemeFilter(theme)} />
+                  </View>
+                ))}
+              </View>
+            </ScrollView>
+          </View>
+
+          <View className="flex-row justify-between items-center mb-4 px-4">
+            <Text className={mergeClassNames(typography.textXlSemibold, "text-cnam-primary-800 text-base flex-1")}>
+              {filteredTools.length} {filteredTools.length === 1 ? "outil" : "outils"}
+            </Text>
+            <TouchableOpacity
+              onPress={() => {
+                showBottomSheet(
+                  <ToolFilterBottomSheet
+                    initialAudienceFilters={audienceFilters}
+                    initialFormatFilters={formatFilters}
+                    onClose={(filters) => {
+                      if (filters) {
+                        setFormatFilters(filters.formatFilters);
+                        setAudienceFilters(filters.audienceFilters);
+                      }
+                      closeBottomSheet();
+                    }}
+                  />
+                );
+              }}
+              className="flex-row items-center"
+            >
+              <Tune width={16} height={16} color={TW_COLORS.CNAM_CYAN_700_DARKEN_40} />
+              <Text className="text-cnam-cyan-700-darken-40 text-base ml-2">Filtres ({filters.length})</Text>
+            </TouchableOpacity>
+            {filters.length > 0 && (
+              <TouchableOpacity
+                onPress={() => {
+                  setFormatFilters([]);
+                  setAudienceFilters([]);
+                }}
+              >
+                <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-800 ml-2")}>{"Effacer"}</Text>
+              </TouchableOpacity>
+            )}
+          </View>
+        </View>
+      </View>
       <FlatList
         className="px-4 z-0"
         data={filteredTools}
@@ -266,133 +353,8 @@ const ToolsScreen: React.FC<ToolsScreenProps> = ({ navigation, route }) => {
         nestedScrollEnabled={false}
         removeClippedSubviews={false}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 150, paddingTop: 300 }}
+        contentContainerStyle={{ paddingBottom: 150 }}
       />
-      <View className="absolute z-2 w-full bg-cnam-primary-50">
-        <View className="bg-cnam-primary-800 flex flex-row justify-between pb-0">
-          <Header navigation={navigation} />
-        </View>
-        <View className="mt-4">
-          <Animated.View
-            style={{
-              opacity: infoButtonOpacity,
-              height: infoButtonScale,
-              marginTop: infoMargin,
-              // transform: [{ scaleY: infoButtonScale }],
-              overflow: "hidden",
-            }}
-          >
-            <View className="px-4">
-              <Animated.Text
-                className="text-cnam-primary-950 font-semibold mb-3"
-                style={{
-                  fontSize: titleFontSize,
-                }}
-              >
-                Explorez les outils pour agir
-              </Animated.Text>
-            </View>
-            <Animated.View
-            // style={{
-            //   opacity: infoButtonOpacity,
-            //   height: infoButtonScale,
-            //   marginTop: infoMargin,
-            //   // transform: [{ scaleY: infoButtonScale }],
-            //   overflow: "hidden",
-            // }}
-            >
-              <TouchableOpacity
-                onPress={() => {
-                  navigation.navigate("tool-selection-info");
-                }}
-                className="flex-row bg-cnam-cyan-lighten-80 items-center mb-8 space-x-1 rounded-full px-3 self-start mx-4"
-              >
-                <ValidatedStampIcon />
-                <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>
-                  Comment ces outils sont-ils séléctionnés ?
-                </Text>
-              </TouchableOpacity>
-            </Animated.View>
-          </Animated.View>
-          <View className="flex-row mb-6">
-            <TouchableOpacity
-              onPress={() => {
-                showBottomSheet(
-                  <ToolThemeFilterBottomSheet
-                    initialThemeFilter={themeFilter}
-                    onClose={({ selectedThemeFilter }) => {
-                      if (selectedThemeFilter) {
-                        setThemeFilter(selectedThemeFilter);
-                      }
-                      closeBottomSheet();
-                    }}
-                  />
-                );
-              }}
-              className="p-2 ml-2"
-            >
-              <MenuIcon />
-            </TouchableOpacity>
-            <ScrollView ref={horizontalScrollViewRef} horizontal={true} showsHorizontalScrollIndicator={false} className="space-x-1">
-              <View className="flex-row space-x-2 items-center mx-4">
-                <View onLayout={(e) => onButtonLayout("Tout", e)}>
-                  <ToolFilterButton label="Tout" selected={themeFilter === "Tout"} onPress={() => setThemeFilter("Tout")} />
-                </View>
-                <View onLayout={(e) => onButtonLayout("Favoris", e)}>
-                  <ToolFilterButton
-                    label="Favoris"
-                    selected={themeFilter === "Favoris"}
-                    onPress={() => setThemeFilter("Favoris")}
-                    icon={<Bookmark width={16} height={16} color={themeFilter === "Favoris" ? TW_COLORS.WHITE : TW_COLORS.CNAM_PRIMARY_900} />}
-                  />
-                </View>
-                {ToolItemThemes.map((theme) => (
-                  <View key={theme} onLayout={(e) => onButtonLayout(theme, e)}>
-                    <ToolFilterButton label={theme} selected={themeFilter === theme} onPress={() => setThemeFilter(theme)} />
-                  </View>
-                ))}
-              </View>
-            </ScrollView>
-          </View>
-
-          <View className="flex-row justify-between items-center mb-4 px-4">
-            <Text className={mergeClassNames(typography.textXlSemibold, "text-cnam-primary-800 text-base flex-1")}>
-              {filteredTools.length} {filteredTools.length === 1 ? "outil" : "outils"}
-            </Text>
-            <TouchableOpacity
-              onPress={() => {
-                showBottomSheet(
-                  <ToolFilterBottomSheet
-                    initialAudienceFilters={audienceFilters}
-                    initialFormatFilters={formatFilters}
-                    onClose={(filters) => {
-                      if (filters) {
-                        setFormatFilters(filters.formatFilters);
-                        setAudienceFilters(filters.audienceFilters);
-                      }
-                      closeBottomSheet();
-                    }}
-                  />
-                );
-              }}
-              className="flex-row items-center"
-            >
-              <Tune width={16} height={16} color={TW_COLORS.CNAM_CYAN_700_DARKEN_40} />
-              <Text className="text-cnam-cyan-700-darken-40 text-base ml-2">Filtres ({filters.length})</Text>
-            </TouchableOpacity>
-            {filters.length > 0 && (
-              <TouchableOpacity
-                onPress={() => {
-                  setFormatFilters([]);
-                  setAudienceFilters([]);
-                }}
-              >
-                <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-800 ml-2")}>{"Effacer"}</Text>
-              </TouchableOpacity>
-            )}
-          </View>
-        </View>
-      </View>
     </SafeAreaView>
   );
 };

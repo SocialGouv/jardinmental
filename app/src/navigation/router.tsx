@@ -77,6 +77,7 @@ import { CrisisPlanSlideContactHelp } from "@/scenes/crisis-plan/CrisisPlanSlide
 import { CrisisPlanSlideReasonToLive } from "@/scenes/crisis-plan/CrisisPlanSlideReasonToLive";
 import { CrisisPlanSlideFinal } from "@/scenes/crisis-plan/CrisisPlanSlideFinal";
 import { CrisisPlanSumupList } from "@/scenes/crisis-plan/CrisisPlanSumupList";
+import ToolsScreen from "@/scenes/tools/ToolScreen";
 
 const Stack = createStackNavigator();
 
@@ -270,6 +271,8 @@ class Router extends React.Component<RouterProps> {
             <Stack.Screen name="drugs-management" component={DrugsManagement} />
             <Stack.Screen name="drugs-list" component={DrugsList} />
             <Stack.Screen name="too-late" component={TooLate} />
+            <Stack.Screen name="tool-screen" component={ToolsScreen} />
+
             <Stack.Screen name="news" component={News} />
             <Stack.Screen name="infos" component={Infos} />
             <Stack.Screen name="beck-home" component={BeckHomeScreen} />
