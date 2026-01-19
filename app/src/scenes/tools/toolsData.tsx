@@ -4,6 +4,14 @@ import { ToolItemType, ToolItemEntity, ToolItemTheme, ToolItemAudience } from ".
 export type { ToolItemType, ToolItemEntity, ToolItemTheme, ToolItemAudience };
 
 export const TOOL_BECK_ID = "b2d8c2f4-0f44-48c0-945a-6c6a0f3b9d3d";
+export const GPS_IDS = [
+  "e7163404-e1bd-4101-a8eb-616e58679464",
+  "e7163404-e1bd-4101-a8eb-616e58679463",
+  "e7163404-e1bd-4101-a8eb-616e58679462",
+  "e7163404-e1bd-4101-a8eb-616e58679461",
+  "e7163404-e1bd-4101-a8eb-616e58679460",
+  "e7163404-e1bd-4101-a8eb-616e58679459",
+];
 
 export const TOOLS_DATA: ToolItemEntity[] = [
   {
@@ -31,18 +39,78 @@ Cet exercice nécessite des explications afin de le réaliser. Nous vous recomma
     audience: ["child", "parent", "student"],
     source: "Jardin Mental",
   },
-  // {
-  //   id: "3f1e8b0e-6e57-4dd1-8e71-3b4d6b902af3",
-  //   matomoId: 60,
-  //   title: "Mon GPS (version interactive)",
-  //   description:
-  //     "Ce livret vise à faciliter l’expression et le respect de vos souhaits concernant vos soins et votre accompagnement, dans l’hypothèse où vous ne seriez plus en mesure de consentir. Il permet d’anticiper une situation de crise, de clarifier ce qui est important pour vous et de soutenir le dialogue avec vos proches et les professionnels.",
-  //   type: ["Fichier"],
-  //   themes: ["Gérer une crise", "Obtenir de l'aide"],
-  //   audience: ["child", "parent", "student"],
-  //   url: "https://www.psycom.org/wp-content/uploads/2023/11/PSYCOM_GPS_VF_INTERACTIF_2023.pdf",
-  //   source: "Psycom",
-  // },
+  {
+    id: "e7163404-e1bd-4101-a8eb-616e58679464",
+    matomoId: 64,
+    title: "Mon GPS Parents (version interactive)",
+    themes: ["Gérer une crise", "Obtenir de l'aide"],
+    audience: ["parent"],
+    url: "https://www.psycom.org/wp-content/uploads/2023/11/PSYCOM_GPS_PARENTS_INTERACTIF.pdf",
+    source: "Psycom",
+    description:
+      "Ce livret vise à faciliter l’expression et le respect des souhaits des parents en ce qui concerne leur parentalité et le soin apporté à leurs enfants, dans l’hypothèse où ils devraient être hospitalisés. Il permet d’anticiper l’organisation familiale, de préciser ce qui est important pour l’enfant et de coordonner l’accompagnement avec les proches et les professionnels.",
+    type: ["Fichier"],
+  },
+  {
+    id: "e7163404-e1bd-4101-a8eb-616e58679463",
+    matomoId: 63,
+    title: "Mon GPS Parents (version impression)",
+    themes: ["Gérer une crise", "Obtenir de l'aide"],
+    audience: ["parent"],
+    url: "https://www.psycom.org/wp-content/uploads/2024/04/PSYCOM_GPS_PARENTS_IMPRESSION_DEF.pdf",
+    source: "Psycom",
+    description:
+      "Ce livret vise à faciliter l’expression et le respect des souhaits des parents en ce qui concerne leur parentalité et le soin apporté à leurs enfants, dans l’hypothèse où ils devraient être hospitalisés. Il permet d’anticiper l’organisation familiale, de préciser ce qui est important pour l’enfant et de coordonner l’accompagnement avec les proches et les professionnels.",
+    type: ["Fichier"],
+  },
+  {
+    id: "e7163404-e1bd-4101-a8eb-616e58679462",
+    matomoId: 62,
+    title: "Mon GPS Ado/Jeune adulte (version interactive)",
+    themes: ["Gérer une crise", "Obtenir de l'aide"],
+    audience: ["child"],
+    url: "https://www.psycom.org/wp-content/uploads/2023/11/PSYCOM_GPS_ADOS_INTERACTIF_2023.pdf",
+    source: "Psycom",
+    description:
+      "Ce livret vise à faciliter l’expression et le respect des souhaits des adolescents et jeunes adultes concernant leurs soins, dans l’hypothèse où ils ne seraient plus en mesure de consentir. Il aide à anticiper les situations de crise, à repérer ce qui les soutient et à renforcer la communication avec les proches, l’école et les professionnels.",
+    type: ["Fichier"],
+  },
+  {
+    id: "e7163404-e1bd-4101-a8eb-616e58679461",
+    matomoId: 61,
+    title: "Mon GPS Ado/Jeune adulte (version impression)",
+    themes: ["Gérer une crise", "Obtenir de l'aide"],
+    audience: ["child"],
+    url: "https://www.psycom.org/wp-content/uploads/2023/11/PSYCOM_GPS_ADOS_A-IMPRIMER_2023.pdf",
+    source: "Psycom",
+    description:
+      "Ce livret vise à faciliter l’expression et le respect des souhaits des adolescents et jeunes adultes concernant leurs soins, dans l’hypothèse où ils ne seraient plus en mesure de consentir. Il aide à anticiper les situations de crise, à repérer ce qui les soutient et à renforcer la communication avec les proches, l’école et les professionnels.",
+    type: ["Fichier"],
+  },
+  {
+    id: "e7163404-e1bd-4101-a8eb-616e58679460",
+    matomoId: 60,
+    title: "Mon GPS (version interactive)",
+    themes: ["Gérer une crise", "Obtenir de l'aide"],
+    audience: ["child", "parent", "student"],
+    url: "https://www.psycom.org/wp-content/uploads/2023/11/PSYCOM_GPS_VF_INTERACTIF_2023.pdf",
+    source: "Psycom",
+    description:
+      "Ce livret vise à faciliter l’expression et le respect de vos souhaits concernant vos soins et votre accompagnement, dans l’hypothèse où vous ne seriez plus en mesure de consentir. Il permet d’anticiper une situation de crise, de clarifier ce qui est important pour vous et de soutenir le dialogue avec vos proches et les professionnels.",
+    type: ["Fichier"],
+  },
+  {
+    id: "e7163404-e1bd-4101-a8eb-616e58679459",
+    matomoId: 59,
+    title: "Mon GPS (version impression)",
+    themes: ["Gérer une crise", "Obtenir de l'aide"],
+    audience: ["child", "parent", "student"],
+    url: "https://www.psycom.org/wp-content/uploads/2024/04/PSYCOM_GPS_VF_IMPRESSION_MAI2022.pdf",
+    source: "Psycom",
+    description:
+      "Ce livret vise à faciliter l’expression et le respect de vos souhaits concernant vos soins et votre accompagnement, dans l’hypothèse où vous ne seriez plus en mesure de consentir. Il permet d’anticiper une situation de crise, de clarifier ce qui est important pour vous et de soutenir le dialogue avec vos proches et les professionnels.",
+    type: ["Fichier"],
+  },
   {
     id: "d6adb4d9-99ae-4a1d-8f1e-c0a7a044070a",
     matomoId: 58,
