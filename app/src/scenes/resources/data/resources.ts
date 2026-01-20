@@ -1396,4 +1396,30 @@ Plusieurs approches de psychothérapie existent, et aucune n’est universelle. 
 - de changer de professionnel si vous ne vous sentez pas en confiance ou si l'approche utilisée ne vous convient pas.`,
     externalResources: ["550e8400-e29b-41d4-a716-446655440286", "550e8400-e29b-41d4-a716-446655440287"],
   },
+  {
+    id: "3f2c9a6e-7d41-4b9e-9a3a-8c6b7d2e4f51",
+    matomoId: 51,
+    title: "Mesures anticipées : le pouvoir d’agir en cas de crise ou d'hospitalisation",
+    image: require("../../../../assets/imgs/resources/Article51.png"),
+    category: CATEGORIES.AGIR_ET_CHERCHER_DE_L_AIDE_SANS_HONTE,
+    content: `Les mesures anticipées en psychiatrie permettent à une personne vivant avec un trouble psychique de décider à l’avance des soins et de l’accompagnement qu’elle souhaite recevoir, notamment en cas de crise, d’hospitalisation ou dans le cas ou qu’elle ne serait plus en mesure de prendre des décisions par elle-même.
+
+**Psycom propose un outil appelé Directives Anticipées en Psychiatrie (DAP), conçu et testé par et pour des personnes vivant avec un trouble psychique.** Ces mesures visent à mieux se connaître, renforcer le pouvoir d’agir, respecter ses droits et favoriser une bonne collaboration avec les professionnel·les de santé.
+
+Rédiger des mesures anticipées permet à l’entourage et aux professionnels de santé mentale de connaître la conduite à tenir, notamment lors d’une hospitalisation ou d’une crise, et favorise :
+
+- **le dialogue** entre la personne concernée, son entourage et les professionnel·les du soin et de l’accompagnement,
+
+- **l’intégration de la notion de consentement** si une situation de crise survient,
+
+- **l’identification des ressources individuelles** et de ce qui aide en situation difficile,
+
+- **la personnalisation des soins et de l’accompagnement,**
+
+- **la prévention et l’anticipation des situations de crise.**
+
+Pour aider à rédiger ces mesures, Psycom propose la collection « mon GPS » (Guide Prévention et Soins en santé mentale), adaptée à différents publics : adolescents, jeunes adultes, parents. Les livrets peuvent être remplis seul ou avec l’aide d’un proche ou d’un professionnel.
+
+**En résumé, les mesures anticipées et les outils « mon GPS » permettent de préparer concrètement ses soins et son accompagnement, de prévenir les situations de crise et de mieux faire respecter ses choix, même lorsque la personne n’est plus en mesure de les exprimer.**`,
+  },
 ];
