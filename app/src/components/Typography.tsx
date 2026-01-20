@@ -64,22 +64,16 @@ export function Typography({ className = "", style, children, ...props }: Typogr
               fontWeight = "normal";
           }
         }
-        if ("fontStyle" in s && s.fontStyle) {
-          fontStyle = s.fontStyle;
-        }
       }
     }
   }
 
   // Construction de la clé pour le mapping
   let fontKey = `font-${fontWeight}`;
-  if (fontStyle === "italic") {
-    fontKey += "-italic";
-  }
   let fontFamily = fontFamilyMap[fontKey] || fontFamilyMap["font-normal"];
 
   return (
-    <Text className={className} style={[style, { fontFamily, fontStyle: "italic" }]} {...props}>
+    <Text className={className} style={[style, { fontFamily }]} {...props}>
       {children}
     </Text>
   );

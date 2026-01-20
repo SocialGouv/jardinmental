@@ -21,6 +21,7 @@ import ChevronIcon from "@assets/svg/icon/chevron";
 import BookmarkMinus from "@assets/svg/icon/BookmarkMinus";
 import LifeBuoy from "@assets/svg/icon/Lifebuoy";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Typography } from "@/components/Typography";
 
 interface ToolsScreenIntroProps {
   navigation: any;
@@ -244,11 +245,21 @@ const ToolsScreenIntro: React.FC<ToolsScreenIntroProps> = ({ navigation, route }
                       themeFilter: "Favoris",
                     });
                   }}
+                  disabled={!favoriteTools.length}
                   className="flex-row space-x-2 items-center justify-start"
                 >
-                  <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40")}>Tous</Text>
+                  <Text
+                    className={mergeClassNames(typography.textMdSemibold, !!favoriteTools.length ? "text-cnam-cyan-700-darken-40" : "text-gray-400")}
+                  >
+                    Tous
+                  </Text>
                   <View>
-                    <ChevronIcon width={12} height={12} direction="right" color={TW_COLORS.CNAM_CYAN_700_DARKEN_40} />
+                    <ChevronIcon
+                      width={12}
+                      height={12}
+                      direction="right"
+                      color={!!favoriteTools.length ? TW_COLORS.CNAM_CYAN_700_DARKEN_40 : TW_COLORS.GRAY_400}
+                    />
                   </View>
                 </TouchableOpacity>
               </View>
@@ -294,91 +305,6 @@ const ToolsScreenIntro: React.FC<ToolsScreenIntroProps> = ({ navigation, route }
                     />
                   );
                 }}
-                ListEmptyComponent={
-                  <View className=" z-10 w-full items-center">
-                    <View className="absolute w-full flex-column space-y-2">
-                      <View className="flex-row w-full space-x-2 opacity-30">
-                        <View className="bg-white rounded-2xl w-20 h-24"></View>
-                        <View className="bg-white rounded-2xl  h-24 flex-1"></View>
-                      </View>
-                      <View className="flex-row w-full space-x-2 opacity-30">
-                        <View className="bg-white rounded-2xl w-20  h-24"></View>
-                        <View className="bg-white rounded-2xl  h-24 flex-1"></View>
-                      </View>
-                      <View className="flex-row w-full space-x-2 opacity-30">
-                        <View className="bg-white rounded-2xl w-20  h-24"></View>
-                        <View className="bg-white rounded-2xl  h-24 flex-1"></View>
-                      </View>
-                      <View className="flex-row w-full space-x-2 opacity-30">
-                        <View className="bg-white rounded-2xl w-20  h-24"></View>
-                        <View className="bg-white rounded-2xl  h-24 flex-1"></View>
-                      </View>
-                      <View className="flex-row w-full space-x-2 opacity-30">
-                        <View className="bg-white rounded-2xl w-20  h-24"></View>
-                        <View className="bg-white rounded-2xl  h-24 flex-1"></View>
-                      </View>
-                      <View className="flex-row w-full space-x-2 opacity-30">
-                        <View className="bg-white rounded-2xl w-20  h-24"></View>
-                        <View className="bg-white rounded-2xl  h-24 flex-1"></View>
-                      </View>
-                    </View>
-                    <View className="absolute -z-1 w-full items-center">
-                      <View
-                        className={"bg-cnam-primary-100 h-[150] w-[150] rounded-full items-center justify-center"}
-                        style={{ top: themeFilter !== "Favoris" ? 20 : 20 }}
-                      >
-                        {themeFilter === "Favoris" && <Bookmark width={31} height={31} color={"#84BECD"} />}
-                      </View>
-                    </View>
-                    {themeFilter !== "Favoris" && (
-                      <View className="px-4 z-20">
-                        <Image
-                          style={{ width: 80, height: 80, left: 40, top: 60, resizeMode: "contain" }}
-                          source={require("../../../assets/imgs/illustration-no-note.png")}
-                        />
-                      </View>
-                    )}
-                    <View
-                      className={mergeClassNames(
-                        "border border-cnam-primary-200 rounded-2xl p-4 py-6 bg-white",
-                        themeFilter === "Favoris" ? "mt-32" : "mt-12"
-                      )}
-                      style={{ borderWidth: 0.5 }}
-                    >
-                      {themeFilter !== "Favoris" && (
-                        <>
-                          <Text className={mergeClassNames(typography.textMdBold, "text-cnam-primary-800 text-center px-4")}>
-                            Aucun outil ne correspond à vos filtres.{" "}
-                          </Text>
-                          <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 text-center px-4 mt-4")}>
-                            Essayez d’élargir la recherche pour découvrir plus d’outils.
-                          </Text>
-                          <TouchableOpacity
-                            onPress={() => {
-                              setFormatFilters([]);
-                              setAudienceFilters([]);
-                              setThemeFilter("Tout");
-                            }}
-                          >
-                            <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40 text-center px-4 mt-4")}>
-                              Réinitialiser les filtres
-                            </Text>
-                          </TouchableOpacity>
-                        </>
-                      )}
-                      {themeFilter === "Favoris" && (
-                        <>
-                          <Text className={mergeClassNames(typography.textMdBold, "text-cnam-primary-800 text-center px-4")}>
-                            Il n’y a pas de favoris pour l’instant
-                          </Text>
-                          <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 text-center px-4 mt-4")}>
-                            Explorez les outils et ajoutez vos contenus préférés en favoris pour y accéder rapidement.
-                          </Text>
-                        </>
-                      )}
-                    </View>
-                  </View>
-                }
                 keyExtractor={(item) => item.id}
                 scrollEnabled={false}
                 nestedScrollEnabled={false}
@@ -402,75 +328,11 @@ const ToolItemList = ({ data, renderItem, themeFilter }) => {
       scrollEventThrottle={16}
       renderItem={renderItem}
       ListEmptyComponent={
-        <View className=" z-10 w-full items-center">
-          <View className="absolute w-full flex-column space-y-2">
-            <View className="flex-row w-full space-x-2 opacity-30">
-              <View className="bg-white rounded-2xl w-20 h-24"></View>
-              <View className="bg-white rounded-2xl  h-24 flex-1"></View>
-            </View>
-            <View className="flex-row w-full space-x-2 opacity-30">
-              <View className="bg-white rounded-2xl w-20  h-24"></View>
-              <View className="bg-white rounded-2xl  h-24 flex-1"></View>
-            </View>
-            <View className="flex-row w-full space-x-2 opacity-30">
-              <View className="bg-white rounded-2xl w-20  h-24"></View>
-              <View className="bg-white rounded-2xl  h-24 flex-1"></View>
-            </View>
-            <View className="flex-row w-full space-x-2 opacity-30">
-              <View className="bg-white rounded-2xl w-20  h-24"></View>
-              <View className="bg-white rounded-2xl  h-24 flex-1"></View>
-            </View>
-            <View className="flex-row w-full space-x-2 opacity-30">
-              <View className="bg-white rounded-2xl w-20  h-24"></View>
-              <View className="bg-white rounded-2xl  h-24 flex-1"></View>
-            </View>
-            <View className="flex-row w-full space-x-2 opacity-30">
-              <View className="bg-white rounded-2xl w-20  h-24"></View>
-              <View className="bg-white rounded-2xl  h-24 flex-1"></View>
-            </View>
-          </View>
-          <View className="absolute -z-1 w-full items-center">
-            <View
-              className={"bg-cnam-primary-100 h-[150] w-[150] rounded-full items-center justify-center"}
-              style={{ top: themeFilter !== "Favoris" ? 20 : 20 }}
-            >
-              {themeFilter === "Favoris" && <Bookmark width={31} height={31} color={"#84BECD"} />}
-            </View>
-          </View>
-          {themeFilter !== "Favoris" && (
-            <View className="px-4 z-20">
-              <Image
-                style={{ width: 80, height: 80, left: 40, top: 60, resizeMode: "contain" }}
-                source={require("../../../assets/imgs/illustration-no-note.png")}
-              />
-            </View>
-          )}
-          <View
-            className={mergeClassNames("border border-cnam-primary-200 rounded-2xl p-4 py-6 bg-white", themeFilter === "Favoris" ? "mt-32" : "mt-12")}
-            style={{ borderWidth: 0.5 }}
-          >
-            {themeFilter !== "Favoris" && (
-              <>
-                <Text className={mergeClassNames(typography.textMdBold, "text-cnam-primary-800 text-center px-4")}>
-                  Aucun outil ne correspond à vos filtres.{" "}
-                </Text>
-                <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 text-center px-4 mt-4")}>
-                  Essayez d’élargir la recherche pour découvrir plus d’outils.
-                </Text>
-              </>
-            )}
-            {themeFilter === "Favoris" && (
-              <>
-                <Text className={mergeClassNames(typography.textMdBold, "text-cnam-primary-800 text-center px-4")}>
-                  Il n’y a pas de favoris pour l’instant
-                </Text>
-                <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 text-center px-4 mt-4")}>
-                  Explorez les outils et ajoutez vos contenus préférés en favoris pour y accéder rapidement.
-                </Text>
-              </>
-            )}
-          </View>
-        </View>
+        <>
+          <Typography className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-800 text-left")}>
+            Explorez les outils et ajoutez vos contenus préférés en favoris pour y accéder rapidement.
+          </Typography>
+        </>
       }
       keyExtractor={(item) => item.id}
       scrollEnabled={false}
