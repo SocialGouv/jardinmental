@@ -21,6 +21,7 @@ import CrisisContactListBottomSheet from "./CrisisContactListBottomSheet";
 import NavigationButtons from "@/components/onboarding/NavigationButtons";
 import CrisisProgressBar from "./CrisisProgressBar";
 import { formatPhoneNumber } from "@/utils/string-util";
+import { Typography } from "@/components/Typography";
 
 interface ModalCorrelationScreenProps {
   navigation: any;
@@ -106,10 +107,10 @@ export const CrisisPlanSlideContactProfessional: React.FC<ModalCorrelationScreen
         {!route.params.isEdit && <CrisisProgressBar slideIndex={5} />}
 
         <View className="flex-column py-4 space-y-4 px-2 rounded-2xl">
-          <Text className={mergeClassNames(typography.textLgSemibold, "text-primary-900")}>{title}</Text>
+          <Typography className={mergeClassNames(typography.textLgSemibold, "text-primary-900")}>{title}</Typography>
         </View>
         <View className="bg-cnam-primary-50 rounded-2xl px-6 py-6">
-          <Text className={mergeClassNames(typography.textSmMedium, "text-gray-700 mb-2")}>Nom du contact</Text>
+          <Typography className={mergeClassNames(typography.textSmMedium, "text-gray-700 mb-2")}>Nom du contact</Typography>
           <View className="flex-row items-center space-x-2 mb-4">
             <InputText
               containerStyle={{
@@ -130,7 +131,7 @@ export const CrisisPlanSlideContactProfessional: React.FC<ModalCorrelationScreen
               hidePlaceholder={undefined}
             />
           </View>
-          <Text className={mergeClassNames(typography.textSmMedium, "text-gray-700 mb-2")}>Renseignez le numéro</Text>
+          <Typography className={mergeClassNames(typography.textSmMedium, "text-gray-700 mb-2")}>Renseignez le numéro</Typography>
           <View className="flex-row items-center space-x-2">
             <InputText
               containerStyle={{
@@ -172,9 +173,9 @@ export const CrisisPlanSlideContactProfessional: React.FC<ModalCorrelationScreen
               );
             }}
           >
-            <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40 underline mt-4 mb-4")}>
+            <Typography className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40 underline mt-4 mb-4")}>
               Choisir parmi les suggestions
-            </Text>
+            </Typography>
           </TouchableOpacity>
           <JMButton
             disabled={!contactName && !number}
@@ -201,10 +202,10 @@ export const CrisisPlanSlideContactProfessional: React.FC<ModalCorrelationScreen
         {loadingContacts && (
           <View style={{ marginTop: 10 }}>
             <ActivityIndicator size="small" color={TW_COLORS.CNAM_CYAN_700_DARKEN_40} />
-            <Text style={{ color: TW_COLORS.CNAM_CYAN_700_DARKEN_40 }}>Chargement des contacts...</Text>
+            <Typography style={{ color: TW_COLORS.CNAM_CYAN_700_DARKEN_40 }}>Chargement des contacts...</Typography>
           </View>
         )}
-        {contactsError && <Text style={{ color: "red", marginTop: 10 }}>{contactsError}</Text>}
+        {contactsError && <Typography style={{ color: "red", marginTop: 10 }}>{contactsError}</Typography>}
         {selectedItems.map((item, index) => {
           return (
             <TouchableOpacity
@@ -239,13 +240,13 @@ export const CrisisPlanSlideContactProfessional: React.FC<ModalCorrelationScreen
             >
               <View className="flex-row space-x-2 flex-1">
                 <View className="flex-col justify-start items-start">
-                  <Text className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-950")}>{item.name}</Text>
+                  <Typography className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-950")}>{item.name}</Typography>
                   {item.phoneNumbers && item.phoneNumbers[0]?.number && (
-                    <Text className={mergeClassNames(typography.textMdRegular, "text-gray-600")}>
+                    <Typography className={mergeClassNames(typography.textMdRegular, "text-gray-600")}>
                       {item.phoneNumbers[0].number && /^\d{10}$/.test(item.phoneNumbers[0].number)
                         ? formatPhoneNumber(item.phoneNumbers[0].number)
                         : item.phoneNumbers[0].number}
-                    </Text>
+                    </Typography>
                   )}
                 </View>
               </View>

@@ -8,6 +8,7 @@ import { TW_COLORS } from "@/utils/constants";
 import PlusIcon from "@assets/svg/icon/plus";
 import ImageIcon from "@assets/svg/icon/ImageIcon";
 import * as FileSystem from "expo-file-system";
+import { Typography } from "@/components/Typography";
 
 // Handles fallback logic for displaying images
 const ImageWithFallback = ({
@@ -77,7 +78,7 @@ const ImageWithFallback = ({
   return (
     <View style={[style, { alignItems: "center", justifyContent: "center", backgroundColor: "#f0f0f0" }]}>
       <ImageIcon />
-      <Text style={{ textAlign: "center", color: "#888", fontSize: 12, marginTop: 4 }}>la photo n'existe plus sur votre téléphone</Text>
+      <Typography style={{ textAlign: "center", color: "#888", fontSize: 12, marginTop: 4 }}>la photo n'existe plus sur votre téléphone</Typography>
     </View>
   );
 };
@@ -128,15 +129,15 @@ const ReasonToLiveCard: React.FC<ReasonToLiveCardProps> = ({ reasonToLive, reaso
       >
         <View className="flex-row items-center justify-between">
           <View className="flex-row items-center">
-            <Text
+            <Typography
               className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-950 p-1 px-3 rounded mr-2")}
               style={{
                 backgroundColor: "#CCEEE8E6",
               }}
             >
               7
-            </Text>
-            <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-950")}>Raisons de vivre</Text>
+            </Typography>
+            <Typography className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-950")}>Raisons de vivre</Typography>
           </View>
           {(!!reasonToLive.length || !!reasonToLiveImage.length) && (
             <View className="mr-2">
@@ -146,16 +147,16 @@ const ReasonToLiveCard: React.FC<ReasonToLiveCardProps> = ({ reasonToLive, reaso
         </View>
         {(!!reasonToLive.length || !!reasonToLiveImage.length) && (
           <View>
-            <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700")}>Vos principales raisons de vivre :</Text>
+            <Typography className={mergeClassNames(typography.textMdMedium, "text-gray-700")}>Vos principales raisons de vivre :</Typography>
           </View>
         )}
         {!reasonToLive.length && !reasonToLiveImage.length && (
-          <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700")}>Aucun élément pour le moment.</Text>
+          <Typography className={mergeClassNames(typography.textMdMedium, "text-gray-700")}>Aucun élément pour le moment.</Typography>
         )}
         {!reasonToLive.length && !reasonToLiveImage.length && (
           <TouchableOpacity className="flex-row items-center space-x-1" onPress={addElement}>
             <PlusIcon color={TW_COLORS.CNAM_PRIMARY_700} />{" "}
-            <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40")}>Ajouter un élément</Text>
+            <Typography className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40")}>Ajouter un élément</Typography>
           </TouchableOpacity>
         )}
       </TouchableOpacity>
@@ -201,7 +202,7 @@ const ReasonToLiveCard: React.FC<ReasonToLiveCardProps> = ({ reasonToLive, reaso
                         padding: 4,
                       }}
                     >
-                      <Text style={{ color: "white", fontSize: 20 }}>✕</Text>
+                      <Typography style={{ color: "white", fontSize: 20 }}>✕</Typography>
                     </TouchableOpacity>
                   </View>
                 </TouchableWithoutFeedback>
@@ -256,7 +257,7 @@ const ReasonToLiveCard: React.FC<ReasonToLiveCardProps> = ({ reasonToLive, reaso
                 <View key={idx} className="flex-row justify-between bg-cnam-primary-25 rounded-xl border border-gray-400 px-4 py-2">
                   <View className="flex-row items-center space-x-2">
                     <ArrowIcon color={TW_COLORS.GRAY_500} />
-                    <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900")}>{itemReason}</Text>
+                    <Typography className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900")}>{itemReason}</Typography>
                   </View>
                 </View>
               );

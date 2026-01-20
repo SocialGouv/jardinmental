@@ -25,6 +25,7 @@ import Icon from "@/components/Icon";
 import Gear from "@assets/svg/Gear";
 import ToolsScreenIntro from "@/scenes/tools/ToolScreenIntro";
 import HeartHand from "@assets/svg/icon/HeartHand";
+import { Typography } from "@/components/Typography";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -218,7 +219,7 @@ const Tabs = ({ navigation, route }) => {
                       />
                     )}
                   </View>
-                  <Text
+                  <Typography
                     className={isActive && Dimensions.get("window").width >= 380 ? typography.textXsBold : typography.textXsRegular}
                     style={{
                       textTransform: "capitalize",
@@ -228,7 +229,7 @@ const Tabs = ({ navigation, route }) => {
                     }}
                   >
                     {tab.label}
-                  </Text>
+                  </Typography>
                 </SquircleButton>
               );
             })}

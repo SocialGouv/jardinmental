@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontWeight: "bold",
+    fontFamily: "SourceSans3-Bold",
     fontSize: 19,
   },
 

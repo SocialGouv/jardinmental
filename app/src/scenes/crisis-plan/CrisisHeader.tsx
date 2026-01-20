@@ -1,3 +1,4 @@
+import { Typography } from "@/components/Typography";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
 import CrossIcon from "@assets/svg/icon/Cross";
@@ -19,11 +20,11 @@ export default ({
   return (
     <View className="flex-row justify-between w-full bg-cnam-primary-800 p-4 items-center" style={{ paddingTop: insets.top + 20 }}>
       <View className="flex-column">
-        <Text className={mergeClassNames(typography.displayXsBold, "text-white")}>{title}</Text>
+        <Typography className={mergeClassNames(typography.displayXsBold, "text-white")}>{title}</Typography>
         {description && (
           <View className="flex-row">
-            <Text className={mergeClassNames(typography.textMdRegular, "text-white text-left")}>Par </Text>
-            <Text className={mergeClassNames(typography.textMdRegular, "text-white text-left italic")}>{description}</Text>
+            <Typography className={mergeClassNames(typography.textMdRegular, "text-white text-left")}>Par </Typography>
+            <Typography className={mergeClassNames(typography.textMdRegular, "text-white text-left italic")}>{description}</Typography>
           </View>
         )}
       </View>

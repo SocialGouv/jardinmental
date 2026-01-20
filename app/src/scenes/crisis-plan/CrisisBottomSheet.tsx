@@ -8,6 +8,7 @@ import { KeyboardAvoidingView } from "react-native-keyboard-controller";
 import { BottomSheetTextInput } from "@gorhom/bottom-sheet";
 import { TW_COLORS } from "@/utils/constants";
 import { colors } from "@/utils/colors";
+import { Typography } from "@/components/Typography";
 
 const screenHeight = Dimensions.get("window").height;
 const height90vh = screenHeight * 0.9;
@@ -50,14 +51,14 @@ export const CrisisBottomSheet = ({
               onClose();
             }}
           >
-            <Text className={mergeClassNames(typography.textLgMedium, "text-cnam-primary-800")}>Annuler</Text>
+            <Typography className={mergeClassNames(typography.textLgMedium, "text-cnam-primary-800")}>Annuler</Typography>
           </TouchableOpacity>
         </View>
         <View className="flex-row bg-[#E5F6FC] self-start items-center p-2 mb-4">
-          <Text className={mergeClassNames(typography.textSmBold, "ml-2 text-cnam-cyan-700-darken-40 text-left")}>{header}</Text>
+          <Typography className={mergeClassNames(typography.textSmBold, "ml-2 text-cnam-cyan-700-darken-40 text-left")}>{header}</Typography>
         </View>
         <View className="bg-cnam-primary-50 rounded-2xl px-6 py-8 mx-4">
-          <Text className={mergeClassNames(typography.textSmMedium, "text-gray-700 mb-2")}>{label}</Text>
+          <Typography className={mergeClassNames(typography.textSmMedium, "text-gray-700 mb-2")}>{label}</Typography>
           <View className="flex-row items-center space-x-2">
             <View
               style={{

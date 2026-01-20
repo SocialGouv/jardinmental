@@ -9,6 +9,7 @@ import { LightSelectionnableItem } from "@/components/SelectionnableItem";
 import { ToolItemTheme, ToolItemThemes, ToolThemeFilter } from "@/entities/ToolItem";
 import MenuIcon from "@assets/svg/icon/Menu";
 import { TW_COLORS } from "@/utils/constants";
+import { Typography } from "@/components/Typography";
 
 const screenHeight = Dimensions.get("window").height;
 const height90vh = screenHeight * 0.9;
@@ -44,11 +45,11 @@ export const ToolThemeFilterBottomSheet = ({
       >
         <View className="flex-row bg-[#E5F6FC] self-start items-center p-2">
           <MenuIcon color={TW_COLORS.CNAM_CYAN_700_DARKEN_40} />
-          <Text className={mergeClassNames(typography.textSmBold, "ml-2 text-cnam-cyan-700-darken-40 text-left")}>Catégories</Text>
+          <Typography className={mergeClassNames(typography.textSmBold, "ml-2 text-cnam-cyan-700-darken-40 text-left")}>Catégories</Typography>
         </View>
         <View className="p-4 flex-column flex-1 gap-6">
           <View className="flex-colum flex-1">
-            {!indicatorList && <Text>Chargement...</Text>}
+            {!indicatorList && <Typography>Chargement...</Typography>}
             {["Toutes les catégories", "Mes Favoris", ...ToolItemThemes].map((theme) => {
               let selectedValue = theme;
               if ("Toutes les catégories" === theme) {

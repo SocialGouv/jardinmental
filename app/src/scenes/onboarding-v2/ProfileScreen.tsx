@@ -8,6 +8,7 @@ import QuestionMark from "../../../assets/svg/QuestionMark";
 import { BottomSheetBackdrop, BottomSheetModal, BottomSheetModalProvider, BottomSheetView } from "@gorhom/bottom-sheet";
 import { TW_COLORS } from "@/utils/constants";
 import { SafeAreaViewWithOptionalHeader } from "./ProgressHeader";
+import { Typography } from "@/components/Typography";
 
 type Props = OnboardingV2ScreenProps<"Profile">;
 
@@ -59,13 +60,13 @@ const ProfileScreen: React.FC<Props> = ({ navigation }) => {
     >
       <View className="flex-row items-center">
         <View className="flex-1">
-          <Text className="text-lg font-semibold mb-1" style={{ color: TW_COLORS.TEXT_PRIMARY }}>
+          <Typography className="text-lg font-semibold mb-1" style={{ color: TW_COLORS.TEXT_PRIMARY }}>
             {item.name}
-          </Text>
+          </Typography>
         </View>
         {selectedProfile?.id === item.id && (
           <View className="w-6 h-6 rounded-full items-center justify-center" style={{ backgroundColor: TW_COLORS.PRIMARY }}>
-            <Text className="text-white text-xs">✓</Text>
+            <Typography className="text-white text-xs">✓</Typography>
           </View>
         )}
       </View>
@@ -92,13 +93,13 @@ const ProfileScreen: React.FC<Props> = ({ navigation }) => {
       <SafeAreaViewWithOptionalHeader className="flex-1 bg-white">
         <CheckInHeader title="" onPrevious={handlePrevious} onSkip={handleNext} showSkip={false} />
         <View className="flex-1 justify-center px-6">
-          <Text className="text-2xl font-bold text-center mb-4" style={{ color: TW_COLORS.TEXT_PRIMARY }}>
+          <Typography className="text-2xl font-bold text-center mb-4" style={{ color: TW_COLORS.TEXT_PRIMARY }}>
             Êtes-vous actuellement suivi(e) par un professionnel de la santé mentale ?
-          </Text>
+          </Typography>
           {profiles.map((item) => renderProfileItem({ item }))}
-          <Text className="text-base text-center mt-4" style={{ color: TW_COLORS.TEXT_SECONDARY }}>
+          <Typography className="text-base text-center mt-4" style={{ color: TW_COLORS.TEXT_SECONDARY }}>
             Cela nous aide à personnaliser votre expérience
-          </Text>
+          </Typography>
           <View className="items-center mt-2">
             <TouchableOpacity
               onPress={() => bottomSheetRef.current?.present()}
@@ -114,18 +115,18 @@ const ProfileScreen: React.FC<Props> = ({ navigation }) => {
         <BottomSheetModal ref={bottomSheetRef} backdropComponent={renderBackdrop} onChange={handleSheetChanges}>
           <BottomSheetView>
             <View className="flex-1 bg-white p-4">
-              <Text className="text-lg font-semibold mb-4" style={{ color: TW_COLORS.TEXT_PRIMARY }}>
+              <Typography className="text-lg font-semibold mb-4" style={{ color: TW_COLORS.TEXT_PRIMARY }}>
                 Qu’est-ce qu’un professionnel de la santé mentale
-              </Text>
-              <Text className="text-base mb-4 leading-6" style={{ color: TW_COLORS.TEXT_SECONDARY }}>
+              </Typography>
+              <Typography className="text-base mb-4 leading-6" style={{ color: TW_COLORS.TEXT_SECONDARY }}>
                 Pas toujours facile de s’y retrouver...
-              </Text>
-              <Text className="text-base mb-4 leading-6" style={{ color: TW_COLORS.TEXT_SECONDARY }}>
+              </Typography>
+              <Typography className="text-base mb-4 leading-6" style={{ color: TW_COLORS.TEXT_SECONDARY }}>
                 Un professionnel de la santé mentale peut être un médecin généraliste, psychiatre, un psychologue, un psychothérapeute…
-              </Text>
-              <Text className="text-base mb-4 leading-6" style={{ color: TW_COLORS.TEXT_SECONDARY }}>
+              </Typography>
+              <Typography className="text-base mb-4 leading-6" style={{ color: TW_COLORS.TEXT_SECONDARY }}>
                 Si vous hésitez, choisissez ce qui vous semble le plus proche de votre situation.
-              </Text>
+              </Typography>
             </View>
           </BottomSheetView>
         </BottomSheetModal>

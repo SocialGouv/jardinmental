@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   welcomeText: { marginBottom: 30 },
-  boldText: { fontWeight: "bold" },
+  boldText: { fontWeight: "bold", fontFamily: "SourceSans3-Bold" },
   blueText: { color: colors.LIGHT_BLUE },
   button: {
     backgroundColor: colors.LIGHT_BLUE,
@@ -99,6 +99,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "#fff",
     fontWeight: "bold",
+    fontFamily: "SourceSans3-Bold",
     fontSize: Dimensions.get("window").width > 350 ? 17 : 13,
     flexWrap: "wrap",
     textAlign: "center",

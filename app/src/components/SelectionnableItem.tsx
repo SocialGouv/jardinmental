@@ -6,6 +6,7 @@ import TrashIcon from "@assets/svg/icon/Trash";
 
 import React, { useState } from "react";
 import { GestureResponderEvent, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Typography } from "./Typography";
 
 type DifficultyOptionProps = {
   id: string | number;
@@ -34,23 +35,23 @@ export default function SelectionnableItem({ id, label, description, selected, o
       <View className={mergeClassNames("flex-row flex-1", boxPosition === "top" ? "items-start" : "items-center")}>
         {selected ? (
           <View className="mr-3 w-6 h-6 rounded-md items-center justify-center bg-cnam-primary-800">
-            <Text className="text-white text-base font-bold">✓</Text>
+            <Typography className="text-white text-base font-bold">✓</Typography>
           </View>
         ) : (
           <View className="mr-3 w-6 h-6 rounded-md items-center justify-center border-2 border-gray-300">
-            <Text className="text-white text-xs" />
+            <Typography className="text-white text-xs"></Typography>
           </View>
         )}
         <View className="flex-1">
-          <Text
+          <Typography
             className={mergeClassNames(
               selected ? typography.textMdSemibold : typography.textMdMedium,
               selected ? "text-cnam-primary-950" : "text-cnam-primary-900"
             )}
           >
             {label}
-          </Text>
-          {description && <Text className={mergeClassNames(typography.textSmMedium, "text-gray-800 mt-1")}>{description}</Text>}
+          </Typography>
+          {description && <Typography className={mergeClassNames(typography.textSmMedium, "text-gray-800 mt-1")}>{description}</Typography>}
         </View>
         {icon && (
           <View className="rounded-full border border-1 border-gray-700 bg-white w-10 h-10 items-center justify-center">
@@ -85,7 +86,11 @@ export function LightSelectionnableItem({
           <View
             className={mergeClassNames("w-6 h-6 items-center justify-center bg-primary mr-4", shape === "circle" ? "rounded-full" : "rounded-md")}
           >
-            {shape == "circle" ? <View className="bg-white w-2 h-2 rounded-xl" /> : <Text className="text-white text-base font-bold">✓</Text>}
+            {shape == "circle" ? (
+              <View className="bg-white w-2 h-2 rounded-xl" />
+            ) : (
+              <Typography className="text-white text-base font-bold">✓</Typography>
+            )}
           </View>
         ) : (
           <View
@@ -94,7 +99,7 @@ export function LightSelectionnableItem({
               shape === "circle" ? "rounded-full" : "rounded-md"
             )}
           >
-            <Text className="text-white text-xs" />
+            <Typography className="text-white text-xs" />
           </View>
         )}
         {icon && (
@@ -103,8 +108,8 @@ export function LightSelectionnableItem({
           </View>
         )}
         <View className="flex-1">
-          <Text className={mergeClassNames(typography.textMdMedium, "text-brand-950", disabled ? "line-through" : "")}>{label}</Text>
-          {description && <Text className={mergeClassNames(typography.textSmMedium, "text-gray-700 mt-1")}>{description}</Text>}
+          <Typography className={mergeClassNames(typography.textMdMedium, "text-brand-950", disabled ? "line-through" : "")}>{label}</Typography>
+          {description && <Typography className={mergeClassNames(typography.textSmMedium, "text-gray-700 mt-1")}>{description}</Typography>}
         </View>
       </View>
     </TouchableOpacity>
@@ -124,10 +129,10 @@ export const SelectionnableRadioItem = ({ onPress, selected, children, text }) =
           </View>
         ) : (
           <View className={mergeClassNames("w-6 h-6 items-center justify-center border-2 border-gray-300 mr-2", "rounded-full")}>
-            <Text className="text-white text-xs" />
+            <Typography className="text-white text-xs" />
           </View>
         )}
-        <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-900")}>{text}</Text>
+        <Typography className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-900")}>{text}</Typography>
       </View>
       <View className="mx-8">{children}</View>
     </TouchableOpacity>
@@ -169,7 +174,11 @@ export function InputSelectionnableItem({
           <View
             className={mergeClassNames("w-6 h-6 items-center justify-center bg-primary mr-4", shape === "circle" ? "rounded-full" : "rounded-md")}
           >
-            {shape == "circle" ? <View className="bg-white w-2 h-2 rounded-xl" /> : <Text className="text-white text-base font-bold">✓</Text>}
+            {shape == "circle" ? (
+              <View className="bg-white w-2 h-2 rounded-xl" />
+            ) : (
+              <Typography className="text-white text-base font-bold">✓</Typography>
+            )}
           </View>
         ) : (
           <View
@@ -178,7 +187,7 @@ export function InputSelectionnableItem({
               shape === "circle" ? "rounded-full" : "rounded-md"
             )}
           >
-            <Text className="text-white text-xs" />
+            <Typography className="text-white text-xs" />
           </View>
         )}
         {icon && (
@@ -187,7 +196,7 @@ export function InputSelectionnableItem({
           </View>
         )}
         <View className="flex-1 flex-col">
-          <Text className={mergeClassNames(typography.textSmMedium, "text-gray-800 mb-2")}>{label}</Text>
+          <Typography className={mergeClassNames(typography.textSmMedium, "text-gray-800 mb-2")}>{label}</Typography>
           <View className="rounded rounded-lg flex-1">
             <TextInput
               placeholder={placeholder}
@@ -202,10 +211,10 @@ export function InputSelectionnableItem({
               }}
               onPress={() => onPress(value)}
             >
-              <Text className={mergeClassNames(typography.textMdSemibold, "text-brand-800")}>Valider</Text>
+              <Typography className={mergeClassNames(typography.textMdSemibold, "text-brand-800")}>Valider</Typography>
             </TouchableOpacity>
           </View>
-          {validationError && <Text className={mergeClassNames(typography.textSmMedium, "text-red-600 mt-2")}>{validationError}</Text>}
+          {validationError && <Typography className={mergeClassNames(typography.textSmMedium, "text-red-600 mt-2")}>{validationError}</Typography>}
         </View>
       </View>
     </TouchableOpacity>
@@ -227,8 +236,8 @@ export function ListItem({ id, label, description, selected, onPress, className,
           </View>
         )}
         <View className="flex-1">
-          <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900")}>{label}</Text>
-          {description && <Text className={mergeClassNames(typography.textSmMedium, "text-gray-600 mt-1")}>{description}</Text>}
+          <Typography className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900")}>{label}</Typography>
+          {description && <Typography className={mergeClassNames(typography.textSmMedium, "text-gray-600 mt-1")}>{description}</Typography>}
         </View>
         <TouchableOpacity onPress={onPress} className="ml-auto items-center justify-center self-stretch">
           <TrashIcon color={TW_COLORS.CNAM_CYAN_600_DARKEN_20} width={24} height={24} />

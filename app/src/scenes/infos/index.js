@@ -235,12 +235,14 @@ const styles = StyleSheet.create({
   },
   lessButton: {
     fontWeight: "700",
+    fontFamily: "SourceSans3-Bold",
     textDecorationLine: "underline",
     color: colors.BLUE,
     paddingTop: 10,
   },
   moreButton: {
     fontWeight: "700",
+    fontFamily: "SourceSans3-Bold",
     textDecorationLine: "underline",
     color: colors.BLUE,
     paddingTop: 10,
@@ -253,6 +255,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     padding: 20,
     fontWeight: "700",
+    fontFamily: "SourceSans3-Bold",
   },
   cgu: {
     paddingVertical: 5,
@@ -283,6 +286,7 @@ const styles = StyleSheet.create({
   link: {
     color: colors.LIGHT_BLUE,
     fontWeight: "700",
+    fontFamily: "SourceSans3-Bold",
     textDecorationLine: "underline",
   },
 });

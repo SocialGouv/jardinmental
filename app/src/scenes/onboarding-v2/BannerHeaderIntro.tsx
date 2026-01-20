@@ -49,7 +49,15 @@ export default function BannerHeaderIntro({
           ]}
           className="py-4 pb-8 px-10 items-center h-full justify-center mt-8"
         >
-          <Animated.Text className={typography.displayXsMedium} style={[animatedTextColor]}>
+          <Animated.Text
+            className={typography.displayXsMedium}
+            style={[
+              {
+                fontFamily: "SourceSans3-Medium",
+              },
+              animatedTextColor,
+            ]}
+          >
             {title}
           </Animated.Text>
           {children}

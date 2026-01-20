@@ -7,6 +7,7 @@ import { ToolItemEntity } from "./toolsData";
 import DownloadIcon from "@assets/svg/icon/Download";
 import EyeIcon from "@assets/svg/icon/Eye";
 import { useBottomSheet } from "@/context/BottomSheetContext";
+import { Typography } from "@/components/Typography";
 
 const screenHeight = Dimensions.get("window").height;
 
@@ -24,18 +25,18 @@ export const BeckBottomSheet = ({ navigation }: { navigation: any }) => {
           }}
         >
           <View className="flex-row justify-between items-center px-4">
-            <Text className={mergeClassNames(typography.textLgRegular, "text-cnam-primary-900")}>À propos des outils</Text>
+            <Typography className={mergeClassNames(typography.textLgRegular, "text-cnam-primary-900")}>À propos des outils</Typography>
           </View>
           <View className="p-4 flex-column">
-            <Text className={mergeClassNames(typography.displayXsBold, "text-left text-cnam-primary-900")}>
+            <Typography className={mergeClassNames(typography.displayXsBold, "text-left text-cnam-primary-900")}>
               Retrouvez l’exercice “Beck” dans vos favoris
-            </Text>
+            </Typography>
           </View>
           <View className="p-4 flex-column flex-1">
-            <Text className={mergeClassNames(typography.textMdRegular, "text-left text-cnam-primary-900")}>
+            <Typography className={mergeClassNames(typography.textMdRegular, "text-left text-cnam-primary-900")}>
               L’exercice “Colonnes de Beck” est déplacé dans les Outils, dans la catégorie Émotions. Il a été ajouté automatiquement à vos Favoris
               pour que vous puissiez le retrouver simplement.{" "}
-            </Text>
+            </Typography>
           </View>
           <View className="w-full py-6 px-6">
             <JMButton

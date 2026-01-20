@@ -108,6 +108,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: "#000",
     fontWeight: "bold",
+    fontFamily: "SourceSans3-Bold",
   },
   choixContainer: {
     backgroundColor: "#fff",

@@ -1,4 +1,5 @@
 import JMButton from "@/components/JMButton";
+import { Typography } from "@/components/Typography";
 import logEvents from "@/services/logEvents";
 import { mergeClassNames } from "@/utils/className";
 import { TW_COLORS } from "@/utils/constants";
@@ -32,7 +33,7 @@ const markdownStyles = {
     fontWeight: "700" as const,
     color: TW_COLORS.CNAM_PRIMARY_800,
     marginBottom: 12,
-    fontFamily: "SourceSans3",
+    fontFamily: "SourceSans3-Bold",
   },
   heading2: {
     fontSize: 20,
@@ -40,7 +41,7 @@ const markdownStyles = {
     fontWeight: "700" as const,
     color: TW_COLORS.CNAM_PRIMARY_800,
     marginBottom: 8,
-    fontFamily: "SourceSans3",
+    fontFamily: "SourceSans3-Bold",
   },
   heading3: {
     fontSize: 18,
@@ -48,7 +49,7 @@ const markdownStyles = {
     fontWeight: "700" as const,
     color: TW_COLORS.CNAM_PRIMARY_800,
     marginBottom: 6,
-    fontFamily: "SourceSans3",
+    fontFamily: "SourceSans3-Bold",
   },
   paragraph: {
     fontSize: 16,
@@ -130,7 +131,7 @@ const DataMonitoringPeriodHelpView = ({ title, description, link, isMd }: Props)
           contentContainerStyle={{ paddingBottom: 100, height: height90vh }}
           showsVerticalScrollIndicator={false}
         >
-          <Text className={mergeClassNames(typography.textXlBold, "mb-6 text-cnam-primary-950")}>{title}</Text>
+          <Typography className={mergeClassNames(typography.textXlBold, "mb-6 text-cnam-primary-950")}>{title}</Typography>
           <Markdown style={markdownStyles}>Tout dépend de ce que vous cherchez à comprendre. </Markdown>
           <View className="space-y-2">
             <TouchableOpacity
@@ -139,9 +140,9 @@ const DataMonitoringPeriodHelpView = ({ title, description, link, isMd }: Props)
               }}
               className="bg-cnam-primary-50 p-4 flex-col rounded-2xl"
             >
-              <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-gray-900")}>Période courte</Text>
+              <Typography className={mergeClassNames(typography.textLgSemibold, "text-cnam-gray-900")}>Période courte</Typography>
               <View className="flex-row space-x-2 items-center mt-2">
-                <Text className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-800")}>Pour comprendre vos variations</Text>
+                <Typography className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-800")}>Pour comprendre vos variations</Typography>
                 <Arrow color={TW_COLORS.CNAM_CYAN_600_DARKEN_20} />
               </View>
             </TouchableOpacity>
@@ -151,9 +152,9 @@ const DataMonitoringPeriodHelpView = ({ title, description, link, isMd }: Props)
               }}
               className="bg-cnam-primary-50 p-4 flex-col rounded-2xl"
             >
-              <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-gray-900")}>Période longue</Text>
+              <Typography className={mergeClassNames(typography.textLgSemibold, "text-cnam-gray-900")}>Période longue</Typography>
               <View className="flex-row space-x-2 items-center mt-2">
-                <Text className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-800")}>Pour observer des tendances</Text>
+                <Typography className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-800")}>Pour observer des tendances</Typography>
                 <Arrow color={TW_COLORS.CNAM_CYAN_600_DARKEN_20} />
               </View>
             </TouchableOpacity>
@@ -165,9 +166,9 @@ const DataMonitoringPeriodHelpView = ({ title, description, link, isMd }: Props)
                 Linking.openURL(link);
               }}
             >
-              <Text className="text-base text-center mb-4 leading-6" style={{ color: TW_COLORS.TEXT_SECONDARY }}>
+              <Typography className="text-base text-center mb-4 leading-6" style={{ color: TW_COLORS.TEXT_SECONDARY }}>
                 {link}
-              </Text>
+              </Typography>
             </TouchableOpacity>
           )}
         </ScrollView>
@@ -190,7 +191,7 @@ const DataMonitoringPeriodHelpView = ({ title, description, link, isMd }: Props)
           >
             <ChevronIcon />
           </TouchableOpacity>
-          <Text className={mergeClassNames(typography.textXlBold, "mb-6 text-cnam-primary-950")}>{data["shortTerm"].title}</Text>
+          <Typography className={mergeClassNames(typography.textXlBold, "mb-6 text-cnam-primary-950")}>{data["shortTerm"].title}</Typography>
           <Markdown style={markdownStyles}>{data["shortTerm"].content}</Markdown>
         </ScrollView>
       </View>
@@ -212,7 +213,7 @@ const DataMonitoringPeriodHelpView = ({ title, description, link, isMd }: Props)
           >
             <ChevronIcon />
           </TouchableOpacity>
-          <Text className={mergeClassNames(typography.textXlBold, "mb-6 text-cnam-primary-950")}>{data["longTerm"].title}</Text>
+          <Typography className={mergeClassNames(typography.textXlBold, "mb-6 text-cnam-primary-950")}>{data["longTerm"].title}</Typography>
           <Markdown style={markdownStyles}>{data["longTerm"].content}</Markdown>
         </ScrollView>
       </View>

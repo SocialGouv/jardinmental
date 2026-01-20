@@ -64,7 +64,7 @@ const CheckInHeader: React.FC<CheckInHeaderProps> = ({
             justifyContent: "center",
           }}
         >
-          <Animated.Text className="text-base font-medium" style={[{ color: TW_COLORS.WHITE }, animatedTextColor]}>
+          <Animated.Text className="text-base font-medium" style={[{ color: TW_COLORS.WHITE, fontFamily: "SourceSans3-Medium" }, animatedTextColor]}>
             {leftComponent ? leftComponent : <ChevronIcon color={TW_COLORS.WHITE} />}
           </Animated.Text>
         </TouchableOpacity>
@@ -85,7 +85,14 @@ const CheckInHeader: React.FC<CheckInHeaderProps> = ({
         <Animated.Text
           numberOfLines={2}
           className={mergeClassNames(typography.textMdRegular, "text-center")}
-          style={[{ color: TW_COLORS.WHITE, position: "absolute" }, animatedTextColor, headerTitleStyle]}
+          style={[
+            { color: TW_COLORS.WHITE, position: "absolute" },
+            {
+              fontFamily: "SourceSans3-Regular",
+            },
+            animatedTextColor,
+            headerTitleStyle,
+          ]}
         >
           {title}
         </Animated.Text>

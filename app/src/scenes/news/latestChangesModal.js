@@ -8,6 +8,7 @@ import { Button2 } from "../../components/Button2";
 import Svg, { Path } from "react-native-svg";
 import Lottie from "lottie-react-native";
 import localStorage from "../../utils/localStorage";
+import { Typography } from "@/components/Typography";
 import Text from "../../components/MyText";
 
 const latestChanges = {
@@ -103,18 +104,27 @@ export const LatestChangesModalProvider = ({ children }) => {
                     d={`M -1,-1 ${(areaLayout?.width || 320) + 1},-1 ${(areaLayout?.width || 320) + 1},110 -1,50`}
                   />
                 </Svg>
-                <Text style={[styles.headerTitle]}>Nouveautés !</Text>
+                <Typography style={[styles.headerTitle]}>Nouveautés !</Typography>
                 <Lottie source={require("../../../assets/lottiefiles/54953-confetti.json")} style={styles.lottieAnim} autoPlay loop />
               </View>
               <ScrollView bounces={contentLayout.height > areaLayout.height}>
                 <View style={[styles.contentContainer]} onLayout={onContentLayout}>
                   {latestChanges?.content?.map((item) => (
                     <>
-                      {item?.title ? <Text className="text-black text-base font-bold mt-5">{item?.title}</Text> : null}
+                      {item?.title ? (
+                        <Typography
+                          className="text-black text-base font-bold mt-5"
+                          stytle={{
+                            fontFamily: "SourceSans3-Bold",
+                          }}
+                        >
+                          {item?.title}
+                        </Typography>
+                      ) : null}
                       {item?.paragraph ? (
-                        <Text className="text-black text-sm font-normal mt-4" style={[styles.paragraph]}>
+                        <Typography className="text-black text-sm font-normal mt-4" style={[styles.paragraph]}>
                           {item?.paragraph}
-                        </Text>
+                        </Typography>
                       ) : null}
                     </>
                   ))}
@@ -167,9 +177,9 @@ const styles = StyleSheet.create({
     height: 110,
   },
   headerTitle: {
-    fontFamily: "SourceSans3",
     fontSize: 16,
     fontWeight: "700",
+    fontFamily: "SourceSans3-Bold",
     marginTop: 24,
     color: "white",
     textAlign: "center",
@@ -193,7 +203,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   title: {
-    fontFamily: "SourceSans3",
+    fontFamily: "SourceSans3-Bold",
     color: "black",
     fontSize: 16,
     fontWeight: "700",

@@ -8,6 +8,7 @@ import ArrowIcon from "@assets/svg/icon/Arrow";
 import JMButton from "@/components/JMButton";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
+import { Typography } from "@/components/Typography";
 
 // Navigation Props
 interface NavigationButtonsProps {
@@ -96,10 +97,10 @@ export const CrisisNavigationButtons: React.FC<NavigationButtonsProps> = ({
             }
             iconPosition="right"
           />
-          <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>Précédent</Text>
+          <Typography className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>Précédent</Typography>
         </TouchableOpacity>
         <TouchableOpacity onPress={onNext} className="flex-row items-center justify-center space-x-2">
-          <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>Suivant</Text>
+          <Typography className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>Suivant</Typography>
           <JMButton
             onPress={onNext}
             title={""}

@@ -439,7 +439,7 @@ const styles = StyleSheet.create({
   },
 
   text: { color: "#333" },
-  bold: { fontWeight: "bold" },
+  bold: { fontWeight: "bold", fontFamily: "SourceSans3-Bold" },
   italic: { fontStyle: "italic" },
   safe: {
     flex: 1,
@@ -449,6 +449,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     padding: 20,
     fontWeight: "700",
+    fontFamily: "SourceSans3-Bold",
   },
   cgu: {
     paddingVertical: 5,
@@ -485,6 +486,8 @@ const styles = StyleSheet.create({
   },
   titleInfos: {
     fontWeight: "bold",
+    fontFamily: "SourceSans3-Bold",
+
     color: colors.BLUE,
     paddingBottom: 3,
   },
@@ -493,6 +496,7 @@ const styles = StyleSheet.create({
   },
   moreButton: {
     fontWeight: "700",
+    fontFamily: "SourceSans3-Bold",
     textDecorationLine: "underline",
     color: colors.BLUE,
     paddingTop: 10,
@@ -528,6 +532,7 @@ const styles = StyleSheet.create({
   lessButton: {
     paddingBottom: 50,
     fontWeight: "700",
+    fontFamily: "SourceSans3-Bold",
     textDecorationLine: "underline",
     color: colors.BLUE,
     paddingTop: 10,
@@ -535,6 +540,7 @@ const styles = StyleSheet.create({
   link: {
     color: colors.LIGHT_BLUE,
     fontWeight: "700",
+    fontFamily: "SourceSans3-Bold",
     textDecorationLine: "underline",
   },
 });

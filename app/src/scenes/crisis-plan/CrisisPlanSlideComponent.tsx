@@ -13,6 +13,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CrisisPlanInputBox } from "./CrisisPlanInputBox";
 import NavigationButtons from "@/components/onboarding/NavigationButtons";
 import CrisisProgressBar from "./CrisisProgressBar";
+import { Typography } from "@/components/Typography";
 
 interface ModalCorrelationScreenProps {
   navigation: any;
@@ -85,7 +86,7 @@ export const CrisisPlanSlideComponent: React.FC<ModalCorrelationScreenProps> = (
         {!route?.params?.isEdit && <CrisisProgressBar slideIndex={slideIndex} />}
 
         <View className="flex-column py-4 space-y-4 px-2 rounded-2xl">
-          <Text className={mergeClassNames(typography.textLgSemibold, "text-primary-900")}>{title}</Text>
+          <Typography className={mergeClassNames(typography.textLgSemibold, "text-primary-900")}>{title}</Typography>
         </View>
         <CrisisPlanInputBox
           label={label}
@@ -137,7 +138,7 @@ export const CrisisPlanSlideComponent: React.FC<ModalCorrelationScreenProps> = (
               }}
               className="bg-gray-200 border-gray-300 rounded-2xl flex-row items-center justify-between p-4"
             >
-              <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-950")}>{item}</Text>
+              <Typography className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-950")}>{item}</Typography>
               <PencilIcon color={TW_COLORS.CNAM_CYAN_700_DARKEN_40} />
             </TouchableOpacity>
           );

@@ -210,6 +210,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 15,
     fontWeight: "700",
+    fontFamily: "SourceSans3-Bold",
     marginTop: 15,
   },
   closeButton: {

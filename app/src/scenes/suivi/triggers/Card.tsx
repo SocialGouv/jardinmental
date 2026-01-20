@@ -4,6 +4,7 @@ import { colors } from "@/utils/colors";
 import { formatDateThread } from "@/utils/date/helpers";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
+import { Typography } from "@/components/Typography";
 
 const EVENTS = [
   { label: "Contexte de la journée", value: "CONTEXT" },
@@ -33,25 +34,25 @@ const Card = ({ date, context, userComment, event }) => {
 
   return (
     <View className="mt-4">
-      <Text className={mergeClassNames(typography.textMdBold, "text-cnam-primary-800 mb-4")}>{formatDateThread(date)}</Text>
+      <Typography className={mergeClassNames(typography.textMdBold, "text-cnam-primary-800 mb-4")}>{formatDateThread(date)}</Typography>
       <View className="bg-cnam-cyan-25-lighten-97 px-4">
         {canDisplay("CONTEXT", context) ? (
           <View className="py-4">
-            <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-800")}>Contexte de la journée</Text>
-            <Text className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-800 text-left")}>{context}</Text>
+            <Typography className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-800")}>Contexte de la journée</Typography>
+            <Typography className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-800 text-left")}>{context}</Typography>
           </View>
         ) : null}
         {canDisplay("USER_COMMENT", userComment) ? (
           <View className="py-4">
-            <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-800")}>Précisions sur l'élément</Text>
-            <Text className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-800 text-left")}>{userComment}</Text>
+            <Typography className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-800")}>Précisions sur l'élément</Typography>
+            <Typography className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-800 text-left")}>{userComment}</Typography>
           </View>
         ) : null}
         {!canDisplay("CONTEXT", context) && !canDisplay("USER_COMMENT", userComment) ? (
           <View className="py-4">
-            <Text className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-800 text-left")}>
+            <Typography className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-800 text-left")}>
               Vous n'avez rien précisé pour ce jour-là
-            </Text>
+            </Typography>
           </View>
         ) : null}
       </View>
@@ -79,6 +80,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingBottom: 10,
     fontWeight: "bold",
+    fontFamily: "SourceSans3-Bold",
     color: colors.BLUE,
     fontSize: 13,
   },

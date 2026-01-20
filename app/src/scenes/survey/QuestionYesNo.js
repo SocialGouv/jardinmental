@@ -38,13 +38,13 @@ const QuestionYesNo = ({ question, explanation, onPress, selected, isLast, showU
           ) : (
             <View />
           )}
-          <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900")}>{question.label}</Text>
+          <Typography className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900")}>{question.label}</Typography>
           {/* we put a view here because we'll add a item here later */}
           <View />
         </View>
         {explanation && showExplanation ? (
           <View style={styles.questionInfo}>
-            <Text>{explanation}</Text>
+            <Typography>{explanation}</Typography>
           </View>
         ) : null}
       </TouchableOpacity>
@@ -66,7 +66,7 @@ const QuestionYesNo = ({ question, explanation, onPress, selected, isLast, showU
           />
         </View>
         {showUserCommentInput ? (
-          <TextInput
+          <TypographyInput
             multiline={true}
             numberOfLines={Platform.OS === "ios" ? null : 1}
             minHeight={Platform.OS === "ios" ? 30 * 1 : null}
@@ -123,6 +123,7 @@ const styles = StyleSheet.create({
   },
   activeLabel: {
     fontWeight: "bold",
+    fontFamily: "SourceSans3-Bold",
   },
   arrowDown: {
     transform: [{ rotate: "180deg" }],
@@ -170,6 +171,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 18,
     fontWeight: "bold",
+    fontFamily: "SourceSans3-Bold",
   },
   answerContainer: {
     paddingTop: 10,
@@ -190,12 +192,14 @@ const styles = StyleSheet.create({
     fontSize: 22,
     marginBottom: 26,
     fontWeight: "700",
+    fontFamily: "SourceSans3-Bold",
   },
   subtitleTop: {
     flex: 1,
     color: colors.LIGHT_BLUE,
     fontSize: 18,
     fontWeight: "700",
+    fontFamily: "SourceSans3-Bold",
     marginTop: 15,
     textAlign: "center",
   },
@@ -234,6 +238,7 @@ const styles = StyleSheet.create({
   },
   backButton: {
     fontWeight: "700",
+    fontFamily: "SourceSans3-Bold",
     textDecorationLine: "underline",
     color: colors.BLUE,
     paddingTop: 15,
@@ -251,6 +256,7 @@ const styles = StyleSheet.create({
   ValidationButtonText: {
     color: "#fff",
     fontWeight: "700",
+    fontFamily: "SourceSans3-Bold",
     fontSize: 19,
   },
   textInput: {

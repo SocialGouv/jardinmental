@@ -21,6 +21,7 @@ import localStorage from "@/utils/localStorage";
 import { ToolThemeFilterBottomSheet } from "./ToolThemeFilterBottomSheet";
 import ChevronIcon from "@assets/svg/icon/chevron";
 import BannerHeader from "../onboarding-v2/BannerHeader";
+import { Typography } from "@/components/Typography";
 
 interface ToolsScreenProps {
   navigation: any;
@@ -314,12 +315,12 @@ const ToolsScreen: React.FC<ToolsScreenProps> = ({ navigation, route }) => {
             >
               {themeFilter !== "Favoris" && (
                 <>
-                  <Text className={mergeClassNames(typography.textMdBold, "text-cnam-primary-800 text-center px-4")}>
+                  <Typography className={mergeClassNames(typography.textMdBold, "text-cnam-primary-800 text-center px-4")}>
                     Aucun outil ne correspond à vos filtres.{" "}
-                  </Text>
-                  <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 text-center px-4 mt-4")}>
+                  </Typography>
+                  <Typography className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 text-center px-4 mt-4")}>
                     Essayez d’élargir la recherche pour découvrir plus d’outils.
-                  </Text>
+                  </Typography>
                   <TouchableOpacity
                     onPress={() => {
                       setFormatFilters([]);
@@ -327,20 +328,20 @@ const ToolsScreen: React.FC<ToolsScreenProps> = ({ navigation, route }) => {
                       setThemeFilter("Tout");
                     }}
                   >
-                    <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40 text-center px-4 mt-4")}>
+                    <Typography className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40 text-center px-4 mt-4")}>
                       Réinitialiser les filtres
-                    </Text>
+                    </Typography>
                   </TouchableOpacity>
                 </>
               )}
               {themeFilter === "Favoris" && (
                 <>
-                  <Text className={mergeClassNames(typography.textMdBold, "text-cnam-primary-800 text-center px-4")}>
+                  <Typography className={mergeClassNames(typography.textMdBold, "text-cnam-primary-800 text-center px-4")}>
                     Il n’y a pas de favoris pour l’instant
-                  </Text>
-                  <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 text-center px-4 mt-4")}>
+                  </Typography>
+                  <Typography className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 text-center px-4 mt-4")}>
                     Explorez les outils et ajoutez vos contenus préférés en favoris pour y accéder rapidement.
-                  </Text>
+                  </Typography>
                 </>
               )}
             </View>
