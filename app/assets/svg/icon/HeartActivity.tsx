@@ -1,6 +1,6 @@
 import Svg, { Path } from "react-native-svg";
 
-export default function HeartActivity({ color }: { color: string }) {
+export default function HeartActivity({ color }: { color?: string }) {
   return (
     <Svg width="32" height="32" viewBox="0 0 32 32" fill="none">
       <Path
