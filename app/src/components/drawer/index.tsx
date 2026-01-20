@@ -306,6 +306,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: "bold",
+    fontFamily: "SourceSans3-Bold",
     padding: 30,
     paddingTop: 15,
     color: colors.DARK_BLUE,

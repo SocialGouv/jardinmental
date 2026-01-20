@@ -80,6 +80,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingBottom: 10,
     fontWeight: "bold",
+    fontFamily: "SourceSans3-Bold",
     color: colors.BLUE,
     fontSize: 13,
   },

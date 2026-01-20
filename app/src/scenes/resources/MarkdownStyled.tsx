@@ -77,5 +77,6 @@ const markdownStyles = {
   },
   strong: {
     fontWeight: "bold" as "bold",
+    fontFamily: "SourceSans3-Bold",
   },
 };

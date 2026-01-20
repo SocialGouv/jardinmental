@@ -119,7 +119,7 @@ const itemStyles = StyleSheet.create({
     flex: 1,
   },
   label: {
-    fontFamily: "SourceSans3",
+    fontFamily: "SourceSans3-Bold",
     fontWeight: "700",
     fontSize: 16,
     color: colors.BLUE,

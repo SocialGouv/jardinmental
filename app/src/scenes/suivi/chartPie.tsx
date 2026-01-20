@@ -261,6 +261,7 @@ const styles = StyleSheet.create({
   },
   bold: {
     fontWeight: "bold",
+    fontFamily: "SourceSans3-Bold",
   },
   averageIconsContainer: {
     display: "flex",

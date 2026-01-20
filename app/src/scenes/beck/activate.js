@@ -81,6 +81,7 @@ const styles = StyleSheet.create({
   },
   bold: {
     fontWeight: "700",
+    fontFamily: "SourceSans3-Bold",
   },
   title: {
     width: "80%",
@@ -113,6 +114,7 @@ const styles = StyleSheet.create({
   activateButtonText: {
     color: "#fff",
     fontWeight: "700",
+    fontFamily: "SourceSans3-Bold",
     fontSize: 19,
   },
   desactivateButton: {

@@ -102,7 +102,7 @@ const _styles = {
     title: {
       fontSize: 16,
       marginBottom: 2,
-      fontFamily: "SourceSans3",
+      fontFamily: "SourceSans3-Bold",
       fontWeight: "700",
       textAlign: "left",
       color: colors.BLUE,

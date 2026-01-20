@@ -194,6 +194,7 @@ const styles = StyleSheet.create({
   setupButtonText: {
     color: "#fff",
     fontWeight: "700",
+    fontFamily: "SourceSans3-Bold",
     fontSize: 19,
   },
   buttonWrapper: {

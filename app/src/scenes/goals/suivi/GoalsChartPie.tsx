@@ -103,7 +103,7 @@ const GoalPie = ({ title, records }) => {
         return {
           value: percentage,
           color: color.color,
-          label: { text: color.symbol, fontWeight: "bold", fontSize: 16, fill: TW_COLORS.BRAND_800, offsetX: -1 },
+          label: { text: color.symbol, fontWeight: "bold", fontFamily: "SourceSans3-Bold", fontSize: 16, fill: TW_COLORS.BRAND_800, offsetX: -1 },
         };
       })
     );

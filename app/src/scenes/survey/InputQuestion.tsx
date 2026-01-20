@@ -87,6 +87,7 @@ const styles = StyleSheet.create({
   questionTitle: {
     fontSize: 18,
     fontWeight: "bold",
+    fontFamily: "SourceSans3-Bold",
   },
   answerContainer: {
     paddingTop: 10,
@@ -97,6 +98,7 @@ const styles = StyleSheet.create({
   },
   backButton: {
     fontWeight: "700",
+    fontFamily: "SourceSans3-Bold",
     textDecorationLine: "underline",
     color: colors.BLUE,
     paddingTop: 15,

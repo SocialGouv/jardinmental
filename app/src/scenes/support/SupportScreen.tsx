@@ -420,6 +420,7 @@ const markdownStyles = {
   },
   strong: {
     fontWeight: "bold" as "bold",
+    fontFamily: "SourceSans3-Bold",
     color: TW_COLORS.CNAM_PRIMARY_800,
   },
 };

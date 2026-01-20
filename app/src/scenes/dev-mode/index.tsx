@@ -413,6 +413,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: "bold",
+    fontFamily: "SourceSans3-Bold",
     color: colors.DARK_BLUE,
     marginBottom: 20,
   },
@@ -422,6 +423,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 18,
     fontWeight: "bold",
+    fontFamily: "SourceSans3-Bold",
     marginBottom: 10,
     color: colors.DARK_BLUE,
   },
@@ -442,6 +444,7 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 16,
     fontWeight: "bold",
+    fontFamily: "SourceSans3-Bold",
   },
   sectionHeader: {
     flexDirection: "row",

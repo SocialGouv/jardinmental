@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
   },
   markText: {
     fontWeight: "bold",
+    fontFamily: "SourceSans3-Bold",
     color: "#191919",
   },
   markTextSelect: {

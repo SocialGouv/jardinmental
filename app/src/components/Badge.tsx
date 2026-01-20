@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     flexBasis: 24,
   },
   text: {
-    fontFamily: "SourceSans3",
+    fontFamily: "SourceSans3-Bold",
     fontWeight: "700",
     fontSize: 16,
     color: "#FFFFFF",

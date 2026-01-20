@@ -177,9 +177,9 @@ const styles = StyleSheet.create({
     height: 110,
   },
   headerTitle: {
-    fontFamily: "SourceSans3",
     fontSize: 16,
     fontWeight: "700",
+    fontFamily: "SourceSans3-Bold",
     marginTop: 24,
     color: "white",
     textAlign: "center",
@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   title: {
-    fontFamily: "SourceSans3",
+    fontFamily: "SourceSans3-Bold",
     color: "black",
     fontSize: 16,
     fontWeight: "700",

@@ -276,6 +276,7 @@ const styles = StyleSheet.create({
   },
   backText: {
     fontWeight: "700",
+    fontFamily: "SourceSans3-Bold",
     textDecorationLine: "underline",
     color: colors.BLUE,
   },

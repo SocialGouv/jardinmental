@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
     borderLeftColor: "#ADB4CD7F",
     paddingLeft: 15,
   },
-  bold: { fontWeight: "bold" },
+  bold: { fontWeight: "bold", fontFamily: "SourceSans3-Bold" },
   safe: {
     flex: 1,
     backgroundColor: "white",
@@ -235,6 +235,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginRight: 20,
     fontWeight: "bold",
+    fontFamily: "SourceSans3-Bold",
     textDecorationLine: "underline",
     color: colors.BLUE,
   },

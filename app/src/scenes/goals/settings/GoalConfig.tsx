@@ -261,7 +261,7 @@ const styles = StyleSheet.create({
   },
   daysOfWeekValue: {
     fontSize: 14,
-    fontFamily: "SourceSans3",
+    fontFamily: "SourceSans3-Bold",
     fontWeight: "700",
     color: colors.BLUE,
   },

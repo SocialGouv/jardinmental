@@ -36,6 +36,7 @@ export default StyleSheet.create({
     marginVertical: 15,
     marginRight: 20,
     fontWeight: "bold",
+    fontFamily: "SourceSans3-Bold",
     textDecorationLine: "underline",
     color: colors.BLUE,
   },

@@ -65,7 +65,7 @@ const AccordionItemComponent: React.FC<AccordionItemComponentProps> = ({ item, i
       fontWeight: "700" as const,
       color: TW_COLORS.CNAM_PRIMARY_800,
       marginBottom: 12,
-      fontFamily: "SourceSans3",
+      fontFamily: "SourceSans3-Bold",
     },
     heading2: {
       fontSize: 20,
@@ -73,7 +73,7 @@ const AccordionItemComponent: React.FC<AccordionItemComponentProps> = ({ item, i
       fontWeight: "700" as const,
       color: TW_COLORS.CNAM_PRIMARY_800,
       marginBottom: 8,
-      fontFamily: "SourceSans3",
+      fontFamily: "SourceSans3-Bold",
     },
     heading3: {
       fontSize: 18,
@@ -81,7 +81,7 @@ const AccordionItemComponent: React.FC<AccordionItemComponentProps> = ({ item, i
       fontWeight: "700" as const,
       color: TW_COLORS.CNAM_PRIMARY_800,
       marginBottom: 6,
-      fontFamily: "SourceSans3",
+      fontFamily: "SourceSans3-Bold",
     },
     paragraph: {
       fontSize: 16,

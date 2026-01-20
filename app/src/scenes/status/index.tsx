@@ -416,6 +416,7 @@ const styles = StyleSheet.create({
   setupButtonText: {
     color: "#fff",
     fontWeight: "bold",
+    fontFamily: "SourceSans3-Bold",
     fontSize: Dimensions.get("window").width > 350 ? 19 : 15,
     flexWrap: "wrap",
     textAlign: "center",

@@ -293,6 +293,7 @@ const styles = StyleSheet.create({
   },
   bold: {
     fontWeight: "bold",
+    fontFamily: "SourceSans3-Bold",
   },
   scrollView: {
     flex: 1,
@@ -304,6 +305,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontWeight: "700",
+    fontFamily: "SourceSans3-Bold",
     fontSize: 22,
   },
 });

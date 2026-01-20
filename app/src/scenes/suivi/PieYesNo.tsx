@@ -65,7 +65,7 @@ export const PieYesNo = ({
       return {
         color: item.color,
         value: e.pourcentage,
-        label: { text: item.symbol, fontWeight: "bold", fontSize: 16, fill: TW_COLORS.BRAND_800, offsetX: -1 },
+        label: { text: item.symbol, fontWeight: "bold", fontFamily: "SourceSans3-Bold", fontSize: 16, fill: TW_COLORS.BRAND_800, offsetX: -1 },
       };
     });
     setSections(sectionsAvecCouleurEtPourcentage);
@@ -184,6 +184,7 @@ const styles = StyleSheet.create({
   },
   bold: {
     fontWeight: "bold",
+    fontFamily: "SourceSans3-Bold",
   },
   averageIconsContainer: {
     display: "flex",

@@ -257,6 +257,7 @@ const EditIndicateursContent = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   bold: {
     fontWeight: "700",
+    fontFamily: "SourceSans3-Bold",
   },
   safe: {
     flex: 1,
@@ -271,6 +272,7 @@ const styles = StyleSheet.create({
     color: colors.BLUE,
     fontSize: 19,
     fontWeight: "700",
+    fontFamily: "SourceSans3-Bold",
   },
   header: {
     height: 60,
@@ -310,6 +312,7 @@ const styles = StyleSheet.create({
     color: colors.BLUE,
     fontSize: 14,
     fontWeight: "700",
+    fontFamily: "SourceSans3-Bold",
     flex: 1,
     marginBottom: 5,
   },

@@ -240,6 +240,7 @@ const styles = StyleSheet.create({
   topTitle: {
     fontSize: 17,
     fontWeight: "700",
+    fontFamily: "SourceSans3-Bold",
     color: colors.BLUE,
     marginBottom: 15,
   },
@@ -297,6 +298,7 @@ const styles = StyleSheet.create({
   setDirectionTitle: {
     fontSize: 15,
     fontWeight: "700",
+    fontFamily: "SourceSans3-Bold",
     color: colors.BLUE,
     marginTop: 15,
   },
@@ -316,6 +318,7 @@ const styles = StyleSheet.create({
     color: colors.BLUE,
     fontSize: 19,
     fontWeight: "700",
+    fontFamily: "SourceSans3-Bold",
   },
   header: {
     height: 60,

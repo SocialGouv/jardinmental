@@ -313,12 +313,14 @@ const styles = StyleSheet.create({
   setupButtonText: {
     color: "#fff",
     fontWeight: "700",
+    fontFamily: "SourceSans3-Bold",
     fontSize: 19,
   },
   titlePosology: {
     color: colors.BLUE,
     fontSize: 15,
     fontWeight: "700",
+    fontFamily: "SourceSans3-Bold",
     flex: 1,
     marginBottom: 25,
   },

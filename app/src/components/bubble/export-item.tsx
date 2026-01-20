@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontWeight: "bold",
+    fontFamily: "SourceSans3-Bold",
     color: colors.BLUE,
     fontSize: 16,
   },

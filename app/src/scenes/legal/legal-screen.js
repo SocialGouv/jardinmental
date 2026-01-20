@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
     color: colors.BLUE,
     fontSize: 20,
     fontWeight: "bold",
+    fontFamily: "SourceSans3-Bold",
     textAlign: "center",
   },
   scrollContainer: {

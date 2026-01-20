@@ -776,6 +776,7 @@ const TestChart = forwardRef(
         yAxisTextStyle={{
           color: TW_COLORS.CNAM_PRIMARY_700,
           fontWeight: 700,
+          fontFamily: "SourceSans3-Bold",
           backgroundColor: "white",
           paddingLeft: 0,
         }}

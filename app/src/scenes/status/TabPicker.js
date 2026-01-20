@@ -76,6 +76,7 @@ const tabStyles = StyleSheet.create({
   },
   actif: {
     fontWeight: "bold",
+    fontFamily: "SourceSans3-Bold",
     color: TW_COLORS.CNAM_PRIMARY_900,
   },
   inactif: {

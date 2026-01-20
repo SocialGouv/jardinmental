@@ -123,6 +123,7 @@ const styles = StyleSheet.create({
   },
   activeLabel: {
     fontWeight: "bold",
+    fontFamily: "SourceSans3-Bold",
   },
   arrowDown: {
     transform: [{ rotate: "180deg" }],
@@ -170,6 +171,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 18,
     fontWeight: "bold",
+    fontFamily: "SourceSans3-Bold",
   },
   answerContainer: {
     paddingTop: 10,
@@ -190,12 +192,14 @@ const styles = StyleSheet.create({
     fontSize: 22,
     marginBottom: 26,
     fontWeight: "700",
+    fontFamily: "SourceSans3-Bold",
   },
   subtitleTop: {
     flex: 1,
     color: colors.LIGHT_BLUE,
     fontSize: 18,
     fontWeight: "700",
+    fontFamily: "SourceSans3-Bold",
     marginTop: 15,
     textAlign: "center",
   },
@@ -234,6 +238,7 @@ const styles = StyleSheet.create({
   },
   backButton: {
     fontWeight: "700",
+    fontFamily: "SourceSans3-Bold",
     textDecorationLine: "underline",
     color: colors.BLUE,
     paddingTop: 15,
@@ -251,6 +256,7 @@ const styles = StyleSheet.create({
   ValidationButtonText: {
     color: "#fff",
     fontWeight: "700",
+    fontFamily: "SourceSans3-Bold",
     fontSize: 19,
   },
   textInput: {
