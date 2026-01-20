@@ -51,6 +51,7 @@ export const FriseHeader = ({
         animatedShadowStyle,
         {
           shadowColor: "#000",
+          backgroundColor: "white",
           shadowOffset: { width: 0, height: 4 },
           shadowRadius: 8,
           zIndex: 10,

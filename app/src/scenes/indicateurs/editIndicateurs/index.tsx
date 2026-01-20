@@ -22,6 +22,7 @@ import { typography } from "@/utils/typography";
 import { TW_COLORS } from "@/utils/constants";
 import ChevronIcon from "@assets/svg/icon/chevron";
 import { IndicatorEditProvider, useIndicatorEdit } from "@/context/IndicatorEditContext";
+import { Typography } from "@/components/Typography";
 
 const EditIndicateursContent = ({ navigation, route }) => {
   const [exemplesVisible, setExemplesVisible] = React.useState(false);
