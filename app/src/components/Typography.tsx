@@ -16,39 +16,40 @@ type TypographyProps = TextProps & {
 };
 
 export function Typography({ className = "", style, children, ...props }: TypographyProps) {
-  // Recherche la première classe de poids présente dans classNameif (Array.isArray(style)) {
   let fontFamily = fontFamilyMap["font-normal"];
-  for (const s of style) {
-    if ("fontWeight" in s && s.fontWeight) {
-      switch (s.fontWeight) {
-        case "bold":
-        case "700":
-          fontFamily = fontFamilyMap["font-bold"];
-          break;
-        case "600":
-        case "semibold":
-          fontFamily = fontFamilyMap["font-semibold"];
-          break;
-        case "500":
-        case "medium":
-          fontFamily = fontFamilyMap["font-medium"];
-          break;
-        case "300":
-        case "light":
-          fontFamily = fontFamilyMap["font-light"];
-          break;
-        case "normal":
-        default:
-          fontFamily = fontFamilyMap["font-normal"];
+
+  // Vérifier si style est un tableau ou un objet unique
+  if (style) {
+    const styles = Array.isArray(style) ? style : [style];
+
+    for (const s of styles) {
+      if (s && typeof s === "object" && "fontWeight" in s && s.fontWeight) {
+        switch (s.fontWeight) {
+          case "bold":
+          case "700":
+            fontFamily = fontFamilyMap["font-bold"];
+            break;
+          case "600":
+          case "semibold":
+            fontFamily = fontFamilyMap["font-semibold"];
+            break;
+          case "500":
+          case "medium":
+            fontFamily = fontFamilyMap["font-medium"];
+            break;
+          case "300":
+          case "light":
+            fontFamily = fontFamilyMap["font-light"];
+            break;
+          case "normal":
+          default:
+            fontFamily = fontFamilyMap["font-normal"];
+        }
+        break;
       }
-      break;
     }
   }
-  const fontClass = Object.keys(fontFamilyMap).find((cls) => className.includes(cls));
 
-  // Utilisation du composant styled de NativeWind
-  const StyledText = styled(Text);
-  console.log(className, fontFamily);
   return (
     <Text className={className} style={[style, { fontFamily }]} {...props}>
       {children}
