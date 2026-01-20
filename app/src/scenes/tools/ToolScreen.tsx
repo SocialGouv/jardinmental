@@ -19,10 +19,8 @@ import MenuIcon from "@assets/svg/icon/Menu";
 import { ToolFilterButton } from "./ToolFilterButton";
 import localStorage from "@/utils/localStorage";
 import { ToolThemeFilterBottomSheet } from "./ToolThemeFilterBottomSheet";
-import { AnimatedHeaderScrollScreen } from "../survey-v2/AnimatedHeaderScrollScreen";
 import ChevronIcon from "@assets/svg/icon/chevron";
 import BannerHeader from "../onboarding-v2/BannerHeader";
-import { interpolate } from "react-native-reanimated";
 
 interface ToolsScreenProps {
   navigation: any;
