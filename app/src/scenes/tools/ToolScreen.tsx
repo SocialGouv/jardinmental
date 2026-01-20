@@ -19,6 +19,7 @@ import MenuIcon from "@assets/svg/icon/Menu";
 import { ToolFilterButton } from "./ToolFilterButton";
 import localStorage from "@/utils/localStorage";
 import { ToolThemeFilterBottomSheet } from "./ToolThemeFilterBottomSheet";
+import { Typography } from "@/components/Typography";
 
 interface ToolsScreenProps {
   navigation: any;
@@ -229,12 +230,12 @@ const ToolsScreen: React.FC<ToolsScreenProps> = ({ navigation, route }) => {
             >
               {themeFilter !== "Favoris" && (
                 <>
-                  <Text className={mergeClassNames(typography.textMdBold, "text-cnam-primary-800 text-center px-4")}>
+                  <Typography className={mergeClassNames(typography.textMdBold, "text-cnam-primary-800 text-center px-4")}>
                     Aucun outil ne correspond à vos filtres.{" "}
-                  </Text>
-                  <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 text-center px-4 mt-4")}>
+                  </Typography>
+                  <Typography className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 text-center px-4 mt-4")}>
                     Essayez d’élargir la recherche pour découvrir plus d’outils.
-                  </Text>
+                  </Typography>
                   <TouchableOpacity
                     onPress={() => {
                       setFormatFilters([]);
@@ -242,20 +243,20 @@ const ToolsScreen: React.FC<ToolsScreenProps> = ({ navigation, route }) => {
                       setThemeFilter("Tout");
                     }}
                   >
-                    <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40 text-center px-4 mt-4")}>
+                    <Typography className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40 text-center px-4 mt-4")}>
                       Réinitialiser les filtres
-                    </Text>
+                    </Typography>
                   </TouchableOpacity>
                 </>
               )}
               {themeFilter === "Favoris" && (
                 <>
-                  <Text className={mergeClassNames(typography.textMdBold, "text-cnam-primary-800 text-center px-4")}>
+                  <Typography className={mergeClassNames(typography.textMdBold, "text-cnam-primary-800 text-center px-4")}>
                     Il n’y a pas de favoris pour l’instant
-                  </Text>
-                  <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 text-center px-4 mt-4")}>
+                  </Typography>
+                  <Typography className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 text-center px-4 mt-4")}>
                     Explorez les outils et ajoutez vos contenus préférés en favoris pour y accéder rapidement.
-                  </Text>
+                  </Typography>
                 </>
               )}
             </View>
@@ -287,6 +288,7 @@ const ToolsScreen: React.FC<ToolsScreenProps> = ({ navigation, route }) => {
                 className="text-cnam-primary-950 font-semibold mb-3"
                 style={{
                   fontSize: titleFontSize,
+                  fontFamily: "SourceSans3-SemiBold",
                 }}
               >
                 Explorez les outils pour agir
@@ -308,9 +310,9 @@ const ToolsScreen: React.FC<ToolsScreenProps> = ({ navigation, route }) => {
                 className="flex-row bg-cnam-cyan-lighten-80 items-center mb-8 space-x-1 rounded-full px-3 self-start mx-4"
               >
                 <ValidatedStampIcon />
-                <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>
+                <Typography className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>
                   Comment ces outils sont-ils séléctionnés ?
-                </Text>
+                </Typography>
               </TouchableOpacity>
             </Animated.View>
           </Animated.View>
@@ -356,9 +358,9 @@ const ToolsScreen: React.FC<ToolsScreenProps> = ({ navigation, route }) => {
           </View>
 
           <View className="flex-row justify-between items-center mb-4 px-4">
-            <Text className={mergeClassNames(typography.textXlSemibold, "text-cnam-primary-800 text-base flex-1")}>
+            <Typography className={mergeClassNames(typography.textXlSemibold, "text-cnam-primary-800 text-base flex-1")}>
               {filteredTools.length} {filteredTools.length === 1 ? "outil" : "outils"}
-            </Text>
+            </Typography>
             <TouchableOpacity
               onPress={() => {
                 showBottomSheet(
@@ -378,7 +380,7 @@ const ToolsScreen: React.FC<ToolsScreenProps> = ({ navigation, route }) => {
               className="flex-row items-center"
             >
               <Tune width={16} height={16} color={TW_COLORS.CNAM_CYAN_700_DARKEN_40} />
-              <Text className="text-cnam-cyan-700-darken-40 text-base ml-2">Filtres ({filters.length})</Text>
+              <Typography className="text-cnam-cyan-700-darken-40 text-base ml-2">Filtres ({filters.length})</Typography>
             </TouchableOpacity>
             {filters.length > 0 && (
               <TouchableOpacity
@@ -387,7 +389,7 @@ const ToolsScreen: React.FC<ToolsScreenProps> = ({ navigation, route }) => {
                   setAudienceFilters([]);
                 }}
               >
-                <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-800 ml-2")}>{"Effacer"}</Text>
+                <Typography className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-800 ml-2")}>{"Effacer"}</Typography>
               </TouchableOpacity>
             )}
           </View>

@@ -19,6 +19,7 @@ import NavigationButtons from "@/components/onboarding/NavigationButtons";
 import { confirm } from "@/utils";
 import logEvents from "@/services/logEvents";
 import { addPushTokenListener } from "expo-notifications";
+import { Typography } from "@/components/Typography";
 
 export const GoalConfig = ({ navigation, route }) => {
   const goalId = route.params?.goalId;
@@ -177,13 +178,13 @@ export const GoalConfig = ({ navigation, route }) => {
         <View className="mx-4">
           {!editing ? (
             <>
-              <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-900 mt-8 mb-2")}>Programmer un rappel</Text>
-              <Text className={mergeClassNames(typography.textMdMedium, "text-primary-800 mb-8 ")}>
+              <Typography className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-900 mt-8 mb-2")}>Programmer un rappel</Typography>
+              <Typography className={mergeClassNames(typography.textMdMedium, "text-primary-800 mb-8 ")}>
                 Souhaitez-vous recevoir une notification pour l'objectif "{goalLabel}" ?
-              </Text>
+              </Typography>
             </>
           ) : (
-            <Text className={mergeClassNames("my-4 mt-6 text-cnam-primary-900", typography.textMdSemibold)}>{editingGoal?.label}</Text>
+            <Typography className={mergeClassNames("my-4 mt-6 text-cnam-primary-900", typography.textMdSemibold)}>{editingGoal?.label}</Typography>
           )}
           <InputGroup containerStyle={styles.spacing} highlight={reminderEnabled}>
             {editing && (
@@ -197,7 +198,7 @@ export const GoalConfig = ({ navigation, route }) => {
                   });
                 }}
               >
-                <Text style={styles.daysOfWeekValue}>{daysOfWeekLabel}</Text>
+                <Typography style={styles.daysOfWeekValue}>{daysOfWeekLabel}</Typography>
                 <Icon
                   icon="ArrowUpSvg"
                   color={colors.BLUE}
@@ -260,7 +261,7 @@ const styles = StyleSheet.create({
   },
   daysOfWeekValue: {
     fontSize: 14,
-    fontFamily: "SourceSans3",
+    fontFamily: "SourceSans3-Bold",
     fontWeight: "700",
     color: colors.BLUE,
   },

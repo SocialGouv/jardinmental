@@ -198,6 +198,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginVertical: 10,
     fontWeight: "bold",
+    fontFamily: "SourceSans3-Bold",
   },
 
   // x.y - Sous titre
@@ -206,6 +207,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
     marginVertical: 8,
     fontWeight: "bold",
+    fontFamily: "SourceSans3-Bold",
   },
 
   // A - Paragraphe
@@ -224,6 +226,7 @@ const styles = StyleSheet.create({
   },
   bold: {
     fontWeight: "bold",
+    fontFamily: "SourceSans3-Bold",
   },
   italic: {
     fontStyle: "italic",

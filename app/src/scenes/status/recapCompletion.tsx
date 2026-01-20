@@ -134,6 +134,7 @@ const styles = StyleSheet.create({
   dayLabelToday: {
     fontSize: 10,
     fontWeight: "bold",
+    fontFamily: "SourceSans3-Bold",
     color: "#fff",
   },
   dayLabelTodayContainer: {
@@ -160,6 +161,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: colors.BLUE,
     fontWeight: "bold",
+    fontFamily: "SourceSans3-Bold",
   },
 });
 

@@ -11,6 +11,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 import HealthIcon from "@assets/svg/icon/Health";
 import { useBottomSheet } from "@/context/BottomSheetContext";
 import { CrisisAuthorizedContactBottomSheet } from "./CrisisAuthorizedContactBottomSheet";
+import { Typography } from "@/components/Typography";
 
 const screenHeight = Dimensions.get("window").height;
 const height90vh = screenHeight * 0.9;
@@ -71,14 +72,14 @@ export default function CrisisListBottomSheet({
               setSelectedItems([]);
             }}
           >
-            <Text className={mergeClassNames(typography.textLgMedium, "text-cnam-primary-800")}>Effacer</Text>
+            <Typography className={mergeClassNames(typography.textLgMedium, "text-cnam-primary-800")}>Effacer</Typography>
           </TouchableOpacity>
         </View>
         <View className="flex-row bg-[#E5F6FC] self-start items-center p-2">
-          <Text className={mergeClassNames(typography.textSmBold, "ml-2 text-cnam-cyan-700-darken-40 text-left")}>{header}</Text>
+          <Typography className={mergeClassNames(typography.textSmBold, "ml-2 text-cnam-cyan-700-darken-40 text-left")}>{header}</Typography>
         </View>
         <View className="p-4 flex-column flex-1 gap-6">
-          <Text className={mergeClassNames(typography.textXlBold, "text-left text-cnam-primary-900")}>{label}</Text>
+          <Typography className={mergeClassNames(typography.textXlBold, "text-left text-cnam-primary-900")}>{label}</Typography>
           <View className="flex-colum flex-1">
             {filteredDoses.map((ind) => {
               const selected = selectedItems.includes(itemIdKey ? ind[itemIdKey] : ind);
@@ -96,7 +97,7 @@ export default function CrisisListBottomSheet({
               );
             })}
             {/* {!!uniqueItems.length && !filteredDoses.length && (
-              <Text className={mergeClassNames(typography.textSmMedium, "text-gray-800")}>Pas de résultat</Text>
+              <Typography className={mergeClassNames(typography.textSmMedium, "text-gray-800")}>Pas de résultat</Typography>
             )} */}
             {/* {!!searchedText && !filteredDoses.length && (
               <TouchableOpacity
@@ -106,7 +107,7 @@ export default function CrisisListBottomSheet({
                 }}
               >
                 <View className="flex-row items-center mr-auto mt-2">
-                  <Text className={mergeClassNames(typography.textLgMedium, "mr-2 text-cnam-primary-900")}>Ajouter "{searchedText}"</Text>
+                  <Typography className={mergeClassNames(typography.textLgMedium, "mr-2 text-cnam-primary-900")}>Ajouter "{searchedText}"</Typography>
                   <PlusIcon />
                 </View>
               </TouchableOpacity>
@@ -119,7 +120,7 @@ export default function CrisisListBottomSheet({
                   }}
                 >
                   <View className="flex-row items-center">
-                    <Text className={mergeClassNames(typography.textMdMedium, "mr-2 text-cnam-primary-900")}>Saisir manuellement</Text>
+                    <Typography className={mergeClassNames(typography.textMdMedium, "mr-2 text-cnam-primary-900")}>Saisir manuellement</Typography>
                     <PlusIcon />
                   </View>
                 </TouchableOpacity>

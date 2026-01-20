@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
     color: colors.DARK_BLUE,
     fontSize: 11,
     fontWeight: "bold",
+    fontFamily: "SourceSans3-Bold",
   },
   container: {
     display: "flex",

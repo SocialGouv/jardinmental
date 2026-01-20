@@ -11,6 +11,7 @@ import { mergeClassNames } from "@/utils/className";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import logEvents from "@/services/logEvents";
 import CheckBox from "@react-native-community/checkbox";
+import { Typography } from "@/components/Typography";
 
 type Props = OnboardingV2ScreenProps<"Intro">;
 
@@ -82,16 +83,16 @@ const IntroScreen: React.FC<Props> = ({ navigation }) => {
         }}
       >
         <View>
-          <Text className={mergeClassNames(typography.textXlMedium, "text-primary")}>
+          <Typography className={mergeClassNames(typography.textXlMedium, "text-primary")}>
             Gratuit à vie.{"\n"}
             Totalement anonyme.{"\n"}
             Sans inscription.
-          </Text>
+          </Typography>
         </View>
         <View className="px-10 mt-12">
-          <Text className={mergeClassNames(typography.textSmSemibold, "text-center")} style={{ color: TW_COLORS.SECONDARY }}>
+          <Typography className={mergeClassNames(typography.textSmSemibold, "text-center")} style={{ color: TW_COLORS.SECONDARY }}>
             Créé avec des professionnels et{"\n"}soutenu par la CNAM
-          </Text>
+          </Typography>
         </View>
       </View>
 
@@ -100,22 +101,22 @@ const IntroScreen: React.FC<Props> = ({ navigation }) => {
           <TouchableOpacity onPress={(newValue) => setIsCguChecked(!isCguChecked)}>
             {isCguChecked ? (
               <View className="mr-3 w-6 h-6 rounded-md items-center justify-center bg-cnam-primary-800">
-                <Text className="text-white text-base font-bold">✓</Text>
+                <Typography className="text-white text-base font-bold">✓</Typography>
               </View>
             ) : (
               <View className="mr-3 w-6 h-6 rounded-md items-center justify-center border-2 border-gray-300">
-                <Text className="text-white text-xs" />
+                <Typography className="text-white text-xs" />
               </View>
             )}
           </TouchableOpacity>
           <View className="flex-1">
-            <Text className={mergeClassNames(typography.textMdRegular, "text-left")} style={{ color: TW_COLORS.PRIMARY }}>
+            <Typography className={mergeClassNames(typography.textMdRegular, "text-left")} style={{ color: TW_COLORS.PRIMARY }}>
               En cochant cette case, vous acceptez les{" "}
-              <Text onPress={onCguClick} className={mergeClassNames(typography.textMdRegular, "underline text-left")}>
+              <Typography onPress={onCguClick} className={mergeClassNames(typography.textMdRegular, "underline text-left")}>
                 conditions d'utilisation
-              </Text>
+              </Typography>
               .
-            </Text>
+            </Typography>
           </View>
         </View>
       </View>

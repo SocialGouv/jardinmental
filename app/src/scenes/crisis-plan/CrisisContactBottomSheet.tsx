@@ -15,6 +15,7 @@ import User from "@assets/svg/icon/User";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 import { BottomSheetTextInput } from "@gorhom/bottom-sheet";
 import { colors } from "@/utils/colors";
+import { Typography } from "@/components/Typography";
 
 const suggestions = ["Aller au cinéma", "Aller au restaurant", "Faire du shopping", "Faire une promenade"];
 const screenHeight = Dimensions.get("window").height;
@@ -92,20 +93,20 @@ export const CrisisContactBottomSheet = ({
               onClose();
             }}
           >
-            <Text className={mergeClassNames(typography.textLgMedium, "text-cnam-primary-800")}>Annuler</Text>
+            <Typography className={mergeClassNames(typography.textLgMedium, "text-cnam-primary-800")}>Annuler</Typography>
           </TouchableOpacity>
         </View>
         <View className="flex-row bg-[#E5F6FC] self-start items-center p-2 mb-4">
-          <Text className={mergeClassNames(typography.textSmBold, "ml-2 text-cnam-cyan-700-darken-40 text-left")}>{header}</Text>
+          <Typography className={mergeClassNames(typography.textSmBold, "ml-2 text-cnam-cyan-700-darken-40 text-left")}>{header}</Typography>
         </View>
         <View className="bg-cnam-primary-50 rounded-2xl px-6 py-8 mx-4 flex-column">
           <View className="flex-row items-center flex-start space-x-2 mb-2">
             <User width={20} height={20} color={TW_COLORS.CNAM_CYAN_600_DARKEN_20} />
-            <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-950")}>{item.name}</Text>
+            <Typography className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-950")}>{item.name}</Typography>
           </View>
           {!cannotEditNumber && variant === "activity" && (
             <View className="flex-column flex-start space-y-1 mb-4">
-              <Text className={mergeClassNames(typography.textSmMedium, "text-gray-700 mb-2")}>Numéro de téléphone</Text>
+              <Typography className={mergeClassNames(typography.textSmMedium, "text-gray-700 mb-2")}>Numéro de téléphone</Typography>
               <InputText
                 containerStyle={{
                   flexGrow: 1,
@@ -157,7 +158,9 @@ export const CrisisContactBottomSheet = ({
           )}
           {variant === "activity" && (
             <>
-              <Text className={mergeClassNames(typography.textSmMedium, "text-gray-700 mb-2")}>Renseignez une activité à faire ensemble</Text>
+              <Typography className={mergeClassNames(typography.textSmMedium, "text-gray-700 mb-2")}>
+                Renseignez une activité à faire ensemble
+              </Typography>
               <View className="flex-column space-y-1">
                 <View className="flex-row items-center space-x-2">
                   <InputText
@@ -247,9 +250,9 @@ export const CrisisContactBottomSheet = ({
                   );
                 }}
               >
-                <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40 underline mt-4")}>
+                <Typography className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40 underline mt-4")}>
                   Choisir parmi les suggestions
-                </Text>
+                </Typography>
               </TouchableOpacity>
             </>
           )}

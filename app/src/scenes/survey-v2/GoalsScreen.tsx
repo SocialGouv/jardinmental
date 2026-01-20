@@ -54,7 +54,7 @@ export const GoalsScreen: React.FC<GoalsScreenProps> = ({ navigation, currentSte
               flex: 1,
               fontSize: 18,
               fontWeight: "bold",
-              fontFamily: "SourceSans3",
+              fontFamily: "SourceSans3-Bold",
               textAlign: "center",
               paddingHorizontal: 4,
               color: "#111",

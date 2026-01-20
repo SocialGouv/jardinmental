@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   textContainer: { width: "100%" },
-  title: { fontWeight: "bold", marginBottom: 10 },
+  title: { fontWeight: "bold", marginBottom: 10, fontFamily: "SourceSans3-Bold" },
 });
 
 export default Toxic;

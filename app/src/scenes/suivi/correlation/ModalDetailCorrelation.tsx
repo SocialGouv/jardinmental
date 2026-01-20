@@ -17,6 +17,7 @@ import { mapIconToSvg } from "@/components/CircledIcon";
 import CheckMarkIcon from "@assets/svg/icon/check";
 import ChevronIcon from "@assets/svg/icon/chevron";
 import ArrowUpSvg from "@assets/svg/icon/ArrowUp";
+import { Typography } from "@/components/Typography";
 
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
@@ -71,7 +72,7 @@ export const DetailModalCorrelationScreen: React.FC<ModalCorrelationScreenProps>
           </TouchableOpacity>
         </View>
         <View className="flex-row h-[66] w-full justify-between items-center">
-          <Text className={mergeClassNames(typography.displayXsBold, "text-white")}>{firstLetterUppercase(formatDate(date, true))}</Text>
+          <Typography className={mergeClassNames(typography.displayXsBold, "text-white")}>{firstLetterUppercase(formatDate(date, true))}</Typography>
         </View>
         <View className="bg-white/10 rounded-2xl p-4 w-full">
           {diaryDataForDate &&
@@ -93,10 +94,10 @@ export const DetailModalCorrelationScreen: React.FC<ModalCorrelationScreenProps>
                       strokeDasharray={index === 0 ? "" : "4 4"} // pattern: 4px dash, 4px gap
                     />
                   </Svg>
-                  <Text key={indicator.uuid} className={mergeClassNames(typography.textMdMedium, "text-white ")}>
-                    <Text className={mergeClassNames(typography.textMdSemibold, "text-white")}>{indicator.name} : </Text>
+                  <Typography key={indicator.uuid} className={mergeClassNames(typography.textMdMedium, "text-white ")}>
+                    <Typography className={mergeClassNames(typography.textMdSemibold, "text-white")}>{indicator.name} : </Typography>
                     {computeIndicatorLabel(indicator, value) || "Pas de donnée"}
-                  </Text>
+                  </Typography>
                 </View>
               );
             })}
@@ -109,10 +110,10 @@ export const DetailModalCorrelationScreen: React.FC<ModalCorrelationScreenProps>
                   <CrossIcon color={"white"} />
                 )}
               </View>
-              <Text className={mergeClassNames(typography.textMdMedium, "text-white ")}>
-                <Text className={mergeClassNames(typography.textMdSemibold, "text-white")}>Traitement : </Text>
+              <Typography className={mergeClassNames(typography.textMdMedium, "text-white ")}>
+                <Typography className={mergeClassNames(typography.textMdSemibold, "text-white")}>Traitement : </Typography>
                 {diaryDataForDate["PRISE_DE_TRAITEMENT"]?.value ? "Oui" : "Non"}
-              </Text>
+              </Typography>
             </View>
           )}
           {diaryDataForDate["PRISE_DE_TRAITEMENT_SI_BESOIN"]?.value === true && (
@@ -120,10 +121,10 @@ export const DetailModalCorrelationScreen: React.FC<ModalCorrelationScreenProps>
               <View className="w-[30] items-center">
                 <View className="w-2 h-2 bg-cnam-primary-950 rounded-full"></View>
               </View>
-              <Text className={mergeClassNames(typography.textMdMedium, "text-white ")}>
-                <Text className={mergeClassNames(typography.textMdSemibold, "text-white")}>Prise d'un "si besoin" : </Text>
+              <Typography className={mergeClassNames(typography.textMdMedium, "text-white ")}>
+                <Typography className={mergeClassNames(typography.textMdSemibold, "text-white")}>Prise d'un "si besoin" : </Typography>
                 {"Oui"}
-              </Text>
+              </Typography>
             </View>
           )}
         </View>
@@ -167,7 +168,7 @@ export const DetailModalCorrelationScreen: React.FC<ModalCorrelationScreenProps>
             />
           </View>
         </View>
-        <Text className={mergeClassNames(typography.textXlSemibold, "text-cnam-primary-900 pt-6 pb-4")}>Ce jour là :</Text>
+        <Typography className={mergeClassNames(typography.textXlSemibold, "text-cnam-primary-900 pt-6 pb-4")}>Ce jour là :</Typography>
         <View className="flex-col space-y-3">
           {Object.keys(diaryDataForDate).map((key) => {
             if (diaryDataForDate[key]?._indicateur) {
@@ -180,9 +181,9 @@ export const DetailModalCorrelationScreen: React.FC<ModalCorrelationScreenProps>
         </View>
         {diaryDataForDate.CONTEXT && (
           <View className="justify-between items-start bg-cnam-primary-50 rounded-xl p-2 my-2">
-            <Text className={mergeClassNames(typography.textSmSemibold, "mb-1 text-cnam-primary-900")}>Note générale</Text>
+            <Typography className={mergeClassNames(typography.textSmSemibold, "mb-1 text-cnam-primary-900")}>Note générale</Typography>
             <View className="w-full flex-row items-center items-start">
-              <Text
+              <Typography
                 className={mergeClassNames("flex-1", typography.textSmRegular, "text-cnam-gray-950 italic")}
                 style={{
                   fontSize: 14,
@@ -193,7 +194,7 @@ export const DetailModalCorrelationScreen: React.FC<ModalCorrelationScreenProps>
                 }}
               >
                 {diaryDataForDate.CONTEXT.userComment || "Oui"}
-              </Text>
+              </Typography>
             </View>
           </View>
         )}
@@ -237,10 +238,10 @@ const ItemStatus = ({ indicator, colors, data }) => {
         )}
         <View className="flex-row flex-1">
           <View className="flex-1 flex-row items-start">
-            <Text className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-900 text-left")}>
-              <Text className={mergeClassNames(typography.textMdBold, "text-cnam-primary-900")}>{data?._indicateur?.name} : </Text>
+            <Typography className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-900 text-left")}>
+              <Typography className={mergeClassNames(typography.textMdBold, "text-cnam-primary-900")}>{data?._indicateur?.name} : </Typography>
               {computeIndicatorLabel(data._indicateur, data.value) || "Pas de donnée"}
-            </Text>
+            </Typography>
           </View>
           {data.userComment && (
             <View
@@ -257,7 +258,9 @@ const ItemStatus = ({ indicator, colors, data }) => {
           )}
         </View>
       </TouchableOpacity>
-      {visible && <Text className={mergeClassNames(typography.textXsRegular, "text-left", "text-gray-700 ml-9")}>{data.userComment}</Text>}
+      {visible && (
+        <Typography className={mergeClassNames(typography.textXsRegular, "text-left", "text-gray-700 ml-9")}>{data.userComment}</Typography>
+      )}
     </View>
   );
 };

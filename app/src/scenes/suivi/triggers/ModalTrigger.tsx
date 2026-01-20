@@ -20,6 +20,7 @@ import { DEFAULT_INDICATOR_LABELS, INDICATOR_LABELS } from "@/utils/liste_indica
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Chevron from "./Chevron";
 import FileIcon from "@assets/svg/icon/File";
+import { Typography } from "@/components/Typography";
 
 interface ModalTriggerScreenProps {
   navigation: any;
@@ -44,13 +45,13 @@ const CircleStateInfo = ({
         backgroundColor: scoreVisualConfig.color,
       }}
     >
-      <Text
+      <Typography
         style={{
           color: scoreVisualConfig.iconColor,
         }}
       >
         {scoreVisualConfig.symbol}
-      </Text>
+      </Typography>
     </View>
   );
 };
@@ -263,7 +264,7 @@ export const ModalTriggerScreen: React.FC<ModalTriggerScreenProps> = ({
         }}
       >
         <View className="flex-row justify-between top-0 w-full p-4 items-center h-[96]">
-          <Text className={mergeClassNames(typography.displayXsBold, "text-white")}>Déclencheurs</Text>
+          <Typography className={mergeClassNames(typography.displayXsBold, "text-white")}>Déclencheurs</Typography>
           <TouchableOpacity
             onPress={() => {
               navigation.goBack();
@@ -283,37 +284,37 @@ export const ModalTriggerScreen: React.FC<ModalTriggerScreenProps> = ({
           <View className="mb-4">
             <View className="flex-col space-y-4 bg-cnam-cyan-50-lighten-90 p-4">
               <View className="flex-row justify-between px-2 rounded-2xl items-center">
-                <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>L'indicateur</Text>
+                <Typography className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>L'indicateur</Typography>
                 <TouchableOpacity className="flex-row items-center justify-between" onPress={openIndicatorBottomSheet}>
-                  <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>
+                  <Typography className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>
                     {selectedIndicator?.name || "Sélectionnez un indicateur"}
-                  </Text>
+                  </Typography>
                   <Chevron />
                 </TouchableOpacity>
               </View>
               <View className="flex-row justify-between px-2 rounded-2xl items-center">
-                <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>était</Text>
+                <Typography className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>était</Typography>
                 <TouchableOpacity className="flex-row items-center justify-between" onPress={openStateBottomSheet}>
                   {selectedState && <CircleStateInfo selectedIndicator={selectedIndicator} selectedState={selectedState} />}
-                  <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>
+                  <Typography className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>
                     {selectedState ? selectedState.label : `Sélectionnez un état`}
-                  </Text>
+                  </Typography>
                   <Chevron />
                 </TouchableOpacity>
               </View>
               <View className="flex-row justify-between px-2 rounded-2xl items-center">
-                <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>sur la période</Text>
+                <Typography className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>sur la période</Typography>
                 <TouchableOpacity className="flex-row items-center justify-between" onPress={openPeriodBottomSheet}>
-                  <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>
+                  <Typography className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>
                     {selectedPeriod.value === "custom" ? "Personalisée" : selectedPeriod.label}
-                  </Text>
+                  </Typography>
                   <Chevron />
                 </TouchableOpacity>
               </View>
               {selectedPeriod.value === "custom" && (
                 <View className="flex-row items-center justify-between">
                   <View className="flex-row justify-between items-center px-2 rounded-2xl">
-                    <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>Période</Text>
+                    <Typography className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>Période</Typography>
                   </View>
                   <View className="flex-row justify-between px-2 rounded-2xl">
                     <TouchableOpacity
@@ -324,10 +325,10 @@ export const ModalTriggerScreen: React.FC<ModalTriggerScreenProps> = ({
                         }
                       }}
                     >
-                      <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>Du </Text>
-                      <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>
+                      <Typography className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>Du </Typography>
+                      <Typography className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>
                         {formatDateToFrenchNumericFormat(fromDate)}
-                      </Text>
+                      </Typography>
                       <Chevron />
                     </TouchableOpacity>
                     <TouchableOpacity
@@ -338,10 +339,10 @@ export const ModalTriggerScreen: React.FC<ModalTriggerScreenProps> = ({
                         }
                       }}
                     >
-                      <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>Au </Text>
-                      <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>
+                      <Typography className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>Au </Typography>
+                      <Typography className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>
                         {formatDateToFrenchNumericFormat(toDate)}
-                      </Text>
+                      </Typography>
                       <Chevron />
                     </TouchableOpacity>
                     <DatePicker
@@ -401,14 +402,14 @@ export const ModalTriggerScreen: React.FC<ModalTriggerScreenProps> = ({
                     <View className="bg-cnam-primary-50 h-[150] w-[150] rounded-full" style={{ top: -110 }}></View>
                   </View>
                   <View className="border border-cnam-primary-200 rounded-2xl p-4 py-6 bg-white" style={{ borderWidth: 0.5 }}>
-                    <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 text-center px-4")}>
+                    <Typography className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 text-center px-4")}>
                       Il n'y a pas de note à afficher sur cette période pour :
-                    </Text>
-                    <Text className={mergeClassNames(typography.textMdBold, "text-cnam-primary-950 text-center px-4 mt-4")}>
+                    </Typography>
+                    <Typography className={mergeClassNames(typography.textMdBold, "text-cnam-primary-950 text-center px-4 mt-4")}>
                       {selectedIndicator.name}{" "}
-                      <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-950 text-center px-4 mt-4")}>est</Text>{" "}
+                      <Typography className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-950 text-center px-4 mt-4")}>est</Typography>{" "}
                       {selectedState.label}
-                    </Text>
+                    </Typography>
                   </View>
                 </View>
                 <View style={{ height: 120 }}></View>
@@ -419,15 +420,15 @@ export const ModalTriggerScreen: React.FC<ModalTriggerScreenProps> = ({
         renderItem={({ item }) => {
           return (
             <View className=" bg-white border-[1px] border-cnam-primary-200 rounded-2xl mb-4 p-4 mx-4">
-              <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40 mb-4")}>
+              <Typography className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40 mb-4")}>
                 {firstLetterUppercase(formatRelativeDate(item.date, true))}
-              </Text>
+              </Typography>
               <View className="flex-col space-y-6">
                 {Object.keys(item.dayData || {}).map((key) => {
                   if (item.dayData[key]?.userComment) {
                     return (
                       <View>
-                        <Text
+                        <Typography
                           style={{
                             fontStyle: "italic",
                             fontSize: 14,
@@ -436,15 +437,15 @@ export const ModalTriggerScreen: React.FC<ModalTriggerScreenProps> = ({
                           className={mergeClassNames("text-cnam-primary-800 mb-2 italic")}
                         >
                           {key === "CONTEXT" ? "Contexte de la journée" : `Précision sur "${item.dayData[key]._indicateur?.name}"`}
-                        </Text>
+                        </Typography>
                         <View className="justify-between items-start bg-cnam-cyan-50-lighten-90 rounded-xl p-2 my-2">
                           <View className="w-full flex-row items-start">
                             <View className="mt-0.5">
                               <FileIcon />
                             </View>
-                            <Text className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-800 text-left ml-2")}>
+                            <Typography className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-800 text-left ml-2")}>
                               {item.dayData[key]?.userComment}
-                            </Text>
+                            </Typography>
                           </View>
                         </View>
                       </View>

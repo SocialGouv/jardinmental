@@ -5,6 +5,7 @@ import Icon from "../Icon";
 import ArrowRightSvg from "../../../assets/svg/arrow-right.js";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
+import { Typography } from "../Typography";
 
 export default ({ title, description, navigation, path = "tabs", icon = null, color = colors.LIGHT_BLUE, onClick, badge = false, style }) => {
   const handleClick = () => {
@@ -32,10 +33,10 @@ export default ({ title, description, navigation, path = "tabs", icon = null, co
           ) : (
             <View style={{ marginHorizontal: 30 }} />
           )}
-          <Text style={styles.label} className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-800")}>
+          <Typography style={styles.label} className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-800")}>
             {title}
-          </Text>
-          {description && <Text className={mergeClassNames(typography.textSmRegular, "text-cnam-primary-800")}>{description}</Text>}
+          </Typography>
+          {description && <Typography className={mergeClassNames(typography.textSmRegular, "text-cnam-primary-800")}>{description}</Typography>}
         </View>
       </View>
     </TouchableOpacity>

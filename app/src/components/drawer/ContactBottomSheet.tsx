@@ -7,6 +7,7 @@ import MessageHeartCircleIcon from "@assets/svg/icon/MessageHeartCircle";
 import MailIcon from "@assets/svg/icon/Mail";
 import NPSManager from "@/services/NPS/NPSManager";
 import localStorage from "@/utils/localStorage";
+import { Typography } from "../Typography";
 
 const screenHeight = Dimensions.get("window").height;
 
@@ -24,15 +25,15 @@ export const ContactBottomSheet = ({ navigation }: { navigation: any }) => {
           }}
         >
           <View className="flex-row justify-between items-center px-4">
-            <Text className={mergeClassNames(typography.textXlBold, "text-cnam-primary-950")}>À savoir avant de nous contacter</Text>
+            <Typography className={mergeClassNames(typography.textXlBold, "text-cnam-primary-950")}>À savoir avant de nous contacter</Typography>
           </View>
           <View className="p-4 flex-column flex-1 space-y-2">
-            <Text className={mergeClassNames(typography.textMdRegular, "text-left text-cnam-primary-950 leading-7")}>
+            <Typography className={mergeClassNames(typography.textMdRegular, "text-left text-cnam-primary-950 leading-7")}>
               Jardin Mental ne peut malheureusement pas répondre aux situations d’urgence.
-            </Text>
-            <Text className={mergeClassNames(typography.textMdRegular, "text-left text-cnam-primary-950 leading-7")}>
+            </Typography>
+            <Typography className={mergeClassNames(typography.textMdRegular, "text-left text-cnam-primary-950 leading-7")}>
               Nous restons toutefois disponibles pour répondre à vos questions sur l’application.
-            </Text>
+            </Typography>
           </View>
           <View className="w-full py-6 px-6">
             <JMButton

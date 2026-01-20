@@ -7,6 +7,7 @@ import { mergeClassNames } from "@/utils/className";
 import { TW_COLORS } from "@/utils/constants";
 import User from "@assets/svg/icon/User";
 import PlusIcon from "@assets/svg/icon/plus";
+import { Typography } from "@/components/Typography";
 
 type HelpCardProps = {
   addElement: () => void;
@@ -52,15 +53,15 @@ const HelpCard: React.FC<HelpCardProps> = ({ contactsHelp, addElement }) => {
       <TouchableOpacity onPress={() => setIsOpen((v) => !v)} className="flex-column space-y-4" disabled={!filteredContacts.length}>
         <View className="flex-row items-center justify-between">
           <View className="flex-row items-center">
-            <Text
+            <Typography
               className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-950 p-1 px-3 rounded mr-2")}
               style={{
                 backgroundColor: "#CCEEE8E6",
               }}
             >
               4
-            </Text>
-            <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-950")}>Demander de l’aide</Text>
+            </Typography>
+            <Typography className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-950")}>Demander de l’aide</Typography>
           </View>
           {!!filteredContacts.length && (
             <View className="mr-2">
@@ -69,17 +70,17 @@ const HelpCard: React.FC<HelpCardProps> = ({ contactsHelp, addElement }) => {
           )}
         </View>
         {!!filteredContacts.length && (
-          <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700")}>
+          <Typography className={mergeClassNames(typography.textMdMedium, "text-gray-700")}>
             Les proches que vous pouvez contacter pour recevoir de l’aide :{" "}
-          </Text>
+          </Typography>
         )}
         {filteredContacts.length === 0 && (
-          <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700")}>Aucun élément pour le moment.</Text>
+          <Typography className={mergeClassNames(typography.textMdMedium, "text-gray-700")}>Aucun élément pour le moment.</Typography>
         )}
         {!filteredContacts.length && (
           <TouchableOpacity className="flex-row items-center space-x-1" onPress={addElement}>
             <PlusIcon color={TW_COLORS.CNAM_PRIMARY_700} />{" "}
-            <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40")}>Ajouter un élément</Text>
+            <Typography className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40")}>Ajouter un élément</Typography>
           </TouchableOpacity>
         )}
       </TouchableOpacity>
@@ -100,7 +101,7 @@ const HelpCard: React.FC<HelpCardProps> = ({ contactsHelp, addElement }) => {
                       <User color={TW_COLORS.CNAM_PRIMARY_800} width={20} height={20} />
                     </View>
                     <View className="flex-column flex-1">
-                      <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-900")}>{item.name}</Text>
+                      <Typography className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-900")}>{item.name}</Typography>
                     </View>
                   </View>
                   <View className="items-center flex-row h-full">

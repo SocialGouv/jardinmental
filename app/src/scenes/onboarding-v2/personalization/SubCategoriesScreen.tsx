@@ -16,6 +16,7 @@ import { AnimatedHeaderScrollScreen } from "@/scenes/survey-v2/AnimatedHeaderScr
 import logEvents from "@/services/logEvents";
 import { useFocusEffect } from "@react-navigation/native";
 import { useStatusBar } from "@/context/StatusBarContext";
+import { Typography } from "@/components/Typography";
 
 type Props = OnboardingV2ScreenProps<"PersonalizationObjective">;
 
@@ -104,9 +105,9 @@ const SubcategoriesScreen: React.FC<Props> = ({ navigation, route }) => {
           headerContent={
             <View>
               <View className="my-2">
-                <Text className={mergeClassNames(typography.textSmMedium, "text-gray-800 text-center")}>
+                <Typography className={mergeClassNames(typography.textSmMedium, "text-gray-800 text-center")}>
                   Vous pourrez modifier cette sélection plus tard
-                </Text>
+                </Typography>
               </View>
             </View>
           }
@@ -139,7 +140,7 @@ const SubcategoriesScreen: React.FC<Props> = ({ navigation, route }) => {
                   <View className="rounded-full border-[1.5px] border-cnam-primary-800 bg-white w-10 h-10 items-center justify-center">
                     {React.createElement(cat.icon, { color: TW_COLORS.BRAND_900 })}
                   </View>
-                  <Text className={mergeClassNames(typography.textLgBold, "text-left text-cnam-primary-900 ml-2")}>{cat.name}</Text>
+                  <Typography className={mergeClassNames(typography.textLgBold, "text-left text-cnam-primary-900 ml-2")}>{cat.name}</Typography>
                 </View>
                 {cat.subCat.map((item) => renderSubCategoryItem({ item }))}
               </View>

@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   welcomeText: { marginBottom: 30 },
-  boldText: { fontWeight: "bold" },
+  boldText: { fontWeight: "bold", fontFamily: "SourceSans3-Bold" },
   showWelcomeView: {
     display: "flex",
     flexDirection: "row",
@@ -175,6 +175,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "#fff",
     fontWeight: "bold",
+    fontFamily: "SourceSans3-Bold",
     fontSize: Dimensions.get("window").width > 350 ? 19 : 15,
     flexWrap: "wrap",
     textAlign: "center",
@@ -216,6 +217,7 @@ const styles = StyleSheet.create({
   link: {
     color: colors.LIGHT_BLUE,
     fontWeight: "700",
+    fontFamily: "SourceSans3-Bold",
     textDecorationLine: "underline",
   },
 });

@@ -106,14 +106,14 @@ export const InputText = ({ fill, preset, onPress, disabled, containerStyle, sty
           inputRange: [0, 1],
           outputRange: [0, 4],
         }),
-        fontFamily: "SourceSans3",
+        fontFamily: "SourceSans3-Regular",
       }
     : {
         fontSize: 16,
         color: TW_COLORS.GRAY_600,
         backgroundColor: "transparent",
         paddingHorizontal: 1,
-        fontFamily: "SourceSans3",
+        fontFamily: "SourceSans3-Regular",
       };
 
   return (

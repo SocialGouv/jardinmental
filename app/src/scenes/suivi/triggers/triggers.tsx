@@ -17,6 +17,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import HelpView from "@/components/HelpView";
 import { DEFAULT_INDICATOR_LABELS, INDICATOR_LABELS } from "@/utils/liste_indicateurs.1";
 import Chevron from "./Chevron";
+import { Typography } from "@/components/Typography";
 
 const screenHeight = Dimensions.get("window").height;
 
@@ -165,7 +166,9 @@ const Events = ({ navigation }) => {
   return (
     <ScrollView className="flex-1 pt-60 px-4 bg-white" showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 100 }}>
       <View className="flex-row justify-between items-center">
-        <Text className={mergeClassNames(typography.textLgBold, "text-cnam-primary-800 pr-2")}>Identifiez ce qui influence votre état</Text>
+        <Typography className={mergeClassNames(typography.textLgBold, "text-cnam-primary-800 pr-2")}>
+          Identifiez ce qui influence votre état
+        </Typography>
         <TouchableOpacity
           onPress={() => {
             showBottomSheet(<HelpView title={"Comment lire mes déclencheurs?"} isMd={true} description={HELP_TEXT} />);
@@ -176,44 +179,44 @@ const Events = ({ navigation }) => {
         </TouchableOpacity>
       </View>
       <View className="flex-row mt-4">
-        <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900")}>
+        <Typography className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900")}>
           Identifiez ce qui déclenche vos variations d’état en explorant les notes laissées sur vos observations.
-        </Text>
+        </Typography>
       </View>
       <View className="border-[1px] border-cnam-primary-500 bg-cnam-cyan-50-lighten-90 p-4 rounded-2xl mt-10">
         <View className="flex-row px-2 mb-4">
-          <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-800")}>Voir mes notes quand :</Text>
+          <Typography className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-800")}>Voir mes notes quand :</Typography>
         </View>
         <View className="flex-row justify-between px-2 rounded-2xl items-center">
-          <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>L'indicateur</Text>
+          <Typography className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>L'indicateur</Typography>
           <TouchableOpacity className="flex-row items-center justify-between" onPress={openIndicatorBottomSheet}>
-            <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>
+            <Typography className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>
               {selectedIndicator?.name || "Sélectionnez un indicateur"}
-            </Text>
+            </Typography>
             <Chevron />
           </TouchableOpacity>
         </View>
         <View className="flex-row justify-between px-2 rounded-2xl items-center">
-          <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>était</Text>
+          <Typography className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>était</Typography>
           <TouchableOpacity className="flex-row items-center justify-between" onPress={openStateBottomSheet}>
-            <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>
+            <Typography className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>
               {selectedState ? selectedState.label : `Sélectionnez un état`}
-            </Text>
+            </Typography>
             <Chevron />
           </TouchableOpacity>
         </View>
         <View className="flex-row justify-between px-2 rounded-2xl items-center">
-          <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>sur la période</Text>
+          <Typography className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>sur la période</Typography>
           <TouchableOpacity className="flex-row items-center justify-between" onPress={openPeriodBottomSheet}>
-            <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>
+            <Typography className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>
               {selectedPeriod.value === "custom" ? "Personalisée" : selectedPeriod.label}
-            </Text>
+            </Typography>
             <Chevron />
           </TouchableOpacity>
         </View>
         {selectedPeriod.value === "custom" && (
           <View className="flex-row justify-between px-2 rounded-2xl items-center">
-            <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>Période</Text>
+            <Typography className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>Période</Typography>
             <TouchableOpacity
               className="flex-row items-center justify-between"
               onPress={() => {
@@ -222,8 +225,10 @@ const Events = ({ navigation }) => {
                 }
               }}
             >
-              <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>Du </Text>
-              <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>{formatDateToFrenchNumericFormat(fromDate)}</Text>
+              <Typography className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>Du </Typography>
+              <Typography className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>
+                {formatDateToFrenchNumericFormat(fromDate)}
+              </Typography>
               <Chevron />
             </TouchableOpacity>
             <TouchableOpacity
@@ -234,8 +239,10 @@ const Events = ({ navigation }) => {
                 }
               }}
             >
-              <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>Au </Text>
-              <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>{formatDateToFrenchNumericFormat(toDate)}</Text>
+              <Typography className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>Au </Typography>
+              <Typography className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>
+                {formatDateToFrenchNumericFormat(toDate)}
+              </Typography>
               <Chevron />
             </TouchableOpacity>
             <DatePicker
@@ -373,6 +380,7 @@ const styles = StyleSheet.create({
   },
   bold: {
     fontWeight: "bold",
+    fontFamily: "SourceSans3-Bold",
   },
   scrollView: {
     flex: 1,

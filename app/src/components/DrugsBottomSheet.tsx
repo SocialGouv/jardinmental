@@ -14,6 +14,7 @@ import { useBottomSheet } from "@/context/BottomSheetContext";
 import localStorage from "@/utils/localStorage";
 import { HELP_POSOLOGY } from "@/scenes/onboarding-v2/data/helperData";
 import { Drug } from "@/entities/Drug";
+import { Typography } from "./Typography";
 
 const screenHeight = Dimensions.get("window").height;
 const height90vh = screenHeight * 0.9;
@@ -65,7 +66,9 @@ export const DrugsBottomSheet = ({ onClose }: { onClose: (treatment?: Drug[]) =>
             </View>
           </View>
 
-          <Text className={mergeClassNames(typography.textLgBold, "text-xl mb-4 text-cnam-primary-950")}>Prenez-vous un traitement ?</Text>
+          <Typography className={mergeClassNames(typography.textLgBold, "text-xl mb-4 text-cnam-primary-950")}>
+            Prenez-vous un traitement ?
+          </Typography>
 
           <TouchableOpacity
             onPress={() => {
@@ -76,13 +79,13 @@ export const DrugsBottomSheet = ({ onClose }: { onClose: (treatment?: Drug[]) =>
             className="flex-row items-center"
           >
             <CircleQuestionMark color={TW_COLORS.GRAY_400} />
-            <Text className={mergeClassNames(typography.textSmSemibold, "ml-2 text-gray-700")}>Information sur les traitements</Text>
+            <Typography className={mergeClassNames(typography.textSmSemibold, "ml-2 text-gray-700")}>Information sur les traitements</Typography>
           </TouchableOpacity>
 
-          <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>
+          <Typography className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>
             La prise d’un traitement peut avoir un effet sur votre quotidien. Suivre la prise de traitement permet de mieux comprendre son effet sur
             votre état de santé mentale
-          </Text>
+          </Typography>
 
           <JMButton
             onPress={() => setIndex(1)}

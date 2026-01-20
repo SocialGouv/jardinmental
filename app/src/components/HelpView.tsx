@@ -4,6 +4,7 @@ import { TW_COLORS } from "@/utils/constants";
 import { typography } from "@/utils/typography";
 import { View, Text, Touchable, TouchableOpacity, Linking } from "react-native";
 import Markdown from "react-native-markdown-display";
+import { Typography } from "./Typography";
 
 interface Props {
   title: string;
@@ -25,7 +26,7 @@ const markdownStyles = {
     fontWeight: "700" as const,
     color: TW_COLORS.CNAM_PRIMARY_800,
     marginBottom: 12,
-    fontFamily: "SourceSans3",
+    fontFamily: "SourceSans3-Bold",
   },
   heading2: {
     fontSize: 20,
@@ -33,7 +34,7 @@ const markdownStyles = {
     fontWeight: "700" as const,
     color: TW_COLORS.CNAM_PRIMARY_800,
     marginBottom: 8,
-    fontFamily: "SourceSans3",
+    fontFamily: "SourceSans3-Bold",
   },
   heading3: {
     fontSize: 18,
@@ -41,7 +42,7 @@ const markdownStyles = {
     fontWeight: "700" as const,
     color: TW_COLORS.CNAM_PRIMARY_800,
     marginBottom: 6,
-    fontFamily: "SourceSans3",
+    fontFamily: "SourceSans3-Bold",
   },
   paragraph: {
     fontSize: 16,
@@ -72,8 +73,8 @@ const markdownStyles = {
 const HelpView = ({ title, description, link, isMd }: Props) => {
   return (
     <View className="flex-1 bg-white p-4 pb-16">
-      <Text className={mergeClassNames(typography.textXlBold, "mb-6 text-cnam-primary-950")}>{title}</Text>
-      {!isMd && <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>{description}</Text>}
+      <Typography className={mergeClassNames(typography.textXlBold, "mb-6 text-cnam-primary-950")}>{title}</Typography>
+      {!isMd && <Typography className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>{description}</Typography>}
       {isMd && <Markdown style={markdownStyles}>{description}</Markdown>}
       {link && (
         <TouchableOpacity
@@ -82,9 +83,9 @@ const HelpView = ({ title, description, link, isMd }: Props) => {
             Linking.openURL(link);
           }}
         >
-          <Text className="text-base text-center mb-4 leading-6" style={{ color: TW_COLORS.TEXT_SECONDARY }}>
+          <Typography className="text-base text-center mb-4 leading-6" style={{ color: TW_COLORS.TEXT_SECONDARY }}>
             {link}
-          </Text>
+          </Typography>
         </TouchableOpacity>
       )}
     </View>

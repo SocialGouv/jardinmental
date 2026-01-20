@@ -11,6 +11,7 @@ import WifiOff from "@assets/svg/icon/WifiOff";
 import LockIcon from "@assets/svg/icon/Lock";
 import UsersIcon from "@assets/svg/icon/Users";
 import { TW_COLORS } from "@/utils/constants";
+import { Typography } from "@/components/Typography";
 interface ModalCorrelationScreenProps {
   navigation: any;
   route?: any;
@@ -30,44 +31,44 @@ export const CrisisPlan: React.FC<ModalCorrelationScreenProps> = ({ navigation, 
       >
         <View className="bg-cnam-mauve-lighten-90 flex-column py-4 space-y-4 px-4 rounded-2xl">
           <LifeBuoy />
-          <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-mauve-darken-80")}>
+          <Typography className={mergeClassNames(typography.textLgSemibold, "text-cnam-mauve-darken-80")}>
             Votre plan de crise pour faire face aux idées suicidaires
-          </Text>
-          <Text className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-900 text-left")}>
+          </Typography>
+          <Typography className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-900 text-left")}>
             Préparez un plan d’action personnel pour lutter contre les idées suicidaires et savoir quoi faire quand la situation monte.
-          </Text>
+          </Typography>
         </View>
         <View className="flex-column py-4 space-y-4 px-2 rounded-2xl">
-          <Text className={mergeClassNames(typography.textLgSemibold, "text-primary-900")}>Infos pratiques</Text>
+          <Typography className={mergeClassNames(typography.textLgSemibold, "text-primary-900")}>Infos pratiques</Typography>
         </View>
         <View className="bg-cnam-primary-50 flex-column py-4 space-y-4 px-4 rounded-2xl">
           <View className="flex-row items-center justify-start space-x-2">
             <ClockIcon />
-            <Text className={mergeClassNames(typography.textMdRegular, "text-primary-900 text-left")}>
+            <Typography className={mergeClassNames(typography.textMdRegular, "text-primary-900 text-left")}>
               Durée : 3–5 min. Modifiable à tout moment.
-            </Text>
+            </Typography>
           </View>
           <View className="flex-row items-center justify-start space-x-2">
             <WifiOff />
-            <Text className={mergeClassNames(typography.textMdRegular, "text-primary-900 text-left")}>Accessible hors connexion.</Text>
+            <Typography className={mergeClassNames(typography.textMdRegular, "text-primary-900 text-left")}>Accessible hors connexion.</Typography>
           </View>
           <View className="flex-row items-center justify-start space-x-2">
             <LockIcon width={16} height={16} color={TW_COLORS.CNAM_PRIMARY_800} />
-            <Text className={mergeClassNames(typography.textMdRegular, "text-primary-900 text-left")}>
+            <Typography className={mergeClassNames(typography.textMdRegular, "text-primary-900 text-left")}>
               Données stockées uniquement sur votre téléphone.
-            </Text>
+            </Typography>
           </View>
           <View className="flex-row items-center justify-start space-x-2">
             <UsersIcon />
-            <Text className={mergeClassNames(typography.textMdRegular, "text-primary-900 text-left")}>
+            <Typography className={mergeClassNames(typography.textMdRegular, "text-primary-900 text-left")}>
               Accès à vos contacts possible pour sélectionner des proches.
-            </Text>
+            </Typography>
           </View>
         </View>
         <View className="py-4 px-4 rounded-2xl items-center justify-center">
-          <Text className={mergeClassNames(typography.textMdSemibold, "text-primary-900")}>
+          <Typography className={mergeClassNames(typography.textMdSemibold, "text-primary-900")}>
             En cas d’urgence,{" "}
-            <Text
+            <Typography
               onPress={() => {
                 Alert.alert("Souhaitez vous appeler le 15 (urgences immédiates)?", undefined, [
                   { text: "Annuler", style: "cancel" },
@@ -77,9 +78,9 @@ export const CrisisPlan: React.FC<ModalCorrelationScreenProps> = ({ navigation, 
               className={mergeClassNames(typography.textMdSemibold, "text-primary-900 underline")}
             >
               appelez le 15
-            </Text>{" "}
+            </Typography>{" "}
             ou{" "}
-            <Text
+            <Typography
               onPress={() => {
                 Alert.alert("Souhaitez vous appeler le 3114 (prévention suicide)?", undefined, [
                   { text: "Annuler", style: "cancel" },
@@ -89,8 +90,8 @@ export const CrisisPlan: React.FC<ModalCorrelationScreenProps> = ({ navigation, 
               className={mergeClassNames(typography.textMdSemibold, "text-primary-900 underline")}
             >
               le 3114
-            </Text>
-          </Text>
+            </Typography>
+          </Typography>
         </View>
       </ScrollView>
       <NavigationButtons

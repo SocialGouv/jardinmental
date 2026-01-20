@@ -8,6 +8,7 @@ import SimplePlus from "@assets/svg/icon/SimplePlus";
 import { TW_COLORS } from "@/utils/constants";
 import { useState } from "react";
 import TrashIcon from "@assets/svg/icon/Trash";
+import { Typography } from "@/components/Typography";
 
 const screenHeight = Dimensions.get("window").height;
 
@@ -40,11 +41,11 @@ export const CrisisMediaBottomSheet = ({
               closeBottomSheet();
             }}
           >
-            <Text className={mergeClassNames(typography.textLgMedium, "text-cnam-primary-800")}>Annuler</Text>
+            <Typography className={mergeClassNames(typography.textLgMedium, "text-cnam-primary-800")}>Annuler</Typography>
           </TouchableOpacity>
         </View>
         <View className="flex-row bg-[#E5F6FC] self-start items-center p-2 mb-4">
-          <Text className={mergeClassNames(typography.textSmBold, "ml-2 text-cnam-cyan-700-darken-40 text-left")}>{header}</Text>
+          <Typography className={mergeClassNames(typography.textSmBold, "ml-2 text-cnam-cyan-700-darken-40 text-left")}>{header}</Typography>
         </View>
         <View className="flex-row flex-wrap mx-6 justify-between">
           {selectedImages.map((img, idx) => (

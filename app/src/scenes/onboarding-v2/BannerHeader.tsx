@@ -133,6 +133,7 @@ export default function BannerHeader({
                   },
                   animatedTextColor,
                   bannerContentStyle,
+                  { fontFamily: "SourceSans3-Bold" },
                   small ? {} : titleMarginStyle,
                 ]}
               >

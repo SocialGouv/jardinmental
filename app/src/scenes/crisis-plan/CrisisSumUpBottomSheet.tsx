@@ -6,6 +6,7 @@ import { TW_COLORS } from "@/utils/constants";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 import { useBottomSheet } from "@/context/BottomSheetContext";
 import PencilIcon from "@assets/svg/icon/Pencil";
+import { Typography } from "@/components/Typography";
 
 const screenHeight = Dimensions.get("window").height;
 const height90vh = screenHeight * 0.9;
@@ -63,14 +64,16 @@ export default function CrisisSumUpBottomSheet({
               closeBottomSheet();
             }}
           >
-            <Text className={mergeClassNames(typography.textLgMedium, "text-cnam-primary-800")}>Fermer</Text>
+            <Typography className={mergeClassNames(typography.textLgMedium, "text-cnam-primary-800")}>Fermer</Typography>
           </TouchableOpacity>
         </View>
         <View className="flex-row bg-[#E5F6FC] self-start items-center p-2">
-          <Text className={mergeClassNames(typography.textSmBold, "ml-2 text-cnam-cyan-700-darken-40 text-left")}>Modifier Mon plan de crise</Text>
+          <Typography className={mergeClassNames(typography.textSmBold, "ml-2 text-cnam-cyan-700-darken-40 text-left")}>
+            Modifier Mon plan de crise
+          </Typography>
         </View>
         <View className="p-4 flex-column flex-1 gap-6">
-          <Text className={mergeClassNames(typography.textXlBold, "text-left text-cnam-primary-900")}>Que souhaitez-vous modifier ?</Text>
+          <Typography className={mergeClassNames(typography.textXlBold, "text-left text-cnam-primary-900")}>Que souhaitez-vous modifier ?</Typography>
           <View className="flex-colum flex-1 space-y-2">
             {suggestions.map((suggestion, ind) => {
               return (
@@ -86,16 +89,18 @@ export default function CrisisSumUpBottomSheet({
                 >
                   <View className="flex-row items-center justify-center">
                     <View className="w-[26] h-[28]">
-                      <Text
+                      <Typography
                         className={mergeClassNames(
                           "bg-cnam-cyan-200-lighten-60 px-2 py-0 text-cnam-primary-950 rounded items-center justify-center",
                           typography.textLgSemibold
                         )}
                       >
                         {ind + 1}
-                      </Text>
+                      </Typography>
                     </View>
-                    <Text className={mergeClassNames("px-2 py-2 text-cnam-primary-950", typography.textLgSemibold)}>{suggestion.label}</Text>
+                    <Typography className={mergeClassNames("px-2 py-2 text-cnam-primary-950", typography.textLgSemibold)}>
+                      {suggestion.label}
+                    </Typography>
                   </View>
                   <View>
                     <PencilIcon width={24} height={24} color={TW_COLORS.CNAM_CYAN_600_DARKEN_20} />

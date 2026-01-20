@@ -6,6 +6,7 @@ import { typography } from "@/utils/typography";
 import { mergeClassNames } from "@/utils/className";
 import { TW_COLORS } from "@/utils/constants";
 import PlusIcon from "@assets/svg/icon/plus";
+import { Typography } from "@/components/Typography";
 
 type AlertCardProps = {
   alerts: string[];
@@ -26,15 +27,15 @@ const AlertCard: React.FC<AlertCardProps> = ({ alerts, addElement }) => {
       <TouchableOpacity onPress={() => setIsOpen((v) => !v)} className=" flex-column space-y-4" disabled={!alerts.length}>
         <View className="flex-row items-center justify-between">
           <View className="flex-row items-center">
-            <Text
+            <Typography
               className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-950 p-1 px-3 rounded mr-2")}
               style={{
                 backgroundColor: "#ECDEF0",
               }}
             >
               1
-            </Text>
-            <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-950")}>Mes signes d'alerte</Text>
+            </Typography>
+            <Typography className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-950")}>Mes signes d'alerte</Typography>
           </View>
           {!!alerts.length && (
             <View className="mr-2">
@@ -43,16 +44,18 @@ const AlertCard: React.FC<AlertCardProps> = ({ alerts, addElement }) => {
           )}
         </View>
         {!!alerts.length && (
-          <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700")}>
+          <Typography className={mergeClassNames(typography.textMdMedium, "text-gray-700")}>
             Les signes d’alerte qui sont pour vous annonciateurs d’idées suicidaires :
-          </Text>
+          </Typography>
         )}
 
-        {!alerts.length && <Text className={mergeClassNames(typography.textMdMedium, "text-gray-700")}>Aucun élément pour le moment.</Text>}
+        {!alerts.length && (
+          <Typography className={mergeClassNames(typography.textMdMedium, "text-gray-700")}>Aucun élément pour le moment.</Typography>
+        )}
         {!alerts.length && (
           <TouchableOpacity className="flex-row items-center space-x-1" onPress={addElement}>
             <PlusIcon color={TW_COLORS.CNAM_PRIMARY_700} />{" "}
-            <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40")}>Ajouter un élément</Text>
+            <Typography className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40")}>Ajouter un élément</Typography>
           </TouchableOpacity>
         )}
       </TouchableOpacity>
@@ -63,7 +66,7 @@ const AlertCard: React.FC<AlertCardProps> = ({ alerts, addElement }) => {
               <View key={idx} className="flex-row justify-between bg-cnam-primary-25 rounded-xl border border-gray-400 px-4 py-2">
                 <View className="flex-row items-center space-x-2">
                   <ArrowIcon color={TW_COLORS.GRAY_500} />
-                  <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900")}>{itemAlert}</Text>
+                  <Typography className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900")}>{itemAlert}</Typography>
                 </View>
               </View>
             );

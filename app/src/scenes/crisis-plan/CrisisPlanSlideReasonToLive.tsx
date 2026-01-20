@@ -20,6 +20,7 @@ import SimplePlus from "@assets/svg/icon/SimplePlus";
 import { CrisisMediaBottomSheet } from "./CrisisMediaBottomSheet";
 import NavigationButtons from "@/components/onboarding/NavigationButtons";
 import CrisisProgressBar from "./CrisisProgressBar";
+import { Typography } from "@/components/Typography";
 
 // Handles fallback logic for displaying images
 const ImageWithFallback = ({ localUri, originalUri, style }: { localUri: string; originalUri: string; style?: any }) => {
@@ -79,7 +80,7 @@ const ImageWithFallback = ({ localUri, originalUri, style }: { localUri: string;
   return (
     <View style={[style, { alignItems: "center", justifyContent: "center", backgroundColor: "#f0f0f0" }]}>
       <ImageIcon />
-      <Text style={{ textAlign: "center", color: "#888", fontSize: 12, marginTop: 4 }}>la photo n'existe plus sur votre téléphone</Text>
+      <Typography style={{ textAlign: "center", color: "#888", fontSize: 12, marginTop: 4 }}>la photo n'existe plus sur votre téléphone</Typography>
     </View>
   );
 };
@@ -219,11 +220,11 @@ export const CrisisPlanSlideReasonToLive: React.FC<ModalCorrelationScreenProps> 
         {!route?.params?.isEdit && <CrisisProgressBar slideIndex={7} />}
 
         <View className="flex-column py-4 space-y-4 px-2 rounded-2xl">
-          <Text className={mergeClassNames(typography.textLgSemibold, "text-primary-900")}>{title}</Text>
+          <Typography className={mergeClassNames(typography.textLgSemibold, "text-primary-900")}>{title}</Typography>
         </View>
         <View className="bg-cnam-primary-50 rounded-2xl px-6 py-6">
           <View className="flex-column flex-start space-y-1">
-            <Text className={mergeClassNames(typography.textSmMedium, "text-gray-700 mb-2")}>Renseignez une raison de vivre</Text>
+            <Typography className={mergeClassNames(typography.textSmMedium, "text-gray-700 mb-2")}>Renseignez une raison de vivre</Typography>
             <View className="flex-row items-center space-x-2">
               <InputText
                 containerStyle={{
@@ -275,9 +276,9 @@ export const CrisisPlanSlideReasonToLive: React.FC<ModalCorrelationScreenProps> 
               );
             }}
           >
-            <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40 underline mt-4 mb-4")}>
+            <Typography className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40 underline mt-4 mb-4")}>
               Choisir parmi les suggestions
-            </Text>
+            </Typography>
           </TouchableOpacity>
         </View>
         {selectedItems.map((item, index) => {
@@ -312,7 +313,7 @@ export const CrisisPlanSlideReasonToLive: React.FC<ModalCorrelationScreenProps> 
             >
               <View className="flex-row space-x-2 flex-1">
                 <View className="flex-col">
-                  <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-950")}>{item}</Text>
+                  <Typography className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-950")}>{item}</Typography>
                 </View>
               </View>
               <View className="pl-2 flex-col items-center justify-center">
@@ -322,7 +323,7 @@ export const CrisisPlanSlideReasonToLive: React.FC<ModalCorrelationScreenProps> 
           );
         })}
         <View className="flex-row justify-between pt-6">
-          <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-800")}>Ajouter des photos</Text>
+          <Typography className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-800")}>Ajouter des photos</Typography>
           {!!selectedImages.length && (
             <TouchableOpacity
               onPress={() => {
@@ -342,7 +343,7 @@ export const CrisisPlanSlideReasonToLive: React.FC<ModalCorrelationScreenProps> 
                 );
               }}
             >
-              <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40 underline")}>Editer</Text>
+              <Typography className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40 underline")}>Editer</Typography>
             </TouchableOpacity>
           )}
         </View>

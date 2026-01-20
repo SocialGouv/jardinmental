@@ -19,6 +19,7 @@ import NavigationButtons from "@/components/onboarding/NavigationButtons";
 import { HELP_POSOLOGY } from "../onboarding-v2/data/helperData";
 import { Drug, Posology } from "@/entities/Drug";
 import { ListItem } from "@/components/SelectionnableItem";
+import { Typography } from "@/components/Typography";
 
 const DrugsManagement = ({ navigation, route }) => {
   const [diaryData, addNewEntryToDiaryData] = useContext(DiaryDataContext);
@@ -129,18 +130,18 @@ const DrugsManagement = ({ navigation, route }) => {
           className="flex-row items-center"
         >
           <CircleQuestionMark color={TW_COLORS.GRAY_400} />
-          <Text className={mergeClassNames(typography.textSmSemibold, "ml-2 text-gray-700")}>Information sur les traitements</Text>
+          <Typography className={mergeClassNames(typography.textSmSemibold, "ml-2 text-gray-700")}>Information sur les traitements</Typography>
         </TouchableOpacity>
-        <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 mt-4")}>
+        <Typography className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 mt-4")}>
           La prise d'un traitement peut avoir un effet sur votre quotidien. Suivre la prise de traitement permet de mieux comprendre son effet sur
           votre état de santé mentale
-        </Text>
+        </Typography>
         <View className="mb-6 mt-10">
           <Pressable onPress={() => reminderToggleRef?.current?.toggle?.()} hitSlop={{ bottom: 8, left: 8, right: 8, top: 8 }}>
             <View className="flex-row items-center justify-between">
-              <Text className={mergeClassNames(typography.textLgMedium, "text-cnam-primary-900")}>
+              <Typography className={mergeClassNames(typography.textLgMedium, "text-cnam-primary-900")}>
                 {hasTreatment ? "Oui, je prends un traitement" : "Non, je n'ai pas de traitement"}
-              </Text>
+              </Typography>
               <InputToggle
                 ref={reminderToggleRef}
                 checked={hasTreatment}
@@ -171,7 +172,7 @@ const DrugsManagement = ({ navigation, route }) => {
         {route?.params?.onboarding ? (
           <View style={styles.buttonWrapper}>
             <TouchableOpacity onPress={() => navigation.navigate("tabs")} style={styles.setupButton}>
-              <Text style={styles.setupButtonText}>Commencer</Text>
+              <Typography style={styles.setupButtonText}>Commencer</Typography>
             </TouchableOpacity>
           </View>
         ) : null}
@@ -193,6 +194,7 @@ const styles = StyleSheet.create({
   setupButtonText: {
     color: "#fff",
     fontWeight: "700",
+    fontFamily: "SourceSans3-Bold",
     fontSize: 19,
   },
   buttonWrapper: {

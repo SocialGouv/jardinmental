@@ -86,7 +86,7 @@ export default function BannerHeader({
           )}
 
           {header}
-          <Animated.Text className="text-2xl font-bold text-left mt-8" style={[animatedTextColor]}>
+          <Animated.Text className="text-2xl font-bold text-left mt-8" style={[{ fontFamily: "SourceSans3-Bold" }, animatedTextColor]}>
             {title}
           </Animated.Text>
           {/* {children} */}

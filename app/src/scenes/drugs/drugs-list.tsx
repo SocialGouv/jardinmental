@@ -11,6 +11,7 @@ import PlusIcon from "@assets/svg/icon/plus";
 import { Drug } from "@/entities/Drug";
 import HealthIcon from "@assets/svg/icon/Health";
 import { TW_COLORS } from "@/utils/constants";
+import { Typography } from "@/components/Typography";
 const ELEMENT_HEIGHT = 55;
 
 const screenHeight = Dimensions.get("window").height;
@@ -115,15 +116,17 @@ const Drugs = ({ route, onClose }) => {
               setTreatment([]);
             }}
           >
-            <Text className={mergeClassNames(typography.textLgMedium, "text-cnam-primary-800")}>Effacer</Text>
+            <Typography className={mergeClassNames(typography.textLgMedium, "text-cnam-primary-800")}>Effacer</Typography>
           </TouchableOpacity>
         </View>
         <View className="flex-row bg-[#E5F6FC] self-start items-center p-2">
           <HealthIcon color={TW_COLORS.CNAM_CYAN_700_DARKEN_40} />
-          <Text className={mergeClassNames(typography.textSmBold, "ml-2 text-cnam-cyan-700-darken-40 text-left")}>Traitement</Text>
+          <Typography className={mergeClassNames(typography.textSmBold, "ml-2 text-cnam-cyan-700-darken-40 text-left")}>Traitement</Typography>
         </View>
         <View className="p-4 flex-column flex-1 gap-6">
-          <Text className={mergeClassNames(typography.displayXsBold, "text-left text-cnam-primary-900")}>Sélectionnez un ou plusieurs éléments</Text>
+          <Typography className={mergeClassNames(typography.displayXsBold, "text-left text-cnam-primary-900")}>
+            Sélectionnez un ou plusieurs éléments
+          </Typography>
           <TextInput
             onChangeText={(text) => {
               setFilter(text);
@@ -146,7 +149,7 @@ const Drugs = ({ route, onClose }) => {
                 />
               );
             })}
-            {!filteredList.length && <Text className={mergeClassNames(typography.textSmMedium, "text-gray-800")}>Pas de résultat</Text>}
+            {!filteredList.length && <Typography className={mergeClassNames(typography.textSmMedium, "text-gray-800")}>Pas de résultat</Typography>}
             {!!filter && !filteredList.length && (
               <TouchableOpacity
                 onPress={async () => {
@@ -155,7 +158,7 @@ const Drugs = ({ route, onClose }) => {
                 }}
               >
                 <View className="flex-row items-center mr-auto mt-2">
-                  <Text className={mergeClassNames(typography.textLgMedium, "mr-2 text-cnam-primary-900")}>Ajouter "{filter}"</Text>
+                  <Typography className={mergeClassNames(typography.textLgMedium, "mr-2 text-cnam-primary-900")}>Ajouter "{filter}"</Typography>
                   <PlusIcon />
                 </View>
               </TouchableOpacity>
@@ -172,7 +175,9 @@ const Drugs = ({ route, onClose }) => {
         }}
         className={`flex-column justify-between items-center p-6 px-6 bg-white/90 pb-10 w-full`}
       >
-        <Text className={mergeClassNames(typography.textSmMedium, "text-gray-800 mb-2")}>Vous pourrez modifier cette sélection plus tard</Text>
+        <Typography className={mergeClassNames(typography.textSmMedium, "text-gray-800 mb-2")}>
+          Vous pourrez modifier cette sélection plus tard
+        </Typography>
         <JMButton
           onPress={async () => {
             logEvents.logAddDrug();

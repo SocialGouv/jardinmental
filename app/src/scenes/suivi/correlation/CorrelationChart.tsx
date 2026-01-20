@@ -8,6 +8,7 @@ import Svg, { Circle, Line } from "react-native-svg";
 import { useDevCorrelationConfig } from "@/hooks/useDevCorrelationConfig";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
+import { Typography } from "@/components/Typography";
 
 // Constants
 const DAY_INITIALS = ["D", "L", "M", "M", "J", "V", "S"];
@@ -412,11 +413,11 @@ const TestChart = forwardRef(
           )}
         >
           <DashedVerticalLine height={LABEL_HEIGHT + 10} />
-          <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-700 absolute -bottom-2 left-2")}>
+          <Typography className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-700 absolute -bottom-2 left-2")}>
             {/* {" "} */}
-            {/* <Text className="text-black">| </Text> */}
+            {/* <Typography className="text-black">| </Typography> */}
             {val}
-          </Text>
+          </Typography>
         </View>
       );
     };
@@ -775,6 +776,7 @@ const TestChart = forwardRef(
         yAxisTextStyle={{
           color: TW_COLORS.CNAM_PRIMARY_700,
           fontWeight: 700,
+          fontFamily: "SourceSans3-Bold",
           backgroundColor: "white",
           paddingLeft: 0,
         }}
