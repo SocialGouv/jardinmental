@@ -1,58 +1,28 @@
-import React, { useEffect, useState, useRef, useCallback, useMemo } from "react";
-import { ScrollView, StyleSheet, View, Image, Dimensions, Text, TouchableOpacity, Alert } from "react-native";
+import React, { useState, useMemo } from "react";
+import { ScrollView, View, Image, Text, TouchableOpacity, Dimensions, Platform } from "react-native";
 
-import { displayedCategories, HELP_ANALYSE, TAB_BAR_HEIGHT, TW_COLORS } from "@/utils/constants";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { beforeToday, getArrayOfDates, getTodaySWeek, formatDate, formatDay } from "@/utils/date/helpers";
+import { TAB_BAR_HEIGHT, TW_COLORS } from "@/utils/constants";
+import { beforeToday, getArrayOfDates, formatDay } from "@/utils/date/helpers";
 import { DiaryDataContext } from "@/context/diaryData";
 import { useContext } from "react";
-import localStorage from "@/utils/localStorage";
-import { LineChart } from "react-native-gifted-charts";
-import Icon from "@/components/Icon";
-import { colors } from "@/utils/colors";
-import { INDICATEURS } from "@/utils/liste_indicateurs.1";
 import { getIndicatorKey } from "@/utils/indicatorUtils";
 import { useBottomSheet } from "@/context/BottomSheetContext";
-import CircleQuestionMark from "@assets/svg/icon/CircleQuestionMark";
-import HelpView from "@/components/HelpView";
-import { useAnimatedStyle, interpolate, Extrapolate, useSharedValue, withTiming } from "react-native-reanimated";
+import { useAnimatedStyle, interpolate, Extrapolate } from "react-native-reanimated";
 import Animated from "react-native-reanimated";
-import RangeDate from "../RangeDate";
-import { FriseFilterBar } from "./FriseFilterBar";
-import Legend from "../Legend";
-import { autoLayoutAnimation } from "@/utils/autoLayoutAnimation";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
 import JMButton from "@/components/JMButton";
 import PlusIcon from "@assets/svg/icon/plus";
 import EmptyCorrelationIllustration from "@assets/svg/illustrations/EmptyCorrelationIllustration";
 import { IndicatorsBottomSheet } from "@/components/IndicatorsBottomSheet";
-import ChevronIcon from "@assets/svg/icon/chevron";
 import ArrowUpSvg from "@assets/svg/icon/ArrowUp";
 import InfoCircle from "@assets/svg/icon/InfoCircle";
 import { Indicator } from "@/entities/Indicator";
 import { Typography } from "@/components/Typography";
 
 const screenHeight = Dimensions.get("window").height;
-const screenWidth = Dimensions.get("window").width;
 
-export const CorrelationHeader = ({
-  presetDate,
-  setPresetDate,
-  fromDate,
-  setFromDate,
-  toDate,
-  setToDate,
-  hasTreatment,
-  scrollY,
-  focusedScores,
-  setFocusedScores,
-  showTraitement,
-  setShowTraitement,
-  filterEnabled,
-  setFilterEnabled,
-  friseInfoButtonRef,
-}) => {
+export const CorrelationHeader = ({ fromDate, toDate, scrollY }) => {
   const { showBottomSheet } = useBottomSheet();
 
   const animatedShadowStyle = useAnimatedStyle(() => {
@@ -85,61 +55,10 @@ export const CorrelationHeader = ({
   );
 };
 
-const generateLineSegments = (data) => {
-  if (!data || data.length === 0) return [];
-
-  const segments: Array<{
-    startIndex: number;
-    endIndex: number;
-    color: string;
-    thickness: number;
-  }> = [];
-  let startIndex = null;
-
-  data.forEach((point, index) => {
-    if (point.value === 1 && point.noValue) {
-      // Début d'un segment
-      if (startIndex === null) {
-        // console.log("start index", index);
-        startIndex = index - 1;
-      }
-    } else {
-      // Fin d'un segment
-      if (startIndex !== null) {
-        // console.log("end index", index - 1);
-        segments.push({
-          startIndex,
-          endIndex: index,
-          color: "transparent", // Vert
-          thickness: 3,
-        });
-        startIndex = null;
-      }
-    }
-  });
-
-  // Gérer le cas où le segment se termine à la fin du tableau
-  if (startIndex !== null) {
-    segments.push({
-      startIndex,
-      endIndex: data.length - 1,
-      color: "#4CAF50",
-      thickness: 3,
-    });
-  }
-
-  return segments;
-};
-
 export const Correlation = ({ navigation, onScroll, scrollY, day, setDay, dynamicPaddingTop }) => {
-  const { showBottomSheet, closeBottomSheet } = useBottomSheet();
+  const { showBottomSheet } = useBottomSheet();
   const [diaryData] = useContext(DiaryDataContext);
-  const [selectedIndicators, setSelectedIndicators] = useState<Indicator[]>([]);
-  const [showTreatment, setShowTreatment] = useState<boolean>(false);
-
-  const onPressChooseIndicator = () => {
-    navigation.navigate("correlation-modal" as never);
-  };
+  const [selectedIndicators] = useState<Indicator[]>([]);
 
   const dataToDisplay = useMemo(() => {
     if (!diaryData) {
@@ -227,62 +146,17 @@ export const Correlation = ({ navigation, onScroll, scrollY, day, setDay, dynami
     return data;
   }, [diaryData, selectedIndicators]); // 👈 recalcul dès que rawData ou filters changent
 
-  // const computeChartData = (indicateur) => {
-  //   return chartDates.map((date) => {
-  //     const dayData = diaryData[date];
-  //     if (!dayData) {
-  //       return {
-  //         value: 1,
-  //         hideDataPoint: true,
-  //         label: date,
-  //       };
-  //     }
-  //     const categoryState = diaryData[date][getIndicatorKey(indicateur)];
-  //     if (!categoryState) {
-  //       return {
-  //         value: 1,
-  //         hideDataPoint: true,
-  //         label: date,
-  //       };
-  //     }
-  //     if (indicateur?.type === "boolean") return { value: categoryState?.value === true ? 4 : 0, label: date };
-  //     if (indicateur?.type === "gauge")
-  //       return {
-  //         label: date,
-  //         value: Math.min(Math.floor(categoryState?.value * 5), 4),
-  //       };
-  //     if (categoryState?.value)
-  //       return {
-  //         value: categoryState?.value,
-  //         label: date,
-  //       };
+  const isSmallScreen = screenHeight < 700;
 
-  //     // get the name and the suffix of the category
-  //     const [categoryName, suffix] = getIndicatorKey(indicateur).split("_");
-  //     let categoryStateIntensity = null;
-  //     if (suffix && suffix === "FREQUENCE") {
-  //       // if it's one category with the suffix 'FREQUENCE' :
-  //       // add the intensity (default level is 3 - for the frequence 'never')
-  //       categoryStateIntensity = diaryData[date][`${categoryName}_INTENSITY`] || { level: 3 };
-  //       return {
-  //         value: categoryState.level + categoryStateIntensity.level - 2,
-  //         label: date,
-  //       };
-  //     }
-  //     return {
-  //       data: categoryState.level ? categoryState.level : null,
-  //       hideDataPoint: !categoryState.level,
-  //       label: date,
-  //     };
-  //   });
-  // };
+  const bottomPadding = Platform.OS === "ios" ? TAB_BAR_HEIGHT + 100 : TAB_BAR_HEIGHT + (isSmallScreen ? 400 : 300);
 
   if (selectedIndicators.length === 0) {
     return (
       <ScrollView
+        bounces={false}
         showsVerticalScrollIndicator={false}
         className="px-4 flex-col space-y-4 pt-60 bg-white"
-        contentContainerStyle={{ paddingBottom: TAB_BAR_HEIGHT + 20 }}
+        contentContainerStyle={{ paddingBottom: bottomPadding }}
       >
         <Typography className={mergeClassNames(typography.textLgBold, "text-cnam-primary-800")}>
           Comparez vos indicateurs, comprenez vos tendances
@@ -295,16 +169,7 @@ export const Correlation = ({ navigation, onScroll, scrollY, day, setDay, dynami
           </Typography>
           <JMButton
             onPress={() => {
-              // showBottomSheet(
-              //   <IndicatorsBottomSheet
-              //     onClose={function ({ showTreatment, selectedIndicators }: { showTreatment: boolean; selectedIndicators: string[] }): void {
-              //       closeBottomSheet();
-              navigation.navigate("correlation-modal", {
-                // selectedIndicators,
-              });
-              //     }}
-              //   />
-              // );
+              navigation.navigate("correlation-modal", {});
             }}
             variant="outline"
             title="Choisir mes indicateurs"
@@ -318,7 +183,7 @@ export const Correlation = ({ navigation, onScroll, scrollY, day, setDay, dynami
     );
   } else if (!dataToDisplay) {
     return (
-      <ScrollView className="px-4 flex-col space-y-4 pt-60 bg-white">
+      <ScrollView className="px-4 flex-col space-y-4 pt-60 bg-white" contentContainerStyle={{ paddingBottom: bottomPadding }}>
         <TouchableOpacity
           onPress={() => {
             showBottomSheet(
@@ -369,7 +234,7 @@ export const Correlation = ({ navigation, onScroll, scrollY, day, setDay, dynami
     );
   } else {
     return (
-      <ScrollView className="px-4 flex-col space-y-4 pt-60 bg-white">
+      <ScrollView className="px-4 flex-col space-y-4 pt-60 bg-white" contentContainerStyle={{ paddingBottom: bottomPadding }}>
         <TestChart
           data={dataToDisplay[0]}
           dataB={dataToDisplay[1]}
