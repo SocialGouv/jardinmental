@@ -150,7 +150,7 @@ const ToolsScreen: React.FC<ToolsScreenProps> = ({ navigation, route }) => {
             className="flex-row space-x-2 items-center justify-center"
           >
             <ChevronIcon direction="left" color={TW_COLORS.CNAM_PRIMARY_25} />
-            <Text className="text-cnam-primary-25">Mes indicateurs</Text>
+            <Typography className="text-cnam-primary-25">Mes indicateurs</Typography>
           </TouchableOpacity>
         }
         small={true}
@@ -200,9 +200,9 @@ const ToolsScreen: React.FC<ToolsScreenProps> = ({ navigation, route }) => {
           </View>
 
           <View className="flex-row justify-between items-center mb-4 px-4">
-            <Text className={mergeClassNames(typography.textXlSemibold, "text-cnam-primary-800 text-base flex-1")}>
+            <Typography className={mergeClassNames(typography.textXlSemibold, "text-cnam-primary-800 text-base flex-1")}>
               {filteredTools.length} {filteredTools.length === 1 ? "outil" : "outils"}
-            </Text>
+            </Typography>
             <TouchableOpacity
               onPress={() => {
                 showBottomSheet(
@@ -222,7 +222,7 @@ const ToolsScreen: React.FC<ToolsScreenProps> = ({ navigation, route }) => {
               className="flex-row items-center"
             >
               <Tune width={16} height={16} color={TW_COLORS.CNAM_CYAN_700_DARKEN_40} />
-              <Text className="text-cnam-cyan-700-darken-40 text-base ml-2">Filtres ({filters.length})</Text>
+              <Typography className="text-cnam-cyan-700-darken-40 text-base ml-2">Filtres ({filters.length})</Typography>
             </TouchableOpacity>
             {filters.length > 0 && (
               <TouchableOpacity
@@ -231,7 +231,7 @@ const ToolsScreen: React.FC<ToolsScreenProps> = ({ navigation, route }) => {
                   setAudienceFilters([]);
                 }}
               >
-                <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-800 ml-2")}>{"Effacer"}</Text>
+                <Typography className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-800 ml-2")}>{"Effacer"}</Typography>
               </TouchableOpacity>
             )}
           </View>

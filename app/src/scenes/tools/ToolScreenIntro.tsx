@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { View, Text, ScrollView, TouchableOpacity, FlatList, Image, Animated } from "react-native";
+import { View, Text, ScrollView, TouchableOpacity, FlatList, Animated } from "react-native";
 import Header from "../../components/Header";
 import logEvents from "../../services/logEvents";
 import { TW_COLORS } from "@/utils/constants";
@@ -7,12 +7,11 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
 import ValidatedStampIcon from "@assets/svg/icon/ValidatedStamp";
-import { ToolItemAudience, ToolItemType, TOOLS_DATA } from "./toolsData";
+import { TOOLS_DATA } from "./toolsData";
 import ToolItemCard from "./ToolItem";
 import { ToolBottomSheet } from "./ToolBottomSheet";
 import { useBottomSheet } from "@/context/BottomSheetContext";
 import { ToolThemeFilter } from "@/entities/ToolItem";
-import Bookmark from "@assets/svg/icon/Bookmark";
 import DropPoint from "@assets/svg/icon/DropPoint";
 import localStorage from "@/utils/localStorage";
 import HeartFull from "@assets/svg/icon/HeartFull";
@@ -34,21 +33,12 @@ interface ToolsScreenIntroProps {
 
 const ToolsScreenIntro: React.FC<ToolsScreenIntroProps> = ({ navigation, route }) => {
   const { showBottomSheet, closeBottomSheet } = useBottomSheet();
-  const [formatFilters, setFormatFilters] = useState<ToolItemType[]>([]);
-  const [audienceFilters, setAudienceFilters] = useState<ToolItemAudience[]>([]);
-  const [themeFilter, setThemeFilter] = useState<ToolThemeFilter>(route.params?.themeFilter || "Tout");
   const [bookmarkedToolIds, setBookmarkedToolIds] = useState<string[]>([]);
   const [showCrisisPlanButton, setShowCrisisPlanButton] = useState<boolean>(false);
   // Scroll animation
   const scrollY = useRef(new Animated.Value(0)).current;
 
-  // Ref for horizontal ScrollView
-  const horizontalScrollViewRef = useRef<ScrollView>(null);
-
   const flatlistScrollRef = useRef<FlatList>(null);
-
-  // Store button positions for accurate scrolling
-  const buttonPositions = useRef<Map<ToolThemeFilter, number>>(new Map()).current;
 
   // Interpolate opacity for info button
   const infoButtonOpacity = scrollY.interpolate({
@@ -88,27 +78,6 @@ const ToolsScreenIntro: React.FC<ToolsScreenIntroProps> = ({ navigation, route }
     setBookmarkedToolIds(bookmarks);
   };
 
-  // Function to store button layout position
-  const onButtonLayout = (theme: ToolThemeFilter, event: any) => {
-    const { x } = event.nativeEvent.layout;
-    buttonPositions.set(theme, x);
-  };
-
-  // Function to scroll to selected theme
-  const scrollToSelectedTheme = (theme: ToolThemeFilter) => {
-    if (horizontalScrollViewRef.current) {
-      const position = buttonPositions.get(theme);
-
-      if (position !== undefined) {
-        // Scroll to the measured position, with some offset to center it better
-        horizontalScrollViewRef.current.scrollTo({
-          x: Math.max(0, position - 20),
-          animated: true,
-        });
-      }
-    }
-  };
-
   useEffect(() => {
     const cb = async () => {
       const keys = await AsyncStorage.getAllKeys();
@@ -118,21 +87,6 @@ const ToolsScreenIntro: React.FC<ToolsScreenIntroProps> = ({ navigation, route }
     };
     cb();
   }, []);
-
-  // Scroll to selected theme when themeFilter changes
-  useEffect(() => {
-    // Small timeout to ensure the UI has updated
-    const timer = setTimeout(() => {
-      scrollToSelectedTheme(themeFilter);
-      if (flatlistScrollRef.current) {
-        flatlistScrollRef.current.scrollToOffset({
-          offset: 0,
-        });
-      }
-    }, 100);
-
-    return () => clearTimeout(timer);
-  }, [themeFilter]);
 
   const favoriteTools = React.useMemo(() => {
     return TOOLS_DATA.filter((tool) => {
@@ -166,7 +120,7 @@ const ToolsScreenIntro: React.FC<ToolsScreenIntroProps> = ({ navigation, route }
         <View className="bg-cnam-primary-800 flex flex-row justify-between pb-0">
           <Header navigation={navigation} />
         </View>
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 200 }}>
           <View className=" flex-col space-y-4 pt-6">
             <Animated.View
               style={{
@@ -194,16 +148,16 @@ const ToolsScreenIntro: React.FC<ToolsScreenIntroProps> = ({ navigation, route }
                   className="flex-row bg-cnam-cyan-lighten-80 items-center mb-8 space-x-1 rounded-full px-3 self-start mx-4"
                 >
                   <ValidatedStampIcon />
-                  <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>
+                  <Typography className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>
                     Comment ces outils sont-ils séléctionnés ?
-                  </Text>
+                  </Typography>
                 </TouchableOpacity>
               </Animated.View>
             </Animated.View>
             <View className="rounded-2xl bg-cnam-mauve-lighten-90 p-4 mx-2 mb-4 space-y-4 flex-col">
               <View className="flex-row items-center justify-start space-x-2">
                 <HeartFull color={TW_COLORS.CNAM_PRIMARY_800} />
-                <Text className={mergeClassNames(typography.textXlSemibold, "text-cnam-primary-950")}>Support immédiat</Text>
+                <Typography className={mergeClassNames(typography.textXlSemibold, "text-cnam-primary-950")}>Support immédiat</Typography>
               </View>
               <View className="flex-row flex-1 space-x-2 items-stretch">
                 <View className="flex-1">
@@ -214,7 +168,9 @@ const ToolsScreenIntro: React.FC<ToolsScreenIntroProps> = ({ navigation, route }
                     className=" border-cnam-mauve-0 border-2 bg-[#FCFAFD] p-6 items-center rounded-2xl mt-2 flex-col space-y-2 justify-center"
                   >
                     <HeartActivity color={TW_COLORS.CNAM_PRIMARY_800} />
-                    <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-950 text-center")}>Cohérence cardiaque</Text>
+                    <Typography className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-950 text-center")}>
+                      Cohérence cardiaque
+                    </Typography>
                   </TouchableOpacity>
                 </View>
 
@@ -227,7 +183,9 @@ const ToolsScreenIntro: React.FC<ToolsScreenIntroProps> = ({ navigation, route }
                       className="flex-1 border-cnam-mauve-0 border-2 bg-[#FCFAFD] p-6 items-center rounded-2xl mt-2 flex-col space-y-2 justify-center"
                     >
                       <LifeBuoy width={32} height={32} color={TW_COLORS.CNAM_PRIMARY_800} />
-                      <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-950 text-center")}>Plan de crise</Text>
+                      <Typography className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-950 text-center")}>
+                        Plan de crise
+                      </Typography>
                     </TouchableOpacity>
                   </View>
                 )}
@@ -237,7 +195,9 @@ const ToolsScreenIntro: React.FC<ToolsScreenIntroProps> = ({ navigation, route }
               <View className="flex-row items-center justify-between mx-4 my-4">
                 <View className="flex-row space-x-2 items-center justify-start">
                   <BookmarkMinus color={TW_COLORS.CNAM_PRIMARY_900} />
-                  <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-950")}>Vos outils favoris</Text>
+                  <Typography className={mergeClassNames(typography.textXlSemibold, "text-cnam-primary-950")}>
+                    Vos outils favoris ({favoriteTools.length})
+                  </Typography>
                 </View>
                 <TouchableOpacity
                   onPress={() => {
@@ -248,11 +208,11 @@ const ToolsScreenIntro: React.FC<ToolsScreenIntroProps> = ({ navigation, route }
                   disabled={!favoriteTools.length}
                   className="flex-row space-x-2 items-center justify-start"
                 >
-                  <Text
+                  <Typography
                     className={mergeClassNames(typography.textMdSemibold, !!favoriteTools.length ? "text-cnam-cyan-700-darken-40" : "text-gray-400")}
                   >
                     Tous
-                  </Text>
+                  </Typography>
                   <View>
                     <ChevronIcon
                       width={12}
@@ -263,13 +223,15 @@ const ToolsScreenIntro: React.FC<ToolsScreenIntroProps> = ({ navigation, route }
                   </View>
                 </TouchableOpacity>
               </View>
-              <ToolItemList data={favoriteTools} renderItem={renderItem} themeFilter={"Favoris"} />
+              <ToolItemList data={favoriteTools} renderItem={renderItem} />
             </View>
             <View className="flex-col">
               <View className="flex-row items-center justify-between mx-4 my-4">
                 <View className="flex-row space-x-2 items-center justify-start">
                   <DropPoint />
-                  <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-950")}>Tous les outils ({TOOLS_DATA.length})</Text>
+                  <Typography className={mergeClassNames(typography.textXlSemibold, "text-cnam-primary-950")}>
+                    Tous les outils ({TOOLS_DATA.length})
+                  </Typography>
                 </View>
                 <TouchableOpacity
                   onPress={() => {
@@ -277,41 +239,13 @@ const ToolsScreenIntro: React.FC<ToolsScreenIntroProps> = ({ navigation, route }
                   }}
                   className="flex-row space-x-2 items-center justify-start"
                 >
-                  <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40")}>Explorer</Text>
+                  <Typography className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40")}>Explorer</Typography>
                   <View>
-                    <ChevronIcon width={12} height={12} direction="right" color={TW_COLORS.CNAM_CYAN_700_DARKEN_40} />
+                    <ChevronIcon width={12} height={12} direction="right" color={TW_COLORS.CNAM_PRIMARY_700} />
                   </View>
                 </TouchableOpacity>
               </View>
-              <FlatList
-                className="px-4 z-0"
-                data={TOOLS_DATA.slice(0, 3)}
-                ref={flatlistScrollRef}
-                scrollEventThrottle={16}
-                renderItem={({ item }) => {
-                  return (
-                    <ToolItemCard
-                      toolItem={item}
-                      isBookmarked={bookmarkedToolIds.includes(item.id)}
-                      onPress={(toolItem) => {
-                        // Log when opening a tool
-                        logEvents.logOutilsOpen(toolItem.matomoId);
-                        showBottomSheet(
-                          <ToolBottomSheet navigation={navigation} toolItem={toolItem} onBookmarkChange={loadBookmarks} onClose={closeBottomSheet} />,
-                          loadBookmarks
-                        );
-                      }}
-                      onBookmarkChange={loadBookmarks}
-                    />
-                  );
-                }}
-                keyExtractor={(item) => item.id}
-                scrollEnabled={false}
-                nestedScrollEnabled={false}
-                removeClippedSubviews={false}
-                showsVerticalScrollIndicator={false}
-                contentContainerStyle={{ paddingBottom: 150 }}
-              />
+              <ToolItemList data={TOOLS_DATA.slice(0, 3)} renderItem={renderItem} />
             </View>
           </View>
         </ScrollView>
@@ -320,7 +254,7 @@ const ToolsScreenIntro: React.FC<ToolsScreenIntroProps> = ({ navigation, route }
   );
 };
 
-const ToolItemList = ({ data, renderItem, themeFilter }) => {
+const ToolItemList = ({ data, renderItem }) => {
   return (
     <FlatList
       className="px-4 z-0"
@@ -328,11 +262,9 @@ const ToolItemList = ({ data, renderItem, themeFilter }) => {
       scrollEventThrottle={16}
       renderItem={renderItem}
       ListEmptyComponent={
-        <>
-          <Typography className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-800 text-left")}>
-            Explorez les outils et ajoutez vos contenus préférés en favoris pour y accéder rapidement.
-          </Typography>
-        </>
+        <Typography className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-800 text-left")}>
+          Explorez les outils et ajoutez vos contenus préférés en favoris pour y accéder rapidement.
+        </Typography>
       }
       keyExtractor={(item) => item.id}
       scrollEnabled={false}
