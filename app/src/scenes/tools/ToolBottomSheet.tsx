@@ -1,12 +1,16 @@
 import { View, Text, ScrollView, useWindowDimensions, Dimensions, Linking, Alert, Platform, TouchableOpacity } from "react-native";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
-import { useEffect, useState } from "react";
+import CircleQuestionMark from "@assets/svg/icon/CircleQuestionMark";
+import React, { useEffect, useState } from "react";
+import Drugs from "@/scenes/drugs/drugs-list";
 import { useBottomSheet } from "@/context/BottomSheetContext";
 import localStorage from "@/utils/localStorage";
 import { Drug } from "@/entities/Drug";
 import JMButton from "@/components/JMButton";
-import { TOOL_BECK_ID, ToolItemEntity } from "./toolsData";
+import HealthIcon from "@assets/svg/icon/Health";
+import { InputText } from "@/components/InputText";
+import { GPS_IDS, TOOL_BECK_ID, ToolItemEntity } from "./toolsData";
 import ReactNativeBlobUtil from "react-native-blob-util";
 import DownloadIcon from "@assets/svg/icon/Download";
 import LinkExternal from "@assets/svg/icon/LinkExternal";
@@ -21,6 +25,8 @@ import * as FileSystem from "expo-file-system";
 import EyeIcon from "@assets/svg/icon/Eye";
 import PlayCircleIcon from "@assets/svg/icon/PlayCircle";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { TW_COLORS } from "@/utils/constants";
+import { ModusOperandiBottomSheet } from "./ModusOperandiBottomSheet";
 import { Typography } from "@/components/Typography";
 
 const screenHeight = Dimensions.get("window").height;
@@ -44,6 +50,7 @@ export const ToolBottomSheet = ({
   const [showAllThemes, setShowAllThemes] = useState<boolean>(false);
   const [crisisPlanCompleted, setCrisisPlanCompleted] = useState<boolean>(false);
   const { useInAppBrowser } = useInAppBrowserConfig();
+  const { showBottomSheet } = useBottomSheet();
 
   const itemId = toolItem.id;
 
@@ -121,6 +128,10 @@ export const ToolBottomSheet = ({
     } finally {
       setIsViewing(false);
     }
+  };
+
+  const showModusOperandi = () => {
+    showBottomSheet(<ModusOperandiBottomSheet />);
   };
 
   const handleDownloadFile = async () => {
@@ -358,13 +369,25 @@ export const ToolBottomSheet = ({
             )}
             {isFileType() && !toolItem.embed && !toolItem.video && !toolItem.innerPath && (
               <>
-                <JMButton
-                  className="mb-2"
-                  icon={<EyeIcon color="white" width={20} height={20} />}
-                  onPress={handleViewPDF}
-                  title={isViewing ? "Chargement..." : "Voir le fichier"}
-                  disabled={isViewing || isDownloading}
-                />
+                {!GPS_IDS.includes(toolItem.id) && (
+                  <JMButton
+                    className="mb-2"
+                    icon={<EyeIcon color="white" width={20} height={20} />}
+                    onPress={handleViewPDF}
+                    title={isViewing ? "Chargement..." : "Voir le fichier"}
+                    disabled={isViewing || isDownloading}
+                  />
+                )}
+                {GPS_IDS.includes(toolItem.id) && (
+                  <JMButton
+                    className="mb-2"
+                    variant="outline"
+                    icon={<CircleQuestionMark color={TW_COLORS.GRAY_400} />}
+                    onPress={showModusOperandi}
+                    title={"Mode operatoire"}
+                    disabled={isViewing || isDownloading}
+                  />
+                )}
                 <JMButton
                   icon={<DownloadIcon color="white" />}
                   onPress={handleDownloadFile}
