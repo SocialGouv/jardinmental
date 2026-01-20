@@ -27,8 +27,11 @@ const isChecklistCompleted = async (): Promise<boolean> => {
     // Survey is always considered done (as per original checklist logic)
     const surveyDone = true;
 
+    // Data export checklist item
+    const dataExportDone = await localStorage.getChecklistDataExportDone?.();
+
     // All items must be completed
-    return reminder && !!goals.length && !!drugs && hasCustomIndicators && surveyDone;
+    return reminder && !!goals.length && !!drugs && hasCustomIndicators && surveyDone && !!dataExportDone;
   } catch (error) {
     console.error("Error checking checklist completion:", error);
     return false;

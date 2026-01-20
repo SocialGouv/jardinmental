@@ -4,6 +4,7 @@ import * as FileSystem from "expo-file-system";
 import * as DocumentPicker from "expo-document-picker";
 import { shareAsync } from "expo-sharing";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import localStorage from "@/utils/localStorage";
 
 import { colors } from "../../utils/colors";
 import logEvents from "../../services/logEvents";
@@ -94,6 +95,9 @@ const DataExportImport = ({ navigation }) => {
         mimeType: "text/plain",
         dialogTitle: "Exporter mes données Jardin Mental",
       });
+
+      // Save export date in localStorage
+      await localStorage.setLastExportDate(new Date().toISOString());
 
       Alert.alert("Export réussi", "Vos données ont été exportées avec succès !");
     } catch (error) {

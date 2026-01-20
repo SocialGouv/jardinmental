@@ -23,7 +23,7 @@ import { typography } from "@/utils/typography";
 import { mergeClassNames } from "@/utils/className";
 import JMButton from "@/components/JMButton";
 import { shouldShowChecklistBanner, handlePlusTardClick as handleBannerDismiss } from "../../utils/checklistBanner";
-import { TAB_BAR_HEIGHT, TW_COLORS } from "@/utils/constants";
+import { EXPORT_REMINDER_LAST_SHOWN_KEY, TAB_BAR_HEIGHT, TW_COLORS } from "@/utils/constants";
 import { SquircleView } from "expo-squircle-view";
 import { interpolate, useAnimatedScrollHandler, useDerivedValue, useSharedValue, useAnimatedStyle } from "react-native-reanimated";
 import { useStatusBar } from "@/context/StatusBarContext";
@@ -40,6 +40,9 @@ import { useBottomSheet } from "@/context/BottomSheetContext";
 import { BeckBottomSheet } from "../tools/BeckBottomSheet";
 import { TOOL_BECK_ID } from "../tools/toolsData";
 import { Typography } from "@/components/Typography";
+import ExportReminderBottomSheet from "../tools/ExportReminderBottomSheet";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { computeThreeMonthsAgo } from "@/utils/date/helpers";
 
 const Status = ({ navigation, startSurvey }) => {
   const [diaryData] = useContext(DiaryDataContext);
@@ -50,7 +53,7 @@ const Status = ({ navigation, startSurvey }) => {
   const scrollRef = React.useRef();
   const { showLatestChangesModal } = useLatestChangesModal();
   const insets = useSafeAreaInsets();
-  const { showBottomSheet } = useBottomSheet();
+  const { showBottomSheet, closeBottomSheet } = useBottomSheet();
   const { setCustomColor } = useStatusBar();
 
   useFocusEffect(
@@ -152,6 +155,39 @@ const Status = ({ navigation, startSurvey }) => {
           await localStorage.bookmarkToolItem(TOOL_BECK_ID);
           showBottomSheet(<BeckBottomSheet navigation={navigation} />);
         }
+        const threeMonthsAgoInMs = computeThreeMonthsAgo();
+        const installDateStr = await localStorage.getStartDate();
+        console.log(installDateStr);
+        if (!installDateStr) return;
+        const installDate = new Date(installDateStr);
+        const now = new Date();
+
+        // check if time > 3 month
+        if (now.getTime() - installDate.getTime() < threeMonthsAgoInMs) return;
+
+        // check last reminder date
+        const lastShownStr = await AsyncStorage.getItem(EXPORT_REMINDER_LAST_SHOWN_KEY);
+        if (lastShownStr) {
+          const lastShown = new Date(lastShownStr);
+          if (now.getTime() - lastShown.getTime() < threeMonthsAgoInMs) return;
+        }
+
+        // Afficher la bottomsheet
+        showBottomSheet(
+          <ExportReminderBottomSheet
+            onExport={() => {
+              AsyncStorage.setItem(EXPORT_REMINDER_LAST_SHOWN_KEY, now.toISOString());
+              closeBottomSheet();
+              if (navigation && navigation.navigate) {
+                navigation.navigate("data-export-import"); // Adapter le nom de la route si besoin
+              }
+            }}
+            onRemindLater={() => {
+              AsyncStorage.setItem(EXPORT_REMINDER_LAST_SHOWN_KEY, now.toISOString());
+              closeBottomSheet();
+            }}
+          />
+        );
       })();
     }, [])
   );
