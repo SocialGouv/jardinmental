@@ -5,6 +5,7 @@ import { TW_COLORS } from "@/utils/constants";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
 import FileIcon from "@assets/svg/icon/File";
+import { Typography } from "@/components/Typography";
 
 const Context = ({ data }) => {
   if (!data || !data.userComment) return null;
@@ -13,10 +14,10 @@ const Context = ({ data }) => {
     <>
       <Separator separatorColor={TW_COLORS.GRAY_400} />
       <View className="justify-between items-start bg-cnam-primary-50 rounded-xl p-2 my-2">
-        <Text className={mergeClassNames(typography.textSmSemibold, "mb-1 text-cnam-primary-900")}>Note générale</Text>
+        <Typography className={mergeClassNames(typography.textSmSemibold, "mb-1 text-cnam-primary-900")}>Note générale</Typography>
         <View className="w-full flex-row items-center items-start">
           <FileIcon />
-          <Text
+          <Typography
             className={mergeClassNames("flex-1", typography.textSmRegular, "text-cnam-gray-950 italic px-2")}
             style={{
               fontSize: 14,
@@ -27,7 +28,7 @@ const Context = ({ data }) => {
             }}
           >
             {data.userComment || "Oui"}
-          </Text>
+          </Typography>
         </View>
       </View>
     </>

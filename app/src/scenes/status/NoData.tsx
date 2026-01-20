@@ -61,6 +61,7 @@ const styles = StyleSheet.create({
   bienvenue: {
     fontSize: 18,
     fontWeight: "bold",
+    fontFamily: "SourceSans3-Bold",
     color: colors.BLUE,
     textAlign: "center",
   },

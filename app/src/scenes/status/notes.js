@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   textContainer: { width: "100%" },
-  boldText: { fontWeight: "bold" },
+  boldText: { fontWeight: "bold", fontFamily: "SourceSans3-Bold" },
   italic: { fontStyle: "italic" },
   divider: {
     height: 1,

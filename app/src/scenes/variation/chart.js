@@ -115,6 +115,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: colors.DARK_BLUE,
     fontWeight: "700",
+    fontFamily: "SourceSans3-Bold",
   },
   legendItem: {
     marginBottom: 14,

@@ -8,6 +8,7 @@ import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
 import NavigationButtons from "@/components/onboarding/NavigationButtons";
 import { Button2 } from "@/components/Button2";
+import { Typography } from "@/components/Typography";
 
 export const GoalDaySelector = ({ navigation, route }) => {
   const goalId = route.params?.goalId;
@@ -87,10 +88,10 @@ export const GoalDaySelector = ({ navigation, route }) => {
       navigation={navigation}
     >
       <View className="mx-4">
-        <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-900 mt-8 mb-2")}>Planifier votre objectif</Text>
-        <Text className={mergeClassNames(typography.textMdMedium, "text-primary-800 mb-8 ")}>
+        <Typography className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-900 mt-8 mb-2")}>Planifier votre objectif</Typography>
+        <Typography className={mergeClassNames(typography.textMdMedium, "text-primary-800 mb-8 ")}>
           Sélectionnez les jours de la semaine où vous souhaitez réaliser l'objectif "{!editing ? goalLabel : editingGoal?.label}"
-        </Text>
+        </Typography>
         <View style={styles.daysContainer} className="w-full">
           {DAY_OF_THE_WEEK_EN_FR.map((day, index) => {
             return (

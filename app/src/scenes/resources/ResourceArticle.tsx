@@ -8,6 +8,7 @@ import logEvents from "../../services/logEvents";
 import { EXTERNAL_RESOURCES_DATA, ExternalResource } from "./data/resourcesExternal";
 import ExternalResourceCard from "./ExternalResourceCard";
 import ArrowIcon from "@assets/svg/icon/Arrow";
+import { Typography } from "@/components/Typography";
 
 interface ResourceArticleProps {
   navigation: any;
@@ -90,14 +91,14 @@ const ResourceArticle: React.FC<ResourceArticleProps> = ({ navigation, route }) 
           ) : (
             <View className="mb-12" />
           )}
-          <Text className="text-2xl font-bold text-cnam-primary-950 mb-5 leading-7 text-left">{resource.title}</Text>
+          <Typography className="text-2xl font-bold text-cnam-primary-950 mb-5 leading-7 text-left">{resource.title}</Typography>
 
           <MarkdownStyled markdown={resource.content} />
 
           {/* P1 Resources - À lire aussi dans ce dossier */}
           {p1Resources.length > 0 && (
             <View className="mt-8 pt-4">
-              <Text className="text-lg text-cnam-primary-950 font-semibold mb-4">À lire dans ce dossier :</Text>
+              <Typography className="text-lg text-cnam-primary-950 font-semibold mb-4">À lire dans ce dossier :</Typography>
               <View className="flex flex-col">
                 {p1Resources.map((externalResource) => (
                   <ExternalResourceCard key={externalResource.id} externalResource={externalResource} onPress={handleContinueReadingMore} />
@@ -109,12 +110,12 @@ const ResourceArticle: React.FC<ResourceArticleProps> = ({ navigation, route }) 
           {/* P2 Resources - Poursuivre la découverte du sujet */}
           {p2Resources.length > 0 && (
             <View className="mt-8 pt-4">
-              <Text className="text-lg text-cnam-primary-950 font-normal mb-4">Poursuivre la découverte du sujet :</Text>
+              <Typography className="text-lg text-cnam-primary-950 font-normal mb-4">Poursuivre la découverte du sujet :</Typography>
               <TouchableOpacity
                 onPress={handleExploreMoreResources}
                 className="bg-cnam-primary-800 rounded-[20px] px-4 py-2.5 flex flex-row items-center justify-center"
               >
-                <Text className="text-white font-semibold text-base mr-2">Explorer {p2Resources.length} ressources</Text>
+                <Typography className="text-white font-semibold text-base mr-2">Explorer {p2Resources.length} ressources</Typography>
                 <ArrowIcon width={18} height={18} color="white" />
               </TouchableOpacity>
             </View>

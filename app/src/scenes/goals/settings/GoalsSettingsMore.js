@@ -131,7 +131,7 @@ const itemStyles = StyleSheet.create({
     alignItems: "center",
   },
   label: {
-    fontFamily: "SourceSans3",
+    fontFamily: "SourceSans3-Bold",
     fontWeight: "700",
     fontSize: 16,
     color: colors.BLUE,

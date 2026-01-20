@@ -2,6 +2,7 @@ import React from "react";
 import { TouchableOpacity, Text } from "react-native";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
+import { Typography } from "@/components/Typography";
 
 interface FilterButtonProps {
   label: string;
@@ -21,7 +22,7 @@ export const ToolFilterButton: React.FC<FilterButtonProps> = ({ label, selected,
       {...props}
     >
       {icon}
-      <Text className={mergeClassNames(typography.textMdMedium, selected ? "text-white" : "text-cnam-primary-900")}>{label}</Text>
+      <Typography className={mergeClassNames(typography.textMdMedium, selected ? "text-white" : "text-cnam-primary-900")}>{label}</Typography>
     </TouchableOpacity>
   );
 };

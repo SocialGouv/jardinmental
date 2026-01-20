@@ -140,6 +140,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     marginBottom: 26,
     fontWeight: "700",
+    fontFamily: "SourceSans3-Bold",
   },
   title: {
     color: colors.DARK_BLUE,
@@ -163,6 +164,7 @@ const styles = StyleSheet.create({
   },
   backButton: {
     fontWeight: "700",
+    fontFamily: "SourceSans3-Bold",
     textDecorationLine: "underline",
     color: colors.BLUE,
     paddingTop: 15,

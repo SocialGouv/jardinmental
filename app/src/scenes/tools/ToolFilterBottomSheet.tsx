@@ -8,6 +8,7 @@ import CheckMarkIcon from "@assets/svg/icon/check";
 import SimplePlusIcon from "@assets/svg/icon/SimplePlus";
 import { ToolItemIcon } from "./toolUtils";
 import { TW_COLORS } from "@/utils/constants";
+import { Typography } from "@/components/Typography";
 
 const screenHeight = Dimensions.get("window").height;
 const height90vh = screenHeight * 0.9;
@@ -91,13 +92,13 @@ export const ToolFilterBottomSheet = ({
       >
         <View className="px-4">
           <View className="flex-row justify-between items-center">
-            <Text className={mergeClassNames(typography.textLgRegular, "text-cnam-primary-900")}>Filtrer les outils</Text>
+            <Typography className={mergeClassNames(typography.textLgRegular, "text-cnam-primary-900")}>Filtrer les outils</Typography>
             <TouchableOpacity onPress={clearAllFilters}>
-              <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-800")}>Tout effacer</Text>
+              <Typography className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-800")}>Tout effacer</Typography>
             </TouchableOpacity>
           </View>
           <View className="flex-row justify-between items-center mb-4 mt-4">
-            <Text className={mergeClassNames(typography.textXlBold, "text-cnam-primary-900")}>Des outils pour...</Text>
+            <Typography className={mergeClassNames(typography.textXlBold, "text-cnam-primary-900")}>Des outils pour...</Typography>
           </View>
           <View className="flex-row flex-wrap items-center">
             {AUDIENCE_TYPES.map((filter) => {
@@ -115,7 +116,7 @@ export const ToolFilterBottomSheet = ({
                     <View className={"w-5 h-4"}>
                       <CheckMarkIcon color={"white"} width={16} height={16} />
                     </View>
-                    <Text className={mergeClassNames(typography.textMdMedium, "ml-1", "text-white")}>{filter.title}</Text>
+                    <Typography className={mergeClassNames(typography.textMdMedium, "ml-1", "text-white")}>{filter.title}</Typography>
                   </TouchableOpacity>
                 );
               } else {
@@ -128,14 +129,14 @@ export const ToolFilterBottomSheet = ({
                     <View className={"w-5 h-4"}>
                       <SimplePlusIcon />
                     </View>
-                    <Text className={mergeClassNames(typography.textMdMedium, "ml-1", "text-cnam-primary-800")}>{filter.title}</Text>
+                    <Typography className={mergeClassNames(typography.textMdMedium, "ml-1", "text-cnam-primary-800")}>{filter.title}</Typography>
                   </TouchableOpacity>
                 );
               }
             })}
           </View>
           <View className="flex-row justify-between items-center mb-4 mt-4">
-            <Text className={mergeClassNames(typography.textXlBold, "text-cnam-primary-900")}>Format</Text>
+            <Typography className={mergeClassNames(typography.textXlBold, "text-cnam-primary-900")}>Format</Typography>
           </View>
           <View className="flex-row flex-wrap items-center">
             {TOOL_ITEM_TYPES.map((type) => {
@@ -154,9 +155,11 @@ export const ToolFilterBottomSheet = ({
                     <View className={"w-5 h-4"}>
                       <CheckMarkIcon color={"white"} width={16} height={16} />
                     </View>
-                    <Text className={mergeClassNames(typography.textMdMedium, "ml-1 mr-1", isSelected ? "text-white" : "text-cnam-primary-800")}>
+                    <Typography
+                      className={mergeClassNames(typography.textMdMedium, "ml-1 mr-1", isSelected ? "text-white" : "text-cnam-primary-800")}
+                    >
                       {type}
-                    </Text>
+                    </Typography>
                     <ToolItemIcon type={type} color={TW_COLORS.WHITE} width={16} height={16} />
                   </TouchableOpacity>
                 );
@@ -170,9 +173,11 @@ export const ToolFilterBottomSheet = ({
                     <View className={"w-5 h-4"}>
                       <SimplePlusIcon />
                     </View>
-                    <Text className={mergeClassNames(typography.textMdMedium, "ml-1 mr-1", isSelected ? "text-white" : "text-cnam-primary-800")}>
+                    <Typography
+                      className={mergeClassNames(typography.textMdMedium, "ml-1 mr-1", isSelected ? "text-white" : "text-cnam-primary-800")}
+                    >
                       {type}
-                    </Text>
+                    </Typography>
                     <ToolItemIcon type={type} color={TW_COLORS.CNAM_PRIMARY_800} width={16} height={16} />
                   </TouchableOpacity>
                 );

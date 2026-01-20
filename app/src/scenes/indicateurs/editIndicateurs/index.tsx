@@ -115,7 +115,7 @@ const EditIndicateursContent = ({ navigation, route }) => {
           className="flex-row space-x-2 items-center justify-center"
         >
           <ChevronIcon direction="left" color={TW_COLORS.CNAM_PRIMARY_25} />
-          <Text className="text-cnam-primary-25">Ajouter un indicateur</Text>
+          <Typography className="text-cnam-primary-25">Ajouter un indicateur</Typography>
         </TouchableOpacity>
       }
       title=""
@@ -135,11 +135,11 @@ const EditIndicateursContent = ({ navigation, route }) => {
       <View className="px-4 py-0">
         <View className="bg-cnam-cyan-50-lighten-90 bg-[#E5F6FC] p-4 rounded-2xl">
           <View className="flex-row items-center mb-4">
-            <Text className={mergeClassNames(typography.textLgBold, "text-cnam-primary-900")}>Créer un indicateur personnalisé</Text>
+            <Typography className={mergeClassNames(typography.textLgBold, "text-cnam-primary-900")}>Créer un indicateur personnalisé</Typography>
           </View>
-          <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900")}>
+          <Typography className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900")}>
             Vous pouvez choisir la manière dont vous souhaitez l’évaluer
-          </Text>
+          </Typography>
           <JMButton
             variant="outline"
             onPress={() => {
@@ -154,10 +154,10 @@ const EditIndicateursContent = ({ navigation, route }) => {
         {exemplesVisible && (
           <View style={styles.warningContainer}>
             <DangerIcon />
-            <Text style={styles.warningText}>
-              Essayez de ne pas sélectionner plus de <Text style={[styles.bold, styles.warningText]}>8</Text> indicateurs{" "}
-              <Text style={[styles.bold, styles.warningText]}>au total</Text>
-            </Text>
+            <Typography style={styles.warningText}>
+              Essayez de ne pas sélectionner plus de <Typography style={[styles.bold, styles.warningText]}>8</Typography> indicateurs{" "}
+              <Typography style={[styles.bold, styles.warningText]}>au total</Typography>
+            </Typography>
           </View>
         )}
 
@@ -168,7 +168,7 @@ const EditIndicateursContent = ({ navigation, route }) => {
         />
 
         <View className="mt-0">
-          <Text className={mergeClassNames(typography.textLgBold, "text-cnam-primary-900 mb-4")}>Choisir parmi des exemples</Text>
+          <Typography className={mergeClassNames(typography.textLgBold, "text-cnam-primary-900 mb-4")}>Choisir parmi des exemples</Typography>
           <CategorieElements
             title="Les plus courants"
             options={INDICATEURS_LES_PLUS_COURANTS}
@@ -199,7 +199,7 @@ const EditIndicateursContent = ({ navigation, route }) => {
           onPress={() => toggleState(existingIndicatorsVisible, setExistingIndicatorsVisible)}
           className="flex-row justify-between flex-1 items-center"
         >
-          <Text className={mergeClassNames(typography.textLgRegular, "text-cnam-primary-900")}>Réactiver un ancien indicateur</Text>
+          <Typography className={mergeClassNames(typography.textLgRegular, "text-cnam-primary-900")}>Réactiver un ancien indicateur</Typography>
           {existingIndicatorsVisible ? (
             <ArrowUpSvg color={TW_COLORS.CNAM_PRIMARY_900} />
           ) : (
@@ -223,7 +223,7 @@ const EditIndicateursContent = ({ navigation, route }) => {
                 .filter((_indicateur) => !_indicateur.active)
                 .map((_indicateur, i) => {
                   return (
-                    <TextTag
+                    <TypographyTag
                       key={i}
                       value={_indicateur.name}
                       selected={false}
@@ -257,6 +257,7 @@ const EditIndicateursContent = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   bold: {
     fontWeight: "700",
+    fontFamily: "SourceSans3-Bold",
   },
   safe: {
     flex: 1,
@@ -271,6 +272,7 @@ const styles = StyleSheet.create({
     color: colors.BLUE,
     fontSize: 19,
     fontWeight: "700",
+    fontFamily: "SourceSans3-Bold",
   },
   header: {
     height: 60,
@@ -310,6 +312,7 @@ const styles = StyleSheet.create({
     color: colors.BLUE,
     fontSize: 14,
     fontWeight: "700",
+    fontFamily: "SourceSans3-Bold",
     flex: 1,
     marginBottom: 5,
   },

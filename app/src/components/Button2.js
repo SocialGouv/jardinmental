@@ -181,6 +181,7 @@ const styles = {
     },
     text: {
       fontWeight: "bold",
+      fontFamily: "SourceSans3-Bold",
       fontSize: 19,
       textAlign: "center",
     },
@@ -257,6 +258,7 @@ const styles = {
     },
     text: {
       fontWeight: "bold",
+      fontFamily: "SourceSans3-Bold",
       fontSize: 15,
       color: "#1f2937",
     },

@@ -15,6 +15,7 @@ import MessageHeartCircleIcon from "@assets/svg/icon/MessageHeartCircle";
 import { SquircleButton } from "expo-squircle-view";
 import { TW_COLORS } from "@/utils/constants";
 import logEvents from "@/services/logEvents";
+import { Typography } from "./Typography";
 
 interface HeaderProps {
   title?: string;
@@ -117,12 +118,12 @@ const Header = ({ title, navigation, scrollY, scrollThreshold = 80, component }:
           className="border border-[1.5] border-cnam-primary-400 px-3 py-2 rounded-full flex-row space-x-1 items-center"
         >
           <HorizontalDots color={TW_COLORS.CNAM_PRIMARY_25} />
-          <Text className={mergeClassNames(typography.textSmMedium, "text-cnam-primary-25")}>Plus d'info</Text>
+          <Typography className={mergeClassNames(typography.textSmMedium, "text-cnam-primary-25")}>Plus d'info</Typography>
           {badgeNotesVersionVisible && (
             <View style={{ borderWidth: 0.5 }} className="bg-red rounded-full w-3 h-3 mr-1 border-cnam-rouge-100-lighten-80"></View>
           )}
         </TouchableOpacity>
-        {/* <Text style={styles.title}>{title}</Text> */}
+        {/* <Typography style={styles.title}>{title}</Typography> */}
         <View className="flex-row">
           <SquircleButton
             cornerSmoothing={100}
@@ -135,16 +136,24 @@ const Header = ({ title, navigation, scrollY, scrollThreshold = 80, component }:
           >
             <MessageHeartCircleIcon />
             <Animated.View style={supportButtonAnimatedStyle}>
-              <Text numberOfLines={1} ellipsizeMode="tail" className={mergeClassNames(typography.textSmMedium, "text-white overflow-hidden")}>
+              <Typography numberOfLines={1} ellipsizeMode="tail" className={mergeClassNames(typography.textSmMedium, "text-white overflow-hidden")}>
                 Soutien 24/7
-              </Text>
+              </Typography>
             </Animated.View>
           </SquircleButton>
         </View>
       </View>
       {title && (
         <Animated.View style={titleContainerStyle}>
-          <Animated.Text style={titleAnimatedStyle} className={mergeClassNames(typography.textLgRegular, "text-white")}>
+          <Animated.Text
+            style={[
+              titleAnimatedStyle,
+              {
+                fontFamily: "SourceSans3-Regular",
+              },
+            ]}
+            className={mergeClassNames(typography.textLgRegular, "text-white")}
+          >
             {title}
           </Animated.Text>
           {component}

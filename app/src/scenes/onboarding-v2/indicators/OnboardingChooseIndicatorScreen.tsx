@@ -30,6 +30,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import AlertBanner from "../AlertBanner";
 import logEvents from "@/services/logEvents";
 import { useStatusBar } from "@/context/StatusBarContext";
+import { Typography } from "@/components/Typography";
 
 const BASE_INDICATORS_FOR_CUSTOM_CATEGORIES = {
   [NEW_INDICATORS_CATEGORIES.RISK_BEHAVIOR]: [INDICATORS.find((ind) => ind.uuid === "1d4c3f59-dc3e-4b45-ae82-2ea77a62e6c6")],
@@ -314,9 +315,9 @@ const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation, route })
             <View>
               {indicatorsTotalCount >= 9 && <AlertBanner text={`Nous vous recommandons de ne pas choisir plus de 8 éléments pour commencer`} />}
               <View className="my-2">
-                <Text className={mergeClassNames(typography.textSmMedium, "text-gray-800 text-center")}>
+                <Typography className={mergeClassNames(typography.textSmMedium, "text-gray-800 text-center")}>
                   Vous pourrez modifier cette sélection plus tard
-                </Text>
+                </Typography>
               </View>
             </View>
           }
@@ -367,14 +368,14 @@ const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation, route })
           </View>
           <View className="px-4 mb-4">
             <TouchableOpacity onPress={() => setShowMoreIndicators(!showMoreIndicators)} className="py-3 px-4">
-              <Text
+              <Typography
                 className="text-center font-medium"
                 style={{
                   textDecorationLine: "underline",
                 }}
               >
                 {showMoreIndicators ? "Masquer" : "Voir plus d'indicateurs"}
-              </Text>
+              </Typography>
             </TouchableOpacity>
           </View>
         </>
@@ -393,9 +394,9 @@ const OnboardingChooseIndicatorScreen: React.FC<Props> = ({ navigation, route })
 
       {(showMoreIndicators || !hasSelectedDifficulties) && (
         <View className="mb-6 px-4 flex-1">
-          <Text className="text-xl font-bold mb-4 mx-0" style={{ color: TW_COLORS.TEXT_PRIMARY }}>
+          <Typography className="text-xl font-bold mb-4 mx-0" style={{ color: TW_COLORS.TEXT_PRIMARY }}>
             Les plus suivis
-          </Text>
+          </Typography>
           {INDICATORS.filter(
             (indicator) =>
               indicator.priority === 0 &&
@@ -419,7 +420,7 @@ const MultiInput = ({ categoryName }: { categoryName: NEW_INDICATORS_CATEGORIES 
     <View className="flex">
       {addedInputs.map((input, index) => (
         <View className="rounded rounded-lg flex-1 flex-row mb-2">
-          <TextInput
+          <TypographyInput
             onChangeText={(text) => {
               addedInputs[index] = text;
               setAddedInputs(addedInputs);
@@ -437,7 +438,7 @@ const MultiInput = ({ categoryName }: { categoryName: NEW_INDICATORS_CATEGORIES 
               setAddedInputs((prev) => [...prev.slice(0, index), ...prev.slice(index + 1)]);
             }}
           >
-            <Text className={mergeClassNames(typography.textMdSemibold, "text-brand-800")}>Supprimer</Text>
+            <Typography className={mergeClassNames(typography.textMdSemibold, "text-brand-800")}>Supprimer</Typography>
           </TouchableOpacity>
         </View>
       ))}
@@ -447,7 +448,7 @@ const MultiInput = ({ categoryName }: { categoryName: NEW_INDICATORS_CATEGORIES 
         }}
         className="flex-row ml-auto items-center justify-center mt-2"
       >
-        <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-900 mr-1")}>Ajouter un autre événement</Text>
+        <Typography className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-900 mr-1")}>Ajouter un autre événement</Typography>
         <PlusIcon color={TW_COLORS.BRAND_700} />
       </TouchableOpacity>
     </View>
@@ -478,12 +479,12 @@ const CategoryCard = ({
           <View className="items-center justify-center mr-4">
             <IconBg type={categoryName} frontSquareColor={TW_COLORS.CNAM_CYAN_50_LIGHTEN_90} backSquareColor={TW_COLORS.CNAM_CYAN_200_LIGHTEN_60} />
           </View>
-          <Text className={mergeClassNames(typography.textLgBold, "text-cnam-primary-900 flex-1")}>
+          <Typography className={mergeClassNames(typography.textLgBold, "text-cnam-primary-900 flex-1")}>
             {INDICATOR_CATEGORIES_DATA[categoryName].name || categoryName}
-          </Text>
+          </Typography>
           {!indicators && (
             <View className="ml-auto rounded py-1 px-2 border border-brand-800 bg-gray-200 flex-row justify-content items-center">
-              <Text className={mergeClassNames(typography.textSmBold, "text-cnam-primary-900")}>à préciser</Text>
+              <Typography className={mergeClassNames(typography.textSmBold, "text-cnam-primary-900")}>à préciser</Typography>
             </View>
           )}
         </View>
@@ -510,7 +511,7 @@ const CategoryCard = ({
               }}
               className="flex-row ml-auto items-center justify-center"
             >
-              <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-900 mr-1")}>Préciser</Text>
+              <Typography className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-900 mr-1")}>Préciser</Typography>
               <ArrowIcon color={TW_COLORS.BRAND_700} />
             </TouchableOpacity>
           </View>

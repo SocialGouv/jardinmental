@@ -125,6 +125,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     color: colors.BLUE,
     fontWeight: "bold",
+    fontFamily: "SourceSans3-Bold",
   },
   backButtonContainer: {
     position: "absolute",
@@ -134,6 +135,7 @@ const styles = StyleSheet.create({
   },
   backButton: {
     fontWeight: "700",
+    fontFamily: "SourceSans3-Bold",
     textDecorationLine: "underline",
     color: colors.BLUE,
   },

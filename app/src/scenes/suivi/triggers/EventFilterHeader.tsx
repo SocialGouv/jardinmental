@@ -15,6 +15,7 @@ import { typography } from "@/utils/typography";
 import CircleQuestionMark from "@assets/svg/icon/CircleQuestionMark";
 import { useBottomSheet } from "@/context/BottomSheetContext";
 import HelpView from "@/components/HelpView";
+import { Typography } from "@/components/Typography";
 
 export const EventFilterHeader = ({
   presetDate,
@@ -58,7 +59,7 @@ export const EventFilterHeader = ({
       className="flex-col space-y-2"
     >
       <View className="flex-row items-center justify-between">
-        <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>Voir les notes quand :</Text>
+        <Typography className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>Voir les notes quand :</Typography>
         <TouchableOpacity
           onPress={() => {
             showBottomSheet(<HelpView title={HELP_ANALYSE["trigger"]["title"]} isMd={true} description={HELP_ANALYSE["trigger"]["description"]} />);
@@ -78,7 +79,7 @@ export const EventFilterHeader = ({
         />
       </View>
       <View className="flex-row items-center space-x-2">
-        <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>était</Text>
+        <Typography className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>était</Typography>
         <View style={[styles.scorePickerBorder]}>
           <ScorePicker
             size="small"

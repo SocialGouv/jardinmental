@@ -47,6 +47,7 @@ import MessageHeartCircleIcon from "@assets/svg/icon/MessageHeartCircle";
 import { ContactBottomSheet } from "./ContactBottomSheet";
 import { useBottomSheet } from "@/context/BottomSheetContext";
 import NPS from "@/services/NPS/NPS";
+import { Typography } from "../Typography";
 
 export default ({ navigation, visible, onClick }) => {
   const [isVisible, setIsVisible] = useState();
@@ -120,7 +121,7 @@ export default ({ navigation, visible, onClick }) => {
                 }}
               >
                 <View className="p-4 pb-6 bg-cnam-primary-800 flex-col space-y-4 visible">
-                  <Text className={mergeClassNames(typography.displayXsBold, "text-cnam-primary-25 text-left")}>Jardin Mental</Text>
+                  <Typography className={mergeClassNames(typography.displayXsBold, "text-cnam-primary-25 text-left")}>Jardin Mental</Typography>
                   <SquircleButton
                     onPress={() => {
                       navigation.navigate("news");
@@ -136,7 +137,7 @@ export default ({ navigation, visible, onClick }) => {
                     {badgeNotesVersionVisible && (
                       <View style={{ borderWidth: 0.5 }} className="bg-red rounded-full w-3 h-3 mr-1 border-cnam-rouge-100-lighten-80"></View>
                     )}
-                    <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-25")}>Nouveautés</Text>
+                    <Typography className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-25")}>Nouveautés</Typography>
                     <View
                       className="ml-2"
                       style={{
@@ -165,8 +166,8 @@ export default ({ navigation, visible, onClick }) => {
                     <MessageHeartCircleIcon color={TW_COLORS.CNAM_PRIMARY_800} />
                   </View>
                   <View className="flex-column">
-                    <Text className={mergeClassNames(typography.textLgBold, "text-cnam-primary-950")}>Soutien 24/24 - 7j/7</Text>
-                    <Text className={mergeClassNames(typography.textSmRegular, "text-cnam-primary-800")}>Numéros d’aide immédiate</Text>
+                    <Typography className={mergeClassNames(typography.textLgBold, "text-cnam-primary-950")}>Soutien 24/24 - 7j/7</Typography>
+                    <Typography className={mergeClassNames(typography.textSmRegular, "text-cnam-primary-800")}>Numéros d’aide immédiate</Typography>
                   </View>
                 </View>
                 <ArrowRightSvg color={TW_COLORS.GRAY_600} />
@@ -252,11 +253,11 @@ export default ({ navigation, visible, onClick }) => {
 
                 <TouchableWithoutFeedback onPress={handleDevModePress}>
                   <View style={styles.versionContainer}>
-                    <Text style={styles.versionLabel}>
+                    <Typography style={styles.versionLabel}>
                       {Platform.OS === "ios"
                         ? `${app.expo.version} (${app.expo.ios.buildNumber})`
                         : `${app.expo.version} (${app.expo.android.versionCode})`}
-                    </Text>
+                    </Typography>
                   </View>
                 </TouchableWithoutFeedback>
               </View>
@@ -305,6 +306,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: "bold",
+    fontFamily: "SourceSans3-Bold",
     padding: 30,
     paddingTop: 15,
     color: colors.DARK_BLUE,

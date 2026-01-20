@@ -101,6 +101,7 @@ const styles = StyleSheet.create({
     color: colors.LIGHT_BLUE,
     fontSize: 18,
     fontWeight: "700",
+    fontFamily: "SourceSans3-Bold",
     marginTop: 15,
     textAlign: "center",
   },
@@ -147,6 +148,7 @@ const styles = StyleSheet.create({
   },
   backButton: {
     fontWeight: "700",
+    fontFamily: "SourceSans3-Bold",
     textDecorationLine: "underline",
     color: colors.BLUE,
     paddingTop: 15,
@@ -164,6 +166,7 @@ const styles = StyleSheet.create({
   ValidationButtonText: {
     color: "#fff",
     fontWeight: "700",
+    fontFamily: "SourceSans3-Bold",
     fontSize: 19,
   },
   textInput: {

@@ -28,6 +28,7 @@ import { useDevCorrelationConfig } from "@/hooks/useDevCorrelationConfig";
 import HelpView from "@/components/HelpView";
 import DataMonitoringPeriodHelpView from "./DataMonitoringPeriodHelpView";
 import ChevronIcon from "@assets/svg/icon/chevron";
+import { Typography } from "@/components/Typography";
 
 interface ModalCorrelationScreenProps {
   navigation: any;
@@ -314,7 +315,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
     return (
       <SafeAreaView className="flex-1 bg-primary" edges={["top"]}>
         <View className="flex-row justify-between top-0 w-full bg-cnam-primary-800 p-4 items-center h-[96]">
-          <Text className={mergeClassNames(typography.displayXsBold, "text-white")}>Tendances & liens</Text>
+          <Typography className={mergeClassNames(typography.displayXsBold, "text-white")}>Tendances & liens</Typography>
           <TouchableOpacity
             onPress={() => {
               navigation.goBack();
@@ -331,7 +332,9 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
             }}
             className="border border-cnam-primary-700 flex-row h-[48px] rounded-2xl items-center px-4 justify-between"
           >
-            <Text className={mergeClassNames(typography.textLgMedium, "text-gray-900")}>Modifier les indicateurs ({selectedIndicators.length})</Text>
+            <Typography className={mergeClassNames(typography.textLgMedium, "text-gray-900")}>
+              Modifier les indicateurs ({selectedIndicators.length})
+            </Typography>
             <ArrowUpSvg
               style={{
                 transform: [{ rotateX: "180deg" }],
@@ -354,13 +357,13 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
             </View>
             <View className="absolute w-full">
               {dataToDisplay ? (
-                <Text className={mergeClassNames(typography.textLgBold, "text-cnam-primary-800 text-center px-4 mt-4")}>
+                <Typography className={mergeClassNames(typography.textLgBold, "text-cnam-primary-800 text-center px-4 mt-4")}>
                   Continuez à renseigner vos observations sur ces indicateurs pendant {MIN_DAYS_FOR_CORRELATION - maxDays} jours.
-                </Text>
+                </Typography>
               ) : (
-                <Text className={mergeClassNames(typography.textLgBold, "text-cnam-primary-800 text-center px-4 mt-4")}>
+                <Typography className={mergeClassNames(typography.textLgBold, "text-cnam-primary-800 text-center px-4 mt-4")}>
                   Sélectionnez au moins un indicateur.
-                </Text>
+                </Typography>
               )}
             </View>
           </View>
@@ -369,10 +372,10 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
               <InfoCircle />
             </View>
             <View className="flex-1">
-              <Text className={mergeClassNames(typography.textMdMedium, "text-primary-900")}>
+              <Typography className={mergeClassNames(typography.textMdMedium, "text-primary-900")}>
                 Les premières courbes apparaîtront dès qu’il y aura assez de données pour repérer des liens. Il faut en moyenne 3 semaines
                 d’utilisation pour faire des corrélations.
-              </Text>
+              </Typography>
             </View>
           </View>
         </ScrollView>
@@ -382,7 +385,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
     return (
       <SafeAreaView className="flex-1 bg-primary" edges={["top"]}>
         <View className="flex-row justify-between top-0 w-full bg-cnam-primary-800 p-4 items-center h-[96]">
-          <Text className={mergeClassNames(typography.displayXsBold, "text-white")}>Tendances & liens</Text>
+          <Typography className={mergeClassNames(typography.displayXsBold, "text-white")}>Tendances & liens</Typography>
           <TouchableOpacity
             onPress={() => {
               navigation.goBack();
@@ -399,9 +402,9 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                 onPress={openIndicatorBottomSheet}
                 className="border border-cnam-primary-700 flex-row h-[48px] rounded-2xl items-center px-4 justify-between"
               >
-                <Text className={mergeClassNames(typography.textLgMedium, "text-gray-900")}>
+                <Typography className={mergeClassNames(typography.textLgMedium, "text-gray-900")}>
                   Modifier les indicateurs ({selectedIndicators.length})
-                </Text>
+                </Typography>
                 <ArrowUpSvg
                   style={{
                     transform: [{ rotateX: "180deg" }],
@@ -419,11 +422,11 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                       "flex-1 h-full px-4 rounded-full items-center justify-center"
                     )}
                   >
-                    <Text
+                    <Typography
                       className={mergeClassNames(typography.textSmMedium, active === "7days" ? "text-cnam-primary-900" : "text-cnam-primary-700")}
                     >
                       7 jours
-                    </Text>
+                    </Typography>
                   </TouchableOpacity>
                   <TouchableOpacity
                     onPress={() => handlePeriodChange("1month")}
@@ -433,11 +436,11 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                       "flex-1 h-full px-4 rounded-full items-center justify-center"
                     )}
                   >
-                    <Text
+                    <Typography
                       className={mergeClassNames(typography.textSmMedium, active === "1month" ? "text-cnam-primary-900" : "text-cnam-primary-700")}
                     >
                       1 mois
-                    </Text>
+                    </Typography>
                   </TouchableOpacity>
                   <TouchableOpacity
                     onPress={() => handlePeriodChange("3months")}
@@ -447,11 +450,11 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                       "flex-1 h-full px-4 rounded-full items-center justify-center"
                     )}
                   >
-                    <Text
+                    <Typography
                       className={mergeClassNames(typography.textSmMedium, active === "3months" ? "text-cnam-primary-900" : "text-cnam-primary-700")}
                     >
                       3 mois
-                    </Text>
+                    </Typography>
                   </TouchableOpacity>
                   {/* <TouchableOpacity
                     onPress={() => handlePeriodChange("6months")}
@@ -461,11 +464,11 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                       "flex-1 h-full px-4 rounded-full items-center justify-center"
                     )}
                   >
-                    <Text
+                    <Typography
                       className={mergeClassNames(typography.textSmMedium, active === "6months" ? "text-cnam-primary-900" : "text-cnam-primary-700")}
                     >
                       6 mois
-                    </Text>
+                    </Typography>
                   </TouchableOpacity> */}
                 </View>
                 <View className={mergeClassNames("w-full", showTreatment || oneBoolean ? "h-64" : "h-48")}>
@@ -475,15 +478,15 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                       className="flex-col border border-cnam-primary-300 bg-white rounded-2xl space-y-2 p-4 mb-4 mt-4 flex-1"
                     >
                       <View className="flex-row justify-between items-center">
-                        <Text className={mergeClassNames(typography.textXsBold, "bg-cnam-primary-800 text-white rounded-lg p-2")}>
+                        <Typography className={mergeClassNames(typography.textXsBold, "bg-cnam-primary-800 text-white rounded-lg p-2")}>
                           {firstLetterUppercase(formatDate(displayItem?.date, true))}
-                        </Text>
+                        </Typography>
                         {/* <TouchableOpacity
                           onPress={() => {
                             setDisplayItem(null);
                           }}
                         >
-                          <Text className={mergeClassNames(typography.textLgBold, "text-cnam-primary-800")}>✕</Text>
+                          <Typography className={mergeClassNames(typography.textLgBold, "text-cnam-primary-800")}>✕</Typography>
                         </TouchableOpacity> */}
                       </View>
                       {displayItem &&
@@ -518,10 +521,12 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                                   />
                                 </Svg>
                               )}
-                              <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 ")}>
-                                <Text className={mergeClassNames(typography.textMdSemibold, "text-primary-900")}>{indicator.name} : </Text>
+                              <Typography className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 ")}>
+                                <Typography className={mergeClassNames(typography.textMdSemibold, "text-primary-900")}>
+                                  {indicator.name} :{" "}
+                                </Typography>
                                 {computeIndicatorLabel(indicator, value) || "Pas de donnée"}
-                              </Text>
+                              </Typography>
                             </View>
                           );
                         })}
@@ -533,9 +538,9 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                             <View className="w-[30] items-center justify-center">
                               <CheckMarkIcon width={15} height={15} color={"#134449"} />
                             </View>
-                            <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 ")}>
-                              <Text className={mergeClassNames(typography.textMdSemibold, "text-primary-900")}>Traitement : </Text>Oui
-                            </Text>
+                            <Typography className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 ")}>
+                              <Typography className={mergeClassNames(typography.textMdSemibold, "text-primary-900")}>Traitement : </Typography>Oui
+                            </Typography>
                           </View>
                         )}
                       {showTreatment &&
@@ -546,9 +551,9 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                             <View className="w-[30] items-center justify-center">
                               <CrossIcon color={"#518B9A"} />
                             </View>
-                            <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 ")}>
-                              <Text className={mergeClassNames(typography.textMdSemibold, "text-primary-900")}>Traitement : </Text>Non
-                            </Text>
+                            <Typography className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 ")}>
+                              <Typography className={mergeClassNames(typography.textMdSemibold, "text-primary-900")}>Traitement : </Typography>Non
+                            </Typography>
                           </View>
                         )}
                       {showTreatment &&
@@ -559,9 +564,9 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                             <View className="w-[30] items-center justify-center">
                               <View className="w-2 h-2 rounded-full bg-cnam-primary-800"></View>
                             </View>
-                            <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 ")}>
-                              <Text className={mergeClassNames(typography.textMdSemibold, "text-primary-900")}>Si besoin : </Text>Oui
-                            </Text>
+                            <Typography className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 ")}>
+                              <Typography className={mergeClassNames(typography.textMdSemibold, "text-primary-900")}>Si besoin : </Typography>Oui
+                            </Typography>
                           </View>
                         )}
 
@@ -587,7 +592,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                           className="flex-row items-center justify-end"
                         >
                           <EyeIcon />
-                          <Text className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-800 ml-2")}>Voir le détail</Text>
+                          <Typography className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-800 ml-2")}>Voir le détail</Typography>
                         </TouchableOpacity>
                       )}
                     </Animated.View>
@@ -597,7 +602,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                       style={[animatedStyle]}
                       className="border border-cnam-primary-300 bg-white rounded-2xl flex-col space-y-2 p-4 mb-6 mt-4 items-center justify-center h-[80] flex-1"
                     >
-                      <Text
+                      <Typography
                         className="mt-6"
                         style={{
                           fontStyle: "italic",
@@ -606,7 +611,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                         }}
                       >
                         Sélectionnez un point pour afficher le détail
-                      </Text>
+                      </Typography>
                     </View>
                   )}
                 </View>
@@ -621,10 +626,15 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                     <ChevronIcon direction="left" color={TW_COLORS.CNAM_PRIMARY_900} />
                   </TouchableOpacity>
                   {firstVisible && (
-                    <Text className={mergeClassNames(" text-cnam-primary-900", typography.textXsSemibold, "")}>{formatDateFR(firstVisible)}</Text>
+                    <Typography className={mergeClassNames(" text-cnam-primary-900", typography.textXsSemibold, "")}>
+                      {formatDateFR(firstVisible)}
+                    </Typography>
                   )}
                   {lastVisible && (
-                    <Text className={mergeClassNames(" text-cnam-primary-900", typography.textXsSemibold)}> - {formatDateFR(lastVisible)}</Text>
+                    <Typography className={mergeClassNames(" text-cnam-primary-900", typography.textXsSemibold)}>
+                      {" "}
+                      - {formatDateFR(lastVisible)}
+                    </Typography>
                   )}
                   <TouchableOpacity
                     hitSlop={20}
@@ -663,7 +673,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                   <View className="flex-row items-center justify-center space-x-4">
                     {selectedIndicators.map((indicator, index) => (
                       <View key={getIndicatorKey(indicator)}>
-                        <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>{indicator.name}</Text>
+                        <Typography className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>{indicator.name}</Typography>
                         <Svg height="2" width="100%">
                           <Line
                             x1="0"
@@ -683,14 +693,14 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                       <View className="flex-row space-x-2">
                         <View className="flex-row">
                           <CheckMarkIcon width={15} height={15} color={"#134449"} />
-                          <Text className="text-cnam-primary-950">/</Text>
+                          <Typography className="text-cnam-primary-950">/</Typography>
                           <CrossIcon color={"#518B9A"} />
                         </View>
-                        <Text className="text-primary-900">Traitement</Text>
+                        <Typography className="text-primary-900">Traitement</Typography>
                       </View>
                       <View className="flex-row items-center justify-center space-x-2">
                         <View className="bg-cnam-primary-950 rounded-full h-2 w-2" />
-                        <Text className="text-primary-900">Prise d'un "si besoin"</Text>
+                        <Typography className="text-primary-900">Prise d'un "si besoin"</Typography>
                       </View>
                     </View>
                   )}
@@ -699,12 +709,12 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
             </View>
           </View>
           <View className="bg-cnam-primary-50 p-4">
-            <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900")}>
+            <Typography className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900")}>
               Recherchez des moments où les indicateurs évoluent ensemble ou dans des directions opposées.
-            </Text>
+            </Typography>
           </View>
           <View className="bg-cnam-primary-100 pt-4 pb-20">
-            <Text className={mergeClassNames(typography.textXlBold, "text-cnam-primary-900 py-4 pl-4")}>Explorez notre guide</Text>
+            <Typography className={mergeClassNames(typography.textXlBold, "text-cnam-primary-900 py-4 pl-4")}>Explorez notre guide</Typography>
             <FlatList
               horizontal={true}
               className="mt-4"
@@ -725,7 +735,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                     }}
                   ></View> */}
                   <View className="flex-1 ml-2">
-                    <Text className={mergeClassNames("text-cnam-primary-950", typography.textMdMedium)}>{item.title}</Text>
+                    <Typography className={mergeClassNames("text-cnam-primary-950", typography.textMdMedium)}>{item.title}</Typography>
                   </View>
                 </TouchableOpacity>
               )}

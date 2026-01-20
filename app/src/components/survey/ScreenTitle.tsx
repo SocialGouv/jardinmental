@@ -14,5 +14,6 @@ const styles = StyleSheet.create({
     fontSize: 22,
     marginBottom: 26,
     fontWeight: "700",
+    fontFamily: "SourceSans3-Bold",
   },
 });

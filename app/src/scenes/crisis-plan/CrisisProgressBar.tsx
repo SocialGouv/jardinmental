@@ -3,6 +3,7 @@ import { Animated, View, Text, Animated as RNAnimated } from "react-native";
 import { useOnboardingProgressHeader } from "../onboarding-v2/ProgressHeader";
 import { useEffect, useRef, useState } from "react";
 import { Easing, useAnimatedStyle } from "react-native-reanimated";
+import { Typography } from "@/components/Typography";
 
 export default function CrisisProgressBar({ slideIndex = 1, slidesCount = 7 }) {
   const animatedProgressValue = useRef(new RNAnimated.Value(0)).current;
@@ -37,9 +38,9 @@ export default function CrisisProgressBar({ slideIndex = 1, slidesCount = 7 }) {
           }}
         />
       </View>
-      <Text className="text-sm font-medium ml-2" style={{ color: TW_COLORS.CNAM_PRIMARY_800 }}>
+      <Typography className="text-sm font-medium ml-2" style={{ color: TW_COLORS.CNAM_PRIMARY_800 }}>
         {slideIndex}/{slidesCount}
-      </Text>
+      </Typography>
     </Animated.View>
   );
 }

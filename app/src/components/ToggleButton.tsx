@@ -1,6 +1,7 @@
 import { TW_COLORS } from "@/utils/constants";
 import { useState, useEffect } from "react";
 import { TouchableOpacity, View, Text } from "react-native";
+import { Typography } from "./Typography";
 
 interface ToggleButtonsProps {
   leftColor?: string;
@@ -49,14 +50,14 @@ export default function ToggleButtons({
             setSelected(true);
           }}
         >
-          <Text
+          <Typography
             style={{
               color: selected === true ? (leftTextColor ? leftTextColor : "white") : TW_COLORS.GRAY_800,
             }}
             className={selected === true ? `font-bold` : `font-medium`}
           >
             {leftText || "Oui"}
-          </Text>
+          </Typography>
         </TouchableOpacity>
         <TouchableOpacity
           disabled={!!disabled}
@@ -69,14 +70,14 @@ export default function ToggleButtons({
             setSelected(false);
           }}
         >
-          <Text
+          <Typography
             style={{
               color: selected === false ? (rightTextColor ? rightTextColor : "white") : TW_COLORS.GRAY_800,
             }}
             className={selected === false ? `font-bold` : `font-medium`}
           >
             {rightText || "Non"}
-          </Text>
+          </Typography>
         </TouchableOpacity>
       </View>
     );
@@ -91,7 +92,7 @@ export default function ToggleButtons({
           setSelected(true);
         }}
       >
-        <Text className={`${selected === true ? "text-white" : "text-gray-800"} font-medium`}>{leftText || "Oui"}</Text>
+        <Typography className={`${selected === true ? "text-white" : "text-gray-800"} font-medium`}>{leftText || "Oui"}</Typography>
       </TouchableOpacity>
       <TouchableOpacity
         className={`p-3 items-center ${selected === false ? "bg-brand-800" : "bg-white"} rounded-r-lg border-l border-gray-300`}
@@ -100,7 +101,7 @@ export default function ToggleButtons({
           setSelected(false);
         }}
       >
-        <Text className={`${selected === false ? "text-white" : "text-gray-800"} font-medium`}>{rightText || "Non"}</Text>
+        <Typography className={`${selected === false ? "text-white" : "text-gray-800"} font-medium`}>{rightText || "Non"}</Typography>
       </TouchableOpacity>
     </View>
   );

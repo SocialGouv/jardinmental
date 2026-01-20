@@ -20,6 +20,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import logEvents from "@/services/logEvents";
 import { setStatusBarBackgroundColor } from "expo-status-bar";
 import ArrowIcon from "@assets/svg/icon/Arrow";
+import { Typography } from "@/components/Typography";
 
 const { width: screenWidth } = Dimensions.get("window");
 const THRESHOLD_MINIMAL_SCREEN_WIDTH = 370; // iPhone SE 2nd gen and similar
@@ -272,7 +273,9 @@ const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
       {selectedMoodIndex !== null && (
         <>
           <Animated.View style={animatedTextStyle} className="items-center">
-            <Text className={mergeClassNames(typography.displayMdBold, "text-cnam-primary-900")}>{moodEmojis[selectedMoodIndex - 1]?.label}</Text>
+            <Typography className={mergeClassNames(typography.displayMdBold, "text-cnam-primary-900")}>
+              {moodEmojis[selectedMoodIndex - 1]?.label}
+            </Typography>
           </Animated.View>
           {screenWidth < THRESHOLD_MINIMAL_SCREEN_WIDTH && (
             <Animated.View
@@ -348,9 +351,9 @@ const CheckInScreen: React.FC<Props> = ({ navigation, route }) => {
       />
       <View className="flex-1 p-8">
         <View className="w-full">
-          <Text className={mergeClassNames(typography.textMdBold, "text-left text-cnam-primary-900 mb-6")}>
+          <Typography className={mergeClassNames(typography.textMdBold, "text-left text-cnam-primary-900 mb-6")}>
             Sélectionnez votre ressenti du moment.
-          </Text>
+          </Typography>
         </View>
         <View className="flex-1 p-8 justify-center items-center">{renderMoodSelector()}</View>
       </View>

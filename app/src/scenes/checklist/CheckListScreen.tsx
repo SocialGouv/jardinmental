@@ -21,6 +21,7 @@ import { AnimatedHeaderScrollScreen } from "../survey-v2/AnimatedHeaderScrollScr
 import { DrugsBottomSheet } from "@/components/DrugsBottomSheet";
 import { useBottomSheet } from "@/context/BottomSheetContext";
 import logEvents from "@/services/logEvents";
+import { Typography } from "@/components/Typography";
 
 type checkListPath = "reminder" | "symptoms" | "profile" | "goals-settings" | "drugs" | "survey";
 type checkListIds = "reminder" | "indicators" | "profile" | "goals" | "drugs" | "survey";
@@ -139,9 +140,9 @@ export default function CheckListScreen({ navigation, route }) {
       navigation={navigation}
     >
       <View className="bg-gray-50 flex-1 p-4">
-        <Text className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-900 text-left mb-8")}>
+        <Typography className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-900 text-left mb-8")}>
           Pour profiter un maximum de Jardin Mental, vous pouvez compléter quelques étapes de personnalisation.
-        </Text>
+        </Typography>
         {checklistItems.map((item, index) => {
           const isDone = item.isDone || checklistItemValues[item.id];
           return (
@@ -166,14 +167,14 @@ export default function CheckListScreen({ navigation, route }) {
               </View>
 
               {/* Text */}
-              <Text
+              <Typography
                 className={mergeClassNames(
                   `flex-1 ml-4 ${typography.textMdMedium} text-cnam-primary-900`,
                   isDone ? "line-through text-mood-text-4" : ""
                 )}
               >
                 {item.label}
-              </Text>
+              </Typography>
 
               {/* Right Arrow */}
               <View className="text-gray-400">{isDone ? <CheckMarkIcon color={TW_COLORS.SUCCESS.TEXT} /> : <ArrowIcon />}</View>

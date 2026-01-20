@@ -103,6 +103,7 @@ const styles = StyleSheet.create({
   mainEmotionIntensityNuancedStyle: {
     color: colors.LIGHT_BLUE,
     fontWeight: "bold",
+    fontFamily: "SourceSans3-Bold",
   },
   line: {
     display: "flex",

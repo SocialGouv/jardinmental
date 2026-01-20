@@ -9,6 +9,7 @@ import BookmarkMinus from "@assets/svg/icon/BookmarkMinus";
 import Bookmark from "@assets/svg/icon/Bookmark";
 import logEvents from "@/services/logEvents";
 import { ToolItemIcon } from "./toolUtils";
+import { Typography } from "@/components/Typography";
 
 interface ToolItemCardProps {
   toolItem: ToolItemEntity;
@@ -64,7 +65,7 @@ const ToolItemCard: React.FC<ToolItemCardProps> = ({ toolItem, onPress, onBookma
       <View className={`rounded-2xl flex flex-row  min-h-[112px] ${"border-2 border-cnam-primary-400 bg-white"}`}>
         <View className={`${"bg-cnam-cyan-lighten-90"} rounded-l-2xl flex items-center justify-center w-20`}>
           <ToolItemIcon type={toolItem.type} />
-          <Text className="text-xs text-cnam-primary-900 font-medium pt-1 rounded text-center">
+          <Typography className="text-xs text-cnam-primary-900 font-medium pt-1 rounded text-center">
             {Array.isArray(toolItem.type) ? (
               toolItem.type[0] === "Questionnaire" ? (
                 <>Question&shy;naire</>
@@ -76,12 +77,12 @@ const ToolItemCard: React.FC<ToolItemCardProps> = ({ toolItem, onPress, onBookma
             ) : (
               toolItem.type
             )}
-          </Text>
+          </Typography>
         </View>
         <View className="flex-1 flex">
           <View className="px-4 grow pt-4">
             <View className="flex flex-row items-start space-x-2">
-              <Text className="flex-1 text-base font-semibold text-cnam-primary-950">{toolItem.title}</Text>
+              <Typography className="flex-1 text-base font-semibold text-cnam-primary-950">{toolItem.title}</Typography>
               <TouchableOpacity onPress={handleBookmarkToggle}>
                 {isBookmarked ? <BookmarkMinus width={20} height={20} /> : <Bookmark width={20} height={20} />}
               </TouchableOpacity>
@@ -89,9 +90,9 @@ const ToolItemCard: React.FC<ToolItemCardProps> = ({ toolItem, onPress, onBookma
           </View>
           <View className="px-4 grow pb-4 mt-2">
             <View className="flex flex-row items-start">
-              <Text className={mergeClassNames(typography.textSmMedium, "flex-1 text-gray-800")} numberOfLines={2}>
+              <Typography className={mergeClassNames(typography.textSmMedium, "flex-1 text-gray-800")} numberOfLines={2}>
                 {toolItem.description}
-              </Text>
+              </Typography>
             </View>
           </View>
         </View>

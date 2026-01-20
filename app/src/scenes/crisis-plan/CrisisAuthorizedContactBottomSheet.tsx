@@ -5,6 +5,7 @@ import JMButton from "@/components/JMButton";
 import { TW_COLORS } from "@/utils/constants";
 import SettingsIcon from "@assets/svg/icon/Settings";
 import { Alert, Linking } from "react-native";
+import { Typography } from "@/components/Typography";
 
 export const CrisisAuthorizedContactBottomSheet = ({
   label,
@@ -31,13 +32,13 @@ export const CrisisAuthorizedContactBottomSheet = ({
               onClose();
             }}
           >
-            <Text className={mergeClassNames(typography.textLgMedium, "text-cnam-primary-800")}>Annuler</Text>
+            <Typography className={mergeClassNames(typography.textLgMedium, "text-cnam-primary-800")}>Annuler</Typography>
           </TouchableOpacity>
         </View>
         <View className="flex-row bg-[#E5F6FC] self-start items-center p-2 mb-4">
-          <Text className={mergeClassNames(typography.textSmBold, "ml-2 text-cnam-cyan-700-darken-40 text-left")}>{header}</Text>
+          <Typography className={mergeClassNames(typography.textSmBold, "ml-2 text-cnam-cyan-700-darken-40 text-left")}>{header}</Typography>
         </View>
-        <Text className={mergeClassNames(typography.textXlBold, "text-cnam-primary-800 mb-2 mx-4")}>{label}</Text>
+        <Typography className={mergeClassNames(typography.textXlBold, "text-cnam-primary-800 mb-2 mx-4")}>{label}</Typography>
         <View className="justify-center items-center -bottom-7">
           <View className="bg-cnam-primary-100 w-[108] h-[108] rounded-full items-center justify-center">
             <SettingsIcon color={TW_COLORS.CNAM_PRIMARY_500} width={40} height={40} />
@@ -50,10 +51,10 @@ export const CrisisAuthorizedContactBottomSheet = ({
             borderColor: "#C1DFE6",
           }}
         >
-          <Text className={(typography.textSmMedium, "text-primary-800 text-center")}>
+          <Typography className={(typography.textSmMedium, "text-primary-800 text-center")}>
             {description ||
               "Pour ajouter des contacts, autorisez l’application à accéder à la liste de vos contacts depuis les paramètres de votre téléphone."}
-          </Text>
+          </Typography>
         </View>
         <View className="w-full py-6 px-6">
           <JMButton

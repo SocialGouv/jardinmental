@@ -6,6 +6,7 @@ import logEvents from "../../services/logEvents";
 import { TW_COLORS } from "@/utils/constants";
 import { typography } from "@/utils/typography";
 import { mergeClassNames } from "@/utils/className";
+import { Typography } from "@/components/Typography";
 
 const TabPicker = ({ onChange, ongletActif = "all" }) => {
   const handlePress = (tab) => {
@@ -19,14 +20,14 @@ const TabPicker = ({ onChange, ongletActif = "all" }) => {
         style={[tabStyles.tabButtonContainer, ongletActif === "all" ? tabStyles.tabActif : tabStyles.tabInactif]}
       >
         <View style={[tabStyles.tabButtonContainer]}>
-          <Text
+          <Typography
             className={mergeClassNames(
               ongletActif === "all" ? `${typography.textMdBold} text-cnam-primary-900` : `${typography.textMdSemibold} text-cnam-primary-800`
             )}
             style={[tabStyles.button]}
           >
             Tout voir
-          </Text>
+          </Typography>
         </View>
       </TouchableOpacity>
       <TouchableOpacity
@@ -34,14 +35,14 @@ const TabPicker = ({ onChange, ongletActif = "all" }) => {
         style={[tabStyles.tabButtonContainer, ongletActif === "NOTES" ? tabStyles.tabActif : tabStyles.tabInactif]}
       >
         <View style={[tabStyles.tabButtonContainer]}>
-          <Text
+          <Typography
             className={mergeClassNames(
               ongletActif === "NOTES" ? `${typography.textMdBold} text-cnam-primary-900` : `${typography.textMdSemibold} text-cnam-primary-800`
             )}
             style={[tabStyles.button]}
           >
             Notes
-          </Text>
+          </Typography>
         </View>
       </TouchableOpacity>
     </View>
@@ -75,6 +76,7 @@ const tabStyles = StyleSheet.create({
   },
   actif: {
     fontWeight: "bold",
+    fontFamily: "SourceSans3-Bold",
     color: TW_COLORS.CNAM_PRIMARY_900,
   },
   inactif: {

@@ -1,4 +1,5 @@
 import { InputText } from "@/components/InputText";
+import { Typography } from "@/components/Typography";
 import { mergeClassNames } from "@/utils/className";
 import { TW_COLORS } from "@/utils/constants";
 import { typography } from "@/utils/typography";
@@ -22,7 +23,7 @@ export const CrisisPlanInputBox = ({
   const [text, setText] = useState<string>();
   return (
     <View className="bg-cnam-primary-50 rounded-2xl px-6 py-6">
-      <Text className={mergeClassNames(typography.textSmMedium, "text-gray-700 mb-2")}>{label}</Text>
+      <Typography className={mergeClassNames(typography.textSmMedium, "text-gray-700 mb-2")}>{label}</Typography>
       <View className="flex-row items-center space-x-2">
         <InputText
           containerStyle={{
@@ -57,9 +58,9 @@ export const CrisisPlanInputBox = ({
         </TouchableOpacity>
       </View>
       <TouchableOpacity onPress={onPress}>
-        <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40 underline mt-4")}>
+        <Typography className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40 underline mt-4")}>
           Choisir parmi les suggestions
-        </Text>
+        </Typography>
       </TouchableOpacity>
     </View>
   );
