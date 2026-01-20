@@ -4,6 +4,7 @@ import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
 import CrisisHeader from "./CrisisHeader";
 import NavigationButtons from "@/components/onboarding/NavigationButtons";
+import { Typography } from "@/components/Typography";
 
 interface ModalCorrelationScreenProps {
   navigation: any;
@@ -38,12 +39,12 @@ export const CrisisPlanIntro: React.FC<ModalCorrelationScreenProps> = ({ navigat
         }}
       >
         <View className="flex-column py-2 space-y-4 px-2 rounded-[8px]">
-          <Text className={mergeClassNames(typography.textLgSemibold, "text-primary-900")}>Ce que vous allez définir</Text>
+          <Typography className={mergeClassNames(typography.textLgSemibold, "text-primary-900")}>Ce que vous allez définir</Typography>
         </View>
         <View className="flex-column space-y-4 rounded-2xl mb-6">
           {dataInfo.map((info) => (
             <View key={info} className="bg-cnam-primary-100 flex-column py-2 space-y-4 px-4 rounded-2xl">
-              <Text className={mergeClassNames(typography.textMdMedium, "text-primary-900 text-left")}>{info}</Text>
+              <Typography className={mergeClassNames(typography.textMdMedium, "text-primary-900 text-left")}>{info}</Typography>
             </View>
           ))}
         </View>

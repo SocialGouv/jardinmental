@@ -288,6 +288,7 @@ const ToolsScreen: React.FC<ToolsScreenProps> = ({ navigation, route }) => {
                 className="text-cnam-primary-950 font-semibold mb-3"
                 style={{
                   fontSize: titleFontSize,
+                  fontFamily: "SourceSans3-SemiBold",
                 }}
               >
                 Explorez les outils pour agir

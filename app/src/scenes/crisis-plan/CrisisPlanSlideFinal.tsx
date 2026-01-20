@@ -7,6 +7,7 @@ import NavigationButtons from "@/components/onboarding/NavigationButtons";
 import BeigeCard from "../onboarding-v2/BeigeCard";
 import { VARIANT_BORDER_COLORS } from "../onboarding-v2/data/carouselData";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Typography } from "@/components/Typography";
 
 interface ModalCorrelationScreenProps {
   navigation: any;
@@ -43,17 +44,19 @@ export const CrisisPlanSlideFinal: React.FC<ModalCorrelationScreenProps> = ({ na
         // bottomComponent={slide.bottomComponent}
         color={VARIANT_BORDER_COLORS.blue}
       >
-        <Text className={mergeClassNames(typography.displayXsBold, "text-cnam-primary-900 text-left")}>Votre liste de secours est terminée!</Text>
+        <Typography className={mergeClassNames(typography.displayXsBold, "text-cnam-primary-900 text-left")}>
+          Votre liste de secours est terminée!
+        </Typography>
 
         {/* Description */}
-        <Text
+        <Typography
           className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-900 text-left mt-10")}
           style={{
             maxWidth: screenWidth - 64,
           }}
         >
           Vous pourrez la modifier à tout moment.
-        </Text>
+        </Typography>
         {/* {slide.children} */}
       </BeigeCard>
       <NavigationButtons

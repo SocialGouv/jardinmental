@@ -145,7 +145,15 @@ const Header = ({ title, navigation, scrollY, scrollThreshold = 80, component }:
       </View>
       {title && (
         <Animated.View style={titleContainerStyle}>
-          <Animated.Text style={titleAnimatedStyle} className={mergeClassNames(typography.textLgRegular, "text-white")}>
+          <Animated.Text
+            style={[
+              titleAnimatedStyle,
+              {
+                fontFamily: "SourceSans3-Regular",
+              },
+            ]}
+            className={mergeClassNames(typography.textLgRegular, "text-white")}
+          >
             {title}
           </Animated.Text>
           {component}

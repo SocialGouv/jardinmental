@@ -8,6 +8,7 @@ import JMButton from "@/components/JMButton";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 import { CrisisAuthorizedContactBottomSheet } from "./CrisisAuthorizedContactBottomSheet";
 import { useBottomSheet } from "@/context/BottomSheetContext";
+import { Typography } from "@/components/Typography";
 
 const screenHeight = Dimensions.get("window").height;
 const height90vh = screenHeight * 0.9;
@@ -83,14 +84,14 @@ export default function CrisisContactListBottomSheet({
               setSelectedItems([]);
             }}
           >
-            <Text className={mergeClassNames(typography.textLgMedium, "text-cnam-primary-800")}>Effacer</Text>
+            <Typography className={mergeClassNames(typography.textLgMedium, "text-cnam-primary-800")}>Effacer</Typography>
           </TouchableOpacity>
         </View>
         <View className="flex-row bg-[#E5F6FC] self-start items-center p-2">
-          <Text className={mergeClassNames(typography.textSmBold, "ml-2 text-cnam-cyan-700-darken-40 text-left")}>{header}</Text>
+          <Typography className={mergeClassNames(typography.textSmBold, "ml-2 text-cnam-cyan-700-darken-40 text-left")}>{header}</Typography>
         </View>
         <View className="p-4 flex-column flex-1 gap-6">
-          <Text className={mergeClassNames(typography.textXlBold, "text-left text-cnam-primary-900")}>{label}</Text>
+          <Typography className={mergeClassNames(typography.textXlBold, "text-left text-cnam-primary-900")}>{label}</Typography>
           {withSearchInput && (
             <TextInput
               onChangeText={(text) => {
@@ -102,7 +103,9 @@ export default function CrisisContactListBottomSheet({
           )}
           {accessPrivileges === "limited" && (
             <View className="bg-cnam-primary-50 p-4 py-2">
-              <Text className={mergeClassNames(typography.textSmMedium, "text-cnam-primary-900")}>Seuls les contacts autorisés sont affichés.</Text>
+              <Typography className={mergeClassNames(typography.textSmMedium, "text-cnam-primary-900")}>
+                Seuls les contacts autorisés sont affichés.
+              </Typography>
               <TouchableOpacity
                 onPress={() => {
                   showBottomSheet(
@@ -116,7 +119,9 @@ export default function CrisisContactListBottomSheet({
                   );
                 }}
               >
-                <Text className={mergeClassNames(typography.textSmMedium, "text-cnam-cyan-700-darken-40")}>Modifier l'accès aux contacts</Text>
+                <Typography className={mergeClassNames(typography.textSmMedium, "text-cnam-cyan-700-darken-40")}>
+                  Modifier l'accès aux contacts
+                </Typography>
               </TouchableOpacity>
             </View>
           )}
@@ -137,7 +142,7 @@ export default function CrisisContactListBottomSheet({
                 />
               );
             })}
-            {!filteredList.length && <Text className={mergeClassNames(typography.textSmMedium, "text-gray-800")}>Pas de résultat</Text>}
+            {!filteredList.length && <Typography className={mergeClassNames(typography.textSmMedium, "text-gray-800")}>Pas de résultat</Typography>}
           </View>
         </View>
       </KeyboardAwareScrollView>

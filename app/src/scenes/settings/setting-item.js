@@ -5,6 +5,7 @@ import { colors } from "../../utils/colors";
 import ArrowRightSvg from "../../../assets/svg/arrow-right.js";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
+import { Typography } from "@/components/Typography";
 
 const SettingItem = ({ title, navigation, path, icon, color = colors.LIGHT_BLUE, onClick, isLast, isFirst, description }) => {
   const handleClick = () => {

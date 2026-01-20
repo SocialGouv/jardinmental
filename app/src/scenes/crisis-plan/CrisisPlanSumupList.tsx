@@ -26,6 +26,7 @@ import * as Print from "expo-print";
 import { shareAsync } from "expo-sharing";
 import * as FileSystem from "expo-file-system";
 import { useFocusEffect } from "@react-navigation/native";
+import { Typography } from "@/components/Typography";
 
 interface ModalCorrelationScreenProps {
   navigation: any;
@@ -278,9 +279,9 @@ export const CrisisPlanSumupList: React.FC<ModalCorrelationScreenProps> = ({ nav
             }}
           >
             <ActivityIndicator size="large" color={TW_COLORS.CNAM_CYAN_700_DARKEN_40} style={{ marginBottom: 24 }} />
-            <Text style={{ textAlign: "center", fontSize: 16, color: "#222" }}>
+            <Typography style={{ textAlign: "center", fontSize: 16, color: "#222" }}>
               {"Le PDF est en cours de génération,\ncela peut prendre un certain temps.\nMerci de patienter."}
-            </Text>
+            </Typography>
           </View>
         </View>
       </Modal>
@@ -295,7 +296,7 @@ export const CrisisPlanSumupList: React.FC<ModalCorrelationScreenProps> = ({ nav
           <TouchableOpacity onPress={handleSharePdf} className="flex-row items-center justify-center space-x-2" disabled={isLoadingPdf}>
             {isLoadingPdf && <ActivityIndicator size="small" color={TW_COLORS.CNAM_CYAN_700_DARKEN_40} style={{ marginRight: 0 }} />}
             {!isLoadingPdf && <ShareIcon width={20} height={20} color={TW_COLORS.CNAM_CYAN_700_DARKEN_40} />}
-            <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40")}>Partager</Text>
+            <Typography className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40")}>Partager</Typography>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
@@ -304,7 +305,7 @@ export const CrisisPlanSumupList: React.FC<ModalCorrelationScreenProps> = ({ nav
             className="flex-row items-center justify-center space-x-2"
           >
             <PencilIcon width={20} height={20} color={TW_COLORS.CNAM_CYAN_700_DARKEN_40} />
-            <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40")}>Editer ma liste</Text>
+            <Typography className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40")}>Editer ma liste</Typography>
           </TouchableOpacity>
         </View>
         <ScrollView style={{ paddingBottom: 200 }} contentContainerStyle={{ paddingBottom: 100 }} showsVerticalScrollIndicator={false}>

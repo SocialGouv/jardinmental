@@ -19,6 +19,7 @@ import CrisisProgressBar from "./CrisisProgressBar";
 import { CrisisAuthorizedContactBottomSheet } from "./CrisisAuthorizedContactBottomSheet";
 import UsersIcon from "@assets/svg/icon/Users";
 import User from "@assets/svg/icon/User";
+import { Typography } from "@/components/Typography";
 
 interface ModalCorrelationScreenProps {
   navigation: any;
@@ -89,10 +90,10 @@ export const CrisisPlanSlideContact: React.FC<ModalCorrelationScreenProps> = ({ 
         {!route.params.isEdit && <CrisisProgressBar slideIndex={3} />}
 
         <View className="flex-column py-4 space-y-4 px-2 rounded-2xl">
-          <Text className={mergeClassNames(typography.textLgSemibold, "text-primary-900")}>{title}</Text>
+          <Typography className={mergeClassNames(typography.textLgSemibold, "text-primary-900")}>{title}</Typography>
         </View>
         <View className="bg-cnam-primary-50 rounded-2xl px-6 py-8">
-          <Text className={mergeClassNames(typography.textSmMedium, "text-gray-700 mb-3")}>{label}</Text>
+          <Typography className={mergeClassNames(typography.textSmMedium, "text-gray-700 mb-3")}>{label}</Typography>
           <JMButton
             variant="outline"
             title="Rechercher parmi mes contacts"
@@ -176,10 +177,10 @@ export const CrisisPlanSlideContact: React.FC<ModalCorrelationScreenProps> = ({ 
           {loadingContacts && (
             <View style={{ marginTop: 10 }}>
               <ActivityIndicator size="small" color={TW_COLORS.CNAM_CYAN_700_DARKEN_40} />
-              <Text style={{ color: TW_COLORS.CNAM_CYAN_700_DARKEN_40 }}>Chargement des contacts...</Text>
+              <Typography style={{ color: TW_COLORS.CNAM_CYAN_700_DARKEN_40 }}>Chargement des contacts...</Typography>
             </View>
           )}
-          {contactsError && <Text style={{ color: "red", marginTop: 10 }}>{contactsError}</Text>}
+          {contactsError && <Typography style={{ color: "red", marginTop: 10 }}>{contactsError}</Typography>}
         </View>
         {selectedItems.map((item, index) => {
           return (
@@ -217,17 +218,19 @@ export const CrisisPlanSlideContact: React.FC<ModalCorrelationScreenProps> = ({ 
                   <User width={20} height={20} color={TW_COLORS.CNAM_PRIMARY_800} />
                 </View>
                 <View className="flex-col">
-                  <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-950")}>{item.name}</Text>
-                  <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-950")}>
+                  <Typography className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-950")}>{item.name}</Typography>
+                  <Typography className={mergeClassNames(typography.textMdSemibold, "text-cnam-primary-950")}>
                     {formatPhoneNumber(item.phoneNumbers[0].number)}
-                  </Text>
+                  </Typography>
 
                   {item.activities?.length ? (
-                    <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-950")}>{item.activities?.join(", ")}</Text>
+                    <Typography className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-950")}>
+                      {item.activities?.join(", ")}
+                    </Typography>
                   ) : (
-                    <Text className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40")}>
+                    <Typography className={mergeClassNames(typography.textMdSemibold, "text-cnam-cyan-700-darken-40")}>
                       Cliquez pour ajouter une activité
-                    </Text>
+                    </Typography>
                   )}
                 </View>
               </View>
