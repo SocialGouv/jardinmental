@@ -79,7 +79,7 @@ export function Typography({ className = "", style, children, ...props }: Typogr
   let fontFamily = fontFamilyMap[fontKey] || fontFamilyMap["font-normal"];
 
   return (
-    <Text className={className} style={[style, { fontFamily }]} {...props}>
+    <Text className={className} style={[style, { fontFamily, fontStyle: "italic" }]} {...props}>
       {children}
     </Text>
   );
