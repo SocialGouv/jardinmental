@@ -2,6 +2,7 @@ import { colors } from "../../utils/colors";
 import Markdown from "react-native-markdown-display";
 import { useNavigation } from "@react-navigation/native";
 import { CATEGORIES, RESOURCES_DATA } from "./data/resources";
+import { Linking } from "react-native";
 
 export default function MarkdownStyled({ markdown }: { markdown: string }) {
   const navigation = useNavigation();
@@ -12,19 +13,28 @@ export default function MarkdownStyled({ markdown }: { markdown: string }) {
   return (
     <Markdown
       style={markdownStyles}
-      onLinkPress={(url) => {
-        if (url === "ressource-5") {
+      onLinkPress={async (url) => {
+        if (url === "ressource-2") {
+          navigation.push("resource-category-list", { category: CATEGORIES.REPERER_LES_SIGNES_DE_MAL_ETRE });
+          return true;
+        } else if (url === "ressource-5") {
           navigation.push("resource-category-list", { category: CATEGORIES.AGIR_ET_CHERCHER_DE_L_AIDE_SANS_HONTE });
+          return true;
+        } else if (url === "ressource-article-14") {
+          navigation.push("resource-article", { resource: RESOURCES_DATA.find((res) => res.matomoId === 14) });
           return true;
         } else if (url === "ressource-article-16") {
           navigation.push("resource-article", { resource: RESOURCES_DATA.find((res) => res.matomoId === 16) });
           return true;
-        } else if (url === "ressource-2") {
-          navigation.push("resource-category-list", { category: CATEGORIES.REPERER_LES_SIGNES_DE_MAL_ETRE });
+        } else if (url === "tools") {
+          navigation.push("tool-screen");
+          return true;
+        } else if (url === "crisis-plan") {
+          navigation.push("crisis-plan");
           return true;
         }
-        // fallback: open external links if needed
-        return false;
+        Linking.openURL(url);
+        return true;
       }}
     >
       {markdown}
@@ -70,7 +80,7 @@ const markdownStyles = {
     fontSize: 16,
     color: "#333",
     lineHeight: 24,
-    marginBottom: 4,
+    marginBottom: 16,
   },
   bullet_list: {
     marginBottom: 16,
