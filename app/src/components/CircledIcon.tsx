@@ -51,6 +51,7 @@ export const BasicIcon = ({
   iconContainerStyle,
   iconWidth = 20,
   iconHeight = 20,
+  isScaled = false, // if component is scaled by Android accessibility zoom
 }) => {
   const Icon = mapIconToSvg(icon);
 
@@ -59,8 +60,8 @@ export const BasicIcon = ({
       className="items-center p-2 rounded-2xl justify-center"
       style={{
         backgroundColor: color,
-        width: 54,
-        height: 70,
+        width: isScaled ? 44 : 54,
+        height: isScaled ? 60 : 70,
         borderWidth: borderWidth,
         borderColor,
       }}
