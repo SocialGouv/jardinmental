@@ -21,7 +21,7 @@ const Posology = ({ patientState, posology, date, onPress }) => {
     return (posology || []).map((p, i) => {
       if (!p?.name1 || !p?.value) return null;
       return (
-        <View className="flex flex-row items-end flex-1 pr-2.5 py-0" key={i}>
+        <View className="flex flex-row items-start flex-1 pr-2.5 py-0" key={i}>
           <View className="items-start h-full pt-1">
             <Icon
               icon="DrugsSvg"
