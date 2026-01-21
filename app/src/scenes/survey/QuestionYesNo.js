@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { TouchableOpacity, StyleSheet, View, TextInput, Platform } from "react-native";
-import Text from "../../components/MyText";
 import { colors } from "../../utils/colors";
 import Icon from "../../components/Icon";
-import { classNames } from "../../utils";
-import { answersYesNo } from "../survey-v2/utils";
 import BasicCard from "@/components/BasicCard";
 import { typography } from "@/utils/typography";
 import { mergeClassNames } from "@/utils/className";
 import ToggleButtons from "@/components/ToggleButton";
+import { Typography } from "@/components/Typography";
 
 const QuestionYesNo = ({ question, explanation, onPress, selected, isLast, showUserCommentInput = true, onChangeUserComment, userComment }) => {
   const [showExplanation, setShowExplanation] = useState(false);
