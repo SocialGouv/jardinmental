@@ -1388,6 +1388,20 @@ const logAnalysesValidateCorrelations = async () => {
   });
 };
 
+const logOpenPlanCriseStart = async () => {
+  await logEvent({
+    category: "RESOURCES",
+    action: "OPEN_PLAN_CRISE_START",
+  });
+};
+
+const logOpenPlanCriseView = async () => {
+  await logEvent({
+    category: "RESOURCES",
+    action: "OPEN_PLAN_CRISE_VIEW",
+  });
+};
+
 // TOOLS EVENTS
 const logOutilsTab = async () => {
   await logEvent({
@@ -1412,6 +1426,8 @@ const logOutilsBookmark = async () => {
 };
 
 export default {
+  logOpenPlanCriseStart,
+  logOpenPlanCriseView,
   initMatomo,
   logAppVisit,
   logAppClose,
