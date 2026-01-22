@@ -137,8 +137,7 @@ const ResourceCategories: React.FC<ResourceCategoriesProps> = ({ navigation }) =
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
           paddingBottom: 180,
-          //marginTop: 120,
-          marginTop: 280,
+          paddingTop: 240,
         }}
         className="bg-cnam-primary-50 flex-1"
       >
