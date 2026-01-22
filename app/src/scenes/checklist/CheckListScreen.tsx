@@ -125,7 +125,7 @@ export default function CheckListScreen({ navigation, route }) {
         ...prev,
         ["data-export-import"]: true,
       }));
-      localStorage.setChecklistDataExportDone?.(true);
+      localStorage.setChecklistDataExportDone(true);
       navigation.navigate(item.path, {
         previous: "checklist",
       });
