@@ -19,6 +19,7 @@ import ArrowUpSvg from "@assets/svg/icon/ArrowUp";
 import InfoCircle from "@assets/svg/icon/InfoCircle";
 import { Indicator } from "@/entities/Indicator";
 import { Typography } from "@/components/Typography";
+import { Goal } from "@/entities/Goal";
 
 const screenHeight = Dimensions.get("window").height;
 
@@ -55,10 +56,63 @@ export const CorrelationHeader = ({ fromDate, toDate, scrollY }) => {
   );
 };
 
-export const Correlation = ({ navigation, onScroll, scrollY, day, setDay, dynamicPaddingTop }) => {
-  const { showBottomSheet } = useBottomSheet();
+export const Correlation = ({ navigation }) => {
+  const { showBottomSheet, closeBottomSheet } = useBottomSheet();
   const [diaryData] = useContext(DiaryDataContext);
-  const [selectedIndicators] = useState<Indicator[]>([]);
+  const [selectedIndicators, setSelectedIndicators] = useState<Indicator[]>([]);
+  const [selectedGoals, setSelectedGoals] = useState<Goal[]>([]);
+
+  const generateLineSegments = (data) => {
+    if (!data || data.length === 0) return [];
+
+    const segments: Array<{
+      startIndex: number;
+      endIndex: number;
+      color: string;
+      thickness: number;
+    }> = [];
+    let startIndex = null;
+
+    data.forEach((point, index) => {
+      if (point.value === 1 && point.noValue) {
+        // Début d'un segment
+        if (startIndex === null) {
+          // console.log("start index", index);
+          startIndex = index - 1;
+        }
+      } else {
+        // Fin d'un segment
+        if (startIndex !== null) {
+          // console.log("end index", index - 1);
+          segments.push({
+            startIndex,
+            endIndex: index,
+            color: "transparent", // Vert
+            thickness: 3,
+          });
+          startIndex = null;
+        }
+      }
+    });
+
+    // Gérer le cas où le segment se termine à la fin du tableau
+    if (startIndex !== null) {
+      segments.push({
+        startIndex,
+        endIndex: data.length - 1,
+        color: "#4CAF50",
+        thickness: 3,
+      });
+    }
+
+    return segments;
+  };
+
+  const [showTreatment, setShowTreatment] = useState<boolean>(false);
+
+  const onPressChooseIndicator = () => {
+    navigation.navigate("correlation-modal" as never);
+  };
 
   const dataToDisplay = useMemo(() => {
     if (!diaryData) {
@@ -197,7 +251,7 @@ export const Correlation = ({ navigation, onScroll, scrollY, day, setDay, dynami
           className="border border-cnam-primary-700 flex-row h-[48px] rounded-2xl items-center px-4 justify-between"
         >
           <Typography className={mergeClassNames(typography.textLgMedium, "text-gray-900")}>
-            Modifier les indicateurs ({selectedIndicators.length})
+            Modifier les indicateurs ({selectedIndicators.length + selectedGoals.length})
           </Typography>
           <ArrowUpSvg
             style={{
