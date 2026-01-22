@@ -62,6 +62,12 @@ const commityList: CommityEntity[] = [
     organization: "EPSM Guadeloupe",
   },
   {
+    name: "Guyodo Josselin",
+    role: "Infirmier en Pratique Avancée mention Psychiatrie Santé Mentale",
+    role2: "",
+    organization: "CHU de Montpellier",
+  },
+  {
     name: "Javelot Hervé",
     role: "Pharmacien hospitalier",
     role2: "Responsable du Centre de Ressources et d'Expertise en Psychopharmacologie (CREPP)",
