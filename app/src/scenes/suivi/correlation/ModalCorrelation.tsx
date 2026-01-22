@@ -735,7 +735,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                         (diaryData[displayItem.date]["PRISE_DE_TRAITEMENT_SI_BESOIN"] || {}).value === true && (
                           <View className="flex-row items-center space-x-2">
                             <View className="w-[30] items-center justify-center">
-                              <View className="w-2 h-2 rounded-full bg-cnam-primary-800"></View>
+                              <View className="w-2 h-2 rounded-full bg-cnam-mauve-0"></View>
                             </View>
                             <Typography className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 ")}>
                               <Typography className={mergeClassNames(typography.textMdSemibold, "text-primary-900")}>Si besoin : </Typography>Oui
@@ -968,7 +968,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                         <Typography className="text-primary-900">Traitement</Typography>
                       </View>
                       <View className="flex-row items-center justify-center space-x-2">
-                        <View className="bg-cnam-primary-950 rounded-full h-2 w-2" />
+                        <View className="bg-cnam-mauve-0 rounded-full h-2 w-2" />
                         <Typography className="text-primary-900">Prise d'un "si besoin"</Typography>
                       </View>
                     </View>
