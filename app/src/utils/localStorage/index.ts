@@ -20,6 +20,9 @@ import {
   STORAGE_KEY_VIEWED_EXTERNAL_RESOURCES,
   STORAGE_KEY_VIEWED_RESOURCES,
   STORAGE_KEY_VIEWED_TOOL_ITEMS,
+  STORAGE_KEY_START_DATE,
+  STORAGE_KEY_LAST_EXPORT_DATE,
+  STORAGE_KEY_CHECKLIST_DATA_EXPORT_DONE,
 } from "../constants";
 import { updateSymptomsFormatIfNeeded } from "./utils";
 import localStorageBeck from "./beck";
@@ -325,6 +328,27 @@ const setIsInfoModalDismissed = async (value) => {
   await AsyncStorage.setItem(STORAGE_INFO_MODAL_DISMISSED, JSON.stringify(value));
 };
 
+const getStartDate = async () => {
+  return await AsyncStorage.getItem(STORAGE_KEY_START_DATE);
+};
+
+const getLastExportDate = async () => {
+  return await AsyncStorage.getItem(STORAGE_KEY_LAST_EXPORT_DATE);
+};
+
+const setLastExportDate = async (date: string) => {
+  await AsyncStorage.setItem(STORAGE_KEY_LAST_EXPORT_DATE, date);
+};
+
+const getChecklistDataExportDone = async (): Promise<boolean> => {
+  const value = await AsyncStorage.getItem(STORAGE_KEY_CHECKLIST_DATA_EXPORT_DONE);
+  return value ? JSON.parse(value) : false;
+};
+
+const setChecklistDataExportDone = async (done: boolean): Promise<void> => {
+  await AsyncStorage.setItem(STORAGE_KEY_CHECKLIST_DATA_EXPORT_DONE, JSON.stringify(done));
+};
+
 export default {
   getSymptoms,
   setSymptoms,
@@ -371,6 +395,11 @@ export default {
   getBookmarkedToolItems,
   bookmarkToolItem,
   removeBookmarkToolItem,
+  getStartDate,
+  getLastExportDate,
+  setLastExportDate,
+  getChecklistDataExportDone,
+  setChecklistDataExportDone,
   ...localStorageBeck,
 };
 

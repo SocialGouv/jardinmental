@@ -158,3 +158,5 @@ export function padTo2Digits(num) {
 export function formatDateToFrenchNumericFormat(date) {
   return [padTo2Digits(date.getDate()), padTo2Digits(date.getMonth() + 1), date.getFullYear()].join("/");
 }
+
+export const computeThreeMonthsAgo = (from = new Date()) => new Date(from.getFullYear(), from.getMonth() + 3, from.getDate()) - from;

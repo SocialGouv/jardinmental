@@ -22,9 +22,10 @@ import { DrugsBottomSheet } from "@/components/DrugsBottomSheet";
 import { useBottomSheet } from "@/context/BottomSheetContext";
 import logEvents from "@/services/logEvents";
 import { Typography } from "@/components/Typography";
+import Save from "@assets/svg/icon/Save";
 
-type checkListPath = "reminder" | "symptoms" | "profile" | "goals-settings" | "drugs" | "survey";
-type checkListIds = "reminder" | "indicators" | "profile" | "goals" | "drugs" | "survey";
+type checkListPath = "reminder" | "symptoms" | "profile" | "goals-settings" | "drugs" | "survey" | "data-export-import";
+type checkListIds = "reminder" | "indicators" | "profile" | "goals" | "drugs" | "survey" | "data-export-import";
 
 const checklistItems: {
   label: string;
@@ -71,11 +72,10 @@ const checklistItems: {
     },
   },
   {
-    label: "Ma première observation",
-    icon: <WinkSmiley />,
-    isDone: true,
-    path: "survey",
-    id: "survey",
+    label: "Découvrir l’export de mes données",
+    icon: <Save />,
+    path: "data-export-import",
+    id: "data-export-import",
   },
 ];
 
@@ -90,12 +90,14 @@ export default function CheckListScreen({ navigation, route }) {
         const goals = await getGoalsTracked();
         const drugs = await localStorage.getMedicalTreatment();
         const userIndicators = await localStorage.getIndicateurs();
+        const dataExportDone = await localStorage.getChecklistDataExportDone?.();
         setChecklistItemValues((prev) => ({
           ...prev,
           reminder,
           indicators: !!userIndicators.filter((ind) => ![INDICATEURS_HUMEUR.uuid, INDICATEURS_SOMMEIL.uuid].includes(ind.uuid) && ind.active).length,
           goals: !!goals.length,
           drugs: !!drugs,
+          ["data-export-import"]: !!dataExportDone,
         }));
       })();
     }, [])
@@ -115,6 +117,18 @@ export default function CheckListScreen({ navigation, route }) {
           }}
         />
       );
+      if (item.onClick) {
+        item.onClick();
+      }
+    } else if (item.id === "data-export-import") {
+      setChecklistItemValues((prev) => ({
+        ...prev,
+        ["data-export-import"]: true,
+      }));
+      localStorage.setChecklistDataExportDone(true);
+      navigation.navigate(item.path, {
+        previous: "checklist",
+      });
       if (item.onClick) {
         item.onClick();
       }
