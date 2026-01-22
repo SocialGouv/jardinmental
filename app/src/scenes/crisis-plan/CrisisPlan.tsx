@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import logEvents from "@/services/logEvents";
 import { View, Text, ScrollView, TouchableOpacity, Alert, Linking } from "react-native";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
@@ -18,6 +19,9 @@ interface ModalCorrelationScreenProps {
 }
 
 export const CrisisPlan: React.FC<ModalCorrelationScreenProps> = ({ navigation, route }) => {
+  useEffect(() => {
+    logEvents.logOpenPlanCriseStart();
+  }, []);
   return (
     <View className="flex-1 bg-cnam-primary-25">
       <CrisisHeader navigation={navigation} title={"Mon plan de crise"} description={"Hop ma liste"} />

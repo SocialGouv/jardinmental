@@ -346,17 +346,6 @@ export const ToolBottomSheet = ({
             <Typography className={mergeClassNames(typography.textMdRegular, "text-left text-cnam-primary-900")}>{toolItem.description}</Typography>
           </View>
           <View className="w-full py-6 px-6">
-            {/* {toolItem.embed === "breath-exercice" && (
-              <JMButton
-                className="mb-2"
-                icon={<DownloadIcon color="white"></DownloadIcon>}
-                onPress={() => {
-                  navigation.navigate(toolItem.embed);
-                  closeBottomSheet();
-                }}
-                title={"Faire l'exercice de respiration"}
-              />
-            )} */}
             {toolItem.video === "coherence-cardiaque-video" && (
               <JMButton
                 icon={<PlayCircleIcon color="white" />}
@@ -399,7 +388,7 @@ export const ToolBottomSheet = ({
             {toolItem.innerPath && (
               <JMButton
                 className="mb-2"
-                onPress={() => {
+                onPress={async () => {
                   if (toolItem.innerPath?.path === "crisis-plan" && crisisPlanCompleted) {
                     navigation.navigate("crisis-plan-slide-sumup-list");
                   } else {

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import logEvents from "@/services/logEvents";
 import { View, Text, TouchableOpacity, Image, ActivityIndicator } from "react-native";
 import CrisisHeader from "./CrisisHeader";
 import NavigationButtons from "@/components/onboarding/NavigationButtons";
@@ -34,6 +35,9 @@ interface ModalCorrelationScreenProps {
 }
 
 export const CrisisPlanSumupList: React.FC<ModalCorrelationScreenProps> = ({ navigation, route }) => {
+  useEffect(() => {
+    logEvents.logOpenPlanCriseView();
+  }, []);
   const [isLoadingPdf, setIsLoadingPdf] = useState(false);
   type Contact = {
     name: string;
