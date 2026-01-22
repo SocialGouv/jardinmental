@@ -78,7 +78,7 @@ const ResourceCategories: React.FC<ResourceCategoriesProps> = ({ navigation }) =
   // Interpolate height scale for info button
   const infoButtonScale = scrollY.interpolate({
     inputRange: [0, 100],
-    outputRange: [220, 0],
+    outputRange: [120, 0],
     extrapolate: "clamp",
   });
 
@@ -142,20 +142,6 @@ const ResourceCategories: React.FC<ResourceCategoriesProps> = ({ navigation }) =
         }}
         className="bg-cnam-primary-50 flex-1"
       >
-        {/* <View className="p-4 bg-cnam-primary-50">
-          <Typography className="text-cnam-primary-800 text-base leading-6">
-            Un guide simple et accessible pour mieux connaître la santé mentale, ses enjeux et les solutions disponibles
-          </Typography>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("commity");
-            }}
-            className="flex-row bg-cnam-cyan-lighten-80 items-center space-x-1 rounded-full px-3 self-start mt-4"
-          >
-            <ValidatedStampIcon />
-            <Typography className={mergeClassNames(typography.textSmSemibold, "text-cnam-primary-950")}>Comment ces contenus sont-ils vérifiés ?</Typography>
-          </TouchableOpacity>
-        </View> */}
         <View className="p-4 pt-2">
           {categories.map((category) => (
             <CategoryCard
