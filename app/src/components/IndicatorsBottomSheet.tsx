@@ -2,7 +2,7 @@ import { View, Text, ScrollView, useWindowDimensions, FlatList, Dimensions, Text
 import JMButton from "./JMButton";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import localStorage from "@/utils/localStorage";
 import { Drug } from "@/entities/Drug";
 import { Indicator } from "@/entities/Indicator";
@@ -51,6 +51,18 @@ export const IndicatorsBottomSheet = ({
   const itemWidths = useRef<number[]>([]);
   const flatListRef = useRef<FlatList>(null);
   const currentIndex = useRef(0);
+  const [treatment, setTreatment] = useState<any[] | undefined>();
+
+  useEffect(
+    useCallback(() => {
+      (async () => {
+        const _treatment = await localStorage.getMedicalTreatment();
+        if (_treatment) {
+          setTreatment(_treatment);
+        }
+      })();
+    }, [])
+  );
 
   const getOffsetForIndex = (index: number) => {
     return itemWidths.current.slice(0, index).reduce((acc, w) => acc + w, 0);
@@ -151,14 +163,6 @@ export const IndicatorsBottomSheet = ({
         }
       }
     }
-    // const indicatorCouplesSelection = indicatorCouples.filter((couple) => {
-    //   return (
-    //     (indicatorList?.map((indicator) => indicator.baseIndicatorUuid)?.includes(couple[0]?.baseIndicatorUuid) ||
-    //       indicatorList?.filter((indicator) => indicator.mainCategory === couple[0])) &&
-    //     (indicatorList?.map((indicator) => indicator.baseIndicatorUuid)?.includes(couple[1]?.baseIndicatorUuid) ||
-    //       indicatorList?.filter((indicator) => indicator.mainCategory === couple[1]))
-    //   );
-    // });
     if (selectedIndicators.length === 0) {
       indicatorCouples = usersIndicatorsCouple;
     } else if (selectedIndicators.length >= 1) {
@@ -337,23 +341,25 @@ export const IndicatorsBottomSheet = ({
             />
           </>
         )}
-        <View className="fr-col space-y-4 mt-4 px-4 w-full">
-          <Typography className={mergeClassNames(typography.textLgSemibold, "text-gray-800")}>Traitement</Typography>
-          <View className="flex-row items-center justify-between">
-            <Typography className={mergeClassNames(typography.textLgMedium, "text-cnam-primary-900")}>
-              Voir lorsque j’ai pris mon traitement
-            </Typography>
-            <Pressable onPress={() => reminderToggleRef?.current?.toggle?.()} hitSlop={{ bottom: 8, left: 8, right: 8, top: 8 }}>
-              <InputToggle
-                ref={reminderToggleRef}
-                checked={showTreatment}
-                onCheckedChanged={async ({ checked }) => {
-                  setShowTreatment(checked);
-                }}
-              />
-            </Pressable>
+        {treatment && treatment.length > 0 && (
+          <View className="fr-col space-y-4 mt-4 px-4 w-full">
+            <Typography className={mergeClassNames(typography.textLgSemibold, "text-gray-800")}>Traitement</Typography>
+            <View className="flex-row items-center justify-between">
+              <Typography className={mergeClassNames(typography.textLgMedium, "text-cnam-primary-900")}>
+                Voir quand j’ai pris mon traitement
+              </Typography>
+              <Pressable onPress={() => reminderToggleRef?.current?.toggle?.()} hitSlop={{ bottom: 8, left: 8, right: 8, top: 8 }}>
+                <InputToggle
+                  ref={reminderToggleRef}
+                  checked={showTreatment}
+                  onCheckedChanged={async ({ checked }) => {
+                    setShowTreatment(checked);
+                  }}
+                />
+              </Pressable>
+            </View>
           </View>
-        </View>
+        )}
         <View className="fr-col space-y-4 mt-4 p-4 w-full">
           <JMButton
             onPress={async () => {

@@ -63,7 +63,38 @@ const MemoizedDataPoint = React.memo(
       strokeWidth = 1;
     }
     let radius = (size - strokeWidth) / 2;
-
+    if (item.isBoolean && item.booleanValue === false) {
+      const center = size / 2;
+      const lineLength = radius * 1.4; //
+      return (
+        <Svg
+          width={size}
+          height={size}
+          style={{
+            top: needShift ? -10 : 0,
+            alignSelf: "center",
+          }}
+        >
+          <Circle
+            cx={size / 2}
+            cy={size / 2}
+            r={radius}
+            fill={item?.backgroundColor || "white"}
+            stroke={item?.color || "#3D6874"}
+            strokeWidth={strokeWidth}
+          />
+          <Line
+            x1={center - lineLength}
+            y1={center - lineLength}
+            x2={center + lineLength}
+            y2={center + lineLength}
+            stroke={item?.color || "#3D6874"}
+            strokeWidth={strokeWidth}
+            strokeLinecap="round"
+          />
+        </Svg>
+      );
+    }
     return (
       <Svg
         width={size}
