@@ -332,6 +332,10 @@ const getStartDate = async () => {
   return await AsyncStorage.getItem(STORAGE_KEY_START_DATE);
 };
 
+const setStartDate = async (date: string) => {
+  await AsyncStorage.setItem(STORAGE_KEY_START_DATE, date);
+};
+
 const getLastExportDate = async () => {
   return await AsyncStorage.getItem(STORAGE_KEY_LAST_EXPORT_DATE);
 };
@@ -396,6 +400,7 @@ export default {
   bookmarkToolItem,
   removeBookmarkToolItem,
   getStartDate,
+  setStartDate,
   getLastExportDate,
   setLastExportDate,
   getChecklistDataExportDone,

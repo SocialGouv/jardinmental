@@ -17,6 +17,7 @@ import localStorage from "@/utils/localStorage";
 import { INDICATOR_TYPE } from "@/entities/IndicatorType";
 import { INDICATORS_CATEGORIES } from "@/entities/IndicatorCategories";
 import NotificationService from "@/services/notifications";
+import DateTimePicker from "@react-native-community/datetimepicker";
 import { useDevCorrelationConfig, DEFAULT_CONFIG, VALUE_RANGES } from "@/hooks/useDevCorrelationConfig";
 import { useInAppBrowserConfig } from "@/hooks/useInAppBrowserConfig";
 
@@ -92,6 +93,18 @@ const DevMode = ({ navigation }) => {
     }
   };
 
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+
+  const handleSetStartDate = async (date: Date) => {
+    try {
+      await localStorage.setStartDate(date.toISOString());
+      Alert.alert("Start date modifiée", "La start date a bien été modifiée !");
+    } catch (e) {
+      Alert.alert("Erreur", "Impossible de modifier la start date.");
+    }
+  };
+
   useEffect(() => {
     fetchDeviceId();
     fetchPushToken();
@@ -117,6 +130,25 @@ const DevMode = ({ navigation }) => {
       <CollapsibleSection title="Sentry Testing">
         <Text style={styles.sectionDescription}>Test Sentry error reporting integration</Text>
         <JMButton className="mt-2" title="Send Test to Sentry" variant="outline" onPress={sendSentryTest} />
+      </CollapsibleSection>
+
+      <CollapsibleSection title="Start Date (dev)">
+        <JMButton title="Définir une start date ancienne (dev)" variant="outline" className="mb-2" onPress={() => setShowDatePicker(true)} />
+        {showDatePicker && (
+          <DateTimePicker
+            value={selectedDate || new Date()}
+            mode="date"
+            display={Platform.OS === "ios" ? "spinner" : "default"}
+            onChange={(_, date) => {
+              setShowDatePicker(false);
+              if (date) {
+                setSelectedDate(date);
+                handleSetStartDate(date);
+              }
+            }}
+            maximumDate={new Date()}
+          />
+        )}
       </CollapsibleSection>
 
       <CollapsibleSection title="Navigateur In-App">
