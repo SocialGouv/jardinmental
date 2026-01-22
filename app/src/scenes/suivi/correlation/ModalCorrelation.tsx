@@ -748,6 +748,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                           onPress={() => {
                             navigation.navigate("detail-correlation-modal", {
                               selectedIndicators,
+                              selectedGoals,
                               diaryDataForDate: diaryData[displayItem.date],
                               date: displayItem.date,
                               data: getSubArray(dataToDisplay[0], selectedPointIndex, 4),

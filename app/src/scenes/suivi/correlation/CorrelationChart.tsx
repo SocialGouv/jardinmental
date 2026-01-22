@@ -437,9 +437,9 @@ const TestChart = forwardRef(
         <View
           style={{ width: spacingFormat === "7days" ? 20 : 50 }}
           className={mergeClassNames(
-            spacingFormat === "7days" ? "ml-[30px]" : "",
-            spacingFormat === "1month" ? "ml-[13px]" : "",
-            spacingFormat === "3months" ? "ml-[11px]" : "",
+            spacingFormat === "7days" ? "ml-[22px]" : "",
+            spacingFormat === "1month" ? "ml-[4px]" : "",
+            spacingFormat === "3months" ? "ml-[2px]" : "",
             "flex-row items-end overflow-visible" // 👈 ICI
           )}
         >
@@ -502,7 +502,7 @@ const TestChart = forwardRef(
           focusedDataPointWidth: !config.useCustomRenderers ? undefined : oneBoolean && d.isBoolean && spacingFormat !== "7days" ? 10 : 20,
           focusedDataPointRadius: !config.useCustomRenderers ? undefined : 7,
           focusedDataPointHeight: !config.useCustomRenderers ? undefined : oneBoolean && d.isBoolean && spacingFormat !== "7days" ? 10 : 20,
-          needShift: true,
+          needShift,
           // hideDataPoint: config.hideDataPoints || spacingFormat === "1month" || spacingFormat === "3months" || spacingFormat === "6months",
         };
       });
@@ -609,7 +609,7 @@ const TestChart = forwardRef(
 
     const computeReferenceLine3Position = useMemo(() => {
       if (showTreatment && oneBoolean) {
-        return 6.5;
+        return 5.5;
       } else if (showTreatment && twoBoolean) {
         return 2.5;
       } else if (showTreatment || oneBoolean) {
@@ -972,13 +972,13 @@ const TestChart = forwardRef(
         referenceLine2Config={{
           thickness: oneBoolean && showTreatment ? 65 : 20,
           type: ruleTypes.SOLID,
-          color: "white",
+          color: displayfixed ? TW_COLORS.CNAM_PRIMARY_25 : "white",
         }}
         showReferenceLine3={showTreatment || oneBoolean}
         referenceLine3Position={computeReferenceLine3Position}
         referenceLine3Config={{
           thickness: 20,
-          color: "white",
+          color: displayfixed ? TW_COLORS.CNAM_PRIMARY_25 : "white",
           type: ruleTypes.SOLID,
         }}
         showVerticalLines={false}
