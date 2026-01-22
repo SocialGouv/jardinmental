@@ -73,12 +73,12 @@ C’est justement ce que propose notre application *Jardin Mental* : un espace p
 
 **Quelques repères pour s’auto-observer :**
 
-- Les émotions : suis-je souvent triste, irritable, anxieux ? Ou au contraire content, joyeux ?
-- Le sommeil : est-ce que je dors bien ? Est-ce que je me réveille reposé ? Ai-je recours à des médicaments sans ordonnance pour améliorer la qualité de mon sommeil ?
-- L’énergie et la motivation : est-ce que je me sens épuisé sans raison ? Est-ce que je trouve du plaisir dans mes activités quotidiennes, de loisirs ou de détente ?
-- Le rapport aux autres : ai-je tendance à m’isoler ? Quel est mon rapport aux autres (famille, amis, collègues) ?
-- Les pensées récurrentes : m’arrive-t-il d’avoir des pensées négatives (sur moi-même, les autres, l’avenir) sans raison ? Des ruminations anxieuses ? Des inquiétudes ? À quel point cela freine-t-il l’atteinte de mes objectifs ?
-- Les consommations : ai-je tendance à augmenter ou à perdre le contrôle de ma consommation de substances ? Est-ce qu’il m’arrive de m’automédiquer régulièrement pour me sentir mieux ?
+- **Les émotions :** suis-je souvent triste, irritable, anxieux ? Ou au contraire content, joyeux ?
+- **Le sommeil :** est-ce que je dors bien ? Est-ce que je me réveille reposé ? Ai-je recours à des médicaments sans ordonnance pour améliorer la qualité de mon sommeil ?
+- **L’énergie et la motivation :** est-ce que je me sens épuisé sans raison ? Est-ce que je trouve du plaisir dans mes activités quotidiennes, de loisirs ou de détente ?
+- **Le rapport aux autres :** ai-je tendance à m’isoler ? Quel est mon rapport aux autres (famille, amis, collègues) ?
+- **Les pensées récurrentes :** m’arrive-t-il d’avoir des pensées négatives (sur moi-même, les autres, l’avenir) sans raison ? Des ruminations anxieuses ? Des inquiétudes ? À quel point cela freine-t-il l’atteinte de mes objectifs ?
+- **Les consommations :** ai-je tendance à augmenter ou à perdre le contrôle de ma consommation de substances ? Est-ce qu’il m’arrive de m’automédiquer régulièrement pour me sentir mieux ?
 
 Mieux connaître sa santé mentale constitue un premier pas concret pour la préserver.`,
     externalResources: ["550e8400-e29b-41d4-a716-446655440004"],
@@ -618,19 +618,19 @@ Ressentir ponctuellement une mauvaise qualité de sommeil ne signifie pas automa
     id: "908d5222-39dd-46c6-9ddb-3c9b8c0386e9",
     matomoId: 26,
     subCategory: SUB_CATEGORIES.ZOOM_SOMMEIL,
-    title: "Nous ne sommes pas tous·tes égaux face au sommeil",
+    title: "Nous ne sommes pas tous égaux face au sommeil",
     image: require("../../../../assets/imgs/resources/Article26.png"),
     category: CATEGORIES.DES_PETITS_PAS_POUR_SON_EQUILIBRE_MENTAL,
     content: `Le sommeil suit toujours trois grandes phases - sommeil léger, profond et paradoxal - qui sont universelles, quel que soit l’âge. Cependant, l’enchaînement et la durée de ces phases varient d’une personne à l’autre, en fonction des besoins individuels. C’est pourquoi il est essentiel de ne pas se comparer ni de chercher un sommeil « idéal » au détail près. Plus que la durée exacte, l’écoute de son corps et la prise en compte de ses signaux restent primordiales.
 
-Les besoins en sommeil évoluent au fil des âges :
+**Les besoins en sommeil évoluent au fil des âges :**
 
-- De la naissance à trois mois, les nouveau-nés dorment entre quatorze et dix-sept heures par jour.
-- Entre 4 et 11 mois, le temps de sommeil est de douze à seize heures.
-- De 1 à 2 ans, les enfants ont besoin de onze à quatorze heures de sommeil.
-- Chez les enfants de 3 à 5 ans, on recommande entre dix et douze heures par nuit. Pour les 6 à 13 ans, il s’agit plutôt de neuf à onze heures, et les adolescents de 14 à 17 ans ont besoin de huit à dix heures de sommeil.
-- Chez les adultes, la majorité des personnes ont besoin de sept à huit heures par nuit.
-- Chez les personnes âgées, le sommeil tend à devenir plus léger et plus fragmenté, sans que cela soit nécessairement un signe de trouble.
+- **De la naissance à trois mois**, les nouveau-nés dorment entre quatorze et dix-sept heures par jour.
+- **Entre 4 et 11 mois**, le temps de sommeil est de douze à seize heures.
+- **De 1 à 2 ans**, les enfants ont besoin de onze à quatorze heures de sommeil.
+- **Chez les enfants de 3 à 5 ans**, on recommande entre dix et douze heures par nuit. Pour les 6 à 13 ans, il s’agit plutôt de neuf à onze heures, et les adolescents de 14 à 17 ans ont besoin de huit à dix heures de sommeil.
+- **Chez les adultes**, la majorité des personnes ont besoin de sept à huit heures par nuit.
+- **Chez les personnes âgées**, le sommeil tend à devenir plus léger et plus fragmenté, sans que cela soit nécessairement un signe de trouble.
 
 Apprendre à reconnaître et respecter ses propres besoins en sommeil est un levier important pour préserver son équilibre mental au quotidien.`,
     externalResources: [
@@ -703,9 +703,11 @@ Enfin, il ne faut pas oublier que le soutien individuel ne peut remplacer les r�
 
 Parce que les bénéfices sont nombreux, à plusieurs niveaux :
 
-- Biologiques : l’activité physique stimule la production de sérotonine et d’endorphines, des substances naturelles qui améliorent l’humeur et réduisent le stress.
-- Psychologiques : bouger aide à reprendre confiance en soi et à faire une pause mentale, surtout en période de stress ou de baisse de moral.
-- Sociaux : marcher avec des collègues, participer à une activité collective, ou simplement bouger à plusieurs, renforce les liens sociaux, essentiels à l’équilibre mental.
+- **Biologiques** : l’activité physique stimule la production de sérotonine et d’endorphines, des substances naturelles qui améliorent l’humeur et réduisent le stress.
+
+- **Psychologiques** : bouger aide à reprendre confiance en soi et à faire une pause mentale, surtout en période de stress ou de baisse de moral.
+
+- **Sociaux** : marcher avec des collègues, participer à une activité collective, ou simplement bouger à plusieurs, renforce les liens sociaux, essentiels à l’équilibre mental.
 
 Être actif permet également de prévenir plusieurs maladies chroniques, comme les maladies cardiovasculaires, le diabète, certains cancers ou encore l’obésité.
 
@@ -802,11 +804,15 @@ Des études montrent que les personnes concernées par des troubles sont souvent
 
 L’idée n’est pas d’être en vigilance permanente ni de scruter chacun de ses comportements, mais d’essayer de prendre un temps pour s’interroger sur ses habitudes et mieux comprendre ce que l’on traverse.
 
-Quelques questions peuvent aider :
+**Quelques questions peuvent aider :**
 
 - Quand et pourquoi je consomme ?
+
 - Quelles conséquences sur mon humeur, mon moral et mon bien-être ?
+
 - Est-ce que cette consommation devient automatique ou difficile à limiter ?
+
+
 - Est-elle utilisée pour apaiser un inconfort ou une tension ?
 
 Quand la consommation devient un réflexe, elle peut révéler un mal-être qui s’exprime autrement. Sans s’alarmer, il peut être utile de s’interroger, d’en parler ou de se faire accompagner si besoin.`,
@@ -836,7 +842,7 @@ Les chercheurs et médecins tentent de déterminer à partir de quel nombre d’
 
 Plus qu’un simple « fantasme », notre usage des écrans est devenu un véritable enjeu de santé publique. Cela ne signifie pas que tous les écrans sont nuisibles, mais que le défi est d’en adopter une utilisation équilibrée. En prenant conscience de nos usages et en posant des limites, il est possible de profiter du numérique sans se laisser dépasser.
 
-Pour accompagner cette vigilance, il peut être utile de se poser quelques questions :
+Pour accompagner cette vigilance, il peut être utile de **se poser quelques questions** :
 
 - Pourquoi est-ce que j’utilise les écrans ?
 - Quelles répercussions mon usage a-t-il sur mon comportement, mon moral, mon sommeil et mon hygiène de vie ?
@@ -864,7 +870,7 @@ Le stress est une réaction normale face à une situation qui demande une répon
 
 L’anxiété, de son côté, est une émotion liée à une menace perçue. Elle peut surgir face à une situation à venir, au regard des autres, ou à des pensées qui tournent en boucle. Contrairement à une idée répandue, elle n’est pas toujours floue ou irrationnelle : elle peut avoir une cause bien identifiée. Comme toute émotion, elle a une fonction utile : nous alerter, nous pousser à nous adapter. Elle n’est donc pas un trouble en soi.
 
-Elle peut toutefois devenir problématique lorsqu’elle devient trop fréquente, trop intense, ou qu’elle envahit le quotidien. On parle alors de troubles anxieux *(consulter notre ressource sur les troubles anxieux)*. Il peut prendre différentes formes (anxiété généralisée, phobies, anxiété sociale, crises de panique...), marquées par une peur qui prend toute la place et perturbe la vie quotidienne, même en dehors des situations redoutées.
+Elle peut toutefois devenir problématique lorsqu’elle devient trop fréquente, trop intense, ou qu’elle envahit le quotidien. On parle alors de troubles anxieux *(consulter notre ressource sur [les troubles anxieux](ressource-article-14))*. Il peut prendre différentes formes (anxiété généralisée, phobies, anxiété sociale, crises de panique...), marquées par une peur qui prend toute la place et perturbe la vie quotidienne, même en dehors des situations redoutées.
 
 Mais le stress chronique et l’anxiété ne sont pas la même chose. Le stress chronique s’installe lorsque l’on vit sous pression de façon prolongée, sans possibilité de récupération. Le corps et l’esprit restent tendus en permanence, ce qui peut entraîner de la fatigue, des troubles du sommeil, de l’irritabilité, voire un épuisement. Ce n’est plus une réaction passagère, mais un état durable qui finit par user.
 
@@ -938,7 +944,7 @@ Des exercices réguliers, combinés à un accompagnement adapté, peuvent réell
 
 Il est aussi essentiel de rappeler que certains événements restent parfois hors de notre contrôle - un deuil, des difficultés financières ou encore des discriminations, par exemple. Ces outils peuvent apporter un soutien, mais ne suffisent pas toujours à tout surmonter. N’hésitez pas à demander de l’aide lorsque les difficultés deviennent trop lourdes à porter seul.
 
-*(consulter notre rubrique [Agir et chercher de l’aide sans honte](ressource-5) et notre Boîte à outils)*`,
+*(consulter notre rubrique [Agir et chercher de l’aide sans honte](ressource-5) et notre [Boîte à outils](tools))*`,
     externalResources: [
       "550e8400-e29b-41d4-a716-446655440018",
       "550e8400-e29b-41d4-a716-446655440262",
@@ -964,11 +970,11 @@ Chez les adolescents, l’anxiété, la dépression, les troubles alimentaires o
 
 **Heureusement, des dispositifs spécialisés existent pour accompagner les enfants, les adolescents et leur entourage :**
 
-- Le médecin de famille (ou le pédiatre) est souvent le premier interlocuteur.
-- Les services de protection maternelle et infantile (PMI) proposent un suivi précoce pour les femmes enceintes, les nourrissons et les jeunes enfants (0-6 ans), ainsi que des conseils aux familles sur la santé, le développement et la prévention.
-- Les centres médico-psychologiques (CMP) accueillent tous les âges, enfants, adolescents et adultes, et offrent un soutien psychologique et psychiatrique adapté.
-- Pour les adolescents, les Points accueil-écoute Jeunes (PAEJ), les Maisons des adolescents (MDA) et les consultations jeunes consommateurs (CJC) pour les conduites addictives proposent un accompagnement ciblé.
-- Des dispositifs d’écoute téléphonique et en ligne, comme Fil Santé Jeunes (0800 235 236), complètent ces dispositifs d’aide.
+- **Le médecin de famille** (ou le pédiatre) est souvent le premier interlocuteur.
+- **Les services de protection maternelle et infantile (PMI)** proposent un suivi précoce pour les femmes enceintes, les nourrissons et les jeunes enfants (0-6 ans), ainsi que des conseils aux familles sur la santé, le développement et la prévention.
+- **Les centres médico-psychologiques (CMP)** accueillent tous les âges, enfants, adolescents et adultes, et offrent un soutien psychologique et psychiatrique adapté.
+- **Pour les adolescents, les Points accueil-écoute Jeunes (PAEJ), les Maisons des adolescents (MDA) et les consultations jeunes consommateurs (CJC)** pour les conduites addictives proposent un accompagnement ciblé.
+- **Des dispositifs d’écoute téléphonique et en ligne**, comme Fil Santé Jeunes (0800 235 236), complètent ces dispositifs d’aide.
 
 Il est crucial que les adultes qui vivent, travaillent ou accompagnent des enfants et adolescents soient attentifs et responsables. Leur vigilance, leur écoute et leur engagement sont indispensables pour détecter les signes de souffrance, même lorsque ceux-ci ne sont pas exprimés, et pour garantir un soutien approprié. **La santé mentale des jeunes est un enjeu collectif qui appelle à une mobilisation partagée.**`,
     externalResources: [
@@ -1124,7 +1130,9 @@ La crise suicidaire est un état de souffrance psychique intense dans lequel les
 
 **Que faire si vous avez des idées suicidaires ?**
 
-Si vous traversez une période difficile avec des pensées suicidaires, ne restez pas seul. Parler à un proche de confiance ou à un professionnel de santé peut permettre de prendre du recul et de trouver des solutions adaptées. Vous pouvez également contacter une ligne d’écoute spécialisée, gratuite et anonyme, comme le 3114 (numéro national de prévention du suicide, accessible 24h/24 et 7j/7). En cas d’urgence, contactez les services d’urgence (15 ou 112) ou rendez-vous à l’hôpital.
+Si vous traversez une période difficile avec des pensées suicidaires, ne restez pas seul. Parler à un proche de confiance ou à un professionnel de santé peut permettre de prendre du recul et de trouver des solutions adaptées. **Vous pouvez également contacter une ligne d’écoute spécialisée, gratuite et anonyme, comme le 3114 (numéro national de prévention du suicide, accessible 24h/24 et 7j/7). En cas d’urgence, contactez les services d’urgence (15 ou 112) ou rendez-vous à l’hôpital.**
+
+Il est aussi possible de **[créer votre plan de crise directement dans l’application](crisis-plan)**. Le plan de crise est un outil personnel préparé à l’avance, qui regroupe des repères, des stratégies et des ressources pour vous aider à rester en sécurité et traverser les moments de forte détresse.
 
 **Que faire si quelqu’un dans votre entourage pense au suicide ?**
 
@@ -1147,7 +1155,7 @@ Numéro national de prévention du suicide.
 
 Permanence d’écoute téléphonique 24h/24 et 7j/7.
 
-[**Suicide Écoute](https://www.suicide-ecoute.fr/)** 
+[**Suicide Écoute**](https://www.suicide-ecoute.fr/)
 
 Écoute anonyme des personnes confrontées au suicide. 
 
@@ -1214,7 +1222,7 @@ Il n’est pas nécessaire de trouver les mots justes. Un simple « Je me fais d
 
 L’objectif n’est pas forcément de faire parler à tout prix, mais d’offrir un espace de soutien, aussi simple soit-il. Il peut s’agir de discuter, mais aussi de proposer une aide concrète : faire les courses, marcher ensemble, accompagner à un rendez-vous, aller chercher les enfants à l’école, ou simplement passer du temps à deux. Ces gestes, parfois modestes, montrent que l’on est présent, que l’autre compte, et que son mal-être est pris au sérieux.
 
-Lorsque la personne est disposée ou d’accord, il peut être utile d’envisager ensemble des ressources : un médecin, un professionnel de santé mentale, ou une ligne d’écoute. Le 3114, numéro national gratuit et accessible 24h/24 et 7j/7, permet d’échanger avec des professionnels formés à ces situations, en toute confidentialité.
+Lorsque la personne est disposée ou d’accord, il peut être utile d’envisager ensemble des ressources : un médecin, un professionnel de santé mentale, ou une ligne d’écoute. **Le 3114, numéro national gratuit et accessible 24h/24 et 7j/7, permet d’échanger avec des professionnels formés à ces situations, en toute confidentialité.**
 
 Si la personne ne souhaite pas appeler elle-même, il est tout à fait possible, en tant que proche ou professionnel de l’entourage, de contacter le 3114 pour obtenir des conseils personnalisés, en fonction de ce que vous observez et de ce que vous ressentez.
 
@@ -1315,11 +1323,11 @@ Les médicaments psychotropes ont pour objectif de soulager une souffrance inten
 
 Il existe différentes catégories de médicaments psychotropes, selon les besoins et la situation de chaque personne :
 
-- les antidépresseurs, utilisés pour traiter les troubles dépressifs et anxieux,
-- les neuroleptiques ou antipsychotiques, destinés à réduire certains troubles de la pensée ou de la perception,
-- les anxiolytiques ou tranquillisants, qui diminuent l’anxiété ou la tension nerveuse,
-- les hypnotiques ou somnifères, prescrits pour faciliter le sommeil,
-- les stabilisateurs de l’humeur, aussi appelés régulateurs de l’humeur, thymorégulateurs ou normothymiques, qui aident à prévenir les variations émotionnelles importantes.
+- **les antidépresseurs**, utilisés pour traiter les troubles dépressifs et anxieux,
+- **les neuroleptiques ou antipsychotiques**, destinés à réduire certains troubles de la pensée ou de la perception,
+- **les anxiolytiques ou tranquillisants**, qui diminuent l’anxiété ou la tension nerveuse,
+- **les hypnotiques ou somnifères**, prescrits pour faciliter le sommeil,
+- **les stabilisateurs de l’humeur**, aussi appelés régulateurs de l’humeur, thymorégulateurs ou normothymiques, qui aident à prévenir les variations émotionnelles importantes.
 
 Comme tout traitement, ces médicaments peuvent apporter des bénéfices, mais aussi entraîner des effets indésirables, parfois difficiles à vivre. Lorsqu’ils sont arrêtés, des réactions physiques ou émotionnelles peuvent également survenir. C’est pourquoi leur usage demande un accompagnement attentif et une réévaluation régulière.
 
@@ -1354,10 +1362,10 @@ Chercher à parler à une IA pour se sentir moins seul peut, sans qu’on s’en
 
 **Et si cette aide ne suffit pas, de nombreuses solutions existent :**
 
-- Les lignes d’écoute et associations, qui offrent une écoute gratuite, anonyme et bienveillante.
-- Les psychologues, pour lesquels le dispositif Mon Soutien Psy permet jusqu’à 12 séances d’accompagnement psychologique avec un psychologue partenaire. Chaque séance coûte 50 euros, remboursée à 60 % par l’Assurance Maladie, le reste pouvant être pris en charge par votre complémentaire santé. Certains psychologues proposent aussi des tarifs préférentiels selon la situation.
-- Les centres médico-psychologiques (CMP), maisons des adolescents et PMI, qui offrent un accompagnement gratuit.
-- Les médecins généralistes et psychiatres, dont les consultations sont généralement remboursées par l’Assurance Maladie. Le reste à charge peut varier selon le secteur de convention et le respect du parcours de soins coordonné.
+- **Les lignes d’écoute et associations**, qui offrent une écoute gratuite, anonyme et bienveillante.
+- **Les psychologues**, pour lesquels le dispositif Mon Soutien Psy permet jusqu’à 12 séances d’accompagnement psychologique avec un psychologue partenaire. Chaque séance coûte 50 euros, remboursée à 60 % par l’Assurance Maladie, le reste pouvant être pris en charge par votre complémentaire santé. Certains psychologues proposent aussi des tarifs préférentiels selon la situation.
+- **Les centres médico-psychologiques (CMP)**, maisons des adolescents et PMI, qui offrent un accompagnement gratuit.
+- **Les médecins généralistes et psychiatres**, dont les consultations sont généralement remboursées par l’Assurance Maladie. Le reste à charge peut varier selon le secteur de convention et le respect du parcours de soins coordonné.
 
 *(consulter notre rubrique [Agir et chercher de l’aide sans honte](ressource-5))*`,
     externalResources: [
@@ -1378,13 +1386,13 @@ Chercher à parler à une IA pour se sentir moins seul peut, sans qu’on s’en
 
 Avant de débuter une psychothérapie, il est important de vérifier à qui l’on s’adresse :
 
-En France, les titres de psychologue, psychiatre et psychothérapeute sont réglementés et garantissent une formation reconnue. À l’inverse, des termes comme « thérapeute », « coach » ou « praticien » ne sont pas encadrés : n’importe qui peut les utiliser, parfois sans formation. Ces dernières années, de plus en plus de personnes se présentent sous ces appellations, notamment sur les réseaux sociaux, parfois avec un objectif principalement commercial. Cette absence de cadre peut mener à des pratiques inadaptées ou dangereuses, ce qui souligne l’importance de vérifier le statut, les modalités et la formation du professionnel avant de s’engager.
+En France, les titres de psychologue, psychiatre et psychothérapeute sont réglementés et garantissent une formation reconnue. À l’inverse, des termes comme « thérapeute », « coach » ou « praticien » ne sont pas encadrés : n’importe qui peut les utiliser, parfois sans formation. **Ces dernières années, de plus en plus de personnes se présentent sous ces appellations, notamment sur les réseaux sociaux, parfois avec un objectif principalement commercial.** Cette absence de cadre peut mener à des pratiques inadaptées ou dangereuses, ce qui souligne l’importance de vérifier le statut, les modalités et la formation du professionnel avant de s’engager.
 
 Plusieurs approches de psychothérapie existent, et aucune n’est universelle. L’important est de trouver celle qui correspond à la situation de chacun :
 
-- Les thérapies cognitivo-comportementales (TCC), issues de la psychologie expérimentale, aident à comprendre les liens entre pensées, émotions et comportements. Elles proposent d'apprendre de nouvelles stratégies pour faire face à l’anxiété, au stress ou à certaines difficultés du quotidien. Par exemple, si l’on évite certaines situations à cause de l’anxiété, les TCC peuvent aider à repérer les pensées qui augmentent le stress et à tester d’autres façons d’agir. Elles sont scientifiquement validées et recommandées pour les troubles anxieux, dépressifs, bipolaires, schizophréniques, borderline et les troubles obsessionnels compulsifs (TOC).
-- Les psychothérapies de type analytique explorent l’histoire personnelle, les relations et ce qui se rejoue dans la vie actuelle. Par exemple, si l’on se retrouve souvent dans les mêmes difficultés au travail ou en couple, ce type d’approche peut aider à comprendre d’où viennent ces schémas et comment s’en libérer.
-- Les thérapies familiales ou systémiques s’intéressent au fonctionnement d’un couple ou d’une famille. Elles partent du principe que les difficultés d’une personne peuvent être liées à la manière dont le groupe interagit. Par exemple, lorsqu’un adolescent va mal, toute la famille peut être concernée, et travailler ensemble peut aider à apaiser les tensions.
+- **Les thérapies cognitivo-comportementales** (TCC), issues de la psychologie expérimentale, aident à comprendre les liens entre pensées, émotions et comportements. Elles proposent d'apprendre de nouvelles stratégies pour faire face à l’anxiété, au stress ou à certaines difficultés du quotidien. Par exemple, si l’on évite certaines situations à cause de l’anxiété, les TCC peuvent aider à repérer les pensées qui augmentent le stress et à tester d’autres façons d’agir. Elles sont scientifiquement validées et recommandées pour les troubles anxieux, dépressifs, bipolaires, schizophréniques, borderline et les troubles obsessionnels compulsifs (TOC).
+- **Les psychothérapies de type analytique** explorent l’histoire personnelle, les relations et ce qui se rejoue dans la vie actuelle. Par exemple, si l’on se retrouve souvent dans les mêmes difficultés au travail ou en couple, ce type d’approche peut aider à comprendre d’où viennent ces schémas et comment s’en libérer.
+- **Les thérapies familiales ou systémiques** s’intéressent au fonctionnement d’un couple ou d’une famille. Elles partent du principe que les difficultés d’une personne peuvent être liées à la manière dont le groupe interagit. Par exemple, lorsqu’un adolescent va mal, toute la famille peut être concernée, et travailler ensemble peut aider à apaiser les tensions.
 - Certaines techniques peuvent compléter une psychothérapie. L’EMDR en fait partie. Ce n’est pas une psychothérapie, mais une méthode scientifiquement validée pour traiter les traumatismes. Elle utilise des stimulations bilatérales, souvent des mouvements oculaires, pour aider à diminuer l’impact émotionnel d’un souvenir difficile. Par exemple, après un accident ou un événement violent, l’EMDR peut aider à atténuer les images ou sensations envahissantes.
 
 **Pour finir, il est important de se méfier des promesses de guérison rapide, des discours culpabilisants ou d’un manque de transparence.** 
