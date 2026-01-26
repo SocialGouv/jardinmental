@@ -77,3 +77,114 @@ This will send a test error to Sentry with proper context and tags. Only enable 
 
 - [app/README.md](./app/README.md) — Mobile app documentation
 - [api/README-TypeScript.md](./api/README-TypeScript.md) — API documentation
+
+---
+
+## Resource, ResourceExternal, and toolsData: Specification & Contribution Guide
+
+### 1. Where to Find the Definitions
+
+- **Resource**
+
+  - **Type/interface:** `Resource`
+  - **File:** `app/src/scenes/resources/data/resources.ts`
+  - **Data array:** `RESOURCES_DATA` in the same file
+
+- **ResourceExternal**
+
+  - **Type/interface:** `ExternalResource`
+  - **File:** `app/src/scenes/resources/data/resourcesExternal.ts`
+  - **Data array:** `EXTERNAL_RESOURCES_DATA` in the same file
+
+- **toolsData**
+  - **Type/interface:** `ToolItemEntity`
+  - **File:** `app/src/scenes/tools/toolsData.tsx`
+  - **Data array:** `TOOLS_DATA` in the same file
+
+---
+
+### 2. Getting Information from the Product Team
+
+- Contact the product team via your usual communication channel (Slack, Teams, email, etc.).
+- Provide a draft of the new resource/tool (title, description, type, audience, etc.) and ask for validation or additional details.
+- If you are unsure about the content, request examples or reference materials.
+- Keep a record of the product team's feedback for traceability.
+
+---
+
+### 3. Generating a UUID
+
+- **Command line:** Run `uuidgen` in your terminal to generate a new UUID.
+- **Online:** Use a trusted UUID generator website (e.g., https://www.uuidgenerator.net/).
+- **JavaScript:** Use the `uuid` npm package:
+  ```js
+  import { v4 as uuidv4 } from "uuid";
+  const id = uuidv4();
+  ```
+- **Note:** Each item in the data arrays must have a unique `id` field (UUID format).
+
+---
+
+### 4. How to Add an Item to the List
+
+#### Resource
+
+Edit `app/src/scenes/resources/data/resources.ts` and add a new object to the `RESOURCES_DATA` array:
+
+```js
+{
+  id: "your-uuid-here",
+  matomoId: 999, // next available number
+  title: "Your resource title",
+  image: require("path/to/image.png"),
+  category: CATEGORIES.YOUR_CATEGORY,
+  content: "Resource content in markdown or plain text",
+  externalResources: ["external-resource-uuid-1", "external-resource-uuid-2"], // optional
+  subCategory: SUB_CATEGORIES.YOUR_SUBCATEGORY, // optional
+}
+```
+
+#### ResourceExternal
+
+Edit `app/src/scenes/resources/data/resourcesExternal.ts` and add a new object to the `EXTERNAL_RESOURCES_DATA` array:
+
+```js
+{
+  id: "your-uuid-here",
+  matomoId: 999, // next available number
+  title: "External resource title",
+  url: "https://example.com",
+  type: "Article", // or "Vidéo", "Podcast", etc.
+  category: "P1 - A lire dans ce dossier", // or "P2 - Explorer d'autres ressources"
+  author: "Author name",
+}
+```
+
+#### toolsData
+
+Edit `app/src/scenes/tools/toolsData.tsx` and add a new object to the `TOOLS_DATA` array:
+
+```js
+{
+  id: "your-uuid-here",
+  matomoId: 999, // next available number
+  title: "Tool title",
+  description: "Tool description",
+  type: ["Exercice"], // or other types
+  themes: ["Theme1", "Theme2"],
+  audience: ["child", "parent", "student"],
+  source: "Source name",
+  // Optional fields: url, innerPath, etc.
+}
+```
+
+---
+
+### 5. Example Workflow
+
+1. **Get requirements** from the product team (title, description, type, etc.).
+2. **Generate a UUID** for the new item.
+3. **Add the item** to the appropriate data array in the correct file.
+4. **Test** the application to ensure the new item appears as expected.
+
+---
