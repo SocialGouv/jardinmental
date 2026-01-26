@@ -1,46 +1,137 @@
-# Test
+# Jardin Mental Mobile App
+
+This is the mobile application for Jardin Mental, built with React Native and Expo.
+
+---
+
+## Setup & Installation
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/) (see root `package.json` for recommended version)
+- [pnpm](https://pnpm.io/) (recommended package manager)
+- [Expo CLI](https://docs.expo.dev/get-started/installation/)
+
+### Install dependencies
 
 ```bash
-# Exécuter tous les tests
-yarn test
-
-# Exécuter les tests en mode watch
-yarn test:watch
-
-# Générer un rapport de couverture
-yarn test:coverage
-
-# Tests pour CI/CD
-yarn test:ci
+pnpm install
 ```
 
-# Event Tracking Documentation
+---
 
-## Overview
+## Running the App
+
+### Start the development server
+
+```bash
+pnpm expo start
+```
+
+### Run on iOS simulator
+
+```bash
+pnpm expo run ios
+```
+
+### Run on Android emulator
+
+```bash
+pnpm expo run android
+```
+
+---
+
+## Testing
+
+```bash
+# Run all tests
+pnpm test
+
+# Run tests in watch mode
+pnpm test:watch
+
+# Generate coverage report
+pnpm test:coverage
+
+# Tests for CI/CD
+pnpm test:ci
+```
+
+---
+
+## Release / Publish
+
+### Version Bumping
+
+Version numbers must be updated manually in the relevant files:
+
+- Android: `android/app/build.gradle` (`versionCode` and `versionName`)
+- iOS: `ios/jardinmental.xcodeproj/project.pbxproj` (`CURRENT_PROJECT_VERSION` and `MARKETING_VERSION`)
+
+> **Note:** You cannot upload the same `versionCode`/`CURRENT_PROJECT_VERSION` twice. Always increment for each release.
+
+### Build for Local Device
+
+- **iOS:**
+  ```bash
+  pnpm expo run ios
+  ```
+- **Android:**
+  ```bash
+  pnpm expo run android
+  ```
+
+### Build for Store Submission (Local Build)
+
+To avoid consuming EAS credits, use local builds:
+
+- **iOS:**
+  ```bash
+  eas build -p ios --local
+  ```
+- **Android:**
+  > **Important:** Before running the build command, you must comment out the two lines in `.gitignore` that reference `google-services.json`.  
+  > This is a workaround required for the build to succeed. Uncomment them after the build if needed.  
+  > There is probably a better configuration to avoid this step, but we haven't found the solution yet.
+  ```bash
+  eas build -p android --local
+  ```
+
+After building:
+
+- For iOS, upload the `.ipa` file using [Transporter](https://apps.apple.com/us/app/transporter/id1450874784) to App Store Connect.
+- For Android, upload the `.aab` file to the Google Play Console.
+
+---
+
+## Event Tracking Documentation
+
+### Overview
 
 The application uses Matomo analytics to track user interactions. All event tracking functions are located in `app/src/services/logEvents.js`. See [logEvents.js](https://github.com/SocialGouv/jardinmental/blob/master/app/src/services/logEvents.js) for implementation details.
 
-## Event Structure
+### Event Structure
 
 ```javascript
 {
   category: string,   // Event category (e.g., "APP", "FEELING")
   action: string,     // Action name (e.g., "APP_OPEN")
   name?: string,      // Optional context
-  value?: any        // Optional value
+  value?: any         // Optional value
 }
 ```
 
-## Main Categories
+### Main Categories
 
-### Core App Events
+#### Core App Events
 
 ```javascript
 logEvents.logAppVisit(); // App open
 logEvents.logAppClose(); // App close
 ```
 
-### User Data Events
+#### User Data Events
 
 ```javascript
 // Feelings
@@ -51,22 +142,24 @@ logEvents._deprecatedLogFeelingAdd();
 logEvents.logDrugsOpen();
 ```
 
-### Navigation
+#### Navigation
 
 ```javascript
 logEvents.logOpenPage(category);
 logEvents.logStatusSubPage(tab);
 ```
 
-## Notes
+### Notes
 
 - Events are sent only when network is available
 - User IDs are randomly generated
 - Device info limited to OS and app version
 
+---
+
 ## Indicators Configuration
 
-The application uses a predefined set of indicators to track user's health and well-being, defined in `app/src/utils/liste_indicateurs.1.js`. . See [liste_indicateurs.1.js](https://github.com/SocialGouv/jardinmental/blob/master/app/src/utils/liste_indicateurs.1.js) for implementation details.
+The application uses a predefined set of indicators to track user's health and well-being, defined in `app/src/utils/liste_indicateurs.1.js`. See [liste_indicateurs.1.js](https://github.com/SocialGouv/jardinmental/blob/master/app/src/utils/liste_indicateurs.1.js) for implementation details.
 
 ### Indicator Structure
 
@@ -84,8 +177,8 @@ The application uses a predefined set of indicators to track user's health and w
 
 1. **Emotions/sentiments**
 2. **Manifestations physiques**
-3. **Pensées**
-4. **Comportements**
+3. **Thoughts**
+4. **Behaviors**
 
 ### Special Collections
 

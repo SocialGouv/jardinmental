@@ -1,100 +1,68 @@
 ![Mobile version](https://img.shields.io/badge/app-1.31.0-blue)
-![Mobile version](https://img.shields.io/badge/api-0.1.0-purple)
+![API version](https://img.shields.io/badge/api-0.1.0-purple)
 
 # Jardin Mental
 
-(anciènement nommée : Mon Suivi Psy)
+(formerly known as: Mon Suivi Psy)
 
-Permettre à chacun de mieux connaitre son trouble pour faciliter le choix du bon traitement
+Empowering users to better understand their mental health and make informed treatment choices.
 
-Site officiel et présentation grand public : https://jardinmental.fabrique.social.gouv.fr/
+- Official website: https://jardinmental.fabrique.social.gouv.fr/
+- Project intent: https://beta.gouv.fr/startups/monsuivipsy.html
 
-Note d'intension du projet : https://beta.gouv.fr/startups/monsuivipsy.html
+---
 
-## Deploy
+## Monorepo Structure
 
-### For all: bump versions
+This repository is a monorepo containing:
 
-#### Concept
+- **app/**: Mobile application (React Native + Expo)
+- **api/**: Backend API (Node.js/TypeScript)
+- Other folders for configuration, documentation, etc.
 
-Both android and ios have two kind of build numbers:
+Each main component has its own `README.md` with detailed instructions.
 
-- android: you can see in `'/android/app/build.gradle` file `versionCode` and `versionName`. Usually, `versionCode` is incremented by 1 for every release, and `versionName` is basic versioning like `1.0.0` or whatever.
+---
 
-- ios: you can see in `./ios/BalaBenzine.xcodeproj/project.pbxproj` two lines called `CURRENT_PROJECT_VERSION` and two other called `MARKETING_VERSION`. Usually, `CURRENT_PROJECT_VERSION` is incremented by 1 for every release, and `MARKETING_VERSION` is basic versioning like `1.0.0` or whatever.
+## Quickstart
 
-#### Automatic bump
+### Prerequisites
 
-run `yarn update-mobile-app-version` with the proper arguments:
+- [Node.js](https://nodejs.org/) (see `package.json` for recommended version)
+- [pnpm](https://pnpm.io/) (recommended package manager)
+- [Expo CLI](https://docs.expo.dev/get-started/installation/) (for the mobile app)
+- [Docker](https://www.docker.com/) (optional, for the API)
 
-- `yarn update-mobile-app-version bump`: it will just increment +1 `versionCode` and `CURRENT_PROJECT_VERSION`
-- `yarn update-mobile-app-version patch`: it will increment +1 `versionCode` and `CURRENT_PROJECT_VERSION` and increment `MARKETING_VERSION` and `versionName` from, for example, 1.0.0 to 1.0.1
-- `yarn update-mobile-app-version minor`: it will increment +1 `versionCode` and `CURRENT_PROJECT_VERSION` and increment `MARKETING_VERSION` and `versionName` from, for example, 1.0.1 to 1.1.0
-- `yarn update-mobile-app-version major`: it will increment +1 `versionCode` and `CURRENT_PROJECT_VERSION` and increment `MARKETING_VERSION` and `versionName` from, for example, 1.1.0 to 2.0.0
+### Install dependencies
 
-#### Manual bump
+```bash
+pnpm install
+```
 
-Just update manually the versions where you need to do it.
+### Run the mobile app
 
-You can't upload twice the same `versionCode`/`CURRENT_PROJECT_VERSION`, whereas you can upload twice `versionName`/`MARKETING_VERSION`.
-In any case, you can't upload any version lower than the previous.
+See [app/README.md](./app/README.md) for detailed instructions.
 
-So be careful when you name those.
+### Run the API
 
-### Android
+See [api/README-TypeScript.md](./api/README-TypeScript.md) for detailed instructions.
 
-#### Manual
+---
 
-Just run `yarn build:android`.
-Get the `.aab` file located at `./android/app/build/outputs/bundle/release/app-release.aab`
+## Deployment & Release
 
-Upload it in Google Play console, Internal Testing or Production directly, as you prefer. Better to have at least one Internal Testing tester that can check the app is properly compiled (like with a real API connection, not localhost).
+Build, release, and publishing instructions are specific to each component:
 
-#### Automatic local
+- For the mobile app, see the "Release/Publish" section in [app/README.md](./app/README.md)
+- For the API, see [api/README-TypeScript.md](./api/README-TypeScript.md)
 
-(ask SRE Team to get needed files)
-
-- obtain and add `key.properties` to `./app/android` folder
-- obtain and add `my-upload-key.jks` to `./app/android/app` folder
-- obtain and add `google-cloud-api-key.json` to `./app/android/fastlane` folder
-- Execute this command from `./app` folder : `yarn publish:android`
-
-This command will build and upload your app to Google Play Console - internal tests
-
-### iOS
-
-#### Manual
-
-- Open `ios/monsuivipsy.xcodeproj`, and click Product > Archive
-
-- At the end of archiving, a new window opens: click "Distribute App". Then:
-
-  - Select "App Store Connect", and click "Next"
-  - Select "Upload", and click "Next"
-  - Select all three checkoxes ("Include bitcode for iOS content", "Strip Swift symbols" and "Upload your app's symbols"), and click "Next"
-  - In "Distribution certificate", select the default one, and in "monsuivipsy.app", select "iOS provisionning", and click "Next"
-  - Finally, click on "Upload"
-
-- Your app is now in the Test Flight tab in your App Store Connect. After it is reviewed, you can use it in your next App Store release.
-
-#### Automatic local
-
-(ask SRE Team to get needed files)
-
-- First ensure to obtain and install the distribution certificate in your mac keychain (double click .p12 file with password) and the mobile provionning profile in xcode (double click .mobileprovision file it will open xcode).
-- obtain and add `appleApiKey.json` to `./app/ios/fastlane` folder
-- Execute this command from `./app` folder : `yarn publish:ios`
-
-This command will build and upload your app to App Store Connect - TestFlight.
+---
 
 ## Debug
 
 ### Sentry Test Endpoint
 
-Sentry runs in the container of the API and in the container of the cron.
-In the cron it passes as extra params the value: 'reminderCronJob'.
-
-
+Sentry runs in the API and cron containers.
 To test Sentry error reporting:
 
 1. Enable debug endpoints: `export DEBUG_ENDPOINTS_ENABLED=true`
@@ -102,3 +70,10 @@ To test Sentry error reporting:
 3. Test: `curl http://localhost:3000/debug/test-sentry`
 
 This will send a test error to Sentry with proper context and tags. Only enable in development/staging environments.
+
+---
+
+## Useful Links
+
+- [app/README.md](./app/README.md) — Mobile app documentation
+- [api/README-TypeScript.md](./api/README-TypeScript.md) — API documentation
