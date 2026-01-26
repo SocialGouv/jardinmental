@@ -36,9 +36,26 @@ pnpm expo run ios
 
 ### Run on Android emulator
 
+> **Note:** To run the app on Android using `pnpm expo run android`, you must have a valid `google-services.json` file in the `app` folder.
+
 ```bash
 pnpm expo run android
 ```
+
+---
+
+## Where to Find `google-services.json`
+
+The `google-services.json` file is required for Android builds and is **not included in the repository** for security reasons.
+
+- **If you are a maintainer or contributor:**  
+  You can generate this file from the [Firebase Console](https://console.firebase.google.com/) by selecting the appropriate project and downloading the configuration for the Android app (make sure to use the correct package name).
+  You can find it here : https://console.firebase.google.com/project/jardin-mental/settings/general/android:com.monsuivipsy
+- **If you do not have access:**  
+  Please contact a project maintainer to request the `google-services.json` file.
+
+Once obtained, place the file in the `app` folder:  
+`/app/google-services.json`
 
 ---
 
@@ -195,3 +212,27 @@ The file defines several special collections of indicators:
 - **smiley**: Mood selection using emoji-style interface
 - **gauge**: Sliding scale for intensity measurement
 - **boolean**: Yes/No toggle for binary states
+
+---
+
+## Troubleshooting
+
+If you encounter issues running or building the app, try the following steps:
+
+- **Kill the Expo server:**  
+  Make sure to stop any running Expo servers (e.g., with <kbd>Ctrl</kbd>+<kbd>C</kbd> in the terminal), or kill all Expo-related processes if needed.
+
+- **Clean the native directories:**  
+  If you have persistent build or dependency issues, you can remove the native directories and regenerate them:
+
+  ```bash
+  rm -rf ios
+  rm -rf android
+  npx expo prebuild --clean
+  ```
+
+- **Clear Expo cache:**  
+  Sometimes, clearing the Expo cache can resolve unexpected errors:
+  ```bash
+  expo start --clear
+  ```
