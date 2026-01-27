@@ -101,16 +101,31 @@ Version numbers must be updated manually in the relevant files:
 
 ### Build for Store Submission (Local Build)
 
+> **Reminder:** Make sure you are in the `app` folder before running these commands.
+>
+> **Important:** Before building, ensure that the version number and build number (for both iOS and Android) have been incremented if the current values have already been released.  
+> The combination of version number and build number must not already exist on the store and must be greater than any previously submitted version.
+
 To avoid consuming EAS credits, use local builds:
 
 - **iOS:**
   ```bash
   eas build -p ios --local
   ```
+  > **Note:** During the build process, you will be prompted to sign in to your Apple Developer account.  
+  > Your account must be linked to the app (i.e., you must have the necessary permissions for the app's bundle identifier) to complete the build and signing process.
 - **Android:**
+  > **Keystore Required:** You need the `my-upload-key.jks` file to sign the Android app.  
+  > Obtain this file from the dev team and place it in the `app` folder.  
+  > If you are not in contact with the dev team, you can generate a new keystore file by following the [official Android documentation](https://developer.android.com/studio/publish/app-signing#generate-key).
+  >
   > **Important:** Before running the build command, you must comment out the two lines in `.gitignore` that reference `google-services.json`.  
   > This is a workaround required for the build to succeed. Uncomment them after the build if needed.  
   > There is probably a better configuration to avoid this step, but we haven't found the solution yet.
+  >
+  > **Troubleshooting:** If you see the error  
+  > `"withAndroidDangerousBaseMod: Cannot copy google-services.json"`  
+  > it means you did not comment out the `google-services.json` lines in `.gitignore` as required.
   ```bash
   eas build -p android --local
   ```
@@ -233,6 +248,11 @@ If you encounter issues running or building the app, try the following steps:
 
 - **Clear Expo cache:**  
   Sometimes, clearing the Expo cache can resolve unexpected errors:
+
   ```bash
   expo start --clear
   ```
+
+- **Android build error "withAndroidDangerousBaseMod: Cannot copy google-services.json":**  
+  This error occurs if you did not comment out the `google-services.json` lines in `.gitignore` before building for Android.  
+  Make sure to follow the instructions in the Android build section above.
