@@ -3,7 +3,7 @@ module.exports = {
   setupFilesAfterEnv: ["<rootDir>/__tests__/setup.ts"],
   testPathIgnorePatterns: ["<rootDir>/node_modules/", "<rootDir>/android/", "<rootDir>/ios/", "<rootDir>/__tests__/setup.ts"],
   transformIgnorePatterns: [
-    "node_modules/(?!(react-native|@react-native|react-native-.*|@react-navigation|expo.*|@expo.*|react-native-uuid|@react-native-async-storage|react-native-localize|date-fns|@miblanchard|react-native-safe-area-context)/)",
+    "node_modules/.pnpm/(?!((@react-native+js-polyfills|react-native|@react-native|react-native-.*|@react-navigation|expo.*|@expo.*|react-native-uuid|@react-native-async-storage|react-native-localize|date-fns|@miblanchard|react-native-safe-area-context).*/node_modules/))",
   ],
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
   testEnvironment: "node",
