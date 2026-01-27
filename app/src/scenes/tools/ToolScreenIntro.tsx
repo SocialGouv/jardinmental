@@ -7,7 +7,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
 import ValidatedStampIcon from "@assets/svg/icon/ValidatedStamp";
-import { TOOLS_DATA } from "./toolsData";
+import { TOOL_COHERENCE_CARDIAQUE_ID, TOOLS_DATA } from "./toolsData";
 import ToolItemCard from "./ToolItem";
 import { ToolBottomSheet } from "./ToolBottomSheet";
 import { useBottomSheet } from "@/context/BottomSheetContext";
@@ -163,7 +163,15 @@ const ToolsScreenIntro: React.FC<ToolsScreenIntroProps> = ({ navigation, route }
                 <View className="flex-1">
                   <TouchableOpacity
                     onPress={() => {
-                      navigation.navigate("coherence-cardiaque-video");
+                      showBottomSheet(
+                        <ToolBottomSheet
+                          navigation={navigation}
+                          toolItem={TOOLS_DATA[TOOL_COHERENCE_CARDIAQUE_ID]}
+                          onBookmarkChange={loadBookmarks}
+                          onClose={closeBottomSheet}
+                        />,
+                        loadBookmarks
+                      );
                     }}
                     className=" border-cnam-mauve-0 border-2 bg-[#FCFAFD] p-6 items-center rounded-2xl mt-2 flex-col space-y-2 justify-center"
                   >

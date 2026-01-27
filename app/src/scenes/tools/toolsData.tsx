@@ -5,6 +5,7 @@ export type { ToolItemType, ToolItemEntity, ToolItemTheme, ToolItemAudience };
 
 export const TOOL_BECK_ID = "b2d8c2f4-0f44-48c0-945a-6c6a0f3b9d3d";
 export const GPS_IDS = ["e7163404-e1bd-4101-a8eb-616e58679460", "e7163404-e1bd-4101-a8eb-616e58679462", "e7163404-e1bd-4101-a8eb-616e58679464"];
+export const TOOL_COHERENCE_CARDIAQUE_ID = "c079d02b-f744-4be4-8ede-386897ca3b89";
 
 export const TOOLS_DATA: ToolItemEntity[] = [
   {
@@ -429,7 +430,7 @@ Cet exercice nécessite des explications afin de le réaliser. Nous vous recomma
     source: "Santé Mentale Info Service",
   },
   {
-    id: "c079d02b-f744-4be4-8ede-386897ca3b89",
+    id: TOOL_COHERENCE_CARDIAQUE_ID,
     matomoId: 31,
     title: "Cohérence cardiaque",
     description:
