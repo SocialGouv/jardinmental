@@ -4,14 +4,7 @@ import { ToolItemType, ToolItemEntity, ToolItemTheme, ToolItemAudience } from ".
 export type { ToolItemType, ToolItemEntity, ToolItemTheme, ToolItemAudience };
 
 export const TOOL_BECK_ID = "b2d8c2f4-0f44-48c0-945a-6c6a0f3b9d3d";
-export const GPS_IDS = [
-  "e7163404-e1bd-4101-a8eb-616e58679464",
-  "e7163404-e1bd-4101-a8eb-616e58679463",
-  "e7163404-e1bd-4101-a8eb-616e58679462",
-  "e7163404-e1bd-4101-a8eb-616e58679461",
-  "e7163404-e1bd-4101-a8eb-616e58679460",
-  "e7163404-e1bd-4101-a8eb-616e58679459",
-];
+export const GPS_IDS = ["e7163404-e1bd-4101-a8eb-616e58679460", "e7163404-e1bd-4101-a8eb-616e58679462", "e7163404-e1bd-4101-a8eb-616e58679464"];
 
 export const TOOLS_DATA: ToolItemEntity[] = [
   {
