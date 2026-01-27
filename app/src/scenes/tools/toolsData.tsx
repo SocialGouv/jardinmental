@@ -5,7 +5,20 @@ export type { ToolItemType, ToolItemEntity, ToolItemTheme, ToolItemAudience };
 
 export const TOOL_BECK_ID = "b2d8c2f4-0f44-48c0-945a-6c6a0f3b9d3d";
 export const GPS_IDS = ["e7163404-e1bd-4101-a8eb-616e58679460", "e7163404-e1bd-4101-a8eb-616e58679462", "e7163404-e1bd-4101-a8eb-616e58679464"];
-export const TOOL_COHERENCE_CARDIAQUE_ID = "c079d02b-f744-4be4-8ede-386897ca3b89";
+export const TOOL_COHERENCE_CARDIAQUE: ToolItemEntity = {
+  id: "c079d02b-f744-4be4-8ede-386897ca3b89",
+  matomoId: 31,
+  title: "Cohérence cardiaque",
+  description:
+    "Cet exercice vidéo vous guide dans une respiration rythmée : inspirez lorsque la bulle monte, expirez lorsqu’elle descend. Pratiqué assis et détendu, il permet de calmer le corps et l’esprit, de réduire le stress et de retrouver rapidement une sensation d’apaisement.",
+  type: ["Vidéo", "Exercice"],
+  themes: ["Gérer le stress", "Gérer une crise"],
+  audience: ["child", "parent", "student"],
+  url: "https://www.santementale-info-service.fr/en-prendre-soin/tous-les-exercices/coherence-cardiaque",
+  source: "Santé Mentale Info Service",
+  embed: "breath-exercice",
+  video: "coherence-cardiaque-video",
+};
 
 export const TOOLS_DATA: ToolItemEntity[] = [
   {
@@ -429,20 +442,7 @@ Cet exercice nécessite des explications afin de le réaliser. Nous vous recomma
     url: "https://www.santementale-info-service.fr/sites/default/files/2025-05/Santementale_Journal-du-sommeil_0.pdf",
     source: "Santé Mentale Info Service",
   },
-  {
-    id: TOOL_COHERENCE_CARDIAQUE_ID,
-    matomoId: 31,
-    title: "Cohérence cardiaque",
-    description:
-      "Cet exercice vidéo vous guide dans une respiration rythmée : inspirez lorsque la bulle monte, expirez lorsqu’elle descend. Pratiqué assis et détendu, il permet de calmer le corps et l’esprit, de réduire le stress et de retrouver rapidement une sensation d’apaisement.",
-    type: ["Vidéo", "Exercice"],
-    themes: ["Gérer le stress", "Gérer une crise"],
-    audience: ["child", "parent", "student"],
-    url: "https://www.santementale-info-service.fr/en-prendre-soin/tous-les-exercices/coherence-cardiaque",
-    source: "Santé Mentale Info Service",
-    embed: "breath-exercice",
-    video: "coherence-cardiaque-video",
-  },
+  TOOL_COHERENCE_CARDIAQUE,
   {
     id: "ef432c51-14af-4d91-af85-7a7dc751dceb",
     matomoId: 30,

@@ -7,7 +7,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
 import ValidatedStampIcon from "@assets/svg/icon/ValidatedStamp";
-import { TOOL_COHERENCE_CARDIAQUE_ID, TOOLS_DATA } from "./toolsData";
+import { TOOL_COHERENCE_CARDIAQUE, TOOLS_DATA } from "./toolsData";
 import ToolItemCard from "./ToolItem";
 import { ToolBottomSheet } from "./ToolBottomSheet";
 import { useBottomSheet } from "@/context/BottomSheetContext";
@@ -166,7 +166,7 @@ const ToolsScreenIntro: React.FC<ToolsScreenIntroProps> = ({ navigation, route }
                       showBottomSheet(
                         <ToolBottomSheet
                           navigation={navigation}
-                          toolItem={TOOLS_DATA[TOOL_COHERENCE_CARDIAQUE_ID]}
+                          toolItem={TOOL_COHERENCE_CARDIAQUE}
                           onBookmarkChange={loadBookmarks}
                           onClose={closeBottomSheet}
                         />,
