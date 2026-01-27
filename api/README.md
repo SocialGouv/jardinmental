@@ -47,6 +47,7 @@ This will start:
   ```bash
   pnpm dev
   ```
+  The API will be available at http://localhost:3000 by default.
 - **Production mode:**
   ```bash
   pnpm build

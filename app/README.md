@@ -132,10 +132,28 @@ To avoid consuming EAS credits, use local builds:
 
 After building:
 
-- For iOS, upload the `.ipa` file using [Transporter](https://apps.apple.com/us/app/transporter/id1450874784) to App Store Connect.
-- For Android, upload the `.aab` file to the Google Play Console.
+- **iOS:** Upload the generated `.ipa` file to App Store Connect using [Transporter](https://apps.apple.com/us/app/transporter/id1450874784) (Apple's official upload tool for iOS apps).
+- **Android:** Upload the generated `.aab` (or `.apk` if applicable) file to the Google Play Console ([https://play.google.com/console](https://play.google.com/console)).
 
 ---
+
+### Testing the Release
+
+#### iOS: Test Mode (TestFlight)
+
+1. After uploading the `.ipa` to App Store Connect, go to the "TestFlight" tab in App Store Connect.
+2. Add testers (internal or external) and submit the build for review if required.
+3. Testers will receive an invitation via email or the TestFlight app to install and test the app.
+
+For more details, see [Apple's TestFlight documentation](https://developer.apple.com/testflight/).
+
+#### Android: Internal Testing (Google Play Console)
+
+1. After uploading the `.aab` (or `.apk`) to the Google Play Console, navigate to "Testing" > "Internal testing".
+2. Create a new internal test release and add testers (by email or Google Group).
+3. Distribute the release; testers will receive a Play Store link to download and test the app.
+
+For more details, see [Google Play Console internal testing documentation](https://support.google.com/googleplay/android-developer/answer/9845334).
 
 ## Event Tracking Documentation
 
