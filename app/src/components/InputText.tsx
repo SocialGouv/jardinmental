@@ -122,7 +122,7 @@ export const InputText = ({ fill, preset, onPress, disabled, containerStyle, sty
         <View style={[styles.contentContainer]}>
           {isFloatingLabelPreset && props.placeholder && (
             <Animated.View style={viewStyle}>
-              <View className="bg-white absolute -left-0 w-full h-2" style={{ bottom: Platform.OS === "android" ? -0.5 : -2.5 }} />
+              <View className="bg-white absolute -left-0 w-full h-2" style={{ bottom: Platform.OS === "android" ? 0.2 : 0.2 }} />
               <View className="flex-row items-center justify-center">
                 {!isFocused && !props.value && (
                   <View className="mr-1">
