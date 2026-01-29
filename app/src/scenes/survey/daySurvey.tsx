@@ -135,10 +135,13 @@ const DaySurvey = ({
       return;
     }
     const initialAnswers = {};
-    const surveyAnswers = initSurvey?.answers || {};
+    let surveyAnswers = initSurvey?.answers || {};
     if (!surveyAnswers || userIndicateurs.length === 0) {
       return;
     }
+    // if there is already data in the diarydata use the diarydata
+    surveyAnswers = Object.keys(initSurvey.answers).length === 0 ? diaryData[initSurvey.date] || {} : initSurvey.answers;
+
     Object.keys(surveyAnswers).forEach((key) => {
       const answer = surveyAnswers[key];
       if (!answer) return;

@@ -78,6 +78,7 @@ import { CrisisPlanSlideReasonToLive } from "@/scenes/crisis-plan/CrisisPlanSlid
 import { CrisisPlanSlideFinal } from "@/scenes/crisis-plan/CrisisPlanSlideFinal";
 import { CrisisPlanSumupList } from "@/scenes/crisis-plan/CrisisPlanSumupList";
 import ToolsScreen from "@/scenes/tools/ToolScreen";
+import { beforeToday, formatDay } from "@/utils/date/helpers";
 
 const Stack = createStackNavigator();
 
@@ -156,7 +157,14 @@ class Router extends React.Component<RouterProps> {
     }
     // Otherwise, detect by title for "Main" and "Goal" notifications
     else if (title === "Comment allez-vous aujourd'hui ?" || title === "Vous avez un objectif aujourd'hui 🎯") {
-      navigationRef.current?.navigate("day-survey");
+      navigationRef.current?.navigate("day-survey", {
+        currentSurvey: {
+          date: formatDay(beforeToday(0)),
+          // if there is already data there will be recovered in day survey screen
+          answers: {},
+        },
+        editingSurvey: true,
+      });
     }
   };
 
