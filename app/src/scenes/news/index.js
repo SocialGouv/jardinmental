@@ -14,7 +14,7 @@ export const getBadgeNotesVersion = async () => {
   return lastNotesVersion !== LAST_NOTES_VERSION;
 };
 
-const LAST_NOTES_VERSION = "1.43.17";
+const LAST_NOTES_VERSION = "1.43.18";
 
 export default ({ navigation }) => {
   useEffect(() => {
@@ -29,6 +29,16 @@ export default ({ navigation }) => {
         <Image style={styles.image} className="rounded-lg" source={require("../../../assets/imgs/icon.png")} />
       </View>
       <ScrollView style={styles.cgu} contentContainerStyle={styles.scrollContainer}>
+        <Card title="“Mon GPS” : les mesures anticipées en psychiatrie disponibles dans les outils" version="v1.43.18" date="01/2026">
+          <Item showDot={false}>
+            <Text style={styles.text}>
+              Ce livret vise à faciliter l’expression et le respect de vos souhaits concernant vos soins et votre accompagnement, dans l’hypothèse où
+              vous ne seriez plus en mesure de consentir. Il permet d’anticiper une situation de crise, de clarifier ce qui est important pour vous et
+              de soutenir le dialogue avec vos proches et les professionnels.
+            </Text>
+            <Text style={styles.text}>Vous pouvez y accéder dans la rubrique Agir, catégorie “Gérer une crise”.</Text>
+          </Item>
+        </Card>
         <Card title="Plan de crise “idées suicidaires” disponible dans les outils" version="v1.43.17" date="12/2025">
           <Item showDot={false}>
             <Text style={styles.text}>
