@@ -140,7 +140,7 @@ const DaySurvey = ({
       return;
     }
     // if there is already data in the diarydata use the diarydata
-    surveyAnswers = Object.keys(initSurvey.answers).length === 0 ? diaryData[initSurvey.date] || {} : initSurvey.answers;
+    surveyAnswers = Object.keys(surveyAnswers).length === 0 ? diaryData[initSurvey.date] || {} : surveyAnswers;
 
     Object.keys(surveyAnswers).forEach((key) => {
       const answer = surveyAnswers[key];
