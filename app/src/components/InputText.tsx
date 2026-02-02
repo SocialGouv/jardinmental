@@ -1,124 +1,131 @@
-import React, { useRef, useState, useEffect } from "react";
-import { Pressable, StyleSheet, TextInput, View, Text, Animated, Platform } from "react-native";
+import React, { useRef, useState, useEffect, useCallback, useMemo } from "react";
+import { Pressable, StyleSheet, TextInput, View, Text, Animated, Platform, TextInputProps, ViewStyle, TextStyle } from "react-native";
 import { colors } from "@/utils/colors";
 import { TW_COLORS } from "@/utils/constants";
 import { mergeClassNames } from "@/utils/className";
 import FileIcon from "@assets/svg/icon/File";
 
-const PressableIfNeeded = ({ onPress, children }) =>
+interface InputTextProps extends TextInputProps {
+  fill?: boolean;
+  preset?: "groupItem" | "lighten" | "floatingLabel" | "iconWithHidePlaceholder";
+  onPress?: () => void;
+  disabled?: boolean;
+  containerStyle?: ViewStyle;
+  style?: TextStyle;
+  hidePlaceholder?: boolean;
+}
+
+const PressableIfNeeded = React.memo(({ onPress, children }: { onPress?: () => void; children: React.ReactNode }) =>
   onPress ? (
     <Pressable onPress={onPress} hitSlop={{ bottom: 10, left: 10, right: 10, top: 10 }}>
       {children}
     </Pressable>
   ) : (
     <>{children}</>
-  );
+  )
+);
 
-export const InputText = ({ fill, preset, onPress, disabled, containerStyle, style, hidePlaceholder, ...props }) => {
+PressableIfNeeded.displayName = 'PressableIfNeeded';
+
+export const InputText = React.memo(({ fill, preset, onPress, disabled, containerStyle, style, hidePlaceholder, ...props }: InputTextProps) => {
   const inputRef = useRef<TextInput>(null);
   const [isFocused, setIsFocused] = useState(false);
+  const previousShouldFloat = useRef(Boolean(props.value));
   const animatedValue = useRef(new Animated.Value(props.value ? 1 : 0)).current;
 
-  const focus = () => {
+  const focus = useCallback(() => {
     console.log("focus");
     inputRef?.current?.focus?.();
-  };
+  }, []);
 
-  if (onPress === undefined) {
-    onPress = focus;
-  }
+  const finalOnPress = onPress === undefined ? focus : onPress;
 
-  const styles = applyStyles({ preset });
+  const styles = useMemo(() => applyStyles({ preset }), [preset]);
 
   // Animation logic for floating label
   const isFloatingLabelPreset = preset === "floatingLabel";
-  const shouldLabelFloat = isFocused || (props.value && props.value.length > 0);
+  const shouldLabelFloat = isFocused || Boolean(props.value);
 
+  // Trigger animation when shouldLabelFloat changes
   useEffect(() => {
-    if (isFloatingLabelPreset) {
+    if (isFloatingLabelPreset && shouldLabelFloat !== previousShouldFloat.current) {
+      previousShouldFloat.current = shouldLabelFloat;
       Animated.timing(animatedValue, {
         toValue: shouldLabelFloat ? 1 : 0,
         duration: 200,
         useNativeDriver: false,
       }).start();
     }
-  }, [shouldLabelFloat, isFloatingLabelPreset]);
+  }, [shouldLabelFloat, isFloatingLabelPreset, animatedValue]);
 
-  const handleFocus = (e) => {
+  const handleFocus = useCallback((e) => {
     setIsFocused(true);
     if (props.onFocus) {
       props.onFocus(e);
     }
-  };
+  }, [props.onFocus]);
 
-  const handleBlur = (e) => {
+  const handleBlur = useCallback((e) => {
     setIsFocused(false);
     if (props.onBlur) {
       props.onBlur(e);
     }
-  };
+  }, [props.onBlur]);
 
-  const viewStyle = isFloatingLabelPreset
-    ? {
-        position: "absolute" as const,
-        left: animatedValue.interpolate({
-          inputRange: [0, 1],
-          outputRange: [16, 12],
-        }),
-        top: animatedValue.interpolate({
-          inputRange: [0, 1],
-          outputRange: [16, -10],
-        }),
-        backgroundColor: "transparent",
-        // paddingHorizontal: animatedValue.interpolate({
-        //   inputRange: [0, 1],
-        //   outputRange: [0, 4],
-        // }),
-      }
-    : {
-        position: "absolute" as const,
-        left: 16,
-        top: 16,
-        backgroundColor: "transparent",
-      };
+  const viewStyle = useMemo(() =>
+    isFloatingLabelPreset
+      ? {
+          position: "absolute" as const,
+          left: animatedValue.interpolate({
+            inputRange: [0, 1],
+            outputRange: [16, 12],
+          }),
+          top: animatedValue.interpolate({
+            inputRange: [0, 1],
+            outputRange: [16, -10],
+          }),
+          backgroundColor: "transparent",
+        }
+      : {
+          position: "absolute" as const,
+          left: 16,
+          top: 16,
+          backgroundColor: "transparent",
+        },
+    [isFloatingLabelPreset, animatedValue]
+  );
 
-  const labelStyle = isFloatingLabelPreset
-    ? {
-        // position: "absolute" as const,
-        // left: animatedValue.interpolate({
-        //   inputRange: [0, 1],
-        //   outputRange: [16, 12],
-        // }),
-        // top: animatedValue.interpolate({
-        //   inputRange: [0, 1],
-        //   outputRange: [16, -10],
-        // }),
-        fontSize: animatedValue.interpolate({
-          inputRange: [0, 1],
-          outputRange: [16, 12],
-        }),
-        color: animatedValue.interpolate({
-          inputRange: [0, 1],
-          outputRange: [TW_COLORS.GRAY_600, colors.BLUE],
-        }),
-        backgroundColor: "transparent",
-        paddingHorizontal: animatedValue.interpolate({
-          inputRange: [0, 1],
-          outputRange: [0, 4],
-        }),
-        fontFamily: "SourceSans3-Regular",
-      }
-    : {
-        fontSize: 16,
-        color: TW_COLORS.GRAY_600,
-        backgroundColor: "transparent",
-        paddingHorizontal: 1,
-        fontFamily: "SourceSans3-Regular",
-      };
+  const labelStyle = useMemo(() =>
+    isFloatingLabelPreset
+      ? {
+          fontSize: animatedValue.interpolate({
+            inputRange: [0, 1],
+            outputRange: [16, 12],
+          }),
+          color: animatedValue.interpolate({
+            inputRange: [0, 1],
+            outputRange: [TW_COLORS.GRAY_600, colors.BLUE],
+          }),
+          backgroundColor: "transparent",
+          paddingHorizontal: animatedValue.interpolate({
+            inputRange: [0, 1],
+            outputRange: [0, 4],
+          }),
+          fontFamily: "SourceSans3-Regular",
+        }
+      : {
+          fontSize: 16,
+          color: TW_COLORS.GRAY_600,
+          backgroundColor: "transparent",
+          paddingHorizontal: 1,
+          fontFamily: "SourceSans3-Regular",
+        },
+    [isFloatingLabelPreset, animatedValue]
+  );
 
   return (
     <View style={[styles.container, fill && { width: "100%" }, containerStyle]}>
-      <PressableIfNeeded onPress={onPress}>
+      <PressableIfNeeded onPress={finalOnPress}>
         <View style={[styles.contentContainer]}>
           {isFloatingLabelPreset && props.placeholder && (
             <Animated.View style={viewStyle}>
@@ -161,7 +168,9 @@ export const InputText = ({ fill, preset, onPress, disabled, containerStyle, sty
       </PressableIfNeeded>
     </View>
   );
-};
+});
+
+InputText.displayName = 'InputText';
 
 const applyStyles = ({ preset }) => {
   const appliedStyles = {
