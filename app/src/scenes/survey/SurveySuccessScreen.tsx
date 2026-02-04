@@ -806,6 +806,8 @@ const HEALTH_TIP_MESSAGES: MotivationalMessage[] = [
   },
 ];
 
+const TIME_BEFORE_PANEL_SHOWS_MS = 1000;
+
 // Combined messages for random selection
 const ALL_MESSAGES = [...ENCOURAGEMENT_MESSAGES, ...HEALTH_TIP_MESSAGES];
 
@@ -983,7 +985,7 @@ const SurveySuccessScreen: React.FC<SurveySuccessScreenProps> = ({ navigation, r
           easing: Easing.out(Easing.cubic),
         })
       );
-    }, 1500);
+    }, TIME_BEFORE_PANEL_SHOWS_MS);
 
     return () => clearTimeout(timer);
   }, []);
