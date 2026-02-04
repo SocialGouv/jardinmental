@@ -124,7 +124,7 @@ const commityList: CommityEntity[] = [
   },
   {
     name: "",
-    role: "",
+    role: "Service Psychiatrie-Addictologie",
     role2: "",
     isOrganization: true,
     organization: "CHU Angers",
