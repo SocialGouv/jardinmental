@@ -150,7 +150,7 @@ const ToolsScreen: React.FC<ToolsScreenProps> = ({ navigation, route }) => {
             className="flex-row space-x-2 items-center justify-center"
           >
             <ChevronIcon direction="left" color={TW_COLORS.CNAM_PRIMARY_25} />
-            <Typography className="text-cnam-primary-25">Mes indicateurs</Typography>
+            <Typography className="text-cnam-primary-25">Tous les outils</Typography>
           </TouchableOpacity>
         }
         small={true}
