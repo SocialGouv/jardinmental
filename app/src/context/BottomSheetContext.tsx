@@ -43,7 +43,7 @@ export const BottomSheetProvider = ({ children }: { children: ReactNode }) => {
           {children}
           <BottomSheetModal
             // Necessary to work on android with scrollview inside bottomsheetview
-            enableContentPanningGesture={false}
+            enableContentPanningGesture={true}
             maxDynamicContentSize={height90vh}
             ref={bottomSheetRef}
             backdropComponent={renderBackdrop}
@@ -52,6 +52,7 @@ export const BottomSheetProvider = ({ children }: { children: ReactNode }) => {
             }}
             keyboardBehavior="extend"
             enableDynamicSizing={true}
+            enableHandlePanningGesture={true}
             onDismiss={() => {
               if (onCloseCallback) {
                 onCloseCallback();
