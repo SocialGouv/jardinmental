@@ -240,10 +240,12 @@ export default function SupportScreen({ navigation, route }) {
                   <LifeBuoy width={24} height={24} color={TW_COLORS.CNAM_PRIMARY_800} />
                 </View>
                 <View className="ml-3">
-                  <Text className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-900 text-left")}>Compléter mon plan de crise</Text>
-                  <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900 text-left")}>
+                  <Typography className={mergeClassNames(typography.textLgSemibold, "text-cnam-primary-900 text-left")}>
+                    Compléter mon plan de crise
+                  </Typography>
+                  <Typography className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-900 text-left")}>
                     Préparez un plan d’action personnel pour lutter contre les idées suicidaires
-                  </Text>
+                  </Typography>
                 </View>
               </SquircleButton>
             )}
