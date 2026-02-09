@@ -40,7 +40,12 @@ jobs:
       - name: Install dependencies
         run: |
           pnpm install --frozen-lockfile
-      
+
+      - name: Generate Prisma Client
+        working-directory: api
+        run: |
+          pnpm exec prisma generate
+
       - name: Type check
         working-directory: api
         run: |
@@ -78,7 +83,12 @@ jobs:
       - name: Install dependencies
         run: |
           pnpm install --frozen-lockfile
-      
+
+      - name: Generate Prisma Client
+        working-directory: api
+        run: |
+          pnpm exec prisma generate
+
       - name: Build TypeScript
         working-directory: api
         run: |
