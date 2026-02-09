@@ -20,6 +20,11 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
+
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 10.24.0
+
       - uses: actions/setup-node@v5
         with:
           node-version: "16.x"
