@@ -22,8 +22,8 @@ jobs:
       - uses: actions/setup-node@v5
         with:
           node-version: "16.x"
-          cache: 'yarn'
-          cache-dependency-path: "app/yarn.lock"
+          cache: 'pnpm'
+          cache-dependency-path: "pnpm-lock.yaml"
 
       - name: Setup JDK 11
         uses: actions/setup-java@v2
@@ -72,10 +72,10 @@ jobs:
         run: cd app/android && bundle install
 
       - name: remove ios part of post install
-        run: cd app && npm pkg set scripts.postinstall="npx jetify"
+        run: cd app && pnpm pkg set scripts.postinstall="pnpm exec jetify"
 
       - name: Install packages
-        run: cd app && yarn install
+        run: pnpm install
 
       - name: Execute Fastlane command
-        run: cd app && yarn publish:android
+        run: cd app && pnpm publish:android

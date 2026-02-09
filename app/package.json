@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "get-ip": "./get-ip.sh",
-    "android": "npm run get-ip && expo run:android --reset-cache",
+    "android": "pnpm run get-ip && expo run:android --reset-cache",
     "ios": "expo run:ios",
     "ios:device": "expo run:ios --device",
     "ios:SE": "expo run:ios --device=\"iPhone SE\"",
