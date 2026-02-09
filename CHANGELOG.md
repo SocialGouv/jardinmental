@@ -1,3 +1,63 @@
+# [1.129.0](https://github.com/SocialGouv/jardinmental/compare/v1.128.0...v1.129.0) (2026-02-09)
+
+
+### Bug Fixes
+
+* add forgotten diary/index.tsx file ([#671](https://github.com/SocialGouv/jardinmental/issues/671)) ([8f767cd](https://github.com/SocialGouv/jardinmental/commit/8f767cd7631786cc8f651d5a0208cc6cacbd2fb8))
+* add missing import ([#712](https://github.com/SocialGouv/jardinmental/issues/712)) ([11c4986](https://github.com/SocialGouv/jardinmental/commit/11c4986e457d34e25cbde64673407fe49425e92d))
+* align note text to the left + change wording for treatment ([#663](https://github.com/SocialGouv/jardinmental/issues/663)) ([4624756](https://github.com/SocialGouv/jardinmental/commit/4624756f0986ec62e0ccba42a5491f961fc51e2a))
+* change return title for ToolScreen ([1b11147](https://github.com/SocialGouv/jardinmental/commit/1b1114719fb5559231a07ef427cee64e6f7e2219))
+* change surmenage order ([#674](https://github.com/SocialGouv/jardinmental/issues/674)) ([4de9dba](https://github.com/SocialGouv/jardinmental/commit/4de9dba2e835683e7eb7e68e90240e8349911d82))
+* **Correlation:** make view scrollable on android small screens ([#701](https://github.com/SocialGouv/jardinmental/issues/701)) ([a55cfa1](https://github.com/SocialGouv/jardinmental/commit/a55cfa1899d78b02753b6330a69398f2c8ff315d))
+* **daysurvey:** mood selection should change header background color ([#662](https://github.com/SocialGouv/jardinmental/issues/662)) ([547fad9](https://github.com/SocialGouv/jardinmental/commit/547fad948c89ead876a82e75d2374063f73511b8))
+* **deps:** update all dependencies ([#344](https://github.com/SocialGouv/jardinmental/issues/344)) ([dfddfe8](https://github.com/SocialGouv/jardinmental/commit/dfddfe84cc00c0d17412111d852b4e702b54617e))
+* fetch data from diaryData when opening survery from notification ([1728537](https://github.com/SocialGouv/jardinmental/commit/17285374e6fa4faacc726b1a40e50d7fac885299))
+* fix bottom sheet coherence cardiac ([684c637](https://github.com/SocialGouv/jardinmental/commit/684c6379b50da22fcf4a6768b566296bf7494f2f))
+* fix context note displaying placeholder when value exist, change text color ([#681](https://github.com/SocialGouv/jardinmental/issues/681)) ([ac66872](https://github.com/SocialGouv/jardinmental/commit/ac668722f466771a749a01ba5c6dd30774826600))
+* fix icon alignment ([#713](https://github.com/SocialGouv/jardinmental/issues/713)) ([f3c262f](https://github.com/SocialGouv/jardinmental/commit/f3c262f8a85c1723af4bc1af4f15a04ad34ff8df))
+* fix mmood indicators when user uses accessibility zoom ([#710](https://github.com/SocialGouv/jardinmental/issues/710)) ([707afcd](https://github.com/SocialGouv/jardinmental/commit/707afcd3c942f7c7ddb61887f167b4db6c62af81))
+* fix opening day survey without data ([8e9b441](https://github.com/SocialGouv/jardinmental/commit/8e9b4414e603389c6f97a9bb076382d18bf6c189))
+* fix tabac indicator order ([#685](https://github.com/SocialGouv/jardinmental/issues/685)) ([c078064](https://github.com/SocialGouv/jardinmental/commit/c078064f924bc43011b17ed13d9aa108f4b4ed5b))
+* floating text input label was crossed out by input border ([23c6a55](https://github.com/SocialGouv/jardinmental/commit/23c6a553a12c3968db0b7cfc90820d8f04411c41))
+* make ressource card clickable, fix ressource cat display on iOS SE ([#661](https://github.com/SocialGouv/jardinmental/issues/661)) ([2724781](https://github.com/SocialGouv/jardinmental/commit/2724781da4f7b3f6c909cdd0f64207ee093932df))
+* **ResourceCategories:** fix scrolling ([#717](https://github.com/SocialGouv/jardinmental/issues/717)) ([7b4bd6d](https://github.com/SocialGouv/jardinmental/commit/7b4bd6d0ef7949dcf6cccaa5149063c22d95faa9))
+* **ResourceCategories:** header prevent from clicking on first category ([3072b1f](https://github.com/SocialGouv/jardinmental/commit/3072b1fef278d5890965d6af891c70bfbc989136))
+* **textInput:** flaoting label is cut by border ([7fc5045](https://github.com/SocialGouv/jardinmental/commit/7fc5045157c7b8faa002539003ccd198dbf81bbd))
+* use SourceSans3 font everywhere ([#704](https://github.com/SocialGouv/jardinmental/issues/704)) ([e334b85](https://github.com/SocialGouv/jardinmental/commit/e334b85d9c93d3b59ed88cd7a841ae6afc12b5eb))
+
+
+### Features
+
+* add back onboarding events on indicators selection ([#646](https://github.com/SocialGouv/jardinmental/issues/646)) ([e3afb4c](https://github.com/SocialGouv/jardinmental/commit/e3afb4c43b8956996316ef708bceb3623402101f))
+* add dev-mode config hooks for correlation graph and in app browser ([4c1381f](https://github.com/SocialGouv/jardinmental/commit/4c1381f3869db06d6647450a3a477b683eb3c459))
+* add indicators couples suggestion ([#655](https://github.com/SocialGouv/jardinmental/issues/655)) ([5f4a745](https://github.com/SocialGouv/jardinmental/commit/5f4a7458d005ad51ce5106e5beb636fd01fb0cee))
+* add new chart library ([#564](https://github.com/SocialGouv/jardinmental/issues/564)) ([265ed96](https://github.com/SocialGouv/jardinmental/commit/265ed9639437f4a01abe8e4f35af1f6090b551be)), closes [#344](https://github.com/SocialGouv/jardinmental/issues/344) [#643](https://github.com/SocialGouv/jardinmental/issues/643)
+* add new design for category ([#650](https://github.com/SocialGouv/jardinmental/issues/650)) ([4623705](https://github.com/SocialGouv/jardinmental/commit/46237051537984937b9b2623d9a4c00c5a1703fd))
+* add new ressource on psychotherapie ([#670](https://github.com/SocialGouv/jardinmental/issues/670)) ([5e7302e](https://github.com/SocialGouv/jardinmental/commit/5e7302e2fd2d6b176fc482a4f159b45f2ae1c868))
+* add panning gesture to close bottom sheet ([5ee1630](https://github.com/SocialGouv/jardinmental/commit/5ee1630eb9e0417f028cdf780dfb25e74c387b46))
+* add pastilles on "plus d'info" button ([#692](https://github.com/SocialGouv/jardinmental/issues/692)) ([99b92f3](https://github.com/SocialGouv/jardinmental/commit/99b92f3d200da114ed9a8ed1b83cad7bbd459a80))
+* add release info in news page ([#679](https://github.com/SocialGouv/jardinmental/issues/679)) ([5431e05](https://github.com/SocialGouv/jardinmental/commit/5431e0579f17a58872dc2e8544e03d0179ba31fa))
+* add ressource about "mesures anticipees" ([#705](https://github.com/SocialGouv/jardinmental/issues/705)) ([ba8a516](https://github.com/SocialGouv/jardinmental/commit/ba8a516927947c761f06677262eb5d7124e657e1))
+* add safety plan ([#680](https://github.com/SocialGouv/jardinmental/issues/680)) ([057e6b5](https://github.com/SocialGouv/jardinmental/commit/057e6b525d9af4a9cd35b99e93471632d2bbd337))
+* add screen not enough data for correlation ([#675](https://github.com/SocialGouv/jardinmental/issues/675)) ([09e01e9](https://github.com/SocialGouv/jardinmental/commit/09e01e965f9b02291c825f9042a8526b486efbe9))
+* add settings to tab bar ([#618](https://github.com/SocialGouv/jardinmental/issues/618)) ([80e57f7](https://github.com/SocialGouv/jardinmental/commit/80e57f7b3e9242759b43d083fa553f99e1b2eee6))
+* add tool's screen with highlight of crisis plan and cardiac exercice ([#702](https://github.com/SocialGouv/jardinmental/issues/702)) ([f1aa893](https://github.com/SocialGouv/jardinmental/commit/f1aa8932465c5a594d37586d37db8eb048e9a592))
+* add tools page ([#641](https://github.com/SocialGouv/jardinmental/issues/641)) ([6bf7eff](https://github.com/SocialGouv/jardinmental/commit/6bf7eff907523819534caa71d572720f28c91c3c))
+* add tracking for crisis plan ([#708](https://github.com/SocialGouv/jardinmental/issues/708)) ([6ae93f8](https://github.com/SocialGouv/jardinmental/commit/6ae93f88c54fcd9a6eef14842f06fc9f3475ca51))
+* **analyse:** add empy states for correlation, bilan and variation screen ([#676](https://github.com/SocialGouv/jardinmental/issues/676)) ([edb87cf](https://github.com/SocialGouv/jardinmental/commit/edb87cfbf7e540b98dac6da6f8237b92039fdd59))
+* bump android ios version for 1.43.16 ([1eb464b](https://github.com/SocialGouv/jardinmental/commit/1eb464b75d00320a380fa4ac443c9b2192012f30))
+* bump build number ([eb55221](https://github.com/SocialGouv/jardinmental/commit/eb5522176d5dc2eb887d155ce552ee645736448e))
+* bump to version 1.43.15 ([b5e0296](https://github.com/SocialGouv/jardinmental/commit/b5e0296b431ff509b383e1953b2a3296eb29d320))
+* bump version ([7150dd1](https://github.com/SocialGouv/jardinmental/commit/7150dd18e497a830909861584444d0f8d35649e7))
+* bump version ([256a368](https://github.com/SocialGouv/jardinmental/commit/256a368712cd57e7247db35bb8f36e707d27fecf))
+* bump version ([a70dc4c](https://github.com/SocialGouv/jardinmental/commit/a70dc4c7db65c8fcd96e85e7f599995699a1dc05))
+* bump version ([8032602](https://github.com/SocialGouv/jardinmental/commit/80326021343281bd2066f32f0651545dffc4a884))
+* change resource content, add internal links system ([#687](https://github.com/SocialGouv/jardinmental/issues/687)) ([598ecdc](https://github.com/SocialGouv/jardinmental/commit/598ecdc10ce8542c6f26f301743fbe1a7094bdfd))
+* redesign contact team ([#656](https://github.com/SocialGouv/jardinmental/issues/656)) ([d2bcabe](https://github.com/SocialGouv/jardinmental/commit/d2bcabe13c01df433e4c5fb528b2400339ac6578))
+* remind user to export data : item in checklist + bottom sheet ([#707](https://github.com/SocialGouv/jardinmental/issues/707)) ([3e09d8f](https://github.com/SocialGouv/jardinmental/commit/3e09d8f17d4729ccdaa45943dd9736bba714b55b))
+* **tool:** add GPS tools and special screen to read its modus operandi ([#703](https://github.com/SocialGouv/jardinmental/issues/703)) ([851f447](https://github.com/SocialGouv/jardinmental/commit/851f447f4e9d01d0b5b918fad59ad6f54a51703e))
+* update adding indicators screen ([#691](https://github.com/SocialGouv/jardinmental/issues/691)) ([fa45c8b](https://github.com/SocialGouv/jardinmental/commit/fa45c8b0337381049613a2b3bd17509853cbbc6d))
+
 # [1.128.0](https://github.com/SocialGouv/jardinmental/compare/v1.127.1...v1.128.0) (2025-11-26)
 
 
