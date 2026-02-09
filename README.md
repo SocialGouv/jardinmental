@@ -1,4 +1,4 @@
-![Mobile version](https://img.shields.io/badge/app-1.31.0-blue)
+![Mobile version](https://img.shields.io/badge/app-1.40.3-blue)
 ![API version](https://img.shields.io/badge/api-0.1.0-purple)
 
 # Jardin Mental
@@ -45,7 +45,7 @@ See [app/README.md](./app/README.md) for detailed instructions.
 
 ### Run the API
 
-See [api/README-TypeScript.md](./api/README-TypeScript.md) for detailed instructions.
+See [api/README.md](./api/README.md) for detailed instructions.
 
 ---
 
@@ -54,7 +54,7 @@ See [api/README-TypeScript.md](./api/README-TypeScript.md) for detailed instruct
 Build, release, and publishing instructions are specific to each component:
 
 - For the mobile app, see the "Release/Publish" section in [app/README.md](./app/README.md)
-- For the API, see [api/README-TypeScript.md](./api/README-TypeScript.md)
+- For the API, see [api/README.md](./api/README.md)
 
 ---
 
@@ -76,7 +76,7 @@ This will send a test error to Sentry with proper context and tags. Only enable 
 ## Useful Links
 
 - [app/README.md](./app/README.md) — Mobile app documentation
-- [api/README-TypeScript.md](./api/README-TypeScript.md) — API documentation
+- [api/README.md](./api/README.md) — API documentation
 
 ---
 

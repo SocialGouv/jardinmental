@@ -85,11 +85,13 @@ pnpm test
 [k9s](https://k9scli.io/) is a terminal UI to interact with your Kubernetes clusters.
 
 **macOS:**
+
 ```bash
 brew install derailed/k9s/k9s
 ```
 
 **Linux:**
+
 ```bash
 # Via snap
 sudo snap install k9s
@@ -99,6 +101,7 @@ sudo snap install k9s
 ```
 
 **Windows:**
+
 ```bash
 # Via Chocolatey
 choco install k9s
@@ -110,10 +113,12 @@ scoop install k9s
 ### Configuration
 
 1. **Obtain kubeconfig files:**
+
    - Request the `ovh-prod` and `ovh-dev` kubeconfig files from a team member with access
    - These files contain the credentials and configuration to access OVH Kubernetes clusters
 
 2. **Copy kubeconfig files:**
+
    ```bash
    # Copy the files to your .kube directory
    cp ovh-prod ~/.kube/ovh-prod
@@ -121,6 +126,7 @@ scoop install k9s
    ```
 
 3. **Launch k9s with multiple contexts:**
+
    ```bash
    KUBECONFIG=~/.kube/ovh-dev:~/.kube/ovh-prod k9s
    ```
@@ -149,28 +155,34 @@ scoop install k9s
 Review environments are created automatically for each pull request. To access a review database:
 
 1. **Open k9s in dev context:**
+
    ```bash
    KUBECONFIG=~/.kube/ovh-dev k9s
    ```
 
 2. **Navigate to review namespace:**
+
    - Press `:` and type `ns`
    - Find and select your review namespace (format: `jardinmental-task-<description>-<id>`)
    - Example: `jardinmental-task-add-specific-message-4xyoo13t`
 
 3. **Access PostgreSQL pod:**
+
    - Navigate to the `PG` pod (PostgreSQL)
    - Press `s` to open a shell in the pod
 
 4. **Connect to PostgreSQL:**
+
    ```bash
    psql -U postgresql
    ```
 
 5. **List databases:**
+
    ```sql
    \l
    ```
+
    This displays all available databases.
 
 6. **Connect to your review database:**
@@ -180,6 +192,7 @@ Review environments are created automatically for each pull request. To access a
    The database name typically matches your GitHub PR branch or title.
 
 **Useful PostgreSQL commands:**
+
 - `\l` - List all databases
 - `\c <db>` - Connect to a database
 - `\dt` - List all tables in current database
@@ -191,39 +204,48 @@ Review environments are created automatically for each pull request. To access a
 ⚠️ **CRITICAL: Production database access requires extreme caution. Always verify you're in the correct context before executing any commands.**
 
 1. **Open k9s in prod context:**
+
    ```bash
    KUBECONFIG=~/.kube/ovh-prod k9s
    ```
 
 2. **Navigate to production namespace:**
+
    - Press `:` and type `ns`
    - Select the `jardinmental` production namespace
 
 3. **Access the PRIMARY PostgreSQL pod:**
+
    - Locate the `PG` pods
    - **IMPORTANT:** Select the **oldest** PG pod (the two others are read replicas)
    - You can identify the primary by checking the pod age
    - Press `s` to open a shell in the pod
 
 4. **Connect to PostgreSQL:**
+
    ```bash
    psql -U postgresql
    ```
 
 5. **List databases:**
+
    ```sql
    \l
    ```
+
    You should see two databases:
+
    - `postgres` (system database)
    - `jardinmental` (application database)
 
 6. **Connect to the application database:**
+
    ```sql
    \c jardinmental
    ```
 
 7. **Execute your SQL queries:**
+
    ```sql
    -- Example: View tables
    \dt
@@ -233,6 +255,7 @@ Review environments are created automatically for each pull request. To access a
    ```
 
 ⚠️ **Production Safety Rules:**
+
 - **NEVER** run `UPDATE`, `DELETE`, or `DROP` commands without explicit approval
 - **ALWAYS** use transactions (`BEGIN;` ... `ROLLBACK;` or `COMMIT;`) for any write operations
 - **TEST** queries on review environments first
@@ -241,6 +264,7 @@ Review environments are created automatically for each pull request. To access a
 - Only connect to the **primary** pod (oldest PG pod), not the replicas
 
 ⚠️ **Security Warning:**
+
 - Never commit kubeconfig files to version control
 - Keep production credentials secure
 - Always verify which context you're in before making changes
