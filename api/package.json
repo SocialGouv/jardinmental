@@ -9,7 +9,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon --config nodemon.json",
-    "start": "NODE_ENV=production npx prisma migrate deploy && NODE_ENV=production node ./dist/index.js",
+    "start": "NODE_ENV=production pnpm exec prisma migrate deploy && NODE_ENV=production node ./dist/index.js",
     "start:test": "NODE_ENV=test node ./dist/index.js",
     "build": "tsc",
     "build:watch": "tsc --watch",

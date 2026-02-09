@@ -261,7 +261,7 @@ If you encounter issues running or building the app, try the following steps:
   ```bash
   rm -rf ios
   rm -rf android
-  npx expo prebuild --clean
+  pnpm exec expo prebuild --clean
   ```
 
 - **Clear Expo cache:**  
