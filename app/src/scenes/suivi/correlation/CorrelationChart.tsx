@@ -63,7 +63,38 @@ const MemoizedDataPoint = React.memo(
       strokeWidth = 1;
     }
     let radius = (size - strokeWidth) / 2;
-
+    if (item.isBoolean && item.booleanValue === false) {
+      const center = size / 2;
+      const lineLength = radius * 1.4; //
+      return (
+        <Svg
+          width={size}
+          height={size}
+          style={{
+            top: needShift ? -10 : 0,
+            alignSelf: "center",
+          }}
+        >
+          <Circle
+            cx={size / 2}
+            cy={size / 2}
+            r={radius}
+            fill={item?.backgroundColor || "white"}
+            stroke={item?.color || "#3D6874"}
+            strokeWidth={strokeWidth}
+          />
+          <Line
+            x1={center - lineLength}
+            y1={center - lineLength}
+            x2={center + lineLength}
+            y2={center + lineLength}
+            stroke={item?.color || "#3D6874"}
+            strokeWidth={strokeWidth}
+            strokeLinecap="round"
+          />
+        </Svg>
+      );
+    }
     return (
       <Svg
         width={size}
@@ -406,9 +437,9 @@ const TestChart = forwardRef(
         <View
           style={{ width: spacingFormat === "7days" ? 20 : 50 }}
           className={mergeClassNames(
-            spacingFormat === "7days" ? "ml-[30px]" : "",
-            spacingFormat === "1month" ? "ml-[13px]" : "",
-            spacingFormat === "3months" ? "ml-[11px]" : "",
+            spacingFormat === "7days" ? "ml-[22px]" : "",
+            spacingFormat === "1month" ? "ml-[4px]" : "",
+            spacingFormat === "3months" ? "ml-[2px]" : "",
             "flex-row items-end overflow-visible" // 👈 ICI
           )}
         >
@@ -471,7 +502,7 @@ const TestChart = forwardRef(
           focusedDataPointWidth: !config.useCustomRenderers ? undefined : oneBoolean && d.isBoolean && spacingFormat !== "7days" ? 10 : 20,
           focusedDataPointRadius: !config.useCustomRenderers ? undefined : 7,
           focusedDataPointHeight: !config.useCustomRenderers ? undefined : oneBoolean && d.isBoolean && spacingFormat !== "7days" ? 10 : 20,
-          needShift: true,
+          needShift,
           // hideDataPoint: config.hideDataPoints || spacingFormat === "1month" || spacingFormat === "3months" || spacingFormat === "6months",
         };
       });
@@ -578,7 +609,7 @@ const TestChart = forwardRef(
 
     const computeReferenceLine3Position = useMemo(() => {
       if (showTreatment && oneBoolean) {
-        return 6.5;
+        return 5.5;
       } else if (showTreatment && twoBoolean) {
         return 2.5;
       } else if (showTreatment || oneBoolean) {
@@ -626,10 +657,10 @@ const TestChart = forwardRef(
         return {
           ...t,
           // label,
-          color: TW_COLORS.CNAM_PRIMARY_800,
-          dataPointColor: t.noValue ? "transparent" : TW_COLORS.CNAM_PRIMARY_800,
-          focusedDataPointColor: t.noValue ? "transparent" : TW_COLORS.CNAM_PRIMARY_800,
-          backgroundColor: TW_COLORS.CNAM_PRIMARY_800,
+          color: TW_COLORS.CNAM_MAUVE_0,
+          dataPointColor: t.noValue ? "transparent" : TW_COLORS.CNAM_MAUVE_0,
+          focusedDataPointColor: t.noValue ? "transparent" : TW_COLORS.CNAM_MAUVE_0,
+          backgroundColor: TW_COLORS.CNAM_MAUVE_0,
           focusedDataPointWidth: 5,
           focusedDataPointHeight: 5,
           isTreatmentSiBesoin: true,
@@ -941,13 +972,13 @@ const TestChart = forwardRef(
         referenceLine2Config={{
           thickness: oneBoolean && showTreatment ? 65 : 20,
           type: ruleTypes.SOLID,
-          color: "white",
+          color: displayfixed ? TW_COLORS.CNAM_PRIMARY_25 : "white",
         }}
         showReferenceLine3={showTreatment || oneBoolean}
         referenceLine3Position={computeReferenceLine3Position}
         referenceLine3Config={{
           thickness: 20,
-          color: "white",
+          color: displayfixed ? TW_COLORS.CNAM_PRIMARY_25 : "white",
           type: ruleTypes.SOLID,
         }}
         showVerticalLines={false}

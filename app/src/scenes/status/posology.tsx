@@ -81,9 +81,15 @@ const Posology = ({ patientState, posology, date, onPress }) => {
           <View className="flex flex-row mb-6 items-center">
             <View className={mergeClassNames("flex flex-row w-8")}>
               {patientState?.PRISE_DE_TRAITEMENT_SI_BESOIN?.value ? (
-                <View className={`h-4 w-4 rounded-full`} style={{ backgroundColor: "#CCEDF9", borderColor: "#0084B2", borderWidth: 0.5 }} />
+                <View
+                  className={`h-4 w-4 rounded-full`}
+                  style={{ backgroundColor: TW_COLORS.CNAM_MAUVE_0, borderColor: "#0084B2", borderWidth: 0.5 }}
+                />
               ) : (
-                <View className={`h-4 w-4 rounded-full`} style={{ backgroundColor: "#F9D1E6", borderColor: "#E21D84", borderWidth: 0.5 }} />
+                <View
+                  className={`h-4 w-4 rounded-full`}
+                  style={{ backgroundColor: TW_COLORS.CNAM_MAUVE_0, borderColor: "#E21D84", borderWidth: 0.5 }}
+                />
               )}
             </View>
             <Typography className={mergeClassNames(typography.textSmMedium, "text-cnam-primary-900")}>Prise d'un "si besoin" : </Typography>

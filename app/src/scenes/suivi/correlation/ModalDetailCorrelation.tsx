@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { View, Text, ScrollView, TouchableOpacity, Dimensions } from "react-native";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
@@ -44,6 +44,7 @@ const computeIndicatorColor = (indicator, value): ColorContextInterface | undefi
 export const DetailModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ navigation, route }) => {
   const {
     selectedIndicators,
+    selectedGoals,
     displayItem,
     data,
     dataB,
@@ -58,6 +59,20 @@ export const DetailModalCorrelationScreen: React.FC<ModalCorrelationScreenProps>
     twoBoolean,
     booleanIndicatorIndex,
   } = route.params;
+
+  const [definedTreatment, setDefinedTreatment] = useState<any[] | undefined>();
+
+  useEffect(
+    useCallback(() => {
+      (async () => {
+        const _treatment = await localStorage.getMedicalTreatment();
+        if (_treatment) {
+          setDefinedTreatment(_treatment);
+        }
+      })();
+    }, [])
+  );
+
   return (
     <SafeAreaView className="flex-1 bg-primary" edges={["top"]}>
       <View className="flex-col justify-between w-full bg-cnam-primary-800 p-4 items-center">
@@ -101,7 +116,33 @@ export const DetailModalCorrelationScreen: React.FC<ModalCorrelationScreenProps>
                 </View>
               );
             })}
-          {typeof diaryDataForDate["PRISE_DE_TRAITEMENT"]?.value === "boolean" && (
+          {diaryDataForDate &&
+            selectedGoals.map((goal, index) => {
+              let value;
+              try {
+                value = goalsByDate[index][displayItem.date].value;
+              } catch (e) {}
+              return (
+                <View key={index} className="flex-row items-center space-x-2">
+                  <Svg height="2" width="30">
+                    <Line
+                      x1="0"
+                      y1="1"
+                      x2="100%"
+                      y2="1"
+                      stroke={index === 0 ? "#00A5DF" : "#3D6874"} // your color
+                      strokeWidth="2"
+                      strokeDasharray={index === 0 ? "" : "4 4"} // pattern: 4px dash, 4px gap
+                    />
+                  </Svg>
+                  <Typography className={mergeClassNames(typography.textMdMedium, "text-white ")}>
+                    <Typography className={mergeClassNames(typography.textMdSemibold, "text-white")}>{goal.label} : </Typography>
+                    {value === true ? "Réalisé" : value === false ? "Non réalisé" : "Pas de donnée"}
+                  </Typography>
+                </View>
+              );
+            })}
+          {showTreatment && typeof diaryDataForDate["PRISE_DE_TRAITEMENT"]?.value === "boolean" && (
             <View className="flex-row items-center space-x-2">
               <View className="w-[30] items-center justify-center">
                 {typeof diaryDataForDate["PRISE_DE_TRAITEMENT"].value ? (
@@ -116,7 +157,7 @@ export const DetailModalCorrelationScreen: React.FC<ModalCorrelationScreenProps>
               </Typography>
             </View>
           )}
-          {diaryDataForDate["PRISE_DE_TRAITEMENT_SI_BESOIN"]?.value === true && (
+          {showTreatment && diaryDataForDate["PRISE_DE_TRAITEMENT_SI_BESOIN"]?.value === true && (
             <View className="flex-row items-center space-x-2">
               <View className="w-[30] items-center">
                 <View className="w-2 h-2 bg-cnam-primary-950 rounded-full"></View>
@@ -148,7 +189,7 @@ export const DetailModalCorrelationScreen: React.FC<ModalCorrelationScreenProps>
                 dataB &&
                 dataB.map((d, index) => ({
                   ...d,
-                  hideDataPoint: index !== selectedPointIndex,
+                  hideDataPoint: !oneBoolean && index !== selectedPointIndex,
                 }))
               }
               spacingFormat={"7days"}
@@ -158,10 +199,11 @@ export const DetailModalCorrelationScreen: React.FC<ModalCorrelationScreenProps>
               oneBoolean={oneBoolean}
               twoBoolean={twoBoolean}
               selectedIndicators={selectedIndicators}
+              selectedGol
               treatmentSiBesoin={treatmentSiBesoin}
               diaryData={diaryData}
               openIndicatorBottomSheet={undefined}
-              showTreatment={true}
+              showTreatment={showTreatment}
               displayfixed={true}
               enablePagination={false}
               booleanIndicatorIndex={booleanIndicatorIndex}

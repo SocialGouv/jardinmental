@@ -13,7 +13,7 @@ import InfoCircle from "@assets/svg/icon/InfoCircle";
 import { LineChart } from "react-native-gifted-charts";
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 import { useBottomSheet } from "@/context/BottomSheetContext";
-import Svg, { Line } from "react-native-svg";
+import Svg, { Circle, Line } from "react-native-svg";
 import CheckMarkIcon from "@assets/svg/icon/check";
 import CrossIcon from "@assets/svg/icon/Cross";
 import { INDICATOR_TYPE } from "@/entities/IndicatorType";
@@ -29,6 +29,9 @@ import HelpView from "@/components/HelpView";
 import DataMonitoringPeriodHelpView from "./DataMonitoringPeriodHelpView";
 import ChevronIcon from "@assets/svg/icon/chevron";
 import { Typography } from "@/components/Typography";
+import { Goal } from "@/entities/Goal";
+import { getGoalsAndRecords } from "@/utils/localStorage/goals";
+import { useFocusEffect } from "@react-navigation/native";
 
 interface ModalCorrelationScreenProps {
   navigation: any;
@@ -69,6 +72,16 @@ function getSubArray<T>(array: T[], index: number, x: number): (T | undefined)[]
   return result;
 }
 
+function groupBy(array, keyOrFn) {
+  return array.reduce((acc, item) => {
+    const key = typeof keyOrFn === "function" ? keyOrFn(item) : item[keyOrFn];
+
+    if (!acc[key]) acc[key] = [];
+    acc[key] = item;
+    return acc;
+  }, {});
+}
+
 export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ navigation, route }) => {
   const { config } = useDevCorrelationConfig();
   const MAX_NUNBER_OF_DAYS = config.maxDays;
@@ -76,7 +89,9 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
 
   const [diaryData] = useContext(DiaryDataContext);
   const [selectedIndicators, setSelectedIndicators] = useState<Indicator[]>([]);
+  const [selectedGoals, setSelectedGoals] = useState<Goal[]>([]);
   const [showTreatment, setShowTreatment] = useState<boolean>();
+
   const [displayItem, setDisplayItem] = useState<null>();
   const [isVisible, setIsVisible] = useState(false);
   const [active, setActive] = useState("7days");
@@ -85,22 +100,33 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
   const [selectedPointIndex, setSelectedPointIndex] = useState<number | null>();
   const [firstVisible, setFirstVisible] = useState();
   const [lastVisible, setLastVisible] = useState();
+  const [goalsAndRecord, setGoalsAndRecord] = useState<{ goal: Goal; records: any[] }[] | undefined>();
   const chartRef = useRef();
 
   const onClose = ({
     showTreatment: _showTreatment,
     selectedIndicators: _selectedIndicators,
+    selectedGoals: _selectedGoals,
   }: {
     showTreatment: boolean;
     selectedIndicators: Indicator[];
+    selectedGoals: Goal[];
   }) => {
     closeBottomSheet();
     setSelectedIndicators(_selectedIndicators);
+    setSelectedGoals(_selectedGoals);
     setShowTreatment(_showTreatment);
   };
 
   const openIndicatorBottomSheet = () => {
-    showBottomSheet(<IndicatorsBottomSheet onClose={onClose} initialSelectedIndicators={selectedIndicators} initialShowTreatment={showTreatment} />);
+    showBottomSheet(
+      <IndicatorsBottomSheet
+        onClose={onClose}
+        initialSelectedGoals={selectedGoals}
+        initialSelectedIndicators={selectedIndicators}
+        initialShowTreatment={showTreatment}
+      />
+    );
   };
 
   useEffect(() => {
@@ -148,14 +174,37 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
     }
   }, [displayItem]);
 
-  const oneBoolean = selectedIndicators.filter((ind) => ind.type === "boolean").length === 1 && selectedIndicators.length === 2;
+  useEffect(() => {
+    const cb = async () => {
+      const goalsAndRecord = await getGoalsAndRecords();
+      setGoalsAndRecord(goalsAndRecord || []);
+    };
+    cb();
+  }, []);
+
+  const goalsByDate = useMemo(() => {
+    if (!goalsAndRecord) {
+      return;
+    }
+    const goalsByDate = goalsAndRecord.map(({ goal, records }, index) => {
+      return groupBy(records, "date");
+    });
+    return goalsByDate;
+  }, [goalsAndRecord]);
+
+  const oneBoolean =
+    (selectedIndicators.filter((ind) => ind.type === "boolean").length === 1 && selectedIndicators.length === 2) ||
+    (selectedGoals.length === 1 && selectedIndicators.filter((ind) => ind.type !== "boolean").length === 1);
+
   const twoBoolean =
     selectedIndicators.filter((ind) => ind.type === "boolean").length === 2 ||
-    (selectedIndicators.filter((ind) => ind.type === "boolean").length === 1 && selectedIndicators.length === 1);
-  const booleanIndicatorIndex = oneBoolean ? selectedIndicators.findIndex((ind) => ind.type === "boolean") : undefined;
+    selectedGoals.length === 2 ||
+    (selectedIndicators.filter((ind) => ind.type === "boolean").length === 1 && selectedGoals.length === 1) ||
+    (selectedGoals.length === 1 && selectedIndicators.length === 0);
+  const booleanIndicatorIndex = oneBoolean ? selectedIndicators.findIndex((ind) => ind.type === "boolean") || selectedGoals[0] : undefined;
 
   const dataToDisplay = useMemo(() => {
-    if (!diaryData || selectedIndicators.length === 0) {
+    if (!diaryData || (selectedIndicators.length === 0 && selectedGoals.length === 0) || !goalsAndRecord || !goalsByDate) {
       return null;
     }
     // if (!selectedIndicators) {
@@ -196,8 +245,9 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
           if (indicator?.type === "boolean")
             return {
               value: oneBoolean ? 0 : categoryState?.value === true ? 2 : 1,
+              booleanValue: categoryState?.value,
               //value: categoryState?.value === true ? 2 : 1,
-              noValue: (oneBoolean && categoryState?.value === false) || false,
+              noValue: categoryState?.value === undefined,
               date: date,
               label: date,
               isBoolean: oneBoolean, // we setup isBoolean true only when oneBoolean
@@ -250,7 +300,42 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
         });
       data.push(newData);
     }
-    if (selectedIndicators.length === 1) {
+
+    for (const goal of selectedGoals) {
+      const goalIndex = goalsAndRecord.findIndex((g) => g.goal.id === goal.id);
+      const newData = chartDates
+        .map((date) => {
+          const dayData = goalsByDate[goalIndex][date];
+          if (!dayData) {
+            return {
+              value: 1,
+              hideDataPoint: false,
+              noValue: true,
+              date: date,
+              indicator: goal,
+              label: date,
+            };
+          }
+          // console.log("dayData", dayData);
+          return {
+            value: oneBoolean ? 0 : dayData.value === true ? 2 : 1,
+            //value: categoryState?.value === true ? 2 : 1,
+            noValue: (oneBoolean && dayData?.value === false) || false,
+            date: date,
+            label: date,
+            isBoolean: oneBoolean, // we setup isBoolean true only when oneBoolean
+          };
+        })
+        .filter((d) => d)
+        .filter((d) => {
+          if (!Number.isFinite(d.value)) {
+            return false;
+          }
+          return true;
+        });
+      data.push(newData);
+    }
+    if ((selectedIndicators.length === 1 && selectedGoals.length === 0) || (selectedIndicators.length === 0 && selectedGoals.length === 1)) {
       data.push(undefined);
     }
     const treatment = true;
@@ -300,13 +385,12 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
       data.push(newData);
     }
     return data;
-  }, [diaryData, selectedIndicators]); // 👈 recalcul dès que rawData ou filters changent
+  }, [diaryData, selectedIndicators, selectedGoals, goalsAndRecord, goalsByDate]); // 👈 recalcul dès que rawData ou filters changent
 
   const handleVisibleRangeChange = (first, last) => {
     setFirstVisible(dataToDisplay[0][first + 1]?.date);
     setLastVisible(dataToDisplay[0][last - 1]?.date);
   };
-
   const validDataCount0 = dataToDisplay?.[0]?.filter((v) => !v["noValue"]).length ?? 0;
   const validDataCount1 = dataToDisplay?.[1]?.filter((v) => !v["noValue"]).length ?? 0;
 
@@ -333,7 +417,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
             className="border border-cnam-primary-700 flex-row h-[48px] rounded-2xl items-center px-4 justify-between"
           >
             <Typography className={mergeClassNames(typography.textLgMedium, "text-gray-900")}>
-              Modifier les indicateurs ({selectedIndicators.length})
+              Modifier les indicateurs ({selectedIndicators.length + selectedGoals.length})
             </Typography>
             <ArrowUpSvg
               style={{
@@ -362,7 +446,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                 </Typography>
               ) : (
                 <Typography className={mergeClassNames(typography.textLgBold, "text-cnam-primary-800 text-center px-4 mt-4")}>
-                  Sélectionnez au moins un indicateur.
+                  Sélectionnez au moins un indicateur ou objectif
                 </Typography>
               )}
             </View>
@@ -403,7 +487,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                 className="border border-cnam-primary-700 flex-row h-[48px] rounded-2xl items-center px-4 justify-between"
               >
                 <Typography className={mergeClassNames(typography.textLgMedium, "text-gray-900")}>
-                  Modifier les indicateurs ({selectedIndicators.length})
+                  Modifier les indicateurs ({selectedIndicators.length + selectedGoals.length})
                 </Typography>
                 <ArrowUpSvg
                   style={{
@@ -495,18 +579,43 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                           try {
                             value = diaryData[displayItem.date][getIndicatorKey(indicator)].value;
                           } catch (e) {}
+                          const center = 30 / 2;
+                          const lineLength = 6 * 1.4; //
                           return (
                             <View key={indicator.uuid} className="flex-row items-center space-x-2">
                               {oneBoolean && booleanIndicatorIndex === index ? (
-                                <View className="items-center" style={{ width: 30 }}>
-                                  <View
-                                    className="w-4 h-4 bg-white rounded-full"
-                                    style={{
-                                      borderColor: index === 0 ? "#00A5DF" : "#3D6874",
-                                      borderWidth: 4,
-                                      backgroundColor: index === 0 ? "#00A5DF" : "white",
-                                    }}
-                                  ></View>
+                                <View>
+                                  {(value === true || value === undefined) && (
+                                    <Svg
+                                      width={30}
+                                      height={30}
+                                      style={{
+                                        alignSelf: "center",
+                                      }}
+                                    >
+                                      <Circle cx={30 / 2} cy={30 / 2} r={6} fill={"white"} stroke={"#3D6874"} strokeWidth={4} />
+                                    </Svg>
+                                  )}
+                                  {value === false && (
+                                    <Svg
+                                      width={30}
+                                      height={30}
+                                      style={{
+                                        alignSelf: "center",
+                                      }}
+                                    >
+                                      <Circle cx={30 / 2} cy={30 / 2} r={6} fill={"white"} stroke={"#3D6874"} strokeWidth={4} />
+                                      <Line
+                                        x1={center - lineLength}
+                                        y1={center - lineLength}
+                                        x2={center + lineLength}
+                                        y2={center + lineLength}
+                                        stroke={"#3D6874"}
+                                        strokeWidth={4}
+                                        strokeLinecap="round"
+                                      />
+                                    </Svg>
+                                  )}
                                 </View>
                               ) : (
                                 <Svg height="2" width="30">
@@ -527,6 +636,70 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                                 </Typography>
                                 {computeIndicatorLabel(indicator, value) || "Pas de donnée"}
                               </Typography>
+                            </View>
+                          );
+                        })}
+                      {displayItem &&
+                        selectedGoals.map((goal, index) => {
+                          let value;
+                          try {
+                            value = goalsByDate[index][displayItem.date].value;
+                          } catch (e) {}
+                          const center = 30 / 2;
+                          const lineLength = 6 * 1.4; //
+                          return (
+                            <View key={goal.id} className="flex-row items-center space-x-2">
+                              {oneBoolean ? (
+                                <View>
+                                  {(value === true || value === undefined) && (
+                                    <Svg
+                                      width={30}
+                                      height={30}
+                                      style={{
+                                        alignSelf: "center",
+                                      }}
+                                    >
+                                      <Circle cx={30 / 2} cy={30 / 2} r={6} fill={"white"} stroke={"#3D6874"} strokeWidth={4} />
+                                    </Svg>
+                                  )}
+                                  {value === false && (
+                                    <Svg
+                                      width={30}
+                                      height={30}
+                                      style={{
+                                        alignSelf: "center",
+                                      }}
+                                    >
+                                      <Circle cx={30 / 2} cy={30 / 2} r={6} fill={"white"} stroke={"#3D6874"} strokeWidth={4} />
+                                      <Line
+                                        x1={center - lineLength}
+                                        y1={center - lineLength}
+                                        x2={center + lineLength}
+                                        y2={center + lineLength}
+                                        stroke={"#3D6874"}
+                                        strokeWidth={4}
+                                        strokeLinecap="round"
+                                      />
+                                    </Svg>
+                                  )}
+                                </View>
+                              ) : (
+                                <Svg height="2" width="30">
+                                  <Line
+                                    x1="0"
+                                    y1="1"
+                                    x2="100%"
+                                    y2="1"
+                                    stroke={index + selectedIndicators.length === 0 ? "#00A5DF" : "#3D6874"} // your color
+                                    strokeWidth="2"
+                                    strokeDasharray={index + selectedIndicators.length === 0 ? "" : "4 4"} // pattern: 4px dash, 4px gap
+                                  />
+                                </Svg>
+                              )}
+                              <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 ")}>
+                                <Text className={mergeClassNames(typography.textMdSemibold, "text-primary-900")}>{goal.label} : </Text>
+                                {value === true ? "Réalisé" : value === false ? "Non réalisé" : "Pas de donnée"}
+                              </Text>
                             </View>
                           );
                         })}
@@ -562,7 +735,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                         (diaryData[displayItem.date]["PRISE_DE_TRAITEMENT_SI_BESOIN"] || {}).value === true && (
                           <View className="flex-row items-center space-x-2">
                             <View className="w-[30] items-center justify-center">
-                              <View className="w-2 h-2 rounded-full bg-cnam-primary-800"></View>
+                              <View className="w-2 h-2 rounded-full bg-cnam-mauve-0"></View>
                             </View>
                             <Typography className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800 ")}>
                               <Typography className={mergeClassNames(typography.textMdSemibold, "text-primary-900")}>Si besoin : </Typography>Oui
@@ -575,6 +748,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                           onPress={() => {
                             navigation.navigate("detail-correlation-modal", {
                               selectedIndicators,
+                              selectedGoals,
                               diaryDataForDate: diaryData[displayItem.date],
                               date: displayItem.date,
                               data: getSubArray(dataToDisplay[0], selectedPointIndex, 4),
@@ -670,21 +844,117 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                   />
                 </View>
                 <View className="bg-cnam-primary-25 p-4 -mt-2 rounded-2xl flex-col space-y-2">
-                  <View className="flex-row items-center justify-center space-x-4">
+                  <View className="flex-row items-left justify-start flex-wrap ">
                     {selectedIndicators.map((indicator, index) => (
                       <View key={getIndicatorKey(indicator)}>
-                        <Typography className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>{indicator.name}</Typography>
-                        <Svg height="2" width="100%">
-                          <Line
-                            x1="0"
-                            y1="1"
-                            x2="100%"
-                            y2="1"
-                            stroke={index === 0 ? "#00A5DF" : "#3D6874"} // your color
-                            strokeWidth="2"
-                            strokeDasharray={index === 0 ? "" : "4 4"} // pattern: 4px dash, 4px gap
-                          />
-                        </Svg>
+                        {indicator.type !== INDICATOR_TYPE.boolean && (
+                          <View className="flex-col mr-2 mb-2">
+                            <Typography className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>{indicator.name}</Typography>
+
+                            <Svg height="2" width="100%">
+                              <Line
+                                x1="0"
+                                y1="1"
+                                x2="100%"
+                                y2="1"
+                                stroke={index === 0 ? "#00A5DF" : "#3D6874"} // your color
+                                strokeWidth="2"
+                                strokeDasharray={index === 0 ? "" : "4 4"} // pattern: 4px dash, 4px gap
+                              />
+                            </Svg>
+                          </View>
+                        )}
+                        {indicator.type === INDICATOR_TYPE.boolean &&
+                          (function () {
+                            const size = 20;
+                            const center = size / 2;
+                            const radius = 4;
+                            const lineLength = radius * 1.4; //
+                            return (
+                              <View className="flex-row items-center justify-center space-x-2 mr-2 mb-2">
+                                <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>{indicator.name}</Text>
+
+                                <View className="flex-row items-center justify-left">
+                                  <Text className={typography.textMdMedium}>Oui</Text>
+                                  <Svg
+                                    width={size}
+                                    height={size}
+                                    style={{
+                                      alignSelf: "center",
+                                    }}
+                                  >
+                                    <Circle cx={center} cy={center} r={radius} fill={"white"} stroke={"#0C419A"} strokeWidth={2} />
+                                    <Line
+                                      x1={center - lineLength}
+                                      y1={center - lineLength}
+                                      x2={center + lineLength}
+                                      y2={center + lineLength}
+                                      stroke={"#3D6874"}
+                                      strokeWidth={2}
+                                      strokeLinecap="round"
+                                    />
+                                  </Svg>
+                                  <Text className={typography.textMdMedium}>Non</Text>
+                                  <Svg
+                                    width={size}
+                                    height={size}
+                                    style={{
+                                      alignSelf: "center",
+                                    }}
+                                  >
+                                    <Circle cx={center} cy={center} r={radius} fill={"white"} stroke={"#3D6874"} strokeWidth={2} />
+                                  </Svg>
+                                </View>
+                              </View>
+                            );
+                          })()}
+                      </View>
+                    ))}
+                    {selectedGoals.map((goal, index) => (
+                      <View key={goal.id}>
+                        {(function () {
+                          const size = 20;
+                          const center = size / 2;
+                          const radius = 4;
+                          const lineLength = radius * 1.4; //
+                          return (
+                            <View className="flex-row items-center justify-center space-x-2">
+                              <Text className={mergeClassNames(typography.textMdMedium, "text-cnam-primary-800")}>{goal.label}</Text>
+
+                              <View className="flex-row items-center justify-left">
+                                <Text className={typography.textMdMedium}>Oui</Text>
+                                <Svg
+                                  width={size}
+                                  height={size}
+                                  style={{
+                                    alignSelf: "center",
+                                  }}
+                                >
+                                  <Circle cx={center} cy={center} r={radius} fill={"white"} stroke={"#3D6874"} strokeWidth={2} />
+                                  <Line
+                                    x1={center - lineLength}
+                                    y1={center - lineLength}
+                                    x2={center + lineLength}
+                                    y2={center + lineLength}
+                                    stroke={"#3D6874"}
+                                    strokeWidth={2}
+                                    strokeLinecap="round"
+                                  />
+                                </Svg>
+                                <Text className={typography.textMdMedium}>Non</Text>
+                                <Svg
+                                  width={size}
+                                  height={size}
+                                  style={{
+                                    alignSelf: "center",
+                                  }}
+                                >
+                                  <Circle cx={center} cy={center} r={radius} fill={"white"} stroke={"#3D6874"} strokeWidth={2} />
+                                </Svg>
+                              </View>
+                            </View>
+                          );
+                        })()}
                       </View>
                     ))}
                   </View>
@@ -699,7 +969,7 @@ export const ModalCorrelationScreen: React.FC<ModalCorrelationScreenProps> = ({ 
                         <Typography className="text-primary-900">Traitement</Typography>
                       </View>
                       <View className="flex-row items-center justify-center space-x-2">
-                        <View className="bg-cnam-primary-950 rounded-full h-2 w-2" />
+                        <View className="bg-cnam-mauve-0 rounded-full h-2 w-2" />
                         <Typography className="text-primary-900">Prise d'un "si besoin"</Typography>
                       </View>
                     </View>
