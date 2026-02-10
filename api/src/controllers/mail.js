@@ -1,6 +1,6 @@
 const express = require("express");
 const fetch = require("node-fetch");
-const { TIPIMAIL_API_USER, TIPIMAIL_API_KEY, ENVIRONMENT } = require("../config");
+const { TIPIMAIL_API_USER, TIPIMAIL_API_KEY, ENVIRONMENT, MAIL_DEFAULT_EMAIL, MAIL_DEFAULT_NAME } = require("../config");
 const { catchErrors } = require("../middlewares/errors");
 const router = express.Router();
 const { capture } = require("../third-parties/sentry");
@@ -17,7 +17,7 @@ router.post(
     if (!subject || (!text && !html)) return res.status(400).json({ ok: false, error: "wrong parameters" });
 
     if (!to) {
-      to = ENVIRONMENT === "development" ? process.env.MAIL_TO_DEV : "jardinmental@fabrique.social.gouv.fr";
+      to = ENVIRONMENT === "development" ? process.env.MAIL_TO_DEV : MAIL_DEFAULT_EMAIL;
     }
 
     if (!replyTo) {
@@ -25,8 +25,8 @@ router.post(
       replyToName = undefined;
     }
 
-    const from = "jardinmental@fabrique.social.gouv.fr";
-    const fromName = "Jardin Mental - Application";
+    const from = MAIL_DEFAULT_EMAIL;
+    const fromName = MAIL_DEFAULT_NAME;
 
     const apiRes = await fetch("https://api.tipimail.com/v1/messages/send", {
       method: "POST",
@@ -85,13 +85,13 @@ router.post("/subscribe", async (req, res) => {
         apiKey: TIPIMAIL_API_KEY,
         to: [
           {
-            address: "jardinmental@fabrique.social.gouv.fr",
+            address: MAIL_DEFAULT_EMAIL,
           },
         ],
         msg: {
           from: {
-            address: "jardinmental@fabrique.social.gouv.fr",
-            personalName: "Jardin Mental - Application",
+            address: MAIL_DEFAULT_EMAIL,
+            personalName: MAIL_DEFAULT_NAME,
           },
           subject: "Nouvelle inscription à la newsletter",
           text: `Nouvelle inscription à la newsletter de l'application Jardin Mental : ${email}`,
