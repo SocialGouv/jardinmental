@@ -2,7 +2,7 @@ import { Share, Platform } from "react-native";
 import logEvents from "../services/logEvents";
 
 export const recommendApp = async () => {
-  const url = "https://jardinmental.fabrique.social.gouv.fr/";
+  const url = "https://www.ameli.fr/assure/jardin-mental";
   try {
     logEvents.logRecommendAppShow();
     const result = await Share.share({

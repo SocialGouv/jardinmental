@@ -6,8 +6,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 const PdfViewer = ({ navigation }) => {
   const uri =
     Platform.OS === "android"
-      ? "https://docs.google.com/gview?embedded=true&url=https://jardinmental.fabrique.social.gouv.fr/Notice%20Jardin%20Mental.pdf"
-      : "https://jardinmental.fabrique.social.gouv.fr/Notice%20Jardin%20Mental.pdf";
+      ? "https://docs.google.com/gview?embedded=true&url=https://www.ameli.fr/assure/jardin-mental/Notice%20Jardin%20Mental.pdf"
+      : "https://www.ameli.fr/assure/jardin-mental/Notice%20Jardin%20Mental.pdf";
 
   return (
     <SafeAreaView className="flex-1 flex-col w-full h-full">
@@ -38,7 +38,7 @@ export default PdfViewer;
 
 // const PdfViewer = () => {
 //   const source = {
-//     uri: "https://jardinmental.fabrique.social.gouv.fr/Notice%20Jardin%20Mental.pdf",
+//     uri: "https://www.ameli.fr/assure/jardin-mental/Notice%20Jardin%20Mental.pdf",
 //     cache: true,
 //   };
 

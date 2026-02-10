@@ -32,7 +32,7 @@ const LegalMentions = ({ navigation }) => {
 
       <Typography className="text-blue-900 text-lg font-bold my-2.5">Accessibilité</Typography>
       <TouchableOpacity
-        onPress={() => Linking.openURL("https://jardinmental.fabrique.social.gouv.fr/accessibilite")}
+        onPress={() => Linking.openURL("https://www.ameli.fr/assure/jardin-mental/accessibilite")}
         accessibilityRole="link"
         accessibilityLabel="Consulter la déclaration d'accessibilité : non-conforme"
         accessibilityHint="Ouvre le lien dans le navigateur"
