@@ -7,7 +7,7 @@
 
 Empowering users to better understand their mental health and make informed treatment choices.
 
-- Official website: https://jardinmental.fabrique.social.gouv.fr/
+- Official website: https://www.ameli.fr/assure/jardin-mental
 - Project intent: https://beta.gouv.fr/startups/monsuivipsy.html
 
 ---
