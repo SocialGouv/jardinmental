@@ -54,7 +54,7 @@ See [api/README.md](./api/README.md) for detailed instructions.
 Build, release, and publishing instructions are specific to each component:
 
 - For the mobile app, see the "Release/Publish" section in [app/README.md](./app/README.md)
-- For the API, see [api/README-TypeScript.md](./api/README-TypeScript.md)
+- For the API, see [api/README.md](./api/README.md)
 
 ---
 
