@@ -247,16 +247,6 @@ Review environments are created automatically for each pull request. To access a
 
 ---
 
-## Additional Resources
-
-- **TypeScript migration and advanced usage:** See [`README-TypeScript.md`](./README-TypeScript.md)
-- **Sentry integration:** See [`SENTRY-INTEGRATION.md`](./SENTRY-INTEGRATION.md)
-- **Jest setup:** See [`JEST-SETUP-COMPLETE.md`](./JEST-SETUP-COMPLETE.md)
-- **Migrations:** See [`MIGRATION-INDEX-COMPLETE.md`](./MIGRATION-INDEX-COMPLETE.md)
-- **TypeScript setup:** See [`TYPESCRIPT-SETUP-COMPLETE.md`](./TYPESCRIPT-SETUP-COMPLETE.md)
-
----
-
 ## Notes
 
 - Only **pnpm** is supported for dependency management and scripts (see `package.json`).
