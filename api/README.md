@@ -8,6 +8,8 @@ This folder contains the backend API for Jardin Mental, built with Node.js, Expr
 
 ## Local Development Setup
 
+> **Important:** In local development, only **Postgres** and **Maildev** run in Docker containers. The Node.js API runs directly on your machine (not in a container).
+
 ### Prerequisites
 
 - **Node.js** (version 14 or higher)
@@ -21,6 +23,8 @@ pnpm install
 ```
 
 ### 2. Start Database and Maildev
+
+> **Note:** Make sure Docker is installed and running before executing this command.
 
 From the `api` directory, run:
 
@@ -58,6 +62,16 @@ This will start:
 
 ```bash
 pnpm test
+```
+
+### 6. Run Cron Jobs (Optional)
+
+The cron job sends scheduled notifications. To run it manually:
+
+From the `api` directory, run:
+
+```bash
+node reminderCronJobRunner.js
 ```
 
 ---

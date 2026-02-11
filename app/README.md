@@ -22,6 +22,8 @@ pnpm install
 
 ## Running the App
 
+> **Note:** All commands below must be run from the `app` folder.
+
 ### Start the development server
 
 ```bash
