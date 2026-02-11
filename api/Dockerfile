@@ -13,12 +13,14 @@ RUN apt-get update && apt-get install -y openssl
 
 WORKDIR /app
 
+# Enable pnpm
+RUN corepack enable && corepack prepare pnpm@latest --activate
+
 # Copy dependency configuration files
-COPY yarn.lock .yarnrc.yml package.json ./
-COPY --chown=1000:1000 .yarn .yarn
+COPY pnpm-lock.yaml package.json ./
 
 # Install ALL dependencies (dev + prod) for compilation
-RUN yarn install --immutable
+RUN pnpm install --frozen-lockfile
 
 # Copy TypeScript sources and configuration
 COPY src/ src/
@@ -33,7 +35,7 @@ RUN if [ -z "$PRODUCTION" ]; then echo "Using staging config for build"; cp .env
 RUN npx prisma generate
 
 # Compile TypeScript to JavaScript
-RUN yarn build
+RUN pnpm build
 
 # Verify compilation succeeded
 RUN echo "Build completed. Contents of dist/:" && ls -la dist/ || (echo "Build failed - dist/ directory not found" && exit 1)
@@ -51,12 +53,14 @@ RUN mkdir /app && chown 1000:1000 /app
 
 WORKDIR /app
 
+# Enable pnpm
+RUN corepack enable && corepack prepare pnpm@latest --activate
+
 # Copy dependency configuration files
-COPY yarn.lock .yarnrc.yml package.json ./
-COPY --chown=1000:1000 .yarn .yarn
+COPY pnpm-lock.yaml package.json ./
 
 # Install ONLY production dependencies
-RUN yarn workspaces focus --production && yarn cache clean
+RUN pnpm install --prod --frozen-lockfile && pnpm store prune
 
 # Copy compiled JavaScript files from builder stage
 COPY --from=builder --chown=1000:1000 /app/dist ./dist
@@ -78,4 +82,4 @@ ENV NODE_ENV=production
 USER 1000
 
 # Start the application (runs the compiled JavaScript)
-ENTRYPOINT ["yarn", "start"]
+ENTRYPOINT ["pnpm", "start"]

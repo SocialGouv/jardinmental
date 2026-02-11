@@ -9,10 +9,12 @@ RUN mkdir /app && chown 1000:1000 /app
 
 WORKDIR /app
 
-COPY yarn.lock .yarnrc.yml ./
-COPY --chown=1000:1000 .yarn .yarn
+# Enable pnpm
+RUN corepack enable && corepack prepare pnpm@latest --activate
 
-RUN yarn fetch workspaces focus --production && yarn cache clean
+COPY pnpm-lock.yaml package.json ./
+
+RUN pnpm install --prod --frozen-lockfile && pnpm store prune
 
 COPY . .
 
@@ -20,7 +22,7 @@ RUN if [ -z "$PRODUCTION" ]; then echo "Copy staging values"; cp .env.staging .e
 
 ENV NODE_ENV=production
 
-RUN yarn build
+RUN pnpm build
 
 RUN npx prisma generate
 
