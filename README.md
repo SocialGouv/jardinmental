@@ -45,7 +45,7 @@ See [app/README.md](./app/README.md) for detailed instructions.
 
 ### Run the API
 
-See [api/README-TypeScript.md](./api/README-TypeScript.md) for detailed instructions.
+See [api/README.md](./api/README.md) for detailed instructions.
 
 ---
 
@@ -76,7 +76,7 @@ This will send a test error to Sentry with proper context and tags. Only enable 
 ## Useful Links
 
 - [app/README.md](./app/README.md) — Mobile app documentation
-- [api/README-TypeScript.md](./api/README-TypeScript.md) — API documentation
+- [api/README.md](./api/README.md) — API documentation
 
 ---
 
