@@ -57,7 +57,7 @@ WORKDIR /app
 RUN corepack enable && corepack prepare pnpm@latest --activate
 
 # Copy dependency configuration files
-COPY pnpm-lock.yaml package.json ./
+COPY ../pnpm-lock.yaml package.json ./
 
 # Install ONLY production dependencies
 RUN pnpm install --prod --frozen-lockfile && pnpm store prune
