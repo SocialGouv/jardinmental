@@ -34,10 +34,6 @@ COPY api/src/ src/
 COPY api/tsconfig.json ./
 COPY api/prisma/ prisma/
 
-# Copy environment files for build context
-COPY api/.env.staging api/.env.production ./
-RUN if [ -z "$PRODUCTION" ]; then echo "Using staging config for build"; cp .env.staging .env; else echo "Using production config for build"; cp .env.production .env; fi
-
 # Generate Prisma client
 RUN npx prisma generate
 
@@ -84,10 +80,6 @@ COPY --from=builder --chown=1000:1000 /app/node_modules/.prisma ./node_modules/.
 
 # Copy Prisma schema for runtime (needed for migrations)
 COPY --chown=1000:1000 api/prisma/ prisma/
-
-# Copy environment configuration files
-COPY api/.env.staging api/.env.production ./
-RUN if [ -z "$PRODUCTION" ]; then echo "Copy staging values"; cp .env.staging .env; else cp .env.production .env; fi
 
 # Set production environment
 ENV NODE_ENV=production

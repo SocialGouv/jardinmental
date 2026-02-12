@@ -28,8 +28,6 @@ RUN pnpm install --filter api_monsuivipsy... --prod --frozen-lockfile --offline 
 # Copy API sources
 COPY api/ .
 
-RUN if [ -z "$PRODUCTION" ]; then echo "Copy staging values"; cp .env.staging .env; else cp .env.production .env; fi
-
 ENV NODE_ENV=production
 
 RUN pnpm build
