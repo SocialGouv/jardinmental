@@ -12,11 +12,21 @@ WORKDIR /app
 # Enable pnpm
 RUN corepack enable && corepack prepare pnpm@latest --activate
 
-COPY ../pnpm-lock.yaml package.json ./
+# Copy workspace lockfiles/config first for better cache reuse
+COPY pnpm-lock.yaml pnpm-workspace.yaml .npmrc ./
 
-RUN pnpm install --prod --frozen-lockfile && pnpm store prune
+# Copy API package manifest (workspace package)
+COPY api/package.json ./api/package.json
+COPY api/.npmrc ./api/.npmrc
 
-COPY . .
+# Prefetch dependencies based on lockfile only
+RUN pnpm fetch
+
+# Install ONLY production dependencies (offline, workspace-aware)
+RUN pnpm install --filter api_monsuivipsy... --prod --frozen-lockfile --offline && pnpm store prune
+
+# Copy API sources
+COPY api/ .
 
 RUN if [ -z "$PRODUCTION" ]; then echo "Copy staging values"; cp .env.staging .env; else cp .env.production .env; fi
 

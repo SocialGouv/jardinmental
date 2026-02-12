@@ -16,19 +16,26 @@ WORKDIR /app
 # Enable pnpm
 RUN corepack enable && corepack prepare pnpm@latest --activate
 
-# Copy dependency configuration files
-COPY ../pnpm-lock.yaml package.json ./
+# Copy workspace lockfiles/config first for better cache reuse
+COPY pnpm-lock.yaml pnpm-workspace.yaml .npmrc ./
 
-# Install ALL dependencies (dev + prod) for compilation
-RUN pnpm install --frozen-lockfile
+# Copy API package manifest (workspace package)
+COPY api/package.json ./api/package.json
+COPY api/.npmrc ./api/.npmrc
+
+# Prefetch dependencies based on lockfile only
+RUN pnpm fetch
+
+# Install ALL dependencies (dev + prod) for compilation (offline, workspace-aware)
+RUN pnpm install --filter api_monsuivipsy... --frozen-lockfile --offline
 
 # Copy TypeScript sources and configuration
-COPY src/ src/
-COPY tsconfig.json ./
-COPY prisma/ prisma/
+COPY api/src/ src/
+COPY api/tsconfig.json ./
+COPY api/prisma/ prisma/
 
 # Copy environment files for build context
-COPY .env.staging .env.production ./
+COPY api/.env.staging api/.env.production ./
 RUN if [ -z "$PRODUCTION" ]; then echo "Using staging config for build"; cp .env.staging .env; else echo "Using production config for build"; cp .env.production .env; fi
 
 # Generate Prisma client
@@ -56,11 +63,18 @@ WORKDIR /app
 # Enable pnpm
 RUN corepack enable && corepack prepare pnpm@latest --activate
 
-# Copy dependency configuration files
-COPY ../pnpm-lock.yaml package.json ./
+# Copy workspace lockfiles/config first for better cache reuse
+COPY pnpm-lock.yaml pnpm-workspace.yaml .npmrc ./
 
-# Install ONLY production dependencies
-RUN pnpm install --prod --frozen-lockfile && pnpm store prune
+# Copy API package manifest (workspace package)
+COPY api/package.json ./api/package.json
+COPY api/.npmrc ./api/.npmrc
+
+# Prefetch dependencies based on lockfile only
+RUN pnpm fetch
+
+# Install ONLY production dependencies (offline, workspace-aware)
+RUN pnpm install --filter api_monsuivipsy... --prod --frozen-lockfile --offline && pnpm store prune
 
 # Copy compiled JavaScript files from builder stage
 COPY --from=builder --chown=1000:1000 /app/dist ./dist
@@ -69,10 +83,10 @@ COPY --from=builder --chown=1000:1000 /app/dist ./dist
 COPY --from=builder --chown=1000:1000 /app/node_modules/.prisma ./node_modules/.prisma
 
 # Copy Prisma schema for runtime (needed for migrations)
-COPY --chown=1000:1000 prisma/ prisma/
+COPY --chown=1000:1000 api/prisma/ prisma/
 
 # Copy environment configuration files
-COPY .env.staging .env.production ./
+COPY api/.env.staging api/.env.production ./
 RUN if [ -z "$PRODUCTION" ]; then echo "Copy staging values"; cp .env.staging .env; else cp .env.production .env; fi
 
 # Set production environment
