@@ -9,18 +9,28 @@ RUN mkdir /app && chown 1000:1000 /app
 
 WORKDIR /app
 
-COPY yarn.lock .yarnrc.yml ./
-COPY --chown=1000:1000 .yarn .yarn
+# Enable pnpm
+RUN corepack enable && corepack prepare pnpm@latest --activate
 
-RUN yarn fetch workspaces focus --production && yarn cache clean
+# Copy workspace lockfiles/config first for better cache reuse
+COPY pnpm-lock.yaml pnpm-workspace.yaml .npmrc ./
 
-COPY . .
+# Copy API package manifest (workspace package)
+COPY api/package.json ./api/package.json
+COPY api/.npmrc ./api/.npmrc
 
-RUN if [ -z "$PRODUCTION" ]; then echo "Copy staging values"; cp .env.staging .env; else cp .env.production .env; fi
+# Prefetch dependencies based on lockfile only
+RUN pnpm fetch
+
+# Install ONLY production dependencies (offline, workspace-aware)
+RUN pnpm install --filter api_monsuivipsy... --prod --frozen-lockfile --offline && pnpm store prune
+
+# Copy API sources
+COPY api/ .
 
 ENV NODE_ENV=production
 
-RUN yarn build
+RUN pnpm build
 
 RUN npx prisma generate
 

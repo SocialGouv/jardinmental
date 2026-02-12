@@ -13,27 +13,32 @@ RUN apt-get update && apt-get install -y openssl
 
 WORKDIR /app
 
-# Copy dependency configuration files
-COPY yarn.lock .yarnrc.yml package.json ./
-COPY --chown=1000:1000 .yarn .yarn
+# Enable pnpm
+RUN corepack enable && corepack prepare pnpm@latest --activate
 
-# Install ALL dependencies (dev + prod) for compilation
-RUN yarn install --immutable
+# Copy workspace lockfiles/config first for better cache reuse
+COPY pnpm-lock.yaml pnpm-workspace.yaml .npmrc ./
+
+# Copy API package manifest (workspace package)
+COPY api/package.json ./api/package.json
+COPY api/.npmrc ./api/.npmrc
+
+# Prefetch dependencies based on lockfile only
+RUN pnpm fetch
+
+# Install ALL dependencies (dev + prod) for compilation (offline, workspace-aware)
+RUN pnpm install --filter api_monsuivipsy... --frozen-lockfile --offline
 
 # Copy TypeScript sources and configuration
-COPY src/ src/
-COPY tsconfig.json ./
-COPY prisma/ prisma/
-
-# Copy environment files for build context
-COPY .env.staging .env.production ./
-RUN if [ -z "$PRODUCTION" ]; then echo "Using staging config for build"; cp .env.staging .env; else echo "Using production config for build"; cp .env.production .env; fi
+COPY api/src/ src/
+COPY api/tsconfig.json ./
+COPY api/prisma/ prisma/
 
 # Generate Prisma client
 RUN npx prisma generate
 
 # Compile TypeScript to JavaScript
-RUN yarn build
+RUN pnpm build
 
 # Verify compilation succeeded
 RUN echo "Build completed. Contents of dist/:" && ls -la dist/ || (echo "Build failed - dist/ directory not found" && exit 1)
@@ -51,12 +56,21 @@ RUN mkdir /app && chown 1000:1000 /app
 
 WORKDIR /app
 
-# Copy dependency configuration files
-COPY yarn.lock .yarnrc.yml package.json ./
-COPY --chown=1000:1000 .yarn .yarn
+# Enable pnpm
+RUN corepack enable && corepack prepare pnpm@latest --activate
 
-# Install ONLY production dependencies
-RUN yarn workspaces focus --production && yarn cache clean
+# Copy workspace lockfiles/config first for better cache reuse
+COPY pnpm-lock.yaml pnpm-workspace.yaml .npmrc ./
+
+# Copy API package manifest (workspace package)
+COPY api/package.json ./api/package.json
+COPY api/.npmrc ./api/.npmrc
+
+# Prefetch dependencies based on lockfile only
+RUN pnpm fetch
+
+# Install ONLY production dependencies (offline, workspace-aware)
+RUN pnpm install --filter api_monsuivipsy... --prod --frozen-lockfile --offline && pnpm store prune
 
 # Copy compiled JavaScript files from builder stage
 COPY --from=builder --chown=1000:1000 /app/dist ./dist
@@ -65,11 +79,7 @@ COPY --from=builder --chown=1000:1000 /app/dist ./dist
 COPY --from=builder --chown=1000:1000 /app/node_modules/.prisma ./node_modules/.prisma
 
 # Copy Prisma schema for runtime (needed for migrations)
-COPY --chown=1000:1000 prisma/ prisma/
-
-# Copy environment configuration files
-COPY .env.staging .env.production ./
-RUN if [ -z "$PRODUCTION" ]; then echo "Copy staging values"; cp .env.staging .env; else cp .env.production .env; fi
+COPY --chown=1000:1000 api/prisma/ prisma/
 
 # Set production environment
 ENV NODE_ENV=production
@@ -78,4 +88,4 @@ ENV NODE_ENV=production
 USER 1000
 
 # Start the application (runs the compiled JavaScript)
-ENTRYPOINT ["yarn", "start"]
+ENTRYPOINT ["pnpm", "start"]
