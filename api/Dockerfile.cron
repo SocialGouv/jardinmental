@@ -12,7 +12,7 @@ WORKDIR /app
 # Enable pnpm
 RUN corepack enable && corepack prepare pnpm@latest --activate
 
-COPY pnpm-lock.yaml package.json ./
+COPY ../pnpm-lock.yaml package.json ./
 
 RUN pnpm install --prod --frozen-lockfile && pnpm store prune
 
