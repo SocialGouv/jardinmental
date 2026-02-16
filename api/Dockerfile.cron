@@ -4,25 +4,39 @@ FROM node:20-bullseye-slim@sha256:affb1afa05024cf8282d966f7b0ffaf2a0fa94f197781b
 
 ARG PRODUCTION
 
-RUN apt-get update && apt-get install -y openssl
-RUN mkdir /app && chown 1000:1000 /app
+# Install OpenSSL for Prisma and build tools for native modules
+RUN apt-get update && apt-get install -y openssl python3 make g++
+
+# Enable pnpm via corepack (included in Node.js 20)
+RUN corepack enable && corepack prepare pnpm@10.24.0 --activate
+
+RUN mkdir -p /app/api && chown -R 1000:1000 /app
 
 WORKDIR /app
 
-COPY yarn.lock .yarnrc.yml ./
-COPY --chown=1000:1000 .yarn .yarn
+# Copy workspace root dependency files (context is now repo root)
+COPY --chown=1000:1000 pnpm-lock.yaml pnpm-workspace.yaml package.json .npmrc ./
+COPY --chown=1000:1000 api/package.json api/.npmrc ./api/
 
-RUN yarn fetch workspaces focus --production && yarn cache clean
+# Install dependencies (including dev for build)
+RUN pnpm install --frozen-lockfile
 
-COPY . .
+# Copy API source code
+COPY --chown=1000:1000 api/ ./api/
 
-RUN if [ -z "$PRODUCTION" ]; then echo "Copy staging values"; cp .env.staging .env; else cp .env.production .env; fi
+# Copy environment files
+RUN if [ -z "$PRODUCTION" ]; then echo "Copy staging values"; cp ./api/.env.staging ./api/.env; else cp ./api/.env.production ./api/.env; fi
 
 ENV NODE_ENV=production
 
-RUN yarn build
+# Set working directory to api
+WORKDIR /app/api
 
+# Generate Prisma client BEFORE building
 RUN npx prisma generate
+
+# Build TypeScript code
+RUN pnpm build
 
 USER 1000
 
