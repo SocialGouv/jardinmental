@@ -34,7 +34,7 @@ RUN if [ -z "$PRODUCTION" ]; then echo "Using staging config for build"; cp ./ap
 
 # Generate Prisma client (from api/ directory)
 WORKDIR /app/api
-RUN npx prisma generate
+RUN pnpm exec prisma generate
 
 # Compile TypeScript to JavaScript
 RUN pnpm build
@@ -83,7 +83,7 @@ ENV NODE_ENV=production
 WORKDIR /app/api
 
 # Generate Prisma client in production stage
-RUN npx prisma generate
+RUN pnpm exec prisma generate
 
 # Switch to non-root user
 USER 1000
