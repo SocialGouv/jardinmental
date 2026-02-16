@@ -32,8 +32,8 @@ jobs:
       - name: 📦 Build and push Docker image for app
         uses: socialgouv/workflows/actions/buildkit@v1
         with:
-          context: "api"
-          dockerfile: "Dockerfile"
+          context: "."
+          dockerfile: "api/Dockerfile"
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           registry: "${{ vars.REGISTRY_URL }}"
@@ -67,8 +67,8 @@ jobs:
       - name: 📦 Build and push Docker image for reminder
         uses: socialgouv/workflows/actions/buildkit@v1
         with:
-          context: "api"
-          dockerfile: "Dockerfile.cron"
+          context: "."
+          dockerfile: "api/Dockerfile.cron"
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           registry: "${{ vars.REGISTRY_URL }}"
