@@ -33,7 +33,7 @@ ENV NODE_ENV=production
 WORKDIR /app/api
 
 # Generate Prisma client BEFORE building
-RUN npx prisma generate
+RUN pnpm exec prisma generate
 
 # Build TypeScript code
 RUN pnpm build
