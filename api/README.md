@@ -92,6 +92,33 @@ node reminderCronJobRunner.js
 
 ---
 
+## Production Server Requirements
+
+The following server resources are configured for the production environment (see [.kontinuous/env/prod/values.yaml](../.kontinuous/env/prod/values.yaml)):
+
+### API Server
+
+- **CPU:**
+  - Requests: 100m (0.1 core)
+  - Limits: 200m (0.2 core)
+- **Memory:**
+  - Requests: 512Mi
+  - Limits: 768Mi
+
+### PostgreSQL Database
+
+- **Storage:** 16Gi
+- **CPU:**
+  - Requests: 1 core
+  - Limits: 1.5 cores (1500m)
+- **Memory:**
+  - Requests: 2Gi
+  - Limits: 2Gi
+
+These specifications represent the minimum resources needed to run the application in production. For development or staging environments, resources can be adjusted accordingly.
+
+---
+
 ## Accessing Kubernetes (k9s)
 
 ### Installation of k9s
