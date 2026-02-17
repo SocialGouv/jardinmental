@@ -420,7 +420,7 @@ const MultiInput = ({ categoryName }: { categoryName: NEW_INDICATORS_CATEGORIES 
     <View className="flex">
       {addedInputs.map((input, index) => (
         <View className="rounded rounded-lg flex-1 flex-row mb-2">
-          <TypographyInput
+          <TextInput
             onChangeText={(text) => {
               addedInputs[index] = text;
               setAddedInputs(addedInputs);

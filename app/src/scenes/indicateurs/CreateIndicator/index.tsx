@@ -108,7 +108,7 @@ const CreateIndicator = ({ navigation, route }) => {
         <Typography className={mergeClassNames(typography.textMdMedium, "text-gray-700 mt-10 mb-2")}>
           Nom de votre indicateur* <Typography className={mergeClassNames(typography.textSmMedium, "text-gray-700")}>(obligatoire)</Typography>
         </Typography>
-        <TypographyInput
+        <TextInput
           onChangeText={(e) => {
             setNameNewIndicator(e);
             setError(false);

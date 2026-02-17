@@ -64,7 +64,7 @@ const QuestionYesNo = ({ question, explanation, onPress, selected, isLast, showU
           />
         </View>
         {showUserCommentInput ? (
-          <TypographyInput
+          <TextInput
             multiline={true}
             numberOfLines={Platform.OS === "ios" ? null : 1}
             minHeight={Platform.OS === "ios" ? 30 * 1 : null}
