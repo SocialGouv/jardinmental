@@ -63,7 +63,7 @@ const Privacy = ({ navigation }) => {
       </Li>
       <View style={styles.break} />
       <Text style={styles.default}>
-        Pour les exercer, contactez-nous par voie électronique :<Text style={styles.link}> jardinmental@fabrique.social.gouv.fr</Text>
+        Pour les exercer, contactez-nous par voie électronique :<Text style={styles.link}> jardinmental.cnam@assurance-maladie.fr</Text>
       </Text>
       <Text style={styles.default}>Par voie postale :</Text>
       <Text style={styles.default}>Caisse nationale de l’assurance maladie</Text>

@@ -89,14 +89,14 @@ export default function FaqMainScreen({ navigation, route }) {
           <Typography className={mergeClassNames(typography.textMdRegular, "text-cnam-primary-900 text-left")}>
             Si vous ne trouvez pas la réponse à votre question, contactez-nous sur
           </Typography>
-          <TouchableOpacity onPress={() => Linking.openURL("mailto:jardinmental@fabrique.social.gouv.fr")}>
+          <TouchableOpacity onPress={() => Linking.openURL("mailto:jardinmental.cnam@assurance-maladie.fr")}>
             <Typography className={mergeClassNames(typography.textMdRegular, "text-gray-800 text-left")}>
-              jardinmental@fabrique.social.gouv.fr
+              jardinmental.cnam@assurance-maladie.fr
             </Typography>
           </TouchableOpacity>
           <JMButton
             onPress={() => {
-              Linking.openURL("mailto:jardinmental@fabrique.social.gouv.fr");
+              Linking.openURL("mailto:jardinmental.cnam@assurance-maladie.fr");
               logEvents.logNeedAssistanceFaq();
             }}
             title="Contactez l’équipe de Jardin mental"
