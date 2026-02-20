@@ -158,7 +158,7 @@ const CGU = ({ navigation }) => {
       </Typography>
       <Typography className="text-blue-900 text-sm my-2">
         Elle permet également à l’Utilisateur de donner son avis, ou de contacter l’équipe via une adresse mail de contact :
-        jardinmental@fabrique.social.gouv.fr
+        jardinmental.cnam@assurance-maladie.fr
       </Typography>
       <Typography className="text-blue-900 text-sm my-2">
         L’Utilisateur peut également recommander l’Application à une personne de son choix.

@@ -55,8 +55,8 @@ const LegalMentions = ({ navigation }) => {
       <Typography className="text-blue-900 text-base my-2">
         Si vous rencontrez un défaut d'accessibilité vous empêchant d'accéder à un contenu ou une fonctionnalité de l'application, merci de nous en
         faire part :{" "}
-        <TouchableOpacity onPress={() => Linking.openURL("mailto:jardinmental@fabrique.social.gouv.fr")}>
-          <Typography className="text-blue-700 underline">jardinmental@fabrique.social.gouv.fr</Typography>
+        <TouchableOpacity onPress={() => Linking.openURL("mailto:jardinmental.cnam@assurance-maladie.fr")}>
+          <Typography className="text-blue-700 underline">jardinmental.cnam@assurance-maladie.fr</Typography>
         </TouchableOpacity>
       </Typography>
       <Typography className="text-blue-900 text-base my-2">

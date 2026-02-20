@@ -49,7 +49,7 @@ export const ContactBottomSheet = ({ navigation }: { navigation: any }) => {
             <JMButton
               onPress={async () => {
                 closeBottomSheet();
-                Linking.openURL("mailto:jardinmental@fabrique.social.gouv.fr");
+                Linking.openURL("mailto:jardinmental.cnam@assurance-maladie.fr");
               }}
               className="flex-row items-center justify-center"
               icon={<MailIcon />}

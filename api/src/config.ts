@@ -28,7 +28,7 @@ export const PUSH_NOTIFICATION_APN_TEAM_ID = process.env.PUSH_NOTIFICATION_APN_T
 export const TIPIMAIL_API_KEY = process.env.TIPIMAIL_API_KEY;
 export const TIPIMAIL_API_USER = process.env.TIPIMAIL_API_USER;
 
-export const MAIL_DEFAULT_EMAIL = process.env.MAIL_DEFAULT_EMAIL || "jardinmental@assurance-maladie.fr";
+export const MAIL_DEFAULT_EMAIL = process.env.MAIL_DEFAULT_EMAIL || "jardinmental.cnam@assurance-maladie.fr";
 export const MAIL_DEFAULT_NAME = process.env.MAIL_DEFAULT_NAME || "Jardin Mental - Application";
 
 export const HMAC_SECRET = process.env.HMAC_SECRET;
