@@ -1,3 +1,10 @@
+# [1.131.0](https://github.com/SocialGouv/jardinmental/compare/v1.130.0...v1.131.0) (2026-02-23)
+
+
+### Features
+
+* bump version 1.43.20 for ios/android ([816dcb9](https://github.com/SocialGouv/jardinmental/commit/816dcb9ff68b7bde7c40e050ee6b628a41ec5503))
+
 # [1.130.0](https://github.com/SocialGouv/jardinmental/compare/v1.129.1...v1.130.0) (2026-02-18)
 
 
