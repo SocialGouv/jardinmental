@@ -247,7 +247,7 @@ export default ({ navigation, visible, onClick }) => {
                   title="Accessibilité numérique : non conforme"
                   navigation={navigation}
                   onClick={() => {
-                    Linking.openURL("https://jardinmental.fabrique.social.gouv.fr/accessibilite");
+                    Linking.openURL("https://www.ameli.fr/assure/jardin-mental/accessibilite");
                   }}
                 />
 
