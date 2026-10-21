@@ -1,3 +1,10 @@
+# [1.132.0](https://github.com/SocialGouv/jardinmental/compare/v1.131.0...v1.132.0) (2026-10-21)
+
+
+### Features
+
+* **api:** add in-app announcement for app renaming on /version endpoint ([cc408d5](https://github.com/SocialGouv/jardinmental/commit/cc408d5614f6b4d80e34634e2db0050e95345d74))
+
 # [1.131.0](https://github.com/SocialGouv/jardinmental/compare/v1.130.0...v1.131.0) (2026-02-23)
 
 
