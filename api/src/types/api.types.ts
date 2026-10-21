@@ -3,6 +3,7 @@ export interface ApiResponse<T = any> {
   ok: boolean;
   data?: T;
   error?: string;
+  sendInApp?: unknown[];
 }
 
 // Types pour les requêtes de rappels

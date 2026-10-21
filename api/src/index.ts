@@ -69,7 +69,13 @@ app.get('/version', async (req: Request, res: Response) => {
   
   const response: ApiResponse<{ MOBILE_VERSION: string; MOBILE_BUILD_NUMBER: number }> = {
     ok: true,
-    data: { MOBILE_VERSION, MOBILE_BUILD_NUMBER: mobileBuildNumber }
+    data: { MOBILE_VERSION, MOBILE_BUILD_NUMBER: mobileBuildNumber },
+    sendInApp: [
+      "🆕 Il y a du nouveau !",
+      "En novembre, Jardin mental change de nom et devient Mon journal mental.\nNous vous informerons prochainement de la suite. À bientôt !",
+      [{ text: "OK" }],
+      { cancelable: true },
+    ],
   };
   
   res.status(200).send(response);
