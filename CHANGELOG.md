@@ -1,3 +1,10 @@
+# [1.133.0](https://github.com/SocialGouv/jardinmental/compare/v1.132.0...v1.133.0) (2026-11-03)
+
+
+### Features
+
+* **api:** add store download link to renaming announcement ([3cb10e2](https://github.com/SocialGouv/jardinmental/commit/3cb10e26959aada2a8340592a52abdfec648771c))
+
 # [1.132.0](https://github.com/SocialGouv/jardinmental/compare/v1.131.0...v1.132.0) (2026-10-21)
 
 
