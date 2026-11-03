@@ -67,13 +67,18 @@ app.get('/version', async (req: Request, res: Response) => {
   const appdevice = req.headers.appdevice as 'ios' | 'android' | undefined;
   const mobileBuildNumber = appdevice === 'ios' ? MOBILE_IOS_BUILD_NUMBER : MOBILE_ANDROID_BUILD_NUMBER;
   
+  const storeLink =
+    appdevice === 'ios'
+      ? 'https://apps.apple.com/fr/app/id1540061393'
+      : 'https://play.google.com/store/apps/details?id=com.monsuivipsy';
+
   const response: ApiResponse<{ MOBILE_VERSION: string; MOBILE_BUILD_NUMBER: number }> = {
     ok: true,
     data: { MOBILE_VERSION, MOBILE_BUILD_NUMBER: mobileBuildNumber },
     sendInApp: [
       "🆕 Il y a du nouveau !",
-      "En novembre, Jardin mental change de nom et devient Mon journal mental.\nNous vous informerons prochainement de la suite. À bientôt !",
-      [{ text: "OK" }],
+      'Votre application "Jardin mental" change de nom et devient "Mon journal mental".\n💡 Afin de bénéficier des prochaines mises à jour, téléchargez la nouvelle version.',
+      [{ text: "Télécharger", link: storeLink }, { text: "Plus tard" }],
       { cancelable: true },
     ],
   };
