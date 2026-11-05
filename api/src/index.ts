@@ -79,9 +79,11 @@ app.get('/version', async (req: Request, res: Response) => {
     data: { MOBILE_VERSION, MOBILE_BUILD_NUMBER: mobileBuildNumber },
   };
 
-  // Builds ≤ 144 : dernière release "Jardin Mental" publiée par la DNUM.
-  // Les builds CNAM ("Mon journal mental") sont forcément supérieurs → pas de popup.
-  if (appversion <= 144) {
+  // Dernière release "Jardin Mental" 1.43.20 publiée par la DNUM (app/app.json :
+  // ios.buildNumber 426, android.versionCode 404). Les builds CNAM
+  // ("Mon journal mental" 2.0.1+) sont supérieurs → pas de popup.
+  const lastDnumBuild = appdevice === 'ios' ? 426 : 404;
+  if (appversion <= lastDnumBuild) {
     response.sendInApp = [
       "🆕 Il y a du nouveau !",
       'Votre application "Jardin mental" change de nom et devient "Mon journal mental".\n💡 Si vous n\'avez pas encore téléchargé la nouvelle version, nous vous invitons à cliquer sur le lien.',
