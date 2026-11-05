@@ -67,6 +67,8 @@ app.get('/version', async (req: Request, res: Response) => {
   const appdevice = req.headers.appdevice as 'ios' | 'android' | undefined;
   const mobileBuildNumber = appdevice === 'ios' ? MOBILE_IOS_BUILD_NUMBER : MOBILE_ANDROID_BUILD_NUMBER;
   
+  const appversion = Number(req.headers.appversion ?? 0);
+
   const storeLink =
     appdevice === 'ios'
       ? 'https://apps.apple.com/fr/app/id1540061393'
@@ -75,14 +77,19 @@ app.get('/version', async (req: Request, res: Response) => {
   const response: ApiResponse<{ MOBILE_VERSION: string; MOBILE_BUILD_NUMBER: number }> = {
     ok: true,
     data: { MOBILE_VERSION, MOBILE_BUILD_NUMBER: mobileBuildNumber },
-    sendInApp: [
+  };
+
+  // Builds ≤ 144 : dernière release "Jardin Mental" publiée par la DNUM.
+  // Les builds CNAM ("Mon journal mental") sont forcément supérieurs → pas de popup.
+  if (appversion <= 144) {
+    response.sendInApp = [
       "🆕 Il y a du nouveau !",
-      'Votre application "Jardin mental" change de nom et devient "Mon journal mental".\n💡 Afin de bénéficier des prochaines mises à jour, téléchargez la nouvelle version.',
+      'Votre application "Jardin mental" change de nom et devient "Mon journal mental".\n💡 Si vous n\'avez pas encore téléchargé la nouvelle version, nous vous invitons à cliquer sur le lien.',
       [{ text: "Télécharger", link: storeLink }, { text: "Plus tard" }],
       { cancelable: true },
-    ],
-  };
-  
+    ];
+  }
+
   res.status(200).send(response);
 });
 
