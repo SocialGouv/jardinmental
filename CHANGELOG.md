@@ -1,3 +1,10 @@
+# [1.134.0](https://github.com/SocialGouv/jardinmental/compare/v1.133.0...v1.134.0) (2026-11-05)
+
+
+### Features
+
+* **api:** only show renaming announcement to legacy Jardin Mental builds ([9a5fa47](https://github.com/SocialGouv/jardinmental/commit/9a5fa47557ce9879d5e85de3f7373a3b2387761f))
+
 # [1.133.0](https://github.com/SocialGouv/jardinmental/compare/v1.132.0...v1.133.0) (2026-11-03)
 
 
