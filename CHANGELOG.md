@@ -1,3 +1,10 @@
+## [1.134.1](https://github.com/SocialGouv/jardinmental/compare/v1.134.0...v1.134.1) (2026-11-05)
+
+
+### Bug Fixes
+
+* **api:** use real app build numbers to gate the renaming announcement ([b4a24fb](https://github.com/SocialGouv/jardinmental/commit/b4a24fbf399f32290de2ac3e536c3c9978abcb02))
+
 # [1.134.0](https://github.com/SocialGouv/jardinmental/compare/v1.133.0...v1.134.0) (2026-11-05)
 
 
