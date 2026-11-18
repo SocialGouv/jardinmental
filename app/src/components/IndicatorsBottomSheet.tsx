@@ -2,7 +2,7 @@ import { View, Text, ScrollView, useWindowDimensions, FlatList, Dimensions, Text
 import JMButton from "./JMButton";
 import { mergeClassNames } from "@/utils/className";
 import { typography } from "@/utils/typography";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import localStorage from "@/utils/localStorage";
 import { Drug } from "@/entities/Drug";
 import { Indicator } from "@/entities/Indicator";
@@ -17,26 +17,52 @@ import ChevronIcon from "@assets/svg/icon/chevron";
 import { TW_COLORS } from "@/utils/constants";
 import { LinearGradient } from "expo-linear-gradient";
 import { Typography } from "./Typography";
+import { Goal } from "@/entities/Goal";
+import { getGoalsData } from "@/utils/localStorage/goals";
 
 const screenHeight = Dimensions.get("window").height;
 const height90vh = screenHeight * 0.9;
 
 export const IndicatorsBottomSheet = ({
   initialSelectedIndicators,
+  initialSelectedGoals,
   initialShowTreatment,
   onClose,
 }: {
   initialSelectedIndicators?: Indicator[];
+  initialSelectedGoals?: Goal[];
   initialShowTreatment?: boolean;
-  onClose: ({ showTreatment, selectedIndicators }: { showTreatment: boolean; selectedIndicators: Indicator[] }) => void;
+  onClose: ({
+    showTreatment,
+    selectedIndicators,
+    selectedGoals,
+  }: {
+    showTreatment: boolean;
+    selectedIndicators: Indicator[];
+    selectedGoals: Goal[];
+  }) => void;
 }) => {
   const [indicatorList, setindicatorList] = useState<Indicator[] | null>(null);
+  const [goalList, setGoalList] = useState<Goal[] | null>(null);
   const [selectedIndicators, setSelectedIndicators] = useState<Indicator[]>(initialSelectedIndicators || []);
+  const [selectedGoals, setSelectedGoals] = useState<Goal[]>(initialSelectedGoals || []);
   const [showTreatment, setShowTreatment] = useState<boolean>(initialShowTreatment || false);
   const reminderToggleRef = useRef<any>();
   const itemWidths = useRef<number[]>([]);
   const flatListRef = useRef<FlatList>(null);
   const currentIndex = useRef(0);
+  const [treatment, setTreatment] = useState<any[] | undefined>();
+
+  useEffect(
+    useCallback(() => {
+      (async () => {
+        const _treatment = await localStorage.getMedicalTreatment();
+        if (_treatment) {
+          setTreatment(_treatment);
+        }
+      })();
+    }, [])
+  );
 
   const getOffsetForIndex = (index: number) => {
     return itemWidths.current.slice(0, index).reduce((acc, w) => acc + w, 0);
@@ -58,14 +84,38 @@ export const IndicatorsBottomSheet = ({
       const indicators = await localStorage.getIndicateurs();
       setindicatorList(indicators);
     };
+    const getGoals = async function () {
+      const goals = await getGoalsData();
+      const keys = Object.keys(goals.goals?.data);
+      if (keys.length > 0) {
+        setGoalList(keys.map((key) => goals.goals?.data[key]));
+        console.log(
+          "goalList",
+          keys.map((key) => goals.goals?.data[key])
+        );
+      }
+    };
     getIndicators();
+    getGoals();
   }, []);
+
+  const setToogleGoalCheckbox = (d: Goal) => {
+    let t = [...selectedGoals];
+    const alreadySelectedGoals = selectedGoals.find((elem) => elem.id === d.id);
+    if (alreadySelectedGoals) {
+      const i = selectedGoals.indexOf(alreadySelectedGoals);
+      t.splice(i, 1);
+    } else {
+      t.push(d);
+    }
+    setSelectedGoals(t);
+  };
 
   const setToogleCheckbox = (d: Indicator) => {
     let t = [...selectedIndicators];
-    const drugInTreatment = selectedIndicators.find((elem) => (elem.uuid || elem.name) === (d.uuid || d.name));
-    if (drugInTreatment) {
-      const i = selectedIndicators.indexOf(drugInTreatment);
+    const alreadySelectedIndicators = selectedIndicators.find((elem) => (elem.uuid || elem.name) === (d.uuid || d.name));
+    if (alreadySelectedIndicators) {
+      const i = selectedIndicators.indexOf(alreadySelectedIndicators);
       t.splice(i, 1);
     } else {
       t.push(d);
@@ -113,14 +163,6 @@ export const IndicatorsBottomSheet = ({
         }
       }
     }
-    // const indicatorCouplesSelection = indicatorCouples.filter((couple) => {
-    //   return (
-    //     (indicatorList?.map((indicator) => indicator.baseIndicatorUuid)?.includes(couple[0]?.baseIndicatorUuid) ||
-    //       indicatorList?.filter((indicator) => indicator.mainCategory === couple[0])) &&
-    //     (indicatorList?.map((indicator) => indicator.baseIndicatorUuid)?.includes(couple[1]?.baseIndicatorUuid) ||
-    //       indicatorList?.filter((indicator) => indicator.mainCategory === couple[1]))
-    //   );
-    // });
     if (selectedIndicators.length === 0) {
       indicatorCouples = usersIndicatorsCouple;
     } else if (selectedIndicators.length >= 1) {
@@ -182,9 +224,25 @@ export const IndicatorsBottomSheet = ({
                     id={e.uuid}
                     label={`${e.name}${!e.active ? " (désactivé)" : ""}`}
                     boxPosition="top"
-                    disabled={!selected && selectedIndicators.length >= 2}
+                    disabled={!selected && selectedIndicators.length + selectedGoals.length >= 2}
                     selected={selected}
                     onPress={(newValue) => setToogleCheckbox(e)}
+                  />
+                );
+              })}
+            {goalList &&
+              goalList.map((e, index) => {
+                const selected = !!selectedGoals.find((x) => x.id === e.id);
+                return (
+                  <LightSelectionnableItem
+                    key={index}
+                    className="flex-row"
+                    id={e.id}
+                    label={`${e.label}${!e.enabled ? " (désactivé)" : ""}`}
+                    boxPosition="top"
+                    disabled={!selected && selectedIndicators.length + selectedGoals.length >= 2}
+                    selected={selected}
+                    onPress={(newValue) => setToogleGoalCheckbox(e)}
                   />
                 );
               })}
@@ -283,33 +341,36 @@ export const IndicatorsBottomSheet = ({
             />
           </>
         )}
-        <View className="fr-col space-y-4 mt-4 px-4 w-full">
-          <Typography className={mergeClassNames(typography.textLgSemibold, "text-gray-800")}>Traitement</Typography>
-          <View className="flex-row items-center justify-between">
-            <Typography className={mergeClassNames(typography.textLgMedium, "text-cnam-primary-900")}>
-              Voir lorsque j’ai pris mon traitement
-            </Typography>
-            <Pressable onPress={() => reminderToggleRef?.current?.toggle?.()} hitSlop={{ bottom: 8, left: 8, right: 8, top: 8 }}>
-              <InputToggle
-                ref={reminderToggleRef}
-                checked={showTreatment}
-                onCheckedChanged={async ({ checked }) => {
-                  setShowTreatment(checked);
-                }}
-              />
-            </Pressable>
+        {treatment && treatment.length > 0 && (
+          <View className="fr-col space-y-4 mt-4 px-4 w-full">
+            <Typography className={mergeClassNames(typography.textLgSemibold, "text-gray-800")}>Traitement</Typography>
+            <View className="flex-row items-center justify-between">
+              <Typography className={mergeClassNames(typography.textLgMedium, "text-cnam-primary-900")}>
+                Voir quand j’ai pris mon traitement
+              </Typography>
+              <Pressable onPress={() => reminderToggleRef?.current?.toggle?.()} hitSlop={{ bottom: 8, left: 8, right: 8, top: 8 }}>
+                <InputToggle
+                  ref={reminderToggleRef}
+                  checked={showTreatment}
+                  onCheckedChanged={async ({ checked }) => {
+                    setShowTreatment(checked);
+                  }}
+                />
+              </Pressable>
+            </View>
           </View>
-        </View>
+        )}
         <View className="fr-col space-y-4 mt-4 p-4 w-full">
           <JMButton
             onPress={async () => {
               logEvents.logAnalysesValidateCorrelations();
               onClose({
                 selectedIndicators,
+                selectedGoals,
                 showTreatment,
               });
             }}
-            disabled={selectedIndicators.length === 0}
+            disabled={selectedIndicators.length + selectedGoals.length === 0}
             title={"Analyser"}
           />
         </View>
