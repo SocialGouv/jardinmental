@@ -1,3 +1,10 @@
+## [1.134.2](https://github.com/SocialGouv/jardinmental/compare/v1.134.1...v1.134.2) (2026-11-20)
+
+
+### Bug Fixes
+
+* **api:** rename app to "Mon journal mental" in reminder push notifications ([d776b8a](https://github.com/SocialGouv/jardinmental/commit/d776b8a05ef49be1fece8a0f543d8577fee9fdff))
+
 ## [1.134.1](https://github.com/SocialGouv/jardinmental/compare/v1.134.0...v1.134.1) (2026-11-05)
 
 
