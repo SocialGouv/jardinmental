@@ -30,7 +30,7 @@ const executeReminderCronJob = async () => {
     await sendNotifications({
       pushTokens: mainReminders.map((reminder) => reminder.user?.pushNotifToken).filter(Boolean),
       title: "Comment allez-vous aujourd'hui ?",
-      body: "N'oubliez pas de renseigner votre journée dans Jardin Mental 🌿",
+      body: "N'oubliez pas de renseigner votre journée dans Mon journal mental 🌿",
     });
   }
 
@@ -56,7 +56,7 @@ const executeReminderCronJob = async () => {
     await sendNotifications({
       pushTokens: goalReminders.map((r) => r.reminder?.user?.pushNotifToken).filter(Boolean),
       title: "Vous avez un objectif aujourd'hui 🎯",
-      body: "N'oubliez de préciser si vous l'avez réalisé dans Jardin Mental",
+      body: "N'oubliez de préciser si vous l'avez réalisé dans Mon journal mental",
     });
   }
 
@@ -82,7 +82,7 @@ const executeReminderCronJob = async () => {
     await sendNotifications({
       pushTokens: inactivityReminders.map((r) => r.reminder?.user?.pushNotifToken).filter(Boolean),
       title: "Comment s'est passée cette semaine ?",
-      body: "Prenez le temps de la renseigner sur Jardin Mental",
+      body: "Prenez le temps de la renseigner sur Mon journal mental",
     });
   }
 };
